@@ -256,7 +256,6 @@ QPixmap Icons::entryIconPixmap(const Entry* entry, IconSize size)
     if (entry->iconUuid().isNull()) {
         icon = databaseIcons()->icon(entry->iconNumber(), size);
     } else {
-        Q_ASSERT(entry->database());
         if (entry->database()) {
             icon = Icons::customIconPixmap(entry->database(), entry->iconUuid(), size);
         }
@@ -275,7 +274,6 @@ QPixmap Icons::groupIconPixmap(const Group* group, IconSize size)
     if (group->iconUuid().isNull()) {
         icon = databaseIcons()->icon(group->iconNumber(), size);
     } else {
-        Q_ASSERT(group->database());
         if (group->database()) {
             icon = Icons::customIconPixmap(group->database(), group->iconUuid(), size);
         }
@@ -299,13 +297,16 @@ QString Icons::imageFormatsFilter()
     QStringList formatsStringList;
 
     for (const QByteArray& format : formats) {
+        bool codePointClean = true;
         for (char codePoint : format) {
             if (!QChar(codePoint).isLetterOrNumber()) {
-                continue;
+                codePointClean = false;
+                break;
             }
         }
-
-        formatsStringList.append("*." + QString::fromLatin1(format).toLower());
+        if (codePointClean) {
+            formatsStringList.append("*." + QString::fromLatin1(format).toLower());
+        }
     }
 
     return formatsStringList.join(" ");
