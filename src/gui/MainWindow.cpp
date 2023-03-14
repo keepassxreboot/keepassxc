@@ -678,6 +678,10 @@ MainWindow::~MainWindow()
 #ifdef WITH_XC_SSHAGENT
     sshAgent()->removeAllIdentities();
 #endif
+
+#if defined(WITH_XC_KEESHARE)
+    KeeShare::destroy();
+#endif
 }
 
 /**

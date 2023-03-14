@@ -51,6 +51,12 @@ void KeeShare::init(QObject* parent)
     m_instance = new KeeShare(parent);
 }
 
+void KeeShare::destroy()
+{
+    delete m_instance;
+    m_instance = nullptr;
+}
+
 KeeShareSettings::Own KeeShare::own()
 {
     // Read existing own certificate or generate a new one if none available
