@@ -98,10 +98,16 @@ The KeePassXC-Browser Extension also lets you generate passwords directly in you
 These steps describe how you can do so:
 
 1. Your KeePassXC application should be open and configured to use the Browser extension.
++
+.Extension is Connected
+image::browser_extension_connected_and_active.jpg[,20%]
 
 2. Visit a website where you want to generate a new password.
 
-3. Right click on the password field and from the KeePassXC sub-menu choose _Password Generater_.
+3. Right click on the password field and from the KeePassXC sub-menu choose _Show Password Generater_.
++
+.Password Generator from KeePass submenu
+image::browser_extension_password_generator.jpg[,80%]
 
 4. This will open a password generator in the KeePassXC application.
 
@@ -111,6 +117,9 @@ These steps describe how you can do so:
 
 7. When you have succussfully submitted the password on the website, a popup will appear asking you to either udpate and existing entry in KeePassXC or add a new one. Choose the option that is relevant to you and you will see the new password udpated/added in KeePassXC database.
 
++
+.Update/Add Password to KeePass
+image::browser_extension_update__or_save_password.jpg[]
 
 // tag::advanced[]
 === Browser statistics
