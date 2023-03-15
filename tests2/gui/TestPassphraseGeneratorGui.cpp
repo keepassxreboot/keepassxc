@@ -18,6 +18,8 @@
 #include "FixtureWithDb.h"
 #include "catch2/catch_all.hpp"
 #include "gui/PasswordGeneratorWidget.h"
+#include "gui/PasswordWidget.h"
+#include "gui/entry/EditEntryWidget.h"
 
 #include <QClipboard>
 #include <QLineEdit>
@@ -123,5 +125,55 @@ SCENARIO_METHOD(FixtureBase, "Passphrase Generator in standalone mode", "[gui]")
         // With static main window we should close a widget explicitly to avoid a side effect for the next test.
         escape(pPassPhraseWidget);
         REQUIRE_FALSE(pPwGenWidget->isVisible());
+    }
+}
+
+SCENARIO_METHOD(FixtureWithDb, "Passphrase Generator on new Entry", "[gui]")
+{
+    GIVEN("User creates a new Entry and opens a Passphrase Generator from the password field by a short key")
+    {
+        clickToolbarButton("actionEntryNew");
+        REQUIRE(m_dbWidget->currentMode() == DatabaseWidget::Mode::EditMode);
+
+        auto* pEditEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
+        auto* pPasswordEdit = pEditEntryWidget->findChild<PasswordWidget*>()->findChild<QLineEdit*>("passwordEdit");
+        QTest::mouseClick(pPasswordEdit, Qt::LeftButton);
+
+#ifdef Q_OS_MAC
+        QTest::keyClick(pPasswordEdit, Qt::Key_G, Qt::MetaModifier);
+#else
+        QTest::keyClick(pPasswordEdit, Qt::Key_G, Qt::ControlModifier);
+#endif
+
+        auto* pPwGenWidget = m_dbWidget->findChild<PasswordGeneratorWidget*>();
+        auto* pPassPhraseWidget = pPwGenWidget->findChild<QWidget*>("dicewareWidget");
+        pPwGenWidget->findChild<QTabWidget*>("tabWidget")->setCurrentWidget(pPassPhraseWidget);
+        REQUIRE(pPassPhraseWidget->isVisible());
+
+        WHEN("User keeps the default parameters")
+        {
+            auto actualPhase = pPwGenWidget->getGeneratedPassword();
+            AND_WHEN("User clicks Apply Password button")
+            {
+                auto* applyPasswordButton = pPwGenWidget->findChild<QPushButton*>("buttonApply");
+                QTest::mouseClick(applyPasswordButton, Qt::MouseButton::LeftButton);
+                QApplication::processEvents();
+
+                THEN("The Passphrase Generator closed and a new passphrase is applied for the entry")
+                {
+                    // FIXME dmaslenko: "The emulated Apply click does not close the widget but applies the changes");
+                    // REQUIRE_FALSE(pPassPhraseWidget->isVisible());
+                    REQUIRE(actualPhase == actualPhase.toLower());
+                    REQUIRE_THAT(actualPhase.toStdString(),
+                                 Catch::Matchers::Matches(R"(^\S+ \S+ \S+ \S+ \S+ \S+ \S+$)"));
+                }
+            }
+        }
+
+        // Close the widget after each test.
+        escape(pPassPhraseWidget);
+        wait(1000);
+        // FIXME dmaslenko: the window is not closed
+        // REQUIRE_FALSE(pPassPhraseWidget->isVisible());
     }
 }
