@@ -59,4 +59,18 @@ TEST_CASE("PassphraseGenerator functionality", "[core]")
         // Using a dash because the test wordlist has few words like, drop-in, felt-tip, t-shirt, etc.
         REQUIRE_THAT(passphrase.toStdString(), Catch::Matchers::Matches(R"(^([A-Z][a-z,-]*\s?)+$)"));
     }
+
+    SECTION("estimateEntropy with default word list should produce non zero result")
+    {
+        REQUIRE_THAT(generator.estimateEntropy(0.0), Catch::Matchers::WithinAbs(90.4736875252, 0.0001));
+        REQUIRE_THAT(generator.estimateEntropy(1.0), Catch::Matchers::WithinAbs(12.9248125036, 0.0001));
+        REQUIRE_THAT(generator.estimateEntropy(10.0), Catch::Matchers::WithinAbs(129.2481250361, 0.0001));
+    }
+
+    SECTION("estimateEntropy with empty word list should produce zero result")
+    {
+        // Reset the word list by trying to load a wrong file.
+        generator.setWordList("wrong path");
+        REQUIRE(generator.estimateEntropy(0.0) == 0.0);
+    }
 }
