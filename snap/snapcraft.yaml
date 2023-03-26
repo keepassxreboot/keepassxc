@@ -1,7 +1,7 @@
 name: keepassxc
 adopt-info: keepassxc
 grade: stable
-base: core20
+base: core22
 confinement: strict
 compression: lzo
 
@@ -10,7 +10,8 @@ apps:
     command: usr/bin/keepassxc
     common-id: org.keepassxc.KeePassXC.desktop
     extensions: [kde-neon]
-    plugs: [home, unity7, network, network-bind, removable-media, raw-usb]
+    plugs: [home, unity7, network, network-bind, removable-media, raw-usb, password-manager-service]
+    autostart: org.keepassxc.KeePassXC.desktop
   cli:
     command: usr/bin/keepassxc-cli
     extensions: [kde-neon]
@@ -54,7 +55,7 @@ parts:
       - asciidoctor
     stage-packages:
       - dbus
-      - libbotan-2-12
+      - libbotan-2-19
       - libqrencode4
       - libusb-1.0-0
       - libreadline8
