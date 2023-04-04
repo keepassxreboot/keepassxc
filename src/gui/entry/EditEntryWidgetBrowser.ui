@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>374</width>
     <height>348</height>
    </rect>
   </property>
@@ -26,7 +26,7 @@
    <item>
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>These settings affect to the entry's behaviour with the browser extension.</string>
+      <string>These settings affect the entry's behaviour with the browser extension.</string>
      </property>
     </widget>
    </item>
@@ -86,7 +86,7 @@
    <item>
     <widget class="QGroupBox" name="groupBox_3">
      <property name="title">
-      <string>Additional URL's</string>
+      <string>Additional URLs</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_1">
       <item>

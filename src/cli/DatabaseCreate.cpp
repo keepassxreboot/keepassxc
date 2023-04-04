@@ -31,7 +31,7 @@ const QCommandLineOption DatabaseCreate::DecryptionTimeOption =
 
 const QCommandLineOption DatabaseCreate::SetKeyFileShortOption = QCommandLineOption(
     QStringList() << "k",
-    QObject::tr("Set the key file for the database.\nThis options is deprecated, use --set-key-file instead."),
+    QObject::tr("Set the key file for the database.\nThis option is deprecated, use --set-key-file instead."),
     QObject::tr("path"));
 
 const QCommandLineOption DatabaseCreate::SetKeyFileOption =
