@@ -6124,7 +6124,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Empty</source>
-        <translation>Prázdné</translation>
+        <translation>Vyprázdnit</translation>
     </message>
     <message>
         <source>Remove</source>
