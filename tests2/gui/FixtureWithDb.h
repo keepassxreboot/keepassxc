@@ -33,6 +33,8 @@ public:
 
 protected:
     void unlockDbByPassword(const QString& password);
+    Entry* newEntry(const QString& title, const QString& user, const QString& pwd);
+    Entry* getCurrentEntry();
 
 protected:
     QPointer<DatabaseTabWidget> m_tabWidget;

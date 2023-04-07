@@ -31,3 +31,7 @@ target_link_libraries(TEST_GUI_SUPPORT Qt5::Core Qt5::Widgets Qt5::Test Catch2::
 add_unit_test(NAME pass-phrase-generator-gui
         SOURCES TestPassphraseGeneratorGui.cpp
         LIBS TEST_GUI_SUPPORT ${TEST_LIBRARIES})
+
+add_unit_test(NAME totp-gui
+        SOURCES TestTotpGui.cpp
+        LIBS TEST_GUI_SUPPORT ${TEST_LIBRARIES})

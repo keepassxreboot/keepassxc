@@ -46,7 +46,6 @@
 #include "gui/PasswordWidget.h"
 #include "gui/SearchWidget.h"
 #include "gui/ShortcutSettingsPage.h"
-#include "gui/TotpDialog.h"
 #include "gui/TotpSetupDialog.h"
 #include "gui/databasekey/KeyFileEditWidget.h"
 #include "gui/databasekey/PasswordEditWidget.h"
@@ -803,77 +802,6 @@ void TestGui::testPasswordEntryEntropy()
 
         QTest::mouseClick(generatedPassword, Qt::LeftButton);
         QTest::keyClick(generatedPassword, Qt::Key_Escape););
-}
-
-void TestGui::testTotp()
-{
-    auto* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
-    auto* entryView = m_dbWidget->findChild<EntryView*>("entryView");
-
-    QCOMPARE(entryView->model()->rowCount(), 1);
-    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::ViewMode);
-    QModelIndex item = entryView->model()->index(0, 1);
-    Entry* entry = entryView->entryFromIndex(item);
-    clickIndex(item, entryView, Qt::LeftButton);
-
-    triggerAction("actionEntrySetupTotp");
-
-    auto* setupTotpDialog = m_dbWidget->findChild<TotpSetupDialog*>("TotpSetupDialog");
-
-    QApplication::processEvents();
-
-    QString exampleSeed = "gezd gnbvgY 3tqojqGEZdgnb vgy3tqoJq===";
-    QString expectedFinalSeed = exampleSeed.toUpper().remove(" ").remove("=");
-    auto* seedEdit = setupTotpDialog->findChild<QLineEdit*>("seedEdit");
-    seedEdit->setText("");
-    QTest::keyClicks(seedEdit, exampleSeed);
-
-    auto* setupTotpButtonBox = setupTotpDialog->findChild<QDialogButtonBox*>("buttonBox");
-    QTest::mouseClick(setupTotpButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
-    QTRY_VERIFY(!setupTotpDialog->isVisible());
-
-    // Make sure the entryView is selected and active
-    entryView->activateWindow();
-    QApplication::processEvents();
-    QTRY_VERIFY(entryView->hasFocus());
-
-    auto* entryEditAction = m_mainWindow->findChild<QAction*>("actionEntryEdit");
-    QWidget* entryEditWidget = toolBar->widgetForAction(entryEditAction);
-    QVERIFY(entryEditWidget->isVisible());
-    QVERIFY(entryEditWidget->isEnabled());
-    QTest::mouseClick(entryEditWidget, Qt::LeftButton);
-    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::EditMode);
-
-    auto* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
-    editEntryWidget->setCurrentPage(1);
-    auto* attrTextEdit = editEntryWidget->findChild<QPlainTextEdit*>("attributesEdit");
-    QTest::mouseClick(editEntryWidget->findChild<QAbstractButton*>("revealAttributeButton"), Qt::LeftButton);
-    QCOMPARE(attrTextEdit->toPlainText(), expectedFinalSeed);
-
-    auto* editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
-    QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
-
-    // Test the TOTP value
-    triggerAction("actionEntryTotp");
-
-    auto* totpDialog = m_dbWidget->findChild<TotpDialog*>("TotpDialog");
-    auto* totpLabel = totpDialog->findChild<QLabel*>("totpLabel");
-
-    QCOMPARE(totpLabel->text().replace(" ", ""), entry->totp());
-    QTest::keyClick(totpDialog, Qt::Key_Escape);
-
-    // Test the QR code
-    triggerAction("actionEntryTotpQRCode");
-    auto* qrCodeDialog = m_mainWindow->findChild<QDialog*>("entryQrCodeWidget");
-    QVERIFY(qrCodeDialog);
-    QVERIFY(qrCodeDialog->isVisible());
-    auto* qrCodeWidget = qrCodeDialog->findChild<QWidget*>("squareSvgWidget");
-    QVERIFY2(qrCodeWidget->geometry().width() == qrCodeWidget->geometry().height(), "Initial QR code is not square");
-
-    // Test the QR code window resizing, make the dialog bigger.
-    qrCodeDialog->setFixedSize(800, 600);
-    QVERIFY2(qrCodeWidget->geometry().width() == qrCodeWidget->geometry().height(), "Resized QR code is not square");
-    QTest::keyClick(qrCodeDialog, Qt::Key_Escape);
 }
 
 void TestGui::testSearch()

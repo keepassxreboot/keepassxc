@@ -14,6 +14,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#include "../streams.h" // for printable logs on QStrings verification
+
 #include "FixtureWithDb.h"
 #include "catch2/catch_all.hpp"
 #include "config-keepassx-tests.h"
@@ -21,8 +23,12 @@
 #include "gui/FileDialog.h"
 #include "gui/MessageBox.h"
 #include "gui/PasswordWidget.h"
+#include "gui/entry/EditEntryWidget.h"
+#include "gui/entry/EntryView.h"
 
 #include <QApplication>
+#include <QComboBox>
+#include <QPushButton>
 #include <QTest>
 
 FixtureWithDb::FixtureWithDb()
@@ -73,4 +79,49 @@ void FixtureWithDb::unlockDbByPassword(const QString& password)
     QTest::keyClick(pPasswordEdit, Qt::Key_Enter);
 
     QApplication::processEvents();
+}
+
+Entry* FixtureWithDb::newEntry(const QString& title, const QString& user, const QString& pwd)
+{
+    auto* pEntryView = m_dbWidget->findChild<EntryView*>("entryView");
+
+    clickToolbarButton("actionEntryNew");
+    REQUIRE(m_dbWidget->currentMode() == DatabaseWidget::Mode::EditMode);
+
+    auto* pEditEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
+    REQUIRE(pEditEntryWidget);
+
+    auto* pTitleEdit = pEditEntryWidget->findChild<QLineEdit*>("titleEdit");
+    REQUIRE(pTitleEdit);
+    QTest::keyClicks(pTitleEdit, title);
+
+    auto* pUsernameComboBox = pEditEntryWidget->findChild<QComboBox*>("usernameComboBox");
+    REQUIRE(pUsernameComboBox);
+    QTest::mouseClick(pUsernameComboBox, Qt::LeftButton);
+    QTest::keyClicks(pUsernameComboBox, user);
+
+    auto* pPasswordEdit = pEditEntryWidget->findChild<PasswordWidget*>()->findChild<QLineEdit*>("passwordEdit");
+    REQUIRE(pPasswordEdit);
+    QTest::keyClicks(pPasswordEdit, pwd);
+
+    auto* pEditEntryWidgetButtonBox = pEditEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
+    REQUIRE(pEditEntryWidgetButtonBox);
+    QTest::mouseClick(pEditEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+
+    auto* pCurrentEntry = pEntryView->currentEntry();
+    REQUIRE(pCurrentEntry);
+    REQUIRE(pCurrentEntry->password() == pwd);
+
+    return pCurrentEntry;
+}
+
+Entry* FixtureWithDb::getCurrentEntry()
+{
+    auto* pEntryView = m_dbWidget->findChild<EntryView*>("entryView");
+    REQUIRE(pEntryView);
+
+    auto* pCurrentEntry = pEntryView->currentEntry();
+    REQUIRE(pCurrentEntry);
+
+    return pCurrentEntry;
 }
