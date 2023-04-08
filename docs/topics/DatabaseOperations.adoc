@@ -333,6 +333,7 @@ image::database_settings.png[]
  * *Max. history size:* When the history of an entry gets above this size, it is truncated. For example, this happens when entries have large attachments. Set this value small to prevent the database from getting too large (we recommend 6 MiB).
  * *Use recycle bin:* Select this check-box if you want deleted entries to move to the recycle bin instead of being permanently removed. The recycle bin will be created if it does not already exist after your first deletion. To delete entries permanently, you must empty the recycle bin manually.
  * *Enable compression:* KeePassXC databases can be compressed before being encrypted. Compression reduces the size of the database and does not have any appreciable affect on speed. It is recommended to always save databases with compression.
+ * *Autosave delay:* Customize the automatic database save operation by delaying it for a set time since the last change. By default, this option is disabled for fast saving, but can be useful for large databases to avoid delays after each change.
 
 3. Click the Security button in the left-hand menu bar to change your database credentials and change encryption settings.
 +
