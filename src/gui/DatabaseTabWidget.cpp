@@ -153,7 +153,9 @@ void DatabaseTabWidget::openDatabase()
 void DatabaseTabWidget::addDatabaseTab(const QString& filePath,
                                        bool inBackground,
                                        const QString& password,
-                                       const QString& keyfile)
+                                       const QString& keyfile,
+                                       const QString& yubiKeySlot,
+                                       bool dontUseLastYubiKey)
 {
     QString cleanFilePath = QDir::toNativeSeparators(filePath);
     QFileInfo fileInfo(cleanFilePath);
@@ -170,7 +172,7 @@ void DatabaseTabWidget::addDatabaseTab(const QString& filePath,
         Q_ASSERT(dbWidget);
         if (dbWidget
             && dbWidget->database()->canonicalFilePath().compare(canonicalFilePath, FILE_CASE_SENSITIVE) == 0) {
-            dbWidget->performUnlockDatabase(password, keyfile);
+            dbWidget->performUnlockDatabase(password, keyfile, yubiKeySlot, dontUseLastYubiKey);
             if (!inBackground) {
                 // switch to existing tab if file is already open
                 setCurrentIndex(indexOf(dbWidget));
@@ -179,9 +181,9 @@ void DatabaseTabWidget::addDatabaseTab(const QString& filePath,
         }
     }
 
-    auto* dbWidget = new DatabaseWidget(QSharedPointer<Database>::create(cleanFilePath), this);
+    auto* dbWidget = new DatabaseWidget(QSharedPointer<Database>::create(cleanFilePath), this, dontUseLastYubiKey);
     addDatabaseTab(dbWidget, inBackground);
-    dbWidget->performUnlockDatabase(password, keyfile);
+    dbWidget->performUnlockDatabase(password, keyfile, yubiKeySlot, dontUseLastYubiKey);
     updateLastDatabases(cleanFilePath);
 }
 
@@ -233,8 +235,8 @@ void DatabaseTabWidget::addDatabaseTab(DatabaseWidget* dbWidget, bool inBackgrou
     }
 
     connect(dbWidget,
-            SIGNAL(requestOpenDatabase(QString, bool, QString, QString)),
-            SLOT(addDatabaseTab(QString, bool, QString, QString)));
+            SIGNAL(requestOpenDatabase(QString, bool, QString, QString, QString)),
+            SLOT(addDatabaseTab(QString, bool, QString, QString, QString)));
     connect(dbWidget, SIGNAL(databaseFilePathChanged(QString, QString)), SLOT(updateTabName()));
     connect(dbWidget, SIGNAL(closeRequest()), SLOT(closeDatabaseTabFromSender()));
     connect(dbWidget,

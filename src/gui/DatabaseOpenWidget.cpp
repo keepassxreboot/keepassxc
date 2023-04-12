@@ -194,8 +194,14 @@ void DatabaseOpenWidget::load(const QString& filename)
     }
 
 #ifdef WITH_XC_YUBIKEY
+    bool dontUseLastYubiKey = false;
+
+    if (auto* databaseWidget = qobject_cast<DatabaseWidget*>(parent())) {
+        dontUseLastYubiKey = databaseWidget->getDontUseLastYubiKey();
+    }
+
     // Only auto-poll for hardware keys if we previously used one with this database file
-    if (config()->get(Config::RememberLastKeyFiles).toBool()) {
+    if (!dontUseLastYubiKey && config()->get(Config::RememberLastKeyFiles).toBool()) {
         auto lastChallengeResponse = config()->get(Config::LastChallengeResponse).toHash();
         if (lastChallengeResponse.contains(m_filename)) {
             pollHardwareKey();
@@ -227,8 +233,63 @@ QString DatabaseOpenWidget::filename()
     return m_filename;
 }
 
-void DatabaseOpenWidget::enterKey(const QString& pw, const QString& keyFile)
+void DatabaseOpenWidget::enterKey(const QString& pw, const QString& keyFile, const QString& yubiKeySlot)
 {
+#ifdef WITH_XC_YUBIKEY
+    if (!yubiKeySlot.isEmpty()) {
+        bool ignore = false;
+        unsigned int serial = 0;
+        int slot;
+
+        bool ok = false;
+        auto parts = yubiKeySlot.split(":");
+        slot = parts[0].toInt(&ok);
+
+        if (!ok || (slot != 1 && slot != 2)) {
+            m_ui->messageWidget->showMessage(tr("Invalid YubiKey slot %1").arg(parts[0]),
+                                             MessageWidget::MessageType::Warning);
+            ignore = true;
+        }
+
+        if (!ignore && parts.size() > 1) {
+            serial = parts[1].toUInt(&ok, 10);
+            if (!ok) {
+                m_ui->messageWidget->showMessage(tr("Invalid YubiKey serial %1").arg(parts[1]),
+                                                 MessageWidget::MessageType::Warning);
+                ignore = true;
+            }
+        }
+
+        if (!ignore) {
+            int selectedIndex = -1;
+            YubiKeySlot foundYubiKey = YubiKeySlot(0, 0);
+
+            YubiKey::instance()->findValidKeys();
+            auto yk_list = YubiKey::instance()->foundKeys();
+
+            hardwareKeyResponse(!yk_list.empty());
+
+            for (auto& yk : yk_list) {
+                if ((serial == 0 && yk.second == slot) || (yk.second == slot && yk.first == serial)) {
+                    foundYubiKey = yk;
+                    break;
+                }
+            }
+
+            if (foundYubiKey == YubiKeySlot(0, 0)) {
+                m_ui->messageWidget->showMessage(tr("No YubiKey found"), MessageWidget::MessageType::Warning);
+            } else {
+                selectedIndex = m_ui->challengeResponseCombo->findData(QVariant::fromValue(foundYubiKey));
+                if (selectedIndex != -1) {
+                    m_ui->challengeResponseCombo->setCurrentIndex(selectedIndex);
+                    m_ui->challengeResponseCombo->setEnabled(true);
+                }
+            }
+        }
+    }
+#else
+    Q_UNUSED(yubiKeySlot);
+#endif // WITH_XC_YUBIKEY
     m_ui->editPassword->setText(pw);
     m_ui->keyFileLineEdit->setText(keyFile);
     m_blockQuickUnlock = true;
@@ -465,6 +526,14 @@ void DatabaseOpenWidget::pollHardwareKey()
 
 void DatabaseOpenWidget::hardwareKeyResponse(bool found)
 {
+    bool dontUseLastYubiKey = false;
+
+#ifdef WITH_XC_YUBIKEY
+    if (auto* databaseWidget = qobject_cast<DatabaseWidget*>(parent())) {
+        dontUseLastYubiKey = databaseWidget->getDontUseLastYubiKey();
+    }
+#endif
+
     m_ui->challengeResponseCombo->clear();
     m_ui->buttonRedetectYubikey->setEnabled(true);
     m_ui->hardwareKeyProgress->setVisible(false);
@@ -479,7 +548,7 @@ void DatabaseOpenWidget::hardwareKeyResponse(bool found)
     }
 
     YubiKeySlot lastUsedSlot;
-    if (config()->get(Config::RememberLastKeyFiles).toBool()) {
+    if (!dontUseLastYubiKey && config()->get(Config::RememberLastKeyFiles).toBool()) {
         auto lastChallengeResponse = config()->get(Config::LastChallengeResponse).toHash();
         if (lastChallengeResponse.contains(m_filename)) {
             // Qt doesn't read custom types in settings so extract from QString
@@ -495,7 +564,7 @@ void DatabaseOpenWidget::hardwareKeyResponse(bool found)
         // add detected YubiKey to combo box
         m_ui->challengeResponseCombo->addItem(YubiKey::instance()->getDisplayName(slot), QVariant::fromValue(slot));
         // Select this YubiKey + Slot if we used it in the past
-        if (lastUsedSlot == slot) {
+        if (!dontUseLastYubiKey && lastUsedSlot == slot) {
             selectedIndex = m_ui->challengeResponseCombo->count() - 1;
         }
     }

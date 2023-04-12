@@ -5,6 +5,12 @@
       <arg name="fileName" type="s" direction="in"/>
       <arg name="pw" type="s" direction="in"/>
       <arg name="keyFile" type="s" direction="in"/>
+      <arg name="yubiKeySlot" type="s" direction="in"/>
+    </method>
+    <method name="openDatabase">
+      <arg name="fileName" type="s" direction="in"/>
+      <arg name="pw" type="s" direction="in"/>
+      <arg name="keyFile" type="s" direction="in"/>
     </method>
     <method name="openDatabase">
       <arg name="fileName" type="s" direction="in"/>
@@ -13,6 +19,11 @@
     <method name="openDatabase">
       <arg name="fileName" type="s" direction="in"/>
     </method>
+    <method name="openDatabaseYubiKey">
+      <arg name="fileName" type="s" direction="in"/>
+      <arg name="pw" type="s" direction="in"/>
+      <arg name="yubiKeySlot" type="s" direction="in"/>
+    </method>
     <method name="appExit">
     </method>
     <method name="isHardwareKeySupported">
@@ -20,6 +31,9 @@
     </method>
     <method name="refreshHardwareKeys">
       <arg name="found" type="b" direction="out"/>
+    </method>
+    <method name="listHardwareKeys">
+      <arg name="found" type="as" direction="out"/>
     </method>
     <method name="lockAllDatabases">
     </method>

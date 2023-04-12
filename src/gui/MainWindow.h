@@ -51,7 +51,7 @@ public:
     ~MainWindow() override;
 
     QList<DatabaseWidget*> getOpenDatabases();
-    void restoreConfigState();
+    void restoreConfigState(bool dontUseLastYubiKey = false);
     void setAllowScreenCapture(bool state);
 
     enum StackedWidgetIndex
@@ -68,10 +68,16 @@ signals:
     void activeDatabaseChanged(DatabaseWidget* dbWidget);
 
 public slots:
-    void openDatabase(const QString& filePath, const QString& password = {}, const QString& keyfile = {});
+    void openDatabase(const QString& filePath,
+                      const QString& password = {},
+                      const QString& keyfile = {},
+                      const QString& yubiKeySlot = {},
+                      bool dontUseLastYubiKey = false);
+    void openDatabaseYubiKey(const QString& filePath, const QString& password, const QString& yubiKeySlot);
     void appExit();
     bool isHardwareKeySupported();
     bool refreshHardwareKeys();
+    QStringList listHardwareKeys();
     void displayGlobalMessage(const QString& text,
                               MessageWidget::MessageType type,
                               bool showClosebutton = true,

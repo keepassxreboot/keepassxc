@@ -55,6 +55,9 @@ Your database works offline and requires no internet connection.
 *--keyfile* <__keyfile__>::
   Key file of the database.
 
+*--yubikey* <__slot[:serial]__>::
+  YubiKey slot and optional serial used to access the database (e.g., 1:7370001).
+
 *--pw-stdin*::
   Reads password of the database from stdin.
 

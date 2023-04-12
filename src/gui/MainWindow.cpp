@@ -693,8 +693,6 @@ MainWindow::MainWindow()
     m_statusBarLabel = new QLabel(statusBar());
     m_statusBarLabel->setObjectName("statusBarLabel");
     statusBar()->addPermanentWidget(m_statusBarLabel);
-
-    restoreConfigState();
 }
 
 MainWindow::~MainWindow()
@@ -707,7 +705,7 @@ MainWindow::~MainWindow()
 /**
  * Restore the main window's state after launch
  */
-void MainWindow::restoreConfigState()
+void MainWindow::restoreConfigState(bool dontUseLastYubiKey)
 {
     // start minimized if configured
     if (config()->get(Config::GUI_MinimizeOnStartup).toBool()) {
@@ -720,12 +718,12 @@ void MainWindow::restoreConfigState()
         const QStringList fileNames = config()->get(Config::LastOpenedDatabases).toStringList();
         for (const QString& filename : fileNames) {
             if (!filename.isEmpty() && QFile::exists(filename)) {
-                openDatabase(filename);
+                openDatabase(filename, {}, {}, {}, dontUseLastYubiKey);
             }
         }
         auto lastActiveFile = config()->get(Config::LastActiveDatabase).toString();
         if (!lastActiveFile.isEmpty()) {
-            openDatabase(lastActiveFile);
+            openDatabase(lastActiveFile, {}, {}, {}, dontUseLastYubiKey);
         }
     }
 }
@@ -785,6 +783,17 @@ bool MainWindow::refreshHardwareKeys()
 #else
     return false;
 #endif
+}
+
+QStringList MainWindow::listHardwareKeys()
+{
+    QStringList results = {};
+#ifdef WITH_XC_YUBIKEY
+    YubiKey::instance()->findValidKeys();
+    for (auto& slot : YubiKey::instance()->foundKeys())
+        results.append(QStringLiteral("%1:%2").arg(slot.second).arg(slot.first));
+#endif
+    return results;
 }
 
 void MainWindow::updateLastDatabasesMenu()
@@ -872,9 +881,18 @@ void MainWindow::clearLastDatabases()
     }
 }
 
-void MainWindow::openDatabase(const QString& filePath, const QString& password, const QString& keyfile)
+void MainWindow::openDatabase(const QString& filePath,
+                              const QString& password,
+                              const QString& keyfile,
+                              const QString& yubiKeySlot,
+                              bool dontUseLastYubiKey)
 {
-    m_ui->tabWidget->addDatabaseTab(filePath, false, password, keyfile);
+    m_ui->tabWidget->addDatabaseTab(filePath, false, password, keyfile, yubiKeySlot, dontUseLastYubiKey);
+}
+
+void MainWindow::openDatabaseYubiKey(const QString& filePath, const QString& password, const QString& yubiKeySlot)
+{
+    openDatabase(filePath, password, QString(""), yubiKeySlot, true);
 }
 
 void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)

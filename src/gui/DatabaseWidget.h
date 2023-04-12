@@ -72,7 +72,7 @@ public:
         LockedMode
     };
 
-    explicit DatabaseWidget(QSharedPointer<Database> db, QWidget* parent = nullptr);
+    explicit DatabaseWidget(QSharedPointer<Database> db, QWidget* parent = nullptr, bool dontUseLastYubiKey = false);
     explicit DatabaseWidget(const QString& filePath, QWidget* parent = nullptr);
     ~DatabaseWidget() override;
 
@@ -139,8 +139,11 @@ signals:
     void currentModeChanged(DatabaseWidget::Mode mode);
     void groupChanged();
     void entrySelectionChanged();
-    void
-    requestOpenDatabase(const QString& filePath, bool inBackground, const QString& password, const QString& keyFile);
+    void requestOpenDatabase(const QString& filePath,
+                             bool inBackground,
+                             const QString& password,
+                             const QString& keyFile,
+                             const QString& yubiKeySlot = {});
     void databaseMerged(QSharedPointer<Database> mergedDb);
     void groupContextMenuRequested(const QPoint& globalPos);
     void entryContextMenuRequested(const QPoint& globalPos);
@@ -213,7 +216,10 @@ public slots:
     void switchToOpenDatabase(const QString& filePath);
     void switchToOpenDatabase(const QString& filePath, const QString& password, const QString& keyFile);
     void switchToCsvImport(const QString& filePath);
-    void performUnlockDatabase(const QString& password, const QString& keyfile = {});
+    void performUnlockDatabase(const QString& password,
+                               const QString& keyfile = {},
+                               const QString& yubiKeySlot = {},
+                               bool dontUseLastYubiKey = false);
     void csvImportFinished(bool accepted);
     void switchToImportKeepass1(const QString& filePath);
     void switchToImportOpVault(const QString& fileName);
@@ -233,6 +239,11 @@ public slots:
                      int autoHideTimeout = MessageWidget::DefaultAutoHideTimeout);
     void showErrorMessage(const QString& errorMessage);
     void hideMessage();
+
+#ifdef WITH_XC_YUBIKEY
+    void setDontUseLastYubiKey(bool dontUse);
+    bool getDontUseLastYubiKey();
+#endif
 
 protected:
     void closeEvent(QCloseEvent* event) override;
@@ -311,6 +322,8 @@ private:
 
     // Auto-Type related
     QString m_searchStringForAutoType;
+
+    bool m_dontUseLastYubiKey = false;
 };
 
 #endif // KEEPASSX_DATABASEWIDGET_H
