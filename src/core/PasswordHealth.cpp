@@ -172,7 +172,7 @@ QSharedPointer<PasswordHealth> HealthChecker::evaluate(const Entry* entry) const
         health->setScore(0);
         health->addScoreReason(QObject::tr("Password has expired"));
         health->addScoreDetails(QObject::tr("Password expiry was %1")
-                                    .arg(entry->timeInfo().expiryTime().toString(Qt::DefaultLocaleShortDate)));
+                                    .arg(entry->timeInfo().expiryTime().toString(Qt::ISODate)));
     } else if (entry->timeInfo().expires()) {
         const int days = QDateTime::currentDateTime().daysTo(entry->timeInfo().expiryTime());
         if (days <= 30) {
@@ -187,7 +187,7 @@ QSharedPointer<PasswordHealth> HealthChecker::evaluate(const Entry* entry) const
 
             health->adjustScore((30 - days) * -2);
             health->addScoreDetails(QObject::tr("Password expires on %1")
-                                        .arg(entry->timeInfo().expiryTime().toString(Qt::DefaultLocaleShortDate)));
+                                        .arg(entry->timeInfo().expiryTime().toString(Qt::ISODate)));
             if (days <= 2) {
                 health->addScoreReason(QObject::tr("Password is about to expire"));
             } else if (days <= 10) {

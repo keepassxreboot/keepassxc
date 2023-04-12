@@ -49,7 +49,7 @@ int AttachmentExport::executeWithDatabase(QSharedPointer<Database> database, QSh
 
     auto entry = database->rootGroup()->findEntryByPath(entryPath);
     if (!entry) {
-        err << QObject::tr("Could not find entry with path %1.").arg(entryPath) << endl;
+        err << QObject::tr("Could not find entry with path %1.").arg(entryPath) << Qt::endl;
         return EXIT_FAILURE;
     }
 
@@ -57,32 +57,32 @@ int AttachmentExport::executeWithDatabase(QSharedPointer<Database> database, QSh
 
     auto attachments = entry->attachments();
     if (!attachments->hasKey(attachmentName)) {
-        err << QObject::tr("Could not find attachment with name %1.").arg(attachmentName) << endl;
+        err << QObject::tr("Could not find attachment with name %1.").arg(attachmentName) << Qt::endl;
         return EXIT_FAILURE;
     }
 
     if (parser->isSet(AttachmentExport::StdoutOption)) {
         // Output to STDOUT even in quiet mode
-        Utils::STDOUT << attachments->value(attachmentName) << flush;
+        Utils::STDOUT << attachments->value(attachmentName) << Qt::flush;
         return EXIT_SUCCESS;
     }
 
     if (args.size() < 4) {
-        err << QObject::tr("No export target given. Please use '--stdout' or specify an 'export-file'.") << endl;
+        err << QObject::tr("No export target given. Please use '--stdout' or specify an 'export-file'.") << Qt::endl;
         return EXIT_FAILURE;
     }
 
     auto exportFileName = args.at(3);
     QFile exportFile(exportFileName);
     if (!exportFile.open(QIODevice::WriteOnly)) {
-        err << QObject::tr("Could not open output file %1.").arg(exportFileName) << endl;
+        err << QObject::tr("Could not open output file %1.").arg(exportFileName) << Qt::endl;
         return EXIT_FAILURE;
     }
     exportFile.write(attachments->value(attachmentName));
 
     out << QObject::tr("Successfully exported attachment %1 of entry %2 to %3.")
                .arg(attachmentName, entryPath, exportFileName)
-        << endl;
+        << Qt::endl;
 
     return EXIT_SUCCESS;
 }

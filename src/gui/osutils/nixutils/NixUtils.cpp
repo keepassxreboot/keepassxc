@@ -157,7 +157,7 @@ void NixUtils::setLaunchAtStartup(bool enable)
                << QStringLiteral("X-GNOME-Autostart-enabled=true") << '\n'
                << QStringLiteral("X-GNOME-Autostart-Delay=2") << '\n'
                << QStringLiteral("X-KDE-autostart-after=panel") << '\n'
-               << QStringLiteral("X-LXQt-Need-Tray=true") << endl;
+               << QStringLiteral("X-LXQt-Need-Tray=true") << Qt::endl;
         desktopFile.close();
     } else if (isLaunchAtStartupEnabled()) {
         QFile::remove(getAutostartDesktopFilename());

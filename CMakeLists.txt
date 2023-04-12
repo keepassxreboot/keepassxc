@@ -294,6 +294,7 @@ add_gcc_compiler_flags("-Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long")
 add_gcc_compiler_flags("-Wformat=2 -Wmissing-format-attribute")
 add_gcc_compiler_flags("-fvisibility=hidden")
 add_gcc_compiler_cxxflags("-fvisibility-inlines-hidden")
+add_gcc_compiler_cxxflags("-Wno-error=deprecated-enum-enum-conversion -Wno-error=deprecated -Wno-error=deprecated-declarations ")
 
 if(CMAKE_BUILD_TYPE_LOWER STREQUAL "debug")
     check_add_gcc_compiler_flag("-Wshadow-compatible-local")
@@ -301,7 +302,7 @@ if(CMAKE_BUILD_TYPE_LOWER STREQUAL "debug")
     add_gcc_compiler_flags("-Werror")
     # This is needed since compiling aginst Botan3 requires compiling against C++20
     if(KPXC_DEV_BOTAN3)
-        add_gcc_compiler_cxxflags("-Wno-error=deprecated-enum-enum-conversion -Wno-error=deprecated")
+        add_gcc_compiler_cxxflags("-Wno-error=deprecated-enum-enum-conversion -Wno-error=deprecated -Wno-error=deprecated-declarations ")
     endif()
 endif()
 

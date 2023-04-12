@@ -43,18 +43,18 @@ int Move::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
 
     Entry* entry = database->rootGroup()->findEntryByPath(entryPath);
     if (!entry) {
-        err << QObject::tr("Could not find entry with path %1.").arg(entryPath) << endl;
+        err << QObject::tr("Could not find entry with path %1.").arg(entryPath) << Qt::endl;
         return EXIT_FAILURE;
     }
 
     Group* destinationGroup = database->rootGroup()->findGroupByPath(destinationPath);
     if (!destinationGroup) {
-        err << QObject::tr("Could not find group with path %1.").arg(destinationPath) << endl;
+        err << QObject::tr("Could not find group with path %1.").arg(destinationPath) << Qt::endl;
         return EXIT_FAILURE;
     }
 
     if (destinationGroup == entry->parent()) {
-        err << QObject::tr("Entry is already in group %1.").arg(destinationPath) << endl;
+        err << QObject::tr("Entry is already in group %1.").arg(destinationPath) << Qt::endl;
         return EXIT_FAILURE;
     }
 
@@ -64,10 +64,10 @@ int Move::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
 
     QString errorMessage;
     if (!database->save(Database::Atomic, {}, &errorMessage)) {
-        err << QObject::tr("Writing the database failed %1.").arg(errorMessage) << endl;
+        err << QObject::tr("Writing the database failed %1.").arg(errorMessage) << Qt::endl;
         return EXIT_FAILURE;
     }
 
-    out << QObject::tr("Successfully moved entry %1 to group %2.").arg(entry->title(), destinationPath) << endl;
+    out << QObject::tr("Successfully moved entry %1 to group %2.").arg(entry->title(), destinationPath) << Qt::endl;
     return EXIT_SUCCESS;
 }

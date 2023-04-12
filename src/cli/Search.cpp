@@ -40,12 +40,12 @@ int Search::executeWithDatabase(QSharedPointer<Database> database, QSharedPointe
     EntrySearcher searcher;
     auto results = searcher.search(args.at(1), database->rootGroup(), true);
     if (results.isEmpty()) {
-        err << "No results for that search term." << endl;
+        err << "No results for that search term." << Qt::endl;
         return EXIT_FAILURE;
     }
 
     for (const Entry* result : asConst(results)) {
-        out << result->path().prepend('/') << endl;
+        out << result->path().prepend('/') << Qt::endl;
     }
     return EXIT_SUCCESS;
 }

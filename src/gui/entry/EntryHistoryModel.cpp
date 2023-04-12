@@ -67,7 +67,7 @@ QVariant EntryHistoryModel::data(const QModelIndex& index, int role) const
         switch (index.column()) {
         case 0:
             if (role == Qt::DisplayRole) {
-                return lastModified.toString(Qt::SystemLocaleShortDate);
+                return lastModified.toString(Qt::ISODate);
             } else {
                 return lastModified;
             }

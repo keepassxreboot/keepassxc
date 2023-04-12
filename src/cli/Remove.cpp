@@ -38,7 +38,7 @@ int Remove::executeWithDatabase(QSharedPointer<Database> database, QSharedPointe
     auto& entryPath = parser->positionalArguments().at(1);
     QPointer<Entry> entry = database->rootGroup()->findEntryByPath(entryPath);
     if (!entry) {
-        err << QObject::tr("Entry %1 not found.").arg(entryPath) << endl;
+        err << QObject::tr("Entry %1 not found.").arg(entryPath) << Qt::endl;
         return EXIT_FAILURE;
     }
 
@@ -54,14 +54,14 @@ int Remove::executeWithDatabase(QSharedPointer<Database> database, QSharedPointe
 
     QString errorMessage;
     if (!database->save(Database::Atomic, {}, &errorMessage)) {
-        err << QObject::tr("Unable to save database to file: %1").arg(errorMessage) << endl;
+        err << QObject::tr("Unable to save database to file: %1").arg(errorMessage) << Qt::endl;
         return EXIT_FAILURE;
     }
 
     if (recycled) {
-        out << QObject::tr("Successfully recycled entry %1.").arg(entryTitle) << endl;
+        out << QObject::tr("Successfully recycled entry %1.").arg(entryTitle) << Qt::endl;
     } else {
-        out << QObject::tr("Successfully deleted entry %1.").arg(entryTitle) << endl;
+        out << QObject::tr("Successfully deleted entry %1.").arg(entryTitle) << Qt::endl;
     }
 
     return EXIT_SUCCESS;

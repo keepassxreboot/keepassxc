@@ -41,7 +41,7 @@ int AttachmentRemove::executeWithDatabase(QSharedPointer<Database> database, QSh
 
     auto entry = database->rootGroup()->findEntryByPath(entryPath);
     if (!entry) {
-        err << QObject::tr("Could not find entry with path %1.").arg(entryPath) << endl;
+        err << QObject::tr("Could not find entry with path %1.").arg(entryPath) << Qt::endl;
         return EXIT_FAILURE;
     }
 
@@ -49,7 +49,7 @@ int AttachmentRemove::executeWithDatabase(QSharedPointer<Database> database, QSh
 
     auto attachments = entry->attachments();
     if (!attachments->hasKey(attachmentName)) {
-        err << QObject::tr("Could not find attachment with name %1.").arg(attachmentName) << endl;
+        err << QObject::tr("Could not find attachment with name %1.").arg(attachmentName) << Qt::endl;
         return EXIT_FAILURE;
     }
 
@@ -59,10 +59,10 @@ int AttachmentRemove::executeWithDatabase(QSharedPointer<Database> database, QSh
 
     QString errorMessage;
     if (!database->save(Database::Atomic, {}, &errorMessage)) {
-        err << QObject::tr("Writing the database failed %1.").arg(errorMessage) << endl;
+        err << QObject::tr("Writing the database failed %1.").arg(errorMessage) << Qt::endl;
         return EXIT_FAILURE;
     }
 
-    out << QObject::tr("Successfully removed attachment %1 from entry %2.").arg(attachmentName, entryPath) << endl;
+    out << QObject::tr("Successfully removed attachment %1 from entry %2.").arg(attachmentName, entryPath) << Qt::endl;
     return EXIT_SUCCESS;
 }

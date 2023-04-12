@@ -381,7 +381,7 @@ void EntryPreviewWidget::updateEntryGeneralTab()
 
     const TimeInfo entryTime = m_currentEntry->timeInfo();
     const QString expires =
-        entryTime.expires() ? entryTime.expiryTime().toLocalTime().toString(Qt::DefaultLocaleShortDate) : tr("Never");
+        entryTime.expires() ? entryTime.expiryTime().toLocalTime().toString(Qt::ISODate) : tr("Never");
     m_ui->entryExpirationLabel->setText(expires);
     m_ui->entryTagsList->tags(m_currentEntry->tagList());
     m_ui->entryTagsList->setReadOnly(true);
@@ -489,7 +489,7 @@ void EntryPreviewWidget::updateGroupGeneralTab()
 
     const TimeInfo groupTime = m_currentGroup->timeInfo();
     const QString expiresText =
-        groupTime.expires() ? groupTime.expiryTime().toString(Qt::DefaultLocaleShortDate) : tr("Never");
+        groupTime.expires() ? groupTime.expiryTime().toString(Qt::ISODate) : tr("Never");
     m_ui->groupExpirationLabel->setText(expiresText);
 
     if (config()->get(Config::Security_HideNotes).toBool()) {

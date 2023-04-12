@@ -61,7 +61,7 @@ int Import::execute(const QStringList& arguments)
     const QString& dbPath = args.at(1);
 
     if (QFileInfo::exists(dbPath)) {
-        err << QObject::tr("File %1 already exists.").arg(dbPath) << endl;
+        err << QObject::tr("File %1 already exists.").arg(dbPath) << Qt::endl;
         return EXIT_FAILURE;
     }
 
@@ -72,15 +72,15 @@ int Import::execute(const QStringList& arguments)
 
     QString errorMessage;
     if (!db->import(xmlExportPath, &errorMessage)) {
-        err << QObject::tr("Unable to import XML database: %1").arg(errorMessage) << endl;
+        err << QObject::tr("Unable to import XML database: %1").arg(errorMessage) << Qt::endl;
         return EXIT_FAILURE;
     }
 
     if (!db->saveAs(dbPath, Database::Atomic, {}, &errorMessage)) {
-        err << QObject::tr("Failed to save the database: %1.").arg(errorMessage) << endl;
+        err << QObject::tr("Failed to save the database: %1.").arg(errorMessage) << Qt::endl;
         return EXIT_FAILURE;
     }
 
-    out << QObject::tr("Successfully imported database.") << endl;
+    out << QObject::tr("Successfully imported database.") << Qt::endl;
     return EXIT_SUCCESS;
 }

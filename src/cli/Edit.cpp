@@ -66,7 +66,7 @@ int Edit::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
 
     // Cannot use those 2 options at the same time!
     if (parser->isSet(Add::GenerateOption) && parser->isSet(Add::PasswordPromptOption)) {
-        err << QObject::tr("Cannot generate a password and prompt at the same time.") << endl;
+        err << QObject::tr("Cannot generate a password and prompt at the same time.") << Qt::endl;
         return EXIT_FAILURE;
     }
 
@@ -83,7 +83,7 @@ int Edit::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
 
     Entry* entry = database->rootGroup()->findEntryByPath(entryPath);
     if (!entry) {
-        err << QObject::tr("Could not find entry with path %1.").arg(entryPath) << endl;
+        err << QObject::tr("Could not find entry with path %1.").arg(entryPath) << Qt::endl;
         return EXIT_FAILURE;
     }
 
@@ -93,7 +93,7 @@ int Edit::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
     QString title = parser->value(Edit::TitleOption);
     bool prompt = parser->isSet(Add::PasswordPromptOption);
     if (username.isEmpty() && url.isEmpty() && notes.isEmpty() && title.isEmpty() && !prompt && !generate) {
-        err << QObject::tr("Not changing any field for entry %1.").arg(entryPath) << endl;
+        err << QObject::tr("Not changing any field for entry %1.").arg(entryPath) << Qt::endl;
         return EXIT_FAILURE;
     }
 
@@ -116,7 +116,7 @@ int Edit::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
     }
 
     if (prompt) {
-        out << QObject::tr("Enter new password for entry: ") << flush;
+        out << QObject::tr("Enter new password for entry: ") << Qt::flush;
         QString password = Utils::getPassword(parser->isSet(Command::QuietOption));
         entry->setPassword(password);
     } else if (generate) {
@@ -128,10 +128,10 @@ int Edit::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
 
     QString errorMessage;
     if (!database->save(Database::Atomic, {}, &errorMessage)) {
-        err << QObject::tr("Writing the database failed: %1").arg(errorMessage) << endl;
+        err << QObject::tr("Writing the database failed: %1").arg(errorMessage) << Qt::endl;
         return EXIT_FAILURE;
     }
 
-    out << QObject::tr("Successfully edited entry %1.").arg(entry->title()) << endl;
+    out << QObject::tr("Successfully edited entry %1.").arg(entry->title()) << Qt::endl;
     return EXIT_SUCCESS;
 }

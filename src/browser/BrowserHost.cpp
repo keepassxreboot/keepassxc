@@ -47,7 +47,8 @@ BrowserHost::~BrowserHost()
 void BrowserHost::start()
 {
     if (!m_localServer->isListening()) {
-        m_localServer->listen(BrowserShared::localServerPath());
+        QString sLocPath = BrowserShared::localServerPath();
+        m_localServer->listen(sLocPath);
     }
 }
 

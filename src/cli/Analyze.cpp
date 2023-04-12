@@ -60,23 +60,23 @@ int Analyze::executeWithDatabase(QSharedPointer<Database> database, QSharedPoint
 
     auto okon = parser->value(Analyze::OkonOption);
     if (!okon.isEmpty()) {
-        out << QObject::tr("Evaluating database entries using okon…") << endl;
+        out << QObject::tr("Evaluating database entries using okon…") << Qt::endl;
 
         if (!HibpOffline::okonReport(database, okon, hibpDatabase, findings, &error)) {
-            err << error << endl;
+            err << error << Qt::endl;
             return EXIT_FAILURE;
         }
     } else {
         QFile hibpFile(hibpDatabase);
         if (!hibpFile.open(QFile::ReadOnly)) {
-            err << QObject::tr("Failed to open HIBP file %1: %2").arg(hibpDatabase).arg(hibpFile.errorString()) << endl;
+            err << QObject::tr("Failed to open HIBP file %1: %2").arg(hibpDatabase).arg(hibpFile.errorString()) << Qt::endl;
             return EXIT_FAILURE;
         }
 
-        out << QObject::tr("Evaluating database entries against HIBP file, this will take a while…") << endl;
+        out << QObject::tr("Evaluating database entries against HIBP file, this will take a while…") << Qt::endl;
 
         if (!HibpOffline::report(database, hibpFile, findings, &error)) {
-            err << error << endl;
+            err << error << Qt::endl;
             return EXIT_FAILURE;
         }
     }
@@ -91,9 +91,9 @@ int Analyze::executeWithDatabase(QSharedPointer<Database> database, QSharedPoint
         }
 
         if (count > 0) {
-            out << QObject::tr("Password for '%1' has been leaked %2 time(s)!", "", count).arg(path).arg(count) << endl;
+            out << QObject::tr("Password for '%1' has been leaked %2 time(s)!", "", count).arg(path).arg(count) << Qt::endl;
         } else {
-            out << QObject::tr("Password for '%1' has been leaked!").arg(path) << endl;
+            out << QObject::tr("Password for '%1' has been leaked!").arg(path) << Qt::endl;
         }
     }
 

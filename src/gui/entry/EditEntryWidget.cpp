@@ -1190,7 +1190,7 @@ void EditEntryWidget::acceptEntry()
 
 void EditEntryWidget::updateEntryData(Entry* entry) const
 {
-    QRegularExpression newLineRegex("(?:\r?\n|\r)");
+    static const QRegularExpression newLineRegex("(?:\r?\n|\r)");
 
     entry->attributes()->copyCustomKeysFrom(m_entryAttributes);
     entry->attachments()->copyDataFrom(m_attachments.data());
@@ -1201,7 +1201,9 @@ void EditEntryWidget::updateEntryData(Entry* entry) const
     entry->setPassword(m_mainUi->passwordEdit->text());
     entry->setExpires(m_mainUi->expireCheck->isChecked());
     entry->setExpiryTime(m_mainUi->expireDatePicker->dateTime().toUTC());
-    entry->setTags(m_mainUi->tagsList->tags().toSet().toList().join(";")); // remove repeated tags
+    auto setTags = m_mainUi->tagsList->tags();
+    QSet<QString> theSet(setTags.begin(), setTags.end());
+    entry->setTags(theSet.values().join(";")); // remove repeated tags
 
     entry->setNotes(m_mainUi->notesEdit->toPlainText());
 

@@ -111,22 +111,22 @@ namespace Utils
 
         QFileInfo dbFileInfo(databaseFilename);
         if (dbFileInfo.canonicalFilePath().isEmpty()) {
-            err << QObject::tr("Failed to open database file %1: not found").arg(databaseFilename) << endl;
+            err << QObject::tr("Failed to open database file %1: not found").arg(databaseFilename) << Qt::endl;
             return {};
         }
 
         if (!dbFileInfo.isFile()) {
-            err << QObject::tr("Failed to open database file %1: not a plain file").arg(databaseFilename) << endl;
+            err << QObject::tr("Failed to open database file %1: not a plain file").arg(databaseFilename) << Qt::endl;
             return {};
         }
 
         if (!dbFileInfo.isReadable()) {
-            err << QObject::tr("Failed to open database file %1: not readable").arg(databaseFilename) << endl;
+            err << QObject::tr("Failed to open database file %1: not readable").arg(databaseFilename) << Qt::endl;
             return {};
         }
 
         if (isPasswordProtected) {
-            err << QObject::tr("Enter password to unlock %1: ").arg(databaseFilename) << flush;
+            err << QObject::tr("Enter password to unlock %1: ").arg(databaseFilename) << Qt::flush;
             QString line = Utils::getPassword(quiet);
             auto passwordKey = QSharedPointer<PasswordKey>::create();
             passwordKey->setPassword(line);
@@ -138,7 +138,7 @@ namespace Utils
             QString errorMessage;
             // LCOV_EXCL_START
             if (!fileKey->load(keyFilename, &errorMessage)) {
-                err << QObject::tr("Failed to load key file %1: %2").arg(keyFilename, errorMessage) << endl;
+                err << QObject::tr("Failed to load key file %1: %2").arg(keyFilename, errorMessage) << Qt::endl;
                 return {};
             }
 
@@ -146,7 +146,7 @@ namespace Utils
                 err << QObject::tr("WARNING: You are using an old key file format which KeePassXC may\n"
                                    "stop supporting in the future.\n\n"
                                    "Please consider generating a new key file.")
-                    << endl;
+                    << Qt::endl;
             }
             // LCOV_EXCL_STOP
 
@@ -193,7 +193,7 @@ namespace Utils
         if (db->open(databaseFilename, compositeKey, &error)) {
             return db;
         } else {
-            err << error << endl;
+            err << error << Qt::endl;
             return {};
         }
     }
@@ -218,7 +218,7 @@ namespace Utils
         setStdinEcho(false);
         QString line = in.readLine();
         setStdinEcho(true);
-        out << endl;
+        out << Qt::endl;
 
         return line;
 #endif // __AFL_COMPILER
@@ -248,7 +248,7 @@ namespace Utils
             if (ans.toLower().startsWith("y")) {
                 passwordKey = QSharedPointer<PasswordKey>::create("");
             }
-            err << endl;
+            err << Qt::endl;
         } else {
             err << QObject::tr("Repeat password: ");
             err.flush();
@@ -257,7 +257,7 @@ namespace Utils
             if (password == repeat) {
                 passwordKey = QSharedPointer<PasswordKey>::create(password);
             } else {
-                err << QObject::tr("Error: Passwords do not match.") << endl;
+                err << QObject::tr("Error: Passwords do not match.") << Qt::endl;
             }
         }
 
@@ -303,7 +303,7 @@ namespace Utils
             QScopedPointer<QProcess> clipProcess(new QProcess(nullptr));
 
             // Skip empty parts, otherwise the program may clip the empty string
-            QStringList progArgs = prog.second.split(" ", QString::SkipEmptyParts);
+            QStringList progArgs = prog.second.split(" ", Qt::SkipEmptyParts);
 
             clipProcess->start(prog.first, progArgs);
             clipProcess->waitForStarted();
@@ -425,13 +425,13 @@ namespace Utils
             fileKey->create(path, &error);
 
             if (!error.isEmpty()) {
-                err << QObject::tr("Creating KeyFile %1 failed: %2").arg(path, error) << endl;
+                err << QObject::tr("Creating KeyFile %1 failed: %2").arg(path, error) << Qt::endl;
                 return false;
             }
         }
 
         if (!fileKey->load(path, &error)) {
-            err << QObject::tr("Loading KeyFile %1 failed: %2").arg(path, error) << endl;
+            err << QObject::tr("Loading KeyFile %1 failed: %2").arg(path, error) << Qt::endl;
             return false;
         }
 

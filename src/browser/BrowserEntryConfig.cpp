@@ -34,22 +34,22 @@ BrowserEntryConfig::BrowserEntryConfig(QObject* parent)
 
 QStringList BrowserEntryConfig::allowedHosts() const
 {
-    return m_allowedHosts.toList();
+    return m_allowedHosts.values();
 }
 
 void BrowserEntryConfig::setAllowedHosts(const QStringList& allowedHosts)
 {
-    m_allowedHosts = allowedHosts.toSet();
+    m_allowedHosts = QSet<QString>(allowedHosts.begin(),allowedHosts.end());
 }
 
 QStringList BrowserEntryConfig::deniedHosts() const
 {
-    return m_deniedHosts.toList();
+    return m_deniedHosts.values();
 }
 
 void BrowserEntryConfig::setDeniedHosts(const QStringList& deniedHosts)
 {
-    m_deniedHosts = deniedHosts.toSet();
+    m_deniedHosts =  QSet<QString>(deniedHosts.begin(),deniedHosts.end());
 }
 
 bool BrowserEntryConfig::isAllowed(const QString& host) const

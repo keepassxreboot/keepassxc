@@ -120,7 +120,7 @@ void OpVaultReader::fillFromSectionField(Entry* entry, const QString& sectionNam
         if (kind == "date" || kind == "monthYear") {
             QDateTime date = resolveDate(kind, field.value("v"));
             if (date.isValid()) {
-                entry->attributes()->set(attrName, date.toString(Qt::SystemLocaleShortDate));
+                entry->attributes()->set(attrName, date.toString(Qt::ISODate));
             } else {
                 qWarning()
                     << QString("[%1] Invalid date attribute found: %2 = %3").arg(entry->title(), attrName, attrValue);

@@ -146,7 +146,7 @@ private:
     int sortPriority(const QStringList& urls, const QString& siteUrl, const QString& formUrl);
     bool schemeFound(const QString& url);
     bool isIpAddress(const QString& host) const;
-    bool removeFirstDomain(QString& hostname);
+    bool removeFirstDomain(QString& hostname) const;
     bool
     shouldIncludeEntry(Entry* entry, const QString& url, const QString& submitUrl, const bool omitWwwSubdomain = false);
     bool handleURL(const QString& entryUrl,

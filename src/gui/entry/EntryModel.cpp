@@ -23,11 +23,12 @@
 
 #include "core/Entry.h"
 #include "core/Group.h"
-#include "core/Metadata.h"
+//#include "core/Metadata.h"
 #include "core/PasswordHealth.h"
 #include "gui/DatabaseIcons.h"
 #include "gui/Icons.h"
 #include "gui/styles/StateColorPalette.h"
+//#include "qlocale.h"
 #ifdef Q_OS_MACOS
 #include "gui/osutils/macutils/MacUtils.h"
 #endif
@@ -36,7 +37,7 @@ EntryModel::EntryModel(QObject* parent)
     : QAbstractTableModel(parent)
     , m_group(nullptr)
     , HiddenContentDisplay(QString("\u25cf").repeated(6))
-    , DateFormat(Qt::DefaultLocaleShortDate)
+    , DateFormat( Qt::ISODate )
 {
     connect(config(), &Config::changed, this, &EntryModel::onConfigChanged);
 }
@@ -245,7 +246,7 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
         }
         case Expires:
             // There seems to be no better way of expressing 'infinity'
-            return entry->timeInfo().expires() ? entry->timeInfo().expiryTime() : QDateTime(QDate(9999, 1, 1));
+            return entry->timeInfo().expires() ? entry->timeInfo().expiryTime() : QDate(9999, 1, 1).startOfDay();
         case Created:
             return entry->timeInfo().creationTime();
         case Modified:

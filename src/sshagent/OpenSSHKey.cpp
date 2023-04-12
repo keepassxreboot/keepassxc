@@ -20,7 +20,7 @@
 
 #include "ASN1Key.h"
 #include "BinaryStream.h"
-#include "crypto/Random.h"
+//#include "crypto/Random.h"
 #include "crypto/SymmetricCipher.h"
 
 #include <QRegularExpression>
@@ -226,7 +226,8 @@ void OpenSSHKey::clearPrivate()
 bool OpenSSHKey::extractPEM(const QByteArray& in, QByteArray& out)
 {
     QString pem = QString::fromLatin1(in);
-    QStringList rows = pem.split(QRegularExpression("(?:\r?\n|\r)"), QString::SkipEmptyParts);
+    static const QRegularExpression  RE("(?:\r?\n|\r)");
+    QStringList rows = pem.split(RE, Qt::SkipEmptyParts);
 
     if (rows.length() < 3) {
         m_error = tr("Invalid key file, expecting an OpenSSH key");
@@ -236,8 +237,10 @@ bool OpenSSHKey::extractPEM(const QByteArray& in, QByteArray& out)
     QString begin = rows.first();
     QString end = rows.last();
 
-    QRegularExpressionMatch beginMatch = QRegularExpression("^-----BEGIN ([^\\-]+)-----$").match(begin);
-    QRegularExpressionMatch endMatch = QRegularExpression("^-----END ([^\\-]+)-----$").match(end);
+    static const QRegularExpression staticBegMatch("^-----BEGIN ([^\\-]+)-----$");
+    static const QRegularExpression staticEndMatch("^-----END ([^\\-]+)-----$");
+    QRegularExpressionMatch beginMatch = QRegularExpression(staticBegMatch).match(begin);
+    QRegularExpressionMatch endMatch = QRegularExpression(staticEndMatch).match(end);
 
     if (!beginMatch.hasMatch() || !endMatch.hasMatch()) {
         m_error = tr("Invalid key file, expecting an OpenSSH key");

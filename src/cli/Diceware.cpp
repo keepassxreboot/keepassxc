@@ -58,7 +58,7 @@ int Diceware::execute(const QStringList& arguments)
     if (wordCount.isEmpty()) {
         dicewareGenerator.setWordCount(PassphraseGenerator::DefaultWordCount);
     } else if (wordCount.toInt() <= 0) {
-        err << QObject::tr("Invalid word count %1").arg(wordCount) << endl;
+        err << QObject::tr("Invalid word count %1").arg(wordCount) << Qt::endl;
         return EXIT_FAILURE;
     } else {
         dicewareGenerator.setWordCount(wordCount.toInt());
@@ -72,12 +72,12 @@ int Diceware::execute(const QStringList& arguments)
     if (!dicewareGenerator.isValid()) {
         // We already validated the word count input so if the generator is invalid, it
         // must be because the word list is too small.
-        err << QObject::tr("The word list is too small (< 1000 items)") << endl;
+        err << QObject::tr("The word list is too small (< 1000 items)") << Qt::endl;
         return EXIT_FAILURE;
     }
 
     QString password = dicewareGenerator.generatePassphrase();
-    out << password << endl;
+    out << password << Qt::endl;
 
     return EXIT_SUCCESS;
 }

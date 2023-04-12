@@ -46,7 +46,7 @@ int Export::executeWithDatabase(QSharedPointer<Database> database, QSharedPointe
         QByteArray xmlData;
         QString errorMessage;
         if (!database->extract(xmlData, &errorMessage)) {
-            err << QObject::tr("Unable to export database to XML: %1").arg(errorMessage) << endl;
+            err << QObject::tr("Unable to export database to XML: %1").arg(errorMessage) << Qt::endl;
             return EXIT_FAILURE;
         }
         out.write(xmlData.constData());
@@ -54,7 +54,7 @@ int Export::executeWithDatabase(QSharedPointer<Database> database, QSharedPointe
         CsvExporter csvExporter;
         out << csvExporter.exportDatabase(database);
     } else {
-        err << QObject::tr("Unsupported format %1").arg(format) << endl;
+        err << QObject::tr("Unsupported format %1").arg(format) << Qt::endl;
         return EXIT_FAILURE;
     }
 

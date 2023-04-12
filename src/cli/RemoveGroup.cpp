@@ -42,12 +42,12 @@ int RemoveGroup::executeWithDatabase(QSharedPointer<Database> database, QSharedP
     // Recursive option means were looking for a group to remove.
     QPointer<Group> group = database->rootGroup()->findGroupByPath(groupPath);
     if (!group) {
-        err << QObject::tr("Group %1 not found.").arg(groupPath) << endl;
+        err << QObject::tr("Group %1 not found.").arg(groupPath) << Qt::endl;
         return EXIT_FAILURE;
     }
 
     if (group == database->rootGroup()) {
-        err << QObject::tr("Cannot remove root group from database.") << endl;
+        err << QObject::tr("Cannot remove root group from database.") << Qt::endl;
         return EXIT_FAILURE;
     }
 
@@ -62,14 +62,14 @@ int RemoveGroup::executeWithDatabase(QSharedPointer<Database> database, QSharedP
 
     QString errorMessage;
     if (!database->save(Database::Atomic, {}, &errorMessage)) {
-        err << QObject::tr("Unable to save database to file: %1").arg(errorMessage) << endl;
+        err << QObject::tr("Unable to save database to file: %1").arg(errorMessage) << Qt::endl;
         return EXIT_FAILURE;
     }
 
     if (recycled) {
-        out << QObject::tr("Successfully recycled group %1.").arg(groupPath) << endl;
+        out << QObject::tr("Successfully recycled group %1.").arg(groupPath) << Qt::endl;
     } else {
-        out << QObject::tr("Successfully deleted group %1.").arg(groupPath) << endl;
+        out << QObject::tr("Successfully deleted group %1.").arg(groupPath) << Qt::endl;
     }
 
     return EXIT_SUCCESS;

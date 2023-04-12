@@ -922,7 +922,8 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
         }
 
         if (launch) {
-            QProcess::startDetached(cmdString.mid(6));
+            static const QStringList empytStringList;
+            QProcess::startDetached(cmdString.mid(6), empytStringList);
 
             if (config()->get(Config::MinimizeOnOpenUrl).toBool()) {
                 getMainWindow()->minimizeOrHide();
@@ -2021,6 +2022,7 @@ bool DatabaseWidget::saveAs()
 {
     // Never allow saving a locked database; it causes corruption
     Q_ASSERT(!isLocked());
+
     // Release build interlock
     if (isLocked()) {
         // We return true since a save is not required
@@ -2034,8 +2036,9 @@ bool DatabaseWidget::saveAs()
             QDir::toNativeSeparators(config()->get(Config::LastDir).toString() + "/"
                                      + (defaultFileName.isEmpty() ? tr("Passwords").append(".kdbx") : defaultFileName));
     }
+    const QFileDialog::Options options;
     const QString newFilePath = fileDialog()->getSaveFileName(
-        this, tr("Save database as"), oldFilePath, tr("KeePass 2 Database").append(" (*.kdbx)"), nullptr, nullptr);
+        this, tr("Save database as"), oldFilePath, tr("KeePass 2 Database").append(" (*.kdbx)"), nullptr, options );
 
     bool ok = false;
     if (!newFilePath.isEmpty()) {
@@ -2125,12 +2128,14 @@ bool DatabaseWidget::saveBackup()
                 + (defaultFileName.isEmpty() ? tr("Passwords").append(".kdbx") : defaultFileName));
         }
 
+        const QFileDialog::Options options2;
+
         const QString newFilePath = fileDialog()->getSaveFileName(this,
                                                                   tr("Save database backup"),
                                                                   FileDialog::getLastDir("backup"),
                                                                   tr("KeePass 2 Database").append(" (*.kdbx)"),
                                                                   nullptr,
-                                                                  nullptr);
+                                                                  options2);
 
         if (!newFilePath.isEmpty()) {
             // Ensure we don't recurse back into this function

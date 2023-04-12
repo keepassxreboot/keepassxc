@@ -87,8 +87,8 @@ void ReportsWidgetStatistics::calculateStats()
     addStatsRow(tr("Description"), m_db->metadata()->description());
     addStatsRow(tr("Location"), m_db->filePath());
     addStatsRow(tr("Database created"),
-                m_db->rootGroup()->timeInfo().creationTime().toString(Qt::DefaultLocaleShortDate));
-    addStatsRow(tr("Last saved"), stats->modified.toString(Qt::DefaultLocaleShortDate));
+                m_db->rootGroup()->timeInfo().creationTime().toString(Qt::ISODate));
+    addStatsRow(tr("Last saved"), stats->modified.toString(Qt::ISODate));
     addStatsRow(tr("Unsaved changes"),
                 m_db->isModified() ? tr("yes") : tr("no"),
                 m_db->isModified(),

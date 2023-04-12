@@ -70,13 +70,13 @@ QSharedPointer<Database> DatabaseCreate::initializeDatabaseFromOptions(const QSh
     if (decryptionTimeValue.length() != 0) {
         decryptionTime = decryptionTimeValue.toInt();
         if (decryptionTime <= 0) {
-            err << QObject::tr("Invalid decryption time %1.").arg(decryptionTimeValue) << endl;
+            err << QObject::tr("Invalid decryption time %1.").arg(decryptionTimeValue) << Qt::endl;
             return {};
         }
         if (decryptionTime < Kdf::MIN_ENCRYPTION_TIME || decryptionTime > Kdf::MAX_ENCRYPTION_TIME) {
             err << QObject::tr("Target decryption time must be between %1 and %2.")
                        .arg(QString::number(Kdf::MIN_ENCRYPTION_TIME), QString::number(Kdf::MAX_ENCRYPTION_TIME))
-                << endl;
+                << Qt::endl;
             return {};
         }
     }
@@ -86,7 +86,7 @@ QSharedPointer<Database> DatabaseCreate::initializeDatabaseFromOptions(const QSh
     if (parser->isSet(DatabaseCreate::SetPasswordOption)) {
         auto passwordKey = Utils::getConfirmedPassword();
         if (passwordKey.isNull()) {
-            err << QObject::tr("Failed to set database password.") << endl;
+            err << QObject::tr("Failed to set database password.") << Qt::endl;
             return {};
         }
         key->addKey(passwordKey);
@@ -104,7 +104,7 @@ QSharedPointer<Database> DatabaseCreate::initializeDatabaseFromOptions(const QSh
         }
 
         if (!Utils::loadFileKey(keyFilePath, fileKey)) {
-            err << QObject::tr("Loading the key file failed") << endl;
+            err << QObject::tr("Loading the key file failed") << Qt::endl;
             return {};
         }
 
@@ -114,7 +114,7 @@ QSharedPointer<Database> DatabaseCreate::initializeDatabaseFromOptions(const QSh
     }
 
     if (key->isEmpty()) {
-        err << QObject::tr("No key is set. Aborting database creation.") << endl;
+        err << QObject::tr("No key is set. Aborting database creation.") << Qt::endl;
         return {};
     }
 
@@ -125,15 +125,15 @@ QSharedPointer<Database> DatabaseCreate::initializeDatabaseFromOptions(const QSh
         auto kdf = db->kdf();
         Q_ASSERT(kdf);
 
-        out << QObject::tr("Benchmarking key derivation function for %1ms delay.").arg(decryptionTimeValue) << endl;
+        out << QObject::tr("Benchmarking key derivation function for %1ms delay.").arg(decryptionTimeValue) << Qt::endl;
         int rounds = kdf->benchmark(decryptionTime);
-        out << QObject::tr("Setting %1 rounds for key derivation function.").arg(QString::number(rounds)) << endl;
+        out << QObject::tr("Setting %1 rounds for key derivation function.").arg(QString::number(rounds)) << Qt::endl;
         kdf->setRounds(rounds);
 
         bool ok = db->changeKdf(kdf);
 
         if (!ok) {
-            err << QObject::tr("error while setting database key derivation settings.") << endl;
+            err << QObject::tr("error while setting database key derivation settings.") << Qt::endl;
             return {};
         }
     }
@@ -168,7 +168,7 @@ int DatabaseCreate::execute(const QStringList& arguments)
 
     const QString& databaseFilename = args.at(0);
     if (QFileInfo::exists(databaseFilename)) {
-        err << QObject::tr("File %1 already exists.").arg(databaseFilename) << endl;
+        err << QObject::tr("File %1 already exists.").arg(databaseFilename) << Qt::endl;
         return EXIT_FAILURE;
     }
 
@@ -179,10 +179,10 @@ int DatabaseCreate::execute(const QStringList& arguments)
 
     QString errorMessage;
     if (!db->saveAs(databaseFilename, Database::Atomic, {}, &errorMessage)) {
-        err << QObject::tr("Failed to save the database: %1.").arg(errorMessage) << endl;
+        err << QObject::tr("Failed to save the database: %1.").arg(errorMessage) << Qt::endl;
         return EXIT_FAILURE;
     }
 
-    out << QObject::tr("Successfully created new database.") << endl;
+    out << QObject::tr("Successfully created new database.") << Qt::endl;
     return EXIT_SUCCESS;
 }

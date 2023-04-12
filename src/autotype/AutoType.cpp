@@ -457,7 +457,8 @@ void AutoType::performGlobalAutoType(const QList<QSharedPointer<Database>>& dbLi
             if (hideExpired && entry->isExpired()) {
                 continue;
             }
-            auto sequences = entry->autoTypeSequences(m_windowTitleForGlobal).toSet();
+            auto seq1 = entry->autoTypeSequences(m_windowTitleForGlobal);
+            auto sequences = QSet<QString>(seq1.begin(), seq1.end());
             for (const auto& sequence : sequences) {
                 matchList << AutoTypeMatch(entry, sequence);
             }

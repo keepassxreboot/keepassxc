@@ -569,7 +569,7 @@ QString BrowserService::storeKey(const QString& key)
     hideWindow();
     db->metadata()->customData()->set(CustomData::BrowserKeyPrefix + id, key);
     db->metadata()->customData()->set(QString("%1_%2").arg(CustomData::Created, id),
-                                      Clock::currentDateTime().toString(Qt::SystemLocaleShortDate));
+                                      Clock::currentDateTime().toString());
     return id;
 }
 
@@ -1042,7 +1042,7 @@ bool BrowserService::isIpAddress(const QString& host) const
     return address.protocol() == QAbstractSocket::IPv4Protocol || address.protocol() == QAbstractSocket::IPv6Protocol;
 }
 
-bool BrowserService::removeFirstDomain(QString& hostname)
+bool BrowserService::removeFirstDomain(QString& hostname) const
 {
     int pos = hostname.indexOf(".");
     if (pos < 0) {
@@ -1131,8 +1131,8 @@ bool BrowserService::handleURL(const QString& entryUrl,
     }
 
     // Check for illegal characters
-    QRegularExpression re("[<>\\^`{|}]");
-    if (re.match(entryUrl).hasMatch()) {
+    static const QRegularExpression RE("[<>\\^`{|}]");
+    if (RE.match(entryUrl).hasMatch()) {
         return false;
     }
 
@@ -1164,16 +1164,60 @@ QString BrowserService::getTopLevelDomainFromUrl(const QString& url) const
         return host;
     }
 
-    if (host.isEmpty() || !host.contains(qurl.topLevelDomain())) {
+    if ( host.isEmpty() ) {
         return {};
     }
 
-    // Remove the top level domain part from the hostname, e.g. https://another.example.co.uk -> https://another.example
-    host.chop(qurl.topLevelDomain().length());
-    // Split the URL and select the last part, e.g. https://another.example -> example
-    QString baseDomain = host.split('.').last();
-    // Append the top level domain back to the URL, e.g. example -> example.co.uk
-    baseDomain.append(qurl.topLevelDomain());
+    if ( !host.contains('.') )
+    {
+        if ( !qurl.authority().isEmpty() )
+            return {};
+    }
+
+    static const QStringList whiteListed = QUrl::idnWhitelist();
+
+    bool found = false;
+    int foundLength = 0;
+    QString sTLD;
+    for ( QString const &s12: whiteListed ) {
+        QString sDot15(".");
+        sDot15 += s12;
+        const int Len = sDot15.length();
+        if (Len > host.length())
+            continue;
+        if (   Len > foundLength
+            && host.right(Len) == sDot15 ) {
+            found = true;
+            foundLength = Len;
+            sTLD = sDot15;
+            //break; // cannot exit because if we found "uk", we will miss "co.uk"
+        }
+    }
+
+    QString baseDomain;
+    if ( found )  {
+        int chopped = sTLD.length();
+        host.chop( chopped );
+        QStringList listL = host.split('.');
+        baseDomain = listL.last();
+        int c2 = baseDomain.length() + 1;
+        if ( c2 + chopped <= 6)
+        {   //do the same once more
+            sTLD = QString(".") + baseDomain + sTLD;
+            host.chop(c2);
+            listL = host.split('.');
+            baseDomain = listL.last();
+        }
+        baseDomain += sTLD;
+    }else{
+        removeFirstDomain(host);
+        baseDomain = host;
+    }
+
+    if ( baseDomain.length() > 0  )
+        if (baseDomain.at(0) == '.' )
+            baseDomain = baseDomain.right(baseDomain.length()-1);
+
     return baseDomain;
 }
 

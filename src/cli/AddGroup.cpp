@@ -45,13 +45,13 @@ int AddGroup::executeWithDatabase(QSharedPointer<Database> database, QSharedPoin
 
     Group* group = database->rootGroup()->findGroupByPath(groupPath);
     if (group) {
-        err << QObject::tr("Group %1 already exists!").arg(groupPath) << endl;
+        err << QObject::tr("Group %1 already exists!").arg(groupPath) << Qt::endl;
         return EXIT_FAILURE;
     }
 
     Group* parentGroup = database->rootGroup()->findGroupByPath(parentGroupPath);
     if (!parentGroup) {
-        err << QObject::tr("Group %1 not found.").arg(parentGroupPath) << endl;
+        err << QObject::tr("Group %1 not found.").arg(parentGroupPath) << Qt::endl;
         return EXIT_FAILURE;
     }
 
@@ -62,12 +62,12 @@ int AddGroup::executeWithDatabase(QSharedPointer<Database> database, QSharedPoin
 
     QString errorMessage;
     if (!database->save(Database::Atomic, {}, &errorMessage)) {
-        err << QObject::tr("Writing the database failed %1.").arg(errorMessage) << endl;
+        err << QObject::tr("Writing the database failed %1.").arg(errorMessage) << Qt::endl;
         return EXIT_FAILURE;
     }
 
     if (!parser->isSet(Command::QuietOption)) {
-        out << QObject::tr("Successfully added group %1.").arg(groupName) << endl;
+        out << QObject::tr("Successfully added group %1.").arg(groupName) << Qt::endl;
     }
     return EXIT_SUCCESS;
 }

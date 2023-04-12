@@ -53,7 +53,7 @@ int DatabaseEdit::executeWithDatabase(QSharedPointer<Database> database, QShared
         err << QObject::tr("Cannot use %1 and %2 at the same time.")
                    .arg(DatabaseCreate::SetPasswordOption.names().at(0))
                    .arg(DatabaseEdit::UnsetPasswordOption.names().at(0))
-            << endl;
+            << Qt::endl;
         return EXIT_FAILURE;
     }
 
@@ -61,7 +61,7 @@ int DatabaseEdit::executeWithDatabase(QSharedPointer<Database> database, QShared
         err << QObject::tr("Cannot use %1 and %2 at the same time.")
                    .arg(DatabaseCreate::SetKeyFileOption.names().at(0))
                    .arg(DatabaseEdit::UnsetKeyFileOption.names().at(0))
-            << endl;
+            << Qt::endl;
         return EXIT_FAILURE;
     }
 
@@ -76,7 +76,7 @@ int DatabaseEdit::executeWithDatabase(QSharedPointer<Database> database, QShared
                                                 parser->value(DatabaseCreate::SetKeyFileOption),
                                                 parser->isSet(DatabaseEdit::UnsetKeyFileOption));
         if (newDatabaseKey.isNull()) {
-            err << QObject::tr("Could not change the database key.") << endl;
+            err << QObject::tr("Could not change the database key.") << Qt::endl;
             return EXIT_FAILURE;
         }
         database->setKey(newDatabaseKey);
@@ -84,17 +84,17 @@ int DatabaseEdit::executeWithDatabase(QSharedPointer<Database> database, QShared
     }
 
     if (!databaseWasChanged) {
-        out << QObject::tr("Database was not modified.") << endl;
+        out << QObject::tr("Database was not modified.") << Qt::endl;
         return EXIT_SUCCESS;
     }
 
     QString errorMessage;
     if (!database->save(Database::Atomic, {}, &errorMessage)) {
-        err << QObject::tr("Writing the database failed: %1").arg(errorMessage) << endl;
+        err << QObject::tr("Writing the database failed: %1").arg(errorMessage) << Qt::endl;
         return EXIT_FAILURE;
     }
 
-    out << QObject::tr("Successfully edited the database.") << endl;
+    out << QObject::tr("Successfully edited the database.") << Qt::endl;
     return EXIT_SUCCESS;
 }
 
@@ -113,19 +113,19 @@ QSharedPointer<CompositeKey> DatabaseEdit::getNewDatabaseKey(QSharedPointer<Data
     auto currentChallengeResponseKey = database->key()->getChallengeResponseKey(ChallengeResponseKey::UUID);
 
     if (removePassword && currentPasswordKey.isNull()) {
-        err << QObject::tr("Cannot remove password: The database does not have a password.") << endl;
+        err << QObject::tr("Cannot remove password: The database does not have a password.") << Qt::endl;
         return {};
     }
 
     if (removeKeyFile && currentFileKey.isNull()) {
-        err << QObject::tr("Cannot remove file key: The database does not have a file key.") << endl;
+        err << QObject::tr("Cannot remove file key: The database does not have a file key.") << Qt::endl;
         return {};
     }
 
     if (updatePassword) {
         QSharedPointer<PasswordKey> newPasswordKey = Utils::getConfirmedPassword();
         if (newPasswordKey.isNull()) {
-            err << QObject::tr("Failed to set database password.") << endl;
+            err << QObject::tr("Failed to set database password.") << Qt::endl;
             return {};
         }
         newDatabaseKey->addKey(newPasswordKey);
@@ -137,7 +137,7 @@ QSharedPointer<CompositeKey> DatabaseEdit::getNewDatabaseKey(QSharedPointer<Data
         QSharedPointer<FileKey> newFileKey = QSharedPointer<FileKey>::create();
         QString errorMessage;
         if (!Utils::loadFileKey(newFileKeyPath, newFileKey)) {
-            err << QObject::tr("Loading the new key file failed: %1").arg(errorMessage) << endl;
+            err << QObject::tr("Loading the new key file failed: %1").arg(errorMessage) << Qt::endl;
             return {};
         }
         newDatabaseKey->addKey(newFileKey);
@@ -150,13 +150,13 @@ QSharedPointer<CompositeKey> DatabaseEdit::getNewDatabaseKey(QSharedPointer<Data
     // silently removed from the database.
     for (const QSharedPointer<Key>& key : database->key()->keys()) {
         if (key->uuid() != PasswordKey::UUID && key->uuid() != FileKey::UUID) {
-            err << QObject::tr("Found unexpected Key type %1").arg(key->uuid().toString()) << endl;
+            err << QObject::tr("Found unexpected Key type %1").arg(key->uuid().toString()) << Qt::endl;
             return {};
         }
     }
     for (const QSharedPointer<ChallengeResponseKey>& key : database->key()->challengeResponseKeys()) {
         if (key->uuid() != ChallengeResponseKey::UUID) {
-            err << QObject::tr("Found unexpected Key type %1").arg(key->uuid().toString()) << endl;
+            err << QObject::tr("Found unexpected Key type %1").arg(key->uuid().toString()) << Qt::endl;
             return {};
         }
     }
@@ -166,7 +166,7 @@ QSharedPointer<CompositeKey> DatabaseEdit::getNewDatabaseKey(QSharedPointer<Data
     }
 
     if (newDatabaseKey->keys().isEmpty() && newDatabaseKey->challengeResponseKeys().isEmpty()) {
-        err << QObject::tr("Cannot remove all the keys from a database.") << endl;
+        err << QObject::tr("Cannot remove all the keys from a database.") << Qt::endl;
         return {};
     }
 
