@@ -168,7 +168,7 @@ void EditEntryWidget::setupMain()
         }
     });
 
-    connect(m_mainUi->notesEnabled, SIGNAL(toggled(bool)), this, SLOT(toggleHideNotes(bool)));
+    connect(m_mainUi->revealNotesButton, &QToolButton::clicked, this, &EditEntryWidget::toggleHideNotes);
 
     m_mainUi->expirePresets->setMenu(createPresetsMenu());
     connect(m_mainUi->expirePresets->menu(), SIGNAL(triggered(QAction*)), this, SLOT(useExpiryPreset(QAction*)));
@@ -839,7 +839,7 @@ void EditEntryWidget::useExpiryPreset(QAction* action)
 void EditEntryWidget::toggleHideNotes(bool visible)
 {
     m_mainUi->notesEdit->setVisible(visible);
-    m_mainUi->notesHint->setVisible(!visible);
+    m_mainUi->revealNotesButton->setIcon(icons()->onOffIcon("password-show", visible));
 }
 
 Entry* EditEntryWidget::currentEntry() const
@@ -898,10 +898,10 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
     m_mainUi->tagsList->completion(m_db->tagList());
     m_mainUi->expireCheck->setEnabled(!m_history);
     m_mainUi->expireDatePicker->setReadOnly(m_history);
-    m_mainUi->notesEnabled->setChecked(!config()->get(Config::Security_HideNotes).toBool());
+    m_mainUi->revealNotesButton->setIcon(icons()->onOffIcon("password-show", false));
+    m_mainUi->revealNotesButton->setVisible(config()->get(Config::Security_HideNotes).toBool());
     m_mainUi->notesEdit->setReadOnly(m_history);
     m_mainUi->notesEdit->setVisible(!config()->get(Config::Security_HideNotes).toBool());
-    m_mainUi->notesHint->setVisible(config()->get(Config::Security_HideNotes).toBool());
     if (config()->get(Config::GUI_MonospaceNotes).toBool()) {
         m_mainUi->notesEdit->setFont(Font::fixedFont());
     } else {
