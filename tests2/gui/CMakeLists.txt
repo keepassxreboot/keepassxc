@@ -13,25 +13,16 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-include_directories(
-        ${CMAKE_CURRENT_SOURCE_DIR}
-        ${CMAKE_CURRENT_BINARY_DIR})
-
 set(TEST_LIBRARIES keepassx_core)
-set(TEST_GUI_SUPPORT_SOURCES
-        main.cpp
+set(TEST_GUI_SOURCES
         ../../tests/util/TemporaryFile.cpp
+        main.cpp
         FixtureBase.cpp
-        FixtureWithDb.cpp)
-add_library(TEST_GUI_SUPPORT STATIC ${TEST_GUI_SUPPORT_SOURCES})
-target_link_libraries(TEST_GUI_SUPPORT Qt5::Core Qt5::Widgets Qt5::Test Catch2::Catch2)
+        FixtureWithDb.cpp
+        TestPassphraseGeneratorGui.cpp
+        TestTotpGui.cpp)
+add_executable(TestGui ${TEST_GUI_SOURCES})
+target_link_libraries(TestGui ${TEST_LIBRARIES} Qt5::Test Catch2::Catch2)
 
-# Add new unit tests here.
-# Naming convention: word-cased separated by a dash. Avoid naming with "test" as obvious.
-add_unit_test(NAME pass-phrase-generator-gui
-        SOURCES TestPassphraseGeneratorGui.cpp
-        LIBS TEST_GUI_SUPPORT ${TEST_LIBRARIES})
-
-add_unit_test(NAME totp-gui
-        SOURCES TestTotpGui.cpp
-        LIBS TEST_GUI_SUPPORT ${TEST_LIBRARIES})
+add_test(TEST_GUI TestGui)
+set_tests_properties(TEST_GUI PROPERTIES ENVIRONMENT "LANG=en_US.UTF-8")
