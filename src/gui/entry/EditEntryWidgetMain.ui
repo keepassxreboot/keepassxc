@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>539</width>
+    <width>400</width>
     <height>523</height>
    </rect>
   </property>
@@ -33,11 +33,11 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>539</width>
+     <width>400</width>
      <height>523</height>
     </rect>
    </property>
-   <layout class="QGridLayout" name="gridLayout">
+   <layout class="QGridLayout" name="gridLayout" columnstretch="0,1">
     <property name="leftMargin">
      <number>0</number>
     </property>
@@ -56,7 +56,37 @@
     <property name="verticalSpacing">
      <number>8</number>
     </property>
-    <item row="7" column="1">
+    <item row="0" column="1">
+     <widget class="QLineEdit" name="titleEdit">
+      <property name="accessibleName">
+       <string>Title field</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="usernameLabel">
+      <property name="text">
+       <string>&amp;Username:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+      <property name="buddy">
+       <cstring>usernameComboBox</cstring>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="PasswordWidget" name="passwordEdit" native="true">
+      <property name="focusPolicy">
+       <enum>Qt::StrongFocus</enum>
+      </property>
+      <property name="accessibleName">
+       <string>Password field</string>
+      </property>
+     </widget>
+    </item>
+    <item row="8" column="1">
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
        <widget class="QPlainTextEdit" name="notesEdit">
@@ -77,20 +107,33 @@
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QLabel" name="notesHint">
-        <property name="visible">
-         <bool>true</bool>
-        </property>
-        <property name="text">
-         <string>Toggle the checkbox to reveal the notes section.</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignTop</set>
-        </property>
-       </widget>
-      </item>
      </layout>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="titleLabel">
+      <property name="text">
+       <string>&amp;Title:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+      <property name="buddy">
+       <cstring>titleEdit</cstring>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="passwordLabel">
+      <property name="text">
+       <string>&amp;Password:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+      <property name="buddy">
+       <cstring>passwordEdit</cstring>
+      </property>
+     </widget>
     </item>
     <item row="1" column="1">
      <widget class="QComboBox" name="usernameComboBox">
@@ -99,41 +142,34 @@
       </property>
      </widget>
     </item>
-    <item row="7" column="0">
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
-       <widget class="QCheckBox" name="notesEnabled">
-        <property name="toolTip">
-         <string>Toggle notes visible</string>
-        </property>
-        <property name="accessibleName">
-         <string>Toggle notes visible</string>
-        </property>
-        <property name="text">
-         <string>Notes:</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="verticalSpacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-     </layout>
+    <item row="5" column="1">
+     <widget class="TagsEdit" name="tagsList" native="true">
+      <property name="focusPolicy">
+       <enum>Qt::StrongFocus</enum>
+      </property>
+      <property name="accessibleName">
+       <string>Tags list</string>
+      </property>
+     </widget>
     </item>
-    <item row="6" column="1">
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <item row="7" column="1">
+     <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,1,0">
       <property name="spacing">
        <number>8</number>
       </property>
+      <item>
+       <widget class="QCheckBox" name="expireCheck">
+        <property name="toolTip">
+         <string>Toggle expiration</string>
+        </property>
+        <property name="accessibleName">
+         <string>Toggle expiration</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
       <item>
        <widget class="QDateTimeEdit" name="expireDatePicker">
         <property name="enabled">
@@ -168,23 +204,16 @@
       </item>
      </layout>
     </item>
-    <item row="2" column="0">
-     <widget class="QLabel" name="passwordLabel">
-      <property name="text">
-       <string>Password:</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-      </property>
-     </widget>
-    </item>
     <item row="3" column="0">
      <widget class="QLabel" name="urlLabel">
       <property name="text">
-       <string>URL:</string>
+       <string>UR&amp;L:</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+      <property name="buddy">
+       <cstring>urlEdit</cstring>
       </property>
      </widget>
     </item>
@@ -215,80 +244,98 @@
       </item>
      </layout>
     </item>
-    <item row="0" column="0">
-     <widget class="QLabel" name="titleLabel">
-      <property name="text">
-       <string>Title:</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1">
-     <widget class="QLineEdit" name="titleEdit">
-      <property name="accessibleName">
-       <string>Title field</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="usernameLabel">
-      <property name="text">
-       <string>Username:</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="1">
-     <widget class="PasswordWidget" name="passwordEdit" native="true">
-      <property name="focusPolicy">
-       <enum>Qt::StrongFocus</enum>
-      </property>
-      <property name="accessibleName">
-       <string>Password field</string>
-      </property>
-     </widget>
-    </item>
-    <item row="6" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <property name="spacing">
-       <number>0</number>
-      </property>
+    <item row="8" column="0">
+     <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QCheckBox" name="expireCheck">
-        <property name="toolTip">
-         <string>Toggle expiration</string>
-        </property>
-        <property name="accessibleName">
-         <string>Toggle expiration</string>
-        </property>
+       <widget class="QLabel" name="notesLabel">
         <property name="text">
-         <string>Expires:</string>
+         <string>&amp;Notes:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+        <property name="buddy">
+         <cstring>notesEdit</cstring>
         </property>
        </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <property name="topMargin">
+         <number>6</number>
+        </property>
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>5</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QToolButton" name="revealNotesButton">
+          <property name="toolTip">
+           <string>Toggle notes visibility</string>
+          </property>
+          <property name="accessibleName">
+           <string>Toggle notes visibility</string>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>14</width>
+            <height>14</height>
+           </size>
+          </property>
+          <property name="checkable">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <spacer name="verticalSpacer">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
       </item>
      </layout>
     </item>
     <item row="5" column="0">
      <widget class="QLabel" name="tagsLabel">
       <property name="text">
-       <string>Tags:</string>
+       <string>T&amp;ags:</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
       </property>
+      <property name="buddy">
+       <cstring>tagsList</cstring>
+      </property>
      </widget>
     </item>
-    <item row="5" column="1">
-     <widget class="TagsEdit" name="tagsList" native="true">
-      <property name="focusPolicy">
-       <enum>Qt::StrongFocus</enum>
+    <item row="7" column="0">
+     <widget class="QLabel" name="expireLabel">
+      <property name="text">
+       <string>&amp;Expires:</string>
       </property>
-      <property name="accessibleName">
-       <string>Tags list</string>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+      <property name="buddy">
+       <cstring>expireCheck</cstring>
       </property>
      </widget>
     </item>
@@ -325,7 +372,7 @@
   <tabstop>expireCheck</tabstop>
   <tabstop>expireDatePicker</tabstop>
   <tabstop>expirePresets</tabstop>
-  <tabstop>notesEnabled</tabstop>
+  <tabstop>revealNotesButton</tabstop>
   <tabstop>notesEdit</tabstop>
  </tabstops>
  <resources/>

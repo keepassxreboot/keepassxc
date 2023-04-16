@@ -146,6 +146,9 @@ MainWindow::MainWindow()
     m_entryContextMenu->addAction(m_ui->actionEntryOpenUrl);
     m_entryContextMenu->addAction(m_ui->actionEntryDownloadIcon);
     m_entryContextMenu->addSeparator();
+    m_entryContextMenu->addAction(m_ui->actionEntryAddToAgent);
+    m_entryContextMenu->addAction(m_ui->actionEntryRemoveFromAgent);
+    m_entryContextMenu->addSeparator();
     m_entryContextMenu->addAction(m_ui->actionEntryRestore);
 
     m_entryNewContextMenu = new QMenu(this);
@@ -192,17 +195,7 @@ MainWindow::MainWindow()
     connect(sshAgent(), SIGNAL(error(QString)), this, SLOT(showErrorMessage(QString)));
     connect(sshAgent(), SIGNAL(enabledChanged(bool)), this, SLOT(agentEnabled(bool)));
     m_ui->settingsWidget->addSettingsPage(new AgentSettingsPage());
-
-    m_entryContextMenu->addSeparator();
-    m_entryContextMenu->addAction(m_ui->actionEntryAddToAgent);
-    m_entryContextMenu->addAction(m_ui->actionEntryRemoveFromAgent);
-
-    m_ui->actionEntryAddToAgent->setIcon(icons()->icon("utilities-terminal"));
-    m_ui->actionEntryRemoveFromAgent->setIcon(icons()->icon("utilities-terminal"));
 #endif
-
-    m_ui->actionEntryAddToAgent->setVisible(false);
-    m_ui->actionEntryRemoveFromAgent->setVisible(false);
 
     initViewMenu();
 
@@ -289,6 +282,7 @@ MainWindow::MainWindow()
     m_ui->actionEntryMoveDown->setShortcut(Qt::CTRL + Qt::ALT + Qt::Key_Down);
     m_ui->actionEntryCopyUsername->setShortcut(Qt::CTRL + Qt::Key_B);
     m_ui->actionEntryCopyPassword->setShortcut(Qt::CTRL + Qt::Key_C);
+    m_ui->actionEntryCopyTitle->setShortcut(Qt::CTRL + Qt::Key_I);
     m_ui->actionEntryAutoTypeSequence->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_V);
     m_ui->actionEntryOpenUrl->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_U);
     m_ui->actionEntryCopyURL->setShortcut(Qt::CTRL + Qt::Key_U);
@@ -322,6 +316,7 @@ MainWindow::MainWindow()
     m_ui->actionEntryAutoTypeSequence->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryOpenUrl->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryCopyURL->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryCopyTitle->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryAddToAgent->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryRemoveFromAgent->setShortcutVisibleInContextMenu(true);
 #endif
@@ -416,6 +411,8 @@ MainWindow::MainWindow()
     m_ui->actionEntryCopyPasswordTotp->setIcon(icons()->icon("totp-copy-password"));
     m_ui->actionEntryTotpQRCode->setIcon(icons()->icon("qrcode"));
     m_ui->actionEntrySetupTotp->setIcon(icons()->icon("totp-edit"));
+    m_ui->actionEntryAddToAgent->setIcon(icons()->icon("utilities-terminal"));
+    m_ui->actionEntryRemoveFromAgent->setIcon(icons()->icon("utilities-terminal"));
     m_ui->menuTags->setIcon(icons()->icon("tag-multiple"));
     m_ui->actionEntryDownloadIcon->setIcon(icons()->icon("favicon-download"));
     m_ui->actionGroupSortAsc->setIcon(icons()->icon("sort-alphabetical-ascending"));
@@ -695,6 +692,7 @@ MainWindow::MainWindow()
     statusBar()->addPermanentWidget(m_statusBarLabel);
 
     restoreConfigState();
+    setMenuActionState();
 }
 
 MainWindow::~MainWindow()
@@ -885,6 +883,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
     bool inWelcomeWidget = (currentIndex == WelcomeScreen);
     bool inDatabaseTabWidgetOrWelcomeWidget = inDatabaseTabWidget || inWelcomeWidget;
 
+    m_ui->actionDatabaseClose->setEnabled(true);
     m_ui->actionDatabaseMerge->setEnabled(inDatabaseTabWidget);
     m_ui->actionDatabaseNew->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
     m_ui->actionDatabaseOpen->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
@@ -1042,6 +1041,13 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             // Only disable the action in the database menu so that the
             // menu remains active in the toolbar, if necessary
             m_ui->actionLockDatabase->setEnabled(false);
+            // Never show in these modes
+            m_ui->actionEntryMoveUp->setVisible(false);
+            m_ui->actionEntryMoveDown->setVisible(false);
+            m_ui->actionEntryRestore->setVisible(false);
+            m_ui->actionEntryAddToAgent->setVisible(false);
+            m_ui->actionEntryRemoveFromAgent->setVisible(false);
+            m_ui->actionGroupEmptyRecycleBin->setVisible(false);
 
             m_searchWidgetAction->setEnabled(false);
             break;
@@ -1049,7 +1055,6 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         default:
             Q_ASSERT(false);
         }
-        m_ui->actionDatabaseClose->setEnabled(true);
     } else {
         const auto entryActions = m_ui->menuEntries->actions();
         for (auto action : entryActions) {
@@ -1072,6 +1077,13 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         m_ui->actionExportCsv->setEnabled(false);
         m_ui->actionExportHtml->setEnabled(false);
         m_ui->actionDatabaseMerge->setEnabled(false);
+        // Hide entry-specific actions
+        m_ui->actionEntryMoveUp->setVisible(false);
+        m_ui->actionEntryMoveDown->setVisible(false);
+        m_ui->actionEntryRestore->setVisible(false);
+        m_ui->actionEntryAddToAgent->setVisible(false);
+        m_ui->actionEntryRemoveFromAgent->setVisible(false);
+        m_ui->actionGroupEmptyRecycleBin->setVisible(false);
 
         m_searchWidgetAction->setEnabled(false);
     }
@@ -1415,7 +1427,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
             } else if (event->key() == Qt::Key_F2) {
                 dbWidget->focusOnEntries(true);
                 return;
-            } else if (event->key() == Qt::Key_F3) {
+            } else if (event->key() == Qt::Key_F3 || event->key() == Qt::Key_F6) {
                 focusSearchWidget();
                 return;
             } else if (event->key() == Qt::Key_Escape && dbWidget->isSearchActive()) {

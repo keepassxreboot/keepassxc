@@ -2896,19 +2896,7 @@ Would you like to correct it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Toggle the checkbox to reveal the notes section.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Username field</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Toggle notes visible</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Notes:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2928,14 +2916,6 @@ Would you like to correct it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Password:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>URL:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Url field</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2944,15 +2924,7 @@ Would you like to correct it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Title:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Title field</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Username:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2964,15 +2936,39 @@ Would you like to correct it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Expires:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tags:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Tags list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Username:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Title:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Password:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>UR&amp;L:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Notes:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle notes visibility</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>T&amp;ags:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Expires:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6237,6 +6233,10 @@ Do you want to overwrite it?</source>
     <message>
         <source>Excellent</source>
         <comment>Password quality</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle password visibilty using Control + H. Open the password generator using Control + G.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

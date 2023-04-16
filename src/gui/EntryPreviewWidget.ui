@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>508</width>
+    <width>530</width>
     <height>257</height>
    </rect>
   </property>
@@ -177,7 +177,7 @@
        <item>
         <widget class="QTabWidget" name="entryTabWidget">
          <property name="currentIndex">
-          <number>0</number>
+          <number>2</number>
          </property>
          <property name="documentMode">
           <bool>false</bool>
@@ -753,7 +753,7 @@
                  <string>Default Sequence</string>
                 </property>
                 <property name="alignment">
-                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
                 </property>
                </widget>
               </item>
@@ -770,6 +770,9 @@
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
                 </property>
                </widget>
               </item>
