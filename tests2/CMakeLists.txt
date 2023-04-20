@@ -104,6 +104,10 @@ add_unit_test(NAME passphrase-generator
         SOURCES core/TestPassphraseGenerator.cpp
         LIBS TEST_SUPPORT ${TEST_LIBRARIES})
 
+add_unit_test(NAME totp
+        SOURCES totp/TestTotp.cpp
+        LIBS TEST_SUPPORT ${TEST_LIBRARIES})
+
 if(WITH_GUI_TESTS)
     add_subdirectory(gui)
 endif(WITH_GUI_TESTS)
