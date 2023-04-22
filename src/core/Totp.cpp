@@ -259,15 +259,6 @@ QString Totp::generateTotp(const QSharedPointer<Totp::Settings>& settings, const
     return retval;
 }
 
-QList<QPair<QString, QString>> Totp::supportedEncoders()
-{
-    QList<QPair<QString, QString>> encoders;
-    for (auto& encoder : totpEncoders) {
-        encoders << QPair<QString, QString>(encoder.name, encoder.shortName);
-    }
-    return encoders;
-}
-
 QList<QPair<QString, Totp::Algorithm>> Totp::supportedAlgorithms()
 {
     QList<QPair<QString, Algorithm>> algorithms;
