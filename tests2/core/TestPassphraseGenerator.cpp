@@ -16,8 +16,10 @@
  */
 #include "../streams.h"
 #include "catch2/catch_all.hpp"
+#include "config-keepassx-tests.h"
 #include "core/PassphraseGenerator.h"
 
+#include <QFile>
 #include <QRegularExpression>
 
 TEST_CASE("PassphraseGenerator functionality", "[core]")
@@ -72,5 +74,19 @@ TEST_CASE("PassphraseGenerator functionality", "[core]")
         // Reset the word list by trying to load a wrong file.
         generator.setWordList("wrong path");
         REQUIRE(generator.estimateEntropy(0.0) == 0.0);
+    }
+
+    SECTION("A passphrase should produce lower case multi-word passphrase when reads a PGP signed wordlist")
+    {
+        // See full version: https://github.com/ulif/diceware/blob/master/diceware/wordlists/wordlist_en_securedrop.asc
+        QString fileName = QString(KEEPASSX_TEST_DATA_DIR).append("/wordlist_pgp_short.asc");
+        REQUIRE(QFile::exists(fileName));
+
+        generator.setWordList(fileName);
+        REQUIRE(generator.isValid());
+
+        QString passphrase = generator.generatePassphrase();
+        REQUIRE(passphrase == passphrase.toLower());
+        REQUIRE_THAT(passphrase.toStdString(), Catch::Matchers::Matches(R"(^\S+ \S+ \S+ \S+ \S+ \S+ \S+$)"));
     }
 }
