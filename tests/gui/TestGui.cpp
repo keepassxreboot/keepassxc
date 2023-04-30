@@ -970,6 +970,10 @@ void TestGui::testSearch()
     QApplication::processEvents();
     helpButton->trigger();
     QTRY_VERIFY(!helpPanel->isVisible());
+
+    // Need to re-activate the window after the help test
+    m_mainWindow->activateWindow();
+
     // Search for "ZZZ"
     QTest::keyClicks(searchTextEdit, "ZZZ");
     QTRY_COMPARE(searchTextEdit->text(), QString("ZZZ"));
