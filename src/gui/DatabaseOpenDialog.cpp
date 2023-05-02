@@ -36,7 +36,11 @@ DatabaseOpenDialog::DatabaseOpenDialog(QWidget* parent)
 {
     setWindowTitle(tr("Unlock Database - KeePassXC"));
     setWindowFlags(Qt::Dialog);
+#if QT_VERSION >= QT_VERSION_CHECK(5, 9, 0)
     setWindowFlag(Qt::WindowContextHelpButtonHint, false);
+#else
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+#endif
 #ifdef Q_OS_LINUX
     // Linux requires this to overcome some Desktop Environments (also no Quick Unlock)
     setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
