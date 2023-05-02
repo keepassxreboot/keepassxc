@@ -29,7 +29,11 @@ CloneDialog::CloneDialog(DatabaseWidget* parent, Database* db, Entry* entry)
     m_ui->setupUi(this);
 
     window()->layout()->setSizeConstraint(QLayout::SetFixedSize);
+#if QT_VERSION >= QT_VERSION_CHECK(5, 9, 0)
     setWindowFlag(Qt::WindowContextHelpButtonHint, false);
+#else
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+#endif
     setAttribute(Qt::WA_DeleteOnClose);
 
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(close()));
