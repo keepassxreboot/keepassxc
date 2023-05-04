@@ -33,12 +33,10 @@ namespace AsyncTask
      * @param future future to wait for
      * @return async task result
      */
-    template <typename FunctionObject>
-    typename std::result_of<FunctionObject()>::type
-    waitForFuture(QFuture<typename std::result_of<FunctionObject()>::type> future)
+    template <typename T> T waitForFuture(QFuture<T> future)
     {
         QEventLoop loop;
-        QFutureWatcher<typename std::result_of<FunctionObject()>::type> watcher;
+        QFutureWatcher<T> watcher;
         QObject::connect(&watcher, SIGNAL(finished()), &loop, SLOT(quit()));
         watcher.setFuture(future);
         loop.exec();
@@ -51,10 +49,9 @@ namespace AsyncTask
      * @param task std::function object to run
      * @return async task result
      */
-    template <typename FunctionObject>
-    typename std::result_of<FunctionObject()>::type runAndWaitForFuture(FunctionObject task)
+    template <typename FunctionObject> decltype(auto) runAndWaitForFuture(FunctionObject task)
     {
-        return waitForFuture<FunctionObject>(QtConcurrent::run(task));
+        return waitForFuture(QtConcurrent::run(task));
     }
 
     /**
@@ -69,9 +66,8 @@ namespace AsyncTask
     template <typename FunctionObject, typename FunctionObject2>
     void runThenCallback(FunctionObject task, QObject* context, FunctionObject2 callback)
     {
-        typedef QFutureWatcher<typename std::result_of<FunctionObject()>::type> FutureWatcher;
         auto future = QtConcurrent::run(task);
-        auto watcher = new FutureWatcher(context);
+        auto watcher = new QFutureWatcher<decltype(future.result())>(context);
         QObject::connect(watcher, &QFutureWatcherBase::finished, context, [=]() {
             watcher->deleteLater();
             callback(future.result());
