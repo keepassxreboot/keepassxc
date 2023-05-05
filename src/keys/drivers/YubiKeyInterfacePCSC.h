@@ -24,6 +24,7 @@
 
 #define CLA_ISO 0x00
 #define INS_SELECT 0xA4
+#define INS_GET_RESPONSE 0xC0
 #define SEL_APP_AID 0x04
 #define INS_API_REQ 0x01
 #define INS_STATUS 0x03
@@ -37,6 +38,7 @@
 #define SW_NOTFOUND_HIGH 0x6A
 #define SW_NOTFOUND_LOW 0x82
 #define SW_UNSUP_HIGH 0x6D
+#define SW_MORE_DATA_HIGH 0x61
 
 typedef QPair<SCARDHANDLE, QByteArray> SCardAID;
 
@@ -75,6 +77,7 @@ private:
     //  and also for compatible third-party ones. They will be tried one by one.
     const QList<QByteArray> m_aid_codes = {
         QByteArrayLiteral("\xA0\x00\x00\x05\x27\x20\x01"), // Yubico Yubikey
+        QByteArrayLiteral("\xA0\x00\x00\x05\x27\x21\x01"), // Yubico Yubikey OATH AID / Nitrokey 3 Secrets App
         QByteArrayLiteral("\xA0\x00\x00\x06\x17\x00\x07\x53\x4E\xAF\x01") // Fidesmo development
     };
 
@@ -109,7 +112,10 @@ private:
         {QByteArrayLiteral("\x3B\x80\x80\x01\x01"), "Fidesmo Card 2.0"},
         {QByteArrayLiteral("\x3B\x8A\x80\x01\x00\x31\xC1\x73\xC8\x40\x00\x00\x90\x00\x90"), "VivoKey Apex"},
         {QByteArrayLiteral("\x3B\x8D\x80\x01\x00\x31\xC1\x73\xC8\x40\x00\x52\xA5\x10\x00\x90\x00\x70"),
-         "Dangerous Things FlexSecure"}};
+         "Dangerous Things FlexSecure"},
+        {QByteArrayLiteral("\x3b\x8f\x01\x80\x5d\x4e\x69\x74\x72\x6f\x6b\x65\x79\x00\x00\x00\x00\x00\x6a"),
+         "Nitrokey 3"},
+    };
 };
 
 #endif // KEEPASSX_YUBIKEY_INTERFACE_PCSC_H
