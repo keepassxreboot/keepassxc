@@ -242,7 +242,53 @@ namespace
         if (rv == SCARD_S_SUCCESS) {
             // Write to and read from the card
             // pioRecvPci is nullptr because we do not expect any PCI response header
+            const SCUINT dwRecvBufferSize = dwRecvLength;
             rv = SCardTransmit(handle, pioSendPci, pbSendBuffer, dwSendLength, nullptr, pbRecvBuffer, &dwRecvLength);
+
+            uint8_t SW1 = pbRecvBuffer[dwRecvLength - 2];
+            // Check for the MoreDataAvailable SW1 code. If present, send GetResponse command repeatedly, until success SW,
+            // or filling the receiving buffer.
+            if (SW1 == SW_MORE_DATA_HIGH) {
+                while (true) {
+                    // Overwrite Status Word in the receiving buffer
+                    dwRecvLength -= 2;
+                    // Use different buffer for sending GET_RESPONSE, and getting the remaining reply
+                    uint8_t pbRecvBuffer_sr[255] = {};
+                    SCUINT dwRecvLength_sr = sizeof pbRecvBuffer_sr;
+                    const uint8_t bRecvBufferSize = sizeof pbRecvBuffer_sr - 2;
+                    uint8_t pbSendBuffer_sr[] = {CLA_ISO, INS_GET_RESPONSE, 0, 0, bRecvBufferSize};
+                    rv = SCardTransmit(handle,
+                                       pioSendPci,
+                                       pbSendBuffer_sr,
+                                       sizeof pbSendBuffer_sr,
+                                       nullptr,
+                                       pbRecvBuffer_sr,
+                                       &dwRecvLength_sr);
+
+                    // Check if any new data are received. Break if the smartcard's status is other than success,
+                    // or no new bytes were received.
+                    if (!(rv == SCARD_S_SUCCESS && dwRecvLength_sr >= 2)) {
+                        break;
+                    }
+
+                    // Abort if receiving buffer is too small
+                    if (dwRecvLength + dwRecvLength_sr > dwRecvBufferSize ){
+                        return SCARD_E_UNEXPECTED;
+                    }
+
+                    // Copy it all to the main receiving buffer
+                    memmove(pbRecvBuffer + dwRecvLength, pbRecvBuffer_sr, dwRecvLength_sr);
+                    dwRecvLength += dwRecvLength_sr;
+                    SW1 = pbRecvBuffer_sr[dwRecvLength_sr - 2];
+                    // Clear the helper buffer before potential exit (TODO call the right clearing function)
+                    memset(pbRecvBuffer_sr, 0, sizeof pbRecvBuffer_sr);
+                    // Break the loop if there is no continuation status
+                    if (SW1 != SW_MORE_DATA_HIGH) {
+                        break;
+                    }
+                }
+            }
+
             if (rv == SCARD_S_SUCCESS) {
                 if (dwRecvLength < 2) {
                     // Any valid response should be at least 2 bytes (response status)
@@ -285,9 +331,10 @@ namespace
         auto pbSendBuffer = new uint8_t[5 + handle.second.size()];
         memcpy(pbSendBuffer, pbSendBuffer_head, 5);
         memcpy(pbSendBuffer + 5, handle.second.constData(), handle.second.size());
-        uint8_t pbRecvBuffer[12] = {
+        // Give it more space in case custom implementations have longer answer to select
+        uint8_t pbRecvBuffer[64] = {
             0}; // 3 bytes version, 1 byte program counter, other stuff for various implementations, 2 bytes status
-        SCUINT dwRecvLength = 12;
+        SCUINT dwRecvLength = sizeof pbRecvBuffer;
 
         auto rv = transmit(handle.first, pbSendBuffer, 5 + handle.second.size(), pbRecvBuffer, dwRecvLength);
 
