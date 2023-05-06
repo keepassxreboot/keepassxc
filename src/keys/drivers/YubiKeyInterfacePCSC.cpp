@@ -19,6 +19,7 @@
 
 #include "core/Tools.h"
 #include "crypto/Random.h"
+#include <algorithm>
 
 // MSYS2 does not define these macros
 // So set them to the value used by pcsc-lite
@@ -245,43 +246,43 @@ namespace
             const SCUINT dwRecvBufferSize = dwRecvLength;
             rv = SCardTransmit(handle, pioSendPci, pbSendBuffer, dwSendLength, nullptr, pbRecvBuffer, &dwRecvLength);
 
+            if (dwRecvLength < 2) {
+                // Any valid response should be at least 2 bytes (response status)
+                // However the protocol itself could fail
+                return SCARD_E_UNEXPECTED;
+            }
+
             uint8_t SW1 = pbRecvBuffer[dwRecvLength - 2];
-            // Check for the MoreDataAvailable SW1 code. If present, send GetResponse command repeatedly, until success SW,
-            // or filling the receiving buffer.
+            // Check for the MoreDataAvailable SW1 code. If present, send GetResponse command repeatedly, until success
+            // SW, or filling the receiving buffer.
             if (SW1 == SW_MORE_DATA_HIGH) {
                 while (true) {
+                    if (dwRecvBufferSize < dwRecvLength) {
+                        // No free buffer space remaining
+                        return SCARD_E_UNEXPECTED;
+                    }
                     // Overwrite Status Word in the receiving buffer
                     dwRecvLength -= 2;
-                    // Use different buffer for sending GET_RESPONSE, and getting the remaining reply
-                    uint8_t pbRecvBuffer_sr[255] = {};
-                    SCUINT dwRecvLength_sr = sizeof pbRecvBuffer_sr;
-                    const uint8_t bRecvBufferSize = sizeof pbRecvBuffer_sr - 2;
-                    uint8_t pbSendBuffer_sr[] = {CLA_ISO, INS_GET_RESPONSE, 0, 0, bRecvBufferSize};
+                    SCUINT dwRecvLength_sr = dwRecvBufferSize - dwRecvLength; // at least 2 bytes for SW are available
+                    const uint8_t bRecvDataSize =
+                        std::clamp(dwRecvLength_sr - 2, static_cast<SCUINT>(0), static_cast<SCUINT>(255));
+                    uint8_t pbSendBuffer_sr[] = {CLA_ISO, INS_GET_RESPONSE, 0, 0, bRecvDataSize};
                     rv = SCardTransmit(handle,
                                        pioSendPci,
                                        pbSendBuffer_sr,
                                        sizeof pbSendBuffer_sr,
                                        nullptr,
-                                       pbRecvBuffer_sr,
+                                       pbRecvBuffer + dwRecvLength,
                                        &dwRecvLength_sr);
 
-                    // Check if any new data are received. Break if the smartcard's status is other than success,
+                    // Check if any new data are received. Break if the smart card's status is other than success,
                     // or no new bytes were received.
                     if (!(rv == SCARD_S_SUCCESS && dwRecvLength_sr >= 2)) {
                         break;
                     }
 
-                    // Abort if receiving buffer is too small
-                    if (dwRecvLength + dwRecvLength_sr > dwRecvBufferSize ){
-                        return SCARD_E_UNEXPECTED;
-                    }
-
-                    // Copy it all to the main receiving buffer
-                    memmove(pbRecvBuffer + dwRecvLength, pbRecvBuffer_sr, dwRecvLength_sr);
                     dwRecvLength += dwRecvLength_sr;
-                    SW1 = pbRecvBuffer_sr[dwRecvLength_sr - 2];
-                    // Clear the helper buffer before potential exit (TODO call the right clearing function)
-                    memset(pbRecvBuffer_sr, 0, sizeof pbRecvBuffer_sr);
+                    SW1 = pbRecvBuffer[dwRecvLength - 2];
                     // Break the loop if there is no continuation status
                     if (SW1 != SW_MORE_DATA_HIGH) {
                         break;
@@ -295,6 +296,8 @@ namespace
                     // However the protocol itself could fail
                     rv = SCARD_E_UNEXPECTED;
                 } else {
+                    const uint8_t SW_HIGH = pbRecvBuffer[dwRecvLength - 2];
+                    const uint8_t SW_LOW = pbRecvBuffer[dwRecvLength - 1];
                     if (pbRecvBuffer[dwRecvLength - 2] == SW_OK_HIGH && pbRecvBuffer[dwRecvLength - 1] == SW_OK_LOW) {
                         rv = SCARD_S_SUCCESS;
                     } else if (pbRecvBuffer[dwRecvLength - 2] == SW_PRECOND_HIGH
