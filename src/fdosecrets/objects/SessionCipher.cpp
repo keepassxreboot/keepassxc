@@ -25,7 +25,7 @@
 #include <QDebug>
 #include <botan/dh.h>
 
-#ifdef KPXC_DEV_BOTAN3
+#ifdef WITH_XC_BOTAN3
 #include <botan/pubkey.h>
 #else
 #include <botan/pk_ops.h>
@@ -57,7 +57,7 @@ namespace FdoSecrets
 
         try {
             Botan::secure_vector<uint8_t> salt(32, '\0');
-#ifdef KPXC_DEV_BOTAN3
+#ifdef WITH_XC_BOTAN3
             Botan::PK_Key_Agreement dhka(*m_privateKey, *randomGen()->getRng(), "HKDF(SHA-256)", "");
             auto aesKey = dhka.derive_key(16,
                                           reinterpret_cast<const uint8_t*>(clientPublicKey.constData()),
