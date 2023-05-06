@@ -355,7 +355,11 @@ bool KeeAgentSettings::inEntryAttachments(const EntryAttachments* attachments)
  */
 bool KeeAgentSettings::fromEntry(const Entry* entry)
 {
-    return fromXml(entry->attachments()->value("KeeAgent.settings"));
+    const auto attachments = entry->attachments();
+    if (attachments->hasKey("KeeAgent.settings")) {
+        return fromXml(attachments->value("KeeAgent.settings"));
+    }
+    return false;
 }
 
 /**
