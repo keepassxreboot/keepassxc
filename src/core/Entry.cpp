@@ -997,19 +997,19 @@ void Entry::updateModifiedSinceBegin()
 
 QString Entry::resolveMultiplePlaceholdersRecursive(const QString& str, int maxDepth) const
 {
+    static QRegularExpression placeholderRegEx("(\\{[^\\}]+?\\})", QRegularExpression::CaseInsensitiveOption);
+
     if (maxDepth <= 0) {
         qWarning("Maximum depth of replacement has been reached. Entry uuid: %s", uuid().toString().toLatin1().data());
         return str;
     }
 
     QString result = str;
-    QRegExp placeholderRegEx("(\\{[^\\}]+\\})", Qt::CaseInsensitive, QRegExp::RegExp2);
-    placeholderRegEx.setMinimal(true);
-    int pos = 0;
-    while ((pos = placeholderRegEx.indexIn(str, pos)) != -1) {
-        const QString found = placeholderRegEx.cap(1);
+    auto matches = placeholderRegEx.globalMatch(str);
+    while (matches.hasNext()) {
+        auto match = matches.next();
+        const auto found = match.captured(1);
         result.replace(found, resolvePlaceholderRecursive(found, maxDepth - 1));
-        pos += placeholderRegEx.matchedLength();
     }
 
     if (result != str) {
