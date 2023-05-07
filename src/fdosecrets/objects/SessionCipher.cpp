@@ -26,6 +26,7 @@
 #include <botan/dh.h>
 
 #ifdef WITH_XC_BOTAN3
+#include <botan/dl_group.h>
 #include <botan/pubkey.h>
 #else
 #include <botan/pk_ops.h>
