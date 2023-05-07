@@ -1936,7 +1936,7 @@ void BaseStyle::drawPrimitive(PrimitiveElement elem,
         auto fropt = qstyleoption_cast<const QStyleOptionFocusRect*>(option);
         if (!fropt)
             break;
-        //### check for d->alt_down
+        // ### check for d->alt_down
         if (!(fropt->state & State_KeyboardFocusChange))
             return;
         if (fropt->state & State_Item) {
