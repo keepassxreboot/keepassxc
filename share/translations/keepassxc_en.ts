@@ -1094,11 +1094,6 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Never ask before accessing credentials</source>
-        <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Never ask before updating credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
         <translation type="unfinished"></translation>
@@ -1203,14 +1198,6 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Allow keepassxc-proxy to list all entries with their title, URL and UUID in connected databases.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Allow limited access to all entries in connected databases (ignores site access restrictions)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; Only adjust these settings if necessary.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1223,10 +1210,6 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;b&gt;Error:&lt;/b&gt; The installed proxy executable is missing from the expected location: %1&lt;br/&gt;Please set a custom proxy location in the advanced settings or reinstall the application.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Allows using insecure http://localhost with passkeys for testing purposes.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1236,6 +1219,10 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message>
         <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The installed proxy executable is missing from the expected location: %1&lt;br/&gt;Please set a custom proxy location in the advanced settings or reinstall the application.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1812,6 +1799,19 @@ This is only necessary if your database is a copy of another and the browser ext
     </message>
     <message>
         <source>No entry with permissions found!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Never confirm before sending credentials to the extension</source>
+        <extracomment>Credentials mean login data requested via browser extension</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Allow a connected program to list all entries with their title, URL and UUID regardless of individual access restrictions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Allow limited access to all entries (may be used by third-party solutions)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

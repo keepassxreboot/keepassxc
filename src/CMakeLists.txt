@@ -25,6 +25,7 @@ set(keepassx_SOURCES
         core/Config.cpp
         core/CustomData.cpp
         core/Database.cpp
+        core/DatabaseSettings.cpp
         core/DatabaseStats.cpp
         core/Entry.cpp
         core/EntryAttachments.cpp
