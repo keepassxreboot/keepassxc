@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -401,17 +401,16 @@ QJsonObject BrowserAction::handleGetDatabaseEntries(const QJsonObject& json, con
         return getErrorReply(action, ERROR_KEEPASS_INCORRECT_ACTION);
     }
 
-    if (!browserSettings()->allowGetDatabaseEntriesRequest()) {
+    bool accessDenied = true;
+    const auto entries = browserService()->getDatabaseEntries(&accessDenied);
+    if (accessDenied) {
         return getErrorReply(action, ERROR_KEEPASS_ACCESS_TO_ALL_ENTRIES_DENIED);
     }
-
-    const QJsonArray entries = browserService()->getDatabaseEntries();
     if (entries.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_NO_GROUPS_FOUND);
     }
 
     const Parameters params{{"entries", entries}};
-
     return buildResponse(action, browserRequest.incrementedNonce, params);
 }
 

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -73,6 +73,7 @@ public:
     static const QString FdoSecretsExposedGroup;
     static const QString RandomSlug;
     static const QString RemoteProgramSettings;
+    static const QString OptionPrefix;
 
     // Pre-KDBX 4.1
     static const QString ExcludeFromReportsLegacy;

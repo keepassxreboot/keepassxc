@@ -27,6 +27,7 @@
 #include "BrowserPasskeysClient.h"
 #include "BrowserPasskeysConfirmationDialog.h"
 #include "BrowserSettings.h"
+#include "DatabaseSettings.h"
 #include "PasskeyUtils.h"
 #include "core/EntryAttributes.h"
 #include "core/Tools.h"
@@ -112,10 +113,7 @@ void BrowserService::setEnabled(bool enabled)
 
 bool BrowserService::isDatabaseOpened() const
 {
-    if (m_currentDatabaseWidget) {
-        return !m_currentDatabaseWidget->isLocked();
-    }
-    return false;
+    return m_currentDatabaseWidget && !m_currentDatabaseWidget->isLocked();
 }
 
 bool BrowserService::openDatabase(bool triggerUnlock)
@@ -124,7 +122,7 @@ bool BrowserService::openDatabase(bool triggerUnlock)
         return false;
     }
 
-    if (m_currentDatabaseWidget && !m_currentDatabaseWidget->isLocked()) {
+    if (isDatabaseOpened()) {
         return true;
     }
 
@@ -232,14 +230,26 @@ QJsonObject BrowserService::getDatabaseGroups()
     return result;
 }
 
-QJsonArray BrowserService::getDatabaseEntries()
+QJsonArray BrowserService::getDatabaseEntries(bool* accessDenied, const QSharedPointer<Database>& selectedDb)
 {
-    auto db = getDatabase();
+    if (accessDenied) {
+        *accessDenied = true;
+    }
+
+    auto db = selectedDb ? selectedDb : getDatabase();
     if (!db) {
         return {};
     }
 
-    Group* rootGroup = db->rootGroup();
+    if (!databaseSettings()->getAllowGetDatabaseEntriesRequest(db)) {
+        return {};
+    }
+
+    if (accessDenied != nullptr) {
+        *accessDenied = false;
+    }
+
+    auto* rootGroup = db->rootGroup();
     if (!rootGroup) {
         return {};
     }
@@ -373,7 +383,7 @@ BrowserService::findEntries(const EntryParameters& entryParameters, const String
         *entriesFound = false;
     }
 
-    const bool alwaysAllowAccess = browserSettings()->alwaysAllowAccess();
+    const bool alwaysAllowAccess = getAlwaysAllowAccess();
     const bool ignoreHttpAuth = browserSettings()->httpAuthPermission();
     const QString siteHost = QUrl(entryParameters.siteUrl).host();
     const QString formHost = QUrl(entryParameters.formUrl).host();
@@ -565,6 +575,26 @@ void BrowserService::showPasswordGenerator(const KeyPairMessage& keyPairMessage)
 bool BrowserService::isPasswordGeneratorRequested() const
 {
     return m_passwordGenerator && m_passwordGenerator->isVisible();
+}
+
+bool BrowserService::getAlwaysAllowAccess()
+{
+    return databaseSettings()->getAlwaysAllowAccess(getDatabase());
+}
+
+void BrowserService::setAlwaysAllowAccess(bool enabled)
+{
+    databaseSettings()->setAlwaysAllowAccess(getDatabase(), enabled);
+}
+
+bool BrowserService::getAllowGetDatabaseEntriesRequest()
+{
+    return databaseSettings()->getAllowGetDatabaseEntriesRequest(getDatabase());
+}
+
+void BrowserService::setAllowGetDatabaseEntriesRequest(bool enabled)
+{
+    databaseSettings()->setAllowGetDatabaseEntriesRequest(getDatabase(), enabled);
 }
 
 QString BrowserService::storeKey(const QString& key)
@@ -1226,6 +1256,13 @@ BrowserService::checkAccess(const Entry* entry, const QString& siteHost, const Q
 {
     if (entry->isExpired() && !browserSettings()->allowExpiredCredentials()) {
         return Denied;
+    }
+
+    const auto db = entry->database();
+    if (db
+        && db->metadata()->customData()->value(CustomData::OptionPrefix + DatabaseSettings::OPTION_ALWAYS_ALLOW_ACCESS)
+               == TRUE_STR) {
+        return Allowed;
     }
 
     BrowserEntryConfig config;

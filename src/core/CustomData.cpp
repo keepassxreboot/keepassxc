@@ -23,6 +23,7 @@
 const QString CustomData::LastModified = QStringLiteral("_LAST_MODIFIED");
 const QString CustomData::Created = QStringLiteral("_CREATED_");
 const QString CustomData::BrowserKeyPrefix = QStringLiteral("KPXC_BROWSER_");
+const QString CustomData::OptionPrefix = QStringLiteral("KPXC_OPTION_");
 const QString CustomData::ExcludeFromReportsLegacy = QStringLiteral("KnownBad");
 const QString CustomData::FdoSecretsExposedGroup = QStringLiteral("FDO_SECRETS_EXPOSED_GROUP");
 const QString CustomData::RandomSlug = QStringLiteral("KPXC_RANDOM_SLUG");

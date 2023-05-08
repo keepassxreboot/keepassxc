@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -151,7 +151,9 @@ void DatabaseSettingsDialog::save()
         return;
     }
 
-    // Browser settings don't have anything to save
+#ifdef KPXC_FEATURE_BROWSER
+    m_browserWidget->saveSettings();
+#endif
 
     m_keeShareWidget->saveSettings();
 #ifdef KPXC_FEATURE_FDOSECRETS
