@@ -7581,7 +7581,7 @@ Kernel: %3 %4</source>
         </translation>
     </message>
     <message>
-        <source>Botan library must be at least 2.11.x, found %1.%2.%3</source>
+        <source>Botan library must be at least %1, found %2.%3.%4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

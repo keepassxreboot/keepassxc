@@ -18,6 +18,8 @@
 
 #include "Crypto.h"
 
+#include "config-keepassx.h"
+
 #include "crypto/CryptoHash.h"
 #include "crypto/SymmetricCipher.h"
 
@@ -237,8 +239,16 @@ namespace Crypto
 {
     bool init()
     {
-        if (Botan::version_major() != 2 || Botan::version_minor() < 11) {
-            g_cryptoError = QObject::tr("Botan library must be at least 2.11.x, found %1.%2.%3")
+#ifdef WITH_XC_BOTAN3
+        unsigned int version_major = 3, min_version_minor = 0;
+        QString versionString = "3.x";
+#else
+        unsigned int version_major = 2, min_version_minor = 11;
+        QString versionString = "2.11.x";
+#endif
+        if (Botan::version_major() != version_major || Botan::version_minor() < min_version_minor) {
+            g_cryptoError = QObject::tr("Botan library must be at least %1, found %2.%3.%4")
+                                .arg(versionString)
                                 .arg(Botan::version_major())
                                 .arg(Botan::version_minor())
                                 .arg(Botan::version_patch());

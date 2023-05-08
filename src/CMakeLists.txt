@@ -338,7 +338,7 @@ target_link_libraries(keepassx_core
         Qt5::Concurrent
         Qt5::Network
         Qt5::Widgets
-        ${BOTAN2_LIBRARIES}
+        ${BOTAN_LIBRARIES}
         ${PCSC_LIBRARIES}
         ${ZXCVBN_LIBRARIES}
         ${ZLIB_LIBRARIES}

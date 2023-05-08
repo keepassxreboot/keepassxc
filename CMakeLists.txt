@@ -203,6 +203,16 @@ if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.14.0")
     check_pie_supported()
 endif()
 
+# Find Botan early since the version affects subsequent compiler options
+find_package(Botan REQUIRED)
+if(BOTAN_VERSION VERSION_GREATER_EQUAL "3.0.0")
+    set(WITH_XC_BOTAN3 TRUE)
+elseif(BOTAN_VERSION VERSION_LESS "2.11.0")
+    # Check for minimum Botan version
+    message(FATAL_ERROR "Botan 2.11.0 or higher is required")   
+endif()
+include_directories(SYSTEM ${BOTAN_INCLUDE_DIR})
+
 # Create position independent code for shared libraries and executables
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
@@ -298,6 +308,10 @@ if(CMAKE_BUILD_TYPE_LOWER STREQUAL "debug")
     check_add_gcc_compiler_flag("-Wshadow-compatible-local")
     check_add_gcc_compiler_flag("-Wshadow-local")
     add_gcc_compiler_flags("-Werror")
+    # This is needed since compiling aginst Botan3 requires compiling against C++20
+    if(WITH_XC_BOTAN3)
+        add_gcc_compiler_cxxflags("-Wno-error=deprecated-enum-enum-conversion -Wno-error=deprecated")
+    endif()
 endif()
 
 if (NOT HAIKU)
@@ -343,7 +357,11 @@ if(UNIX AND NOT APPLE)
 endif()
 
 set(CMAKE_C_STANDARD 99)
-set(CMAKE_CXX_STANDARD 17)
+if(WITH_XC_BOTAN3)
+    set(CMAKE_CXX_STANDARD 20)
+else()
+    set(CMAKE_CXX_STANDARD 17)
+endif()
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 check_cxx_compiler_flag("-fsized-deallocation" CXX_HAS_fsized_deallocation)
@@ -529,12 +547,6 @@ endif()
 # Make sure we don't enable asserts there.
 set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS_NONE QT_NO_DEBUG)
 
-# Find Botan2
-find_package(Botan2 REQUIRED)
-if(BOTAN2_VERSION VERSION_LESS "2.11.0")
-    message(FATAL_ERROR "Botan2 2.11.0 or higher is required")
-endif()
-include_directories(SYSTEM ${BOTAN2_INCLUDE_DIR})
 # Find Argon2 -- Botan 2.18 and below does not support threaded Argon2
 find_library(ARGON2_LIBRARIES NAMES argon2)
 find_path(ARGON2_INCLUDE_DIR NAMES argon2.h PATH_SUFFIXES local/include)
