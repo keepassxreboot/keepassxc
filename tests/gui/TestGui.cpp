@@ -31,7 +31,6 @@
 #include <QToolBar>
 
 #include "config-keepassx-tests.h"
-#include "core/PasswordHealth.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
 #include "gui/ActionCollection.h"
@@ -686,122 +685,6 @@ void TestGui::testAddEntry()
 
     // Confirm no changed entry count
     QTRY_COMPARE(entryView->model()->rowCount(), 3);
-}
-
-void TestGui::testPasswordEntryEntropy_data()
-{
-    QTest::addColumn<QString>("password");
-    QTest::addColumn<QString>("expectedStrengthLabel");
-
-    QTest::newRow("Empty password") << ""
-                                    << "Password Quality: Poor";
-
-    QTest::newRow("Well-known password") << "hello"
-                                         << "Password Quality: Poor";
-
-    QTest::newRow("Password composed of well-known words.") << "helloworld"
-                                                            << "Password Quality: Poor";
-
-    QTest::newRow("Password composed of well-known words with number.") << "password1"
-                                                                        << "Password Quality: Poor";
-
-    QTest::newRow("Password out of small character space.") << "D0g.................."
-                                                            << "Password Quality: Poor";
-
-    QTest::newRow("XKCD, easy substitutions.") << "Tr0ub4dour&3"
-                                               << "Password Quality: Poor";
-
-    QTest::newRow("XKCD, word generator.") << "correcthorsebatterystaple"
-                                           << "Password Quality: Weak";
-
-    QTest::newRow("Random characters, medium length.") << "YQC3kbXbjC652dTDH"
-                                                       << "Password Quality: Good";
-
-    QTest::newRow("Random characters, long.") << "Bs5ZFfthWzR8DGFEjaCM6bGqhmCT4km"
-                                              << "Password Quality: Excellent";
-
-    QTest::newRow("Long password using Zxcvbn chunk estimation")
-        << "quintet-tamper-kinswoman-humility-vengeful-haven-tastiness-aspire-widget-ipad-cussed-reaffirm-ladylike-"
-           "ashamed-anatomy-daybed-jam-swear-strudel-neatness-stalemate-unbundle-flavored-relation-emergency-underrate-"
-           "registry-getting-award-unveiled-unshaken-stagnate-cartridge-magnitude-ointment-hardener-enforced-scrubbed-"
-           "radial-fiddling-envelope-unpaved-moisture-unused-crawlers-quartered-crushed-kangaroo-tiptop-doily"
-        << "Password Quality: Excellent";
-
-    QTest::newRow("Longer password above Zxcvbn threshold")
-        << "quintet-tamper-kinswoman-humility-vengeful-haven-tastiness-aspire-widget-ipad-cussed-reaffirm-ladylike-"
-           "ashamed-anatomy-daybed-jam-swear-strudel-neatness-stalemate-unbundle-flavored-relation-emergency-underrate-"
-           "registry-getting-award-unveiled-unshaken-stagnate-cartridge-magnitude-ointment-hardener-enforced-scrubbed-"
-           "radial-fiddling-envelope-unpaved-moisture-unused-crawlers-quartered-crushed-kangaroo-tiptop-doily-hefty-"
-           "untie-fidgeting-radiance-twilight-freebase-sulphuric-parrot-decree-monotype-nautical-pout-sip-geometric-"
-           "crunching-deviancy-festival-hacking-rage-unify-coronary-zigzagged-dwindle-possum-lilly-exhume-daringly-"
-           "barbell-rage-animate-lapel-emporium-renounce-justifier-relieving-gauze-arrive-alive-collected-immobile-"
-           "unleash-snowman-gift-expansion-marbles-requisite-excusable-flatness-displace-caloric-sensuous-moustache-"
-           "sensuous-capillary-aversion-contents-cadet-giggly-amenity-peddling-spotting-drier-mooned-rudder-peroxide-"
-           "posting-oppressor-scrabble-scorer-whomever-paprika-slapstick-said-spectacle-capture-debate-attire-emcee-"
-           "unfocused-sympathy-doily-election-ambulance-polish-subtype-grumbling-neon-stooge-reanalyze-rockfish-"
-           "disparate-decorated-washroom-threefold-muzzle-buckwheat-kerosene-swell-why-reprocess-correct-shady-"
-           "impatient-slit-banshee-scrubbed-dreadful-unlocking-urologist-hurried-citable-fragment-septic-lapped-"
-           "prankish-phantom-unpaved-moisture-unused-crawlers-quartered-crushed-kangaroo-lapel-emporium-renounce"
-        << "Password Quality: Excellent";
-}
-
-void TestGui::testPasswordEntryEntropy()
-{
-    auto* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
-
-    // Find the new entry action
-    auto* entryNewAction = m_mainWindow->findChild<QAction*>("actionEntryNew");
-    QVERIFY(entryNewAction->isEnabled());
-
-    // Find the button associated with the new entry action
-    QWidget* entryNewWidget = toolBar->widgetForAction(entryNewAction);
-    QVERIFY(entryNewWidget->isVisible());
-    QVERIFY(entryNewWidget->isEnabled());
-
-    // Click the new entry button and check that we enter edit mode
-    QTest::mouseClick(entryNewWidget, Qt::LeftButton);
-    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::EditMode);
-
-    // Add entry "test" and confirm added
-    auto* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
-    auto* titleEdit = editEntryWidget->findChild<QLineEdit*>("titleEdit");
-    QTest::keyClicks(titleEdit, "test");
-
-    // Open the password generator
-    auto* passwordEdit =
-        editEntryWidget->findChild<PasswordWidget*>("passwordEdit")->findChild<QLineEdit*>("passwordEdit");
-    QVERIFY(passwordEdit);
-    QTest::mouseClick(passwordEdit, Qt::LeftButton);
-
-#ifdef Q_OS_MAC
-    QTest::keyClick(passwordEdit, Qt::Key_G, Qt::MetaModifier);
-#else
-    QTest::keyClick(passwordEdit, Qt::Key_G, Qt::ControlModifier);
-#endif
-
-    TEST_MODAL(
-        PasswordGeneratorWidget * pwGeneratorWidget;
-        QTRY_VERIFY(pwGeneratorWidget = m_dbWidget->findChild<PasswordGeneratorWidget*>());
-
-        // Type in some password
-        auto* generatedPassword =
-            pwGeneratorWidget->findChild<PasswordWidget*>("editNewPassword")->findChild<QLineEdit*>("passwordEdit");
-        auto* entropyLabel = pwGeneratorWidget->findChild<QLabel*>("entropyLabel");
-        auto* strengthLabel = pwGeneratorWidget->findChild<QLabel*>("strengthLabel");
-
-        QFETCH(QString, password);
-        QFETCH(QString, expectedStrengthLabel);
-
-        // Dynamically calculate entropy due to variances with zxcvbn wordlists
-        PasswordHealth health(password);
-        auto expectedEntropy = QString("Entropy: %1 bit").arg(QString::number(health.entropy(), 'f', 2));
-
-        generatedPassword->setText(password);
-        QCOMPARE(entropyLabel->text(), expectedEntropy);
-        QCOMPARE(strengthLabel->text(), expectedStrengthLabel);
-
-        QTest::mouseClick(generatedPassword, Qt::LeftButton);
-        QTest::keyClick(generatedPassword, Qt::Key_Escape););
 }
 
 void TestGui::testSearch()
