@@ -17,11 +17,11 @@
 #ifndef KEEPASSXC_NETWORKREQUEST_H
 #define KEEPASSXC_NETWORKREQUEST_H
 
-#include <QObject>
-#include <QList>
-#include <QUrl>
 #include <QHash>
+#include <QList>
+#include <QObject>
 #include <QTimer>
+#include <QUrl>
 class QNetworkReply;
 class QNetworkAccessManager;
 
@@ -32,67 +32,74 @@ class QNetworkAccessManager;
  * response can be obtained by calling the url(), ContentType(), and ContentTypeParameters()
  * methods.
  */
-class NetworkRequest : public QObject {
-        Q_OBJECT
+class NetworkRequest : public QObject
+{
+    Q_OBJECT
 
-        QNetworkAccessManager* m_manager;
-        QNetworkReply* m_reply;
-        QByteArray m_bytes;
+    QNetworkAccessManager* m_manager;
+    QNetworkReply* m_reply;
+    QByteArray m_bytes;
 
-        // Response information
-        QString m_content_type;
-        QHash<QString, QString> m_content_type_parameters;
+    // Response information
+    QString m_content_type;
+    QHash<QString, QString> m_content_type_parameters;
 
-        // Request parameters
-        QTimer m_timeout;
-        int m_maxRedirects;
-        int m_redirects;
-        std::chrono::milliseconds m_timeoutDuration;
-        QList<QPair<QString, QString>> m_headers;
-    public:
-        // TODO Disallow insecure connections by default?
-        explicit NetworkRequest(int maxRedirects, std::chrono::milliseconds timeoutDuration,
-                                QList<QPair<QString, QString>> headers, QNetworkAccessManager* manager = nullptr);
-        ~NetworkRequest() override;
+    // Request parameters
+    QTimer m_timeout;
+    int m_maxRedirects;
+    int m_redirects;
+    std::chrono::milliseconds m_timeoutDuration;
+    QList<QPair<QString, QString>> m_headers;
+    QUrl m_url;
 
-        void setMaxRedirects(int maxRedirects);
-        void setTimeout(std::chrono::milliseconds timeoutDuration);
+public:
+    // TODO Disallow insecure connections by default?
+    explicit NetworkRequest(int maxRedirects,
+                            std::chrono::milliseconds timeoutDuration,
+                            QList<QPair<QString, QString>> headers,
+                            QNetworkAccessManager* manager = nullptr);
+    ~NetworkRequest() override;
 
-        // TODO Should it be single shot vs multiple shot?
-        void fetch(const QUrl& url);
-        void cancel();
+    void setMaxRedirects(int maxRedirects);
+    void setTimeout(std::chrono::milliseconds timeoutDuration);
 
-        QUrl url() const;
-        /**
-         * @return The MIME Type set in the Content-Type header. Empty string if Content-Type was not set.
-         */
-        const QString& ContentType() const;
-        /**
-         * @return Any parameters set in the Content-Type header.
-         */
-        const QHash<QString, QString>& ContentTypeParameters() const;
-    private:
-        void reset();
-    private slots:
-        void fetchFinished();
-        void fetchReadyRead();
-        void fetchTimeout();
+    // TODO Should it be single shot vs multiple shot?
+    void fetch(const QUrl& url);
+    void cancel();
 
-    signals:
-        void success(QByteArray);
-        void failure();
-    };
-
+    QUrl url() const;
     /**
-     * Creates a NetworkRequest with default parameters.
-     * @param maxRedirects
-     * @param timeoutDuration
-     * @param headers
-     * @param manager
-     * @return
+     * @return The MIME Type set in the Content-Type header. Empty string if Content-Type was not set.
      */
-    NetworkRequest createRequest(int maxRedirects = 5,
-                                 std::chrono::milliseconds timeoutDuration = std::chrono::milliseconds(5000),
-                                 QList<QPair<QString, QString>> additionalHeaders = {}, QNetworkAccessManager* manager = nullptr);
+    const QString& ContentType() const;
+    /**
+     * @return Any parameters set in the Content-Type header.
+     */
+    const QHash<QString, QString>& ContentTypeParameters() const;
+
+private:
+    void reset();
+private slots:
+    void fetchFinished();
+    void fetchReadyRead();
+    void fetchTimeout();
+
+signals:
+    void success(QByteArray);
+    void failure();
+};
+
+/**
+ * Creates a NetworkRequest with default parameters.
+ * @param maxRedirects
+ * @param timeoutDuration
+ * @param headers
+ * @param manager
+ * @return
+ */
+NetworkRequest createRequest(int maxRedirects = 5,
+                             std::chrono::milliseconds timeoutDuration = std::chrono::milliseconds(5000),
+                             QList<QPair<QString, QString>> additionalHeaders = {},
+                             QNetworkAccessManager* manager = nullptr);
 
 #endif // KEEPASSXC_NETWORKREQUEST_H
