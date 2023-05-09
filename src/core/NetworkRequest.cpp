@@ -4,6 +4,7 @@
 #include <QtNetwork/QNetworkAccessManager>
 #include <QtNetwork/QNetworkReply>
 #include <QtNetwork/QNetworkRequest>
+#include <QString>
 
 namespace
 {
@@ -23,6 +24,12 @@ void NetworkRequest::fetch(const QUrl& url)
     reset();
 
     QNetworkRequest request(url);
+
+    // Set headers
+    for(const auto &[header, value] : qAsConst(m_headers)) {
+        request.setRawHeader(header.toUtf8(), value.toUtf8());
+    }
+
     m_reply = m_manager->get(request);
 
     connect(m_reply, &QNetworkReply::finished, this, &NetworkRequest::fetchFinished);
@@ -115,7 +122,9 @@ void NetworkRequest::setMaxRedirects(int maxRedirects)
     m_maxRedirects = std::max(0, maxRedirects);
 }
 
-NetworkRequest::NetworkRequest(int maxRedirects, std::chrono::milliseconds timeoutDuration, QNetworkAccessManager* manager) : m_reply(nullptr), m_maxRedirects(maxRedirects), m_redirects(0), m_timeoutDuration(timeoutDuration)
+NetworkRequest::NetworkRequest(int maxRedirects, std::chrono::milliseconds timeoutDuration,
+                               QList<QPair<QString, QString>> headers, QNetworkAccessManager* manager)
+    : m_reply(nullptr), m_maxRedirects(maxRedirects), m_redirects(0), m_timeoutDuration(timeoutDuration), m_headers(headers)
 {
     m_manager = manager ? manager : getNetMgr();
     connect(&m_timeout, &QTimer::timeout, this, &NetworkRequest::fetchTimeout);
@@ -140,4 +149,17 @@ void NetworkRequest::fetchTimeout()
 {
     // Cancel request on timeout
     cancel();
+}
+NetworkRequest createRequest(int maxRedirects,
+                             std::chrono::milliseconds timeoutDuration,
+                             QList<QPair<QString, QString>> additionalHeaders,
+                             QNetworkAccessManager* manager)
+{
+    // Append user agent unless given
+    if(std::none_of(additionalHeaders.begin(), additionalHeaders.end(), [](const auto& pair) {
+        return pair.first == "User-Agent";
+    })) {
+        additionalHeaders.append(QPair{"User-Agent", "KeePassXC"});
+    }
+    return NetworkRequest(maxRedirects, timeoutDuration, additionalHeaders, manager);
 }
