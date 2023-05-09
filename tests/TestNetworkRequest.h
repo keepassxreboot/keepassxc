@@ -1,0 +1,19 @@
+
+#ifndef KEEPASSXC_TESTNETWORKREQUEST_HPP
+#define KEEPASSXC_TESTNETWORKREQUEST_HPP
+
+#include <QObject>
+
+class TestNetworkRequest : public QObject
+{
+    Q_OBJECT
+
+private slots:
+    void testNetworkRequest();
+    void testNetworkRequest_data();
+
+    void testNetworkRequestTimeout();
+    void testNetworkRequestRedirects();
+};
+
+#endif // KEEPASSXC_TESTNETWORKREQUEST_HPP

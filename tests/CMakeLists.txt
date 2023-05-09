@@ -150,6 +150,8 @@ if(WITH_XC_NETWORKING)
             LIBS ${TEST_LIBRARIES})
 
     add_unit_test(NAME testicondownloader SOURCES TestIconDownloader.cpp LIBS ${TEST_LIBRARIES})
+
+    add_unit_test(NAME testnetworkrequest SOURCES TestNetworkRequest.cpp mock/MockNetworkAccessManager.cpp LIBS ${TEST_LIBRARIES})
 endif()
 
 if(WITH_XC_AUTOTYPE)
