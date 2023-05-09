@@ -67,6 +67,7 @@ PasswordWidget::PasswordWidget(QWidget* parent)
         icons()->onOffIcon("password-show", false),
         tr("Toggle Password (%1)").arg(QKeySequence(modifier + Qt::Key_H).toString(QKeySequence::NativeText)),
         this);
+    m_toggleVisibleAction->setObjectName(QString("passwordToggleVisibleAction"));
     m_toggleVisibleAction->setCheckable(true);
     m_toggleVisibleAction->setShortcut(modifier + Qt::Key_H);
     m_toggleVisibleAction->setShortcutContext(Qt::WidgetShortcut);
