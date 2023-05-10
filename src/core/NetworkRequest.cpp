@@ -27,7 +27,7 @@ namespace
         contentType = tokens[0].trimmed();
         for (int i = 1; i < tokens.size(); ++i) {
             auto parameterTokens = tokens[i].split("=");
-            contentTypeParameters[parameterTokens[0]] = parameterTokens[1];
+            contentTypeParameters[parameterTokens[0].trimmed()] = parameterTokens[1].trimmed();
         }
         return {contentType, contentTypeParameters};
     }

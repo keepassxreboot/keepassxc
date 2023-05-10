@@ -7,10 +7,16 @@
 
 QTEST_GUILESS_MAIN(TestNetworkRequest)
 
+using ContentTypeParameters_t = QHash<QString, QString>;
+Q_DECLARE_METATYPE(ContentTypeParameters_t);
+
 void TestNetworkRequest::testNetworkRequest()
 {
     QFETCH(QUrl, requestedURL);
     QFETCH(QByteArray, expectedContent);
+    QFETCH(QString, responseContentType);
+    QFETCH(QString, expectedContentType);
+    QFETCH(ContentTypeParameters_t, expectedContentTypeParameters);
     QFETCH(QString, expectedUserAgent);
     QFETCH(bool, expectError);
     QFETCH(QNetworkReply::NetworkError, error);
@@ -26,7 +32,7 @@ void TestNetworkRequest::testNetworkRequest()
                                                            QRegularExpression(expectedUserAgent)))
         .reply();
     if (!expectError) {
-        reply.withBody(expectedContent);
+        reply.withBody(expectedContent).withHeader(QNetworkRequest::ContentTypeHeader, responseContentType);
     } else {
         reply.withError(error);
     }
@@ -55,8 +61,11 @@ void TestNetworkRequest::testNetworkRequest()
     QCOMPARE(request.URL(), requestedURL);
     if(!expectError) {
         QCOMPARE(actualContent, expectedContent);
+        QCOMPARE(request.ContentType(), expectedContentType);
+        QCOMPARE(request.ContentTypeParameters(), expectedContentTypeParameters);
         QCOMPARE(didSucceed, true);
         QCOMPARE(didError, false);
+        QCOMPARE(request.Reply()->isFinished(), true);
     } else {
         QCOMPARE(didSucceed, false);
         QCOMPARE(didError, true);
@@ -66,6 +75,9 @@ void TestNetworkRequest::testNetworkRequest_data()
 {
     QTest::addColumn<QUrl>("requestedURL");
     QTest::addColumn<QByteArray>("expectedContent");
+    QTest::addColumn<QString>("responseContentType");
+    QTest::addColumn<QString>("expectedContentType");
+    QTest::addColumn<ContentTypeParameters_t>("expectedContentTypeParameters");
     QTest::addColumn<QString>("expectedUserAgent");
     QTest::addColumn<bool>("expectError");
     QTest::addColumn<QNetworkReply::NetworkError>("error");
@@ -75,15 +87,29 @@ void TestNetworkRequest::testNetworkRequest_data()
     const QUrl& exampleURL = QUrl{"https://example.com"};
     const QByteArray& exampleContent = QString{"test-content"}.toUtf8();
 
-    QTest::newRow("successful request") << exampleURL << exampleContent << defaultUserAgent
-        << false << QNetworkReply::NetworkError::NoError;
+    QTest::newRow("successful request") << exampleURL << exampleContent << "text/plain"
+                                        << "text/plain" << ContentTypeParameters_t{}
+                                        << defaultUserAgent << false << QNetworkReply::NetworkError::NoError;
+    QTest::newRow("content type") << exampleURL << exampleContent << "application/test-content-type"
+                                        << "application/test-content-type" << ContentTypeParameters_t{}
+                                        << defaultUserAgent << false << QNetworkReply::NetworkError::NoError;
+    QTest::newRow("content type parameters") << exampleURL << exampleContent << "application/test-content-type;test-param=test-value"
+                                        << "application/test-content-type" << ContentTypeParameters_t {{"test-param", "test-value"}}
+                                        << defaultUserAgent << false << QNetworkReply::NetworkError::NoError;
+    QTest::newRow("content type parameters trimmed") << exampleURL << exampleContent << "application/test-content-type; test-param = test-value"
+                                        << "application/test-content-type" << ContentTypeParameters_t {{"test-param", "test-value"}}
+                                        << defaultUserAgent << false << QNetworkReply::NetworkError::NoError;
 }
 
 void TestNetworkRequest::testNetworkRequestTimeout()
 {
+    // Timeout should work for single request
+    // Timeout should capture entire duration, including redirects
     // TODO
 }
 void TestNetworkRequest::testNetworkRequestRedirects()
 {
+    // Should respect max number of redirects
+    // Headers, Reply, etc. should reflect final request
     // TODO
 }
