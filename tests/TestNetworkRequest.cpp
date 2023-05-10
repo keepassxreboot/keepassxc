@@ -32,8 +32,7 @@ void TestNetworkRequest::testNetworkRequest()
     }
 
     // Create request
-    NetworkRequest request = createRequest(5, std::chrono::milliseconds{5000}, QList<QPair<QString, QString>>{}, &manager);
-    request.fetch(requestedURL);
+    NetworkRequest request = createRequest(requestedURL, 5, std::chrono::milliseconds{5000}, QList<QPair<QString, QString>>{}, &manager);
 
     QString actualContent;
     bool didError = false, didSucceed = false;
@@ -53,19 +52,12 @@ void TestNetworkRequest::testNetworkRequest()
 
     // Ensures that predicates match - i.e., the header was set correctly
     QCOMPARE(manager.matchedRequests().length(), 1);
+    QCOMPARE(request.URL(), requestedURL);
     if(!expectError) {
-        // Ensures that NetworkRequest parses the reply properly
-        // URL correct?
-        QCOMPARE(request.url(), requestedURL);
-        // Content correct?
         QCOMPARE(actualContent, expectedContent);
         QCOMPARE(didSucceed, true);
         QCOMPARE(didError, false);
     } else {
-        // Ensures that NetworkRequest parses the reply properly
-        // URL correct?
-        QCOMPARE(request.url(), requestedURL);
-        // Content correct?
         QCOMPARE(didSucceed, false);
         QCOMPARE(didError, true);
     }

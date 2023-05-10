@@ -17,13 +17,27 @@ namespace
         }
         return url;
     }
+
+    QPair<QString, QHash<QString, QString>> parseContentTypeHeader(const QString& contentTypeHeader)
+    {
+        QString contentType;
+        QHash<QString, QString> contentTypeParameters;
+        // Parse content type
+        auto tokens = contentTypeHeader.split(";", Qt::SkipEmptyParts);
+        contentType = tokens[0].trimmed();
+        for (int i = 1; i < tokens.size(); ++i) {
+            auto parameterTokens = tokens[i].split("=");
+            contentTypeParameters[parameterTokens[0]] = parameterTokens[1];
+        }
+        return {contentType, contentTypeParameters};
+    }
 } // namespace
 
 void NetworkRequest::fetch(const QUrl& url)
 {
     reset();
 
-    m_url = url;
+    m_requested_url = url;
 
     QNetworkRequest request(url);
 
@@ -43,11 +57,6 @@ void NetworkRequest::fetchFinished()
     auto error = m_reply->error();
     QUrl redirectTarget = getRedirectTarget(m_reply);
     QUrl url = m_reply->url();
-    // Returns an empty string if the header was not set
-    QString contentTypeHeader = m_reply->header(QNetworkRequest::ContentTypeHeader).toString();
-
-    m_reply->deleteLater();
-    m_reply = nullptr;
 
     if (error != QNetworkReply::NoError) {
         // Do not emit on abort.
@@ -73,13 +82,12 @@ void NetworkRequest::fetchFinished()
         }
     }
 
-    // Parse content type
-    auto tokens = contentTypeHeader.split(";", Qt::SkipEmptyParts);
-    m_content_type = tokens[0].trimmed();
-    for (int i = 1; i < tokens.size(); ++i) {
-        auto parameterTokens = tokens[i].split("=");
-        m_content_type_parameters[parameterTokens[0]] = parameterTokens[1];
-    }
+    // Returns an empty string if the header was not set
+    QString contentTypeHeader = m_reply->header(QNetworkRequest::ContentTypeHeader).toString();
+    // Parse the header and cache the result
+    auto [contentType, contentTypeParameters] = parseContentTypeHeader(contentTypeHeader);
+    m_content_type = contentType;
+    m_content_type_parameters = contentTypeParameters;
 
     emit success(std::move(m_bytes));
 }
@@ -91,18 +99,23 @@ void NetworkRequest::fetchReadyRead()
 
 void NetworkRequest::reset()
 {
-    m_redirects = 0;
     m_bytes.clear();
     m_content_type = "";
     m_content_type_parameters.clear();
-    m_timeout.setInterval(m_timeoutDuration);
-    m_timeout.setSingleShot(true);
+
+    // Ensure that replies of redirects are deleted
+    if(m_reply) {
+        m_reply->deleteLater();
+        m_reply = nullptr;
+    }
 }
 
 void NetworkRequest::cancel()
 {
     if (m_reply) {
         m_reply->abort();
+        // Clear all data and free any resources
+        reset();
     }
 }
 
@@ -111,9 +124,9 @@ NetworkRequest::~NetworkRequest()
     cancel();
 }
 
-QUrl NetworkRequest::url() const
+QUrl NetworkRequest::URL() const
 {
-    return m_url;
+    return m_requested_url;
 }
 
 void NetworkRequest::setMaxRedirects(int maxRedirects)
@@ -121,7 +134,9 @@ void NetworkRequest::setMaxRedirects(int maxRedirects)
     m_maxRedirects = std::max(0, maxRedirects);
 }
 
-NetworkRequest::NetworkRequest(int maxRedirects,
+NetworkRequest::NetworkRequest(
+    QUrl targetURL,
+                                int maxRedirects,
                                std::chrono::milliseconds timeoutDuration,
                                QList<QPair<QString, QString>> headers,
                                QNetworkAccessManager* manager)
@@ -130,9 +145,15 @@ NetworkRequest::NetworkRequest(int maxRedirects,
     , m_redirects(0)
     , m_timeoutDuration(timeoutDuration)
     , m_headers(headers)
+    , m_requested_url(targetURL)
 {
     m_manager = manager ? manager : getNetMgr();
     connect(&m_timeout, &QTimer::timeout, this, &NetworkRequest::fetchTimeout);
+
+    m_timeout.setInterval(m_timeoutDuration);
+    m_timeout.setSingleShot(true);
+
+    fetch(m_requested_url);
 }
 
 const QString& NetworkRequest::ContentType() const
@@ -155,7 +176,13 @@ void NetworkRequest::fetchTimeout()
     // Cancel request on timeout
     cancel();
 }
-NetworkRequest createRequest(int maxRedirects,
+
+QNetworkReply* NetworkRequest::Reply() const
+{
+    return m_reply;
+}
+
+NetworkRequest createRequest(QUrl target,int maxRedirects,
                              std::chrono::milliseconds timeoutDuration,
                              QList<QPair<QString, QString>> additionalHeaders,
                              QNetworkAccessManager* manager)
@@ -166,5 +193,5 @@ NetworkRequest createRequest(int maxRedirects,
         })) {
         additionalHeaders.append(QPair{"User-Agent", "KeePassXC"});
     }
-    return NetworkRequest(maxRedirects, timeoutDuration, additionalHeaders, manager);
+    return NetworkRequest(std::move(target), maxRedirects, timeoutDuration, additionalHeaders, manager);
 }

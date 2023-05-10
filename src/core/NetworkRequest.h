@@ -50,28 +50,43 @@ class NetworkRequest : public QObject
     int m_redirects;
     std::chrono::milliseconds m_timeoutDuration;
     QList<QPair<QString, QString>> m_headers;
-    QUrl m_url;
+    QUrl m_requested_url;
 
 public:
     // TODO Disallow insecure connections by default?
-    explicit NetworkRequest(int maxRedirects,
+    explicit NetworkRequest(QUrl targetURL, int maxRedirects,
                             std::chrono::milliseconds timeoutDuration,
                             QList<QPair<QString, QString>> headers,
                             QNetworkAccessManager* manager = nullptr);
     ~NetworkRequest() override;
 
+    /**
+     * Sets the maximum number of redirects to follow.
+     * @param maxRedirects The maximum number of redirects to follow. Must be >= 0.
+     */
     void setMaxRedirects(int maxRedirects);
+
+    /**
+     * Sets the timeout duration for the request. This is the maximum time the request may take, including redirects.
+     * @param timeoutDuration The duration of the timeout in milliseconds.
+     */
     void setTimeout(std::chrono::milliseconds timeoutDuration);
 
-    // TODO Should it be single shot vs multiple shot?
-    void fetch(const QUrl& url);
     void cancel();
 
-    QUrl url() const;
+    QUrl URL() const;
+
     /**
-     * @return The MIME Type set in the Content-Type header. Empty string if Content-Type was not set.
+     * @return The QNetworkReply of the final request.
+     */
+    QNetworkReply* Reply() const;
+
+    /**
+     * @return The MIME Type set in the Content-Type header of the last request.
+     * Empty string if Content-Type was not set.
      */
     const QString& ContentType() const;
+
     /**
      * @return Any parameters set in the Content-Type header.
      */
@@ -79,6 +94,7 @@ public:
 
 private:
     void reset();
+    void fetch(const QUrl& url);
 private slots:
     void fetchFinished();
     void fetchReadyRead();
@@ -97,7 +113,7 @@ signals:
  * @param manager
  * @return
  */
-NetworkRequest createRequest(int maxRedirects = 5,
+NetworkRequest createRequest(QUrl target, int maxRedirects = 5,
                              std::chrono::milliseconds timeoutDuration = std::chrono::milliseconds(5000),
                              QList<QPair<QString, QString>> additionalHeaders = {},
                              QNetworkAccessManager* manager = nullptr);
