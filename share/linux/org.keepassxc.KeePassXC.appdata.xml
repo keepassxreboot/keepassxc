@@ -59,6 +59,43 @@
     </screenshots>
 
     <releases>
+        <release version="2.7.5" date="2023-05-14">
+            <description>
+                <ul>
+                    <li>Add menu option to allow screenshots [#8841]</li>
+                    <li>Add support for Botan 3 [#9388]</li>
+                    <li>Increase max TOTP step to 24 hours [#9149]</li>
+                    <li>Improve HTML export layout [#8987]</li>
+                    <li>Turn search reset off by default [#9153]</li>
+                    <li>Use QClipboard::clear() instead of setting blank text [#9148]</li>
+                    <li>Hide group column header choice when not in search [#9171]</li>
+                    <li>Improve look of KeePassXC logo and icons [#9355]</li>
+                    <li>Add keyboard shortcuts for app and database settings [#9007]</li>
+                    <li>Hide rename button from attachments preview panel [#8842]</li>
+                    <li>Linux: Set SingleMainWindow in .desktop file [#7430]</li>
+                    <li>Fix crash when search clears while creating new entry [#9230]</li>
+                    <li>Fix crash when using Windows Hello in a Remote Desktop session [#9006]</li>
+                    <li>Fix crash in Group Edit after enabling Browser Integration [#8778]</li>
+                    <li>Fix canceling quick unlock when it is unavailable [#9034]</li>
+                    <li>Set password input field font correctly [#8732]</li>
+                    <li>Greatly improve performance when rendering entry view [#9398]</li>
+                    <li>Fix various accessibility issues [#9138]</li>
+                    <li>Fix arrows size when expand/collapse a group [#9096]</li>
+                    <li>Select the clone instead of the original after cloning an entry [#9070]</li>
+                    <li>Fix bugs with preview widget [#9170]</li>
+                    <li>Fix status bar update when switching to other DB [#9073]</li>
+                    <li>Fix database settings spin box bug [#9101]</li>
+                    <li>Fix Ctrl+Tab shortcut to cycle databases in unlock dialog [#8839]</li>
+                    <li>Fix TOTP QR code maintaining square ratio [#9027]</li>
+                    <li>Fix Auto-Type configuration page on custom sequence selection [#8752]</li>
+                    <li>Fix unexpected behavior of `--lock` when KeePassXC is not running [#8889]</li>
+                    <li>Make open folder icon exempt from "Apply group icon to entry" [#9205]</li>
+                    <li>Allow setting default file open directory with env var [#9192]</li>
+                    <li>SSH Agent: Fix support for AES-256/GCM openssh keys [#8968]</li>
+                    <li>Browser: Fix Native Messaging script path with BSD OS's [#8835]</li>
+                </ul>
+            </description>
+        </release>
         <release version="2.7.4" date="2022-10-29">
             <description>
                 <ul>
