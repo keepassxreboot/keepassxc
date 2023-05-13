@@ -250,10 +250,6 @@ AutoTypeAction::Result AutoTypeExecutorMac::execType(const AutoTypeKey* action)
             int ch = action->character.toUpper().toLatin1();
             m_platform->sendKey(static_cast<Qt::Key>(ch), true, action->modifiers);
             m_platform->sendKey(static_cast<Qt::Key>(ch), false, action->modifiers);
-        } else if (mode == Mode::VIRTUAL) {
-            int ch = action->character.toLatin1();
-            m_platform->sendKey(static_cast<Qt::Key>(ch), true, action->modifiers);
-            m_platform->sendKey(static_cast<Qt::Key>(ch), false, action->modifiers);
         } else {
             m_platform->sendChar(action->character, true);
             m_platform->sendChar(action->character, false);
