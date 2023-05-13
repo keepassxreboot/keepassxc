@@ -1,5 +1,45 @@
 # Changelog
 
+## 2.7.5 (2023-05-14)
+
+### Changes
+- Add menu option to allow screenshots [#8841]
+- Add support for Botan 3 [#9388]
+- Increase max TOTP step to 24 hours [#9149]
+- Improve HTML export layout [#8987]
+- Turn search reset off by default [#9153]
+- Use QClipboard::clear() instead of setting blank text [#9148]
+- Hide group column header choice when not in search [#9171]
+- Improve look of KeePassXC logo and icons [#9355]
+- Add keyboard shortcuts for app and database settings [#9007]
+- Hide rename button from attachments preview panel [#8842]
+- Linux: Set SingleMainWindow in .desktop file [#7430]
+
+### Fixes
+- Fix crash when search clears while creating new entry [#9230]
+- Fix crash when using Windows Hello in a Remote Desktop session [#9006]
+- Fix crash in Group Edit after enabling Browser Integration [#8778]
+- Fix canceling quick unlock when it is unavailable [#9034]
+- Set password input field font correctly [#8732]
+- Greatly improve performance when rendering entry view [#9398]
+- Fix various accessibility issues [#9138]
+- Fix arrows size when expand/collapse a group [#9096]
+- Select the clone instead of the original after cloning an entry [#9070]
+- Fix bugs with preview widget [#9170]
+- Fix status bar update when switching to other DB [#9073]
+- Fix database settings spin box bug [#9101]
+- Fix Ctrl+Tab shortcut to cycle databases in unlock dialog [#8839]
+- Fix TOTP QR code maintaining square ratio [#9027]
+- Fix Auto-Type configuration page on custom sequence selection [#8752]
+- Fix unexpected behavior of `--lock` when KeePassXC is not running [#8889]
+- Make open folder icon exempt from "Apply group icon to entry" [#9205]
+- Allow setting default file open directory with env var [#9192]
+- SSH Agent: Fix support for AES-256/GCM openssh keys [#8968]
+- Browser: Fix Native Messaging script path with BSD OS's [#8835]
+- MacOS: Fix text selection for Auto-Type clear field [#9066]
+- MacOS: Don't rely on AppleInterfaceStyle for theme switching [#8615]
+- Windows: Remove registry detection of desktop shortcut [#9380]
+
 ## 2.7.4 (2022-10-29)
 
 ### Changes
