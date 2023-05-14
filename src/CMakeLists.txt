@@ -500,7 +500,7 @@ if(WIN32)
         # install OpenSSL library
         if(WITH_XC_NETWORKING)
             find_file(OPENSSL_DLL
-                    NAMES libssl-1_1.dll libssl-1_1-x64.dll
+                    NAMES libssl-3.dll libssl-3-x64.dll
                     HINTS "${OPENSSL_ROOT_DIR}/bin"
                     )
             if (NOT OPENSSL_DLL)
@@ -508,7 +508,7 @@ if(WIN32)
             endif()
 
             find_file(CRYPTO_DLL
-                    NAMES libcrypto-1_1.dll libcrypto-1_1-x64.dll
+                    NAMES libcrypto-3.dll libcrypto-3-x64.dll
                     HINTS "${OPENSSL_ROOT_DIR}/bin"
                     )
             if (NOT CRYPTO_DLL)
