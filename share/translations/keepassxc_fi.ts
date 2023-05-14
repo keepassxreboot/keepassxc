@@ -112,7 +112,7 @@
     <name>AgentSettingsWidget</name>
     <message>
         <source>Enable SSH Agent integration</source>
-        <translation>Ota SSH Agentti käyttöön</translation>
+        <translation>Ota SSH-agentin integraatio käyttöön</translation>
     </message>
     <message>
         <source>Use Pageant</source>
@@ -144,11 +144,11 @@
     </message>
     <message>
         <source>No SSH Agent socket available. Either make sure SSH_AUTH_SOCK environment variable exists or set an override.</source>
-        <translation>SSH Agentin socketia ei ole. Varmista, että SSH_AUTH_SOCK-ympäristömuuttuja on olemassa, tai aseta sille ylikirjoitus</translation>
+        <translation>Yhteystieto SSH-agenttiin puuttuu. Varmista, että SSH_AUTH_SOCK-ympäristömuuttuja on olemassa, tai aseta sille ylikirjoitus</translation>
     </message>
     <message>
         <source>SSH Agent connection is working!</source>
-        <translation>SSH Agent -yhteys toimii!</translation>
+        <translation>Yhteys SSH-agenttiin toimii!</translation>
     </message>
     <message>
         <source>Use both agents</source>
@@ -532,7 +532,7 @@
     <message>
         <source> min</source>
         <comment>Minutes</comment>
-        <translation>minuuttia</translation>
+        <translation> minuuttia</translation>
     </message>
     <message>
         <source>Clipboard clear seconds</source>
@@ -593,6 +593,10 @@
     <message>
         <source>Use DuckDuckGo service to download website icons</source>
         <translation>Käytä DuckDuckGo:ta sivustojen ikonien lataukseen</translation>
+    </message>
+    <message>
+        <source>Hide TOTP in the entry preview panel</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1544,10 +1548,6 @@ Jos et halua nähdä tätä virhettä uudestaan, mene &quot;Tietokannan asetukse
         <translation>Yritä uudelleen tyhjällä salasanalla</translation>
     </message>
     <message>
-        <source>Failed to authenticate with Windows Hello</source>
-        <translation>Autentikaatio Windows Hellon kautta ei onnistunut</translation>
-    </message>
-    <message>
         <source>Failed to authenticate with Touch ID</source>
         <translation>Autentikaatio Touch ID:n kautta ei onnistunut</translation>
     </message>
@@ -1610,6 +1610,14 @@ Jos sinulla ei ole avaintiedostoa, jätä kenttä tyhjäksi.</translation>
 &lt;p&gt;Click for more information…&lt;/p&gt;</source>
         <translation>&lt;p&gt;Voit käyttää laiteavainta, kuten &lt;strong&gt;Yubikey:tä&lt;/strong&gt; tai &lt;strong&gt;Onlykey:tä&lt;/strong&gt; HMAC-SHA1 -asetuksella olevan paikan kanssa.&lt;/p&gt;
 &lt;p&gt;Lisätietoja tästä...&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>authenticate to access the database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to authenticate with Windows Hello: %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2040,16 +2048,8 @@ Jos pidät tämän arvon, tietokanta ei ole välttämättä turvattu brute force
         <translation>Historiamerkintöjen maksimimäärä per tietue</translation>
     </message>
     <message>
-        <source>Max. history items:</source>
-        <translation>Maks. historia-kohteiden lukumäärä:</translation>
-    </message>
-    <message>
         <source>Maximum size of history per entry</source>
         <translation>Historian koon maksimimäärä per tietue</translation>
-    </message>
-    <message>
-        <source>Max. history size:</source>
-        <translation>Maks. historian koko:</translation>
     </message>
     <message>
         <source> MiB</source>
@@ -2079,6 +2079,35 @@ This action is not reversible.</source>
     <message>
         <source> (old)</source>
         <translation>(vanha)</translation>
+    </message>
+    <message>
+        <source>When saving this setting or editing an entry
+the oldest history items of an entry will be
+removed such that only the specified amount
+of entries remain at most.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Limit the amount of history items per entry to:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>When saving this setting or editing an entry
+the oldest history items of an entry will be
+removed such that the remaining history items
+add up to the specified amount at most.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Limit the total size of history items per entry to:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Move entries to a recycle bin group
+instead of deleting them from the database.
+Entries deleted from the recycle bin are
+removed from the database.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2440,7 +2469,7 @@ Ota turvallinen tallennus pois käytöstä ja yritä uudelleen?</translation>
     </message>
     <message numerus="yes">
         <source>Entries expiring within %1 day(s)</source>
-        <translation><numerusform>%1 päivän kuluttua vanhentuva tietue</numerusform><numerusform>%1 päivän kuluttua vanhentuva tietue</numerusform></translation>
+        <translation><numerusform>Tietueet jotka vanhenevat %1 päivässä</numerusform><numerusform>Tietueet jotka vanhenevat %1 päivässä</numerusform></translation>
     </message>
     <message>
         <source>Searches and Tags</source>
@@ -2613,7 +2642,7 @@ Haluatko korjata sen?</translation>
     </message>
     <message numerus="yes">
         <source>%n hour(s)</source>
-        <translation><numerusform>%n tunti</numerusform><numerusform>%n tuntia</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -2873,20 +2902,8 @@ Haluatko korjata sen?</translation>
         <translation>Muistiinpanojen kenttä</translation>
     </message>
     <message>
-        <source>Toggle the checkbox to reveal the notes section.</source>
-        <translation>Ruksi valintaruutu näyttääksesi muistiinpano-osio.</translation>
-    </message>
-    <message>
         <source>Username field</source>
         <translation>Käyttäjätunnuksen kenttä</translation>
-    </message>
-    <message>
-        <source>Toggle notes visible</source>
-        <translation>Vaihda muistiinpanojen näkyvyyttä</translation>
-    </message>
-    <message>
-        <source>Notes:</source>
-        <translation>Muistiinpanot:</translation>
     </message>
     <message>
         <source>Expiration field</source>
@@ -2905,14 +2922,6 @@ Haluatko korjata sen?</translation>
         <translation>Esiasetukset</translation>
     </message>
     <message>
-        <source>Password:</source>
-        <translation>Salasana</translation>
-    </message>
-    <message>
-        <source>URL:</source>
-        <translation>URL:</translation>
-    </message>
-    <message>
         <source>Url field</source>
         <translation>Osoitekenttä</translation>
     </message>
@@ -2921,16 +2930,8 @@ Haluatko korjata sen?</translation>
         <translation>Lataa favicon tälle URL:lle</translation>
     </message>
     <message>
-        <source>Title:</source>
-        <translation>Otsikko:</translation>
-    </message>
-    <message>
         <source>Title field</source>
         <translation>Otsikkokenttä</translation>
-    </message>
-    <message>
-        <source>Username:</source>
-        <translation>Käyttäjänimi</translation>
     </message>
     <message>
         <source>Password field</source>
@@ -2941,16 +2942,40 @@ Haluatko korjata sen?</translation>
         <translation>Ota vanhentumisaika käyttöön</translation>
     </message>
     <message>
-        <source>Expires:</source>
-        <translation>Vanhentuu:</translation>
-    </message>
-    <message>
-        <source>Tags:</source>
-        <translation>Tagit:</translation>
-    </message>
-    <message>
         <source>Tags list</source>
         <translation>Tagilista</translation>
+    </message>
+    <message>
+        <source>&amp;Username:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Title:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Password:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>UR&amp;L:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Notes:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle notes visibility</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>T&amp;ags:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Expires:</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3090,10 +3115,6 @@ Haluatko korjata sen?</translation>
 </context>
 <context>
     <name>EditGroupWidgetBrowser</name>
-    <message>
-        <source>Edit Group</source>
-        <translation>Muokkaa ryhmää</translation>
-    </message>
     <message>
         <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
         <translation>Nämä asetukset vaikuttavat ryhmän toimintaan selainlaajennuksen kanssa.</translation>
@@ -4079,7 +4100,7 @@ Tämä jättää salasanasi ja minkä tahansa arkaluontoisen tiedon haavoittuvak
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
-        <translation><numerusform>%n tietue käytetiin %1</numerusform><numerusform>%n tietuetta käytettiin %1</numerusform></translation>
+        <translation><numerusform>%1 tietuetta käytettiin %1:n toimesta</numerusform><numerusform>%1 tietuetta käytettiin %1:n toimesta</numerusform></translation>
     </message>
 </context>
 <context>
@@ -5216,10 +5237,6 @@ Haluatko jatkaa käyttämällä tätä tiedostoa?</translation>
         <translation>Kopioi nimi leikepöydälle</translation>
     </message>
     <message>
-        <source>&amp;URL</source>
-        <translation>&amp;URL</translation>
-    </message>
-    <message>
         <source>Copy URL to clipboard</source>
         <translation>Kopioi osoite leikepöydälle</translation>
     </message>
@@ -5453,11 +5470,11 @@ Suosittelemme, että käytät AppImagea, jonka voit hakea lataussivustoltamme.</
     </message>
     <message>
         <source>No Tags</source>
-        <translation>Tunnisteita ei ole</translation>
+        <translation>Ei tunnisteita</translation>
     </message>
     <message numerus="yes">
         <source>%1 Entry(s)</source>
-        <translation><numerusform>%1 tietue</numerusform><numerusform>%1 tietuetta</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Copy Password and TOTP</source>
@@ -5469,6 +5486,14 @@ Suosittelemme, että käytät AppImagea, jonka voit hakea lataussivustoltamme.</
     </message>
     <message>
         <source>XML File…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy &amp;URL</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Allow Screen Capture</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -5840,6 +5865,10 @@ Suosittelemme, että käytät AppImagea, jonka voit hakea lataussivustoltamme.</
     <message>
         <source>Unexpected EOF when writing private key</source>
         <translation>Odottamaton EOF yksityistä avainta kirjoittaessa</translation>
+    </message>
+    <message>
+        <source>AES-256/GCM is currently not supported</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6220,6 +6249,10 @@ Haluatko ylikirjoittaa sen?</translation>
         <source>Excellent</source>
         <comment>Password quality</comment>
         <translation>Erinomainen</translation>
+    </message>
+    <message>
+        <source>Toggle password visibilty using Control + H. Open the password generator using Control + G.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7544,8 +7577,8 @@ Ydin: %3 %4</translation>
         <translation><numerusform>%1 minuutti</numerusform><numerusform>%1 minuuttia</numerusform></translation>
     </message>
     <message>
-        <source>Botan library must be at least 2.11.x, found %1.%2.%3</source>
-        <translation>Botan-kirjaston täytyy olla vähintään versio 2.11.x. Löydettiin versio %1.%2.%3</translation>
+        <source>Botan library must be at least %1, found %2.%3.%4</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Cryptographic libraries:</source>
@@ -7810,10 +7843,6 @@ Ydin: %3 %4</translation>
         <translation>KeePassXC - Virhe</translation>
     </message>
     <message>
-        <source>Warning: Failed to prevent screenshots on a top level window!</source>
-        <translation>Varoitus: Ruudunkaappauksia ylimmän tason ikkunalla ei voitu estää!</translation>
-    </message>
-    <message>
         <source>Database password: </source>
         <translation>Tietokannan salasana:</translation>
     </message>
@@ -7836,8 +7865,20 @@ Ydin: %3 %4</translation>
         <translation>Vastauksen allekirjoitus Windows Hellolle epäonnistui</translation>
     </message>
     <message>
+        <source>Warning: Failed to block screenshot capture on a top-level window.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid Cipher</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid KDF</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Please present or touch your YubiKey to continue.</source>
-        <translation>Jatka kytkemällä YubiKey-avaimesi tai koskettamalla sitä.</translation>
+        <translation>Jatka kytkemällä YubiKey-avaimesi tai koskettamalla sitä</translation>
     </message>
     <message>
         <source>Show all the attributes of the entry.</source>
@@ -7894,6 +7935,10 @@ Ydin: %3 %4</translation>
     <message>
         <source>Set the key file for the database.
 This options is deprecated, use --set-key-file instead.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC is not running. No open database to lock</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -8003,7 +8048,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation><numerusform>Poista tietue...</numerusform><numerusform>Poista tietueet...</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform>Poista tietueet...</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
@@ -8362,7 +8407,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>No agent running, cannot list identities.</source>
-        <translation>Agentti ei ole päällä, tunnisteita ei voi listata.</translation>
+        <translation>Agentti ei ole päällä, identiteettejä ei voi listata.</translation>
     </message>
 </context>
 <context>
@@ -8700,7 +8745,7 @@ mutta arvo voi vaihdella ohjelmasta riippuen.)&lt;/p&gt;&lt;/body&gt;&lt;/html&g
     </message>
     <message>
         <source>Remove tag &quot;%1&quot; from all entries in this database?</source>
-        <translation>Poistetaanko tunniste &quot;%1&quot; tietokannan kaikilta tietueilta?</translation>
+        <translation>Poistetaanko tunniste &quot;%1&quot; tietokannan kaikilta tietueista?</translation>
     </message>
 </context>
 <context>

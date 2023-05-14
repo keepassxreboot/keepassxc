@@ -227,7 +227,7 @@
     </message>
     <message>
         <source>This setting cannot be enabled when minimize on unlock is enabled.</source>
-        <translation type="unfinished"/>
+        <translation>This setting cannot be enabled when minimize on unlock is enabled.</translation>
     </message>
 </context>
 <context>
@@ -499,11 +499,11 @@
     </message>
     <message>
         <source> recent files</source>
-        <translation type="unfinished"/>
+        <translation> recent files</translation>
     </message>
     <message>
         <source>Show passwords in color</source>
-        <translation type="unfinished"/>
+        <translation>Show passwords in color</translation>
     </message>
 </context>
 <context>
@@ -594,6 +594,10 @@
         <source>Use DuckDuckGo service to download website icons</source>
         <translation>Use DuckDuckGo service to download website icons</translation>
     </message>
+    <message>
+        <source>Hide TOTP in the entry preview panel</source>
+        <translation>Hide TOTP in the entry preview panel</translation>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
@@ -657,7 +661,7 @@
     </message>
     <message>
         <source>Entry does not have attribute for PICKCHARS: %1</source>
-        <translation type="unfinished"/>
+        <translation>Entry does not have attribute for PICKCHARS: %1</translation>
     </message>
 </context>
 <context>
@@ -1545,10 +1549,6 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
         <translation>Retry with empty password</translation>
     </message>
     <message>
-        <source>Failed to authenticate with Windows Hello</source>
-        <translation>Failed to authenticate with Windows Hello</translation>
-    </message>
-    <message>
         <source>Failed to authenticate with Touch ID</source>
         <translation>Failed to authenticate with Touch ID</translation>
     </message>
@@ -1611,6 +1611,14 @@ If you do not have a key file, please leave the field empty.</translation>
 &lt;p&gt;Click for more information…&lt;/p&gt;</source>
         <translation>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
 &lt;p&gt;Click for more information…&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>authenticate to access the database</source>
+        <translation>authenticate to access the database</translation>
+    </message>
+    <message>
+        <source>Failed to authenticate with Windows Hello: %1</source>
+        <translation>Failed to authenticate with Windows Hello: %1</translation>
     </message>
 </context>
 <context>
@@ -2041,16 +2049,8 @@ If you keep this number, your database will not be protected from brute force at
         <translation>Maximum number of history items per entry</translation>
     </message>
     <message>
-        <source>Max. history items:</source>
-        <translation>Max. history items:</translation>
-    </message>
-    <message>
         <source>Maximum size of history per entry</source>
         <translation>Maximum size of history per entry</translation>
-    </message>
-    <message>
-        <source>Max. history size:</source>
-        <translation>Max. history size:</translation>
     </message>
     <message>
         <source> MiB</source>
@@ -2081,6 +2081,44 @@ This action is not reversible.</translation>
     <message>
         <source> (old)</source>
         <translation> (old)</translation>
+    </message>
+    <message>
+        <source>When saving this setting or editing an entry
+the oldest history items of an entry will be
+removed such that only the specified amount
+of entries remain at most.</source>
+        <translation>When saving this setting or editing an entry
+the oldest history items of an entry will be
+removed such that only the specified amount
+of entries remain at most.</translation>
+    </message>
+    <message>
+        <source>Limit the amount of history items per entry to:</source>
+        <translation>Limit the amount of history items per entry to:</translation>
+    </message>
+    <message>
+        <source>When saving this setting or editing an entry
+the oldest history items of an entry will be
+removed such that the remaining history items
+add up to the specified amount at most.</source>
+        <translation>When saving this setting or editing an entry
+the oldest history items of an entry will be
+removed such that the remaining history items
+add up to the specified amount at most.</translation>
+    </message>
+    <message>
+        <source>Limit the total size of history items per entry to:</source>
+        <translation>Limit the total size of history items per entry to:</translation>
+    </message>
+    <message>
+        <source>Move entries to a recycle bin group
+instead of deleting them from the database.
+Entries deleted from the recycle bin are
+removed from the database.</source>
+        <translation>Move entries to a recycle bin group
+instead of deleting them from the database.
+Entries deleted from the recycle bin are
+removed from the database.</translation>
     </message>
 </context>
 <context>
@@ -2265,15 +2303,15 @@ This is definitely a bug, please report it to the developers.</translation>
     </message>
     <message>
         <source>Export database to XML file</source>
-        <translation type="unfinished"/>
+        <translation>Export database to XML file</translation>
     </message>
     <message>
         <source>XML file</source>
-        <translation type="unfinished"/>
+        <translation>XML file</translation>
     </message>
     <message>
         <source>Writing the XML file failed</source>
-        <translation type="unfinished"/>
+        <translation>Writing the XML file failed</translation>
     </message>
 </context>
 <context>
@@ -2446,11 +2484,11 @@ Disable safe saves and try again?</translation>
     </message>
     <message>
         <source>Searches and Tags</source>
-        <translation type="unfinished"/>
+        <translation>Searches and Tags</translation>
     </message>
     <message>
         <source>Enter a unique name or overwrite an existing search from the list:</source>
-        <translation type="unfinished"/>
+        <translation>Enter a unique name or overwrite an existing search from the list:</translation>
     </message>
     <message>
         <source>Save</source>
@@ -2458,7 +2496,7 @@ Disable safe saves and try again?</translation>
     </message>
     <message>
         <source>Save Search</source>
-        <translation type="unfinished"/>
+        <translation>Save Search</translation>
     </message>
 </context>
 <context>
@@ -2875,20 +2913,8 @@ Would you like to correct it?</translation>
         <translation>Notes field</translation>
     </message>
     <message>
-        <source>Toggle the checkbox to reveal the notes section.</source>
-        <translation>Toggle the checkbox to reveal the notes section.</translation>
-    </message>
-    <message>
         <source>Username field</source>
         <translation>Username field</translation>
-    </message>
-    <message>
-        <source>Toggle notes visible</source>
-        <translation>Toggle notes visible</translation>
-    </message>
-    <message>
-        <source>Notes:</source>
-        <translation>Notes:</translation>
     </message>
     <message>
         <source>Expiration field</source>
@@ -2907,14 +2933,6 @@ Would you like to correct it?</translation>
         <translation>Presets</translation>
     </message>
     <message>
-        <source>Password:</source>
-        <translation>Password:</translation>
-    </message>
-    <message>
-        <source>URL:</source>
-        <translation>URL:</translation>
-    </message>
-    <message>
         <source>Url field</source>
         <translation>Url field</translation>
     </message>
@@ -2923,16 +2941,8 @@ Would you like to correct it?</translation>
         <translation>Download favicon for URL</translation>
     </message>
     <message>
-        <source>Title:</source>
-        <translation>Title:</translation>
-    </message>
-    <message>
         <source>Title field</source>
         <translation>Title field</translation>
-    </message>
-    <message>
-        <source>Username:</source>
-        <translation>Username:</translation>
     </message>
     <message>
         <source>Password field</source>
@@ -2943,16 +2953,40 @@ Would you like to correct it?</translation>
         <translation>Toggle expiration</translation>
     </message>
     <message>
-        <source>Expires:</source>
-        <translation>Expires:</translation>
-    </message>
-    <message>
-        <source>Tags:</source>
-        <translation>Tags:</translation>
-    </message>
-    <message>
         <source>Tags list</source>
         <translation>Tags list</translation>
+    </message>
+    <message>
+        <source>&amp;Username:</source>
+        <translation>&amp;Username:</translation>
+    </message>
+    <message>
+        <source>&amp;Title:</source>
+        <translation>&amp;Title:</translation>
+    </message>
+    <message>
+        <source>&amp;Password:</source>
+        <translation>&amp;Password:</translation>
+    </message>
+    <message>
+        <source>UR&amp;L:</source>
+        <translation>UR&amp;L:</translation>
+    </message>
+    <message>
+        <source>&amp;Notes:</source>
+        <translation>&amp;Notes:</translation>
+    </message>
+    <message>
+        <source>Toggle notes visibility</source>
+        <translation>Toggle notes visibility</translation>
+    </message>
+    <message>
+        <source>T&amp;ags:</source>
+        <translation>T&amp;ags:</translation>
+    </message>
+    <message>
+        <source>&amp;Expires:</source>
+        <translation>&amp;Expires:</translation>
     </message>
 </context>
 <context>
@@ -3093,10 +3127,6 @@ Would you like to correct it?</translation>
 <context>
     <name>EditGroupWidgetBrowser</name>
     <message>
-        <source>Edit Group</source>
-        <translation>Edit Group</translation>
-    </message>
-    <message>
         <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
         <translation>These settings affect to the group&apos;s behaviour with the browser extension.</translation>
     </message>
@@ -3134,11 +3164,11 @@ Would you like to correct it?</translation>
     </message>
     <message>
         <source>Omit WWW subdomain from matching:</source>
-        <translation type="unfinished"/>
+        <translation>Omit WWW subdomain from matching:</translation>
     </message>
     <message>
         <source>Omit WWW subdomain from matching toggle for this and sub groups</source>
-        <translation type="unfinished"/>
+        <translation>Omit WWW subdomain from matching toggle for this and sub groups</translation>
     </message>
 </context>
 <context>
@@ -3947,7 +3977,7 @@ Error: %1</translation>
     </message>
     <message>
         <source>Double click to copy value</source>
-        <translation type="unfinished"/>
+        <translation>Double click to copy value</translation>
     </message>
 </context>
 <context>
@@ -5218,10 +5248,6 @@ Are you sure you want to continue with this file?</translation>
         <translation>Copy title to clipboard</translation>
     </message>
     <message>
-        <source>&amp;URL</source>
-        <translation>&amp;URL</translation>
-    </message>
-    <message>
         <source>Copy URL to clipboard</source>
         <translation>Copy URL to clipboard</translation>
     </message>
@@ -5455,7 +5481,7 @@ We recommend you use the AppImage available on our downloads page.</translation>
     </message>
     <message>
         <source>No Tags</source>
-        <translation type="unfinished"/>
+        <translation>No Tags</translation>
     </message>
     <message numerus="yes">
         <source>%1 Entry(s)</source>
@@ -5463,15 +5489,23 @@ We recommend you use the AppImage available on our downloads page.</translation>
     </message>
     <message>
         <source>Copy Password and TOTP</source>
-        <translation type="unfinished"/>
+        <translation>Copy Password and TOTP</translation>
     </message>
     <message>
         <source>&amp;XML File…</source>
-        <translation type="unfinished"/>
+        <translation>&amp;XML File…</translation>
     </message>
     <message>
         <source>XML File…</source>
-        <translation type="unfinished"/>
+        <translation>XML File…</translation>
+    </message>
+    <message>
+        <source>Copy &amp;URL</source>
+        <translation>Copy &amp;URL</translation>
+    </message>
+    <message>
+        <source>Allow Screen Capture</source>
+        <translation>Allow Screen Capture</translation>
     </message>
 </context>
 <context>
@@ -5843,6 +5877,10 @@ We recommend you use the AppImage available on our downloads page.</translation>
         <source>Unexpected EOF when writing private key</source>
         <translation>Unexpected EOF when writing private key</translation>
     </message>
+    <message>
+        <source>AES-256/GCM is currently not supported</source>
+        <translation>AES-256/GCM is currently not supported</translation>
+    </message>
 </context>
 <context>
     <name>PasswordEditWidget</name>
@@ -6201,7 +6239,7 @@ Do you want to overwrite it?</translation>
     </message>
     <message>
         <source>Quality: %1</source>
-        <translation type="unfinished"/>
+        <translation>Quality: %1</translation>
     </message>
     <message>
         <source>Poor</source>
@@ -6222,6 +6260,10 @@ Do you want to overwrite it?</translation>
         <source>Excellent</source>
         <comment>Password quality</comment>
         <translation>Excellent</translation>
+    </message>
+    <message>
+        <source>Toggle password visibilty using Control + H. Open the password generator using Control + G.</source>
+        <translation>Toggle password visibilty using Control + H. Open the password generator using Control + G.</translation>
     </message>
 </context>
 <context>
@@ -7546,8 +7588,8 @@ Kernel: %3 %4</translation>
         <translation><numerusform>%1 minute</numerusform><numerusform>%1 minutes</numerusform></translation>
     </message>
     <message>
-        <source>Botan library must be at least 2.11.x, found %1.%2.%3</source>
-        <translation>Botan library must be at least 2.11.x, found %1.%2.%3</translation>
+        <source>Botan library must be at least %1, found %2.%3.%4</source>
+        <translation>Botan library must be at least %1, found %2.%3.%4</translation>
     </message>
     <message>
         <source>Cryptographic libraries:</source>
@@ -7812,10 +7854,6 @@ Kernel: %3 %4</translation>
         <translation>KeePassXC - Error</translation>
     </message>
     <message>
-        <source>Warning: Failed to prevent screenshots on a top level window!</source>
-        <translation>Warning: Failed to prevent screenshots on a top level window!</translation>
-    </message>
-    <message>
         <source>Database password: </source>
         <translation>Database password: </translation>
     </message>
@@ -7838,65 +7876,82 @@ Kernel: %3 %4</translation>
         <translation>Failed to sign challenge using Windows Hello.</translation>
     </message>
     <message>
+        <source>Warning: Failed to block screenshot capture on a top-level window.</source>
+        <translation>Warning: Failed to block screenshot capture on a top-level window.</translation>
+    </message>
+    <message>
+        <source>Invalid Cipher</source>
+        <translation>Invalid Cipher</translation>
+    </message>
+    <message>
+        <source>Invalid KDF</source>
+        <translation>Invalid KDF</translation>
+    </message>
+    <message>
         <source>Please present or touch your YubiKey to continue.</source>
         <translation>Please present or touch your YubiKey to continue.</translation>
     </message>
     <message>
         <source>Show all the attributes of the entry.</source>
-        <translation type="unfinished"/>
+        <translation>Show all the attributes of the entry.</translation>
     </message>
     <message>
         <source>Edit a database.</source>
-        <translation type="unfinished"/>
+        <translation>Edit a database.</translation>
     </message>
     <message>
         <source>Could not change the database key.</source>
-        <translation type="unfinished"/>
+        <translation>Could not change the database key.</translation>
     </message>
     <message>
         <source>Database was not modified.</source>
-        <translation type="unfinished"/>
+        <translation>Database was not modified.</translation>
     </message>
     <message>
         <source>Successfully edited the database.</source>
-        <translation type="unfinished"/>
+        <translation>Successfully edited the database.</translation>
     </message>
     <message>
         <source>Loading the new key file failed: %1</source>
-        <translation type="unfinished"/>
+        <translation>Loading the new key file failed: %1</translation>
     </message>
     <message>
         <source>Unset the password for the database.</source>
-        <translation type="unfinished"/>
+        <translation>Unset the password for the database.</translation>
     </message>
     <message>
         <source>Unset the key file for the database.</source>
-        <translation type="unfinished"/>
+        <translation>Unset the key file for the database.</translation>
     </message>
     <message>
         <source>Cannot use %1 and %2 at the same time.</source>
-        <translation type="unfinished"/>
+        <translation>Cannot use %1 and %2 at the same time.</translation>
     </message>
     <message>
         <source>Cannot remove all the keys from a database.</source>
-        <translation type="unfinished"/>
+        <translation>Cannot remove all the keys from a database.</translation>
     </message>
     <message>
         <source>Cannot remove password: The database does not have a password.</source>
-        <translation type="unfinished"/>
+        <translation>Cannot remove password: The database does not have a password.</translation>
     </message>
     <message>
         <source>Cannot remove file key: The database does not have a file key.</source>
-        <translation type="unfinished"/>
+        <translation>Cannot remove file key: The database does not have a file key.</translation>
     </message>
     <message>
         <source>Found unexpected Key type %1</source>
-        <translation type="unfinished"/>
+        <translation>Found unexpected Key type %1</translation>
     </message>
     <message>
         <source>Set the key file for the database.
 This options is deprecated, use --set-key-file instead.</source>
-        <translation type="unfinished"/>
+        <translation>Set the key file for the database.
+This options is deprecated, use --set-key-file instead.</translation>
+    </message>
+    <message>
+        <source>KeePassXC is not running. No open database to lock</source>
+        <translation>KeePassXC is not running. No open database to lock</translation>
     </message>
 </context>
 <context>
@@ -8447,7 +8502,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Save Search</source>
-        <translation type="unfinished"/>
+        <translation>Save Search</translation>
     </message>
 </context>
 <context>
@@ -8679,30 +8734,30 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>All Entries</source>
-        <translation type="unfinished"/>
+        <translation>All Entries</translation>
     </message>
     <message>
         <source>Clear Search</source>
-        <translation type="unfinished"/>
+        <translation>Clear Search</translation>
     </message>
 </context>
 <context>
     <name>TagView</name>
     <message>
         <source>Remove Search</source>
-        <translation type="unfinished"/>
+        <translation>Remove Search</translation>
     </message>
     <message>
         <source>Remove Tag</source>
-        <translation type="unfinished"/>
+        <translation>Remove Tag</translation>
     </message>
     <message>
         <source>Confirm Remove Tag</source>
-        <translation type="unfinished"/>
+        <translation>Confirm Remove Tag</translation>
     </message>
     <message>
         <source>Remove tag &quot;%1&quot; from all entries in this database?</source>
-        <translation type="unfinished"/>
+        <translation>Remove tag &quot;%1&quot; from all entries in this database?</translation>
     </message>
 </context>
 <context>

@@ -293,7 +293,7 @@
     <message>
         <source>will expire within </source>
         <comment>On database unlock, show entries that...</comment>
-        <translation>löper ut inom</translation>
+        <translation>går ut inom</translation>
     </message>
     <message>
         <source>File Management</source>
@@ -446,11 +446,11 @@
     </message>
     <message>
         <source>Use entry title to match windows for global Auto-Type</source>
-        <translation>Använd postens titel för att matcha fönster vid global autoskriv</translation>
+        <translation>Använd postens titel för att matcha fönster vid systemövergripande autoskriv</translation>
     </message>
     <message>
         <source>Use entry URL to match windows for global Auto-Type</source>
-        <translation>Använd postens URL för att matcha fönster vid global autoskriv</translation>
+        <translation>Använd postens URL för att matcha fönster vid systemövergripande autoskriv</translation>
     </message>
     <message>
         <source>Always ask before performing Auto-Type</source>
@@ -593,6 +593,10 @@
     <message>
         <source>Use DuckDuckGo service to download website icons</source>
         <translation>Använd DuckDuckGo för att ladda ner webbplatsikoner</translation>
+    </message>
+    <message>
+        <source>Hide TOTP in the entry preview panel</source>
+        <translation>Dölj TOTP i förhandsgranskningspanelen</translation>
     </message>
 </context>
 <context>
@@ -1546,10 +1550,6 @@ För att förhindra att detta fel uppstår igen, måste du gå till &quot;Databa
         <translation>Försök med tomt lösenord</translation>
     </message>
     <message>
-        <source>Failed to authenticate with Windows Hello</source>
-        <translation>Kunde inte autentisera med Windows Hello</translation>
-    </message>
-    <message>
         <source>Failed to authenticate with Touch ID</source>
         <translation>Kunde inte autentisera med Touch ID</translation>
     </message>
@@ -1612,6 +1612,14 @@ Om du inte har någon nyckelfil, lämnar du fältet tomt.</translation>
 &lt;p&gt;Click for more information…&lt;/p&gt;</source>
         <translation>&lt;p&gt;Du kan använda en hårdvarunyckel såsom &lt;strong&gt;YubiKey&lt;/strong&gt; eller &lt;strong&gt;OnlyKey&lt;/strong&gt; med anslutningsplatser konfigurerade för HMAC-SHA1.&lt;/p&gt;
 &lt;p&gt;Klicka för mer information...&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>authenticate to access the database</source>
+        <translation>autentisera för åtkomst till databasen</translation>
+    </message>
+    <message>
+        <source>Failed to authenticate with Windows Hello: %1</source>
+        <translation>Kunde inte autentisera med Windows Hello: %1</translation>
     </message>
 </context>
 <context>
@@ -2042,16 +2050,8 @@ Om du behåller detta antal, kommer din databas inte att vara skyddad mot brute 
         <translation>Max antal historikobjekt per post</translation>
     </message>
     <message>
-        <source>Max. history items:</source>
-        <translation>Max antal historikposter:</translation>
-    </message>
-    <message>
         <source>Maximum size of history per entry</source>
         <translation>Max historikstorlek per post</translation>
-    </message>
-    <message>
-        <source>Max. history size:</source>
-        <translation>Maximal historikstorlek:</translation>
     </message>
     <message>
         <source> MiB</source>
@@ -2082,6 +2082,44 @@ Denna åtgärd kan inte ångras.</translation>
     <message>
         <source> (old)</source>
         <translation> (gammal)</translation>
+    </message>
+    <message>
+        <source>When saving this setting or editing an entry
+the oldest history items of an entry will be
+removed such that only the specified amount
+of entries remain at most.</source>
+        <translation>När du sparar den här inställningen eller redigerar 
+en post kommer de äldsta historikobjekten i en 
+post att tas bort, så att endast den angivna mängden
+poster blir kvar som mest.</translation>
+    </message>
+    <message>
+        <source>Limit the amount of history items per entry to:</source>
+        <translation>Begränsa antalet historikobjekt per post till:</translation>
+    </message>
+    <message>
+        <source>When saving this setting or editing an entry
+the oldest history items of an entry will be
+removed such that the remaining history items
+add up to the specified amount at most.</source>
+        <translation>När du sparar den här inställningen eller redigerar en 
+post kommer de äldsta historiska objekten i en post att
+tas bort så att de återstående historikobjekten läggs 
+till det angivna beloppet som högst.</translation>
+    </message>
+    <message>
+        <source>Limit the total size of history items per entry to:</source>
+        <translation>Begränsa antalet historikobjekt per post till:</translation>
+    </message>
+    <message>
+        <source>Move entries to a recycle bin group
+instead of deleting them from the database.
+Entries deleted from the recycle bin are
+removed from the database.</source>
+        <translation>Flytta poster till en papperskorgsgrupp
+i stället för att ta bort dem från databasen.
+Poster som tas bort från papperskorgen
+tas också bort från databasen.</translation>
     </message>
 </context>
 <context>
@@ -2791,7 +2829,7 @@ Vill du korrigera det?</translation>
     </message>
     <message>
         <source>Skip Auto-Submit for this entry</source>
-        <translation>Undanta autoskriv för den här posten</translation>
+        <translation>Undanta att skicka automatiskt för den här posten</translation>
     </message>
     <message>
         <source>Only send this setting to the browser for HTTP Auth dialogs. If enabled, normal login forms will not show this entry for selection.</source>
@@ -2876,20 +2914,8 @@ Vill du korrigera det?</translation>
         <translation>Anteckningar</translation>
     </message>
     <message>
-        <source>Toggle the checkbox to reveal the notes section.</source>
-        <translation>Klicka i kryssrutan för att visa anteckningssektionen.</translation>
-    </message>
-    <message>
         <source>Username field</source>
         <translation>Användarnamn</translation>
-    </message>
-    <message>
-        <source>Toggle notes visible</source>
-        <translation>Visa/Dölj anteckningar</translation>
-    </message>
-    <message>
-        <source>Notes:</source>
-        <translation>Anteckningar:</translation>
     </message>
     <message>
         <source>Expiration field</source>
@@ -2908,14 +2934,6 @@ Vill du korrigera det?</translation>
         <translation>Förinställningar</translation>
     </message>
     <message>
-        <source>Password:</source>
-        <translation>Lösenord:</translation>
-    </message>
-    <message>
-        <source>URL:</source>
-        <translation>URL:</translation>
-    </message>
-    <message>
         <source>Url field</source>
         <translation>URL</translation>
     </message>
@@ -2924,16 +2942,8 @@ Vill du korrigera det?</translation>
         <translation>Ladda ner favicon för URL:en</translation>
     </message>
     <message>
-        <source>Title:</source>
-        <translation>Titel:</translation>
-    </message>
-    <message>
         <source>Title field</source>
         <translation>Titel</translation>
-    </message>
-    <message>
-        <source>Username:</source>
-        <translation>Användarnamn:</translation>
     </message>
     <message>
         <source>Password field</source>
@@ -2944,16 +2954,40 @@ Vill du korrigera det?</translation>
         <translation>Förfallodag på/av</translation>
     </message>
     <message>
-        <source>Expires:</source>
-        <translation>Förfaller:</translation>
-    </message>
-    <message>
-        <source>Tags:</source>
-        <translation>Taggar:</translation>
-    </message>
-    <message>
         <source>Tags list</source>
         <translation>Tagglista</translation>
+    </message>
+    <message>
+        <source>&amp;Username:</source>
+        <translation>&amp;Användarnamn:</translation>
+    </message>
+    <message>
+        <source>&amp;Title:</source>
+        <translation>&amp;Titel:</translation>
+    </message>
+    <message>
+        <source>&amp;Password:</source>
+        <translation>&amp;Lösenord:</translation>
+    </message>
+    <message>
+        <source>UR&amp;L:</source>
+        <translation>&amp;URL:</translation>
+    </message>
+    <message>
+        <source>&amp;Notes:</source>
+        <translation>A&amp;nteckningar:</translation>
+    </message>
+    <message>
+        <source>Toggle notes visibility</source>
+        <translation>Visa/Dölj anteckningar</translation>
+    </message>
+    <message>
+        <source>T&amp;ags:</source>
+        <translation>Ta&amp;ggar:</translation>
+    </message>
+    <message>
+        <source>&amp;Expires:</source>
+        <translation>&amp;Förfaller:</translation>
     </message>
 </context>
 <context>
@@ -3060,7 +3094,7 @@ Vill du korrigera det?</translation>
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation>Webbläsarintegration</translation>
+        <translation>Webbläsarintegrering</translation>
     </message>
     <message>
         <source>Properties</source>
@@ -3093,10 +3127,6 @@ Vill du korrigera det?</translation>
 </context>
 <context>
     <name>EditGroupWidgetBrowser</name>
-    <message>
-        <source>Edit Group</source>
-        <translation>Redigera grupp</translation>
-    </message>
     <message>
         <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
         <translation>Dessa inställningar påverkar gruppens beteende med webbläsartillägget.</translation>
@@ -4975,7 +5005,7 @@ Vill du verkligen fortsätta med den här filen?</translation>
     </message>
     <message>
         <source>Global shortcut already registered to %1</source>
-        <translation>Systemövergripande genväg redan registrerad på %1</translation>
+        <translation>Systemövergripande genväg redan registrerad för %1</translation>
     </message>
     <message>
         <source>Could not register global shortcut</source>
@@ -5217,10 +5247,6 @@ Vill du verkligen fortsätta med den här filen?</translation>
         <translation>Kopiera titel till urklipp</translation>
     </message>
     <message>
-        <source>&amp;URL</source>
-        <translation>&amp;URL</translation>
-    </message>
-    <message>
         <source>Copy URL to clipboard</source>
         <translation>Kopiera URL till urklipp</translation>
     </message>
@@ -5350,7 +5376,7 @@ Vill du verkligen fortsätta med den här filen?</translation>
     </message>
     <message>
         <source>Classic (Platform-native)</source>
-        <translation>Klassisk (Platfformsintegration)</translation>
+        <translation>Klassisk (Platformsintegration)</translation>
     </message>
     <message>
         <source>Show Toolbar</source>
@@ -5471,6 +5497,14 @@ Vi rekommenderar att du använder den AppImage som finns på vår nerladdningssi
     <message>
         <source>XML File…</source>
         <translation>XML-fil</translation>
+    </message>
+    <message>
+        <source>Copy &amp;URL</source>
+        <translation>Kopiera &amp;URL</translation>
+    </message>
+    <message>
+        <source>Allow Screen Capture</source>
+        <translation>Tillåt skärmklipp</translation>
     </message>
 </context>
 <context>
@@ -5658,7 +5692,7 @@ Vi rekommenderar att du använder den AppImage som finns på vår nerladdningssi
     </message>
     <message>
         <source>Global shortcut already registered to %1</source>
-        <translation>Systemövergripande genväg redan registrerad på %1</translation>
+        <translation>Systemövergripande genväg finns redan registrerad för %1</translation>
     </message>
     <message>
         <source>Could not register global shortcut</source>
@@ -5841,6 +5875,10 @@ Vi rekommenderar att du använder den AppImage som finns på vår nerladdningssi
     <message>
         <source>Unexpected EOF when writing private key</source>
         <translation>Oväntad EOF, vid skrivning av privat nyckel</translation>
+    </message>
+    <message>
+        <source>AES-256/GCM is currently not supported</source>
+        <translation>AES-256/GCM stöds för närvarande inte</translation>
     </message>
 </context>
 <context>
@@ -6221,6 +6259,10 @@ Vill du skriva över den?</translation>
         <source>Excellent</source>
         <comment>Password quality</comment>
         <translation>Utmärkt</translation>
+    </message>
+    <message>
+        <source>Toggle password visibilty using Control + H. Open the password generator using Control + G.</source>
+        <translation>Visa/Dölj lösenord med Ctrl+H. Öppna lösenordsgeneratorn med Ctrl+G.</translation>
     </message>
 </context>
 <context>
@@ -7545,8 +7587,8 @@ Kärna: %3 %4</translation>
         <translation><numerusform>%1 minut</numerusform><numerusform>%1 minuter</numerusform></translation>
     </message>
     <message>
-        <source>Botan library must be at least 2.11.x, found %1.%2.%3</source>
-        <translation>Botan-biblioteket måste vara lägst 2.11.x, hittade %1.%2.%3</translation>
+        <source>Botan library must be at least %1, found %2.%3.%4</source>
+        <translation>Botan-biblioteket måste vara lägst %1, hittade %2.%3.%4</translation>
     </message>
     <message>
         <source>Cryptographic libraries:</source>
@@ -7646,7 +7688,7 @@ Kärna: %3 %4</translation>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)…</source>
-        <translation><numerusform>Rensar urklipp om %1 sekund...</numerusform><numerusform>Rensar urklipp om %1 sekunder...</numerusform></translation>
+        <translation><numerusform>Rensar urklipp om %1 sekund…</numerusform><numerusform>Rensar urklipp om %1 sekunder…</numerusform></translation>
     </message>
     <message>
         <source>Group</source>
@@ -7811,10 +7853,6 @@ Kärna: %3 %4</translation>
         <translation>KeePassXC - Fel</translation>
     </message>
     <message>
-        <source>Warning: Failed to prevent screenshots on a top level window!</source>
-        <translation>Varning! Kunde inte förhindra skärmklipp i ett fönster på den översta nivån!</translation>
-    </message>
-    <message>
         <source>Database password: </source>
         <translation>Databaslösenord: </translation>
     </message>
@@ -7835,6 +7873,18 @@ Kärna: %3 %4</translation>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
         <translation>Kunde inte signera challenge med Windows Hello</translation>
+    </message>
+    <message>
+        <source>Warning: Failed to block screenshot capture on a top-level window.</source>
+        <translation>Varning! Kunde inte blockera skärmklipp i ett fönster på översta nivån!</translation>
+    </message>
+    <message>
+        <source>Invalid Cipher</source>
+        <translation>Ogiltigt shiffer</translation>
+    </message>
+    <message>
+        <source>Invalid KDF</source>
+        <translation>Ogiltig KDF</translation>
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue.</source>
@@ -7897,6 +7947,10 @@ Kärna: %3 %4</translation>
 This options is deprecated, use --set-key-file instead.</source>
         <translation>Ange nyckelfil för databasen.
 Det här alternativet är inaktuellt, använd --set-key-file istället.</translation>
+    </message>
+    <message>
+        <source>KeePassXC is not running. No open database to lock</source>
+        <translation>KeePassXC körs inte. Det finns ingen öppen databas att låsa.</translation>
     </message>
 </context>
 <context>
@@ -7977,7 +8031,7 @@ Det här alternativet är inaktuellt, använd --set-key-file istället.</transla
     </message>
     <message>
         <source>This entry is being excluded from reports</source>
-        <translation>Denna post har undantagits från rapporter</translation>
+        <translation>Denna post undantas från rapporter</translation>
     </message>
     <message>
         <source>Please wait, browser statistics is being calculated…</source>
@@ -8005,7 +8059,7 @@ Det här alternativet är inaktuellt, använd --set-key-file istället.</transla
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation><numerusform>Ta bort post…</numerusform><numerusform>Ta bort poster…</numerusform></translation>
+        <translation><numerusform>Ta bort post...</numerusform><numerusform>Ta bort poster…</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
@@ -8963,7 +9017,7 @@ Exempel: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Selected hardware key slot does not support challenge-response!</source>
-        <translation>Den valda maskinvarunyckelplatsen stöder inte challenge-response!</translation>
+        <translation>Den valda hårdvarunyckelplatsen stöder inte challenge-response!</translation>
     </message>
     <message>
         <source>Challenge-Response</source>
@@ -8987,7 +9041,7 @@ Exempel: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>&lt;p&gt;If you own a &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; or &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt;, you can use it for additional security.&lt;/p&gt;&lt;p&gt;The key requires one of its slots to be programmed as &lt;a href=&quot;https://www.yubico.com/products/services-software/challenge-response/&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Om du äger en &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; eller en &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt;, kan du använda den för ytterligare säkerhet.&lt;/p&gt;&lt;p&gt;Nyckeln kräver att en av dess ianslutningsplatser programmeras som &lt;a href=&quot;https://www.yubico.com/products/services-software/challenge-response/&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Om du äger en &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; eller en &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt;, kan du använda den för ytterligare säkerhet.&lt;/p&gt;&lt;p&gt;Nyckeln kräver att en av dess anslutningsplatser programmeras som &lt;a href=&quot;https://www.yubico.com/products/services-software/challenge-response/&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Detecting hardware keys…</source>

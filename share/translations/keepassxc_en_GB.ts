@@ -584,7 +584,7 @@
     </message>
     <message>
         <source>Enable double click to copy the username/password entry columns</source>
-        <translation>Enable double-click to copy the username/password entry columns</translation>
+        <translation>Enable double click to copy the username/password entry columns</translation>
     </message>
     <message>
         <source>Privacy</source>
@@ -593,6 +593,10 @@
     <message>
         <source>Use DuckDuckGo service to download website icons</source>
         <translation>Use DuckDuckGo service to download website icons</translation>
+    </message>
+    <message>
+        <source>Hide TOTP in the entry preview panel</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1396,7 +1400,7 @@ Would you like to migrate your existing settings now?</translation>
     </message>
     <message>
         <source>Could not save, database has not been initialized!</source>
-        <translation>Could not save. Database has not been initialised!</translation>
+        <translation>Could not save, database has not been initialised!</translation>
     </message>
     <message>
         <source>Database file has unmerged changes.</source>
@@ -1545,10 +1549,6 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
         <translation>Retry with empty password</translation>
     </message>
     <message>
-        <source>Failed to authenticate with Windows Hello</source>
-        <translation>Failed to authenticate with Windows Hello</translation>
-    </message>
-    <message>
         <source>Failed to authenticate with Touch ID</source>
         <translation>Failed to authenticate with Touch ID</translation>
     </message>
@@ -1611,6 +1611,14 @@ If you do not have a key file, please leave the field empty.</translation>
 &lt;p&gt;Click for more information…&lt;/p&gt;</source>
         <translation>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
 &lt;p&gt;Click for more information…&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>authenticate to access the database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to authenticate with Windows Hello: %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2041,16 +2049,8 @@ If you keep this number, your database will not be protected from brute force at
         <translation>Maximum number of history items per entry</translation>
     </message>
     <message>
-        <source>Max. history items:</source>
-        <translation>Max. history items:</translation>
-    </message>
-    <message>
         <source>Maximum size of history per entry</source>
         <translation>Maximum size of history per entry</translation>
-    </message>
-    <message>
-        <source>Max. history size:</source>
-        <translation>Max. history size:</translation>
     </message>
     <message>
         <source> MiB</source>
@@ -2081,6 +2081,35 @@ This action is not reversible.</translation>
     <message>
         <source> (old)</source>
         <translation> (old)</translation>
+    </message>
+    <message>
+        <source>When saving this setting or editing an entry
+the oldest history items of an entry will be
+removed such that only the specified amount
+of entries remain at most.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Limit the amount of history items per entry to:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>When saving this setting or editing an entry
+the oldest history items of an entry will be
+removed such that the remaining history items
+add up to the specified amount at most.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Limit the total size of history items per entry to:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Move entries to a recycle bin group
+instead of deleting them from the database.
+Entries deleted from the recycle bin are
+removed from the database.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2875,20 +2904,8 @@ Would you like to correct it?</translation>
         <translation>Notes field</translation>
     </message>
     <message>
-        <source>Toggle the checkbox to reveal the notes section.</source>
-        <translation>Toggle the checkbox to reveal the notes section.</translation>
-    </message>
-    <message>
         <source>Username field</source>
         <translation>Username field</translation>
-    </message>
-    <message>
-        <source>Toggle notes visible</source>
-        <translation>Toggle notes visible</translation>
-    </message>
-    <message>
-        <source>Notes:</source>
-        <translation>Notes:</translation>
     </message>
     <message>
         <source>Expiration field</source>
@@ -2907,14 +2924,6 @@ Would you like to correct it?</translation>
         <translation>Presets</translation>
     </message>
     <message>
-        <source>Password:</source>
-        <translation>Password:</translation>
-    </message>
-    <message>
-        <source>URL:</source>
-        <translation>URL:</translation>
-    </message>
-    <message>
         <source>Url field</source>
         <translation>URL field</translation>
     </message>
@@ -2923,16 +2932,8 @@ Would you like to correct it?</translation>
         <translation>Download favicon for URL</translation>
     </message>
     <message>
-        <source>Title:</source>
-        <translation>Title:</translation>
-    </message>
-    <message>
         <source>Title field</source>
         <translation>Title field</translation>
-    </message>
-    <message>
-        <source>Username:</source>
-        <translation>Username:</translation>
     </message>
     <message>
         <source>Password field</source>
@@ -2943,16 +2944,40 @@ Would you like to correct it?</translation>
         <translation>Toggle expiry</translation>
     </message>
     <message>
-        <source>Expires:</source>
-        <translation>Expires:</translation>
-    </message>
-    <message>
-        <source>Tags:</source>
-        <translation>Tags:</translation>
-    </message>
-    <message>
         <source>Tags list</source>
         <translation>Tags list</translation>
+    </message>
+    <message>
+        <source>&amp;Username:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Title:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Password:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>UR&amp;L:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Notes:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle notes visibility</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>T&amp;ags:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Expires:</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3092,10 +3117,6 @@ Would you like to correct it?</translation>
 </context>
 <context>
     <name>EditGroupWidgetBrowser</name>
-    <message>
-        <source>Edit Group</source>
-        <translation>Edit Group</translation>
-    </message>
     <message>
         <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
         <translation>These settings affect the group&apos;s behaviour with the browser extension.</translation>
@@ -3287,7 +3308,7 @@ Supported extensions are: %1.</translation>
     </message>
     <message>
         <source>Auto-Type toggle for this and sub groups</source>
-        <translation>Auto-Type toggle for this group and subgroups</translation>
+        <translation>Auto-Type toggle for this and subgroups</translation>
     </message>
     <message>
         <source>Notes:</source>
@@ -5218,10 +5239,6 @@ Are you sure you want to continue with this file?</translation>
         <translation>Copy title to clipboard</translation>
     </message>
     <message>
-        <source>&amp;URL</source>
-        <translation>&amp;URL</translation>
-    </message>
-    <message>
         <source>Copy URL to clipboard</source>
         <translation>Copy URL to clipboard</translation>
     </message>
@@ -5471,6 +5488,14 @@ We recommend you use the AppImage available on our downloads page.</translation>
     </message>
     <message>
         <source>XML File…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy &amp;URL</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Allow Screen Capture</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -5842,6 +5867,10 @@ We recommend you use the AppImage available on our downloads page.</translation>
     <message>
         <source>Unexpected EOF when writing private key</source>
         <translation>Unexpected EOF when writing private key</translation>
+    </message>
+    <message>
+        <source>AES-256/GCM is currently not supported</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6222,6 +6251,10 @@ Do you want to overwrite it?</translation>
         <source>Excellent</source>
         <comment>Password quality</comment>
         <translation>Excellent</translation>
+    </message>
+    <message>
+        <source>Toggle password visibilty using Control + H. Open the password generator using Control + G.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7546,8 +7579,8 @@ Kernel: %3 %4</translation>
         <translation><numerusform>%1 minute</numerusform><numerusform>%1 minutes</numerusform></translation>
     </message>
     <message>
-        <source>Botan library must be at least 2.11.x, found %1.%2.%3</source>
-        <translation>Botan library must be at least 2.11.x, found %1.%2.%3</translation>
+        <source>Botan library must be at least %1, found %2.%3.%4</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Cryptographic libraries:</source>
@@ -7688,12 +7721,12 @@ Kernel: %3 %4</translation>
     <message numerus="yes">
         <source>%1 ms</source>
         <comment>milliseconds</comment>
-        <translation><numerusform>%1 ms</numerusform><numerusform>%1ms</numerusform></translation>
+        <translation><numerusform>%1ms</numerusform><numerusform>%1ms</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 s</source>
         <comment>seconds</comment>
-        <translation><numerusform>%1 s</numerusform><numerusform>%1s</numerusform></translation>
+        <translation><numerusform>%1s</numerusform><numerusform>%1s</numerusform></translation>
     </message>
     <message>
         <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
@@ -7812,10 +7845,6 @@ Kernel: %3 %4</translation>
         <translation>KeePassXC - Error</translation>
     </message>
     <message>
-        <source>Warning: Failed to prevent screenshots on a top level window!</source>
-        <translation>Warning: Failed to prevent screenshots on a top level window!</translation>
-    </message>
-    <message>
         <source>Database password: </source>
         <translation>Database password: </translation>
     </message>
@@ -7836,6 +7865,18 @@ Kernel: %3 %4</translation>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
         <translation>Failed to sign challenge using Windows Hello.</translation>
+    </message>
+    <message>
+        <source>Warning: Failed to block screenshot capture on a top-level window.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid Cipher</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid KDF</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue.</source>
@@ -7896,6 +7937,10 @@ Kernel: %3 %4</translation>
     <message>
         <source>Set the key file for the database.
 This options is deprecated, use --set-key-file instead.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC is not running. No open database to lock</source>
         <translation type="unfinished"/>
     </message>
 </context>

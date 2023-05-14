@@ -124,7 +124,7 @@
     </message>
     <message>
         <source>SSH_AUTH_SOCK override</source>
-        <translation>SSH_AUTH_SOCK 覆写</translation>
+        <translation>SSH_AUTH_SOCK 重写</translation>
     </message>
     <message>
         <source>SSH_AUTH_SOCK value</source>
@@ -144,7 +144,7 @@
     </message>
     <message>
         <source>No SSH Agent socket available. Either make sure SSH_AUTH_SOCK environment variable exists or set an override.</source>
-        <translation>没有可用的 SSH 代理套接字。确保环境变量 SSH_AUTH_SOCK 存在或已设置覆写。</translation>
+        <translation>没有可用的 SSH 代理套接字。确保环境变量 SSH_AUTH_SOCK 存在或已设置重写。</translation>
     </message>
     <message>
         <source>SSH Agent connection is working!</source>
@@ -593,6 +593,10 @@
     <message>
         <source>Use DuckDuckGo service to download website icons</source>
         <translation>使用 DuckDuckGo 来下载网站图标</translation>
+    </message>
+    <message>
+        <source>Hide TOTP in the entry preview panel</source>
+        <translation>在条目预览面板隐藏 TOTP</translation>
     </message>
 </context>
 <context>
@@ -1545,10 +1549,6 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
         <translation>使用空密码重试</translation>
     </message>
     <message>
-        <source>Failed to authenticate with Windows Hello</source>
-        <translation>Windows Hello 验证失败</translation>
-    </message>
-    <message>
         <source>Failed to authenticate with Touch ID</source>
         <translation>Touch ID 验证失败</translation>
     </message>
@@ -1611,6 +1611,14 @@ If you do not have a key file, please leave the field empty.</source>
 &lt;p&gt;Click for more information…&lt;/p&gt;</source>
         <translation>&lt;p&gt;您可以使用像 &lt;strong&gt;YubiKey&lt;/strong&gt; 或 &lt;strong&gt;OnlyKey&lt;/strong&gt; 这种带有 HMAC-SHA1 配置插槽的硬件安全密钥。&lt;/p&gt;
 &lt;p&gt;点击获取更多信息…&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>authenticate to access the database</source>
+        <translation>验证身份以访问数据库</translation>
+    </message>
+    <message>
+        <source>Failed to authenticate with Windows Hello: %1</source>
+        <translation>Windows Hello 验证失败：%1</translation>
     </message>
 </context>
 <context>
@@ -2041,16 +2049,8 @@ If you keep this number, your database will not be protected from brute force at
         <translation>每个条目最多历史记录数</translation>
     </message>
     <message>
-        <source>Max. history items:</source>
-        <translation>最大历史记录数：</translation>
-    </message>
-    <message>
         <source>Maximum size of history per entry</source>
         <translation>每个项目最大历史记录大小</translation>
-    </message>
-    <message>
-        <source>Max. history size:</source>
-        <translation>最大历史记录大小：</translation>
     </message>
     <message>
         <source> MiB</source>
@@ -2081,6 +2081,44 @@ This action is not reversible.</source>
     <message>
         <source> (old)</source>
         <translation>（旧的）</translation>
+    </message>
+    <message>
+        <source>When saving this setting or editing an entry
+the oldest history items of an entry will be
+removed such that only the specified amount
+of entries remain at most.</source>
+        <translation>在保存此设置或编辑条目时
+条目中最早的历史记录将会
+被删除，保证只有指定的数
+量被保留。</translation>
+    </message>
+    <message>
+        <source>Limit the amount of history items per entry to:</source>
+        <translation>限制每个条目的历史记录数量为：</translation>
+    </message>
+    <message>
+        <source>When saving this setting or editing an entry
+the oldest history items of an entry will be
+removed such that the remaining history items
+add up to the specified amount at most.</source>
+        <translation>在保存此设置或编辑条目时
+条目中最早的历史记录将会
+被删除，保证最多只剩余指
+定的数量。</translation>
+    </message>
+    <message>
+        <source>Limit the total size of history items per entry to:</source>
+        <translation>限制每个条目的历史记录总大小为：</translation>
+    </message>
+    <message>
+        <source>Move entries to a recycle bin group
+instead of deleting them from the database.
+Entries deleted from the recycle bin are
+removed from the database.</source>
+        <translation>将条目移动到回收站群组
+而非直接从数据库中删除。
+从回收站中删除的条目将
+会从数据库中删除。</translation>
     </message>
 </context>
 <context>
@@ -2875,20 +2913,8 @@ Would you like to correct it?</source>
         <translation>备注字段</translation>
     </message>
     <message>
-        <source>Toggle the checkbox to reveal the notes section.</source>
-        <translation>勾选以显示备注部分。</translation>
-    </message>
-    <message>
         <source>Username field</source>
         <translation>用户名字段</translation>
-    </message>
-    <message>
-        <source>Toggle notes visible</source>
-        <translation>显示或隐藏备注</translation>
-    </message>
-    <message>
-        <source>Notes:</source>
-        <translation>备注：</translation>
     </message>
     <message>
         <source>Expiration field</source>
@@ -2907,14 +2933,6 @@ Would you like to correct it?</source>
         <translation>预设</translation>
     </message>
     <message>
-        <source>Password:</source>
-        <translation>密码：</translation>
-    </message>
-    <message>
-        <source>URL:</source>
-        <translation>URL：</translation>
-    </message>
-    <message>
         <source>Url field</source>
         <translation>URL 字段</translation>
     </message>
@@ -2923,16 +2941,8 @@ Would you like to correct it?</source>
         <translation>从 URL 下载网站图标</translation>
     </message>
     <message>
-        <source>Title:</source>
-        <translation>标题：</translation>
-    </message>
-    <message>
         <source>Title field</source>
         <translation>标题字段</translation>
-    </message>
-    <message>
-        <source>Username:</source>
-        <translation>用户名：</translation>
     </message>
     <message>
         <source>Password field</source>
@@ -2943,16 +2953,40 @@ Would you like to correct it?</source>
         <translation>启用或禁用过期</translation>
     </message>
     <message>
-        <source>Expires:</source>
-        <translation>过期时间：</translation>
-    </message>
-    <message>
-        <source>Tags:</source>
-        <translation>标签：</translation>
-    </message>
-    <message>
         <source>Tags list</source>
         <translation>标签列表</translation>
+    </message>
+    <message>
+        <source>&amp;Username:</source>
+        <translation>用户名(&amp;U)：</translation>
+    </message>
+    <message>
+        <source>&amp;Title:</source>
+        <translation>标题(&amp;T)：</translation>
+    </message>
+    <message>
+        <source>&amp;Password:</source>
+        <translation>密码(&amp;P)：</translation>
+    </message>
+    <message>
+        <source>UR&amp;L:</source>
+        <translation>UR&amp;L：</translation>
+    </message>
+    <message>
+        <source>&amp;Notes:</source>
+        <translation>备注(&amp;N)：</translation>
+    </message>
+    <message>
+        <source>Toggle notes visibility</source>
+        <translation>显示或隐藏备注</translation>
+    </message>
+    <message>
+        <source>T&amp;ags:</source>
+        <translation>标签(&amp;A)：</translation>
+    </message>
+    <message>
+        <source>&amp;Expires:</source>
+        <translation>过期时间(&amp;E)：</translation>
     </message>
 </context>
 <context>
@@ -3092,10 +3126,6 @@ Would you like to correct it?</source>
 </context>
 <context>
     <name>EditGroupWidgetBrowser</name>
-    <message>
-        <source>Edit Group</source>
-        <translation>编辑群组</translation>
-    </message>
     <message>
         <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
         <translation>这些设置会影响启用浏览器扩展时此群组的行为。</translation>
@@ -5215,10 +5245,6 @@ Are you sure you want to continue with this file?</source>
         <translation>复制标题到剪贴板</translation>
     </message>
     <message>
-        <source>&amp;URL</source>
-        <translation>&amp;URL</translation>
-    </message>
-    <message>
         <source>Copy URL to clipboard</source>
         <translation>复制 URL 到剪贴板</translation>
     </message>
@@ -5468,6 +5494,14 @@ We recommend you use the AppImage available on our downloads page.</source>
     <message>
         <source>XML File…</source>
         <translation>XML 文件…</translation>
+    </message>
+    <message>
+        <source>Copy &amp;URL</source>
+        <translation>复制 &amp;URL</translation>
+    </message>
+    <message>
+        <source>Allow Screen Capture</source>
+        <translation>允许屏幕截图</translation>
     </message>
 </context>
 <context>
@@ -5838,6 +5872,10 @@ We recommend you use the AppImage available on our downloads page.</source>
     <message>
         <source>Unexpected EOF when writing private key</source>
         <translation>写入私钥时遇到意外的 EOF</translation>
+    </message>
+    <message>
+        <source>AES-256/GCM is currently not supported</source>
+        <translation>AES-256/GCM 目前不支持</translation>
     </message>
 </context>
 <context>
@@ -6218,6 +6256,10 @@ Do you want to overwrite it?</source>
         <source>Excellent</source>
         <comment>Password quality</comment>
         <translation>优秀</translation>
+    </message>
+    <message>
+        <source>Toggle password visibilty using Control + H. Open the password generator using Control + G.</source>
+        <translation>使用 Control + H 显示或隐藏密码。使用 Control + G 打开密码生成器。</translation>
     </message>
 </context>
 <context>
@@ -7540,8 +7582,8 @@ CPU 架构：%2
         <translation><numerusform>%1 分</numerusform></translation>
     </message>
     <message>
-        <source>Botan library must be at least 2.11.x, found %1.%2.%3</source>
-        <translation>Botan 库的版本至少应为 2.11.x，您的版本为 %1.%2.%3</translation>
+        <source>Botan library must be at least %1, found %2.%3.%4</source>
+        <translation>Botan 库的版本至少应为 %1，您的版本为 %2.%3.%4</translation>
     </message>
     <message>
         <source>Cryptographic libraries:</source>
@@ -7806,10 +7848,6 @@ CPU 架构：%2
         <translation>KeePassXC - 错误</translation>
     </message>
     <message>
-        <source>Warning: Failed to prevent screenshots on a top level window!</source>
-        <translation>警告：在顶层窗口阻止截图失败！</translation>
-    </message>
-    <message>
         <source>Database password: </source>
         <translation>数据库密码：</translation>
     </message>
@@ -7830,6 +7868,18 @@ CPU 架构：%2
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
         <translation>使用 Windows Hello 签名挑战失败。</translation>
+    </message>
+    <message>
+        <source>Warning: Failed to block screenshot capture on a top-level window.</source>
+        <translation>警告：在顶层窗口阻止屏幕截图失败。</translation>
+    </message>
+    <message>
+        <source>Invalid Cipher</source>
+        <translation>无效的加密方法</translation>
+    </message>
+    <message>
+        <source>Invalid KDF</source>
+        <translation>无效的 KDF</translation>
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue.</source>
@@ -7892,6 +7942,10 @@ CPU 架构：%2
 This options is deprecated, use --set-key-file instead.</source>
         <translation>设置数据库的密钥文件。
 此选项已弃用，请用 --set-key-file 代替。</translation>
+    </message>
+    <message>
+        <source>KeePassXC is not running. No open database to lock</source>
+        <translation>KeePassXC 未在运行。没有可锁定的已打开数据库</translation>
     </message>
 </context>
 <context>
@@ -8848,7 +8902,7 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>You have the latest version of KeePassXC</source>
-        <translation>您的 KeePassXC 已经是最新版本</translation>
+        <translation>您的 KeePassXC 已经是最版本</translation>
     </message>
 </context>
 <context>

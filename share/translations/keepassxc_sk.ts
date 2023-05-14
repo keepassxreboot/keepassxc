@@ -594,6 +594,10 @@
         <source>Use DuckDuckGo service to download website icons</source>
         <translation>Používať služby DuckDuckGo na stiahnutie ikon webových stránok</translation>
     </message>
+    <message>
+        <source>Hide TOTP in the entry preview panel</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
@@ -1534,10 +1538,6 @@ Ak chcete zabrániť zobrazovaniu tejto chyby, musíte ísť do &quot;Nastavenia
         <translation>Skúsiť znova s prázdnym heslom</translation>
     </message>
     <message>
-        <source>Failed to authenticate with Windows Hello</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Failed to authenticate with Touch ID</source>
         <translation type="unfinished"/>
     </message>
@@ -1600,6 +1600,14 @@ Ak nemáte súbor kľúča, prosím nechajte toto pole prázdne.</translation>
 &lt;p&gt;Click for more information…&lt;/p&gt;</source>
         <translation>&lt;p&gt;Môžete použiť hardvérový bezpečnostný kľúč ako &lt;strong&gt;Yubikey&lt;/strong&gt; alebo &lt;strong&gt;OnlyKey&lt;/strong&gt; so slotmi nakonfigurovanými pre HMAC-SHA1.&lt;/p&gt;
 &lt;p&gt;Kliknite pre viac informácií...&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>authenticate to access the database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to authenticate with Windows Hello: %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2030,16 +2038,8 @@ Ak ponecháte toto číslo, môže byť prelomenie ochrany databázy príliš je
         <translation>Maximálny počet  histórie na položku</translation>
     </message>
     <message>
-        <source>Max. history items:</source>
-        <translation>Max. položiek histórie:</translation>
-    </message>
-    <message>
         <source>Maximum size of history per entry</source>
         <translation>Maximálna veľkosť  histórie na položku</translation>
-    </message>
-    <message>
-        <source>Max. history size:</source>
-        <translation>Max. veľkosť histórie:</translation>
     </message>
     <message>
         <source> MiB</source>
@@ -2070,6 +2070,35 @@ Táto akcia nie je reverzibilná.</translation>
     <message>
         <source> (old)</source>
         <translation> (staré)</translation>
+    </message>
+    <message>
+        <source>When saving this setting or editing an entry
+the oldest history items of an entry will be
+removed such that only the specified amount
+of entries remain at most.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Limit the amount of history items per entry to:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>When saving this setting or editing an entry
+the oldest history items of an entry will be
+removed such that the remaining history items
+add up to the specified amount at most.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Limit the total size of history items per entry to:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Move entries to a recycle bin group
+instead of deleting them from the database.
+Entries deleted from the recycle bin are
+removed from the database.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2790,7 +2819,7 @@ Chcete to opraviť?</translation>
     </message>
     <message>
         <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
-        <translation>Toto nastavenie neposielať do prehliadača pre dialógy HTTP Auth. Ak je zapnuté, bežné prihlasovacie formuláre nebudú na výber poskytovať túto položku.</translation>
+        <translation>Toto nastavenie neposielať do prehliadača pre dialógy HTTP Auth. Ak je zapnuté, bežné prihlasovacie formuláre nebudú túto položku poskytovať na výber.</translation>
     </message>
     <message>
         <source>Do not use this entry with HTTP Basic Auth</source>
@@ -2863,20 +2892,8 @@ Chcete to opraviť?</translation>
         <translation>Pole poznámok</translation>
     </message>
     <message>
-        <source>Toggle the checkbox to reveal the notes section.</source>
-        <translation>Prepnite zaškrtávacie pole na odkrytie sekcie poznámok.</translation>
-    </message>
-    <message>
         <source>Username field</source>
         <translation>Pole použ. mena</translation>
-    </message>
-    <message>
-        <source>Toggle notes visible</source>
-        <translation>Prepnúť tobrazenie poznámok</translation>
-    </message>
-    <message>
-        <source>Notes:</source>
-        <translation>Poznámky:</translation>
     </message>
     <message>
         <source>Expiration field</source>
@@ -2895,14 +2912,6 @@ Chcete to opraviť?</translation>
         <translation>Predvoľby</translation>
     </message>
     <message>
-        <source>Password:</source>
-        <translation>Heslo:</translation>
-    </message>
-    <message>
-        <source>URL:</source>
-        <translation>URL:</translation>
-    </message>
-    <message>
         <source>Url field</source>
         <translation>Pole URL</translation>
     </message>
@@ -2911,16 +2920,8 @@ Chcete to opraviť?</translation>
         <translation>Stiahnuť ikonu URL</translation>
     </message>
     <message>
-        <source>Title:</source>
-        <translation>Názov:</translation>
-    </message>
-    <message>
         <source>Title field</source>
         <translation>Pole nadpisu</translation>
-    </message>
-    <message>
-        <source>Username:</source>
-        <translation>Použ. meno:</translation>
     </message>
     <message>
         <source>Password field</source>
@@ -2931,15 +2932,39 @@ Chcete to opraviť?</translation>
         <translation>Prepnúť dobu platnosti</translation>
     </message>
     <message>
-        <source>Expires:</source>
-        <translation>Platí do:</translation>
-    </message>
-    <message>
-        <source>Tags:</source>
+        <source>Tags list</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Tags list</source>
+        <source>&amp;Username:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Title:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Password:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>UR&amp;L:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Notes:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle notes visibility</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>T&amp;ags:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Expires:</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -3080,10 +3105,6 @@ Chcete to opraviť?</translation>
 </context>
 <context>
     <name>EditGroupWidgetBrowser</name>
-    <message>
-        <source>Edit Group</source>
-        <translation>Upraviť skupinu</translation>
-    </message>
     <message>
         <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
         <translation>Tieto nastavenia ovplyvňujú správanie skupiny s doplnkom prehliadača.</translation>
@@ -5126,7 +5147,7 @@ Naozaj chcete pokračovať s týmto súborom?</translation>
     </message>
     <message>
         <source>Statistics, health check, etc.</source>
-        <translation>Štatistiky, kontrola zdravia, apod.</translation>
+        <translation>Štatistiky, Kontrola zdravia, apod.</translation>
     </message>
     <message>
         <source>&amp;Database Settings…</source>
@@ -5207,10 +5228,6 @@ Naozaj chcete pokračovať s týmto súborom?</translation>
     <message>
         <source>Copy title to clipboard</source>
         <translation>Kopírovať názov do schránky</translation>
-    </message>
-    <message>
-        <source>&amp;URL</source>
-        <translation>&amp;URL</translation>
     </message>
     <message>
         <source>Copy URL to clipboard</source>
@@ -5462,6 +5479,14 @@ Odporúčame použiť AppImage dostupný na našej stránke sťahovaní.</transl
     </message>
     <message>
         <source>XML File…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy &amp;URL</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Allow Screen Capture</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -5833,6 +5858,10 @@ Odporúčame použiť AppImage dostupný na našej stránke sťahovaní.</transl
     <message>
         <source>Unexpected EOF when writing private key</source>
         <translation>Neočakávaný koniec súboru pri zápise súkromného kľúča</translation>
+    </message>
+    <message>
+        <source>AES-256/GCM is currently not supported</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6212,6 +6241,10 @@ Do you want to overwrite it?</source>
         <source>Excellent</source>
         <comment>Password quality</comment>
         <translation>Výbroné</translation>
+    </message>
+    <message>
+        <source>Toggle password visibilty using Control + H. Open the password generator using Control + G.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7535,8 +7568,8 @@ Jadro: %3 %4</translation>
         <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
-        <source>Botan library must be at least 2.11.x, found %1.%2.%3</source>
-        <translation>Knižnica Botan musí byť aspoň 2.11.x, nájdené %1.%2.%3</translation>
+        <source>Botan library must be at least %1, found %2.%3.%4</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Cryptographic libraries:</source>
@@ -7801,10 +7834,6 @@ Jadro: %3 %4</translation>
         <translation>KeePassXC – Chyba</translation>
     </message>
     <message>
-        <source>Warning: Failed to prevent screenshots on a top level window!</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Database password: </source>
         <translation>Heslo databázy:</translation>
     </message>
@@ -7824,6 +7853,18 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Warning: Failed to block screenshot capture on a top-level window.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid Cipher</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid KDF</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -7885,6 +7926,10 @@ Jadro: %3 %4</translation>
     <message>
         <source>Set the key file for the database.
 This options is deprecated, use --set-key-file instead.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC is not running. No open database to lock</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -7994,7 +8039,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation><numerusform>Odstrániť položku…</numerusform><numerusform>Odstrániť položky…</numerusform><numerusform>Odstrániť položky…</numerusform><numerusform>Odstrániť položky…</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform>Odstrániť položky…</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>

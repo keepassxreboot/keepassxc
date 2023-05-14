@@ -288,7 +288,7 @@
     <message>
         <source> days</source>
         <comment>On database unlock, show entries that will expire within %1 days</comment>
-        <translation>일 후에 만료됨</translation>
+        <translation>일 내에 만료됨</translation>
     </message>
     <message>
         <source>will expire within </source>
@@ -593,6 +593,10 @@
     <message>
         <source>Use DuckDuckGo service to download website icons</source>
         <translation>웹 사이트 아이콘을 다운로드할 때 DuckDuckGo 서비스 사용</translation>
+    </message>
+    <message>
+        <source>Hide TOTP in the entry preview panel</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1545,10 +1549,6 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
         <translation>빈 암호로 다시 시도</translation>
     </message>
     <message>
-        <source>Failed to authenticate with Windows Hello</source>
-        <translation>Windows Hello로 인증할 수 없음</translation>
-    </message>
-    <message>
         <source>Failed to authenticate with Touch ID</source>
         <translation>Touch ID로 인증할 수 없음</translation>
     </message>
@@ -1611,6 +1611,14 @@ If you do not have a key file, please leave the field empty.</source>
 &lt;p&gt;Click for more information…&lt;/p&gt;</source>
         <translation>&lt;p&gt;&lt;strong&gt;YubiKey&lt;/strong&gt;나 &lt;strong&gt;OnlyKey&lt;/strong&gt;와 같은 하드웨어 키의 슬롯을 HMAC-SHA1로 설정 시 사용할 수 있습니다.&lt;/p&gt;
 &lt;p&gt;더 많은 정보를 보려면 클릭하십시오…&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>authenticate to access the database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to authenticate with Windows Hello: %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2041,16 +2049,8 @@ If you keep this number, your database will not be protected from brute force at
         <translation>항목당 최대 과거 기록 개수</translation>
     </message>
     <message>
-        <source>Max. history items:</source>
-        <translation>최대 과거 항목 수:</translation>
-    </message>
-    <message>
         <source>Maximum size of history per entry</source>
         <translation>항목당 최대 과거 기록 크기</translation>
-    </message>
-    <message>
-        <source>Max. history size:</source>
-        <translation>최대 과거 항목 크기:</translation>
     </message>
     <message>
         <source> MiB</source>
@@ -2081,6 +2081,35 @@ This action is not reversible.</source>
     <message>
         <source> (old)</source>
         <translation>(이전)</translation>
+    </message>
+    <message>
+        <source>When saving this setting or editing an entry
+the oldest history items of an entry will be
+removed such that only the specified amount
+of entries remain at most.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Limit the amount of history items per entry to:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>When saving this setting or editing an entry
+the oldest history items of an entry will be
+removed such that the remaining history items
+add up to the specified amount at most.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Limit the total size of history items per entry to:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Move entries to a recycle bin group
+instead of deleting them from the database.
+Entries deleted from the recycle bin are
+removed from the database.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2874,20 +2903,8 @@ Would you like to correct it?</source>
         <translation>메모 필드</translation>
     </message>
     <message>
-        <source>Toggle the checkbox to reveal the notes section.</source>
-        <translation>메모 부분을 표시하려면 체크 상자를 전환하십시오.</translation>
-    </message>
-    <message>
         <source>Username field</source>
         <translation>사용자 이름 필드</translation>
-    </message>
-    <message>
-        <source>Toggle notes visible</source>
-        <translation>메모 표시 여부 전환</translation>
-    </message>
-    <message>
-        <source>Notes:</source>
-        <translation>메모:</translation>
     </message>
     <message>
         <source>Expiration field</source>
@@ -2906,14 +2923,6 @@ Would you like to correct it?</source>
         <translation>사전 설정</translation>
     </message>
     <message>
-        <source>Password:</source>
-        <translation>암호:</translation>
-    </message>
-    <message>
-        <source>URL:</source>
-        <translation>URL:</translation>
-    </message>
-    <message>
         <source>Url field</source>
         <translation>URL 필드</translation>
     </message>
@@ -2922,16 +2931,8 @@ Would you like to correct it?</source>
         <translation>URL의 파비콘 다운로드</translation>
     </message>
     <message>
-        <source>Title:</source>
-        <translation>제목:</translation>
-    </message>
-    <message>
         <source>Title field</source>
         <translation>제목 필드</translation>
-    </message>
-    <message>
-        <source>Username:</source>
-        <translation>사용자 이름:</translation>
     </message>
     <message>
         <source>Password field</source>
@@ -2942,16 +2943,40 @@ Would you like to correct it?</source>
         <translation>만료 여부 전환</translation>
     </message>
     <message>
-        <source>Expires:</source>
-        <translation>만료:</translation>
-    </message>
-    <message>
-        <source>Tags:</source>
-        <translation>태그:</translation>
-    </message>
-    <message>
         <source>Tags list</source>
         <translation>태그 목록</translation>
+    </message>
+    <message>
+        <source>&amp;Username:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Title:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Password:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>UR&amp;L:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Notes:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle notes visibility</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>T&amp;ags:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Expires:</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3092,10 +3117,6 @@ Would you like to correct it?</source>
 <context>
     <name>EditGroupWidgetBrowser</name>
     <message>
-        <source>Edit Group</source>
-        <translation>그룹 편집</translation>
-    </message>
-    <message>
         <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
         <translation>이 설정은 브라우저 확장 기능에서 해당 그룹을 처리하는 방법을 변경합니다.</translation>
     </message>
@@ -3129,7 +3150,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Do not use HTTP Auth toggle for this and sub groups</source>
-        <translation>이 그룹과 하위 그룹의 항목을 HTTP 인증에 사용하지 않기 </translation>
+        <translation>이 그룹과 하위 그룹의 항목을 HTTP 인증에 사용하지 않기 전환</translation>
     </message>
     <message>
         <source>Omit WWW subdomain from matching:</source>
@@ -3576,7 +3597,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Are you sure you want to overwrite the existing file &quot;%1&quot; with the attachment?</source>
-        <translation>기존 파일 &quot;%1&quot;의 내용을 첨부 항목으로 덮어 쓰시겠습니까?</translation>
+        <translation>기존 파일 &quot;%1&quot;의 내용을 첨부 항목으로 덮어쓰시겠습니까?</translation>
     </message>
     <message>
         <source>Confirm overwrite</source>
@@ -5216,10 +5237,6 @@ Are you sure you want to continue with this file?</source>
         <translation>클립보드에 제목 복사</translation>
     </message>
     <message>
-        <source>&amp;URL</source>
-        <translation>URL(&amp;U)</translation>
-    </message>
-    <message>
         <source>Copy URL to clipboard</source>
         <translation>클립보드에 URL 복사</translation>
     </message>
@@ -5469,6 +5486,14 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>XML File…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy &amp;URL</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Allow Screen Capture</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -5840,6 +5865,10 @@ We recommend you use the AppImage available on our downloads page.</source>
     <message>
         <source>Unexpected EOF when writing private key</source>
         <translation>비밀 키를 기록하는 중 예상하지 못한 곳에서 파일이 끝남</translation>
+    </message>
+    <message>
+        <source>AES-256/GCM is currently not supported</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6221,6 +6250,10 @@ Do you want to overwrite it?</source>
         <comment>Password quality</comment>
         <translation>매우 좋음</translation>
     </message>
+    <message>
+        <source>Toggle password visibilty using Control + H. Open the password generator using Control + G.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>PickcharsDialog</name>
@@ -6253,7 +6286,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Empty</source>
-        <translation>비어 있음</translation>
+        <translation>삭제</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -7544,8 +7577,8 @@ CPU 아키텍처: %2
         <translation><numerusform>%1분</numerusform></translation>
     </message>
     <message>
-        <source>Botan library must be at least 2.11.x, found %1.%2.%3</source>
-        <translation>Botan 라이브러리의 최소 필요 버전은 2.11.x이지만 %1.%2.%3 버전이 설치되어 있음</translation>
+        <source>Botan library must be at least %1, found %2.%3.%4</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Cryptographic libraries:</source>
@@ -7557,7 +7590,7 @@ CPU 아키텍처: %2
     </message>
     <message>
         <source>Argon2%1 (%2 rounds, %3 KB)</source>
-        <translation>Argon2%1(%2회, %3 KB)</translation>
+        <translation>Argon2%1(%2라운드, %3 KB)</translation>
     </message>
     <message>
         <source>SymmetricCipher::init: Invalid cipher mode.</source>
@@ -7810,10 +7843,6 @@ CPU 아키텍처: %2
         <translation>KeePassXC - 오류</translation>
     </message>
     <message>
-        <source>Warning: Failed to prevent screenshots on a top level window!</source>
-        <translation>경고: 최상위 수준 창의 스크린샷 캡처 방지를 설정할 수 없습니다!</translation>
-    </message>
-    <message>
         <source>Database password: </source>
         <translation>데이터베이스 암호: </translation>
     </message>
@@ -7834,6 +7863,18 @@ CPU 아키텍처: %2
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
         <translation>Windows Hello로 Challenge를 서명할 수 없습니다.</translation>
+    </message>
+    <message>
+        <source>Warning: Failed to block screenshot capture on a top-level window.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid Cipher</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid KDF</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue.</source>
@@ -7894,6 +7935,10 @@ CPU 아키텍처: %2
     <message>
         <source>Set the key file for the database.
 This options is deprecated, use --set-key-file instead.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC is not running. No open database to lock</source>
         <translation type="unfinished"/>
     </message>
 </context>

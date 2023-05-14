@@ -11,19 +11,19 @@
     </message>
     <message>
         <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
-        <translation>Сообщить об ошибках: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
+        <translation>Сообщить об &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;ошибках&lt;/a&gt; на https://github.com</translation>
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
-        <translation>KeePassXC распространяется на условиях универсальной общедоступной лицензии GNU (GPL) версии 2 или 3 (на ваше усмотрение).</translation>
+        <translation>KeePassXC распространяется на условиях Основной Общественной Лицензии GNU версии 2 или 3 (на ваше усмотрение).</translation>
     </message>
     <message>
         <source>Project Maintainers:</source>
-        <translation>Проект сопровождают:</translation>
+        <translation>Сопровождающие проекта:</translation>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
-        <translation>Команда KeePassXC выражает особую благодарность debfx за создание оригинального KeePassX.</translation>
+        <translation>Команда KeePassXC выражает особую благодарность debfx за создание изначального KeePassX.</translation>
     </message>
     <message>
         <source>Contributors</source>
@@ -35,11 +35,11 @@
     </message>
     <message>
         <source>Debug Info</source>
-        <translation>Отладочная информация</translation>
+        <translation>Отладочные сведения</translation>
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
-        <translation>Добавьте в сообщение об ошибке следующую информацию:</translation>
+        <translation>Добавьте в сообщение об ошибке следующие сведения:</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
@@ -54,7 +54,7 @@
     </message>
     <message>
         <source>Non-existing/inaccessible executable path. Please double-check the client is legit.</source>
-        <translation>Несуществующий/недоступный путь к исполняемому  файлу. Перепроверьте подлинность клиента.</translation>
+        <translation>Несуществующий/недоступный путь к исполняемому файлу. Пожалуйста, дважды проверьте, что клиент подлинный.</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;%1 &lt;/span&gt;is requesting access to the following entries:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -105,7 +105,7 @@
     <name>AccessControlDialog::DenyButton</name>
     <message>
         <source>Deny for this program</source>
-        <translation>Запретить для этой программы</translation>
+        <translation>Запретить для этого приложения</translation>
     </message>
 </context>
 <context>
@@ -124,11 +124,11 @@
     </message>
     <message>
         <source>SSH_AUTH_SOCK override</source>
-        <translation>Переопределить SSH_AUTH_SOCK</translation>
+        <translation>переопределить SSH_AUTH_SOCK</translation>
     </message>
     <message>
         <source>SSH_AUTH_SOCK value</source>
-        <translation>Значение SSH_AUTH_SOCK</translation>
+        <translation>значение SSH_AUTH_SOCK</translation>
     </message>
     <message>
         <source>(empty)</source>
@@ -140,15 +140,15 @@
     </message>
     <message>
         <source>SSH_SK_PROVIDER override</source>
-        <translation>Переопределить SSH_SK_PROVIDER</translation>
+        <translation>SSH_SK_PROVIDER переопределить</translation>
     </message>
     <message>
         <source>No SSH Agent socket available. Either make sure SSH_AUTH_SOCK environment variable exists or set an override.</source>
-        <translation>Отсутствуют сокеты SSH-агента. Убедитесь, что переменная SSL_AUTH_SOCK определена или переопределите её значение.  </translation>
+        <translation>Отсутствуют сокеты агента SSH. Убедитесь, что переменная окружения SSL_AUTH_SOCK определена или переопределите её значение.  </translation>
     </message>
     <message>
         <source>SSH Agent connection is working!</source>
-        <translation>Соединение с SSH-агентом активно!</translation>
+        <translation>Соединение с агентом SSH активно.</translation>
     </message>
     <message>
         <source>Use both agents</source>
@@ -159,7 +159,7 @@
     <name>ApplicationSettingsWidget</name>
     <message>
         <source>Application Settings</source>
-        <translation>Параметры приложения</translation>
+        <translation>Настройки приложения</translation>
     </message>
     <message>
         <source>General</source>
@@ -219,7 +219,7 @@
     </message>
     <message>
         <source>Are you sure you want to reset all general and security settings to default?</source>
-        <translation>Действительно сбросить все общие параметры и параметры безопасности к значениям, заданным по умолчанию? </translation>
+        <translation>Вы уверены, что хотите сбросить все основные настройки и настройки безопасности на значения по умолчанию?</translation>
     </message>
     <message>
         <source>Select backup storage directory</source>
@@ -234,7 +234,7 @@
     <name>ApplicationSettingsWidgetGeneral</name>
     <message>
         <source>Basic Settings</source>
-        <translation>Основные параметры</translation>
+        <translation>Основные настройки</translation>
     </message>
     <message>
         <source>Startup</source>
@@ -242,11 +242,11 @@
     </message>
     <message>
         <source>Start only a single instance of KeePassXC</source>
-        <translation>Запускать только один экземпляр KeePassXC</translation>
+        <translation>Запускать только одну копию приложения</translation>
     </message>
     <message>
         <source>Automatically launch KeePassXC at system startup</source>
-        <translation>Автоматически запускать KeePassXC при загрузке системы</translation>
+        <translation>Автоматически запускать KeePassXC при запуске системы</translation>
     </message>
     <message>
         <source>Minimize window at application startup</source>
@@ -254,7 +254,7 @@
     </message>
     <message>
         <source>Minimize window after unlocking database</source>
-        <translation>Сворачивать окно после разблокировки базы данных</translation>
+        <translation>Свернуть окно после открытия базы данных</translation>
     </message>
     <message>
         <source>Remember previously used databases</source>
@@ -266,7 +266,7 @@
     </message>
     <message>
         <source>Remember database key files and security dongles</source>
-        <translation>Запоминать файлы-ключи баз данных и аппаратные ключи безопасности</translation>
+        <translation>Запоминать для баз данных файлы-ключи и аппаратные ключи безопасности</translation>
     </message>
     <message>
         <source>Check for updates at application startup once per week</source>
@@ -274,11 +274,11 @@
     </message>
     <message>
         <source>Include beta releases when checking for updates</source>
-        <translation>Включить в проверку обновлений бета-релизы</translation>
+        <translation>Включать в проверку обновлений бета-выпуски</translation>
     </message>
     <message>
         <source>On database unlock, show entries that </source>
-        <translation>При разблокировке базы данных показывать записи, которые </translation>
+        <translation>При открытии базы данных показать записи, которые </translation>
     </message>
     <message>
         <source>have expired</source>
@@ -288,12 +288,12 @@
     <message>
         <source> days</source>
         <comment>On database unlock, show entries that will expire within %1 days</comment>
-        <translation>дней</translation>
+        <translation>дни</translation>
     </message>
     <message>
         <source>will expire within </source>
         <comment>On database unlock, show entries that...</comment>
-        <translation>истекают в течение</translation>
+        <translation>истекает в течение</translation>
     </message>
     <message>
         <source>File Management</source>
@@ -305,11 +305,11 @@
     </message>
     <message>
         <source>Automatically save when locking database</source>
-        <translation>Автоматически сохранять при блокировке базы данных</translation>
+        <translation>Автоматическое сохранение при блокировке базы данных</translation>
     </message>
     <message>
         <source>Automatically save non-data changes when locking database</source>
-        <translation>Автоматически сохранять изменения, не связанные с данными, при блокировке базы данных.</translation>
+        <translation>Автоматическое сохранение изменений, не связанных с данными, при блокировке базы данных.</translation>
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
@@ -325,7 +325,7 @@
     </message>
     <message>
         <source>Specifies the database backup file location. Occurrences of &quot;{DB_FILENAME}&quot; are replaced with the filename of the saved database without extension. {TIME:&lt;format&gt;} is replaced with the backup time, see https://doc.qt.io/qt-5/qdatetime.html#toString. &lt;format&gt; defaults to format string &quot;dd_MM_yyyy_hh-mm-ss&quot;.</source>
-        <translation>Указывает местоположение файла резервной копии базы данных. Встречающиеся &quot;{DB_FILENAME}&quot; заменяются именем файла сохранённой базы данных без расширения. {TIME:&lt;format&gt;} заменяется временем резервного копирования, см. https://doc.qt.io/qt-5/qdatetime.html#toString. &lt;format&gt; использует строку формата &quot;дд_ММ_ггг_чч-мм-сс&quot;.</translation>
+        <translation>Указывает местоположение файла резервной копии базы данных. Встречающиеся &quot;{DB_FILENAME}&quot; заменяются именем файла сохранённой базы данных без расширения. {TIME:} заменяется временем резервного копирования, см. https://doc.qt.io/qt-5/qdatetime.html#toString. По умолчанию используется строка формата &quot;дд_ММ_ггг_чч-мм-сс&quot;.</translation>
     </message>
     <message>
         <source>{DB_FILENAME}.old.kdbx</source>
@@ -337,7 +337,7 @@
     </message>
     <message>
         <source>Use alternative saving method (may solve problems with Dropbox, Google Drive, GVFS, etc.)</source>
-        <translation>Использовать альтернативный метод хранения (может решить проблемы с Dropbox, Google Drive, GVFS и т.д.)</translation>
+        <translation>Использовать другой способ хранения (может решить проблемы с Dropbox, Google Drive, GVFS и т.д.)</translation>
     </message>
     <message>
         <source>Temporary file moved into place</source>
@@ -361,7 +361,7 @@
     </message>
     <message>
         <source>Hide window when copying to clipboard</source>
-        <translation>Скрывать окно после копирования в буфер обмена</translation>
+        <translation>Скрывать окно после копирования в буфер обмена:</translation>
     </message>
     <message>
         <source>Minimize</source>
@@ -377,7 +377,7 @@
     </message>
     <message>
         <source>Website icon download timeout in seconds</source>
-        <translation>Тайм-аут получения значков веб-сайтов в секундах</translation>
+        <translation>Тайм-аут получения значков с веб-сайтов, в секундах</translation>
     </message>
     <message>
         <source> sec</source>
@@ -406,7 +406,7 @@
     </message>
     <message>
         <source>(restart program to activate)</source>
-        <translation>(перезапустить программу для активации)</translation>
+        <translation>(перезапустить приложение для применения)</translation>
     </message>
     <message>
         <source>Toolbar button style:</source>
@@ -422,7 +422,7 @@
     </message>
     <message>
         <source>Show a system tray icon</source>
-        <translation>Показывать значок в области уведомлений</translation>
+        <translation>Значок в области уведомлений</translation>
     </message>
     <message>
         <source>Tray icon type</source>
@@ -470,7 +470,7 @@
     </message>
     <message>
         <source>Global Auto-Type shortcut:</source>
-        <translation>Комбинация клавиш для глобального автоввода:</translation>
+        <translation>Сочетание клавиш для глобального автоввода:</translation>
     </message>
     <message>
         <source>Auto-type start delay milliseconds</source>
@@ -487,7 +487,7 @@
     </message>
     <message>
         <source>Global auto-type shortcut</source>
-        <translation>Комбинация клавиш для глобального автоввода:</translation>
+        <translation>Сочетание клавиш для глобального автоввода:</translation>
     </message>
     <message>
         <source>Auto-type character typing delay milliseconds</source>
@@ -540,7 +540,7 @@
     </message>
     <message>
         <source>Lock databases after inactivity of</source>
-        <translation>Блокировать базу данных при неактивности в течение</translation>
+        <translation>Блокировать базу данных при бездействии в течение</translation>
     </message>
     <message>
         <source>Convenience</source>
@@ -548,7 +548,7 @@
     </message>
     <message>
         <source>Enable database quick unlock (Touch ID / Windows Hello)</source>
-        <translation>Включить быструю разблокировку базы данных (Touch ID / Windows Hello)</translation>
+        <translation>Включить быстрое открытие базы данных (Touch ID / Windows Hello)</translation>
     </message>
     <message>
         <source>Lock databases when session is locked or lid is closed</source>
@@ -564,7 +564,7 @@
     </message>
     <message>
         <source>Hide passwords when editing them</source>
-        <translation>Скрыть пароли при их редактировании</translation>
+        <translation>Скрыть пароли при их изменении</translation>
     </message>
     <message>
         <source>Use placeholder for empty password fields</source>
@@ -593,6 +593,10 @@
     <message>
         <source>Use DuckDuckGo service to download website icons</source>
         <translation>Использовать DuckDuckGo для загрузки значков</translation>
+    </message>
+    <message>
+        <source>Hide TOTP in the entry preview panel</source>
+        <translation>Скрыть TOTP на панели предварительного просмотра записей</translation>
     </message>
 </context>
 <context>
@@ -725,7 +729,7 @@
     </message>
     <message>
         <source>Double click a row to perform Auto-Type or find an entry using the search:</source>
-        <translation>Сделайте двойной щелчок по строке для выполнения автоввода или найдите запись с помощью функции поиска:</translation>
+        <translation>Сделайте двойной щелчок по строке для выполнения автоввода или найдите запись с помощью поиска:</translation>
     </message>
     <message>
         <source>&lt;p&gt;You can use advanced search queries to find any entry in your open databases. The following shortcuts are useful:&lt;br/&gt;
@@ -739,7 +743,7 @@ Ctrl+F — включить или отключить поиск по базам
 Ctrl+1 — ввести имя пользователя&lt;br/&gt;
 Ctrl+2 — ввести пароль&lt;br/&gt;
 Ctrl+3 — ввести TOTP&lt;br/&gt;
-Ctrl+4 - использовать виртуальную клавиатуру (только для Windows)&lt;/p&gt;</translation>
+Ctrl+4 - использовать экранную клавиатуру (только для Windows)&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Search all open databases</source>
@@ -783,7 +787,7 @@ Ctrl+4 - использовать виртуальную клавиатуру (�
     </message>
     <message>
         <source>Use Virtual Keyboard</source>
-        <translation>Использовать виртуальную клавиатуру</translation>
+        <translation>Использовать экранную клавиатуру</translation>
     </message>
 </context>
 <context>
@@ -869,7 +873,7 @@ chrome-laptop.</source>
         <translation>Получен запрос на ассоциацию для следующей базы данных:
 %1
 
-Задайте для соединения уникальное имя или идентификатор, например: chrome-laptop.</translation>
+Задайте для соединения исключительное имя или идентификатор, например: chrome-laptop.</translation>
     </message>
     <message>
         <source>Save and allow access</source>
@@ -1013,7 +1017,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Request to unlock the database if it is locked</source>
-        <translation>Запрашивать разблокировку базы данных, если она заблокирована</translation>
+        <translation>Запрашивать открытие базы данных, если она заблокирована</translation>
     </message>
     <message>
         <source>Only entries with the same scheme (http://, https://, …) are returned.</source>
@@ -1077,11 +1081,11 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Don&apos;t display the popup suggesting migration of legacy KeePassHTTP settings.</source>
-        <translation>Не показывать напоминание о переносе устаревших параметров KeePassHTTP.</translation>
+        <translation>Не показывать напоминание о переносе устаревших настроек KeePassHTTP.</translation>
     </message>
     <message>
         <source>Do not prompt for KeePassHTTP settings migration.</source>
-        <translation>Не показывать напоминание о переносе устаревших параметров KeePassHTTP</translation>
+        <translation>Не показывать напоминание о переносе устаревших настроек KeePassHTTP</translation>
     </message>
     <message>
         <source>Updates KeePassXC or keepassxc-proxy binary path automatically to native messaging scripts on startup.</source>
@@ -1163,7 +1167,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation>&lt;b&gt;ВНИМАНИЕ:&lt;/b&gt; Следующие параметры могут быть опасны!</translation>
+        <translation>&lt;b&gt;ВНИМАНИЕ:&lt;/b&gt; Следующие настройки могут быть опасны!</translation>
     </message>
     <message>
         <source>Executable Files</source>
@@ -1186,7 +1190,7 @@ Would you like to migrate your existing settings now?</source>
     <name>CloneDialog</name>
     <message>
         <source>Clone Entry Options</source>
-        <translation>Параметры клонирования записей</translation>
+        <translation>Настройки клонирования записей</translation>
     </message>
     <message>
         <source>Append &apos; - Clone&apos; to title</source>
@@ -1313,7 +1317,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Not Present</source>
-        <translation>Отсутствует</translation>
+        <translation>Отусуствует</translation>
     </message>
     <message>
         <source>Column %1</source>
@@ -1419,7 +1423,7 @@ Backup database located at %2</source>
     <name>DatabaseOpenDialog</name>
     <message>
         <source>Unlock Database - KeePassXC</source>
-        <translation>Разблокировать базу данных - KeePassXC</translation>
+        <translation>Открыть базу данных - KeePassXC</translation>
     </message>
 </context>
 <context>
@@ -1462,7 +1466,7 @@ Backup database located at %2</source>
     </message>
     <message>
         <source>Key file to unlock the database</source>
-        <translation>Файл-ключ для разблокирования базы данных</translation>
+        <translation>Файл-ключ для открытия базы данных</translation>
     </message>
     <message>
         <source>Browse for key file</source>
@@ -1482,7 +1486,7 @@ Backup database located at %2</source>
     </message>
     <message>
         <source>Unlock Database</source>
-        <translation>Разблокировать базу данных</translation>
+        <translation>Открыть базу данных</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1490,7 +1494,7 @@ Backup database located at %2</source>
     </message>
     <message>
         <source>Unlock</source>
-        <translation>Разблокировать</translation>
+        <translation>Открыть</translation>
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue…</source>
@@ -1522,29 +1526,25 @@ We recommend you update your KeePassXC installation.</source>
     </message>
     <message>
         <source>Database unlock canceled.</source>
-        <translation>Разблокировка базы данных отменена.</translation>
+        <translation>Открытие базы данных отменено.</translation>
     </message>
     <message>
         <source>Unlock failed and no password given</source>
-        <translation>Неудачное разблокирование, пароль не указан</translation>
+        <translation>Неудачное открытие, пароль не указан</translation>
     </message>
     <message>
         <source>Unlocking the database failed and you did not enter a password.
 Do you want to retry with an &quot;empty&quot; password instead?
 
 To prevent this error from appearing, you must go to &quot;Database Settings / Security&quot; and reset your password.</source>
-        <translation>Не удалось разблокировать базу данных, пароль не был указан.
+        <translation>Не удалось открыть базу данных, пароль не был указан.
 Повторить попытку с пустым паролем?
 
-Чтобы отключить вывод этого сообщения об ошибке, выполните сброс пароля в меню «Параметры базы данных» → «Безопасность».</translation>
+Чтобы отключить вывод этого сообщения об ошибке, выполните сброс пароля в меню «Настройки базы данных» → «Безопасность».</translation>
     </message>
     <message>
         <source>Retry with empty password</source>
         <translation>Попробовать ещё раз с пустым паролем</translation>
-    </message>
-    <message>
-        <source>Failed to authenticate with Windows Hello</source>
-        <translation>Не удалось пройти аутентификацию с помощью Windows Hello</translation>
     </message>
     <message>
         <source>Failed to authenticate with Touch ID</source>
@@ -1556,7 +1556,7 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
     </message>
     <message>
         <source>Old key file format</source>
-        <translation>Старый формат файла-ключа</translation>
+        <translation>Устаревший формат файла-ключа</translation>
     </message>
     <message>
         <source>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database &amp;gt; Database Security &amp;gt; Change Key File.&lt;/strong&gt;&lt;br&gt;</source>
@@ -1601,13 +1601,21 @@ If you do not have a key file, please leave the field empty.</source>
     </message>
     <message>
         <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Для усиления защиты базы данных в дополнение к основному паролю возможно использовать секретный файл. Такой файл может быть создан в разделе «Безопасность» диалога параметров базы данных.&lt;/p&gt;&lt;p&gt;Файл-ключ &lt;strong&gt;не является&lt;/strong&gt; файлом базы данных в формате *.kdbx!&lt;br&gt;Если файл-ключ не используется, оставьте это поле пустым.&lt;/p&gt;&lt;p&gt;Нажмите для получения дополнительных сведений…&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Для усиления защиты базы данных в дополнение к основному паролю возможно использовать тайный файл. Такой файл может быть создан в разделе «Безопасность» диалога настроек базы данных.&lt;/p&gt;&lt;p&gt;Файл-ключ &lt;strong&gt;не является&lt;/strong&gt; файлом базы данных в формате *.kdbx!&lt;br&gt;Если файл-ключ не используется, оставьте это поле пустым.&lt;/p&gt;&lt;p&gt;Нажмите для получения дополнительных сведений…&lt;/p&gt;</translation>
     </message>
     <message>
         <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
 &lt;p&gt;Click for more information…&lt;/p&gt;</source>
         <translation>&lt;p&gt;Возможно использовать аппаратные ключи безопасности, такие как &lt;strong&gt;Yubikey&lt;/strong&gt; или &lt;strong&gt;OneKey&lt;/strong&gt; со слотами, настроенными в режиме HMAC-SHA1.&lt;/p&gt;
 &lt;p&gt;Нажмите здесь для получения дополнительных сведений…&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>authenticate to access the database</source>
+        <translation>аутентифицироваться для доступа к базе данных</translation>
+    </message>
+    <message>
+        <source>Failed to authenticate with Windows Hello: %1</source>
+        <translation>Не удалось пройти аутентификацию с помощью Windows Hello: %1</translation>
     </message>
 </context>
 <context>
@@ -1621,7 +1629,7 @@ If you do not have a key file, please leave the field empty.</source>
     <name>DatabaseSettingsDialog</name>
     <message>
         <source>Advanced Settings</source>
-        <translation>Дополнительные параметры</translation>
+        <translation>Дополнительные настройки</translation>
     </message>
     <message>
         <source>General</source>
@@ -1637,7 +1645,7 @@ If you do not have a key file, please leave the field empty.</source>
     </message>
     <message>
         <source>Encryption Settings</source>
-        <translation>Параметры шифрования</translation>
+        <translation>Настройки шифрования</translation>
     </message>
     <message>
         <source>Browser Integration</source>
@@ -1714,7 +1722,7 @@ This may prevent connection to the browser plugin.</source>
     </message>
     <message>
         <source>Enable Browser Integration to access these settings.</source>
-        <translation>Для доступа к этим параметрам требуется включить интеграцию с браузером.</translation>
+        <translation>Для доступа к этим настройкам требуется включить интеграцию с браузером.</translation>
     </message>
     <message>
         <source>Do you really want to disconnect all browsers?
@@ -1967,7 +1975,7 @@ If you keep this number, your database will not be protected from brute force at
     </message>
     <message>
         <source>Failed to transform key with new KDF parameters; KDF unchanged.</source>
-        <translation>Ошибка преобразования ФФК с новыми параметрами; ФФК не изменена.</translation>
+        <translation>Ошибка преобразования ФФК с новыми настройками; ФФК не изменена.</translation>
     </message>
     <message numerus="yes">
         <source> MiB</source>
@@ -1996,7 +2004,7 @@ If you keep this number, your database will not be protected from brute force at
     </message>
     <message>
         <source>Enable Secret Service to access these settings.</source>
-        <translation>Включите службу Secret Service, чтобы настроить эти параметры.</translation>
+        <translation>Включите службу Secret Service, чтобы изменить эти настройки.</translation>
     </message>
 </context>
 <context>
@@ -2038,16 +2046,8 @@ If you keep this number, your database will not be protected from brute force at
         <translation>Максимальное количество событий истории для каждой из записей</translation>
     </message>
     <message>
-        <source>Max. history items:</source>
-        <translation>Максимум записей в истории:</translation>
-    </message>
-    <message>
         <source>Maximum size of history per entry</source>
         <translation>Максимальный размер событий истории для каждой из записей</translation>
-    </message>
-    <message>
-        <source>Max. history size:</source>
-        <translation>Максимальный размер истории:</translation>
     </message>
     <message>
         <source> MiB</source>
@@ -2059,7 +2059,7 @@ If you keep this number, your database will not be protected from brute force at
     </message>
     <message>
         <source>Additional Database Settings</source>
-        <translation>Дополнительные параметры базы данных</translation>
+        <translation>Дополнительные настройки базы данных</translation>
     </message>
     <message>
         <source>Enable compression (recommended)</source>
@@ -2078,6 +2078,44 @@ This action is not reversible.</source>
     <message>
         <source> (old)</source>
         <translation> (устар.)</translation>
+    </message>
+    <message>
+        <source>When saving this setting or editing an entry
+the oldest history items of an entry will be
+removed such that only the specified amount
+of entries remain at most.</source>
+        <translation>При сохранении этой настройки или редактировании
+записи самые старые элементы истории записи
+будут удалены так, что останется только
+указанное максимальное количество записей.</translation>
+    </message>
+    <message>
+        <source>Limit the amount of history items per entry to:</source>
+        <translation>Ограничение числа элементов истории на одну запись:</translation>
+    </message>
+    <message>
+        <source>When saving this setting or editing an entry
+the oldest history items of an entry will be
+removed such that the remaining history items
+add up to the specified amount at most.</source>
+        <translation>При сохранении этой настройки или редактировании
+записи самые старые элементы истории записей
+будут удалены так, что оставшиеся элементы
+истории не превысят указанное количество.</translation>
+    </message>
+    <message>
+        <source>Limit the total size of history items per entry to:</source>
+        <translation>Ограничение общего размера элементов истории на одну запись:</translation>
+    </message>
+    <message>
+        <source>Move entries to a recycle bin group
+instead of deleting them from the database.
+Entries deleted from the recycle bin are
+removed from the database.</source>
+        <translation>Перемещать записи в корзину группы
+вместо удаления их из базы данных.
+Записи, удаленные из корзины,
+также удаляются из базы данных.</translation>
     </message>
 </context>
 <context>
@@ -2443,7 +2481,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Searches and Tags</source>
-        <translation>Поиск и теги</translation>
+        <translation>Поиск и метки</translation>
     </message>
     <message>
         <source>Enter a unique name or overwrite an existing search from the list:</source>
@@ -2494,7 +2532,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Properties</source>
-        <translation>Параметры</translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <source>History</source>
@@ -2611,7 +2649,7 @@ Would you like to correct it?</source>
     </message>
     <message numerus="yes">
         <source>%n hour(s)</source>
-        <translation><numerusform>%n час</numerusform><numerusform>%n часа</numerusform><numerusform>%n часов</numerusform><numerusform>%n часов</numerusform></translation>
+        <translation><numerusform>%n час</numerusform><numerusform>%n час(а)</numerusform><numerusform>%n час(ов)</numerusform><numerusform>%n час(ов)</numerusform></translation>
     </message>
 </context>
 <context>
@@ -2674,7 +2712,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>If checked, the entry will not appear in reports like Health Check and HIBP even if it doesn&apos;t match the quality requirements.</source>
-        <translation>Если этот параметр включён, запись не будет показана в таких отчётах, как «Проверка безопасности» и HIBP, даже если она не соответствует требованиям к качеству.</translation>
+        <translation>Если эта настройка включена, запись не будет показана в таких отчётах, как «Проверка безопасности» и HIBP, даже если она не соответствует требованиям к качеству.</translation>
     </message>
     <message>
         <source>Exclude from database reports</source>
@@ -2774,7 +2812,7 @@ Would you like to correct it?</source>
     <name>EditEntryWidgetBrowser</name>
     <message>
         <source>These settings affect to the entry&apos;s behaviour with the browser extension.</source>
-        <translation>Эти параметры влияют на данные, возвращаемые при запросе из расширения браузера.</translation>
+        <translation>Эти настройки влияют на данные, возвращаемые при запросе из расширения браузера.</translation>
     </message>
     <message>
         <source>General</source>
@@ -2871,20 +2909,8 @@ Would you like to correct it?</source>
         <translation>Поле заметок</translation>
     </message>
     <message>
-        <source>Toggle the checkbox to reveal the notes section.</source>
-        <translation>Включите для отображения раздела примечаний.</translation>
-    </message>
-    <message>
         <source>Username field</source>
         <translation>Поле имени пользователя</translation>
-    </message>
-    <message>
-        <source>Toggle notes visible</source>
-        <translation>Скрыть или показать заметку</translation>
-    </message>
-    <message>
-        <source>Notes:</source>
-        <translation>Примечания:</translation>
     </message>
     <message>
         <source>Expiration field</source>
@@ -2903,14 +2929,6 @@ Would you like to correct it?</source>
         <translation>Предустановки</translation>
     </message>
     <message>
-        <source>Password:</source>
-        <translation>Пароль:</translation>
-    </message>
-    <message>
-        <source>URL:</source>
-        <translation>URL-адрес:</translation>
-    </message>
-    <message>
         <source>Url field</source>
         <translation>Поле URL-адреса</translation>
     </message>
@@ -2919,16 +2937,8 @@ Would you like to correct it?</source>
         <translation>Загрузить значок сайта для URL-адреса</translation>
     </message>
     <message>
-        <source>Title:</source>
-        <translation>Название:</translation>
-    </message>
-    <message>
         <source>Title field</source>
         <translation>Поле названия</translation>
-    </message>
-    <message>
-        <source>Username:</source>
-        <translation>Имя пользователя:</translation>
     </message>
     <message>
         <source>Password field</source>
@@ -2939,16 +2949,40 @@ Would you like to correct it?</source>
         <translation>Использовать срок окончания действия</translation>
     </message>
     <message>
-        <source>Expires:</source>
-        <translation>Истекает:</translation>
-    </message>
-    <message>
-        <source>Tags:</source>
-        <translation>Теги:</translation>
-    </message>
-    <message>
         <source>Tags list</source>
         <translation>Список тегов</translation>
+    </message>
+    <message>
+        <source>&amp;Username:</source>
+        <translation>&amp;Имя пользователя:</translation>
+    </message>
+    <message>
+        <source>&amp;Title:</source>
+        <translation>&amp;Заголовок:</translation>
+    </message>
+    <message>
+        <source>&amp;Password:</source>
+        <translation>&amp;Пароль:</translation>
+    </message>
+    <message>
+        <source>UR&amp;L:</source>
+        <translation>UR&amp;L:</translation>
+    </message>
+    <message>
+        <source>&amp;Notes:</source>
+        <translation>&amp;Заметки:</translation>
+    </message>
+    <message>
+        <source>Toggle notes visibility</source>
+        <translation>Видимость заметки</translation>
+    </message>
+    <message>
+        <source>T&amp;ags:</source>
+        <translation>T&amp;ags:</translation>
+    </message>
+    <message>
+        <source>&amp;Expires:</source>
+        <translation>&amp;Истекает:</translation>
     </message>
 </context>
 <context>
@@ -2967,7 +3001,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Add key to agent when database is opened/unlocked</source>
-        <translation>Добавить ключ в агент при открытии/разблокировке базы данных</translation>
+        <translation>Добавить ключ в агент при открытии базы данных</translation>
     </message>
     <message>
         <source>Decrypt</source>
@@ -3055,11 +3089,11 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation>Интеграция с браузером</translation>
+        <translation>Интеграция с браузерами</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation>Параметры</translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <source>Add group</source>
@@ -3088,10 +3122,6 @@ Would you like to correct it?</source>
 </context>
 <context>
     <name>EditGroupWidgetBrowser</name>
-    <message>
-        <source>Edit Group</source>
-        <translation>Редактировать группу</translation>
-    </message>
     <message>
         <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
         <translation>Эти настройки влияют на взаимодействие с расширением браузера.</translation>
@@ -3215,15 +3245,15 @@ Supported extensions are: %1.</source>
     <message>
         <source>KeeShare is currently disabled. You can enable import/export in the application settings.</source>
         <comment>KeeShare is a proper noun</comment>
-        <translation>Обмен записями KeeShare отключён. Включите возможность импорта и/или экспорта в параметрах приложения.</translation>
+        <translation>Обмен записями KeeShare отключён. Включите возможность импорта и/или экспорта в настройках приложения.</translation>
     </message>
     <message>
         <source>Database export is currently disabled by application settings.</source>
-        <translation>Экспорт базы данных запрещён параметрами приложения.</translation>
+        <translation>Экспорт базы данных запрещён настройками приложения.</translation>
     </message>
     <message>
         <source>Database import is currently disabled by application settings.</source>
-        <translation>Импорт в базу данных запрещён параметрами приложения.</translation>
+        <translation>Импорт в базу данных запрещён настройками приложения.</translation>
     </message>
     <message>
         <source>KeeShare container</source>
@@ -3369,7 +3399,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>You can enable the DuckDuckGo website icon service under Tools -&gt; Settings -&gt; Security</source>
-        <translation>Возможно использовать службу поиска значков сайта DuckDuckGo в меню «Сервис» → «Параметры» → «Безопасность»</translation>
+        <translation>Возможно использовать службу поиска значков сайта DuckDuckGo в меню «Сервис» → «Настройки» → «Безопасность»</translation>
     </message>
     <message>
         <source>Existing icon selected.</source>
@@ -3733,7 +3763,7 @@ Error: %1</source>
     </message>
     <message>
         <source>Tags</source>
-        <translation>Теги</translation>
+        <translation>Метки</translation>
     </message>
 </context>
 <context>
@@ -3872,7 +3902,7 @@ Error: %1</source>
     </message>
     <message>
         <source>Tags</source>
-        <translation>Теги</translation>
+        <translation>Метки</translation>
     </message>
     <message>
         <source>Tags list</source>
@@ -3977,7 +4007,7 @@ Error: %1</source>
     </message>
     <message>
         <source>Sort entries by...</source>
-        <translation>Сортировать записи по...</translation>
+        <translation>Упорядочивать записи по...</translation>
     </message>
     <message>
         <source>You are about to export your database to an unencrypted file.
@@ -4076,7 +4106,7 @@ This will leave your passwords and sensitive information vulnerable!
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
-        <translation><numerusform>%n запись использована %1</numerusform><numerusform>%n записи использованы %1</numerusform><numerusform>%n записей использованы %1</numerusform><numerusform>%n записи использованы %1</numerusform></translation>
+        <translation><numerusform>%n запись была использована %1</numerusform><numerusform>%n записей были использованы %1</numerusform><numerusform>%n записей были использованы %1</numerusform><numerusform>%n записей были использованы %1</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4148,7 +4178,7 @@ This will leave your passwords and sensitive information vulnerable!
         <source>Having trouble downloading icons?
 You can enable the DuckDuckGo website icon service in the security section of the application settings.</source>
         <translation>Не удалось получить значки сайтов?
-В разделе «Конфиденциальность» вкладки «Безопасность» параметров приложения возможно включить использование службы значков сайта DuckDuckGo.</translation>
+В разделе «Конфиденциальность» вкладки «Безопасность» настроек приложения возможно включить использование службы значков сайта DuckDuckGo.</translation>
     </message>
     <message>
         <source>Close</source>
@@ -4216,7 +4246,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
         <translation>Вероятно, для входа были указанные неверные данные.
-Попробуйте ввести данные ещё раз, если ошибка повторится, возможно, файл базы данных повреждён.</translation>
+Попробуйте ввести данные ещё раз, если ошибка повториться, возможно, файл базы данных повреждён.</translation>
     </message>
     <message>
         <source>Header doesn&apos;t match hash</source>
@@ -4273,7 +4303,7 @@ If this reoccurs, then your database file may be corrupt.</source>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
         <translation>Вероятно, для входа были указанные неверные данные.
-Попробуйте ввести данные ещё раз, если ошибка повторится, возможно, файл базы данных повреждён.</translation>
+Попробуйте ввести данные ещё раз, если ошибка повториться, возможно, файл базы данных повреждён.</translation>
     </message>
     <message>
         <source>(HMAC mismatch)</source>
@@ -4297,11 +4327,11 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Failed to open buffer for KDF parameters in header</source>
-        <translation>Не удалось открыть буфер для параметров ФФК в заголовке</translation>
+        <translation>Не удалось открыть буфер для настроек ФФК в заголовке</translation>
     </message>
     <message>
         <source>Unsupported key derivation function (KDF) or invalid parameters</source>
-        <translation>Функция формирования ключа (ФФК) не поддерживается, либо неверные параметры</translation>
+        <translation>Функция формирования ключа (ФФК) не поддерживается, либо неверные настройки</translation>
     </message>
     <message>
         <source>Legacy header fields found in KDBX4 file.</source>
@@ -4402,7 +4432,7 @@ If this reoccurs, then your database file may be corrupt.</source>
     <message>
         <source>Failed to serialize KDF parameters variant map</source>
         <extracomment>Translation comment: variant map = data structure for storing meta data</extracomment>
-        <translation>Ошибка сериализации ФФК параметров структуры матаданных</translation>
+        <translation>Ошибка сериализации ФФК настроек структуры матаданных</translation>
     </message>
 </context>
 <context>
@@ -4445,7 +4475,7 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Invalid random stream id size</source>
-        <translation>Недопустимый размер идентификатора случайного потока</translation>
+        <translation>Недопустимый размер индентификатора случайного потока</translation>
     </message>
     <message>
         <source>Invalid inner random stream cipher</source>
@@ -4602,7 +4632,7 @@ Line %2, column %3</source>
     <name>KeeAgentSettings</name>
     <message>
         <source>Invalid KeeAgent settings file structure.</source>
-        <translation>Неверная структура файла параметров KeeAgent</translation>
+        <translation>Неверная структура файла настроек KeeAgent</translation>
     </message>
     <message>
         <source>Private key is an attachment but no attachments provided.</source>
@@ -4695,7 +4725,7 @@ Line %2, column %3</source>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
         <translation>Вероятно, для входа были указанные неверные данные.
-Попробуйте ввести данные ещё раз, если ошибка повторится, возможно, файл базы данных повреждён.</translation>
+Попробуйте ввести данные ещё раз, если ошибка повториться, возможно, файл базы данных повреждён.</translation>
     </message>
     <message>
         <source>Key transformation failed</source>
@@ -4775,7 +4805,7 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Invalid entry creation time field size</source>
-        <translation>Недопустимый размер поля времени создания записи</translation>
+        <translation>Недопустимный размер поля времени создания записи</translation>
     </message>
     <message>
         <source>Invalid entry modification time field size</source>
@@ -4814,11 +4844,11 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Import is disabled in settings</source>
-        <translation>Возможность импортировать отключена в параметрах программы</translation>
+        <translation>Возможность импортировать отключена в настройках приложения</translation>
     </message>
     <message>
         <source>Export is disabled in settings</source>
-        <translation>Возможность экспорировать отключена в параметрах программы</translation>
+        <translation>Возможность экспорировать отключена в настройках приложения</translation>
     </message>
     <message>
         <source>Inactive share</source>
@@ -4872,7 +4902,7 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</source>
-        <translation>Внимание: изменение файла приведёт к невозможности разблокировать базу данных!</translation>
+        <translation>Внимание: изменение файла приведёт к невозможности открыть базу данных!</translation>
     </message>
     <message>
         <source>Browse for key file</source>
@@ -5111,11 +5141,11 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Sort &amp;A-Z</source>
-        <translation>Сортировать &amp;А-Я</translation>
+        <translation>Упорядочивать &amp;А-Я</translation>
     </message>
     <message>
         <source>Sort &amp;Z-A</source>
-        <translation>Сортировать &amp;Я-А</translation>
+        <translation>Упорядочивать &amp;Я-А</translation>
     </message>
     <message>
         <source>Sa&amp;ve Database As…</source>
@@ -5123,7 +5153,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Database &amp;Security…</source>
-        <translation>&amp;Безопасность базы данных…</translation>
+        <translation>&amp;Безопаснось базы данных…</translation>
     </message>
     <message>
         <source>Database &amp;Reports…</source>
@@ -5135,11 +5165,11 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>&amp;Database Settings…</source>
-        <translation>Параметры базы данных…</translation>
+        <translation>Настройки базы данных…</translation>
     </message>
     <message>
         <source>Database settings</source>
-        <translation>Параметры базы данных</translation>
+        <translation>Настройки базы данных</translation>
     </message>
     <message>
         <source>&amp;Clone Entry…</source>
@@ -5179,7 +5209,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>&amp;Settings</source>
-        <translation>&amp;Параметры</translation>
+        <translation>&amp;Настройки</translation>
     </message>
     <message>
         <source>&amp;Password Generator</source>
@@ -5214,12 +5244,8 @@ Are you sure you want to continue with this file?</source>
         <translation>Скопировать название в буфер обмена</translation>
     </message>
     <message>
-        <source>&amp;URL</source>
-        <translation>&amp;URL-адрес</translation>
-    </message>
-    <message>
         <source>Copy URL to clipboard</source>
-        <translation>Скопировать URL-адрес в буфер обмена</translation>
+        <translation>Скопировать ссылку в буфер обмена</translation>
     </message>
     <message>
         <source>&amp;Notes</source>
@@ -5315,7 +5341,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>&amp;Keyboard Shortcuts</source>
-        <translation>&amp;Комбинации клавиш</translation>
+        <translation>&amp;Сочетания клавиш</translation>
     </message>
     <message>
         <source>Save Database Backup…</source>
@@ -5343,7 +5369,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Dark</source>
-        <translation>Тёмная</translation>
+        <translation>Темная</translation>
     </message>
     <message>
         <source>Classic (Platform-native)</source>
@@ -5363,7 +5389,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Hide Usernames</source>
-        <translation>Скрыть логины</translation>
+        <translation>Скрыть имена пользователей</translation>
     </message>
     <message>
         <source>Hide Passwords</source>
@@ -5411,7 +5437,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Settings</source>
-        <translation>Параметры</translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <source>Check for updates on startup?</source>
@@ -5443,11 +5469,11 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
-        <translation>Требуется перезапуск приложения для применения этого параметра. Выполнить перезапуск сейчас?</translation>
+        <translation>Требуется перезапуск приложения для применения этой настройки. Выполнить перезапуск сейчас?</translation>
     </message>
     <message>
         <source>Tags</source>
-        <translation>Теги</translation>
+        <translation>Метки</translation>
     </message>
     <message>
         <source>No Tags</source>
@@ -5455,7 +5481,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message numerus="yes">
         <source>%1 Entry(s)</source>
-        <translation><numerusform>%1 запись</numerusform><numerusform>%1 записи</numerusform><numerusform>%1 записей</numerusform><numerusform>%1 запись(и)</numerusform></translation>
+        <translation><numerusform>%1 запись</numerusform><numerusform>%1 записи</numerusform><numerusform>%1 записей</numerusform><numerusform>%1 записи</numerusform></translation>
     </message>
     <message>
         <source>Copy Password and TOTP</source>
@@ -5469,24 +5495,32 @@ We recommend you use the AppImage available on our downloads page.</source>
         <source>XML File…</source>
         <translation>XML-файл…</translation>
     </message>
+    <message>
+        <source>Copy &amp;URL</source>
+        <translation>Скопировать &amp;адрес</translation>
+    </message>
+    <message>
+        <source>Allow Screen Capture</source>
+        <translation>Разрешить скриншоты</translation>
+    </message>
 </context>
 <context>
     <name>ManageDatabase</name>
     <message>
         <source>Database settings</source>
-        <translation>Параметры базы данных</translation>
+        <translation>Настройки базы данных</translation>
     </message>
     <message>
         <source>Edit database settings</source>
-        <translation>Редактирование параметров базы данных</translation>
+        <translation>Правка настроек базы данных</translation>
     </message>
     <message>
         <source>Unlock database</source>
-        <translation>Разблокировать базу данных</translation>
+        <translation>Открыть базу данных</translation>
     </message>
     <message>
         <source>Unlock database to show more information</source>
-        <translation>Разблокируйте базу данных для просмотра дополнительных сведений</translation>
+        <translation>Откройте базу данных для просмотра дополнительных сведений</translation>
     </message>
     <message>
         <source>Lock database</source>
@@ -5599,15 +5633,15 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Encryption Settings</source>
-        <translation>Параметры шифрования</translation>
+        <translation>Настройки шифрования</translation>
     </message>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
-        <translation>Здесь можно настроить параметры шифрования базы данных. Их можно будет изменить позже в настройках базы данных.</translation>
+        <translation>Здесь можно изменить настройки шифрования базы данных. Их можно будет изменить позже в настройках базы данных.</translation>
     </message>
     <message>
         <source>Advanced Settings</source>
-        <translation>Дополнительные параметры</translation>
+        <translation>Дополнительные настройки</translation>
     </message>
     <message>
         <source>Simple Settings</source>
@@ -5629,11 +5663,11 @@ We recommend you use the AppImage available on our downloads page.</source>
     <name>NewDatabaseWizardPageEncryption</name>
     <message>
         <source>Encryption Settings</source>
-        <translation>Параметры шифрования</translation>
+        <translation>Настройки шифрования</translation>
     </message>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
-        <translation>Здесь можно настроить параметры шифрования базы данных. Их можно будет изменить позже в настройках базы данных.</translation>
+        <translation>Здесь можно изменить настройки шифрования базы данных. Их можно будет изменить позже в настройках базы данных.</translation>
     </message>
 </context>
 <context>
@@ -5838,6 +5872,10 @@ We recommend you use the AppImage available on our downloads page.</source>
     <message>
         <source>Unexpected EOF when writing private key</source>
         <translation>Неожиданный конец файла при записи закрытого (личного) ключа</translation>
+    </message>
+    <message>
+        <source>AES-256/GCM is currently not supported</source>
+        <translation>AES-256/GCM в настоящее время не поддерживается</translation>
     </message>
 </context>
 <context>
@@ -6219,6 +6257,10 @@ Do you want to overwrite it?</source>
         <comment>Password quality</comment>
         <translation>Отличный</translation>
     </message>
+    <message>
+        <source>Toggle password visibilty using Control + H. Open the password generator using Control + G.</source>
+        <translation>Переключить видимость пароля с помощью Control + H. Открыть генератор паролей с помощью Control + G.</translation>
+    </message>
 </context>
 <context>
     <name>PickcharsDialog</name>
@@ -6434,7 +6476,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Check if any passwords have been publicly leaked. FILENAME must be the path of a file listing SHA-1 hashes of leaked passwords in HIBP format, as available from https://haveibeenpwned.com/Passwords.</source>
-        <translation>Проверка паролей на компрометацию. Параметр ИМЯ_ФАЙЛА должен быть путём к файлу данных списка SHA-1 хэшей паролей в формате HIBP, полученным, например, с сайта https://haveibeenpwned.com/Passwords.</translation>
+        <translation>Проверка паролей на утечку. НАСТРОЙКА ИМЯ_ФАЙЛА должна быть путём к файлу данных списка SHA-1 хэшей паролей в формате HIBP, полученным, например, с сайта https://haveibeenpwned.com/Passwords.</translation>
     </message>
     <message>
         <source>FILENAME</source>
@@ -6720,7 +6762,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>error while setting database key derivation settings.</source>
-        <translation>ошибка при задании параметров базы данных для функции формирования ключа.</translation>
+        <translation>ошибка при задании настроек базы данных для функции формирования ключа.</translation>
     </message>
     <message>
         <source>File %1 already exists.</source>
@@ -6983,7 +7025,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Invalid password generator after applying all options</source>
-        <translation>Невозможно создать пароль с заданными параметрами</translation>
+        <translation>Невозможно создать пароль с заданными настройками</translation>
     </message>
     <message>
         <source>Display command help.</source>
@@ -7342,7 +7384,7 @@ Available commands:
 stop supporting in the future.
 
 Please consider generating a new key file.</source>
-        <translation>ВНИМАНИЕ: Вы используете файл-ключ устаревшего формата, поддержка которого 
+        <translation>ВНИМАНИЕ: вы используете файл-ключ устаревшего формата, поддержка которого 
 может быть прекращена в будущем.
 
 По возможности создайте новый ключевой файл.</translation>
@@ -7541,8 +7583,8 @@ Kernel: %3 %4</source>
         <translation><numerusform>%1 мин.</numerusform><numerusform>%1 мин.</numerusform><numerusform>%1 мин.</numerusform><numerusform>%1 мин.</numerusform></translation>
     </message>
     <message>
-        <source>Botan library must be at least 2.11.x, found %1.%2.%3</source>
-        <translation>Необходима библиотека Botan версии не ниже 2.11.x, а обнаружена версия %1.%2.%3</translation>
+        <source>Botan library must be at least %1, found %2.%3.%4</source>
+        <translation>Библиотека Botan должна быть не менее %1, найдено %2.%3.%4</translation>
     </message>
     <message>
         <source>Cryptographic libraries:</source>
@@ -7642,7 +7684,7 @@ Kernel: %3 %4</source>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)…</source>
-        <translation><numerusform>Буфер обмена будет очищен через %1 с</numerusform><numerusform>Буфер обмена будет очищен через %1 с</numerusform><numerusform>Буфер обмена будет очищен через %1 с</numerusform><numerusform>Буфер обмена будет очищен через %1 с</numerusform></translation>
+        <translation><numerusform>Буфер обмена будет очищен через %1 секунду...</numerusform><numerusform>Буфер обмена будет очищен через %1 секунд...</numerusform><numerusform>Буфер обмена будет очищен через %1 секунд...</numerusform><numerusform>Буфер обмена будет очищен через %1 секунд...</numerusform></translation>
     </message>
     <message>
         <source>Group</source>
@@ -7744,7 +7786,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Unsupported key file version: %1</source>
-        <translation>Неподдерживаемый тип файла-ключа: %1</translation>
+        <translation>Неподдерживаемый тип ключа: %1</translation>
     </message>
     <message>
         <source>Checksum mismatch! Key file may be corrupt.</source>
@@ -7807,17 +7849,13 @@ Kernel: %3 %4</source>
         <translation>Ошибка - KeePassXC</translation>
     </message>
     <message>
-        <source>Warning: Failed to prevent screenshots on a top level window!</source>
-        <translation>Внимание: не удалось запретить снимки экрана для окна верхнего уровня!</translation>
-    </message>
-    <message>
         <source>Database password: </source>
         <translation>Пароль базы данных: </translation>
     </message>
     <message>
         <source>Invalid Settings</source>
         <comment>TOTP</comment>
-        <translation>Недопустимые параметры</translation>
+        <translation>Недопустимые настройки</translation>
     </message>
     <message>
         <source>Invalid Key</source>
@@ -7831,6 +7869,18 @@ Kernel: %3 %4</source>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
         <translation>Не удалось подписать вызов с помощью Windows Hello.</translation>
+    </message>
+    <message>
+        <source>Warning: Failed to block screenshot capture on a top-level window.</source>
+        <translation>Предупреждение: не удалось заблокировать скриншот в окне верхнего уровня.</translation>
+    </message>
+    <message>
+        <source>Invalid Cipher</source>
+        <translation>Неверный шифр</translation>
+    </message>
+    <message>
+        <source>Invalid KDF</source>
+        <translation>Недействительный ФФК</translation>
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue.</source>
@@ -7893,6 +7943,10 @@ Kernel: %3 %4</source>
 This options is deprecated, use --set-key-file instead.</source>
         <translation>Установить файл ключа для базы данных.
 Эта опция устарела, вместо нее используйте --set-key-file.</translation>
+    </message>
+    <message>
+        <source>KeePassXC is not running. No open database to lock</source>
+        <translation>KeePassXC не запущен. Нет открытой базы данных для блокировки</translation>
     </message>
 </context>
 <context>
@@ -7985,7 +8039,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Title</source>
-        <translation>Заголовок</translation>
+        <translation>Название</translation>
     </message>
     <message>
         <source>Path</source>
@@ -8001,7 +8055,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation><numerusform>Удаление записи...</numerusform><numerusform>Удаление записей...</numerusform><numerusform>Удаление записей...</numerusform><numerusform>Удаление записей...</numerusform></translation>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform>Удаление записей...</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
@@ -8500,7 +8554,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If enabled, any attempt to read a password must be confirmed. Otherwise, clients can read passwords without confirmation when the database is unlocked.&lt;/p&gt;&lt;p&gt;This option only covers the access to the password of an entry. Clients can always enumerate the items of exposed databases and query their attributes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Если этот параметр включён, потребуется подтверждать каждую попытку чтения пароля. Если же он отключён, клиенты смогут выполнять чтение паролей без подтверждения, когда база данных разблокирована.&lt;/p&gt;&lt;p&gt;Этот параметр управляет только доступом к паролю записи. Клиенты в любой момент могут выполнить перечисление элементов представленных баз данных и запросить их атрибуты.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Если эта настройка включена, потребуется подтверждать каждую попытку чтения пароля. Если же он отключён, пользователи смогут выполнять чтение паролей без подтверждения, когда база данных открыта.&lt;/p&gt;&lt;p&gt;Эта настройка управляет только доступом к паролю записи. Пользователи в любое время могут выполнить перечисление элементов представленных баз данных и запросить их атрибуты.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Confirm when passwords are retrieved by clients</source>
@@ -8512,7 +8566,7 @@ This options is deprecated, use --set-key-file instead.</source>
            Emoji','Segoe UI Emoji'; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;This setting does
            not override disabling recycle bin prompts&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
           </source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;Этот параметр не подавляет запросы на прекращение использования корзины&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;Эта настройка не подавляет запросы на прекращение использования корзины&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Confirm when clients request entry deletion</source>
@@ -8525,13 +8579,13 @@ This options is deprecated, use --set-key-file instead.</source>
            different value set in applications.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
           </source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Это улучшает совместимость с некоторыми приложениями,
-которые ищут пароль без предварительной разблокировки базы данных.&lt;/p&gt;&lt;p&gt;Включение параметра может также
-вызвать сбой клиента, если база данных не может быть разблокирована в течение определенного тайм-аута. (Обычно 25 с, другое значение устанавливается в приложениях.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
+которые ищут пароль без предварительного открытия базы данных.&lt;/p&gt;&lt;p&gt;Включение настройки может также
+вызвать сбой клиента, если база данных не может быть открыта в течение определённого времени. (Обычно 25 с, другое значение устанавливается в приложениях.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
 </translation>
     </message>
     <message>
         <source>Prompt to unlock database before searching</source>
-        <translation>Предложение разблокировать базу данных перед началом поиска</translation>
+        <translation>Предложение открыть базу данных перед началом поиска</translation>
     </message>
     <message>
         <source>Exposed database groups:</source>
@@ -8720,7 +8774,7 @@ This options is deprecated, use --set-key-file instead.</source>
     <message>
         <source>NOTE: These TOTP settings are custom and may not work with other authenticators.</source>
         <comment>TOTP QR code dialog warning</comment>
-        <translation>* Эти параметры TOTP - пользовательские, они могут не работать с другими средствами проверки подлинности.</translation>
+        <translation>* Эти настройки TOTP — пользовательские, они могут не работать с другими средствами проверки подлинности.</translation>
     </message>
     <message>
         <source>There was an error creating the QR code.</source>
@@ -8751,15 +8805,15 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Default settings (RFC 6238)</source>
-        <translation>Параметры по умолчанию (RFC 6238)</translation>
+        <translation>Настройки по умолчанию (RFC 6238)</translation>
     </message>
     <message>
         <source>Steam® settings</source>
-        <translation>Параметры Steam®</translation>
+        <translation>Настройки Steam®</translation>
     </message>
     <message>
         <source>Custom settings:</source>
-        <translation>Пользовательские параметры</translation>
+        <translation>Пользовательские настройки</translation>
     </message>
     <message>
         <source>Custom Settings</source>
@@ -8801,11 +8855,11 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Confirm Remove TOTP Settings</source>
-        <translation>Подтверждение удаления параметров TOTP</translation>
+        <translation>Подтверждение удаления настроек TOTP</translation>
     </message>
     <message>
         <source>Are you sure you want to delete TOTP settings for this entry?</source>
-        <translation>Удалить параметры TOTP этой записи?</translation>
+        <translation>Удалить настройки TOTP этой записи?</translation>
     </message>
 </context>
 <context>
@@ -9016,7 +9070,7 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Hardware key is locked or timed out. Unlock or re-present it to continue.</source>
-        <translation>Аппаратный ключ заблокирован или истек срок его действия. Разблокируйте или подключите его повторно, чтобы продолжить.</translation>
+        <translation>Аппаратный ключ заблокирован или истёк срок его действия. Разблокируйте или подключите его повторно, чтобы продолжить.</translation>
     </message>
     <message>
         <source>Hardware key was not found or is not configured.</source>

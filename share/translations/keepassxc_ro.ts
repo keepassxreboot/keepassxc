@@ -594,6 +594,10 @@
         <source>Use DuckDuckGo service to download website icons</source>
         <translation>Utilizați serviciul DuckDuckGo pentru a descărca pictogramele site-ului</translation>
     </message>
+    <message>
+        <source>Hide TOTP in the entry preview panel</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
@@ -1530,10 +1534,6 @@ Pentru a preveni apariția acestei erori, trebuie să accesați „Setări baza 
         <translation>Încercați din nou cu parola goală</translation>
     </message>
     <message>
-        <source>Failed to authenticate with Windows Hello</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Failed to authenticate with Touch ID</source>
         <translation type="unfinished"/>
     </message>
@@ -1594,6 +1594,14 @@ Dacă nu aveți un fișier cheie, lăsați câmpul gol.</translation>
     <message>
         <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
 &lt;p&gt;Click for more information…&lt;/p&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>authenticate to access the database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to authenticate with Windows Hello: %1</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -2019,16 +2027,8 @@ If you keep this number, your database will not be protected from brute force at
         <translation>Numărul maxim de articole istorice pe intrare</translation>
     </message>
     <message>
-        <source>Max. history items:</source>
-        <translation>Max. elemente de istorie:</translation>
-    </message>
-    <message>
         <source>Maximum size of history per entry</source>
         <translation>Mărimea maximă a istoricului pe intrare</translation>
-    </message>
-    <message>
-        <source>Max. history size:</source>
-        <translation>Max. Dimensiune istorie:</translation>
     </message>
     <message>
         <source> MiB</source>
@@ -2059,6 +2059,35 @@ Această acțiune nu este reversibilă.</translation>
     <message>
         <source> (old)</source>
         <translation>(vechi)</translation>
+    </message>
+    <message>
+        <source>When saving this setting or editing an entry
+the oldest history items of an entry will be
+removed such that only the specified amount
+of entries remain at most.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Limit the amount of history items per entry to:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>When saving this setting or editing an entry
+the oldest history items of an entry will be
+removed such that the remaining history items
+add up to the specified amount at most.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Limit the total size of history items per entry to:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Move entries to a recycle bin group
+instead of deleting them from the database.
+Entries deleted from the recycle bin are
+removed from the database.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2848,20 +2877,8 @@ Would you like to correct it?</source>
         <translation>Câmpul de note</translation>
     </message>
     <message>
-        <source>Toggle the checkbox to reveal the notes section.</source>
-        <translation>Comutați caseta de selectare pentru a dezvălui secțiunea de note.</translation>
-    </message>
-    <message>
         <source>Username field</source>
         <translation>Câmpul utilizatorului</translation>
-    </message>
-    <message>
-        <source>Toggle notes visible</source>
-        <translation>Notele de comutare sunt vizibile</translation>
-    </message>
-    <message>
-        <source>Notes:</source>
-        <translation type="unfinished"/>
     </message>
     <message>
         <source>Expiration field</source>
@@ -2880,14 +2897,6 @@ Would you like to correct it?</source>
         <translation>Presetări</translation>
     </message>
     <message>
-        <source>Password:</source>
-        <translation>Parola:</translation>
-    </message>
-    <message>
-        <source>URL:</source>
-        <translation>URL:</translation>
-    </message>
-    <message>
         <source>Url field</source>
         <translation>Câmp url</translation>
     </message>
@@ -2896,16 +2905,8 @@ Would you like to correct it?</source>
         <translation>Descărcați favicon pentru URL</translation>
     </message>
     <message>
-        <source>Title:</source>
-        <translation>Titlu:</translation>
-    </message>
-    <message>
         <source>Title field</source>
         <translation>Câmpul titlu</translation>
-    </message>
-    <message>
-        <source>Username:</source>
-        <translation>Nume utilizator:</translation>
     </message>
     <message>
         <source>Password field</source>
@@ -2916,15 +2917,39 @@ Would you like to correct it?</source>
         <translation>Combate expirarea</translation>
     </message>
     <message>
-        <source>Expires:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Tags:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Tags list</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Username:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Title:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Password:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>UR&amp;L:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Notes:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle notes visibility</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>T&amp;ags:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Expires:</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -3065,10 +3090,6 @@ Would you like to correct it?</source>
 </context>
 <context>
     <name>EditGroupWidgetBrowser</name>
-    <message>
-        <source>Edit Group</source>
-        <translation type="unfinished"/>
-    </message>
     <message>
         <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
         <translation type="unfinished"/>
@@ -3660,7 +3681,7 @@ Error: %1</source>
     </message>
     <message>
         <source>Password</source>
-        <translation>Parolă</translation>
+        <translation>Parola</translation>
     </message>
     <message>
         <source>URL</source>
@@ -5181,10 +5202,6 @@ Sigur doriți să continuați cu acest fișier?</translation>
         <translation>Copiere titlu în Clipboard</translation>
     </message>
     <message>
-        <source>&amp;URL</source>
-        <translation>&amp;URL</translation>
-    </message>
-    <message>
         <source>Copy URL to clipboard</source>
         <translation>Copiere URL în Clipboard</translation>
     </message>
@@ -5430,6 +5447,14 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>XML File…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy &amp;URL</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Allow Screen Capture</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -5801,6 +5826,10 @@ We recommend you use the AppImage available on our downloads page.</source>
     <message>
         <source>Unexpected EOF when writing private key</source>
         <translation>EOF neașteptate atunci când scrierea cheie privată</translation>
+    </message>
+    <message>
+        <source>AES-256/GCM is currently not supported</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6180,6 +6209,10 @@ Do you want to overwrite it?</source>
         <source>Excellent</source>
         <comment>Password quality</comment>
         <translation>Excelent</translation>
+    </message>
+    <message>
+        <source>Toggle password visibilty using Control + H. Open the password generator using Control + G.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7500,7 +7533,7 @@ Nucleu (Kernel): %3 %4</translation>
         <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
-        <source>Botan library must be at least 2.11.x, found %1.%2.%3</source>
+        <source>Botan library must be at least %1, found %2.%3.%4</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -7766,10 +7799,6 @@ Nucleu (Kernel): %3 %4</translation>
         <translation>KeePassXC - Eroare</translation>
     </message>
     <message>
-        <source>Warning: Failed to prevent screenshots on a top level window!</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Database password: </source>
         <translation>Parolă bază de date:</translation>
     </message>
@@ -7789,6 +7818,18 @@ Nucleu (Kernel): %3 %4</translation>
     </message>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Warning: Failed to block screenshot capture on a top-level window.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid Cipher</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid KDF</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -7850,6 +7891,10 @@ Nucleu (Kernel): %3 %4</translation>
     <message>
         <source>Set the key file for the database.
 This options is deprecated, use --set-key-file instead.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC is not running. No open database to lock</source>
         <translation type="unfinished"/>
     </message>
 </context>

@@ -1,68 +1,68 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="nl">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="fil">
 <context>
     <name>AboutDialog</name>
     <message>
         <source>About KeePassXC</source>
-        <translation>Over KeePassXC</translation>
+        <translation>Tungkol sa KeePassXC</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>Over</translation>
+        <translation>Tungkol</translation>
     </message>
     <message>
         <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
-        <translation>Meld problemen op: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt; https://github.com&lt;/a&gt;</translation>
+        <translation>Mag-ulat ng mga bug sa: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</translation>
     </message>
     <message>
         <source>KeePassXC is distributed under the terms of the GNU General Public License (GPL) version 2 or (at your option) version 3.</source>
-        <translation>KeePassXC wordt verspreid onder de voorwaarden van de GNU General Public License (GPL) versie 2 of (desgewenst) versie 3.</translation>
+        <translation>Ang KeePassXC ay ipinamamahagi sa ilalim ng mga tuntunin ng GNU General Public License (GPL) na bersyon 2 o (sa iyong opsyon) na bersyon 3.</translation>
     </message>
     <message>
         <source>Project Maintainers:</source>
-        <translation>Projectbeheerders:</translation>
+        <translation>Mga Tagapanatili ng Proyekto:</translation>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
-        <translation>Bijzondere dank van het KeePassXC-team gaat uit naar debfx voor het creëren van het oorspronkelijke KeePassX.</translation>
+        <translation>Espesyal na pasasalamat mula sa team ng KeePassXC pumunta sa debfx para sa paglikha ng orihinal na KeePassX.</translation>
     </message>
     <message>
         <source>Contributors</source>
-        <translation>Bijdragen van</translation>
+        <translation>Mga contributor</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Toon bijdragen op GitHub&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Tingnan ang Mga Kontribusyon sa GitHub&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Debug Info</source>
-        <translation>Foutinformatie</translation>
+        <translation>Debug Info</translation>
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
-        <translation>Voeg de volgende informatie bij de foutrapportage:</translation>
+        <translation>Isama ang sumusunod na impormasyon sa tuwing mag-uulat ka ng bug:</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation>Naar klembord kopiëren</translation>
+        <translation>Kopyahin sa clipboard</translation>
     </message>
 </context>
 <context>
     <name>AccessControlDialog</name>
     <message>
         <source>KeePassXC -  Access Request</source>
-        <translation>KeePassXC - Verzoek om toegang</translation>
+        <translation>KeePassXC -  Kahilingan sa Pag-access</translation>
     </message>
     <message>
         <source>Non-existing/inaccessible executable path. Please double-check the client is legit.</source>
-        <translation>Niet-bestaand/ontoegankelijk uitvoerbaar pad. Controleer nogmaals of de client legitiem is.</translation>
+        <translation>Hindi umiiral/hindi ma-access na maipapatupad na landas. Pakitingnan muli kung legit ang kliyente.</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;%1 &lt;/span&gt;is requesting access to the following entries:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;%1 &lt;/span&gt;vraagt om toegang tot de volgende items:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;%1 &lt;/span&gt;ay humihiling ng access sa mga sumusunod na entry:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>Naam</translation>
+        <translation>Pangalan</translation>
     </message>
     <message>
         <source>PID</source>
@@ -70,262 +70,262 @@
     </message>
     <message>
         <source>Executable</source>
-        <translation>Uitvoerbaar bestand</translation>
+        <translation>Executable</translation>
     </message>
     <message>
         <source>Command Line</source>
-        <translation>Opdrachtregel</translation>
+        <translation>Command Line</translation>
     </message>
     <message>
         <source>Details</source>
-        <translation>Details</translation>
+        <translation>Mga Detalye</translation>
     </message>
     <message>
         <source>Remember</source>
-        <translation>Onthouden</translation>
+        <translation>Tandaan</translation>
     </message>
     <message>
         <source>Allow Selected</source>
-        <translation>Selectie toestaan</translation>
+        <translation>Payagan ang Napili</translation>
     </message>
     <message>
         <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
-        <translation>Je beslissing wordt onthouden voor de duur dat ZOWEL de aanvragende client ALS KeePassXC actief zijn.</translation>
+        <translation>Ang desisyon mo ay tatandaan sa tagal habang ang humihiling na client AT KeePassXC ay tumatakbo.</translation>
     </message>
     <message>
         <source>Deny All &amp;&amp; Future</source>
-        <translation>Alles afwijzen, nu &amp;&amp; toekomst</translation>
+        <translation>I-deny Lahat &amp;&amp; Future</translation>
     </message>
     <message>
         <source>Allow All &amp;&amp; &amp;Future</source>
-        <translation>Alles toestaan, nu &amp;&amp; toekomst</translation>
+        <translation>Payagan Lahat &amp;&amp; &amp;Future</translation>
     </message>
 </context>
 <context>
     <name>AccessControlDialog::DenyButton</name>
     <message>
         <source>Deny for this program</source>
-        <translation>Weigeren voor dit programma</translation>
+        <translation>Tanggihan para sa programang ito</translation>
     </message>
 </context>
 <context>
     <name>AgentSettingsWidget</name>
     <message>
         <source>Enable SSH Agent integration</source>
-        <translation>SSH Agent-integratie inschakelen</translation>
+        <translation>I-enable ang pagsasama ng SSH Agent</translation>
     </message>
     <message>
         <source>Use Pageant</source>
-        <translation>Gebruik Pageant</translation>
+        <translation>Gamitin ang Pageant</translation>
     </message>
     <message>
         <source>Use OpenSSH</source>
-        <translation>Gebruik OpenSSH</translation>
+        <translation>Gamitin ang OpenSSH</translation>
     </message>
     <message>
         <source>SSH_AUTH_SOCK override</source>
-        <translation>SSH_AUTH_SOCK overschrijven</translation>
+        <translation>Override ng SSH_AUTH_SOCK</translation>
     </message>
     <message>
         <source>SSH_AUTH_SOCK value</source>
-        <translation>SSH_AUTH_SOCK waarde</translation>
+        <translation>Value ng SSH_AUTH_SOCK</translation>
     </message>
     <message>
         <source>(empty)</source>
-        <translation>(leeg)</translation>
+        <translation>(walang laman)</translation>
     </message>
     <message>
         <source>SSH_SK_PROVIDER value</source>
-        <translation>SSH_SK_PROVIDER waarde</translation>
+        <translation>Value ng SSH_SK_PROVIDER</translation>
     </message>
     <message>
         <source>SSH_SK_PROVIDER override</source>
-        <translation>SSH_SK_PROVIDER override</translation>
+        <translation>I-override ang SSH_SK_PROVIDER</translation>
     </message>
     <message>
         <source>No SSH Agent socket available. Either make sure SSH_AUTH_SOCK environment variable exists or set an override.</source>
-        <translation>Geen SSH Agent-socket beschikbaar. Zorg ervoor dat de omgevingsvariabele SSH_AUTH_SOCK bestaat of stel een overschrijving in.</translation>
+        <translation>Walang available na socket ng SSH Agent. Alinman ay tiyaking may SSH_AUTH_SOCK environment variable o magtakda ng override.</translation>
     </message>
     <message>
         <source>SSH Agent connection is working!</source>
-        <translation>SSH Agent-verbinding werkt!</translation>
+        <translation>Gumagana ang koneksyon ng SSH Agent!</translation>
     </message>
     <message>
         <source>Use both agents</source>
-        <translation>Gebruik beide agenten</translation>
+        <translation>Gamitin ang parehong mga agent</translation>
     </message>
 </context>
 <context>
     <name>ApplicationSettingsWidget</name>
     <message>
         <source>Application Settings</source>
-        <translation>Programma-instellingen</translation>
+        <translation>Mga Application Setting</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>Algemeen</translation>
+        <translation>Pangkalahatan</translation>
     </message>
     <message>
         <source>Security</source>
-        <translation>Beveiliging</translation>
+        <translation>Security</translation>
     </message>
     <message>
         <source>Access error for config file %1</source>
-        <translation>Geen toegang tot configuratiebestand %1</translation>
+        <translation>Error sa pag-access para sa config file na %1</translation>
     </message>
     <message>
         <source>Icon only</source>
-        <translation>Alleen pictogram</translation>
+        <translation>Icon lamang</translation>
     </message>
     <message>
         <source>Text only</source>
-        <translation>Alleen tekst</translation>
+        <translation>Text lamang</translation>
     </message>
     <message>
         <source>Text beside icon</source>
-        <translation>Tekst naast pictogram</translation>
+        <translation>Text sa tabi ng icon</translation>
     </message>
     <message>
         <source>Text under icon</source>
-        <translation>Tekst onder pictogram</translation>
+        <translation>Text sa ilalim ng icon</translation>
     </message>
     <message>
         <source>Follow style</source>
-        <translation>Volg stijl</translation>
+        <translation>Sundin ang istilo</translation>
     </message>
     <message>
         <source>Monochrome</source>
-        <translation>Monochroom</translation>
+        <translation>Monochrome</translation>
     </message>
     <message>
         <source>Monochrome (light)</source>
-        <translation>Monochroom (licht)</translation>
+        <translation>Monochrome (light)</translation>
     </message>
     <message>
         <source>Monochrome (dark)</source>
-        <translation>Monochroom (donker)</translation>
+        <translation>Monochrome (dark)</translation>
     </message>
     <message>
         <source>Colorful</source>
-        <translation>Kleurrijk</translation>
+        <translation>Makulay</translation>
     </message>
     <message>
         <source>You must restart the application to set the new language. Would you like to restart now?</source>
-        <translation>Je moet de toepassing opnieuw starten om de nieuwe taal in te stellen. Wil je dat nu doen?</translation>
+        <translation>You must restart the application to set the new language. Would you like to restart now?</translation>
     </message>
     <message>
         <source>Reset Settings?</source>
-        <translation>Instellingen herstellen? </translation>
+        <translation>I-reset ang Mga Setting?</translation>
     </message>
     <message>
         <source>Are you sure you want to reset all general and security settings to default?</source>
-        <translation>Weet je zeker dat je de algemene en beveiligingsinstellingen opnieuw wilt instellen?</translation>
+        <translation>Sigurado ka bang nais mong i-reset ang pangkalahatan at mga setting ng seguridad sa default?</translation>
     </message>
     <message>
         <source>Select backup storage directory</source>
-        <translation>Selecteer map voor opslag back-up</translation>
+        <translation>Piliin ang direktoryo ng backup na storage</translation>
     </message>
     <message>
         <source>This setting cannot be enabled when minimize on unlock is enabled.</source>
-        <translation>Deze instelling kan niet worden ingeschakeld als minimaliseren na ontgrendelen is ingeschakeld.</translation>
+        <translation>Hindi maaaring i-enable ang setting na ito kapag na-enable ang pag-minimize ng pag-unlock.</translation>
     </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
     <message>
         <source>Basic Settings</source>
-        <translation>Basisinstellingen</translation>
+        <translation>Mga Pangunahing Setting</translation>
     </message>
     <message>
         <source>Startup</source>
-        <translation>Opstarten</translation>
+        <translation>Magsimula</translation>
     </message>
     <message>
         <source>Start only a single instance of KeePassXC</source>
-        <translation>Start niet meer dan één instantie van KeePassXC</translation>
+        <translation>Magsimula lamang ng isang halimbawa ng KeePassXC</translation>
     </message>
     <message>
         <source>Automatically launch KeePassXC at system startup</source>
-        <translation>KeePassXC automatisch opstarten met het systeem</translation>
+        <translation>Awtomatikong i-launch ang KeePassXC sa pagsisimula ng system</translation>
     </message>
     <message>
         <source>Minimize window at application startup</source>
-        <translation>Scherm minimaliseren bij het opstarten</translation>
+        <translation>I-minimize ang window sa pagsisimula ng application</translation>
     </message>
     <message>
         <source>Minimize window after unlocking database</source>
-        <translation>Venster minimaliseren na ontgrendelen van database</translation>
+        <translation>I-minimize ang window pagkatapos i-unlock ang database</translation>
     </message>
     <message>
         <source>Remember previously used databases</source>
-        <translation>Laatstgebruikte databases onthouden</translation>
+        <translation>Tandaan ang mga dating ginamit na database</translation>
     </message>
     <message>
         <source>Load previously open databases on startup</source>
-        <translation>Laatstgebruikte databases openen bij het opstarten</translation>
+        <translation>Mag-load ng mga dating bukas na database sa pagsisimula</translation>
     </message>
     <message>
         <source>Remember database key files and security dongles</source>
-        <translation>Laatstgebruikte sleutelbestanden en beveiligingssticks onthouden</translation>
+        <translation>Tandaan ang mga key file at security dongle ng database</translation>
     </message>
     <message>
         <source>Check for updates at application startup once per week</source>
-        <translation>Controleer eens per week op updates bij het opstarten van het programma</translation>
+        <translation>Tingnan para sa mga update sa startup ng application isang beses bawat linggo</translation>
     </message>
     <message>
         <source>Include beta releases when checking for updates</source>
-        <translation>Zoek ook naar bèta-releases bij het controleren op updates</translation>
+        <translation>Isama ang mga nilabas na beta kapag tumitingin ng mga update</translation>
     </message>
     <message>
         <source>On database unlock, show entries that </source>
-        <translation>Bij het ontgrendelen van databases, toon items die </translation>
+        <translation>Sa pag-unlock ng database, ipakita ang mga entry na </translation>
     </message>
     <message>
         <source>have expired</source>
         <comment>On database unlock, show entries that...</comment>
-        <translation>zijn verlopen</translation>
+        <translation>nag-expire na</translation>
     </message>
     <message>
         <source> days</source>
         <comment>On database unlock, show entries that will expire within %1 days</comment>
-        <translation> dagen</translation>
+        <translation> araw</translation>
     </message>
     <message>
         <source>will expire within </source>
         <comment>On database unlock, show entries that...</comment>
-        <translation>zullen vervallen binnen </translation>
+        <translation>ay mawawalan ng bisa sa loob ng </translation>
     </message>
     <message>
         <source>File Management</source>
-        <translation>Bestandsbeheer</translation>
+        <translation>Pamamahala ng File</translation>
     </message>
     <message>
         <source>Automatically save after every change</source>
-        <translation>Automatisch opslaan na iedere wijziging</translation>
+        <translation>Awtomatikong i-save pagkatapos ng bawat pagbabago</translation>
     </message>
     <message>
         <source>Automatically save when locking database</source>
-        <translation>Automatisch opslaan bij het vergrendelen van de database</translation>
+        <translation>Awtomatikong maisi-save kapag nag-lock ng database</translation>
     </message>
     <message>
         <source>Automatically save non-data changes when locking database</source>
-        <translation>Automatisch niet-gegevens wijzigingen opslaan bij het vergrendelen van de database</translation>
+        <translation>Awtomatikong maisi-save ang non-data na mga pagbabago kapag nag-lock ng database</translation>
     </message>
     <message>
         <source>Automatically reload the database when modified externally</source>
-        <translation>Database automatisch opnieuw laden als deze van buitenaf is gewijzigd</translation>
+        <translation>Awtomatikong i-reload ang database kapag binago sa panlabas</translation>
     </message>
     <message>
         <source>Backup database file before saving</source>
-        <translation>Back-up databasebestand voor het opslaan</translation>
+        <translation>I-backup ang database file bago i-save</translation>
     </message>
     <message>
         <source>Backup destination</source>
-        <translation>Back-upbestemming</translation>
+        <translation>Backup na destinasyon</translation>
     </message>
     <message>
         <source>Specifies the database backup file location. Occurrences of &quot;{DB_FILENAME}&quot; are replaced with the filename of the saved database without extension. {TIME:&lt;format&gt;} is replaced with the backup time, see https://doc.qt.io/qt-5/qdatetime.html#toString. &lt;format&gt; defaults to format string &quot;dd_MM_yyyy_hh-mm-ss&quot;.</source>
-        <translation>Hiermee geef je de locatie van het back-upbestand van de database op. Exemplaren van &quot;{DB_FILENAME}&quot; worden vervangen door de bestandsnaam van de opgeslagen database zonder extensie. {TIME:&lt;format&gt;} wordt vervangen door de back-uptijd, zie https://doc.qt.io/qt-5/qdatetime.html#toString. &lt;format&gt; standaard tekenreeks &quot;dd_MM_yyyy_hh-mm-ss&quot;.</translation>
+        <translation>Tinutukoy ang lokasyon ng backup file ng database. Mga pangyayari ng &quot;{DB_FILENAME}&quot; ay pinalitan ng filename ng naka-save na database nang walang extension. {TIME:&lt;format&gt;} ay pinalitan ng oras ng pag-backup, tingnan ang https://doc.qt.io/qt-5/qdatetime.html#toString. &lt;format&gt; default sa pag-format ng string &quot;dd_MM_yyyy_hh-mm-ss&quot;.</translation>
     </message>
     <message>
         <source>{DB_FILENAME}.old.kdbx</source>
@@ -333,201 +333,201 @@
     </message>
     <message>
         <source>Choose...</source>
-        <translation>Kiezen...</translation>
+        <translation>Pumili...</translation>
     </message>
     <message>
         <source>Use alternative saving method (may solve problems with Dropbox, Google Drive, GVFS, etc.)</source>
-        <translation>Gebruik een alternatieve opslagmethode (kan problemen oplossen met Dropbox, Google Drive, GVFS, enz.)</translation>
+        <translation>Gumamit ng alternatibong paraan ng pag-save (maaaring malutas ang mga problema sa Dropbox, Google Drive, GVFS, atbp.)</translation>
     </message>
     <message>
         <source>Temporary file moved into place</source>
-        <translation>Tijdelijk bestand op zijn plaats verplaatst</translation>
+        <translation>Naisalugar ang pansamantalang file</translation>
     </message>
     <message>
         <source>Directly write to database file (dangerous)</source>
-        <translation>Direct naar databasebestand schrijven (gevaarlijk)</translation>
+        <translation>Direktang sumulat sa database file (mapanganib)</translation>
     </message>
     <message>
         <source>Entry Management</source>
-        <translation>Itembeheer</translation>
+        <translation>Pamamahala ng Entry</translation>
     </message>
     <message>
         <source>Use group icon on entry creation</source>
-        <translation>Groepspictogram toepassen bij nieuwe items</translation>
+        <translation>Gumamit ng icon ng grupo sa paggawa ng entry</translation>
     </message>
     <message>
         <source>Minimize when opening a URL</source>
-        <translation>Minimaliseren bij het openen van een URL</translation>
+        <translation>I-minimize kapag nagbubukas ng URL</translation>
     </message>
     <message>
         <source>Hide window when copying to clipboard</source>
-        <translation>Venster verbergen bij kopiëren naar klembord</translation>
+        <translation>Itago ang window kapag kumukopya sa clipboard</translation>
     </message>
     <message>
         <source>Minimize</source>
-        <translation>Minimaliseren</translation>
+        <translation>I-minimize</translation>
     </message>
     <message>
         <source>Drop to background</source>
-        <translation>Naar achtergrond verplaatsen</translation>
+        <translation>I-drop sa background</translation>
     </message>
     <message>
         <source>Favicon download timeout:</source>
-        <translation>Favicon download time-out:</translation>
+        <translation>Timeout sa pag-download ng Favicon:</translation>
     </message>
     <message>
         <source>Website icon download timeout in seconds</source>
-        <translation>Websitepictogram download time-out in seconden</translation>
+        <translation>Nag-timeout sa pag-download ng icon ng website sa ilang segundo</translation>
     </message>
     <message>
         <source> sec</source>
         <comment>Seconds</comment>
-        <translation> sec</translation>
+        <translation> seg</translation>
     </message>
     <message>
         <source>User Interface</source>
-        <translation>Gebruikersomgeving</translation>
+        <translation>User Interface</translation>
     </message>
     <message>
         <source>Toolbar button style</source>
-        <translation>Knopstijl van de werkbalk</translation>
+        <translation>Estilo ng button ng toolbar</translation>
     </message>
     <message>
         <source>Movable toolbar</source>
-        <translation>Verplaatsbare werkbalk</translation>
+        <translation>Naigagalaw na toolbar</translation>
     </message>
     <message>
         <source>Language selection</source>
-        <translation>Taalkeuze</translation>
+        <translation>Pagpili ng wika</translation>
     </message>
     <message>
         <source>Language:</source>
-        <translation>Taal:</translation>
+        <translation>Wika:</translation>
     </message>
     <message>
         <source>(restart program to activate)</source>
-        <translation>(programma opnieuw starten om te activeren)</translation>
+        <translation>(i-restart ang program para i-activate)</translation>
     </message>
     <message>
         <source>Toolbar button style:</source>
-        <translation>Knopstijl van de werkbalk:</translation>
+        <translation>Estilo ng button ng toolbar:</translation>
     </message>
     <message>
         <source>Use monospaced font for notes</source>
-        <translation>Mono-lettertype gebruiken voor notities</translation>
+        <translation>Gumamit ng monospaced na font para sa mga tala</translation>
     </message>
     <message>
         <source>Minimize instead of app exit</source>
-        <translation>Minimaliseren in plaats van app afsluiten</translation>
+        <translation>I-minimize sa halip na i-exit ang app</translation>
     </message>
     <message>
         <source>Show a system tray icon</source>
-        <translation>Pictogram in het systeemvak weergeven</translation>
+        <translation>Ipakita ang system tray icon</translation>
     </message>
     <message>
         <source>Tray icon type</source>
-        <translation>Systeemvak-pictogram</translation>
+        <translation>Uri ng tray icon</translation>
     </message>
     <message>
         <source>Tray icon type:</source>
-        <translation>Systeemvak-pictogram:</translation>
+        <translation>Uri ng tray icon:</translation>
     </message>
     <message>
         <source>Hide window to system tray when minimized</source>
-        <translation>Minimaliseren naar systeemvak</translation>
+        <translation>Itago ang window sa system tray kapag pinaliit</translation>
     </message>
     <message>
         <source>Reset settings to default…</source>
-        <translation>Standaardinstellingen terugzetten...</translation>
+        <translation>I-reset ang mga setting sa default…</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Auto-type</translation>
+        <translation>Auto-Type</translation>
     </message>
     <message>
         <source>Use entry title to match windows for global Auto-Type</source>
-        <translation>Gebruik naam van item als vensternaam voor Auto-type</translation>
+        <translation>Gumamit ng pamagat ng entry para tumugma sa mga window para sa pandaigdigang Auto-Type</translation>
     </message>
     <message>
         <source>Use entry URL to match windows for global Auto-Type</source>
-        <translation>Laat URL overeenkomen met item bij Auto-type</translation>
+        <translation>Gumamit ng entry URL para tumugma sa mga window para sa pandaigdigang Auto-Type</translation>
     </message>
     <message>
         <source>Always ask before performing Auto-Type</source>
-        <translation>Altijd vragen voor toepassen Auto-type</translation>
+        <translation>Palaging magtanong bago isagawa ang Auto-Type</translation>
     </message>
     <message>
         <source>Hide expired entries from Auto-Type</source>
-        <translation>Verlopen items verbergen voor Auto-Type</translation>
+        <translation>Itago ang mga nag-expire na entry mula sa Auto-Type</translation>
     </message>
     <message>
         <source>Re-lock previously locked database after performing Auto-Type</source>
-        <translation>Vergrendelde database na Auto-type weer vergrendelen</translation>
+        <translation>Muling i-lock ang dating naka-lock na database pagkatapos magsagawa ng Auto-Type</translation>
     </message>
     <message>
         <source>Auto-Type start delay:</source>
-        <translation>Auto-type startvertraging:</translation>
+        <translation>Auto-Type simulan ang pagkaantala:</translation>
     </message>
     <message>
         <source>Global Auto-Type shortcut:</source>
-        <translation>Algemene Auto-type sneltoets:</translation>
+        <translation>Global Auto-Type na shortcut:</translation>
     </message>
     <message>
         <source>Auto-type start delay milliseconds</source>
-        <translation>Auto-type startvertraging milliseconden</translation>
+        <translation>Auto-type na simulan ang pagkaantala ng millisecond</translation>
     </message>
     <message>
         <source> ms</source>
         <comment>Milliseconds</comment>
-        <translation>ms</translation>
+        <translation> ms</translation>
     </message>
     <message>
         <source>Auto-Type typing delay:</source>
-        <translation>Auto-type typevertraging:</translation>
+        <translation>Auto-Type na pagkaantala sa pag-type:</translation>
     </message>
     <message>
         <source>Global auto-type shortcut</source>
-        <translation>Globale sneltoets voor Auto-type</translation>
+        <translation>Global auto-type na shortcut</translation>
     </message>
     <message>
         <source>Auto-type character typing delay milliseconds</source>
-        <translation>Auto-typevertraging milliseconden</translation>
+        <translation>Auto-type na pagkaantala ng pag-type ng character sa millisecond</translation>
     </message>
     <message>
         <source>Remember last typed entry for:</source>
-        <translation>Onthoud de laatst getypte vermelding voor:</translation>
+        <translation>Tandaan ang huling na-type na entry para sa:</translation>
     </message>
     <message>
         <source> recent files</source>
-        <translation> onlangs geopende bestanden</translation>
+        <translation> kamakailang mga file</translation>
     </message>
     <message>
         <source>Show passwords in color</source>
-        <translation>Wachtwoorden voorzien van kleur</translation>
+        <translation>Ipakita ang mga password sa kulay</translation>
     </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetSecurity</name>
     <message>
         <source>Timeouts</source>
-        <translation>Time-outs</translation>
+        <translation>Mga timeout</translation>
     </message>
     <message>
         <source>Database lock timeout seconds</source>
-        <translation>Database vergrendeling wachttijd seconden</translation>
+        <translation>Mga segundo ng lock timeout ng database</translation>
     </message>
     <message>
         <source> sec</source>
         <comment>Seconds</comment>
-        <translation> sec</translation>
+        <translation> seg</translation>
     </message>
     <message>
         <source>Clear clipboard after</source>
-        <translation>Klembord wissen na</translation>
+        <translation>I-clear ang clipboard pagkatapos</translation>
     </message>
     <message>
         <source>Clear search query after</source>
-        <translation>Zoekopdracht wissen na</translation>
+        <translation>I-clear ang query sa paghahanap pagkatapos</translation>
     </message>
     <message>
         <source> min</source>
@@ -536,55 +536,55 @@
     </message>
     <message>
         <source>Clipboard clear seconds</source>
-        <translation>Klembord wissen in seconden</translation>
+        <translation>I-clear ang clipboard ng segundo</translation>
     </message>
     <message>
         <source>Lock databases after inactivity of</source>
-        <translation>Databases vergrendelen na inactiviteit van</translation>
+        <translation>I-lock ang mga database matapos hindi maging aktibo ng</translation>
     </message>
     <message>
         <source>Convenience</source>
-        <translation>Gebruiksgemak</translation>
+        <translation>Convenience</translation>
     </message>
     <message>
         <source>Enable database quick unlock (Touch ID / Windows Hello)</source>
-        <translation>Snel ontgrendelen van databases inschakelen (Touch ID / Windows Hello)</translation>
+        <translation>I-enable ang mabilisang pag-unlock ng database (Touch ID / Windows Hello)</translation>
     </message>
     <message>
         <source>Lock databases when session is locked or lid is closed</source>
-        <translation>Databases vergrendelen als de gebruikerssessie wordt vergrendeld of bij het sluiten van het deksel</translation>
+        <translation>I-lock ang mga database kapag naka-lock ang session o nakasara ang lid</translation>
     </message>
     <message>
         <source>Lock databases after minimizing the window</source>
-        <translation>Databases vergrendelen bij het minimaliseren van het venster</translation>
+        <translation>I-lock ang mga database matapos i-minimize ang window</translation>
     </message>
     <message>
         <source>Require password repeat when it is visible</source>
-        <translation>Herhaling vereisen wanneer het wachtwoord zichtbaar is</translation>
+        <translation>Hilingin ang pag-ulit ng password kapag ito ay nakikita na</translation>
     </message>
     <message>
         <source>Hide passwords when editing them</source>
-        <translation>Wachtwoord verbergen tijdens bewerken</translation>
+        <translation>Itago ang mga password kapag ine-edit ang mga ito</translation>
     </message>
     <message>
         <source>Use placeholder for empty password fields</source>
-        <translation>Tijdelijke aanduiding gebruiken voor lege wachtwoordvelden</translation>
+        <translation>Gumamit ng placeholder para sa mga walang laman na patlang ng password</translation>
     </message>
     <message>
         <source>Hide passwords in the entry preview panel</source>
-        <translation>Wachtwoorden in voorvertoning verbergen</translation>
+        <translation>Itago ang mga password sa panel ng preview ng entry</translation>
     </message>
     <message>
         <source>Hide entry notes by default</source>
-        <translation>Notities standaard verbergen</translation>
+        <translation>Itago ang mga note ng entry bilang default</translation>
     </message>
     <message>
         <source>Move entries to recycle bin without confirmation</source>
-        <translation>Items zonder bevestiging naar de prullenbak verplaatsen</translation>
+        <translation>Ilipat ang mga entry sa recycle bin nang walang kumpirmasyon</translation>
     </message>
     <message>
         <source>Enable double click to copy the username/password entry columns</source>
-        <translation>Dubbelklikken inschakelen om de kolommen voor gebruikersnaam/wachtwoordinvoer te kopiëren</translation>
+        <translation>I-enable ang double click para kopyahin ang mga column ng username/password entry</translation>
     </message>
     <message>
         <source>Privacy</source>
@@ -592,144 +592,144 @@
     </message>
     <message>
         <source>Use DuckDuckGo service to download website icons</source>
-        <translation>DuckDuckGo gebruiken om websitepictogrammen te downloaden</translation>
+        <translation>Gamitin ang serbisyo ng DuckDuckGo para i-download ang mga icon ng website</translation>
     </message>
     <message>
         <source>Hide TOTP in the entry preview panel</source>
-        <translation>TOTP&apos;s in voorvertoning verbergen</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>AutoType</name>
     <message>
         <source>The requested Auto-Type sequence cannot be used due to an error:</source>
-        <translation>De gevraagde automatische reeks kan niet worden gebruikt vanwege een fout:</translation>
+        <translation>Ang hiniling na Auto-Type sequence ay hindi magagamit dahil sa isang error:</translation>
     </message>
     <message>
         <source>Auto-Type Error</source>
-        <translation>Fout bij Auto-type</translation>
+        <translation>Auto-Type Error</translation>
     </message>
     <message>
         <source>Permission Required</source>
-        <translation>Toestemming vereist</translation>
+        <translation>Kinakailangan ang Pahintulot</translation>
     </message>
     <message>
         <source>KeePassXC requires the Accessibility permission in order to perform entry level Auto-Type. If you already granted permission, you may have to restart KeePassXC.</source>
-        <translation>KeePassXC heeft de Toegankelijkheid-machtiging nodig om invoerniveau Auto-type te kunnen uitvoeren. Als je de machtiging al gegeven hebt, is het mogelijk dat je KeePassXC opnieuw moet opstarten.</translation>
+        <translation>Ang KeePassXC ay nangangailangan ng pahintulot sa Accessibility upang maisagawa ang entry-level na Auto-Type. Kung nagbigay ka na ng pahintulot, maaaring kailanganin mong i-restart ang KeePassXC.</translation>
     </message>
     <message>
         <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
-        <translation>KeePassXC heeft de Toegankelijkheid- en Schermopname-machtiging nodig om globale Auto-type te kunnen uitvoeren. Schermopname is benodigd om het venster te gebruiken om invoer te kunnen vinden. Als je de machtiging al gegeven hebt, is het mogelijk dat je KeePassXC opnieuw moet opstarten.</translation>
+        <translation>Kinakailangan ng KeePassXC ang pahintulot sa Accessibility at Screen Recorder para maisagawa ang global Auto-Type. Kinakailangan ang Pagre-record ng Screen upang magamit ang pamagat ng window upang maghanap ng mga entry. Kung nagbigay ka na ng pahintulot, maaaring kailanganin mong i-restart ang KeePassXC.</translation>
     </message>
     <message>
         <source>Invalid entry provided</source>
-        <translation>Ongeldige vermelding opgegeven</translation>
+        <translation>Invalid na ibinigay na entry</translation>
     </message>
     <message>
         <source>Bracket imbalance detected, found extra { or }</source>
-        <translation>Ongelijk aantal haakjes gedetecteerd, extra { of } gevonden</translation>
+        <translation>Na-detect ang imbalance ng bracket, may nakitang sobra { or }</translation>
     </message>
     <message>
         <source>Too many repetitions detected, max is %1: %2</source>
-        <translation>Te veel herhalingen gedetecteerd, max is %1: %2</translation>
+        <translation>Masyadong maraming pag-uulit ang natukoy, ang max ay %1: %2</translation>
     </message>
     <message>
         <source>Very slow key press detected, max is %1: %2</source>
-        <translation>Zeer trage toetsaanslag gedetecteerd, max is %1: %2</translation>
+        <translation>Natukoy ang nagpabagal sa key press, ang max ay %1: %2</translation>
     </message>
     <message>
         <source>Very long delay detected, max is %1: %2</source>
-        <translation>Zeer lange vertraging gedetecteerd, max is %1: %2</translation>
+        <translation>Natukoy ang mahabang pagkaantala, ang max ay %1: %2</translation>
     </message>
     <message>
         <source>Invalid conversion type: %1</source>
-        <translation>Ongeldig conversietype: %1</translation>
+        <translation>Invalid na uri ng conversion: %1</translation>
     </message>
     <message>
         <source>Invalid conversion syntax: %1</source>
-        <translation>Ongeldige conversiesyntaxis: %1</translation>
+        <translation>Invalid na conversion syntax: %1</translation>
     </message>
     <message>
         <source>Invalid regular expression syntax %1
 %2</source>
-        <translation>Ongeldige syntaxis voor reguliere expressie %1
+        <translation>Invalid na syntax ng regular na expression na %1
 %2</translation>
     </message>
     <message>
         <source>Invalid placeholder: %1</source>
-        <translation>Ongeldige tijdelijke aanduiding: %1</translation>
+        <translation>Invalid na placeholder: %1</translation>
     </message>
     <message>
         <source>Entry does not have attribute for PICKCHARS: %1</source>
-        <translation>Het item bevat geen kenmerk voor PICKCHARS: %1</translation>
+        <translation>Ang entry ay walang attribute para sa PICKCHARS: %1</translation>
     </message>
 </context>
 <context>
     <name>AutoTypeAssociationsModel</name>
     <message>
         <source>Window</source>
-        <translation>Venster</translation>
+        <translation>Window</translation>
     </message>
     <message>
         <source>Sequence</source>
-        <translation>Tekenreeks</translation>
+        <translation>Pagkakasunod-sunod</translation>
     </message>
     <message>
         <source>(empty)</source>
-        <translation>(leeg)</translation>
+        <translation>(walang laman)</translation>
     </message>
     <message>
         <source>Default sequence</source>
-        <translation>Standaard tekenreeks</translation>
+        <translation>Default na sequence</translation>
     </message>
 </context>
 <context>
     <name>AutoTypeMatchModel</name>
     <message>
         <source>Group</source>
-        <translation>Groep</translation>
+        <translation>Group</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Naam</translation>
+        <translation>Pamagat</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Gebruikersnaam</translation>
+        <translation>Username</translation>
     </message>
     <message>
         <source>Sequence</source>
-        <translation>Tekenreeks</translation>
+        <translation>Pagkakasunod-sunod</translation>
     </message>
 </context>
 <context>
     <name>AutoTypePlatformX11</name>
     <message>
         <source>Trying to send invalid keysym.</source>
-        <translation>Poging om ongeldig keysym te verzenden.</translation>
+        <translation>Sinusubukang magpadala ng invalid keysym.</translation>
     </message>
     <message>
         <source>Sequence aborted: Caps Lock is on</source>
-        <translation>Volgorde afgebroken: Caps Lock is ingeschakeld</translation>
+        <translation>Na-abort ang sequence: Naka-on ang Caps Lock</translation>
     </message>
     <message>
         <source>Sequence aborted: Modifier keys held by user</source>
-        <translation>Reeks afgebroken: Modifier-toetsen ingedrukt door de gebruiker</translation>
+        <translation>Na-abort ang sequence: Mga modifier key na hawak ng user</translation>
     </message>
     <message>
         <source>Unable to get valid keycode for key: </source>
-        <translation>Kan geen geldige code krijgen voor toets: </translation>
+        <translation>Hindi makakuha ng valid keycode para sa key: </translation>
     </message>
 </context>
 <context>
     <name>AutoTypeSelectDialog</name>
     <message>
         <source>Auto-Type - KeePassXC</source>
-        <translation>Auto-type - KeePassXC</translation>
+        <translation>Auto-Type - KeePassXC</translation>
     </message>
     <message>
         <source>Double click a row to perform Auto-Type or find an entry using the search:</source>
-        <translation>Dubbelklik op een rij om Automatisch typen uit te voeren of zoek een item met de zoekopdracht:</translation>
+        <translation>I-double click ang isang row para magsagawa ng Auto-Type o maghanap ng entry gamit ang search:</translation>
     </message>
     <message>
         <source>&lt;p&gt;You can use advanced search queries to find any entry in your open databases. The following shortcuts are useful:&lt;br/&gt;
@@ -738,131 +738,131 @@ Ctrl+1 - Type username&lt;br/&gt;
 Ctrl+2 - Type password&lt;br/&gt;
 Ctrl+3 - Type TOTP&lt;br/&gt;
 Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Gebruik geavanceerde zoekopdrachten om items in de geopende databases te vinden. De volgende sneltoetsen zijn handig:&lt;br/&gt;
-Ctrl+F - Zoeken in database in-/uitschakelen&lt;br/&gt;
-Ctrl+1 - Typ gebruikersnaam&lt;br/&gt;
-Ctrl+2 - Typ wachtwoord&lt;br/&gt;
-Ctrl+3 - Typ TOTP&lt;br/&gt;
-Ctrl+4 - Virtueel toetsenbord gebruiken (alleen Windows)&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Maaari kang gumamit ng mga advanced na query sa paghahanap para mahanap ang anumang entry sa iyong mga bukas na database. Ang mga sumusunod na shortcut ay kapaki-pakinabang:&lt;br/&gt;
+Ctrl+F - Toggle database search&lt;br/&gt;
+Ctrl+1 - Type username&lt;br/&gt;
+Ctrl+2 - Type password&lt;br/&gt;
+Ctrl+3 - Type TOTP&lt;br/&gt;
+Ctrl+4 - Use Virtual Keyboard (Sa Windows Lang)&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Search all open databases</source>
-        <translation>Alle geopende databases doorzoeken</translation>
+        <translation>Maghanap sa lahat ng bukas na database</translation>
     </message>
     <message>
         <source>Search…</source>
-        <translation>Zoeken...</translation>
+        <translation>Maghanap…</translation>
     </message>
     <message>
         <source>Type Sequence</source>
-        <translation>Tekenreeks invoeren</translation>
+        <translation>Uri ng Sequence</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuleren</translation>
+        <translation>Kanselahin</translation>
     </message>
     <message>
         <source>Type {USERNAME}</source>
-        <translation>{GEBRUIKERSNAAM} invoeren</translation>
+        <translation>Uri ng {USERNAME}</translation>
     </message>
     <message>
         <source>Type {PASSWORD}</source>
-        <translation>{WACHTWOORD} invoeren</translation>
+        <translation>Uri ng {PASSWORD}</translation>
     </message>
     <message>
         <source>Type {TOTP}</source>
-        <translation>{TOTP} invoeren</translation>
+        <translation>Uri ng {TOTP}</translation>
     </message>
     <message>
         <source>Copy Username</source>
-        <translation>Gebruikersnaam kopiëren</translation>
+        <translation>kopyahin ang Username</translation>
     </message>
     <message>
         <source>Copy Password</source>
-        <translation>Wachtwoord kopiëren</translation>
+        <translation>Kopyahin ang Password</translation>
     </message>
     <message>
         <source>Copy TOTP</source>
-        <translation>TOTP kopiëren</translation>
+        <translation>Kopyahin ang TOTP</translation>
     </message>
     <message>
         <source>Use Virtual Keyboard</source>
-        <translation>Virtueel toetsenbord gebruiken</translation>
+        <translation>Gamitin ang Virtual na Keyboard</translation>
     </message>
 </context>
 <context>
     <name>BrowserAccessControlDialog</name>
     <message>
         <source>KeePassXC - Browser Access Request</source>
-        <translation>KeePassXC - Verzoek om browsertoegang</translation>
+        <translation>KeePassXC - Kahilingan sa Pag-access sa Browser</translation>
     </message>
     <message>
         <source>%1 is requesting access to the following entries:</source>
-        <translation>%1 vraagt toegang tot de volgende vermeldingen:</translation>
+        <translation>%1 ay humihiling ng access sa mga sumusunod na entry:</translation>
     </message>
     <message>
         <source>Remember access to checked entries</source>
-        <translation>Onthoud de toegang tot aangevinkte vermeldingen</translation>
+        <translation>Tandaan ang access sa mga naka-check na entry</translation>
     </message>
     <message>
         <source>Remember</source>
-        <translation>Onthouden</translation>
+        <translation>Tandaan</translation>
     </message>
     <message>
         <source>Allow access to entries</source>
-        <translation>Toegang tot vermeldingen toestaan</translation>
+        <translation>Payagan ang access sa mga entry</translation>
     </message>
     <message>
         <source>Allow Selected</source>
-        <translation>Selectie toestaan</translation>
+        <translation>Payagan ang Napili</translation>
     </message>
     <message>
         <source>Deny All</source>
-        <translation>Alles weigeren</translation>
+        <translation>I-deny Lahat</translation>
     </message>
     <message>
         <source>Disable for this site</source>
-        <translation>Uitschakelen voor deze website</translation>
+        <translation>I-disable para sa site na ito</translation>
     </message>
 </context>
 <context>
     <name>BrowserEntrySaveDialog</name>
     <message>
         <source>KeePassXC-Browser Save Entry</source>
-        <translation>KeePassXC-Browser: Item opslaan</translation>
+        <translation>KeePassXC-Browser I-save ang Entry</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation>Oké</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuleren</translation>
+        <translation>Kanselahin</translation>
     </message>
     <message>
         <source>You have multiple databases open.
 Please select the correct database for saving credentials.</source>
-        <translation>Er zijn meerdere databases geopend.
-Selecteer de database voor het opslaan van de inloggegevens.</translation>
+        <translation>Marami kang nakabukas na database.
+Mangyaring piliin ang tamang database para sa pag-save ng mga kredensyal.</translation>
     </message>
 </context>
 <context>
     <name>BrowserService</name>
     <message>
         <source>KeePassXC: Create a new group</source>
-        <translation>KeePassXC: Een nieuwe groep aanmaken</translation>
+        <translation>KeePassXC: Lumikha ng bagong group</translation>
     </message>
     <message>
         <source>A request for creating a new group &quot;%1&quot; has been received.
 Do you want to create this group?
 </source>
-        <translation>Een aanvraag voor het aanmaken van een nieuwe groep &apos;%1&apos; werd ontvangen.
-Wil je deze groep aanmaken?
+        <translation>Isang kahilingan para sa paglikha ng bagong pangkat na &quot;%1&quot; ay natanggap.
+Gusto mo bang likhain ang pangkat na ito?
 </translation>
     </message>
     <message>
         <source>KeePassXC: New key association request</source>
-        <translation>KeePassXC: Nieuw verzoek voor sleutelkoppeling</translation>
+        <translation>KeePassXC: Bagong kahilingan sa pag-uugnay ng key</translation>
     </message>
     <message>
         <source>You have received an association request for the following database:
@@ -870,118 +870,118 @@ Wil je deze groep aanmaken?
 
 Give the connection a unique name or ID, for example:
 chrome-laptop.</source>
-        <translation>Je hebt een associatieverzoek ontvangen voor de volgende database:
+        <translation>Nakatanggap ka ng kahilingan sa pag-uugnay para sa sumusunod na database:
 %1
 
-Geef de verbinding een unieke naam of ID, voorbeeld:
-chrome-laptop</translation>
+Bigyan ang koneksyon ng isang natatanging pangalan o ID, halimbawa:
+chrome-laptop.</translation>
     </message>
     <message>
         <source>Save and allow access</source>
-        <translation>Opslaan en toegang verlenen</translation>
+        <translation>I-save at payagan ang access</translation>
     </message>
     <message>
         <source>KeePassXC: Overwrite existing key?</source>
-        <translation>KeePassXC: Bestaande sleutel overschrijven?</translation>
+        <translation>KeePassXC: I-overwrite ang kasalukuyang key?</translation>
     </message>
     <message>
         <source>A shared encryption key with the name &quot;%1&quot; already exists.
 Do you want to overwrite it?</source>
-        <translation>Een gedeelde coderingssleutel met de naam &quot;%1&quot; bestaat al.
-Wil je deze overschrijven?</translation>
+        <translation>May umiiral nang nakabahaging encryption key na may pangalang &quot;%1&quot;.
+Gusto mo bang i-overwrite ito?</translation>
     </message>
     <message>
         <source>KeePassXC: Update Entry</source>
-        <translation>KeePassXC: Item bijwerken</translation>
+        <translation>KeePassXC: I-update ang Entry</translation>
     </message>
     <message>
         <source>Do you want to update the information in %1 - %2?</source>
-        <translation>Wil je de gegevens in %1 - %2 bijwerken?</translation>
+        <translation>Gusto mo bang i-update ang impormasyon sa %1 - %2?</translation>
     </message>
     <message>
         <source>KeePassXC: Delete entry</source>
-        <translation>KeePassXC: Item verwijderen</translation>
+        <translation>KeePassXC: I-delete ang entry</translation>
     </message>
     <message>
         <source>A request for deleting entry &quot;%1&quot; has been received.
 Do you want to delete the entry?
 </source>
-        <translation>Er is een verzoek ontvangen om item &quot;%1&quot; te verwijderen.
-Wil je dit item verwijderen?
+        <translation>Isang kahilingan para sa pag-delete ng entry na &quot;%1&quot; ay natanggap.
+Gusto mo bang i-delete ang entry?
 </translation>
     </message>
     <message>
         <source>Converting attributes to custom data…</source>
-        <translation>Kenmerken worden omgezet in aangepaste gegevens...</translation>
+        <translation>Kino-convert ang mga attribute sa custom data…</translation>
     </message>
     <message>
         <source>Abort</source>
-        <translation>Afbreken</translation>
+        <translation>I-abort</translation>
     </message>
     <message>
         <source>KeePassXC: Converted KeePassHTTP attributes</source>
-        <translation>KeePassXC: Omgezette KeePassHTTP-kenmerken</translation>
+        <translation>KeePassXC: Na-convert na mga attribute ng KeePassHTTP</translation>
     </message>
     <message>
         <source>Successfully converted attributes from %1 entry(s).
 Moved %2 keys to custom data.</source>
-        <translation>Kenmerken van %1 item(s) is/zijn omgezet.
-%2 sleutels naar aangepaste gegevens verplaatst.</translation>
+        <translation>Matagumpay na na-convert ang mga attribute mula sa %1 na (mga) entry.
+Inilipat ang %2 key sa custom na data.</translation>
     </message>
     <message numerus="yes">
         <source>Successfully moved %n keys to custom data.</source>
-        <translation><numerusform>Sleutel is verplaats naar speciale data.</numerusform><numerusform>%n Sleutels zijn verplaatst naar aangepaste gegevens.</numerusform></translation>
+        <translation><numerusform>Matagumpay na nailipat ang %n key sa custom na data.</numerusform><numerusform>Matagumpay na nailipat ang %n mga key sa custom na data.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with KeePassHTTP attributes found!</source>
-        <translation>KeePassXC: Geen item met KeePassHTTP-kenmerken gevonden!</translation>
+        <translation>KeePassXC: Walang nakitang entry na may mga attribute ng KeePassHTTP!</translation>
     </message>
     <message>
         <source>The active database does not contain an entry with KeePassHTTP attributes.</source>
-        <translation>De actieve database bevat geen item met KeePassHTTP-kenmerken.</translation>
+        <translation>Ang aktibong database ay hindi naglalaman ng isang entry na may mga attribute ng KeePassHTTP.</translation>
     </message>
     <message>
         <source>Don&apos;t show this warning again</source>
-        <translation>Deze waarschuwing niet meer geven</translation>
+        <translation>Huwag ipakitang muli ang babalang ito</translation>
     </message>
     <message>
         <source>KeePassXC: Legacy browser integration settings detected</source>
-        <translation>KeePassXC: instellingen voor oudere browserintegratie gedetecteerd</translation>
+        <translation>KeePassXC: Natukoy ang mga setting ng legacy browser integration</translation>
     </message>
     <message>
         <source>Your KeePassXC-Browser settings need to be moved into the database settings.
 This is necessary to maintain your current browser connections.
 Would you like to migrate your existing settings now?</source>
-        <translation>De KeePassXC-Browser instellingen moeten worden verplaatst naar de instellingen-database.
-Dit is nodig om de huidige browserverbindingen te behouden.
-Wil je de bestaande instellingen nu migreren?</translation>
+        <translation>Ang mga setting ng KeePassXC-Browser mo ay kailangang ilipat sa mga setting ng database.
+Ito ay kinakailangan upang mapanatili ang iyong kasalukuyang mga koneksyon sa browser.
+Gusto mo bang ilipat ang iyong mga kasalukuyang setting ngayon?</translation>
     </message>
 </context>
 <context>
     <name>BrowserSettingsWidget</name>
     <message>
         <source>Dialog</source>
-        <translation>Dialoog</translation>
+        <translation>Dialog</translation>
     </message>
     <message>
         <source>This is required for accessing your databases with KeePassXC-Browser</source>
-        <translation>Dit is vereist voor toegang tot jouw databases met KeePassXC-Browser</translation>
+        <translation>Ito ay kinakailangan para sa pag-access sa mga database mo gamit ang KeePassXC-Browser</translation>
     </message>
     <message>
         <source>Enable browser integration</source>
-        <translation>Browserintegratie inschakelen</translation>
+        <translation>I-enable ang browser integration</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>Algemeen</translation>
+        <translation>Pangkalahatan</translation>
     </message>
     <message>
         <source>Browsers installed as snaps are currently not supported.</source>
-        <translation>Browsers die als snaps zijn geïnstalleerd, worden momenteel niet ondersteund.</translation>
+        <translation>Ang mga browser na naka-install bilang mga snap ay kasalukuyang hindi suportado.</translation>
     </message>
     <message>
         <source>Enable integration for these browsers:</source>
-        <translation>Activeer integratie voor deze browsers:</translation>
+        <translation>I-enable ang integration para sa mga browser na ito:</translation>
     </message>
     <message>
         <source>Vivaldi</source>
@@ -1014,231 +1014,231 @@ Wil je de bestaande instellingen nu migreren?</translation>
     <message>
         <source>Show a notification when credentials are requested</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Toon een melding wanneer om referenties wordt gevraagd</translation>
+        <translation>Ipakita ang notification kapag hiniling ang mga kredensyal</translation>
     </message>
     <message>
         <source>Request to unlock the database if it is locked</source>
-        <translation>Verzoek om ontgrendeling van de database als deze is vergrendeld</translation>
+        <translation>Hilingin na i-unlock ang database kung ito ay naka-lock</translation>
     </message>
     <message>
         <source>Only entries with the same scheme (http://, https://, …) are returned.</source>
-        <translation>Alleen items met hetzelfde schema (http://, https://, ...) worden gegeven.</translation>
+        <translation>Tanging ang mga entry lamang na may parehong scheme (http://, https://, …) ang ibinabalik.</translation>
     </message>
     <message>
         <source>Match URL scheme (e.g., https://example.com)</source>
-        <translation>Overeenkomstig URL-schema (bijv. https://example.com)</translation>
+        <translation>Itugma ang scheme ng URL (hal., https://example.com)</translation>
     </message>
     <message>
         <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
-        <translation>Geeft alleen de beste overeenkomsten terug voor een specifieke URL in plaats van alle items voor het hele domein.</translation>
+        <translation>Tanging ang pinakamahusay na mga tugma para sa isang partikular na URL sa halip na ang lahat ng mga entry para sa buong domain ang ibinabalik.</translation>
     </message>
     <message>
         <source>Return only best-matching credentials</source>
-        <translation>Geef alleen best overeenkomende inloggegevens</translation>
+        <translation>Ibalik lamang ang pinakamahusay na tumutugmang mga kredensyal</translation>
     </message>
     <message>
         <source>Returns expired credentials. String [expired] is added to the title.</source>
-        <translation>Geeft verlopen inloggegevens. Woord [expired] is aan de titel toegevoegd.</translation>
+        <translation>Ibinabalik ang mga nag-expire na kredensyal. Ang string na [expired] ay idinagdag sa pamagat.</translation>
     </message>
     <message>
         <source>Allow returning expired credentials</source>
-        <translation>Verlopen inloggegevens toestaan</translation>
+        <translation>Payagan ang pagbabalik ng mga nag-expire na kredensyal</translation>
     </message>
     <message>
         <source>All databases connected to the extension will return matching credentials.</source>
-        <translation>Alle databases verbonden met de extensie kunnen overeenkomende inloggegevens geven.</translation>
+        <translation>Ang lahat ng database na konektado sa extension ay magbabalik ng tumutugmang mga kredensyal.</translation>
     </message>
     <message>
         <source>Search in all opened databases for matching credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Zoek in alle geopende databases naar overeenkomende inloggegevens</translation>
+        <translation>Maghanap sa lahat ng nakabukas na database para sa pagtutugma ng mga kredensyal</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Geavanceerd</translation>
+        <translation>Advanced</translation>
     </message>
     <message>
         <source>Never ask before accessing credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Nooit waarschuwen bij toegang tot logingegevens</translation>
+        <translation>Huwag kailanman itanong bago i-access ang mga kredensyal</translation>
     </message>
     <message>
         <source>Never ask before updating credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Nooit waarschuwen bij bijwerken van inloggegevens</translation>
+        <translation>Huwag kailanman itanong bago mag-update ng mga kredensyal</translation>
     </message>
     <message>
         <source>Do not ask permission for HTTP Basic Auth</source>
         <extracomment>An extra HTTP Basic Auth setting</extracomment>
-        <translation>Vraag geen toestemming voor HTTP Basic Auth</translation>
+        <translation>Huwag humingi ng pahintulot para sa HTTP Basic Auth</translation>
     </message>
     <message>
         <source>Automatically creating or updating string fields is not supported.</source>
-        <translation>Het automatisch aanmaken of wijzigen van tekenreeks-velden wordt niet ondersteund.</translation>
+        <translation>Hindi sinusuportahan ang awtomatikong paggawa o pag-update ng mga string field.</translation>
     </message>
     <message>
         <source>Return advanced string fields which start with &quot;KPH: &quot;</source>
-        <translation>Lever geavanceerde tekenreeksvelden die beginnen met &quot;KPH:&quot;</translation>
+        <translation>Ibalik ang mga advanced na field ng string na nagsisimula sa &quot;KPH: &quot;</translation>
     </message>
     <message>
         <source>Don&apos;t display the popup suggesting migration of legacy KeePassHTTP settings.</source>
-        <translation>Laat de pop-up die de migratie van KeePassHTTP naar KeePassXC-Browser aanbiedt, niet meer zien.</translation>
+        <translation>Huwag ipakita ang popup na nagmumungkahi ng paglipat ng mga legacy na setting ng KeePassHTTP.</translation>
     </message>
     <message>
         <source>Do not prompt for KeePassHTTP settings migration.</source>
-        <translation>Vraag niet om migratie van KeePassHTTP-instellingen.</translation>
+        <translation>Huwag i-prompt para sa paglipat ng mga setting ng KeePassHTTP.</translation>
     </message>
     <message>
         <source>Updates KeePassXC or keepassxc-proxy binary path automatically to native messaging scripts on startup.</source>
-        <translation>Wijzig bij het opstarten automatisch het zoekpad van KeePassXC of keepassxc-proxy naar de native messaging scripts.</translation>
+        <translation>Awtomatikong ina-update ang KeePassXC o keepassxc-proxy binary path sa mga native na script ng pagmemensahe sa startup.</translation>
     </message>
     <message>
         <source>Update native messaging manifest files at startup</source>
-        <translation>Native messaging-manifestbestanden bij het opstarten bijwerken</translation>
+        <translation>I-update ang mga manifest file ng native messaging sa startup</translation>
     </message>
     <message>
         <source>Use a custom proxy location if you installed a proxy manually.</source>
-        <translation>Gebruik een aangepaste proxy-locatie als je zelf een proxy hebt geïnstalleerd.</translation>
+        <translation>Gumamit ng custom na lokasyon ng proxy kung manwal kang nag-install ng proxy.</translation>
     </message>
     <message>
         <source>Use a custom proxy location:</source>
         <comment>Meant is the proxy for KeePassXC-Browser</comment>
-        <translation>Aangepaste proxy-locatie toepassen:</translation>
+        <translation>Gumamit ng custom na lokasyon ng proxy:</translation>
     </message>
     <message>
         <source>Custom proxy location field</source>
-        <translation>Handmatig Proxy invulveld</translation>
+        <translation>Lokasyon ng field ng custom na proxy</translation>
     </message>
     <message>
         <source>Browser for custom proxy file</source>
-        <translation>Blader naar eigen Proxy configuratiebestand</translation>
+        <translation>Browser para sa custom na proxy file</translation>
     </message>
     <message>
         <source>Browse…</source>
         <extracomment>Button for opening file dialog</extracomment>
-        <translation>Bladeren…</translation>
+        <translation>Mag-browse…</translation>
     </message>
     <message>
         <source>Use a custom browser configuration location:</source>
-        <translation>Aangepaste locatie voor de browserconfiguratie gebruiken:</translation>
+        <translation>Gumamit ng custom na lokasyon ng browser configuration:</translation>
     </message>
     <message>
         <source>Browser type:</source>
-        <translation>Browser-type:</translation>
+        <translation>Uri ng browser:</translation>
     </message>
     <message>
         <source>Toolbar button style</source>
-        <translation>Knopstijl van de werkbalk</translation>
+        <translation>Estilo ng button ng toolbar</translation>
     </message>
     <message>
         <source>Config Location:</source>
-        <translation>Locatie configuratiebestand:</translation>
+        <translation>Lokasyon ng Config:</translation>
     </message>
     <message>
         <source>Custom browser location field</source>
-        <translation>Aangepast locatieveld van de browser</translation>
+        <translation>Lokasyon ng field ng custom na browser</translation>
     </message>
     <message>
         <source>Browse for custom browser path</source>
-        <translation>Blader naar een aangepast browserpad</translation>
+        <translation>Mag-browse para sa isang custom na browser path</translation>
     </message>
     <message>
         <source>Custom extension ID:</source>
-        <translation>Aangepast extensie-ID:</translation>
+        <translation>Custom na extension ID:</translation>
     </message>
     <message>
         <source>Custom extension ID</source>
-        <translation>Aangepast extensie-ID</translation>
+        <translation>Custom na extension ID</translation>
     </message>
     <message>
         <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
-        <translation>Vanwege de Snap-sandboxing moet je een script uitvoeren waarmee browserintegratie mogelijk wordt. &lt;br /&gt; Je kunt dit script vinden op %1</translation>
+        <translation>Dahil sa Snap sandboxing, dapat kang mag-run ng script para i-enable ang pag-integrate ng browser.&lt;br /&gt;Makukuha mo ang script na ito mula sa %1</translation>
     </message>
     <message>
         <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3. %4</source>
-        <translation>KeePassXC-Browser is nodig om de integratie met de browser te laten werken.  &lt;br /&gt; Download het voor %1 en %2 en %3. %4.</translation>
+        <translation>Kailangan ang KeePassXC-Browser para gumana ang browser integration. &lt;br /&gt;I-download ito para sa %1 at %2 at %3. %4</translation>
     </message>
     <message>
         <source>Please see special instructions for browser extension use below</source>
-        <translation>Raadpleeg onderstaande speciale instructies voor gebruik van browserextensie </translation>
+        <translation>Pakitingnan ang mga espesyal na tagubilin para sa paggamit ng extension ng browser sa ibaba</translation>
     </message>
     <message>
         <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location cannot be found!&lt;br/&gt;Browser integration WILL NOT WORK without the proxy application.</source>
-        <translation>&lt;b&gt;Fout:&lt;/b&gt; De aangepaste proxy-locatie is niet gevonden!&lt;br/&gt;Browserintegratie WERKT NIET zonder de proxy-applicatie.</translation>
+        <translation>&lt;b&gt;Error:&lt;/b&gt; Hindi mahanap ang custom na lokasyon ng proxy!&lt;br/&gt;HINDI GAGANA ang pag-integrate ng browser kung wala ang proxy application.</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation>&lt;b&gt;Waarschuwing:&lt;/b&gt; De volgende opties kunnen gevaarlijk zijn!</translation>
+        <translation>&lt;b&gt;Babala:&lt;/b&gt; Ang mga sumusunod na opsyon ay maaaring delikado!</translation>
     </message>
     <message>
         <source>Executable Files</source>
-        <translation>Uitvoerbare bestanden</translation>
+        <translation>Mga Executable na File</translation>
     </message>
     <message>
         <source>All Files</source>
-        <translation>Alle bestanden</translation>
+        <translation>Lahat ng Mga File</translation>
     </message>
     <message>
         <source>Select custom proxy location</source>
-        <translation>Selecteer aangepaste proxy-locatie</translation>
+        <translation>Pumili ng custom na lokasyon ng proxy</translation>
     </message>
     <message>
         <source>Select native messaging host folder location</source>
-        <translation>Selecteer de locatie van de native messaging-hostmap</translation>
+        <translation>Piliin ang lokasyon ng folder ng host ng native na pagmemensahe</translation>
     </message>
 </context>
 <context>
     <name>CloneDialog</name>
     <message>
         <source>Clone Entry Options</source>
-        <translation>Opties voor items dupliceren</translation>
+        <translation>I-clone ang Mga Opsyon ng Entry</translation>
     </message>
     <message>
         <source>Append &apos; - Clone&apos; to title</source>
-        <translation>Voeg &apos; - Duplicaat&apos; toe aan naam</translation>
+        <translation>Idugtong &apos; - Clone&apos; sa pamagat</translation>
     </message>
     <message>
         <source>Replace username and password with references</source>
-        <translation>Gebruikersnaam en wachtwoord vervangen door referenties</translation>
+        <translation>Palitan ang username at password ng mga sanggunian</translation>
     </message>
     <message>
         <source>Copy history</source>
-        <translation>Historie kopiëren</translation>
+        <translation>Kopyahin ang history</translation>
     </message>
 </context>
 <context>
     <name>CsvImportWidget</name>
     <message>
         <source>Import CSV fields</source>
-        <translation>CSV-velden importeren</translation>
+        <translation>Mag-import ng mga CSV field</translation>
     </message>
     <message>
         <source>filename</source>
-        <translation>bestandsnaam</translation>
+        <translation>filename</translation>
     </message>
     <message>
         <source>size, rows, columns</source>
-        <translation>grootte, rijen, kolommen</translation>
+        <translation>sukat, hilera, hanay</translation>
     </message>
     <message>
         <source>Column Association</source>
-        <translation>Kolomverwijzing</translation>
+        <translation>Column Association</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Wachtwoord</translation>
+        <translation>Password</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Gebruikersnaam</translation>
+        <translation>Username</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Naam</translation>
+        <translation>Pamagat</translation>
     </message>
     <message>
         <source>Group</source>
-        <translation>Groep</translation>
+        <translation>Group</translation>
     </message>
     <message>
         <source>URL</source>
@@ -1246,7 +1246,7 @@ Wil je de bestaande instellingen nu migreren?</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Notities</translation>
+        <translation>Mga tala</translation>
     </message>
     <message>
         <source>TOTP</source>
@@ -1254,19 +1254,19 @@ Wil je de bestaande instellingen nu migreren?</translation>
     </message>
     <message>
         <source>Created</source>
-        <translation>Aangemaakt</translation>
+        <translation>Nilikha na</translation>
     </message>
     <message>
         <source>Last Modified</source>
-        <translation>Laatst bewerkt</translation>
+        <translation>Huling Binago</translation>
     </message>
     <message>
         <source>Icon</source>
-        <translation>Pictogram</translation>
+        <translation>Icon</translation>
     </message>
     <message>
         <source>Encoding</source>
-        <translation>Codering</translation>
+        <translation>Ini-encode</translation>
     </message>
     <message>
         <source>Codec</source>
@@ -1274,80 +1274,80 @@ Wil je de bestaande instellingen nu migreren?</translation>
     </message>
     <message>
         <source>Text is qualified by</source>
-        <translation>Tekst staat tussen</translation>
+        <translation>Ang text ay kwalipikado ng</translation>
     </message>
     <message>
         <source>Text qualification</source>
-        <translation>Tekstkwalificatie</translation>
+        <translation>Kwalipikasyon sa text</translation>
     </message>
     <message>
         <source>Fields are separated by</source>
-        <translation>Velden worden gescheiden door</translation>
+        <translation>Ang mga field ay pinaghihiwalay ng</translation>
     </message>
     <message>
         <source>Field separation</source>
-        <translation>Veldscheiding</translation>
+        <translation>Paghihiwalay ng field</translation>
     </message>
     <message>
         <source>Comments start with</source>
-        <translation>Commentaar start met</translation>
+        <translation>Nagsisimula ang mga comment sa</translation>
     </message>
     <message>
         <source>Header lines skipped</source>
-        <translation>Koptekstregels overgeslagen</translation>
+        <translation>Nilaktawan ang mga linya ng header</translation>
     </message>
     <message>
         <source>Number of header lines to discard</source>
-        <translation>Aantal te negeren kopregels</translation>
+        <translation>Bilang ng mga linya ng header na tatanggihan</translation>
     </message>
     <message>
         <source>First line has field names</source>
-        <translation>De eerste regel bevat veldnamen</translation>
+        <translation>Ang unang linya ay may mga pangalan ng field</translation>
     </message>
     <message>
         <source>Consider &apos;\&apos; an escape character</source>
-        <translation>Beschouw &apos;\&apos; als escape-teken</translation>
+        <translation>Isaalang-alang ang &apos;\&apos; na isang escape character</translation>
     </message>
     <message>
         <source>Preview</source>
-        <translation>Voorvertoning</translation>
+        <translation>Preview</translation>
     </message>
     <message>
         <source>CSV import preview</source>
-        <translation>CSV import voorbeeld</translation>
+        <translation>Preview ng pag-import ng CSV</translation>
     </message>
     <message>
         <source>Not Present</source>
-        <translation>Niet aanwezig</translation>
+        <translation>Hindi Naroroon</translation>
     </message>
     <message>
         <source>Column %1</source>
-        <translation>Kolom %1</translation>
+        <translation>Column na %1</translation>
     </message>
     <message>
         <source>Imported from CSV file</source>
-        <translation>Geïmporteerd uit CSV-bestand</translation>
+        <translation>Na-import mula sa CSV file</translation>
     </message>
     <message>
         <source>Original data: </source>
-        <translation>Originele gegevens:</translation>
+        <translation>Orihinal na data: </translation>
     </message>
     <message>
         <source>Error(s) detected in CSV file!</source>
-        <translation>Fout(en) gevonden in CSV-bestand!</translation>
+        <translation>May (mga) error na nakita sa CSV file!</translation>
     </message>
     <message numerus="yes">
         <source>[%n more message(s) skipped]</source>
-        <translation><numerusform>[%n meer bericht(en) overgeslagen]</numerusform><numerusform>[%n bericht(en) overgeslagen]</numerusform></translation>
+        <translation><numerusform>[%n higit pang mensahe ang nilaktawan]</numerusform><numerusform>[%n higit pang (mga) mensahe ang nilaktawan]</numerusform></translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Fout</translation>
+        <translation>Error</translation>
     </message>
     <message>
         <source>CSV import: writer has errors:
 %1</source>
-        <translation>CSV importeren: schrijver heeft fouten:
+        <translation>CSV import: may mga error ang writer:
 %1</translation>
     </message>
 </context>
@@ -1360,15 +1360,15 @@ Wil je de bestaande instellingen nu migreren?</translation>
     </message>
     <message numerus="yes">
         <source>%n byte(s)</source>
-        <translation><numerusform>%n byte (s)</numerusform><numerusform>%n byte(s)</numerusform></translation>
+        <translation><numerusform>%n byte</numerusform><numerusform>%n (mga)byte</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n row(s)</source>
-        <translation><numerusform>%n rij(en)</numerusform><numerusform>%n rij(en)</numerusform></translation>
+        <translation><numerusform>%n row</numerusform><numerusform>%n (mga)row</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n column(s)</source>
-        <translation><numerusform>%n kolom</numerusform><numerusform>%n kolommen</numerusform></translation>
+        <translation><numerusform>%n ng column</numerusform><numerusform>%n ng (mga)column</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1376,135 +1376,135 @@ Wil je de bestaande instellingen nu migreren?</translation>
     <message>
         <source>Passwords</source>
         <comment>Root group name</comment>
-        <translation>Wachtwoorden</translation>
+        <translation>Passwords</translation>
     </message>
     <message>
         <source>File %1 does not exist.</source>
-        <translation>Bestand %1 bestaat niet.</translation>
+        <translation>Ang file na %1 ay wala.</translation>
     </message>
     <message>
         <source>Unable to open file %1.</source>
-        <translation>Kan bestand %1 niet openen.</translation>
+        <translation>Hindi mabuksan ang file na %1.</translation>
     </message>
     <message>
         <source>Error while reading the database: %1</source>
-        <translation>Fout bij het lezen van de database: %1</translation>
+        <translation>Error habang binabasa ang database: %1</translation>
     </message>
     <message>
         <source>Could not save, database does not point to a valid file.</source>
-        <translation>Kan niet opslaan. Database verwijst niet naar een geldig bestand.</translation>
+        <translation>Hindi mai-save, hindi tumutugma ang database sa isang valid file.</translation>
     </message>
     <message>
         <source>Database save is already in progress.</source>
-        <translation>Database wordt opgeslagen.</translation>
+        <translation>Nasa progreso na ang pag-save ng database.</translation>
     </message>
     <message>
         <source>Could not save, database has not been initialized!</source>
-        <translation>Niet opgeslagen, database is niet geïnitialiseerd!</translation>
+        <translation>Hindi mai-save, hindi makapagsimula ang database!</translation>
     </message>
     <message>
         <source>Database file has unmerged changes.</source>
-        <translation>Databasebestand heeft niet opgeslagen gegevens.</translation>
+        <translation>Ang database file ay may mga hindi naisama sa pagbabago.</translation>
     </message>
     <message>
         <source>%1
 Backup database located at %2</source>
         <translation>%1
-Back-up databestand op %2</translation>
+Backup database na matatagpuan sa %2</translation>
     </message>
     <message>
         <source>Key not transformed. This is a bug, please report it to the developers.</source>
-        <translation>Sleutel is niet getransformeerd. Dit is een fout, rapporteer deze alsjeblieft aan de ontwikkelaars!</translation>
+        <translation>Hindi nabago ang key. Ito ay isang bug, mangyaring iulat ito sa mga developer.</translation>
     </message>
     <message>
         <source>Recycle Bin</source>
-        <translation>Prullenbak</translation>
+        <translation>Recycle Bin</translation>
     </message>
 </context>
 <context>
     <name>DatabaseOpenDialog</name>
     <message>
         <source>Unlock Database - KeePassXC</source>
-        <translation>Database ontgrendelen - KeePassXC</translation>
+        <translation>I-unlock ang Database -KeePassXC</translation>
     </message>
 </context>
 <context>
     <name>DatabaseOpenWidget</name>
     <message>
         <source>Unlock KeePassXC Database</source>
-        <translation>KeePassXC-database ontgrendelen</translation>
+        <translation>I-unlock ang Database ng KeePassXC</translation>
     </message>
     <message>
         <source>Enter Password:</source>
-        <translation>Geef wachtwoord:</translation>
+        <translation>Ilagay ang Password:</translation>
     </message>
     <message>
         <source>Password field</source>
-        <translation>Wachtwoord invulveld</translation>
+        <translation>Field ng password</translation>
     </message>
     <message>
         <source>Enter Additional Credentials (if any):</source>
-        <translation>Voer eventuele aanvullende inloggegevens in:</translation>
+        <translation>Ipasok ang Mga Karagdagang Kredensyal (kung mayroon man):</translation>
     </message>
     <message>
         <source>Key File:</source>
-        <translation>Sleutelbestand:</translation>
+        <translation>Key File:</translation>
     </message>
     <message>
         <source>Key file help</source>
-        <translation>Sleutelbestandhulp</translation>
+        <translation>Tulong sa key file</translation>
     </message>
     <message>
         <source>Hardware key slot selection</source>
-        <translation>Hardwaresleutel positie selectie</translation>
+        <translation>Pagpili ng hardware key slot</translation>
     </message>
     <message>
         <source>Hardware Key:</source>
-        <translation>Hardwaresleutel:</translation>
+        <translation>Hardware Key:</translation>
     </message>
     <message>
         <source>Hardware key help</source>
-        <translation>Hardwaresleutelhulp</translation>
+        <translation>Tulong sa hardware key</translation>
     </message>
     <message>
         <source>Key file to unlock the database</source>
-        <translation>Sleutelbestand om de database te ontgrendelen</translation>
+        <translation>Key file upang i-unlock ang database</translation>
     </message>
     <message>
         <source>Browse for key file</source>
-        <translation>Blader naar sleutelbestand</translation>
+        <translation>Mag-browse para sa key file</translation>
     </message>
     <message>
         <source>Browse…</source>
-        <translation>Bladeren…</translation>
+        <translation>Mag-browse…</translation>
     </message>
     <message>
         <source>Refresh hardware tokens</source>
-        <translation>Hardwaretoken verversen</translation>
+        <translation>I-refresh ang mga token ng hardware</translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation>Vernieuwen</translation>
+        <translation>I-refresh</translation>
     </message>
     <message>
         <source>Unlock Database</source>
-        <translation>Database ontgrendelen</translation>
+        <translation>I-unlock ang Database</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuleren</translation>
+        <translation>Kanselahin</translation>
     </message>
     <message>
         <source>Unlock</source>
-        <translation>Ontgrendelen</translation>
+        <translation>I-unlock</translation>
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue…</source>
-        <translation>Plaats je YubiKey of druk er op om door te gaan...</translation>
+        <translation>Mangyaring ipakita o pindutin ang iyong YubiKey para magpatuloy…</translation>
     </message>
     <message>
         <source>Database Version Mismatch</source>
-        <translation>Databaseversie komt niet overeen</translation>
+        <translation>Hindi Tugma sa Bersyon ng Database</translation>
     </message>
     <message>
         <source>The database you are trying to open was most likely
@@ -1514,419 +1514,420 @@ You can try to open it anyway, but it may be incomplete
 and saving any changes may incur data loss.
 
 We recommend you update your KeePassXC installation.</source>
-        <translation>De database die je probeert te openen, was waarschijnlijk
-gemaakt door een nieuwere versie van KeePassXC.
+        <translation>Ang database na sinusubukan mong buksan ay malamang na
+nilikha ng isang mas bagong bersyon ng KeePassXC.
 
-Je kunt toch proberen het te openen, maar het kan onvolledig zijn
-en het opslaan van eventuele wijzigingen kan gegevensverlies veroorzaken.
+Maaari mo pa ring subukang buksan ito, ngunit maaaring hindi ito kumpleto
+at ang pag-save ng anumang mga pagbabago ay maaaring magkaroon ng pagkawala ng data.
 
-We raden je aan jouw KeePassXC-installatie bij te werken.</translation>
+Inirerekomenda namin na i-update mo ang pag-install mo ng KeePassXC.</translation>
     </message>
     <message>
         <source>Open database anyway</source>
-        <translation>Open database toch</translation>
+        <translation>Buksan pa rin ang database</translation>
     </message>
     <message>
         <source>Database unlock canceled.</source>
-        <translation>Database ontgrendelen geannuleerd.</translation>
+        <translation>Kinansela ang pag-unlock ng database.</translation>
     </message>
     <message>
         <source>Unlock failed and no password given</source>
-        <translation>Ontgrendeling mislukt en geen wachtwoord ingevoerd</translation>
+        <translation>Nabigo ang pag-unlock at walang ibinigay na password</translation>
     </message>
     <message>
         <source>Unlocking the database failed and you did not enter a password.
 Do you want to retry with an &quot;empty&quot; password instead?
 
 To prevent this error from appearing, you must go to &quot;Database Settings / Security&quot; and reset your password.</source>
-        <translation>Het ontgrendelen van de database is mislukt en je hebt geen wachtwoord ingevoerd.
-Wil je het opnieuw proberen met een &quot;leeg&quot; wachtwoord?
+        <translation>Nabigo ang pag-unlock sa database at hindi ka naglagay ng password.
+Gusto mo bang subukang muli gamit ang &quot;walang laman&quot; na password sa halip?
 
-Om deze fout te voorkomen ga je naar &quot;Database instellingen.../Beveiliging&quot; en herstel daar het wachtwoord.</translation>
+Para maiwasan ang paglabas ng error na ito, dapat kang pumunta sa &quot;Settings ng Database / Seguridad&quot; at i-reset ang iyong password.</translation>
     </message>
     <message>
         <source>Retry with empty password</source>
-        <translation>Probeer opnieuw met leeg wachtwoord</translation>
+        <translation>Subukang muli gamit ang walang laman na password</translation>
     </message>
     <message>
         <source>Failed to authenticate with Touch ID</source>
-        <translation>Kan niet worden geverifieerd met Touch ID</translation>
+        <translation>Nabigong mag-authenticate gamit ang Touch ID</translation>
     </message>
     <message>
         <source>Failed to open key file: %1</source>
-        <translation>Kon sleutelbestand niet openen: %1</translation>
+        <translation>Nabigong buksan ang key file: %1</translation>
     </message>
     <message>
         <source>Old key file format</source>
-        <translation>Oud sleutelbestandsformaat</translation>
+        <translation>File format ng dating key</translation>
     </message>
     <message>
         <source>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database &amp;gt; Database Security &amp;gt; Change Key File.&lt;/strong&gt;&lt;br&gt;</source>
-        <translation>Je gebruikt een oude sleutelbestandsindeling die KeePassXC&lt;br&gt;in de toekomst mogelijk niet meer ondersteunt.&lt;br&gt;&lt;br&gt;Overweeg om een nieuw sleutelbestand te genereren bij:&lt;br&gt;&lt;strong&gt;Database &gt; Databasebeveiliging &gt; Sleutelbestand wijzigen.&lt;/strong&gt;&lt;br&gt;</translation>
+        <translation>Gumagamit ka ng lumang format ng key file na maaaring&lt;br&gt;magpahinto sa suporta ng KeePassXC sa hinaharap.&lt;br&gt;&lt;br&gt;Mangyaring isaalang-alang ang pagbuo ng bagong key file sa pamamagitan ng pagpunta sa:&lt;br&gt;&lt;strong&gt;Database &amp;gt; Seguridad ng Database &amp;gt; Baguhin ang Key File.&lt;/strong&gt;&lt;br&gt;</translation>
     </message>
     <message>
         <source>Don&apos;t show this warning again</source>
-        <translation>Deze waarschuwing niet meer geven</translation>
+        <translation>Huwag ipakitang muli ang babalang ito</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Alle bestanden</translation>
+        <translation>Lahat ng mga file</translation>
     </message>
     <message>
         <source>Key files</source>
-        <translation>Sleutelbestanden</translation>
+        <translation>Mga key file</translation>
     </message>
     <message>
         <source>Select key file</source>
-        <translation>Kies sleutelbestand</translation>
+        <translation>Piliin ang key file</translation>
     </message>
     <message>
         <source>Cannot use database file as key file</source>
-        <translation>Kan database niet als sleutelbestand gebruiken</translation>
+        <translation>Hindi magagamit ang database file bilang key file</translation>
     </message>
     <message>
         <source>You cannot use your database file as a key file.
 If you do not have a key file, please leave the field empty.</source>
-        <translation>Je kunt je database niet als sleutelbestand gebruiken.
-Als je geen sleutelbestand hebt laat je het veld leeg.</translation>
+        <translation>Hindi mo magagamit ang iyong database file bilang key file.
+Kung wala kang key file, mangyaring iwanang walang laman ang field.</translation>
     </message>
     <message>
         <source>Detecting hardware keys…</source>
-        <translation>Hardwaresleutels detecteren...</translation>
+        <translation>Dini-detect ang mga hardware key…</translation>
     </message>
     <message>
         <source>No hardware keys detected</source>
-        <translation>Geen hardwaresleutels gedetecteerd</translation>
+        <translation>Walang nakitang hardware key</translation>
     </message>
     <message>
         <source>Select hardware key…</source>
-        <translation>Selecteer hardwaresleutel...</translation>
+        <translation>Piliin ang hardware key…</translation>
     </message>
     <message>
         <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Naast een wachtwoord kan je een geheim bestand gebruiken om de beveiliging van je database te verbeteren. Dit bestand kan worden gegenereerd in de beveiligingsinstellingen van je database.&lt;/p&gt;&lt;p&gt;Dit is &lt;strong&gt;niet&lt;/strong&gt; jouw *.kdbx database-bestand!&lt;br&gt;Laat dit veld leeg als je geen sleutelbestand gebruikt.&lt;/p&gt;&lt;p&gt;Klik hier voor meer informatie...&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Bilang karagdagan sa isang password, maaari kang gumamit ng isang secret file upang mapahusay ang seguridad ng database mo. Maaaring mabuo ang file na ito sa mga setting ng database security mo.&lt;/p&gt;&lt;p&gt;Ito ay&lt;strong&gt;hindi&lt;/strong&gt; iyong *.kdbx database file!&lt;br&gt;Kung wala kang key file, iwanang walang laman ang field na ito.&lt;/p&gt;&lt;p&gt;Mag-click para sa karagdagang impormasyon…&lt;/p&gt;</translation>
     </message>
     <message>
         <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
 &lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Je kunt een hardwarebeveiligingssleutel gebruiken, zoals een &lt;strong&gt;YubiKey&lt;/strong&gt; of &lt;strong&gt;OnlyKey&lt;/strong&gt; met posities (slots) geconfigureerd voor HMAC-SHA1.&lt;/p&gt;
-&lt;p&gt;Klik voor meer informatie...&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Maaari kang gumamit ng security key ng hardware gaya ng &lt;strong&gt;YubiKey&lt;/strong&gt; o &lt;strong&gt;OnlyKey&lt;/strong&gt; na may slot na naka-configure pa sa HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Mag-click para sa karagdagang impormasyon…&lt;/p&gt;</translation>
     </message>
     <message>
         <source>authenticate to access the database</source>
-        <translation>Toegang tot databank toestaan</translation>
+        <translation>patotohanan para ma-access ang database</translation>
     </message>
     <message>
         <source>Failed to authenticate with Windows Hello: %1</source>
-        <translation>De Windows Hello-verificatie is mislukt: %1</translation>
+        <translation>Nabigong mag-authenticate gamit ang Windows Hello: %1</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingWidgetMetaData</name>
     <message>
         <source>Passwords</source>
-        <translation>Wachtwoorden</translation>
+        <translation>Passwords</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsDialog</name>
     <message>
         <source>Advanced Settings</source>
-        <translation>Geavanceerde instellingen</translation>
+        <translation>Mga Advanced Setting</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>Algemeen</translation>
+        <translation>Pangkalahatan</translation>
     </message>
     <message>
         <source>Security</source>
-        <translation>Beveiliging</translation>
+        <translation>Security</translation>
     </message>
     <message>
         <source>Database Credentials</source>
-        <translation>Databasegegevens</translation>
+        <translation>Mga Kredensyal sa Database</translation>
     </message>
     <message>
         <source>Encryption Settings</source>
-        <translation>Versleutelingsinstellingen</translation>
+        <translation>Mga Setting ng Pag-encrypt</translation>
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation>Browserintegratie</translation>
+        <translation>Pagsasama ng Browser</translation>
     </message>
     <message>
         <source>Maintenance</source>
-        <translation>Onderhoud</translation>
+        <translation>Maintenance</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetBrowser</name>
     <message>
         <source>KeePassXC-Browser settings</source>
-        <translation>KeePassXC-Browser instellingen</translation>
+        <translation>KeePassXC-Mga Browser setting</translation>
     </message>
     <message>
         <source>Convert KeePassHTTP data</source>
-        <translation>KeePassHTTP-gegevens converteren</translation>
+        <translation>I-convert ang data ng KeePassHTTP</translation>
     </message>
     <message>
         <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
-        <translation>Converteer verouderde KeePassHTTP-kenmerken naar KeePassXC-Browser-compatibele aangepaste gegevens</translation>
+        <translation>I-convert ang mga legacy na attribute ng KeePassHTTP -Browser na tugma sa custom data</translation>
     </message>
     <message>
         <source>Refresh database root group ID</source>
-        <translation>Database-rootgroep-ID vernieuwen</translation>
+        <translation>I-refresh ang database root group ID</translation>
     </message>
     <message>
         <source>Disconnect all browsers</source>
-        <translation>Verbreek de verbinding met alle browsers</translation>
+        <translation>Idiskonekta ang lahat ng browser</translation>
     </message>
     <message>
         <source>Forget all site-specific settings on entries</source>
-        <translation>Vergeet alle site-specifieke instellingen bij items</translation>
+        <translation>Kalimutan ang lahat ng mga setting na partikular sa site sa mga entry</translation>
     </message>
     <message>
         <source>Stored keys</source>
-        <translation>Opgeslagen sleutels</translation>
+        <translation>Naka-store na mga key</translation>
     </message>
     <message>
         <source>Stored browser keys</source>
-        <translation>Opgeslagen browsersleutels</translation>
+        <translation>Naka-store na mga key ng browser</translation>
     </message>
     <message>
         <source>Remove selected key</source>
-        <translation>Geselecteerde sleutel verwijderen</translation>
+        <translation>Alisin ang napiling key</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Verwijderen</translation>
+        <translation>Alisin</translation>
     </message>
     <message>
         <source>Delete the selected key?</source>
-        <translation>Geselecteerde sleutel verwijderen?</translation>
+        <translation>I-delete ang napiling key?</translation>
     </message>
     <message>
         <source>Do you really want to delete the selected key?
 This may prevent connection to the browser plugin.</source>
-        <translation>Wil je de geselecteerde sleutel echt verwijderen?
-Hierdoor werkt de verbinding met de browserextensie mogelijk niet meer.</translation>
+        <translation>Gusto mo bang i-delete ang napiling key?
+Maaaring pigilan nito ang koneksyon sa browser plugin.</translation>
     </message>
     <message>
         <source>Key</source>
-        <translation>Sleutel</translation>
+        <translation>Key</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation>Waarde</translation>
+        <translation>Value</translation>
     </message>
     <message>
         <source>Created</source>
-        <translation>Aangemaakt</translation>
+        <translation>Nalikha na</translation>
     </message>
     <message>
         <source>Enable Browser Integration to access these settings.</source>
-        <translation>Activeer browserintegratie om deze instellingen te kunnen wijzigen.</translation>
+        <translation>I-enable ang Browser Integration para ma-access ang mga setting na ito.</translation>
     </message>
     <message>
         <source>Do you really want to disconnect all browsers?
 This may prevent connection to the browser plugin.</source>
-        <translation>Wil je echt de verbinding met alle browsers verbreken?
-Hierdoor werkt de verbinding met de browserextensie mogelijk niet meer.</translation>
+        <translation>Gusto mo bang idiskonekta ang lahat ng browser?
+Maaaring pigilan nito ang koneksyon sa browser plugin.</translation>
     </message>
     <message>
         <source>KeePassXC: No keys found</source>
-        <translation>KeePassXC: Geen sleutels gevonden</translation>
+        <translation>KeePassXC: Walang Nakitang Mga Key</translation>
     </message>
     <message>
         <source>No shared encryption keys found in KeePassXC settings.</source>
-        <translation>Geen gedeelde coderingssleutels gevonden in KeePassXC instellingen.</translation>
+        <translation>Walang nahanap na nakabahaging encryption key sa settings ng KeePassXC.</translation>
     </message>
     <message>
         <source>KeePassXC: Removed keys from database</source>
-        <translation>KeePassXC: Sleutels uit database verwijderd</translation>
+        <translation>KeePassXC: Noi-remove ang mga key mula sa database</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
-        <translation><numerusform>Er is %n coderingssleutel uit KeePassXC instellingen verwijderd.</numerusform><numerusform>Er zijn %n coderingssleutels uit KeePassXC-instellingen verwijderd.</numerusform></translation>
+        <translation><numerusform>Matagumpay na na-remove ang %n encryption key mula sa mga setting ng KeePassXC.</numerusform><numerusform>Matagumpay na na-remove ang %n (mga) encryption key mula sa mga setting ng KeePassXC.</numerusform></translation>
     </message>
     <message>
         <source>Do you really want forget all site-specific settings on every entry?
 Permissions to access entries will be revoked.</source>
-        <translation>Wil je echt alle site-specifieke instellingen bij items vergeten? Machtigingen voor toegang zullen worden ingetrokken.</translation>
+        <translation>Gusto mo bang kalimutan ang lahat ng setting na partikular sa site sa bawat entry?
+Ang pahintulot na ma-access ang mga entry ay babawiin.</translation>
     </message>
     <message>
         <source>Removing stored permissions…</source>
-        <translation>Opgeslagen machtigingen verwijderen…</translation>
+        <translation>Inaalis ang mga naka-store na pahintulot…</translation>
     </message>
     <message>
         <source>Abort</source>
-        <translation>Afbreken</translation>
+        <translation>I-abort</translation>
     </message>
     <message>
         <source>KeePassXC: Removed permissions</source>
-        <translation>KeePassXC: machtigingen verwijderd</translation>
+        <translation>KeePassXC: Ni-remove ang mga pahintulot</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation><numerusform>Machtigingen zijn verwijderd uit %n item(s).</numerusform><numerusform>Machtigingen zijn verwijderd uit %n item(s).</numerusform></translation>
+        <translation><numerusform>Matagumpay na na-remove ang mga permission mula sa %n na entry.</numerusform><numerusform>Matagumpay na na-remove ang mga permission mula sa %n na (mga) entry.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
-        <translation>KeePassXC: Geen item met machtigingen gevonden!</translation>
+        <translation>KeePassXC: Walang nakitang entry na may mga pahintulot!</translation>
     </message>
     <message>
         <source>The active database does not contain an entry with permissions.</source>
-        <translation>De actieve database bevat geen items met machtigingen.</translation>
+        <translation>Ang aktibong database ay hindi naglalaman ng entry na may mga permission.</translation>
     </message>
     <message>
         <source>Move KeePassHTTP attributes to custom data</source>
-        <translation>KeePassHTTP-kenmerken naar aangepaste gegevens verplaasen</translation>
+        <translation>Ilipat ang mga attribute ng KeePassHTTP sa custom na data</translation>
     </message>
     <message>
         <source>Do you really want to convert all legacy browser integration data to the latest standard?
 This is necessary to maintain compatibility with the browser plugin.</source>
-        <translation>Wil je echt alle instellingen voor de oudere browserintegratie veranderen naar de nieuwste standaard?
-Dit is nodig om compatibiliteit met de browserextensie te behouden.</translation>
+        <translation>Gusto mo bang i-convert ang lahat ng legacy browser integration data sa pinakabagong pamantayan?
+Ito ay kinakailangan upang mapanatili ang pagiging tugma sa browser plugin.</translation>
     </message>
     <message>
         <source>Refresh database ID</source>
-        <translation>Database-ID vernieuwen</translation>
+        <translation>I-refresh ang database ID</translation>
     </message>
     <message>
         <source>Do you really want refresh the database ID?
 This is only necessary if your database is a copy of another and the browser extension cannot connect.</source>
-        <translation>Wilt je echt de database-ID vernieuwen?
-Dit is alleen nodig als je database een kopie is van een andere en de browserextensie geen verbinding kan maken.</translation>
+        <translation>Gusto mo bang i-refresh ang database ID?
+Ito ay kinakailangan lamang kung ang iyong database ay isang kopya ng isa pa at ang extension ng browser ay hindi makakonekta.</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetDatabaseKey</name>
     <message>
         <source>Add additional protection…</source>
-        <translation>Aanvullende beveiliging toevoegen...</translation>
+        <translation>Magdagdag ng karagdagang proteksyon…</translation>
     </message>
     <message>
         <source>No password set</source>
-        <translation>Geen wachtwoord ingesteld</translation>
+        <translation>Walang na-set na password</translation>
     </message>
     <message>
         <source>WARNING! You have not set a password. Using a database without a password is strongly discouraged!
 
 Are you sure you want to continue without a password?</source>
-        <translation>WAARSCHUWING! Je hebt geen wachtwoord ingesteld. Een database gebruiken zonder wachtwoord wordt sterk afgeraden!
+        <translation>BABALA! Hindi ka nagtakda ng password. Ang paggamit ng database na walang password ay mahigpit na hindi hinihikayat!
 
-Weet je zeker dat je door wilt gaan zonder een wachtwoord?</translation>
+Sigurado ka bang gusto mong magpatuloy nang walang password?</translation>
     </message>
     <message>
         <source>Continue without password</source>
-        <translation>Doorgaan zonder wachtwoord</translation>
+        <translation>Magpatuloy nang walang password</translation>
     </message>
     <message>
         <source>No encryption key added</source>
-        <translation>Geen coderingssleutel toegevoegd</translation>
+        <translation>Walang idinagdag na encryption key</translation>
     </message>
     <message>
         <source>You must add at least one encryption key to secure your database!</source>
-        <translation>Je moet minstens één coderingssleutel aan je database toevoegen om deze te beveiligen!</translation>
+        <translation>Dapat kang magdagdag ng kahit isang encryption key para maprotektahan ang database mo!</translation>
     </message>
     <message>
         <source>Unknown error</source>
-        <translation>Onbekende fout</translation>
+        <translation>Hindi kilalang error</translation>
     </message>
     <message>
         <source>Failed to change database credentials</source>
-        <translation>Veranderen van databasereferenties is mislukt</translation>
+        <translation>Nabigong baguhin ang mga kredensyal ng database</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetEncryption</name>
     <message>
         <source>Decryption Time:</source>
-        <translation>Decoderingstijd:</translation>
+        <translation>Oras ng Pag-decrypt:</translation>
     </message>
     <message>
         <source>Change existing decryption time</source>
-        <translation>Huidige decoderingstijd wijzigen</translation>
+        <translation>Baguhin ang kasalukuyang oras ng pag-decrypt</translation>
     </message>
     <message>
         <source>Change</source>
-        <translation>Wijzigen</translation>
+        <translation>Palitan</translation>
     </message>
     <message>
         <source>Decryption time in seconds</source>
-        <translation>Decoderingstijd in seconden</translation>
+        <translation>Segundo na oras ng pag-decrypt</translation>
     </message>
     <message>
         <source>Higher values offer more protection, but opening the database will take longer.</source>
-        <translation>Hogere waarden bieden meer bescherming, maar laten het openen van de database langer duren.</translation>
+        <translation>Ang mas mataas na value ay nag-aalok ng higit na proteksyon, ngunit ang pagbubukas ng database ay mas babagal.</translation>
     </message>
     <message>
         <source>Database format:</source>
-        <translation>Database-indeling:</translation>
+        <translation>Format ng database</translation>
     </message>
     <message>
         <source>Database format</source>
-        <translation>Database-indeling</translation>
+        <translation>Format ng database</translation>
     </message>
     <message>
         <source>Format cannot be changed: Your database uses KDBX 4 features</source>
-        <translation>Indeling kan niet worden gewijzigd: de database maakt gebruik van KDBX 4-functies</translation>
+        <translation>Hindi mababago ang format: Gumagamit ang database mo ng mga feature ng KDBX 4</translation>
     </message>
     <message>
         <source>Unless you need to open your database with other programs, always use the latest format.</source>
-        <translation>Tenzij je de database met andere programma&apos;s wil openen, gebruik je altijd de nieuwste indeling.</translation>
+        <translation>Maliban kung kailangan mong buksan ang iyong database sa iba pang mga programa, palaging gamitin ang pinakabagong format.</translation>
     </message>
     <message>
         <source>Encryption Algorithm:</source>
-        <translation>Versleutelingsalgoritme:</translation>
+        <translation>Pag-encrypt ng Algorithm:</translation>
     </message>
     <message>
         <source>Encryption algorithm</source>
-        <translation>Versleutelingsalgoritme</translation>
+        <translation>Pag-encrypth ng algorithm</translation>
     </message>
     <message>
         <source>AES:  256 Bit   (default)</source>
-        <translation>AES: 256 bit (standaard)</translation>
+        <translation>AES:  256 Bit   (default)</translation>
     </message>
     <message>
         <source>Twofish:  256 Bit</source>
-        <translation>Twofish: 256 bit</translation>
+        <translation>Twofish:  256 Bit</translation>
     </message>
     <message>
         <source>Key Derivation Function:</source>
-        <translation>Sleutel-afleidingsfunctie:</translation>
+        <translation>Key Derivation na Function:</translation>
     </message>
     <message>
         <source>Key derivation function</source>
-        <translation>Sleutelafleidingsfunctie</translation>
+        <translation>Key derivation na function</translation>
     </message>
     <message>
         <source>Transform rounds:</source>
-        <translation>Transformatie-iteraties:</translation>
+        <translation>Baguhin ang mga round:</translation>
     </message>
     <message>
         <source>Transform rounds</source>
-        <translation>Transformatierondes</translation>
+        <translation>Baguhin ang mga round</translation>
     </message>
     <message>
         <source>Memory Usage:</source>
-        <translation>Geheugengebruik:</translation>
+        <translation>Paggamit ng Memory:</translation>
     </message>
     <message>
         <source>Memory usage</source>
-        <translation>Geheugengebruik</translation>
+        <translation>Paggamit ng Memory</translation>
     </message>
     <message>
         <source>Parallelism:</source>
-        <translation>Parallelliteit:</translation>
+        <translation>Parallelism:</translation>
     </message>
     <message>
         <source>Parallelism</source>
-        <translation>Parallelliteit</translation>
+        <translation>Parallelism</translation>
     </message>
     <message>
         <source>KDBX 4 (recommended)</source>
-        <translation>KDBX 4 (aanbevolen)</translation>
+        <translation>KDBX 4 (inirerekomenda)</translation>
     </message>
     <message>
         <source>KDBX 3</source>
@@ -1935,49 +1936,49 @@ Weet je zeker dat je door wilt gaan zonder een wachtwoord?</translation>
     <message>
         <source>unchanged</source>
         <comment>Database decryption time is unchanged</comment>
-        <translation>ongewijzigd</translation>
+        <translation>hindi nabago</translation>
     </message>
     <message>
         <source>Number of rounds too high</source>
         <comment>Key transformation rounds</comment>
-        <translation>Aantal iteraties te hoog</translation>
+        <translation>Masyadong mataas ang bilang ng mga round</translation>
     </message>
     <message>
         <source>You are using a very high number of key transform rounds with Argon2.
 
 If you keep this number, your database may take hours, days, or even longer to open.</source>
-        <translation>Je gebruikt een zeer groot aantal sleuteltransformatie-iteraties met Argon2.
+        <translation>Gumagamit ka ng napakataas na bilang ng mga key transform round sa Argon2.
 
-Als je dit aantal aanhoudt, kan het uren, dagen of zelfs langer duren om de database te openen!</translation>
+Kung pananatilihin mo ang numerong ito, maaaring tumagal ng oras, araw, o mas matagal pa bago mabuksan ang database mo.</translation>
     </message>
     <message>
         <source>Understood, keep number</source>
-        <translation>Begrepen, aantal aanhouden</translation>
+        <translation>Naintindihan, panatilihin ang bilang</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuleren</translation>
+        <translation>Kanselahin</translation>
     </message>
     <message>
         <source>Number of rounds too low</source>
         <comment>Key transformation rounds</comment>
-        <translation>Aantal iteraties te laag</translation>
+        <translation>Masyadong mababa ang bilang ng mga round</translation>
     </message>
     <message>
         <source>You are using a very low number of key transform rounds with AES-KDF.
 
 If you keep this number, your database will not be protected from brute force attacks.</source>
-        <translation>Je gebruikt een zeer laag aantal sleuteltransformatie-iteraties met AES-KDF.
+        <translation>Gumagamit ka ng napakababang bilang ng mga key transform round sa AES-KDF.
 
-Als je dit aantal aanhoudt is je database niet bestand tegen brute kracht aanvallen!</translation>
+Kung pananatilihin mo ang numerong ito, hindi mapoprotektahan ang database mo mula sa mga brute-force na pag-atake.</translation>
     </message>
     <message>
         <source>KDF unchanged</source>
-        <translation>KDF ongewijzigd</translation>
+        <translation>Hindi nabago ang KDF</translation>
     </message>
     <message>
         <source>Failed to transform key with new KDF parameters; KDF unchanged.</source>
-        <translation>Het transformeren van de sleutel met de nieuwe KDF-parameters is mislukt; KDF is ongewijzigd.</translation>
+        <translation>Nabigong i-transform ang key gamit ang mga bagong parameter ng KDF; Ang KDF ay hindi nabago.</translation>
     </message>
     <message numerus="yes">
         <source> MiB</source>
@@ -1987,69 +1988,69 @@ Als je dit aantal aanhoudt is je database niet bestand tegen brute kracht aanval
     <message numerus="yes">
         <source> thread(s)</source>
         <comment>Threads for parallel execution (KDF settings)</comment>
-        <translation><numerusform>thread(s)</numerusform><numerusform>thread(s)</numerusform></translation>
+        <translation><numerusform> thread</numerusform><numerusform> (mga)thread</numerusform></translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetFdoSecrets</name>
     <message>
         <source>Exposed Entries</source>
-        <translation>Beschikbare items</translation>
+        <translation>Mga Expose na Entry</translation>
     </message>
     <message>
         <source>Don&apos;t expose this database</source>
-        <translation>Deze database niet blootstellen</translation>
+        <translation>Huwag i-expose ang database na ito</translation>
     </message>
     <message>
         <source>Expose entries under this group:</source>
-        <translation>Items onder deze groep blootstellen:</translation>
+        <translation>Ipakita ang mga entry sa ilalim ng group na ito:</translation>
     </message>
     <message>
         <source>Enable Secret Service to access these settings.</source>
-        <translation>Schakel Secret Service in om toegang te krijgen tot deze instellingen.</translation>
+        <translation>I-enable ang Secret Service para ma-access ang mga setting na ito.</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetGeneral</name>
     <message>
         <source>Database Metadata</source>
-        <translation>Database meta-gegevens</translation>
+        <translation>Metadata ng Database</translation>
     </message>
     <message>
         <source>Database name:</source>
-        <translation>Naam van de database:</translation>
+        <translation>Pangalan ng database:</translation>
     </message>
     <message>
         <source>Database name field</source>
-        <translation>Databasenaamveld</translation>
+        <translation>Field ng pangalan ng database</translation>
     </message>
     <message>
         <source>Database description:</source>
-        <translation>Beschrijving van de database:</translation>
+        <translation>Field ng paglalarawan ng database</translation>
     </message>
     <message>
         <source>Database description field</source>
-        <translation>Databaseomschrijvingveld</translation>
+        <translation>Field ng paglalarawan ng database</translation>
     </message>
     <message>
         <source>Default username:</source>
-        <translation>Standaard gebruikersnaam:</translation>
+        <translation>Default na username:</translation>
     </message>
     <message>
         <source>Default username field</source>
-        <translation>Standaardgebruikersnaamveld</translation>
+        <translation>Default na field ng username</translation>
     </message>
     <message>
         <source>History Settings</source>
-        <translation>Geschiedenis-instellingen</translation>
+        <translation>Mga History Setting</translation>
     </message>
     <message>
         <source>Maximum number of history items per entry</source>
-        <translation>Maximum aantal vorige versies per item</translation>
+        <translation>Maximum na bilang ng mga item sa history bawat entry</translation>
     </message>
     <message>
         <source>Maximum size of history per entry</source>
-        <translation>Maximale grootte van vorige versies per item</translation>
+        <translation>Pinakamataas na sukat ng history sa bawat entry</translation>
     </message>
     <message>
         <source> MiB</source>
@@ -2057,96 +2058,94 @@ Als je dit aantal aanhoudt is je database niet bestand tegen brute kracht aanval
     </message>
     <message>
         <source>Use recycle bin</source>
-        <translation>Prullenbak gebruiken</translation>
+        <translation>Gumamit ng recycle bin</translation>
     </message>
     <message>
         <source>Additional Database Settings</source>
-        <translation>Aanvullende database-instellingen</translation>
+        <translation>Karagdagang Mga Database Setting</translation>
     </message>
     <message>
         <source>Enable compression (recommended)</source>
-        <translation>Compressie inschakelen (aanbevolen)</translation>
+        <translation>I-enable ang compression (inirerekomenda)</translation>
     </message>
     <message>
         <source>Delete Recycle Bin</source>
-        <translation>Verwijder prullenbak</translation>
+        <translation>I-delete ang Recycle Bin</translation>
     </message>
     <message>
         <source>Do you want to delete the current recycle bin and all its contents?
 This action is not reversible.</source>
-        <translation>Wil je de huidige prullenbak en al zijn inhoud verwijderen?
-Deze actie is onomkeerbaar.</translation>
+        <translation>Gusto mo bang i-delete ang kasalukuyang recycle bin at lahat ng nilalaman nito?
+Ang aksyon na ito ay hindi na maaarin mabawi.</translation>
     </message>
     <message>
         <source> (old)</source>
-        <translation>(oud)</translation>
+        <translation> (luma)</translation>
     </message>
     <message>
         <source>When saving this setting or editing an entry
 the oldest history items of an entry will be
 removed such that only the specified amount
 of entries remain at most.</source>
-        <translation>Bij het opslaan van deze instelling of het 
-bewerken van een item worden de oudste 
-geschiedenisitems van een item verwijderd, 
-zodat alleen het gespecificeerde aantal items 
-maximaal blijft.</translation>
+        <translation>Kapag sine-save ang setting na ito o nag-e-edit ng entry
+ang pinakamatandang mga item sa history ng isang entry ay magiging
+inalis tulad na lamang ang tinukoy na halaga
+ng mga entry ay nananatili sa karamihan.</translation>
     </message>
     <message>
         <source>Limit the amount of history items per entry to:</source>
-        <translation>Beperk het aantal geschiedenisitems per item tot:</translation>
+        <translation>Limitahan ang dami ng mga item sa history ng bawat entry sa:</translation>
     </message>
     <message>
         <source>When saving this setting or editing an entry
 the oldest history items of an entry will be
 removed such that the remaining history items
 add up to the specified amount at most.</source>
-        <translation>Bij het opslaan van deze instelling of het 
-bewerken van een item worden de oudste 
-geschiedenisitems van een item verwijderd, 
-zodat de resterende geschiedenisitems 
-maximaal het gespecificeerde bedrag bedragen.</translation>
+        <translation>Kapag sine-save ang setting na ito o nag-e-edit ng entry
+ang pinakamatandang mga item sa kasaysayan ng isang entry ay ire-remove
+para ang natitirang mga item sa history na
+magdaragdag ng hanggang sa tinukoy na halaga sa pinakamaraming.</translation>
     </message>
     <message>
         <source>Limit the total size of history items per entry to:</source>
-        <translation>Beperk de totale grootte van geschiedenisitems per item tot:</translation>
+        <translation>Limitahan ang kabuuang sukat ng mga item sa history ng bawat entry sa:</translation>
     </message>
     <message>
         <source>Move entries to a recycle bin group
 instead of deleting them from the database.
 Entries deleted from the recycle bin are
 removed from the database.</source>
-        <translation>Verplaats items naar een prullenbakgroep 
-in plaats van ze uit de database te verwijderen.
-Inzendingen die uit de prullenbak zijn verwijderd, 
-worden uit de database verwijderd.</translation>
+        <translation>Ilipat ang mga entry sa isang recycle bin group
+sa halip na tanggalin ang mga ito mula sa database.
+Ang mga entry na na-delete mula sa recycle bin ay
+na-delete mula sa database.</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetKeeShare</name>
     <message>
         <source>Sharing</source>
-        <translation>Delen</translation>
+        <translation>Pagbabahagi</translation>
     </message>
     <message>
         <source>Breadcrumb</source>
-        <translation>Broodkruimel</translation>
+        <translation>Breadcrumb</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation>Type</translation>
+        <translation>Uri</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation>Pad</translation>
+        <translation>Path</translation>
     </message>
     <message>
         <source>Last Signer</source>
-        <translation>Laatste ondertekenaar</translation>
+        <translation>Huling Signer</translation>
     </message>
     <message>
         <source>Certificates</source>
-        <translation>Certificaten</translation>
+        <translation>Certificates</translation>
     </message>
     <message>
         <source> &gt; </source>
@@ -2158,369 +2157,369 @@ worden uit de database verwijderd.</translation>
     <name>DatabaseSettingsWidgetMaintenance</name>
     <message>
         <source>Manage Custom Icons</source>
-        <translation>Aangepaste pictogrammen beheren</translation>
+        <translation>Pamahalaan ang Mga Custom Icon</translation>
     </message>
     <message>
         <source>Delete selected icon(s)</source>
-        <translation>Geselecteerde pictogram(en) verwijderen</translation>
+        <translation>I-delete ang (mga) napiling icon</translation>
     </message>
     <message>
         <source>Delete all custom icons not in use by any entry or group</source>
-        <translation>Alle aangepaste pictogrammen verwijderen die niet door een vermelding of groep worden gebruikt</translation>
+        <translation>I-delete ang lahat ng custom na icon na hindi ginagamit ng anumang entry o group</translation>
     </message>
     <message>
         <source>Purge unused icons</source>
-        <translation>Ongebruikte pictogrammen opschonen</translation>
+        <translation>I-purge ang mga hindi nagamit na icon</translation>
     </message>
     <message>
         <source>Confirm Deletion</source>
-        <translation>Verwijdering bevestigen</translation>
+        <translation>Kumpirmahin ang Pag-delete</translation>
     </message>
     <message>
         <source>At least one of the selected icons is currently in use by at least one entry or group. The icons of all affected entries and groups will be replaced by the default icon. Are you sure you want to delete icons that are currently in use?</source>
-        <translation>Tenminste één van de geselecteerde pictogrammen wordt momenteel gebruikt door tenminste één item of groep. De pictogrammen van alle betrokken vermeldingen en groepen worden vervangen door het standaardpictogram. Weet je zeker dat je pictogrammen wilt verwijderen die momenteel in gebruik zijn?</translation>
+        <translation>Hindi bababa sa isa sa mga napiling icon ang kasalukuyang ginagamit ng hindi bababa sa isang entry o pangkat. Ang mga icon ng lahat ng apektadong entry at pangkat ay papalitan ng default na icon. Sigurado ka bang nais mong i-delete ang mga icon na kasalukuyang ginagamit?</translation>
     </message>
     <message>
         <source>Custom Icons Are In Use</source>
-        <translation>Aangepaste pictogrammen zijn in gebruik</translation>
+        <translation>Ginagamit na ang Mga Custom na Icon</translation>
     </message>
     <message>
         <source>All custom icons are in use by at least one entry or group.</source>
-        <translation>Alle aangepaste pictogrammen worden gebruikt door tenminste één item of groep.</translation>
+        <translation>Ang lahat ng mga custom na icon ay ginagamit ng hindi bababa sa isang entry o pangkat.</translation>
     </message>
     <message>
         <source>Purged Unused Icons</source>
-        <translation>Ongebruikte pictogrammen gewist</translation>
+        <translation>Na-purge na Hindi Nagamit na Mga Icon</translation>
     </message>
     <message numerus="yes">
         <source>Purged %n icon(s) from the database.</source>
-        <translation><numerusform>%n-pictogram(en) uit de database verwijderd.</numerusform><numerusform>%n pictogram(en) zijn uit de database verwijderd.</numerusform></translation>
+        <translation><numerusform>Na-purge na ang (mga) icon ng %n mula sa database.</numerusform><numerusform>Na-purge na ang icon ng %n mula sa database.</numerusform></translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetMetaDataSimple</name>
     <message>
         <source>Database Name:</source>
-        <translation>Database naam:</translation>
+        <translation>Pangalan ng Database:</translation>
     </message>
     <message>
         <source>Database name field</source>
-        <translation>Databasenaamveld</translation>
+        <translation>Field ng pangalan ng database</translation>
     </message>
     <message>
         <source>Description:</source>
-        <translation>Beschrijving:</translation>
+        <translation>Paglalarawan:</translation>
     </message>
     <message>
         <source>Database description field</source>
-        <translation>Databaseomschrijvingveld</translation>
+        <translation>Field ng paglalarawan ng database</translation>
     </message>
 </context>
 <context>
     <name>DatabaseTabWidget</name>
     <message>
         <source>Database creation error</source>
-        <translation>Fout bij het aanmaken van de database:</translation>
+        <translation>Error sa paglikha ng database</translation>
     </message>
     <message>
         <source>The created database has no key or KDF, refusing to save it.
 This is definitely a bug, please report it to the developers.</source>
-        <translation>De aangemaakte database heeft geen sleutel of KDF en kan daarom niet worden opgeslagen.
-Dit is zeker een fout, rapporteer dit aan de ontwikkelaars.</translation>
+        <translation>Ang nilikhang database ay walang key o KDF, hindi ito mai-save.
+Tiyak na bug ito, mangyaring i-ulat sa mga developer.</translation>
     </message>
     <message>
         <source>KeePass 2 Database</source>
-        <translation>KeePass 2-database</translation>
+        <translation>KeePass 2 Database</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Alle bestanden</translation>
+        <translation>Lahat ng mga file</translation>
     </message>
     <message>
         <source>Open database</source>
-        <translation>Database openen</translation>
+        <translation>Buksan ang database</translation>
     </message>
     <message>
         <source>Failed to open %1. It either does not exist or is not accessible.</source>
-        <translation>Kon %1 niet openen. Het bestaat niet of is niet toegankelijk.</translation>
+        <translation>Nabigong buksan ang %1. Maaaring hindi umiiral ito o hindi naa-access.</translation>
     </message>
     <message>
         <source>CSV file</source>
-        <translation>CSV-bestand</translation>
+        <translation>CSV file</translation>
     </message>
     <message>
         <source>Select CSV file</source>
-        <translation>Selecteer CSV-bestand</translation>
+        <translation>Piliin ang CSV file</translation>
     </message>
     <message>
         <source>Merge database</source>
-        <translation>Databases samenvoegen</translation>
+        <translation>Pagsamahin ang dabatase</translation>
     </message>
     <message>
         <source>KeePass 1 database</source>
-        <translation>KeePass 1-database</translation>
+        <translation>KeePass 1 database</translation>
     </message>
     <message>
         <source>Open KeePass 1 database</source>
-        <translation>KeePass 1-database openen</translation>
+        <translation>Buksan ang database ng KeePass 1</translation>
     </message>
     <message>
         <source>Open OPVault</source>
-        <translation>OPVault openen</translation>
+        <translation>Buksan ang OPVault</translation>
     </message>
     <message>
         <source>Export database to CSV file</source>
-        <translation>Database exporteren naar CSV-bestand</translation>
+        <translation>I-export ang database sa CSV file</translation>
     </message>
     <message>
         <source>Writing the CSV file failed.</source>
-        <translation>Schrijven van het CSV-bestand mislukt.</translation>
+        <translation>Nabigo ang pagsulat ng CSV file.</translation>
     </message>
     <message>
         <source>Writing the HTML file failed.</source>
-        <translation>Schrijven van het HTML-bestand is mislukt.</translation>
+        <translation>Nabigo ang pagsulat ng HTML file.</translation>
     </message>
     <message>
         <source>Export Confirmation</source>
-        <translation>Exporteerbevestiging</translation>
+        <translation>I-export ang Kumpirmasyon</translation>
     </message>
     <message>
         <source>You are about to export your database to an unencrypted file. This will leave your passwords and sensitive information vulnerable! Are you sure you want to continue?</source>
-        <translation>Je gaat je database naar een niet-versleuteld bestand exporteren. Dit maakt je wachtwoorden en gevoelige informatie kwetsbaar! Weet je zeker dat je door wil gaan?</translation>
+        <translation>Ie-export mo na ang database mo sa isang hindi naka-encrypt na file. Iiwan nitong mahina ang iyong mga password at sensitibong impormasyon! Sigurado ka bang gusto mong magpatuloy?</translation>
     </message>
     <message>
         <source>New Database</source>
-        <translation>Nieuwe database</translation>
+        <translation>Bagong Database</translation>
     </message>
     <message>
         <source>%1 [New Database]</source>
         <comment>Database tab name modifier</comment>
-        <translation>%1 [nieuwe database]</translation>
+        <translation>%1 [Bagong Database]</translation>
     </message>
     <message>
         <source>%1 [Locked]</source>
         <comment>Database tab name modifier</comment>
-        <translation>%1 [vergrendeld]</translation>
+        <translation>%1 [Naka-lock]</translation>
     </message>
     <message>
         <source>Export database to XML file</source>
-        <translation>Database exporteren naar xml-bestand</translation>
+        <translation>I-export ang database sa XML file</translation>
     </message>
     <message>
         <source>XML file</source>
-        <translation>Xml-bestand</translation>
+        <translation>XML file</translation>
     </message>
     <message>
         <source>Writing the XML file failed</source>
-        <translation>Het xml-bestand kan niet worden weggeschreven.</translation>
+        <translation>Nabigo ang pagsulat ng XML file</translation>
     </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
     <message>
         <source>Searching…</source>
-        <translation>Bezig met zoeken…</translation>
+        <translation>Naghahanap…</translation>
     </message>
     <message>
         <source>Shared group…</source>
-        <translation>Gedeelde groep...</translation>
+        <translation>Nakabahaging group…</translation>
     </message>
     <message>
         <source>Confirm Auto-Type</source>
-        <translation>Auto-type bevestigen</translation>
+        <translation>Kumpirmahin ang Auto-Type</translation>
     </message>
     <message>
         <source>Perform Auto-Type into the previously active window?</source>
-        <translation>Auto-type uitvoeren in het venster dat zojuist actief was?</translation>
+        <translation>Isagawa ang Auto-Type sa dating aktibong window?</translation>
     </message>
     <message>
         <source>Execute command?</source>
-        <translation>Opdracht uitvoeren?</translation>
+        <translation>Ipatupad ang command?</translation>
     </message>
     <message>
         <source>Do you really want to execute the following command?&lt;br&gt;&lt;br&gt;%1&lt;br&gt;</source>
-        <translation>Weet je zeker dat je de volgende opdracht wil uitvoeren? &lt;br&gt;&lt;br&gt;%1&lt;br&gt;</translation>
+        <translation>Nais mo bang isagawa ang sumusunod na command?&lt;br&gt;&lt;br&gt;%1&lt;br&gt;</translation>
     </message>
     <message>
         <source>Remember my choice</source>
-        <translation>Mijn keuze onthouden</translation>
+        <translation>Tandaan ang aking pinili</translation>
     </message>
     <message>
         <source>Delete group</source>
-        <translation>Groep verwijderen</translation>
+        <translation>I-delete ang group</translation>
     </message>
     <message>
         <source>Do you really want to delete the group &quot;%1&quot; for good?</source>
-        <translation>Weet je zeker dat je de groep &quot;%1&quot; wil verwijderen?</translation>
+        <translation>Gusto mo bang i-delete ang group na &quot;%1&quot; nang tuluyan?</translation>
     </message>
     <message>
         <source>Move group to recycle bin?</source>
-        <translation>Groep naar prullenbak verplaatsen?</translation>
+        <translation>Ilipat ang grupo sa recycle bin?</translation>
     </message>
     <message>
         <source>Do you really want to move the group &quot;%1&quot; to the recycle bin?</source>
-        <translation>Weet je zeker dat je de groep &apos;%1&apos; naar de prullenbak wilt verplaatsen?</translation>
+        <translation>Gusto mo bang ilipat ang group na &quot;%1&quot; sa recycle bin?</translation>
     </message>
     <message>
         <source>Expired entries</source>
-        <translation>Verlopen items</translation>
+        <translation>Mga nag-expire na entry</translation>
     </message>
     <message>
         <source>No current database.</source>
-        <translation>Geen actuele database.</translation>
+        <translation>Walang kasalukuyang database.</translation>
     </message>
     <message>
         <source>No source database, nothing to do.</source>
-        <translation>Geen brondatabase; er valt niks te doen.</translation>
+        <translation>Walang source database, walang magawa.</translation>
     </message>
     <message>
         <source>Successfully merged the database files.</source>
-        <translation>De databasebestanden zijn samengevoegd.</translation>
+        <translation>Matagumpay na pinagsama ang mga file ng database.</translation>
     </message>
     <message>
         <source>Database was not modified by merge operation.</source>
-        <translation>Database werd niet gewijzigd door het samenvoegen.</translation>
+        <translation>Ang database ay hindi binago ng operasyon ng pagsasama.</translation>
     </message>
     <message>
         <source>Search Results (%1)</source>
-        <translation>Zoekresultaten (%1)</translation>
+        <translation>Mga Resulta ng Paghahanap (%1)</translation>
     </message>
     <message>
         <source>No Results</source>
-        <translation>Geen resultaten</translation>
+        <translation>Walang Mga Resulta</translation>
     </message>
     <message>
         <source>Lock Database?</source>
-        <translation>Database vergrendelen?</translation>
+        <translation>I-lock ang Database?</translation>
     </message>
     <message>
         <source>You are editing an entry. Discard changes and lock anyway?</source>
-        <translation>Je bewerkt een item. De wijzigingen verwerpen en toch vergrendelen?</translation>
+        <translation>Nag-e-edit ka ng entry. I-discard ang mga pagbabago at i-lock pa rin?</translation>
     </message>
     <message>
         <source>&quot;%1&quot; was modified.
 Save changes?</source>
-        <translation>&quot;%1&quot; is aangepast.
-Wijzigingen opslaan?</translation>
+        <translation>&quot;%1&quot; ay binago.
+I-save ang mga pagbabago?</translation>
     </message>
     <message>
         <source>Database was modified.
 Save changes?</source>
-        <translation>Database is gewijzigd.
-Wijzigingen opslaan?</translation>
+        <translation>Binago ang database.
+I-save ang mga pagbabago?</translation>
     </message>
     <message>
         <source>Save changes?</source>
-        <translation>Wijzigingen opslaan?</translation>
+        <translation>I-save ang mga pagbabago?</translation>
     </message>
     <message>
         <source>File has changed</source>
-        <translation>Bestand is gewijzigd</translation>
+        <translation>Nagbago ang file</translation>
     </message>
     <message>
         <source>The database file has changed. Do you want to load the changes?</source>
-        <translation>Het database-bestand is gewijzigd. Wil je de aanpassingen inlezen?</translation>
+        <translation>Nagbago ang database file. Gusto mo bang i-load ang mga pagbabago?</translation>
     </message>
     <message>
         <source>Merge Request</source>
-        <translation>Samenvoegingsverzoek</translation>
+        <translation>Pagsamahin ang Kahilingan</translation>
     </message>
     <message>
         <source>The database file has changed and you have unsaved changes.
 Do you want to merge your changes?</source>
-        <translation>Het databasebestand is veranderd en er zijn niet-opgeslagen wijzigingen.
-Wil je de wijzigingen samenvoegen?</translation>
+        <translation>Ang file ng database ay nabago at mayroon kang mga hindi na-save na mga pagbabago.
+Gusto mo bang pagsamahin ang mga binago mo?</translation>
     </message>
     <message>
         <source>Could not open the new database file while attempting to autoreload.
 Error: %1</source>
-        <translation>Kan het nieuwe databasebestand niet openen tijdens het automatisch opnieuw laden.
-Fout: %1</translation>
+        <translation>Hindi mabuksan ang bagong database file habang sinusubukang i-autoreload.
+Error: %1</translation>
     </message>
     <message>
         <source>Disable safe saves?</source>
-        <translation>Veilig opslaan uitschakelen?</translation>
+        <translation>I-disable ang ligtas na pag-save?</translation>
     </message>
     <message>
         <source>KeePassXC has failed to save the database multiple times. This is likely caused by file sync services holding a lock on the save file.
 Disable safe saves and try again?</source>
-        <translation>KeePassXC heeft de database meerdere keren niet kunnen opslaan. Dit wordt waarschijnlijk veroorzaakt doordat een synchronisatie-dienst het bestand vergrendeld houdt.
-Veilig opslaan uitschakelen en opnieuw proberen?</translation>
+        <translation>Nabigo ang KeePassXC na i-save ang database nang maraming beses. Ito ay malamang na sanhi ng mga serbisyo sa pag-sync ng file na may hawak na lock sa save file.
+I-disable ang safe save at subukang muli?</translation>
     </message>
     <message>
         <source>Writing the database failed: %1</source>
-        <translation>Het schrijven van de database is mislukt: %1</translation>
+        <translation>Nabigo ang pagsulat ng database: %1</translation>
     </message>
     <message>
         <source>Passwords</source>
-        <translation>Wachtwoorden</translation>
+        <translation>Passwords</translation>
     </message>
     <message>
         <source>Save database as</source>
-        <translation>Database opslaan als</translation>
+        <translation>I-save ang database bilang</translation>
     </message>
     <message>
         <source>KeePass 2 Database</source>
-        <translation>KeePass 2-database</translation>
+        <translation>KeePass 2 Database</translation>
     </message>
     <message>
         <source>Save database backup</source>
-        <translation>Database-backup opslaan</translation>
+        <translation>I-save ang backup ng database</translation>
     </message>
     <message>
         <source>Empty recycle bin?</source>
-        <translation>Prullenbak legen?</translation>
+        <translation>Walang laman ang recycle bin?</translation>
     </message>
     <message>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
-        <translation>Weet je zeker dat je alles definitief uit de prullenbak wil verwijderen?</translation>
+        <translation>Sigurado ka bang nais mong permanenteng i-delete ang lahat sa recycle bin mo?</translation>
     </message>
     <message>
         <source>Could not find database file: %1</source>
-        <translation>Databasebestand is niet aangetroffen: %1</translation>
+        <translation>Hindi mahanap ang database file: %1</translation>
     </message>
     <message numerus="yes">
         <source>Entries expiring within %1 day(s)</source>
-        <translation><numerusform>Items die binnen %1 dag aflopen</numerusform><numerusform>Items die binnen %1 dagen aflopen</numerusform></translation>
+        <translation><numerusform>Mag-e-expire ang mga entry sa loob ng %1 na araw</numerusform><numerusform>Mag-e-expire ang mga entry sa loob ng %1 na (mga) araw</numerusform></translation>
     </message>
     <message>
         <source>Searches and Tags</source>
-        <translation>Zoekopdrachten en labels</translation>
+        <translation>Mga Paghahanap at Tag</translation>
     </message>
     <message>
         <source>Enter a unique name or overwrite an existing search from the list:</source>
-        <translation>Voer een unieke naam in of overschrijf een bestaande zoekopdracht op de lijst:</translation>
+        <translation>Maglagay ng natatanging pangalan o i-overwrite ang isang umiiral na nahanap mula sa listahan:</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Opslaan</translation>
+        <translation>I-save</translation>
     </message>
     <message>
         <source>Save Search</source>
-        <translation>Zoekopdracht opslaan</translation>
+        <translation>I-save ang Search</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidget</name>
     <message>
         <source>Entry</source>
-        <translation>Item</translation>
+        <translation>Entry</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Geavanceerd</translation>
+        <translation>Advanced</translation>
     </message>
     <message>
         <source>Icon</source>
-        <translation>Pictogram</translation>
+        <translation>Icon</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Auto-type</translation>
+        <translation>Auto-Type</translation>
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation>Browserintegratie</translation>
+        <translation>Pagsasama ng Browser</translation>
     </message>
     <message>
         <source>&lt;empty URL&gt;</source>
@@ -2528,279 +2527,279 @@ Veilig opslaan uitschakelen en opnieuw proberen?</translation>
     </message>
     <message>
         <source>Confirm Removal</source>
-        <translation>Verwijdering bevestigen</translation>
+        <translation>Kumpirmahin ang Pag-remove</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this URL?</source>
-        <translation>Weet je zeker dat je dit URL wil verwijderen?</translation>
+        <translation>Sigurado ka bang nais mong alisin ang URL na ito?</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation>Eigenschappen</translation>
+        <translation>Mga pag-aari</translation>
     </message>
     <message>
         <source>History</source>
-        <translation>Geschiedenis</translation>
+        <translation>History</translation>
     </message>
     <message>
         <source>SSH Agent</source>
-        <translation>SSH-agent</translation>
+        <translation>SSH Agent</translation>
     </message>
     <message>
         <source>n/a</source>
-        <translation>n.v.t.</translation>
+        <translation>n/a</translation>
     </message>
     <message>
         <source>(encrypted)</source>
-        <translation>(versleuteld)</translation>
+        <translation>(naka-encrypt)</translation>
     </message>
     <message>
         <source>Select private key</source>
-        <translation>Kies persoonlijke sleutel</translation>
+        <translation>Pumili ng private key</translation>
     </message>
     <message>
         <source>Entry history</source>
-        <translation>Item geschiedenis</translation>
+        <translation>History ng entry</translation>
     </message>
     <message>
         <source>Add entry</source>
-        <translation>Item toevoegen</translation>
+        <translation>Magdagdag ng entry</translation>
     </message>
     <message>
         <source>Edit entry</source>
-        <translation>Item bewerken</translation>
+        <translation>I-edit ang entry</translation>
     </message>
     <message>
         <source>Some Browser Integration settings are overridden by group settings.</source>
-        <translation>Sommige instellingen voor browserintegratie worden overschreven door groepsinstellingen.</translation>
+        <translation>Ang ilang mga setting ng Browser Integration ay na-override ng mga group setting.</translation>
     </message>
     <message>
         <source>Invalid Entry</source>
-        <translation>Ongeldige invoer</translation>
+        <translation>Invalid na Entry</translation>
     </message>
     <message>
         <source>An external merge operation has invalidated this entry.
 Unfortunately, any changes made have been lost.</source>
-        <translation>Een externe samenvoegbewerking heeft dit item ongeldig gemaakt.
-Helaas zijn alle aangebrachte wijzigingen verloren gegaan.</translation>
+        <translation>Ang isang external merge operation ay nagpawalang-bisa sa entry na ito.
+Sa kasamaang palad, nawala ang anumang mga pagbabagong ginawa.</translation>
     </message>
     <message>
         <source>Auto-Type Validation Error</source>
-        <translation>Validatiefout bij Auto-type</translation>
+        <translation>Auto-Type Validation Error</translation>
     </message>
     <message>
         <source>An error occurred while validating the custom Auto-Type sequence:
 %1
 Would you like to correct it?</source>
-        <translation>Er is een fout opgetreden tijdens het valideren van de aangepaste Auto-type reeks:
+        <translation>Nagkaroon ng error habang kinukumpirma ang custom na Auto-Type sequence:
 %1
-Wil je dit corrigeren?</translation>
+Gusto mo bang itama ito?</translation>
     </message>
     <message>
         <source>An error occurred while validating the Auto-Type sequence for &quot;%1&quot;:
 %2
 Would you like to correct it?</source>
-        <translation>Er is een fout opgetreden tijdens het valideren van de Auto-type reeks voor %1:
+        <translation>Nagkaroon ng error habang kinukumpirma ang Auto-Type sequence para sa &quot;%1&quot;:
 %2
-Wil je dit corrigeren?</translation>
+Gusto mo bang itama ito?</translation>
     </message>
     <message>
         <source>Entry updated successfully.</source>
-        <translation>Het item is bijgewerkt.</translation>
+        <translation>Matagumpay na na-update ang entry.</translation>
     </message>
     <message>
         <source>Unsaved Changes</source>
-        <translation>Niet-opgeslagen wijzigingen</translation>
+        <translation>Mga Hindi Na-save na Pagbabago</translation>
     </message>
     <message>
         <source>Would you like to save changes to this entry?</source>
-        <translation>Wil je de wijzigingen in dit item opslaan?</translation>
+        <translation>Gusto mo bang i-save ang mga pagbabago sa entry na ito?</translation>
     </message>
     <message>
         <source>New attribute</source>
-        <translation>Nieuw kenmerk</translation>
+        <translation>Bagong katangian</translation>
     </message>
     <message>
         <source>New attribute %1</source>
-        <translation>Nieuw kenmerk %1</translation>
+        <translation>Bagong katangian %1</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this attribute?</source>
-        <translation>Weet je zeker dat je dit kenmerk wil verwijderen?</translation>
+        <translation>Sigurado ka bang nais mong alisin ang attribute ito?</translation>
     </message>
     <message>
         <source>Reveal</source>
-        <translation>Onthullen</translation>
+        <translation>Ipakita</translation>
     </message>
     <message>
         <source>[PROTECTED] Press Reveal to view or edit</source>
-        <translation>[BESCHERMD] Druk op Onthullen om te bekijken of te bewerken</translation>
+        <translation>[PROTECTED] Pindutin ang Reveal para tingnan o i-edit</translation>
     </message>
     <message>
         <source>Hide</source>
-        <translation>Verbergen</translation>
+        <translation>Itago</translation>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation><numerusform>%n week</numerusform><numerusform>%n weken</numerusform></translation>
+        <translation><numerusform>%n linggo</numerusform><numerusform>%n (mga)linggo</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation><numerusform>%n maand</numerusform><numerusform>%n maanden</numerusform></translation>
+        <translation><numerusform>%n buwan</numerusform><numerusform>%n (mga)buwan</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n year(s)</source>
-        <translation><numerusform>%n jaar</numerusform><numerusform>%n jaren</numerusform></translation>
+        <translation><numerusform>%n taon</numerusform><numerusform>%n (mga)taon</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n hour(s)</source>
-        <translation><numerusform>%n uur</numerusform><numerusform>%n uur</numerusform></translation>
+        <translation><numerusform>%n oras</numerusform><numerusform>%n (mga)oras</numerusform></translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetAdvanced</name>
     <message>
         <source>Additional attributes</source>
-        <translation>Aanvullende kenmerken</translation>
+        <translation>Karagdagang attributes</translation>
     </message>
     <message>
         <source>Attribute selection</source>
-        <translation>Kenmerkselectie</translation>
+        <translation>Pagpili ng attribute</translation>
     </message>
     <message>
         <source>Attribute value</source>
-        <translation>Kenmerkwaarde</translation>
+        <translation>Value ng attribute</translation>
     </message>
     <message>
         <source>Add a new attribute</source>
-        <translation>Een nieuw kenmerk toevoegen</translation>
+        <translation>Magdagdag ng isang bagong attribute</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation>Toevoegen</translation>
+        <translation>Magdagdag</translation>
     </message>
     <message>
         <source>Remove selected attribute</source>
-        <translation>Gekozen kenmerk verwijderen</translation>
+        <translation>Alisin ang napiling katangian</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Verwijderen</translation>
+        <translation>Alisin</translation>
     </message>
     <message>
         <source>Edit attribute name</source>
-        <translation>Kenmerknaam bewerken</translation>
+        <translation>I-edit ang pangalan ng attribute</translation>
     </message>
     <message>
         <source>Edit Name</source>
-        <translation>Naam bewerken</translation>
+        <translation>I-edit ang Pangalan</translation>
     </message>
     <message>
         <source>Toggle attribute protection</source>
-        <translation>Kenmerkbescherming aan/uit</translation>
+        <translation>I-toggle ang proteksyon ng attribute</translation>
     </message>
     <message>
         <source>Protect</source>
-        <translation>Beveiligen</translation>
+        <translation>Protektahan</translation>
     </message>
     <message>
         <source>Show a protected attribute</source>
-        <translation>Een beschermd kenmerk weergeven</translation>
+        <translation>Ipakita ang protektadong attribute</translation>
     </message>
     <message>
         <source>Reveal</source>
-        <translation>Onthullen</translation>
+        <translation>Ipakita</translation>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>Bijlagen</translation>
+        <translation>Mga attachment</translation>
     </message>
     <message>
         <source>If checked, the entry will not appear in reports like Health Check and HIBP even if it doesn&apos;t match the quality requirements.</source>
-        <translation>Als deze optie is ingeschakeld, wordt de vermelding niet weergegeven in rapporten zoals Health Check en HIBP, zelfs niet als deze niet voldoet aan de kwaliteitseisen.</translation>
+        <translation>Kung nilagyan ng check, hindi lalabas ang entry sa mga ulat tulad ng Health Check at HIBP kahit na hindi ito tumutugma sa mga kinakailangan sa kalidad.</translation>
     </message>
     <message>
         <source>Exclude from database reports</source>
-        <translation>Uitsluiten van databaserapportage</translation>
+        <translation>Ibukod mula sa mga ulat sa database</translation>
     </message>
     <message>
         <source>Foreground Color:</source>
-        <translation>Voorgrondkleur:</translation>
+        <translation>Kulay ng Foreground:</translation>
     </message>
     <message>
         <source>Foreground color selection</source>
-        <translation>Voorgrondkleurselectie</translation>
+        <translation>Pagpili ng kulay sa foreground</translation>
     </message>
     <message>
         <source>Background Color:</source>
-        <translation>Achtergrondkleur:</translation>
+        <translation>Kulay ng Background:</translation>
     </message>
     <message>
         <source>Background color selection</source>
-        <translation>Achtergrondkleurselectie</translation>
+        <translation>Pagpili ng kulay ng background</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetAutoType</name>
     <message>
         <source>Enable Auto-Type for this entry</source>
-        <translation>Auto-type inschakelen voor dit item</translation>
+        <translation>I-enable ang Auto-Type para sa entry na ito</translation>
     </message>
     <message>
         <source>Inherit default Auto-Type sequence from the group</source>
-        <translation>Standaard auto-typevolgorde van de groep overnemen</translation>
+        <translation>Kunin bilang default na Auto-Type na sequence mula sa group</translation>
     </message>
     <message>
         <source>Use custom Auto-Type sequence:</source>
-        <translation>Gebruik aangepaste Auto-typevolgorde:</translation>
+        <translation>Gumamit ng custom na pagkakasunod-sunod ng Auto-Type:</translation>
     </message>
     <message>
         <source>Custom Auto-Type sequence</source>
-        <translation>Aangepaste Auto-type tekenreeks</translation>
+        <translation>Custom na Auto-Type sequence</translation>
     </message>
     <message>
         <source>Open Auto-Type help webpage</source>
-        <translation>Open Auto-type help-webpagina</translation>
+        <translation>Buksan ang Auto-Type help webpage</translation>
     </message>
     <message>
         <source>Window Associations</source>
-        <translation>Scherm-koppelingen</translation>
+        <translation>Mga Window Association</translation>
     </message>
     <message>
         <source>Existing window associations</source>
-        <translation>Bestaande venster koppelingen</translation>
+        <translation>Mga umiiral na window association</translation>
     </message>
     <message>
         <source>Add new window association</source>
-        <translation>Voeg venster koppeling toe</translation>
+        <translation>Magdagdag ng bagong window association</translation>
     </message>
     <message>
         <source>Remove selected window association</source>
-        <translation>Verwijder scherm koppeling</translation>
+        <translation>Alisin ang napiling pagkakaugnay ng window</translation>
     </message>
     <message>
         <source>Window title:</source>
-        <translation>Vensternaam:</translation>
+        <translation>Pamagat ng Window:</translation>
     </message>
     <message>
         <source>You can use an asterisk (*) to match everything</source>
-        <translation>Je kunt een ster (*) gebruiken om alles te vinden</translation>
+        <translation>Maaari kang gumamit ng asterisk (*) upang itugma sa lahat</translation>
     </message>
     <message>
         <source>Set the window association title</source>
-        <translation>Stel de venster koppeling titel in</translation>
+        <translation>Itakda ang pamagat ng pagkakaugnay ng window</translation>
     </message>
     <message>
         <source>You can use an asterisk to match everything</source>
-        <translation>Je kunt een sterretje gebruiken om alles te vinden</translation>
+        <translation>Maaari kang gumamit ng asterisk upang itugma sa lahat</translation>
     </message>
     <message>
         <source>Use a specific sequence for this association:</source>
-        <translation>Gebruik een specifieke tekenreeks voor deze associatie.</translation>
+        <translation>Gumamit ng isang partikular na pagkakasunud-sunod para sa kaugnayang ito:</translation>
     </message>
     <message>
         <source>Custom Auto-Type sequence for this window</source>
-        <translation>Aangepaste Auto-type tekenreeks voor dit venster</translation>
+        <translation>Custom na Auto-Type sequence para sa window na ito</translation>
     </message>
     <message>
         <source>+</source>
@@ -2817,654 +2816,654 @@ Wil je dit corrigeren?</translation>
     <name>EditEntryWidgetBrowser</name>
     <message>
         <source>These settings affect to the entry&apos;s behaviour with the browser extension.</source>
-        <translation>Deze instellingen beïnvloeden het gedrag van de browserextensie voor dit item.</translation>
+        <translation>Nakakaapekto ang mga setting na ito sa gawi ng entry sa extension ng browser.</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>Algemeen</translation>
+        <translation>Pangkalahatan</translation>
     </message>
     <message>
         <source>Hide this entry from the browser extension</source>
-        <translation>Verberg dit item in de browserextensie</translation>
+        <translation>Itago ang entry na ito mula sa extension ng browser</translation>
     </message>
     <message>
         <source>Skip Auto-Submit for this entry</source>
-        <translation>Automatisch indienen uitschakelen voor dit item</translation>
+        <translation>Laktawan ang Auto-Submit para sa entry na ito:</translation>
     </message>
     <message>
         <source>Only send this setting to the browser for HTTP Auth dialogs. If enabled, normal login forms will not show this entry for selection.</source>
-        <translation>Stuur deze instelling alleen naar de browser voor HTTP Auth-dialogen. Indien ingeschakeld, tonen normale aanmeldingsformulieren dit item niet voor selectie.</translation>
+        <translation>Ipadala lamang ang setting na ito sa browser para sa mga dialog ng HTTP Auth. Kung na-enable, hindi ipapakita ng mga normal na form sa pag-log in ang entry na ito para sa pagpili.</translation>
     </message>
     <message>
         <source>Use this entry only with HTTP Basic Auth</source>
-        <translation>Gebruik dit item alleen met HTTP Basic Auth</translation>
+        <translation>Gamitin lamang ang entry na ito sa HTTP Basic Auth</translation>
     </message>
     <message>
         <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
-        <translation>Stuur deze instelling niet naar de browser voor HTTP Auth-dialoogvensters. Indien ingeschakeld, zullen HTTP-authenticatiedialogen dit item niet tonen voor selectie.</translation>
+        <translation>Huwag ipadala ang setting na ito sa browser para sa mga dialog ng HTTP Auth. Kung naka-enable, hindi ipapakita ng mga dialog ng HTTP Auth ang entry na ito para sa pagpili.</translation>
     </message>
     <message>
         <source>Do not use this entry with HTTP Basic Auth</source>
-        <translation>Gebruik dit item niet met HTTP Basic Auth</translation>
+        <translation>Huwag gamitin ang entry na ito sa HTTP Basic Auth</translation>
     </message>
     <message>
         <source>Additional URL&apos;s</source>
-        <translation>Aanvullende URLs</translation>
+        <translation>Karagdagang URL&apos;s</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation>Toevoegen</translation>
+        <translation>Magdagdag</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Verwijderen</translation>
+        <translation>Alisin</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Bewerken</translation>
+        <translation>I-edit</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetHistory</name>
     <message>
         <source>Entry history selection</source>
-        <translation>Item geschiedenis selectie</translation>
+        <translation>History ng pagpili ng entry</translation>
     </message>
     <message>
         <source>Show entry at selected history state</source>
-        <translation>Toon het item zoals in geselecteerde vorige versie</translation>
+        <translation>Ipakita ang entry sa napiling kundisyon ng history</translation>
     </message>
     <message>
         <source>Show</source>
-        <translation>Tonen</translation>
+        <translation>Ipakita</translation>
     </message>
     <message>
         <source>Restore entry to selected history state</source>
-        <translation>Herstel het item naar de geselecteerde vorige versie</translation>
+        <translation>Ibalik ang entry sa napiling estado ng history</translation>
     </message>
     <message>
         <source>Restore</source>
-        <translation>Herstellen</translation>
+        <translation>Ibalik</translation>
     </message>
     <message>
         <source>Delete selected history state</source>
-        <translation>Verwijder geselecteerde vorige versie</translation>
+        <translation>I-delete ang napiling history state</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Verwijderen</translation>
+        <translation>I-delete</translation>
     </message>
     <message>
         <source>Delete all history</source>
-        <translation>Verwijder alle vorige versies</translation>
+        <translation>I-delete lahat ng history</translation>
     </message>
     <message>
         <source>Delete all</source>
-        <translation>Alles verwijderen</translation>
+        <translation>I-delete lahat</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetMain</name>
     <message>
         <source>Edit Entry</source>
-        <translation>Invoer bewerken</translation>
+        <translation>I-edit ang Entry</translation>
     </message>
     <message>
         <source>Notes field</source>
-        <translation>Notities veld</translation>
+        <translation>Patlang ng mga tala</translation>
     </message>
     <message>
         <source>Username field</source>
-        <translation>Gebruikersnaam veld</translation>
+        <translation>Field ng username</translation>
     </message>
     <message>
         <source>Expiration field</source>
-        <translation>Vervaldatum veld</translation>
+        <translation>Field ng expiration</translation>
     </message>
     <message>
         <source>Expiration Presets</source>
-        <translation>Vervaldatum voorinstellingen</translation>
+        <translation>Mga Preset ng Expiration</translation>
     </message>
     <message>
         <source>Expiration presets</source>
-        <translation>Vervaldatum voorinstellingen</translation>
+        <translation>Mga preset ng expiration</translation>
     </message>
     <message>
         <source>Presets</source>
-        <translation>Voorkeuze</translation>
+        <translation>Mga preset</translation>
     </message>
     <message>
         <source>Url field</source>
-        <translation>URL veld</translation>
+        <translation>Patlang ng URL</translation>
     </message>
     <message>
         <source>Download favicon for URL</source>
-        <translation>Favicon downloaden voor URL</translation>
+        <translation>Mag-download ng favicon para sa URL</translation>
     </message>
     <message>
         <source>Title field</source>
-        <translation>Titel veld</translation>
+        <translation>Pamagat ng field</translation>
     </message>
     <message>
         <source>Password field</source>
-        <translation>Wachtwoord invulveld</translation>
+        <translation>Field ng password</translation>
     </message>
     <message>
         <source>Toggle expiration</source>
-        <translation>Vervaldatum wel/niet tonen</translation>
+        <translation>I-toggle ang pag-expire</translation>
     </message>
     <message>
         <source>Tags list</source>
-        <translation>Lijst met labels</translation>
+        <translation>Listahan ng mga tag</translation>
     </message>
     <message>
         <source>&amp;Username:</source>
-        <translation>Gebr&amp;uikersnaam:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Title:</source>
-        <translation>Naa&amp;m:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Password:</source>
-        <translation>&amp;Wachtwoord:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>UR&amp;L:</source>
-        <translation>Ur&amp;l:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Notes:</source>
-        <translation>&amp;Notities:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Toggle notes visibility</source>
-        <translation>Notities tonen/verbergen</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>T&amp;ags:</source>
-        <translation>L&amp;abels:</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Expires:</source>
-        <translation>V&amp;erloopt op:</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>EditEntryWidgetSSHAgent</name>
     <message>
         <source>Form</source>
-        <translation>Formulier</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Remove key from agent when database is closed/locked</source>
-        <translation>Sleutel bij agent wegnemen als de database wordt gesloten/vergrendeld</translation>
+        <translation>Alisin ang key mula sa agent kapag nakasara/naka-lock ang database</translation>
     </message>
     <message>
         <source>Comment</source>
-        <translation>Opmerking</translation>
+        <translation>Comment</translation>
     </message>
     <message>
         <source>Add key to agent when database is opened/unlocked</source>
-        <translation>Sleutel aan agent toevoegen wanneer de database wordt geopend/ontgrendeld</translation>
+        <translation>Magdagdag ng key sa agent kapag naka-bukas/naka-unlock ang database</translation>
     </message>
     <message>
         <source>Decrypt</source>
-        <translation>Decoderen</translation>
+        <translation>I-decrypt</translation>
     </message>
     <message>
         <source>Fingerprint</source>
-        <translation>Vingerafdruk</translation>
+        <translation>Fingerprint</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation>Naar klembord kopiëren</translation>
+        <translation>Kopyahin sa clipboard</translation>
     </message>
     <message>
         <source>Public key</source>
-        <translation>Openbare sleutel</translation>
+        <translation>Public key</translation>
     </message>
     <message>
         <source>Private key</source>
-        <translation>Persoonlijke sleutel</translation>
+        <translation>Pribadong key</translation>
     </message>
     <message>
         <source>External file</source>
-        <translation>Extern bestand</translation>
+        <translation>Panlabas na file</translation>
     </message>
     <message>
         <source>Browser for key file</source>
-        <translation>Blader naar sleutelbestand</translation>
+        <translation>Browser para sa key file</translation>
     </message>
     <message>
         <source>Browse…</source>
         <extracomment>Button for opening file dialog</extracomment>
-        <translation>Bladeren…</translation>
+        <translation>Mag-browse…</translation>
     </message>
     <message>
         <source>Attachment</source>
-        <translation>Bijlage</translation>
+        <translation>Attachment</translation>
     </message>
     <message>
         <source>External key file</source>
-        <translation>Extern sleutelbestand</translation>
+        <translation>Panlabas na key file</translation>
     </message>
     <message>
         <source>Add to agent</source>
-        <translation>Aan agent toevoegen</translation>
+        <translation>Magdagdag sa agent</translation>
     </message>
     <message>
         <source>Remove from agent</source>
-        <translation>Van agent verwijderen</translation>
+        <translation>Alisin mula sa agent</translation>
     </message>
     <message>
         <source>Select attachment file</source>
-        <translation>Selecteer bijlage bestand</translation>
+        <translation>Piliin ang attachment file</translation>
     </message>
     <message>
         <source>Require user confirmation when this key is used</source>
-        <translation>Bevestiging van de gebruiker vragen als deze sleutel wordt gebruikt</translation>
+        <translation>Nangangailangan ng kumpirmasyon ng user kapag ginamit ang key na ito</translation>
     </message>
     <message>
         <source>n/a</source>
-        <translation>n.v.t.</translation>
+        <translation>n/a</translation>
     </message>
     <message>
         <source>Remove key from agent after</source>
-        <translation>Sleutel bij agent wegnemen na</translation>
+        <translation>Alisin ang key sa agent pagkatapos</translation>
     </message>
     <message>
         <source>Remove key from agent after specified seconds</source>
-        <translation>Verwijder de sleutel van de agent na het opgegeven aantal seconden</translation>
+        <translation>Alisin ang key mula sa agent pagkatapos ng tinukoy na segundo</translation>
     </message>
     <message>
         <source> seconds</source>
-        <translation>seconden</translation>
+        <translation> segundo</translation>
     </message>
 </context>
 <context>
     <name>EditGroupWidget</name>
     <message>
         <source>Group</source>
-        <translation>Groep</translation>
+        <translation>Group</translation>
     </message>
     <message>
         <source>Icon</source>
-        <translation>Pictogram</translation>
+        <translation>Icon</translation>
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation>Browserintegratie</translation>
+        <translation>Pagsasama ng Browser</translation>
     </message>
     <message>
         <source>Properties</source>
-        <translation>Eigenschappen</translation>
+        <translation>Mga pag-aari</translation>
     </message>
     <message>
         <source>Add group</source>
-        <translation>Groep toevoegen</translation>
+        <translation>Magdagdag ng pangkat</translation>
     </message>
     <message>
         <source>Edit group</source>
-        <translation>Groep bewerken</translation>
+        <translation>I-edit ang group</translation>
     </message>
     <message>
         <source>Group has unsaved changes</source>
-        <translation>Groep heeft niet-opgeslagen wijzigingen</translation>
+        <translation>May mga hindi na-save na pagbabago ng group</translation>
     </message>
     <message>
         <source>Enable</source>
-        <translation>Activeren</translation>
+        <translation>I-enable</translation>
     </message>
     <message>
         <source>Disable</source>
-        <translation>Uitschakelen</translation>
+        <translation>I-disable</translation>
     </message>
     <message>
         <source>Inherit from parent group (%1)</source>
-        <translation>Overnemen van bovenliggende groep (%1)</translation>
+        <translation>Kunin mula sa parent group na (%1)</translation>
     </message>
 </context>
 <context>
     <name>EditGroupWidgetBrowser</name>
     <message>
         <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
-        <translation>Deze instellingen zijn van invloed op het gedrag van de groep met de browserextensie.</translation>
+        <translation>Ang mga setting na ito ay nakakaapekto sa gawi ng group sa extension ng browser.</translation>
     </message>
     <message>
         <source>Hide entries from browser extension:</source>
-        <translation>Verberg vermeldingen van browserextensie:</translation>
+        <translation>Itago ang mga entry mula sa extension ng browser:</translation>
     </message>
     <message>
         <source>Hide entries from browser extension toggle for this and sub groups</source>
-        <translation>Items van deze browserextensie en subgroepen wel/niet verbergen</translation>
+        <translation>Itago ang mga entry mula sa browser extension toggle para dito at sa mga sub group</translation>
     </message>
     <message>
         <source>Skip Auto-Submit for entries:</source>
-        <translation>Automatisch indienen overslaan voor inzendingen:</translation>
+        <translation>Laktawan ang Auto-Submit para sa mga entry:</translation>
     </message>
     <message>
         <source>Skip Auto-Submit toggle for this and sub groups</source>
-        <translation>Automatisch indienen wel/niet overslaan voor deze groep en subgroepen</translation>
+        <translation>Laktawan ang Auto-Submit para sa dito at sa mga sub group</translation>
     </message>
     <message>
         <source>Use entries only with HTTP Basic Auth:</source>
-        <translation>Gebruik alleen vermeldingen met HTTP Basic Auth:</translation>
+        <translation>Gumamit lamang ng mga entry sa HTTP Basic Auth:</translation>
     </message>
     <message>
         <source>Only HTTP Auth toggle for this and sub groups</source>
-        <translation>Alleen HTTP Auth aan/uit voor deze en subgroepen</translation>
+        <translation>Tanging ang HTTP Auth toggle para dito at sa mga sub group</translation>
     </message>
     <message>
         <source>Do not use entries with HTTP Basic Auth:</source>
-        <translation>Gebruik deze items niet met HTTP Basic Auth:</translation>
+        <translation>Huwag gumamit ng mga entry na may HTTP Basic Auth:</translation>
     </message>
     <message>
         <source>Do not use HTTP Auth toggle for this and sub groups</source>
-        <translation>Gebruik geen HTTP Auth aan/iut voor deze en subgroepen</translation>
+        <translation>Huwag gumamit ng HTTP Auth toggle para dito at sa mga sub group</translation>
     </message>
     <message>
         <source>Omit WWW subdomain from matching:</source>
-        <translation>WWW-subdomein negeren in overeenkomsten:</translation>
+        <translation>Alisin ang WWW subdomain mula sa pagtutugma:</translation>
     </message>
     <message>
         <source>Omit WWW subdomain from matching toggle for this and sub groups</source>
-        <translation>WWW-subdomein negeren in overeenkomsten in deze en onderliggende groepen</translation>
+        <translation>Alisin ang WWW subdomain sa pagtutugma ng toggle para dito at sa mga sub group</translation>
     </message>
 </context>
 <context>
     <name>EditGroupWidgetKeeShare</name>
     <message>
         <source>Sharing mode field</source>
-        <translation>Delen modus veld</translation>
+        <translation>Field ng mode ng pagbabahagi</translation>
     </message>
     <message>
         <source>Password field</source>
-        <translation>Wachtwoord invulveld</translation>
+        <translation>Field ng password</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation>Type:</translation>
+        <translation>Uri:</translation>
     </message>
     <message>
         <source>Password:</source>
-        <translation>Wachtwoord:</translation>
+        <translation>Password:</translation>
     </message>
     <message>
         <source>Path:</source>
-        <translation>Pad:</translation>
+        <translation>Path:</translation>
     </message>
     <message>
         <source>Path to share file field</source>
-        <translation>Pad naar te delen bestand veld</translation>
+        <translation>Path para ibahagi ang patlang ng file</translation>
     </message>
     <message>
         <source>Browse for share file</source>
-        <translation>Blader naar deelbestand</translation>
+        <translation>Mag-browse para sa pagbabahagi ng file</translation>
     </message>
     <message>
         <source>Browse…</source>
-        <translation>Bladeren…</translation>
+        <translation>Mag-browse…</translation>
     </message>
     <message>
         <source>Clear fields</source>
-        <translation>Wis velden</translation>
+        <translation>I-clear ang mga field</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation>Wissen</translation>
+        <translation>I-clear</translation>
     </message>
     <message>
         <source>Inactive</source>
-        <translation>Inactief</translation>
+        <translation>Hindi aktibo</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation>Importeren</translation>
+        <translation>Mag-import</translation>
     </message>
     <message>
         <source>Export</source>
-        <translation>Exporteren</translation>
+        <translation>I-export</translation>
     </message>
     <message>
         <source>Synchronize</source>
-        <translation>Synchroniseer</translation>
+        <translation>I-synchronize</translation>
     </message>
     <message>
         <source>Your KeePassXC version does not support sharing this container type.
 Supported extensions are: %1.</source>
-        <translation>Deze KeePassXC-versie biedt geen ondersteuning voor het delen van dit container type.
-Ondersteund zijn: %1.</translation>
+        <translation>Hindi sinusuportahan ng bersyon ng KeePassXC mo ang pagbabahagi ng ganitong uri ng container.
+Ang mga sinusuportahang extension ay: %1.</translation>
     </message>
     <message>
         <source>%1 is already being exported by this database.</source>
-        <translation>%1 wordt al geëxporteerd door deze database.</translation>
+        <translation>%1 ay na-export na sa database na ito.</translation>
     </message>
     <message>
         <source>%1 is already being imported by this database.</source>
-        <translation>%1 wordt al geïmporteerd door deze database.</translation>
+        <translation>%1 ay na-import na sa database na ito.</translation>
     </message>
     <message>
         <source>%1 is being imported and exported by different groups in this database.</source>
-        <translation>%1 wordt geïmporteerd en geëxporteerd door verschillende groepen in deze database.</translation>
+        <translation>%1 ay na-import at na-export sa iba&apos;t ibang grupo sa database na ito.</translation>
     </message>
     <message>
         <source>KeeShare is currently disabled. You can enable import/export in the application settings.</source>
         <comment>KeeShare is a proper noun</comment>
-        <translation>KeeShare is momenteel uitgeschakeld. Je kunt importeren/exporteren inschakelen in de instellingen.</translation>
+        <translation>Kasalukuyang naka-disable ang KeeShare. Maaari mong i-enable ang pag-import/pag-export sa mga setting ng application.</translation>
     </message>
     <message>
         <source>Database export is currently disabled by application settings.</source>
-        <translation>Database export is momenteel uitgeschakeld in de programma instellingen.</translation>
+        <translation>Ang pag-export ng database ay kasalukuyang ni-disable ng mga setting ng application.</translation>
     </message>
     <message>
         <source>Database import is currently disabled by application settings.</source>
-        <translation>Database import is momenteel uitgeschakeld in de programma instellingen.</translation>
+        <translation>Ang pag-import ng database ay kasalukuyang na-disable ng mga setting ng application.</translation>
     </message>
     <message>
         <source>KeeShare container</source>
-        <translation>KeeShare-container</translation>
+        <translation>KeeShare container</translation>
     </message>
     <message>
         <source>KeeShare signed container</source>
-        <translation>KeeShare ondertekende container</translation>
+        <translation>KeeShare na naka-sign na container</translation>
     </message>
     <message>
         <source>Select import source</source>
-        <translation>Selecteer bron voor import</translation>
+        <translation>Piliin ang source ng pag-import</translation>
     </message>
     <message>
         <source>Select export target</source>
-        <translation>Selecteer doel voor export</translation>
+        <translation>Pumili ng target sa pag-export</translation>
     </message>
     <message>
         <source>Select import/export file</source>
-        <translation>Selecteer import-/exportbestand</translation>
+        <translation>Piliin ang import/export na file</translation>
     </message>
 </context>
 <context>
     <name>EditGroupWidgetMain</name>
     <message>
         <source>Edit Group</source>
-        <translation>Groep bewerken</translation>
+        <translation>I-edit ang Group</translation>
     </message>
     <message>
         <source>Toggle expiration</source>
-        <translation>Vervaldatum wel/niet tonen</translation>
+        <translation>I-toggle ang pag-expire</translation>
     </message>
     <message>
         <source>Expires:</source>
-        <translation>Verloopt:</translation>
+        <translation>Mag-e-expire:</translation>
     </message>
     <message>
         <source>Name field</source>
-        <translation>Naam veld</translation>
+        <translation>Field ng pangalan</translation>
     </message>
     <message>
         <source>Expiration field</source>
-        <translation>Vervaldatum veld</translation>
+        <translation>Field ng expiration</translation>
     </message>
     <message>
         <source>Use default Auto-Type sequence of parent group</source>
-        <translation>Gebruik standaard Auto-type volgorde van bovenliggende groep</translation>
+        <translation>Gumamit ng default na pagkakasunod-sunod ng Auto-Type ng parent group</translation>
     </message>
     <message>
         <source>Auto-Type:</source>
-        <translation>Auto-type:</translation>
+        <translation>Auto-Type:</translation>
     </message>
     <message>
         <source>Search:</source>
-        <translation>Zoeken:</translation>
+        <translation>Maghanap:</translation>
     </message>
     <message>
         <source>Auto-Type toggle for this and sub groups</source>
-        <translation>Auto-type aan/uit voor deze en onderliggende groepen</translation>
+        <translation>Auto-Type toggle para dito at sa mga subgroup</translation>
     </message>
     <message>
         <source>Notes:</source>
-        <translation>Opmerkingen:</translation>
+        <translation>Mga tala:</translation>
     </message>
     <message>
         <source>Default auto-type sequence field</source>
-        <translation>Standaard Auto-type tekenreeks veld</translation>
+        <translation>Default na field ng sequence ng auto-type</translation>
     </message>
     <message>
         <source>Notes field</source>
-        <translation>Notities veld</translation>
+        <translation>Patlang ng mga tala</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation>Naam:</translation>
+        <translation>Pangalan:</translation>
     </message>
     <message>
         <source>Set default Auto-Type sequence</source>
-        <translation>Standaard Auto-type tekenreeks instellen</translation>
+        <translation>Itakda ang default na Auto-Type sequence</translation>
     </message>
     <message>
         <source>Search toggle for this and sub groups</source>
-        <translation>Zoeken aan/uit voor deze en onderliggende groepen</translation>
+        <translation>Naka-toggle na paghahanap para dito at sa mga sub group</translation>
     </message>
 </context>
 <context>
     <name>EditWidgetIcons</name>
     <message>
         <source>Use default icon</source>
-        <translation>Standaardpictogram gebruiken</translation>
+        <translation>Gamitin ang default na icon</translation>
     </message>
     <message>
         <source>Use custom icon</source>
-        <translation>Aangepast pictogram gebruiken</translation>
+        <translation>Gumamit ng custom na icon</translation>
     </message>
     <message>
         <source>Choose icon…</source>
-        <translation>Kies pictogram...</translation>
+        <translation>Pumili ng icon…</translation>
     </message>
     <message>
         <source>Set the URL to use to search for a favicon</source>
-        <translation>Stel de URL in om naar een favicon te zoeken</translation>
+        <translation>Itakda ang URL na gagamitin para maghanap ng favicon</translation>
     </message>
     <message>
         <source>Favicon URL</source>
-        <translation>Favicon-URL</translation>
+        <translation>URL ng Favicon</translation>
     </message>
     <message>
         <source>Download favicon for URL</source>
-        <translation>Favicon downloaden voor URL</translation>
+        <translation>Mag-download ng favicon para sa URL</translation>
     </message>
     <message>
         <source>Download favicon</source>
-        <translation>Favicon downloaden</translation>
+        <translation>Mag-download ng favicon</translation>
     </message>
     <message>
         <source>Apply selected icon to subgroups and entries</source>
-        <translation>Gebruik het geselecteerde pictogram voor onderliggende groepen en items</translation>
+        <translation>Ilapat ang napiling icon sa mga subgroup at entry</translation>
     </message>
     <message>
         <source>Apply icon to…</source>
-        <translation>Pictogram toepassen op...</translation>
+        <translation>Ilapat ang icon sa…</translation>
     </message>
     <message>
         <source>Apply to this group only</source>
-        <translation>Alleen op deze groep toepassen</translation>
+        <translation>Ilapat lamang sa pangkat na ito</translation>
     </message>
     <message>
         <source>Also apply to child groups</source>
-        <translation>Ook toepassen op onderliggende groepen</translation>
+        <translation>Puwede din sa mga pangkat ng bata</translation>
     </message>
     <message>
         <source>Also apply to child entries</source>
-        <translation>Ook toepassen op onderliggende items</translation>
+        <translation>Puwede din sa mga entry ng bata</translation>
     </message>
     <message>
         <source>Also apply to all children</source>
-        <translation>Ook toepassen op alle onderliggenden</translation>
+        <translation>Puwede din sa lahat ng bata</translation>
     </message>
     <message>
         <source>Unable to fetch favicon.</source>
-        <translation>Kan favicon niet ophalen.</translation>
+        <translation>Hindi makuha ang favicon.</translation>
     </message>
     <message>
         <source>You can enable the DuckDuckGo website icon service under Tools -&gt; Settings -&gt; Security</source>
-        <translation>Je kunt de DuckDuckGo website pictogram dienst inschakelen onder Extra&gt;Instellingen&gt;Beveiliging</translation>
+        <translation>Maaari mong paganahin ang serbisyo ng icon ng website ng DuckDuckGo sa ilalim ng Tools -&gt; Settings -&gt; Security</translation>
     </message>
     <message>
         <source>Existing icon selected.</source>
-        <translation>Bestaand pictogram geselecteerd.</translation>
+        <translation>Pinili ang kasalukuyang icon.</translation>
     </message>
     <message>
         <source>Images</source>
-        <translation>Afbeeldingen</translation>
+        <translation>Mga Imahe</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Alle bestanden</translation>
+        <translation>Lahat ng mga file</translation>
     </message>
     <message>
         <source>Select Image(s)</source>
-        <translation>Selecteer afbeelding(en)</translation>
+        <translation>Piliin ang (mga) Larawan</translation>
     </message>
     <message numerus="yes">
         <source>Successfully loaded %1 of %n icon(s)</source>
-        <translation><numerusform>%1 van %n pictogram(men) geladen</numerusform><numerusform>%1 van %n pictogram(men) geladen</numerusform></translation>
+        <translation><numerusform>Matagumpay na na-load ang %1 ng %n icon</numerusform><numerusform>Matagumpay na na-load ang %1 ng %n (mga) icon</numerusform></translation>
     </message>
     <message>
         <source>No icons were loaded</source>
-        <translation>Geen pictogrammen geladen</translation>
+        <translation>Walang na-load na mga icon</translation>
     </message>
     <message numerus="yes">
         <source>%n icon(s) already exist in the database</source>
-        <translation><numerusform>%n pictogram(men) al aanwezig in de database</numerusform><numerusform>%n pictogram(men) al aanwezig in de database</numerusform></translation>
+        <translation><numerusform>%n ng icon ay umiiral na sa database</numerusform><numerusform>%n ng (mga)icon ay umiiral na sa database</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>The following icon(s) failed:</source>
-        <translation><numerusform>De volgende pictogram(men) mislukten:</numerusform><numerusform>De volgende pictogram(men) mislukten:</numerusform></translation>
+        <translation><numerusform>Nabigo ang sumusunod na icon:</numerusform><numerusform>Nabigo ang sumusunod na (mga) icon:</numerusform></translation>
     </message>
 </context>
 <context>
     <name>EditWidgetProperties</name>
     <message>
         <source>Created:</source>
-        <translation>Aangemaakt:</translation>
+        <translation>Nalikha na:</translation>
     </message>
     <message>
         <source>Datetime created</source>
-        <translation>Datum tijd gemaakt</translation>
+        <translation>Nalikha na angdatetime</translation>
     </message>
     <message>
         <source>Modified:</source>
-        <translation>Gewijzigd:</translation>
+        <translation>Nabago:</translation>
     </message>
     <message>
         <source>Datetime modified</source>
-        <translation>Datum tijd gewijzigd</translation>
+        <translation>Binago ang datetime</translation>
     </message>
     <message>
         <source>Accessed:</source>
-        <translation>Toegang:</translation>
+        <translation>Na-access:</translation>
     </message>
     <message>
         <source>Datetime accessed</source>
-        <translation>Datum tijd laatste toegang</translation>
+        <translation>Na-access na Datetime</translation>
     </message>
     <message>
         <source>Uuid:</source>
@@ -3472,256 +3471,258 @@ Ondersteund zijn: %1.</translation>
     </message>
     <message>
         <source>Unique ID</source>
-        <translation>Uniek ID</translation>
+        <translation>Natatanging ID</translation>
     </message>
     <message>
         <source>Plugin Data</source>
-        <translation>Plugin-gegevens:</translation>
+        <translation>Plugin Data</translation>
     </message>
     <message>
         <source>Plugin data</source>
-        <translation>Plugin-gegevens</translation>
+        <translation>Plugin data</translation>
     </message>
     <message>
         <source>Remove selected plugin data</source>
-        <translation>Geselecteerde plugin-gegevens verwijderen</translation>
+        <translation>Alisin ang napiling plugin data</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Verwijderen</translation>
+        <translation>Alisin</translation>
     </message>
     <message>
         <source>Delete plugin data?</source>
-        <translation>Plugin-gegevens verwijderen?</translation>
+        <translation>I-delete ang data ng plugin?</translation>
     </message>
     <message>
         <source>Do you really want to delete the selected plugin data?
 This may cause the affected plugins to malfunction.</source>
-        <translation>Weet je zeker dat je de geselecteerde plugin-gegevens wilt verwijderen?
-Hierdoor werken de plugins mogelijk niet meer goed.</translation>
+        <translation>Gusto mo bang i-delete ang napiling data ng plugin?
+Maaari itong maging sanhi ng hindi paggana ng mga apektadong plugin.</translation>
     </message>
     <message>
         <source>Key</source>
-        <translation>Sleutel</translation>
+        <translation>Key</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation>Waarde</translation>
+        <translation>Value</translation>
     </message>
 </context>
 <context>
     <name>Entry</name>
     <message>
         <source>%1 - Clone</source>
-        <translation>%1 - Duplicaat</translation>
+        <translation>%1 - Clone</translation>
     </message>
 </context>
 <context>
     <name>EntryAttachments</name>
     <message>
         <source>Cannot open file &quot;%1&quot;</source>
-        <translation>Kan bestand &quot;%1&quot; niet openen</translation>
+        <translation>Hindi mabuksan ang file na &quot;%1&quot;</translation>
     </message>
 </context>
 <context>
     <name>EntryAttachmentsModel</name>
     <message>
         <source>Name</source>
-        <translation>Naam</translation>
+        <translation>Pangalan</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation>Grootte</translation>
+        <translation>Sukat</translation>
     </message>
 </context>
 <context>
     <name>EntryAttachmentsWidget</name>
     <message>
         <source>Form</source>
-        <translation>Formulier</translation>
+        <translation>Form</translation>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>Bijlagen</translation>
+        <translation>Mga attachment</translation>
     </message>
     <message>
         <source>Add new attachment</source>
-        <translation>Nieuwe bijlage toevoegen</translation>
+        <translation>Magdagdag ng bagong attachment</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation>Toevoegen</translation>
+        <translation>Magdagdag</translation>
     </message>
     <message>
         <source>Remove selected attachment</source>
-        <translation>Geselecteerde bijlage verwijderen</translation>
+        <translation>Alisin ang napiling attachment</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Verwijderen</translation>
+        <translation>Alisin</translation>
     </message>
     <message>
         <source>Rename selected attachment</source>
-        <translation>Geselecteerde bijlage hernoemen</translation>
+        <translation>Pangalanan muli ang napiling attachment</translation>
     </message>
     <message>
         <source>Rename</source>
-        <translation>Hernoemen</translation>
+        <translation>Pangalanan muli</translation>
     </message>
     <message>
         <source>Open selected attachment</source>
-        <translation>Geselecteerde bijlage openen</translation>
+        <translation>Buksan ang napiling attachment</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation>Openen</translation>
+        <translation>Buksan</translation>
     </message>
     <message>
         <source>Save selected attachment to disk</source>
-        <translation>Geselecteerde bijlage opslaan</translation>
+        <translation>I-save ang napiling attachment sa disk</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Opslaan</translation>
+        <translation>I-save</translation>
     </message>
     <message>
         <source>Select files</source>
-        <translation>Kies bestanden</translation>
+        <translation>Pumili ng mga file</translation>
     </message>
     <message>
         <source>Confirm remove</source>
-        <translation>Verwijdering bevestigen</translation>
+        <translation>Kumpirmahin ang pag-remove</translation>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation><numerusform>Weet je zeker dat je %n bijlage wil verwijderen?</numerusform><numerusform>Weet je zeker dat je %n bijlagen wil verwijderen?</numerusform></translation>
+        <translation><numerusform>Sigurado ka bang nais mong alisin ang %n na attachment?</numerusform><numerusform>Sigurado ka bang nais mong alisin ang %n na (mga) attachment?</numerusform></translation>
     </message>
     <message>
         <source>Save attachments</source>
-        <translation>Bijlagen opslaan</translation>
+        <translation>I-save ang mga attachment</translation>
     </message>
     <message>
         <source>Unable to create directory:
 %1</source>
-        <translation>Kan de map niet maken:
+        <translation>Hindi malikha ng directory:
 %1</translation>
     </message>
     <message>
         <source>Are you sure you want to overwrite the existing file &quot;%1&quot; with the attachment?</source>
-        <translation>Weet je zeker dat je het bestaande bestand &quot;%1&quot; met de bijlage wil overschrijven?</translation>
+        <translation>Sigurado ka bang nais mong i-overwrite ang umiiral na file na &quot;%1&quot; gamit ang attachment?</translation>
     </message>
     <message>
         <source>Confirm overwrite</source>
-        <translation>Overschrijving bevestigen</translation>
+        <translation>Kumpirmahin ang overwrite</translation>
     </message>
     <message>
         <source>Unable to save attachments:
 %1</source>
-        <translation>Kan de bijlagen niet opslaan:
+        <translation>Hindi mai-save ang mga attachment:
 %1</translation>
     </message>
     <message>
         <source>Unable to open attachment:
 %1</source>
-        <translation>Kan de bijlage niet openen:
+        <translation>Hindi mabuksan ang attachment:
 %1</translation>
     </message>
     <message>
         <source>Unable to open attachments:
 %1</source>
-        <translation>Kan de bijlagen niet openen:
+        <translation>Hindi mabuksan ang mga attachment:
 %1</translation>
     </message>
     <message numerus="yes">
         <source>Unable to open file(s):
 %1</source>
-        <translation><numerusform>Kan bestand niet openen: %1</numerusform><numerusform>Kan bestanden niet openen: %1</numerusform></translation>
+        <translation><numerusform>Hindi mabuksan ang file:
+%1</numerusform><numerusform>Hindi mabuksan ang (mga) file:
+%1</numerusform></translation>
     </message>
     <message>
         <source>Confirm Overwrite Attachment</source>
-        <translation>Overschrijven van bijlage bevestigen</translation>
+        <translation>Kumpirmahin ang Overwrite Attachment</translation>
     </message>
     <message>
         <source>Attachment &quot;%1&quot; already exists. 
 Would you like to overwrite the existing attachment?</source>
-        <translation>Bijlage &quot;%1&quot; bestaat al. 
-Bestaande bijlage overschrijven?</translation>
+        <translation>Umiiral na ang attachment na &quot;%1&quot;.
+Gusto mo bang i-overwrite ang kasalukuyang attachment?</translation>
     </message>
     <message>
         <source>Confirm Attachment</source>
-        <translation>Bijlage bevestigen</translation>
+        <translation>Kumpirmahin ang Attachment</translation>
     </message>
     <message>
         <source>%1 is a big file (%2 MB).
 Your database may get very large and reduce performance.
 
 Are you sure to add this file?</source>
-        <translation>%1 is een groot bestand (%2 MB).
-De database kan erg groot worden en de prestaties verminderen.
+        <translation>%1 ay malaking file (%2 MB).
+Ang database mo maaaring maging malaki at mababawasan ang performance
 
-Weet je zeker dat je dit bestand wilt toevoegen?</translation>
+Sigurado ka bang gusto mong idagdag ang file na ito?</translation>
     </message>
     <message>
         <source>Attachment modified</source>
-        <translation>Bijlage gewijzigd</translation>
+        <translation>Binago ang attachment</translation>
     </message>
     <message>
         <source>The attachment '%1' was modified.
 Do you want to save the changes to your database?</source>
-        <translation>De bijlage &apos;%1&apos; is gewijzigd.
-Wil je de wijzigingen opslaan in de database?</translation>
+        <translation>Ang attachment na &apos;%1&apos; ay binago.
+Gusto mo bang i-save ang mga pagbabago sa database mo?</translation>
     </message>
     <message>
         <source>Saving attachment failed</source>
-        <translation>Opslaan van bijlage mislukt</translation>
+        <translation>Nabigo ang pag-save ng attachment</translation>
     </message>
     <message>
         <source>Saving updated attachment failed.
 Error: %1</source>
-        <translation>Opslaan van bijgewerkte bijlage is mislukt.
-Fout: %1</translation>
+        <translation>Nabigo ang pag-save ng na-update na attachment.
+Error: %1</translation>
     </message>
 </context>
 <context>
     <name>EntryAttributesModel</name>
     <message>
         <source>Name</source>
-        <translation>Naam</translation>
+        <translation>Pangalan</translation>
     </message>
 </context>
 <context>
     <name>EntryHistoryModel</name>
     <message>
         <source>Current (%1)</source>
-        <translation>Huidig (%1)</translation>
+        <translation>Kasalukuyang (%1)</translation>
     </message>
     <message>
         <source>Last modified</source>
-        <translation>Laatst gewijzigd</translation>
+        <translation>Huling binago</translation>
     </message>
     <message>
         <source>Age</source>
-        <translation>Leeftijd</translation>
+        <translation>Edad</translation>
     </message>
     <message>
         <source>Difference</source>
-        <translation>Verschil</translation>
+        <translation>Pagkakaiba</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation>Grootte</translation>
+        <translation>Sukat</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Naam</translation>
+        <translation>Pamagat</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Gebruikersnaam</translation>
+        <translation>Username</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Wachtwoord</translation>
+        <translation>Password</translation>
     </message>
     <message>
         <source>URL</source>
@@ -3729,23 +3730,23 @@ Fout: %1</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Notities</translation>
+        <translation>Mga tala</translation>
     </message>
     <message>
         <source>Custom Attributes</source>
-        <translation>Aangepaste kenmerken</translation>
+        <translation>Mga Custom na Attribute</translation>
     </message>
     <message>
         <source>Icon</source>
-        <translation>Pictogram</translation>
+        <translation>Icon</translation>
     </message>
     <message>
         <source>Color</source>
-        <translation>Kleur</translation>
+        <translation>Kulay</translation>
     </message>
     <message>
         <source>Expiration</source>
-        <translation>Vervaldatum</translation>
+        <translation>Expiration</translation>
     </message>
     <message>
         <source>TOTP</source>
@@ -3753,19 +3754,19 @@ Fout: %1</translation>
     </message>
     <message>
         <source>Custom Data</source>
-        <translation>Aangepaste gegevens</translation>
+        <translation>Custom na Data</translation>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>Bijlagen</translation>
+        <translation>Mga attachment</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Auto-type</translation>
+        <translation>Auto-Type</translation>
     </message>
     <message>
         <source>Tags</source>
-        <translation>Labels</translation>
+        <translation>Mga tag</translation>
     </message>
 </context>
 <context>
@@ -3777,23 +3778,23 @@ Fout: %1</translation>
     </message>
     <message>
         <source>Never</source>
-        <translation>Nooit</translation>
+        <translation>Huwag kailanman</translation>
     </message>
     <message>
         <source>Group</source>
-        <translation>Groep</translation>
+        <translation>Group</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Naam</translation>
+        <translation>Pamagat</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Gebruikersnaam</translation>
+        <translation>Username</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Wachtwoord</translation>
+        <translation>Password</translation>
     </message>
     <message>
         <source>URL</source>
@@ -3801,118 +3802,118 @@ Fout: %1</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Notities</translation>
+        <translation>Mga tala</translation>
     </message>
     <message>
         <source>Expires</source>
-        <translation>Verloopt</translation>
+        <translation>Nag-expire na</translation>
     </message>
     <message>
         <source>Created</source>
-        <translation>Aangemaakt</translation>
+        <translation>Nalikha na</translation>
     </message>
     <message>
         <source>Modified</source>
-        <translation>Gewijzigd</translation>
+        <translation>Binago</translation>
     </message>
     <message>
         <source>Accessed</source>
-        <translation>Toegang</translation>
+        <translation>Na-access</translation>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>Bijlagen</translation>
+        <translation>Mga attachment</translation>
     </message>
     <message>
         <source>Size</source>
-        <translation>Grootte</translation>
+        <translation>Sukat</translation>
     </message>
     <message>
         <source>Group name</source>
-        <translation>Groepnaam</translation>
+        <translation>Pangalan ng group</translation>
     </message>
     <message>
         <source>Entry title</source>
-        <translation>Titel van het item</translation>
+        <translation>Pamagat ng entry</translation>
     </message>
     <message>
         <source>Password Strength</source>
-        <translation>Wachtwoordsterkte</translation>
+        <translation>Lakas ng Password</translation>
     </message>
     <message>
         <source>Entry notes</source>
-        <translation>Notities bij het item</translation>
+        <translation>Mga entry note</translation>
     </message>
     <message>
         <source>Entry expires at</source>
-        <translation>Item verloopt op</translation>
+        <translation>Mag-e-expire ang entry sa</translation>
     </message>
     <message>
         <source>Creation date</source>
-        <translation>Aanmaakdatum</translation>
+        <translation>Petsa ng paglikha</translation>
     </message>
     <message>
         <source>Last modification date</source>
-        <translation>Datum laatste wijziging</translation>
+        <translation>Petsa ng huling pagbabago</translation>
     </message>
     <message>
         <source>Last access date</source>
-        <translation>Datum laatste toegang</translation>
+        <translation>Petsa ng huling pag-access</translation>
     </message>
     <message>
         <source>Attached files</source>
-        <translation>Bijgevoegde bestanden</translation>
+        <translation>Naka-attach na mga file</translation>
     </message>
     <message>
         <source>Entry size</source>
-        <translation>Grootte van het item</translation>
+        <translation>Sukat ng entry</translation>
     </message>
     <message>
         <source>Has attachments</source>
-        <translation>Heeft bijlagen</translation>
+        <translation>May mga attachment</translation>
     </message>
     <message>
         <source>Has TOTP</source>
-        <translation>Heeft TOTP</translation>
+        <translation>May TOTP</translation>
     </message>
 </context>
 <context>
     <name>EntryPreviewWidget</name>
     <message>
         <source>Display current TOTP value</source>
-        <translation>Toon huidige TOTP-waarde</translation>
+        <translation>Ipakita ang kasalukuyang TOTP value</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Sluiten</translation>
+        <translation>I-close</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>Algemeen</translation>
+        <translation>Pangkalahatan</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Wachtwoord</translation>
+        <translation>Password</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Notities</translation>
+        <translation>Mga tala</translation>
     </message>
     <message>
         <source>Expiration</source>
-        <translation>Vervaldatum</translation>
+        <translation>Expiration</translation>
     </message>
     <message>
         <source>Tags</source>
-        <translation>Labels</translation>
+        <translation>Mga tag</translation>
     </message>
     <message>
         <source>Tags list</source>
-        <translation>Lijst met labels</translation>
+        <translation>Listahan ng mga tag</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Gebruikersnaam</translation>
+        <translation>Username</translation>
     </message>
     <message>
         <source>URL</source>
@@ -3920,189 +3921,189 @@ Fout: %1</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Geavanceerd</translation>
+        <translation>Advanced</translation>
     </message>
     <message>
         <source>Attachments</source>
-        <translation>Bijlagen</translation>
+        <translation>Mga attachment</translation>
     </message>
     <message>
         <source>Attributes</source>
-        <translation>Kenmerken</translation>
+        <translation>Mga attribute</translation>
     </message>
     <message>
         <source>Autotype</source>
-        <translation>Auto-type</translation>
+        <translation>Autotype</translation>
     </message>
     <message>
         <source>Default Sequence</source>
-        <translation>Standaardreeks</translation>
+        <translation>Default na Sequence</translation>
     </message>
     <message>
         <source>Window</source>
-        <translation>Venster</translation>
+        <translation>Window</translation>
     </message>
     <message>
         <source>Sequence</source>
-        <translation>Tekenreeks</translation>
+        <translation>Pagkakasunod-sunod</translation>
     </message>
     <message>
         <source>Searching</source>
-        <translation>Zoeken</translation>
+        <translation>Naghahanap</translation>
     </message>
     <message>
         <source>Share</source>
-        <translation>Delen</translation>
+        <translation>Ibahagi</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation>Zoeken</translation>
+        <translation>Maghanap</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation>Wissen</translation>
+        <translation>I-clear</translation>
     </message>
     <message>
         <source>Never</source>
-        <translation>Nooit</translation>
+        <translation>Huwag kailanman</translation>
     </message>
     <message>
         <source>Enabled</source>
-        <translation>Geactiveerd</translation>
+        <translation>Na-enable na</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation>Uitgeschakeld</translation>
+        <translation>Naka-disable</translation>
     </message>
     <message>
         <source>Double click to copy value</source>
-        <translation>Dubbelklik om de waarde te kopiëren</translation>
+        <translation>I-double click para kopyahin ang value</translation>
     </message>
 </context>
 <context>
     <name>EntryURLModel</name>
     <message>
         <source>Invalid URL</source>
-        <translation>Ongeldige URL</translation>
+        <translation>Invalid na URL</translation>
     </message>
 </context>
 <context>
     <name>EntryView</name>
     <message>
         <source>Fit to window</source>
-        <translation>Aanpassen aan venstergrootte</translation>
+        <translation>Akma sa window</translation>
     </message>
     <message>
         <source>Fit to contents</source>
-        <translation>Aanpassen aan inhoud</translation>
+        <translation>Akma sa mga content</translation>
     </message>
     <message>
         <source>Reset to defaults</source>
-        <translation>Standaardwaarden opnieuw instellen</translation>
+        <translation>I-reset sa mga default</translation>
     </message>
 </context>
 <context>
     <name>ExportDialog</name>
     <message>
         <source>Export options</source>
-        <translation>Exporteer opties</translation>
+        <translation>Mga opsyon sa pag-export</translation>
     </message>
     <message>
         <source>Sort entries by...</source>
-        <translation>Items sorteren op...</translation>
+        <translation>I-sort ang mga entry ayon sa...</translation>
     </message>
     <message>
         <source>You are about to export your database to an unencrypted file.
 This will leave your passwords and sensitive information vulnerable!
 </source>
-        <translation>Je staat op het punt de database te exporteren naar een niet-versleuteld bestand.
-Dit maakt jouw wachtwoorden en gevoelige informatie kwetsbaar!
+        <translation>Ie-export mo na ang database mo sa isang hindi naka-encrypt na file.
+Iiwan nitong mahina ang mga mo password at sensitibong impormasyon!
 </translation>
     </message>
     <message>
         <source>database order</source>
-        <translation>database volgorde</translation>
+        <translation>pagkakasunud-sunod ng database</translation>
     </message>
     <message>
         <source>name (ascending)</source>
-        <translation>naam (oplopend)</translation>
+        <translation>pangalan (ascending)</translation>
     </message>
     <message>
         <source>name (descending)</source>
-        <translation>naam (aflopend)</translation>
+        <translation>pangalan (descending)</translation>
     </message>
     <message>
         <source>unknown</source>
-        <translation>onbekend</translation>
+        <translation>unknown</translation>
     </message>
     <message>
         <source>Export database to HTML file</source>
-        <translation>Database exporteren naar HTML-bestand</translation>
+        <translation>I-export ang database sa HTML file</translation>
     </message>
     <message>
         <source>HTML file</source>
-        <translation>HTML-bestand</translation>
+        <translation>HTML file</translation>
     </message>
 </context>
 <context>
     <name>FdoSecrets::DBusMgr</name>
     <message>
         <source>Failed to deliver message</source>
-        <translation>Kan bericht niet afleveren</translation>
+        <translation>Nabigong ihatid ang mensahe</translation>
     </message>
     <message>
         <source>Failed to send reply on DBus</source>
-        <translation>Kan antwoord niet verzenden op DBus</translation>
+        <translation>Nabigong magpadala ng reply sa DBus</translation>
     </message>
     <message>
         <source>Unknown</source>
         <comment>Unknown PID</comment>
-        <translation>Onbekend</translation>
+        <translation>Unknown</translation>
     </message>
     <message>
         <source>Unknown</source>
         <comment>Unknown executable path</comment>
-        <translation>Onbekend</translation>
+        <translation>Unknown</translation>
     </message>
     <message>
         <source>&lt;i&gt;PID: %1, Executable: %2&lt;/i&gt;</source>
         <comment>&lt;i&gt;PID: 1234, Executable: /path/to/exe&lt;/i&gt;</comment>
-        <translation>&lt;i&gt;PID: %1, Uitvoerbaar bestand: %2&lt;/i&gt;</translation>
+        <translation>&lt;i&gt;PID: %1, Executable: %2&lt;/i&gt;</translation>
     </message>
     <message>
         <source>Another secret service is running (%1).&lt;br/&gt;Please stop/remove it before re-enabling the Secret Service Integration.</source>
-        <translation>Een andere secret service is actief (%1).&lt;br/&gt;Stop/verwijder deze en probeer de Secret Service-integratie opnieuw te activeren.</translation>
+        <translation>Ang isa pang secret service ay tumatakbo na (%1).&lt;br/&gt;Pakihinto/i-remove ito bago muling i-enable ang Secret Service Integration.</translation>
     </message>
     <message>
         <source>Failed to register DBus service at %1.&lt;br/&gt;</source>
-        <translation>Kan DBus-service niet registreren op %1.&lt;br/&gt;</translation>
+        <translation>Nabigong irehistro ang serbisyo ng DBus sa %1.&lt;br/&gt;</translation>
     </message>
     <message>
         <source>Failed to register service on DBus at path &apos;%1&apos;</source>
-        <translation>Kan service niet registreren op DBus op pad &apos;%1&apos;</translation>
+        <translation>Nabigong irehistro ang serbisyo sa DBus sa path na &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Failed to register database on DBus under the name &apos;%1&apos;</source>
-        <translation>Registratie van database op DBus onder de naam &apos;%1&apos; mislukt</translation>
+        <translation>Nabigong irehistro ang database sa DBus sa ilalim ng pangalan na &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Failed to register session on DBus at path &apos;%1&apos;</source>
-        <translation>Kan sessie niet registreren op DBus op pad &apos;%1&apos;</translation>
+        <translation>Nabigong irehistro ang session sa DBus sa path na &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Failed to register item on DBus at path &apos;%1&apos;</source>
-        <translation>Kan item niet registreren op DBus op pad &apos;%1&apos;</translation>
+        <translation>Nabigong irehistro ang item sa DBus sa path na &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Failed to register prompt object on DBus at path &apos;%1&apos;</source>
-        <translation>Kan object niet registreren op DBus op pad &apos;%1&apos;</translation>
+        <translation>Nabigong irehistro ang prompt object sa DBus sa path na &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
     <name>FdoSecrets::Item</name>
     <message>
         <source>Entry &quot;%1&quot; from database &quot;%2&quot; was used by %3</source>
-        <translation>Het item &quot;%1&quot; van de database &quot;%2&quot; werd gebruikt door %3</translation>
+        <translation>Ang entry na &quot;%1&quot; mula sa database na &quot;%2&quot; ay ginamit ng %3</translation>
     </message>
 </context>
 <context>
@@ -4110,29 +4111,29 @@ Dit maakt jouw wachtwoorden en gevoelige informatie kwetsbaar!
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
-        <translation><numerusform>%n Post(en) werd gebruikt door %1</numerusform><numerusform>%n Item(s) gebruikt door %1</numerusform></translation>
+        <translation><numerusform>%n ng Entry ay ginamit ng %1</numerusform><numerusform>%n ng (mga)Entry ay ginamit ng %1</numerusform></translation>
     </message>
 </context>
 <context>
     <name>FdoSecrets::SettingsClientModel</name>
     <message>
         <source>Unknown</source>
-        <translation>Onbekend</translation>
+        <translation>Hindi kilala</translation>
     </message>
     <message>
         <source>Non-existing/inaccessible executable path. Please double-check the client is legit.</source>
-        <translation>Niet-bestaand/ontoegankelijk uitvoerbaar pad. Controleer nogmaals of de client legitiem is.</translation>
+        <translation>Hindi umiiral/hindi ma-access na maipapatupad na landas. Pakitingnan muli kung legit ang kliyente.</translation>
     </message>
 </context>
 <context>
     <name>FdoSecrets::SettingsDatabaseModel</name>
     <message>
         <source>Unlock to show</source>
-        <translation>Ontgrendel voor deze informatie</translation>
+        <translation>I-unlock para ipakita</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>Geen</translation>
+        <translation>Wala</translation>
     </message>
 </context>
 <context>
@@ -4154,39 +4155,39 @@ Dit maakt jouw wachtwoorden en gevoelige informatie kwetsbaar!
     <message>
         <source>[empty]</source>
         <comment>group has no children</comment>
-        <translation>[leeg]</translation>
+        <translation>[empty]</translation>
     </message>
     <message>
         <source>%1 - Clone</source>
-        <translation>%1 - Duplicaat</translation>
+        <translation>%1 - Clone</translation>
     </message>
 </context>
 <context>
     <name>HibpDownloader</name>
     <message>
         <source>Online password validation failed</source>
-        <translation>Online validatie van wachtwoord is mislukt</translation>
+        <translation>Nabigo ang online na pagpapatunay ng password</translation>
     </message>
 </context>
 <context>
     <name>IconDownloaderDialog</name>
     <message>
         <source>Download Favicons</source>
-        <translation>Favicons downloaden</translation>
+        <translation>I-download ang mga Favicon</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuleren</translation>
+        <translation>Kanselahin</translation>
     </message>
     <message>
         <source>Having trouble downloading icons?
 You can enable the DuckDuckGo website icon service in the security section of the application settings.</source>
-        <translation>Problemen met het downloaden van pictogrammen?
-Je kunt de DuckDuckGo website pictogram dienst inschakelen in de sectie &apos;Beveiliging&apos; in de instellingen.</translation>
+        <translation>Nagkakaproblema sa pag-download ng mga icon?
+Puwede mong i-enable ang icon service ng website ng DuckDuckGo sa seksyon ng seguridad ng mga setting ng application.</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Sluiten</translation>
+        <translation>I-close</translation>
     </message>
     <message>
         <source>URL</source>
@@ -4198,75 +4199,75 @@ Je kunt de DuckDuckGo website pictogram dienst inschakelen in de sectie &apos;Be
     </message>
     <message>
         <source>Please wait, processing entry list…</source>
-        <translation>Even wachten, de items worden verwerkt...</translation>
+        <translation>Pakihintay, pinoproseso ang listahan ng entry…</translation>
     </message>
     <message>
         <source>Downloading…</source>
-        <translation>Downloaden...</translation>
+        <translation>Nagda-download…</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation>Oké</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Already Exists</source>
-        <translation>Bestaat al</translation>
+        <translation>Umiiral na</translation>
     </message>
     <message>
         <source>Download Failed</source>
-        <translation>Download is mislukt</translation>
+        <translation>Nabigo ang Pag-download</translation>
     </message>
     <message>
         <source>Downloading favicons (%1/%2)…</source>
-        <translation>Favicons downloaden (%1/%2)...</translation>
+        <translation>Dina-download ang mga favicon na (%1/%2)…</translation>
     </message>
 </context>
 <context>
     <name>KMessageWidget</name>
     <message>
         <source>&amp;Close</source>
-        <translation>&amp;Sluiten</translation>
+        <translation>&amp;Close</translation>
     </message>
     <message>
         <source>Close message</source>
-        <translation>Bericht sluiten</translation>
+        <translation>I-close ang mensahe</translation>
     </message>
 </context>
 <context>
     <name>Kdbx3Reader</name>
     <message>
         <source>Missing database headers</source>
-        <translation>Ontbrekende databaseheaders</translation>
+        <translation>Nawawalang mga header ng database</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
-        <translation>Kan databasesleutel niet berekenen</translation>
+        <translation>Hindi makalkula ang database key</translation>
     </message>
     <message>
         <source>Unable to issue challenge-response: %1</source>
-        <translation>Kan challenge-response niet starten: %1</translation>
+        <translation>Hindi makapagbigay ng challenge-response: %1</translation>
     </message>
     <message>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
-        <translation>Ongeldige inloggegevens, probeer het opnieuw.
-Als dit vaker gebeurt, is het databasebestand mogelijk beschadigd.</translation>
+        <translation>Ang mga invalid na kredensyal ay ibinigay, pakisubukang muli.
+Kung maulit ito, maaaring sira ang database file mo.</translation>
     </message>
     <message>
         <source>Header doesn&apos;t match hash</source>
-        <translation>Header komt niet overeen met hash</translation>
+        <translation>Ang header ay hindi tumutugma sa hash</translation>
     </message>
     <message>
         <source>Invalid header id size</source>
-        <translation>Ongeldige grootte van header-ID</translation>
+        <translation>Invalid na sukat ng header id</translation>
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation>Ongeldige headerlengte: veld %1</translation>
+        <translation>Invalid na haba ng field ng header: field na %1</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation>Ongeldige lengte van header-gegevens: veld %1, %2 verwacht, %3 aangetroffen</translation>
+        <translation>Invalid na haba ng data ng header: field na %1, %2 ang inaasahan, %3 ang nakita</translation>
     </message>
 </context>
 <context>
@@ -4274,742 +4275,742 @@ Als dit vaker gebeurt, is het databasebestand mogelijk beschadigd.</translation>
     <message>
         <source>Invalid symmetric cipher IV size.</source>
         <comment>IV = Initialization Vector for symmetric cipher</comment>
-        <translation>Ongeldige grootte van symmetrisch versleutelingsalgoritme IV.</translation>
+        <translation>Invalid na sukat ng symmetric cipher IV.</translation>
     </message>
     <message>
         <source>Unable to issue challenge-response: %1</source>
-        <translation>Kan challenge-response niet starten: %1</translation>
+        <translation>Hindi makapagbigay ng challenge-response: %1</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
-        <translation>Kan databasesleutel niet berekenen</translation>
+        <translation>Hindi makalkula ang database key</translation>
     </message>
 </context>
 <context>
     <name>Kdbx4Reader</name>
     <message>
         <source>missing database headers</source>
-        <translation>ontbrekende database-koppen</translation>
+        <translation>nawawalang mga header ng database</translation>
     </message>
     <message>
         <source>Unable to calculate database key: %1</source>
-        <translation>Kan databasesleutel niet berekenen: %1</translation>
+        <translation>Hindi makalkula ang database key: %1</translation>
     </message>
     <message>
         <source>Invalid header checksum size</source>
-        <translation>Ongeldige grootte van header-controlecijfer</translation>
+        <translation>Invalid na sukat ng header checksum</translation>
     </message>
     <message>
         <source>Header SHA256 mismatch</source>
-        <translation>SHA256-kop komt niet overeen</translation>
+        <translation>Hindi tugma ang header na SHA256</translation>
     </message>
     <message>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
-        <translation>Ongeldige inloggegevens, probeer het opnieuw.
-Als dit vaker gebeurt, is het databasebestand mogelijk beschadigd.</translation>
+        <translation>Ang mga invalid na kredensyal ay ibinigay, pakisubukang muli.
+Kung maulit ito, maaaring sira ang database file mo.</translation>
     </message>
     <message>
         <source>(HMAC mismatch)</source>
-        <translation>(HMAC komt niet overeen)</translation>
+        <translation>(HMAC mismatch)</translation>
     </message>
     <message>
         <source>Unknown cipher</source>
-        <translation>Onbekend versleutelingsalgoritme</translation>
+        <translation>Hindi kilalang cipher</translation>
     </message>
     <message>
         <source>Invalid header id size</source>
-        <translation>Ongeldige grootte van header-ID</translation>
+        <translation>Invalid na sukat ng header id</translation>
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation>Ongeldige headerlengte: veld %1</translation>
+        <translation>Invalid na haba ng field ng header: field na %1</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation>Ongeldige lengte van header-gegevens: veld %1, %2 verwacht, %3 aangetroffen</translation>
+        <translation>Invalid na haba ng data ng header: field na %1, %2 ang inaasahan, %3 ang nakita</translation>
     </message>
     <message>
         <source>Failed to open buffer for KDF parameters in header</source>
-        <translation>Fout bij het openen van de buffer voor KDF-parameters in header</translation>
+        <translation>Nabigong buksan ang buffer para sa mga parameter ng KDF sa header</translation>
     </message>
     <message>
         <source>Unsupported key derivation function (KDF) or invalid parameters</source>
-        <translation>Niet-ondersteunde sleutel-afleidingsfunctie (KDF) of ongeldige parameters</translation>
+        <translation>Hindi suportadong key derivation function (KDF) o hindi valid na mga parametro</translation>
     </message>
     <message>
         <source>Legacy header fields found in KDBX4 file.</source>
-        <translation>Verouderde header-velden gevonden in KDBX4 bestand.</translation>
+        <translation>Ang mga legacy na field ng header ay natagpuan sa KDBX4 file.</translation>
     </message>
     <message>
         <source>Invalid inner header id size</source>
-        <translation>Ongeldige grootte van inner header-id</translation>
+        <translation>Invalid na sukat ng panloob na header id</translation>
     </message>
     <message>
         <source>Invalid inner header field length: field %1</source>
-        <translation>Ongeldige lengte van het binnenste headerveld: veld %1</translation>
+        <translation>Invalid na haba ng field ng panloob na header: field na %1</translation>
     </message>
     <message>
         <source>Invalid inner header data length: field %1, %2 expected, %3 found</source>
-        <translation>Ongeldige gegevenslengte binnenste headertekst: veld %1, %2 verwacht, %3 aangetroffen</translation>
+        <translation>Invalid na haba ng data ng panloob na header: field na %1, %2 ang inaasahan, %3 ang natagpuan</translation>
     </message>
     <message>
         <source>Invalid inner header binary size</source>
-        <translation>Ongeldige binaire grootte van inner header</translation>
+        <translation>Invalid na sukat ng inner header binary</translation>
     </message>
     <message>
         <source>Unsupported KeePass variant map version.</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Niet-ondersteunde versie van KeePass variant map.</translation>
+        <translation>Hindi suportadong bersyon ng mapa ng variant ng KeePass.</translation>
     </message>
     <message>
         <source>Invalid variant map entry name length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Ongeldige lengte van een variant map item naam</translation>
+        <translation>Invalid na haba ng entry na pangalan ng variant map</translation>
     </message>
     <message>
         <source>Invalid variant map entry name data</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Ongeldige data in een variant map item naam</translation>
+        <translation>Invalid na data ng entry na pangalan ng variant map</translation>
     </message>
     <message>
         <source>Invalid variant map entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Ongeldige lengte van een variant map waarde</translation>
+        <translation>Invalid na haba ng entry value ng variant map</translation>
     </message>
     <message>
         <source>Invalid variant map entry value data</source>
         <extracomment>Translation comment: variant map = data structure for storing meta data</extracomment>
-        <translation>Ongeldige data in een variant map waarde</translation>
+        <translation>Invalid na data entry value ng variant map</translation>
     </message>
     <message>
         <source>Invalid variant map Bool entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Ongeldige lengte van een variant map Boolean-waarde</translation>
+        <translation>Invalid ang haba ng value ng entry sa Bool ng variant map</translation>
     </message>
     <message>
         <source>Invalid variant map Int32 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Ongeldige lengte van een variant map Int32-waarde</translation>
+        <translation>Invalid na haba ng entry value ng variant map Int32</translation>
     </message>
     <message>
         <source>Invalid variant map UInt32 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Ongeldige lengte van een variant map UInt32-waarde</translation>
+        <translation>Invalid na haba ng entry value ng variant map UInt32</translation>
     </message>
     <message>
         <source>Invalid variant map Int64 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Ongeldige lengte van een variant map Int64-waarde</translation>
+        <translation>Invalid na haba ng entry value ng variant map Int64</translation>
     </message>
     <message>
         <source>Invalid variant map UInt64 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Ongeldige lengte van een variant map UInt64-waarde</translation>
+        <translation>Invalid na haba ng entry value ng variant map UInt64</translation>
     </message>
     <message>
         <source>Invalid variant map entry type</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Ongeldige item-type in variant map</translation>
+        <translation>Invalid na uri ng entry ng variant map</translation>
     </message>
     <message>
         <source>Invalid variant map field type size</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Ongeldige grootte van variant map veld-type</translation>
+        <translation>Invalid na sukat ng uri ng field ng variant map</translation>
     </message>
 </context>
 <context>
     <name>Kdbx4Writer</name>
     <message>
         <source>Invalid symmetric cipher algorithm.</source>
-        <translation>Ongeldig symmetrisch versleutelingsalgoritme.</translation>
+        <translation>Invalid na algorithm ng symmetric cipher.</translation>
     </message>
     <message>
         <source>Invalid symmetric cipher IV size.</source>
         <comment>IV = Initialization Vector for symmetric cipher</comment>
-        <translation>Ongeldige grootte van symmetrisch versleutelingsalgoritme IV.</translation>
+        <translation>Invalid na sukat ng symmetric cipher IV.</translation>
     </message>
     <message>
         <source>Unable to calculate database key: %1</source>
-        <translation>Kan databasesleutel niet berekenen: %1</translation>
+        <translation>Hindi makalkula ang database key: %1</translation>
     </message>
     <message>
         <source>Failed to serialize KDF parameters variant map</source>
         <extracomment>Translation comment: variant map = data structure for storing meta data</extracomment>
-        <translation>Fout bij serialisering van KDF-parameters variant map</translation>
+        <translation>Nabigong i-serialize ang mga KDF parameter variant map</translation>
     </message>
 </context>
 <context>
     <name>KdbxReader</name>
     <message>
         <source>Invalid cipher uuid length: %1 (length=%2)</source>
-        <translation>Ongeldige versleuteling uuid lengte: %1 (lengte=%2)</translation>
+        <translation>Invalid na haba ng cipher uuid: %1 (length=%2)</translation>
     </message>
     <message>
         <source>Unable to parse UUID: %1</source>
-        <translation>Geen geldige UUID: %1</translation>
+        <translation>Hindi ma-parse ang UUID: %1</translation>
     </message>
     <message>
         <source>Unsupported cipher</source>
-        <translation>Niet ondersteund versleutelingsalgoritme</translation>
+        <translation>Hindi suportadong cipher</translation>
     </message>
     <message>
         <source>Invalid compression flags length</source>
-        <translation>Ongeldige lengte van compressie-opties</translation>
+        <translation>Invalid na haba ng mga compression flag</translation>
     </message>
     <message>
         <source>Unsupported compression algorithm</source>
-        <translation>Niet ondersteund compressie-algoritme</translation>
+        <translation>Hindi suportadong algorithm ng compression</translation>
     </message>
     <message>
         <source>Invalid master seed size</source>
-        <translation>Ongeldige grootte van master-seed</translation>
+        <translation>Invalid na sukat ng master seed</translation>
     </message>
     <message>
         <source>Invalid transform seed size</source>
-        <translation>Ongeldige grootte van transform-seed</translation>
+        <translation>Invalid na sukat ng transform seed</translation>
     </message>
     <message>
         <source>Invalid transform rounds size</source>
-        <translation>Ongeldig aantal transformatie-iteraties</translation>
+        <translation>Invalid na sukat ng mga transform round</translation>
     </message>
     <message>
         <source>Invalid start bytes size</source>
-        <translation>Ongeldige grootte van start-bytes</translation>
+        <translation>Invalid na sukat ng mga byte na panimula</translation>
     </message>
     <message>
         <source>Invalid random stream id size</source>
-        <translation>Ongeldige grootte van random stream-id</translation>
+        <translation>Invalid na sukat ng random stream id</translation>
     </message>
     <message>
         <source>Invalid inner random stream cipher</source>
-        <translation>Ongeldig inner-random-stream versleutelingsalgoritme</translation>
+        <translation>Invalid na inner random stream cipher</translation>
     </message>
     <message>
         <source>Failed to read database file.</source>
-        <translation>Lezen van databasebestand is mislukt.</translation>
+        <translation>Nabigong basahin ang file ng database.</translation>
     </message>
     <message>
         <source>The selected file is an old KeePass 1 database (.kdb).
 
 You can import it by clicking on Database &gt; 'Import KeePass 1 database…'.
 This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
-        <translation>Het gekozen bestand is een oude KeePass 1 database (.kdb).
+        <translation>Ang napiling file ay isang lumang database ng KeePass 1 (.kdb).
 
-Je kunt het importeren door te klikken op Database &gt; &apos;KeePass 1 database importeren&apos;.
-Deze actie is niet omkeerbaar. De geïmporteerde database kan niet meer worden geopend met de oude KeePassX versie 0.4.</translation>
+Maaari mong i-import ito sa pamamagitan ng pag-click sa Database &gt; &apos;Import KeePass 1 database…&apos;.
+Isa itong one-way na paglipat. Hindi mo mabubuksan ang na-import na database gamit ang lumang bersyon ng KeePassX 0.4.</translation>
     </message>
     <message>
         <source>Not a KeePass database.</source>
-        <translation>Geen KeePass-database.</translation>
+        <translation>Hindi isang database ng KeePass.</translation>
     </message>
     <message>
         <source>Unsupported KeePass 2 database version.</source>
-        <translation>Niet-ondersteunde KeePass 2-databaseversie.</translation>
+        <translation>Hindi suportadong bersyon ng database ng KeePass 2.</translation>
     </message>
 </context>
 <context>
     <name>KdbxXmlReader</name>
     <message>
         <source>XML parsing failure: %1</source>
-        <translation>XML leesfout: %1</translation>
+        <translation>Nabigo ang pag-parse ng XML: %1</translation>
     </message>
     <message>
         <source>No root group</source>
-        <translation>Geen hoofdgroep</translation>
+        <translation>Walang ugat na grupo</translation>
     </message>
     <message>
         <source>XML error:
 %1
 Line %2, column %3</source>
-        <translation>XML fout:
+        <translation>XML error:
 %1
-Lijn %2, kolom %3</translation>
+Linya na %2, column na %3</translation>
     </message>
     <message>
         <source>Missing icon uuid or data</source>
-        <translation>Ontbrekende pictogram-uuid of -gegevens</translation>
+        <translation>Nawawalang icon uuid o data</translation>
     </message>
     <message>
         <source>Missing custom data key or value</source>
-        <translation>Ontbrekende aangepaste datasleutel of -waarde</translation>
+        <translation>Nawawala ang custom na data key o value</translation>
     </message>
     <message>
         <source>Multiple group elements</source>
-        <translation>Meerdere groepselementen</translation>
+        <translation>Maramihang mga elemento ng grupo</translation>
     </message>
     <message>
         <source>Null group uuid</source>
-        <translation>Null groep uuid</translation>
+        <translation>Walang saysay ang uuid ng grupo</translation>
     </message>
     <message>
         <source>Invalid group icon number</source>
-        <translation>Ongeldig groepspictogramnummer</translation>
+        <translation>Invalid na numero ng group icon</translation>
     </message>
     <message>
         <source>Invalid EnableAutoType value</source>
-        <translation>Ongeldige EnableAutoType-waarde</translation>
+        <translation>Invalid na value ng EnableAutoType</translation>
     </message>
     <message>
         <source>Invalid EnableSearching value</source>
-        <translation>Ongeldige EnableSearching-waarde</translation>
+        <translation>Invalid na value ng EnableSearching</translation>
     </message>
     <message>
         <source>No group uuid found</source>
-        <translation>Geen groep-uuid gevonden</translation>
+        <translation>Walang nahanap na grupo uuid</translation>
     </message>
     <message>
         <source>Null DeleteObject uuid</source>
-        <translation>Null DeleteObject uuid</translation>
+        <translation>Walang saysay ang uuid ng DeleteObject</translation>
     </message>
     <message>
         <source>Missing DeletedObject uuid or time</source>
-        <translation>Ontbrekende DeletedObject uuid of tijd</translation>
+        <translation>Nawawala ang DeletedObject uuid o oras</translation>
     </message>
     <message>
         <source>Null entry uuid</source>
-        <translation>Null item uuid</translation>
+        <translation>Walang saysay ang uuid ng entry</translation>
     </message>
     <message>
         <source>Invalid entry icon number</source>
-        <translation>Ongeldig pictogramnummer</translation>
+        <translation>Invalid na bilang ng entry icon</translation>
     </message>
     <message>
         <source>History element in history entry</source>
-        <translation>Geschiedenis element in geschiedenis item</translation>
+        <translation>Elemento ng history sa entry ng history</translation>
     </message>
     <message>
         <source>No entry uuid found</source>
-        <translation>Geen item-uuid gevonden</translation>
+        <translation>Walang nahanap na entry uuid</translation>
     </message>
     <message>
         <source>History element with different uuid</source>
-        <translation>Geschiedenis element met ander uuid</translation>
+        <translation>Elemento ng history na may iba&apos;t ibang uuid</translation>
     </message>
     <message>
         <source>Duplicate custom attribute found</source>
-        <translation>Duplicaat aangepast kenmerk gevonden</translation>
+        <translation>May nakitang duplicate na custom na attribute</translation>
     </message>
     <message>
         <source>Entry string key or value missing</source>
-        <translation>Stringsleutel of -waarde ontbreekt in item</translation>
+        <translation>Nawawala ang string key o value ng entry</translation>
     </message>
     <message>
         <source>Entry binary key or value missing</source>
-        <translation>Binaire sleutel of waarde ontbreekt in item</translation>
+        <translation>Nawawala ang binary key o value ng entry</translation>
     </message>
     <message>
         <source>Auto-type association window or sequence missing</source>
-        <translation>Auto-type vensterkoppeling of tekenreeks ontbreekt</translation>
+        <translation>Auto-type na association window o nawawala ang sequence</translation>
     </message>
     <message>
         <source>Invalid bool value</source>
-        <translation>Ongeldige boolean-waarde</translation>
+        <translation>Invalide na bool value</translation>
     </message>
     <message>
         <source>Invalid date time value</source>
-        <translation>Ongeldige datum-tijdwaarde</translation>
+        <translation>Invalid na date time value</translation>
     </message>
     <message>
         <source>Invalid color value</source>
-        <translation>Ongeldige kleurwaarde</translation>
+        <translation>Invalid na color value</translation>
     </message>
     <message>
         <source>Invalid color rgb part</source>
-        <translation>Ongeldige kleur in rgb-deel</translation>
+        <translation>Invalid na bahagi ng kulay na rgb</translation>
     </message>
     <message>
         <source>Invalid number value</source>
-        <translation>Ongeldig getal</translation>
+        <translation>Invalid na value ng numero</translation>
     </message>
     <message>
         <source>Invalid uuid value</source>
-        <translation>Ongeldige uuid-waarde</translation>
+        <translation>Invalid na uuid value</translation>
     </message>
     <message>
         <source>Unable to decompress binary</source>
         <extracomment>Translator meant is a binary data inside an entry</extracomment>
-        <translation>Kan binaire gegevens niet decomprimeren</translation>
+        <translation>Hindi ma-decompress ang binary</translation>
     </message>
 </context>
 <context>
     <name>KeeAgentSettings</name>
     <message>
         <source>Invalid KeeAgent settings file structure.</source>
-        <translation>Ongeldige bestandsstructuur van KeeAgent-instellingen.</translation>
+        <translation>Invalid na istraktura ng file ng mga setting ng KeeAgent.</translation>
     </message>
     <message>
         <source>Private key is an attachment but no attachments provided.</source>
-        <translation>Privésleutel is een bijlage maar er is geen bijlage verstrekt.</translation>
+        <translation>Ang pribadong key ay isang attachment pero walang ibinigay na mga attachment.</translation>
     </message>
     <message>
         <source>Private key is empty</source>
-        <translation>Privésleutel is leeg</translation>
+        <translation>Walang laman ang pribadong key</translation>
     </message>
     <message>
         <source>File too large to be a private key</source>
-        <translation>Bestand te groot voor een persoonlijke sleutel</translation>
+        <translation>Masyadong malaki ang file para maging private key</translation>
     </message>
     <message>
         <source>Failed to open private key</source>
-        <translation>Persoonlijk sleutelbestand niet kunnen openen</translation>
+        <translation>Nabigong buksan ang private key</translation>
     </message>
 </context>
 <context>
     <name>KeePass1OpenWidget</name>
     <message>
         <source>Import KeePass1 Database</source>
-        <translation>Importeer KeePass1 database</translation>
+        <translation>Mag-import ng KeePass1 Database</translation>
     </message>
     <message>
         <source>Unable to open the database.</source>
-        <translation>Kan database niet openen.</translation>
+        <translation>Hindi mabuksan ang database.</translation>
     </message>
 </context>
 <context>
     <name>KeePass1Reader</name>
     <message>
         <source>Unable to read keyfile.</source>
-        <translation>Kan sleutelbestand niet lezen.</translation>
+        <translation>Hindi mabasa ang keyfile.</translation>
     </message>
     <message>
         <source>Not a KeePass database.</source>
-        <translation>Geen KeePass-database</translation>
+        <translation>Hindi isang database ng KeePass.</translation>
     </message>
     <message>
         <source>Unsupported encryption algorithm.</source>
-        <translation>Niet-ondersteund versleutelings-algoritme</translation>
+        <translation>Hindi suportadong algorithm ng encryption.</translation>
     </message>
     <message>
         <source>Unsupported KeePass database version.</source>
-        <translation>Niet-ondersteunde versie van KeePass-database.</translation>
+        <translation>Hindi suportadong bersyon ng database ng KeePass.</translation>
     </message>
     <message>
         <source>Unable to read encryption IV</source>
         <comment>IV = Initialization Vector for symmetric cipher</comment>
-        <translation>Kan versleuteling IV niet lezen</translation>
+        <translation>Hindi mabasa ang encryption IV</translation>
     </message>
     <message>
         <source>Invalid number of groups</source>
-        <translation>Ongeldig aantal groepen</translation>
+        <translation>Invalid na bilang ng mga group</translation>
     </message>
     <message>
         <source>Invalid number of entries</source>
-        <translation>Ongeldig aantal items</translation>
+        <translation>Invalid na bilang ng mga entry</translation>
     </message>
     <message>
         <source>Invalid content hash size</source>
-        <translation>Ongeldige grootte van inhoud-hash</translation>
+        <translation>Invalid na sukat ng content hash</translation>
     </message>
     <message>
         <source>Invalid transform seed size</source>
-        <translation>Ongeldige grootte van transform-seed</translation>
+        <translation>Invalid na sukat ng transform seed</translation>
     </message>
     <message>
         <source>Invalid number of transform rounds</source>
-        <translation>Ongeldig aantal transformatie-iteraties</translation>
+        <translation>Invalid na bilang ng mga transform round</translation>
     </message>
     <message>
         <source>Unable to construct group tree</source>
-        <translation>Kan groepsstructuur niet opbouwen</translation>
+        <translation>Hindi makagawa ng group tree</translation>
     </message>
     <message>
         <source>Root</source>
-        <translation>Alles</translation>
+        <translation>Root</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
-        <translation>Kan databasesleutel niet berekenen</translation>
+        <translation>Hindi makalkula ang database key</translation>
     </message>
     <message>
         <source>unable to seek to content position</source>
-        <translation>kan niet naar positie in inhoud springen</translation>
+        <translation>hindi makapaghanap sa posisyon ng content</translation>
     </message>
     <message>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
-        <translation>Ongeldige inloggegevens, probeer het opnieuw.
-Als dit vaker gebeurt, is het databasebestand mogelijk beschadigd.</translation>
+        <translation>Ang mga invalid na kredensyal ay ibinigay, pakisubukang muli.
+Kung maulit ito, maaaring sira ang database file mo.</translation>
     </message>
     <message>
         <source>Key transformation failed</source>
-        <translation>Sleuteltransformatie is mislukt</translation>
+        <translation>Nabigo ang pagbabagong-anyo ng key</translation>
     </message>
     <message>
         <source>Invalid group field type number</source>
-        <translation>Ongeldig veld typenummer van groep</translation>
+        <translation>Invalid na uri ng numero ng group field</translation>
     </message>
     <message>
         <source>Invalid group field size</source>
-        <translation>Ongeldige veldgrootte van groep</translation>
+        <translation>Invalid na sukat ng group field</translation>
     </message>
     <message>
         <source>Read group field data doesn&apos;t match size</source>
-        <translation>Groep veld data komt niet overeen met grootte</translation>
+        <translation>Basahin ang data ng field ng group ay hindi tumutugma sa sukat</translation>
     </message>
     <message>
         <source>Incorrect group id field size</source>
-        <translation>Onjuiste veldgrootte van id</translation>
+        <translation>Maling sukat ng group id field</translation>
     </message>
     <message>
         <source>Incorrect group creation time field size</source>
-        <translation>Onjuiste veldgrootte van aanmaaktijd</translation>
+        <translation>Maling sukat ng group creation time field</translation>
     </message>
     <message>
         <source>Incorrect group modification time field size</source>
-        <translation>Onjuiste veldgrootte van wijzigingstijd</translation>
+        <translation>Maling sukat ng group modification time field</translation>
     </message>
     <message>
         <source>Incorrect group access time field size</source>
-        <translation>Onjuiste veldgrootte van toegangstijd</translation>
+        <translation>Maling sukat ng group access time field</translation>
     </message>
     <message>
         <source>Incorrect group expiry time field size</source>
-        <translation>Onjuiste veldgrootte van verlooptijd</translation>
+        <translation>Maling sukat ng group expiry time field</translation>
     </message>
     <message>
         <source>Incorrect group icon field size</source>
-        <translation>Onjuiste veldgrootte groepspictogram</translation>
+        <translation>Maling sukat ng group icon field</translation>
     </message>
     <message>
         <source>Incorrect group level field size</source>
-        <translation>Onjuiste veldgrootte van groepsniveau</translation>
+        <translation>Maling sukat ng group level field</translation>
     </message>
     <message>
         <source>Invalid group field type</source>
-        <translation>Ongeldig veldtype van groep</translation>
+        <translation>Invalid na uri ng group field</translation>
     </message>
     <message>
         <source>Missing group id or level</source>
-        <translation>Ontbrekende groeps-id of -niveau</translation>
+        <translation>Nawawalang group id o level</translation>
     </message>
     <message>
         <source>Missing entry field type number</source>
-        <translation>Ontbrekend veldnummer van item</translation>
+        <translation>Nawawalang numero ng entry field type</translation>
     </message>
     <message>
         <source>Invalid entry field size</source>
-        <translation>Ongeldige veldgrootte van item</translation>
+        <translation>Invalid na sukat ng entry field</translation>
     </message>
     <message>
         <source>Read entry field data doesn&apos;t match size</source>
-        <translation>Itemgegevens komen niet overeen met veldgrootte</translation>
+        <translation>Basahin ang data ng field ng entry ay hindi tumutugma sa laki</translation>
     </message>
     <message>
         <source>Invalid entry UUID field size</source>
-        <translation>Ongeldige invoer UUID-veldgrootte</translation>
+        <translation>Invalid na sukat ng entry ng UUID field</translation>
     </message>
     <message>
         <source>Invalid entry group id field size</source>
-        <translation>Ongeldige veldgrootte van groepid</translation>
+        <translation>Invalid na sukat ng field ng entry group</translation>
     </message>
     <message>
         <source>Invalid entry icon field size</source>
-        <translation>Ongeldige veldgrootte van pictogram</translation>
+        <translation>Invalid na sukat ng entry ng field icon</translation>
     </message>
     <message>
         <source>Invalid entry creation time field size</source>
-        <translation>Ongeldige veldgrootte van aanmaaktijd</translation>
+        <translation>Invalid na sukat ng field ng oras ng paglikha ng entry</translation>
     </message>
     <message>
         <source>Invalid entry modification time field size</source>
-        <translation>Ongeldige veldgrootte van wijzigingstijd</translation>
+        <translation>Invalid na sukat ng entry ng pagbabago ng oras</translation>
     </message>
     <message>
         <source>Invalid entry expiry time field size</source>
-        <translation>Ongeldige veldgrootte van verlooptijd</translation>
+        <translation>Invalid na sukat ng field ng entry ng oras ng pag-expire</translation>
     </message>
     <message>
         <source>Invalid entry field type</source>
-        <translation>Ongeldig item veldtype</translation>
+        <translation>Invalid na uri ng entry field</translation>
     </message>
 </context>
 <context>
     <name>KeeShare</name>
     <message>
         <source>Invalid sharing reference</source>
-        <translation>Ongeldige verwijzing</translation>
+        <translation>Invalid na sharing reference</translation>
     </message>
     <message>
         <source>Inactive share %1</source>
-        <translation>Niet actieve gedaalde database %1</translation>
+        <translation>Hindi aktibong bahagi na %1</translation>
     </message>
     <message>
         <source>Imported from %1</source>
-        <translation>Geïmporteerd vanuit %1</translation>
+        <translation>Na-import mula sa %1</translation>
     </message>
     <message>
         <source>Exported to %1</source>
-        <translation>Geëxporteerd naar %1</translation>
+        <translation>Na-export sa %1</translation>
     </message>
     <message>
         <source>Synchronized with %1</source>
-        <translation>Gesynchroniseerd met %1</translation>
+        <translation>Na-synchronize sa %1</translation>
     </message>
     <message>
         <source>Import is disabled in settings</source>
-        <translation>Importeren is uitgeschakeld in instellingen</translation>
+        <translation>Ang pag-import ay naka-disable sa mga setting</translation>
     </message>
     <message>
         <source>Export is disabled in settings</source>
-        <translation>Exporteren is uitgeschakeld in instellingen</translation>
+        <translation>Naka-disable ang pag-export sa mga setting</translation>
     </message>
     <message>
         <source>Inactive share</source>
-        <translation>Niet actieve gedeelde database</translation>
+        <translation>Hindi aktibong bahagi</translation>
     </message>
     <message>
         <source>Imported from</source>
-        <translation>Geïmporteerd uit</translation>
+        <translation>Na-import mula sa</translation>
     </message>
     <message>
         <source>Exported to</source>
-        <translation>Geëxporteerd naar</translation>
+        <translation>Na-export sa</translation>
     </message>
     <message>
         <source>Synchronized with</source>
-        <translation>Gesynchroniseerd met</translation>
+        <translation>Naka-synchronize sa</translation>
     </message>
 </context>
 <context>
     <name>KeyComponentWidget</name>
     <message>
         <source>Key Component</source>
-        <translation>Sleutelcomponent</translation>
+        <translation>Key Component</translation>
     </message>
     <message>
         <source>Key Component Description</source>
-        <translation>Sleutelcomponent beschrijving</translation>
+        <translation>Paglalarawan ng Key Component</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuleren</translation>
+        <translation>Kanselahin</translation>
     </message>
     <message>
         <source>Key Component set, click to change or remove</source>
-        <translation>Sleutelcomponent verzameling, klik om te wijzigen of verwijderen</translation>
+        <translation>Itakda ang Key Component, i-click para baguhin o i-remove</translation>
     </message>
 </context>
 <context>
     <name>KeyFileEditWidget</name>
     <message>
         <source>Generate a new key file</source>
-        <translation>Een nieuw sleutelbestand genereren</translation>
+        <translation>Bumuo ng bagong key file</translation>
     </message>
     <message>
         <source>Generate</source>
-        <translation>Genereren</translation>
+        <translation>Bumuo</translation>
     </message>
     <message>
         <source>Generate a new key file or choose an existing one to protect your database.</source>
-        <translation>Genereer een nieuw sleutelbestand of kies een bestaand bestand om de database te beschermen.</translation>
+        <translation>Bumuo ng bagong key file o pumili ng meron na para protektahan ang database mo.</translation>
     </message>
     <message>
         <source>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</source>
-        <translation>Opmerking: gebruik GEEN bestand dat kan veranderen, omdat ertoe kan leiden dat de database niet ontgrendeld kan worden.</translation>
+        <translation>Tandaan: HUWAG gumamit ng file na maaaring magbago dahil pumipigil ito mula sa pag-unlock ng iyong database.</translation>
     </message>
     <message>
         <source>Browse for key file</source>
-        <translation>Blader naar sleutelbestand</translation>
+        <translation>Mag-browse para sa key file</translation>
     </message>
     <message>
         <source>Browse…</source>
-        <translation>Bladeren…</translation>
+        <translation>Mag-browse…</translation>
     </message>
     <message>
         <source>Old key file format</source>
-        <translation>Oud sleutelbestandsformaat</translation>
+        <translation>File format ng dating key</translation>
     </message>
     <message>
         <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
-        <translation>Je hebt een sleutelbestand in een oud formaat geselecteerd&lt;br&gt;dat KeePassXC in de toekomst mogelijk niet meer ondersteunt.&lt;br&gt;&lt;br&gt;Overweeg in plaats daarvan een nieuw sleutelbestand te genereren.</translation>
+        <translation>Pumili ka ng key file sa lumang format na maaaring hindi suporatahan ng KeePassXC&lt;br&gt;sa hinaharap.&lt;br&gt;&lt;br&gt;Mangyaring isaalang-alang ang pagbuo ng bagong key file sa halip.</translation>
     </message>
     <message>
         <source>Error loading the key file '%1'
 Message: %2</source>
-        <translation>Er ging iets fout bij het laden van het sleutelbestand &apos;%1&apos;
-Bericht: %2</translation>
+        <translation>Error sa paglo-load ng key file na &apos;%1&apos;
+Mensahe: %2</translation>
     </message>
     <message>
         <source>Key File</source>
-        <translation>Sleutelbestand</translation>
+        <translation>Key File</translation>
     </message>
     <message>
         <source>Add Key File</source>
-        <translation>Voeg sleutelbestand toe</translation>
+        <translation>Magdagdag ng Key File</translation>
     </message>
     <message>
         <source>Change Key File</source>
-        <translation>Wijzig sleutelbestand</translation>
+        <translation>Palitan ang Key File</translation>
     </message>
     <message>
         <source>Remove Key File</source>
-        <translation>Verwijder sleutelbestand</translation>
+        <translation>Alisin ang Key File</translation>
     </message>
     <message>
         <source>Key File set, click to change or remove</source>
-        <translation>Sleutelbestand ingesteld, klik om te wijzigen of te verwijderen</translation>
+        <translation>Key File set, i-click upang baguhin o i-remove</translation>
     </message>
     <message>
         <source>&lt;p&gt;You can add a key file containing random bytes for additional security.&lt;/p&gt;&lt;p&gt;You must keep it secret and never lose it or you will be locked out.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Je kunt een sleutelbestand met willekeurige bytes toevoegen voor extra veiligheid.&lt;/p&gt; &lt;p&gt;Je moet het sleutelbestand geheim houden en nooit verliezen anders wordt je buitengesloten!&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Maaari kang magdagdag ng key file na naglalaman ng mga random na byte para sa karagdagang seguridad.&lt;/p&gt;&lt;p&gt;Dapat lihim mo itong panatilihin at huwag kailanman walain kung hindi ay mai-lock out ka.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Key files</source>
-        <translation>Sleutelbestanden</translation>
+        <translation>Mga key file</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Alle bestanden</translation>
+        <translation>Lahat ng mga file</translation>
     </message>
     <message>
         <source>Create Key File…</source>
-        <translation>Sleutelbestand aanmaken…</translation>
+        <translation>Gumawa ng Key File…</translation>
     </message>
     <message>
         <source>Error creating key file</source>
-        <translation>Er ging iets fout bij het maken van het sleutelbestand</translation>
+        <translation>Error sa paglikha ng key file</translation>
     </message>
     <message>
         <source>Unable to create key file: %1</source>
-        <translation>Kan sleutelbestand niet maken: %1</translation>
+        <translation>Hindi makalikha ng key file: %1</translation>
     </message>
     <message>
         <source>Select a key file</source>
-        <translation>Kies een sleutelbestand</translation>
+        <translation>Pumili ng key file</translation>
     </message>
     <message>
         <source>Invalid Key File</source>
-        <translation>Ongeldig sleutelbestand</translation>
+        <translation>Invalid na Key File</translation>
     </message>
     <message>
         <source>You cannot use the current database as its own keyfile. Please choose a different file or generate a new key file.</source>
-        <translation>Je kunt de huidige database niet gebruiken als zijn eigen sleutelbestand. Kies een ander bestand of genereer een nieuw sleutelbestand.</translation>
+        <translation>Hindi mo magagamit ang kasalukuyang database bilang key file nito. Mangyaring pumili ng ibang file o bumuo ng bagong key file.</translation>
     </message>
     <message>
         <source>Suspicious Key File</source>
-        <translation>Verdacht sleutelbestand</translation>
+        <translation>Kahina-hinalang Key File</translation>
     </message>
     <message>
         <source>The chosen key file looks like a password database file. A key file must be a static file that never changes or you will lose access to your database forever.
 Are you sure you want to continue with this file?</source>
-        <translation>Het gekozen sleutelbestand ziet eruit als een wachtwoord databasebestand. Een sleutelbestand moet een statisch bestand zijn dat nooit wijzigt ander verlies je voor altijd toegang tot de database.
-Weet je zeker dat je wilt doorgaan met dit bestand?</translation>
+        <translation>Ang napiling key file ay mukhang isang password database file. Ang isang key file ay dapat na isang static na file na hindi nagbabago o mawawalan ka ng access sa iyong database magpakailanman.
+Sigurado ka bang gusto mong magpatuloy sa file na ito?</translation>
     </message>
 </context>
 <context>
     <name>MacUtils</name>
     <message>
         <source>Invalid key code</source>
-        <translation>Ongeldige sleutelcode</translation>
+        <translation>Invalid na key code</translation>
     </message>
     <message>
         <source>Global shortcut already registered to %1</source>
-        <translation>Globale snelkoppeling is al geregistreerd bij %1</translation>
+        <translation>Nakarehistro na ang global shortcut sa %1</translation>
     </message>
     <message>
         <source>Could not register global shortcut</source>
-        <translation>Kan algemene snelkoppeling niet registreren</translation>
+        <translation>Hindi mairehistro ang global shortcut</translation>
     </message>
 </context>
 <context>
@@ -5020,15 +5021,15 @@ Weet je zeker dat je wilt doorgaan met dit bestand?</translation>
     </message>
     <message>
         <source>&amp;Recent Databases</source>
-        <translation>&amp;Recente databases</translation>
+        <translation>&amp;Recent Databases</translation>
     </message>
     <message>
         <source>&amp;Import</source>
-        <translation>&amp;Importeren</translation>
+        <translation>&amp;Import</translation>
     </message>
     <message>
         <source>&amp;Export</source>
-        <translation>&amp;Exporteren</translation>
+        <translation>&amp;Export</translation>
     </message>
     <message>
         <source>&amp;Help</source>
@@ -5036,11 +5037,11 @@ Weet je zeker dat je wilt doorgaan met dit bestand?</translation>
     </message>
     <message>
         <source>&amp;Entries</source>
-        <translation>&amp;Items</translation>
+        <translation>&amp;Entries</translation>
     </message>
     <message>
         <source>Copy Att&amp;ribute</source>
-        <translation>Ken&amp;merk kopiëren</translation>
+        <translation>Kopyahin ang Att&amp;ribute</translation>
     </message>
     <message>
         <source>TOTP</source>
@@ -5048,687 +5049,686 @@ Weet je zeker dat je wilt doorgaan met dit bestand?</translation>
     </message>
     <message>
         <source>&amp;Groups</source>
-        <translation>&amp;Groepen</translation>
+        <translation>&amp;Groups</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
-        <translation>E&amp;xtra</translation>
+        <translation>&amp;Tools</translation>
     </message>
     <message>
         <source>View</source>
-        <translation>Beeld</translation>
+        <translation>Tingan</translation>
     </message>
     <message>
         <source>Theme</source>
-        <translation>Thema</translation>
+        <translation>Tema</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation>&amp;Afsluiten</translation>
+        <translation>&amp;Quit</translation>
     </message>
     <message>
         <source>&amp;About</source>
-        <translation>&amp;Over</translation>
+        <translation>&amp;About</translation>
     </message>
     <message>
         <source>&amp;Check for Updates</source>
-        <translation>&amp;Controleren op updates</translation>
+        <translation>&amp;Check for Updates</translation>
     </message>
     <message>
         <source>&amp;Open Database…</source>
-        <translation>Database &amp;openen...</translation>
+        <translation>&amp;Open Database…</translation>
     </message>
     <message>
         <source>&amp;Save Database</source>
-        <translation>Database op&amp;slaan...</translation>
+        <translation>&amp;Save Database</translation>
     </message>
     <message>
         <source>&amp;Close Database</source>
-        <translation>Database s&amp;luiten</translation>
+        <translation>&amp;Close Database</translation>
     </message>
     <message>
         <source>&amp;New Database…</source>
-        <translation>&amp;Nieuwe database...</translation>
+        <translation>&amp;New Database…</translation>
     </message>
     <message>
         <source>Create a new database</source>
-        <translation>Een nieuwe database maken</translation>
+        <translation>Lumikha ng bagong database</translation>
     </message>
     <message>
         <source>&amp;Merge From Database…</source>
-        <translation>Databases sa&amp;menvoegen...</translation>
+        <translation>&amp;Merge From Database…</translation>
     </message>
     <message>
         <source>Merge from another KDBX database</source>
-        <translation>Samenvoegen uit een andere KDBX database</translation>
+        <translation>Pagsamahin mula sa isa pang KDBX database</translation>
     </message>
     <message>
         <source>&amp;New Entry…</source>
-        <translation>&amp;Nieuw item…</translation>
+        <translation>&amp;New Entry…</translation>
     </message>
     <message>
         <source>Add a new entry</source>
-        <translation>Nieuw item toevoegen</translation>
+        <translation>Magdagdag ng bagong entry</translation>
     </message>
     <message>
         <source>&amp;Edit Entry…</source>
-        <translation>Item &amp;bewerken…</translation>
+        <translation>&amp;Edit Entry…</translation>
     </message>
     <message>
         <source>View or edit entry</source>
-        <translation>Item bekijken/bewerken</translation>
+        <translation>Tingnan o i-edit ang entry</translation>
     </message>
     <message>
         <source>&amp;Delete Entry…</source>
-        <translation>Item &amp;verwijderen…</translation>
+        <translation>&amp;Delete Entry…</translation>
     </message>
     <message>
         <source>&amp;New Group…</source>
-        <translation>&amp;Nieuwe groep…</translation>
+        <translation>&amp;New Group…</translation>
     </message>
     <message>
         <source>Add a new group</source>
-        <translation>Een nieuwe groep toevoegen</translation>
+        <translation>Magdagdag ng isang bagong pangkat</translation>
     </message>
     <message>
         <source>&amp;Edit Group…</source>
-        <translation>Groep &amp;bewerken…</translation>
+        <translation>&amp;Edit Group…</translation>
     </message>
     <message>
         <source>&amp;Delete Group…</source>
-        <translation>Groep &amp;verwijderen…</translation>
+        <translation>&amp;Delete Group…</translation>
     </message>
     <message>
         <source>Download All &amp;Favicons…</source>
-        <translation>Alle &amp;favicons downloaden...</translation>
+        <translation>I-download ang Lahat ng &amp;Favicon…</translation>
     </message>
     <message>
         <source>Sort &amp;A-Z</source>
-        <translation>Sorteren &amp;A-Z</translation>
+        <translation>I-sort ang &amp;A-Z</translation>
     </message>
     <message>
         <source>Sort &amp;Z-A</source>
-        <translation>Sorteren &amp;Z-A</translation>
+        <translation>I-sort ang &amp;A-Z</translation>
     </message>
     <message>
         <source>Sa&amp;ve Database As…</source>
-        <translation>Database opslaan &amp;als...</translation>
+        <translation>I-sa&amp;ve ang Database Bilang…</translation>
     </message>
     <message>
         <source>Database &amp;Security…</source>
-        <translation>Database-be&amp;veiliging...</translation>
+        <translation>Database &amp;Security…</translation>
     </message>
     <message>
         <source>Database &amp;Reports…</source>
-        <translation>Database-&amp;rapportage...</translation>
+        <translation>Database &amp;Reports…</translation>
     </message>
     <message>
         <source>Statistics, health check, etc.</source>
-        <translation>Statistieken, gezondheidscontrole, etc.</translation>
+        <translation>Mga statistic, pagsusuri sa kalusugan, atbp.</translation>
     </message>
     <message>
         <source>&amp;Database Settings…</source>
-        <translation>&amp;Database-instellingen</translation>
+        <translation>&amp;Database Settings…</translation>
     </message>
     <message>
         <source>Database settings</source>
-        <translation>Database-instellingen</translation>
+        <translation>Mga database setting</translation>
     </message>
     <message>
         <source>&amp;Clone Entry…</source>
-        <translation>Item &amp;dupliceren...</translation>
+        <translation>&amp;Clone Entry…</translation>
     </message>
     <message>
         <source>Move u&amp;p</source>
-        <translation>Om&amp;hoog verplaatsen</translation>
+        <translation>Ilipat ang u&amp;p</translation>
     </message>
     <message>
         <source>Move entry one step up</source>
-        <translation>Hiermee verplaats je een item een positie omhoog.</translation>
+        <translation>Ilipat ang entry ng isang hakbang pataas</translation>
     </message>
     <message>
         <source>Move do&amp;wn</source>
-        <translation>Om&amp;laag verplaatsen</translation>
+        <translation>Ilipat sa do&amp;wn</translation>
     </message>
     <message>
         <source>Move entry one step down</source>
-        <translation>Hiermee verplaats je een item een positie omlaag.</translation>
+        <translation>Ilipat ang entry ng isang hakbang pababa</translation>
     </message>
     <message>
         <source>Copy &amp;Username</source>
-        <translation>&amp;Gebruikersnaam kopiëren</translation>
+        <translation>Kopyahin ang &amp;Username</translation>
     </message>
     <message>
         <source>Copy username to clipboard</source>
-        <translation>Gebruikersnaam naar klembord kopiëren</translation>
+        <translation>Kopyahin ang username sa clipboard</translation>
     </message>
     <message>
         <source>Copy &amp;Password</source>
-        <translation>&amp;Wachtwoord kopiëren</translation>
+        <translation>Kopyahin ang &amp;Password</translation>
     </message>
     <message>
         <source>Copy password to clipboard</source>
-        <translation>Wachtwoord naar klembord kopiëren</translation>
+        <translation>Kopyahin ang password sa clipboard</translation>
     </message>
     <message>
         <source>&amp;Settings</source>
-        <translation>&amp;Instellingen</translation>
+        <translation>&amp;Settings</translation>
     </message>
     <message>
         <source>&amp;Password Generator</source>
-        <translation>&amp;Wachtwoordgenerator</translation>
+        <translation>&amp;Password Generator</translation>
     </message>
     <message>
         <source>Perform &amp;Auto-Type</source>
-        <translation>&amp;Auto-type uitvoeren</translation>
+        <translation>Isagawa ang &amp;Auto-Type</translation>
     </message>
     <message>
         <source>Download &amp;Favicon</source>
-        <translation>&amp;Favicon downloaden</translation>
+        <translation>I-download ang &amp;Favicon</translation>
     </message>
     <message>
         <source>Open &amp;URL</source>
-        <translation>&amp;URL openen</translation>
+        <translation>Buksan ang &amp;URL</translation>
     </message>
     <message>
         <source>&amp;Lock Database</source>
-        <translation>Database vergrende&amp;len</translation>
+        <translation>&amp;Lock Database</translation>
     </message>
     <message>
         <source>Lock &amp;All Databases</source>
-        <translation>&amp;Alle databases vergrendelen</translation>
+        <translation>I-lock ang &amp;All Databases</translation>
     </message>
     <message>
         <source>&amp;Title</source>
-        <translation>&amp;Naam</translation>
+        <translation>&amp;Title</translation>
     </message>
     <message>
         <source>Copy title to clipboard</source>
-        <translation>Naam naar klembord kopiëren</translation>
+        <translation>Kopyahin ang pamagat sa clipboard</translation>
     </message>
     <message>
         <source>Copy URL to clipboard</source>
-        <translation>URL naar klembord kopiëren</translation>
+        <translation>kopyahin ang URL sa clipboard</translation>
     </message>
     <message>
         <source>&amp;Notes</source>
-        <translation>&amp;Notities</translation>
+        <translation>&amp;Notes</translation>
     </message>
     <message>
         <source>Copy notes to clipboard</source>
-        <translation>Notities naar klembord kopiëren</translation>
+        <translation>Kopyahin ang mga note sa clipboard</translation>
     </message>
     <message>
         <source>&amp;CSV File…</source>
-        <translation>&amp;CSV-bestand...</translation>
+        <translation>&amp;CSV File…</translation>
     </message>
     <message>
         <source>&amp;HTML File…</source>
-        <translation>&amp;HTML-bestand...</translation>
+        <translation>&amp;HTML File…</translation>
     </message>
     <message>
         <source>KeePass 1 Database…</source>
-        <translation>KeePass 1-database...</translation>
+        <translation>KeePass 1 Database…</translation>
     </message>
     <message>
         <source>Import a KeePass 1 database</source>
-        <translation>Een KeePass 1-database importeren</translation>
+        <translation>Mag-import ng database ng KeePass 1</translation>
     </message>
     <message>
         <source>1Password Vault…</source>
-        <translation>1Password-kluis...</translation>
+        <translation>1Password Vault…</translation>
     </message>
     <message>
         <source>Import a 1Password Vault</source>
-        <translation>Een 1Password-kluis importeren</translation>
+        <translation>Mag-import ng 1Password Vault</translation>
     </message>
     <message>
         <source>CSV File…</source>
-        <translation>CSV-bestand...</translation>
+        <translation>CSV File…</translation>
     </message>
     <message>
         <source>Import a CSV file</source>
-        <translation>Een CSV-bestand importeren</translation>
+        <translation>Mag-import ng CSV file</translation>
     </message>
     <message>
         <source>Show TOTP</source>
-        <translation>TOTP weergeven</translation>
+        <translation>Ipakita ang TOTP</translation>
     </message>
     <message>
         <source>Show QR Code</source>
-        <translation>TOTP QR-code tonen</translation>
+        <translation>Ipakit ang QR Code</translation>
     </message>
     <message>
         <source>Set up TOTP…</source>
-        <translation>TOTP instellen…</translation>
+        <translation>I-set up ang TOTP…</translation>
     </message>
     <message>
         <source>Copy &amp;TOTP</source>
-        <translation>&amp;TOTP kopiëren</translation>
+        <translation>Kopyahin ang &amp;TOTP</translation>
     </message>
     <message>
         <source>E&amp;mpty recycle bin</source>
-        <translation>Prullenbak leegmaken</translation>
+        <translation>E&amp;mpty na recycle bin</translation>
     </message>
     <message>
         <source>&amp;Donate</source>
-        <translation>&amp;Doneren</translation>
+        <translation>&amp;Donate</translation>
     </message>
     <message>
         <source>Report a &amp;Bug</source>
-        <translation>Meld een &amp;fout</translation>
+        <translation>Mag-ulat ng isang &amp;Bug</translation>
     </message>
     <message>
         <source>&amp;Getting Started</source>
-        <translation>Snelstart&amp;gids</translation>
+        <translation>&amp;Getting Started</translation>
     </message>
     <message>
         <source>Open Getting Started Guide</source>
-        <translation>Open de snelstartgids</translation>
+        <translation>Buksan ang Gabay sa Pagsisimula</translation>
     </message>
     <message>
         <source>&amp;Online Help</source>
-        <translation>&amp;Online hulp</translation>
+        <translation>&amp;Online Help</translation>
     </message>
     <message>
         <source>Go to online documentation</source>
-        <translation>Online documentatie</translation>
+        <translation>Pumunta sa online na documentation</translation>
     </message>
     <message>
         <source>&amp;User Guide</source>
-        <translation>&amp;Gebruikershandleiding</translation>
+        <translation>&amp;User Guide</translation>
     </message>
     <message>
         <source>Open User Guide</source>
-        <translation>Open de gebruikershandleiding</translation>
+        <translation>Buksan ang Gabay sa User</translation>
     </message>
     <message>
         <source>&amp;Keyboard Shortcuts</source>
-        <translation>&amp;Sneltoetsen</translation>
+        <translation>&amp;Keyboard Shortcuts</translation>
     </message>
     <message>
         <source>Save Database Backup…</source>
-        <translation>Database-backup opslaan...</translation>
+        <translation>I-save ang Backup ng Database…</translation>
     </message>
     <message>
         <source>Add key to SSH Agent</source>
-        <translation>Sleutel toevoegen aan SSH-agent</translation>
+        <translation>Magdagdag ng key sa SSH Agent</translation>
     </message>
     <message>
         <source>Remove key from SSH Agent</source>
-        <translation>Sleutel wegnemen van SSH-agent</translation>
+        <translation>Alisin ang key mula sa SSH Agent</translation>
     </message>
     <message>
         <source>Compact Mode</source>
-        <translation>Compacte weergave</translation>
+        <translation>Compact Mode</translation>
     </message>
     <message>
         <source>Automatic</source>
-        <translation>Automatisch</translation>
+        <translation>Awtomatiko</translation>
     </message>
     <message>
         <source>Light</source>
-        <translation>Licht</translation>
+        <translation>Magaan</translation>
     </message>
     <message>
         <source>Dark</source>
-        <translation>Donker</translation>
+        <translation>Dark</translation>
     </message>
     <message>
         <source>Classic (Platform-native)</source>
-        <translation>Klassiek (platform-eigen)</translation>
+        <translation>Classic (Platform-native)</translation>
     </message>
     <message>
         <source>Show Toolbar</source>
-        <translation>Werkbalk weergeven</translation>
+        <translation>Ipakita ang Toolbar</translation>
     </message>
     <message>
         <source>Show Preview Panel</source>
-        <translation>Voorbeeldvenster weergeven</translation>
+        <translation>Ipakita ang Preview Panel</translation>
     </message>
     <message>
         <source>Always on Top</source>
-        <translation>Altijd bovenop</translation>
+        <translation>Laging nasa Itaas</translation>
     </message>
     <message>
         <source>Hide Usernames</source>
-        <translation>Gebruikersnamen verbergen</translation>
+        <translation>Itago ang Mga Username</translation>
     </message>
     <message>
         <source>Hide Passwords</source>
-        <translation>Wachtwoorden verbergen</translation>
+        <translation>Itago ang Mga Password</translation>
     </message>
     <message>
         <source>Clone Group...</source>
-        <translation>Groep dupliceren...</translation>
+        <translation>I-clond ang Group...</translation>
     </message>
     <message>
         <source>Clear history</source>
-        <translation>Geschiedenislijst wissen</translation>
+        <translation>I-clear ang history</translation>
     </message>
     <message>
         <source>Access error for config file %1</source>
-        <translation>Geen toegang tot configuratiebestand %1</translation>
+        <translation>Error sa pag-access para sa config file na %1</translation>
     </message>
     <message>
         <source>Don&apos;t show again for this version</source>
-        <translation>Niet meer weergeven voor deze versie</translation>
+        <translation>Huwag ipakitang muli para sa bersyong ito</translation>
     </message>
     <message>
         <source>WARNING: You are using an unstable build of KeePassXC.
 There is a high risk of corruption, maintain a backup of your databases.
 This version is not meant for production use.</source>
-        <translation>WAARSCHUWING: Je gebruikt een niet-stabiele versie van KeePassXC!
-Deze versie is niet bedoeld voor dagelijks gebruik.
-Er is een verhoogd risico op beschadiging. Bewaar een back-up van jouw databases.</translation>
+        <translation>BABALA: Gumagamit ka ng hindi matatag na uri ng KeePassXC.
+Mayroong mataas na panganib ng katiwalian, panatilihin ang isang backup ng iyong mga database.
+Ang bersyon na ito ay hindi para sa paggamit ng produksyon.</translation>
     </message>
     <message>
         <source>NOTE: You are using a pre-release version of KeePassXC.
 Expect some bugs and minor issues, this version is meant for testing purposes.</source>
-        <translation>Opmerking: Je gebruikt een pre-release versie van KeePassXC!
-Houd rekening met fouten en kleine problemen. Deze versie is bedoeld voor testdoeleinden.</translation>
+        <translation>TANDAAN: Gumagamit ka ng paunang labas na bersyon ng KeePassXC.
+Asahan ang ilang mga bug at maliliit na isyu, ang bersyon na ito ay para sa mga pagsubok na layunin.</translation>
     </message>
     <message>
         <source>WARNING: Your Qt version may cause KeePassXC to crash with an On-Screen Keyboard.
 We recommend you use the AppImage available on our downloads page.</source>
-        <translation>WAARSCHUWING: Jouw Qt-versie kan KeePassXC laten crashen bij gebruik van een schermtoetsenbord!
-Wij raden je aan om de AppImage te gebruiken welke beschikbaar is op onze downloadpagina.</translation>
+        <translation>BABALA: Ang bersyon ng Qt mo ay maaaring magdulot ng pag-crash ng KeePassXC gamit ang On-Screen Keyboard.
+Inirerekomenda naming gamitin mo ang AppImage na available sa aming pahina ng mga pag-download.</translation>
     </message>
     <message numerus="yes">
         <source>Restore Entry(s)</source>
-        <translation><numerusform>Vermelding(en) herstellen</numerusform><numerusform>Item(s) herstellen</numerusform></translation>
+        <translation><numerusform>Ibalik ang Entry</numerusform><numerusform>Ibalik ang (mga) Entry</numerusform></translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation>Instellingen</translation>
+        <translation>Mga setting</translation>
     </message>
     <message>
         <source>Check for updates on startup?</source>
-        <translation>Controleren op updates bij het opstarten?</translation>
+        <translation>Tingnan kung may mga update sa startup?</translation>
     </message>
     <message>
         <source>Would you like KeePassXC to check for updates on startup?</source>
-        <translation>Wil je dat KeePassXC bij het opstarten controleert op updates?</translation>
+        <translation>Gusto mo bang tingnan ng KeePassXC ang mga update sa startup?</translation>
     </message>
     <message>
         <source>You can always check for updates manually from the application menu.</source>
-        <translation>Je kunt altijd handmatig controleren of er updates zijn vanuit het programmamenu.</translation>
+        <translation>Maaari mong suriin nang manu-mano ang mga update anumang oras mula sa menu ng application.</translation>
     </message>
     <message>
         <source>Toggle window</source>
-        <translation>Venster openen</translation>
+        <translation>I-toggle ang window</translation>
     </message>
     <message>
         <source>Quit KeePassXC</source>
-        <translation>KeePassXC afsluiten</translation>
+        <translation>Ihinto ang KeePassXC</translation>
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue…</source>
-        <translation>Presenteer je YubiKey of druk er op om door te gaan...</translation>
+        <translation>Mangyaring ipakita o pindutin ang iyong YubiKey upang magpatuloy…</translation>
     </message>
     <message>
         <source>Restart Application?</source>
-        <translation>Programma opnieuw starten?</translation>
+        <translation>I-restart ang Application?</translation>
     </message>
     <message>
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
-        <translation>Je moet de applicatie opnieuw opstarten om deze instelling toe te passen. 
-Wil je KeePassXC nu opnieuw opstarten?</translation>
+        <translation>Dapat mong i-restart ang application upang mailapat ang setting na ito. Gusto mo bang i-restart ngayon?</translation>
     </message>
     <message>
         <source>Tags</source>
-        <translation>Labels</translation>
+        <translation>Mga tag</translation>
     </message>
     <message>
         <source>No Tags</source>
-        <translation>Geen labels</translation>
+        <translation>Walang Mga Tag</translation>
     </message>
     <message numerus="yes">
         <source>%1 Entry(s)</source>
-        <translation><numerusform>%1 item</numerusform><numerusform>%1 items</numerusform></translation>
+        <translation><numerusform>%1 Entry</numerusform><numerusform>%1 (mga)Entry</numerusform></translation>
     </message>
     <message>
         <source>Copy Password and TOTP</source>
-        <translation>Wachtwoord en TOTP kopiëren</translation>
+        <translation>Kopyahin ang Password at TOTP</translation>
     </message>
     <message>
         <source>&amp;XML File…</source>
-        <translation>&amp;Xml-bestand…</translation>
+        <translation>&amp;XML File…</translation>
     </message>
     <message>
         <source>XML File…</source>
-        <translation>Xml-bestand…</translation>
+        <translation>XML File…</translation>
     </message>
     <message>
         <source>Copy &amp;URL</source>
-        <translation>&amp;Url kopiëren</translation>
+        <translation>Kopyahin ang &amp;URL</translation>
     </message>
     <message>
         <source>Allow Screen Capture</source>
-        <translation>Schermopname toestaan</translation>
+        <translation>Payagan ang Screen Capture</translation>
     </message>
 </context>
 <context>
     <name>ManageDatabase</name>
     <message>
         <source>Database settings</source>
-        <translation>Database-instellingen</translation>
+        <translation>Mga database setting</translation>
     </message>
     <message>
         <source>Edit database settings</source>
-        <translation>Database instellingen bewerken</translation>
+        <translation>I-edit ang mga database setting</translation>
     </message>
     <message>
         <source>Unlock database</source>
-        <translation>Database ontgrendelen</translation>
+        <translation>I-unlock ang Database</translation>
     </message>
     <message>
         <source>Unlock database to show more information</source>
-        <translation>Ontgrendel de database voor meer informatie</translation>
+        <translation>I-unlock ang database para magpakita ng higit pang impormasyon</translation>
     </message>
     <message>
         <source>Lock database</source>
-        <translation>Database vergrendelen</translation>
+        <translation>I-lock ang database</translation>
     </message>
 </context>
 <context>
     <name>ManageSession</name>
     <message>
         <source>Disconnect</source>
-        <translation>Verbreken</translation>
+        <translation>Idiskonekta</translation>
     </message>
     <message>
         <source>Disconnect this application</source>
-        <translation>Deze applicatie loskoppelen</translation>
+        <translation>Idiskonekta ang application na ito</translation>
     </message>
     <message>
         <source>Reset</source>
-        <translation>Opnieuw instellen</translation>
+        <translation>I-reset</translation>
     </message>
     <message>
         <source>Reset any remembered decisions for this application</source>
-        <translation>Alle onthouden beslissingen voor deze toepassing opnieuw instellen</translation>
+        <translation>I-reset ang anumang mga naaalalang desisyon para sa application na ito</translation>
     </message>
 </context>
 <context>
     <name>Merger</name>
     <message>
         <source>Creating missing %1 [%2]</source>
-        <translation>Ontbrekende %1 [%2] aanmaken</translation>
+        <translation>Lumilikha ng nawawalang %1 [%2]</translation>
     </message>
     <message>
         <source>Relocating %1 [%2]</source>
-        <translation>%1 [%2] verplaatsen</translation>
+        <translation>Inililipat ang %1 [%2]</translation>
     </message>
     <message>
         <source>Overwriting %1 [%2]</source>
-        <translation>%1 [%2] overschrijven</translation>
+        <translation>Ino-overwrite na ang %1 [%2]</translation>
     </message>
     <message>
         <source>older entry merged from database &quot;%1&quot;</source>
-        <translation>ouder item samengevoegd uit database &apos;%1&apos;</translation>
+        <translation>ang mas lumang entry ay pinagsama mula sa database na &quot;%1&quot;</translation>
     </message>
     <message>
         <source>Adding backup for older target %1 [%2]</source>
-        <translation>Back-up toevoegen voor ouder doel %1 [%2]</translation>
+        <translation>Pagdaragdag ng backup para sa lumang target %1 [%2]</translation>
     </message>
     <message>
         <source>Adding backup for older source %1 [%2]</source>
-        <translation>Back-up toevoegen voor oudere bron %1 [%2]</translation>
+        <translation>Pagdaragdag ng backup para sa mas lumang source %1 [%2]</translation>
     </message>
     <message>
         <source>Reapplying older target entry on top of newer source %1 [%2]</source>
-        <translation>Ouder doel item is opnieuw toegepast over nieuwer bron item %1 [%2]</translation>
+        <translation>Muling inilalapat ang mas lumang target na entry sa itaas ng mas bagong pinagmulan na %1 [%2]</translation>
     </message>
     <message>
         <source>Reapplying older source entry on top of newer target %1 [%2]</source>
-        <translation>Ouder bron item is opnieuw toegepast over nieuwer doel item %1 [%2]</translation>
+        <translation>Muling inilalapat ang mas lumang source entry sa itaas ng mas bagong target na %1 [%2]</translation>
     </message>
     <message>
         <source>Synchronizing from newer source %1 [%2]</source>
-        <translation>Synchroniseren van nieuwere bron %1 [%2]</translation>
+        <translation>Sini-synchronize mula sa mas bagong source na %1 [%2]</translation>
     </message>
     <message>
         <source>Synchronizing from older source %1 [%2]</source>
-        <translation>Synchroniseren van oudere bron %1 [%2]</translation>
+        <translation>Sini-synchronize mula sa mas lumang source na %1 [%2]</translation>
     </message>
     <message>
         <source>Deleting child %1 [%2]</source>
-        <translation>Verwijderen van kind %1 [%2]</translation>
+        <translation>Dini-delete ang child na %1 [%2]</translation>
     </message>
     <message>
         <source>Deleting orphan %1 [%2]</source>
-        <translation>Verwijderen wees %1 [%2]</translation>
+        <translation>Dini-delete ang orphan na %1 [%2]</translation>
     </message>
     <message>
         <source>Changed deleted objects</source>
-        <translation>Verwijderde objecten gewijzigd</translation>
+        <translation>Binago na ang mga na-delete na object</translation>
     </message>
     <message>
         <source>Adding missing icon %1</source>
-        <translation>Toevoegen van ontbrekend pictogram %1</translation>
+        <translation>Pagdaragdag ng nawawalang icon %1</translation>
     </message>
     <message>
         <source>Removed custom data %1 [%2]</source>
-        <translation>Gebruikersinstellingen verwijderd %1 [%2]</translation>
+        <translation>Inalis ang custom data na %1 [%2]</translation>
     </message>
     <message>
         <source>Adding custom data %1 [%2]</source>
-        <translation>Gebruikersinstellingen toegevoegd %1 [%2]</translation>
+        <translation>Pagdaragdag ng custom data %1 [%2]</translation>
     </message>
 </context>
 <context>
     <name>NewDatabaseWizard</name>
     <message>
         <source>Create a new KeePassXC database…</source>
-        <translation>Nieuwe KeePassXC database aanmaken...</translation>
+        <translation>Lumikha ng bagong database ng KeePassXC…</translation>
     </message>
     <message>
         <source>Root</source>
         <comment>Root group</comment>
-        <translation>Alles</translation>
+        <translation>Root</translation>
     </message>
 </context>
 <context>
     <name>NewDatabaseWizardPage</name>
     <message>
         <source>WizardPage</source>
-        <translation>Assistent</translation>
+        <translation>WizardPage</translation>
     </message>
     <message>
         <source>Encryption Settings</source>
-        <translation>Versleutelingsinstellingen</translation>
+        <translation>Mga Setting ng Pag-encrypt</translation>
     </message>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
-        <translation>Hier kun je de versleutelingsinstellingen van de database aanpassen. Maak je geen zorgen, je kunt dit later in de database-instellingen wijzigen.</translation>
+        <translation>Dito puwede mong ayusin ang mga setting ng pag-encrypt ng database. Huwag mag-alala, puwede mong baguhin ang mga ito sa ibang pagkakataon sa mga setting ng database.</translation>
     </message>
     <message>
         <source>Advanced Settings</source>
-        <translation>Geavanceerde instellingen</translation>
+        <translation>Mga Advanced Setting</translation>
     </message>
     <message>
         <source>Simple Settings</source>
-        <translation>Eenvoudige instellingen</translation>
+        <translation>Mga Simpleng Setting</translation>
     </message>
 </context>
 <context>
     <name>NewDatabaseWizardPageDatabaseKey</name>
     <message>
         <source>Database Credentials</source>
-        <translation>Databasegegevens</translation>
+        <translation>Mga Kredensyal sa Database</translation>
     </message>
     <message>
         <source>A set of credentials known only to you that protects your database.</source>
-        <translation>Een verzameling referenties die jij alleen kent en die je database beschermt.</translation>
+        <translation>Isang hanay ng mga kredensyal na mismong alam mong nagpoprotekta sa database mo.</translation>
     </message>
 </context>
 <context>
     <name>NewDatabaseWizardPageEncryption</name>
     <message>
         <source>Encryption Settings</source>
-        <translation>Versleutelingsinstellingen</translation>
+        <translation>Mga Setting ng Pag-encrypt</translation>
     </message>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
-        <translation>Hier kun je de versleutelingsinstellingen van de database aanpassen. Maak je geen zorgen, je kunt dit later in de database-instellingen wijzigen.</translation>
+        <translation>Dito puwede mong ayusin ang mga setting ng pag-encrypt ng database. Huwag mag-alala, puwede mong baguhin ang mga ito sa ibang pagkakataon sa mga setting ng database.</translation>
     </message>
 </context>
 <context>
     <name>NewDatabaseWizardPageMetaData</name>
     <message>
         <source>General Database Information</source>
-        <translation>Algemene database-informatie</translation>
+        <translation>Pangkalahatang Impormasyon sa Database</translation>
     </message>
     <message>
         <source>Please fill in the display name and an optional description for your new database:</source>
-        <translation>Geef de weergavenaam en een optionele beschrijving voor de nieuwe database:</translation>
+        <translation>Pakipunan ang display name at isang opsyonal na paglalarawan para sa iyong bagong database:</translation>
     </message>
 </context>
 <context>
     <name>NixUtils</name>
     <message>
         <source>Password Manager</source>
-        <translation>Wachtwoordbeheer</translation>
+        <translation>Password Manager</translation>
     </message>
     <message>
         <source>Global shortcut already registered to %1</source>
-        <translation>Globale snelkoppeling is al geregistreerd bij %1</translation>
+        <translation>Nakarehistro na ang global shortcut sa %1</translation>
     </message>
     <message>
         <source>Could not register global shortcut</source>
-        <translation>Kan algemene snelkoppeling niet registreren</translation>
+        <translation>Hindi mairehistro ang global shortcut</translation>
     </message>
 </context>
 <context>
     <name>OpData01</name>
     <message>
         <source>Invalid OpData01, does not contain header</source>
-        <translation>Ongeldige OpData01, bevat geen header</translation>
+        <translation>Invalid na OpData01, hindi naglalaman ng header</translation>
     </message>
     <message>
         <source>Unable to read all IV bytes, wanted 16 but got %1</source>
-        <translation>Kon niet alle IV bytes lezen, gewenst is 16 maar kreeg er %1</translation>
+        <translation>Hindi mabasa ang lahat ng IV bytes, ginusto ng 16 ngunit nakakuha ng %1</translation>
     </message>
     <message>
         <source>Unable to init cipher for opdata01: %1</source>
-        <translation>Kan versleuteling niet initiëren voor opdata01: %1</translation>
+        <translation>Hindi ma-init ang cipher para sa opdata01: %1</translation>
     </message>
     <message>
         <source>Unable to read all HMAC signature bytes</source>
-        <translation>Kan niet alle HMAC-handtekening bytes lezen</translation>
+        <translation>Hindi mabasa ang lahat ng HMAC signature bytes</translation>
     </message>
     <message>
         <source>Malformed OpData01 due to a failed HMAC</source>
-        <translation>Ongeldige OpData01 vanwege een mislukte HMAC</translation>
+        <translation>Hindi nabuo ang OpData01 dahil sa nabigo ang HMAC</translation>
     </message>
     <message>
         <source>Unable to process clearText in place</source>
-        <translation>Kan hier alleen versleutelde tekst verwerken</translation>
+        <translation>Hindi maproseso ang clearText sa lugar</translation>
     </message>
     <message>
         <source>Expected %1 bytes of clear-text, found %2</source>
-        <translation>%1 bytes niet versleutelde tekst verwacht, %2 aangetroffen</translation>
+        <translation>Inaasahan na %1 byte ng may malinaw na teksto, natagpuan ang %2</translation>
     </message>
 </context>
 <context>
@@ -5736,217 +5736,216 @@ Wil je KeePassXC nu opnieuw opstarten?</translation>
     <message>
         <source>Read Database did not produce an instance
 %1</source>
-        <translation>De te lezen database heeft geen exemplaar geproduceerd
-%1</translation>
+        <translation>Ang Read Database ay hindi gumawa ng isang kahilingan na %1</translation>
     </message>
 </context>
 <context>
     <name>OpVaultReader</name>
     <message>
         <source>Directory .opvault must exist</source>
-        <translation>Directory .opvault moet bestaan</translation>
+        <translation>Dapat umiral ang Directory .opvault</translation>
     </message>
     <message>
         <source>Directory .opvault must be readable</source>
-        <translation>Directory .opvault moet leesbaar zijn</translation>
+        <translation>Dapat na nababasa ang Directory .opvault</translation>
     </message>
     <message>
         <source>Directory .opvault/default must exist</source>
-        <translation>Directory .opvault/default moet bestaan</translation>
+        <translation>Dapat umiral ang Directory .opvault/default</translation>
     </message>
     <message>
         <source>Directory .opvault/default must be readable</source>
-        <translation>Directory .opvault/default moet leesbaar zijn</translation>
+        <translation>Dapat na nababasa ang directory .opvault/default</translation>
     </message>
     <message>
         <source>Unable to decode masterKey: %1</source>
-        <translation>Kan hoofdsleutel niet decoderen: %1</translation>
+        <translation>Hindi ma-decode ang masterKey: %1</translation>
     </message>
     <message>
         <source>Unable to derive master key: %1</source>
-        <translation>Kan hoofdsleutel niet afleiden: %1</translation>
+        <translation>Hindi makuha ang master key: %1</translation>
     </message>
 </context>
 <context>
     <name>OpenSSHKey</name>
     <message>
         <source>Invalid key file, expecting an OpenSSH key</source>
-        <translation>Ongeldig sleutelbestand, er werd een OpenSSH-sleutel verwacht</translation>
+        <translation>Invalid na key file, asahan ang OpenSSH key</translation>
     </message>
     <message>
         <source>PEM boundary mismatch</source>
-        <translation>PEM-grens komt niet overeen</translation>
+        <translation>Hindi tugma sa PEM boundary</translation>
     </message>
     <message>
         <source>Base64 decoding failed</source>
-        <translation>Base64-decodering mislukt</translation>
+        <translation>Nabigo ang pag-decode ng Base64</translation>
     </message>
     <message>
         <source>Key file way too small.</source>
-        <translation>Sleutelbestand veel te klein.</translation>
+        <translation>Napakaliit ng key file.</translation>
     </message>
     <message>
         <source>Key file magic header id invalid</source>
-        <translation>Ongeldig &apos;magic header id&apos; in sleutelbestand</translation>
+        <translation>Invalid ang magic header id ng key file</translation>
     </message>
     <message>
         <source>Found zero keys</source>
-        <translation>Geen sleutels gevonden</translation>
+        <translation>May nakitang mga zero key</translation>
     </message>
     <message>
         <source>Failed to read public key.</source>
-        <translation>Lezen publieke sleutel mislukt.</translation>
+        <translation>Nabigong basahin ang public key.</translation>
     </message>
     <message>
         <source>Corrupted key file, reading private key failed</source>
-        <translation>Beschadigd sleutelbestand, lezen persoonlijke sleutel mislukt</translation>
+        <translation>Sirang key file, hindi nabasa ang private key</translation>
     </message>
     <message>
         <source>Unsupported key type: %1</source>
-        <translation>Niet ondersteund sleuteltype: %1</translation>
+        <translation>Hindi suportadong uri ng key: %1</translation>
     </message>
     <message>
         <source>No private key payload to decrypt</source>
-        <translation>Geen inhoud persoonlijke sleutel om te decoderen</translation>
+        <translation>Walang pribadong key payload para ma-decrypt</translation>
     </message>
     <message>
         <source>Unknown cipher: %1</source>
-        <translation>Onbekende versleuteling: %1</translation>
+        <translation>Hindi kilalang cipher: %1</translation>
     </message>
     <message>
         <source>Passphrase is required to decrypt this key</source>
-        <translation>Wachtwoord(-zin)  nodig om deze sleutel te ontcijferen</translation>
+        <translation>Kinakailangan ang passphrase para i-decrypt ang key na ito</translation>
     </message>
     <message>
         <source>Key derivation failed: %1</source>
-        <translation>Sleutelafleiding is mislukt: %1</translation>
+        <translation>Nabigo ang pag-derivate ng key: %1</translation>
     </message>
     <message>
         <source>Cipher IV is too short for MD5 kdf</source>
-        <translation>Versleuteilng IV is te kort om MD5-sleutel te verkrijgen.</translation>
+        <translation>Masyadong maikli ang Cipher IV para sa MD5 kdf</translation>
     </message>
     <message>
         <source>Unknown KDF: %1</source>
-        <translation>Onbekende sleutelafleidings-functie: %1</translation>
+        <translation>Hindi kilalang KDF: %1</translation>
     </message>
     <message>
         <source>Failed to initialize cipher: %1</source>
-        <translation>Kan codering niet initialiseren: %1</translation>
+        <translation>Nabigong simulan ang cipher: %1</translation>
     </message>
     <message>
         <source>Decryption failed: %1</source>
-        <translation>Decodering is mislukt: %1</translation>
+        <translation>Nabigo ang pag-decrypt: %1</translation>
     </message>
     <message>
         <source>Decryption failed, wrong passphrase?</source>
-        <translation>Decodering mislukt, verkeerd wachtwoord(-zin)?</translation>
+        <translation>Nabigo ang pag-decrypt, maling passphrase?</translation>
     </message>
     <message>
         <source>Unexpected EOF while reading key</source>
-        <translation>Onverwacht bestandseinde tijdens lezen van de sleutel</translation>
+        <translation>Hindi inaasahang EOF habang nagsusulat ng key</translation>
     </message>
     <message>
         <source>Unsupported key part</source>
-        <translation>Niet ondersteund sleutelonderdeel</translation>
+        <translation>Hindi suportadong bahagi ng key</translation>
     </message>
     <message>
         <source>Unexpected EOF while reading public key</source>
-        <translation>Onverwacht bestandseinde publieke sleutel</translation>
+        <translation>Hindi inaasahang EOF habang nagsusulat ng public key</translation>
     </message>
     <message>
         <source>Unknown key type: %1</source>
-        <translation>Onbekend sleuteltype: %1</translation>
+        <translation>Hindi kilalang uri ng key: %1</translation>
     </message>
     <message>
         <source>Unexpected EOF while reading private key</source>
-        <translation>Onverwacht bestandseinde persoonlijke sleutel</translation>
+        <translation>Hindi inaasahang EOF habang nagbabasa ng private key</translation>
     </message>
     <message>
         <source>Can&apos;t write public key as it is empty</source>
-        <translation>Kan publieke sleutel niet opslaan, aangezien deze leeg is</translation>
+        <translation>Hindi makasulat ng public key dahil ito ay walang laman</translation>
     </message>
     <message>
         <source>Unexpected EOF when writing public key</source>
-        <translation>Onverwacht bestandseinde bij schrijven publieke sleutel</translation>
+        <translation>Hindi inaasahang EOF kapag nagsusulat ng public key</translation>
     </message>
     <message>
         <source>Can&apos;t write private key as it is empty</source>
-        <translation>Kan persoonlijke sleutel niet opslaan, aangezien deze leeg is</translation>
+        <translation>Hindi makasulat ng private key dahil ito ay walang laman</translation>
     </message>
     <message>
         <source>Unexpected EOF when writing private key</source>
-        <translation>Onverwacht bestandseinde bij schrijven persoonlijke sleutel</translation>
+        <translation>Hindi inaasahang EOF kapag nagsusulat ng private key</translation>
     </message>
     <message>
         <source>AES-256/GCM is currently not supported</source>
-        <translation>AES-256/GCM wordt momenteel niet ondersteund</translation>
+        <translation>AES-256/GCM ay kasalukuyang hindi sinusuportahan</translation>
     </message>
 </context>
 <context>
     <name>PasswordEditWidget</name>
     <message>
         <source>Enter password:</source>
-        <translation>Wachtwoord invoeren:</translation>
+        <translation>Ilagay ang password:</translation>
     </message>
     <message>
         <source>Password field</source>
-        <translation>Wachtwoord invulveld</translation>
+        <translation>Field ng password</translation>
     </message>
     <message>
         <source>Confirm password:</source>
-        <translation>Wachtwoord bevestigen:</translation>
+        <translation>Kumpirmahin ang password:</translation>
     </message>
     <message>
         <source>Repeat password field</source>
-        <translation>Wachtwoord herhaling veld</translation>
+        <translation>Ulitin ang patlang ng password</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Wachtwoord</translation>
+        <translation>Password</translation>
     </message>
     <message>
         <source>Add Password</source>
-        <translation>Wachtwoord toevoegen</translation>
+        <translation>Magdagdag ng Password</translation>
     </message>
     <message>
         <source>Change Password</source>
-        <translation>Wachtwoord wijzigen</translation>
+        <translation>Palitan ang Password</translation>
     </message>
     <message>
         <source>Remove Password</source>
-        <translation>Wachtwoord verwijderen</translation>
+        <translation>Alisin ang Password</translation>
     </message>
     <message>
         <source>Password set, click to change or remove</source>
-        <translation>Wachtwoord ingesteld, klik om te wijzigen of verwijderen</translation>
+        <translation>Itakda ang password, i-click para baguhin o i-remove</translation>
     </message>
     <message>
         <source>&lt;p&gt;A password is the primary method for securing your database.&lt;/p&gt;&lt;p&gt;Good passwords are long and unique. KeePassXC can generate one for you.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Een wachtwoord is de primaire methode voor het beveiligen van een database.&lt;/p&gt; &lt;p&gt;Goede wachtwoorden zijn lang en uniek. KeePassXC kan er een voor je genereren.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Ang isang password ay isang pangunahing paraan para sa pagprotekta ng database mo.&lt;/p&gt;&lt;p&gt;Ang magagandang password ay mahaba at natatangi. Ang KeePassXC ay maaaring bumuo ng isa nito para sa iyo.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Passwords do not match.</source>
-        <translation>Wachtwoorden komen niet overeen.</translation>
+        <translation>Hindi tugma ang mga password.</translation>
     </message>
 </context>
 <context>
     <name>PasswordGeneratorWidget</name>
     <message>
         <source>Generate Password</source>
-        <translation>Wachtwoord genereren</translation>
+        <translation>Bumuo ng Password</translation>
     </message>
     <message>
         <source>strength</source>
         <comment>Password strength</comment>
-        <translation>sterkte</translation>
+        <translation>lakas</translation>
     </message>
     <message>
         <source>entropy</source>
-        <translation>entropie</translation>
+        <translation>entropy</translation>
     </message>
     <message>
         <source>Generated password</source>
-        <translation>Gegenereerd wachtwoord</translation>
+        <translation>Nabuong password</translation>
     </message>
     <message>
         <source>%p%</source>
@@ -5954,95 +5953,95 @@ Wil je KeePassXC nu opnieuw opstarten?</translation>
     </message>
     <message>
         <source>Regenerate password</source>
-        <translation>Opnieuw genereren</translation>
+        <translation>Muling bumuo ng password</translation>
     </message>
     <message>
         <source>Copy password</source>
-        <translation>Wachtwoord kopiëren</translation>
+        <translation>kopyahin ang password</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Wachtwoord</translation>
+        <translation>Password</translation>
     </message>
     <message>
         <source>&amp;Length:</source>
-        <translation>&amp;Lengte:</translation>
+        <translation>&amp;Length:</translation>
     </message>
     <message>
         <source>Password length</source>
-        <translation>Wachtwoordlengte</translation>
+        <translation>Haba ng password</translation>
     </message>
     <message>
         <source>Switch to advanced mode</source>
-        <translation>Overschakelen naar de geavanceerde modus</translation>
+        <translation>Lumipat sa advanced na mode</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Geavanceerd</translation>
+        <translation>Advanced</translation>
     </message>
     <message>
         <source>Character Types</source>
-        <translation>Tekens</translation>
+        <translation>Mga Uri ng Character</translation>
     </message>
     <message>
         <source>Special characters</source>
-        <translation>Speciale tekens</translation>
+        <translation>Mga espesyal na character</translation>
     </message>
     <message>
         <source>Quotes</source>
-        <translation>Aanhalingstekens</translation>
+        <translation>Mga quote</translation>
     </message>
     <message>
         <source>Punctuation</source>
-        <translation>Leestekens</translation>
+        <translation>Bantas</translation>
     </message>
     <message>
         <source>Dashes and Slashes</source>
-        <translation>Streepjes en schuine streepjes</translation>
+        <translation>Dashes at Slashes</translation>
     </message>
     <message>
         <source>Upper-case letters</source>
-        <translation>Hoofdletters</translation>
+        <translation>Malalaking titik</translation>
     </message>
     <message>
         <source>Numbers</source>
-        <translation>Cijfers</translation>
+        <translation>Mga numero</translation>
     </message>
     <message>
         <source>Lower-case letters</source>
-        <translation>Kleine letters</translation>
+        <translation>Mga maliliit na titik</translation>
     </message>
     <message>
         <source>Math Symbols</source>
-        <translation>Wiskunde tekens</translation>
+        <translation>Mga Math Symbol</translation>
     </message>
     <message>
         <source>Extended ASCII</source>
-        <translation>Uitgebreide ASCII</translation>
+        <translation>Pinalawak na ASCII</translation>
     </message>
     <message>
         <source>Braces</source>
-        <translation>Haakjes</translation>
+        <translation>Braces</translation>
     </message>
     <message>
         <source>Do not include:</source>
-        <translation>Niet gebruiken:</translation>
+        <translation>Huwag isama ang:</translation>
     </message>
     <message>
         <source>Additional characters to use for the generated password</source>
-        <translation>Aanvullende tekens in het gegenereerde wachtwoord</translation>
+        <translation>Mga karagdagang character na gagamitin para sa nabuong password</translation>
     </message>
     <message>
         <source>Additional characters</source>
-        <translation>Aanvullende tekens</translation>
+        <translation>Mga karagdagang character</translation>
     </message>
     <message>
         <source>Add non-hex letters to &quot;do not include&quot; list</source>
-        <translation>Voeg niet-hex karakters toe aan de &quot;niet gebruiken&quot; lijst</translation>
+        <translation>Magdagdag ng mga non-hex na titik sa listahan ng &quot;huwag isama&quot;.</translation>
     </message>
     <message>
         <source>Hex Passwords</source>
-        <translation>Hex wachtwoord</translation>
+        <translation>Mga Hex na Password</translation>
     </message>
     <message>
         <source>Hex</source>
@@ -6050,63 +6049,63 @@ Wil je KeePassXC nu opnieuw opstarten?</translation>
     </message>
     <message>
         <source>Character set to exclude from generated password</source>
-        <translation>Tekenset die niet gebruikt mag worden in het gegenereerde wachtwoord</translation>
+        <translation>I-set ang character na bukod mula sa nabuong password</translation>
     </message>
     <message>
         <source>Excluded characters</source>
-        <translation>Niet te gebruiken tekens</translation>
+        <translation>Mga ibinukod na character</translation>
     </message>
     <message>
         <source>Also choose from:</source>
-        <translation>Kies ook uit:</translation>
+        <translation>Gayundin, pumili mula sa:</translation>
     </message>
     <message>
         <source>Exclude look-alike characters</source>
-        <translation>Op elkaar lijkende tekens niet gebruiken</translation>
+        <translation>Ibukod ang mga halos katulad na karakter</translation>
     </message>
     <message>
         <source>Pick characters from every group</source>
-        <translation>Gebruik tekens uit iedere groep</translation>
+        <translation>Pumili ng mga character mula sa bawat grupo</translation>
     </message>
     <message>
         <source>Passphrase</source>
-        <translation>Wachtwoordzin</translation>
+        <translation>Passphrase</translation>
     </message>
     <message>
         <source>Word Separator:</source>
-        <translation>Scheidingsteken:</translation>
+        <translation>Word Separator:</translation>
     </message>
     <message>
         <source>Wordlist:</source>
-        <translation>Woordenlijst:</translation>
+        <translation>Wordlist:</translation>
     </message>
     <message>
         <source>Word Count:</source>
-        <translation>Aantal woorden:</translation>
+        <translation>Bilang ng Salita:</translation>
     </message>
     <message>
         <source>Character Count:</source>
-        <translation>Aantal tekens:</translation>
+        <translation>Bilang ng Character:</translation>
     </message>
     <message>
         <source>Word Case:</source>
-        <translation>Teken grootte</translation>
+        <translation>Word Case:</translation>
     </message>
     <message>
         <source>Delete selected wordlist</source>
-        <translation>Geselecteerde woordenlijst verwijderen</translation>
+        <translation>I-delete ang napiling wordlist</translation>
     </message>
     <message>
         <source>Add custom wordlist</source>
-        <translation>Aangepaste woordenlijst toevoegen</translation>
+        <translation>Magdagdag ng custom wordlist</translation>
     </message>
     <message>
         <source>character</source>
-        <translation>teken</translation>
+        <translation>character</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Sluiten</translation>
+        <translation>I-close</translation>
     </message>
     <message>
         <source>Esc</source>
@@ -6114,301 +6113,301 @@ Wil je KeePassXC nu opnieuw opstarten?</translation>
     </message>
     <message>
         <source>Apply Password</source>
-        <translation>Wachtwoord gebruiken</translation>
+        <translation>Ilapat ang Password</translation>
     </message>
     <message>
         <source>Regenerate password (%1)</source>
-        <translation>Òpnieuw genereren (%1)</translation>
+        <translation>Muling bumuo ng password (%1)</translation>
     </message>
     <message>
         <source>lower case</source>
-        <translation>kleine letters</translation>
+        <translation>maliit na titik</translation>
     </message>
     <message>
         <source>UPPER CASE</source>
-        <translation>HOOFDLETTERS</translation>
+        <translation>MALALAKING LETRA</translation>
     </message>
     <message>
         <source>Title Case</source>
-        <translation>Eerste Letter Als Hoofdletter</translation>
+        <translation>Pamagat ng Case</translation>
     </message>
     <message>
         <source>(SYSTEM)</source>
-        <translation>(SYSTEEM)</translation>
+        <translation>(SYSTEM)</translation>
     </message>
     <message>
         <source>Entropy: %1 bit</source>
-        <translation>Entropie: %1 bit</translation>
+        <translation>Entropy: %1 bit</translation>
     </message>
     <message>
         <source>Confirm Delete Wordlist</source>
-        <translation>Verwijdering woordenlijst bevestigen</translation>
+        <translation>Kumpirmahin ang Delete Wordlist</translation>
     </message>
     <message>
         <source>Do you really want to delete the wordlist &quot;%1&quot;?</source>
-        <translation>Wil je de woordenlijst &quot;%1&quot; echt verwijderen?</translation>
+        <translation>Gusto mo bang i-delete ang wordlist na &quot;%1&quot;?</translation>
     </message>
     <message>
         <source>Failed to delete wordlist</source>
-        <translation>Woordenlijst is niet verwijderd</translation>
+        <translation>Nabigong i-delete ang wordlist</translation>
     </message>
     <message>
         <source>Wordlists</source>
-        <translation>Woordenlijsten</translation>
+        <translation>Mga Wordlist</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Alle bestanden</translation>
+        <translation>Lahat ng mga file</translation>
     </message>
     <message>
         <source>Select Custom Wordlist</source>
-        <translation>Aangepaste woordenlijst selecteren</translation>
+        <translation>Piliin ang Custom na Wordlist</translation>
     </message>
     <message>
         <source>Overwrite Wordlist?</source>
-        <translation>Woordenlijst overschrijven?</translation>
+        <translation>I-overwrite ang Wordlist?</translation>
     </message>
     <message>
         <source>Wordlist &quot;%1&quot; already exists as a custom wordlist.
 Do you want to overwrite it?</source>
-        <translation>Woordenlijst &quot;%1&quot; bestaat al als een aangepaste woordenlijst.
-Wil je deze overschrijven?</translation>
+        <translation>Umiiral na ang Wordlist na &quot;%1&quot; bilang custom na wordlist.
+Gusto mo bang i-overwrite ito?</translation>
     </message>
     <message>
         <source>Failed to add wordlist</source>
-        <translation>Woordenlijst is niet toegevoegd</translation>
+        <translation>Nabigong magdagdag ng wordlist</translation>
     </message>
     <message>
         <source>Logograms</source>
-        <translation>Special tekens</translation>
+        <translation>Logograms</translation>
     </message>
     <message>
         <source>Special Characters</source>
-        <translation>Speciale tekens</translation>
+        <translation>Mga Espesyal na Character</translation>
     </message>
     <message>
         <source>Password Quality: %1</source>
-        <translation>Kwaliteit: %1</translation>
+        <translation>Kalidad ng Password: %1</translation>
     </message>
     <message>
         <source>Poor</source>
         <comment>Password quality</comment>
-        <translation>Slecht</translation>
+        <translation>Mahina</translation>
     </message>
     <message>
         <source>Weak</source>
         <comment>Password quality</comment>
-        <translation>Zwak</translation>
+        <translation>Mahina</translation>
     </message>
     <message>
         <source>Good</source>
         <comment>Password quality</comment>
-        <translation>Goed</translation>
+        <translation>Mabuti</translation>
     </message>
     <message>
         <source>Excellent</source>
         <comment>Password quality</comment>
-        <translation>Uitstekend</translation>
+        <translation>Magaling</translation>
     </message>
     <message>
         <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>Niet te gebruiken karakters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</translation>
+        <translation>Mga ibinukod na character: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</translation>
     </message>
 </context>
 <context>
     <name>PasswordWidget</name>
     <message>
         <source>Passwords do not match</source>
-        <translation>De wachtwoorden komen niet overeen</translation>
+        <translation>Hindi tugma ang mga password</translation>
     </message>
     <message>
         <source>Passwords match so far</source>
-        <translation>Wachtwoordovereenkomst tot dusver</translation>
+        <translation>Ang mga password ay tugma sa ngayon</translation>
     </message>
     <message>
         <source>Toggle Password (%1)</source>
-        <translation>Wachtwoord schakelen (%1)</translation>
+        <translation>I-toggle ang Password na (%1)</translation>
     </message>
     <message>
         <source>Generate Password (%1)</source>
-        <translation>Wachtwoord genereren (%1)</translation>
+        <translation>Bumuo ng Password na (%1)</translation>
     </message>
     <message>
         <source>Warning: Caps Lock enabled!</source>
-        <translation>Let op: CapsLock is ingeschakeld!</translation>
+        <translation>Babala: Naka-enable ang Caps Lock!</translation>
     </message>
     <message>
         <source>Quality: %1</source>
-        <translation>Sterkte: %1</translation>
+        <translation>Kalidad: %1</translation>
     </message>
     <message>
         <source>Poor</source>
         <comment>Password quality</comment>
-        <translation>Slecht</translation>
+        <translation>Mahina</translation>
     </message>
     <message>
         <source>Weak</source>
         <comment>Password quality</comment>
-        <translation>Zwak</translation>
+        <translation>Mahina</translation>
     </message>
     <message>
         <source>Good</source>
         <comment>Password quality</comment>
-        <translation>Goed</translation>
+        <translation>Mabuti</translation>
     </message>
     <message>
         <source>Excellent</source>
         <comment>Password quality</comment>
-        <translation>Uitstekend</translation>
+        <translation>Magaling</translation>
     </message>
     <message>
         <source>Toggle password visibilty using Control + H. Open the password generator using Control + G.</source>
-        <translation>Toon/Verberg wachtwoorden met Ctrl+H - open de wachtwoordgenerator met Ctrl+G.</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>PickcharsDialog</name>
     <message>
         <source>KeePassXC - Pick Characters</source>
-        <translation>KeePassXC - Lettertekens kiezen</translation>
+        <translation>KeePassXC - Mga Pick Character</translation>
     </message>
     <message>
         <source>Select characters to type, navigate with arrow keys, Ctrl + S submits.</source>
-        <translation>Selecteer tekens om te typen, navigeer met pijltoetsen, Ctrl + S verzendt.</translation>
+        <translation>Pumili ng mga character na ita-type, mag-navigate gamit ang mga arrow key, Ctrl + S isinumite.</translation>
     </message>
     <message>
         <source>Press &amp;Tab between characters</source>
-        <translation>Druk &amp;Tab tussen de tekens</translation>
+        <translation>Pindutin ang &amp;Tab sa pagitan ng mga character</translation>
     </message>
 </context>
 <context>
     <name>QMessageBox</name>
     <message>
         <source>Overwrite</source>
-        <translation>Overschrijven</translation>
+        <translation>I-overwrite</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Verwijderen</translation>
+        <translation>I-delete</translation>
     </message>
     <message>
         <source>Move</source>
-        <translation>Verplaatsen</translation>
+        <translation>Ilipat</translation>
     </message>
     <message>
         <source>Empty</source>
-        <translation>Legen</translation>
+        <translation>Walang laman</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Verwijderen</translation>
+        <translation>Alisin</translation>
     </message>
     <message>
         <source>Skip</source>
-        <translation>Overslaan</translation>
+        <translation>Laktawan</translation>
     </message>
     <message>
         <source>Disable</source>
-        <translation>Uitschakelen</translation>
+        <translation>I-disable</translation>
     </message>
     <message>
         <source>Merge</source>
-        <translation>Samenvoegen</translation>
+        <translation>Pagsamahin</translation>
     </message>
     <message>
         <source>Continue</source>
-        <translation>Doorgaan</translation>
+        <translation>Magpatuloy</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <source>Database not opened</source>
-        <translation>Database niet geopend</translation>
+        <translation>Hindi nabuksan ang database</translation>
     </message>
     <message>
         <source>Database hash not available</source>
-        <translation>Database-hashwaarde is niet beschikbaar</translation>
+        <translation>Hindi available ang hash ng database</translation>
     </message>
     <message>
         <source>Client public key not received</source>
-        <translation>Openbare sleutel niet ontvangen</translation>
+        <translation>Hindi natanggap ang public key ng client</translation>
     </message>
     <message>
         <source>Cannot decrypt message</source>
-        <translation>Kan bericht niet decoderen</translation>
+        <translation>Hindi ma-decrypt ang mensahe</translation>
     </message>
     <message>
         <source>Action cancelled or denied</source>
-        <translation>Actie afgebroken of geweigerd</translation>
+        <translation>Kinansela o tinanggihan ang aksyon</translation>
     </message>
     <message>
         <source>Message encryption failed.</source>
-        <translation>Berichtcodering is mislukt.</translation>
+        <translation>Nabigo ang pag-encrypt ng mensahe.</translation>
     </message>
     <message>
         <source>KeePassXC association failed, try again</source>
-        <translation>KeePassXC-koppeling is mislukt, probeer het opnieuw</translation>
+        <translation>Nabigo ang pagkakaugnay ng KeePassXC, subukang muli</translation>
     </message>
     <message>
         <source>Encryption key is not recognized</source>
-        <translation>De coderingssleutel is niet herkend</translation>
+        <translation>Ang key sa pag-encrypt ay hindi nakikilala</translation>
     </message>
     <message>
         <source>Incorrect action</source>
-        <translation>Onjuiste actie</translation>
+        <translation>Maling aksyon</translation>
     </message>
     <message>
         <source>Empty message received</source>
-        <translation>Leeg bericht ontvangen</translation>
+        <translation>Walang laman ang natanggap na mensahe</translation>
     </message>
     <message>
         <source>No URL provided</source>
-        <translation>Geen URL opgegeven</translation>
+        <translation>Walang ibinigay na URL</translation>
     </message>
     <message>
         <source>No logins found</source>
-        <translation>Geen aanmeldingen gevonden</translation>
+        <translation>Walang nahanap na mga login</translation>
     </message>
     <message>
         <source>No groups found</source>
-        <translation>Geen groepen gevonden</translation>
+        <translation>Walang nakitang group</translation>
     </message>
     <message>
         <source>Cannot create new group</source>
-        <translation>Kan geen nieuwe groep aanmaken</translation>
+        <translation>Hindi makagawa ng bagong pangkat</translation>
     </message>
     <message>
         <source>No valid UUID provided</source>
-        <translation>Geen geldige UUID verstrekt</translation>
+        <translation>Walang valid na UUID ang ibinigay</translation>
     </message>
     <message>
         <source>Unknown error</source>
-        <translation>Onbekende fout</translation>
+        <translation>Unknown na error</translation>
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation>Browserintegratie</translation>
+        <translation>Pagsasama ng Browser</translation>
     </message>
     <message>
         <source>Browser Plugin Failure</source>
-        <translation>Fout met browser-extensie</translation>
+        <translation>Nabigo ang Plugin ng Browser</translation>
     </message>
     <message>
         <source>Could not save the native messaging script file for %1.</source>
-        <translation>Kan het native messaging scriptbestand voor %1 niet opslaan.</translation>
+        <translation>Hindi mai-save ang native messaging script file para sa %1.</translation>
     </message>
     <message>
         <source>Username for the entry.</source>
-        <translation>Gebruikersnaam voor het item.</translation>
+        <translation>Username para sa entry.</translation>
     </message>
     <message>
         <source>username</source>
-        <translation>gebruikersnaam</translation>
+        <translation>username</translation>
     </message>
     <message>
         <source>URL for the entry.</source>
-        <translation>URL voor het item.</translation>
+        <translation>URL para sa entry.</translation>
     </message>
     <message>
         <source>URL</source>
@@ -6416,79 +6415,79 @@ Wil je deze overschrijven?</translation>
     </message>
     <message>
         <source>Notes for the entry.</source>
-        <translation>Notities bij het item.</translation>
+        <translation>Mag tala para sa entry.</translation>
     </message>
     <message>
         <source>Notes</source>
-        <translation>Notities</translation>
+        <translation>Mga tala</translation>
     </message>
     <message>
         <source>Prompt for the entry&apos;s password.</source>
-        <translation>Vraag om het item&apos;s wachtwoord.</translation>
+        <translation>I-prompt para sa password ng entry.</translation>
     </message>
     <message>
         <source>Generate a password for the entry.</source>
-        <translation>Genereer een wachtwoord voor het item.</translation>
+        <translation>Bumuo ng isang password para sa entry.</translation>
     </message>
     <message>
         <source>Add a new entry to a database.</source>
-        <translation>Nieuw item toevoegen aan een database.</translation>
+        <translation>Magdagdag ng bagong entry sa isang database.</translation>
     </message>
     <message>
         <source>Path of the entry to add.</source>
-        <translation>Pad van toe te voegen item.</translation>
+        <translation>Path ng entry na idadagdag.</translation>
     </message>
     <message>
         <source>Cannot generate a password and prompt at the same time.</source>
-        <translation>Kan geen wachtwoord en prompt op hetzelfde moment genereren!</translation>
+        <translation>Hindi makabuo ng password at prompt sa magkaparehong oras.</translation>
     </message>
     <message>
         <source>Could not create entry with path %1.</source>
-        <translation>Kan geen item maken met pad %1.</translation>
+        <translation>Hindi makalikha ng entry na may path na %1.</translation>
     </message>
     <message>
         <source>Enter password for new entry: </source>
-        <translation>Voer wachtwoord in voor nieuw item:</translation>
+        <translation>Maglagay ng password para sa bagong entry: </translation>
     </message>
     <message>
         <source>Writing the database failed %1.</source>
-        <translation>Het schrijven van de database is mislukt %1.</translation>
+        <translation>Nabigo ang pagsulat ng database na %1.</translation>
     </message>
     <message>
         <source>Successfully added entry %1.</source>
-        <translation>Item %1 toegevoegd.</translation>
+        <translation>Matagumpay na naidagdag ang entry na %1.</translation>
     </message>
     <message>
         <source>Adds a new group to a database.</source>
-        <translation>Voegt een nieuwe groep toe aan een database.</translation>
+        <translation>Magdagdag ng bagong pangkat sa isang database.</translation>
     </message>
     <message>
         <source>Path of the group to add.</source>
-        <translation>Pad van de toe te voegen groep.</translation>
+        <translation>Path ng group na idaragdag.</translation>
     </message>
     <message>
         <source>Group %1 already exists!</source>
-        <translation>Groep %1 bestaat al!</translation>
+        <translation>Umiiral na ang group na %1!</translation>
     </message>
     <message>
         <source>Group %1 not found.</source>
-        <translation>Groep %1 niet gevonden.</translation>
+        <translation>Hindi nahanap ang group na %1.</translation>
     </message>
     <message>
         <source>Successfully added group %1.</source>
-        <translation>Groep %1 toegevoegd.</translation>
+        <translation>Matagumpay na naidagdag ang group na %1.</translation>
     </message>
     <message>
         <source>Check if any passwords have been publicly leaked. FILENAME must be the path of a file listing SHA-1 hashes of leaked passwords in HIBP format, as available from https://haveibeenpwned.com/Passwords.</source>
-        <translation>Controleer of er wachtwoorden zijn gelekt en openbaar zijn gemaakt. BESTANDSNAAM moet het pad zijn van een bestand met SHA-1-hashes van gelekte wachtwoorden in HIBP-indeling, zoals beschikbaar op https://haveibeenpwned.com/Passwords.</translation>
+        <translation>Suriin kung ang anumang mga password ay na-leak sa publiko. Ang FILENAME ay dapat na path ng file na naglilista ng mga SHA-1 na hash ng mga na-leak na password sa HIBP na format, bilang available mula sa https://haveibeenpwned.com/Passwords.</translation>
     </message>
     <message>
         <source>FILENAME</source>
-        <translation>BESTANDSNAAM</translation>
+        <translation>FILENAME</translation>
     </message>
     <message>
         <source>Path to okon-cli to search a formatted HIBP file</source>
-        <translation>Pad naar okon-cli om een geformatteerd HIBP-bestand te zoeken</translation>
+        <translation>Path sa okon-cli para maghanap ng na-format na HIBP file</translation>
     </message>
     <message>
         <source>okon-cli</source>
@@ -6496,368 +6495,368 @@ Wil je deze overschrijven?</translation>
     </message>
     <message>
         <source>Analyze passwords for weaknesses and problems.</source>
-        <translation>Analyseer wachtwoorden op zwakke punten en problemen.</translation>
+        <translation>Suriin ang mga password para sa mga kahinaan at problema.</translation>
     </message>
     <message>
         <source>Cannot find HIBP file: %1</source>
-        <translation>Kan HIBP-bestand niet vinden: %1</translation>
+        <translation>Hindi mahanap ang HIBP file: %1</translation>
     </message>
     <message>
         <source>Evaluating database entries using okon…</source>
-        <translation>Database-items evalueren met okon...</translation>
+        <translation>Sinusuri ang mga entry sa database gamit ang okon…</translation>
     </message>
     <message>
         <source>Failed to open HIBP file %1: %2</source>
-        <translation>Kon HIBP bestand niet openen %1: %2</translation>
+        <translation>Nabigong buksan ang HIBP file na %1: %2</translation>
     </message>
     <message>
         <source>Evaluating database entries against HIBP file, this will take a while…</source>
-        <translation>Database items evalueren t.o.v. HIBP-bestand, dit kan even duren...</translation>
+        <translation>Sinusuri ang mga entry sa database sa HIBP file, ito ay medyo magtatagal…</translation>
     </message>
     <message numerus="yes">
         <source>Password for &apos;%1&apos; has been leaked %2 time(s)!</source>
-        <translation><numerusform>Wachtwoord voor &apos;%1&apos; is %2 keer gelekt!</numerusform><numerusform>Wachtwoorden voor &apos;%1&apos; zijn %2 keer gelekt!</numerusform></translation>
+        <translation><numerusform>Ang password para kay &apos;%1&apos; ay na-leak ng %2 (na) beses!</numerusform><numerusform>Ang password para kay &apos;%1&apos; ay na-leak ng %2 (na) beses!</numerusform></translation>
     </message>
     <message>
         <source>Password for &apos;%1&apos; has been leaked!</source>
-        <translation>Wachtwoord voor &apos;%1&apos; is gelekt!</translation>
+        <translation>Ang password para kay &apos;%1&apos; ay na-leak!</translation>
     </message>
     <message>
         <source>Export an attachment of an entry.</source>
-        <translation>Een bijlage van een item exporteren.</translation>
+        <translation>Mag-export ng attachment ng isang entry.</translation>
     </message>
     <message>
         <source>Path of the entry with the target attachment.</source>
-        <translation>Pad van het item met de doelbijlage.</translation>
+        <translation>Path ng entry na may target na attachment.</translation>
     </message>
     <message>
         <source>Name of the attachment to be exported.</source>
-        <translation>Naam van de te exporteren bijlage.</translation>
+        <translation>Pangalan ng attachment na ie-export.</translation>
     </message>
     <message>
         <source>Path to which the attachment should be exported.</source>
-        <translation>Pad waarnaar de bijlage moet worden geëxporteerd.</translation>
+        <translation>Path kung saan dapat i-export ang attachment.</translation>
     </message>
     <message>
         <source>Could not find entry with path %1.</source>
-        <translation>Kan item met pad %1 niet vinden.</translation>
+        <translation>Hindi mahanap ang entry na may path na %1.</translation>
     </message>
     <message>
         <source>Could not find attachment with name %1.</source>
-        <translation>Kan bijlage met naam %1 niet vinden.</translation>
+        <translation>Hindi mahanap ang attachment na may pangalan na %1.</translation>
     </message>
     <message>
         <source>No export target given. Please use &apos;--stdout&apos; or specify an &apos;export-file&apos;.</source>
-        <translation>Geen exportbestemming opgegeven. Gebruik &apos;--stdout&apos; of geef een &apos;export-bestand&apos; op.</translation>
+        <translation>Walang ibinigay na target sa pag-export. Pakigamit ang &apos;--stdout&apos; o tukuyin ang &apos;export-file&apos;.</translation>
     </message>
     <message>
         <source>Could not open output file %1.</source>
-        <translation>Kan uitvoerbestand %1 niet openen.</translation>
+        <translation>Hindi mabuksan ang output file na %1.</translation>
     </message>
     <message>
         <source>Successfully exported attachment %1 of entry %2 to %3.</source>
-        <translation>Bijlage %1 van item %2 tot en met %3 met succes geëxporteerd.</translation>
+        <translation>Matagumpay na na-export ang attachment na %1 ng entry na %2 hanggang sa %3.</translation>
     </message>
     <message>
         <source>Overwrite existing attachments.</source>
-        <translation>Bestaande bijlagen overschrijven.</translation>
+        <translation>I-overwrite ang mga kasalukuyang attachment.</translation>
     </message>
     <message>
         <source>Imports an attachment to an entry.</source>
-        <translation>Hiermee importeer je een bijlage bij een item.</translation>
+        <translation>Mag-import ng attachment sa isang entry.</translation>
     </message>
     <message>
         <source>Path of the entry.</source>
-        <translation>Pad van het item.</translation>
+        <translation>Path ng entry.</translation>
     </message>
     <message>
         <source>Name of the attachment to be added.</source>
-        <translation>Naam van de toe te voegen bijlage.</translation>
+        <translation>Pangalan ng attachment na idadagdag.</translation>
     </message>
     <message>
         <source>Path of the attachment to be imported.</source>
-        <translation>Pad van de te importeren bijlage.</translation>
+        <translation>Path ng attachment na ii-import.</translation>
     </message>
     <message>
         <source>Attachment %1 already exists for entry %2.</source>
-        <translation>Bijlage %1 bestaat al voor item %2.</translation>
+        <translation>Umiiral na ang attachment na %1 para sa entry na %2.</translation>
     </message>
     <message>
         <source>Could not open attachment file %1.</source>
-        <translation>Kan bijlagebestand %1 niet openen.</translation>
+        <translation>Hindi mabuksan ang attachment file na %1.</translation>
     </message>
     <message>
         <source>Successfully imported attachment %1 as %2 to entry %3.</source>
-        <translation>Bijlage %1 met succes als %2 ingevoerd bij %3.</translation>
+        <translation>Matagumpay na na-import ang attachment na %1 bilang %2 sa entry na %3.</translation>
     </message>
     <message>
         <source>Remove an attachment of an entry.</source>
-        <translation>Verwijder een bijlage van een vermelding.</translation>
+        <translation>Alisin ang isang attachment ng isang entry.</translation>
     </message>
     <message>
         <source>Name of the attachment to be removed.</source>
-        <translation>Naam van de te verwijderen bijlage.</translation>
+        <translation>Pangalan ng attachment na aalisin.</translation>
     </message>
     <message>
         <source>Successfully removed attachment %1 from entry %2.</source>
-        <translation>Bijlage %1 uit vermelding %2 is verwijderd.</translation>
+        <translation>Matagumpay na na-remove ang attachment na %1 mula sa entry na %2.</translation>
     </message>
     <message>
         <source>Copy the given attribute to the clipboard. Defaults to &quot;password&quot; if not specified.</source>
         <comment>Don't translate &quot;password&quot;, it refers to the attribute.</comment>
-        <translation>Kopieer het gegeven kenmerk naar het klembord. Dit is &quot;wachtwoord&quot; tenzij anders gespecificeerd.</translation>
+        <translation>Kopyahin ang ibinigay na attribute sa clipboard. Default sa &quot;password&quot; kung hindi tinukoy.</translation>
     </message>
     <message>
         <source>Copy the current TOTP to the clipboard (equivalent to &quot;-a totp&quot;).</source>
-        <translation>Kopieer de huidige TOTP naar het klembord (equivalent aan &quot;-a totp&quot;).</translation>
+        <translation>Kopyahin ang kasalukuyang TOTP sa clipboard (katumbas ng &quot;-isang totp&quot;).</translation>
     </message>
     <message>
         <source>Must match only one entry, otherwise a list of possible matches is shown.</source>
-        <translation>Moet overeenkomen met slechts één item, anders wordt een lijst met mogelijke overeenkomsten weergegeven.</translation>
+        <translation>Dapat tumugma sa isang entry lamang, kung hindi, isang listahan ng mga posibleng tugma ay ipapakita.</translation>
     </message>
     <message>
         <source>Copy an entry&apos;s attribute to the clipboard.</source>
-        <translation>Kopieer het kenmerk van een item naar het klembord.</translation>
+        <translation>Kopyahin ang attribute ng isang entry sa clipboard.</translation>
     </message>
     <message>
         <source>Path of the entry to clip.</source>
         <comment>clip = copy to clipboard</comment>
-        <translation>Pad van het te kopiëren item.</translation>
+        <translation>Path ng entry sa clip.</translation>
     </message>
     <message>
         <source>Timeout before clearing the clipboard (default is %1 seconds, set to 0 for unlimited).</source>
-        <translation>Time-out voordat het klembord wordt leeg gemaakt (standaard is %1 seconden, gebruik 0 voor onbeperkt).</translation>
+        <translation>Patigilin bago i-clear ang clipboard (default ay %1 segundo, nakatakda sa 0 para sa unlimited).</translation>
     </message>
     <message>
         <source>Invalid timeout value %1.</source>
-        <translation>Ongeldige time-out %1.</translation>
+        <translation>Invalid na value ng timeout na %1.</translation>
     </message>
     <message>
         <source>Multiple entries matching:</source>
-        <translation>Meerdere overeenkomstige items:</translation>
+        <translation>Maramihang mga entry na tumutugma:</translation>
     </message>
     <message>
         <source>Using matching entry: %1</source>
-        <translation>Overeenkomstig item gebruiken: %1</translation>
+        <translation>Gamit ang katugmang entry: %1</translation>
     </message>
     <message>
         <source>Entry %1 not found.</source>
-        <translation>Item %1 niet gevonden.</translation>
+        <translation>Hindi nahanap ang entry na %1.</translation>
     </message>
     <message>
         <source>ERROR: Please specify one of --attribute or --totp, not both.</source>
-        <translation>FOUT: geef --attribute op OF --totp, niet beide.</translation>
+        <translation>ERROR: Pakitukoy ang isa sa --attribute o --totp, hindi pareho.</translation>
     </message>
     <message>
         <source>Entry with path %1 has no TOTP set up.</source>
-        <translation>Item met pad %1 heeft geen TOTP instellingen.</translation>
+        <translation>Ang entry na may path na %1 ay walang TOTP set up.</translation>
     </message>
     <message>
         <source>ERROR: attribute %1 is ambiguous, it matches %2.</source>
-        <translation>FOUT: kenmerk %1 is dubbelzinnig, het komt overeen met %2.</translation>
+        <translation>ERROR: ang attribute na %1 ay hindi tiyak, tumutugma ito sa %2.</translation>
     </message>
     <message>
         <source>Attribute &quot;%1&quot; not found.</source>
-        <translation>Kenmerk &quot;%1&quot; niet aangetroffen.</translation>
+        <translation>Hindi nakita ang attribute na &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>Entry&apos;s &quot;%1&quot; attribute copied to the clipboard!</source>
-        <translation>Kenmerk &quot;%1&quot; van het item is naar het klembord gekopieerd!</translation>
+        <translation>Nakopya sa clipboard ang entry na attribute na &quot;%1&quot;!</translation>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)...</source>
-        <translation><numerusform>Het klemboard wordt over %1 seconde(n) gewist...</numerusform><numerusform>Het klembord wordt over %1 seconde(n) gewist...</numerusform></translation>
+        <translation><numerusform>Kini-clear ang clipboard sa %1 segundo...</numerusform><numerusform>Kini-clear ang clipboard sa %1 (mga) segundo...</numerusform></translation>
     </message>
     <message>
         <source>Clipboard cleared!</source>
-        <translation>Klembord gewist!</translation>
+        <translation>Na-clear ang clipboard!</translation>
     </message>
     <message>
         <source>Close the currently opened database.</source>
-        <translation>Sluit de geopende database.</translation>
+        <translation>I-close ang kasalukuyang nakabukas na database.</translation>
     </message>
     <message>
         <source>Display this help.</source>
-        <translation>Toont deze helptekst.</translation>
+        <translation>Ipakita ang tulong na ito.</translation>
     </message>
     <message>
         <source>Silence password prompt and other secondary outputs.</source>
-        <translation>Wachtwoordprompt en andere bijkomstige meldingen verbergen.</translation>
+        <translation>Patigilin ang prompt ng password at iba pang pangalawang output.</translation>
     </message>
     <message>
         <source>Key file of the database.</source>
-        <translation>Sleutelbestand van de database.</translation>
+        <translation>Key file ng database.</translation>
     </message>
     <message>
         <source>path</source>
-        <translation>pad</translation>
+        <translation>path</translation>
     </message>
     <message>
         <source>Deactivate password key for the database.</source>
-        <translation>Schakel de wachtwoordsleutel voor de database uit.</translation>
+        <translation>I-deactivate ang password key para sa database.</translation>
     </message>
     <message>
         <source>Yubikey slot and optional serial used to access the database (e.g., 1:7370001).</source>
-        <translation>Yubikey-positie en optioneel serienummer dat wordt gebruikt om toegang te krijgen tot de database (bijv. 1: 7370001).</translation>
+        <translation>Ang Yubikey slot at opsyonal na serial na ginagamit para ma-access ang database (hal., 1:7370001).</translation>
     </message>
     <message>
         <source>slot[:serial]</source>
-        <translation>positie[:nummer]</translation>
+        <translation>slot[:serial]</translation>
     </message>
     <message>
         <source>Missing positional argument(s).</source>
-        <translation>Er ontbreken positionele argument(en).</translation>
+        <translation>Nawawala (mga) positional na argument.</translation>
     </message>
     <message>
         <source>Too many arguments provided.</source>
-        <translation>Te veel argumenten.</translation>
+        <translation>Masyadong maraming argument ang ibinigay.</translation>
     </message>
     <message>
         <source>Target decryption time in MS for the database.</source>
-        <translation>Beoogde decoderingstijd voor de database [ms].</translation>
+        <translation>Target na oras ng pag-decrypt sa MS para sa database.</translation>
     </message>
     <message>
         <source>time</source>
-        <translation>tijd</translation>
+        <translation>oras</translation>
     </message>
     <message>
         <source>Set the key file for the database.</source>
-        <translation>Het sleutelbestand voor de database instellen.</translation>
+        <translation>Itakda ang key file para sa database.</translation>
     </message>
     <message>
         <source>Set a password for the database.</source>
-        <translation>Stel een wachtwoord in voor de database.</translation>
+        <translation>Magtakda ng password para sa database.</translation>
     </message>
     <message>
         <source>Create a new database.</source>
-        <translation>Nieuwe database aanmaken</translation>
+        <translation>Lumikha ng bagong database</translation>
     </message>
     <message>
         <source>Path of the database.</source>
-        <translation>Pad naar de database.</translation>
+        <translation>Path ng database</translation>
     </message>
     <message>
         <source>Invalid decryption time %1.</source>
-        <translation>Ongeldige decoderingstijd %1.</translation>
+        <translation>Invalid na oras ng pag-decrypt na %1.</translation>
     </message>
     <message>
         <source>Target decryption time must be between %1 and %2.</source>
-        <translation>Beoogde decoderingstijd moet tussen %1 en %2 liggen.</translation>
+        <translation>Ang target na oras ng pag-decrypt ay dapat nasa pagitan ng %1 at %2.</translation>
     </message>
     <message>
         <source>Failed to set database password.</source>
-        <translation>Kan databasewachtwoord niet instellen.</translation>
+        <translation>Nabigong i-set ang password ng database.</translation>
     </message>
     <message>
         <source>Loading the key file failed</source>
-        <translation>Laden van het sleutelbestand is mislukt</translation>
+        <translation>Nabigo ang paglo-load ng key file</translation>
     </message>
     <message>
         <source>No key is set. Aborting database creation.</source>
-        <translation>Geen sleutel ingesteld. De aanmaak van de database is afgebroken.</translation>
+        <translation>Walang na-set na key. Pinapatigil ang paglikha ng database.</translation>
     </message>
     <message>
         <source>Benchmarking key derivation function for %1ms delay.</source>
-        <translation>Tijdmeting sleutel-afleidingsfunctie bij %1 ms vertraging.</translation>
+        <translation>Pag-benchmark ng key derivation function para sa %1ms na pagkaantala.</translation>
     </message>
     <message>
         <source>Setting %1 rounds for key derivation function.</source>
-        <translation>Sleutel-afleidingsfunctie instellen op %1 iteraties.</translation>
+        <translation>Pagtatakda ng %1 round para sa key derivation function.</translation>
     </message>
     <message>
         <source>error while setting database key derivation settings.</source>
-        <translation>fout bij het instellen van database-sleutelafleiding.</translation>
+        <translation>error habang nagtatakda ng mga setting ng derivation ng database key.</translation>
     </message>
     <message>
         <source>File %1 already exists.</source>
-        <translation>Bestand %1 bestaat al.</translation>
+        <translation>Umiiral na ang file na %1.</translation>
     </message>
     <message>
         <source>Failed to save the database: %1.</source>
-        <translation>Opslaan van de database is mislukt: %1</translation>
+        <translation>Nabigong i-save ang database: %1.</translation>
     </message>
     <message>
         <source>Successfully created new database.</source>
-        <translation>Nieuwe database is aangemaakt</translation>
+        <translation>Matagumpay na nakagawa ng bagong database.</translation>
     </message>
     <message>
         <source>Word count for the diceware passphrase.</source>
-        <translation>Aantal woorden voor de Diceware wachtwoordzin.</translation>
+        <translation>Bilang ng salita para sa diceware passphrase.</translation>
     </message>
     <message>
         <source>count</source>
         <comment>CLI parameter</comment>
-        <translation>aantal</translation>
+        <translation>bilang</translation>
     </message>
     <message>
         <source>Wordlist for the diceware generator.
 [Default: EFF English]</source>
-        <translation>Woordenlijst voor de Diceware-generator.
-[Standaard: EFF Engels]</translation>
+        <translation>Wordlist para sa diceware generator.
+[Default: EFF English]</translation>
     </message>
     <message>
         <source>Generate a new random diceware passphrase.</source>
-        <translation>Genereer een nieuwe willekeurige Diceware wachtwoordzin</translation>
+        <translation>Bumuo ng bagong random na diceware passphrase.</translation>
     </message>
     <message>
         <source>Invalid word count %1</source>
-        <translation>Ongeldig aantal woorden %1</translation>
+        <translation>Invalid na word count na %1</translation>
     </message>
     <message>
         <source>The word list is too small (&lt; 1000 items)</source>
-        <translation>De woordenlijst is te klein (&lt; 1000 items)</translation>
+        <translation>Masyadong maliit ang listahan ng salitang (&lt; 1000 item)</translation>
     </message>
     <message>
         <source>Title for the entry.</source>
-        <translation>Naam voor deze entry.</translation>
+        <translation>Pamagat para sa entry</translation>
     </message>
     <message>
         <source>title</source>
-        <translation>naam</translation>
+        <translation>pamagat</translation>
     </message>
     <message>
         <source>Edit an entry.</source>
-        <translation>Een item bewerken.</translation>
+        <translation>I-edit ang entry.</translation>
     </message>
     <message>
         <source>Path of the entry to edit.</source>
-        <translation>Pad van het te bewerken item.</translation>
+        <translation>Path ng entry para i-edit.</translation>
     </message>
     <message>
         <source>Not changing any field for entry %1.</source>
-        <translation>Geen enkel veld in item %1 is gewijzigd.</translation>
+        <translation>Hindi binabago ang anumang field para sa entry %1.</translation>
     </message>
     <message>
         <source>Enter new password for entry: </source>
-        <translation>Voer nieuw wachtwoord in voor item:</translation>
+        <translation>Maglagay ng bagong password para sa entry: </translation>
     </message>
     <message>
         <source>Writing the database failed: %1</source>
-        <translation>Het schrijven van de database is mislukt: %1</translation>
+        <translation>Nabigo ang pagsulat ng database: %1</translation>
     </message>
     <message>
         <source>Successfully edited entry %1.</source>
-        <translation>Item %1 is aangepast.</translation>
+        <translation>Matagumpay na na-edit ang entry na %1.</translation>
     </message>
     <message>
         <source>Perform advanced analysis on the password.</source>
-        <translation>Geavanceerde analyse op het wachtwoord uitvoeren.</translation>
+        <translation>Magsagawa ng advanced na pagsusuri sa password.</translation>
     </message>
     <message>
         <source>Password for which to estimate the entropy.</source>
-        <translation>Wachtwoord waarvoor de entropie geschat moet worden.</translation>
+        <translation>Password para kung saan tatantyahin ang entropy.</translation>
     </message>
     <message>
         <source>Estimate the entropy of a password.</source>
-        <translation>De entropie van een wachtwoord inschatten.</translation>
+        <translation>Tantyahin ang entropy ng isang password.</translation>
     </message>
     <message>
         <source>Length %1</source>
-        <translation>Lengte %1</translation>
+        <translation>Haba na %1</translation>
     </message>
     <message>
         <source>Entropy %1</source>
-        <translation>Entropie %1</translation>
+        <translation>Entropy %1</translation>
     </message>
     <message>
         <source>Log10 %1</source>
@@ -6865,203 +6864,203 @@ Wil je deze overschrijven?</translation>
     </message>
     <message>
         <source>Multi-word extra bits %1</source>
-        <translation>Multi-word extra bits %1</translation>
+        <translation>Dagdag na piraso ng maramihang salita %1</translation>
     </message>
     <message>
         <source>Type: Bruteforce</source>
-        <translation>Type: Brute kracht</translation>
+        <translation>Uri: Bruteforce</translation>
     </message>
     <message>
         <source>Type: Dictionary</source>
-        <translation>Type: Woordenboek</translation>
+        <translation>Uri: Dictionary</translation>
     </message>
     <message>
         <source>Type: Dict+Leet</source>
-        <translation>Type: Woordenboek + Leet</translation>
+        <translation>Uri: Dict+Leet</translation>
     </message>
     <message>
         <source>Type: User Words</source>
-        <translation>Type: Gebruikerwoorden</translation>
+        <translation>Uri: User Words</translation>
     </message>
     <message>
         <source>Type: User+Leet</source>
-        <translation>Type: Gebruikerwoorden + Leet</translation>
+        <translation>Uri: User+Leet</translation>
     </message>
     <message>
         <source>Type: Repeated</source>
-        <translation>Type: Herhaald</translation>
+        <translation>Uri: Paulit-ulit</translation>
     </message>
     <message>
         <source>Type: Sequence</source>
-        <translation>Type: Reeks</translation>
+        <translation>Uri: Sequence</translation>
     </message>
     <message>
         <source>Type: Spatial</source>
-        <translation>Type: Ruimtelijk</translation>
+        <translation>Uri: Spatial</translation>
     </message>
     <message>
         <source>Type: Date</source>
-        <translation>Type: Datum</translation>
+        <translation>Uri: Petsa</translation>
     </message>
     <message>
         <source>Type: Bruteforce(Rep)</source>
-        <translation>Type: Brute kracht (herh)</translation>
+        <translation>Uri: Bruteforce(Rep)</translation>
     </message>
     <message>
         <source>Type: Dictionary(Rep)</source>
-        <translation>Type: Woordenboek (herh)</translation>
+        <translation>Uri: Dictionary(Rep)</translation>
     </message>
     <message>
         <source>Type: Dict+Leet(Rep)</source>
-        <translation>Type: Woordenboek + Leet (herh)</translation>
+        <translation>Uri: Dict+Leet(Rep)</translation>
     </message>
     <message>
         <source>Type: User Words(Rep)</source>
-        <translation>Type: Gebruikerwoorden (herh)</translation>
+        <translation>Uri: User Words(Rep)</translation>
     </message>
     <message>
         <source>Type: User+Leet(Rep)</source>
-        <translation>Type: Gebruikerwoorden + Leet (herh)</translation>
+        <translation>Uri: User+Leet(Rep)</translation>
     </message>
     <message>
         <source>Type: Repeated(Rep)</source>
-        <translation>Type: Herhaald (herh)</translation>
+        <translation>Uri: Paulit-ulit na(Rep)</translation>
     </message>
     <message>
         <source>Type: Sequence(Rep)</source>
-        <translation>Type: Reeks (herh)</translation>
+        <translation>Uri: Sequence(Rep)</translation>
     </message>
     <message>
         <source>Type: Spatial(Rep)</source>
-        <translation>Type: Ruimtelijk (herh)</translation>
+        <translation>Uri: Spatial(Rep)</translation>
     </message>
     <message>
         <source>Type: Date(Rep)</source>
-        <translation>Type: Datum (herh)</translation>
+        <translation>Type: Petsa ng(Rep)</translation>
     </message>
     <message>
         <source>Type: Unknown (%1)</source>
-        <translation>Type: Onbekend (%1)</translation>
+        <translation>Uri: Unknown na (%1)</translation>
     </message>
     <message>
         <source>Entropy %1 (%2)</source>
-        <translation>Entropie %1 (%2)</translation>
+        <translation>Entropy %1 (%2)</translation>
     </message>
     <message>
         <source>*** Password length (%1) != sum of length of parts (%2) ***</source>
-        <translation>*** Wachtwoordlengte (%1) ! = som van de lengte van de onderdelen (%2) ***</translation>
+        <translation>*** Password length (%1) != sum of length of parts (%2) ***</translation>
     </message>
     <message>
         <source>Exit interactive mode.</source>
-        <translation>Interactieve modus afsluiten.</translation>
+        <translation>Lumabas sa interactive mode.</translation>
     </message>
     <message>
         <source>Format to use when exporting. Available choices are &apos;xml&apos; or &apos;csv&apos;. Defaults to &apos;xml&apos;.</source>
-        <translation>Formaat om te gebruiken bij het exporteren. Beschikbare keuzes zijn &apos;xml&apos; of &apos;csv&apos;. Standaard ingesteld op &apos;xml&apos;.</translation>
+        <translation>Format na gagamitin kapag nag-e-export. Ang mga available na pagpipilian ay &apos;xml&apos; o &apos;csv&apos;. Default sa &apos;xml&apos;.</translation>
     </message>
     <message>
         <source>Exports the content of a database to standard output in the specified format.</source>
-        <translation>Exporteert de inhoud van een database naar standaarduitvoer in de opgegeven indeling.</translation>
+        <translation>Nai-export na ang nilalaman ng isang database sa karaniwang output sa tinukoy na format.</translation>
     </message>
     <message>
         <source>Unable to export database to XML: %1</source>
-        <translation>Kon de database niet exporteren naar XML: %1</translation>
+        <translation>Hindi ma-export ang database sa XML: %1</translation>
     </message>
     <message>
         <source>Unsupported format %1</source>
-        <translation>Niet-ondersteund formaat %1</translation>
+        <translation>Hindi suportadong format %1</translation>
     </message>
     <message>
         <source>Length of the generated password</source>
-        <translation>Lengte van het gegenereerde wachtwoord</translation>
+        <translation>Ang haba ng nabuong password</translation>
     </message>
     <message>
         <source>length</source>
-        <translation>lengte</translation>
+        <translation>Haba</translation>
     </message>
     <message>
         <source>Use lowercase characters</source>
-        <translation>Kleine letters gebruiken</translation>
+        <translation>Gumamit ng maliliit na character</translation>
     </message>
     <message>
         <source>Use uppercase characters</source>
-        <translation>Hoofdletters gebruiken</translation>
+        <translation>Gumamit ng malalaking character</translation>
     </message>
     <message>
         <source>Use numbers</source>
-        <translation>Getallen gebruiken.</translation>
+        <translation>Gumamit ng mga numero</translation>
     </message>
     <message>
         <source>Use special characters</source>
-        <translation>Speciale tekens gebruiken</translation>
+        <translation>Gumamit ng mga espesyal na character</translation>
     </message>
     <message>
         <source>Use extended ASCII</source>
-        <translation>Uitgebreide ASCII-tekens gebruiken</translation>
+        <translation>Gumamit ng pinahabang ASCII</translation>
     </message>
     <message>
         <source>Exclude character set</source>
-        <translation>Tekenset uitsluiten</translation>
+        <translation>Ibukod ang set ng character</translation>
     </message>
     <message>
         <source>chars</source>
-        <translation>Tekens</translation>
+        <translation>chars</translation>
     </message>
     <message>
         <source>Use custom character set</source>
-        <translation>Aangepaste tekenset gebruiken</translation>
+        <translation>Gumamit ng custom na set ng character</translation>
     </message>
     <message>
         <source>Exclude similar looking characters</source>
-        <translation>Op elkaar lijkende tekens niet gebruiken</translation>
+        <translation>Ibukod ang magkatulad na hitsura ng mga character</translation>
     </message>
     <message>
         <source>Include characters from every selected group</source>
-        <translation>Tekens uit iedere geslecteerde groep opnemen</translation>
+        <translation>Isama ang mga character mula sa bawat napiling group</translation>
     </message>
     <message>
         <source>Generate a new random password.</source>
-        <translation>Genereer een willekeurig wachtwoord</translation>
+        <translation>Bumuo ng bagong random na password.</translation>
     </message>
     <message>
         <source>Invalid password length %1</source>
-        <translation>Ongeldige wachtwoordlengte %1</translation>
+        <translation>Invalid na haba ng password na %1</translation>
     </message>
     <message>
         <source>Invalid password generator after applying all options</source>
-        <translation>Ongeldige wachtwoordgenerator na het toepassen van alle opties</translation>
+        <translation>Invalid na generator ng password pagkatapos ilapat ang lahat ng mga opsyon</translation>
     </message>
     <message>
         <source>Display command help.</source>
-        <translation>Toon helptekst voor opdracht.</translation>
+        <translation>Ipakita ang tulong na command.</translation>
     </message>
     <message>
         <source>Available commands:</source>
-        <translation>Beschikbare opdrachten:</translation>
+        <translation>Mga available na command:</translation>
     </message>
     <message>
         <source>Import the contents of an XML database.</source>
-        <translation>Importeer de inhoud van een XML-database.</translation>
+        <translation>Mag-import ng mga content ng isang XML database.</translation>
     </message>
     <message>
         <source>Path of the XML database export.</source>
-        <translation>Pad van de XML-database export.</translation>
+        <translation>Path ng pag-export ng XML database</translation>
     </message>
     <message>
         <source>Path of the new database.</source>
-        <translation>Pad van de nieuwe database.</translation>
+        <translation>Path ng bagong database.</translation>
     </message>
     <message>
         <source>Unable to import XML database: %1</source>
-        <translation>Kan XML-database niet importeren: %1</translation>
+        <translation>Hindi makapag-import ng XML database: %1</translation>
     </message>
     <message>
         <source>Successfully imported database.</source>
-        <translation>Database is geïmporteerd.</translation>
+        <translation>Matagumpay na na-import ang database.</translation>
     </message>
     <message>
         <source>Show a database&apos;s information.</source>
-        <translation>Toon de gegevens van een database.</translation>
+        <translation>Ipakita ang impormasyon ng database</translation>
     </message>
     <message>
         <source>UUID: </source>
@@ -7069,15 +7068,15 @@ Wil je deze overschrijven?</translation>
     </message>
     <message>
         <source>Name: </source>
-        <translation>Naam: </translation>
+        <translation>Pangalan: </translation>
     </message>
     <message>
         <source>Description: </source>
-        <translation>Beschrijving:</translation>
+        <translation>Paglalarawan: </translation>
     </message>
     <message>
         <source>Cipher: </source>
-        <translation>Versleuteling:</translation>
+        <translation>Cipher: </translation>
     </message>
     <message>
         <source>KDF: </source>
@@ -7085,83 +7084,83 @@ Wil je deze overschrijven?</translation>
     </message>
     <message>
         <source>Recycle bin is enabled.</source>
-        <translation>Prullenbak is ingeschakeld.</translation>
+        <translation>Naka-enable ang recycle bin</translation>
     </message>
     <message>
         <source>Recycle bin is not enabled.</source>
-        <translation>Prullenbak is niet ingeschakeld.</translation>
+        <translation>Ang recycle bin ay hindi naka-enable.</translation>
     </message>
     <message>
         <source>Location</source>
-        <translation>Locatie</translation>
+        <translation>Lokasyon</translation>
     </message>
     <message>
         <source>Database created</source>
-        <translation>Database aangemaakt</translation>
+        <translation>Nalikha na ang database</translation>
     </message>
     <message>
         <source>Last saved</source>
-        <translation>Laatst opgeslagen</translation>
+        <translation>Huling na-save</translation>
     </message>
     <message>
         <source>Unsaved changes</source>
-        <translation>Niet-opgeslagen wijzigingen</translation>
+        <translation>Mga hindi na-save na pagbabago</translation>
     </message>
     <message>
         <source>yes</source>
-        <translation>ja</translation>
+        <translation>oo</translation>
     </message>
     <message>
         <source>no</source>
-        <translation>nee</translation>
+        <translation>wala</translation>
     </message>
     <message>
         <source>Number of groups</source>
-        <translation>Aantal groepen</translation>
+        <translation>Bilang ng mga grupo</translation>
     </message>
     <message>
         <source>Number of entries</source>
-        <translation>Aantal items</translation>
+        <translation>Bilang ng mga entry</translation>
     </message>
     <message>
         <source>Number of expired entries</source>
-        <translation>Aantal verlopen items</translation>
+        <translation>Bilang ng mga nag-expire na entry</translation>
     </message>
     <message>
         <source>Unique passwords</source>
-        <translation>Unieke wachtwoorden</translation>
+        <translation>Natatanging password</translation>
     </message>
     <message>
         <source>Non-unique passwords</source>
-        <translation>Niet-unieke wachtwoorden</translation>
+        <translation>Hindi natatanging mga password</translation>
     </message>
     <message>
         <source>Maximum password reuse</source>
-        <translation>Maximaal wachtwoordherbruik</translation>
+        <translation>Maximum na muling paggamit ng password</translation>
     </message>
     <message>
         <source>Number of short passwords</source>
-        <translation>Aantal korte wachtwoorden</translation>
+        <translation>Bilang ng mabababang password</translation>
     </message>
     <message>
         <source>Number of weak passwords</source>
-        <translation>Aantal zwakke wachtwoorden</translation>
+        <translation>Bilang ng mahihinang password</translation>
     </message>
     <message>
         <source>Entries excluded from reports</source>
-        <translation>Items die zijn uitgesloten van rapportage</translation>
+        <translation>Ang mga entry ay hindi kasama sa mga ulat</translation>
     </message>
     <message>
         <source>Average password length</source>
-        <translation>Gemiddelde wachtwoordlengte</translation>
+        <translation>Average na haba ng password</translation>
     </message>
     <message>
         <source>%1 characters</source>
-        <translation>%1 tekens</translation>
+        <translation>%1 character</translation>
     </message>
     <message>
         <source>Unknown command %1</source>
-        <translation>Onbekende opdracht %1</translation>
+        <translation>Hindi kilalang utos %1</translation>
     </message>
     <message>
         <source>
@@ -7170,374 +7169,374 @@ Available commands:
 </source>
         <translation>
 
-Beschikbare opdrachten:
+Mga available command:
 </translation>
     </message>
     <message>
         <source>Name of the command to execute.</source>
-        <translation>Naam van de uit te voeren opdracht.</translation>
+        <translation>Pangalan ng utos na isasagawa.</translation>
     </message>
     <message>
         <source>Displays debugging information.</source>
-        <translation>Geeft foutopsporingsinformatie weer.</translation>
+        <translation>Nagpapakita ng impormasyon sa pag-debug.</translation>
     </message>
     <message>
         <source>Invalid command %1.</source>
-        <translation>Ongeldige opdracht %1.</translation>
+        <translation>Invalid na command na %1.</translation>
     </message>
     <message>
         <source>Recursively list the elements of the group.</source>
-        <translation>De elementen van de groep recursief opsommen</translation>
+        <translation>Paulit-ulit na ilista ang mga elemento ng group.</translation>
     </message>
     <message>
         <source>Flattens the output to single lines.</source>
-        <translation>Hiermee wordt de uitvoer samengevoegd tot enkele lijnen.</translation>
+        <translation>Pina-flatten ang output sa iisang linya.</translation>
     </message>
     <message>
         <source>List database entries.</source>
-        <translation>Lijst van database-items.</translation>
+        <translation>Listahan ng mga entry sa database.</translation>
     </message>
     <message>
         <source>Path of the group to list. Default is /</source>
-        <translation>Pad naar de groepslijst. Standaard is /</translation>
+        <translation>Path ng group para sa listahan. Default ay /</translation>
     </message>
     <message>
         <source>Cannot find group %1.</source>
-        <translation>Kan groep %1 niet vinden.</translation>
+        <translation>Hindi mahanap ang pangkat na %1.</translation>
     </message>
     <message>
         <source>Use the same credentials for both database files.</source>
-        <translation>Gebruik dezelfde gegevens voor beide gegevensbestanden.</translation>
+        <translation>Gamitin ang parehong mga kredensyal para sa parehong mga file ng database.</translation>
     </message>
     <message>
         <source>Key file of the database to merge from.</source>
-        <translation>Sleutelbestand van gegevensbestand om samen te voegen.</translation>
+        <translation>Key file ng database na pagsasamahin.</translation>
     </message>
     <message>
         <source>Deactivate password key for the database to merge from.</source>
-        <translation>Deactiveer de wachtwoordsleutel voor de database waaruit je wil samenvoegen.</translation>
+        <translation>I-deactivate ang password key para sa database na pagsasamahin.</translation>
     </message>
     <message>
         <source>Only print the changes detected by the merge operation.</source>
-        <translation>Alleen de wijzigingen afdrukken die zijn gedetecteerd door de samenvoegbewerking.</translation>
+        <translation>I-print lamang ang mga pagbabagong nakita ng merge operation.</translation>
     </message>
     <message>
         <source>Yubikey slot for the second database.</source>
-        <translation>YubiKey positie voor de tweede database.</translation>
+        <translation>Yubikey slot para sa pangalawang database.</translation>
     </message>
     <message>
         <source>slot</source>
-        <translation>positie</translation>
+        <translation>slot</translation>
     </message>
     <message>
         <source>Merge two databases.</source>
-        <translation>Twee databases samenvoegen.</translation>
+        <translation>Pagsamahin ang dalawang database.</translation>
     </message>
     <message>
         <source>Path of the database to merge from.</source>
-        <translation>Pad naar de samen te voegen brondatabase.</translation>
+        <translation>Path ng database kung saan pagsasamahin.</translation>
     </message>
     <message>
         <source>Error reading merge file:
 %1</source>
-        <translation>Fout bij lezen van samenvoegbestand:
+        <translation>Error sa pagbabasa ng merge file:
 %1</translation>
     </message>
     <message>
         <source>Unable to save database to file : %1</source>
-        <translation>Kan de database niet opslaan in bestand: %1</translation>
+        <translation>Hindi mai-save ang databasa sa file na: %1</translation>
     </message>
     <message>
         <source>Successfully merged %1 into %2.</source>
-        <translation>%1 en %2 zijn samengevoegd.</translation>
+        <translation>Matagumpay na pinagsama ang %1 sa %2.</translation>
     </message>
     <message>
         <source>Database was not modified by merge operation.</source>
-        <translation>Database werd niet gewijzigd door het samenvoegen.</translation>
+        <translation>Ang database ay hindi binago ng operasyon ng pagsasama.</translation>
     </message>
     <message>
         <source>Moves an entry to a new group.</source>
-        <translation>Hiermee verplaats je een item naar een nieuwe groep.</translation>
+        <translation>Inilipat ang isang entry sa isang bagong group.</translation>
     </message>
     <message>
         <source>Path of the entry to move.</source>
-        <translation>Pad van het te verplaatsen item.</translation>
+        <translation>Path ng entry para ilipat.</translation>
     </message>
     <message>
         <source>Path of the destination group.</source>
-        <translation>Pad van de doelgroep.</translation>
+        <translation>Path ng distinasyon ng group.</translation>
     </message>
     <message>
         <source>Could not find group with path %1.</source>
-        <translation>Kan groep met pad %1 niet vinden.</translation>
+        <translation>Hindi mahanap ang group na may path na %1.</translation>
     </message>
     <message>
         <source>Entry is already in group %1.</source>
-        <translation>Het item is al in groep %1.</translation>
+        <translation>Ang entry ay nasa group na %1.</translation>
     </message>
     <message>
         <source>Successfully moved entry %1 to group %2.</source>
-        <translation>Item %1 is verplaatst naar groep %2.</translation>
+        <translation>Matagumpay na nailipat ang entry %1 sa group na %2.</translation>
     </message>
     <message>
         <source>Open a database.</source>
-        <translation>Open een gegevensbestand.</translation>
+        <translation>Magbukas ng database.</translation>
     </message>
     <message>
         <source>Path of the entry to remove.</source>
-        <translation>Pad van het te verwijderen item.</translation>
+        <translation>Path ng entry para i-remove.</translation>
     </message>
     <message>
         <source>Unable to save database to file: %1</source>
-        <translation>Kan de database niet opslaan in bestand: %1</translation>
+        <translation>Hindi mai-save ang database sa file na: %1</translation>
     </message>
     <message>
         <source>Successfully recycled entry %1.</source>
-        <translation>Item %1 is hergebruikt.</translation>
+        <translation>Matagumpay na na-recycle ang entry na %1.</translation>
     </message>
     <message>
         <source>Successfully deleted entry %1.</source>
-        <translation>Item %1 is verwijderd.</translation>
+        <translation>Matagumpay na na-delete ang entry na %1.</translation>
     </message>
     <message>
         <source>Path of the group to remove.</source>
-        <translation>Pad van de te verwijderen groep.</translation>
+        <translation>Path ng group na ire-remove.</translation>
     </message>
     <message>
         <source>Cannot remove root group from database.</source>
-        <translation>Kan de hoofdgroep niet verwijderen uit de database.</translation>
+        <translation>Hindi maalis ang root group mula sa database.</translation>
     </message>
     <message>
         <source>Successfully recycled group %1.</source>
-        <translation>Groep %1 is hergebruikt.</translation>
+        <translation>Matagumpay na na-recycle ang group na %1.</translation>
     </message>
     <message>
         <source>Successfully deleted group %1.</source>
-        <translation>Groep %1 is verwijderd.</translation>
+        <translation>Matagumpay na na-delete ang group na %1.</translation>
     </message>
     <message>
         <source>Find entries quickly.</source>
-        <translation>Items snel zoeken.</translation>
+        <translation>Maghanap ng mga entry nang mabilis.</translation>
     </message>
     <message>
         <source>Search term.</source>
-        <translation>Zoekterm.</translation>
+        <translation>Termino sa paghahanap.</translation>
     </message>
     <message>
         <source>Show the entry&apos;s current TOTP.</source>
-        <translation>Toon de huidige TOTP van het item.</translation>
+        <translation>Ipakita ang kasalukuyang TOTP ng entry.</translation>
     </message>
     <message>
         <source>Show the protected attributes in clear text.</source>
-        <translation>Toon de beschermde kenmerken in tekst.</translation>
+        <translation>Ipakita ang mga protektadong attribute sa malinaw na teksto.</translation>
     </message>
     <message>
         <source>Show the attachments of the entry.</source>
-        <translation>Toon de bijlagen van het item.</translation>
+        <translation>Ipakita ang mga attachment ng entry.</translation>
     </message>
     <message>
         <source>Names of the attributes to show. This option can be specified more than once, with each attribute shown one-per-line in the given order. If no attributes are specified, a summary of the default attributes is given.</source>
-        <translation>Namen van de te tonen kenmerken. Deze optie kan meer dan eens worden opgegeven, waarbij elk kenmerk op een regel wordt getoond in de opgegeven volgorde. Als er geen kenmerken worden opgegeven, wordt een samenvatting van de standaardkenmerken gegeven.</translation>
+        <translation>Mga pangalan ng ipapakitang katangian. Maaaring tukuyin ang opsyon na ito nang higit sa isang beses, na ang bawat katangian ay ipinapakita nang isa-bawat-linya sa ibinigay na pagkakasunud-sunod. Kung walang tinukoy na mga katangian, ibibigay ang buod ng mga default na katangian.</translation>
     </message>
     <message>
         <source>attribute</source>
-        <translation>kenmerk</translation>
+        <translation>attribute</translation>
     </message>
     <message>
         <source>Show an entry&apos;s information.</source>
-        <translation>Toon de informatie die hoort bij een item.</translation>
+        <translation>Ipakita ang impormasyon ng entry.</translation>
     </message>
     <message>
         <source>Name of the entry to show.</source>
-        <translation>Naam van het item dat getoond moet worden.</translation>
+        <translation>Pangalan ng entry na ipapakita.</translation>
     </message>
     <message>
         <source>ERROR: unknown attribute %1.</source>
-        <translation>FOUT: onbekend kenmerk %1.</translation>
+        <translation>ERROR: hindi alam na attribute %1.</translation>
     </message>
     <message>
         <source>No attachments present.</source>
-        <translation>Geen bijlagen aanwezig.</translation>
+        <translation>Walang mga attachment ang naroroon.</translation>
     </message>
     <message>
         <source>Attachments:</source>
-        <translation>Bijlagen:</translation>
+        <translation>Mga attachment:</translation>
     </message>
     <message>
         <source>Failed to open database file %1: not found</source>
-        <translation>Kan het databasebestand %1 niet openen: niet gevonden</translation>
+        <translation>Nabigong buksan ang file ng database na %1: hindi nahanap</translation>
     </message>
     <message>
         <source>Failed to open database file %1: not a plain file</source>
-        <translation>Kan het databasebestand %1 niet openen: geen gewoon bestand</translation>
+        <translation>Nabigong buksan ang database file na %1: hindi isang simpleng file</translation>
     </message>
     <message>
         <source>Failed to open database file %1: not readable</source>
-        <translation>Kan het databasebestand %1 niet openen: niet leesbaar</translation>
+        <translation>Nabigong buksan ang database file na %1: hindi nababasa</translation>
     </message>
     <message>
         <source>Enter password to unlock %1: </source>
-        <translation>Geef het wachtwoord om %1 te ontgrendelen:</translation>
+        <translation>Maglagay ng password para i-unlock ang %1: </translation>
     </message>
     <message>
         <source>Failed to load key file %1: %2</source>
-        <translation>Er ging iets fout bij het laden van sleutelbestand %1: %2</translation>
+        <translation>Nabigong i-load ang key file %1: %2</translation>
     </message>
     <message>
         <source>WARNING: You are using an old key file format which KeePassXC may
 stop supporting in the future.
 
 Please consider generating a new key file.</source>
-        <translation>WAARSCHUWING: Je gebruikt een oud sleutelbestandsformaat dat KeePassXC
-in de toekomst mogelijk niet meer kan ondersteunen.
+        <translation>BABALA: Gumagamit ka ng lumang key file format na maaaring magpatigil sa
+KeePassXC ng pagsuporta sa hinaharap.
 
-Overweeg om een nieuw sleutelbestand te genereren.</translation>
+Mangyaring isaalang-alang ang pagbuo ng bagong key file.</translation>
     </message>
     <message>
         <source>Invalid YubiKey slot %1</source>
-        <translation>Ongeldige YubiKey positie %1</translation>
+        <translation>Invalid na YubiKey slot na %1</translation>
     </message>
     <message>
         <source>Invalid YubiKey serial %1</source>
-        <translation>Ongeldig YubiKey nummer %1</translation>
+        <translation>Invalid na YubiKey serial na %1</translation>
     </message>
     <message>
         <source>Enter password to encrypt database (optional): </source>
-        <translation>Voer een wachtwoord in om de database te versleutelen (optioneel):</translation>
+        <translation>Maglagay ng password para i-encrypt ang database (opsyonal): </translation>
     </message>
     <message>
         <source>Do you want to create a database with an empty password? [y/N]: </source>
-        <translation>Wil je een database aanmaken met een leeg wachtwoord? [j/N]:</translation>
+        <translation>Gusto mo bang lumikha ng isang database na walang password? [y/N]: </translation>
     </message>
     <message>
         <source>Repeat password: </source>
-        <translation>Herhaal wachtwoord:</translation>
+        <translation>Ulitin ang password: </translation>
     </message>
     <message>
         <source>Error: Passwords do not match.</source>
-        <translation>Fout: wachtwoorden komen niet overeen.</translation>
+        <translation>Error: Hindi tugma ang mga password.</translation>
     </message>
     <message>
         <source>No program defined for clipboard manipulation</source>
-        <translation>Geen programma ingesteld voor klembord manipulatie</translation>
+        <translation>Walang tinukoy na program para sa pagmamanipula ng clipboard</translation>
     </message>
     <message>
         <source>All clipping programs failed. Tried %1
 </source>
-        <translation>Alle knipprogramma&apos;s zijn mislukt. Ik heb %1 geprobeerd
+        <translation>Nabigo ang lahat ng clipping program. Sinubukan ang %1
 </translation>
     </message>
     <message>
         <source>Creating KeyFile %1 failed: %2</source>
-        <translation>Aanmaak van sleutelbestand %1 is mislukt: %2</translation>
+        <translation>Nabigo ang paglikha ng KeyFile na %1: %2</translation>
     </message>
     <message>
         <source>Loading KeyFile %1 failed: %2</source>
-        <translation>Laden van sleutelbestand %1 is mislukt: %2</translation>
+        <translation>Nabigo ang paglo-load ng KeyFile na %1: %2</translation>
     </message>
     <message>
         <source>HIBP file, line %1: parse error</source>
-        <translation>HIBP-bestand, regel %1: fout bij interpreteren</translation>
+        <translation>HIBP file, linya na %1: error sa pag-parse</translation>
     </message>
     <message>
         <source>To use okon, you must provide a post-processed file (e.g. file.okon)</source>
-        <translation>Om okon te gebruiken, moet je een nabewerkt bestand opgeven (bijv. bestand.okon)</translation>
+        <translation>Para magamit ang okon, dapat kang magbigay ng post-processed na file (hal. file.okon)</translation>
     </message>
     <message>
         <source>Could not start okon process: %1</source>
-        <translation>Kon okon-proces niet starten: %1</translation>
+        <translation>Hindi masimulan ang proseso ng okon: %1</translation>
     </message>
     <message>
         <source>Error: okon process did not finish</source>
-        <translation>Fout: okon-proces is niet voltooid</translation>
+        <translation>Error: hindi natapos ang proseso ng okon</translation>
     </message>
     <message>
         <source>Failed to load okon processed database: %1</source>
-        <translation>Kan okon-verwerkte database niet laden: %1</translation>
+        <translation>Nabigong i-load ang okon sa naprosesong database: %1</translation>
     </message>
     <message>
         <source>Very weak password</source>
-        <translation>Zeer zwak wachtwoord</translation>
+        <translation>Napakahina ng password</translation>
     </message>
     <message>
         <source>Password entropy is %1 bits</source>
-        <translation>Wachtwoord-entropie is %1 bits</translation>
+        <translation>Ang entropy ng password ay %1 bits</translation>
     </message>
     <message>
         <source>Weak password</source>
-        <translation>Zwak wachtwoord</translation>
+        <translation>Mahinang password</translation>
     </message>
     <message>
         <source>Used in %1/%2</source>
-        <translation>Gebruikt in %1/%2</translation>
+        <translation>Ginamit sa %1%2</translation>
     </message>
     <message numerus="yes">
         <source>Password is used %1 time(s)</source>
-        <translation><numerusform>Wachtwoord is %1 keer gebruikt</numerusform><numerusform>Wachtwoord is %1 keer gebruikt</numerusform></translation>
+        <translation><numerusform>Ginagamit ang password ng %1 beses</numerusform><numerusform>Ginagamit ang password ng %1 (mga) beses</numerusform></translation>
     </message>
     <message>
         <source>Password has expired</source>
-        <translation>Wachtwoord is verlopen</translation>
+        <translation>Nag-expire na ang password</translation>
     </message>
     <message>
         <source>Password expiry was %1</source>
-        <translation>Wachtwoord is %1 verlopen</translation>
+        <translation>Ang pag-expire ng password ay sa %1</translation>
     </message>
     <message>
         <source>Password expires on %1</source>
-        <translation>Wachtwoord verloopt op %1</translation>
+        <translation>Mag-e-expire ang password sa %1</translation>
     </message>
     <message>
         <source>Password is about to expire</source>
-        <translation>Wachtwoord is bijna verlopen</translation>
+        <translation>Malapit nang mag-expire ang password</translation>
     </message>
     <message numerus="yes">
         <source>Password expires in %1 day(s)</source>
-        <translation><numerusform>Wachtwoord verloopt in %1 dag(en)</numerusform><numerusform>Wachtwoord verloopt in %1 dag(en)</numerusform></translation>
+        <translation><numerusform>Mag-e-expire ang password sa loob ng %1 na araw</numerusform><numerusform>Mag-e-expire ang password sa loob ng %1 na (mga) araw</numerusform></translation>
     </message>
     <message>
         <source>Password will expire soon</source>
-        <translation>Wachtwoord verloopt snel</translation>
+        <translation>Malapit nang mag-expire ang password</translation>
     </message>
     <message>
         <source>Version %1</source>
-        <translation>Versie %1</translation>
+        <translation>Bersyon na %1</translation>
     </message>
     <message>
         <source>Build Type: %1</source>
-        <translation>Bouwtype: %1</translation>
+        <translation>Uri ng Build: %1</translation>
     </message>
     <message>
         <source>Revision: %1</source>
-        <translation>Revisie: %1</translation>
+        <translation>Pagbabago: %1</translation>
     </message>
     <message>
         <source>Distribution: %1</source>
-        <translation>Distributie: %1</translation>
+        <translation>Pamamahagi: %1</translation>
     </message>
     <message>
         <source>Debugging mode is disabled.</source>
-        <translation>De foutopsporingsmodus is uitgeschakeld.</translation>
+        <translation>Naka-disable ang mode ng pag-debug.</translation>
     </message>
     <message>
         <source>Debugging mode is enabled.</source>
-        <translation>De foutopsporingsmodus is ingeschakeld.</translation>
+        <translation>Naka-enable ang mode ng pag-debug.</translation>
     </message>
     <message>
         <source>Operating system: %1
 CPU architecture: %2
 Kernel: %3 %4</source>
-        <translation>Besturingssysteem: %1
-CPU-architectuur: %2
-Kernelversie: %3 %4</translation>
+        <translation>Operating system: %1
+Arkitektura ng CPU: %2
+Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>Auto-type</translation>
+        <translation>Auto-Type</translation>
     </message>
     <message>
         <source>SSH Agent</source>
-        <translation>SSH-agent</translation>
+        <translation>SSH Agent</translation>
     </message>
     <message>
         <source>KeeShare</source>
@@ -7549,107 +7548,107 @@ Kernelversie: %3 %4</translation>
     </message>
     <message>
         <source>Quick Unlock</source>
-        <translation>Snel ontgrendelen</translation>
+        <translation>Mabilis na I-unlock</translation>
     </message>
     <message>
         <source>Secret Service Integration</source>
-        <translation>Integratie van geheime diensten</translation>
+        <translation>Secret Service Integration</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>Geen</translation>
+        <translation>Wala</translation>
     </message>
     <message>
         <source>Enabled extensions:</source>
-        <translation>Geactiveerde extensies:</translation>
+        <translation>Mga na-enable na extension:</translation>
     </message>
     <message numerus="yes">
         <source>over %1 year(s)</source>
-        <translation><numerusform>meer dan %1 jaar</numerusform><numerusform>meer dan %1 jaar</numerusform></translation>
+        <translation><numerusform>mahigit sa %1 taon</numerusform><numerusform>mahigit sa %1 (mga) taon</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>about %1 month(s)</source>
-        <translation><numerusform>ongeveer %1 maand(en)</numerusform><numerusform>ongeveer %1 maand(en)</numerusform></translation>
+        <translation><numerusform>humigit-kumulang na %1 buwan</numerusform><numerusform>humigit-kumulang na %1 (mga) buwan</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 week(s)</source>
-        <translation><numerusform>%1 week(en)</numerusform><numerusform>%1 week(en)</numerusform></translation>
+        <translation><numerusform>%1 linggo</numerusform><numerusform>%1 (mga)linggo</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 day(s)</source>
-        <translation><numerusform>%1 dag(en)</numerusform><numerusform>%1 dag(en)</numerusform></translation>
+        <translation><numerusform>%1 araw</numerusform><numerusform>%1 (mga)araw</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 hour(s)</source>
-        <translation><numerusform>%1 uur</numerusform><numerusform>%1 uur</numerusform></translation>
+        <translation><numerusform>%1 oras</numerusform><numerusform>%1 (mga)oras</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 minute(s)</source>
-        <translation><numerusform>%1 minuut</numerusform><numerusform>%1 minuten</numerusform></translation>
+        <translation><numerusform>%1 minuto</numerusform><numerusform>%1 (mga)minuto</numerusform></translation>
     </message>
     <message>
         <source>Botan library must be at least %1, found %2.%3.%4</source>
-        <translation>Botan-bibliotheek moet minstens versie %1 zijn. Aangetroffen: %2.%3.%4</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Cryptographic libraries:</source>
-        <translation>Cryptografische bibliotheken:</translation>
+        <translation>Mga Cryptographic na library:</translation>
     </message>
     <message>
         <source>AES (%1 rounds)</source>
-        <translation>AES (%1 iteraties)</translation>
+        <translation>AES (%1 round)</translation>
     </message>
     <message>
         <source>Argon2%1 (%2 rounds, %3 KB)</source>
-        <translation>Argon2%1 (%2 cycli, %3 KB)</translation>
+        <translation>Argon2%1 (%2 rounds, %3 KB)</translation>
     </message>
     <message>
         <source>SymmetricCipher::init: Invalid cipher mode.</source>
-        <translation>SymmetricCipher::init: Ongeldige cijfermodus.</translation>
+        <translation>SymmetricCipher::init: Invalid na cipher mode.</translation>
     </message>
     <message>
         <source>SymmetricCipher::init: Invalid IV size of %1 for %2.</source>
-        <translation>SymmetricCipher::init: Ongeldige IV-grootte van %1 voor %2.</translation>
+        <translation>SymmetricCipher::init: Invalid IV na sukat ng %1 para sa %2.</translation>
     </message>
     <message>
         <source>Cipher not initialized prior to use.</source>
-        <translation>Codering niet geïnitialiseerd voor gebruik.</translation>
+        <translation>Hindi nasimulan ang cipher bago gamitin.</translation>
     </message>
     <message>
         <source>Cannot process 0 length data.</source>
-        <translation>Kan gegevens met een lengte van 0 niet verwerken.</translation>
+        <translation>Hindi maproseso ang 0 haba ng data.</translation>
     </message>
     <message>
         <source>unknown executable (DBus address %1)</source>
-        <translation>onbekend uitvoerbaar bestand (DBus-adres %1)</translation>
+        <translation>unknown na executable (DBus address na %1)</translation>
     </message>
     <message>
         <source>%1 (invalid executable path)</source>
-        <translation>%1 (ongeldig uitvoerbaar pad)</translation>
+        <translation>%1 (hindi wastong executable path)</translation>
     </message>
     <message>
         <source>NULL device</source>
-        <translation>NULL-apparaat</translation>
+        <translation>NULL na device</translation>
     </message>
     <message>
         <source>error reading from device</source>
-        <translation>fout bij het lezen van apparaat</translation>
+        <translation>error sa pagbabasa mula sa device</translation>
     </message>
     <message>
         <source>file empty</source>
-        <translation>leeg bestand</translation>
+        <translation>walang lamang file</translation>
     </message>
     <message>
         <source>malformed string</source>
-        <translation>misvormde tekenreeks</translation>
+        <translation>malformed na string</translation>
     </message>
     <message>
         <source>missing closing quote</source>
-        <translation>afsluitend aanhalingsteken ontbreekt</translation>
+        <translation>nawawalang closing quote</translation>
     </message>
     <message>
         <source>%1: (row, col) %2,%3</source>
-        <translation>%1: (rij, col) %2,%3</translation>
+        <translation>%1: (row, col) %2,%3</translation>
     </message>
     <message>
         <source>AES 256-bit</source>
@@ -7665,7 +7664,7 @@ Kernelversie: %3 %4</translation>
     </message>
     <message>
         <source>Argon2d (KDBX 4 – recommended)</source>
-        <translation>Argon2d (KDBX 4 – aanbevolen)</translation>
+        <translation>Argon2d (KDBX 4 – inirerekomenda)</translation>
     </message>
     <message>
         <source>Argon2id (KDBX 4)</source>
@@ -7681,31 +7680,31 @@ Kernelversie: %3 %4</translation>
     </message>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
-        <translation>Het bestaande single-instance vergrendelingsbestand is niet geldig. Een nieuwe instantie wordt gestart.</translation>
+        <translation>Ang umiiral na single-instance lock file ay di-wasto. Maglunsad ng bagong instance.</translation>
     </message>
     <message>
         <source>The lock file could not be created. Single-instance mode disabled.</source>
-        <translation>Het vergrendelingsbestand kon niet worden aangemaakt. Single-instance mode uitgeschakeld.</translation>
+        <translation>Hindi malikha ang lock file. Naka-disable ang single-instance mode.</translation>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)…</source>
-        <translation><numerusform>Het klembord wordt over %1 seconde gewist...</numerusform><numerusform>Het klembord wordt over %1 seconden gewist...</numerusform></translation>
+        <translation><numerusform>Kini-clear ang clipboard sa %1 segundo…</numerusform><numerusform>Kini-clear ang clipboard sa %1 (mga) segundo…</numerusform></translation>
     </message>
     <message>
         <source>Group</source>
-        <translation>Groep</translation>
+        <translation>Group</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Naam</translation>
+        <translation>Pamagat</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Gebruikersnaam</translation>
+        <translation>Username</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Wachtwoord</translation>
+        <translation>Password</translation>
     </message>
     <message>
         <source>TOTP</source>
@@ -7713,19 +7712,19 @@ Kernelversie: %3 %4</translation>
     </message>
     <message>
         <source>Icon</source>
-        <translation>Pictogram</translation>
+        <translation>Icon</translation>
     </message>
     <message>
         <source>Last Modified</source>
-        <translation>Laatst bewerkt</translation>
+        <translation>Huling Binago</translation>
     </message>
     <message>
         <source>Created</source>
-        <translation>Aangemaakt</translation>
+        <translation>Nalikha na</translation>
     </message>
     <message>
         <source>Benchmark %1 delay</source>
-        <translation>Tijdmeting %1 vertraging</translation>
+        <translation>Benchmark %1 na pagkaantala</translation>
     </message>
     <message numerus="yes">
         <source>%1 ms</source>
@@ -7739,47 +7738,47 @@ Kernelversie: %3 %4</translation>
     </message>
     <message>
         <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
-        <translation>Weet je zeker dat je item &quot;%1&quot; definitief wil verwijderen?</translation>
+        <translation>Gusto mo bang i-delete ang entry na &quot;%1&quot; nang tuluyan?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to delete %n entry(s) for good?</source>
-        <translation><numerusform>Wilt u %n-item(s) echt voorgoed verwijderen?</numerusform><numerusform>Wil je %n item(s) voorgoed verwijderen?</numerusform></translation>
+        <translation><numerusform>Gusto mo bang i-delete ang %n na entry nang tuluyan?</numerusform><numerusform>Gusto mo bang i-delete ang %n (mga) na entry nang tuluyan?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Delete entry(s)?</source>
-        <translation><numerusform>Item(s) verwijderen?</numerusform><numerusform>Item(s) verwijderen?</numerusform></translation>
+        <translation><numerusform>I-delete ang entry?</numerusform><numerusform>I-delete ang (mga) entry?</numerusform></translation>
     </message>
     <message>
         <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
-        <translation>Weet je zeker dat je item &quot;%1&quot; naar de prullenbak wil verplaatsen?</translation>
+        <translation>Gusto mo bang ilipat ang entry na &quot;%1&quot; sa recycle bin?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>Wilt u %n entry(s) echt naar de prullenbak verplaatsen?</numerusform><numerusform>Wil je %n item(s) echt naar de prullenbak verplaatsen?</numerusform></translation>
+        <translation><numerusform>Gusto mo bang ilipat ang %n na entry sa recycle bin?</numerusform><numerusform>Gusto mo bang ilipat ang %n na (mga) entry sa recycle bin?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Move entry(s) to recycle bin?</source>
-        <translation><numerusform>Invoer(en) verplaatsen naar prullenbak?</numerusform><numerusform>Item(s) verplaatsen naar prullenbak?</numerusform></translation>
+        <translation><numerusform>Ilipat ang entry sa recycle bin?</numerusform><numerusform>Ilipat ang (mga) entry sa recycle bin?</numerusform></translation>
     </message>
     <message>
         <source>Replace references to entry?</source>
-        <translation>Referenties naar items vervangen?</translation>
+        <translation>Palitan ang mga sanggunian sa entry?</translation>
     </message>
     <message numerus="yes">
         <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
-        <translation><numerusform>Item &quot;%1&quot; heeft %2 referentie. Wil je de verwijzing vervangen door waarden, dit bericht overslaan of toch verwijderen ?</numerusform><numerusform>Item &quot;%1&quot; heeft %2 referenties. Wil je de verwijzingen vervangen door waarden, dit bericht overslaan of toch verwijderen ?</numerusform></translation>
+        <translation><numerusform>Ang entry na &quot;%1&quot; ay mayroong %2 na reference. Gusto mo bang i-overwrite ang mga reference na may mga value, laktawan ang entry na ito, o i-delete ang mga ito?</numerusform><numerusform>Ang entry na &quot;%1&quot; ay mayroong %2 na (mga) reference. Gusto mo bang i-overwrite ang mga reference na may mga value, laktawan ang entry na ito, o i-delete ang mga ito?</numerusform></translation>
     </message>
     <message>
         <source>User name</source>
-        <translation>Gebruikersnaam</translation>
+        <translation>Pangalan ng user</translation>
     </message>
     <message>
         <source>Browser Statistics</source>
-        <translation>Browserstatistieken</translation>
+        <translation>Mga Browser Statistic</translation>
     </message>
     <message>
         <source>Health Check</source>
-        <translation>Gezondheid</translation>
+        <translation>Pagsuri sa Health</translation>
     </message>
     <message>
         <source>HIBP</source>
@@ -7787,350 +7786,350 @@ Kernelversie: %3 %4</translation>
     </message>
     <message>
         <source>Statistics</source>
-        <translation>Statistieken</translation>
+        <translation>Statistics</translation>
     </message>
     <message>
         <source>Unsupported key file version: %1</source>
-        <translation>Niet-ondersteunde sleutelbestandversie: %1</translation>
+        <translation>Hindi suportadong bersyon ng key file: %1</translation>
     </message>
     <message>
         <source>Checksum mismatch! Key file may be corrupt.</source>
-        <translation>Checksum komt niet overeen! Sleutelbestand is mogelijk beschadigd.</translation>
+        <translation>Hindi tugma ang checksum! Maaaring sira ang key file.</translation>
     </message>
     <message>
         <source>Unexpected key file data! Key file may be corrupt.</source>
-        <translation>Onverwachte sleutelbestandgegevens! Sleutelbestand is mogelijk beschadigd.</translation>
+        <translation>Hindi inaasahang data ng key file! Maaaring corrupt ang key file.</translation>
     </message>
     <message>
         <source>KeePassXC - cross-platform password manager</source>
-        <translation>KeepassXC - multi-platform wachtwoordbeheerder</translation>
+        <translation>KeePassXC - cross-platform na password manager</translation>
     </message>
     <message>
         <source>filenames of the password databases to open (*.kdbx)</source>
-        <translation>bestandsnamen van de te openen wachtwoorddatabases (*.kdbx)</translation>
+        <translation>mga filename ng mga database ng password na bubuksan (*.kdbx)</translation>
     </message>
     <message>
         <source>path to a custom config file</source>
-        <translation>pad naar aangepast configuratiebestand</translation>
+        <translation>path sa isang custom na config file</translation>
     </message>
     <message>
         <source>path to a custom local config file</source>
-        <translation>pad naar een aangepast lokaal configuratiebestand</translation>
+        <translation>path sa isang custom local config file</translation>
     </message>
     <message>
         <source>lock all open databases</source>
-        <translation>alle databases vergrendelen</translation>
+        <translation>i-lock ang lahat ng bukas na database</translation>
     </message>
     <message>
         <source>key file of the database</source>
-        <translation>sleutelbestand van de database</translation>
+        <translation>key file ng database</translation>
     </message>
     <message>
         <source>read password of the database from stdin</source>
-        <translation>lees wachtwoord van de database uit stdin</translation>
+        <translation>basahin ang password ng database mula sa stdin</translation>
     </message>
     <message>
         <source>allow app screen recordering and screenshots</source>
-        <translation>Schermafbeeldingen en schermopnamen van de app toestaan</translation>
+        <translation>payagan ang pag-record ng screen ng app at mga screenshot</translation>
     </message>
     <message>
         <source>Locked databases.</source>
-        <translation>Vergrendelde databases.</translation>
+        <translation>Mga naka-lock na database.</translation>
     </message>
     <message>
         <source>Database failed to lock.</source>
-        <translation>Database kan niet worden vergrendeld.</translation>
+        <translation>Nabigong i-lock ang database.</translation>
     </message>
     <message>
         <source>Another instance of KeePassXC is already running.</source>
-        <translation>Een andere instantie van KeePassXC is reeds actief.</translation>
+        <translation>Ang isa pang halimbawa ng KeePassXC ay tumatakbo na.</translation>
     </message>
     <message>
         <source>Fatal error while testing the cryptographic functions.</source>
-        <translation>Cruciale fout bij het testen van de cryptografische functies.</translation>
+        <translation>Fatal na error habang sinusubukan ang mga cryptographic function.</translation>
     </message>
     <message>
         <source>KeePassXC - Error</source>
-        <translation>KeePassXC - Fout</translation>
+        <translation>KeePassXC - Error</translation>
     </message>
     <message>
         <source>Database password: </source>
-        <translation>Databasewachtwoord: </translation>
+        <translation>Password ng database: </translation>
     </message>
     <message>
         <source>Invalid Settings</source>
         <comment>TOTP</comment>
-        <translation>Ongeldige instellingen</translation>
+        <translation>Mga Invalid Setting</translation>
     </message>
     <message>
         <source>Invalid Key</source>
         <comment>TOTP</comment>
-        <translation>Ongeldige sleutel</translation>
+        <translation>Invalid na Key</translation>
     </message>
     <message>
         <source>Failed to create Windows Hello credential.</source>
-        <translation>Kan geen Windows Hello-referenties aanmaken.</translation>
+        <translation>Nabigong gumawa ng kredensyal ng Windows Hello.</translation>
     </message>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
-        <translation>Kan challenge niet ondertekenen met Windows Hello.</translation>
+        <translation>Nabigong lagdaan ang challenge gamit ang Windows Hello.</translation>
     </message>
     <message>
         <source>Warning: Failed to block screenshot capture on a top-level window.</source>
-        <translation>Waarschuwing: een schermfoto van het venster op het hoogste niveau kon niet worden voorkomen!</translation>
+        <translation>Babala: Nabigong harangan ang pagkuha ng screenshot sa isang top-level na window.</translation>
     </message>
     <message>
         <source>Invalid Cipher</source>
-        <translation>Ongeldige versleuteling</translation>
+        <translation>Invalid na Cipher</translation>
     </message>
     <message>
         <source>Invalid KDF</source>
-        <translation>Ongeldige KDF</translation>
+        <translation>Invalid na KDF</translation>
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue.</source>
-        <translation>Biedt of raak de YubiKey aan om door te gaan.</translation>
+        <translation>Mangyaring ipakita o pindutin ang iyong YubiKey para magpatuloy.</translation>
     </message>
     <message>
         <source>Show all the attributes of the entry.</source>
-        <translation>Toon de kenmerken van het item.</translation>
+        <translation>Ipakita ang lahat ng mga attribute ng entry.</translation>
     </message>
     <message>
         <source>Edit a database.</source>
-        <translation>Bewerk een database.</translation>
+        <translation>I-edit ang database</translation>
     </message>
     <message>
         <source>Could not change the database key.</source>
-        <translation>De databasesleutel kan niet worden gewijzigd.</translation>
+        <translation>Hindi mabago ang database key.</translation>
     </message>
     <message>
         <source>Database was not modified.</source>
-        <translation>De database is niet bewerkt.</translation>
+        <translation>Hindi binago ang database.</translation>
     </message>
     <message>
         <source>Successfully edited the database.</source>
-        <translation>De database is bewerkt.</translation>
+        <translation>Matagumpay na na-edit ang database.</translation>
     </message>
     <message>
         <source>Loading the new key file failed: %1</source>
-        <translation>Het nieuwe sleutelbestand kan niet worden geladen: %1</translation>
+        <translation>Nabigo ang pag-load ng bagong key file: %1</translation>
     </message>
     <message>
         <source>Unset the password for the database.</source>
-        <translation>Wis het databasewachtwoord.</translation>
+        <translation>I-unset ang password para sa database.</translation>
     </message>
     <message>
         <source>Unset the key file for the database.</source>
-        <translation>Wis het databasesleutelbestand.</translation>
+        <translation>I-unset ang key file para sa database</translation>
     </message>
     <message>
         <source>Cannot use %1 and %2 at the same time.</source>
-        <translation>%1 en %2 kunnen niet tegelijkertijd worden gebruikt.</translation>
+        <translation>Hindi magagamit ang %1 at %2 nang magkasabay.</translation>
     </message>
     <message>
         <source>Cannot remove all the keys from a database.</source>
-        <translation>Niet alle sleutels kunnen worden gewist.</translation>
+        <translation>Hindi maalis ang lahat ng mga key mula sa database.</translation>
     </message>
     <message>
         <source>Cannot remove password: The database does not have a password.</source>
-        <translation>Het wachtwoord kan niet worden gewist omdat er geen wachtwoord is.</translation>
+        <translation>Hindi maalis ang password: Walang password ang database.</translation>
     </message>
     <message>
         <source>Cannot remove file key: The database does not have a file key.</source>
-        <translation>Het sleutelbestand kan niet worden gewist omdat er geen wachtwoord is.</translation>
+        <translation>Hindi maalis ang file key: Ang database ay walang file key.</translation>
     </message>
     <message>
         <source>Found unexpected Key type %1</source>
-        <translation>Onverwacht sleuteltype aangetroffen: ‘%1’</translation>
+        <translation>May nakitang hindi inaasahang uri ng Key %1</translation>
     </message>
     <message>
         <source>Set the key file for the database.
 This options is deprecated, use --set-key-file instead.</source>
-        <translation>Stel het sleutelbestand van de database in.
-Let op: deze optie is verouderd, gebruik --set-key-file</translation>
+        <translation>Itakda ang key file para sa database.
+Ang pagpipiliang ito ay hindi na ginagamit, gamitin ang --set-key-file sa halip.</translation>
     </message>
     <message>
         <source>KeePassXC is not running. No open database to lock</source>
-        <translation>KeePassXC is niet actief, dus er is geen databank om te vergrendelen.</translation>
+        <translation>Ang KeePassXC ay hindi tumatakbo. Walang bukas na database upang i-lock</translation>
     </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
     <message>
         <source>Internal zlib error when compressing: </source>
-        <translation>Interne fout in zlib bij inpakken:</translation>
+        <translation>Panloob na zlib error kapag nag-compress: </translation>
     </message>
     <message>
         <source>Error writing to underlying device: </source>
-        <translation>Fout bij schrijven naar onderliggend apparaat:</translation>
+        <translation>Error sa pagsulat sa pinagbabatayang device: </translation>
     </message>
     <message>
         <source>Error opening underlying device: </source>
-        <translation>Fout bij openen van onderliggend apparaat:</translation>
+        <translation>Error sa pagbubukas ng pinagbabatayang device: </translation>
     </message>
     <message>
         <source>Error reading data from underlying device: </source>
-        <translation>Fout bij lezen van gegevens van onderliggend apparaat:</translation>
+        <translation>Error sa pagbabasa ng data mula sa pinagbabatayang device: </translation>
     </message>
     <message>
         <source>Internal zlib error when decompressing: </source>
-        <translation>Interne fout in zlib bij uitpakken:</translation>
+        <translation>Panloob na zlib error kapag nagde-decompress: </translation>
     </message>
 </context>
 <context>
     <name>QtIOCompressor::open</name>
     <message>
         <source>The gzip format not supported in this version of zlib.</source>
-        <translation>Gzip wordt niet ondersteund in deze versie van zlib.</translation>
+        <translation>Ang gzip na format ay hindi suportado sa bersyong ng zlib na ito.</translation>
     </message>
     <message>
         <source>Internal zlib error: </source>
-        <translation>Interne fout in zlib:</translation>
+        <translation>Panloob na zlib na error: </translation>
     </message>
 </context>
 <context>
     <name>ReportsWidgetBrowserStatistics</name>
     <message>
         <source>Exclude expired entries from the report</source>
-        <translation>Verlopen items uitsluiten van het rapport</translation>
+        <translation>Ibukod ang mga nag-expire na entry mula sa ulat</translation>
     </message>
     <message>
         <source>Show only entries which have URL set</source>
-        <translation>Alleen vermeldingen weergeven waarvoor de URL is ingesteld</translation>
+        <translation>Ipakita lamang ang mga entry na may nakatakdang URL</translation>
     </message>
     <message>
         <source>Show only entries which have browser settings in custom data</source>
-        <translation>Alleen vermeldingen weergeven met browserinstellingen in aangepaste gegevens</translation>
+        <translation>Ipakita lamang ang mga entry na may mga setting ng browser sa custom na data</translation>
     </message>
     <message>
         <source>Double-click entries to edit.</source>
-        <translation>Dubbelklik items om deze te bewerken.</translation>
+        <translation>I-double click ang mga entry para i-edit.</translation>
     </message>
     <message>
         <source>List of entry URLs</source>
-        <translation>Lijst met vermeldings-URL&apos;s</translation>
+        <translation>Listahan ng mga URL entry</translation>
     </message>
     <message>
         <source>Entry has no URLs set</source>
-        <translation>Item heeft geen URL ingesteld</translation>
+        <translation>Walang nakatakdang mga URL ang entry</translation>
     </message>
     <message>
         <source>Allowed URLs</source>
-        <translation>Toegestane URL&apos;s</translation>
+        <translation>Mga pinapayagang URL</translation>
     </message>
     <message>
         <source>Entry has no Browser Integration settings</source>
-        <translation>Item heeft geen instellingen voor browserintegratie</translation>
+        <translation>Ang entry ay walang mga setting ng Browser Integration</translation>
     </message>
     <message>
         <source>Denied URLs</source>
-        <translation>Geweigerde URL&apos;s</translation>
+        <translation>Mga URL na tinanggihan</translation>
     </message>
     <message>
         <source> (Excluded)</source>
-        <translation>(Uitgesloten)</translation>
+        <translation> (Hindi kasama)</translation>
     </message>
     <message>
         <source>This entry is being excluded from reports</source>
-        <translation>Dit item wordt uitgesloten van rapportage</translation>
+        <translation>Ang entry na ito ay hindi kasama sa mga ulat</translation>
     </message>
     <message>
         <source>Please wait, browser statistics is being calculated…</source>
-        <translation>Een ogenblik geduld, browserstatistieken worden verzameld...</translation>
+        <translation>Pakihintay, ang mga istatistika ng browser ay kinakalkula…</translation>
     </message>
     <message>
         <source>No entries with a URL, or none has browser extension settings saved.</source>
-        <translation>Er zijn geen items met een URL of instellingen voor browserextensies.</translation>
+        <translation>Walang mga entry na may URL, o walang naka-save na settings ng extension ng browser.</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Naam</translation>
+        <translation>Pamagat</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation>Pad</translation>
+        <translation>Path</translation>
     </message>
     <message>
         <source>URLs</source>
-        <translation>URL&apos;s</translation>
+        <translation>URLs</translation>
     </message>
     <message>
         <source>Edit Entry…</source>
-        <translation>Item bewerken...</translation>
+        <translation>I-edit ang Entry…</translation>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation><numerusform>Item(s) verwijderen...</numerusform><numerusform>Item(s) verwijderen...</numerusform></translation>
+        <translation><numerusform>I-delete ang Entry…</numerusform><numerusform>I-delete ang (mga)Entry…</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
-        <translation>Uitsluiten van rapportage</translation>
+        <translation>Ibukod mula sa mga ulat</translation>
     </message>
 </context>
 <context>
     <name>ReportsWidgetHealthcheck</name>
     <message>
         <source>Exclude expired entries from the report</source>
-        <translation>Verlopen items uitsluiten van het rapport</translation>
+        <translation>Ibukod ang mga nag-expire na entry mula sa ulat</translation>
     </message>
     <message>
         <source>Also show entries that have been excluded from reports</source>
-        <translation>Toon ook vermeldingen die zijn uitgesloten van rapportage</translation>
+        <translation>Gayundin, ipakita ang mga entry na hindi kasama sa mga ulat</translation>
     </message>
     <message>
         <source>Hover over reason to show additional details. Double-click entries to edit.</source>
-        <translation>Positioneer de muis boven een item om aanvullende details weer te geven. Dubbelklik een items om het te bewerken.</translation>
+        <translation>Mag-hover sa itaas para makita ng mga karagdagang detalye. I-double click ang mga entry para i-edit.</translation>
     </message>
     <message>
         <source>Bad</source>
         <comment>Password quality</comment>
-        <translation>Slecht</translation>
+        <translation>Hindi maganda</translation>
     </message>
     <message>
         <source>Bad — password must be changed</source>
-        <translation>Slecht — wachtwoord moet worden gewijzigd</translation>
+        <translation>Hindi maganda — dapat palitan ang password</translation>
     </message>
     <message>
         <source>Poor</source>
         <comment>Password quality</comment>
-        <translation>Slecht</translation>
+        <translation>Mahina</translation>
     </message>
     <message>
         <source>Poor — password should be changed</source>
-        <translation>Mager — wachtwoord moet worden gewijzigd</translation>
+        <translation>Mahina — dapat palitan ang password</translation>
     </message>
     <message>
         <source>Weak</source>
         <comment>Password quality</comment>
-        <translation>Zwak</translation>
+        <translation>Mahina</translation>
     </message>
     <message>
         <source>Weak — consider changing the password</source>
-        <translation>Zwak — overweeg het wachtwoord te wijzigen</translation>
+        <translation>Mahina — isaalang-alang ang pagpapalit ng password</translation>
     </message>
     <message>
         <source> (Excluded)</source>
-        <translation>(Uitgesloten)</translation>
+        <translation> (Hindi kasama)</translation>
     </message>
     <message>
         <source>This entry is being excluded from reports</source>
-        <translation>Dit item wordt uitgesloten van rapportage</translation>
+        <translation>Ang entry na ito ay hindi kasama sa mga ulat</translation>
     </message>
     <message>
         <source>Please wait, health data is being calculated…</source>
-        <translation>Even geduld, gezondheidsgegevens worden verzameld...</translation>
+        <translation>Pakihintay, ang data ng kalusugan ay kinakalkula…</translation>
     </message>
     <message>
         <source>Congratulations, everything is healthy!</source>
-        <translation>Gefeliciteerd, alles ziet er goed uit!</translation>
+        <translation>Congratulations, lahat ay ok!</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Naam</translation>
+        <translation>Pamagat</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation>Pad</translation>
+        <translation>Path</translation>
     </message>
     <message>
         <source>Score</source>
@@ -8138,378 +8137,378 @@ Let op: deze optie is verouderd, gebruik --set-key-file</translation>
     </message>
     <message>
         <source>Reason</source>
-        <translation>Reden</translation>
+        <translation>Dahilan</translation>
     </message>
     <message>
         <source>Edit Entry…</source>
-        <translation>Item bewerken...</translation>
+        <translation>I-edit ang Entry…</translation>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation><numerusform>Item verwijderen...</numerusform><numerusform>Items verwijderen...</numerusform></translation>
+        <translation><numerusform>I-delete ang Entry…</numerusform><numerusform>I-delete ang (mga)Entry…</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
-        <translation>Uitsluiten van rapportage</translation>
+        <translation>Ibukod mula sa mga ulat</translation>
     </message>
 </context>
 <context>
     <name>ReportsWidgetHibp</name>
     <message>
         <source>CAUTION: This report requires sending information to the Have I Been Pwned online service (https://haveibeenpwned.com). If you proceed, your database passwords will be cryptographically hashed and the first five characters of those hashes will be sent securely to this service. Your database remains secure and cannot be reconstituted from this information. However, the number of passwords you send and your IP address will be exposed to this service.</source>
-        <translation>LET OP: Voor deze rapportage wordt informatie verzonden naar de online dienst Have I Been Pwned (HIBP) (https://haveibeenpwned.com). Als je doorgaat, worden je databasewachtwoorden cryptografisch gehasht en worden de eerste vijf tekens van die hashes op veilige wijze verzonden naar deze dienst. Jouw database blijft veilig en kan uit deze informatie niet worden samengesteld. Het aantal wachtwoorden dat je verzendt en je IP-adres worden wel blootgesteld aan deze dienst.</translation>
+        <translation>BABALA: Ang ulat na ito ay nangangailangan ng pagpapadala ng impormasyon sa online na serbisyong Have I Been Pwned (https://haveibeenpwned.com). Kung magpapatuloy ka, ang iyong mga password sa database ay iha-hash sa cryptographic at ang unang limang character ng mga hash na iyon ay ligtas na ipapadala sa serbisyong ito. Ang database mo ay nananatiling ligtas at hindi mawawala ang impormasyon nito. Gayunpaman, ang bilang ng mga password na iyong ipapadala at ang iyong IP address ay malalantad sa serbisyong ito.</translation>
     </message>
     <message>
         <source>Perform Online Analysis</source>
-        <translation>Online analyse uitvoeren</translation>
+        <translation>Magsagawa ng Online na Pagsusuri</translation>
     </message>
     <message>
         <source>Also show entries that have been excluded from reports</source>
-        <translation>Toon ook vermeldingen die zijn uitgesloten van rapportage</translation>
+        <translation>Gayundin, ipakita ang mga entry na hindi kasama sa mga ulat</translation>
     </message>
     <message>
         <source>This build of KeePassXC does not have network functions. Networking is required to check your passwords against Have I Been Pwned databases.</source>
-        <translation>Deze versie van KeePassXC biedt geen netwerkfunctionaliteit. Dit is nodig om jouw wachtwoorden te vergelijken met die in de databases van Have I Been Pwned.</translation>
+        <translation>Ang build na ito ng KeePassXC ay walang mga function sa network. Kinakailangan ang networking upang suriin ang mga password mo laban sa mga database ng Have I Been Pwned.</translation>
     </message>
     <message>
         <source>Congratulations, no exposed passwords!</source>
-        <translation>Gefeliciteerd, geen gelekte wachtwoorden!</translation>
+        <translation>Congratulations, walang na-expose na mga password!</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Naam</translation>
+        <translation>Pamagat</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation>Pad</translation>
+        <translation>Path</translation>
     </message>
     <message>
         <source>Password exposed…</source>
-        <translation>Gelekte wachtwoorden...</translation>
+        <translation>Na-expose ang password…</translation>
     </message>
     <message>
         <source> (Excluded)</source>
-        <translation>(Uitgesloten)</translation>
+        <translation> (Hindi kasama)</translation>
     </message>
     <message>
         <source>This entry is being excluded from reports</source>
-        <translation>Dit item wordt uitgesloten van rapportage</translation>
+        <translation>Ang entry na ito ay hindi kasama sa mga ulat</translation>
     </message>
     <message>
         <source>once</source>
         <comment>Password exposure amount</comment>
-        <translation>eenmalig</translation>
+        <translation>minsan</translation>
     </message>
     <message>
         <source>up to 10 times</source>
         <comment>Password exposure amount</comment>
-        <translation>tot 10 keer</translation>
+        <translation>hanggang 10 beses</translation>
     </message>
     <message>
         <source>up to 100 times</source>
         <comment>Password exposure amount</comment>
-        <translation>tot 100 keer</translation>
+        <translation>hanggang 100 beses</translation>
     </message>
     <message>
         <source>up to 1000 times</source>
         <comment>Password exposure amount</comment>
-        <translation>tot 1000 keer</translation>
+        <translation>hanggang 1000 beses</translation>
     </message>
     <message>
         <source>up to 10,000 times</source>
         <comment>Password exposure amount</comment>
-        <translation>tot 10.000 keer</translation>
+        <translation>hanggang 10,000 beses</translation>
     </message>
     <message>
         <source>up to 100,000 times</source>
         <comment>Password exposure amount</comment>
-        <translation>tot 100.000 keer</translation>
+        <translation>hanggang 100,000 beses</translation>
     </message>
     <message>
         <source>up to a million times</source>
         <comment>Password exposure amount</comment>
-        <translation>tot miljoen keer</translation>
+        <translation>hanggang sa isang milyong beses</translation>
     </message>
     <message>
         <source>millions of times</source>
         <comment>Password exposure amount</comment>
-        <translation>miljoen keer</translation>
+        <translation>milyon-milyong beses</translation>
     </message>
     <message>
         <source>Edit Entry…</source>
-        <translation>Item bewerken...</translation>
+        <translation>I-edit ang Entry…</translation>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation><numerusform>Item verwijderen...</numerusform><numerusform>Items verwijderen...</numerusform></translation>
+        <translation><numerusform>I-delete ang Entry…</numerusform><numerusform>I-delete ang (mga)Entry…</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
-        <translation>Uitsluiten van rapportage</translation>
+        <translation>Ibukod mula sa mga ulat</translation>
     </message>
 </context>
 <context>
     <name>ReportsWidgetStatistics</name>
     <message>
         <source>Hover over lines with error icons for further information.</source>
-        <translation>Beweeg de muis over regels met foutpictogrammen voor meer informatie.</translation>
+        <translation>Mag-hover sa mga linyang may mga icon ng error para sa karagdagang impormasyon.</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>Naam</translation>
+        <translation>Pangalan</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation>Waarde</translation>
+        <translation>Value</translation>
     </message>
     <message>
         <source>Please wait, database statistics are being calculated…</source>
-        <translation>Even geduld, databasestatistieken worden berekend...</translation>
+        <translation>Pakihintay, ang mga istatistika ng database ay kinakalkula…</translation>
     </message>
     <message>
         <source>Database name</source>
-        <translation>Databasenaam</translation>
+        <translation>Pangalan ng database</translation>
     </message>
     <message>
         <source>Description</source>
-        <translation>Beschrijving</translation>
+        <translation>Paglalarawan</translation>
     </message>
     <message>
         <source>Location</source>
-        <translation>Locatie</translation>
+        <translation>Lokasyon</translation>
     </message>
     <message>
         <source>Database created</source>
-        <translation>Database aangemaakt</translation>
+        <translation>Nalikha na ang database</translation>
     </message>
     <message>
         <source>Last saved</source>
-        <translation>Laatst opgeslagen</translation>
+        <translation>Huling na-save</translation>
     </message>
     <message>
         <source>Unsaved changes</source>
-        <translation>Niet-opgeslagen wijzigingen</translation>
+        <translation>Mga hindi na-save na pagbabago</translation>
     </message>
     <message>
         <source>yes</source>
-        <translation>ja</translation>
+        <translation>oo</translation>
     </message>
     <message>
         <source>no</source>
-        <translation>nee</translation>
+        <translation>wala</translation>
     </message>
     <message>
         <source>The database was modified, but the changes have not yet been saved to disk.</source>
-        <translation>De database is bewerkt, maar de wijzigingen zijn nog niet opgeslagen.</translation>
+        <translation>Ang database ay binago, ngunit ang mga pagbabago ay hindi pa nai-save sa disk.</translation>
     </message>
     <message>
         <source>Number of groups</source>
-        <translation>Aantal groepen</translation>
+        <translation>Bilang ng mga grupo</translation>
     </message>
     <message>
         <source>Number of entries</source>
-        <translation>Aantal items</translation>
+        <translation>Bilang ng mga entry</translation>
     </message>
     <message>
         <source>Number of expired entries</source>
-        <translation>Aantal verlopen items</translation>
+        <translation>Bilang ng mga nag-expire na entry</translation>
     </message>
     <message>
         <source>The database contains entries that have expired.</source>
-        <translation>De database bevat items die verlopen zijn.</translation>
+        <translation>Naglalaman ang database ng mga entry na nag-expire.</translation>
     </message>
     <message>
         <source>Unique passwords</source>
-        <translation>Unieke wachtwoorden</translation>
+        <translation>Natatanging mga password</translation>
     </message>
     <message>
         <source>Non-unique passwords</source>
-        <translation>Niet-unieke wachtwoorden</translation>
+        <translation>Hindi natatanging mga password</translation>
     </message>
     <message>
         <source>More than 10% of passwords are reused. Use unique passwords when possible.</source>
-        <translation>Meer dan 10% van de wachtwoorden zijn dubbel gebruikt. Gebruik waar mogelijk unieke wachtwoorden.</translation>
+        <translation>Higit sa 10% ng mga password ang muling ginagamit. Gumamit ng mga natatanging password kung maaari.</translation>
     </message>
     <message>
         <source>Maximum password reuse</source>
-        <translation>Maximaal wachtwoordherbruik</translation>
+        <translation>Maximum na muling paggamit ng password</translation>
     </message>
     <message>
         <source>Some passwords are used more than three times. Use unique passwords when possible.</source>
-        <translation>Verscheidene wachtwoorden worden meer dan drie keer gebruikt. Gebruik waar mogelijk unieke wachtwoorden.</translation>
+        <translation>Ang ilang mga password ay ginagamit nang higit sa tatlong beses. Gumamit ng mga natatanging password kung maaari.</translation>
     </message>
     <message>
         <source>Number of short passwords</source>
-        <translation>Aantal korte wachtwoorden</translation>
+        <translation>Bilang ng mabababang password</translation>
     </message>
     <message>
         <source>Recommended minimum password length is at least 8 characters.</source>
-        <translation>Aangeraden minimumlengte voor wachtwoorden is 8 tekens.</translation>
+        <translation>Ang inirerekomendang minimum na haba ng password ay hindi bababa sa 8 character.</translation>
     </message>
     <message>
         <source>Number of weak passwords</source>
-        <translation>Aantal zwakke wachtwoorden</translation>
+        <translation>Bilang ng mahihinang password</translation>
     </message>
     <message>
         <source>Recommend using long, randomized passwords with a rating of &apos;good&apos; or &apos;excellent&apos;.</source>
-        <translation>Het is aanbevolen om lange, willekeurige wachtwoorden te gebruiken met een beoordeling van &apos;goed&apos; of &apos;uitstekend&apos;.</translation>
+        <translation>Irekomenda ang paggamit ng mahaba, naka-random na mga password na may rating na &apos;mabuti&apos; o &apos;mahusay&apos;.</translation>
     </message>
     <message>
         <source>Entries excluded from reports</source>
-        <translation>Items die zijn uitgesloten van rapportage</translation>
+        <translation>Ang mga entry ay hindi kasama sa mga ulat</translation>
     </message>
     <message>
         <source>Excluding entries from reports, e. g. because they are known to have a poor password, isn&apos;t necessarily a problem but you should keep an eye on them.</source>
-        <translation>Het uitsluiten van vermeldingen uit rapportage, bijv. omdat al bekend is dat ze een slecht wachtwoord hebben, is niet per se een probleem, maar je moet ze wel in de gaten houden.</translation>
+        <translation>Hindi kasama ang mga entry mula sa mga ulat, ibig sabihin dahil sila ay kilala na may mahinang password, ay hindi nangangahulugang isang problema, ngunit dapat mong bantayan sila.</translation>
     </message>
     <message>
         <source>Average password length</source>
-        <translation>Gemiddelde wachtwoordlengte</translation>
+        <translation>Average na haba ng password</translation>
     </message>
     <message>
         <source>%1 characters</source>
-        <translation>%1 tekens</translation>
+        <translation>%1 character</translation>
     </message>
     <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
-        <translation>Gemiddeld wachtwoordlengte is minder dan tien tekens. Langere wachtwoorden bieden meer veiligheid.</translation>
+        <translation>Ang average na haba ng password ay hindi baba sa sampung character. Ang mas mahahabang password ay nagbibigay ng higit na seguridad.</translation>
     </message>
 </context>
 <context>
     <name>SSHAgent</name>
     <message>
         <source>Agent connection failed.</source>
-        <translation>Verbinding met agent mislukt.</translation>
+        <translation>Hindi makakonekta ang agent</translation>
     </message>
     <message>
         <source>Agent protocol error.</source>
-        <translation>Agent-protocolfout.</translation>
+        <translation>Error sa protocol ng agent.</translation>
     </message>
     <message>
         <source>No agent running, cannot add identity.</source>
-        <translation>Geen agent actief, kan geen identiteit toevoegen.</translation>
+        <translation>Walang gumaganang ahente, hindi makakapagdagdag ng pagkakakilanlan.</translation>
     </message>
     <message>
         <source>Key identity ownership conflict. Refusing to add.</source>
-        <translation>Conflict tussen sleutelidentiteit. Geweigerd.</translation>
+        <translation>Salungatan sa pagmamay-ari ng key identity. Tumangging magdagdag.</translation>
     </message>
     <message>
         <source>Agent refused this identity. Possible reasons include:</source>
-        <translation>Agent weigerde deze identiteit. Mogelijke redenen zijn onder andere:</translation>
+        <translation>Itinanggi ng agent ang pagkakakilanlan na ito. Kabilang sa mga posibleng dahilan ang:</translation>
     </message>
     <message>
         <source>The key has already been added.</source>
-        <translation>De sleutel was al toegevoegd.</translation>
+        <translation>Naidagdag na ang key.</translation>
     </message>
     <message>
         <source>Restricted lifetime is not supported by the agent (check options).</source>
-        <translation>De agent ondersteunt beperkte levensduur niet (zie opties).</translation>
+        <translation>Ang pinaghihigpitang lifetime ay hindi sinusuportahan ng agent (tingnan ang mga opsyon).</translation>
     </message>
     <message>
         <source>A confirmation request is not supported by the agent (check options).</source>
-        <translation>De agent ondersteunt aanvraag voor transactiebevestiging niet (zie opties).</translation>
+        <translation>Ang isang kahilingan sa pagkumpirma ay hindi sinusuportahan ng ahente (tingnan ang mga opsyon).</translation>
     </message>
     <message>
         <source>Security keys are not supported by the agent or the security key provider is unavailable.</source>
-        <translation>Beveiligingssleutels worden niet ondersteund door de agent of de beveiligingssleutelprovider is niet beschikbaar.</translation>
+        <translation>Ang mga security key ay hindi sinusuportahan ng agent o ang security key provider ay hindi available.</translation>
     </message>
     <message>
         <source>No agent running, cannot remove identity.</source>
-        <translation>Geen agent actief, kan geen identiteit verwijderen.</translation>
+        <translation>Walang tumatakbong ahente, hindi maalis ang pagkakakilanlan.</translation>
     </message>
     <message>
         <source>No agent running, cannot list identities.</source>
-        <translation>Geen agent actief, kan geen identiteiten opsommen.</translation>
+        <translation>Walang gumaganang ahente, hindi makakapaglista ng mga pagkakakilanlan.</translation>
     </message>
 </context>
 <context>
     <name>SearchHelpWidget</name>
     <message>
         <source>Search Help</source>
-        <translation>Zoek hulp</translation>
+        <translation>Maghanap ng Tulong</translation>
     </message>
     <message>
         <source>Search terms are as follows: [modifiers][field:][&quot;]term[&quot;]</source>
-        <translation>Zoektermen zijn als volgt: [parameters][veld:][&quot;]term[&quot;]</translation>
+        <translation>Ang mga termino para sa paghahanap ay ang mga sumusunod: [modifiers][field:][&quot;]term[&quot;]</translation>
     </message>
     <message>
         <source>Every search term must match (ie, logical AND)</source>
-        <translation>Elke zoekterm moet overeenkomen (een logisch EN)</translation>
+        <translation>Dapat tumugma ang bawat termino para sa paghahanap (ibig sabihin, logical AT)</translation>
     </message>
     <message>
         <source>Modifiers</source>
-        <translation>Modifiers</translation>
+        <translation>Mga modifier</translation>
     </message>
     <message>
         <source>exclude term from results</source>
-        <translation>zoekterm uit resultaten weglaten</translation>
+        <translation>ibukod ang termino mula sa mga resulta</translation>
     </message>
     <message>
         <source>match term exactly</source>
-        <translation>zoekterm moet exact overeenkomen</translation>
+        <translation>eksaktong kataga</translation>
     </message>
     <message>
         <source>use regex in term</source>
-        <translation>expressies gebruiken in zoekopdracht</translation>
+        <translation>gumamit ng regex sa termino</translation>
     </message>
     <message>
         <source>Fields</source>
-        <translation>Velden</translation>
+        <translation>Mga Field</translation>
     </message>
     <message>
         <source>Term Wildcards</source>
-        <translation>Zoekterm jokertekens</translation>
+        <translation>Terminong Wildcards</translation>
     </message>
     <message>
         <source>match anything</source>
-        <translation>elke overeenkomst</translation>
+        <translation>tumugma sa kahit ano</translation>
     </message>
     <message>
         <source>match one</source>
-        <translation>één overeenkomst</translation>
+        <translation>tumugma sa isa</translation>
     </message>
     <message>
         <source>logical OR</source>
-        <translation>logische OF</translation>
+        <translation>logical OR</translation>
     </message>
     <message>
         <source>Examples</source>
-        <translation>Voorbeelden</translation>
+        <translation>Mga halimbawa</translation>
     </message>
 </context>
 <context>
     <name>SearchWidget</name>
     <message>
         <source>Search</source>
-        <translation>Zoeken</translation>
+        <translation>Maghanap</translation>
     </message>
     <message>
         <source>Search Help</source>
-        <translation>Zoek hulp</translation>
+        <translation>Maghanap ng Tulong</translation>
     </message>
     <message>
         <source>Search (%1)…</source>
         <comment>Search placeholder text, %1 is the keyboard shortcut</comment>
-        <translation>Zoeken (%1)...</translation>
+        <translation>Maghanap ng (%1)…</translation>
     </message>
     <message>
         <source>Case sensitive</source>
-        <translation>Hoofdlettergevoelig</translation>
+        <translation>Case sensitive</translation>
     </message>
     <message>
         <source>Limit search to selected group</source>
-        <translation>Beperk het zoeken tot de geselecteerde groep</translation>
+        <translation>Limitahan ang paghahanap sa napiling group</translation>
     </message>
     <message>
         <source>Save Search</source>
-        <translation>Zoekopdracht opslaan</translation>
+        <translation>I-save ang Search</translation>
     </message>
 </context>
 <context>
     <name>SettingsClientModel</name>
     <message>
         <source>Application</source>
-        <translation>Programma</translation>
+        <translation>Application</translation>
     </message>
     <message>
         <source>PID</source>
@@ -8517,53 +8516,53 @@ Let op: deze optie is verouderd, gebruik --set-key-file</translation>
     </message>
     <message>
         <source>DBus Address</source>
-        <translation>DBus-adres</translation>
+        <translation>DBus Address</translation>
     </message>
     <message>
         <source>Manage</source>
-        <translation>Beheren</translation>
+        <translation>Pamahalaan</translation>
     </message>
 </context>
 <context>
     <name>SettingsDatabaseModel</name>
     <message>
         <source>File Name</source>
-        <translation>Bestandsnaam</translation>
+        <translation>Pangalan ng File</translation>
     </message>
     <message>
         <source>Group</source>
-        <translation>Groep</translation>
+        <translation>Group</translation>
     </message>
     <message>
         <source>Manage</source>
-        <translation>Beheren</translation>
+        <translation>Pamahalaan</translation>
     </message>
 </context>
 <context>
     <name>SettingsWidgetFdoSecrets</name>
     <message>
         <source>Options</source>
-        <translation>Opties</translation>
+        <translation>Mga Opsyon</translation>
     </message>
     <message>
         <source>Enable KeepassXC Freedesktop.org Secret Service integration</source>
-        <translation>De integratie van KeepassXC Freedesktop.org Secret service inschakelen</translation>
+        <translation>I-enable ang Secret Service na pagsasama ng KeepassXC Freedesktop.org</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>Algemeen</translation>
+        <translation>Pangkalahatan</translation>
     </message>
     <message>
         <source>Show notification when passwords are retrieved by clients</source>
-        <translation>Melding weergeven wanneer wachtwoorden worden opgehaald door clients</translation>
+        <translation>Ipakita ang abiso kapag ang mga password ay nakuha ng mga client</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If enabled, any attempt to read a password must be confirmed. Otherwise, clients can read passwords without confirmation when the database is unlocked.&lt;/p&gt;&lt;p&gt;This option only covers the access to the password of an entry. Clients can always enumerate the items of exposed databases and query their attributes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Als deze optie is ingeschakeld, moet elke poging om een wachtwoord te lezen worden bevestigd. Anders kunnen clients wachtwoorden lezen zonder bevestiging wanneer de database wordt ontgrendeld.&lt;/p&gt;&lt;p&gt;Deze optie betreft alleen de toegang tot het wachtwoord van een item. Clients kunnen altijd de items van blootgestelde databases en hun kenmerken opvragen.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Kung naka-enable, anumang pagtatangka na basahin ang isang password ay dapat kumpirmahin. Kung hindi, maaarin mabasa ng mga kliyente ang mga password nang walang kumpirmasyon kapag na-unlock ang database.&lt;/p&gt;&lt;p&gt;Saklaw lang ng opsyong ito ang access sa password ng isang entry. Maaaring palaging isa-isahin ng mga kliyente ang mga item ng database na naka-expose at i-query ang kanilang mga attribute.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Confirm when passwords are retrieved by clients</source>
-        <translation>Bevestigen wanneer wachtwoorden worden opgehaald door clients</translation>
+        <translation>Kumpirmahin kapag ang mga password ay nabawi na ng mga client</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;
@@ -8571,12 +8570,15 @@ Let op: deze optie is verouderd, gebruik --set-key-file</translation>
            Emoji','Segoe UI Emoji'; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;This setting does
            not override disabling recycle bin prompts&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
           </source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;Deze instelling 
-           overschrijft niet de uitschakeling van prullenbak-meldingen&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;
+           font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color
+           Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;Ang setting na ito ay hindi
+           magpapawalang-bisa sa paggana ng mga promt sa recycle bin&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
+          </translation>
     </message>
     <message>
         <source>Confirm when clients request entry deletion</source>
-        <translation>Bevestigen wanneer clients de verwijdering van items aanvragen</translation>
+        <translation>Kumpirmahin kapag humiling ang mga client ng pag-delete ng entry</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications
@@ -8584,439 +8586,440 @@ Let op: deze optie is verouderd, gebruik --set-key-file</translation>
            crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a
            different value set in applications.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
           </source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dit verbetert de compatibiliteit met bepaalde toepassingen
-           die zoeken naar wachtwoorden zonder eerst de database te ontgrendelen.&lt;/p&gt;&lt;p&gt;Maar dit kan ook leiden tot
-           crashes van de client als de database niet binnen een bepaalde time-out kan worden ontgrendeld. (Meestal 25s, maar kan een
-           verschillende waarden die in toepassingen zijn ingesteld.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pinapabuti nito ang pagiging tugma sa mga partikular na application
+           na naghahanap para sa password nang hindi muna ina-unlock ang database.&lt;/p&gt;&lt;p&gt;Ngunit ang pagpapagana nito ay maaari ding
+           makasira ng database ng kliyente kung hindi pa ito bukas sa loob ng tinukoy na timeout. (Kadalasan 25s, ngunit maaaring
+           magkaibang value set sa applications.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
           </translation>
     </message>
     <message>
         <source>Prompt to unlock database before searching</source>
-        <translation>Vraag voor het zoeken om ontgrendeling van de database</translation>
+        <translation>I-prompt para i-unlock ang database bago mag-search</translation>
     </message>
     <message>
         <source>Exposed database groups:</source>
-        <translation>Blootgestelde databasegroepen:</translation>
+        <translation>Na-expose na mga group ng database:</translation>
     </message>
     <message>
         <source>Authorization</source>
-        <translation>Autorisatie</translation>
+        <translation>Awtorisasyon</translation>
     </message>
     <message>
         <source>These applications are currently connected:</source>
-        <translation>Deze programma&apos;s zijn momenteel verbonden:</translation>
+        <translation>Ang mga application na ito ay kasalukuyang konektado:</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; </source>
-        <translation>&lt;b&gt;Waarschuwing:&lt;/b&gt; </translation>
+        <translation>&lt;b&gt;Babala:&lt;/b&gt; </translation>
     </message>
     <message>
         <source>Save current changes to activate the plugin and enable editing of this section.</source>
-        <translation>Sla huidige wijzigingen op om de plug-in te activeren en het bewerken van deze sectie mogelijk te maken.</translation>
+        <translation>I-save ang mga kasalukuyang pagbabago para i-activate ang plugin at i-enable ang pag-edit ng seksyong ito.</translation>
     </message>
 </context>
 <context>
     <name>SettingsWidgetKeeShare</name>
     <message>
         <source>Active</source>
-        <translation>Activering</translation>
+        <translation>Aktibo</translation>
     </message>
     <message>
         <source>Allow KeeShare imports</source>
-        <translation>Importeren van KeeShare toestaan</translation>
+        <translation>Payagan ang mga pag-import ng KeeShare</translation>
     </message>
     <message>
         <source>Allow import</source>
-        <translation>Importeren toestaan</translation>
+        <translation>Payagan ang pag-import</translation>
     </message>
     <message>
         <source>Allow KeeShare exports</source>
-        <translation>Sta KeeShare exports toe</translation>
+        <translation>Payagan ang mga pag-export ng KeeShare</translation>
     </message>
     <message>
         <source>Allow export</source>
-        <translation>Exporteren toestaan</translation>
+        <translation>Payagan ang pag-export</translation>
     </message>
     <message>
         <source>Only show warnings and errors</source>
-        <translation>Alleen waarschuwingen en fouten weergeven</translation>
+        <translation>Magpakita lamang ng mga babala at error</translation>
     </message>
     <message>
         <source>Own certificate</source>
-        <translation>Eigen certificaat</translation>
+        <translation>Sariling certificate</translation>
     </message>
     <message>
         <source>Signer:</source>
-        <translation>Ondertekenaar:</translation>
+        <translation>Signer:</translation>
     </message>
     <message>
         <source>Generate new certificate</source>
-        <translation>Nieuw certificaat genereren</translation>
+        <translation>Bumuo ng bagong certificate</translation>
     </message>
     <message>
         <source>Generate</source>
-        <translation>Genereren</translation>
+        <translation>Bumuo</translation>
     </message>
     <message>
         <source>Fingerprint:</source>
-        <translation>Vingerafdruk:</translation>
+        <translation>Fingerprint:</translation>
     </message>
     <message>
         <source>Signer name field</source>
-        <translation>Ondertekenaar naamveld</translation>
+        <translation>Field ng pangalan ng signer</translation>
     </message>
     <message>
         <source>Fingerprint</source>
-        <translation>Vingerafdruk</translation>
+        <translation>Fingerprint</translation>
     </message>
 </context>
 <context>
     <name>ShareExport</name>
     <message>
         <source>Could not write export container.</source>
-        <translation>Kan geen exportcontainer schrijven.</translation>
+        <translation>Hindi maisulat ang export container.</translation>
     </message>
 </context>
 <context>
     <name>ShareImport</name>
     <message>
         <source>Successful import</source>
-        <translation>Succesvol geïmporteerd</translation>
+        <translation>Matagumpay na pag-import</translation>
     </message>
 </context>
 <context>
     <name>ShareObserver</name>
     <message>
         <source>Import from %1 failed (%2)</source>
-        <translation>Importeren vanuit %1 is mislukt (%2)</translation>
+        <translation>Nabigo ang pag-import mula sa %1 (%2)</translation>
     </message>
     <message>
         <source>Import from %1 successful (%2)</source>
-        <translation>Importeren vanuit %1 is voltooid (%2)</translation>
+        <translation>Matagumpay ang (%2) na nai-import mula sa %1</translation>
     </message>
     <message>
         <source>Imported from %1</source>
-        <translation>Geïmporteerd vanuit %1</translation>
+        <translation>Na-import mula sa %1</translation>
     </message>
     <message>
         <source>Multiple import source path to %1 in %2</source>
-        <translation>Meerdere import-bronpaden naar %1 in %2</translation>
+        <translation>Maramihang landas ng pag-import sa %1 sa %2</translation>
     </message>
     <message>
         <source>Conflicting export target path %1 in %2</source>
-        <translation>Conflicterend export-doelpad %1 in %2</translation>
+        <translation>Magkasalungat na path ng target na pag-export na %1 sa %2</translation>
     </message>
     <message>
         <source>Export to %1 failed (%2)</source>
-        <translation>Exporteren naar %1 is mislukt (%2)</translation>
+        <translation>Nabigo ang pag-export sa %1 (%2)</translation>
     </message>
     <message>
         <source>Export to %1 successful (%2)</source>
-        <translation>Exporteren naar %1 gelukt (%2)</translation>
+        <translation>Matagumpay na na-export sa %1 ang (%2)</translation>
     </message>
     <message>
         <source>Export to %1</source>
-        <translation>Exporteren naar %1</translation>
+        <translation>I-export sa %1</translation>
     </message>
 </context>
 <context>
     <name>TagModel</name>
     <message>
         <source>Expired</source>
-        <translation>Verlopen</translation>
+        <translation>Nag-expire na</translation>
     </message>
     <message>
         <source>Weak Passwords</source>
-        <translation>Zwakke wachtwoorden</translation>
+        <translation>Mga Mahinang Password</translation>
     </message>
     <message>
         <source>All Entries</source>
-        <translation>Alle items</translation>
+        <translation>Lahat ng Entry</translation>
     </message>
     <message>
         <source>Clear Search</source>
-        <translation>Zoekopdracht wissen</translation>
+        <translation>I-clear ang Paghahanap</translation>
     </message>
 </context>
 <context>
     <name>TagView</name>
     <message>
         <source>Remove Search</source>
-        <translation>Zoekopdracht verwijderen</translation>
+        <translation>Alisin ang Search</translation>
     </message>
     <message>
         <source>Remove Tag</source>
-        <translation>Label verwijderen</translation>
+        <translation>Alisin ang Tag</translation>
     </message>
     <message>
         <source>Confirm Remove Tag</source>
-        <translation>Verwijderen bevestigen</translation>
+        <translation>Kumpirmahin ang Remove Tag</translation>
     </message>
     <message>
         <source>Remove tag &quot;%1&quot; from all entries in this database?</source>
-        <translation>Weet je zeker dat je het label “%1” van alle items wilt verwijderen?</translation>
+        <translation>Alisin ang tag na &quot;%1&quot; sa lahat ng mga entry sa database na ito?</translation>
     </message>
 </context>
 <context>
     <name>TotpDialog</name>
     <message>
         <source>Timed Password</source>
-        <translation>Tijdgebonden wachtwoord</translation>
+        <translation>Naka-time na Password</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation>Kopiëren</translation>
+        <translation>kopyahin</translation>
     </message>
     <message numerus="yes">
         <source>Expires in &lt;b&gt;%n&lt;/b&gt; second(s)</source>
-        <translation><numerusform>Verloopt in &lt;b&gt;%n&lt;/b&gt; seconde(n)</numerusform><numerusform>Verloopt over &lt;b&gt;%n&lt;/b&gt; seconde(n)</numerusform></translation>
+        <translation><numerusform>Mag-e-expire sa loob ng &lt;b&gt;%n&lt;/b&gt; segundo</numerusform><numerusform>Mag-e-expire sa loob ng &lt;b&gt;%n&lt;/b&gt; (mga)segundo</numerusform></translation>
     </message>
 </context>
 <context>
     <name>TotpExportSettingsDialog</name>
     <message>
         <source>Copy</source>
-        <translation>Kopiëren</translation>
+        <translation>Kopyahin</translation>
     </message>
     <message>
         <source>NOTE: These TOTP settings are custom and may not work with other authenticators.</source>
         <comment>TOTP QR code dialog warning</comment>
-        <translation>Let op: deze TOTP-instellingen zijn applicatie-specifiek en werken mogelijk niet met andere authenticators.</translation>
+        <translation>TANDAAN: Ang settings ng TOTP na ito ay custom
+at maaaring hindi gumana sa ibang mga authenticator.</translation>
     </message>
     <message>
         <source>There was an error creating the QR code.</source>
-        <translation>Er ging iets fout bij het maken van de QR-code.</translation>
+        <translation>Nagkaroon ng error sa paglikha ng QR code.</translation>
     </message>
     <message>
         <source>Closing in %1 seconds.</source>
-        <translation>Sluiten in %1 seconden.</translation>
+        <translation>Magsasara sa loob ng %1 segundo.</translation>
     </message>
 </context>
 <context>
     <name>TotpSetupDialog</name>
     <message>
         <source>Setup TOTP</source>
-        <translation>TOTP-instellen</translation>
+        <translation>I-setup ang TOTP</translation>
     </message>
     <message>
         <source>Secret Key:</source>
-        <translation>Geheime sleutel:</translation>
+        <translation>Secret Key:</translation>
     </message>
     <message>
         <source>Secret key must be in Base32 format</source>
-        <translation>Geheime sleutel moet in Base32-indeling zijn</translation>
+        <translation>Ang secret key ay dapat nasa Base32 na format</translation>
     </message>
     <message>
         <source>Secret key field</source>
-        <translation>Geheime sleutel veld</translation>
+        <translation>Secret key field</translation>
     </message>
     <message>
         <source>Default settings (RFC 6238)</source>
-        <translation>Standaard instellingen (RFC 6238)</translation>
+        <translation>Mga default setting (RFC 6238)</translation>
     </message>
     <message>
         <source>Steam® settings</source>
-        <translation>Steam® instellingen</translation>
+        <translation>Mga setting ng Steam®</translation>
     </message>
     <message>
         <source>Custom settings:</source>
-        <translation>Aangepaste instellingen:</translation>
+        <translation>Mga custom setting:</translation>
     </message>
     <message>
         <source>Custom Settings</source>
-        <translation>Aangepaste instellingen</translation>
+        <translation>Mga Custom Setting</translation>
     </message>
     <message>
         <source>Algorithm:</source>
-        <translation>Algoritme:</translation>
+        <translation>Algorithm:</translation>
     </message>
     <message>
         <source>Time step:</source>
-        <translation>Tijdsinterval:</translation>
+        <translation>Time step:</translation>
     </message>
     <message>
         <source>Time step field</source>
-        <translation>Tijd-stap veld</translation>
+        <translation>Field ng time step</translation>
     </message>
     <message>
         <source> sec</source>
         <comment>Seconds</comment>
-        <translation> sec</translation>
+        <translation> seg</translation>
     </message>
     <message>
         <source>Code size:</source>
-        <translation>Grootte van de code:</translation>
+        <translation>Sukat ng code:</translation>
     </message>
     <message>
         <source> digits</source>
-        <translation>cijfers</translation>
+        <translation> mga digit</translation>
     </message>
     <message>
         <source>Invalid TOTP Secret</source>
-        <translation>Ongeldig TOTP-geheim</translation>
+        <translation>Invalid na TOTP Secret</translation>
     </message>
     <message>
         <source>You have entered an invalid secret key. The key must be in Base32 format.
 Example: JBSWY3DPEHPK3PXP</source>
-        <translation>Je hebt een ongeldige geheime sleutel ingevoerd. De sleutel moet in Base32-indeling zijn.
-Voorbeeld: JBSWY3DPEHPK3PXP</translation>
+        <translation>Naglagay ka ng invalid secret key. Ang key ay dapat nasa Base32 na format.
+Halimbawa: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Confirm Remove TOTP Settings</source>
-        <translation>Bevestig het verwijderen van de TOTP instellingen</translation>
+        <translation>Kumpirmahin ang Mga Romove TOTP Setting</translation>
     </message>
     <message>
         <source>Are you sure you want to delete TOTP settings for this entry?</source>
-        <translation>Weet je zeker dat je de TOTP instellingen voor dit item wilt verwijderen?</translation>
+        <translation>Sigurado ka bang gusto mong i-delete ang mga setting ng TOTP para sa entry na ito?</translation>
     </message>
 </context>
 <context>
     <name>URLEdit</name>
     <message>
         <source>Invalid URL</source>
-        <translation>Ongeldige URL</translation>
+        <translation>Invalid na URL</translation>
     </message>
 </context>
 <context>
     <name>UpdateCheckDialog</name>
     <message>
         <source>Checking for updates</source>
-        <translation>Controleren op updates</translation>
+        <translation>Tinitingnan ang mga update</translation>
     </message>
     <message>
         <source>Checking for updates…</source>
-        <translation>Controleren op updates…</translation>
+        <translation>Tinitingnan ang mga update…</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Sluiten</translation>
+        <translation>I-close</translation>
     </message>
     <message>
         <source>Software Update</source>
-        <translation>Software-update</translation>
+        <translation>Update ng Software</translation>
     </message>
     <message>
         <source>An error occurred when trying to retrieve update information, please try again later.</source>
-        <translation>Er is een fout opgetreden bij het ophalen van update-informatie. Probeer het later opnieuw.</translation>
+        <translation>Nagkaroon ng error noong sinusubukang ibalik ang na-update na impormasyon, pakisubukang muli sa ibang pagkakataon.</translation>
     </message>
     <message>
         <source>&lt;strong&gt;A new version is available.&lt;/strong&gt;&lt;br/&gt;KeePassXC %1 can be &lt;a href=&quot;https://keepassxc.org/download/&quot;&gt;downloaded here&lt;/a&gt;.</source>
-        <translation>&lt;strong&gt;Een nieuwe versie is beschikbaar.&lt;/strong&gt;&lt;br/&gt;KeePassXC %1 kan &lt;a href=&quot;https://keepassxc.org/download/&quot;&gt;hier worden gedownload&lt;/a&gt;.</translation>
+        <translation>&lt;strong&gt;Available ang bagong bersyon.&lt;/strong&gt;&lt;br/&gt;KeePassXC %1 ay maaaring &lt;a href=&quot;https://keepassxc.org/download/&quot;&gt;i-download dito&lt;/a&gt;.</translation>
     </message>
     <message>
         <source>You have the latest version of KeePassXC</source>
-        <translation>Je hebt de laatste versie van KeePassXC</translation>
+        <translation>Mayroon kang pinakabagong bersyon ng KeePassXC</translation>
     </message>
 </context>
 <context>
     <name>WelcomeWidget</name>
     <message>
         <source>Start storing your passwords securely in a KeePassXC database</source>
-        <translation>Sla jouw wachtwoorden veilig op in een KeePassXC-database</translation>
+        <translation>Simulan ang pag-store ng iyong mga password nang ligtas sa isang database ng KeePassXC</translation>
     </message>
     <message>
         <source>Create new database</source>
-        <translation>Nieuwe database aanmaken</translation>
+        <translation>Lumikha ng bagong database</translation>
     </message>
     <message>
         <source>Open existing database</source>
-        <translation>Bestaande database openen</translation>
+        <translation>Buksan ang umiiral na database</translation>
     </message>
     <message>
         <source>Import from KeePass 1</source>
-        <translation>Importeren vanuit Keepass 1-database</translation>
+        <translation>Mag-import mula sa KeePass 1</translation>
     </message>
     <message>
         <source>Import from 1Password</source>
-        <translation>Importeren vanuit 1Password-kluis</translation>
+        <translation>Mag-import mula sa 1Password</translation>
     </message>
     <message>
         <source>Import from CSV</source>
-        <translation>Importeren vanuit CSV-bestand</translation>
+        <translation>Mag-import mula sa CSV</translation>
     </message>
     <message>
         <source>Recent databases</source>
-        <translation>Recente databases</translation>
+        <translation>Mga kamakailang database</translation>
     </message>
     <message>
         <source>Open a recent database</source>
-        <translation>Een recente database openen</translation>
+        <translation>Magbukas ng kamakailang database</translation>
     </message>
     <message>
         <source>Welcome to KeePassXC %1</source>
-        <translation>Welkom bij KeePassXC %1</translation>
+        <translation>Welcome sa KeePassXC %1</translation>
     </message>
 </context>
 <context>
     <name>WinUtils</name>
     <message>
         <source>Invalid key code</source>
-        <translation>Ongeldige sleutelcode</translation>
+        <translation>Invalid na key code</translation>
     </message>
     <message>
         <source>Global shortcut already registered to %1</source>
-        <translation>Globale snelkoppeling is al geregistreerd bij %1</translation>
+        <translation>Nakarehistro na ang global shortcut sa %1</translation>
     </message>
     <message>
         <source>Could not register global shortcut</source>
-        <translation>Kan algemene snelkoppeling niet registreren</translation>
+        <translation>Hindi mairehistro ang global shortcut</translation>
     </message>
 </context>
 <context>
     <name>WindowsHello</name>
     <message>
         <source>Failed to init KeePassXC crypto.</source>
-        <translation>Kan KeePassXC crypto niet initiëren.</translation>
+        <translation>Nabigong simulan ang KeePassXC crypto.</translation>
     </message>
     <message>
         <source>Failed to encrypt key data.</source>
-        <translation>Sleutelgegevens kunnen niet worden versleuteld.</translation>
+        <translation>Nabigong i-encrypt ang key data.</translation>
     </message>
     <message>
         <source>Failed to get Windows Hello credential.</source>
-        <translation>Kan geen Windows Hello-referenties ophalen.</translation>
+        <translation>Nabigong makuha ang kredensyal ng Windows Hello.</translation>
     </message>
     <message>
         <source>Failed to decrypt key data.</source>
-        <translation>Kan sleutelgegevens niet decoderen.</translation>
+        <translation>Nabigong i-decrypt ang key data.</translation>
     </message>
 </context>
 <context>
     <name>YubiKey</name>
     <message>
         <source>%1 No interface, slot %2</source>
-        <translation>%1 Geen interface, positie %2</translation>
+        <translation>%1 Walang interface, slot %2</translation>
     </message>
     <message>
         <source>General: </source>
-        <translation>Algemeen:</translation>
+        <translation>Pangkalahatan: </translation>
     </message>
     <message>
         <source>Could not find interface for hardware key with serial number %1. Please connect it to continue.</source>
-        <translation>Kan interface voor hardwaresleutel met serienummer %1 niet vinden. Sluit het aan om door te gaan.</translation>
+        <translation>Hindi mahanap ang interface para sa hardware key na may serial number na %1. Mangyaring ikonekta ito para magpatuloy.</translation>
     </message>
 </context>
 <context>
     <name>YubiKeyEditWidget</name>
     <message>
         <source>Refresh hardware tokens</source>
-        <translation>Hardwaretoken verversen</translation>
+        <translation>I-refresh ang mga token ng hardware</translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation>Vernieuwen</translation>
+        <translation>I-refresh</translation>
     </message>
     <message>
         <source>Hardware key slot selection</source>
-        <translation>Hardwaresleutel positie selectie</translation>
+        <translation>Pagpili ng hardware key slot</translation>
     </message>
     <message>
         <source>Could not find any hardware keys!</source>
-        <translation>Geen hardwaresleutels aangetroffen!</translation>
+        <translation>Hindi makahanap ng anumang mga hardware key!</translation>
     </message>
     <message>
         <source>Selected hardware key slot does not support challenge-response!</source>
-        <translation>Geselecteerde hardwaresleutel-positie ondersteunt geen challenge-response!</translation>
+        <translation>Ang napiling hardware key slot ay hindi sumusuporta sa challenge-response!</translation>
     </message>
     <message>
         <source>Challenge-Response</source>
@@ -9024,118 +9027,118 @@ Voorbeeld: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Add Challenge-Response</source>
-        <translation>Challenge-Response toevoegen</translation>
+        <translation>Magdagdag ng Challenge-Response</translation>
     </message>
     <message>
         <source>Change Challenge-Response</source>
-        <translation>Challenge-Response wijzigen</translation>
+        <translation>Palitan ang Challenge-Response</translation>
     </message>
     <message>
         <source>Remove Challenge-Response</source>
-        <translation>Challenge-Response verwijderen</translation>
+        <translation>Alisin ang Hamon-Tugon</translation>
     </message>
     <message>
         <source>Challenge-Response set, click to change or remove</source>
-        <translation>Challenge-Response ingesteld, klik om te wijzigen of te verwijderen</translation>
+        <translation>Challenge-Response set, i-click upang baguhin o alisin</translation>
     </message>
     <message>
         <source>&lt;p&gt;If you own a &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; or &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt;, you can use it for additional security.&lt;/p&gt;&lt;p&gt;The key requires one of its slots to be programmed as &lt;a href=&quot;https://www.yubico.com/products/services-software/challenge-response/&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Als je een &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; of &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt; bezit, kun je deze gebruiken voor extra beveiliging.&lt;/p&gt;&lt;p&gt;De sleutel vereist dat een van zijn posities (slots) wordt geprogrammeerd als &lt;a href=&quot;https://www.yubico.com/products/services-software/challenge-response/&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Kung mayroon ka ng &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; o &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt;, magagamit mo ito para sa karagdagang seguridad.&lt;/p&gt;&lt;p&gt;Ang key ay nangangailangan ng isa sa mga slot nito upang ma-program bilang &lt;a href=&quot;https://www.yubico.com/products/services-software/challenge-response/&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Detecting hardware keys…</source>
-        <translation>Hardwaresleutels detecteren...</translation>
+        <translation>Dini-detect ang mga hardware key…</translation>
     </message>
     <message>
         <source>No hardware keys detected</source>
-        <translation>Geen hardwaresleutels gedetecteerd</translation>
+        <translation>Walang nakitang hardware key</translation>
     </message>
 </context>
 <context>
     <name>YubiKeyInterface</name>
     <message>
         <source>%1 Invalid slot specified - %2</source>
-        <translation>%1 Ongeldige positie opgegeven - %2</translation>
+        <translation>%1 Di-wastong slot ang tinukoy - %2</translation>
     </message>
 </context>
 <context>
     <name>YubiKeyInterfacePCSC</name>
     <message>
         <source>(PCSC) %1 [%2] Challenge-Response - Slot %3</source>
-        <translation>(PCSC) %1 [%2] Challenge-Response - Positie %3</translation>
+        <translation>(PCSC) %1 [%2] Challenge-Response - Slot %3</translation>
     </message>
     <message>
         <source>The YubiKey PCSC interface has not been initialized.</source>
-        <translation>De YubiKey PCSC-interface is niet geïnitialiseerd.</translation>
+        <translation>Ang interface ng YubiKey PCSC ay hindi pa nasimulan.</translation>
     </message>
     <message>
         <source>Hardware key is currently in use.</source>
-        <translation>Hardwaresleutel is momenteel in gebruik.</translation>
+        <translation>Kasalukuyang ginagamit ang hardware key.</translation>
     </message>
     <message>
         <source>Could not find or access hardware key with serial number %1. Please present it to continue. </source>
-        <translation>Kan hardwaresleutel met serienummer %1 niet vinden of openen. Presenteer de hardwaresleutel om door te gaan. </translation>
+        <translation>Hindi mahanap o ma-access ang hardware key na may serial number na %1. Mangyaring ipakita ito para magpatuloy. </translation>
     </message>
     <message>
         <source>Hardware key is locked or timed out. Unlock or re-present it to continue.</source>
-        <translation>De hardwaresleutel is vergrendeld of er is een time-out. Ontgrendel of presenteer het opnieuw om door te gaan.</translation>
+        <translation>Naka-lock o nag-time out ang hardware key. I-unlock o muling ipakita ito para makapagpatuloy.</translation>
     </message>
     <message>
         <source>Hardware key was not found or is not configured.</source>
-        <translation>De hardwaresleutel is niet gevonden of is niet geconfigureerd.</translation>
+        <translation>Hindi nahanap o hindi na-configure ang hardware key.</translation>
     </message>
     <message>
         <source>Failed to complete a challenge-response, the PCSC error code was: %1</source>
-        <translation>De challenge-response is mislukt, de PCSC fout was: %1</translation>
+        <translation>Nabigong makumpleto ang isang challenge-response, ang PCSC error code ay: %1</translation>
     </message>
 </context>
 <context>
     <name>YubiKeyInterfaceUSB</name>
     <message>
         <source>Unknown</source>
-        <translation>Onbekend</translation>
+        <translation>Hindi kilala</translation>
     </message>
     <message>
         <source>(USB) %1 [%2] Configured Slot - %3</source>
-        <translation>(USB) %1 [%2] Geconfigureerde positie - %3</translation>
+        <translation>(USB) %1 [%2] ng Na-configyre na Slot - %3</translation>
     </message>
     <message>
         <source>(USB) %1 [%2] Challenge-Response - Slot %3 - %4</source>
-        <translation>(USB) %1 [%2] Challenge-Respons - Positie %3 - %4</translation>
+        <translation>(USB) %1 [%2] Challenge-Response - Slot %3 - %4</translation>
     </message>
     <message>
         <source>Press</source>
         <comment>USB Challenge-Response Key interaction request</comment>
-        <translation>Druk</translation>
+        <translation>Pindutin</translation>
     </message>
     <message>
         <source>Passive</source>
         <comment>USB Challenge-Response Key no interaction required</comment>
-        <translation>Passief</translation>
+        <translation>Passive</translation>
     </message>
     <message>
         <source>The YubiKey USB interface has not been initialized.</source>
-        <translation>De YubiKey USB interface is niet geïnitialiseerd.</translation>
+        <translation>Ang YubiKey USB interface ay hindi pa nasimulan.</translation>
     </message>
     <message>
         <source>Hardware key is currently in use.</source>
-        <translation>Hardwaresleutel is momenteel in gebruik.</translation>
+        <translation>Kasalukuyang ginagamit ang hardware key.</translation>
     </message>
     <message>
         <source>Could not find hardware key with serial number %1. Please plug it in to continue.</source>
-        <translation>Hardwaresleutel met serienummer %1 niet gevonden. Sluit deze aan om door te gaan.</translation>
+        <translation>Hindi mahanap ang hardware key na may serial number na %1. Paki-plug ito upang magpatuloy.</translation>
     </message>
     <message>
         <source>Hardware key timed out waiting for user interaction.</source>
-        <translation>Er is een time-out opgetreden voor de hardwaresleutel tijdens het wachten op gebruikersinteractie.</translation>
+        <translation>Nag-time out ang hardware key habang naghihintay para sa pakikipag-ugnayan sa user.</translation>
     </message>
     <message>
         <source>A USB error occurred when accessing the hardware key: %1</source>
-        <translation>Er is een USB-fout opgetreden bij het openen van de hardwaresleutel: %1</translation>
+        <translation>Isang USB error ang nangyare noong ina-access ang hardware key: %1</translation>
     </message>
     <message>
         <source>Failed to complete a challenge-response, the specific error was: %1</source>
-        <translation>Challenge-response is niet voltooid, de specifieke fout was: %1</translation>
+        <translation>Nabigong makumpleto ang isang challenge-response, ang partikular na error ay: %1</translation>
     </message>
 </context>
 </TS>

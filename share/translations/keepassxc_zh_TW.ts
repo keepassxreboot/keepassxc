@@ -594,6 +594,10 @@
         <source>Use DuckDuckGo service to download website icons</source>
         <translation>使用 DuckDuckGo 服務下載網站圖示</translation>
     </message>
+    <message>
+        <source>Hide TOTP in the entry preview panel</source>
+        <translation>隱藏項目預覽面板上的 TOTP</translation>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
@@ -1545,10 +1549,6 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
         <translation>以空白密碼重試</translation>
     </message>
     <message>
-        <source>Failed to authenticate with Windows Hello</source>
-        <translation>Windows Hello 驗證失敗</translation>
-    </message>
-    <message>
         <source>Failed to authenticate with Touch ID</source>
         <translation>Touch ID 驗證失敗</translation>
     </message>
@@ -1611,6 +1611,14 @@ If you do not have a key file, please leave the field empty.</source>
 &lt;p&gt;Click for more information…&lt;/p&gt;</source>
         <translation>&lt;p&gt;您可以使用諸如 &lt;strong&gt;YubiKey&lt;/strong&gt; 或 &lt;strong&gt;OnlyKey&lt;/strong&gt; 等實體安全金鑰，只要它們擁有可設置 HMAC-SHA1 的槽位。&lt;/p&gt;
 &lt;p&gt;點擊獲得更多資訊…&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>authenticate to access the database</source>
+        <translation>驗證以存取資料庫</translation>
+    </message>
+    <message>
+        <source>Failed to authenticate with Windows Hello: %1</source>
+        <translation>以 Windows Hello 驗證失敗: %1</translation>
     </message>
 </context>
 <context>
@@ -2041,16 +2049,8 @@ If you keep this number, your database will not be protected from brute force at
         <translation>每個項目的最大歷史記錄數</translation>
     </message>
     <message>
-        <source>Max. history items:</source>
-        <translation>最大歷史記錄數：</translation>
-    </message>
-    <message>
         <source>Maximum size of history per entry</source>
         <translation>每個項目的最大歷史記錄大小</translation>
-    </message>
-    <message>
-        <source>Max. history size:</source>
-        <translation>最大歷史記錄大小：</translation>
     </message>
     <message>
         <source> MiB</source>
@@ -2081,6 +2081,44 @@ This action is not reversible.</source>
     <message>
         <source> (old)</source>
         <translation> （舊）</translation>
+    </message>
+    <message>
+        <source>When saving this setting or editing an entry
+the oldest history items of an entry will be
+removed such that only the specified amount
+of entries remain at most.</source>
+        <translation>儲存此設定，或編輯一個項目時，
+將從時間最舊的歷史項開始移除，
+直到該項目可保留的歷史項
+不超過指定的數量為止。</translation>
+    </message>
+    <message>
+        <source>Limit the amount of history items per entry to:</source>
+        <translation>將每個項目的歷史數限制在：</translation>
+    </message>
+    <message>
+        <source>When saving this setting or editing an entry
+the oldest history items of an entry will be
+removed such that the remaining history items
+add up to the specified amount at most.</source>
+        <translation>儲存此設定，或編輯一個項目時，
+將從時間最舊的歷史項開始移除，
+直到該項目所有歷史項的使用空間
+不超過指定的大小為止。</translation>
+    </message>
+    <message>
+        <source>Limit the total size of history items per entry to:</source>
+        <translation>將每個項目的歷史總大小限制在：</translation>
+    </message>
+    <message>
+        <source>Move entries to a recycle bin group
+instead of deleting them from the database.
+Entries deleted from the recycle bin are
+removed from the database.</source>
+        <translation>將項目移動至「回收桶」群組
+而不是直接從資料庫中刪除它們。
+在「回收桶」刪除的項目將
+直接移除自資料庫。</translation>
     </message>
 </context>
 <context>
@@ -2875,20 +2913,8 @@ Would you like to correct it?</source>
         <translation>備註欄位</translation>
     </message>
     <message>
-        <source>Toggle the checkbox to reveal the notes section.</source>
-        <translation>切換核取方塊以揭示備註欄位。</translation>
-    </message>
-    <message>
         <source>Username field</source>
         <translation>使用者名稱欄位</translation>
-    </message>
-    <message>
-        <source>Toggle notes visible</source>
-        <translation>切換備註可見性</translation>
-    </message>
-    <message>
-        <source>Notes:</source>
-        <translation>附註：</translation>
     </message>
     <message>
         <source>Expiration field</source>
@@ -2907,14 +2933,6 @@ Would you like to correct it?</source>
         <translation>預先定義</translation>
     </message>
     <message>
-        <source>Password:</source>
-        <translation>密碼：</translation>
-    </message>
-    <message>
-        <source>URL:</source>
-        <translation>URL:</translation>
-    </message>
-    <message>
         <source>Url field</source>
         <translation>URL 欄位</translation>
     </message>
@@ -2923,16 +2941,8 @@ Would you like to correct it?</source>
         <translation>下載 URL 的網站圖標</translation>
     </message>
     <message>
-        <source>Title:</source>
-        <translation>標題：</translation>
-    </message>
-    <message>
         <source>Title field</source>
         <translation>標題欄位</translation>
-    </message>
-    <message>
-        <source>Username:</source>
-        <translation>使用者名稱：</translation>
     </message>
     <message>
         <source>Password field</source>
@@ -2940,19 +2950,43 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Toggle expiration</source>
-        <translation>切換過期時間</translation>
-    </message>
-    <message>
-        <source>Expires:</source>
-        <translation>過期：</translation>
-    </message>
-    <message>
-        <source>Tags:</source>
-        <translation>標籤：</translation>
+        <translation>啟用或停用過期</translation>
     </message>
     <message>
         <source>Tags list</source>
         <translation>標籤清單</translation>
+    </message>
+    <message>
+        <source>&amp;Username:</source>
+        <translation>使用者名稱(&amp;U):</translation>
+    </message>
+    <message>
+        <source>&amp;Title:</source>
+        <translation>標題(&amp;T)：</translation>
+    </message>
+    <message>
+        <source>&amp;Password:</source>
+        <translation>密碼(&amp;P)：</translation>
+    </message>
+    <message>
+        <source>UR&amp;L:</source>
+        <translation>UR&amp;L:</translation>
+    </message>
+    <message>
+        <source>&amp;Notes:</source>
+        <translation>備註(&amp;N)：</translation>
+    </message>
+    <message>
+        <source>Toggle notes visibility</source>
+        <translation>顯示或隱藏備註</translation>
+    </message>
+    <message>
+        <source>T&amp;ags:</source>
+        <translation>標籤(&amp;A)：</translation>
+    </message>
+    <message>
+        <source>&amp;Expires:</source>
+        <translation>過期時間(&amp;E)：</translation>
     </message>
 </context>
 <context>
@@ -3092,10 +3126,6 @@ Would you like to correct it?</source>
 </context>
 <context>
     <name>EditGroupWidgetBrowser</name>
-    <message>
-        <source>Edit Group</source>
-        <translation>編輯群組</translation>
-    </message>
     <message>
         <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
         <translation>這些設定影響了群組在瀏覽器擴充下的行為。</translation>
@@ -3259,7 +3289,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Toggle expiration</source>
-        <translation>切換過期時間</translation>
+        <translation>啟用或停用過期</translation>
     </message>
     <message>
         <source>Expires:</source>
@@ -5216,10 +5246,6 @@ Are you sure you want to continue with this file?</source>
         <translation>將標題複製到剪貼簿</translation>
     </message>
     <message>
-        <source>&amp;URL</source>
-        <translation>&amp;URL</translation>
-    </message>
-    <message>
         <source>Copy URL to clipboard</source>
         <translation>將 URL 複製到剪貼簿</translation>
     </message>
@@ -5470,6 +5496,14 @@ We recommend you use the AppImage available on our downloads page.</source>
     <message>
         <source>XML File…</source>
         <translation>XML 檔…</translation>
+    </message>
+    <message>
+        <source>Copy &amp;URL</source>
+        <translation>複製 &amp;URL</translation>
+    </message>
+    <message>
+        <source>Allow Screen Capture</source>
+        <translation>允許螢幕截圖</translation>
     </message>
 </context>
 <context>
@@ -5841,6 +5875,10 @@ We recommend you use the AppImage available on our downloads page.</source>
         <source>Unexpected EOF when writing private key</source>
         <translation>寫入私密金鑰時出現意外的檔案結尾</translation>
     </message>
+    <message>
+        <source>AES-256/GCM is currently not supported</source>
+        <translation>AES-256/GCM 目前不受支援</translation>
+    </message>
 </context>
 <context>
     <name>PasswordEditWidget</name>
@@ -6187,7 +6225,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Toggle Password (%1)</source>
-        <translation>切換密碼 (%1)</translation>
+        <translation>切換密碼顯示 (%1)</translation>
     </message>
     <message>
         <source>Generate Password (%1)</source>
@@ -6220,6 +6258,10 @@ Do you want to overwrite it?</source>
         <source>Excellent</source>
         <comment>Password quality</comment>
         <translation>極好</translation>
+    </message>
+    <message>
+        <source>Toggle password visibilty using Control + H. Open the password generator using Control + G.</source>
+        <translation>使用 Control + H 顯示或隱藏密碼。使用 Control + G 打開密碼產生器。</translation>
     </message>
 </context>
 <context>
@@ -7544,8 +7586,8 @@ Kernel: %3 %4</source>
         <translation><numerusform>%1 分</numerusform></translation>
     </message>
     <message>
-        <source>Botan library must be at least 2.11.x, found %1.%2.%3</source>
-        <translation>Botan 函式庫需要至少 2.11.x，找到 %1.%2.%3</translation>
+        <source>Botan library must be at least %1, found %2.%3.%4</source>
+        <translation>Botan 函式庫必須至少為 %1，找到 %2.%3.%4</translation>
     </message>
     <message>
         <source>Cryptographic libraries:</source>
@@ -7810,10 +7852,6 @@ Kernel: %3 %4</source>
         <translation>KeePassXC - 錯誤</translation>
     </message>
     <message>
-        <source>Warning: Failed to prevent screenshots on a top level window!</source>
-        <translation>警告：於最頂層視窗防擷圖失敗！</translation>
-    </message>
-    <message>
         <source>Database password: </source>
         <translation>資料庫密碼：</translation>
     </message>
@@ -7834,6 +7872,18 @@ Kernel: %3 %4</source>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
         <translation>使用 Windows Hello 簽署挑戰失敗。</translation>
+    </message>
+    <message>
+        <source>Warning: Failed to block screenshot capture on a top-level window.</source>
+        <translation>警告：於頂層視窗阻擋螢幕截取失敗。</translation>
+    </message>
+    <message>
+        <source>Invalid Cipher</source>
+        <translation>無效的加密法</translation>
+    </message>
+    <message>
+        <source>Invalid KDF</source>
+        <translation>無效的 KDF</translation>
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue.</source>
@@ -7896,6 +7946,10 @@ Kernel: %3 %4</source>
 This options is deprecated, use --set-key-file instead.</source>
         <translation>設定資料庫的金鑰檔案。
 此選項已經棄用，請用 --set-key-file 代替。</translation>
+    </message>
+    <message>
+        <source>KeePassXC is not running. No open database to lock</source>
+        <translation>KeePassXC 並未執行。沒有已開啟的資料庫要鎖定</translation>
     </message>
 </context>
 <context>

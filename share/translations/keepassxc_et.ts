@@ -594,6 +594,10 @@
         <source>Use DuckDuckGo service to download website icons</source>
         <translation>Saidiikoonide allalaadimiseks kasutatakse DuckDuckGo teenust</translation>
     </message>
+    <message>
+        <source>Hide TOTP in the entry preview panel</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
@@ -1545,10 +1549,6 @@ Selle veateate ilmumise vältimiseks peaksid avama andmebaasi seadetes turvalisu
         <translation>Proovi uuesti tühja parooliga</translation>
     </message>
     <message>
-        <source>Failed to authenticate with Windows Hello</source>
-        <translation>Windows Helloga autentimine ebaõnnestus</translation>
-    </message>
-    <message>
         <source>Failed to authenticate with Touch ID</source>
         <translation>Touch ID-ga autentimine ebaõnnestus</translation>
     </message>
@@ -1611,6 +1611,14 @@ Kui andmebaasi avamiseks pole võtmefaili vaja, jäta see väli tühjaks.</trans
 &lt;p&gt;Click for more information…&lt;/p&gt;</source>
         <translation>&lt;p&gt;Kasutada saab riistvaralist võtit nagu &lt;strong&gt;YubiKey&lt;/strong&gt; või &lt;strong&gt;OnlyKey&lt;/strong&gt;, millel on HMAC-SHA1 jaoks seadistatud pesa.&lt;/p&gt;
 &lt;p&gt;Lisateabe saamiseks klõpsa.&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>authenticate to access the database</source>
+        <translation>andmebaasi avamiseks on tarvis autentida</translation>
+    </message>
+    <message>
+        <source>Failed to authenticate with Windows Hello: %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2041,16 +2049,8 @@ Kui jätad selle suuremaks muutmata, on andmebaas jõhkra jõuga rünnete ees ka
         <translation>Ajalooelementide maksimaalne arv kirje kohta</translation>
     </message>
     <message>
-        <source>Max. history items:</source>
-        <translation>Ajalooelementide maksimumarv kirje kohta:</translation>
-    </message>
-    <message>
         <source>Maximum size of history per entry</source>
         <translation>Ajaloo maksimaalne maht kirje kohta</translation>
-    </message>
-    <message>
-        <source>Max. history size:</source>
-        <translation>Ajaloo maksimummaht kirje kohta:</translation>
     </message>
     <message>
         <source> MiB</source>
@@ -2081,6 +2081,35 @@ Seda toimingut ei saa tagasi võtta.</translation>
     <message>
         <source> (old)</source>
         <translation> (vana)</translation>
+    </message>
+    <message>
+        <source>When saving this setting or editing an entry
+the oldest history items of an entry will be
+removed such that only the specified amount
+of entries remain at most.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Limit the amount of history items per entry to:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>When saving this setting or editing an entry
+the oldest history items of an entry will be
+removed such that the remaining history items
+add up to the specified amount at most.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Limit the total size of history items per entry to:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Move entries to a recycle bin group
+instead of deleting them from the database.
+Entries deleted from the recycle bin are
+removed from the database.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2877,20 +2906,8 @@ isegi kui see ei vasta kvaliteedinõuetele. Märgi see ruut, kui parooli keeruku
         <translation>Märkmete väli</translation>
     </message>
     <message>
-        <source>Toggle the checkbox to reveal the notes section.</source>
-        <translation>Märkmete nägemiseks või muutmiseks märgi kõrvalolev ruut.</translation>
-    </message>
-    <message>
         <source>Username field</source>
         <translation>Kasutajanime väli</translation>
-    </message>
-    <message>
-        <source>Toggle notes visible</source>
-        <translation>Lülita märkmete nähtavust</translation>
-    </message>
-    <message>
-        <source>Notes:</source>
-        <translation>Märkmed:</translation>
     </message>
     <message>
         <source>Expiration field</source>
@@ -2909,14 +2926,6 @@ isegi kui see ei vasta kvaliteedinõuetele. Märgi see ruut, kui parooli keeruku
         <translation>Valmisseaded</translation>
     </message>
     <message>
-        <source>Password:</source>
-        <translation>Parool:</translation>
-    </message>
-    <message>
-        <source>URL:</source>
-        <translation>URL:</translation>
-    </message>
-    <message>
         <source>Url field</source>
         <translation>URL-i väli</translation>
     </message>
@@ -2925,16 +2934,8 @@ isegi kui see ei vasta kvaliteedinõuetele. Märgi see ruut, kui parooli keeruku
         <translation>Laadi alla saidiikoon selle URL-i jaoks</translation>
     </message>
     <message>
-        <source>Title:</source>
-        <translation>Pealkiri:</translation>
-    </message>
-    <message>
         <source>Title field</source>
         <translation>Pealkirja väli</translation>
-    </message>
-    <message>
-        <source>Username:</source>
-        <translation>Kasutajanimi:</translation>
     </message>
     <message>
         <source>Password field</source>
@@ -2945,16 +2946,40 @@ isegi kui see ei vasta kvaliteedinõuetele. Märgi see ruut, kui parooli keeruku
         <translation>Lülita aegumist</translation>
     </message>
     <message>
-        <source>Expires:</source>
-        <translation>Aegub:</translation>
-    </message>
-    <message>
-        <source>Tags:</source>
-        <translation>Sildid:</translation>
-    </message>
-    <message>
         <source>Tags list</source>
         <translation>Siltide loend</translation>
+    </message>
+    <message>
+        <source>&amp;Username:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Title:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Password:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>UR&amp;L:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Notes:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle notes visibility</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>T&amp;ags:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Expires:</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3094,10 +3119,6 @@ isegi kui see ei vasta kvaliteedinõuetele. Märgi see ruut, kui parooli keeruku
 </context>
 <context>
     <name>EditGroupWidgetBrowser</name>
-    <message>
-        <source>Edit Group</source>
-        <translation>Grupi muutmine</translation>
-    </message>
     <message>
         <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
         <translation>Need seaded mõjutavad grupi käitumist brauserilaiendusega.</translation>
@@ -5219,10 +5240,6 @@ Kas oled kindel, et soovid selle failiga jätkata?</translation>
         <translation>Kopeeri pealkiri lõikepuhvrisse</translation>
     </message>
     <message>
-        <source>&amp;URL</source>
-        <translation>&amp;URL</translation>
-    </message>
-    <message>
         <source>Copy URL to clipboard</source>
         <translation>Kopeeri URL lõikepuhvrisse</translation>
     </message>
@@ -5474,6 +5491,14 @@ Võiksid kaaluda KeePassXC allalaadimislehel oleva AppImage’i kasutamist.</tra
     <message>
         <source>XML File…</source>
         <translation>XML-failiks…</translation>
+    </message>
+    <message>
+        <source>Copy &amp;URL</source>
+        <translation>K&amp;opeeri URL</translation>
+    </message>
+    <message>
+        <source>Allow Screen Capture</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5844,6 +5869,10 @@ Võiksid kaaluda KeePassXC allalaadimislehel oleva AppImage’i kasutamist.</tra
     <message>
         <source>Unexpected EOF when writing private key</source>
         <translation>Ootamatu faililõpp privaatvõtme kirjutamisel</translation>
+    </message>
+    <message>
+        <source>AES-256/GCM is currently not supported</source>
+        <translation>AES-256/GCM-i praegu ei toetata</translation>
     </message>
 </context>
 <context>
@@ -6224,6 +6253,10 @@ Kas soovid selle üle kirjutada?</translation>
         <source>Excellent</source>
         <comment>Password quality</comment>
         <translation>suurepärane</translation>
+    </message>
+    <message>
+        <source>Toggle password visibilty using Control + H. Open the password generator using Control + G.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7548,8 +7581,8 @@ Kernel: %3 %4</translation>
         <translation><numerusform>%1 minut</numerusform><numerusform>%1 minutit</numerusform></translation>
     </message>
     <message>
-        <source>Botan library must be at least 2.11.x, found %1.%2.%3</source>
-        <translation>Botan&apos;i teek peab olema 2.11.x või uuem, leiti aga %1.%2.%3</translation>
+        <source>Botan library must be at least %1, found %2.%3.%4</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Cryptographic libraries:</source>
@@ -7814,10 +7847,6 @@ Kernel: %3 %4</translation>
         <translation>Viga – KeePassXC</translation>
     </message>
     <message>
-        <source>Warning: Failed to prevent screenshots on a top level window!</source>
-        <translation>Hoiatus: ülemise taseme aknast ekraanipiltide tegemise ennetamine ebaõnnestus!</translation>
-    </message>
-    <message>
         <source>Database password: </source>
         <translation>Andmebaasi parool: </translation>
     </message>
@@ -7838,6 +7867,18 @@ Kernel: %3 %4</translation>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
         <translation>Windows Hello abil pretensiooni allkirjastamine ebaõnnestus.</translation>
+    </message>
+    <message>
+        <source>Warning: Failed to block screenshot capture on a top-level window.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid Cipher</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid KDF</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue.</source>
@@ -7900,6 +7941,10 @@ Kernel: %3 %4</translation>
 This options is deprecated, use --set-key-file instead.</source>
         <translation>Andmebaasile võtmefaili määramine.
 See argument on iganenud, kasuta parem &quot;--set-key-file&quot;.</translation>
+    </message>
+    <message>
+        <source>KeePassXC is not running. No open database to lock</source>
+        <translation>KeePassXC ei tööta, seega pole ühtki avatud andmebaasi, mida lukustada.</translation>
     </message>
 </context>
 <context>
