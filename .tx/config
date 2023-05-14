@@ -1,14 +1,17 @@
 [main]
-host = https://www.transifex.com
+host = https://app.transifex.com
 
-[keepassxc.share-translations-keepassxc-en-ts--develop]
-source_file = share/translations/keepassxc_en.ts
-file_filter = share/translations/keepassxc_<lang>.ts
-source_lang = en
-type = QT
+[o:keepassxc:p:keepassxc:r:share-translations-keepassxc-en-ts--develop]
+file_filter   = share/translations/keepassxc_<lang>.ts
+source_file   = share/translations/keepassxc_en.ts
+type          = QT
+minimum_perc  = 0
+resource_name = keepassxc_en.ts (develop)
 
-[keepassxc.share-translations-keepassxc-en-ts--master]
-source_file = share/translations/keepassxc_en.ts
-file_filter = share/translations/keepassxc_<lang>.ts
-source_lang = en
-type = QT
+[o:keepassxc:p:keepassxc:r:share-translations-keepassxc-en-ts--master]
+file_filter   = share/translations/keepassxc_<lang>.ts
+source_file   = share/translations/keepassxc_en.ts
+type          = QT
+minimum_perc  = 0
+resource_name = keepassxc_en.ts (2.7.x stable)
+
