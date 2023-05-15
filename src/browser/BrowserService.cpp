@@ -24,6 +24,7 @@
 #include "BrowserHost.h"
 #include "BrowserMessageBuilder.h"
 #include "BrowserSettings.h"
+#include "core/DatabaseSettings.h"
 #include "core/Tools.h"
 #include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
@@ -343,8 +344,10 @@ QString BrowserService::getCurrentTotp(const QString& uuid)
     return {};
 }
 
-QJsonArray
-BrowserService::findEntries(const EntryParameters& entryParameters, const StringPairList& keyList, bool* entriesFound)
+QJsonArray BrowserService::findEntries(const EntryParameters& entryParameters,
+                                       const StringPairList& keyList,
+                                       const ClientProcess& clientProcess,
+                                       bool* entriesFound)
 {
     if (entriesFound) {
         *entriesFound = false;
@@ -358,7 +361,7 @@ BrowserService::findEntries(const EntryParameters& entryParameters, const String
     // Check entries for authorization
     QList<Entry*> entriesToConfirm;
     QList<Entry*> allowedEntries;
-    for (auto* entry : searchEntries(entryParameters.siteUrl, entryParameters.formUrl, keyList)) {
+    for (auto* entry : searchEntries(entryParameters.siteUrl, entryParameters.formUrl, keyList, clientProcess)) {
         auto entryCustomData = entry->customData();
 
         if (!entryParameters.httpAuth
@@ -762,18 +765,25 @@ BrowserService::searchEntries(const QSharedPointer<Database>& db, const QString&
     return entries;
 }
 
-QList<Entry*>
-BrowserService::searchEntries(const QString& siteUrl, const QString& formUrl, const StringPairList& keyList)
+QList<Entry*> BrowserService::searchEntries(const QString& siteUrl,
+                                            const QString& formUrl,
+                                            const StringPairList& keyList,
+                                            const ClientProcess& clientProcess)
 {
     // Check if database is connected with KeePassXC-Browser
     auto databaseConnected = [&](const QSharedPointer<Database>& db) {
+        bool connected = false;
         for (const StringPair& keyPair : keyList) {
-            QString key = db->metadata()->customData()->value(CustomData::BrowserKeyPrefix + keyPair.first);
+            auto key = db->metadata()->customData()->value(CustomData::BrowserKeyPrefix + keyPair.first);
             if (!key.isEmpty() && keyPair.second == key) {
-                return true;
+                connected = true;
+                break;
             }
         }
-        return false;
+
+        bool allowed = !databaseSettings()->getClientRestrictions(db)
+                       || BrowserClientRestrictions::isClientProcessAllowed(db, clientProcess);
+        return connected && allowed;
     };
 
     // Get the list of databases to search

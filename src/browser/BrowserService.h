@@ -21,6 +21,7 @@
 #define BROWSERSERVICE_H
 
 #include "BrowserAccessControlDialog.h"
+#include "BrowserClientRestrictions.h"
 #include "core/Entry.h"
 #include "gui/PasswordGeneratorWidget.h"
 
@@ -75,6 +76,7 @@ public:
     bool isDatabaseOpened() const;
     bool openDatabase(bool triggerUnlock);
     void lockDatabase();
+    QSharedPointer<Database> getDatabase();
 
     QJsonObject getDatabaseGroups();
     QJsonArray getDatabaseEntries();
@@ -90,7 +92,10 @@ public:
                   const QSharedPointer<Database>& selectedDb = {});
     bool updateEntry(const EntryParameters& entryParameters, const QString& uuid);
     bool deleteEntry(const QString& uuid);
-    QJsonArray findEntries(const EntryParameters& entryParameters, const StringPairList& keyList, bool* entriesFound);
+    QJsonArray findEntries(const EntryParameters& entryParameters,
+                           const StringPairList& keyList,
+                           const ClientProcess& clientProcess,
+                           bool* entriesFound);
     void requestGlobalAutoType(const QString& search);
 
     static const QString KEEPASSXCBROWSER_NAME;
@@ -130,7 +135,10 @@ private:
     };
 
     QList<Entry*> searchEntries(const QSharedPointer<Database>& db, const QString& siteUrl, const QString& formUrl);
-    QList<Entry*> searchEntries(const QString& siteUrl, const QString& formUrl, const StringPairList& keyList);
+    QList<Entry*> searchEntries(const QString& siteUrl,
+                                const QString& formUrl,
+                                const StringPairList& keyList,
+                                const ClientProcess& clientProcess);
     QList<Entry*> sortEntries(QList<Entry*>& entries, const QString& siteUrl, const QString& formUrl);
     QList<Entry*> confirmEntries(QList<Entry*>& entriesToConfirm,
                                  const EntryParameters& entryParameters,
@@ -155,7 +163,6 @@ private:
                    const bool omitWwwSubdomain = false);
     QString getTopLevelDomainFromUrl(const QString& url) const;
     QString baseDomain(const QString& hostname) const;
-    QSharedPointer<Database> getDatabase();
     QSharedPointer<Database> selectedDatabase();
     QString getDatabaseRootUuid();
     QString getDatabaseRecycleBinUuid();

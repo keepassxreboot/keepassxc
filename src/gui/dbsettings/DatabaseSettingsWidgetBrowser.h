@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2018 Sami Vänttinen <sami.vanttinen@protonmail.com>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -55,16 +55,21 @@ public slots:
 
 private slots:
     void removeSelectedKey();
+    void removeSelectedProcess();
+    void addAllowedProcess();
     void toggleRemoveButton(const QItemSelection& selected);
+    void toggleRemoveProcessButton(const QItemSelection& selected);
     void updateSharedKeyList();
     void removeSharedEncryptionKeys();
     void removeStoredPermissions();
     void refreshDatabaseID();
     void editIndex(const QModelIndex& index);
     void editFinished(QStandardItem* item);
+    void clientRestrictionOptionChanged();
 
 private:
     void updateModel();
+    void updateAllowedProcessesModel();
     void settingsWarning();
 
 protected:
@@ -75,6 +80,7 @@ protected:
 private:
     QPointer<CustomData> m_customData;
     QPointer<QStandardItemModel> m_customDataModel;
+    QPointer<QStandardItemModel> m_clientRestrictionDataModel;
     QString m_valueInEdit;
 };
 

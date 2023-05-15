@@ -18,6 +18,7 @@
 #ifndef BROWSERACTION_H
 #define BROWSERACTION_H
 
+#include "BrowserClientRestrictions.h"
 #include "BrowserMessageBuilder.h"
 
 #include <QJsonArray>
@@ -58,12 +59,12 @@ public:
     QJsonObject processClientMessage(QLocalSocket* socket, const QJsonObject& json);
 
 private:
-    QJsonObject handleAction(QLocalSocket* socket, const QJsonObject& json);
+    QJsonObject handleAction(QLocalSocket* socket, const QJsonObject& json, const ClientProcess& clientProcess);
     QJsonObject handleChangePublicKeys(const QJsonObject& json, const QString& action);
     QJsonObject handleGetDatabaseHash(const QJsonObject& json, const QString& action);
     QJsonObject handleAssociate(const QJsonObject& json, const QString& action);
     QJsonObject handleTestAssociate(const QJsonObject& json, const QString& action);
-    QJsonObject handleGetLogins(const QJsonObject& json, const QString& action);
+    QJsonObject handleGetLogins(const QJsonObject& json, const QString& action, const ClientProcess& clientProcess);
     QJsonObject handleGeneratePassword(QLocalSocket* socket, const QJsonObject& json, const QString& action);
     QJsonObject handleSetLogin(const QJsonObject& json, const QString& action);
     QJsonObject handleLockDatabase(const QJsonObject& json, const QString& action);

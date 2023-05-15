@@ -125,6 +125,8 @@ QString BrowserMessageBuilder::getErrorMessage(const int errorCode) const
         return QObject::tr("No valid UUID provided");
     case ERROR_KEEPASS_ACCESS_TO_ALL_ENTRIES_DENIED:
         return QObject::tr("Access to all entries is denied");
+    case ERROR_KEEPASS_CLIENT_RESTRICTED:
+        return QObject::tr("Client is restricted");
     default:
         return QObject::tr("Unknown error");
     }

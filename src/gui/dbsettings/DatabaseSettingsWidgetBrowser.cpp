@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2018 Sami Vänttinen <sami.vanttinen@protonmail.com>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -19,10 +19,13 @@
 #include "DatabaseSettingsWidgetBrowser.h"
 #include "ui_DatabaseSettingsWidgetBrowser.h"
 
+#include <QFileDialog>
 #include <QProgressDialog>
 
 #include "browser/BrowserService.h"
 #include "browser/BrowserSettings.h"
+#include "core/DatabaseSettings.h"
+#include "core/FileHash.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "gui/MessageBox.h"
@@ -32,6 +35,7 @@ DatabaseSettingsWidgetBrowser::DatabaseSettingsWidgetBrowser(QWidget* parent)
     , m_ui(new Ui::DatabaseSettingsWidgetBrowser())
     , m_customData(new CustomData(this))
     , m_customDataModel(new QStandardItemModel(this))
+    , m_clientRestrictionDataModel(new QStandardItemModel(this))
 {
     m_ui->setupUi(this);
     m_ui->removeCustomDataButton->setEnabled(false);
@@ -39,19 +43,29 @@ DatabaseSettingsWidgetBrowser::DatabaseSettingsWidgetBrowser(QWidget* parent)
 
     settingsWarning();
 
-    // clang-format off
+    m_ui->addAllowedProcessButton->setEnabled(false);
+    m_ui->removeAllowedProcessButton->setEnabled(false);
+    m_ui->clientRestrictionsTable->setEnabled(false);
+    m_ui->clientRestrictionsTable->setModel(m_clientRestrictionDataModel);
+
     connect(m_ui->customDataTable->selectionModel(),
-            SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
+            SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
             SLOT(toggleRemoveButton(QItemSelection)));
     connect(m_ui->customDataTable, SIGNAL(doubleClicked(QModelIndex)), SLOT(editIndex(QModelIndex)));
     connect(m_customDataModel, SIGNAL(itemChanged(QStandardItem*)), SLOT(editFinished(QStandardItem*)));
-    // clang-format on
 
     connect(m_ui->removeCustomDataButton, SIGNAL(clicked()), SLOT(removeSelectedKey()));
     connect(m_ui->removeSharedEncryptionKeys, SIGNAL(clicked()), this, SLOT(removeSharedEncryptionKeys()));
     connect(m_ui->removeSharedEncryptionKeys, SIGNAL(clicked()), this, SLOT(updateSharedKeyList()));
     connect(m_ui->removeStoredPermissions, SIGNAL(clicked()), this, SLOT(removeStoredPermissions()));
     connect(m_ui->refreshDatabaseID, SIGNAL(clicked()), this, SLOT(refreshDatabaseID()));
+
+    connect(m_ui->clientRestrictionsCheckbox, SIGNAL(clicked()), SLOT(clientRestrictionOptionChanged()));
+    connect(m_ui->clientRestrictionsTable->selectionModel(),
+            SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
+            SLOT(toggleRemoveProcessButton(QItemSelection)));
+    connect(m_ui->addAllowedProcessButton, SIGNAL(clicked()), SLOT(addAllowedProcess()));
+    connect(m_ui->removeAllowedProcessButton, SIGNAL(clicked()), SLOT(removeSelectedProcess()));
 }
 
 DatabaseSettingsWidgetBrowser::~DatabaseSettingsWidgetBrowser()
@@ -70,6 +84,7 @@ CustomData* DatabaseSettingsWidgetBrowser::customData() const
 void DatabaseSettingsWidgetBrowser::initialize()
 {
     updateModel();
+    updateAllowedProcessesModel();
     settingsWarning();
 }
 
@@ -110,9 +125,57 @@ void DatabaseSettingsWidgetBrowser::removeSelectedKey()
     }
 }
 
+void DatabaseSettingsWidgetBrowser::removeSelectedProcess()
+{
+    if (MessageBox::Yes
+        != MessageBox::question(this,
+                                tr("Remove the allowed process?"),
+                                tr("Do you really want to remove the allowed?\n"
+                                   "This will prevent connections from this client."),
+                                MessageBox::Yes | MessageBox::Cancel,
+                                MessageBox::Cancel)) {
+        return;
+    }
+
+    const QItemSelectionModel* itemSelectionModel = m_ui->clientRestrictionsTable->selectionModel();
+    if (itemSelectionModel) {
+        for (const QModelIndex& index : itemSelectionModel->selectedRows(0)) {
+            auto key = index.data().toString();
+            key.insert(0, CustomData::OptionPrefix + CustomData::BrowserAllowedProcessPrefix);
+            customData()->remove(key);
+        }
+        updateAllowedProcessesModel();
+    }
+}
+
+void DatabaseSettingsWidgetBrowser::addAllowedProcess()
+{
+#ifdef Q_OS_WIN
+    QString fileTypeFilter(QString("%1 (*.exe);;%2 (*.*)").arg(tr("Executable Files"), tr("All Files")));
+#else
+    QString fileTypeFilter(QString("%1 (*)").arg(tr("Executable Files")));
+#endif
+    auto processLocation = QFileDialog::getOpenFileName(this,
+                                                        tr("Select allowed process"),
+                                                        QFileInfo(QCoreApplication::applicationDirPath()).filePath(),
+                                                        fileTypeFilter);
+
+    // Add location and MD5 hash to table
+    if (!processLocation.isEmpty()) {
+        auto hash = FileHash::getFileHash(processLocation, QCryptographicHash::Md5, 8192);
+        customData()->set(CustomData::OptionPrefix + CustomData::BrowserAllowedProcessPrefix + hash, processLocation);
+        updateAllowedProcessesModel();
+    }
+}
+
 void DatabaseSettingsWidgetBrowser::toggleRemoveButton(const QItemSelection& selected)
 {
     m_ui->removeCustomDataButton->setEnabled(!selected.isEmpty());
+}
+
+void DatabaseSettingsWidgetBrowser::toggleRemoveProcessButton(const QItemSelection& selected)
+{
+    m_ui->removeAllowedProcessButton->setEnabled(!selected.isEmpty());
 }
 
 void DatabaseSettingsWidgetBrowser::updateModel()
@@ -134,6 +197,37 @@ void DatabaseSettingsWidgetBrowser::updateModel()
     }
 
     m_ui->removeCustomDataButton->setEnabled(false);
+}
+
+void DatabaseSettingsWidgetBrowser::updateAllowedProcessesModel()
+{
+    m_clientRestrictionDataModel->clear();
+    m_clientRestrictionDataModel->setHorizontalHeaderLabels({tr("Hash"), tr("Path")});
+
+    m_ui->removeAllowedProcessButton->setEnabled(false);
+    m_ui->clientRestrictionsTable->setEnabled(false);
+    m_ui->addAllowedProcessButton->setEnabled(false);
+
+    auto clientRestrictionsEnabled = databaseSettings()->getClientRestrictions(m_db);
+    if (!clientRestrictionsEnabled) {
+        return;
+    }
+
+    m_ui->clientRestrictionsTable->setEnabled(true);
+    m_ui->addAllowedProcessButton->setEnabled(true);
+
+    for (const auto& key : customData()->keys()) {
+        if (key.startsWith(CustomData::OptionPrefix + CustomData::BrowserAllowedProcessPrefix)) {
+            auto strippedKey = key;
+            strippedKey.remove(CustomData::OptionPrefix + CustomData::BrowserAllowedProcessPrefix);
+
+            auto keyItem = new QStandardItem(strippedKey);
+            auto valueItem = new QStandardItem(customData()->value(key));
+            keyItem->setToolTip(strippedKey);
+            valueItem->setToolTip(customData()->value(key));
+            m_clientRestrictionDataModel->appendRow(QList<QStandardItem*>() << keyItem << valueItem);
+        }
+    }
 }
 
 void DatabaseSettingsWidgetBrowser::settingsWarning()
@@ -304,4 +398,10 @@ void DatabaseSettingsWidgetBrowser::editFinished(QStandardItem* item)
 void DatabaseSettingsWidgetBrowser::updateSharedKeyList()
 {
     updateModel();
+}
+
+void DatabaseSettingsWidgetBrowser::clientRestrictionOptionChanged()
+{
+    databaseSettings()->setClientRestrictions(m_db, m_ui->clientRestrictionsCheckbox->isChecked());
+    updateAllowedProcessesModel();
 }

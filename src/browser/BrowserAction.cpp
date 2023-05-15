@@ -16,8 +16,10 @@
  */
 
 #include "BrowserAction.h"
+#include "BrowserClientRestrictions.h"
 #include "BrowserService.h"
 #include "BrowserSettings.h"
+#include "core/DatabaseSettings.h"
 #include "core/Global.h"
 #include "core/Tools.h"
 
@@ -57,6 +59,15 @@ QJsonObject BrowserAction::processClientMessage(QLocalSocket* socket, const QJso
         return getErrorReply(action, ERROR_KEEPASS_INCORRECT_ACTION);
     }
 
+    // Client restrictions
+    const auto db = browserService()->getDatabase();
+    auto clientProcess = BrowserClientRestrictions::getProcessPathAndHash(socket);
+    if (databaseSettings()->getClientRestrictions(db)
+        && !BrowserClientRestrictions::isClientProcessAllowed(db, clientProcess)) {
+        qDebug() << "Client restricted";
+        return getErrorReply(action, ERROR_KEEPASS_CLIENT_RESTRICTED);
+    }
+
     if (action.compare(BROWSER_REQUEST_CHANGE_PUBLIC_KEYS) != 0 && action.compare(BROWSER_REQUEST_REQUEST_AUTOTYPE) != 0
         && !browserService()->isDatabaseOpened()) {
         if (m_clientPublicKey.isEmpty()) {
@@ -66,13 +77,14 @@ QJsonObject BrowserAction::processClientMessage(QLocalSocket* socket, const QJso
         }
     }
 
-    return handleAction(socket, json);
+    return handleAction(socket, json, clientProcess);
 }
 
 // Private functions
 ///////////////////////
 
-QJsonObject BrowserAction::handleAction(QLocalSocket* socket, const QJsonObject& json)
+QJsonObject
+BrowserAction::handleAction(QLocalSocket* socket, const QJsonObject& json, const ClientProcess& clientProcess)
 {
     QString action = json.value("action").toString();
 
@@ -85,7 +97,7 @@ QJsonObject BrowserAction::handleAction(QLocalSocket* socket, const QJsonObject&
     } else if (action.compare(BROWSER_REQUEST_TEST_ASSOCIATE) == 0) {
         return handleTestAssociate(json, action);
     } else if (action.compare(BROWSER_REQUEST_GET_LOGINS) == 0) {
-        return handleGetLogins(json, action);
+        return handleGetLogins(json, action, clientProcess);
     } else if (action.compare(BROWSER_REQUEST_GENERATE_PASSWORD) == 0) {
         return handleGeneratePassword(socket, json, action);
     } else if (action.compare(BROWSER_REQUEST_SET_LOGIN) == 0) {
@@ -210,7 +222,8 @@ QJsonObject BrowserAction::handleTestAssociate(const QJsonObject& json, const QS
     return buildResponse(action, browserRequest.incrementedNonce, params);
 }
 
-QJsonObject BrowserAction::handleGetLogins(const QJsonObject& json, const QString& action)
+QJsonObject
+BrowserAction::handleGetLogins(const QJsonObject& json, const QString& action, const ClientProcess& clientProcess)
 {
     if (!m_associated) {
         return getErrorReply(action, ERROR_KEEPASS_ASSOCIATION_FAILED);
@@ -247,7 +260,7 @@ QJsonObject BrowserAction::handleGetLogins(const QJsonObject& json, const QStrin
     entryParameters.httpAuth = httpAuth;
 
     bool entriesFound = false;
-    const auto entries = browserService()->findEntries(entryParameters, keyList, &entriesFound);
+    const auto entries = browserService()->findEntries(entryParameters, keyList, clientProcess, &entriesFound);
     if (!entriesFound) {
         return getErrorReply(action, ERROR_KEEPASS_NO_LOGINS_FOUND);
     }
