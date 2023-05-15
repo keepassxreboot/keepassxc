@@ -33,7 +33,7 @@ namespace GuiTools
             QString prompt;
             if (entries.size() == 1) {
                 prompt = QObject::tr("Do you really want to delete the entry \"%1\" for good?")
-                             .arg(entries.first()->title().toHtmlEscaped());
+                             .arg(entries.first()->title().toHtmlEscaped().replace("&amp;", "&"));
             } else {
                 prompt = QObject::tr("Do you really want to delete %n entry(s) for good?", "", entries.size());
             }
@@ -51,7 +51,7 @@ namespace GuiTools
             QString prompt;
             if (entries.size() == 1) {
                 prompt = QObject::tr("Do you really want to move entry \"%1\" to the recycle bin?")
-                             .arg(entries.first()->title().toHtmlEscaped());
+                             .arg(entries.first()->title().toHtmlEscaped().replace("&amp;", "&"));
             } else {
                 prompt = QObject::tr("Do you really want to move %n entry(s) to the recycle bin?", "", entries.size());
             }
