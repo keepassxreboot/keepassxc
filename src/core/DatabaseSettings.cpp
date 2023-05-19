@@ -62,16 +62,13 @@ void DatabaseSettings::setClientRestrictions(const QSharedPointer<Database>& db,
 {
     setCustomDataOption(db, DatabaseSettings::OPTION_ENABLE_CLIENT_RESTRICTIONS, enabled ? TRUE_STR : FALSE_STR);
 }
-#include <QDebug>
+
 QString DatabaseSettings::getCustomDataOption(const QSharedPointer<Database>& db, const QString& key) const
 {
     if (!db) {
         return {};
     }
 
-    qDebug() << "With prefix: " << CustomData::OptionPrefix + key;
-    qDebug() << "Key: " << key
-             << ", has value: " << db->metadata()->customData()->value(CustomData::OptionPrefix + key);
     return db->metadata()->customData()->value(CustomData::OptionPrefix + key);
 }
 
@@ -83,7 +80,5 @@ void DatabaseSettings::setCustomDataOption(const QSharedPointer<Database>& db,
         return;
     }
 
-    qDebug() << "Setting with prefix: " << CustomData::OptionPrefix + key;
-    qDebug() << "value: " << value;
     db->metadata()->customData()->set(CustomData::OptionPrefix + key, value);
 }

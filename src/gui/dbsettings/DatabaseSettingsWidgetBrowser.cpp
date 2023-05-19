@@ -47,6 +47,7 @@ DatabaseSettingsWidgetBrowser::DatabaseSettingsWidgetBrowser(QWidget* parent)
     m_ui->removeAllowedProcessButton->setEnabled(false);
     m_ui->clientRestrictionsTable->setEnabled(false);
     m_ui->clientRestrictionsTable->setModel(m_clientRestrictionDataModel);
+    m_ui->restrictionWarningWidget->setVisible(false);
 
     connect(m_ui->customDataTable->selectionModel(),
             SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
@@ -207,6 +208,7 @@ void DatabaseSettingsWidgetBrowser::updateAllowedProcessesModel()
     m_ui->removeAllowedProcessButton->setEnabled(false);
     m_ui->clientRestrictionsTable->setEnabled(false);
     m_ui->addAllowedProcessButton->setEnabled(false);
+    m_ui->restrictionWarningWidget->setVisible(false);
 
     auto clientRestrictionsEnabled = databaseSettings()->getClientRestrictions(m_db);
     if (!clientRestrictionsEnabled) {
@@ -227,6 +229,16 @@ void DatabaseSettingsWidgetBrowser::updateAllowedProcessesModel()
             valueItem->setToolTip(customData()->value(key));
             m_clientRestrictionDataModel->appendRow(QList<QStandardItem*>() << keyItem << valueItem);
         }
+    }
+
+    if (m_clientRestrictionDataModel->rowCount() == 0) {
+        m_ui->restrictionWarningWidget->showMessage(
+            tr("<b>Warning:</b> No allowed clients in the list! Connections to KeePassXC are not allowed."),
+            MessageWidget::Warning);
+        m_ui->restrictionWarningWidget->setCloseButtonVisible(false);
+        m_ui->restrictionWarningWidget->setAutoHideTimeout(-1);
+        m_ui->restrictionWarningWidget->setAnimate(false);
+        m_ui->restrictionWarningWidget->setVisible(true);
     }
 }
 

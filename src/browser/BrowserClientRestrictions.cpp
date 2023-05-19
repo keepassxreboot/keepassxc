@@ -41,8 +41,6 @@ bool BrowserClientRestrictions::isClientProcessAllowed(const QSharedPointer<Data
             strippedKey.remove(CustomData::OptionPrefix + CustomData::BrowserAllowedProcessPrefix);
 
             const auto value = db->metadata()->customData()->value(key);
-            qDebug() << "CD hash: " << strippedKey;
-            qDebug() << "CD path: " << value;
             if (strippedKey == clientProcess.hash && value == clientProcess.path) {
                 return true;
             }

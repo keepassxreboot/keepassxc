@@ -64,7 +64,6 @@ QJsonObject BrowserAction::processClientMessage(QLocalSocket* socket, const QJso
     auto clientProcess = BrowserClientRestrictions::getProcessPathAndHash(socket);
     if (databaseSettings()->getClientRestrictions(db)
         && !BrowserClientRestrictions::isClientProcessAllowed(db, clientProcess)) {
-        qDebug() << "Client restricted";
         return getErrorReply(action, ERROR_KEEPASS_CLIENT_RESTRICTED);
     }
 

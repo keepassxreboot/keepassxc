@@ -226,6 +226,9 @@
          </widget>
         </item>
         <item>
+         <widget class="MessageWidget" name="restrictionWarningWidget" native="true"/>
+        </item>
+        <item>
          <layout class="QHBoxLayout" name="horizontalLayout_6">
           <item>
            <widget class="QGroupBox" name="groupBox_5">
