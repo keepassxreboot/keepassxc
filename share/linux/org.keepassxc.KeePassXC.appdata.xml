@@ -5,9 +5,6 @@
     <name>KeePassXC</name>
     <metadata_license>CC-BY-3.0</metadata_license>
     <project_license>GPL-3.0+</project_license>
-    <mimetypes>
-        <mimetype>application/x-keepass2</mimetype>
-    </mimetypes>
     <summary>Community-driven port of the Windows application “KeePass Password Safe”</summary>
     <summary xml:lang="de">Von der Community entwickelter Port der Windows Anwendung “KeePass Password Safe”</summary>
     <developer_name>KeePassXC Team</developer_name>
@@ -37,23 +34,19 @@
 
     <screenshots>
         <screenshot type="default">
-            <image>https://keepassxc.org/images/screenshots/thumbs/welcome_screen.png</image>
-            <caption>Create, Import or Open Databases</caption>
-        </screenshot>
-        <screenshot>
-            <image>https://keepassxc.org/images/screenshots/thumbs/database_view.png</image>
+            <image>https://keepassxc.org/assets/img/screenshots/database_view.png</image>
             <caption>Organize with Groups and Entries</caption>
         </screenshot>
         <screenshot>
-            <image>https://keepassxc.org/images/screenshots/thumbs/edit_entry.png</image>
-            <caption>Database Entry</caption>
+            <image>https://keepassxc.org/assets/img/screenshots/unlock_database.png</image>
+            <caption>Unlock database</caption>
         </screenshot>
         <screenshot>
-            <image>https://keepassxc.org/images/screenshots/thumbs/edit_entry_icons.png</image>
+            <image>https://keepassxc.org/assets/img/screenshots/edit_entry_icons.png</image>
             <caption>Icon Selection for Entry</caption>
         </screenshot>
         <screenshot>
-            <image>https://keepassxc.org/images/screenshots/thumbs/password_generator_advanced.png</image>
+            <image>https://keepassxc.org/assets/img/screenshots/password_generator_advanced.png</image>
             <caption>Password Generator</caption>
         </screenshot>
     </screenshots>
