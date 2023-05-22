@@ -160,9 +160,6 @@ void BrowserSettingsWidget::loadSettings()
     m_ui->browserGlobalWarningWidget->setAutoHideTimeout(-1);
 #endif
 #ifdef KEEPASSXC_DIST_FLATPAK
-    // Guarantees proxy path works with different flatpak installations
-    m_ui->updateBinaryPath->setChecked(true);
-    m_ui->updateBinaryPath->setEnabled(false);
     // The sandbox makes custom proxy locations very unintuitive
     m_ui->useCustomProxy->setChecked(false);
     m_ui->useCustomProxy->setEnabled(false);
