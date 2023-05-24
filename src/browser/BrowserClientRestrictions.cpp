@@ -16,7 +16,6 @@
  */
 
 #include "BrowserClientRestrictions.h"
-#include "core/DatabaseSettings.h"
 #include "core/FileHash.h"
 #include "core/Metadata.h"
 #include <QCryptographicHash>
@@ -28,8 +27,12 @@
 #include <limits.h>
 #elif Q_OS_WIN
 #include <psapi.h>
-#elif Q_OS_UNIX
-
+#elif Q_OS_FREEBSD
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <sys/ucred.h>
+#include <sys/un.h>
+#include <sys/sysctl.h>
 #endif
 
 bool BrowserClientRestrictions::isClientProcessAllowed(const QSharedPointer<Database>& db,
@@ -112,13 +115,40 @@ ClientProcess BrowserClientRestrictions::getProcessPathAndHash(QLocalSocket* soc
     }
 
     clientProcess.path = fullPath;
-#elif Q_OS_UNIX
+#elif Q_OS_FREEBSD
+    struct xucred xucred;
+    socklen_t xucredSize = sizeof(xucred);
+    auto ret = getsockopt(socketDesc, SOL_LOCAL, LOCAL_PEERCRED, &xucred, &xucredSize);
+    if (ret < 0) {
+        return {};
+    }
+
+    int mib[4];
+    mib[0] = CTL_KERN;
+    mib[1] = KERN_PROC;
+    mib[2] = KERN_PROC_PATHNAME;
+    mib[3] = xucred.cr_pid;
+    size_t bufSize;
+
+    auto res = sysctl(mib, 4, nullptr, &bufSize, nullptr, 0);
+    if (res < 0) {
+        return {};
+    }
+
+    char buf[bufSize + 1];
+    res = sysctl(mib, 4, &buf, &bufSize, nullptr, 0);
+    if (res < 0) {
+        return {};
+    }
+
+    clientProcess.path = buf;
+#else
 
 #endif
     if (clientProcess.path.isEmpty()) {
         return {};
     }
 
-    clientProcess.hash = FileHash::getFileHash(fullPath, QCryptographicHash::Md5, 8192);
+    clientProcess.hash = FileHash::getFileHash(clientProcess.path, QCryptographicHash::Md5, 8192);
     return clientProcess;
 }
