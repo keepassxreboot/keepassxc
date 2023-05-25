@@ -24,6 +24,9 @@ namespace
         QHash<QString, QString> contentTypeParameters;
         // Parse content type
         auto tokens = contentTypeHeader.split(";", Qt::SkipEmptyParts);
+        if(tokens.isEmpty()) {
+            return {contentType, contentTypeParameters};
+        }
         contentType = tokens[0].trimmed();
         for (int i = 1; i < tokens.size(); ++i) {
             auto parameterTokens = tokens[i].split("=");
@@ -35,9 +38,8 @@ namespace
 
 void NetworkRequest::fetch(const QUrl& url)
 {
-    reset();
-
     m_requested_url = url;
+    m_finished = false;
 
     QNetworkRequest request(url);
 
@@ -50,10 +52,16 @@ void NetworkRequest::fetch(const QUrl& url)
 
     connect(m_reply, &QNetworkReply::finished, this, &NetworkRequest::fetchFinished);
     connect(m_reply, &QIODevice::readyRead, this, &NetworkRequest::fetchReadyRead);
+
+    m_timeout.start();
 }
 
 void NetworkRequest::fetchFinished()
 {
+    if(m_finished)
+        return;
+    m_finished = true;
+
     auto error = m_reply->error();
     QUrl redirectTarget = getRedirectTarget(m_reply);
     QUrl url = m_reply->url();
@@ -112,6 +120,9 @@ void NetworkRequest::reset()
 
 void NetworkRequest::cancel()
 {
+    if(m_finished)
+        return;
+    m_finished = true;
     if (m_reply) {
         m_reply->abort();
         // Clear all data and free any resources
@@ -141,6 +152,7 @@ NetworkRequest::NetworkRequest(
                                QList<QPair<QString, QString>> headers,
                                QNetworkAccessManager* manager)
     : m_reply(nullptr)
+    , m_finished(false)
     , m_maxRedirects(maxRedirects)
     , m_redirects(0)
     , m_timeoutDuration(timeoutDuration)
@@ -173,8 +185,12 @@ void NetworkRequest::setTimeout(std::chrono::milliseconds timeoutDuration)
 
 void NetworkRequest::fetchTimeout()
 {
+    if(m_finished)
+        return;
+    m_finished = true;
     // Cancel request on timeout
     cancel();
+    emit failure();
 }
 
 QNetworkReply* NetworkRequest::Reply() const

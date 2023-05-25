@@ -9,6 +9,7 @@ QTEST_GUILESS_MAIN(TestNetworkRequest)
 
 using ContentTypeParameters_t = QHash<QString, QString>;
 Q_DECLARE_METATYPE(ContentTypeParameters_t);
+Q_DECLARE_METATYPE(std::chrono::milliseconds);
 
 void TestNetworkRequest::testNetworkRequest()
 {
@@ -93,6 +94,8 @@ void TestNetworkRequest::testNetworkRequest_data()
     QTest::newRow("content type") << exampleURL << exampleContent << "application/test-content-type"
                                         << "application/test-content-type" << ContentTypeParameters_t{}
                                         << defaultUserAgent << false << QNetworkReply::NetworkError::NoError;
+    QTest::newRow("empty content type") << exampleURL << QByteArray{} << "" << "" << ContentTypeParameters_t{}
+                                  << defaultUserAgent << false << QNetworkReply::NetworkError::NoError;
     QTest::newRow("content type parameters") << exampleURL << exampleContent << "application/test-content-type;test-param=test-value"
                                         << "application/test-content-type" << ContentTypeParameters_t {{"test-param", "test-value"}}
                                         << defaultUserAgent << false << QNetworkReply::NetworkError::NoError;
@@ -105,8 +108,70 @@ void TestNetworkRequest::testNetworkRequestTimeout()
 {
     // Timeout should work for single request
     // Timeout should capture entire duration, including redirects
-    // TODO
+    QFETCH(bool, expectError);
+    QFETCH(std::chrono::milliseconds, delay);
+    QFETCH(std::chrono::milliseconds, timeout);
+
+    const auto requestedURL = QUrl("https://example.com");
+    const auto expectedUserAgent = QString("KeePassXC");
+
+    // Create mock reply
+    // Create and configure the mocked network access manager
+    MockNetworkAccess::Manager<QNetworkAccessManager> manager;
+
+    auto& reply = manager
+        .whenGet(requestedURL)
+            // Has right user agent?
+        .has(MockNetworkAccess::Predicates::HeaderMatching(QNetworkRequest::UserAgentHeader,
+                                                           QRegularExpression(expectedUserAgent)))
+        .reply();
+
+    // Timeout
+    QTimer timer;
+    timer.setSingleShot(true);
+    timer.setInterval(delay);
+
+    reply.withFinishDelayUntil(&timer, &QTimer::timeout);
+
+    // Create request
+    NetworkRequest request = createRequest(requestedURL, 5, timeout, QList<QPair<QString, QString>>{}, &manager);
+
+    // Start timer
+    timer.start();
+
+    bool didSucceed = false, didError = false;
+    // Check request
+    QSignalSpy spy(&request, &NetworkRequest::success);
+    connect(&request, &NetworkRequest::success, [&didSucceed](const QByteArray&) {
+        didSucceed = true;
+    });
+
+    QSignalSpy errorSpy(&request, &NetworkRequest::failure);
+    connect(&request, &NetworkRequest::failure, [&didError]() { didError = true; });
+
+
+    QTest::qWait(3*100);
+
+    QTEST_ASSERT(didError || didSucceed);
+
+    // Ensures that predicates match - i.e., the header was set correctly
+    QCOMPARE(manager.matchedRequests().length(), 1);
+    QCOMPARE(request.URL(), requestedURL);
+    QCOMPARE(didSucceed, !expectError);
+    QCOMPARE(didError, expectError);
 }
+
+void TestNetworkRequest::testNetworkRequestTimeout_data()
+{
+
+    QTest::addColumn<bool>("expectError");
+    QTest::addColumn<std::chrono::milliseconds>("delay");
+    QTest::addColumn<std::chrono::milliseconds>("timeout");
+
+    QTest::newRow("timeout") << true << std::chrono::milliseconds{200} << std::chrono::milliseconds{100};
+    QTest::newRow("no timeout") << false << std::chrono::milliseconds{100} << std::chrono::milliseconds{200};
+}
+
 void TestNetworkRequest::testNetworkRequestRedirects()
 {
     // Should respect max number of redirects

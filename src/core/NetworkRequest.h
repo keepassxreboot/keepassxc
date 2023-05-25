@@ -39,6 +39,7 @@ class NetworkRequest : public QObject
     QNetworkAccessManager* m_manager;
     QNetworkReply* m_reply;
     QByteArray m_bytes;
+    bool m_finished;
 
     // Response information
     QString m_content_type;
