@@ -82,7 +82,7 @@ void DatabaseSettingsWidgetBrowser::showEvent(QShowEvent* event)
     QWidget::showEvent(event);
 }
 
-bool DatabaseSettingsWidgetBrowser::save()
+bool DatabaseSettingsWidgetBrowser::saveSettings()
 {
     return true;
 }

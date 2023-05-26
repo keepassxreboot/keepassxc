@@ -1,6 +1,6 @@
 
 /*
- *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -69,7 +69,7 @@ void NewDatabaseWizardPage::initializePage()
         return;
     }
 
-    m_pageWidget->load(m_db);
+    m_pageWidget->loadSettings(m_db);
 }
 
 bool NewDatabaseWizardPage::validatePage()
@@ -79,7 +79,7 @@ bool NewDatabaseWizardPage::validatePage()
         return false;
     }
 
-    bool valid = m_pageWidget->save();
+    bool valid = m_pageWidget->saveSettings();
     m_pageWidget->uninitialize();
     return valid;
 }
