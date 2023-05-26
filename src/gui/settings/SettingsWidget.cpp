@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,6 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "core/Config.h"
 #include "SettingsWidget.h"
 
 SettingsWidget::SettingsWidget(QWidget* parent)
@@ -38,6 +39,7 @@ void SettingsWidget::setAdvancedMode(bool advanced)
 {
     if (hasAdvancedMode() && advanced != advancedMode()) {
         m_advancedMode = advanced;
+        config()->set(Config::GUI_AdvancedSettings, advanced);
         emit advancedModeChanged(advanced);
     }
 }

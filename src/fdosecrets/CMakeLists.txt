@@ -9,7 +9,6 @@ if(WITH_XC_FDOSECRETS)
         widgets/RowButtonHelper.cpp
 
         # per database settings page
-        DatabaseSettingsPageFdoSecrets.cpp
         widgets/DatabaseSettingsWidgetFdoSecrets.cpp
 
         # prompt dialog

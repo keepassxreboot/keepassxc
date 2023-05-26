@@ -433,6 +433,33 @@
      </property>
     </spacer>
    </item>
+   <item>
+    <layout class="QHBoxLayout" name="advancedSettingsLayout">
+     <item>
+      <spacer name="horizontalSpacer_4">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="advancedSettingsButton">
+       <property name="text">
+        <string>Advanced Settings</string>
+       </property>
+       <property name="visible">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
   </layout>
  </widget>
  <tabstops>
@@ -445,6 +472,7 @@
   <tabstop>transformBenchmarkButton</tabstop>
   <tabstop>memorySpinBox</tabstop>
   <tabstop>parallelismSpinBox</tabstop>
+  <tabstop>advancedSettingsButton</tabstop>
  </tabstops>
  <resources/>
  <connections/>
