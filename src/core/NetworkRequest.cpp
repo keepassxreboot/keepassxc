@@ -38,7 +38,6 @@ namespace
 
 void NetworkRequest::fetch(const QUrl& url)
 {
-    m_requested_url = url;
     m_finished = false;
 
     QNetworkRequest request(url);
@@ -82,9 +81,12 @@ void NetworkRequest::fetchFinished()
                 redirectTarget = url.resolved(redirectTarget);
             }
             // Request the redirect target
+            qDebug() << "Following redirect to" << redirectTarget;
+            m_redirects += 1;
             fetch(redirectTarget);
             return;
         } else {
+            qDebug() << "Too many redirects";
             emit failure();
             return;
         }

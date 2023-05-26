@@ -176,5 +176,73 @@ void TestNetworkRequest::testNetworkRequestRedirects()
 {
     // Should respect max number of redirects
     // Headers, Reply, etc. should reflect final request
-    // TODO
+
+    QFETCH(int, numRedirects);
+    QFETCH(int, maxRedirects);
+    const bool expectError = numRedirects > maxRedirects;
+
+    const auto requestedURL = QUrl("https://example.com");
+    const auto expectedUserAgent = QString("KeePassXC");
+
+    // Create mock reply
+    // Create and configure the mocked network access manager
+    MockNetworkAccess::Manager<QNetworkAccessManager> manager;
+
+    QStringList requestedUrls;
+
+    auto* reply = &manager
+        .whenGet(requestedURL)
+            // Has right user agent?
+        .has(MockNetworkAccess::Predicates::HeaderMatching(QNetworkRequest::UserAgentHeader,
+                                                           QRegularExpression(expectedUserAgent)))
+        .reply();
+
+    for(int i = 0; i < numRedirects; ++i) {
+        auto redirectTarget = QUrl("https://example.com/redirect" + QString::number(i));
+        reply->withRedirect(redirectTarget);
+        reply = &manager.whenGet(redirectTarget)
+            // Has right user agent?
+            .has(MockNetworkAccess::Predicates::HeaderMatching(QNetworkRequest::UserAgentHeader,
+                                                               QRegularExpression(expectedUserAgent)))
+            .reply();
+    }
+    reply->withBody(QString{"test-content"}.toUtf8());
+
+    // Create request
+    NetworkRequest request = createRequest(requestedURL, maxRedirects, std::chrono::milliseconds{5000}, QList<QPair<QString, QString>>{}, &manager);
+
+    bool didSucceed = false, didError = false;
+    // Check request
+    QSignalSpy spy(&request, &NetworkRequest::success);
+    connect(&request, &NetworkRequest::success, [&didSucceed](const QByteArray&) {
+        didSucceed = true;
+    });
+
+    QSignalSpy errorSpy(&request, &NetworkRequest::failure);
+    connect(&request, &NetworkRequest::failure, [&didError]() { didError = true; });
+
+
+    QTest::qWait(3*100);
+
+    QTEST_ASSERT(didError || didSucceed);
+    // Ensures that predicates match - i.e., the header was set correctly
+    QCOMPARE(didSucceed, !expectError);
+    QCOMPARE(didError, expectError);
+    if(didSucceed) {
+        QCOMPARE(manager.matchedRequests().length(), numRedirects + 1);
+        QCOMPARE(request.URL(), requestedURL);
+    }
+}
+
+void TestNetworkRequest::testNetworkRequestRedirects_data()
+{
+    QTest::addColumn<int>("numRedirects");
+    QTest::addColumn<int>("maxRedirects");
+
+    QTest::newRow("all good (0)") << 0 << 5;
+    QTest::newRow("all good (1)") << 1 << 5;
+    QTest::newRow("all good (2)") << 2 << 5;
+    QTest::newRow("no good (1, 0)") << 1 << 0;
+    QTest::newRow("no good (2, 1)") << 2 << 1;
+    QTest::newRow("no good (3, 2)") << 3 << 2;
 }

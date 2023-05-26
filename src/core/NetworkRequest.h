@@ -75,6 +75,9 @@ public:
 
     void cancel();
 
+    /**
+     * @return The URL of the original request. Not updated after redirects. Use reply()->url() for the final URL including redirects.
+     */
     QUrl URL() const;
 
     /**
