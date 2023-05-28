@@ -20,7 +20,7 @@ apps:
     command: usr/bin/keepassxc-proxy
     extensions: [kde-neon]
     plugs: [home]
-    
+
 slots:
   session-dbus-interface:
     interface: dbus
@@ -53,6 +53,7 @@ parts:
       - libxi-dev
       - libxtst-dev
       - asciidoctor
+      - libfreetype-dev
     stage-packages:
       - dbus
       - libbotan-2-19
@@ -62,4 +63,10 @@ parts:
       - libpcsclite1
       - libminizip1
       - libxtst6
+      - libfreetype6
       - xclip
+lint:
+  ignore:
+    - library:
+      - lib/**/libhistory.so*
+
