@@ -1,4 +1,5 @@
 #include "TestNetworkRequest.h"
+#include "core/NetworkManager.h"
 #include "core/NetworkRequest.h"
 #include "mock/MockNetworkAccessManager.h"
 #include <QSignalSpy>
@@ -41,7 +42,7 @@ void TestNetworkRequest::testNetworkRequest()
     }
 
     // Create request
-    NetworkRequest request = NetworkRequestBuilder(requestedURL).setManager(&manager).build();
+    NetworkRequest request = buildRequest(requestedURL).setManager(&manager).build();
 
     QString actualContent;
     bool didError = false, didSucceed = false;
@@ -136,7 +137,7 @@ void TestNetworkRequest::testNetworkRequestTimeout()
     reply.withFinishDelayUntil(&timer, &QTimer::timeout);
 
     // Create request
-    NetworkRequest request = NetworkRequestBuilder(requestedURL).setManager(&manager).setTimeout(timeout).build();
+    NetworkRequest request = buildRequest(requestedURL).setManager(&manager).setTimeout(timeout).build();
 
     // Start timer
     timer.start();
@@ -212,7 +213,7 @@ void TestNetworkRequest::testNetworkRequestRedirects()
     reply->withBody(QString{"test-content"}.toUtf8());
 
     // Create request
-    NetworkRequest request = NetworkRequestBuilder(requestedURL).setManager(&manager)
+    NetworkRequest request = buildRequest(requestedURL).setManager(&manager)
                                  .setMaxRedirects(maxRedirects).build();
 
     bool didSucceed = false, didError = false;
@@ -289,7 +290,7 @@ void TestNetworkRequest::testNetworkRequestTimeoutWithRedirects()
     reply->withBody(QString{"test-content"}.toUtf8());
 
     // Create request
-    NetworkRequest request = NetworkRequestBuilder(requestedURL).setManager(&manager)
+    NetworkRequest request = buildRequest(requestedURL).setManager(&manager)
                                  .setTimeout(timeout)
                                  .setMaxRedirects(NetworkRequest::UNLIMITED_REDIRECTS).build();
 
