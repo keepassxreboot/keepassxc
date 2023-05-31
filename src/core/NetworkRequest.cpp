@@ -6,6 +6,18 @@
 #include <QtNetwork/QNetworkReply>
 #include <QtNetwork/QNetworkRequest>
 
+namespace {
+    QList<QPair<QString, QString>> createDefaultHeaders() {
+        QList<QPair<QString, QString>> headers;
+        headers.append(QPair{"User-Agent", "KeePassXC"});
+        return headers;
+    }
+}
+
+static constexpr int DEFAULT_MAX_REDIRECTS = 5;
+static constexpr std::chrono::milliseconds DEFAULT_TIMEOUT = std::chrono::seconds(5);
+static QList<QPair<QString, QString>> DEFAULT_HEADERS = createDefaultHeaders();
+
 namespace
 {
     QUrl getRedirectTarget(QNetworkReply* reply)
@@ -51,8 +63,6 @@ void NetworkRequest::fetch(const QUrl& url)
 
     connect(m_reply, &QNetworkReply::finished, this, &NetworkRequest::fetchFinished);
     connect(m_reply, &QIODevice::readyRead, this, &NetworkRequest::fetchReadyRead);
-
-    m_timeout.start();
 }
 
 void NetworkRequest::fetchFinished()
@@ -81,12 +91,10 @@ void NetworkRequest::fetchFinished()
                 redirectTarget = url.resolved(redirectTarget);
             }
             // Request the redirect target
-            qDebug() << "Following redirect to" << redirectTarget;
             m_redirects += 1;
             fetch(redirectTarget);
             return;
         } else {
-            qDebug() << "Too many redirects";
             emit failure();
             return;
         }
@@ -142,32 +150,25 @@ QUrl NetworkRequest::URL() const
     return m_requested_url;
 }
 
-void NetworkRequest::setMaxRedirects(int maxRedirects)
-{
-    m_maxRedirects = std::max(0, maxRedirects);
-}
-
 NetworkRequest::NetworkRequest(
-    QUrl targetURL,
-                                int maxRedirects,
-                               std::chrono::milliseconds timeoutDuration,
-                               QList<QPair<QString, QString>> headers,
-                               QNetworkAccessManager* manager)
-    : m_reply(nullptr)
+    QUrl targetURL, bool allowInsecure, unsigned int maxRedirects, std::chrono::milliseconds timeoutDuration, QList<QPair<QString, QString>> headers,
+    QNetworkAccessManager* manager)
+    : m_manager(manager)
+    , m_reply(nullptr)
     , m_finished(false)
     , m_maxRedirects(maxRedirects)
     , m_redirects(0)
-    , m_timeoutDuration(timeoutDuration)
     , m_headers(headers)
     , m_requested_url(targetURL)
 {
-    m_manager = manager ? manager : getNetMgr();
     connect(&m_timeout, &QTimer::timeout, this, &NetworkRequest::fetchTimeout);
 
-    m_timeout.setInterval(m_timeoutDuration);
+    m_timeout.setInterval(timeoutDuration);
     m_timeout.setSingleShot(true);
 
-    fetch(m_requested_url);
+    if(!allowInsecure) {
+        // TODO
+    }
 }
 
 const QString& NetworkRequest::ContentType() const
@@ -178,11 +179,6 @@ const QString& NetworkRequest::ContentType() const
 const QHash<QString, QString>& NetworkRequest::ContentTypeParameters() const
 {
     return m_content_type_parameters;
-}
-
-void NetworkRequest::setTimeout(std::chrono::milliseconds timeoutDuration)
-{
-    m_timeoutDuration = timeoutDuration;
 }
 
 void NetworkRequest::fetchTimeout()
@@ -200,16 +196,71 @@ QNetworkReply* NetworkRequest::Reply() const
     return m_reply;
 }
 
-NetworkRequest createRequest(QUrl target,int maxRedirects,
-                             std::chrono::milliseconds timeoutDuration,
-                             QList<QPair<QString, QString>> additionalHeaders,
-                             QNetworkAccessManager* manager)
+void NetworkRequest::fetch()
 {
+    m_timeout.start();
+    fetch(m_requested_url);
+}
+
+NetworkRequestBuilder::NetworkRequestBuilder()
+{
+    this->setAllowInsecure(false);
+    this->setMaxRedirects(DEFAULT_MAX_REDIRECTS);
+    this->setTimeout(DEFAULT_TIMEOUT);
+    this->setHeaders(DEFAULT_HEADERS);
+    this->setManager(nullptr);
+}
+
+NetworkRequestBuilder::NetworkRequestBuilder(QUrl url) : NetworkRequestBuilder()
+{
+    this->setUrl(url);
+}
+
+NetworkRequestBuilder& NetworkRequestBuilder::setManager(QNetworkAccessManager* manager)
+{
+    m_manager = manager ? manager : getNetMgr();
+    return *this;
+}
+
+NetworkRequest NetworkRequestBuilder::build()
+{
+    return NetworkRequest(m_url, m_allowInsecure, m_maxRedirects, m_timeoutDuration, m_headers, m_manager);
+}
+
+NetworkRequestBuilder& NetworkRequestBuilder::setHeaders(QList<QPair<QString, QString>> headers)
+{
+    m_headers = headers;
+
     // Append user agent unless given
-    if (std::none_of(additionalHeaders.begin(), additionalHeaders.end(), [](const auto& pair) {
-            return pair.first == "User-Agent";
-        })) {
-        additionalHeaders.append(QPair{"User-Agent", "KeePassXC"});
+    if (std::none_of(m_headers.begin(), m_headers.end(), [](const auto& pair) {
+        return pair.first == "User-Agent";
+    })) {
+        m_headers.append(QPair{"User-Agent", "KeePassXC"});
     }
-    return NetworkRequest(std::move(target), maxRedirects, timeoutDuration, additionalHeaders, manager);
+
+    return *this;
+}
+
+NetworkRequestBuilder& NetworkRequestBuilder::setTimeout(std::chrono::milliseconds timeoutDuration)
+{
+    m_timeoutDuration = timeoutDuration;
+    return *this;
+}
+
+NetworkRequestBuilder& NetworkRequestBuilder::setUrl(QUrl url)
+{
+    m_url = url;
+    return *this;
+}
+
+NetworkRequestBuilder& NetworkRequestBuilder::setAllowInsecure(bool allowInsecure)
+{
+    m_allowInsecure = allowInsecure;
+    return *this;
+}
+
+NetworkRequestBuilder& NetworkRequestBuilder::setMaxRedirects(unsigned int maxRedirects)
+{
+    m_maxRedirects = maxRedirects;
+    return *this;
 }

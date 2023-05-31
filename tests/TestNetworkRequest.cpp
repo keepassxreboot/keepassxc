@@ -11,6 +11,12 @@ using ContentTypeParameters_t = QHash<QString, QString>;
 Q_DECLARE_METATYPE(ContentTypeParameters_t);
 Q_DECLARE_METATYPE(std::chrono::milliseconds);
 
+namespace {
+    void processRequests() {
+        QTest::qWait(300);
+    }
+}
+
 void TestNetworkRequest::testNetworkRequest()
 {
     QFETCH(QUrl, requestedURL);
@@ -39,7 +45,7 @@ void TestNetworkRequest::testNetworkRequest()
     }
 
     // Create request
-    NetworkRequest request = createRequest(requestedURL, 5, std::chrono::milliseconds{5000}, QList<QPair<QString, QString>>{}, &manager);
+    NetworkRequest request = NetworkRequestBuilder(requestedURL).setManager(&manager).build();
 
     QString actualContent;
     bool didError = false, didSucceed = false;
@@ -54,8 +60,8 @@ void TestNetworkRequest::testNetworkRequest()
     QSignalSpy errorSpy(&request, &NetworkRequest::failure);
     connect(&request, &NetworkRequest::failure, [&didError]() { didError = true; });
 
-
-    QTest::qWait(3*100);
+    request.fetch();
+    processRequests();
 
     // Ensures that predicates match - i.e., the header was set correctly
     QCOMPARE(manager.matchedRequests().length(), 1);
@@ -134,7 +140,7 @@ void TestNetworkRequest::testNetworkRequestTimeout()
     reply.withFinishDelayUntil(&timer, &QTimer::timeout);
 
     // Create request
-    NetworkRequest request = createRequest(requestedURL, 5, timeout, QList<QPair<QString, QString>>{}, &manager);
+    NetworkRequest request = NetworkRequestBuilder(requestedURL).setManager(&manager).setTimeout(timeout).build();
 
     // Start timer
     timer.start();
@@ -149,8 +155,8 @@ void TestNetworkRequest::testNetworkRequestTimeout()
     QSignalSpy errorSpy(&request, &NetworkRequest::failure);
     connect(&request, &NetworkRequest::failure, [&didError]() { didError = true; });
 
-
-    QTest::qWait(3*100);
+    request.fetch();
+    processRequests();
 
     QTEST_ASSERT(didError || didSucceed);
 
@@ -168,8 +174,8 @@ void TestNetworkRequest::testNetworkRequestTimeout_data()
     QTest::addColumn<std::chrono::milliseconds>("delay");
     QTest::addColumn<std::chrono::milliseconds>("timeout");
 
-    QTest::newRow("timeout") << true << std::chrono::milliseconds{200} << std::chrono::milliseconds{100};
-    QTest::newRow("no timeout") << false << std::chrono::milliseconds{100} << std::chrono::milliseconds{200};
+    QTest::newRow("timeout") << true << std::chrono::milliseconds{100} << std::chrono::milliseconds{50};
+    QTest::newRow("no timeout") << false << std::chrono::milliseconds{50} << std::chrono::milliseconds{100};
 }
 
 void TestNetworkRequest::testNetworkRequestRedirects()
@@ -209,7 +215,8 @@ void TestNetworkRequest::testNetworkRequestRedirects()
     reply->withBody(QString{"test-content"}.toUtf8());
 
     // Create request
-    NetworkRequest request = createRequest(requestedURL, maxRedirects, std::chrono::milliseconds{5000}, QList<QPair<QString, QString>>{}, &manager);
+    NetworkRequest request = NetworkRequestBuilder(requestedURL).setManager(&manager)
+                                 .setMaxRedirects(maxRedirects).build();
 
     bool didSucceed = false, didError = false;
     // Check request
@@ -221,8 +228,8 @@ void TestNetworkRequest::testNetworkRequestRedirects()
     QSignalSpy errorSpy(&request, &NetworkRequest::failure);
     connect(&request, &NetworkRequest::failure, [&didError]() { didError = true; });
 
-
-    QTest::qWait(3*100);
+    request.fetch();
+    processRequests();
 
     QTEST_ASSERT(didError || didSucceed);
     // Ensures that predicates match - i.e., the header was set correctly
@@ -239,10 +246,10 @@ void TestNetworkRequest::testNetworkRequestRedirects_data()
     QTest::addColumn<int>("numRedirects");
     QTest::addColumn<int>("maxRedirects");
 
-    QTest::newRow("all good (0)") << 0 << 5;
-    QTest::newRow("all good (1)") << 1 << 5;
-    QTest::newRow("all good (2)") << 2 << 5;
-    QTest::newRow("no good (1, 0)") << 1 << 0;
-    QTest::newRow("no good (2, 1)") << 2 << 1;
-    QTest::newRow("no good (3, 2)") << 3 << 2;
+    QTest::newRow("fewer redirects than allowed (0)") << 0 << 5;
+    QTest::newRow("fewer redirects than allowed (1)") << 1 << 5;
+    QTest::newRow("fewer redirects than allowed (2)") << 2 << 5;
+    QTest::newRow("more redirects than allowed (1, 0)") << 1 << 0;
+    QTest::newRow("more redirects than allowed (2, 1)") << 2 << 1;
+    QTest::newRow("more redirects than allowed (3, 2)") << 3 << 2;
 }

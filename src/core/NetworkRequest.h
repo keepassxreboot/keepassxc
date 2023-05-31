@@ -47,31 +47,19 @@ class NetworkRequest : public QObject
 
     // Request parameters
     QTimer m_timeout;
-    int m_maxRedirects;
-    int m_redirects;
-    std::chrono::milliseconds m_timeoutDuration;
+    unsigned int m_maxRedirects;
+    unsigned int m_redirects;
     QList<QPair<QString, QString>> m_headers;
     QUrl m_requested_url;
 
 public:
     // TODO Disallow insecure connections by default?
-    explicit NetworkRequest(QUrl targetURL, int maxRedirects,
+    explicit NetworkRequest(QUrl targetURL, bool allowInsecure, unsigned int maxRedirects,
                             std::chrono::milliseconds timeoutDuration,
                             QList<QPair<QString, QString>> headers,
                             QNetworkAccessManager* manager = nullptr);
-    ~NetworkRequest() override;
 
-    /**
-     * Sets the maximum number of redirects to follow.
-     * @param maxRedirects The maximum number of redirects to follow. Must be >= 0.
-     */
-    void setMaxRedirects(int maxRedirects);
-
-    /**
-     * Sets the timeout duration for the request. This is the maximum time the request may take, including redirects.
-     * @param timeoutDuration The duration of the timeout in milliseconds.
-     */
-    void setTimeout(std::chrono::milliseconds timeoutDuration);
+    void fetch();
 
     void cancel();
 
@@ -96,6 +84,7 @@ public:
      */
     const QHash<QString, QString>& ContentTypeParameters() const;
 
+    ~NetworkRequest() override;
 private:
     void reset();
     void fetch(const QUrl& url);
@@ -109,17 +98,58 @@ signals:
     void failure();
 };
 
-/**
- * Creates a NetworkRequest with default parameters.
- * @param maxRedirects
- * @param timeoutDuration
- * @param headers
- * @param manager
- * @return
- */
-NetworkRequest createRequest(QUrl target, int maxRedirects = 5,
-                             std::chrono::milliseconds timeoutDuration = std::chrono::milliseconds(5000),
-                             QList<QPair<QString, QString>> additionalHeaders = {},
-                             QNetworkAccessManager* manager = nullptr);
+class NetworkRequestBuilder {
+    QUrl m_url;
+    bool m_allowInsecure;
+    unsigned int m_maxRedirects;
+    std::chrono::milliseconds m_timeoutDuration;
+    QList<QPair<QString, QString>> m_headers;
+    QNetworkAccessManager* m_manager;
+
+    NetworkRequestBuilder();
+public:
+    explicit NetworkRequestBuilder(QUrl url);
+
+    /**
+     * Sets the URL to request.
+     * @param url The URL to request.
+     */
+    NetworkRequestBuilder& setUrl(QUrl url);
+
+    /**
+     * Sets whether insecure connections are allowed.
+     * @param allowInsecure
+     */
+    NetworkRequestBuilder& setAllowInsecure(bool allowInsecure);
+
+    /**
+     * Sets the maximum number of redirects to follow.
+     * @param maxRedirects The maximum number of redirects to follow. Must be >= 0.
+     */
+    NetworkRequestBuilder& setMaxRedirects(unsigned int maxRedirects);
+
+    /**
+     * Sets the timeout duration for the request. This is the maximum time the request may take, including redirects.
+     * @param timeoutDuration The duration of the timeout in milliseconds.
+     */
+    NetworkRequestBuilder& setTimeout(std::chrono::milliseconds timeoutDuration);
+
+    /**
+     * Sets the headers to send with the request.
+     * @param headers
+     */
+    NetworkRequestBuilder& setHeaders(QList<QPair<QString, QString>> headers);
+
+    /**
+     * Sets the QNetworkAccessManager to use for the request.
+     * @param manager
+     */
+    NetworkRequestBuilder& setManager(QNetworkAccessManager* manager);
+
+    /**
+     * Builds a new NetworkRequest based on the configured parameters.
+     */
+    NetworkRequest build();
+};
 
 #endif // KEEPASSXC_NETWORKREQUEST_H
