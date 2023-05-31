@@ -52,7 +52,23 @@ void NetworkRequest::fetch(const QUrl& url)
 {
     m_finished = false;
 
+    if(url.scheme() == "http") {
+        if(!m_allowInsecure) {
+            fail();
+            emit failure();
+            return;
+        }
+    } else if (url.scheme() != "https") {
+        fail();
+        emit failure();
+        return;
+    }
+
     QNetworkRequest request(url);
+
+    QSslConfiguration sslConfiguration = request.sslConfiguration();
+    sslConfiguration.setProtocol(QSsl::SecureProtocols);
+    request.setSslConfiguration(sslConfiguration);
 
     // Set headers
     for (const auto& [header, value] : qAsConst(m_headers)) {
@@ -78,7 +94,7 @@ void NetworkRequest::fetchFinished()
     if (error != QNetworkReply::NoError) {
         // Do not emit on abort.
         if (error != QNetworkReply::OperationCanceledError) {
-            emit failure();
+            fail();
         }
         return;
     }
@@ -95,7 +111,7 @@ void NetworkRequest::fetchFinished()
             fetch(redirectTarget);
             return;
         } else {
-            emit failure();
+            fail();
             return;
         }
     }
@@ -160,15 +176,12 @@ NetworkRequest::NetworkRequest(
     , m_redirects(0)
     , m_headers(headers)
     , m_requested_url(targetURL)
+, m_allowInsecure(allowInsecure)
 {
     connect(&m_timeout, &QTimer::timeout, this, &NetworkRequest::fetchTimeout);
 
     m_timeout.setInterval(timeoutDuration);
     m_timeout.setSingleShot(true);
-
-    if(!allowInsecure) {
-        // TODO
-    }
 }
 
 const QString& NetworkRequest::ContentType() const
@@ -186,9 +199,7 @@ void NetworkRequest::fetchTimeout()
     if(m_finished)
         return;
     m_finished = true;
-    // Cancel request on timeout
-    cancel();
-    emit failure();
+    fail();
 }
 
 QNetworkReply* NetworkRequest::Reply() const
@@ -200,6 +211,12 @@ void NetworkRequest::fetch()
 {
     m_timeout.start();
     fetch(m_requested_url);
+}
+
+void NetworkRequest::fail()
+{
+    cancel();
+    emit failure();
 }
 
 NetworkRequestBuilder::NetworkRequestBuilder()
@@ -250,6 +267,13 @@ NetworkRequestBuilder& NetworkRequestBuilder::setTimeout(std::chrono::millisecon
 NetworkRequestBuilder& NetworkRequestBuilder::setUrl(QUrl url)
 {
     m_url = url;
+    // Default scheme to https.
+    if(m_url.scheme().isEmpty()) {
+        // Necessary to ensure that setScheme adds // (QUrl needs a valid authority section)
+        // For example, QUrl("example.com").setScheme("https") would result in "https:example.com" (invalid
+        m_url = QUrl::fromUserInput(m_url.toString(QUrl::FullyEncoded));
+        m_url.setScheme("https");
+    }
     return *this;
 }
 

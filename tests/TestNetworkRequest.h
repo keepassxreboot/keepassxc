@@ -19,6 +19,9 @@ private slots:
     void testNetworkRequestRedirects_data();
 
     void testNetworkRequestTimeoutWithRedirects();
+
+    void testNetworkRequestSecurityParameter();
+    void testNetworkRequestSecurityParameter_data();
 };
 
 #endif // KEEPASSXC_TESTNETWORKREQUEST_HPP

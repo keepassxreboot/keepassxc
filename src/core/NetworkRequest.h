@@ -51,6 +51,7 @@ class NetworkRequest : public QObject
     unsigned int m_redirects;
     QList<QPair<QString, QString>> m_headers;
     QUrl m_requested_url;
+    bool m_allowInsecure;
 
 public:
     static constexpr auto UNLIMITED_REDIRECTS = std::numeric_limits<unsigned int>::max();
@@ -89,6 +90,7 @@ public:
 private:
     void reset();
     void fetch(const QUrl& url);
+    void fail();
 private slots:
     void fetchFinished();
     void fetchReadyRead();

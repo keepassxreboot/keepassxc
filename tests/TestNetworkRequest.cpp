@@ -17,6 +17,7 @@ static constexpr auto TIMEOUT_GRACE_MS = 25;
 void TestNetworkRequest::testNetworkRequest()
 {
     QFETCH(QUrl, requestedURL);
+    QFETCH(QUrl, expectedURL);
     QFETCH(QByteArray, expectedContent);
     QFETCH(QString, responseContentType);
     QFETCH(QString, expectedContentType);
@@ -30,7 +31,7 @@ void TestNetworkRequest::testNetworkRequest()
     MockNetworkAccess::Manager<QNetworkAccessManager> manager;
 
     auto& reply = manager
-        .whenGet(requestedURL)
+        .whenGet(expectedURL)
         // Has right user agent?
         .has(MockNetworkAccess::Predicates::HeaderMatching(QNetworkRequest::UserAgentHeader,
                                                            QRegularExpression(expectedUserAgent)))
@@ -62,7 +63,7 @@ void TestNetworkRequest::testNetworkRequest()
 
     // Ensures that predicates match - i.e., the header was set correctly
     QCOMPARE(manager.matchedRequests().length(), 1);
-    QCOMPARE(request.URL(), requestedURL);
+    QCOMPARE(request.URL(), expectedURL);
     if(!expectError) {
         QCOMPARE(actualContent, expectedContent);
         QCOMPARE(request.ContentType(), expectedContentType);
@@ -78,6 +79,7 @@ void TestNetworkRequest::testNetworkRequest()
 void TestNetworkRequest::testNetworkRequest_data()
 {
     QTest::addColumn<QUrl>("requestedURL");
+    QTest::addColumn<QUrl>("expectedURL");
     QTest::addColumn<QByteArray>("expectedContent");
     QTest::addColumn<QString>("responseContentType");
     QTest::addColumn<QString>("expectedContentType");
@@ -88,22 +90,29 @@ void TestNetworkRequest::testNetworkRequest_data()
 
     QString defaultUserAgent("KeePassXC");
 
+    //const QUrl& exampleURL = QUrl{"https://example.com"};
     const QUrl& exampleURL = QUrl{"https://example.com"};
     const QByteArray& exampleContent = QString{"test-content"}.toUtf8();
 
-    QTest::newRow("successful request") << exampleURL << exampleContent << "text/plain"
+    QTest::newRow("successful request") << exampleURL << exampleURL << exampleContent << "text/plain"
                                         << "text/plain" << ContentTypeParameters_t{}
                                         << defaultUserAgent << false << QNetworkReply::NetworkError::NoError;
-    QTest::newRow("content type") << exampleURL << exampleContent << "application/test-content-type"
+    QTest::newRow("content type") << exampleURL << exampleURL << exampleContent << "application/test-content-type"
                                         << "application/test-content-type" << ContentTypeParameters_t{}
                                         << defaultUserAgent << false << QNetworkReply::NetworkError::NoError;
-    QTest::newRow("empty content type") << exampleURL << QByteArray{} << "" << "" << ContentTypeParameters_t{}
+    QTest::newRow("empty content type") << exampleURL << exampleURL << QByteArray{} << "" << "" << ContentTypeParameters_t{}
                                   << defaultUserAgent << false << QNetworkReply::NetworkError::NoError;
-    QTest::newRow("content type parameters") << exampleURL << exampleContent << "application/test-content-type;test-param=test-value"
+    QTest::newRow("content type parameters") << exampleURL << exampleURL << exampleContent << "application/test-content-type;test-param=test-value"
                                         << "application/test-content-type" << ContentTypeParameters_t {{"test-param", "test-value"}}
                                         << defaultUserAgent << false << QNetworkReply::NetworkError::NoError;
-    QTest::newRow("content type parameters trimmed") << exampleURL << exampleContent << "application/test-content-type; test-param = test-value"
+    QTest::newRow("content type parameters trimmed") << exampleURL << exampleURL << exampleContent << "application/test-content-type; test-param = test-value"
                                         << "application/test-content-type" << ContentTypeParameters_t {{"test-param", "test-value"}}
+                                        << defaultUserAgent << false << QNetworkReply::NetworkError::NoError;
+    QTest::newRow("request without schema should add https") << QUrl("example.com") << QUrl("https://example.com") << exampleContent << "text/plain"
+                                                             << "text/plain" << ContentTypeParameters_t{}
+                                                             << defaultUserAgent << false << QNetworkReply::NetworkError::NoError;
+    QTest::newRow("request without schema should add https (edge case with // but no scheme)") << QUrl("//example.com") << QUrl("https://example.com") << exampleContent << "text/plain"
+                                        << "text/plain" << ContentTypeParameters_t{}
                                         << defaultUserAgent << false << QNetworkReply::NetworkError::NoError;
 }
 
@@ -311,4 +320,54 @@ void TestNetworkRequest::testNetworkRequestTimeoutWithRedirects()
     QTEST_ASSERT(didError || didSucceed);
     QCOMPARE(didSucceed, false);
     QCOMPARE(didError, true);
+}
+
+void TestNetworkRequest::testNetworkRequestSecurityParameter()
+{
+    // Test that requests with allowInsecure() set to false fail when the URL uses an insecure schema
+    QFETCH(QUrl, targetURL);
+    QFETCH(bool, allowInsecure);
+    QFETCH(bool, shouldSucceed);
+
+    // Create mock reply
+    // Create and configure the mocked network access manager
+    MockNetworkAccess::Manager<QNetworkAccessManager> manager;
+
+    QStringList requestedUrls;
+
+    auto* reply = &manager.whenGet(targetURL).reply();
+    reply->withBody(QString{"test-content"}.toUtf8());
+
+    // Create request
+    NetworkRequest request = buildRequest(targetURL).setManager(&manager)
+                                 .setAllowInsecure(allowInsecure).build();
+
+    bool didSucceed = false, didError = false;
+    // Check request
+    QSignalSpy spy(&request, &NetworkRequest::success);
+    connect(&request, &NetworkRequest::success, [&didSucceed](const QByteArray&) {
+        didSucceed = true;
+    });
+
+    QSignalSpy errorSpy(&request, &NetworkRequest::failure);
+    connect(&request, &NetworkRequest::failure, [&didError]() { didError = true; });
+
+    request.fetch();
+    QTest::qWait(300);
+
+    QTEST_ASSERT(didError || didSucceed);
+    QCOMPARE(didSucceed, shouldSucceed);
+    QCOMPARE(didError, !shouldSucceed);
+}
+
+void TestNetworkRequest::testNetworkRequestSecurityParameter_data()
+{
+    QTest::addColumn<QUrl>("targetURL");
+    QTest::addColumn<bool>("allowInsecure");
+    QTest::addColumn<bool>("shouldSucceed");
+
+    QTest::newRow("secure protocol with allowInsecure=false succeeds") << QUrl("https://example.com") << false << true;
+    QTest::newRow("secure protocol with allowInsecure=true succeeds") << QUrl("https://example.com") << true << true;
+    QTest::newRow("insecure protocol with allowInsecure=false fails") << QUrl("http://example.com") << false << false;
+    QTest::newRow("insecure protocol with allowInsecure=true succeeds") << QUrl("http://example.com") << true << true;
 }
