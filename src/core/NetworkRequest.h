@@ -53,7 +53,8 @@ class NetworkRequest : public QObject
     QUrl m_requested_url;
 
 public:
-    // TODO Disallow insecure connections by default?
+    static constexpr auto UNLIMITED_REDIRECTS = std::numeric_limits<unsigned int>::max();
+
     explicit NetworkRequest(QUrl targetURL, bool allowInsecure, unsigned int maxRedirects,
                             std::chrono::milliseconds timeoutDuration,
                             QList<QPair<QString, QString>> headers,
@@ -96,6 +97,8 @@ private slots:
 signals:
     void success(QByteArray);
     void failure();
+private:
+    Q_DISABLE_COPY(NetworkRequest)
 };
 
 class NetworkRequestBuilder {

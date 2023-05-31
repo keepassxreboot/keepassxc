@@ -11,11 +11,7 @@ using ContentTypeParameters_t = QHash<QString, QString>;
 Q_DECLARE_METATYPE(ContentTypeParameters_t);
 Q_DECLARE_METATYPE(std::chrono::milliseconds);
 
-namespace {
-    void processRequests() {
-        QTest::qWait(300);
-    }
-}
+static constexpr auto TIMEOUT_GRACE_MS = 25;
 
 void TestNetworkRequest::testNetworkRequest()
 {
@@ -61,7 +57,7 @@ void TestNetworkRequest::testNetworkRequest()
     connect(&request, &NetworkRequest::failure, [&didError]() { didError = true; });
 
     request.fetch();
-    processRequests();
+    QTest::qWait(300);
 
     // Ensures that predicates match - i.e., the header was set correctly
     QCOMPARE(manager.matchedRequests().length(), 1);
@@ -156,7 +152,8 @@ void TestNetworkRequest::testNetworkRequestTimeout()
     connect(&request, &NetworkRequest::failure, [&didError]() { didError = true; });
 
     request.fetch();
-    processRequests();
+    // Wait until the timeout should have (or not) occured
+    QTest::qWait(std::chrono::duration_cast<std::chrono::milliseconds>(timeout).count() + TIMEOUT_GRACE_MS);
 
     QTEST_ASSERT(didError || didSucceed);
 
@@ -229,7 +226,7 @@ void TestNetworkRequest::testNetworkRequestRedirects()
     connect(&request, &NetworkRequest::failure, [&didError]() { didError = true; });
 
     request.fetch();
-    processRequests();
+    QTest::qWait(300);
 
     QTEST_ASSERT(didError || didSucceed);
     // Ensures that predicates match - i.e., the header was set correctly
@@ -252,4 +249,65 @@ void TestNetworkRequest::testNetworkRequestRedirects_data()
     QTest::newRow("more redirects than allowed (1, 0)") << 1 << 0;
     QTest::newRow("more redirects than allowed (2, 1)") << 2 << 1;
     QTest::newRow("more redirects than allowed (3, 2)") << 3 << 2;
+}
+
+void TestNetworkRequest::testNetworkRequestTimeoutWithRedirects()
+{
+    // Test that the timeout parameter is respected even when redirects are involved:
+    // - Set up a request that will redirect 2 times
+    // - Each request should have a delay of 250ms
+    // - The timeout should be 400ms
+    // -> The request should fail
+    const int numRedirects = 3;
+    const auto delayPerRequest = std::chrono::milliseconds{250};
+    const auto timeout = std::chrono::milliseconds{400};
+    const auto requestedURL = QUrl("https://example.com");
+
+    // Create mock reply
+    // Create and configure the mocked network access manager
+    MockNetworkAccess::Manager<QNetworkAccessManager> manager;
+
+    QStringList requestedUrls;
+
+    auto* reply = &manager.whenGet(requestedURL).reply();
+
+    std::vector<std::unique_ptr<QTimer>> timers;
+    auto nextDelay = delayPerRequest;
+    for(int i = 0; i < numRedirects; ++i) {
+        auto redirectTarget = QUrl("https://example.com/redirect" + QString::number(i));
+
+        auto timer(std::make_unique<QTimer>());
+        timer->setSingleShot(true);
+        timer->start(delayPerRequest);
+        nextDelay += delayPerRequest;
+
+        reply->withRedirect(redirectTarget).withFinishDelayUntil(timer.get(), &QTimer::timeout);
+        reply = &manager.whenGet(redirectTarget).reply();
+
+        timers.push_back(std::move(timer));
+    }
+    reply->withBody(QString{"test-content"}.toUtf8());
+
+    // Create request
+    NetworkRequest request = NetworkRequestBuilder(requestedURL).setManager(&manager)
+                                 .setTimeout(timeout)
+                                 .setMaxRedirects(NetworkRequest::UNLIMITED_REDIRECTS).build();
+
+    bool didSucceed = false, didError = false;
+    // Check request
+    QSignalSpy spy(&request, &NetworkRequest::success);
+    connect(&request, &NetworkRequest::success, [&didSucceed](const QByteArray&) {
+        didSucceed = true;
+    });
+
+    QSignalSpy errorSpy(&request, &NetworkRequest::failure);
+    connect(&request, &NetworkRequest::failure, [&didError]() { didError = true; });
+
+    request.fetch();
+    // Wait until the timeout should have occured
+    QTest::qWait(std::chrono::duration_cast<std::chrono::milliseconds>(timeout).count() + TIMEOUT_GRACE_MS);
+
+    QTEST_ASSERT(didError || didSucceed);
+    QCOMPARE(didSucceed, false);
+    QCOMPARE(didError, true);
 }
