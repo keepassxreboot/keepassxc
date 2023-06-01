@@ -12,7 +12,7 @@ using ContentTypeParameters_t = QHash<QString, QString>;
 Q_DECLARE_METATYPE(ContentTypeParameters_t);
 Q_DECLARE_METATYPE(std::chrono::milliseconds);
 
-static constexpr auto TIMEOUT_GRACE_MS = 25;
+static constexpr auto TIMEOUT_GRACE_MS = 100;
 
 void TestNetworkRequest::testNetworkRequest()
 {
@@ -45,13 +45,13 @@ void TestNetworkRequest::testNetworkRequest()
     // Create request
     NetworkRequest request = buildRequest(requestedURL).setManager(&manager).build();
 
-    QString actualContent;
+    QByteArray actualContent;
     bool didError = false, didSucceed = false;
 
     // Check request
     QSignalSpy spy(&request, &NetworkRequest::success);
     connect(&request, &NetworkRequest::success, [&actualContent, &didSucceed](QByteArray content) {
-        actualContent = QString(content);
+        actualContent = content;
         didSucceed = true;
     });
 

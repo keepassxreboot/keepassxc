@@ -17,6 +17,10 @@
 #ifndef KEEPASSXC_NETWORKREQUEST_H
 #define KEEPASSXC_NETWORKREQUEST_H
 
+#include "config-keepassx.h"
+
+#ifdef WITH_XC_NETWORKING
+
 #include <QHash>
 #include <QList>
 #include <QObject>
@@ -156,5 +160,7 @@ public:
      */
     NetworkRequest build();
 };
+
+#endif
 
 #endif // KEEPASSXC_NETWORKREQUEST_H

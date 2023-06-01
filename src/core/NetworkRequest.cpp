@@ -1,15 +1,19 @@
 
 #include "NetworkRequest.h"
+
+#ifdef WITH_XC_NETWORKING
+
 #include "NetworkManager.h"
 #include <QString>
 #include <QtNetwork/QNetworkAccessManager>
 #include <QtNetwork/QNetworkReply>
 #include <QtNetwork/QNetworkRequest>
 
+
 namespace {
     QList<QPair<QString, QString>> createDefaultHeaders() {
         QList<QPair<QString, QString>> headers;
-        headers.append(QPair{"User-Agent", "KeePassXC"});
+        headers.append(QPair<QString, QString>("User-Agent", "KeePassXC"));
         return headers;
     }
 }
@@ -35,16 +39,16 @@ namespace
         QString contentType;
         QHash<QString, QString> contentTypeParameters;
         // Parse content type
-        auto tokens = contentTypeHeader.split(";", Qt::SkipEmptyParts);
+        auto tokens = contentTypeHeader.split(";", QString::SkipEmptyParts);
         if(tokens.isEmpty()) {
-            return {contentType, contentTypeParameters};
+            return qMakePair(contentType, contentTypeParameters);
         }
         contentType = tokens[0].trimmed();
         for (int i = 1; i < tokens.size(); ++i) {
             auto parameterTokens = tokens[i].split("=");
             contentTypeParameters[parameterTokens[0].trimmed()] = parameterTokens[1].trimmed();
         }
-        return {contentType, contentTypeParameters};
+        return qMakePair(contentType, contentTypeParameters);
     }
 } // namespace
 
@@ -252,7 +256,7 @@ NetworkRequestBuilder& NetworkRequestBuilder::setHeaders(QList<QPair<QString, QS
     if (std::none_of(m_headers.begin(), m_headers.end(), [](const auto& pair) {
         return pair.first == "User-Agent";
     })) {
-        m_headers.append(QPair{"User-Agent", "KeePassXC"});
+        m_headers.append(QPair<QString, QString>("User-Agent", "KeePassXC"));
     }
 
     return *this;
@@ -288,3 +292,5 @@ NetworkRequestBuilder& NetworkRequestBuilder::setMaxRedirects(unsigned int maxRe
     m_maxRedirects = maxRedirects;
     return *this;
 }
+
+#endif
