@@ -1600,10 +1600,6 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Failed to authenticate with Windows Hello: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Use hardware key [Serial: %1]</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1633,6 +1629,14 @@ Are you sure you want to continue with this file?.</source>
     </message>
     <message>
         <source>Refresh Hardware Keys</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Click to add a key file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;I have a key file&lt;/a&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1675,6 +1679,10 @@ Are you sure you want to continue with this file?.</source>
     </message>
     <message>
         <source>Secret Service Integration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remote Sync</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1997,11 +2005,15 @@ If you keep this number, your database will not be protected from brute force at
         </translation>
     </message>
     <message>
-        <source>Advanced Settings</source>
+        <source>Encryption Settings:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Simple Settings</source>
+        <source>Basic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Advanced</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

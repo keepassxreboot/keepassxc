@@ -43,7 +43,7 @@ public:
 public slots:
     void initialize() override;
     void uninitialize() override;
-    bool save() override;
+    bool saveSettings() override;
 
 private slots:
     void saveCurrentSettings();

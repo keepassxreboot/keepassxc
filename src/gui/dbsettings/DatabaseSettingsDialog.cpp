@@ -91,7 +91,7 @@ DatabaseSettingsDialog::DatabaseSettingsDialog(QWidget* parent)
 #endif
 
     addPage(tr("Maintenance"), icons()->icon("hammer-wrench"), m_maintenanceWidget);
-    
+
     connect(m_ui->categoryList, SIGNAL(categoryChanged(int)), m_ui->stackedWidget, SLOT(setCurrentIndex(int)));
 }
 
