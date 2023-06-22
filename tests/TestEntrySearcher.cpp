@@ -17,6 +17,7 @@
 
 #include "TestEntrySearcher.h"
 #include "core/Group.h"
+#include "core/Tools.h"
 
 #include <QTest>
 
@@ -371,4 +372,25 @@ void TestEntrySearcher::testSkipProtected()
     m_searchResult =
         m_entrySearcher.search("_testAttribute:testE1 _testProtected:apple _testAttribute:testE2", m_rootGroup);
     QCOMPARE(m_searchResult, {});
+}
+
+void TestEntrySearcher::testUUIDSearch()
+{
+    auto entry1 = new Entry();
+    entry1->setGroup(m_rootGroup);
+    entry1->setTitle("testTitle");
+    auto uuid1 = QUuid::createUuid();
+    entry1->setUuid(uuid1);
+
+    auto entry2 = new Entry();
+    entry2->setGroup(m_rootGroup);
+    entry2->setTitle("testTitle2");
+    auto uuid2 = QUuid::createUuid();
+    entry2->setUuid(uuid2);
+
+    m_searchResult = m_entrySearcher.search("uuid:", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 2);
+
+    m_searchResult = m_entrySearcher.search("uuid:" + Tools::uuidToHex(uuid1), m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 1);
 }

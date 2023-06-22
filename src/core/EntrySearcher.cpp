@@ -218,6 +218,9 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
             }
             found = false;
             break;
+        case Field::Uuid:
+            found = term.regex.match(entry->uuidToHex()).hasMatch();
+            break;
         default:
             // Terms without a specific field try to match title, username, url, and notes
             found = term.regex.match(entry->resolvePlaceholder(entry->title())).hasMatch()
@@ -253,7 +256,8 @@ void EntrySearcher::parseSearchTerms(const QString& searchString)
         {QStringLiteral("url"), Field::Url},
         {QStringLiteral("group"), Field::Group},
         {QStringLiteral("tag"), Field::Tag},
-        {QStringLiteral("is"), Field::Is}};
+        {QStringLiteral("is"), Field::Is},
+        {QStringLiteral("uuid"), Field::Uuid}};
 
     // Group 1 = modifiers, Group 2 = field, Group 3 = quoted string, Group 4 = unquoted string
     static QRegularExpression termParser(R"re(([-!*+]+)?(?:(\w*):)?(?:(?=")"((?:[^"\\]|\\.)*)"|([^ ]*))( |$))re");
