@@ -69,7 +69,6 @@ private slots:
     void save();
     void reject();
     void pageChanged();
-    void toggleAdvancedMode(bool advanced);
 
 private:
     enum Page
