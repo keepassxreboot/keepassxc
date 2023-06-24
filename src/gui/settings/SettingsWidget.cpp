@@ -24,28 +24,6 @@ SettingsWidget::SettingsWidget(QWidget* parent)
 
 SettingsWidget::~SettingsWidget() = default;
 
-/**
- * Switch between simple mode (the default) and advanced mode.
- * Subclasses which implement an advanced mode, need to override this method,
- * \link advancedMode() and \link hasAdvancedMode.
- *
- * When overriding this method, make sure to also emit the
- * \link advancedModeChanged() signal.
- *
- * @param advanced whether advanced mode is enabled
- */
-void SettingsWidget::setAdvancedMode(bool advanced)
+void SettingsWidget::discard()
 {
-    if (hasAdvancedMode() && advanced != advancedMode()) {
-        m_advancedMode = advanced;
-        emit advancedModeChanged(advanced);
-    }
-}
-
-/**
- * @return true if advanced mode is on (default: false)
- */
-bool SettingsWidget::advancedMode() const
-{
-    return m_advancedMode;
 }

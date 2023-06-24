@@ -66,8 +66,6 @@ void TestGuiBrowser::initTestCase()
     config()->set(Config::AutoSaveOnExit, false);
     // Enable the tray icon so we can test hiding/restoring the windowQByteArray
     config()->set(Config::GUI_ShowTrayIcon, true);
-    // Disable advanced settings mode (activate within individual tests to test advanced settings)
-    config()->set(Config::GUI_AdvancedSettings, false);
     // Disable the update check first time alert
     config()->set(Config::UpdateCheckMessageShown, true);
 

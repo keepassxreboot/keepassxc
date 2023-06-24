@@ -37,18 +37,10 @@ public:
     Q_DISABLE_COPY(DatabaseSettingsWidgetEncryption);
     ~DatabaseSettingsWidgetEncryption() override;
 
-    inline bool hasAdvancedMode() const override
-    {
-        return true;
-    }
-    void setAdvancedMode(bool advanced) override;
-
 public slots:
     void initialize() override;
     void uninitialize() override;
     bool save() override;
-
-    static QString getTextualEncryptionTime(int millisecs);
 
 protected:
     void showEvent(QShowEvent* event) override;
@@ -64,10 +56,12 @@ private slots:
     void setupKdfComboBox(bool enableKdbx3);
     void loadKdfParameters();
     void updateKdfFields();
-    void activateChangeDecryptionTime();
     void markDirty();
 
 private:
+    bool isAdvancedMode();
+    void showBasicEncryption(int decryptionMillisecs = Kdf::DEFAULT_ENCRYPTION_TIME);
+
     enum FormatSelection
     {
         KDBX4,
@@ -76,6 +70,7 @@ private:
     static const char* CD_DECRYPTION_TIME_PREFERENCE_KEY;
 
     bool m_isDirty = false;
+    bool m_initWithAdvanced = false;
     bool m_formatCompatibilityDirty = false;
     const QScopedPointer<Ui::DatabaseSettingsWidgetEncryption> m_ui;
 };

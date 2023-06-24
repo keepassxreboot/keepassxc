@@ -27,8 +27,6 @@ NewDatabaseWizardPage::NewDatabaseWizardPage(QWidget* parent)
     , m_ui(new Ui::NewDatabaseWizardPage())
 {
     m_ui->setupUi(this);
-
-    connect(m_ui->advancedSettingsButton, SIGNAL(clicked()), SLOT(toggleAdvancedSettings()));
 }
 
 NewDatabaseWizardPage::~NewDatabaseWizardPage() = default;
@@ -43,7 +41,6 @@ void NewDatabaseWizardPage::setPageWidget(DatabaseSettingsWidget* page)
 {
     m_pageWidget = page;
     m_ui->pageContent->setWidget(m_pageWidget);
-    m_ui->advancedSettingsButton->setVisible(m_pageWidget->hasAdvancedMode());
 }
 
 /**
@@ -85,22 +82,4 @@ bool NewDatabaseWizardPage::validatePage()
     bool valid = m_pageWidget->save();
     m_pageWidget->uninitialize();
     return valid;
-}
-
-/**
- * Toggle settings page widget between simple and advanced mode.
- */
-void NewDatabaseWizardPage::toggleAdvancedSettings()
-{
-    if (!m_pageWidget || !m_pageWidget->hasAdvancedMode()) {
-        return;
-    }
-
-    if (m_pageWidget->advancedMode()) {
-        m_pageWidget->setAdvancedMode(false);
-        m_ui->advancedSettingsButton->setText(tr("Advanced Settings"));
-    } else {
-        m_pageWidget->setAdvancedMode(true);
-        m_ui->advancedSettingsButton->setText(tr("Simple Settings"));
-    }
 }
