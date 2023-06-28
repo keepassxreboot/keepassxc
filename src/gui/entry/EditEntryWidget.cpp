@@ -326,17 +326,18 @@ void EditEntryWidget::insertURL()
 {
     Q_ASSERT(!m_history);
 
-    QString name("KP2A_URL");
+    QString name(BrowserService::ADDITIONAL_URL);
     int i = 1;
 
     while (m_entryAttributes->keys().contains(name)) {
-        name = QString("KP2A_URL_%1").arg(i);
+        name = QString("%1_%2").arg(BrowserService::ADDITIONAL_URL, QString::number(i));
         i++;
     }
 
     m_entryAttributes->set(name, tr("<empty URL>"));
     QModelIndex index = m_additionalURLsDataModel->indexByKey(name);
 
+    m_additionalURLsDataModel->setEntryUrl(m_entry->url());
     m_browserUi->additionalURLsView->setCurrentIndex(index);
     m_browserUi->additionalURLsView->edit(index);
 

@@ -3919,6 +3919,10 @@ Error: %1</source>
         <source>Invalid URL</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Duplicate URL</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EntryView</name>
