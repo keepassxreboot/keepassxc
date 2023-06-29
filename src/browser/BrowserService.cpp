@@ -911,8 +911,8 @@ QJsonObject BrowserService::prepareEntry(const Entry* entry)
 BrowserService::Access
 BrowserService::checkAccess(const Entry* entry, const QString& siteHost, const QString& formHost, const QString& realm)
 {
-    if (entry->isExpired()) {
-        return browserSettings()->allowExpiredCredentials() ? Unknown : Denied;
+    if (entry->isExpired() && !browserSettings()->allowExpiredCredentials()) {
+        return Denied;
     }
 
     BrowserEntryConfig config;
