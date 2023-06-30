@@ -54,7 +54,7 @@ void EntryURLModel::setEntryAttributes(EntryAttributes* entryAttributes)
 
     endResetModel();
 }
-
+#include <QDebug>
 QVariant EntryURLModel::data(const QModelIndex& index, int role) const
 {
     if (!index.isValid()) {
@@ -69,11 +69,10 @@ QVariant EntryURLModel::data(const QModelIndex& index, int role) const
     const auto value = m_entryAttributes->value(key);
     const auto urlValid = Tools::checkUrlValid(value);
 
-    // Check for duplicate URLs in the attribute list
-    auto customKeys = m_entryAttributes->customKeys();
-    customKeys.removeOne(key);
-    const auto values = m_entryAttributes->values(customKeys);
-    const auto duplicateUrl = values.contains(value) || value == m_entryUrl;
+    // Check for duplicate URLs in the attribute list. Excludes the current key/value from the comparison.
+    auto customAttributeKeys = m_entryAttributes->customKeys();
+    customAttributeKeys.removeOne(key);
+    const auto duplicateUrl = m_entryAttributes->values(customAttributeKeys).contains(value) || value == m_entryUrl;
 
     if (role == Qt::BackgroundRole && (!urlValid || duplicateUrl)) {
         StateColorPalette statePalette;
