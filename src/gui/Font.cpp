@@ -31,7 +31,7 @@ QFont Font::fixedFont()
 
 #ifdef Q_OS_WIN
     // try to use Consolas on Windows, because the default Courier New has too many similar characters
-    auto consolasFont = QFontDatabase().font("Consolas", fixedFont.styleName(), fixedFont.pointSize());
+    auto consolasFont = QFontDatabase().font("Misans", fixedFont.styleName(), fixedFont.pointSize());
     if (consolasFont.family().contains("consolas", Qt::CaseInsensitive)) {
         fixedFont = consolasFont;
     }
