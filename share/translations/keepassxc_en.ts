@@ -3997,6 +3997,13 @@ Error: %1</source>
         <source>Reset to defaults</source>
         <translation type="unfinished"></translation>
     </message>
+    <message numerus="yes">
+        <source>+ %1 entry(s)...</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
 </context>
 <context>
     <name>ExportDialog</name>
