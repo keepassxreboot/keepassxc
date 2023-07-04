@@ -38,6 +38,7 @@ private slots:
     void testCustomAttributesAreSearched();
     void testGroup();
     void testSkipProtected();
+    void testUUIDSearch();
 
 private:
     Group* m_rootGroup;
