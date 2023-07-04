@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_DATABASESETTINGSPAGECHANGEDBKEY_H
-#define KEEPASSXC_DATABASESETTINGSPAGECHANGEDBKEY_H
+#ifndef KEEPASSXC_DATABASESETTINGSWIDGETDATABASEKEY_H
+#define KEEPASSXC_DATABASESETTINGSWIDGETDATABASEKEY_H
 
 #include "DatabaseSettingsWidget.h"
 #include "config-keepassx.h"
@@ -42,7 +42,7 @@ public:
     Q_DISABLE_COPY(DatabaseSettingsWidgetDatabaseKey);
     ~DatabaseSettingsWidgetDatabaseKey() override;
 
-    void load(QSharedPointer<Database> db) override;
+    void loadSettings(QSharedPointer<Database> db) override;
 
     inline bool hasAdvancedMode() const override
     {
@@ -52,7 +52,7 @@ public:
 public slots:
     void initialize() override;
     void uninitialize() override;
-    bool save() override;
+    bool saveSettings() override;
     void discard() override;
 
 private slots:
@@ -82,4 +82,4 @@ private:
 #endif
 };
 
-#endif // KEEPASSXC_DATABASESETTINGSPAGECHANGEDBKEY_H
+#endif // KEEPASSXC_DATABASESETTINGSWIDGETDATABASEKEY_H

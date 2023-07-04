@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -58,8 +58,9 @@ DatabaseSettingsWidgetEncryption::DatabaseSettingsWidgetEncryption(QWidget* pare
     connect(m_ui->activateChangeDecryptionTimeButton, SIGNAL(clicked()), SLOT(activateChangeDecryptionTime()));
     connect(m_ui->decryptionTimeSlider, SIGNAL(valueChanged(int)), SLOT(updateDecryptionTime(int)));
     connect(m_ui->compatibilitySelection, SIGNAL(currentIndexChanged(int)), SLOT(updateFormatCompatibility(int)));
+    connect(m_ui->advancedSettingsButton, SIGNAL(clicked()), SLOT(toggleAdvancedSettings()));
 
-    // conditions under which a key re-transformation is needed
+    // Conditions under which a key re-transformation is needed
     connect(m_ui->decryptionTimeSlider, SIGNAL(valueChanged(int)), SLOT(markDirty()));
     connect(m_ui->compatibilitySelection, SIGNAL(currentIndexChanged(int)), SLOT(markDirty()));
     connect(m_ui->activateChangeDecryptionTimeButton, SIGNAL(clicked()), SLOT(markDirty()));
@@ -74,6 +75,11 @@ DatabaseSettingsWidgetEncryption::~DatabaseSettingsWidgetEncryption() = default;
 
 #define IS_ARGON2(uuid) (uuid == KeePass2::KDF_ARGON2D || uuid == KeePass2::KDF_ARGON2ID)
 #define IS_AES_KDF(uuid) (uuid == KeePass2::KDF_AES_KDBX3 || uuid == KeePass2::KDF_AES_KDBX4)
+
+void DatabaseSettingsWidgetEncryption::showAdvancedModeButton(bool show)
+{
+    m_ui->advancedSettingsButton->setVisible(show);
+}
 
 void DatabaseSettingsWidgetEncryption::initialize()
 {
@@ -95,7 +101,7 @@ void DatabaseSettingsWidgetEncryption::initialize()
     }
     bool kdbx3Enabled = KeePass2Writer::kdbxVersionRequired(m_db.data(), true, true) <= KeePass2::FILE_VERSION_3_1;
 
-    // check if the DB's custom data has a decryption time setting stored
+    // Check if the DB's custom data has a decryption time setting stored
     // and set the slider to it, otherwise just state that the time is unchanged
     // (we cannot infer the time from the raw KDF settings)
     auto* cd = m_db->metadata()->customData();
@@ -214,7 +220,7 @@ void DatabaseSettingsWidgetEncryption::markDirty()
     m_isDirty = true;
 }
 
-bool DatabaseSettingsWidgetEncryption::save()
+bool DatabaseSettingsWidgetEncryption::saveSettings()
 {
     Q_ASSERT(m_db);
     if (!m_db) {
@@ -222,7 +228,7 @@ bool DatabaseSettingsWidgetEncryption::save()
     }
 
     if (m_db->key() && !m_db->key()->keys().isEmpty() && !m_isDirty) {
-        // nothing has changed, don't re-transform
+        // Nothing has changed, don't re-transform
         return true;
     }
 
@@ -375,13 +381,24 @@ void DatabaseSettingsWidgetEncryption::parallelismChanged(int value)
 void DatabaseSettingsWidgetEncryption::setAdvancedMode(bool advanced)
 {
     DatabaseSettingsWidget::setAdvancedMode(advanced);
+    toggleAdvancedMode(advanced);
+}
 
+void DatabaseSettingsWidgetEncryption::toggleAdvancedSettings()
+{
+    setAdvancedMode(!advancedMode());
+}
+
+void DatabaseSettingsWidgetEncryption::toggleAdvancedMode(bool advanced)
+{
     if (advanced) {
         loadKdfParameters();
         m_ui->stackedWidget->setCurrentIndex(1);
+        m_ui->advancedSettingsButton->setText(tr("Simple Settings"));
     } else {
         m_ui->compatibilitySelection->setCurrentIndex(m_db->kdf()->uuid() == KeePass2::KDF_AES_KDBX3 ? KDBX3 : KDBX4);
         m_ui->stackedWidget->setCurrentIndex(0);
+        m_ui->advancedSettingsButton->setText(tr("Advanced Settings"));
     }
 }
 

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ DatabaseSettingsWidget::~DatabaseSettingsWidget() = default;
  *
  * @param db database object to be configured
  */
-void DatabaseSettingsWidget::load(QSharedPointer<Database> db)
+void DatabaseSettingsWidget::loadSettings(QSharedPointer<Database> db)
 {
     m_db = std::move(db);
     initialize();

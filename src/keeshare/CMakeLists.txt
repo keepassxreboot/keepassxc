@@ -2,7 +2,6 @@ if(WITH_XC_KEESHARE)
     set(keeshare_SOURCES
         SettingsPageKeeShare.cpp
         SettingsWidgetKeeShare.cpp
-        DatabaseSettingsPageKeeShare.cpp
         DatabaseSettingsWidgetKeeShare.cpp
         group/EditGroupWidgetKeeShare.cpp
         group/EditGroupPageKeeShare.cpp

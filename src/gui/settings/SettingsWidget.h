@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -57,7 +57,7 @@ public slots:
      *
      * @return true on success, false on failure
      */
-    virtual bool save() = 0;
+    virtual bool saveSettings() = 0;
 
     /**
      * Discard settings.

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -49,10 +49,10 @@ DatabaseSettingsWidgetDatabaseKey::DatabaseSettingsWidgetDatabaseKey(QWidget* pa
     auto* vbox = new QVBoxLayout(this);
     vbox->setSizeConstraint(QLayout::SetMinimumSize);
 
-    // primary password option
+    // Primary password option
     vbox->addWidget(m_passwordEditWidget);
 
-    // additional key options
+    // Additional key options
     m_additionalKeyOptionsToggle->setObjectName("additionalKeyOptionsToggle");
     vbox->addWidget(m_additionalKeyOptionsToggle);
     vbox->addWidget(m_additionalKeyOptions);
@@ -73,12 +73,12 @@ DatabaseSettingsWidgetDatabaseKey::DatabaseSettingsWidgetDatabaseKey(QWidget* pa
 
 DatabaseSettingsWidgetDatabaseKey::~DatabaseSettingsWidgetDatabaseKey() = default;
 
-void DatabaseSettingsWidgetDatabaseKey::load(QSharedPointer<Database> db)
+void DatabaseSettingsWidgetDatabaseKey::loadSettings(QSharedPointer<Database> db)
 {
-    DatabaseSettingsWidget::load(db);
+    DatabaseSettingsWidget::loadSettings(db);
 
     if (!m_db->key() || m_db->key()->keys().isEmpty()) {
-        // database has no key, we are about to add a new one
+        // Database has no key, we are about to add a new one
         m_passwordEditWidget->changeVisiblePage(KeyComponentWidget::Page::Edit);
         m_passwordEditWidget->setPasswordVisible(true);
     }
@@ -126,7 +126,7 @@ void DatabaseSettingsWidgetDatabaseKey::uninitialize()
 {
 }
 
-bool DatabaseSettingsWidgetDatabaseKey::save()
+bool DatabaseSettingsWidgetDatabaseKey::saveSettings()
 {
     m_isDirty |= (m_passwordEditWidget->visiblePage() == KeyComponentWidget::Page::Edit);
     m_isDirty |= (m_keyFileEditWidget->visiblePage() == KeyComponentWidget::Page::Edit);
@@ -135,7 +135,7 @@ bool DatabaseSettingsWidgetDatabaseKey::save()
 #endif
 
     if (m_db->key() && !m_db->key()->keys().isEmpty() && !m_isDirty) {
-        // key unchanged
+        // Key unchanged
         return true;
     }
 

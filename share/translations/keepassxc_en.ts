@@ -1578,10 +1578,6 @@ If you do not have a key file, please leave the field empty.</source>
 <context>
     <name>DatabaseSettingsDialog</name>
     <message>
-        <source>Advanced Settings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>General</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1603,6 +1599,14 @@ If you do not have a key file, please leave the field empty.</source>
     </message>
     <message>
         <source>Maintenance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeeShare</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Secret Service Integration</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1920,6 +1924,14 @@ If you keep this number, your database will not be protected from brute force at
             <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Advanced Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Simple Settings</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
