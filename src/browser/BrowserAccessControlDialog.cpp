@@ -84,15 +84,24 @@ void BrowserAccessControlDialog::addEntryToList(Entry* entry, int row)
     disableButton->setToolTip(tr("Disable for this site"));
 
     connect(disableButton, &QAbstractButton::pressed, [&, item, disableButton] {
+        auto font = item->font();
         if (item->flags() == Qt::NoItemFlags) {
             item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
             item->setSelected(true);
+
+            font.setStrikeOut(false);
+            item->setFont(font);
+
             disableButton->setIcon(icons()->icon("entry-delete"));
             disableButton->setToolTip(tr("Disable for this site"));
             m_ui->rememberDecisionCheckBox->setEnabled(true);
         } else {
             item->setFlags(Qt::NoItemFlags);
             item->setSelected(false);
+
+            font.setStrikeOut(true);
+            item->setFont(font);
+
             disableButton->setIcon(icons()->icon("entry-restore"));
             disableButton->setToolTip(tr("Undo"));
 
