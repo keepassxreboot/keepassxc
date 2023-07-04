@@ -40,7 +40,8 @@ public:
         AttributeValue,
         Group,
         Tag,
-        Is
+        Is,
+        Uuid
     };
 
     struct SearchTerm
