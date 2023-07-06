@@ -1535,7 +1535,7 @@ void DatabaseWidget::onDatabaseModified()
     refreshSearch();
     int autosaveDelayMs = m_db->metadata()->autosaveDelayMin() * 60 * 1000; // min to msec for QTimer
     bool autosaveAfterEveryChangeConfig = config()->get(Config::AutoSaveAfterEveryChange).toBool();
-    if (m_autosaveTimer->isActive() || (autosaveDelayMs > 0 && autosaveAfterEveryChangeConfig)) {
+    if (autosaveDelayMs > 0 && autosaveAfterEveryChangeConfig) {
         // reset delay when modified
         m_autosaveTimer->start(autosaveDelayMs);
         return;
@@ -1550,6 +1550,12 @@ void DatabaseWidget::onDatabaseModified()
 
 void DatabaseWidget::onAutosaveDelayTimeout()
 {
+    const bool isAutosaveDelayEnabled = m_db->metadata()->autosaveDelayMin() > 0;
+    const bool autosaveAfterEveryChangeConfig = config()->get(Config::AutoSaveAfterEveryChange).toBool();
+    if (!(isAutosaveDelayEnabled && autosaveAfterEveryChangeConfig)) {
+        // User might disable the delay/autosave while the timer is running
+        return;
+    }
     if (!m_blockAutoSave) {
         save();
     } else {

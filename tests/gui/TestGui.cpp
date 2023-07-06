@@ -1577,7 +1577,43 @@ void TestGui::testDatabaseSettings()
     m_dbWidget->triggerAutosaveTimer();
     QTRY_COMPARE(writeDbSignalSpy.count(), 1);
 
-    // 4 cleanup
+    // 4 Test no delay when disabled autosave or autosaveDelay
+    // 4.a) create new entry
+    QTest::mouseClick(entryNewWidget, Qt::LeftButton);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::EditMode);
+    QTest::keyClicks(titleEdit, "Test autosaveDelay 3");
+
+    // 4.b) Save changes
+    editEntryWidget->setCurrentPage(0);
+    editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
+    QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+
+    // 4.c) Start timer
+    Tools::wait(150); // due to modify timer
+
+    // 4.d) Disable autosave
+    config()->set(Config::AutoSaveAfterEveryChange, false);
+
+    // 4.e) Make sure changes are not saved
+    m_dbWidget->triggerAutosaveTimer();
+    QTRY_COMPARE(writeDbSignalSpy.count(), 1);
+
+    // 4.f) Repeat for autosaveDelay
+    config()->set(Config::AutoSaveAfterEveryChange, true);
+    QTest::mouseClick(entryNewWidget, Qt::LeftButton);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::EditMode);
+    QTest::keyClicks(titleEdit, "Test autosaveDelay 4");
+    editEntryWidget->setCurrentPage(0);
+    editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
+    QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    Tools::wait(150); // due to modify timer
+    m_db->metadata()->setAutosaveDelayMin(0);
+
+    // 4.g) Make sure changes are not saved
+    m_dbWidget->triggerAutosaveTimer();
+    QTRY_COMPARE(writeDbSignalSpy.count(), 1);
+
+    // 5 Cleanup
     config()->set(Config::AutoSaveAfterEveryChange, false);
 }
 
