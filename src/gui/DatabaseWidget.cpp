@@ -222,6 +222,10 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
 
     m_blockAutoSave = false;
 
+    m_autosaveTimer = new QTimer(this);
+    m_autosaveTimer->setSingleShot(true);
+    connect(m_autosaveTimer, SIGNAL(timeout()), this, SLOT(onAutosaveDelayTimeout()));
+
     m_searchLimitGroup = config()->get(Config::SearchLimitGroup).toBool();
 
 #ifdef WITH_XC_KEESHARE
@@ -1528,13 +1532,42 @@ void DatabaseWidget::onGroupChanged()
 
 void DatabaseWidget::onDatabaseModified()
 {
-    if (!m_blockAutoSave && config()->get(Config::AutoSaveAfterEveryChange).toBool()) {
+    refreshSearch();
+    int autosaveDelayMs = m_db->metadata()->autosaveDelayMin() * 60 * 1000; // min to msec for QTimer
+    bool autosaveAfterEveryChangeConfig = config()->get(Config::AutoSaveAfterEveryChange).toBool();
+    if (autosaveDelayMs > 0 && autosaveAfterEveryChangeConfig) {
+        // reset delay when modified
+        m_autosaveTimer->start(autosaveDelayMs);
+        return;
+    }
+    if (!m_blockAutoSave && autosaveAfterEveryChangeConfig) {
         save();
     } else {
         // Only block once, then reset
         m_blockAutoSave = false;
     }
-    refreshSearch();
+}
+
+void DatabaseWidget::onAutosaveDelayTimeout()
+{
+    const bool isAutosaveDelayEnabled = m_db->metadata()->autosaveDelayMin() > 0;
+    const bool autosaveAfterEveryChangeConfig = config()->get(Config::AutoSaveAfterEveryChange).toBool();
+    if (!(isAutosaveDelayEnabled && autosaveAfterEveryChangeConfig)) {
+        // User might disable the delay/autosave while the timer is running
+        return;
+    }
+    if (!m_blockAutoSave) {
+        save();
+    } else {
+        // Only block once, then reset
+        m_blockAutoSave = false;
+    }
+}
+
+void DatabaseWidget::triggerAutosaveTimer()
+{
+    m_autosaveTimer->stop();
+    QMetaObject::invokeMethod(m_autosaveTimer, "timeout");
 }
 
 QString DatabaseWidget::getCurrentSearch()
@@ -1986,6 +2019,7 @@ bool DatabaseWidget::save()
     if (performSave(errorMessage)) {
         m_saveAttempts = 0;
         m_blockAutoSave = false;
+        m_autosaveTimer->stop(); // stop autosave delay to avoid triggering another save
         return true;
     }
 

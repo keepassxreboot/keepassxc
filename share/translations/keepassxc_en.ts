@@ -2041,6 +2041,26 @@ Entries deleted from the recycle bin are
 removed from the database.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Autosave delay since last change</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Autosave delay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Autosave delay since last change in minutes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> min</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Autosave delay since last change checkbox</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetKeeShare</name>
