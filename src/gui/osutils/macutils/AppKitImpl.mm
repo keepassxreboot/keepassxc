@@ -243,6 +243,7 @@ AppKit::~AppKit()
 {
     [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:static_cast<id>(self)];
     [[NSDistributedNotificationCenter defaultCenter] removeObserver:static_cast<id>(self)];
+    [NSApp removeObserver:static_cast<id>(self) forKeyPath:@"effectiveAppearance"];
     [static_cast<id>(self) dealloc];
 }
 
