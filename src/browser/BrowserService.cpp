@@ -452,23 +452,46 @@ QList<Entry*> BrowserService::confirmEntries(QList<Entry*>& entriesToConfirm,
         denyEntry(entry, siteHost, formUrl, entryParameters.realm);
     });
 
-    accessControlDialog.setItems(entriesToConfirm, entryParameters.siteUrl, httpAuth);
+    accessControlDialog.setEntries(entriesToConfirm, entryParameters.siteUrl, httpAuth);
 
     QList<Entry*> allowedEntries;
     auto ret = accessControlDialog.exec();
-    for (auto item : accessControlDialog.getSelectedEntries()) {
-        auto entry = entriesToConfirm[item->row()];
-        if (accessControlDialog.remember()) {
-            if (ret == QDialog::Accepted) {
+    auto remember = accessControlDialog.remember();
+
+    // All are denied
+    if (ret == QDialog::Rejected && remember) {
+        for (auto& entry : entriesToConfirm) {
+            denyEntry(entry, siteHost, formUrl, entryParameters.realm);
+        }
+    }
+
+    // Some/all are accepted
+    if (ret == QDialog::Accepted) {
+        auto selectedEntries = accessControlDialog.getEntries(SelectionType::Selected);
+        for (auto& item : selectedEntries) {
+            auto entry = entriesToConfirm[item->row()];
+            allowedEntries.append(entry);
+
+            if (remember) {
                 allowEntry(entry, siteHost, formUrl, entryParameters.realm);
-            } else {
-                denyEntry(entry, siteHost, formUrl, entryParameters.realm);
             }
         }
 
-        if (ret == QDialog::Accepted) {
-            allowedEntries.append(entry);
+        // Remembered non-selected entries must be denied
+        if (remember) {
+            auto nonSelectedEntries = accessControlDialog.getEntries(SelectionType::NonSelected);
+            for (auto& item : nonSelectedEntries) {
+                auto entry = entriesToConfirm[item->row()];
+                denyEntry(entry, siteHost, formUrl, entryParameters.realm);
+            }
         }
+    }
+
+    // Handle disabled entries (returned Accept/Reject status does not matter)
+    auto disabledEntries = accessControlDialog.getEntries(SelectionType::Disabled);
+    for (auto& item : disabledEntries) {
+        auto entry = entriesToConfirm[item->row()];
+        denyEntry(entry, siteHost, formUrl, entryParameters.realm);
     }
 
     // Re-hide the application if it wasn't visible before

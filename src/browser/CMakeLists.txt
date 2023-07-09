@@ -1,5 +1,5 @@
+#  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
 #  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
-#  Copyright (C) 2022 KeePassXC Team <team@keepassxc.org>
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -29,6 +29,7 @@ if(WITH_XC_BROWSER)
             BrowserService.cpp
             BrowserSettings.cpp
             BrowserShared.cpp
+            CustomTableWidget.cpp
             NativeMessageInstaller.cpp
             )
 
