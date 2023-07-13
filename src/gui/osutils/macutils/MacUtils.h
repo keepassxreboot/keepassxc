@@ -1,6 +1,6 @@
 /*
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@
 #include <QColor>
 #include <QPointer>
 #include <QScopedPointer>
+#include <QUrl>
 #include <qwindowdefs.h>
 
 class MacUtils : public OSUtilsBase
@@ -64,6 +65,8 @@ public:
 
     bool canPreventScreenCapture() const override;
     bool setPreventScreenCapture(QWindow* window, bool prevent) const override;
+
+    QString getDefaultApplicationForUrl(const QUrl& url) override;
 
 signals:
     void lockDatabases();

@@ -1,6 +1,6 @@
 /*
+ * Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  * Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
- * Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -44,6 +44,7 @@
 #include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
 #include "gui/OpVaultOpenWidget.h"
+#include "gui/PrivateBrowser.h"
 #include "gui/TotpDialog.h"
 #include "gui/TotpExportSettingsDialog.h"
 #include "gui/TotpSetupDialog.h"
@@ -197,7 +198,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     connect(m_groupSplitter, SIGNAL(splitterMoved(int,int)), SIGNAL(splitterSizesChanged()));
     connect(m_previewSplitter, SIGNAL(splitterMoved(int,int)), SIGNAL(splitterSizesChanged()));
     connect(this, SIGNAL(currentModeChanged(DatabaseWidget::Mode)), m_previewView, SLOT(setDatabaseMode(DatabaseWidget::Mode)));
-    connect(m_previewView, SIGNAL(entryUrlActivated(Entry*)), SLOT(openUrlForEntry(Entry*)));
+    connect(m_previewView, SIGNAL(entryUrlActivated(Entry*)), SLOT(openUrlForEntry(Entry*,bool)));
     connect(m_entryView, SIGNAL(viewStateChanged()), SIGNAL(entryViewStateChanged()));
     connect(m_groupView, SIGNAL(groupSelectionChanged()), SLOT(onGroupChanged()));
     connect(m_groupView, &GroupView::groupFocused, this, [this] { m_previewView->setGroup(currentGroup()); });
@@ -823,12 +824,17 @@ void DatabaseWidget::performAutoTypeTOTP()
     performAutoType(QStringLiteral("{TOTP}"));
 }
 
-void DatabaseWidget::openUrl()
+void DatabaseWidget::openUrl(bool privateMode)
 {
     auto currentEntry = currentSelectedEntry();
     if (currentEntry) {
-        openUrlForEntry(currentEntry);
+        openUrlForEntry(currentEntry, privateMode);
     }
+}
+
+void DatabaseWidget::openUrlInPrivateMode()
+{
+    openUrl(true);
 }
 
 void DatabaseWidget::downloadSelectedFavicons()
@@ -881,7 +887,7 @@ void DatabaseWidget::performIconDownloads(const QList<Entry*>& entries, bool for
 #endif
 }
 
-void DatabaseWidget::openUrlForEntry(Entry* entry)
+void DatabaseWidget::openUrlForEntry(Entry* entry, bool privateMode)
 {
     Q_ASSERT(entry);
     if (!entry) {
@@ -937,7 +943,11 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
     } else {
         QUrl url = QUrl::fromUserInput(entry->resolveMultiplePlaceholders(entry->url()));
         if (!url.isEmpty()) {
-            QDesktopServices::openUrl(url);
+            if (privateMode) {
+                PrivateBrowser::openUrl(url);
+            } else {
+                QDesktopServices::openUrl(url);
+            }
 
             if (config()->get(Config::MinimizeOnOpenUrl).toBool()) {
                 getMainWindow()->minimizeOrHide();

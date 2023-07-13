@@ -144,6 +144,7 @@ MainWindow::MainWindow()
     m_entryContextMenu->addAction(m_ui->actionEntryMoveDown);
     m_entryContextMenu->addSeparator();
     m_entryContextMenu->addAction(m_ui->actionEntryOpenUrl);
+    m_entryContextMenu->addAction(m_ui->actionEntryOpenUrlInPrivateMode);
     m_entryContextMenu->addAction(m_ui->actionEntryDownloadIcon);
     m_entryContextMenu->addSeparator();
     m_entryContextMenu->addAction(m_ui->actionEntryAddToAgent);
@@ -285,6 +286,7 @@ MainWindow::MainWindow()
     m_ui->actionEntryCopyTitle->setShortcut(Qt::CTRL + Qt::Key_I);
     m_ui->actionEntryAutoTypeSequence->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_V);
     m_ui->actionEntryOpenUrl->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_U);
+    m_ui->actionEntryOpenUrlInPrivateMode->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_P);
     m_ui->actionEntryCopyURL->setShortcut(Qt::CTRL + Qt::Key_U);
     m_ui->actionEntryRestore->setShortcut(Qt::CTRL + Qt::Key_R);
 
@@ -315,6 +317,7 @@ MainWindow::MainWindow()
     m_ui->actionEntryCopyPassword->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryAutoTypeSequence->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryOpenUrl->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryOpenUrlInPrivateMode->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryCopyURL->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryCopyTitle->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryAddToAgent->setShortcutVisibleInContextMenu(true);
@@ -424,6 +427,7 @@ MainWindow::MainWindow()
     m_ui->actionGroupDelete->setIcon(icons()->icon("group-delete"));
     m_ui->actionGroupEmptyRecycleBin->setIcon(icons()->icon("group-empty-trash"));
     m_ui->actionEntryOpenUrl->setIcon(icons()->icon("web"));
+    m_ui->actionEntryOpenUrlInPrivateMode->setIcon(icons()->icon("web"));
     m_ui->actionGroupDownloadFavicons->setIcon(icons()->icon("favicon-download"));
 
     m_ui->actionSettings->setIcon(icons()->icon("configure"));
@@ -525,6 +529,8 @@ MainWindow::MainWindow()
         m_ui->actionEntryAutoTypePasswordEnter, SIGNAL(triggered()), SLOT(performAutoTypePasswordEnter()));
     m_actionMultiplexer.connect(m_ui->actionEntryAutoTypeTOTP, SIGNAL(triggered()), SLOT(performAutoTypeTOTP()));
     m_actionMultiplexer.connect(m_ui->actionEntryOpenUrl, SIGNAL(triggered()), SLOT(openUrl()));
+    m_actionMultiplexer.connect(
+        m_ui->actionEntryOpenUrlInPrivateMode, SIGNAL(triggered()), SLOT(openUrlInPrivateMode()));
     m_actionMultiplexer.connect(m_ui->actionEntryDownloadIcon, SIGNAL(triggered()), SLOT(downloadSelectedFavicons()));
 #ifdef WITH_XC_SSHAGENT
     m_actionMultiplexer.connect(m_ui->actionEntryAddToAgent, SIGNAL(triggered()), SLOT(addToAgent()));
@@ -951,6 +957,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionEntryAutoTypeTOTP->setEnabled(singleEntrySelected && dbWidget->currentEntryHasTotp());
             m_ui->actionEntryAutoTypeTOTP->setVisible(singleEntrySelected && dbWidget->currentEntryHasTotp());
             m_ui->actionEntryOpenUrl->setEnabled(singleEntrySelected && dbWidget->currentEntryHasUrl());
+            m_ui->actionEntryOpenUrlInPrivateMode->setEnabled(singleEntrySelected && dbWidget->currentEntryHasUrl());
             m_ui->actionEntryTotp->setEnabled(singleEntrySelected && dbWidget->currentEntryHasTotp());
             m_ui->actionEntryCopyTotp->setEnabled(singleEntrySelected && dbWidget->currentEntryHasTotp());
             m_ui->actionEntryCopyPasswordTotp->setEnabled(singleEntrySelected && dbWidget->currentEntryHasTotp());
@@ -1004,6 +1011,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
                                                                m_ui->actionEntryCopyPassword,
                                                                m_ui->actionEntryCopyURL,
                                                                m_ui->actionEntryOpenUrl,
+                                                               m_ui->actionEntryOpenUrlInPrivateMode,
                                                                m_ui->actionEntryAutoType,
                                                                m_ui->actionEntryDownloadIcon,
                                                                m_ui->actionEntryCopyNotes,

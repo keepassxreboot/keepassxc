@@ -1,6 +1,6 @@
 /*
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -193,11 +193,12 @@ public slots:
     void performAutoTypePassword();
     void performAutoTypePasswordEnter();
     void performAutoTypeTOTP();
-    void openUrl();
+    void openUrl(bool privateMode = false);
+    void openUrlInPrivateMode();
     void downloadSelectedFavicons();
     void downloadAllFavicons();
     void downloadFaviconInBackground(Entry* entry);
-    void openUrlForEntry(Entry* entry);
+    void openUrlForEntry(Entry* entry, bool privateMode = false);
     void createGroup();
     void cloneGroup();
     void deleteGroup();

@@ -1,6 +1,6 @@
 /*
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2016 Lennart Glauer <mail@lennart-glauer.de>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,26 +17,26 @@
  */
 
 #import "AppKitImpl.h"
-#import <QWindow>
 #import <Cocoa/Cocoa.h>
+#import <QWindow>
 
 @implementation AppKitImpl
 
-- (id) initWithObject:(AppKit*)appkit
+- (id)initWithObject:(AppKit*)appkit
 {
     self = [super init];
 
     if (self) {
         m_appkit = appkit;
         [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self
-                                                           selector:@selector(didDeactivateApplicationObserver:)
-                                                               name:NSWorkspaceDidDeactivateApplicationNotification
-                                                             object:nil];
-    
+                                                               selector:@selector(didDeactivateApplicationObserver:)
+                                                                   name:NSWorkspaceDidDeactivateApplicationNotification
+                                                                 object:nil];
+
         [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self
-                                                            selector:@selector(userSwitchHandler:)
-                                                                name:NSWorkspaceSessionDidResignActiveNotification
-                                                                object:nil];
+                                                               selector:@selector(userSwitchHandler:)
+                                                                   name:NSWorkspaceSessionDidResignActiveNotification
+                                                                 object:nil];
 
         [NSApp addObserver:self forKeyPath:@"effectiveAppearance" options:NSKeyValueObservingOptionNew context:nil];
 
@@ -46,7 +46,6 @@
                                                             selector:@selector(interfaceThemeChanged:)
                                                                 name:@"AppleColorPreferencesChangedNotification"
                                                               object:nil];
-
     }
     return self;
 }
@@ -54,7 +53,7 @@
 //
 // Update last active application property
 //
-- (void) didDeactivateApplicationObserver:(NSNotification*) notification
+- (void)didDeactivateApplicationObserver:(NSNotification*)notification
 {
     NSDictionary* userInfo = notification.userInfo;
     NSRunningApplication* app = [userInfo objectForKey:NSWorkspaceApplicationKey];
@@ -64,10 +63,10 @@
     }
 }
 
-- (void) observeValueForKeyPath:(NSString *)keyPath
+- (void)observeValueForKeyPath:(NSString*)keyPath
                       ofObject:(id)object
-                        change:(NSDictionary<NSKeyValueChangeKey,id> *)change
-                       context:(void *)context
+                        change:(NSDictionary<NSKeyValueChangeKey, id>*)change
+                       context:(void*)context
 {
     Q_UNUSED(object)
     Q_UNUSED(change)
@@ -79,22 +78,21 @@
                 emit m_appkit->interfaceThemeChanged();
             };
 
-            if(@available(macOS 11.0, *)) {
-                // Not sure why exactly this call is needed, but Apple sample code uses it so it's best to use it here too
+            if (@available(macOS 11.0, *)) {
+                // Not sure why exactly this call is needed, but Apple sample code uses it so it's best to use it here
+                // too
                 [NSApp.effectiveAppearance performAsCurrentDrawingAppearance:emitBlock];
-            }
-            else {
+            } else {
                 emitBlock();
             }
         }
     }
 }
 
-
 //
 // Get process id of frontmost application (-> keyboard input)
 //
-- (pid_t) activeProcessId
+- (pid_t)activeProcessId
 {
     return [NSWorkspace sharedWorkspace].frontmostApplication.processIdentifier;
 }
@@ -102,7 +100,7 @@
 //
 // Get process id of own process
 //
-- (pid_t) ownProcessId
+- (pid_t)ownProcessId
 {
     return [NSProcessInfo processInfo].processIdentifier;
 }
@@ -110,7 +108,7 @@
 //
 // Activate application by process id
 //
-- (bool) activateProcess:(pid_t) pid
+- (bool)activateProcess:(pid_t)pid
 {
     NSRunningApplication* app = [NSRunningApplication runningApplicationWithProcessIdentifier:pid];
     return [app activateWithOptions:NSApplicationActivateIgnoringOtherApps];
@@ -119,7 +117,7 @@
 //
 // Hide application by process id
 //
-- (bool) hideProcess:(pid_t) pid
+- (bool)hideProcess:(pid_t)pid
 {
     NSRunningApplication* app = [NSRunningApplication runningApplicationWithProcessIdentifier:pid];
     return [app hide];
@@ -128,7 +126,7 @@
 //
 // Get application hidden state by process id
 //
-- (bool) isHidden:(pid_t) pid
+- (bool)isHidden:(pid_t)pid
 {
     NSRunningApplication* app = [NSRunningApplication runningApplicationWithProcessIdentifier:pid];
     return [app isHidden];
@@ -137,16 +135,15 @@
 //
 // Get state of macOS Dark Mode color scheme
 //
-- (bool) isDarkMode
+- (bool)isDarkMode
 {
     return [NSApp.effectiveAppearance.name isEqualToString:NSAppearanceNameDarkAqua];
 }
 
-
 //
 // Get global menu bar theme state
 //
-- (bool) isStatusBarDark
+- (bool)isStatusBarDark
 {
 #if __clang_major__ >= 9 && MAC_OS_X_VERSION_MIN_REQUIRED >= 101000
     if (@available(macOS 10.17, *)) {
@@ -164,10 +161,9 @@
 //
 // Notification for user switch
 //
-- (void) userSwitchHandler:(NSNotification*) notification
+- (void)userSwitchHandler:(NSNotification*)notification
 {
-    if ([[notification name] isEqualToString:NSWorkspaceSessionDidResignActiveNotification] && m_appkit)
-    {
+    if ([[notification name] isEqualToString:NSWorkspaceSessionDidResignActiveNotification] && m_appkit) {
         emit m_appkit->lockDatabases();
     }
 }
@@ -175,11 +171,11 @@
 //
 // Check if accessibility is enabled, may show an popup asking for permissions
 //
-- (bool) enableAccessibility
+- (bool)enableAccessibility
 {
 #if MAC_OS_X_VERSION_MIN_REQUIRED >= 1090
     // Request accessibility permissions for Auto-Type type on behalf of the user
-    NSDictionary* opts = @{static_cast<id>(kAXTrustedCheckOptionPrompt): @YES};
+    NSDictionary* opts = @{static_cast<id>(kAXTrustedCheckOptionPrompt) : @YES};
     return AXIsProcessTrustedWithOptions(static_cast<CFDictionaryRef>(opts));
 #else
     return YES;
@@ -189,15 +185,21 @@
 //
 // Check if screen recording is enabled, may show an popup asking for permissions
 //
-- (bool) enableScreenRecording
+- (bool)enableScreenRecording
 {
 #if __clang_major__ >= 9 && MAC_OS_X_VERSION_MIN_REQUIRED >= 1080
     if (@available(macOS 10.15, *)) {
         // Request screen recording permission on macOS 10.15+
         // This is necessary to get the current window title
-        CGDisplayStreamRef stream = CGDisplayStreamCreate(CGMainDisplayID(), 1, 1, kCVPixelFormatType_32BGRA, nil,
-                                                          ^(CGDisplayStreamFrameStatus status, uint64_t displayTime, 
-                                                                  IOSurfaceRef frameSurface, CGDisplayStreamUpdateRef updateRef) {
+        CGDisplayStreamRef stream = CGDisplayStreamCreate(CGMainDisplayID(),
+                                                          1,
+                                                          1,
+                                                          kCVPixelFormatType_32BGRA,
+                                                          nil,
+                                                          ^(CGDisplayStreamFrameStatus status,
+                                                            uint64_t displayTime,
+                                                            IOSurfaceRef frameSurface,
+                                                            CGDisplayStreamUpdateRef updateRef) {
                                                               Q_UNUSED(status);
                                                               Q_UNUSED(displayTime);
                                                               Q_UNUSED(frameSurface);
@@ -213,7 +215,7 @@
     return YES;
 }
 
-- (void) toggleForegroundApp:(bool) foreground
+- (void)toggleForegroundApp:(bool)foreground
 {
     if (foreground) {
         [NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];
@@ -222,9 +224,18 @@
     }
 }
 
-- (void) setWindowSecurity:(NSWindow*) window state:(bool) state
+- (void)setWindowSecurity:(NSWindow*)window state:(bool)state
 {
-    [window setSharingType: state ? NSWindowSharingNone : NSWindowSharingReadOnly];
+    [window setSharingType:state ? NSWindowSharingNone : NSWindowSharingReadOnly];
+}
+
+//
+// Returns default application assigned to URLs
+//
+- (const char*)getDefaultApplicationForUrl:(NSURL*)url
+{
+    NSURL* app = [[NSWorkspace sharedWorkspace] URLForApplicationToOpenURL:url];
+    return [app fileSystemRepresentation];
 }
 
 @end
@@ -286,7 +297,6 @@ bool AppKit::isStatusBarDark()
     return [static_cast<id>(self) isStatusBarDark];
 }
 
-
 bool AppKit::enableAccessibility()
 {
     return [static_cast<id>(self) enableAccessibility];
@@ -306,4 +316,12 @@ void AppKit::setWindowSecurity(QWindow* window, bool state)
 {
     auto view = reinterpret_cast<NSView*>(window->winId());
     [static_cast<id>(self) setWindowSecurity:view.window state:state];
+}
+
+QString AppKit::getDefaultApplicationForUrl(const QUrl& url)
+{
+    auto nsUrl = url.toNSURL();
+    //auto res = [static_cast<id>(self) getDefaultApplicationForUrl:nsUrl];
+    //return res.UTF8String;
+    return [static_cast<id>(self) getDefaultApplicationForUrl:nsUrl];
 }

@@ -340,6 +340,7 @@
     <addaction name="actionEntryAutoType"/>
     <addaction name="separator"/>
     <addaction name="actionEntryOpenUrl"/>
+    <addaction name="actionEntryOpenUrlInPrivateMode"/>
     <addaction name="actionEntryDownloadIcon"/>
     <addaction name="separator"/>
     <addaction name="actionEntryAddToAgent"/>
@@ -780,6 +781,14 @@
    </property>
    <property name="text">
     <string>Open &amp;URL</string>
+   </property>
+  </action>
+  <action name="actionEntryOpenUrlInPrivateMode">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Open URL (&amp;Private)</string>
    </property>
   </action>
   <action name="actionLockDatabase">

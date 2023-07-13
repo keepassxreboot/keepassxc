@@ -1,6 +1,6 @@
 /*
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2016 Lennart Glauer <mail@lennart-glauer.de>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,8 +19,9 @@
 #ifndef KEEPASSX_APPKIT_H
 #define KEEPASSX_APPKIT_H
 
-#include <QObject>
 #include <QColor>
+#include <QObject>
+#include <QUrl>
 #include <unistd.h>
 
 class QWindow;
@@ -45,6 +46,7 @@ public:
     bool enableScreenRecording();
     void toggleForegroundApp(bool foreground);
     void setWindowSecurity(QWindow* window, bool state);
+    QString getDefaultApplicationForUrl(const QUrl& url);
 
 signals:
     void lockDatabases();
