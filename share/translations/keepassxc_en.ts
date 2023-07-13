@@ -6427,6 +6427,10 @@ This version is not meant for production use.</source>
             <numerusform></numerusform>
         </translation>
     </message>
+    <message>
+        <source>Open URL (&amp;Private)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ManageDatabase</name>

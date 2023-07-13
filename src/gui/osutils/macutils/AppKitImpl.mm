@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2016 Lennart Glauer <mail@lennart-glauer.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@
 
 @implementation AppKitImpl
 
-- (id) initWithObject:(AppKit*)appkit
+- (id) initWithObject:(AppKit*) appkit
 {
     self = [super init];
 
@@ -39,9 +39,9 @@
                                                              object:nil];
 
         [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self
-                                                            selector:@selector(userSwitchHandler:)
-                                                                name:NSWorkspaceSessionDidResignActiveNotification
-                                                                object:nil];
+                                                               selector:@selector(userSwitchHandler:)
+                                                                   name:NSWorkspaceSessionDidResignActiveNotification
+                                                                 object:nil];
 
         [NSApp addObserver:self forKeyPath:@"effectiveAppearance" options:NSKeyValueObservingOptionNew context:nil];
     }
@@ -61,9 +61,9 @@
     }
 }
 
-- (void) observeValueForKeyPath:(NSString *)keyPath
+- (void) observeValueForKeyPath:(NSString *) keyPath
                       ofObject:(id)object
-                        change:(NSDictionary<NSKeyValueChangeKey,id> *)change
+                        change:(NSDictionary<NSKeyValueChangeKey, id> *)change
                        context:(void *)context
 {
     Q_UNUSED(object)
@@ -76,17 +76,16 @@
                 emit m_appkit->interfaceThemeChanged();
             };
 
-            if(@available(macOS 11.0, *)) {
-                // Not sure why exactly this call is needed, but Apple sample code uses it so it's best to use it here too
+            if (@available(macOS 11.0, *)) {
+                // Not sure why exactly this call is needed, but Apple sample code uses it so it's best to use it here
+                // too
                 [NSApp.effectiveAppearance performAsCurrentDrawingAppearance:emitBlock];
-            }
-            else {
+            } else {
                 emitBlock();
             }
         }
     }
 }
-
 
 //
 // Get process id of frontmost application (-> keyboard input)
@@ -138,7 +137,6 @@
 {
     return [NSApp.effectiveAppearance.name isEqualToString:NSAppearanceNameDarkAqua];
 }
-
 
 //
 // Get global menu bar theme state
@@ -230,7 +228,16 @@
 
 - (void) setWindowSecurity:(NSWindow*) window state:(bool) state
 {
-    [window setSharingType: state ? NSWindowSharingNone : NSWindowSharingReadOnly];
+    [window setSharingType:state ? NSWindowSharingNone : NSWindowSharingReadOnly];
+}
+
+//
+// Returns default application assigned to URLs
+//
+- (const char*) getDefaultApplicationForUrl:(NSURL*) url
+{
+    NSURL* app = [[NSWorkspace sharedWorkspace] URLForApplicationToOpenURL:url];
+    return [app fileSystemRepresentation];
 }
 
 - (void) configureWindowAndHelpMenus:(QMainWindow*) mainWindow helpMenu:(QMenu*) helpMenu
@@ -314,7 +321,6 @@ bool AppKit::isStatusBarDark()
     return [static_cast<id>(self) isStatusBarDark];
 }
 
-
 bool AppKit::enableAccessibility()
 {
     return [static_cast<id>(self) enableAccessibility];
@@ -339,4 +345,10 @@ void AppKit::setWindowSecurity(QWindow* window, bool state)
 void AppKit::configureWindowAndHelpMenus(QMainWindow* window, QMenu* helpMenu)
 {
     [static_cast<id>(self) configureWindowAndHelpMenus:window helpMenu:helpMenu];
+}
+
+QString AppKit::getDefaultApplicationForUrl(const QUrl& url)
+{
+    auto nsUrl = url.toNSURL();
+    return [static_cast<id>(self) getDefaultApplicationForUrl:nsUrl];
 }

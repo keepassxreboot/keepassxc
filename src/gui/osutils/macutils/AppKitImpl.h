@@ -1,6 +1,6 @@
 /*
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2016 Lennart Glauer <mail@lennart-glauer.de>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,17 +18,17 @@
 
 #import "AppKit.h"
 
-#import <Foundation/Foundation.h>
 #import <AppKit/NSRunningApplication.h>
 #import <AppKit/NSWindow.h>
+#import <AppKit/NSWorkspace.h>
+#import <Foundation/Foundation.h>
 
-@interface AppKitImpl : NSObject
-{
+@interface AppKitImpl : NSObject {
     AppKit* m_appkit;
 }
-- (id) initWithObject:(AppKit*)appkit;
+- (id)initWithObject:(AppKit*)appkit;
 
-@property (strong) NSRunningApplication *lastActiveApplication;
+@property (strong) NSRunningApplication* lastActiveApplication;
 
 - (pid_t) activeProcessId;
 - (pid_t) ownProcessId;
@@ -43,5 +43,6 @@
 - (void) toggleForegroundApp:(bool) foreground;
 - (void) setWindowSecurity:(NSWindow*) window state:(bool) state;
 - (void) configureWindowAndHelpMenus:(QMainWindow*) mainWindow helpMenu:(QMenu*) helpMenu;
+- (const char*)getDefaultApplicationForUrl:(NSURL*)url;
 
 @end

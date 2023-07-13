@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2016 Lennart Glauer <mail@lennart-glauer.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -23,6 +23,7 @@
 #include <QObject>
 #include <QMenu>
 #include <QMainWindow>
+#include <QUrl>
 #include <unistd.h>
 
 class QWindow;
@@ -48,6 +49,7 @@ public:
     void toggleForegroundApp(bool foreground);
     void setWindowSecurity(QWindow* window, bool state);
     void configureWindowAndHelpMenus(QMainWindow* mainWindow, QMenu* helpMenu);
+    QString getDefaultApplicationForUrl(const QUrl& url);
 
 signals:
     void userSwitched();
