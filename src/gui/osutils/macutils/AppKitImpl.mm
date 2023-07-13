@@ -321,7 +321,5 @@ void AppKit::setWindowSecurity(QWindow* window, bool state)
 QString AppKit::getDefaultApplicationForUrl(const QUrl& url)
 {
     auto nsUrl = url.toNSURL();
-    //auto res = [static_cast<id>(self) getDefaultApplicationForUrl:nsUrl];
-    //return res.UTF8String;
     return [static_cast<id>(self) getDefaultApplicationForUrl:nsUrl];
 }
