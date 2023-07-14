@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
+ * Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -322,4 +322,11 @@ void NixUtils::setColorScheme(QDBusVariant value)
     m_systemColorschemePref = static_cast<ColorschemePref>(value.variant().toInt());
     m_systemColorschemePrefExists = true;
     emit interfaceThemeChanged();
+}
+
+// TODO
+QString NixUtils::getDefaultApplicationForUrl(const QUrl& url)
+{
+    Q_UNUSED(url)
+    return {};
 }

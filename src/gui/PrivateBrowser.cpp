@@ -23,14 +23,18 @@
 void PrivateBrowser::openUrl(const QUrl& url)
 {
     const auto applicationPath = osUtils->getDefaultApplicationForUrl(url);
+    if (applicationPath.isEmpty()) {
+        return;
+    }
+
     const auto privateModeArg = getPrivateModeArg(applicationPath);
 
-#ifdef Q_OS_MAC
+#if defined(Q_OS_MAC)
     QStringList args{"-n", applicationPath, "--args", privateModeArg, url.toString()};
     QProcess::startDetached("open", args);
-#elif Q_OS_WIN
+#elif defined(Q_OS_WIN)
 
-#elif Q_OS_LINUX
+#elif defined(Q_OS_LINUX)
 
 #endif
     getMainWindow()->lower();
