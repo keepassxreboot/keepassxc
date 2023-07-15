@@ -21,12 +21,3 @@ Special, incidental or consequential damages arising out of the use or inability
 Limited to loss of data or data being rendered inaccurate or losses sustained by you or third parties or a failure of
 The program to operate with any other programs), even if such holder or other party has been advised of the possibility
 Of such damages.
-
-== Contact Us
-
-We are committed to continually improve KeePassXC through customer experience and your feedback is important to us.
-Please send us your feedback or comments to team@keepassxc.org.
-To report issues, visit: https://github.com/keepassxreboot/keepassxc.
-
-Thank You, +
-Team KeePassXC
