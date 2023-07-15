@@ -43,6 +43,18 @@ KeePassXC has numerous features for novice and power users alike. This guide wil
  ** SSH Agent
  ** FreeDesktop.org Secret Service (replace Gnome keyring, etc.)
  ** Additional encryption choices: Twofish and ChaCha20
+
+== Contact Us
+
+We are committed to continually improve KeePassXC through customer experience and your feedback is important to us.
+Please report any bugs you encounter at our https://github.com/keepassxreboot/keepassxc/issues[GitHub issue tracker].
+
+We are also https://matrix.to/#/#keepassxc-community:mozilla.org[available on Matrix] for real-time feedback and
+discussions. See our https://keepassxc.org/team/#contact[contact page] for further options.
+
+Thank You, +
+Team KeePassXC
+
 // end::content[]
 // tag::advanced[]
 // end::advanced[]
