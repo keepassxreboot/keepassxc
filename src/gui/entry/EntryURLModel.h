@@ -1,6 +1,6 @@
 /*
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 #ifndef KEEPASSXC_ENTRYURLMODEL_H
 #define KEEPASSXC_ENTRYURLMODEL_H
 
+#include "core/Entry.h"
 #include <QStandardItemModel>
 #include <QStyledItemDelegate>
 
@@ -43,8 +44,10 @@ class EntryURLModel : public QStandardItemModel
 
 public:
     explicit EntryURLModel(QObject* parent = nullptr);
+
     void setEntryAttributes(EntryAttributes* entryAttributes);
     void insertRow(const QString& key, const QString& value);
+    void setEntryUrl(const QString& entryUrl);
     bool setData(const QModelIndex& index, const QVariant& value, int role = Qt::EditRole) override;
     QVariant data(const QModelIndex& index, int role) const override;
     QModelIndex indexByKey(const QString& key) const;
@@ -57,6 +60,7 @@ private:
     QList<QPair<QString, QString>> m_urls;
     EntryAttributes* m_entryAttributes;
     QIcon m_errorIcon;
+    QString m_entryUrl;
 };
 
 #endif // KEEPASSXC_ENTRYURLMODEL_H
