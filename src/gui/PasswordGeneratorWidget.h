@@ -1,6 +1,6 @@
 /*
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2013 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2022 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 #define KEEPASSX_PASSWORDGENERATORWIDGET_H
 
 #include <QComboBox>
+#include <QDialog>
 #include <QTimer>
 
 #include "core/PassphraseGenerator.h"
@@ -34,7 +35,7 @@ class PasswordGenerator;
 class PasswordHealth;
 class PassphraseGenerator;
 
-class PasswordGeneratorWidget : public QWidget
+class PasswordGeneratorWidget : public QDialog
 {
     Q_OBJECT
 
