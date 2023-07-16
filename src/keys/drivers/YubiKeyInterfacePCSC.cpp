@@ -242,23 +242,68 @@ namespace
         if (rv == SCARD_S_SUCCESS) {
             // Write to and read from the card
             // pioRecvPci is nullptr because we do not expect any PCI response header
+            const SCUINT dwRecvBufferSize = dwRecvLength;
             rv = SCardTransmit(handle, pioSendPci, pbSendBuffer, dwSendLength, nullptr, pbRecvBuffer, &dwRecvLength);
+
+            if (dwRecvLength < 2) {
+                // Any valid response should be at least 2 bytes (response status)
+                // However the protocol itself could fail
+                return SCARD_E_UNEXPECTED;
+            }
+
+            uint8_t SW1 = pbRecvBuffer[dwRecvLength - 2];
+            // Check for the MoreDataAvailable SW1 code. If present, send GetResponse command repeatedly, until success
+            // SW, or filling the receiving buffer.
+            if (SW1 == SW_MORE_DATA_HIGH) {
+                while (true) {
+                    if (dwRecvBufferSize < dwRecvLength) {
+                        // No free buffer space remaining
+                        return SCARD_E_UNEXPECTED;
+                    }
+                    // Overwrite Status Word in the receiving buffer
+                    dwRecvLength -= 2;
+                    SCUINT dwRecvLength_sr = dwRecvBufferSize - dwRecvLength; // at least 2 bytes for SW are available
+                    const uint8_t bRecvDataSize =
+                        qBound(static_cast<SCUINT>(0), dwRecvLength_sr - 2, static_cast<SCUINT>(255));
+                    uint8_t pbSendBuffer_sr[] = {CLA_ISO, INS_GET_RESPONSE, 0, 0, bRecvDataSize};
+                    rv = SCardTransmit(handle,
+                                       pioSendPci,
+                                       pbSendBuffer_sr,
+                                       sizeof pbSendBuffer_sr,
+                                       nullptr,
+                                       pbRecvBuffer + dwRecvLength,
+                                       &dwRecvLength_sr);
+
+                    // Check if any new data are received. Break if the smart card's status is other than success,
+                    // or no new bytes were received.
+                    if (!(rv == SCARD_S_SUCCESS && dwRecvLength_sr >= 2)) {
+                        break;
+                    }
+
+                    dwRecvLength += dwRecvLength_sr;
+                    SW1 = pbRecvBuffer[dwRecvLength - 2];
+                    // Break the loop if there is no continuation status
+                    if (SW1 != SW_MORE_DATA_HIGH) {
+                        break;
+                    }
+                }
+            }
+
             if (rv == SCARD_S_SUCCESS) {
                 if (dwRecvLength < 2) {
                     // Any valid response should be at least 2 bytes (response status)
                     // However the protocol itself could fail
                     rv = SCARD_E_UNEXPECTED;
                 } else {
-                    if (pbRecvBuffer[dwRecvLength - 2] == SW_OK_HIGH && pbRecvBuffer[dwRecvLength - 1] == SW_OK_LOW) {
+                    const uint8_t SW_HIGH = pbRecvBuffer[dwRecvLength - 2];
+                    const uint8_t SW_LOW = pbRecvBuffer[dwRecvLength - 1];
+                    if (SW_HIGH == SW_OK_HIGH && SW_LOW == SW_OK_LOW) {
                         rv = SCARD_S_SUCCESS;
-                    } else if (pbRecvBuffer[dwRecvLength - 2] == SW_PRECOND_HIGH
-                               && pbRecvBuffer[dwRecvLength - 1] == SW_PRECOND_LOW) {
+                    } else if (SW_HIGH == SW_PRECOND_HIGH && SW_LOW == SW_PRECOND_LOW) {
                         // This happens if the key requires eg. a button press or if the applet times out
                         // Solution: Re-present the card to the reader
                         rv = SCARD_W_CARD_NOT_AUTHENTICATED;
-                    } else if ((pbRecvBuffer[dwRecvLength - 2] == SW_NOTFOUND_HIGH
-                                && pbRecvBuffer[dwRecvLength - 1] == SW_NOTFOUND_LOW)
-                               || pbRecvBuffer[dwRecvLength - 2] == SW_UNSUP_HIGH) {
+                    } else if ((SW_HIGH == SW_NOTFOUND_HIGH && SW_LOW == SW_NOTFOUND_LOW) || SW_HIGH == SW_UNSUP_HIGH) {
                         // This happens eg. during a select command when the AID is not found
                         rv = SCARD_E_FILE_NOT_FOUND;
                     } else {
@@ -285,9 +330,10 @@ namespace
         auto pbSendBuffer = new uint8_t[5 + handle.second.size()];
         memcpy(pbSendBuffer, pbSendBuffer_head, 5);
         memcpy(pbSendBuffer + 5, handle.second.constData(), handle.second.size());
-        uint8_t pbRecvBuffer[12] = {
+        // Give it more space in case custom implementations have longer answer to select
+        uint8_t pbRecvBuffer[64] = {
             0}; // 3 bytes version, 1 byte program counter, other stuff for various implementations, 2 bytes status
-        SCUINT dwRecvLength = 12;
+        SCUINT dwRecvLength = sizeof pbRecvBuffer;
 
         auto rv = transmit(handle.first, pbSendBuffer, 5 + handle.second.size(), pbRecvBuffer, dwRecvLength);
 
