@@ -78,7 +78,7 @@ int main(int argc, char** argv)
     QCommandLineOption keyfileOption("keyfile", QObject::tr("key file of the database"), "keyfile");
     QCommandLineOption pwstdinOption("pw-stdin", QObject::tr("read password of the database from stdin"));
     QCommandLineOption allowScreenCaptureOption("allow-screencapture",
-                                                QObject::tr("allow app screen recordering and screenshots"));
+                                                QObject::tr("allow screenshots and app recording (Windows/macOS)"));
 
     QCommandLineOption helpOption = parser.addHelpOption();
     QCommandLineOption versionOption = parser.addVersionOption();
@@ -89,10 +89,7 @@ int main(int argc, char** argv)
     parser.addOption(keyfileOption);
     parser.addOption(pwstdinOption);
     parser.addOption(debugInfoOption);
-
-    if (osUtils->canPreventScreenCapture()) {
-        parser.addOption(allowScreenCaptureOption);
-    }
+    parser.addOption(allowScreenCaptureOption);
 
     parser.process(app);
 
