@@ -182,6 +182,10 @@ int main(int argc, char** argv)
     Application::bootstrap();
 
     MainWindow mainWindow;
+#ifdef Q_OS_WIN
+    // Qt Hack - Prevent white flicker when showing window
+    mainWindow.setProperty("windowOpacity", 0.0);
+#endif
 
     // Disable screen capture if not explicitly allowed
     // This ensures any top-level windows (Main Window, Modal Dialogs, etc.) are excluded from screenshots
@@ -201,6 +205,14 @@ int main(int argc, char** argv)
             password = Utils::getPassword();
         }
         mainWindow.openDatabase(filename, password, parser.value(keyfileOption));
+    }
+
+    // start minimized if configured
+    if (config()->get(Config::GUI_MinimizeOnStartup).toBool()) {
+        mainWindow.hideWindow();
+    } else {
+        mainWindow.bringToFront();
+        Application::processEvents();
     }
 
     int exitCode = Application::exec();

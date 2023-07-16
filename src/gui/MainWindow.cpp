@@ -707,13 +707,6 @@ MainWindow::~MainWindow()
  */
 void MainWindow::restoreConfigState()
 {
-    // start minimized if configured
-    if (config()->get(Config::GUI_MinimizeOnStartup).toBool()) {
-        hideWindow();
-    } else {
-        bringToFront();
-    }
-
     if (config()->get(Config::OpenPreviousDatabasesOnStartup).toBool()) {
         const QStringList fileNames = config()->get(Config::LastOpenedDatabases).toStringList();
         for (const QString& filename : fileNames) {
@@ -1368,6 +1361,24 @@ void MainWindow::databaseTabChanged(int tabIndex)
 
     m_actionMultiplexer.setCurrentObject(m_ui->tabWidget->currentDatabaseWidget());
     updateEntryCountLabel();
+}
+
+void MainWindow::showEvent(QShowEvent* event)
+{
+    Q_UNUSED(event)
+#ifdef Q_OS_WIN
+    // Qt Hack - Prevent white flicker when showing window
+    QTimer::singleShot(50, this, [=] { setProperty("windowOpacity", 1.0); });
+#endif
+}
+
+void MainWindow::hideEvent(QHideEvent* event)
+{
+    Q_UNUSED(event)
+#ifdef Q_OS_WIN
+    // Qt Hack - Prevent white flicker when showing window
+    setProperty("windowOpacity", 0.0);
+#endif
 }
 
 void MainWindow::closeEvent(QCloseEvent* event)
