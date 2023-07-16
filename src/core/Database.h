@@ -171,6 +171,7 @@ signals:
     void databaseSaved();
     void databaseDiscarded();
     void databaseFileChanged();
+    void databaseNonDataChanged();
     void tagListUpdated();
 
 private:
