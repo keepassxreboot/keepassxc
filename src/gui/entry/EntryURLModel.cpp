@@ -54,7 +54,7 @@ void EntryURLModel::setEntryAttributes(EntryAttributes* entryAttributes)
 
     endResetModel();
 }
-#include <QDebug>
+
 QVariant EntryURLModel::data(const QModelIndex& index, int role) const
 {
     if (!index.isValid()) {

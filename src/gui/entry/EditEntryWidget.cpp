@@ -161,6 +161,9 @@ void EditEntryWidget::setupMain()
     connect(m_mainUi->urlEdit, SIGNAL(textChanged(QString)), m_iconsWidget, SLOT(setUrl(QString)));
     m_mainUi->urlEdit->enableVerifyMode();
 #endif
+#ifdef WITH_XC_BROWSER
+    connect(m_mainUi->urlEdit, SIGNAL(textChanged(QString)), this, SLOT(entryURLEdited(const QString&)));
+#endif
     connect(m_mainUi->expireCheck, &QCheckBox::toggled, [&](bool enabled) {
         m_mainUi->expireDatePicker->setEnabled(enabled);
         if (enabled) {
@@ -397,6 +400,11 @@ void EditEntryWidget::updateCurrentURL()
         m_browserUi->editURLButton->setEnabled(false);
         m_browserUi->removeURLButton->setEnabled(false);
     }
+}
+
+void EditEntryWidget::entryURLEdited(const QString& url)
+{
+    m_additionalURLsDataModel->setEntryUrl(url);
 }
 #endif
 
