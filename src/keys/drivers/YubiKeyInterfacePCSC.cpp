@@ -19,7 +19,6 @@
 
 #include "core/Tools.h"
 #include "crypto/Random.h"
-#include <algorithm>
 
 // MSYS2 does not define these macros
 // So set them to the value used by pcsc-lite
@@ -265,7 +264,7 @@ namespace
                     dwRecvLength -= 2;
                     SCUINT dwRecvLength_sr = dwRecvBufferSize - dwRecvLength; // at least 2 bytes for SW are available
                     const uint8_t bRecvDataSize =
-                        std::clamp(dwRecvLength_sr - 2, static_cast<SCUINT>(0), static_cast<SCUINT>(255));
+                        qBound(static_cast<SCUINT>(0), dwRecvLength_sr - 2, static_cast<SCUINT>(255));
                     uint8_t pbSendBuffer_sr[] = {CLA_ISO, INS_GET_RESPONSE, 0, 0, bRecvDataSize};
                     rv = SCardTransmit(handle,
                                        pioSendPci,
