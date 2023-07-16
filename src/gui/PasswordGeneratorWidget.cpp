@@ -1,6 +1,6 @@
 /*
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2013 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2022 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@
 #include "gui/styles/StateColorPalette.h"
 
 PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
-    : QWidget(parent)
+    : QDialog(parent)
     , m_passwordGenerator(new PasswordGenerator())
     , m_dicewareGenerator(new PassphraseGenerator())
     , m_ui(new Ui::PasswordGeneratorWidget())
