@@ -34,13 +34,16 @@ QFont Font::fixedFont()
     auto consolasFont = QFontDatabase().font("Consolas", fixedFont.styleName(), fixedFont.pointSize());
     if (consolasFont.family().contains("consolas", Qt::CaseInsensitive)) {
         fixedFont = consolasFont;
+        // Bump up the font size by one point to match the default font
+        fixedFont.setPointSize(fixedFont.pointSize() + 1);
     }
 #endif
 #ifdef Q_OS_MACOS
     // Qt doesn't choose a monospace font correctly on macOS
     fixedFont = QFontDatabase().font("Menlo", fixedFont.styleName(), fixedFont.pointSize());
 #endif
-
+#ifndef Q_OS_WIN
     fixedFont.setPointSize(qApp->font().pointSize());
+#endif
     return fixedFont;
 }
