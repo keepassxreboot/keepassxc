@@ -53,6 +53,7 @@
 #include "gui/group/GroupView.h"
 #include "gui/reports/ReportsDialog.h"
 #include "gui/tag/TagView.h"
+#include "gui/widgets/ElidedLabel.h"
 #include "keeshare/KeeShare.h"
 
 #ifdef WITH_XC_NETWORKING
@@ -73,7 +74,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     , m_previewView(new EntryPreviewWidget(this))
     , m_previewSplitter(new QSplitter(m_mainWidget))
     , m_searchingLabel(new QLabel(this))
-    , m_shareLabel(new QLabel(this))
+    , m_shareLabel(new ElidedLabel(this))
     , m_csvImportWizard(new CsvImportWizard(this))
     , m_editEntryWidget(new EditEntryWidget(this))
     , m_editGroupWidget(new EditGroupWidget(this))
@@ -159,7 +160,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
 
 #ifdef WITH_XC_KEESHARE
     m_shareLabel->setObjectName("KeeShareBanner");
-    m_shareLabel->setText(tr("Shared group…"));
+    m_shareLabel->setRawText(tr("Shared group…"));
     m_shareLabel->setAlignment(Qt::AlignCenter);
     m_shareLabel->setVisible(false);
 #endif
@@ -1520,7 +1521,7 @@ void DatabaseWidget::onGroupChanged()
 #ifdef WITH_XC_KEESHARE
     auto shareLabel = KeeShare::sharingLabel(group);
     if (!shareLabel.isEmpty()) {
-        m_shareLabel->setText(shareLabel);
+        m_shareLabel->setRawText(shareLabel);
         m_shareLabel->setVisible(true);
     } else {
         m_shareLabel->setVisible(false);
