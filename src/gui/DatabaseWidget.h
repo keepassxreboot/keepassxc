@@ -50,6 +50,7 @@ class QLabel;
 class MessageWidget;
 class EntryPreviewWidget;
 class TagView;
+class ElidedLabel;
 
 namespace Ui
 {
@@ -280,7 +281,7 @@ private:
     QPointer<EntryPreviewWidget> m_previewView;
     QPointer<QSplitter> m_previewSplitter;
     QPointer<QLabel> m_searchingLabel;
-    QPointer<QLabel> m_shareLabel;
+    QPointer<ElidedLabel> m_shareLabel;
     QPointer<CsvImportWizard> m_csvImportWizard;
     QPointer<EditEntryWidget> m_editEntryWidget;
     QPointer<EditGroupWidget> m_editGroupWidget;
