@@ -8227,63 +8227,15 @@ Kernel: %3 %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>AES initialization failed</source>
+        <source>Enter Shortcut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>AES encrypt failed</source>
+        <source>Action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Failed to store in Linux Keyring</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Could not locate key in keyring</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Could not read key in keyring</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>AES decrypt failed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No Polkit authentication agent was available</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Polkit authorization failed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No Quick Unlock provider is available</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Polkit returned an error: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to init KeePassXC crypto.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to encrypt key data.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to get Windows Hello credential.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to decrypt key data.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Passkeys</source>
+        <source>Shortcuts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8312,6 +8264,66 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Resident Keys are not supported</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Passkeys</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AES initialization failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AES encrypt failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to store in Linux Keyring</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polkit returned an error: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not locate key in keyring</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not read key in keyring</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AES decrypt failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No Polkit authentication agent was available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polkit authorization failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No Quick Unlock provider is available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to init KeePassXC crypto.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to encrypt key data.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to get Windows Hello credential.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to decrypt key data.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9166,6 +9178,10 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Shortcut Conflict</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
