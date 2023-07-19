@@ -7851,10 +7851,6 @@ Kernel: %3 %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>allow app screen recordering and screenshots</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Locked databases.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7971,6 +7967,10 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>KeePassXC is not running. No open database to lock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>allow screenshots and app recording (Windows/macOS)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
