@@ -7891,10 +7891,6 @@ Kernel: %3 %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>allow app screen recordering and screenshots</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Locked databases.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7954,6 +7950,10 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Access to all entries is denied</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>allow screenshots and app recording (Windows/macOS)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
