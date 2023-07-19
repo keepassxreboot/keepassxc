@@ -148,7 +148,10 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
     auto attributes = QStringList(attributes_keys + entry->attributes()->values(attributes_keys));
     auto attachments = QStringList(entry->attachments()->keys());
     // Build a group hierarchy to allow searching for e.g. /group1/subgroup*
-    auto hierarchy = entry->group()->hierarchy().join('/').prepend("/");
+    QString hierarchy;
+    if (entry->group()) {
+        hierarchy = entry->group()->hierarchy().join('/').prepend("/");
+    }
 
     // By default, empty term matches every entry.
     // However when skipping protected fields, we will reject everything instead
@@ -190,7 +193,7 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
             // Match against the full hierarchy if the word contains a '/' otherwise just the group name
             if (term.word.contains('/')) {
                 found = term.regex.match(hierarchy).hasMatch();
-            } else {
+            } else if (entry->group()) {
                 found = term.regex.match(entry->group()->name()).hasMatch();
             }
             break;
