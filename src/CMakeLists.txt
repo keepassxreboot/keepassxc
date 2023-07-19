@@ -98,6 +98,7 @@ set(keepassx_SOURCES
         gui/styles/dark/DarkStyle.cpp
         gui/styles/light/LightStyle.cpp
         gui/AboutDialog.cpp
+        gui/ActionCollection.cpp
         gui/Application.cpp
         gui/CategoryListWidget.cpp
         gui/Clipboard.cpp
@@ -130,6 +131,7 @@ set(keepassx_SOURCES
         gui/SearchWidget.cpp
         gui/SortFilterHideProxyModel.cpp
         gui/SquareSvgWidget.cpp
+        gui/ShortcutSettingsPage.cpp
         gui/TotpSetupDialog.cpp
         gui/TotpDialog.cpp
         gui/TotpExportSettingsDialog.cpp

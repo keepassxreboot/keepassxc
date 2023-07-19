@@ -111,6 +111,13 @@
     </message>
 </context>
 <context>
+    <name>ActionCollection</name>
+    <message>
+        <source>Shortcut %3 conflicts with action &apos;%1&apos; with title &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AgentSettingsWidget</name>
     <message>
         <source>Enable SSH Agent integration</source>
@@ -9144,6 +9151,21 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Export to %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ShortcutSettingsWidget</name>
+    <message>
+        <source>Double click an action to change its shortcut</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shortcut %3 conflicts with action &apos;%1&apos; with title &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shortcut Conflict</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

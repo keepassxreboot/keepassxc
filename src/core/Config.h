@@ -21,6 +21,7 @@
 
 #include <QPointer>
 #include <QVariant>
+#include <QVector>
 
 class QSettings;
 
@@ -198,6 +199,12 @@ public:
         Deleted
     };
 
+    struct ShortcutEntry
+    {
+        QString name;
+        QString shortcut;
+    };
+
     ~Config() override;
     QVariant get(ConfigKey key);
     QVariant getDefault(ConfigKey key);
@@ -207,6 +214,8 @@ public:
     bool hasAccessError();
     void sync();
     void resetToDefaults();
+    QVector<ShortcutEntry> getShortcuts() const;
+    void setShortcuts(const QVector<ShortcutEntry>& shortcuts);
 
     static Config* instance();
     static void createConfigFromFile(const QString& configFileName, const QString& localConfigFileName = {});

@@ -168,6 +168,7 @@ private:
     void dropEvent(QDropEvent* event) override;
 
     void initViewMenu();
+    void initActionCollection();
 
     const QScopedPointer<Ui::MainWindow> m_ui;
     SignalMultiplexer m_actionMultiplexer;
