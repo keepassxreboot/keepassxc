@@ -68,6 +68,8 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
     m_ui->entryNotesTextEdit->document()->setDocumentMargin(0);
     m_ui->groupNotesTextEdit->document()->setDocumentMargin(0);
 
+    m_ui->entryTotpLabel->installEventFilter(this);
+
     connect(m_ui->entryTotpButton, SIGNAL(toggled(bool)), m_ui->entryTotpLabel, SLOT(setVisible(bool)));
     connect(m_ui->entryTotpButton, SIGNAL(toggled(bool)), m_ui->entryTotpProgress, SLOT(setVisible(bool)));
     connect(m_ui->entryCloseButton, SIGNAL(clicked()), SLOT(hide()));
@@ -111,6 +113,18 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
 
 EntryPreviewWidget::~EntryPreviewWidget()
 {
+}
+
+bool EntryPreviewWidget::eventFilter(QObject* object, QEvent* event)
+{
+    if (object == m_ui->entryTotpLabel && event->type() == QEvent::MouseButtonDblClick) {
+        if (m_currentEntry && m_currentEntry->hasTotp()) {
+            clipboard()->setText(m_currentEntry->totp());
+            m_ui->entryTotpLabel->clearFocus();
+            return true;
+        }
+    }
+    return QWidget::eventFilter(object, event);
 }
 
 void EntryPreviewWidget::clear()

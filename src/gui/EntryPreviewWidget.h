@@ -46,6 +46,9 @@ public slots:
 signals:
     void entryUrlActivated(Entry* entry);
 
+protected:
+    bool eventFilter(QObject* object, QEvent* event) override;
+
 private slots:
     void updateEntryHeaderLine();
     void updateEntryTotp();
