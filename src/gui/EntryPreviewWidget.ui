@@ -123,6 +123,9 @@
                <bold>true</bold>
               </font>
              </property>
+             <property name="toolTip">
+              <string>Double click to copy to clipboard</string>
+             </property>
              <property name="text">
               <string notr="true">1234567</string>
              </property>
