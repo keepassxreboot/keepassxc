@@ -35,7 +35,8 @@ void PrivateBrowser::openUrl(const QUrl& url)
 #elif defined(Q_OS_WIN)
 
 #elif defined(Q_OS_LINUX)
-
+    QStringList args{privateModeArg, url.toString()};
+    QProcess::startDetached(applicationPath, args);
 #endif
     getMainWindow()->lower();
 }

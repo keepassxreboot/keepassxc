@@ -23,6 +23,7 @@
 #include <QDBusInterface>
 #include <QDir>
 #include <QPointer>
+#include <QProcess>
 #include <QStandardPaths>
 #include <QStyle>
 #include <QTextStream>
@@ -324,9 +325,46 @@ void NixUtils::setColorScheme(QDBusVariant value)
     emit interfaceThemeChanged();
 }
 
-// TODO
 QString NixUtils::getDefaultApplicationForUrl(const QUrl& url)
 {
     Q_UNUSED(url)
+#ifdef WITH_XC_X11
+    QProcess xdgProcess;
+    xdgProcess.start("xdg-settings", {"get", "default-web-browser", "--hash"});
+    if (!xdgProcess.waitForStarted()) {
+        qWarning("Could not start xdg-settings process.");
+        return {};
+    }
+
+    if (!xdgProcess.waitForFinished()) {
+        qWarning("Error: xdg-settings process did not finish.");
+        return {};
+    }
+
+    auto applicationName = QString(xdgProcess.readAllStandardOutput()).remove('\n');
+    auto applicationPath = QStandardPaths::locate(QStandardPaths::ApplicationsLocation, applicationName);
+    if (applicationPath.isEmpty()) {
+        qWarning("No application file found.");
+        return {};
+    }
+
+    QFile applicationFile(applicationPath);
+    if (!applicationFile.open(QFile::ReadOnly)) {
+        qWarning("Cannot open application file.");
+        return {};
+    }
+
+    QString execValue;
+    while (!applicationFile.atEnd()) {
+        const auto line = applicationFile.readLine();
+        if (line.contains("Exec=")) {
+            execValue = line.split('=').at(1).split(' ').first();
+            break;
+        }
+    }
+
+    applicationFile.close();
+    return execValue;
+#endif
     return {};
 }
