@@ -1,6 +1,6 @@
 /*
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1292,4 +1292,30 @@ void TestGroup::testPreviousParentGroup()
     group1->setParent(root);
     QVERIFY(group1->previousParentGroupUuid() == group2->uuid());
     QVERIFY(group1->previousParentGroup() == group2);
+}
+
+void TestGroup::testAutoTypeState()
+{
+    Database db;
+    auto* root = db.rootGroup();
+
+    auto* entry1 = new Entry();
+    entry1->setGroup(root);
+
+    auto subGroup = new Group();
+    subGroup->setParent(root);
+    auto* entry2 = new Entry();
+    entry2->setGroup(subGroup);
+
+    // Disable Auto-Type from root group
+    root->setAutoTypeEnabled(Group::TriState::Disable);
+    QVERIFY(!entry1->groupAutoTypeEnabled());
+    QVERIFY(!entry2->groupAutoTypeEnabled());
+
+    // Enable Auto-Type for sub group
+    subGroup->setAutoTypeEnabled(Group::TriState::Enable);
+    QVERIFY(root->autoTypeEnabled() == Group::TriState::Disable);
+    QVERIFY(subGroup->autoTypeEnabled() == Group::TriState::Enable);
+    QVERIFY(!entry1->groupAutoTypeEnabled());
+    QVERIFY(entry2->groupAutoTypeEnabled());
 }

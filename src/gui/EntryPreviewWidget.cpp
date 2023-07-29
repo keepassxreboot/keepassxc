@@ -1,6 +1,6 @@
 /*
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -468,7 +468,9 @@ void EntryPreviewWidget::updateEntryAutotypeTab()
     }
 
     m_ui->entryAutotypeTree->addTopLevelItems(items);
-    setTabEnabled(m_ui->entryTabWidget, m_ui->entryAutotypeTab, m_currentEntry->autoTypeEnabled());
+    setTabEnabled(m_ui->entryTabWidget,
+                  m_ui->entryAutotypeTab,
+                  m_currentEntry->autoTypeEnabled() && m_currentEntry->groupAutoTypeEnabled());
 }
 
 void EntryPreviewWidget::updateGroupHeaderLine()
