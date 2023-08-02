@@ -862,7 +862,7 @@ chrome-laptop</translation>
     <message>
         <source>A shared encryption key with the name &quot;%1&quot; already exists.
 Do you want to overwrite it?</source>
-        <translation>Uma chave de criptografia compartilhada com o nome &quot;% 1&quot; já existe.
+        <translation>Uma chave de criptografia compartilhada com o nome &quot;%1&quot; já existe.
 Você deseja sobrescreve-la?</translation>
     </message>
     <message>
