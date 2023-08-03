@@ -23,6 +23,7 @@
 #include "fdosecrets/objects/Session.h"
 #include "fdosecrets/widgets/AccessControlDialog.h"
 
+#include "FdoSecretsSettings.h"
 #include "core/Entry.h"
 #include "gui/MessageBox.h"
 
@@ -298,7 +299,7 @@ namespace FdoSecrets
                 }
                 auto entry = item->backend();
                 auto uuid = entry->uuid();
-                if (client->itemKnown(uuid)) {
+                if (client->itemKnown(uuid) || !FdoSecrets::settings()->confirmAccessItem()) {
                     if (!client->itemAuthorized(uuid)) {
                         m_numRejected += 1;
                     }
