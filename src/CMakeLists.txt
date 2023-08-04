@@ -1,4 +1,4 @@
-#  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+#  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
 #  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
 #
 #  This program is free software: you can redistribute it and/or modify
@@ -39,6 +39,7 @@ set(keepassx_SOURCES
         core/Config.cpp
         core/CustomData.cpp
         core/Database.cpp
+        core/DatabaseSettings.cpp
         core/DatabaseStats.cpp
         core/Entry.cpp
         core/EntryAttachments.cpp

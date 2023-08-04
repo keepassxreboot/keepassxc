@@ -77,11 +77,16 @@ public:
     void lockDatabase();
 
     QJsonObject getDatabaseGroups();
-    QJsonArray getDatabaseEntries();
+    QJsonArray getDatabaseEntries(bool* accessDenied, const QSharedPointer<Database>& selectedDb = {});
     QJsonObject createNewGroup(const QString& groupName);
     QString getCurrentTotp(const QString& uuid);
     void showPasswordGenerator(const KeyPairMessage& keyPairMessage);
     bool isPasswordGeneratorRequested() const;
+
+    bool getAlwaysAllowAccess();
+    void setAlwaysAllowAccess(bool enabled);
+    bool getAllowGetDatabaseEntriesRequest();
+    void setAllowGetDatabaseEntriesRequest(bool enabled);
 
     void addEntry(const EntryParameters& entryParameters,
                   const QString& group,

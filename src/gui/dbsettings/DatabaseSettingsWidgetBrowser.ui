@@ -51,8 +51,8 @@
       <string>KeePassXC-Browser settings</string>
      </property>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="0" column="0">
-       <widget class="QPushButton" name="removeSharedEncryptionKeys">
+      <item row="1" column="0">
+       <widget class="QPushButton" name="refreshDatabaseID">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -60,7 +60,7 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>Disconnect all browsers</string>
+         <string>Refresh database root group ID</string>
         </property>
        </widget>
       </item>
@@ -77,8 +77,8 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="0">
-       <widget class="QPushButton" name="refreshDatabaseID">
+      <item row="0" column="0">
+       <widget class="QPushButton" name="removeSharedEncryptionKeys">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
           <horstretch>0</horstretch>
@@ -86,7 +86,24 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>Refresh database root group ID</string>
+         <string>Disconnect all browsers</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0" colspan="2">
+       <widget class="QCheckBox" name="alwaysAllowAccess">
+        <property name="text">
+         <string extracomment="Credentials mean login data requested via browser extension">Never ask before accessing credentials</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0" colspan="2">
+       <widget class="QCheckBox" name="allowGetDatabaseEntriesRequest">
+        <property name="toolTip">
+         <string>Allow keepassxc-proxy to list all entries with their title, URL and UUID in connected databases.</string>
+        </property>
+        <property name="text">
+         <string>Allow limited access to all entries in connected databases (ignores site access restrictions)</string>
         </property>
        </widget>
       </item>

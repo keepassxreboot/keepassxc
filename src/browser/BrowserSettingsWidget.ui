@@ -277,13 +277,6 @@
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="alwaysAllowAccess">
-         <property name="text">
-          <string extracomment="Credentials mean login data requested via browser extension">Never ask before accessing credentials</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QCheckBox" name="alwaysAllowUpdate">
          <property name="text">
           <string extracomment="Credentials mean login data requested via browser extension">Never ask before updating credentials</string>
@@ -324,16 +317,6 @@
          </property>
          <property name="text">
           <string>Update native messaging manifest files at startup</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="allowGetDatabaseEntriesRequest">
-         <property name="toolTip">
-          <string>Allow keepassxc-proxy to list all entries with their title, URL and UUID in connected databases.</string>
-         </property>
-         <property name="text">
-          <string>Allow limited access to all entries in connected databases (ignores site access restrictions)</string>
          </property>
         </widget>
        </item>
@@ -484,7 +467,7 @@
            </layout>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout">
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
             <item>
              <widget class="QLabel" name="customBrowserLabel_2">
               <property name="sizePolicy">

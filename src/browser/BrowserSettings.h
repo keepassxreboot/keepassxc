@@ -1,7 +1,6 @@
 /*
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2013 Francois Ferrand
- *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
- *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -39,8 +38,6 @@ public:
     void setUnlockDatabase(bool unlockDatabase);
     bool matchUrlScheme();
     void setMatchUrlScheme(bool matchUrlScheme);
-    bool alwaysAllowAccess();
-    void setAlwaysAllowAccess(bool alwaysAllowAccess);
     bool alwaysAllowUpdate();
     void setAlwaysAllowUpdate(bool alwaysAllowUpdate);
     bool searchInAllDatabases();
@@ -63,8 +60,6 @@ public:
 #endif
     bool updateBinaryPath();
     void setUpdateBinaryPath(bool enabled);
-    bool allowGetDatabaseEntriesRequest();
-    void setAllowGetDatabaseEntriesRequest(bool enabled);
     bool allowExpiredCredentials();
     void setAllowExpiredCredentials(bool enabled);
 

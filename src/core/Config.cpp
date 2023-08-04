@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2011 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -155,9 +155,7 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::Browser_UseCustomProxy, {QS("Browser/UseCustomProxy"), Roaming, false}},
     {Config::Browser_CustomProxyLocation, {QS("Browser/CustomProxyLocation"), Roaming, {}}},
     {Config::Browser_UpdateBinaryPath, {QS("Browser/UpdateBinaryPath"), Roaming, true}},
-    {Config::Browser_AllowGetDatabaseEntriesRequest, {QS("Browser/AllowGetDatabaseEntriesRequest"), Roaming, false}},
     {Config::Browser_AllowExpiredCredentials, {QS("Browser/AllowExpiredCredentials"), Roaming, false}},
-    {Config::Browser_AlwaysAllowAccess, {QS("Browser/AlwaysAllowAccess"), Roaming, false}},
     {Config::Browser_AlwaysAllowUpdate, {QS("Browser/AlwaysAllowUpdate"), Roaming, false}},
     {Config::Browser_HttpAuthPermission, {QS("Browser/HttpAuthPermission"), Roaming, false}},
     {Config::Browser_SearchInAllDatabases, {QS("Browser/SearchInAllDatabases"), Roaming, false}},

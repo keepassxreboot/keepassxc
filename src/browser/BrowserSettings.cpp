@@ -1,7 +1,6 @@
 /*
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2013 Francois Ferrand
- *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
- *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -83,16 +82,6 @@ bool BrowserSettings::matchUrlScheme()
 void BrowserSettings::setMatchUrlScheme(bool matchUrlScheme)
 {
     config()->set(Config::Browser_MatchUrlScheme, matchUrlScheme);
-}
-
-bool BrowserSettings::alwaysAllowAccess()
-{
-    return config()->get(Config::Browser_AlwaysAllowAccess).toBool();
-}
-
-void BrowserSettings::setAlwaysAllowAccess(bool alwaysAllowAccess)
-{
-    config()->set(Config::Browser_AlwaysAllowAccess, alwaysAllowAccess);
 }
 
 bool BrowserSettings::alwaysAllowUpdate()
@@ -220,16 +209,6 @@ bool BrowserSettings::updateBinaryPath()
 void BrowserSettings::setUpdateBinaryPath(bool enabled)
 {
     config()->set(Config::Browser_UpdateBinaryPath, enabled);
-}
-
-bool BrowserSettings::allowGetDatabaseEntriesRequest()
-{
-    return config()->get(Config::Browser_AllowGetDatabaseEntriesRequest).toBool();
-}
-
-void BrowserSettings::setAllowGetDatabaseEntriesRequest(bool enabled)
-{
-    config()->set(Config::Browser_AllowGetDatabaseEntriesRequest, enabled);
 }
 
 bool BrowserSettings::allowExpiredCredentials()

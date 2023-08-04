@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2018 Sami Vänttinen <sami.vanttinen@protonmail.com>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -60,6 +60,7 @@ private slots:
     void editFinished(QStandardItem* item);
 
 private:
+    void loadSettings();
     void updateModel();
     void settingsWarning();
 

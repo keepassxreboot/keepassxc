@@ -172,6 +172,10 @@ void DatabaseSettingsDialog::save()
         return;
     }
 
+#ifdef WITH_XC_BROWSER
+    m_browserWidget->save();
+#endif
+
     for (const ExtraPage& extraPage : asConst(m_extraPages)) {
         extraPage.saveSettings();
     }

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2018 Sami Vänttinen <sami.vanttinen@protonmail.com>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -69,6 +69,7 @@ CustomData* DatabaseSettingsWidgetBrowser::customData() const
 
 void DatabaseSettingsWidgetBrowser::initialize()
 {
+    loadSettings();
     updateModel();
     settingsWarning();
 }
@@ -82,8 +83,16 @@ void DatabaseSettingsWidgetBrowser::showEvent(QShowEvent* event)
     QWidget::showEvent(event);
 }
 
+void DatabaseSettingsWidgetBrowser::loadSettings()
+{
+    m_ui->alwaysAllowAccess->setChecked(browserService()->getAlwaysAllowAccess());
+    m_ui->allowGetDatabaseEntriesRequest->setChecked(browserService()->getAllowGetDatabaseEntriesRequest());
+}
+
 bool DatabaseSettingsWidgetBrowser::save()
 {
+    browserService()->setAlwaysAllowAccess(m_ui->alwaysAllowAccess->isChecked());
+    browserService()->setAllowGetDatabaseEntriesRequest(m_ui->allowGetDatabaseEntriesRequest->isChecked());
     return true;
 }
 

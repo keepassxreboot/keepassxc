@@ -52,6 +52,7 @@ private slots:
     void testValidURLs();
     void testBestMatchingCredentials();
     void testBestMatchingWithAdditionalURLs();
+    void testGetDatabaseEntries();
 
 private:
     QList<Entry*> createEntries(QStringList& urls, Group* root) const;

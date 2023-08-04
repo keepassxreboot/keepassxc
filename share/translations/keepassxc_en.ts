@@ -1002,11 +1002,6 @@ Do you want to delete the entry?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Never ask before accessing credentials</source>
-        <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Never ask before updating credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
         <translation type="unfinished"></translation>
@@ -1128,14 +1123,6 @@ Do you want to delete the entry?
     </message>
     <message>
         <source>Select native messaging host folder location</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Allow keepassxc-proxy to list all entries with their title, URL and UUID in connected databases.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Allow limited access to all entries in connected databases (ignores site access restrictions)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1728,6 +1715,19 @@ Permissions to access entries will be revoked.</source>
     <message>
         <source>Do you really want refresh the database ID?
 This is only necessary if your database is a copy of another and the browser extension cannot connect.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Never ask before accessing credentials</source>
+        <extracomment>Credentials mean login data requested via browser extension</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Allow keepassxc-proxy to list all entries with their title, URL and UUID in connected databases.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Allow limited access to all entries in connected databases (ignores site access restrictions)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

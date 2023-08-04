@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@ const QString CustomData::LastModified = QStringLiteral("_LAST_MODIFIED");
 const QString CustomData::Created = QStringLiteral("_CREATED");
 const QString CustomData::BrowserKeyPrefix = QStringLiteral("KPXC_BROWSER_");
 const QString CustomData::BrowserLegacyKeyPrefix = QStringLiteral("Public Key: ");
+const QString CustomData::OptionPrefix = QStringLiteral("KPXC_OPTION_");
 const QString CustomData::ExcludeFromReportsLegacy = QStringLiteral("KnownBad");
 
 // Fallback item for return by reference
