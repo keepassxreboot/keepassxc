@@ -22,7 +22,7 @@
 
 @implementation AppKitImpl
 
-- (id)initWithObject:(AppKit*)appkit
+- (id) initWithObject:(AppKit*) appkit
 {
     self = [super init];
 
@@ -53,7 +53,7 @@
 //
 // Update last active application property
 //
-- (void)didDeactivateApplicationObserver:(NSNotification*)notification
+- (void) didDeactivateApplicationObserver:(NSNotification*) notification
 {
     NSDictionary* userInfo = notification.userInfo;
     NSRunningApplication* app = [userInfo objectForKey:NSWorkspaceApplicationKey];
@@ -63,10 +63,10 @@
     }
 }
 
-- (void)observeValueForKeyPath:(NSString*)keyPath
+- (void) observeValueForKeyPath:(NSString *) keyPath
                       ofObject:(id)object
-                        change:(NSDictionary<NSKeyValueChangeKey, id>*)change
-                       context:(void*)context
+                        change:(NSDictionary<NSKeyValueChangeKey, id> *)change
+                       context:(void *)context
 {
     Q_UNUSED(object)
     Q_UNUSED(change)
@@ -92,7 +92,7 @@
 //
 // Get process id of frontmost application (-> keyboard input)
 //
-- (pid_t)activeProcessId
+- (pid_t) activeProcessId
 {
     return [NSWorkspace sharedWorkspace].frontmostApplication.processIdentifier;
 }
@@ -100,7 +100,7 @@
 //
 // Get process id of own process
 //
-- (pid_t)ownProcessId
+- (pid_t) ownProcessId
 {
     return [NSProcessInfo processInfo].processIdentifier;
 }
@@ -108,7 +108,7 @@
 //
 // Activate application by process id
 //
-- (bool)activateProcess:(pid_t)pid
+- (bool) activateProcess:(pid_t) pid
 {
     NSRunningApplication* app = [NSRunningApplication runningApplicationWithProcessIdentifier:pid];
     return [app activateWithOptions:NSApplicationActivateIgnoringOtherApps];
@@ -117,7 +117,7 @@
 //
 // Hide application by process id
 //
-- (bool)hideProcess:(pid_t)pid
+- (bool) hideProcess:(pid_t) pid
 {
     NSRunningApplication* app = [NSRunningApplication runningApplicationWithProcessIdentifier:pid];
     return [app hide];
@@ -126,7 +126,7 @@
 //
 // Get application hidden state by process id
 //
-- (bool)isHidden:(pid_t)pid
+- (bool) isHidden:(pid_t) pid
 {
     NSRunningApplication* app = [NSRunningApplication runningApplicationWithProcessIdentifier:pid];
     return [app isHidden];
@@ -135,7 +135,7 @@
 //
 // Get state of macOS Dark Mode color scheme
 //
-- (bool)isDarkMode
+- (bool) isDarkMode
 {
     return [NSApp.effectiveAppearance.name isEqualToString:NSAppearanceNameDarkAqua];
 }
@@ -143,7 +143,7 @@
 //
 // Get global menu bar theme state
 //
-- (bool)isStatusBarDark
+- (bool) isStatusBarDark
 {
 #if __clang_major__ >= 9 && MAC_OS_X_VERSION_MIN_REQUIRED >= 101000
     if (@available(macOS 10.17, *)) {
@@ -161,7 +161,7 @@
 //
 // Notification for user switch
 //
-- (void)userSwitchHandler:(NSNotification*)notification
+- (void) userSwitchHandler:(NSNotification*) notification
 {
     if ([[notification name] isEqualToString:NSWorkspaceSessionDidResignActiveNotification] && m_appkit) {
         emit m_appkit->lockDatabases();
@@ -171,11 +171,11 @@
 //
 // Check if accessibility is enabled, may show an popup asking for permissions
 //
-- (bool)enableAccessibility
+- (bool) enableAccessibility
 {
 #if MAC_OS_X_VERSION_MIN_REQUIRED >= 1090
     // Request accessibility permissions for Auto-Type type on behalf of the user
-    NSDictionary* opts = @{static_cast<id>(kAXTrustedCheckOptionPrompt) : @YES};
+    NSDictionary* opts = @{static_cast<id>(kAXTrustedCheckOptionPrompt): @YES};
     return AXIsProcessTrustedWithOptions(static_cast<CFDictionaryRef>(opts));
 #else
     return YES;
@@ -185,7 +185,7 @@
 //
 // Check if screen recording is enabled, may show an popup asking for permissions
 //
-- (bool)enableScreenRecording
+- (bool) enableScreenRecording
 {
 #if __clang_major__ >= 9 && MAC_OS_X_VERSION_MIN_REQUIRED >= 1080
     if (@available(macOS 10.15, *)) {
@@ -215,7 +215,7 @@
     return YES;
 }
 
-- (void)toggleForegroundApp:(bool)foreground
+- (void) toggleForegroundApp:(bool) foreground
 {
     if (foreground) {
         [NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];
@@ -224,7 +224,7 @@
     }
 }
 
-- (void)setWindowSecurity:(NSWindow*)window state:(bool)state
+- (void) setWindowSecurity:(NSWindow*) window state:(bool) state
 {
     [window setSharingType:state ? NSWindowSharingNone : NSWindowSharingReadOnly];
 }
@@ -232,7 +232,7 @@
 //
 // Returns default application assigned to URLs
 //
-- (const char*)getDefaultApplicationForUrl:(NSURL*)url
+- (const char*) getDefaultApplicationForUrl:(NSURL*) url
 {
     NSURL* app = [[NSWorkspace sharedWorkspace] URLForApplicationToOpenURL:url];
     return [app fileSystemRepresentation];
