@@ -41,6 +41,7 @@ public slots:
 private slots:
     void showProxyLocationFileDialog();
     void validateCustomProxyLocation();
+    void validateProxyLocation();
     void showCustomBrowserLocationFileDialog();
 
 private:

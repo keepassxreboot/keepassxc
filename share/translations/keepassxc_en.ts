@@ -1138,6 +1138,14 @@ Do you want to delete the entry?
         <source>Allow limited access to all entries in connected databases (ignores site access restrictions)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>&lt;b&gt;Error: &lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Info: &lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CloneDialog</name>
@@ -7954,6 +7962,22 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>allow screenshots and app recording (Windows/macOS)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;br/&gt;Proxy will be set at: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;br/&gt;The proxy executable is missing. We recommend &lt;b&gt;one of&lt;/b&gt;:&lt;br/&gt;  - to copy it to path %1&lt;br/&gt;       &lt;b&gt;or&lt;/b&gt;&lt;br/&gt;  - set a custom proxy location in Settings-&gt;Browser Integration-&gt;Advanced to a correct proxy executable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;br/&gt; The custom proxy executable (%1) not found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;br/&gt; The proxy executable (%1) not installed correctly</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

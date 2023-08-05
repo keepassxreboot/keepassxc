@@ -272,17 +272,37 @@ QString constructFlatpakPath()
 #endif
 
 /**
- * Gets the path to keepassxc-proxy binary
+ * Gets the path to currently effective keepassxc-proxy binary
+ * This is the binary placement which will be "advertised" to
+ * external clients (for example to browsers)
  *
- * @param location Custom proxy path
  * @return path Path to keepassxc-proxy
  */
 QString NativeMessageInstaller::getProxyPath() const
 {
+    QString result;
     if (browserSettings()->useCustomProxy()) {
-        return browserSettings()->customProxyLocation();
+        result = browserSettings()->customProxyLocation();
+    } else {
+        result = getInstalledProxyPath();
     }
+    return result;
+}
 
+/**
+ * Gets the path to keepassxc-proxy binary
+ * at the time of the installation (as expected to be).
+ * This is different for different types of installations
+ * like Windows/Linux/snap/flatpak/appimage etc.
+ * External clients should not depend on this function.
+ * It is to be used only in places where the user configures
+ * the services (not in places that the service is used).
+ * That is, the function should be not completely public but "friend"
+ *
+ * @return Path to keepassxc-proxy at the time of the installation
+ */
+QString NativeMessageInstaller::getInstalledProxyPath() const
+{
     QString path;
 #if defined(KEEPASSXC_DIST_APPIMAGE)
     path = QProcessEnvironment::systemEnvironment().value("APPIMAGE");
