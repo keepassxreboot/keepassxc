@@ -125,14 +125,7 @@ void BrowserSettingsWidget::loadSettings()
     m_ui->supportKphFields->setChecked(settings->supportKphFields());
     m_ui->noMigrationPrompt->setChecked(settings->noMigrationPrompt());
     m_ui->useCustomProxy->setChecked(settings->useCustomProxy());
-    if (settings->customProxyLocation().isEmpty()) {
-        // if custom proxy path was never set (or reset to "non-custom")
-        //  - set it to the default install path
-        m_ui->customProxyLocation->setText(settings->replaceHomePath(settings->proxyLocationAsInstalled()));
-    } else {
-        // otherwise use the custom user setting
-        m_ui->customProxyLocation->setText(settings->replaceHomePath(settings->customProxyLocation()));
-    }
+    m_ui->customProxyLocation->setText(settings->replaceHomePath(settings->customProxyLocation()));
     m_ui->updateBinaryPath->setChecked(settings->updateBinaryPath());
     m_ui->allowGetDatabaseEntriesRequest->setChecked(settings->allowGetDatabaseEntriesRequest());
     m_ui->allowExpiredCredentials->setChecked(settings->allowExpiredCredentials());
