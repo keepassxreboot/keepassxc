@@ -240,7 +240,7 @@ QJsonObject BrowserService::createNewGroup(const QString& groupName)
         return result;
     }
 
-    auto dialogResult = MessageBox::warning(nullptr,
+    auto dialogResult = MessageBox::warning(m_currentDatabaseWidget,
                                             tr("KeePassXC: Create a new group"),
                                             tr("A request for creating a new group \"%1\" has been received.\n"
                                                "Do you want to create this group?\n")
@@ -411,7 +411,7 @@ QList<Entry*> BrowserService::confirmEntries(QList<Entry*>& pwEntriesToConfirm,
 
     m_dialogActive = true;
     updateWindowState();
-    BrowserAccessControlDialog accessControlDialog;
+    BrowserAccessControlDialog accessControlDialog(m_currentDatabaseWidget);
 
     connect(m_currentDatabaseWidget, SIGNAL(databaseLockRequested()), &accessControlDialog, SLOT(reject()));
 
@@ -447,7 +447,7 @@ void BrowserService::showPasswordGenerator(QLocalSocket* socket,
                                            const QString& secretKey)
 {
     if (!m_passwordGenerator) {
-        m_passwordGenerator.reset(PasswordGeneratorWidget::popupGenerator());
+        m_passwordGenerator.reset(PasswordGeneratorWidget::popupGenerator(m_currentDatabaseWidget));
 
         connect(m_passwordGenerator.data(), &PasswordGeneratorWidget::closed, m_passwordGenerator.data(), [=] {
             if (!m_passwordGenerator->isPasswordGenerated()) {
@@ -498,7 +498,7 @@ QString BrowserService::storeKey(const QString& key)
     QString id;
 
     do {
-        QInputDialog keyDialog;
+        QInputDialog keyDialog(m_currentDatabaseWidget);
         connect(m_currentDatabaseWidget, SIGNAL(databaseLockRequested()), &keyDialog, SLOT(reject()));
         keyDialog.setWindowTitle(tr("KeePassXC: New key association request"));
         keyDialog.setLabelText(tr("You have received an association request for the following database:\n%1\n\n"
@@ -521,7 +521,7 @@ QString BrowserService::storeKey(const QString& key)
 
         contains = db->metadata()->customData()->contains(CustomData::BrowserKeyPrefix + id);
         if (contains) {
-            dialogResult = MessageBox::warning(nullptr,
+            dialogResult = MessageBox::warning(m_currentDatabaseWidget,
                                                tr("KeePassXC: Overwrite existing key?"),
                                                tr("A shared encryption key with the name \"%1\" "
                                                   "already exists.\nDo you want to overwrite it?")
@@ -650,7 +650,7 @@ bool BrowserService::updateEntry(const QString& dbid,
         if (!browserSettings()->alwaysAllowUpdate()) {
             raiseWindow();
             dialogResult = MessageBox::question(
-                nullptr,
+                m_currentDatabaseWidget,
                 tr("KeePassXC: Update Entry"),
                 tr("Do you want to update the information in %1 - %2?").arg(QUrl(siteUrl).host(), username),
                 MessageBox::Save | MessageBox::Cancel,
@@ -686,7 +686,7 @@ bool BrowserService::deleteEntry(const QString& uuid)
         return false;
     }
 
-    auto dialogResult = MessageBox::warning(nullptr,
+    auto dialogResult = MessageBox::warning(m_currentDatabaseWidget,
                                             tr("KeePassXC: Delete entry"),
                                             tr("A request for deleting entry \"%1\" has been received.\n"
                                                "Do you want to delete the entry?\n")
@@ -1245,7 +1245,7 @@ QSharedPointer<Database> BrowserService::selectedDatabase()
         }
     }
 
-    BrowserEntrySaveDialog browserEntrySaveDialog;
+    BrowserEntrySaveDialog browserEntrySaveDialog(m_currentDatabaseWidget);
     int openDatabaseCount = browserEntrySaveDialog.setItems(databaseWidgets, m_currentDatabaseWidget);
     if (openDatabaseCount > 1) {
         int res = browserEntrySaveDialog.exec();
