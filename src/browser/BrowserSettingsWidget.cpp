@@ -20,6 +20,7 @@
 
 #include "BrowserSettings.h"
 #include "config-keepassx.h"
+#include "gui/styles/StateColorPalette.h"
 
 #include <QFileDialog>
 
@@ -49,10 +50,6 @@ BrowserSettingsWidget::BrowserSettingsWidget(QWidget* parent)
                  snapInstructions));
     // clang-format on
 
-    m_ui->warningWidget->setCloseButtonVisible(false);
-    m_ui->warningWidget->setAutoHideTimeout(MessageWidget::DisableAutoHide);
-    m_ui->warningWidget->setAnimate(false);
-
     m_ui->tabWidget->setEnabled(m_ui->enableBrowserSupport->isChecked());
     connect(m_ui->enableBrowserSupport, SIGNAL(toggled(bool)), m_ui->tabWidget, SLOT(setEnabled(bool)));
     connect(m_ui->enableBrowserSupport, SIGNAL(toggled(bool)), SLOT(validateProxyLocation()));
@@ -77,6 +74,11 @@ BrowserSettingsWidget::BrowserSettingsWidget(QWidget* parent)
     connect(m_ui->customProxyLocation, SIGNAL(editingFinished()), SLOT(validateProxyLocation()));
     connect(m_ui->customProxyLocationBrowseButton, SIGNAL(clicked()), this, SLOT(showProxyLocationFileDialog()));
 
+    m_ui->messageWidget->setVisible(false);
+    m_ui->messageWidget->setCloseButtonVisible(false);
+    m_ui->messageWidget->setWordWrap(true);
+    m_ui->messageWidget->setAutoHideTimeout(MessageWidget::DisableAutoHide);
+
 #ifndef Q_OS_LINUX
     m_ui->snapWarningLabel->setVisible(false);
 #endif
@@ -91,7 +93,6 @@ BrowserSettingsWidget::BrowserSettingsWidget(QWidget* parent)
     m_ui->torBrowserSupport->setHidden(true);
     m_ui->firefoxSupport->setText("Firefox and Tor Browser");
 #endif
-    m_ui->browserGlobalWarningWidget->setVisible(false);
 
 #ifndef QT_DEBUG
     m_ui->customExtensionId->setVisible(false);
@@ -162,10 +163,8 @@ void BrowserSettingsWidget::loadSettings()
     m_ui->customBrowserSupport->setVisible(false);
     m_ui->customBrowserGroupBox->setVisible(false);
     // Show notice to user
-    m_ui->browserGlobalWarningWidget->showMessage(tr("Please see special instructions for browser extension use below"),
-                                                  MessageWidget::Warning);
-    m_ui->browserGlobalWarningWidget->setCloseButtonVisible(false);
-    m_ui->browserGlobalWarningWidget->setAutoHideTimeout(MessageWidget::DisableAutoHide);
+    m_ui->messageWidget->showMessage(tr("Please see special instructions for browser extension use below"),
+                                     MessageWidget::Warning);
 #endif
 #ifdef KEEPASSXC_DIST_FLATPAK
     // The sandbox makes custom proxy locations very unintuitive
@@ -197,80 +196,46 @@ void BrowserSettingsWidget::loadSettings()
     validateProxyLocation();
 }
 
-void BrowserSettingsWidget::validateCustomProxyLocation()
+QString BrowserSettingsWidget::resolveCustomProxyLocation()
 {
-    auto path = m_ui->customProxyLocation->text(); // get the path that would be effective _after_ settings are
-                                                   // applied
-
-    if (m_ui->enableBrowserSupport->isChecked() && m_ui->useCustomProxy->isChecked() && !QFile::exists(path)) {
-        m_ui->warningWidget->showMessage(tr("<b>Error:</b> The custom proxy location cannot be found!"
-                                            "<br/>Browser integration WILL NOT WORK without the proxy application."),
-                                         MessageWidget::Error);
-    } else {
-        m_ui->warningWidget->showMessage(tr("<b>Warning:</b> The following options can be dangerous!"),
-                                         MessageWidget::Warning);
-    }
+    auto settings = browserSettings();
+    auto proxyLocation = m_ui->customProxyLocation->text();
+    proxyLocation = settings->replaceTildeHomePath(proxyLocation);
+    return proxyLocation;
 }
 
 void BrowserSettingsWidget::validateProxyLocation()
 {
-    // check the custom proxy dependency in case it is set
-    // this will update the advanced tab warning message only
-    validateCustomProxyLocation();
+    // Reset the UI
+    m_ui->messageWidget->setVisible(false);
+    m_ui->customProxyLocation->setStyleSheet("");
+    m_ui->customProxyLocation->setToolTip("");
 
-    // check the rest of the dependency and set the warning message when needed for the complete dependency
-    bool isValid = true;
-    bool isUiBrowseIntegrationEnabled = m_ui->enableBrowserSupport->isChecked();
-    QString warning = tr("<b>Error: </b>");
-    QString info = tr("<b>Info: </b>");
+    if (m_ui->enableBrowserSupport->isChecked()) {
+        // If we are using a custom proxy location, check if it exists and display warning if not
+        if (m_ui->useCustomProxy->isChecked()) {
+            if (!QFile::exists(resolveCustomProxyLocation())) {
+                StateColorPalette statePalette;
+                auto color = statePalette.color(StateColorPalette::ColorRole::Error);
+                m_ui->customProxyLocation->setStyleSheet(QString("QLineEdit { background: %1; }").arg(color.name()));
+                m_ui->customProxyLocation->setToolTip(tr("The custom proxy location does not exist."));
 
-    if (isUiBrowseIntegrationEnabled) {
-        // check if proxy exists -- this code assumes that all browsers use the same
-        // proxy executable. if this fact changes and the proxy is specific for each browser
-        // then the check should be dome in setBrowserEnabled
-        QString installedPath = browserSettings()->proxyLocationAsInstalled(); // this does not depend on user settings
-        info += QObject::tr("<br/>Proxy will be set at: ");
-        QString warningGen =
-            QObject::tr("<br/>The proxy executable is missing. We recommend <b>one of</b>:"
-                        "<br/>  - to copy it to path %1<br/>       <b>or</b>"
-                        "<br/>  - set a custom proxy location in Settings->Browser Integration->Advanced"
-                        " to a correct proxy executable.")
-                .arg(installedPath);
-        bool isCustomPrxExpected = m_ui->useCustomProxy->isChecked();
-        if (isCustomPrxExpected) {
-            QString newFilePath = m_ui->customProxyLocation->text(); // This is the location that would be
-                                                                     // effective _after_ Settings are applied
-            auto settingsData = browserSettings();
-            if (newFilePath.isEmpty()) {
-                newFilePath = settingsData->replaceHomePath(settingsData->proxyLocation());
+                m_ui->messageWidget->showMessage(tr("<b>Error:</b> The custom proxy location does not exist. Correct "
+                                                    "this in the advanced settings tab."),
+                                                 MessageWidget::Error);
             }
-            newFilePath = settingsData->replaceTildeHomePath(newFilePath);
-            if (!QFileInfo::exists(newFilePath)) {
-                isValid = false;
-                QString warning2 = QObject::tr("<br/> The custom proxy executable (%1) not found.").arg(newFilePath);
-                warning += warning2;
-                warning += warningGen;
-            } else {
-                info += newFilePath;
-            }
-        } else if (!QFileInfo::exists(installedPath)) {
-            isValid = false;
-            QString wrn3 = QObject::tr("<br/> The proxy executable (%1) not installed correctly").arg(installedPath);
-            warning += wrn3;
-            warning += warningGen;
         } else {
-            info += installedPath;
+            // Otherwise check if the installed proxy exists
+            auto expectedProxyLocation = browserSettings()->proxyLocationAsInstalled();
+            if (!QFile::exists(expectedProxyLocation)) {
+                m_ui->messageWidget->showMessage(
+                    tr("<b>Error:</b> The installed proxy executable is missing from the expected location: %1<br/>"
+                       "Please set a custom proxy location in the advanced settings or reinstall the application.")
+                        .arg(expectedProxyLocation),
+                    MessageWidget::Error);
+            }
         }
-    } else {
-        // do nothing the default is already all disabled;
-        // info stays as is (most probably info is not shown anyway, only errors and warnings)
     }
-
-    QString message = isValid ? info : warning;
-    MessageWidget::MessageType msgType = isValid ? MessageWidget::Information : MessageWidget::Warning;
-    m_ui->browserGlobalWarningWidget->setAutoHideTimeout(MessageWidget::DisableAutoHide);
-    m_ui->browserGlobalWarningWidget->showMessage(message, msgType);
-    m_ui->browserGlobalWarningWidget->setVisible(!isValid); // visibility of "info message" may be shown
 }
 
 void BrowserSettingsWidget::saveSettings()
@@ -283,7 +248,7 @@ void BrowserSettingsWidget::saveSettings()
     settings->setMatchUrlScheme(m_ui->matchUrlScheme->isChecked());
 
     settings->setUseCustomProxy(m_ui->useCustomProxy->isChecked());
-    settings->setCustomProxyLocation(browserSettings()->replaceTildeHomePath(m_ui->customProxyLocation->text()));
+    settings->setCustomProxyLocation(resolveCustomProxyLocation());
 
     settings->setUpdateBinaryPath(m_ui->updateBinaryPath->isChecked());
     settings->setAllowGetDatabaseEntriesRequest(m_ui->allowGetDatabaseEntriesRequest->isChecked());
@@ -326,7 +291,7 @@ void BrowserSettingsWidget::showProxyLocationFileDialog()
     QString fileTypeFilter(QString("%1 (*)").arg(tr("Executable Files")));
 #endif
 
-    QString initialFilePath = m_ui->customProxyLocation->text();
+    auto initialFilePath = resolveCustomProxyLocation();
     if (QFileInfo::exists(initialFilePath)) {
         initialFilePath = QFileInfo(initialFilePath).filePath();
     } else {
@@ -340,7 +305,6 @@ void BrowserSettingsWidget::showProxyLocationFileDialog()
     if (!proxyLocation.isEmpty()) {
         proxyLocation = browserSettings()->replaceHomePath(proxyLocation);
         m_ui->customProxyLocation->setText(proxyLocation);
-        // validate the complete dependency of browser integration related to the location of the proxy
         validateProxyLocation();
     } else {
         // do not overwrite old proxy setting

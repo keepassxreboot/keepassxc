@@ -1107,14 +1107,6 @@ Do you want to delete the entry?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location cannot be found!&lt;br/&gt;Browser integration WILL NOT WORK without the proxy application.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1139,11 +1131,19 @@ Do you want to delete the entry?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;b&gt;Error: &lt;/b&gt;</source>
+        <source>&lt;b&gt;Warning:&lt;/b&gt; Only adjust these settings if necessary.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;b&gt;Info: &lt;/b&gt;</source>
+        <source>The custom proxy location does not exist.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location does not exist. Correct this in the advanced settings tab.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The installed proxy executable is missing from the expected location: %1&lt;br/&gt;Please set a custom proxy location in the advanced settings or reinstall the application.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7962,22 +7962,6 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>allow screenshots and app recording (Windows/macOS)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;br/&gt;Proxy will be set at: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;br/&gt;The proxy executable is missing. We recommend &lt;b&gt;one of&lt;/b&gt;:&lt;br/&gt;  - to copy it to path %1&lt;br/&gt;       &lt;b&gt;or&lt;/b&gt;&lt;br/&gt;  - set a custom proxy location in Settings-&gt;Browser Integration-&gt;Advanced to a correct proxy executable.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;br/&gt; The custom proxy executable (%1) not found.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;br/&gt; The proxy executable (%1) not installed correctly</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
