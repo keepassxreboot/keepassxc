@@ -142,11 +142,32 @@ bool WinUtils::isHighContrastMode() const
     return (settings.value("Flags").toInt() & 1u) != 0;
 }
 
-// TODO
 QString WinUtils::getDefaultApplicationForUrl(const QUrl& url)
 {
-    Q_UNUSED(url)
-    return {};
+    // Get the associated program ID from scheme
+    auto registryPath =
+        QString("HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\Shell\\Associations\\UrlAssociations\\%1\\UserChoice")
+            .arg(url.scheme());
+    QSettings defaultBrowserRegistry(registryPath, QSettings::NativeFormat);
+    auto defaultBrowser = defaultBrowserRegistry.value("ProgId").toString();
+    if (defaultBrowser.isEmpty()) {
+        return {};
+    }
+
+    // Get the executable path from program ID
+    registryPath = QString("HKEY_LOCAL_MACHINE\\SOFTWARE\\Classes\\%1\\shell\\open\\command").arg(defaultBrowser);
+    QSettings executableRegistry(registryPath, QSettings::NativeFormat);
+    auto fullPath = executableRegistry.value("Default").toString();
+    if (fullPath.isEmpty()) {
+        return {};
+    }
+
+    auto splitPath = fullPath.split('"', Qt::SkipEmptyParts);
+    if (splitPath.isEmpty()) {
+        return {};
+    }
+
+    return splitPath.first();
 }
 
 bool WinUtils::registerGlobalShortcut(const QString& name, Qt::Key key, Qt::KeyboardModifiers modifiers, QString* error)

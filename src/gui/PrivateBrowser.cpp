@@ -32,9 +32,7 @@ void PrivateBrowser::openUrl(const QUrl& url)
 #if defined(Q_OS_MAC)
     QStringList args{"-n", applicationPath, "--args", privateModeArg, url.toString()};
     QProcess::startDetached("open", args);
-#elif defined(Q_OS_WIN)
-
-#elif defined(Q_OS_LINUX)
+#else
     QStringList args{privateModeArg, url.toString()};
     QProcess::startDetached(applicationPath, args);
 #endif
