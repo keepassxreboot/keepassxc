@@ -59,12 +59,6 @@ private:
     void eraseGroup(Group* group);
     ChangeList resolveEntryConflict(const MergeContext& context, const Entry* existingEntry, Entry* otherEntry);
     ChangeList resolveGroupConflict(const MergeContext& context, const Group* existingGroup, Group* otherGroup);
-    Merger::ChangeList
-    resolveEntryConflict_Duplicate(const MergeContext& context, const Entry* sourceEntry, Entry* targetEntry);
-    Merger::ChangeList
-    resolveEntryConflict_KeepLocal(const MergeContext& context, const Entry* sourceEntry, Entry* targetEntry);
-    Merger::ChangeList
-    resolveEntryConflict_KeepRemote(const MergeContext& context, const Entry* sourceEntry, Entry* targetEntry);
     Merger::ChangeList resolveEntryConflict_MergeHistories(const MergeContext& context,
                                                            const Entry* sourceEntry,
                                                            Entry* targetEntry,

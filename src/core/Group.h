@@ -39,9 +39,6 @@ public:
     enum MergeMode
     {
         Default, // Determine merge strategy from parent or fallback (Synchronize)
-        Duplicate, // lossy strategy regarding deletions, duplicate older changes in a new entry
-        KeepLocal, // merge history forcing local as top regardless of age
-        KeepRemote, // merge history forcing remote as top regardless of age
         KeepNewer, // merge history
         Synchronize, // merge history keeping most recent as top entry and applying deletions
     };
