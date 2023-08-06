@@ -58,6 +58,9 @@ public slots:
     void complete(bool accepted);
     void tabChanged(int index);
 
+protected:
+    void showEvent(QShowEvent* event) override;
+
 private:
     void selectTabOffset(int offset);
 

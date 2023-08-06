@@ -1579,6 +1579,10 @@ If you do not have a key file, please leave the field empty.</source>
         <source>Failed to authenticate with Windows Hello: %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Windows Hello setup was canceled or failed. Quick unlock has not been enabled.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingWidgetMetaData</name>
