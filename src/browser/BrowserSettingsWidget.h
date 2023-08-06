@@ -32,7 +32,7 @@ class BrowserSettingsWidget : public QWidget
 
 public:
     explicit BrowserSettingsWidget(QWidget* parent = nullptr);
-    ~BrowserSettingsWidget();
+    ~BrowserSettingsWidget() override;
 
 public slots:
     void loadSettings();
@@ -40,10 +40,12 @@ public slots:
 
 private slots:
     void showProxyLocationFileDialog();
-    void validateCustomProxyLocation();
+    void validateProxyLocation();
     void showCustomBrowserLocationFileDialog();
 
 private:
+    QString resolveCustomProxyLocation();
+
     QScopedPointer<Ui::BrowserSettingsWidget> m_ui;
 };
 

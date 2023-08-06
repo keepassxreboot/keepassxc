@@ -27,7 +27,7 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="MessageWidget" name="browserGlobalWarningWidget" native="true"/>
+    <widget class="MessageWidget" name="messageWidget" native="true"/>
    </item>
    <item>
     <widget class="QCheckBox" name="enableBrowserSupport">
@@ -267,12 +267,15 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_6">
        <item>
-        <widget class="MessageWidget" name="warningWidget" native="true">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
+        <widget class="MessageWidget" name="advancedMessageWidget" native="true">
+         <property name="text" stdset="0">
+          <string>&lt;b&gt;Warning:&lt;/b&gt; Only adjust these settings if necessary.</string>
+         </property>
+         <property name="closeButtonVisible" stdset="0">
+          <bool>false</bool>
+         </property>
+         <property name="messageType" stdset="0">
+          <number>2</number>
          </property>
         </widget>
        </item>

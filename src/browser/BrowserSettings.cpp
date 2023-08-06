@@ -200,6 +200,11 @@ QString BrowserSettings::proxyLocation()
     return m_nativeMessageInstaller.getProxyPath();
 }
 
+QString BrowserSettings::proxyLocationAsInstalled() const
+{
+    return m_nativeMessageInstaller.getInstalledProxyPath();
+}
+
 #ifdef QT_DEBUG
 QString BrowserSettings::customExtensionId()
 {
