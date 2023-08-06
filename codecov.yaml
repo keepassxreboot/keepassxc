@@ -2,7 +2,24 @@ coverage:
   range: 60..80
   round: nearest
   precision: 2
+  status:
+    project:
+      default:
+        target: auto
+        threshold: 0.5%
+        paths:
+          - "src"
+    patch:
+      default:
+        target: 75%
+        threshold: 0%
+        paths:
+          - "src"
 fixes:
   - "*/src/::"
+ignore:
+  - "src/gui/styles/**"
+  - "src/thirdparty/**"
+  - "src/zxcvbn/**"
 comment:
   require_changes: true
