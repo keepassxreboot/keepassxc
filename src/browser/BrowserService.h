@@ -82,6 +82,7 @@ public:
     QString getCurrentTotp(const QString& uuid);
     void showPasswordGenerator(const KeyPairMessage& keyPairMessage);
     bool isPasswordGeneratorRequested() const;
+    bool isUrlIdentical(const QString& first, const QString& second) const;
 
     void addEntry(const EntryParameters& entryParameters,
                   const QString& group,
