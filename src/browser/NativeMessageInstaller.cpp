@@ -272,17 +272,24 @@ QString constructFlatpakPath()
 #endif
 
 /**
- * Gets the path to keepassxc-proxy binary
- *
- * @param location Custom proxy path
- * @return path Path to keepassxc-proxy
+ * Returns the effective proxy path used to build the native messaging JSON script
  */
 QString NativeMessageInstaller::getProxyPath() const
 {
+    QString result;
     if (browserSettings()->useCustomProxy()) {
-        return browserSettings()->customProxyLocation();
+        result = browserSettings()->customProxyLocation();
+    } else {
+        result = getInstalledProxyPath();
     }
+    return result;
+}
 
+/**
+ * Returns the original proxy path at the time of installation
+ */
+QString NativeMessageInstaller::getInstalledProxyPath() const
+{
     QString path;
 #if defined(KEEPASSXC_DIST_APPIMAGE)
     path = QProcessEnvironment::systemEnvironment().value("APPIMAGE");

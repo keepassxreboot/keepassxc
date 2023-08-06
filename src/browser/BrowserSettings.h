@@ -57,6 +57,7 @@ public:
     QString customProxyLocation();
     void setCustomProxyLocation(const QString& location);
     QString proxyLocation();
+    QString proxyLocationAsInstalled() const;
 #ifdef QT_DEBUG
     QString customExtensionId();
     void setCustomExtensionId(const QString& id);

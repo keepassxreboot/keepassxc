@@ -33,6 +33,7 @@ public:
     bool isBrowserEnabled(BrowserShared::SupportedBrowsers browser);
 
     QString getProxyPath() const;
+    QString getInstalledProxyPath() const;
     void updateBinaryPaths();
 
 private:
