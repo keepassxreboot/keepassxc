@@ -29,13 +29,6 @@ QTEST_GUILESS_MAIN(TestMerge)
 
 namespace
 {
-    TimeInfo modificationTime(TimeInfo timeInfo, int years, int months, int days)
-    {
-        const QDateTime time = timeInfo.lastModificationTime();
-        timeInfo.setLastModificationTime(time.addYears(years).addMonths(months).addDays(days));
-        return timeInfo;
-    }
-
     MockClock* m_clock = nullptr;
 } // namespace
 
@@ -256,50 +249,6 @@ void TestMerge::testResolveConflictExisting()
     for (DeletedObject deletedObject : dbDestination->deletedObjects()) {
         QVERIFY(deletedObject.uuid != entryDestinationMerged->uuid());
     }
-}
-
-/**
- * Tests the KeepBoth merge mode.
- */
-void TestMerge::testResolveConflictDuplicate()
-{
-    QScopedPointer<Database> dbDestination(createTestDatabase());
-    QScopedPointer<Database> dbSource(
-        createTestDatabaseStructureClone(dbDestination.data(), Entry::CloneIncludeHistory, Group::CloneIncludeEntries));
-
-    // sanity check
-    QCOMPARE(dbDestination->rootGroup()->children().at(0)->entries().size(), 2);
-
-    // make this entry newer than in original db
-    QPointer<Entry> updatedDestinationEntry = dbDestination->rootGroup()->children().at(0)->entries().at(0);
-    const TimeInfo initialEntryTimeInfo = updatedDestinationEntry->timeInfo();
-    const TimeInfo updatedEntryTimeInfo = modificationTime(initialEntryTimeInfo, 1, 0, 0);
-
-    updatedDestinationEntry->setTimeInfo(updatedEntryTimeInfo);
-
-    dbDestination->rootGroup()->setMergeMode(Group::MergeMode::Duplicate);
-
-    // Make sure the merge changes have a different timestamp.
-    m_clock->advanceSecond(1);
-
-    Merger merger(dbSource.data(), dbDestination.data());
-    merger.merge();
-
-    // one entry is duplicated because of mode
-    QCOMPARE(dbDestination->rootGroup()->children().at(0)->entries().size(), 3);
-    QCOMPARE(dbDestination->rootGroup()->children().at(0)->entries().at(0)->historyItems().isEmpty(), false);
-    // the older entry was merged from the other db as last in the group
-    QPointer<Entry> newerEntry = dbDestination->rootGroup()->children().at(0)->entries().at(0);
-    QPointer<Entry> olderEntry = dbDestination->rootGroup()->children().at(0)->entries().at(2);
-    QVERIFY(newerEntry->title() == olderEntry->title());
-    QVERIFY2(!newerEntry->attributes()->hasKey("merged"), "newer entry is not marked with an attribute \"merged\"");
-    QVERIFY2(olderEntry->attributes()->hasKey("merged"), "older entry is marked with an attribute \"merged\"");
-    QCOMPARE(olderEntry->historyItems().isEmpty(), false);
-    QCOMPARE(newerEntry->timeInfo(), updatedEntryTimeInfo);
-    // TODO HNH: this may be subject to discussions since the entry itself is newer but represents an older one
-    // QCOMPARE(olderEntry->timeInfo(), initialEntryTimeInfo);
-    QVERIFY2(olderEntry->uuidToHex() != updatedDestinationEntry->uuidToHex(),
-             "KeepBoth should not reuse the UUIDs when cloning.");
 }
 
 void TestMerge::testResolveConflictTemplate(
@@ -733,24 +682,9 @@ void TestMerge::testDeletionConflictEntry_Synchronized()
     testDeletionConflictTemplate(Group::Synchronize, &TestMerge::assertDeletionNewerOnly);
 }
 
-void TestMerge::testDeletionConflictEntry_KeepLocal()
-{
-    testDeletionConflictTemplate(Group::KeepLocal, &TestMerge::assertDeletionLocalOnly);
-}
-
-void TestMerge::testDeletionConflictEntry_KeepRemote()
-{
-    testDeletionConflictTemplate(Group::KeepRemote, &TestMerge::assertDeletionLocalOnly);
-}
-
 void TestMerge::testDeletionConflictEntry_KeepNewer()
 {
     testDeletionConflictTemplate(Group::KeepNewer, &TestMerge::assertDeletionLocalOnly);
-}
-
-void TestMerge::testDeletionConflictEntry_Duplicate()
-{
-    testDeletionConflictTemplate(Group::Duplicate, &TestMerge::assertDeletionLocalOnly);
 }
 
 /**
@@ -762,29 +696,6 @@ void TestMerge::testResolveConflictEntry_Synchronize()
         QPointer<Group> mergedRootGroup = db->rootGroup();
         QPointer<Group> mergedGroup1 = mergedRootGroup->children().at(0);
         TestMerge::assertUpdateMergedEntry1(mergedGroup1->entries().at(0), timestamps);
-        TestMerge::assertUpdateMergedEntry2(mergedGroup1->entries().at(1), timestamps);
-    });
-}
-
-/**
- * Tests the KeepExisting mode concerning history.
- */
-void TestMerge::testResolveConflictEntry_KeepLocal()
-{
-    testResolveConflictTemplate(Group::KeepLocal, [](Database* db, const QMap<const char*, QDateTime>& timestamps) {
-        QPointer<Group> mergedRootGroup = db->rootGroup();
-        QPointer<Group> mergedGroup1 = mergedRootGroup->children().at(0);
-        TestMerge::assertUpdateMergedEntry1(mergedGroup1->entries().at(0), timestamps);
-        TestMerge::assertUpdateReappliedEntry2(mergedGroup1->entries().at(1), timestamps);
-    });
-}
-
-void TestMerge::testResolveConflictEntry_KeepRemote()
-{
-    testResolveConflictTemplate(Group::KeepRemote, [](Database* db, const QMap<const char*, QDateTime>& timestamps) {
-        QPointer<Group> mergedRootGroup = db->rootGroup();
-        QPointer<Group> mergedGroup1 = mergedRootGroup->children().at(0);
-        TestMerge::assertUpdateReappliedEntry1(mergedGroup1->entries().at(0), timestamps);
         TestMerge::assertUpdateMergedEntry2(mergedGroup1->entries().at(1), timestamps);
     });
 }
