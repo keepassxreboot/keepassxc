@@ -1672,7 +1672,12 @@ void MainWindow::applySettingsChanges()
     }
 
     m_ui->toolBar->setHidden(config()->get(Config::GUI_HideToolbar).toBool());
-    m_ui->toolBar->setMovable(config()->get(Config::GUI_MovableToolbar).toBool());
+    auto movable = config()->get(Config::GUI_MovableToolbar).toBool();
+    m_ui->toolBar->setMovable(movable);
+    if (!movable) {
+        // Move the toolbar back to the top of the main window
+        addToolBar(Qt::TopToolBarArea, m_ui->toolBar);
+    }
 
     bool isOk = false;
     const auto toolButtonStyle =
