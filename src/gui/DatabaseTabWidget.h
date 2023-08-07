@@ -74,6 +74,7 @@ public slots:
 
     bool lockDatabases();
     void lockDatabasesDelayed();
+    void lockDatabasesOnUserSwitch();
     void closeDatabaseFromSender();
     void unlockDatabaseInDialog(DatabaseWidget* dbWidget, DatabaseOpenDialog::Intent intent);
     void unlockDatabaseInDialog(DatabaseWidget* dbWidget, DatabaseOpenDialog::Intent intent, const QString& filePath);
