@@ -129,6 +129,7 @@ signals:
     // relayed Database signals
     void databaseFilePathChanged(const QString& oldPath, const QString& newPath);
     void databaseModified();
+    void databaseNonDataChanged();
     void databaseSaved();
     void databaseUnlocked();
     void databaseLockRequested();
@@ -254,6 +255,7 @@ private slots:
     void onEntryChanged(Entry* entry);
     void onGroupChanged();
     void onDatabaseModified();
+    void onDatabaseNonDataChanged();
     void onAutosaveDelayTimeout();
     void connectDatabaseSignals();
     void loadDatabase(bool accepted);

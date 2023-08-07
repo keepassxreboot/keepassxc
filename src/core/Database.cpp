@@ -939,6 +939,7 @@ void Database::markAsClean()
 void Database::markNonDataChange()
 {
     m_hasNonDataChange = true;
+    emit databaseNonDataChanged();
 }
 
 /**
