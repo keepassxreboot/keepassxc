@@ -134,6 +134,16 @@
             </property>
            </widget>
           </item>
+          <item row="1" column="3">
+           <widget class="QCheckBox" name="thunderBirdSupport">
+            <property name="text">
+             <string>Thunderbird</string>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="0">
            <widget class="QCheckBox" name="chromeSupport">
             <property name="text">
