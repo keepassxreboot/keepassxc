@@ -753,7 +753,7 @@ void TestBrowser::testIsUrlIdentical()
     QVERIFY(browserService()->isUrlIdentical("https://example.com/  ", "  https://example.com"));
     QVERIFY(!browserService()->isUrlIdentical("https://example.com/", "  example.com"));
     QVERIFY(browserService()->isUrlIdentical("https://example.com/path/to/nowhere",
-                                              "https://example.com/path/to/nowhere/"));
+                                             "https://example.com/path/to/nowhere/"));
     QVERIFY(!browserService()->isUrlIdentical("https://example.com/", "://example.com/"));
     QVERIFY(browserService()->isUrlIdentical("ftp://127.0.0.1/", "ftp://127.0.0.1"));
 }
