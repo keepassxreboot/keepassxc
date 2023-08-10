@@ -35,7 +35,6 @@ void TestConfig::testUpgrade()
     Config::createConfigFromFile(tempFile.fileName());
 
     // value of new setting should be opposite the value of deprecated setting
-    QVERIFY(!config()->get(Config::Security_PasswordsRepeatVisible).toBool());
     QVERIFY(!config()->get(Config::Security_PasswordsHidden).toBool());
     QVERIFY(config()->get(Config::Security_PasswordEmptyPlaceholder).toBool());
 

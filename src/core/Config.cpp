@@ -137,7 +137,6 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::Security_LockDatabaseMinimize, {QS("Security/LockDatabaseMinimize"), Roaming, false}},
     {Config::Security_LockDatabaseScreenLock, {QS("Security/LockDatabaseScreenLock"), Roaming, true}},
     {Config::Security_RelockAutoType, {QS("Security/RelockAutoType"), Roaming, false}},
-    {Config::Security_PasswordsRepeatVisible, {QS("Security/PasswordsRepeatVisible"), Roaming, true}},
     {Config::Security_PasswordsHidden, {QS("Security/PasswordsHidden"), Roaming, true}},
     {Config::Security_PasswordEmptyPlaceholder, {QS("Security/PasswordEmptyPlaceholder"), Roaming, false}},
     {Config::Security_HidePasswordPreviewPanel, {QS("Security/HidePasswordPreviewPanel"), Roaming, true}},
@@ -332,7 +331,7 @@ static const QHash<QString, Config::ConfigKey> deprecationMap = {
     {QS("security/passwordscleartext"), Config::Security_PasswordsHidden},
     {QS("security/passwordemptynodots"), Config::Security_PasswordEmptyPlaceholder},
     {QS("security/HidePasswordPreviewPanel"), Config::Security_HidePasswordPreviewPanel},
-    {QS("security/passwordsrepeat"), Config::Security_PasswordsRepeatVisible},
+    {QS("security/passwordsrepeat"), Config::Deleted},
     {QS("security/hidenotes"), Config::Security_HideNotes},
     {QS("KeeShare/Settings.own"), Config::KeeShare_Own},
     {QS("KeeShare/Settings.foreign"), Config::KeeShare_Foreign},
@@ -378,7 +377,8 @@ static const QHash<QString, Config::ConfigKey> deprecationMap = {
     {QS("Security/ResetTouchIdScreenlock"), Config::Deleted},
 
     // 2.8.0
-    {QS("GUI/AdvancedSettings"), Config::Deleted}};
+    {QS("GUI/AdvancedSettings"), Config::Deleted},
+    {QS("Security/PasswordsRepeatVisible"), Config::Deleted}};
 
 /**
  * Migrate settings from previous versions.
