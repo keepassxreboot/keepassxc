@@ -139,6 +139,7 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     // QuickUnlock actions
     connect(m_ui->quickUnlockButton, &QPushButton::pressed, this, [this] { openDatabase(); });
     connect(m_ui->resetQuickUnlockButton, &QPushButton::pressed, this, [this] { resetQuickUnlock(); });
+    m_ui->resetQuickUnlockButton->setShortcut(Qt::Key_Escape);
 }
 
 DatabaseOpenWidget::~DatabaseOpenWidget()
@@ -286,7 +287,11 @@ void DatabaseOpenWidget::openDatabase()
             auto keyData = databaseKey->serialize();
 #if defined(Q_CC_MSVC)
             // Store the password using Windows Hello
-            getWindowsHello()->storeKey(m_filename, keyData);
+            if (!getWindowsHello()->storeKey(m_filename, keyData)) {
+                getMainWindow()->displayTabMessage(
+                    tr("Windows Hello setup was canceled or failed. Quick unlock has not been enabled."),
+                    MessageWidget::MessageType::Warning);
+            }
 #elif defined(Q_OS_MACOS)
             // Store the password using TouchID
             TouchID::getInstance().storeKey(m_filename, keyData);
@@ -534,6 +539,13 @@ void DatabaseOpenWidget::setUserInteractionLock(bool state)
 bool DatabaseOpenWidget::isOnQuickUnlockScreen()
 {
     return m_ui->centralStack->currentIndex() == 1;
+}
+
+void DatabaseOpenWidget::triggerQuickUnlock()
+{
+    if (isOnQuickUnlockScreen()) {
+        m_ui->quickUnlockButton->click();
+    }
 }
 
 /**

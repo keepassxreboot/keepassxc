@@ -45,8 +45,12 @@ public:
     void clearForms();
     void enterKey(const QString& pw, const QString& keyFile);
     QSharedPointer<Database> database();
-    void resetQuickUnlock();
     bool unlockingDatabase();
+
+    // Quick Unlock helper functions
+    bool isOnQuickUnlockScreen();
+    void triggerQuickUnlock();
+    void resetQuickUnlock();
 
 signals:
     void dialogFinished(bool accepted);
@@ -56,8 +60,6 @@ protected:
     void hideEvent(QHideEvent* event) override;
     QSharedPointer<CompositeKey> buildDatabaseKey();
     void setUserInteractionLock(bool state);
-    // Quick Unlock helper functions
-    bool isOnQuickUnlockScreen();
 
     const QScopedPointer<Ui::DatabaseOpenWidget> m_ui;
     QSharedPointer<Database> m_db;
