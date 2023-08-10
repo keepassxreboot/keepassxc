@@ -561,10 +561,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Require password repeat when it is visible</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Hide passwords when editing them</source>
         <translation type="unfinished"></translation>
     </message>

@@ -61,7 +61,6 @@ protected:
     bool event(QEvent* event) override;
 
 private slots:
-    void autocompletePassword(const QString& password);
     void popupPasswordGenerator();
     void updateRepeatStatus();
     void updatePasswordStrength(const QString& password);
