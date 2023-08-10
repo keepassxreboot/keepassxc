@@ -80,6 +80,16 @@ DatabaseOpenDialog::DatabaseOpenDialog(QWidget* parent)
     connect(shortcut, &QShortcut::activated, this, [this]() { selectTabOffset(1); });
 }
 
+void DatabaseOpenDialog::showEvent(QShowEvent* event)
+{
+    QDialog::showEvent(event);
+    QTimer::singleShot(100, this, [=] {
+        if (m_view->isOnQuickUnlockScreen() && !m_view->unlockingDatabase()) {
+            m_view->triggerQuickUnlock();
+        }
+    });
+}
+
 void DatabaseOpenDialog::selectTabOffset(int offset)
 {
     if (offset == 0 || m_tabBar->count() <= 1) {

@@ -142,6 +142,8 @@ void TestGuiFdoSecrets::initTestCase()
     config()->set(Config::AutoSaveOnExit, false);
     config()->set(Config::GUI_ShowTrayIcon, true);
     config()->set(Config::UpdateCheckMessageShown, true);
+    // Disable quick unlock
+    config()->set(Config::Security_QuickUnlock, false);
     // Disable secret service integration (activate within individual tests to test the plugin)
     FdoSecrets::settings()->setEnabled(false);
     // activate within individual tests

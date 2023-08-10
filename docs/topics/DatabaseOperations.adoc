@@ -61,7 +61,7 @@ image::database_view.png[]
 === Quick Unlock
 On Windows and macOS, subject to hardware availability, your credentials can be securely stored to enable subsequent unlocking of your database through biometric authentication. This is enabled by default on Windows using _Windows Hello_ and on macOS using _Touch ID or Apple Watch_ services. You can disable this feature in the Application Settings under the Security section.
 
-NOTE: On Windows you will be prompted to authenticate to Windows Hello on the initial database unlock. This is required to access the hardware certificate store that encrypts your credentials.
+NOTE: On Windows, you will be prompted to authenticate to Windows Hello after unlocking your database with full credentials. This is required to setup Quick Unlock. If you cancel this prompt then Quick Unlock will not be enabled and your database will continue to unlock.
 
 .Windows Hello example
 image::quick_unlock_windows_hello.png[]
