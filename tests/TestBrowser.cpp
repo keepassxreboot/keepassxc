@@ -668,3 +668,19 @@ void TestBrowser::testBestMatchingWithAdditionalURLs()
     QCOMPARE(sorted.length(), 1);
     QCOMPARE(sorted[0]->url(), urls[0]);
 }
+
+void TestBrowser::testIsUrlIdentical()
+{
+    QVERIFY(browserService()->isUrlIdentical("https://example.com", "https://example.com"));
+    QVERIFY(browserService()->isUrlIdentical("https://example.com", "  https://example.com  "));
+    QVERIFY(!browserService()->isUrlIdentical("https://example.com", "https://example2.com"));
+    QVERIFY(!browserService()->isUrlIdentical("https://example.com/", "https://example.com/#login"));
+    QVERIFY(browserService()->isUrlIdentical("https://example.com", "https://example.com/"));
+    QVERIFY(browserService()->isUrlIdentical("https://example.com/", "https://example.com"));
+    QVERIFY(browserService()->isUrlIdentical("https://example.com/  ", "  https://example.com"));
+    QVERIFY(!browserService()->isUrlIdentical("https://example.com/", "  example.com"));
+    QVERIFY(browserService()->isUrlIdentical("https://example.com/path/to/nowhere",
+                                             "https://example.com/path/to/nowhere/"));
+    QVERIFY(!browserService()->isUrlIdentical("https://example.com/", "://example.com/"));
+    QVERIFY(browserService()->isUrlIdentical("ftp://127.0.0.1/", "ftp://127.0.0.1"));
+}

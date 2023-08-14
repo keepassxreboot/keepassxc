@@ -63,6 +63,7 @@ public:
                                const QString& publicKey,
                                const QString& secretKey);
     bool isPasswordGeneratorRequested() const;
+    bool isUrlIdentical(const QString& first, const QString& second) const;
 
     void addEntry(const QString& dbid,
                   const QString& login,
