@@ -544,6 +544,33 @@ bool BrowserService::isPasswordGeneratorRequested() const
     return m_passwordGeneratorRequested;
 }
 
+// Returns true if URLs are identical. Paths with "/" are removed during comparison.
+// URLs without scheme reverts to https.
+// Special handling is needed because QUrl::matches() with QUrl::StripTrailingSlash does not strip "/" paths.
+bool BrowserService::isUrlIdentical(const QString& first, const QString& second) const
+{
+    auto trimUrl = [](QString url) {
+        url = url.trimmed();
+        if (url.endsWith("/")) {
+            url.remove(url.length() - 1, 1);
+        }
+
+        return url;
+    };
+
+    if (first.isEmpty() || second.isEmpty()) {
+        return false;
+    }
+
+    const auto firstUrl = trimUrl(first);
+    const auto secondUrl = trimUrl(second);
+    if (firstUrl == secondUrl) {
+        return true;
+    }
+
+    return QUrl(firstUrl).matches(QUrl(secondUrl), QUrl::StripTrailingSlash);
+}
+
 QString BrowserService::storeKey(const QString& key)
 {
     auto db = getDatabase();

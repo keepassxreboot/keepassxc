@@ -132,6 +132,7 @@ private slots:
     void removeCurrentURL();
     void editCurrentURL();
     void updateCurrentURL();
+    void entryURLEdited(const QString& url);
 #endif
 
 private:
