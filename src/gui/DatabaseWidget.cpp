@@ -1108,6 +1108,8 @@ void DatabaseWidget::connectDatabaseSignals()
     connect(m_db.data(), &Database::modified, this, &DatabaseWidget::onDatabaseModified);
     connect(m_db.data(), &Database::databaseSaved, this, &DatabaseWidget::databaseSaved);
     connect(m_db.data(), &Database::databaseFileChanged, this, &DatabaseWidget::reloadDatabaseFile);
+    connect(m_db.data(), &Database::databaseNonDataChanged, this, &DatabaseWidget::databaseNonDataChanged);
+    connect(m_db.data(), &Database::databaseNonDataChanged, this, &DatabaseWidget::onDatabaseNonDataChanged);
 }
 
 void DatabaseWidget::loadDatabase(bool accepted)
@@ -1536,6 +1538,14 @@ void DatabaseWidget::onDatabaseModified()
         m_blockAutoSave = false;
     }
     refreshSearch();
+}
+
+void DatabaseWidget::onDatabaseNonDataChanged()
+{
+    // Force mark the database modified if we are not auto-saving non-data changes
+    if (!config()->get(Config::AutoSaveNonDataChanges).toBool()) {
+        m_db->markAsModified();
+    }
 }
 
 QString DatabaseWidget::getCurrentSearch()
