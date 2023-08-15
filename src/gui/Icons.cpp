@@ -77,29 +77,27 @@ QString Icons::trayIconAppearance() const
     return iconAppearance;
 }
 
-QIcon Icons::trayIcon(QString style)
+QIcon Icons::trayIcon(bool unlocked)
 {
-    if (style == "unlocked") {
-        style.clear();
-    }
-    if (!style.isEmpty()) {
-        style = "-" + style;
+    QString suffix;
+    if (!unlocked) {
+        suffix = "-locked";
     }
 
     auto iconApperance = trayIconAppearance();
     if (!iconApperance.startsWith("monochrome")) {
-        return icon(QString("%1%2").arg(applicationIconName(), style), false);
+        return icon(QString("%1%2").arg(applicationIconName(), suffix), false);
     }
 
     QIcon i;
 #if defined(Q_OS_MACOS) || defined(Q_OS_WIN)
     if (osUtils->isStatusBarDark()) {
-        i = icon(QString("keepassxc-monochrome-light%1").arg(style), false);
+        i = icon(QString("keepassxc-monochrome-light%1").arg(suffix), false);
     } else {
-        i = icon(QString("keepassxc-monochrome-dark%1").arg(style), false);
+        i = icon(QString("keepassxc-monochrome-dark%1").arg(suffix), false);
     }
 #else
-    i = icon(QString("%1-%2%3").arg(applicationIconName(), iconApperance, style), false);
+    i = icon(QString("%1-%2%3").arg(applicationIconName(), iconApperance, suffix), false);
 #endif
 #if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
     // Set as mask to allow the operating system to recolour the tray icon. This may look weird
@@ -109,16 +107,6 @@ QIcon Icons::trayIcon(QString style)
     i.setIsMask(true);
 #endif
     return i;
-}
-
-QIcon Icons::trayIconLocked()
-{
-    return trayIcon("locked");
-}
-
-QIcon Icons::trayIconUnlocked()
-{
-    return trayIcon("unlocked");
 }
 
 AdaptiveIconEngine::AdaptiveIconEngine(QIcon baseIcon, QColor overrideColor)
