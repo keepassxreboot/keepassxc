@@ -1561,12 +1561,8 @@ void MainWindow::updateTrayIcon()
             connect(actionToggle, SIGNAL(triggered()), SLOT(toggleWindow()));
         }
 
-        if (m_ui->tabWidget->hasLockableDatabases()) {
-            m_trayIcon->setIcon(icons()->trayIconUnlocked());
-        } else {
-            m_trayIcon->setIcon(icons()->trayIconLocked());
-        }
-
+        bool showUnlocked = m_ui->tabWidget->hasLockableDatabases();
+        m_trayIcon->setIcon(icons()->trayIcon(showUnlocked));
         m_trayIcon->setToolTip(windowTitle().replace("[*]", isWindowModified() ? "*" : ""));
         m_trayIcon->show();
 
