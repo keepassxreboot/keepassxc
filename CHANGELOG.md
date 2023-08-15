@@ -5,7 +5,7 @@
 ### Changes
 - Significant improvement to visual when drag/drop entries [#9698]
 - Automatically prompt for Quick Unlock when showing unlock dialog [#9697]
-- Improve colorful lock icon [#9632]
+- Improve colorful lock icon and fix file MIME icon on KDE [#9632]
 - Ability to search by entry UUID [#9571]
 - Add challenge-response support for NitroKey 3 [#9631]
 - Auto-Type: Disable entry level Auto-Type when disabled at group/entry [#9672]
