@@ -198,6 +198,7 @@ QString BrowserSettingsWidget::resolveCustomProxyLocation()
 
 void BrowserSettingsWidget::validateProxyLocation()
 {
+#if !defined(KEEPASSXC_DIST_SNAP) && !defined(KEEPASSXC_DIST_FLATPAK)
     // Reset the UI
     m_ui->messageWidget->setVisible(false);
     m_ui->customProxyLocation->setStyleSheet("");
@@ -228,6 +229,7 @@ void BrowserSettingsWidget::validateProxyLocation()
             }
         }
     }
+#endif
 }
 
 void BrowserSettingsWidget::saveSettings()
