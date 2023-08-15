@@ -74,7 +74,6 @@ BrowserService::BrowserService()
     , m_browserHost(new BrowserHost)
     , m_dialogActive(false)
     , m_bringToFrontRequested(false)
-    , m_passwordGeneratorRequested(false)
     , m_prevWindowState(WindowState::Normal)
     , m_keepassBrowserUUID(Tools::hexToUuid("de887cc3036343b8974b5911b8816224"))
 {
@@ -512,7 +511,7 @@ QList<Entry*> BrowserService::confirmEntries(QList<Entry*>& entriesToConfirm,
 void BrowserService::showPasswordGenerator(const KeyPairMessage& keyPairMessage)
 {
     if (!m_passwordGenerator) {
-        m_passwordGenerator.reset(PasswordGeneratorWidget::popupGenerator(m_currentDatabaseWidget));
+        m_passwordGenerator = PasswordGeneratorWidget::popupGenerator();
 
         connect(m_passwordGenerator.data(), &PasswordGeneratorWidget::closed, m_passwordGenerator.data(), [=] {
             if (!m_passwordGenerator->isPasswordGenerated()) {
@@ -521,9 +520,7 @@ void BrowserService::showPasswordGenerator(const KeyPairMessage& keyPairMessage)
                 m_browserHost->sendClientMessage(keyPairMessage.socket, errorMessage);
             }
 
-            m_passwordGenerator.reset();
-            hideWindow();
-            m_passwordGeneratorRequested = false;
+            QTimer::singleShot(50, this, [&] { hideWindow(); });
         });
 
         connect(m_passwordGenerator.data(),
@@ -537,19 +534,18 @@ void BrowserService::showPasswordGenerator(const KeyPairMessage& keyPairMessage)
                                                                                             params,
                                                                                             keyPairMessage.publicKey,
                                                                                             keyPairMessage.secretKey));
-                    hideWindow();
                 });
     }
 
-    m_passwordGeneratorRequested = true;
     raiseWindow();
+    m_passwordGenerator->show();
     m_passwordGenerator->raise();
     m_passwordGenerator->activateWindow();
 }
 
 bool BrowserService::isPasswordGeneratorRequested() const
 {
-    return m_passwordGeneratorRequested;
+    return m_passwordGenerator && m_passwordGenerator->isVisible();
 }
 
 QString BrowserService::storeKey(const QString& key)
