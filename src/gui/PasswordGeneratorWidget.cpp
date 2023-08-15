@@ -1,6 +1,6 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2013 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2022 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -34,13 +34,12 @@
 #include "gui/styles/StateColorPalette.h"
 
 PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
-    : QDialog(parent)
+    : QWidget(parent)
     , m_passwordGenerator(new PasswordGenerator())
     , m_dicewareGenerator(new PassphraseGenerator())
     , m_ui(new Ui::PasswordGeneratorWidget())
 {
     m_ui->setupUi(this);
-    setWindowFlags(Qt::Widget);
 
     m_ui->buttonGenerate->setIcon(icons()->icon("refresh"));
     m_ui->buttonGenerate->setToolTip(
@@ -122,7 +121,7 @@ void PasswordGeneratorWidget::closeEvent(QCloseEvent* event)
 {
     // Emits closed signal when clicking X from title bar
     emit closed();
-    event->accept();
+    QWidget::closeEvent(event);
 }
 
 PasswordGeneratorWidget* PasswordGeneratorWidget::popupGenerator(QWidget* parent)
