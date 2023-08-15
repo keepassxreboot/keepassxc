@@ -52,6 +52,31 @@
     </screenshots>
 
     <releases>
+        <release version="2.7.6" date="2023-08-15">
+            <description>
+                <ul>
+                    <li>Significant improvement to visual when drag/drop entries [#9698]</li>
+                    <li>Automatically prompt for Quick Unlock when showing unlock dialog [#9697]</li>
+                    <li>Improve colorful lock icon [#9632]</li>
+                    <li>Ability to search by entry UUID [#9571]</li>
+                    <li>Add challenge-response support for NitroKey 3 [#9631]</li>
+                    <li>Auto-Type: Disable entry level Auto-Type when disabled at group/entry [#9672]</li>
+                    <li>Browser: Show warning when adding duplicate URL's to entry [#9588][#9635]</li>
+                    <li>Browser: Improve error message when proxy cannot be found [#9385]</li>
+                    <li>Fix crash on exit on macOS [#9620]</li>
+                    <li>Fix crash on search if entry doesn't have a group [#9633]</li>
+                    <li>Fix several issues with Quick Unlock [#9697]</li>
+                    <li>Enable save button when not auto-saving non-data changes [#9634]</li>
+                    <li>Several UI/UX fixes [#9647]</li>
+                    <li>Move toolbar back to top of window when disabling movement [#9699]</li>
+                    <li>Browser: Fix closing password generator dialog with X button [#9636]</li>
+                    <li>Browser: Fix handling of expired credentials [#9595]</li>
+                    <li>Windows: Prevent white flicker when launching application [#9637]</li>
+                    <li>Linux: Fix warning message about allow screencapture [#9638]</li>
+                    <li>FdoSecrets: Fix access confirmation dialog showing even when disabled [#9690]</li>
+                </ul>
+            </description>
+        </release>
         <release version="2.7.5" date="2023-05-14">
             <description>
                 <ul>
