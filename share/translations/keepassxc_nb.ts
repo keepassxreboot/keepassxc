@@ -1161,14 +1161,6 @@ Vil du overføre de eksisterende innstillingene dine nå?</translation>
         <translation>Vennligst se spesielle instruksjoner for bruk av nettleserutvidelse nedenfor</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location cannot be found!&lt;br/&gt;Browser integration WILL NOT WORK without the proxy application.</source>
-        <translation>&lt;b&gt;Feil:&lt;/b&gt; Finner ikke plasseringen til den egendefinerte mellomtjeneren.&lt;br/&gt;Nettleserintegrasjonen VIL IKKE FUNGERE uten mellomtjener-applikasjonen.</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation>&lt;b&gt;Advarsel:&lt;/b&gt; Disse innstillingene kan medføre risiko.</translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation>Kjørbare filer</translation>
     </message>
@@ -1183,6 +1175,22 @@ Vil du overføre de eksisterende innstillingene dine nå?</translation>
     <message>
         <source>Select native messaging host folder location</source>
         <translation>Velg plassering til den innebygde meldingsformidleren</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Warning:&lt;/b&gt; Only adjust these settings if necessary.</source>
+        <translation>&lt;b&gt;Advarsel:&lt;/b&gt; Juster disse innstillingene bare om nødvendig.</translation>
+    </message>
+    <message>
+        <source>The custom proxy location does not exist.</source>
+        <translation>Den egendefinerte proxy-lokasjonen finnes ikke.</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location does not exist. Correct this in the advanced settings tab.</source>
+        <translation>&lt;b&gt;Feil:&lt;/b&gt; Den egendefinerte proxy-lokasjonen finnes ikke. Korriger dette i fanen for avanserte innstillinger.</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The installed proxy executable is missing from the expected location: %1&lt;br/&gt;Please set a custom proxy location in the advanced settings or reinstall the application.</source>
+        <translation>&lt;b&gt;Feil:&lt;/b&gt; Den installerte eksekverbare proxyen finnes ikke på den forventede plasseringen: %1&lt;br/&gt;Angi en egendefinert proxy-lokasjon i de avanserte innstillingene, eller installer applikasjonen på nytt.</translation>
     </message>
 </context>
 <context>
@@ -1617,6 +1625,10 @@ Hvis du ikke har en nøkkelfil, lar du feltet stå tomt.</translation>
     <message>
         <source>Failed to authenticate with Windows Hello: %1</source>
         <translation>Kunne ikke autentisere med Windows Hello: %1</translation>
+    </message>
+    <message>
+        <source>Windows Hello setup was canceled or failed. Quick unlock has not been enabled.</source>
+        <translation>Installasjonen av Windows Hello ble avbrutt eller mislyktes. Hurtigopplåsing er ikke blitt aktivert.</translation>
     </message>
 </context>
 <context>
@@ -3977,12 +3989,20 @@ Feil: %1</translation>
         <source>Double click to copy value</source>
         <translation>Dobbeltklikk for å kopiere verdi</translation>
     </message>
+    <message>
+        <source>Double click to copy to clipboard</source>
+        <translation>Dobbeltklikk for å kopiere til utklippstavlen</translation>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
     <message>
         <source>Invalid URL</source>
         <translation>Ugyldig URL</translation>
+    </message>
+    <message>
+        <source>Duplicate URL</source>
+        <translation>Klon URL</translation>
     </message>
 </context>
 <context>
@@ -3998,6 +4018,10 @@ Feil: %1</translation>
     <message>
         <source>Reset to defaults</source>
         <translation>Resett til standardinnstillinger</translation>
+    </message>
+    <message numerus="yes">
+        <source>+ %1 entry(s)...</source>
+        <translation><numerusform>+ %1 oppføring…</numerusform><numerusform>+ %1 oppføringer…</numerusform></translation>
     </message>
 </context>
 <context>
@@ -7828,10 +7852,6 @@ Kjerne: %3 %4</translation>
         <translation>les database-passord fra &apos;stdin&apos;</translation>
     </message>
     <message>
-        <source>allow app screen recordering and screenshots</source>
-        <translation>tillat skjermopptaker og skjermdumper for apper</translation>
-    </message>
-    <message>
         <source>Locked databases.</source>
         <translation>Låste databaser.</translation>
     </message>
@@ -7950,6 +7970,10 @@ Disse alternativene er utdatert, bruk --set-key-file i stedet.</translation>
     <message>
         <source>KeePassXC is not running. No open database to lock</source>
         <translation>KeePassXC kjører ikke. Ingen åpen database å låse</translation>
+    </message>
+    <message>
+        <source>allow screenshots and app recording (Windows/macOS)</source>
+        <translation>tillat skjermdumper og app-opptak (Windows/macOS)</translation>
     </message>
 </context>
 <context>

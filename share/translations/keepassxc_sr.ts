@@ -1155,14 +1155,6 @@ Would you like to migrate your existing settings now?</source>
         <translation>Молимо погледајте посебна упутства за употребу додатка прегледача у наставку</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location cannot be found!&lt;br/&gt;Browser integration WILL NOT WORK without the proxy application.</source>
-        <translation>&lt;/b&gt;Грешка:&lt;/b&gt; Није могуће пронаћи прилагођену локацију проки сервера!&lt;br/&gt;Интеграција прегледача НЕЋЕ РАДИТИ без проки апликације.</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation>&lt;b&gt;Упозорење:&lt;/b&gt; Следеће опције могу бити опасне!</translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation>Извршне датотеке</translation>
     </message>
@@ -1177,6 +1169,22 @@ Would you like to migrate your existing settings now?</source>
     <message>
         <source>Select native messaging host folder location</source>
         <translation>Изабери место фасцикле матичног хоста размене порука</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Warning:&lt;/b&gt; Only adjust these settings if necessary.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The custom proxy location does not exist.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location does not exist. Correct this in the advanced settings tab.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The installed proxy executable is missing from the expected location: %1&lt;br/&gt;Please set a custom proxy location in the advanced settings or reinstall the application.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1603,6 +1611,10 @@ If you do not have a key file, please leave the field empty.</source>
     </message>
     <message>
         <source>Failed to authenticate with Windows Hello: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Windows Hello setup was canceled or failed. Quick unlock has not been enabled.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -3944,12 +3956,20 @@ Error: %1</source>
         <source>Double click to copy value</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Double click to copy to clipboard</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
     <message>
         <source>Invalid URL</source>
         <translation>Погрешна URL</translation>
+    </message>
+    <message>
+        <source>Duplicate URL</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3965,6 +3985,10 @@ Error: %1</source>
     <message>
         <source>Reset to defaults</source>
         <translation>Вратити на подразумевано</translation>
+    </message>
+    <message numerus="yes">
+        <source>+ %1 entry(s)...</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -7783,10 +7807,6 @@ Kernel: %3 %4</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>allow app screen recordering and screenshots</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Locked databases.</source>
         <translation type="unfinished"/>
     </message>
@@ -7903,6 +7923,10 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>KeePassXC is not running. No open database to lock</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>allow screenshots and app recording (Windows/macOS)</source>
         <translation type="unfinished"/>
     </message>
 </context>

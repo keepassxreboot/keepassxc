@@ -86,7 +86,7 @@
     </message>
     <message>
         <source>Allow Selected</source>
-        <translation>Zezwalaj wybranym</translation>
+        <translation>Zezwól wybranym</translation>
     </message>
     <message>
         <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
@@ -112,7 +112,7 @@
     <name>AgentSettingsWidget</name>
     <message>
         <source>Enable SSH Agent integration</source>
-        <translation>Włącz integrację agenta SSH</translation>
+        <translation>Włącz integrację z agentem SSH</translation>
     </message>
     <message>
         <source>Use Pageant</source>
@@ -615,11 +615,11 @@
     </message>
     <message>
         <source>KeePassXC requires the Accessibility permission in order to perform entry level Auto-Type. If you already granted permission, you may have to restart KeePassXC.</source>
-        <translation>KeePassXC wymaga uprawnienia Dostępności w celu wykonania autowpisywania na poziomie podstawowym. Jeśli już udzieliłeś uprawnienia, być może będziesz musiał zrestartować KeePassXC.</translation>
+        <translation>KeePassXC wymaga uprawnienia dostępności w celu wykonania podstawowego autowpisywania. Jeśli już udzielono uprawnienia, być może będzie wymagane ponowne uruchomienie KeePassXC.</translation>
     </message>
     <message>
         <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
-        <translation>KeePassXC wymaga uprawnień Dostępności i Rejestratora ekranu w celu wykonania globalnego autowpisywania. Nagrywanie ekranu jest konieczne, aby użyć tytułu okna do odnajdywania wpisów. Jeśli już udzieliłeś uprawnień, być może będziesz musiał zrestartować KeePassXC.</translation>
+        <translation>KeePassXC wymaga uprawnień dostępności i rejestratora ekranu w celu wykonania globalnego autowpisywania. Nagrywanie ekranu jest konieczne, aby użyć tytułu okna do odnajdywania wpisów. Jeśli już udzielono uprawnień, być może będzie wymagane ponowne uruchomienie KeePassXC.</translation>
     </message>
     <message>
         <source>Invalid entry provided</source>
@@ -810,11 +810,11 @@ Ctrl+4 - Użyj klawiatury wirtualnej (tylko Windows)&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Allow access to entries</source>
-        <translation>Zezwalaj na dostęp do wpisów</translation>
+        <translation>Zezwól na dostęp do wpisów</translation>
     </message>
     <message>
         <source>Allow Selected</source>
-        <translation>Zezwalaj wybranym</translation>
+        <translation>Zezwól wybranym</translation>
     </message>
     <message>
         <source>Deny All</source>
@@ -1042,7 +1042,7 @@ Czy chcesz teraz migrować istniejące ustawienia?</translation>
     </message>
     <message>
         <source>Allow returning expired credentials</source>
-        <translation>Zezwalaj na zwrot wygasłych danych uwierzytelniających</translation>
+        <translation>Zezwól na zwrot wygasłych danych uwierzytelniających</translation>
     </message>
     <message>
         <source>All databases connected to the extension will return matching credentials.</source>
@@ -1098,20 +1098,20 @@ Czy chcesz teraz migrować istniejące ustawienia?</translation>
     </message>
     <message>
         <source>Use a custom proxy location if you installed a proxy manually.</source>
-        <translation>Używaj niestandardowej lokalizacji proxy, jeżeli została zainstalowana ręcznie.</translation>
+        <translation>Używaj lokalizacji niestandardowego proxy, jeżeli został zainstalowana ręcznie.</translation>
     </message>
     <message>
         <source>Use a custom proxy location:</source>
         <comment>Meant is the proxy for KeePassXC-Browser</comment>
-        <translation>Używaj niestandardowej lokalizacji proxy:</translation>
+        <translation>Używaj lokalizacji niestandardowego proxy:</translation>
     </message>
     <message>
         <source>Custom proxy location field</source>
-        <translation>Niestandardowe pole lokalizacji proxy</translation>
+        <translation>Pole lokalizacji niestandardowego proxy</translation>
     </message>
     <message>
         <source>Browser for custom proxy file</source>
-        <translation>Przeglądarka niestandardowego pliku proxy</translation>
+        <translation>Przeglądarka pliku niestandardowego proxy</translation>
     </message>
     <message>
         <source>Browse…</source>
@@ -1163,14 +1163,6 @@ Czy chcesz teraz migrować istniejące ustawienia?</translation>
         <translation>Zobacz poniżej specjalne instrukcje dotyczące używania rozszerzenia przeglądarki</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location cannot be found!&lt;br/&gt;Browser integration WILL NOT WORK without the proxy application.</source>
-        <translation>&lt;b&gt;Błąd:&lt;/b&gt; Nie można znaleźć niestandardowej lokalizacji proxy! Integracja z przeglądarką NIE DZIAŁA bez aplikacji proxy.</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation>&lt;b&gt;Ostrzeżenie:&lt;/b&gt; Poniższe opcje mogą być niebezpieczne!</translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation>Pliki wykonywalne</translation>
     </message>
@@ -1180,11 +1172,27 @@ Czy chcesz teraz migrować istniejące ustawienia?</translation>
     </message>
     <message>
         <source>Select custom proxy location</source>
-        <translation>Wybierz niestandardową lokalizację proxy</translation>
+        <translation>Wybierz lokalizację niestandardowego proxy</translation>
     </message>
     <message>
         <source>Select native messaging host folder location</source>
         <translation>Wybierz lokalizację folderu hosta wiadomości natywnych</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Warning:&lt;/b&gt; Only adjust these settings if necessary.</source>
+        <translation>&lt;b&gt;Ostrzeżenie:&lt;/b&gt; Dostosowuj te ustawienia tylko w razie potrzeby.</translation>
+    </message>
+    <message>
+        <source>The custom proxy location does not exist.</source>
+        <translation>Lokalizacja niestandardowego proxy nie istnieje.</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location does not exist. Correct this in the advanced settings tab.</source>
+        <translation>&lt;b&gt;Błąd:&lt;/b&gt; Lokalizacja niestandardowego proxy nie istnieje. Popraw to na karcie ustawień zaawansowanych.</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The installed proxy executable is missing from the expected location: %1&lt;br/&gt;Please set a custom proxy location in the advanced settings or reinstall the application.</source>
+        <translation>&lt;b&gt;Błąd:&lt;/b&gt; Brak pliku wykonywalnego zainstalowanego proxy w oczekiwanej lokalizacji: %1&lt;br/&gt;Ustaw lokalizację niestandardowego proxy w ustawieniach zaawansowanych lub zainstaluj ponownie aplikację.</translation>
     </message>
 </context>
 <context>
@@ -1254,7 +1262,7 @@ Czy chcesz teraz migrować istniejące ustawienia?</translation>
     </message>
     <message>
         <source>Created</source>
-        <translation>Utworzone</translation>
+        <translation>Utworzono</translation>
     </message>
     <message>
         <source>Last Modified</source>
@@ -1620,6 +1628,10 @@ Jeśli nie masz pliku klucza, pozostaw puste pole.</translation>
         <source>Failed to authenticate with Windows Hello: %1</source>
         <translation>Nie udało się uwierzytelnić za pomocą Windows Hello: %1</translation>
     </message>
+    <message>
+        <source>Windows Hello setup was canceled or failed. Quick unlock has not been enabled.</source>
+        <translation>Konfiguracja Windows Hello została anulowana lub nie powiodła się. Szybkie odblokowanie nie zostało włączone.</translation>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingWidgetMetaData</name>
@@ -1721,7 +1733,7 @@ Może to uniemożliwić połączenie z wtyczką przeglądarki.</translation>
     </message>
     <message>
         <source>Created</source>
-        <translation>Utworzone</translation>
+        <translation>Utworzono</translation>
     </message>
     <message>
         <source>Enable Browser Integration to access these settings.</source>
@@ -1949,7 +1961,7 @@ Czy na pewno chcesz kontynuować bez hasła?</translation>
 If you keep this number, your database may take hours, days, or even longer to open.</source>
         <translation>Używasz bardzo dużej liczby rund transformacji klucza z Argon2.
 
-Jeśli zachowasz tę liczbę, otworzenie twojej bazy danych może zająć godziny, dni lub nawet dłużej.</translation>
+Jeśli zachowasz tę liczbę, otworzenie Twojej bazy danych może zająć godziny, dni lub nawet dłużej.</translation>
     </message>
     <message>
         <source>Understood, keep number</source>
@@ -1970,7 +1982,7 @@ Jeśli zachowasz tę liczbę, otworzenie twojej bazy danych może zająć godzin
 If you keep this number, your database will not be protected from brute force attacks.</source>
         <translation>Używasz bardzo małej liczby rund transformacji klucza z AES-KDF.
 
-Jeśli zachowasz tę liczbę, twoja baza danych nie będzie chroniona przed atakami siłowymi.</translation>
+Jeśli zachowasz tę liczbę, Twoja baza danych nie będzie chroniona przed atakami siłowymi.</translation>
     </message>
     <message>
         <source>KDF unchanged</source>
@@ -2428,7 +2440,7 @@ Zapisać zmiany?</translation>
         <source>The database file has changed and you have unsaved changes.
 Do you want to merge your changes?</source>
         <translation>Plik bazy danych został zmieniony, a masz niezapisane zmiany.
-Czy chcesz scalić twoje zmiany?</translation>
+Czy chcesz scalić Twoje zmiany?</translation>
     </message>
     <message>
         <source>Could not open the new database file while attempting to autoreload.
@@ -2472,7 +2484,7 @@ Wyłączyć bezpieczne zapisywanie i spróbować ponownie?</translation>
     </message>
     <message>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
-        <translation>Czy na pewno chcesz nieodwracalnie usunąć wszystko z twojego kosza?</translation>
+        <translation>Czy na pewno chcesz nieodwracalnie usunąć wszystko z kosza?</translation>
     </message>
     <message>
         <source>Could not find database file: %1</source>
@@ -3443,27 +3455,27 @@ Obsługiwane rozszerzenia to: %1.</translation>
     <name>EditWidgetProperties</name>
     <message>
         <source>Created:</source>
-        <translation>Utworzone:</translation>
+        <translation>Utworzono:</translation>
     </message>
     <message>
         <source>Datetime created</source>
-        <translation>Utworzono datę i godzinę</translation>
+        <translation>Data i godzina utworzenia</translation>
     </message>
     <message>
         <source>Modified:</source>
-        <translation>Modyfikowane:</translation>
+        <translation>Modyfikowano:</translation>
     </message>
     <message>
         <source>Datetime modified</source>
-        <translation>Zmodyfikowano datę i godzinę</translation>
+        <translation>Data i godzina modyfikowania</translation>
     </message>
     <message>
         <source>Accessed:</source>
-        <translation>Ostatnio używane:</translation>
+        <translation>Dostęp:</translation>
     </message>
     <message>
         <source>Datetime accessed</source>
-        <translation>Ostatnio używano datę i godzinę</translation>
+        <translation>Data i godzina dostępu</translation>
     </message>
     <message>
         <source>Uuid:</source>
@@ -3812,15 +3824,15 @@ Błąd: %1</translation>
     </message>
     <message>
         <source>Created</source>
-        <translation>Utworzone</translation>
+        <translation>Utworzono</translation>
     </message>
     <message>
         <source>Modified</source>
-        <translation>Modyfikowane</translation>
+        <translation>Modyfikowano</translation>
     </message>
     <message>
         <source>Accessed</source>
-        <translation>Ostatnio używane</translation>
+        <translation>Dostęp</translation>
     </message>
     <message>
         <source>Attachments</source>
@@ -3981,12 +3993,20 @@ Błąd: %1</translation>
         <source>Double click to copy value</source>
         <translation>Kliknij dwukrotnie, aby skopiować wartość</translation>
     </message>
+    <message>
+        <source>Double click to copy to clipboard</source>
+        <translation>Kliknij dwukrotnie, aby skopiować do schowka</translation>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
     <message>
         <source>Invalid URL</source>
         <translation>Nieprawidłowy adres URL</translation>
+    </message>
+    <message>
+        <source>Duplicate URL</source>
+        <translation>Zduplikowany adres URL</translation>
     </message>
 </context>
 <context>
@@ -4002,6 +4022,10 @@ Błąd: %1</translation>
     <message>
         <source>Reset to defaults</source>
         <translation>Przywróć domyślne</translation>
+    </message>
+    <message numerus="yes">
+        <source>+ %1 entry(s)...</source>
+        <translation><numerusform>+ %1 wpis...</numerusform><numerusform>+ %1 wpisy...</numerusform><numerusform>+ %1 wpisów...</numerusform><numerusform>+ %1 wpisów...</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4074,7 +4098,7 @@ To narazi Twoje hasła i poufne informacje na niebezpieczeństwo!
     </message>
     <message>
         <source>Another secret service is running (%1).&lt;br/&gt;Please stop/remove it before re-enabling the Secret Service Integration.</source>
-        <translation>Uruchomiona jest inna usługa sekretna (%1). Zatrzymaj ją/usuń przed ponownym włączeniem Integracji usługi sekretnej.</translation>
+        <translation>Uruchomiona jest inna usługa sekretna (%1). Zatrzymaj ją/usuń przed ponownym włączeniem integracji z usługą sekretną.</translation>
     </message>
     <message>
         <source>Failed to register DBus service at %1.&lt;br/&gt;</source>
@@ -5012,7 +5036,7 @@ Czy na pewno chcesz kontynuować z tym plikiem?</translation>
     </message>
     <message>
         <source>Could not register global shortcut</source>
-        <translation>Nie udało się zarejestrować skrótu globalnego</translation>
+        <translation>Nie można zarejestrować skrótu globalnego</translation>
     </message>
 </context>
 <context>
@@ -5219,7 +5243,7 @@ Czy na pewno chcesz kontynuować z tym plikiem?</translation>
     </message>
     <message>
         <source>&amp;Password Generator</source>
-        <translation>&amp;Generator hasła</translation>
+        <translation>&amp;Generator haseł</translation>
     </message>
     <message>
         <source>Perform &amp;Auto-Type</source>
@@ -5699,7 +5723,7 @@ Zalecamy korzystanie z AppImage dostępnego na naszej stronie pobierania.</trans
     </message>
     <message>
         <source>Could not register global shortcut</source>
-        <translation>Nie udało się zarejestrować skrótu globalnego</translation>
+        <translation>Nie można zarejestrować skrótu globalnego</translation>
     </message>
 </context>
 <context>
@@ -6299,7 +6323,7 @@ Czy chcesz ją nadpisać?</translation>
     </message>
     <message>
         <source>Empty</source>
-        <translation>Pusty</translation>
+        <translation>Opróżnij</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -7417,7 +7441,7 @@ Rozważ wygenerowanie nowego pliku klucza.</translation>
     </message>
     <message>
         <source>Error: Passwords do not match.</source>
-        <translation>Błąd: hasła nie są zgodne.</translation>
+        <translation>Błąd: Hasła nie są zgodne.</translation>
     </message>
     <message>
         <source>No program defined for clipboard manipulation</source>
@@ -7451,7 +7475,7 @@ Rozważ wygenerowanie nowego pliku klucza.</translation>
     </message>
     <message>
         <source>Error: okon process did not finish</source>
-        <translation>Błąd: proces okon nie zakończył się</translation>
+        <translation>Błąd: Proces okon się nie zakończył</translation>
     </message>
     <message>
         <source>Failed to load okon processed database: %1</source>
@@ -7723,7 +7747,7 @@ Jądro: %3 %4</translation>
     </message>
     <message>
         <source>Created</source>
-        <translation>Utworzone</translation>
+        <translation>Utworzono</translation>
     </message>
     <message>
         <source>Benchmark %1 delay</source>
@@ -7830,10 +7854,6 @@ Jądro: %3 %4</translation>
     <message>
         <source>read password of the database from stdin</source>
         <translation>odczytaj hasło bazy danych z stdin</translation>
-    </message>
-    <message>
-        <source>allow app screen recordering and screenshots</source>
-        <translation>zezwalaj na aplikację nagrywania ekranu i zrzuty ekranu</translation>
     </message>
     <message>
         <source>Locked databases.</source>
@@ -7954,6 +7974,10 @@ Ta opcja jest przestarzała, zamiast jej użyj --set-key-file.</translation>
     <message>
         <source>KeePassXC is not running. No open database to lock</source>
         <translation>KeePassXC nie jest uruchomiony. Brak otwartej bazy danych do zablokowania</translation>
+    </message>
+    <message>
+        <source>allow screenshots and app recording (Windows/macOS)</source>
+        <translation>zezwól na zrzuty ekranu i nagrywanie aplikacji (Windows/macOS)</translation>
     </message>
 </context>
 <context>
@@ -8628,19 +8652,19 @@ Ta opcja jest przestarzała, zamiast jej użyj --set-key-file.</translation>
     </message>
     <message>
         <source>Allow KeeShare imports</source>
-        <translation>Zezwalaj na importowanie KeeShare</translation>
+        <translation>Zezwól na importowanie KeeShare</translation>
     </message>
     <message>
         <source>Allow import</source>
-        <translation>Pozwól importować</translation>
+        <translation>Zezwól na import</translation>
     </message>
     <message>
         <source>Allow KeeShare exports</source>
-        <translation>Zezwalaj na eksportowanie KeeShare</translation>
+        <translation>Zezwól na eksportowanie KeeShare</translation>
     </message>
     <message>
         <source>Allow export</source>
-        <translation>Pozwól eksportować</translation>
+        <translation>Zezwól na eksport</translation>
     </message>
     <message>
         <source>Only show warnings and errors</source>
@@ -8679,7 +8703,7 @@ Ta opcja jest przestarzała, zamiast jej użyj --set-key-file.</translation>
     <name>ShareExport</name>
     <message>
         <source>Could not write export container.</source>
-        <translation>Nie udało się zapisać kontenera eksportu.</translation>
+        <translation>Nie można zapisać kontenera eksportu.</translation>
     </message>
 </context>
 <context>
@@ -8854,7 +8878,7 @@ Ta opcja jest przestarzała, zamiast jej użyj --set-key-file.</translation>
     </message>
     <message>
         <source> digits</source>
-        <translation> cyfry</translation>
+        <translation> cyfr</translation>
     </message>
     <message>
         <source>Invalid TOTP Secret</source>
@@ -8964,7 +8988,7 @@ Przykład: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Could not register global shortcut</source>
-        <translation>Nie udało się zarejestrować skrótu globalnego</translation>
+        <translation>Nie można zarejestrować skrótu globalnego</translation>
     </message>
 </context>
 <context>
@@ -9079,7 +9103,7 @@ Przykład: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Could not find or access hardware key with serial number %1. Please present it to continue. </source>
-        <translation>Nie można znaleźć lub uzyskać dostępu do klucza sprzętowego o numerze seryjnym %1. Proszę go okazać, aby kontynuować.</translation>
+        <translation>Nie można znaleźć lub uzyskać dostępu do klucza sprzętowego o numerze seryjnym %1. Proszę go okazać, aby kontynuować. </translation>
     </message>
     <message>
         <source>Hardware key is locked or timed out. Unlock or re-present it to continue.</source>

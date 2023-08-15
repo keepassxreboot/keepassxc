@@ -1161,15 +1161,6 @@ Valóban migrálja most a meglévő beállításokat?</translation>
         <translation>Olvassa el a böngészőkiegészítő használatáról szóló különleges utasításokat alább</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location cannot be found!&lt;br/&gt;Browser integration WILL NOT WORK without the proxy application.</source>
-        <translation>&lt;b&gt;Hiba:&lt;/b&gt; Az egyéni proxyhely nem található!
-&lt;br/&gt;A böngészőintegráció NEM FOG MŰKÖDNI a proxy-alkalmazás nélkül.</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation>&lt;b&gt;Figyelmeztetés:&lt;/b&gt; A következő beállítások veszélyesek lehetnek!</translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation>Végrehajtható fájlok</translation>
     </message>
@@ -1184,6 +1175,22 @@ Valóban migrálja most a meglévő beállításokat?</translation>
     <message>
         <source>Select native messaging host folder location</source>
         <translation>Jelölje ki a natív üzenetküldési kiszolgálót tartalmazó mappát</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Warning:&lt;/b&gt; Only adjust these settings if necessary.</source>
+        <translation>&lt;b&gt;Figyelem:&lt;/b&gt; Ezen beállításokat csak szükség esetén módosítsa.</translation>
+    </message>
+    <message>
+        <source>The custom proxy location does not exist.</source>
+        <translation>Az egyéni proxy helye nem létezik.</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location does not exist. Correct this in the advanced settings tab.</source>
+        <translation>&lt;b&gt;Hiba:&lt;/b&gt; Az egyéni proxy helye nem létezik. Javítsa ki ezt a Speciális beállítások lapon.</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The installed proxy executable is missing from the expected location: %1&lt;br/&gt;Please set a custom proxy location in the advanced settings or reinstall the application.</source>
+        <translation>&lt;b&gt;Hiba:&lt;/b&gt; A telepített proxy futtatható fájl hiányzik a várt helyről: %1&lt;br/&gt; Kérjük, állítson be egy egyéni proxy-helyet a Speciális beállításokban, vagy telepítse újra az alkalmazást.</translation>
     </message>
 </context>
 <context>
@@ -1617,6 +1624,10 @@ If you do not have a key file, please leave the field empty.</source>
     <message>
         <source>Failed to authenticate with Windows Hello: %1</source>
         <translation>Nem sikerült a hitelesítés a Windows Hello-val: %1</translation>
+    </message>
+    <message>
+        <source>Windows Hello setup was canceled or failed. Quick unlock has not been enabled.</source>
+        <translation>A Windows Hello beállítását megszakította vagy sikertelen volt. A gyors feloldás nem lett engedélyezve.</translation>
     </message>
 </context>
 <context>
@@ -3977,12 +3988,20 @@ Hiba: %1</translation>
         <source>Double click to copy value</source>
         <translation>Dupla kattintás az érték másolásához</translation>
     </message>
+    <message>
+        <source>Double click to copy to clipboard</source>
+        <translation>Dupla kattintás a vágólapra másoláshoz</translation>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
     <message>
         <source>Invalid URL</source>
         <translation>Érvénytelen URL</translation>
+    </message>
+    <message>
+        <source>Duplicate URL</source>
+        <translation>Ismételt URL</translation>
     </message>
 </context>
 <context>
@@ -3998,6 +4017,10 @@ Hiba: %1</translation>
     <message>
         <source>Reset to defaults</source>
         <translation>Visszaállítás alapértelmezettre</translation>
+    </message>
+    <message numerus="yes">
+        <source>+ %1 entry(s)...</source>
+        <translation><numerusform>+ %1 bejegyzés…</numerusform><numerusform>+ %1 bejegyzés…</numerusform></translation>
     </message>
 </context>
 <context>
@@ -7826,10 +7849,6 @@ Kernel: %3 %4</translation>
         <translation>adatbázis jelszó beolvasása az stdin-ről</translation>
     </message>
     <message>
-        <source>allow app screen recordering and screenshots</source>
-        <translation>Képernyőmentések és felvételek engedélyezése az alkalmazás számára</translation>
-    </message>
-    <message>
         <source>Locked databases.</source>
         <translation>Zárolt adatbázisok.</translation>
     </message>
@@ -7948,6 +7967,10 @@ Ez a kapcsoló elavult, használja helyette a --set-key-file kapcsolót.</transl
     <message>
         <source>KeePassXC is not running. No open database to lock</source>
         <translation>A KeePassXC nem fut. Nincs megnyitott adatbázis, amit zárolni lehetne</translation>
+    </message>
+    <message>
+        <source>allow screenshots and app recording (Windows/macOS)</source>
+        <translation>képernyőképek és alkalmazásrögzítés engedélyezése (Windows/macOS)</translation>
     </message>
 </context>
 <context>

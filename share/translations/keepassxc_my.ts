@@ -1163,14 +1163,6 @@ Would you like to migrate your existing settings now?</source>
         <translation>ကျေးဇူးပြု၍ ဘရောက်ဇာအဆက် သုံးရန် အထူးညွှန်ကြားချက်များကို အောက်တွင်ကြည့်ပါ</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location cannot be found!&lt;br/&gt;Browser integration WILL NOT WORK without the proxy application.</source>
-        <translation>&lt;b&gt;ပြဿနာ -&lt;/b&gt; စိတ်ကြိုက်ပရောက်စီ တည်နေရာကို ရှာမတွေ့ပါ။&lt;br/&gt; ပရောက်စီ အက်ပလီကေးရှင်း မပါဘဲ ဘရောက်ဇာ ပေါင်းစပ်ထည့်သွင်းမှု အလုပ်လုပ်မည်မဟုတ်ပါ။</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation>&lt;b&gt;သတိပေးချက် -&lt;/b&gt;အောက်ပါရွေးချယ်မှုများသည် အန္တရာယ်ရှိနိုင်သည်။‌</translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation>လည်ပတ်လုပ်ဆောင်နိုင်သော ဖိုင်များ</translation>
     </message>
@@ -1185,6 +1177,22 @@ Would you like to migrate your existing settings now?</source>
     <message>
         <source>Select native messaging host folder location</source>
         <translation>မူလ မက်ဆေ့ချ်ပို့သည့် လက်ခံဖိုင်တွဲတည်နေရာ ရွေးရန်</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Warning:&lt;/b&gt; Only adjust these settings if necessary.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The custom proxy location does not exist.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location does not exist. Correct this in the advanced settings tab.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The installed proxy executable is missing from the expected location: %1&lt;br/&gt;Please set a custom proxy location in the advanced settings or reinstall the application.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1613,6 +1621,10 @@ If you do not have a key file, please leave the field empty.</source>
     <message>
         <source>Failed to authenticate with Windows Hello: %1</source>
         <translation>Windows Hello ဖြင့် စစ်မှန်ကြောင်းသက်သေပြခြင်း မအောင်မြင်ပါ - %1</translation>
+    </message>
+    <message>
+        <source>Windows Hello setup was canceled or failed. Quick unlock has not been enabled.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3965,12 +3977,20 @@ Error: %1</source>
         <source>Double click to copy value</source>
         <translation>value ကို ကူးယူရန် နှစ်ချက်နှိပ်ပါ</translation>
     </message>
+    <message>
+        <source>Double click to copy to clipboard</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
     <message>
         <source>Invalid URL</source>
         <translation>URL မမှန်ကန်ပါ</translation>
+    </message>
+    <message>
+        <source>Duplicate URL</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3986,6 +4006,10 @@ Error: %1</source>
     <message>
         <source>Reset to defaults</source>
         <translation>ပုံသေမူလသို့ ပြန်လည်သတ်မှတ်ပါ</translation>
+    </message>
+    <message numerus="yes">
+        <source>+ %1 entry(s)...</source>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -7817,10 +7841,6 @@ CPU တည်ဆောက်ပုံ - %2
         <translation>စံထည့်သွင်းမှုမှ ဒေတာဘေ့စ်၏ စကားဝှက်ကို ဖတ်ပါ</translation>
     </message>
     <message>
-        <source>allow app screen recordering and screenshots</source>
-        <translation>အက်ပ်စခရင် မှတ်တမ်းတင်ခြင်းနှင့် စခရင်ရှော့(တ်)များကို ခွင့်ပြုပါ</translation>
-    </message>
-    <message>
         <source>Locked databases.</source>
         <translation>လော့ချထားသော ဒေတာဘေ့စ်များ။</translation>
     </message>
@@ -7939,6 +7959,10 @@ This options is deprecated, use --set-key-file instead.</source>
     <message>
         <source>KeePassXC is not running. No open database to lock</source>
         <translation>KeePassXC သည် အလုပ်မလုပ်ပါ။ လော့ခ်ဖွင့်ရန် ဒေတာဘေ့စ်မရှိပါ</translation>
+    </message>
+    <message>
+        <source>allow screenshots and app recording (Windows/macOS)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

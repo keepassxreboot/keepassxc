@@ -1162,14 +1162,6 @@ Haluat siirtää asetukset nyt?</translation>
         <translation>Katso yksityiskohtaisemmat ohjeet selainlaajennuksen käyttöön alta</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location cannot be found!&lt;br/&gt;Browser integration WILL NOT WORK without the proxy application.</source>
-        <translation>&lt;b&gt;Virhe:&lt;/b&gt; Mukautetun välitysohjelman sijaintia ei löydy!&lt;br/&gt;Selainintegraatio EI TOIMI ilman välitysohjelmaa.</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation>&lt;b&gt;Varoitus:&lt;/b&gt; Seuraavat valinnat voivat olla vaarallisia!</translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation>Suoritettavat tiedostot</translation>
     </message>
@@ -1184,6 +1176,22 @@ Haluat siirtää asetukset nyt?</translation>
     <message>
         <source>Select native messaging host folder location</source>
         <translation>Valitse native messaging -isännän hakemiston sijainti</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Warning:&lt;/b&gt; Only adjust these settings if necessary.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The custom proxy location does not exist.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location does not exist. Correct this in the advanced settings tab.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The installed proxy executable is missing from the expected location: %1&lt;br/&gt;Please set a custom proxy location in the advanced settings or reinstall the application.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1617,6 +1625,10 @@ Jos sinulla ei ole avaintiedostoa, jätä kenttä tyhjäksi.</translation>
     </message>
     <message>
         <source>Failed to authenticate with Windows Hello: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Windows Hello setup was canceled or failed. Quick unlock has not been enabled.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -3968,12 +3980,20 @@ Virhe: %1</translation>
         <source>Double click to copy value</source>
         <translation>Tuplaklikkaa kopioidaksesi arvo</translation>
     </message>
+    <message>
+        <source>Double click to copy to clipboard</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
     <message>
         <source>Invalid URL</source>
         <translation>Virheellinen URL</translation>
+    </message>
+    <message>
+        <source>Duplicate URL</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3989,6 +4009,10 @@ Virhe: %1</translation>
     <message>
         <source>Reset to defaults</source>
         <translation>Palauta oletusasetukset</translation>
+    </message>
+    <message numerus="yes">
+        <source>+ %1 entry(s)...</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -7819,10 +7843,6 @@ Ydin: %3 %4</translation>
         <translation>lue tietokannan salasana stdin:istä</translation>
     </message>
     <message>
-        <source>allow app screen recordering and screenshots</source>
-        <translation>salli sovelluksen näytön tallentaminen ja ruudunkaappaukset</translation>
-    </message>
-    <message>
         <source>Locked databases.</source>
         <translation>Lukitut tietokannat.</translation>
     </message>
@@ -7939,6 +7959,10 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>KeePassXC is not running. No open database to lock</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>allow screenshots and app recording (Windows/macOS)</source>
         <translation type="unfinished"/>
     </message>
 </context>

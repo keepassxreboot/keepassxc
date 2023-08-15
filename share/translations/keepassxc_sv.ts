@@ -1163,14 +1163,6 @@ Vill du migrera dina befintliga inställningar nu?</translation>
         <translation>Se specialinstruktioner för webbläsarintegreringens användning nedan</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location cannot be found!&lt;br/&gt;Browser integration WILL NOT WORK without the proxy application.</source>
-        <translation>&lt;b&gt;Fel:&lt;/b&gt; Det går inte att hitta den anpassade proxyplatsen!&lt;br/&gt;Webbläsarintegration KOMMER INTE ATT FUNGERA utan proxyprogrammet.</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation>&lt;b&gt;Varning:&lt;/b&gt; Följande alternativ kan vara farliga!</translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation>Körbara filer</translation>
     </message>
@@ -1185,6 +1177,22 @@ Vill du migrera dina befintliga inställningar nu?</translation>
     <message>
         <source>Select native messaging host folder location</source>
         <translation>Välj plats för den inbyggda värdmappen för meddelanden</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Warning:&lt;/b&gt; Only adjust these settings if necessary.</source>
+        <translation>&lt;b&gt;Varning!&lt;/b&gt; Justera dessa inställningar endast om nödvändigt.</translation>
+    </message>
+    <message>
+        <source>The custom proxy location does not exist.</source>
+        <translation>Den anpassade proxyplatsen finns inte.</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location does not exist. Correct this in the advanced settings tab.</source>
+        <translation>&lt;b&gt;Fel:&lt;/b&gt; Den anpassade proxyplatsen finns inte. Korrigera det i avancerade inställningar.</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The installed proxy executable is missing from the expected location: %1&lt;br/&gt;Please set a custom proxy location in the advanced settings or reinstall the application.</source>
+        <translation>&lt;b&gt;Fel:&lt;/b&gt; Den installerade körbara proxyfilen saknas på den förväntade platsen: %1&lt;br/&gt;Ange en anpassad proxyplats i de avancerade inställningarna eller installera om programmet.</translation>
     </message>
 </context>
 <context>
@@ -1620,6 +1628,10 @@ Om du inte har någon nyckelfil, lämnar du fältet tomt.</translation>
     <message>
         <source>Failed to authenticate with Windows Hello: %1</source>
         <translation>Kunde inte autentisera med Windows Hello: %1</translation>
+    </message>
+    <message>
+        <source>Windows Hello setup was canceled or failed. Quick unlock has not been enabled.</source>
+        <translation>Windows Hello-installationen har avbrutits eller misslyckats. Snabb upplåsning har inte aktiverats.</translation>
     </message>
 </context>
 <context>
@@ -3979,12 +3991,20 @@ Fel: %1</translation>
         <source>Double click to copy value</source>
         <translation>Dubbelklick för att kopiera värde</translation>
     </message>
+    <message>
+        <source>Double click to copy to clipboard</source>
+        <translation>Dubbelklicka för att kopiera till urklipp</translation>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
     <message>
         <source>Invalid URL</source>
         <translation>Ogiltig URL</translation>
+    </message>
+    <message>
+        <source>Duplicate URL</source>
+        <translation>Duplicera URL</translation>
     </message>
 </context>
 <context>
@@ -4000,6 +4020,10 @@ Fel: %1</translation>
     <message>
         <source>Reset to defaults</source>
         <translation>Återställ till standardvärden</translation>
+    </message>
+    <message numerus="yes">
+        <source>+ %1 entry(s)...</source>
+        <translation><numerusform>+ %1 poster...</numerusform><numerusform>+ %1 post...</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4262,11 +4286,11 @@ Om detta upprepas, kan din databasfil vara skadad.</translation>
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltig storlek på sidhuvudets fältlängd: Fält %1</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltig rubrikdatalängd: fältet %1, %2 förväntat, %3 hittades</translation>
     </message>
 </context>
 <context>
@@ -4323,11 +4347,11 @@ Om detta upprepas, kan din databasfil vara skadad.</translation>
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltig storlek på sidhuvudets fältlängd: Fält %1</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltig rubrikdatalängd: fältet %1, %2 förväntat, %3 hittades</translation>
     </message>
     <message>
         <source>Failed to open buffer for KDF parameters in header</source>
@@ -4347,11 +4371,11 @@ Om detta upprepas, kan din databasfil vara skadad.</translation>
     </message>
     <message>
         <source>Invalid inner header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltig längd på inre sidhuvudfält: Fält %1</translation>
     </message>
     <message>
         <source>Invalid inner header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltig datalängd för inre rubrik: fält %1, %2 förväntat, %3 hittades</translation>
     </message>
     <message>
         <source>Invalid inner header binary size</source>
@@ -7829,10 +7853,6 @@ Kärna: %3 %4</translation>
         <translation>hämta databaslösenordet från stdin</translation>
     </message>
     <message>
-        <source>allow app screen recordering and screenshots</source>
-        <translation>Tillåt programskärminspelning och skärmbilder</translation>
-    </message>
-    <message>
         <source>Locked databases.</source>
         <translation>Låste databaser.</translation>
     </message>
@@ -7951,6 +7971,10 @@ Det här alternativet är inaktuellt, använd --set-key-file istället.</transla
     <message>
         <source>KeePassXC is not running. No open database to lock</source>
         <translation>KeePassXC körs inte. Det finns ingen öppen databas att låsa.</translation>
+    </message>
+    <message>
+        <source>allow screenshots and app recording (Windows/macOS)</source>
+        <translation>tillåt skärmklipp och programinspelning (Windows/macOS)</translation>
     </message>
 </context>
 <context>

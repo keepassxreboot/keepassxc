@@ -1164,14 +1164,6 @@ Voulez-vous migrer vos paramètres maintenant ?</translation>
         <translation>Veuillez consulter ci-dessous les instructions spéciales de l’extension pour navigateurs</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location cannot be found!&lt;br/&gt;Browser integration WILL NOT WORK without the proxy application.</source>
-        <translation>&lt;b&gt;Erreur :&lt;/b&gt; L’emplacement de mandataire personnalisé est introuvable. &lt;br/&gt;L’intégration aux navigateurs NE FONCTIONNERA PAS sans l’application mandataire.</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation>&lt;b&gt;Avertissement:&lt;/b&gt; Les options suivantes peuvent être dangereuses</translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation>Fichiers exécutables</translation>
     </message>
@@ -1186,6 +1178,22 @@ Voulez-vous migrer vos paramètres maintenant ?</translation>
     <message>
         <source>Select native messaging host folder location</source>
         <translation>Sélectionner l’emplacement du dossier de l’hôte de messagerie native</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Warning:&lt;/b&gt; Only adjust these settings if necessary.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The custom proxy location does not exist.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location does not exist. Correct this in the advanced settings tab.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The installed proxy executable is missing from the expected location: %1&lt;br/&gt;Please set a custom proxy location in the advanced settings or reinstall the application.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1613,6 +1621,10 @@ Si vous n’avez pas de fichier clé, laissez le champ vide.</translation>
     <message>
         <source>Failed to authenticate with Windows Hello: %1</source>
         <translation>Échec d’authentification avec Windows Hello: %1</translation>
+    </message>
+    <message>
+        <source>Windows Hello setup was canceled or failed. Quick unlock has not been enabled.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3950,12 +3962,20 @@ Error: %1</source>
         <source>Double click to copy value</source>
         <translation>Double-cliquez pour copier la valeur</translation>
     </message>
+    <message>
+        <source>Double click to copy to clipboard</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
     <message>
         <source>Invalid URL</source>
         <translation>L’URL est invalide</translation>
+    </message>
+    <message>
+        <source>Duplicate URL</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3971,6 +3991,10 @@ Error: %1</source>
     <message>
         <source>Reset to defaults</source>
         <translation>Réinitialiser aux valeurs par défaut</translation>
+    </message>
+    <message numerus="yes">
+        <source>+ %1 entry(s)...</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -7790,10 +7814,6 @@ Noyau : %3 %4</translation>
         <translation>lire le mot de passe de la base de données sur l’entrée standard</translation>
     </message>
     <message>
-        <source>allow app screen recordering and screenshots</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Locked databases.</source>
         <translation>Bases de données verrouillées.</translation>
     </message>
@@ -7910,6 +7930,10 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>KeePassXC is not running. No open database to lock</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>allow screenshots and app recording (Windows/macOS)</source>
         <translation type="unfinished"/>
     </message>
 </context>

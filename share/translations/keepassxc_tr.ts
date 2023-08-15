@@ -227,7 +227,7 @@
     </message>
     <message>
         <source>This setting cannot be enabled when minimize on unlock is enabled.</source>
-        <translation>Kilit açıldığında küçültülsün seçeneği etkinken bu seçenek etkinleştirilemez.</translation>
+        <translation>Kilit açıldığında küçültülsün seçeneği açıkken bu seçenek açılamaz.</translation>
     </message>
 </context>
 <context>
@@ -258,11 +258,11 @@
     </message>
     <message>
         <source>Remember previously used databases</source>
-        <translation>Kullanılan veritabanları hatırlansın</translation>
+        <translation>Kullanılan veri tabanları hatırlansın</translation>
     </message>
     <message>
         <source>Load previously open databases on startup</source>
-        <translation>Başlangıçta son kullanılan veritabanları yüklensin</translation>
+        <translation>Başlangıçta son kullanılan veri tabanları yüklensin</translation>
     </message>
     <message>
         <source>Remember database key files and security dongles</source>
@@ -552,11 +552,11 @@
     </message>
     <message>
         <source>Lock databases when session is locked or lid is closed</source>
-        <translation>Oturum kilitlendiğinde ya da kapak kapatıldığında veritabanları kilitlensin</translation>
+        <translation>Oturum kilitlendiğinde ya da kapak kapatıldığında veri tabanları kilitlensin</translation>
     </message>
     <message>
         <source>Lock databases after minimizing the window</source>
-        <translation>Simge durumuna küçültüldüğünde veritabanları kilitlensin</translation>
+        <translation>Simge durumuna küçültüldüğünde veri tabanları kilitlensin</translation>
     </message>
     <message>
         <source>Require password repeat when it is visible</source>
@@ -747,7 +747,7 @@ Ctrl+4 - Sanal klavyeyi kullan (yalnızca Windows)&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Search all open databases</source>
-        <translation>Tüm açık veritabanlarında ara</translation>
+        <translation>Tüm açık veri tabanlarında ara</translation>
     </message>
     <message>
         <source>Search…</source>
@@ -822,7 +822,7 @@ Ctrl+4 - Sanal klavyeyi kullan (yalnızca Windows)&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Disable for this site</source>
-        <translation>Bu site için devre dışı bırak</translation>
+        <translation>Bu site için kapat</translation>
     </message>
 </context>
 <context>
@@ -965,7 +965,7 @@ Bu işlem, var olan tarayıcı bağlantılarınızın korunması için gereklidi
     </message>
     <message>
         <source>This is required for accessing your databases with KeePassXC-Browser</source>
-        <translation>KeePassXC-Browser tarafından veritabanlarınıza erişilmesi için gereklidir.</translation>
+        <translation>KeePassXC-Browser tarafından veri tabanlarınıza erişilmesi için gereklidir.</translation>
     </message>
     <message>
         <source>Enable browser integration</source>
@@ -1046,12 +1046,12 @@ Bu işlem, var olan tarayıcı bağlantılarınızın korunması için gereklidi
     </message>
     <message>
         <source>All databases connected to the extension will return matching credentials.</source>
-        <translation>Uzantıya bağlı tüm veritabanları uyan kimlik bilgilerini döndürür.</translation>
+        <translation>Uzantıya bağlı tüm veri tabanları uyan kimlik bilgilerini döndürür.</translation>
     </message>
     <message>
         <source>Search in all opened databases for matching credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Tüm açık veritabanlarında uygun kimlik bilgileri aransın</translation>
+        <translation>Tüm açık veri tabanlarında uygun kimlik bilgileri aransın</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -1163,14 +1163,6 @@ Bu işlem, var olan tarayıcı bağlantılarınızın korunması için gereklidi
         <translation>Lütfen aşağıdan tarayıcı uzantısı kullanımı ile ilgili özel yönergelere bakın</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location cannot be found!&lt;br/&gt;Browser integration WILL NOT WORK without the proxy application.</source>
-        <translation>&lt;b&gt;Hata:&lt;/b&gt; Özel vekil sunucu konumu bulunamadı!&lt;br/&gt;Tarayıcı bütünleşmesi vekil sunucu uygulaması olmadan ÇALIŞMAZ.</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation>&lt;b&gt;Uyarı:&lt;/b&gt; Aşağıdaki seçenekler tehlikeli olabilir!</translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation>Çalıştırılabilir dosyalar</translation>
     </message>
@@ -1185,6 +1177,22 @@ Bu işlem, var olan tarayıcı bağlantılarınızın korunması için gereklidi
     <message>
         <source>Select native messaging host folder location</source>
         <translation>Yerel iletişim sunucusu klasörünün konumunu seçin</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Warning:&lt;/b&gt; Only adjust these settings if necessary.</source>
+        <translation>&lt;b&gt;Uyarı:&lt;/b&gt; Bu ayarları yalnızca gerekli olduğunda değiştirin.</translation>
+    </message>
+    <message>
+        <source>The custom proxy location does not exist.</source>
+        <translation>Özel vekil sunucu konumu bulunamadı.</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location does not exist. Correct this in the advanced settings tab.</source>
+        <translation>&lt;b&gt;Hata:&lt;/b&gt; Özel vekil sunucu konumu bulunamadı. Bu sorunu gelişmiş ayarlar sekmesinden düzeltin.</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The installed proxy executable is missing from the expected location: %1&lt;br/&gt;Please set a custom proxy location in the advanced settings or reinstall the application.</source>
+        <translation>&lt;b&gt;Hata:&lt;/b&gt; Kurulmuş vekil sunucunun çalıştırılan dosyası beklenen konumda değil: %1&lt;br/&gt;Lütfen gelişmiş ayarlar bölümünden bir özel vekil sunucu konumu ayarlayın ya da uygulamayı yeniden kurun.</translation>
     </message>
 </context>
 <context>
@@ -1620,6 +1628,10 @@ Bir anahtar dosyanız yoksa, lütfen alanı boş bırakın.</translation>
         <source>Failed to authenticate with Windows Hello: %1</source>
         <translation>Windows Hello ile kimlik doğrulanamadı: %1</translation>
     </message>
+    <message>
+        <source>Windows Hello setup was canceled or failed. Quick unlock has not been enabled.</source>
+        <translation>Windows Hello kurulumu iptal edildi ya da tamamlanamadı. Hızlı kilit açma özelliği açılmadı.</translation>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingWidgetMetaData</name>
@@ -1725,7 +1737,7 @@ Bu işlem, tarayıcı uzantısı ile bağlantı kurulmasını engelleyebilir.</t
     </message>
     <message>
         <source>Enable Browser Integration to access these settings.</source>
-        <translation>Bu ayarlara erişmek için tarayıcı bütünleşmesini etkinleştirin.</translation>
+        <translation>Bu ayarlara erişmek için tarayıcı bütünleşmesini açın.</translation>
     </message>
     <message>
         <source>Do you really want to disconnect all browsers?
@@ -2438,13 +2450,13 @@ Hata: %1</translation>
     </message>
     <message>
         <source>Disable safe saves?</source>
-        <translation>Güvenli kaydetme devre dışı bırakılsın mı?</translation>
+        <translation>Güvenli kaydetme kapatılsın mı?</translation>
     </message>
     <message>
         <source>KeePassXC has failed to save the database multiple times. This is likely caused by file sync services holding a lock on the save file.
 Disable safe saves and try again?</source>
         <translation>KeePassXC birkaç kez veri tabanını kaydedemedi. Bu durum genellikle kaydedilen bir dosyayı kilitleyen dosya eşitleme hizmetlerinden kaynaklanır.
-Güvenli kaydetme devre dışı bırakılarak yeniden denensin mi?</translation>
+Güvenli kaydetme kapatılarak yeniden denensin mi?</translation>
     </message>
     <message>
         <source>Writing the database failed: %1</source>
@@ -2580,8 +2592,8 @@ Güvenli kaydetme devre dışı bırakılarak yeniden denensin mi?</translation>
     <message>
         <source>An external merge operation has invalidated this entry.
 Unfortunately, any changes made have been lost.</source>
-        <translation>Bu kayıt bir dış birleştirme işlemi ile devre dışı bırakılmış.
-Maalesef yapılmış değişiklikler kaybolacak. </translation>
+        <translation>Bu kayıt bir dış birleştirme işlemi ile geçersiz kılınmış.
+Ne yazık ki yapılmış değişiklikler kaybolacak. </translation>
     </message>
     <message>
         <source>Auto-Type Validation Error</source>
@@ -2832,7 +2844,7 @@ Düzeltmek ister misiniz?</translation>
     </message>
     <message>
         <source>Only send this setting to the browser for HTTP Auth dialogs. If enabled, normal login forms will not show this entry for selection.</source>
-        <translation>Bu ayar tarayıcıya yalnızca HRRP Auth pencereleri için gönderilir. Bu seçenek etkinleştirildiğinde, bu kayıt normal oturum açma formlarında seçilmek üzere görüntülenmez.</translation>
+        <translation>Bu ayar tarayıcıya yalnızca HRRP Auth pencereleri için gönderilir. Bu seçenek açıldığında, bu kayıt normal oturum açma formlarında seçilmek üzere görüntülenmez.</translation>
     </message>
     <message>
         <source>Use this entry only with HTTP Basic Auth</source>
@@ -2840,7 +2852,7 @@ Düzeltmek ister misiniz?</translation>
     </message>
     <message>
         <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
-        <translation>Bu ayar tarayıcıya HTTP kimlik doğrulama pencereleri için gönderilmez. Bu seçenek etkinleştirildiğinde, bu kayıt HTTP kimlik doğrulama pencerelerinde seçilmek üzere görüntülenmez.</translation>
+        <translation>Bu ayar tarayıcıya HTTP kimlik doğrulama pencereleri için gönderilmez. Bu seçenek açıldığında, bu kayıt HTTP kimlik doğrulama pencerelerinde seçilmek üzere görüntülenmez.</translation>
     </message>
     <message>
         <source>Do not use this entry with HTTP Basic Auth</source>
@@ -3113,11 +3125,11 @@ Düzeltmek ister misiniz?</translation>
     </message>
     <message>
         <source>Enable</source>
-        <translation>Etkinleştir</translation>
+        <translation>Aç</translation>
     </message>
     <message>
         <source>Disable</source>
-        <translation>Devre dışı bırak</translation>
+        <translation>Kapat</translation>
     </message>
     <message>
         <source>Inherit from parent group (%1)</source>
@@ -3250,15 +3262,15 @@ Desteklenen uzantılar: %1.</translation>
     <message>
         <source>KeeShare is currently disabled. You can enable import/export in the application settings.</source>
         <comment>KeeShare is a proper noun</comment>
-        <translation>KeeShare şu anda devre dışı. Uygulama ayarları bölümünden içe/dışa aktarmayı etkinleştirebilirsiniz.</translation>
+        <translation>KeeShare şu anda kapalı. Uygulama ayarları bölümünden içe/dışa aktarmayı açabilirsiniz.</translation>
     </message>
     <message>
         <source>Database export is currently disabled by application settings.</source>
-        <translation>Veri tabanı dışa aktarma özelliği uygulama ayarlarından devre dışı bırakılmış.</translation>
+        <translation>Veri tabanı dışa aktarma özelliği uygulama ayarlarından kapatılmış.</translation>
     </message>
     <message>
         <source>Database import is currently disabled by application settings.</source>
-        <translation>Veri tabanı içe aktarma özelliği uygulama ayarlarından devre dışı bırakılmış.</translation>
+        <translation>Veri tabanı içe aktarma özelliği uygulama ayarlarından kapatılmış.</translation>
     </message>
     <message>
         <source>KeeShare container</source>
@@ -3404,7 +3416,7 @@ Desteklenen uzantılar: %1.</translation>
     </message>
     <message>
         <source>You can enable the DuckDuckGo website icon service under Tools -&gt; Settings -&gt; Security</source>
-        <translation>DuckDuckGo site simgesi hizmetini Araçlar -&gt; Ayarlar -&gt; Güvenlik bölümünden etkinleştirebilirsiniz</translation>
+        <translation>DuckDuckGo site simgesi hizmetini Araçlar -&gt; Ayarlar -&gt; Güvenlik bölümünden açabilirsiniz</translation>
     </message>
     <message>
         <source>Existing icon selected.</source>
@@ -3969,15 +3981,19 @@ Hata: %1</translation>
     </message>
     <message>
         <source>Enabled</source>
-        <translation>Etkin</translation>
+        <translation>Açık</translation>
     </message>
     <message>
         <source>Disabled</source>
-        <translation>Devre dışı</translation>
+        <translation>Kapalı</translation>
     </message>
     <message>
         <source>Double click to copy value</source>
         <translation>Değeri kopyalamak için çift tıklayın</translation>
+    </message>
+    <message>
+        <source>Double click to copy to clipboard</source>
+        <translation>Panoya kopyalamak için çift tıklayın</translation>
     </message>
 </context>
 <context>
@@ -3985,6 +4001,10 @@ Hata: %1</translation>
     <message>
         <source>Invalid URL</source>
         <translation>Geçersiz adres</translation>
+    </message>
+    <message>
+        <source>Duplicate URL</source>
+        <translation>Adresi kopyala</translation>
     </message>
 </context>
 <context>
@@ -4000,6 +4020,10 @@ Hata: %1</translation>
     <message>
         <source>Reset to defaults</source>
         <translation>Varsayılanlara sıfırla</translation>
+    </message>
+    <message numerus="yes">
+        <source>+ %1 entry(s)...</source>
+        <translation><numerusform>+ %1 kayıt...</numerusform><numerusform>+ %1 kayıt...</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4072,7 +4096,7 @@ Bu işlem, parolalarınızı ve önemli bilgilerinizi korumasız kılacak!
     </message>
     <message>
         <source>Another secret service is running (%1).&lt;br/&gt;Please stop/remove it before re-enabling the Secret Service Integration.</source>
-        <translation>Başka bir gizli hizmet çalışıyor  (%1).&lt;br/&gt;Gizli hizmet bütünleşmesini yeniden etkinleştirmeden önce bu hizmeti durdurun ya da kaldırın.</translation>
+        <translation>Başka bir gizli hizmet çalışıyor  (%1).&lt;br/&gt;Gizli hizmet bütünleşmesini yeniden açmadan önce bu hizmeti durdurun ya da kaldırın.</translation>
     </message>
     <message>
         <source>Failed to register DBus service at %1.&lt;br/&gt;</source>
@@ -4183,7 +4207,7 @@ Bu işlem, parolalarınızı ve önemli bilgilerinizi korumasız kılacak!
         <source>Having trouble downloading icons?
 You can enable the DuckDuckGo website icon service in the security section of the application settings.</source>
         <translation>Simgeleri indirmede sorun mu yaşıyorsunuz?
-Uygulama ayarlarındaki güvenlik bölümünden DuckDuckGo site simge hizmetini etkinleştirin.</translation>
+Uygulama ayarlarındaki güvenlik bölümünden DuckDuckGo site simge hizmetini açın.</translation>
     </message>
     <message>
         <source>Close</source>
@@ -4849,11 +4873,11 @@ Bu sorunla yeniden karşılaşırsanız, veri tabanı dosyası bozulmuş olabili
     </message>
     <message>
         <source>Import is disabled in settings</source>
-        <translation>İçe aktarma özelliği ayarlardan devre dışı bırakılmış</translation>
+        <translation>İçe aktarma özelliği ayarlardan kapatılmış</translation>
     </message>
     <message>
         <source>Export is disabled in settings</source>
-        <translation>Dışa aktarma özelliği ayarlardan devre dışı bırakılmış</translation>
+        <translation>Dışa aktarma özelliği ayarlardan kapatılmış</translation>
     </message>
     <message>
         <source>Inactive share</source>
@@ -5021,7 +5045,7 @@ Bu dosyayı kullanarak ilerlemek istediğinize emin misiniz?</translation>
     </message>
     <message>
         <source>&amp;Recent Databases</source>
-        <translation>&amp;Son kullanılan veritabanları</translation>
+        <translation>&amp;Son kullanılan veri tabanları</translation>
     </message>
     <message>
         <source>&amp;Import</source>
@@ -5237,7 +5261,7 @@ Bu dosyayı kullanarak ilerlemek istediğinize emin misiniz?</translation>
     </message>
     <message>
         <source>Lock &amp;All Databases</source>
-        <translation>&amp;Tüm veritabanlarını kilitle</translation>
+        <translation>&amp;Tüm veri tabanlarını kilitle</translation>
     </message>
     <message>
         <source>&amp;Title</source>
@@ -6309,7 +6333,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Disable</source>
-        <translation>Devre dışı bırak</translation>
+        <translation>Kapat</translation>
     </message>
     <message>
         <source>Merge</source>
@@ -7517,11 +7541,11 @@ Lütfen bu dosyayı kullanmak yerine yeni bir anahtar dosyası oluşturmayı de�
     </message>
     <message>
         <source>Debugging mode is disabled.</source>
-        <translation>Hata ayıklama kipi devre dışı.</translation>
+        <translation>Hata ayıklama kipi kapalı.</translation>
     </message>
     <message>
         <source>Debugging mode is enabled.</source>
-        <translation>Hata ayıklama kipi etkin.</translation>
+        <translation>Hata ayıklama kipi açık.</translation>
     </message>
     <message>
         <source>Operating system: %1
@@ -7561,7 +7585,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Enabled extensions:</source>
-        <translation>Etkin eklentiler:</translation>
+        <translation>Kullanımdaki eklentiler:</translation>
     </message>
     <message numerus="yes">
         <source>over %1 year(s)</source>
@@ -7685,7 +7709,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>The lock file could not be created. Single-instance mode disabled.</source>
-        <translation>Kilit dosyası oluşturulamadı. Tek kopya kipi devre dışı bırakıldı.</translation>
+        <translation>Kilit dosyası oluşturulamadı. Tek kopya kipi kapatıldı.</translation>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)…</source>
@@ -7807,7 +7831,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>filenames of the password databases to open (*.kdbx)</source>
-        <translation>açılacak parola veritabanlarının dosya adları (*.kdbx)</translation>
+        <translation>açılacak parola veri tabanlarının dosya adları (*.kdbx)</translation>
     </message>
     <message>
         <source>path to a custom config file</source>
@@ -7819,7 +7843,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>lock all open databases</source>
-        <translation>tüm açık veritabanlarını kilitle</translation>
+        <translation>tüm açık veri tabanlarını kilitle</translation>
     </message>
     <message>
         <source>key file of the database</source>
@@ -7830,12 +7854,8 @@ Kernel: %3 %4</source>
         <translation>veri tabanının parolası stdin üzerinden okunsun</translation>
     </message>
     <message>
-        <source>allow app screen recordering and screenshots</source>
-        <translation>uygulamanın ekran kaydı yapmasına ve ekran görüntüleri almasına izin ver</translation>
-    </message>
-    <message>
         <source>Locked databases.</source>
-        <translation>Kilitli veritabanları.</translation>
+        <translation>Kilitli veri tabanları.</translation>
     </message>
     <message>
         <source>Database failed to lock.</source>
@@ -7952,6 +7972,10 @@ Bu seçenekler kullanımdan kaldırıldı. yerine --set-key-file kullanın.</tra
     <message>
         <source>KeePassXC is not running. No open database to lock</source>
         <translation>KeePassXC çalışmıyor. Kilitenebilecek bir açık veri tabanı yok</translation>
+    </message>
+    <message>
+        <source>allow screenshots and app recording (Windows/macOS)</source>
+        <translation>ekran görüntüsü ve uygulama kaydı alınabilsin (Windows/macOS)</translation>
     </message>
 </context>
 <context>
@@ -8169,7 +8193,7 @@ Bu seçenekler kullanımdan kaldırıldı. yerine --set-key-file kullanın.</tra
     </message>
     <message>
         <source>This build of KeePassXC does not have network functions. Networking is required to check your passwords against Have I Been Pwned databases.</source>
-        <translation>Bu KeePassXC yapımında ağ özellikleri bulunmaz. Parolalarınızın Have I Been Pwned veritabanlarıyla incelenebilmesi için ağ özelliği gereklidir.</translation>
+        <translation>Bu KeePassXC yapımında ağ özellikleri bulunmaz. Parolalarınızın Have I Been Pwned veri tabanlarıyla incelenebilmesi için ağ özelliği gereklidir.</translation>
     </message>
     <message>
         <source>Congratulations, no exposed passwords!</source>
@@ -8559,7 +8583,7 @@ Bu seçenekler kullanımdan kaldırıldı. yerine --set-key-file kullanın.</tra
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If enabled, any attempt to read a password must be confirmed. Otherwise, clients can read passwords without confirmation when the database is unlocked.&lt;/p&gt;&lt;p&gt;This option only covers the access to the password of an entry. Clients can always enumerate the items of exposed databases and query their attributes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bu seçenek etkinleştirildiğinde, herhangi bir parola okuma girişimi onaylanmalıdır. Yoksa, veri tabanı kilidi açıldığında uygulamalar parolaları onay almadan okuyabilir.&lt;/p&gt;&lt;p&gt;Bu seçenek yalnızca bir kaydın parolasına erişim iznini kapsar. Uygualamalar her zaman açıkta kalan veri tabanlarının ögelerini öğrenebilir ve özniteliklerini sorgulayabilir.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bu seçenek açıldığında, herhangi bir parola okuma girişimi onaylanmalıdır. Yoksa, veri tabanı kilidi açıldığında uygulamalar parolaları onay almadan okuyabilir.&lt;/p&gt;&lt;p&gt;Bu seçenek yalnızca bir kaydın parolasına erişim iznini kapsar. Uygulamalar her zaman açıkta kalan veri tabanlarının ögelerini öğrenebilir ve özniteliklerini sorgulayabilir.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Confirm when passwords are retrieved by clients</source>
@@ -8574,7 +8598,7 @@ Bu seçenekler kullanımdan kaldırıldı. yerine --set-key-file kullanın.</tra
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;
            font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color
            Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;Bu seçenek çöp
-           kutusu sorularını devre dışı bırakmaz&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
+           kutusu ile ilgili soruları kapatmaz&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
           </translation>
     </message>
     <message>
@@ -8588,7 +8612,7 @@ Bu seçenekler kullanımdan kaldırıldı. yerine --set-key-file kullanın.</tra
            different value set in applications.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
           </source>
         <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Böylece, önce veri tabanı kilidini açmadan 
-           parola arayan belirli uygulamalar ile daha iyi uyumluluk sağlanabilir.&lt;/p&gt;&lt;p&gt;Ancak bu seçenek etkinleştirildiğinde,
+           parola arayan belirli uygulamalar ile daha iyi uyumluluk sağlanabilir.&lt;/p&gt;&lt;p&gt;Ancak bu seçenek açıldığında,
            belirli bir süre içinde veri tabanının kilidi açılamazsa uygulama çökebilir. (Genellikle 25s. Ancak uygulamalarda
            farklı bir değer ayarlanmış olabilir.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
           </translation>
@@ -8615,7 +8639,7 @@ Bu seçenekler kullanımdan kaldırıldı. yerine --set-key-file kullanın.</tra
     </message>
     <message>
         <source>Save current changes to activate the plugin and enable editing of this section.</source>
-        <translation>Eklentiyi etkinleştirmek için yapılmış değişiklikleri kaydedin ve bu bölümü düzenlemeyi etkinleştirin.</translation>
+        <translation>Eklentiyi etkinleştirmek için yapılmış değişiklikleri kaydedin ve bu bölümü düzenlemeyi açın.</translation>
     </message>
 </context>
 <context>
@@ -8939,7 +8963,7 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Recent databases</source>
-        <translation>Son veritabanları</translation>
+        <translation>Son veri tabanları</translation>
     </message>
     <message>
         <source>Open a recent database</source>

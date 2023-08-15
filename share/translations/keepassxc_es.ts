@@ -31,7 +31,7 @@
     </message>
     <message>
         <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Ver contribuciones en GitHub&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;Vea contribuciones en GitHub&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Debug Info</source>
@@ -74,7 +74,7 @@
     </message>
     <message>
         <source>Command Line</source>
-        <translation>Línea de comandos</translation>
+        <translation>Línea de instrucción</translation>
     </message>
     <message>
         <source>Details</source>
@@ -283,7 +283,7 @@
     <message>
         <source>have expired</source>
         <comment>On database unlock, show entries that...</comment>
-        <translation>ha expirado</translation>
+        <translation>han caducado</translation>
     </message>
     <message>
         <source> days</source>
@@ -297,7 +297,7 @@
     </message>
     <message>
         <source>File Management</source>
-        <translation>Administración de archivos</translation>
+        <translation>Administración de Archivos</translation>
     </message>
     <message>
         <source>Automatically save after every change</source>
@@ -317,7 +317,7 @@
     </message>
     <message>
         <source>Backup database file before saving</source>
-        <translation>Hacer una copia de seguridad de la base de datos antes de guardar</translation>
+        <translation>Respaldar la base de datos antes de guardar</translation>
     </message>
     <message>
         <source>Backup destination</source>
@@ -740,7 +740,7 @@ Ctrl+3 - Type TOTP&lt;br/&gt;
 Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
         <translation>&lt;p&gt;Puede usar búsquedas de consultas avanzadas para encontrar cualquier apunte en su base de datos abierta. Los siguientes atajos de teclado son útiles:&lt;br/&gt;
 Ctrl+F - Intercambiar búsqueda de base de datos&lt;br/&gt;
-Ctrl+1 - Escribir nombre de usuario&lt;br/&gt;
+Ctrl+1 - Escribir usuario&lt;br/&gt;
 Ctrl+2 - Escribir contraseña&lt;br/&gt;
 Ctrl+3 - Escribir TOTP&lt;br/&gt;
 Ctrl+4 - Usar teclado virtual (solo Windows)&lt;/p&gt;</translation>
@@ -1163,14 +1163,6 @@ Es necesario para mantener sus conexiones presentes del navegador.
         <translation>Vea las instrucciones especiales para el uso de extensión de navegador debajo.</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location cannot be found!&lt;br/&gt;Browser integration WILL NOT WORK without the proxy application.</source>
-        <translation>&lt;b&gt;Error:&lt;/b&gt; ¡No se puede encontrar la ubicación de proxy personalizada!&lt;br/&gt;La integración del navegador NO funcionará sin la aplicación proxy.</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation>&lt;b&gt;Advertencia:&lt;/b&gt; las siguientes opciones pueden ser peligrosas.</translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation>Archivos ejecutables</translation>
     </message>
@@ -1185,6 +1177,22 @@ Es necesario para mantener sus conexiones presentes del navegador.
     <message>
         <source>Select native messaging host folder location</source>
         <translation>Seleccionar la ubicación de la carpeta del host de mensajería nativa</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Warning:&lt;/b&gt; Only adjust these settings if necessary.</source>
+        <translation>&lt;b&gt;Advertencia:&lt;/b&gt; Solo ajustar estas configuraciones si es necesario.</translation>
+    </message>
+    <message>
+        <source>The custom proxy location does not exist.</source>
+        <translation>La localización de proxy personalizada no existe.</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location does not exist. Correct this in the advanced settings tab.</source>
+        <translation>&lt;b&gt;Error:&lt;/b&gt; La localización de proxy personalizada no existe. Corrija esto en la pestaña de configuración avanzada.</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The installed proxy executable is missing from the expected location: %1&lt;br/&gt;Please set a custom proxy location in the advanced settings or reinstall the application.</source>
+        <translation>&lt;b&gt;Error:&lt;/b&gt; El ejecutable de proxy instalado falta en la localización esperada: %1&lt;br/&gt; Establezca una localización de proxy personalizada en la configuración avanzada o reinstale la aplicación.</translation>
     </message>
 </context>
 <context>
@@ -1448,7 +1456,7 @@ Copia de seguridad de base de datos ubicada en %2</translation>
     </message>
     <message>
         <source>Key File:</source>
-        <translation>Archivo Clave:</translation>
+        <translation>Archivo clave:</translation>
     </message>
     <message>
         <source>Key file help</source>
@@ -1619,6 +1627,10 @@ Si no tiene un archivo clave, deje el campo vacío.</translation>
     <message>
         <source>Failed to authenticate with Windows Hello: %1</source>
         <translation>Fallo de autenticación con Windows Hello: %1</translation>
+    </message>
+    <message>
+        <source>Windows Hello setup was canceled or failed. Quick unlock has not been enabled.</source>
+        <translation>La configuración de Windows Hello ha sido cancelada o ha fallado. El desbloqueo rápido no ha sido habilitado.</translation>
     </message>
 </context>
 <context>
@@ -2957,35 +2969,35 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>&amp;Username:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Usuario:</translation>
     </message>
     <message>
         <source>&amp;Title:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Título:</translation>
     </message>
     <message>
         <source>&amp;Password:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Contraseña:</translation>
     </message>
     <message>
         <source>UR&amp;L:</source>
-        <translation type="unfinished"/>
+        <translation>UR&amp;L:</translation>
     </message>
     <message>
         <source>&amp;Notes:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Notas:</translation>
     </message>
     <message>
         <source>Toggle notes visibility</source>
-        <translation type="unfinished"/>
+        <translation>Intercambiar visibilidad de notas</translation>
     </message>
     <message>
         <source>T&amp;ags:</source>
-        <translation type="unfinished"/>
+        <translation>Etiquet&amp;as:</translation>
     </message>
     <message>
         <source>&amp;Expires:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Expira:</translation>
     </message>
 </context>
 <context>
@@ -3979,12 +3991,20 @@ Error: %1</translation>
         <source>Double click to copy value</source>
         <translation>Doble clic para copiar valor</translation>
     </message>
+    <message>
+        <source>Double click to copy to clipboard</source>
+        <translation>Doble clic para copiar el portapapeles</translation>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
     <message>
         <source>Invalid URL</source>
         <translation>URL inválida</translation>
+    </message>
+    <message>
+        <source>Duplicate URL</source>
+        <translation>Duplicar URL</translation>
     </message>
 </context>
 <context>
@@ -4000,6 +4020,10 @@ Error: %1</translation>
     <message>
         <source>Reset to defaults</source>
         <translation>Restablecer ajustes por defecto</translation>
+    </message>
+    <message numerus="yes">
+        <source>+ %1 entry(s)...</source>
+        <translation><numerusform>+ %1 apunte...</numerusform><numerusform>+ %1 apuntes...</numerusform><numerusform>+ %1 apuntes...</numerusform></translation>
     </message>
 </context>
 <context>
@@ -5197,7 +5221,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Copy &amp;Username</source>
-        <translation>Copiar nombre de &amp;usuario</translation>
+        <translation>Copiar &amp;usuario</translation>
     </message>
     <message>
         <source>Copy username to clipboard</source>
@@ -6263,7 +6287,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Toggle password visibilty using Control + H. Open the password generator using Control + G.</source>
-        <translation type="unfinished"/>
+        <translation>Intercambiar visibilidad de la contraseña usando Control + H. Abrir el generador de contraseñas usando Control + G.</translation>
     </message>
 </context>
 <context>
@@ -7830,10 +7854,6 @@ Núcleo: %3 %4</translation>
         <translation>leer contraseña de la base de datos desde el apunte estándar</translation>
     </message>
     <message>
-        <source>allow app screen recordering and screenshots</source>
-        <translation>Permitir la grabación de la pantalla de la aplicación y las capturas de pantalla</translation>
-    </message>
-    <message>
         <source>Locked databases.</source>
         <translation>Bases de datos bloquedas.</translation>
     </message>
@@ -7952,6 +7972,10 @@ Estas opciones están obsoletas, use --set-key-file.</translation>
     <message>
         <source>KeePassXC is not running. No open database to lock</source>
         <translation>KeePassXC no está en ejecución. No hay base de datos abierta a cerrar</translation>
+    </message>
+    <message>
+        <source>allow screenshots and app recording (Windows/macOS)</source>
+        <translation>permitir aplicación de capturas de pantalla y granación (Windows/macOS)</translation>
     </message>
 </context>
 <context>
@@ -9130,7 +9154,7 @@ Ejemplo: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Hardware key timed out waiting for user interaction.</source>
-        <translation>La llave por hardware expiró esperando interacción del usuario.</translation>
+        <translation>La llave por hardware caducó esperando interacción del usuario.</translation>
     </message>
     <message>
         <source>A USB error occurred when accessing the hardware key: %1</source>

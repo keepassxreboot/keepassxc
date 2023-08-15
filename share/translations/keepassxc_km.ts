@@ -596,7 +596,7 @@
     </message>
     <message>
         <source>Hide TOTP in the entry preview panel</source>
-        <translation type="unfinished"/>
+        <translation>លាក់ TOTP នៅក្នុងបន្ទះមើលជាមុនធាតុ</translation>
     </message>
 </context>
 <context>
@@ -1163,14 +1163,6 @@ Would you like to migrate your existing settings now?</source>
         <translation>សូមមើលការណែនាំពិសេសសម្រាប់ការប្រើប្រាស់កម្មវិធីបន្ថែម​របស់កម្មវិធីរុករកតាមអ៊ីនធឺណិតខាងក្រោម</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location cannot be found!&lt;br/&gt;Browser integration WILL NOT WORK without the proxy application.</source>
-        <translation>&lt;b&gt;កំហុស៖&lt;/b&gt; ទីតាំងប្រូកស៊ីផ្ទាល់មិនអាចរកឃើញទេ!&lt;br/&gt;ការបញ្ចូលកម្មវិធីរុករកនឹងមិនដំណើរការដោយគ្មានកម្មវិធីប្រូកស៊ីទេ។</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation>&lt;b&gt;ការព្រមាន៖&lt;/b&gt; ជម្រើសខាងក្រោមអាចមានគ្រោះថ្នាក់!</translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation>ឯកសារដែលអនុវត្តន៍បាន</translation>
     </message>
@@ -1185,6 +1177,23 @@ Would you like to migrate your existing settings now?</source>
     <message>
         <source>Select native messaging host folder location</source>
         <translation>ជ្រើសរើសទីតាំងថតម៉ាស៊ីនផ្ញើសារដើម​</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Warning:&lt;/b&gt; Only adjust these settings if necessary.</source>
+        <translation>&lt;b&gt;ការព្រមាន&lt;/b&gt; លៃ​តម្រូវ​តែ​ការ​កំណត់​ទាំង​នេះ​បើ​ចាំបាច់។
+</translation>
+    </message>
+    <message>
+        <source>The custom proxy location does not exist.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location does not exist. Correct this in the advanced settings tab.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The installed proxy executable is missing from the expected location: %1&lt;br/&gt;Please set a custom proxy location in the advanced settings or reinstall the application.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1615,6 +1624,10 @@ If you do not have a key file, please leave the field empty.</source>
     <message>
         <source>Failed to authenticate with Windows Hello: %1</source>
         <translation>បានបរាជ័យក្នុងការផ្ទៀងផ្ទាត់ជាមួយ Windows Hello៖ %1</translation>
+    </message>
+    <message>
+        <source>Windows Hello setup was canceled or failed. Quick unlock has not been enabled.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2954,15 +2967,15 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>&amp;Username:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Username:</translation>
     </message>
     <message>
         <source>&amp;Title:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;ចំណងជើង:</translation>
     </message>
     <message>
         <source>&amp;Password:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;ពាក្យសម្ងាត់:</translation>
     </message>
     <message>
         <source>UR&amp;L:</source>
@@ -2970,7 +2983,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>&amp;Notes:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;ចំណាំ:</translation>
     </message>
     <message>
         <source>Toggle notes visibility</source>
@@ -2978,11 +2991,11 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>T&amp;ags:</source>
-        <translation type="unfinished"/>
+        <translation>T&amp;ags:</translation>
     </message>
     <message>
         <source>&amp;Expires:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Expires:</translation>
     </message>
 </context>
 <context>
@@ -3970,12 +3983,20 @@ Error: %1</source>
         <source>Double click to copy value</source>
         <translation>ចុចពីរដងដើម្បីចម្លងតម្លៃ</translation>
     </message>
+    <message>
+        <source>Double click to copy to clipboard</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
     <message>
         <source>Invalid URL</source>
         <translation>URL មិនត្រឹមត្រូវ</translation>
+    </message>
+    <message>
+        <source>Duplicate URL</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3991,6 +4012,10 @@ Error: %1</source>
     <message>
         <source>Reset to defaults</source>
         <translation>ការកំណត់ទៅលំនាំដើមវិញ</translation>
+    </message>
+    <message numerus="yes">
+        <source>+ %1 entry(s)...</source>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -7819,10 +7844,6 @@ Kernel: %3 %4</source>
         <translation>អានពាក្យសម្ងាត់នៃមូលដ្ឋានទិន្នន័យពី stdin</translation>
     </message>
     <message>
-        <source>allow app screen recordering and screenshots</source>
-        <translation>បើកមុខងារថតអេក្រង់ និងរូបថត​អេក្រង់សម្រាប់កម្មវិធី</translation>
-    </message>
-    <message>
         <source>Locked databases.</source>
         <translation>បានចាក់សោមូលដ្ឋានទិន្នន័យ។</translation>
     </message>
@@ -7941,6 +7962,10 @@ This options is deprecated, use --set-key-file instead.</source>
     <message>
         <source>KeePassXC is not running. No open database to lock</source>
         <translation>KeePassXC មិនកំពុងដំណើរការទេ។ មិនមានមូលដ្ឋានទិន្នន័យដែលបានបើកដើម្បីចាក់សោទេ</translation>
+    </message>
+    <message>
+        <source>allow screenshots and app recording (Windows/macOS)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

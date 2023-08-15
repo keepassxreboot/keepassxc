@@ -1163,14 +1163,6 @@ Kas tahad oma olemasoleva seadistuse kohe üle kolida?</translation>
         <translation>Vaata allpool brauserilaienduse kasutamise erijuhiseid.</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location cannot be found!&lt;br/&gt;Browser integration WILL NOT WORK without the proxy application.</source>
-        <translation>&lt;b&gt;Viga:&lt;/b&gt; kohandatud puhverrakenduse asukohta ei leitud!&lt;br/&gt;Ilma puhverrakenduseta brauserilõiming EI TÖÖTA.</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation>&lt;b&gt;Hoiatus:&lt;/b&gt; nende seadete muutmine võib olla ohtlik!</translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation>Rakendusfailid</translation>
     </message>
@@ -1185,6 +1177,22 @@ Kas tahad oma olemasoleva seadistuse kohe üle kolida?</translation>
     <message>
         <source>Select native messaging host folder location</source>
         <translation>Programmiomase teatevahetuse hosti kausta valimine</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Warning:&lt;/b&gt; Only adjust these settings if necessary.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The custom proxy location does not exist.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location does not exist. Correct this in the advanced settings tab.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The installed proxy executable is missing from the expected location: %1&lt;br/&gt;Please set a custom proxy location in the advanced settings or reinstall the application.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1618,6 +1626,10 @@ Kui andmebaasi avamiseks pole võtmefaili vaja, jäta see väli tühjaks.</trans
     </message>
     <message>
         <source>Failed to authenticate with Windows Hello: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Windows Hello setup was canceled or failed. Quick unlock has not been enabled.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -2951,35 +2963,35 @@ isegi kui see ei vasta kvaliteedinõuetele. Märgi see ruut, kui parooli keeruku
     </message>
     <message>
         <source>&amp;Username:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Kasutajanimi:</translation>
     </message>
     <message>
         <source>&amp;Title:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Pealkiri:</translation>
     </message>
     <message>
         <source>&amp;Password:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Parool:</translation>
     </message>
     <message>
         <source>UR&amp;L:</source>
-        <translation type="unfinished"/>
+        <translation>UR&amp;L:</translation>
     </message>
     <message>
         <source>&amp;Notes:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Märkmed:</translation>
     </message>
     <message>
         <source>Toggle notes visibility</source>
-        <translation type="unfinished"/>
+        <translation>Lülita märkmete nähtavust</translation>
     </message>
     <message>
         <source>T&amp;ags:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Sildid:</translation>
     </message>
     <message>
         <source>&amp;Expires:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Aegub:</translation>
     </message>
 </context>
 <context>
@@ -3972,12 +3984,20 @@ Viga: %1</translation>
         <source>Double click to copy value</source>
         <translation>Väärtuse kopeerimiseks tee topeltklõps</translation>
     </message>
+    <message>
+        <source>Double click to copy to clipboard</source>
+        <translation>Kopeerimiseks lõikelauale tee topeltklõps</translation>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
     <message>
         <source>Invalid URL</source>
         <translation>Sobimatu URL</translation>
+    </message>
+    <message>
+        <source>Duplicate URL</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3993,6 +4013,10 @@ Viga: %1</translation>
     <message>
         <source>Reset to defaults</source>
         <translation>Taasta vaikeväärtused</translation>
+    </message>
+    <message numerus="yes">
+        <source>+ %1 entry(s)...</source>
+        <translation><numerusform>+ %1 kirje...</numerusform><numerusform>+ %1 kirjet...</numerusform></translation>
     </message>
 </context>
 <context>
@@ -5498,7 +5522,7 @@ Võiksid kaaluda KeePassXC allalaadimislehel oleva AppImage’i kasutamist.</tra
     </message>
     <message>
         <source>Allow Screen Capture</source>
-        <translation type="unfinished"/>
+        <translation>Luba ekraanitõmmiste tegemine</translation>
     </message>
 </context>
 <context>
@@ -7823,10 +7847,6 @@ Kernel: %3 %4</translation>
         <translation>Andmebaasi parooli lugemine standardsisendist (stdin).</translation>
     </message>
     <message>
-        <source>allow app screen recordering and screenshots</source>
-        <translation>Rakendusest ekraanipiltide ja -videote tegemise lubamine.</translation>
-    </message>
-    <message>
         <source>Locked databases.</source>
         <translation>Andmebaasid lukustatud.</translation>
     </message>
@@ -7874,11 +7894,11 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Invalid Cipher</source>
-        <translation type="unfinished"/>
+        <translation>Sobimatu šiffer</translation>
     </message>
     <message>
         <source>Invalid KDF</source>
-        <translation type="unfinished"/>
+        <translation>Sobimatu KDF</translation>
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue.</source>
@@ -7945,6 +7965,10 @@ See argument on iganenud, kasuta parem &quot;--set-key-file&quot;.</translation>
     <message>
         <source>KeePassXC is not running. No open database to lock</source>
         <translation>KeePassXC ei tööta, seega pole ühtki avatud andmebaasi, mida lukustada.</translation>
+    </message>
+    <message>
+        <source>allow screenshots and app recording (Windows/macOS)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

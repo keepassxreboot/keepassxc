@@ -140,7 +140,7 @@
     </message>
     <message>
         <source>SSH_SK_PROVIDER override</source>
-        <translation> SSH_SK_PROVIDER de remplacement</translation>
+        <translation>Remplacer SSH_SK_PROVIDER</translation>
     </message>
     <message>
         <source>No SSH Agent socket available. Either make sure SSH_AUTH_SOCK environment variable exists or set an override.</source>
@@ -325,7 +325,7 @@
     </message>
     <message>
         <source>Specifies the database backup file location. Occurrences of &quot;{DB_FILENAME}&quot; are replaced with the filename of the saved database without extension. {TIME:&lt;format&gt;} is replaced with the backup time, see https://doc.qt.io/qt-5/qdatetime.html#toString. &lt;format&gt; defaults to format string &quot;dd_MM_yyyy_hh-mm-ss&quot;.</source>
-        <translation>Spécifie l&apos;emplacement du fichier de sauvegarde de la base de données. Les occurrences de &quot;{DB_FILENAME}&quot; sont remplacées par le nom de fichier de la base de données sauvegardée sans extension. {TIME:&lt;format&gt;}  est remplacé par l&apos;heure de sauvegarde, cf https://doc.qt.io/qt-5/qdatetime.html#toString. Par défaut, &lt;format&gt;utilise le format &quot;dd_MM_yyyy_hh-mm-ss&quot;.</translation>
+        <translation>Spécifie l&apos;emplacement du fichier de sauvegarde de la base de données. Les occurrences de &quot;{DB_FILENAME}&quot; sont remplacées par le nom de fichier de la base de données sauvegardée sans extension. {TIME:&lt;format&gt;}  est remplacé par l&apos;heure de sauvegarde, cf. https://doc.qt.io/qt-5/qdatetime.html#toString. Par défaut, &lt;format&gt;utilise le format &quot;dd_MM_yyyy_hh-mm-ss&quot;.</translation>
     </message>
     <message>
         <source>{DB_FILENAME}.old.kdbx</source>
@@ -333,11 +333,11 @@
     </message>
     <message>
         <source>Choose...</source>
-        <translation>Choisissez...</translation>
+        <translation>Choisissez…</translation>
     </message>
     <message>
         <source>Use alternative saving method (may solve problems with Dropbox, Google Drive, GVFS, etc.)</source>
-        <translation>Utiliser une méthode d&apos;enregistrement alternative (peut résoudre les problèmes avec Dropbox, Google Drive, GVFS, etc).</translation>
+        <translation>Utiliser une méthode d&apos;enregistrement alternative (peut résoudre les problèmes avec Dropbox, Google Drive, GVFS, etc.)</translation>
     </message>
     <message>
         <source>Temporary file moved into place</source>
@@ -470,7 +470,7 @@
     </message>
     <message>
         <source>Global Auto-Type shortcut:</source>
-        <translation>Raccourci de saisie automatique globale :</translation>
+        <translation>Raccourci de saisie automatique globale :</translation>
     </message>
     <message>
         <source>Auto-type start delay milliseconds</source>
@@ -483,7 +483,7 @@
     </message>
     <message>
         <source>Auto-Type typing delay:</source>
-        <translation>Vitesse de remplissage de la saisie automatique :</translation>
+        <translation>Vitesse de remplissage de la saisie automatique :</translation>
     </message>
     <message>
         <source>Global auto-type shortcut</source>
@@ -596,7 +596,7 @@
     </message>
     <message>
         <source>Hide TOTP in the entry preview panel</source>
-        <translation type="unfinished"/>
+        <translation>Cacher le TOTP dans le panneau d’aperçu des entrées</translation>
     </message>
 </context>
 <context>
@@ -752,7 +752,7 @@ Ctrl+4 - Utiliser le clavier virtuel (Windows seulement)&lt;/p&gt;
     </message>
     <message>
         <source>Search…</source>
-        <translation>Rechercher...</translation>
+        <translation>Rechercher…</translation>
     </message>
     <message>
         <source>Type Sequence</source>
@@ -1164,14 +1164,6 @@ Souhaitez-vous migrer vos paramètres maintenant ?</translation>
         <translation>Veuillez consulter ci-dessous les instructions propres à l’extension pour navigateurs</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location cannot be found!&lt;br/&gt;Browser integration WILL NOT WORK without the proxy application.</source>
-        <translation>&lt;b&gt;Erreur :&lt;/b&gt; L&apos;emplacement de proxy personnalisé est introuvable !&lt;br/&gt;L&apos;intégration au navigateur  NE FONCTIONNERA PAS sans l&apos;application proxy.</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation>&lt;b&gt;Avertissement :&lt;/b&gt; Les options suivantes peuvent être dangereuses !</translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation>Fichiers exécutables</translation>
     </message>
@@ -1186,6 +1178,22 @@ Souhaitez-vous migrer vos paramètres maintenant ?</translation>
     <message>
         <source>Select native messaging host folder location</source>
         <translation>Sélectionner l&apos;emplacement du dossier de l&apos;hôte de messagerie native</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Warning:&lt;/b&gt; Only adjust these settings if necessary.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The custom proxy location does not exist.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location does not exist. Correct this in the advanced settings tab.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The installed proxy executable is missing from the expected location: %1&lt;br/&gt;Please set a custom proxy location in the advanced settings or reinstall the application.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1501,7 +1509,7 @@ La base de données de sauvegarde est située sur %2</translation>
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue…</source>
-        <translation>Veuillez insérer ou toucher votre YubiKey pour continuer...</translation>
+        <translation>Veuillez insérer ou toucher votre YubiKey pour continuer…</translation>
     </message>
     <message>
         <source>Database Version Mismatch</source>
@@ -1591,7 +1599,7 @@ Si vous n’avez pas de fichier clé, veuillez laisser le champ vide.</translati
     </message>
     <message>
         <source>Detecting hardware keys…</source>
-        <translation>Détection des clés matérielles...</translation>
+        <translation>Détection des clés matérielles…</translation>
     </message>
     <message>
         <source>No hardware keys detected</source>
@@ -1599,7 +1607,7 @@ Si vous n’avez pas de fichier clé, veuillez laisser le champ vide.</translati
     </message>
     <message>
         <source>Select hardware key…</source>
-        <translation>Sélectionner une clé matérielle...</translation>
+        <translation>Sélectionner une clé matérielle…</translation>
     </message>
     <message>
         <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
@@ -1613,11 +1621,15 @@ Si vous n’avez pas de fichier clé, veuillez laisser le champ vide.</translati
     </message>
     <message>
         <source>authenticate to access the database</source>
-        <translation>Autentifiez vous pour accéder à la base de données</translation>
+        <translation>Authentifiez-vous pour accéder à la base de données</translation>
     </message>
     <message>
         <source>Failed to authenticate with Windows Hello: %1</source>
         <translation>Échec de l&apos;authentification avec Windows Hello: %1</translation>
+    </message>
+    <message>
+        <source>Windows Hello setup was canceled or failed. Quick unlock has not been enabled.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1666,7 +1678,7 @@ Si vous n’avez pas de fichier clé, veuillez laisser le champ vide.</translati
     </message>
     <message>
         <source>Convert KeePassHTTP data</source>
-        <translation>Convertir KeePassHTTP data</translation>
+        <translation>Convertir les données KeePassHTTP</translation>
     </message>
     <message>
         <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
@@ -1793,15 +1805,15 @@ This is necessary to maintain compatibility with the browser plugin.</source>
     <message>
         <source>Do you really want refresh the database ID?
 This is only necessary if your database is a copy of another and the browser extension cannot connect.</source>
-        <translation>Souhaitez-vous vraiment actualiser l&apos;ID de la base de données ?
-Ceci est seulement nécessaire si votre base de données est une copie d&apos;une autre et que l&apos;extension du navigateur ne peut se connecter.</translation>
+        <translation>Voulez-vous vraiment actualiser l’ID de la base de données ?
+Cela n’est nécessaire que si votre base de données est la copie d’une autre et que l’extension du navigateur ne peut pas se connecter.</translation>
     </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetDatabaseKey</name>
     <message>
         <source>Add additional protection…</source>
-        <translation>Ajouter une autre protection...</translation>
+        <translation>Ajouter une autre protection…</translation>
     </message>
     <message>
         <source>No password set</source>
@@ -2084,22 +2096,28 @@ Cette action est irréversible.</translation>
 the oldest history items of an entry will be
 removed such that only the specified amount
 of entries remain at most.</source>
-        <translation type="unfinished"/>
+        <translation>Lors de l’enregistrement de ce paramètre ou de la modification d’une entrée
+les éléments les plus anciens de l&apos;historique d’une entrée seront
+supprimés de telle sorte qu&apos;il ne reste au maximum
+que le nombre spécifié d&apos;entrées.</translation>
     </message>
     <message>
         <source>Limit the amount of history items per entry to:</source>
-        <translation type="unfinished"/>
+        <translation>Limiter le nombre d’éléments d’historique par entrée à :</translation>
     </message>
     <message>
         <source>When saving this setting or editing an entry
 the oldest history items of an entry will be
 removed such that the remaining history items
 add up to the specified amount at most.</source>
-        <translation type="unfinished"/>
+        <translation>Lors de l’enregistrement de ce paramètre ou de la modification d’une entrée
+les éléments les plus anciens de l&apos;historique d’une entrée seront
+supprimés de telle sorte que les éléments restants de l&apos;historique
+atteignent le nombre spécifié.</translation>
     </message>
     <message>
         <source>Limit the total size of history items per entry to:</source>
-        <translation type="unfinished"/>
+        <translation>Limiter la taille totale des éléments de l’historique par entrée à :</translation>
     </message>
     <message>
         <source>Move entries to a recycle bin group
@@ -2306,11 +2324,11 @@ C’est très certainement un bogue, veuillez le signaler aux développeurs.</tr
     <name>DatabaseWidget</name>
     <message>
         <source>Searching…</source>
-        <translation>Recherche...</translation>
+        <translation>Recherche…</translation>
     </message>
     <message>
         <source>Shared group…</source>
-        <translation>Groupe partagé...</translation>
+        <translation>Groupe partagé…</translation>
     </message>
     <message>
         <source>Confirm Auto-Type</source>
@@ -2946,15 +2964,15 @@ La corriger ?</translation>
     </message>
     <message>
         <source>&amp;Username:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Nom d&apos;utilisateur :</translation>
     </message>
     <message>
         <source>&amp;Title:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Titre :</translation>
     </message>
     <message>
         <source>&amp;Password:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Mot de passe :</translation>
     </message>
     <message>
         <source>UR&amp;L:</source>
@@ -2962,11 +2980,11 @@ La corriger ?</translation>
     </message>
     <message>
         <source>&amp;Notes:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Notes :</translation>
     </message>
     <message>
         <source>Toggle notes visibility</source>
-        <translation type="unfinished"/>
+        <translation>Changer la visibilité des notes</translation>
     </message>
     <message>
         <source>T&amp;ags:</source>
@@ -2974,7 +2992,7 @@ La corriger ?</translation>
     </message>
     <message>
         <source>&amp;Expires:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Expire le :</translation>
     </message>
 </context>
 <context>
@@ -3343,7 +3361,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Choose icon…</source>
-        <translation>Choisir une icône...</translation>
+        <translation>Choisir une icône…</translation>
     </message>
     <message>
         <source>Set the URL to use to search for a favicon</source>
@@ -3367,7 +3385,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Apply icon to…</source>
-        <translation>Appliquer l&apos;icône à...</translation>
+        <translation>Appliquer l&apos;icône à…</translation>
     </message>
     <message>
         <source>Apply to this group only</source>
@@ -3966,12 +3984,20 @@ Erreur : %1</translation>
         <source>Double click to copy value</source>
         <translation>Double-cliquer pour copier la valeur</translation>
     </message>
+    <message>
+        <source>Double click to copy to clipboard</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
     <message>
         <source>Invalid URL</source>
         <translation>URL invalide</translation>
+    </message>
+    <message>
+        <source>Duplicate URL</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3988,6 +4014,10 @@ Erreur : %1</translation>
         <source>Reset to defaults</source>
         <translation>Réinitialiser aux valeurs par défaut</translation>
     </message>
+    <message numerus="yes">
+        <source>+ %1 entry(s)...</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
 </context>
 <context>
     <name>ExportDialog</name>
@@ -3997,14 +4027,15 @@ Erreur : %1</translation>
     </message>
     <message>
         <source>Sort entries by...</source>
-        <translation>Trier les entrées par...</translation>
+        <translation>Trier les entrées par…</translation>
     </message>
     <message>
         <source>You are about to export your database to an unencrypted file.
 This will leave your passwords and sensitive information vulnerable!
 </source>
-        <translation>Vous êtes sur le point d&apos;exporter votre base de données vers un fichier non crypté.
-Vos mots de passe de données sensibles seront vulnérables !</translation>
+        <translation>Vous êtes sur le point d&apos;exporter votre base de données vers un fichier non chiffré.
+Vos mots de passe de données sensibles seront vulnérables !
+</translation>
     </message>
     <message>
         <source>database order</source>
@@ -4185,11 +4216,11 @@ Vous pouvez activer le service d’icônes de sites Web de DuckDuckGo dans la se
     </message>
     <message>
         <source>Please wait, processing entry list…</source>
-        <translation>Veuillez patienter, traitement de la liste des entrées...</translation>
+        <translation>Veuillez patienter, traitement de la liste des entrées…</translation>
     </message>
     <message>
         <source>Downloading…</source>
-        <translation>Téléchargement...</translation>
+        <translation>Téléchargement…</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -4951,7 +4982,7 @@ Message : %2</translation>
     </message>
     <message>
         <source>Create Key File…</source>
-        <translation>Créer un fichier clé...</translation>
+        <translation>Créer un fichier clé…</translation>
     </message>
     <message>
         <source>Error creating key file</source>
@@ -5075,7 +5106,7 @@ Souhaitez-vous vraiment poursuivre avec ce fichier ?</translation>
     </message>
     <message>
         <source>&amp;New Database…</source>
-        <translation>&amp;Nouvelle base de données...</translation>
+        <translation>&amp;Nouvelle base de données…</translation>
     </message>
     <message>
         <source>Create a new database</source>
@@ -5083,7 +5114,7 @@ Souhaitez-vous vraiment poursuivre avec ce fichier ?</translation>
     </message>
     <message>
         <source>&amp;Merge From Database…</source>
-        <translation>Fusio&amp;nner à partir d&apos;une base de données...</translation>
+        <translation>Fusio&amp;nner à partir d&apos;une base de données…</translation>
     </message>
     <message>
         <source>Merge from another KDBX database</source>
@@ -5091,7 +5122,7 @@ Souhaitez-vous vraiment poursuivre avec ce fichier ?</translation>
     </message>
     <message>
         <source>&amp;New Entry…</source>
-        <translation>&amp;Nouvelle entrée...</translation>
+        <translation>&amp;Nouvelle entrée…</translation>
     </message>
     <message>
         <source>Add a new entry</source>
@@ -5099,7 +5130,7 @@ Souhaitez-vous vraiment poursuivre avec ce fichier ?</translation>
     </message>
     <message>
         <source>&amp;Edit Entry…</source>
-        <translation>Modifi&amp;er l’entrée...</translation>
+        <translation>Modifi&amp;er l’entrée…</translation>
     </message>
     <message>
         <source>View or edit entry</source>
@@ -5107,11 +5138,11 @@ Souhaitez-vous vraiment poursuivre avec ce fichier ?</translation>
     </message>
     <message>
         <source>&amp;Delete Entry…</source>
-        <translation>S&amp;upprimer l&apos;entrée...</translation>
+        <translation>&amp;Supprimer l&apos;entrée…</translation>
     </message>
     <message>
         <source>&amp;New Group…</source>
-        <translation>&amp;Nouveau groupe...</translation>
+        <translation>&amp;Nouveau groupe…</translation>
     </message>
     <message>
         <source>Add a new group</source>
@@ -5119,11 +5150,11 @@ Souhaitez-vous vraiment poursuivre avec ce fichier ?</translation>
     </message>
     <message>
         <source>&amp;Edit Group…</source>
-        <translation>Modifi&amp;er le groupe...</translation>
+        <translation>Modifi&amp;er le groupe…</translation>
     </message>
     <message>
         <source>&amp;Delete Group…</source>
-        <translation>&amp;Supprimer le groupe...</translation>
+        <translation>&amp;Supprimer le groupe…</translation>
     </message>
     <message>
         <source>Download All &amp;Favicons…</source>
@@ -5139,7 +5170,7 @@ Souhaitez-vous vraiment poursuivre avec ce fichier ?</translation>
     </message>
     <message>
         <source>Sa&amp;ve Database As…</source>
-        <translation>Enre&amp;gistrer la base de données sous...</translation>
+        <translation>Enre&amp;gistrer la base de données sous…</translation>
     </message>
     <message>
         <source>Database &amp;Security…</source>
@@ -5147,7 +5178,7 @@ Souhaitez-vous vraiment poursuivre avec ce fichier ?</translation>
     </message>
     <message>
         <source>Database &amp;Reports…</source>
-        <translation>&amp;Rapports de la base données...</translation>
+        <translation>&amp;Rapports de la base données…</translation>
     </message>
     <message>
         <source>Statistics, health check, etc.</source>
@@ -5486,7 +5517,7 @@ Nous vous recommandons d&apos;utiliser l&apos;AppImage disponible sur notre page
     </message>
     <message>
         <source>Copy &amp;URL</source>
-        <translation type="unfinished"/>
+        <translation>Copier l&apos;&amp;URL</translation>
     </message>
     <message>
         <source>Allow Screen Capture</source>
@@ -7573,7 +7604,7 @@ Noyau : %3 %4</translation>
     </message>
     <message>
         <source>Botan library must be at least %1, found %2.%3.%4</source>
-        <translation type="unfinished"/>
+        <translation>La bibliothèque Botan doit être au moins %1, trouvée %2.%3.%4</translation>
     </message>
     <message>
         <source>Cryptographic libraries:</source>
@@ -7814,10 +7845,6 @@ Noyau : %3 %4</translation>
         <translation>lire le mot de passe de la base de données sur l’entrée standard</translation>
     </message>
     <message>
-        <source>allow app screen recordering and screenshots</source>
-        <translation>autoriser l&apos;application à enregistrer et capturer l&apos;écran</translation>
-    </message>
-    <message>
         <source>Locked databases.</source>
         <translation>Les bases de données ont été verrouillées.</translation>
     </message>
@@ -7865,11 +7892,11 @@ Noyau : %3 %4</translation>
     </message>
     <message>
         <source>Invalid Cipher</source>
-        <translation type="unfinished"/>
+        <translation>Chiffre invalide</translation>
     </message>
     <message>
         <source>Invalid KDF</source>
-        <translation type="unfinished"/>
+        <translation>FDC invalide</translation>
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue.</source>
@@ -7935,6 +7962,10 @@ This options is deprecated, use --set-key-file instead.</source>
     <message>
         <source>KeePassXC is not running. No open database to lock</source>
         <translation>KeePassXC est arrêté. Aucune base de données ouverte à verrouiller.</translation>
+    </message>
+    <message>
+        <source>allow screenshots and app recording (Windows/macOS)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

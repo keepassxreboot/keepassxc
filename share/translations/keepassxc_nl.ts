@@ -1163,14 +1163,6 @@ Wil je de bestaande instellingen nu migreren?</translation>
         <translation>Raadpleeg onderstaande speciale instructies voor gebruik van browserextensie </translation>
     </message>
     <message>
-        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location cannot be found!&lt;br/&gt;Browser integration WILL NOT WORK without the proxy application.</source>
-        <translation>&lt;b&gt;Fout:&lt;/b&gt; De aangepaste proxy-locatie is niet gevonden!&lt;br/&gt;Browserintegratie WERKT NIET zonder de proxy-applicatie.</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation>&lt;b&gt;Waarschuwing:&lt;/b&gt; De volgende opties kunnen gevaarlijk zijn!</translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation>Uitvoerbare bestanden</translation>
     </message>
@@ -1185,6 +1177,22 @@ Wil je de bestaande instellingen nu migreren?</translation>
     <message>
         <source>Select native messaging host folder location</source>
         <translation>Selecteer de locatie van de native messaging-hostmap</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Warning:&lt;/b&gt; Only adjust these settings if necessary.</source>
+        <translation>&lt;b&gt;Waarschuwing:&lt;/b&gt; pas deze instellingen alléén aan indien nodig.</translation>
+    </message>
+    <message>
+        <source>The custom proxy location does not exist.</source>
+        <translation>De aangepaste proxylocatie bestaat niet.</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location does not exist. Correct this in the advanced settings tab.</source>
+        <translation>&lt;b&gt;Foutmelding:&lt;/b&gt; de aangepaste proxylocatie bestaat niet. Pas de locatie aan in de geavanceerde instellingen.</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The installed proxy executable is missing from the expected location: %1&lt;br/&gt;Please set a custom proxy location in the advanced settings or reinstall the application.</source>
+        <translation>&lt;b&gt;Foutmelding:&lt;/b&gt; het geïnstalleerde proxybestand is niet aanwezig in de verwachte locatie: %1&lt;br/&gt;Stel een aangepaste proxylocatie in in de geavanceerde instellingen of herinstalleer het programma.</translation>
     </message>
 </context>
 <context>
@@ -1619,6 +1627,10 @@ Als je geen sleutelbestand hebt laat je het veld leeg.</translation>
     <message>
         <source>Failed to authenticate with Windows Hello: %1</source>
         <translation>De Windows Hello-verificatie is mislukt: %1</translation>
+    </message>
+    <message>
+        <source>Windows Hello setup was canceled or failed. Quick unlock has not been enabled.</source>
+        <translation>De Windows Hello-instelhulp is afgebroken of mislukt. Snel ontgrendelen is uitgeschakeld.</translation>
     </message>
 </context>
 <context>
@@ -3978,12 +3990,20 @@ Fout: %1</translation>
         <source>Double click to copy value</source>
         <translation>Dubbelklik om de waarde te kopiëren</translation>
     </message>
+    <message>
+        <source>Double click to copy to clipboard</source>
+        <translation>Dubbelklik om te kopiëren naar klembord</translation>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
     <message>
         <source>Invalid URL</source>
         <translation>Ongeldige URL</translation>
+    </message>
+    <message>
+        <source>Duplicate URL</source>
+        <translation>Url klonen</translation>
     </message>
 </context>
 <context>
@@ -3999,6 +4019,10 @@ Fout: %1</translation>
     <message>
         <source>Reset to defaults</source>
         <translation>Standaardwaarden opnieuw instellen</translation>
+    </message>
+    <message numerus="yes">
+        <source>+ %1 entry(s)...</source>
+        <translation><numerusform>+%1 item…</numerusform><numerusform>+%1 items…</numerusform></translation>
     </message>
 </context>
 <context>
@@ -7830,10 +7854,6 @@ Kernelversie: %3 %4</translation>
         <translation>lees wachtwoord van de database uit stdin</translation>
     </message>
     <message>
-        <source>allow app screen recordering and screenshots</source>
-        <translation>Schermafbeeldingen en schermopnamen van de app toestaan</translation>
-    </message>
-    <message>
         <source>Locked databases.</source>
         <translation>Vergrendelde databases.</translation>
     </message>
@@ -7952,6 +7972,10 @@ Let op: deze optie is verouderd, gebruik --set-key-file</translation>
     <message>
         <source>KeePassXC is not running. No open database to lock</source>
         <translation>KeePassXC is niet actief, dus er is geen databank om te vergrendelen.</translation>
+    </message>
+    <message>
+        <source>allow screenshots and app recording (Windows/macOS)</source>
+        <translation>Schermfoto&apos;s en -opnames toestaan (Windows/macOS)</translation>
     </message>
 </context>
 <context>

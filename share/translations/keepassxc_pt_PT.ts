@@ -1163,14 +1163,6 @@ Gostaria de migrar agora as definições?</translation>
         <translation>Por favor consulte abaixo as instruções para a utilização da extensão</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location cannot be found!&lt;br/&gt;Browser integration WILL NOT WORK without the proxy application.</source>
-        <translation>&lt;b&gt;Erro:&lt;/b&gt; não foi possível encontrar a localização do proxy!&lt;br/&gt; A integração com o navegador não funcionará sem um proxy.</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation>&lt;b&gt;Aviso&lt;/b&gt;: as opções seguintes podem ser perigosas!</translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation>Ficheiros executáveis</translation>
     </message>
@@ -1185,6 +1177,22 @@ Gostaria de migrar agora as definições?</translation>
     <message>
         <source>Select native messaging host folder location</source>
         <translation>Selecione a localização da pasta de mensagens nativas</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Warning:&lt;/b&gt; Only adjust these settings if necessary.</source>
+        <translation>&lt;b&gt;Aviso:&lt;/b&gt; apenas deve ajustar estas definições se for necessário.</translation>
+    </message>
+    <message>
+        <source>The custom proxy location does not exist.</source>
+        <translation>A localização do proxy não existe.</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location does not exist. Correct this in the advanced settings tab.</source>
+        <translation>&lt;b&gt;Erro:&lt;/b&gt; a localização do proxy personalizado não existe. Corrija a localização nas definições avançadas.</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The installed proxy executable is missing from the expected location: %1&lt;br/&gt;Please set a custom proxy location in the advanced settings or reinstall the application.</source>
+        <translation>&lt;b&gt;Erro:&lt;/b&gt; o executáveldo proxy instalado não existe na localização esperada: %1&lt;br/&gt;Defina a localização do proxy nas definições avançadas ou, em alternativa, reinstale a aplicação.</translation>
     </message>
 </context>
 <context>
@@ -1619,6 +1627,10 @@ Se não quiser utilizar um ficheiro-chave, deixe este campo em branco.</translat
     <message>
         <source>Failed to authenticate with Windows Hello: %1</source>
         <translation>Não foi possível autenticar com Windows Hello: %1</translation>
+    </message>
+    <message>
+        <source>Windows Hello setup was canceled or failed. Quick unlock has not been enabled.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3980,12 +3992,20 @@ Erro: %1</translation>
         <source>Double click to copy value</source>
         <translation>Duplo clique para copiar o valor</translation>
     </message>
+    <message>
+        <source>Double click to copy to clipboard</source>
+        <translation>Dois cliques para copiar para a área de transferência</translation>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
     <message>
         <source>Invalid URL</source>
         <translation>URL inválido</translation>
+    </message>
+    <message>
+        <source>Duplicate URL</source>
+        <translation>URL está duplicado</translation>
     </message>
 </context>
 <context>
@@ -4001,6 +4021,10 @@ Erro: %1</translation>
     <message>
         <source>Reset to defaults</source>
         <translation>Repor predefinições</translation>
+    </message>
+    <message numerus="yes">
+        <source>+ %1 entry(s)...</source>
+        <translation><numerusform>+ %1 entrada...</numerusform><numerusform>+ %1 entradas...</numerusform><numerusform>+ %1 entradas...</numerusform></translation>
     </message>
 </context>
 <context>
@@ -7831,10 +7855,6 @@ Kernel: %3 %4</translation>
         <translation>ler palavra-passe da base de dados a partir de stdin</translation>
     </message>
     <message>
-        <source>allow app screen recordering and screenshots</source>
-        <translation>permitir a gravação de ecrã e capturas de ecrã da aplicação</translation>
-    </message>
-    <message>
         <source>Locked databases.</source>
         <translation>Bases de dados bloqueadas.</translation>
     </message>
@@ -7953,6 +7973,10 @@ Esta opção foi descontinuada, utilize &apos;--set-key-file&apos;.</translation
     <message>
         <source>KeePassXC is not running. No open database to lock</source>
         <translation>KeePassXC não está em execução. Não há nenhuma base de dados para bloquear</translation>
+    </message>
+    <message>
+        <source>allow screenshots and app recording (Windows/macOS)</source>
+        <translation>permitir captura de ecrã e gravação de aplicações (Windows/macOS)</translation>
     </message>
 </context>
 <context>

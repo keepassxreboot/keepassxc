@@ -1163,14 +1163,6 @@ Would you like to migrate your existing settings now?</source>
         <translation>请参阅下面的浏览器扩展使用特殊说明</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location cannot be found!&lt;br/&gt;Browser integration WILL NOT WORK without the proxy application.</source>
-        <translation>&lt;b&gt;错误：&lt;/b&gt;找不到自定义代理位置！&lt;br/&gt;没有代理应用程序，浏览器集成将无法使用。</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation>&lt;b&gt;警告：&lt;/b&gt;以下选项可能有危险！</translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation>可执行文件</translation>
     </message>
@@ -1185,6 +1177,22 @@ Would you like to migrate your existing settings now?</source>
     <message>
         <source>Select native messaging host folder location</source>
         <translation>选择 Native Messaging 主机文件夹位置</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Warning:&lt;/b&gt; Only adjust these settings if necessary.</source>
+        <translation>&lt;b&gt;警告：&lt;/b&gt;仅在必要时调整这些设置。 </translation>
+    </message>
+    <message>
+        <source>The custom proxy location does not exist.</source>
+        <translation>自定义代理位置不存在。</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location does not exist. Correct this in the advanced settings tab.</source>
+        <translation>&lt;b&gt;错误：&lt;/b&gt;自定义代理位置不存在。请前往高级设置页面修正。</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The installed proxy executable is missing from the expected location: %1&lt;br/&gt;Please set a custom proxy location in the advanced settings or reinstall the application.</source>
+        <translation>&lt;b&gt;错误：&lt;/b&gt;已安装到此位置的代理程序可执行文件丢失：%1&lt;br/&gt;请在高级设置中修改自定义代理位置或重新安装应用。</translation>
     </message>
 </context>
 <context>
@@ -1619,6 +1627,10 @@ If you do not have a key file, please leave the field empty.</source>
     <message>
         <source>Failed to authenticate with Windows Hello: %1</source>
         <translation>Windows Hello 验证失败：%1</translation>
+    </message>
+    <message>
+        <source>Windows Hello setup was canceled or failed. Quick unlock has not been enabled.</source>
+        <translation>Windows Hello 设置被取消或失败。快速解锁未被启用。</translation>
     </message>
 </context>
 <context>
@@ -3977,12 +3989,20 @@ Error: %1</source>
         <source>Double click to copy value</source>
         <translation>双击复制值</translation>
     </message>
+    <message>
+        <source>Double click to copy to clipboard</source>
+        <translation>双击复制到剪贴板</translation>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
     <message>
         <source>Invalid URL</source>
         <translation>无效 URL</translation>
+    </message>
+    <message>
+        <source>Duplicate URL</source>
+        <translation>重复 URL</translation>
     </message>
 </context>
 <context>
@@ -3998,6 +4018,10 @@ Error: %1</source>
     <message>
         <source>Reset to defaults</source>
         <translation>重置为默认值</translation>
+    </message>
+    <message numerus="yes">
+        <source>+ %1 entry(s)...</source>
+        <translation><numerusform>+ %1 项条目…</numerusform></translation>
     </message>
 </context>
 <context>
@@ -7824,10 +7848,6 @@ CPU 架构：%2
         <translation>从标准输入读取数据库的密码</translation>
     </message>
     <message>
-        <source>allow app screen recordering and screenshots</source>
-        <translation>允许应用被录像或截图</translation>
-    </message>
-    <message>
         <source>Locked databases.</source>
         <translation>已锁定数据库。</translation>
     </message>
@@ -7946,6 +7966,10 @@ This options is deprecated, use --set-key-file instead.</source>
     <message>
         <source>KeePassXC is not running. No open database to lock</source>
         <translation>KeePassXC 未在运行。没有可锁定的已打开数据库</translation>
+    </message>
+    <message>
+        <source>allow screenshots and app recording (Windows/macOS)</source>
+        <translation>允许屏幕截图与应用录制（Windows/macOS）</translation>
     </message>
 </context>
 <context>

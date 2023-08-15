@@ -1164,14 +1164,6 @@ Would you like to migrate your existing settings now?</source>
         <translation>Нижче ви можете переглянути інструкцію для користування розширенням браузера</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location cannot be found!&lt;br/&gt;Browser integration WILL NOT WORK without the proxy application.</source>
-        <translation>&lt;b&gt;Помилка:&lt;/b&gt; Неможливо знайти розташування власного проксі!&lt;br/&gt;Інтеграція з браузером НЕ ПРАЦЮВАТИМЕ без програми проксі.</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation>&lt;b&gt;Попередження:&lt;/b&gt; ці параметри можуть бути небезпечними!</translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation>Виконувані файли</translation>
     </message>
@@ -1186,6 +1178,22 @@ Would you like to migrate your existing settings now?</source>
     <message>
         <source>Select native messaging host folder location</source>
         <translation>Вибрати розташування теки для вузла власного обміну повідомленнями</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Warning:&lt;/b&gt; Only adjust these settings if necessary.</source>
+        <translation>&lt;b&gt;Попередження:&lt;/b&gt; Змінюйте ці налаштування лише за необхідності.</translation>
+    </message>
+    <message>
+        <source>The custom proxy location does not exist.</source>
+        <translation>Користувацького розташування проксі не існує.</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location does not exist. Correct this in the advanced settings tab.</source>
+        <translation>&lt;b&gt;Помилка:&lt;/b&gt; Місцезнаходження користувацького проксі не існує. Виправте це на вкладці розширених налаштувань.</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The installed proxy executable is missing from the expected location: %1&lt;br/&gt;Please set a custom proxy location in the advanced settings or reinstall the application.</source>
+        <translation>&lt;b&gt;Помилка:&lt;/b&gt; Встановлений проксі відсутній: %1&lt;br/&gt; Встановіть проксі в додаткових налаштуваннях або переінсталюйте програму.</translation>
     </message>
 </context>
 <context>
@@ -1620,6 +1628,10 @@ If you do not have a key file, please leave the field empty.</source>
     <message>
         <source>Failed to authenticate with Windows Hello: %1</source>
         <translation>Не вдалося автентифікуватися через Windows Hello: %1</translation>
+    </message>
+    <message>
+        <source>Windows Hello setup was canceled or failed. Quick unlock has not been enabled.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2959,35 +2971,35 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>&amp;Username:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Ім&apos;я користувача:</translation>
     </message>
     <message>
         <source>&amp;Title:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Назва:</translation>
     </message>
     <message>
         <source>&amp;Password:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Пароль:</translation>
     </message>
     <message>
         <source>UR&amp;L:</source>
-        <translation type="unfinished"/>
+        <translation>UR&amp;L:</translation>
     </message>
     <message>
         <source>&amp;Notes:</source>
-        <translation type="unfinished"/>
+        <translation>При&amp;мітки:</translation>
     </message>
     <message>
         <source>Toggle notes visibility</source>
-        <translation type="unfinished"/>
+        <translation>Перемикання видимості приміток</translation>
     </message>
     <message>
         <source>T&amp;ags:</source>
-        <translation type="unfinished"/>
+        <translation>Т&amp;еги:</translation>
     </message>
     <message>
         <source>&amp;Expires:</source>
-        <translation type="unfinished"/>
+        <translation>Термін &amp;дії закінчується:</translation>
     </message>
 </context>
 <context>
@@ -3982,12 +3994,20 @@ Error: %1</source>
         <source>Double click to copy value</source>
         <translation>Клацніть двічі, щоб скопіювати значення</translation>
     </message>
+    <message>
+        <source>Double click to copy to clipboard</source>
+        <translation>Двічі клацніть, щоб скопіювати в буфер обміну</translation>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
     <message>
         <source>Invalid URL</source>
         <translation>Непридатний URL</translation>
+    </message>
+    <message>
+        <source>Duplicate URL</source>
+        <translation>Дублікат URL</translation>
     </message>
 </context>
 <context>
@@ -4003,6 +4023,10 @@ Error: %1</source>
     <message>
         <source>Reset to defaults</source>
         <translation>Повернути до типового налаштування</translation>
+    </message>
+    <message numerus="yes">
+        <source>+ %1 entry(s)...</source>
+        <translation><numerusform>+ %1 запис</numerusform><numerusform>+ %1 записи(ів)...</numerusform><numerusform>+ %1 записів...</numerusform><numerusform>+ %1 записів...</numerusform></translation>
     </message>
 </context>
 <context>
@@ -6266,7 +6290,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Toggle password visibilty using Control + H. Open the password generator using Control + G.</source>
-        <translation type="unfinished"/>
+        <translation>Увімкнути видимість пароля - Control + H. Відкрити генератор паролів - Control + G.</translation>
     </message>
 </context>
 <context>
@@ -7833,10 +7857,6 @@ Kernel: %3 %4</source>
         <translation>отримати пароль до бази даних із stdin</translation>
     </message>
     <message>
-        <source>allow app screen recordering and screenshots</source>
-        <translation>дозволити запис та знімки екрану програми</translation>
-    </message>
-    <message>
         <source>Locked databases.</source>
         <translation>Заблоковані бази даних.</translation>
     </message>
@@ -7955,6 +7975,10 @@ This options is deprecated, use --set-key-file instead.</source>
     <message>
         <source>KeePassXC is not running. No open database to lock</source>
         <translation>KeePassXC не працює. Не відкрита база даних для блокування</translation>
+    </message>
+    <message>
+        <source>allow screenshots and app recording (Windows/macOS)</source>
+        <translation>дозволити скріншоти та запис програм (Windows/macOS)</translation>
     </message>
 </context>
 <context>

@@ -454,7 +454,7 @@
     </message>
     <message>
         <source>Always ask before performing Auto-Type</source>
-        <translation>Selalu bertanya sebelum menjalankan Ketik-Otomatis</translation>
+        <translation>Selalu tanyakan sebelum menjalankan Ketik-Otomatis</translation>
     </message>
     <message>
         <source>Hide expired entries from Auto-Type</source>
@@ -607,7 +607,7 @@
     </message>
     <message>
         <source>Auto-Type Error</source>
-        <translation>Galat Auto-Type</translation>
+        <translation>Galat Ketik-Otomatis</translation>
     </message>
     <message>
         <source>Permission Required</source>
@@ -1163,14 +1163,6 @@ Apakah Anda ingin memindahkan pengaturan yang ada sekarang?</translation>
         <translation>Lihat instruksi untuk penggunaan browser extension</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location cannot be found!&lt;br/&gt;Browser integration WILL NOT WORK without the proxy application.</source>
-        <translation>&lt;b&gt;Error:&lt;/b&gt;Lokasi proxy khusus tidak dapat ditemukan!&lt;br/&gt;Integrasi browser TIDAK DAPAT BEKERJA tanpa aplikasi proxy.</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation>&lt;b&gt;Peringatan:&lt;/b&gt; Opsi berikut bisa berbahaya!</translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation>Berkas Executable</translation>
     </message>
@@ -1185,6 +1177,22 @@ Apakah Anda ingin memindahkan pengaturan yang ada sekarang?</translation>
     <message>
         <source>Select native messaging host folder location</source>
         <translation>Pilih lokasi folder hos perpesanan bawaan</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Warning:&lt;/b&gt; Only adjust these settings if necessary.</source>
+        <translation>&lt;b&gt;Peringatan:&lt;/b&gt; Hanya setel pengaturan ini bila perlu.</translation>
+    </message>
+    <message>
+        <source>The custom proxy location does not exist.</source>
+        <translation>Lokasi proksi ubahan tidak ada.</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location does not exist. Correct this in the advanced settings tab.</source>
+        <translation>&lt;b&gt;Galat:&lt;/b&gt; Lokasi proksi ubahan tidak ada. Perbaiki ini dalam tab pengaturan tingkat lanjut.</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The installed proxy executable is missing from the expected location: %1&lt;br/&gt;Please set a custom proxy location in the advanced settings or reinstall the application.</source>
+        <translation>&lt;b&gt;Galat:&lt;/b&gt; Executable proksi yang terpasang hilang dari lokasi yang diharapkan: %1&lt;br/&gt;Harap atur suatu lokasi proksi ubahan dalam pengaturan tingkat lanjut atau pasang ulang aplikasi.</translation>
     </message>
 </context>
 <context>
@@ -1618,6 +1626,10 @@ Jika Anda tidak memiliki berkas kunci, biarkan ruas tetap kosong.</translation>
     <message>
         <source>Failed to authenticate with Windows Hello: %1</source>
         <translation>Gagal mengautentikasi dengan Windows Hello: %1</translation>
+    </message>
+    <message>
+        <source>Windows Hello setup was canceled or failed. Quick unlock has not been enabled.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2176,7 +2188,7 @@ dipindahkan dari basis data.</translation>
     </message>
     <message>
         <source>At least one of the selected icons is currently in use by at least one entry or group. The icons of all affected entries and groups will be replaced by the default icon. Are you sure you want to delete icons that are currently in use?</source>
-        <translation>Setidaknya satu dari ikon yang dipilih saat ini digunakan oleh sekurang-kurangnya satu entri atau grup. Ikon pada entri atau grup yang terdampak akan diganti oleh ikon bawaan. Apakah Anda yakin ingin menghapus ikon yang sedang digunakan?</translation>
+        <translation>Sedikitnya satu dari ikon yang dipilih saat ini digunakan oleh sekurang-kurangnya satu entri atau grup. Ikon pada entri atau grup yang terdampak akan digantikan oleh ikon bawaan. Apakah Anda yakin ingin menghapus ikon yang sedang digunakan?</translation>
     </message>
     <message>
         <source>Custom Icons Are In Use</source>
@@ -2184,7 +2196,7 @@ dipindahkan dari basis data.</translation>
     </message>
     <message>
         <source>All custom icons are in use by at least one entry or group.</source>
-        <translation>Semua ikon kustom paling tidak digunakan pada satu entri atau grup.</translation>
+        <translation>Semua ikon kustom sedikitnya digunakan pada satu entri atau grup.</translation>
     </message>
     <message>
         <source>Purged Unused Icons</source>
@@ -2232,7 +2244,7 @@ Masalah ini jelas sebuah bug, silakan laporkan ke pengembang.</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Semua Berkas</translation>
+        <translation>Semua berkas</translation>
     </message>
     <message>
         <source>Open database</source>
@@ -2580,7 +2592,7 @@ Nonaktifkan penyimpanan aman dan coba lagi?</translation>
         <source>An external merge operation has invalidated this entry.
 Unfortunately, any changes made have been lost.</source>
         <translation>Operasi penggabungan eksternal telah menginvalidasi entri ini.
-Semua perubahan yang dilakukan telah hilang.</translation>
+Namun, semua perubahan yang dilakukan telah hilang.</translation>
     </message>
     <message>
         <source>Auto-Type Validation Error</source>
@@ -2770,7 +2782,7 @@ Apakah Anda ingin mengoreksinya?</translation>
     </message>
     <message>
         <source>Add new window association</source>
-        <translation>Tambah asosiasi jendela baru</translation>
+        <translation>Tambahkan asosiasi jendela baru</translation>
     </message>
     <message>
         <source>Remove selected window association</source>
@@ -2839,7 +2851,7 @@ Apakah Anda ingin mengoreksinya?</translation>
     </message>
     <message>
         <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
-        <translation>Jangan kirimkan setelan ini ke peramban untuk dialog Autentifikasi HTTP.  Jika diaktifkan, dialog Autentifikasi HTTP menampilkan entri ini sebagai pilihan.</translation>
+        <translation>Jangan kirimkan setelan ini ke peramban untuk dialog Autentifikasi HTTP. Jika diaktifkan, dialog Autentifikasi HTTP menampilkan entri ini sebagai pilihan.</translation>
     </message>
     <message>
         <source>Do not use this entry with HTTP Basic Auth</source>
@@ -2957,35 +2969,35 @@ Apakah Anda ingin mengoreksinya?</translation>
     </message>
     <message>
         <source>&amp;Username:</source>
-        <translation type="unfinished"/>
+        <translation>Nama Pengg&amp;una:</translation>
     </message>
     <message>
         <source>&amp;Title:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Judul:</translation>
     </message>
     <message>
         <source>&amp;Password:</source>
-        <translation type="unfinished"/>
+        <translation>Kata &amp;Sandi:</translation>
     </message>
     <message>
         <source>UR&amp;L:</source>
-        <translation type="unfinished"/>
+        <translation>UR&amp;L:</translation>
     </message>
     <message>
         <source>&amp;Notes:</source>
-        <translation type="unfinished"/>
+        <translation>Catata&amp;n:</translation>
     </message>
     <message>
         <source>Toggle notes visibility</source>
-        <translation type="unfinished"/>
+        <translation>Jungkitkan kenampakan catatan</translation>
     </message>
     <message>
         <source>T&amp;ags:</source>
-        <translation type="unfinished"/>
+        <translation>T&amp;ag:</translation>
     </message>
     <message>
         <source>&amp;Expires:</source>
-        <translation type="unfinished"/>
+        <translation>K&amp;edaluwarsa:</translation>
     </message>
 </context>
 <context>
@@ -3049,7 +3061,7 @@ Apakah Anda ingin mengoreksinya?</translation>
     </message>
     <message>
         <source>Add to agent</source>
-        <translation>Tambahkan ke agent</translation>
+        <translation>Tambahkan ke agen</translation>
     </message>
     <message>
         <source>Remove from agent</source>
@@ -3244,7 +3256,7 @@ Ekstensi yang didukung adalah: %1.</translation>
     </message>
     <message>
         <source>%1 is being imported and exported by different groups in this database.</source>
-        <translation>%1 sedang diimpor dan diekspor oleh berbagai grup  dalam basis data ini.</translation>
+        <translation>%1 sedang diimpor dan diekspor oleh berbagai grup dalam basis data ini.</translation>
     </message>
     <message>
         <source>KeeShare is currently disabled. You can enable import/export in the application settings.</source>
@@ -3387,15 +3399,15 @@ Ekstensi yang didukung adalah: %1.</translation>
     </message>
     <message>
         <source>Also apply to child groups</source>
-        <translation>Juga terapkan ke grup di dalamnya</translation>
+        <translation>Terapkan juga ke grup di dalamnya</translation>
     </message>
     <message>
         <source>Also apply to child entries</source>
-        <translation>Juga terapkan ke entri di dalamnya</translation>
+        <translation>Terapkan juga ke entri di dalamnya</translation>
     </message>
     <message>
         <source>Also apply to all children</source>
-        <translation>Juga terapkan ke semua grup dan entri</translation>
+        <translation>Terapkan juga ke semua grup dan entri</translation>
     </message>
     <message>
         <source>Unable to fetch favicon.</source>
@@ -3415,7 +3427,7 @@ Ekstensi yang didukung adalah: %1.</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Semua Berkas</translation>
+        <translation>Semua berkas</translation>
     </message>
     <message>
         <source>Select Image(s)</source>
@@ -3431,7 +3443,7 @@ Ekstensi yang didukung adalah: %1.</translation>
     </message>
     <message numerus="yes">
         <source>%n icon(s) already exist in the database</source>
-        <translation><numerusform>%n ikon sudah ada didalam basis data</numerusform></translation>
+        <translation><numerusform>%n ikon sudah ada di dalam basis data</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>The following icon(s) failed:</source>
@@ -3544,7 +3556,7 @@ Ini mungkin akan menyebabkan pengaya menjadi tidak berfungsi.</translation>
     </message>
     <message>
         <source>Add new attachment</source>
-        <translation>Tambah lampiran baru</translation>
+        <translation>Tambahkan lampiran baru</translation>
     </message>
     <message>
         <source>Add</source>
@@ -3977,12 +3989,20 @@ Galat: %1</translation>
         <source>Double click to copy value</source>
         <translation>Klik ganda untuk menyalin nilai</translation>
     </message>
+    <message>
+        <source>Double click to copy to clipboard</source>
+        <translation>Klik ganda untuk menyalin ke papan klip</translation>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
     <message>
         <source>Invalid URL</source>
         <translation>URL tidak valid</translation>
+    </message>
+    <message>
+        <source>Duplicate URL</source>
+        <translation>Duplikatkan URL</translation>
     </message>
 </context>
 <context>
@@ -3998,6 +4018,10 @@ Galat: %1</translation>
     <message>
         <source>Reset to defaults</source>
         <translation>Kembalikan ke setelan bawaan</translation>
+    </message>
+    <message numerus="yes">
+        <source>+ %1 entry(s)...</source>
+        <translation><numerusform>+ %1 entri...</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4959,7 +4983,7 @@ Pesan: %2</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>Semua Berkas</translation>
+        <translation>Semua berkas</translation>
     </message>
     <message>
         <source>Create Key File…</source>
@@ -6056,7 +6080,7 @@ Kami sarankan Anda menggunakan AppImage yang tersedia di halaman unduhan kami.</
     </message>
     <message>
         <source>Also choose from:</source>
-        <translation>Juga pilih dari:</translation>
+        <translation>Pilih juga dari:</translation>
     </message>
     <message>
         <source>Exclude look-alike characters</source>
@@ -6156,7 +6180,7 @@ Kami sarankan Anda menggunakan AppImage yang tersedia di halaman unduhan kami.</
     </message>
     <message>
         <source>All files</source>
-        <translation>Semua Berkas</translation>
+        <translation>Semua berkas</translation>
     </message>
     <message>
         <source>Select Custom Wordlist</source>
@@ -6260,7 +6284,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Toggle password visibilty using Control + H. Open the password generator using Control + G.</source>
-        <translation type="unfinished"/>
+        <translation>Jungkitkan kenampakan kata sandi memakai Control +H. Buka pembangkit kata sandi memakai Control + G.</translation>
     </message>
 </context>
 <context>
@@ -6493,7 +6517,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Analyze passwords for weaknesses and problems.</source>
-        <translation>Menganalisa kata sandi untuk kelemahan dan masalah.</translation>
+        <translation>Menganalisis kata sandi untuk kelemahan dan masalah.</translation>
     </message>
     <message>
         <source>Cannot find HIBP file: %1</source>
@@ -7586,7 +7610,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Botan library must be at least %1, found %2.%3.%4</source>
-        <translation type="unfinished"/>
+        <translation>Pustaka Botan mesti setidaknya %1, ditemukan %2.%3.%4</translation>
     </message>
     <message>
         <source>Cryptographic libraries:</source>
@@ -7827,10 +7851,6 @@ Kernel: %3 %4</translation>
         <translation>baca sandi basis data dari stdin</translation>
     </message>
     <message>
-        <source>allow app screen recordering and screenshots</source>
-        <translation>izinkan perekam layar dan tangkapan layar aplikasi</translation>
-    </message>
-    <message>
         <source>Locked databases.</source>
         <translation>Basis Data terkunci.</translation>
     </message>
@@ -7949,6 +7969,10 @@ Opsi ini tidak digunakan lagi, gunakan --set-key-file sebagai gantinya.</transla
     <message>
         <source>KeePassXC is not running. No open database to lock</source>
         <translation>KeePassXC tidak berjalan. Tidak ada database terbuka untuk dikunci</translation>
+    </message>
+    <message>
+        <source>allow screenshots and app recording (Windows/macOS)</source>
+        <translation>izinkan pencuplikan layar dan perekaman aplikasi (Windows/macOS)</translation>
     </message>
 </context>
 <context>
@@ -8369,7 +8393,7 @@ Opsi ini tidak digunakan lagi, gunakan --set-key-file sebagai gantinya.</transla
     </message>
     <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
-        <translation>Panjang rata-rata kata sandi kurang dari sepuluh karakter. Kata sandi yang lebih panjang memberikan keamanan yang lebih.</translation>
+        <translation>Panjang rata-rata kata sandi kurang dari sepuluh karakter. Makin panjang kata sandi makin baik keamanannya.</translation>
     </message>
 </context>
 <context>
@@ -8392,7 +8416,7 @@ Opsi ini tidak digunakan lagi, gunakan --set-key-file sebagai gantinya.</transla
     </message>
     <message>
         <source>Agent refused this identity. Possible reasons include:</source>
-        <translation>Agen menolak identitas ini. Alasan yang mungkin meliputi:</translation>
+        <translation>Agen menolak identitas ini. Kemungkinan alasannya meliputi:</translation>
     </message>
     <message>
         <source>The key has already been added.</source>

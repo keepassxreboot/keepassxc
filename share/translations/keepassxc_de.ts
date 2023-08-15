@@ -1164,14 +1164,6 @@ Möchten Sie Ihre bestehenden Einstellungen jetzt migrieren?</translation>
         <translation>Bitte beachten Sie die untenstehenden speziellen Anweisungen für die Verwendung der Browser-Erweiterung</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location cannot be found!&lt;br/&gt;Browser integration WILL NOT WORK without the proxy application.</source>
-        <translation>&lt;b&gt;Fehler:&lt;/b&gt; Benutzerdefinierter Proxy-Pfad nicht gefunden!&lt;br/&gt;Ohne Proxy-Anwendung wird die Browser-Integration nicht funktionieren.</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation>&lt;b&gt;Warnung:&lt;/b&gt; Die folgenden Einstellungen können gefährlich sein!</translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation>Ausführbare Dateien</translation>
     </message>
@@ -1186,6 +1178,22 @@ Möchten Sie Ihre bestehenden Einstellungen jetzt migrieren?</translation>
     <message>
         <source>Select native messaging host folder location</source>
         <translation>Ordner-Pfad für Native-Messaging-Host auswählen</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Warning:&lt;/b&gt; Only adjust these settings if necessary.</source>
+        <translation>&lt;b&gt;Warnung:&lt;/b&gt;Diese Einstellungen sollten nur bei Bedarf angepasst werden.</translation>
+    </message>
+    <message>
+        <source>The custom proxy location does not exist.</source>
+        <translation>Der benutzerdefinierte Proxy-Pfad ist nicht vorhanden.</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location does not exist. Correct this in the advanced settings tab.</source>
+        <translation>&lt;b&gt;Fehler:&lt;/b&gt; Der benutzerdefinierte Proxy-Pfad ist nicht vorhanden. Korrigieren Sie dies auf dem Tab &quot;Erweiterte Einstellungen&quot;.</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The installed proxy executable is missing from the expected location: %1&lt;br/&gt;Please set a custom proxy location in the advanced settings or reinstall the application.</source>
+        <translation>&lt;b&gt;Fehler:&lt;/b&gt; Die installierte ausführbare Proxy-Datei fehlt am erwarteten Speicherort: %1&lt;br/&gt;Bitte legen Sie in den erweiterten Einstellungen einen benutzerdefinierten Proxy-Pfad fest oder installieren Sie die Anwendung neu.</translation>
     </message>
 </context>
 <context>
@@ -1619,6 +1627,10 @@ Wenn Sie keine Schlüsseldatei haben, lassen Sie das Feld leer.</translation>
     <message>
         <source>Failed to authenticate with Windows Hello: %1</source>
         <translation>Authentifizierung mit Windows Hello fehlgeschlagen: %1</translation>
+    </message>
+    <message>
+        <source>Windows Hello setup was canceled or failed. Quick unlock has not been enabled.</source>
+        <translation>Die Einrichtung von Windows Hello wurde abgebrochen oder ist fehlgeschlagen. Die Schnellentsperrung wurde nicht aktiviert.</translation>
     </message>
 </context>
 <context>
@@ -3980,12 +3992,20 @@ Fehler: %1</translation>
         <source>Double click to copy value</source>
         <translation>Zum Kopieren des Wertes doppelklicken</translation>
     </message>
+    <message>
+        <source>Double click to copy to clipboard</source>
+        <translation>Zum Kopieren in die Zwischenablage doppelklicken</translation>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
     <message>
         <source>Invalid URL</source>
         <translation>Ungültige URL</translation>
+    </message>
+    <message>
+        <source>Duplicate URL</source>
+        <translation>URL duplizieren</translation>
     </message>
 </context>
 <context>
@@ -4001,6 +4021,10 @@ Fehler: %1</translation>
     <message>
         <source>Reset to defaults</source>
         <translation>Auf Voreinstellung zurücksetzen</translation>
+    </message>
+    <message numerus="yes">
+        <source>+ %1 entry(s)...</source>
+        <translation><numerusform>+ %1 Eintrag...</numerusform><numerusform>+ %1 Einträge...</numerusform></translation>
     </message>
 </context>
 <context>
@@ -7830,10 +7854,6 @@ Kernel: %3 %4</translation>
         <translation>Passwort der Datenbank von stdin lesen</translation>
     </message>
     <message>
-        <source>allow app screen recordering and screenshots</source>
-        <translation>Bildschirmaufnahmen und Screenshots zulassen.</translation>
-    </message>
-    <message>
         <source>Locked databases.</source>
         <translation>Gesperrte Datenbanken.</translation>
     </message>
@@ -7952,6 +7972,10 @@ Diese Option ist veraltet, verwenden Sie stattdessen --set-key-file.</translatio
     <message>
         <source>KeePassXC is not running. No open database to lock</source>
         <translation>KeePassXC läuft im Moment nicht. Keine offene Datenbank zum Sperren</translation>
+    </message>
+    <message>
+        <source>allow screenshots and app recording (Windows/macOS)</source>
+        <translation>Bildschirmfotos und App-Aufnahmen erlauben (Windows/macOS)</translation>
     </message>
 </context>
 <context>

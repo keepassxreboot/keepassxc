@@ -1163,14 +1163,6 @@ Gusto mo bang ilipat ang iyong mga kasalukuyang setting ngayon?</translation>
         <translation>Pakitingnan ang mga espesyal na tagubilin para sa paggamit ng extension ng browser sa ibaba</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location cannot be found!&lt;br/&gt;Browser integration WILL NOT WORK without the proxy application.</source>
-        <translation>&lt;b&gt;Error:&lt;/b&gt; Hindi mahanap ang custom na lokasyon ng proxy!&lt;br/&gt;HINDI GAGANA ang pag-integrate ng browser kung wala ang proxy application.</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation>&lt;b&gt;Babala:&lt;/b&gt; Ang mga sumusunod na opsyon ay maaaring delikado!</translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation>Mga Executable na File</translation>
     </message>
@@ -1185,6 +1177,22 @@ Gusto mo bang ilipat ang iyong mga kasalukuyang setting ngayon?</translation>
     <message>
         <source>Select native messaging host folder location</source>
         <translation>Piliin ang lokasyon ng folder ng host ng native na pagmemensahe</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Warning:&lt;/b&gt; Only adjust these settings if necessary.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The custom proxy location does not exist.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location does not exist. Correct this in the advanced settings tab.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The installed proxy executable is missing from the expected location: %1&lt;br/&gt;Please set a custom proxy location in the advanced settings or reinstall the application.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1619,6 +1627,10 @@ Kung wala kang key file, mangyaring iwanang walang laman ang field.</translation
     <message>
         <source>Failed to authenticate with Windows Hello: %1</source>
         <translation>Nabigong mag-authenticate gamit ang Windows Hello: %1</translation>
+    </message>
+    <message>
+        <source>Windows Hello setup was canceled or failed. Quick unlock has not been enabled.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3979,12 +3991,20 @@ Error: %1</translation>
         <source>Double click to copy value</source>
         <translation>I-double click para kopyahin ang value</translation>
     </message>
+    <message>
+        <source>Double click to copy to clipboard</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
     <message>
         <source>Invalid URL</source>
         <translation>Invalid na URL</translation>
+    </message>
+    <message>
+        <source>Duplicate URL</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4000,6 +4020,10 @@ Error: %1</translation>
     <message>
         <source>Reset to defaults</source>
         <translation>I-reset sa mga default</translation>
+    </message>
+    <message numerus="yes">
+        <source>+ %1 entry(s)...</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -7829,10 +7853,6 @@ Kernel: %3 %4</translation>
         <translation>basahin ang password ng database mula sa stdin</translation>
     </message>
     <message>
-        <source>allow app screen recordering and screenshots</source>
-        <translation>payagan ang pag-record ng screen ng app at mga screenshot</translation>
-    </message>
-    <message>
         <source>Locked databases.</source>
         <translation>Mga naka-lock na database.</translation>
     </message>
@@ -7951,6 +7971,10 @@ Ang pagpipiliang ito ay hindi na ginagamit, gamitin ang --set-key-file sa halip.
     <message>
         <source>KeePassXC is not running. No open database to lock</source>
         <translation>Ang KeePassXC ay hindi tumatakbo. Walang bukas na database upang i-lock</translation>
+    </message>
+    <message>
+        <source>allow screenshots and app recording (Windows/macOS)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

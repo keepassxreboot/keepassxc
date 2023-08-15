@@ -1163,14 +1163,6 @@ Would you like to migrate your existing settings now?</source>
         <translation>אנא עיין בהוראות מיוחדות בהמשך לשימוש בתוסף הדפדפן</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location cannot be found!&lt;br/&gt;Browser integration WILL NOT WORK without the proxy application.</source>
-        <translation>&lt;b&gt;שגיאה:&lt;/b&gt; מיקום השָׁרָת המְתַוֵּךְ המותאם אישית לא נמצא!&lt;br/&gt;שילוב הדפדפן לא יפעל ללא יישום שָׁרָת מְתַוֵּךְ.</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation>&lt;b&gt; אזהרה: &lt;/b&gt; האפשרויות הבאות עלולות להיות מסוכנות!</translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation>קבצי הפעלה</translation>
     </message>
@@ -1185,6 +1177,22 @@ Would you like to migrate your existing settings now?</source>
     <message>
         <source>Select native messaging host folder location</source>
         <translation>בחירת מיקום תיקיית מארח שרות הודעות מובנה</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Warning:&lt;/b&gt; Only adjust these settings if necessary.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The custom proxy location does not exist.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location does not exist. Correct this in the advanced settings tab.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The installed proxy executable is missing from the expected location: %1&lt;br/&gt;Please set a custom proxy location in the advanced settings or reinstall the application.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1619,6 +1627,10 @@ If you do not have a key file, please leave the field empty.</source>
     <message>
         <source>Failed to authenticate with Windows Hello: %1</source>
         <translation>אימות באמצעות Windows Hello כשל: %1</translation>
+    </message>
+    <message>
+        <source>Windows Hello setup was canceled or failed. Quick unlock has not been enabled.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3978,12 +3990,20 @@ Error: %1</source>
         <source>Double click to copy value</source>
         <translation>הקשה כפולה להעתקת ערך</translation>
     </message>
+    <message>
+        <source>Double click to copy to clipboard</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
     <message>
         <source>Invalid URL</source>
         <translation>מען URL תקין</translation>
+    </message>
+    <message>
+        <source>Duplicate URL</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3999,6 +4019,10 @@ Error: %1</source>
     <message>
         <source>Reset to defaults</source>
         <translation>איפוס לברירות המחדל</translation>
+    </message>
+    <message numerus="yes">
+        <source>+ %1 entry(s)...</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -7830,10 +7854,6 @@ Kernel: %3 %4</source>
         <translation>קריאת ססמה של מסד הנתונים מ־stdin</translation>
     </message>
     <message>
-        <source>allow app screen recordering and screenshots</source>
-        <translation>אפשור יישום הקלטת מסך וצילומי מסך</translation>
-    </message>
-    <message>
         <source>Locked databases.</source>
         <translation>מסדי־נתונים נעולים.</translation>
     </message>
@@ -7952,6 +7972,10 @@ This options is deprecated, use --set-key-file instead.</source>
     <message>
         <source>KeePassXC is not running. No open database to lock</source>
         <translation>KeePassXC לא פעיל. אין מסד נתונים פתוח לנעילה.</translation>
+    </message>
+    <message>
+        <source>allow screenshots and app recording (Windows/macOS)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

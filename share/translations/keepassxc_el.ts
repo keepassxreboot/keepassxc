@@ -1163,14 +1163,6 @@ Would you like to migrate your existing settings now?</source>
         <translation>Παρακαλώ δείτε ειδικές οδηγές για την χρήση επέκτασης φυλλομετρητή παρακάτω:</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location cannot be found!&lt;br/&gt;Browser integration WILL NOT WORK without the proxy application.</source>
-        <translation>&lt;b&gt;Σφάλμα:&lt;/b&gt; Δεν είναι δυνατή η εύρεση της προσαρμοσμένης τοποθεσίας διακομιστή μεσολάβησης!&lt;br/&gt;Η ενσωμάτωση του προγράμματος περιήγησης ΔΕΝ θα λειτουργήσει χωρίς την εφαρμογή διακομιστή μεσολάβησης.</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation>&lt;b&gt;Προειδοποίηση:&lt;/b&gt; Οι ακόλουθες επιλογές μπορεί να είναι επικίνδυνες!</translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation>Εκτελέσιμα αρχεία</translation>
     </message>
@@ -1185,6 +1177,22 @@ Would you like to migrate your existing settings now?</source>
     <message>
         <source>Select native messaging host folder location</source>
         <translation>Επιλέξτε τοποθεσία φακέλου φιλοξενίας έμφυτων μηνυμάτων</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Warning:&lt;/b&gt; Only adjust these settings if necessary.</source>
+        <translation>&lt;b&gt;Προειδοποίηση:&lt;/b&gt; Προσαρμόστε αυτές τις ρυθμίσεις μόνο εάν είναι απαραίτητο.</translation>
+    </message>
+    <message>
+        <source>The custom proxy location does not exist.</source>
+        <translation>Η προσαρμοσμένη τοποθεσία διακομιστή μεσολάβησης δεν υπάρχει.</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location does not exist. Correct this in the advanced settings tab.</source>
+        <translation>&lt;b&gt;Σφάλμα:&lt;/b&gt; Η προσαρμοσμένη τοποθεσία διακομιστή μεσολάβησης δεν υπάρχει. Διορθώστε το στην καρτέλα ρυθμίσεων για προχωρημένους.</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The installed proxy executable is missing from the expected location: %1&lt;br/&gt;Please set a custom proxy location in the advanced settings or reinstall the application.</source>
+        <translation>&lt;b&gt;Σφάλμα:&lt;/b&gt; Το εγκατεστημένο εκτελέσιμο αρχείο διακομιστή μεσολάβησης λείπει από την αναμενόμενη τοποθεσία: %1&lt;br/&gt;Ορίστε μια προσαρμοσμένη τοποθεσία διακομιστή μεσολάβησης στις ρυθμίσεις για προχωρημένους ή εγκαταστήστε ξανά την εφαρμογή.</translation>
     </message>
 </context>
 <context>
@@ -1619,6 +1627,10 @@ If you do not have a key file, please leave the field empty.</source>
     <message>
         <source>Failed to authenticate with Windows Hello: %1</source>
         <translation>Απέτυχε ο έλεγχος ταυτότητας με το Windows Hello: %1</translation>
+    </message>
+    <message>
+        <source>Windows Hello setup was canceled or failed. Quick unlock has not been enabled.</source>
+        <translation>Η εγκατάσταση του Windows Hello ακυρώθηκε ή απέτυχε. Το γρήγορο ξεκλείδωμα δεν έχει ενεργοποιηθεί.</translation>
     </message>
 </context>
 <context>
@@ -3979,12 +3991,20 @@ Error: %1</source>
         <source>Double click to copy value</source>
         <translation>Κάντε διπλό κλικ για να αντιγράψετε την τιμή</translation>
     </message>
+    <message>
+        <source>Double click to copy to clipboard</source>
+        <translation>Κάντε διπλό κλικ για αντιγραφή στο πρόχειρο</translation>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
     <message>
         <source>Invalid URL</source>
         <translation>Η διεύθυνση URL δεν είναι έγκυρη</translation>
+    </message>
+    <message>
+        <source>Duplicate URL</source>
+        <translation>Διπλότυπο URL</translation>
     </message>
 </context>
 <context>
@@ -4000,6 +4020,10 @@ Error: %1</source>
     <message>
         <source>Reset to defaults</source>
         <translation>Επαναφορά στις προεπιλογές</translation>
+    </message>
+    <message numerus="yes">
+        <source>+ %1 entry(s)...</source>
+        <translation><numerusform>+ %1 καταχώριση(εις)...</numerusform><numerusform>+ %1 καταχώριση(εις)...</numerusform></translation>
     </message>
 </context>
 <context>
@@ -7828,10 +7852,6 @@ Kernel: %3 %4</source>
         <translation>Διάβασμα κωδικού βάσης από το stdin</translation>
     </message>
     <message>
-        <source>allow app screen recordering and screenshots</source>
-        <translation>Να επιτρέπεται η εγγραφή οθόνης εφαρμογών και τα στιγμιότυπα οθόνης</translation>
-    </message>
-    <message>
         <source>Locked databases.</source>
         <translation>Κλειδωμένες βάσεις δεδομένων.</translation>
     </message>
@@ -7950,6 +7970,10 @@ This options is deprecated, use --set-key-file instead.</source>
     <message>
         <source>KeePassXC is not running. No open database to lock</source>
         <translation>Το KeePassXC δεν εκτελείται.  Δεν υπάρχει ανοιχτή βάση δεδομένων για κλείδωμα</translation>
+    </message>
+    <message>
+        <source>allow screenshots and app recording (Windows/macOS)</source>
+        <translation>να επιτρέπονται στιγμιότυπα οθόνης και εφαρμογές εγγραφής (Windows/macOS)</translation>
     </message>
 </context>
 <context>

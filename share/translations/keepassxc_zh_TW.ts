@@ -1163,14 +1163,6 @@ Would you like to migrate your existing settings now?</source>
         <translation>請參閱以下的具體指示，學習如何使用瀏覽器擴展</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location cannot be found!&lt;br/&gt;Browser integration WILL NOT WORK without the proxy application.</source>
-        <translation>&lt;b&gt;錯誤：&lt;/b&gt;找不到自定義的代理位置！&lt;br/&gt;沒有代理程式，瀏覽器整合將 無 法 運 作 。</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation>&lt;b&gt;警告：&lt;/b&gt;以下選項存在一定風險！</translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation>可執行檔案</translation>
     </message>
@@ -1185,6 +1177,22 @@ Would you like to migrate your existing settings now?</source>
     <message>
         <source>Select native messaging host folder location</source>
         <translation>選擇本地消息主機的資料夾位置</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Warning:&lt;/b&gt; Only adjust these settings if necessary.</source>
+        <translation>&lt;b&gt;警告：&lt;/b&gt;只有在必要時才調整這些設定。</translation>
+    </message>
+    <message>
+        <source>The custom proxy location does not exist.</source>
+        <translation>自定義的代理位置不存在。</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location does not exist. Correct this in the advanced settings tab.</source>
+        <translation>&lt;b&gt;錯誤：&lt;/b&gt;自定義的代理位置不存在。請至進階設定分頁修正它。</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The installed proxy executable is missing from the expected location: %1&lt;br/&gt;Please set a custom proxy location in the advanced settings or reinstall the application.</source>
+        <translation>&lt;b&gt;錯誤：&lt;/b&gt;代理的執行檔遺失，之前曾安裝於此位置：%1&lt;br/&gt;請至進階設定調整自定義代理位置，或者重新安裝應用程序。</translation>
     </message>
 </context>
 <context>
@@ -1619,6 +1627,10 @@ If you do not have a key file, please leave the field empty.</source>
     <message>
         <source>Failed to authenticate with Windows Hello: %1</source>
         <translation>以 Windows Hello 驗證失敗: %1</translation>
+    </message>
+    <message>
+        <source>Windows Hello setup was canceled or failed. Quick unlock has not been enabled.</source>
+        <translation>Windows Hello 設定失敗或被取消。快速解鎖未被啟用。</translation>
     </message>
 </context>
 <context>
@@ -2958,7 +2970,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>&amp;Username:</source>
-        <translation>使用者名稱(&amp;U):</translation>
+        <translation>使用者名稱(&amp;U)：</translation>
     </message>
     <message>
         <source>&amp;Title:</source>
@@ -3321,7 +3333,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Notes:</source>
-        <translation>附註：</translation>
+        <translation>備註：</translation>
     </message>
     <message>
         <source>Default auto-type sequence field</source>
@@ -3977,12 +3989,20 @@ Error: %1</source>
         <source>Double click to copy value</source>
         <translation>雙擊可複製值</translation>
     </message>
+    <message>
+        <source>Double click to copy to clipboard</source>
+        <translation>雙擊以複製到剪貼簿</translation>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
     <message>
         <source>Invalid URL</source>
         <translation>無效的 URL</translation>
+    </message>
+    <message>
+        <source>Duplicate URL</source>
+        <translation>重複 URL</translation>
     </message>
 </context>
 <context>
@@ -3998,6 +4018,10 @@ Error: %1</source>
     <message>
         <source>Reset to defaults</source>
         <translation>重置為預設值</translation>
+    </message>
+    <message numerus="yes">
+        <source>+ %1 entry(s)...</source>
+        <translation><numerusform>+ %1 項目...</numerusform></translation>
     </message>
 </context>
 <context>
@@ -6330,7 +6354,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Client public key not received</source>
-        <translation>未收到用戶端公開金鑰</translation>
+        <translation>未收到客戶端公開金鑰</translation>
     </message>
     <message>
         <source>Cannot decrypt message</source>
@@ -7828,10 +7852,6 @@ Kernel: %3 %4</source>
         <translation>從 stdin 讀取資料庫密碼</translation>
     </message>
     <message>
-        <source>allow app screen recordering and screenshots</source>
-        <translation>允許應用進行螢幕錄製與擷圖</translation>
-    </message>
-    <message>
         <source>Locked databases.</source>
         <translation>已鎖定的資料庫。</translation>
     </message>
@@ -7950,6 +7970,10 @@ This options is deprecated, use --set-key-file instead.</source>
     <message>
         <source>KeePassXC is not running. No open database to lock</source>
         <translation>KeePassXC 並未執行。沒有已開啟的資料庫要鎖定</translation>
+    </message>
+    <message>
+        <source>allow screenshots and app recording (Windows/macOS)</source>
+        <translation>允許螢幕截圖與錄製 (Windows/macOS)</translation>
     </message>
 </context>
 <context>

@@ -86,7 +86,7 @@
     </message>
     <message>
         <source>Allow Selected</source>
-        <translation>選択したものを許可</translation>
+        <translation>選択したものを許可する</translation>
     </message>
     <message>
         <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
@@ -94,18 +94,18 @@
     </message>
     <message>
         <source>Deny All &amp;&amp; Future</source>
-        <translation>今後も含めすべて拒否</translation>
+        <translation>今後も含めすべて拒否する</translation>
     </message>
     <message>
         <source>Allow All &amp;&amp; &amp;Future</source>
-        <translation>今後も含めすべて許可</translation>
+        <translation>今後も含めすべて許可する</translation>
     </message>
 </context>
 <context>
     <name>AccessControlDialog::DenyButton</name>
     <message>
         <source>Deny for this program</source>
-        <translation>このプログラムを拒否</translation>
+        <translation>このプログラムを拒否する</translation>
     </message>
 </context>
 <context>
@@ -128,15 +128,15 @@
     </message>
     <message>
         <source>SSH_AUTH_SOCK value</source>
-        <translation>SSH_AUTH_SOCK 値</translation>
+        <translation>SSH_AUTH_SOCK の値</translation>
     </message>
     <message>
         <source>(empty)</source>
-        <translation>(空)</translation>
+        <translation>(空白)</translation>
     </message>
     <message>
         <source>SSH_SK_PROVIDER value</source>
-        <translation>SSH_SK_PROVIDER 値</translation>
+        <translation>SSH_SK_PROVIDER の値</translation>
     </message>
     <message>
         <source>SSH_SK_PROVIDER override</source>
@@ -219,15 +219,15 @@
     </message>
     <message>
         <source>Are you sure you want to reset all general and security settings to default?</source>
-        <translation>すべての全般設定とセキュリティ設定を初期設定に戻してもよろしいですか？</translation>
+        <translation>本当に、すべての全般設定とセキュリティ設定を初期設定に戻しますか？</translation>
     </message>
     <message>
         <source>Select backup storage directory</source>
-        <translation>バックアップディレクトリを選択</translation>
+        <translation>バックアップディレクトリーを選択</translation>
     </message>
     <message>
         <source>This setting cannot be enabled when minimize on unlock is enabled.</source>
-        <translation type="unfinished"/>
+        <translation>この設定は、ロック解除時の最小化が有効な場合は使用できません。</translation>
     </message>
 </context>
 <context>
@@ -270,7 +270,7 @@
     </message>
     <message>
         <source>Check for updates at application startup once per week</source>
-        <translation>起動時に更新を確認する (週一回)</translation>
+        <translation>起動時に更新を確認する (週 1 回)</translation>
     </message>
     <message>
         <source>Include beta releases when checking for updates</source>
@@ -278,12 +278,12 @@
     </message>
     <message>
         <source>On database unlock, show entries that </source>
-        <translation>データベースのロック解除時に次のエントリーを表示する</translation>
+        <translation>次のエントリーをデータベースのロック解除時に表示する</translation>
     </message>
     <message>
         <source>have expired</source>
         <comment>On database unlock, show entries that...</comment>
-        <translation>期限切れ</translation>
+        <translation>有効期限切れ</translation>
     </message>
     <message>
         <source> days</source>
@@ -377,7 +377,7 @@
     </message>
     <message>
         <source>Website icon download timeout in seconds</source>
-        <translation>ウェブサイトアイコンダウンロードのタイムアウトまでの秒</translation>
+        <translation>ウェブサイトアイコンダウンロードのタイムアウトまでの時間 (秒)</translation>
     </message>
     <message>
         <source> sec</source>
@@ -596,7 +596,7 @@
     </message>
     <message>
         <source>Hide TOTP in the entry preview panel</source>
-        <translation type="unfinished"/>
+        <translation>エントリーのプレビューパネルで、TOTP を非表示にする</translation>
     </message>
 </context>
 <context>
@@ -623,7 +623,7 @@
     </message>
     <message>
         <source>Invalid entry provided</source>
-        <translation>提供されたエントリーが不正です</translation>
+        <translation>提供されたエントリーが正しくありません</translation>
     </message>
     <message>
         <source>Bracket imbalance detected, found extra { or }</source>
@@ -643,16 +643,16 @@
     </message>
     <message>
         <source>Invalid conversion type: %1</source>
-        <translation>変換形式が不正です: %1</translation>
+        <translation>変換形式が正しくありません: %1</translation>
     </message>
     <message>
         <source>Invalid conversion syntax: %1</source>
-        <translation>変換構文が不正です: %1</translation>
+        <translation>変換構文が正しくありません: %1</translation>
     </message>
     <message>
         <source>Invalid regular expression syntax %1
 %2</source>
-        <translation>正規表現の構文が不正です: %1
+        <translation>正規表現の構文が正しくありません: %1
 %2</translation>
     </message>
     <message>
@@ -676,7 +676,7 @@
     </message>
     <message>
         <source>(empty)</source>
-        <translation>(空)</translation>
+        <translation>(空白)</translation>
     </message>
     <message>
         <source>Default sequence</source>
@@ -1163,14 +1163,6 @@ Would you like to migrate your existing settings now?</source>
         <translation>ブラウザー拡張機能を使用するには以下の手順を参照してください</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location cannot be found!&lt;br/&gt;Browser integration WILL NOT WORK without the proxy application.</source>
-        <translation>&lt;b&gt;エラー:&lt;/b&gt; カスタムプロキシの場所が見つかりませんでした。&lt;br/&gt;ブラウザー統合はプロキシアプリケーション無しでは動作しません。</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation>&lt;b&gt;警告:&lt;/b&gt; 以下は危険なオプションです。</translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation>実行ファイル</translation>
     </message>
@@ -1185,6 +1177,22 @@ Would you like to migrate your existing settings now?</source>
     <message>
         <source>Select native messaging host folder location</source>
         <translation>Native messaging のホストフォルダーの場所を選択</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Warning:&lt;/b&gt; Only adjust these settings if necessary.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The custom proxy location does not exist.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location does not exist. Correct this in the advanced settings tab.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The installed proxy executable is missing from the expected location: %1&lt;br/&gt;Please set a custom proxy location in the advanced settings or reinstall the application.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1617,6 +1625,10 @@ If you do not have a key file, please leave the field empty.</source>
     </message>
     <message>
         <source>Failed to authenticate with Windows Hello: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Windows Hello setup was canceled or failed. Quick unlock has not been enabled.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -3968,12 +3980,20 @@ Error: %1</source>
         <source>Double click to copy value</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Double click to copy to clipboard</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
     <message>
         <source>Invalid URL</source>
         <translation>無効な URL</translation>
+    </message>
+    <message>
+        <source>Duplicate URL</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3989,6 +4009,10 @@ Error: %1</source>
     <message>
         <source>Reset to defaults</source>
         <translation>規定値に戻す</translation>
+    </message>
+    <message numerus="yes">
+        <source>+ %1 entry(s)...</source>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -7820,10 +7844,6 @@ CPU アーキテクチャー: %2
         <translation>標準入力からデータベースのパスワードを読み込む</translation>
     </message>
     <message>
-        <source>allow app screen recordering and screenshots</source>
-        <translation>アプリによる画面の録画とスクリーンショットの撮影を許可する</translation>
-    </message>
-    <message>
         <source>Locked databases.</source>
         <translation>データベースをロックしました。</translation>
     </message>
@@ -7940,6 +7960,10 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>KeePassXC is not running. No open database to lock</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>allow screenshots and app recording (Windows/macOS)</source>
         <translation type="unfinished"/>
     </message>
 </context>

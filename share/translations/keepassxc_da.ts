@@ -1161,14 +1161,6 @@ Vil du migrere dine eksisterende indstillinger nu?</translation>
         <translation>Venligst se vigtige instruktioner for brug af browser tilføjelsen nedenfor</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location cannot be found!&lt;br/&gt;Browser integration WILL NOT WORK without the proxy application.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation>&lt;b&gt;Advarsel:&lt;/b&gt; Følgende indstillinger kan være farlige!</translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation>Eksekverbare filer</translation>
     </message>
@@ -1182,6 +1174,22 @@ Vil du migrere dine eksisterende indstillinger nu?</translation>
     </message>
     <message>
         <source>Select native messaging host folder location</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;b&gt;Warning:&lt;/b&gt; Only adjust these settings if necessary.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The custom proxy location does not exist.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location does not exist. Correct this in the advanced settings tab.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The installed proxy executable is missing from the expected location: %1&lt;br/&gt;Please set a custom proxy location in the advanced settings or reinstall the application.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1609,6 +1617,10 @@ Hvis du ikke har en nøglefil, bedes du lade feltet være tomt.</translation>
     </message>
     <message>
         <source>Failed to authenticate with Windows Hello: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Windows Hello setup was canceled or failed. Quick unlock has not been enabled.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -3944,11 +3956,19 @@ Error: %1</source>
         <source>Double click to copy value</source>
         <translation>Dobbeltklik for at kopiere værdi</translation>
     </message>
+    <message>
+        <source>Double click to copy to clipboard</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
     <message>
         <source>Invalid URL</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Duplicate URL</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -3965,6 +3985,10 @@ Error: %1</source>
     <message>
         <source>Reset to defaults</source>
         <translation>Nulstil til standardindstillinger</translation>
+    </message>
+    <message numerus="yes">
+        <source>+ %1 entry(s)...</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -7781,10 +7805,6 @@ Kerne: %3 %4</translation>
         <translation>læs adgangskode til databasen fra stdin</translation>
     </message>
     <message>
-        <source>allow app screen recordering and screenshots</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Locked databases.</source>
         <translation>Låste databaser.</translation>
     </message>
@@ -7902,6 +7922,10 @@ Denne indstilling er forældet, brug i stedet --set-key-file.</translation>
     </message>
     <message>
         <source>KeePassXC is not running. No open database to lock</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>allow screenshots and app recording (Windows/macOS)</source>
         <translation type="unfinished"/>
     </message>
 </context>

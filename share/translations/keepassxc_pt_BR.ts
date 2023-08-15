@@ -596,7 +596,7 @@
     </message>
     <message>
         <source>Hide TOTP in the entry preview panel</source>
-        <translation type="unfinished"/>
+        <translation>Ocultar TOTP no painel de visualização da entrada</translation>
     </message>
 </context>
 <context>
@@ -1163,14 +1163,6 @@ Gostaria de migrar suas configurações existentes agora?</translation>
         <translation>Por favor, veja as instruções especiais para o uso da extensão do navegador abaixo</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location cannot be found!&lt;br/&gt;Browser integration WILL NOT WORK without the proxy application.</source>
-        <translation>&lt;b&gt;Erro:&lt;/b&gt; O endereço de proxy personalizado não foi encontrado!&lt;br/&gt;A integração com o navegador NÃO IRÁ funcionar sem a aplicação de proxy.</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation>&lt;b&gt;AVISO:&lt;/b&gt; As seguintes opções podem ser perigosas!</translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation>Arquivos Executáveis</translation>
     </message>
@@ -1185,6 +1177,22 @@ Gostaria de migrar suas configurações existentes agora?</translation>
     <message>
         <source>Select native messaging host folder location</source>
         <translation>Selecione o local da pasta de host de mensagens nativas</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Warning:&lt;/b&gt; Only adjust these settings if necessary.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The custom proxy location does not exist.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location does not exist. Correct this in the advanced settings tab.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The installed proxy executable is missing from the expected location: %1&lt;br/&gt;Please set a custom proxy location in the advanced settings or reinstall the application.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1619,6 +1627,10 @@ Se você não tem um arquivo-chave, por favor deixe o campo vazio.</translation>
     <message>
         <source>Failed to authenticate with Windows Hello: %1</source>
         <translation>Não foi possível autenticar com Windows Hello: %1</translation>
+    </message>
+    <message>
+        <source>Windows Hello setup was canceled or failed. Quick unlock has not been enabled.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2958,27 +2970,27 @@ Gostaria de a corrigir?</translation>
     </message>
     <message>
         <source>&amp;Username:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Nome de usuário:</translation>
     </message>
     <message>
         <source>&amp;Title:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Título:</translation>
     </message>
     <message>
         <source>&amp;Password:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Senha:</translation>
     </message>
     <message>
         <source>UR&amp;L:</source>
-        <translation type="unfinished"/>
+        <translation>UR&amp;L:</translation>
     </message>
     <message>
         <source>&amp;Notes:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Notas:</translation>
     </message>
     <message>
         <source>Toggle notes visibility</source>
-        <translation type="unfinished"/>
+        <translation>Alternar visibilidade das notas</translation>
     </message>
     <message>
         <source>T&amp;ags:</source>
@@ -3980,12 +3992,20 @@ Erro: %1</translation>
         <source>Double click to copy value</source>
         <translation>Faça dois cliques para copiar o valor</translation>
     </message>
+    <message>
+        <source>Double click to copy to clipboard</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
     <message>
         <source>Invalid URL</source>
         <translation>URL inválida</translation>
+    </message>
+    <message>
+        <source>Duplicate URL</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4001,6 +4021,10 @@ Erro: %1</translation>
     <message>
         <source>Reset to defaults</source>
         <translation>Redefinir as configurações padrões</translation>
+    </message>
+    <message numerus="yes">
+        <source>+ %1 entry(s)...</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -7830,10 +7854,6 @@ Foi encontrada a versão %2.%3.%4</translation>
         <translation>ler a senha do banco de dados da entrada padrão</translation>
     </message>
     <message>
-        <source>allow app screen recordering and screenshots</source>
-        <translation>permitir gravação e capturas de tela do aplicativo</translation>
-    </message>
-    <message>
         <source>Locked databases.</source>
         <translation>Bancos de dados bloqueados.</translation>
     </message>
@@ -7952,6 +7972,10 @@ Esta opção está obsoleta, use --set-key-file em seu lugar.</translation>
     <message>
         <source>KeePassXC is not running. No open database to lock</source>
         <translation>KeePassXC não está em execução. Não há nenhum banco de dados para bloquear.</translation>
+    </message>
+    <message>
+        <source>allow screenshots and app recording (Windows/macOS)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
