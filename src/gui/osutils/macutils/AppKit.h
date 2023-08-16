@@ -47,7 +47,7 @@ public:
     void setWindowSecurity(QWindow* window, bool state);
 
 signals:
-    void lockDatabasesOnUserSwitch();
+    void userSwitched();
     void interfaceThemeChanged();
 
 private:

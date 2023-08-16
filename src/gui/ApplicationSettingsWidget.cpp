@@ -318,9 +318,9 @@ void ApplicationSettingsWidget::loadSettings()
     m_secUi->lockDatabaseOnScreenLockCheckBox->setChecked(
         config()->get(Config::Security_LockDatabaseScreenLock).toBool());
 #if defined(Q_OS_MACOS)
-    m_secUi->lockDatabasesOnUserSwitchCheckBox->setEnabled(true);
+    m_secUi->lockDatabasesOnUserSwitchCheckBox->setVisible(true);
 #else
-    m_secUi->lockDatabasesOnUserSwitchCheckBox->setEnabled(false);
+    m_secUi->lockDatabasesOnUserSwitchCheckBox->setVisible(false);
 #endif
     m_secUi->lockDatabasesOnUserSwitchCheckBox->setChecked(
         config()->get(Config::Security_LockDatabaseOnUserSwitch).toBool());

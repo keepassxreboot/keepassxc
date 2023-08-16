@@ -63,7 +63,7 @@ DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
     // clang-format on
 
 #ifdef Q_OS_MACOS
-    connect(macUtils(), SIGNAL(lockDatabasesOnUserSwitch()), SLOT(lockDatabasesOnUserSwitch()));
+    connect(macUtils(), SIGNAL(userSwitched()), SLOT(lockDatabasesOnUserSwitch()));
 #endif
 
     m_lockDelayTimer.setSingleShot(true);

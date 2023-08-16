@@ -39,7 +39,7 @@ MacUtils::MacUtils(QObject* parent)
     : OSUtilsBase(parent)
     , m_appkit(new AppKit())
 {
-    connect(m_appkit.data(), SIGNAL(lockDatabasesOnUserSwitch()), SIGNAL(lockDatabasesOnUserSwitch()));
+    connect(m_appkit.data(), SIGNAL(userSwitched()), SIGNAL(userSwitched()));
     connect(m_appkit.data(), SIGNAL(interfaceThemeChanged()), SIGNAL(interfaceThemeChanged()));
     connect(m_appkit.data(), &AppKit::interfaceThemeChanged, this, [this]() {
         // Emit with delay, since isStatusBarDark() still returns the old value

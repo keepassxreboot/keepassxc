@@ -66,7 +66,7 @@ public:
     bool setPreventScreenCapture(QWindow* window, bool prevent) const override;
 
 signals:
-    void lockDatabasesOnUserSwitch();
+    void userSwitched();
 
 protected:
     explicit MacUtils(QObject* parent = nullptr);
