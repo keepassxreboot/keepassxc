@@ -79,6 +79,7 @@
                 emit m_appkit->interfaceThemeChanged();
             };
 
+#if (TARGET_OS_OSX && __MAC_OS_X_VERSION_MAX_ALLOWED >= 110000)
             if(@available(macOS 11.0, *)) {
                 // Not sure why exactly this call is needed, but Apple sample code uses it so it's best to use it here too
                 [NSApp.effectiveAppearance performAsCurrentDrawingAppearance:emitBlock];
@@ -86,6 +87,9 @@
             else {
                 emitBlock();
             }
+#else
+            emitBlock();
+#endif
         }
     }
 }
@@ -139,7 +143,14 @@
 //
 - (bool) isDarkMode
 {
+#if (TARGET_OS_OSX && __MAC_OS_X_VERSION_MAX_ALLOWED >= 110000)
     return [NSApp.effectiveAppearance.name isEqualToString:NSAppearanceNameDarkAqua];
+#else
+    NSDictionary* dict = [[NSUserDefaults standardUserDefaults] persistentDomainForName:NSGlobalDomain];
+    id style = [dict objectForKey:@"AppleInterfaceStyle"];
+    return ( style && [style isKindOfClass:[NSString class]]
+             && NSOrderedSame == [style caseInsensitiveCompare:@"dark"] );
+#endif
 }
 
 
