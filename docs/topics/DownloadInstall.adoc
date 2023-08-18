@@ -59,7 +59,7 @@ image::linux_store.png[]
 
 The Snap and Flatpak options are sandboxed applications (more secure). The Native option is installed with the operating system files. Read more about the limitations of these options here: https://keepassxc.org/docs/#faq-appsnap-yubikey[KeePassXC Snap FAQ]
 
-NOTE: KeePassXC stores a configuration file in `~/.cache` to remember window position, recent files, and other local settings. If you mount this folder to a tmpdisk you will lose settings after reboot.
+NOTE: KeePassXC stores a configuration file in `~/.local/state` to remember window position, recent files, and other local settings. If you mount this folder to a tmpdisk you will lose settings after reboot.
 
 === macOS
 To install the KeePassXC app on macOS, double click on the downloaded DMG file and use the click and drag option as shown:
