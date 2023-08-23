@@ -173,13 +173,14 @@ bool DatabaseSettingsWidgetDatabaseKey::save()
         return false;
     }
 
-    auto minQuality = static_cast<PasswordHealth::Quality>(config()->get(Config::Security_DatabasePasswordMinimumQuality).toInt());
+    auto minQuality =
+        static_cast<PasswordHealth::Quality>(config()->get(Config::Security_DatabasePasswordMinimumQuality).toInt());
     if (m_passwordEditWidget->getPasswordQuality() < minQuality) {
         MessageBox::critical(this,
-                                tr("Weak password"),
-                                tr("You must enter a stronger password to protect your database."),
-                                MessageBox::Ok,
-                                MessageBox::Ok);
+                             tr("Weak password"),
+                             tr("You must enter a stronger password to protect your database."),
+                             MessageBox::Ok,
+                             MessageBox::Ok);
         return false;
     }
 
