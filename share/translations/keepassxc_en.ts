@@ -3469,10 +3469,6 @@ Supported extensions are: %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>You can enable the DuckDuckGo website icon service under Tools -&gt; Settings -&gt; Security</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Existing icon selected.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3512,6 +3508,10 @@ Supported extensions are: %1.</source>
             <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
+    </message>
+    <message>
+        <source>You can enable the DuckDuckGo website icon service under Application Settings -&gt; Security</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
