@@ -1839,6 +1839,14 @@ Are you sure you want to continue without a password?</source>
         <source>Failed to change database credentials</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Weak password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You must enter a stronger password to protect your database.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetEncryption</name>

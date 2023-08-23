@@ -17,7 +17,9 @@
 
 #include "DatabaseSettingsWidgetDatabaseKey.h"
 
+#include "core/Config.h"
 #include "core/Database.h"
+#include "core/PasswordHealth.h"
 #include "gui/MessageBox.h"
 #include "gui/databasekey/KeyFileEditWidget.h"
 #include "gui/databasekey/PasswordEditWidget.h"
@@ -168,6 +170,16 @@ bool DatabaseSettingsWidgetDatabaseKey::save()
             return false;
         }
     } else if (!addToCompositeKey(m_passwordEditWidget, newKey, oldPasswordKey)) {
+        return false;
+    }
+
+    auto minQuality = static_cast<PasswordHealth::Quality>(config()->get(Config::Security_DatabasePasswordMinimumQuality).toInt());
+    if (m_passwordEditWidget->getPasswordQuality() < minQuality) {
+        MessageBox::critical(this,
+                                tr("Weak password"),
+                                tr("You must enter a stronger password to protect your database."),
+                                MessageBox::Ok,
+                                MessageBox::Ok);
         return false;
     }
 
