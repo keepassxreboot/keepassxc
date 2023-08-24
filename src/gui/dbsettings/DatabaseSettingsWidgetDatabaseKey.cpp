@@ -182,7 +182,7 @@ bool DatabaseSettingsWidgetDatabaseKey::save()
         msgBox->setWindowTitle(tr("Weak password"));
         msgBox->setText(tr("WARNING! You have set a weak password. If you do not choose a stronger and "
                            "more complex password, your database may be compromised more easily.\n\n"
-                           "Are you sure you want to continue usign a weak password?"));
+                           "Are you sure you want to continue using a weak password?"));
         auto btn = msgBox->addButton(tr("Continue"), QMessageBox::ButtonRole::AcceptRole);
         msgBox->addButton(QMessageBox::Cancel);
         msgBox->setDefaultButton(QMessageBox::Cancel);
