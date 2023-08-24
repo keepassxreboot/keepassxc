@@ -155,6 +155,7 @@ bool DatabaseSettingsWidgetDatabaseKey::save()
         }
     }
 
+    // Show warning if database password has not been set
     if (m_passwordEditWidget->visiblePage() == KeyComponentWidget::Page::AddNew || m_passwordEditWidget->isEmpty()) {
         QScopedPointer<QMessageBox> msgBox(new QMessageBox(this));
         msgBox->setIcon(QMessageBox::Warning);
@@ -173,9 +174,29 @@ bool DatabaseSettingsWidgetDatabaseKey::save()
         return false;
     }
 
+    // Show warning if database password is weak
+    if (!m_passwordEditWidget->isEmpty()
+        && m_passwordEditWidget->getPasswordQuality() < PasswordHealth::Quality::Good) {
+        QScopedPointer<QMessageBox> msgBox(new QMessageBox(this));
+        msgBox->setIcon(QMessageBox::Warning);
+        msgBox->setWindowTitle(tr("Weak password"));
+        msgBox->setText(tr("WARNING! You have set a weak password. If you do not choose a stronger and "
+                           "more complex password, your database may be compromised more easily.\n\n"
+                           "Are you sure you want to continue usign a weak password?"));
+        auto btn = msgBox->addButton(tr("Continue"), QMessageBox::ButtonRole::AcceptRole);
+        msgBox->addButton(QMessageBox::Cancel);
+        msgBox->setDefaultButton(QMessageBox::Cancel);
+        msgBox->exec();
+
+        if (msgBox->clickedButton() != btn) {
+            return false;
+        }
+    }
+
+    // If enforced in the config file, deny users from continuing with a weak password
     auto minQuality =
         static_cast<PasswordHealth::Quality>(config()->get(Config::Security_DatabasePasswordMinimumQuality).toInt());
-    if (m_passwordEditWidget->getPasswordQuality() < minQuality) {
+    if (!m_passwordEditWidget->isEmpty() && m_passwordEditWidget->getPasswordQuality() < minQuality) {
         MessageBox::critical(this,
                              tr("Weak password"),
                              tr("You must enter a stronger password to protect your database."),
