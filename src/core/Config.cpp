@@ -476,19 +476,21 @@ void Config::init(const QString& configFileName, const QString& localConfigFileN
     // Upgrade from previous KeePassXC version which stores its config
     // in ~/.cache on Linux instead of ~/.local/state.
     // Move file to correct location before continuing.
-    QString oldLocalConfigPath;
-    oldLocalConfigPath = QStandardPaths::writableLocation(QStandardPaths::GenericCacheLocation) + "/keepassxc";
-    QString suffix;
+    if (!QFile::exists(localConfigFileName)) {
+        QString oldLocalConfigPath;
+        oldLocalConfigPath = QStandardPaths::writableLocation(QStandardPaths::GenericCacheLocation) + "/keepassxc";
+        QString suffix;
 #ifdef QT_DEBUG
-    suffix = "_debug";
+        suffix = "_debug";
 #endif
-    oldLocalConfigPath += QString("/keepassxc%1.ini").arg(suffix);
-    oldLocalConfigPath = QDir::toNativeSeparators(oldLocalConfigPath);
-    if (!QFile::exists(localConfigFileName) && QFile::exists(oldLocalConfigPath)) {
-        QDir().mkpath(QFileInfo(localConfigFileName).absolutePath());
-        QFile::copy(oldLocalConfigPath, localConfigFileName);
-        QFile::remove(oldLocalConfigPath);
-        QDir().rmdir(QFileInfo(oldLocalConfigPath).absolutePath());
+        oldLocalConfigPath += QString("/keepassxc%1.ini").arg(suffix);
+        oldLocalConfigPath = QDir::toNativeSeparators(oldLocalConfigPath);
+        if (QFile::exists(oldLocalConfigPath)) {
+            QDir().mkpath(QFileInfo(localConfigFileName).absolutePath());
+            QFile::copy(oldLocalConfigPath, localConfigFileName);
+            QFile::remove(oldLocalConfigPath);
+            QDir().rmdir(QFileInfo(oldLocalConfigPath).absolutePath());
+        }
     }
 #endif
 
