@@ -533,8 +533,7 @@ QPair<QString, QString> Config::defaultConfigFiles()
     // On case-sensitive Operating Systems, force use of lowercase app directories
     configPath = QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation) + "/keepassxc";
     // Qt does not support XDG_STATE_HOME yet, change this once XDG_STATE_HOME is added
-    QString xdgStateHome;
-    xdgStateHome = QFile::decodeName(qgetenv("XDG_STATE_HOME"));
+    QString xdgStateHome = QFile::decodeName(qgetenv("XDG_STATE_HOME"));
     if (!xdgStateHome.startsWith(u'/')) {
         xdgStateHome.clear(); // spec says relative paths should be ignored
     }
