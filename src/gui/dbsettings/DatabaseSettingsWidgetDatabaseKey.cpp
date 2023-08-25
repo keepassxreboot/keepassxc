@@ -177,18 +177,16 @@ bool DatabaseSettingsWidgetDatabaseKey::save()
     // Show warning if database password is weak
     if (!m_passwordEditWidget->isEmpty()
         && m_passwordEditWidget->getPasswordQuality() < PasswordHealth::Quality::Good) {
-        QScopedPointer<QMessageBox> msgBox(new QMessageBox(this));
-        msgBox->setIcon(QMessageBox::Warning);
-        msgBox->setWindowTitle(tr("Weak password"));
-        msgBox->setText(tr("WARNING! You have set a weak password. If you do not choose a stronger and "
-                           "more complex password, your database may be compromised more easily.\n\n"
-                           "Are you sure you want to continue using a weak password?"));
-        auto btn = msgBox->addButton(tr("Continue"), QMessageBox::ButtonRole::AcceptRole);
-        msgBox->addButton(QMessageBox::Cancel);
-        msgBox->setDefaultButton(QMessageBox::Cancel);
-        msgBox->exec();
+        auto dialogResult =
+            MessageBox::warning(this,
+                                tr("Weak password"),
+                                tr("WARNING! You have set a weak password. If you do not choose a stronger and "
+                                   "more complex password, your database may be compromised more easily.\n\n"
+                                   "Are you sure you want to continue using a weak password?"),
+                                MessageBox::Continue | MessageBox::Cancel,
+                                MessageBox::Cancel);
 
-        if (msgBox->clickedButton() != btn) {
+        if (dialogResult == MessageBox::Cancel) {
             return false;
         }
     }

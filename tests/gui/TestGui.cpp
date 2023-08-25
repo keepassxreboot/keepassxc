@@ -257,9 +257,9 @@ void TestGui::testCreateDatabase()
             passwordWidget->findChild<PasswordWidget*>("repeatPasswordEdit")->findChild<QLineEdit*>("passwordEdit");
         QTRY_VERIFY(passwordEdit->isVisible());
         QTRY_VERIFY(passwordEdit->hasFocus());
-        QTest::keyClicks(passwordEdit, "Xi3R0nW9PWapNjj");
+        QTest::keyClicks(passwordEdit, "test");
         QTest::keyClick(passwordEdit, Qt::Key::Key_Tab);
-        QTest::keyClicks(passwordRepeatEdit, "Xi3R0nW9PWapNjj");
+        QTest::keyClicks(passwordRepeatEdit, "test");
 
         // add key file
         auto* additionalOptionsButton = wizard->currentPage()->findChild<QPushButton*>("additionalKeyOptionsToggle");
@@ -286,7 +286,10 @@ void TestGui::testCreateDatabase()
         tmpFile.close();
         fileDialog()->setNextFileName(tmpFile.fileName());
 
+        // click Continue on the warning due to weak password
+        MessageBox::setNextAnswer(MessageBox::Continue);
         QTest::keyClick(fileEdit, Qt::Key::Key_Enter);
+
         tmpFile.remove(););
 
     triggerAction("actionDatabaseNew");
@@ -309,7 +312,7 @@ void TestGui::testCreateDatabase()
     QCOMPARE(m_db->kdf()->uuid(), KeePass2::KDF_ARGON2D);
     QCOMPARE(m_db->cipher(), KeePass2::CIPHER_AES256);
     auto compositeKey = QSharedPointer<CompositeKey>::create();
-    compositeKey->addKey(QSharedPointer<PasswordKey>::create("Xi3R0nW9PWapNjj"));
+    compositeKey->addKey(QSharedPointer<PasswordKey>::create("test"));
     auto fileKey = QSharedPointer<FileKey>::create();
     fileKey->load(QString("%1/%2").arg(QString(KEEPASSX_TEST_DATA_DIR), "FileKeyHashed.key"));
     compositeKey->addKey(fileKey);
