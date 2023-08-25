@@ -484,7 +484,7 @@ void Config::init(const QString& configFileName, const QString& localConfigFileN
 #endif
     oldLocalConfigPath += QString("/keepassxc%1.ini").arg(suffix);
     oldLocalConfigPath = QDir::toNativeSeparators(oldLocalConfigPath);
-    if (!localConfigFileName.isEmpty() && !QFile::exists(localConfigFileName) && QFile::exists(oldLocalConfigPath)) {
+    if (!QFile::exists(localConfigFileName) && QFile::exists(oldLocalConfigPath)) {
         QDir().mkpath(QFileInfo(localConfigFileName).absolutePath());
         QFile::copy(oldLocalConfigPath, localConfigFileName);
         QFile::remove(oldLocalConfigPath);
