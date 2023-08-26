@@ -477,8 +477,8 @@ void Config::init(const QString& configFileName, const QString& localConfigFileN
     // in ~/.cache on Linux instead of ~/.local/state.
     // Move file to correct location before continuing.
     if (!QFile::exists(localConfigFileName)) {
-        QString oldLocalConfigPath;
-        oldLocalConfigPath = QStandardPaths::writableLocation(QStandardPaths::GenericCacheLocation) + "/keepassxc";
+        QString oldLocalConfigPath =
+            QStandardPaths::writableLocation(QStandardPaths::GenericCacheLocation) + "/keepassxc";
         QString suffix;
 #ifdef QT_DEBUG
         suffix = "_debug";
