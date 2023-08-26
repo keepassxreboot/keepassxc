@@ -287,7 +287,7 @@ if ($Merge) {
         "-extensions c,cpp,h,js,mm,qrc,ui -no-obsolete ./src -ts share/translations/keepassxc_en.ts"
 
     Write-Host "Pulling updated translations from Transifex..."
-    Invoke-Cmd "tx" "pull -af --minimum-perc=60 --parallel -r keepassxc.share-translations-keepassxc-en-ts--develop"
+    Invoke-Cmd "tx" "pull -af --minimum-perc=60 -r keepassxc.share-translations-keepassxc-en-ts--develop"
 
     # Only commit if there are changes
     $changes = & git status --porcelain
@@ -429,8 +429,8 @@ if ($Merge) {
 # SIG # Begin signature block
 # MIIfXAYJKoZIhvcNAQcCoIIfTTCCH0kCAQExDzANBglghkgBZQMEAgEFADB5Bgor
 # BgEEAYI3AgEEoGswaTA0BgorBgEEAYI3AgEeMCYCAwEAAAQQH8w7YFlLCE63JNLG
-# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCCyL72KYcPC3xiu
-# XNxyDy0dxda/uihakmlcLUtXbyvnkaCCGSAwggU6MIIEIqADAgECAhBYotctjMD9
+# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCC3+AltPeIvGycP
+# LJr+5kqYiFnGPXyfdXgAkgrw+aI/AqCCGSAwggU6MIIEIqADAgECAhBYotctjMD9
 # icz/IeDU7cdKMA0GCSqGSIb3DQEBCwUAMHwxCzAJBgNVBAYTAkdCMRswGQYDVQQI
 # ExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNVBAcTB1NhbGZvcmQxGDAWBgNVBAoT
 # D1NlY3RpZ28gTGltaXRlZDEkMCIGA1UEAxMbU2VjdGlnbyBSU0EgQ29kZSBTaWdu
@@ -570,13 +570,13 @@ if ($Merge) {
 # Z28gUlNBIENvZGUgU2lnbmluZyBDQQIQWKLXLYzA/YnM/yHg1O3HSjANBglghkgB
 # ZQMEAgEFAKCBhDAYBgorBgEEAYI3AgEMMQowCKACgAChAoAAMBkGCSqGSIb3DQEJ
 # AzEMBgorBgEEAYI3AgEEMBwGCisGAQQBgjcCAQsxDjAMBgorBgEEAYI3AgEVMC8G
-# CSqGSIb3DQEJBDEiBCAqTz6Ip2LLYNFN5K1JJDf7b5f7S+xfp3YvZbz/pRmklTAN
-# BgkqhkiG9w0BAQEFAASCAQAKN1cBYbsh7MV3GuUP/EmgN1E/SnQt8ZmqO7kinpF3
-# xIaoeAAUWBD8tBHJHGEMyykgkkDaDexoxIiOFfTCbVI1PasUxuvuA/I+8ReVSRjH
-# E8+iT9Gh2IL1O2a0Wzjk7Xf0YeGK1rj635N9bhQeO7U8mBOZxe87kez5wj9e9jjM
-# VK3dU69ymf6QHfilkQjPhIYBgdIwcwhXJZDZuh6TJFHzdsxigYoKY9LCEKDS1YkX
-# ucGpn3xZ0DGg7RESFNF+Uhw/8NbaLH+pJomvgchJeCesmaQjUB7YC6dPofYFGS1Q
-# CkdWSEZIUNYPr9uovh1lxsGrUSmu85boJigDrL6BkbQjoYIDSzCCA0cGCSqGSIb3
+# CSqGSIb3DQEJBDEiBCBp7GODztdZALJXKtlDO7iMqjlod5DXJQUaVMMwaRVDkzAN
+# BgkqhkiG9w0BAQEFAASCAQB8i7HZnhNcD6S7hrG+nk6bDcg8LyL+C3QOnmxIQKA3
+# +TQB02qB83WI+ErrH7GQHgi+7kB4K8NYs1dK/yYIp6pwgXUnYqQlsQCYzMRk9Shn
+# gvJWO04dV3V17NHfAXHT/+gHKTOOUJf58/Yabo87/vu4K5gE2g3TOrMHm0G9x1k8
+# PXgW6mzMD6xEz0tuvXdGZ8BSZ5VlDYV5ITchn8Eni29RTSIBIbZHbMWI5Gcsbzqd
+# ZLKHmVOoT2Las0VWNzq96+1X1HjFGhPqAIm19ByZyGI3OO9fgP6lfGuHyE2eyYUp
+# MKQ6qr8nfPzmp3bF0JLSGV3pEViDOqRgkkQmOXHfHlqsoYIDSzCCA0cGCSqGSIb3
 # DQEJBjGCAzgwggM0AgEBMIGRMH0xCzAJBgNVBAYTAkdCMRswGQYDVQQIExJHcmVh
 # dGVyIE1hbmNoZXN0ZXIxEDAOBgNVBAcTB1NhbGZvcmQxGDAWBgNVBAoTD1NlY3Rp
 # Z28gTGltaXRlZDElMCMGA1UEAxMcU2VjdGlnbyBSU0EgVGltZSBTdGFtcGluZyBD

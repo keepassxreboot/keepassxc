@@ -1,5 +1,30 @@
 # Changelog
 
+## 2.7.6 (2023-08-15)
+
+### Changes
+- Significant improvement to visual when drag/drop entries [#9698]
+- Automatically prompt for Quick Unlock when showing unlock dialog [#9697]
+- Improve colorful lock icon and fix file MIME icon on KDE [#9632]
+- Ability to search by entry UUID [#9571]
+- Add challenge-response support for NitroKey 3 [#9631]
+- Auto-Type: Disable entry level Auto-Type when disabled at group/entry [#9672]
+- Browser: Show warning when adding duplicate URL's to entry [#9588][#9635]
+- Browser: Improve error message when proxy cannot be found [#9385]
+
+### Fixes
+- Fix crash on exit on macOS [#9620]
+- Fix crash on search if entry doesn't have a group [#9633]
+- Fix several issues with Quick Unlock [#9697]
+- Enable save button when not auto-saving non-data changes [#9634]
+- Several UI/UX fixes [#9647]
+- Move toolbar back to top of window when disabling movement [#9699]
+- Browser: Fix closing password generator dialog with X button [#9636]
+- Browser: Fix handling of expired credentials [#9595]
+- Windows: Prevent white flicker when launching application [#9637]
+- Linux: Fix warning message about allow screencapture [#9638]
+- FdoSecrets: Fix access confirmation dialog showing even when disabled [#9690]
+
 ## 2.7.5 (2023-05-14)
 
 ### Changes
