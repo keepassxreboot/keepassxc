@@ -1445,7 +1445,7 @@ i18n() {
 
     elif [ "$cmd" == "tx-pull" ]; then
         logInfo "Pulling updated translations from Transifex..."
-        tx pull -af --minimum-perc=45 --parallel -r "$resource" $@
+        tx pull -af --minimum-perc=60 -r "$resource" $@
     fi
 }
 
