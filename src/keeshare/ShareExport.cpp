@@ -92,8 +92,7 @@ namespace
         key->addKey(QSharedPointer<PasswordKey>::create(reference.password));
         targetDb->setKey(key);
 
-        auto* obsoleteRoot = targetDb->rootGroup();
-        targetDb->setRootGroup(targetRoot);
+        auto obsoleteRoot = targetDb->setRootGroup(targetRoot);
         delete obsoleteRoot;
 
         targetDb->metadata()->setName(sourceRoot->name());

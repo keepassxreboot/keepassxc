@@ -112,7 +112,7 @@ public:
     const Metadata* metadata() const;
     Group* rootGroup();
     const Group* rootGroup() const;
-    void setRootGroup(Group* group);
+    Q_REQUIRED_RESULT Group* setRootGroup(Group* group);
     QVariantMap& publicCustomData();
     const QVariantMap& publicCustomData() const;
     void setPublicCustomData(const QVariantMap& customData);
