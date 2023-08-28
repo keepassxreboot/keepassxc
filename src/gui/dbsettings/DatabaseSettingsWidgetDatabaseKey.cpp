@@ -180,9 +180,8 @@ bool DatabaseSettingsWidgetDatabaseKey::save()
         auto dialogResult =
             MessageBox::warning(this,
                                 tr("Weak password"),
-                                tr("WARNING! You have set a weak password. If you do not choose a stronger and "
-                                   "more complex password, your database may be compromised more easily.\n\n"
-                                   "Are you sure you want to continue using a weak password?"),
+                                tr("WARNING! Using a weak password may expose your accounts to security risks. "
+                                   "Do you wish to continue?"),
                                 MessageBox::Continue | MessageBox::Cancel,
                                 MessageBox::Cancel);
 
