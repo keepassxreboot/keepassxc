@@ -8,11 +8,13 @@
         <file>application/scalable/actions/application-exit.svg</file>
         <file>application/scalable/actions/attributes-copy.svg</file>
         <file>application/scalable/actions/auto-type.svg</file>
+        <file>application/scalable/actions/bitwarden.svg</file>
         <file>application/scalable/actions/bugreport.svg</file>
         <file>application/scalable/actions/chevron-double-down.svg</file>
         <file>application/scalable/actions/chevron-double-right.svg</file>
         <file>application/scalable/actions/clipboard-text.svg</file>
         <file>application/scalable/actions/configure.svg</file>
+        <file>application/scalable/actions/csv.svg</file>
         <file>application/scalable/actions/database-change-key.svg</file>
         <file>application/scalable/actions/database-lock.svg</file>
         <file>application/scalable/actions/database-lock-all.svg</file>
@@ -58,6 +60,7 @@
         <file>application/scalable/actions/move-up.svg</file>
         <file>application/scalable/actions/object-locked.svg</file>
         <file>application/scalable/actions/object-unlocked.svg</file>
+        <file>application/scalable/actions/onepassword.svg</file>
         <file>application/scalable/actions/paperclip.svg</file>
         <file>application/scalable/actions/passkey.svg</file>
         <file>application/scalable/actions/password-copy.svg</file>

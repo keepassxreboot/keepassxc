@@ -21,6 +21,7 @@
 #include <QApplication>
 #include <QDebug>
 #include <QPluginLoader>
+#include <QRegularExpression>
 #include <QUrl>
 
 #include "config-keepassx.h"

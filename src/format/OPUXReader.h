@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,31 +15,29 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TEST_OPVAULT_READER_H_
-#define TEST_OPVAULT_READER_H_
+#ifndef OPUX_READER_H
+#define OPUX_READER_H
 
-#include <QMap>
-#include <QObject>
+#include <QSharedPointer>
 
-class TestOpVaultReader : public QObject
+class Database;
+
+/*!
+ * Imports a 1Password vault in 1PUX format: https://support.1password.com/1pux-format/
+ */
+class OPUXReader
 {
-    Q_OBJECT
+public:
+    explicit OPUXReader() = default;
+    ~OPUXReader() = default;
 
-private slots:
-    void initTestCase();
-    void testReadIntoDatabase();
+    QSharedPointer<Database> convert(const QString& path);
+
+    bool hasError();
+    QString errorString();
 
 private:
-    // absolute path to the .opvault directory
-    QString m_opVaultPath;
-
-    /*
-     * Points to the file made by using the 1Password GUI to "Export all"
-     * to its text file format, which are almost key=value pairs
-     * except for multi-line strings.
-     */
-    QString m_opVaultTextExportPath;
-    QStringList m_categories;
+    QString m_error;
 };
 
-#endif /* TEST_OPVAULT_READER_H_ */
+#endif // OPUX_READER_H

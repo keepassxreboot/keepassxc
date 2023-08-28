@@ -71,6 +71,7 @@ set(keepassx_SOURCES
         crypto/kdf/Kdf.cpp
         crypto/kdf/AesKdf.cpp
         crypto/kdf/Argon2Kdf.cpp
+        format/BitwardenReader.cpp
         format/CsvExporter.cpp
         format/CsvParser.cpp
         format/KeePass1Reader.cpp
@@ -87,6 +88,7 @@ set(keepassx_SOURCES
         format/Kdbx4Writer.cpp
         format/KdbxXmlWriter.cpp
         format/OpData01.cpp
+        format/OPUXReader.cpp
         format/OpVaultReader.cpp
         format/OpVaultReaderAttachments.cpp
         format/OpVaultReaderBandEntry.cpp
@@ -118,12 +120,10 @@ set(keepassx_SOURCES
         gui/GuiTools.cpp
         gui/HtmlExporter.cpp
         gui/IconModels.cpp
-        gui/KeePass1OpenWidget.cpp
         gui/KMessageWidget.cpp
         gui/MainWindow.cpp
         gui/MessageBox.cpp
         gui/MessageWidget.cpp
-        gui/OpVaultOpenWidget.cpp
         gui/PasswordWidget.cpp
         gui/PasswordGeneratorWidget.cpp
         gui/ApplicationSettingsWidget.cpp
@@ -139,7 +139,6 @@ set(keepassx_SOURCES
         gui/URLEdit.cpp
         gui/WelcomeWidget.cpp
         gui/csvImport/CsvImportWidget.cpp
-        gui/csvImport/CsvImportWizard.cpp
         gui/csvImport/CsvParserModel.cpp
         gui/entry/AutoTypeAssociationsModel.cpp
         gui/entry/EditEntryWidget.cpp
@@ -183,6 +182,9 @@ set(keepassx_SOURCES
         gui/widgets/KPToolBar.cpp
         gui/widgets/PopupHelpWidget.cpp
         gui/widgets/ShortcutWidget.cpp
+        gui/wizard/ImportWizard.cpp
+        gui/wizard/ImportWizardPageReview.cpp
+        gui/wizard/ImportWizardPageSelect.cpp
         gui/wizard/NewDatabaseWizard.cpp
         gui/wizard/NewDatabaseWizardPage.cpp
         gui/wizard/NewDatabaseWizardPageMetaData.cpp
@@ -390,6 +392,7 @@ target_link_libraries(keepassx_core
         ${PCSC_LIBRARIES}
         ${ZXCVBN_LIBRARIES}
         ${ZLIB_LIBRARIES}
+        ${MINIZIP_LIBRARIES}
         ${ARGON2_LIBRARIES}
         ${KEYUTILS_LIBRARIES}
         ${thirdparty_LIBRARIES}
