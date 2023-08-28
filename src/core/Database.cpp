@@ -66,9 +66,9 @@ Database::Database()
     // block modified signal and set root group
     setEmitModified(false);
 
-    setRootGroup(new Group());
-    rootGroup()->setUuid(QUuid::createUuid());
-    rootGroup()->setName(tr("Passwords", "Root group name"));
+    // Note: oldGroup is nullptr but need to respect return value capture
+    auto oldGroup = setRootGroup(new Group());
+    Q_UNUSED(oldGroup)
 
     m_modified = false;
     setEmitModified(true);
@@ -481,9 +481,8 @@ void Database::releaseData()
     m_data.clear();
     m_metadata->clear();
 
-    auto oldGroup = rootGroup();
-    setRootGroup(new Group());
-    // explicitly delete old group, otherwise it is only deleted when the database object is destructed
+    // Reset and delete the root group
+    auto oldGroup = setRootGroup(new Group());
     delete oldGroup;
 
     m_fileWatcher->stop();
@@ -559,14 +558,12 @@ const Group* Database::rootGroup() const
     return m_rootGroup;
 }
 
-/**
- * Sets group as the root group and takes ownership of it.
- * Warning: Be careful when calling this method as it doesn't
- *          emit any notifications so e.g. models aren't updated.
- *          The caller is responsible for cleaning up the previous
-            root group.
+/* Set the root group of the database and return
+ * the old root group. It is the responsibility
+ * of the calling function to dispose of the old
+ * root group.
  */
-void Database::setRootGroup(Group* group)
+Group* Database::setRootGroup(Group* group)
 {
     Q_ASSERT(group);
 
@@ -574,8 +571,17 @@ void Database::setRootGroup(Group* group)
         emit databaseDiscarded();
     }
 
+    auto oldRoot = m_rootGroup;
     m_rootGroup = group;
     m_rootGroup->setParent(this);
+
+    // Initialize the root group if not done already
+    if (m_rootGroup->uuid().isNull()) {
+        m_rootGroup->setUuid(QUuid::createUuid());
+        m_rootGroup->setName(tr("Passwords", "Root group name"));
+    }
+
+    return oldRoot;
 }
 
 Metadata* Database::metadata()
