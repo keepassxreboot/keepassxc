@@ -231,14 +231,6 @@
       <string>&amp;Recent Databases</string>
      </property>
     </widget>
-    <widget class="QMenu" name="menuImport">
-     <property name="title">
-      <string>&amp;Import</string>
-     </property>
-     <addaction name="actionImportCsv"/>
-     <addaction name="actionImportOpVault"/>
-     <addaction name="actionImportKeePass1"/>
-    </widget>
     <widget class="QMenu" name="menuExport">
      <property name="title">
       <string>&amp;Export</string>
@@ -266,7 +258,7 @@
     <addaction name="actionImportPasskey"/>
     <addaction name="separator"/>
     <addaction name="actionDatabaseMerge"/>
-    <addaction name="menuImport"/>
+    <addaction name="actionImport"/>
     <addaction name="menuExport"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
@@ -1269,6 +1261,19 @@
    </property>
    <property name="toolTip">
     <string>Toggle Allow Screen Capture</string>
+   </property>
+  </action>
+  <action name="actionImport1PUX">
+   <property name="text">
+    <string>1Password 1PUX...</string>
+   </property>
+   <property name="toolTip">
+    <string>Import a 1Password 1PUX file</string>
+   </property>
+  </action>
+  <action name="actionImport">
+   <property name="text">
+    <string>Import…</string>
    </property>
   </action>
  </widget>

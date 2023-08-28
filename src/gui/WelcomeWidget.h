@@ -39,9 +39,7 @@ signals:
     void newDatabase();
     void openDatabase();
     void openDatabaseFile(QString);
-    void importKeePass1Database();
-    void importOpVaultDatabase();
-    void importCsv();
+    void importFile();
 
 protected:
     void keyPressEvent(QKeyEvent* event) override;

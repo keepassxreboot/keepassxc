@@ -143,11 +143,13 @@ License: MIT
 Files: share/icons/application/scalable/actions/application-exit.svg
        share/icons/application/scalable/actions/attributes-copy.svg
        share/icons/application/scalable/actions/auto-type.svg
+       share/icons/application/scalable/actions/bitwarden.svg
        share/icons/application/scalable/actions/bugreport.svg
        share/icons/application/scalable/actions/chevron-double-down.svg
        share/icons/application/scalable/actions/chevron-double-right.svg
        share/icons/application/scalable/actions/clipboard-text.svg
        share/icons/application/scalable/actions/configure.svg
+       share/icons/application/scalable/actions/csv.svg
        share/icons/application/scalable/actions/database-change-key.svg
        share/icons/application/scalable/actions/database-lock.svg
        share/icons/application/scalable/actions/database-lock-all.svg
@@ -192,6 +194,7 @@ Files: share/icons/application/scalable/actions/application-exit.svg
        share/icons/application/scalable/actions/move-up.svg
        share/icons/application/scalable/actions/object-locked.svg
        share/icons/application/scalable/actions/object-unlocked.svg
+       share/icons/application/scalable/actions/onepassword.svg
        share/icons/application/scalable/actions/paperclip.svg
        share/icons/application/scalable/actions/password-copy.svg
        share/icons/application/scalable/actions/passkey.svg

@@ -21,6 +21,7 @@
 #include <QTabBar>
 
 #include "autotype/AutoType.h"
+#include "core/Merger.h"
 #include "core/Tools.h"
 #include "format/CsvExporter.h"
 #include "gui/Clipboard.h"
@@ -28,13 +29,13 @@
 #include "gui/DatabaseWidget.h"
 #include "gui/DatabaseWidgetStateSync.h"
 #include "gui/FileDialog.h"
-#include "gui/HtmlExporter.h"
 #include "gui/MessageBox.h"
 #include "gui/export/ExportDialog.h"
 #ifdef Q_OS_MACOS
 #include "gui/osutils/macutils/MacUtils.h"
 #endif
 #include "gui/wizard/NewDatabaseWizard.h"
+#include "wizard/ImportWizard.h"
 
 DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
     : QTabWidget(parent)
@@ -250,24 +251,52 @@ void DatabaseTabWidget::addDatabaseTab(DatabaseWidget* dbWidget, bool inBackgrou
     connect(dbWidget, SIGNAL(databaseLocked()), SLOT(emitDatabaseLockChanged()));
 }
 
-void DatabaseTabWidget::importCsv()
+DatabaseWidget* DatabaseTabWidget::importFile()
 {
-    auto filter = QString("%1 (*.csv);;%2 (*)").arg(tr("CSV file"), tr("All files"));
-    auto fileName = fileDialog()->getOpenFileName(this, tr("Select CSV file"), FileDialog::getLastDir("csv"), filter);
-    if (fileName.isEmpty()) {
-        return;
+    // Show the import wizard
+    QScopedPointer wizard(new ImportWizard(this));
+    if (!wizard->exec()) {
+        return nullptr;
     }
 
-    FileDialog::saveLastDir("csv", fileName, true);
-
-    auto db = execNewDatabaseWizard();
+    auto db = wizard->database();
     if (!db) {
-        return;
+        // Import wizard was cancelled
+        return nullptr;
     }
 
-    auto* dbWidget = new DatabaseWidget(db, this);
-    addDatabaseTab(dbWidget);
-    dbWidget->switchToCsvImport(fileName);
+    auto importInto = wizard->importInto();
+    if (importInto.first.isNull()) {
+        // Start the new database wizard with the imported database
+        auto newDb = execNewDatabaseWizard();
+        if (newDb) {
+            // Merge the imported db into the new one
+            Merger merger(db.data(), newDb.data());
+            merger.merge();
+            // Show the new database
+            auto dbWidget = new DatabaseWidget(newDb, this);
+            addDatabaseTab(dbWidget);
+            newDb->markAsModified();
+            return dbWidget;
+        }
+    } else {
+        for (int i = 0, c = count(); i < c; ++i) {
+            // Find the database and group to import into based on import wizard choice
+            auto dbWidget = databaseWidgetFromIndex(i);
+            if (!dbWidget->isLocked() && dbWidget->database()->uuid() == importInto.first) {
+                auto group = dbWidget->database()->rootGroup()->findGroupByUuid(importInto.second);
+                if (group) {
+                    // Extract the root group from the import database
+                    auto importGroup = db->setRootGroup(new Group());
+                    importGroup->setParent(group);
+                    setCurrentIndex(i);
+                    return dbWidget;
+                }
+            }
+        }
+    }
+
+    return nullptr;
 }
 
 void DatabaseTabWidget::mergeDatabase()
@@ -287,44 +316,6 @@ void DatabaseTabWidget::mergeDatabase()
 void DatabaseTabWidget::mergeDatabase(const QString& filePath)
 {
     unlockDatabaseInDialog(currentDatabaseWidget(), DatabaseOpenDialog::Intent::Merge, filePath);
-}
-
-void DatabaseTabWidget::importKeePass1Database()
-{
-    auto filter = QString("%1 (*.kdb);;%2 (*)").arg(tr("KeePass 1 database"), tr("All files"));
-    auto fileName =
-        fileDialog()->getOpenFileName(this, tr("Open KeePass 1 database"), FileDialog::getLastDir("kp1"), filter);
-    if (fileName.isEmpty()) {
-        return;
-    }
-
-    FileDialog::saveLastDir("kp1", fileName, true);
-
-    auto db = QSharedPointer<Database>::create();
-    auto* dbWidget = new DatabaseWidget(db, this);
-    addDatabaseTab(dbWidget);
-    dbWidget->switchToImportKeepass1(fileName);
-}
-
-void DatabaseTabWidget::importOpVaultDatabase()
-{
-    auto defaultDir = FileDialog::getLastDir("opvault");
-#ifdef Q_OS_MACOS
-    QString fileName = fileDialog()->getOpenFileName(this, tr("Open OPVault"), defaultDir, "OPVault (*.opvault)");
-#else
-    QString fileName = fileDialog()->getExistingDirectory(this, tr("Open OPVault"), defaultDir);
-#endif
-
-    if (fileName.isEmpty()) {
-        return;
-    }
-
-    FileDialog::saveLastDir("opvault", fileName);
-
-    auto db = QSharedPointer<Database>::create();
-    auto* dbWidget = new DatabaseWidget(db, this);
-    addDatabaseTab(dbWidget);
-    dbWidget->switchToImportOpVault(fileName);
 }
 
 /**
@@ -611,43 +602,18 @@ bool DatabaseTabWidget::hasLockableDatabases() const
  */
 QString DatabaseTabWidget::tabName(int index)
 {
-    if (index == -1 || index > count()) {
-        return "";
+    auto dbWidget = databaseWidgetFromIndex(index);
+    if (!dbWidget) {
+        return {};
     }
 
-    auto* dbWidget = databaseWidgetFromIndex(index);
-
-    auto db = dbWidget->database();
-    Q_ASSERT(db);
-    if (!db) {
-        return "";
-    }
-
-    QString tabName;
-
-    if (!db->filePath().isEmpty()) {
-        QFileInfo fileInfo(db->filePath());
-
-        if (db->metadata()->name().isEmpty()) {
-            tabName = fileInfo.fileName();
-        } else {
-            tabName = db->metadata()->name();
-        }
-
-        setTabToolTip(index, fileInfo.absoluteFilePath());
-    } else {
-        if (db->metadata()->name().isEmpty()) {
-            tabName = tr("New Database");
-        } else {
-            tabName = tr("%1 [New Database]", "Database tab name modifier").arg(db->metadata()->name());
-        }
-    }
+    auto tabName = dbWidget->displayName();
 
     if (dbWidget->isLocked()) {
         tabName = tr("%1 [Locked]", "Database tab name modifier").arg(tabName);
     }
 
-    if (db->isModified()) {
+    if (dbWidget->database()->isModified()) {
         tabName.append("*");
     }
 
@@ -670,6 +636,7 @@ void DatabaseTabWidget::updateTabName(int index)
     }
     index = indexOf(dbWidget);
     setTabText(index, tabName(index));
+    setTabToolTip(index, dbWidget->displayFilePath());
     emit tabNameChanged();
 }
 
