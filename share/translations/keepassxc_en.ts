@@ -1848,7 +1848,7 @@ Are you sure you want to continue without a password?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>WARNING! Using a weak password may expose your accounts to security risks. Do you wish to continue?</source>
+        <source>This is a weak password! For better protection of your secrets, you should choose a stronger password.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6517,6 +6517,10 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Continue</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Continue with weak password</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

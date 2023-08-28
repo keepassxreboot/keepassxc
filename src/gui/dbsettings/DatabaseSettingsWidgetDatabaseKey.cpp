@@ -177,13 +177,12 @@ bool DatabaseSettingsWidgetDatabaseKey::save()
     // Show warning if database password is weak
     if (!m_passwordEditWidget->isEmpty()
         && m_passwordEditWidget->getPasswordQuality() < PasswordHealth::Quality::Good) {
-        auto dialogResult =
-            MessageBox::warning(this,
-                                tr("Weak password"),
-                                tr("WARNING! Using a weak password may expose your accounts to security risks. "
-                                   "Do you wish to continue?"),
-                                MessageBox::Continue | MessageBox::Cancel,
-                                MessageBox::Cancel);
+        auto dialogResult = MessageBox::warning(this,
+                                                tr("Weak password"),
+                                                tr("This is a weak password! For better protection of your secrets, "
+                                                   "you should choose a stronger password."),
+                                                MessageBox::ContinueWithWeakPass | MessageBox::Cancel,
+                                                MessageBox::Cancel);
 
         if (dialogResult == MessageBox::Cancel) {
             return false;

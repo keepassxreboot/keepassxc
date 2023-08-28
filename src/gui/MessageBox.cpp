@@ -66,6 +66,7 @@ void MessageBox::initializeButtonDefs()
         {Disable, {QMessageBox::tr("Disable"), QMessageBox::ButtonRole::AcceptRole}},
         {Merge, {QMessageBox::tr("Merge"), QMessageBox::ButtonRole::AcceptRole}},
         {Continue, {QMessageBox::tr("Continue"), QMessageBox::ButtonRole::AcceptRole}},
+        {ContinueWithWeakPass, {QMessageBox::tr("Continue with weak password"), QMessageBox::ButtonRole::AcceptRole}},
     };
 }
 
