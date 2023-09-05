@@ -102,6 +102,7 @@ public:
     bool hasNonDataChanges() const;
     bool isSaving();
 
+    QUuid publicUuid();
     QUuid uuid() const;
     QString filePath() const;
     QString canonicalFilePath() const;

@@ -27,6 +27,8 @@
 /**
  * Read KDBX magic header numbers from a device.
  *
+ * Passing a null key will only read in the unprotected headers.
+ *
  * @param device input device
  * @param sig1 KDBX signature 1
  * @param sig2 KDBX signature 2
@@ -54,6 +56,8 @@ bool KdbxReader::readMagicNumbers(QIODevice* device, quint32& sig1, quint32& sig
 /**
  * Read KDBX stream from device.
  * The device will automatically be reset to 0 before reading.
+ *
+ * Passing a null key will only read in the unprotected headers.
  *
  * @param device input device
  * @param key database encryption composite key
@@ -89,6 +93,11 @@ bool KdbxReader::readDatabase(QIODevice* device, QSharedPointer<const CompositeK
 
     if (hasError()) {
         return false;
+    }
+
+    // No key provided - don't proceed to load payload
+    if (key.isNull()) {
+        return true;
     }
 
     // read payload

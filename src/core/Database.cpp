@@ -113,6 +113,8 @@ bool Database::open(QSharedPointer<const CompositeKey> key, QString* error)
  * Unless `readOnly` is set to false, the database will be opened in
  * read-write mode and fall back to read-only if that is not possible.
  *
+ * If key is provided as null, only headers will be read.
+ *
  * @param filePath path to the file
  * @param key composite key for unlocking the database
  * @param error error message in case of failure
@@ -995,4 +997,15 @@ void Database::startModifiedTimer()
 void Database::stopModifiedTimer()
 {
     QMetaObject::invokeMethod(&m_modifiedTimer, "stop");
+}
+
+QUuid Database::publicUuid()
+{
+
+    if (!publicCustomData().contains("KPXC_PUBLIC_UUID")) {
+        publicCustomData().insert("KPXC_PUBLIC_UUID", QUuid::createUuid().toRfc4122());
+        markAsModified();
+    }
+
+    return QUuid::fromRfc4122(publicCustomData()["KPXC_PUBLIC_UUID"].toByteArray());
 }

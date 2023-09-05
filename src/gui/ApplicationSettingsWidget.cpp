@@ -29,15 +29,10 @@
 #include "gui/Icons.h"
 #include "gui/MainWindow.h"
 #include "gui/osutils/OSUtils.h"
+#include "quickunlock/QuickUnlockInterface.h"
 
 #include "FileDialog.h"
 #include "MessageBox.h"
-#ifdef Q_OS_MACOS
-#include "touchid/TouchID.h"
-#endif
-#ifdef Q_CC_MSVC
-#include "winhello/WindowsHello.h"
-#endif
 
 class ApplicationSettingsWidget::ExtraPage
 {
@@ -314,14 +309,7 @@ void ApplicationSettingsWidget::loadSettings()
     m_secUi->EnableCopyOnDoubleClickCheckBox->setChecked(
         config()->get(Config::Security_EnableCopyOnDoubleClick).toBool());
 
-    bool quickUnlockAvailable = false;
-#if defined(Q_OS_MACOS)
-    quickUnlockAvailable = TouchID::getInstance().isAvailable();
-#elif defined(Q_CC_MSVC)
-    quickUnlockAvailable = getWindowsHello()->isAvailable();
-    connect(getWindowsHello(), &WindowsHello::availableChanged, m_secUi->quickUnlockCheckBox, &QCheckBox::setEnabled);
-#endif
-    m_secUi->quickUnlockCheckBox->setEnabled(quickUnlockAvailable);
+    m_secUi->quickUnlockCheckBox->setEnabled(getQuickUnlock()->isAvailable());
     m_secUi->quickUnlockCheckBox->setChecked(config()->get(Config::Security_QuickUnlock).toBool());
 
     for (const ExtraPage& page : asConst(m_extraPages)) {

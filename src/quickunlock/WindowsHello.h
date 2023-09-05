@@ -18,41 +18,28 @@
 #ifndef KEEPASSXC_WINDOWSHELLO_H
 #define KEEPASSXC_WINDOWSHELLO_H
 
+#include "QuickUnlockInterface.h";
+
 #include <QHash>
 #include <QObject>
 
-class WindowsHello : public QObject
+class WindowsHello : public QuickUnlockInterface
 {
-    Q_OBJECT
-
 public:
-    static WindowsHello* instance();
-    bool isAvailable() const;
-    QString errorString() const;
-    void reset();
+    WindowsHello() = default;
+    bool isAvailable() const override;
+    QString errorString() const override;
+    void reset() override;
 
-    bool storeKey(const QString& dbPath, const QByteArray& key);
-    bool getKey(const QString& dbPath, QByteArray& key);
-    bool hasKey(const QString& dbPath) const;
-    void reset(const QString& dbPath);
-
-signals:
-    void availableChanged(bool state);
+    bool setKey(const QUuid& dbUuid, const QByteArray& key) override;
+    bool getKey(const QUuid& dbUuid, QByteArray& key) override;
+    bool hasKey(const QUuid& dbUuid) const override;
+    void reset(const QUuid& dbUuid) override;
 
 private:
-    bool m_available = false;
     QString m_error;
-    QHash<QString, QByteArray> m_encryptedKeys;
-
-    static WindowsHello* m_instance;
-    WindowsHello(QObject* parent = nullptr);
-    ~WindowsHello() override = default;
+    QHash<QUuid, QByteArray> m_encryptedKeys;
     Q_DISABLE_COPY(WindowsHello);
 };
-
-inline WindowsHello* getWindowsHello()
-{
-    return WindowsHello::instance();
-}
 
 #endif // KEEPASSXC_WINDOWSHELLO_H

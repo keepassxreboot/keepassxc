@@ -1519,10 +1519,6 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Failed to authenticate with Touch ID</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Failed to open key file: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1576,11 +1572,7 @@ If you do not have a key file, please leave the field empty.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Failed to authenticate with Windows Hello: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Windows Hello setup was canceled or failed. Quick unlock has not been enabled.</source>
+        <source>Failed to authenticate with Quick Unlock: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7983,6 +7975,62 @@ Kernel: %3 %4</source>
         <source>allow screenshots and app recording (Windows/macOS)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>AES initialization failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AES encrypt failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to store in Linux Keyring</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not locate key in keyring</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not read key in keyring</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AES decrypt failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No Polkit authentication agent was available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polkit authorization failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No Quick Unlock provider is available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polkit returned an error: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to init KeePassXC crypto.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to encrypt key data.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to get Windows Hello credential.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to decrypt key data.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
@@ -8995,25 +9043,6 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Could not register global shortcut</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>WindowsHello</name>
-    <message>
-        <source>Failed to init KeePassXC crypto.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to encrypt key data.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to get Windows Hello credential.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to decrypt key data.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
