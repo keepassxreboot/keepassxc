@@ -58,7 +58,12 @@ if(UNIX AND NOT APPLE AND NOT HAIKU)
                 EXCLUDE PATTERN "actions" EXCLUDE PATTERN "categories" EXCLUDE)
     endif(KEEPASSXC_DIST_FLATPAK)
     configure_file(linux/${APP_ID}.desktop.in ${CMAKE_CURRENT_BINARY_DIR}/linux/${APP_ID}.desktop @ONLY)
+    configure_file(linux/${APP_ID}.policy.in ${CMAKE_CURRENT_BINARY_DIR}/linux/${APP_ID}.policy @ONLY)
+
     install(FILES ${CMAKE_CURRENT_BINARY_DIR}/linux/${APP_ID}.desktop DESTINATION ${CMAKE_INSTALL_DATADIR}/applications)
+    if("${CMAKE_SYSTEM}" MATCHES "Linux")
+      install(FILES ${CMAKE_CURRENT_BINARY_DIR}/linux/${APP_ID}.policy DESTINATION ${CMAKE_INSTALL_DATADIR}/polkit-1/actions)
+    endif()
     install(FILES linux/${APP_ID}.appdata.xml DESTINATION ${CMAKE_INSTALL_DATADIR}/metainfo)
 endif(UNIX AND NOT APPLE AND NOT HAIKU)
 

@@ -1,0 +1,16 @@
+<!DOCTYPE node PUBLIC "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN" "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node>
+  <interface name="org.freedesktop.PolicyKit1.Authority">
+    <method name="CheckAuthorization">
+      <arg type="(sa{sv})" name="subject" direction="in" />
+      <arg type="s" name="action_id" direction="in" />
+      <arg type="a{ss}" name="details" direction="in" />
+      <arg type="u" name="flags" direction="in" />
+      <arg type="s" name="cancellation_id" direction="in" />>
+      <arg type="(bba{ss})" name="result" direction="out" />
+      <annotation name="org.qtproject.QtDBus.QtTypeName.Out0" value="PolkitAuthorizationResults"/>
+      <annotation name="org.qtproject.QtDBus.QtTypeName.In0" value="PolkitSubject"/>
+      <annotation name="org.qtproject.QtDBus.QtTypeName.In2" value="QMap&lt;QString, QString&gt;"/>
+    </method>
+  </interface>
+</node>

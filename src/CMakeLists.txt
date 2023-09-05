@@ -194,6 +194,7 @@ set(keepassx_SOURCES
         streams/qtiocompressor.cpp
         streams/StoreDataStream.cpp
         streams/SymmetricCipherStream.cpp
+        quickunlock/QuickUnlockInterface.cpp
         totp/totp.cpp)
 if(APPLE)
     set(keepassx_SOURCES
@@ -209,6 +210,12 @@ if(UNIX AND NOT APPLE)
             ${keepassx_SOURCES}
             gui/osutils/nixutils/ScreenLockListenerDBus.cpp
             gui/osutils/nixutils/NixUtils.cpp)
+    if("${CMAKE_SYSTEM}" MATCHES "Linux")
+        set(keepassx_SOURCES
+                ${keepassx_SOURCES}
+                quickunlock/Polkit.cpp
+                quickunlock/PolkitDbusTypes.cpp)
+    endif()
     if(WITH_XC_X11)
         list(APPEND keepassx_SOURCES
             gui/osutils/nixutils/X11Funcs.cpp)
@@ -217,6 +224,21 @@ if(UNIX AND NOT APPLE)
             gui/org.keepassxc.KeePassXC.MainWindow.xml
             gui/MainWindow.h
             MainWindow)
+
+    set_source_files_properties(
+        quickunlock/dbus/org.freedesktop.PolicyKit1.Authority.xml
+        PROPERTIES
+        INCLUDE "quickunlock/PolkitDbusTypes.h"
+        )
+    qt5_add_dbus_interface(keepassx_SOURCES
+        quickunlock/dbus/org.freedesktop.PolicyKit1.Authority.xml
+        polkit_dbus
+    )
+
+    find_library(KEYUTILS_LIBRARIES NAMES keyutils)
+    if(NOT KEYUTILS_LIBRARIES)
+		message(FATAL_ERROR "Could not find libkeyutils")
+    endif()
 endif()
 if(WIN32)
     set(keepassx_SOURCES
@@ -224,7 +246,7 @@ if(WIN32)
             gui/osutils/winutils/ScreenLockListenerWin.cpp
             gui/osutils/winutils/WinUtils.cpp)
     if (MSVC)
-        list(APPEND keepassx_SOURCES winhello/WindowsHello.cpp)
+        list(APPEND keepassx_SOURCES quickunlock/WindowsHello.cpp)
     endif()
 endif()
 
@@ -316,9 +338,9 @@ if(WITH_XC_NETWORKING)
 endif()
 
 if(APPLE)
-    list(APPEND keepassx_SOURCES touchid/TouchID.mm)
+    list(APPEND keepassx_SOURCES quickunlock/TouchID.mm)
     # TODO: Remove -Wno-error once deprecation warnings have been resolved.
-    set_source_files_properties(touchid/TouchID.mm PROPERTY COMPILE_FLAGS "-Wno-old-style-cast")
+    set_source_files_properties(quickunlock/TouchID.mm PROPERTY COMPILE_FLAGS "-Wno-old-style-cast")
 endif()
 
 configure_file(config-keepassx.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-keepassx.h)
@@ -344,6 +366,7 @@ target_link_libraries(keepassx_core
         ${ZXCVBN_LIBRARIES}
         ${ZLIB_LIBRARIES}
         ${ARGON2_LIBRARIES}
+        ${KEYUTILS_LIBRARIES}
         ${thirdparty_LIBRARIES}
 	)
 

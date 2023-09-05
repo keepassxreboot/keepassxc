@@ -25,13 +25,7 @@
 #include "keys/ChallengeResponseKey.h"
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
-
-#ifdef Q_OS_MACOS
-#include "touchid/TouchID.h"
-#endif
-#ifdef Q_CC_MSVC
-#include "winhello/WindowsHello.h"
-#endif
+#include "quickunlock/QuickUnlockInterface.h"
 
 #include <QLayout>
 #include <QPushButton>
@@ -198,11 +192,7 @@ bool DatabaseSettingsWidgetDatabaseKey::save()
 
     m_db->setKey(newKey, true, false, false);
 
-#if defined(Q_OS_MACOS)
-    TouchID::getInstance().reset(m_db->filePath());
-#elif defined(Q_CC_MSVC)
-    getWindowsHello()->reset(m_db->filePath());
-#endif
+    getQuickUnlock()->reset(m_db->publicUuid());
 
     emit editFinished(true);
     if (m_isDirty) {

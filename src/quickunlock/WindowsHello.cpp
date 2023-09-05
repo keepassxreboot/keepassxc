@@ -99,28 +99,10 @@ namespace
     }
 } // namespace
 
-WindowsHello* WindowsHello::m_instance{nullptr};
-WindowsHello* WindowsHello::instance()
-{
-    if (!m_instance) {
-        m_instance = new WindowsHello();
-    }
-    return m_instance;
-}
-
-WindowsHello::WindowsHello(QObject* parent)
-    : QObject(parent)
-{
-    concurrency::create_task([this] {
-        bool state = KeyCredentialManager::IsSupportedAsync().get();
-        m_available = state;
-        emit availableChanged(m_available);
-    });
-}
-
 bool WindowsHello::isAvailable() const
 {
-    return m_available;
+    auto task = concurrency::create_task([] { return KeyCredentialManager::IsSupportedAsync().get(); });
+    return task.get();
 }
 
 QString WindowsHello::errorString() const
@@ -128,7 +110,7 @@ QString WindowsHello::errorString() const
     return m_error;
 }
 
-bool WindowsHello::storeKey(const QString& dbPath, const QByteArray& data)
+bool WindowsHello::setKey(const QUuid& dbUuid, const QByteArray& data)
 {
     queueSecurityPromptFocus();
 
@@ -144,26 +126,26 @@ bool WindowsHello::storeKey(const QString& dbPath, const QByteArray& data)
     // Encrypt the data using AES-256-CBC
     SymmetricCipher cipher;
     if (!cipher.init(SymmetricCipher::Aes256_GCM, SymmetricCipher::Encrypt, key, challenge)) {
-        m_error = tr("Failed to init KeePassXC crypto.");
+        m_error = QObject::tr("Failed to init KeePassXC crypto.");
         return false;
     }
     QByteArray encrypted = data;
     if (!cipher.finish(encrypted)) {
-        m_error = tr("Failed to encrypt key data.");
+        m_error = QObject::tr("Failed to encrypt key data.");
         return false;
     }
 
     // Prepend the challenge/IV to the encrypted data
     encrypted.prepend(challenge);
-    m_encryptedKeys.insert(dbPath, encrypted);
+    m_encryptedKeys.insert(dbUuid, encrypted);
     return true;
 }
 
-bool WindowsHello::getKey(const QString& dbPath, QByteArray& data)
+bool WindowsHello::getKey(const QUuid& dbUuid, QByteArray& data)
 {
     data.clear();
-    if (!hasKey(dbPath)) {
-        m_error = tr("Failed to get Windows Hello credential.");
+    if (!hasKey(dbUuid)) {
+        m_error = QObject::tr("Failed to get Windows Hello credential.");
         return false;
     }
 
@@ -171,7 +153,7 @@ bool WindowsHello::getKey(const QString& dbPath, QByteArray& data)
 
     // Read the previously used challenge and encrypted data
     auto ivSize = SymmetricCipher::defaultIvSize(SymmetricCipher::Aes256_GCM);
-    const auto& keydata = m_encryptedKeys.value(dbPath);
+    const auto& keydata = m_encryptedKeys.value(dbUuid);
     auto challenge = keydata.left(ivSize);
     auto encrypted = keydata.mid(ivSize);
     QByteArray key;
@@ -183,7 +165,7 @@ bool WindowsHello::getKey(const QString& dbPath, QByteArray& data)
     // Decrypt the data using the generated key and IV from above
     SymmetricCipher cipher;
     if (!cipher.init(SymmetricCipher::Aes256_GCM, SymmetricCipher::Decrypt, key, challenge)) {
-        m_error = tr("Failed to init KeePassXC crypto.");
+        m_error = QObject::tr("Failed to init KeePassXC crypto.");
         return false;
     }
 
@@ -191,21 +173,21 @@ bool WindowsHello::getKey(const QString& dbPath, QByteArray& data)
     data = encrypted;
     if (!cipher.finish(data)) {
         data.clear();
-        m_error = tr("Failed to decrypt key data.");
+        m_error = QObject::tr("Failed to decrypt key data.");
         return false;
     }
 
     return true;
 }
 
-void WindowsHello::reset(const QString& dbPath)
+void WindowsHello::reset(const QUuid& dbUuid)
 {
-    m_encryptedKeys.remove(dbPath);
+    m_encryptedKeys.remove(dbUuid);
 }
 
-bool WindowsHello::hasKey(const QString& dbPath) const
+bool WindowsHello::hasKey(const QUuid& dbUuid) const
 {
-    return m_encryptedKeys.contains(dbPath);
+    return m_encryptedKeys.contains(dbUuid);
 }
 
 void WindowsHello::reset()
