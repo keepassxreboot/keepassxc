@@ -59,7 +59,8 @@ public:
         DatabaseTabScreen = 0,
         SettingsScreen = 1,
         WelcomeScreen = 2,
-        PasswordGeneratorScreen = 3
+        PasswordGeneratorScreen = 3,
+        GlobalTotpScreen = 4
     };
 
 signals:
@@ -121,6 +122,7 @@ private slots:
     void switchToDatabases();
     void switchToSettings(bool enabled);
     void togglePasswordGenerator(bool enabled);
+    void toggleGlobalTotp(bool enabled);
     void switchToNewDatabase();
     void switchToOpenDatabase();
     void switchToDatabaseFile(const QString& file);

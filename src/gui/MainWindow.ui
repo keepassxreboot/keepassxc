@@ -206,6 +206,25 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="pageGlobalTotp">
+       <layout class="QVBoxLayout" name="verticalLayout_7">
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="GlobalTotpDialog" name="globalTotpDialog" native="true"/>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -371,6 +390,7 @@
     <property name="title">
      <string>&amp;Tools</string>
     </property>
+    <addaction name="actionGlobalTotp"/>
     <addaction name="actionPasswordGenerator"/>
     <addaction name="actionSettings"/>
    </widget>
@@ -435,6 +455,7 @@
    <addaction name="actionEntryCopyURL"/>
    <addaction name="actionEntryAutoType"/>
    <addaction name="separator"/>
+   <addaction name="actionGlobalTotp"/>
    <addaction name="actionPasswordGenerator"/>
    <addaction name="actionSettings"/>
    <addaction name="separator"/>
@@ -764,6 +785,14 @@
    </property>
    <property name="toolTip">
     <string>Show Password Generator</string>
+   </property>
+  </action>
+  <action name="actionGlobalTotp">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;View all TOTP</string>
    </property>
   </action>
   <action name="actionEntryAutoType">
@@ -1307,6 +1336,12 @@
    <class>KPToolBar</class>
    <extends>QToolBar</extends>
    <header>gui/widgets/KPToolBar.h</header>
+  </customwidget>
+  <customwidget>
+   <class>GlobalTotpDialog</class>
+   <extends>QWidget</extends>
+   <header>gui/GlobalTotpDialog.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>
