@@ -5478,6 +5478,10 @@ We recommend you use the AppImage available on our downloads page.</source>
         <source>Allow Screen Capture</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>&amp;Expire Entry…</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ManageDatabase</name>
@@ -8095,6 +8099,13 @@ Kernel: %3 %4</source>
         <source>Exclude from reports</source>
         <translation type="unfinished"></translation>
     </message>
+    <message numerus="yes">
+        <source>Expire Entry(s)…</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
 </context>
 <context>
     <name>ReportsWidgetHealthcheck</name>
@@ -8183,6 +8194,13 @@ Kernel: %3 %4</source>
     <message>
         <source>Exclude from reports</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Expire Entry(s)…</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -8281,6 +8299,13 @@ Kernel: %3 %4</source>
     <message>
         <source>Exclude from reports</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Expire Entry(s)…</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 <context>

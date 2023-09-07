@@ -136,6 +136,7 @@ MainWindow::MainWindow()
     m_entryContextMenu->addAction(m_ui->actionEntryAutoType);
     m_entryContextMenu->addSeparator();
     m_entryContextMenu->addAction(m_ui->actionEntryEdit);
+    m_entryContextMenu->addAction(m_ui->actionEntryExpire);
     m_entryContextMenu->addAction(m_ui->actionEntryClone);
     m_entryContextMenu->addAction(m_ui->actionEntryDelete);
     m_entryContextMenu->addAction(m_ui->actionEntryNew);
@@ -302,6 +303,7 @@ MainWindow::MainWindow()
     // Unfortunately, Qt::AA_DontShowShortcutsInContextMenus is broken, have to manually enable them
     m_ui->actionEntryNew->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryEdit->setShortcutVisibleInContextMenu(true);
+    m_ui->actionEntryExpire->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryDelete->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryRestore->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryClone->setShortcutVisibleInContextMenu(true);
@@ -390,6 +392,7 @@ MainWindow::MainWindow()
     m_ui->actionEntryNew->setIcon(icons()->icon("entry-new"));
     m_ui->actionEntryClone->setIcon(icons()->icon("entry-clone"));
     m_ui->actionEntryEdit->setIcon(icons()->icon("entry-edit"));
+    m_ui->actionEntryExpire->setIcon(icons()->icon("entry-expire"));
     m_ui->actionEntryDelete->setIcon(icons()->icon("entry-delete"));
     m_ui->actionEntryRestore->setIcon(icons()->icon("entry-restore"));
     m_ui->actionEntryAutoType->setIcon(icons()->icon("auto-type"));
@@ -496,8 +499,9 @@ MainWindow::MainWindow()
     connect(m_ui->actionQuit, SIGNAL(triggered()), SLOT(appExit()));
 
     m_actionMultiplexer.connect(m_ui->actionEntryNew, SIGNAL(triggered()), SLOT(createEntry()));
-    m_actionMultiplexer.connect(m_ui->actionEntryClone, SIGNAL(triggered()), SLOT(cloneEntry()));
     m_actionMultiplexer.connect(m_ui->actionEntryEdit, SIGNAL(triggered()), SLOT(switchToEntryEdit()));
+    m_actionMultiplexer.connect(m_ui->actionEntryExpire, SIGNAL(triggered()), SLOT(expireSelectedEntries()));
+    m_actionMultiplexer.connect(m_ui->actionEntryClone, SIGNAL(triggered()), SLOT(cloneEntry()));
     m_actionMultiplexer.connect(m_ui->actionEntryDelete, SIGNAL(triggered()), SLOT(deleteSelectedEntries()));
     m_actionMultiplexer.connect(m_ui->actionEntryRestore, SIGNAL(triggered()), SLOT(restoreSelectedEntries()));
 
@@ -908,8 +912,9 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             int numEntries = dbWidget->currentGroup()->entries().size();
 
             m_ui->actionEntryNew->setEnabled(true);
-            m_ui->actionEntryClone->setEnabled(singleEntrySelected);
             m_ui->actionEntryEdit->setEnabled(singleEntrySelected);
+            m_ui->actionEntryExpire->setEnabled(entriesSelected);
+            m_ui->actionEntryClone->setEnabled(singleEntrySelected);
             m_ui->actionEntryDelete->setEnabled(entriesSelected);
             m_ui->actionEntryRestore->setVisible(entriesSelected && recycleBinSelected);
             m_ui->actionEntryRestore->setEnabled(entriesSelected && recycleBinSelected);
