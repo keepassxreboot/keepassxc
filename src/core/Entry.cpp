@@ -381,15 +381,31 @@ QString Entry::url() const
     return m_attributes->value(EntryAttributes::URLKey);
 }
 
+QString Entry::resolveUrl() const
+{
+    const auto entryUrl = url();
+    if (entryUrl.isEmpty()) {
+        return {};
+    }
+
+    return EntryAttributes::matchReference(entryUrl).hasMatch() ? resolveMultiplePlaceholders(entryUrl) : entryUrl;
+}
+
 QStringList Entry::getAllUrls() const
 {
     QStringList urlList;
-    auto entryUrl = url();
 
+    const auto entryUrl = resolveUrl();
     if (!entryUrl.isEmpty()) {
-        urlList << (EntryAttributes::matchReference(entryUrl).hasMatch() ? resolveMultiplePlaceholders(entryUrl)
-                                                                         : entryUrl);
+        urlList << entryUrl;
     }
+
+    return urlList << getAdditionalUrls();
+}
+
+QStringList Entry::getAdditionalUrls() const
+{
+    QStringList urlList;
 
     for (const auto& key : m_attributes->keys()) {
         if (key.startsWith(EntryAttributes::AdditionalUrlAttribute)

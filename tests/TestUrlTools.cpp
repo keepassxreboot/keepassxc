@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -133,6 +133,36 @@ void TestUrlTools::testIsUrlValid()
     while (i.hasNext()) {
         i.next();
         QCOMPARE(urlTools()->isUrlValid(i.key()), i.value());
+    }
+}
+
+void TestUrlTools::testIsUrlValidWithLooseComparison()
+{
+    QHash<QString, bool> urls;
+    urls[""] = true;
+    urls["\"https://github.com/login\""] = true;
+    urls["https://*.github.com/"] = true;
+    urls["*.github.com"] = true;
+    urls["https://*.com"] = false;
+    urls["https://*.computer.com"] = true; // TLD in domain (com) should not affect
+    urls["\"\""] = false;
+    urls["\"*.example.com\""] = false;
+    urls["http://*"] = false;
+    urls["*"] = false;
+    urls["****"] = false;
+    urls["*.co.jp"] = false;
+    urls["*.com"] = false;
+    urls["*.computer.com"] = true;
+    urls["*.computer.com/*com"] = true; // TLD in path should not affect this
+    urls["*com"] = false;
+    urls["*.com/"] = false;
+    urls["*.com/*"] = false;
+    urls["**.com/**"] = false;
+
+    QHashIterator<QString, bool> i(urls);
+    while (i.hasNext()) {
+        i.next();
+        QCOMPARE(urlTools()->isUrlValid(i.key(), true), i.value());
     }
 }
 

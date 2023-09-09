@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -41,8 +41,10 @@ public:
     bool isIpAddress(const QString& host) const;
 #endif
     bool isUrlIdentical(const QString& first, const QString& second) const;
-    bool isUrlValid(const QString& urlField) const;
+    bool isUrlValid(const QString& urlField, bool looseComparison = false) const;
     bool domainHasIllegalCharacters(const QString& domain) const;
+
+    static const QString URL_WILDCARD;
 
 private:
     QUrl convertVariantToUrl(const QVariant& var) const;

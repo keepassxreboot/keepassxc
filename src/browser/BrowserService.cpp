@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
  *  Copyright (C) 2013 Francois Ferrand
  *
@@ -51,6 +51,7 @@
 #include <QLocalSocket>
 #include <QLocale>
 #include <QProgressDialog>
+#include <QStringView>
 #include <QUrl>
 
 const QString BrowserService::KEEPASSXCBROWSER_NAME = QStringLiteral("KeePassXC-Browser Settings");
@@ -1375,9 +1376,15 @@ bool BrowserService::shouldIncludeEntry(Entry* entry,
         return url.endsWith("by-path/" + entry->path());
     }
 
-    const auto allEntryUrls = entry->getAllUrls();
-    for (const auto& entryUrl : allEntryUrls) {
-        if (handleURL(entryUrl, url, submitUrl, omitWwwSubdomain)) {
+    // Handle the entry URL
+    if (handleURL(entry->resolveUrl(), url, submitUrl, omitWwwSubdomain)) {
+        return true;
+    }
+
+    // Handle additional URLs
+    const auto additionalUrls = entry->getAdditionalUrls();
+    for (const auto& additionalUrl : additionalUrls) {
+        if (handleURL(additionalUrl, url, submitUrl, omitWwwSubdomain, true)) {
             return true;
         }
     }
@@ -1465,17 +1472,35 @@ QJsonObject BrowserService::getPasskeyError(int errorCode) const
 bool BrowserService::handleURL(const QString& entryUrl,
                                const QString& siteUrl,
                                const QString& formUrl,
-                               const bool omitWwwSubdomain)
+                               const bool omitWwwSubdomain,
+                               const bool allowWildcards)
 {
     if (entryUrl.isEmpty()) {
         return false;
     }
 
+    bool isWildcardUrl = false;
+    auto tempUrl = entryUrl;
+
+    // Allows matching with exact URL and wildcards
+    if (allowWildcards) {
+        // Exact match where URL is wrapped inside " characters
+        if (entryUrl.startsWith("\"") && entryUrl.endsWith("\"")) {
+            return QStringView{entryUrl}.mid(1, entryUrl.length() - 2) == siteUrl;
+        }
+
+        // Replace wildcards
+        isWildcardUrl = entryUrl.contains("*");
+        if (isWildcardUrl) {
+            tempUrl = tempUrl.replace("*", UrlTools::URL_WILDCARD);
+        }
+    }
+
     QUrl entryQUrl;
     if (entryUrl.contains("://")) {
-        entryQUrl = entryUrl;
+        entryQUrl = tempUrl;
     } else {
-        entryQUrl = QUrl::fromUserInput(entryUrl);
+        entryQUrl = QUrl::fromUserInput(tempUrl);
 
         if (browserSettings()->matchUrlScheme()) {
             entryQUrl.setScheme("https");
@@ -1515,6 +1540,11 @@ bool BrowserService::handleURL(const QString& entryUrl,
         return false;
     }
 
+    // Use wildcard matching instead
+    if (isWildcardUrl) {
+        return handleURLWithWildcards(entryQUrl, siteUrl);
+    }
+
     // Match the base domain
     if (urlTools()->getBaseDomainFromUrl(siteQUrl.host()) != urlTools()->getBaseDomainFromUrl(entryQUrl.host())) {
         return false;
@@ -1526,6 +1556,46 @@ bool BrowserService::handleURL(const QString& entryUrl,
     }
 
     return false;
+}
+
+bool BrowserService::handleURLWithWildcards(const QUrl& entryQUrl, const QString& siteUrl)
+{
+    auto matchWithRegex = [&](QString firstPart, const QString& secondPart, bool hostnameUsed = false) {
+        if (firstPart == secondPart) {
+            return true;
+        }
+
+        // If there's no wildcard with hostname, just compare directly
+        if (hostnameUsed && !firstPart.contains(UrlTools::URL_WILDCARD) && firstPart != secondPart) {
+            return false;
+        }
+
+        // Escape illegal characters
+        auto re = firstPart.replace(QRegularExpression(R"(([!\^\$\+\-\(\)@<>]))"), "\\\\1");
+
+        if (hostnameUsed) {
+            // Replace all host parts with wildcards
+            re = re.replace(QString("%1.").arg(UrlTools::URL_WILDCARD), "(.*?)");
+        }
+
+        // Append a + to the end of regex to match all paths after the last asterisk
+        if (re.endsWith(UrlTools::URL_WILDCARD)) {
+            re.append("+");
+        }
+
+        // Replace any remaining wildcards for paths
+        re = re.replace(UrlTools::URL_WILDCARD, "(.*?)");
+        return QRegularExpression(re).match(secondPart).hasMatch();
+    };
+
+    // Match hostname and path
+    QUrl siteQUrl = siteUrl;
+    if (!matchWithRegex(entryQUrl.host(), siteQUrl.host(), true)
+        || !matchWithRegex(entryQUrl.path(), siteQUrl.path())) {
+        return false;
+    }
+
+    return true;
 }
 
 QSharedPointer<Database> BrowserService::getDatabase(const QUuid& rootGroupUuid)

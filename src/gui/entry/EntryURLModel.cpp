@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -67,7 +67,7 @@ QVariant EntryURLModel::data(const QModelIndex& index, int role) const
     }
 
     const auto value = m_entryAttributes->value(key);
-    const auto urlValid = urlTools()->isUrlValid(value);
+    const auto urlValid = urlTools()->isUrlValid(value, true);
 
     // Check for duplicate URLs in the attribute list. Excludes the current key/value from the comparison.
     auto customAttributeKeys = m_entryAttributes->customKeys().filter(EntryAttributes::AdditionalUrlAttribute);

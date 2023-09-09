@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,6 +23,8 @@
 #endif
 #include <QRegularExpression>
 #include <QUrl>
+
+const QString UrlTools::URL_WILDCARD = "1kpxcwc1";
 
 Q_GLOBAL_STATIC(UrlTools, s_urlTools)
 
@@ -137,8 +139,9 @@ bool UrlTools::isUrlIdentical(const QString& first, const QString& second) const
         return false;
     }
 
-    const auto firstUrl = trimUrl(first);
-    const auto secondUrl = trimUrl(second);
+    // Replace URL wildcards for comparison if found
+    const auto firstUrl = trimUrl(QString(first).replace("*", UrlTools::URL_WILDCARD));
+    const auto secondUrl = trimUrl(QString(second).replace("*", UrlTools::URL_WILDCARD));
     if (firstUrl == secondUrl) {
         return true;
     }
@@ -146,27 +149,59 @@ bool UrlTools::isUrlIdentical(const QString& first, const QString& second) const
     return QUrl(firstUrl).matches(QUrl(secondUrl), QUrl::StripTrailingSlash);
 }
 
-bool UrlTools::isUrlValid(const QString& urlField) const
+bool UrlTools::isUrlValid(const QString& urlField, bool looseComparison) const
 {
     if (urlField.isEmpty() || urlField.startsWith("cmd://", Qt::CaseInsensitive)
         || urlField.startsWith("kdbx://", Qt::CaseInsensitive) || urlField.startsWith("{REF:A", Qt::CaseInsensitive)) {
         return true;
     }
 
-    QUrl url;
-    if (urlField.contains("://")) {
-        url = urlField;
-    } else {
-        url = QUrl::fromUserInput(urlField);
+    auto url = urlField;
+
+    // Loose comparison that allows wildcards and exact URL inside " characters
+    if (looseComparison) {
+        // Exact URL
+        if (url.startsWith("\"") && url.endsWith("\"")) {
+            // Do not allow exact URL with wildcards, or empty exact URL
+            if (url.contains("*") || url.length() == 2) {
+                return false;
+            }
+
+            // Get the URL inside ""
+            url.remove(0, 1);
+            url.remove(url.length() - 1, 1);
+        } else {
+            // Do not allow URL with just wildcards, or double wildcards, or no separator (.)
+            if (url.length() == url.count("*") || url.contains("**") || url.contains("*.*") || !url.contains(".")) {
+                return false;
+            }
+
+            url.replace("*", UrlTools::URL_WILDCARD);
+        }
     }
 
-    if (url.scheme() != "file" && url.host().isEmpty()) {
+    QUrl qUrl;
+    if (urlField.contains("://")) {
+        qUrl = url;
+    } else {
+        qUrl = QUrl::fromUserInput(url);
+    }
+
+    if (qUrl.scheme() != "file" && qUrl.host().isEmpty()) {
         return false;
+    }
+
+    // Prevent TLD wildcards
+    if (looseComparison) {
+        const auto tld = getTopLevelDomainFromUrl(url);
+        if (qUrl.host() == QString("%1.%2").arg(UrlTools::URL_WILDCARD, tld)) {
+            return false;
+        }
     }
 
     // Check for illegal characters. Adds also the wildcard * to the list
     QRegularExpression re("[<>\\^`{|}\\*]");
-    auto match = re.match(urlField);
+    auto match = re.match(url);
     if (match.hasMatch()) {
         return false;
     }

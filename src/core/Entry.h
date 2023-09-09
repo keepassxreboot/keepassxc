@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -100,7 +100,9 @@ public:
     const AutoTypeAssociations* autoTypeAssociations() const;
     QString title() const;
     QString url() const;
+    QString resolveUrl() const;
     QStringList getAllUrls() const;
+    QStringList getAdditionalUrls() const;
     QString webUrl() const;
     QString displayUrl() const;
     QString username() const;
