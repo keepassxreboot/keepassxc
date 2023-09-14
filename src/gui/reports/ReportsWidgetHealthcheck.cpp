@@ -166,27 +166,31 @@ void ReportsWidgetHealthcheck::addHealthRow(QSharedPointer<PasswordHealth> healt
                                             bool excluded)
 {
     QString tip;
+    QString iconName = "lock-question";
     QColor qualityColor;
     StateColorPalette statePalette;
     const auto quality = health->quality();
     switch (quality) {
     case PasswordHealth::Quality::Bad:
         tip = tr("Bad — password must be changed");
+        iconName = "lock-open-alert";
         qualityColor = statePalette.color(StateColorPalette::HealthCritical);
         break;
-
     case PasswordHealth::Quality::Poor:
         tip = tr("Poor — password should be changed");
+        iconName = "lock-open-alert";
         qualityColor = statePalette.color(StateColorPalette::HealthBad);
         break;
 
     case PasswordHealth::Quality::Weak:
         tip = tr("Weak — consider changing the password");
+        iconName = "lock-open";
         qualityColor = statePalette.color(StateColorPalette::HealthWeak);
         break;
 
     case PasswordHealth::Quality::Good:
     case PasswordHealth::Quality::Excellent:
+        iconName = "lock";
         qualityColor = statePalette.color(StateColorPalette::HealthOk);
         break;
     }
@@ -200,7 +204,7 @@ void ReportsWidgetHealthcheck::addHealthRow(QSharedPointer<PasswordHealth> healt
     }
 
     auto row = QList<QStandardItem*>();
-    row << new QStandardItem(" ▍");
+    row << new QStandardItem(Icons::instance()->icon(iconName, true, qualityColor), "");
     row << new QStandardItem(Icons::entryIconPixmap(entry), title);
     row << new QStandardItem(Icons::groupIconPixmap(group), group->hierarchy().join("/"));
     row << new QStandardItem(QString::number(health->score()));

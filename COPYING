@@ -240,6 +240,9 @@ Files: share/icons/application/scalable/actions/application-exit.svg
        share/icons/application/scalable/status/dialog-information.svg
        share/icons/application/scalable/status/dialog-warning.svg
        share/icons/application/scalable/status/security-high.svg
+       share/icons/application/scalable/actions/lock-open-alert.svg
+       share/icons/application/scalable/actions/lock-open.svg
+       share/icons/application/scalable/actions/lock.svg
 Copyright: 2019 Austin Andrews <http://templarian.com/>
 License: SIL OPEN FONT LICENSE Version 1.1
 Comment: Taken from Material Design icon set (https://github.com/templarian/MaterialDesign/)

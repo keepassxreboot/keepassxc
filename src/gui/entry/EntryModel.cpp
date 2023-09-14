@@ -290,6 +290,35 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             break;
         case Title:
             return Icons::entryIconPixmap(entry);
+
+        case PasswordStrength:
+            if (!entry->password().isEmpty() && !entry->excludeFromReports()) {
+                QString iconName = "lock-question";
+                StateColorPalette statePalette;
+                QColor color = statePalette.color(StateColorPalette::Error);
+
+                switch (entry->passwordHealth()->quality()) {
+                case PasswordHealth::Quality::Bad:
+                case PasswordHealth::Quality::Poor:
+                    iconName = "lock-open-alert";
+                    color = statePalette.color(StateColorPalette::HealthCritical);
+                    break;
+                case PasswordHealth::Quality::Weak:
+                    iconName = "lock-open";
+                    color = statePalette.color(StateColorPalette::HealthBad);
+                    break;
+                case PasswordHealth::Quality::Good:
+                case PasswordHealth::Quality::Excellent:
+                    iconName = "lock";
+                    color = statePalette.color(StateColorPalette::HealthExcellent);
+                    break;
+                }
+
+                if (color.isValid()) {
+                    return icons()->icon(iconName, true, color);
+                }
+            }
+            break;
         case Paperclip:
             if (!entry->attachments()->isEmpty()) {
                 return icons()->icon("paperclip");
@@ -300,39 +329,6 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
                 return icons()->icon("totp");
             }
             break;
-        }
-    } else if (role == Qt::FontRole) {
-        QFont font;
-        if (entry->isExpired()) {
-            font.setStrikeOut(true);
-        }
-        return font;
-    } else if (role == Qt::ForegroundRole) {
-
-        if(index.column() == PasswordStrength) {
-
-            if (!entry->password().isEmpty() && !entry->excludeFromReports()) {
-                StateColorPalette statePalette;
-                QColor color = statePalette.color(StateColorPalette::Error);
-
-                switch (entry->passwordHealth()->quality()) {
-                case PasswordHealth::Quality::Bad:
-                case PasswordHealth::Quality::Poor:
-                    color = statePalette.color(StateColorPalette::HealthCritical);
-                    break;
-                case PasswordHealth::Quality::Weak:
-                    color = statePalette.color(StateColorPalette::HealthBad);
-                    break;
-                case PasswordHealth::Quality::Good:
-                case PasswordHealth::Quality::Excellent:
-                    color = statePalette.color(StateColorPalette::HealthExcellent);
-                    break;
-                }
-
-                if (color.isValid()) {
-                    return color;
-                }
-            }
         }
     } else if (role == Qt::FontRole) {
         QFont font;
