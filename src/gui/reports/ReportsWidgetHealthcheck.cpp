@@ -165,25 +165,22 @@ void ReportsWidgetHealthcheck::addHealthRow(QSharedPointer<PasswordHealth> healt
                                             Entry* entry,
                                             bool excluded)
 {
-    QString descr, tip;
+    QString tip;
     QColor qualityColor;
     StateColorPalette statePalette;
     const auto quality = health->quality();
     switch (quality) {
     case PasswordHealth::Quality::Bad:
-        descr = tr("Bad", "Password quality");
         tip = tr("Bad — password must be changed");
         qualityColor = statePalette.color(StateColorPalette::HealthCritical);
         break;
 
     case PasswordHealth::Quality::Poor:
-        descr = tr("Poor", "Password quality");
         tip = tr("Poor — password should be changed");
         qualityColor = statePalette.color(StateColorPalette::HealthBad);
         break;
 
     case PasswordHealth::Quality::Weak:
-        descr = tr("Weak", "Password quality");
         tip = tr("Weak — consider changing the password");
         qualityColor = statePalette.color(StateColorPalette::HealthWeak);
         break;
@@ -203,7 +200,7 @@ void ReportsWidgetHealthcheck::addHealthRow(QSharedPointer<PasswordHealth> healt
     }
 
     auto row = QList<QStandardItem*>();
-    row << new QStandardItem(descr);
+    row << new QStandardItem(" ▍");
     row << new QStandardItem(Icons::entryIconPixmap(entry), title);
     row << new QStandardItem(Icons::groupIconPixmap(group), group->hierarchy().join("/"));
     row << new QStandardItem(QString::number(health->score()));
@@ -214,7 +211,6 @@ void ReportsWidgetHealthcheck::addHealthRow(QSharedPointer<PasswordHealth> healt
     // invisible, it's just for screen readers etc.
     QBrush brush(qualityColor);
     row[0]->setForeground(brush);
-    row[0]->setBackground(brush);
 
     // Set tooltips
     row[0]->setToolTip(tip);

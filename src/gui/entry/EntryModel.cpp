@@ -168,6 +168,11 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
                 result = "";
             }
             return result;
+        case PasswordStrength:
+            if (!entry->password().isEmpty() && !entry->excludeFromReports()) {
+                result = " ▍";
+            }
+            return result;
         case Url:
             result = entry->resolveMultiplePlaceholders(entry->displayUrl());
             if (attr->isReference(EntryAttributes::URLKey)) {
@@ -295,7 +300,17 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
                 return icons()->icon("totp");
             }
             break;
-        case PasswordStrength:
+        }
+    } else if (role == Qt::FontRole) {
+        QFont font;
+        if (entry->isExpired()) {
+            font.setStrikeOut(true);
+        }
+        return font;
+    } else if (role == Qt::ForegroundRole) {
+
+        if(index.column() == PasswordStrength) {
+
             if (!entry->password().isEmpty() && !entry->excludeFromReports()) {
                 StateColorPalette statePalette;
                 QColor color = statePalette.color(StateColorPalette::Error);
@@ -314,9 +329,10 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
                     break;
                 }
 
-                return color;
+                if (color.isValid()) {
+                    return color;
+                }
             }
-            break;
         }
     } else if (role == Qt::FontRole) {
         QFont font;
