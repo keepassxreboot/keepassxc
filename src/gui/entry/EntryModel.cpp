@@ -168,11 +168,6 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
                 result = "";
             }
             return result;
-        case PasswordStrength:
-            if (!entry->password().isEmpty() && !entry->excludeFromReports()) {
-                result = " ▍";
-            }
-            return result;
         case Url:
             result = entry->resolveMultiplePlaceholders(entry->displayUrl());
             if (attr->isReference(EntryAttributes::URLKey)) {
