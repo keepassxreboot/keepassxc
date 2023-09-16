@@ -3840,6 +3840,10 @@ Error: %1</source>
         <source>Has TOTP</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Background Color</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EntryPreviewWidget</name>
