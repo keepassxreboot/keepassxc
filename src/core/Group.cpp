@@ -288,6 +288,21 @@ void Group::setCustomDataTriState(const QString& key, const Group::TriState& val
     }
 }
 
+// Note that this returns an empty string both if the key is missing *or* if the key is present but value is empty.
+QString Group::resolveCustomDataString(const QString& key, bool checkParent) const
+{
+    // If not defined, check our parent up to the root group
+    if (!m_customData->contains(key)) {
+        if (!m_parent || !checkParent) {
+            return QString();
+        } else {
+            return m_parent->resolveCustomDataString(key);
+        }
+    }
+
+    return m_customData->value(key);
+}
+
 bool Group::equals(const Group* other, CompareItemOptions options) const
 {
     if (!other) {

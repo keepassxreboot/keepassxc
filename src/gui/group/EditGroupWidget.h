@@ -81,6 +81,10 @@ private:
     Group::TriState triStateFromIndex(int index);
     void setupModifiedTracking();
 
+    void addRestrictKeyComboBoxItems(QStringList const& keyList, QString inheritValue);
+    void setRestrictKeyComboBoxIndex(const Group* group);
+    void setRestrictKeyCustomData(CustomData* customData);
+
     const QScopedPointer<Ui::EditGroupWidgetMain> m_mainUi;
 
     QPointer<QScrollArea> m_editGroupWidgetMain;

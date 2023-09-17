@@ -64,6 +64,7 @@ const QString BrowserService::OPTION_HIDE_ENTRY = QStringLiteral("BrowserHideEnt
 const QString BrowserService::OPTION_ONLY_HTTP_AUTH = QStringLiteral("BrowserOnlyHttpAuth");
 const QString BrowserService::OPTION_NOT_HTTP_AUTH = QStringLiteral("BrowserNotHttpAuth");
 const QString BrowserService::OPTION_OMIT_WWW = QStringLiteral("BrowserOmitWww");
+const QString BrowserService::OPTION_RESTRICT_KEY = QStringLiteral("BrowserRestrictKey");
 
 Q_GLOBAL_STATIC(BrowserService, s_browserService);
 
@@ -947,6 +948,7 @@ bool BrowserService::deleteEntry(const QString& uuid)
 QList<Entry*> BrowserService::searchEntries(const QSharedPointer<Database>& db,
                                             const QString& siteUrl,
                                             const QString& formUrl,
+                                            const QStringList& keys,
                                             bool passkey)
 {
     QList<Entry*> entries;
@@ -958,6 +960,12 @@ QList<Entry*> BrowserService::searchEntries(const QSharedPointer<Database>& db,
     for (const auto& group : rootGroup->groupsRecursive(true)) {
         if (group->isRecycled()
             || group->resolveCustomDataTriState(BrowserService::OPTION_HIDE_ENTRY) == Group::Enable) {
+            continue;
+        }
+
+        // If a key restriction is specified and not contained in the keys list then skip this group.
+        auto restrictKey = group->resolveCustomDataString(BrowserService::OPTION_RESTRICT_KEY);
+        if (!restrictKey.isEmpty() && !keys.contains(restrictKey)) {
             continue;
         }
 
@@ -997,30 +1005,35 @@ QList<Entry*> BrowserService::searchEntries(const QString& siteUrl,
                                             const StringPairList& keyList,
                                             bool passkey)
 {
-    // Check if database is connected with KeePassXC-Browser
+    // Check if database is connected with KeePassXC-Browser. If so, return browser key (otherwise empty)
     auto databaseConnected = [&](const QSharedPointer<Database>& db) {
         for (const StringPair& keyPair : keyList) {
             QString key = db->metadata()->customData()->value(CustomData::BrowserKeyPrefix + keyPair.first);
             if (!key.isEmpty() && keyPair.second == key) {
-                return true;
+                return keyPair.first;
             }
         }
-        return false;
+        return QString();
     };
 
     // Get the list of databases to search
     QList<QSharedPointer<Database>> databases;
+    QStringList keys;
     if (browserSettings()->searchInAllDatabases()) {
         for (auto dbWidget : getMainWindow()->getOpenDatabases()) {
             auto db = dbWidget->database();
-            if (db && databaseConnected(dbWidget->database())) {
+            auto key = databaseConnected(dbWidget->database());
+            if (db && !key.isEmpty()) {
                 databases << db;
+                keys << key;
             }
         }
     } else {
         const auto& db = getDatabase();
-        if (databaseConnected(db)) {
+        auto key = databaseConnected(db);
+        if (!key.isEmpty()) {
             databases << db;
+            keys << key;
         }
     }
 
@@ -1029,11 +1042,16 @@ QList<Entry*> BrowserService::searchEntries(const QString& siteUrl,
     QList<Entry*> entries;
     do {
         for (const auto& db : databases) {
-            entries << searchEntries(db, siteUrl, formUrl, passkey);
+            entries << searchEntries(db, siteUrl, formUrl, keys, passkey);
         }
     } while (entries.isEmpty() && removeFirstDomain(hostname));
 
     return entries;
+}
+
+QString BrowserService::decodeCustomDataRestrictKey(const QString& key)
+{
+    return key.isEmpty() ? tr("Disable") : key;
 }
 
 void BrowserService::requestGlobalAutoType(const QString& search)
