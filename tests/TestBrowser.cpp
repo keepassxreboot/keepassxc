@@ -675,3 +675,68 @@ void TestBrowser::testBestMatchingWithAdditionalURLs()
     QCOMPARE(sorted.length(), 1);
     QCOMPARE(sorted[0]->url(), urls[0]);
 }
+
+void TestBrowser::testRestrictBrowserKey()
+{
+    auto db = QSharedPointer<Database>::create();
+    auto* root = db->rootGroup();
+
+    // Group 0 (root): No browser key restriction given
+    QStringList urlsRoot = {"https://example.com/0"};
+    auto entriesRoot = createEntries(urlsRoot, root);
+
+    // Group 1: restricted to browser with 'key1'
+    auto* group1 = new Group();
+    group1->setParent(root);
+    group1->setName("TestGroup1");
+    group1->customData()->set(BrowserService::OPTION_RESTRICT_KEY, "key1");
+    QStringList urls1 = {"https://example.com/1"};
+    auto entries1 = createEntries(urls1, group1);
+
+    // Group 2: restricted to browser with 'key2'
+    auto* group2 = new Group();
+    group2->setParent(root);
+    group2->setName("TestGroup2");
+    group2->customData()->set(BrowserService::OPTION_RESTRICT_KEY, "key2");
+    QStringList urls2 = {"https://example.com/2"};
+    auto entries2 = createEntries(urls2, group2);
+
+    // Group 2b: inherits parent group (2) restriction
+    auto* group2b = new Group();
+    group2b->setParent(group2);
+    group2b->setName("TestGroup2b");
+    QStringList urls2b = {"https://example.com/2b"};
+    auto entries2b = createEntries(urls2b, group2b);
+
+    // Group 3: inherits parent group (root) - any browser can see
+    auto* group3 = new Group();
+    group3->setParent(root);
+    group3->setName("TestGroup3");
+    QStringList urls3 = {"https://example.com/3"};
+    auto entries3 = createEntries(urls3, group3);
+
+    // Browser 'key0': Groups 1 and 2 are excluded, so entries 0 and 3 will be found
+    auto siteUrl = QString("https://example.com");
+    auto result = m_browserService->searchEntries(db, siteUrl, siteUrl, {"key0"});
+    auto sorted = m_browserService->sortEntries(result, siteUrl, siteUrl);
+    QCOMPARE(sorted.size(), 2);
+    QCOMPARE(sorted[0]->url(), QString("https://example.com/3"));
+    QCOMPARE(sorted[1]->url(), QString("https://example.com/0"));
+
+    // Browser 'key1': Group 2 will be excluded, so entries 0, 1, and 3 will be found
+    result = m_browserService->searchEntries(db, siteUrl, siteUrl, {"key1"});
+    sorted = m_browserService->sortEntries(result, siteUrl, siteUrl);
+    QCOMPARE(sorted.size(), 3);
+    QCOMPARE(sorted[0]->url(), QString("https://example.com/3"));
+    QCOMPARE(sorted[1]->url(), QString("https://example.com/1"));
+    QCOMPARE(sorted[2]->url(), QString("https://example.com/0"));
+
+    // Browser 'key2': Group 1 will be excluded, so entries 0, 2, 2b, 3 will be found
+    result = m_browserService->searchEntries(db, siteUrl, siteUrl, {"key2"});
+    sorted = m_browserService->sortEntries(result, siteUrl, siteUrl);
+    QCOMPARE(sorted.size(), 4);
+    QCOMPARE(sorted[0]->url(), QString("https://example.com/3"));
+    QCOMPARE(sorted[1]->url(), QString("https://example.com/2b"));
+    QCOMPARE(sorted[2]->url(), QString("https://example.com/2"));
+    QCOMPARE(sorted[3]->url(), QString("https://example.com/0"));
+}

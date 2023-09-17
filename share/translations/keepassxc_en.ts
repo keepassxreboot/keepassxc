@@ -953,7 +953,7 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>KeePassXC - New key association request</source>
+        <source>Disable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -970,6 +970,10 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
     </message>
     <message>
         <source>KeePassXC - Delete entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeePassXC - New key association request</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3207,6 +3211,14 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Omit WWW subdomain from matching toggle for this and sub groups</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Restrict matching to given browser key:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Restrict matching to given browser key toggle for this and sub groups</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

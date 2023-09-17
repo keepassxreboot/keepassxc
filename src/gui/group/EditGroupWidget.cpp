@@ -196,6 +196,7 @@ void EditGroupWidget::loadGroup(Group* group, bool create, const QSharedPointer<
         auto inheritOnlyHttp = false;
         auto inheritNoHttp = false;
         auto inheritOmitWww = false;
+        auto inheritRestrictKey = QString();
 
         auto parent = group->parentGroup();
         if (parent) {
@@ -204,6 +205,7 @@ void EditGroupWidget::loadGroup(Group* group, bool create, const QSharedPointer<
             inheritOnlyHttp = parent->resolveCustomDataTriState(BrowserService::OPTION_ONLY_HTTP_AUTH);
             inheritNoHttp = parent->resolveCustomDataTriState(BrowserService::OPTION_NOT_HTTP_AUTH);
             inheritOmitWww = parent->resolveCustomDataTriState(BrowserService::OPTION_OMIT_WWW);
+            inheritRestrictKey = parent->resolveCustomDataString(BrowserService::OPTION_RESTRICT_KEY);
         }
 
         // If the page has not been created at all, some of the elements are null
@@ -219,6 +221,7 @@ void EditGroupWidget::loadGroup(Group* group, bool create, const QSharedPointer<
         addTriStateItems(m_browserUi->browserIntegrationOnlyHttpAuthComboBox, inheritOnlyHttp);
         addTriStateItems(m_browserUi->browserIntegrationNotHttpAuthComboBox, inheritNoHttp);
         addTriStateItems(m_browserUi->browserIntegrationOmitWwwCombobox, inheritOmitWww);
+        addRestrictKeyComboBoxItems(m_db->metadata()->customData()->keys(), inheritRestrictKey);
 
         m_browserUi->browserIntegrationHideEntriesComboBox->setCurrentIndex(
             indexFromTriState(group->resolveCustomDataTriState(BrowserService::OPTION_HIDE_ENTRY, false)));
@@ -230,6 +233,7 @@ void EditGroupWidget::loadGroup(Group* group, bool create, const QSharedPointer<
             indexFromTriState(group->resolveCustomDataTriState(BrowserService::OPTION_NOT_HTTP_AUTH, false)));
         m_browserUi->browserIntegrationOmitWwwCombobox->setCurrentIndex(
             indexFromTriState(group->resolveCustomDataTriState(BrowserService::OPTION_OMIT_WWW, false)));
+        setRestrictKeyComboBoxIndex(group);
     } else if (hasPage(m_browserWidget)) {
         setPageHidden(m_browserWidget, true);
     }
@@ -303,6 +307,7 @@ void EditGroupWidget::apply()
         m_temporaryGroup->setCustomDataTriState(
             BrowserService::OPTION_OMIT_WWW,
             triStateFromIndex(m_browserUi->browserIntegrationOmitWwwCombobox->currentIndex()));
+        setRestrictKeyCustomData(m_temporaryGroup->customData());
     }
 #endif
 
@@ -444,3 +449,58 @@ Group::TriState EditGroupWidget::triStateFromIndex(int index)
         return Group::Inherit;
     }
 }
+
+#ifdef WITH_XC_BROWSER
+void EditGroupWidget::addRestrictKeyComboBoxItems(QStringList const& keyList, QString inheritValue)
+{
+    auto comboBox = m_browserUi->browserIntegrationRestrictKeyCombobox;
+
+    comboBox->clear();
+    comboBox->addItem(
+        tr("Inherit from parent group (%1)").arg(BrowserService::decodeCustomDataRestrictKey(inheritValue)));
+    comboBox->addItem(tr("Disable"));
+
+    comboBox->insertSeparator(2);
+
+    // Add all the browser keys to the combobox
+    for (const QString& key : keyList) {
+        if (key.startsWith(CustomData::BrowserKeyPrefix)) {
+            auto strippedKey = key;
+            strippedKey.remove(CustomData::BrowserKeyPrefix);
+            comboBox->addItem(strippedKey);
+        }
+    }
+}
+
+void EditGroupWidget::setRestrictKeyComboBoxIndex(const Group* group)
+{
+    auto comboBox = m_browserUi->browserIntegrationRestrictKeyCombobox;
+
+    if (!group || !group->customData()->contains(BrowserService::OPTION_RESTRICT_KEY)) {
+        comboBox->setCurrentIndex(0);
+        return;
+    }
+
+    auto key = group->customData()->value(BrowserService::OPTION_RESTRICT_KEY);
+    if (key.isEmpty()) {
+        comboBox->setCurrentIndex(1);
+    } else {
+        comboBox->setCurrentText(key);
+    }
+}
+
+// Set the customData regarding OPTION_RESTRICT_KEY
+void EditGroupWidget::setRestrictKeyCustomData(CustomData* customData)
+{
+    auto comboBox = m_browserUi->browserIntegrationRestrictKeyCombobox;
+    auto key = BrowserService::OPTION_RESTRICT_KEY;
+    auto idx = comboBox->currentIndex();
+    if (idx == 0) {
+        customData->remove(key);
+    } else if (idx == 1) {
+        customData->set(key, QString());
+    } else {
+        customData->set(key, comboBox->currentText());
+    }
+}
+#endif

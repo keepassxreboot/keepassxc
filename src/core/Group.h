@@ -102,6 +102,7 @@ public:
     const CustomData* customData() const;
     Group::TriState resolveCustomDataTriState(const QString& key, bool checkParent = true) const;
     void setCustomDataTriState(const QString& key, const Group::TriState& value);
+    QString resolveCustomDataString(const QString& key, bool checkParent = true) const;
     const Group* previousParentGroup() const;
     QUuid previousParentGroupUuid() const;
 
