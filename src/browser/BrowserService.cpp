@@ -845,8 +845,7 @@ bool BrowserService::updateEntry(const EntryParameters& entryParameters, const Q
                                                 tr("Do you want to update the information in %1 - %2?")
                                                     .arg(QUrl(entryParameters.siteUrl).host(), username),
                                                 MessageBox::Save | MessageBox::Cancel,
-                                                MessageBox::Cancel,
-                                                MessageBox::Raise);
+                                                MessageBox::Cancel);
         }
 
         if (browserSettings()->alwaysAllowUpdate() || dialogResult == MessageBox::Save) {
