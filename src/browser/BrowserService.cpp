@@ -700,27 +700,36 @@ bool BrowserService::updateEntry(const EntryParameters& entryParameters, const Q
         return true;
     }
 
-    // Check if the entry password is a reference. If so, update the original entry instead
-    while (entry->attributes()->isReference(EntryAttributes::PasswordKey)) {
-        const QUuid referenceUuid = entry->attributes()->referenceUuid(EntryAttributes::PasswordKey);
-        if (!referenceUuid.isNull()) {
-            entry = db->rootGroup()->findEntryByUuid(referenceUuid);
-            if (!entry) {
-                return false;
-            }
-        }
-    }
-
     auto username = entry->username();
     if (username.isEmpty()) {
         return false;
     }
 
+    // Get the original entry if the password is a reference
+    Entry* originalEntry = nullptr;
+    while (entry->attributes()->isReference(EntryAttributes::PasswordKey)) {
+        const QUuid referenceUuid = entry->attributes()->referenceUuid(EntryAttributes::PasswordKey);
+        if (!referenceUuid.isNull()) {
+            originalEntry = db->rootGroup()->findEntryByUuid(referenceUuid);
+            break;
+        }
+    }
+
+    const auto isEntryPasswordChanged =
+        !originalEntry && entry->password().compare(entryParameters.password, Qt::CaseSensitive) != 0;
+    const auto isReferencePasswordChanged =
+        originalEntry && originalEntry->password().compare(entryParameters.password, Qt::CaseSensitive) != 0;
+    const auto isPasswordChanged = isEntryPasswordChanged || isReferencePasswordChanged;
+
     bool result = false;
-    if (username.compare(entryParameters.login, Qt::CaseSensitive) != 0
-        || entry->password().compare(entryParameters.password, Qt::CaseSensitive) != 0) {
+    if (username.compare(entryParameters.login, Qt::CaseSensitive) != 0 || isPasswordChanged) {
         MessageBox::Button dialogResult = MessageBox::No;
-        if (!browserSettings()->alwaysAllowUpdate()) {
+
+        if (entry->attributes()->isReference(EntryAttributes::UserNameKey)) {
+            username = !originalEntry ? entry->resolvePlaceholder(entry->username()) : originalEntry->username();
+        }
+
+        if (!browserSettings()->alwaysAllowUpdate() && isEntryPasswordChanged) {
             raiseWindow();
             dialogResult = MessageBox::question(m_currentDatabaseWidget,
                                                 tr("KeePassXC: Update Entry"),
@@ -729,9 +738,30 @@ bool BrowserService::updateEntry(const EntryParameters& entryParameters, const Q
                                                 MessageBox::Save | MessageBox::Cancel,
                                                 MessageBox::Cancel,
                                                 MessageBox::Raise);
+        } else if (isReferencePasswordChanged) {
+            raiseWindow();
+            dialogResult = MessageBox::question(
+                nullptr,
+                tr("KeePassXC: Update Entry"),
+                tr("Do you want to update the information in %1 - %2?\n\nThe selected entry is a "
+                   "reference of \"%3\".\nSelect Overwrite to change password to the current referenced entry.\nSelect "
+                   "Save to change the password of the original entry.")
+                    .arg(QUrl(entryParameters.siteUrl).host(),
+                         username,
+                         originalEntry ? originalEntry->title() : entry->title()),
+                MessageBox::Save | MessageBox::Cancel | MessageBox::Overwrite,
+                MessageBox::Cancel,
+                MessageBox::Raise);
+
+            // Make the save to the original entry
+            if (dialogResult == MessageBox::Save) {
+                entry = originalEntry;
+            }
         }
 
-        if (browserSettings()->alwaysAllowUpdate() || dialogResult == MessageBox::Save) {
+        if (entry
+            && (browserSettings()->alwaysAllowUpdate() || dialogResult == MessageBox::Save
+                || dialogResult == MessageBox::Overwrite)) {
             entry->beginUpdate();
             if (!entry->attributes()->isReference(EntryAttributes::UserNameKey)) {
                 entry->setUsername(entryParameters.login);
