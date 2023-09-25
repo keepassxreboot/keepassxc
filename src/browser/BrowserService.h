@@ -102,6 +102,7 @@ public:
     static const QString OPTION_NOT_HTTP_AUTH;
     static const QString OPTION_OMIT_WWW;
     static const QString ADDITIONAL_URL;
+    static const QString URL_WILDCARD;
 
 signals:
     void requestUnlock();
@@ -130,7 +131,8 @@ private:
         Hidden
     };
 
-    QList<Entry*> searchEntries(const QSharedPointer<Database>& db, const QString& siteUrl, const QString& formUrl);
+    QList<Entry*>
+    searchEntries(const QSharedPointer<Database>& db, const QString& siteUrl, const QString& formUrl = {});
     QList<Entry*> searchEntries(const QString& siteUrl, const QString& formUrl, const StringPairList& keyList);
     QList<Entry*> sortEntries(QList<Entry*>& entries, const QString& siteUrl, const QString& formUrl);
     QList<Entry*> confirmEntries(QList<Entry*>& entriesToConfirm,
@@ -154,6 +156,7 @@ private:
                    const QString& siteUrl,
                    const QString& formUrl,
                    const bool omitWwwSubdomain = false);
+    bool handleURLWithWildcards(const QUrl& entryQUrl, const QString& siteUrl);
     QString getTopLevelDomainFromUrl(const QString& url) const;
     QString baseDomain(const QString& hostname) const;
     QSharedPointer<Database> getDatabase();

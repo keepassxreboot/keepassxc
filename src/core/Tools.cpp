@@ -274,24 +274,28 @@ namespace Tools
     bool checkUrlValid(const QString& urlField)
     {
         if (urlField.isEmpty() || urlField.startsWith("cmd://", Qt::CaseInsensitive)
-            || urlField.startsWith("kdbx://", Qt::CaseInsensitive)
-            || urlField.startsWith("{REF:A", Qt::CaseInsensitive)) {
+            || urlField.startsWith("kdbx://", Qt::CaseInsensitive) || urlField.startsWith("{REF:A", Qt::CaseInsensitive)
+            || (urlField.startsWith("\"") && urlField.endsWith("\""))) {
             return true;
         }
 
+        // Replace wildcards
+        auto tempUrl = urlField;
+        tempUrl.replace("*", "1kpxcwc1");
+
         QUrl url;
         if (urlField.contains("://")) {
-            url = urlField;
+            url = tempUrl;
         } else {
-            url = QUrl::fromUserInput(urlField);
+            url = QUrl::fromUserInput(tempUrl);
         }
 
         if (url.scheme() != "file" && url.host().isEmpty()) {
             return false;
         }
 
-        // Check for illegal characters. Adds also the wildcard * to the list
-        QRegularExpression re("[<>\\^`{|}\\*]");
+        // Check for illegal characters
+        QRegularExpression re("[<>\\^`{|}]");
         auto match = re.match(urlField);
         if (match.hasMatch()) {
             return false;
