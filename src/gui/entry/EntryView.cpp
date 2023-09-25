@@ -219,11 +219,12 @@ void EntryView::displaySearch(const QList<Entry*>& entries)
     m_model->setEntries(entries);
     header()->showSection(EntryModel::ParentGroup);
 
+    setFirstEntryActive();
+
     // Reset sort column to 'Group', overrides DatabaseWidgetStateSync
     m_sortModel->sort(EntryModel::ParentGroup, Qt::AscendingOrder);
     sortByColumn(EntryModel::ParentGroup, Qt::AscendingOrder);
 
-    setFirstEntryActive();
     m_inSearchMode = true;
 }
 

@@ -1082,6 +1082,13 @@ void TestGui::testSearch()
     QCOMPARE(groupView->currentGroup(), m_db->rootGroup());
     QVERIFY(!m_dbWidget->isSearchActive());
 
+    // check if first entry is selected after search
+    QTest::keyClicks(searchTextEdit, "some");
+    QTRY_VERIFY(m_dbWidget->isSearchActive());
+    QTRY_COMPARE(entryView->selectedEntries().length(), 1);
+    QModelIndex index_current = entryView->indexFromEntry(entryView->currentEntry());
+    QTRY_COMPARE(index_current.row(), 0);
+
     // Try to edit the first entry from the search view
     // Refocus back to search edit
     QTest::mouseClick(searchTextEdit, Qt::LeftButton);
