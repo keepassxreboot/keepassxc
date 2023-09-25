@@ -22,7 +22,7 @@
 
 #include "config-keepassx.h"
 #include "gui/Icons.h"
-#include "updatecheck/UpdateChecker.h"
+#include "networking/UpdateChecker.h"
 
 UpdateCheckDialog::UpdateCheckDialog(QWidget* parent)
     : QDialog(parent)

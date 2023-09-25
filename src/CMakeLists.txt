@@ -89,6 +89,19 @@ set(keepassx_SOURCES
         format/OpVaultReaderAttachments.cpp
         format/OpVaultReaderBandEntry.cpp
         format/OpVaultReaderSections.cpp
+        keys/CompositeKey.cpp
+        keys/FileKey.cpp
+        keys/PasswordKey.cpp
+        keys/ChallengeResponseKey.cpp
+        streams/HashedBlockStream.cpp
+        streams/HmacBlockStream.cpp
+        streams/LayeredStream.cpp
+        streams/qtiocompressor.cpp
+        streams/StoreDataStream.cpp
+        streams/SymmetricCipherStream.cpp
+        totp/totp.cpp)
+
+set(gui_SOURCES
         gui/styles/styles.qrc
         gui/styles/StateColorPalette.cpp
         gui/styles/base/phantomcolor.cpp
@@ -182,52 +195,42 @@ set(keepassx_SOURCES
         gui/wizard/NewDatabaseWizardPage.cpp
         gui/wizard/NewDatabaseWizardPageMetaData.cpp
         gui/wizard/NewDatabaseWizardPageEncryption.cpp
-        gui/wizard/NewDatabaseWizardPageDatabaseKey.cpp
-        keys/CompositeKey.cpp
-        keys/FileKey.cpp
-        keys/PasswordKey.cpp
-        keys/ChallengeResponseKey.cpp
-        streams/HashedBlockStream.cpp
-        streams/HmacBlockStream.cpp
-        streams/LayeredStream.cpp
-        streams/qtiocompressor.cpp
-        streams/StoreDataStream.cpp
-        streams/SymmetricCipherStream.cpp
-        totp/totp.cpp)
+        gui/wizard/NewDatabaseWizardPageDatabaseKey.cpp)
+
 if(APPLE)
-    set(keepassx_SOURCES
-            ${keepassx_SOURCES}
-            core/MacPasteboard.cpp
+    set(gui_SOURCES
+            ${gui_SOURCES}
+            gui/osutils/macutils/MacPasteboard.cpp
             gui/osutils/macutils/MacUtils.cpp
             gui/osutils/macutils/ScreenLockListenerMac.cpp
             gui/osutils/macutils/AppKitImpl.mm
             gui/osutils/macutils/AppKit.h)
 endif()
 if(UNIX AND NOT APPLE)
-    set(keepassx_SOURCES
-            ${keepassx_SOURCES}
+    set(gui_SOURCES
+            ${gui_SOURCES}
             gui/osutils/nixutils/ScreenLockListenerDBus.cpp
             gui/osutils/nixutils/NixUtils.cpp)
     if(WITH_XC_X11)
-        list(APPEND keepassx_SOURCES
+        list(APPEND gui_SOURCES
             gui/osutils/nixutils/X11Funcs.cpp)
     endif()
-    qt5_add_dbus_adaptor(keepassx_SOURCES
+    qt5_add_dbus_adaptor(gui_SOURCES
             gui/org.keepassxc.KeePassXC.MainWindow.xml
             gui/MainWindow.h
             MainWindow)
 endif()
 if(WIN32)
-    set(keepassx_SOURCES
-            ${keepassx_SOURCES}
+    set(gui_SOURCES
+            ${gui_SOURCES}
             gui/osutils/winutils/ScreenLockListenerWin.cpp
             gui/osutils/winutils/WinUtils.cpp)
     if (MSVC)
-        list(APPEND keepassx_SOURCES winhello/WindowsHello.cpp)
+        list(APPEND gui_SOURCES winhello/WindowsHello.cpp)
     endif()
 endif()
 
-set(keepassx_SOURCES ${keepassx_SOURCES}
+set(gui_SOURCES ${gui_SOURCES}
         ../share/icons/icons.qrc
         ../share/wizard/wizard.qrc)
 
@@ -248,10 +251,10 @@ add_subdirectory(browser)
 add_subdirectory(proxy)
 if(WITH_XC_BROWSER)
     set(keepassxcbrowser_LIB keepassxcbrowser)
-    set(keepassx_SOURCES ${keepassx_SOURCES} gui/dbsettings/DatabaseSettingsWidgetBrowser.cpp)
-    set(keepassx_SOURCES ${keepassx_SOURCES} gui/entry/EntryURLModel.cpp)
-    set(keepassx_SOURCES ${keepassx_SOURCES} gui/reports/ReportsWidgetBrowserStatistics.cpp)
-    set(keepassx_SOURCES ${keepassx_SOURCES} gui/reports/ReportsPageBrowserStatistics.cpp)
+    set(gui_SOURCES ${gui_SOURCES} gui/dbsettings/DatabaseSettingsWidgetBrowser.cpp)
+    set(gui_SOURCES ${gui_SOURCES} gui/entry/EntryURLModel.cpp)
+    set(gui_SOURCES ${gui_SOURCES} gui/reports/ReportsWidgetBrowserStatistics.cpp)
+    set(gui_SOURCES ${gui_SOURCES} gui/reports/ReportsPageBrowserStatistics.cpp)
 endif()
 
 add_subdirectory(autotype)
@@ -277,7 +280,6 @@ endif()
 add_subdirectory(thirdparty)
 
 set(autotype_SOURCES
-        core/Tools.cpp
         autotype/AutoType.cpp
         autotype/AutoTypeAction.cpp
         autotype/AutoTypeMatchModel.cpp
@@ -305,13 +307,13 @@ else()
 endif()
 
 if(WITH_XC_NETWORKING)
-    list(APPEND keepassx_SOURCES
-            core/HibpDownloader.cpp
-            core/NetworkManager.cpp
+    list(APPEND gui_SOURCES
+            networking/HibpDownloader.cpp
+            networking/NetworkManager.cpp
+            networking/UpdateChecker.cpp
             gui/UpdateCheckDialog.cpp
             gui/IconDownloader.cpp
-            gui/IconDownloaderDialog.cpp
-            updatecheck/UpdateChecker.cpp)
+            gui/IconDownloaderDialog.cpp)
 endif()
 
 if(APPLE)
@@ -328,51 +330,61 @@ target_link_libraries(autotype Qt5::Core Qt5::Widgets)
 
 add_library(keepassx_core STATIC ${keepassx_SOURCES})
 
-set_target_properties(keepassx_core PROPERTIES COMPILE_DEFINITIONS KEEPASSX_BUILDING_CORE)
-target_link_libraries(keepassx_core
-        autotype
-        ${keepassxcbrowser_LIB}
+set(gui_SOURCES
+    ${gui_SOURCES}
+    ${keepassx_SOURCES})
+
+set(keepassx_core_LIBRARIES
         ${qrcode_LIB}
-        ${fdosecrets_LIB}
         Qt5::Core
         Qt5::Concurrent
-        Qt5::Network
-        Qt5::Widgets
         ${BOTAN_LIBRARIES}
         ${PCSC_LIBRARIES}
         ${ZXCVBN_LIBRARIES}
         ${ZLIB_LIBRARIES}
         ${ARGON2_LIBRARIES}
-        ${thirdparty_LIBRARIES}
-	)
+        ${thirdparty_LIBRARIES})
+
+add_library(keepassx_gui STATIC ${gui_SOURCES})
+target_link_libraries(keepassx_gui
+        ${keepassx_core_LIBRARIES}
+        Qt5::Network
+        Qt5::Widgets
+        autotype
+        ${keepassxcbrowser_LIB}
+        ${fdosecrets_LIB}
+  )
+
+set_target_properties(keepassx_core PROPERTIES COMPILE_DEFINITIONS KEEPASSX_BUILDING_CORE)
+target_link_libraries(keepassx_core ${keepassx_core_LIBRARIES})
 
 if(WITH_XC_SSHAGENT)
-  target_link_libraries(keepassx_core sshagent)
+  target_link_libraries(keepassx_gui sshagent)
 endif()
 if(WITH_XC_KEESHARE)
-  target_link_libraries(keepassx_core keeshare)
+  target_link_libraries(keepassx_gui keeshare)
 endif()
 
 if(APPLE)
-    target_link_libraries(keepassx_core "-framework Foundation -framework AppKit -framework Carbon -framework Security -framework LocalAuthentication")
+    target_link_libraries(keepassx_gui "-framework Foundation -framework AppKit -framework Carbon -framework Security -framework LocalAuthentication")
     if(Qt5MacExtras_FOUND)
-        target_link_libraries(keepassx_core Qt5::MacExtras)
+        target_link_libraries(keepassx_gui Qt5::MacExtras)
     endif()
 endif()
 if(HAIKU)
-    target_link_libraries(keepassx_core network)
+    target_link_libraries(keepassx_gui network)
 endif()
 if(UNIX AND NOT APPLE)
-    target_link_libraries(keepassx_core Qt5::DBus)
+    target_link_libraries(keepassx_gui Qt5::DBus)
     if(WITH_XC_X11)
-        target_link_libraries(keepassx_core Qt5::X11Extras X11)
+        target_link_libraries(keepassx_gui Qt5::X11Extras X11)
     endif()
     include_directories(${Qt5Gui_PRIVATE_INCLUDE_DIRS})
 endif()
 if(WIN32)
-    target_link_libraries(keepassx_core Wtsapi32.lib Ws2_32.lib)
+    target_link_libraries(keepassx_gui Wtsapi32.lib Ws2_32.lib)
     if (MSVC)
-        target_link_libraries(keepassx_core WindowsApp.lib)
+        target_link_libraries(keepassx_gui WindowsApp.lib)
     endif()
 endif()
 
@@ -389,7 +401,7 @@ if(WIN32)
 endif()
 
 add_executable(${PROGNAME} WIN32 ${keepassx_SOURCES_MAINEXE} ${WIN32_ProductVersionFiles})
-target_link_libraries(${PROGNAME} keepassx_core)
+target_link_libraries(${PROGNAME} keepassx_gui)
 
 set_target_properties(${PROGNAME} PROPERTIES ENABLE_EXPORTS ON)
 
