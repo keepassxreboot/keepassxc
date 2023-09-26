@@ -196,11 +196,12 @@ public slots:
     void performAutoTypePassword();
     void performAutoTypePasswordEnter();
     void performAutoTypeTOTP();
-    void openUrl();
+    void openUrl(bool privateMode = false);
+    void openUrlInPrivateMode();
     void downloadSelectedFavicons();
     void downloadAllFavicons();
     void downloadFaviconInBackground(Entry* entry);
-    void openUrlForEntry(Entry* entry);
+    void openUrlForEntry(Entry* entry, bool privateMode = false);
     void createGroup();
     void cloneGroup();
     void deleteGroup();
@@ -273,6 +274,8 @@ private:
     void openDatabaseFromEntry(const Entry* entry, bool inBackground = true);
     void performIconDownloads(const QList<Entry*>& entries, bool force = false, bool downloadInBackground = false);
     bool performSave(QString& errorMessage, const QString& fileName = {});
+    void openUrlInPrivateWindow(const QUrl& url);
+    QString getPrivateModeArg(const QString& applicationPath);
 
     QSharedPointer<Database> m_db;
 

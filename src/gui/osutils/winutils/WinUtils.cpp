@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
+ * Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -140,6 +140,34 @@ bool WinUtils::isHighContrastMode() const
 {
     QSettings settings(R"(HKEY_CURRENT_USER\Control Panel\Accessibility\HighContrast)", QSettings::NativeFormat);
     return (settings.value("Flags").toInt() & 1u) != 0;
+}
+
+QString WinUtils::getDefaultApplicationForUrl(const QUrl& url)
+{
+    // Get the associated program ID from scheme
+    auto registryPath =
+        QString("HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\Shell\\Associations\\UrlAssociations\\%1\\UserChoice")
+            .arg(url.scheme());
+    QSettings defaultBrowserRegistry(registryPath, QSettings::NativeFormat);
+    auto defaultBrowser = defaultBrowserRegistry.value("ProgId").toString();
+    if (defaultBrowser.isEmpty()) {
+        return {};
+    }
+
+    // Get the executable path from program ID
+    registryPath = QString("HKEY_LOCAL_MACHINE\\SOFTWARE\\Classes\\%1\\shell\\open\\command").arg(defaultBrowser);
+    QSettings executableRegistry(registryPath, QSettings::NativeFormat);
+    auto fullPath = executableRegistry.value("Default").toString();
+    if (fullPath.isEmpty()) {
+        return {};
+    }
+
+    auto splitPath = fullPath.split('"', Qt::SkipEmptyParts);
+    if (splitPath.isEmpty()) {
+        return {};
+    }
+
+    return splitPath.first();
 }
 
 bool WinUtils::registerGlobalShortcut(const QString& name, Qt::Key key, Qt::KeyboardModifiers modifiers, QString* error)

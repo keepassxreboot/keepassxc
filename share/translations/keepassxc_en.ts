@@ -5482,6 +5482,10 @@ We recommend you use the AppImage available on our downloads page.</source>
         <source>Allow Screen Capture</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Open URL (&amp;Private)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ManageDatabase</name>

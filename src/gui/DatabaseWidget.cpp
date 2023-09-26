@@ -30,6 +30,7 @@
 #include <QSplitter>
 #include <QTextDocumentFragment>
 #include <QTextEdit>
+#include <QUrl>
 #include <core/Tools.h>
 
 #include "autotype/AutoType.h"
@@ -51,6 +52,7 @@
 #include "gui/entry/EntryView.h"
 #include "gui/group/EditGroupWidget.h"
 #include "gui/group/GroupView.h"
+#include "gui/osutils/OSUtils.h"
 #include "gui/reports/ReportsDialog.h"
 #include "gui/tag/TagView.h"
 #include "gui/widgets/ElidedLabel.h"
@@ -198,7 +200,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     connect(m_groupSplitter, SIGNAL(splitterMoved(int,int)), SIGNAL(splitterSizesChanged()));
     connect(m_previewSplitter, SIGNAL(splitterMoved(int,int)), SIGNAL(splitterSizesChanged()));
     connect(this, SIGNAL(currentModeChanged(DatabaseWidget::Mode)), m_previewView, SLOT(setDatabaseMode(DatabaseWidget::Mode)));
-    connect(m_previewView, SIGNAL(entryUrlActivated(Entry*)), SLOT(openUrlForEntry(Entry*)));
+    connect(m_previewView, SIGNAL(entryUrlActivated(Entry*,bool)), SLOT(openUrlForEntry(Entry*,bool)));
     connect(m_entryView, SIGNAL(viewStateChanged()), SIGNAL(entryViewStateChanged()));
     connect(m_groupView, SIGNAL(groupSelectionChanged()), SLOT(onGroupChanged()));
     connect(m_groupView, &GroupView::groupFocused, this, [this] { m_previewView->setGroup(currentGroup()); });
@@ -824,12 +826,17 @@ void DatabaseWidget::performAutoTypeTOTP()
     performAutoType(QStringLiteral("{TOTP}"));
 }
 
-void DatabaseWidget::openUrl()
+void DatabaseWidget::openUrl(bool privateMode)
 {
     auto currentEntry = currentSelectedEntry();
     if (currentEntry) {
-        openUrlForEntry(currentEntry);
+        openUrlForEntry(currentEntry, privateMode);
     }
+}
+
+void DatabaseWidget::openUrlInPrivateMode()
+{
+    openUrl(true);
 }
 
 void DatabaseWidget::downloadSelectedFavicons()
@@ -882,7 +889,7 @@ void DatabaseWidget::performIconDownloads(const QList<Entry*>& entries, bool for
 #endif
 }
 
-void DatabaseWidget::openUrlForEntry(Entry* entry)
+void DatabaseWidget::openUrlForEntry(Entry* entry, bool privateMode)
 {
     Q_ASSERT(entry);
     if (!entry) {
@@ -938,13 +945,42 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
     } else {
         QUrl url = QUrl::fromUserInput(entry->resolveMultiplePlaceholders(entry->url()));
         if (!url.isEmpty()) {
-            QDesktopServices::openUrl(url);
+            if (privateMode) {
+                openUrlInPrivateWindow(url);
+            } else {
+                QDesktopServices::openUrl(url);
+            }
 
             if (config()->get(Config::MinimizeOnOpenUrl).toBool()) {
                 getMainWindow()->minimizeOrHide();
             }
         }
     }
+}
+
+void DatabaseWidget::openUrlInPrivateWindow(const QUrl& url)
+{
+    const auto applicationPath = osUtils->getDefaultApplicationForUrl(url);
+    if (applicationPath.isEmpty()) {
+        return;
+    }
+
+    const auto privateModeArg = getPrivateModeArg(applicationPath);
+#if defined(Q_OS_MAC)
+    QStringList args{"-n", applicationPath, "--args", privateModeArg, url.toString()};
+    QProcess::startDetached("open", args);
+#else
+    QStringList args{privateModeArg, url.toString()};
+    QProcess::startDetached(applicationPath, args);
+#endif
+    getMainWindow()->lower();
+}
+
+// Returns command line argument for private mode for selected browser
+QString DatabaseWidget::getPrivateModeArg(const QString& applicationPath)
+{
+    const auto path = applicationPath.toLower();
+    return path.contains("fox") || path.contains("librewolf") ? "-private-window" : "-incognito";
 }
 
 Entry* DatabaseWidget::currentSelectedEntry()

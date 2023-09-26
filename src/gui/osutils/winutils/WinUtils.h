@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
+ * Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -59,6 +59,8 @@ public:
 
     bool canPreventScreenCapture() const override;
     bool setPreventScreenCapture(QWindow* window, bool prevent) const override;
+
+    QString getDefaultApplicationForUrl(const QUrl& url) override;
 
 protected:
     explicit WinUtils(QObject* parent = nullptr);

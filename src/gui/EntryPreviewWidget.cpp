@@ -566,7 +566,7 @@ void EntryPreviewWidget::updateTabIndexes()
 void EntryPreviewWidget::openEntryUrl()
 {
     if (m_currentEntry) {
-        emit entryUrlActivated(m_currentEntry);
+        emit entryUrlActivated(m_currentEntry, false);
     }
 }
 

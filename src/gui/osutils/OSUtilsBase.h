@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
+ * Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 #define KEEPASSXC_OSUTILSBASE_H
 
 #include <QObject>
+#include <QUrl>
 
 class QWindow;
 
@@ -66,6 +67,8 @@ public:
 
     virtual bool canPreventScreenCapture() const = 0;
     virtual bool setPreventScreenCapture(QWindow* window, bool allow) const;
+
+    virtual QString getDefaultApplicationForUrl(const QUrl& url) = 0;
 
 signals:
     void globalShortcutTriggered(const QString& name, const QString& search = {});

@@ -1,6 +1,6 @@
 /*
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2016 Lennart Glauer <mail@lennart-glauer.de>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,26 +17,26 @@
  */
 
 #import "AppKitImpl.h"
-#import <QWindow>
 #import <Cocoa/Cocoa.h>
+#import <QWindow>
 
 @implementation AppKitImpl
 
-- (id) initWithObject:(AppKit*)appkit
+- (id) initWithObject:(AppKit*) appkit
 {
     self = [super init];
 
     if (self) {
         m_appkit = appkit;
         [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self
-                                                           selector:@selector(didDeactivateApplicationObserver:)
-                                                               name:NSWorkspaceDidDeactivateApplicationNotification
-                                                             object:nil];
-    
+                                                               selector:@selector(didDeactivateApplicationObserver:)
+                                                                   name:NSWorkspaceDidDeactivateApplicationNotification
+                                                                 object:nil];
+
         [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self
-                                                            selector:@selector(userSwitchHandler:)
-                                                                name:NSWorkspaceSessionDidResignActiveNotification
-                                                                object:nil];
+                                                               selector:@selector(userSwitchHandler:)
+                                                                   name:NSWorkspaceSessionDidResignActiveNotification
+                                                                 object:nil];
 
         [NSApp addObserver:self forKeyPath:@"effectiveAppearance" options:NSKeyValueObservingOptionNew context:nil];
 
@@ -46,7 +46,6 @@
                                                             selector:@selector(interfaceThemeChanged:)
                                                                 name:@"AppleColorPreferencesChangedNotification"
                                                               object:nil];
-
     }
     return self;
 }
@@ -64,9 +63,9 @@
     }
 }
 
-- (void) observeValueForKeyPath:(NSString *)keyPath
+- (void) observeValueForKeyPath:(NSString *) keyPath
                       ofObject:(id)object
-                        change:(NSDictionary<NSKeyValueChangeKey,id> *)change
+                        change:(NSDictionary<NSKeyValueChangeKey, id> *)change
                        context:(void *)context
 {
     Q_UNUSED(object)
@@ -79,17 +78,16 @@
                 emit m_appkit->interfaceThemeChanged();
             };
 
-            if(@available(macOS 11.0, *)) {
-                // Not sure why exactly this call is needed, but Apple sample code uses it so it's best to use it here too
+            if (@available(macOS 11.0, *)) {
+                // Not sure why exactly this call is needed, but Apple sample code uses it so it's best to use it here
+                // too
                 [NSApp.effectiveAppearance performAsCurrentDrawingAppearance:emitBlock];
-            }
-            else {
+            } else {
                 emitBlock();
             }
         }
     }
 }
-
 
 //
 // Get process id of frontmost application (-> keyboard input)
@@ -142,7 +140,6 @@
     return [NSApp.effectiveAppearance.name isEqualToString:NSAppearanceNameDarkAqua];
 }
 
-
 //
 // Get global menu bar theme state
 //
@@ -166,8 +163,7 @@
 //
 - (void) userSwitchHandler:(NSNotification*) notification
 {
-    if ([[notification name] isEqualToString:NSWorkspaceSessionDidResignActiveNotification] && m_appkit)
-    {
+    if ([[notification name] isEqualToString:NSWorkspaceSessionDidResignActiveNotification] && m_appkit) {
         emit m_appkit->lockDatabases();
     }
 }
@@ -195,9 +191,15 @@
     if (@available(macOS 10.15, *)) {
         // Request screen recording permission on macOS 10.15+
         // This is necessary to get the current window title
-        CGDisplayStreamRef stream = CGDisplayStreamCreate(CGMainDisplayID(), 1, 1, kCVPixelFormatType_32BGRA, nil,
-                                                          ^(CGDisplayStreamFrameStatus status, uint64_t displayTime, 
-                                                                  IOSurfaceRef frameSurface, CGDisplayStreamUpdateRef updateRef) {
+        CGDisplayStreamRef stream = CGDisplayStreamCreate(CGMainDisplayID(),
+                                                          1,
+                                                          1,
+                                                          kCVPixelFormatType_32BGRA,
+                                                          nil,
+                                                          ^(CGDisplayStreamFrameStatus status,
+                                                            uint64_t displayTime,
+                                                            IOSurfaceRef frameSurface,
+                                                            CGDisplayStreamUpdateRef updateRef) {
                                                               Q_UNUSED(status);
                                                               Q_UNUSED(displayTime);
                                                               Q_UNUSED(frameSurface);
@@ -224,7 +226,16 @@
 
 - (void) setWindowSecurity:(NSWindow*) window state:(bool) state
 {
-    [window setSharingType: state ? NSWindowSharingNone : NSWindowSharingReadOnly];
+    [window setSharingType:state ? NSWindowSharingNone : NSWindowSharingReadOnly];
+}
+
+//
+// Returns default application assigned to URLs
+//
+- (const char*) getDefaultApplicationForUrl:(NSURL*) url
+{
+    NSURL* app = [[NSWorkspace sharedWorkspace] URLForApplicationToOpenURL:url];
+    return [app fileSystemRepresentation];
 }
 
 @end
@@ -287,7 +298,6 @@ bool AppKit::isStatusBarDark()
     return [static_cast<id>(self) isStatusBarDark];
 }
 
-
 bool AppKit::enableAccessibility()
 {
     return [static_cast<id>(self) enableAccessibility];
@@ -307,4 +317,10 @@ void AppKit::setWindowSecurity(QWindow* window, bool state)
 {
     auto view = reinterpret_cast<NSView*>(window->winId());
     [static_cast<id>(self) setWindowSecurity:view.window state:state];
+}
+
+QString AppKit::getDefaultApplicationForUrl(const QUrl& url)
+{
+    auto nsUrl = url.toNSURL();
+    return [static_cast<id>(self) getDefaultApplicationForUrl:nsUrl];
 }

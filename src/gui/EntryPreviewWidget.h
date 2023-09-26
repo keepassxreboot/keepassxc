@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -44,7 +44,7 @@ public slots:
     void clear();
 
 signals:
-    void entryUrlActivated(Entry* entry);
+    void entryUrlActivated(Entry* entry, bool privateMode);
 
 protected:
     bool eventFilter(QObject* object, QEvent* event) override;
