@@ -82,7 +82,7 @@ private:
         PreferLight
     };
     ColorschemePref m_systemColorschemePref = ColorschemePref::PreferNone;
-    bool m_systemColorschemePrefExists;
+    bool m_systemColorschemePrefExists = false;
 
     void setColorScheme(QDBusVariant value);
 
