@@ -9,8 +9,9 @@ QToolTip {
 
 DatabaseWidget #SearchBanner, DatabaseWidget #KeeShareBanner {
     font-weight: bold;
-    background-color: rgb(94, 161, 14);
-    border: 1px solid rgb(190, 190, 190);
+    background-color: palette(highlight);
+    color: palette(highlighted-text);
+    border: 1px solid palette(dark);
     padding: 2px;
 }
 
