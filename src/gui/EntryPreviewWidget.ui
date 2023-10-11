@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>530</width>
-    <height>257</height>
+    <width>554</width>
+    <height>313</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -236,6 +236,38 @@
                  </widget>
                 </item>
                 <item>
+                 <spacer name="horizontalSpacer">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeType">
+                   <enum>QSizePolicy::Fixed</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>5</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QToolButton" name="toggleIndexButton">
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>14</width>
+                    <height>14</height>
+                   </size>
+                  </property>
+                  <property name="checkable">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+                <item>
                  <widget class="QScrollArea" name="passwordScrollArea">
                   <property name="frameShape">
                    <enum>QFrame::NoFrame</enum>
@@ -257,8 +289,8 @@
                     <rect>
                      <x>0</x>
                      <y>0</y>
-                     <width>157</width>
-                     <height>63</height>
+                     <width>99</width>
+                     <height>72</height>
                     </rect>
                    </property>
                    <layout class="QHBoxLayout" name="horizontalLayout_8">
