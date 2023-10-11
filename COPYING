@@ -131,6 +131,11 @@ Copyright: none
 License: CC0
 Comment: Taken from https://github.com/paomedia/small-n-flat
 
+Files: share/icons/application/scalable/actions/masked-password-on.svg
+       share/icons/application/scalable/actions/masked-password-off.svg
+Copyright: 2023 Przemyslaw Zygmunt <p.zygmunt@acsoftware.pl>
+License: MIT
+
 Files: share/icons/badges/2_Expired.svg
        share/icons/database/C37_KPercentage.svg
        share/icons/database/C45_Cancel.svg

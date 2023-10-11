@@ -53,6 +53,7 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
     m_ui->entryCloseButton->setIcon(icons()->icon("dialog-close"));
     m_ui->toggleUsernameButton->setIcon(icons()->onOffIcon("password-show", true));
     m_ui->togglePasswordButton->setIcon(icons()->onOffIcon("password-show", true));
+    m_ui->toggleIndexButton->setIcon(icons()->onOffIcon("masked-password", true));
     m_ui->toggleEntryNotesButton->setIcon(icons()->onOffIcon("password-show", true));
     m_ui->toggleGroupNotesButton->setIcon(icons()->onOffIcon("password-show", true));
 
@@ -75,6 +76,7 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
     connect(m_ui->entryCloseButton, SIGNAL(clicked()), SLOT(hide()));
     connect(m_ui->toggleUsernameButton, SIGNAL(clicked(bool)), SLOT(setUsernameVisible(bool)));
     connect(m_ui->togglePasswordButton, SIGNAL(clicked(bool)), SLOT(setPasswordVisible(bool)));
+    connect(m_ui->toggleIndexButton, SIGNAL(clicked(bool)), SLOT(setIndexVisible(bool)));
     connect(m_ui->toggleEntryNotesButton, SIGNAL(clicked(bool)), SLOT(setEntryNotesVisible(bool)));
     connect(m_ui->toggleGroupNotesButton, SIGNAL(clicked(bool)), SLOT(setGroupNotesVisible(bool)));
     connect(m_ui->entryTabWidget, SIGNAL(tabBarClicked(int)), SLOT(updateTabIndexes()), Qt::QueuedConnection);
@@ -289,17 +291,48 @@ void EntryPreviewWidget::setPasswordVisible(bool state)
 
     const QString password = m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->password());
     if (state) {
-        if (config()->get(Config::GUI_ColorPasswords).toBool()) {
+        const bool indexButtonIsChecked = m_ui->toggleIndexButton->isChecked();
+        const bool colorPasswords = config()->get(Config::GUI_ColorPasswords).toBool();
+
+        if (colorPasswords || indexButtonIsChecked) {
             // Show the password in color
             // clang-format off
             QString html;
             const auto dark = kpxcApp->isDarkTheme();
-            for (const auto c : password) {
-                const auto color = c.isDigit()   ? (dark ? "lightblue" : "blue")
-                                   : c.isUpper() ? (dark ? "lightgreen" : "darkgreen")
-                                   : c.isLower() ? (dark ? "yellow" : "red")
-                                                 : (dark ? "white" : "black");
-                html += "<span style=\"color: " + QString(color) + ";\">" + QString(c).toHtmlEscaped() + "</span>";
+            for (int i = 0; i < password.length(); ++i) {
+            	auto c = password.at(i);
+
+                QString pwdBgColor;
+                QString pwdColor;
+                QString space;
+
+                if (colorPasswords) {
+                	pwdColor = "color: " + QString(pwdColor);
+                    pwdColor += c.isDigit() ? (dark ? "lightblue" : "blue")
+                              : c.isUpper() ? (dark ? "lightgreen" : "darkgreen")
+                              : c.isLower() ? (dark ? "yellow" : "red")
+                              : (dark ? "white" : "black");
+                    pwdColor += ";";
+                }
+
+                if (indexButtonIsChecked) {
+                	QString indexColor;
+                	space = " ";
+
+                	pwdBgColor = "background-color: ";
+                	if (dark) {
+                		pwdBgColor += "#6b4100";
+                		indexColor = "#636161";
+                	} else {
+                		pwdBgColor += "#fca202";
+                		indexColor = "#cecece";
+                	}
+                	pwdBgColor += ";";
+
+                	html += "<span style=\"color: " + indexColor + ";\">" + QString::number(i + 1) + "</span>";
+                }
+
+                html += "<span style=\"" + pwdBgColor + pwdColor + "\">" + space + QString(c).toHtmlEscaped() + space + "</span>";
             }
             // clang-format on
             m_ui->entryPasswordLabel->setText(html);
@@ -317,6 +350,13 @@ void EntryPreviewWidget::setPasswordVisible(bool state)
                                                + m_ui->passwordScrollArea->horizontalScrollBar()->sizeHint().height());
 
     m_ui->togglePasswordButton->setIcon(icons()->onOffIcon("password-show", state));
+    m_ui->togglePasswordButton->setChecked(state);
+}
+
+void EntryPreviewWidget::setIndexVisible(bool state)
+{
+    setPasswordVisible(m_ui->togglePasswordButton->isChecked());
+    m_ui->toggleIndexButton->setIcon(icons()->onOffIcon("masked-password", state));
 }
 
 void EntryPreviewWidget::setEntryNotesVisible(bool state)
@@ -365,12 +405,15 @@ void EntryPreviewWidget::updateEntryGeneralTab()
         setPasswordVisible(false);
         // Show the password toggle button if there are dots in the label
         m_ui->togglePasswordButton->setVisible(!m_currentEntry->password().isEmpty());
-        m_ui->togglePasswordButton->setChecked(false);
     } else {
         // Show password
         setPasswordVisible(true);
         m_ui->togglePasswordButton->setVisible(false);
     }
+
+    m_ui->toggleIndexButton->setVisible(!m_currentEntry->password().isEmpty());
+    m_ui->toggleIndexButton->setChecked(false);
+    setIndexVisible(false);
 
     auto hasNotes = !m_currentEntry->notes().isEmpty();
     auto hideNotes = config()->get(Config::Security_HideNotes).toBool();
