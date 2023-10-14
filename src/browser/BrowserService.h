@@ -82,7 +82,6 @@ public:
     QString getCurrentTotp(const QString& uuid);
     void showPasswordGenerator(const KeyPairMessage& keyPairMessage);
     bool isPasswordGeneratorRequested() const;
-    bool isUrlIdentical(const QString& first, const QString& second) const;
 
     void addEntry(const EntryParameters& entryParameters,
                   const QString& group,
@@ -146,7 +145,6 @@ private:
     Group* getDefaultEntryGroup(const QSharedPointer<Database>& selectedDb = {});
     int sortPriority(const QStringList& urls, const QString& siteUrl, const QString& formUrl);
     bool schemeFound(const QString& url);
-    bool isIpAddress(const QString& host) const;
     bool removeFirstDomain(QString& hostname);
     bool
     shouldIncludeEntry(Entry* entry, const QString& url, const QString& submitUrl, const bool omitWwwSubdomain = false);
@@ -154,8 +152,6 @@ private:
                    const QString& siteUrl,
                    const QString& formUrl,
                    const bool omitWwwSubdomain = false);
-    QString getTopLevelDomainFromUrl(const QString& url) const;
-    QString baseDomain(const QString& hostname) const;
     QSharedPointer<Database> getDatabase();
     QSharedPointer<Database> selectedDatabase();
     QString getDatabaseRootUuid();
