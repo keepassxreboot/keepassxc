@@ -144,54 +144,6 @@ void TestBrowser::testBuildResponse()
     QCOMPARE(firstArr["test"].toBool(), true);
 }
 
-/**
- * Tests for BrowserService
- */
-void TestBrowser::testTopLevelDomain()
-{
-    QString url1 = "https://another.example.co.uk";
-    QString url2 = "https://www.example.com";
-    QString url3 = "http://test.net";
-    QString url4 = "http://so.many.subdomains.co.jp";
-    QString url5 = "https://192.168.0.1";
-    QString url6 = "https://192.168.0.1:8000";
-
-    QString res1 = m_browserService->getTopLevelDomainFromUrl(url1);
-    QString res2 = m_browserService->getTopLevelDomainFromUrl(url2);
-    QString res3 = m_browserService->getTopLevelDomainFromUrl(url3);
-    QString res4 = m_browserService->getTopLevelDomainFromUrl(url4);
-    QString res5 = m_browserService->getTopLevelDomainFromUrl(url5);
-    QString res6 = m_browserService->getTopLevelDomainFromUrl(url6);
-
-    QCOMPARE(res1, QString("example.co.uk"));
-    QCOMPARE(res2, QString("example.com"));
-    QCOMPARE(res3, QString("test.net"));
-    QCOMPARE(res4, QString("subdomains.co.jp"));
-    QCOMPARE(res5, QString("192.168.0.1"));
-    QCOMPARE(res6, QString("192.168.0.1"));
-}
-
-void TestBrowser::testIsIpAddress()
-{
-    auto host1 = "example.com"; // Not valid
-    auto host2 = "192.168.0.1";
-    auto host3 = "278.21.2.0"; // Not valid
-    auto host4 = "2001:0db8:85a3:0000:0000:8a2e:0370:7334";
-    auto host5 = "2001:db8:0:1:1:1:1:1";
-    auto host6 = "fe80::1ff:fe23:4567:890a";
-    auto host7 = "2001:20::1";
-    auto host8 = "2001:0db8:85y3:0000:0000:8a2e:0370:7334"; // Not valid
-
-    QVERIFY(!m_browserService->isIpAddress(host1));
-    QVERIFY(m_browserService->isIpAddress(host2));
-    QVERIFY(!m_browserService->isIpAddress(host3));
-    QVERIFY(m_browserService->isIpAddress(host4));
-    QVERIFY(m_browserService->isIpAddress(host5));
-    QVERIFY(m_browserService->isIpAddress(host6));
-    QVERIFY(m_browserService->isIpAddress(host7));
-    QVERIFY(!m_browserService->isIpAddress(host8));
-}
-
 void TestBrowser::testSortPriority()
 {
     QFETCH(QString, entryUrl);
@@ -583,26 +535,6 @@ QList<Entry*> TestBrowser::createEntries(QStringList& urls, Group* root) const
 
     return entries;
 }
-void TestBrowser::testValidURLs()
-{
-    QHash<QString, bool> urls;
-    urls["https://github.com/login"] = true;
-    urls["https:///github.com/"] = false;
-    urls["http://github.com/**//*"] = false;
-    urls["http://*.github.com/login"] = false;
-    urls["//github.com"] = true;
-    urls["github.com/{}<>"] = false;
-    urls["http:/example.com"] = false;
-    urls["cmd://C:/Toolchains/msys2/usr/bin/mintty \"ssh jon@192.168.0.1:22\""] = true;
-    urls["file:///Users/testUser/Code/test.html"] = true;
-    urls["{REF:A@I:46C9B1FFBD4ABC4BBB260C6190BAD20C} "] = true;
-
-    QHashIterator<QString, bool> i(urls);
-    while (i.hasNext()) {
-        i.next();
-        QCOMPARE(Tools::checkUrlValid(i.key()), i.value());
-    }
-}
 
 void TestBrowser::testBestMatchingCredentials()
 {
@@ -740,20 +672,4 @@ void TestBrowser::testBestMatchingWithAdditionalURLs()
         result, "https://test.github.com/anotherpage", "https://test.github.com/anotherpage");
     QCOMPARE(sorted.length(), 1);
     QCOMPARE(sorted[0]->url(), urls[0]);
-}
-
-void TestBrowser::testIsUrlIdentical()
-{
-    QVERIFY(browserService()->isUrlIdentical("https://example.com", "https://example.com"));
-    QVERIFY(browserService()->isUrlIdentical("https://example.com", "  https://example.com  "));
-    QVERIFY(!browserService()->isUrlIdentical("https://example.com", "https://example2.com"));
-    QVERIFY(!browserService()->isUrlIdentical("https://example.com/", "https://example.com/#login"));
-    QVERIFY(browserService()->isUrlIdentical("https://example.com", "https://example.com/"));
-    QVERIFY(browserService()->isUrlIdentical("https://example.com/", "https://example.com"));
-    QVERIFY(browserService()->isUrlIdentical("https://example.com/  ", "  https://example.com"));
-    QVERIFY(!browserService()->isUrlIdentical("https://example.com/", "  example.com"));
-    QVERIFY(browserService()->isUrlIdentical("https://example.com/path/to/nowhere",
-                                             "https://example.com/path/to/nowhere/"));
-    QVERIFY(!browserService()->isUrlIdentical("https://example.com/", "://example.com/"));
-    QVERIFY(browserService()->isUrlIdentical("ftp://127.0.0.1/", "ftp://127.0.0.1"));
 }

@@ -20,7 +20,7 @@
 
 #include "browser/BrowserService.h"
 #include "core/EntryAttributes.h"
-#include "core/Tools.h"
+#include "core/UrlTools.h"
 #include "gui/Icons.h"
 #include "gui/styles/StateColorPalette.h"
 
@@ -67,14 +67,14 @@ QVariant EntryURLModel::data(const QModelIndex& index, int role) const
     }
 
     const auto value = m_entryAttributes->value(key);
-    const auto urlValid = Tools::checkUrlValid(value);
+    const auto urlValid = urlTools()->isUrlValid(value);
 
     // Check for duplicate URLs in the attribute list. Excludes the current key/value from the comparison.
     auto customAttributeKeys = m_entryAttributes->customKeys().filter(BrowserService::ADDITIONAL_URL);
     customAttributeKeys.removeOne(key);
 
-    const auto duplicateUrl = m_entryAttributes->values(customAttributeKeys).contains(value)
-                              || browserService()->isUrlIdentical(value, m_entryUrl);
+    const auto duplicateUrl =
+        m_entryAttributes->values(customAttributeKeys).contains(value) || urlTools()->isUrlIdentical(value, m_entryUrl);
     if (role == Qt::BackgroundRole && (!urlValid || duplicateUrl)) {
         StateColorPalette statePalette;
         return statePalette.color(StateColorPalette::ColorRole::Error);
