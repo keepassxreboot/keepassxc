@@ -16,8 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_ENTRYVIEW_H
-#define KEEPASSX_ENTRYVIEW_H
+#ifndef KEEPASSXC_ENTRYVIEW_H
+#define KEEPASSXC_ENTRYVIEW_H
 
 #include <QTreeView>
 
@@ -89,4 +89,4 @@ private:
     QActionGroup* m_columnActions;
 };
 
-#endif // KEEPASSX_ENTRYVIEW_H
+#endif // KEEPASSXC_ENTRYVIEW_H

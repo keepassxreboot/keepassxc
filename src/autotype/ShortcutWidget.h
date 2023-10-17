@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_SHORTCUTWIDGET_H
-#define KEEPASSX_SHORTCUTWIDGET_H
+#ifndef KEEPASSXC_SHORTCUTWIDGET_H
+#define KEEPASSXC_SHORTCUTWIDGET_H
 
 #include <QLineEdit>
 
@@ -44,4 +44,4 @@ private:
     bool m_locked;
 };
 
-#endif // KEEPASSX_SHORTCUTWIDGET_H
+#endif // KEEPASSXC_SHORTCUTWIDGET_H

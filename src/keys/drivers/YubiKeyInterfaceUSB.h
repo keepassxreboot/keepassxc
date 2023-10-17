@@ -16,8 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_YUBIKEY_INTERFACE_USB_H
-#define KEEPASSX_YUBIKEY_INTERFACE_USB_H
+#ifndef KEEPASSXC_YUBIKEYINTERFACEUSB_H
+#define KEEPASSXC_YUBIKEYINTERFACEUSB_H
 
 #include "thirdparty/ykcore/ykdef.h"
 
@@ -71,4 +71,4 @@ private:
                                              {PLUS_U2F_OTP_PID, "YubiKey plus - OTP+U2F"}};
 };
 
-#endif // KEEPASSX_YUBIKEY_INTERFACE_USB_H
+#endif // KEEPASSXC_YUBIKEYINTERFACEUSB_H

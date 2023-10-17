@@ -16,8 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_ENTRYATTRIBUTES_H
-#define KEEPASSX_ENTRYATTRIBUTES_H
+#ifndef KEEPASSXC_ENTRYATTRIBUTES_H
+#define KEEPASSXC_ENTRYATTRIBUTES_H
 
 #include <QMap>
 #include <QObject>
@@ -84,4 +84,4 @@ private:
     QSet<QString> m_protectedAttributes;
 };
 
-#endif // KEEPASSX_ENTRYATTRIBUTES_H
+#endif // KEEPASSXC_ENTRYATTRIBUTES_H

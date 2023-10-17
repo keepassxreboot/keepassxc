@@ -16,8 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef AGENTSETTINGSPAGE_H
-#define AGENTSETTINGSPAGE_H
+#ifndef KEEPASSXC_AGENTSETTINGSPAGE_H
+#define KEEPASSXC_AGENTSETTINGSPAGE_H
 
 #include "gui/ApplicationSettingsWidget.h"
 
@@ -36,4 +36,4 @@ public:
 private:
 };
 
-#endif // AGENTSETTINGSPAGE_H
+#endif // KEEPASSXC_AGENTSETTINGSPAGE_H

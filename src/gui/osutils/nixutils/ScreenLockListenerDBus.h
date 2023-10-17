@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SCREENLOCKLISTENERDBUS_H
-#define SCREENLOCKLISTENERDBUS_H
+#ifndef KEEPASSXC_SCREENLOCKLISTENERDBUS_H
+#define KEEPASSXC_SCREENLOCKLISTENERDBUS_H
 #include "gui/osutils/ScreenLockListenerPrivate.h"
 #include <QDBusMessage>
 
@@ -34,4 +34,4 @@ private slots:
     void login1SessionObjectReceived(QDBusMessage);
 };
 
-#endif // SCREENLOCKLISTENERDBUS_H
+#endif // KEEPASSXC_SCREENLOCKLISTENERDBUS_H

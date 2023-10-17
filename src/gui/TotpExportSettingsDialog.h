@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TotpExportSettingsDialog_H
-#define KEEPASSX_TotpExportSettingsDialog_H
+#ifndef KEEPASSXC_TOTPEXPORTSETTINGSDIALOG_H
+#define KEEPASSXC_TOTPEXPORTSETTINGSDIALOG_H
 
 #include "core/Database.h"
 #include "gui/DatabaseWidget.h"
@@ -51,4 +51,4 @@ private:
     QDialogButtonBox* m_buttonBox;
 };
 
-#endif // KEEPASSX_TOTPEXPORTSETTINGSDIALOG_H
+#endif // KEEPASSXC_TOTPEXPORTSETTINGSDIALOG_H

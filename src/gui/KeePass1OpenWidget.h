@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_KEEPASS1OPENWIDGET_H
-#define KEEPASSX_KEEPASS1OPENWIDGET_H
+#ifndef KEEPASSXC_KEEPASS1OPENWIDGET_H
+#define KEEPASSXC_KEEPASS1OPENWIDGET_H
 
 #include "gui/DatabaseOpenWidget.h"
 
@@ -31,4 +31,4 @@ protected:
     void openDatabase() override;
 };
 
-#endif // KEEPASSX_KEEPASS1OPENWIDGET_H
+#endif // KEEPASSXC_KEEPASS1OPENWIDGET_H

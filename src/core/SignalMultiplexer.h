@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_SIGNALMULTIPLEXER_H
-#define KEEPASSX_SIGNALMULTIPLEXER_H
+#ifndef KEEPASSXC_SIGNALMULTIPLEXER_H
+#define KEEPASSXC_SIGNALMULTIPLEXER_H
 
 #include <QPointer>
 
@@ -52,4 +52,4 @@ private:
     Q_DISABLE_COPY(SignalMultiplexer)
 };
 
-#endif // KEEPASSX_SIGNALMULTIPLEXER_H
+#endif // KEEPASSXC_SIGNALMULTIPLEXER_H

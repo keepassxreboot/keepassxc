@@ -108,4 +108,4 @@ protected:
     BaseStylePrivate* d;
 };
 
-#endif
+#endif // KEEPASSXC_BASESTYLE_H

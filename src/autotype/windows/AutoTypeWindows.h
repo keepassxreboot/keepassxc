@@ -16,8 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_AUTOTYPEWINDOWS_H
-#define KEEPASSX_AUTOTYPEWINDOWS_H
+#ifndef KEEPASSXC_AUTOTYPEWINDOWS_H
+#define KEEPASSXC_AUTOTYPEWINDOWS_H
 
 #include <QtPlugin>
 
@@ -67,4 +67,4 @@ private:
     AutoTypePlatformWin* const m_platform;
 };
 
-#endif // KEEPASSX_AUTOTYPEWINDOWS_H
+#endif // KEEPASSXC_AUTOTYPEWINDOWS_H

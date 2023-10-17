@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_SORTFILTERHIDEPROXYMODEL_H
-#define KEEPASSX_SORTFILTERHIDEPROXYMODEL_H
+#ifndef KEEPASSXC_SORTFILTERHIDEPROXYMODEL_H
+#define KEEPASSXC_SORTFILTERHIDEPROXYMODEL_H
 
 #include <QBitArray>
 #include <QCollator>
@@ -40,4 +40,4 @@ private:
     QCollator m_collator;
 };
 
-#endif // KEEPASSX_SORTFILTERHIDEPROXYMODEL_H
+#endif // KEEPASSXC_SORTFILTERHIDEPROXYMODEL_H

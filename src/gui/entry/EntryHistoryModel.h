@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_ENTRYHISTORYMODEL_H
-#define KEEPASSX_ENTRYHISTORYMODEL_H
+#ifndef KEEPASSXC_ENTRYHISTORYMODEL_H
+#define KEEPASSXC_ENTRYHISTORYMODEL_H
 
 #include <QAbstractTableModel>
 
@@ -51,4 +51,4 @@ private:
     const Entry* m_parentEntry;
 };
 
-#endif // KEEPASSX_ENTRYHISTORYMODEL_H
+#endif // KEEPASSXC_ENTRYHISTORYMODEL_H

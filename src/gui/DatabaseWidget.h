@@ -16,8 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_DATABASEWIDGET_H
-#define KEEPASSX_DATABASEWIDGET_H
+#ifndef KEEPASSXC_DATABASEWIDGET_H
+#define KEEPASSXC_DATABASEWIDGET_H
 
 #include <QFileSystemWatcher>
 #include <QListView>
@@ -322,4 +322,4 @@ private:
     QString m_searchStringForAutoType;
 };
 
-#endif // KEEPASSX_DATABASEWIDGET_H
+#endif // KEEPASSXC_DATABASEWIDGET_H

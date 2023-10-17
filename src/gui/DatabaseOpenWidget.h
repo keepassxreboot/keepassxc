@@ -16,8 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_DATABASEOPENWIDGET_H
-#define KEEPASSX_DATABASEOPENWIDGET_H
+#ifndef KEEPASSXC_DATABASEOPENWIDGET_H
+#define KEEPASSXC_DATABASEOPENWIDGET_H
 
 #include <QScopedPointer>
 #include <QTimer>
@@ -86,4 +86,4 @@ private:
     Q_DISABLE_COPY(DatabaseOpenWidget)
 };
 
-#endif // KEEPASSX_DATABASEOPENWIDGET_H
+#endif // KEEPASSXC_DATABASEOPENWIDGET_H

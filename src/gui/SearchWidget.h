@@ -16,8 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_SEARCHWIDGET_H
-#define KEEPASSX_SEARCHWIDGET_H
+#ifndef KEEPASSXC_SEARCHWIDGET_H
+#define KEEPASSXC_SEARCHWIDGET_H
 
 #include <QTimer>
 #include <QWidget>
@@ -87,4 +87,4 @@ private:
     QMenu* m_searchMenu;
 };
 
-#endif // SEARCHWIDGET_H
+#endif // KEEPASSXC_SEARCHWIDGET_H

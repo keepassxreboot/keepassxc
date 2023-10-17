@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BROWSERACTION_H
-#define BROWSERACTION_H
+#ifndef KEEPASSXC_BROWSERACTION_H
+#define KEEPASSXC_BROWSERACTION_H
 
 #include "BrowserMessageBuilder.h"
 
@@ -91,4 +91,4 @@ private:
     friend class TestBrowser;
 };
 
-#endif // BROWSERACTION_H
+#endif // KEEPASSXC_BROWSERACTION_H

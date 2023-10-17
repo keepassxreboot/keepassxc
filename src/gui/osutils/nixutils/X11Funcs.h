@@ -28,4 +28,4 @@ KeySym qcharToNativeKeyCode(const QChar& ch);
 KeySym qtToNativeKeyCode(Qt::Key key);
 uint qtToNativeModifiers(Qt::KeyboardModifiers modifiers);
 
-#endif
+#endif // KEEPASSXC_X11FUNCS_H

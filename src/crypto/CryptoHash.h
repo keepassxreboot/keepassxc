@@ -16,8 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_CRYPTOHASH_H
-#define KEEPASSX_CRYPTOHASH_H
+#ifndef KEEPASSXC_CRYPTOHASH_H
+#define KEEPASSXC_CRYPTOHASH_H
 
 #include <QByteArray>
 
@@ -47,4 +47,4 @@ private:
     Q_DECLARE_PRIVATE(CryptoHash)
 };
 
-#endif // KEEPASSX_CRYPTOHASH_H
+#endif // KEEPASSXC_CRYPTOHASH_H

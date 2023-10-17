@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_GROUPMODEL_H
-#define KEEPASSX_GROUPMODEL_H
+#ifndef KEEPASSXC_GROUPMODEL_H
+#define KEEPASSXC_GROUPMODEL_H
 
 #include <QAbstractItemModel>
 
@@ -64,4 +64,4 @@ private:
     Database* m_db;
 };
 
-#endif // KEEPASSX_GROUPMODEL_H
+#endif // KEEPASSXC_GROUPMODEL_H

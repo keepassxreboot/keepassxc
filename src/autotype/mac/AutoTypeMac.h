@@ -16,8 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_AUTOTYPEMAC_H
-#define KEEPASSX_AUTOTYPEMAC_H
+#ifndef KEEPASSXC_AUTOTYPEMAC_H
+#define KEEPASSXC_AUTOTYPEMAC_H
 
 #include <Carbon/Carbon.h>
 #include <QtPlugin>
@@ -65,4 +65,4 @@ private:
     AutoTypePlatformMac* const m_platform;
 };
 
-#endif  // KEEPASSX_AUTOTYPEMAC_H
+#endif // KEEPASSXC_AUTOTYPEMAC_H

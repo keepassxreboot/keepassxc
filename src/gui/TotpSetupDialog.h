@@ -16,8 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_SETUPTOTPDIALOG_H
-#define KEEPASSX_SETUPTOTPDIALOG_H
+#ifndef KEEPASSXC_TOTPSETUPDIALOG_H
+#define KEEPASSXC_TOTPSETUPDIALOG_H
 
 #include "core/Database.h"
 #include "gui/DatabaseWidget.h"
@@ -48,4 +48,4 @@ private:
     Entry* m_entry;
 };
 
-#endif // KEEPASSX_SETUPTOTPDIALOG_H
+#endif // KEEPASSXC_TOTPSETUPDIALOG_H

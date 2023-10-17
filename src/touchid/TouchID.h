@@ -1,5 +1,5 @@
-#ifndef KEEPASSX_TOUCHID_H
-#define KEEPASSX_TOUCHID_H
+#ifndef KEEPASSXC_TOUCHID_H
+#define KEEPASSXC_TOUCHID_H
 
 #include <QHash>
 
@@ -36,4 +36,4 @@ private:
     QHash<QString, QByteArray> m_encryptedMasterKeys;
 };
 
-#endif // KEEPASSX_TOUCHID_H
+#endif // KEEPASSXC_TOUCHID_H

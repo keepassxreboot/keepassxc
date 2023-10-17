@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_PASSPHRASEGENERATOR_H
-#define KEEPASSX_PASSPHRASEGENERATOR_H
+#ifndef KEEPASSXC_PASSPHRASEGENERATOR_H
+#define KEEPASSXC_PASSPHRASEGENERATOR_H
 
 #include <QVector>
 
@@ -54,4 +54,4 @@ private:
     QVector<QString> m_wordlist;
 };
 
-#endif // KEEPASSX_PASSPHRASEGENERATOR_H
+#endif // KEEPASSXC_PASSPHRASEGENERATOR_H

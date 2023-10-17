@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_UNLOCKDATABASEDIALOG_H
-#define KEEPASSX_UNLOCKDATABASEDIALOG_H
+#ifndef KEEPASSXC_DATABASEOPENDIALOG_H
+#define KEEPASSXC_DATABASEOPENDIALOG_H
 
 #include "core/Global.h"
 
@@ -72,4 +72,4 @@ private:
     Intent m_intent = Intent::None;
 };
 
-#endif // KEEPASSX_UNLOCKDATABASEDIALOG_H
+#endif // KEEPASSXC_DATABASEOPENDIALOG_H

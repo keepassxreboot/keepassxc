@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_KDBXXMLWRITER_H
-#define KEEPASSX_KDBXXMLWRITER_H
+#ifndef KEEPASSXC_KDBXXMLWRITER_H
+#define KEEPASSXC_KDBXXMLWRITER_H
 
 #include <QDateTime>
 #include <QXmlStreamWriter>
@@ -93,4 +93,4 @@ private:
     QString m_errorStr = "";
 };
 
-#endif // KEEPASSX_KDBXXMLWRITER_H
+#endif // KEEPASSXC_KDBXXMLWRITER_H

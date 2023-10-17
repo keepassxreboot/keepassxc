@@ -16,8 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef AGENTSETTINGSWIDGET_H
-#define AGENTSETTINGSWIDGET_H
+#ifndef KEEPASSXC_AGENTSETTINGSWIDGET_H
+#define KEEPASSXC_AGENTSETTINGSWIDGET_H
 
 #include <QScopedPointer>
 #include <QUuid>
@@ -44,4 +44,4 @@ private:
     QScopedPointer<Ui::AgentSettingsWidget> m_ui;
 };
 
-#endif // AGENTSETTINGSWIDGET_H
+#endif // KEEPASSXC_AGENTSETTINGSWIDGET_H

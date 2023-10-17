@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_KEEPASS1_H
-#define KEEPASSX_KEEPASS1_H
+#ifndef KEEPASSXC_KEEPASS1_H
+#define KEEPASSXC_KEEPASS1_H
 
 #include <QSysInfo>
 
@@ -37,4 +37,4 @@ namespace KeePass1
     };
 } // namespace KeePass1
 
-#endif // KEEPASSX_KEEPASS1_H
+#endif // KEEPASSXC_KEEPASS1_H

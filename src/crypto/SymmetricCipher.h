@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_SYMMETRICCIPHER_H
-#define KEEPASSX_SYMMETRICCIPHER_H
+#ifndef KEEPASSXC_SYMMETRICCIPHER_H
+#define KEEPASSXC_SYMMETRICCIPHER_H
 
 #include <QByteArray>
 #include <QSharedPointer>
@@ -82,4 +82,4 @@ private:
     Q_DISABLE_COPY(SymmetricCipher)
 };
 
-#endif // KEEPASSX_SYMMETRICCIPHER_H
+#endif // KEEPASSXC_SYMMETRICCIPHER_H

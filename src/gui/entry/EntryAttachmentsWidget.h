@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef ENTRYATTACHMENTSWIDGET_H
-#define ENTRYATTACHMENTSWIDGET_H
+#ifndef KEEPASSXC_ENTRYATTACHMENTSWIDGET_H
+#define KEEPASSXC_ENTRYATTACHMENTSWIDGET_H
 
 #include <QPointer>
 #include <QWidget>
@@ -81,4 +81,4 @@ private:
     bool m_buttonsVisible;
 };
 
-#endif // ENTRYATTACHMENTSWIDGET_H
+#endif // KEEPASSXC_ENTRYATTACHMENTSWIDGET_H

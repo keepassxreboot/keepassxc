@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_KEEPASS2_H
-#define KEEPASSX_KEEPASS2_H
+#ifndef KEEPASSXC_KEEPASS2_H
+#define KEEPASSXC_KEEPASS2_H
 
 #include <QSharedPointer>
 #include <QUuid>
@@ -133,4 +133,4 @@ namespace KeePass2
     QString kdfToString(QUuid kdfUuid);
 } // namespace KeePass2
 
-#endif // KEEPASSX_KEEPASS2_H
+#endif // KEEPASSXC_KEEPASS2_H

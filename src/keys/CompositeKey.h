@@ -16,8 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_COMPOSITEKEY_H
-#define KEEPASSX_COMPOSITEKEY_H
+#ifndef KEEPASSXC_COMPOSITEKEY_H
+#define KEEPASSXC_COMPOSITEKEY_H
 
 #include <QSharedPointer>
 
@@ -60,4 +60,4 @@ private:
     QList<QSharedPointer<ChallengeResponseKey>> m_challengeResponseKeys;
 };
 
-#endif // KEEPASSX_COMPOSITEKEY_H
+#endif // KEEPASSXC_COMPOSITEKEY_H

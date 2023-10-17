@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_KEEPASS2READER_H
-#define KEEPASSX_KEEPASS2READER_H
+#ifndef KEEPASSXC_KEEPASS2READER_H
+#define KEEPASSXC_KEEPASS2READER_H
 
 #include "KdbxReader.h"
 
@@ -46,4 +46,4 @@ private:
     quint32 m_version = 0;
 };
 
-#endif // KEEPASSX_KEEPASS2READER_H
+#endif // KEEPASSXC_KEEPASS2READER_H

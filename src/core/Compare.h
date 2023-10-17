@@ -77,4 +77,4 @@ inline short compare(bool lhsEnabled,
     return enabled;
 }
 
-#endif // KEEPASSX_COMPARE_H
+#endif // KEEPASSXC_COMPARE_H

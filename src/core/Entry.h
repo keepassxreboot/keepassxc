@@ -16,8 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_ENTRY_H
-#define KEEPASSX_ENTRY_H
+#ifndef KEEPASSXC_ENTRY_H
+#define KEEPASSXC_ENTRY_H
 
 #include <QMap>
 #include <QPointer>
@@ -303,4 +303,4 @@ private:
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(Entry::CloneFlags)
 
-#endif // KEEPASSX_ENTRY_H
+#endif // KEEPASSXC_ENTRY_H

@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_STOREDATASTREAM_H
-#define KEEPASSX_STOREDATASTREAM_H
+#ifndef KEEPASSXC_STOREDATASTREAM_H
+#define KEEPASSXC_STOREDATASTREAM_H
 
 #include "streams/LayeredStream.h"
 
@@ -36,4 +36,4 @@ private:
     QByteArray m_storedData;
 };
 
-#endif // KEEPASSX_STOREDATASTREAM_H
+#endif // KEEPASSXC_STOREDATASTREAM_H

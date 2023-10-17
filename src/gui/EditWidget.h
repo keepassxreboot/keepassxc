@@ -16,8 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_EDITWIDGET_H
-#define KEEPASSX_EDITWIDGET_H
+#ifndef KEEPASSXC_EDITWIDGET_H
+#define KEEPASSXC_EDITWIDGET_H
 
 #include <QScopedPointer>
 #include <QStyledItemDelegate>
@@ -72,4 +72,4 @@ private:
     Q_DISABLE_COPY(EditWidget)
 };
 
-#endif // KEEPASSX_EDITWIDGET_H
+#endif // KEEPASSXC_EDITWIDGET_H

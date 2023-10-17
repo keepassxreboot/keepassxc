@@ -16,8 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_EDITGROUPWIDGET_H
-#define KEEPASSX_EDITGROUPWIDGET_H
+#ifndef KEEPASSXC_EDITGROUPWIDGET_H
+#define KEEPASSXC_EDITGROUPWIDGET_H
 
 #include <QComboBox>
 #include <QScrollArea>
@@ -102,4 +102,4 @@ private:
     Q_DISABLE_COPY(EditGroupWidget)
 };
 
-#endif // KEEPASSX_EDITGROUPWIDGET_H
+#endif // KEEPASSXC_EDITGROUPWIDGET_H

@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_AUTOTYPEPLATFORMPLUGIN_H
-#define KEEPASSX_AUTOTYPEPLATFORMPLUGIN_H
+#ifndef KEEPASSXC_AUTOTYPEPLATFORMPLUGIN_H
+#define KEEPASSXC_AUTOTYPEPLATFORMPLUGIN_H
 
 #include <QWidget>
 
@@ -47,4 +47,4 @@ public:
 
 Q_DECLARE_INTERFACE(AutoTypePlatformInterface, "org.keepassx.AutoTypePlatformInterface/1")
 
-#endif // KEEPASSX_AUTOTYPEPLATFORMPLUGIN_H
+#endif // KEEPASSXC_AUTOTYPEPLATFORMPLUGIN_H

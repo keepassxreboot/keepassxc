@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_ENTRYATTACHMENTSMODEL_H
-#define KEEPASSX_ENTRYATTACHMENTSMODEL_H
+#ifndef KEEPASSXC_ENTRYATTACHMENTSMODEL_H
+#define KEEPASSXC_ENTRYATTACHMENTSMODEL_H
 
 #include <QAbstractListModel>
 #include <QPointer>
@@ -61,4 +61,4 @@ private:
     bool m_readOnly = false;
 };
 
-#endif // KEEPASSX_ENTRYATTACHMENTSMODEL_H
+#endif // KEEPASSXC_ENTRYATTACHMENTSMODEL_H

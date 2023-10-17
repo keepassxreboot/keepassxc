@@ -16,8 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef MESSAGEWIDGET_H
-#define MESSAGEWIDGET_H
+#ifndef KEEPASSXC_MESSAGEWIDGET_H
+#define KEEPASSXC_MESSAGEWIDGET_H
 
 #include "gui/KMessageWidget.h"
 
@@ -55,4 +55,4 @@ private:
     bool m_animate = true;
 };
 
-#endif // MESSAGEWIDGET_H
+#endif // KEEPASSXC_MESSAGEWIDGET_H

@@ -16,8 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_CSVIMPORTWIZARD_H
-#define KEEPASSX_CSVIMPORTWIZARD_H
+#ifndef KEEPASSXC_CSVIMPORTWIZARD_H
+#define KEEPASSXC_CSVIMPORTWIZARD_H
 
 #include "CsvImportWidget.h"
 
@@ -48,4 +48,4 @@ private:
     QGridLayout* m_layout;
 };
 
-#endif // KEEPASSX_CSVIMPORTWIZARD_H
+#endif // KEEPASSXC_CSVIMPORTWIZARD_H

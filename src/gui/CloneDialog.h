@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_CLONEDIALOG_H
-#define KEEPASSX_CLONEDIALOG_H
+#ifndef KEEPASSXC_CLONEDIALOG_H
+#define KEEPASSXC_CLONEDIALOG_H
 
 #include "core/Database.h"
 #include "gui/DatabaseWidget.h"
@@ -49,4 +49,4 @@ protected:
     DatabaseWidget* m_parent;
 };
 
-#endif // KEEPASSX_CLONEDIALOG_H
+#endif // KEEPASSXC_CLONEDIALOG_H

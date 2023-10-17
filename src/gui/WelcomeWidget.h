@@ -16,8 +16,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_WELCOMEWIDGET_H
-#define KEEPASSX_WELCOMEWIDGET_H
+#ifndef KEEPASSXC_WELCOMEWIDGET_H
+#define KEEPASSXC_WELCOMEWIDGET_H
 
 #include <QListWidgetItem>
 
@@ -55,4 +55,4 @@ private:
     void removeFromLastDatabases(QListWidgetItem* item);
 };
 
-#endif // KEEPASSX_WELCOMEWIDGET_H
+#endif // KEEPASSXC_WELCOMEWIDGET_H

@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_EDITWIDGETPROPERTIES_H
-#define KEEPASSX_EDITWIDGETPROPERTIES_H
+#ifndef KEEPASSXC_EDITWIDGETPROPERTIES_H
+#define KEEPASSXC_EDITWIDGETPROPERTIES_H
 
 #include <QItemSelection>
 #include <QPointer>
@@ -57,4 +57,4 @@ private:
     Q_DISABLE_COPY(EditWidgetProperties)
 };
 
-#endif // KEEPASSX_EDITWIDGETPROPERTIES_H
+#endif // KEEPASSXC_EDITWIDGETPROPERTIES_H

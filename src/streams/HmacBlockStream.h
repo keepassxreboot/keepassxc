@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_HMACBLOCKSTREAM_H
-#define KEEPASSX_HMACBLOCKSTREAM_H
+#ifndef KEEPASSXC_HMACBLOCKSTREAM_H
+#define KEEPASSXC_HMACBLOCKSTREAM_H
 
 #include <QSysInfo>
 
@@ -58,4 +58,4 @@ private:
     bool m_error;
 };
 
-#endif // KEEPASSX_HMACBLOCKSTREAM_H
+#endif // KEEPASSXC_HMACBLOCKSTREAM_H

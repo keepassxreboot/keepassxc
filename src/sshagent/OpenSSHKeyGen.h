@@ -27,4 +27,4 @@ namespace OpenSSHKeyGen
     bool generateEd25519(OpenSSHKey& key);
 } // namespace OpenSSHKeyGen
 
-#endif
+#endif // KEEPASSXC_OPENSSHKEYGEN_H

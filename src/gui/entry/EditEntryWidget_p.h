@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_EDITENTRYWIDGET_P_H
-#define KEEPASSX_EDITENTRYWIDGET_P_H
+#ifndef KEEPASSXC_EDITENTRYWIDGET_P_H
+#define KEEPASSXC_EDITENTRYWIDGET_P_H
 
 #include <QListView>
 #include <QScrollBar>
@@ -44,4 +44,4 @@ public:
     }
 };
 
-#endif // KEEPASSX_EDITENTRYWIDGET_P_H
+#endif // KEEPASSXC_EDITENTRYWIDGET_P_H

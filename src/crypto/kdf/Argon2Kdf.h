@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_ARGON2KDF_H
-#define KEEPASSX_ARGON2KDF_H
+#ifndef KEEPASSXC_ARGON2KDF_H
+#define KEEPASSXC_ARGON2KDF_H
 
 #include "Kdf.h"
 
@@ -52,4 +52,4 @@ public:
     quint32 m_parallelism;
 };
 
-#endif // KEEPASSX_ARGON2KDF_H
+#endif // KEEPASSXC_ARGON2KDF_H

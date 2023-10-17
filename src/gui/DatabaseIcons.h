@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_DATABASEICONS_H
-#define KEEPASSX_DATABASEICONS_H
+#ifndef KEEPASSXC_DATABASEICONS_H
+#define KEEPASSXC_DATABASEICONS_H
 
 #include <QIcon>
 
@@ -62,4 +62,4 @@ inline DatabaseIcons* databaseIcons()
     return DatabaseIcons::instance();
 }
 
-#endif // KEEPASSX_DATABASEICONS_H
+#endif // KEEPASSXC_DATABASEICONS_H
