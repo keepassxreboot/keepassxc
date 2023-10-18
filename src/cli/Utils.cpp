@@ -329,6 +329,8 @@ namespace Utils
 
             if (clipProcess->exitCode() == EXIT_SUCCESS) {
                 return EXIT_SUCCESS;
+            } else {
+                failedProgramNames.append(prog.first);
             }
         }
 
