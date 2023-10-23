@@ -472,6 +472,28 @@ void Config::init(const QString& configFileName, const QString& localConfigFileN
         QDir().rmdir(QFileInfo(localConfigFileName).absolutePath());
     }
 
+#if defined(Q_OS_LINUX)
+    // Upgrade from previous KeePassXC version which stores its config
+    // in ~/.cache on Linux instead of ~/.local/state.
+    // Move file to correct location before continuing.
+    if (!QFile::exists(localConfigFileName)) {
+        QString oldLocalConfigPath =
+            QStandardPaths::writableLocation(QStandardPaths::GenericCacheLocation) + "/keepassxc";
+        QString suffix;
+#ifdef QT_DEBUG
+        suffix = "_debug";
+#endif
+        oldLocalConfigPath += QString("/keepassxc%1.ini").arg(suffix);
+        oldLocalConfigPath = QDir::toNativeSeparators(oldLocalConfigPath);
+        if (QFile::exists(oldLocalConfigPath)) {
+            QDir().mkpath(QFileInfo(localConfigFileName).absolutePath());
+            QFile::copy(oldLocalConfigPath, localConfigFileName);
+            QFile::remove(oldLocalConfigPath);
+            QDir().rmdir(QFileInfo(oldLocalConfigPath).absolutePath());
+        }
+    }
+#endif
+
     m_settings.reset(new QSettings(configFileName, QSettings::IniFormat));
     if (!localConfigFileName.isEmpty() && configFileName != localConfigFileName) {
         m_localSettings.reset(new QSettings(localConfigFileName, QSettings::IniFormat));
@@ -512,7 +534,16 @@ QPair<QString, QString> Config::defaultConfigFiles()
 #else
     // On case-sensitive Operating Systems, force use of lowercase app directories
     configPath = QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation) + "/keepassxc";
-    localConfigPath = QStandardPaths::writableLocation(QStandardPaths::GenericCacheLocation) + "/keepassxc";
+    // Qt does not support XDG_STATE_HOME yet, change this once XDG_STATE_HOME is added
+    QString xdgStateHome = QFile::decodeName(qgetenv("XDG_STATE_HOME"));
+    if (!xdgStateHome.startsWith(u'/')) {
+        xdgStateHome.clear(); // spec says relative paths should be ignored
+    }
+    if (xdgStateHome.isEmpty()) {
+        xdgStateHome = QDir::homePath() + "/.local/state";
+    }
+
+    localConfigPath = xdgStateHome + "/keepassxc";
 #endif
 
     QString suffix;
