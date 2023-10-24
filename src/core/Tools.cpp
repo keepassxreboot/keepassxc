@@ -415,14 +415,9 @@ namespace Tools
     {
         // Remove forward slash from title on all platforms
         filename.replace("/", "_");
-#ifdef Q_OS_WIN
-        // Remove invalid characters on Windows
+        // Remove invalid characters
         filename.remove(QRegularExpression("[:*?\"<>|]"));
-#endif
-#ifdef Q_OS_MACOS
-        // MacOS does not support colons
-        filename.replace(":", "");
-#endif
+
         return filename.trimmed();
     }
 
