@@ -19,8 +19,8 @@
 #include "ui_TotpSetupDialog.h"
 
 #include "core/Base32.h"
+#include "core/Totp.h"
 #include "gui/MessageBox.h"
-#include "totp/totp.h"
 
 TotpSetupDialog::TotpSetupDialog(QWidget* parent, Entry* entry)
     : QDialog(parent)

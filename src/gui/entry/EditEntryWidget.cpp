@@ -115,6 +115,7 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     m_entryModifiedTimer.setSingleShot(true);
     m_entryModifiedTimer.setInterval(0);
     connect(&m_entryModifiedTimer, &QTimer::timeout, this, [this] {
+        // TODO: Upon refactor of this widget, this needs to merge unsaved changes in the UI
         if (isVisible() && m_entry) {
             setForms(m_entry);
         }
@@ -711,6 +712,13 @@ void EditEntryWidget::toKeeAgentSettings(KeeAgentSettings& settings) const
     settings.setSaveAttachmentToTempFile(m_sshAgentSettings.saveAttachmentToTempFile());
 }
 
+void EditEntryWidget::updateTotp()
+{
+    if (m_entry) {
+        m_attributesModel->setEntryAttributes(m_entry->attributes());
+    }
+}
+
 void EditEntryWidget::browsePrivateKey()
 {
     auto fileName = fileDialog()->getOpenFileName(this, tr("Select private key"), FileDialog::getLastDir("sshagent"));
@@ -867,8 +875,6 @@ void EditEntryWidget::loadEntry(Entry* entry,
     m_create = create;
     m_history = history;
 
-    connect(m_entry, &Entry::modified, this, [this] { m_entryModifiedTimer.start(); });
-
     if (history) {
         setHeadline(QString("%1 \u2022 %2").arg(parentName, tr("Entry history")));
     } else {
@@ -876,6 +882,8 @@ void EditEntryWidget::loadEntry(Entry* entry,
             setHeadline(QString("%1 \u2022 %2").arg(parentName, tr("Add entry")));
         } else {
             setHeadline(QString("%1 \u2022 %2 \u2022 %3").arg(parentName, entry->title(), tr("Edit entry")));
+            // Reload entry details if changed outside of the edit dialog
+            connect(m_entry, &Entry::modified, this, [this] { m_entryModifiedTimer.start(); });
         }
     }
 
