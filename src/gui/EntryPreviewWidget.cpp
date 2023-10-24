@@ -21,10 +21,10 @@
 
 #include "Application.h"
 #include "core/Config.h"
+#include "core/Totp.h"
 #include "gui/Clipboard.h"
 #include "gui/Font.h"
 #include "gui/Icons.h"
-#include "totp/totp.h"
 #if defined(WITH_XC_KEESHARE)
 #include "keeshare/KeeShare.h"
 #include "keeshare/KeeShareSettings.h"

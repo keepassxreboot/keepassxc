@@ -22,9 +22,9 @@
 #include <QStringListModel>
 
 #include "core/Clock.h"
+#include "core/Totp.h"
 #include "format/KeePass2Writer.h"
 #include "gui/MessageBox.h"
-#include "totp/totp.h"
 
 // I wanted to make the CSV import GUI future-proof, so if one day you need a new field,
 // all you have to do is add a field to m_columnHeader, and the GUI will follow:
@@ -206,7 +206,7 @@ void CsvImportWidget::writeDatabase()
         auto otpString = m_parserModel->data(m_parserModel->index(r, 6));
         if (otpString.isValid() && !otpString.toString().isEmpty()) {
             auto totp = Totp::parseSettings(otpString.toString());
-            if (totp->key.isEmpty()) {
+            if (!totp || totp->key.isEmpty()) {
                 // Bare secret, use default TOTP settings
                 totp = Totp::parseSettings({}, otpString.toString());
             }

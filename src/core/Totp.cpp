@@ -16,7 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "totp.h"
+#include "Totp.h"
 
 #include "core/Base32.h"
 #include "core/Clock.h"
@@ -59,6 +59,11 @@ static QString getNameForHashType(const Totp::Algorithm hashType)
 
 QSharedPointer<Totp::Settings> Totp::parseSettings(const QString& rawSettings, const QString& key)
 {
+    // Early out if both strings are empty
+    if (rawSettings.isEmpty() && key.isEmpty()) {
+        return {};
+    }
+
     // Create default settings
     auto settings = createSettings(key, DEFAULT_DIGITS, DEFAULT_STEP);
 
@@ -96,6 +101,11 @@ QSharedPointer<Totp::Settings> Totp::parseSettings(const QString& rawSettings, c
                 settings->algorithm = getHashTypeByName(query.queryItemValue("otpHashMode"));
             }
         } else {
+            if (settings->key.isEmpty()) {
+                // Legacy format cannot work with an empty key
+                return {};
+            }
+
             // Parse semi-colon separated values ([step];[digits|S])
             settings->format = StorageFormat::LEGACY;
             auto vars = rawSettings.split(";");
