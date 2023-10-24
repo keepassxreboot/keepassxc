@@ -115,7 +115,7 @@ bool BrowserService::openDatabase(bool triggerUnlock)
         return true;
     }
 
-    if (triggerUnlock) {
+    if (triggerUnlock && !m_bringToFrontRequested) {
         m_bringToFrontRequested = true;
         updateWindowState();
         emit requestUnlock();
