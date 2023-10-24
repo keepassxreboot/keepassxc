@@ -864,27 +864,11 @@ Please select the correct database for saving credentials.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Do you want to register Passkey credentials for:
-%1 (%2)?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Existing Passkey found.
-Do you want to register a new Passkey for:
-%1 (%2)?
-Select the existing Passkey and press Update to replace it.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Register new</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Register</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Authenticate Passkey credentials for:%1?</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
@@ -893,6 +877,27 @@ Select the existing Passkey and press Update to replace it.</source>
             <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Do you want to register Passkey for:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 (%2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Existing Passkey found.
+Do you want to register a new Passkey for:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select the existing Passkey and press Update to replace it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Authenticate Passkey credentials for:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -951,7 +956,7 @@ Do you want to delete the entry?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Passkey</source>
+        <source>%1 (Passkey)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5976,6 +5981,10 @@ Do you want to overwrite it?
         <source>Cannot open file &quot;%1&quot; for writing.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Cannot write to file</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PasskeyImportDialog</name>
@@ -6024,11 +6033,11 @@ Do you want to overwrite it?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>URL</source>
+        <source>Database: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Username</source>
+        <source>Group:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

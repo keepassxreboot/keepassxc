@@ -48,10 +48,10 @@ PasskeyImportDialog::~PasskeyImportDialog()
 
 void PasskeyImportDialog::setInfo(const QString& url, const QString& username, const QSharedPointer<Database>& database)
 {
-    m_ui->urlLabel->setText(QString("%1: %2").arg(tr("URL"), url));
-    m_ui->usernameLabel->setText(QString("%1: %2").arg(tr("Username"), username));
-    m_ui->selectDatabaseLabel->setText(QString("%1: %2").arg(tr("Database"), getDatabaseName(database)));
-    m_ui->selectGroupLabel->setText(QString("%1:").arg(tr("Group")));
+    m_ui->urlLabel->setText(tr("URL: %1").arg(url));
+    m_ui->usernameLabel->setText(tr("Username: %1").arg(username));
+    m_ui->selectDatabaseLabel->setText(tr("Database: %1").arg(getDatabaseName(database)));
+    m_ui->selectGroupLabel->setText(tr("Group:"));
 
     addGroups(database);
 
@@ -104,7 +104,7 @@ void PasskeyImportDialog::selectDatabase()
     }
 
     m_selectedDatabase = selectedDatabase;
-    m_ui->selectDatabaseLabel->setText(QString("%1: %2").arg(tr("Database"), getDatabaseName(m_selectedDatabase)));
+    m_ui->selectDatabaseLabel->setText(QString("Database: %1").arg(getDatabaseName(m_selectedDatabase)));
 
     addGroups(m_selectedDatabase);
 }

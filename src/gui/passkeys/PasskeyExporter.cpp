@@ -23,7 +23,8 @@
 #include "core/Tools.h"
 #include "gui/MessageBox.h"
 #include <QFile>
-#include <QTextStream>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 void PasskeyExporter::showExportDialog(const QList<Entry*>& items)
 {
@@ -53,11 +54,15 @@ void PasskeyExporter::showExportDialog(const QList<Entry*>& items)
 /**
  * Creates an export file for a Passkey credential
  *
- * File contents:
- * <URL>
- * <username>
- * <password / generated ID>
- * <key data>
+ * File contents in JSON:
+ * {
+ *      "privateKey": <private key>,
+ *      "relyingParty: <relying party>,
+ *      "url": <URL>,
+ *      "userHandle": <user handle>,
+ *      "userId": <generated user id>,
+ *      "username:" <username>
+ * }
  */
 void PasskeyExporter::exportSelectedEntry(const Entry* entry, const QString& folder)
 {
@@ -82,13 +87,19 @@ void PasskeyExporter::exportSelectedEntry(const Entry* entry, const QString& fol
         return;
     }
 
-    QTextStream fileStream(&passkeyFile);
-    fileStream << entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_RELYING_PARTY) << "\n";
-    fileStream << entry->url() << "\n";
-    fileStream << entry->username() << "\n";
-    fileStream << entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_GENERATED_USER_ID) << "\n";
-    fileStream << entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_USER_HANDLE) << "\n";
-    fileStream << entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_PRIVATE_KEY_PEM);
+    QJsonObject passkeyObject;
+    passkeyObject["relyingParty"] = entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_RELYING_PARTY);
+    passkeyObject["url"] = entry->url();
+    passkeyObject["username"] = entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_USERNAME);
+    passkeyObject["userId"] = entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_GENERATED_USER_ID);
+    passkeyObject["userHandle"] = entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_USER_HANDLE);
+    passkeyObject["privateKey"] = entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_PRIVATE_KEY_PEM);
+
+    QJsonDocument document(passkeyObject);
+    if (passkeyFile.write(document.toJson()) < 0) {
+        MessageBox::information(
+            nullptr, tr("Cannot write to file"), tr("Cannot open file \"%1\" for writing.").arg(fullPath));
+    }
 
     passkeyFile.close();
 }

@@ -52,13 +52,14 @@ void BrowserPasskeysConfirmationDialog::registerCredential(const QString& userna
                                                            const QList<Entry*>& existingEntries,
                                                            int timeout)
 {
-    m_ui->confirmationLabel->setText(
-        tr("Do you want to register Passkey credentials for:\n%1 (%2)?").arg(username, siteId));
+    m_ui->firstLabel->setText(tr("Do you want to register Passkey for:"));
+    m_ui->dataLabel->setText(tr("%1 (%2)").arg(username, siteId));
+    m_ui->secondLabel->setText("");
 
     if (!existingEntries.isEmpty()) {
-        m_ui->confirmationLabel->setText(tr("Existing Passkey found.\nDo you want to register a new Passkey for:\n%1 "
-                                            "(%2)?\nSelect the existing Passkey and press Update to replace it.")
-                                             .arg(username, siteId));
+        m_ui->firstLabel->setText(tr("Existing Passkey found.\nDo you want to register a new Passkey for:"));
+        m_ui->secondLabel->setText(tr("Select the existing Passkey and press Update to replace it."));
+
         m_ui->updateButton->setVisible(true);
         m_ui->confirmButton->setText(tr("Register new"));
         updateEntriesToTable(existingEntries);
@@ -74,7 +75,9 @@ void BrowserPasskeysConfirmationDialog::authenticateCredential(const QList<Entry
                                                                const QString& origin,
                                                                int timeout)
 {
-    m_ui->confirmationLabel->setText(tr("Authenticate Passkey credentials for:%1?").arg(origin));
+    m_ui->firstLabel->setText(tr("Authenticate Passkey credentials for:"));
+    m_ui->dataLabel->setText(origin);
+    m_ui->secondLabel->setText("");
     updateEntriesToTable(entries);
     startCounter(timeout);
 }

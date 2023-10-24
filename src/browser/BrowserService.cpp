@@ -746,7 +746,7 @@ void BrowserService::addPasskeyToGroup(Group* group,
     auto* entry = new Entry();
     entry->setUuid(QUuid::createUuid());
     entry->setGroup(group);
-    entry->setTitle(QString("%1 (%2)").arg(rpName, tr("Passkey")));
+    entry->setTitle(tr("%1 (Passkey)").arg(rpName));
     entry->setUsername(username);
     entry->setUrl(url);
     entry->setIcon(KEEPASSXCBROWSER_PASSKEY_ICON);

@@ -32,72 +32,69 @@ QTEST_GUILESS_MAIN(TestPasskeys)
 
 // Register request
 // clang-format off
-const QString PublicKeyCredentialOptions =
-    QString("{"
-                "\"attestation\": \"none\","
-                "\"authenticatorSelection\": {"
-                    "\"residentKey\": \"preferred\","
-                    "\"requireResidentKey\": false,"
-                    "\"userVerification\": \"required\""
-                "},"
-                "\"challenge\": ""\"lVeHzVxWsr8MQxMkZF0ti6FXhdgMljqKzgA-q_zk2Mnii3eJ47VF97sqUoYktVC85WAZ1uIASm-a_lDFZwsLfw\","
-                "\"pubKeyCredParams\": ["
-                    "{"
-                        "\"type\": \"public-key\","
-                        "\"alg\": -7"
-                    "},"
-                    "{"
-                        "\"type\": \"public-key\","
-                        "\"alg\": -257"
-                    "}"
-                "],"
-                "\"rp\": {"
-                    "\"name\": \"webauthn.io\","
-                    "\"id\": \"webauthn.io\""
-                "},"
-                "\"timeout\": 60000,"
-                "\"excludeCredentials\": [],"
-                "\"user\": {"
-                    "\"displayName\": \"Test User\","
-                    "\"id\": \"VkdWemRDQlZjMlZ5\","
-                    "\"name\": \"Test User\""
-                "}"
-            "}");
+const QString PublicKeyCredentialOptions = R"(
+    {
+        "attestation": "none",
+        "authenticatorSelection": {
+            "residentKey": "preferred",
+            "requireResidentKey": false,
+            "userVerification": "required"
+        },
+        "challenge": "lVeHzVxWsr8MQxMkZF0ti6FXhdgMljqKzgA-q_zk2Mnii3eJ47VF97sqUoYktVC85WAZ1uIASm-a_lDFZwsLfw",
+        "pubKeyCredParams": [
+            {
+                "type": "public-key",
+                "alg": -7
+            },
+            {
+                "type": "public-key",
+                "alg": -257
+            }
+        ],
+        "rp": {
+            "name": "webauthn.io",
+            "id": "webauthn.io"
+        },
+        "timeout": 60000,
+        "excludeCredentials": [],
+        "user": {
+            "displayName": "Test User",
+            "id": "VkdWemRDQlZjMlZ5",
+            "name": "Test User"
+        }
+    }
+)";
 
 // Register response
-const QString PublicKeyCredential =
-    QString("{"
-                "\"authenticatorAttachment\": \"platform\","
-                "\"id\": \"yrzFJ5lwcpTwYMOdXSmxF5b5cYQlqBMzbbU_d-oFLO8\","
-                "\"rawId\": \"cabcc52799707294f060c39d5d29b11796f9718425a813336db53f77ea052cef\","
-                "\"response\": {"
-                    "\"attestationObject\": "
-                        "\"o2NmbXRkbm9uZWdhdHRTdG10oGhhdXRoRGF0YVikdKbqkhPJnC90siSSsyDPQCYqlMGpUKA5fyklC2CEHvBFAAAAAAECAwQFBgcIAQID"
-                        "BAUGBwgAIMq8xSeZcHKU8GDDnV0psReW-XGEJagTM221P3fqBSzvpQECAyYgASFYIAbsrzRbYpFhbRlZA6ZQKsoxxJWoaeXwh-"
-                        "XUuDLNCIXdIlgg4u5_6Q8O6R0Hg0oDCdtCJLEL0yX_GDLhU5m3HUIE54M\","
-                    "\"clientDataJSON\": "
-                        "\"eyJ0eXBlIjoid2ViYXV0aG4uY3JlYXRlIiwiY2hhbGxlbmdlIjoibFZlSHpWeFdzcjhNUXhNa1pGMHRpNkZYaGRnTWxqcUt6Z0EtcV96"
-                        "azJNbmlpM2VKNDdWRjk3c3FVb1lrdFZDODVXQVoxdUlBU20tYV9sREZad3NMZnciLCJvcmlnaW4iOiJodHRwczovL3dlYmF1dGhuLmlvIi"
-                        "wiY3Jvc3NPcmlnaW4iOmZhbHNlfQ\""
-                "},"
-                "\"type\": \"public-key\""
-            "}");
+const QString PublicKeyCredential = R"(
+    {
+        "authenticatorAttachment": "platform",
+        "id": "yrzFJ5lwcpTwYMOdXSmxF5b5cYQlqBMzbbU_d-oFLO8",
+        "rawId": "cabcc52799707294f060c39d5d29b11796f9718425a813336db53f77ea052cef",
+        "response": {
+            "attestationObject": "o2NmbXRkbm9uZWdhdHRTdG10oGhhdXRoRGF0YVikdKbqkhPJnC90siSSsyDPQCYqlMGpUKA5fyklC2CEHvBFAAAAAAECAwQFBgcIAQIDBAUGBwgAIMq8xSeZcHKU8GDDnV0psReW-XGEJagTM221P3fqBSzvpQECAyYgASFYIAbsrzRbYpFhbRlZA6ZQKsoxxJWoaeXwh-XUuDLNCIXdIlgg4u5_6Q8O6R0Hg0oDCdtCJLEL0yX_GDLhU5m3HUIE54M",
+            "clientDataJSON": "eyJ0eXBlIjoid2ViYXV0aG4uY3JlYXRlIiwiY2hhbGxlbmdlIjoibFZlSHpWeFdzcjhNUXhNa1pGMHRpNkZYaGRnTWxqcUt6Z0EtcV96azJNbmlpM2VKNDdWRjk3c3FVb1lrdFZDODVXQVoxdUlBU20tYV9sREZad3NMZnciLCJvcmlnaW4iOiJodHRwczovL3dlYmF1dGhuLmlvIiwiY3Jvc3NPcmlnaW4iOmZhbHNlfQ"
+        },
+        "type": "public-key"
+    }
+)";
 
 // Get request
-const QString PublicKeyCredentialRequestOptions =
-    QString("{"
-                "\"allowCredentials\": ["
-                    "{"
-                        "\"id\": \"yrzFJ5lwcpTwYMOdXSmxF5b5cYQlqBMzbbU_d-oFLO8\","
-                        "\"transports\": [\"internal\"],"
-                        "\"type\": \"public-key\""
-                    "}"
-                "],"
-                "\"challenge\": ""\"9z36vTfQTL95Lf7WnZgyte7ohGeF-XRiLxkL-LuGU1zopRmMIUA1LVwzGpyIm1fOBn1QnRa0QH27ADAaJGHysQ\","
-                "\"rpId\": \"webauthn.io\","
-                "\"timeout\": 60000,"
-                "\"userVerification\": \"required\""
-            "}");
+const QString PublicKeyCredentialRequestOptions = R"(
+    {
+        "allowCredentials": [
+            {
+                "id": "yrzFJ5lwcpTwYMOdXSmxF5b5cYQlqBMzbbU_d-oFLO8",
+                "transports": ["internal"],
+                "type": "public-key"
+            }
+        ],
+        "challenge": "9z36vTfQTL95Lf7WnZgyte7ohGeF-XRiLxkL-LuGU1zopRmMIUA1LVwzGpyIm1fOBn1QnRa0QH27ADAaJGHysQ",
+        "rpId": "webauthn.io",
+        "timeout": 60000,
+        "userVerification": "required"
+    }
+)";
 // clang-format on
 
 void TestPasskeys::initTestCase()

@@ -17,6 +17,7 @@
 
 #include "PasskeyImporter.h"
 #include "PasskeyImportDialog.h"
+#include "browser/BrowserMessageBuilder.h"
 #include "browser/BrowserPasskeys.h"
 #include "browser/BrowserService.h"
 #include "core/Entry.h"
@@ -24,7 +25,6 @@
 #include "gui/FileDialog.h"
 #include "gui/MessageBox.h"
 #include <QFileInfo>
-#include <QTextStream>
 #include <QUuid>
 
 static const QString IMPORTED_PASSKEYS_GROUP = QStringLiteral("Imported Passkeys");
@@ -52,17 +52,21 @@ void PasskeyImporter::importPasskey(QSharedPointer<Database>& database)
 
 void PasskeyImporter::importSelectedFile(QFile& file, QSharedPointer<Database>& database)
 {
-    QTextStream fileStream(&file);
-    const auto relyingParty = fileStream.readLine();
-    const auto url = fileStream.readLine();
-    const auto username = fileStream.readLine();
-    const auto password = fileStream.readLine();
-    const auto userHandle = fileStream.readLine();
-
-    QString privateKey;
-    while (!fileStream.atEnd()) {
-        privateKey.append(fileStream.readLine() + "\n");
+    const auto fileData = file.readAll();
+    const auto passkeyObject = browserMessageBuilder()->getJsonObject(fileData);
+    if (passkeyObject.isEmpty()) {
+        MessageBox::information(nullptr,
+                                tr("Cannot import Passkey"),
+                                tr("Cannot import Passkey file \"%1\". Data is missing.").arg(file.fileName()));
+        return;
     }
+
+    const auto relyingParty = passkeyObject["relyingParty"].toString();
+    const auto url = passkeyObject["url"].toString();
+    const auto username = passkeyObject["username"].toString();
+    const auto password = passkeyObject["userId"].toString();
+    const auto userHandle = passkeyObject["userHandle"].toString();
+    const auto privateKey = passkeyObject["privateKey"].toString();
 
     if (relyingParty.isEmpty() || username.isEmpty() || password.isEmpty() || userHandle.isEmpty()
         || privateKey.isEmpty()) {
