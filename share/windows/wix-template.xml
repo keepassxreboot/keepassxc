@@ -92,6 +92,9 @@
                     <RegistryValue Root="HKCU" Key="Software\KeePassXC" Name="DesktopShortcut" Type="integer" Value="1" KeyPath="yes"/>
                 </Component>
             </Directory>
+
+            <!-- Windows system folder -->
+            <Directory Id="SystemFolder" Name="SystemFolder" />
         </DirectoryRef>
 
         <!-- Custom properties to control installation options -->
@@ -116,12 +119,17 @@
         <Property Id="WixShellExecTarget" Value="[#CM_FP_KeePassXC.exe]" />
         <CustomAction Id="LaunchApplication" BinaryKey="WixCA" DllEntry="WixShellExec" Impersonate="yes" />
 
-        <!-- Action to kill running KeePassXC processes -->
-        <Property Id="WixSilentExecCmdLine" Value='taskkill /IM KeePassXC.exe; taskkill /IM keepassxc-proxy.exe /F' />
-        <CustomAction Id="KillKeePassXC" BinaryKey="WixCA" DllEntry="WixSilentExec" Execute="immediate" Return="ignore" />
+        <!-- Action to kill running KeePassXC process -->
+        <Property Id="WixQuietExecCmdLine" Value='"[SystemFolder]taskkill.exe" /IM KeePassXC.exe' />
+        <CustomAction Id="KillKeePassXC" BinaryKey="WixCA" DllEntry="WixQuietExec" Execute="immediate" Return="ignore" />
+
+        <!-- Action to kill running keepassxc-proxy processes -->
+        <Property Id="WixSilentExecCmdLine" Value='"[SystemFolder]taskkill.exe" /IM keepassxc-proxy.exe /F' />
+        <CustomAction Id="KillKeePassXCProxy" BinaryKey="WixCA" DllEntry="WixSilentExec" Execute="immediate" Return="ignore" />
 
         <InstallExecuteSequence>
             <Custom Action="KillKeePassXC" Before="InstallValidate" />
+            <Custom Action="KillKeePassXCProxy" Before="InstallValidate" />
             <!-- Prevent pinned taskbar shortcut from being removed -->
             <RemoveShortcuts Suppress="yes" />
         </InstallExecuteSequence>
