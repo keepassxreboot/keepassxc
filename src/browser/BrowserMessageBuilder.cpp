@@ -19,11 +19,14 @@
 #include "BrowserShared.h"
 #include "config-keepassx.h"
 #include "core/Global.h"
-#include "core/Tools.h"
 
+#include <QCryptographicHash>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#ifdef QT_DEBUG
+#include <QDebug>
+#endif
 
 #include <botan/sodium.h>
 
@@ -243,6 +246,11 @@ QJsonObject BrowserMessageBuilder::getJsonObject(const uchar* pArray, const uint
     QByteArray arr = getQByteArray(pArray, len);
     QJsonParseError err;
     QJsonDocument doc(QJsonDocument::fromJson(arr, &err));
+#ifdef QT_DEBUG
+    if (doc.isNull()) {
+        qWarning() << "Cannot create QJsonDocument: " << err.errorString();
+    }
+#endif
     return doc.object();
 }
 
@@ -250,6 +258,12 @@ QJsonObject BrowserMessageBuilder::getJsonObject(const QByteArray& ba) const
 {
     QJsonParseError err;
     QJsonDocument doc(QJsonDocument::fromJson(ba, &err));
+#ifdef QT_DEBUG
+    if (doc.isNull()) {
+        qWarning() << "Cannot create QJsonDocument: " << err.errorString();
+    }
+#endif
+
     return doc.object();
 }
 
@@ -265,4 +279,66 @@ QString BrowserMessageBuilder::incrementNonce(const QString& nonce)
 
     sodium_increment(n.data(), n.size());
     return getQByteArray(n.data(), n.size()).toBase64();
+}
+
+QString BrowserMessageBuilder::getRandomBytesAsBase64(int bytes) const
+{
+    if (bytes == 0) {
+        return {};
+    }
+
+    std::shared_ptr<unsigned char[]> buf(new unsigned char[bytes]);
+    Botan::Sodium::randombytes_buf(buf.get(), bytes);
+
+    return getBase64FromArray(reinterpret_cast<const char*>(buf.get()), bytes);
+}
+
+QString BrowserMessageBuilder::getBase64FromArray(const char* arr, int len) const
+{
+    if (len < 1) {
+        return {};
+    }
+
+    auto data = QByteArray::fromRawData(arr, len);
+    return getBase64FromArray(data);
+}
+
+// Returns URL encoded base64 with trailing removed
+QString BrowserMessageBuilder::getBase64FromArray(const QByteArray& byteArray) const
+{
+    if (byteArray.length() < 1) {
+        return {};
+    }
+
+    return byteArray.toBase64(QByteArray::Base64UrlEncoding | QByteArray::OmitTrailingEquals);
+}
+
+QString BrowserMessageBuilder::getBase64FromJson(const QJsonObject& jsonObject) const
+{
+    if (jsonObject.isEmpty()) {
+        return {};
+    }
+
+    const auto dataArray = QJsonDocument(jsonObject).toJson(QJsonDocument::Compact);
+    return getBase64FromArray(dataArray);
+}
+
+QByteArray BrowserMessageBuilder::getArrayFromHexString(const QString& hexString) const
+{
+    return QByteArray::fromHex(hexString.toUtf8());
+}
+
+QByteArray BrowserMessageBuilder::getArrayFromBase64(const QString& base64str) const
+{
+    return QByteArray::fromBase64(base64str.toUtf8(), QByteArray::Base64UrlEncoding | QByteArray::OmitTrailingEquals);
+}
+
+QByteArray BrowserMessageBuilder::getSha256Hash(const QString& str) const
+{
+    return QCryptographicHash::hash(str.toUtf8(), QCryptographicHash::Sha256);
+}
+
+QString BrowserMessageBuilder::getSha256HashAsBase64(const QString& str) const
+{
+    return getBase64FromArray(QCryptographicHash::hash(str.toUtf8(), QCryptographicHash::Sha256));
 }

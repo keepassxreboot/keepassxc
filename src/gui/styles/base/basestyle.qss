@@ -25,6 +25,10 @@ QCheckBox, QRadioButton {
     spacing: 10px;
 }
 
+ReportsDialog QTableView::item {
+    padding: 4px;
+}
+
 DatabaseWidget, DatabaseWidget #groupView, DatabaseWidget #tagView {
     background-color: palette(window);
     border: none;

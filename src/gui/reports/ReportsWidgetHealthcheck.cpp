@@ -64,16 +64,16 @@ namespace
             return m_items;
         }
 
-        bool anyKnownBad() const
+        bool anyExcludedEntries() const
         {
-            return m_anyKnownBad;
+            return m_anyExcludedEntries;
         }
 
     private:
         QSharedPointer<Database> m_db;
         HealthChecker m_checker;
         QList<QSharedPointer<Item>> m_items;
-        bool m_anyKnownBad = false;
+        bool m_anyExcludedEntries = false;
     };
 
     class ReportSortProxyModel : public QSortFilterProxyModel
@@ -121,7 +121,7 @@ Health::Health(QSharedPointer<Database> db)
             // Evaluate this entry
             const auto item = QSharedPointer<Item>(new Item(group, entry, m_checker.evaluate(entry)));
             if (item->exclude) {
-                m_anyKnownBad = true;
+                m_anyExcludedEntries = true;
             }
 
             // Add entry if its password isn't at least "good"
@@ -152,8 +152,8 @@ ReportsWidgetHealthcheck::ReportsWidgetHealthcheck(QWidget* parent)
 
     connect(m_ui->healthcheckTableView, SIGNAL(customContextMenuRequested(QPoint)), SLOT(customMenuRequested(QPoint)));
     connect(m_ui->healthcheckTableView, SIGNAL(doubleClicked(QModelIndex)), SLOT(emitEntryActivated(QModelIndex)));
-    connect(m_ui->showKnownBadCheckBox, SIGNAL(stateChanged(int)), this, SLOT(calculateHealth()));
-    connect(m_ui->excludeExpired, SIGNAL(stateChanged(int)), this, SLOT(calculateHealth()));
+    connect(m_ui->showExcluded, SIGNAL(stateChanged(int)), this, SLOT(calculateHealth()));
+    connect(m_ui->showExpired, SIGNAL(stateChanged(int)), this, SLOT(calculateHealth()));
 
     new QShortcut(Qt::Key_Delete, this, SLOT(deleteSelectedEntries()));
 }
@@ -163,7 +163,7 @@ ReportsWidgetHealthcheck::~ReportsWidgetHealthcheck() = default;
 void ReportsWidgetHealthcheck::addHealthRow(QSharedPointer<PasswordHealth> health,
                                             Group* group,
                                             Entry* entry,
-                                            bool knownBad)
+                                            bool excluded)
 {
     QString descr, tip;
     QColor qualityColor;
@@ -195,8 +195,11 @@ void ReportsWidgetHealthcheck::addHealthRow(QSharedPointer<PasswordHealth> healt
     }
 
     auto title = entry->title();
-    if (knownBad) {
+    if (excluded) {
         title.append(tr(" (Excluded)"));
+    }
+    if (entry->isExpired()) {
+        title.append(tr(" (Expired)"));
     }
 
     auto row = QList<QStandardItem*>();
@@ -215,7 +218,7 @@ void ReportsWidgetHealthcheck::addHealthRow(QSharedPointer<PasswordHealth> healt
 
     // Set tooltips
     row[0]->setToolTip(tip);
-    if (knownBad) {
+    if (excluded) {
         row[1]->setToolTip(tr("This entry is being excluded from reports"));
     }
     row[4]->setToolTip(health->scoreDetails());
@@ -255,15 +258,12 @@ void ReportsWidgetHealthcheck::calculateHealth()
     // Perform the health check
     const QScopedPointer<Health> health(AsyncTask::runAndWaitForFuture([this] { return new Health(m_db); }));
 
-    // Display entries that are marked as "known bad"?
-    const auto showExcluded = m_ui->showKnownBadCheckBox->isChecked();
-
     // Display the entries
     m_rowToEntry.clear();
     for (const auto& item : health->items()) {
-        auto excluded = item->exclude || (item->entry->isExpired() && m_ui->excludeExpired->isChecked());
-        if (excluded && !showExcluded) {
-            // Exclude this entry from the report
+        // Check if the entry should be displayed
+        if ((!m_ui->showExcluded->isChecked() && item->exclude)
+            || (!m_ui->showExpired->isChecked() && item->entry->isExpired())) {
             continue;
         }
 
@@ -283,13 +283,8 @@ void ReportsWidgetHealthcheck::calculateHealth()
     m_ui->healthcheckTableView->resizeColumnsToContents();
     m_ui->healthcheckTableView->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Fixed);
 
-    // Show the "show known bad entries" checkbox if there's any known
-    // bad entry in the database.
-    if (health->anyKnownBad()) {
-        m_ui->showKnownBadCheckBox->show();
-    } else {
-        m_ui->showKnownBadCheckBox->hide();
-    }
+    // Only show the "show excluded" checkbox if there are any excluded entries in the database
+    m_ui->showExcluded->setVisible(health->anyExcludedEntries());
 }
 
 void ReportsWidgetHealthcheck::emitEntryActivated(const QModelIndex& index)
