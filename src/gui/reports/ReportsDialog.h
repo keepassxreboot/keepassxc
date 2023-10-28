@@ -63,9 +63,8 @@ public:
 
     void load(const QSharedPointer<Database>& db);
     void addPage(QSharedPointer<IReportsPage> page);
-#ifdef WITH_XC_BROWSER_PASSKEYS
     void activatePasskeysPage();
-#endif
+    bool onPassKeysPage();
 
 signals:
     void editFinished(bool accepted);

@@ -69,6 +69,7 @@ private slots:
     void testAutoType();
     void testTrayRestoreHide();
     void testShortcutConfig();
+    void testMenuActionStates();
 
 private:
     void addCannedEntries();

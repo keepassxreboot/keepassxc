@@ -128,14 +128,23 @@ void ReportsDialog::addPage(QSharedPointer<IReportsPage> page)
     m_ui->categoryList->setCurrentCategory(category);
 }
 
-#ifdef WITH_XC_BROWSER_PASSKEYS
 void ReportsDialog::activatePasskeysPage()
 {
+#ifdef WITH_XC_BROWSER_PASSKEYS
     m_ui->stackedWidget->setCurrentWidget(m_passkeysPage->m_passkeysWidget);
     auto index = m_ui->stackedWidget->currentIndex();
     m_ui->categoryList->setCurrentCategory(index);
-}
 #endif
+}
+
+bool ReportsDialog::onPassKeysPage()
+{
+#ifdef WITH_XC_BROWSER_PASSKEYS
+    return m_ui->stackedWidget->currentWidget() == m_passkeysPage->m_passkeysWidget;
+#else
+    return false;
+#endif
+}
 
 void ReportsDialog::reject()
 {
@@ -144,7 +153,7 @@ void ReportsDialog::reject()
 
 void ReportsDialog::entryActivationSignalReceived(Entry* entry)
 {
-    m_sender = static_cast<QWidget*>(sender());
+    m_sender = qobject_cast<QWidget*>(sender());
     m_editEntryWidget->loadEntry(entry, false, false, entry->group()->hierarchy().join(" > "), m_db);
     m_ui->stackedWidget->setCurrentWidget(m_editEntryWidget);
 }

@@ -537,19 +537,27 @@ bool DatabaseTabWidget::warnOnExport()
     return ans == MessageBox::Yes;
 }
 
+void DatabaseTabWidget::showDatabaseReports(bool state)
+{
+    if (state) {
+        currentDatabaseWidget()->switchToDatabaseReports();
+    } else {
+        currentDatabaseWidget()->switchToMainView();
+    }
+}
+
+void DatabaseTabWidget::showDatabaseSettings(bool state)
+{
+    if (state) {
+        currentDatabaseWidget()->switchToDatabaseSettings();
+    } else {
+        currentDatabaseWidget()->switchToMainView();
+    }
+}
+
 void DatabaseTabWidget::showDatabaseSecurity()
 {
     currentDatabaseWidget()->switchToDatabaseSecurity();
-}
-
-void DatabaseTabWidget::showDatabaseReports()
-{
-    currentDatabaseWidget()->switchToDatabaseReports();
-}
-
-void DatabaseTabWidget::showDatabaseSettings()
-{
-    currentDatabaseWidget()->switchToDatabaseSettings();
 }
 
 #ifdef WITH_XC_BROWSER_PASSKEYS

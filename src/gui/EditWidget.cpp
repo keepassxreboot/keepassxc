@@ -31,6 +31,7 @@ EditWidget::EditWidget(QWidget* parent)
     setModified(false);
 
     m_ui->messageWidget->setHidden(true);
+    m_ui->headerLabel->setHidden(true);
 
     QFont headerLabelFont = m_ui->headerLabel->font();
     headerLabelFont.setBold(true);
@@ -118,6 +119,7 @@ void EditWidget::setCurrentPage(int index)
 
 void EditWidget::setHeadline(const QString& text)
 {
+    m_ui->headerLabel->setHidden(text.isEmpty());
     m_ui->headerLabel->setText(text);
 }
 
