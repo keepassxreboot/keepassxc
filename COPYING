@@ -155,6 +155,7 @@ Files: share/icons/application/scalable/actions/application-exit.svg
        share/icons/application/scalable/actions/database-lock-all.svg
        share/icons/application/scalable/actions/database-merge.svg
        share/icons/application/scalable/actions/database-search.svg
+       share/icons/application/scalable/actions/database-settings.svg
        share/icons/application/scalable/actions/dialog-close.svg
        share/icons/application/scalable/actions/dialog-ok.svg
        share/icons/application/scalable/actions/document-close.svg
@@ -243,9 +244,9 @@ Files: share/icons/application/scalable/actions/application-exit.svg
        share/icons/application/scalable/actions/lock-open-alert.svg
        share/icons/application/scalable/actions/lock-open.svg
        share/icons/application/scalable/actions/lock.svg
-Copyright: 2019 Austin Andrews <http://templarian.com/>
-License: SIL OPEN FONT LICENSE Version 1.1
-Comment: Taken from Material Design icon set (https://github.com/templarian/MaterialDesign/)
+Copyright: 2023 Pictogrammers <https://pictogrammers.com/docs/general/about/>
+License: Apache-2.0
+Comment: Some icons are modified to fit KeePassXC design (https://pictogrammers.com/library/mdi/)
 
 Files: src/streams/qtiocompressor.*
        src/streams/QtIOCompressor
