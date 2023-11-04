@@ -84,7 +84,9 @@ public:
     QString getCurrentTotp(const QString& uuid);
     void showPasswordGenerator(const KeyPairMessage& keyPairMessage);
     bool isPasswordGeneratorRequested() const;
+    QSharedPointer<Database> getDatabase(const QUuid& rootGroupUuid = {});
     QSharedPointer<Database> selectedDatabase();
+    QList<QSharedPointer<Database>> getOpenDatabases();
 #ifdef WITH_XC_BROWSER_PASSKEYS
     QJsonObject
     showPasskeysRegisterPrompt(const QJsonObject& publicKey, const QString& origin, const StringPairList& keyList);
@@ -191,7 +193,6 @@ private:
                    const QString& siteUrl,
                    const QString& formUrl,
                    const bool omitWwwSubdomain = false);
-    QSharedPointer<Database> getDatabase();
     QString getDatabaseRootUuid();
     QString getDatabaseRecycleBinUuid();
     bool checkLegacySettings(QSharedPointer<Database> db);

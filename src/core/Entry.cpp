@@ -545,6 +545,11 @@ bool Entry::hasTotp() const
     return !m_data.totpSettings.isNull();
 }
 
+bool Entry::hasPasskey() const
+{
+    return m_attributes->hasPasskey();
+}
+
 QString Entry::totp() const
 {
     if (hasTotp()) {

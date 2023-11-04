@@ -779,6 +779,20 @@ void BrowserService::addPasskeyToEntry(Entry* entry,
         return;
     }
 
+    // Ask confirmation if entry already contains a Passkey
+    if (entry->hasPasskey()) {
+        if (MessageBox::question(
+                m_currentDatabaseWidget,
+                tr("KeePassXC: Update Passkey"),
+                tr("Entry already has a Passkey.\nDo you want to overwrite the Passkey in %1 - %2?")
+                    .arg(entry->title(), entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_USERNAME)),
+                MessageBox::Overwrite | MessageBox::Cancel,
+                MessageBox::Cancel)
+            != MessageBox::Overwrite) {
+            return;
+        }
+    }
+
     entry->beginUpdate();
 
     entry->attributes()->set(BrowserPasskeys::KPEX_PASSKEY_USERNAME, username);
@@ -1295,8 +1309,7 @@ QList<Entry*> BrowserService::getPasskeyEntries(const QString& rpId, const Strin
 {
     QList<Entry*> entries;
     for (const auto& entry : searchEntries(rpId, "", keyList, true)) {
-        if (entry->attributes()->hasKey(BrowserPasskeys::KPEX_PASSKEY_PRIVATE_KEY_PEM)
-            && entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_RELYING_PARTY) == rpId) {
+        if (entry->hasPasskey() && entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_RELYING_PARTY) == rpId) {
             entries << entry;
         }
     }
@@ -1423,12 +1436,32 @@ bool BrowserService::handleURL(const QString& entryUrl,
     return false;
 }
 
-QSharedPointer<Database> BrowserService::getDatabase()
+QSharedPointer<Database> BrowserService::getDatabase(const QUuid& rootGroupUuid)
 {
+    if (!rootGroupUuid.isNull()) {
+        const auto openDatabases = getOpenDatabases();
+        for (const auto& db : openDatabases) {
+            if (db->rootGroup()->uuid() == rootGroupUuid) {
+                return db;
+            }
+        }
+    }
+
     if (m_currentDatabaseWidget) {
         return m_currentDatabaseWidget->database();
     }
     return {};
+}
+
+QList<QSharedPointer<Database>> BrowserService::getOpenDatabases()
+{
+    QList<QSharedPointer<Database>> databaseList;
+    for (auto dbWidget : getMainWindow()->getOpenDatabases()) {
+        if (!dbWidget->isLocked()) {
+            databaseList << dbWidget->database();
+        }
+    }
+    return databaseList;
 }
 
 QSharedPointer<Database> BrowserService::selectedDatabase()

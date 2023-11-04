@@ -959,6 +959,15 @@ Do you want to delete the entry?
         <source>%1 (Passkey)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>KeePassXC: Update Passkey</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Entry already has a Passkey.
+Do you want to overwrite the Passkey in %1 - %2?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BrowserSettingsWidget</name>
@@ -6038,6 +6047,14 @@ Do you want to overwrite it?
     </message>
     <message>
         <source>Group:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import to entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to import the Passkey to this entry?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

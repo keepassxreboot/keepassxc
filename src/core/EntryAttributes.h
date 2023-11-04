@@ -1,6 +1,6 @@
 /*
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -33,6 +33,7 @@ public:
     explicit EntryAttributes(QObject* parent = nullptr);
     QList<QString> keys() const;
     bool hasKey(const QString& key) const;
+    bool hasPasskey() const;
     QList<QString> customKeys() const;
     QString value(const QString& key) const;
     QList<QString> values(const QList<QString>& keys) const;

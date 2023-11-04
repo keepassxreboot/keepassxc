@@ -52,6 +52,18 @@ bool EntryAttributes::hasKey(const QString& key) const
     return m_attributes.contains(key);
 }
 
+bool EntryAttributes::hasPasskey() const
+{
+    const auto keyList = keys();
+    for (const auto& key : keyList) {
+        if (isPasskeyAttribute(key)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 QList<QString> EntryAttributes::customKeys() const
 {
     QList<QString> customKeys;

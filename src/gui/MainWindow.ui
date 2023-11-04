@@ -342,6 +342,8 @@
     <addaction name="separator"/>
     <addaction name="actionEntryAutoType"/>
     <addaction name="separator"/>
+    <addaction name="actionEntryImportPasskey"/>
+    <addaction name="separator"/>
     <addaction name="actionEntryOpenUrl"/>
     <addaction name="actionEntryDownloadIcon"/>
     <addaction name="separator"/>
@@ -728,6 +730,14 @@
    </property>
    <property name="text">
     <string>Perform &amp;Auto-Type</string>
+   </property>
+  </action>
+  <action name="actionEntryImportPasskey">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Import Passkey</string>
    </property>
   </action>
   <action name="actionEntryAutoTypeUsername">

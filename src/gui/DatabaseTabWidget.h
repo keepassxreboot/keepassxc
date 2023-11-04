@@ -88,6 +88,7 @@ public slots:
 #ifdef WITH_XC_BROWSER_PASSKEYS
     void showPasskeys();
     void importPasskey();
+    void importPasskeyToEntry();
 #endif
     void performGlobalAutoType(const QString& search);
     void performBrowserUnlock();

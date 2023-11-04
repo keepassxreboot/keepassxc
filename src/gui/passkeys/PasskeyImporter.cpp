@@ -29,7 +29,7 @@
 
 static const QString IMPORTED_PASSKEYS_GROUP = QStringLiteral("Imported Passkeys");
 
-void PasskeyImporter::importPasskey(QSharedPointer<Database>& database)
+void PasskeyImporter::importPasskey(QSharedPointer<Database>& database, Entry* entry)
 {
     auto filter = QString("%1 (*.passkey);;%2 (*)").arg(tr("Passkey file"), tr("All files"));
     auto fileName =
@@ -47,10 +47,10 @@ void PasskeyImporter::importPasskey(QSharedPointer<Database>& database)
         return;
     }
 
-    importSelectedFile(file, database);
+    importSelectedFile(file, database, entry);
 }
 
-void PasskeyImporter::importSelectedFile(QFile& file, QSharedPointer<Database>& database)
+void PasskeyImporter::importSelectedFile(QFile& file, QSharedPointer<Database>& database, Entry* entry)
 {
     const auto fileData = file.readAll();
     const auto passkeyObject = browserMessageBuilder()->getJsonObject(fileData);
@@ -80,7 +80,7 @@ void PasskeyImporter::importSelectedFile(QFile& file, QSharedPointer<Database>& 
             tr("Cannot import Passkey"),
             tr("Cannot import Passkey file \"%1\". Private key is missing or malformed.").arg(file.fileName()));
     } else {
-        showImportDialog(database, url, relyingParty, username, credentialId, userHandle, privateKey);
+        showImportDialog(database, url, relyingParty, username, credentialId, userHandle, privateKey, entry);
     }
 }
 
@@ -90,10 +90,11 @@ void PasskeyImporter::showImportDialog(QSharedPointer<Database>& database,
                                        const QString& username,
                                        const QString& credentialId,
                                        const QString& userHandle,
-                                       const QString& privateKey)
+                                       const QString& privateKey,
+                                       Entry* entry)
 {
     PasskeyImportDialog passkeyImportDialog;
-    passkeyImportDialog.setInfo(relyingParty, username, database);
+    passkeyImportDialog.setInfo(relyingParty, username, database, entry != nullptr);
 
     auto ret = passkeyImportDialog.exec();
     if (ret != QDialog::Accepted) {
@@ -103,6 +104,29 @@ void PasskeyImporter::showImportDialog(QSharedPointer<Database>& database,
     auto db = passkeyImportDialog.getSelectedDatabase();
     if (!db) {
         db = database;
+    }
+
+    // Store to entry if given directly
+    if (entry) {
+        browserService()->addPasskeyToEntry(
+            entry, relyingParty, relyingParty, username, userId, userHandle, privateKey);
+        return;
+    }
+
+    // Import to entry selected instead of creating a new one
+    if (!passkeyImportDialog.createNewEntry()) {
+        auto groupUuid = passkeyImportDialog.getSelectedGroupUuid();
+        auto group = db->rootGroup()->findGroupByUuid(groupUuid);
+
+        if (group) {
+            auto selectedEntry = group->findEntryByUuid(passkeyImportDialog.getSelectedEntryUuid());
+            if (selectedEntry) {
+                browserService()->addPasskeyToEntry(
+                    selectedEntry, relyingParty, relyingParty, username, userId, userHandle, privateKey);
+            }
+        }
+
+        return;
     }
 
     // Group settings. Use default group "Imported Passkeys" if user did not select a specific one.
@@ -123,7 +147,7 @@ void PasskeyImporter::showImportDialog(QSharedPointer<Database>& database,
         group, url, relyingParty, relyingParty, username, credentialId, userHandle, privateKey);
 }
 
-Group* PasskeyImporter::getDefaultGroup(QSharedPointer<Database>& database)
+Group* PasskeyImporter::getDefaultGroup(QSharedPointer<Database>& database) const
 {
     auto defaultGroup = database->rootGroup()->findGroupByPath(IMPORTED_PASSKEYS_GROUP);
 
