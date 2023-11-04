@@ -40,6 +40,7 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     , m_ui(new Ui::PasswordGeneratorWidget())
 {
     m_ui->setupUi(this);
+    setWindowFlags(Qt::Widget);
 
     m_ui->buttonGenerate->setIcon(icons()->icon("refresh"));
     m_ui->buttonGenerate->setToolTip(
