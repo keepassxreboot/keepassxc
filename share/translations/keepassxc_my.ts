@@ -81,6 +81,10 @@
         <translation>အသေးစိတ် အချက်အလက်များ</translation>
     </message>
     <message>
+        <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
+        <translation>KeePassXC နှင့် ဖွင့်ရန်တောင်းဆိုထားသော အခြား Client နှစ်ခုစလုံး အလုပ်လုပ်နေချိန်တွင် သင့်ဆုံးဖြတ်ချက်များအား မှတ်သားထားမည်ဖြစ်သည်။</translation>
+    </message>
+    <message>
         <source>Remember</source>
         <translation>မှတ်ထားရန်</translation>
     </message>
@@ -89,16 +93,12 @@
         <translation>ရွေးထားသည့်အရာများကို ခွင့်ပြုရန်</translation>
     </message>
     <message>
-        <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Deny All &amp;&amp; Future</source>
-        <translation type="unfinished"/>
+        <translation>အားလုံးကို ယခုရော နောင်ရော ငြင်းဆိုမည်။</translation>
     </message>
     <message>
         <source>Allow All &amp;&amp; &amp;Future</source>
-        <translation type="unfinished"/>
+        <translation>အားလုံးကို ယခုရော နောင်ရော ခွင့်ပြုမည်။</translation>
     </message>
 </context>
 <context>
@@ -121,6 +121,10 @@
     <message>
         <source>Use OpenSSH</source>
         <translation>OpenSSH အသုံးပြုရန်</translation>
+    </message>
+    <message>
+        <source>Use both agents</source>
+        <translation>အေးဂျင့် နှစ်ခုလုံးကို အသုံးပြုပါ</translation>
     </message>
     <message>
         <source>SSH_AUTH_SOCK override</source>
@@ -150,10 +154,6 @@
         <source>SSH Agent connection is working!</source>
         <translation>SSH အေးဂျင့် ချိတ်ဆက်မှု အလုပ်လုပ်နေသည်။</translation>
     </message>
-    <message>
-        <source>Use both agents</source>
-        <translation type="unfinished"/>
-    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidget</name>
@@ -168,6 +168,10 @@
     <message>
         <source>Security</source>
         <translation>လုံခြုံရေး</translation>
+    </message>
+    <message>
+        <source>This setting cannot be enabled when minimize on unlock is enabled.</source>
+        <translation>အန်လော့ခ်လုပ်ချိန် မြင်ကွင်းကျုံ့ခြင်းကို ရွေးချယ်ထားချိန် ဤ‌ရွေးချယ်မှုကို ပြုလုပ်၍မရပါ။</translation>
     </message>
     <message>
         <source>Access error for config file %1</source>
@@ -223,7 +227,7 @@
     </message>
     <message>
         <source>Select backup storage directory</source>
-        <translation type="unfinished"/>
+        <translation>အရံသိမ်းဖိုင်ကို သိမ်းမည့် နေရာရွေးပါ။</translation>
     </message>
 </context>
 <context>
@@ -257,6 +261,10 @@
         <translation>ယခင်ကသုံးခဲ့သော ဒေတာဘေ့စ်များကို မှတ်ထားပါ</translation>
     </message>
     <message>
+        <source> recent files</source>
+        <translation> မကြာသေးခင်က သုံးထားသော ဖိုင်များ</translation>
+    </message>
+    <message>
         <source>Load previously open databases on startup</source>
         <translation>စတင်ဆောင်ရွက်ချိန်တွင် ယခင်ကဖွင့်ထားသော ဒေတာဘေ့စ်များကို တင်ပါ</translation>
     </message>
@@ -274,22 +282,22 @@
     </message>
     <message>
         <source>On database unlock, show entries that </source>
-        <translation type="unfinished"/>
+        <translation>ဒေတာဘေ့စ် ပွင့်နေလျင်, ........... သော ထည့်ပြီးသားအချက်အလက်များကို ပြပါ။</translation>
     </message>
     <message>
         <source>have expired</source>
         <comment>On database unlock, show entries that...</comment>
-        <translation type="unfinished"/>
+        <translation>သက်တမ်းကုန်သွား</translation>
     </message>
     <message>
         <source> days</source>
         <comment>On database unlock, show entries that will expire within %1 days</comment>
-        <translation type="unfinished"/>
+        <translation>ရက်များ</translation>
     </message>
     <message>
         <source>will expire within </source>
         <comment>On database unlock, show entries that...</comment>
-        <translation type="unfinished"/>
+        <translation>အတွင်းမှာ သက်တမ်းကုန်မည်</translation>
     </message>
     <message>
         <source>File Management</source>
@@ -317,19 +325,19 @@
     </message>
     <message>
         <source>Backup destination</source>
-        <translation type="unfinished"/>
+        <translation>အရံသိမ်းဖိုင် သိမ်းဆည်းရာနေရာ</translation>
     </message>
     <message>
         <source>Specifies the database backup file location. Occurrences of &quot;{DB_FILENAME}&quot; are replaced with the filename of the saved database without extension. {TIME:&lt;format&gt;} is replaced with the backup time, see https://doc.qt.io/qt-5/qdatetime.html#toString. &lt;format&gt; defaults to format string &quot;dd_MM_yyyy_hh-mm-ss&quot;.</source>
-        <translation type="unfinished"/>
+        <translation>ဒေတာဘေ့စ် အရံသိမ်းဖိုင်ကို သိမ်းရန်နေရာ သတ်မှတ်ပြီးဖြစ်သည်။ &quot;{DB_FILENAME}&quot; များကို တွေ့ရှိပါက ၄င်းတို့ကို ဖိုင်နာမည်ဖြင့် အစားထိုးသွားမည်ဖြစ်သည်။ {TIME: 1} ကို အရံသိမ်းဖိုင် သိမ်းရန်ကြာချိန် ဖြင့် အစားထိုးမည်။  https://doc.qt.io/qt-5/qdatetime.html#toString တွင်ကြည့်ပါ။ ရက်စွဲ နဂိုထည့်သွင်းပြီး ဖောမတ်မှာ &quot;dd_MM_yyyy_hh-mm-ss&quot; ဖြစ်သည်။</translation>
     </message>
     <message>
         <source>{DB_FILENAME}.old.kdbx</source>
-        <translation type="unfinished"/>
+        <translation>[DB_FILENAME].old.kdbx</translation>
     </message>
     <message>
         <source>Choose...</source>
-        <translation type="unfinished"/>
+        <translation>ရွေးချယ်ပါ</translation>
     </message>
     <message>
         <source>Use alternative saving method (may solve problems with Dropbox, Google Drive, GVFS, etc.)</source>
@@ -407,6 +415,10 @@
     <message>
         <source>Toolbar button style:</source>
         <translation>တူးလ်ဘား ခလုတ် ပုံစံ -</translation>
+    </message>
+    <message>
+        <source>Show passwords in color</source>
+        <translation>စကားဝှက်များကို အရောင်ဖြင့် ပြပါ</translation>
     </message>
     <message>
         <source>Use monospaced font for notes</source>
@@ -491,7 +503,7 @@
     </message>
     <message>
         <source>Remember last typed entry for:</source>
-        <translation type="unfinished"/>
+        <translation>နောက်ဆုံးရိုက်ထည့်ခဲ့သော ထည့်သွင်းချက်ကိုမှတ်ထားပါ</translation>
     </message>
 </context>
 <context>
@@ -536,7 +548,7 @@
     </message>
     <message>
         <source>Enable database quick unlock (Touch ID / Windows Hello)</source>
-        <translation type="unfinished"/>
+        <translation>ဒေတာဘေ့စ်ကိုအလျင်အမြန်ပွင့်စနစ်ကို ဖွင့်ပါ</translation>
     </message>
     <message>
         <source>Lock databases when session is locked or lid is closed</source>
@@ -582,6 +594,10 @@
         <source>Use DuckDuckGo service to download website icons</source>
         <translation>ဝက်ဘ်ဆိုက်အိုင်ကွန်များကို ဒေါင်းလုဒ်လုပ်ရန် DuckDuckGo ဝန်ဆောင်မှုကို အသုံးပြုပါ</translation>
     </message>
+    <message>
+        <source>Hide TOTP in the entry preview panel</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
@@ -624,6 +640,10 @@
     <message>
         <source>Very long delay detected, max is %1: %2</source>
         <translation>ကြန့်ကြာချိန် အလွန်ကြာကြောင်း တွေ့ရသည်၊ အများဆုံး %1 - %2</translation>
+    </message>
+    <message>
+        <source>Entry does not have attribute for PICKCHARS: %1</source>
+        <translation>ထည့်သွင်းမှုတွင် PICKCHARS အတွက် အရည်အချင်း မရှိပါ - %1</translation>
     </message>
     <message>
         <source>Invalid conversion type: %1</source>
@@ -718,7 +738,12 @@ Ctrl+1 - Type username&lt;br/&gt;
 Ctrl+2 - Type password&lt;br/&gt;
 Ctrl+3 - Type TOTP&lt;br/&gt;
 Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>အသုံးပြုနိုင်သော ‌ဒေတာဘေ့စ်များတွင် မည်သည့်ဖြည့်သွင်းချက်ကိုမဆို အဆင့်မြင့် ရှာဖွေမှု မေးမြန်းချက်များကို အသုံးပြုပြီးရှာဖွေ နိုင်သည်။ အောက်ပါရှော့(တ်)ကတ်များသည် အသုံးဝင်သည် 
+Ctrl+F - ဒေတာဘေ့စ် ရှာဖွေမှုကို အဖွင့်အပိတ်လုပ်ရန်
+Ctrl+1 - အသုံးပြုသူအမည် ရိုက်ရန်
+Ctrl+2 - စကားဝှက် ရိုက်ရန်
+Ctrl+3 - TOTP ရိုက်ရန်
+Ctrl+4 -  ကီးဘုတ်ကိုအသုံးပြုမည်(ဝင်းဒိုးတွင်သာ)</translation>
     </message>
     <message>
         <source>Search all open databases</source>
@@ -762,7 +787,7 @@ Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
     </message>
     <message>
         <source>Use Virtual Keyboard</source>
-        <translation type="unfinished"/>
+        <translation>virtual ကီးဘုတ်ကို အသုံးပြုပါ</translation>
     </message>
 </context>
 <context>
@@ -799,13 +824,13 @@ Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
         <source>Disable for this site</source>
         <translation>ဤဝက်ဘ်ဆိုက်အတွက် ပယ်ဖျက်ရန်</translation>
     </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>BrowserEntrySaveDialog</name>
-    <message>
-        <source>KeePassXC-Browser Save Entry</source>
-        <translation>KeePassXC-ဘရောက်ဇာ ဖြည့်သွင်းချက် သိမ်းရန်</translation>
-    </message>
     <message>
         <source>Ok</source>
         <translation>အိုကေ</translation>
@@ -819,6 +844,62 @@ Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
 Please select the correct database for saving credentials.</source>
         <translation>သင်သည် ဒေတာဘေ့စ်များစွာ ဖွင့်ထားသည်။
 ကျေးဇူးပြု၍ အထောက်အထားများသိမ်းရန်အတွက် မှန်ကန်သော ဒေတာဘေ့စ်ကို ရွေးပါ။</translation>
+    </message>
+    <message>
+        <source>KeePassXC - Select Database</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>BrowserPasskeysConfirmationDialog</name>
+    <message>
+        <source>KeePassXC: Passkey credentials</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>ပယ်ဖျက်ရန်</translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Authenticate</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Register new</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Register</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>Timeout in &lt;b&gt;%n&lt;/b&gt; seconds...</source>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Do you want to register Passkey for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 (%2)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Existing Passkey found.
+Do you want to register a new Passkey for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Select the existing Passkey and press Update to replace it.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Authenticate Passkey credentials for:</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -886,50 +967,8 @@ Do you want to delete the entry?
 </translation>
     </message>
     <message>
-        <source>Converting attributes to custom data…</source>
-        <translation>ပင်ကိုအချက်အလက်ကို စိတ်ကြိုက်အချက်အလက်အဖြစ် ပြောင်းနေသည်…</translation>
-    </message>
-    <message>
-        <source>Abort</source>
-        <translation>ဖျက်ပစ်ရန်</translation>
-    </message>
-    <message>
-        <source>KeePassXC: Converted KeePassHTTP attributes</source>
-        <translation>KeePassXC - ပြောင်းထားသော KeePassHTTP ပင်ကိုအချက်အလက်များ</translation>
-    </message>
-    <message>
-        <source>Successfully converted attributes from %1 entry(s).
-Moved %2 keys to custom data.</source>
-        <translation>ဖြည့်သွင်းချက် %1 ခုမှ ပင်ကိုအချက်အလက်ကို အောင်မြင်စွာ ပြောင်းပြီးပါပြီ။
-စကားဝှက်သော့ %2 ကို စိတ်ကြိုက်အချက်အလက်သို့ ရွှေ့ပြောင်းထားသည်။</translation>
-    </message>
-    <message numerus="yes">
-        <source>Successfully moved %n keys to custom data.</source>
-        <translation><numerusform>စကားဝှက်သော့ %n ခုကို စိတ်ကြိုက်အချက်အလက်သို့ အောင်မြင်စွာ ရွှေ့ပြောင်းပြီးပါပြီ။</numerusform></translation>
-    </message>
-    <message>
-        <source>KeePassXC: No entry with KeePassHTTP attributes found!</source>
-        <translation>KeePassXC - KeePassHTTP ပင်ကိုအချက်အလက်ပါသော ဖြည့်သွင်းချက် မတွေ့ပါ။</translation>
-    </message>
-    <message>
-        <source>The active database does not contain an entry with KeePassHTTP attributes.</source>
-        <translation>အသုံးပြုနေသော ဒေတာဘေ့စ်တွင် KeePassHTTP ပင်ကိုအချက်အလက်ပါသော ဖြည့်သွင်းချက် မပါဝင်ပါ။</translation>
-    </message>
-    <message>
-        <source>Don&apos;t show this warning again</source>
-        <translation>ဤသတိပေးချက်ကို ထပ်မပြပါနှင့်</translation>
-    </message>
-    <message>
-        <source>KeePassXC: Legacy browser integration settings detected</source>
-        <translation>KeePassXC - အသုံးများသော ဘရောက်ဇာ ပေါင်းစပ်ထည့်သွင်းမှု ဆက်တင်ဟောင်းများ တွေ့ရှိသည်</translation>
-    </message>
-    <message>
-        <source>Your KeePassXC-Browser settings need to be moved into the database settings.
-This is necessary to maintain your current browser connections.
-Would you like to migrate your existing settings now?</source>
-        <translation>သင့် KeePassXC-ဘရောက်ဇာ ဆက်တင်များကို ဒေတာဘေ့စ် ဆက်တင်များသို့ ရွှေ့ရန် လိုအပ်ပါသည်။
-သင်၏ လက်ရှိဘရောက်ဇာ ချိတ်ဆက်မှုများကို ထိန်းသိမ်းရန် လိုအပ်ပါသည်။
-သင်၏ တည်ရှိဆဲ ဆက်တင်များကို ယခု ရွှေ့လိုပါသလား။</translation>
+        <source>%1 (Passkey)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1138,14 +1177,6 @@ Would you like to migrate your existing settings now?</source>
         <translation>ကျေးဇူးပြု၍ ဘရောက်ဇာအဆက် သုံးရန် အထူးညွှန်ကြားချက်များကို အောက်တွင်ကြည့်ပါ</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location cannot be found!&lt;br/&gt;Browser integration WILL NOT WORK without the proxy application.</source>
-        <translation>&lt;b&gt;ပြဿနာ -&lt;/b&gt; စိတ်ကြိုက်ပရောက်စီတည်နေရာကို ရှာမတွေ့ပါ။&lt;br/&gt; ပရောက်စီ အက်ပလီကေးရှင်း မပါဘဲ ဘရောက်ဇာ ပေါင်းစပ်ထည့်သွင်းမှု အလုပ်လုပ်မည်မဟုတ်ပါ။</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation>&lt;b&gt;သတိပေးချက် -&lt;/b&gt;အောက်ပါရွေးချယ်မှုများသည် အန္တရာယ်ရှိနိုင်သည်။‌</translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation>လည်ပတ်လုပ်ဆောင်နိုင်သော ဖိုင်များ</translation>
     </message>
@@ -1160,6 +1191,30 @@ Would you like to migrate your existing settings now?</source>
     <message>
         <source>Select native messaging host folder location</source>
         <translation>မူလ မက်ဆေ့ချ်ပို့သည့် လက်ခံဖိုင်တွဲတည်နေရာ ရွေးရန်</translation>
+    </message>
+    <message>
+        <source>Allow keepassxc-proxy to list all entries with their title, URL and UUID in connected databases.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Allow limited access to all entries in connected databases (ignores site access restrictions)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;b&gt;Warning:&lt;/b&gt; Only adjust these settings if necessary.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The custom proxy location does not exist.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location does not exist. Correct this in the advanced settings tab.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The installed proxy executable is missing from the expected location: %1&lt;br/&gt;Please set a custom proxy location in the advanced settings or reinstall the application.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1473,7 +1528,7 @@ Backup database located at %2</source>
     </message>
     <message>
         <source>Unlock Database</source>
-        <translation type="unfinished"/>
+        <translation>ဒေတာဘေ့စ်ကို လော့ဖြည်ရန်</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1481,7 +1536,7 @@ Backup database located at %2</source>
     </message>
     <message>
         <source>Unlock</source>
-        <translation type="unfinished"/>
+        <translation>လော့ဖြည်ခြင်း </translation>
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue…</source>
@@ -1489,7 +1544,7 @@ Backup database located at %2</source>
     </message>
     <message>
         <source>Database Version Mismatch</source>
-        <translation type="unfinished"/>
+        <translation>မကိုက်ညီသော ဒေတာဘေ့စ် ဗားရှင်း</translation>
     </message>
     <message>
         <source>The database you are trying to open was most likely
@@ -1499,15 +1554,15 @@ You can try to open it anyway, but it may be incomplete
 and saving any changes may incur data loss.
 
 We recommend you update your KeePassXC installation.</source>
-        <translation type="unfinished"/>
+        <translation> KeePassXC ရဲ့ Version အသစ်ဖြစ်နိုင်သည့် ဒေတာဘေ့စ် ကို သင်ဖွင့်ရန် လုပ်ဆောင်နေသည်။ ဘယ်လိုနည်းနှင့်မဆို ဖွင့်လိုက်နိုင်ပေမယ့် ဒေတာပျောက်ဆုံးခြင်း၊ မပြည့်စုံခြင်း၊ မသိမ်းစည်းလိုက်မိခြင်းများ ဖြစ်စေနိုင်သည်။ ထိုကြောင့် KeePassXC ကို Update လုပ်ဆောင်ရန် အကြံပြုပါသည်။</translation>
     </message>
     <message>
         <source>Open database anyway</source>
-        <translation type="unfinished"/>
+        <translation>မည်သည့်နည်းနှင့်မဆိုဒေတာဘေ့စ်အားဖွင့်ခြင်း </translation>
     </message>
     <message>
         <source>Database unlock canceled.</source>
-        <translation type="unfinished"/>
+        <translation>ဒေတာဘေ့စ်လော့ဖြည့်ခြင်းကို ပယ်ဖျက်ခဲ့သည် ။</translation>
     </message>
     <message>
         <source>Unlock failed and no password given</source>
@@ -1526,14 +1581,6 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
     <message>
         <source>Retry with empty password</source>
         <translation>စကားဝှက် အလွတ်ထားပြီး ပြန်စမ်းကြည့်ရန်</translation>
-    </message>
-    <message>
-        <source>Failed to authenticate with Windows Hello</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Failed to authenticate with Touch ID</source>
-        <translation type="unfinished"/>
     </message>
     <message>
         <source>Failed to open key file: %1</source>
@@ -1585,6 +1632,14 @@ If you do not have a key file, please leave the field empty.</source>
         <source>Select hardware key…</source>
         <translation>ဟာ့ဝဲ စကားဝှက်သော့ ရွေးရန်…</translation>
     </message>
+    <message>
+        <source>authenticate to access the database</source>
+        <translation>ဒေတာဘေ့စ်ကိုဝင်ရောက်ရန် စစ်မှန်ကြောင်းသက်သေပြပါ</translation>
+    </message>
+    <message>
+        <source>Failed to authenticate with Quick Unlock: %1</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingWidgetMetaData</name>
@@ -1595,10 +1650,6 @@ If you do not have a key file, please leave the field empty.</source>
 </context>
 <context>
     <name>DatabaseSettingsDialog</name>
-    <message>
-        <source>Advanced Settings</source>
-        <translation>အဆင့်မြင့် ဆက်တင်များ</translation>
-    </message>
     <message>
         <source>General</source>
         <translation>ယေဘုယျ</translation>
@@ -1631,24 +1682,16 @@ If you do not have a key file, please leave the field empty.</source>
         <translation>KeePassXC-ဘရောက်ဇာ ဆက်တင်များ</translation>
     </message>
     <message>
-        <source>Convert KeePassHTTP data</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Refresh database root group ID</source>
-        <translation>ဒေတာဘေ့စ်အခြေ အုပ်စု ID ကို ပြန်လည်လန်းဆန်းရန်</translation>
-    </message>
-    <message>
         <source>Disconnect all browsers</source>
         <translation>ဘရောက်ဇာအားလုံးကို ချိတ်ဆက်မှုဖျက်ရန်</translation>
     </message>
     <message>
         <source>Forget all site-specific settings on entries</source>
         <translation>ဖြည့်သွင်းချက်များနှင့်ဆိုင်သော ဝက်ဘ်ဆိုက်အလိုက် ဆက်တင်အားလုံးကို မေ့ပစ်ရန်</translation>
+    </message>
+    <message>
+        <source>Refresh database root group ID</source>
+        <translation>ဒေတာဘေ့စ်အခြေ အုပ်စု ID ကို ပြန်လည်လန်းဆန်းရန်</translation>
     </message>
     <message>
         <source>Stored keys</source>
@@ -1745,16 +1788,6 @@ Permissions to access entries will be revoked.</source>
         <translation>အသုံးပြုနေသော ဒေတာဘေ့စ်တွင် ခွင့်ပြုချက်များပါသော ဖြည့်သွင်းချက် မပါဝင်ပါ။</translation>
     </message>
     <message>
-        <source>Move KeePassHTTP attributes to custom data</source>
-        <translation>KeePassHTTP ပင်ကိုအချက်အလက်များကို စိတ်ကြိုက် အချက်အလက်သို့ ရွှေ့ရန်</translation>
-    </message>
-    <message>
-        <source>Do you really want to convert all legacy browser integration data to the latest standard?
-This is necessary to maintain compatibility with the browser plugin.</source>
-        <translation>အသုံးများသော ဘရောက်ဇာ ပေါင်းစပ်ထည့်သွင်းမှု အချက်အလက်ဟောင်းအားလုံးကို နောက်ဆုံးပေါ် စံနှုန်းအဖြစ်သို့ အမှန်တကယ် ပြောင်းလဲလိုပါသလား။
-ဘရောက်ဇာ ချိတ်ဆက်ပရိုဂရမ်နှင့် ကိုက်ညီမှု ထိန်းသိမ်းထားရန်အတွက် ၎င်းကို လိုအပ်ပါသည်။</translation>
-    </message>
-    <message>
         <source>Refresh database ID</source>
         <translation>ဒေတာဘေ့စ် ID ကို ပြန်လည်လန်းဆန်းရန်</translation>
     </message>
@@ -1811,14 +1844,6 @@ Are you sure you want to continue without a password?</source>
         <translation>ပြန်ဖြည်ရန် ကြာချိန် -</translation>
     </message>
     <message>
-        <source>Change existing decryption time</source>
-        <translation>ရှိနေဆဲ ပြန်ဖြည်ရန်ကြာချိန်ကို ပြောင်းလဲရန်</translation>
-    </message>
-    <message>
-        <source>Change</source>
-        <translation>ပြောင်းလဲမှု</translation>
-    </message>
-    <message>
         <source>Decryption time in seconds</source>
         <translation>စက္ကန့်နှင့်ပြထားသော ပြန်ဖြည်ရန်ကြာချိန်</translation>
     </message>
@@ -1836,11 +1861,11 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>Format cannot be changed: Your database uses KDBX 4 features</source>
-        <translation type="unfinished"/>
+        <translation>ပုံစံကို ပြောင်းလဲ၍မရနိုင်ပါ - သင်၏ဒေတာဘေ့စ်သည် KDBX 4ကို အသုံးပြုထားခြင်းဖြစ်သည်</translation>
     </message>
     <message>
         <source>Unless you need to open your database with other programs, always use the latest format.</source>
-        <translation type="unfinished"/>
+        <translation>သင်၏ဒေတာဘေ့စ်ကိုအခြားသောပရိုဂရမ်ဖြင့်ဖွင့်ရန်မလိုအပ်လျှင်, နောက်ဆုံးပုံစံကိုသာအမြဲတမ်းအသုံးပြုပါ</translation>
     </message>
     <message>
         <source>Encryption Algorithm:</source>
@@ -1892,16 +1917,11 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>KDBX 4 (recommended)</source>
-        <translation type="unfinished"/>
+        <translation>KBDX 4</translation>
     </message>
     <message>
         <source>KDBX 3</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>unchanged</source>
-        <comment>Database decryption time is unchanged</comment>
-        <translation>မပြောင်းလဲထားပါ</translation>
+        <translation>KBDX 3</translation>
     </message>
     <message>
         <source>Number of rounds too high</source>
@@ -1954,6 +1974,18 @@ If you keep this number, your database will not be protected from brute force at
         <source> thread(s)</source>
         <comment>Threads for parallel execution (KDF settings)</comment>
         <translation><numerusform>အစဉ်လိုက်လုပ်ဆောင်ချက်(များ)</numerusform></translation>
+    </message>
+    <message>
+        <source>Encryption Settings:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Basic</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translation>အဆင့်မြင့်</translation>
     </message>
 </context>
 <context>
@@ -2014,16 +2046,8 @@ If you keep this number, your database will not be protected from brute force at
         <translation>ဖြည့်သွင်းချက်တစ်ခုရှိ အများဆုံး မှတ်တမ်းတွင်ပါဝင်သည့်အရာ အရေအတွက်</translation>
     </message>
     <message>
-        <source>Max. history items:</source>
-        <translation>အများဆုံး မှတ်တမ်းတွင် ပါဝင်သည့်အရာများ -</translation>
-    </message>
-    <message>
         <source>Maximum size of history per entry</source>
         <translation>ဖြည့်သွင်းချက်တစ်ခုရှိ အများဆုံး မှတ်တမ်း အရွယ်အစား</translation>
-    </message>
-    <message>
-        <source>Max. history size:</source>
-        <translation>အများဆုံး မှတ်တမ်းအရွယ်အစား -</translation>
     </message>
     <message>
         <source> MiB</source>
@@ -2054,6 +2078,55 @@ This action is not reversible.</source>
     <message>
         <source> (old)</source>
         <translation>(အဟောင်း)</translation>
+    </message>
+    <message>
+        <source>When saving this setting or editing an entry
+the oldest history items of an entry will be
+removed such that only the specified amount
+of entries remain at most.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Limit the amount of history items per entry to:</source>
+        <translation>ထည့်သွင်းမှုတစ်ခုစီ၏ မှတ်တမ်းအကြောင်းအရာများ၏ ပမာဏကို ကန့်သတ်ရန် -</translation>
+    </message>
+    <message>
+        <source>When saving this setting or editing an entry
+the oldest history items of an entry will be
+removed such that the remaining history items
+add up to the specified amount at most.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Limit the total size of history items per entry to:</source>
+        <translation>ထည့်သွင်းမှုတစ်ခုစီ၏ မှတ်တမ်းအကြောင်းအရာများ၏ စုစုပေါင်းအရွယ်အစားကို ကန့်သတ်ရန် -</translation>
+    </message>
+    <message>
+        <source>Move entries to a recycle bin group
+instead of deleting them from the database.
+Entries deleted from the recycle bin are
+removed from the database.</source>
+        <translation>ဒေတာဘေ့စ်မှ အပြီးတိုင်ဖျက်ပစ်မည့်အစား ပြန်လည်ရယူနိုင်သော (recycle bin) အုပ်စု ထဲသို့သာ ရွေ့ပြောင်းထားပါ။ ၄င်း (recycle bin) မှ ရွှေ့ပြောင်းသောအရာများမှာ ဒေတာဘေ့စ်မှ ဖယ်ရှားခံရမည် ဖြစ်သည်။</translation>
+    </message>
+    <message>
+        <source>Autosave delay since last change</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Autosave delay</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Autosave delay since last change in minutes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source> min</source>
+        <translation>မိနစ်</translation>
+    </message>
+    <message>
+        <source>Autosave delay since last change checkbox</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2215,6 +2288,18 @@ This is definitely a bug, please report it to the developers.</source>
         <translation>HTML ဖိုင်ကို ရေးသားခြင်း မအောင်မြင်ပါ။</translation>
     </message>
     <message>
+        <source>Export database to XML file</source>
+        <translation>ဒေတာဘေ့စ်ကို XML ဖိုင်သို့ တင်ပို့ပါ</translation>
+    </message>
+    <message>
+        <source>XML file</source>
+        <translation>XML ဖိုင်</translation>
+    </message>
+    <message>
+        <source>Writing the XML file failed</source>
+        <translation>XML ဖိုင်ကို ရေးသားခြင်း မအောင်မြင်ပါ</translation>
+    </message>
+    <message>
         <source>Export Confirmation</source>
         <translation>ပို့ရန် အတည်ပြုချက်</translation>
     </message>
@@ -2240,8 +2325,8 @@ This is definitely a bug, please report it to the developers.</source>
 <context>
     <name>DatabaseWidget</name>
     <message>
-        <source>Database Tags</source>
-        <translation type="unfinished"/>
+        <source>Searches and Tags</source>
+        <translation>ရှာဖွေမှုများနှင့် တက်များ</translation>
     </message>
     <message>
         <source>Searching…</source>
@@ -2289,7 +2374,11 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message>
         <source>Expired entries</source>
-        <translation type="unfinished"/>
+        <translation>သက်တမ်းကုန်ဆုံးသွားသော ထည့်သွင်းမှုများ</translation>
+    </message>
+    <message numerus="yes">
+        <source>Entries expiring within %1 day(s)</source>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message>
         <source>No current database.</source>
@@ -2314,6 +2403,18 @@ This is definitely a bug, please report it to the developers.</source>
     <message>
         <source>No Results</source>
         <translation>ရလဒ် မရှိပါ</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>သိမ်းရန်</translation>
+    </message>
+    <message>
+        <source>Enter a unique name or overwrite an existing search from the list:</source>
+        <translation>ထူးခြားသော အမည်တစ်ခုကို ထည့်ပါ သို့မဟုတ် စာရင်းမှရှိပြီးသား ရှာဖွေမှုတစ်ခုကို အစားထိုးရေးပါ -</translation>
+    </message>
+    <message>
+        <source>Save Search</source>
+        <translation>ရှာဖွေမှုကိုသိမ်းဆည်းပါ</translation>
     </message>
     <message>
         <source>Lock Database?</source>
@@ -2404,10 +2505,6 @@ Disable safe saves and try again?</source>
     <message>
         <source>Could not find database file: %1</source>
         <translation>ဒေတာဘေ့စ်ဖိုင်ကို ရှာမတွေ့ပါ - %1</translation>
-    </message>
-    <message numerus="yes">
-        <source>Entries expiring within %1 day(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -2551,6 +2648,10 @@ Would you like to correct it?</source>
         <translation>ဝှက်ရန်</translation>
     </message>
     <message numerus="yes">
+        <source>%n hour(s)</source>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
         <source>%n week(s)</source>
         <translation><numerusform>%n ပတ်</numerusform></translation>
     </message>
@@ -2561,10 +2662,6 @@ Would you like to correct it?</source>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>%n နှစ်</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n hour(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -2685,8 +2782,18 @@ Would you like to correct it?</source>
         <translation>ဝင်းဒိုး ဆက်စပ်မှုအသစ် ထည့်ရန်</translation>
     </message>
     <message>
+        <source>+</source>
+        <comment>Add item</comment>
+        <translation>+</translation>
+    </message>
+    <message>
         <source>Remove selected window association</source>
         <translation>ရွေးချယ်ထားသော ဝင်းဒိုး ဆက်စပ်မှုကို ဖယ်ရှားရန်</translation>
+    </message>
+    <message>
+        <source>-</source>
+        <comment>Remove item</comment>
+        <translation>-</translation>
     </message>
     <message>
         <source>Window title:</source>
@@ -2711,16 +2818,6 @@ Would you like to correct it?</source>
     <message>
         <source>Custom Auto-Type sequence for this window</source>
         <translation>ဤဝင်းဒိုးအတွက် စိတ်ကြိုက် အလိုအလျောက် စာရိုက်ခြင်း အစဉ်</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <comment>Add item</comment>
-        <translation>+</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <comment>Remove item</comment>
-        <translation>-</translation>
     </message>
 </context>
 <context>
@@ -2824,20 +2921,8 @@ Would you like to correct it?</source>
         <translation>မှတ်ချက်များ ဖြည့်ရန်အကွက်</translation>
     </message>
     <message>
-        <source>Toggle the checkbox to reveal the notes section.</source>
-        <translation>မှတ်ချက်များ အပိုင်းကို ပြသရန်အတွက် အမှန်ခြစ်ရန်အကွက်ကို ဖွင့်/ပိတ်ပါ။</translation>
-    </message>
-    <message>
         <source>Username field</source>
         <translation>အသုံးပြုသူအမည် ဖြည့်ရန်အကွက်</translation>
-    </message>
-    <message>
-        <source>Toggle notes visible</source>
-        <translation>မှတ်ချက်များကို မြင်ရအောင် ဖွင့်ပါ</translation>
-    </message>
-    <message>
-        <source>Notes:</source>
-        <translation>မှတ်ချက်များ -</translation>
     </message>
     <message>
         <source>Expiration field</source>
@@ -2856,14 +2941,6 @@ Would you like to correct it?</source>
         <translation>ကြိုတင်သတ်မှတ်မှုများ</translation>
     </message>
     <message>
-        <source>Password:</source>
-        <translation>စကားဝှက် -</translation>
-    </message>
-    <message>
-        <source>URL:</source>
-        <translation>URL -</translation>
-    </message>
-    <message>
         <source>Url field</source>
         <translation>Url အကွက်</translation>
     </message>
@@ -2872,16 +2949,8 @@ Would you like to correct it?</source>
         <translation>URL အတွက် သီးသန့်ဝက်ဘ်ဆိုက်အိုင်ကွန်ကို ဒေါင်းလုဒ်လုပ်ပါ</translation>
     </message>
     <message>
-        <source>Title:</source>
-        <translation>ခေါင်းစဉ် -</translation>
-    </message>
-    <message>
         <source>Title field</source>
         <translation>ခေါင်းစဉ် ဖြည့်ရန်အကွက်</translation>
-    </message>
-    <message>
-        <source>Username:</source>
-        <translation>အသုံးပြုသူအမည် -</translation>
     </message>
     <message>
         <source>Password field</source>
@@ -2892,15 +2961,39 @@ Would you like to correct it?</source>
         <translation>အဖွင့်၊အပိတ် သက်တမ်းကုန်ဆုံးချိန်</translation>
     </message>
     <message>
-        <source>Expires:</source>
-        <translation>သက်တမ်းကုန်ချိန် -</translation>
+        <source>Tags list</source>
+        <translation>ပူးတွဲမှုစာရင်း</translation>
     </message>
     <message>
-        <source>Tags:</source>
+        <source>&amp;Username:</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Tags list</source>
+        <source>&amp;Title:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Password:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>UR&amp;L:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Notes:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle notes visibility</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>T&amp;ags:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Expires:</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -2943,19 +3036,6 @@ Would you like to correct it?</source>
         <translation>သီးသန့် စကားဝှက်သော့</translation>
     </message>
     <message>
-        <source>External file</source>
-        <translation>ပြင်ပဖိုင်</translation>
-    </message>
-    <message>
-        <source>Browser for key file</source>
-        <translation>စကားဝှက်သော့ဖိုင်အတွက် ဘရောက်ဇာ</translation>
-    </message>
-    <message>
-        <source>Browse…</source>
-        <extracomment>Button for opening file dialog</extracomment>
-        <translation>ရှာဖွေရန်…</translation>
-    </message>
-    <message>
         <source>Attachment</source>
         <translation>ပူးတွဲဖိုင်</translation>
     </message>
@@ -2970,6 +3050,23 @@ Would you like to correct it?</source>
     <message>
         <source>Remove from agent</source>
         <translation>အေးဂျင့်ဆီမှ ဖယ်ရှားရန်</translation>
+    </message>
+    <message>
+        <source>External file</source>
+        <translation>ပြင်ပဖိုင်</translation>
+    </message>
+    <message>
+        <source>Browser for key file</source>
+        <translation>စကားဝှက်သော့ဖိုင်အတွက် ဘရောက်ဇာ</translation>
+    </message>
+    <message>
+        <source>Browse…</source>
+        <extracomment>Button for opening file dialog</extracomment>
+        <translation>ရှာဖွေရန်…</translation>
+    </message>
+    <message>
+        <source>Generate</source>
+        <translation>ထုတ်လုပ်ရန်</translation>
     </message>
     <message>
         <source>Select attachment file</source>
@@ -3007,10 +3104,6 @@ Would you like to correct it?</source>
         <translation>အိုင်ကွန်</translation>
     </message>
     <message>
-        <source>Browser Integration</source>
-        <translation>ဘရောက်ဇာ ပေါင်းစပ်ထည့်သွင်းခြင်း</translation>
-    </message>
-    <message>
         <source>Properties</source>
         <translation>ဂုဏ်သတ္တိများ</translation>
     </message>
@@ -3027,6 +3120,10 @@ Would you like to correct it?</source>
         <translation>အုပ်စုတွင် မသိမ်းရသေးသော အပြောင်းအလဲများ ရှိသည်</translation>
     </message>
     <message>
+        <source>Browser Integration</source>
+        <translation>ဘရောက်ဇာ ပေါင်းစပ်ထည့်သွင်းခြင်း</translation>
+    </message>
+    <message>
         <source>Enable</source>
         <translation>ဖွင့်ရန်</translation>
     </message>
@@ -3041,10 +3138,6 @@ Would you like to correct it?</source>
 </context>
 <context>
     <name>EditGroupWidgetBrowser</name>
-    <message>
-        <source>Edit Group</source>
-        <translation>အုပ်စု တည်းဖြတ်ရန်</translation>
-    </message>
     <message>
         <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
         <translation>ဤဆက်တင်များသည် ဘရောက်ဇာအဆက်နှင့်ဆိုင်သော အဖွဲ့၏ အပြုအမူပေါ် သက်ရောက်သည်။</translation>
@@ -3080,6 +3173,14 @@ Would you like to correct it?</source>
     <message>
         <source>Do not use HTTP Auth toggle for this and sub groups</source>
         <translation>ဤအုပ်စုနှင့် အုပ်စုခွဲများအတွက် HTTP Auth ဖွင့်/ပိတ်ခလုတ်ကို မသုံးပါနှင့်</translation>
+    </message>
+    <message>
+        <source>Omit WWW subdomain from matching:</source>
+        <translation>အောက်ပါတို့မှ လိုက်ဖက်သော ဆပ်ဒိုမိန်း WWW ကို ချန်ထားပါ -</translation>
+    </message>
+    <message>
+        <source>Omit WWW subdomain from matching toggle for this and sub groups</source>
+        <translation>ဤအရာနှင့် လက်အောက်ခံအုပ်စုများအတွက် လိုက်ဖက်သောပြောင်းလဲမှုမှ ဆပ်ဒိုမိန်း WWW ကို ချန်ထားပါ</translation>
     </message>
 </context>
 <context>
@@ -3173,7 +3274,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>KeeShare container</source>
-        <translation type="unfinished"/>
+        <translation>KeeShare ထည့်သွင်းထားသောနေရာ </translation>
     </message>
     <message>
         <source>KeeShare signed container</source>
@@ -3267,15 +3368,15 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Choose icon…</source>
-        <translation type="unfinished"/>
+        <translation>icon ‌‌‌ရွေးချယ်ပါ </translation>
     </message>
     <message>
         <source>Set the URL to use to search for a favicon</source>
-        <translation type="unfinished"/>
+        <translation>Favicon ကိုရှာရန်အတွက် URL ကို နေရာချထား</translation>
     </message>
     <message>
         <source>Favicon URL</source>
-        <translation type="unfinished"/>
+        <translation>Favicon URL</translation>
     </message>
     <message>
         <source>Download favicon for URL</source>
@@ -3550,12 +3651,13 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message>
         <source>Confirm Overwrite Attachment</source>
-        <translation type="unfinished"/>
+        <translation>ထပ်ပေါင်းရေးထားသောဖိုင်တွဲကို အတည်ပြု</translation>
     </message>
     <message>
         <source>Attachment &quot;%1&quot; already exists. 
 Would you like to overwrite the existing attachment?</source>
-        <translation type="unfinished"/>
+        <translation>ဖိုင်တွဲ&quot;%1&quot; ရှိနေပါပြီ။
+သင်လက်ရှိဖိုင်တွဲပေါ်တွင် ထပ်ရေးချင်ပါသလား?</translation>
     </message>
     <message>
         <source>Confirm Attachment</source>
@@ -3603,7 +3705,7 @@ Error: %1</source>
     <name>EntryHistoryModel</name>
     <message>
         <source>Current (%1)</source>
-        <translation type="unfinished"/>
+        <translation>လက်ရှိ (%1)</translation>
     </message>
     <message>
         <source>Last modified</source>
@@ -3611,11 +3713,11 @@ Error: %1</source>
     </message>
     <message>
         <source>Age</source>
-        <translation type="unfinished"/>
+        <translation>အသက်</translation>
     </message>
     <message>
         <source>Difference</source>
-        <translation type="unfinished"/>
+        <translation>ကွဲပြားခြားနားမှု</translation>
     </message>
     <message>
         <source>Size</source>
@@ -3643,7 +3745,7 @@ Error: %1</source>
     </message>
     <message>
         <source>Custom Attributes</source>
-        <translation type="unfinished"/>
+        <translation>စိတ်ကြိုက်‌လက္ခဏာရပ်</translation>
     </message>
     <message>
         <source>Icon</source>
@@ -3651,7 +3753,7 @@ Error: %1</source>
     </message>
     <message>
         <source>Color</source>
-        <translation type="unfinished"/>
+        <translation>အရောင်</translation>
     </message>
     <message>
         <source>Expiration</source>
@@ -3663,7 +3765,7 @@ Error: %1</source>
     </message>
     <message>
         <source>Custom Data</source>
-        <translation type="unfinished"/>
+        <translation>စိတ်ကြိုက်‌အချက်အလက်</translation>
     </message>
     <message>
         <source>Attachments</source>
@@ -3675,7 +3777,7 @@ Error: %1</source>
     </message>
     <message>
         <source>Tags</source>
-        <translation type="unfinished"/>
+        <translation>ပူးတွဲမှုများ</translation>
     </message>
 </context>
 <context>
@@ -3785,6 +3887,10 @@ Error: %1</source>
         <source>Has TOTP</source>
         <translation>TOTP ရှိသည်</translation>
     </message>
+    <message>
+        <source>Background Color</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EntryPreviewWidget</name>
@@ -3805,8 +3911,8 @@ Error: %1</source>
         <translation>စကားဝှက်</translation>
     </message>
     <message>
-        <source>Notes</source>
-        <translation>မှတ်ချက်များ</translation>
+        <source>URL</source>
+        <translation>URL</translation>
     </message>
     <message>
         <source>Expiration</source>
@@ -3814,19 +3920,19 @@ Error: %1</source>
     </message>
     <message>
         <source>Tags</source>
-        <translation type="unfinished"/>
+        <translation>ပူးတွဲမှုများ</translation>
     </message>
     <message>
         <source>Tags list</source>
-        <translation type="unfinished"/>
+        <translation>ပူးတွဲမှုစာရင်း</translation>
     </message>
     <message>
         <source>Username</source>
         <translation>အသုံးပြုသူအမည်</translation>
     </message>
     <message>
-        <source>URL</source>
-        <translation>URL</translation>
+        <source>Notes</source>
+        <translation>မှတ်ချက်များ</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -3877,6 +3983,10 @@ Error: %1</source>
         <translation>ဘယ်တော့မှ</translation>
     </message>
     <message>
+        <source>Double click to copy value</source>
+        <translation>value ကို ကူးယူရန် နှစ်ချက်နှိပ်ပါ</translation>
+    </message>
+    <message>
         <source>Enabled</source>
         <translation>ဖွင့်ထားသည်</translation>
     </message>
@@ -3884,12 +3994,20 @@ Error: %1</source>
         <source>Disabled</source>
         <translation>ပယ်ဖျက်ထားသည်</translation>
     </message>
+    <message>
+        <source>Double click to copy to clipboard</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
     <message>
         <source>Invalid URL</source>
         <translation>မမှန်ကန်သော URL</translation>
+    </message>
+    <message>
+        <source>Duplicate URL</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3906,38 +4024,42 @@ Error: %1</source>
         <source>Reset to defaults</source>
         <translation>ပုံသေမူလသို့ ပြန်လည်သတ်မှတ်ပါ</translation>
     </message>
+    <message numerus="yes">
+        <source>+ %1 entry(s)...</source>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
 </context>
 <context>
     <name>ExportDialog</name>
     <message>
         <source>Export options</source>
-        <translation type="unfinished"/>
+        <translation>တင်ပို့မှု ရွေးချယ်မှုများ</translation>
     </message>
     <message>
         <source>Sort entries by...</source>
-        <translation type="unfinished"/>
+        <translation>ဝင်ရောက်မှုများကို စီစဉ်ပါ</translation>
     </message>
     <message>
         <source>You are about to export your database to an unencrypted file.
 This will leave your passwords and sensitive information vulnerable!
 </source>
-        <translation type="unfinished"/>
+        <translation>သင်သည် သင့်ဒေတာဘေ့စ်ကို ကုဒ်ဖြင့်မပြောင်းရသေးသောဖိုင်သို့ ပို့တော့မည်ဖြစ်သည်။ ဤသို့ပို့ခြင်းဖြင့် သင့်စကားဝှက်များနှင့် ထိခိုက်လွယ်သော အချက်အလက်တို့တွင် အန္တရာယ်ရှိသည်။</translation>
     </message>
     <message>
         <source>database order</source>
-        <translation type="unfinished"/>
+        <translation>စီစဉ်ထားသော ဒေတာဘေ့စ်</translation>
     </message>
     <message>
         <source>name (ascending)</source>
-        <translation type="unfinished"/>
+        <translation>နာမည် (ascending)</translation>
     </message>
     <message>
         <source>name (descending)</source>
-        <translation type="unfinished"/>
+        <translation>နာမည် (descending)</translation>
     </message>
     <message>
         <source>unknown</source>
-        <translation type="unfinished"/>
+        <translation>အမည်မသိ</translation>
     </message>
     <message>
         <source>Export database to HTML file</source>
@@ -4140,7 +4262,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     <name>Kdbx3Reader</name>
     <message>
         <source>Missing database headers</source>
-        <translation type="unfinished"/>
+        <translation>ဒေတာဘေ့စ် ခေါင်းစီးများ လိုနေသည်</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
@@ -4166,11 +4288,11 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>မမှန်ကန်သော ခေါင်းစီးပိုင်း အရှည်: အပိုင်း %1</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>မမှန်ကန်သော ခေါင်းစီး အချက်အလက် အရှည်: အပိုင်း %1, %2 မျော်လင့်ထားသည့် %3 တွေ့ရှိခဲ့သည်။</translation>
     </message>
 </context>
 <context>
@@ -4227,11 +4349,11 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Invalid header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>မမှန်ကန်သော ခေါင်းစီးပိုင်း အရှည်: အပိုင်း %1</translation>
     </message>
     <message>
         <source>Invalid header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>မမှန်ကန်သော ခေါင်းစီး အချက်အလက် အရှည်: အပိုင်း %1, %2 မျော်လင့်ထားသည့် %3 တွေ့ရှိခဲ့သည်။</translation>
     </message>
     <message>
         <source>Failed to open buffer for KDF parameters in header</source>
@@ -4251,11 +4373,11 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Invalid inner header field length: field %1</source>
-        <translation type="unfinished"/>
+        <translation>မမှန်ကန်သော အတွင်းခေါင်းစီးပိုင်း အရှည်: အပိုင်း %1</translation>
     </message>
     <message>
         <source>Invalid inner header data length: field %1, %2 expected, %3 found</source>
-        <translation type="unfinished"/>
+        <translation>မမှန်ကန်သော အတွင်းပိုင်း ခေါင်းစီး အချက်အလက် အရှည်: အပိုင်း %1, %2 မျော်လင့်ထားသည့် %3 တွေ့ရှိခဲ့သည်။</translation>
     </message>
     <message>
         <source>Invalid inner header binary size</source>
@@ -4951,6 +5073,10 @@ Are you sure you want to continue with this file?</source>
         <translation>TOTP</translation>
     </message>
     <message>
+        <source>Tags</source>
+        <translation>ပူးတွဲမှုများ</translation>
+    </message>
+    <message>
         <source>&amp;Groups</source>
         <translation>&amp;အုပ်စုများ</translation>
     </message>
@@ -5136,11 +5262,11 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>&amp;Lock Database</source>
-        <translation type="unfinished"/>
+        <translation>&amp;ဒေတာဘေစ့်များကို လော့ချရန်</translation>
     </message>
     <message>
         <source>Lock &amp;All Databases</source>
-        <translation type="unfinished"/>
+        <translation>လော့ချခြင်း &amp;ဒေတာဘေ့စ် အားလုံး</translation>
     </message>
     <message>
         <source>&amp;Title</source>
@@ -5151,8 +5277,8 @@ Are you sure you want to continue with this file?</source>
         <translation>ခေါင်းစဉ်ကို clipboard သို့ ကူးရန်</translation>
     </message>
     <message>
-        <source>&amp;URL</source>
-        <translation>&amp;URL</translation>
+        <source>Copy &amp;URL</source>
+        <translation>&amp;URL ကို ကူးယူပါ</translation>
     </message>
     <message>
         <source>Copy URL to clipboard</source>
@@ -5213,6 +5339,10 @@ Are you sure you want to continue with this file?</source>
     <message>
         <source>Copy &amp;TOTP</source>
         <translation>&amp;TOTP ကို ကူးရန်</translation>
+    </message>
+    <message>
+        <source>Copy Password and TOTP</source>
+        <translation>စကားဝှက်နှင့် TOTP ကို ကူးယူပါ</translation>
     </message>
     <message>
         <source>E&amp;mpty recycle bin</source>
@@ -5311,6 +5441,14 @@ Are you sure you want to continue with this file?</source>
         <translation>အုပ်စုကို ပုံတူပွားရန်…</translation>
     </message>
     <message>
+        <source>&amp;XML File…</source>
+        <translation>&amp;XML ဖိုင်…</translation>
+    </message>
+    <message>
+        <source>XML File…</source>
+        <translation>XML ဖိုင်…</translation>
+    </message>
+    <message>
         <source>Clear history</source>
         <translation>မှတ်တမ်းကို ရှင်းရန်</translation>
     </message>
@@ -5342,6 +5480,10 @@ We recommend you use the AppImage available on our downloads page.</source>
         <translation>သတိပေးချက် - သင်၏ Qt ဗားရှင်းသည် မျက်နှာပြင်ပေါ်ရှိကီးဘုတ် အသုံးပြုပါက KeePassXC ကို ရပ်တန့်စေနိုင်သည်။
 ကျွန်ုပ်တို့၏ ဒေါင်းလုဒ်စာမျက်နှာတွင် ရရှိနိုင်သော AppImage ကို သုံးရန် သင့်အား အကြံပြုပါသည်။</translation>
     </message>
+    <message>
+        <source>No Tags</source>
+        <translation>တဂ်များမရှိပါ</translation>
+    </message>
     <message numerus="yes">
         <source>Restore Entry(s)</source>
         <translation type="unfinished"><numerusform></numerusform></translation>
@@ -5370,6 +5512,10 @@ We recommend you use the AppImage available on our downloads page.</source>
         <source>Quit KeePassXC</source>
         <translation>KeePassXC မှ ထွက်ရန်</translation>
     </message>
+    <message numerus="yes">
+        <source>%1 Entry(s)</source>
+        <translation><numerusform>%1 ဖြည့်သွင်းချက်(s)</numerusform></translation>
+    </message>
     <message>
         <source>Please present or touch your YubiKey to continue…</source>
         <translation>ကျေးဇူးပြု၍ ဆက်လုပ်ရန် သင့် YubiKey ကို တင်ပြပါ သို့မဟုတ် နှိပ်ပါ…</translation>
@@ -5381,6 +5527,22 @@ We recommend you use the AppImage available on our downloads page.</source>
     <message>
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
         <translation>သင်သည် ဤဆက်တင်ကို သုံးရန် အက်ပလီကေးရှင်းကို ပြန်လည်စတင်ရမည်။ ယခု ပြန်လည်စတင်လိုပါသလား။</translation>
+    </message>
+    <message>
+        <source>Allow Screen Capture</source>
+        <translation>မျက်နှာပြင်ကို ဓါတ်ပုံရိုက်ယူခွင့်ပြုပါ</translation>
+    </message>
+    <message>
+        <source>Passkeys…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Passkeys</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import Passkey</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5418,11 +5580,11 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Reset</source>
-        <translation type="unfinished"/>
+        <translation>မူလအတိုင်းပြန်လည်စတင်ခြင်း </translation>
     </message>
     <message>
         <source>Reset any remembered decisions for this application</source>
-        <translation type="unfinished"/>
+        <translation>ယခုအက်ပ်ပလီကေးရှင်းအတွက်သိမ်းဆည်းထားသောမှတ်တမ်းများအားမူလအတိုင်းပြန်လည်သတ်မှတ်ပါ</translation>
     </message>
 </context>
 <context>
@@ -5517,14 +5679,6 @@ We recommend you use the AppImage available on our downloads page.</source>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
         <translation>ဒေတာဘေ့စ် ကုဒ်ဖြင့်ပြောင်းခြင်း ဆက်တင်များကို ဤနေရာတွင် ချိန်ညှိနိုင်သည်။ ၎င်းတို့ကို ဒေတာဘေ့စ် ဆက်တင်များတွင် နောက်မှ ပြောင်းလဲနိုင်သည်။</translation>
-    </message>
-    <message>
-        <source>Advanced Settings</source>
-        <translation>အဆင့်မြင့် ဆက်တင်များ</translation>
-    </message>
-    <message>
-        <source>Simple Settings</source>
-        <translation>လွယ်ကူရိုးရှင်းသော ဆက်တင်များ</translation>
     </message>
 </context>
 <context>
@@ -5689,6 +5843,10 @@ We recommend you use the AppImage available on our downloads page.</source>
         <translation>အမည်မသိ ကုဒ်ရေးသားမှု - %1</translation>
     </message>
     <message>
+        <source>AES-256/GCM is currently not supported</source>
+        <translation>AES-256/GCM ကို လောလောဆယ် မပံ့ပိုးပါ</translation>
+    </message>
+    <message>
         <source>Passphrase is required to decrypt this key</source>
         <translation>ဤစကားဝှက်သော့ကို ပြန်ဖြည်ရန် လျှို့ဝှက်စာသား လိုအပ်သည်</translation>
     </message>
@@ -5754,26 +5912,168 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
 </context>
 <context>
-    <name>PasswordEdit</name>
+    <name>OpenSSHKeyGenDialog</name>
     <message>
-        <source>Passwords do not match</source>
-        <translation>စကားဝှက်သော့များ မကိုက်ညီပါ</translation>
+        <source>SSH Key Generator</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Passwords match so far</source>
-        <translation>ယခုချိန်ထိ စကားဝှက်သော့များ ကိုက်ညီသည်</translation>
+        <source>Type</source>
+        <translation>အမျိုးအစား</translation>
     </message>
     <message>
-        <source>Toggle Password (%1)</source>
-        <translation>စကားဝှက်ကို ဝှက်ရန်/ပြရန် (%1)</translation>
+        <source>Bits</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Generate Password (%1)</source>
-        <translation>စကားဝှက် ထုတ်လုပ်ရန် (%1)</translation>
+        <source>Comment</source>
+        <translation>မှတ်ချက်ပေးရန်</translation>
+    </message>
+</context>
+<context>
+    <name>PasskeyExportDialog</name>
+    <message>
+        <source>KeePassXC - Passkey Export</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Warning: Caps Lock enabled!</source>
-        <translation>သတိပေးချက် - Caps Lock ဖွင့်ထားသည်။</translation>
+        <source>Export the following Passkey entries.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Filenames will be generated with title and .passkey file extension.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export entries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export Selected</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>ပယ်ဖျက်ရန်</translation>
+    </message>
+    <message>
+        <source>Export to folder</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>PasskeyExporter</name>
+    <message>
+        <source>KeePassXC: Passkey Export</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>File &quot;%1.passkey&quot; already exists.
+Do you want to overwrite it?
+</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot open file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot open file &quot;%1&quot; for writing.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot write to file</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>PasskeyImportDialog</name>
+    <message>
+        <source>KeePassXC - Passkey Import</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to import the Passkey?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>URL: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Username: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use default group (Imported Passkeys)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Group</source>
+        <translation>အုပ်စု</translation>
+    </message>
+    <message>
+        <source>Database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Select Database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import Passkey</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation>ထည့်သွင်းရန်</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>ပယ်ဖျက်ရန်</translation>
+    </message>
+    <message>
+        <source>Database: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Group:</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>PasskeyImporter</name>
+    <message>
+        <source>Passkey file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>All files</source>
+        <translation>ဖိုင်အားလုံး</translation>
+    </message>
+    <message>
+        <source>Open Passkey file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot open file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot open file &quot;%1&quot; for reading.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot import Passkey</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot import Passkey file &quot;%1&quot;. Data is missing.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot import Passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5992,11 +6292,11 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Delete selected wordlist</source>
-        <translation type="unfinished"/>
+        <translation>ရွေးခြယ်ထားသောစာလုံးများအားဖျက်ပါ</translation>
     </message>
     <message>
         <source>Add custom wordlist</source>
-        <translation type="unfinished"/>
+        <translation>စိတ်ကြိုက်ပြုလုပ်ထားသောစာလုံးစာရင်းအားထည့်သွင်းပါ</translation>
     </message>
     <message>
         <source>character</source>
@@ -6032,56 +6332,11 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>(SYSTEM)</source>
-        <translation type="unfinished"/>
+        <translation>စနစ်</translation>
     </message>
     <message>
         <source>Entropy: %1 bit</source>
         <translation>အချက်အလက် ရွှေ့ပြောင်းနှုန်း - %1 ဘစ်</translation>
-    </message>
-    <message>
-        <source>Confirm Delete Wordlist</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Do you really want to delete the wordlist &quot;%1&quot;?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Failed to delete wordlist</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Wordlists</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>All files</source>
-        <translation>ဖိုင်အားလုံး</translation>
-    </message>
-    <message>
-        <source>Select Custom Wordlist</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Overwrite Wordlist?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Wordlist &quot;%1&quot; already exists as a custom wordlist.
-Do you want to overwrite it?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Failed to add wordlist</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Logograms</source>
-        <translation>စာသားကိုယ်စားပြု သင်္ကေတများ</translation>
-    </message>
-    <message>
-        <source>Special Characters</source>
-        <translation>အထူးစာလုံးများ</translation>
     </message>
     <message>
         <source>Password Quality: %1</source>
@@ -6106,6 +6361,103 @@ Do you want to overwrite it?</source>
         <source>Excellent</source>
         <comment>Password quality</comment>
         <translation>အလွန်ကောင်း</translation>
+    </message>
+    <message>
+        <source>Confirm Delete Wordlist</source>
+        <translation>စာလုံးစာရင်းအားဖျက်ရန်အတည်ပြုပါသည်</translation>
+    </message>
+    <message>
+        <source>Do you really want to delete the wordlist &quot;%1&quot;?</source>
+        <translation>သင့်အနေနှင့်စာလုံးစာရင်း&quot;%1&quot;အားဖျက်ရန်သေချာပါသလား?</translation>
+    </message>
+    <message>
+        <source>Failed to delete wordlist</source>
+        <translation>စာလုံးစာရင်းအားဖျက်ရန်မအောင်မြင်ပါ</translation>
+    </message>
+    <message>
+        <source>Wordlists</source>
+        <translation>စာလုံးစာရင်း</translation>
+    </message>
+    <message>
+        <source>All files</source>
+        <translation>ဖိုင်အားလုံး</translation>
+    </message>
+    <message>
+        <source>Select Custom Wordlist</source>
+        <translation>စိတ်ကြိုက်ပြုလုပ်ထားသောစာလုံးစာရင်းအားရွေးခြယ်ပါ</translation>
+    </message>
+    <message>
+        <source>Overwrite Wordlist?</source>
+        <translation>စာလုံးစာရင်း ထပ်ရေးရန် </translation>
+    </message>
+    <message>
+        <source>Wordlist &quot;%1&quot; already exists as a custom wordlist.
+Do you want to overwrite it?</source>
+        <translation>စာလုံးစာရင်း ၁ ရာခို်င်နှုန်းသည် စိတ်ကြိုက်ပြုလုပ်နိုင်သော စာလုံးစာရင်းတွင် ပါရှိပြီးဖြစ်သည်။
+သင် ထပ်ရေးချင်ပါသလား ? </translation>
+    </message>
+    <message>
+        <source>Failed to add wordlist</source>
+        <translation>စာလုံးစာရင်းတွင် ထပ်ဖြည့်ရန် မအောင်မြင်ပါ ။ </translation>
+    </message>
+    <message>
+        <source>Logograms</source>
+        <translation>စာသားကိုယ်စားပြု သင်္ကေတများ</translation>
+    </message>
+    <message>
+        <source>Special Characters</source>
+        <translation>အထူးစာလုံးများ</translation>
+    </message>
+</context>
+<context>
+    <name>PasswordWidget</name>
+    <message>
+        <source>Passwords do not match</source>
+        <translation>စကားဝှက်များ မကိုက်ညီပါ</translation>
+    </message>
+    <message>
+        <source>Passwords match so far</source>
+        <translation>ယခုချိန်ထိ စကားဝှက်များ ကိုက်ညီသည်</translation>
+    </message>
+    <message>
+        <source>Toggle Password (%1)</source>
+        <translation>စကားဝှက်ကို ဝှက်ရန်/ပြရန် (%1)</translation>
+    </message>
+    <message>
+        <source>Generate Password (%1)</source>
+        <translation>စကားဝှက် ထုတ်လုပ်ရန် (%1)</translation>
+    </message>
+    <message>
+        <source>Warning: Caps Lock enabled!</source>
+        <translation>သတိပေးချက် - Caps Lock ဖွင့်ထားသည်။</translation>
+    </message>
+    <message>
+        <source>Quality: %1</source>
+        <translation>အရည်အသွေး - %1</translation>
+    </message>
+    <message>
+        <source>Poor</source>
+        <comment>Password quality</comment>
+        <translation>ညံ့</translation>
+    </message>
+    <message>
+        <source>Weak</source>
+        <comment>Password quality</comment>
+        <translation>အားနည်း</translation>
+    </message>
+    <message>
+        <source>Good</source>
+        <comment>Password quality</comment>
+        <translation>ကောင်း</translation>
+    </message>
+    <message>
+        <source>Excellent</source>
+        <comment>Password quality</comment>
+        <translation>အလွန်ကောင်း</translation>
+    </message>
+    <message>
+        <source>Toggle password visibilty using Control + H. Open the password generator using Control + G.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6366,19 +6718,19 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Export an attachment of an entry.</source>
-        <translation type="unfinished"/>
+        <translation>ဖြည့်သွင်းချက်တစ်ခုအတွက် ပူးတွဲဖိုင်အား တင်ပို့ပါ ။ </translation>
     </message>
     <message>
         <source>Path of the entry with the target attachment.</source>
-        <translation type="unfinished"/>
+        <translation>ရည်ရွယ်ထားသော ပူးတွဲဖိုင်နှင့်အတူ ဖြည့်သွင်းရမည့် လမ်းကြောင်း</translation>
     </message>
     <message>
         <source>Name of the attachment to be exported.</source>
-        <translation type="unfinished"/>
+        <translation>တင်ပို့ရမည့် ပူးတွဲဖိုင်နာမည်</translation>
     </message>
     <message>
         <source>Path to which the attachment should be exported.</source>
-        <translation type="unfinished"/>
+        <translation>ပူးတွဲဖိုင်တင်ပို့သင့်သည့် လမ်းကြောင်း</translation>
     </message>
     <message>
         <source>Could not find entry with path %1.</source>
@@ -6386,63 +6738,63 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Could not find attachment with name %1.</source>
-        <translation type="unfinished"/>
+        <translation>%1  နာမည်နှင့် ပူးတွဲဖိုင်အား ရှာမတွေ့ပါ ။ </translation>
     </message>
     <message>
         <source>No export target given. Please use &apos;--stdout&apos; or specify an &apos;export-file&apos;.</source>
-        <translation type="unfinished"/>
+        <translation>တင်ပို့ရမည့် ပစ်မှတ်နေရာ ပေးထားခြင်းမရှိ ။ ကျေးဇူးပြု၍ &apos;--stdout&apos; ကိုသုံးပါ သို့မဟုတ် &apos;export-file&apos; ကို သတ်မှတ်ပေးပါ။ </translation>
     </message>
     <message>
         <source>Could not open output file %1.</source>
-        <translation type="unfinished"/>
+        <translation>%1 ရလဒ်ဖိုင်ကို ဖွင့်၍မရပါ ။ </translation>
     </message>
     <message>
         <source>Successfully exported attachment %1 of entry %2 to %3.</source>
-        <translation type="unfinished"/>
+        <translation>ဖြည့်သွင်းချက် ၂% မှ ၃ % ၏ ၁ % သော ပူးတွဲဖိုင်များကို အောင်မြင်စွာထုပ်ယူပြီးဖြစ်သည်။</translation>
     </message>
     <message>
         <source>Overwrite existing attachments.</source>
-        <translation type="unfinished"/>
+        <translation>ရှိရင်းစွဲ ပူးတွဲဖိုင်များအပေါ် ထပ်ရေးပါ။</translation>
     </message>
     <message>
         <source>Imports an attachment to an entry.</source>
-        <translation type="unfinished"/>
+        <translation>ပူးတွဲဖိုင်အား ဖြည့်သွင်းချက်သို့ ထည့်သွင်းပါ။</translation>
     </message>
     <message>
         <source>Path of the entry.</source>
-        <translation type="unfinished"/>
+        <translation>ဖြည့်သွင်းရန် လမ်းကြောင်း</translation>
     </message>
     <message>
         <source>Name of the attachment to be added.</source>
-        <translation type="unfinished"/>
+        <translation>ထည့်ရမည့် ပူးတွဲဖိုင်၏အမည်</translation>
     </message>
     <message>
         <source>Path of the attachment to be imported.</source>
-        <translation type="unfinished"/>
+        <translation>ပူးတွဲဖိုင်၏ လမ်းကြောင်းကို တင်သွင်းသည့် </translation>
     </message>
     <message>
         <source>Attachment %1 already exists for entry %2.</source>
-        <translation type="unfinished"/>
+        <translation>ဖြည့်သွင်းချက် ၂% အတွက် ပူးတွဲဖိုင် ၁% ရှိပြီးဖြစ်သည်။</translation>
     </message>
     <message>
         <source>Could not open attachment file %1.</source>
-        <translation type="unfinished"/>
+        <translation>%1 ပူးတွဲဖိုင်ကို ဖွင့်၍မရပါ ။ </translation>
     </message>
     <message>
         <source>Successfully imported attachment %1 as %2 to entry %3.</source>
-        <translation type="unfinished"/>
+        <translation>ဖြည့်သွင်းချက် ၂% မှ ၃ % ၏ ၁ % သော ပူးတွဲဖိုင်များကို အောင်မြင်ထည့်သွင်းပြီးဖြစ်သည်။</translation>
     </message>
     <message>
         <source>Remove an attachment of an entry.</source>
-        <translation type="unfinished"/>
+        <translation>ဖြည့်သွင်းချက်၏ ပူးတွဲဖိုင်အား ဖယ်ရှားသည်။</translation>
     </message>
     <message>
         <source>Name of the attachment to be removed.</source>
-        <translation type="unfinished"/>
+        <translation>ဖယ်ရှားရမည့် ပူးတွဲဖိုင်အမည်</translation>
     </message>
     <message>
         <source>Successfully removed attachment %1 from entry %2.</source>
-        <translation type="unfinished"/>
+        <translation>ထည့်သွင်းပြီး %2 မှ ပူးတွဲဖိုင် %1 အား အောင်မြင်စွာဖယ်ရှားပြီး</translation>
     </message>
     <message>
         <source>Copy the given attribute to the clipboard. Defaults to &quot;password&quot; if not specified.</source>
@@ -6555,12 +6907,22 @@ Do you want to overwrite it?</source>
         <translation>ပေးထားသော တန်ဖိုးများ များလွန်းသည်။</translation>
     </message>
     <message>
+        <source>Path of the database.</source>
+        <translation>ဒေတာဘေ့စ် လမ်းကြောင်း။</translation>
+    </message>
+    <message>
         <source>Target decryption time in MS for the database.</source>
         <translation>ဒေတာဘေ့စ်အတွက် MS ရှိ မှန်းထားသော ပြန်ဖြည်ရန်ကြာချိန်။</translation>
     </message>
     <message>
         <source>time</source>
         <translation>ကြာချိန်</translation>
+    </message>
+    <message>
+        <source>Set the key file for the database.
+This options is deprecated, use --set-key-file instead.</source>
+        <translation>ဒေတာဘေ့စ်အတွက် သော့ဖိုင်ကို သတ်မှတ်ပါ။
+ဤရွေးချယ်မှုများကို ရပ်တန့်ထားပြီး၊ ၎င်းအစား --set-key-file ကို အသုံးပြုပါ။</translation>
     </message>
     <message>
         <source>Set the key file for the database.</source>
@@ -6573,10 +6935,6 @@ Do you want to overwrite it?</source>
     <message>
         <source>Create a new database.</source>
         <translation>ဒေတာဘေ့စ်အသစ်တစ်ခု ဖန်တီးပါ။</translation>
-    </message>
-    <message>
-        <source>Path of the database.</source>
-        <translation>ဒေတာဘေ့စ် လမ်းကြောင်း။</translation>
     </message>
     <message>
         <source>Invalid decryption time %1.</source>
@@ -6621,6 +6979,158 @@ Do you want to overwrite it?</source>
     <message>
         <source>Successfully created new database.</source>
         <translation>ဒေတာဘေ့စ်အသစ် အောင်မြင်စွာ ဖန်တီးပြီးပါပြီ။</translation>
+    </message>
+    <message>
+        <source>Unset the password for the database.</source>
+        <translation>ဒေတာဘေ့စ်အတွက် စကားဝှက်ကို မသတ်မှတ်ပါ။</translation>
+    </message>
+    <message>
+        <source>Unset the key file for the database.</source>
+        <translation>ဒေတာဘေ့စ်အတွက် သော့ဖိုင်ကို သတ်မှတ်မထားပါ။</translation>
+    </message>
+    <message>
+        <source>Edit a database.</source>
+        <translation>ဒေတာဘေ့စကို တည်းဖြတ်ပါ။</translation>
+    </message>
+    <message>
+        <source>Cannot use %1 and %2 at the same time.</source>
+        <translation>%1 နှင့် %2 ကို တစ်ချိန်တည်းတွင် အသုံးမပြုနိုင်ပါ။</translation>
+    </message>
+    <message>
+        <source>Could not change the database key.</source>
+        <translation>ဒေတာဘေ့စ်သော့ကို မပြောင်းနိုင်ပါ။</translation>
+    </message>
+    <message>
+        <source>Database was not modified.</source>
+        <translation>ဒေတာဘေ့စ်ကို မွမ်းမံမထားပါ။</translation>
+    </message>
+    <message>
+        <source>Writing the database failed: %1</source>
+        <translation>ဒေတာဘေ့စ်ကို ရေးသားခြင်း မအောင်မြင်ပါ - %1</translation>
+    </message>
+    <message>
+        <source>Successfully edited the database.</source>
+        <translation>ဒေတာဘေ့စ်ကို အောင်မြင်စွာ တည်းဖြတ်ခဲ့သည်။</translation>
+    </message>
+    <message>
+        <source>Cannot remove password: The database does not have a password.</source>
+        <translation>စကားဝှက်ကို ဖယ်ရှား၍မရပါ - ဒေတာဘေ့စ်တွင် စကားဝှက်တစ်ခု မရှိပါ။</translation>
+    </message>
+    <message>
+        <source>Cannot remove file key: The database does not have a file key.</source>
+        <translation>ဖိုင်သော့ကို ဖယ်ရှား၍မရပါ - ဒေတာဘေ့စ်တွင် ဖိုင်သော့တစ်ခု မရှိပါ။</translation>
+    </message>
+    <message>
+        <source>Loading the new key file failed: %1</source>
+        <translation>သော့ဖိုင်အသစ်ကို တင်ခြင်း မအောင်မြင်ပါ - %1</translation>
+    </message>
+    <message>
+        <source>Found unexpected Key type %1</source>
+        <translation>မမျှော်လင့်ထားသော သော့အမျိုးအစား %1 ကို တွေ့ရှိခဲ့သည်</translation>
+    </message>
+    <message>
+        <source>Cannot remove all the keys from a database.</source>
+        <translation>ဒေတာဘေ့စ်တစ်ခုမှ သော့အားလုံးကို မဖယ်ရှားနိုင်ပါ။</translation>
+    </message>
+    <message>
+        <source>Show a database&apos;s information.</source>
+        <translation>ဒေတာဘေ့စ်၏ အချက်အလက်ကို ပြပါ။</translation>
+    </message>
+    <message>
+        <source>UUID: </source>
+        <translation>UUID - </translation>
+    </message>
+    <message>
+        <source>Name: </source>
+        <translation>အမည် -</translation>
+    </message>
+    <message>
+        <source>Description: </source>
+        <translation>ဖော်ပြချက် -</translation>
+    </message>
+    <message>
+        <source>Cipher: </source>
+        <translation>ကုဒ်ရေးသားမှု -</translation>
+    </message>
+    <message>
+        <source>KDF: </source>
+        <translation>KDF -</translation>
+    </message>
+    <message>
+        <source>Recycle bin is enabled.</source>
+        <translation>အမှိုက်ပုံးကို ဖွင့်ထားသည်။</translation>
+    </message>
+    <message>
+        <source>Recycle bin is not enabled.</source>
+        <translation>အမှိုက်ပုံးကို ဖွင့်မထားပါ။</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>တည်နေရာ</translation>
+    </message>
+    <message>
+        <source>Database created</source>
+        <translation>ဒေတာဘေ့စ် ဖန်တီးပြီးပါပြီ</translation>
+    </message>
+    <message>
+        <source>Last saved</source>
+        <translation>နောက်ဆုံးသိမ်းခဲ့ချိန်</translation>
+    </message>
+    <message>
+        <source>Unsaved changes</source>
+        <translation>သိမ်းမထားသော အပြောင်းအလဲများ</translation>
+    </message>
+    <message>
+        <source>yes</source>
+        <translation>ဟုတ်</translation>
+    </message>
+    <message>
+        <source>no</source>
+        <translation>မဟုတ်</translation>
+    </message>
+    <message>
+        <source>Number of groups</source>
+        <translation>အုပ်စု အရေအတွက်</translation>
+    </message>
+    <message>
+        <source>Number of entries</source>
+        <translation>ဖြည့်သွင်းချက် အရေအတွက်</translation>
+    </message>
+    <message>
+        <source>Number of expired entries</source>
+        <translation>သက်တမ်းကုန်သွားသော ဖြည့်သွင်းချက် အရေအတွက်</translation>
+    </message>
+    <message>
+        <source>Unique passwords</source>
+        <translation>သီးသန့် စကားဝှက်များ</translation>
+    </message>
+    <message>
+        <source>Non-unique passwords</source>
+        <translation>သီးသန့်မဟုတ်သော စကားဝှက်များ</translation>
+    </message>
+    <message>
+        <source>Maximum password reuse</source>
+        <translation>အများဆုံး စကားဝှက်ပြန်သုံးမှု</translation>
+    </message>
+    <message>
+        <source>Number of short passwords</source>
+        <translation>စကားဝှက်အတို အရေအတွက်</translation>
+    </message>
+    <message>
+        <source>Number of weak passwords</source>
+        <translation>အားနည်းသော စကားဝှက် အရေအတွက်</translation>
+    </message>
+    <message>
+        <source>Entries excluded from reports</source>
+        <translation>အစီရင်ခံစာများမှ ဖယ်ထားသော ဖြည့်သွင်းချက်များ</translation>
+    </message>
+    <message>
+        <source>Average password length</source>
+        <translation>ပျမ်းမျှ စကားဝှက်အရှည်</translation>
+    </message>
+    <message>
+        <source>%1 characters</source>
+        <translation>စာလုံး %1 လုံး</translation>
     </message>
     <message>
         <source>Word count for the diceware passphrase.</source>
@@ -6672,10 +7182,6 @@ Do you want to overwrite it?</source>
     <message>
         <source>Enter new password for entry: </source>
         <translation>ဖြည့်သွင်းချက်အတွက် စကားဝှက်အသစ် ထည့်ပါ -</translation>
-    </message>
-    <message>
-        <source>Writing the database failed: %1</source>
-        <translation>ဒေတာဘေ့စ်ကို ရေးသားခြင်း မအောင်မြင်ပါ - %1</translation>
     </message>
     <message>
         <source>Successfully edited entry %1.</source>
@@ -6851,7 +7357,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Use custom character set</source>
-        <translation type="unfinished"/>
+        <translation>စိတ်ကြိုက် စာလုံး အစု အားအသုံးပြုမည်</translation>
     </message>
     <message>
         <source>Exclude similar looking characters</source>
@@ -6900,106 +7406,6 @@ Do you want to overwrite it?</source>
     <message>
         <source>Successfully imported database.</source>
         <translation>ဒေတာဘေ့စ် အောင်မြင်စွာ ထည့်သွင်းပြီးပါပြီ။</translation>
-    </message>
-    <message>
-        <source>Show a database&apos;s information.</source>
-        <translation>ဒေတာဘေ့စ်၏ အချက်အလက်ကို ပြပါ။</translation>
-    </message>
-    <message>
-        <source>UUID: </source>
-        <translation>UUID - </translation>
-    </message>
-    <message>
-        <source>Name: </source>
-        <translation>အမည် -</translation>
-    </message>
-    <message>
-        <source>Description: </source>
-        <translation>ဖော်ပြချက် -</translation>
-    </message>
-    <message>
-        <source>Cipher: </source>
-        <translation>ကုဒ်ရေးသားမှု -</translation>
-    </message>
-    <message>
-        <source>KDF: </source>
-        <translation>KDF -</translation>
-    </message>
-    <message>
-        <source>Recycle bin is enabled.</source>
-        <translation>အမှိုက်ပုံးကို ဖွင့်ထားသည်။</translation>
-    </message>
-    <message>
-        <source>Recycle bin is not enabled.</source>
-        <translation>အမှိုက်ပုံးကို ဖွင့်မထားပါ။</translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation>တည်နေရာ</translation>
-    </message>
-    <message>
-        <source>Database created</source>
-        <translation>ဒေတာဘေ့စ် ဖန်တီးပြီးပါပြီ</translation>
-    </message>
-    <message>
-        <source>Last saved</source>
-        <translation>နောက်ဆုံးသိမ်းခဲ့ချိန်</translation>
-    </message>
-    <message>
-        <source>Unsaved changes</source>
-        <translation>သိမ်းမထားသော အပြောင်းအလဲများ</translation>
-    </message>
-    <message>
-        <source>yes</source>
-        <translation>ဟုတ်</translation>
-    </message>
-    <message>
-        <source>no</source>
-        <translation>မဟုတ်</translation>
-    </message>
-    <message>
-        <source>Number of groups</source>
-        <translation>အုပ်စု အရေအတွက်</translation>
-    </message>
-    <message>
-        <source>Number of entries</source>
-        <translation>ဖြည့်သွင်းချက် အရေအတွက်</translation>
-    </message>
-    <message>
-        <source>Number of expired entries</source>
-        <translation>သက်တမ်းကုန်သွားသော ဖြည့်သွင်းချက် အရေအတွက်</translation>
-    </message>
-    <message>
-        <source>Unique passwords</source>
-        <translation>သီးသန့် စကားဝှက်များ</translation>
-    </message>
-    <message>
-        <source>Non-unique passwords</source>
-        <translation>သီးသန့်မဟုတ်သော စကားဝှက်များ</translation>
-    </message>
-    <message>
-        <source>Maximum password reuse</source>
-        <translation>အများဆုံး စကားဝှက်ပြန်သုံးမှု</translation>
-    </message>
-    <message>
-        <source>Number of short passwords</source>
-        <translation>စကားဝှက်အတို အရေအတွက်</translation>
-    </message>
-    <message>
-        <source>Number of weak passwords</source>
-        <translation>အားနည်းသော စကားဝှက် အရေအတွက်</translation>
-    </message>
-    <message>
-        <source>Entries excluded from reports</source>
-        <translation>အစီရင်ခံစာများမှ ဖယ်ထားသော ဖြည့်သွင်းချက်များ</translation>
-    </message>
-    <message>
-        <source>Average password length</source>
-        <translation>ပျမ်းမျှ စကားဝှက်အရှည်</translation>
-    </message>
-    <message>
-        <source>%1 characters</source>
-        <translation>စာလုံး %1 လုံး</translation>
     </message>
     <message>
         <source>Unknown command %1</source>
@@ -7174,8 +7580,12 @@ Available commands:
         <translation>ကာကွယ်ထားသော ပင်ကိုအချက်အလက်များကို ကုဒ်ပြောင်းမထားသော စာသားဖြင့် ပြပါ။</translation>
     </message>
     <message>
+        <source>Show all the attributes of the entry.</source>
+        <translation>ထည့်သွင်းမှု၏ အရည်အချင်းအားလုံးကို ပြပါ။</translation>
+    </message>
+    <message>
         <source>Show the attachments of the entry.</source>
-        <translation type="unfinished"/>
+        <translation>ဖြည့်သွင်းချက်၏ ပူးတွဲဖိုင် များအားပြပါ။</translation>
     </message>
     <message>
         <source>Names of the attributes to show. This option can be specified more than once, with each attribute shown one-per-line in the given order. If no attributes are specified, a summary of the default attributes is given.</source>
@@ -7199,11 +7609,11 @@ Available commands:
     </message>
     <message>
         <source>No attachments present.</source>
-        <translation type="unfinished"/>
+        <translation>မည်သည့် ပူးတွဲဖိုင်မျှ မပါရှိပါ။</translation>
     </message>
     <message>
         <source>Attachments:</source>
-        <translation type="unfinished"/>
+        <translation>ပူးတွဲဖိုင်များ</translation>
     </message>
     <message>
         <source>Failed to open database file %1: not found</source>
@@ -7241,6 +7651,10 @@ Please consider generating a new key file.</source>
     <message>
         <source>Invalid YubiKey serial %1</source>
         <translation>မမှန်ကန်သော YubiKey အစဉ် %1</translation>
+    </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue.</source>
+        <translation>ကျေးဇူးပြု၍ ဆက်လုပ်ရန် သင့် YubiKey ကို တင်ပြပါ သို့မဟုတ် နှိပ်ပါ</translation>
     </message>
     <message>
         <source>Enter password to encrypt database (optional): </source>
@@ -7382,7 +7796,7 @@ CPU တည်ဆောက်ပုံ - %2
     </message>
     <message>
         <source>KeeShare</source>
-        <translation type="unfinished"/>
+        <translation> KeeShare</translation>
     </message>
     <message>
         <source>YubiKey</source>
@@ -7390,7 +7804,7 @@ CPU တည်ဆောက်ပုံ - %2
     </message>
     <message>
         <source>Quick Unlock</source>
-        <translation type="unfinished"/>
+        <translation>အမြန်ပွင့်</translation>
     </message>
     <message>
         <source>Secret Service Integration</source>
@@ -7429,8 +7843,8 @@ CPU တည်ဆောက်ပုံ - %2
         <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message>
-        <source>Botan library must be at least 2.11.x, found %1.%2.%3</source>
-        <translation>Botan စာကြည့်တိုက်သည် အနည်းဆုံး 2.11.x ဖြစ်ရမည်၊ %1.%2.%3 ကို တွေ့ရှိထားသည်</translation>
+        <source>Botan library must be at least %1, found %2.%3.%4</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Cryptographic libraries:</source>
@@ -7502,7 +7916,7 @@ CPU တည်ဆောက်ပုံ - %2
     </message>
     <message>
         <source>ChaCha20 256-bit</source>
-        <translation type="unfinished"/>
+        <translation>ChaCha20 256-bit</translation>
     </message>
     <message>
         <source>Argon2d (KDBX 4 – recommended)</source>
@@ -7518,7 +7932,7 @@ CPU တည်ဆောက်ပုံ - %2
     </message>
     <message>
         <source>AES-KDF (KDBX 3)</source>
-        <translation type="unfinished"/>
+        <translation>AES-KDF (KDBX 3)</translation>
     </message>
     <message>
         <source>Existing single-instance lock file is invalid. Launching new instance.</source>
@@ -7616,7 +8030,7 @@ CPU တည်ဆောက်ပုံ - %2
     </message>
     <message>
         <source>Browser Statistics</source>
-        <translation type="unfinished"/>
+        <translation>ဘရောင်ဇာ စာရင်းအင်းများ</translation>
     </message>
     <message>
         <source>Health Check</source>
@@ -7671,10 +8085,6 @@ CPU တည်ဆောက်ပုံ - %2
         <translation>စံထည့်သွင်းမှုမှ ဒေတာဘေ့စ်၏ စကားဝှက်ကို ဖတ်ပါ</translation>
     </message>
     <message>
-        <source>allow app screen recordering and screenshots</source>
-        <translation>အက်ပ်စခရင် မှတ်တမ်းတင်ခြင်းနှင့် စခရင်ရှော့(တ်)များကို ခွင့်ပြုပါ</translation>
-    </message>
-    <message>
         <source>Locked databases.</source>
         <translation>လော့ချထားသော ဒေတာဘေ့စ်များ။</translation>
     </message>
@@ -7687,16 +8097,16 @@ CPU တည်ဆောက်ပုံ - %2
         <translation>KeePassXC ကို အခြားတစ်နေရာတွင် လည်ပတ်နေပါသည်။</translation>
     </message>
     <message>
+        <source>KeePassXC is not running. No open database to lock</source>
+        <translation>KeePassXC သည် အလုပ်မလုပ်ပါ။ လော့ခ်ဖွင့်ရန် ဒေတာဘေ့စ်မရှိပါ</translation>
+    </message>
+    <message>
         <source>Fatal error while testing the cryptographic functions.</source>
         <translation>ကုဒ်ထည့်ထားသော လုပ်ဆောင်ချက်များကို စစ်ဆေးစဉ် အရေးကြီးပြဿနာ ဖြစ်ခဲ့သည်။</translation>
     </message>
     <message>
         <source>KeePassXC - Error</source>
         <translation>KeePassXC - ပြဿနာ</translation>
-    </message>
-    <message>
-        <source>Warning: Failed to prevent screenshots on a top level window!</source>
-        <translation>သတိပေးချက် - အဆင့်မြင့်ဝင်းဒိုးတွင် စခရင်ရှော့(များ)ကို တားဆီးခြင်း မအောင်မြင်ပါ။</translation>
     </message>
     <message>
         <source>Database password: </source>
@@ -7714,14 +8124,90 @@ CPU တည်ဆောက်ပုံ - %2
     </message>
     <message>
         <source>Failed to create Windows Hello credential.</source>
-        <translation type="unfinished"/>
+        <translation>Windows Hello အထောက်အထားကို ဖန်တီး၍ မရနိုင်ပါ</translation>
     </message>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
+        <translation>Windows Hello ကိုအသုံးပြုပြီး လက်မှတ်ထိုးဝင်၍ မရပါ</translation>
+    </message>
+    <message>
+        <source>Warning: Failed to block screenshot capture on a top-level window.</source>
+        <translation>သတိပေးချက် - ထိပ်တန်းအဆင့်ဝင်းဒိုးတွင် မျက်နှာပြင်ဖမ်းယူခြင်းကို မတားဆီးနိုင်ပါ။</translation>
+    </message>
+    <message>
+        <source>Invalid Cipher</source>
+        <translation>Cipher မမှန်ပါ</translation>
+    </message>
+    <message>
+        <source>Invalid KDF</source>
+        <translation>KDF မမှန်ပါ</translation>
+    </message>
+    <message>
+        <source>Access to all entries is denied</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Please present or touch your YubiKey to continue.</source>
+        <source>allow screenshots and app recording (Windows/macOS)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>AES initialization failed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>AES encrypt failed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to store in Linux Keyring</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not locate key in keyring</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not read key in keyring</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>AES decrypt failed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No Polkit authentication agent was available</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Polkit authorization failed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No Quick Unlock provider is available</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Polkit returned an error: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to init KeePassXC crypto.</source>
+        <translation>KeePassXC crypto စတင်ရန် မအောင်မြင်ခဲ့ပါ</translation>
+    </message>
+    <message>
+        <source>Failed to encrypt key data.</source>
+        <translation>အချက်အလက်များကို ကုဒ်ဖြင့်ပြောင်းရန် မအောင်မြင်ခဲ့ပါ</translation>
+    </message>
+    <message>
+        <source>Failed to get Windows Hello credential.</source>
+        <translation>Window Hello အထောက်အထားရရန် မအောင်မြင်ခဲ့ပါ</translation>
+    </message>
+    <message>
+        <source>Failed to decrypt key data.</source>
+        <translation>အချက်အလက်များကို ကုဒ်ပြန်ဖြည်ခြင်း မအောင်မြင်ခဲ့ပါ</translation>
+    </message>
+    <message>
+        <source>Passkeys</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -7762,40 +8248,28 @@ CPU တည်ဆောက်ပုံ - %2
 <context>
     <name>ReportsWidgetBrowserStatistics</name>
     <message>
-        <source>Exclude expired entries from the report</source>
-        <translation>သက်တမ်းကုန်ပြီးသော ဖြည့်သွင်းချက်များကို အစီရင်ခံစာမှ ဖယ်ပါ</translation>
-    </message>
-    <message>
-        <source>Show only entries which have URL set</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Show only entries which have browser settings in custom data</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Double-click entries to edit.</source>
-        <translation type="unfinished"/>
+        <translation>ထည့်သွင်းမှုများကိုပြင်ဆင်ရန် ကလစ် ၂ ချက်နှိပ်ပါ</translation>
     </message>
     <message>
         <source>List of entry URLs</source>
-        <translation type="unfinished"/>
+        <translation>URL ထည့်သွင်းမှုများစာရင်း</translation>
     </message>
     <message>
         <source>Entry has no URLs set</source>
-        <translation type="unfinished"/>
+        <translation>ထည့်သွင်းမှုတွင် URL set များမပါဝင်ပါ</translation>
     </message>
     <message>
         <source>Allowed URLs</source>
-        <translation type="unfinished"/>
+        <translation>ခွင့်ပြုထားသော URL များ</translation>
     </message>
     <message>
         <source>Entry has no Browser Integration settings</source>
-        <translation type="unfinished"/>
+        <translation>ထည့်သွင်းမှုတွင် Browser Intigration ပြင်ဆင်ချက်များ မရှိပါ</translation>
     </message>
     <message>
         <source>Denied URLs</source>
-        <translation type="unfinished"/>
+        <translation>ငြင်းပယ်ထားသော URLများ</translation>
     </message>
     <message>
         <source> (Excluded)</source>
@@ -7807,11 +8281,11 @@ CPU တည်ဆောက်ပုံ - %2
     </message>
     <message>
         <source>Please wait, browser statistics is being calculated…</source>
-        <translation type="unfinished"/>
+        <translation>ကျေးဇူးပြု၍ စောင့်ပါ၊ ဒေတာဘေ့စ် အချက်အလက်များကို တွက်ချက်နေသည်</translation>
     </message>
     <message>
         <source>No entries with a URL, or none has browser extension settings saved.</source>
-        <translation type="unfinished"/>
+        <translation>URL ပါသောထည့်သွင်းမှုများမရှိပါ၊ သို့မဟုတ် ဘရောင်ဇာအပိုလုပ်ဆောင်မှုပြင်ဆင်ချက်များ သိမ်းဆည်ထားခြင်းမရှိပါ း</translation>
     </message>
     <message>
         <source>Title</source>
@@ -7823,7 +8297,7 @@ CPU တည်ဆောက်ပုံ - %2
     </message>
     <message>
         <source>URLs</source>
-        <translation type="unfinished"/>
+        <translation>URL များ</translation>
     </message>
     <message>
         <source>Edit Entry…</source>
@@ -7837,17 +8311,25 @@ CPU တည်ဆောက်ပုံ - %2
         <source>Exclude from reports</source>
         <translation>အစီရင်ခံစာများမှ ဖယ်ရန်</translation>
     </message>
+    <message>
+        <source>Only show entries that have a URL</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Only show entries that have been explicitly allowed or denied</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show expired entries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source> (Expired)</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ReportsWidgetHealthcheck</name>
-    <message>
-        <source>Exclude expired entries from the report</source>
-        <translation>သက်တမ်းကုန်ပြီးသော ဖြည့်သွင်းချက်များကို အစီရင်ခံစာမှ ဖယ်ပါ</translation>
-    </message>
-    <message>
-        <source>Also show entries that have been excluded from reports</source>
-        <translation>အစီရင်ခံစာများမှ ဖယ်ထားသော ဖြည့်သွင်းချက်များကိုပါ ပြသပါ</translation>
-    </message>
     <message>
         <source>Hover over reason to show additional details. Double-click entries to edit.</source>
         <translation>ထပ်ဆောင်း အသေးစိတ်အချက်အလက်များကို ပြရန် အကြောင်းရင်းပေါ်တွင် ထောက်ပါ။ ဖြည့်သွင်းချက်များကို တည်းဖြတ်ရန် နှစ်ချက်နှိပ်ပါ။</translation>
@@ -7922,6 +8404,18 @@ CPU တည်ဆောက်ပုံ - %2
     <message>
         <source>Exclude from reports</source>
         <translation>အစီရင်ခံစာများမှ ဖယ်ရန်</translation>
+    </message>
+    <message>
+        <source>Show expired entries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show entries that have been excluded from reports</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source> (Expired)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -8017,6 +8511,65 @@ CPU တည်ဆောက်ပုံ - %2
     <message>
         <source>Exclude from reports</source>
         <translation>အစီရင်ခံစာများမှ ဖယ်ရန်</translation>
+    </message>
+</context>
+<context>
+    <name>ReportsWidgetPasskeys</name>
+    <message>
+        <source>Export</source>
+        <translation>ပို့ရန်</translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation>ထည့်သွင်းရန်</translation>
+    </message>
+    <message>
+        <source>List of entry URLs</source>
+        <translation>URL ထည့်သွင်းမှုများစာရင်း</translation>
+    </message>
+    <message>
+        <source>Please wait, list of entries with Passkeys is being updated…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No entries with Passkeys.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation>ခေါင်းစဉ်</translation>
+    </message>
+    <message>
+        <source>Path</source>
+        <translation>လမ်းကြောင်း</translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>အသုံးပြုသူအမည်</translation>
+    </message>
+    <message>
+        <source>URLs</source>
+        <translation>URL များ</translation>
+    </message>
+    <message>
+        <source>Edit Entry…</source>
+        <translation>ဖြည့်သွင်းချက်ကို တည်းဖြတ်ပါ…</translation>
+    </message>
+    <message numerus="yes">
+        <source>Delete Entry(s)…</source>
+        <translation><numerusform>ဖြည့်သွင်းချက်(များ)ကို ဖျက်ပါ…</numerusform></translation>
+    </message>
+    <message>
+        <source>Relying Party</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show expired entries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source> (Expired)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -8259,6 +8812,10 @@ CPU တည်ဆောက်ပုံ - %2
         <translation>ရှာဖွေမှု အကူအညီ</translation>
     </message>
     <message>
+        <source>Save Search</source>
+        <translation>ရှာဖွေမှုကိုသိမ်းဆည်းပါ</translation>
+    </message>
+    <message>
         <source>Search (%1)…</source>
         <comment>Search placeholder text, %1 is the keyboard shortcut</comment>
         <translation>ရှာဖွေသည် (%1)…</translation>
@@ -8444,14 +9001,14 @@ CPU တည်ဆောက်ပုံ - %2
     <name>ShareExport</name>
     <message>
         <source>Could not write export container.</source>
-        <translation type="unfinished"/>
+        <translation>တင်ပို့မှုဒေတာထည့်သွင်းထားရာနေရာတွင် ရေးသွင်းခြင်းမရနိုင်ပါ</translation>
     </message>
 </context>
 <context>
     <name>ShareImport</name>
     <message>
         <source>Successful import</source>
-        <translation type="unfinished"/>
+        <translation>အောင်မြင်စွာတင်သွင်းသည်</translation>
     </message>
 </context>
 <context>
@@ -8492,16 +9049,39 @@ CPU တည်ဆောက်ပုံ - %2
 <context>
     <name>TagModel</name>
     <message>
-        <source>All</source>
-        <translation type="unfinished"/>
+        <source>Clear Search</source>
+        <translation>ရှာဖွေမှုကို ရှင်းလင်းပါ</translation>
+    </message>
+    <message>
+        <source>All Entries</source>
+        <translation>ထည့်သွင်းမှုများအားလုံး</translation>
     </message>
     <message>
         <source>Expired</source>
-        <translation type="unfinished"/>
+        <translation>ကုန်ဆုံးသွားသည်</translation>
     </message>
     <message>
         <source>Weak Passwords</source>
-        <translation type="unfinished"/>
+        <translation>အားနည်းသောစကားဝှက်များ</translation>
+    </message>
+</context>
+<context>
+    <name>TagView</name>
+    <message>
+        <source>Remove Search</source>
+        <translation>ရှာဖွေမှုကို ဖယ်ရှားပါ</translation>
+    </message>
+    <message>
+        <source>Remove Tag</source>
+        <translation>တက်ကို ဖယ်ရှားပါ</translation>
+    </message>
+    <message>
+        <source>Confirm Remove Tag</source>
+        <translation>တက်ကို ဖယ်ရှားရန် အတည်ပြုပါ</translation>
+    </message>
+    <message>
+        <source>Remove tag &quot;%1&quot; from all entries in this database?</source>
+        <translation>တက် &quot;%1&quot; ကို ဤဒေတာဘေ့စ်ရှိ ထည့်သွင်းမှုများအားလုံးမှ ဖယ်ရှားမလား။</translation>
     </message>
 </context>
 <context>
@@ -8707,25 +9287,6 @@ Example: JBSWY3DPEHPK3PXP</source>
     <message>
         <source>Could not register global shortcut</source>
         <translation>ကမ္ဘာသုံး ရှော့(တ်)ကတ်ကို စာရင်းသွင်း၍မရပါ</translation>
-    </message>
-</context>
-<context>
-    <name>WindowsHello</name>
-    <message>
-        <source>Failed to init KeePassXC crypto.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Failed to encrypt key data.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Failed to get Windows Hello credential.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Failed to decrypt key data.</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
