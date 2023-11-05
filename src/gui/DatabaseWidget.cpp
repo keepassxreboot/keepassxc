@@ -1889,7 +1889,10 @@ void DatabaseWidget::closeEvent(QCloseEvent* event)
         return;
     }
 
-    m_databaseOpenWidget->resetQuickUnlock();
+    // Reset quick unlock if we are not remembering it
+    if (!config()->get(Config::Security_QuickUnlockRemember).toBool()) {
+        m_databaseOpenWidget->resetQuickUnlock();
+    }
     event->accept();
 }
 

@@ -38,7 +38,6 @@ public:
 
 private:
     QString m_error;
-    QHash<QUuid, QByteArray> m_encryptedKeys;
     Q_DISABLE_COPY(WindowsHello);
 };
 
