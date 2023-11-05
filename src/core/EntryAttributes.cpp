@@ -34,6 +34,7 @@ const QString EntryAttributes::SearchInGroupName = "SearchIn";
 const QString EntryAttributes::SearchTextGroupName = "SearchText";
 
 const QString EntryAttributes::RememberCmdExecAttr = "_EXEC_CMD";
+const QString EntryAttributes::AdditionalUrlAttribute = "KP2A_URL";
 const QString EntryAttributes::PasskeyAttribute = "KPEX_PASSKEY";
 
 EntryAttributes::EntryAttributes(QObject* parent)

@@ -126,7 +126,6 @@ public:
     static const QString OPTION_ONLY_HTTP_AUTH;
     static const QString OPTION_NOT_HTTP_AUTH;
     static const QString OPTION_OMIT_WWW;
-    static const QString ADDITIONAL_URL;
 
 signals:
     void requestUnlock();

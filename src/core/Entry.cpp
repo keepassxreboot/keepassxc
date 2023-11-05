@@ -385,7 +385,8 @@ QStringList Entry::getAllUrls() const
     }
 
     for (const auto& key : m_attributes->keys()) {
-        if (key.startsWith("KP2A_URL")) {
+        if (key.startsWith(EntryAttributes::AdditionalUrlAttribute)
+            || key == QString("%1_RELYING_PARTY").arg(EntryAttributes::PasskeyAttribute)) {
             auto additionalUrl = m_attributes->value(key);
             if (!additionalUrl.isEmpty()) {
                 urlList << resolveMultiplePlaceholders(additionalUrl);

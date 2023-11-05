@@ -64,8 +64,6 @@ const QString BrowserService::OPTION_HIDE_ENTRY = QStringLiteral("BrowserHideEnt
 const QString BrowserService::OPTION_ONLY_HTTP_AUTH = QStringLiteral("BrowserOnlyHttpAuth");
 const QString BrowserService::OPTION_NOT_HTTP_AUTH = QStringLiteral("BrowserNotHttpAuth");
 const QString BrowserService::OPTION_OMIT_WWW = QStringLiteral("BrowserOmitWww");
-// Multiple URL's
-const QString BrowserService::ADDITIONAL_URL = QStringLiteral("KP2A_URL");
 
 Q_GLOBAL_STATIC(BrowserService, s_browserService);
 
@@ -1102,7 +1100,13 @@ void BrowserService::denyEntry(Entry* entry, const QString& siteHost, const QStr
 QJsonObject BrowserService::prepareEntry(const Entry* entry)
 {
     QJsonObject res;
+#ifdef WITH_XC_BROWSER_PASSKEYS
+    // Use Passkey's username instead if found
+    res["login"] = entry->hasPasskey() ? entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_USERNAME)
+                                       : entry->resolveMultiplePlaceholders(entry->username());
+#else
     res["login"] = entry->resolveMultiplePlaceholders(entry->username());
+#endif
     res["password"] = entry->resolveMultiplePlaceholders(entry->password());
     res["name"] = entry->resolveMultiplePlaceholders(entry->title());
     res["uuid"] = entry->resolveMultiplePlaceholders(entry->uuidToHex());
