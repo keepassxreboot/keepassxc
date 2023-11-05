@@ -19,15 +19,16 @@
 #ifndef KEEPASSX_DATABASEWIDGET_H
 #define KEEPASSX_DATABASEWIDGET_H
 
+#include "DatabaseOpenDialog.h"
 #include <QFileSystemWatcher>
 #include <QListView>
 #include <QStackedWidget>
 
-#include "DatabaseOpenDialog.h"
 #include "config-keepassx.h"
 #include "gui/MessageWidget.h"
 #include "gui/csvImport/CsvImportWizard.h"
 #include "gui/entry/EntryModel.h"
+#include "gui/remote/RemoteParams.h"
 
 class DatabaseOpenWidget;
 class KeePass1OpenWidget;
@@ -145,6 +146,10 @@ signals:
     void
     requestOpenDatabase(const QString& filePath, bool inBackground, const QString& password, const QString& keyFile);
     void databaseMerged(QSharedPointer<Database> mergedDb);
+    void databaseSyncedWith(QSharedPointer<Database> syncedDb);
+    void databaseSyncFailed();
+    void syncWithRemote(RemoteParams* remoteProgramParams);
+    void saveToRemote(RemoteParams* remoteProgramParams);
     void groupContextMenuRequested(const QPoint& globalPos);
     void entryContextMenuRequested(const QPoint& globalPos);
     void listModeAboutToActivate();
@@ -204,6 +209,9 @@ public slots:
     void createGroup();
     void cloneGroup();
     void deleteGroup();
+    void syncWithRemoteAndSwitchToMainView(RemoteParams* remoteProgramParams);
+    void saveToRemoteAndSwitchToMainView(RemoteParams* remoteProgramParams);
+    bool attemptSyncDatabaseWithSameKey(const QString& filePath);
     void switchToMainView(bool previousDialogAccepted = false);
     void switchToEntryEdit();
     void switchToGroupEdit();
@@ -265,6 +273,8 @@ private slots:
     void loadDatabase(bool accepted);
     void unlockDatabase(bool accepted);
     void mergeDatabase(bool accepted);
+    void syncDatabase(bool accepted);
+    bool syncDatabase(const QSharedPointer<Database>& srcDb, const QSharedPointer<Database>& destinationDb);
     void emitCurrentModeChanged();
     // Database autoreload slots
     void reloadDatabaseFile();

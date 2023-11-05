@@ -68,6 +68,7 @@ public:
     static const QString Created;
     static const QString BrowserKeyPrefix;
     static const QString BrowserLegacyKeyPrefix;
+    static const QString RemoteProgramSettings;
 
     // Pre-KDBX 4.1
     static const QString ExcludeFromReportsLegacy;

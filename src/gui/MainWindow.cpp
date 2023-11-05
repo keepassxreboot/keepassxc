@@ -47,6 +47,7 @@
 #include "gui/ShortcutSettingsPage.h"
 #include "gui/entry/EntryView.h"
 #include "gui/osutils/OSUtils.h"
+#include "gui/remote/RemoteSettingsCustomDataHandler.h"
 
 #ifdef WITH_XC_UPDATECHECK
 #include "gui/UpdateCheckDialog.h"
@@ -159,6 +160,8 @@ MainWindow::MainWindow()
 
     m_entryNewContextMenu = new QMenu(this);
     m_entryNewContextMenu->addAction(m_ui->actionEntryNew);
+
+    connect(m_ui->menuRemoteSync, &QMenu::aboutToShow, this, &MainWindow::updateRemoteSyncMenuEntries);
 
     // Build Entry Level Auto-Type menu
     auto autotypeMenu = new QMenu({}, this);
@@ -354,6 +357,7 @@ MainWindow::MainWindow()
     m_ui->actionLockAllDatabases->setIcon(icons()->icon("database-lock-all"));
     m_ui->actionQuit->setIcon(icons()->icon("application-exit"));
     m_ui->actionDatabaseMerge->setIcon(icons()->icon("database-merge"));
+    m_ui->menuRemoteSync->setIcon(icons()->icon("web"));
     m_ui->menuImport->setIcon(icons()->icon("document-import"));
     m_ui->menuExport->setIcon(icons()->icon("document-export"));
 
@@ -467,6 +471,7 @@ MainWindow::MainWindow()
     connect(m_ui->actionImportCsv, SIGNAL(triggered()), m_ui->tabWidget, SLOT(importCsv()));
     connect(m_ui->actionImportKeePass1, SIGNAL(triggered()), m_ui->tabWidget, SLOT(importKeePass1Database()));
     connect(m_ui->actionImportOpVault, SIGNAL(triggered()), m_ui->tabWidget, SLOT(importOpVaultDatabase()));
+    connect(m_ui->actionOpenRemoteDatabase, SIGNAL(triggered()), m_ui->tabWidget, SLOT(openRemoteDatabase()));
     connect(m_ui->actionExportCsv, SIGNAL(triggered()), m_ui->tabWidget, SLOT(exportToCsv()));
     connect(m_ui->actionExportHtml, SIGNAL(triggered()), m_ui->tabWidget, SLOT(exportToHtml()));
     connect(m_ui->actionExportXML, SIGNAL(triggered()), m_ui->tabWidget, SLOT(exportToXML()));
@@ -535,6 +540,7 @@ MainWindow::MainWindow()
     connect(m_ui->welcomeWidget, SIGNAL(importKeePass1Database()), SLOT(switchToKeePass1Database()));
     connect(m_ui->welcomeWidget, SIGNAL(importOpVaultDatabase()), SLOT(switchToOpVaultDatabase()));
     connect(m_ui->welcomeWidget, SIGNAL(importCsv()), SLOT(switchToCsvImport()));
+    connect(m_ui->welcomeWidget, SIGNAL(openRemoteDatabase()), SLOT(switchToRemoteDatabase()));
 
     connect(m_ui->actionAbout, SIGNAL(triggered()), SLOT(showAboutDialog()));
     connect(m_ui->actionDonate, SIGNAL(triggered()), SLOT(openDonateUrl()));
@@ -669,6 +675,7 @@ MainWindow::MainWindow()
     m_progressBar->setMaximum(100);
     statusBar()->addPermanentWidget(m_progressBar);
     connect(clipboard(), SIGNAL(updateCountdown(int, QString)), this, SLOT(updateProgressBar(int, QString)));
+    connect(m_ui->tabWidget, SIGNAL(updateSyncProgress(int, QString)), this, SLOT(updateProgressBar(int, QString)));
     m_statusBarLabel = new QLabel(statusBar());
     m_statusBarLabel->setObjectName("statusBarLabel");
     statusBar()->addPermanentWidget(m_statusBarLabel);
@@ -860,6 +867,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
 
     m_ui->actionDatabaseClose->setEnabled(true);
     m_ui->actionDatabaseMerge->setEnabled(inDatabaseTabWidget);
+    m_ui->menuRemoteSync->setEnabled(inDatabaseTabWidget);
     m_ui->actionDatabaseNew->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
     m_ui->actionDatabaseOpen->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
     m_ui->menuRecentDatabases->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
@@ -963,6 +971,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionImportPasskey->setEnabled(true);
             m_ui->actionEntryImportPasskey->setEnabled(true);
 #endif
+            m_ui->menuRemoteSync->setEnabled(true);
 #ifdef WITH_XC_SSHAGENT
             bool singleEntryHasSshKey =
                 singleEntrySelected && sshAgent()->isEnabled() && dbWidget->currentEntryHasSshKey();
@@ -1019,6 +1028,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionExportCsv->setEnabled(false);
             m_ui->actionExportHtml->setEnabled(false);
             m_ui->actionDatabaseMerge->setEnabled(false);
+            m_ui->menuRemoteSync->setEnabled(false);
             // Only disable the action in the database menu so that the
             // menu remains active in the toolbar, if necessary
             m_ui->actionLockDatabase->setEnabled(false);
@@ -1068,6 +1078,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         m_ui->actionExportCsv->setEnabled(false);
         m_ui->actionExportHtml->setEnabled(false);
         m_ui->actionDatabaseMerge->setEnabled(false);
+        m_ui->menuRemoteSync->setEnabled(false);
         // Hide entry-specific actions
         m_ui->actionEntryMoveUp->setVisible(false);
         m_ui->actionEntryMoveDown->setVisible(false);
@@ -1309,6 +1320,37 @@ void MainWindow::switchToCsvImport()
     switchToDatabases();
 }
 
+void MainWindow::switchToRemoteDatabase()
+{
+    m_ui->tabWidget->openRemoteDatabase();
+    switchToDatabases();
+}
+
+void MainWindow::updateRemoteSyncMenuEntries()
+{
+    m_ui->menuRemoteSync->clear();
+
+    auto dbWidget = m_ui->tabWidget->currentDatabaseWidget();
+    if (dbWidget) {
+        auto remoteSettingsConfig = new RemoteSettingsCustomDataHandler(this, dbWidget->database());
+
+        // Build remote sync menu
+        foreach (auto entryForMenu, remoteSettingsConfig->getRemoteProgramEntries()) {
+            auto* remoteSyncAction = new QAction(entryForMenu->getName(), this);
+            m_ui->menuRemoteSync->addAction(remoteSyncAction);
+            connect(remoteSyncAction, &QAction::triggered, [this, entryForMenu]() {
+                m_ui->tabWidget->syncDatabaseWithRemote(entryForMenu->toRemoteProgramParams());
+            });
+        }
+    }
+
+    // If no remote settings exist in the database then show a tip to the user
+    if (m_ui->menuRemoteSync->isEmpty()) {
+        auto action = m_ui->menuRemoteSync->addAction(tr("No Remote Sync Settings"));
+        action->setEnabled(false);
+    }
+}
+
 void MainWindow::databaseStatusChanged(DatabaseWidget* dbWidget)
 {
     Q_UNUSED(dbWidget);
@@ -1508,7 +1550,7 @@ bool MainWindow::saveLastDatabases()
 {
     if (config()->get(Config::OpenPreviousDatabasesOnStartup).toBool()) {
         auto currentDbWidget = m_ui->tabWidget->currentDatabaseWidget();
-        if (currentDbWidget) {
+        if (currentDbWidget && !currentDbWidget->database()->isRemoteDatabase()) {
             config()->set(Config::LastActiveDatabase, currentDbWidget->database()->filePath());
         } else {
             config()->remove(Config::LastActiveDatabase);
@@ -1517,7 +1559,9 @@ bool MainWindow::saveLastDatabases()
         QStringList openDatabases;
         for (int i = 0; i < m_ui->tabWidget->count(); ++i) {
             auto dbWidget = m_ui->tabWidget->databaseWidgetFromIndex(i);
-            openDatabases.append(QDir::toNativeSeparators(dbWidget->database()->filePath()));
+            if (!dbWidget->database()->isRemoteDatabase()) {
+                openDatabases.append(QDir::toNativeSeparators(dbWidget->database()->filePath()));
+            }
         }
 
         config()->set(Config::LastOpenedDatabases, openDatabases);

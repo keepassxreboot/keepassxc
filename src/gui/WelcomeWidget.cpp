@@ -45,6 +45,7 @@ WelcomeWidget::WelcomeWidget(QWidget* parent)
     connect(m_ui->buttonImportKeePass1, SIGNAL(clicked()), SIGNAL(importKeePass1Database()));
     connect(m_ui->buttonImportOpVault, SIGNAL(clicked()), SIGNAL(importOpVaultDatabase()));
     connect(m_ui->buttonImportCSV, SIGNAL(clicked()), SIGNAL(importCsv()));
+    connect(m_ui->buttonOpenRemote, SIGNAL(clicked()), SIGNAL(openRemoteDatabase()));
     connect(m_ui->recentListWidget,
             SIGNAL(itemActivated(QListWidgetItem*)),
             this,

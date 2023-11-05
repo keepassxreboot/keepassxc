@@ -422,6 +422,9 @@ void DatabaseWidget::replaceDatabase(QSharedPointer<Database> db)
     // signals triggering dangling pointers.
     auto oldDb = m_db;
     m_db = std::move(db);
+    if (oldDb->isRemoteDatabase()) {
+        m_db->markAsRemoteDatabase();
+    }
     connectDatabaseSignals();
     m_groupView->changeDatabase(m_db);
     m_tagView->setDatabase(m_db);
@@ -1035,6 +1038,18 @@ int DatabaseWidget::addChildWidget(QWidget* w)
     return index;
 }
 
+void DatabaseWidget::saveToRemoteAndSwitchToMainView(RemoteParams* remoteProgramParams)
+{
+    switchToMainView(true);
+    emit saveToRemote(remoteProgramParams);
+}
+
+void DatabaseWidget::syncWithRemoteAndSwitchToMainView(RemoteParams* remoteProgramParams)
+{
+    switchToMainView(true);
+    emit syncWithRemote(remoteProgramParams);
+}
+
 void DatabaseWidget::switchToMainView(bool previousDialogAccepted)
 {
     setCurrentWidget(m_mainWidget);
@@ -1204,6 +1219,77 @@ void DatabaseWidget::mergeDatabase(bool accepted)
     emit databaseMerged(m_db);
 }
 
+bool DatabaseWidget::attemptSyncDatabaseWithSameKey(const QString& filePath)
+{
+    QString ignoreErrors;
+    QSharedPointer<Database> destinationDb = QSharedPointer<Database>::create();
+    if (destinationDb->open(filePath, m_db->key(), &ignoreErrors)) {
+        destinationDb->markAsRemoteDatabase();
+        if (syncDatabase(m_db, destinationDb)) {
+            emit databaseSyncedWith(destinationDb);
+        } else {
+            emit databaseSyncFailed();
+        }
+        return true;
+    }
+    return false;
+}
+
+void DatabaseWidget::syncDatabase(bool accepted)
+{
+    if (accepted) {
+        if (!m_db) {
+            showMessage(tr("No current database."), MessageWidget::Error);
+            return;
+        }
+
+        auto* senderDialog = qobject_cast<DatabaseOpenDialog*>(sender());
+
+        Q_ASSERT(senderDialog);
+        if (!senderDialog) {
+            return;
+        }
+        auto destinationDb = senderDialog->database();
+
+        if (!destinationDb) {
+            showMessage(tr("No source database, nothing to do."), MessageWidget::Error);
+            return;
+        }
+
+        if (syncDatabase(m_db, destinationDb)) {
+            emit databaseSyncedWith(destinationDb);
+        } else {
+            emit databaseSyncFailed();
+        }
+    }
+    switchToMainView();
+}
+
+bool DatabaseWidget::syncDatabase(const QSharedPointer<Database>& srcDb, const QSharedPointer<Database>& destinationDb)
+{
+    Merger mergerToRemote(destinationDb.data(), srcDb.data());
+    Merger mergerFromRemote(srcDb.data(), destinationDb.data());
+    QStringList changeList = mergerToRemote.merge() + mergerFromRemote.merge();
+
+    if (!changeList.isEmpty()) {
+        // Save synced databases
+        QString error;
+        if (!srcDb->save(Database::Atomic, {}, &error)) {
+            showMessage(tr("Error while saving source database: %1.").arg(error), MessageWidget::Error);
+            return false;
+        }
+        if (!destinationDb->save(Database::Atomic, {}, &error)) {
+            showMessage(tr("Error while saving destination database: %1.").arg(error), MessageWidget::Error);
+            return false;
+        }
+
+        showMessage(tr("Successfully synced the database files."), MessageWidget::Information);
+    } else {
+        showMessage(tr("Database was not modified by sync operation."), MessageWidget::Information);
+    }
+    return true;
+}
+
 /**
  * Unlock the database.
  *
@@ -1217,12 +1303,20 @@ void DatabaseWidget::unlockDatabase(bool accepted)
         if (!senderDialog && (!m_db || !m_db->isInitialized())) {
             emit closeRequest();
         }
+        if (senderDialog && senderDialog->intent() == DatabaseOpenDialog::Intent::RemoteSync) {
+            emit databaseSyncFailed();
+        }
         return;
     }
 
-    if (senderDialog && senderDialog->intent() == DatabaseOpenDialog::Intent::Merge) {
-        mergeDatabase(accepted);
-        return;
+    if (senderDialog) {
+        if (senderDialog->intent() == DatabaseOpenDialog::Intent::Merge) {
+            mergeDatabase(accepted);
+            return;
+        } else if (senderDialog->intent() == DatabaseOpenDialog::Intent::RemoteSync) {
+            syncDatabase(accepted);
+            return;
+        }
     }
 
     QSharedPointer<Database> db;

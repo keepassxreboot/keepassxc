@@ -25,6 +25,7 @@ const QString CustomData::Created = QStringLiteral("_CREATED");
 const QString CustomData::BrowserKeyPrefix = QStringLiteral("KPXC_BROWSER_");
 const QString CustomData::BrowserLegacyKeyPrefix = QStringLiteral("Public Key: ");
 const QString CustomData::ExcludeFromReportsLegacy = QStringLiteral("KnownBad");
+const QString CustomData::RemoteProgramSettings = QStringLiteral("Remote_Program_Settings");
 
 // Fallback item for return by reference
 static const CustomData::CustomDataItem NULL_ITEM{};
@@ -188,7 +189,8 @@ void CustomData::updateLastModified(QDateTime lastModified)
 
 bool CustomData::isProtected(const QString& key) const
 {
-    return key.startsWith(CustomData::BrowserKeyPrefix) || key.startsWith(CustomData::Created);
+    return key.startsWith(CustomData::BrowserKeyPrefix) || key.startsWith(CustomData::Created)
+           || key == CustomData::RemoteProgramSettings;
 }
 
 bool CustomData::operator==(const CustomData& other) const

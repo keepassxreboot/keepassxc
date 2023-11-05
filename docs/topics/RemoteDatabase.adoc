@@ -1,0 +1,41 @@
+= KeePassXC – Remote Database Support
+include::.sharedheader[]
+:imagesdir: ../images
+
+// tag::content[]
+== Remote database support
+KeePassXC provides support for opening and syncing database files that reside in a remote location. If you can download/upload the database file via a commandline tool (e.g. rsync, ssh, scp etc.) KeePassXC offers easy to use functionality to open the remote database and/or sync it.
+
+=== Open remote database
+
+To open a remote database, click on the "Open from remote" button on the welcome screen or via the menu select _Database > Import > Open remote database…_
+
+.Open remote database via menu or welcome screen
+image::open_remote_database.png[]
+
+A dialog appears that allows you to specify a command to download the remote file. Specify a placeholder `{TEMP_DATABASE}` as file location to download the database to. KeepassXC will replace `{TEMP_DATABASE}` with a temporary file location on your system, it will expect the database to be downloaded to.
+
+.Dialog to specify download/upload command
+image::open_remote_database_dialog.png[]
+
+Depending on the command/script you are calling, you may need to specify input that is passed to your command/script.
+
+It is not necessary to specify an upload commend, for opening a remote database.
+
+NOTE: Opening a remote database creates a temporary local copy. No changes are made to the remote database automatically. You need to sync to the remote database to update it with changes made to the temporary local copy.
+
+=== Sync with remote database
+Open the remote sync settings via _Database > Remote Sync… > Open Remote Sync Settings…_ to sync a local database or a temporary local copy of a remote database.
+
+The dialog that opens is the same as for opening a remote database. The same settings can be used for both. To sync a database an upload command *(B)* is needed as well as a download command *(A)*.
+
+.Remote sync settings
+image::sync_remote_settings.png[]
+
+Remote settings can be given a name *\(C)* and saved *(D)*. Additionally, remote settings can be added as menu entries below the _Remote Sync…_ menu for quicker access if _Add to menu_ *(E)* is checked.
+
+Clicking on the button _Sync_ will start the syncing process and a progress bar will show up in the lower right corner. Alternatively, with the _Upload_ button, the current database can just be uploaded to a remote location.
+
+WARNING: In case the remote database is changed by another user/process after the downloading command finishes and before uploading again, those changes will be overwritten. Syncing is not an atomic operation.
+
+// end::content[]
