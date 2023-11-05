@@ -485,12 +485,12 @@ void DatabaseOpenWidget::hardwareKeyResponse(bool found)
 
 void DatabaseOpenWidget::openHardwareKeyHelp()
 {
-    QDesktopServices::openUrl(QUrl("https://keepassxc.org/docs#faq-cat-yubikey"));
+    QDesktopServices::openUrl(QUrl("https://keepassxc.org/docs/#faq-yubikey-2fa"));
 }
 
 void DatabaseOpenWidget::openKeyFileHelp()
 {
-    QDesktopServices::openUrl(QUrl("https://keepassxc.org/docs#faq-cat-keyfile"));
+    QDesktopServices::openUrl(QUrl("https://keepassxc.org/docs/#faq-keyfile-howto"));
 }
 
 void DatabaseOpenWidget::setUserInteractionLock(bool state)
