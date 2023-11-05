@@ -138,7 +138,7 @@
         <property name="sizeHint" stdset="0">
          <size>
           <width>40</width>
-          <height>20</height>
+          <height>0</height>
          </size>
         </property>
        </spacer>
@@ -168,9 +168,39 @@
       <item>
        <widget class="QCheckBox" name="quickUnlockCheckBox">
         <property name="text">
-         <string>Enable database quick unlock (Touch ID / Windows Hello)</string>
+         <string>Enable database quick unlock (Touch ID / Windows Hello / Polkit)</string>
         </property>
        </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <item>
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Fixed</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>30</width>
+            <height>0</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="quickUnlockRememberCheckBox">
+          <property name="text">
+           <string>Remember quick unlock after database is closed</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
       <item>
        <widget class="QCheckBox" name="lockDatabaseOnScreenLockCheckBox">

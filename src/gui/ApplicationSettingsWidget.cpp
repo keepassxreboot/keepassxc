@@ -181,6 +181,10 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
         m_secUi->lockDatabaseMinimizeCheckBox->setEnabled(!state);
     });
 
+    connect(m_secUi->quickUnlockCheckBox, &QCheckBox::toggled, this, [this](bool state) {
+        m_secUi->quickUnlockRememberCheckBox->setEnabled(state);
+    });
+
     // Set Auto-Type shortcut when changed
     connect(
         m_generalUi->autoTypeShortcutWidget, &ShortcutWidget::shortcutChanged, this, [this](auto key, auto modifiers) {
@@ -416,6 +420,15 @@ void ApplicationSettingsWidget::loadSettings()
 
     m_secUi->quickUnlockCheckBox->setEnabled(getQuickUnlock()->isAvailable());
     m_secUi->quickUnlockCheckBox->setChecked(config()->get(Config::Security_QuickUnlock).toBool());
+    m_secUi->quickUnlockCheckBox->setToolTip(
+        m_secUi->quickUnlockCheckBox->isEnabled() ? QString() : tr("Quick unlock is not available on your device."));
+
+    m_secUi->quickUnlockRememberCheckBox->setEnabled(getQuickUnlock()->isAvailable()
+                                                     && getQuickUnlock()->canRemember());
+    m_secUi->quickUnlockRememberCheckBox->setChecked(config()->get(Config::Security_QuickUnlockRemember).toBool());
+    m_secUi->quickUnlockRememberCheckBox->setToolTip(m_secUi->quickUnlockRememberCheckBox->isEnabled()
+                                                         ? QString()
+                                                         : tr("Quick unlock cannot be remembered on your device."));
 
     for (const ExtraPage& page : asConst(m_extraPages)) {
         page.loadSettings();
@@ -553,6 +566,7 @@ void ApplicationSettingsWidget::saveSettings()
 
     if (m_secUi->quickUnlockCheckBox->isEnabled()) {
         config()->set(Config::Security_QuickUnlock, m_secUi->quickUnlockCheckBox->isChecked());
+        config()->set(Config::Security_QuickUnlockRemember, m_secUi->quickUnlockRememberCheckBox->isChecked());
     }
 
     // Security: clear storage if related settings are disabled

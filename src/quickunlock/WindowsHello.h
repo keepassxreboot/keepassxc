@@ -27,18 +27,21 @@ class WindowsHello : public QuickUnlockInterface
 {
 public:
     WindowsHello() = default;
+
     bool isAvailable() const override;
     QString errorString() const override;
-    void reset() override;
 
     bool setKey(const QUuid& dbUuid, const QByteArray& key) override;
     bool getKey(const QUuid& dbUuid, QByteArray& key) override;
     bool hasKey(const QUuid& dbUuid) const override;
-    void reset(const QUuid& dbUuid) override;
 
+    bool canRemember() const override;
+
+    void reset(const QUuid& dbUuid) override;
+    void reset() override;
+    
 private:
     QString m_error;
-    QHash<QUuid, QByteArray> m_encryptedKeys;
     Q_DISABLE_COPY(WindowsHello);
 };
 

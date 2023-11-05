@@ -35,6 +35,8 @@ public:
     virtual bool getKey(const QUuid& dbUuid, QByteArray& key) = 0;
     virtual bool hasKey(const QUuid& dbUuid) const = 0;
 
+    virtual bool canRemember() const = 0;
+
     virtual void reset(const QUuid& dbUuid) = 0;
     virtual void reset() = 0;
 };
@@ -48,6 +50,8 @@ public:
     bool setKey(const QUuid& dbUuid, const QByteArray& key) override;
     bool getKey(const QUuid& dbUuid, QByteArray& key) override;
     bool hasKey(const QUuid& dbUuid) const override;
+
+    bool canRemember() const override;
 
     void reset(const QUuid& dbUuid) override;
     void reset() override;
