@@ -39,7 +39,7 @@ private:
                           const QString& url,
                           const QString& relyingParty,
                           const QString& username,
-                          const QString& userId,
+                          const QString& credentialId,
                           const QString& userHandle,
                           const QString& privateKey);
     Group* getDefaultGroup(QSharedPointer<Database>& database);

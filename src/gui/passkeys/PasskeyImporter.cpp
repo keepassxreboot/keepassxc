@@ -64,11 +64,11 @@ void PasskeyImporter::importSelectedFile(QFile& file, QSharedPointer<Database>& 
     const auto relyingParty = passkeyObject["relyingParty"].toString();
     const auto url = passkeyObject["url"].toString();
     const auto username = passkeyObject["username"].toString();
-    const auto password = passkeyObject["userId"].toString();
+    const auto credentialId = passkeyObject["credentialId"].toString();
     const auto userHandle = passkeyObject["userHandle"].toString();
     const auto privateKey = passkeyObject["privateKey"].toString();
 
-    if (relyingParty.isEmpty() || username.isEmpty() || password.isEmpty() || userHandle.isEmpty()
+    if (relyingParty.isEmpty() || username.isEmpty() || credentialId.isEmpty() || userHandle.isEmpty()
         || privateKey.isEmpty()) {
         MessageBox::information(nullptr,
                                 tr("Cannot import Passkey"),
@@ -80,7 +80,7 @@ void PasskeyImporter::importSelectedFile(QFile& file, QSharedPointer<Database>& 
             tr("Cannot import Passkey"),
             tr("Cannot import Passkey file \"%1\". Private key is missing or malformed.").arg(file.fileName()));
     } else {
-        showImportDialog(database, url, relyingParty, username, password, userHandle, privateKey);
+        showImportDialog(database, url, relyingParty, username, credentialId, userHandle, privateKey);
     }
 }
 
@@ -88,7 +88,7 @@ void PasskeyImporter::showImportDialog(QSharedPointer<Database>& database,
                                        const QString& url,
                                        const QString& relyingParty,
                                        const QString& username,
-                                       const QString& userId,
+                                       const QString& credentialId,
                                        const QString& userHandle,
                                        const QString& privateKey)
 {
@@ -120,7 +120,7 @@ void PasskeyImporter::showImportDialog(QSharedPointer<Database>& database,
     }
 
     browserService()->addPasskeyToGroup(
-        group, url, relyingParty, relyingParty, username, userId, userHandle, privateKey);
+        group, url, relyingParty, relyingParty, username, credentialId, userHandle, privateKey);
 }
 
 Group* PasskeyImporter::getDefaultGroup(QSharedPointer<Database>& database)
