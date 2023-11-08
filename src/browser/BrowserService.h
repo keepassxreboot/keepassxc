@@ -95,14 +95,14 @@ public:
                            const QString& rpId,
                            const QString& rpName,
                            const QString& username,
-                           const QString& userId,
+                           const QString& credentialId,
                            const QString& userHandle,
                            const QString& privateKey);
     void addPasskeyToEntry(Entry* entry,
                            const QString& rpId,
                            const QString& rpName,
                            const QString& username,
-                           const QString& userId,
+                           const QString& credentialId,
                            const QString& userHandle,
                            const QString& privateKey);
 #endif
