@@ -61,8 +61,9 @@ PublicKeyCredential BrowserPasskeys::buildRegisterPublicKeyCredential(const QJso
                                                                       const TestingVariables& testingVariables)
 {
     QJsonObject publicKeyCredential;
-    const auto id = testingVariables.credentialId.isEmpty() ? browserMessageBuilder()->getRandomBytesAsBase64(ID_BYTES)
-                                                            : testingVariables.credentialId;
+    const auto credentialId = testingVariables.credentialId.isEmpty()
+                                  ? browserMessageBuilder()->getRandomBytesAsBase64(ID_BYTES)
+                                  : testingVariables.credentialId;
 
     // Extensions
     auto extensionObject = publicKeyCredentialOptions["extensions"].toObject();
@@ -72,22 +73,23 @@ PublicKeyCredential BrowserPasskeys::buildRegisterPublicKeyCredential(const QJso
     // Response
     QJsonObject responseObject;
     const auto clientData = buildClientDataJson(publicKeyCredentialOptions, origin, false);
-    const auto attestationObject = buildAttestationObject(publicKeyCredentialOptions, extensions, id, testingVariables);
+    const auto attestationObject =
+        buildAttestationObject(publicKeyCredentialOptions, extensions, credentialId, testingVariables);
     responseObject["clientDataJSON"] = browserMessageBuilder()->getBase64FromJson(clientData);
     responseObject["attestationObject"] = browserMessageBuilder()->getBase64FromArray(attestationObject.cborEncoded);
 
     // PublicKeyCredential
     publicKeyCredential["authenticatorAttachment"] = QString("platform");
-    publicKeyCredential["id"] = id;
+    publicKeyCredential["id"] = credentialId;
     publicKeyCredential["response"] = responseObject;
     publicKeyCredential["type"] = PUBLIC_KEY;
 
-    return {id, publicKeyCredential, attestationObject.pem};
+    return {credentialId, publicKeyCredential, attestationObject.pem};
 }
 
 QJsonObject BrowserPasskeys::buildGetPublicKeyCredential(const QJsonObject& publicKeyCredentialRequestOptions,
                                                          const QString& origin,
-                                                         const QString& userId,
+                                                         const QString& credentialId,
                                                          const QString& userHandle,
                                                          const QString& privateKeyPem)
 {
@@ -104,7 +106,7 @@ QJsonObject BrowserPasskeys::buildGetPublicKeyCredential(const QJsonObject& publ
 
     QJsonObject publicKeyCredential;
     publicKeyCredential["authenticatorAttachment"] = QString("platform");
-    publicKeyCredential["id"] = userId;
+    publicKeyCredential["id"] = credentialId;
     publicKeyCredential["response"] = responseObject;
     publicKeyCredential["type"] = PUBLIC_KEY;
 
@@ -156,7 +158,7 @@ QJsonObject BrowserPasskeys::buildClientDataJson(const QJsonObject& publicKey, c
 // https://w3c.github.io/webauthn/#attestation-object
 PrivateKey BrowserPasskeys::buildAttestationObject(const QJsonObject& publicKey,
                                                    const QString& extensions,
-                                                   const QString& id,
+                                                   const QString& credentialId,
                                                    const TestingVariables& testingVariables)
 {
     QByteArray result;
@@ -188,7 +190,7 @@ PrivateKey BrowserPasskeys::buildAttestationObject(const QJsonObject& publicKey,
 
     // Credential Id
     result.append(QByteArray::fromBase64(
-        testingVariables.credentialId.isEmpty() ? id.toUtf8() : testingVariables.credentialId.toUtf8(),
+        testingVariables.credentialId.isEmpty() ? credentialId.toUtf8() : testingVariables.credentialId.toUtf8(),
         QByteArray::Base64UrlEncoding));
 
     // Credential private key

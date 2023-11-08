@@ -84,7 +84,6 @@ public:
     QString getCurrentTotp(const QString& uuid);
     void showPasswordGenerator(const KeyPairMessage& keyPairMessage);
     bool isPasswordGeneratorRequested() const;
-    bool isUrlIdentical(const QString& first, const QString& second) const;
     QSharedPointer<Database> selectedDatabase();
 #ifdef WITH_XC_BROWSER_PASSKEYS
     QJsonObject
@@ -97,14 +96,14 @@ public:
                            const QString& rpId,
                            const QString& rpName,
                            const QString& username,
-                           const QString& userId,
+                           const QString& credentialId,
                            const QString& userHandle,
                            const QString& privateKey);
     void addPasskeyToEntry(Entry* entry,
                            const QString& rpId,
                            const QString& rpName,
                            const QString& username,
-                           const QString& userId,
+                           const QString& credentialId,
                            const QString& userHandle,
                            const QString& privateKey);
 #endif

@@ -666,12 +666,18 @@ QJsonObject BrowserService::showPasskeysRegisterPrompt(const QJsonObject& public
                               rpId,
                               rpName,
                               username,
-                              publicKeyCredentials.id,
+                              publicKeyCredentials.credentialId,
                               userHandle,
                               publicKeyCredentials.key);
         } else {
-            addPasskeyToGroup(
-                nullptr, origin, rpId, rpName, username, publicKeyCredentials.id, userHandle, publicKeyCredentials.key);
+            addPasskeyToGroup(nullptr,
+                              origin,
+                              rpId,
+                              rpName,
+                              username,
+                              publicKeyCredentials.credentialId,
+                              userHandle,
+                              publicKeyCredentials.key);
         }
 
         hideWindow();
@@ -730,7 +736,7 @@ void BrowserService::addPasskeyToGroup(Group* group,
                                        const QString& rpId,
                                        const QString& rpName,
                                        const QString& username,
-                                       const QString& userId,
+                                       const QString& credentialId,
                                        const QString& userHandle,
                                        const QString& privateKey)
 {
@@ -751,7 +757,7 @@ void BrowserService::addPasskeyToGroup(Group* group,
     entry->setUrl(url);
     entry->setIcon(KEEPASSXCBROWSER_PASSKEY_ICON);
 
-    addPasskeyToEntry(entry, rpId, rpName, username, userId, userHandle, privateKey);
+    addPasskeyToEntry(entry, rpId, rpName, username, credentialId, userHandle, privateKey);
 
     // Remove blank entry history
     entry->removeHistoryItems(entry->historyItems());
@@ -761,7 +767,7 @@ void BrowserService::addPasskeyToEntry(Entry* entry,
                                        const QString& rpId,
                                        const QString& rpName,
                                        const QString& username,
-                                       const QString& userId,
+                                       const QString& credentialId,
                                        const QString& userHandle,
                                        const QString& privateKey)
 {
@@ -776,7 +782,7 @@ void BrowserService::addPasskeyToEntry(Entry* entry,
     entry->beginUpdate();
 
     entry->attributes()->set(BrowserPasskeys::KPEX_PASSKEY_USERNAME, username);
-    entry->attributes()->set(BrowserPasskeys::KPEX_PASSKEY_GENERATED_USER_ID, userId, true);
+    entry->attributes()->set(BrowserPasskeys::KPEX_PASSKEY_GENERATED_USER_ID, credentialId, true);
     entry->attributes()->set(BrowserPasskeys::KPEX_PASSKEY_PRIVATE_KEY_PEM, privateKey, true);
     entry->attributes()->set(BrowserPasskeys::KPEX_PASSKEY_RELYING_PARTY, rpId);
     entry->attributes()->set(BrowserPasskeys::KPEX_PASSKEY_USER_HANDLE, userHandle, true);
@@ -1324,9 +1330,9 @@ QJsonObject
 BrowserService::getPublicKeyCredentialFromEntry(const Entry* entry, const QJsonObject& publicKey, const QString& origin)
 {
     const auto privateKeyPem = entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_PRIVATE_KEY_PEM);
-    const auto userId = entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_GENERATED_USER_ID);
+    const auto credentialId = entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_GENERATED_USER_ID);
     const auto userHandle = entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_USER_HANDLE);
-    return browserPasskeys()->buildGetPublicKeyCredential(publicKey, origin, userId, userHandle, privateKeyPem);
+    return browserPasskeys()->buildGetPublicKeyCredential(publicKey, origin, credentialId, userHandle, privateKeyPem);
 }
 
 // Checks if the same user ID already exists for the current site
