@@ -60,7 +60,7 @@ void PasskeyExporter::showExportDialog(const QList<Entry*>& items)
  *      "relyingParty: <relying party>,
  *      "url": <URL>,
  *      "userHandle": <user handle>,
- *      "userId": <generated user id>,
+ *      "credentialId": <generated credential id>,
  *      "username:" <username>
  * }
  */
@@ -91,7 +91,7 @@ void PasskeyExporter::exportSelectedEntry(const Entry* entry, const QString& fol
     passkeyObject["relyingParty"] = entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_RELYING_PARTY);
     passkeyObject["url"] = entry->url();
     passkeyObject["username"] = entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_USERNAME);
-    passkeyObject["userId"] = entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_GENERATED_USER_ID);
+    passkeyObject["credentialId"] = entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_GENERATED_USER_ID);
     passkeyObject["userHandle"] = entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_USER_HANDLE);
     passkeyObject["privateKey"] = entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_PRIVATE_KEY_PEM);
 

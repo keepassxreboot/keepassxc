@@ -54,7 +54,7 @@ enum AuthenticatorFlags
 
 struct PublicKeyCredential
 {
-    QString id;
+    QString credentialId;
     QJsonObject response;
     QByteArray key;
 };
@@ -87,7 +87,7 @@ public:
                                                          const TestingVariables& predefinedVariables = {});
     QJsonObject buildGetPublicKeyCredential(const QJsonObject& publicKeyCredentialRequestOptions,
                                             const QString& origin,
-                                            const QString& userId,
+                                            const QString& credentialId,
                                             const QString& userHandle,
                                             const QString& privateKeyPem);
     bool isUserVerificationValid(const QString& userVerification) const;
@@ -112,7 +112,7 @@ private:
     QJsonObject buildClientDataJson(const QJsonObject& publicKey, const QString& origin, bool get);
     PrivateKey buildAttestationObject(const QJsonObject& publicKey,
                                       const QString& extensions,
-                                      const QString& id,
+                                      const QString& credentialId,
                                       const TestingVariables& predefinedVariables = {});
     QByteArray buildGetAttestationObject(const QJsonObject& publicKey);
     PrivateKey buildCredentialPrivateKey(int alg,
