@@ -22,6 +22,7 @@
 #include "core/Global.h"
 
 #include <QDateTime>
+#include <QList>
 #include <QProcessEnvironment>
 
 class QIODevice;
@@ -98,6 +99,19 @@ namespace Tools
         }();
 
         return version;
+    }
+
+    // Checks if all values are found inside the list. Returns a list of values not found.
+    template <typename T> QList<T> getMissingValuesFromList(const QList<T>& list, const QList<T>& required)
+    {
+        QList<T> missingValues;
+        for (const auto& r : required) {
+            if (!list.contains(r)) {
+                missingValues << r;
+            }
+        }
+
+        return missingValues;
     }
 
     QVariantMap qo2qvm(const QObject* object, const QStringList& ignoredProperties = {"objectName"});

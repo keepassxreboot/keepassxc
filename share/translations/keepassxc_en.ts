@@ -6084,6 +6084,12 @@ Do you want to overwrite it?
         <source>Cannot import Passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Cannot import Passkey file &quot;%1&quot;.
+The following data is missing:
+%2</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PasswordEditWidget</name>

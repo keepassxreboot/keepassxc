@@ -22,6 +22,7 @@
 #include "browser/BrowserService.h"
 #include "core/Entry.h"
 #include "core/Group.h"
+#include "core/Tools.h"
 #include "gui/FileDialog.h"
 #include "gui/MessageBox.h"
 #include <QFileInfo>
@@ -61,18 +62,20 @@ void PasskeyImporter::importSelectedFile(QFile& file, QSharedPointer<Database>& 
         return;
     }
 
-    const auto relyingParty = passkeyObject["relyingParty"].toString();
-    const auto url = passkeyObject["url"].toString();
-    const auto username = passkeyObject["username"].toString();
-    const auto credentialId = passkeyObject["credentialId"].toString();
-    const auto userHandle = passkeyObject["userHandle"].toString();
     const auto privateKey = passkeyObject["privateKey"].toString();
+    const auto missingKeys = Tools::getMissingValuesFromList<QString>(passkeyObject.keys(),
+                                                                      QStringList() << "relyingParty"
+                                                                                    << "url"
+                                                                                    << "username"
+                                                                                    << "credentialId"
+                                                                                    << "userHandle"
+                                                                                    << "privateKey");
 
-    if (relyingParty.isEmpty() || username.isEmpty() || credentialId.isEmpty() || userHandle.isEmpty()
-        || privateKey.isEmpty()) {
+    if (!missingKeys.isEmpty()) {
         MessageBox::information(nullptr,
                                 tr("Cannot import Passkey"),
-                                tr("Cannot import Passkey file \"%1\". Data is missing.").arg(file.fileName()));
+                                tr("Cannot import Passkey file \"%1\".\nThe following data is missing:\n%2")
+                                    .arg(file.fileName(), missingKeys.join(", ")));
     } else if (!privateKey.startsWith("-----BEGIN PRIVATE KEY-----")
                || !privateKey.trimmed().endsWith("-----END PRIVATE KEY-----")) {
         MessageBox::information(
@@ -80,6 +83,11 @@ void PasskeyImporter::importSelectedFile(QFile& file, QSharedPointer<Database>& 
             tr("Cannot import Passkey"),
             tr("Cannot import Passkey file \"%1\". Private key is missing or malformed.").arg(file.fileName()));
     } else {
+        const auto relyingParty = passkeyObject["relyingParty"].toString();
+        const auto url = passkeyObject["url"].toString();
+        const auto username = passkeyObject["username"].toString();
+        const auto credentialId = passkeyObject["credentialId"].toString();
+        const auto userHandle = passkeyObject["userHandle"].toString();
         showImportDialog(database, url, relyingParty, username, credentialId, userHandle, privateKey, entry);
     }
 }
@@ -109,7 +117,7 @@ void PasskeyImporter::showImportDialog(QSharedPointer<Database>& database,
     // Store to entry if given directly
     if (entry) {
         browserService()->addPasskeyToEntry(
-            entry, relyingParty, relyingParty, username, userId, userHandle, privateKey);
+            entry, relyingParty, relyingParty, username, credentialId, userHandle, privateKey);
         return;
     }
 
@@ -122,7 +130,7 @@ void PasskeyImporter::showImportDialog(QSharedPointer<Database>& database,
             auto selectedEntry = group->findEntryByUuid(passkeyImportDialog.getSelectedEntryUuid());
             if (selectedEntry) {
                 browserService()->addPasskeyToEntry(
-                    selectedEntry, relyingParty, relyingParty, username, userId, userHandle, privateKey);
+                    selectedEntry, relyingParty, relyingParty, username, credentialId, userHandle, privateKey);
             }
         }
 
