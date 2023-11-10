@@ -128,12 +128,23 @@ void PasskeyImportDialog::addEntries()
         return;
     }
 
-    for (const auto& entry : group->entries()) {
+    // Collect all entries in the group and resolve the title
+    QList<QPair<QString, QUuid>> entries;
+    for (const auto entry : group->entries()) {
         if (!entry || entry->isRecycled()) {
             continue;
         }
+        entries.append({entry->resolveMultiplePlaceholders(entry->title()), entry->uuid()});
+    }
 
-        m_ui->selectEntryComboBox->addItem(entry->title(), entry->uuid());
+    // Sort entries by title
+    std::sort(entries.begin(), entries.end(), [](const auto& a, const auto& b) {
+        return a.first.compare(b.first, Qt::CaseInsensitive) < 0;
+    });
+
+    // Add sorted entries to the combobox
+    for (const auto& pair : entries) {
+        m_ui->selectEntryComboBox->addItem(pair.first, pair.second);
     }
 }
 
