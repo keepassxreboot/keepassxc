@@ -326,7 +326,10 @@ void DatabaseOpenWidget::openDatabase()
         // Save Quick Unlock credentials if available
         if (!blockQuickUnlock && isQuickUnlockAvailable()) {
             auto keyData = databaseKey->serialize();
-            getQuickUnlock()->setKey(m_db->publicUuid(), keyData);
+            if (!getQuickUnlock()->setKey(m_db->publicUuid(), keyData) && !getQuickUnlock()->errorString().isEmpty()) {
+                getMainWindow()->displayTabMessage(getQuickUnlock()->errorString(),
+                                                   MessageWidget::MessageType::Warning);
+            }
             m_ui->messageWidget->hideMessage();
         }
 

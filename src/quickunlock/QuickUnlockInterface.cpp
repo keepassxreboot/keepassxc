@@ -75,6 +75,11 @@ bool NoQuickUnlock::hasKey(const QUuid& dbUuid) const
     return false;
 }
 
+bool NoQuickUnlock::canRemember() const
+{
+    return false;
+}
+
 void NoQuickUnlock::reset(const QUuid& dbUuid)
 {
     Q_UNUSED(dbUuid)

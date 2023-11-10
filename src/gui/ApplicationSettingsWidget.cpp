@@ -343,7 +343,15 @@ void ApplicationSettingsWidget::loadSettings()
 
     m_secUi->quickUnlockCheckBox->setEnabled(getQuickUnlock()->isAvailable());
     m_secUi->quickUnlockCheckBox->setChecked(config()->get(Config::Security_QuickUnlock).toBool());
+    m_secUi->quickUnlockCheckBox->setToolTip(
+        m_secUi->quickUnlockCheckBox->isEnabled() ? QString() : tr("Quick unlock is not available on your device."));
+
+    m_secUi->quickUnlockRememberCheckBox->setEnabled(getQuickUnlock()->isAvailable()
+                                                     && getQuickUnlock()->canRemember());
     m_secUi->quickUnlockRememberCheckBox->setChecked(config()->get(Config::Security_QuickUnlockRemember).toBool());
+    m_secUi->quickUnlockRememberCheckBox->setToolTip(m_secUi->quickUnlockRememberCheckBox->isEnabled()
+                                                         ? QString()
+                                                         : tr("Quick unlock cannot be remembered on your device."));
 
     for (const ExtraPage& page : asConst(m_extraPages)) {
         page.loadSettings();
