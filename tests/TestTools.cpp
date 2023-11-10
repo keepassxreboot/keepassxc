@@ -262,7 +262,7 @@ void TestTools::testArrayContainsValues()
     QCOMPARE(result2.length(), 0);
 
     // None are found
-    const auto numberValues = {1, 2, 3, 4, 5};
-    const auto result3 = Tools::getMissingValuesFromList<int>(numberValues, {6, 7, 8});
+    const auto numberValues = QList<int>({1, 2, 3, 4, 5});
+    const auto result3 = Tools::getMissingValuesFromList<int>(numberValues, QList<int>({6, 7, 8}));
     QCOMPARE(result3.length(), 3);
 }
