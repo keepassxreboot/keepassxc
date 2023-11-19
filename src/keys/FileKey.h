@@ -19,6 +19,7 @@
 #ifndef KEEPASSX_FILEKEY_H
 #define KEEPASSX_FILEKEY_H
 
+#include <botan/mem_ops.h>
 #include <botan/secmem.h>
 
 #include "keys/Key.h"
