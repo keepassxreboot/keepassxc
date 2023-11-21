@@ -13,7 +13,7 @@ include(FindPackageHandleStandardArgs)
 
 set(BOTAN_VERSIONS botan-3 botan-2)
 set(BOTAN_NAMES botan-3 botan-2 botan)
-set(BOTAN_NAMES_DEBUG botand-3 botand-2 botand botan)
+set(BOTAN_NAMES_DEBUG botand-3 botand-2 botand botan botan-3)
 
 find_path(
     BOTAN_INCLUDE_DIR
