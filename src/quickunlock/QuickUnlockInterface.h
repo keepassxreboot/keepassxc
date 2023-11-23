@@ -18,6 +18,7 @@
 #ifndef KEEPASSXC_QUICKUNLOCKINTERFACE_H
 #define KEEPASSXC_QUICKUNLOCKINTERFACE_H
 
+#include <QList>
 #include <QUuid>
 
 class QuickUnlockInterface
@@ -41,22 +42,20 @@ public:
     virtual void reset() = 0;
 };
 
-class NoQuickUnlock : public QuickUnlockInterface
+class QuickUnlockManager final
 {
+    Q_DISABLE_COPY(QuickUnlockManager)
+
 public:
-    bool isAvailable() const override;
-    QString errorString() const override;
+    QuickUnlockManager();
+    ~QuickUnlockManager();
 
-    bool setKey(const QUuid& dbUuid, const QByteArray& key) override;
-    bool getKey(const QUuid& dbUuid, QByteArray& key) override;
-    bool hasKey(const QUuid& dbUuid) const override;
+    static const QuickUnlockManager* get();
 
-    bool canRemember() const override;
+    QuickUnlockInterface* getQuickUnlock();
 
-    void reset(const QUuid& dbUuid) override;
-    void reset() override;
+private:
+    QList<QuickUnlockInterface*> m_interfaces;
 };
-
-QuickUnlockInterface* getQuickUnlock();
 
 #endif // KEEPASSXC_QUICKUNLOCKINTERFACE_H

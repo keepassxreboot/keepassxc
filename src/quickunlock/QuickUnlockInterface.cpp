@@ -16,71 +16,46 @@
  */
 
 #include "QuickUnlockInterface.h"
+#include "PinUnlock.h"
+
 #include <QObject>
 
 #if defined(Q_OS_MACOS)
 #include "TouchID.h"
-#define QUICKUNLOCK_IMPLEMENTATION TouchID
 #elif defined(Q_CC_MSVC)
 #include "WindowsHello.h"
-#define QUICKUNLOCK_IMPLEMENTATION WindowsHello
 #elif defined(Q_OS_LINUX)
 #include "Polkit.h"
-#define QUICKUNLOCK_IMPLEMENTATION Polkit
-#else
-#define QUICKUNLOCK_IMPLEMENTATION NoQuickUnlock
 #endif
 
-QUICKUNLOCK_IMPLEMENTATION* quickUnlockInstance = {nullptr};
+QuickUnlockManager* quickUnlockManager = nullptr;
 
-QuickUnlockInterface* getQuickUnlock()
+QuickUnlockManager::QuickUnlockManager()
 {
-    if (!quickUnlockInstance) {
-        quickUnlockInstance = new QUICKUNLOCK_IMPLEMENTATION();
+#if defined(Q_OS_MACOS)
+    m_interfaces.append(new TouchId());
+#elif defined(Q_CC_MSVC)
+    m_interfaces.append(new WindowsHello());
+#elif defined(Q_OS_LINUX)
+    m_interfaces.append(new Polkit());
+#endif
+    m_interfaces.append(new PinUnlock());
+}
+
+const QuickUnlockManager* QuickUnlockManager::get()
+{
+    if (!quickUnlockManager) {
+        quickUnlockManager = new QuickUnlockManager();
     }
-    return quickUnlockInstance;
+    return quickUnlockManager;
 }
 
-bool NoQuickUnlock::isAvailable() const
+QuickUnlockInterface* QuickUnlockManager::getQuickUnlock()
 {
-    return false;
-}
-
-QString NoQuickUnlock::errorString() const
-{
-    return QObject::tr("No Quick Unlock provider is available");
-}
-
-void NoQuickUnlock::reset()
-{
-}
-
-bool NoQuickUnlock::setKey(const QUuid& dbUuid, const QByteArray& key)
-{
-    Q_UNUSED(dbUuid)
-    Q_UNUSED(key)
-    return false;
-}
-
-bool NoQuickUnlock::getKey(const QUuid& dbUuid, QByteArray& key)
-{
-    Q_UNUSED(dbUuid)
-    Q_UNUSED(key)
-    return false;
-}
-
-bool NoQuickUnlock::hasKey(const QUuid& dbUuid) const
-{
-    Q_UNUSED(dbUuid)
-    return false;
-}
-
-bool NoQuickUnlock::canRemember() const
-{
-    return false;
-}
-
-void NoQuickUnlock::reset(const QUuid& dbUuid)
-{
-    Q_UNUSED(dbUuid)
+    for (auto* interface : m_interfaces) {
+        if (interface->isAvailable()) {
+            return interface;
+        }
+    }
+    return nullptr;
 }

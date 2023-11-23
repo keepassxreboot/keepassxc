@@ -374,13 +374,16 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::buildDatabaseKey()
 {
     auto databaseKey = QSharedPointer<CompositeKey>::create();
 
-    if (!m_db.isNull() && canPerformQuickUnlock()) {
-        // try to retrieve the stored password using Windows Hello
+    if (!m_db.isNull() && canPerformQuickUnlock(m_db->publicUuid())) {
+        // try to retrieve the stored password using quick unlock
         QByteArray keyData;
         if (!getQuickUnlock()->getKey(m_db->publicUuid(), keyData)) {
             m_ui->messageWidget->showMessage(
                 tr("Failed to authenticate with Quick Unlock: %1").arg(getQuickUnlock()->errorString()),
                 MessageWidget::Error);
+            if (!getQuickUnlock()->hasKey(m_db->publicUuid())) {
+                resetQuickUnlock();
+            }
             return {};
         }
         databaseKey->setRawKey(keyData);
