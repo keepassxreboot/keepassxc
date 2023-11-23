@@ -628,13 +628,19 @@ QJsonObject BrowserService::showPasskeysRegisterPrompt(const QJsonObject& public
     const auto excludeCredentials = publicKey["excludeCredentials"].toArray();
     const auto attestation = publicKey["attestation"].toString();
 
+    // Check Resident Key requirement
+    const auto authenticatorSelection = publicKey["authenticatorSelection"].toObject();
+    const auto requireResidentKey = authenticatorSelection["requireResidentKey"].toBool();
+    if (requireResidentKey) {
+        return getPasskeyError(ERROR_PASSKEYS_RESIDENT_KEYS_NOT_SUPPORTED);
+    }
+
     // Only support these two for now
     if (attestation != BrowserPasskeys::PASSKEYS_ATTESTATION_NONE
         && attestation != BrowserPasskeys::PASSKEYS_ATTESTATION_DIRECT) {
         return getPasskeyError(ERROR_PASSKEYS_ATTESTATION_NOT_SUPPORTED);
     }
 
-    const auto authenticatorSelection = publicKey["authenticatorSelection"].toObject();
     const auto userVerification = authenticatorSelection["userVerification"].toString();
     if (!browserPasskeys()->isUserVerificationValid(userVerification)) {
         return getPasskeyError(ERROR_PASSKEYS_INVALID_USER_VERIFICATION);

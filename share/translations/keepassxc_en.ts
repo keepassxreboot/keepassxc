@@ -8251,6 +8251,34 @@ Kernel: %3 %4</source>
         <source>Passkeys</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Attestation not supported</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Credential is excluded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Passkeys request canceled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid user verification</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty public key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid URL provided</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resident Keys are not supported</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
