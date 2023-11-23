@@ -128,6 +128,20 @@ QString BrowserMessageBuilder::getErrorMessage(const int errorCode) const
         return QObject::tr("No valid UUID provided");
     case ERROR_KEEPASS_ACCESS_TO_ALL_ENTRIES_DENIED:
         return QObject::tr("Access to all entries is denied");
+    case ERROR_PASSKEYS_ATTESTATION_NOT_SUPPORTED:
+        return QObject::tr("Attestation not supported");
+    case ERROR_PASSKEYS_CREDENTIAL_IS_EXCLUDED:
+        return QObject::tr("Credential is excluded");
+    case ERROR_PASSKEYS_REQUEST_CANCELED:
+        return QObject::tr("Passkeys request canceled");
+    case ERROR_PASSKEYS_INVALID_USER_VERIFICATION:
+        return QObject::tr("Invalid user verification");
+    case ERROR_PASSKEYS_EMPTY_PUBLIC_KEY:
+        return QObject::tr("Empty public key");
+    case ERROR_PASSKEYS_INVALID_URL_PROVIDED:
+        return QObject::tr("Invalid URL provided");
+    case ERROR_PASSKEYS_RESIDENT_KEYS_NOT_SUPPORTED:
+        return QObject::tr("Resident Keys are not supported");
     default:
         return QObject::tr("Unknown error");
     }
