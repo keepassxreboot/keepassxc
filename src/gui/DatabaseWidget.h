@@ -214,7 +214,7 @@ public slots:
     void switchToDatabaseSettings();
 #ifdef WITH_XC_BROWSER_PASSKEYS
     void switchToPasskeys();
-    void switchToImportPasskey();
+    void showImportPasskeyDialog(bool isEntry = false);
 #endif
     void switchToOpenDatabase();
     void switchToOpenDatabase(const QString& filePath);

@@ -19,6 +19,9 @@
 #include "browser/BrowserCbor.h"
 #include "browser/BrowserMessageBuilder.h"
 #include "browser/BrowserService.h"
+#include "core/Database.h"
+#include "core/Entry.h"
+#include "core/Group.h"
 #include "crypto/Crypto.h"
 
 #include <QJsonArray>
@@ -468,4 +471,28 @@ void TestPasskeys::testSetFlags()
         QJsonObject({{"ED", false}, {"AT", false}, {"BS", false}, {"BE", false}, {"UV", false}, {"UP", true}});
     auto discouragedResult = browserPasskeys()->setFlagsFromJson(discouragedJson);
     QCOMPARE(discouragedResult, 0x01);
+}
+
+void TestPasskeys::testEntry()
+{
+    Database db;
+    auto* root = db.rootGroup();
+    root->setUuid(QUuid::createUuid());
+
+    auto* group1 = new Group();
+    group1->setUuid(QUuid::createUuid());
+    group1->setParent(root);
+
+    auto* entry = new Entry();
+    entry->setGroup(root);
+
+    browserService()->addPasskeyToEntry(entry,
+                                        QString("example.com"),
+                                        QString("example.com"),
+                                        QString("username"),
+                                        QString("userId"),
+                                        QString("userHandle"),
+                                        QString("privateKey"));
+
+    QVERIFY(entry->hasPasskey());
 }

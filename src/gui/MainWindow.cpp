@@ -135,6 +135,10 @@ MainWindow::MainWindow()
     m_entryContextMenu->addSeparator();
     m_entryContextMenu->addAction(m_ui->actionEntryAutoType);
     m_entryContextMenu->addSeparator();
+#ifdef WITH_XC_BROWSER_PASSKEYS
+    m_entryContextMenu->addAction(m_ui->actionEntryImportPasskey);
+    m_entryContextMenu->addSeparator();
+#endif
     m_entryContextMenu->addAction(m_ui->actionEntryEdit);
     m_entryContextMenu->addAction(m_ui->actionEntryClone);
     m_entryContextMenu->addAction(m_ui->actionEntryDelete);
@@ -441,6 +445,7 @@ MainWindow::MainWindow()
 #ifdef WITH_XC_BROWSER_PASSKEYS
     m_ui->actionPasskeys->setIcon(icons()->icon("passkey"));
     m_ui->actionImportPasskey->setIcon(icons()->icon("document-import"));
+    m_ui->actionEntryImportPasskey->setIcon(icons()->icon("document-import"));
 #endif
 
     m_actionMultiplexer.connect(
@@ -491,6 +496,7 @@ MainWindow::MainWindow()
 #ifdef WITH_XC_BROWSER_PASSKEYS
     connect(m_ui->actionPasskeys, SIGNAL(triggered()), m_ui->tabWidget, SLOT(showPasskeys()));
     connect(m_ui->actionImportPasskey, SIGNAL(triggered()), m_ui->tabWidget, SLOT(importPasskey()));
+    connect(m_ui->actionEntryImportPasskey, SIGNAL(triggered()), m_ui->tabWidget, SLOT(importPasskeyToEntry()));
 #endif
     connect(m_ui->actionImportCsv, SIGNAL(triggered()), m_ui->tabWidget, SLOT(importCsv()));
     connect(m_ui->actionImportKeePass1, SIGNAL(triggered()), m_ui->tabWidget, SLOT(importKeePass1Database()));
@@ -989,6 +995,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
 #ifdef WITH_XC_BROWSER_PASSKEYS
             m_ui->actionPasskeys->setEnabled(true);
             m_ui->actionImportPasskey->setEnabled(true);
+            m_ui->actionEntryImportPasskey->setEnabled(true);
 #endif
 #ifdef WITH_XC_SSHAGENT
             bool singleEntryHasSshKey =
@@ -1060,9 +1067,11 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
 #ifdef WITH_XC_BROWSER_PASSKEYS
             m_ui->actionPasskeys->setEnabled(false);
             m_ui->actionImportPasskey->setEnabled(false);
+            m_ui->actionEntryImportPasskey->setEnabled(false);
 #else
             m_ui->actionPasskeys->setVisible(false);
             m_ui->actionImportPasskey->setVisible(false);
+            m_ui->actionEntryImportPasskey->setVisible(false);
 #endif
 
             m_searchWidgetAction->setEnabled(false);

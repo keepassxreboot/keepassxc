@@ -341,8 +341,8 @@ void TestBrowser::testSearchEntriesByReference()
     auto secondEntryUuid = entries[1]->uuidToHex();
     auto fullReference = QString("{REF:A@I:%1}").arg(firstEntryUuid);
     auto partialReference = QString("https://subdomain.{REF:A@I:%1}").arg(secondEntryUuid);
-    entries[2]->attributes()->set(BrowserService::ADDITIONAL_URL, fullReference);
-    entries[3]->attributes()->set(BrowserService::ADDITIONAL_URL, partialReference);
+    entries[2]->attributes()->set(EntryAttributes::AdditionalUrlAttribute, fullReference);
+    entries[3]->attributes()->set(EntryAttributes::AdditionalUrlAttribute, partialReference);
     entries[4]->setUrl(fullReference);
     entries[5]->setUrl(partialReference);
 
@@ -351,11 +351,13 @@ void TestBrowser::testSearchEntriesByReference()
     QCOMPARE(result[0]->url(), urls[0]);
     QCOMPARE(result[1]->url(), urls[1]);
     QCOMPARE(result[2]->url(), urls[2]);
-    QCOMPARE(result[2]->resolveMultiplePlaceholders(result[2]->attributes()->value(BrowserService::ADDITIONAL_URL)),
-             urls[0]);
+    QCOMPARE(
+        result[2]->resolveMultiplePlaceholders(result[2]->attributes()->value(EntryAttributes::AdditionalUrlAttribute)),
+        urls[0]);
     QCOMPARE(result[3]->url(), urls[3]);
-    QCOMPARE(result[3]->resolveMultiplePlaceholders(result[3]->attributes()->value(BrowserService::ADDITIONAL_URL)),
-             urls[0]);
+    QCOMPARE(
+        result[3]->resolveMultiplePlaceholders(result[3]->attributes()->value(EntryAttributes::AdditionalUrlAttribute)),
+        urls[0]);
     QCOMPARE(result[4]->url(), fullReference);
     QCOMPARE(result[4]->resolveMultiplePlaceholders(result[4]->url()), urls[0]); // Should be resolved to the main entry
     QCOMPARE(result[5]->url(), partialReference);
@@ -386,7 +388,7 @@ void TestBrowser::testSearchEntriesWithAdditionalURLs()
     auto entries = createEntries(urls, root);
 
     // Add an additional URL to the first entry
-    entries.first()->attributes()->set(BrowserService::ADDITIONAL_URL, "https://keepassxc.org");
+    entries.first()->attributes()->set(EntryAttributes::AdditionalUrlAttribute, "https://keepassxc.org");
 
     auto result = m_browserService->searchEntries(db, "https://github.com", "https://github.com/session");
     QCOMPARE(result.length(), 1);
@@ -663,7 +665,7 @@ void TestBrowser::testBestMatchingWithAdditionalURLs()
     browserSettings()->setBestMatchOnly(true);
 
     // Add an additional URL to the first entry
-    entries.first()->attributes()->set(BrowserService::ADDITIONAL_URL, "https://test.github.com/anotherpage");
+    entries.first()->attributes()->set(EntryAttributes::AdditionalUrlAttribute, "https://test.github.com/anotherpage");
 
     // The first entry should be triggered
     auto result = m_browserService->searchEntries(
