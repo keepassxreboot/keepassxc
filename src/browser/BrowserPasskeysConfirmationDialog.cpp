@@ -33,6 +33,7 @@ BrowserPasskeysConfirmationDialog::BrowserPasskeysConfirmationDialog(QWidget* pa
 
     m_ui->setupUi(this);
     m_ui->updateButton->setVisible(false);
+    m_ui->verticalLayout->setAlignment(Qt::AlignTop);
 
     connect(m_ui->credentialsTable, SIGNAL(cellDoubleClicked(int, int)), this, SLOT(accept()));
     connect(m_ui->confirmButton, SIGNAL(clicked()), SLOT(accept()));
@@ -48,12 +49,13 @@ BrowserPasskeysConfirmationDialog::~BrowserPasskeysConfirmationDialog()
 }
 
 void BrowserPasskeysConfirmationDialog::registerCredential(const QString& username,
-                                                           const QString& siteId,
+                                                           const QString& relyingParty,
                                                            const QList<Entry*>& existingEntries,
                                                            int timeout)
 {
     m_ui->firstLabel->setText(tr("Do you want to register Passkey for:"));
-    m_ui->dataLabel->setText(tr("%1 (%2)").arg(username, siteId));
+    m_ui->relyingPartyLabel->setText(tr("Relying Party: %1").arg(relyingParty));
+    m_ui->usernameLabel->setText(tr("Username: %1").arg(username));
     m_ui->secondLabel->setText("");
 
     if (!existingEntries.isEmpty()) {
@@ -64,6 +66,7 @@ void BrowserPasskeysConfirmationDialog::registerCredential(const QString& userna
         m_ui->confirmButton->setText(tr("Register new"));
         updateEntriesToTable(existingEntries);
     } else {
+        m_ui->verticalLayout->setSizeConstraint(QLayout::SetFixedSize);
         m_ui->confirmButton->setText(tr("Register"));
         m_ui->credentialsTable->setVisible(false);
     }
@@ -72,11 +75,12 @@ void BrowserPasskeysConfirmationDialog::registerCredential(const QString& userna
 }
 
 void BrowserPasskeysConfirmationDialog::authenticateCredential(const QList<Entry*>& entries,
-                                                               const QString& origin,
+                                                               const QString& relyingParty,
                                                                int timeout)
 {
     m_ui->firstLabel->setText(tr("Authenticate Passkey credentials for:"));
-    m_ui->dataLabel->setText(origin);
+    m_ui->relyingPartyLabel->setText(tr("Relying Party: %1").arg(relyingParty));
+    m_ui->usernameLabel->setVisible(false);
     m_ui->secondLabel->setText("");
     updateEntriesToTable(entries);
     startCounter(timeout);
