@@ -36,7 +36,10 @@ public:
     explicit PasskeyImportDialog(QWidget* parent = nullptr);
     ~PasskeyImportDialog() override;
 
-    void setInfo(const QString& url, const QString& username, const QSharedPointer<Database>& database, bool isEntry);
+    void setInfo(const QString& relyingParty,
+                 const QString& username,
+                 const QSharedPointer<Database>& database,
+                 bool isEntry);
     QSharedPointer<Database> getSelectedDatabase() const;
     QUuid getSelectedEntryUuid() const;
     QUuid getSelectedGroupUuid() const;

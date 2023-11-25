@@ -848,10 +848,6 @@ Please select the correct database for saving credentials.</source>
 <context>
     <name>BrowserPasskeysConfirmationDialog</name>
     <message>
-        <source>KeePassXC: Passkey credentials</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -883,10 +879,6 @@ Please select the correct database for saving credentials.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>%1 (%2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Existing Passkey found.
 Do you want to register a new Passkey for:</source>
         <translation type="unfinished"></translation>
@@ -899,21 +891,25 @@ Do you want to register a new Passkey for:</source>
         <source>Authenticate Passkey credentials for:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Relying Party: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Username: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeePassXC - Passkey credentials</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BrowserService</name>
     <message>
-        <source>KeePassXC: Create a new group</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>A request for creating a new group &quot;%1&quot; has been received.
 Do you want to create this group?
 </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>KeePassXC: New key association request</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -929,24 +925,12 @@ chrome-laptop.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>KeePassXC: Overwrite existing key?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>A shared encryption key with the name &quot;%1&quot; already exists.
 Do you want to overwrite it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>KeePassXC: Update Entry</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Do you want to update the information in %1 - %2?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>KeePassXC: Delete entry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -960,12 +944,32 @@ Do you want to delete the entry?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>KeePassXC: Update Passkey</source>
+        <source>Entry already has a Passkey.
+Do you want to overwrite the Passkey in %1 - %2?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Entry already has a Passkey.
-Do you want to overwrite the Passkey in %1 - %2?</source>
+        <source>KeePassXC - Create a new group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeePassXC - New key association request</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeePassXC - Overwrite existing key?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeePassXC - Update Passkey</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeePassXC - Update Entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeePassXC - Delete entry</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1743,15 +1747,7 @@ This may prevent connection to the browser plugin.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>KeePassXC: No keys found</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>No shared encryption keys found in KeePassXC settings.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>KeePassXC: Removed keys from database</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
@@ -1774,20 +1770,12 @@ Permissions to access entries will be revoked.</source>
         <source>Abort</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>KeePassXC: Removed permissions</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
-    </message>
-    <message>
-        <source>KeePassXC: No entry with permissions found!</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>The active database does not contain an entry with permissions.</source>
@@ -1800,6 +1788,22 @@ Permissions to access entries will be revoked.</source>
     <message>
         <source>Do you really want refresh the database ID?
 This is only necessary if your database is a copy of another and the browser extension cannot connect.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No keys found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Removed keys from database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Removed permissions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No entry with permissions found!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5982,10 +5986,6 @@ Do you want to overwrite it?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>URL: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Username: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6027,6 +6027,10 @@ Do you want to overwrite it?
     </message>
     <message>
         <source>Default Passkeys group (Imported Passkeys)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Relying Party: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
