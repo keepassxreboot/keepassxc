@@ -50,7 +50,7 @@ const QuickUnlockManager* QuickUnlockManager::get()
     return quickUnlockManager;
 }
 
-QuickUnlockInterface* QuickUnlockManager::getQuickUnlock()
+QuickUnlockInterface* QuickUnlockManager::getQuickUnlock() const
 {
     for (auto* interface : m_interfaces) {
         if (interface->isAvailable()) {

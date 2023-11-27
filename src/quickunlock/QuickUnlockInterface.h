@@ -51,8 +51,9 @@ public:
     ~QuickUnlockManager();
 
     static const QuickUnlockManager* get();
+    static bool isAvailable();
 
-    QuickUnlockInterface* getQuickUnlock();
+    QuickUnlockInterface* getQuickUnlock() const;
 
 private:
     QList<QuickUnlockInterface*> m_interfaces;
