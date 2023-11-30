@@ -33,6 +33,7 @@ GenericName[zh_CN]=密码管理器
 GenericName[zh_TW]=密碼管理員
 Comment=Community-driven port of the Windows application “KeePass Password Safe”
 Comment[da]=Fællesskabsdrevet port af Windows-programmet “KeePass Password Safe”
+Comment[es]=Adaptación impulsada por la comunidad de la aplicación para Windows “KeePass Password Safe”
 Comment[et]=Kogukonna arendatav port Windowsi programmist KeePass Password Safe
 Comment[ru]=Разработанный сообществом порт Windows-приложения KeePass Password Safe
 Exec=keepassxc %f
