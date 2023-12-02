@@ -94,6 +94,7 @@ void TextStream::detectCodec()
     codecName = env.value("ENCODING_OVERRIDE", codecName);
     auto* codec = QTextCodec::codecForName(codecName.toLatin1());
     if (codec) {
-        setCodec(codec);
+        // TODO: Solve
+        // setCodec(codec);
     }
 }

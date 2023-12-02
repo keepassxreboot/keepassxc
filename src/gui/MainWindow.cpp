@@ -262,35 +262,35 @@ MainWindow::MainWindow()
     connect(m_inactivityTimer, SIGNAL(inactivityDetected()), this, SLOT(lockDatabasesAfterInactivity()));
     applySettingsChanges();
 
-    m_ui->actionDatabaseNew->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_N);
-    setShortcut(m_ui->actionDatabaseOpen, QKeySequence::Open, Qt::CTRL + Qt::Key_O);
-    setShortcut(m_ui->actionDatabaseSave, QKeySequence::Save, Qt::CTRL + Qt::Key_S);
-    setShortcut(m_ui->actionDatabaseSaveAs, QKeySequence::SaveAs, Qt::CTRL + Qt::SHIFT + Qt::Key_S);
+    m_ui->actionDatabaseNew->setShortcut(Qt::CTRL | Qt::SHIFT | Qt::Key_N);
+    setShortcut(m_ui->actionDatabaseOpen, QKeySequence::Open, Qt::CTRL | Qt::Key_O);
+    setShortcut(m_ui->actionDatabaseSave, QKeySequence::Save, Qt::CTRL | Qt::Key_S);
+    setShortcut(m_ui->actionDatabaseSaveAs, QKeySequence::SaveAs, Qt::CTRL | Qt::SHIFT | Qt::Key_S);
     setShortcut(m_ui->actionDatabaseClose, QKeySequence::Close, Qt::CTRL + Qt::Key_W);
-    m_ui->actionDatabaseSettings->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_Comma);
-    m_ui->actionReports->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_R);
-    setShortcut(m_ui->actionSettings, QKeySequence::Preferences, Qt::CTRL + Qt::Key_Comma);
-    m_ui->actionLockDatabase->setShortcut(Qt::CTRL + Qt::Key_L);
-    m_ui->actionLockAllDatabases->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_L);
-    setShortcut(m_ui->actionQuit, QKeySequence::Quit, Qt::CTRL + Qt::Key_Q);
-    setShortcut(m_ui->actionEntryNew, QKeySequence::New, Qt::CTRL + Qt::Key_N);
-    m_ui->actionEntryEdit->setShortcut(Qt::CTRL + Qt::Key_E);
-    m_ui->actionEntryDelete->setShortcut(Qt::CTRL + Qt::Key_D);
+    m_ui->actionDatabaseSettings->setShortcut(Qt::CTRL | Qt::SHIFT | Qt::Key_Comma);
+    m_ui->actionReports->setShortcut(Qt::CTRL | Qt::SHIFT | Qt::Key_R);
+    setShortcut(m_ui->actionSettings, QKeySequence::Preferences, Qt::CTRL | Qt::Key_Comma);
+    m_ui->actionLockDatabase->setShortcut(Qt::CTRL | Qt::Key_L);
+    m_ui->actionLockAllDatabases->setShortcut(Qt::CTRL | Qt::SHIFT | Qt::Key_L);
+    setShortcut(m_ui->actionQuit, QKeySequence::Quit, Qt::CTRL | Qt::Key_Q);
+    setShortcut(m_ui->actionEntryNew, QKeySequence::New, Qt::CTRL | Qt::Key_N);
+    m_ui->actionEntryEdit->setShortcut(Qt::CTRL | Qt::Key_E);
+    m_ui->actionEntryDelete->setShortcut(Qt::CTRL | Qt::Key_D);
     m_ui->actionEntryDelete->setShortcut(Qt::Key_Delete);
-    m_ui->actionEntryClone->setShortcut(Qt::CTRL + Qt::Key_K);
-    m_ui->actionEntryTotp->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_T);
-    m_ui->actionEntryDownloadIcon->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_D);
-    m_ui->actionEntryCopyTotp->setShortcut(Qt::CTRL + Qt::Key_T);
-    m_ui->actionEntryCopyPasswordTotp->setShortcut(Qt::CTRL + Qt::Key_Y);
-    m_ui->actionEntryMoveUp->setShortcut(Qt::CTRL + Qt::ALT + Qt::Key_Up);
-    m_ui->actionEntryMoveDown->setShortcut(Qt::CTRL + Qt::ALT + Qt::Key_Down);
-    m_ui->actionEntryCopyUsername->setShortcut(Qt::CTRL + Qt::Key_B);
-    m_ui->actionEntryCopyPassword->setShortcut(Qt::CTRL + Qt::Key_C);
-    m_ui->actionEntryCopyTitle->setShortcut(Qt::CTRL + Qt::Key_I);
-    m_ui->actionEntryAutoTypeSequence->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_V);
-    m_ui->actionEntryOpenUrl->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_U);
-    m_ui->actionEntryCopyURL->setShortcut(Qt::CTRL + Qt::Key_U);
-    m_ui->actionEntryRestore->setShortcut(Qt::CTRL + Qt::Key_R);
+    m_ui->actionEntryClone->setShortcut(Qt::CTRL | Qt::Key_K);
+    m_ui->actionEntryTotp->setShortcut(Qt::CTRL | Qt::SHIFT | Qt::Key_T);
+    m_ui->actionEntryDownloadIcon->setShortcut(Qt::CTRL | Qt::SHIFT | Qt::Key_D);
+    m_ui->actionEntryCopyTotp->setShortcut(Qt::CTRL | Qt::Key_T);
+    m_ui->actionEntryCopyPasswordTotp->setShortcut(Qt::CTRL | Qt::Key_Y);
+    m_ui->actionEntryMoveUp->setShortcut(Qt::CTRL | Qt::ALT | Qt::Key_Up);
+    m_ui->actionEntryMoveDown->setShortcut(Qt::CTRL | Qt::ALT | Qt::Key_Down);
+    m_ui->actionEntryCopyUsername->setShortcut(Qt::CTRL | Qt::Key_B);
+    m_ui->actionEntryCopyPassword->setShortcut(Qt::CTRL | Qt::Key_C);
+    m_ui->actionEntryCopyTitle->setShortcut(Qt::CTRL | Qt::Key_I);
+    m_ui->actionEntryAutoTypeSequence->setShortcut(Qt::CTRL | Qt::SHIFT | Qt::Key_V);
+    m_ui->actionEntryOpenUrl->setShortcut(Qt::CTRL | Qt::SHIFT | Qt::Key_U);
+    m_ui->actionEntryCopyURL->setShortcut(Qt::CTRL | Qt::Key_U);
+    m_ui->actionEntryRestore->setShortcut(Qt::CTRL | Qt::Key_R);
 
     // Prevent conflicts with global Mac shortcuts (force Control on all platforms)
 #ifdef Q_OS_MAC
@@ -298,8 +298,8 @@ MainWindow::MainWindow()
 #else
     auto modifier = Qt::CTRL;
 #endif
-    m_ui->actionEntryAddToAgent->setShortcut(modifier + Qt::Key_H);
-    m_ui->actionEntryRemoveFromAgent->setShortcut(modifier + Qt::SHIFT + Qt::Key_H);
+    m_ui->actionEntryAddToAgent->setShortcut(modifier | Qt::Key_H);
+    m_ui->actionEntryRemoveFromAgent->setShortcut(modifier | Qt::SHIFT | Qt::Key_H);
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
     // Qt 5.10 introduced a new "feature" to hide shortcuts in context menus
@@ -335,18 +335,18 @@ MainWindow::MainWindow()
     connect(m_ui->menuGroups, SIGNAL(aboutToHide()), SLOT(releaseContextFocusLock()));
 
     // Control window state
-    new QShortcut(Qt::CTRL + Qt::Key_M, this, SLOT(minimizeOrHide()));
-    new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_M, this, SLOT(hideWindow()));
+    new QShortcut(Qt::CTRL | Qt::Key_M, this, SLOT(minimizeOrHide()));
+    new QShortcut(Qt::CTRL | Qt::SHIFT | Qt::Key_M, this, SLOT(hideWindow()));
     // Control database tabs
     // Ctrl+Tab is broken on Mac, so use Alt (i.e. the Option key) - https://bugreports.qt.io/browse/QTBUG-8596
     auto dbTabModifier2 = Qt::CTRL;
 #ifdef Q_OS_MACOS
     dbTabModifier2 = Qt::ALT;
 #endif
-    new QShortcut(dbTabModifier2 + Qt::Key_Tab, this, SLOT(selectNextDatabaseTab()));
-    new QShortcut(Qt::CTRL + Qt::Key_PageDown, this, SLOT(selectNextDatabaseTab()));
-    new QShortcut(dbTabModifier2 + Qt::SHIFT + Qt::Key_Tab, this, SLOT(selectPreviousDatabaseTab()));
-    new QShortcut(Qt::CTRL + Qt::Key_PageUp, this, SLOT(selectPreviousDatabaseTab()));
+    new QShortcut(dbTabModifier2 | Qt::Key_Tab, this, SLOT(selectNextDatabaseTab()));
+    new QShortcut(Qt::CTRL | Qt::Key_PageDown, this, SLOT(selectNextDatabaseTab()));
+    new QShortcut(dbTabModifier2 | Qt::SHIFT | Qt::Key_Tab, this, SLOT(selectPreviousDatabaseTab()));
+    new QShortcut(Qt::CTRL | Qt::Key_PageUp, this, SLOT(selectPreviousDatabaseTab()));
 
     // Tab selection by number, Windows uses Ctrl, macOS uses Command,
     // and Linux uses Alt to emulate a browser-like experience
@@ -354,23 +354,23 @@ MainWindow::MainWindow()
 #ifdef Q_OS_LINUX
     dbTabModifier = Qt::ALT;
 #endif
-    auto shortcut = new QShortcut(dbTabModifier + Qt::Key_1, this);
+    auto shortcut = new QShortcut(dbTabModifier | Qt::Key_1, this);
     connect(shortcut, &QShortcut::activated, [this]() { selectDatabaseTab(0); });
-    shortcut = new QShortcut(dbTabModifier + Qt::Key_2, this);
+    shortcut = new QShortcut(dbTabModifier | Qt::Key_2, this);
     connect(shortcut, &QShortcut::activated, [this]() { selectDatabaseTab(1); });
-    shortcut = new QShortcut(dbTabModifier + Qt::Key_3, this);
+    shortcut = new QShortcut(dbTabModifier | Qt::Key_3, this);
     connect(shortcut, &QShortcut::activated, [this]() { selectDatabaseTab(2); });
-    shortcut = new QShortcut(dbTabModifier + Qt::Key_4, this);
+    shortcut = new QShortcut(dbTabModifier | Qt::Key_4, this);
     connect(shortcut, &QShortcut::activated, [this]() { selectDatabaseTab(3); });
-    shortcut = new QShortcut(dbTabModifier + Qt::Key_5, this);
+    shortcut = new QShortcut(dbTabModifier | Qt::Key_5, this);
     connect(shortcut, &QShortcut::activated, [this]() { selectDatabaseTab(4); });
-    shortcut = new QShortcut(dbTabModifier + Qt::Key_6, this);
+    shortcut = new QShortcut(dbTabModifier | Qt::Key_6, this);
     connect(shortcut, &QShortcut::activated, [this]() { selectDatabaseTab(5); });
-    shortcut = new QShortcut(dbTabModifier + Qt::Key_7, this);
+    shortcut = new QShortcut(dbTabModifier | Qt::Key_7, this);
     connect(shortcut, &QShortcut::activated, [this]() { selectDatabaseTab(6); });
-    shortcut = new QShortcut(dbTabModifier + Qt::Key_8, this);
+    shortcut = new QShortcut(dbTabModifier | Qt::Key_8, this);
     connect(shortcut, &QShortcut::activated, [this]() { selectDatabaseTab(7); });
-    shortcut = new QShortcut(dbTabModifier + Qt::Key_9, this);
+    shortcut = new QShortcut(dbTabModifier | Qt::Key_9, this);
     connect(shortcut, &QShortcut::activated, [this]() { selectDatabaseTab(m_ui->tabWidget->count() - 1); });
 
     m_ui->actionDatabaseNew->setIcon(icons()->icon("document-new"));

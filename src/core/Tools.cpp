@@ -226,11 +226,11 @@ namespace Tools
     bool isBase64(const QByteArray& ba)
     {
         constexpr auto pattern = R"(^(?:[a-z0-9+/]{4})*(?:[a-z0-9+/]{3}=|[a-z0-9+/]{2}==)?$)";
-        QRegExp regexp(pattern, Qt::CaseInsensitive, QRegExp::RegExp2);
+        QRegularExpression regexp(pattern, QRegularExpression::CaseInsensitiveOption);
 
         QString base64 = QString::fromLatin1(ba.constData(), ba.size());
 
-        return regexp.exactMatch(base64);
+        return regexp.match(base64).hasMatch();
     }
 
     void sleep(int ms)

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -14,7 +14,8 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
+/*
+#include <QTextCodec>
 #include "MacPasteboard.h"
 
 QString MacPasteboard::convertorName()
@@ -97,3 +98,4 @@ QList<QByteArray> MacPasteboard::convertFromMime(const QString&, QVariant data, 
         ret.append(QTextCodec::codecForName("UTF-16")->fromUnicode(string));
     return ret;
 }
+*/
