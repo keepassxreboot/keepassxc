@@ -2155,7 +2155,7 @@ bool DatabaseWidget::performSave(QString& errorMessage, const QString& fileName)
     m_groupView->setDisabled(false);
     m_tagView->setDisabled(false);
 
-    if (focusWidget) {
+    if (focusWidget && focusWidget->isVisible()) {
         focusWidget->setFocus();
     }
 
