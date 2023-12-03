@@ -295,6 +295,8 @@ bool Kdbx4Writer::serializeVariantMap(const QVariantMap& map, QByteArray& output
         QByteArray dataLenBytes = Endian::sizedIntToBytes(data.size(), KeePass2::BYTEORDER);
 
         CHECK_RETURN_FALSE(buf.write(typeBytes) == 1);
+        auto res = buf.write(nameLenBytes) == 4;
+        qDebug() << res;
         CHECK_RETURN_FALSE(buf.write(nameLenBytes) == 4);
         CHECK_RETURN_FALSE(buf.write(nameBytes) == nameBytes.size());
         CHECK_RETURN_FALSE(buf.write(dataLenBytes) == 4);

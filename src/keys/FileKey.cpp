@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2011 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -301,7 +301,7 @@ bool FileKey::loadXml(QIODevice* device, QString* errorMsg)
     if (xmlReader.error()) {
         return false;
     }
-    if (xmlReader.readNextStartElement() && xmlReader.name().compare("KeyFile") != 0) {
+    if (xmlReader.readNextStartElement() && xmlReader.name().toString() != "KeyFile") {
         return false;
     }
 
@@ -313,9 +313,9 @@ bool FileKey::loadXml(QIODevice* device, QString* errorMsg)
     } keyFileData;
 
     while (!xmlReader.error() && xmlReader.readNextStartElement()) {
-        if (xmlReader.name().compare("Meta") == 0) {
+        if (xmlReader.name().toString() == "Meta") {
             while (!xmlReader.error() && xmlReader.readNextStartElement()) {
-                if (xmlReader.name().compare("Version") == 0) {
+                if (xmlReader.name().toString() == "Version") {
                     keyFileData.version = xmlReader.readElementText();
                     if (keyFileData.version.startsWith("1.0")) {
                         m_type = KeePass2XML;
@@ -329,9 +329,9 @@ bool FileKey::loadXml(QIODevice* device, QString* errorMsg)
                     }
                 }
             }
-        } else if (xmlReader.name().compare("Key") == 0) {
+        } else if (xmlReader.name().toString() == "Key") {
             while (!xmlReader.error() && xmlReader.readNextStartElement()) {
-                if (xmlReader.name().compare("Data") == 0) {
+                if (xmlReader.name().toString() == "Data") {
                     keyFileData.hash = QByteArray::fromHex(xmlReader.attributes().value("Hash").toLatin1());
                     keyFileData.data = xmlReader.readElementText().simplified().replace(" ", "").toLatin1();
 

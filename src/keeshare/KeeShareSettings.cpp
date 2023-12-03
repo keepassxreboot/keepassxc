@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -52,7 +52,7 @@ namespace KeeShareSettings
         void xmlDeserialize(const QString& raw, std::function<void(QXmlStreamReader& reader)> specific)
         {
             QXmlStreamReader reader(raw);
-            if (!reader.readNextStartElement() || reader.qualifiedName().compare("KeeShare") != 0) {
+            if (!reader.readNextStartElement() || reader.qualifiedName().toString() != "KeeShare") {
                 return;
             }
             specific(reader);
@@ -105,9 +105,9 @@ namespace KeeShareSettings
     {
         Certificate certificate;
         while (!reader.error() && reader.readNextStartElement()) {
-            if (reader.name().compare("Signer") == 0) {
+            if (reader.name().toString() == "Signer") {
                 certificate.signer = reader.readElementText();
-            } else if (reader.name().compare("Key") == 0) {
+            } else if (reader.name().toString() == "Key") {
                 auto rawKey = QByteArray::fromBase64(reader.readElementText().toLatin1());
                 if (!rawKey.isEmpty()) {
                     try {
@@ -199,12 +199,12 @@ namespace KeeShareSettings
         Active active;
         xmlDeserialize(raw, [&](QXmlStreamReader& reader) {
             while (!reader.error() && reader.readNextStartElement()) {
-                if (reader.name().compare("Active") == 0) {
+                if (reader.name().toString() == "Active") {
                     while (reader.readNextStartElement()) {
-                        if (reader.name().compare("Import") == 0) {
+                        if (reader.name().toString() == "Import") {
                             active.in = true;
                             reader.skipCurrentElement();
-                        } else if (reader.name().compare("Export") == 0) {
+                        } else if (reader.name().toString() == "Export") {
                             active.out = true;
                             reader.skipCurrentElement();
                         } else {
@@ -247,9 +247,9 @@ namespace KeeShareSettings
         Own own;
         xmlDeserialize(raw, [&](QXmlStreamReader& reader) {
             while (!reader.error() && reader.readNextStartElement()) {
-                if (reader.name().compare("PrivateKey") == 0) {
+                if (reader.name().toString() == "PrivateKey") {
                     own.key = Key::deserialize(reader);
-                } else if (reader.name().compare("PublicKey") == 0) {
+                } else if (reader.name().toString() == "PublicKey") {
                     own.certificate = Certificate::deserialize(reader);
                 } else {
                     qWarning("Unknown KeeShareSettings element %s", qPrintable(reader.name().toString()));
@@ -327,23 +327,23 @@ namespace KeeShareSettings
         Reference reference;
         xmlDeserialize(raw, [&](QXmlStreamReader& reader) {
             while (!reader.error() && reader.readNextStartElement()) {
-                if (reader.name().compare("Type") == 0) {
+                if (reader.name().toString() == "Type") {
                     while (reader.readNextStartElement()) {
-                        if (reader.name().compare("Import") == 0) {
+                        if (reader.name().toString() == "Import") {
                             reference.type |= ImportFrom;
                             reader.skipCurrentElement();
-                        } else if (reader.name().compare("Export") == 0) {
+                        } else if (reader.name().toString() == "Export") {
                             reference.type |= ExportTo;
                             reader.skipCurrentElement();
                         } else {
                             break;
                         }
                     }
-                } else if (reader.name().compare("Group") == 0) {
+                } else if (reader.name().toString() == "Group") {
                     reference.uuid = QUuid::fromRfc4122(QByteArray::fromBase64(reader.readElementText().toLatin1()));
-                } else if (reader.name().compare("Path") == 0) {
+                } else if (reader.name().toString() == "Path") {
                     reference.path = QString::fromUtf8(QByteArray::fromBase64(reader.readElementText().toLatin1()));
-                } else if (reader.name().compare("Password") == 0) {
+                } else if (reader.name().toString() == "Password") {
                     reference.password = QString::fromUtf8(QByteArray::fromBase64(reader.readElementText().toLatin1()));
                 } else {
                     qWarning("Unknown Reference element %s", qPrintable(reader.name().toString()));
