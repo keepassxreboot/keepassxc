@@ -189,7 +189,7 @@ QString KdbxXmlReader::errorString() const
     return {};
 }
 
-bool KdbxXmlReader::isTrueValue(const QStringView& value)
+bool KdbxXmlReader::isTrueValue(QStringView value)
 {
     return value.compare(QLatin1String("true"), Qt::CaseInsensitive) == 0 || value.toString() == "1";
 }
