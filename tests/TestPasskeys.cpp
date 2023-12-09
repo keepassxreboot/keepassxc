@@ -75,7 +75,7 @@ const QString PublicKeyCredential = R"(
         "id": "yrzFJ5lwcpTwYMOdXSmxF5b5cYQlqBMzbbU_d-oFLO8",
         "rawId": "cabcc52799707294f060c39d5d29b11796f9718425a813336db53f77ea052cef",
         "response": {
-            "attestationObject": "o2NmbXRkbm9uZWdhdHRTdG10oGhhdXRoRGF0YVikdKbqkhPJnC90siSSsyDPQCYqlMGpUKA5fyklC2CEHvBFAAAAAAECAwQFBgcIAQIDBAUGBwgAIMq8xSeZcHKU8GDDnV0psReW-XGEJagTM221P3fqBSzvpQECAyYgASFYIAbsrzRbYpFhbRlZA6ZQKsoxxJWoaeXwh-XUuDLNCIXdIlgg4u5_6Q8O6R0Hg0oDCdtCJLEL0yX_GDLhU5m3HUIE54M",
+            "attestationObject": "o2NmbXRkbm9uZWdhdHRTdG10oGhhdXRoRGF0YVikdKbqkhPJnC90siSSsyDPQCYqlMGpUKA5fyklC2CEHvBFAAAAAP2xQbJdhEQ-ijVGmMIFpQIAIMq8xSeZcHKU8GDDnV0psReW-XGEJagTM221P3fqBSzvpQECAyYgASFYIAbsrzRbYpFhbRlZA6ZQKsoxxJWoaeXwh-XUuDLNCIXdIlgg4u5_6Q8O6R0Hg0oDCdtCJLEL0yX_GDLhU5m3HUIE54M",
             "clientDataJSON": "eyJ0eXBlIjoid2ViYXV0aG4uY3JlYXRlIiwiY2hhbGxlbmdlIjoibFZlSHpWeFdzcjhNUXhNa1pGMHRpNkZYaGRnTWxqcUt6Z0EtcV96azJNbmlpM2VKNDdWRjk3c3FVb1lrdFZDODVXQVoxdUlBU20tYV9sREZad3NMZnciLCJvcmlnaW4iOiJodHRwczovL3dlYmF1dGhuLmlvIiwiY3Jvc3NPcmlnaW4iOmZhbHNlfQ"
         },
         "type": "public-key"
@@ -167,7 +167,7 @@ void TestPasskeys::testDecodeResponseData()
 
     // The attestationObject should include the same ID after decoding with the response root
     QCOMPARE(credentialData["credentialId"].toString(), publicKeyCredential["id"].toString());
-    QCOMPARE(credentialData["aaguid"].toString(), QString("AQIDBAUGBwgBAgMEBQYHCA"));
+    QCOMPARE(credentialData["aaguid"].toString(), QString("_bFBsl2ERD6KNUaYwgWlAg"));
     QCOMPARE(authData["rpIdHash"].toString(), QString("dKbqkhPJnC90siSSsyDPQCYqlMGpUKA5fyklC2CEHvA"));
     QCOMPARE(flags["AT"], true);
     QCOMPARE(flags["UP"], true);
