@@ -37,6 +37,9 @@
 
 Q_GLOBAL_STATIC(BrowserPasskeys, s_browserPasskeys);
 
+// KeePassXC AAGUID: fdb141b2-5d84-443e-8a35-4698c205a502
+const QString BrowserPasskeys::AAGUID = QStringLiteral("fdb141b25d84443e8a354698c205a502");
+
 const QString BrowserPasskeys::PUBLIC_KEY = QStringLiteral("public-key");
 const QString BrowserPasskeys::REQUIREMENT_DISCOURAGED = QStringLiteral("discouraged");
 const QString BrowserPasskeys::REQUIREMENT_PREFERRED = QStringLiteral("preferred");
@@ -181,8 +184,8 @@ PrivateKey BrowserPasskeys::buildAttestationObject(const QJsonObject& publicKey,
     const char counter[4] = {0x00, 0x00, 0x00, 0x00};
     result.append(QByteArray::fromRawData(counter, 4));
 
-    // AAGUID (use the default/non-set)
-    result.append("\x01\x02\x03\x04\x05\x06\x07\b\x01\x02\x03\x04\x05\x06\x07\b");
+    // AAGUID
+    result.append(browserMessageBuilder()->getArrayFromHexString(AAGUID));
 
     // Credential length
     const char credentialLength[2] = {0x00, 0x20};
