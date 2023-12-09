@@ -94,6 +94,7 @@ public:
     int getTimeout(const QString& userVerification, int timeout) const;
     QStringList getAllowedCredentialsFromPublicKey(const QJsonObject& publicKey) const;
 
+    static const QString AAGUID;
     static const QString PUBLIC_KEY;
     static const QString REQUIREMENT_DISCOURAGED;
     static const QString REQUIREMENT_PREFERRED;
