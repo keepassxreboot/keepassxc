@@ -18,7 +18,7 @@
 #ifndef KEEPASSXC_WINDOWSHELLO_H
 #define KEEPASSXC_WINDOWSHELLO_H
 
-#include "QuickUnlockInterface.h";
+#include "QuickUnlockInterface.h"
 
 #include <QHash>
 #include <QObject>

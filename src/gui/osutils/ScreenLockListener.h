@@ -26,7 +26,7 @@ class ScreenLockListener : public QObject
     Q_OBJECT
 
 public:
-    ScreenLockListener(QWidget* parent = nullptr);
+    explicit ScreenLockListener(QWidget* parent);
     ~ScreenLockListener() override;
 
 signals:

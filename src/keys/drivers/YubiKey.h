@@ -20,6 +20,7 @@
 #define KEEPASSX_YUBIKEY_H
 
 #include <QHash>
+#include <QMultiMap>
 #include <QMutex>
 #include <QObject>
 #include <QTimer>
@@ -36,6 +37,7 @@ class YubiKey : public QObject
     Q_OBJECT
 
 public:
+    typedef QMap<YubiKeySlot, QString> KeyMap;
     enum class ChallengeResult : int
     {
         YCR_ERROR = 0,
@@ -49,8 +51,7 @@ public:
     bool findValidKeys();
     void findValidKeysAsync();
 
-    QList<YubiKeySlot> foundKeys();
-    QString getDisplayName(YubiKeySlot slot);
+    KeyMap foundKeys();
 
     ChallengeResult challenge(YubiKeySlot slot, const QByteArray& challenge, Botan::secure_vector<char>& response);
     bool testChallenge(YubiKeySlot slot, bool* wouldBlock = nullptr);
@@ -85,7 +86,11 @@ private:
     QTimer m_interactionTimer;
     bool m_initialized = false;
     QString m_error;
-    QMutex m_interfaces_detect_mutex;
+
+    static QMutex s_interfaceMutex;
+
+    KeyMap m_usbKeys;
+    KeyMap m_pcscKeys;
 
     Q_DISABLE_COPY(YubiKey)
 };

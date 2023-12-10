@@ -221,6 +221,7 @@ Files: share/icons/application/scalable/actions/application-exit.svg
        share/icons/application/scalable/actions/username-copy.svg
        share/icons/application/scalable/actions/view-history.svg
        share/icons/application/scalable/actions/web.svg
+       share/icons/application/scalable/actions/yubikey-refresh.svg
        share/icons/application/scalable/apps/internet-web-browser.svg
        share/icons/application/scalable/apps/keepassxc.svg
        share/icons/application/scalable/apps/keepassxc-dark.svg

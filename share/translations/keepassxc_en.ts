@@ -1501,36 +1501,7 @@ Backup database located at %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Enter Additional Credentials (if any):</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Key File:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Key file help</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Hardware key slot selection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hardware Key:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hardware key help</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1543,14 +1514,6 @@ Backup database located at %2</source>
     </message>
     <message>
         <source>Browse…</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Refresh hardware tokens</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Refresh</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1639,28 +1602,59 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>You cannot use your database file as a key file.
-If you do not have a key file, please leave the field empty.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Detecting hardware keys…</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No hardware keys detected</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select hardware key…</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>authenticate to access the database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Failed to authenticate with Quick Unlock: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Key File:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;/p&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Click to add a key file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;I have a key file&lt;/a&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use hardware key [Serial: %1]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use hardware key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your database file is NOT a key file!
+If you don&apos;t have a key file or don&apos;t know what that is, you don&apos;t have to select one.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeePassXC database file selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The file you selected looks like a database file.
+A database file is NOT a key file!
+
+Are you sure you want to continue with this file?.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No hardware keys found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Refresh Hardware Keys</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9634,10 +9628,6 @@ Example: JBSWY3DPEHPK3PXP</source>
 <context>
     <name>YubiKey</name>
     <message>
-        <source>%1 No interface, slot %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>General: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -9648,14 +9638,6 @@ Example: JBSWY3DPEHPK3PXP</source>
 </context>
 <context>
     <name>YubiKeyEditWidget</name>
-    <message>
-        <source>Refresh hardware tokens</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Refresh</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Hardware key slot selection</source>
         <translation type="unfinished"></translation>
@@ -9700,26 +9682,15 @@ Example: JBSWY3DPEHPK3PXP</source>
         <source>&lt;p&gt;If you own a &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; or &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt;, you can use it for additional security.&lt;/p&gt;&lt;p&gt;The key requires one of its slots to be programmed as &lt;a href=&quot;https://docs.yubico.com/yesdk/users-manual/application-otp/challenge-response.html&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>YubiKeyInterface</name>
     <message>
-        <source>%1 Invalid slot specified - %2</source>
+        <source>Refresh hardware keys</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>YubiKeyInterfacePCSC</name>
     <message>
-        <source>(PCSC) %1 [%2] Challenge-Response - Slot %3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>The YubiKey PCSC interface has not been initialized.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hardware key is currently in use.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9738,19 +9709,26 @@ Example: JBSWY3DPEHPK3PXP</source>
         <source>Failed to complete a challenge-response, the PCSC error code was: %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>(NFC) %1 [%2] - Slot %3, %4</source>
+        <comment>YubiKey display fields</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Press</source>
+        <comment>USB Challenge-Response Key interaction request</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Passive</source>
+        <comment>USB Challenge-Response Key no interaction required</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>YubiKeyInterfaceUSB</name>
     <message>
         <source>Unknown</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>(USB) %1 [%2] Configured Slot - %3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>(USB) %1 [%2] Challenge-Response - Slot %3 - %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9768,10 +9746,6 @@ Example: JBSWY3DPEHPK3PXP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Hardware key is currently in use.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Could not find hardware key with serial number %1. Please plug it in to continue.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9785,6 +9759,16 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Failed to complete a challenge-response, the specific error was: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 [%2] - Slot %3</source>
+        <comment>YubiKey NEO display fields</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 [%2] - Slot %3, %4</source>
+        <comment>YubiKey display fields</comment>
         <translation type="unfinished"></translation>
     </message>
 </context>
