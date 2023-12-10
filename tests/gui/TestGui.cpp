@@ -141,6 +141,7 @@ void TestGui::init()
         databaseOpenWidget->findChild<PasswordWidget*>("editPassword")->findChild<QLineEdit*>("passwordEdit");
     QVERIFY(editPassword);
     editPassword->setFocus();
+    QTRY_VERIFY(editPassword->hasFocus());
 
     QTest::keyClicks(editPassword, "a");
     QTest::keyClick(editPassword, Qt::Key_Enter);
