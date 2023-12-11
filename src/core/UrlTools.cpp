@@ -16,7 +16,7 @@
  */
 
 #include "UrlTools.h"
-#ifdef WITH_XC_NETWORKING
+#if defined(WITH_XC_NETWORKING) || defined(WITH_XC_BROWSER)
 #include <QHostAddress>
 #include <QNetworkCookie>
 #include <QNetworkCookieJar>
@@ -40,7 +40,7 @@ QUrl UrlTools::convertVariantToUrl(const QVariant& var) const
     return url;
 }
 
-#ifdef WITH_XC_NETWORKING
+#if defined(WITH_XC_NETWORKING) || defined(WITH_XC_BROWSER)
 QUrl UrlTools::getRedirectTarget(QNetworkReply* reply) const
 {
     QVariant var = reply->attribute(QNetworkRequest::RedirectionTargetAttribute);

@@ -150,8 +150,6 @@ if(WITH_XC_NETWORKING)
             LIBS ${TEST_LIBRARIES})
 
     add_unit_test(NAME testicondownloader SOURCES TestIconDownloader.cpp LIBS ${TEST_LIBRARIES})
-
-    add_unit_test(NAME testurltools SOURCES TestUrlTools.cpp LIBS ${TEST_LIBRARIES})
 endif()
 
 if(WITH_XC_AUTOTYPE)
@@ -244,6 +242,10 @@ if(WITH_XC_BROWSER)
                     LIBS keepassxcbrowser ${TEST_LIBRARIES})
         endif()
     endif()
+endif()
+
+if(WITH_XC_NETWORKING OR WITH_XC_BROWSER)
+    add_unit_test(NAME testurltools SOURCES TestUrlTools.cpp LIBS ${TEST_LIBRARIES})
 endif()
 
 add_unit_test(NAME testcli SOURCES TestCli.cpp

@@ -32,7 +32,7 @@ public:
     explicit UrlTools() = default;
     static UrlTools* instance();
 
-#ifdef WITH_XC_NETWORKING
+#if defined(WITH_XC_NETWORKING) || defined(WITH_XC_BROWSER)
     QUrl getRedirectTarget(QNetworkReply* reply) const;
     QString getBaseDomainFromUrl(const QString& url) const;
     QString getTopLevelDomainFromUrl(const QString& url) const;
