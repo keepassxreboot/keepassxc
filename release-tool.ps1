@@ -141,14 +141,8 @@ function Test-WorkingTreeClean {
 
 function Invoke-VSToolchain([String] $Toolchain, [String] $Path, [String] $Arch) {
     # Find Visual Studio installations
-    try {
-        # Try to get the VS instances using the default CIM session
-        $vs = Get-CimInstance MSFT_VSInstance
-    }
-    catch {
-        # If an error occurs, try to get the VS instances using the WMI namespace
-        $vs = Get-CimInstance MSFT_VSInstance -Namespace root/cimv2/vs
-    }
+    $vs = Get-CimInstance MSFT_VSInstance -Namespace root/cimv2/vs
+  
     if ($vs.count -eq 0) {
         $err = "No Visual Studio installations found, download one from https://visualstudio.com/downloads."
         $err = "$err`nIf Visual Studio is installed, you may need to repair the install then restart."
