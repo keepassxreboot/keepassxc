@@ -158,13 +158,6 @@ Merger::resolveGroupConflict(const MergeContext& context, const Group* sourceChi
     return changes;
 }
 
-bool Merger::markOlderEntry(Entry* entry)
-{
-    entry->attributes()->set(
-        "merged", tr("older entry merged from database \"%1\"").arg(entry->group()->database()->metadata()->name()));
-    return true;
-}
-
 void Merger::moveEntry(Entry* entry, Group* targetGroup)
 {
     Q_ASSERT(entry);
