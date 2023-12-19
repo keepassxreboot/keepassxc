@@ -5612,10 +5612,6 @@ We recommend you use the AppImage available on our downloads page.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>older entry merged from database &quot;%1&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Synchronizing from newer source %1 [%2]</source>
         <translation type="unfinished"></translation>
     </message>
