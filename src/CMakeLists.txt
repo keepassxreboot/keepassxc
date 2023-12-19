@@ -482,8 +482,9 @@ if(WIN32)
             "${CMAKE_SOURCE_DIR}/LICENSE.GPL-2"
             "${CMAKE_CURRENT_BINARY_DIR}/INSTALLER_LICENSE.txt")
 
-    # Prepare portal zip file
-    set(CPACK_INSTALL_SCRIPTS "${CMAKE_SOURCE_DIR}/cmake/MakePortableZip.cmake")
+    # Prepare post-install script and set to run prior to building cpack installers
+    configure_file("${CMAKE_SOURCE_DIR}/cmake/WindowsPostInstall.cmake.in" "${CMAKE_BINARY_DIR}/WindowsPostInstall.cmake" @ONLY)
+    set(CPACK_PRE_BUILD_SCRIPTS "${CMAKE_BINARY_DIR}/WindowsPostInstall.cmake")
 
     string(REGEX REPLACE "-.*$" "" KEEPASSXC_VERSION_CLEAN ${KEEPASSXC_VERSION})
 

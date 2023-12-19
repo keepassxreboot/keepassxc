@@ -1,7 +1,7 @@
 {
   "name": "keepassxc",
   "version-string": "2.8.0",
-  "builtin-baseline": "f9c128a6f7a96f5fa2f6f089f37ed6788a90e4b0",
+  "builtin-baseline": "74e6536215718009aae747d86d84b78376bf9e09",
   "dependencies": [
     {
       "name": "argon2",
@@ -36,37 +36,22 @@
     },
     {
       "name": "qt5",
-      "version>=": "5.15.11"
+      "version>=": "5.15.17",
+      "features": [
+        "declarative",
+        "extras",
+        "imageformats",
+        "svg",
+        "tools",
+        "translations"
+      ],
+      "default-features": false
     },
     {
-      "name": "qt5-imageformats",
-      "version>=": "5.15.11"
-    },
-    {
-      "name": "qt5-macextras",
-      "version>=": "5.15.11",
-      "platform": "osx"
-    },
-    {
-      "name": "qt5-svg",
-      "version>=": "5.15.11"
-    },
-    {
-      "name": "qt5-tools",
-      "version>=": "5.15.11"
-    },
-    {
-      "name": "qt5-translations",
-      "version>=": "5.15.11"
-    },
-    {
-      "name": "qt5-wayland",
-      "version>=": "5.15.11",
-      "platform": "linux | freebsd"
-    },
-    {
-      "name": "qt5-x11extras",
-      "version>=": "5.15.11",
+      "name": "qt5",
+      "features": [
+        "wayland"
+      ],
       "platform": "linux | freebsd"
     },
     {

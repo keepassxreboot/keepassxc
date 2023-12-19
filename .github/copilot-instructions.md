@@ -1,38 +1,44 @@
-This is a C++ based repository that uses Qt5 as a primary support and GUI library. This repository is for a password manager application that stores passwords 
-and other highly sensitive information. The data format that passwords are stored is called KDBX which is a mixed binary and XML format that is fully encrypted 
-at rest. This format is unpacked into a series of data structures: Database, Groups, and Entries. Please follow these guidelines when contributing:
+This repository is a C++ (C++20) Qt-based password manager. The important domain concepts are
+Database, Group, and Entry (KDBX format). Key areas to know before making changes are below.
 
-## Code Standards
+Quick reference (common commands)
+- Configure + build (preferred: CMake presets)
+	- Windows (PowerShell): `cmake --preset x64-debug`
+	- Build: `cmake --build --preset x64-debug` or `cmake --build . -j <n>` from the build dir
+- Formatting (required before commits):
+	- `cmake --build . --target format` (runs clang-format)
+- Tests:
+	- Run all tests: `ctest -j <n>` from build dir
+	- Run single test (verbose): `ctest -R <Test Name> -V`
+- Translations & i18n (release tooling):
+	- Update translation sources: `python ./release-tool.py i18n lupdate`
 
-### Required Before Each Commit
-- Run `cmake --build . --target format` before committing any changes to ensure proper code formatting
-- This will run clang-format to ensure all code conforms to the style guide
-- From the checkout directory, also run `./release-tool i18n lupdate` to update translation files
+Big-picture architecture (where to look)
+- src/core: core data model (Database, Groups, Entries). Example: `src/core/Database.h`
+- src/format: KDBX readers/writers and import/export logic.  (sensitive - avoid casual edits)
+- src/crypto: cryptographic primitives and key derivation. (sensitive - avoid casual edits)
+- src/gui: Qt UI layers, widgets, main window and app lifecycle (entry: `src/main.cpp`, `src/gui/MainWindow.cpp`)
+- src/sshagent, src/browser, src/fdosecrets, src/quickunlock: integration adapters for external systems
+- tests/ and tests/gui/: QTest-based unit and GUI tests (follow existing test patterns)
 
-### Development Flow
-- Setup Build Folder: `mkdir build; cd build`
-- Configure: `cmake -G Ninja -DWITH_XC_ALL=ON -DWITH_GUI_TESTS=ON ..`
-- Build: `cmake --build . -- -j $(nproc)`
-- Test: `ctest`
+Project-specific conventions & patterns
+- Language/features: C++20, heavy use of Qt signal/slot idioms and QObject-derived classes.
+- Build: use provided CMake commands to configure and build the project successfully.
+- Formatting: a CMake target (`format`) runs clang-format — run it before committing.
+- Translations: translation files are generated/updated via the release tool — run it before committing.
+- UI files: .ui changes are non-trivial; prefer proposing .ui edits rather than committing wholesale .ui changes unless very simple.
+- Sensitive areas: `src/crypto` and `src/format` contain security-sensitive logic — avoid refactors that change algorithms without expert review.
 
-## Repository Structure
-- `docs/topics`: Documentation written in asciidoctor syntax
-- `src/`: Main source code files are under this subdirectory
-- `src/autotype`: Code that emulates a virtual keyboard to type into interfaces
-- `src/browser`: Interface with the KeePassXC Browser Extension using a JSON-based protocol
-- `src/cli`: Command Line Interface code
-- `src/core`: Contains files that define the data model and other shared code structures
-- `src/format`: Code for import/export and reading/writing of KDBX databases
-- `src/fdosecrets`: freedesktop.org Secret Service interface code
-- `src/quickunlock`: Quick unlock interfaces for various platforms
-- `src/sshagent`: SSH Agent interface code to load private keys from the database into ssh-agent
-- `tests/`: Test source code files
-- `tests/gui`: GUI test source code files
+Concrete examples (where to copy patterns)
+- Signal connections: see `src/keeshare/ShareObserver.cpp` (connect to Database signals like `groupAdded` / `modified`).
+- Opening/locking DBs: `src/gui/DatabaseTabWidget.*` and `src/gui/DatabaseWidget.*` show typical lifecycle and `emitActiveDatabaseChanged()`.
+- Format/validation: use `src/format/KdbxReader.cpp` and `Kdbx4Reader.cpp` for error handling patterns when reading DBs.
 
-## Key Guidelines
-1. Follow C++20 and Qt5 best practices and idiomatic patterns
-2. Maintain existing code structure and organization
-3. Prefer not to edit cryptographic handling code or other sensitive parts of the code base
-4. Write unit tests for new functionality using QTest scaffolding
-5. Suggest changes to the `docs/topics` folder when appropriate
-6. Unless the change is simple, don't actually make edits to .ui files, just suggest the changes needed
+Rules for automated agents
+- Do not change cryptographic or serialization logic unless the change is narrowly scoped and you run tests.
+- When adding features, create relevant unit tests within existing files in `tests/`.
+- Always run code formatting, translation update, and tests before submitting commits.
+- All tests related to your change must pass before committing.
+- Reference real files in PR descriptions (e.g., "changed src/core/Database.h and tests/TestDatabase.cpp").
+
+If anything above is unclear or you want more detail about a specific area (build matrix, CI, or release-tool commands), tell me which part and I will expand.

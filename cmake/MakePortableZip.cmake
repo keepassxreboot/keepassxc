@@ -1,3 +1,0 @@
-if (CMAKE_INSTALL_PREFIX MATCHES "/ZIP/")
-  file(TOUCH "${CMAKE_INSTALL_PREFIX}/.portable")
-endif()
