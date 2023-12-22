@@ -26,6 +26,11 @@
 #include "core/Entry.h"
 #include "core/Tools.h"
 
+#ifdef __FreeBSD__
+#include <string.h>
+#include <sys/sysctl.h>
+#endif
+
 namespace FdoSecrets
 {
     static const auto IntrospectionService = R"xml(
@@ -175,7 +180,18 @@ namespace FdoSecrets
 
         // The /proc/pid/exe link is more reliable than /proc/pid/cmdline
         // It's still weak and if the application does a prctl(PR_SET_DUMPABLE, 0) this link cannot be accessed.
+
+#ifdef __FreeBSD__
+        const int mib[] = {CTL_KERN, KERN_PROC, KERN_PROC_PATHNAME, static_cast<int>(info.pid)};
+        char buffer[2048];
+        size_t size = sizeof(buffer);
+        if (sysctl(mib, 4, buffer, &size, NULL, 0) != 0) {
+            strlcpy(buffer, "Invalid path", sizeof(buffer));
+        }
+        QFileInfo exe(buffer);
+#else
         QFileInfo exe(QStringLiteral("/proc/%1/exe").arg(pid));
+#endif
         info.exePath = exe.canonicalFilePath();
 
         // /proc/pid/cmdline gives full command line
