@@ -79,7 +79,7 @@
 - Browser: Revert code causing connection problems [#8665]
 - Browser: Fix socket file symbolic link on Linux [#8656]
 - Flatpak: Fix launching browser proxy service [#8680]
-- SSH Agent: Fix paegent support on Windows [#8619]
+- SSH Agent: Fix pageant support on Windows [#8619]
 
 ## 2.7.3 (2022-10-23)
 

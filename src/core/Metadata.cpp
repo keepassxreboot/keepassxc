@@ -279,7 +279,7 @@ int Metadata::autosaveDelayMin() const
         // data is not set yet, use default
         return Metadata::DefaultAutosaveDelayMin;
     }
-    bool ok; // check for QString to int op failuer
+    bool ok; // check for QString to int op failure
     int autosaveDelayMin = autosaveDelayMinStr.toInt(&ok);
     Q_ASSERT(ok);
     return autosaveDelayMin;

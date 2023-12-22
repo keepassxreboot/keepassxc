@@ -1549,7 +1549,7 @@ bool EntryData::equals(const EntryData& other, CompareItemOptions options) const
             return false;
         }
     } else if (totpSettings.isNull() != other.totpSettings.isNull()) {
-        // The existance of TOTP has changed between these entries
+        // The existence of TOTP has changed between these entries
         return false;
     }
     if (::compare(excludeFromReports, other.excludeFromReports, options) != 0) {

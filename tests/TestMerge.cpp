@@ -533,7 +533,7 @@ void TestMerge::assertDeletionNewerOnly(Database* db, const QMap<QString, QUuid>
     // newer deletion in source forces deletion
     QVERIFY(!mergedRootGroup->findEntryByUuid(identifiers["EntryDeletedInSourceAfterChangedInTarget"]));
     QVERIFY(db->containsDeletedObject(identifiers["EntryDeletedInSourceAfterChangedInTarget"]));
-    // newer change in source privents deletion
+    // newer change in source prevents deletion
     QVERIFY(mergedRootGroup->findEntryByUuid(identifiers["EntryDeletedInTargetBeforeChangedInSource"]));
     QVERIFY(!db->containsDeletedObject(identifiers["EntryDeletedInTargetBeforeChangedInSource"]));
     // newer deletion in target forces deletion
@@ -549,7 +549,7 @@ void TestMerge::assertDeletionNewerOnly(Database* db, const QMap<QString, QUuid>
     QVERIFY(db->containsDeletedObject(identifiers["GroupDeletedInSourceAfterEntryUpdatedInTarget"]));
     QVERIFY(!mergedRootGroup->findEntryByUuid(identifiers["EntryDeletedInSourceAfterEntryUpdatedInTarget"]));
     QVERIFY(db->containsDeletedObject(identifiers["EntryDeletedInSourceAfterEntryUpdatedInTarget"]));
-    // newer change in source privents deletion
+    // newer change in source prevents deletion
     QVERIFY(mergedRootGroup->findGroupByUuid(identifiers["GroupDeletedInTargetBeforeEntryUpdatedInSource"]));
     QVERIFY(!db->containsDeletedObject(identifiers["GroupDeletedInTargetBeforeEntryUpdatedInSource"]));
     QVERIFY(mergedRootGroup->findEntryByUuid(identifiers["EntryDeletedInTargetBeforeEntryUpdatedInSource"]));
@@ -890,7 +890,7 @@ void TestMerge::testUpdateEntryDifferentLocation()
     QCOMPARE(entryDestinationMerged->username(), QString("username"));
     QCOMPARE(entryDestinationMerged->group()->name(), QString("group3"));
     QCOMPARE(uuidBeforeSyncing, entryDestinationMerged->uuid());
-    // default merge strategie is KeepNewer - therefore the older location is used!
+    // default merge strategy is KeepNewer - therefore the older location is used!
     QCOMPARE(entryDestinationMerged->timeInfo().locationChanged(), sourceLocationChanged);
 }
 
