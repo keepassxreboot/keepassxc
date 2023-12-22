@@ -593,7 +593,7 @@ namespace Phantom
                 } else {
                     // Remove the oldest guy from the cache. Remember that because we may
                     // re-enter QStyle functions multiple times when drawing or calculating
-                    // something, we may have to load several swaitches derived from
+                    // something, we may have to load several switches derived from
                     // different QPalettes on different stack frames at the same time. But as
                     // an extra cost-savings measure, we'll check and see if something else
                     // has a reference to the removed guy. If there aren't any references to
@@ -2770,7 +2770,7 @@ void BaseStyle::drawControl(ControlElement element,
             // that when it is resolved against the device, this font will win. This
             // is mainly to handle cases where someone sets the font on the window
             // and then the combo inherits it and passes it onward. At that point the
-            // resolve mask is very, very weak. This makes it stonger.
+            // resolve mask is very, very weak. This makes it stronger.
 #if 0
                 QFont font = menuItem->font;
       font.setPointSizeF(QFontInfo(menuItem->font).pointSizeF());

@@ -126,7 +126,7 @@
                     <li>Browser: Revert code causing connection problems [#8665]</li>
                     <li>Browser: Fix socket file symbolic link on Linux [#8656]</li>
                     <li>Flatpak: Fix launching browser proxy service [#8680]</li>
-                    <li>SSH Agent: Fix paegent support on Windows [#8619]</li>
+                    <li>SSH Agent: Fix pageant support on Windows [#8619]</li>
                 </ul>
             </description>
         </release>

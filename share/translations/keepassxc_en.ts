@@ -6450,7 +6450,7 @@ Do you want to overwrite it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Toggle password visibilty using Control + H. Open the password generator using Control + G.</source>
+        <source>Toggle password visibility using Control + H. Open the password generator using Control + G.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

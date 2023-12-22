@@ -310,7 +310,7 @@ if(CMAKE_BUILD_TYPE_LOWER STREQUAL "debug")
     check_add_gcc_compiler_flag("-Wshadow-compatible-local")
     check_add_gcc_compiler_flag("-Wshadow-local")
     add_gcc_compiler_flags("-Werror")
-    # This is needed since compiling aginst Botan3 requires compiling against C++20
+    # This is needed since compiling against Botan3 requires compiling against C++20
     if(WITH_XC_BOTAN3)
         add_gcc_compiler_cxxflags("-Wno-error=deprecated-enum-enum-conversion -Wno-error=deprecated")
     endif()

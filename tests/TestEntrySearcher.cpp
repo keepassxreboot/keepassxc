@@ -364,7 +364,7 @@ void TestEntrySearcher::testSkipProtected()
         m_entrySearcher.search("_testProtected:apple _testAttribute:testE1 _testAttribute:testE2", m_rootGroup);
     QCOMPARE(m_searchResult, {});
 
-    // also move the protected term around to execurise the short-circut logic
+    // also move the protected term around to exercise the short-circuit logic
     m_searchResult = m_entrySearcher.search("_testAttribute:testE2 _testProtected:apple", m_rootGroup);
     QCOMPARE(m_searchResult, expectE2);
     m_searchResult = m_entrySearcher.search("_testAttribute:testE1 _testProtected:apple", m_rootGroup);
