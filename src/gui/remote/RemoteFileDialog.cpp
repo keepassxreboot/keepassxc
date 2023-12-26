@@ -18,6 +18,10 @@
 #include "RemoteFileDialog.h"
 #include "ui_RemoteFileDialog.h"
 
+#include "gui/Icons.h"
+
+#include <QDesktopServices>
+
 RemoteFileDialog::RemoteFileDialog(QWidget* parent)
     : QDialog(parent)
     , m_ui(new Ui::RemoteFileDialog())
@@ -41,12 +45,15 @@ RemoteFileDialog::RemoteFileDialog(QWidget* parent)
     m_statusBar->addPermanentWidget(m_progressBar);
     m_ui->verticalLayout->addWidget(m_statusBar);
 
+    m_ui->helpButton->setIcon(icons()->icon("system-help"));
+    connect(m_ui->helpButton, &QToolButton::clicked, this, [this] {
+        QDesktopServices::openUrl(QUrl("https://keepassxc.org/docs/KeePassXC_UserGuide#_remote_database_support"));
+    });
+
     connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &RemoteFileDialog::close);
     connect(m_ui->buttonBox, &QDialogButtonBox::accepted, this, &RemoteFileDialog::acceptRemoteProgramParams);
 
-    connect(
-        m_remoteHandler, &RemoteHandler::downloadedSuccessfullyTo, this, &RemoteFileDialog::handleSuccessfulDownload);
-    connect(m_remoteHandler, &RemoteHandler::downloadError, this, &RemoteFileDialog::showRemoteDownloadErrorMessage);
+    connect(m_remoteHandler, &RemoteHandler::downloadFinished, this, &RemoteFileDialog::onDownloadFinished);
 }
 
 RemoteFileDialog::~RemoteFileDialog() = default;
@@ -60,7 +67,19 @@ void RemoteFileDialog::acceptRemoteProgramParams()
     setInputDisabled(true);
     updateProgressBar(50, tr("Downloading..."));
     auto* remoteProgramParams = getRemoteParams();
-    emit m_remoteHandler->downloadFromRemote(remoteProgramParams);
+    m_remoteHandler->download(remoteProgramParams);
+}
+
+void RemoteFileDialog::onDownloadFinished(RemoteHandler::RemoteResult result)
+{
+    if (result.success) {
+        accept();
+        emit downloadedSuccessfullyTo(result.filePath);
+    } else {
+        setInputDisabled(false);
+        updateProgressBar(-1, "");
+        m_ui->messageWidget->showMessage(result.errorMessage, MessageWidget::Error);
+    }
 }
 
 void RemoteFileDialog::handleSuccessfulDownload(const QString& downloadedFileName)

@@ -20,16 +20,14 @@
 #include <QTest>
 #include <utility>
 
-MockRemoteProcess::MockRemoteProcess(QObject* parent, QString mockedTempFileLocation, QString source)
+MockRemoteProcess::MockRemoteProcess(QObject* parent)
     : RemoteProcess(parent)
-    , m_mockedTempFileLocation(std::move(mockedTempFileLocation))
-    , m_source(std::move(source))
 {
 }
 
 void MockRemoteProcess::start(const QString&)
 {
-    // nothing to do
+    // TODO: Fake "download" the previously supplied database
 }
 
 qint64 MockRemoteProcess::write(const QString& data)
@@ -55,9 +53,4 @@ bool MockRemoteProcess::waitForFinished(int)
 int MockRemoteProcess::exitCode() const
 {
     return 0; // always return success
-}
-
-QString MockRemoteProcess::getTempFileLocation()
-{
-    return m_mockedTempFileLocation;
 }

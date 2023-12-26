@@ -25,9 +25,14 @@ RemoteProcess::RemoteProcess(QObject* parent)
 {
 }
 
+RemoteProcess::~RemoteProcess()
+{
+}
+
 void RemoteProcess::start(const QString& program)
 {
     m_process->start(program);
+    m_process->waitForStarted();
 }
 
 qint64 RemoteProcess::write(const QString& data)
@@ -55,14 +60,17 @@ int RemoteProcess::exitCode() const
     return m_process->exitCode();
 }
 
-void RemoteProcess::kill()
+QString RemoteProcess::readOutput()
 {
-    m_process->kill();
+    return m_process->readAllStandardOutput();
 }
 
-QString RemoteProcess::getTempFileLocation()
+QString RemoteProcess::readError()
 {
-    QString uuid = QUuid::createUuid().toString().remove(0, 1);
-    uuid.chop(1);
-    return QDir::toNativeSeparators(QDir::temp().absoluteFilePath("RemoteDatabase-" + uuid + ".kdbx"));
+    return m_process->readAllStandardError();
+}
+
+void RemoteProcess::kill() const
+{
+    m_process->kill();
 }

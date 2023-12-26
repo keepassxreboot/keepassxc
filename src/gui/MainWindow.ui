@@ -238,7 +238,6 @@
      <addaction name="actionImportCsv"/>
      <addaction name="actionImportOpVault"/>
      <addaction name="actionImportKeePass1"/>
-     <addaction name="actionOpenRemoteDatabase"/>
     </widget>
     <widget class="QMenu" name="menuExport">
      <property name="title">
@@ -252,9 +251,11 @@
      <property name="title">
       <string>Remote S&amp;ync…</string>
      </property>
+     <addaction name="separator"/>
     </widget>
     <addaction name="actionDatabaseNew"/>
     <addaction name="actionDatabaseOpen"/>
+    <addaction name="actionOpenRemoteDatabase"/>
     <addaction name="menuRecentDatabases"/>
     <addaction name="actionDatabaseSave"/>
     <addaction name="actionDatabaseSaveAs"/>
@@ -969,7 +970,7 @@
   </action>
   <action name="actionOpenRemoteDatabase">
    <property name="text">
-    <string>Open remote database…</string>
+    <string>Open Remote Database…</string>
    </property>
    <property name="toolTip">
     <string>Open remote database</string>

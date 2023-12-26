@@ -344,6 +344,7 @@ MainWindow::MainWindow()
 
     m_ui->actionDatabaseNew->setIcon(icons()->icon("document-new"));
     m_ui->actionDatabaseOpen->setIcon(icons()->icon("document-open"));
+    m_ui->actionOpenRemoteDatabase->setIcon(icons()->icon("document-open-remote"));
     m_ui->menuRecentDatabases->setIcon(icons()->icon("document-open-recent"));
     m_ui->actionDatabaseSave->setIcon(icons()->icon("document-save"));
     m_ui->actionDatabaseSaveAs->setIcon(icons()->icon("document-save-as"));
@@ -357,7 +358,7 @@ MainWindow::MainWindow()
     m_ui->actionLockAllDatabases->setIcon(icons()->icon("database-lock-all"));
     m_ui->actionQuit->setIcon(icons()->icon("application-exit"));
     m_ui->actionDatabaseMerge->setIcon(icons()->icon("database-merge"));
-    m_ui->menuRemoteSync->setIcon(icons()->icon("web"));
+    m_ui->menuRemoteSync->setIcon(icons()->icon("remote-sync"));
     m_ui->menuImport->setIcon(icons()->icon("document-import"));
     m_ui->menuExport->setIcon(icons()->icon("document-export"));
 
@@ -1332,22 +1333,29 @@ void MainWindow::updateRemoteSyncMenuEntries()
 
     auto dbWidget = m_ui->tabWidget->currentDatabaseWidget();
     if (dbWidget) {
+        // Setup sync shortcut
+        auto action = m_ui->menuRemoteSync->addAction(tr("Setup new sync…"));
+        connect(action, &QAction::triggered, dbWidget, &DatabaseWidget::switchToDatabaseSettings);
+
         auto remoteSettingsConfig = new RemoteSettingsCustomDataHandler(this, dbWidget->database());
+        auto remoteProgramEntries = remoteSettingsConfig->getRemoteProgramEntries();
+
+        // TODO: Sync all shortcut
+        // action = m_ui->menuRemoteSync->addAction(tr("Run every sync…"));
+        // connect(action, &QAction::triggered, dbWidget, [=] {
+        //     dbWidget->syncWithAllRemotes(remoteProgramEntries);
+        // });
+
+        m_ui->menuRemoteSync->addSeparator();
 
         // Build remote sync menu
-        foreach (auto entryForMenu, remoteSettingsConfig->getRemoteProgramEntries()) {
+        for (const auto entryForMenu : remoteSettingsConfig->getRemoteProgramEntries()) {
             auto* remoteSyncAction = new QAction(entryForMenu->getName(), this);
             m_ui->menuRemoteSync->addAction(remoteSyncAction);
-            connect(remoteSyncAction, &QAction::triggered, [this, entryForMenu]() {
-                m_ui->tabWidget->syncDatabaseWithRemote(entryForMenu->toRemoteProgramParams());
+            connect(remoteSyncAction, &QAction::triggered, dbWidget, [=] {
+                dbWidget->syncWithRemote(entryForMenu->toRemoteProgramParams());
             });
         }
-    }
-
-    // If no remote settings exist in the database then show a tip to the user
-    if (m_ui->menuRemoteSync->isEmpty()) {
-        auto action = m_ui->menuRemoteSync->addAction(tr("No Remote Sync Settings"));
-        action->setEnabled(false);
     }
 }
 

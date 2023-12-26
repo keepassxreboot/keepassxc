@@ -28,7 +28,6 @@
 #include "gui/MessageWidget.h"
 #include "gui/csvImport/CsvImportWizard.h"
 #include "gui/entry/EntryModel.h"
-#include "gui/remote/RemoteParams.h"
 
 class DatabaseOpenWidget;
 class KeePass1OpenWidget;
@@ -52,6 +51,7 @@ class MessageWidget;
 class EntryPreviewWidget;
 class TagView;
 class ElidedLabel;
+class RemoteParams; // TODO: May be able to remove this
 
 namespace Ui
 {
@@ -126,6 +126,8 @@ public:
     void setSplitterSizes(const QHash<Config::ConfigKey, QList<int>>& sizes);
     void setSearchStringForAutoType(const QString& search);
 
+    void syncWithRemote(RemoteParams* params);
+
 signals:
     // relayed Database signals
     void databaseFilePathChanged(const QString& oldPath, const QString& newPath);
@@ -146,10 +148,10 @@ signals:
     void
     requestOpenDatabase(const QString& filePath, bool inBackground, const QString& password, const QString& keyFile);
     void databaseMerged(QSharedPointer<Database> mergedDb);
-    void databaseSyncedWith(QSharedPointer<Database> syncedDb);
-    void databaseSyncFailed();
-    void syncWithRemote(RemoteParams* remoteProgramParams);
-    void saveToRemote(RemoteParams* remoteProgramParams);
+    void databaseSyncedWith(QSharedPointer<Database> syncedDb); // TODO: May be able to remove this
+    void databaseSyncCompleted(const QString& syncName);
+    void databaseSyncFailed(const QString& syncName, const QString& error);
+    void saveToRemote(RemoteParams* remoteProgramParams); // TODO: May be able to remove this
     void groupContextMenuRequested(const QPoint& globalPos);
     void entryContextMenuRequested(const QPoint& globalPos);
     void listModeAboutToActivate();
@@ -209,9 +211,7 @@ public slots:
     void createGroup();
     void cloneGroup();
     void deleteGroup();
-    void syncWithRemoteAndSwitchToMainView(RemoteParams* remoteProgramParams);
-    void saveToRemoteAndSwitchToMainView(RemoteParams* remoteProgramParams);
-    bool attemptSyncDatabaseWithSameKey(const QString& filePath);
+    bool attemptSyncDatabaseWithSameKey(const QString& filePath); // TODO: May be able to remove this
     void switchToMainView(bool previousDialogAccepted = false);
     void switchToEntryEdit();
     void switchToGroupEdit();

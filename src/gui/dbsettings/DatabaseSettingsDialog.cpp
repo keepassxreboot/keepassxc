@@ -96,6 +96,9 @@ DatabaseSettingsDialog::DatabaseSettingsDialog(QWidget* parent)
 
     m_securityTabWidget->addTab(m_encryptionWidget, tr("Encryption Settings"));
 
+    m_ui->categoryList->addCategory(tr("Remote Sync"), icons()->icon("remote-sync"));
+    m_ui->stackedWidget->addWidget(m_remoteWidget);
+
 #if defined(WITH_XC_KEESHARE)
     addSettingsPage(new DatabaseSettingsPageKeeShare());
 #endif
@@ -117,9 +120,6 @@ DatabaseSettingsDialog::DatabaseSettingsDialog(QWidget* parent)
 
     m_ui->categoryList->addCategory(tr("Maintenance"), icons()->icon("hammer-wrench"));
     m_ui->stackedWidget->addWidget(m_maintenanceWidget);
-
-    m_ui->categoryList->addCategory(tr("Remote"), icons()->icon("refresh"));
-    m_ui->stackedWidget->addWidget(m_remoteWidget);
 
     pageChanged();
 }

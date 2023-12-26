@@ -18,11 +18,11 @@
 #ifndef KEEPASSXC_REMOTEHANDLER_H
 #define KEEPASSXC_REMOTEHANDLER_H
 
-#include "core/Database.h"
-#include "gui/remote/RemoteParams.h"
-#include "gui/remote/RemoteProcess.h"
-
 #include <QObject>
+
+class Database;
+class RemoteParams;
+class RemoteProcess;
 
 class RemoteHandler : public QObject
 {
@@ -30,24 +30,35 @@ class RemoteHandler : public QObject
 
 public:
     explicit RemoteHandler(QObject* parent = nullptr);
-    ~RemoteHandler() override;
-    void download(RemoteParams* remoteProgramParams);
+    ~RemoteHandler() override = default;
+
+    void sync(const QSharedPointer<Database>& db, RemoteParams* params);
+    void download(RemoteParams* params);
+    void upload(const QSharedPointer<Database>& db, RemoteParams* params);
+
+    struct RemoteResult
+    {
+        bool success;
+        QString errorMessage;
+        QString filePath;
+        QString stdOutput;
+        QString stdError;
+    };
+
+    // Used for testing only
+    static void setRemoteProcessFunc(std::function<QScopedPointer<RemoteProcess>(QObject*)> func);
 
 signals:
-    void downloadFromRemote(RemoteParams*);
-    void uploadToRemote(const QSharedPointer<Database>&, RemoteParams*);
-
-    void downloadedSuccessfullyTo(const QString& filePath);
-    void downloadError(const QString& errorMessage);
-    void uploadSuccess();
-    void uploadError(const QString& errorMessage);
-
-private slots:
-    void upload(const QSharedPointer<Database>&, RemoteParams* remoteProgramParams);
+    void syncFinished(RemoteResult result);
+    void downloadFinished(RemoteResult result);
+    void uploadFinished(RemoteResult result);
 
 private:
-    void downloadInternal(RemoteParams* remoteProgramParams);
-    void uploadInternal(const QSharedPointer<Database>& remoteSyncedDb, RemoteParams* remoteProgramParams);
+    RemoteResult downloadInternal(RemoteParams* params);
+    RemoteResult uploadInternal(const QSharedPointer<Database>& db, RemoteParams* params);
+
+    static std::function<QScopedPointer<RemoteProcess>(QObject*)> m_createRemoteProcess;
+    static QString m_tempFileLocation;
 };
 
 #endif // KEEPASSXC_REMOTEHANDLER_H

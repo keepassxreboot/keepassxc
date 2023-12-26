@@ -17,49 +17,57 @@
 
 #include "RemoteParams.h"
 
-#include <utility>
-
-void RemoteParams::setCommandForDownload(QString downloadCommand)
+bool RemoteParams::hasDownloadCommand() const
 {
-    m_downloadCommand = std::move(downloadCommand);
+    return m_downloadCommand.length() > 0;
 }
 
-void RemoteParams::setInputForDownload(QString downloadCommandInput)
+bool RemoteParams::hasUploadCommand() const
 {
-    m_downloadCommandInput = std::move(downloadCommandInput);
+    return m_uploadCommand.length() > 0;
 }
 
-void RemoteParams::setCommandForUpload(QString uploadCommand)
+void RemoteParams::setCommandForDownload(const QString& downloadCommand)
 {
-    m_uploadCommand = std::move(uploadCommand);
-}
-void RemoteParams::setInputForUpload(QString uploadCommandInput)
-{
-    m_uploadCommandInput = std::move(uploadCommandInput);
+    m_downloadCommand = downloadCommand;
 }
 
-QString RemoteParams::getCommandForDownload(QString destination)
+void RemoteParams::setInputForDownload(const QString& downloadCommandInput)
+{
+    m_downloadCommandInput = downloadCommandInput;
+}
+
+void RemoteParams::setCommandForUpload(const QString& uploadCommand)
+{
+    m_uploadCommand = uploadCommand;
+}
+void RemoteParams::setInputForUpload(const QString& uploadCommandInput)
+{
+    m_uploadCommandInput = uploadCommandInput;
+}
+
+QString RemoteParams::getCommandForDownload(const QString& destination)
 {
     return resolveCommandOrInput(m_downloadCommand, destination);
 }
 
-QString RemoteParams::getInputForDownload(QString destination)
+QString RemoteParams::getInputForDownload(const QString& destination)
 {
     return resolveCommandOrInput(m_downloadCommandInput, destination);
 }
 
-QString RemoteParams::getCommandForUpload(QString source)
+QString RemoteParams::getCommandForUpload(const QString& source)
 {
     return resolveCommandOrInput(m_uploadCommand, source);
 }
 
-QString RemoteParams::getInputForUpload(QString source)
+QString RemoteParams::getInputForUpload(const QString& source)
 {
     return resolveCommandOrInput(m_uploadCommandInput, source);
 }
 
-QString RemoteParams::resolveCommandOrInput(QString input, const QString& tempDatabasePath)
+QString RemoteParams::resolveCommandOrInput(const QString& input, const QString& tempDatabasePath)
 {
-    auto resolved = input.replace("{TEMP_DATABASE}", tempDatabasePath);
-    return resolved;
+    QString resolved = input;
+    return resolved.replace("{TEMP_DATABASE}", tempDatabasePath);
 }

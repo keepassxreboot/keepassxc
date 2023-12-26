@@ -131,7 +131,7 @@ void DatabaseSettingsWidgetRemote::editCurrentSettings()
 void DatabaseSettingsWidgetRemote::updateSettingsList()
 {
     m_ui->settingsListWidget->clear();
-    foreach (auto remoteSetting, m_customDataHandler->getRemoteProgramEntries()) {
+    for (auto remoteSetting : m_customDataHandler->getRemoteProgramEntries()) {
         auto* item = new QListWidgetItem(m_ui->settingsListWidget);
         item->setText(remoteSetting->getName());
         m_ui->settingsListWidget->addItem(item);

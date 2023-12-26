@@ -16,32 +16,54 @@
  */
 
 #include "RemoteHandler.h"
-#include "RemoteProcessFactory.h"
+
+#include "gui/remote/RemoteParams.h"
+#include "gui/remote/RemoteProcess.h"
+
 #include "core/AsyncTask.h"
+#include "core/Database.h"
+
+namespace
+{
+    QString getTempFileLocation()
+    {
+        QString uuid = QUuid::createUuid().toString().remove(0, 1);
+        uuid.chop(1);
+        return QDir::toNativeSeparators(QDir::temp().absoluteFilePath("RemoteDatabase-" + uuid + ".kdbx"));
+    }
+} // namespace
+
+std::function<QScopedPointer<RemoteProcess>(QObject*)> RemoteHandler::m_createRemoteProcess([](QObject* parent) {
+    return QScopedPointer<RemoteProcess>(new RemoteProcess(parent));
+});
 
 RemoteHandler::RemoteHandler(QObject* parent)
     : QObject(parent)
 {
-    connect(this, &RemoteHandler::downloadFromRemote, &RemoteHandler::download);
-    connect(this, &RemoteHandler::uploadToRemote, &RemoteHandler::upload);
 }
 
-RemoteHandler::~RemoteHandler()
+void RemoteHandler::download(RemoteParams* params)
 {
+    AsyncTask::runThenCallback(
+        [&, params] { return downloadInternal(params); }, this, [&](auto result) { emit downloadFinished(result); });
 }
 
-void RemoteHandler::download(RemoteParams* remoteProgramParams)
+void RemoteHandler::upload(const QSharedPointer<Database>& db, RemoteParams* params)
 {
-    AsyncTask::runAndWaitForFinished([&] { this->downloadInternal(remoteProgramParams); });
+    AsyncTask::runThenCallback([&, db, params] { return uploadInternal(db, params); },
+                               this,
+                               [&](auto result) { emit uploadFinished(result); });
 }
 
-void RemoteHandler::downloadInternal(RemoteParams* remoteProgramParams)
+RemoteHandler::RemoteResult RemoteHandler::downloadInternal(RemoteParams* params)
 {
-    auto remoteProcess = RemoteProcessFactory::createRemoteProcess();
-    QString destination = remoteProcess->getTempFileLocation();
-    auto downloadCommand = remoteProgramParams->getCommandForDownload(destination);
+    RemoteResult result;
+
+    auto remoteProcess = m_createRemoteProcess(this);
+    QString destination = getTempFileLocation();
+    auto downloadCommand = params->getCommandForDownload(destination);
     remoteProcess->start(downloadCommand);
-    auto input = remoteProgramParams->getInputForDownload(destination);
+    auto input = params->getInputForDownload(destination);
     if (!input.isEmpty()) {
         remoteProcess->write(input + "\n");
         remoteProcess->waitForBytesWritten();
@@ -50,52 +72,63 @@ void RemoteHandler::downloadInternal(RemoteParams* remoteProgramParams)
 
     bool finished = remoteProcess->waitForFinished(10000);
     int statusCode = remoteProcess->exitCode();
-    if (finished && statusCode == 0) {
-        emit downloadedSuccessfullyTo(destination);
-        return;
-    }
 
-    if (finished) {
-        emit downloadError(tr("Command `%1` exited with status code: %3").arg(downloadCommand).arg(statusCode));
+    // TODO: For future use
+    result.stdOutput = remoteProcess->readOutput();
+    result.stdError = remoteProcess->readError();
+
+    if (finished && statusCode == 0) {
+        result.success = true;
+        result.filePath = destination;
+    } else if (finished) {
+        result.success = false;
+        result.errorMessage = tr("Command `%1` exited with status code: %3").arg(downloadCommand).arg(statusCode);
     } else {
         remoteProcess->kill();
-        emit downloadError(tr("Command `%1` did not finish in time. Process was killed.").arg(downloadCommand));
+        result.success = false;
+        result.errorMessage = tr("Command `%1` did not finish in time. Process was killed.").arg(downloadCommand);
     }
+
+    return result;
 }
 
-void RemoteHandler::upload(const QSharedPointer<Database>& remoteSyncedDb, RemoteParams* remoteProgramParams)
+RemoteHandler::RemoteResult RemoteHandler::uploadInternal(const QSharedPointer<Database>& db, RemoteParams* params)
 {
-    AsyncTask::runAndWaitForFinished([&] { this->uploadInternal(remoteSyncedDb, remoteProgramParams); });
-}
+    RemoteResult result;
 
-void RemoteHandler::uploadInternal(const QSharedPointer<Database>& remoteSyncedDb, RemoteParams* remoteProgramParams)
-{
-    auto remoteProcess = RemoteProcessFactory::createRemoteProcess();
-    QString source = remoteSyncedDb->filePath();
-    auto uploadCommand = remoteProgramParams->getCommandForUpload(source);
+    auto remoteProcess = m_createRemoteProcess(this);
+    QString source = db->filePath();
+    auto uploadCommand = params->getCommandForUpload(source);
     remoteProcess->start(uploadCommand);
-    auto input = remoteProgramParams->getInputForUpload(source);
+    auto input = params->getInputForUpload(source);
     if (!input.isEmpty()) {
         remoteProcess->write(input + "\n");
         remoteProcess->waitForBytesWritten();
         remoteProcess->closeWriteChannel();
     }
+
     bool finished = remoteProcess->waitForFinished(10000);
     int statusCode = remoteProcess->exitCode();
-    if (finished && statusCode == 0) {
-        emit uploadSuccess();
-        return;
-    }
 
-    if (finished) {
-        emit uploadError(tr("Failed to upload merged database. Command `%1` exited with status code: %3")
-                             .arg(uploadCommand)
-                             .arg(statusCode));
+    // TODO: For future use
+    result.stdOutput = remoteProcess->readOutput();
+    result.stdError = remoteProcess->readError();
+
+    if (finished && statusCode == 0) {
+        result.success = true;
+    } else if (finished) {
+        result.success = false;
+        result.errorMessage = tr("Failed to upload merged database. Command `%1` exited with status code: %3")
+                                  .arg(uploadCommand)
+                                  .arg(statusCode);
     } else {
         remoteProcess->kill();
-        emit uploadError(
+        result.success = false;
+        result.errorMessage =
             tr("Failed to upload merged database. Command `%1` did not finish in time. Process was killed.")
                 .arg(uploadCommand)
-                .arg(statusCode));
+                .arg(statusCode);
     }
+
+    return result;
 }

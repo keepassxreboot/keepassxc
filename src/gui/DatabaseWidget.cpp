@@ -55,6 +55,8 @@
 #include "gui/tag/TagView.h"
 #include "gui/widgets/ElidedLabel.h"
 #include "keeshare/KeeShare.h"
+#include "remote/RemoteHandler.h"
+#include "remote/RemoteParams.h"
 
 #ifdef WITH_XC_NETWORKING
 #include "gui/IconDownloaderDialog.h"
@@ -1038,16 +1040,43 @@ int DatabaseWidget::addChildWidget(QWidget* w)
     return index;
 }
 
-void DatabaseWidget::saveToRemoteAndSwitchToMainView(RemoteParams* remoteProgramParams)
+void DatabaseWidget::syncWithRemote(RemoteParams* params)
 {
-    switchToMainView(true);
-    emit saveToRemote(remoteProgramParams);
-}
+    setDisabled(true);
 
-void DatabaseWidget::syncWithRemoteAndSwitchToMainView(RemoteParams* remoteProgramParams)
-{
-    switchToMainView(true);
-    emit syncWithRemote(remoteProgramParams);
+    auto remoteHandler = new RemoteHandler(this);
+    connect(remoteHandler, &RemoteHandler::downloadFinished, this, [=](auto result) {
+        if (result.success) {
+            if (attemptSyncDatabaseWithSameKey(result.filePath)) {
+                remoteHandler->upload(m_db, params);
+                return;
+            } else {
+                // TODO: Handle case where key differs?
+                // TODO: Handle other errors?
+            }
+        }
+
+        setDisabled(false);
+        remoteHandler->deleteLater();
+        emit databaseSyncFailed("syncName", result.errorMessage);
+    });
+    connect(remoteHandler, &RemoteHandler::uploadFinished, this, [=](auto result) {
+        setDisabled(false);
+        remoteHandler->deleteLater();
+        if (result.success) {
+            emit databaseSyncCompleted("syncName");
+        } else {
+            emit databaseSyncFailed("syncName", result.errorMessage);
+        }
+    });
+
+    if (params->hasDownloadCommand()) {
+        // Start a download first then merge and upload in the callback
+        remoteHandler->download(params);
+    } else {
+        // Go straight to upload
+        remoteHandler->upload(m_db, params);
+    }
 }
 
 void DatabaseWidget::switchToMainView(bool previousDialogAccepted)
@@ -1225,12 +1254,7 @@ bool DatabaseWidget::attemptSyncDatabaseWithSameKey(const QString& filePath)
     QSharedPointer<Database> destinationDb = QSharedPointer<Database>::create();
     if (destinationDb->open(filePath, m_db->key(), &ignoreErrors)) {
         destinationDb->markAsRemoteDatabase();
-        if (syncDatabase(m_db, destinationDb)) {
-            emit databaseSyncedWith(destinationDb);
-        } else {
-            emit databaseSyncFailed();
-        }
-        return true;
+        return syncDatabase(m_db, destinationDb);
     }
     return false;
 }
@@ -1259,7 +1283,7 @@ void DatabaseWidget::syncDatabase(bool accepted)
         if (syncDatabase(m_db, destinationDb)) {
             emit databaseSyncedWith(destinationDb);
         } else {
-            emit databaseSyncFailed();
+            emit databaseSyncFailed(destinationDb->filePath(), "");
         }
     }
     switchToMainView();
@@ -1304,7 +1328,7 @@ void DatabaseWidget::unlockDatabase(bool accepted)
             emit closeRequest();
         }
         if (senderDialog && senderDialog->intent() == DatabaseOpenDialog::Intent::RemoteSync) {
-            emit databaseSyncFailed();
+            emit databaseSyncFailed("", "");
         }
         return;
     }

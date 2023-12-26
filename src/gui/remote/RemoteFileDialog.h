@@ -46,6 +46,7 @@ private slots:
     void acceptRemoteProgramParams();
 
 private:
+    void onDownloadFinished(RemoteHandler::RemoteResult result);
     void showRemoteDownloadErrorMessage(const QString& errorMessage);
     void handleSuccessfulDownload(const QString& downloadedFileName);
 

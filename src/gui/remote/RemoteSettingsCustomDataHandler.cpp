@@ -18,10 +18,9 @@
 #include "RemoteSettingsCustomDataHandler.h"
 
 #include "core/Metadata.h"
-#include <QDataStream>
+
 #include <QJsonArray>
 #include <QJsonDocument>
-#include <utility>
 
 RemoteSettingsCustomDataHandler::RemoteSettingsCustomDataHandler(QObject* parent, QSharedPointer<Database> db)
     : QObject(parent)
@@ -31,25 +30,25 @@ RemoteSettingsCustomDataHandler::RemoteSettingsCustomDataHandler(QObject* parent
     QJsonDocument configAsJson = QJsonDocument::fromJson(data.toUtf8());
 
     QList<RemoteSettings*> typedList;
-    foreach (auto variant, configAsJson.array()) {
+    for (const auto& variant : configAsJson.array()) {
         auto* remoteProgramParams = new RemoteSettings();
         remoteProgramParams->fromConfig(variant.toObject());
         typedList << remoteProgramParams;
     }
-    this->m_lastRemoteProgramEntries = typedList;
+    m_lastRemoteProgramEntries = typedList;
 }
 
 RemoteSettingsCustomDataHandler::~RemoteSettingsCustomDataHandler() = default;
 
 QList<RemoteSettings*> RemoteSettingsCustomDataHandler::getRemoteProgramEntries()
 {
-    return this->m_lastRemoteProgramEntries;
+    return m_lastRemoteProgramEntries;
 }
 
 void RemoteSettingsCustomDataHandler::addRemoteSettingsEntry(RemoteSettings* newRemoteSettings)
 {
     QList<RemoteSettings*> toRemove;
-    foreach (auto* remoteSettings, m_lastRemoteProgramEntries) {
+    for (auto remoteSettings : m_lastRemoteProgramEntries) {
         if (newRemoteSettings->getName() == remoteSettings->getName()) {
             toRemove << remoteSettings;
         }
@@ -61,7 +60,7 @@ void RemoteSettingsCustomDataHandler::addRemoteSettingsEntry(RemoteSettings* new
         int replaceAt = m_lastRemoteProgramEntries.indexOf(toRemove.at(0));
         m_lastRemoteProgramEntries.replace(replaceAt, newRemoteSettings);
     } else {
-        foreach (auto* removeSetting, toRemove) {
+        for (auto removeSetting : toRemove) {
             m_lastRemoteProgramEntries.removeOne(removeSetting);
         }
         m_lastRemoteProgramEntries.append(newRemoteSettings);
@@ -71,19 +70,19 @@ void RemoteSettingsCustomDataHandler::addRemoteSettingsEntry(RemoteSettings* new
 void RemoteSettingsCustomDataHandler::removeRemoteSettingsEntry(const QString& name)
 {
     QList<RemoteSettings*> toRemove;
-    foreach (auto* remoteSettings, m_lastRemoteProgramEntries) {
+    for (auto remoteSettings : m_lastRemoteProgramEntries) {
         if (name == remoteSettings->getName()) {
             toRemove << remoteSettings;
         }
     }
-    foreach (auto* removeSetting, toRemove) {
+    for (auto removeSetting : toRemove) {
         m_lastRemoteProgramEntries.removeOne(removeSetting);
     }
 }
 
 RemoteSettings* RemoteSettingsCustomDataHandler::getRemoteSettingsEntry(const QString& name)
 {
-    foreach (auto* remoteSettings, m_lastRemoteProgramEntries) {
+    for (auto* remoteSettings : m_lastRemoteProgramEntries) {
         if (name == remoteSettings->getName()) {
             return remoteSettings;
         }
@@ -94,14 +93,10 @@ RemoteSettings* RemoteSettingsCustomDataHandler::getRemoteSettingsEntry(const QS
 void RemoteSettingsCustomDataHandler::syncConfig()
 {
     QJsonArray lastRemoteProgramEntriesConfig;
-    foreach (RemoteSettings* remoteSettings, m_lastRemoteProgramEntries) {
+    for (auto* remoteSettings : m_lastRemoteProgramEntries) {
         lastRemoteProgramEntriesConfig << remoteSettings->toConfig();
     }
 
-    QByteArray configAsJson = QJsonDocument(lastRemoteProgramEntriesConfig).toJson(QJsonDocument::Compact);
-    auto previousConfig = m_db->metadata()->customData()->value(CustomData::RemoteProgramSettings);
-    if (configAsJson != previousConfig) {
-        m_db->metadata()->customData()->set(CustomData::RemoteProgramSettings, configAsJson);
-        m_db->markAsModified();
-    }
+    auto configAsJson = QJsonDocument(lastRemoteProgramEntriesConfig).toJson(QJsonDocument::Compact);
+    m_db->metadata()->customData()->set(CustomData::RemoteProgramSettings, configAsJson);
 }

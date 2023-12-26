@@ -58,7 +58,7 @@
 #include "gui/group/EditGroupWidget.h"
 #include "gui/group/GroupModel.h"
 #include "gui/group/GroupView.h"
-#include "gui/remote/RemoteProcessFactory.h"
+#include "gui/remote/RemoteHandler.h"
 #include "gui/tag/TagsEdit.h"
 #include "gui/wizard/NewDatabaseWizard.h"
 #include "keys/FileKey.h"
@@ -424,7 +424,7 @@ void TestGui::prepareAndTriggerRemoteSync(const QString& sourceToSync)
 void TestGui::testRemoteSyncDatabaseSameKey()
 {
     QString sourceToSync = "sftp user@server:Database.kdbx";
-    RemoteProcessFactory::setCreateRemoteProcessFunc([sourceToSync](QObject* parent) {
+    RemoteHandler::setRemoteProcessFunc([sourceToSync](QObject* parent) {
         return QScopedPointer<RemoteProcess>(
             new MockRemoteProcess(parent, QString(KEEPASSX_TEST_DATA_DIR).append("/SyncDatabase.kdbx"), sourceToSync));
     });
@@ -445,7 +445,7 @@ void TestGui::testRemoteSyncDatabaseSameKey()
 void TestGui::testRemoteSyncDatabaseRequiresPassword()
 {
     QString sourceToSync = "sftp user@server:Database.kdbx";
-    RemoteProcessFactory::setCreateRemoteProcessFunc([sourceToSync](QObject* parent) {
+    RemoteHandler::setRemoteProcessFunc([sourceToSync](QObject* parent) {
         return QScopedPointer<RemoteProcess>(new MockRemoteProcess(
             parent, QString(KEEPASSX_TEST_DATA_DIR).append("/SyncDatabaseDifferentPassword.kdbx"), sourceToSync));
     });
@@ -1771,10 +1771,12 @@ void TestGui::testOpenRemoteDatabase()
     // close current database
     cleanup();
 
+    // TODO: Replace with listening for the remote result and extracting the database file
+    // TODO: MockRemoteProcess should be able to return the contents of a database
     QString remoteFileToOpen = "sftp user@server:Database.kdbx";
-    RemoteProcessFactory::setCreateRemoteProcessFunc([remoteFileToOpen](QObject* parent) {
+    RemoteHandler::setRemoteProcessFunc([remoteFileToOpen](QObject* parent) {
         return QScopedPointer<RemoteProcess>(new MockRemoteProcess(
-            parent, QString(KEEPASSX_TEST_DATA_DIR).append("/SyncDatabase.kdbx"), remoteFileToOpen));
+            parent, QString(KEEPASSX_TEST_DATA_DIR).append("/SyncDatabase.kdbx")));
     });
     auto* openRemoteButton = QApplication::activeWindow()->findChild<QPushButton*>("buttonOpenRemote");
     QTest::mouseClick(openRemoteButton, Qt::LeftButton);

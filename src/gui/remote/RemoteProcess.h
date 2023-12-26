@@ -24,22 +24,20 @@ class RemoteProcess
 {
 public:
     explicit RemoteProcess(QObject* parent);
-    virtual ~RemoteProcess() = default;
+    virtual ~RemoteProcess();
 
     virtual void start(const QString& program);
     virtual qint64 write(const QString& data);
     virtual bool waitForBytesWritten();
     virtual void closeWriteChannel();
     virtual bool waitForFinished(int msecs);
-    [[nodiscard]] virtual int exitCode() const;
-
-    virtual QString getTempFileLocation();
-
-public slots:
-    void kill();
+    virtual QString readOutput();
+    virtual QString readError();
+    virtual int exitCode() const;
+    void kill() const;
 
 private:
-    QProcess* m_process;
+    QScopedPointer<QProcess> m_process;
 };
 
 #endif // KEEPASSXC_REMOTEPROCESS_H

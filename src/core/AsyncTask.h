@@ -20,7 +20,6 @@
 
 #include <QFutureWatcher>
 #include <QtConcurrent>
-#include <utility>
 
 /**
  * Asynchronously run computations outside the GUI thread.
@@ -52,22 +51,6 @@ namespace AsyncTask
     template <typename FunctionObject> decltype(auto) runAndWaitForFuture(FunctionObject task)
     {
         return waitForFuture(QtConcurrent::run(task));
-    }
-
-    /**
-     * Run a given task and wait for it to finish without blocking the event loop.
-     *
-     * @param task std::function object to run
-     */
-    template <typename FunctionObject> void runAndWaitForFinished(FunctionObject func)
-    {
-        QFuture<void> future = QtConcurrent::run(func);
-        QEventLoop loop;
-        QFutureWatcher<void> watcher;
-        QObject::connect(&watcher, SIGNAL(finished()), &loop, SLOT(quit()));
-        watcher.setFuture(future);
-        loop.exec();
-        future.waitForFinished();
     }
 
     /**

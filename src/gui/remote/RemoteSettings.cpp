@@ -18,55 +18,49 @@
 #include "RemoteSettings.h"
 
 #include "RemoteParams.h"
-#include <utility>
 
-RemoteSettings::RemoteSettings(QObject* parent)
-    : QObject(parent)
-{
-}
-
-QString RemoteSettings::getName()
+QString RemoteSettings::getName() const
 {
     return m_name;
 }
-QString RemoteSettings::getDownloadCommand()
+QString RemoteSettings::getDownloadCommand() const
 {
     return m_downloadCommand;
 }
-QString RemoteSettings::getDownloadCommandInput()
+QString RemoteSettings::getDownloadCommandInput() const
 {
     return m_downloadCommandInput;
 }
-QString RemoteSettings::getUploadCommand()
+QString RemoteSettings::getUploadCommand() const
 {
     return m_uploadCommand;
 }
-QString RemoteSettings::getUploadCommandInput()
+QString RemoteSettings::getUploadCommandInput() const
 {
     return m_uploadCommandInput;
 }
-void RemoteSettings::setName(QString name)
+void RemoteSettings::setName(const QString& name)
 {
-    m_name = std::move(name);
+    m_name = name;
 }
-void RemoteSettings::setDownloadCommand(QString downloadCommand)
+void RemoteSettings::setDownloadCommand(const QString& downloadCommand)
 {
-    m_downloadCommand = std::move(downloadCommand);
+    m_downloadCommand = downloadCommand;
 }
-void RemoteSettings::setDownloadCommandInput(QString downloadCommandInput)
+void RemoteSettings::setDownloadCommandInput(const QString& downloadCommandInput)
 {
-    m_downloadCommandInput = std::move(downloadCommandInput);
+    m_downloadCommandInput = downloadCommandInput;
 }
-void RemoteSettings::setUploadCommand(QString uploadCommand)
+void RemoteSettings::setUploadCommand(const QString& uploadCommand)
 {
-    m_uploadCommand = std::move(uploadCommand);
+    m_uploadCommand = uploadCommand;
 }
-void RemoteSettings::setUploadCommandInput(QString uploadCommandInput)
+void RemoteSettings::setUploadCommandInput(const QString& uploadCommandInput)
 {
-    m_uploadCommandInput = std::move(uploadCommandInput);
+    m_uploadCommandInput = uploadCommandInput;
 }
 
-QJsonObject RemoteSettings::toConfig()
+QJsonObject RemoteSettings::toConfig() const
 {
     QJsonObject config;
     config["name"] = m_name;
@@ -86,7 +80,7 @@ void RemoteSettings::fromConfig(const QJsonObject& config)
     setUploadCommandInput(config["uploadCommandInput"].toString());
 }
 
-RemoteParams* RemoteSettings::toRemoteProgramParams()
+RemoteParams* RemoteSettings::toRemoteProgramParams() const
 {
     auto* remoteProgramParams = new RemoteParams();
     remoteProgramParams->setCommandForDownload(m_downloadCommand);

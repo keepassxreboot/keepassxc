@@ -21,8 +21,6 @@
 #include "DatabaseOpenDialog.h"
 #include "config-keepassx.h"
 #include "gui/MessageWidget.h"
-#include "gui/remote/RemoteHandler.h"
-#include "gui/remote/RemoteParams.h"
 
 #include <QTabWidget>
 #include <QTimer>
@@ -66,9 +64,6 @@ public slots:
     DatabaseWidget* newDatabase();
     void openDatabase();
     void mergeDatabase();
-    void syncDatabaseWithRemote(RemoteParams* remoteProgramParams);
-    void saveDatabaseToRemote(RemoteParams* remoteProgramParams);
-    void remoteSyncDatabase(const QString& filePath);
 
     void importKeePass1Database();
     void importOpVaultDatabase();
@@ -112,7 +107,6 @@ signals:
     void messageGlobal(const QString&, MessageWidget::MessageType type);
     void messageDismissGlobal();
     void databaseUnlockDialogFinished(bool accepted, DatabaseWidget* dbWidget);
-    void updateSyncProgress(int percentage, QString message);
 
 private slots:
     void toggleTabbar();
@@ -121,9 +115,6 @@ private slots:
     void handleDatabaseUnlockDialogFinished(bool accepted, DatabaseWidget* dbWidget);
     void handleExportError(const QString& reason);
     void updateLastDatabases();
-    void remoteSyncSuccess();
-    void remoteUploadSuccess();
-    void showRemoteErrorMessage(const QString& errorMessage);
 
 private:
     QSharedPointer<Database> execNewDatabaseWizard();
@@ -136,8 +127,6 @@ private:
     QPointer<DatabaseOpenDialog> m_databaseOpenDialog;
     QTimer m_lockDelayTimer;
     bool m_databaseOpenInProgress;
-    QPointer<RemoteHandler> m_remoteSyncHandler;
-    QPointer<RemoteHandler> m_remoteUploadHandler;
 };
 
 #endif // KEEPASSX_DATABASETABWIDGET_H

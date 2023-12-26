@@ -172,7 +172,6 @@ set(keepassx_SOURCES
         gui/remote/RemoteHandler.cpp
         gui/remote/RemoteParams.cpp
         gui/remote/RemoteProcess.cpp
-        gui/remote/RemoteProcessFactory.cpp
         gui/remote/RemoteSettings.cpp
         gui/remote/RemoteSettingsCustomDataHandler.cpp
         gui/reports/ReportsWidget.cpp

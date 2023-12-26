@@ -19,36 +19,31 @@
 #define KEEPASSXC_REMOTESETTINGS_H
 
 #include <QJsonObject>
-#include <QMap>
-#include <QObject>
-#include <QVariant>
 
-#include "RemoteParams.h"
+class RemoteParams;
 
-class RemoteSettings : QObject
+class RemoteSettings final
 {
-    Q_OBJECT
-
 public:
-    explicit RemoteSettings(QObject* parent = nullptr);
-    ~RemoteSettings() override = default;
+    explicit RemoteSettings() = default;
+    ~RemoteSettings() = default;
 
-    QString getName();
-    QString getDownloadCommand();
-    QString getDownloadCommandInput();
-    QString getUploadCommand();
-    QString getUploadCommandInput();
+    QString getName() const;
+    QString getDownloadCommand() const;
+    QString getDownloadCommandInput() const;
+    QString getUploadCommand() const;
+    QString getUploadCommandInput() const;
 
-    void setName(QString name);
-    void setDownloadCommand(QString downloadCommand);
-    void setDownloadCommandInput(QString downloadCommandInput);
-    void setUploadCommand(QString uploadCommand);
-    void setUploadCommandInput(QString uploadCommandInput);
+    void setName(const QString& name);
+    void setDownloadCommand(const QString& downloadCommand);
+    void setDownloadCommandInput(const QString& downloadCommandInput);
+    void setUploadCommand(const QString& uploadCommand);
+    void setUploadCommandInput(const QString& uploadCommandInput);
 
-    QJsonObject toConfig();
     void fromConfig(const QJsonObject&);
+    QJsonObject toConfig() const;
 
-    RemoteParams* toRemoteProgramParams();
+    RemoteParams* toRemoteProgramParams() const;
 
 private:
     QString m_name;

@@ -18,28 +18,29 @@
 #ifndef KEEPASSXC_REMOTEPARAMS_H
 #define KEEPASSXC_REMOTEPARAMS_H
 
-#include "RemoteParams.h"
 #include <QMetaType>
-#include <QStringList>
 
-class RemoteParams
+class RemoteParams final
 {
 public:
-    RemoteParams() = default;
+    explicit RemoteParams() = default;
     ~RemoteParams() = default;
 
-    QString getCommandForDownload(QString destination);
-    QString getInputForDownload(QString destination);
-    QString getCommandForUpload(QString source);
-    QString getInputForUpload(QString source);
+    bool hasDownloadCommand() const;
+    bool hasUploadCommand() const;
 
-    void setCommandForDownload(QString downloadCommand);
-    void setInputForDownload(QString downloadCommandInput);
-    void setCommandForUpload(QString uploadCommand);
-    void setInputForUpload(QString uploadCommandInput);
+    QString getCommandForDownload(const QString& destination);
+    QString getInputForDownload(const QString& destination);
+    QString getCommandForUpload(const QString& source);
+    QString getInputForUpload(const QString& source);
+
+    void setCommandForDownload(const QString& downloadCommand);
+    void setInputForDownload(const QString& downloadCommandInput);
+    void setCommandForUpload(const QString& uploadCommand);
+    void setInputForUpload(const QString& uploadCommandInput);
 
 private:
-    QString resolveCommandOrInput(QString input, const QString& tempDatabasePath);
+    QString resolveCommandOrInput(const QString& input, const QString& tempDatabasePath);
 
     QString m_downloadCommand;
     QString m_downloadCommandInput;
