@@ -35,7 +35,8 @@ int Remove::executeWithDatabase(QSharedPointer<Database> database, QSharedPointe
     auto& out = parser->isSet(Command::QuietOption) ? Utils::DEVNULL : Utils::STDOUT;
     auto& err = Utils::STDERR;
 
-    auto& entryPath = parser->positionalArguments().at(1);
+    auto args = parser->positionalArguments();
+    auto& entryPath = args.at(1);
     QPointer<Entry> entry = database->rootGroup()->findEntryByPath(entryPath);
     if (!entry) {
         err << QObject::tr("Entry %1 not found.").arg(entryPath) << endl;
