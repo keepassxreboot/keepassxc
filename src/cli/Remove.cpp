@@ -51,7 +51,7 @@ int Remove::executeWithDatabase(QSharedPointer<Database> database, QSharedPointe
         recycled = false;
     } else {
         database->recycleEntry(entry);
-    };
+    }
 
     QString errorMessage;
     if (!database->save(Database::Atomic, {}, &errorMessage)) {
