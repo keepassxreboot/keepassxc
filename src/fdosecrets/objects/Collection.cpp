@@ -495,6 +495,10 @@ namespace FdoSecrets
         }
 
         auto item = Item::Create(this, entry);
+        if (!item) {
+            return;
+        }
+
         m_items << item;
         m_entryToItem[entry] = item;
 

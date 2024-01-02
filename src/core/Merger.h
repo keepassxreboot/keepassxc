@@ -49,7 +49,7 @@ private:
     ChangeList mergeGroup(const MergeContext& context);
     ChangeList mergeDeletions(const MergeContext& context);
     ChangeList mergeMetadata(const MergeContext& context);
-    bool mergeHistory(const Entry* sourceEntry, Entry* targetEntry, Group::MergeMode mergeMethod);
+    bool mergeHistory(const Entry* sourceEntry, Entry* targetEntry, Group::MergeMode mergeMethod, const int maxItems);
     void moveEntry(Entry* entry, Group* targetGroup);
     void moveGroup(Group* group, Group* targetGroup);
     // remove an entry without a trace in the deletedObjects - needed for elemination cloned entries
