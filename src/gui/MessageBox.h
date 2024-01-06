@@ -58,10 +58,11 @@ public:
         Disable = 1 << 25,
         Merge = 1 << 26,
         Continue = 1 << 27,
+        ContinueWithWeakPass = 1 << 28,
 
         // Internal loop markers. Update Last when new KeePassXC button is added
         First = Ok,
-        Last = Continue,
+        Last = ContinueWithWeakPass,
     };
 
     enum Action

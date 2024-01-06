@@ -64,6 +64,14 @@ bool PasswordEditWidget::isEmpty() const
     return (visiblePage() == Page::Edit) && m_compUi->enterPasswordEdit->text().isEmpty();
 }
 
+PasswordHealth::Quality PasswordEditWidget::getPasswordQuality() const
+{
+    QString pwd = m_compUi->enterPasswordEdit->text();
+    PasswordHealth passwordHealth(pwd);
+
+    return passwordHealth.quality();
+}
+
 QWidget* PasswordEditWidget::componentEditWidget()
 {
     m_compEditWidget = new QWidget();

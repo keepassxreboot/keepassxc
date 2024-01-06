@@ -1879,6 +1879,8 @@ bool TestGuiFdoSecrets::driveNewDatabaseWizard()
             tmpFile.close();
             fileDialog()->setNextFileName(tmpFile.fileName());
 
+            // click Continue on the warning due to weak password
+            MessageBox::setNextAnswer(MessageBox::ContinueWithWeakPass);
             wizard->accept();
 
             tmpFile.remove();
