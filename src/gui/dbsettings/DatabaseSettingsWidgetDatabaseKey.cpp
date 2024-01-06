@@ -17,7 +17,9 @@
 
 #include "DatabaseSettingsWidgetDatabaseKey.h"
 
+#include "core/Config.h"
 #include "core/Database.h"
+#include "core/PasswordHealth.h"
 #include "gui/MessageBox.h"
 #include "gui/databasekey/KeyFileEditWidget.h"
 #include "gui/databasekey/PasswordEditWidget.h"
@@ -153,6 +155,7 @@ bool DatabaseSettingsWidgetDatabaseKey::save()
         }
     }
 
+    // Show warning if database password has not been set
     if (m_passwordEditWidget->visiblePage() == KeyComponentWidget::Page::AddNew || m_passwordEditWidget->isEmpty()) {
         QScopedPointer<QMessageBox> msgBox(new QMessageBox(this));
         msgBox->setIcon(QMessageBox::Warning);
@@ -168,6 +171,33 @@ bool DatabaseSettingsWidgetDatabaseKey::save()
             return false;
         }
     } else if (!addToCompositeKey(m_passwordEditWidget, newKey, oldPasswordKey)) {
+        return false;
+    }
+
+    // Show warning if database password is weak
+    if (!m_passwordEditWidget->isEmpty()
+        && m_passwordEditWidget->getPasswordQuality() < PasswordHealth::Quality::Good) {
+        auto dialogResult = MessageBox::warning(this,
+                                                tr("Weak password"),
+                                                tr("This is a weak password! For better protection of your secrets, "
+                                                   "you should choose a stronger password."),
+                                                MessageBox::ContinueWithWeakPass | MessageBox::Cancel,
+                                                MessageBox::Cancel);
+
+        if (dialogResult == MessageBox::Cancel) {
+            return false;
+        }
+    }
+
+    // If enforced in the config file, deny users from continuing with a weak password
+    auto minQuality =
+        static_cast<PasswordHealth::Quality>(config()->get(Config::Security_DatabasePasswordMinimumQuality).toInt());
+    if (!m_passwordEditWidget->isEmpty() && m_passwordEditWidget->getPasswordQuality() < minQuality) {
+        MessageBox::critical(this,
+                             tr("Weak password"),
+                             tr("You must enter a stronger password to protect your database."),
+                             MessageBox::Ok,
+                             MessageBox::Ok);
         return false;
     }
 

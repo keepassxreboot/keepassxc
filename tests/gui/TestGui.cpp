@@ -286,7 +286,10 @@ void TestGui::testCreateDatabase()
         tmpFile.close();
         fileDialog()->setNextFileName(tmpFile.fileName());
 
+        // click Continue on the warning due to weak password
+        MessageBox::setNextAnswer(MessageBox::ContinueWithWeakPass);
         QTest::keyClick(fileEdit, Qt::Key::Key_Enter);
+
         tmpFile.remove(););
 
     triggerAction("actionDatabaseNew");
