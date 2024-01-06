@@ -261,8 +261,8 @@ QVector<PasswordGroup> PasswordGenerator::passwordGroups() const
     if (!m_custom.isEmpty()) {
         PasswordGroup group;
 
-        for (auto ch : m_custom) {
-            if (!group.contains(ch)){
+        for (const auto& ch : m_custom) {
+            if (!group.contains(ch)) {
                 group.append(ch);
             }
         }
