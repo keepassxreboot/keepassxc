@@ -661,7 +661,7 @@ QJsonObject BrowserService::showPasskeysAuthenticationPrompt(const QJsonObject& 
         return getPublicKeyCredentialFromEntry(entries.first(), publicKey, origin);
     }
 
-    const auto timeout = publicKey["timeout"].toInt();
+    const auto timeout = browserPasskeys()->getTimeout(userVerification, publicKey["timeout"].toInt());
 
     raiseWindow();
     BrowserPasskeysConfirmationDialog confirmDialog;
