@@ -33,6 +33,25 @@ enum
     max_length = 16 * 1024
 };
 
+struct KeyPairMessage
+{
+    QLocalSocket* socket;
+    QString nonce;
+    QString publicKey;
+    QString secretKey;
+};
+
+struct EntryParameters
+{
+    QString dbid;
+    QString login;
+    QString password;
+    QString realm;
+    QString hash;
+    QString siteUrl;
+    QString formUrl;
+};
+
 class DatabaseWidget;
 class BrowserHost;
 class BrowserAction;
@@ -58,36 +77,19 @@ public:
     QJsonObject getDatabaseGroups();
     QJsonObject createNewGroup(const QString& groupName);
     QString getCurrentTotp(const QString& uuid);
-    void showPasswordGenerator(QLocalSocket* socket,
-                               const QString& nonce,
-                               const QString& publicKey,
-                               const QString& secretKey);
+    void showPasswordGenerator(const KeyPairMessage& keyPairMessage);
     bool isPasswordGeneratorRequested() const;
     bool isUrlIdentical(const QString& first, const QString& second) const;
 
-    void addEntry(const QString& dbid,
-                  const QString& login,
-                  const QString& password,
-                  const QString& siteUrl,
-                  const QString& formUrl,
-                  const QString& realm,
+    void addEntry(const EntryParameters& entryParameters,
                   const QString& group,
                   const QString& groupUuid,
                   const bool downloadFavicon,
                   const QSharedPointer<Database>& selectedDb = {});
-    bool updateEntry(const QString& dbid,
-                     const QString& uuid,
-                     const QString& login,
-                     const QString& password,
-                     const QString& siteUrl,
-                     const QString& formUrl);
+    bool updateEntry(const EntryParameters& entryParameters, const QString& uuid);
     bool deleteEntry(const QString& uuid);
-    QJsonArray findMatchingEntries(const QString& dbid,
-                                   const QString& siteUrlStr,
-                                   const QString& formUrlStr,
-                                   const QString& realm,
-                                   const StringPairList& keyList,
-                                   const bool httpAuth = false);
+    QJsonArray
+    findEntries(const EntryParameters& entryParameters, const StringPairList& keyList, const bool httpAuth = false);
     void requestGlobalAutoType(const QString& search);
     static void convertAttributesToCustomData(QSharedPointer<Database> db);
 
@@ -131,10 +133,9 @@ private:
     QList<Entry*> searchEntries(const QString& siteUrl, const QString& formUrl, const StringPairList& keyList);
     QList<Entry*> sortEntries(QList<Entry*>& pwEntries, const QString& siteUrl, const QString& formUrl);
     QList<Entry*> confirmEntries(QList<Entry*>& pwEntriesToConfirm,
-                                 const QString& siteUrl,
+                                 const EntryParameters& entryParameters,
                                  const QString& siteHost,
                                  const QString& formUrl,
-                                 const QString& realm,
                                  const bool httpAuth);
     QJsonObject prepareEntry(const Entry* entry);
     void allowEntry(Entry* entry, const QString& siteHost, const QString& formUrl, const QString& realm);
