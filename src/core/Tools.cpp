@@ -5,7 +5,7 @@
  *  Copyright (C) 2020 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com,
  *  author Giuseppe D'Angelo <giuseppe.dangelo@kdab.com>
  *  Copyright (C) 2021 The Qt Company Ltd.
- *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -272,35 +272,6 @@ namespace Tools
                 }
             } while (!timer.hasExpired(ms));
         }
-    }
-
-    bool checkUrlValid(const QString& urlField)
-    {
-        if (urlField.isEmpty() || urlField.startsWith("cmd://", Qt::CaseInsensitive)
-            || urlField.startsWith("kdbx://", Qt::CaseInsensitive)
-            || urlField.startsWith("{REF:A", Qt::CaseInsensitive)) {
-            return true;
-        }
-
-        QUrl url;
-        if (urlField.contains("://")) {
-            url = urlField;
-        } else {
-            url = QUrl::fromUserInput(urlField);
-        }
-
-        if (url.scheme() != "file" && url.host().isEmpty()) {
-            return false;
-        }
-
-        // Check for illegal characters. Adds also the wildcard * to the list
-        QRegularExpression re("[<>\\^`{|}\\*]");
-        auto match = re.match(urlField);
-        if (match.hasMatch()) {
-            return false;
-        }
-
-        return true;
     }
 
     /****************************************************************************

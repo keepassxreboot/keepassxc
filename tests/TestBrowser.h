@@ -37,8 +37,6 @@ private slots:
     void testGetBase64FromKey();
     void testIncrementNonce();
     void testBuildResponse();
-    void testTopLevelDomain();
-    void testIsIpAddress();
     void testSortPriority();
     void testSortPriority_data();
     void testSearchEntries();
@@ -49,10 +47,8 @@ private slots:
     void testSearchEntriesWithAdditionalURLs();
     void testInvalidEntries();
     void testSubdomainsAndPaths();
-    void testValidURLs();
     void testBestMatchingCredentials();
     void testBestMatchingWithAdditionalURLs();
-    void testIsUrlIdentical();
 
 private:
     QList<Entry*> createEntries(QStringList& urls, Group* root) const;
