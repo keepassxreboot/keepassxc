@@ -17,10 +17,11 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BROWSERSERVICE_H
-#define BROWSERSERVICE_H
+#ifndef KEEPASSXC_BROWSERSERVICE_H
+#define KEEPASSXC_BROWSERSERVICE_H
 
 #include "BrowserAccessControlDialog.h"
+#include "config-keepassx.h"
 #include "core/Entry.h"
 #include "gui/PasswordGeneratorWidget.h"
 
@@ -45,6 +46,7 @@ struct KeyPairMessage
 struct EntryParameters
 {
     QString dbid;
+    QString title;
     QString login;
     QString password;
     QString realm;
@@ -82,7 +84,30 @@ public:
     void showPasswordGenerator(const KeyPairMessage& keyPairMessage);
     bool isPasswordGeneratorRequested() const;
     bool isUrlIdentical(const QString& first, const QString& second) const;
-
+    
+    QSharedPointer<Database> selectedDatabase();
+#ifdef WITH_XC_BROWSER_PASSKEYS
+    QJsonObject
+    showPasskeysRegisterPrompt(const QJsonObject& publicKey, const QString& origin, const StringPairList& keyList);
+    QJsonObject showPasskeysAuthenticationPrompt(const QJsonObject& publicKey,
+                                                 const QString& origin,
+                                                 const StringPairList& keyList);
+    void addPasskeyToGroup(Group* group,
+                           const QString& url,
+                           const QString& rpId,
+                           const QString& rpName,
+                           const QString& username,
+                           const QString& userId,
+                           const QString& userHandle,
+                           const QString& privateKey);
+    void addPasskeyToEntry(Entry* entry,
+                           const QString& rpId,
+                           const QString& rpName,
+                           const QString& username,
+                           const QString& userId,
+                           const QString& userHandle,
+                           const QString& privateKey);
+#endif
     void addEntry(const EntryParameters& entryParameters,
                   const QString& group,
                   const QString& groupUuid,
@@ -130,8 +155,12 @@ private:
         Hidden
     };
 
-    QList<Entry*> searchEntries(const QSharedPointer<Database>& db, const QString& siteUrl, const QString& formUrl);
-    QList<Entry*> searchEntries(const QString& siteUrl, const QString& formUrl, const StringPairList& keyList);
+    QList<Entry*> searchEntries(const QSharedPointer<Database>& db,
+                                const QString& siteUrl,
+                                const QString& formUrl,
+                                bool passkey = false);
+    QList<Entry*>
+    searchEntries(const QString& siteUrl, const QString& formUrl, const StringPairList& keyList, bool passkey = false);
     QList<Entry*> sortEntries(QList<Entry*>& entries, const QString& siteUrl, const QString& formUrl);
     QList<Entry*> confirmEntries(QList<Entry*>& entriesToConfirm,
                                  const EntryParameters& entryParameters,
@@ -150,6 +179,17 @@ private:
     bool removeFirstDomain(QString& hostname);
     bool
     shouldIncludeEntry(Entry* entry, const QString& url, const QString& submitUrl, const bool omitWwwSubdomain = false);
+#ifdef WITH_XC_BROWSER_PASSKEYS
+    QList<Entry*> getPasskeyEntries(const QString& rpId, const StringPairList& keyList);
+    QList<Entry*>
+    getPasskeyAllowedEntries(const QJsonObject& publicKey, const QString& rpId, const StringPairList& keyList);
+    QJsonObject
+    getPublicKeyCredentialFromEntry(const Entry* entry, const QJsonObject& publicKey, const QString& origin);
+    bool isPasskeyCredentialExcluded(const QJsonArray& excludeCredentials,
+                                     const QString& origin,
+                                     const StringPairList& keyList);
+    QJsonObject getPasskeyError(int errorCode) const;
+#endif
     bool handleURL(const QString& entryUrl,
                    const QString& siteUrl,
                    const QString& formUrl,
@@ -157,7 +197,6 @@ private:
     QString getTopLevelDomainFromUrl(const QString& url) const;
     QString baseDomain(const QString& hostname) const;
     QSharedPointer<Database> getDatabase();
-    QSharedPointer<Database> selectedDatabase();
     QString getDatabaseRootUuid();
     QString getDatabaseRecycleBinUuid();
     bool checkLegacySettings(QSharedPointer<Database> db);
@@ -184,6 +223,9 @@ private:
     Q_DISABLE_COPY(BrowserService);
 
     friend class TestBrowser;
+#ifdef WITH_XC_BROWSER_PASSKEYS
+    friend class TestPasskeys;
+#endif
 };
 
 static inline BrowserService* browserService()
@@ -191,4 +233,4 @@ static inline BrowserService* browserService()
     return BrowserService::instance();
 }
 
-#endif // BROWSERSERVICE_H
+#endif // KEEPASSXC_BROWSERSERVICE_H

@@ -19,6 +19,7 @@
 #define KEEPASSX_DATABASETABWIDGET_H
 
 #include "DatabaseOpenDialog.h"
+#include "config-keepassx.h"
 #include "gui/MessageWidget.h"
 
 #include <QTabWidget>
@@ -84,6 +85,10 @@ public slots:
     void showDatabaseSecurity();
     void showDatabaseReports();
     void showDatabaseSettings();
+#ifdef WITH_XC_BROWSER_PASSKEYS
+    void showPasskeys();
+    void importPasskey();
+#endif
     void performGlobalAutoType(const QString& search);
     void performBrowserUnlock();
 

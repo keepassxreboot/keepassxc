@@ -61,7 +61,9 @@ public:
     static const QString NotesKey;
     static const QStringList DefaultAttributes;
     static const QString RememberCmdExecAttr;
+    static const QString PasskeyAttribute;
     static bool isDefaultAttribute(const QString& key);
+    static bool isPasskeyAttribute(const QString& key);
 
     static const QString WantedFieldGroupName;
     static const QString SearchInGroupName;

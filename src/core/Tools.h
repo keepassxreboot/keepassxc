@@ -44,6 +44,7 @@ namespace Tools
     bool isValidUuid(const QString& uuidStr);
     QString envSubstitute(const QString& filepath,
                           QProcessEnvironment environment = QProcessEnvironment::systemEnvironment());
+    QString cleanFilename(QString filename);
 
     /**
      * Escapes all characters in regex such that they do not receive any special treatment when used

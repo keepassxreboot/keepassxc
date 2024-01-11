@@ -59,6 +59,7 @@
         <file>application/scalable/actions/object-locked.svg</file>
         <file>application/scalable/actions/object-unlocked.svg</file>
         <file>application/scalable/actions/paperclip.svg</file>
+        <file>application/scalable/actions/passkey.svg</file>
         <file>application/scalable/actions/password-copy.svg</file>
         <file>application/scalable/actions/password-generator.svg</file>
         <file>application/scalable/actions/password-show-off.svg</file>

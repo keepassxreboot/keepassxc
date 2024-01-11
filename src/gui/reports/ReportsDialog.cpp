@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -24,6 +24,10 @@
 #ifdef WITH_XC_BROWSER
 #include "ReportsPageBrowserStatistics.h"
 #include "ReportsWidgetBrowserStatistics.h"
+#endif
+#ifdef WITH_XC_BROWSER_PASSKEYS
+#include "ReportsPagePasskeys.h"
+#include "ReportsWidgetPasskeys.h"
 #endif
 #include "ReportsWidgetHealthcheck.h"
 #include "ReportsWidgetHibp.h"
@@ -65,16 +69,22 @@ ReportsDialog::ReportsDialog(QWidget* parent)
 #ifdef WITH_XC_BROWSER
     , m_browserStatPage(new ReportsPageBrowserStatistics())
 #endif
+#ifdef WITH_XC_BROWSER_PASSKEYS
+    , m_passkeysPage(new ReportsPagePasskeys())
+#endif
     , m_editEntryWidget(new EditEntryWidget(this))
 {
     m_ui->setupUi(this);
 
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(reject()));
     addPage(m_statPage);
+    addPage(m_healthPage);
+#ifdef WITH_XC_BROWSER_PASSKEYS
+    addPage(m_passkeysPage);
+#endif
 #ifdef WITH_XC_BROWSER
     addPage(m_browserStatPage);
 #endif
-    addPage(m_healthPage);
     addPage(m_hibpPage);
 
     m_ui->stackedWidget->setCurrentIndex(0);
@@ -91,6 +101,10 @@ ReportsDialog::ReportsDialog(QWidget* parent)
     connect(m_browserStatPage->m_browserWidget,
             SIGNAL(entryActivated(Entry*)),
             SLOT(entryActivationSignalReceived(Entry*)));
+#endif
+#ifdef WITH_XC_BROWSER_PASSKEYS
+    connect(
+        m_passkeysPage->m_passkeysWidget, SIGNAL(entryActivated(Entry*)), SLOT(entryActivationSignalReceived(Entry*)));
 #endif
     connect(m_editEntryWidget, SIGNAL(editFinished(bool)), SLOT(switchToMainView(bool)));
 }
@@ -118,6 +132,15 @@ void ReportsDialog::addPage(QSharedPointer<IReportsPage> page)
     m_ui->categoryList->addCategory(page->name(), page->icon());
     m_ui->categoryList->setCurrentCategory(category);
 }
+
+#ifdef WITH_XC_BROWSER_PASSKEYS
+void ReportsDialog::activatePasskeysPage()
+{
+    m_ui->stackedWidget->setCurrentWidget(m_passkeysPage->m_passkeysWidget);
+    auto index = m_ui->stackedWidget->currentIndex();
+    m_ui->categoryList->setCurrentCategory(index);
+}
+#endif
 
 void ReportsDialog::reject()
 {
@@ -152,6 +175,11 @@ void ReportsDialog::switchToMainView(bool previousDialogAccepted)
 #ifdef WITH_XC_BROWSER
         if (m_sender == m_browserStatPage->m_browserWidget) {
             m_browserStatPage->m_browserWidget->calculateBrowserStatistics();
+        }
+#endif
+#ifdef WITH_XC_BROWSER_PASSKEYS
+        if (m_sender == m_passkeysPage->m_passkeysWidget) {
+            m_passkeysPage->m_passkeysWidget->updateEntries();
         }
 #endif
     }
