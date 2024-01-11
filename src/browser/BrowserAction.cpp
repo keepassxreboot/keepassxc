@@ -241,13 +241,16 @@ QJsonObject BrowserAction::handleGetLogins(const QJsonObject& json, const QStrin
     entryParameters.hash = browserRequest.hash;
     entryParameters.siteUrl = siteUrl;
     entryParameters.formUrl = formUrl;
+    entryParameters.httpAuth = httpAuth;
 
-    const auto users = browserService()->findEntries(entryParameters, keyList, httpAuth);
-    if (users.isEmpty()) {
+    bool entriesFound = false;
+    const auto entries = browserService()->findEntries(entryParameters, keyList, &entriesFound);
+    if (!entriesFound) {
         return getErrorReply(action, ERROR_KEEPASS_NO_LOGINS_FOUND);
     }
 
-    const Parameters params{{"count", users.count()}, {"entries", users}, {"hash", browserRequest.hash}, {"id", id}};
+    const Parameters params{
+        {"count", entries.count()}, {"entries", entries}, {"hash", browserRequest.hash}, {"id", id}};
     return buildResponse(action, browserRequest.incrementedNonce, params);
 }
 
