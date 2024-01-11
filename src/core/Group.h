@@ -85,6 +85,7 @@ public:
     QString name() const;
     QString notes() const;
     QString tags() const;
+    QString fullPath() const;
     int iconNumber() const;
     const QUuid& iconUuid() const;
     const TimeInfo& timeInfo() const;

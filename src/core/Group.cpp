@@ -131,6 +131,19 @@ QString Group::tags() const
     return m_data.tags;
 }
 
+QString Group::fullPath() const
+{
+    QString fullPath;
+    auto group = this;
+
+    do {
+        fullPath.insert(0, "/" + group->name());
+        group = group->parentGroup();
+    } while (group);
+
+    return fullPath;
+}
+
 int Group::iconNumber() const
 {
     return m_data.iconNumber;

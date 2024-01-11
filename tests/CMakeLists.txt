@@ -1,4 +1,4 @@
-#  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+#  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
 #  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
 #
 #  This program is free software: you can redistribute it and/or modify
@@ -229,6 +229,17 @@ endif()
 if(WITH_XC_BROWSER)
     add_unit_test(NAME testbrowser SOURCES TestBrowser.cpp
         LIBS ${TEST_LIBRARIES})
+
+    if(WITH_XC_BROWSER_PASSKEYS)
+        # Prevent duplicate linking with macOS
+        if(APPLE)
+            add_unit_test(NAME testpasskeys SOURCES TestPasskeys.cpp
+                    LIBS ${TEST_LIBRARIES})
+        else()
+            add_unit_test(NAME testpasskeys SOURCES TestPasskeys.cpp
+                    LIBS keepassxcbrowser ${TEST_LIBRARIES})
+        endif()
+    endif()
 endif()
 
 add_unit_test(NAME testcli SOURCES TestCli.cpp

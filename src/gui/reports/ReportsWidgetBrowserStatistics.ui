@@ -10,7 +10,7 @@
     <height>379</height>
    </rect>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0,0">
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -55,23 +55,26 @@
     </widget>
    </item>
    <item>
-    <widget class="QCheckBox" name="excludeExpired">
-     <property name="text">
-      <string>Exclude expired entries from the report</string>
-     </property>
-    </widget>
-   </item>
-   <item>
     <widget class="QCheckBox" name="showEntriesWithUrlOnlyCheckBox">
      <property name="text">
-      <string>Show only entries which have URL set</string>
+      <string>Only show entries that have a URL</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QCheckBox" name="showConnectedOnlyCheckBox">
+    <widget class="QCheckBox" name="showAllowDenyCheckBox">
      <property name="text">
-      <string>Show only entries which have browser settings in custom data</string>
+      <string>Only show entries that have been explicitly allowed or denied</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="showExpired">
+     <property name="text">
+      <string>Show expired entries</string>
      </property>
     </widget>
    </item>
@@ -91,9 +94,8 @@
  </widget>
  <tabstops>
   <tabstop>browserStatisticsTableView</tabstop>
-  <tabstop>excludeExpired</tabstop>
   <tabstop>showEntriesWithUrlOnlyCheckBox</tabstop>
-  <tabstop>showConnectedOnlyCheckBox</tabstop>
+  <tabstop>showAllowDenyCheckBox</tabstop>
  </tabstops>
  <resources/>
  <connections/>

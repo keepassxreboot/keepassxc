@@ -558,6 +558,18 @@ void DatabaseTabWidget::showDatabaseSettings()
     currentDatabaseWidget()->switchToDatabaseSettings();
 }
 
+#ifdef WITH_XC_BROWSER_PASSKEYS
+void DatabaseTabWidget::showPasskeys()
+{
+    currentDatabaseWidget()->switchToPasskeys();
+}
+
+void DatabaseTabWidget::importPasskey()
+{
+    currentDatabaseWidget()->switchToImportPasskey();
+}
+#endif
+
 bool DatabaseTabWidget::isModified(int index) const
 {
     if (count() == 0) {

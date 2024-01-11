@@ -1,5 +1,5 @@
 KeePassXC - http://www.keepassxc.org/
-Copyright (C) 2016-2020 KeePassXC Team <team@keepassxc.org>
+Copyright (C) 2016-2023 KeePassXC Team <team@keepassxc.org>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -194,6 +194,7 @@ Files: share/icons/application/scalable/actions/application-exit.svg
        share/icons/application/scalable/actions/object-unlocked.svg
        share/icons/application/scalable/actions/paperclip.svg
        share/icons/application/scalable/actions/password-copy.svg
+       share/icons/application/scalable/actions/passkey.svg
        share/icons/application/scalable/actions/password-generator.svg
        share/icons/application/scalable/actions/password-show-off.svg
        share/icons/application/scalable/actions/password-show-on.svg
