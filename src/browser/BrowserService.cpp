@@ -313,23 +313,18 @@ QString BrowserService::getCurrentTotp(const QString& uuid)
     return {};
 }
 
-QJsonArray BrowserService::findMatchingEntries(const QString& dbid,
-                                               const QString& siteUrl,
-                                               const QString& formUrl,
-                                               const QString& realm,
-                                               const StringPairList& keyList,
-                                               const bool httpAuth)
+QJsonArray
+BrowserService::findEntries(const EntryParameters& entryParameters, const StringPairList& keyList, const bool httpAuth)
 {
-    Q_UNUSED(dbid);
     const bool alwaysAllowAccess = browserSettings()->alwaysAllowAccess();
     const bool ignoreHttpAuth = browserSettings()->httpAuthPermission();
-    const QString siteHost = QUrl(siteUrl).host();
-    const QString formHost = QUrl(formUrl).host();
+    const QString siteHost = QUrl(entryParameters.siteUrl).host();
+    const QString formHost = QUrl(entryParameters.formUrl).host();
 
     // Check entries for authorization
     QList<Entry*> pwEntriesToConfirm;
     QList<Entry*> pwEntries;
-    for (auto* entry : searchEntries(siteUrl, formUrl, keyList)) {
+    for (auto* entry : searchEntries(entryParameters.siteUrl, entryParameters.formUrl, keyList)) {
         auto entryCustomData = entry->customData();
 
         if (!httpAuth
@@ -352,7 +347,7 @@ QJsonArray BrowserService::findMatchingEntries(const QString& dbid,
             continue;
         }
 
-        switch (checkAccess(entry, siteHost, formHost, realm)) {
+        switch (checkAccess(entry, siteHost, formHost, entryParameters.realm)) {
         case Denied:
             continue;
 
@@ -372,7 +367,7 @@ QJsonArray BrowserService::findMatchingEntries(const QString& dbid,
 
     // Confirm entries
     QList<Entry*> selectedEntriesToConfirm =
-        confirmEntries(pwEntriesToConfirm, siteUrl, siteHost, formHost, realm, httpAuth);
+        confirmEntries(pwEntriesToConfirm, entryParameters, siteHost, formHost, httpAuth);
     if (!selectedEntriesToConfirm.isEmpty()) {
         pwEntries.append(selectedEntriesToConfirm);
     }
@@ -387,7 +382,7 @@ QJsonArray BrowserService::findMatchingEntries(const QString& dbid,
     }
 
     // Sort results
-    pwEntries = sortEntries(pwEntries, siteUrl, formUrl);
+    pwEntries = sortEntries(pwEntries, entryParameters.siteUrl, entryParameters.formUrl);
 
     // Fill the list
     QJsonArray result;
@@ -399,10 +394,9 @@ QJsonArray BrowserService::findMatchingEntries(const QString& dbid,
 }
 
 QList<Entry*> BrowserService::confirmEntries(QList<Entry*>& pwEntriesToConfirm,
-                                             const QString& siteUrl,
+                                             const EntryParameters& entryParameters,
                                              const QString& siteHost,
                                              const QString& formUrl,
-                                             const QString& realm,
                                              const bool httpAuth)
 {
     if (pwEntriesToConfirm.isEmpty() || m_dialogActive) {
@@ -417,10 +411,10 @@ QList<Entry*> BrowserService::confirmEntries(QList<Entry*>& pwEntriesToConfirm,
 
     connect(&accessControlDialog, &BrowserAccessControlDialog::disableAccess, [&](QTableWidgetItem* item) {
         auto entry = pwEntriesToConfirm[item->row()];
-        denyEntry(entry, siteHost, formUrl, realm);
+        denyEntry(entry, siteHost, formUrl, entryParameters.realm);
     });
 
-    accessControlDialog.setItems(pwEntriesToConfirm, siteUrl, httpAuth);
+    accessControlDialog.setItems(pwEntriesToConfirm, entryParameters.siteUrl, httpAuth);
 
     QList<Entry*> allowedEntries;
     auto ret = accessControlDialog.exec();
@@ -428,7 +422,7 @@ QList<Entry*> BrowserService::confirmEntries(QList<Entry*>& pwEntriesToConfirm,
         for (auto item : accessControlDialog.getSelectedEntries()) {
             auto entry = pwEntriesToConfirm[item->row()];
             if (accessControlDialog.remember()) {
-                allowEntry(entry, siteHost, formUrl, realm);
+                allowEntry(entry, siteHost, formUrl, entryParameters.realm);
             }
             allowedEntries.append(entry);
         }
@@ -441,10 +435,7 @@ QList<Entry*> BrowserService::confirmEntries(QList<Entry*>& pwEntriesToConfirm,
     return allowedEntries;
 }
 
-void BrowserService::showPasswordGenerator(QLocalSocket* socket,
-                                           const QString& incrementedNonce,
-                                           const QString& publicKey,
-                                           const QString& secretKey)
+void BrowserService::showPasswordGenerator(const KeyPairMessage& keyPairMessage)
 {
     if (!m_passwordGenerator) {
         m_passwordGenerator.reset(PasswordGeneratorWidget::popupGenerator(m_currentDatabaseWidget));
@@ -453,7 +444,7 @@ void BrowserService::showPasswordGenerator(QLocalSocket* socket,
             if (!m_passwordGenerator->isPasswordGenerated()) {
                 auto errorMessage = browserMessageBuilder()->getErrorReply("generate-password",
                                                                            ERROR_KEEPASS_ACTION_CANCELLED_OR_DENIED);
-                m_browserHost->sendClientMessage(socket, errorMessage);
+                m_browserHost->sendClientMessage(keyPairMessage.socket, errorMessage);
             }
 
             m_passwordGenerator.reset();
@@ -465,12 +456,13 @@ void BrowserService::showPasswordGenerator(QLocalSocket* socket,
                 &PasswordGeneratorWidget::appliedPassword,
                 m_passwordGenerator.data(),
                 [=](const QString& password) {
-                    QJsonObject message = browserMessageBuilder()->buildMessage(incrementedNonce);
-                    message["password"] = password;
-                    m_browserHost->sendClientMessage(
-                        socket,
-                        browserMessageBuilder()->buildResponse(
-                            "generate-password", message, incrementedNonce, publicKey, secretKey));
+                    const Parameters params{{"password", password}};
+                    m_browserHost->sendClientMessage(keyPairMessage.socket,
+                                                     browserMessageBuilder()->buildResponse("generate-password",
+                                                                                            keyPairMessage.nonce,
+                                                                                            params,
+                                                                                            keyPairMessage.publicKey,
+                                                                                            keyPairMessage.secretKey));
                     hideWindow();
                 });
     }
@@ -575,19 +567,13 @@ QString BrowserService::getKey(const QString& id)
     return db->metadata()->customData()->value(CustomData::BrowserKeyPrefix + id);
 }
 
-void BrowserService::addEntry(const QString& dbid,
-                              const QString& login,
-                              const QString& password,
-                              const QString& siteUrl,
-                              const QString& formUrl,
-                              const QString& realm,
+void BrowserService::addEntry(const EntryParameters& entryParameters,
                               const QString& group,
                               const QString& groupUuid,
                               const bool downloadFavicon,
                               const QSharedPointer<Database>& selectedDb)
 {
     // TODO: select database based on this key id
-    Q_UNUSED(dbid);
     auto db = selectedDb ? selectedDb : selectedDatabase();
     if (!db) {
         return;
@@ -595,11 +581,11 @@ void BrowserService::addEntry(const QString& dbid,
 
     auto* entry = new Entry();
     entry->setUuid(QUuid::createUuid());
-    entry->setTitle(QUrl(siteUrl).host());
-    entry->setUrl(siteUrl);
+    entry->setTitle(QUrl(entryParameters.siteUrl).host());
+    entry->setUrl(entryParameters.siteUrl);
     entry->setIcon(KEEPASSXCBROWSER_DEFAULT_ICON);
-    entry->setUsername(login);
-    entry->setPassword(password);
+    entry->setUsername(entryParameters.login);
+    entry->setPassword(entryParameters.password);
 
     // Select a group for the entry
     if (!group.isEmpty()) {
@@ -615,16 +601,16 @@ void BrowserService::addEntry(const QString& dbid,
         entry->setGroup(getDefaultEntryGroup(db));
     }
 
-    const QString host = QUrl(siteUrl).host();
-    const QString submitHost = QUrl(formUrl).host();
+    const QString host = QUrl(entryParameters.siteUrl).host();
+    const QString submitHost = QUrl(entryParameters.formUrl).host();
     BrowserEntryConfig config;
     config.allow(host);
 
     if (!submitHost.isEmpty()) {
         config.allow(submitHost);
     }
-    if (!realm.isEmpty()) {
-        config.setRealm(realm);
+    if (!entryParameters.realm.isEmpty()) {
+        config.setRealm(entryParameters.realm);
     }
     config.save(entry);
 
@@ -633,15 +619,9 @@ void BrowserService::addEntry(const QString& dbid,
     }
 }
 
-bool BrowserService::updateEntry(const QString& dbid,
-                                 const QString& uuid,
-                                 const QString& login,
-                                 const QString& password,
-                                 const QString& siteUrl,
-                                 const QString& formUrl)
+bool BrowserService::updateEntry(const EntryParameters& entryParameters, const QString& uuid)
 {
     // TODO: select database based on this key id
-    Q_UNUSED(dbid);
     auto db = selectedDatabase();
     if (!db) {
         return false;
@@ -650,7 +630,7 @@ bool BrowserService::updateEntry(const QString& dbid,
     Entry* entry = db->rootGroup()->findEntryByUuid(Tools::hexToUuid(uuid));
     if (!entry) {
         // If entry is not found for update, add a new one to the selected database
-        addEntry(dbid, login, password, siteUrl, formUrl, "", "", "", db);
+        addEntry(entryParameters, "", "", false, db);
         return true;
     }
 
@@ -665,32 +645,32 @@ bool BrowserService::updateEntry(const QString& dbid,
         }
     }
 
-    QString username = entry->username();
+    auto username = entry->username();
     if (username.isEmpty()) {
         return false;
     }
 
     bool result = false;
-    if (username.compare(login, Qt::CaseSensitive) != 0
-        || entry->password().compare(password, Qt::CaseSensitive) != 0) {
+    if (username.compare(entryParameters.login, Qt::CaseSensitive) != 0
+        || entry->password().compare(entryParameters.password, Qt::CaseSensitive) != 0) {
         MessageBox::Button dialogResult = MessageBox::No;
         if (!browserSettings()->alwaysAllowUpdate()) {
             raiseWindow();
-            dialogResult = MessageBox::question(
-                m_currentDatabaseWidget,
-                tr("KeePassXC: Update Entry"),
-                tr("Do you want to update the information in %1 - %2?").arg(QUrl(siteUrl).host(), username),
-                MessageBox::Save | MessageBox::Cancel,
-                MessageBox::Cancel,
-                MessageBox::Raise);
+            dialogResult = MessageBox::question(nullptr,
+                                                tr("KeePassXC: Update Entry"),
+                                                tr("Do you want to update the information in %1 - %2?")
+                                                    .arg(QUrl(entryParameters.siteUrl).host(), username),
+                                                MessageBox::Save | MessageBox::Cancel,
+                                                MessageBox::Cancel,
+                                                MessageBox::Raise);
         }
 
         if (browserSettings()->alwaysAllowUpdate() || dialogResult == MessageBox::Save) {
             entry->beginUpdate();
             if (!entry->attributes()->isReference(EntryAttributes::UserNameKey)) {
-                entry->setUsername(login);
+                entry->setUsername(entryParameters.login);
             }
-            entry->setPassword(password);
+            entry->setPassword(entryParameters.password);
             entry->endUpdate();
             result = true;
         }

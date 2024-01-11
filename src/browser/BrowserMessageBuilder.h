@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,8 +20,11 @@
 
 #include <QPair>
 #include <QString>
+#include <QVariant>
 
 class QJsonObject;
+
+typedef QMap<QString, QVariant> Parameters;
 
 namespace
 {
@@ -55,11 +58,10 @@ public:
     static BrowserMessageBuilder* instance();
 
     QPair<QString, QString> getKeyPair();
-
     QJsonObject buildMessage(const QString& nonce) const;
     QJsonObject buildResponse(const QString& action,
-                              const QJsonObject& message,
                               const QString& nonce,
+                              const Parameters& params,
                               const QString& publicKey,
                               const QString& secretKey);
     QJsonObject getErrorReply(const QString& action, const int errorCode) const;

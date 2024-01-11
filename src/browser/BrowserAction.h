@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,10 +18,36 @@
 #ifndef BROWSERACTION_H
 #define BROWSERACTION_H
 
+#include "BrowserMessageBuilder.h"
+
+#include <QJsonArray>
+#include <QJsonObject>
 #include <QString>
 
-class QJsonObject;
 class QLocalSocket;
+
+struct BrowserRequest
+{
+    QString hash;
+    QString nonce;
+    QString incrementedNonce;
+    QJsonObject decrypted;
+
+    inline bool isEmpty() const
+    {
+        return decrypted.isEmpty();
+    }
+
+    inline QJsonArray getArray(const QString& param) const
+    {
+        return decrypted.value(param).toArray();
+    }
+
+    inline QString getString(const QString& param) const
+    {
+        return decrypted.value(param).toString();
+    }
+};
 
 class BrowserAction
 {
@@ -48,10 +74,10 @@ private:
     QJsonObject handleGlobalAutoType(const QJsonObject& json, const QString& action);
 
 private:
-    QJsonObject buildMessage(const QString& nonce) const;
-    QJsonObject buildResponse(const QString& action, const QJsonObject& message, const QString& nonce);
+    QJsonObject buildResponse(const QString& action, const QString& nonce, const Parameters& params = {});
     QJsonObject getErrorReply(const QString& action, const int errorCode) const;
     QJsonObject decryptMessage(const QString& message, const QString& nonce);
+    BrowserRequest decodeRequest(const QJsonObject& json);
 
 private:
     static const int MaxUrlLength;
