@@ -161,7 +161,6 @@ private:
     QString getDatabaseRootUuid();
     QString getDatabaseRecycleBinUuid();
     bool checkLegacySettings(QSharedPointer<Database> db);
-    QStringList getEntryURLs(const Entry* entry);
     void hideWindow() const;
     void raiseWindow(const bool force = false);
 
