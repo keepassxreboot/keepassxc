@@ -248,7 +248,7 @@ QJsonObject BrowserService::createNewGroup(const QString& groupName)
     }
 
     auto dialogResult = MessageBox::warning(m_currentDatabaseWidget,
-                                            tr("KeePassXC: Create a new group"),
+                                            tr("KeePassXC - Create a new group"),
                                             tr("A request for creating a new group \"%1\" has been received.\n"
                                                "Do you want to create this group?\n")
                                                 .arg(groupName),
@@ -512,7 +512,7 @@ QString BrowserService::storeKey(const QString& key)
     do {
         QInputDialog keyDialog(m_currentDatabaseWidget);
         connect(m_currentDatabaseWidget, SIGNAL(databaseLockRequested()), &keyDialog, SLOT(reject()));
-        keyDialog.setWindowTitle(tr("KeePassXC: New key association request"));
+        keyDialog.setWindowTitle(tr("KeePassXC - New key association request"));
         keyDialog.setLabelText(tr("You have received an association request for the following database:\n%1\n\n"
                                   "Give the connection a unique name or ID, for example:\nchrome-laptop.")
                                    .arg(db->metadata()->name().toHtmlEscaped()));
@@ -534,7 +534,7 @@ QString BrowserService::storeKey(const QString& key)
         contains = db->metadata()->customData()->contains(CustomData::BrowserKeyPrefix + id);
         if (contains) {
             dialogResult = MessageBox::warning(m_currentDatabaseWidget,
-                                               tr("KeePassXC: Overwrite existing key?"),
+                                               tr("KeePassXC - Overwrite existing key?"),
                                                tr("A shared encryption key with the name \"%1\" "
                                                   "already exists.\nDo you want to overwrite it?")
                                                    .arg(id),
@@ -665,7 +665,7 @@ QJsonObject BrowserService::showPasskeysAuthenticationPrompt(const QJsonObject& 
 
     raiseWindow();
     BrowserPasskeysConfirmationDialog confirmDialog;
-    confirmDialog.authenticateCredential(entries, origin, timeout);
+    confirmDialog.authenticateCredential(entries, rpId, timeout);
     auto dialogResult = confirmDialog.exec();
     if (dialogResult == QDialog::Accepted) {
         hideWindow();
@@ -729,7 +729,7 @@ void BrowserService::addPasskeyToEntry(Entry* entry,
     if (entry->hasPasskey()) {
         if (MessageBox::question(
                 m_currentDatabaseWidget,
-                tr("KeePassXC: Update Passkey"),
+                tr("KeePassXC - Update Passkey"),
                 tr("Entry already has a Passkey.\nDo you want to overwrite the Passkey in %1 - %2?")
                     .arg(entry->title(), entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_USERNAME)),
                 MessageBox::Overwrite | MessageBox::Cancel,
@@ -840,8 +840,8 @@ bool BrowserService::updateEntry(const EntryParameters& entryParameters, const Q
         MessageBox::Button dialogResult = MessageBox::No;
         if (!browserSettings()->alwaysAllowUpdate()) {
             raiseWindow();
-            dialogResult = MessageBox::question(nullptr,
-                                                tr("KeePassXC: Update Entry"),
+            dialogResult = MessageBox::question(m_currentDatabaseWidget,
+                                                tr("KeePassXC - Update Entry"),
                                                 tr("Do you want to update the information in %1 - %2?")
                                                     .arg(QUrl(entryParameters.siteUrl).host(), username),
                                                 MessageBox::Save | MessageBox::Cancel,
@@ -878,7 +878,7 @@ bool BrowserService::deleteEntry(const QString& uuid)
     }
 
     auto dialogResult = MessageBox::warning(m_currentDatabaseWidget,
-                                            tr("KeePassXC: Delete entry"),
+                                            tr("KeePassXC - Delete entry"),
                                             tr("A request for deleting entry \"%1\" has been received.\n"
                                                "Do you want to delete the entry?\n")
                                                 .arg(entry->title()),

@@ -38,10 +38,10 @@ public:
     ~BrowserPasskeysConfirmationDialog() override;
 
     void registerCredential(const QString& username,
-                            const QString& siteId,
+                            const QString& relyingParty,
                             const QList<Entry*>& existingEntries,
                             int timeout);
-    void authenticateCredential(const QList<Entry*>& entries, const QString& origin, int timeout);
+    void authenticateCredential(const QList<Entry*>& entries, const QString& relyingParty, int timeout);
     Entry* getSelectedEntry() const;
     bool isPasskeyUpdated() const;
 
