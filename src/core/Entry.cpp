@@ -377,16 +377,18 @@ QString Entry::url() const
 QStringList Entry::getAllUrls() const
 {
     QStringList urlList;
+    auto entryUrl = url();
 
-    if (!url().isEmpty()) {
-        urlList << url();
+    if (!entryUrl.isEmpty()) {
+        urlList << (EntryAttributes::matchReference(entryUrl).hasMatch() ? resolveMultiplePlaceholders(entryUrl)
+                                                                         : entryUrl);
     }
 
     for (const auto& key : m_attributes->keys()) {
         if (key.startsWith("KP2A_URL")) {
             auto additionalUrl = m_attributes->value(key);
             if (!additionalUrl.isEmpty()) {
-                urlList << additionalUrl;
+                urlList << resolveMultiplePlaceholders(additionalUrl);
             }
         }
     }
