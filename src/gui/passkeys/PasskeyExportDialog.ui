@@ -87,6 +87,16 @@
       </spacer>
      </item>
      <item>
+      <widget class="QPushButton" name="cancelButton">
+       <property name="text">
+        <string>Cancel</string>
+       </property>
+       <property name="autoDefault">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="exportButton">
        <property name="accessibleName">
         <string>Export entries</string>
@@ -98,16 +108,6 @@
         <bool>true</bool>
        </property>
        <property name="default">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="cancelButton">
-       <property name="text">
-        <string>Cancel</string>
-       </property>
-       <property name="autoDefault">
         <bool>true</bool>
        </property>
       </widget>

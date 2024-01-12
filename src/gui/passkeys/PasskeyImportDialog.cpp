@@ -45,12 +45,12 @@ PasskeyImportDialog::~PasskeyImportDialog()
 {
 }
 
-void PasskeyImportDialog::setInfo(const QString& url,
+void PasskeyImportDialog::setInfo(const QString& relyingParty,
                                   const QString& username,
                                   const QSharedPointer<Database>& database,
                                   bool isEntry)
 {
-    m_ui->urlLabel->setText(tr("URL: %1").arg(url));
+    m_ui->relyingPartyLabel->setText(tr("Relying Party: %1").arg(relyingParty));
     m_ui->usernameLabel->setText(tr("Username: %1").arg(username));
 
     if (isEntry) {

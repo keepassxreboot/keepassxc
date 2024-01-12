@@ -178,10 +178,8 @@ void DatabaseSettingsWidgetBrowser::removeSharedEncryptionKeys()
     }
 
     if (keysToRemove.isEmpty()) {
-        MessageBox::information(this,
-                                tr("KeePassXC: No keys found"),
-                                tr("No shared encryption keys found in KeePassXC settings."),
-                                MessageBox::Ok);
+        MessageBox::information(
+            this, tr("No keys found"), tr("No shared encryption keys found in KeePassXC settings."), MessageBox::Ok);
         return;
     }
 
@@ -191,7 +189,7 @@ void DatabaseSettingsWidgetBrowser::removeSharedEncryptionKeys()
 
     const int count = keysToRemove.count();
     MessageBox::information(this,
-                            tr("KeePassXC: Removed keys from database"),
+                            tr("Removed keys from database"),
                             tr("Successfully removed %n encryption key(s) from KeePassXC settings.", "", count),
                             MessageBox::Ok);
 }
@@ -231,12 +229,12 @@ void DatabaseSettingsWidgetBrowser::removeStoredPermissions()
 
     if (counter > 0) {
         MessageBox::information(this,
-                                tr("KeePassXC: Removed permissions"),
+                                tr("Removed permissions"),
                                 tr("Successfully removed permissions from %n entry(s).", "", counter),
                                 MessageBox::Ok);
     } else {
         MessageBox::information(this,
-                                tr("KeePassXC: No entry with permissions found!"),
+                                tr("No entry with permissions found!"),
                                 tr("The active database does not contain an entry with permissions."),
                                 MessageBox::Ok);
     }
