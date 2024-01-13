@@ -27,33 +27,41 @@
 PasskeyImportDialog::PasskeyImportDialog(QWidget* parent)
     : QDialog(parent)
     , m_ui(new Ui::PasskeyImportDialog())
-    , m_useDefaultGroup(true)
 {
     setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
 
     m_ui->setupUi(this);
-    m_ui->useDefaultGroupCheckbox->setChecked(true);
-    m_ui->selectGroupComboBox->setEnabled(false);
 
+    connect(this, SIGNAL(updateGroups()), this, SLOT(addGroups()));
+    connect(this, SIGNAL(updateEntries()), this, SLOT(addEntries()));
     connect(m_ui->importButton, SIGNAL(clicked()), SLOT(accept()));
     connect(m_ui->cancelButton, SIGNAL(clicked()), SLOT(reject()));
-    connect(m_ui->selectDatabaseButton, SIGNAL(clicked()), SLOT(selectDatabase()));
+    connect(m_ui->selectDatabaseCombobBox, SIGNAL(currentIndexChanged(int)), SLOT(changeDatabase(int)));
+    connect(m_ui->selectEntryComboBox, SIGNAL(currentIndexChanged(int)), SLOT(changeEntry(int)));
     connect(m_ui->selectGroupComboBox, SIGNAL(currentIndexChanged(int)), SLOT(changeGroup(int)));
-    connect(m_ui->useDefaultGroupCheckbox, SIGNAL(stateChanged(int)), SLOT(useDefaultGroupChanged()));
 }
 
 PasskeyImportDialog::~PasskeyImportDialog()
 {
 }
 
-void PasskeyImportDialog::setInfo(const QString& url, const QString& username, const QSharedPointer<Database>& database)
+void PasskeyImportDialog::setInfo(const QString& url,
+                                  const QString& username,
+                                  const QSharedPointer<Database>& database,
+                                  bool isEntry)
 {
     m_ui->urlLabel->setText(tr("URL: %1").arg(url));
     m_ui->usernameLabel->setText(tr("Username: %1").arg(username));
-    m_ui->selectDatabaseLabel->setText(tr("Database: %1").arg(getDatabaseName(database)));
-    m_ui->selectGroupLabel->setText(tr("Group:"));
 
-    addGroups(database);
+    if (isEntry) {
+        m_ui->verticalLayout->setSizeConstraint(QLayout::SetFixedSize);
+        m_ui->infoLabel->setText(tr("Import the following Passkey to this entry:"));
+        m_ui->groupBox->setVisible(false);
+    }
+
+    m_selectedDatabase = database;
+    addDatabases();
+    addGroups();
 
     auto openDatabaseCount = 0;
     for (auto dbWidget : getMainWindow()->getOpenDatabases()) {
@@ -61,34 +69,96 @@ void PasskeyImportDialog::setInfo(const QString& url, const QString& username, c
             openDatabaseCount++;
         }
     }
-    m_ui->selectDatabaseButton->setEnabled(openDatabaseCount > 1);
+    m_ui->selectDatabaseCombobBox->setEnabled(openDatabaseCount > 1);
 }
 
-QSharedPointer<Database> PasskeyImportDialog::getSelectedDatabase()
+QSharedPointer<Database> PasskeyImportDialog::getSelectedDatabase() const
 {
     return m_selectedDatabase;
 }
 
-QUuid PasskeyImportDialog::getSelectedGroupUuid()
+QUuid PasskeyImportDialog::getSelectedEntryUuid() const
+{
+    return m_selectedEntryUuid;
+}
+
+QUuid PasskeyImportDialog::getSelectedGroupUuid() const
 {
     return m_selectedGroupUuid;
 }
 
-bool PasskeyImportDialog::useDefaultGroup()
+bool PasskeyImportDialog::useDefaultGroup() const
 {
-    return m_useDefaultGroup;
+    return m_selectedGroupUuid.isNull();
 }
 
-QString PasskeyImportDialog::getDatabaseName(const QSharedPointer<Database>& database) const
+bool PasskeyImportDialog::createNewEntry() const
 {
-    return QFileInfo(database->filePath()).fileName();
+    return m_selectedEntryUuid.isNull();
 }
 
-void PasskeyImportDialog::addGroups(const QSharedPointer<Database>& database)
+void PasskeyImportDialog::addDatabases()
 {
+    auto currentDatabaseIndex = 0;
+    const auto openDatabases = browserService()->getOpenDatabases();
+    const auto currentDatabase = browserService()->getDatabase();
+
+    m_ui->selectDatabaseCombobBox->clear();
+    for (const auto& db : openDatabases) {
+        m_ui->selectDatabaseCombobBox->addItem(db->metadata()->name(), db->rootGroup()->uuid());
+        if (db->rootGroup()->uuid() == currentDatabase->rootGroup()->uuid()) {
+            currentDatabaseIndex = m_ui->selectDatabaseCombobBox->count() - 1;
+        }
+    }
+
+    m_ui->selectDatabaseCombobBox->setCurrentIndex(currentDatabaseIndex);
+}
+
+void PasskeyImportDialog::addEntries()
+{
+    if (!m_selectedDatabase || !m_selectedDatabase->rootGroup()) {
+        return;
+    }
+
+    m_ui->selectEntryComboBox->clear();
+    m_ui->selectEntryComboBox->addItem(tr("Create new entry"), {});
+
+    const auto group = m_selectedDatabase->rootGroup()->findGroupByUuid(m_selectedGroupUuid);
+    if (!group) {
+        return;
+    }
+
+    // Collect all entries in the group and resolve the title
+    QList<QPair<QString, QUuid>> entries;
+    for (const auto entry : group->entries()) {
+        if (!entry || entry->isRecycled()) {
+            continue;
+        }
+        entries.append({entry->resolveMultiplePlaceholders(entry->title()), entry->uuid()});
+    }
+
+    // Sort entries by title
+    std::sort(entries.begin(), entries.end(), [](const auto& a, const auto& b) {
+        return a.first.compare(b.first, Qt::CaseInsensitive) < 0;
+    });
+
+    // Add sorted entries to the combobox
+    for (const auto& pair : entries) {
+        m_ui->selectEntryComboBox->addItem(pair.first, pair.second);
+    }
+}
+
+void PasskeyImportDialog::addGroups()
+{
+    if (!m_selectedDatabase) {
+        return;
+    }
+
     m_ui->selectGroupComboBox->clear();
-    for (const auto& group : database->rootGroup()->groupsRecursive(true)) {
-        if (!group || group->isRecycled() || group == database->metadata()->recycleBin()) {
+    m_ui->selectGroupComboBox->addItem(tr("Default Passkeys group (Imported Passkeys)"), {});
+
+    for (const auto& group : m_selectedDatabase->rootGroup()->groupsRecursive(true)) {
+        if (!group || group->isRecycled() || group == m_selectedDatabase->metadata()->recycleBin()) {
             continue;
         }
 
@@ -96,26 +166,20 @@ void PasskeyImportDialog::addGroups(const QSharedPointer<Database>& database)
     }
 }
 
-void PasskeyImportDialog::selectDatabase()
+void PasskeyImportDialog::changeDatabase(int index)
 {
-    auto selectedDatabase = browserService()->selectedDatabase();
-    if (!selectedDatabase) {
-        return;
-    }
+    m_selectedDatabaseUuid = m_ui->selectDatabaseCombobBox->itemData(index).value<QUuid>();
+    m_selectedDatabase = browserService()->getDatabase(m_selectedDatabaseUuid);
+    emit updateGroups();
+}
 
-    m_selectedDatabase = selectedDatabase;
-    m_ui->selectDatabaseLabel->setText(QString("Database: %1").arg(getDatabaseName(m_selectedDatabase)));
-
-    addGroups(m_selectedDatabase);
+void PasskeyImportDialog::changeEntry(int index)
+{
+    m_selectedEntryUuid = m_ui->selectEntryComboBox->itemData(index).value<QUuid>();
 }
 
 void PasskeyImportDialog::changeGroup(int index)
 {
     m_selectedGroupUuid = m_ui->selectGroupComboBox->itemData(index).value<QUuid>();
-}
-
-void PasskeyImportDialog::useDefaultGroupChanged()
-{
-    m_ui->selectGroupComboBox->setEnabled(!m_ui->useDefaultGroupCheckbox->isChecked());
-    m_useDefaultGroup = m_ui->useDefaultGroupCheckbox->isChecked();
+    emit updateEntries();
 }

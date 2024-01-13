@@ -956,6 +956,15 @@ Do you want to delete the entry?
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>KeePassXC: Update Passkey</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Entry already has a Passkey.
+Do you want to overwrite the Passkey in %1 - %2?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Converting attributes to custom data…</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6018,10 +6027,6 @@ Do you want to overwrite it?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Do you want to import the Passkey?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>URL: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6030,19 +6035,11 @@ Do you want to overwrite it?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Use default group (Imported Passkeys)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Group</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Database</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Select Database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6058,11 +6055,23 @@ Do you want to overwrite it?
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Database: %1</source>
+        <source>Import the following Passkey:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Group:</source>
+        <source>Entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import the following Passkey to this entry:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create new entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default Passkeys group (Imported Passkeys)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6098,6 +6107,12 @@ Do you want to overwrite it?
     </message>
     <message>
         <source>Cannot import Passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot import Passkey file &quot;%1&quot;.
+The following data is missing:
+%2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

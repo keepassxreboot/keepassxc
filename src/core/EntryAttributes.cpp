@@ -34,6 +34,7 @@ const QString EntryAttributes::SearchInGroupName = "SearchIn";
 const QString EntryAttributes::SearchTextGroupName = "SearchText";
 
 const QString EntryAttributes::RememberCmdExecAttr = "_EXEC_CMD";
+const QString EntryAttributes::AdditionalUrlAttribute = "KP2A_URL";
 const QString EntryAttributes::PasskeyAttribute = "KPEX_PASSKEY";
 
 EntryAttributes::EntryAttributes(QObject* parent)
@@ -50,6 +51,18 @@ QList<QString> EntryAttributes::keys() const
 bool EntryAttributes::hasKey(const QString& key) const
 {
     return m_attributes.contains(key);
+}
+
+bool EntryAttributes::hasPasskey() const
+{
+    const auto keyList = keys();
+    for (const auto& key : keyList) {
+        if (isPasskeyAttribute(key)) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 QList<QString> EntryAttributes::customKeys() const

@@ -1403,10 +1403,20 @@ void DatabaseWidget::switchToPasskeys()
     m_reportsDialog->activatePasskeysPage();
 }
 
-void DatabaseWidget::switchToImportPasskey()
+void DatabaseWidget::showImportPasskeyDialog(bool isEntry)
 {
     PasskeyImporter passkeyImporter;
-    passkeyImporter.importPasskey(m_db);
+
+    if (isEntry) {
+        auto currentEntry = currentSelectedEntry();
+        if (!currentEntry) {
+            return;
+        }
+
+        passkeyImporter.importPasskey(m_db, currentEntry);
+    } else {
+        passkeyImporter.importPasskey(m_db);
+    }
 }
 #endif
 

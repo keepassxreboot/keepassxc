@@ -1,6 +1,6 @@
 /*
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -330,11 +330,11 @@ void EditEntryWidget::insertURL()
 {
     Q_ASSERT(!m_history);
 
-    QString name(BrowserService::ADDITIONAL_URL);
+    QString name(EntryAttributes::AdditionalUrlAttribute);
     int i = 1;
 
     while (m_entryAttributes->keys().contains(name)) {
-        name = QString("%1_%2").arg(BrowserService::ADDITIONAL_URL, QString::number(i));
+        name = QString("%1_%2").arg(EntryAttributes::AdditionalUrlAttribute, QString::number(i));
         i++;
     }
 
