@@ -453,7 +453,7 @@
         <translation>Amaga les entrades caducades del tecleig automàtic</translation>
     </message>
     <message>
-        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <source>Re-lock previously unlocked database after performing Auto-Type</source>
         <translation>Torna a blocar la base de dades després d&apos;una compleció automàtica</translation>
     </message>
     <message>

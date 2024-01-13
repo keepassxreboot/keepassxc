@@ -469,7 +469,7 @@
         <translation>הסתרת רשומות שפג תוקפם מהקלדה־אוטומטית</translation>
     </message>
     <message>
-        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <source>Re-lock previously unlocked database after performing Auto-Type</source>
         <translation>נעילת מסד־נתונים מחדש לאחר הקלדה־אוטומטית</translation>
     </message>
     <message>

@@ -469,7 +469,7 @@
         <translation>Сакрити уносе којима је истекао рок од Ауто-куцања</translation>
     </message>
     <message>
-        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <source>Re-lock previously unlocked database after performing Auto-Type</source>
         <translation>Поново закључај претходно закључану базу након извођења ауто-уноса</translation>
     </message>
     <message>

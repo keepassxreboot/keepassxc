@@ -469,7 +469,7 @@
         <translation>Скрыть истёкшие записи из автоввода</translation>
     </message>
     <message>
-        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <source>Re-lock previously unlocked database after performing Auto-Type</source>
         <translation>Блокировать ранее заблокированную БД после автоввода</translation>
     </message>
     <message>

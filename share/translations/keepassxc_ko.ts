@@ -469,7 +469,7 @@
         <translation>자동 입력에서 만료된 항목 숨기기</translation>
     </message>
     <message>
-        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <source>Re-lock previously unlocked database after performing Auto-Type</source>
         <translation>자동 입력 이후 이전에 잠긴 데이터베이스 다시 잠그기</translation>
     </message>
     <message>

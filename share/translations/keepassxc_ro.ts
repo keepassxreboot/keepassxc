@@ -469,7 +469,7 @@
         <translation>Ascunde din auto-tastare înregistrările expirate</translation>
     </message>
     <message>
-        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <source>Re-lock previously unlocked database after performing Auto-Type</source>
         <translation>Încuie din nou baza de dată blocată anterior după efectuarea auto-tastării</translation>
     </message>
     <message>

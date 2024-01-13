@@ -469,7 +469,7 @@
         <translation>Απόκρυψη καταχωρήσεων που έχουν λήξει από την Αυτόματη Πληκτρολόγηση</translation>
     </message>
     <message>
-        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <source>Re-lock previously unlocked database after performing Auto-Type</source>
         <translation>Να κλειδώνει εκ νέου η προηγούμενα κλειδωμένη βάση δεδομένων μετά την χρήση του Auto-Type</translation>
     </message>
     <message>

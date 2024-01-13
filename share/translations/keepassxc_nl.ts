@@ -469,7 +469,7 @@
         <translation>Verlopen items verbergen van automatisch invullen</translation>
     </message>
     <message>
-        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <source>Re-lock previously unlocked database after performing Auto-Type</source>
         <translation>Vergrendelde database na automatisch invullen opnieuw vergrendelen</translation>
     </message>
     <message>

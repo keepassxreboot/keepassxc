@@ -469,7 +469,7 @@
         <translation>Nascondi le voci scadute dalla digitazione automatica</translation>
     </message>
     <message>
-        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <source>Re-lock previously unlocked database after performing Auto-Type</source>
         <translation>Blocca nuovamente un database precedentemente bloccato dopo il completamento automatico</translation>
     </message>
     <message>

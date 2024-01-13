@@ -469,7 +469,7 @@
         <translation>Ocultar entradas expiradas de Auto-Digitar:</translation>
     </message>
     <message>
-        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <source>Re-lock previously unlocked database after performing Auto-Type</source>
         <translation>Bloquear novamente o banco de dados anteriormente bloqueado depois de executar o Auto-Digitar</translation>
     </message>
     <message>

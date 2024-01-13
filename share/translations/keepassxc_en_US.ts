@@ -469,8 +469,8 @@
         <translation>Hide expired entries from Auto-Type</translation>
     </message>
     <message>
-        <source>Re-lock previously locked database after performing Auto-Type</source>
-        <translation>Re-lock previously locked database after performing Auto-Type</translation>
+        <source>Re-lock previously unlocked database after performing Auto-Type</source>
+        <translation>Re-lock previously unlocked database after performing Auto-Type</translation>
     </message>
     <message>
         <source>Auto-Type start delay:</source>

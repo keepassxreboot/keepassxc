@@ -469,7 +469,7 @@
         <translation>Paslėpti nebegaliojančius įrašus nuo Auto-Įvedimo</translation>
     </message>
     <message>
-        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <source>Re-lock previously unlocked database after performing Auto-Type</source>
         <translation>Iš naujo užrakinti anksčiau užrakintą duomenų bazę atlikus automatinį rinkimą</translation>
     </message>
     <message>

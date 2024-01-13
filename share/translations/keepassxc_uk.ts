@@ -469,7 +469,7 @@
         <translation>Приховати протерміновані записи для автозаповнення</translation>
     </message>
     <message>
-        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <source>Re-lock previously unlocked database after performing Auto-Type</source>
         <translation>Блокувати попередньо заблоковану базу даних після виконання автозаповнення</translation>
     </message>
     <message>

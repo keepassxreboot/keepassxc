@@ -469,7 +469,7 @@
         <translation>Dölj förfallna poster från autoskriv</translation>
     </message>
     <message>
-        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <source>Re-lock previously unlocked database after performing Auto-Type</source>
         <translation>Lås tidigare låst databas efter att ha utfört autoskriv</translation>
     </message>
     <message>

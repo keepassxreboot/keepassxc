@@ -469,7 +469,7 @@
         <translation>從自動輸入隱藏過期的項目</translation>
     </message>
     <message>
-        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <source>Re-lock previously unlocked database after performing Auto-Type</source>
         <translation>執行自動輸入後，將之前鎖定的資料庫重新鎖上</translation>
     </message>
     <message>

@@ -469,7 +469,7 @@
         <translation>Fshih nga Vetë-Shtypje zëra të skaduar</translation>
     </message>
     <message>
-        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <source>Re-lock previously unlocked database after performing Auto-Type</source>
         <translation>Pas kryerjes së Vetë-Shtypjes, rikyç bazë të dhënash të kyçur më parë</translation>
     </message>
     <message>

@@ -1063,7 +1063,7 @@
        <item>
         <widget class="QCheckBox" name="autoTypeRelockDatabaseCheckBox">
          <property name="text">
-          <string>Re-lock previously locked database after performing Auto-Type</string>
+          <string>Re-lock previously unlocked database after performing Auto-Type</string>
          </property>
         </widget>
        </item>

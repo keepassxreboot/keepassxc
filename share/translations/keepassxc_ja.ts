@@ -469,7 +469,7 @@
         <translation>期限切れのエントリーは自動入力しない</translation>
     </message>
     <message>
-        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <source>Re-lock previously unlocked database after performing Auto-Type</source>
         <translation>自動入力実行後に以前ロックしていたデータベースを再ロックする</translation>
     </message>
     <message>

@@ -469,7 +469,7 @@
         <translation>Skrýt položky, kterým skončila platnost, z automatického vyplňování</translation>
     </message>
     <message>
-        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <source>Re-lock previously unlocked database after performing Auto-Type</source>
         <translation>Po provedení automatického vyplnění databázi opět zamknout, pokud předtím byla uzamčena.</translation>
     </message>
     <message>

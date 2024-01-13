@@ -469,7 +469,7 @@
         <translation>Piilota vanhentuneet tietueet automaattisyötöltä</translation>
     </message>
     <message>
-        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <source>Re-lock previously unlocked database after performing Auto-Type</source>
         <translation>Uudelleenlukitse aikaisemmin lukittu tietokanta automaattisyötön jälkeen</translation>
     </message>
     <message>

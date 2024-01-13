@@ -469,7 +469,7 @@
         <translation>Skjul utløpte oppføringer fra autoskriv</translation>
     </message>
     <message>
-        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <source>Re-lock previously unlocked database after performing Auto-Type</source>
         <translation>Lås tidligere låst database etter utført autoskriv</translation>
     </message>
     <message>

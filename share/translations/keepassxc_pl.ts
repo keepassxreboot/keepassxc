@@ -469,7 +469,7 @@
         <translation>Ukryj wygasłe wpisy przed autowpisywaniem</translation>
     </message>
     <message>
-        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <source>Re-lock previously unlocked database after performing Auto-Type</source>
         <translation>Ponownie zablokuj poprzednio zablokowaną bazę danych po wykonaniu autowpisywania</translation>
     </message>
     <message>

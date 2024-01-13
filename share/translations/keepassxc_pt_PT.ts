@@ -469,7 +469,7 @@
         <translation>Não usar entradas caducadas na escrita automática</translation>
     </message>
     <message>
-        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <source>Re-lock previously unlocked database after performing Auto-Type</source>
         <translation>Bloquear novamente a base de dados depois de usar a escrita automática</translation>
     </message>
     <message>

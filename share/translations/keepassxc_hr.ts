@@ -453,7 +453,7 @@
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <source>Re-lock previously unlocked database after performing Auto-Type</source>
         <translation>Ponovo zaključaj prethodno zaključanu bazu podataka nakon izvođenja Auto-Tipkanja</translation>
     </message>
     <message>

@@ -469,7 +469,7 @@
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <source>Re-lock previously unlocked database after performing Auto-Type</source>
         <translation>Znova zamknúť predtým zamknutú databázu po vykonaní Automatického vypĺňania</translation>
     </message>
     <message>

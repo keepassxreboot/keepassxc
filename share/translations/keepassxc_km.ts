@@ -470,7 +470,7 @@
         <translation>លាក់ទិន្នន័យបញ្ចូលដែលផុតកំណត់ពីមុខងារវាយបញ្ចូលស្វ័យប្រវត្តិ</translation>
     </message>
     <message>
-        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <source>Re-lock previously unlocked database after performing Auto-Type</source>
         <translation>ចាក់សោមូលដ្ឋានទិន្នន័យដែលបានចាក់សោពីមុនឡើងវិញ បន្ទាប់ពីប្រើប្រាស់មុខងារវាយបញ្ចូលស្វ័យប្រវត្តិ</translation>
     </message>
     <message>

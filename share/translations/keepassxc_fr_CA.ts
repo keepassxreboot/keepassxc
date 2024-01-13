@@ -469,7 +469,7 @@
         <translation>Exclure les entrées expirés de la saisie automatique</translation>
     </message>
     <message>
-        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <source>Re-lock previously unlocked database after performing Auto-Type</source>
         <translation>Après avoir effectué la saisie automatique, reverrouiller la base de données qui était verrouillée précédemment</translation>
     </message>
     <message>

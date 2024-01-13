@@ -469,7 +469,7 @@
         <translation>Sembunyikan entri kedaluwarsa dari Ketik-Otomatis</translation>
     </message>
     <message>
-        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <source>Re-lock previously unlocked database after performing Auto-Type</source>
         <translation>Kunci ulang basis data yang sebelumnya terkunci setelah menjalankan Ketik-Otomatis</translation>
     </message>
     <message>

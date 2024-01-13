@@ -469,7 +469,7 @@
         <translation>Ocultar apuntes expirados de la autoescritura</translation>
     </message>
     <message>
-        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <source>Re-lock previously unlocked database after performing Auto-Type</source>
         <translation>Volver a bloquear la base de datos tras realizar un auto-tecleo</translation>
     </message>
     <message>

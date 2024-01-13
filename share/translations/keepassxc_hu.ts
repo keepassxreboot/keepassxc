@@ -469,7 +469,7 @@
         <translation>Lejárt bejegyzések elrejtése automatikus beíráskor.</translation>
     </message>
     <message>
-        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <source>Re-lock previously unlocked database after performing Auto-Type</source>
         <translation>Az előzőleg zárolt adatbázis újbóli zárolása automatikus beírást követően</translation>
     </message>
     <message>

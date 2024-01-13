@@ -469,7 +469,7 @@
         <translation>Aegunud kirjeid automaatsisestuse jaoks ei pakuta</translation>
     </message>
     <message>
-        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <source>Re-lock previously unlocked database after performing Auto-Type</source>
         <translation>Pärast automaatsisestuse sooritamist lukustatakse eelnevalt lukus olnud andmebaas uuesti</translation>
     </message>
     <message>

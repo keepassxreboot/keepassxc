@@ -469,7 +469,7 @@
         <translation>Пропускане на изтекли записи при автоматично въвеждане</translation>
     </message>
     <message>
-        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <source>Re-lock previously unlocked database after performing Auto-Type</source>
         <translation>Повторно заключване на преди това заключено хранилище след извършване на автоматично въвеждане</translation>
     </message>
     <message>

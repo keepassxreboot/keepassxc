@@ -469,7 +469,7 @@
         <translation>ซ่อนรายการที่หมดอายุจาก Auto-Type</translation>
     </message>
     <message>
-        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <source>Re-lock previously unlocked database after performing Auto-Type</source>
         <translation>ล็อคฐานข้อมูลก่อนหน้าอีกครั้งหลังทำการ Auto-Type</translation>
     </message>
     <message>

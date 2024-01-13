@@ -469,7 +469,7 @@
         <translation>Süresi geçmiş kayıtlar otomatik yazmada gizlensin</translation>
     </message>
     <message>
-        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <source>Re-lock previously unlocked database after performing Auto-Type</source>
         <translation>Otomatik yazma sonrasında önceden kilitli veri tabanı yeniden kilitlensin</translation>
     </message>
     <message>

@@ -469,7 +469,7 @@
         <translation>သက်တမ်းကုန်ပြီးသော ဖြည့်သွင်းချက်များကို အလိုအလျောက် စာရိုက်ခြင်းမှ ဝှက်ရန်</translation>
     </message>
     <message>
-        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <source>Re-lock previously unlocked database after performing Auto-Type</source>
         <translation>အလိုအလျောက် စာရိုက်ခြင်းကို လုပ်ဆောင်ပြီးနောက် ယခင်က လော့ချထားသော ဒေတာဘေ့စ်ကို ပြန်လည်လော့ချပါ</translation>
     </message>
     <message>

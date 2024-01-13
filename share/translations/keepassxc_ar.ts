@@ -469,7 +469,7 @@
         <translation>إخفاء الإدخالات منتهية الصلاحية من الكتابة التلقائية</translation>
     </message>
     <message>
-        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <source>Re-lock previously unlocked database after performing Auto-Type</source>
         <translation>أعد قفل قاعدة البيانات التي تم تأمينها سابقًا بعد تنفيذ الطباعة التلقائية</translation>
     </message>
     <message>

@@ -469,7 +469,7 @@
         <translation>ස්වයංක්‍රීය ටයිප් වෙතින් කල් ඉකුත් වූ ඇතුළත් කිරීම් සඟවන්න</translation>
     </message>
     <message>
-        <source>Re-lock previously locked database after performing Auto-Type</source>
+        <source>Re-lock previously unlocked database after performing Auto-Type</source>
         <translation>ස්වයංක්‍රීය ටයිප් කිරීමෙන් පසු කලින් අගුලු දැමූ දත්ත සමුදාය නැවත අගුළු දමන්න</translation>
     </message>
     <message>
