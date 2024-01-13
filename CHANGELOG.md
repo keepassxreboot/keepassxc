@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.7.7 (2024-01-31)
+
+### Changes
+- Browser: Add support for PassKeys [#8825, #9987]
+
+### Fixes
+- Browser: Fix bugs when returning credentials [#9136]
+- Browser: Fix crash on database open from browser [#9939]
+- Browser: Fix support for referenced URL fields [#8788]
+
 ## 2.7.6 (2023-08-15)
 
 ### Changes

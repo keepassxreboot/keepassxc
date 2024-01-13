@@ -52,6 +52,16 @@
     </screenshots>
 
     <releases>
+        <release version="2.7.7" date="2023-01-31">
+            <description>
+                <ul>
+                    <li>Browser: Add support for PassKeys [#8825, #9987]</li>
+                    <li>Browser: Fix bugs when returning credentials [#9136]</li>
+                    <li>Browser: Fix crash on database open from browser [#9939]</li>
+                    <li>Browser: Fix support for referenced URL fields [#8788]</li>
+                </ul>
+            </description
+        </release>
         <release version="2.7.6" date="2023-08-15">
             <description>
                 <ul>
