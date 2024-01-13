@@ -21,6 +21,7 @@
 #include "core/Database.h"
 #include <QFile>
 #include <QObject>
+#include <QUuid>
 
 class Entry;
 
@@ -31,18 +32,19 @@ class PasskeyImporter : public QObject
 public:
     explicit PasskeyImporter() = default;
 
-    void importPasskey(QSharedPointer<Database>& database);
+    void importPasskey(QSharedPointer<Database>& database, Entry* entry = nullptr);
 
 private:
-    void importSelectedFile(QFile& file, QSharedPointer<Database>& database);
+    void importSelectedFile(QFile& file, QSharedPointer<Database>& database, Entry* entry);
     void showImportDialog(QSharedPointer<Database>& database,
                           const QString& url,
                           const QString& relyingParty,
                           const QString& username,
                           const QString& credentialId,
                           const QString& userHandle,
-                          const QString& privateKey);
-    Group* getDefaultGroup(QSharedPointer<Database>& database);
+                          const QString& privateKey,
+                          Entry* entry);
+    Group* getDefaultGroup(QSharedPointer<Database>& database) const;
 };
 
 #endif // KEEPASSXC_PASSKEYIMPORTER_H

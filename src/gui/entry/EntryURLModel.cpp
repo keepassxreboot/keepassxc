@@ -70,7 +70,7 @@ QVariant EntryURLModel::data(const QModelIndex& index, int role) const
     const auto urlValid = urlTools()->isUrlValid(value);
 
     // Check for duplicate URLs in the attribute list. Excludes the current key/value from the comparison.
-    auto customAttributeKeys = m_entryAttributes->customKeys().filter(BrowserService::ADDITIONAL_URL);
+    auto customAttributeKeys = m_entryAttributes->customKeys().filter(EntryAttributes::AdditionalUrlAttribute);
     customAttributeKeys.removeOne(key);
 
     const auto duplicateUrl =
@@ -148,7 +148,7 @@ void EntryURLModel::updateAttributes()
 
     const auto attributesKeyList = m_entryAttributes->keys();
     for (const auto& key : attributesKeyList) {
-        if (!EntryAttributes::isDefaultAttribute(key) && key.contains(BrowserService::ADDITIONAL_URL)) {
+        if (!EntryAttributes::isDefaultAttribute(key) && key.contains(EntryAttributes::AdditionalUrlAttribute)) {
             const auto value = m_entryAttributes->value(key);
             m_urls.append(qMakePair(key, value));
 

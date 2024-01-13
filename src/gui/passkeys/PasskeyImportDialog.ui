@@ -6,9 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>405</width>
-    <height>227</height>
+    <width>500</width>
+    <height>300</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>400</width>
+    <height>300</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>KeePassXC - Passkey Import</string>
@@ -24,7 +36,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Do you want to import the Passkey?</string>
+        <string>Import the following Passkey:</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -52,80 +64,62 @@
       </widget>
      </item>
      <item>
-      <widget class="QCheckBox" name="useDefaultGroupCheckbox">
-       <property name="text">
-        <string>Use default group (Imported Passkeys)</string>
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
        </property>
-       <property name="checked">
-        <bool>false</bool>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>10</height>
+        </size>
        </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QGroupBox" name="groupBox">
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <layout class="QFormLayout" name="selectGroupHorLayout">
+          <item row="0" column="0">
+           <widget class="QLabel" name="databaseLabel">
+            <property name="text">
+             <string>Database</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QComboBox" name="selectDatabaseCombobBox"/>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="groupLabel">
+            <property name="text">
+             <string>Group</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QComboBox" name="selectGroupComboBox"/>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="entryLabel">
+            <property name="text">
+             <string>Entry</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="1">
+           <widget class="QComboBox" name="selectEntryComboBox"/>
+          </item>
+         </layout>
+        </item>
+       </layout>
       </widget>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="selectGroupHorLayout">
-       <item>
-        <widget class="QLabel" name="selectGroupLabel">
-         <property name="text">
-          <string>Group</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QComboBox" name="selectGroupComboBox"/>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="selectDatabaseHorLayout">
-       <item>
-        <widget class="QLabel" name="selectDatabaseLabel">
-         <property name="text">
-          <string>Database</string>
-         </property>
-         <property name="scaledContents">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_3">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QPushButton" name="selectDatabaseButton">
-         <property name="text">
-          <string>Select Database</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
      </item>
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">

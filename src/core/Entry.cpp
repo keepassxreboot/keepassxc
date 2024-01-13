@@ -385,7 +385,8 @@ QStringList Entry::getAllUrls() const
     }
 
     for (const auto& key : m_attributes->keys()) {
-        if (key.startsWith("KP2A_URL")) {
+        if (key.startsWith(EntryAttributes::AdditionalUrlAttribute)
+            || key == QString("%1_RELYING_PARTY").arg(EntryAttributes::PasskeyAttribute)) {
             auto additionalUrl = m_attributes->value(key);
             if (!additionalUrl.isEmpty()) {
                 urlList << resolveMultiplePlaceholders(additionalUrl);
@@ -543,6 +544,11 @@ const CustomData* Entry::customData() const
 bool Entry::hasTotp() const
 {
     return !m_data.totpSettings.isNull();
+}
+
+bool Entry::hasPasskey() const
+{
+    return m_attributes->hasPasskey();
 }
 
 QString Entry::totp() const

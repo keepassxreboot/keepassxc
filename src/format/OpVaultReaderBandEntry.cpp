@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -243,7 +243,8 @@ bool OpVaultReader::fillAttributes(Entry* entry, const QJsonObject& bandEntry)
             auto newUrl = urlObj["u"].toString();
             if (newUrl != url) {
                 // Add this url if it isn't the base one
-                entry->attributes()->set(QString("KP2A_URL_%1").arg(i), newUrl);
+                entry->attributes()->set(
+                    QString("%1_%2").arg(EntryAttributes::AdditionalUrlAttribute, QString::number(i)), newUrl);
                 ++i;
             }
         }

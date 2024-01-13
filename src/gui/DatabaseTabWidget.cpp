@@ -566,7 +566,12 @@ void DatabaseTabWidget::showPasskeys()
 
 void DatabaseTabWidget::importPasskey()
 {
-    currentDatabaseWidget()->switchToImportPasskey();
+    currentDatabaseWidget()->showImportPasskeyDialog();
+}
+
+void DatabaseTabWidget::importPasskeyToEntry()
+{
+    currentDatabaseWidget()->showImportPasskeyDialog(true);
 }
 #endif
 

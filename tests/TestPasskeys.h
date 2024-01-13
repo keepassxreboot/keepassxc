@@ -43,5 +43,7 @@ private slots:
     void testExtensions();
     void testParseFlags();
     void testSetFlags();
+
+    void testEntry();
 };
 #endif // KEEPASSXC_TESTPASSKEYS_H

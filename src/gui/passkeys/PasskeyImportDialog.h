@@ -36,25 +36,33 @@ public:
     explicit PasskeyImportDialog(QWidget* parent = nullptr);
     ~PasskeyImportDialog() override;
 
-    void setInfo(const QString& url, const QString& username, const QSharedPointer<Database>& database);
-    QSharedPointer<Database> getSelectedDatabase();
-    QUuid getSelectedGroupUuid();
-    bool useDefaultGroup();
+    void setInfo(const QString& url, const QString& username, const QSharedPointer<Database>& database, bool isEntry);
+    QSharedPointer<Database> getSelectedDatabase() const;
+    QUuid getSelectedEntryUuid() const;
+    QUuid getSelectedGroupUuid() const;
+    bool useDefaultGroup() const;
+    bool createNewEntry() const;
 
 private:
-    QString getDatabaseName(const QSharedPointer<Database>& database) const;
-    void addGroups(const QSharedPointer<Database>& database);
+    void addDatabases();
+
+signals:
+    void updateEntries();
+    void updateGroups();
 
 private slots:
-    void selectDatabase();
+    void addEntries();
+    void addGroups();
+    void changeDatabase(int index);
+    void changeEntry(int index);
     void changeGroup(int index);
-    void useDefaultGroupChanged();
 
 private:
     QScopedPointer<Ui::PasskeyImportDialog> m_ui;
     QSharedPointer<Database> m_selectedDatabase;
+    QUuid m_selectedDatabaseUuid;
+    QUuid m_selectedEntryUuid;
     QUuid m_selectedGroupUuid;
-    bool m_useDefaultGroup;
 };
 
 #endif // KEEPASSXC_PASSKEYIMPORTDIALOG_H
