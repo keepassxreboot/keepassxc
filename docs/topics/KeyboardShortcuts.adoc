@@ -33,6 +33,10 @@ NOTE: On macOS please substitute `Ctrl` with `Cmd` (aka `⌘`).
 |Trigger AutoType             | Ctrl + Shift + V
 |Add key to SSH Agent         | Ctrl + H
 |Remove key from SSH Agent    | Ctrl + Shift + H
+|Move entry up (if unsorted)   | Ctrl + Alt + Up
+|Move entry down (if unsorted) | Ctrl + Alt + Down
+|Sort Groups A-Z              | Ctrl + Down
+|Sort Groups Z-A              | Ctrl + Up
 |Minimize Window              | Ctrl + M
 |Hide Window                  | Ctrl + Shift + M
 |Select Next Database Tab     | Ctrl + Tab ; Ctrl + PageDn
