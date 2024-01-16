@@ -44,6 +44,7 @@
 #include "gui/FileDialog.h"
 #include "gui/GuiTools.h"
 #include "gui/MainWindow.h"
+#include "gui/MergeDialog.h"
 #include "gui/MessageBox.h"
 #include "gui/TotpDialog.h"
 #include "gui/TotpExportSettingsDialog.h"
@@ -1387,14 +1388,31 @@ void DatabaseWidget::mergeDatabase(bool accepted)
             return;
         }
 
-        Merger merger(srcDb.data(), m_db.data());
-        QStringList changeList = merger.merge();
-
-        if (!changeList.isEmpty()) {
-            showMessage(tr("Successfully merged the database files."), MessageWidget::Information);
-        } else {
-            showMessage(tr("Database was not modified by merge operation."), MessageWidget::Information);
-        }
+        auto* mergeDialog = new MergeDialog(srcDb, m_db, this);
+        connect(mergeDialog, &MergeDialog::databaseMerged, [this](bool changed) {
+            if (changed) {
+                showMessage(tr("Successfully merged the database files."), MessageWidget::Information);
+            } else {
+                showMessage(tr("Database was not modified by merge operation."), MessageWidget::Information);
+            }
+        });
+        connect(mergeDialog,
+                &MergeDialog::databaseModifiedMerge,
+                [this](const Merger::ChangeList& actualChanges, const Merger::ChangeList&) {
+                    if (!actualChanges.isEmpty()) {
+                        showMessage(tr("Merged changes do not match displayed changes!"), MessageWidget::Warning);
+                        auto* actualChangesDialog = new MergeDialog(actualChanges, this);
+                        actualChangesDialog->setWindowTitle(tr("Actual Merge Result"));
+                        actualChangesDialog->open();
+                    } else {
+                        showMessage(tr("Database was not modified by merge operation, no changes were not applied!"),
+                                    MessageWidget::Warning);
+                    }
+                });
+        connect(mergeDialog, &MergeDialog::rejected, [this]() {
+            showMessage(tr("Merge aborted - database was not modified."), MessageWidget::Information);
+        });
+        mergeDialog->open();
     }
 
     switchToMainView();
@@ -1438,7 +1456,7 @@ bool DatabaseWidget::syncWithDatabase(const QSharedPointer<Database>& otherDb, Q
     emit updateSyncProgress(50, tr("Syncing..."));
     Merger firstMerge(m_db.data(), otherDb.data());
     Merger secondMerge(otherDb.data(), m_db.data());
-    QStringList changeList = firstMerge.merge() + secondMerge.merge();
+    auto changeList = firstMerge.merge() + secondMerge.merge();
 
     if (!changeList.isEmpty()) {
         // Save synced databases

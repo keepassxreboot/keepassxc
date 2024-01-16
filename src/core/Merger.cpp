@@ -21,6 +21,102 @@
 #include "core/Metadata.h"
 #include "core/Tools.h"
 
+Merger::Change::Change(Type type, QString details)
+    : m_type{type}
+    , m_details{std::move(details)}
+{
+}
+
+Merger::Change::Change(Type type, const Group& group, QString details)
+    : m_type{type}
+    , m_group{group.fullPath()}
+    , m_uuid{group.uuid()}
+    , m_details{std::move(details)}
+{
+}
+Merger::Change::Change(Type type, const Entry& entry, QString details)
+    : m_type{type}
+    , m_title{entry.title()}
+    , m_uuid{entry.uuid()}
+    , m_details{std::move(details)}
+{
+    if (const auto* group = entry.group()) {
+        m_group = group->fullPath();
+    }
+}
+Merger::Change::Change(QString details)
+    : m_details{std::move(details)}
+{
+}
+
+Merger::Change::Type Merger::Change::type() const
+{
+    return m_type;
+}
+const QString& Merger::Change::title() const
+{
+    return m_title;
+}
+const QString& Merger::Change::group() const
+{
+    return m_group;
+}
+const QUuid& Merger::Change::uuid() const
+{
+    return m_uuid;
+}
+const QString& Merger::Change::details() const
+{
+    return m_details;
+}
+
+QString Merger::Change::typeString() const
+{
+    switch (m_type) {
+    case Type::Added:
+        return tr("Added");
+    case Type::Modified:
+        return tr("Modified");
+    case Type::Moved:
+        return tr("Moved");
+    case Type::Deleted:
+        return tr("Deleted");
+    case Type::Metadata:
+        return "Metadata";
+    case Type::Unspecified:
+        return "";
+    default:
+        return "?";
+    }
+}
+
+QString Merger::Change::toString() const
+{
+    QString result;
+    if (m_type != Type::Unspecified) {
+        result += QString("%1: ").arg(typeString());
+    }
+    if (!m_group.isEmpty()) {
+        result += QString("'%1'").arg(m_group);
+    }
+    if (!m_title.isEmpty()) {
+        result += QString("/'%1'").arg(m_title);
+    }
+    if (!m_uuid.isNull()) {
+        result += QString(" [%1]").arg(m_uuid.toString());
+    }
+    if (!m_details.isEmpty()) {
+        result += QString(" (%1)").arg(m_details);
+    }
+    return result;
+}
+
+bool operator==(const Merger::Change& lhs, const Merger::Change& rhs)
+{
+    return lhs.type() == rhs.type() && lhs.group() == rhs.group() && lhs.title() == rhs.title()
+           && lhs.uuid() == rhs.uuid() && lhs.details() == rhs.details();
+}
+
 Merger::Merger(const Database* sourceDb, Database* targetDb)
     : m_mode(Group::Default)
 {
@@ -64,7 +160,7 @@ void Merger::setSkipDatabaseCustomData(bool state)
     m_skipCustomData = state;
 }
 
-QStringList Merger::merge()
+Merger::ChangeList Merger::merge()
 {
     // Order of merge steps is important - it is possible that we
     // create some items before deleting them afterwards
@@ -88,7 +184,7 @@ Merger::ChangeList Merger::mergeGroup(const MergeContext& context)
     for (Entry* sourceEntry : sourceEntries) {
         Entry* targetEntry = context.m_targetRootGroup->findEntryByUuid(sourceEntry->uuid());
         if (!targetEntry) {
-            changes << tr("Creating missing %1 [%2]").arg(sourceEntry->title(), sourceEntry->uuidToHex());
+            changes << Change(Change::Type::Added, *sourceEntry);
             // This entry does not exist at all. Create it.
             targetEntry = sourceEntry->clone(Entry::CloneIncludeHistory);
             moveEntry(targetEntry, context.m_targetGroup);
@@ -97,7 +193,8 @@ Merger::ChangeList Merger::mergeGroup(const MergeContext& context)
             const bool locationChanged =
                 targetEntry->timeInfo().locationChanged() < sourceEntry->timeInfo().locationChanged();
             if (locationChanged && targetEntry->group() != context.m_targetGroup) {
-                changes << tr("Relocating %1 [%2]").arg(sourceEntry->title(), sourceEntry->uuidToHex());
+                changes << Change(
+                    Change::Type::Moved, *sourceEntry, tr("Previous location: %1").arg(targetEntry->group()->name()));
                 moveEntry(targetEntry, context.m_targetGroup);
             }
             changes << resolveEntryConflict(context, sourceEntry, targetEntry);
@@ -109,7 +206,10 @@ Merger::ChangeList Merger::mergeGroup(const MergeContext& context)
     for (Group* sourceChildGroup : sourceChildGroups) {
         Group* targetChildGroup = context.m_targetRootGroup->findGroupByUuid(sourceChildGroup->uuid());
         if (!targetChildGroup) {
-            changes << tr("Creating missing %1 [%2]").arg(sourceChildGroup->name(), sourceChildGroup->uuidToHex());
+            changes << Change(
+                Change::Type::Added,
+                *sourceChildGroup,
+                tr("Number of entries in group: %1").arg(QString::number(sourceChildGroup->entries().size())));
             targetChildGroup = sourceChildGroup->clone(Entry::CloneNoFlags, Group::CloneNoFlags);
             moveGroup(targetChildGroup, context.m_targetGroup);
             TimeInfo timeinfo = targetChildGroup->timeInfo();
@@ -119,7 +219,8 @@ Merger::ChangeList Merger::mergeGroup(const MergeContext& context)
             bool locationChanged =
                 targetChildGroup->timeInfo().locationChanged() < sourceChildGroup->timeInfo().locationChanged();
             if (locationChanged && targetChildGroup->parent() != context.m_targetGroup) {
-                changes << tr("Relocating %1 [%2]").arg(sourceChildGroup->name(), sourceChildGroup->uuidToHex());
+                changes << Change(
+                    Change::Type::Moved, *sourceChildGroup, tr("Previous location: %1").arg(targetChildGroup->name()));
                 moveGroup(targetChildGroup, context.m_targetGroup);
                 TimeInfo timeinfo = targetChildGroup->timeInfo();
                 timeinfo.setLocationChanged(sourceChildGroup->timeInfo().locationChanged());
@@ -149,18 +250,57 @@ Merger::resolveGroupConflict(const MergeContext& context, const Group* sourceChi
 
     // only if the other group is newer, update the existing one.
     if (timeExisting < timeOther) {
-        changes << tr("Overwriting %1 [%2]").arg(sourceChildGroup->name(), sourceChildGroup->uuidToHex());
-        targetChildGroup->setName(sourceChildGroup->name());
-        targetChildGroup->setNotes(sourceChildGroup->notes());
+        QStringList modifications;
+        auto updateIfNecessary = [&modifications](const auto& targetValue,
+                                                  const auto& sourceValue,
+                                                  auto&& updateFunction,
+                                                  const QString& modification) {
+            if (targetValue != sourceValue) {
+                updateFunction(sourceValue);
+
+                modifications << modification;
+                return true;
+            }
+            return false;
+        };
+        updateIfNecessary(
+            targetChildGroup->name(),
+            sourceChildGroup->name(),
+            [&](auto&& newValue) { targetChildGroup->setName(newValue); },
+            tr("Group name"));
+        updateIfNecessary(
+            targetChildGroup->notes(),
+            sourceChildGroup->notes(),
+            [&](auto&& newValue) { targetChildGroup->setNotes(newValue); },
+            tr("Notes"));
         if (sourceChildGroup->iconNumber() == 0) {
-            targetChildGroup->setIcon(sourceChildGroup->iconUuid());
+            updateIfNecessary(
+                targetChildGroup->iconUuid(),
+                sourceChildGroup->iconUuid(),
+                [&](auto&& newValue) { targetChildGroup->setIcon(newValue); },
+                tr("Icon (UUID)"));
         } else {
-            targetChildGroup->setIcon(sourceChildGroup->iconNumber());
+            updateIfNecessary(
+                targetChildGroup->iconNumber(),
+                sourceChildGroup->iconNumber(),
+                [&](auto&& newValue) { targetChildGroup->setIcon(newValue); },
+                tr("Icon (Number)"));
         }
-        targetChildGroup->setExpiryTime(sourceChildGroup->timeInfo().expiryTime());
-        TimeInfo timeInfo = targetChildGroup->timeInfo();
-        timeInfo.setLastModificationTime(timeOther);
-        targetChildGroup->setTimeInfo(timeInfo);
+        updateIfNecessary(
+            targetChildGroup->timeInfo().expiryTime(),
+            sourceChildGroup->timeInfo().expiryTime(),
+            [&](auto&& newValue) { targetChildGroup->setExpiryTime(newValue); },
+            tr("Expiry time"));
+        updateIfNecessary(
+            timeExisting,
+            timeOther,
+            [&](auto&& newValue) {
+                TimeInfo timeInfo = targetChildGroup->timeInfo();
+                timeInfo.setLastModificationTime(newValue);
+                targetChildGroup->setTimeInfo(timeInfo);
+            },
+            tr("Modification time"));
+        changes << Change(Change::Type::Modified, *sourceChildGroup, modifications.join(", "));
     }
     return changes;
 }
@@ -268,6 +408,8 @@ Merger::ChangeList Merger::resolveEntryConflict_MergeHistories(const MergeContex
     const int comparison = compare(targetEntry->timeInfo().lastModificationTime(),
                                    sourceEntry->timeInfo().lastModificationTime(),
                                    CompareItemIgnoreMilliseconds);
+    auto differences = targetEntry->calculateDifference(sourceEntry);
+    differences += "History";
     const int maxItems = targetEntry->database()->metadata()->historyMaxItems();
     if (comparison < 0) {
         Group* currentGroup = targetEntry->group();
@@ -276,8 +418,10 @@ Merger::ChangeList Merger::resolveEntryConflict_MergeHistories(const MergeContex
                qPrintable(targetEntry->title()),
                qPrintable(sourceEntry->title()),
                qPrintable(currentGroup->name()));
-        changes << tr("Synchronizing from newer source %1 [%2]").arg(targetEntry->title(), targetEntry->uuidToHex());
         mergeHistory(targetEntry, clonedEntry, mergeMethod, maxItems);
+        changes << Change(Change::Type::Modified,
+                          *targetEntry,
+                          tr("%1 (Add local modifications to new entry)").arg(differences.join(", ")));
         eraseEntry(targetEntry);
         moveEntry(clonedEntry, currentGroup);
     } else {
@@ -287,8 +431,9 @@ Merger::ChangeList Merger::resolveEntryConflict_MergeHistories(const MergeContex
                qPrintable(targetEntry->group()->name()));
         const bool changed = mergeHistory(sourceEntry, targetEntry, mergeMethod, maxItems);
         if (changed) {
-            changes
-                << tr("Synchronizing from older source %1 [%2]").arg(targetEntry->title(), targetEntry->uuidToHex());
+            changes << Change(Change::Type::Modified,
+                              *targetEntry,
+                              tr("%1 (Add new modifications to existing entry)").arg(differences.join(", ")));
         }
     }
     return changes;
@@ -465,9 +610,9 @@ Merger::ChangeList Merger::mergeDeletions(const MergeContext& context)
         }
         deletions << object;
         if (entry->group()) {
-            changes << tr("Deleting child %1 [%2]").arg(entry->title(), entry->uuidToHex());
+            changes << Change(Change::Type::Deleted, *entry, tr("Explicit deletion"));
         } else {
-            changes << tr("Deleting orphan %1 [%2]").arg(entry->title(), entry->uuidToHex());
+            changes << Change(Change::Type::Deleted, *entry, tr("Implicit deletion (e.g. removal of parent group)"));
         }
         // Entry is inserted into deletedObjects after deletions are processed
         eraseEntry(entry);
@@ -475,7 +620,7 @@ Merger::ChangeList Merger::mergeDeletions(const MergeContext& context)
 
     while (!groups.isEmpty()) {
         auto* group = groups.takeFirst();
-        if (Tools::asSet(group->children()).intersects(Tools::asSet(groups))) {
+        if (!(group->children().toSet() & groups.toSet()).isEmpty()) {
             // we need to finish all children before we are able to determine if the group can be removed
             groups << group;
             continue;
@@ -491,15 +636,15 @@ Merger::ChangeList Merger::mergeDeletions(const MergeContext& context)
         }
         deletions << object;
         if (group->parentGroup()) {
-            changes << tr("Deleting child %1 [%2]").arg(group->name(), group->uuidToHex());
+            changes << Change(Change::Type::Deleted, *group, tr("Explicit deletion"));
         } else {
-            changes << tr("Deleting orphan %1 [%2]").arg(group->name(), group->uuidToHex());
+            changes << Change(Change::Type::Deleted, *group, tr("Implicit deletion (e.g. removal of parent group)"));
         }
         eraseGroup(group);
     }
     // Put every deletion to the earliest date of deletion
     if (deletions != context.m_targetDb->deletedObjects()) {
-        changes << tr("Changed deleted objects");
+        changes << Change(Change::Type::Metadata, tr("Changed deleted objects"));
     }
     context.m_targetDb->setDeletedObjects(deletions);
     return changes;
@@ -517,7 +662,8 @@ Merger::ChangeList Merger::mergeMetadata(const MergeContext& context)
     for (const auto& iconUuid : sourceMetadata->customIconsOrder()) {
         if (!targetMetadata->hasCustomIcon(iconUuid)) {
             targetMetadata->addCustomIcon(iconUuid, sourceMetadata->customIcon(iconUuid));
-            changes << tr("Adding missing icon %1").arg(QString::fromLatin1(iconUuid.toRfc4122().toHex()));
+            changes << Change(Change::Type::Metadata,
+                              tr("Adding new icon %1").arg(QString::fromLatin1(iconUuid.toRfc4122().toHex())));
         }
     }
 
@@ -541,7 +687,7 @@ Merger::ChangeList Merger::mergeMetadata(const MergeContext& context)
             if (!sourceMetadata->customData()->contains(key) && !sourceMetadata->customData()->isProtected(key)) {
                 auto value = targetMetadata->customData()->value(key);
                 targetMetadata->customData()->remove(key);
-                changes << tr("Removed custom data %1 [%2]").arg(key, value);
+                changes << Change(Change::Type::Metadata, tr("Removed custom data %1 [%2]").arg(key, value));
             }
         }
 
@@ -557,7 +703,7 @@ Merger::ChangeList Merger::mergeMetadata(const MergeContext& context)
             // Merge only if the values are not the same.
             if (sourceValue != targetValue) {
                 targetMetadata->customData()->set(key, sourceValue);
-                changes << tr("Adding custom data %1 [%2]").arg(key, sourceValue);
+                changes << Change(Change::Type::Metadata, tr("Adding custom data %1 [%2]").arg(key, sourceValue));
             }
         }
     }

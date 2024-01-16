@@ -134,6 +134,7 @@ set(gui_SOURCES
         gui/IconModels.cpp
         gui/KMessageWidget.cpp
         gui/MainWindow.cpp
+        gui/MergeDialog.cpp
         gui/MessageBox.cpp
         gui/MessageWidget.cpp
         gui/PasswordWidget.cpp

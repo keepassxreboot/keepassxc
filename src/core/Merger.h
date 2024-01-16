@@ -27,17 +27,53 @@ class Merger : public QObject
 {
     Q_OBJECT
 public:
+    class Change;
+    using ChangeList = QList<Change>;
+
     Merger(const Database* sourceDb, Database* targetDb);
     Merger(const Group* sourceGroup, Group* targetGroup);
     void setForcedMergeMode(Group::MergeMode mode);
     void resetForcedMergeMode();
     void setSkipDatabaseCustomData(bool state);
-    QStringList merge();
+    ChangeList merge();
+
+    class Change
+    {
+    public:
+        enum class Type
+        {
+            Unspecified,
+            Added,
+            Modified,
+            Moved,
+            Deleted,
+            Metadata,
+        };
+
+        Change(Type type, QString details);
+        Change(Type type, const Group& group, QString details = "");
+        Change(Type type, const Entry& entry, QString details = "");
+        explicit Change(QString details = "");
+
+        [[nodiscard]] Type type() const;
+        [[nodiscard]] QString typeString() const;
+        [[nodiscard]] const QString& title() const;
+        [[nodiscard]] const QString& group() const;
+        [[nodiscard]] const QUuid& uuid() const;
+        [[nodiscard]] const QString& details() const;
+
+        [[nodiscard]] QString toString() const;
+        void merge();
+
+    private:
+        Type m_type{Type::Unspecified};
+        QString m_title;
+        QString m_group;
+        QUuid m_uuid;
+        QString m_details;
+    };
 
 private:
-    typedef QString Change;
-    typedef QStringList ChangeList;
-
     struct MergeContext
     {
         QPointer<const Database> m_sourceDb;
@@ -69,5 +105,7 @@ private:
     Group::MergeMode m_mode;
     bool m_skipCustomData = false;
 };
+
+bool operator==(const Merger::Change& lhs, const Merger::Change& rhs);
 
 #endif // KEEPASSXC_MERGER_H

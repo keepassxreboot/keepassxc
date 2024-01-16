@@ -2775,11 +2775,7 @@ Disable safe saves and try again?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Remote sync &apos;%1&apos; failed: %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error while saving database %1: %2</source>
+        <source>Merge aborted - database was not modified.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2791,7 +2787,15 @@ Disable safe saves and try again?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Remote sync &apos;%1&apos; failed: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Syncing...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error while saving database %1: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2808,10 +2812,6 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Do you want to load the changes?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reload database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2839,6 +2839,10 @@ Disable safe saves and try again?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Reload database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Database file overwritten.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2851,11 +2855,15 @@ Disable safe saves and try again?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Save</source>
+        <source>Merged changes do not match displayed changes!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Save Database Backup</source>
+        <source>Actual Merge Result</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Database was not modified by merge operation, no changes were not applied!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2868,6 +2876,14 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Confirm Recycle Group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save Database Backup</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3940,6 +3956,62 @@ This may cause the affected plugins to malfunction.</source>
 %2</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>URL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom Attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Icon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Expiration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TOTP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom Data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attachments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto-Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EntryAttachments</name>
@@ -4142,62 +4214,6 @@ Would you like to overwrite the existing attachment?</source>
     </message>
     <message>
         <source>Size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Title</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Username</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>URL</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Notes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Custom Attributes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Icon</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Color</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Expiration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>TOTP</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Custom Data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Attachments</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Auto-Type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tags</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6430,41 +6446,40 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
     </message>
 </context>
 <context>
+    <name>MergeDialog</name>
+    <message>
+        <source>Database Merge Confirmation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Merge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>UUID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Details</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Merger</name>
     <message>
-        <source>Creating missing %1 [%2]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Relocating %1 [%2]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Overwriting %1 [%2]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Synchronizing from newer source %1 [%2]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Synchronizing from older source %1 [%2]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Deleting child %1 [%2]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Deleting orphan %1 [%2]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Changed deleted objects</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Adding missing icon %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6473,6 +6488,74 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
     </message>
     <message>
         <source>Adding custom data %1 [%2]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Added</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Modified</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Moved</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deleted</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Previous location: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of entries in group: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Group name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Icon (UUID)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Icon (Number)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Expiry time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Modification time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 (Add local modifications to new entry)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 (Add new modifications to existing entry)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Explicit deletion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Implicit deletion (e.g. removal of parent group)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Adding new icon %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
