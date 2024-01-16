@@ -1191,7 +1191,7 @@ void DatabaseWidget::mergeDatabase(bool accepted)
         }
 
         Merger merger(srcDb.data(), m_db.data());
-        QStringList changeList = merger.merge();
+        auto changeList = merger.merge();
 
         if (!changeList.isEmpty()) {
             showMessage(tr("Successfully merged the database files."), MessageWidget::Information);
