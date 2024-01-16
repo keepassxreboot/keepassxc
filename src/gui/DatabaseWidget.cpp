@@ -42,6 +42,7 @@
 #include "gui/GuiTools.h"
 #include "gui/KeePass1OpenWidget.h"
 #include "gui/MainWindow.h"
+#include "gui/MergeDialog.h"
 #include "gui/MessageBox.h"
 #include "gui/OpVaultOpenWidget.h"
 #include "gui/TotpDialog.h"
@@ -1190,14 +1191,18 @@ void DatabaseWidget::mergeDatabase(bool accepted)
             return;
         }
 
-        Merger merger(srcDb.data(), m_db.data());
-        auto changeList = merger.merge();
-
-        if (!changeList.isEmpty()) {
-            showMessage(tr("Successfully merged the database files."), MessageWidget::Information);
-        } else {
-            showMessage(tr("Database was not modified by merge operation."), MessageWidget::Information);
-        }
+        auto* mergeDialog = new MergeDialog(srcDb, m_db, this);
+        connect(mergeDialog, &MergeDialog::databaseMerged, [this](bool changed) {
+            if (changed) {
+                showMessage(tr("Successfully merged the database files."), MessageWidget::Information);
+            } else {
+                showMessage(tr("Database was not modified by merge operation."), MessageWidget::Information);
+            }
+        });
+        connect(mergeDialog, &MergeDialog::rejected, [this]() {
+            showMessage(tr("Merge aborted - database was not modified."), MessageWidget::Information);
+        });
+        mergeDialog->open();
     }
 
     switchToMainView();

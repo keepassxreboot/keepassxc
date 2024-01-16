@@ -354,6 +354,10 @@ void TestGui::testMergeDatabase()
     QTest::keyClicks(editPasswordMerge, "a");
     QTest::keyClick(editPasswordMerge, Qt::Key_Enter);
 
+    // confirm merge in confirmation dialog
+    QTRY_VERIFY(QApplication::focusWindow()->title().contains("Merge"));
+    QTest::keyClick(QApplication::focusWidget(), Qt::Key_Enter);
+
     QTRY_COMPARE(dbMergeSpy.count(), 1);
     QTRY_VERIFY(m_tabWidget->tabText(m_tabWidget->currentIndex()).contains("*"));
 

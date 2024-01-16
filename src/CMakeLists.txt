@@ -121,6 +121,7 @@ set(keepassx_SOURCES
         gui/KeePass1OpenWidget.cpp
         gui/KMessageWidget.cpp
         gui/MainWindow.cpp
+        gui/MergeDialog.cpp
         gui/MessageBox.cpp
         gui/MessageWidget.cpp
         gui/OpVaultOpenWidget.cpp
