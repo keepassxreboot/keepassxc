@@ -60,7 +60,7 @@
                     <li>Browser: Fix crash on database open from browser [#9939]</li>
                     <li>Browser: Fix support for referenced URL fields [#8788]</li>
                 </ul>
-            </description
+            </description>
         </release>
         <release version="2.7.6" date="2023-08-15">
             <description>
