@@ -2901,15 +2901,7 @@ Would you like to correct it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Only send this setting to the browser for HTTP Auth dialogs. If enabled, normal login forms will not show this entry for selection.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Use this entry only with HTTP Basic Auth</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2934,6 +2926,14 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Additional URLs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Only send this entry to the browser for HTTP Auth dialogs. If enabled, normal login forms will not show this entry for selection.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do not send this entry to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
