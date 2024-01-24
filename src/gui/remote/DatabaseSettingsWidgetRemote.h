@@ -18,16 +18,14 @@
 #ifndef KEEPASSX_DATABASESETTINGSWIDGETREMOTE_H
 #define KEEPASSX_DATABASESETTINGSWIDGETREMOTE_H
 
-#include "RemoteParams.h"
-#include "config-keepassx.h"
-
-#include "../dbsettings/DatabaseSettingsWidget.h"
-#include "RemoteSettingsCustomDataHandler.h"
+#include "gui/dbsettings/DatabaseSettingsWidget.h"
 
 #include <QListWidgetItem>
 #include <QPointer>
 
 class Database;
+class RemoteSettings;
+
 namespace Ui
 {
     class DatabaseSettingsWidgetRemote;
@@ -57,7 +55,7 @@ private:
     QListWidgetItem* findItemByName(const QString& name);
     void clearFields();
 
-    QPointer<RemoteSettingsCustomDataHandler> m_customDataHandler;
+    QScopedPointer<RemoteSettings> m_remoteSettings;
     const QScopedPointer<Ui::DatabaseSettingsWidgetRemote> m_ui;
 };
 

@@ -25,7 +25,7 @@
 
 DatabaseSettingsWidgetRemote::DatabaseSettingsWidgetRemote(QWidget* parent)
     : DatabaseSettingsWidget(parent)
-    , m_customDataHandler(nullptr)
+    , m_remoteSettings(new RemoteSettings(nullptr, this))
     , m_ui(new Ui::DatabaseSettingsWidgetRemote())
 {
     m_ui->setupUi(this);
@@ -45,9 +45,9 @@ DatabaseSettingsWidgetRemote::~DatabaseSettingsWidgetRemote() = default;
 void DatabaseSettingsWidgetRemote::initialize()
 {
     clearFields();
-    m_customDataHandler = new RemoteSettingsCustomDataHandler(this, m_db);
+    m_remoteSettings->setDatabase(m_db);
     updateSettingsList();
-    if (!m_customDataHandler->getRemoteProgramEntries().empty()) {
+    if (m_ui->settingsListWidget->count() > 0) {
         m_ui->settingsListWidget->setCurrentRow(0);
         m_ui->removeSettingsButton->setEnabled(true);
     } else {
@@ -61,7 +61,7 @@ void DatabaseSettingsWidgetRemote::uninitialize()
 
 bool DatabaseSettingsWidgetRemote::save()
 {
-    m_customDataHandler->syncConfig();
+    m_remoteSettings->saveSettings();
     return true;
 }
 
@@ -73,16 +73,14 @@ void DatabaseSettingsWidgetRemote::saveCurrentSettings()
         return;
     }
 
-    auto* remoteSettings = new RemoteSettings();
-    remoteSettings->setName(m_ui->nameLineEdit->text());
-    remoteSettings->setDownloadCommand(m_ui->downloadCommand->text());
-    remoteSettings->setDownloadCommandInput(m_ui->inputForDownload->toPlainText());
-    remoteSettings->setUploadCommand(m_ui->uploadCommand->text());
-    remoteSettings->setUploadCommandInput(m_ui->inputForUpload->toPlainText());
+    auto* params = new RemoteParams();
+    params->name = m_ui->nameLineEdit->text();
+    params->downloadCommand = m_ui->downloadCommand->text();
+    params->downloadInput = m_ui->inputForDownload->toPlainText();
+    params->uploadCommand = m_ui->uploadCommand->text();
+    params->uploadInput = m_ui->inputForUpload->toPlainText();
 
-    m_db->publicCustomData();
-
-    m_customDataHandler->addRemoteSettingsEntry(remoteSettings);
+    m_remoteSettings->addRemoteParams(params);
     updateSettingsList();
 
     auto item = findItemByName(name);
@@ -97,9 +95,9 @@ QListWidgetItem* DatabaseSettingsWidgetRemote::findItemByName(const QString& nam
 
 void DatabaseSettingsWidgetRemote::removeCurrentSettings()
 {
-    m_customDataHandler->removeRemoteSettingsEntry(m_ui->nameLineEdit->text());
+    m_remoteSettings->removeRemoteParams(m_ui->nameLineEdit->text());
     updateSettingsList();
-    if (!m_customDataHandler->getRemoteProgramEntries().empty()) {
+    if (!m_remoteSettings->getAllRemoteParams().empty()) {
         m_ui->settingsListWidget->setCurrentRow(0);
         m_ui->removeSettingsButton->setEnabled(true);
     } else {
@@ -110,30 +108,29 @@ void DatabaseSettingsWidgetRemote::removeCurrentSettings()
 
 void DatabaseSettingsWidgetRemote::editCurrentSettings()
 {
-    if (m_ui->settingsListWidget->currentItem() == nullptr) {
+    if (!m_ui->settingsListWidget->currentItem()) {
         return;
     }
 
-    QString itemName = m_ui->settingsListWidget->currentItem()->text();
-    auto* remoteSettings = m_customDataHandler->getRemoteSettingsEntry(itemName);
-    if (remoteSettings == nullptr) {
-        // this should never happen
+    QString name = m_ui->settingsListWidget->currentItem()->text();
+    auto* params = m_remoteSettings->getRemoteParams(name);
+    if (!params) {
         return;
     }
 
-    m_ui->nameLineEdit->setText(remoteSettings->getName());
-    m_ui->downloadCommand->setText(remoteSettings->getDownloadCommand());
-    m_ui->inputForDownload->setPlainText(remoteSettings->getDownloadCommandInput());
-    m_ui->uploadCommand->setText(remoteSettings->getUploadCommand());
-    m_ui->inputForUpload->setPlainText(remoteSettings->getUploadCommandInput());
+    m_ui->nameLineEdit->setText(params->name);
+    m_ui->downloadCommand->setText(params->downloadCommand);
+    m_ui->inputForDownload->setPlainText(params->downloadInput);
+    m_ui->uploadCommand->setText(params->uploadCommand);
+    m_ui->inputForUpload->setPlainText(params->uploadInput);
 }
 
 void DatabaseSettingsWidgetRemote::updateSettingsList()
 {
     m_ui->settingsListWidget->clear();
-    for (auto remoteSetting : m_customDataHandler->getRemoteProgramEntries()) {
+    for (auto params : m_remoteSettings->getAllRemoteParams()) {
         auto* item = new QListWidgetItem(m_ui->settingsListWidget);
-        item->setText(remoteSetting->getName());
+        item->setText(params->name);
         m_ui->settingsListWidget->addItem(item);
     }
 }

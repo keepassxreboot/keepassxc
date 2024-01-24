@@ -17,8 +17,8 @@
 
 #include "RemoteHandler.h"
 
-#include "gui/remote/RemoteParams.h"
-#include "gui/remote/RemoteProcess.h"
+#include "RemoteProcess.h"
+#include "RemoteSettings.h"
 
 #include "core/AsyncTask.h"
 #include "core/Database.h"
@@ -42,30 +42,26 @@ RemoteHandler::RemoteHandler(QObject* parent)
 {
 }
 
-void RemoteHandler::download(RemoteParams* params)
+void RemoteHandler::setRemoteProcessFunc(std::function<QScopedPointer<RemoteProcess>(QObject*)> func)
 {
-    AsyncTask::runThenCallback(
-        [&, params] { return downloadInternal(params); }, this, [&](auto result) { emit downloadFinished(result); });
+    m_createRemoteProcess = std::move(func);
 }
 
-void RemoteHandler::upload(const QSharedPointer<Database>& db, RemoteParams* params)
-{
-    AsyncTask::runThenCallback([&, db, params] { return uploadInternal(db, params); },
-                               this,
-                               [&](auto result) { emit uploadFinished(result); });
-}
-
-RemoteHandler::RemoteResult RemoteHandler::downloadInternal(RemoteParams* params)
+RemoteHandler::RemoteResult RemoteHandler::download(const RemoteParams* params)
 {
     RemoteResult result;
+    if (!params) {
+        result.success = false;
+        result.errorMessage = tr("Invalid download parameters provided.");
+        return result;
+    }
 
+    auto filePath = getTempFileLocation();
     auto remoteProcess = m_createRemoteProcess(this);
-    QString destination = getTempFileLocation();
-    auto downloadCommand = params->getCommandForDownload(destination);
-    remoteProcess->start(downloadCommand);
-    auto input = params->getInputForDownload(destination);
-    if (!input.isEmpty()) {
-        remoteProcess->write(input + "\n");
+    remoteProcess->setTempFileLocation(filePath);
+    remoteProcess->start(params->downloadCommand);
+    if (!params->downloadInput.isEmpty()) {
+        remoteProcess->write(params->downloadInput + "\n");
         remoteProcess->waitForBytesWritten();
         remoteProcess->closeWriteChannel();
     }
@@ -78,31 +74,49 @@ RemoteHandler::RemoteResult RemoteHandler::downloadInternal(RemoteParams* params
     result.stdError = remoteProcess->readError();
 
     if (finished && statusCode == 0) {
-        result.success = true;
-        result.filePath = destination;
+        // Check if the file actually downloaded
+        QFileInfo fileInfo(filePath);
+        if (!fileInfo.exists() || fileInfo.size() == 0) {
+            result.success = false;
+            result.errorMessage = tr("Command `%1` failed to download database.").arg(params->downloadCommand);
+        } else {
+            result.success = true;
+            result.filePath = filePath;
+        }
     } else if (finished) {
         result.success = false;
-        result.errorMessage = tr("Command `%1` exited with status code: %3").arg(downloadCommand).arg(statusCode);
+        result.errorMessage =
+            tr("Command `%1` exited with status code: %3").arg(params->downloadCommand).arg(statusCode);
     } else {
         remoteProcess->kill();
         result.success = false;
-        result.errorMessage = tr("Command `%1` did not finish in time. Process was killed.").arg(downloadCommand);
+        result.errorMessage =
+            tr("Command `%1` did not finish in time. Process was killed.").arg(params->downloadCommand);
     }
 
     return result;
 }
 
-RemoteHandler::RemoteResult RemoteHandler::uploadInternal(const QSharedPointer<Database>& db, RemoteParams* params)
+void RemoteHandler::downloadAsync(const RemoteParams* params)
+{
+    AsyncTask::runThenCallback(
+        [&, params] { return download(params); }, this, [&](auto result) { emit downloadFinished(result); });
+}
+
+RemoteHandler::RemoteResult RemoteHandler::upload(const QSharedPointer<Database>& db, const RemoteParams* params)
 {
     RemoteResult result;
+    if (!db || !params) {
+        result.success = false;
+        result.errorMessage = tr("Invalid database pointer or upload parameters provided.");
+        return result;
+    }
 
     auto remoteProcess = m_createRemoteProcess(this);
-    QString source = db->filePath();
-    auto uploadCommand = params->getCommandForUpload(source);
-    remoteProcess->start(uploadCommand);
-    auto input = params->getInputForUpload(source);
-    if (!input.isEmpty()) {
-        remoteProcess->write(input + "\n");
+    remoteProcess->setTempFileLocation(db->filePath());
+    remoteProcess->start(params->uploadCommand);
+    if (!params->uploadInput.isEmpty()) {
+        remoteProcess->write(params->uploadInput + "\n");
         remoteProcess->waitForBytesWritten();
         remoteProcess->closeWriteChannel();
     }
@@ -119,16 +133,22 @@ RemoteHandler::RemoteResult RemoteHandler::uploadInternal(const QSharedPointer<D
     } else if (finished) {
         result.success = false;
         result.errorMessage = tr("Failed to upload merged database. Command `%1` exited with status code: %3")
-                                  .arg(uploadCommand)
+                                  .arg(params->uploadCommand)
                                   .arg(statusCode);
     } else {
         remoteProcess->kill();
         result.success = false;
         result.errorMessage =
             tr("Failed to upload merged database. Command `%1` did not finish in time. Process was killed.")
-                .arg(uploadCommand)
+                .arg(params->uploadCommand)
                 .arg(statusCode);
     }
 
     return result;
+}
+
+void RemoteHandler::uploadAsync(const QSharedPointer<Database>& db, const RemoteParams* params)
+{
+    AsyncTask::runThenCallback(
+        [&, db, params] { return upload(db, params); }, this, [&](auto result) { emit uploadFinished(result); });
 }

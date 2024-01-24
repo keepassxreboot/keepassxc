@@ -19,6 +19,8 @@
 #include "ui_RemoteFileDialog.h"
 
 #include "gui/Icons.h"
+#include "RemoteHandler.h"
+#include "RemoteSettings.h"
 
 #include <QDesktopServices>
 
@@ -103,10 +105,10 @@ void RemoteFileDialog::setInputDisabled(bool disabled)
 
 RemoteParams* RemoteFileDialog::getRemoteParams()
 {
-    auto* remoteParams = new RemoteParams();
-    remoteParams->setCommandForDownload(m_ui->downloadCommand->text());
-    remoteParams->setInputForDownload(m_ui->inputForDownload->toPlainText());
-    return remoteParams;
+    auto* params = new RemoteParams();
+    params->downloadCommand = m_ui->downloadCommand->text();
+    params->downloadInput = m_ui->inputForDownload->toPlainText();
+    return params;
 }
 
 void RemoteFileDialog::updateProgressBar(int percentage, const QString& message)

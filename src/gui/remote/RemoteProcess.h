@@ -26,8 +26,10 @@ public:
     explicit RemoteProcess(QObject* parent);
     virtual ~RemoteProcess();
 
-    virtual void start(const QString& program);
-    virtual qint64 write(const QString& data);
+    virtual void setTempFileLocation(const QString& tempFile);
+
+    virtual void start(const QString& command);
+    virtual qint64 write(const QString& input);
     virtual bool waitForBytesWritten();
     virtual void closeWriteChannel();
     virtual bool waitForFinished(int msecs);
@@ -36,7 +38,12 @@ public:
     virtual int exitCode() const;
     void kill() const;
 
+protected:
+    QString m_tempFileLocation;
+
 private:
+    QString resolveTemplateVariables(const QString& input) const;
+
     QScopedPointer<QProcess> m_process;
 };
 

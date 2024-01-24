@@ -21,8 +21,8 @@
 #include <QObject>
 
 class Database;
-class RemoteParams;
 class RemoteProcess;
+struct RemoteParams;
 
 class RemoteHandler : public QObject
 {
@@ -31,10 +31,6 @@ class RemoteHandler : public QObject
 public:
     explicit RemoteHandler(QObject* parent = nullptr);
     ~RemoteHandler() override = default;
-
-    void sync(const QSharedPointer<Database>& db, RemoteParams* params);
-    void download(RemoteParams* params);
-    void upload(const QSharedPointer<Database>& db, RemoteParams* params);
 
     struct RemoteResult
     {
@@ -45,6 +41,12 @@ public:
         QString stdError;
     };
 
+    RemoteResult download(const RemoteParams* params);
+    void downloadAsync(const RemoteParams* params);
+
+    RemoteResult upload(const QSharedPointer<Database>& db, const RemoteParams* params);
+    void uploadAsync(const QSharedPointer<Database>& db, const RemoteParams* params);
+
     // Used for testing only
     static void setRemoteProcessFunc(std::function<QScopedPointer<RemoteProcess>(QObject*)> func);
 
@@ -54,11 +56,10 @@ signals:
     void uploadFinished(RemoteResult result);
 
 private:
-    RemoteResult downloadInternal(RemoteParams* params);
-    RemoteResult uploadInternal(const QSharedPointer<Database>& db, RemoteParams* params);
-
     static std::function<QScopedPointer<RemoteProcess>(QObject*)> m_createRemoteProcess;
     static QString m_tempFileLocation;
+
+    Q_DISABLE_COPY(RemoteHandler)
 };
 
 #endif // KEEPASSXC_REMOTEHANDLER_H

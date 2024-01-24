@@ -17,75 +17,100 @@
 
 #include "RemoteSettings.h"
 
-#include "RemoteParams.h"
+#include "core/Database.h"
+#include "core/Metadata.h"
 
-QString RemoteSettings::getName() const
+#include <QDebug>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+
+RemoteSettings::RemoteSettings(const QSharedPointer<Database>& db, QObject* parent)
+    : QObject(parent)
 {
-    return m_name;
-}
-QString RemoteSettings::getDownloadCommand() const
-{
-    return m_downloadCommand;
-}
-QString RemoteSettings::getDownloadCommandInput() const
-{
-    return m_downloadCommandInput;
-}
-QString RemoteSettings::getUploadCommand() const
-{
-    return m_uploadCommand;
-}
-QString RemoteSettings::getUploadCommandInput() const
-{
-    return m_uploadCommandInput;
-}
-void RemoteSettings::setName(const QString& name)
-{
-    m_name = name;
-}
-void RemoteSettings::setDownloadCommand(const QString& downloadCommand)
-{
-    m_downloadCommand = downloadCommand;
-}
-void RemoteSettings::setDownloadCommandInput(const QString& downloadCommandInput)
-{
-    m_downloadCommandInput = downloadCommandInput;
-}
-void RemoteSettings::setUploadCommand(const QString& uploadCommand)
-{
-    m_uploadCommand = uploadCommand;
-}
-void RemoteSettings::setUploadCommandInput(const QString& uploadCommandInput)
-{
-    m_uploadCommandInput = uploadCommandInput;
+    setDatabase(db);
 }
 
-QJsonObject RemoteSettings::toConfig() const
+RemoteSettings::~RemoteSettings() = default;
+
+void RemoteSettings::setDatabase(const QSharedPointer<Database>& db)
 {
-    QJsonObject config;
-    config["name"] = m_name;
-    config["downloadCommand"] = m_downloadCommand;
-    config["downloadCommandInput"] = m_downloadCommandInput;
-    config["uploadCommand"] = m_uploadCommand;
-    config["uploadCommandInput"] = m_uploadCommandInput;
-    return config;
+    m_remoteParams.clear();
+    m_db = db;
+    loadSettings();
 }
 
-void RemoteSettings::fromConfig(const QJsonObject& config)
+void RemoteSettings::addRemoteParams(RemoteParams* params)
 {
-    setName(config["name"].toString());
-    setDownloadCommand(config["downloadCommand"].toString());
-    setDownloadCommandInput(config["downloadCommandInput"].toString());
-    setUploadCommand(config["uploadCommand"].toString());
-    setUploadCommandInput(config["uploadCommandInput"].toString());
+    if (params->name.isEmpty()) {
+        qWarning() << "RemoteSettings::addRemoteParams: Remote parameters name is empty";
+        return;
+    }
+    m_remoteParams.insert(params->name, params);
 }
 
-RemoteParams* RemoteSettings::toRemoteProgramParams() const
+void RemoteSettings::removeRemoteParams(const QString& name)
 {
-    auto* remoteProgramParams = new RemoteParams();
-    remoteProgramParams->setCommandForDownload(m_downloadCommand);
-    remoteProgramParams->setInputForDownload(m_downloadCommandInput);
-    remoteProgramParams->setCommandForUpload(m_uploadCommand);
-    remoteProgramParams->setInputForUpload(m_uploadCommandInput);
-    return remoteProgramParams;
+    m_remoteParams.remove(name);
+}
+
+RemoteParams* RemoteSettings::getRemoteParams(const QString& name) const
+{
+    if (m_remoteParams.contains(name)) {
+        return m_remoteParams.value(name);
+    }
+    return nullptr;
+}
+
+QList<RemoteParams*> RemoteSettings::getAllRemoteParams() const
+{
+    return m_remoteParams.values();
+}
+
+void RemoteSettings::loadSettings()
+{
+    if (m_db) {
+        fromConfig(m_db->metadata()->customData()->value(CustomData::RemoteProgramSettings));
+    }
+}
+
+void RemoteSettings::saveSettings() const
+{
+    if (m_db) {
+        m_db->metadata()->customData()->set(CustomData::RemoteProgramSettings, toConfig());
+    }
+}
+
+QString RemoteSettings::toConfig() const
+{
+    QJsonArray config;
+    for (const auto params : m_remoteParams.values()) {
+        QJsonObject object;
+        object["name"] = params->name;
+        object["downloadCommand"] = params->downloadCommand;
+        object["downloadCommandInput"] = params->downloadInput;
+        object["uploadCommand"] = params->uploadCommand;
+        object["uploadCommandInput"] = params->uploadInput;
+        config << object;
+    }
+    QJsonDocument doc(config);
+    return doc.toJson(QJsonDocument::Compact);
+}
+
+void RemoteSettings::fromConfig(const QString& data)
+{
+    m_remoteParams.clear();
+
+    QJsonDocument json = QJsonDocument::fromJson(data.toUtf8());
+    for (const auto& item : json.array().toVariantList()) {
+        auto itemMap = item.toMap();
+        auto* params = new RemoteParams();
+        params->name = itemMap["name"].toString();
+        params->downloadCommand = itemMap["downloadCommand"].toString();
+        params->downloadInput = itemMap["downloadCommandInput"].toString();
+        params->uploadCommand = itemMap["uploadCommand"].toString();
+        params->uploadInput = itemMap["uploadCommandInput"].toString();
+
+        m_remoteParams.insert(params->name, params);
+    }
 }

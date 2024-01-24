@@ -47,7 +47,7 @@
 #include "gui/ShortcutSettingsPage.h"
 #include "gui/entry/EntryView.h"
 #include "gui/osutils/OSUtils.h"
-#include "gui/remote/RemoteSettingsCustomDataHandler.h"
+#include "gui/remote/RemoteSettings.h"
 
 #ifdef WITH_XC_UPDATECHECK
 #include "gui/UpdateCheckDialog.h"
@@ -1337,9 +1337,6 @@ void MainWindow::updateRemoteSyncMenuEntries()
         auto action = m_ui->menuRemoteSync->addAction(tr("Setup new sync…"));
         connect(action, &QAction::triggered, dbWidget, &DatabaseWidget::switchToDatabaseSettings);
 
-        auto remoteSettingsConfig = new RemoteSettingsCustomDataHandler(this, dbWidget->database());
-        auto remoteProgramEntries = remoteSettingsConfig->getRemoteProgramEntries();
-
         // TODO: Sync all shortcut
         // action = m_ui->menuRemoteSync->addAction(tr("Run every sync…"));
         // connect(action, &QAction::triggered, dbWidget, [=] {
@@ -1349,11 +1346,11 @@ void MainWindow::updateRemoteSyncMenuEntries()
         m_ui->menuRemoteSync->addSeparator();
 
         // Build remote sync menu
-        for (const auto entryForMenu : remoteSettingsConfig->getRemoteProgramEntries()) {
-            auto* remoteSyncAction = new QAction(entryForMenu->getName(), this);
+        for (const auto params : dbWidget->getRemoteParams()) {
+            auto* remoteSyncAction = new QAction(params->name, this);
             m_ui->menuRemoteSync->addAction(remoteSyncAction);
             connect(remoteSyncAction, &QAction::triggered, dbWidget, [=] {
-                dbWidget->syncWithRemote(entryForMenu->toRemoteProgramParams());
+                dbWidget->syncWithRemote(params);
             });
         }
     }

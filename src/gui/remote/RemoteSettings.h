@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,39 +18,44 @@
 #ifndef KEEPASSXC_REMOTESETTINGS_H
 #define KEEPASSXC_REMOTESETTINGS_H
 
-#include <QJsonObject>
+#include <QObject>
+#include <QSharedPointer>
 
-class RemoteParams;
+class Database;
 
-class RemoteSettings final
+struct RemoteParams
 {
+    QString name;
+    QString downloadCommand;
+    QString downloadInput;
+    QString uploadCommand;
+    QString uploadInput;
+};
+Q_DECLARE_METATYPE(RemoteParams)
+
+class RemoteSettings : public QObject
+{
+    Q_OBJECT
 public:
-    explicit RemoteSettings() = default;
-    ~RemoteSettings() = default;
+    explicit RemoteSettings(const QSharedPointer<Database>& db, QObject* parent = nullptr);
+    ~RemoteSettings() override;
 
-    QString getName() const;
-    QString getDownloadCommand() const;
-    QString getDownloadCommandInput() const;
-    QString getUploadCommand() const;
-    QString getUploadCommandInput() const;
+    void setDatabase(const QSharedPointer<Database>& db);
 
-    void setName(const QString& name);
-    void setDownloadCommand(const QString& downloadCommand);
-    void setDownloadCommandInput(const QString& downloadCommandInput);
-    void setUploadCommand(const QString& uploadCommand);
-    void setUploadCommandInput(const QString& uploadCommandInput);
+    void addRemoteParams(RemoteParams* params);
+    void removeRemoteParams(const QString& name);
+    RemoteParams* getRemoteParams(const QString& name) const;
+    QList<RemoteParams*> getAllRemoteParams() const;
 
-    void fromConfig(const QJsonObject&);
-    QJsonObject toConfig() const;
-
-    RemoteParams* toRemoteProgramParams() const;
+    void loadSettings();
+    void saveSettings() const;
 
 private:
-    QString m_name;
-    QString m_downloadCommand;
-    QString m_downloadCommandInput;
-    QString m_uploadCommand;
-    QString m_uploadCommandInput;
+    void fromConfig(const QString& data);
+    QString toConfig() const;
+
+    QHash<QString, RemoteParams*> m_remoteParams;
+    QSharedPointer<Database> m_db;
 };
 
 #endif // KEEPASSXC_REMOTESETTINGS_H

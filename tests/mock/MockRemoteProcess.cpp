@@ -17,10 +17,7 @@
 
 #include "MockRemoteProcess.h"
 
-#include <QTest>
-#include <utility>
-
-MockRemoteProcess::MockRemoteProcess(QObject* parent)
+MockRemoteProcess::MockRemoteProcess(QObject* parent, const QString& dbPath)
     : RemoteProcess(parent)
 {
 }

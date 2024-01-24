@@ -29,15 +29,21 @@ RemoteProcess::~RemoteProcess()
 {
 }
 
-void RemoteProcess::start(const QString& program)
+void RemoteProcess::setTempFileLocation(const QString& tempFile)
 {
-    m_process->start(program);
+    m_tempFileLocation = tempFile;
+}
+
+void RemoteProcess::start(const QString& command)
+{
+    m_process->start(resolveTemplateVariables(command));
     m_process->waitForStarted();
 }
 
-qint64 RemoteProcess::write(const QString& data)
+qint64 RemoteProcess::write(const QString& input)
 {
-    return m_process->write(data.toUtf8());
+    auto resolved = resolveTemplateVariables(input);
+    return m_process->write(resolved.toUtf8());
 }
 
 bool RemoteProcess::waitForBytesWritten()
@@ -73,4 +79,10 @@ QString RemoteProcess::readError()
 void RemoteProcess::kill() const
 {
     m_process->kill();
+}
+
+QString RemoteProcess::resolveTemplateVariables(const QString& input) const
+{
+    QString resolved = input;
+    return resolved.replace("{TEMP_DATABASE}", m_tempFileLocation);
 }

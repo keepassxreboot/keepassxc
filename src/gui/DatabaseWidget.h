@@ -51,7 +51,8 @@ class MessageWidget;
 class EntryPreviewWidget;
 class TagView;
 class ElidedLabel;
-class RemoteParams; // TODO: May be able to remove this
+class RemoteSettings;
+struct RemoteParams;
 
 namespace Ui
 {
@@ -126,7 +127,8 @@ public:
     void setSplitterSizes(const QHash<Config::ConfigKey, QList<int>>& sizes);
     void setSearchStringForAutoType(const QString& search);
 
-    void syncWithRemote(RemoteParams* params);
+    void syncWithRemote(const RemoteParams* params);
+    QList<RemoteParams*> getRemoteParams() const;
 
 signals:
     // relayed Database signals
@@ -148,10 +150,8 @@ signals:
     void
     requestOpenDatabase(const QString& filePath, bool inBackground, const QString& password, const QString& keyFile);
     void databaseMerged(QSharedPointer<Database> mergedDb);
-    void databaseSyncedWith(QSharedPointer<Database> syncedDb); // TODO: May be able to remove this
     void databaseSyncCompleted(const QString& syncName);
     void databaseSyncFailed(const QString& syncName, const QString& error);
-    void saveToRemote(RemoteParams* remoteProgramParams); // TODO: May be able to remove this
     void groupContextMenuRequested(const QPoint& globalPos);
     void entryContextMenuRequested(const QPoint& globalPos);
     void listModeAboutToActivate();
@@ -211,7 +211,6 @@ public slots:
     void createGroup();
     void cloneGroup();
     void deleteGroup();
-    bool attemptSyncDatabaseWithSameKey(const QString& filePath); // TODO: May be able to remove this
     void switchToMainView(bool previousDialogAccepted = false);
     void switchToEntryEdit();
     void switchToGroupEdit();
@@ -273,8 +272,7 @@ private slots:
     void loadDatabase(bool accepted);
     void unlockDatabase(bool accepted);
     void mergeDatabase(bool accepted);
-    void syncDatabase(bool accepted);
-    bool syncDatabase(const QSharedPointer<Database>& srcDb, const QSharedPointer<Database>& destinationDb);
+    bool syncWithDatabase(const QSharedPointer<Database>& otherDb, QString& error);
     void emitCurrentModeChanged();
     // Database autoreload slots
     void reloadDatabaseFile();
@@ -319,6 +317,8 @@ private:
     QUuid m_entryBeforeLock;
 
     int m_saveAttempts;
+
+    QScopedPointer<RemoteSettings> m_remoteSettings;
 
     // Search state
     QScopedPointer<EntrySearcher> m_entrySearcher;

@@ -18,7 +18,7 @@
 #ifndef KEEPASSXC_MOCKREMOTEPROCESS_H
 #define KEEPASSXC_MOCKREMOTEPROCESS_H
 
-#include <gui/remote/RemoteProcess.h>
+#include "gui/remote/RemoteProcess.h"
 
 class MockRemoteProcess : public RemoteProcess
 {
@@ -34,8 +34,7 @@ public:
     [[nodiscard]] int exitCode() const override;
 
 private:
-    QString m_mockedTempFileLocation;
-    QString m_source;
+    QByteArray m_data;
 };
 
 #endif // KEEPASSXC_MOCKREMOTEPROCESS_H
