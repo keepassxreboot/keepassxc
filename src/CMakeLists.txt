@@ -182,6 +182,7 @@ set(keepassx_SOURCES
         gui/widgets/ElidedLabel.cpp
         gui/widgets/KPToolBar.cpp
         gui/widgets/PopupHelpWidget.cpp
+        gui/widgets/ShortcutWidget.cpp
         gui/wizard/NewDatabaseWizard.cpp
         gui/wizard/NewDatabaseWizardPage.cpp
         gui/wizard/NewDatabaseWizardPageMetaData.cpp
@@ -321,7 +322,6 @@ set(autotype_SOURCES
         autotype/AutoTypeMatchView.cpp
         autotype/AutoTypeSelectDialog.cpp
         autotype/PickcharsDialog.cpp
-        autotype/ShortcutWidget.cpp
         autotype/WindowSelectComboBox.cpp)
 
 if(WIN32)

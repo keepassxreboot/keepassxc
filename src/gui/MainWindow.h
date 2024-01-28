@@ -154,8 +154,6 @@ private slots:
     void focusSearchWidget();
 
 private:
-    static void setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback = 0);
-
     static const QString BaseWindowTitle;
 
     void saveWindowInformation();

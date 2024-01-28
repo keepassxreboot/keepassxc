@@ -1,3 +1,20 @@
+/*
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #ifndef KEEPASSXC_ACTION_COLLECTION_H
 #define KEEPASSXC_ACTION_COLLECTION_H
 
@@ -18,43 +35,27 @@ class ActionCollection : public QObject
 public:
     static ActionCollection* instance();
 
-    const QVector<QAction*> actions() const
-    {
-        return m_actions;
-    }
+    QList<QAction*> actions() const;
 
-    /**
-     * Add an action to the collection
-     */
-    QAction* addAction(const QString& name, QObject* parent = nullptr);
+    void addAction(QAction* action);
+    void addActions(const QList<QAction*>& actions);
 
-    /**
-     * Add an action to the collection
-     */
-    QAction* addAction(QAction* action);
-
-    void addActions(const QVector<QAction*> actions);
-
-    /**
-     * Retreive an action from the collection
-     */
-    QAction* action(const QString& name) const;
+    QKeySequence defaultShortcut(const QAction* a) const;
+    QList<QKeySequence> defaultShortcuts(const QAction* a) const;
 
     void setDefaultShortcut(QAction* a, const QKeySequence& shortcut);
-    QKeySequence defaultShortcut(QAction* a) const;
-
+    void setDefaultShortcut(QAction* a, QKeySequence::StandardKey standard, const QKeySequence& fallback);
     void setDefaultShortcuts(QAction* a, const QList<QKeySequence>& shortcut);
-    QList<QKeySequence> defaultShortcuts(QAction* a) const;
 
     // Check if any action conflicts with @p seq and return the conflicting action
-    QPair<bool, QAction*> isConflictingShortcut(QAction* action, const QKeySequence& seq, QString& outMessage) const;
+    QAction* isConflictingShortcut(const QAction* action, const QKeySequence& seq) const;
 
-public Q_SLOTS:
+public slots:
     void restoreShortcuts();
     void saveShortcuts();
 
 private:
-    QVector<QAction*> m_actions;
+    QList<QAction*> m_actions;
 };
 
 #endif

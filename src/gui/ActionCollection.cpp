@@ -1,17 +1,24 @@
+/*
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include "ActionCollection.h"
 #include "core/Config.h"
 
 #include <QDebug>
-
-static bool assert_not_exists(const QVector<QAction*>& actions, const QString& name)
-{
-    for (auto a : actions) {
-        if (a->objectName() == name) {
-            return false;
-        }
-    }
-    return true;
-}
 
 ActionCollection* ActionCollection::instance()
 {
@@ -19,117 +26,98 @@ ActionCollection* ActionCollection::instance()
     return &ac;
 }
 
-QAction* ActionCollection::action(const QString& name) const
+QList<QAction*> ActionCollection::actions() const
 {
-    if (name.isEmpty()) {
-        qWarning() << Q_FUNC_INFO << "Unexpected empty action name";
-    }
-    for (auto* action : m_actions) {
-        if (action->objectName() == name) {
-            return action;
-        }
-    }
-    qWarning() << "Unexpected unable to find action " << name << "in ActionCollection. Should not happen";
-    return nullptr;
+    return m_actions;
 }
 
-QAction* ActionCollection::addAction(const QString& name, QObject* parent)
+void ActionCollection::addAction(QAction* action)
 {
-    auto a = new QAction(parent);
-    a->setObjectName(name);
-    return addAction(a);
-}
-
-QAction* ActionCollection::addAction(QAction* action)
-{
-    if (action->objectName().isEmpty()) {
-        qWarning() << Q_FUNC_INFO << "'action name' should not be empty";
-        return nullptr;
+    if (!m_actions.contains(action)) {
+        m_actions << action;
     }
-    Q_ASSERT(assert_not_exists(m_actions, action->objectName()));
-    m_actions << action;
-    return action;
 }
 
-void ActionCollection::addActions(const QVector<QAction*> actions)
+void ActionCollection::addActions(const QList<QAction*>& actions)
 {
-    m_actions.reserve(m_actions.size() + actions.size());
     for (auto a : actions) {
         addAction(a);
     }
 }
 
-QKeySequence ActionCollection::defaultShortcut(QAction* action) const
+QKeySequence ActionCollection::defaultShortcut(const QAction* action) const
 {
-    const QList<QKeySequence> shortcuts = defaultShortcuts(action);
+    auto shortcuts = defaultShortcuts(action);
     return shortcuts.isEmpty() ? QKeySequence() : shortcuts.first();
 }
 
-QList<QKeySequence> ActionCollection::defaultShortcuts(QAction* action) const
+QList<QKeySequence> ActionCollection::defaultShortcuts(const QAction* action) const
 {
-    Q_ASSERT(m_actions.contains(action));
     return action->property("defaultShortcuts").value<QList<QKeySequence>>();
 }
 
 void ActionCollection::setDefaultShortcut(QAction* action, const QKeySequence& shortcut)
 {
-    setDefaultShortcuts(action, QList<QKeySequence>() << shortcut);
+    setDefaultShortcuts(action, {shortcut});
+}
+
+void ActionCollection::setDefaultShortcut(QAction* action,
+                                          QKeySequence::StandardKey standard,
+                                          const QKeySequence& fallback)
+{
+    if (!QKeySequence::keyBindings(standard).isEmpty()) {
+        setDefaultShortcuts(action, QKeySequence::keyBindings(standard));
+    } else if (fallback != 0) {
+        setDefaultShortcut(action, QKeySequence(fallback));
+    }
 }
 
 void ActionCollection::setDefaultShortcuts(QAction* action, const QList<QKeySequence>& shortcuts)
 {
-    Q_ASSERT(m_actions.contains(action));
     action->setShortcuts(shortcuts);
     action->setProperty("defaultShortcuts", QVariant::fromValue(shortcuts));
 }
 
 void ActionCollection::restoreShortcuts()
 {
-    const QVector<Config::ShortcutEntry> shortcuts = Config::instance()->getShortcuts();
+    const auto shortcuts = Config::instance()->getShortcuts();
     QHash<QString, QAction*> actionsByName;
-    actionsByName.reserve(shortcuts.size());
     for (auto action : m_actions) {
-        actionsByName[action->objectName()] = action;
+        actionsByName.insert(action->objectName(), action);
     }
     for (const auto& shortcut : shortcuts) {
-        auto it = actionsByName.find(shortcut.name);
-        if (it == actionsByName.end()) {
-            qWarning() << "Unexpected " << shortcut.name << ", not found in actions";
-            continue;
+        if (actionsByName.contains(shortcut.name)) {
+            const auto key = QKeySequence::fromString(shortcut.shortcut);
+            actionsByName.value(shortcut.name)->setShortcut(key);
         }
-        const auto key = QKeySequence::fromString(shortcut.shortcut);
-        it.value()->setShortcut(key);
     }
 }
 
 void ActionCollection::saveShortcuts()
 {
-    QVector<Config::ShortcutEntry> shortcuts;
+    QList<Config::ShortcutEntry> shortcuts;
     shortcuts.reserve(m_actions.size());
     for (auto a : m_actions) {
-        if (defaultShortcuts(a) == a->shortcuts()) {
-            continue;
+        // Only store non-default shortcut assignments
+        if (a->shortcut() != defaultShortcut(a)) {
+            shortcuts << Config::ShortcutEntry{a->objectName(), a->shortcut().toString()};
         }
-        shortcuts.push_back(Config::ShortcutEntry{a->objectName(), a->shortcut().toString()});
     }
     Config::instance()->setShortcuts(shortcuts);
 }
 
-QPair<bool, QAction*>
-ActionCollection::isConflictingShortcut(QAction* action, const QKeySequence& seq, QString& outMessage) const
+QAction* ActionCollection::isConflictingShortcut(const QAction* action, const QKeySequence& seq) const
 {
+    // Empty sequences don't conflict with anything
     if (seq.isEmpty()) {
-        return {false, nullptr}; // Empty sequences don't conflict with anything
+        return nullptr;
     }
+
     for (auto a : m_actions) {
-        if (a == action) {
-            continue;
-        }
-        if (a->shortcut() == seq) {
-            outMessage = tr("Shortcut %3 conflicts with action '%1' with title '%2'")
-                             .arg(a->objectName(), a->text(), seq.toString());
-            return {true, a};
+        if (a != action && a->shortcut() == seq) {
+            return a;
         }
     }
-    return {false, nullptr};
+
+    return nullptr;
 }

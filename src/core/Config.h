@@ -214,8 +214,9 @@ public:
     bool hasAccessError();
     void sync();
     void resetToDefaults();
-    QVector<ShortcutEntry> getShortcuts() const;
-    void setShortcuts(const QVector<ShortcutEntry>& shortcuts);
+
+    QList<ShortcutEntry> getShortcuts() const;
+    void setShortcuts(const QList<ShortcutEntry>& shortcuts);
 
     static Config* instance();
     static void createConfigFromFile(const QString& configFileName, const QString& localConfigFileName = {});

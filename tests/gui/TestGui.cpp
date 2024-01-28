@@ -1862,11 +1862,7 @@ void TestGui::testShortcutConfig()
     QAction* a = new QAction(ActionCollection::instance());
     a->setObjectName("MyAction1");
     ActionCollection::instance()->addAction(a);
-    QCOMPARE(ActionCollection::instance()->action("MyAction1"), a);
-
-    // Add an action, make sure it gets added
-    auto a2 = ActionCollection::instance()->addAction("MyAction2", ActionCollection::instance());
-    QCOMPARE(ActionCollection::instance()->action("MyAction2"), a2);
+    QVERIFY(ActionCollection::instance()->actions().contains(a));
 
     const QKeySequence seq(Qt::CTRL + Qt::SHIFT + Qt::ALT + Qt::Key_N);
     ActionCollection::instance()->setDefaultShortcut(a, seq);

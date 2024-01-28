@@ -20,13 +20,8 @@
 #include <QKeyEvent>
 #include <QToolTip>
 
-#include "autotype/AutoType.h"
-
 ShortcutWidget::ShortcutWidget(QWidget* parent)
     : QLineEdit(parent)
-    , m_key(static_cast<Qt::Key>(0))
-    , m_modifiers(nullptr)
-    , m_locked(false)
 {
     setReadOnly(true);
 }
@@ -41,6 +36,11 @@ Qt::KeyboardModifiers ShortcutWidget::modifiers() const
     return m_modifiers;
 }
 
+QKeySequence ShortcutWidget::sequence() const
+{
+    return (m_key == Qt::Key_unknown) ? QKeySequence() : QKeySequence(m_key | m_modifiers);
+}
+
 void ShortcutWidget::setShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers)
 {
     m_key = key;
@@ -48,22 +48,15 @@ void ShortcutWidget::setShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers)
     m_locked = true;
 
     displayShortcut(m_key, m_modifiers);
-
-    QString error;
-    if (autoType()->registerGlobalShortcut(m_key, m_modifiers, &error)) {
-        setStyleSheet("");
-    } else {
-        QToolTip::showText(mapToGlobal(rect().bottomLeft()), error);
-        setStyleSheet("background-color: #FF9696;");
-    }
+    emit shortcutChanged(m_key, m_modifiers);
 }
 
 void ShortcutWidget::resetShortcut()
 {
-    m_key = static_cast<Qt::Key>(0);
-    m_modifiers = nullptr;
+    m_key = Qt::Key_unknown;
+    m_modifiers = Qt::NoModifier;
     m_locked = false;
-    autoType()->unregisterGlobalShortcut();
+    emit shortcutReset();
 }
 
 void ShortcutWidget::keyPressEvent(QKeyEvent* event)
@@ -116,13 +109,11 @@ void ShortcutWidget::keyEvent(QKeyEvent* event)
             setShortcut(key, modifiers);
         } else {
             resetShortcut();
-            setStyleSheet("");
             displayShortcut(key, modifiers);
         }
     } else {
         if (m_locked) {
             resetShortcut();
-            setStyleSheet("");
         }
 
         displayShortcut(static_cast<Qt::Key>(0), modifiers);
