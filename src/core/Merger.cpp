@@ -338,6 +338,7 @@ Merger::ChangeList Merger::resolveEntryConflict_MergeHistories(const MergeContex
     const int comparison = compare(targetEntry->timeInfo().lastModificationTime(),
                                    sourceEntry->timeInfo().lastModificationTime(),
                                    CompareItemIgnoreMilliseconds);
+    const int maxItems = targetEntry->database()->metadata()->historyMaxItems();
     if (comparison < 0) {
         Group* currentGroup = targetEntry->group();
         Entry* clonedEntry = sourceEntry->clone(Entry::CloneIncludeHistory);
@@ -346,15 +347,15 @@ Merger::ChangeList Merger::resolveEntryConflict_MergeHistories(const MergeContex
                qPrintable(sourceEntry->title()),
                qPrintable(currentGroup->name()));
         changes << tr("Synchronizing from newer source %1 [%2]").arg(targetEntry->title(), targetEntry->uuidToHex());
-        moveEntry(clonedEntry, currentGroup);
-        mergeHistory(targetEntry, clonedEntry, mergeMethod);
+        mergeHistory(targetEntry, clonedEntry, mergeMethod, maxItems);
         eraseEntry(targetEntry);
+        moveEntry(clonedEntry, currentGroup);
     } else {
         qDebug("Merge %s/%s with local on top/under %s",
                qPrintable(targetEntry->title()),
                qPrintable(sourceEntry->title()),
                qPrintable(targetEntry->group()->name()));
-        const bool changed = mergeHistory(sourceEntry, targetEntry, mergeMethod);
+        const bool changed = mergeHistory(sourceEntry, targetEntry, mergeMethod, maxItems);
         if (changed) {
             changes
                 << tr("Synchronizing from older source %1 [%2]").arg(targetEntry->title(), targetEntry->uuidToHex());
@@ -400,7 +401,10 @@ Merger::resolveEntryConflict(const MergeContext& context, const Entry* sourceEnt
     return changes;
 }
 
-bool Merger::mergeHistory(const Entry* sourceEntry, Entry* targetEntry, Group::MergeMode mergeMethod)
+bool Merger::mergeHistory(const Entry* sourceEntry,
+                          Entry* targetEntry,
+                          Group::MergeMode mergeMethod,
+                          const int maxItems)
 {
     Q_UNUSED(mergeMethod);
     const auto targetHistoryItems = targetEntry->historyItems();
@@ -473,7 +477,6 @@ bool Merger::mergeHistory(const Entry* sourceEntry, Entry* targetEntry, Group::M
     }
 
     bool changed = false;
-    const int maxItems = targetEntry->database()->metadata()->historyMaxItems();
     const auto updatedHistoryItems = merged.values();
     for (int i = 0; i < maxItems; ++i) {
         const Entry* oldEntry = targetHistoryItems.value(targetHistoryItems.count() - i);
