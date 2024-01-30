@@ -22,9 +22,9 @@
 #include <QTest>
 
 #include "core/Group.h"
+#include "core/Totp.h"
 #include "crypto/Crypto.h"
 #include "format/CsvExporter.h"
-#include "totp/totp.h"
 
 QTEST_GUILESS_MAIN(TestCsvExporter)
 

@@ -20,9 +20,9 @@
 #include "config-keepassx-tests.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
+#include "core/Totp.h"
 #include "crypto/Crypto.h"
 #include "format/OpVaultReader.h"
-#include "totp/totp.h"
 
 #include <QJsonObject>
 #include <QList>
