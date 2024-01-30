@@ -19,8 +19,8 @@
 #include "TestTotp.h"
 
 #include "core/Entry.h"
+#include "core/Totp.h"
 #include "crypto/Crypto.h"
-#include "totp/totp.h"
 
 #include <QTest>
 
@@ -97,6 +97,14 @@ void TestTotp::testParseSecret()
     QCOMPARE(settings->digits, 6u);
     QCOMPARE(settings->step, 30u);
     QCOMPARE(settings->algorithm, Totp::Algorithm::Sha1);
+
+    // Blank settings (expected failure)
+    settings = Totp::parseSettings("", "");
+    QVERIFY(settings.isNull());
+
+    // TOTP Settings with blank secret (expected failure)
+    settings = Totp::parseSettings("30;8", "");
+    QVERIFY(settings.isNull());
 }
 
 void TestTotp::testTotpCode()
@@ -164,4 +172,8 @@ void TestTotp::testEntryHistory()
     entry.setTotp(settings);
     QCOMPARE(entry.historyItems().size(), 2);
     QCOMPARE(entry.totpSettings()->key, QString("foo"));
+    // Nullptr Settings (expected reset of TOTP)
+    entry.setTotp(nullptr);
+    QVERIFY(!entry.hasTotp());
+    QCOMPARE(entry.historyItems().size(), 3);
 }

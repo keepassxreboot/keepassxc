@@ -20,9 +20,9 @@
 #include "ui_TotpDialog.h"
 
 #include "core/Clock.h"
+#include "core/Totp.h"
 #include "gui/Clipboard.h"
 #include "gui/MainWindow.h"
-#include "totp/totp.h"
 
 #include <QPushButton>
 #include <QShortcut>

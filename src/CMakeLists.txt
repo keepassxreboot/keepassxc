@@ -59,6 +59,7 @@ set(keepassx_SOURCES
         core/TimeDelta.cpp
         core/TimeInfo.cpp
         core/Tools.cpp
+        core/Totp.cpp
         core/Translator.cpp
         core/UrlTools.cpp
         cli/Utils.cpp
@@ -193,8 +194,7 @@ set(keepassx_SOURCES
         streams/LayeredStream.cpp
         streams/qtiocompressor.cpp
         streams/StoreDataStream.cpp
-        streams/SymmetricCipherStream.cpp
-        totp/totp.cpp)
+        streams/SymmetricCipherStream.cpp)
 if(APPLE)
     set(keepassx_SOURCES
             ${keepassx_SOURCES}

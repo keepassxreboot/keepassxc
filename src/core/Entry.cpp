@@ -24,7 +24,7 @@
 #include "core/Metadata.h"
 #include "core/PasswordHealth.h"
 #include "core/Tools.h"
-#include "totp/totp.h"
+#include "core/Totp.h"
 
 #include <QDir>
 #include <QRegularExpression>
@@ -566,7 +566,7 @@ void Entry::setTotp(QSharedPointer<Totp::Settings> settings)
     m_attributes->remove(Totp::ATTRIBUTE_SEED);
     m_attributes->remove(Totp::ATTRIBUTE_SETTINGS);
 
-    if (settings->key.isEmpty()) {
+    if (!settings || settings->key.isEmpty()) {
         m_data.totpSettings.reset();
     } else {
         m_data.totpSettings = std::move(settings);
