@@ -38,7 +38,7 @@ To install KeePassXC on Microsoft Windows, perform the following steps:
 .Install wizard
 image::install_wizard_1.png[,80%]
 
-2. Click Next and follow the simple instructions on the KeepPassXC Setup Wizard to complete the installation. You will have the option to choose your install location, add a desktop shortcut, and launch on startup.
+2. Click Next and follow the simple instructions on the KeePassXC Setup Wizard to complete the installation. You will have the option to choose your install location, add a desktop shortcut, and launch on startup.
 +
 .Install wizard (cont)
 image::install_wizard_2.png[,80%]
