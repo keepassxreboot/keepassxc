@@ -102,7 +102,7 @@ void YubiKeyEditWidget::initComponent()
         tr("<p>If you own a <a href=\"https://www.yubico.com/\">YubiKey</a> or "
            "<a href=\"https://onlykey.io\">OnlyKey</a>, you can use it for additional security.</p>"
            "<p>The key requires one of its slots to be programmed as "
-           "<a href=\"https://www.yubico.com/products/services-software/challenge-response/\">"
+           "<a href=\"https://docs.yubico.com/yesdk/users-manual/application-otp/challenge-response.html\">"
            "HMAC-SHA1 Challenge-Response</a>.</p>"));
 }
 
