@@ -29,6 +29,8 @@
 #include <QSortFilterProxyModel>
 #include <QStandardItemModel>
 
+#include <algorithm>
+
 namespace
 {
     class ReportSortProxyModel : public QSortFilterProxyModel
@@ -131,8 +133,8 @@ void ReportsWidgetHibp::makeHibpTable()
         }
     }
 
-    // Sort descending by the number the password has been exposed
-    qSort(items.begin(), items.end(), [](QPair<Entry*, int>& lhs, QPair<Entry*, int>& rhs) {
+    // Sort decending by the number the password has been exposed
+    std::sort(items.begin(), items.end(), [](QPair<Entry*, int>& lhs, QPair<Entry*, int>& rhs) {
         return lhs.second > rhs.second;
     });
 

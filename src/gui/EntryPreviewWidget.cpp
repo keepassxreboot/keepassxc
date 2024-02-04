@@ -20,6 +20,7 @@
 #include "ui_EntryPreviewWidget.h"
 
 #include "Application.h"
+#include "core/Clock.h"
 #include "core/Config.h"
 #include "core/Totp.h"
 #include "gui/Clipboard.h"
@@ -399,8 +400,7 @@ void EntryPreviewWidget::updateEntryGeneralTab()
     }
 
     const TimeInfo entryTime = m_currentEntry->timeInfo();
-    const QString expires =
-        entryTime.expires() ? entryTime.expiryTime().toLocalTime().toString(Qt::DefaultLocaleShortDate) : tr("Never");
+    const QString expires = entryTime.expires() ? Clock::toString(entryTime.expiryTime().toLocalTime()) : tr("Never");
     m_ui->entryExpirationLabel->setText(expires);
     m_ui->entryTagsList->tags(m_currentEntry->tagList());
     m_ui->entryTagsList->setReadOnly(true);
@@ -509,8 +509,7 @@ void EntryPreviewWidget::updateGroupGeneralTab()
     m_ui->groupAutotypeLabel->setText(autotypeText);
 
     const TimeInfo groupTime = m_currentGroup->timeInfo();
-    const QString expiresText =
-        groupTime.expires() ? groupTime.expiryTime().toString(Qt::DefaultLocaleShortDate) : tr("Never");
+    const QString expiresText = groupTime.expires() ? Clock::toString(groupTime.expiryTime()) : tr("Never");
     m_ui->groupExpirationLabel->setText(expiresText);
 
     if (config()->get(Config::Security_HideNotes).toBool()) {

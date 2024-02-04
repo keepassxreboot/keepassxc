@@ -73,12 +73,12 @@ int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
 
     Entry* entry = database->rootGroup()->findEntryByPath(entryPath);
     if (!entry) {
-        err << QObject::tr("Could not find entry with path %1.").arg(entryPath) << endl;
+        err << QObject::tr("Could not find entry with path %1.").arg(entryPath) << Qt::endl;
         return EXIT_FAILURE;
     }
 
     if (showTotp && !entry->hasTotp()) {
-        err << QObject::tr("Entry with path %1 has no TOTP set up.").arg(entryPath) << endl;
+        err << QObject::tr("Entry with path %1 has no TOTP set up.").arg(entryPath) << Qt::endl;
         return EXIT_FAILURE;
     }
 
@@ -113,20 +113,20 @@ int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
             if (!attributesWereSpecified) {
                 out << attributeName << ": ";
             }
-            out << Utils::getTopLevelField(entry, attributeName) << endl;
+            out << Utils::getTopLevelField(entry, attributeName) << Qt::endl;
             continue;
         }
 
         QStringList attrs = Utils::findAttributes(*entry->attributes(), attributeName);
         if (attrs.isEmpty()) {
             encounteredError = true;
-            err << QObject::tr("ERROR: unknown attribute %1.").arg(attributeName) << endl;
+            err << QObject::tr("ERROR: unknown attribute %1.").arg(attributeName) << Qt::endl;
             continue;
         } else if (attrs.size() > 1) {
             encounteredError = true;
             err << QObject::tr("ERROR: attribute %1 is ambiguous, it matches %2.")
                        .arg(attributeName, QLocale().createSeparatedList(attrs))
-                << endl;
+                << Qt::endl;
             continue;
         }
         QString canonicalName = attrs[0];
@@ -134,33 +134,33 @@ int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
             out << canonicalName << ": ";
         }
         if (entry->attributes()->isProtected(canonicalName) && !attributesWereSpecified && !showProtectedAttributes) {
-            out << "PROTECTED" << endl;
+            out << "PROTECTED" << Qt::endl;
         } else {
-            out << entry->resolveMultiplePlaceholders(entry->attributes()->value(canonicalName)) << endl;
+            out << entry->resolveMultiplePlaceholders(entry->attributes()->value(canonicalName)) << Qt::endl;
         }
     }
 
     if (parser->isSet(Show::AttachmentsOption)) {
         // Separate attachment output from attributes output via a newline.
-        out << endl;
+        out << Qt::endl;
 
         EntryAttachments* attachments = entry->attachments();
         if (attachments->isEmpty()) {
-            out << QObject::tr("No attachments present.") << endl;
+            out << QObject::tr("No attachments present.") << Qt::endl;
         } else {
-            out << QObject::tr("Attachments:") << endl;
+            out << QObject::tr("Attachments:") << Qt::endl;
 
             // Iterate over the attachments and output their names and size line-by-line, indented.
             for (const QString& attachmentName : attachments->keys()) {
                 // TODO: use QLocale::formattedDataSize when >= Qt 5.10
                 QString attachmentSize = Tools::humanReadableFileSize(attachments->value(attachmentName).size(), 1);
-                out << "  " << attachmentName << " (" << attachmentSize << ")" << endl;
+                out << "  " << attachmentName << " (" << attachmentSize << ")" << Qt::endl;
             }
         }
     }
 
     if (showTotp) {
-        out << entry->totp() << endl;
+        out << entry->totp() << Qt::endl;
     }
 
     return encounteredError ? EXIT_FAILURE : EXIT_SUCCESS;

@@ -94,7 +94,6 @@ private:
     QSet<const Group*> m_allGroups;
 
     const QString HiddenContentDisplay;
-    const Qt::DateFormat DateFormat;
 };
 
 #endif // KEEPASSX_ENTRYMODEL_H

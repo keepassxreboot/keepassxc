@@ -24,6 +24,8 @@
 #include "fdosecrets/widgets/RowButtonHelper.h"
 
 #include "core/Entry.h"
+#include "core/Global.h"
+#include "core/Tools.h"
 #include "gui/Icons.h"
 
 #include <QWindow>
@@ -206,7 +208,7 @@ QHash<Entry*, AuthDecision> AccessControlDialog::decisions() const
 AccessControlDialog::EntryModel::EntryModel(QList<Entry*> entries, QObject* parent)
     : QAbstractTableModel(parent)
     , m_entries(std::move(entries))
-    , m_selected(QSet<Entry*>::fromList(m_entries))
+    , m_selected(Tools::asSet(m_entries))
 {
 }
 

@@ -20,9 +20,15 @@
 #define KEEPASSX_YUBIKEY_H
 
 #include <QHash>
-#include <QMutex>
 #include <QObject>
 #include <QTimer>
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+#include <QRecursiveMutex>
+#else
+#include <QMutex>
+#endif
+
 #include <botan/secmem.h>
 
 typedef QPair<unsigned int, int> YubiKeySlot;
@@ -85,7 +91,12 @@ private:
     QTimer m_interactionTimer;
     bool m_initialized = false;
     QString m_error;
-    QMutex m_interfaces_detect_mutex;
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+    QRecursiveMutex m_interfaces_detect_mutex;
+#else
+    QMutex m_interfaces_detect_mutex{QMutex::Recursive};
+#endif
 
     Q_DISABLE_COPY(YubiKey)
 };

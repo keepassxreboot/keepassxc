@@ -19,6 +19,7 @@
 #define KEEPASSX_ENTRYHISTORYMODEL_H
 
 #include <QAbstractTableModel>
+#include <QLocale>
 
 class Entry;
 
@@ -45,6 +46,7 @@ public:
 private:
     void calculateHistoryModifications();
 
+    QLocale m_systemLocale;
     QList<Entry*> m_historyEntries;
     QList<Entry*> m_deletedHistoryEntries;
     QStringList m_historyModifications;

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,6 +16,8 @@
  */
 #include "Clock.h"
 
+#include <QLocale>
+
 QSharedPointer<Clock> Clock::m_instance;
 
 QDateTime Clock::currentDateTimeUtc()
@@ -30,8 +32,7 @@ QDateTime Clock::currentDateTime()
 
 uint Clock::currentSecondsSinceEpoch()
 {
-    // TODO: change to toSecsSinceEpoch() when min Qt >= 5.8
-    return instance().currentDateTimeImpl().toTime_t();
+    return instance().currentDateTimeImpl().toSecsSinceEpoch();
 }
 
 qint64 Clock::currentMilliSecondsSinceEpoch()
@@ -76,6 +77,12 @@ QDateTime Clock::parse(const QString& text, Qt::DateFormat format)
 QDateTime Clock::parse(const QString& text, const QString& format)
 {
     return QDateTime::fromString(text, format);
+}
+
+QString Clock::toString(const QDateTime& dateTime)
+{
+    static QLocale locale;
+    return locale.toString(dateTime, QLocale::ShortFormat);
 }
 
 Clock::~Clock() = default;

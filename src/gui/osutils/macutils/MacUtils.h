@@ -1,6 +1,6 @@
 /*
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -24,8 +24,11 @@
 #include <Carbon/Carbon.h>
 
 #include <QColor>
+#include <QHash>
 #include <QPointer>
 #include <QScopedPointer>
+#include <QSharedPointer>
+#include <QString>
 #include <qwindowdefs.h>
 
 class MacUtils : public OSUtilsBase
