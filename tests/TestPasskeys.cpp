@@ -259,7 +259,7 @@ void TestPasskeys::testCreatingAttestationObjectWithEC()
     TestingVariables testingVariables = {id, predefinedFirst, predefinedSecond};
     auto result = browserPasskeys()->buildAttestationObject(publicKeyCredentialOptions, "", id, testingVariables);
     QCOMPARE(
-        QString(result.cborEncoded),
+        QString(result.cborEncoded.toStdString().c_str()),
         QString("\xA3"
                 "cfmtdnonegattStmt\xA0hauthDataX\xA4t\xA6\xEA\x92\x13\xC9\x9C/t\xB2$\x92\xB3 \xCF@&*\x94\xC1\xA9P\xA0"
                 "9\x7F)%\x0B`\x84\x1E\xF0"

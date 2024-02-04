@@ -308,7 +308,7 @@ bool OpenSSHKey::parsePKCS1PEM(const QByteArray& in)
             return false;
         }
 
-        if (QString::fromLatin1(magic) != "openssh-key-v1") {
+        if (QString::fromLatin1(magic.toStdString().c_str()) != "openssh-key-v1") {
             m_error = tr("Key file magic header id invalid");
             return false;
         }
