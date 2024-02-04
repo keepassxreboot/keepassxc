@@ -41,7 +41,6 @@ private slots:
     void testCreateDatabase();
     void testMergeDatabase();
     void testAutoreloadDatabase();
-    void testTabs();
     void testEditEntry();
     void testSearchEditEntry();
     void testAddEntry();

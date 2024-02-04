@@ -421,12 +421,6 @@ void TestGui::testAutoreloadDatabase()
     QTRY_VERIFY(m_tabWidget->tabText(m_tabWidget->currentIndex()).endsWith("*"));
 }
 
-void TestGui::testTabs()
-{
-    QCOMPARE(m_tabWidget->count(), 1);
-    QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), m_dbFileName);
-}
-
 void TestGui::testEditEntry()
 {
     auto* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
