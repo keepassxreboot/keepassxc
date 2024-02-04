@@ -21,6 +21,7 @@ set(TEST_GUI_SOURCES
         FixtureWithDb.cpp
         TestPassphraseGeneratorGui.cpp
         TestPasswordGeneratorGui.cpp
+        TestDbLockingGui.cpp
         TestTotpGui.cpp)
 add_executable(TestGui ${TEST_GUI_SOURCES})
 target_link_libraries(TestGui ${TEST_LIBRARIES} Qt5::Test Catch2::Catch2)

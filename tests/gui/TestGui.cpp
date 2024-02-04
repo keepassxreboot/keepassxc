@@ -1378,35 +1378,26 @@ void TestGui::testDatabaseSettings()
     config()->set(Config::AutoSaveAfterEveryChange, false);
 }
 
-void TestGui::testDatabaseLocking()
+void TestGui::testKeePass1Import()
 {
-    QString origDbName = m_tabWidget->tabText(0);
+    fileDialog()->setNextFileName(QString(KEEPASSX_TEST_DATA_DIR).append("/basic.kdb"));
+    triggerAction("actionImportKeePass1");
 
-    MessageBox::setNextAnswer(MessageBox::Cancel);
-    triggerAction("actionLockAllDatabases");
-
-    QCOMPARE(m_tabWidget->tabText(0), origDbName + " [Locked]");
-
-    auto* actionDatabaseMerge = m_mainWindow->findChild<QAction*>("actionDatabaseMerge", Qt::FindChildrenRecursively);
-    QCOMPARE(actionDatabaseMerge->isEnabled(), false);
-    auto* actionDatabaseSave = m_mainWindow->findChild<QAction*>("actionDatabaseSave", Qt::FindChildrenRecursively);
-    QCOMPARE(actionDatabaseSave->isEnabled(), false);
-
-    DatabaseWidget* dbWidget = m_tabWidget->currentDatabaseWidget();
-    QVERIFY(dbWidget->isLocked());
-    auto* unlockDatabaseWidget = dbWidget->findChild<QWidget*>("databaseOpenWidget");
-    QWidget* editPassword =
-        unlockDatabaseWidget->findChild<PasswordWidget*>("editPassword")->findChild<QLineEdit*>("passwordEdit");
+    auto* keepass1OpenWidget = m_tabWidget->currentDatabaseWidget()->findChild<QWidget*>("keepass1OpenWidget");
+    auto* editPassword =
+        keepass1OpenWidget->findChild<PasswordWidget*>("editPassword")->findChild<QLineEdit*>("passwordEdit");
     QVERIFY(editPassword);
 
-    QTest::keyClicks(editPassword, "a");
+    QTest::keyClicks(editPassword, "masterpw");
     QTest::keyClick(editPassword, Qt::Key_Enter);
 
-    QVERIFY(!dbWidget->isLocked());
-    QCOMPARE(m_tabWidget->tabText(0), origDbName);
+    QTRY_COMPARE(m_tabWidget->count(), 2);
+    QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("basic [New Database]*"));
 
-    actionDatabaseMerge = m_mainWindow->findChild<QAction*>("actionDatabaseMerge", Qt::FindChildrenRecursively);
-    QCOMPARE(actionDatabaseMerge->isEnabled(), true);
+    // Close the KeePass1 Database
+    MessageBox::setNextAnswer(MessageBox::No);
+    triggerAction("actionDatabaseClose");
+    QApplication::processEvents();
 }
 
 void TestGui::testDragAndDropKdbxFiles()
