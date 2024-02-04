@@ -1312,7 +1312,7 @@ Database* Entry::database()
 QString Entry::maskPasswordPlaceholders(const QString& str) const
 {
     QString result = str;
-    result.replace(QRegularExpression("(\\{PASSWORD\\})", QRegularExpression::CaseInsensitiveOption), "******");
+    result.replace(QRegularExpression(R"(\\{PASSWORD\\})", QRegularExpression::CaseInsensitiveOption), "******");
     return result;
 }
 
@@ -1431,8 +1431,8 @@ QString Entry::resolveUrl(const QString& url) const
 {
     QString newUrl = url;
 
-    QRegularExpression fileRegEx("^([a-z]:)?[\\\\/]", QRegularExpression::CaseInsensitiveOption);
-    if (!fileRegEx.match(newUrl).hasMatch()) {
+    QRegularExpression fileRegEx(R"(^([a-z]:)?[\\\\/])", QRegularExpression::CaseInsensitiveOption);
+    if (fileRegEx.match(newUrl).hasMatch()) {
         // Match possible file paths without the scheme and convert it to a file URL
         newUrl = QDir::fromNativeSeparators(newUrl);
         newUrl = QUrl::fromLocalFile(newUrl).toString();
