@@ -597,4 +597,28 @@ void Config::createTempFileInstance()
     tmpFile->setParent(m_instance);
 }
 
+QList<Config::ShortcutEntry> Config::getShortcuts() const
+{
+    m_settings->beginGroup("Shortcuts");
+    const auto keys = m_settings->childKeys();
+    QList<ShortcutEntry> ret;
+    ret.reserve(keys.size());
+    for (const auto& key : keys) {
+        const auto shortcut = m_settings->value(key).toString();
+        ret.push_back(ShortcutEntry{key, shortcut});
+    }
+    m_settings->endGroup();
+    return ret;
+}
+
+void Config::setShortcuts(const QList<ShortcutEntry>& shortcuts)
+{
+    m_settings->beginGroup("Shortcuts");
+    m_settings->remove(""); // clear previous
+    for (const auto& shortcutEntry : shortcuts) {
+        m_settings->setValue(shortcutEntry.name, shortcutEntry.shortcut);
+    }
+    m_settings->endGroup();
+}
+
 #undef QS

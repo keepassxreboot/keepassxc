@@ -98,6 +98,7 @@ set(keepassx_SOURCES
         gui/styles/dark/DarkStyle.cpp
         gui/styles/light/LightStyle.cpp
         gui/AboutDialog.cpp
+        gui/ActionCollection.cpp
         gui/Application.cpp
         gui/CategoryListWidget.cpp
         gui/Clipboard.cpp
@@ -130,6 +131,7 @@ set(keepassx_SOURCES
         gui/SearchWidget.cpp
         gui/SortFilterHideProxyModel.cpp
         gui/SquareSvgWidget.cpp
+        gui/ShortcutSettingsPage.cpp
         gui/TotpSetupDialog.cpp
         gui/TotpDialog.cpp
         gui/TotpExportSettingsDialog.cpp
@@ -180,6 +182,7 @@ set(keepassx_SOURCES
         gui/widgets/ElidedLabel.cpp
         gui/widgets/KPToolBar.cpp
         gui/widgets/PopupHelpWidget.cpp
+        gui/widgets/ShortcutWidget.cpp
         gui/wizard/NewDatabaseWizard.cpp
         gui/wizard/NewDatabaseWizardPage.cpp
         gui/wizard/NewDatabaseWizardPageMetaData.cpp
@@ -319,7 +322,6 @@ set(autotype_SOURCES
         autotype/AutoTypeMatchView.cpp
         autotype/AutoTypeSelectDialog.cpp
         autotype/PickcharsDialog.cpp
-        autotype/ShortcutWidget.cpp
         autotype/WindowSelectComboBox.cpp)
 
 if(WIN32)

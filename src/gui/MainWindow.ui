@@ -443,6 +443,9 @@
    <property name="text">
     <string>&amp;Quit</string>
    </property>
+   <property name="toolTip">
+    <string>Quit Application</string>
+   </property>
    <property name="menuRole">
     <enum>QAction::QuitRole</enum>
    </property>
@@ -450,6 +453,9 @@
   <action name="actionAbout">
    <property name="text">
     <string>&amp;About</string>
+   </property>
+   <property name="toolTip">
+    <string>Open About Dialog</string>
    </property>
    <property name="menuRole">
     <enum>QAction::AboutRole</enum>
@@ -466,6 +472,9 @@
   <action name="actionDatabaseOpen">
    <property name="text">
     <string>&amp;Open Database…</string>
+   </property>
+   <property name="toolTip">
+    <string>Open Database</string>
    </property>
   </action>
   <action name="actionDatabaseSave">
@@ -489,7 +498,7 @@
     <string>&amp;New Database…</string>
    </property>
    <property name="toolTip">
-    <string>Create a new database</string>
+    <string>Create Database</string>
    </property>
   </action>
   <action name="actionDatabaseMerge">
@@ -497,7 +506,7 @@
     <string>&amp;Merge From Database…</string>
    </property>
    <property name="toolTip">
-    <string>Merge from another KDBX database</string>
+    <string>Merge From Database</string>
    </property>
   </action>
   <action name="actionEntryNew">
@@ -508,7 +517,7 @@
     <string>&amp;New Entry…</string>
    </property>
    <property name="toolTip">
-    <string>Add a new entry</string>
+    <string>Create Entry</string>
    </property>
   </action>
   <action name="actionEntryEdit">
@@ -519,7 +528,7 @@
     <string>&amp;Edit Entry…</string>
    </property>
    <property name="toolTip">
-    <string>View or edit entry</string>
+    <string>Edit Entry</string>
    </property>
   </action>
   <action name="actionEntryDelete">
@@ -528,6 +537,9 @@
    </property>
    <property name="text">
     <string>&amp;Delete Entry…</string>
+   </property>
+   <property name="toolTip">
+    <string>Delete Entry</string>
    </property>
   </action>
   <action name="actionGroupNew">
@@ -538,7 +550,7 @@
     <string>&amp;New Group…</string>
    </property>
    <property name="toolTip">
-    <string>Add a new group</string>
+    <string>Create Group</string>
    </property>
   </action>
   <action name="actionGroupEdit">
@@ -548,6 +560,9 @@
    <property name="text">
     <string>&amp;Edit Group…</string>
    </property>
+   <property name="toolTip">
+    <string>Edit Group</string>
+   </property>
   </action>
   <action name="actionGroupDelete">
    <property name="enabled">
@@ -555,6 +570,9 @@
    </property>
    <property name="text">
     <string>&amp;Delete Group…</string>
+   </property>
+   <property name="toolTip">
+    <string>Delete Group</string>
    </property>
   </action>
   <action name="actionGroupDownloadFavicons">
@@ -564,6 +582,9 @@
    <property name="text">
     <string>Download All &amp;Favicons…</string>
    </property>
+   <property name="toolTip">
+    <string>Download All Favicons</string>
+   </property>
   </action>
   <action name="actionGroupSortAsc">
    <property name="enabled">
@@ -571,6 +592,9 @@
    </property>
    <property name="text">
     <string>Sort &amp;A-Z</string>
+   </property>
+   <property name="toolTip">
+    <string>Sort Groups A-Z</string>
    </property>
   </action>
   <action name="actionGroupSortDesc">
@@ -580,6 +604,9 @@
    <property name="text">
     <string>Sort &amp;Z-A</string>
    </property>
+   <property name="toolTip">
+    <string>Sort Groups Z-A</string>
+   </property>
   </action>
   <action name="actionDatabaseSaveAs">
    <property name="enabled">
@@ -588,6 +615,9 @@
    <property name="text">
     <string>Sa&amp;ve Database As…</string>
    </property>
+   <property name="toolTip">
+    <string>Save Database As</string>
+   </property>
   </action>
   <action name="actionDatabaseSecurity">
    <property name="enabled">
@@ -595,6 +625,9 @@
    </property>
    <property name="text">
     <string>Database &amp;Security…</string>
+   </property>
+   <property name="toolTip">
+    <string>Show Database Security</string>
    </property>
   </action>
   <action name="actionReports">
@@ -605,7 +638,7 @@
     <string>Database &amp;Reports…</string>
    </property>
    <property name="toolTip">
-    <string>Statistics, health check, etc.</string>
+    <string>Show Database Reports</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -619,7 +652,7 @@
     <string>&amp;Database Settings…</string>
    </property>
    <property name="toolTip">
-    <string>Database settings</string>
+    <string>Show Database Settings</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -633,7 +666,7 @@
     <string>Passkeys…</string>
    </property>
    <property name="toolTip">
-    <string>Passkeys</string>
+    <string>Show Passkeys</string>
    </property>
    <property name="menuRole">
     <enum>QAction::NoRole</enum>
@@ -660,6 +693,9 @@
    <property name="text">
     <string>&amp;Clone Entry…</string>
    </property>
+   <property name="toolTip">
+    <string>Clone Entry</string>
+   </property>
   </action>
   <action name="actionEntryMoveUp">
    <property name="enabled">
@@ -669,7 +705,7 @@
     <string>Move u&amp;p</string>
    </property>
    <property name="toolTip">
-    <string>Move entry one step up</string>
+    <string>Move Entry Up</string>
    </property>
   </action>
   <action name="actionEntryMoveDown">
@@ -680,7 +716,7 @@
     <string>Move do&amp;wn</string>
    </property>
    <property name="toolTip">
-    <string>Move entry one step down</string>
+    <string>Move Entry Down</string>
    </property>
   </action>
   <action name="actionEntryCopyUsername">
@@ -691,7 +727,7 @@
     <string>Copy &amp;Username</string>
    </property>
    <property name="toolTip">
-    <string>Copy username to clipboard</string>
+    <string>Copy Username</string>
    </property>
   </action>
   <action name="actionEntryCopyPassword">
@@ -702,7 +738,7 @@
     <string>Copy &amp;Password</string>
    </property>
    <property name="toolTip">
-    <string>Copy password to clipboard</string>
+    <string>Copy Password</string>
    </property>
   </action>
   <action name="actionSettings">
@@ -711,6 +747,9 @@
    </property>
    <property name="text">
     <string>&amp;Settings</string>
+   </property>
+   <property name="toolTip">
+    <string>Show Application Settings</string>
    </property>
    <property name="menuRole">
     <enum>QAction::PreferencesRole</enum>
@@ -722,6 +761,9 @@
    </property>
    <property name="text">
     <string>&amp;Password Generator</string>
+   </property>
+   <property name="toolTip">
+    <string>Show Password Generator</string>
    </property>
   </action>
   <action name="actionEntryAutoType">
@@ -751,7 +793,7 @@
     <string notr="true">{USERNAME}</string>
    </property>
    <property name="toolTip">
-    <string notr="true">{USERNAME}</string>
+    <string>Perform Auto-Type: {USERNAME}</string>
    </property>
   </action>
   <action name="actionEntryAutoTypeUsernameEnter">
@@ -765,7 +807,7 @@
     <string notr="true">{USERNAME}{ENTER}</string>
    </property>
    <property name="toolTip">
-    <string notr="true">{USERNAME}{ENTER}</string>
+    <string>Perform Auto-Type: {USERNAME}{ENTER}</string>
    </property>
   </action>
   <action name="actionEntryAutoTypePassword">
@@ -779,7 +821,7 @@
     <string notr="true">{PASSWORD}</string>
    </property>
    <property name="toolTip">
-    <string notr="true">{PASSWORD}</string>
+    <string>Perform Auto-Type: {PASSWORD}</string>
    </property>
   </action>
   <action name="actionEntryAutoTypePasswordEnter">
@@ -793,7 +835,7 @@
     <string notr="true">{PASSWORD}{ENTER}</string>
    </property>
    <property name="toolTip">
-    <string notr="true">{PASSWORD}{ENTER}</string>
+    <string>Perform Auto-Type: {PASSWORD}{ENTER}</string>
    </property>
   </action>
   <action name="actionEntryAutoTypeTOTP">
@@ -807,7 +849,7 @@
     <string notr="true">{TOTP}</string>
    </property>
    <property name="toolTip">
-    <string notr="true">{TOTP}</string>
+    <string>Perform Auto-Type: {TOTP}</string>
    </property>
   </action>
   <action name="actionEntryDownloadIcon">
@@ -847,7 +889,7 @@
     <string>&amp;Title</string>
    </property>
    <property name="toolTip">
-    <string>Copy title to clipboard</string>
+    <string>Copy Title</string>
    </property>
   </action>
   <action name="actionEntryCopyURL">
@@ -858,7 +900,7 @@
     <string>Copy &amp;URL</string>
    </property>
    <property name="toolTip">
-    <string>Copy URL to clipboard</string>
+    <string>Copy URL</string>
    </property>
   </action>
   <action name="actionEntryCopyNotes">
@@ -869,7 +911,7 @@
     <string>&amp;Notes</string>
    </property>
    <property name="toolTip">
-    <string>Copy notes to clipboard</string>
+    <string>Copy Notes</string>
    </property>
   </action>
   <action name="actionExportCsv">
@@ -879,6 +921,9 @@
    <property name="text">
     <string>&amp;CSV File…</string>
    </property>
+   <property name="toolTip">
+    <string>Export to CSV</string>
+   </property>
   </action>
   <action name="actionExportHtml">
    <property name="enabled">
@@ -887,13 +932,16 @@
    <property name="text">
     <string>&amp;HTML File…</string>
    </property>
+   <property name="toolTip">
+    <string>Export to HTML</string>
+   </property>
   </action>
   <action name="actionImportKeePass1">
    <property name="text">
     <string>KeePass 1 Database…</string>
    </property>
    <property name="toolTip">
-    <string>Import a KeePass 1 database</string>
+    <string>Import KeePass1 Database</string>
    </property>
   </action>
   <action name="actionImportOpVault">
@@ -901,7 +949,7 @@
     <string>1Password Vault…</string>
    </property>
    <property name="toolTip">
-    <string>Import a 1Password Vault</string>
+    <string>Import 1Password Vault</string>
    </property>
   </action>
   <action name="actionImportCsv">
@@ -909,7 +957,7 @@
     <string>CSV File…</string>
    </property>
    <property name="toolTip">
-    <string>Import a CSV file</string>
+    <string>Import CSV File</string>
    </property>
   </action>
   <action name="actionEntryTotp">
@@ -921,10 +969,16 @@
    <property name="text">
     <string>Show QR Code</string>
    </property>
+   <property name="toolTip">
+    <string>Show TOTP QR Code</string>
+   </property>
   </action>
   <action name="actionEntrySetupTotp">
    <property name="text">
     <string>Set up TOTP…</string>
+   </property>
+   <property name="toolTip">
+    <string>Set up TOTP</string>
    </property>
   </action>
   <action name="actionEntryCopyTotp">
@@ -941,6 +995,9 @@
    <property name="text">
     <string>E&amp;mpty recycle bin</string>
    </property>
+   <property name="toolTip">
+    <string>Empty Recycle Bin</string>
+   </property>
    <property name="visible">
     <bool>false</bool>
    </property>
@@ -949,10 +1006,16 @@
    <property name="text">
     <string>&amp;Donate</string>
    </property>
+   <property name="toolTip">
+    <string>Open Donation Website</string>
+   </property>
   </action>
   <action name="actionBugReport">
    <property name="text">
     <string>Report a &amp;Bug</string>
+   </property>
+   <property name="toolTip">
+    <string>Open Bug Report</string>
    </property>
   </action>
   <action name="actionGettingStarted">
@@ -968,7 +1031,7 @@
     <string>&amp;Online Help</string>
    </property>
    <property name="toolTip">
-    <string>Go to online documentation</string>
+    <string>Open Online Documentation</string>
    </property>
   </action>
   <action name="actionUserGuide">
@@ -983,6 +1046,9 @@
    <property name="text">
     <string>&amp;Keyboard Shortcuts</string>
    </property>
+   <property name="toolTip">
+    <string>Open Keyboard Shortcuts Guide</string>
+   </property>
    <property name="shortcut">
     <string notr="true">Ctrl+/</string>
    </property>
@@ -994,15 +1060,24 @@
    <property name="text">
     <string>Save Database Backup…</string>
    </property>
+   <property name="toolTip">
+    <string>Save Database Backup</string>
+   </property>
   </action>
   <action name="actionEntryAddToAgent">
    <property name="text">
     <string>Add key to SSH Agent</string>
    </property>
+   <property name="toolTip">
+    <string>SSH Agent: Add Key</string>
+   </property>
   </action>
   <action name="actionEntryRemoveFromAgent">
    <property name="text">
     <string>Remove key from SSH Agent</string>
+   </property>
+   <property name="toolTip">
+    <string>SSH Agent: Remove Key</string>
    </property>
   </action>
   <action name="actionCompactMode">
@@ -1011,6 +1086,9 @@
    </property>
    <property name="text">
     <string>Compact Mode</string>
+   </property>
+   <property name="toolTip">
+    <string>Toggle Compact Mode</string>
    </property>
   </action>
   <action name="actionThemeAuto">
@@ -1023,6 +1101,9 @@
    <property name="text">
     <string>Automatic</string>
    </property>
+   <property name="toolTip">
+    <string>Set Theme: Automatic</string>
+   </property>
   </action>
   <action name="actionThemeLight">
    <property name="checkable">
@@ -1030,6 +1111,9 @@
    </property>
    <property name="text">
     <string>Light</string>
+   </property>
+   <property name="toolTip">
+    <string>Set Theme: Light</string>
    </property>
   </action>
   <action name="actionThemeDark">
@@ -1039,6 +1123,9 @@
    <property name="text">
     <string>Dark</string>
    </property>
+   <property name="toolTip">
+    <string>Set Theme: Dark</string>
+   </property>
   </action>
   <action name="actionThemeClassic">
    <property name="checkable">
@@ -1046,6 +1133,9 @@
    </property>
    <property name="text">
     <string>Classic (Platform-native)</string>
+   </property>
+   <property name="toolTip">
+    <string>Set Theme: Classic</string>
    </property>
   </action>
   <action name="actionShowToolbar">
@@ -1058,6 +1148,9 @@
    <property name="text">
     <string>Show Toolbar</string>
    </property>
+   <property name="toolTip">
+    <string>Toggle Show Toolbar</string>
+   </property>
   </action>
   <action name="actionShowPreviewPanel">
    <property name="checkable">
@@ -1069,6 +1162,9 @@
    <property name="text">
     <string>Show Preview Panel</string>
    </property>
+   <property name="toolTip">
+    <string>Toggle Show Preview Panel</string>
+   </property>
   </action>
   <action name="actionAlwaysOnTop">
    <property name="checkable">
@@ -1076,6 +1172,9 @@
    </property>
    <property name="text">
     <string>Always on Top</string>
+   </property>
+   <property name="toolTip">
+    <string>Toggle Always on Top</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Shift+A</string>
@@ -1087,6 +1186,9 @@
    </property>
    <property name="text">
     <string>Hide Usernames</string>
+   </property>
+   <property name="toolTip">
+    <string>Toggle Hide Usernames</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Shift+B</string>
@@ -1102,6 +1204,9 @@
    <property name="text">
     <string>Hide Passwords</string>
    </property>
+   <property name="toolTip">
+    <string>Toggle Hide Passwords</string>
+   </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Shift+C</string>
    </property>
@@ -1114,7 +1219,7 @@
     <string notr="true">{USERNAME}{TAB}{PASSWORD}{ENTER}</string>
    </property>
    <property name="toolTip">
-    <string notr="true">{USERNAME}{TAB}{PASSWORD}{ENTER}</string>
+    <string notr="true">Perform Auto-Type: Entry Default</string>
    </property>
   </action>
   <action name="actionGroupClone">
@@ -1130,7 +1235,7 @@
     <string notr="true" extracomment="Translatable string with plural form set in CPP file">Restore Entry(s)</string>
    </property>
    <property name="toolTip">
-    <string notr="true" extracomment="Translatable string with plural form set in CPP file">Restore Entry(s)</string>
+    <string notr="true" extracomment="Translatable string with plural form set in CPP file">Restore Entry</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+R</string>
@@ -1152,7 +1257,7 @@
     <string>&amp;XML File…</string>
    </property>
    <property name="toolTip">
-    <string>XML File…</string>
+    <string>Export to XML</string>
    </property>
   </action>
   <action name="actionAllowScreenCapture">
@@ -1161,6 +1266,9 @@
    </property>
    <property name="text">
     <string>Allow Screen Capture</string>
+   </property>
+   <property name="toolTip">
+    <string>Toggle Allow Screen Capture</string>
    </property>
   </action>
  </widget>

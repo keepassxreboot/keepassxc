@@ -18,6 +18,7 @@
 #ifndef KEEPASSX_SHORTCUTWIDGET_H
 #define KEEPASSX_SHORTCUTWIDGET_H
 
+#include <QKeySequence>
 #include <QLineEdit>
 
 class ShortcutWidget : public QLineEdit
@@ -26,9 +27,16 @@ class ShortcutWidget : public QLineEdit
 
 public:
     explicit ShortcutWidget(QWidget* parent = nullptr);
+
     Qt::Key key() const;
     Qt::KeyboardModifiers modifiers() const;
+    QKeySequence sequence() const;
+
     void setShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers);
+
+signals:
+    void shortcutChanged(Qt::Key key, Qt::KeyboardModifiers modifiers);
+    void shortcutReset();
 
 protected:
     void keyPressEvent(QKeyEvent* event) override;
@@ -39,9 +47,9 @@ private:
     void displayShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers);
     void resetShortcut();
 
-    Qt::Key m_key;
-    Qt::KeyboardModifiers m_modifiers;
-    bool m_locked;
+    Qt::Key m_key = Qt::Key_unknown;
+    Qt::KeyboardModifiers m_modifiers = Qt::NoModifier;
+    bool m_locked = false;
 };
 
 #endif // KEEPASSX_SHORTCUTWIDGET_H

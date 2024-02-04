@@ -154,8 +154,6 @@ private slots:
     void focusSearchWidget();
 
 private:
-    static void setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback = 0);
-
     static const QString BaseWindowTitle;
 
     void saveWindowInformation();
@@ -168,6 +166,7 @@ private:
     void dropEvent(QDropEvent* event) override;
 
     void initViewMenu();
+    void initActionCollection();
 
     const QScopedPointer<Ui::MainWindow> m_ui;
     SignalMultiplexer m_actionMultiplexer;

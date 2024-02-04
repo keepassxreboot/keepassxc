@@ -21,6 +21,7 @@
 #include "ui_ApplicationSettingsWidgetSecurity.h"
 #include <QDesktopServices>
 #include <QDir>
+#include <QToolTip>
 
 #include "config-keepassx.h"
 
@@ -136,6 +137,22 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
         m_secUi->lockDatabaseMinimizeCheckBox->setToolTip(
             state ? tr("This setting cannot be enabled when minimize on unlock is enabled.") : "");
         m_secUi->lockDatabaseMinimizeCheckBox->setEnabled(!state);
+    });
+
+    // Set Auto-Type shortcut when changed
+    connect(
+        m_generalUi->autoTypeShortcutWidget, &ShortcutWidget::shortcutChanged, this, [this](auto key, auto modifiers) {
+            QString error;
+            if (autoType()->registerGlobalShortcut(key, modifiers, &error)) {
+                m_generalUi->autoTypeShortcutWidget->setStyleSheet("");
+            } else {
+                QToolTip::showText(mapToGlobal(rect().bottomLeft()), error);
+                m_generalUi->autoTypeShortcutWidget->setStyleSheet("background-color: #FF9696;");
+            }
+        });
+    connect(m_generalUi->autoTypeShortcutWidget, &ShortcutWidget::shortcutReset, this, [this] {
+        autoType()->unregisterGlobalShortcut();
+        m_generalUi->autoTypeShortcutWidget->setStyleSheet("");
     });
 
     // Disable mouse wheel grab when scrolling

@@ -40,9 +40,11 @@
 #include "core/Resources.h"
 #include "core/Tools.h"
 #include "gui/AboutDialog.h"
+#include "gui/ActionCollection.h"
 #include "gui/Icons.h"
 #include "gui/MessageBox.h"
 #include "gui/SearchWidget.h"
+#include "gui/ShortcutSettingsPage.h"
 #include "gui/entry/EntryView.h"
 #include "gui/osutils/OSUtils.h"
 
@@ -189,6 +191,11 @@ MainWindow::MainWindow()
     connect(m_ui->tabWidget, &DatabaseTabWidget::databaseUnlocked, this, &MainWindow::databaseUnlocked);
     connect(m_ui->tabWidget, &DatabaseTabWidget::activeDatabaseChanged, this, &MainWindow::activeDatabaseChanged);
 
+    initViewMenu();
+    initActionCollection();
+
+    m_ui->settingsWidget->addSettingsPage(new ShortcutSettingsPage());
+
 #ifdef WITH_XC_BROWSER
     m_ui->settingsWidget->addSettingsPage(new BrowserSettingsPage());
     connect(
@@ -200,8 +207,6 @@ MainWindow::MainWindow()
     connect(sshAgent(), SIGNAL(enabledChanged(bool)), this, SLOT(agentEnabled(bool)));
     m_ui->settingsWidget->addSettingsPage(new AgentSettingsPage());
 #endif
-
-    initViewMenu();
 
 #if defined(WITH_XC_KEESHARE)
     KeeShare::init(this);
@@ -261,45 +266,6 @@ MainWindow::MainWindow()
     m_inactivityTimer = new InactivityTimer(this);
     connect(m_inactivityTimer, SIGNAL(inactivityDetected()), this, SLOT(lockDatabasesAfterInactivity()));
     applySettingsChanges();
-
-    m_ui->actionDatabaseNew->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_N);
-    setShortcut(m_ui->actionDatabaseOpen, QKeySequence::Open, Qt::CTRL + Qt::Key_O);
-    setShortcut(m_ui->actionDatabaseSave, QKeySequence::Save, Qt::CTRL + Qt::Key_S);
-    setShortcut(m_ui->actionDatabaseSaveAs, QKeySequence::SaveAs, Qt::CTRL + Qt::SHIFT + Qt::Key_S);
-    setShortcut(m_ui->actionDatabaseClose, QKeySequence::Close, Qt::CTRL + Qt::Key_W);
-    m_ui->actionDatabaseSettings->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_Comma);
-    m_ui->actionReports->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_R);
-    setShortcut(m_ui->actionSettings, QKeySequence::Preferences, Qt::CTRL + Qt::Key_Comma);
-    m_ui->actionLockDatabase->setShortcut(Qt::CTRL + Qt::Key_L);
-    m_ui->actionLockAllDatabases->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_L);
-    setShortcut(m_ui->actionQuit, QKeySequence::Quit, Qt::CTRL + Qt::Key_Q);
-    setShortcut(m_ui->actionEntryNew, QKeySequence::New, Qt::CTRL + Qt::Key_N);
-    m_ui->actionEntryEdit->setShortcut(Qt::CTRL + Qt::Key_E);
-    m_ui->actionEntryDelete->setShortcut(Qt::CTRL + Qt::Key_D);
-    m_ui->actionEntryDelete->setShortcut(Qt::Key_Delete);
-    m_ui->actionEntryClone->setShortcut(Qt::CTRL + Qt::Key_K);
-    m_ui->actionEntryTotp->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_T);
-    m_ui->actionEntryDownloadIcon->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_D);
-    m_ui->actionEntryCopyTotp->setShortcut(Qt::CTRL + Qt::Key_T);
-    m_ui->actionEntryCopyPasswordTotp->setShortcut(Qt::CTRL + Qt::Key_Y);
-    m_ui->actionEntryMoveUp->setShortcut(Qt::CTRL + Qt::ALT + Qt::Key_Up);
-    m_ui->actionEntryMoveDown->setShortcut(Qt::CTRL + Qt::ALT + Qt::Key_Down);
-    m_ui->actionEntryCopyUsername->setShortcut(Qt::CTRL + Qt::Key_B);
-    m_ui->actionEntryCopyPassword->setShortcut(Qt::CTRL + Qt::Key_C);
-    m_ui->actionEntryCopyTitle->setShortcut(Qt::CTRL + Qt::Key_I);
-    m_ui->actionEntryAutoTypeSequence->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_V);
-    m_ui->actionEntryOpenUrl->setShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_U);
-    m_ui->actionEntryCopyURL->setShortcut(Qt::CTRL + Qt::Key_U);
-    m_ui->actionEntryRestore->setShortcut(Qt::CTRL + Qt::Key_R);
-
-    // Prevent conflicts with global Mac shortcuts (force Control on all platforms)
-#ifdef Q_OS_MAC
-    auto modifier = Qt::META;
-#else
-    auto modifier = Qt::CTRL;
-#endif
-    m_ui->actionEntryAddToAgent->setShortcut(modifier + Qt::Key_H);
-    m_ui->actionEntryRemoveFromAgent->setShortcut(modifier + Qt::SHIFT + Qt::Key_H);
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
     // Qt 5.10 introduced a new "feature" to hide shortcuts in context menus
@@ -1675,15 +1641,6 @@ void MainWindow::showGroupContextMenu(const QPoint& globalPos)
     m_ui->menuGroups->popup(globalPos);
 }
 
-void MainWindow::setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback)
-{
-    if (!QKeySequence::keyBindings(standard).isEmpty()) {
-        action->setShortcuts(standard);
-    } else if (fallback != 0) {
-        action->setShortcut(QKeySequence(fallback));
-    }
-}
-
 void MainWindow::applySettingsChanges()
 {
     int timeout = config()->get(Config::Security_LockDatabaseIdleSeconds).toInt() * 1000;
@@ -2092,6 +2049,145 @@ void MainWindow::initViewMenu()
     connect(m_ui->actionHidePasswords, &QAction::toggled, this, [](bool checked) {
         config()->set(Config::GUI_HidePasswords, checked);
     });
+}
+
+void MainWindow::initActionCollection()
+{
+    auto ac = ActionCollection::instance();
+    ac->addActions({// Database Menu
+                    m_ui->actionDatabaseNew,
+                    m_ui->actionDatabaseOpen,
+                    m_ui->actionDatabaseSave,
+                    m_ui->actionDatabaseSaveAs,
+                    m_ui->actionDatabaseSaveBackup,
+                    m_ui->actionDatabaseClose,
+                    m_ui->actionLockDatabase,
+                    m_ui->actionLockAllDatabases,
+                    m_ui->actionDatabaseSettings,
+                    m_ui->actionDatabaseSecurity,
+                    m_ui->actionReports,
+                    m_ui->actionPasskeys,
+                    m_ui->actionDatabaseMerge,
+                    m_ui->actionImportPasskey,
+                    m_ui->actionImportCsv,
+                    m_ui->actionImportOpVault,
+                    m_ui->actionImportKeePass1,
+                    m_ui->actionExportCsv,
+                    m_ui->actionExportHtml,
+                    m_ui->actionExportXML,
+                    m_ui->actionQuit,
+                    // Entry Menu
+                    m_ui->actionEntryNew,
+                    m_ui->actionEntryEdit,
+                    m_ui->actionEntryClone,
+                    m_ui->actionEntryDelete,
+                    m_ui->actionEntryCopyUsername,
+                    m_ui->actionEntryCopyPassword,
+                    m_ui->actionEntryCopyURL,
+                    m_ui->actionEntryCopyTitle,
+                    m_ui->actionEntryCopyNotes,
+                    m_ui->actionEntryTotp,
+                    m_ui->actionEntryTotpQRCode,
+                    m_ui->actionEntrySetupTotp,
+                    m_ui->actionEntryCopyTotp,
+                    m_ui->actionEntryCopyPasswordTotp,
+                    m_ui->actionEntryAutoTypeSequence,
+                    m_ui->actionEntryAutoTypeUsername,
+                    m_ui->actionEntryAutoTypeUsernameEnter,
+                    m_ui->actionEntryAutoTypePassword,
+                    m_ui->actionEntryAutoTypePasswordEnter,
+                    m_ui->actionEntryAutoTypeTOTP,
+                    m_ui->actionEntryDownloadIcon,
+                    m_ui->actionEntryOpenUrl,
+                    m_ui->actionEntryMoveUp,
+                    m_ui->actionEntryMoveDown,
+                    m_ui->actionEntryAddToAgent,
+                    m_ui->actionEntryRemoveFromAgent,
+                    m_ui->actionEntryRestore,
+                    // Group Menu
+                    m_ui->actionGroupNew,
+                    m_ui->actionGroupEdit,
+                    m_ui->actionGroupClone,
+                    m_ui->actionGroupDelete,
+                    m_ui->actionGroupDownloadFavicons,
+                    m_ui->actionGroupSortAsc,
+                    m_ui->actionGroupSortDesc,
+                    m_ui->actionGroupEmptyRecycleBin,
+                    // Tools Menu
+                    m_ui->actionPasswordGenerator,
+                    m_ui->actionSettings,
+                    // View Menu
+                    m_ui->actionThemeAuto,
+                    m_ui->actionThemeLight,
+                    m_ui->actionThemeDark,
+                    m_ui->actionThemeClassic,
+                    m_ui->actionCompactMode,
+                    m_ui->actionShowToolbar,
+                    m_ui->actionShowPreviewPanel,
+                    m_ui->actionAllowScreenCapture,
+                    m_ui->actionAlwaysOnTop,
+                    m_ui->actionHideUsernames,
+                    m_ui->actionHidePasswords,
+                    // Help Menu
+                    m_ui->actionGettingStarted,
+                    m_ui->actionUserGuide,
+                    m_ui->actionKeyboardShortcuts,
+                    m_ui->actionOnlineHelp,
+                    m_ui->actionCheckForUpdates,
+                    m_ui->actionDonate,
+                    m_ui->actionBugReport,
+                    m_ui->actionAbout});
+
+    // Add actions whose shortcuts were set in the .ui file
+    for (const auto action : ac->actions()) {
+        if (!action->shortcut().isEmpty()) {
+            ac->setDefaultShortcut(action, action->shortcut());
+        }
+    }
+
+    // Actions with standard shortcuts
+    ac->setDefaultShortcut(m_ui->actionDatabaseOpen, QKeySequence::Open, Qt::CTRL + Qt::Key_O);
+    ac->setDefaultShortcut(m_ui->actionDatabaseSave, QKeySequence::Save, Qt::CTRL + Qt::Key_S);
+    ac->setDefaultShortcut(m_ui->actionDatabaseSaveAs, QKeySequence::SaveAs, Qt::CTRL + Qt::SHIFT + Qt::Key_S);
+    ac->setDefaultShortcut(m_ui->actionDatabaseClose, QKeySequence::Close, Qt::CTRL + Qt::Key_W);
+    ac->setDefaultShortcut(m_ui->actionSettings, QKeySequence::Preferences, Qt::CTRL + Qt::Key_Comma);
+    ac->setDefaultShortcut(m_ui->actionQuit, QKeySequence::Quit, Qt::CTRL + Qt::Key_Q);
+    ac->setDefaultShortcut(m_ui->actionEntryNew, QKeySequence::New, Qt::CTRL + Qt::Key_N);
+
+    // Prevent conflicts with global Mac shortcuts (force Control on all platforms)
+#ifdef Q_OS_MAC
+    auto modifier = Qt::META;
+#else
+    auto modifier = Qt::CTRL;
+#endif
+
+    // All other actions with default shortcuts
+    ac->setDefaultShortcut(m_ui->actionDatabaseNew, Qt::CTRL + Qt::SHIFT + Qt::Key_N);
+    ac->setDefaultShortcut(m_ui->actionDatabaseSettings, Qt::CTRL + Qt::SHIFT + Qt::Key_Comma);
+    ac->setDefaultShortcut(m_ui->actionReports, Qt::CTRL + Qt::SHIFT + Qt::Key_R);
+    ac->setDefaultShortcut(m_ui->actionLockDatabase, Qt::CTRL + Qt::Key_L);
+    ac->setDefaultShortcut(m_ui->actionLockAllDatabases, Qt::CTRL + Qt::SHIFT + Qt::Key_L);
+    ac->setDefaultShortcut(m_ui->actionEntryEdit, Qt::CTRL + Qt::Key_E);
+    ac->setDefaultShortcut(m_ui->actionEntryDelete, Qt::CTRL + Qt::Key_D);
+    ac->setDefaultShortcut(m_ui->actionEntryDelete, Qt::Key_Delete);
+    ac->setDefaultShortcut(m_ui->actionEntryClone, Qt::CTRL + Qt::Key_K);
+    ac->setDefaultShortcut(m_ui->actionEntryTotp, Qt::CTRL + Qt::SHIFT + Qt::Key_T);
+    ac->setDefaultShortcut(m_ui->actionEntryDownloadIcon, Qt::CTRL + Qt::SHIFT + Qt::Key_D);
+    ac->setDefaultShortcut(m_ui->actionEntryCopyTotp, Qt::CTRL + Qt::Key_T);
+    ac->setDefaultShortcut(m_ui->actionEntryCopyPasswordTotp, Qt::CTRL + Qt::Key_Y);
+    ac->setDefaultShortcut(m_ui->actionEntryMoveUp, Qt::CTRL + Qt::ALT + Qt::Key_Up);
+    ac->setDefaultShortcut(m_ui->actionEntryMoveDown, Qt::CTRL + Qt::ALT + Qt::Key_Down);
+    ac->setDefaultShortcut(m_ui->actionEntryCopyUsername, Qt::CTRL + Qt::Key_B);
+    ac->setDefaultShortcut(m_ui->actionEntryCopyPassword, Qt::CTRL + Qt::Key_C);
+    ac->setDefaultShortcut(m_ui->actionEntryCopyTitle, Qt::CTRL + Qt::Key_I);
+    ac->setDefaultShortcut(m_ui->actionEntryAutoTypeSequence, Qt::CTRL + Qt::SHIFT + Qt::Key_V);
+    ac->setDefaultShortcut(m_ui->actionEntryOpenUrl, Qt::CTRL + Qt::SHIFT + Qt::Key_U);
+    ac->setDefaultShortcut(m_ui->actionEntryCopyURL, Qt::CTRL + Qt::Key_U);
+    ac->setDefaultShortcut(m_ui->actionEntryRestore, Qt::CTRL + Qt::Key_R);
+    ac->setDefaultShortcut(m_ui->actionEntryAddToAgent, modifier + Qt::Key_H);
+    ac->setDefaultShortcut(m_ui->actionEntryRemoveFromAgent, modifier + Qt::SHIFT + Qt::Key_H);
+
+    QTimer::singleShot(1, ac, &ActionCollection::restoreShortcuts);
 }
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)

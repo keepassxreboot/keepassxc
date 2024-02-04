@@ -5157,15 +5157,7 @@ Are you sure you want to continue with this file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Create a new database</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;Merge From Database…</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Merge from another KDBX database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5173,15 +5165,7 @@ Are you sure you want to continue with this file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Add a new entry</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;Edit Entry…</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>View or edit entry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5190,10 +5174,6 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>&amp;New Group…</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add a new group</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5229,15 +5209,7 @@ Are you sure you want to continue with this file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Statistics, health check, etc.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;Database Settings…</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Database settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5249,15 +5221,7 @@ Are you sure you want to continue with this file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Move entry one step up</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Move do&amp;wn</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Move entry one step down</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5265,15 +5229,7 @@ Are you sure you want to continue with this file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Copy username to clipboard</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Copy &amp;Password</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Copy password to clipboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5309,23 +5265,11 @@ Are you sure you want to continue with this file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Copy title to clipboard</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Copy &amp;URL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Copy URL to clipboard</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;Notes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Copy notes to clipboard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5341,23 +5285,11 @@ Are you sure you want to continue with this file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Import a KeePass 1 database</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>1Password Vault…</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Import a 1Password Vault</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>CSV File…</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Import a CSV file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5402,10 +5334,6 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>&amp;Online Help</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Go to online documentation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5478,10 +5406,6 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>&amp;XML File…</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>XML File…</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5575,11 +5499,251 @@ We recommend you use the AppImage available on our downloads page.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Passkeys</source>
+        <source>Import Passkey</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Import Passkey</source>
+        <source>Quit Application</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open About Dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Merge From Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create Entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete Entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create Group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete Group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Download All Favicons</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sort Groups A-Z</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sort Groups Z-A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save Database As</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Database Security</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Database Reports</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Database Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Passkeys</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clone Entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move Entry Up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move Entry Down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy Username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Application Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Password Generator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Perform Auto-Type: {USERNAME}</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Perform Auto-Type: {USERNAME}{ENTER}</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Perform Auto-Type: {PASSWORD}</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Perform Auto-Type: {PASSWORD}{ENTER}</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Perform Auto-Type: {TOTP}</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy Title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy URL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy Notes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export to CSV</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export to HTML</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import KeePass1 Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import 1Password Vault</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import CSV File</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show TOTP QR Code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set up TOTP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty Recycle Bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open Donation Website</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open Bug Report</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open Online Documentation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open Keyboard Shortcuts Guide</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save Database Backup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SSH Agent: Add Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SSH Agent: Remove Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle Compact Mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set Theme: Automatic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set Theme: Light</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set Theme: Dark</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set Theme: Classic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle Show Toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle Show Preview Panel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle Always on Top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle Hide Usernames</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle Hide Passwords</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export to XML</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle Allow Screen Capture</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8220,63 +8384,15 @@ Kernel: %3 %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>AES initialization failed</source>
+        <source>Enter Shortcut</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>AES encrypt failed</source>
+        <source>Action</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Failed to store in Linux Keyring</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Could not locate key in keyring</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Could not read key in keyring</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>AES decrypt failed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No Polkit authentication agent was available</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Polkit authorization failed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No Quick Unlock provider is available</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Polkit returned an error: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to init KeePassXC crypto.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to encrypt key data.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to get Windows Hello credential.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to decrypt key data.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Passkeys</source>
+        <source>Shortcuts</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8305,6 +8421,66 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Resident Keys are not supported</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Passkeys</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AES initialization failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AES encrypt failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to store in Linux Keyring</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polkit returned an error: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not locate key in keyring</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not read key in keyring</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AES decrypt failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No Polkit authentication agent was available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polkit authorization failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No Quick Unlock provider is available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to init KeePassXC crypto.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to encrypt key data.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to get Windows Hello credential.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to decrypt key data.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9144,6 +9320,29 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Export to %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ShortcutSettingsWidget</name>
+    <message>
+        <source>Double click an action to change its shortcut</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shortcut Conflict</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shortcut %1 conflicts with &apos;%2&apos;. Overwrite shortcut?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reset Shortcuts</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

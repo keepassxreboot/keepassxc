@@ -67,6 +67,7 @@ private slots:
     void testSortGroups();
     void testAutoType();
     void testTrayRestoreHide();
+    void testShortcutConfig();
 
 private:
     void addCannedEntries();

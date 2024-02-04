@@ -33,6 +33,7 @@
 #include "config-keepassx-tests.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
+#include "gui/ActionCollection.h"
 #include "gui/ApplicationSettingsWidget.h"
 #include "gui/CategoryListWidget.h"
 #include "gui/CloneDialog.h"
@@ -43,6 +44,7 @@
 #include "gui/PasswordGeneratorWidget.h"
 #include "gui/PasswordWidget.h"
 #include "gui/SearchWidget.h"
+#include "gui/ShortcutSettingsPage.h"
 #include "gui/TotpDialog.h"
 #include "gui/TotpSetupDialog.h"
 #include "gui/databasekey/KeyFileEditWidget.h"
@@ -1849,6 +1851,52 @@ void TestGui::testTrayRestoreHide()
     trayIcon->activated(QSystemTrayIcon::DoubleClick);
     QTRY_VERIFY(m_mainWindow->isVisible());
 #endif
+}
+
+void TestGui::testShortcutConfig()
+{
+    // Action collection should not be empty
+    QVERIFY(!ActionCollection::instance()->actions().isEmpty());
+
+    // Add an action, make sure it gets added
+    QAction* a = new QAction(ActionCollection::instance());
+    a->setObjectName("MyAction1");
+    ActionCollection::instance()->addAction(a);
+    QVERIFY(ActionCollection::instance()->actions().contains(a));
+
+    const QKeySequence seq(Qt::CTRL + Qt::SHIFT + Qt::ALT + Qt::Key_N);
+    ActionCollection::instance()->setDefaultShortcut(a, seq);
+    QCOMPARE(ActionCollection::instance()->defaultShortcut(a), seq);
+
+    bool v = false;
+    m_mainWindow->addAction(a);
+    connect(a, &QAction::triggered, ActionCollection::instance(), [&v] { v = !v; });
+    QTest::keyClick(m_mainWindow.data(), Qt::Key_N, Qt::ControlModifier | Qt::ShiftModifier | Qt::AltModifier);
+    QVERIFY(v);
+
+    // Change shortcut and save
+    const QKeySequence newSeq(Qt::CTRL + Qt::SHIFT + Qt::ALT + Qt::Key_M);
+    a->setShortcut(newSeq);
+    QVERIFY(a->shortcut() != ActionCollection::instance()->defaultShortcut(a));
+    ActionCollection::instance()->saveShortcuts();
+    QCOMPARE(a->shortcut(), newSeq);
+    const auto shortcuts = Config::instance()->getShortcuts();
+    Config::ShortcutEntry entryForA;
+    for (const auto& s : shortcuts) {
+        if (s.name == a->objectName()) {
+            entryForA = s;
+            break;
+        }
+    }
+    QCOMPARE(entryForA.name, a->objectName());
+    QCOMPARE(QKeySequence::fromString(entryForA.shortcut), a->shortcut());
+
+    // trigger the old shortcut
+    QTest::keyClick(m_mainWindow.data(), Qt::Key_N, Qt::ControlModifier | Qt::ShiftModifier | Qt::AltModifier);
+    QVERIFY(v); // value of v should not change
+    QTest::keyClick(m_mainWindow.data(), Qt::Key_M, Qt::ControlModifier | Qt::ShiftModifier | Qt::AltModifier);
+    QVERIFY(!v);
+    disconnect(a, nullptr, nullptr, nullptr);
 }
 
 void TestGui::testAutoType()
