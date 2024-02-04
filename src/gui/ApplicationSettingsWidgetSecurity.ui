@@ -184,6 +184,13 @@
        </widget>
       </item>
       <item>
+       <widget class="QCheckBox" name="lockDatabasesOnUserSwitchCheckBox">
+        <property name="text">
+         <string>Lock databases when switching user</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QCheckBox" name="passwordsRepeatVisibleCheckBox">
         <property name="text">
          <string>Require password repeat when it is visible</string>
@@ -281,6 +288,7 @@
   <tabstop>clearClipboardSpinBox</tabstop>
   <tabstop>lockDatabaseIdleCheckBox</tabstop>
   <tabstop>lockDatabaseIdleSpinBox</tabstop>
+  <tabstop>lockDatabasesOnUserSwitchCheckBox</tabstop>
   <tabstop>clearSearchCheckBox</tabstop>
   <tabstop>clearSearchSpinBox</tabstop>
   <tabstop>lockDatabaseOnScreenLockCheckBox</tabstop>

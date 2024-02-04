@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2011 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -114,6 +114,7 @@ public:
         Security_LockDatabaseIdleSeconds,
         Security_LockDatabaseMinimize,
         Security_LockDatabaseScreenLock,
+        Security_LockDatabaseOnUserSwitch,
         Security_RelockAutoType,
         Security_PasswordsRepeatVisible,
         Security_PasswordsHidden,

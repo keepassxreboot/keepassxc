@@ -1,6 +1,6 @@
 /*
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2016 Lennart Glauer <mail@lennart-glauer.de>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@
                                                            selector:@selector(didDeactivateApplicationObserver:)
                                                                name:NSWorkspaceDidDeactivateApplicationNotification
                                                              object:nil];
-    
+
         [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self
                                                             selector:@selector(userSwitchHandler:)
                                                                 name:NSWorkspaceSessionDidResignActiveNotification
@@ -168,7 +168,7 @@
 {
     if ([[notification name] isEqualToString:NSWorkspaceSessionDidResignActiveNotification] && m_appkit)
     {
-        emit m_appkit->lockDatabases();
+        emit m_appkit->userSwitched();
     }
 }
 
@@ -196,7 +196,7 @@
         // Request screen recording permission on macOS 10.15+
         // This is necessary to get the current window title
         CGDisplayStreamRef stream = CGDisplayStreamCreate(CGMainDisplayID(), 1, 1, kCVPixelFormatType_32BGRA, nil,
-                                                          ^(CGDisplayStreamFrameStatus status, uint64_t displayTime, 
+                                                          ^(CGDisplayStreamFrameStatus status, uint64_t displayTime,
                                                                   IOSurfaceRef frameSurface, CGDisplayStreamUpdateRef updateRef) {
                                                               Q_UNUSED(status);
                                                               Q_UNUSED(displayTime);

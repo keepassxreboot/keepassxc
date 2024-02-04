@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2011 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -133,6 +133,7 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::Security_LockDatabaseIdleSeconds, {QS("Security/LockDatabaseIdleSeconds"), Roaming, 240}},
     {Config::Security_LockDatabaseMinimize, {QS("Security/LockDatabaseMinimize"), Roaming, false}},
     {Config::Security_LockDatabaseScreenLock, {QS("Security/LockDatabaseScreenLock"), Roaming, true}},
+    {Config::Security_LockDatabaseOnUserSwitch, {QS("Security/LockDatabaseOnUserSwitch"), Roaming, true}},
     {Config::Security_RelockAutoType, {QS("Security/RelockAutoType"), Roaming, false}},
     {Config::Security_PasswordsRepeatVisible, {QS("Security/PasswordsRepeatVisible"), Roaming, true}},
     {Config::Security_PasswordsHidden, {QS("Security/PasswordsHidden"), Roaming, true}},
