@@ -125,3 +125,18 @@ Entry* FixtureWithDb::getCurrentEntry()
 
     return pCurrentEntry;
 }
+
+void FixtureWithDb::checkDatabase(const QString& filePath, const QString& expectedDbName)
+{
+    auto key = QSharedPointer<CompositeKey>::create();
+    key->addKey(QSharedPointer<PasswordKey>::create("a"));
+    auto dbSaved = QSharedPointer<Database>::create();
+
+    REQUIRE(dbSaved->open(filePath, key, nullptr));
+    REQUIRE(dbSaved->metadata()->name() == expectedDbName);
+}
+
+void FixtureWithDb::checkDatabase(const QString& filePath)
+{
+    checkDatabase(filePath.isEmpty() ? m_dbFilePath : filePath, m_db->metadata()->name());
+}
