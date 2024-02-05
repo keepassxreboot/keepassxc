@@ -1093,32 +1093,6 @@ void TestGui::testDragAndDropGroup()
     dragAndDropGroup(groupModel->index(0, 0, rootIndex), rootIndex, -1, true, "NewDatabase", 4);
 }
 
-void TestGui::testSaveAs()
-{
-    QFileInfo fileInfo(m_dbFilePath);
-    QDateTime lastModified = fileInfo.lastModified();
-
-    m_db->metadata()->setName("testSaveAs");
-
-    // open temporary file so it creates a filename
-    TemporaryFile tmpFile;
-    QVERIFY(tmpFile.open());
-    QString tmpFileName = tmpFile.fileName();
-    tmpFile.remove();
-
-    fileDialog()->setNextFileName(tmpFileName);
-
-    triggerAction("actionDatabaseSaveAs");
-
-    QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("testSaveAs"));
-
-    checkDatabase(tmpFileName);
-
-    fileInfo.refresh();
-    QCOMPARE(fileInfo.lastModified(), lastModified);
-    tmpFile.remove();
-}
-
 void TestGui::testSaveBackup()
 {
     m_db->metadata()->setName("testSaveBackup");

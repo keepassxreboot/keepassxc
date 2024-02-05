@@ -38,6 +38,7 @@ protected:
     static QString findLabelText(const QWidget* pWidget, const QString& labelName);
     static void escape(QWidget* pWidget, int waitMs = 250);
     static void wait(int ms);
+    static QString newTempFileName();
 
 protected:
     // Have one single main window for all GUI tests.
