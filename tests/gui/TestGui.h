@@ -51,7 +51,6 @@ private slots:
     void testEntryPlaceholders();
     void testDragAndDropEntry();
     void testDragAndDropGroup();
-    void testSaveAs();
     void testSaveBackup();
     void testSave();
     void testSaveBackupPath();

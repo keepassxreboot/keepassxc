@@ -15,6 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "FixtureBase.h"
+#include "../../tests/util/TemporaryFile.h"
 #include "catch2/catch_all.hpp"
 #include "gui/MainWindow.h"
 
@@ -115,4 +116,11 @@ void FixtureBase::escape(QWidget* pWidget, const int waitMs)
 void FixtureBase::wait(const int ms)
 {
     Tools::wait(ms);
+}
+
+// Generates a temporary filename. The created file will be removed automatically by ~TemporaryFile().
+QString FixtureBase::newTempFileName()
+{
+    TemporaryFile tmpFile;
+    return tmpFile.fileName();
 }
