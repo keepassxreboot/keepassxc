@@ -24,6 +24,10 @@
 #include "format/KeePass2.h"
 #include "format/KeePass2Reader.h"
 #include "format/KeePass2Writer.h"
+#ifdef WITH_XC_KEESHARE
+#include "keeshare/KeeShare.h"
+#include "keeshare/KeeShareSettings.h"
+#endif
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
 #include "mock/MockChallengeResponseKey.h"
@@ -72,7 +76,7 @@ QSharedPointer<Database> TestKdbx4Argon2::readXml(QBuffer* buf, bool strictMode,
 
 void TestKdbx4Argon2::writeXml(QBuffer* buf, Database* db, bool& hasError, QString& errorString)
 {
-    KdbxXmlWriter writer(KeePass2::FILE_VERSION_4);
+    KdbxXmlWriter writer(KeePass2::FILE_VERSION_4, {});
     writer.writeDatabase(buf, db);
     hasError = writer.hasError();
     errorString = writer.errorString();
@@ -415,6 +419,107 @@ void TestKdbx4Format::testUpgradeMasterKeyIntegrity_data()
     QTest::newRow("Upgrade (implicit): rootentry-customdata")
         << QString("rootentry-customdata") << KeePass2::FILE_VERSION_4;
     QTest::newRow("Upgrade (implicit): entry-customdata") << QString("entry-customdata") << KeePass2::FILE_VERSION_4;
+}
+
+void TestKdbx4Format::testAttachmentIndexStability()
+{
+    QScopedPointer<Database> db(new Database());
+    db->changeKdf(fastKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2ID)));
+    auto compositeKey = QSharedPointer<CompositeKey>::create();
+    db->setKey(compositeKey);
+    QVERIFY(!db->uuid().isNull());
+
+    auto root = db->rootGroup();
+
+    auto group1 = new Group();
+    group1->setUuid(QUuid::createUuid());
+    QVERIFY(!group1->uuid().isNull());
+    group1->setParent(root);
+
+    // Simulate KeeShare group, which uses its own attachment namespace
+    auto group2 = new Group();
+    group2->setUuid(QUuid::createUuid());
+    QVERIFY(!group2->uuid().isNull());
+    group2->setParent(group1);
+#ifdef WITH_XC_KEESHARE
+    KeeShareSettings::Reference ref;
+    ref.type = KeeShareSettings::SynchronizeWith;
+    ref.path = "123";
+    KeeShare::setReferenceTo(group2, ref);
+    QVERIFY(KeeShare::isShared(group2));
+#endif
+
+    auto attachment1 = QByteArray("qwerty");
+    auto attachment2 = QByteArray("asdf");
+    auto attachment3 = QByteArray("zxcv");
+
+    auto entry1 = new Entry();
+    entry1->setUuid(QUuid::createUuid());
+    QVERIFY(!entry1->uuid().isNull());
+    auto uuid1 = entry1->uuid();
+    entry1->attachments()->set("a", attachment1);
+    QCOMPARE(entry1->attachments()->keys().size(), 1);
+    QCOMPARE(entry1->attachments()->values().size(), 1);
+    entry1->setGroup(root);
+
+    auto entry2 = new Entry();
+    entry2->setUuid(QUuid::createUuid());
+    QVERIFY(!entry2->uuid().isNull());
+    auto uuid2 = entry2->uuid();
+    entry2->attachments()->set("a", attachment1);
+    entry2->attachments()->set("b", attachment2);
+    QCOMPARE(entry2->attachments()->keys().size(), 2);
+    QCOMPARE(entry2->attachments()->values().size(), 2);
+    entry2->setGroup(group1);
+
+    auto entry3 = new Entry();
+    entry3->setUuid(QUuid::createUuid());
+    QVERIFY(!entry3->uuid().isNull());
+    auto uuid3 = entry3->uuid();
+    entry3->attachments()->set("a", attachment1);
+    entry3->attachments()->set("b", attachment2);
+    entry3->attachments()->set("x", attachment3);
+    entry3->attachments()->set("y", attachment3);
+    QCOMPARE(entry3->attachments()->keys().size(), 4);
+    QCOMPARE(entry3->attachments()->values().size(), 3);
+    entry3->setGroup(group2);
+
+    QBuffer buffer;
+    buffer.open(QBuffer::ReadWrite);
+    KeePass2Writer writer;
+    QVERIFY(writer.writeDatabase(&buffer, db.data()));
+    QVERIFY(writer.version() >= KeePass2::FILE_VERSION_4);
+
+    buffer.seek(0);
+    KeePass2Reader reader;
+
+    // Re-read database and check that all attachments are still correctly assigned
+    auto db2 = QSharedPointer<Database>::create();
+    reader.readDatabase(&buffer, QSharedPointer<CompositeKey>::create(), db2.data());
+    QVERIFY(!reader.hasError());
+    QVERIFY(!db->uuid().isNull());
+
+    auto a1 = db2->rootGroup()->findEntryByUuid(uuid1)->attachments();
+    QCOMPARE(a1->keys().size(), 1);
+    QCOMPARE(a1->values().size(), 1);
+    QCOMPARE(a1->value("a"), attachment1);
+
+    auto a2 = db2->rootGroup()->findEntryByUuid(uuid2)->attachments();
+    QCOMPARE(a2->keys().size(), 2);
+    QCOMPARE(a2->values().size(), 2);
+    QCOMPARE(a2->value("a"), attachment1);
+    QCOMPARE(a2->value("b"), attachment2);
+
+#ifdef WITH_XC_KEESHARE
+    QVERIFY(KeeShare::isShared(db2->rootGroup()->findEntryByUuid(uuid3)->group()));
+#endif
+    auto a3 = db2->rootGroup()->findEntryByUuid(uuid3)->attachments();
+    QCOMPARE(a3->keys().size(), 4);
+    QCOMPARE(a3->values().size(), 3);
+    QCOMPARE(a3->value("a"), attachment1);
+    QCOMPARE(a3->value("b"), attachment2);
+    QCOMPARE(a3->value("x"), attachment3);
+    QCOMPARE(a3->value("y"), attachment3);
 }
 
 void TestKdbx4Format::testCustomData()

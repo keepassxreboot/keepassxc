@@ -30,7 +30,13 @@ class KeePass2RandomStream;
 class KdbxXmlWriter
 {
 public:
+    /**
+     * Map of entry + attachment key to KDBX 4 inner header binary index.
+     */
+    typedef QHash<QPair<const Entry*, QString>, qint64> BinaryIdxMap;
+
     explicit KdbxXmlWriter(quint32 version);
+    explicit KdbxXmlWriter(quint32 version, KdbxXmlWriter::BinaryIdxMap binaryIdxMap);
 
     void writeDatabase(QIODevice* device,
                        const Database* db,
@@ -43,7 +49,7 @@ public:
     QString errorString();
 
 private:
-    void generateIdMap();
+    void fillBinaryIdxMap();
 
     void writeMetadata();
     void writeMemoryProtection();
@@ -85,7 +91,7 @@ private:
     QPointer<const Database> m_db;
     QPointer<const Metadata> m_meta;
     KeePass2RandomStream* m_randomStream = nullptr;
-    QHash<QByteArray, int> m_idMap;
+    BinaryIdxMap m_binaryIdxMap;
     QByteArray m_headerHash;
 
     bool m_error = false;
