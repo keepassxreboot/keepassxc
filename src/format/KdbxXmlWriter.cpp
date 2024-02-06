@@ -19,9 +19,13 @@
 
 #include <QBuffer>
 #include <QFile>
+#include <QMap>
 
 #include "core/Endian.h"
+#include "crypto/CryptoHash.h"
 #include "format/KeePass2RandomStream.h"
+#include "keeshare/KeeShare.h"
+#include "keeshare/KeeShareSettings.h"
 #include "streams/qtiocompressor.h"
 
 /**
@@ -29,6 +33,15 @@
  */
 KdbxXmlWriter::KdbxXmlWriter(quint32 version)
     : m_kdbxVersion(version)
+{
+    Q_ASSERT_X(m_kdbxVersion < KeePass2::FILE_VERSION_4,
+               "KDBX version",
+               "KDBX version >= 4 requires explicit binary index map.");
+}
+
+KdbxXmlWriter::KdbxXmlWriter(quint32 version, KdbxXmlWriter::BinaryIdxMap binaryIdxMap)
+    : m_kdbxVersion(version)
+    , m_binaryIdxMap(std::move(binaryIdxMap))
 {
 }
 
@@ -46,7 +59,9 @@ void KdbxXmlWriter::writeDatabase(QIODevice* device,
     m_xml.setAutoFormattingIndent(-1); // 1 tab
     m_xml.setCodec("UTF-8");
 
-    generateIdMap();
+    if (m_kdbxVersion < KeePass2::FILE_VERSION_4) {
+        fillBinaryIdxMap();
+    }
 
     m_xml.setDevice(device);
     m_xml.writeStartDocument("1.0", true);
@@ -80,18 +95,38 @@ QString KdbxXmlWriter::errorString()
     return m_errorStr;
 }
 
-void KdbxXmlWriter::generateIdMap()
+/**
+ * Generate a map of entry attachments to deduplicated attachment index IDs.
+ * This is basically duplicated code from Kdbx4Writer.cpp for KDBX 3 compatibility.
+ * I don't have a good solution for getting rid of this duplication without getting rid of KDBX 3.
+ */
+void KdbxXmlWriter::fillBinaryIdxMap()
 {
     const QList<Entry*> allEntries = m_db->rootGroup()->entriesRecursive(true);
-    int nextId = 0;
+    QHash<QByteArray, qint64> writtenAttachments;
+    qint64 nextIdx = 0;
 
     for (Entry* entry : allEntries) {
         const QList<QString> attachmentKeys = entry->attachments()->keys();
         for (const QString& key : attachmentKeys) {
             QByteArray data = entry->attachments()->value(key);
-            if (!m_idMap.contains(data)) {
-                m_idMap.insert(data, nextId++);
+            CryptoHash hash(CryptoHash::Sha256);
+#ifdef WITH_XC_KEESHARE
+            // Namespace KeeShare attachments so they don't get deduplicated together with attachments
+            // from other databases. Prevents potential filesize side channels.
+            if (auto shared = KeeShare::resolveSharedGroup(entry->group())) {
+                hash.addData(KeeShare::referenceOf(shared).uuid.toByteArray());
+            } else {
+                hash.addData(m_db->uuid().toByteArray());
             }
+#endif
+            hash.addData(data);
+
+            const auto hashResult = hash.result();
+            if (!writtenAttachments.contains(hashResult)) {
+                writtenAttachments.insert(hashResult, nextIdx++);
+            }
+            m_binaryIdxMap.insert(qMakePair(entry, key), writtenAttachments.value(hashResult));
         }
     }
 }
@@ -181,13 +216,19 @@ void KdbxXmlWriter::writeIcon(const QUuid& uuid, const Metadata::CustomIconData&
 
 void KdbxXmlWriter::writeBinaries()
 {
+    // Reverse binary index map
+    QMap<qint64, QByteArray> binaries;
+    for (auto i = m_binaryIdxMap.constBegin(); i != m_binaryIdxMap.constEnd(); ++i) {
+        if (!binaries.contains(i.value())) {
+            binaries.insert(i.value(), i.key().first->attachments()->value(i.key().second));
+        }
+    }
+
     m_xml.writeStartElement("Binaries");
 
-    QHash<QByteArray, int>::const_iterator i;
-    for (i = m_idMap.constBegin(); i != m_idMap.constEnd(); ++i) {
+    for (auto i = binaries.constBegin(); i != binaries.constEnd(); ++i) {
         m_xml.writeStartElement("Binary");
-
-        m_xml.writeAttribute("ID", QString::number(i.value()));
+        m_xml.writeAttribute("ID", QString::number(i.key()));
 
         QByteArray data;
         if (m_db->compressionAlgorithm() == Database::CompressionGZip) {
@@ -200,15 +241,15 @@ void KdbxXmlWriter::writeBinaries()
             compressor.setStreamFormat(QtIOCompressor::GzipFormat);
             compressor.open(QIODevice::WriteOnly);
 
-            qint64 bytesWritten = compressor.write(i.key());
-            Q_ASSERT(bytesWritten == i.key().size());
+            qint64 bytesWritten = compressor.write(i.value());
+            Q_ASSERT(bytesWritten == i.value().size());
             Q_UNUSED(bytesWritten);
             compressor.close();
 
             buffer.seek(0);
             data = buffer.readAll();
         } else {
-            data = i.key();
+            data = i.value();
         }
 
         if (!data.isEmpty()) {
@@ -422,7 +463,7 @@ void KdbxXmlWriter::writeEntry(const Entry* entry)
         writeString("Key", key);
 
         m_xml.writeStartElement("Value");
-        m_xml.writeAttribute("Ref", QString::number(m_idMap[entry->attachments()->value(key)]));
+        m_xml.writeAttribute("Ref", QString::number(m_binaryIdxMap[qMakePair(entry, key)]));
         m_xml.writeEndElement();
 
         m_xml.writeEndElement();
