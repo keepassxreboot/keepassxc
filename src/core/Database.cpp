@@ -21,6 +21,7 @@
 #include "core/AsyncTask.h"
 #include "core/FileWatcher.h"
 #include "core/Group.h"
+#include "crypto/Random.h"
 #include "format/KdbxXmlReader.h"
 #include "format/KeePass2Reader.h"
 #include "format/KeePass2Writer.h"
@@ -268,6 +269,10 @@ bool Database::saveAs(const QString& filePath, SaveAction action, const QString&
 
     // Clear read-only flag
     m_fileWatcher->stop();
+
+    // Add random data to prevent side-channel data deduplication attacks
+    int length = Random::instance()->randomUIntRange(64, 512);
+    m_metadata->customData()->set("KPXC_RANDOM_SLUG", Random::instance()->randomArray(length).toHex());
 
     // Prevent destructive operations while saving
     QMutexLocker locker(&m_saveMutex);
