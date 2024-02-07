@@ -196,7 +196,6 @@ private:
                    const bool omitWwwSubdomain = false);
     QString getDatabaseRootUuid();
     QString getDatabaseRecycleBinUuid();
-    bool checkLegacySettings(QSharedPointer<Database> db);
     void hideWindow() const;
     void raiseWindow(const bool force = false);
     void updateWindowState();
