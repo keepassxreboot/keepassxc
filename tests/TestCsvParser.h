@@ -19,7 +19,6 @@
 #ifndef KEEPASSX_TESTCSVPARSER_H
 #define KEEPASSX_TESTCSVPARSER_H
 
-#include <QFile>
 #include <QTemporaryFile>
 
 #include "format/CsvParser.h"
@@ -62,7 +61,6 @@ private:
     QScopedPointer<QTemporaryFile> file;
     QScopedPointer<CsvParser> parser;
     CsvTable t;
-    void dumpRow(CsvTable table, int row);
 };
 
 #endif // KEEPASSX_TESTCSVPARSER_H

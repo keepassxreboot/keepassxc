@@ -154,7 +154,6 @@ public:
     const QList<Group*>& children() const;
     QList<Entry*> entries();
     const QList<Entry*>& entries() const;
-    Entry* findEntryRecursive(const QString& text, EntryReferenceType referenceType, Group* group = nullptr);
     QList<Entry*> referencesRecursive(const Entry* entry) const;
     QList<Entry*> entriesRecursive(bool includeHistoryItems = false) const;
     QList<const Group*> groupsRecursive(bool includeSelf) const;
