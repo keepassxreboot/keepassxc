@@ -140,8 +140,6 @@ QString BrowserMessageBuilder::getErrorMessage(const int errorCode) const
         return QObject::tr("Empty public key");
     case ERROR_PASSKEYS_INVALID_URL_PROVIDED:
         return QObject::tr("Invalid URL provided");
-    case ERROR_PASSKEYS_RESIDENT_KEYS_NOT_SUPPORTED:
-        return QObject::tr("Resident Keys are not supported");
     default:
         return QObject::tr("Unknown error");
     }

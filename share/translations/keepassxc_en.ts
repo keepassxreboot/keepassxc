@@ -8420,10 +8420,6 @@ Kernel: %3 %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Resident Keys are not supported</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Passkeys</source>
         <translation type="unfinished"></translation>
     </message>
