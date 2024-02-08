@@ -102,7 +102,7 @@ QString UrlTools::getTopLevelDomainFromUrl(const QString& url) const
         cookie.setDomain(host);
 
         // Check if dummy cookie's domain/TLD matches with public suffix list
-        if (!QNetworkCookieJar{}.setCookiesFromUrl(QList{cookie}, url)) {
+        if (!QNetworkCookieJar{}.setCookiesFromUrl(QList{cookie}, QUrl::fromUserInput(url))) {
             return host;
         }
     }
@@ -112,7 +112,9 @@ QString UrlTools::getTopLevelDomainFromUrl(const QString& url) const
 
 bool UrlTools::isIpAddress(const QString& host) const
 {
-    QHostAddress address(host);
+    // Handle IPv6 host with brackets, e.g [::1]
+    const auto hostAddress = host.startsWith('[') && host.endsWith(']') ? host.mid(1, host.length() - 2) : host;
+    QHostAddress address(hostAddress);
     return address.protocol() == QAbstractSocket::IPv4Protocol || address.protocol() == QAbstractSocket::IPv6Protocol;
 }
 #endif
@@ -170,4 +172,10 @@ bool UrlTools::isUrlValid(const QString& urlField) const
     }
 
     return true;
+}
+
+bool UrlTools::domainHasIllegalCharacters(const QString& domain) const
+{
+    QRegularExpression re(R"([\s\^#|/:<>\?@\[\]\\])");
+    return re.match(domain).hasMatch();
 }
