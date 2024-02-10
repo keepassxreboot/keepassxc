@@ -140,3 +140,23 @@ void FixtureWithDb::checkDatabase(const QString& filePath)
 {
     checkDatabase(filePath.isEmpty() ? m_dbFilePath : filePath, m_db->metadata()->name());
 }
+
+void FixtureWithDb::saveAndCheckDatabase(int attempts)
+{
+    REQUIRE(m_db->isModified());
+    REQUIRE(m_tabWidget->tabText(m_tabWidget->currentIndex()).endsWith("*"));
+
+    // Attempt to save the database many times to overcome transient file errors.
+    int i = 0;
+    do {
+        triggerAction("actionDatabaseSave");
+        if (!m_db->isModified()) {
+            checkDatabase();
+            return;
+        }
+        WARN("Failed to save database, trying again...");
+        wait(250);
+    } while (++i < attempts);
+
+    FAIL("Could not save database.");
+}

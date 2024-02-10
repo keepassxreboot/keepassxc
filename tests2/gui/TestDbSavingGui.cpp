@@ -46,3 +46,17 @@ SCENARIO_METHOD(FixtureWithDb, "Test Save As...", "[gui]")
         }
     }
 }
+
+SCENARIO_METHOD(FixtureWithDb, "Test Save", "[gui]")
+{
+    WHEN("User changes the DB and saves it")
+    {
+        m_db->metadata()->setName("testSave");
+        wait(250);
+
+        THEN("The DB is saved")
+        {
+            saveAndCheckDatabase();
+        }
+    }
+}

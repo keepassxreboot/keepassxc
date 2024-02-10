@@ -1122,13 +1122,6 @@ void TestGui::testSaveBackup()
     tmpFile.remove();
 }
 
-void TestGui::testSave()
-{
-    // Make a modification to the database then save
-    m_db->metadata()->setName("testSave");
-    checkSaveDatabase();
-}
-
 void TestGui::testSaveBackupPath_data()
 {
     QTest::addColumn<QString>("backupFilePathPattern");
