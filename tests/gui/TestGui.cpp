@@ -1093,35 +1093,6 @@ void TestGui::testDragAndDropGroup()
     dragAndDropGroup(groupModel->index(0, 0, rootIndex), rootIndex, -1, true, "NewDatabase", 4);
 }
 
-void TestGui::testSaveBackup()
-{
-    m_db->metadata()->setName("testSaveBackup");
-
-    QFileInfo fileInfo(m_dbFilePath);
-    QDateTime lastModified = fileInfo.lastModified();
-
-    // open temporary file so it creates a filename
-    TemporaryFile tmpFile;
-    QVERIFY(tmpFile.open());
-    QString tmpFileName = tmpFile.fileName();
-    tmpFile.remove();
-
-    // wait for modified timer
-    QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("testSaveBackup*"));
-
-    fileDialog()->setNextFileName(tmpFileName);
-
-    triggerAction("actionDatabaseSaveBackup");
-
-    QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("testSaveBackup*"));
-
-    checkDatabase(tmpFileName);
-
-    fileInfo.refresh();
-    QCOMPARE(fileInfo.lastModified(), lastModified);
-    tmpFile.remove();
-}
-
 void TestGui::testSaveBackupPath_data()
 {
     QTest::addColumn<QString>("backupFilePathPattern");
