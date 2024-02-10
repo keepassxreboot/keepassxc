@@ -60,3 +60,28 @@ SCENARIO_METHOD(FixtureWithDb, "Test Save", "[gui]")
         }
     }
 }
+
+SCENARIO_METHOD(FixtureWithDb, "Test Save Backup", "[gui]")
+{
+    QFileInfo dbFileInfo(m_dbFilePath);
+    QDateTime dbFileLastModified = dbFileInfo.lastModified();
+    QString tmpFileName = newTempFileName();
+
+    WHEN("User changes the DB and saves the current DB as a backup")
+    {
+        m_db->metadata()->setName("testSaveBackup");
+
+        fileDialog()->setNextFileName(tmpFileName);
+        triggerAction("actionDatabaseSaveBackup");
+
+        THEN("The saved DB is as expected")
+        {
+            REQUIRE_FALSE(m_dbWidget->isLocked());
+            REQUIRE(m_tabWidget->tabText(m_tabWidget->currentIndex()) == QString("testSaveBackup"));
+            checkDatabase(tmpFileName);
+
+            dbFileInfo.refresh();
+            REQUIRE(dbFileInfo.lastModified() == dbFileLastModified);
+        }
+    }
+}
