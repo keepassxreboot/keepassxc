@@ -85,3 +85,65 @@ SCENARIO_METHOD(FixtureWithDb, "Test Save Backup", "[gui]")
         }
     }
 }
+
+SCENARIO_METHOD(FixtureWithDb, "Test Save Backup Path", "[gui]")
+{
+    QFileInfo dbFileInfo(m_dbFilePath);
+
+    /**
+     * Tests that the backupFilePathPattern config entry is respected. We do not test patterns like {TIME} etc here
+     * as this is done in a separate test case. We do however check {DB_FILENAME} as this is a feature of the
+     * performBackup() function.
+     */
+    WHEN("User changes the DB and saves the current DB as a backup")
+    {
+        struct TestData {
+            QString backupFilePathPattern;
+            QString expectedBackupFile;
+        };
+
+        QString tmpFileName = newTempFileName();
+
+        auto data = GENERATE_REF(
+            // Absolute backup path
+            TestData{tmpFileName, tmpFileName},
+            // Relative backup path (implicit)
+            TestData{"other_dir/test.old.kdbx", "other_dir/test.old.kdbx"},
+            // Relative backup path (explicit)
+            TestData{"./other_dir2/test2.old.kdbx", "other_dir2/test2.old.kdbx"},
+            // Path with placeholders
+            TestData{"{DB_FILENAME}.old.kdbx", "KeePassXC.old.kdbx"},
+            // empty path should be replaced with default pattern
+            TestData{"", config()->getDefault(Config::BackupFilePathPattern).toString()},
+            // {DB_FILENAME} should be replaced with database filename
+            TestData { "{DB_FILENAME}_.old.kdbx", "{DB_FILENAME}_.old.kdbx" }
+        );
+
+        // Enable automatic backups
+        config()->set(Config::BackupBeforeSave, true);
+        config()->set(Config::BackupFilePathPattern, data.backupFilePathPattern);
+
+        // Replace placeholders and resolve relative paths. This cannot be done in the _data() function as the
+        // db path/filename is not known yet
+        if (!QDir::isAbsolutePath(data.expectedBackupFile)) {
+            data.expectedBackupFile = QDir(dbFileInfo.absolutePath()).absoluteFilePath(data.expectedBackupFile);
+        }
+        data.expectedBackupFile.replace("{DB_FILENAME}", dbFileInfo.completeBaseName());
+
+        // Save a modified database
+        auto prevName = m_db->metadata()->name();
+        m_db->metadata()->setName("testBackupPathPattern");
+        wait(250);
+
+        THEN("The saved DB is as expected")
+        {
+            saveAndCheckDatabase();
+
+            // Test that the backup file has the previous database name
+            checkDatabase(data.expectedBackupFile, prevName);
+
+            // Clean up
+            QFile(data.expectedBackupFile).remove();
+        }
+    }
+}

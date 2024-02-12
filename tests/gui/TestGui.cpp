@@ -1093,68 +1093,6 @@ void TestGui::testDragAndDropGroup()
     dragAndDropGroup(groupModel->index(0, 0, rootIndex), rootIndex, -1, true, "NewDatabase", 4);
 }
 
-void TestGui::testSaveBackupPath_data()
-{
-    QTest::addColumn<QString>("backupFilePathPattern");
-    QTest::addColumn<QString>("expectedBackupFile");
-
-    // Absolute paths should remain absolute
-    TemporaryFile tmpFile;
-    QVERIFY(tmpFile.open());
-    tmpFile.remove();
-
-    QTest::newRow("Absolute backup path") << tmpFile.fileName() << tmpFile.fileName();
-    // relative paths should be resolved to database parent directory
-    QTest::newRow("Relative backup path (implicit)") << "other_dir/test.old.kdbx"
-                                                     << "other_dir/test.old.kdbx";
-    QTest::newRow("Relative backup path (explicit)") << "./other_dir2/test2.old.kdbx"
-                                                     << "other_dir2/test2.old.kdbx";
-
-    QTest::newRow("Path with placeholders") << "{DB_FILENAME}.old.kdbx"
-                                            << "KeePassXC.old.kdbx";
-    // empty path should be replaced with default pattern
-    QTest::newRow("Empty path") << QString("") << config()->getDefault(Config::BackupFilePathPattern).toString();
-    // {DB_FILENAME} should be replaced with database filename
-    QTest::newRow("") << "{DB_FILENAME}_.old.kdbx"
-                      << "{DB_FILENAME}_.old.kdbx";
-}
-
-void TestGui::testSaveBackupPath()
-{
-    /**
-     * Tests that the backupFilePathPattern config entry is respected. We do not test patterns like {TIME} etc here
-     * as this is done in a separate test case. We do however check {DB_FILENAME} as this is a feature of the
-     * performBackup() function.
-     */
-
-    // Get test data
-    QFETCH(QString, backupFilePathPattern);
-    QFETCH(QString, expectedBackupFile);
-
-    // Enable automatic backups
-    config()->set(Config::BackupBeforeSave, true);
-    config()->set(Config::BackupFilePathPattern, backupFilePathPattern);
-
-    // Replace placeholders and resolve relative paths. This cannot be done in the _data() function as the
-    // db path/filename is not known yet
-    auto dbFileInfo = QFileInfo(m_dbFilePath);
-    if (!QDir::isAbsolutePath(expectedBackupFile)) {
-        expectedBackupFile = QDir(dbFileInfo.absolutePath()).absoluteFilePath(expectedBackupFile);
-    }
-    expectedBackupFile.replace("{DB_FILENAME}", dbFileInfo.completeBaseName());
-
-    // Save a modified database
-    auto prevName = m_db->metadata()->name();
-    m_db->metadata()->setName("testBackupPathPattern");
-    checkSaveDatabase();
-
-    // Test that the backup file has the previous database name
-    checkDatabase(expectedBackupFile, prevName);
-
-    // Clean up
-    QFile(expectedBackupFile).remove();
-}
-
 void TestGui::testDatabaseSettings()
 {
     m_db->metadata()->setName("testDatabaseSettings");
