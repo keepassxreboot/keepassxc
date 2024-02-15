@@ -24,11 +24,13 @@
 #include <QMutex>
 #include <QPointer>
 #include <QTimer>
+#include <QDebug>
 
 #include "config-keepassx.h"
 #include "core/ModifiableObject.h"
 #include "crypto/kdf/AesKdf.h"
 #include "format/KeePass2.h"
+#include "format/AuthenticationFactorInfo.h"
 #include "keys/CompositeKey.h"
 #include "keys/PasswordKey.h"
 
@@ -150,6 +152,10 @@ public:
     bool changeKdf(const QSharedPointer<Kdf>& kdf);
     QByteArray transformedDatabaseKey() const;
 
+    void setAuthenticationFactorInfo(const QSharedPointer<AuthenticationFactorInfo>& authenticationFactorInfo);
+    AuthenticationFactorInfo* authenticationFactorInfo();
+    const AuthenticationFactorInfo* authenticationFactorInfo() const;
+
     static Database* databaseByUuid(const QUuid& uuid);
 
 public slots:
@@ -192,6 +198,8 @@ private:
 
         QVariantMap publicCustomData;
 
+        QSharedPointer<AuthenticationFactorInfo> authenticationFactorInfo;
+
         DatabaseData()
             : masterSeed(new PasswordKey())
             , transformedDatabaseKey(new PasswordKey())
@@ -212,6 +220,7 @@ private:
             kdf.reset();
 
             publicCustomData.clear();
+            authenticationFactorInfo.clear();
         }
     };
 

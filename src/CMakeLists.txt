@@ -71,14 +71,19 @@ set(keepassx_SOURCES
         crypto/kdf/Kdf.cpp
         crypto/kdf/AesKdf.cpp
         crypto/kdf/Argon2Kdf.cpp
+        format/AuthenticationFactor.cpp
+        format/AuthenticationFactorGroup.cpp
+        format/AuthenticationFactorInfo.cpp
         format/CsvExporter.cpp
         format/CsvParser.cpp
+        format/FidoAuthenticationFactor.cpp
         format/KeePass1Reader.cpp
         format/KeePass2.cpp
         format/KeePass2RandomStream.cpp
         format/KdbxReader.cpp
         format/KdbxWriter.cpp
         format/KdbxXmlReader.cpp
+        format/KdbxXmlAuthenticationFactorReader.cpp
         format/KeePass2Reader.cpp
         format/KeePass2Writer.cpp
         format/Kdbx3Reader.cpp
@@ -91,6 +96,7 @@ set(keepassx_SOURCES
         format/OpVaultReaderAttachments.cpp
         format/OpVaultReaderBandEntry.cpp
         format/OpVaultReaderSections.cpp
+        format/PasswordAuthenticationFactor.cpp
         gui/styles/styles.qrc
         gui/styles/StateColorPalette.cpp
         gui/styles/base/phantomcolor.cpp
