@@ -15,26 +15,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "AuthenticationFactorInfo.h"
+#include "AESCBCFactorKeyDerivation.h"
+#include "crypto/SymmetricCipher.h"
 
+#include <QDebug>
 
-void AuthenticationFactorInfo::setComprehensive(bool comprehensive)
+bool AESCBCFactorKeyDerivation::derive(QByteArray& data, const QByteArray& key,
+                                       const QByteArray& salt)
 {
-    m_comprehensive = comprehensive;
-}
+    qDebug() << tr("Performing AES-CBC decryption on wrapped key");
 
-bool AuthenticationFactorInfo::getComprehensive() const
-{
-    return m_comprehensive;
-}
+    SymmetricCipher aes256;
+    if (!aes256.init(SymmetricCipher::Aes256_CBC_UNPADDED, SymmetricCipher::Decrypt, key, salt)) {
+        m_error = aes256.errorString();
+        return false;
+    }
+    if (!aes256.finish(data)) {
+        m_error = aes256.errorString();
+        return false;
+    }
 
-void AuthenticationFactorInfo::addGroup(const QSharedPointer<AuthenticationFactorGroup>& group)
-{
-    m_groups.append(group);
-    group->setParent(this);
-}
-
-const QList<QSharedPointer<AuthenticationFactorGroup>>& AuthenticationFactorInfo::getGroups() const
-{
-    return m_groups;
+    return true;
 }

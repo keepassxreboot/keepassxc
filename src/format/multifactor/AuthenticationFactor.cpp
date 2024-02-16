@@ -16,9 +16,10 @@
  */
 
 #include "AuthenticationFactor.h"
+#include "AESCBCFactorKeyDerivation.h"
 
-#include <QSharedPointer>
 #include <QDebug>
+#include <QSharedPointer>
 
 void AuthenticationFactor::setName(const QString& name)
 {
@@ -33,6 +34,12 @@ const QString& AuthenticationFactor::getName() const
 void AuthenticationFactor::setKeyType(AuthenticationFactorKeyType type)
 {
     m_keyType = type;
+
+    if (m_keyType == AuthenticationFactorKeyType::AES_CBC) {
+        m_derivation = QSharedPointer<AESCBCFactorKeyDerivation>::create();
+    } else {
+        m_derivation = QSharedPointer<AESCBCFactorKeyDerivation>(nullptr);
+    }
 }
 
 void AuthenticationFactor::setKeySalt(const QByteArray& salt)
@@ -63,4 +70,26 @@ AuthenticationFactorKeyType AuthenticationFactor::getKeyType() const
 const QString& AuthenticationFactor::getFactorType() const
 {
     return m_factorType;
+}
+
+QSharedPointer<QByteArray> AuthenticationFactor::unwrapKey(const QSharedPointer<AuthenticationFactorUserData>& userData) const
+{
+    auto unwrappingKey = getUnwrappingKey(userData);
+
+    auto wrappedKey = getWrappedKey();
+
+    if (m_derivation->derive(wrappedKey, unwrappingKey, getKeySalt())) {
+        // "wrappedKey" is now unwrapped!
+        return QSharedPointer<QByteArray>::create(wrappedKey);
+    } else {
+        qWarning() << tr("Validation failed when unwrapping factor '%1': %2").arg(getName(), m_derivation->getError());
+    }
+
+    return { nullptr };
+}
+
+QByteArray AuthenticationFactor::getUnwrappingKey(const QSharedPointer<AuthenticationFactorUserData>& userData) const
+{
+    Q_UNUSED(userData);
+    return QByteArray();
 }

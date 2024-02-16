@@ -20,9 +20,11 @@
 
 #include <QCoreApplication>
 #include <QSharedPointer>
+#include <botan/secmem.h>
 
-#include "AuthenticationFactor.h"
 #include "AuthenticationFactorInfo.h"
+#include "format/multifactor/AuthenticationFactor.h"
+#include "core/AuthenticationFactorUserData.h"
 
 enum class AuthenticationFactorGroupValidationType {
     NONE,
@@ -38,6 +40,8 @@ class AuthenticationFactorGroup: public QObject {
 public:
     AuthenticationFactorGroup() = default;
     ~AuthenticationFactorGroup() override = default;
+
+    QSharedPointer<QByteArray> getRawKey(const QSharedPointer<AuthenticationFactorUserData>& userData);
 
     void setValidationIn(const QByteArray& validationIn);
     const QByteArray& getValidationIn() const;
@@ -57,6 +61,8 @@ protected:
     AuthenticationFactorGroupValidationType m_validationType = AuthenticationFactorGroupValidationType::NONE;
 
     QList<QSharedPointer<AuthenticationFactor>> m_factors = QList<QSharedPointer<AuthenticationFactor>>();
+
+    Botan::secure_vector<char> m_key;
 };
 
 #endif // KEEPASSXC_AUTHENTICATIONFACTORGROUP_H

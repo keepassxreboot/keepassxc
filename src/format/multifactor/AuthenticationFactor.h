@@ -19,6 +19,8 @@
 #define KEEPASSXC_AUTHENTICATIONFACTOR_H
 
 #include "AuthenticationFactorGroup.h"
+#include "FactorKeyDerivation.h"
+#include "core/AuthenticationFactorUserData.h"
 
 #include <QCoreApplication>
 
@@ -43,6 +45,8 @@ public:
     explicit AuthenticationFactor() = default;
     ~AuthenticationFactor() override = default;
 
+    virtual QSharedPointer<QByteArray> unwrapKey(const QSharedPointer<AuthenticationFactorUserData>& userData) const;
+
     const QString& getFactorType() const;
 
     const QString& getName() const;
@@ -55,12 +59,15 @@ public:
     void setWrappedKey(const QByteArray& key);
 
 protected:
+    virtual QByteArray getUnwrappingKey(const QSharedPointer<AuthenticationFactorUserData>& userData) const;
+
     QString m_name = "<Unnamed factor>";
     AuthenticationFactorKeyType m_keyType = AuthenticationFactorKeyType::NONE;
     QByteArray m_keySalt = QByteArray();
     QByteArray m_wrappedKey = QByteArray();
 
     QString m_factorType = FACTOR_TYPE_NULL;
+    QSharedPointer<FactorKeyDerivation> m_derivation;
 };
 
 #endif // KEEPASSXC_AUTHENTICATIONFACTOR_H

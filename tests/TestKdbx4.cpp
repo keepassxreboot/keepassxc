@@ -517,9 +517,9 @@ void TestKdbx4Format::testMultiFactorHeaderRead()
     QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/MultiFactorPasswordOnly.kdbx");
 
     auto key = QSharedPointer<CompositeKey>::create();
-    auto fileKey = QSharedPointer<FileKey>::create();
-    fileKey->setRawKey(QByteArray::fromStdString("password12345678password12345678"));
-    key->addKey(QSharedPointer<FileKey>(fileKey));
+    auto passwordKey = QSharedPointer<PasswordKey>::create();
+    passwordKey->setPassword(QByteArray::fromStdString("somepassword"));
+    key->addKey(QSharedPointer<PasswordKey>(passwordKey));
 
     KeePass2Reader reader;
     auto db = QSharedPointer<Database>::create();
@@ -527,7 +527,7 @@ void TestKdbx4Format::testMultiFactorHeaderRead()
 
     QVERIFY(!reader.hasError());
     QVERIFY(db->authenticationFactorInfo() != nullptr);
-    QCOMPARE(db->authenticationFactorInfo()->getComprehensive(), true);
+    QCOMPARE(db->authenticationFactorInfo()->isComprehensive(), true);
 
     auto groups = db->authenticationFactorInfo()->getGroups();
 

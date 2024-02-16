@@ -1010,14 +1010,14 @@ QUuid Database::publicUuid()
     return QUuid::fromRfc4122(publicCustomData()["KPXC_PUBLIC_UUID"].toByteArray());
 }
 
-AuthenticationFactorInfo* Database::authenticationFactorInfo()
+QSharedPointer<AuthenticationFactorInfo> Database::authenticationFactorInfo()
 {
-    return m_data.authenticationFactorInfo.data();
+    return m_data.authenticationFactorInfo;
 }
 
-const AuthenticationFactorInfo* Database::authenticationFactorInfo() const
+const QSharedPointer<AuthenticationFactorInfo>& Database::authenticationFactorInfo() const
 {
-    return m_data.authenticationFactorInfo.data();
+    return m_data.authenticationFactorInfo;
 }
 
 void Database::setAuthenticationFactorInfo(const QSharedPointer<AuthenticationFactorInfo>& authenticationFactorInfo)

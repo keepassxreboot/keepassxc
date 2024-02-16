@@ -17,6 +17,8 @@
 
 #include "AuthenticationFactorGroup.h"
 
+#include <QDebug>
+
 void AuthenticationFactorGroup::setValidationIn(const QByteArray& validationIn)
 {
     m_validationIn = validationIn;
@@ -66,4 +68,30 @@ const QByteArray& AuthenticationFactorGroup::getChallenge() const
 AuthenticationFactorGroupValidationType AuthenticationFactorGroup::getValidationType() const
 {
     return m_validationType;
+}
+
+QSharedPointer<QByteArray> AuthenticationFactorGroup::getRawKey(const QSharedPointer<AuthenticationFactorUserData>& userData)
+{
+    bool groupContributed = false;
+
+    for (const auto& factor : getFactors()) {
+        auto unwrappedKey = factor->unwrapKey(userData);
+
+        if (unwrappedKey == nullptr) {
+            qDebug() << QObject::tr("Factor '%1' did not contribute key material").arg(factor->getName());
+            continue;
+        }
+
+        qDebug() << QObject::tr("Got a key part from factor '%1'").arg(factor->getName());
+
+        m_key.insert(m_key.end(), unwrappedKey->begin(), unwrappedKey->end());
+        groupContributed = true;
+        break;
+    }
+
+    if (!groupContributed) {
+        return { nullptr };
+    }
+
+    return QSharedPointer<QByteArray>::create(m_key.data(), m_key.size());
 }

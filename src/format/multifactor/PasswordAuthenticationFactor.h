@@ -15,26 +15,23 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef KEEPASSXC_FIDOAUTHENTICATIONFACTOR_H
-#define KEEPASSXC_FIDOAUTHENTICATIONFACTOR_H
+#ifndef KEEPASSXC_PASSWORDAUTHENTICATIONFACTOR_H
+#define KEEPASSXC_PASSWORDAUTHENTICATIONFACTOR_H
 
-#include "AuthenticationFactor.h"
+#include "format/multifactor/AuthenticationFactor.h"
 
 #include <QCoreApplication>
 
-class FidoAuthenticationFactor: public AuthenticationFactor {
+class PasswordAuthenticationFactor: public AuthenticationFactor {
     Q_OBJECT
 
 public:
 
-    explicit FidoAuthenticationFactor(const QSharedPointer<AuthenticationFactor>& factor);
-    ~FidoAuthenticationFactor() override = default;
-
-    void setCredentialID(const QByteArray& credentialID);
-    const QByteArray& getCredentialID() const;
+    explicit PasswordAuthenticationFactor(const QSharedPointer<AuthenticationFactor>& factor);
+    ~PasswordAuthenticationFactor() override = default;
 
 protected:
-    QByteArray m_credentialID;
+    QByteArray getUnwrappingKey(const QSharedPointer<AuthenticationFactorUserData> &userData) const override;
 };
 
-#endif // KEEPASSXC_FIDOAUTHENTICATIONFACTOR_H
+#endif // KEEPASSXC_PASSWORDAUTHENTICATIONFACTOR_H

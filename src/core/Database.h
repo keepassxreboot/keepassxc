@@ -30,7 +30,7 @@
 #include "core/ModifiableObject.h"
 #include "crypto/kdf/AesKdf.h"
 #include "format/KeePass2.h"
-#include "format/AuthenticationFactorInfo.h"
+#include "format/multifactor/AuthenticationFactorInfo.h"
 #include "keys/CompositeKey.h"
 #include "keys/PasswordKey.h"
 
@@ -153,8 +153,8 @@ public:
     QByteArray transformedDatabaseKey() const;
 
     void setAuthenticationFactorInfo(const QSharedPointer<AuthenticationFactorInfo>& authenticationFactorInfo);
-    AuthenticationFactorInfo* authenticationFactorInfo();
-    const AuthenticationFactorInfo* authenticationFactorInfo() const;
+    QSharedPointer<AuthenticationFactorInfo> authenticationFactorInfo();
+    const QSharedPointer<AuthenticationFactorInfo>& authenticationFactorInfo() const;
 
     static Database* databaseByUuid(const QUuid& uuid);
 

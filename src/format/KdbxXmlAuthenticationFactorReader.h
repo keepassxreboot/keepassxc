@@ -22,10 +22,10 @@
 #include <QPointer>
 #include <QXmlStreamReader>
 
-#include "AuthenticationFactor.h"
-#include "AuthenticationFactorGroup.h"
-#include "AuthenticationFactorInfo.h"
 #include "core/Database.h"
+#include "format/multifactor/AuthenticationFactor.h"
+#include "format/multifactor/AuthenticationFactorGroup.h"
+#include "format/multifactor/AuthenticationFactorInfo.h"
 
 /**
  * KDBX XML payload reader.

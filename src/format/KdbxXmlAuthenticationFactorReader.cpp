@@ -16,8 +16,8 @@
  */
 
 #include "KdbxXmlAuthenticationFactorReader.h"
-#include "FidoAuthenticationFactor.h"
-#include "PasswordAuthenticationFactor.h"
+#include "format/multifactor/FidoAuthenticationFactor.h"
+#include "format/multifactor/PasswordAuthenticationFactor.h"
 #include <QDebug>
 
 /**

@@ -15,22 +15,24 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef KEEPASSXC_PASSWORDAUTHENTICATIONFACTOR_H
-#define KEEPASSXC_PASSWORDAUTHENTICATIONFACTOR_H
+#ifndef KEEPASSXC_AESCBC_DERIVATION_H
+#define KEEPASSXC_AESCBC_DERIVATION_H
 
-#include "AuthenticationFactor.h"
+#include "FactorKeyDerivation.h"
 
 #include <QCoreApplication>
 
-class PasswordAuthenticationFactor: public AuthenticationFactor {
+class AESCBCFactorKeyDerivation: public FactorKeyDerivation {
     Q_OBJECT
 
 public:
 
-    explicit PasswordAuthenticationFactor(const QSharedPointer<AuthenticationFactor>& factor);
-    ~PasswordAuthenticationFactor() override = default;
+    explicit AESCBCFactorKeyDerivation() = default;
+    virtual ~AESCBCFactorKeyDerivation() override = default;
+
+    virtual bool derive(QByteArray& data, const QByteArray& key, const QByteArray& salt) override;
 
 protected:
 };
 
-#endif // KEEPASSXC_PASSWORDAUTHENTICATIONFACTOR_H
+#endif // KEEPASSXC_AESCBC_DERIVATION_H

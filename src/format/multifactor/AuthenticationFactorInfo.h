@@ -18,7 +18,7 @@
 #ifndef KEEPASSXC_AUTHENTICATIONFACTORINFO_H
 #define KEEPASSXC_AUTHENTICATIONFACTORINFO_H
 
-#include "AuthenticationFactorGroup.h"
+#include "format/multifactor/AuthenticationFactorGroup.h"
 #include <QCoreApplication>
 #include <QSharedPointer>
 
@@ -31,7 +31,7 @@ public:
     explicit AuthenticationFactorInfo() = default;
     ~AuthenticationFactorInfo() override = default;
 
-    bool getComprehensive() const;
+    bool isComprehensive() const;
     void setComprehensive(bool comprehensive);
 
     void addGroup(const QSharedPointer<AuthenticationFactorGroup>& group);
