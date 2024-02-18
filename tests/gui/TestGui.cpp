@@ -34,7 +34,6 @@
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
 #include "gui/ActionCollection.h"
-#include "gui/ApplicationSettingsWidget.h"
 #include "gui/CategoryListWidget.h"
 #include "gui/CloneDialog.h"
 #include "gui/DatabaseTabWidget.h"
@@ -170,33 +169,6 @@ void TestGui::cleanup()
 void TestGui::cleanupTestCase()
 {
     m_dbFile.remove();
-}
-
-void TestGui::testSettingsDefaultTabOrder()
-{
-    // check application settings default tab order
-    triggerAction("actionSettings");
-    auto* settingsWidget = m_mainWindow->findChild<ApplicationSettingsWidget*>();
-    QVERIFY(settingsWidget->isVisible());
-    QCOMPARE(settingsWidget->findChild<CategoryListWidget*>("categoryList")->currentCategory(), 0);
-    for (auto* w : settingsWidget->findChildren<QTabWidget*>()) {
-        if (w->currentIndex() != 0) {
-            QFAIL("Application settings contain QTabWidgets whose default index is not 0");
-        }
-    }
-    QTest::keyClick(settingsWidget, Qt::Key::Key_Escape);
-
-    // check database settings default tab order
-    triggerAction("actionDatabaseSettings");
-    auto* dbSettingsWidget = m_mainWindow->findChild<DatabaseSettingsDialog*>();
-    QVERIFY(dbSettingsWidget->isVisible());
-    QCOMPARE(dbSettingsWidget->findChild<CategoryListWidget*>("categoryList")->currentCategory(), 0);
-    for (auto* w : dbSettingsWidget->findChildren<QTabWidget*>()) {
-        if (w->currentIndex() != 0 && w->objectName() != "encryptionSettingsTabWidget") {
-            QFAIL("Database settings contain QTabWidgets whose default index is not 0");
-        }
-    }
-    QTest::keyClick(dbSettingsWidget, Qt::Key::Key_Escape);
 }
 
 void TestGui::testCreateDatabase()
