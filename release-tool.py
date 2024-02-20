@@ -105,7 +105,7 @@ logger.addHandler(console_handler)
 ###########################################################################################
 
 
-def _run(cmd, *args, input=None, capture_output=True, timeout=None, check=False, **kwargs):
+def _run(cmd, *args, input=None, capture_output=True, cwd=None, timeout=None, check=True, **kwargs):
     """
     Run a command and return its output.
     Raises an error if ``check`` is ``True`` and the process exited with a non-zero code.
@@ -114,7 +114,7 @@ def _run(cmd, *args, input=None, capture_output=True, timeout=None, check=False,
         raise ValueError('Empty command given.')
     try:
         return subprocess.run(
-            cmd, *args, input=input, capture_output=capture_output, timeout=timeout, check=check, **kwargs)
+            cmd, *args, input=input, capture_output=capture_output, cwd=cwd, timeout=timeout, check=check, **kwargs)
     except FileNotFoundError:
         raise Error('Command not found: %s', cmd[0] if type(cmd) in [list, tuple] else cmd)
     except subprocess.CalledProcessError as e:
@@ -132,17 +132,16 @@ def _cmd_exists(cmd):
 
 def _git_get_branch():
     """Get current Git branch."""
-    branch = _run(['git', 'rev-parse', '--abbrev-ref', 'HEAD'], check=True).stdout.decode()
-    global ORIG_GIT_BRANCH
-    if not ORIG_GIT_BRANCH:
-        ORIG_GIT_BRANCH = branch
-    return branch
+    return _run(['git', 'rev-parse', '--abbrev-ref', 'HEAD']).stdout.decode()
 
 
 def _git_checkout(branch):
     """Check out Git branch."""
     try:
-        _run(['git', 'checkout', branch], check=True)
+        global ORIG_GIT_BRANCH
+        if not ORIG_GIT_BRANCH:
+            ORIG_GIT_BRANCH = _git_get_branch()
+        _run(['git', 'checkout', branch])
     except SubprocessError as e:
         raise Error('Failed to check out branch \'%s\'. %s', branch, e.stderr.decode().capitalize())
 
@@ -184,6 +183,36 @@ class Check(Command):
 
     def run(self, version):
         print(version)
+
+    @staticmethod
+    def check_src_dir_exists(src_dir):
+        if not os.path.isdir(src_dir):
+            raise Error(f'Source directory \'{src_dir}\' does not exist!')
+
+    @staticmethod
+    def check_output_dir_does_not_exist(output_dir):
+        if os.path.exists(output_dir):
+            raise Error(f'Output directory \'{output_dir}\' already exists. Please choose a different folder.')
+
+    @staticmethod
+    def check_git_repository(cwd=None):
+        if _run(['git', 'rev-parse', '--is-inside-work-tree'], check=False, cwd=cwd).returncode != 0:
+            raise Error('Not a valid Git repository: %s', e.msg)
+
+    @staticmethod
+    def check_release_does_not_exist(tag_name, cwd=None):
+        if _run(['git', 'tag', '-l', tag_name], check=False, cwd=cwd).stdout:
+            raise Error('Release tag already exists: %s', tag_name)
+
+    @staticmethod
+    def check_working_tree_clean(cwd=None):
+        if _run(['git', 'diff-index', '--quiet', 'HEAD', '--'], check=False, cwd=cwd).returncode != 0:
+            raise Error('Current working tree is not clean! Please commit or unstage any changes.')
+
+    @staticmethod
+    def check_source_branch_exists(branch, cwd=None):
+        if _run(['git', 'rev-parse', branch], check=False, cwd=cwd).returncode != 0:
+            raise Error(f'Source branch \'{branch}\' does not exist!')
 
 
 class Merge(Command):
