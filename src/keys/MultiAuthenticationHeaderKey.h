@@ -22,16 +22,15 @@
 #include "Key.h"
 #include "format/multifactor/AuthenticationFactorInfo.h"
 
-#include <botan/secmem.h>
 #include <QCoreApplication>
+#include <botan/secmem.h>
 
 class MultiAuthenticationHeaderKey : public Key
 {
 public:
     explicit MultiAuthenticationHeaderKey(
         const QSharedPointer<const AuthenticationFactorInfo>& authenticationFactorInfo,
-        const QSharedPointer<const CompositeKey>& existingKey
-        );
+        const QSharedPointer<const CompositeKey>& existingKey);
     ~MultiAuthenticationHeaderKey() override = default;
 
     bool process();

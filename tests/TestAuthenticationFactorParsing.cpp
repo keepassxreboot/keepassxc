@@ -51,16 +51,14 @@ void TestAuthenticationFactorParsing::testNoCompatVersion()
 
 void TestAuthenticationFactorParsing::testUnsupportedCompatVersion()
 {
-    m_reader.readAuthenticationFactors(nullptr,
-                                       "<FactorInfo><CompatVersion>2</CompatVersion></FactorInfo>");
+    m_reader.readAuthenticationFactors(nullptr, "<FactorInfo><CompatVersion>2</CompatVersion></FactorInfo>");
 
     QVERIFY(m_reader.hasError());
 }
 
 void TestAuthenticationFactorParsing::testNoGroups()
 {
-    auto res = m_reader.readAuthenticationFactors(nullptr,
-                                                  "<FactorInfo><CompatVersion>1</CompatVersion></FactorInfo>");
+    auto res = m_reader.readAuthenticationFactors(nullptr, "<FactorInfo><CompatVersion>1</CompatVersion></FactorInfo>");
 
     QVERIFY(!m_reader.hasError());
     QCOMPARE(res->getGroups().size(), 0);
@@ -68,57 +66,77 @@ void TestAuthenticationFactorParsing::testNoGroups()
 
 void TestAuthenticationFactorParsing::testGroupWithNoFactors()
 {
-    m_reader.readAuthenticationFactors(nullptr, "<FactorInfo><CompatVersion>1</CompatVersion><Group></Group></FactorInfo>");
+    m_reader.readAuthenticationFactors(nullptr,
+                                       "<FactorInfo><CompatVersion>1</CompatVersion><Group></Group></FactorInfo>");
 
     QVERIFY(m_reader.hasError());
 }
 
 void TestAuthenticationFactorParsing::testUnsupportedFactorTypeAlone()
 {
-    m_reader.readAuthenticationFactors(nullptr, "<FactorInfo><CompatVersion>1</CompatVersion><Group>"
-                                           "<Factor><KeyType>AES-CBC</KeyType><TypeUUID>bogus</TypeUUID>"
-                                           "<WrappedKey>B4pHAoQomD8728UKeST2HOxglrjzwyq2M/IPEOV4xo8=</WrappedKey></Factor>"
-                                           "</Group></FactorInfo>");
+    m_reader.readAuthenticationFactors(nullptr,
+                                       "<FactorInfo><CompatVersion>1</CompatVersion><Group>"
+                                       "<Factor><KeyType>AES-CBC</KeyType><TypeUUID>bogus</TypeUUID>"
+                                       "<WrappedKey>B4pHAoQomD8728UKeST2HOxglrjzwyq2M/IPEOV4xo8=</WrappedKey></Factor>"
+                                       "</Group></FactorInfo>");
     QVERIFY(m_reader.hasError());
 }
 
 void TestAuthenticationFactorParsing::testUnsupportedFactorTypeAndSupportedTogether()
 {
-    auto res = m_reader.readAuthenticationFactors(nullptr, "<FactorInfo><CompatVersion>1</CompatVersion><Group>"
-                                                "<Factor><KeyType>AES-CBC</KeyType><TypeUUID>bogus</TypeUUID>"
-                                                "<WrappedKey>B4pHAoQomD8728UKeST2HOxglrjzwyq2M/IPEOV4xo8=</WrappedKey></Factor>"
-                                                           "<Factor><KeyType>AES-CBC</KeyType><TypeUUID>" FACTOR_TYPE_PASSWORD_SHA256 "</TypeUUID>"
-                                                "<WrappedKey>B4pHAoQomD8728UKeST2HOxglrjzwyq2M/IPEOV4xo8=</WrappedKey></Factor>"
-                                                "</Group></FactorInfo>");
+    auto res = m_reader.readAuthenticationFactors(
+        nullptr,
+        "<FactorInfo><CompatVersion>1</CompatVersion><Group>"
+        "<Factor><KeyType>AES-CBC</KeyType><TypeUUID>bogus</TypeUUID>"
+        "<WrappedKey>B4pHAoQomD8728UKeST2HOxglrjzwyq2M/IPEOV4xo8=</WrappedKey></Factor>"
+        "<Factor><KeyType>AES-CBC</KeyType><TypeUUID>" FACTOR_TYPE_PASSWORD_SHA256 "</TypeUUID>"
+        "<WrappedKey>B4pHAoQomD8728UKeST2HOxglrjzwyq2M/IPEOV4xo8=</WrappedKey></Factor>"
+        "</Group></FactorInfo>");
     QVERIFY(!m_reader.hasError());
     QCOMPARE(res->getGroups().first()->getFactors().size(), 2);
 }
 
 void TestAuthenticationFactorParsing::testUnsupportedVerificationMethod()
 {
-    auto res = m_reader.readAuthenticationFactors(nullptr, "<FactorInfo><CompatVersion>1</CompatVersion><Group>"
-                                                           "<ValidationType>bogus</ValidationType>"
-                                                           "<Factor><KeyType>AES-CBC</KeyType><TypeUUID>" FACTOR_TYPE_PASSWORD_SHA256 "</TypeUUID>"
-                                                           "<WrappedKey>B4pHAoQomD8728UKeST2HOxglrjzwyq2M/IPEOV4xo8=</WrappedKey></Factor>"
-                                                           "</Group></FactorInfo>");
+    auto res = m_reader.readAuthenticationFactors(
+        nullptr,
+        "<FactorInfo><CompatVersion>1</CompatVersion><Group>"
+        "<ValidationType>bogus</ValidationType>"
+        "<Factor><KeyType>AES-CBC</KeyType><TypeUUID>" FACTOR_TYPE_PASSWORD_SHA256 "</TypeUUID>"
+        "<WrappedKey>B4pHAoQomD8728UKeST2HOxglrjzwyq2M/IPEOV4xo8=</WrappedKey></Factor>"
+        "</Group></FactorInfo>");
     QVERIFY(!m_reader.hasError());
     QCOMPARE(res->getGroups().first()->getValidationType(), AuthenticationFactorGroupValidationType::NONE);
 }
 
 void TestAuthenticationFactorParsing::testOmittedVerification()
 {
-    m_reader.readAuthenticationFactors(nullptr, "<FactorInfo><CompatVersion>1</CompatVersion><Group>"
-                                                "<Factor><KeyType>AES-CBC</KeyType><TypeUUID>" FACTOR_TYPE_PASSWORD_SHA256 "</TypeUUID>"
-                                                "<WrappedKey>B4pHAoQomD8728UKeST2HOxglrjzwyq2M/IPEOV4xo8=</WrappedKey></Factor>"
-                                                "</Group></FactorInfo>");
+    m_reader.readAuthenticationFactors(nullptr,
+                                       "<FactorInfo><CompatVersion>1</CompatVersion><Group>"
+                                       "<Factor><KeyType>AES-CBC</KeyType><TypeUUID>" FACTOR_TYPE_PASSWORD_SHA256
+                                       "</TypeUUID>"
+                                       "<WrappedKey>B4pHAoQomD8728UKeST2HOxglrjzwyq2M/IPEOV4xo8=</WrappedKey></Factor>"
+                                       "</Group></FactorInfo>");
     QVERIFY(!m_reader.hasError());
 }
 
 void TestAuthenticationFactorParsing::testInvalidBase64()
 {
-    m_reader.readAuthenticationFactors(nullptr, "<FactorInfo><CompatVersion>1</CompatVersion><Group>"
-                                                "<Factor><KeyType>AES-CBC</KeyType><TypeUUID>" FACTOR_TYPE_PASSWORD_SHA256 "</TypeUUID>"
-                                                "<WrappedKey>_</WrappedKey></Factor>"
-                                                "</Group></FactorInfo>");
+    m_reader.readAuthenticationFactors(nullptr,
+                                       "<FactorInfo><CompatVersion>1</CompatVersion><Group>"
+                                       "<Factor><KeyType>AES-CBC</KeyType><TypeUUID>" FACTOR_TYPE_PASSWORD_SHA256
+                                       "</TypeUUID>"
+                                       "<WrappedKey>_</WrappedKey></Factor>"
+                                       "</Group></FactorInfo>");
+    QVERIFY(m_reader.hasError());
+}
+
+void TestAuthenticationFactorParsing::testMissingRequiredFields()
+{
+    m_reader.readAuthenticationFactors(nullptr,
+                                       "<FactorInfo><CompatVersion>1</CompatVersion><Group>"
+                                       "<Factor><TypeUUID>" FACTOR_TYPE_PASSWORD_SHA256 "</TypeUUID>"
+                                       "<WrappedKey>B4pHAoQomD8728UKeST2HOxglrjzwyq2M/IPEOV4xo8=</WrappedKey></Factor>"
+                                       "</Group></FactorInfo>");
     QVERIFY(m_reader.hasError());
 }

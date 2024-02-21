@@ -42,6 +42,7 @@ private slots:
     void testUnsupportedVerificationMethod();
     void testOmittedVerification();
     void testInvalidBase64();
+    void testMissingRequiredFields();
 
 private:
     KdbxXmlAuthenticationFactorReader m_reader;

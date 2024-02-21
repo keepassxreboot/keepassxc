@@ -27,7 +27,7 @@ QSharedPointer<QByteArray> AuthenticationFactorUserData::getDataItem(const QStri
     const auto& v = m_data.find(key);
 
     if (v == m_data.end()) {
-        return { nullptr };
+        return {nullptr};
     }
 
     return *v;

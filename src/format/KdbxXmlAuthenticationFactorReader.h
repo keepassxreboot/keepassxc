@@ -38,7 +38,8 @@ public:
     explicit KdbxXmlAuthenticationFactorReader() = default;
     virtual ~KdbxXmlAuthenticationFactorReader() = default;
 
-    virtual QSharedPointer<AuthenticationFactorInfo> readAuthenticationFactors(Database* db, const QString& authenticationFactorXml);
+    virtual QSharedPointer<AuthenticationFactorInfo> readAuthenticationFactors(Database* db,
+                                                                               const QString& authenticationFactorXml);
 
     [[nodiscard]] bool hasError() const;
     [[nodiscard]] QString errorString() const;

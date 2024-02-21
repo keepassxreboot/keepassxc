@@ -229,7 +229,8 @@ bool Kdbx4Reader::readHeaderField(StoreDataStream& device, Database* db)
         if (it != data.constEnd()) {
             qDebug() << tr("Parsing authentication factors");
 
-            auto authFactorReader = QScopedPointer<KdbxXmlAuthenticationFactorReader>(new KdbxXmlAuthenticationFactorReader());
+            auto authFactorReader =
+                QScopedPointer<KdbxXmlAuthenticationFactorReader>(new KdbxXmlAuthenticationFactorReader());
             authFactorReader->readAuthenticationFactors(db, it.value().toString());
 
             if (authFactorReader->hasError()) {

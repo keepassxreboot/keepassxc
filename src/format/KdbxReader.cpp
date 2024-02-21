@@ -107,8 +107,7 @@ bool KdbxReader::readDatabase(QIODevice* device, QSharedPointer<const CompositeK
             }
         }
 
-        auto headerInfoKey = QSharedPointer<MultiAuthenticationHeaderKey>::create(
-            authenticationFactorInfo, key);
+        auto headerInfoKey = QSharedPointer<MultiAuthenticationHeaderKey>::create(authenticationFactorInfo, key);
         if (!headerInfoKey->process()) {
             m_error = true;
             m_errorStr = headerInfoKey->error();

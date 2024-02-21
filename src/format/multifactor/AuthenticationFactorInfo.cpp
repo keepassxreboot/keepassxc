@@ -17,7 +17,6 @@
 
 #include "AuthenticationFactorInfo.h"
 
-
 void AuthenticationFactorInfo::setComprehensive(bool comprehensive)
 {
     m_comprehensive = comprehensive;

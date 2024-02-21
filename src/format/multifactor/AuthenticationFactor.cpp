@@ -72,7 +72,8 @@ const QString& AuthenticationFactor::getFactorType() const
     return m_factorType;
 }
 
-QSharedPointer<QByteArray> AuthenticationFactor::unwrapKey(const QSharedPointer<AuthenticationFactorUserData>& userData) const
+QSharedPointer<QByteArray>
+AuthenticationFactor::unwrapKey(const QSharedPointer<AuthenticationFactorUserData>& userData) const
 {
     auto unwrappingKey = getUnwrappingKey(userData);
 
@@ -85,11 +86,13 @@ QSharedPointer<QByteArray> AuthenticationFactor::unwrapKey(const QSharedPointer<
         qWarning() << tr("Validation failed when unwrapping factor '%1': %2").arg(getName(), m_derivation->getError());
     }
 
-    return { nullptr };
+    return {nullptr};
 }
 
 QByteArray AuthenticationFactor::getUnwrappingKey(const QSharedPointer<AuthenticationFactorUserData>& userData) const
 {
     Q_UNUSED(userData);
+    // This shouldn't happen - it means we didn't understand the factor type?
+    qWarning() << "Attempted to get unwrapping key from generic AuthenticationFactor";
     return QByteArray();
 }

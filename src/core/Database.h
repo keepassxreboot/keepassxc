@@ -20,11 +20,11 @@
 #define KEEPASSX_DATABASE_H
 
 #include <QDateTime>
+#include <QDebug>
 #include <QHash>
 #include <QMutex>
 #include <QPointer>
 #include <QTimer>
-#include <QDebug>
 
 #include "config-keepassx.h"
 #include "core/ModifiableObject.h"

@@ -70,7 +70,8 @@ AuthenticationFactorGroupValidationType AuthenticationFactorGroup::getValidation
     return m_validationType;
 }
 
-QSharedPointer<QByteArray> AuthenticationFactorGroup::getRawKey(const QSharedPointer<AuthenticationFactorUserData>& userData)
+QSharedPointer<QByteArray>
+AuthenticationFactorGroup::getRawKey(const QSharedPointer<AuthenticationFactorUserData>& userData)
 {
     bool groupContributed = false;
 
@@ -90,7 +91,7 @@ QSharedPointer<QByteArray> AuthenticationFactorGroup::getRawKey(const QSharedPoi
     }
 
     if (!groupContributed) {
-        return { nullptr };
+        return {nullptr};
     }
 
     return QSharedPointer<QByteArray>::create(m_key.data(), m_key.size());

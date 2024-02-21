@@ -31,7 +31,8 @@ PasswordAuthenticationFactor::PasswordAuthenticationFactor(const QSharedPointer<
 }
 
 QByteArray
-PasswordAuthenticationFactor::getUnwrappingKey(const QSharedPointer<AuthenticationFactorUserData>& userData) const {
+PasswordAuthenticationFactor::getUnwrappingKey(const QSharedPointer<AuthenticationFactorUserData>& userData) const
+{
     auto ret = userData->getDataItem(getName());
 
     QByteArray dataToUse;

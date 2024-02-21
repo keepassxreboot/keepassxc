@@ -26,8 +26,8 @@
  * @param authenticationFactorXml A blob of XML describing authentication factors
  * @return pointer to authentication factor information
  */
-QSharedPointer<AuthenticationFactorInfo> KdbxXmlAuthenticationFactorReader::readAuthenticationFactors(
-    Database* db, const QString& authenticationFactorXml)
+QSharedPointer<AuthenticationFactorInfo>
+KdbxXmlAuthenticationFactorReader::readAuthenticationFactors(Database* db, const QString& authenticationFactorXml)
 {
     m_error = false;
     m_errorStr.clear();
@@ -121,17 +121,15 @@ bool KdbxXmlAuthenticationFactorReader::parseFactorInfo(const QSharedPointer<Aut
             continue;
         }
 
-        raiseError(tr("Unknown element type while processing authentication factor info: %1")
-                       .arg(m_xml.name()));
+        raiseError(
+            tr("Unknown element type while processing authentication factor info: %1").arg(m_xml.name().toString()));
         return false;
     }
 
     return compatVersionFound;
 }
 
-bool KdbxXmlAuthenticationFactorReader::parseFactorGroup(
-    const QSharedPointer<AuthenticationFactorInfo>& info
-    )
+bool KdbxXmlAuthenticationFactorReader::parseFactorGroup(const QSharedPointer<AuthenticationFactorInfo>& info)
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "Group");
 
@@ -194,8 +192,8 @@ bool KdbxXmlAuthenticationFactorReader::parseFactorGroup(
             continue;
         }
 
-        raiseError(tr("Unknown element type while processing authentication factor group: %1")
-                       .arg(m_xml.name()));
+        raiseError(
+            tr("Unknown element type while processing authentication factor group: %1").arg(m_xml.name().toString()));
         return group;
     }
 
@@ -205,7 +203,7 @@ bool KdbxXmlAuthenticationFactorReader::parseFactorGroup(
     }
 
     bool foundCompatibleFactor = false;
-    for (auto & factor : group->getFactors()) {
+    for (auto& factor : group->getFactors()) {
         if (factor->getFactorType() != FACTOR_TYPE_NULL && factor->getKeyType() != AuthenticationFactorKeyType::NONE) {
             foundCompatibleFactor = true;
             break;
@@ -222,6 +220,12 @@ bool KdbxXmlAuthenticationFactorReader::parseFactorGroup(
     return true;
 }
 
+/**
+ * Parses the <Factor> XML element from a header-stored FactorInfo block.
+ *
+ * @param group The group to which the factor belongs
+ * @return true if parse successful; false on error
+ */
 bool KdbxXmlAuthenticationFactorReader::parseFactor(AuthenticationFactorGroup* group)
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "Factor");
@@ -239,6 +243,7 @@ bool KdbxXmlAuthenticationFactorReader::parseFactor(AuthenticationFactorGroup* g
             continue;
         }
         if (m_xml.name() == "TypeUUID") {
+            // Lowercase to not care about how the UUID is formatted as much
             const auto& text = m_xml.readElementText().toLower();
 
             if (text == FACTOR_TYPE_PASSWORD_SHA256) {
@@ -268,6 +273,7 @@ bool KdbxXmlAuthenticationFactorReader::parseFactor(AuthenticationFactorGroup* g
                 qWarning() << tr("Unrecognized factor key type %1").arg(text);
             }
 
+            // Note: unknown types get AuthenticationFactorKeyType::NONE - in other words, unusable
             factor->setKeyType(type);
 
             foundKeyType = true;
@@ -297,10 +303,11 @@ bool KdbxXmlAuthenticationFactorReader::parseFactor(AuthenticationFactorGroup* g
             continue;
         }
         if (m_xml.name() == "CredentialID") {
+            // This block should move to a FIDO-factor-type-specified code location eventually, but right now
+            // since this is the only thing that isn't generic to all factors, it's here
             auto factorType = factor->getFactorType();
             if (factorType != FACTOR_TYPE_FIDO_ES256) {
-                raiseError(tr("Encountered a CredentialID element on factor of non-FIDO type %1")
-                           .arg(factorType));
+                raiseError(tr("Encountered a CredentialID element on factor of non-FIDO type %1").arg(factorType));
                 return false;
             }
 
@@ -316,12 +323,13 @@ bool KdbxXmlAuthenticationFactorReader::parseFactor(AuthenticationFactorGroup* g
             continue;
         }
 
-        raiseError(tr("Unknown element type while processing generic authentication factor: %1")
-                       .arg(m_xml.name()));
+        raiseError(
+            tr("Unknown element type while processing generic authentication factor: %1").arg(m_xml.name().toString()));
         return false;
     }
 
     if (!foundFactorType || !foundWrappedKey || !foundKeyType) {
+        // Missing a required field (or several...)
         raiseError(tr("Factor %1 is missing required fields").arg(factor->getName()));
         return false;
     }

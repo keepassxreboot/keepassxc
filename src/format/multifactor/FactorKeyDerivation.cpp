@@ -17,15 +17,6 @@
 
 #include "FactorKeyDerivation.h"
 
-bool FactorKeyDerivation::derive(QByteArray& data, const QByteArray& key,
-                                 const QByteArray& salt)
-{
-    Q_UNUSED(data);
-    Q_UNUSED(key);
-    Q_UNUSED(salt);
-    Q_ASSERT(false);
-}
-
 const QString& FactorKeyDerivation::getError() const
 {
     return m_error;

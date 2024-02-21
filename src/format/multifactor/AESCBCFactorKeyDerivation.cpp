@@ -20,8 +20,7 @@
 
 #include <QDebug>
 
-bool AESCBCFactorKeyDerivation::derive(QByteArray& data, const QByteArray& key,
-                                       const QByteArray& salt)
+bool AESCBCFactorKeyDerivation::derive(QByteArray& data, const QByteArray& key, const QByteArray& salt)
 {
     qDebug() << tr("Performing AES-CBC decryption on wrapped key");
 

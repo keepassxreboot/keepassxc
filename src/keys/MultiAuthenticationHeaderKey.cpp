@@ -27,18 +27,17 @@ QUuid MultiAuthenticationHeaderKey::UUID("e31ab20b-ee50-45af-99bc-ab4c4d34f4cc")
 
 MultiAuthenticationHeaderKey::MultiAuthenticationHeaderKey(
     const QSharedPointer<const AuthenticationFactorInfo>& authenticationFactorInfo,
-    const QSharedPointer<const CompositeKey>& existingKey
-    )
+    const QSharedPointer<const CompositeKey>& existingKey)
     : Key(UUID)
-    {
-        m_authenticationFactorInfo = authenticationFactorInfo;
-        m_userData = QSharedPointer<AuthenticationFactorUserData>::create();
+{
+    m_authenticationFactorInfo = authenticationFactorInfo;
+    m_userData = QSharedPointer<AuthenticationFactorUserData>::create();
 
-        for (const auto& keyPart : existingKey->keys()) {
-            const auto& uuid = keyPart->uuid();
+    for (const auto& keyPart : existingKey->keys()) {
+        const auto& uuid = keyPart->uuid();
 
-            m_userData->addDataItem(uuid.toString(), QSharedPointer<QByteArray>::create(keyPart->rawKey()));
-        }
+        m_userData->addDataItem(uuid.toString(), QSharedPointer<QByteArray>::create(keyPart->rawKey()));
+    }
 }
 
 QByteArray MultiAuthenticationHeaderKey::rawKey() const
