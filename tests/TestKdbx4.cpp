@@ -535,6 +535,6 @@ void TestKdbx4Format::testMultiFactorHeaderRead()
     auto group = groups.first();
     QCOMPARE(group->getFactors().size(), 1);
     auto factor = group->getFactors().first();
-    QCOMPARE(factor->getName().toStdString(), "SomePassword");
-    QCOMPARE(factor->getFactorType().toStdString(), FACTOR_TYPE_PASSWORD_SHA256);
+    QCOMPARE(factor->getName(), QString("SomePassword"));
+    QCOMPARE(factor->getFactorType(), QString(FACTOR_TYPE_PASSWORD_SHA256));
 }
