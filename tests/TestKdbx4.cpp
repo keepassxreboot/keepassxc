@@ -140,7 +140,7 @@ void TestKdbx4Format::testFormat400()
     QCOMPARE(db->rootGroup()->name(), QString("Format400"));
     QCOMPARE(db->metadata()->name(), QString("Format400"));
     QCOMPARE(db->rootGroup()->entries().size(), 1);
-    QCOMPARE(db->authenticationFactorInfo(), nullptr);
+    QVERIFY(db->authenticationFactorInfo().isNull());
     auto entry = db->rootGroup()->entries().at(0);
 
     QCOMPARE(entry->title(), QString("Format400"));
@@ -535,6 +535,6 @@ void TestKdbx4Format::testMultiFactorHeaderRead()
     auto group = groups.first();
     QCOMPARE(group->getFactors().size(), 1);
     auto factor = group->getFactors().first();
-    QCOMPARE(factor->getName(), "SomePassword");
-    QCOMPARE(factor->getFactorType(), FACTOR_TYPE_PASSWORD_SHA256);
+    QCOMPARE(factor->getName().toStdString(), "SomePassword");
+    QCOMPARE(factor->getFactorType().toStdString(), FACTOR_TYPE_PASSWORD_SHA256);
 }
