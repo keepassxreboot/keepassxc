@@ -137,8 +137,7 @@ bool KdbxXmlAuthenticationFactorReader::parseFactorGroup(const QSharedPointer<Au
 
     while (!m_xml.hasError() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "ValidationIn") {
-            QByteArray value = QByteArray::fromBase64(m_xml.readElementText().toLatin1(),
-                                                      QByteArray::Base64Option::AbortOnBase64DecodingErrors);
+            QByteArray value = QByteArray::fromBase64(m_xml.readElementText().toLatin1());
             if (value.isEmpty()) {
                 raiseError(tr("Unable to decode validation input for authentication factor"));
                 return false;
@@ -147,8 +146,7 @@ bool KdbxXmlAuthenticationFactorReader::parseFactorGroup(const QSharedPointer<Au
             continue;
         }
         if (m_xml.name() == "ValidationOut") {
-            QByteArray value = QByteArray::fromBase64(m_xml.readElementText().toLatin1(),
-                                                      QByteArray::Base64Option::AbortOnBase64DecodingErrors);
+            QByteArray value = QByteArray::fromBase64(m_xml.readElementText().toLatin1());
             if (value.isEmpty()) {
                 raiseError(tr("Unable to decode validation output for authentication factor"));
                 return false;
@@ -173,8 +171,7 @@ bool KdbxXmlAuthenticationFactorReader::parseFactorGroup(const QSharedPointer<Au
             continue;
         }
         if (m_xml.name() == "Challenge") {
-            QByteArray value = QByteArray::fromBase64(m_xml.readElementText().toLatin1(),
-                                                      QByteArray::Base64Option::AbortOnBase64DecodingErrors);
+            QByteArray value = QByteArray::fromBase64(m_xml.readElementText().toLatin1());
             if (value.isEmpty()) {
                 raiseError(tr("Unable to decode challenge for authentication factor"));
                 return false;
@@ -280,8 +277,7 @@ bool KdbxXmlAuthenticationFactorReader::parseFactor(AuthenticationFactorGroup* g
             continue;
         }
         if (m_xml.name() == "KeySalt") {
-            QByteArray value = QByteArray::fromBase64(m_xml.readElementText().toLatin1(),
-                                                      QByteArray::Base64Option::AbortOnBase64DecodingErrors);
+            QByteArray value = QByteArray::fromBase64(m_xml.readElementText().toLatin1());
             if (value.isEmpty()) {
                 raiseError(tr("Unable to decode key salt for authentication factor"));
                 return false;
@@ -290,8 +286,7 @@ bool KdbxXmlAuthenticationFactorReader::parseFactor(AuthenticationFactorGroup* g
             continue;
         }
         if (m_xml.name() == "WrappedKey") {
-            QByteArray value = QByteArray::fromBase64(m_xml.readElementText().toLatin1(),
-                                                      QByteArray::Base64Option::AbortOnBase64DecodingErrors);
+            QByteArray value = QByteArray::fromBase64(m_xml.readElementText().toLatin1());
 
             if (value.isEmpty()) {
                 raiseError(tr("Unable to decode wrapped key for authentication factor"));
@@ -311,8 +306,7 @@ bool KdbxXmlAuthenticationFactorReader::parseFactor(AuthenticationFactorGroup* g
                 return false;
             }
 
-            QByteArray value = QByteArray::fromBase64(m_xml.readElementText().toLatin1(),
-                                                      QByteArray::Base64Option::AbortOnBase64DecodingErrors);
+            QByteArray value = QByteArray::fromBase64(m_xml.readElementText().toLatin1());
             if (value.isEmpty()) {
                 raiseError(tr("Unable to decode FIDO credential ID for authentication factor"));
                 return false;
