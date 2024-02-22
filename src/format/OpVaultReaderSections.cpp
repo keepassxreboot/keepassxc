@@ -18,7 +18,7 @@
 #include "OpVaultReader.h"
 
 #include "core/Entry.h"
-#include "totp/totp.h"
+#include "core/Totp.h"
 
 #include <QDebug>
 #include <QJsonArray>

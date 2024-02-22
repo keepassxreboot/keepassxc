@@ -136,6 +136,23 @@
        </widget>
       </item>
       <item row="5" column="0">
+       <widget class="QLabel" name="browserIntegrationRestrictKey">
+        <property name="text">
+         <string>Restrict matching to given browser key:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QComboBox" name="browserIntegrationRestrictKeyCombobox">
+        <property name="accessibleName">
+         <string>Restrict matching to given browser key toggle for this and sub groups</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0">
        <spacer name="verticalSpacer_1">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -158,6 +175,7 @@
   <tabstop>browserIntegrationOnlyHttpAuthComboBox</tabstop>
   <tabstop>browserIntegrationNotHttpAuthComboBox</tabstop>
   <tabstop>browserIntegrationOmitWwwCombobox</tabstop>
+  <tabstop>browserIntegrationRestrictKeyCombobox</tabstop>
  </tabstops>
  <resources/>
  <connections/>

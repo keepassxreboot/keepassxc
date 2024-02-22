@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -37,6 +37,7 @@ const QString SECRETKEY = "B8ei4ZjQJkWzZU2SK/tBsrYRwp+6ztEMf5GFQV+i0yI=";
 const QString SERVERPUBLICKEY = "lKnbLhrVCOqzEjuNoUz1xj9EZlz8xeO4miZBvLrUPVQ=";
 const QString SERVERSECRETKEY = "tbPQcghxfOgbmsnEqG2qMIj1W2+nh+lOJcNsHncaz1Q=";
 const QString NONCE = "zBKdvTjL5bgWaKMCTut/8soM/uoMrFoZ";
+const QString INCREMENTEDNONCE = "zRKdvTjL5bgWaKMCTut/8soM/uoMrFoZ";
 const QString CLIENTID = "testClient";
 
 void TestBrowser::initTestCase()
@@ -107,55 +108,40 @@ void TestBrowser::testGetBase64FromKey()
 void TestBrowser::testIncrementNonce()
 {
     auto result = browserMessageBuilder()->incrementNonce(NONCE);
-    QCOMPARE(result, QString("zRKdvTjL5bgWaKMCTut/8soM/uoMrFoZ"));
+    QCOMPARE(result, INCREMENTEDNONCE);
 }
 
-/**
- * Tests for BrowserService
- */
-void TestBrowser::testTopLevelDomain()
+void TestBrowser::testBuildResponse()
 {
-    QString url1 = "https://another.example.co.uk";
-    QString url2 = "https://www.example.com";
-    QString url3 = "http://test.net";
-    QString url4 = "http://so.many.subdomains.co.jp";
-    QString url5 = "https://192.168.0.1";
-    QString url6 = "https://192.168.0.1:8000";
+    const auto object = QJsonObject{{"test", true}};
+    const QJsonArray arr = {QJsonObject{{"test", true}}};
+    const auto val = QString("value1");
 
-    QString res1 = m_browserService->getTopLevelDomainFromUrl(url1);
-    QString res2 = m_browserService->getTopLevelDomainFromUrl(url2);
-    QString res3 = m_browserService->getTopLevelDomainFromUrl(url3);
-    QString res4 = m_browserService->getTopLevelDomainFromUrl(url4);
-    QString res5 = m_browserService->getTopLevelDomainFromUrl(url5);
-    QString res6 = m_browserService->getTopLevelDomainFromUrl(url6);
+    // Note: Passing a const QJsonObject will fail
+    const Parameters params{
+        {"test-param-1", val}, {"test-param-2", 2}, {"test-param-3", false}, {"object", object}, {"arr", arr}};
 
-    QCOMPARE(res1, QString("example.co.uk"));
-    QCOMPARE(res2, QString("example.com"));
-    QCOMPARE(res3, QString("test.net"));
-    QCOMPARE(res4, QString("subdomains.co.jp"));
-    QCOMPARE(res5, QString("192.168.0.1"));
-    QCOMPARE(res6, QString("192.168.0.1"));
-}
+    const auto action = QString("test-action");
+    const auto message = browserMessageBuilder()->buildResponse(action, NONCE, params, PUBLICKEY, SERVERSECRETKEY);
+    QVERIFY(!message.isEmpty());
+    QCOMPARE(message["action"].toString(), action);
+    QCOMPARE(message["nonce"].toString(), NONCE);
 
-void TestBrowser::testIsIpAddress()
-{
-    auto host1 = "example.com"; // Not valid
-    auto host2 = "192.168.0.1";
-    auto host3 = "278.21.2.0"; // Not valid
-    auto host4 = "2001:0db8:85a3:0000:0000:8a2e:0370:7334";
-    auto host5 = "2001:db8:0:1:1:1:1:1";
-    auto host6 = "fe80::1ff:fe23:4567:890a";
-    auto host7 = "2001:20::1";
-    auto host8 = "2001:0db8:85y3:0000:0000:8a2e:0370:7334"; // Not valid
+    const auto decrypted =
+        browserMessageBuilder()->decryptMessage(message["message"].toString(), NONCE, PUBLICKEY, SERVERSECRETKEY);
+    QVERIFY(!decrypted.isEmpty());
+    QCOMPARE(decrypted["test-param-1"].toString(), QString("value1"));
+    QCOMPARE(decrypted["test-param-2"].toInt(), 2);
+    QCOMPARE(decrypted["test-param-3"].toBool(), false);
 
-    QVERIFY(!m_browserService->isIpAddress(host1));
-    QVERIFY(m_browserService->isIpAddress(host2));
-    QVERIFY(!m_browserService->isIpAddress(host3));
-    QVERIFY(m_browserService->isIpAddress(host4));
-    QVERIFY(m_browserService->isIpAddress(host5));
-    QVERIFY(m_browserService->isIpAddress(host6));
-    QVERIFY(m_browserService->isIpAddress(host7));
-    QVERIFY(!m_browserService->isIpAddress(host8));
+    const auto objectResult = decrypted["object"].toObject();
+    QCOMPARE(objectResult["test"].toBool(), true);
+
+    const auto arrResult = decrypted["arr"].toArray();
+    QCOMPARE(arrResult.size(), 1);
+
+    const auto firstArr = arrResult[0].toObject();
+    QCOMPARE(firstArr["test"].toBool(), true);
 }
 
 void TestBrowser::testSortPriority()
@@ -168,8 +154,7 @@ void TestBrowser::testSortPriority()
     QScopedPointer<Entry> entry(new Entry());
     entry->setUrl(entryUrl);
 
-    QCOMPARE(m_browserService->sortPriority(m_browserService->getEntryURLs(entry.data()), siteUrl, formUrl),
-             expectedScore);
+    QCOMPARE(m_browserService->sortPriority(entry->getAllUrls(), siteUrl, formUrl), expectedScore);
 }
 
 void TestBrowser::testSortPriority_data()
@@ -310,7 +295,7 @@ void TestBrowser::testSearchEntriesByUUID()
 
     for (Entry* entry : entries) {
         QString testUrl = "keepassxc://by-uuid/" + entry->uuidToHex();
-        /* Look for an entry with that UUID. First using handleEntry, then through the search */
+        /* Look for an entry with that UUID. First using shouldIncludeEntry, then through the search */
         QCOMPARE(m_browserService->shouldIncludeEntry(entry, testUrl, ""), true);
         auto result = m_browserService->searchEntries(db, testUrl, "");
         QCOMPARE(result.length(), 1);
@@ -337,6 +322,48 @@ void TestBrowser::testSearchEntriesByUUID()
     }
 }
 
+void TestBrowser::testSearchEntriesByReference()
+{
+    auto db = QSharedPointer<Database>::create();
+    auto* root = db->rootGroup();
+
+    /* The URLs don't really matter for this test, we just need some entries */
+    QStringList urls = {"https://subdomain.example.com",
+                        "example.com", // Only includes a partial URL for references
+                        "https://another.domain.com", // Additional URL as full reference
+                        "https://subdomain.somesite.com", // Additional URL as partial reference
+                        "", // Full reference will be added to https://subdomain.example.com
+                        "" // Partial reference will be added to https://subdomain.example.com
+                        "https://www.notincluded.com"}; // Should not show in search
+    auto entries = createEntries(urls, root);
+
+    auto firstEntryUuid = entries.first()->uuidToHex();
+    auto secondEntryUuid = entries[1]->uuidToHex();
+    auto fullReference = QString("{REF:A@I:%1}").arg(firstEntryUuid);
+    auto partialReference = QString("https://subdomain.{REF:A@I:%1}").arg(secondEntryUuid);
+    entries[2]->attributes()->set(EntryAttributes::AdditionalUrlAttribute, fullReference);
+    entries[3]->attributes()->set(EntryAttributes::AdditionalUrlAttribute, partialReference);
+    entries[4]->setUrl(fullReference);
+    entries[5]->setUrl(partialReference);
+
+    auto result = m_browserService->searchEntries(db, "https://subdomain.example.com", "");
+    QCOMPARE(result.length(), 6);
+    QCOMPARE(result[0]->url(), urls[0]);
+    QCOMPARE(result[1]->url(), urls[1]);
+    QCOMPARE(result[2]->url(), urls[2]);
+    QCOMPARE(
+        result[2]->resolveMultiplePlaceholders(result[2]->attributes()->value(EntryAttributes::AdditionalUrlAttribute)),
+        urls[0]);
+    QCOMPARE(result[3]->url(), urls[3]);
+    QCOMPARE(
+        result[3]->resolveMultiplePlaceholders(result[3]->attributes()->value(EntryAttributes::AdditionalUrlAttribute)),
+        urls[0]);
+    QCOMPARE(result[4]->url(), fullReference);
+    QCOMPARE(result[4]->resolveMultiplePlaceholders(result[4]->url()), urls[0]); // Should be resolved to the main entry
+    QCOMPARE(result[5]->url(), partialReference);
+    QCOMPARE(result[5]->resolveMultiplePlaceholders(result[5]->url()), urls[0]); // Should be resolved to the main entry
+}
+
 void TestBrowser::testSearchEntriesWithPort()
 {
     auto db = QSharedPointer<Database>::create();
@@ -361,7 +388,7 @@ void TestBrowser::testSearchEntriesWithAdditionalURLs()
     auto entries = createEntries(urls, root);
 
     // Add an additional URL to the first entry
-    entries.first()->attributes()->set(BrowserService::ADDITIONAL_URL, "https://keepassxc.org");
+    entries.first()->attributes()->set(EntryAttributes::AdditionalUrlAttribute, "https://keepassxc.org");
 
     auto result = m_browserService->searchEntries(db, "https://github.com", "https://github.com/session");
     QCOMPARE(result.length(), 1);
@@ -510,26 +537,6 @@ QList<Entry*> TestBrowser::createEntries(QStringList& urls, Group* root) const
 
     return entries;
 }
-void TestBrowser::testValidURLs()
-{
-    QHash<QString, bool> urls;
-    urls["https://github.com/login"] = true;
-    urls["https:///github.com/"] = false;
-    urls["http://github.com/**//*"] = false;
-    urls["http://*.github.com/login"] = false;
-    urls["//github.com"] = true;
-    urls["github.com/{}<>"] = false;
-    urls["http:/example.com"] = false;
-    urls["cmd://C:/Toolchains/msys2/usr/bin/mintty \"ssh jon@192.168.0.1:22\""] = true;
-    urls["file:///Users/testUser/Code/test.html"] = true;
-    urls["{REF:A@I:46C9B1FFBD4ABC4BBB260C6190BAD20C} "] = true;
-
-    QHashIterator<QString, bool> i(urls);
-    while (i.hasNext()) {
-        i.next();
-        QCOMPARE(Tools::checkUrlValid(i.key()), i.value());
-    }
-}
 
 void TestBrowser::testBestMatchingCredentials()
 {
@@ -658,7 +665,7 @@ void TestBrowser::testBestMatchingWithAdditionalURLs()
     browserSettings()->setBestMatchOnly(true);
 
     // Add an additional URL to the first entry
-    entries.first()->attributes()->set(BrowserService::ADDITIONAL_URL, "https://test.github.com/anotherpage");
+    entries.first()->attributes()->set(EntryAttributes::AdditionalUrlAttribute, "https://test.github.com/anotherpage");
 
     // The first entry should be triggered
     auto result = m_browserService->searchEntries(
@@ -667,4 +674,69 @@ void TestBrowser::testBestMatchingWithAdditionalURLs()
         result, "https://test.github.com/anotherpage", "https://test.github.com/anotherpage");
     QCOMPARE(sorted.length(), 1);
     QCOMPARE(sorted[0]->url(), urls[0]);
+}
+
+void TestBrowser::testRestrictBrowserKey()
+{
+    auto db = QSharedPointer<Database>::create();
+    auto* root = db->rootGroup();
+
+    // Group 0 (root): No browser key restriction given
+    QStringList urlsRoot = {"https://example.com/0"};
+    auto entriesRoot = createEntries(urlsRoot, root);
+
+    // Group 1: restricted to browser with 'key1'
+    auto* group1 = new Group();
+    group1->setParent(root);
+    group1->setName("TestGroup1");
+    group1->customData()->set(BrowserService::OPTION_RESTRICT_KEY, "key1");
+    QStringList urls1 = {"https://example.com/1"};
+    auto entries1 = createEntries(urls1, group1);
+
+    // Group 2: restricted to browser with 'key2'
+    auto* group2 = new Group();
+    group2->setParent(root);
+    group2->setName("TestGroup2");
+    group2->customData()->set(BrowserService::OPTION_RESTRICT_KEY, "key2");
+    QStringList urls2 = {"https://example.com/2"};
+    auto entries2 = createEntries(urls2, group2);
+
+    // Group 2b: inherits parent group (2) restriction
+    auto* group2b = new Group();
+    group2b->setParent(group2);
+    group2b->setName("TestGroup2b");
+    QStringList urls2b = {"https://example.com/2b"};
+    auto entries2b = createEntries(urls2b, group2b);
+
+    // Group 3: inherits parent group (root) - any browser can see
+    auto* group3 = new Group();
+    group3->setParent(root);
+    group3->setName("TestGroup3");
+    QStringList urls3 = {"https://example.com/3"};
+    auto entries3 = createEntries(urls3, group3);
+
+    // Browser 'key0': Groups 1 and 2 are excluded, so entries 0 and 3 will be found
+    auto siteUrl = QString("https://example.com");
+    auto result = m_browserService->searchEntries(db, siteUrl, siteUrl, {"key0"});
+    auto sorted = m_browserService->sortEntries(result, siteUrl, siteUrl);
+    QCOMPARE(sorted.size(), 2);
+    QCOMPARE(sorted[0]->url(), QString("https://example.com/3"));
+    QCOMPARE(sorted[1]->url(), QString("https://example.com/0"));
+
+    // Browser 'key1': Group 2 will be excluded, so entries 0, 1, and 3 will be found
+    result = m_browserService->searchEntries(db, siteUrl, siteUrl, {"key1"});
+    sorted = m_browserService->sortEntries(result, siteUrl, siteUrl);
+    QCOMPARE(sorted.size(), 3);
+    QCOMPARE(sorted[0]->url(), QString("https://example.com/3"));
+    QCOMPARE(sorted[1]->url(), QString("https://example.com/1"));
+    QCOMPARE(sorted[2]->url(), QString("https://example.com/0"));
+
+    // Browser 'key2': Group 1 will be excluded, so entries 0, 2, 2b, 3 will be found
+    result = m_browserService->searchEntries(db, siteUrl, siteUrl, {"key2"});
+    sorted = m_browserService->sortEntries(result, siteUrl, siteUrl);
+    QCOMPARE(sorted.size(), 4);
+    QCOMPARE(sorted[0]->url(), QString("https://example.com/3"));
+    QCOMPARE(sorted[1]->url(), QString("https://example.com/2b"));
+    QCOMPARE(sorted[2]->url(), QString("https://example.com/2"));
+    QCOMPARE(sorted[3]->url(), QString("https://example.com/0"));
 }

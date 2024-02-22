@@ -158,9 +158,10 @@ void EntryHistoryModel::deleteIndex(QModelIndex index)
 {
     auto entry = entryFromIndex(index);
     if (entry) {
-        beginRemoveRows(QModelIndex(), m_historyEntries.indexOf(entry), m_historyEntries.indexOf(entry));
+        beginRemoveRows(QModelIndex(), index.row(), index.row());
         m_historyEntries.removeAll(entry);
         m_deletedHistoryEntries << entry;
+        m_historyModifications.erase(m_historyModifications.begin() + index.row());
         endRemoveRows();
     }
 }

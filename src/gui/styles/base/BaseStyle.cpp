@@ -593,7 +593,7 @@ namespace Phantom
                 } else {
                     // Remove the oldest guy from the cache. Remember that because we may
                     // re-enter QStyle functions multiple times when drawing or calculating
-                    // something, we may have to load several swaitches derived from
+                    // something, we may have to load several switches derived from
                     // different QPalettes on different stack frames at the same time. But as
                     // an extra cost-savings measure, we'll check and see if something else
                     // has a reference to the removed guy. If there aren't any references to
@@ -773,9 +773,7 @@ namespace Phantom
             static MenuItemMetrics ofFontHeight(int fontHeight);
 
         private:
-            MenuItemMetrics()
-            {
-            }
+            MenuItemMetrics() = default;
         };
 
         MenuItemMetrics MenuItemMetrics::ofFontHeight(int fontHeight)
@@ -1051,7 +1049,7 @@ namespace Phantom
         // Expected time (release): 5usecs for regular-sized arrows
         Q_NEVER_INLINE void drawArrow(QPainter* p, QRect rect, Qt::ArrowType arrowDirection, const QBrush& brush)
         {
-            const qreal ArrowBaseRatio = 0.70;
+            const qreal ArrowBaseRatio = 0.9;
             qreal irx, iry, irw, irh;
             QRectF(rect).getRect(&irx, &iry, &irw, &irh);
             if (irw < 1.0 || irh < 1.0)
@@ -1938,7 +1936,7 @@ void BaseStyle::drawPrimitive(PrimitiveElement elem,
         auto fropt = qstyleoption_cast<const QStyleOptionFocusRect*>(option);
         if (!fropt)
             break;
-        //### check for d->alt_down
+        // ### check for d->alt_down
         if (!(fropt->state & State_KeyboardFocusChange))
             return;
         if (fropt->state & State_Item) {
@@ -2772,7 +2770,7 @@ void BaseStyle::drawControl(ControlElement element,
             // that when it is resolved against the device, this font will win. This
             // is mainly to handle cases where someone sets the font on the window
             // and then the combo inherits it and passes it onward. At that point the
-            // resolve mask is very, very weak. This makes it stonger.
+            // resolve mask is very, very weak. This makes it stronger.
 #if 0
                 QFont font = menuItem->font;
       font.setPointSizeF(QFontInfo(menuItem->font).pointSizeF());
@@ -3979,14 +3977,14 @@ QSize BaseStyle::sizeFromContents(ContentsType type,
         if (!btn->icon.isNull() || !btn->text.isEmpty())
             margins =
                 proxy()->pixelMetric(isRadio ? PM_RadioButtonLabelSpacing : PM_CheckBoxLabelSpacing, option, widget);
-        return QSize(size.width() + w + margins, qMax(size.height(), h));
+        return {size.width() + w + margins, qMax(size.height(), h)};
     }
     case CT_MenuBarItem: {
         int fontHeight = option ? option->fontMetrics.height() : size.height();
         auto w = static_cast<int>(fontHeight * Ph::MenuBar_HorizontalPaddingFontRatio);
         auto h = static_cast<int>(fontHeight * Ph::MenuBar_VerticalPaddingFontRatio);
         int line = Ph::dpiScaled(1);
-        return QSize(size.width() + w * 2, size.height() + h * 2 + line);
+        return {size.width() + w * 2, size.height() + h * 2 + line};
     }
     case CT_MenuItem: {
         auto menuItem = qstyleoption_cast<const QStyleOptionMenuItem*>(option);
@@ -4113,7 +4111,7 @@ QSize BaseStyle::sizeFromContents(ContentsType type,
             xadd += 2;
             yadd += 2;
         }
-        return QSize(size.width() + xadd, size.height() + yadd);
+        return {size.width() + xadd, size.height() + yadd};
     }
     case CT_ItemViewItem: {
         auto vopt = qstyleoption_cast<const QStyleOptionViewItem*>(option);
@@ -4335,7 +4333,7 @@ QRect BaseStyle::subControlRect(ComplexControl control,
             break;
         case SC_SpinBoxDown:
             if (spinbox->buttonSymbols == QAbstractSpinBox::NoButtons)
-                return QRect();
+                return {};
 
             rect = QRect(x, center, buttonWidth, spinbox->rect.bottom() - center - fw + 1);
             break;
@@ -4429,13 +4427,13 @@ QRect BaseStyle::subControlRect(ComplexControl control,
     case CC_ComboBox: {
         auto cb = qstyleoption_cast<const QStyleOptionComboBox*>(option);
         if (!cb)
-            return QRect();
+            return {};
         int frame = cb->frame ? proxy()->pixelMetric(PM_ComboBoxFrameWidth, cb, widget) : 0;
         QRect r = option->rect;
         r.adjust(frame, frame, -frame, -frame);
         int dim = qMin(r.width(), r.height());
         if (dim < 1)
-            return QRect();
+            return {};
         switch (subControl) {
         case SC_ComboBoxFrame:
             return cb->rect;

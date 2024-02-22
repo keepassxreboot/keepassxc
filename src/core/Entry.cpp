@@ -1,6 +1,6 @@
 /*
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
 #include "core/Metadata.h"
 #include "core/PasswordHealth.h"
 #include "core/Tools.h"
-#include "totp/totp.h"
+#include "core/Totp.h"
 
 #include <QDir>
 #include <QRegularExpression>
@@ -205,6 +205,11 @@ bool Entry::autoTypeEnabled() const
     return m_data.autoTypeEnabled;
 }
 
+bool Entry::groupAutoTypeEnabled() const
+{
+    return group() && group()->resolveAutoTypeEnabled();
+}
+
 int Entry::autoTypeObfuscation() const
 {
     return m_data.autoTypeObfuscation;
@@ -372,16 +377,19 @@ QString Entry::url() const
 QStringList Entry::getAllUrls() const
 {
     QStringList urlList;
+    auto entryUrl = url();
 
-    if (!url().isEmpty()) {
-        urlList << url();
+    if (!entryUrl.isEmpty()) {
+        urlList << (EntryAttributes::matchReference(entryUrl).hasMatch() ? resolveMultiplePlaceholders(entryUrl)
+                                                                         : entryUrl);
     }
 
     for (const auto& key : m_attributes->keys()) {
-        if (key.startsWith("KP2A_URL")) {
+        if (key.startsWith(EntryAttributes::AdditionalUrlAttribute)
+            || key == QString("%1_RELYING_PARTY").arg(EntryAttributes::PasskeyAttribute)) {
             auto additionalUrl = m_attributes->value(key);
             if (!additionalUrl.isEmpty()) {
-                urlList << additionalUrl;
+                urlList << resolveMultiplePlaceholders(additionalUrl);
             }
         }
     }
@@ -538,6 +546,11 @@ bool Entry::hasTotp() const
     return !m_data.totpSettings.isNull();
 }
 
+bool Entry::hasPasskey() const
+{
+    return m_attributes->hasPasskey();
+}
+
 QString Entry::totp() const
 {
     if (hasTotp()) {
@@ -553,7 +566,7 @@ void Entry::setTotp(QSharedPointer<Totp::Settings> settings)
     m_attributes->remove(Totp::ATTRIBUTE_SEED);
     m_attributes->remove(Totp::ATTRIBUTE_SETTINGS);
 
-    if (settings->key.isEmpty()) {
+    if (!settings || settings->key.isEmpty()) {
         m_data.totpSettings.reset();
     } else {
         m_data.totpSettings = std::move(settings);
@@ -995,19 +1008,19 @@ void Entry::updateModifiedSinceBegin()
 
 QString Entry::resolveMultiplePlaceholdersRecursive(const QString& str, int maxDepth) const
 {
+    static QRegularExpression placeholderRegEx("(\\{[^\\}]+?\\})", QRegularExpression::CaseInsensitiveOption);
+
     if (maxDepth <= 0) {
         qWarning("Maximum depth of replacement has been reached. Entry uuid: %s", uuid().toString().toLatin1().data());
         return str;
     }
 
     QString result = str;
-    QRegExp placeholderRegEx("(\\{[^\\}]+\\})", Qt::CaseInsensitive, QRegExp::RegExp2);
-    placeholderRegEx.setMinimal(true);
-    int pos = 0;
-    while ((pos = placeholderRegEx.indexIn(str, pos)) != -1) {
-        const QString found = placeholderRegEx.cap(1);
+    auto matches = placeholderRegEx.globalMatch(str);
+    while (matches.hasNext()) {
+        auto match = matches.next();
+        const auto found = match.captured(1);
         result.replace(found, resolvePlaceholderRecursive(found, maxDepth - 1));
-        pos += placeholderRegEx.matchedLength();
     }
 
     if (result != str) {
@@ -1212,7 +1225,7 @@ QString Entry::referenceFieldValue(EntryReferenceType referenceType) const
     default:
         break;
     }
-    return QString();
+    return {};
 }
 
 void Entry::moveUp()
@@ -1264,10 +1277,10 @@ void Entry::setGroup(Group* group, bool trackPrevious)
         }
     }
 
+    QObject::setParent(group);
+
     m_group = group;
     group->addEntry(this);
-
-    QObject::setParent(group);
 
     if (m_updateTimeinfo) {
         m_data.timeInfo.setLocationChanged(Clock::currentDateTimeUtc());
@@ -1329,7 +1342,7 @@ QString Entry::resolvePlaceholder(const QString& placeholder) const
 QString Entry::resolveUrlPlaceholder(const QString& str, Entry::PlaceholderType placeholderType) const
 {
     if (str.isEmpty()) {
-        return QString();
+        return {};
     }
 
     const QUrl qurl(str);
@@ -1360,7 +1373,7 @@ QString Entry::resolveUrlPlaceholder(const QString& str, Entry::PlaceholderType 
     }
     }
 
-    return QString();
+    return {};
 }
 
 Entry::PlaceholderType Entry::placeholderType(const QString& placeholder) const
@@ -1432,7 +1445,7 @@ QString Entry::resolveUrl(const QString& url) const
         }
 
         // No URL in this command
-        return QString("");
+        return {};
     }
 
     if (!newUrl.isEmpty() && !newUrl.contains("://")) {
@@ -1536,7 +1549,7 @@ bool EntryData::equals(const EntryData& other, CompareItemOptions options) const
             return false;
         }
     } else if (totpSettings.isNull() != other.totpSettings.isNull()) {
-        // The existance of TOTP has changed between these entries
+        // The existence of TOTP has changed between these entries
         return false;
     }
     if (::compare(excludeFromReports, other.excludeFromReports, options) != 0) {

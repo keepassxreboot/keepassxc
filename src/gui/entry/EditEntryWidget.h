@@ -118,11 +118,13 @@ private slots:
     void updateSSHAgentAttachment();
     void updateSSHAgentAttachments();
     void updateSSHAgentKeyInfo();
+    void updateTotp();
     void browsePrivateKey();
     void addKeyToAgent();
     void removeKeyFromAgent();
     void decryptPrivateKey();
     void copyPublicKey();
+    void generatePrivateKey();
 #endif
 #ifdef WITH_XC_BROWSER
     void updateBrowserModified();
@@ -131,6 +133,7 @@ private slots:
     void removeCurrentURL();
     void editCurrentURL();
     void updateCurrentURL();
+    void entryURLEdited(const QString& url);
 #endif
 
 private:
@@ -167,6 +170,7 @@ private:
     bool m_history;
 #ifdef WITH_XC_SSHAGENT
     KeeAgentSettings m_sshAgentSettings;
+    QString m_pendingPrivateKey;
 #endif
     const QScopedPointer<Ui::EditEntryWidgetMain> m_mainUi;
     const QScopedPointer<Ui::EditEntryWidgetAdvanced> m_advancedUi;

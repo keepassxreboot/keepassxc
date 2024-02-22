@@ -238,11 +238,11 @@ struct TagsEdit::Impl
         auto const e = std::end(tags);
         if (cursorVisible()) {
             auto const m = b + static_cast<std::ptrdiff_t>(editing_index);
-            calcRects(lt, row, r, fm, std::make_pair(b, m));
+            calcRects(lt, row, r, fm, std::pair(b, m));
             calcEditorRect(lt, row, r, fm, m);
-            calcRects(lt, row, r, fm, std::make_pair(m + 1, e));
+            calcRects(lt, row, r, fm, std::pair(m + 1, e));
         } else {
-            calcRects(lt, row, r, fm, std::make_pair(b, e));
+            calcRects(lt, row, r, fm, std::pair(b, e));
         }
 
         r.setBottom(lt.y() + fm.height() + fm.leading() + tag_inner.top() + tag_inner.bottom() - 1);
@@ -667,8 +667,7 @@ void TagsEdit::paintEvent(QPaintEvent*)
 
         // tags
         impl->drawTags(
-            p,
-            std::make_pair(impl->tags.cbegin(), std::next(impl->tags.cbegin(), std::ptrdiff_t(impl->editing_index))));
+            p, std::pair(impl->tags.cbegin(), std::next(impl->tags.cbegin(), std::ptrdiff_t(impl->editing_index))));
 
         // draw not terminated tag
         auto const formatting = impl->formatting();
@@ -683,12 +682,10 @@ void TagsEdit::paintEvent(QPaintEvent*)
 
         // tags
         impl->drawTags(
-            p,
-            std::make_pair(std::next(impl->tags.cbegin(), std::ptrdiff_t(impl->editing_index + 1)), impl->tags.cend()));
+            p, std::pair(std::next(impl->tags.cbegin(), std::ptrdiff_t(impl->editing_index + 1)), impl->tags.cend()));
     } else {
-        impl->drawTags(p,
-                       std::make_pair(EmptySkipIterator(impl->tags.begin(), impl->tags.end()),
-                                      EmptySkipIterator(impl->tags.end())));
+        impl->drawTags(
+            p, std::pair(EmptySkipIterator(impl->tags.begin(), impl->tags.end()), EmptySkipIterator(impl->tags.end())));
     }
 }
 

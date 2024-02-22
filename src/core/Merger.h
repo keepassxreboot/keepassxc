@@ -49,8 +49,7 @@ private:
     ChangeList mergeGroup(const MergeContext& context);
     ChangeList mergeDeletions(const MergeContext& context);
     ChangeList mergeMetadata(const MergeContext& context);
-    bool markOlderEntry(Entry* entry);
-    bool mergeHistory(const Entry* sourceEntry, Entry* targetEntry, Group::MergeMode mergeMethod);
+    bool mergeHistory(const Entry* sourceEntry, Entry* targetEntry, Group::MergeMode mergeMethod, const int maxItems);
     void moveEntry(Entry* entry, Group* targetGroup);
     void moveGroup(Group* group, Group* targetGroup);
     // remove an entry without a trace in the deletedObjects - needed for elemination cloned entries
@@ -59,12 +58,6 @@ private:
     void eraseGroup(Group* group);
     ChangeList resolveEntryConflict(const MergeContext& context, const Entry* existingEntry, Entry* otherEntry);
     ChangeList resolveGroupConflict(const MergeContext& context, const Group* existingGroup, Group* otherGroup);
-    Merger::ChangeList
-    resolveEntryConflict_Duplicate(const MergeContext& context, const Entry* sourceEntry, Entry* targetEntry);
-    Merger::ChangeList
-    resolveEntryConflict_KeepLocal(const MergeContext& context, const Entry* sourceEntry, Entry* targetEntry);
-    Merger::ChangeList
-    resolveEntryConflict_KeepRemote(const MergeContext& context, const Entry* sourceEntry, Entry* targetEntry);
     Merger::ChangeList resolveEntryConflict_MergeHistories(const MergeContext& context,
                                                            const Entry* sourceEntry,
                                                            Entry* targetEntry,

@@ -184,7 +184,7 @@ void KeePass2Writer::raiseError(const QString& errorMessage)
  */
 QSharedPointer<KdbxWriter> KeePass2Writer::writer() const
 {
-    return QSharedPointer<KdbxWriter>();
+    return {};
 }
 
 /**

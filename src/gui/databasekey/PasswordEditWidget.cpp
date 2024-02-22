@@ -29,9 +29,7 @@ PasswordEditWidget::PasswordEditWidget(QWidget* parent)
     initComponent();
 }
 
-PasswordEditWidget::~PasswordEditWidget()
-{
-}
+PasswordEditWidget::~PasswordEditWidget() = default;
 
 bool PasswordEditWidget::addToCompositeKey(QSharedPointer<CompositeKey> key)
 {
@@ -62,6 +60,14 @@ bool PasswordEditWidget::isPasswordVisible() const
 bool PasswordEditWidget::isEmpty() const
 {
     return (visiblePage() == Page::Edit) && m_compUi->enterPasswordEdit->text().isEmpty();
+}
+
+PasswordHealth::Quality PasswordEditWidget::getPasswordQuality() const
+{
+    QString pwd = m_compUi->enterPasswordEdit->text();
+    PasswordHealth passwordHealth(pwd);
+
+    return passwordHealth.quality();
 }
 
 QWidget* PasswordEditWidget::componentEditWidget()

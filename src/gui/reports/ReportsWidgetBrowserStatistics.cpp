@@ -112,8 +112,8 @@ ReportsWidgetBrowserStatistics::ReportsWidgetBrowserStatistics(QWidget* parent)
     connect(
         m_ui->browserStatisticsTableView, SIGNAL(doubleClicked(QModelIndex)), SLOT(emitEntryActivated(QModelIndex)));
     connect(m_ui->showEntriesWithUrlOnlyCheckBox, SIGNAL(stateChanged(int)), this, SLOT(calculateBrowserStatistics()));
-    connect(m_ui->showConnectedOnlyCheckBox, SIGNAL(stateChanged(int)), this, SLOT(calculateBrowserStatistics()));
-    connect(m_ui->excludeExpired, SIGNAL(stateChanged(int)), this, SLOT(calculateBrowserStatistics()));
+    connect(m_ui->showAllowDenyCheckBox, SIGNAL(stateChanged(int)), this, SLOT(calculateBrowserStatistics()));
+    connect(m_ui->showExpired, SIGNAL(stateChanged(int)), this, SLOT(calculateBrowserStatistics()));
 
     new QShortcut(Qt::Key_Delete, this, SLOT(deleteSelectedEntries()));
 }
@@ -143,6 +143,9 @@ void ReportsWidgetBrowserStatistics::addStatisticsRow(bool hasUrls,
     auto title = entry->title();
     if (excluded) {
         title.append(tr(" (Excluded)"));
+    }
+    if (entry->isExpired()) {
+        title.append(tr(" (Expired)"));
     }
 
     auto row = QList<QStandardItem*>();
@@ -196,16 +199,15 @@ void ReportsWidgetBrowserStatistics::calculateBrowserStatistics()
     const QScopedPointer<BrowserStatistics> browserStatistics(
         AsyncTask::runAndWaitForFuture([this] { return new BrowserStatistics(m_db); }));
 
-    const auto showExcluded = m_ui->showConnectedOnlyCheckBox->isChecked();
+    const auto showExpired = m_ui->showExpired->isChecked();
     const auto showEntriesWithUrlOnly = m_ui->showEntriesWithUrlOnlyCheckBox->isChecked();
-    const auto showOnlyEntriesWithSettings = m_ui->showConnectedOnlyCheckBox->isChecked();
+    const auto showOnlyEntriesWithSettings = m_ui->showAllowDenyCheckBox->isChecked();
 
     // Display the entries
     m_rowToEntry.clear();
     for (const auto& item : browserStatistics->items()) {
-        auto excluded = item->exclude || (item->entry->isExpired() && m_ui->excludeExpired->isChecked());
-        if (excluded && !showExcluded) {
-            // Exclude this entry from the report
+        // Check if the entry should be displayed
+        if (!showExpired && item->entry->isExpired()) {
             continue;
         }
 

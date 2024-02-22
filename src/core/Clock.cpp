@@ -50,12 +50,12 @@ QDateTime Clock::serialized(const QDateTime& dateTime)
 
 QDateTime Clock::datetimeUtc(int year, int month, int day, int hour, int min, int second)
 {
-    return QDateTime(QDate(year, month, day), QTime(hour, min, second), Qt::UTC);
+    return {QDate(year, month, day), QTime(hour, min, second), Qt::UTC};
 }
 
 QDateTime Clock::datetime(int year, int month, int day, int hour, int min, int second)
 {
-    return QDateTime(QDate(year, month, day), QTime(hour, min, second), Qt::LocalTime);
+    return {QDate(year, month, day), QTime(hour, min, second), Qt::LocalTime};
 }
 
 QDateTime Clock::datetimeUtc(qint64 msecSinceEpoch)
@@ -78,13 +78,9 @@ QDateTime Clock::parse(const QString& text, const QString& format)
     return QDateTime::fromString(text, format);
 }
 
-Clock::~Clock()
-{
-}
+Clock::~Clock() = default;
 
-Clock::Clock()
-{
-}
+Clock::Clock() = default;
 
 QDateTime Clock::currentDateTimeUtcImpl() const
 {

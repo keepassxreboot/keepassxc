@@ -36,6 +36,7 @@ DatabaseOpenDialog::DatabaseOpenDialog(QWidget* parent)
 {
     setWindowTitle(tr("Unlock Database - KeePassXC"));
     setWindowFlags(Qt::Dialog);
+    setWindowFlag(Qt::WindowContextHelpButtonHint, false);
 #ifdef Q_OS_LINUX
     // Linux requires this to overcome some Desktop Environments (also no Quick Unlock)
     setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
@@ -77,6 +78,16 @@ DatabaseOpenDialog::DatabaseOpenDialog(QWidget* parent)
     shortcut = new QShortcut(dbTabModifier + Qt::Key_Tab, this);
     shortcut->setContext(Qt::WidgetWithChildrenShortcut);
     connect(shortcut, &QShortcut::activated, this, [this]() { selectTabOffset(1); });
+}
+
+void DatabaseOpenDialog::showEvent(QShowEvent* event)
+{
+    QDialog::showEvent(event);
+    QTimer::singleShot(100, this, [=] {
+        if (m_view->isOnQuickUnlockScreen() && !m_view->unlockingDatabase()) {
+            m_view->triggerQuickUnlock();
+        }
+    });
 }
 
 void DatabaseOpenDialog::selectTabOffset(int offset)

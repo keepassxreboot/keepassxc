@@ -78,7 +78,7 @@ int main(int argc, char** argv)
     QCommandLineOption keyfileOption("keyfile", QObject::tr("key file of the database"), "keyfile");
     QCommandLineOption pwstdinOption("pw-stdin", QObject::tr("read password of the database from stdin"));
     QCommandLineOption allowScreenCaptureOption("allow-screencapture",
-                                                QObject::tr("allow app screen recordering and screenshots"));
+                                                QObject::tr("allow screenshots and app recording (Windows/macOS)"));
 
     QCommandLineOption helpOption = parser.addHelpOption();
     QCommandLineOption versionOption = parser.addVersionOption();
@@ -89,10 +89,7 @@ int main(int argc, char** argv)
     parser.addOption(keyfileOption);
     parser.addOption(pwstdinOption);
     parser.addOption(debugInfoOption);
-
-    if (osUtils->canPreventScreenCapture()) {
-        parser.addOption(allowScreenCaptureOption);
-    }
+    parser.addOption(allowScreenCaptureOption);
 
     parser.process(app);
 
@@ -156,6 +153,14 @@ int main(int argc, char** argv)
         return EXIT_SUCCESS;
     }
 
+    if (parser.isSet(lockOption)) {
+        qWarning() << QObject::tr("KeePassXC is not running. No open database to lock").toUtf8().constData();
+
+        // still return with EXIT_SUCCESS because when used within a script for ensuring that there is no unlocked
+        // keepass database (e.g. screen locking) we can consider it as successful
+        return EXIT_SUCCESS;
+    }
+
     if (!Crypto::init()) {
         QString error = QObject::tr("Fatal error while testing the cryptographic functions.");
         error.append("\n");
@@ -174,22 +179,14 @@ int main(int argc, char** argv)
     Application::bootstrap();
 
     MainWindow mainWindow;
-
-#ifndef QT_DEBUG
-    // Disable screen capture if capable and not explicitly allowed
-    if (osUtils->canPreventScreenCapture() && !parser.isSet(allowScreenCaptureOption)) {
-        // This ensures any top-level windows (Main Window, Modal Dialogs, etc.) are excluded from screenshots
-        QObject::connect(&app, &QGuiApplication::focusWindowChanged, &mainWindow, [&](QWindow* window) {
-            if (window) {
-                if (!osUtils->setPreventScreenCapture(window, true)) {
-                    mainWindow.displayGlobalMessage(
-                        QObject::tr("Warning: Failed to prevent screenshots on a top level window!"),
-                        MessageWidget::Error);
-                }
-            }
-        });
-    }
+#ifdef Q_OS_WIN
+    // Qt Hack - Prevent white flicker when showing window
+    mainWindow.setProperty("windowOpacity", 0.0);
 #endif
+
+    // Disable screen capture if not explicitly allowed
+    // This ensures any top-level windows (Main Window, Modal Dialogs, etc.) are excluded from screenshots
+    mainWindow.setAllowScreenCapture(parser.isSet(allowScreenCaptureOption));
 
     const bool pwstdin = parser.isSet(pwstdinOption);
     if (!fileNames.isEmpty() && pwstdin) {
@@ -205,6 +202,14 @@ int main(int argc, char** argv)
             password = Utils::getPassword();
         }
         mainWindow.openDatabase(filename, password, parser.value(keyfileOption));
+    }
+
+    // start minimized if configured
+    if (config()->get(Config::GUI_MinimizeOnStartup).toBool()) {
+        mainWindow.hideWindow();
+    } else {
+        mainWindow.bringToFront();
+        Application::processEvents();
     }
 
     int exitCode = Application::exec();

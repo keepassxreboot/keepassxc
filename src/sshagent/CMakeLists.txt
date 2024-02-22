@@ -8,6 +8,8 @@ if(WITH_XC_SSHAGENT)
         BinaryStream.cpp
         KeeAgentSettings.cpp
         OpenSSHKey.cpp
+        OpenSSHKeyGen.cpp
+        OpenSSHKeyGenDialog.cpp
         SSHAgent.cpp
     )
 

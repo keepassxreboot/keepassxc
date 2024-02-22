@@ -115,7 +115,7 @@ void TestEntry::testClone()
     QScopedPointer<Entry> entryCloneRename(entryOrg->clone(Entry::CloneRenameTitle));
     QCOMPARE(entryCloneRename->uuid(), entryOrg->uuid());
     QCOMPARE(entryCloneRename->title(), QString("New Title - Clone"));
-    // Cloning should not modify time info unless explicity requested
+    // Cloning should not modify time info unless explicitly requested
     QCOMPARE(entryCloneRename->timeInfo(), entryOrg->timeInfo());
 
     QScopedPointer<Entry> entryCloneResetTime(entryOrg->clone(Entry::CloneResetTimeInfo));

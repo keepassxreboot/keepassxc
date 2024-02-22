@@ -1,6 +1,6 @@
 /*
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,7 +17,6 @@
  */
 
 #include "EntryAttributes.h"
-
 #include "core/Global.h"
 
 #include <QRegularExpression>
@@ -35,6 +34,8 @@ const QString EntryAttributes::SearchInGroupName = "SearchIn";
 const QString EntryAttributes::SearchTextGroupName = "SearchText";
 
 const QString EntryAttributes::RememberCmdExecAttr = "_EXEC_CMD";
+const QString EntryAttributes::AdditionalUrlAttribute = "KP2A_URL";
+const QString EntryAttributes::PasskeyAttribute = "KPEX_PASSKEY";
 
 EntryAttributes::EntryAttributes(QObject* parent)
     : ModifiableObject(parent)
@@ -52,12 +53,24 @@ bool EntryAttributes::hasKey(const QString& key) const
     return m_attributes.contains(key);
 }
 
+bool EntryAttributes::hasPasskey() const
+{
+    const auto keyList = keys();
+    for (const auto& key : keyList) {
+        if (isPasskeyAttribute(key)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 QList<QString> EntryAttributes::customKeys() const
 {
     QList<QString> customKeys;
     const QList<QString> keyList = keys();
     for (const QString& key : keyList) {
-        if (!isDefaultAttribute(key)) {
+        if (!isDefaultAttribute(key) && !isPasskeyAttribute(key)) {
             customKeys.append(key);
         }
     }
@@ -320,4 +333,9 @@ int EntryAttributes::attributesSize() const
 bool EntryAttributes::isDefaultAttribute(const QString& key)
 {
     return DefaultAttributes.contains(key);
+}
+
+bool EntryAttributes::isPasskeyAttribute(const QString& key)
+{
+    return key.startsWith(PasskeyAttribute);
 }

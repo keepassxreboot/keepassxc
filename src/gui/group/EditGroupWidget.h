@@ -39,9 +39,7 @@ namespace Ui
 class IEditGroupPage
 {
 public:
-    virtual ~IEditGroupPage()
-    {
-    }
+    virtual ~IEditGroupPage() = default;
     virtual QString name() = 0;
     virtual QIcon icon() = 0;
     virtual QWidget* createWidget() = 0;
@@ -82,6 +80,10 @@ private:
     int indexFromTriState(Group::TriState triState);
     Group::TriState triStateFromIndex(int index);
     void setupModifiedTracking();
+
+    void addRestrictKeyComboBoxItems(QStringList const& keyList, QString inheritValue);
+    void setRestrictKeyComboBoxIndex(const Group* group);
+    void setRestrictKeyCustomData(CustomData* customData);
 
     const QScopedPointer<Ui::EditGroupWidgetMain> m_mainUi;
 

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -36,21 +36,20 @@ private slots:
     void testDecryptMessage();
     void testGetBase64FromKey();
     void testIncrementNonce();
-
-    void testTopLevelDomain();
-    void testIsIpAddress();
+    void testBuildResponse();
     void testSortPriority();
     void testSortPriority_data();
     void testSearchEntries();
     void testSearchEntriesByPath();
     void testSearchEntriesByUUID();
+    void testSearchEntriesByReference();
     void testSearchEntriesWithPort();
     void testSearchEntriesWithAdditionalURLs();
     void testInvalidEntries();
     void testSubdomainsAndPaths();
-    void testValidURLs();
     void testBestMatchingCredentials();
     void testBestMatchingWithAdditionalURLs();
+    void testRestrictBrowserKey();
 
 private:
     QList<Entry*> createEntries(QStringList& urls, Group* root) const;

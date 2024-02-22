@@ -1,5 +1,70 @@
 # Changelog
 
+## 2.7.6 (2023-08-15)
+
+### Changes
+- Significant improvement to visual when drag/drop entries [#9698]
+- Automatically prompt for Quick Unlock when showing unlock dialog [#9697]
+- Improve colorful lock icon and fix file MIME icon on KDE [#9632]
+- Ability to search by entry UUID [#9571]
+- Add challenge-response support for NitroKey 3 [#9631]
+- Auto-Type: Disable entry level Auto-Type when disabled at group/entry [#9672]
+- Browser: Show warning when adding duplicate URL's to entry [#9588][#9635]
+- Browser: Improve error message when proxy cannot be found [#9385]
+
+### Fixes
+- Fix crash on exit on macOS [#9620]
+- Fix crash on search if entry doesn't have a group [#9633]
+- Fix several issues with Quick Unlock [#9697]
+- Enable save button when not auto-saving non-data changes [#9634]
+- Several UI/UX fixes [#9647]
+- Move toolbar back to top of window when disabling movement [#9699]
+- Browser: Fix closing password generator dialog with X button [#9636]
+- Browser: Fix handling of expired credentials [#9595]
+- Windows: Prevent white flicker when launching application [#9637]
+- Linux: Fix warning message about allow screencapture [#9638]
+- FdoSecrets: Fix access confirmation dialog showing even when disabled [#9690]
+
+## 2.7.5 (2023-05-14)
+
+### Changes
+- Add menu option to allow screenshots [#8841]
+- Add support for Botan 3 [#9388]
+- Increase max TOTP step to 24 hours [#9149]
+- Improve HTML export layout [#8987]
+- Turn search reset off by default [#9153]
+- Use QClipboard::clear() instead of setting blank text [#9148]
+- Hide group column header choice when not in search [#9171]
+- Improve look of KeePassXC logo and icons [#9355]
+- Add keyboard shortcuts for app and database settings [#9007]
+- Hide rename button from attachments preview panel [#8842]
+- Linux: Set SingleMainWindow in .desktop file [#7430]
+
+### Fixes
+- Fix crash when search clears while creating new entry [#9230]
+- Fix crash when using Windows Hello in a Remote Desktop session [#9006]
+- Fix crash in Group Edit after enabling Browser Integration [#8778]
+- Fix canceling quick unlock when it is unavailable [#9034]
+- Set password input field font correctly [#8732]
+- Greatly improve performance when rendering entry view [#9398]
+- Fix various accessibility issues [#9138]
+- Fix arrows size when expand/collapse a group [#9096]
+- Select the clone instead of the original after cloning an entry [#9070]
+- Fix bugs with preview widget [#9170]
+- Fix status bar update when switching to other DB [#9073]
+- Fix database settings spin box bug [#9101]
+- Fix Ctrl+Tab shortcut to cycle databases in unlock dialog [#8839]
+- Fix TOTP QR code maintaining square ratio [#9027]
+- Fix Auto-Type configuration page on custom sequence selection [#8752]
+- Fix unexpected behavior of `--lock` when KeePassXC is not running [#8889]
+- Make open folder icon exempt from "Apply group icon to entry" [#9205]
+- Allow setting default file open directory with env var [#9192]
+- SSH Agent: Fix support for AES-256/GCM openssh keys [#8968]
+- Browser: Fix Native Messaging script path with BSD OS's [#8835]
+- MacOS: Fix text selection for Auto-Type clear field [#9066]
+- MacOS: Don't rely on AppleInterfaceStyle for theme switching [#8615]
+- Windows: Remove registry detection of desktop shortcut [#9380]
+
 ## 2.7.4 (2022-10-29)
 
 ### Changes
@@ -14,7 +79,7 @@
 - Browser: Revert code causing connection problems [#8665]
 - Browser: Fix socket file symbolic link on Linux [#8656]
 - Flatpak: Fix launching browser proxy service [#8680]
-- SSH Agent: Fix paegent support on Windows [#8619]
+- SSH Agent: Fix pageant support on Windows [#8619]
 
 ## 2.7.3 (2022-10-23)
 
@@ -897,7 +962,7 @@
 - Compare window title to entry URLs #556
 - Implemented inline error messages #162
 - Ignore group expansion and other minor changes when making database "dirty" #464
-- Updated license and copyright information on souce files #632
+- Updated license and copyright information on source files #632
 - Added contributors list to about dialog #629
 
 ## 2.1.4 (2017-04-09)

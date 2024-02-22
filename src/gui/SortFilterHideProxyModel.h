@@ -19,6 +19,7 @@
 #define KEEPASSX_SORTFILTERHIDEPROXYMODEL_H
 
 #include <QBitArray>
+#include <QCollator>
 #include <QSortFilterProxyModel>
 
 class SortFilterHideProxyModel : public QSortFilterProxyModel
@@ -36,6 +37,7 @@ protected:
 
 private:
     QBitArray m_hiddenColumns;
+    QCollator m_collator;
 };
 
 #endif // KEEPASSX_SORTFILTERHIDEPROXYMODEL_H

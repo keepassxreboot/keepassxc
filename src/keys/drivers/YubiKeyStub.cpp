@@ -18,9 +18,7 @@
 
 #include "YubiKey.h"
 
-YubiKey::YubiKey()
-{
-}
+YubiKey::YubiKey() = default;
 
 YubiKey* YubiKey::m_instance(Q_NULLPTR);
 

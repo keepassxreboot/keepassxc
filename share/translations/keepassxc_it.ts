@@ -7,7 +7,7 @@
     </message>
     <message>
         <source>About</source>
-        <translation>Informazioni</translation>
+        <translation>Info programma</translation>
     </message>
     <message>
         <source>Report bugs at: &lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/issues&quot; style=&quot;text-decoration: underline;&quot;&gt;https://github.com&lt;/a&gt;</source>
@@ -31,11 +31,11 @@
     </message>
     <message>
         <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt; vedere i contributi su GitHub&lt;/a&gt;</translation>
+        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt; Contributi su GitHub&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Debug Info</source>
-        <translation>Informazioni di debug</translation>
+        <translation>Informazioni debug</translation>
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
@@ -43,18 +43,18 @@
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation>Copia negli appunti</translation>
+        <translation>Copia negli Appunti</translation>
     </message>
 </context>
 <context>
     <name>AccessControlDialog</name>
     <message>
         <source>KeePassXC -  Access Request</source>
-        <translation>KeePassXC -  Richiesta di accesso</translation>
+        <translation>KeePassXC - Richiesta di accesso</translation>
     </message>
     <message>
         <source>Non-existing/inaccessible executable path. Please double-check the client is legit.</source>
-        <translation>Percorso eseguibile non esistente/inaccessibile. Si prega di ricontrollare che il client sia legittimo.</translation>
+        <translation>Percorso eseguibile non esistente/inaccessibile. Ricontrolla che il client sia legittimo.</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;%1 &lt;/span&gt;is requesting access to the following entries:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -81,24 +81,24 @@
         <translation>Dettagli</translation>
     </message>
     <message>
+        <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
+        <translation>Questa decisione verrà ricordata per tutta la durata mentre sia il client richiedente che KeePassXC sono in esecuzione.</translation>
+    </message>
+    <message>
         <source>Remember</source>
-        <translation>Ricorda </translation>
+        <translation>Ricorda</translation>
     </message>
     <message>
         <source>Allow Selected</source>
         <translation>Consenti selezionati</translation>
     </message>
     <message>
-        <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
-        <translation>La tua decisione verrà ricordata per tutta la durata mentre sia il client richiedente che KeePassXC sono in esecuzione.</translation>
-    </message>
-    <message>
         <source>Deny All &amp;&amp; Future</source>
-        <translation>Nega tutto &amp;&amp; futuri</translation>
+        <translation>Nega tutto e futuri</translation>
     </message>
     <message>
         <source>Allow All &amp;&amp; &amp;Future</source>
-        <translation>Consenti tutto &amp;&amp; &amp;futuri</translation>
+        <translation>Consenti tutto e &amp;futuri</translation>
     </message>
 </context>
 <context>
@@ -112,7 +112,7 @@
     <name>AgentSettingsWidget</name>
     <message>
         <source>Enable SSH Agent integration</source>
-        <translation>Abilitare l&apos;integrazione dell&apos;agente SSH</translation>
+        <translation>Abilita l&apos;integrazione dell&apos;agente SSH</translation>
     </message>
     <message>
         <source>Use Pageant</source>
@@ -121,6 +121,10 @@
     <message>
         <source>Use OpenSSH</source>
         <translation>Usa OpenSSH</translation>
+    </message>
+    <message>
+        <source>Use both agents</source>
+        <translation>Usa entrambi gli agenti</translation>
     </message>
     <message>
         <source>SSH_AUTH_SOCK override</source>
@@ -144,15 +148,11 @@
     </message>
     <message>
         <source>No SSH Agent socket available. Either make sure SSH_AUTH_SOCK environment variable exists or set an override.</source>
-        <translation>Nessun collegamento SSH disponibile. Verificare che la variabile d&apos;ambiente SSH_AUTH_SOCK esista oppure sovrascriverne il contenuto.</translation>
+        <translation>Nessun collegamento SSH disponibile. Verifica che la variabile d&apos;ambiente SSH_AUTH_SOCK esista oppure sovrascriverne il contenuto.</translation>
     </message>
     <message>
         <source>SSH Agent connection is working!</source>
         <translation>La connessione dell&apos;agente SSH sta funzionando!</translation>
-    </message>
-    <message>
-        <source>Use both agents</source>
-        <translation>Utilizzare entrambi gli agenti</translation>
     </message>
 </context>
 <context>
@@ -170,6 +170,10 @@
         <translation>Sicurezza</translation>
     </message>
     <message>
+        <source>This setting cannot be enabled when minimize on unlock is enabled.</source>
+        <translation>Questa impostazione non può essere abilitata quando è abilitata la riduzione a icona con lo sblocco.</translation>
+    </message>
+    <message>
         <source>Access error for config file %1</source>
         <translation>Errore di accesso per il file di configurazione %1</translation>
     </message>
@@ -179,7 +183,7 @@
     </message>
     <message>
         <source>Text only</source>
-        <translation>Solo testo</translation>
+        <translation>Solo icone</translation>
     </message>
     <message>
         <source>Text beside icon</source>
@@ -195,7 +199,7 @@
     </message>
     <message>
         <source>Monochrome</source>
-        <translation>Monocromatico</translation>
+        <translation>Monocromatica</translation>
     </message>
     <message>
         <source>Monochrome (light)</source>
@@ -211,11 +215,11 @@
     </message>
     <message>
         <source>You must restart the application to set the new language. Would you like to restart now?</source>
-        <translation>È necessario riavviare l&apos;applicazione per impostare la nuova lingua. Vuoi riavviare ora?</translation>
+        <translation>Per impostare la nuova lingua è necessario riavviare l&apos;applicazione. Vuoi riavviare ora?</translation>
     </message>
     <message>
         <source>Reset Settings?</source>
-        <translation>Ripristinare le impostazioni?</translation>
+        <translation>Vuoi ripristinare le impostazioni?</translation>
     </message>
     <message>
         <source>Are you sure you want to reset all general and security settings to default?</source>
@@ -254,7 +258,11 @@
     </message>
     <message>
         <source>Remember previously used databases</source>
-        <translation>Ricordare i database usati in precedenza</translation>
+        <translation>Ricorda i database usati in precedenza</translation>
+    </message>
+    <message>
+        <source> recent files</source>
+        <translation> file recenti</translation>
     </message>
     <message>
         <source>Load previously open databases on startup</source>
@@ -262,11 +270,11 @@
     </message>
     <message>
         <source>Remember database key files and security dongles</source>
-        <translation>Memorizzare i file di chiave del database e i dongle di sicurezza</translation>
+        <translation>Memorizza i file chiave del database e i dongle di sicurezza</translation>
     </message>
     <message>
         <source>Check for updates at application startup once per week</source>
-        <translation>Verificare la disponibilità di aggiornamenti all&apos;avvio dell&apos;applicazione una volta alla settimana</translation>
+        <translation>Verifica la disponibilità di aggiornamenti all&apos;avvio dell&apos;applicazione una volta alla settimana</translation>
     </message>
     <message>
         <source>Include beta releases when checking for updates</source>
@@ -274,7 +282,7 @@
     </message>
     <message>
         <source>On database unlock, show entries that </source>
-        <translation>Allo sblocco del database, mostra le voci che </translation>
+        <translation>Allo sblocco del database, visualizza le voci che </translation>
     </message>
     <message>
         <source>have expired</source>
@@ -289,7 +297,7 @@
     <message>
         <source>will expire within </source>
         <comment>On database unlock, show entries that...</comment>
-        <translation>scadrà entro </translation>
+        <translation>scadranno entro </translation>
     </message>
     <message>
         <source>File Management</source>
@@ -321,7 +329,7 @@
     </message>
     <message>
         <source>Specifies the database backup file location. Occurrences of &quot;{DB_FILENAME}&quot; are replaced with the filename of the saved database without extension. {TIME:&lt;format&gt;} is replaced with the backup time, see https://doc.qt.io/qt-5/qdatetime.html#toString. &lt;format&gt; defaults to format string &quot;dd_MM_yyyy_hh-mm-ss&quot;.</source>
-        <translation>Specifica il percorso del file di backup del database. Le occorrenze di &quot;{DB_FILENAME}&quot; vengono sostituite con il nome del file del database salvato senza estensione. {TIME:&lt;format&gt;} viene sostituito con l&apos;ora di backup, vedere https://doc.qt.io/qt-5/qdatetime.html#toString. &lt;format&gt;per impostazione predefinita, formatta la stringa &quot;dd_MM_yyyy_hh-mm-ss&quot;.</translation>
+        <translation>Specifica il percorso del file di backup del database. Le occorrenze di &quot;{DB_FILENAME}&quot; vengono sostituite con il nome del file del database salvato senza estensione. {TIME:&lt;format&gt;} viene sostituito con l&apos;ora di backup, vedi https://doc.qt.io/qt-5/qdatetime.html#toString. &lt;format&gt;per impostazione predefinita, formatta la stringa &quot;dd_MM_yyyy_hh-mm-ss&quot;.</translation>
     </message>
     <message>
         <source>{DB_FILENAME}.old.kdbx</source>
@@ -333,7 +341,7 @@
     </message>
     <message>
         <source>Use alternative saving method (may solve problems with Dropbox, Google Drive, GVFS, etc.)</source>
-        <translation>Utilizzare un metodo di salvataggio alternativo (può risolvere problemi con Dropbox, Google Drive, GVFS, ecc.)</translation>
+        <translation>Usa un metodo di salvataggio alternativo (può risolvere problemi con Dropbox, Google Drive, GVFS, ecc.)</translation>
     </message>
     <message>
         <source>Temporary file moved into place</source>
@@ -341,7 +349,7 @@
     </message>
     <message>
         <source>Directly write to database file (dangerous)</source>
-        <translation>Scrittura diretta nel file di database (pericoloso)</translation>
+        <translation>Scrittura diretta nel file database (pericoloso)</translation>
     </message>
     <message>
         <source>Entry Management</source>
@@ -369,11 +377,11 @@
     </message>
     <message>
         <source>Favicon download timeout:</source>
-        <translation>Timeout scaricamento Favicon:</translation>
+        <translation>Timeout scaricamento favicon:</translation>
     </message>
     <message>
         <source>Website icon download timeout in seconds</source>
-        <translation>Timeout scaricamento icona sito Web in secondi</translation>
+        <translation>Timeout scaricamento icona sito web in secondi</translation>
     </message>
     <message>
         <source> sec</source>
@@ -386,7 +394,7 @@
     </message>
     <message>
         <source>Toolbar button style</source>
-        <translation>Stile pulsante della barra degli strumenti</translation>
+        <translation>Stile pulsante barra degli strumenti</translation>
     </message>
     <message>
         <source>Movable toolbar</source>
@@ -402,19 +410,23 @@
     </message>
     <message>
         <source>(restart program to activate)</source>
-        <translation>(riavviare il programma per attivare)</translation>
+        <translation>(per attivare riavvia il programma)</translation>
     </message>
     <message>
         <source>Toolbar button style:</source>
         <translation>Stile pulsanti della barra degli strumenti:</translation>
     </message>
     <message>
+        <source>Show passwords in color</source>
+        <translation>Visualizza le password a colori</translation>
+    </message>
+    <message>
         <source>Use monospaced font for notes</source>
-        <translation>Utilizzare un tipo di carattere monospazio per le note</translation>
+        <translation>Per le note usa una font a larghezza fissa</translation>
     </message>
     <message>
         <source>Minimize instead of app exit</source>
-        <translation>Minimizzare invece di uscire dall&apos;app</translation>
+        <translation>Minimizza invece di uscire dall&apos;applicazione</translation>
     </message>
     <message>
         <source>Show a system tray icon</source>
@@ -422,19 +434,19 @@
     </message>
     <message>
         <source>Tray icon type</source>
-        <translation>Tipo di icona vassoio</translation>
+        <translation>Tipo icona barra sistema</translation>
     </message>
     <message>
         <source>Tray icon type:</source>
-        <translation>Tipo di icona vassoio:</translation>
+        <translation>Tipo icona barra sistema:</translation>
     </message>
     <message>
         <source>Hide window to system tray when minimized</source>
-        <translation>Nascondi la finestra nell&apos;area di notifica di sistema quando viene minimizzata</translation>
+        <translation>Quando viene minimizzata la finestra nascondila nell&apos;area di notifica di sistema </translation>
     </message>
     <message>
         <source>Reset settings to default…</source>
-        <translation>Ripristina impostazioni predefinite…</translation>
+        <translation>Ripristina impostazioni predefinite...</translation>
     </message>
     <message>
         <source>Auto-Type</source>
@@ -442,11 +454,11 @@
     </message>
     <message>
         <source>Use entry title to match windows for global Auto-Type</source>
-        <translation>Usa il titolo della voce per la corrispondenza con le finestre per il completamento automatico globale</translation>
+        <translation>Per il completamento automatico globale per la corrispondenza con le finestre usa il titolo della voce</translation>
     </message>
     <message>
         <source>Use entry URL to match windows for global Auto-Type</source>
-        <translation>Usa URL della voce per la corrispondenza con le finestre per il completamento automatico globale</translation>
+        <translation>Per il completamento automatico globale per la corrispondenza con le finestre usa URL della voce</translation>
     </message>
     <message>
         <source>Always ask before performing Auto-Type</source>
@@ -454,11 +466,11 @@
     </message>
     <message>
         <source>Hide expired entries from Auto-Type</source>
-        <translation>Nascondere le voci scadute dalla digitazione automatica</translation>
+        <translation>Nascondi le voci scadute dalla digitazione automatica</translation>
     </message>
     <message>
         <source>Re-lock previously locked database after performing Auto-Type</source>
-        <translation>Blocca nuovamente un database precedentemente bloccato dopo aver completato l&apos;Auto-Type</translation>
+        <translation>Blocca nuovamente un database precedentemente bloccato dopo il completamento automatico</translation>
     </message>
     <message>
         <source>Auto-Type start delay:</source>
@@ -466,7 +478,7 @@
     </message>
     <message>
         <source>Global Auto-Type shortcut:</source>
-        <translation>Scorciatoia globale per l&apos;auto-completamento</translation>
+        <translation>Scorciatoia globale completamento automatico:</translation>
     </message>
     <message>
         <source>Auto-type start delay milliseconds</source>
@@ -479,11 +491,11 @@
     </message>
     <message>
         <source>Auto-Type typing delay:</source>
-        <translation>Ritardo del completamento automatico:</translation>
+        <translation>Ritardo completamento automatico:</translation>
     </message>
     <message>
         <source>Global auto-type shortcut</source>
-        <translation>Scorciatoia globale per il completamento automatico</translation>
+        <translation>Scorciatoia globale completamento automatico</translation>
     </message>
     <message>
         <source>Auto-type character typing delay milliseconds</source>
@@ -502,7 +514,7 @@
     </message>
     <message>
         <source>Database lock timeout seconds</source>
-        <translation>Secondi di timeout per il blocco del database</translation>
+        <translation>Secondi timeout blocco database</translation>
     </message>
     <message>
         <source> sec</source>
@@ -524,7 +536,7 @@
     </message>
     <message>
         <source>Clipboard clear seconds</source>
-        <translation>Secondi per la cancellazione degli appunti</translation>
+        <translation>Secondi cancellazione appunti</translation>
     </message>
     <message>
         <source>Lock databases after inactivity of</source>
@@ -556,7 +568,7 @@
     </message>
     <message>
         <source>Use placeholder for empty password fields</source>
-        <translation> Usa segnaposti per campi password vuoti</translation>
+        <translation>Usa segnaposti per campi password vuoti</translation>
     </message>
     <message>
         <source>Hide passwords in the entry preview panel</source>
@@ -564,15 +576,15 @@
     </message>
     <message>
         <source>Hide entry notes by default</source>
-        <translation>Nascondi le note della voce per impostazione predefinita</translation>
+        <translation>per impostazione predefinita nascondi le note della voce</translation>
     </message>
     <message>
         <source>Move entries to recycle bin without confirmation</source>
-        <translation>Spostare le voci nel cestino senza conferma</translation>
+        <translation>Sposta le voci nel cestino senza conferma</translation>
     </message>
     <message>
         <source>Enable double click to copy the username/password entry columns</source>
-        <translation>Abilitare il doppio clic per copiare le colonne di immissione nome utente/password</translation>
+        <translation>Abilita il doppio clic per copiare le colonne di immissione nome utente/password</translation>
     </message>
     <message>
         <source>Privacy</source>
@@ -580,14 +592,18 @@
     </message>
     <message>
         <source>Use DuckDuckGo service to download website icons</source>
-        <translation>Utilizzare il servizio DuckDuckGo per scaricare le icone del sito web</translation>
+        <translation>Per scaricare le icone del sito web usa il servizio DuckDuckGo</translation>
+    </message>
+    <message>
+        <source>Hide TOTP in the entry preview panel</source>
+        <translation>Nascondi TOTP nel pannello di anteprima della voce</translation>
     </message>
 </context>
 <context>
     <name>AutoType</name>
     <message>
         <source>The requested Auto-Type sequence cannot be used due to an error:</source>
-        <translation>Impossibile utilizzare la sequenza automatica richiesta a causa di un errore:</translation>
+        <translation>Impossibile usare la sequenza automatica richiesta a causa di un errore:</translation>
     </message>
     <message>
         <source>Auto-Type Error</source>
@@ -599,11 +615,13 @@
     </message>
     <message>
         <source>KeePassXC requires the Accessibility permission in order to perform entry level Auto-Type. If you already granted permission, you may have to restart KeePassXC.</source>
-        <translation>KeePassXC richiede il permesso di Accessibilità per effettuare l&apos;auto-completamento di livello base. Se hai già concesso il permesso, riavvia KeePassXC.</translation>
+        <translation>Per effettuare l&apos;auto-completamento di livello base KeePassXC richiede il permesso di Accessibilità. Se hai già concesso il permesso, riavvia KeePassXC.</translation>
     </message>
     <message>
         <source>KeePassXC requires the Accessibility and Screen Recorder permission in order to perform global Auto-Type. Screen Recording is necessary to use the window title to find entries. If you already granted permission, you may have to restart KeePassXC.</source>
-        <translation>KeePasssXC richiede il permesso di Accessibilità e di Registrazione Schermo per effettuare l&apos;auto-completamento globale. La registrazione dello schermo è necessaria per usare il titolo della finestra al fine di trovare le voci corrispondenti. Se hai già concesso il permesso, riavvia KeePassXC.</translation>
+        <translation>Per effettuare il completamento automatico globale KeePasssXC richiede il permesso di Accessibilità e di Registrazione Schermo. 
+Per usare il titolo della finestra al fine di trovare le voci corrispondenti è necessaria la registrazione dello schermo. 
+Se hai già concesso il permesso, riavvia KeePassXC.</translation>
     </message>
     <message>
         <source>Invalid entry provided</source>
@@ -624,6 +642,10 @@
     <message>
         <source>Very long delay detected, max is %1: %2</source>
         <translation>Ritardo molto lungo rilevato, max è %1: %2</translation>
+    </message>
+    <message>
+        <source>Entry does not have attribute for PICKCHARS: %1</source>
+        <translation>La voce non ha l&apos;attributo per PICKCHARS: %1</translation>
     </message>
     <message>
         <source>Invalid conversion type: %1</source>
@@ -709,7 +731,7 @@
     </message>
     <message>
         <source>Double click a row to perform Auto-Type or find an entry using the search:</source>
-        <translation>Fare doppio clic su una riga per eseguire la digitazione automatica o trovare una voce utilizzando la ricerca:</translation>
+        <translation>Doppio clic su una riga per eseguire la digitazione automatica o trovare una voce usando la ricerca:</translation>
     </message>
     <message>
         <source>&lt;p&gt;You can use advanced search queries to find any entry in your open databases. The following shortcuts are useful:&lt;br/&gt;
@@ -718,11 +740,11 @@ Ctrl+1 - Type username&lt;br/&gt;
 Ctrl+2 - Type password&lt;br/&gt;
 Ctrl+3 - Type TOTP&lt;br/&gt;
 Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
-        <translation>&lt;p&gt;È possibile utilizzare query di ricerca avanzate per trovare qualsiasi voce nei database aperti. Le seguenti scorciatoie sono utili:&lt;br/&gt;CTRL+F - Attiva/disattiva la ricerca nel database&lt;br/&gt;CTRL+1 - Digita nome utente&lt;br/&gt;Ctrl+2 - Digita password&lt;br/&gt;CTRL+3 - Digita TOTP&lt;br/&gt;CTRL+4 - Usa tastiera virtuale (solo Windows)&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Per trovare qualsiasi voce nei database aperti è possibile usare query di ricerca avanzate . Sono utilile seguenti scorciatoie:&lt;br/&gt;CTRL+F - Attiva/disattiva ricerca nel database&lt;br/&gt;CTRL+1 - Digita nome utente&lt;br/&gt;Ctrl+2 - Digita password&lt;br/&gt;CTRL+3 - Digita TOTP&lt;br/&gt;CTRL+4 - Usa tastiera virtuale (solo Windows)&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Search all open databases</source>
-        <translation>Cercare in tutti i database aperti</translation>
+        <translation>Cerca in tutti i database aperti</translation>
     </message>
     <message>
         <source>Search…</source>
@@ -730,7 +752,7 @@ Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
     </message>
     <message>
         <source>Type Sequence</source>
-        <translation>Digitare la sequenza</translation>
+        <translation>Digita la sequenza</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -738,7 +760,7 @@ Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
     </message>
     <message>
         <source>Type {USERNAME}</source>
-        <translation>Digitare {USERNAME}</translation>
+        <translation>Digita {USERNAME}</translation>
     </message>
     <message>
         <source>Type {PASSWORD}</source>
@@ -781,7 +803,7 @@ Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
     </message>
     <message>
         <source>Remember</source>
-        <translation>Ricorda </translation>
+        <translation>Ricorda</translation>
     </message>
     <message>
         <source>Allow access to entries</source>
@@ -799,13 +821,13 @@ Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
         <source>Disable for this site</source>
         <translation>Disabilita per questo sito</translation>
     </message>
+    <message>
+        <source>Undo</source>
+        <translation>Ripristina</translation>
+    </message>
 </context>
 <context>
     <name>BrowserEntrySaveDialog</name>
-    <message>
-        <source>KeePassXC-Browser Save Entry</source>
-        <translation>Voce di salvataggio del browser KeePassXC</translation>
-    </message>
     <message>
         <source>Ok</source>
         <translation>Ok</translation>
@@ -817,22 +839,78 @@ Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
     <message>
         <source>You have multiple databases open.
 Please select the correct database for saving credentials.</source>
-        <translation>C&apos;è più di un database aperto
-Selezionare il database corretto dove salvare le credenziali</translation>
+        <translation>C&apos;è più di un database aperto. 
+Seleziona il database corretto dove salvare le credenziali.</translation>
+    </message>
+    <message>
+        <source>KeePassXC - Select Database</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>BrowserPasskeysConfirmationDialog</name>
+    <message>
+        <source>KeePassXC: Passkey credentials</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annulla</translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Authenticate</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Register new</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Register</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>Timeout in &lt;b&gt;%n&lt;/b&gt; seconds...</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Do you want to register Passkey for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 (%2)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Existing Passkey found.
+Do you want to register a new Passkey for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Select the existing Passkey and press Update to replace it.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Authenticate Passkey credentials for:</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>BrowserService</name>
     <message>
         <source>KeePassXC: Create a new group</source>
-        <translation>KeePassXC: Creare un nuovo gruppo</translation>
+        <translation>KeePassXC: Crea un nuovo gruppo</translation>
     </message>
     <message>
         <source>A request for creating a new group &quot;%1&quot; has been received.
 Do you want to create this group?
 </source>
         <translation>È stata ricevuta una richiesta di creazione di un nuovo gruppo &quot;%1&quot;.
-Si desidera creare questo gruppo?
+Vuoi creare questo gruppo?
 </translation>
     </message>
     <message>
@@ -845,11 +923,11 @@ Si desidera creare questo gruppo?
 
 Give the connection a unique name or ID, for example:
 chrome-laptop.</source>
-        <translation>Hai ricevuto una richiesta di associazione per il segguente database:
+        <translation>Hai ricevuto una richiesta di associazione per il seguente database:
 %1
 
 Assegnagli un nome univoco o un ID, per esempio:
-laptop-chrome</translation>
+laptop-chrome.</translation>
     </message>
     <message>
         <source>Save and allow access</source>
@@ -857,12 +935,12 @@ laptop-chrome</translation>
     </message>
     <message>
         <source>KeePassXC: Overwrite existing key?</source>
-        <translation>KeePassXC: Vuoi sovrascrivere la chiave esistente?</translation>
+        <translation>KeePassXC: vuoi sovrascrivere la chiave esistente?</translation>
     </message>
     <message>
         <source>A shared encryption key with the name &quot;%1&quot; already exists.
 Do you want to overwrite it?</source>
-        <translation>Esiste già una chiave crittografica condivisa con il nome &quot;%1&quot;- Vuoi sovrascriverla?</translation>
+        <translation>Esiste già una chiave di cifratura condivisa con il nome &quot;%1&quot;- Vuoi sovrascriverla?</translation>
     </message>
     <message>
         <source>KeePassXC: Update Entry</source>
@@ -885,50 +963,8 @@ Vuoi eliminare questa voce?
 </translation>
     </message>
     <message>
-        <source>Converting attributes to custom data…</source>
-        <translation>Conversione di attributi in dati personalizzati in corso…</translation>
-    </message>
-    <message>
-        <source>Abort</source>
-        <translation>Interrompi</translation>
-    </message>
-    <message>
-        <source>KeePassXC: Converted KeePassHTTP attributes</source>
-        <translation>KeePassXC: attributi KeePassHTTP convertiti</translation>
-    </message>
-    <message>
-        <source>Successfully converted attributes from %1 entry(s).
-Moved %2 keys to custom data.</source>
-        <translation>Attributi convertiti correttamente da %1 voce(i).
-Sono stati spostati %2 chiavi nei dati personalizzati.</translation>
-    </message>
-    <message numerus="yes">
-        <source>Successfully moved %n keys to custom data.</source>
-        <translation><numerusform>Sono stati spostati %n chiavi in dati personalizzati.</numerusform><numerusform>Sono state spostate %n chiavi in dati personalizzati.</numerusform></translation>
-    </message>
-    <message>
-        <source>KeePassXC: No entry with KeePassHTTP attributes found!</source>
-        <translation>KeePassXC: Nessuna voce trovata con gli attributi KeePassHTTP!</translation>
-    </message>
-    <message>
-        <source>The active database does not contain an entry with KeePassHTTP attributes.</source>
-        <translation>Il database attivo non contiene una voce con attributi KeePassHTTP.</translation>
-    </message>
-    <message>
-        <source>Don&apos;t show this warning again</source>
-        <translation>Non mostrare nuovamente questo avviso</translation>
-    </message>
-    <message>
-        <source>KeePassXC: Legacy browser integration settings detected</source>
-        <translation>KeePassXC: rilevate le impostazioni di integrazione del browser legacy</translation>
-    </message>
-    <message>
-        <source>Your KeePassXC-Browser settings need to be moved into the database settings.
-This is necessary to maintain your current browser connections.
-Would you like to migrate your existing settings now?</source>
-        <translation>Le impostazioni di KeePassXC-Browser devono essere spostate nelle impostazioni del database.
-Ciò è necessario per mantenere le connessioni del browser corrente.
-Si desidera eseguire ora la migrazione delle impostazioni esistenti?</translation>
+        <source>%1 (Passkey)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -939,11 +975,11 @@ Si desidera eseguire ora la migrazione delle impostazioni esistenti?</translatio
     </message>
     <message>
         <source>This is required for accessing your databases with KeePassXC-Browser</source>
-        <translation>Questo è necessario per accedere al tuo database con KeePassXC-Browser</translation>
+        <translation>Questo è necessario per accedere al database con KeePassXC-Browser</translation>
     </message>
     <message>
         <source>Enable browser integration</source>
-        <translation>Abilitare l&apos;integrazione del browser</translation>
+        <translation>Abilita l&apos;integrazione del browser</translation>
     </message>
     <message>
         <source>General</source>
@@ -955,7 +991,7 @@ Si desidera eseguire ora la migrazione delle impostazioni esistenti?</translatio
     </message>
     <message>
         <source>Enable integration for these browsers:</source>
-        <translation>Abilita l&apos;integrazione per i seguenti browser:</translation>
+        <translation>Abilita integrazione per i seguenti browser:</translation>
     </message>
     <message>
         <source>Vivaldi</source>
@@ -988,7 +1024,7 @@ Si desidera eseguire ora la migrazione delle impostazioni esistenti?</translatio
     <message>
         <source>Show a notification when credentials are requested</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Mostra una notifica quando le credenziali sono richieste</translation>
+        <translation>Visualizza una notifica quando le credenziali sono richieste</translation>
     </message>
     <message>
         <source>Request to unlock the database if it is locked</source>
@@ -1000,11 +1036,11 @@ Si desidera eseguire ora la migrazione delle impostazioni esistenti?</translatio
     </message>
     <message>
         <source>Match URL scheme (e.g., https://example.com)</source>
-        <translation>Corrispondenza dello schema URL  (ad esempio, https://example.com)</translation>
+        <translation>Corrispondenza dello schema URL (ad es., https://esempio.com)</translation>
     </message>
     <message>
         <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
-        <translation>Restituisci solo le corrispondenze migliori per un&apos;URL specifica invece di tutte le voci per l&apos;intero dominio.</translation>
+        <translation>Restituisci solo le corrispondenze migliori per una URL specifica invece di tutte le voci per l&apos;intero dominio.</translation>
     </message>
     <message>
         <source>Return only best-matching credentials</source>
@@ -1044,7 +1080,7 @@ Si desidera eseguire ora la migrazione delle impostazioni esistenti?</translatio
     <message>
         <source>Do not ask permission for HTTP Basic Auth</source>
         <extracomment>An extra HTTP Basic Auth setting</extracomment>
-        <translation>Non chiedere l&apos;autorizzazione per l&apos;autenticazione HTTP e basic</translation>
+        <translation>Non chiedere l&apos;autorizzazione per l&apos;autenticazione semplice HTTP</translation>
     </message>
     <message>
         <source>Automatically creating or updating string fields is not supported.</source>
@@ -1056,7 +1092,7 @@ Si desidera eseguire ora la migrazione delle impostazioni esistenti?</translatio
     </message>
     <message>
         <source>Don&apos;t display the popup suggesting migration of legacy KeePassHTTP settings.</source>
-        <translation>Non visualizzare il popup che suggerisce la migrazione delle impostazioni KeePassHTTP legacy.</translation>
+        <translation>Non visualizzare la finestra a comparsa che suggerisce la migrazione delle impostazioni KeePassHTTP obsolete.</translation>
     </message>
     <message>
         <source>Do not prompt for KeePassHTTP settings migration.</source>
@@ -1064,7 +1100,7 @@ Si desidera eseguire ora la migrazione delle impostazioni esistenti?</translatio
     </message>
     <message>
         <source>Updates KeePassXC or keepassxc-proxy binary path automatically to native messaging scripts on startup.</source>
-        <translation>Aggiorna automaticamente all&apos;avvio il percorso dei binari di KeePassXC o keepassxc-proxy per gli script di messaggistica nativa</translation>
+        <translation>Aggiorna automaticamente all&apos;avvio il percorso dei binari di KeePassXC o keepassxc-proxy per gli script di messaggistica nativa.</translation>
     </message>
     <message>
         <source>Update native messaging manifest files at startup</source>
@@ -1072,12 +1108,12 @@ Si desidera eseguire ora la migrazione delle impostazioni esistenti?</translatio
     </message>
     <message>
         <source>Use a custom proxy location if you installed a proxy manually.</source>
-        <translation>Usa un indirizzo proxy personalizzato se hai installato manualmente un proxy</translation>
+        <translation>Usa un indirizzo proxy personalizzato se hai installato manualmente un proxy.</translation>
     </message>
     <message>
         <source>Use a custom proxy location:</source>
         <comment>Meant is the proxy for KeePassXC-Browser</comment>
-        <translation>Utilizza un proxy personalizzato</translation>
+        <translation>Usa un proxy personalizzato:</translation>
     </message>
     <message>
         <source>Custom proxy location field</source>
@@ -1085,7 +1121,7 @@ Si desidera eseguire ora la migrazione delle impostazioni esistenti?</translatio
     </message>
     <message>
         <source>Browser for custom proxy file</source>
-        <translation>Browser per file proxy personalizzato</translation>
+        <translation>Browser file proxy personalizzato</translation>
     </message>
     <message>
         <source>Browse…</source>
@@ -1094,7 +1130,7 @@ Si desidera eseguire ora la migrazione delle impostazioni esistenti?</translatio
     </message>
     <message>
         <source>Use a custom browser configuration location:</source>
-        <translation>Usare un percorso personalizzato per la configurazione del browser:</translation>
+        <translation>Usa percorso personalizzato configurazione browser:</translation>
     </message>
     <message>
         <source>Browser type:</source>
@@ -1102,7 +1138,7 @@ Si desidera eseguire ora la migrazione delle impostazioni esistenti?</translatio
     </message>
     <message>
         <source>Toolbar button style</source>
-        <translation>Stile pulsante della barra degli strumenti</translation>
+        <translation>Stile pulsante barra degli strumenti</translation>
     </message>
     <message>
         <source>Config Location:</source>
@@ -1114,7 +1150,7 @@ Si desidera eseguire ora la migrazione delle impostazioni esistenti?</translatio
     </message>
     <message>
         <source>Browse for custom browser path</source>
-        <translation>Cerca un percorso personalizzato per il browser </translation>
+        <translation>Cerca percorso personalizzato browser</translation>
     </message>
     <message>
         <source>Custom extension ID:</source>
@@ -1126,23 +1162,15 @@ Si desidera eseguire ora la migrazione delle impostazioni esistenti?</translatio
     </message>
     <message>
         <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
-        <translation>A causa del sandboxing di Snap, è necessario eseguire uno script per abilitare l&apos;integrazione del browser. &lt;br /&gt;È possibile ottenere questo script da %1</translation>
+        <translation>A causa del sandboxing di Snap, per abilitare l&apos;integrazione del browser è necessario eseguire uno script. &lt;br /&gt;È possibile ottenere questo script da %1</translation>
     </message>
     <message>
         <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3. %4</source>
-        <translation>KeePassXC-Browser è necessario per far funzionare l&apos;integrazione del browser. &lt;br /&gt;Scaricarlo per %1, %2 e %3. %4</translation>
+        <translation>Per far funzionare l&apos;integrazione del browser KeePassXC-Browser. &lt;br /&gt;Scaricarlo per %1, %2 e %3. %4</translation>
     </message>
     <message>
         <source>Please see special instructions for browser extension use below</source>
-        <translation>Si prega di consultare le istruzioni speciali per l&apos;uso dell&apos;estensione del browser di seguito</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location cannot be found!&lt;br/&gt;Browser integration WILL NOT WORK without the proxy application.</source>
-        <translation>&lt;b&gt;Errore:&lt;/b&gt; Il percorso personalizzato per il proxy non può essere trovato!&lt;br/&gt;L&apos;estensione del browser NON PUO&apos; LAVORARE senza l&apos;utilizzo di un proxy.</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation>&lt;b&gt;Avviso:&lt;/b&gt; le seguenti opzioni possono essere pericolose.</translation>
+        <translation>Per l&apos;uso dell&apos;estensione del browser di seguito consulta le istruzioni speciali</translation>
     </message>
     <message>
         <source>Executable Files</source>
@@ -1154,11 +1182,35 @@ Si desidera eseguire ora la migrazione delle impostazioni esistenti?</translatio
     </message>
     <message>
         <source>Select custom proxy location</source>
-        <translation>Selezionare una posizione personalizzata per il proxy</translation>
+        <translation>Seleziona una posizione personalizzata per il proxy</translation>
     </message>
     <message>
         <source>Select native messaging host folder location</source>
-        <translation>Selezionare il percorso per la cartella principale della messaggistica</translation>
+        <translation>Seleziona il percorso per la cartella principale della messaggistica</translation>
+    </message>
+    <message>
+        <source>Allow keepassxc-proxy to list all entries with their title, URL and UUID in connected databases.</source>
+        <translation>Consenti a keepassxc-proxy di elencare tutte le voci con il loro titolo, URL e UUID nei database collegati.</translation>
+    </message>
+    <message>
+        <source>Allow limited access to all entries in connected databases (ignores site access restrictions)</source>
+        <translation>Consenti accesso limitato a tutte le voci nei database connessi (ignora le restrizioni di accesso al sito)</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Warning:&lt;/b&gt; Only adjust these settings if necessary.</source>
+        <translation>&lt;b&gt;Avvertimento:&lt;/b&gt; Regola queste impostazioni solo se necessario.</translation>
+    </message>
+    <message>
+        <source>The custom proxy location does not exist.</source>
+        <translation>Il percorso proxy personalizzato non esiste.</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location does not exist. Correct this in the advanced settings tab.</source>
+        <translation>&lt;b&gt;Errore:&lt;/b&gt; Il percorso proxy personalizzato non esiste. Correggi questo problema nella scheda Impostazioni avanzate.</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The installed proxy executable is missing from the expected location: %1&lt;br/&gt;Please set a custom proxy location in the advanced settings or reinstall the application.</source>
+        <translation>&lt;b&gt;Errore:&lt;/b&gt; L&apos;eseguibile proxy installato non è presente nel percorso previsto: %1&lt;br/&gt;Impostare una posizione proxy personalizzata nelle impostazioni avanzate o reinstallare l&apos;applicazione.</translation>
     </message>
 </context>
 <context>
@@ -1312,7 +1364,7 @@ Si desidera eseguire ora la migrazione delle impostazioni esistenti?</translatio
     </message>
     <message numerus="yes">
         <source>[%n more message(s) skipped]</source>
-        <translation><numerusform>[%n altro messaggio saltato]</numerusform><numerusform>[altri %n messaggi saltati]</numerusform></translation>
+        <translation><numerusform>[%n altro messaggio saltato]</numerusform><numerusform>[altri %n messaggi saltati]</numerusform><numerusform>[altri %n messaggi saltati]</numerusform></translation>
     </message>
     <message>
         <source>Error</source>
@@ -1334,15 +1386,15 @@ Si desidera eseguire ora la migrazione delle impostazioni esistenti?</translatio
     </message>
     <message numerus="yes">
         <source>%n byte(s)</source>
-        <translation><numerusform>%n byte (s)</numerusform><numerusform>%n byte(s)</numerusform></translation>
+        <translation><numerusform>%n byte (s)</numerusform><numerusform>%n byte(s)</numerusform><numerusform>%n byte(s)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n row(s)</source>
-        <translation><numerusform>righe: %n</numerusform><numerusform>%n riga(e)</numerusform></translation>
+        <translation><numerusform>righe: %n</numerusform><numerusform>%n riga(e)</numerusform><numerusform>%n riga(e)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n column(s)</source>
-        <translation><numerusform>%n colonna</numerusform><numerusform>%n colonne</numerusform></translation>
+        <translation><numerusform>%n colonna</numerusform><numerusform>%n colonne</numerusform><numerusform>%n colonne</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1358,7 +1410,7 @@ Si desidera eseguire ora la migrazione delle impostazioni esistenti?</translatio
     </message>
     <message>
         <source>Unable to open file %1.</source>
-        <translation>Impossibile aprire il file %1.</translation>
+        <translation>Impossibile aprire il file &apos;%1&apos;.</translation>
     </message>
     <message>
         <source>Error while reading the database: %1</source>
@@ -1370,7 +1422,7 @@ Si desidera eseguire ora la migrazione delle impostazioni esistenti?</translatio
     </message>
     <message>
         <source>Database save is already in progress.</source>
-        <translation>Salvataggio del database già avviato</translation>
+        <translation>Salvataggio del database già avviato.</translation>
     </message>
     <message>
         <source>Could not save, database has not been initialized!</source>
@@ -1378,7 +1430,7 @@ Si desidera eseguire ora la migrazione delle impostazioni esistenti?</translatio
     </message>
     <message>
         <source>Database file has unmerged changes.</source>
-        <translation>Il file di database ha apportato modifiche non unite.</translation>
+        <translation>Il file database ha apportato modifiche non unite.</translation>
     </message>
     <message>
         <source>%1
@@ -1388,7 +1440,7 @@ Database di backup che si trova in %2</translation>
     </message>
     <message>
         <source>Key not transformed. This is a bug, please report it to the developers.</source>
-        <translation>Chiave non trasformata. Questo è un bug, si prega di segnalarlo agli sviluppatori.</translation>
+        <translation>Chiave non trasformata. Questo è un bug, segnalalo agli sviluppatori.</translation>
     </message>
     <message>
         <source>Recycle Bin</source>
@@ -1399,7 +1451,7 @@ Database di backup che si trova in %2</translation>
     <name>DatabaseOpenDialog</name>
     <message>
         <source>Unlock Database - KeePassXC</source>
-        <translation>Sbloccare Database - KeePassXC</translation>
+        <translation>Sblocca database - KeePassXC</translation>
     </message>
 </context>
 <context>
@@ -1426,7 +1478,7 @@ Database di backup che si trova in %2</translation>
     </message>
     <message>
         <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Oltre a una password, è possibile utilizzare un file segreto per migliorare la sicurezza del database. Questo file può essere generato nelle impostazioni di sicurezza del database.&lt;/p&gt;&lt;p&gt;Questo non &lt;strong&gt;è il&lt;/strong&gt; tuo file di database *.kdbx!&lt;br&gt;Se non si dispone di un file di chiave, lasciare vuoto questo campo.&lt;/p&gt;&lt;p&gt;Clicca per maggiori informazioni...&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Oltre a una password, è possibile usare un file segreto per migliorare la sicurezza del database. Questo file può essere generato nelle impostazioni di sicurezza del database.&lt;/p&gt;&lt;p&gt;Questo non &lt;strong&gt;è il&lt;/strong&gt; file database *.kdbx!&lt;br&gt;Se non si dispone di un file chiave, lascia vuoto questo campo.&lt;/p&gt;&lt;p&gt;Fai clic per maggiori informazioni...&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Key file help</source>
@@ -1443,8 +1495,8 @@ Database di backup che si trova in %2</translation>
     <message>
         <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
 &lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;È possibile utilizzare una chiave di protezione hardware, ad esempio &lt;strong&gt;YubiKey&lt;/strong&gt; o &lt;strong&gt;OnlyKey&lt;/strong&gt; con slot configurati per HMAC-SHA1.&lt;/p&gt;
-&lt;p&gt;Clicca per maggiori informazioni...&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;È possibile usare una chiave di protezione hardware, ad esempio &lt;strong&gt;YubiKey&lt;/strong&gt; o &lt;strong&gt;OnlyKey&lt;/strong&gt; con slot configurati per HMAC-SHA1.&lt;/p&gt;
+&lt;p&gt;Per maggiori informazioni fai clic...&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Hardware key help</source>
@@ -1456,7 +1508,7 @@ Database di backup che si trova in %2</translation>
     </message>
     <message>
         <source>Browse for key file</source>
-        <translation>Cercare il file chiave</translation>
+        <translation>Seleziona file chiave</translation>
     </message>
     <message>
         <source>Browse…</source>
@@ -1464,7 +1516,7 @@ Database di backup che si trova in %2</translation>
     </message>
     <message>
         <source>Refresh hardware tokens</source>
-        <translation>Aggiornare i token hardware</translation>
+        <translation>Aggiorna i token hardware</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -1484,11 +1536,11 @@ Database di backup che si trova in %2</translation>
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue…</source>
-        <translation>Si prega di presentare o toccare il vostro YubiKey per continuare...</translation>
+        <translation>Per continuare presenta o tocca la YubiKey ...</translation>
     </message>
     <message>
         <source>Database Version Mismatch</source>
-        <translation>Versione del database non corrispondente</translation>
+        <translation>Versione database non corrispondente</translation>
     </message>
     <message>
         <source>The database you are trying to open was most likely
@@ -1504,7 +1556,7 @@ creato da una versione più recente di KeePassXC.
 Puoi provare ad aprirlo comunque, ma potrebbe essere incompleto
 e il salvataggio di qualsiasi modifica può comportare una perdita di dati.
 
-Ti consigliamo di aggiornare la tua installazione di KeePassXC.</translation>
+Ti consigliamo di aggiornare questa installazione di KeePassXC.</translation>
     </message>
     <message>
         <source>Open database anyway</source>
@@ -1524,7 +1576,7 @@ Do you want to retry with an &quot;empty&quot; password instead?
 
 To prevent this error from appearing, you must go to &quot;Database Settings / Security&quot; and reset your password.</source>
         <translation>Sblocco del database non riuscito e non è stata immessa una password.
-Si desidera riprovare con una password &quot;vuota&quot;?
+Vuoi riprovare con una password &quot;vuota&quot;?
 
 Per evitare che questo errore venga visualizzato, è necessario andare alle &quot;Impostazioni database / Sicurezza&quot; e reimpostare la password.</translation>
     </message>
@@ -1533,16 +1585,8 @@ Per evitare che questo errore venga visualizzato, è necessario andare alle &quo
         <translation>Riprova con password vuota</translation>
     </message>
     <message>
-        <source>Failed to authenticate with Windows Hello</source>
-        <translation>Impossibile eseguire l&apos;autenticazione con Windows Hello</translation>
-    </message>
-    <message>
-        <source>Failed to authenticate with Touch ID</source>
-        <translation>Impossibile eseguire l&apos;autenticazione con Touch ID</translation>
-    </message>
-    <message>
         <source>Failed to open key file: %1</source>
-        <translation>Impossibile aprire il file di chiave: %1</translation>
+        <translation>Impossibile aprire il file chiave: %1</translation>
     </message>
     <message>
         <source>Old key file format</source>
@@ -1550,11 +1594,11 @@ Per evitare che questo errore venga visualizzato, è necessario andare alle &quo
     </message>
     <message>
         <source>You are using an old key file format which KeePassXC may&lt;br&gt;stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file by going to:&lt;br&gt;&lt;strong&gt;Database &amp;gt; Database Security &amp;gt; Change Key File.&lt;/strong&gt;&lt;br&gt;</source>
-        <translation>Stai utilizzando un vecchio formato di file chiave che KeePassXC può&lt;br&gt;smettere di supportare in futuro.&lt;br&gt;&lt;br&gt;Prendere in considerazione la possibilità di generare un nuovo file di chiave andando a:&lt;br&gt;&lt;strong&gt;Database &amp;gt; Sicurezza database &amp;gt; modificare il file di chiave.&lt;/strong&gt;&lt;br&gt;</translation>
+        <translation>Stai usando un vecchio formato di file chiave che KeePassXC può&lt;br&gt;smettere di supportare in futuro.&lt;br&gt;&lt;br&gt;Prendi in considerazione la possibilità di generare un nuovo file chiave andando in:&lt;br&gt;&lt;strong&gt;Database &amp;gt; Sicurezza database &amp;gt; Modifica file chiave.&lt;/strong&gt;&lt;br&gt;</translation>
     </message>
     <message>
         <source>Don&apos;t show this warning again</source>
-        <translation>Non mostrare nuovamente questo avviso</translation>
+        <translation>Non visualizzare nuovamente questo avviso</translation>
     </message>
     <message>
         <source>All files</source>
@@ -1575,12 +1619,12 @@ Per evitare che questo errore venga visualizzato, è necessario andare alle &quo
     <message>
         <source>You cannot use your database file as a key file.
 If you do not have a key file, please leave the field empty.</source>
-        <translation>Non puoi usare il tuo file database come file chiave.
+        <translation>Non puoi usare il file database come file chiave.
 Se non possiedi un file chiave, lascia vuoto questo campo.</translation>
     </message>
     <message>
         <source>Detecting hardware keys…</source>
-        <translation>Rilevamento delle chiavi hardware in corso…</translation>
+        <translation>Rilevamento delle chiavi hardware...</translation>
     </message>
     <message>
         <source>No hardware keys detected</source>
@@ -1588,7 +1632,15 @@ Se non possiedi un file chiave, lascia vuoto questo campo.</translation>
     </message>
     <message>
         <source>Select hardware key…</source>
-        <translation>Seleziona chiave hardware…</translation>
+        <translation>Seleziona chiave hardware...</translation>
+    </message>
+    <message>
+        <source>authenticate to access the database</source>
+        <translation>Per accedere al database esegui l&apos;autenticazione </translation>
+    </message>
+    <message>
+        <source>Failed to authenticate with Quick Unlock: %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1600,10 +1652,6 @@ Se non possiedi un file chiave, lascia vuoto questo campo.</translation>
 </context>
 <context>
     <name>DatabaseSettingsDialog</name>
-    <message>
-        <source>Advanced Settings</source>
-        <translation>Impostazioni avanzate</translation>
-    </message>
     <message>
         <source>General</source>
         <translation>Generale</translation>
@@ -1618,11 +1666,11 @@ Se non possiedi un file chiave, lascia vuoto questo campo.</translation>
     </message>
     <message>
         <source>Encryption Settings</source>
-        <translation>Impostazioni di crittografia</translation>
+        <translation>Impostazioni di cifratura</translation>
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation>Integrazione con i browser</translation>
+        <translation>Integrazione browser</translation>
     </message>
     <message>
         <source>Maintenance</source>
@@ -1636,24 +1684,16 @@ Se non possiedi un file chiave, lascia vuoto questo campo.</translation>
         <translation>Impostazioni di KeePassXC-Browser</translation>
     </message>
     <message>
-        <source>Convert KeePassHTTP data</source>
-        <translation>Convertire i dati KeePassHTTP</translation>
-    </message>
-    <message>
-        <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
-        <translation>Convertire gli attributi KeePassHTTP legacy in dati personalizzati compatibili con KeePassXC-Browser</translation>
-    </message>
-    <message>
-        <source>Refresh database root group ID</source>
-        <translation>Aggiornare l&apos;ID gruppo radice del database</translation>
-    </message>
-    <message>
         <source>Disconnect all browsers</source>
         <translation>Scollega tutti i browser</translation>
     </message>
     <message>
         <source>Forget all site-specific settings on entries</source>
-        <translation>Dimenticare tutte le impostazioni specifiche del sito nelle voci</translation>
+        <translation>Dimenticae tutte le impostazioni specifiche del sito nelle voci</translation>
+    </message>
+    <message>
+        <source>Refresh database root group ID</source>
+        <translation>Aggiorna l&apos;ID gruppo radice del database</translation>
     </message>
     <message>
         <source>Stored keys</source>
@@ -1665,7 +1705,7 @@ Se non possiedi un file chiave, lascia vuoto questo campo.</translation>
     </message>
     <message>
         <source>Remove selected key</source>
-        <translation>Rimuovere la chiave selezionata</translation>
+        <translation>Rimuovi chiave selezionata</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -1673,13 +1713,13 @@ Se non possiedi un file chiave, lascia vuoto questo campo.</translation>
     </message>
     <message>
         <source>Delete the selected key?</source>
-        <translation>Eliminare la chiave selezionata?</translation>
+        <translation>Vuoi eliminare la chiave selezionata?</translation>
     </message>
     <message>
         <source>Do you really want to delete the selected key?
 This may prevent connection to the browser plugin.</source>
         <translation>Vuoi davvero eliminare la chiave selezionata?
-Ciò potrebbe impedire la connessione al plug-in del browser.</translation>
+Questo potrebbe impedire la connessione al plug-in del browser.</translation>
     </message>
     <message>
         <source>Key</source>
@@ -1695,13 +1735,13 @@ Ciò potrebbe impedire la connessione al plug-in del browser.</translation>
     </message>
     <message>
         <source>Enable Browser Integration to access these settings.</source>
-        <translation>Abilita l&apos;integrazione con i browser per accedere a queste impostazioni.</translation>
+        <translation>Per accedere a queste impostazioni abilita l&apos;integrazione browser.</translation>
     </message>
     <message>
         <source>Do you really want to disconnect all browsers?
 This may prevent connection to the browser plugin.</source>
         <translation>Vuoi davvero scollegare tutti i browser?
-Ciò potrebbe impedire la connessione al plug-in del browser.</translation>
+Questo potrebbe impedire la connessione al plug-in del browser.</translation>
     </message>
     <message>
         <source>KeePassXC: No keys found</source>
@@ -1709,7 +1749,7 @@ Ciò potrebbe impedire la connessione al plug-in del browser.</translation>
     </message>
     <message>
         <source>No shared encryption keys found in KeePassXC settings.</source>
-        <translation>Nessuna chiave di crittografia condivisa trovata nelle impostazioni KeePassXC.</translation>
+        <translation>Nessuna chiave di cifratura condivisa trovata nelle impostazioni KeePassXC.</translation>
     </message>
     <message>
         <source>KeePassXC: Removed keys from database</source>
@@ -1717,17 +1757,17 @@ Ciò potrebbe impedire la connessione al plug-in del browser.</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
-        <translation><numerusform> Rimossa con successo %n chiave di cifratura dalle impostazioni di KeePassXC. </numerusform><numerusform> Rimosse con successo %n chiavi di cifratura dalle impostazioni di KeePassXC. </numerusform></translation>
+        <translation><numerusform> Rimossa con successo %n chiave di cifratura dalle impostazioni di KeePassXC. </numerusform><numerusform> Rimosse con successo %n chiavi di cifratura dalle impostazioni di KeePassXC. </numerusform><numerusform> Rimosse con successo %n chiavi di cifratura dalle impostazioni di KeePassXC. </numerusform></translation>
     </message>
     <message>
         <source>Do you really want forget all site-specific settings on every entry?
 Permissions to access entries will be revoked.</source>
         <translation>Vuoi davvero dimenticare tutte le impostazioni specifiche del sito su ogni voce?
-Le autorizzazioni per accedere alle voci verranno revocate.</translation>
+Verranno revocate le autorizzazioni per accedere alle voci.</translation>
     </message>
     <message>
         <source>Removing stored permissions…</source>
-        <translation>Rimozione dei permessi salvati…</translation>
+        <translation>Rimozione dei permessi salvati...</translation>
     </message>
     <message>
         <source>Abort</source>
@@ -1739,7 +1779,7 @@ Le autorizzazioni per accedere alle voci verranno revocate.</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation><numerusform>Permessi rimossi con successo da %n voce.</numerusform><numerusform>Permessi rimossi con successo da %n voci.</numerusform></translation>
+        <translation><numerusform>Permessi rimossi con successo da %n voce.</numerusform><numerusform>Permessi rimossi con successo da %n voci.</numerusform><numerusform>Permessi rimossi con successo da %n voci.</numerusform></translation>
     </message>
     <message>
         <source>KeePassXC: No entry with permissions found!</source>
@@ -1750,24 +1790,14 @@ Le autorizzazioni per accedere alle voci verranno revocate.</translation>
         <translation>Il database attivo non contiene una voce con permessi.</translation>
     </message>
     <message>
-        <source>Move KeePassHTTP attributes to custom data</source>
-        <translation>Spostare gli attributi KeePassHTTP in dati personalizzati</translation>
-    </message>
-    <message>
-        <source>Do you really want to convert all legacy browser integration data to the latest standard?
-This is necessary to maintain compatibility with the browser plugin.</source>
-        <translation>Vuoi davvero convertire tutti i dati di integrazione del browser legacy allo standard più recente?
-Questo è necessario per mantenere la compatibilità con il plug-in del browser.</translation>
-    </message>
-    <message>
         <source>Refresh database ID</source>
         <translation>Aggiorna ID database</translation>
     </message>
     <message>
         <source>Do you really want refresh the database ID?
 This is only necessary if your database is a copy of another and the browser extension cannot connect.</source>
-        <translation>Si vuole davvero aggiornare l&apos;ID del database?
-Questo è necessario solo se il database è una copia e l&apos;estensione del browser non riesce a connettersi. </translation>
+        <translation>Vuoi davvero aggiornare l&apos;ID del database? 
+Questo è necessario solo se il database è una copia e l&apos;estensione del browser non riesce a connettersi.</translation>
     </message>
 </context>
 <context>
@@ -1784,9 +1814,9 @@ Questo è necessario solo se il database è una copia e l&apos;estensione del br
         <source>WARNING! You have not set a password. Using a database without a password is strongly discouraged!
 
 Are you sure you want to continue without a password?</source>
-        <translation>ATTENZIONE! Non è stata impostata una password. Utilizzare un database senza password è fortemente sconsigliato!
+        <translation>ATTENZIONE! Non è stata impostata una password. Usare un database senza password è fortemente sconsigliato!
 
-Siete sicuri di voler continuare senza password?</translation>
+Vuoi continuare senza password?</translation>
     </message>
     <message>
         <source>Continue without password</source>
@@ -1794,11 +1824,11 @@ Siete sicuri di voler continuare senza password?</translation>
     </message>
     <message>
         <source>No encryption key added</source>
-        <translation>Nessuna chiave di crittografia aggiunta</translation>
+        <translation>Nessuna chiave di cifratura aggiunta</translation>
     </message>
     <message>
         <source>You must add at least one encryption key to secure your database!</source>
-        <translation>Bisogna aggiungere almeno un&apos;altra chiave di cifratura per rendere sicuro il database.</translation>
+        <translation>Per rendere sicuro il database devi aggiungere almeno un&apos;altra chiave di cifratura!</translation>
     </message>
     <message>
         <source>Unknown error</source>
@@ -1813,19 +1843,11 @@ Siete sicuri di voler continuare senza password?</translation>
     <name>DatabaseSettingsWidgetEncryption</name>
     <message>
         <source>Decryption Time:</source>
-        <translation>Tempo di de-crittografia:</translation>
-    </message>
-    <message>
-        <source>Change existing decryption time</source>
-        <translation>Modificare il tempo di decrittografia esistente</translation>
-    </message>
-    <message>
-        <source>Change</source>
-        <translation>Modifica</translation>
+        <translation>Tempo di decifratura:</translation>
     </message>
     <message>
         <source>Decryption time in seconds</source>
-        <translation>Tempo di decrittografia in secondi</translation>
+        <translation>Tempo di decifratura in secondi</translation>
     </message>
     <message>
         <source>Higher values offer more protection, but opening the database will take longer.</source>
@@ -1833,7 +1855,7 @@ Siete sicuri di voler continuare senza password?</translation>
     </message>
     <message>
         <source>Database format:</source>
-        <translation>Formato di database:</translation>
+        <translation>Formato database:</translation>
     </message>
     <message>
         <source>Database format</source>
@@ -1841,11 +1863,11 @@ Siete sicuri di voler continuare senza password?</translation>
     </message>
     <message>
         <source>Format cannot be changed: Your database uses KDBX 4 features</source>
-        <translation>Il formato non può essere cambiato: Il tuo database utilizza le caratteristiche di KDBX 4</translation>
+        <translation>Il formato non può essere cambiato: il database usa le caratteristiche di KDBX 4</translation>
     </message>
     <message>
         <source>Unless you need to open your database with other programs, always use the latest format.</source>
-        <translation>A meno che non abbia bisogno di aprire il tuo database con altri programmi, usa sempre l&apos;ultimo formato.</translation>
+        <translation>A meno che non abbia bisogno di aprire il database con altri programmi, usa sempre l&apos;ultimo formato.</translation>
     </message>
     <message>
         <source>Encryption Algorithm:</source>
@@ -1853,11 +1875,11 @@ Siete sicuri di voler continuare senza password?</translation>
     </message>
     <message>
         <source>Encryption algorithm</source>
-        <translation>Algoritmo di crittografia</translation>
+        <translation>Algoritmo di cifratura</translation>
     </message>
     <message>
         <source>AES:  256 Bit   (default)</source>
-        <translation>AES: 256 Bit (impostazione predefinita)</translation>
+        <translation>AES: 256 Bit (predefinito)</translation>
     </message>
     <message>
         <source>Twofish:  256 Bit</source>
@@ -1904,11 +1926,6 @@ Siete sicuri di voler continuare senza password?</translation>
         <translation>KDBX 3</translation>
     </message>
     <message>
-        <source>unchanged</source>
-        <comment>Database decryption time is unchanged</comment>
-        <translation>invariato</translation>
-    </message>
-    <message>
         <source>Number of rounds too high</source>
         <comment>Key transformation rounds</comment>
         <translation>Numero di giri troppo elevato</translation>
@@ -1917,7 +1934,7 @@ Siete sicuri di voler continuare senza password?</translation>
         <source>You are using a very high number of key transform rounds with Argon2.
 
 If you keep this number, your database may take hours, days, or even longer to open.</source>
-        <translation>Con Argon2 si utilizza un numero molto elevato di turni di trasformazione chiave.
+        <translation>Con Argon2 si usa un numero molto elevato di turni di trasformazione chiave.
 
 Se si mantiene questo numero, l&apos;apertura del database potrebbe richiedere ore, giorni o anche più tempo.</translation>
     </message>
@@ -1938,7 +1955,7 @@ Se si mantiene questo numero, l&apos;apertura del database potrebbe richiedere o
         <source>You are using a very low number of key transform rounds with AES-KDF.
 
 If you keep this number, your database will not be protected from brute force attacks.</source>
-        <translation>Con AES-KDF si utilizza un numero molto basso di turni di trasformazione chiave.
+        <translation>Con AES-KDF si usa un numero molto basso di turni di trasformazione chiave.
 
 Se si mantiene questo numero, il database non sarà protetto da attacchi di forza bruta.</translation>
     </message>
@@ -1948,17 +1965,29 @@ Se si mantiene questo numero, il database non sarà protetto da attacchi di forz
     </message>
     <message>
         <source>Failed to transform key with new KDF parameters; KDF unchanged.</source>
-        <translation>La trasformazione della chiave con i nuovi parametri KDF e&apos; fallita; KDF immutato</translation>
+        <translation>La trasformazione della chiave con i nuovi parametri KDF non è riuscita; KDF immutato.</translation>
     </message>
     <message numerus="yes">
         <source> MiB</source>
         <comment>Abbreviation for Mebibytes (KDF settings)</comment>
-        <translation><numerusform> MiB</numerusform><numerusform> MiB</numerusform></translation>
+        <translation><numerusform> MiB</numerusform><numerusform> MiB</numerusform><numerusform> MiB</numerusform></translation>
     </message>
     <message numerus="yes">
         <source> thread(s)</source>
         <comment>Threads for parallel execution (KDF settings)</comment>
-        <translation><numerusform> iscritto (i)</numerusform><numerusform>thread(s)</numerusform></translation>
+        <translation><numerusform>thread</numerusform><numerusform>thread</numerusform><numerusform>thread</numerusform></translation>
+    </message>
+    <message>
+        <source>Encryption Settings:</source>
+        <translation>Impostazioni di crittografia:</translation>
+    </message>
+    <message>
+        <source>Basic</source>
+        <translation>Base</translation>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translation>Avanzate</translation>
     </message>
 </context>
 <context>
@@ -1977,7 +2006,7 @@ Se si mantiene questo numero, il database non sarà protetto da attacchi di forz
     </message>
     <message>
         <source>Enable Secret Service to access these settings.</source>
-        <translation>Consentire ai Servizi Segreti di accedere a queste impostazioni.</translation>
+        <translation>Consenti ai servizi segreti di accedere a queste impostazioni.</translation>
     </message>
 </context>
 <context>
@@ -2019,16 +2048,8 @@ Se si mantiene questo numero, il database non sarà protetto da attacchi di forz
         <translation>Numero massimo di elementi della cronologia per voce</translation>
     </message>
     <message>
-        <source>Max. history items:</source>
-        <translation>Oggetti max. nella cronologia:</translation>
-    </message>
-    <message>
         <source>Maximum size of history per entry</source>
         <translation>Dimensione massima della cronologia per voce</translation>
-    </message>
-    <message>
-        <source>Max. history size:</source>
-        <translation>Grandezza max. cronologia:</translation>
     </message>
     <message>
         <source> MiB</source>
@@ -2053,12 +2074,70 @@ Se si mantiene questo numero, il database non sarà protetto da attacchi di forz
     <message>
         <source>Do you want to delete the current recycle bin and all its contents?
 This action is not reversible.</source>
-        <translation>Vuoi eliminare il cestino corrente e tutto il suo contenuto?
+        <translation>Vuoi eliminare il cestino attuale e tutto il suo contenuto?
 Questa azione non è reversibile.</translation>
     </message>
     <message>
         <source> (old)</source>
-        <translation>(vecchio)</translation>
+        <translation> (vecchio)</translation>
+    </message>
+    <message>
+        <source>When saving this setting or editing an entry
+the oldest history items of an entry will be
+removed such that only the specified amount
+of entries remain at most.</source>
+        <translation>Quando si salva questa impostazione o si modifica una voce
+gli elementi della cronologia più vecchi di una voce saranno
+rimossi in modo tale che solo il numero specificato
+delle voci rimanga.</translation>
+    </message>
+    <message>
+        <source>Limit the amount of history items per entry to:</source>
+        <translation>Limita la quantità elementi cronologia per voce a:</translation>
+    </message>
+    <message>
+        <source>When saving this setting or editing an entry
+the oldest history items of an entry will be
+removed such that the remaining history items
+add up to the specified amount at most.</source>
+        <translation>Quando si salva questa impostazione o si modifica una voce
+gli elementi della cronologia più vecchi di una voce saranno
+rimossi in modo tale che gli elementi rimanenti della cronologia
+si accumulino fino al numero specificato.</translation>
+    </message>
+    <message>
+        <source>Limit the total size of history items per entry to:</source>
+        <translation>Limita la dimensione totale elementi cronologia per voce a:</translation>
+    </message>
+    <message>
+        <source>Move entries to a recycle bin group
+instead of deleting them from the database.
+Entries deleted from the recycle bin are
+removed from the database.</source>
+        <translation>Sposta le voci in un gruppo Cestino
+invece di eliminarli dal database.
+Le voci eliminate dal cestino sono
+rimosse dal database.</translation>
+    </message>
+    <message>
+        <source>Autosave delay since last change</source>
+        <translation>Intervallo di salvataggio automatico dall&apos;ultimo cambiamento</translation>
+    </message>
+    <message>
+        <source>Autosave delay</source>
+        <translation>Intervallo di salvataggio automatico</translation>
+    </message>
+    <message>
+        <source>Autosave delay since last change in minutes</source>
+        <translation>Intervallo di salvataggio automatico dall&apos;ultimo cambiamento in minuti</translation>
+    </message>
+    <message>
+        <source> min</source>
+        <translation> min</translation>
+    </message>
+    <message>
+        <source>Autosave delay since last change checkbox</source>
+        <translation>Casella di controllo per l&apos;intervallo di salvataggio automatico dall&apos;ultimo  cambiamento</translation>
     </message>
 </context>
 <context>
@@ -2090,7 +2169,7 @@ Questa azione non è reversibile.</translation>
     <message>
         <source> &gt; </source>
         <comment>Breadcrumb separator</comment>
-        <translation>&gt;</translation>
+        <translation> &gt; </translation>
     </message>
 </context>
 <context>
@@ -2101,15 +2180,15 @@ Questa azione non è reversibile.</translation>
     </message>
     <message>
         <source>Delete selected icon(s)</source>
-        <translation>Eliminare le icone selezionate</translation>
+        <translation>Elimina icone selezionate</translation>
     </message>
     <message>
         <source>Delete all custom icons not in use by any entry or group</source>
-        <translation>Eliminare tutte le icone personalizzate non utilizzate da alcuna voce o gruppo</translation>
+        <translation>Elimina tutte le icone personalizzate non usate da alcuna voce o gruppo</translation>
     </message>
     <message>
         <source>Purge unused icons</source>
-        <translation>Eliminare le icone inutilizzate</translation>
+        <translation>Elimina icone non usate</translation>
     </message>
     <message>
         <source>Confirm Deletion</source>
@@ -2117,7 +2196,7 @@ Questa azione non è reversibile.</translation>
     </message>
     <message>
         <source>At least one of the selected icons is currently in use by at least one entry or group. The icons of all affected entries and groups will be replaced by the default icon. Are you sure you want to delete icons that are currently in use?</source>
-        <translation>Almeno una delle icone selezionate è attualmente in uso da almeno una voce o gruppo. Le icone di tutte le voci e i gruppi interessati verranno sostituite dall&apos;icona predefinita. Eliminare le icone attualmente in uso?</translation>
+        <translation>Almeno una delle icone selezionate è attualmente in uso da almeno una voce o gruppo. Le icone di tutte le voci e i gruppi interessati verranno sostituite dall&apos;icona predefinita. Vuoi eliminare le icone attualmente in uso?</translation>
     </message>
     <message>
         <source>Custom Icons Are In Use</source>
@@ -2125,15 +2204,15 @@ Questa azione non è reversibile.</translation>
     </message>
     <message>
         <source>All custom icons are in use by at least one entry or group.</source>
-        <translation>Tutte le icone personalizzate sono utilizzate da almeno una voce o gruppo.</translation>
+        <translation>Tutte le icone personalizzate sono usate da almeno una voce o gruppo.</translation>
     </message>
     <message>
         <source>Purged Unused Icons</source>
-        <translation>Icone non utilizzate eliminate</translation>
+        <translation>Icone non usate eliminate</translation>
     </message>
     <message numerus="yes">
         <source>Purged %n icon(s) from the database.</source>
-        <translation><numerusform>Eliminata %n icona dal database.</numerusform><numerusform>Eliminate %n icone dal database.</numerusform></translation>
+        <translation><numerusform>Eliminata %n icona dal database.</numerusform><numerusform>Eliminate %n icone dal database.</numerusform><numerusform>Eliminate %n icone dal database.</numerusform></translation>
     </message>
 </context>
 <context>
@@ -2165,7 +2244,7 @@ Questa azione non è reversibile.</translation>
         <source>The created database has no key or KDF, refusing to save it.
 This is definitely a bug, please report it to the developers.</source>
         <translation>Il database creato non ha chiave o KDF, rifiutando di salvarlo.
-Questo è sicuramente un bug, si prega di segnalarlo agli sviluppatori.</translation>
+Questo è sicuramente un bug, segnalalo agli sviluppatori.</translation>
     </message>
     <message>
         <source>KeePass 2 Database</source>
@@ -2181,7 +2260,7 @@ Questo è sicuramente un bug, si prega di segnalarlo agli sviluppatori.</transla
     </message>
     <message>
         <source>Failed to open %1. It either does not exist or is not accessible.</source>
-        <translation>Impossibile aprire %1. Non esiste o non è accessibile.</translation>
+        <translation>Impossibile aprire &apos;%1&apos;. Non esiste o non è accessibile.</translation>
     </message>
     <message>
         <source>CSV file</source>
@@ -2189,7 +2268,7 @@ Questo è sicuramente un bug, si prega di segnalarlo agli sviluppatori.</transla
     </message>
     <message>
         <source>Select CSV file</source>
-        <translation>Selezionare il file CSV</translation>
+        <translation>Seleziona file CSV</translation>
     </message>
     <message>
         <source>Merge database</source>
@@ -2220,16 +2299,28 @@ Questo è sicuramente un bug, si prega di segnalarlo agli sviluppatori.</transla
         <translation>Scrittura del file HTML non riuscita.</translation>
     </message>
     <message>
+        <source>Export database to XML file</source>
+        <translation>Esporta il database in un file XML</translation>
+    </message>
+    <message>
+        <source>XML file</source>
+        <translation>File XML</translation>
+    </message>
+    <message>
+        <source>Writing the XML file failed</source>
+        <translation>Scrittura del file XML non riuscita</translation>
+    </message>
+    <message>
         <source>Export Confirmation</source>
         <translation>Conferma esportazione</translation>
     </message>
     <message>
         <source>You are about to export your database to an unencrypted file. This will leave your passwords and sensitive information vulnerable! Are you sure you want to continue?</source>
-        <translation>Si sta per esportare il database in un file non crittografato. Questo lascerà le password e le informazioni sensibili vulnerabili! Sei sicuro di voler continuare?</translation>
+        <translation>Stai per esportare il database in un file non cifrato. Questo lascerà le password e le informazioni sensibili vulnerabili! Sei sicuro di voler continuare?</translation>
     </message>
     <message>
         <source>New Database</source>
-        <translation>Nuovo Database</translation>
+        <translation>Nuovo database</translation>
     </message>
     <message>
         <source>%1 [New Database]</source>
@@ -2245,8 +2336,8 @@ Questo è sicuramente un bug, si prega di segnalarlo agli sviluppatori.</transla
 <context>
     <name>DatabaseWidget</name>
     <message>
-        <source>Database Tags</source>
-        <translation>Etichette del database</translation>
+        <source>Searches and Tags</source>
+        <translation>Ricerche ed etichette</translation>
     </message>
     <message>
         <source>Searching…</source>
@@ -2286,15 +2377,19 @@ Questo è sicuramente un bug, si prega di segnalarlo agli sviluppatori.</transla
     </message>
     <message>
         <source>Move group to recycle bin?</source>
-        <translation>Cestinare il gruppo?</translation>
+        <translation>Vuoi spostare il gruppo nel cestino?</translation>
     </message>
     <message>
         <source>Do you really want to move the group &quot;%1&quot; to the recycle bin?</source>
-        <translation>Vuoi davvero cestinare il gruppo &quot;%1&quot;?</translation>
+        <translation>Vuoi davvero spostare il gruppo &quot;%1&quot; nel cestino?</translation>
     </message>
     <message>
         <source>Expired entries</source>
         <translation>Voci scadute</translation>
+    </message>
+    <message numerus="yes">
+        <source>Entries expiring within %1 day(s)</source>
+        <translation><numerusform>Voci che scadono entro %1 giorno(i)</numerusform><numerusform>Voci che scadono entro %1 giorno(i)</numerusform><numerusform>Voci che scadono entro %1 giorno(i)</numerusform></translation>
     </message>
     <message>
         <source>No current database.</source>
@@ -2306,7 +2401,7 @@ Questo è sicuramente un bug, si prega di segnalarlo agli sviluppatori.</transla
     </message>
     <message>
         <source>Successfully merged the database files.</source>
-        <translation>I file di database sono uniti correttamente.</translation>
+        <translation>I file database sono stati uniti correttamente.</translation>
     </message>
     <message>
         <source>Database was not modified by merge operation.</source>
@@ -2321,12 +2416,24 @@ Questo è sicuramente un bug, si prega di segnalarlo agli sviluppatori.</transla
         <translation>Nessun risultato</translation>
     </message>
     <message>
+        <source>Save</source>
+        <translation>Salva</translation>
+    </message>
+    <message>
+        <source>Enter a unique name or overwrite an existing search from the list:</source>
+        <translation>Inserisci un nome univoco o sovrascrivi una ricerca esistente dall&apos;elenco:</translation>
+    </message>
+    <message>
+        <source>Save Search</source>
+        <translation>Salva ricerca</translation>
+    </message>
+    <message>
         <source>Lock Database?</source>
-        <translation>Bloccare il database?</translation>
+        <translation>Vuoi bloccare il database?</translation>
     </message>
     <message>
         <source>You are editing an entry. Discard changes and lock anyway?</source>
-        <translation>Si sta modificando una voce. Eliminare le modifiche e bloccare comunque?</translation>
+        <translation>Sta modificando una voce. Vuoi eliminare le modifiche e bloccare comunque?</translation>
     </message>
     <message>
         <source>&quot;%1&quot; was modified.
@@ -2338,11 +2445,11 @@ Vuoi salvare le modifiche?</translation>
         <source>Database was modified.
 Save changes?</source>
         <translation>Il database è stato modificato.
-Salvare le modifiche?</translation>
+Vuoi salvare le modifiche?</translation>
     </message>
     <message>
         <source>Save changes?</source>
-        <translation>Salvare le modifiche?</translation>
+        <translation>Vuoi salvare le modifiche?</translation>
     </message>
     <message>
         <source>File has changed</source>
@@ -2359,13 +2466,13 @@ Salvare le modifiche?</translation>
     <message>
         <source>The database file has changed and you have unsaved changes.
 Do you want to merge your changes?</source>
-        <translation>Il file del database e&apos; stato cambiato e ci sono cambiamenti non salvati
-Vuoi fondere i cambiamenti?</translation>
+        <translation>Il file del database è stato cambiato e ci sono cambiamenti non salvati
+Vuoi unire le modifiche?</translation>
     </message>
     <message>
         <source>Could not open the new database file while attempting to autoreload.
 Error: %1</source>
-        <translation>Impossibile aprire il nuovo file di database durante il tentativo di ricaricamento.
+        <translation>Impossibile aprire il nuovo file database durante il tentativo di ricaricamento.
 Errore: %1</translation>
     </message>
     <message>
@@ -2375,8 +2482,8 @@ Errore: %1</translation>
     <message>
         <source>KeePassXC has failed to save the database multiple times. This is likely caused by file sync services holding a lock on the save file.
 Disable safe saves and try again?</source>
-        <translation>Nonostante ripetuti tentativi, KeePassXC non è riuscito a salvare il database. Probabilmente la causa risiede in un file di lock bloccato da qualche servizio di sincronizzazione file.
-Disabilitare i salvataggi sicuri e riprovare?</translation>
+        <translation>Nonostante ripetuti tentativi, KeePassXC non è riuscito a salvare il database. Probabilmente la causa risiede in un file bloccato da qualche servizio di sincronizzazione file.
+Vuoi disabilitare i salvataggi sicuri e riprovare?</translation>
     </message>
     <message>
         <source>Writing the database failed: %1</source>
@@ -2396,11 +2503,11 @@ Disabilitare i salvataggi sicuri e riprovare?</translation>
     </message>
     <message>
         <source>Save database backup</source>
-        <translation>Salva il backup del database </translation>
+        <translation>Salva backup database</translation>
     </message>
     <message>
         <source>Empty recycle bin?</source>
-        <translation>Svuotare il cestino?</translation>
+        <translation>Vuoi svuotare il cestino?</translation>
     </message>
     <message>
         <source>Are you sure you want to permanently delete everything from your recycle bin?</source>
@@ -2408,11 +2515,7 @@ Disabilitare i salvataggi sicuri e riprovare?</translation>
     </message>
     <message>
         <source>Could not find database file: %1</source>
-        <translation>Impossibile trovare il file di database: %1</translation>
-    </message>
-    <message numerus="yes">
-        <source>Entries expiring within %1 day(s)</source>
-        <translation><numerusform>Voci che scadono entro %1 giorno(i)</numerusform><numerusform>Voci che scadono entro %1 giorno(i)</numerusform></translation>
+        <translation>Impossibile trovare il file database: %1</translation>
     </message>
 </context>
 <context>
@@ -2435,7 +2538,7 @@ Disabilitare i salvataggi sicuri e riprovare?</translation>
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation>Integrazione con i browser</translation>
+        <translation>Integrazione browser</translation>
     </message>
     <message>
         <source>&lt;empty URL&gt;</source>
@@ -2529,7 +2632,7 @@ Vuoi correggerla?</translation>
     </message>
     <message>
         <source>Would you like to save changes to this entry?</source>
-        <translation>Salvare le modifiche a questa voce?</translation>
+        <translation>Vuoi salvare le modifiche a questa voce?</translation>
     </message>
     <message>
         <source>New attribute</source>
@@ -2549,27 +2652,27 @@ Vuoi correggerla?</translation>
     </message>
     <message>
         <source>[PROTECTED] Press Reveal to view or edit</source>
-        <translation>[PROTETTO] Premere Mostra per visualizzare o modificare</translation>
+        <translation>[PROTETTO] Seleziona &apos;Visualizza&apos; per visualizzare o modificare</translation>
     </message>
     <message>
         <source>Hide</source>
         <translation>Nascondi</translation>
     </message>
     <message numerus="yes">
+        <source>%n hour(s)</source>
+        <translation><numerusform>%n ora(e)</numerusform><numerusform>%n ora(e)</numerusform><numerusform>%n ora(e)</numerusform></translation>
+    </message>
+    <message numerus="yes">
         <source>%n week(s)</source>
-        <translation><numerusform>%n settimana</numerusform><numerusform>%n settimane</numerusform></translation>
+        <translation><numerusform>%n settimana</numerusform><numerusform>%n settimane</numerusform><numerusform>%n settimane</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation><numerusform>%n mese</numerusform><numerusform>%n mesi</numerusform></translation>
+        <translation><numerusform>%n mese</numerusform><numerusform>%n mesi</numerusform><numerusform>%n mesi</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n year(s)</source>
-        <translation><numerusform>anno (i) %n</numerusform><numerusform>%n anno(i)</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n hour(s)</source>
-        <translation><numerusform>%n ora(e)</numerusform><numerusform>%n ora(e)</numerusform></translation>
+        <translation><numerusform>%n anno</numerusform><numerusform>%n anni</numerusform><numerusform>%n anni</numerusform></translation>
     </message>
 </context>
 <context>
@@ -2588,7 +2691,7 @@ Vuoi correggerla?</translation>
     </message>
     <message>
         <source>Add a new attribute</source>
-        <translation>Aggiungere un nuovo attributo</translation>
+        <translation>Aggiungi un nuovo attributo</translation>
     </message>
     <message>
         <source>Add</source>
@@ -2612,7 +2715,7 @@ Vuoi correggerla?</translation>
     </message>
     <message>
         <source>Toggle attribute protection</source>
-        <translation>Attivare o disattivare la protezione degli attributi</translation>
+        <translation>Attiva/disattiva la protezione attributi</translation>
     </message>
     <message>
         <source>Protect</source>
@@ -2620,7 +2723,7 @@ Vuoi correggerla?</translation>
     </message>
     <message>
         <source>Show a protected attribute</source>
-        <translation>Visualizzare un attributo protetto</translation>
+        <translation>Visualizza un attributo protetto</translation>
     </message>
     <message>
         <source>Reveal</source>
@@ -2632,11 +2735,11 @@ Vuoi correggerla?</translation>
     </message>
     <message>
         <source>If checked, the entry will not appear in reports like Health Check and HIBP even if it doesn&apos;t match the quality requirements.</source>
-        <translation>Se selezionata, la voce non verrà visualizzata in report come Health Check e HIBP anche se non corrisponde ai requisiti di qualità.</translation>
+        <translation>Se selezionata, la voce non verrà visualizzata nel rapporto come Controllo salute e HIBP anche se non corrisponde ai requisiti di qualità.</translation>
     </message>
     <message>
         <source>Exclude from database reports</source>
-        <translation>Escludere dal rapporto del database</translation>
+        <translation>Escludi dal rapporto del database</translation>
     </message>
     <message>
         <source>Foreground Color:</source>
@@ -2675,7 +2778,7 @@ Vuoi correggerla?</translation>
     </message>
     <message>
         <source>Open Auto-Type help webpage</source>
-        <translation>Aprire la pagina Web di aiuto per i completamenti automatici</translation>
+        <translation>Apri la pagina web di aiuto per i completamenti automatici</translation>
     </message>
     <message>
         <source>Window Associations</source>
@@ -2690,8 +2793,18 @@ Vuoi correggerla?</translation>
         <translation>Aggiungi nuova associazione finestra</translation>
     </message>
     <message>
+        <source>+</source>
+        <comment>Add item</comment>
+        <translation>+</translation>
+    </message>
+    <message>
         <source>Remove selected window association</source>
-        <translation>Rimuovere l&apos;associazione della finestra selezionata</translation>
+        <translation>Rimuovi associazione finestra selezionata</translation>
+    </message>
+    <message>
+        <source>-</source>
+        <comment>Remove item</comment>
+        <translation>-</translation>
     </message>
     <message>
         <source>Window title:</source>
@@ -2699,15 +2812,15 @@ Vuoi correggerla?</translation>
     </message>
     <message>
         <source>You can use an asterisk (*) to match everything</source>
-        <translation>È possibile utilizzare un asterisco (*) per abbinare tutto</translation>
+        <translation>È possibile usare un asterisco (*) per abbinare tutto</translation>
     </message>
     <message>
         <source>Set the window association title</source>
-        <translation>Impostare il titolo dell&apos;associazione della finestra</translation>
+        <translation>Imposta il titolo dell&apos;associazione finestra</translation>
     </message>
     <message>
         <source>You can use an asterisk to match everything</source>
-        <translation>È possibile utilizzare un asterisco per abbinare tutto</translation>
+        <translation>È possibile usare un asterisco per abbinare tutto</translation>
     </message>
     <message>
         <source>Use a specific sequence for this association:</source>
@@ -2716,16 +2829,6 @@ Vuoi correggerla?</translation>
     <message>
         <source>Custom Auto-Type sequence for this window</source>
         <translation>Sequenza personalizzata del completamento automatico per questa finestra</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <comment>Add item</comment>
-        <translation>+</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <comment>Remove item</comment>
-        <translation>-</translation>
     </message>
 </context>
 <context>
@@ -2752,7 +2855,7 @@ Vuoi correggerla?</translation>
     </message>
     <message>
         <source>Use this entry only with HTTP Basic Auth</source>
-        <translation>Utilizza questa voce solo con l&apos;autenticazione HTTP Basic </translation>
+        <translation>Usa questa voce solo con l&apos;autenticazione semplice HTTP</translation>
     </message>
     <message>
         <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
@@ -2760,7 +2863,7 @@ Vuoi correggerla?</translation>
     </message>
     <message>
         <source>Do not use this entry with HTTP Basic Auth</source>
-        <translation>Non utilizzare questa voce con l&apos;autenticazione di base HTTP</translation>
+        <translation>Non usare questa voce con l&apos;autenticazione semplice HTTP</translation>
     </message>
     <message>
         <source>Additional URL&apos;s</source>
@@ -2787,7 +2890,7 @@ Vuoi correggerla?</translation>
     </message>
     <message>
         <source>Show entry at selected history state</source>
-        <translation>Mostra voce nello stato della cronologia selezionato</translation>
+        <translation>Visualizza voce nello stato della cronologia selezionato</translation>
     </message>
     <message>
         <source>Show</source>
@@ -2795,7 +2898,7 @@ Vuoi correggerla?</translation>
     </message>
     <message>
         <source>Restore entry to selected history state</source>
-        <translation>Ripristinare la voce allo stato della cronologia selezionato</translation>
+        <translation>Ripristina la voce allo stato cronologia selezionato</translation>
     </message>
     <message>
         <source>Restore</source>
@@ -2803,7 +2906,7 @@ Vuoi correggerla?</translation>
     </message>
     <message>
         <source>Delete selected history state</source>
-        <translation>Eliminare lo stato della cronologia selezionato</translation>
+        <translation>Elimina lo stato cronologia selezionato</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -2829,20 +2932,8 @@ Vuoi correggerla?</translation>
         <translation>Campo note</translation>
     </message>
     <message>
-        <source>Toggle the checkbox to reveal the notes section.</source>
-        <translation>Attivare o disattivare la casella di controllo per rivelare la sezione note.</translation>
-    </message>
-    <message>
         <source>Username field</source>
         <translation>Campo nome utente</translation>
-    </message>
-    <message>
-        <source>Toggle notes visible</source>
-        <translation>Attiva/disattiva visibilità delle note</translation>
-    </message>
-    <message>
-        <source>Notes:</source>
-        <translation>Note:</translation>
     </message>
     <message>
         <source>Expiration field</source>
@@ -2861,14 +2952,6 @@ Vuoi correggerla?</translation>
         <translation>Preimpostazioni</translation>
     </message>
     <message>
-        <source>Password:</source>
-        <translation>Password:</translation>
-    </message>
-    <message>
-        <source>URL:</source>
-        <translation>URL:</translation>
-    </message>
-    <message>
         <source>Url field</source>
         <translation>Campo Url</translation>
     </message>
@@ -2877,16 +2960,8 @@ Vuoi correggerla?</translation>
         <translation>Scarica favicon per URL</translation>
     </message>
     <message>
-        <source>Title:</source>
-        <translation>Titolo:</translation>
-    </message>
-    <message>
         <source>Title field</source>
         <translation>Campo del titolo</translation>
-    </message>
-    <message>
-        <source>Username:</source>
-        <translation>Nome utente:</translation>
     </message>
     <message>
         <source>Password field</source>
@@ -2897,16 +2972,40 @@ Vuoi correggerla?</translation>
         <translation>Attiva/disattiva scadenza</translation>
     </message>
     <message>
-        <source>Expires:</source>
-        <translation>Scade:</translation>
-    </message>
-    <message>
-        <source>Tags:</source>
-        <translation>Etichette:</translation>
-    </message>
-    <message>
         <source>Tags list</source>
         <translation>Elenco delle etichette</translation>
+    </message>
+    <message>
+        <source>&amp;Username:</source>
+        <translation>Nome &amp;utente:</translation>
+    </message>
+    <message>
+        <source>&amp;Title:</source>
+        <translation>&amp;Titolo:</translation>
+    </message>
+    <message>
+        <source>&amp;Password:</source>
+        <translation>&amp;Password:</translation>
+    </message>
+    <message>
+        <source>UR&amp;L:</source>
+        <translation>UR&amp;L:</translation>
+    </message>
+    <message>
+        <source>&amp;Notes:</source>
+        <translation>&amp;Note:</translation>
+    </message>
+    <message>
+        <source>Toggle notes visibility</source>
+        <translation>Attiva/disattiva la visibilità delle note</translation>
+    </message>
+    <message>
+        <source>T&amp;ags:</source>
+        <translation>&amp;Etichette:</translation>
+    </message>
+    <message>
+        <source>&amp;Expires:</source>
+        <translation>&amp;Scade:</translation>
     </message>
 </context>
 <context>
@@ -2937,7 +3036,7 @@ Vuoi correggerla?</translation>
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation>Copia negli appunti</translation>
+        <translation>Copia negli Appunti</translation>
     </message>
     <message>
         <source>Public key</source>
@@ -2948,25 +3047,12 @@ Vuoi correggerla?</translation>
         <translation>Chiave privata</translation>
     </message>
     <message>
-        <source>External file</source>
-        <translation>File esterno</translation>
-    </message>
-    <message>
-        <source>Browser for key file</source>
-        <translation>Ricerca del file di chiave</translation>
-    </message>
-    <message>
-        <source>Browse…</source>
-        <extracomment>Button for opening file dialog</extracomment>
-        <translation>Sfoglia…</translation>
-    </message>
-    <message>
         <source>Attachment</source>
         <translation>Allegato</translation>
     </message>
     <message>
         <source>External key file</source>
-        <translation>File di chiave esterna</translation>
+        <translation>File chiave esterno</translation>
     </message>
     <message>
         <source>Add to agent</source>
@@ -2975,6 +3061,23 @@ Vuoi correggerla?</translation>
     <message>
         <source>Remove from agent</source>
         <translation>Rimuovi dall&apos;agente</translation>
+    </message>
+    <message>
+        <source>External file</source>
+        <translation>File esterno</translation>
+    </message>
+    <message>
+        <source>Browser for key file</source>
+        <translation>Selezione file chiave</translation>
+    </message>
+    <message>
+        <source>Browse…</source>
+        <extracomment>Button for opening file dialog</extracomment>
+        <translation>Sfoglia…</translation>
+    </message>
+    <message>
+        <source>Generate</source>
+        <translation>Genera</translation>
     </message>
     <message>
         <source>Select attachment file</source>
@@ -3012,10 +3115,6 @@ Vuoi correggerla?</translation>
         <translation>Icona</translation>
     </message>
     <message>
-        <source>Browser Integration</source>
-        <translation>Integrazione con i browser</translation>
-    </message>
-    <message>
         <source>Properties</source>
         <translation>Proprietà</translation>
     </message>
@@ -3032,6 +3131,10 @@ Vuoi correggerla?</translation>
         <translation>Il gruppo ha modifiche non salvate</translation>
     </message>
     <message>
+        <source>Browser Integration</source>
+        <translation>Integrazione browser</translation>
+    </message>
+    <message>
         <source>Enable</source>
         <translation>Abilita</translation>
     </message>
@@ -3046,10 +3149,6 @@ Vuoi correggerla?</translation>
 </context>
 <context>
     <name>EditGroupWidgetBrowser</name>
-    <message>
-        <source>Edit Group</source>
-        <translation>Modifica gruppo</translation>
-    </message>
     <message>
         <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
         <translation>Queste impostazioni influiscono sul comportamento del gruppo con l&apos;estensione del browser.</translation>
@@ -3072,7 +3171,7 @@ Vuoi correggerla?</translation>
     </message>
     <message>
         <source>Use entries only with HTTP Basic Auth:</source>
-        <translation>Utilizzare le voci solo con l&apos;autenticazione di base HTTP:</translation>
+        <translation>Usa le voci solo con l&apos;autenticazione semplice HTTP:</translation>
     </message>
     <message>
         <source>Only HTTP Auth toggle for this and sub groups</source>
@@ -3080,11 +3179,19 @@ Vuoi correggerla?</translation>
     </message>
     <message>
         <source>Do not use entries with HTTP Basic Auth:</source>
-        <translation>Non utilizzare voci con autenticazione di base HTTP:</translation>
+        <translation>Non usare voci con autenticazione semplice HTTP:</translation>
     </message>
     <message>
         <source>Do not use HTTP Auth toggle for this and sub groups</source>
-        <translation>Non utilizzare l&apos;interruttore di autenticazione HTTP per questo e sottogruppi</translation>
+        <translation>Non usare l&apos;interruttore di autenticazione HTTP per questo e sottogruppi</translation>
+    </message>
+    <message>
+        <source>Omit WWW subdomain from matching:</source>
+        <translation>Ometti il sottodominio WWW dalla corrispondenza:</translation>
+    </message>
+    <message>
+        <source>Omit WWW subdomain from matching toggle for this and sub groups</source>
+        <translation>Ometti il sottodominio WWW dal selettore corrispondente per questo e sottogruppi</translation>
     </message>
 </context>
 <context>
@@ -3123,7 +3230,7 @@ Vuoi correggerla?</translation>
     </message>
     <message>
         <source>Clear fields</source>
-        <translation>Cancellare i campi</translation>
+        <translation>Azzera campi</translation>
     </message>
     <message>
         <source>Clear</source>
@@ -3135,7 +3242,7 @@ Vuoi correggerla?</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation>Importazione</translation>
+        <translation>Importa</translation>
     </message>
     <message>
         <source>Export</source>
@@ -3148,8 +3255,8 @@ Vuoi correggerla?</translation>
     <message>
         <source>Your KeePassXC version does not support sharing this container type.
 Supported extensions are: %1.</source>
-        <translation>La tua versione di KeePassXC non supporta la condivisione di questo tipo di contenitore.
-Le estensioni supportate sono: %1.</translation>
+        <translation>Questa versione di KeePassXC non supporta la condivisione di questo tipo di contenitore.
+Le estensioni supportate sono: &apos;%1&apos;.</translation>
     </message>
     <message>
         <source>%1 is already being exported by this database.</source>
@@ -3186,7 +3293,7 @@ Le estensioni supportate sono: %1.</translation>
     </message>
     <message>
         <source>Select import source</source>
-        <translation>Selezionare l&apos;origine di importazione</translation>
+        <translation>Seleziona sorgente importazione</translation>
     </message>
     <message>
         <source>Select export target</source>
@@ -3194,7 +3301,7 @@ Le estensioni supportate sono: %1.</translation>
     </message>
     <message>
         <source>Select import/export file</source>
-        <translation>Selezionare il file di importazione/esportazione</translation>
+        <translation>Seleziona file importazione/esportazione</translation>
     </message>
 </context>
 <context>
@@ -3253,7 +3360,7 @@ Le estensioni supportate sono: %1.</translation>
     </message>
     <message>
         <source>Set default Auto-Type sequence</source>
-        <translation>Impostare la sequenza predefinita del completamento automatico</translation>
+        <translation>Imposta sequenza predefinita completamento automatico</translation>
     </message>
     <message>
         <source>Search toggle for this and sub groups</source>
@@ -3276,11 +3383,11 @@ Le estensioni supportate sono: %1.</translation>
     </message>
     <message>
         <source>Set the URL to use to search for a favicon</source>
-        <translation>Impostare l&apos;URL da utilizzare per cercare una favicon</translation>
+        <translation>Imposta l&apos;URL da usare per cercare una favicon</translation>
     </message>
     <message>
         <source>Favicon URL</source>
-        <translation>Favicon URL</translation>
+        <translation>URL favicon</translation>
     </message>
     <message>
         <source>Download favicon for URL</source>
@@ -3292,11 +3399,11 @@ Le estensioni supportate sono: %1.</translation>
     </message>
     <message>
         <source>Apply selected icon to subgroups and entries</source>
-        <translation>Applicare l&apos;icona selezionata a sottogruppi e voci</translation>
+        <translation>Applica l&apos;icona selezionata a sottogruppi e voci</translation>
     </message>
     <message>
         <source>Apply icon to…</source>
-        <translation>Applicare l&apos;icona a...</translation>
+        <translation>Applica l&apos;icona a...</translation>
     </message>
     <message>
         <source>Apply to this group only</source>
@@ -3308,11 +3415,11 @@ Le estensioni supportate sono: %1.</translation>
     </message>
     <message>
         <source>Also apply to child entries</source>
-        <translation>Si applicano anche alle voci figlio</translation>
+        <translation>Applica alle voci figlie</translation>
     </message>
     <message>
         <source>Also apply to all children</source>
-        <translation>Si applicano anche a tutti i figli</translation>
+        <translation>Applica anche a tutti i figli</translation>
     </message>
     <message>
         <source>Unable to fetch favicon.</source>
@@ -3320,7 +3427,7 @@ Le estensioni supportate sono: %1.</translation>
     </message>
     <message>
         <source>You can enable the DuckDuckGo website icon service under Tools -&gt; Settings -&gt; Security</source>
-        <translation>È possibile attivare il servizio per le icone del sito Web DuckDuckGo in Strumenti -&gt; Impostazioni -&gt; Sicurezza</translation>
+        <translation>È possibile attivare il servizio per le icone del sito web DuckDuckGo in Strumenti -&gt; Impostazioni -&gt; Sicurezza</translation>
     </message>
     <message>
         <source>Existing icon selected.</source>
@@ -3336,11 +3443,11 @@ Le estensioni supportate sono: %1.</translation>
     </message>
     <message>
         <source>Select Image(s)</source>
-        <translation>Selezionare immagine(i)</translation>
+        <translation>Seleziona immagine/i</translation>
     </message>
     <message numerus="yes">
         <source>Successfully loaded %1 of %n icon(s)</source>
-        <translation><numerusform>Caricate con successo %1 di %n icona.</numerusform><numerusform>Caricate con successo %1 di %n icone.</numerusform></translation>
+        <translation><numerusform>Caricate con successo %1 di %n icona.</numerusform><numerusform>Caricate con successo %1 di %n icone.</numerusform><numerusform>Caricate con successo %1 di %n icone.</numerusform></translation>
     </message>
     <message>
         <source>No icons were loaded</source>
@@ -3348,11 +3455,11 @@ Le estensioni supportate sono: %1.</translation>
     </message>
     <message numerus="yes">
         <source>%n icon(s) already exist in the database</source>
-        <translation><numerusform>%n icona esiste già nel database</numerusform><numerusform>%n icone esistono già nel database</numerusform></translation>
+        <translation><numerusform>%n icona esiste già nel database</numerusform><numerusform>%n icone esistono già nel database</numerusform><numerusform>%n icone esistono già nel database</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>The following icon(s) failed:</source>
-        <translation><numerusform>La seguente icona presenta degli errori:</numerusform><numerusform>Le seguenti icone presentano degli errori:</numerusform></translation>
+        <translation><numerusform>La seguente icona presenta degli errori:</numerusform><numerusform>Le seguenti icone presentano degli errori:</numerusform><numerusform>Le seguenti icone presentano degli errori:</numerusform></translation>
     </message>
 </context>
 <context>
@@ -3399,7 +3506,7 @@ Le estensioni supportate sono: %1.</translation>
     </message>
     <message>
         <source>Remove selected plugin data</source>
-        <translation>Rimuovere i dati selezionati del plug-in</translation>
+        <translation>Rimuovi dati plugin selezionato</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -3407,13 +3514,13 @@ Le estensioni supportate sono: %1.</translation>
     </message>
     <message>
         <source>Delete plugin data?</source>
-        <translation>Eliminare i dati del plugin?</translation>
+        <translation>Vuoi eliminare i dati del plugin?</translation>
     </message>
     <message>
         <source>Do you really want to delete the selected plugin data?
 This may cause the affected plugins to malfunction.</source>
         <translation>Vuoi davvero eliminare i dati del plugin selezionato?
-Ciò potrebbe causare malfunzionamenti ai plugin interessati.</translation>
+Questo potrebbe causare malfunzionamenti ai plugin interessati.</translation>
     </message>
     <message>
         <source>Key</source>
@@ -3469,7 +3576,7 @@ Ciò potrebbe causare malfunzionamenti ai plugin interessati.</translation>
     </message>
     <message>
         <source>Remove selected attachment</source>
-        <translation>Rimuovere l&apos;allegato selezionato</translation>
+        <translation>Rimuovi allegato selezionato</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -3477,7 +3584,7 @@ Ciò potrebbe causare malfunzionamenti ai plugin interessati.</translation>
     </message>
     <message>
         <source>Rename selected attachment</source>
-        <translation>Rinominare l&apos;allegato selezionato</translation>
+        <translation>Rinomina l&apos;allegato selezionato</translation>
     </message>
     <message>
         <source>Rename</source>
@@ -3485,7 +3592,7 @@ Ciò potrebbe causare malfunzionamenti ai plugin interessati.</translation>
     </message>
     <message>
         <source>Open selected attachment</source>
-        <translation>Aprire l&apos;allegato selezionato</translation>
+        <translation>Apri allegato selezionato</translation>
     </message>
     <message>
         <source>Open</source>
@@ -3505,11 +3612,11 @@ Ciò potrebbe causare malfunzionamenti ai plugin interessati.</translation>
     </message>
     <message>
         <source>Confirm remove</source>
-        <translation>Confermare la rimozione</translation>
+        <translation>Conferma rimozione</translation>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation><numerusform>Sei sicuro di voler rimuovere %n allegato?</numerusform><numerusform>Sei sicuro di voler rimuovere %n allegati?</numerusform></translation>
+        <translation><numerusform>Sei sicuro di voler rimuovere %n allegato?</numerusform><numerusform>Sei sicuro di voler rimuovere %n allegati?</numerusform><numerusform>Sei sicuro di voler rimuovere %n allegati?</numerusform></translation>
     </message>
     <message>
         <source>Save attachments</source>
@@ -3518,7 +3625,7 @@ Ciò potrebbe causare malfunzionamenti ai plugin interessati.</translation>
     <message>
         <source>Unable to create directory:
 %1</source>
-        <translation>Impossibile creare la directory:
+        <translation>Impossibile creare la cartella:
 %1</translation>
     </message>
     <message>
@@ -3527,7 +3634,7 @@ Ciò potrebbe causare malfunzionamenti ai plugin interessati.</translation>
     </message>
     <message>
         <source>Confirm overwrite</source>
-        <translation>Confermare la sovrascrittura</translation>
+        <translation>Conferma sovrascrittura</translation>
     </message>
     <message>
         <source>Unable to save attachments:
@@ -3552,17 +3659,18 @@ Ciò potrebbe causare malfunzionamenti ai plugin interessati.</translation>
 %1</source>
         <translation><numerusform>Impossibile aprire il file:
 %1</numerusform><numerusform>Impossibile aprire i file:
+%1</numerusform><numerusform>Impossibile aprire i file:
 %1</numerusform></translation>
     </message>
     <message>
         <source>Confirm Overwrite Attachment</source>
-        <translation>Confermare sovrascrittura dell&apos;allegato</translation>
+        <translation>Conferma sovrascrittura allegato</translation>
     </message>
     <message>
         <source>Attachment &quot;%1&quot; already exists. 
 Would you like to overwrite the existing attachment?</source>
         <translation>L&apos;allegato &quot;%1&quot; esiste già. 
-Si desidera sovrascrivere l&apos;allegato esistente?</translation>
+Vuoi sovrascrivere l&apos;allegato esistente?</translation>
     </message>
     <message>
         <source>Confirm Attachment</source>
@@ -3573,10 +3681,10 @@ Si desidera sovrascrivere l&apos;allegato esistente?</translation>
 Your database may get very large and reduce performance.
 
 Are you sure to add this file?</source>
-        <translation>%1 Ha dimensioni elevate  (%2 MB).
+        <translation>%1 ha dimensioni elevate (%2 MB).
 Il database potrebbe occupare più spazio e ridurre le sue performance.
 
-Siete sicuri di voler aggiungere questo file?</translation>
+Sei sicuro di voler aggiungere questo file?</translation>
     </message>
     <message>
         <source>Attachment modified</source>
@@ -3586,7 +3694,7 @@ Siete sicuri di voler aggiungere questo file?</translation>
         <source>The attachment '%1' was modified.
 Do you want to save the changes to your database?</source>
         <translation>L&apos;allegato &apos;%1&apos; è stato modificato.
-Vuoi salvare le modifiche nel tuo database?</translation>
+Vuoi salvare le modifiche nel database?</translation>
     </message>
     <message>
         <source>Saving attachment failed</source>
@@ -3595,7 +3703,7 @@ Vuoi salvare le modifiche nel tuo database?</translation>
     <message>
         <source>Saving updated attachment failed.
 Error: %1</source>
-        <translation>Salvataggio allegato aggiornato fallito.
+        <translation>Salvataggio allegato aggiornato non riuscito.
 Errore: %1</translation>
     </message>
 </context>
@@ -3754,7 +3862,7 @@ Errore: %1</translation>
     </message>
     <message>
         <source>Password Strength</source>
-        <translation>Sicurezza della password</translation>
+        <translation>Sicurezza password</translation>
     </message>
     <message>
         <source>Entry notes</source>
@@ -3792,12 +3900,16 @@ Errore: %1</translation>
         <source>Has TOTP</source>
         <translation>Ha TOTP</translation>
     </message>
+    <message>
+        <source>Background Color</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EntryPreviewWidget</name>
     <message>
         <source>Display current TOTP value</source>
-        <translation>Visualizza il valore TOTP corrente</translation>
+        <translation>Visualizza il valore TOTP attuale</translation>
     </message>
     <message>
         <source>Close</source>
@@ -3812,8 +3924,8 @@ Errore: %1</translation>
         <translation>Password</translation>
     </message>
     <message>
-        <source>Notes</source>
-        <translation>Note</translation>
+        <source>URL</source>
+        <translation>URL</translation>
     </message>
     <message>
         <source>Expiration</source>
@@ -3832,8 +3944,8 @@ Errore: %1</translation>
         <translation>Nome utente</translation>
     </message>
     <message>
-        <source>URL</source>
-        <translation>URL</translation>
+        <source>Notes</source>
+        <translation>Note</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -3884,6 +3996,10 @@ Errore: %1</translation>
         <translation>Mai</translation>
     </message>
     <message>
+        <source>Double click to copy value</source>
+        <translation>Doppio clic per copiare il valore</translation>
+    </message>
+    <message>
         <source>Enabled</source>
         <translation>Abilitato</translation>
     </message>
@@ -3891,12 +4007,20 @@ Errore: %1</translation>
         <source>Disabled</source>
         <translation>Disabilitato</translation>
     </message>
+    <message>
+        <source>Double click to copy to clipboard</source>
+        <translation>Fare doppio clic per copiare negli appunti</translation>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
     <message>
         <source>Invalid URL</source>
         <translation>URL non corretto</translation>
+    </message>
+    <message>
+        <source>Duplicate URL</source>
+        <translation>URL duplicato</translation>
     </message>
 </context>
 <context>
@@ -3913,6 +4037,10 @@ Errore: %1</translation>
         <source>Reset to defaults</source>
         <translation>Ripristina valori predefiniti</translation>
     </message>
+    <message numerus="yes">
+        <source>+ %1 entry(s)...</source>
+        <translation><numerusform>+ %1 voce(i)...</numerusform><numerusform>+ %1 voce(i)...</numerusform><numerusform>+ %1 voce(i)...</numerusform></translation>
+    </message>
 </context>
 <context>
     <name>ExportDialog</name>
@@ -3928,8 +4056,8 @@ Errore: %1</translation>
         <source>You are about to export your database to an unencrypted file.
 This will leave your passwords and sensitive information vulnerable!
 </source>
-        <translation>Si sta per esportare il database in un file non crittografato.
-Ciò lascerà vulnerabili le tue password e le tue informazioni sensibili!
+        <translation>Stai per esportare il database in un file non cifrato.
+Questo lascerà vulnerabili le password e le informazioni sensibili!
 </translation>
     </message>
     <message>
@@ -3950,7 +4078,7 @@ Ciò lascerà vulnerabili le tue password e le tue informazioni sensibili!
     </message>
     <message>
         <source>Export database to HTML file</source>
-        <translation>Esportare il database in un file HTML</translation>
+        <translation>Esporta il database in un file HTML</translation>
     </message>
     <message>
         <source>HTML file</source>
@@ -3984,7 +4112,7 @@ Ciò lascerà vulnerabili le tue password e le tue informazioni sensibili!
     </message>
     <message>
         <source>Another secret service is running (%1).&lt;br/&gt;Please stop/remove it before re-enabling the Secret Service Integration.</source>
-        <translation>Un altro servizio segreto è già in esecuzione (%1).&lt;br/&gt;Fermarlo o rimuoverlo prima di abilitare l&apos;integrazione dei servizi segreti.</translation>
+        <translation>Un altro servizio segreto è già in esecuzione (%1).&lt;br/&gt;Fermalo o rimuovilo prima di abilitare l&apos;integrazione dei servizi segreti.</translation>
     </message>
     <message>
         <source>Failed to register DBus service at %1.&lt;br/&gt;</source>
@@ -4015,7 +4143,7 @@ Ciò lascerà vulnerabili le tue password e le tue informazioni sensibili!
     <name>FdoSecrets::Item</name>
     <message>
         <source>Entry &quot;%1&quot; from database &quot;%2&quot; was used by %3</source>
-        <translation>La voce &quot;%1&quot; dal database &quot;%2&quot; è stata utilizzata da %3</translation>
+        <translation>La voce &quot;%1&quot; dal database &quot;%2&quot; è stata usata da %3</translation>
     </message>
 </context>
 <context>
@@ -4023,7 +4151,7 @@ Ciò lascerà vulnerabili le tue password e le tue informazioni sensibili!
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
-        <translation><numerusform>%n Voce utilizzata da %1</numerusform><numerusform>%n Voci utilizzate da %1</numerusform></translation>
+        <translation><numerusform>%n Voce utilizzata da %1</numerusform><numerusform>%n Voci utilizzate da %1</numerusform><numerusform>%n Voci utilizzate da %1</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4034,14 +4162,14 @@ Ciò lascerà vulnerabili le tue password e le tue informazioni sensibili!
     </message>
     <message>
         <source>Non-existing/inaccessible executable path. Please double-check the client is legit.</source>
-        <translation>Percorso eseguibile non esistente/inaccessibile. Si prega di ricontrollare che il client sia legittimo.</translation>
+        <translation>Percorso eseguibile non esistente/inaccessibile. Ricontrolla che il client sia legittimo.</translation>
     </message>
 </context>
 <context>
     <name>FdoSecrets::SettingsDatabaseModel</name>
     <message>
         <source>Unlock to show</source>
-        <translation>Sblocca per mostrare</translation>
+        <translation>Sblocca per visualizzare</translation>
     </message>
     <message>
         <source>None</source>
@@ -4078,14 +4206,14 @@ Ciò lascerà vulnerabili le tue password e le tue informazioni sensibili!
     <name>HibpDownloader</name>
     <message>
         <source>Online password validation failed</source>
-        <translation>Validazione online della password fallita</translation>
+        <translation>Validazione online della password non riuscita</translation>
     </message>
 </context>
 <context>
     <name>IconDownloaderDialog</name>
     <message>
         <source>Download Favicons</source>
-        <translation>Scarica i Favicon</translation>
+        <translation>Scarica favicon</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -4095,7 +4223,7 @@ Ciò lascerà vulnerabili le tue password e le tue informazioni sensibili!
         <source>Having trouble downloading icons?
 You can enable the DuckDuckGo website icon service in the security section of the application settings.</source>
         <translation>Hai problemi a scaricare le icone?
-È possibile attivare il servizio per le icone del sito Web DuckDuckGo nella sezione relativa alla sicurezza delle impostazioni dell&apos;applicazione.</translation>
+È possibile attivare il servizio per le icone del sito web DuckDuckGo nella sezione relativa alla sicurezza delle impostazioni dell&apos;applicazione.</translation>
     </message>
     <message>
         <source>Close</source>
@@ -4131,7 +4259,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Downloading favicons (%1/%2)…</source>
-        <translation>Scaricamento delle favicons (%1/%2)...</translation>
+        <translation>Scaricamento delle favicon (%1/%2)...</translation>
     </message>
 </context>
 <context>
@@ -4149,7 +4277,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     <name>Kdbx3Reader</name>
     <message>
         <source>Missing database headers</source>
-        <translation>Intestazioni di database mancanti</translation>
+        <translation>Intestazioni database mancanti</translation>
     </message>
     <message>
         <source>Unable to calculate database key</source>
@@ -4163,7 +4291,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
         <translation>Sono state fornite credenziali non valide, riprovare.
-Se ciò si ripresenta, il file di database potrebbe essere danneggiato.</translation>
+Se ciò si ripresenta, il file database potrebbe essere danneggiato.</translation>
     </message>
     <message>
         <source>Header doesn&apos;t match hash</source>
@@ -4220,7 +4348,7 @@ Se ciò si ripresenta, il file di database potrebbe essere danneggiato.</transla
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
         <translation>Sono state fornite credenziali non valide, riprovare.
-Se ciò si ripresenta, il file di database potrebbe essere danneggiato.</translation>
+Se ciò si ripresenta, il file database potrebbe essere danneggiato.</translation>
     </message>
     <message>
         <source>(HMAC mismatch)</source>
@@ -4244,7 +4372,7 @@ Se ciò si ripresenta, il file di database potrebbe essere danneggiato.</transla
     </message>
     <message>
         <source>Failed to open buffer for KDF parameters in header</source>
-        <translation>Fallimento dell&apos;apertura del buffer per i parametri KDF nell&apos;header</translation>
+        <translation>Fallimento dell&apos;apertura del buffer per i parametri KDF nell&apos;intestazione</translation>
     </message>
     <message>
         <source>Unsupported key derivation function (KDF) or invalid parameters</source>
@@ -4252,7 +4380,7 @@ Se ciò si ripresenta, il file di database potrebbe essere danneggiato.</transla
     </message>
     <message>
         <source>Legacy header fields found in KDBX4 file.</source>
-        <translation>Sono stati trovati dei campi obsloleti nell&apos;header del file KDBX4</translation>
+        <translation>Campi di intestazione obsoleti trovati nel file KDBX4.</translation>
     </message>
     <message>
         <source>Invalid inner header id size</source>
@@ -4278,7 +4406,7 @@ Se ciò si ripresenta, il file di database potrebbe essere danneggiato.</transla
     <message>
         <source>Invalid variant map entry name length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Il nome della voce per la mappa di variazione ha una lunghezza non valida </translation>
+        <translation>Lunghezza nome voce della mappa variante non valida</translation>
     </message>
     <message>
         <source>Invalid variant map entry name data</source>
@@ -4288,7 +4416,7 @@ Se ciò si ripresenta, il file di database potrebbe essere danneggiato.</transla
     <message>
         <source>Invalid variant map entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Il valore della voce per la mappa di variazione ha una lunghezza non valida </translation>
+        <translation>Lunghezza valore voce mappa variante non valida</translation>
     </message>
     <message>
         <source>Invalid variant map entry value data</source>
@@ -4328,7 +4456,7 @@ Se ciò si ripresenta, il file di database potrebbe essere danneggiato.</transla
     <message>
         <source>Invalid variant map field type size</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>Dimensione non valida per il tipo di campo della mappa di variazione </translation>
+        <translation>Dimensione tipo campo mappa variante non valida</translation>
     </message>
 </context>
 <context>
@@ -4349,7 +4477,7 @@ Se ciò si ripresenta, il file di database potrebbe essere danneggiato.</transla
     <message>
         <source>Failed to serialize KDF parameters variant map</source>
         <extracomment>Translation comment: variant map = data structure for storing meta data</extracomment>
-        <translation>Fallita serializzazione della mappa di variazione dei parametri per la funzione di derivazione della chiave di cifratura (KDF)</translation>
+        <translation>Serializzazione della mappa di variazione dei parametri KDF non riuscita</translation>
     </message>
 </context>
 <context>
@@ -4400,7 +4528,7 @@ Se ciò si ripresenta, il file di database potrebbe essere danneggiato.</transla
     </message>
     <message>
         <source>Failed to read database file.</source>
-        <translation>Impossibile leggere il file di database.</translation>
+        <translation>Impossibile leggere il file database.</translation>
     </message>
     <message>
         <source>The selected file is an old KeePass 1 database (.kdb).
@@ -4418,7 +4546,7 @@ Questa è una migrazione a senso unico. Non sarà possibile aprire il database i
     </message>
     <message>
         <source>Unsupported KeePass 2 database version.</source>
-        <translation>Versione di database KeePass 2 non supportata.</translation>
+        <translation>Versione database KeePass 2 non supportata.</translation>
     </message>
 </context>
 <context>
@@ -4542,7 +4670,7 @@ Riga %2, colonna %3</translation>
     <message>
         <source>Unable to decompress binary</source>
         <extracomment>Translator meant is a binary data inside an entry</extracomment>
-        <translation>Impossibile decomprimere il binario</translation>
+        <translation>Impossibile decomprimere il file binario</translation>
     </message>
 </context>
 <context>
@@ -4583,7 +4711,7 @@ Riga %2, colonna %3</translation>
     <name>KeePass1Reader</name>
     <message>
         <source>Unable to read keyfile.</source>
-        <translation>Impossibile leggere il file della chiave.</translation>
+        <translation>Impossibile leggere il file chiave.</translation>
     </message>
     <message>
         <source>Not a KeePass database.</source>
@@ -4612,7 +4740,7 @@ Riga %2, colonna %3</translation>
     </message>
     <message>
         <source>Invalid content hash size</source>
-        <translation>DImensione dell&apos;hash non valida per questo contenuto</translation>
+        <translation>Dimensione dell&apos;hash non valida per questo contenuto</translation>
     </message>
     <message>
         <source>Invalid transform seed size</source>
@@ -4642,7 +4770,7 @@ Riga %2, colonna %3</translation>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
         <translation>Sono state fornite credenziali non valide, riprovare.
-Se ciò si ripresenta, il file di database potrebbe essere danneggiato.</translation>
+Se ciò si ripresenta, il file database potrebbe essere danneggiato.</translation>
     </message>
     <message>
         <source>Key transformation failed</source>
@@ -4698,7 +4826,7 @@ Se ciò si ripresenta, il file di database potrebbe essere danneggiato.</transla
     </message>
     <message>
         <source>Missing entry field type number</source>
-        <translation>Numero mancante per il tipo della voce corrente</translation>
+        <translation>Numero mancante per il tipo della voce attuale</translation>
     </message>
     <message>
         <source>Invalid entry field size</source>
@@ -4706,7 +4834,7 @@ Se ciò si ripresenta, il file di database potrebbe essere danneggiato.</transla
     </message>
     <message>
         <source>Read entry field data doesn&apos;t match size</source>
-        <translation>I dati letti  per la voce corrente non coincidono con la dimensione</translation>
+        <translation>I dati letti per la voce attuale non coincidono con la dimensione</translation>
     </message>
     <message>
         <source>Invalid entry UUID field size</source>
@@ -4714,27 +4842,27 @@ Se ciò si ripresenta, il file di database potrebbe essere danneggiato.</transla
     </message>
     <message>
         <source>Invalid entry group id field size</source>
-        <translation>Dimensione dell&apos;ID di gruppo della voce corrente non valida</translation>
+        <translation>Dimensione dell&apos;ID di gruppo della voce attuale non valida</translation>
     </message>
     <message>
         <source>Invalid entry icon field size</source>
-        <translation>Dimensione dell&apos;icona della voce corrente non valida</translation>
+        <translation>Dimensione dell&apos;icona della voce attuale non valida</translation>
     </message>
     <message>
         <source>Invalid entry creation time field size</source>
-        <translation>Dimensione della data di creazione della voce corrente non valida</translation>
+        <translation>Dimensione della data di creazione della voce attuale non valida</translation>
     </message>
     <message>
         <source>Invalid entry modification time field size</source>
-        <translation>Dimensione della data di modifica della voce corrente non valida</translation>
+        <translation>Dimensione della data di modifica della voce attuale non valida</translation>
     </message>
     <message>
         <source>Invalid entry expiry time field size</source>
-        <translation>Dimensione della data di scadenza della voce corrente non valida</translation>
+        <translation>Dimensione della data di scadenza della voce attuale non valida</translation>
     </message>
     <message>
         <source>Invalid entry field type</source>
-        <translation>Tipo di dato non valido </translation>
+        <translation>Tipo di dato non valido</translation>
     </message>
 </context>
 <context>
@@ -4800,14 +4928,14 @@ Se ciò si ripresenta, il file di database potrebbe essere danneggiato.</transla
     </message>
     <message>
         <source>Key Component set, click to change or remove</source>
-        <translation>Set di componenti chiave, fare clic per modificare o rimuovere</translation>
+        <translation>Set di componenti chiave, fai clic per modificare/rimuovere</translation>
     </message>
 </context>
 <context>
     <name>KeyFileEditWidget</name>
     <message>
         <source>Generate a new key file</source>
-        <translation>Generare un nuovo file chiave</translation>
+        <translation>Genera un nuovo file chiave</translation>
     </message>
     <message>
         <source>Generate</source>
@@ -4815,15 +4943,15 @@ Se ciò si ripresenta, il file di database potrebbe essere danneggiato.</transla
     </message>
     <message>
         <source>Generate a new key file or choose an existing one to protect your database.</source>
-        <translation>Genera un nuovo file chiave o scegline uno esistente per proteggere il tuo database.</translation>
+        <translation>Genera un nuovo file chiave o scegline uno esistente per proteggere il database.</translation>
     </message>
     <message>
         <source>Note: Do NOT use a file that may change as that will prevent you from unlocking your database.</source>
-        <translation>Nota: NON utilizzare un file che potrebbe cambiare in quanto ciò ti impedirà di sbloccare il tuo database.</translation>
+        <translation>Nota: NON usare un file che potrebbe essere modificato in quanto ciò ti impedirà di sbloccare il database.</translation>
     </message>
     <message>
         <source>Browse for key file</source>
-        <translation>Cercare il file chiave</translation>
+        <translation>Seleziona file chiave</translation>
     </message>
     <message>
         <source>Browse…</source>
@@ -4835,7 +4963,7 @@ Se ciò si ripresenta, il file di database potrebbe essere danneggiato.</transla
     </message>
     <message>
         <source>You selected a key file in an old format which KeePassXC&lt;br&gt;may stop supporting in the future.&lt;br&gt;&lt;br&gt;Please consider generating a new key file instead.</source>
-        <translation>È stato selezionato un file di chiave in un vecchio formato che KeePassXC&lt;br&gt;potrebbe smettere di supportare in futuro.&lt;br&gt;&lt;br&gt;Prendere in considerazione la possibilità di generare un nuovo file di chiave.</translation>
+        <translation>È stato selezionato un file chiave in un vecchio formato che KeePassXC&lt;br&gt;potrebbe smettere di supportare in futuro.&lt;br&gt;&lt;br&gt;Prendi in considerazione la possibilità di generare un nuovo file chiave.</translation>
     </message>
     <message>
         <source>Error loading the key file '%1'
@@ -4861,11 +4989,11 @@ Messaggio: %2</translation>
     </message>
     <message>
         <source>Key File set, click to change or remove</source>
-        <translation>File chiave impostato, clicca per cambiare o rimuovere</translation>
+        <translation>File chiave impostato, fai clic per modificare/rimuovere</translation>
     </message>
     <message>
         <source>&lt;p&gt;You can add a key file containing random bytes for additional security.&lt;/p&gt;&lt;p&gt;You must keep it secret and never lose it or you will be locked out.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;È possibile aggiungere un file di chiave contenente byte casuali per una maggiore sicurezza.&lt;/p&gt;&lt;p&gt;Devi tenerlo segreto e non perderlo mai o sarai bloccato.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Per una maggiore sicurezza è possibile aggiungere un file chiave contenente byte casuali.&lt;/p&gt;&lt;p&gt;Devi tenerlo segreto e non perderlo mai o sarai bloccato.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Key files</source>
@@ -4897,7 +5025,7 @@ Messaggio: %2</translation>
     </message>
     <message>
         <source>You cannot use the current database as its own keyfile. Please choose a different file or generate a new key file.</source>
-        <translation>Non è possibile utilizzare il database corrente come proprio file chiave. Scegliere un file diverso o generare un nuovo file chiave.</translation>
+        <translation>Non è possibile usare il database attuale come proprio file chiave. Scegli un file diverso o generare un nuovo file chiave.</translation>
     </message>
     <message>
         <source>Suspicious Key File</source>
@@ -4937,7 +5065,7 @@ Sei sicuro di voler continuare con questo file?</translation>
     </message>
     <message>
         <source>&amp;Import</source>
-        <translation>&amp;Importare</translation>
+        <translation>&amp;Importa</translation>
     </message>
     <message>
         <source>&amp;Export</source>
@@ -4958,6 +5086,10 @@ Sei sicuro di voler continuare con questo file?</translation>
     <message>
         <source>TOTP</source>
         <translation>TOTP</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation>Etichette</translation>
     </message>
     <message>
         <source>&amp;Groups</source>
@@ -5001,11 +5133,11 @@ Sei sicuro di voler continuare con questo file?</translation>
     </message>
     <message>
         <source>&amp;New Database…</source>
-        <translation>&amp;Nuovo database…</translation>
+        <translation>&amp;Nuovo database...</translation>
     </message>
     <message>
         <source>Create a new database</source>
-        <translation>Creare un nuovo database</translation>
+        <translation>Crea un nuovo database</translation>
     </message>
     <message>
         <source>&amp;Merge From Database…</source>
@@ -5017,43 +5149,43 @@ Sei sicuro di voler continuare con questo file?</translation>
     </message>
     <message>
         <source>&amp;New Entry…</source>
-        <translation>&amp;Nuova voce…</translation>
+        <translation>&amp;Nuova voce...</translation>
     </message>
     <message>
         <source>Add a new entry</source>
-        <translation>Aggiungere una nuova voce</translation>
+        <translation>Aggiungi una nuova voce</translation>
     </message>
     <message>
         <source>&amp;Edit Entry…</source>
-        <translation>&amp;Modifica voce…</translation>
+        <translation>&amp;Modifica voce...</translation>
     </message>
     <message>
         <source>View or edit entry</source>
-        <translation>Visualizzare o modificare voce</translation>
+        <translation>Visualizza/modifica voce</translation>
     </message>
     <message>
         <source>&amp;Delete Entry…</source>
-        <translation>&amp;Elimina voce…</translation>
+        <translation>&amp;Elimina voce...</translation>
     </message>
     <message>
         <source>&amp;New Group…</source>
-        <translation>&amp;Nuovo gruppo…</translation>
+        <translation>&amp;Nuovo gruppo...</translation>
     </message>
     <message>
         <source>Add a new group</source>
-        <translation>Aggiungere un nuovo gruppo</translation>
+        <translation>Aggiungi un nuovo gruppo</translation>
     </message>
     <message>
         <source>&amp;Edit Group…</source>
-        <translation>&amp;Modifica gruppo…</translation>
+        <translation>&amp;Modifica gruppo...</translation>
     </message>
     <message>
         <source>&amp;Delete Group…</source>
-        <translation>&amp;Elimina gruppo…</translation>
+        <translation>&amp;Elimina gruppo...</translation>
     </message>
     <message>
         <source>Download All &amp;Favicons…</source>
-        <translation>Scarica tutte le &amp;Favicon…</translation>
+        <translation>Scarica tutte le &amp;Favicon...</translation>
     </message>
     <message>
         <source>Sort &amp;A-Z</source>
@@ -5065,15 +5197,15 @@ Sei sicuro di voler continuare con questo file?</translation>
     </message>
     <message>
         <source>Sa&amp;ve Database As…</source>
-        <translation>Sal&amp;va database come…</translation>
+        <translation>Sal&amp;va database come...</translation>
     </message>
     <message>
         <source>Database &amp;Security…</source>
-        <translation>Database &amp;Sicurezza…</translation>
+        <translation>&amp;Sicurezza database...</translation>
     </message>
     <message>
         <source>Database &amp;Reports…</source>
-        <translation>Database &amp;Reports...</translation>
+        <translation>&amp;Rapporti del database...</translation>
     </message>
     <message>
         <source>Statistics, health check, etc.</source>
@@ -5081,7 +5213,7 @@ Sei sicuro di voler continuare con questo file?</translation>
     </message>
     <message>
         <source>&amp;Database Settings…</source>
-        <translation>Impostazioni &amp;database…</translation>
+        <translation>Impostazioni &amp;database...</translation>
     </message>
     <message>
         <source>Database settings</source>
@@ -5089,11 +5221,11 @@ Sei sicuro di voler continuare con questo file?</translation>
     </message>
     <message>
         <source>&amp;Clone Entry…</source>
-        <translation>&amp;Clona voce…</translation>
+        <translation>&amp;Clona voce...</translation>
     </message>
     <message>
         <source>Move u&amp;p</source>
-        <translation>Sposta in s&amp;ù</translation>
+        <translation>Sposta in s&amp;u</translation>
     </message>
     <message>
         <source>Move entry one step up</source>
@@ -5129,7 +5261,7 @@ Sei sicuro di voler continuare con questo file?</translation>
     </message>
     <message>
         <source>&amp;Password Generator</source>
-        <translation>Generatore di &amp;password</translation>
+        <translation>Generatore &amp;password</translation>
     </message>
     <message>
         <source>Perform &amp;Auto-Type</source>
@@ -5137,11 +5269,11 @@ Sei sicuro di voler continuare con questo file?</translation>
     </message>
     <message>
         <source>Download &amp;Favicon</source>
-        <translation>Scarica &amp;Favicon</translation>
+        <translation>Scarica &amp;favicon</translation>
     </message>
     <message>
         <source>Open &amp;URL</source>
-        <translation>Aprire &amp;URL</translation>
+        <translation>Apri &amp;URL</translation>
     </message>
     <message>
         <source>&amp;Lock Database</source>
@@ -5149,7 +5281,7 @@ Sei sicuro di voler continuare con questo file?</translation>
     </message>
     <message>
         <source>Lock &amp;All Databases</source>
-        <translation>Blocca &amp;Tutti i database</translation>
+        <translation>Blocca &amp;tutti i database</translation>
     </message>
     <message>
         <source>&amp;Title</source>
@@ -5160,8 +5292,8 @@ Sei sicuro di voler continuare con questo file?</translation>
         <translation>Copia titolo negli appunti</translation>
     </message>
     <message>
-        <source>&amp;URL</source>
-        <translation>&amp;URL</translation>
+        <source>Copy &amp;URL</source>
+        <translation>Copia &amp;URL</translation>
     </message>
     <message>
         <source>Copy URL to clipboard</source>
@@ -5177,35 +5309,35 @@ Sei sicuro di voler continuare con questo file?</translation>
     </message>
     <message>
         <source>&amp;CSV File…</source>
-        <translation>&amp;File CSV…</translation>
+        <translation>&amp;File CSV...</translation>
     </message>
     <message>
         <source>&amp;HTML File…</source>
-        <translation>File &amp;HTML…</translation>
+        <translation>File &amp;HTML...</translation>
     </message>
     <message>
         <source>KeePass 1 Database…</source>
-        <translation>Database KeePass 1…</translation>
+        <translation>Database KeePass 1...</translation>
     </message>
     <message>
         <source>Import a KeePass 1 database</source>
-        <translation>Importare un database KeePass 1</translation>
+        <translation>Importa un database KeePass 1</translation>
     </message>
     <message>
         <source>1Password Vault…</source>
-        <translation>1Password Vault…</translation>
+        <translation>1Password Vault...</translation>
     </message>
     <message>
         <source>Import a 1Password Vault</source>
-        <translation>Importare un 1Password Vault</translation>
+        <translation>Importa un 1Password Vault</translation>
     </message>
     <message>
         <source>CSV File…</source>
-        <translation>File CSV…</translation>
+        <translation>File CSV...</translation>
     </message>
     <message>
         <source>Import a CSV file</source>
-        <translation>Importare un file CSV</translation>
+        <translation>Importa un file CSV</translation>
     </message>
     <message>
         <source>Show TOTP</source>
@@ -5213,15 +5345,19 @@ Sei sicuro di voler continuare con questo file?</translation>
     </message>
     <message>
         <source>Show QR Code</source>
-        <translation>Mostra codice QR</translation>
+        <translation>Visualizza codice QR</translation>
     </message>
     <message>
         <source>Set up TOTP…</source>
-        <translation>Configura TOTP…</translation>
+        <translation>Configura TOTP...</translation>
     </message>
     <message>
         <source>Copy &amp;TOTP</source>
         <translation>Copia &amp;TOTP</translation>
+    </message>
+    <message>
+        <source>Copy Password and TOTP</source>
+        <translation>Copia password e TOTP</translation>
     </message>
     <message>
         <source>E&amp;mpty recycle bin</source>
@@ -5229,7 +5365,7 @@ Sei sicuro di voler continuare con questo file?</translation>
     </message>
     <message>
         <source>&amp;Donate</source>
-        <translation>&amp;Donare</translation>
+        <translation>&amp;Dona</translation>
     </message>
     <message>
         <source>Report a &amp;Bug</source>
@@ -5261,11 +5397,11 @@ Sei sicuro di voler continuare con questo file?</translation>
     </message>
     <message>
         <source>&amp;Keyboard Shortcuts</source>
-        <translation>&amp;Tasti di scelta rapida</translation>
+        <translation>&amp;Tasti scelta rapida</translation>
     </message>
     <message>
         <source>Save Database Backup…</source>
-        <translation>Salva backup del database in...</translation>
+        <translation>Salva backup database in...</translation>
     </message>
     <message>
         <source>Add key to SSH Agent</source>
@@ -5297,15 +5433,15 @@ Sei sicuro di voler continuare con questo file?</translation>
     </message>
     <message>
         <source>Show Toolbar</source>
-        <translation>Mostra barra degli strumenti</translation>
+        <translation>Visualizza barra strumenti</translation>
     </message>
     <message>
         <source>Show Preview Panel</source>
-        <translation>Mostra pannello anteprima</translation>
+        <translation>Visualizza pannello anteprima</translation>
     </message>
     <message>
         <source>Always on Top</source>
-        <translation>Sempre sopra</translation>
+        <translation>Sempre in primo piano</translation>
     </message>
     <message>
         <source>Hide Usernames</source>
@@ -5320,40 +5456,52 @@ Sei sicuro di voler continuare con questo file?</translation>
         <translation>Clona gruppo...</translation>
     </message>
     <message>
+        <source>&amp;XML File…</source>
+        <translation>File &amp;XML...</translation>
+    </message>
+    <message>
+        <source>XML File…</source>
+        <translation>File XML...</translation>
+    </message>
+    <message>
         <source>Clear history</source>
         <translation>Azzera cronologia</translation>
     </message>
     <message>
         <source>Access error for config file %1</source>
-        <translation>Errore di accesso per il file di configurazione %1</translation>
+        <translation>Errore di accesso al file di configurazione %1</translation>
     </message>
     <message>
         <source>Don&apos;t show again for this version</source>
-        <translation>Non mostrare più per questa versione</translation>
+        <translation>Non visualizzare più per questa versione</translation>
     </message>
     <message>
         <source>WARNING: You are using an unstable build of KeePassXC.
 There is a high risk of corruption, maintain a backup of your databases.
 This version is not meant for production use.</source>
-        <translation>ATTENZIONE: si sta utilizzando una build instabile di KeePassXC.
+        <translation>ATTENZIONE: stau usando una build instabile di KeePassXC.
 C&apos;è un alto rischio di corruzione, mantenere un backup dei database.
 Questa versione non è destinata all&apos;uso in produzione.</translation>
     </message>
     <message>
         <source>NOTE: You are using a pre-release version of KeePassXC.
 Expect some bugs and minor issues, this version is meant for testing purposes.</source>
-        <translation>NOTA: si utilizza una versione non definitiva di KeePassXC.
+        <translation>NOTA: stai usando una versione non definitiva di KeePassXC.
 Aspettatevi alcuni bug e problemi minori, questa versione è pensata per scopi di test.</translation>
     </message>
     <message>
         <source>WARNING: Your Qt version may cause KeePassXC to crash with an On-Screen Keyboard.
 We recommend you use the AppImage available on our downloads page.</source>
         <translation>ATTENZIONE: la versione di Qt potrebbe causare l&apos;arresto anomalo di KeePassXC con una tastiera su schermo.
-Ti consigliamo di utilizzare l&apos;AppImage disponibile sulla nostra pagina download.</translation>
+Ti consigliamo di usare l&apos;AppImage disponibile sulla nostra pagina download.</translation>
+    </message>
+    <message>
+        <source>No Tags</source>
+        <translation>Nessuna etichetta</translation>
     </message>
     <message numerus="yes">
         <source>Restore Entry(s)</source>
-        <translation><numerusform>Ripristina voce(i)</numerusform><numerusform>Ripristina voce(i)</numerusform></translation>
+        <translation><numerusform>Ripristina voce</numerusform><numerusform>Ripristina voci</numerusform><numerusform>Ripristina voci</numerusform></translation>
     </message>
     <message>
         <source>Settings</source>
@@ -5361,7 +5509,7 @@ Ti consigliamo di utilizzare l&apos;AppImage disponibile sulla nostra pagina dow
     </message>
     <message>
         <source>Check for updates on startup?</source>
-        <translation>Controllare gli aggiornamenti all&apos;avvio?</translation>
+        <translation>Vuoi controllare gli aggiornamenti all&apos;avvio?</translation>
     </message>
     <message>
         <source>Would you like KeePassXC to check for updates on startup?</source>
@@ -5379,17 +5527,37 @@ Ti consigliamo di utilizzare l&apos;AppImage disponibile sulla nostra pagina dow
         <source>Quit KeePassXC</source>
         <translation>Esci da KeePassXC</translation>
     </message>
+    <message numerus="yes">
+        <source>%1 Entry(s)</source>
+        <translation><numerusform>%1 voce</numerusform><numerusform>%1 voci</numerusform><numerusform>%1 voci</numerusform></translation>
+    </message>
     <message>
         <source>Please present or touch your YubiKey to continue…</source>
-        <translation>Si prega di presentare o toccare il vostro YubiKey per continuare...</translation>
+        <translation>Per continuare presenta o tocca la YubiKey...</translation>
     </message>
     <message>
         <source>Restart Application?</source>
-        <translation>Riavviare l&apos;applicazione?</translation>
+        <translation>Vuoi riavviare l&apos;applicazione?</translation>
     </message>
     <message>
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
-        <translation>È necessario riavviare l&apos;applicazione per applicare questa impostazione. Vuoi riavviare ora?</translation>
+        <translation>Per applicare questa impostazione è necessario riavviare l&apos;applicazione. Vuoi riavviarla ora?</translation>
+    </message>
+    <message>
+        <source>Allow Screen Capture</source>
+        <translation>Consenti cattura schermo</translation>
+    </message>
+    <message>
+        <source>Passkeys…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Passkeys</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import Passkey</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5400,7 +5568,7 @@ Ti consigliamo di utilizzare l&apos;AppImage disponibile sulla nostra pagina dow
     </message>
     <message>
         <source>Edit database settings</source>
-        <translation>Modificare le impostazioni del database</translation>
+        <translation>Modifica impostazioni database</translation>
     </message>
     <message>
         <source>Unlock database</source>
@@ -5408,7 +5576,7 @@ Ti consigliamo di utilizzare l&apos;AppImage disponibile sulla nostra pagina dow
     </message>
     <message>
         <source>Unlock database to show more information</source>
-        <translation>Sblocca il database per mostrare ulteriori informazioni</translation>
+        <translation>Per visualizzare ulteriori informazioni sblocca il database</translation>
     </message>
     <message>
         <source>Lock database</source>
@@ -5431,7 +5599,7 @@ Ti consigliamo di utilizzare l&apos;AppImage disponibile sulla nostra pagina dow
     </message>
     <message>
         <source>Reset any remembered decisions for this application</source>
-        <translation>Reimpostare tutte le decisioni ricordate per questa applicazione</translation>
+        <translation>Reimposta tutte le decisioni salvate per questa applicazione</translation>
     </message>
 </context>
 <context>
@@ -5442,7 +5610,7 @@ Ti consigliamo di utilizzare l&apos;AppImage disponibile sulla nostra pagina dow
     </message>
     <message>
         <source>Relocating %1 [%2]</source>
-        <translation>Rilocazione di %1 [%2]</translation>
+        <translation>Trasferimento di %1 [%2]</translation>
     </message>
     <message>
         <source>Overwriting %1 [%2]</source>
@@ -5458,27 +5626,27 @@ Ti consigliamo di utilizzare l&apos;AppImage disponibile sulla nostra pagina dow
     </message>
     <message>
         <source>Adding backup for older source %1 [%2]</source>
-        <translation>Aggiunto backup per l&apos;origine precedente %1 [%2]</translation>
+        <translation>Aggiunto backup per la sorgente precedente %1 [%2]</translation>
     </message>
     <message>
         <source>Reapplying older target entry on top of newer source %1 [%2]</source>
-        <translation>Riapplicare la voce di destinazione precedente all&apos;origine più recente %1 [%2]</translation>
+        <translation>Riapplica la voce destinazione precedente alla sorgente più recente %1 [%2]</translation>
     </message>
     <message>
         <source>Reapplying older source entry on top of newer target %1 [%2]</source>
-        <translation>Riapplicare la voce di origine precedente alla destinazione più recente %1 [%2]</translation>
+        <translation>Riapplica la voce sorgente precedente alla destinazione più recente %1 [%2]</translation>
     </message>
     <message>
         <source>Synchronizing from newer source %1 [%2]</source>
-        <translation>Sincronizzazione dall&apos;origine più recente %1 [%2]</translation>
+        <translation>Sincronizzazione sorgente più recente %1 [%2]</translation>
     </message>
     <message>
         <source>Synchronizing from older source %1 [%2]</source>
-        <translation>Sincronizzazione dall&apos;origine precedente %1 [%2]</translation>
+        <translation>Sincronizzazione sorgente precedente %1 [%2]</translation>
     </message>
     <message>
         <source>Deleting child %1 [%2]</source>
-        <translation>Eliminazione dell&apos;elemento figlio %1 [%2]</translation>
+        <translation>Eliminazione elemento figlio %1 [%2]</translation>
     </message>
     <message>
         <source>Deleting orphan %1 [%2]</source>
@@ -5490,7 +5658,7 @@ Ti consigliamo di utilizzare l&apos;AppImage disponibile sulla nostra pagina dow
     </message>
     <message>
         <source>Adding missing icon %1</source>
-        <translation>Aggiungere l&apos;icona mancante %1</translation>
+        <translation>Aggiunta icona mancante %1</translation>
     </message>
     <message>
         <source>Removed custom data %1 [%2]</source>
@@ -5498,7 +5666,7 @@ Ti consigliamo di utilizzare l&apos;AppImage disponibile sulla nostra pagina dow
     </message>
     <message>
         <source>Adding custom data %1 [%2]</source>
-        <translation>Aggiunta di dati personalizzati %1 [%2]</translation>
+        <translation>Aggiunta dati personalizzati %1 [%2]</translation>
     </message>
 </context>
 <context>
@@ -5521,19 +5689,11 @@ Ti consigliamo di utilizzare l&apos;AppImage disponibile sulla nostra pagina dow
     </message>
     <message>
         <source>Encryption Settings</source>
-        <translation>Impostazioni di crittografia</translation>
+        <translation>Impostazioni di cifratura</translation>
     </message>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
-        <translation>Qui è possibile modificare le impostazioni di crittaggio del database. È sempre possibile modificarli dopo nelle impostazioni del database.</translation>
-    </message>
-    <message>
-        <source>Advanced Settings</source>
-        <translation>Impostazioni avanzate</translation>
-    </message>
-    <message>
-        <source>Simple Settings</source>
-        <translation>Impostazioni semplici</translation>
+        <translation>Qui puoi modificare le impostazioni di cifratura del database. Puoi sempre modificarle dopo nelle impostazioni del database.</translation>
     </message>
 </context>
 <context>
@@ -5551,11 +5711,11 @@ Ti consigliamo di utilizzare l&apos;AppImage disponibile sulla nostra pagina dow
     <name>NewDatabaseWizardPageEncryption</name>
     <message>
         <source>Encryption Settings</source>
-        <translation>Impostazioni di crittografia</translation>
+        <translation>Impostazioni di cifratura</translation>
     </message>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
-        <translation>Qui è possibile modificare le impostazioni di crittaggio del database. È sempre possibile modificarli dopo nelle impostazioni del database.</translation>
+        <translation>Qui puoi modificare le impostazioni di cifratura del database. Puoi sempre modificarle dopo nelle impostazioni del database.</translation>
     </message>
 </context>
 <context>
@@ -5566,7 +5726,7 @@ Ti consigliamo di utilizzare l&apos;AppImage disponibile sulla nostra pagina dow
     </message>
     <message>
         <source>Please fill in the display name and an optional description for your new database:</source>
-        <translation>Si prega di compilare il nome visualizzato e una descrizione facoltativa per il nuovo database:</translation>
+        <translation>Compila il nome visualizzato e una descrizione facoltativa per il nuovo database:</translation>
     </message>
 </context>
 <context>
@@ -5596,7 +5756,7 @@ Ti consigliamo di utilizzare l&apos;AppImage disponibile sulla nostra pagina dow
     </message>
     <message>
         <source>Unable to init cipher for opdata01: %1</source>
-        <translation>Impossibile inizializzare la crittografia per opdata01: %1</translation>
+        <translation>Impossibile inizializzare la cifratura per opdata01: %1</translation>
     </message>
     <message>
         <source>Unable to read all HMAC signature bytes</source>
@@ -5612,7 +5772,7 @@ Ti consigliamo di utilizzare l&apos;AppImage disponibile sulla nostra pagina dow
     </message>
     <message>
         <source>Expected %1 bytes of clear-text, found %2</source>
-        <translation>Previsto %1 byte di testo non crittografato, trovato %2</translation>
+        <translation>Previsto %1 byte di testo non cifrato, trovato %2</translation>
     </message>
 </context>
 <context>
@@ -5628,19 +5788,19 @@ Ti consigliamo di utilizzare l&apos;AppImage disponibile sulla nostra pagina dow
     <name>OpVaultReader</name>
     <message>
         <source>Directory .opvault must exist</source>
-        <translation>La directory .opvault deve esistere</translation>
+        <translation>La cartella .opvault deve esistere</translation>
     </message>
     <message>
         <source>Directory .opvault must be readable</source>
-        <translation>La directory .opvault deve essere leggibile</translation>
+        <translation>La cartella .opvault deve essere leggibile</translation>
     </message>
     <message>
         <source>Directory .opvault/default must exist</source>
-        <translation>Directory .opvault/default deve esistere</translation>
+        <translation>La cartella .opvault/default deve esistere</translation>
     </message>
     <message>
         <source>Directory .opvault/default must be readable</source>
-        <translation>Directory .opvault/default deve essere leggibile</translation>
+        <translation>La cartella .opvault/default deve essere leggibile</translation>
     </message>
     <message>
         <source>Unable to decode masterKey: %1</source>
@@ -5655,11 +5815,11 @@ Ti consigliamo di utilizzare l&apos;AppImage disponibile sulla nostra pagina dow
     <name>OpenSSHKey</name>
     <message>
         <source>Invalid key file, expecting an OpenSSH key</source>
-        <translation>File di chiave non valido, era attesa una chiave OpenSSH</translation>
+        <translation>File chiave non valido, era attesa una chiave OpenSSH</translation>
     </message>
     <message>
         <source>PEM boundary mismatch</source>
-        <translation>Mancata corrispondenza del marigne PEM</translation>
+        <translation>Mancata corrispondenza del margine PEM</translation>
     </message>
     <message>
         <source>Base64 decoding failed</source>
@@ -5698,6 +5858,10 @@ Ti consigliamo di utilizzare l&apos;AppImage disponibile sulla nostra pagina dow
         <translation>Tipo di cifrario non supportato: %1</translation>
     </message>
     <message>
+        <source>AES-256/GCM is currently not supported</source>
+        <translation>AES-256/GCM non è attualmente supportato</translation>
+    </message>
+    <message>
         <source>Passphrase is required to decrypt this key</source>
         <translation>La decifrazione di questa chiave richiede una frase segreta</translation>
     </message>
@@ -5707,7 +5871,7 @@ Ti consigliamo di utilizzare l&apos;AppImage disponibile sulla nostra pagina dow
     </message>
     <message>
         <source>Cipher IV is too short for MD5 kdf</source>
-        <translation>Il vettore di inizializzazione del cifrario è troppo corto per la derivazione della chiave crittografica tramite MD5</translation>
+        <translation>Il vettore di inizializzazione del cifrario è troppo corto per la derivazione della chiave di cifratura tramite MD5</translation>
     </message>
     <message>
         <source>Unknown KDF: %1</source>
@@ -5719,11 +5883,11 @@ Ti consigliamo di utilizzare l&apos;AppImage disponibile sulla nostra pagina dow
     </message>
     <message>
         <source>Decryption failed: %1</source>
-        <translation>Decrittografia non riuscita: %1</translation>
+        <translation>Decifratura non riuscita: %1</translation>
     </message>
     <message>
         <source>Decryption failed, wrong passphrase?</source>
-        <translation>Decifrazione non riuscita, frase segreta non corretta?</translation>
+        <translation>Decifratura non riuscita, frase segreta non corretta?</translation>
     </message>
     <message>
         <source>Unexpected EOF while reading key</source>
@@ -5763,26 +5927,168 @@ Ti consigliamo di utilizzare l&apos;AppImage disponibile sulla nostra pagina dow
     </message>
 </context>
 <context>
-    <name>PasswordEdit</name>
+    <name>OpenSSHKeyGenDialog</name>
     <message>
-        <source>Passwords do not match</source>
-        <translation>Le password non corrispondono</translation>
+        <source>SSH Key Generator</source>
+        <translation>Generatore chiave SSH</translation>
     </message>
     <message>
-        <source>Passwords match so far</source>
-        <translation>Le password corrispondono finora</translation>
+        <source>Type</source>
+        <translation>Tipo</translation>
     </message>
     <message>
-        <source>Toggle Password (%1)</source>
-        <translation>Attiva/disattiva password (%1)</translation>
+        <source>Bits</source>
+        <translation>Bit</translation>
     </message>
     <message>
-        <source>Generate Password (%1)</source>
-        <translation>Genera password (%1)</translation>
+        <source>Comment</source>
+        <translation>Commento</translation>
+    </message>
+</context>
+<context>
+    <name>PasskeyExportDialog</name>
+    <message>
+        <source>KeePassXC - Passkey Export</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Warning: Caps Lock enabled!</source>
-        <translation>Attenzione: Caps Lock abilitato!</translation>
+        <source>Export the following Passkey entries.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Filenames will be generated with title and .passkey file extension.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export entries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export Selected</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annulla</translation>
+    </message>
+    <message>
+        <source>Export to folder</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>PasskeyExporter</name>
+    <message>
+        <source>KeePassXC: Passkey Export</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>File &quot;%1.passkey&quot; already exists.
+Do you want to overwrite it?
+</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot open file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot open file &quot;%1&quot; for writing.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot write to file</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>PasskeyImportDialog</name>
+    <message>
+        <source>KeePassXC - Passkey Import</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to import the Passkey?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>URL: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Username: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use default group (Imported Passkeys)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Group</source>
+        <translation>Gruppo</translation>
+    </message>
+    <message>
+        <source>Database</source>
+        <translation>Database</translation>
+    </message>
+    <message>
+        <source>Select Database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import Passkey</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation>Importa</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annulla</translation>
+    </message>
+    <message>
+        <source>Database: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Group:</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>PasskeyImporter</name>
+    <message>
+        <source>Passkey file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>All files</source>
+        <translation>Tutti i file</translation>
+    </message>
+    <message>
+        <source>Open Passkey file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot open file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot open file &quot;%1&quot; for reading.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot import Passkey</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot import Passkey file &quot;%1&quot;. Data is missing.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot import Passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5821,11 +6127,11 @@ Ti consigliamo di utilizzare l&apos;AppImage disponibile sulla nostra pagina dow
     </message>
     <message>
         <source>Password set, click to change or remove</source>
-        <translation>Password impostata, clicca per cambiare o rimuovere</translation>
+        <translation>Password impostata, fai clic per modificarla/rimuoverla</translation>
     </message>
     <message>
         <source>&lt;p&gt;A password is the primary method for securing your database.&lt;/p&gt;&lt;p&gt;Good passwords are long and unique. KeePassXC can generate one for you.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Una password è il metodo principale per mantenere sicuro il vostro database.&lt;/p&gt;&lt;p&gt;Una buona password dev&apos;essere lunga ed unica. KeePassXC può generarne una per voi.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Una password è il metodo principale per mantenere sicuro il database.&lt;/p&gt;&lt;p&gt;Una buona password dev&apos;essere lunga ed unica. KeePassXC può generarne una per voi.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Passwords do not match.</source>
@@ -5877,7 +6183,7 @@ Ti consigliamo di utilizzare l&apos;AppImage disponibile sulla nostra pagina dow
     </message>
     <message>
         <source>Switch to advanced mode</source>
-        <translation>Passare alla modalità avanzata</translation>
+        <translation>Passa alla modalità avanzata</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -5933,7 +6239,7 @@ Ti consigliamo di utilizzare l&apos;AppImage disponibile sulla nostra pagina dow
     </message>
     <message>
         <source>Additional characters to use for the generated password</source>
-        <translation>Caratteri aggiuntivi da utilizzare nella generazione delle password</translation>
+        <translation>Caratteri aggiuntivi da usare nella generazione delle password</translation>
     </message>
     <message>
         <source>Additional characters</source>
@@ -5941,7 +6247,7 @@ Ti consigliamo di utilizzare l&apos;AppImage disponibile sulla nostra pagina dow
     </message>
     <message>
         <source>Add non-hex letters to &quot;do not include&quot; list</source>
-        <translation>Aggiungere lettere non esadecimali all&apos;elenco &quot;non includere&quot;</translation>
+        <translation>Aggiungi lettere non esadecimali all&apos;elenco &quot;non includere&quot;</translation>
     </message>
     <message>
         <source>Hex Passwords</source>
@@ -5965,7 +6271,7 @@ Ti consigliamo di utilizzare l&apos;AppImage disponibile sulla nostra pagina dow
     </message>
     <message>
         <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>Escludere i caratteri: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</translation>
+        <translation>Caratteri esclusi: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</translation>
     </message>
     <message>
         <source>Exclude look-alike characters</source>
@@ -6001,11 +6307,11 @@ Ti consigliamo di utilizzare l&apos;AppImage disponibile sulla nostra pagina dow
     </message>
     <message>
         <source>Delete selected wordlist</source>
-        <translation>Eliminare l&apos;elenco di parole selezionato</translation>
+        <translation>Elimina elenco parole selezionato</translation>
     </message>
     <message>
         <source>Add custom wordlist</source>
-        <translation>Aggiungi elenco di parole personalizzato</translation>
+        <translation>Aggiungi elenco parole personalizzato</translation>
     </message>
     <message>
         <source>character</source>
@@ -6048,52 +6354,6 @@ Ti consigliamo di utilizzare l&apos;AppImage disponibile sulla nostra pagina dow
         <translation>Entropia: %1 bit</translation>
     </message>
     <message>
-        <source>Confirm Delete Wordlist</source>
-        <translation>Conferma cancellazione elenco di parole</translation>
-    </message>
-    <message>
-        <source>Do you really want to delete the wordlist &quot;%1&quot;?</source>
-        <translation>Vuoi davvero eliminare l&apos;elenco di parole &quot;%1&quot;?</translation>
-    </message>
-    <message>
-        <source>Failed to delete wordlist</source>
-        <translation>Impossibile eliminare l&apos;elenco di parole</translation>
-    </message>
-    <message>
-        <source>Wordlists</source>
-        <translation>Elenchi di parole</translation>
-    </message>
-    <message>
-        <source>All files</source>
-        <translation>Tutti i file</translation>
-    </message>
-    <message>
-        <source>Select Custom Wordlist</source>
-        <translation>Seleziona elenco di parole personalizzato</translation>
-    </message>
-    <message>
-        <source>Overwrite Wordlist?</source>
-        <translation>Sovrascrivere elenco di parole?</translation>
-    </message>
-    <message>
-        <source>Wordlist &quot;%1&quot; already exists as a custom wordlist.
-Do you want to overwrite it?</source>
-        <translation>L&apos;elenco di parole &quot;%1&quot; esiste già come elenco di parole personalizzato.
-Vuoi sovrascriverlo?</translation>
-    </message>
-    <message>
-        <source>Failed to add wordlist</source>
-        <translation>Impossibile aggiungere l&apos;elenco di parole</translation>
-    </message>
-    <message>
-        <source>Logograms</source>
-        <translation>Logogrammi</translation>
-    </message>
-    <message>
-        <source>Special Characters</source>
-        <translation>Caratteri speciali</translation>
-    </message>
-    <message>
         <source>Password Quality: %1</source>
         <translation>Qualità password: %1</translation>
     </message>
@@ -6117,6 +6377,103 @@ Vuoi sovrascriverlo?</translation>
         <comment>Password quality</comment>
         <translation>Eccellente</translation>
     </message>
+    <message>
+        <source>Confirm Delete Wordlist</source>
+        <translation>Conferma cancellazione elenco parole</translation>
+    </message>
+    <message>
+        <source>Do you really want to delete the wordlist &quot;%1&quot;?</source>
+        <translation>Vuoi davvero eliminare l&apos;elenco parole &quot;%1&quot;?</translation>
+    </message>
+    <message>
+        <source>Failed to delete wordlist</source>
+        <translation>Impossibile eliminare l&apos;elenco parole</translation>
+    </message>
+    <message>
+        <source>Wordlists</source>
+        <translation>Elenchi di parole</translation>
+    </message>
+    <message>
+        <source>All files</source>
+        <translation>Tutti i file</translation>
+    </message>
+    <message>
+        <source>Select Custom Wordlist</source>
+        <translation>Seleziona elenco parole personalizzato</translation>
+    </message>
+    <message>
+        <source>Overwrite Wordlist?</source>
+        <translation>Vuuoi sovrascrivere elenco parole?</translation>
+    </message>
+    <message>
+        <source>Wordlist &quot;%1&quot; already exists as a custom wordlist.
+Do you want to overwrite it?</source>
+        <translation>L&apos;elenco parole &quot;%1&quot; esiste già come elenco parole personalizzato.
+Vuoi sovrascriverlo?</translation>
+    </message>
+    <message>
+        <source>Failed to add wordlist</source>
+        <translation>Impossibile aggiungere l&apos;elenco parole</translation>
+    </message>
+    <message>
+        <source>Logograms</source>
+        <translation>Logogrammi</translation>
+    </message>
+    <message>
+        <source>Special Characters</source>
+        <translation>Caratteri speciali</translation>
+    </message>
+</context>
+<context>
+    <name>PasswordWidget</name>
+    <message>
+        <source>Passwords do not match</source>
+        <translation>Le password non corrispondono</translation>
+    </message>
+    <message>
+        <source>Passwords match so far</source>
+        <translation>Le password corrispondono finora</translation>
+    </message>
+    <message>
+        <source>Toggle Password (%1)</source>
+        <translation>Attiva/disattiva password (%1)</translation>
+    </message>
+    <message>
+        <source>Generate Password (%1)</source>
+        <translation>Genera password (%1)</translation>
+    </message>
+    <message>
+        <source>Warning: Caps Lock enabled!</source>
+        <translation>Attenzione: Caps Lock abilitato!</translation>
+    </message>
+    <message>
+        <source>Quality: %1</source>
+        <translation>Qualità: %1</translation>
+    </message>
+    <message>
+        <source>Poor</source>
+        <comment>Password quality</comment>
+        <translation>Debole</translation>
+    </message>
+    <message>
+        <source>Weak</source>
+        <comment>Password quality</comment>
+        <translation>Intermedia</translation>
+    </message>
+    <message>
+        <source>Good</source>
+        <comment>Password quality</comment>
+        <translation>Buona</translation>
+    </message>
+    <message>
+        <source>Excellent</source>
+        <comment>Password quality</comment>
+        <translation>Eccellente</translation>
+    </message>
+    <message>
+        <source>Toggle password visibilty using Control + H. Open the password generator using Control + G.</source>
+        <translation>Mostra/nascondi password con Control + H. Apri il generatore di password usano Control + G.</translation>
+    </message>
 </context>
 <context>
     <name>PickcharsDialog</name>
@@ -6126,11 +6483,11 @@ Vuoi sovrascriverlo?</translation>
     </message>
     <message>
         <source>Select characters to type, navigate with arrow keys, Ctrl + S submits.</source>
-        <translation>Selezionare i caratteri da digitare, spostarsi con i tasti di direzione, CTRL+S invia.</translation>
+        <translation>Seleziona i caratteri da digitare, spostati con i tasti di direzione, CTRL+S per inviare.</translation>
     </message>
     <message>
         <source>Press &amp;Tab between characters</source>
-        <translation>Premere &amp;TAB tra i caratteri</translation>
+        <translation>Premi &amp;Tab tra i caratteri</translation>
     </message>
 </context>
 <context>
@@ -6188,7 +6545,7 @@ Vuoi sovrascriverlo?</translation>
     </message>
     <message>
         <source>Cannot decrypt message</source>
-        <translation>Impossibile decrittografare il messaggio</translation>
+        <translation>Impossibile decifrare il messaggio</translation>
     </message>
     <message>
         <source>Action cancelled or denied</source>
@@ -6196,15 +6553,15 @@ Vuoi sovrascriverlo?</translation>
     </message>
     <message>
         <source>Message encryption failed.</source>
-        <translation>Crittografia del messaggio non riuscita.</translation>
+        <translation>Cifratura del messaggio non riuscita.</translation>
     </message>
     <message>
         <source>KeePassXC association failed, try again</source>
-        <translation>Associazione KeePassXC fallita, riprova</translation>
+        <translation>Associazione KeePassXC non riuscita, riprova</translation>
     </message>
     <message>
         <source>Encryption key is not recognized</source>
-        <translation>Chiave di crittografia non riconosciuta</translation>
+        <translation>Chiave di cifratura non riconosciuta</translation>
     </message>
     <message>
         <source>Incorrect action</source>
@@ -6240,7 +6597,7 @@ Vuoi sovrascriverlo?</translation>
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation>Integrazione con i browser</translation>
+        <translation>Integrazione browser</translation>
     </message>
     <message>
         <source>Browser Plugin Failure</source>
@@ -6300,7 +6657,7 @@ Vuoi sovrascriverlo?</translation>
     </message>
     <message>
         <source>Enter password for new entry: </source>
-        <translation>Immettere la password per la nuova voce: </translation>
+        <translation>Insersci la password per la nuova voce: </translation>
     </message>
     <message>
         <source>Writing the database failed %1.</source>
@@ -6332,7 +6689,7 @@ Vuoi sovrascriverlo?</translation>
     </message>
     <message>
         <source>Check if any passwords have been publicly leaked. FILENAME must be the path of a file listing SHA-1 hashes of leaked passwords in HIBP format, as available from https://haveibeenpwned.com/Passwords.</source>
-        <translation>Verificare se le password sono state rivelate pubblicamente. FILENAME deve essere il percorso di un file che elenca gli hashe SHA-1 delle password rivelate in formato HIBP, come disponibile da https://haveibeenpwned.com/Passwords.</translation>
+        <translation>Verifica se le password sono state rivelate pubblicamente. FILENAME deve essere il percorso di un file che elenca gli hashe SHA-1 delle password rivelate in formato HIBP, come disponibile da https://haveibeenpwned.com/Passwords.</translation>
     </message>
     <message>
         <source>FILENAME</source>
@@ -6348,7 +6705,7 @@ Vuoi sovrascriverlo?</translation>
     </message>
     <message>
         <source>Analyze passwords for weaknesses and problems.</source>
-        <translation>Analizzare le password per trovare punti deboli e problemi.</translation>
+        <translation>Analizza le password per trovare punti deboli e problemi.</translation>
     </message>
     <message>
         <source>Cannot find HIBP file: %1</source>
@@ -6368,7 +6725,7 @@ Vuoi sovrascriverlo?</translation>
     </message>
     <message numerus="yes">
         <source>Password for &apos;%1&apos; has been leaked %2 time(s)!</source>
-        <translation><numerusform>La password per &apos;%1&apos; è trapelata %2 volta!</numerusform><numerusform>La password per &apos;%1&apos; è trapelata %2 volte!</numerusform></translation>
+        <translation><numerusform>La password per &apos;%1&apos; è trapelata %2 volta!</numerusform><numerusform>La password per &apos;%1&apos; è trapelata %2 volte!</numerusform><numerusform>La password per &apos;%1&apos; è trapelata %2 volte!</numerusform></translation>
     </message>
     <message>
         <source>Password for &apos;%1&apos; has been leaked!</source>
@@ -6462,7 +6819,7 @@ Usa &apos;--stdout&apos; o specifica un &apos;file-esportazione&apos;.</translat
     </message>
     <message>
         <source>Copy the current TOTP to the clipboard (equivalent to &quot;-a totp&quot;).</source>
-        <translation>Copiare il TOTP negli appunti. (analogo a &quot;-a totp&quot;).</translation>
+        <translation>Copia il TOTP negli appunti (analogo a &quot;-a totp&quot;).</translation>
     </message>
     <message>
         <source>Must match only one entry, otherwise a list of possible matches is shown.</source>
@@ -6479,7 +6836,7 @@ Usa &apos;--stdout&apos; o specifica un &apos;file-esportazione&apos;.</translat
     </message>
     <message>
         <source>Timeout before clearing the clipboard (default is %1 seconds, set to 0 for unlimited).</source>
-        <translation>Timeout prima di cancellare gli Appunti (l&apos;impostazione predefinita è %1 secondi, impostata su 0 per senza limite).</translation>
+        <translation>Timeout prima di cancellare gli appunti (l&apos;impostazione predefinita è %1 secondi, impostata su 0 illimitato).</translation>
     </message>
     <message>
         <source>Invalid timeout value %1.</source>
@@ -6491,7 +6848,7 @@ Usa &apos;--stdout&apos; o specifica un &apos;file-esportazione&apos;.</translat
     </message>
     <message>
         <source>Using matching entry: %1</source>
-        <translation>Voce corrispondente utilizzata: %1</translation>
+        <translation>Voce corrispondente usata: %1</translation>
     </message>
     <message>
         <source>Entry %1 not found.</source>
@@ -6499,7 +6856,7 @@ Usa &apos;--stdout&apos; o specifica un &apos;file-esportazione&apos;.</translat
     </message>
     <message>
         <source>ERROR: Please specify one of --attribute or --totp, not both.</source>
-        <translation>ERRORE: Specificare uno solo tra attributo o TOTOP, non entrambi.</translation>
+        <translation>ERRORE: Specifica uno solo tra --attribute o --totp, non entrambi.</translation>
     </message>
     <message>
         <source>Entry with path %1 has no TOTP set up.</source>
@@ -6519,7 +6876,7 @@ Usa &apos;--stdout&apos; o specifica un &apos;file-esportazione&apos;.</translat
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)...</source>
-        <translation><numerusform>Cancellazione degli Appunti in %1 secondi...</numerusform><numerusform>Cancellazione degli appunti in %1 secondo(i)...</numerusform></translation>
+        <translation><numerusform>Cancellazione degli Appunti in %1 secondi...</numerusform><numerusform>Cancellazione degli appunti in %1 secondo(i)...</numerusform><numerusform>Cancellazione degli appunti in %1 secondo(i)...</numerusform></translation>
     </message>
     <message>
         <source>Clipboard cleared!</source>
@@ -6527,7 +6884,7 @@ Usa &apos;--stdout&apos; o specifica un &apos;file-esportazione&apos;.</translat
     </message>
     <message>
         <source>Close the currently opened database.</source>
-        <translation>Chiudere il database attualmente aperto.</translation>
+        <translation>Chiudi il database attualmente aperto.</translation>
     </message>
     <message>
         <source>Display this help.</source>
@@ -6535,7 +6892,7 @@ Usa &apos;--stdout&apos; o specifica un &apos;file-esportazione&apos;.</translat
     </message>
     <message>
         <source>Silence password prompt and other secondary outputs.</source>
-        <translation>Silenziare la richiesta di password e altri output secondari.</translation>
+        <translation>Silenzia la richiesta di password e altri output secondari.</translation>
     </message>
     <message>
         <source>Key file of the database.</source>
@@ -6547,11 +6904,11 @@ Usa &apos;--stdout&apos; o specifica un &apos;file-esportazione&apos;.</translat
     </message>
     <message>
         <source>Deactivate password key for the database.</source>
-        <translation>Disattivare la chiave della password per il database.</translation>
+        <translation>Disattiva la chiave password per il database.</translation>
     </message>
     <message>
         <source>Yubikey slot and optional serial used to access the database (e.g., 1:7370001).</source>
-        <translation>Slot Yubikey e porta seriale opzionale utilizzata per l&apos;accesso al database (es. 1:7370001).</translation>
+        <translation>Slot Yubikey e porta seriale opzionale usata per l&apos;accesso al database (es. 1:7370001).</translation>
     </message>
     <message>
         <source>slot[:serial]</source>
@@ -6566,36 +6923,42 @@ Usa &apos;--stdout&apos; o specifica un &apos;file-esportazione&apos;.</translat
         <translation>Troppi argomenti forniti.</translation>
     </message>
     <message>
+        <source>Path of the database.</source>
+        <translation>Percorso del database.</translation>
+    </message>
+    <message>
         <source>Target decryption time in MS for the database.</source>
-        <translation>Il tempo di decrittazione del database in MS.</translation>
+        <translation>Il tempo di decifratura del database in MS.</translation>
     </message>
     <message>
         <source>time</source>
         <translation>orario</translation>
     </message>
     <message>
+        <source>Set the key file for the database.
+This options is deprecated, use --set-key-file instead.</source>
+        <translation>Imposta il file chiave per il database.
+Questa opzione è deprecata, usa invece --set-key-file.</translation>
+    </message>
+    <message>
         <source>Set the key file for the database.</source>
-        <translation>Imposta un file chiave per il database</translation>
+        <translation>Imposta un file chiave per il database.</translation>
     </message>
     <message>
         <source>Set a password for the database.</source>
-        <translation>Imposta una password per il database</translation>
+        <translation>Imposta una password per il database.</translation>
     </message>
     <message>
         <source>Create a new database.</source>
         <translation>Crea un nuovo database.</translation>
     </message>
     <message>
-        <source>Path of the database.</source>
-        <translation>Percorso del database.</translation>
-    </message>
-    <message>
         <source>Invalid decryption time %1.</source>
-        <translation>Tempo di decrittazione non valido %1.</translation>
+        <translation>Tempo di decifratura non valido %1.</translation>
     </message>
     <message>
         <source>Target decryption time must be between %1 and %2.</source>
-        <translation>Il tempo di decrittazione deve essere compreso tra %1 e %2.</translation>
+        <translation>Il tempo di decifratura deve essere compreso tra %1 e %2.</translation>
     </message>
     <message>
         <source>Failed to set database password.</source>
@@ -6603,7 +6966,7 @@ Usa &apos;--stdout&apos; o specifica un &apos;file-esportazione&apos;.</translat
     </message>
     <message>
         <source>Loading the key file failed</source>
-        <translation>Caricamento del key-file fallito.</translation>
+        <translation>Caricamento del key-file non riuscito.</translation>
     </message>
     <message>
         <source>No key is set. Aborting database creation.</source>
@@ -6611,11 +6974,11 @@ Usa &apos;--stdout&apos; o specifica un &apos;file-esportazione&apos;.</translat
     </message>
     <message>
         <source>Benchmarking key derivation function for %1ms delay.</source>
-        <translation>Test delle prestazioni della chiave di derivazione per %1ms di ritardo.</translation>
+        <translation>Test delle prestazioni della funzione di derivazione della chiave per %1ms di ritardo.</translation>
     </message>
     <message>
         <source>Setting %1 rounds for key derivation function.</source>
-        <translation>Impostare %1 iterazioni per la funzione di derivazione della chiave.</translation>
+        <translation>Imposta %1 iterazioni per la funzione di derivazione della chiave.</translation>
     </message>
     <message>
         <source>error while setting database key derivation settings.</source>
@@ -6632,6 +6995,158 @@ Usa &apos;--stdout&apos; o specifica un &apos;file-esportazione&apos;.</translat
     <message>
         <source>Successfully created new database.</source>
         <translation>Nuovo database creato con successo.</translation>
+    </message>
+    <message>
+        <source>Unset the password for the database.</source>
+        <translation>Annulla l&apos;impostazione della password per il database.</translation>
+    </message>
+    <message>
+        <source>Unset the key file for the database.</source>
+        <translation>Annulla l&apos;impostazione del file chiave per il database.</translation>
+    </message>
+    <message>
+        <source>Edit a database.</source>
+        <translation>Modifica un database.</translation>
+    </message>
+    <message>
+        <source>Cannot use %1 and %2 at the same time.</source>
+        <translation>Non è possibile usare &apos;%1&apos; e &apos;%2&apos; contemporaneamente.</translation>
+    </message>
+    <message>
+        <source>Could not change the database key.</source>
+        <translation>Impossibile modificare la chiave del database.</translation>
+    </message>
+    <message>
+        <source>Database was not modified.</source>
+        <translation>Il database non è stato modificato.</translation>
+    </message>
+    <message>
+        <source>Writing the database failed: %1</source>
+        <translation>Scrittura del database non riuscita: %1</translation>
+    </message>
+    <message>
+        <source>Successfully edited the database.</source>
+        <translation>Il database è stato modificato correttamente.</translation>
+    </message>
+    <message>
+        <source>Cannot remove password: The database does not have a password.</source>
+        <translation>Impossibile rimuovere la password: il database non dispone di una password.</translation>
+    </message>
+    <message>
+        <source>Cannot remove file key: The database does not have a file key.</source>
+        <translation>Impossibile rimuovere il file chiave: il database non dispone di un file chiave.</translation>
+    </message>
+    <message>
+        <source>Loading the new key file failed: %1</source>
+        <translation>Caricamento del nuovo file chiave non riuscito: %1</translation>
+    </message>
+    <message>
+        <source>Found unexpected Key type %1</source>
+        <translation>Trovato un tipo di chiave %1 inaspettato</translation>
+    </message>
+    <message>
+        <source>Cannot remove all the keys from a database.</source>
+        <translation>Impossibile rimuovere tutte le chiavi da un database.</translation>
+    </message>
+    <message>
+        <source>Show a database&apos;s information.</source>
+        <translation>Visualizza informazioni del database.</translation>
+    </message>
+    <message>
+        <source>UUID: </source>
+        <translation>UUID: </translation>
+    </message>
+    <message>
+        <source>Name: </source>
+        <translation>Nome: </translation>
+    </message>
+    <message>
+        <source>Description: </source>
+        <translation>Descrizione: </translation>
+    </message>
+    <message>
+        <source>Cipher: </source>
+        <translation>Cifrario: </translation>
+    </message>
+    <message>
+        <source>KDF: </source>
+        <translation>KDF: </translation>
+    </message>
+    <message>
+        <source>Recycle bin is enabled.</source>
+        <translation>Il cestino è abilitato .</translation>
+    </message>
+    <message>
+        <source>Recycle bin is not enabled.</source>
+        <translation>Il cestino non è abilitato.</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Posizione</translation>
+    </message>
+    <message>
+        <source>Database created</source>
+        <translation>Database creato</translation>
+    </message>
+    <message>
+        <source>Last saved</source>
+        <translation>Ultimo salvataggio</translation>
+    </message>
+    <message>
+        <source>Unsaved changes</source>
+        <translation>Modifiche non salvate</translation>
+    </message>
+    <message>
+        <source>yes</source>
+        <translation>sì</translation>
+    </message>
+    <message>
+        <source>no</source>
+        <translation>No</translation>
+    </message>
+    <message>
+        <source>Number of groups</source>
+        <translation>Numero di gruppi</translation>
+    </message>
+    <message>
+        <source>Number of entries</source>
+        <translation>Numero di voci</translation>
+    </message>
+    <message>
+        <source>Number of expired entries</source>
+        <translation>Numero di voci scadute</translation>
+    </message>
+    <message>
+        <source>Unique passwords</source>
+        <translation>Password univoche</translation>
+    </message>
+    <message>
+        <source>Non-unique passwords</source>
+        <translation>Password non univoche</translation>
+    </message>
+    <message>
+        <source>Maximum password reuse</source>
+        <translation>Massimo riutilizzo della password</translation>
+    </message>
+    <message>
+        <source>Number of short passwords</source>
+        <translation>Numero di password brevi</translation>
+    </message>
+    <message>
+        <source>Number of weak passwords</source>
+        <translation>Numero di password deboli</translation>
+    </message>
+    <message>
+        <source>Entries excluded from reports</source>
+        <translation>Voci escluse dal rapporto</translation>
+    </message>
+    <message>
+        <source>Average password length</source>
+        <translation>Lunghezza media password</translation>
+    </message>
+    <message>
+        <source>%1 characters</source>
+        <translation>%1 caratteri</translation>
     </message>
     <message>
         <source>Word count for the diceware passphrase.</source>
@@ -6682,11 +7197,7 @@ Usa &apos;--stdout&apos; o specifica un &apos;file-esportazione&apos;.</translat
     </message>
     <message>
         <source>Enter new password for entry: </source>
-        <translation>Immettere la nuova password per la voce: </translation>
-    </message>
-    <message>
-        <source>Writing the database failed: %1</source>
-        <translation>Scrittura del database non riuscita: %1</translation>
+        <translation>Insersci la nuova password per la voce: </translation>
     </message>
     <message>
         <source>Successfully edited entry %1.</source>
@@ -6810,7 +7321,7 @@ Usa &apos;--stdout&apos; o specifica un &apos;file-esportazione&apos;.</translat
     </message>
     <message>
         <source>Format to use when exporting. Available choices are &apos;xml&apos; or &apos;csv&apos;. Defaults to &apos;xml&apos;.</source>
-        <translation>Formati utilizzabile per l&apos;esportazione. E&apos; possibile scegliere tra &apos;xml&apos; e &apos;csv&apos;. L&apos;impostazione predefinita è &apos;xml&apos;.</translation>
+        <translation>Formato usabile per l&apos;esportazione. È possibile scegliere tra &apos;xml&apos; e &apos;csv&apos;. L&apos;impostazione predefinita è &apos;xml&apos;.</translation>
     </message>
     <message>
         <source>Exports the content of a database to standard output in the specified format.</source>
@@ -6834,27 +7345,27 @@ Usa &apos;--stdout&apos; o specifica un &apos;file-esportazione&apos;.</translat
     </message>
     <message>
         <source>Use lowercase characters</source>
-        <translation>Utilizzare caratteri minuscoli</translation>
+        <translation>Usa caratteri minuscoli</translation>
     </message>
     <message>
         <source>Use uppercase characters</source>
-        <translation>Utilizzare caratteri maiuscoli</translation>
+        <translation>Usa caratteri maiuscoli</translation>
     </message>
     <message>
         <source>Use numbers</source>
-        <translation>Utilizzare i numeri</translation>
+        <translation>Usa i numeri</translation>
     </message>
     <message>
         <source>Use special characters</source>
-        <translation>Utilizzare caratteri speciali</translation>
+        <translation>Usa caratteri speciali</translation>
     </message>
     <message>
         <source>Use extended ASCII</source>
-        <translation>Usare ASCII esteso</translation>
+        <translation>Usa ASCII esteso</translation>
     </message>
     <message>
         <source>Exclude character set</source>
-        <translation>Escludere il set di caratteri</translation>
+        <translation>Escludi set caratteri</translation>
     </message>
     <message>
         <source>chars</source>
@@ -6862,15 +7373,15 @@ Usa &apos;--stdout&apos; o specifica un &apos;file-esportazione&apos;.</translat
     </message>
     <message>
         <source>Use custom character set</source>
-        <translation>Utilizzare un set di caratteri personalizzato</translation>
+        <translation>Usa set caratteri personalizzato</translation>
     </message>
     <message>
         <source>Exclude similar looking characters</source>
-        <translation>Escludere i caratteri dall&apos;aspetto simile</translation>
+        <translation>Escludi caratteri dall&apos;aspetto simile</translation>
     </message>
     <message>
         <source>Include characters from every selected group</source>
-        <translation>Includere i caratteri da ogni gruppo selezionato</translation>
+        <translation>Includi i caratteri da ogni gruppo selezionato</translation>
     </message>
     <message>
         <source>Generate a new random password.</source>
@@ -6882,11 +7393,11 @@ Usa &apos;--stdout&apos; o specifica un &apos;file-esportazione&apos;.</translat
     </message>
     <message>
         <source>Invalid password generator after applying all options</source>
-        <translation>Generatore di password non valido dopo l&apos;applicazione di tutte le opzioni</translation>
+        <translation>Generatore password non valido dopo l&apos;applicazione di tutte le opzioni</translation>
     </message>
     <message>
         <source>Display command help.</source>
-        <translation>Visualizzare la guida del comando.</translation>
+        <translation>Visualizza la guida del comando.</translation>
     </message>
     <message>
         <source>Available commands:</source>
@@ -6894,7 +7405,7 @@ Usa &apos;--stdout&apos; o specifica un &apos;file-esportazione&apos;.</translat
     </message>
     <message>
         <source>Import the contents of an XML database.</source>
-        <translation>Importare il contenuto di un database XML.</translation>
+        <translation>Importa il contenuto di un database XML.</translation>
     </message>
     <message>
         <source>Path of the XML database export.</source>
@@ -6911,106 +7422,6 @@ Usa &apos;--stdout&apos; o specifica un &apos;file-esportazione&apos;.</translat
     <message>
         <source>Successfully imported database.</source>
         <translation>Database importato correttamente.</translation>
-    </message>
-    <message>
-        <source>Show a database&apos;s information.</source>
-        <translation>Mostra le informazioni di un database.</translation>
-    </message>
-    <message>
-        <source>UUID: </source>
-        <translation>UUID:</translation>
-    </message>
-    <message>
-        <source>Name: </source>
-        <translation>Nome:</translation>
-    </message>
-    <message>
-        <source>Description: </source>
-        <translation>Descrizione:</translation>
-    </message>
-    <message>
-        <source>Cipher: </source>
-        <translation>Cifrario:</translation>
-    </message>
-    <message>
-        <source>KDF: </source>
-        <translation>Kdf:</translation>
-    </message>
-    <message>
-        <source>Recycle bin is enabled.</source>
-        <translation>Il cestino è abilitato </translation>
-    </message>
-    <message>
-        <source>Recycle bin is not enabled.</source>
-        <translation>Il cestino non è abilitato </translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation>Posizione</translation>
-    </message>
-    <message>
-        <source>Database created</source>
-        <translation>Database creato</translation>
-    </message>
-    <message>
-        <source>Last saved</source>
-        <translation>Ultimo salvataggio</translation>
-    </message>
-    <message>
-        <source>Unsaved changes</source>
-        <translation>Modifiche non salvate</translation>
-    </message>
-    <message>
-        <source>yes</source>
-        <translation>sì</translation>
-    </message>
-    <message>
-        <source>no</source>
-        <translation>No</translation>
-    </message>
-    <message>
-        <source>Number of groups</source>
-        <translation>Numero di gruppi</translation>
-    </message>
-    <message>
-        <source>Number of entries</source>
-        <translation>Numero di voci</translation>
-    </message>
-    <message>
-        <source>Number of expired entries</source>
-        <translation>Numero di voci scadute</translation>
-    </message>
-    <message>
-        <source>Unique passwords</source>
-        <translation>Password univoche</translation>
-    </message>
-    <message>
-        <source>Non-unique passwords</source>
-        <translation>Password non univoche</translation>
-    </message>
-    <message>
-        <source>Maximum password reuse</source>
-        <translation>Massimo riutilizzo della password</translation>
-    </message>
-    <message>
-        <source>Number of short passwords</source>
-        <translation>Numero di password brevi</translation>
-    </message>
-    <message>
-        <source>Number of weak passwords</source>
-        <translation>Numero di password deboli</translation>
-    </message>
-    <message>
-        <source>Entries excluded from reports</source>
-        <translation>Voci escluse dal rapporto </translation>
-    </message>
-    <message>
-        <source>Average password length</source>
-        <translation>Lunghezza media password</translation>
-    </message>
-    <message>
-        <source>%1 characters</source>
-        <translation>%1 caratteri</translation>
     </message>
     <message>
         <source>Unknown command %1</source>
@@ -7032,7 +7443,7 @@ Comandi disponibili:
     </message>
     <message>
         <source>Displays debugging information.</source>
-        <translation>Visualizza le informazioni di debug.</translation>
+        <translation>Visualizza le informazioni debug.</translation>
     </message>
     <message>
         <source>Invalid command %1.</source>
@@ -7040,7 +7451,7 @@ Comandi disponibili:
     </message>
     <message>
         <source>Recursively list the elements of the group.</source>
-        <translation>Elencare gli elementi del gruppo in modo ricorsivo.</translation>
+        <translation>Elenca gli elementi del gruppo in modo ricorsivo.</translation>
     </message>
     <message>
         <source>Flattens the output to single lines.</source>
@@ -7060,7 +7471,7 @@ Comandi disponibili:
     </message>
     <message>
         <source>Use the same credentials for both database files.</source>
-        <translation>Usa le stesse credenziali per entrambi i file di database.</translation>
+        <translation>Usa le stesse credenziali per entrambi i file database.</translation>
     </message>
     <message>
         <source>Key file of the database to merge from.</source>
@@ -7068,11 +7479,11 @@ Comandi disponibili:
     </message>
     <message>
         <source>Deactivate password key for the database to merge from.</source>
-        <translation>Disattivare la chiave della password per il database da cui eseguire l&apos;unione.</translation>
+        <translation>Disattiva la chiave della password per il database da cui eseguire l&apos;unione.</translation>
     </message>
     <message>
         <source>Only print the changes detected by the merge operation.</source>
-        <translation>Stampare solo le modifiche rilevate dall&apos;operazione di unione.</translation>
+        <translation>Stampa solo le modifiche rilevate dall&apos;operazione di unione.</translation>
     </message>
     <message>
         <source>Yubikey slot for the second database.</source>
@@ -7118,7 +7529,7 @@ Comandi disponibili:
     </message>
     <message>
         <source>Path of the destination group.</source>
-        <translation>Percorso del gruppo di destinazione.</translation>
+        <translation>Percorso del gruppo destinazione.</translation>
     </message>
     <message>
         <source>Could not find group with path %1.</source>
@@ -7134,7 +7545,7 @@ Comandi disponibili:
     </message>
     <message>
         <source>Open a database.</source>
-        <translation>Aprire un database.</translation>
+        <translation>Apri un database.</translation>
     </message>
     <message>
         <source>Path of the entry to remove.</source>
@@ -7178,11 +7589,15 @@ Comandi disponibili:
     </message>
     <message>
         <source>Show the entry&apos;s current TOTP.</source>
-        <translation>Mostra il TOTP corrente della voce.</translation>
+        <translation>Visualizza il TOTP attualee della voce.</translation>
     </message>
     <message>
         <source>Show the protected attributes in clear text.</source>
-        <translation>Mostra in chiaro gli attributi protetti</translation>
+        <translation>Visualizza in chiaro gli attributi protetti.</translation>
+    </message>
+    <message>
+        <source>Show all the attributes of the entry.</source>
+        <translation>Visualizza tutti gli attributi della voce.</translation>
     </message>
     <message>
         <source>Show the attachments of the entry.</source>
@@ -7190,7 +7605,7 @@ Comandi disponibili:
     </message>
     <message>
         <source>Names of the attributes to show. This option can be specified more than once, with each attribute shown one-per-line in the given order. If no attributes are specified, a summary of the default attributes is given.</source>
-        <translation>Numero di attributi da mostrare. Questa opzione può essere specificata più di una volta, con ogni attributo mostrato in una riga separata nell&apos;ordine dato. Se nessun attributo è specificato verrà dato un riassunto degli attributi predefiniti.</translation>
+        <translation>Numero di attributi da visualizzare. Questa opzione può essere specificata più di una volta, con ogni attributo visualizzato in una riga separata nell&apos;ordine dato. Se nessun attributo è specificato verrà dato un riassunto degli attributi predefiniti.</translation>
     </message>
     <message>
         <source>attribute</source>
@@ -7198,7 +7613,7 @@ Comandi disponibili:
     </message>
     <message>
         <source>Show an entry&apos;s information.</source>
-        <translation>Mostra la informazioni di una voce.</translation>
+        <translation>Visualizza la informazioni di una voce.</translation>
     </message>
     <message>
         <source>Name of the entry to show.</source>
@@ -7218,33 +7633,32 @@ Comandi disponibili:
     </message>
     <message>
         <source>Failed to open database file %1: not found</source>
-        <translation>Impossibile aprire il file di database %1: non trovato</translation>
+        <translation>Impossibile aprire il file database %1: non trovato</translation>
     </message>
     <message>
         <source>Failed to open database file %1: not a plain file</source>
-        <translation>Impossibile aprire il file di database %1: non un file piatto</translation>
+        <translation>Impossibile aprire il file database %1: non un file piatto</translation>
     </message>
     <message>
         <source>Failed to open database file %1: not readable</source>
-        <translation>Impossibile aprire il file di database %1: non leggibile</translation>
+        <translation>Impossibile aprire il file database %1: non leggibile</translation>
     </message>
     <message>
         <source>Enter password to unlock %1: </source>
-        <translation>Immettere la password per sbloccare %1:</translation>
+        <translation>Inserisci la password per sbloccare %1: </translation>
     </message>
     <message>
         <source>Failed to load key file %1: %2</source>
-        <translation>Impossibile caricare il file di chiave %1: %2</translation>
+        <translation>Impossibile caricare il file chiave %1: %2</translation>
     </message>
     <message>
         <source>WARNING: You are using an old key file format which KeePassXC may
 stop supporting in the future.
 
 Please consider generating a new key file.</source>
-        <translation>ATTENZIONE: stai utilizzando un vecchio formato di file chiave che KeePassXC potrebbe
-smettere di supportare in futuro.
+        <translation>ATTENZIONE: stai usando un vecchio formato di file chiave che KeePassXC potrebbe smettere di supportare in futuro.
 
-Prendere in considerazione la possibilità di generare un nuovo file di chiave.</translation>
+Prendi in considerazione la possibilità di generare un nuovo file chiave.</translation>
     </message>
     <message>
         <source>Invalid YubiKey slot %1</source>
@@ -7255,20 +7669,24 @@ Prendere in considerazione la possibilità di generare un nuovo file di chiave.<
         <translation>Seriale YubiKey %1 non valido</translation>
     </message>
     <message>
+        <source>Please present or touch your YubiKey to continue.</source>
+        <translation>Per continuare presenta o tocca la YubiKey .</translation>
+    </message>
+    <message>
         <source>Enter password to encrypt database (optional): </source>
-        <translation>Immettere la password per crittografare il database (facoltativo):</translation>
+        <translation>Inserisci la password per cifrare il database (facoltativo): </translation>
     </message>
     <message>
         <source>Do you want to create a database with an empty password? [y/N]: </source>
-        <translation>Si vuole davvero creare un database senza una password? [y/N]: </translation>
+        <translation>Vuoi davvero creare un database senza una password? [y/N]: </translation>
     </message>
     <message>
         <source>Repeat password: </source>
-        <translation>Ripeti password:</translation>
+        <translation>Ripeti password: </translation>
     </message>
     <message>
         <source>Error: Passwords do not match.</source>
-        <translation>Errore: le password non corrispondono </translation>
+        <translation>Errore: le password non corrispondono.</translation>
     </message>
     <message>
         <source>No program defined for clipboard manipulation</source>
@@ -7294,7 +7712,7 @@ Prendere in considerazione la possibilità di generare un nuovo file di chiave.<
     </message>
     <message>
         <source>To use okon, you must provide a post-processed file (e.g. file.okon)</source>
-        <translation>Per utilizzare okon, è necessario fornire un file post-elaborato (ad esempio file.okon)</translation>
+        <translation>Per usare okon, è necessario fornire un file post-elaborato (ad esempio file.okon)</translation>
     </message>
     <message>
         <source>Could not start okon process: %1</source>
@@ -7322,11 +7740,11 @@ Prendere in considerazione la possibilità di generare un nuovo file di chiave.<
     </message>
     <message>
         <source>Used in %1/%2</source>
-        <translation>Utilizzato in %1/%2</translation>
+        <translation>Usato in %1/%2</translation>
     </message>
     <message numerus="yes">
         <source>Password is used %1 time(s)</source>
-        <translation><numerusform>La password è stata utilizzata %1 volta</numerusform><numerusform>La password è stata utilizzata %1 volte</numerusform></translation>
+        <translation><numerusform>La password è stata utilizzata %1 volta</numerusform><numerusform>La password è stata utilizzata %1 volte</numerusform><numerusform>La password è stata utilizzata %1 volte</numerusform></translation>
     </message>
     <message>
         <source>Password has expired</source>
@@ -7334,11 +7752,11 @@ Prendere in considerazione la possibilità di generare un nuovo file di chiave.<
     </message>
     <message>
         <source>Password expiry was %1</source>
-        <translation>La password è scaduta il %1 </translation>
+        <translation>La password è scaduta il %1</translation>
     </message>
     <message>
         <source>Password expires on %1</source>
-        <translation>La password scade il %1 </translation>
+        <translation>La password scade il %1</translation>
     </message>
     <message>
         <source>Password is about to expire</source>
@@ -7346,7 +7764,7 @@ Prendere in considerazione la possibilità di generare un nuovo file di chiave.<
     </message>
     <message numerus="yes">
         <source>Password expires in %1 day(s)</source>
-        <translation><numerusform>La password scade tra %1 giorno</numerusform><numerusform>La password scade tra %1 giorni</numerusform></translation>
+        <translation><numerusform>La password scade tra %1 giorno</numerusform><numerusform>La password scade tra %1 giorni</numerusform><numerusform>La password scade tra %1 giorni</numerusform></translation>
     </message>
     <message>
         <source>Password will expire soon</source>
@@ -7370,11 +7788,11 @@ Prendere in considerazione la possibilità di generare un nuovo file di chiave.<
     </message>
     <message>
         <source>Debugging mode is disabled.</source>
-        <translation>La modalità di debug è disabilitata.</translation>
+        <translation>La modalità debug è disabilitata.</translation>
     </message>
     <message>
         <source>Debugging mode is enabled.</source>
-        <translation>La modalità di debug è abilitata.</translation>
+        <translation>La modalità debug è abilitata.</translation>
     </message>
     <message>
         <source>Operating system: %1
@@ -7418,35 +7836,35 @@ Kernel: %3 %4</translation>
     </message>
     <message numerus="yes">
         <source>over %1 year(s)</source>
-        <translation><numerusform>oltre %1 anno(i)</numerusform><numerusform>oltre %1 anno(i)</numerusform></translation>
+        <translation><numerusform>oltre %1 anno</numerusform><numerusform>oltre %1 anni</numerusform><numerusform>oltre %1 anni</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>about %1 month(s)</source>
-        <translation><numerusform>circa %1 mese(i)</numerusform><numerusform>circa %1 mese(i)</numerusform></translation>
+        <translation><numerusform>circa %1 mese(i)</numerusform><numerusform>circa %1 mese(i)</numerusform><numerusform>circa %1 mese(i)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 week(s)</source>
-        <translation><numerusform>%1 settimana(e)</numerusform><numerusform>%1 settimana(e)</numerusform></translation>
+        <translation><numerusform>%1 settimana(e)</numerusform><numerusform>%1 settimana(e)</numerusform><numerusform>%1 settimana(e)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 day(s)</source>
-        <translation><numerusform>%1 giorno(i)</numerusform><numerusform>%1 giorno(i)</numerusform></translation>
+        <translation><numerusform>%1 giorno(i)</numerusform><numerusform>%1 giorno(i)</numerusform><numerusform>%1 giorno(i)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 hour(s)</source>
-        <translation><numerusform>%1 ora(e)</numerusform><numerusform>%1 ora(e)</numerusform></translation>
+        <translation><numerusform>%1 ora(e)</numerusform><numerusform>%1 ora(e)</numerusform><numerusform>%1 ora(e)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 minute(s)</source>
-        <translation><numerusform>%1 minuto(i)</numerusform><numerusform>%1 minuto(i)</numerusform></translation>
+        <translation><numerusform>%1 minuto(i)</numerusform><numerusform>%1 minuto(i)</numerusform><numerusform>%1 minuto(i)</numerusform></translation>
     </message>
     <message>
-        <source>Botan library must be at least 2.11.x, found %1.%2.%3</source>
-        <translation>La libreria Botan deve essere almeno 2.11.x, trovata %1.%2.%3</translation>
+        <source>Botan library must be at least %1, found %2.%3.%4</source>
+        <translation>La libreria Botan deve essere almeno %1, trovata %2.%3.%4</translation>
     </message>
     <message>
         <source>Cryptographic libraries:</source>
-        <translation>Librerie crittografiche:</translation>
+        <translation>Librerie crittografia:</translation>
     </message>
     <message>
         <source>AES (%1 rounds)</source>
@@ -7538,11 +7956,11 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>The lock file could not be created. Single-instance mode disabled.</source>
-        <translation>Il file di blocco non può essere creato. La modalità a istanza singola è disattivata.</translation>
+        <translation>Impossibile creare il file di blocco. La modalità a istanza singola è disattivata.</translation>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)…</source>
-        <translation><numerusform>Cancellazione degli appunti in %1 secondo…</numerusform><numerusform>Cancellazione degli appunti in %1 secondi…</numerusform></translation>
+        <translation><numerusform>Cancellazione degli appunti in %1 secondo…</numerusform><numerusform>Cancellazione degli appunti in %1 secondi…</numerusform><numerusform>Cancellazione degli appunti in %1 secondi…</numerusform></translation>
     </message>
     <message>
         <source>Group</source>
@@ -7578,17 +7996,17 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Benchmark %1 delay</source>
-        <translation>Test delle prestazioni %1 ritardo</translation>
+        <translation>Test prestazioni per %1 di ritardo</translation>
     </message>
     <message numerus="yes">
         <source>%1 ms</source>
         <comment>milliseconds</comment>
-        <translation><numerusform>%1 ms</numerusform><numerusform>%1 ms</numerusform></translation>
+        <translation><numerusform>%1 ms</numerusform><numerusform>%1 ms</numerusform><numerusform>%1 ms</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%1 s</source>
         <comment>seconds</comment>
-        <translation><numerusform>%1 s</numerusform><numerusform>%1 s</numerusform></translation>
+        <translation><numerusform>%1 s</numerusform><numerusform>%1 s</numerusform><numerusform>%1 s</numerusform></translation>
     </message>
     <message>
         <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
@@ -7596,11 +8014,11 @@ Kernel: %3 %4</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to delete %n entry(s) for good?</source>
-        <translation><numerusform>Vuoi davvero eliminare %n voce per sempre?</numerusform><numerusform>Vuoi davvero eliminare %n voci per sempre?</numerusform></translation>
+        <translation><numerusform>Vuoi davvero eliminare %n voce per sempre?</numerusform><numerusform>Vuoi davvero eliminare %n voci per sempre?</numerusform><numerusform>Vuoi davvero eliminare %n voci per sempre?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Delete entry(s)?</source>
-        <translation><numerusform>Eliminare voce?</numerusform><numerusform>Eliminare voci?</numerusform></translation>
+        <translation><numerusform>Eliminare voce?</numerusform><numerusform>Eliminare voci?</numerusform><numerusform>Eliminare voci?</numerusform></translation>
     </message>
     <message>
         <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
@@ -7608,11 +8026,11 @@ Kernel: %3 %4</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation><numerusform>Vuoi davvero spostare %n voce nel cestino?</numerusform><numerusform>Vuoi davvero spostare %n voci nel cestino?</numerusform></translation>
+        <translation><numerusform>Vuoi davvero spostare %n voce nel cestino?</numerusform><numerusform>Vuoi davvero spostare %n voci nel cestino?</numerusform><numerusform>Vuoi davvero spostare %n voci nel cestino?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Move entry(s) to recycle bin?</source>
-        <translation><numerusform>Spostare voce nel cestino?</numerusform><numerusform>Spostare voci nel cestino?</numerusform></translation>
+        <translation><numerusform>Spostare voce nel cestino?</numerusform><numerusform>Spostare voci nel cestino?</numerusform><numerusform>Spostare voci nel cestino?</numerusform></translation>
     </message>
     <message>
         <source>Replace references to entry?</source>
@@ -7620,7 +8038,7 @@ Kernel: %3 %4</translation>
     </message>
     <message numerus="yes">
         <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
-        <translation><numerusform>La voce &quot;%1&quot; ha %2 riferimento. Sovrascrivere i riferimenti con i valori, ignorare questa voce o eliminare comunque?</numerusform><numerusform>La voce &quot;%1&quot; ha %2 riferimenti. Sovrascrivere i riferimenti con i valori, ignorare questa voce o eliminare comunque?</numerusform></translation>
+        <translation><numerusform>La voce &quot;%1&quot; ha %2 riferimento. Sovrascrivere i riferimenti con i valori, ignorare questa voce o eliminare comunque?</numerusform><numerusform>La voce &quot;%1&quot; ha %2 riferimenti. Sovrascrivere i riferimenti con i valori, ignorare questa voce o eliminare comunque?</numerusform><numerusform>La voce &quot;%1&quot; ha %2 riferimenti. Sovrascrivere i riferimenti con i valori, ignorare questa voce o eliminare comunque?</numerusform></translation>
     </message>
     <message>
         <source>User name</source>
@@ -7644,7 +8062,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Unsupported key file version: %1</source>
-        <translation>Versione del file chiave non supportata: %1</translation>
+        <translation>Versione file chiave non supportata: %1</translation>
     </message>
     <message>
         <source>Checksum mismatch! Key file may be corrupt.</source>
@@ -7660,7 +8078,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>filenames of the password databases to open (*.kdbx)</source>
-        <translation>i nomi dei file di database delle password da aprire (*.kdbx)</translation>
+        <translation>i nomi dei file database delle password da aprire (*.kdbx)</translation>
     </message>
     <message>
         <source>path to a custom config file</source>
@@ -7683,10 +8101,6 @@ Kernel: %3 %4</translation>
         <translation>leggi la password del database da stdin</translation>
     </message>
     <message>
-        <source>allow app screen recordering and screenshots</source>
-        <translation>consenti la registrazione dello schermo dell&apos;app e screenshot</translation>
-    </message>
-    <message>
         <source>Locked databases.</source>
         <translation>Database bloccati.</translation>
     </message>
@@ -7699,16 +8113,16 @@ Kernel: %3 %4</translation>
         <translation>È già in esecuzione un&apos;altra istanza di KeePassXC.</translation>
     </message>
     <message>
+        <source>KeePassXC is not running. No open database to lock</source>
+        <translation>KeePassXC non è in esecuzione. Nessun database aperto da bloccare</translation>
+    </message>
+    <message>
         <source>Fatal error while testing the cryptographic functions.</source>
         <translation>Errore fatale durante il test delle funzioni di crittografia.</translation>
     </message>
     <message>
         <source>KeePassXC - Error</source>
         <translation>KeePassXC - Errore</translation>
-    </message>
-    <message>
-        <source>Warning: Failed to prevent screenshots on a top level window!</source>
-        <translation>Avviso: impossibile impedire screenshot in una finestra di primo livello!</translation>
     </message>
     <message>
         <source>Database password: </source>
@@ -7730,11 +8144,87 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
-        <translation>Impossibile firmare la prova utilizzando Windows Hello.</translation>
+        <translation>Impossibile firmare la prova usando Windows Hello.</translation>
     </message>
     <message>
-        <source>Please present or touch your YubiKey to continue.</source>
-        <translation>Per favore presenta o tocca la tua YubiKey per continuare.</translation>
+        <source>Warning: Failed to block screenshot capture on a top-level window.</source>
+        <translation>Attenzione: fallito il blocco dell&apos;acquisizione di screenshot in una finestra di primo livello.</translation>
+    </message>
+    <message>
+        <source>Invalid Cipher</source>
+        <translation>Cifratura non valida</translation>
+    </message>
+    <message>
+        <source>Invalid KDF</source>
+        <translation>KDF non valido</translation>
+    </message>
+    <message>
+        <source>Access to all entries is denied</source>
+        <translation>L&apos;accesso a tutte le voci è negato</translation>
+    </message>
+    <message>
+        <source>allow screenshots and app recording (Windows/macOS)</source>
+        <translation>consentire screenshot e registrazione con app (Windows / macOS)</translation>
+    </message>
+    <message>
+        <source>AES initialization failed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>AES encrypt failed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to store in Linux Keyring</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not locate key in keyring</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not read key in keyring</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>AES decrypt failed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No Polkit authentication agent was available</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Polkit authorization failed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No Quick Unlock provider is available</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Polkit returned an error: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to init KeePassXC crypto.</source>
+        <translation>Impossibile inizializzare la cifratura di KeePassXC.</translation>
+    </message>
+    <message>
+        <source>Failed to encrypt key data.</source>
+        <translation>Impossibile cifrare i dati chiave.</translation>
+    </message>
+    <message>
+        <source>Failed to get Windows Hello credential.</source>
+        <translation>Impossibile ottenere credenziale Windows Hello.</translation>
+    </message>
+    <message>
+        <source>Failed to decrypt key data.</source>
+        <translation>Impossibile decifrare dati chiave.</translation>
+    </message>
+    <message>
+        <source>Passkeys</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7774,20 +8264,8 @@ Kernel: %3 %4</translation>
 <context>
     <name>ReportsWidgetBrowserStatistics</name>
     <message>
-        <source>Exclude expired entries from the report</source>
-        <translation>Escludere le voci scadute dal report</translation>
-    </message>
-    <message>
-        <source>Show only entries which have URL set</source>
-        <translation>Mostra solo le voci con URL impostato</translation>
-    </message>
-    <message>
-        <source>Show only entries which have browser settings in custom data</source>
-        <translation>Mostra solo le voci con impostazioni del browser nei dati personalizzati</translation>
-    </message>
-    <message>
         <source>Double-click entries to edit.</source>
-        <translation>Fare doppio clic sulle voci da modificare.</translation>
+        <translation>Doppio clic sulle voci da modificare.</translation>
     </message>
     <message>
         <source>List of entry URLs</source>
@@ -7811,15 +8289,15 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source> (Excluded)</source>
-        <translation>(Esclusa)</translation>
+        <translation> (Esclusa)</translation>
     </message>
     <message>
         <source>This entry is being excluded from reports</source>
-        <translation>Questa voce è stata esclusa dai rapporti </translation>
+        <translation>Questa voce è stata esclusa dai rapporti</translation>
     </message>
     <message>
         <source>Please wait, browser statistics is being calculated…</source>
-        <translation>Si prega di attendere, le statistiche del browser sono in fase di calcolo ...</translation>
+        <translation>Attendi le statistiche del browser sono in fase di calcolo...</translation>
     </message>
     <message>
         <source>No entries with a URL, or none has browser extension settings saved.</source>
@@ -7843,26 +8321,34 @@ Kernel: %3 %4</translation>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation><numerusform>Elimina voce…</numerusform><numerusform>Elimina voci…</numerusform></translation>
+        <translation><numerusform>Elimina voce…</numerusform><numerusform>Elimina voci…</numerusform><numerusform>Elimina voci…</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
-        <translation>Escludere dal rapporto</translation>
+        <translation>Escludi dal rapporto</translation>
+    </message>
+    <message>
+        <source>Only show entries that have a URL</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Only show entries that have been explicitly allowed or denied</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show expired entries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source> (Expired)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>ReportsWidgetHealthcheck</name>
     <message>
-        <source>Exclude expired entries from the report</source>
-        <translation>Escludere le voci scadute dal report</translation>
-    </message>
-    <message>
-        <source>Also show entries that have been excluded from reports</source>
-        <translation>Mostra anche le voci escluse dai rapporti</translation>
-    </message>
-    <message>
         <source>Hover over reason to show additional details. Double-click entries to edit.</source>
-        <translation>Spostare il cursore sulla notifica per vedere dettagli aggiuntivi. Doppio-click per modificare la voce.</translation>
+        <translation>Per visualizzzare dettagli aggiuntivi sposta il cursore sulla notifica. Doppio clic per modificare le voci.</translation>
     </message>
     <message>
         <source>Bad</source>
@@ -7880,7 +8366,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Poor — password should be changed</source>
-        <translation>Inefficace — la password dovrebbe essere cambiata</translation>
+        <translation>Inefficace — la password dovrebbe essere modificata</translation>
     </message>
     <message>
         <source>Weak</source>
@@ -7889,19 +8375,19 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Weak — consider changing the password</source>
-        <translation>Debole — considera di cambiare password</translation>
+        <translation>Debole — considera di modificare la password</translation>
     </message>
     <message>
         <source> (Excluded)</source>
-        <translation>(Esclusa)</translation>
+        <translation> (Esclusa)</translation>
     </message>
     <message>
         <source>This entry is being excluded from reports</source>
-        <translation>Questa voce è stata esclusa dai rapporti </translation>
+        <translation>Questa voce è stata esclusa dai rapporti</translation>
     </message>
     <message>
         <source>Please wait, health data is being calculated…</source>
-        <translation>Si prega di attendere, i dati sulla salute sono in fase di calcolo ...</translation>
+        <translation>Attendi, i dati sulla salute sono in fase di calcolo ...</translation>
     </message>
     <message>
         <source>Congratulations, everything is healthy!</source>
@@ -7929,18 +8415,30 @@ Kernel: %3 %4</translation>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation><numerusform>Elimina voce…</numerusform><numerusform>Elimina voci…</numerusform></translation>
+        <translation><numerusform>Elimina voce…</numerusform><numerusform>Elimina voci…</numerusform><numerusform>Elimina voci…</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
-        <translation>Escludere dal rapporto</translation>
+        <translation>Escludi dal rapporto</translation>
+    </message>
+    <message>
+        <source>Show expired entries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show entries that have been excluded from reports</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source> (Expired)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>ReportsWidgetHibp</name>
     <message>
         <source>CAUTION: This report requires sending information to the Have I Been Pwned online service (https://haveibeenpwned.com). If you proceed, your database passwords will be cryptographically hashed and the first five characters of those hashes will be sent securely to this service. Your database remains secure and cannot be reconstituted from this information. However, the number of passwords you send and your IP address will be exposed to this service.</source>
-        <translation>ATTENZIONE: Questo rapporto richiede l&apos;invio di informazioni al servizio online Have I Been Pwned (https://haveibeenpwned.com). Se si procede le password verranno crittografate e i primi cinque caratteri verranno inviati in modo sicuro al servizio. Il tuo database rimane sicuro e non può essere ricostruito da queste informazioni. Tuttavia il numero di password inviate sarà esposto a questo servizio.</translation>
+        <translation>ATTENZIONE: Questo rapporto richiede l&apos;invio di informazioni al servizio online Have I Been Pwned (https://haveibeenpwned.com). Se si procede, alle password del database sarà applicato un hash crittografico e i primi cinque caratteri saranno inviati in modo sicuro al servizio. Il database rimane sicuro e non può essere ricostruito da queste informazioni. Tuttavia il numero di password inviate sarà esposto a questo servizio.</translation>
     </message>
     <message>
         <source>Perform Online Analysis</source>
@@ -7948,11 +8446,12 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Also show entries that have been excluded from reports</source>
-        <translation>Mostra anche le voci escluse dai rapporti</translation>
+        <translation>Visualizza anche le voci escluse dai rapporti</translation>
     </message>
     <message>
         <source>This build of KeePassXC does not have network functions. Networking is required to check your passwords against Have I Been Pwned databases.</source>
-        <translation>Questa versione di KeePassXC non possiede funzionalità di rete. La funzionalità di rete è richiesta per verificare la tua password con i database di Have I Been Pwned</translation>
+        <translation>Questa versione di KeePassXC non possiede funzionalità di rete. 
+La funzionalità di rete è richiesta per verificare la password con i database di Have I Been Pwned.</translation>
     </message>
     <message>
         <source>Congratulations, no exposed passwords!</source>
@@ -7968,20 +8467,20 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Password exposed…</source>
-        <translation>Password esposta…</translation>
+        <translation>Password esposta...</translation>
     </message>
     <message>
         <source> (Excluded)</source>
-        <translation>(Esclusa)</translation>
+        <translation> (Esclusa)</translation>
     </message>
     <message>
         <source>This entry is being excluded from reports</source>
-        <translation>Questa voce è stata esclusa dai rapporti </translation>
+        <translation>Questa voce è stata esclusa dai rapporti</translation>
     </message>
     <message>
         <source>once</source>
         <comment>Password exposure amount</comment>
-        <translation>una volta </translation>
+        <translation>una volta</translation>
     </message>
     <message>
         <source>up to 10 times</source>
@@ -8024,18 +8523,77 @@ Kernel: %3 %4</translation>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation><numerusform>Elimina voce…</numerusform><numerusform>Elimina voci…</numerusform></translation>
+        <translation><numerusform>Elimina voce…</numerusform><numerusform>Elimina voci…</numerusform><numerusform>Elimina voci…</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
-        <translation>Escludere dal rapporto</translation>
+        <translation>Escludi dal rapporto</translation>
+    </message>
+</context>
+<context>
+    <name>ReportsWidgetPasskeys</name>
+    <message>
+        <source>Export</source>
+        <translation>Esportare</translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation>Importa</translation>
+    </message>
+    <message>
+        <source>List of entry URLs</source>
+        <translation>Elenco degli URL delle voci</translation>
+    </message>
+    <message>
+        <source>Please wait, list of entries with Passkeys is being updated…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No entries with Passkeys.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation>Titolo</translation>
+    </message>
+    <message>
+        <source>Path</source>
+        <translation>Percorso</translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>Nome utente</translation>
+    </message>
+    <message>
+        <source>URLs</source>
+        <translation>URL</translation>
+    </message>
+    <message>
+        <source>Edit Entry…</source>
+        <translation>Modifica voce…</translation>
+    </message>
+    <message numerus="yes">
+        <source>Delete Entry(s)…</source>
+        <translation><numerusform>Elimina voce…</numerusform><numerusform>Elimina voci…</numerusform><numerusform>Elimina voce/i…</numerusform></translation>
+    </message>
+    <message>
+        <source>Relying Party</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show expired entries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source> (Expired)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>ReportsWidgetStatistics</name>
     <message>
         <source>Hover over lines with error icons for further information.</source>
-        <translation>Passare il mouse sulle righe con icone di errore per ulteriori informazioni.</translation>
+        <translation>Per ulteriori informazioni passa il mouse sulle righe con icone di errore.</translation>
     </message>
     <message>
         <source>Name</source>
@@ -8111,7 +8669,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>More than 10% of passwords are reused. Use unique passwords when possible.</source>
-        <translation>Più del 10% delle password vengono riutilizzate. Utilizzare password univoche quando possibile.</translation>
+        <translation>Più del 10% delle password sono riusate. Usa password univoche quando possibile.</translation>
     </message>
     <message>
         <source>Maximum password reuse</source>
@@ -8119,7 +8677,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Some passwords are used more than three times. Use unique passwords when possible.</source>
-        <translation>Alcune password vengono utilizzate più di tre volte. Utilizzare password univoche quando possibile.</translation>
+        <translation>Alcune password vengono utilizzate più di tre volte. Usa password univoche quando possibile.</translation>
     </message>
     <message>
         <source>Number of short passwords</source>
@@ -8135,15 +8693,15 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Recommend using long, randomized passwords with a rating of &apos;good&apos; or &apos;excellent&apos;.</source>
-        <translation>Consiglia di utilizzare password lunghe e randomizzate con una valutazione &quot;buona&quot; o &quot;eccellente&quot;.</translation>
+        <translation>Ti consigliamo di usare password lunghe e randomizzate con una valutazione &quot;buona&quot; o &quot;eccellente&quot;.</translation>
     </message>
     <message>
         <source>Entries excluded from reports</source>
-        <translation>Voci escluse dal rapporto </translation>
+        <translation>Voci escluse dal rapporto</translation>
     </message>
     <message>
         <source>Excluding entries from reports, e. g. because they are known to have a poor password, isn&apos;t necessarily a problem but you should keep an eye on them.</source>
-        <translation>Escludere voci dal rapporto, ad esempio perché possiedono una password scadente, non è necessariamente un problema ma dovrebbero essere tenute sotto controllo.</translation>
+        <translation>Escludi voci dal rapporto, ad esempio perché possiedono una password scadente, non è necessariamente un problema ma dovrebbero essere tenute sotto controllo.</translation>
     </message>
     <message>
         <source>Average password length</source>
@@ -8186,11 +8744,11 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Restricted lifetime is not supported by the agent (check options).</source>
-        <translation>Durata limitata non è supportata dall&apos;agente (controllare le opzioni).</translation>
+        <translation>Durata limitata non è supportata dall&apos;agente (controlla le opzioni).</translation>
     </message>
     <message>
         <source>A confirmation request is not supported by the agent (check options).</source>
-        <translation>Una richiesta di conferma non è supportata dall&apos;agente (controllare le opzioni).</translation>
+        <translation>Una richiesta di conferma non è supportata dall&apos;agente (controlla le opzioni).</translation>
     </message>
     <message>
         <source>Security keys are not supported by the agent or the security key provider is unavailable.</source>
@@ -8202,14 +8760,14 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>No agent running, cannot list identities.</source>
-        <translation>Nessun agente in esecuzione non può elencare le identità.</translation>
+        <translation>Nessun agente in esecuzione, impossibile elencare le identità.</translation>
     </message>
 </context>
 <context>
     <name>SearchHelpWidget</name>
     <message>
         <source>Search Help</source>
-        <translation>Cercare nell&apos;aiuto</translation>
+        <translation>Cerca nella Guida in linea</translation>
     </message>
     <message>
         <source>Search terms are as follows: [modifiers][field:][&quot;]term[&quot;]</source>
@@ -8225,7 +8783,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>exclude term from results</source>
-        <translation>Escludere il termine dai risultati</translation>
+        <translation>Escludi termine dai risultati</translation>
     </message>
     <message>
         <source>match term exactly</source>
@@ -8233,7 +8791,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>use regex in term</source>
-        <translation>utilizzare regex nel termine</translation>
+        <translation>usa regex nel termine</translation>
     </message>
     <message>
         <source>Fields</source>
@@ -8268,7 +8826,11 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Search Help</source>
-        <translation>Cercare nell&apos;aiuto</translation>
+        <translation>Cerca nella Guida in linea</translation>
+    </message>
+    <message>
+        <source>Save Search</source>
+        <translation>Salva ricerca</translation>
     </message>
     <message>
         <source>Search (%1)…</source>
@@ -8326,7 +8888,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Enable KeepassXC Freedesktop.org Secret Service integration</source>
-        <translation>Abilitare l&apos;integrazione di KeepassXC con Freedesktop.org Secret Service</translation>
+        <translation>Abilita l&apos;integrazione di KeepassXC con Freedesktop.org Secret Service</translation>
     </message>
     <message>
         <source>General</source>
@@ -8334,7 +8896,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Show notification when passwords are retrieved by clients</source>
-        <translation>Mostra notifica quando le password vengono recuperate dai client</translation>
+        <translation>Visualizza notifica quando le password vengono recuperate dai client</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If enabled, any attempt to read a password must be confirmed. Otherwise, clients can read passwords without confirmation when the database is unlocked.&lt;/p&gt;&lt;p&gt;This option only covers the access to the password of an entry. Clients can always enumerate the items of exposed databases and query their attributes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -8342,7 +8904,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Confirm when passwords are retrieved by clients</source>
-        <translation>Confermare quando le password vengono recuperate dai client</translation>
+        <translation>Conferma quando le password vengono recuperate dai client</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;
@@ -8358,7 +8920,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Confirm when clients request entry deletion</source>
-        <translation>Confermare quando i client richiedono l&apos;eliminazione delle voci</translation>
+        <translation>Conferma quando i client richiedono l&apos;eliminazione delle voci</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications
@@ -8366,7 +8928,7 @@ Kernel: %3 %4</translation>
            crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a
            different value set in applications.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
           </source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ciò migliora la compatibilità con determinate applicazioni
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Questo migliora la compatibilità con determinate applicazioni
            che cercano la password senza prima sbloccare il database.&lt;/p&gt;&lt;p&gt;Ma abilitare questo può anche
            arrestare in modo anomalo il client se il database non può essere sbloccato entro un determinato timeout. (di solito 25s, ma può essere un
            valore diverso impostato nelle applicazioni.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
@@ -8378,7 +8940,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Exposed database groups:</source>
-        <translation>Gruppi di database esposti:</translation>
+        <translation>Gruppi database esposti:</translation>
     </message>
     <message>
         <source>Authorization</source>
@@ -8390,11 +8952,11 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; </source>
-        <translation>&lt;b&gt;Attenzione:&lt;/b&gt;</translation>
+        <translation>&lt;b&gt;Attenzione:&lt;/b&gt; </translation>
     </message>
     <message>
         <source>Save current changes to activate the plugin and enable editing of this section.</source>
-        <translation>Salvare i cambiamenti per attivare il plugin e modificare questa sezione.</translation>
+        <translation>Salva i cambiamenti per attivare il plugin e modificare questa sezione.</translation>
     </message>
 </context>
 <context>
@@ -8421,7 +8983,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Only show warnings and errors</source>
-        <translation>Mostra solo avvisi ed errori</translation>
+        <translation>Visualizza solo avvisi ed errori</translation>
     </message>
     <message>
         <source>Own certificate</source>
@@ -8441,7 +9003,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Fingerprint:</source>
-        <translation>impronta digitale:</translation>
+        <translation>Impronta digitale:</translation>
     </message>
     <message>
         <source>Signer name field</source>
@@ -8456,7 +9018,7 @@ Kernel: %3 %4</translation>
     <name>ShareExport</name>
     <message>
         <source>Could not write export container.</source>
-        <translation>Impossibile scrivere il contenitore di esportazione.</translation>
+        <translation>Impossibile scrivere il contenitore esportazione.</translation>
     </message>
 </context>
 <context>
@@ -8486,7 +9048,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Conflicting export target path %1 in %2</source>
-        <translation>Percorso di destinazione esportazione in conflitto %1 in %2</translation>
+        <translation>Percorso destinazione esportazione in conflitto %1 in %2</translation>
     </message>
     <message>
         <source>Export to %1 failed (%2)</source>
@@ -8504,8 +9066,12 @@ Kernel: %3 %4</translation>
 <context>
     <name>TagModel</name>
     <message>
-        <source>All</source>
-        <translation>Tutto</translation>
+        <source>Clear Search</source>
+        <translation>Cancella ricerca</translation>
+    </message>
+    <message>
+        <source>All Entries</source>
+        <translation>Tutte le voci</translation>
     </message>
     <message>
         <source>Expired</source>
@@ -8514,6 +9080,25 @@ Kernel: %3 %4</translation>
     <message>
         <source>Weak Passwords</source>
         <translation>Password deboli</translation>
+    </message>
+</context>
+<context>
+    <name>TagView</name>
+    <message>
+        <source>Remove Search</source>
+        <translation>Rimuovi ricerca</translation>
+    </message>
+    <message>
+        <source>Remove Tag</source>
+        <translation>Rimuovi etichetta</translation>
+    </message>
+    <message>
+        <source>Confirm Remove Tag</source>
+        <translation>Conferma rimozione etichetta</translation>
+    </message>
+    <message>
+        <source>Remove tag &quot;%1&quot; from all entries in this database?</source>
+        <translation>Vuoi rimuovere l&apos;etichetta &quot;%1&quot; da tutte le voci in questo database?</translation>
     </message>
 </context>
 <context>
@@ -8528,7 +9113,7 @@ Kernel: %3 %4</translation>
     </message>
     <message numerus="yes">
         <source>Expires in &lt;b&gt;%n&lt;/b&gt; second(s)</source>
-        <translation><numerusform>Scadenza tra &lt;b&gt;%n&lt;/b&gt; secondi</numerusform><numerusform>Scadenza tra &lt;b&gt;%n&lt;/b&gt; secondo(i)</numerusform></translation>
+        <translation><numerusform>Scadenza tra &lt;b&gt;%n&lt;/b&gt; secondi</numerusform><numerusform>Scadenza tra &lt;b&gt;%n&lt;/b&gt; secondo(i)</numerusform><numerusform>Scadenza tra &lt;b&gt;%n&lt;/b&gt; secondo(i)</numerusform></translation>
     </message>
 </context>
 <context>
@@ -8608,7 +9193,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source> digits</source>
-        <translation>cifre</translation>
+        <translation> cifre</translation>
     </message>
     <message>
         <source>Invalid TOTP Secret</source>
@@ -8652,11 +9237,11 @@ Esempio: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Software Update</source>
-        <translation>Aggiornamento software</translation>
+        <translation>Aggiornamento programma</translation>
     </message>
     <message>
         <source>An error occurred when trying to retrieve update information, please try again later.</source>
-        <translation>Si è verificato un errore durante il tentativo di recuperare le informazioni di aggiornamento, riprovare in un secondo momento.</translation>
+        <translation>Si è verificato un errore durante il tentativo di recuperare le informazioni di aggiornamento, riprova in un secondo momento.</translation>
     </message>
     <message>
         <source>&lt;strong&gt;A new version is available.&lt;/strong&gt;&lt;br/&gt;KeePassXC %1 can be &lt;a href=&quot;https://keepassxc.org/download/&quot;&gt;downloaded here&lt;/a&gt;.</source>
@@ -8664,22 +9249,22 @@ Esempio: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>You have the latest version of KeePassXC</source>
-        <translation>Hai l&apos;ultima versione di KeePassXC</translation>
+        <translation>Questa versione di KeePassXC è aggiornata</translation>
     </message>
 </context>
 <context>
     <name>WelcomeWidget</name>
     <message>
         <source>Start storing your passwords securely in a KeePassXC database</source>
-        <translation>Inizia ad archiviare le tue password in modo sicuro in un database di KeePassXC</translation>
+        <translation>Inizio archivziazione password in modo sicuro in un database KeePassXC</translation>
     </message>
     <message>
         <source>Create new database</source>
-        <translation>Crea un nuovo database</translation>
+        <translation>Crea nuovo database</translation>
     </message>
     <message>
         <source>Open existing database</source>
-        <translation>Apri un database esistente</translation>
+        <translation>Apri database esistente</translation>
     </message>
     <message>
         <source>Import from KeePass 1</source>
@@ -8699,7 +9284,7 @@ Esempio: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Open a recent database</source>
-        <translation>Aprire un database recente</translation>
+        <translation>Apri database recente</translation>
     </message>
     <message>
         <source>Welcome to KeePassXC %1</source>
@@ -8722,25 +9307,6 @@ Esempio: JBSWY3DPEHPK3PXP</translation>
     </message>
 </context>
 <context>
-    <name>WindowsHello</name>
-    <message>
-        <source>Failed to init KeePassXC crypto.</source>
-        <translation>Impossibile inizializare la crittografia KeePassXC.</translation>
-    </message>
-    <message>
-        <source>Failed to encrypt key data.</source>
-        <translation>Impossibile crittografare i dati chiave.</translation>
-    </message>
-    <message>
-        <source>Failed to get Windows Hello credential.</source>
-        <translation>Impossibile ottenere le credenziali di Windows Hello.</translation>
-    </message>
-    <message>
-        <source>Failed to decrypt key data.</source>
-        <translation>Impossibile decrittografare i dati chiave.</translation>
-    </message>
-</context>
-<context>
     <name>YubiKey</name>
     <message>
         <source>%1 No interface, slot %2</source>
@@ -8752,14 +9318,14 @@ Esempio: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Could not find interface for hardware key with serial number %1. Please connect it to continue.</source>
-        <translation>Impossibile trovare l&apos;interfaccia per la chiave hardware con numero di serie %1. Si prega di collegarlo per continuare.</translation>
+        <translation>Impossibile trovare l&apos;interfaccia per la chiave hardware con numero di serie %1. Collegala per continuare.</translation>
     </message>
 </context>
 <context>
     <name>YubiKeyEditWidget</name>
     <message>
         <source>Refresh hardware tokens</source>
-        <translation>Aggiornare i token hardware</translation>
+        <translation>Aggiorna token hardware</translation>
     </message>
     <message>
         <source>Refresh</source>
@@ -8795,15 +9361,15 @@ Esempio: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Challenge-Response set, click to change or remove</source>
-        <translation>Risposta di verifica impostata, fare clic per modificare o rimuovere</translation>
+        <translation>Risposta di verifica impostata, fai clic per modificarla/rimuoverla</translation>
     </message>
     <message>
         <source>&lt;p&gt;If you own a &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; or &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt;, you can use it for additional security.&lt;/p&gt;&lt;p&gt;The key requires one of its slots to be programmed as &lt;a href=&quot;https://www.yubico.com/products/services-software/challenge-response/&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Se si possiede una &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt;  o &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt;, è possibile utilizzarla per una protezione aggiuntiva.&lt;/p&gt;&lt;p&gt;La chiave richiede che uno dei suoi slot sia programmato come &lt;a href=&quot;https://www.yubico.com/products/services-software/challenge-response/&quot;&gt;HMAC-SHA1 Risposta di verifica&lt;/a&gt;.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Se possiedi una &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; o &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt;, è possibile usarla per una protezione aggiuntiva.&lt;/p&gt;&lt;p&gt;La chiave richiede che uno dei suoi slot sia programmato come &lt;a href=&quot;https://www.yubico.com/products/services-software/challenge-response/&quot;&gt;HMAC-SHA1 Risposta di verifica&lt;/a&gt;.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Detecting hardware keys…</source>
-        <translation>Rilevamento delle chiavi hardware in corso…</translation>
+        <translation>Rilevamento delle chiavi hardware...</translation>
     </message>
     <message>
         <source>No hardware keys detected</source>
@@ -8833,7 +9399,7 @@ Esempio: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Could not find or access hardware key with serial number %1. Please present it to continue. </source>
-        <translation>Impossibile trovare o accedere alla chiave hardware con numero di serie %1. Si prega di presentarla per continuare. </translation>
+        <translation>Impossibile trovare o accedere alla chiave hardware con numero di serie %1. Presentala per continuare. </translation>
     </message>
     <message>
         <source>Hardware key is locked or timed out. Unlock or re-present it to continue.</source>
@@ -8882,7 +9448,7 @@ Esempio: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Could not find hardware key with serial number %1. Please plug it in to continue.</source>
-        <translation>Non è stato possibile trovare una chiave hardware nello slot numero %1. Per favore collegarne una per procedere.</translation>
+        <translation>Non è stato possibile trovare una chiave hardware nello slot numero %1. Ccollegane una per procedere.</translation>
     </message>
     <message>
         <source>Hardware key timed out waiting for user interaction.</source>

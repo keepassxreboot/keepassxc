@@ -1,6 +1,6 @@
 /*
+ * Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  * Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
- * Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,6 +53,7 @@
 #include "gui/group/GroupView.h"
 #include "gui/reports/ReportsDialog.h"
 #include "gui/tag/TagView.h"
+#include "gui/widgets/ElidedLabel.h"
 #include "keeshare/KeeShare.h"
 
 #ifdef WITH_XC_NETWORKING
@@ -61,6 +62,10 @@
 
 #ifdef WITH_XC_SSHAGENT
 #include "sshagent/SSHAgent.h"
+#endif
+
+#ifdef WITH_XC_BROWSER_PASSKEYS
+#include "gui/passkeys/PasskeyImporter.h"
 #endif
 
 DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
@@ -73,7 +78,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     , m_previewView(new EntryPreviewWidget(this))
     , m_previewSplitter(new QSplitter(m_mainWidget))
     , m_searchingLabel(new QLabel(this))
-    , m_shareLabel(new QLabel(this))
+    , m_shareLabel(new ElidedLabel(this))
     , m_csvImportWizard(new CsvImportWizard(this))
     , m_editEntryWidget(new EditEntryWidget(this))
     , m_editGroupWidget(new EditGroupWidget(this))
@@ -159,7 +164,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
 
 #ifdef WITH_XC_KEESHARE
     m_shareLabel->setObjectName("KeeShareBanner");
-    m_shareLabel->setText(tr("Shared group…"));
+    m_shareLabel->setRawText(tr("Shared group…"));
     m_shareLabel->setAlignment(Qt::AlignCenter);
     m_shareLabel->setVisible(false);
 #endif
@@ -221,6 +226,10 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     connectDatabaseSignals();
 
     m_blockAutoSave = false;
+
+    m_autosaveTimer = new QTimer(this);
+    m_autosaveTimer->setSingleShot(true);
+    connect(m_autosaveTimer, SIGNAL(timeout()), this, SLOT(onAutosaveDelayTimeout()));
 
     m_searchLimitGroup = config()->get(Config::SearchLimitGroup).toBool();
 
@@ -447,6 +456,11 @@ void DatabaseWidget::cloneEntry()
     }
 
     auto cloneDialog = new CloneDialog(this, m_db.data(), currentEntry);
+    connect(cloneDialog, &CloneDialog::entryCloned, this, [this](auto entry) {
+        refreshSearch();
+        m_entryView->setCurrentEntry(entry);
+    });
+
     cloneDialog->show();
 }
 
@@ -483,6 +497,10 @@ void DatabaseWidget::setupTotp()
 
     auto setupTotpDialog = new TotpSetupDialog(this, currentEntry);
     connect(setupTotpDialog, SIGNAL(totpUpdated()), SIGNAL(entrySelectionChanged()));
+    if (currentWidget() == m_editEntryWidget) {
+        // Entry is being edited, tell it when we are finished updating TOTP
+        connect(setupTotpDialog, SIGNAL(totpUpdated()), m_editEntryWidget, SLOT(updateTotp()));
+    }
     connect(this, &DatabaseWidget::databaseLockRequested, setupTotpDialog, &TotpSetupDialog::close);
     setupTotpDialog->open();
 }
@@ -1102,6 +1120,8 @@ void DatabaseWidget::connectDatabaseSignals()
     connect(m_db.data(), &Database::modified, this, &DatabaseWidget::onDatabaseModified);
     connect(m_db.data(), &Database::databaseSaved, this, &DatabaseWidget::databaseSaved);
     connect(m_db.data(), &Database::databaseFileChanged, this, &DatabaseWidget::reloadDatabaseFile);
+    connect(m_db.data(), &Database::databaseNonDataChanged, this, &DatabaseWidget::databaseNonDataChanged);
+    connect(m_db.data(), &Database::databaseNonDataChanged, this, &DatabaseWidget::onDatabaseNonDataChanged);
 }
 
 void DatabaseWidget::loadDatabase(bool accepted)
@@ -1384,6 +1404,30 @@ void DatabaseWidget::switchToDatabaseSecurity()
     m_databaseSettingDialog->showDatabaseKeySettings();
 }
 
+#ifdef WITH_XC_BROWSER_PASSKEYS
+void DatabaseWidget::switchToPasskeys()
+{
+    switchToDatabaseReports();
+    m_reportsDialog->activatePasskeysPage();
+}
+
+void DatabaseWidget::showImportPasskeyDialog(bool isEntry)
+{
+    PasskeyImporter passkeyImporter;
+
+    if (isEntry) {
+        auto currentEntry = currentSelectedEntry();
+        if (!currentEntry) {
+            return;
+        }
+
+        passkeyImporter.importPasskey(m_db, currentEntry);
+    } else {
+        passkeyImporter.importPasskey(m_db);
+    }
+}
+#endif
+
 void DatabaseWidget::performUnlockDatabase(const QString& password, const QString& keyfile)
 {
     if (password.isEmpty() && keyfile.isEmpty()) {
@@ -1399,7 +1443,10 @@ void DatabaseWidget::performUnlockDatabase(const QString& password, const QStrin
 void DatabaseWidget::refreshSearch()
 {
     if (isSearchActive()) {
+        auto selectedEntry = m_entryView->currentEntry();
         search(m_lastSearchText);
+        // Re-select the previous entry if it is still in the search
+        m_entryView->setCurrentEntry(selectedEntry);
     }
 }
 
@@ -1508,7 +1555,7 @@ void DatabaseWidget::onGroupChanged()
 #ifdef WITH_XC_KEESHARE
     auto shareLabel = KeeShare::sharingLabel(group);
     if (!shareLabel.isEmpty()) {
-        m_shareLabel->setText(shareLabel);
+        m_shareLabel->setRawText(shareLabel);
         m_shareLabel->setVisible(true);
     } else {
         m_shareLabel->setVisible(false);
@@ -1520,13 +1567,50 @@ void DatabaseWidget::onGroupChanged()
 
 void DatabaseWidget::onDatabaseModified()
 {
-    if (!m_blockAutoSave && config()->get(Config::AutoSaveAfterEveryChange).toBool()) {
+    refreshSearch();
+    int autosaveDelayMs = m_db->metadata()->autosaveDelayMin() * 60 * 1000; // min to msec for QTimer
+    bool autosaveAfterEveryChangeConfig = config()->get(Config::AutoSaveAfterEveryChange).toBool();
+    if (autosaveDelayMs > 0 && autosaveAfterEveryChangeConfig) {
+        // reset delay when modified
+        m_autosaveTimer->start(autosaveDelayMs);
+        return;
+    }
+    if (!m_blockAutoSave && autosaveAfterEveryChangeConfig) {
         save();
     } else {
         // Only block once, then reset
         m_blockAutoSave = false;
     }
-    refreshSearch();
+}
+
+void DatabaseWidget::onAutosaveDelayTimeout()
+{
+    const bool isAutosaveDelayEnabled = m_db->metadata()->autosaveDelayMin() > 0;
+    const bool autosaveAfterEveryChangeConfig = config()->get(Config::AutoSaveAfterEveryChange).toBool();
+    if (!(isAutosaveDelayEnabled && autosaveAfterEveryChangeConfig)) {
+        // User might disable the delay/autosave while the timer is running
+        return;
+    }
+    if (!m_blockAutoSave) {
+        save();
+    } else {
+        // Only block once, then reset
+        m_blockAutoSave = false;
+    }
+}
+
+void DatabaseWidget::triggerAutosaveTimer()
+{
+    m_autosaveTimer->stop();
+    QMetaObject::invokeMethod(m_autosaveTimer, "timeout");
+}
+
+void DatabaseWidget::onDatabaseNonDataChanged()
+{
+    // Force mark the database modified if we are not auto-saving non-data changes
+    if (!config()->get(Config::AutoSaveNonDataChanges).toBool()) {
+        m_db->markAsModified();
+    }
 }
 
 QString DatabaseWidget::getCurrentSearch()
@@ -1837,7 +1921,7 @@ QStringList DatabaseWidget::customEntryAttributes() const
 {
     Entry* entry = m_entryView->currentEntry();
     if (!entry) {
-        return QStringList();
+        return {};
     }
 
     return entry->attributes()->customKeys();
@@ -1936,6 +2020,16 @@ bool DatabaseWidget::currentEntryHasNotes()
     return !currentEntry->resolveMultiplePlaceholders(currentEntry->notes()).isEmpty();
 }
 
+bool DatabaseWidget::currentEntryHasAutoTypeEnabled()
+{
+    auto currentEntry = currentSelectedEntry();
+    if (!currentEntry) {
+        return false;
+    }
+
+    return currentEntry->autoTypeEnabled() && currentEntry->groupAutoTypeEnabled();
+}
+
 GroupView* DatabaseWidget::groupView()
 {
     return m_groupView;
@@ -1978,6 +2072,7 @@ bool DatabaseWidget::save()
     if (performSave(errorMessage)) {
         m_saveAttempts = 0;
         m_blockAutoSave = false;
+        m_autosaveTimer->stop(); // stop autosave delay to avoid triggering another save
         return true;
     }
 
@@ -2023,7 +2118,7 @@ bool DatabaseWidget::saveAs()
     if (!QFileInfo::exists(oldFilePath)) {
         QString defaultFileName = config()->get(Config::DefaultDatabaseFileName).toString();
         oldFilePath =
-            QDir::toNativeSeparators(config()->get(Config::LastDir).toString() + "/"
+            QDir::toNativeSeparators(FileDialog::getLastDir("db") + "/"
                                      + (defaultFileName.isEmpty() ? tr("Passwords").append(".kdbx") : defaultFileName));
     }
     const QString newFilePath = fileDialog()->getSaveFileName(
@@ -2094,7 +2189,7 @@ bool DatabaseWidget::performSave(QString& errorMessage, const QString& fileName)
     m_groupView->setDisabled(false);
     m_tagView->setDisabled(false);
 
-    if (focusWidget) {
+    if (focusWidget && focusWidget->isVisible()) {
         focusWidget->setFocus();
     }
 
@@ -2113,13 +2208,13 @@ bool DatabaseWidget::saveBackup()
         if (!QFileInfo::exists(oldFilePath)) {
             QString defaultFileName = config()->get(Config::DefaultDatabaseFileName).toString();
             oldFilePath = QDir::toNativeSeparators(
-                config()->get(Config::LastDir).toString() + "/"
+                FileDialog::getLastDir("db") + "/"
                 + (defaultFileName.isEmpty() ? tr("Passwords").append(".kdbx") : defaultFileName));
         }
 
         const QString newFilePath = fileDialog()->getSaveFileName(this,
                                                                   tr("Save database backup"),
-                                                                  FileDialog::getLastDir("backup"),
+                                                                  FileDialog::getLastDir("backup", oldFilePath),
                                                                   tr("KeePass 2 Database").append(" (*.kdbx)"),
                                                                   nullptr,
                                                                   nullptr);

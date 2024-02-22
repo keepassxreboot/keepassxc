@@ -184,17 +184,17 @@ QString AutoTypePlatformX11::windowTitle(Window window, bool useBlacklist)
 
     if (useBlacklist && !title.isEmpty()) {
         if (window == m_rootWindow) {
-            return QString();
+            return {};
         }
 
         QString className = windowClassName(window);
         if (m_classBlacklist.contains(className)) {
-            return QString();
+            return {};
         }
 
         QList<Window> keepassxWindows = widgetsToX11Windows(QApplication::topLevelWidgets());
         if (keepassxWindows.contains(window)) {
-            return QString();
+            return {};
         }
     }
 

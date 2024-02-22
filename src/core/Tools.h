@@ -1,6 +1,6 @@
 /*
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 #include "core/Global.h"
 
 #include <QDateTime>
+#include <QList>
 #include <QProcessEnvironment>
 
 class QIODevice;
@@ -38,12 +39,12 @@ namespace Tools
     bool isBase64(const QByteArray& ba);
     void sleep(int ms);
     void wait(int ms);
-    bool checkUrlValid(const QString& urlField);
     QString uuidToHex(const QUuid& uuid);
     QUuid hexToUuid(const QString& uuid);
     bool isValidUuid(const QString& uuidStr);
     QString envSubstitute(const QString& filepath,
                           QProcessEnvironment environment = QProcessEnvironment::systemEnvironment());
+    QString cleanFilename(QString filename);
 
     /**
      * Escapes all characters in regex such that they do not receive any special treatment when used
@@ -98,6 +99,19 @@ namespace Tools
         }();
 
         return version;
+    }
+
+    // Checks if all values are found inside the list. Returns a list of values not found.
+    template <typename T> QList<T> getMissingValuesFromList(const QList<T>& list, const QList<T>& required)
+    {
+        QList<T> missingValues;
+        for (const auto& r : required) {
+            if (!list.contains(r)) {
+                missingValues << r;
+            }
+        }
+
+        return missingValues;
     }
 
     QVariantMap qo2qvm(const QObject* object, const QStringList& ignoredProperties = {"objectName"});

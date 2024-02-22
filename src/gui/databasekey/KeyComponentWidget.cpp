@@ -43,9 +43,7 @@ KeyComponentWidget::KeyComponentWidget(QWidget* parent)
     m_ui->stackedWidget->blockSignals(prev);
 }
 
-KeyComponentWidget::~KeyComponentWidget()
-{
-}
+KeyComponentWidget::~KeyComponentWidget() = default;
 
 void KeyComponentWidget::setComponentAdded(bool added)
 {

@@ -327,9 +327,7 @@ AboutDialog::AboutDialog(QWidget* parent)
     m_ui->buttonBox->button(QDialogButtonBox::Close)->setDefault(true);
 }
 
-AboutDialog::~AboutDialog()
-{
-}
+AboutDialog::~AboutDialog() = default;
 
 void AboutDialog::copyToClipboard()
 {

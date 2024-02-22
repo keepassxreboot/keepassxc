@@ -15,8 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NATIVEMESSAGINGHOST_H
-#define NATIVEMESSAGINGHOST_H
+#ifndef KEEPASSXC_NATIVEMESSAGINGHOST_H
+#define KEEPASSXC_NATIVEMESSAGINGHOST_H
 
 #include <QJsonObject>
 #include <QObject>
@@ -56,4 +56,4 @@ private:
     QList<QLocalSocket*> m_socketList;
 };
 
-#endif // NATIVEMESSAGINGHOST_H
+#endif // KEEPASSXC_NATIVEMESSAGINGHOST_H

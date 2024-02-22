@@ -39,11 +39,8 @@ public:
     enum MergeMode
     {
         Default, // Determine merge strategy from parent or fallback (Synchronize)
-        Duplicate, // lossy strategy regarding deletions, duplicate older changes in a new entry
-        KeepLocal, // merge history forcing local as top regardless of age
-        KeepRemote, // merge history forcing remote as top regardless of age
         KeepNewer, // merge history
-        Synchronize, // merge history keeping most recent as top entry and appling deletions
+        Synchronize, // merge history keeping most recent as top entry and applying deletions
     };
 
     enum CloneFlag
@@ -85,6 +82,7 @@ public:
     QString name() const;
     QString notes() const;
     QString tags() const;
+    QString fullPath() const;
     int iconNumber() const;
     const QUuid& iconUuid() const;
     const TimeInfo& timeInfo() const;
@@ -104,12 +102,14 @@ public:
     const CustomData* customData() const;
     Group::TriState resolveCustomDataTriState(const QString& key, bool checkParent = true) const;
     void setCustomDataTriState(const QString& key, const Group::TriState& value);
+    QString resolveCustomDataString(const QString& key, bool checkParent = true) const;
     const Group* previousParentGroup() const;
     QUuid previousParentGroupUuid() const;
 
     bool equals(const Group* other, CompareItemOptions options) const;
 
     static const int DefaultIconNumber;
+    static const int OpenFolderIconNumber;
     static const int RecycleBinIconNumber;
     static const QString RootAutoTypeSequence;
 

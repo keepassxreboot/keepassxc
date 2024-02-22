@@ -33,6 +33,7 @@
 #include "config-keepassx-tests.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
+#include "gui/ActionCollection.h"
 #include "gui/ApplicationSettingsWidget.h"
 #include "gui/CategoryListWidget.h"
 #include "gui/CloneDialog.h"
@@ -43,6 +44,7 @@
 #include "gui/PasswordGeneratorWidget.h"
 #include "gui/PasswordWidget.h"
 #include "gui/SearchWidget.h"
+#include "gui/ShortcutSettingsPage.h"
 #include "gui/TotpDialog.h"
 #include "gui/TotpSetupDialog.h"
 #include "gui/databasekey/KeyFileEditWidget.h"
@@ -91,6 +93,7 @@ void TestGui::initTestCase()
 
     m_mainWindow.reset(new MainWindow());
     m_tabWidget = m_mainWindow->findChild<DatabaseTabWidget*>("tabWidget");
+    m_statusBarLabel = m_mainWindow->findChild<QLabel*>("statusBarLabel");
     m_mainWindow->show();
     m_mainWindow->resize(1024, 768);
 }
@@ -188,7 +191,7 @@ void TestGui::testSettingsDefaultTabOrder()
     QVERIFY(dbSettingsWidget->isVisible());
     QCOMPARE(dbSettingsWidget->findChild<CategoryListWidget*>("categoryList")->currentCategory(), 0);
     for (auto* w : dbSettingsWidget->findChildren<QTabWidget*>()) {
-        if (w->currentIndex() != 0) {
+        if (w->currentIndex() != 0 && w->objectName() != "encryptionSettingsTabWidget") {
             QFAIL("Database settings contain QTabWidgets whose default index is not 0");
         }
     }
@@ -207,12 +210,16 @@ void TestGui::testCreateDatabase()
         QTest::keyClick(wizard, Qt::Key_Enter);
         QCOMPARE(wizard->currentId(), 1);
 
+        // Check that basic encryption settings are visible
         auto decryptionTimeSlider = wizard->currentPage()->findChild<QSlider*>("decryptionTimeSlider");
         auto algorithmComboBox = wizard->currentPage()->findChild<QComboBox*>("algorithmComboBox");
         QTRY_VERIFY(decryptionTimeSlider->isVisible());
         QVERIFY(!algorithmComboBox->isVisible());
-        auto advancedToggle = wizard->currentPage()->findChild<QPushButton*>("advancedSettingsButton");
-        QTest::mouseClick(advancedToggle, Qt::MouseButton::LeftButton);
+
+        // Set the encryption settings to the advanced view
+        auto encryptionSettings = wizard->currentPage()->findChild<QTabWidget*>("encryptionSettingsTabWidget");
+        auto advancedTab = encryptionSettings->findChild<QWidget*>("advancedTab");
+        encryptionSettings->setCurrentWidget(advancedTab);
         QTRY_VERIFY(!decryptionTimeSlider->isVisible());
         QVERIFY(algorithmComboBox->isVisible());
 
@@ -281,10 +288,17 @@ void TestGui::testCreateDatabase()
         tmpFile.close();
         fileDialog()->setNextFileName(tmpFile.fileName());
 
+        // click Continue on the warning due to weak password
+        MessageBox::setNextAnswer(MessageBox::ContinueWithWeakPass);
         QTest::keyClick(fileEdit, Qt::Key::Key_Enter);
+
         tmpFile.remove(););
 
     triggerAction("actionDatabaseNew");
+
+    QCOMPARE(m_tabWidget->count(), 2);
+
+    checkStatusBarText("0 Ent");
 
     // there is a new empty db
     m_db = m_tabWidget->currentDatabaseWidget()->database();
@@ -305,6 +319,15 @@ void TestGui::testCreateDatabase()
     fileKey->load(QString("%1/%2").arg(QString(KEEPASSX_TEST_DATA_DIR), "FileKeyHashed.key"));
     compositeKey->addKey(fileKey);
     QCOMPARE(m_db->key()->rawKey(), compositeKey->rawKey());
+
+    checkStatusBarText("0 Ent");
+
+    // Test the switching to other DB tab
+    m_tabWidget->setCurrentIndex(0);
+    checkStatusBarText("1 Ent");
+
+    m_tabWidget->setCurrentIndex(1);
+    checkStatusBarText("0 Ent");
 
     // close the new database
     MessageBox::setNextAnswer(MessageBox::No);
@@ -592,6 +615,9 @@ void TestGui::testAddEntry()
     auto* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
     auto* entryView = m_dbWidget->findChild<EntryView*>("entryView");
 
+    // Given the status bar label with initial number of entries.
+    checkStatusBarText("1 Ent");
+
     // Find the new entry action
     auto* entryNewAction = m_mainWindow->findChild<QAction*>("actionEntryNew");
     QVERIFY(entryNewAction->isEnabled());
@@ -626,6 +652,9 @@ void TestGui::testAddEntry()
 
     m_db->updateCommonUsernames();
 
+    // Then the status bar label should be updated with incremented number of entries.
+    checkStatusBarText("2 Ent");
+
     // Add entry "something 2"
     QTest::mouseClick(entryNewWidget, Qt::LeftButton);
     QTest::keyClicks(titleEdit, "something 2");
@@ -653,7 +682,7 @@ void TestGui::testAddEntry()
 
     QApplication::processEvents();
 
-    // Confirm entry count
+    // Confirm no changed entry count
     QTRY_COMPARE(entryView->model()->rowCount(), 3);
 }
 
@@ -895,12 +924,27 @@ void TestGui::testTotp()
     auto* editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
 
+    // Test the TOTP value
     triggerAction("actionEntryTotp");
 
     auto* totpDialog = m_dbWidget->findChild<TotpDialog*>("TotpDialog");
     auto* totpLabel = totpDialog->findChild<QLabel*>("totpLabel");
 
     QCOMPARE(totpLabel->text().replace(" ", ""), entry->totp());
+    QTest::keyClick(totpDialog, Qt::Key_Escape);
+
+    // Test the QR code
+    triggerAction("actionEntryTotpQRCode");
+    auto* qrCodeDialog = m_mainWindow->findChild<QDialog*>("entryQrCodeWidget");
+    QVERIFY(qrCodeDialog);
+    QVERIFY(qrCodeDialog->isVisible());
+    auto* qrCodeWidget = qrCodeDialog->findChild<QWidget*>("squareSvgWidget");
+    QVERIFY2(qrCodeWidget->geometry().width() == qrCodeWidget->geometry().height(), "Initial QR code is not square");
+
+    // Test the QR code window resizing, make the dialog bigger.
+    qrCodeDialog->setFixedSize(800, 600);
+    QVERIFY2(qrCodeWidget->geometry().width() == qrCodeWidget->geometry().height(), "Resized QR code is not square");
+    QTest::keyClick(qrCodeDialog, Qt::Key_Escape);
 }
 
 void TestGui::testSearch()
@@ -935,6 +979,10 @@ void TestGui::testSearch()
     QApplication::processEvents();
     helpButton->trigger();
     QTRY_VERIFY(!helpPanel->isVisible());
+
+    // Need to re-activate the window after the help test
+    m_mainWindow->activateWindow();
+
     // Search for "ZZZ"
     QTest::keyClicks(searchTextEdit, "ZZZ");
     QTRY_COMPARE(searchTextEdit->text(), QString("ZZZ"));
@@ -1039,6 +1087,13 @@ void TestGui::testSearch()
     QCOMPARE(groupView->currentGroup(), m_db->rootGroup());
     QVERIFY(!m_dbWidget->isSearchActive());
 
+    // check if first entry is selected after search
+    QTest::keyClicks(searchTextEdit, "some");
+    QTRY_VERIFY(m_dbWidget->isSearchActive());
+    QTRY_COMPARE(entryView->selectedEntries().length(), 1);
+    QModelIndex index_current = entryView->indexFromEntry(entryView->currentEntry());
+    QTRY_COMPARE(index_current.row(), 0);
+
     // Try to edit the first entry from the search view
     // Refocus back to search edit
     QTest::mouseClick(searchTextEdit, Qt::LeftButton);
@@ -1072,6 +1127,7 @@ void TestGui::testDeleteEntry()
 {
     // Add canned entries for consistent testing
     addCannedEntries();
+    checkStatusBarText("4 Ent");
 
     auto* groupView = m_dbWidget->findChild<GroupView*>("groupView");
     auto* entryView = m_dbWidget->findChild<EntryView*>("entryView");
@@ -1100,6 +1156,8 @@ void TestGui::testDeleteEntry()
         QCOMPARE(entryView->model()->rowCount(), 3);
         QCOMPARE(m_db->metadata()->recycleBin()->entries().size(), 1);
     }
+
+    checkStatusBarText("3 Ent");
 
     // Select multiple entries and move them to the recycling bin
     clickIndex(entryView->model()->index(1, 1), entryView, Qt::LeftButton);
@@ -1185,6 +1243,7 @@ void TestGui::testCloneEntry()
     Entry* entryClone = entryView->entryFromIndex(entryView->model()->index(1, 1));
     QVERIFY(entryOrg->uuid() != entryClone->uuid());
     QCOMPARE(entryClone->title(), entryOrg->title() + QString(" - Clone"));
+    QVERIFY(m_dbWidget->currentSelectedEntry()->uuid() == entryClone->uuid());
 }
 
 void TestGui::testEntryPlaceholders()
@@ -1423,18 +1482,160 @@ void TestGui::testDatabaseSettings()
     m_db->metadata()->setName("testDatabaseSettings");
     triggerAction("actionDatabaseSettings");
     auto* dbSettingsDialog = m_dbWidget->findChild<QWidget*>("databaseSettingsDialog");
-    auto* transformRoundsSpinBox = dbSettingsDialog->findChild<QSpinBox*>("transformRoundsSpinBox");
-    auto advancedToggle = dbSettingsDialog->findChild<QCheckBox*>("advancedSettingsToggle");
+    auto* dbSettingsCategoryList = dbSettingsDialog->findChild<CategoryListWidget*>("categoryList");
+    auto* dbSettingsStackedWidget = dbSettingsDialog->findChild<QStackedWidget*>("stackedWidget");
+    auto* autosaveDelayCheckBox = dbSettingsDialog->findChild<QCheckBox*>("autosaveDelayCheckBox");
+    auto* autosaveDelaySpinBox = dbSettingsDialog->findChild<QSpinBox*>("autosaveDelaySpinBox");
+    auto* dbSettingsButtonBox = dbSettingsDialog->findChild<QDialogButtonBox*>("buttonBox");
+    int autosaveDelayTestValue = 2;
 
-    advancedToggle->setChecked(true);
+    dbSettingsCategoryList->setCurrentCategory(1); // go into security category
+    dbSettingsStackedWidget->findChild<QTabWidget*>()->setCurrentIndex(1); // go into encryption tab
+
+    auto encryptionSettings = dbSettingsDialog->findChild<QTabWidget*>("encryptionSettingsTabWidget");
+    auto advancedTab = encryptionSettings->findChild<QWidget*>("advancedTab");
+    encryptionSettings->setCurrentWidget(advancedTab);
+
     QApplication::processEvents();
 
-    QVERIFY(transformRoundsSpinBox != nullptr);
+    auto transformRoundsSpinBox = advancedTab->findChild<QSpinBox*>("transformRoundsSpinBox");
+    QVERIFY(transformRoundsSpinBox);
+    QVERIFY(transformRoundsSpinBox->isVisible());
+
     transformRoundsSpinBox->setValue(123456);
     QTest::keyClick(transformRoundsSpinBox, Qt::Key_Enter);
     QTRY_COMPARE(m_db->kdf()->rounds(), 123456);
 
+    // test disable and default values for maximum history items and size
+    triggerAction("actionDatabaseSettings");
+    auto* historyMaxItemsCheckBox = dbSettingsDialog->findChild<QCheckBox*>("historyMaxItemsCheckBox");
+    auto* historyMaxItemsSpinBox = dbSettingsDialog->findChild<QSpinBox*>("historyMaxItemsSpinBox");
+    auto* historyMaxSizeCheckBox = dbSettingsDialog->findChild<QCheckBox*>("historyMaxSizeCheckBox");
+    auto* historyMaxSizeSpinBox = dbSettingsDialog->findChild<QSpinBox*>("historyMaxSizeSpinBox");
+    // test defaults
+    QCOMPARE(historyMaxItemsSpinBox->value(), Metadata::DefaultHistoryMaxItems);
+    QCOMPARE(historyMaxSizeSpinBox->value(), qRound(Metadata::DefaultHistoryMaxSize / qreal(1024 * 1024)));
+    // disable and test setting as well
+    historyMaxItemsCheckBox->setChecked(false);
+    historyMaxSizeCheckBox->setChecked(false);
+    QTest::mouseClick(dbSettingsButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    QTRY_COMPARE(m_db->metadata()->historyMaxItems(), -1);
+    QTRY_COMPARE(m_db->metadata()->historyMaxSize(), -1);
+    // then open to check the saved disabled state in gui
+    triggerAction("actionDatabaseSettings");
+    QCOMPARE(historyMaxItemsCheckBox->isChecked(), false);
+    QCOMPARE(historyMaxSizeCheckBox->isChecked(), false);
+    QTest::mouseClick(dbSettingsButtonBox->button(QDialogButtonBox::Cancel), Qt::LeftButton);
+
+    // Test loading default values and setting autosaveDelay
+    triggerAction("actionDatabaseSettings");
+    QVERIFY(autosaveDelayCheckBox->isChecked() == false);
+    autosaveDelayCheckBox->toggle();
+    autosaveDelaySpinBox->setValue(autosaveDelayTestValue);
+    QTest::mouseClick(dbSettingsButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    QTRY_COMPARE(m_db->metadata()->autosaveDelayMin(), autosaveDelayTestValue);
+
     checkSaveDatabase();
+
+    // Test loading autosaveDelay non-default values
+    triggerAction("actionDatabaseSettings");
+    QTRY_COMPARE(autosaveDelayCheckBox->isChecked(), true);
+    QTRY_COMPARE(autosaveDelaySpinBox->value(), autosaveDelayTestValue);
+    QTest::mouseClick(dbSettingsButtonBox->button(QDialogButtonBox::Cancel), Qt::LeftButton);
+
+    // test autosave delay
+
+    // 1 init
+    config()->set(Config::AutoSaveAfterEveryChange, true);
+    QSignalSpy writeDbSignalSpy(m_db.data(), &Database::databaseSaved);
+
+    // 2 create new entries
+
+    // 2.a) Click the new entry button and set the title
+    auto* entryNewAction = m_mainWindow->findChild<QAction*>("actionEntryNew");
+    QVERIFY(entryNewAction->isEnabled());
+
+    auto* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
+    QVERIFY(toolBar);
+
+    QWidget* entryNewWidget = toolBar->widgetForAction(entryNewAction);
+
+    QTest::mouseClick(entryNewWidget, Qt::LeftButton);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::EditMode);
+
+    auto* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
+    QVERIFY(editEntryWidget);
+    auto* titleEdit = editEntryWidget->findChild<QLineEdit*>("titleEdit");
+    QVERIFY(titleEdit);
+
+    QTest::keyClicks(titleEdit, "Test autosaveDelay 1");
+
+    // 2.b) Save changes
+    editEntryWidget->setCurrentPage(0);
+    auto* editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
+    QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+
+    // 2.c) Make sure file was not modified yet
+    Tools::wait(150); // due to modify timer
+    QTRY_COMPARE(writeDbSignalSpy.count(), 0);
+
+    // 2.d) Create second entry to test delay timer reset
+    QTest::mouseClick(entryNewWidget, Qt::LeftButton);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::EditMode);
+    QTest::keyClicks(titleEdit, "Test autosaveDelay 2");
+
+    // 2.e) Save changes
+    editEntryWidget->setCurrentPage(0);
+    editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
+    QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+
+    // 3 Double check both true negative and true positive
+    // 3.a) Test unmodified prior to delay timeout
+    Tools::wait(150); // due to modify timer
+    QTRY_COMPARE(writeDbSignalSpy.count(), 0);
+
+    // 3.b) Test modification time after expected
+    m_dbWidget->triggerAutosaveTimer();
+    QTRY_COMPARE(writeDbSignalSpy.count(), 1);
+
+    // 4 Test no delay when disabled autosave or autosaveDelay
+    // 4.a) create new entry
+    QTest::mouseClick(entryNewWidget, Qt::LeftButton);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::EditMode);
+    QTest::keyClicks(titleEdit, "Test autosaveDelay 3");
+
+    // 4.b) Save changes
+    editEntryWidget->setCurrentPage(0);
+    editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
+    QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+
+    // 4.c) Start timer
+    Tools::wait(150); // due to modify timer
+
+    // 4.d) Disable autosave
+    config()->set(Config::AutoSaveAfterEveryChange, false);
+
+    // 4.e) Make sure changes are not saved
+    m_dbWidget->triggerAutosaveTimer();
+    QTRY_COMPARE(writeDbSignalSpy.count(), 1);
+
+    // 4.f) Repeat for autosaveDelay
+    config()->set(Config::AutoSaveAfterEveryChange, true);
+    QTest::mouseClick(entryNewWidget, Qt::LeftButton);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::EditMode);
+    QTest::keyClicks(titleEdit, "Test autosaveDelay 4");
+    editEntryWidget->setCurrentPage(0);
+    editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
+    QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    Tools::wait(150); // due to modify timer
+    m_db->metadata()->setAutosaveDelayMin(0);
+
+    // 4.g) Make sure changes are not saved
+    m_dbWidget->triggerAutosaveTimer();
+    QTRY_COMPARE(writeDbSignalSpy.count(), 1);
+
+    // 5 Cleanup
+    config()->set(Config::AutoSaveAfterEveryChange, false);
 }
 
 void TestGui::testKeePass1Import()
@@ -1652,6 +1853,52 @@ void TestGui::testTrayRestoreHide()
 #endif
 }
 
+void TestGui::testShortcutConfig()
+{
+    // Action collection should not be empty
+    QVERIFY(!ActionCollection::instance()->actions().isEmpty());
+
+    // Add an action, make sure it gets added
+    QAction* a = new QAction(ActionCollection::instance());
+    a->setObjectName("MyAction1");
+    ActionCollection::instance()->addAction(a);
+    QVERIFY(ActionCollection::instance()->actions().contains(a));
+
+    const QKeySequence seq(Qt::CTRL + Qt::SHIFT + Qt::ALT + Qt::Key_N);
+    ActionCollection::instance()->setDefaultShortcut(a, seq);
+    QCOMPARE(ActionCollection::instance()->defaultShortcut(a), seq);
+
+    bool v = false;
+    m_mainWindow->addAction(a);
+    connect(a, &QAction::triggered, ActionCollection::instance(), [&v] { v = !v; });
+    QTest::keyClick(m_mainWindow.data(), Qt::Key_N, Qt::ControlModifier | Qt::ShiftModifier | Qt::AltModifier);
+    QVERIFY(v);
+
+    // Change shortcut and save
+    const QKeySequence newSeq(Qt::CTRL + Qt::SHIFT + Qt::ALT + Qt::Key_M);
+    a->setShortcut(newSeq);
+    QVERIFY(a->shortcut() != ActionCollection::instance()->defaultShortcut(a));
+    ActionCollection::instance()->saveShortcuts();
+    QCOMPARE(a->shortcut(), newSeq);
+    const auto shortcuts = Config::instance()->getShortcuts();
+    Config::ShortcutEntry entryForA;
+    for (const auto& s : shortcuts) {
+        if (s.name == a->objectName()) {
+            entryForA = s;
+            break;
+        }
+    }
+    QCOMPARE(entryForA.name, a->objectName());
+    QCOMPARE(QKeySequence::fromString(entryForA.shortcut), a->shortcut());
+
+    // trigger the old shortcut
+    QTest::keyClick(m_mainWindow.data(), Qt::Key_N, Qt::ControlModifier | Qt::ShiftModifier | Qt::AltModifier);
+    QVERIFY(v); // value of v should not change
+    QTest::keyClick(m_mainWindow.data(), Qt::Key_M, Qt::ControlModifier | Qt::ShiftModifier | Qt::AltModifier);
+    QVERIFY(!v);
+    disconnect(a, nullptr, nullptr, nullptr);
+}
+
 void TestGui::testAutoType()
 {
     // Clear entries from root group to guarantee order
@@ -1866,6 +2113,14 @@ void TestGui::checkSaveDatabase()
     } while (++i < 2);
 
     QFAIL("Could not save database.");
+}
+
+void TestGui::checkStatusBarText(const QString& textFragment)
+{
+    QApplication::processEvents();
+    QVERIFY(m_statusBarLabel->isVisible());
+    QTRY_VERIFY2(m_statusBarLabel->text().startsWith(textFragment),
+                 qPrintable(QString("'%1' doesn't start with '%2'").arg(m_statusBarLabel->text(), textFragment)));
 }
 
 void TestGui::triggerAction(const QString& name)

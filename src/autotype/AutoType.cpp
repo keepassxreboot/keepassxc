@@ -225,7 +225,7 @@ void AutoType::createTestInstance()
 QStringList AutoType::windowTitles()
 {
     if (!m_plugin) {
-        return QStringList();
+        return {};
     }
 
     return m_plugin->windowTitles();
@@ -356,7 +356,7 @@ void AutoType::executeAutoTypeActions(const Entry* entry,
 
 /**
  * Single Autotype entry-point function
- * Look up the Auto-Type sequence for the given entry then perfom Auto-Type in the active window
+ * Look up the Auto-Type sequence for the given entry then perform Auto-Type in the active window
  */
 void AutoType::performAutoType(const Entry* entry)
 {
@@ -372,7 +372,7 @@ void AutoType::performAutoType(const Entry* entry)
 
 /**
  * Extra Autotype entry-point function
- * Perfom Auto-Type of the directly specified sequence in the active window
+ * Perform Auto-Type of the directly specified sequence in the active window
  */
 void AutoType::performAutoTypeWithSequence(const Entry* entry, const QString& sequence)
 {

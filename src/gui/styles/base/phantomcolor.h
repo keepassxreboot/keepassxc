@@ -42,9 +42,7 @@ namespace Phantom
     struct Rgb
     {
         qreal r, g, b;
-        Rgb()
-        {
-        }
+        Rgb() = default;
         Rgb(qreal r, qreal g, qreal b)
             : r(r)
             , g(g)
@@ -78,9 +76,7 @@ namespace Phantom
     struct Hsl
     {
         qreal h, s, l;
-        Hsl()
-        {
-        }
+        Hsl() = default;
         Hsl(qreal h, qreal s, qreal l)
             : h(h)
             , s(s)
@@ -113,7 +109,7 @@ namespace Phantom
         return (1.0 - a) * x + a * y;
     }
 
-    // Linearly interpolate two QColors after trasnforming them to linear color
+    // Linearly interpolate two QColors after transforming them to linear color
     // space, treating the QColor values as if they were in sRGB space. The
     // returned QColor is converted back to sRGB space.
     QColor lerpQColor(const QColor& x, const QColor& y, qreal a);

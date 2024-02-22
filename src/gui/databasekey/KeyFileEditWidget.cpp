@@ -33,9 +33,7 @@ KeyFileEditWidget::KeyFileEditWidget(DatabaseSettingsWidget* parent)
     initComponent();
 }
 
-KeyFileEditWidget::~KeyFileEditWidget()
-{
-}
+KeyFileEditWidget::~KeyFileEditWidget() = default;
 
 bool KeyFileEditWidget::addToCompositeKey(QSharedPointer<CompositeKey> key)
 {

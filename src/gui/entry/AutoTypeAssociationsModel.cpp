@@ -79,14 +79,14 @@ QVariant AutoTypeAssociationsModel::headerData(int section, Qt::Orientation orie
             return tr("Sequence");
         }
     } else {
-        return QVariant();
+        return {};
     }
 }
 
 QVariant AutoTypeAssociationsModel::data(const QModelIndex& index, int role) const
 {
     if (!index.isValid()) {
-        return QVariant();
+        return {};
     }
 
     if (role == Qt::DisplayRole) {
@@ -108,7 +108,7 @@ QVariant AutoTypeAssociationsModel::data(const QModelIndex& index, int role) con
             return sequence;
         }
     } else {
-        return QVariant();
+        return {};
     }
 }
 

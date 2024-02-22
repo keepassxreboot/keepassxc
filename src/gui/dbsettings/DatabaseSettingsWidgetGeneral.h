@@ -35,11 +35,6 @@ public:
     Q_DISABLE_COPY(DatabaseSettingsWidgetGeneral);
     ~DatabaseSettingsWidgetGeneral() override;
 
-    inline bool hasAdvancedMode() const override
-    {
-        return false;
-    }
-
 public slots:
     void initialize() override;
     void uninitialize() override;

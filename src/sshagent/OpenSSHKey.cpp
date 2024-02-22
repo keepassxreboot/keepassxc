@@ -20,6 +20,7 @@
 
 #include "ASN1Key.h"
 #include "BinaryStream.h"
+#include "crypto/Random.h"
 #include "crypto/SymmetricCipher.h"
 
 #include <QRegularExpression>
@@ -30,9 +31,11 @@
 const QString OpenSSHKey::TYPE_DSA_PRIVATE = "DSA PRIVATE KEY";
 const QString OpenSSHKey::TYPE_RSA_PRIVATE = "RSA PRIVATE KEY";
 const QString OpenSSHKey::TYPE_OPENSSH_PRIVATE = "OPENSSH PRIVATE KEY";
+const QString OpenSSHKey::OPENSSH_CIPHER_SUFFIX = "@openssh.com";
 
 OpenSSHKey::OpenSSHKey(QObject* parent)
     : QObject(parent)
+    , m_check(0)
     , m_type(QString())
     , m_cipherName(QString("none"))
     , m_kdfName(QString("none"))
@@ -48,6 +51,7 @@ OpenSSHKey::OpenSSHKey(QObject* parent)
 
 OpenSSHKey::OpenSSHKey(const OpenSSHKey& other)
     : QObject(nullptr)
+    , m_check(other.m_check)
     , m_type(other.m_type)
     , m_cipherName(other.m_cipherName)
     , m_kdfName(other.m_kdfName)
@@ -125,6 +129,64 @@ const QString OpenSSHKey::publicKey() const
     return m_type + " " + QString::fromLatin1(publicKey.toBase64()) + " " + m_comment;
 }
 
+const QString OpenSSHKey::privateKey()
+{
+    QByteArray sshKey;
+    BinaryStream stream(&sshKey);
+
+    // magic
+    stream.write(QString("openssh-key-v1").toUtf8());
+    stream.write(static_cast<quint8>(0));
+
+    // cipher name
+    stream.writeString(QString("none"));
+
+    // kdf name
+    stream.writeString(QString("none"));
+
+    // kdf options
+    stream.writeString(QString(""));
+
+    // number of keys
+    stream.write(static_cast<quint32>(1));
+
+    // string wrapped public key
+    QByteArray publicKey;
+    BinaryStream publicStream(&publicKey);
+    writePublic(publicStream);
+    stream.writeString(publicKey);
+
+    // string wrapper private key
+    QByteArray privateKey;
+    BinaryStream privateStream(&privateKey);
+
+    // integrity check value
+    privateStream.write(m_check);
+    privateStream.write(m_check);
+
+    writePrivate(privateStream);
+
+    // padding for unencrypted key
+    for (quint8 i = 1; i <= privateKey.size() % 8; i++) {
+        privateStream.write(i);
+    }
+
+    stream.writeString(privateKey);
+
+    // encode to PEM format
+    QString out;
+    out += "-----BEGIN OPENSSH PRIVATE KEY-----\n";
+
+    auto base64Key = QString::fromUtf8(sshKey.toBase64());
+    for (int i = 0; i < base64Key.size(); i += 70) {
+        out += base64Key.midRef(i, 70);
+        out += "\n";
+    }
+
+    out += "-----END OPENSSH PRIVATE KEY-----\n";
+    return out;
+}
+
 const QString OpenSSHKey::errorString() const
 {
     return m_error;
@@ -133,6 +195,11 @@ const QString OpenSSHKey::errorString() const
 void OpenSSHKey::setType(const QString& type)
 {
     m_type = type;
+}
+
+void OpenSSHKey::setCheck(quint32 check)
+{
+    m_check = check;
 }
 
 void OpenSSHKey::setPublicData(const QByteArray& data)
@@ -310,9 +377,16 @@ bool OpenSSHKey::openKey(const QString& passphrase)
     QByteArray rawData = m_rawData;
 
     if (m_cipherName != "none") {
-        auto cipherMode = SymmetricCipher::stringToMode(m_cipherName);
+        QString l_cipherName(m_cipherName);
+        if (l_cipherName.endsWith(OPENSSH_CIPHER_SUFFIX)) {
+            l_cipherName.remove(OPENSSH_CIPHER_SUFFIX);
+        }
+        auto cipherMode = SymmetricCipher::stringToMode(l_cipherName);
         if (cipherMode == SymmetricCipher::InvalidMode) {
-            m_error = tr("Unknown cipher: %1").arg(m_cipherName);
+            m_error = tr("Unknown cipher: %1").arg(l_cipherName);
+            return false;
+        } else if (cipherMode == SymmetricCipher::Aes256_GCM) {
+            m_error = tr("AES-256/GCM is currently not supported");
             return false;
         }
 
@@ -325,7 +399,7 @@ bool OpenSSHKey::openKey(const QString& passphrase)
             }
 
             int keySize = cipher->keySize(cipherMode);
-            int blockSize = 16;
+            int ivSize = cipher->ivSize(cipherMode);
 
             BinaryStream optionStream(&m_kdfOptions);
 
@@ -335,7 +409,7 @@ bool OpenSSHKey::openKey(const QString& passphrase)
             optionStream.readString(salt);
             optionStream.read(rounds);
 
-            QByteArray decryptKey(keySize + blockSize, '\0');
+            QByteArray decryptKey(keySize + ivSize, '\0');
             try {
                 auto baPass = passphrase.toUtf8();
                 auto pwhash = Botan::PasswordHashFamily::create_or_throw("Bcrypt-PBKDF")->from_iterations(rounds);
@@ -351,7 +425,7 @@ bool OpenSSHKey::openKey(const QString& passphrase)
             }
 
             keyData = decryptKey.left(keySize);
-            ivData = decryptKey.right(blockSize);
+            ivData = decryptKey.right(ivSize);
         } else if (m_kdfName == "md5") {
             if (m_cipherIV.length() < 8) {
                 m_error = tr("Cipher IV is too short for MD5 kdf");
@@ -420,6 +494,8 @@ bool OpenSSHKey::openKey(const QString& passphrase)
             m_error = tr("Decryption failed, wrong passphrase?");
             return false;
         }
+
+        m_check = checkInt1;
 
         return readPrivate(keyStream);
     }

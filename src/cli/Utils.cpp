@@ -329,6 +329,8 @@ namespace Utils
 
             if (clipProcess->exitCode() == EXIT_SUCCESS) {
                 return EXIT_SUCCESS;
+            } else {
+                failedProgramNames.append(prog.first);
             }
         }
 
@@ -384,7 +386,7 @@ namespace Utils
         if (fieldName == TagsFieldName) {
             return entry->tags();
         }
-        return QString("");
+        return "";
     }
 
     QStringList findAttributes(const EntryAttributes& attributes, const QString& name)
@@ -413,7 +415,7 @@ namespace Utils
      *
      * @param path Path to the key file to be loaded
      * @param fileKey Resulting fileKey
-     * @return true if the key file was loaded succesfully
+     * @return true if the key file was loaded successfully
      */
     bool loadFileKey(const QString& path, QSharedPointer<FileKey>& fileKey)
     {

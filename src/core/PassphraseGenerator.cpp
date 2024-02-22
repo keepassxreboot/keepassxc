@@ -116,7 +116,7 @@ QString PassphraseGenerator::generatePassphrase() const
 
     // In case there was an error loading the wordlist
     if (m_wordlist.length() == 0) {
-        return QString();
+        return {};
     }
 
     QStringList words;

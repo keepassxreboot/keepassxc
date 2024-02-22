@@ -250,6 +250,10 @@ AutoTypeAction::Result AutoTypeExecutorMac::execType(const AutoTypeKey* action)
             int ch = action->character.toUpper().toLatin1();
             m_platform->sendKey(static_cast<Qt::Key>(ch), true, action->modifiers);
             m_platform->sendKey(static_cast<Qt::Key>(ch), false, action->modifiers);
+        } else if (mode == Mode::VIRTUAL) {
+            int ch = action->character.toLatin1();
+            m_platform->sendKey(static_cast<Qt::Key>(ch), true, action->modifiers);
+            m_platform->sendKey(static_cast<Qt::Key>(ch), false, action->modifiers);
         } else {
             m_platform->sendChar(action->character, true);
             m_platform->sendChar(action->character, false);
@@ -263,8 +267,8 @@ AutoTypeAction::Result AutoTypeExecutorMac::execType(const AutoTypeKey* action)
 AutoTypeAction::Result AutoTypeExecutorMac::execClearField(const AutoTypeClearField* action)
 {
     Q_UNUSED(action);
-    execType(new AutoTypeKey(Qt::Key_Up, Qt::ControlModifier));
-    execType(new AutoTypeKey(Qt::Key_Down, Qt::ControlModifier | Qt::ShiftModifier));
+    execType(new AutoTypeKey(Qt::Key_Left, Qt::ControlModifier));
+    execType(new AutoTypeKey(Qt::Key_Right, Qt::ControlModifier | Qt::ShiftModifier));
     execType(new AutoTypeKey(Qt::Key_Backspace));
     return AutoTypeAction::Result::Ok();
 }

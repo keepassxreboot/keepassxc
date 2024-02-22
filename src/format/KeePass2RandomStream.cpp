@@ -50,7 +50,7 @@ QByteArray KeePass2RandomStream::randomBytes(int size, bool* ok)
         if (m_buffer.size() == m_offset) {
             if (!loadBlock()) {
                 *ok = false;
-                return QByteArray();
+                return {};
             }
         }
 
@@ -71,7 +71,7 @@ QByteArray KeePass2RandomStream::process(const QByteArray& data, bool* ok)
     QByteArray randomData = randomBytes(data.size(), &randomBytesOk);
     if (!randomBytesOk) {
         *ok = false;
-        return QByteArray();
+        return {};
     }
 
     QByteArray result;

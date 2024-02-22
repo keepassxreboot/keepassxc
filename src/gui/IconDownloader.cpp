@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 #include "IconDownloader.h"
 #include "core/Config.h"
 #include "core/NetworkManager.h"
+#include "core/UrlTools.h"
 
 #include <QBuffer>
 #include <QHostInfo>
@@ -39,37 +40,6 @@ IconDownloader::~IconDownloader()
 {
     abortDownload();
 }
-
-namespace
-{
-    // Try to get the 2nd level domain of the host part of a QUrl. For example,
-    // "foo.bar.example.com" would become "example.com", and "foo.bar.example.co.uk"
-    // would become "example.co.uk".
-    QString getSecondLevelDomain(const QUrl& url)
-    {
-        QString fqdn = url.host();
-        fqdn.truncate(fqdn.length() - url.topLevelDomain().length());
-        QStringList parts = fqdn.split('.');
-        QString newdom = parts.takeLast() + url.topLevelDomain();
-        return newdom;
-    }
-
-    QUrl convertVariantToUrl(const QVariant& var)
-    {
-        QUrl url;
-        if (var.canConvert<QUrl>()) {
-            url = var.toUrl();
-        }
-        return url;
-    }
-
-    QUrl getRedirectTarget(QNetworkReply* reply)
-    {
-        QVariant var = reply->attribute(QNetworkRequest::RedirectionTargetAttribute);
-        QUrl url = convertVariantToUrl(var);
-        return url;
-    }
-} // namespace
 
 void IconDownloader::setUrl(const QString& entryUrl)
 {
@@ -114,7 +84,7 @@ void IconDownloader::setUrl(const QString& entryUrl)
     // Determine the second-level domain, if available
     QString secondLevelDomain;
     if (!hostIsIp) {
-        secondLevelDomain = getSecondLevelDomain(url);
+        secondLevelDomain = urlTools()->getBaseDomainFromUrl(url.toString());
     }
 
     // Start with the "fallback" url (if enabled) to try to get the best favicon
@@ -202,7 +172,7 @@ void IconDownloader::fetchFinished()
     QString url = m_url;
 
     bool error = (m_reply->error() != QNetworkReply::NoError);
-    QUrl redirectTarget = getRedirectTarget(m_reply);
+    QUrl redirectTarget = urlTools()->getRedirectTarget(m_reply);
 
     m_reply->deleteLater();
     m_reply = nullptr;

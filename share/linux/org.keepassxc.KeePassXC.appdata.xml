@@ -5,9 +5,6 @@
     <name>KeePassXC</name>
     <metadata_license>CC-BY-3.0</metadata_license>
     <project_license>GPL-3.0+</project_license>
-    <mimetypes>
-        <mimetype>application/x-keepass2</mimetype>
-    </mimetypes>
     <summary>Community-driven port of the Windows application “KeePass Password Safe”</summary>
     <summary xml:lang="de">Von der Community entwickelter Port der Windows Anwendung “KeePass Password Safe”</summary>
     <developer_name>KeePassXC Team</developer_name>
@@ -37,28 +34,86 @@
 
     <screenshots>
         <screenshot type="default">
-            <image>https://keepassxc.org/images/screenshots/thumbs/welcome_screen.png</image>
-            <caption>Create, Import or Open Databases</caption>
-        </screenshot>
-        <screenshot>
-            <image>https://keepassxc.org/images/screenshots/thumbs/database_view.png</image>
+            <image>https://keepassxc.org/assets/img/screenshots/database_view.png</image>
             <caption>Organize with Groups and Entries</caption>
         </screenshot>
         <screenshot>
-            <image>https://keepassxc.org/images/screenshots/thumbs/edit_entry.png</image>
-            <caption>Database Entry</caption>
+            <image>https://keepassxc.org/assets/img/screenshots/unlock_database.png</image>
+            <caption>Unlock database</caption>
         </screenshot>
         <screenshot>
-            <image>https://keepassxc.org/images/screenshots/thumbs/edit_entry_icons.png</image>
+            <image>https://keepassxc.org/assets/img/screenshots/edit_entry_icons.png</image>
             <caption>Icon Selection for Entry</caption>
         </screenshot>
         <screenshot>
-            <image>https://keepassxc.org/images/screenshots/thumbs/password_generator_advanced.png</image>
+            <image>https://keepassxc.org/assets/img/screenshots/password_generator_advanced.png</image>
             <caption>Password Generator</caption>
         </screenshot>
     </screenshots>
 
     <releases>
+        <release version="2.7.6" date="2023-08-15">
+            <description>
+                <ul>
+                    <li>Significant improvement to visual when drag/drop entries [#9698]</li>
+                    <li>Automatically prompt for Quick Unlock when showing unlock dialog [#9697]</li>
+                    <li>Improve colorful lock icon [#9632]</li>
+                    <li>Ability to search by entry UUID [#9571]</li>
+                    <li>Add challenge-response support for NitroKey 3 [#9631]</li>
+                    <li>Auto-Type: Disable entry level Auto-Type when disabled at group/entry [#9672]</li>
+                    <li>Browser: Show warning when adding duplicate URL's to entry [#9588][#9635]</li>
+                    <li>Browser: Improve error message when proxy cannot be found [#9385]</li>
+                    <li>Fix crash on exit on macOS [#9620]</li>
+                    <li>Fix crash on search if entry doesn't have a group [#9633]</li>
+                    <li>Fix several issues with Quick Unlock [#9697]</li>
+                    <li>Enable save button when not auto-saving non-data changes [#9634]</li>
+                    <li>Several UI/UX fixes [#9647]</li>
+                    <li>Move toolbar back to top of window when disabling movement [#9699]</li>
+                    <li>Browser: Fix closing password generator dialog with X button [#9636]</li>
+                    <li>Browser: Fix handling of expired credentials [#9595]</li>
+                    <li>Windows: Prevent white flicker when launching application [#9637]</li>
+                    <li>Linux: Fix warning message about allow screencapture [#9638]</li>
+                    <li>FdoSecrets: Fix access confirmation dialog showing even when disabled [#9690]</li>
+                </ul>
+            </description>
+        </release>
+        <release version="2.7.5" date="2023-05-14">
+            <description>
+                <ul>
+                    <li>Add menu option to allow screenshots [#8841]</li>
+                    <li>Add support for Botan 3 [#9388]</li>
+                    <li>Increase max TOTP step to 24 hours [#9149]</li>
+                    <li>Improve HTML export layout [#8987]</li>
+                    <li>Turn search reset off by default [#9153]</li>
+                    <li>Use QClipboard::clear() instead of setting blank text [#9148]</li>
+                    <li>Hide group column header choice when not in search [#9171]</li>
+                    <li>Improve look of KeePassXC logo and icons [#9355]</li>
+                    <li>Add keyboard shortcuts for app and database settings [#9007]</li>
+                    <li>Hide rename button from attachments preview panel [#8842]</li>
+                    <li>Linux: Set SingleMainWindow in .desktop file [#7430]</li>
+                    <li>Fix crash when search clears while creating new entry [#9230]</li>
+                    <li>Fix crash when using Windows Hello in a Remote Desktop session [#9006]</li>
+                    <li>Fix crash in Group Edit after enabling Browser Integration [#8778]</li>
+                    <li>Fix canceling quick unlock when it is unavailable [#9034]</li>
+                    <li>Set password input field font correctly [#8732]</li>
+                    <li>Greatly improve performance when rendering entry view [#9398]</li>
+                    <li>Fix various accessibility issues [#9138]</li>
+                    <li>Fix arrows size when expand/collapse a group [#9096]</li>
+                    <li>Select the clone instead of the original after cloning an entry [#9070]</li>
+                    <li>Fix bugs with preview widget [#9170]</li>
+                    <li>Fix status bar update when switching to other DB [#9073]</li>
+                    <li>Fix database settings spin box bug [#9101]</li>
+                    <li>Fix Ctrl+Tab shortcut to cycle databases in unlock dialog [#8839]</li>
+                    <li>Fix TOTP QR code maintaining square ratio [#9027]</li>
+                    <li>Fix Auto-Type configuration page on custom sequence selection [#8752]</li>
+                    <li>Fix unexpected behavior of `--lock` when KeePassXC is not running [#8889]</li>
+                    <li>Make open folder icon exempt from "Apply group icon to entry" [#9205]</li>
+                    <li>Allow setting default file open directory with env var [#9192]</li>
+                    <li>SSH Agent: Fix support for AES-256/GCM openssh keys [#8968]</li>
+                    <li>Browser: Fix Native Messaging script path with BSD OS's [#8835]</li>
+                </ul>
+            </description>
+        </release>
         <release version="2.7.4" date="2022-10-29">
             <description>
                 <ul>
@@ -71,7 +126,7 @@
                     <li>Browser: Revert code causing connection problems [#8665]</li>
                     <li>Browser: Fix socket file symbolic link on Linux [#8656]</li>
                     <li>Flatpak: Fix launching browser proxy service [#8680]</li>
-                    <li>SSH Agent: Fix paegent support on Windows [#8619]</li>
+                    <li>SSH Agent: Fix pageant support on Windows [#8619]</li>
                 </ul>
             </description>
         </release>
@@ -941,7 +996,7 @@
                     <li>Compare window title to entry URLs [#556]</li>
                     <li>Implemented inline error messages [#162]</li>
                     <li>Ignore group expansion and other minor changes when making database "dirty" [#464]</li>
-                    <li>Updated license and copyright information on souce files [#632]</li>
+                    <li>Updated license and copyright information on source files [#632]</li>
                     <li>Added contributors list to about dialog [#629]</li>
                 </ul>
             </description>

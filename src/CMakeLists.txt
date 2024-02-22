@@ -1,4 +1,4 @@
-#  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+#  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
 #  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
 #
 #  This program is free software: you can redistribute it and/or modify
@@ -59,7 +59,9 @@ set(keepassx_SOURCES
         core/TimeDelta.cpp
         core/TimeInfo.cpp
         core/Tools.cpp
+        core/Totp.cpp
         core/Translator.cpp
+        core/UrlTools.cpp
         cli/Utils.cpp
         cli/TextStream.cpp
         crypto/Crypto.cpp
@@ -96,6 +98,7 @@ set(keepassx_SOURCES
         gui/styles/dark/DarkStyle.cpp
         gui/styles/light/LightStyle.cpp
         gui/AboutDialog.cpp
+        gui/ActionCollection.cpp
         gui/Application.cpp
         gui/CategoryListWidget.cpp
         gui/Clipboard.cpp
@@ -128,6 +131,7 @@ set(keepassx_SOURCES
         gui/SearchWidget.cpp
         gui/SortFilterHideProxyModel.cpp
         gui/SquareSvgWidget.cpp
+        gui/ShortcutSettingsPage.cpp
         gui/TotpSetupDialog.cpp
         gui/TotpDialog.cpp
         gui/TotpExportSettingsDialog.cpp
@@ -178,6 +182,7 @@ set(keepassx_SOURCES
         gui/widgets/ElidedLabel.cpp
         gui/widgets/KPToolBar.cpp
         gui/widgets/PopupHelpWidget.cpp
+        gui/widgets/ShortcutWidget.cpp
         gui/wizard/NewDatabaseWizard.cpp
         gui/wizard/NewDatabaseWizardPage.cpp
         gui/wizard/NewDatabaseWizardPageMetaData.cpp
@@ -193,7 +198,7 @@ set(keepassx_SOURCES
         streams/qtiocompressor.cpp
         streams/StoreDataStream.cpp
         streams/SymmetricCipherStream.cpp
-        totp/totp.cpp)
+        quickunlock/QuickUnlockInterface.cpp)
 if(APPLE)
     set(keepassx_SOURCES
             ${keepassx_SOURCES}
@@ -208,6 +213,12 @@ if(UNIX AND NOT APPLE)
             ${keepassx_SOURCES}
             gui/osutils/nixutils/ScreenLockListenerDBus.cpp
             gui/osutils/nixutils/NixUtils.cpp)
+    if("${CMAKE_SYSTEM}" MATCHES "Linux")
+        set(keepassx_SOURCES
+                ${keepassx_SOURCES}
+                quickunlock/Polkit.cpp
+                quickunlock/PolkitDbusTypes.cpp)
+    endif()
     if(WITH_XC_X11)
         list(APPEND keepassx_SOURCES
             gui/osutils/nixutils/X11Funcs.cpp)
@@ -216,6 +227,21 @@ if(UNIX AND NOT APPLE)
             gui/org.keepassxc.KeePassXC.MainWindow.xml
             gui/MainWindow.h
             MainWindow)
+
+    set_source_files_properties(
+        quickunlock/dbus/org.freedesktop.PolicyKit1.Authority.xml
+        PROPERTIES
+        INCLUDE "quickunlock/PolkitDbusTypes.h"
+        )
+    qt5_add_dbus_interface(keepassx_SOURCES
+        quickunlock/dbus/org.freedesktop.PolicyKit1.Authority.xml
+        polkit_dbus
+    )
+
+    find_library(KEYUTILS_LIBRARIES NAMES keyutils)
+    if(NOT KEYUTILS_LIBRARIES)
+		message(FATAL_ERROR "Could not find libkeyutils")
+    endif()
 endif()
 if(WIN32)
     set(keepassx_SOURCES
@@ -223,7 +249,7 @@ if(WIN32)
             gui/osutils/winutils/ScreenLockListenerWin.cpp
             gui/osutils/winutils/WinUtils.cpp)
     if (MSVC)
-        list(APPEND keepassx_SOURCES winhello/WindowsHello.cpp)
+        list(APPEND keepassx_SOURCES quickunlock/WindowsHello.cpp)
     endif()
 endif()
 
@@ -236,6 +262,7 @@ set(keepassx_SOURCES_MAINEXE main.cpp)
 add_feature_info(Auto-Type WITH_XC_AUTOTYPE "Automatic password typing")
 add_feature_info(Networking WITH_XC_NETWORKING "Compile KeePassXC with network access code (e.g. for downloading website icons)")
 add_feature_info(KeePassXC-Browser WITH_XC_BROWSER "Browser integration with KeePassXC-Browser")
+add_feature_info(Passkeys WITH_XC_BROWSER_PASSKEYS "Passkeys support for browser integration")
 add_feature_info(SSHAgent WITH_XC_SSHAGENT "SSH agent integration compatible with KeeAgent")
 add_feature_info(KeeShare WITH_XC_KEESHARE "Sharing integration with KeeShare")
 add_feature_info(YubiKey WITH_XC_YUBIKEY "YubiKey HMAC-SHA1 challenge-response")
@@ -248,10 +275,21 @@ add_subdirectory(browser)
 add_subdirectory(proxy)
 if(WITH_XC_BROWSER)
     set(keepassxcbrowser_LIB keepassxcbrowser)
-    set(keepassx_SOURCES ${keepassx_SOURCES} gui/dbsettings/DatabaseSettingsWidgetBrowser.cpp)
-    set(keepassx_SOURCES ${keepassx_SOURCES} gui/entry/EntryURLModel.cpp)
-    set(keepassx_SOURCES ${keepassx_SOURCES} gui/reports/ReportsWidgetBrowserStatistics.cpp)
-    set(keepassx_SOURCES ${keepassx_SOURCES} gui/reports/ReportsPageBrowserStatistics.cpp)
+    set(keepassx_SOURCES ${keepassx_SOURCES}
+            gui/dbsettings/DatabaseSettingsWidgetBrowser.cpp
+            gui/entry/EntryURLModel.cpp
+            gui/reports/ReportsWidgetBrowserStatistics.cpp
+            gui/reports/ReportsPageBrowserStatistics.cpp)
+endif()
+
+if(WITH_XC_BROWSER_PASSKEYS)
+    set(keepassx_SOURCES ${keepassx_SOURCES}
+            gui/reports/ReportsWidgetPasskeys.cpp
+            gui/reports/ReportsPagePasskeys.cpp
+            gui/passkeys/PasskeyExporter.cpp
+            gui/passkeys/PasskeyExportDialog.cpp
+            gui/passkeys/PasskeyImporter.cpp
+            gui/passkeys/PasskeyImportDialog.cpp)
 endif()
 
 add_subdirectory(autotype)
@@ -284,7 +322,6 @@ set(autotype_SOURCES
         autotype/AutoTypeMatchView.cpp
         autotype/AutoTypeSelectDialog.cpp
         autotype/PickcharsDialog.cpp
-        autotype/ShortcutWidget.cpp
         autotype/WindowSelectComboBox.cpp)
 
 if(WIN32)
@@ -292,14 +329,14 @@ if(WIN32)
 endif()
 
 if(WITH_XC_YUBIKEY)
-    list(APPEND keepassx_SOURCES 
+    list(APPEND keepassx_SOURCES
         keys/drivers/YubiKey.h
-        keys/drivers/YubiKey.cpp 
-        keys/drivers/YubiKeyInterface.cpp 
-        keys/drivers/YubiKeyInterfaceUSB.cpp 
+        keys/drivers/YubiKey.cpp
+        keys/drivers/YubiKeyInterface.cpp
+        keys/drivers/YubiKeyInterfaceUSB.cpp
         keys/drivers/YubiKeyInterfacePCSC.cpp)
 else()
-    list(APPEND keepassx_SOURCES 
+    list(APPEND keepassx_SOURCES
         keys/drivers/YubiKey.h
         keys/drivers/YubiKeyStub.cpp)
 endif()
@@ -315,9 +352,9 @@ if(WITH_XC_NETWORKING)
 endif()
 
 if(APPLE)
-    list(APPEND keepassx_SOURCES touchid/TouchID.mm)
+    list(APPEND keepassx_SOURCES quickunlock/TouchID.mm)
     # TODO: Remove -Wno-error once deprecation warnings have been resolved.
-    set_source_files_properties(touchid/TouchID.mm PROPERTY COMPILE_FLAGS "-Wno-old-style-cast")
+    set_source_files_properties(quickunlock/TouchID.mm PROPERTY COMPILE_FLAGS "-Wno-old-style-cast")
 endif()
 
 configure_file(config-keepassx.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-keepassx.h)
@@ -338,11 +375,12 @@ target_link_libraries(keepassx_core
         Qt5::Concurrent
         Qt5::Network
         Qt5::Widgets
-        ${BOTAN2_LIBRARIES}
+        ${BOTAN_LIBRARIES}
         ${PCSC_LIBRARIES}
         ${ZXCVBN_LIBRARIES}
         ${ZLIB_LIBRARIES}
         ${ARGON2_LIBRARIES}
+        ${KEYUTILS_LIBRARIES}
         ${thirdparty_LIBRARIES}
 	)
 
@@ -441,19 +479,19 @@ if(WIN32)
     string(REGEX REPLACE "-.*$" "" KEEPASSXC_VERSION_CLEAN ${KEEPASSXC_VERSION})
 
     set(CPACK_GENERATOR "ZIP;WIX")
+    set(CPACK_COMPONENTS_ALL "")
     set(CPACK_STRIP_FILES OFF)
     set(CPACK_PACKAGE_FILE_NAME "${PROGNAME}-${KEEPASSXC_VERSION}-${OUTPUT_FILE_POSTFIX}")
     set(CPACK_PACKAGE_INSTALL_DIRECTORY ${PROGNAME})
     set(CPACK_PACKAGE_VERSION ${KEEPASSXC_VERSION_CLEAN})
     set(CPACK_PACKAGE_VENDOR "${PROGNAME} Team")
-    string(REGEX REPLACE "/" "\\\\\\\\" CPACK_PACKAGE_ICON "${CMAKE_SOURCE_DIR}/share/windows/installer-header.bmp")
     set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_BINARY_DIR}/INSTALLER_LICENSE.txt")
     set(CPACK_NSIS_ENABLE_UNINSTALL_BEFORE_INSTALL ON)
     set(CPACK_NSIS_MUI_ICON "${CMAKE_SOURCE_DIR}/share/windows/keepassxc.ico")
     set(CPACK_NSIS_MUI_UNIICON "${CPACK_NSIS_MUI_ICON}")
     set(CPACK_NSIS_INSTALLED_ICON_NAME "\\\\${PROGNAME}.exe")
-    string(REGEX REPLACE "/" "\\\\\\\\" CPACK_NSIS_MUI_WELCOMEFINISHPAGE_BITMAP "${CMAKE_SOURCE_DIR}/share/windows/installer-wizard.bmp")
-    set(CPACK_NSIS_MUI_UNWELCOMEFINISHPAGE_BITMAP "${CPACK_NSIS_MUI_WELCOMEFINISHPAGE_BITMAP}")
+    set(CPACK_NSIS_MUI_WELCOMEFINISHPAGE_BITMAP "${CMAKE_SOURCE_DIR}/share/windows/installer-wizard.png")
+    set(CPACK_NSIS_MUI_UNWELCOMEFINISHPAGE_BITMAP "${CMAKE_SOURCE_DIR}/share/windows/installer-wizard.png")
     set(CPACK_NSIS_CREATE_ICONS_EXTRA "CreateShortCut '$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\${PROGNAME}.lnk' '$INSTDIR\\\\${PROGNAME}.exe'")
     set(CPACK_NSIS_DELETE_ICONS_EXTRA "Delete '$SMPROGRAMS\\\\$START_MENU\\\\${PROGNAME}.lnk'")
     set(CPACK_NSIS_EXTRA_PREINSTALL_COMMANDS "ExecWait 'Taskkill /IM KeePassXC.exe'")
@@ -466,8 +504,8 @@ if(WIN32)
     set(CPACK_NSIS_MUI_FINISHPAGE_RUN "../${PROGNAME}.exe")
     set(CPACK_WIX_UPGRADE_GUID 88785A72-3EAE-4F29-89E3-BC6B19BA9A5B)
     set(CPACK_WIX_PRODUCT_ICON "${CMAKE_SOURCE_DIR}/share/windows/keepassxc.ico")
-    set(CPACK_WIX_UI_BANNER "${CMAKE_SOURCE_DIR}/share/windows/wix-banner.bmp")
-    set(CPACK_WIX_UI_DIALOG "${CMAKE_SOURCE_DIR}/share/windows/wix-dialog.bmp")
+    set(CPACK_WIX_UI_BANNER "${CMAKE_SOURCE_DIR}/share/windows/installer-banner.png")
+    set(CPACK_WIX_UI_DIALOG "${CMAKE_SOURCE_DIR}/share/windows/installer-wizard.png")
     set(CPACK_WIX_UI_REF "KPXC_InstallDir")
     set(CPACK_WIX_TEMPLATE "${CMAKE_SOURCE_DIR}/share/windows/wix-template.xml")
     set(CPACK_WIX_PATCH_FILE "${CMAKE_SOURCE_DIR}/share/windows/wix-patch.xml")
@@ -501,7 +539,7 @@ if(WIN32)
         # install OpenSSL library
         if(WITH_XC_NETWORKING)
             find_file(OPENSSL_DLL
-                    NAMES libssl-1_1.dll libssl-1_1-x64.dll
+                    NAMES libssl-3.dll libssl-3-x64.dll
                     HINTS "${OPENSSL_ROOT_DIR}/bin"
                     )
             if (NOT OPENSSL_DLL)
@@ -509,7 +547,7 @@ if(WIN32)
             endif()
 
             find_file(CRYPTO_DLL
-                    NAMES libcrypto-1_1.dll libcrypto-1_1-x64.dll
+                    NAMES libcrypto-3.dll libcrypto-3-x64.dll
                     HINTS "${OPENSSL_ROOT_DIR}/bin"
                     )
             if (NOT CRYPTO_DLL)
@@ -532,5 +570,5 @@ if(WIN32)
 endif()
 
 # The install commands in this subdirectory will be executed after all the install commands in the
-# current scope are ran. It is required for correct functtioning of macdeployqt.
+# current scope are ran. It is required for correct functioning of macdeployqt.
 add_subdirectory(post_install)

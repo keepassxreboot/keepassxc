@@ -102,6 +102,7 @@ public:
     bool hasNonDataChanges() const;
     bool isSaving();
 
+    QUuid publicUuid();
     QUuid uuid() const;
     QString filePath() const;
     QString canonicalFilePath() const;
@@ -171,6 +172,7 @@ signals:
     void databaseSaved();
     void databaseDiscarded();
     void databaseFileChanged();
+    void databaseNonDataChanged();
     void tagListUpdated();
 
 private:

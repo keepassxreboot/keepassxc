@@ -52,6 +52,7 @@ public:
 
     QList<DatabaseWidget*> getOpenDatabases();
     void restoreConfigState();
+    void setAllowScreenCapture(bool state);
 
     enum StackedWidgetIndex
     {
@@ -95,6 +96,8 @@ public slots:
     void restartApp(const QString& message);
 
 protected:
+    void showEvent(QShowEvent* event) override;
+    void hideEvent(QHideEvent* event) override;
     void closeEvent(QCloseEvent* event) override;
     void changeEvent(QEvent* event) override;
     void keyPressEvent(QKeyEvent* event) override;
@@ -151,8 +154,6 @@ private slots:
     void focusSearchWidget();
 
 private:
-    static void setShortcut(QAction* action, QKeySequence::StandardKey standard, int fallback = 0);
-
     static const QString BaseWindowTitle;
 
     void saveWindowInformation();
@@ -165,6 +166,7 @@ private:
     void dropEvent(QDropEvent* event) override;
 
     void initViewMenu();
+    void initActionCollection();
 
     const QScopedPointer<Ui::MainWindow> m_ui;
     SignalMultiplexer m_actionMultiplexer;
@@ -192,6 +194,7 @@ private:
     bool m_restartRequested = false;
     bool m_contextMenuFocusLock = false;
     bool m_showToolbarSeparator = false;
+    bool m_allowScreenCapture = false;
     qint64 m_lastFocusOutTime = 0;
     qint64 m_lastShowTime = 0;
     QTimer m_updateCheckTimer;

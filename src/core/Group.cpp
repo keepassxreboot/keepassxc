@@ -33,6 +33,7 @@
 #include <QtConcurrentFilter>
 
 const int Group::DefaultIconNumber = 48;
+const int Group::OpenFolderIconNumber = 49;
 const int Group::RecycleBinIconNumber = 43;
 const QString Group::RootAutoTypeSequence = "{USERNAME}{TAB}{PASSWORD}{ENTER}";
 
@@ -130,6 +131,19 @@ QString Group::tags() const
     return m_data.tags;
 }
 
+QString Group::fullPath() const
+{
+    QString fullPath;
+    auto group = this;
+
+    do {
+        fullPath.insert(0, "/" + group->name());
+        group = group->parentGroup();
+    } while (group);
+
+    return fullPath;
+}
+
 int Group::iconNumber() const
 {
     return m_data.iconNumber;
@@ -166,7 +180,7 @@ QString Group::effectiveAutoTypeSequence() const
     const Group* group = this;
     do {
         if (group->autoTypeEnabled() == Group::Disable) {
-            return QString();
+            return {};
         }
 
         sequence = group->defaultAutoTypeSequence();
@@ -272,6 +286,21 @@ void Group::setCustomDataTriState(const QString& key, const Group::TriState& val
         m_customData->remove(key);
         break;
     }
+}
+
+// Note that this returns an empty string both if the key is missing *or* if the key is present but value is empty.
+QString Group::resolveCustomDataString(const QString& key, bool checkParent) const
+{
+    // If not defined, check our parent up to the root group
+    if (!m_customData->contains(key)) {
+        if (!m_parent || !checkParent) {
+            return QString();
+        } else {
+            return m_parent->resolveCustomDataString(key);
+        }
+    }
+
+    return m_customData->value(key);
 }
 
 bool Group::equals(const Group* other, CompareItemOptions options) const
@@ -1132,7 +1161,8 @@ void Group::applyGroupIconOnCreateTo(Entry* entry)
         return;
     }
 
-    if (iconNumber() == Group::DefaultIconNumber && iconUuid().isNull()) {
+    if ((iconNumber() == Group::DefaultIconNumber || iconNumber() == Group::OpenFolderIconNumber)
+        && iconUuid().isNull()) {
         return;
     }
 

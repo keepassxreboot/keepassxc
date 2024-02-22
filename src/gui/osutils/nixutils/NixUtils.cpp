@@ -21,6 +21,7 @@
 
 #include <QApplication>
 #include <QDBusInterface>
+#include <QDebug>
 #include <QDir>
 #include <QPointer>
 #include <QStandardPaths>
@@ -83,9 +84,7 @@ NixUtils::NixUtils(QObject* parent)
     sessionBus.callWithCallback(msg, this, SLOT(handleColorSchemeRead(QDBusVariant)));
 }
 
-NixUtils::~NixUtils()
-{
-}
+NixUtils::~NixUtils() = default;
 
 bool NixUtils::isDarkMode() const
 {
@@ -324,4 +323,30 @@ void NixUtils::setColorScheme(QDBusVariant value)
     m_systemColorschemePref = static_cast<ColorschemePref>(value.variant().toInt());
     m_systemColorschemePrefExists = true;
     emit interfaceThemeChanged();
+}
+
+quint64 NixUtils::getProcessStartTime() const
+{
+    QString processStatPath = QString("/proc/%1/stat").arg(QCoreApplication::applicationPid());
+    QFile processStatFile(processStatPath);
+
+    if (!processStatFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "nixutils: failed to open " << processStatPath;
+        return 0;
+    }
+
+    QTextStream processStatStream(&processStatFile);
+    QString processStatInfo = processStatStream.readLine();
+    processStatFile.close();
+
+    auto startIndex = processStatInfo.indexOf(')', -1);
+    if (startIndex != -1) {
+        auto tokens = processStatInfo.midRef(startIndex + 2).split(' ');
+        if (tokens.size() >= 20) {
+            return tokens[19].toULongLong();
+        }
+    }
+
+    qDebug() << "nixutils: failed to parse " << processStatPath;
+    return 0;
 }

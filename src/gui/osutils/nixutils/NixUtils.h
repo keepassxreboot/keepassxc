@@ -49,6 +49,8 @@ public:
         return false;
     }
 
+    quint64 getProcessStartTime() const;
+
 private slots:
     void handleColorSchemeRead(QDBusVariant value);
     void handleColorSchemeChanged(QString ns, QString key, QDBusVariant value);
@@ -80,7 +82,7 @@ private:
         PreferLight
     };
     ColorschemePref m_systemColorschemePref = ColorschemePref::PreferNone;
-    bool m_systemColorschemePrefExists;
+    bool m_systemColorschemePrefExists = false;
 
     void setColorScheme(QDBusVariant value);
 

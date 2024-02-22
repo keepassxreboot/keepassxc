@@ -48,16 +48,14 @@ private:
 
 Icons* Icons::m_instance(nullptr);
 
-Icons::Icons()
-{
-}
+Icons::Icons() = default;
 
 QString Icons::applicationIconName()
 {
 #ifdef KEEPASSXC_DIST_FLATPAK
-    return QString("org.keepassxc.KeePassXC");
+    return "org.keepassxc.KeePassXC";
 #else
-    return QString("keepassxc");
+    return "keepassxc";
 #endif
 }
 
@@ -79,29 +77,27 @@ QString Icons::trayIconAppearance() const
     return iconAppearance;
 }
 
-QIcon Icons::trayIcon(QString style)
+QIcon Icons::trayIcon(bool unlocked)
 {
-    if (style == "unlocked") {
-        style.clear();
-    }
-    if (!style.isEmpty()) {
-        style = "-" + style;
+    QString suffix;
+    if (!unlocked) {
+        suffix = "-locked";
     }
 
     auto iconApperance = trayIconAppearance();
     if (!iconApperance.startsWith("monochrome")) {
-        return icon(QString("%1%2").arg(applicationIconName(), style), false);
+        return icon(QString("%1%2").arg(applicationIconName(), suffix), false);
     }
 
     QIcon i;
 #if defined(Q_OS_MACOS) || defined(Q_OS_WIN)
     if (osUtils->isStatusBarDark()) {
-        i = icon(QString("keepassxc-monochrome-light%1").arg(style), false);
+        i = icon(QString("keepassxc-monochrome-light%1").arg(suffix), false);
     } else {
-        i = icon(QString("keepassxc-monochrome-dark%1").arg(style), false);
+        i = icon(QString("keepassxc-monochrome-dark%1").arg(suffix), false);
     }
 #else
-    i = icon(QString("%1-%2%3").arg(applicationIconName(), iconApperance, style), false);
+    i = icon(QString("%1-%2%3").arg(applicationIconName(), iconApperance, suffix), false);
 #endif
 #if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
     // Set as mask to allow the operating system to recolour the tray icon. This may look weird
@@ -111,16 +107,6 @@ QIcon Icons::trayIcon(QString style)
     i.setIsMask(true);
 #endif
     return i;
-}
-
-QIcon Icons::trayIconLocked()
-{
-    return trayIcon("locked");
-}
-
-QIcon Icons::trayIconUnlocked()
-{
-    return trayIcon("unlocked");
 }
 
 AdaptiveIconEngine::AdaptiveIconEngine(QIcon baseIcon, QColor overrideColor)
@@ -258,7 +244,6 @@ QPixmap Icons::entryIconPixmap(const Entry* entry, IconSize size)
     if (entry->iconUuid().isNull()) {
         icon = databaseIcons()->icon(entry->iconNumber(), size);
     } else {
-        Q_ASSERT(entry->database());
         if (entry->database()) {
             icon = Icons::customIconPixmap(entry->database(), entry->iconUuid(), size);
         }
@@ -277,7 +262,6 @@ QPixmap Icons::groupIconPixmap(const Group* group, IconSize size)
     if (group->iconUuid().isNull()) {
         icon = databaseIcons()->icon(group->iconNumber(), size);
     } else {
-        Q_ASSERT(group->database());
         if (group->database()) {
             icon = Icons::customIconPixmap(group->database(), group->iconUuid(), size);
         }
@@ -301,13 +285,16 @@ QString Icons::imageFormatsFilter()
     QStringList formatsStringList;
 
     for (const QByteArray& format : formats) {
+        bool codePointClean = true;
         for (char codePoint : format) {
             if (!QChar(codePoint).isLetterOrNumber()) {
-                continue;
+                codePointClean = false;
+                break;
             }
         }
-
-        formatsStringList.append("*." + QString::fromLatin1(format).toLower());
+        if (codePointClean) {
+            formatsStringList.append("*." + QString::fromLatin1(format).toLower());
+        }
     }
 
     return formatsStringList.join(" ");

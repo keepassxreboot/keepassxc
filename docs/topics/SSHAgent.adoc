@@ -1,4 +1,4 @@
-= KeePassXC - SSH Agent integration
+= KeePassXC – SSH Agent integration
 include::.sharedheader[]
 :imagesdir: ../images
 

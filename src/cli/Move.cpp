@@ -30,9 +30,7 @@ Move::Move()
     positionalArguments.append({QString("group"), QObject::tr("Path of the destination group."), QString("")});
 }
 
-Move::~Move()
-{
-}
+Move::~Move() = default;
 
 int Move::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)
 {

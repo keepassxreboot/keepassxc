@@ -1,6 +1,6 @@
 /*
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,14 +21,16 @@
 
 #include "Application.h"
 #include "core/Config.h"
+#include "core/Totp.h"
 #include "gui/Clipboard.h"
 #include "gui/Font.h"
 #include "gui/Icons.h"
-#include "totp/totp.h"
 #if defined(WITH_XC_KEESHARE)
 #include "keeshare/KeeShare.h"
 #include "keeshare/KeeShareSettings.h"
 #endif
+
+#include <QScrollBar>
 
 namespace
 {
@@ -65,6 +67,8 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
     // Align notes text with label text
     m_ui->entryNotesTextEdit->document()->setDocumentMargin(0);
     m_ui->groupNotesTextEdit->document()->setDocumentMargin(0);
+
+    m_ui->entryTotpLabel->installEventFilter(this);
 
     connect(m_ui->entryTotpButton, SIGNAL(toggled(bool)), m_ui->entryTotpLabel, SLOT(setVisible(bool)));
     connect(m_ui->entryTotpButton, SIGNAL(toggled(bool)), m_ui->entryTotpProgress, SLOT(setVisible(bool)));
@@ -107,8 +111,18 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
 #endif
 }
 
-EntryPreviewWidget::~EntryPreviewWidget()
+EntryPreviewWidget::~EntryPreviewWidget() = default;
+
+bool EntryPreviewWidget::eventFilter(QObject* object, QEvent* event)
 {
+    if (object == m_ui->entryTotpLabel && event->type() == QEvent::MouseButtonDblClick) {
+        if (m_currentEntry && m_currentEntry->hasTotp()) {
+            clipboard()->setText(m_currentEntry->totp());
+            m_ui->entryTotpLabel->clearFocus();
+            return true;
+        }
+    }
+    return QWidget::eventFilter(object, event);
 }
 
 void EntryPreviewWidget::clear()
@@ -121,38 +135,50 @@ void EntryPreviewWidget::clear()
 
 void EntryPreviewWidget::setEntry(Entry* selectedEntry)
 {
+    if (m_currentEntry == selectedEntry) {
+        return;
+    }
+
     if (m_currentEntry) {
-        disconnect(m_currentEntry);
+        disconnect(m_currentEntry, nullptr, this, nullptr);
     }
     if (m_currentGroup) {
-        disconnect(m_currentGroup);
+        disconnect(m_currentGroup, nullptr, this, nullptr);
     }
 
     m_currentEntry = selectedEntry;
     m_currentGroup = nullptr;
 
-    if (!selectedEntry) {
+    if (!m_currentEntry) {
         hide();
         return;
     }
 
-    connect(selectedEntry, &Entry::modified, this, &EntryPreviewWidget::refresh);
+    connect(m_currentEntry, &Entry::modified, this, &EntryPreviewWidget::refresh);
     refresh();
+
+    if (m_currentEntry->hasTotp()) {
+        m_ui->entryTotpButton->setChecked(!config()->get(Config::Security_HideTotpPreviewPanel).toBool());
+    }
 }
 
 void EntryPreviewWidget::setGroup(Group* selectedGroup)
 {
+    if (m_currentGroup == selectedGroup) {
+        return;
+    }
+
     if (m_currentEntry) {
-        disconnect(m_currentEntry);
+        disconnect(m_currentEntry, nullptr, this, nullptr);
     }
     if (m_currentGroup) {
-        disconnect(m_currentGroup);
+        disconnect(m_currentGroup, nullptr, this, nullptr);
     }
 
     m_currentEntry = nullptr;
     m_currentGroup = selectedGroup;
 
-    if (!selectedGroup) {
+    if (!m_currentGroup) {
         hide();
         return;
     }
@@ -228,15 +254,15 @@ void EntryPreviewWidget::updateEntryTotp()
     Q_ASSERT(m_currentEntry);
     const bool hasTotp = m_currentEntry->hasTotp();
     m_ui->entryTotpButton->setVisible(hasTotp);
-    m_ui->entryTotpLabel->hide();
-    m_ui->entryTotpProgress->hide();
-    m_ui->entryTotpButton->setChecked(false);
 
     if (hasTotp) {
         m_totpTimer.start(1000);
         m_ui->entryTotpProgress->setMaximum(m_currentEntry->totpSettings()->step);
         updateTotpLabel();
     } else {
+        m_ui->entryTotpLabel->hide();
+        m_ui->entryTotpProgress->hide();
+        m_ui->entryTotpButton->setChecked(false);
         m_ui->entryTotpLabel->clear();
         m_totpTimer.stop();
     }
@@ -276,16 +302,19 @@ void EntryPreviewWidget::setPasswordVisible(bool state)
                 html += "<span style=\"color: " + QString(color) + ";\">" + QString(c).toHtmlEscaped() + "</span>";
             }
             // clang-format on
-            m_ui->entryPasswordLabel->setHtml(html);
+            m_ui->entryPasswordLabel->setText(html);
         } else {
             // No color
-            m_ui->entryPasswordLabel->setPlainText(password);
+            m_ui->entryPasswordLabel->setText(password);
         }
     } else if (password.isEmpty() && !config()->get(Config::Security_PasswordEmptyPlaceholder).toBool()) {
-        m_ui->entryPasswordLabel->setPlainText("");
+        m_ui->entryPasswordLabel->setText("");
     } else {
-        m_ui->entryPasswordLabel->setPlainText(QString("\u25cf").repeated(6));
+        m_ui->entryPasswordLabel->setText(QString("\u25cf").repeated(6));
     }
+
+    m_ui->passwordScrollArea->setMaximumHeight(m_ui->entryPasswordLabel->sizeHint().height()
+                                               + m_ui->passwordScrollArea->horizontalScrollBar()->sizeHint().height());
 
     m_ui->togglePasswordButton->setIcon(icons()->onOffIcon("password-show", state));
 }
@@ -458,7 +487,9 @@ void EntryPreviewWidget::updateEntryAutotypeTab()
     }
 
     m_ui->entryAutotypeTree->addTopLevelItems(items);
-    setTabEnabled(m_ui->entryTabWidget, m_ui->entryAutotypeTab, m_currentEntry->autoTypeEnabled());
+    setTabEnabled(m_ui->entryTabWidget,
+                  m_ui->entryAutotypeTab,
+                  m_currentEntry->autoTypeEnabled() && m_currentEntry->groupAutoTypeEnabled());
 }
 
 void EntryPreviewWidget::updateGroupHeaderLine()
@@ -555,6 +586,9 @@ void EntryPreviewWidget::setTabEnabled(QTabWidget* tabWidget, QWidget* widget, b
 
 QString EntryPreviewWidget::hierarchy(const Group* group, const QString& title)
 {
-    QString groupList = QString("%1").arg(group->hierarchy().join(" / "));
-    return title.isEmpty() ? groupList : QString("%1 / %2").arg(groupList, title);
+    if (group) {
+        QString groupList = QString("%1").arg(group->hierarchy().join(" / "));
+        return title.isEmpty() ? groupList : QString("%1 / %2").arg(groupList, title);
+    }
+    return {};
 }

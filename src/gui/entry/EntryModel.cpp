@@ -50,8 +50,10 @@ Entry* EntryModel::entryFromIndex(const QModelIndex& index) const
 QModelIndex EntryModel::indexFromEntry(Entry* entry) const
 {
     int row = m_entries.indexOf(entry);
-    Q_ASSERT(row != -1);
-    return index(row, 1);
+    if (row >= 0) {
+        return index(row, 1);
+    }
+    return {};
 }
 
 void EntryModel::setGroup(Group* group)
@@ -114,13 +116,13 @@ int EntryModel::columnCount(const QModelIndex& parent) const
         return 0;
     }
 
-    return 15;
+    return 16;
 }
 
 QVariant EntryModel::data(const QModelIndex& index, int role) const
 {
     if (!index.isValid()) {
-        return QVariant();
+        return {};
     }
 
     Entry* entry = entryFromIndex(index);
@@ -228,6 +230,13 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
 
             return result;
         }
+        case Color:
+            QColor backgroundColor;
+            backgroundColor.setNamedColor(entry->backgroundColor());
+            if (backgroundColor.isValid()) {
+                result = "▍";
+                return result;
+            }
         }
     } else if (role == Qt::UserRole) { // Qt::UserRole is used as sort role, see EntryView::EntryView()
         switch (index.column()) {
@@ -312,6 +321,15 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
         }
         return font;
     } else if (role == Qt::ForegroundRole) {
+
+        if (index.column() == Color) {
+            QColor backgroundColor;
+            backgroundColor.setNamedColor(entry->backgroundColor());
+            if (backgroundColor.isValid()) {
+                return backgroundColor;
+            }
+        }
+
         QColor foregroundColor;
         foregroundColor.setNamedColor(entry->foregroundColor());
         if (entry->hasReferences()) {
@@ -325,10 +343,12 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             return QVariant(foregroundColor);
         }
     } else if (role == Qt::BackgroundRole) {
-        QColor backgroundColor;
-        backgroundColor.setNamedColor(entry->backgroundColor());
-        if (backgroundColor.isValid()) {
-            return QVariant(backgroundColor);
+        if (m_backgroundColorVisible) {
+            QColor backgroundColor;
+            backgroundColor.setNamedColor(entry->backgroundColor());
+            if (backgroundColor.isValid()) {
+                return QVariant(backgroundColor);
+            }
         }
     } else if (role == Qt::ToolTipRole) {
         if (index.column() == PasswordStrength && !entry->password().isEmpty() && !entry->excludeFromReports()) {
@@ -336,7 +356,7 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
         }
     }
 
-    return QVariant();
+    return {};
 }
 
 QVariant EntryModel::headerData(int section, Qt::Orientation orientation, int role) const
@@ -412,6 +432,8 @@ QVariant EntryModel::headerData(int section, Qt::Orientation orientation, int ro
             return tr("Has attachments");
         case Totp:
             return tr("Has TOTP");
+        case Color:
+            return tr("Background Color");
         }
     }
 
@@ -593,4 +615,8 @@ void EntryModel::makeConnections(const Group* group)
     connect(group, SIGNAL(entryAboutToMoveDown(int)), SLOT(entryAboutToMoveDown(int)));
     connect(group, SIGNAL(entryMovedDown()), SLOT(entryMovedDown()));
     connect(group, SIGNAL(entryDataChanged(Entry*)), SLOT(entryDataChanged(Entry*)));
+}
+void EntryModel::setBackgroundColorVisible(bool visible)
+{
+    m_backgroundColorVisible = visible;
 }

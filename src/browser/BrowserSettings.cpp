@@ -200,6 +200,11 @@ QString BrowserSettings::proxyLocation()
     return m_nativeMessageInstaller.getProxyPath();
 }
 
+QString BrowserSettings::proxyLocationAsInstalled() const
+{
+    return m_nativeMessageInstaller.getInstalledProxyPath();
+}
+
 #ifdef QT_DEBUG
 QString BrowserSettings::customExtensionId()
 {
@@ -220,6 +225,16 @@ bool BrowserSettings::updateBinaryPath()
 void BrowserSettings::setUpdateBinaryPath(bool enabled)
 {
     config()->set(Config::Browser_UpdateBinaryPath, enabled);
+}
+
+bool BrowserSettings::allowGetDatabaseEntriesRequest()
+{
+    return config()->get(Config::Browser_AllowGetDatabaseEntriesRequest).toBool();
+}
+
+void BrowserSettings::setAllowGetDatabaseEntriesRequest(bool enabled)
+{
+    config()->set(Config::Browser_AllowGetDatabaseEntriesRequest, enabled);
 }
 
 bool BrowserSettings::allowExpiredCredentials()

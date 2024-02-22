@@ -1,4 +1,4 @@
-= KeePassXC - Download and Install
+= KeePassXC – Download and Install
 include::.sharedheader[]
 :imagesdir: ../images
 
@@ -8,9 +8,9 @@ KeePassXC is available for download for the following operating systems and plat
 
 * Microsoft Windows
 ** Portable and MSI Installer (64-bit and 32-bit)
-* Linux - Official Cross-Distribution Packages
+* Linux – Official Cross-Distribution Packages
 ** AppImage and Snap Package
-* Linux - Distribution-Specific Packages
+* Linux – Distribution-Specific Packages
 ** Ubuntu, Debian, Arch Linux, Gentoo, Fedora, CentOS, and OpenSUSE
 * macOS
 ** DMG Installer, Homebrew Cask
@@ -38,16 +38,16 @@ To install KeePassXC on Microsoft Windows, perform the following steps:
 .Install wizard
 image::install_wizard_1.png[,80%]
 
-2. Click Next and follow the simple instructions on the KeepPassXC Setup Wizard to complete the installation. You will have the option to choose your install location, add a desktop shortcut, and launch on startup.
+2. Click Next and follow the simple instructions on the KeePassXC Setup Wizard to complete the installation. You will have the option to choose your install location, add a desktop shortcut, and launch on startup.
 +
 .Install wizard (cont)
 image::install_wizard_2.png[,80%]
 
 The following options can be set when running the MSI in an unattended installation:
 
-* *LAUNCHAPPONEXIT* - Launch KeePassXC after install (default ON)
-* *AUTOSTARTPROGRAM* - KeePassXC will auto-start on login (default ON)
-* *INSTALLDESKTOPSHORTCUT* - A desktop icon will be installed (default OFF)
+* *LAUNCHAPPONEXIT* – Launch KeePassXC after install (default ON)
+* *AUTOSTARTPROGRAM* – KeePassXC will auto-start on login (default ON)
+* *INSTALLDESKTOPSHORTCUT* – A desktop icon will be installed (default OFF)
 
 Example: `msiexec.exe /q /i KeePassXC-Y.Y.Y-WinZZ.msi AUTOSTARTPROGRAM=0`
 
@@ -59,7 +59,7 @@ image::linux_store.png[]
 
 The Snap and Flatpak options are sandboxed applications (more secure). The Native option is installed with the operating system files. Read more about the limitations of these options here: https://keepassxc.org/docs/#faq-appsnap-yubikey[KeePassXC Snap FAQ]
 
-NOTE: KeePassXC stores a configuration file in `~/.cache` to remember window position, recent files, and other local settings. If you mount this folder to a tmpdisk you will lose settings after reboot.
+NOTE: KeePassXC stores a configuration file in `~/.local/state` to remember window position, recent files, and other local settings. If you mount this folder to a tmpdisk you will lose settings after reboot.
 
 === macOS
 To install the KeePassXC app on macOS, double click on the downloaded DMG file and use the click and drag option as shown:

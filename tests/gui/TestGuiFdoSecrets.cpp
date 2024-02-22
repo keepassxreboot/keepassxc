@@ -142,6 +142,8 @@ void TestGuiFdoSecrets::initTestCase()
     config()->set(Config::AutoSaveOnExit, false);
     config()->set(Config::GUI_ShowTrayIcon, true);
     config()->set(Config::UpdateCheckMessageShown, true);
+    // Disable quick unlock
+    config()->set(Config::Security_QuickUnlock, false);
     // Disable secret service integration (activate within individual tests to test the plugin)
     FdoSecrets::settings()->setEnabled(false);
     // activate within individual tests
@@ -418,7 +420,7 @@ void TestGuiFdoSecrets::testServiceSearchBlockingUnlockMultiple()
     VERIFY(service);
 
     // when there are multiple locked databases,
-    // repeatly show the dialog until there is at least one unlocked collection
+    // repeatedly show the dialog until there is at least one unlocked collection
     FdoSecrets::settings()->setUnlockBeforeSearch(true);
 
     // when only unlocking the one with no exposed group, a second dialog is shown
@@ -1877,6 +1879,8 @@ bool TestGuiFdoSecrets::driveNewDatabaseWizard()
             tmpFile.close();
             fileDialog()->setNextFileName(tmpFile.fileName());
 
+            // click Continue on the warning due to weak password
+            MessageBox::setNextAnswer(MessageBox::ContinueWithWeakPass);
             wizard->accept();
 
             tmpFile.remove();

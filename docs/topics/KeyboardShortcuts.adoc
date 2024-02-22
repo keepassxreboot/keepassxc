@@ -1,4 +1,4 @@
-= KeePassXC - Keyboard Shortcuts
+= KeePassXC – Keyboard Shortcuts
 include::.sharedheader[]
 :imagesdir: ../images
 
@@ -9,12 +9,15 @@ NOTE: On macOS please substitute `Ctrl` with `Cmd` (aka `⌘`).
 |===
 |Action                       | Keyboard Shortcut
 
+|Settings                     | Ctrl + ,
 |Open Database                | Ctrl + O
 |Save Database                | Ctrl + S
 |Save Database As             | Ctrl + Shift + S
 |New Database                 | Ctrl + Shift + N
 |Close Database               | Ctrl + W ; Ctrl + F4
 |Lock All Databases           | Ctrl + L
+|Database Settings            | Ctrl + Shift + ,
+|Database Reports             | Ctrl + Shift + R
 |Quit                         | Ctrl + Q
 |New Entry                    | Ctrl + N
 |Edit Entry                   | Enter ; Ctrl + E

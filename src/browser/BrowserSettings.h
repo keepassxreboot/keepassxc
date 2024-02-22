@@ -17,8 +17,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BROWSERSETTINGS_H
-#define BROWSERSETTINGS_H
+#ifndef KEEPASSXC_BROWSERSETTINGS_H
+#define KEEPASSXC_BROWSERSETTINGS_H
 
 #include "NativeMessageInstaller.h"
 
@@ -57,12 +57,15 @@ public:
     QString customProxyLocation();
     void setCustomProxyLocation(const QString& location);
     QString proxyLocation();
+    QString proxyLocationAsInstalled() const;
 #ifdef QT_DEBUG
     QString customExtensionId();
     void setCustomExtensionId(const QString& id);
 #endif
     bool updateBinaryPath();
     void setUpdateBinaryPath(bool enabled);
+    bool allowGetDatabaseEntriesRequest();
+    void setAllowGetDatabaseEntriesRequest(bool enabled);
     bool allowExpiredCredentials();
     void setAllowExpiredCredentials(bool enabled);
 
@@ -89,4 +92,4 @@ inline BrowserSettings* browserSettings()
     return BrowserSettings::instance();
 }
 
-#endif // BROWSERSETTINGS_H
+#endif // KEEPASSXC_BROWSERSETTINGS_H

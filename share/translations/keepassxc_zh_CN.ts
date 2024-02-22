@@ -81,16 +81,16 @@
         <translation>详情</translation>
     </message>
     <message>
+        <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
+        <translation>在请求客户端与 KeePassXC 同时运行期间，您的选择会被记住。</translation>
+    </message>
+    <message>
         <source>Remember</source>
         <translation>记住</translation>
     </message>
     <message>
         <source>Allow Selected</source>
         <translation>允许选定</translation>
-    </message>
-    <message>
-        <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
-        <translation>在请求客户端与 KeePassXC 同时运行期间，您的选择会被记住。</translation>
     </message>
     <message>
         <source>Deny All &amp;&amp; Future</source>
@@ -123,8 +123,12 @@
         <translation>使用 OpenSSH</translation>
     </message>
     <message>
+        <source>Use both agents</source>
+        <translation>同时使用两种代理</translation>
+    </message>
+    <message>
         <source>SSH_AUTH_SOCK override</source>
-        <translation>SSH_AUTH_SOCK 重写</translation>
+        <translation>SSH_AUTH_SOCK 覆写</translation>
     </message>
     <message>
         <source>SSH_AUTH_SOCK value</source>
@@ -144,15 +148,11 @@
     </message>
     <message>
         <source>No SSH Agent socket available. Either make sure SSH_AUTH_SOCK environment variable exists or set an override.</source>
-        <translation>没有可用的 SSH 代理套接字。确保环境变量 SSH_AUTH_SOCK 存在或已设置重写。</translation>
+        <translation>没有可用的 SSH 代理套接字。确保环境变量 SSH_AUTH_SOCK 存在或已设置覆写。</translation>
     </message>
     <message>
         <source>SSH Agent connection is working!</source>
         <translation>SSH 代理连接工作正常！</translation>
-    </message>
-    <message>
-        <source>Use both agents</source>
-        <translation>同时使用两种代理</translation>
     </message>
 </context>
 <context>
@@ -168,6 +168,10 @@
     <message>
         <source>Security</source>
         <translation>安全</translation>
+    </message>
+    <message>
+        <source>This setting cannot be enabled when minimize on unlock is enabled.</source>
+        <translation>如果启用解锁时最小化，则无法启用此设置。</translation>
     </message>
     <message>
         <source>Access error for config file %1</source>
@@ -255,6 +259,10 @@
     <message>
         <source>Remember previously used databases</source>
         <translation>记住以前使用的数据库</translation>
+    </message>
+    <message>
+        <source> recent files</source>
+        <translation>最近的文件</translation>
     </message>
     <message>
         <source>Load previously open databases on startup</source>
@@ -407,6 +415,10 @@
     <message>
         <source>Toolbar button style:</source>
         <translation>工具栏按钮样式：</translation>
+    </message>
+    <message>
+        <source>Show passwords in color</source>
+        <translation>密码以彩色显示</translation>
     </message>
     <message>
         <source>Use monospaced font for notes</source>
@@ -582,6 +594,10 @@
         <source>Use DuckDuckGo service to download website icons</source>
         <translation>使用 DuckDuckGo 来下载网站图标</translation>
     </message>
+    <message>
+        <source>Hide TOTP in the entry preview panel</source>
+        <translation>在条目预览面板隐藏 TOTP</translation>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
@@ -624,6 +640,10 @@
     <message>
         <source>Very long delay detected, max is %1: %2</source>
         <translation>检测到过长延迟，最大值为 %1：%2</translation>
+    </message>
+    <message>
+        <source>Entry does not have attribute for PICKCHARS: %1</source>
+        <translation>条目不包含用于 PICKCHARS 的属性：%1</translation>
     </message>
     <message>
         <source>Invalid conversion type: %1</source>
@@ -804,13 +824,13 @@ Ctrl+4 - 使用虚拟键盘（仅限 Windows）&lt;/p&gt;</translation>
         <source>Disable for this site</source>
         <translation>对此站点禁用</translation>
     </message>
+    <message>
+        <source>Undo</source>
+        <translation>撤销</translation>
+    </message>
 </context>
 <context>
     <name>BrowserEntrySaveDialog</name>
-    <message>
-        <source>KeePassXC-Browser Save Entry</source>
-        <translation>KeePassXC-Browser 保存条目</translation>
-    </message>
     <message>
         <source>Ok</source>
         <translation>确定</translation>
@@ -824,6 +844,63 @@ Ctrl+4 - 使用虚拟键盘（仅限 Windows）&lt;/p&gt;</translation>
 Please select the correct database for saving credentials.</source>
         <translation>您打开了多个数据库。
 请选择正确的数据库以保存凭据。</translation>
+    </message>
+    <message>
+        <source>KeePassXC - Select Database</source>
+        <translation>KeePassXC - 选择数据库</translation>
+    </message>
+</context>
+<context>
+    <name>BrowserPasskeysConfirmationDialog</name>
+    <message>
+        <source>KeePassXC: Passkey credentials</source>
+        <translation>KeePassXC: Passkey 凭据</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation>更新</translation>
+    </message>
+    <message>
+        <source>Authenticate</source>
+        <translation>认证</translation>
+    </message>
+    <message>
+        <source>Register new</source>
+        <translation>新注册</translation>
+    </message>
+    <message>
+        <source>Register</source>
+        <translation>注册</translation>
+    </message>
+    <message numerus="yes">
+        <source>Timeout in &lt;b&gt;%n&lt;/b&gt; seconds...</source>
+        <translation><numerusform>在 &lt;b&gt;%n&lt;/b&gt; 秒后超时…</numerusform></translation>
+    </message>
+    <message>
+        <source>Do you want to register Passkey for:</source>
+        <translation>您是否要注册 Passkey 到：</translation>
+    </message>
+    <message>
+        <source>%1 (%2)</source>
+        <translation>%1（%2）</translation>
+    </message>
+    <message>
+        <source>Existing Passkey found.
+Do you want to register a new Passkey for:</source>
+        <translation>找到已存在的 Passkey。
+您是否要注册新 Passkey 到：</translation>
+    </message>
+    <message>
+        <source>Select the existing Passkey and press Update to replace it.</source>
+        <translation>选择已存在的 Passkey 并按下更新来替换。</translation>
+    </message>
+    <message>
+        <source>Authenticate Passkey credentials for:</source>
+        <translation>认证 Passkey 凭据：</translation>
     </message>
 </context>
 <context>
@@ -891,50 +968,8 @@ Do you want to delete the entry?
 </translation>
     </message>
     <message>
-        <source>Converting attributes to custom data…</source>
-        <translation>将属性转换为自定义数据...</translation>
-    </message>
-    <message>
-        <source>Abort</source>
-        <translation>中止</translation>
-    </message>
-    <message>
-        <source>KeePassXC: Converted KeePassHTTP attributes</source>
-        <translation>KeePassXC：已转换为 KeePassHTTP 属性</translation>
-    </message>
-    <message>
-        <source>Successfully converted attributes from %1 entry(s).
-Moved %2 keys to custom data.</source>
-        <translation>已成功转换 %1 个条目的属性。
-已移动 %2 个密钥到自定义数据。</translation>
-    </message>
-    <message numerus="yes">
-        <source>Successfully moved %n keys to custom data.</source>
-        <translation><numerusform>已成功移动 %n 个密钥到自定义数据。</numerusform></translation>
-    </message>
-    <message>
-        <source>KeePassXC: No entry with KeePassHTTP attributes found!</source>
-        <translation>KeePassXC：找不到含有 KeePassHTTP 属性的条目！</translation>
-    </message>
-    <message>
-        <source>The active database does not contain an entry with KeePassHTTP attributes.</source>
-        <translation>当前数据库中不存在有 KeePassHTTP 属性的条目。</translation>
-    </message>
-    <message>
-        <source>Don&apos;t show this warning again</source>
-        <translation>不再显示此警告</translation>
-    </message>
-    <message>
-        <source>KeePassXC: Legacy browser integration settings detected</source>
-        <translation>KeePassXC：检测到旧版浏览器集成设置</translation>
-    </message>
-    <message>
-        <source>Your KeePassXC-Browser settings need to be moved into the database settings.
-This is necessary to maintain your current browser connections.
-Would you like to migrate your existing settings now?</source>
-        <translation>您的 KeePassXC-Browser 设置需要移动到数据库设置中。
-这对于保持当前浏览器连接是必需的。
-是否要立即迁移现有设置？</translation>
+        <source>%1 (Passkey)</source>
+        <translation>%1（Passkey）</translation>
     </message>
 </context>
 <context>
@@ -1143,14 +1178,6 @@ Would you like to migrate your existing settings now?</source>
         <translation>请参阅下面的浏览器扩展使用特殊说明</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location cannot be found!&lt;br/&gt;Browser integration WILL NOT WORK without the proxy application.</source>
-        <translation>&lt;b&gt;错误：&lt;/b&gt;找不到自定义代理位置！&lt;br/&gt;没有代理应用程序，浏览器集成将无法使用。</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation>&lt;b&gt;警告：&lt;/b&gt;以下选项可能有危险！</translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation>可执行文件</translation>
     </message>
@@ -1165,6 +1192,30 @@ Would you like to migrate your existing settings now?</source>
     <message>
         <source>Select native messaging host folder location</source>
         <translation>选择 Native Messaging 主机文件夹位置</translation>
+    </message>
+    <message>
+        <source>Allow keepassxc-proxy to list all entries with their title, URL and UUID in connected databases.</source>
+        <translation>允许 keepassxc-proxy 列出已连接的数据库中的所有条目，包括标题、URL 和 UUID。</translation>
+    </message>
+    <message>
+        <source>Allow limited access to all entries in connected databases (ignores site access restrictions)</source>
+        <translation>允许对已连接的数据库中所有条目的受限访问（忽略站点访问限制）</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Warning:&lt;/b&gt; Only adjust these settings if necessary.</source>
+        <translation>&lt;b&gt;警告：&lt;/b&gt;仅在必要时调整这些设置。 </translation>
+    </message>
+    <message>
+        <source>The custom proxy location does not exist.</source>
+        <translation>自定义代理位置不存在。</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location does not exist. Correct this in the advanced settings tab.</source>
+        <translation>&lt;b&gt;错误：&lt;/b&gt;自定义代理位置不存在。请前往高级设置页面修正。</translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The installed proxy executable is missing from the expected location: %1&lt;br/&gt;Please set a custom proxy location in the advanced settings or reinstall the application.</source>
+        <translation>&lt;b&gt;错误：&lt;/b&gt;已安装到此位置的代理程序可执行文件丢失：%1&lt;br/&gt;请在高级设置中修改自定义代理位置或重新安装应用。</translation>
     </message>
 </context>
 <context>
@@ -1539,14 +1590,6 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
         <translation>使用空密码重试</translation>
     </message>
     <message>
-        <source>Failed to authenticate with Windows Hello</source>
-        <translation>Windows Hello 验证失败</translation>
-    </message>
-    <message>
-        <source>Failed to authenticate with Touch ID</source>
-        <translation>Touch ID 验证失败</translation>
-    </message>
-    <message>
         <source>Failed to open key file: %1</source>
         <translation>无法打开密钥文件：%1</translation>
     </message>
@@ -1596,6 +1639,14 @@ If you do not have a key file, please leave the field empty.</source>
         <source>Select hardware key…</source>
         <translation>选择硬件密钥...</translation>
     </message>
+    <message>
+        <source>authenticate to access the database</source>
+        <translation>验证身份以访问数据库</translation>
+    </message>
+    <message>
+        <source>Failed to authenticate with Quick Unlock: %1</source>
+        <translation>快速解锁验证失败：%1</translation>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingWidgetMetaData</name>
@@ -1606,10 +1657,6 @@ If you do not have a key file, please leave the field empty.</source>
 </context>
 <context>
     <name>DatabaseSettingsDialog</name>
-    <message>
-        <source>Advanced Settings</source>
-        <translation>高级设置</translation>
-    </message>
     <message>
         <source>General</source>
         <translation>常规</translation>
@@ -1642,24 +1689,16 @@ If you do not have a key file, please leave the field empty.</source>
         <translation>KeePassXC-Browser 设置</translation>
     </message>
     <message>
-        <source>Convert KeePassHTTP data</source>
-        <translation>转换 KeePassHTTP 数据</translation>
-    </message>
-    <message>
-        <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
-        <translation>将旧版 KeePassHTTP 属性转换为兼容 KeePassXC-Browser 的自定义数据</translation>
-    </message>
-    <message>
-        <source>Refresh database root group ID</source>
-        <translation>刷新数据库根群组 ID</translation>
-    </message>
-    <message>
         <source>Disconnect all browsers</source>
         <translation>断开与所有浏览器的关联</translation>
     </message>
     <message>
         <source>Forget all site-specific settings on entries</source>
         <translation>取消条目上所有站点特定设置</translation>
+    </message>
+    <message>
+        <source>Refresh database root group ID</source>
+        <translation>刷新数据库根群组 ID</translation>
     </message>
     <message>
         <source>Stored keys</source>
@@ -1756,16 +1795,6 @@ Permissions to access entries will be revoked.</source>
         <translation>当前数据库中不包含具有权限的条目。</translation>
     </message>
     <message>
-        <source>Move KeePassHTTP attributes to custom data</source>
-        <translation>将 KeePassHTTP 属性移动到自定义数据</translation>
-    </message>
-    <message>
-        <source>Do you really want to convert all legacy browser integration data to the latest standard?
-This is necessary to maintain compatibility with the browser plugin.</source>
-        <translation>您确定要将所有旧版浏览器集成数据转换到最新标准吗？
-这对于保持与浏览器插件的兼容性是必要的。</translation>
-    </message>
-    <message>
         <source>Refresh database ID</source>
         <translation>刷新数据库 ID</translation>
     </message>
@@ -1820,14 +1849,6 @@ Are you sure you want to continue without a password?</source>
     <message>
         <source>Decryption Time:</source>
         <translation>解密时间：</translation>
-    </message>
-    <message>
-        <source>Change existing decryption time</source>
-        <translation>改变现在的解密时间</translation>
-    </message>
-    <message>
-        <source>Change</source>
-        <translation>更改</translation>
     </message>
     <message>
         <source>Decryption time in seconds</source>
@@ -1910,11 +1931,6 @@ Are you sure you want to continue without a password?</source>
         <translation>KDBX 3</translation>
     </message>
     <message>
-        <source>unchanged</source>
-        <comment>Database decryption time is unchanged</comment>
-        <translation>无变化</translation>
-    </message>
-    <message>
         <source>Number of rounds too high</source>
         <comment>Key transformation rounds</comment>
         <translation>次数过高</translation>
@@ -1965,6 +1981,18 @@ If you keep this number, your database will not be protected from brute force at
         <source> thread(s)</source>
         <comment>Threads for parallel execution (KDF settings)</comment>
         <translation><numerusform>线程</numerusform></translation>
+    </message>
+    <message>
+        <source>Encryption Settings:</source>
+        <translation>加密设置：</translation>
+    </message>
+    <message>
+        <source>Basic</source>
+        <translation>基本</translation>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translation>高级</translation>
     </message>
 </context>
 <context>
@@ -2025,16 +2053,8 @@ If you keep this number, your database will not be protected from brute force at
         <translation>每个条目最多历史记录数</translation>
     </message>
     <message>
-        <source>Max. history items:</source>
-        <translation>最大历史记录数：</translation>
-    </message>
-    <message>
         <source>Maximum size of history per entry</source>
         <translation>每个项目最大历史记录大小</translation>
-    </message>
-    <message>
-        <source>Max. history size:</source>
-        <translation>最大历史记录大小：</translation>
     </message>
     <message>
         <source> MiB</source>
@@ -2065,6 +2085,64 @@ This action is not reversible.</source>
     <message>
         <source> (old)</source>
         <translation>（旧的）</translation>
+    </message>
+    <message>
+        <source>When saving this setting or editing an entry
+the oldest history items of an entry will be
+removed such that only the specified amount
+of entries remain at most.</source>
+        <translation>在保存此设置或编辑条目时
+条目中最早的历史记录将会
+被删除，保证只有指定的数
+量被保留。</translation>
+    </message>
+    <message>
+        <source>Limit the amount of history items per entry to:</source>
+        <translation>限制每个条目的历史记录数量为：</translation>
+    </message>
+    <message>
+        <source>When saving this setting or editing an entry
+the oldest history items of an entry will be
+removed such that the remaining history items
+add up to the specified amount at most.</source>
+        <translation>在保存此设置或编辑条目时
+条目中最早的历史记录将会
+被删除，保证最多只剩余指
+定的数量。</translation>
+    </message>
+    <message>
+        <source>Limit the total size of history items per entry to:</source>
+        <translation>限制每个条目的历史记录总大小为：</translation>
+    </message>
+    <message>
+        <source>Move entries to a recycle bin group
+instead of deleting them from the database.
+Entries deleted from the recycle bin are
+removed from the database.</source>
+        <translation>将条目移动到回收站群组
+而非直接从数据库中删除。
+从回收站中删除的条目将
+会从数据库中删除。</translation>
+    </message>
+    <message>
+        <source>Autosave delay since last change</source>
+        <translation>修改后自动保存延迟</translation>
+    </message>
+    <message>
+        <source>Autosave delay</source>
+        <translation>自动保存延迟</translation>
+    </message>
+    <message>
+        <source>Autosave delay since last change in minutes</source>
+        <translation>修改后自动保存延迟分钟</translation>
+    </message>
+    <message>
+        <source> min</source>
+        <translation> 分</translation>
+    </message>
+    <message>
+        <source>Autosave delay since last change checkbox</source>
+        <translation>修改后自动保存延迟复选框</translation>
     </message>
 </context>
 <context>
@@ -2226,6 +2304,18 @@ This is definitely a bug, please report it to the developers.</source>
         <translation>写入 HTML 文件失败</translation>
     </message>
     <message>
+        <source>Export database to XML file</source>
+        <translation>导出数据库到 XML 文件</translation>
+    </message>
+    <message>
+        <source>XML file</source>
+        <translation>XML 文件</translation>
+    </message>
+    <message>
+        <source>Writing the XML file failed</source>
+        <translation>写入 XML 文件失败</translation>
+    </message>
+    <message>
         <source>Export Confirmation</source>
         <translation>导出确认</translation>
     </message>
@@ -2251,8 +2341,8 @@ This is definitely a bug, please report it to the developers.</source>
 <context>
     <name>DatabaseWidget</name>
     <message>
-        <source>Database Tags</source>
-        <translation>数据库标签</translation>
+        <source>Searches and Tags</source>
+        <translation>搜索与标签</translation>
     </message>
     <message>
         <source>Searching…</source>
@@ -2302,6 +2392,10 @@ This is definitely a bug, please report it to the developers.</source>
         <source>Expired entries</source>
         <translation>已过期条目</translation>
     </message>
+    <message numerus="yes">
+        <source>Entries expiring within %1 day(s)</source>
+        <translation><numerusform>将在 %1 天内过期的条目</numerusform></translation>
+    </message>
     <message>
         <source>No current database.</source>
         <translation>未打开任何数据库。</translation>
@@ -2325,6 +2419,18 @@ This is definitely a bug, please report it to the developers.</source>
     <message>
         <source>No Results</source>
         <translation>无结果</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>保存</translation>
+    </message>
+    <message>
+        <source>Enter a unique name or overwrite an existing search from the list:</source>
+        <translation>输入唯一名称或者覆盖列表中已存在的搜索：</translation>
+    </message>
+    <message>
+        <source>Save Search</source>
+        <translation>保存搜索</translation>
     </message>
     <message>
         <source>Lock Database?</source>
@@ -2415,10 +2521,6 @@ Disable safe saves and try again?</source>
     <message>
         <source>Could not find database file: %1</source>
         <translation>找不到数据库文件：%1</translation>
-    </message>
-    <message numerus="yes">
-        <source>Entries expiring within %1 day(s)</source>
-        <translation><numerusform>将在 ％1 天内过期的条目</numerusform></translation>
     </message>
 </context>
 <context>
@@ -2562,6 +2664,10 @@ Would you like to correct it?</source>
         <translation>隐藏</translation>
     </message>
     <message numerus="yes">
+        <source>%n hour(s)</source>
+        <translation><numerusform>%n 小时</numerusform></translation>
+    </message>
+    <message numerus="yes">
         <source>%n week(s)</source>
         <translation><numerusform>%n 周</numerusform></translation>
     </message>
@@ -2572,10 +2678,6 @@ Would you like to correct it?</source>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>%n 年</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n hour(s)</source>
-        <translation><numerusform>%n 小时</numerusform></translation>
     </message>
 </context>
 <context>
@@ -2696,8 +2798,18 @@ Would you like to correct it?</source>
         <translation>添加一个新的窗口关联</translation>
     </message>
     <message>
+        <source>+</source>
+        <comment>Add item</comment>
+        <translation>+</translation>
+    </message>
+    <message>
         <source>Remove selected window association</source>
         <translation>删除所选窗口关联</translation>
+    </message>
+    <message>
+        <source>-</source>
+        <comment>Remove item</comment>
+        <translation>-</translation>
     </message>
     <message>
         <source>Window title:</source>
@@ -2722,16 +2834,6 @@ Would you like to correct it?</source>
     <message>
         <source>Custom Auto-Type sequence for this window</source>
         <translation>自定义此窗口的自动输入序列</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <comment>Add item</comment>
-        <translation>+</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <comment>Remove item</comment>
-        <translation>-</translation>
     </message>
 </context>
 <context>
@@ -2835,20 +2937,8 @@ Would you like to correct it?</source>
         <translation>备注字段</translation>
     </message>
     <message>
-        <source>Toggle the checkbox to reveal the notes section.</source>
-        <translation>勾选以显示备注部分。</translation>
-    </message>
-    <message>
         <source>Username field</source>
         <translation>用户名字段</translation>
-    </message>
-    <message>
-        <source>Toggle notes visible</source>
-        <translation>显示或隐藏备注</translation>
-    </message>
-    <message>
-        <source>Notes:</source>
-        <translation>备注：</translation>
     </message>
     <message>
         <source>Expiration field</source>
@@ -2867,14 +2957,6 @@ Would you like to correct it?</source>
         <translation>预设</translation>
     </message>
     <message>
-        <source>Password:</source>
-        <translation>密码：</translation>
-    </message>
-    <message>
-        <source>URL:</source>
-        <translation>URL：</translation>
-    </message>
-    <message>
         <source>Url field</source>
         <translation>URL 字段</translation>
     </message>
@@ -2883,16 +2965,8 @@ Would you like to correct it?</source>
         <translation>从 URL 下载网站图标</translation>
     </message>
     <message>
-        <source>Title:</source>
-        <translation>标题：</translation>
-    </message>
-    <message>
         <source>Title field</source>
         <translation>标题字段</translation>
-    </message>
-    <message>
-        <source>Username:</source>
-        <translation>用户名：</translation>
     </message>
     <message>
         <source>Password field</source>
@@ -2903,16 +2977,40 @@ Would you like to correct it?</source>
         <translation>启用或禁用过期</translation>
     </message>
     <message>
-        <source>Expires:</source>
-        <translation>过期时间：</translation>
-    </message>
-    <message>
-        <source>Tags:</source>
-        <translation>标签：</translation>
-    </message>
-    <message>
         <source>Tags list</source>
         <translation>标签列表</translation>
+    </message>
+    <message>
+        <source>&amp;Username:</source>
+        <translation>用户名(&amp;U)：</translation>
+    </message>
+    <message>
+        <source>&amp;Title:</source>
+        <translation>标题(&amp;T)：</translation>
+    </message>
+    <message>
+        <source>&amp;Password:</source>
+        <translation>密码(&amp;P)：</translation>
+    </message>
+    <message>
+        <source>UR&amp;L:</source>
+        <translation>UR&amp;L：</translation>
+    </message>
+    <message>
+        <source>&amp;Notes:</source>
+        <translation>备注(&amp;N)：</translation>
+    </message>
+    <message>
+        <source>Toggle notes visibility</source>
+        <translation>显示或隐藏备注</translation>
+    </message>
+    <message>
+        <source>T&amp;ags:</source>
+        <translation>标签(&amp;A)：</translation>
+    </message>
+    <message>
+        <source>&amp;Expires:</source>
+        <translation>过期时间(&amp;E)：</translation>
     </message>
 </context>
 <context>
@@ -2954,19 +3052,6 @@ Would you like to correct it?</source>
         <translation>私钥</translation>
     </message>
     <message>
-        <source>External file</source>
-        <translation>外部文件</translation>
-    </message>
-    <message>
-        <source>Browser for key file</source>
-        <translation>浏览密钥文件</translation>
-    </message>
-    <message>
-        <source>Browse…</source>
-        <extracomment>Button for opening file dialog</extracomment>
-        <translation>浏览...</translation>
-    </message>
-    <message>
         <source>Attachment</source>
         <translation>附件</translation>
     </message>
@@ -2981,6 +3066,23 @@ Would you like to correct it?</source>
     <message>
         <source>Remove from agent</source>
         <translation>从代理中删除</translation>
+    </message>
+    <message>
+        <source>External file</source>
+        <translation>外部文件</translation>
+    </message>
+    <message>
+        <source>Browser for key file</source>
+        <translation>浏览密钥文件</translation>
+    </message>
+    <message>
+        <source>Browse…</source>
+        <extracomment>Button for opening file dialog</extracomment>
+        <translation>浏览...</translation>
+    </message>
+    <message>
+        <source>Generate</source>
+        <translation>生成</translation>
     </message>
     <message>
         <source>Select attachment file</source>
@@ -3018,10 +3120,6 @@ Would you like to correct it?</source>
         <translation>图标</translation>
     </message>
     <message>
-        <source>Browser Integration</source>
-        <translation>浏览器集成</translation>
-    </message>
-    <message>
         <source>Properties</source>
         <translation>属性</translation>
     </message>
@@ -3038,6 +3136,10 @@ Would you like to correct it?</source>
         <translation>群组有未保存的更改</translation>
     </message>
     <message>
+        <source>Browser Integration</source>
+        <translation>浏览器集成</translation>
+    </message>
+    <message>
         <source>Enable</source>
         <translation>启用</translation>
     </message>
@@ -3052,10 +3154,6 @@ Would you like to correct it?</source>
 </context>
 <context>
     <name>EditGroupWidgetBrowser</name>
-    <message>
-        <source>Edit Group</source>
-        <translation>编辑群组</translation>
-    </message>
     <message>
         <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
         <translation>这些设置会影响启用浏览器扩展时此群组的行为。</translation>
@@ -3091,6 +3189,14 @@ Would you like to correct it?</source>
     <message>
         <source>Do not use HTTP Auth toggle for this and sub groups</source>
         <translation>切换当前群组与子群组是否不用于 HTTP 认证</translation>
+    </message>
+    <message>
+        <source>Omit WWW subdomain from matching:</source>
+        <translation>匹配时省略 WWW 子域名：</translation>
+    </message>
+    <message>
+        <source>Omit WWW subdomain from matching toggle for this and sub groups</source>
+        <translation>切换当前群组与子群组是否在匹配时省略 WWW 子域名</translation>
     </message>
 </context>
 <context>
@@ -3515,7 +3621,7 @@ This may cause the affected plugins to malfunction.</source>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation><numerusform>您确定要删除 ％n 个附件吗？</numerusform></translation>
+        <translation><numerusform>您确定要删除 %n 个附件吗？</numerusform></translation>
     </message>
     <message>
         <source>Save attachments</source>
@@ -3796,6 +3902,10 @@ Error: %1</source>
         <source>Has TOTP</source>
         <translation>有 TOTP</translation>
     </message>
+    <message>
+        <source>Background Color</source>
+        <translation>背景色</translation>
+    </message>
 </context>
 <context>
     <name>EntryPreviewWidget</name>
@@ -3816,8 +3926,8 @@ Error: %1</source>
         <translation>密码</translation>
     </message>
     <message>
-        <source>Notes</source>
-        <translation>备注</translation>
+        <source>URL</source>
+        <translation>URL</translation>
     </message>
     <message>
         <source>Expiration</source>
@@ -3836,8 +3946,8 @@ Error: %1</source>
         <translation>用户名</translation>
     </message>
     <message>
-        <source>URL</source>
-        <translation>URL</translation>
+        <source>Notes</source>
+        <translation>备注</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -3888,6 +3998,10 @@ Error: %1</source>
         <translation>从不</translation>
     </message>
     <message>
+        <source>Double click to copy value</source>
+        <translation>双击复制值</translation>
+    </message>
+    <message>
         <source>Enabled</source>
         <translation>启用</translation>
     </message>
@@ -3895,12 +4009,20 @@ Error: %1</source>
         <source>Disabled</source>
         <translation>禁用</translation>
     </message>
+    <message>
+        <source>Double click to copy to clipboard</source>
+        <translation>双击复制到剪贴板</translation>
+    </message>
 </context>
 <context>
     <name>EntryURLModel</name>
     <message>
         <source>Invalid URL</source>
         <translation>无效 URL</translation>
+    </message>
+    <message>
+        <source>Duplicate URL</source>
+        <translation>重复 URL</translation>
     </message>
 </context>
 <context>
@@ -3916,6 +4038,10 @@ Error: %1</source>
     <message>
         <source>Reset to defaults</source>
         <translation>重置为默认值</translation>
+    </message>
+    <message numerus="yes">
+        <source>+ %1 entry(s)...</source>
+        <translation><numerusform>+ %1 项条目…</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4963,6 +5089,10 @@ Are you sure you want to continue with this file?</source>
         <translation>TOTP</translation>
     </message>
     <message>
+        <source>Tags</source>
+        <translation>标签</translation>
+    </message>
+    <message>
         <source>&amp;Groups</source>
         <translation>群组(&amp;G)</translation>
     </message>
@@ -5163,8 +5293,8 @@ Are you sure you want to continue with this file?</source>
         <translation>复制标题到剪贴板</translation>
     </message>
     <message>
-        <source>&amp;URL</source>
-        <translation>&amp;URL</translation>
+        <source>Copy &amp;URL</source>
+        <translation>复制 &amp;URL</translation>
     </message>
     <message>
         <source>Copy URL to clipboard</source>
@@ -5225,6 +5355,10 @@ Are you sure you want to continue with this file?</source>
     <message>
         <source>Copy &amp;TOTP</source>
         <translation>复制 &amp;TOTP</translation>
+    </message>
+    <message>
+        <source>Copy Password and TOTP</source>
+        <translation>复制密码和 TOTP</translation>
     </message>
     <message>
         <source>E&amp;mpty recycle bin</source>
@@ -5323,6 +5457,14 @@ Are you sure you want to continue with this file?</source>
         <translation>克隆群组...</translation>
     </message>
     <message>
+        <source>&amp;XML File…</source>
+        <translation>&amp;XML 文件…</translation>
+    </message>
+    <message>
+        <source>XML File…</source>
+        <translation>XML 文件…</translation>
+    </message>
+    <message>
         <source>Clear history</source>
         <translation>清空历史</translation>
     </message>
@@ -5353,6 +5495,10 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
 We recommend you use the AppImage available on our downloads page.</source>
         <translation>警告：您的 Qt 版本可能会导致 KeePassXC 在使用屏幕键盘时崩溃。我们建议您使用我们的下载页面上提供的 AppImage。</translation>
     </message>
+    <message>
+        <source>No Tags</source>
+        <translation>无标签</translation>
+    </message>
     <message numerus="yes">
         <source>Restore Entry(s)</source>
         <translation><numerusform>恢复条目</numerusform></translation>
@@ -5381,6 +5527,10 @@ We recommend you use the AppImage available on our downloads page.</source>
         <source>Quit KeePassXC</source>
         <translation>退出 KeePassXC</translation>
     </message>
+    <message numerus="yes">
+        <source>%1 Entry(s)</source>
+        <translation><numerusform>%1 项条目</numerusform></translation>
+    </message>
     <message>
         <source>Please present or touch your YubiKey to continue…</source>
         <translation>请感应或触摸您的 YubiKey 以继续…</translation>
@@ -5392,6 +5542,22 @@ We recommend you use the AppImage available on our downloads page.</source>
     <message>
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
         <translation>您必须重新启动应用才能应用此设置。要现在重新启动吗？</translation>
+    </message>
+    <message>
+        <source>Allow Screen Capture</source>
+        <translation>允许屏幕截图</translation>
+    </message>
+    <message>
+        <source>Passkeys…</source>
+        <translation>Passkey…</translation>
+    </message>
+    <message>
+        <source>Passkeys</source>
+        <translation>Passkey</translation>
+    </message>
+    <message>
+        <source>Import Passkey</source>
+        <translation>导入 Passkey</translation>
     </message>
 </context>
 <context>
@@ -5528,14 +5694,6 @@ We recommend you use the AppImage available on our downloads page.</source>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
         <translation>您可以在此处调整数据库加密设置。不用担心，您随时可以在数据库设置中更改它们。</translation>
-    </message>
-    <message>
-        <source>Advanced Settings</source>
-        <translation>高级设置</translation>
-    </message>
-    <message>
-        <source>Simple Settings</source>
-        <translation>简单设置</translation>
     </message>
 </context>
 <context>
@@ -5700,6 +5858,10 @@ We recommend you use the AppImage available on our downloads page.</source>
         <translation>未知加密：%1</translation>
     </message>
     <message>
+        <source>AES-256/GCM is currently not supported</source>
+        <translation>AES-256/GCM 目前不支持</translation>
+    </message>
+    <message>
         <source>Passphrase is required to decrypt this key</source>
         <translation>需要口令解密此密钥</translation>
     </message>
@@ -5765,26 +5927,170 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
 </context>
 <context>
-    <name>PasswordEdit</name>
+    <name>OpenSSHKeyGenDialog</name>
     <message>
-        <source>Passwords do not match</source>
-        <translation>密码不匹配</translation>
+        <source>SSH Key Generator</source>
+        <translation>SSH Key 生成器</translation>
     </message>
     <message>
-        <source>Passwords match so far</source>
-        <translation>密码目前匹配</translation>
+        <source>Type</source>
+        <translation>类型</translation>
     </message>
     <message>
-        <source>Toggle Password (%1)</source>
-        <translation>切换密码显示(%1)</translation>
+        <source>Bits</source>
+        <translation>比特</translation>
     </message>
     <message>
-        <source>Generate Password (%1)</source>
-        <translation>生成密码(%1)</translation>
+        <source>Comment</source>
+        <translation>注释</translation>
+    </message>
+</context>
+<context>
+    <name>PasskeyExportDialog</name>
+    <message>
+        <source>KeePassXC - Passkey Export</source>
+        <translation>KeePassXC: Passkey 导出</translation>
     </message>
     <message>
-        <source>Warning: Caps Lock enabled!</source>
-        <translation>警告：已启用大写锁定！</translation>
+        <source>Export the following Passkey entries.</source>
+        <translation>导出以下 Passkey 条目。</translation>
+    </message>
+    <message>
+        <source>Filenames will be generated with title and .passkey file extension.</source>
+        <translation>文件名将会以标题和 .passkey 扩展名生成。</translation>
+    </message>
+    <message>
+        <source>Export entries</source>
+        <translation>导出条目</translation>
+    </message>
+    <message>
+        <source>Export Selected</source>
+        <translation>导出选定</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <source>Export to folder</source>
+        <translation>导出到文件夹</translation>
+    </message>
+</context>
+<context>
+    <name>PasskeyExporter</name>
+    <message>
+        <source>KeePassXC: Passkey Export</source>
+        <translation>KeePassXC：Passkey 导出</translation>
+    </message>
+    <message>
+        <source>File &quot;%1.passkey&quot; already exists.
+Do you want to overwrite it?
+</source>
+        <translation>文件“%1.passkey”已经存在。
+您是否要覆盖它？
+</translation>
+    </message>
+    <message>
+        <source>Cannot open file</source>
+        <translation>无法打开文件</translation>
+    </message>
+    <message>
+        <source>Cannot open file &quot;%1&quot; for writing.</source>
+        <translation>无法打开文件“%1”以写入。</translation>
+    </message>
+    <message>
+        <source>Cannot write to file</source>
+        <translation>无法写入文件</translation>
+    </message>
+</context>
+<context>
+    <name>PasskeyImportDialog</name>
+    <message>
+        <source>KeePassXC - Passkey Import</source>
+        <translation>KeePassXC - Passkey 导入</translation>
+    </message>
+    <message>
+        <source>Do you want to import the Passkey?</source>
+        <translation>您是否要导入此 Passkey？</translation>
+    </message>
+    <message>
+        <source>URL: %1</source>
+        <translation>URL：%1</translation>
+    </message>
+    <message>
+        <source>Username: %1</source>
+        <translation>用户名：%1</translation>
+    </message>
+    <message>
+        <source>Use default group (Imported Passkeys)</source>
+        <translation>使用默认群组（导入的 Passkey）</translation>
+    </message>
+    <message>
+        <source>Group</source>
+        <translation>群组</translation>
+    </message>
+    <message>
+        <source>Database</source>
+        <translation>数据库</translation>
+    </message>
+    <message>
+        <source>Select Database</source>
+        <translation>选择数据库</translation>
+    </message>
+    <message>
+        <source>Import Passkey</source>
+        <translation>导入 Passkey</translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation>导入</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <source>Database: %1</source>
+        <translation>数据库：%1</translation>
+    </message>
+    <message>
+        <source>Group:</source>
+        <translation>群组：</translation>
+    </message>
+</context>
+<context>
+    <name>PasskeyImporter</name>
+    <message>
+        <source>Passkey file</source>
+        <translation>Passkey 文件</translation>
+    </message>
+    <message>
+        <source>All files</source>
+        <translation>所有文件</translation>
+    </message>
+    <message>
+        <source>Open Passkey file</source>
+        <translation>打开 Passkey 文件</translation>
+    </message>
+    <message>
+        <source>Cannot open file</source>
+        <translation>无法打开文件</translation>
+    </message>
+    <message>
+        <source>Cannot open file &quot;%1&quot; for reading.</source>
+        <translation>无法打开文件“%1”以读取。</translation>
+    </message>
+    <message>
+        <source>Cannot import Passkey</source>
+        <translation>无法导入 Passkey</translation>
+    </message>
+    <message>
+        <source>Cannot import Passkey file &quot;%1&quot;. Data is missing.</source>
+        <translation>无法导入 Passkey 文件“%1”。数据缺失。</translation>
+    </message>
+    <message>
+        <source>Cannot import Passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
+        <translation>无法导入 Passkey 文件“%1”。私钥缺失或损坏。</translation>
     </message>
 </context>
 <context>
@@ -6050,6 +6356,30 @@ We recommend you use the AppImage available on our downloads page.</source>
         <translation>熵：%1 比特</translation>
     </message>
     <message>
+        <source>Password Quality: %1</source>
+        <translation>密码强度：%1</translation>
+    </message>
+    <message>
+        <source>Poor</source>
+        <comment>Password quality</comment>
+        <translation>差劲</translation>
+    </message>
+    <message>
+        <source>Weak</source>
+        <comment>Password quality</comment>
+        <translation>较弱</translation>
+    </message>
+    <message>
+        <source>Good</source>
+        <comment>Password quality</comment>
+        <translation>良好</translation>
+    </message>
+    <message>
+        <source>Excellent</source>
+        <comment>Password quality</comment>
+        <translation>优秀</translation>
+    </message>
+    <message>
         <source>Confirm Delete Wordlist</source>
         <translation>确认删除词表</translation>
     </message>
@@ -6095,9 +6425,32 @@ Do you want to overwrite it?</source>
         <source>Special Characters</source>
         <translation>特殊字符</translation>
     </message>
+</context>
+<context>
+    <name>PasswordWidget</name>
     <message>
-        <source>Password Quality: %1</source>
-        <translation>密码强度：%1</translation>
+        <source>Passwords do not match</source>
+        <translation>密码不匹配</translation>
+    </message>
+    <message>
+        <source>Passwords match so far</source>
+        <translation>密码目前匹配</translation>
+    </message>
+    <message>
+        <source>Toggle Password (%1)</source>
+        <translation>切换密码显示(%1)</translation>
+    </message>
+    <message>
+        <source>Generate Password (%1)</source>
+        <translation>生成密码(%1)</translation>
+    </message>
+    <message>
+        <source>Warning: Caps Lock enabled!</source>
+        <translation>警告：已启用大写锁定！</translation>
+    </message>
+    <message>
+        <source>Quality: %1</source>
+        <translation>质量：%1</translation>
     </message>
     <message>
         <source>Poor</source>
@@ -6118,6 +6471,10 @@ Do you want to overwrite it?</source>
         <source>Excellent</source>
         <comment>Password quality</comment>
         <translation>优秀</translation>
+    </message>
+    <message>
+        <source>Toggle password visibilty using Control + H. Open the password generator using Control + G.</source>
+        <translation>使用 Control + H 显示或隐藏密码。使用 Control + G 打开密码生成器。</translation>
     </message>
 </context>
 <context>
@@ -6567,12 +6924,22 @@ Do you want to overwrite it?</source>
         <translation>提供的参数过多。</translation>
     </message>
     <message>
+        <source>Path of the database.</source>
+        <translation>数据库路径。</translation>
+    </message>
+    <message>
         <source>Target decryption time in MS for the database.</source>
         <translation>数据库的目标解密时间，单位为毫秒。</translation>
     </message>
     <message>
         <source>time</source>
         <translation>时间</translation>
+    </message>
+    <message>
+        <source>Set the key file for the database.
+This options is deprecated, use --set-key-file instead.</source>
+        <translation>设置数据库的密钥文件。
+此选项已弃用，请用 --set-key-file 代替。</translation>
     </message>
     <message>
         <source>Set the key file for the database.</source>
@@ -6585,10 +6952,6 @@ Do you want to overwrite it?</source>
     <message>
         <source>Create a new database.</source>
         <translation>创建新数据库。</translation>
-    </message>
-    <message>
-        <source>Path of the database.</source>
-        <translation>数据库路径。</translation>
     </message>
     <message>
         <source>Invalid decryption time %1.</source>
@@ -6633,6 +6996,158 @@ Do you want to overwrite it?</source>
     <message>
         <source>Successfully created new database.</source>
         <translation>已成功创建新数据库。</translation>
+    </message>
+    <message>
+        <source>Unset the password for the database.</source>
+        <translation>删除数据库的密码。</translation>
+    </message>
+    <message>
+        <source>Unset the key file for the database.</source>
+        <translation>删除数据库的密钥文件。</translation>
+    </message>
+    <message>
+        <source>Edit a database.</source>
+        <translation>编辑一个数据库。</translation>
+    </message>
+    <message>
+        <source>Cannot use %1 and %2 at the same time.</source>
+        <translation>无法同时使用 %1 和 %2。</translation>
+    </message>
+    <message>
+        <source>Could not change the database key.</source>
+        <translation>无法更改数据库密钥。</translation>
+    </message>
+    <message>
+        <source>Database was not modified.</source>
+        <translation>数据库未被修改。</translation>
+    </message>
+    <message>
+        <source>Writing the database failed: %1</source>
+        <translation>写入数据库失败：%1</translation>
+    </message>
+    <message>
+        <source>Successfully edited the database.</source>
+        <translation>已成功编辑数据库。</translation>
+    </message>
+    <message>
+        <source>Cannot remove password: The database does not have a password.</source>
+        <translation>无法删除密码：数据库不含密码。</translation>
+    </message>
+    <message>
+        <source>Cannot remove file key: The database does not have a file key.</source>
+        <translation>无法删除文件密钥：数据库不含文件密钥。</translation>
+    </message>
+    <message>
+        <source>Loading the new key file failed: %1</source>
+        <translation>加载新密钥文件失败：%1</translation>
+    </message>
+    <message>
+        <source>Found unexpected Key type %1</source>
+        <translation>发现意料之外的密钥类型 %1</translation>
+    </message>
+    <message>
+        <source>Cannot remove all the keys from a database.</source>
+        <translation>无法从数据库中删除所有密钥 。</translation>
+    </message>
+    <message>
+        <source>Show a database&apos;s information.</source>
+        <translation>显示数据库的信息。</translation>
+    </message>
+    <message>
+        <source>UUID: </source>
+        <translation>UUID：</translation>
+    </message>
+    <message>
+        <source>Name: </source>
+        <translation>名称：</translation>
+    </message>
+    <message>
+        <source>Description: </source>
+        <translation>描述：</translation>
+    </message>
+    <message>
+        <source>Cipher: </source>
+        <translation>加密：</translation>
+    </message>
+    <message>
+        <source>KDF: </source>
+        <translation>KDF：</translation>
+    </message>
+    <message>
+        <source>Recycle bin is enabled.</source>
+        <translation>回收站已启用。</translation>
+    </message>
+    <message>
+        <source>Recycle bin is not enabled.</source>
+        <translation>回收站未启用。</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>位置</translation>
+    </message>
+    <message>
+        <source>Database created</source>
+        <translation>数据库创建时间</translation>
+    </message>
+    <message>
+        <source>Last saved</source>
+        <translation>保存时间</translation>
+    </message>
+    <message>
+        <source>Unsaved changes</source>
+        <translation>尚未保存修改</translation>
+    </message>
+    <message>
+        <source>yes</source>
+        <translation>是</translation>
+    </message>
+    <message>
+        <source>no</source>
+        <translation>否</translation>
+    </message>
+    <message>
+        <source>Number of groups</source>
+        <translation>群组数</translation>
+    </message>
+    <message>
+        <source>Number of entries</source>
+        <translation>条目数</translation>
+    </message>
+    <message>
+        <source>Number of expired entries</source>
+        <translation>过期条目数</translation>
+    </message>
+    <message>
+        <source>Unique passwords</source>
+        <translation>唯一密码</translation>
+    </message>
+    <message>
+        <source>Non-unique passwords</source>
+        <translation>重复密码</translation>
+    </message>
+    <message>
+        <source>Maximum password reuse</source>
+        <translation>密码最高重复次数</translation>
+    </message>
+    <message>
+        <source>Number of short passwords</source>
+        <translation>短密码总数</translation>
+    </message>
+    <message>
+        <source>Number of weak passwords</source>
+        <translation>弱密码总数</translation>
+    </message>
+    <message>
+        <source>Entries excluded from reports</source>
+        <translation>报告中已排除条目</translation>
+    </message>
+    <message>
+        <source>Average password length</source>
+        <translation>平均密码长度</translation>
+    </message>
+    <message>
+        <source>%1 characters</source>
+        <translation>%1 字符</translation>
     </message>
     <message>
         <source>Word count for the diceware passphrase.</source>
@@ -6684,10 +7199,6 @@ Do you want to overwrite it?</source>
     <message>
         <source>Enter new password for entry: </source>
         <translation>输入条目新密码：</translation>
-    </message>
-    <message>
-        <source>Writing the database failed: %1</source>
-        <translation>写入数据库失败：%1</translation>
     </message>
     <message>
         <source>Successfully edited entry %1.</source>
@@ -6914,106 +7425,6 @@ Do you want to overwrite it?</source>
         <translation>已成功导入数据库。</translation>
     </message>
     <message>
-        <source>Show a database&apos;s information.</source>
-        <translation>显示数据库的信息。</translation>
-    </message>
-    <message>
-        <source>UUID: </source>
-        <translation>UUID：</translation>
-    </message>
-    <message>
-        <source>Name: </source>
-        <translation>名称：</translation>
-    </message>
-    <message>
-        <source>Description: </source>
-        <translation>描述：</translation>
-    </message>
-    <message>
-        <source>Cipher: </source>
-        <translation>加密：</translation>
-    </message>
-    <message>
-        <source>KDF: </source>
-        <translation>KDF：</translation>
-    </message>
-    <message>
-        <source>Recycle bin is enabled.</source>
-        <translation>回收站已启用。</translation>
-    </message>
-    <message>
-        <source>Recycle bin is not enabled.</source>
-        <translation>回收站未启用。</translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation>位置</translation>
-    </message>
-    <message>
-        <source>Database created</source>
-        <translation>数据库创建时间</translation>
-    </message>
-    <message>
-        <source>Last saved</source>
-        <translation>保存时间</translation>
-    </message>
-    <message>
-        <source>Unsaved changes</source>
-        <translation>尚未保存修改</translation>
-    </message>
-    <message>
-        <source>yes</source>
-        <translation>是</translation>
-    </message>
-    <message>
-        <source>no</source>
-        <translation>否</translation>
-    </message>
-    <message>
-        <source>Number of groups</source>
-        <translation>群组数</translation>
-    </message>
-    <message>
-        <source>Number of entries</source>
-        <translation>条目数</translation>
-    </message>
-    <message>
-        <source>Number of expired entries</source>
-        <translation>过期条目数</translation>
-    </message>
-    <message>
-        <source>Unique passwords</source>
-        <translation>唯一密码</translation>
-    </message>
-    <message>
-        <source>Non-unique passwords</source>
-        <translation>重复密码</translation>
-    </message>
-    <message>
-        <source>Maximum password reuse</source>
-        <translation>密码最高重复次数</translation>
-    </message>
-    <message>
-        <source>Number of short passwords</source>
-        <translation>短密码总数</translation>
-    </message>
-    <message>
-        <source>Number of weak passwords</source>
-        <translation>弱密码总数</translation>
-    </message>
-    <message>
-        <source>Entries excluded from reports</source>
-        <translation>报告中已排除条目</translation>
-    </message>
-    <message>
-        <source>Average password length</source>
-        <translation>平均密码长度</translation>
-    </message>
-    <message>
-        <source>%1 characters</source>
-        <translation>%1 字符</translation>
-    </message>
-    <message>
         <source>Unknown command %1</source>
         <translation>未知命令 %1</translation>
     </message>
@@ -7186,6 +7597,10 @@ Available commands:
         <translation>明文显示被保护的属性。</translation>
     </message>
     <message>
+        <source>Show all the attributes of the entry.</source>
+        <translation>显示条目的所有属性。</translation>
+    </message>
+    <message>
         <source>Show the attachments of the entry.</source>
         <translation>显示条目的附件。</translation>
     </message>
@@ -7253,6 +7668,10 @@ Please consider generating a new key file.</source>
     <message>
         <source>Invalid YubiKey serial %1</source>
         <translation>无效的 YubiKey 序号 %1</translation>
+    </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue.</source>
+        <translation>请感应或触摸您的 YubiKey 以继续。</translation>
     </message>
     <message>
         <source>Enter password to encrypt database (optional): </source>
@@ -7440,8 +7859,8 @@ CPU 架构：%2
         <translation><numerusform>%1 分</numerusform></translation>
     </message>
     <message>
-        <source>Botan library must be at least 2.11.x, found %1.%2.%3</source>
-        <translation>Botan 库的版本至少应为 2.11.x，您的版本为 %1.%2.%3</translation>
+        <source>Botan library must be at least %1, found %2.%3.%4</source>
+        <translation>Botan 库的版本至少应为 %1，您的版本为 %2.%3.%4</translation>
     </message>
     <message>
         <source>Cryptographic libraries:</source>
@@ -7682,10 +8101,6 @@ CPU 架构：%2
         <translation>从标准输入读取数据库的密码</translation>
     </message>
     <message>
-        <source>allow app screen recordering and screenshots</source>
-        <translation>允许应用被录像或截图</translation>
-    </message>
-    <message>
         <source>Locked databases.</source>
         <translation>已锁定数据库。</translation>
     </message>
@@ -7698,16 +8113,16 @@ CPU 架构：%2
         <translation>另一个 KeePassXC 实例已在运行。</translation>
     </message>
     <message>
+        <source>KeePassXC is not running. No open database to lock</source>
+        <translation>KeePassXC 未在运行。没有可锁定的已打开数据库</translation>
+    </message>
+    <message>
         <source>Fatal error while testing the cryptographic functions.</source>
         <translation>在测试加密函数时发生致命错误。</translation>
     </message>
     <message>
         <source>KeePassXC - Error</source>
         <translation>KeePassXC - 错误</translation>
-    </message>
-    <message>
-        <source>Warning: Failed to prevent screenshots on a top level window!</source>
-        <translation>警告：在顶层窗口阻止截图失败！</translation>
     </message>
     <message>
         <source>Database password: </source>
@@ -7732,8 +8147,84 @@ CPU 架构：%2
         <translation>使用 Windows Hello 签名挑战失败。</translation>
     </message>
     <message>
-        <source>Please present or touch your YubiKey to continue.</source>
-        <translation>请感应或触摸您的 YubiKey 以继续。</translation>
+        <source>Warning: Failed to block screenshot capture on a top-level window.</source>
+        <translation>警告：在顶层窗口阻止屏幕截图失败。</translation>
+    </message>
+    <message>
+        <source>Invalid Cipher</source>
+        <translation>无效的加密方法</translation>
+    </message>
+    <message>
+        <source>Invalid KDF</source>
+        <translation>无效的 KDF</translation>
+    </message>
+    <message>
+        <source>Access to all entries is denied</source>
+        <translation>对所有条目的访问已禁止</translation>
+    </message>
+    <message>
+        <source>allow screenshots and app recording (Windows/macOS)</source>
+        <translation>允许屏幕截图与应用录制（Windows/macOS）</translation>
+    </message>
+    <message>
+        <source>AES initialization failed</source>
+        <translation>AES 初始化失败</translation>
+    </message>
+    <message>
+        <source>AES encrypt failed</source>
+        <translation>AES 加密失败</translation>
+    </message>
+    <message>
+        <source>Failed to store in Linux Keyring</source>
+        <translation>存入 Linux Keyring 失败</translation>
+    </message>
+    <message>
+        <source>Could not locate key in keyring</source>
+        <translation>无法在 Keyring 中定位密钥</translation>
+    </message>
+    <message>
+        <source>Could not read key in keyring</source>
+        <translation>无法在 Keyring 中读取密钥</translation>
+    </message>
+    <message>
+        <source>AES decrypt failed</source>
+        <translation>AES 解密失败</translation>
+    </message>
+    <message>
+        <source>No Polkit authentication agent was available</source>
+        <translation>无可用的 Polkit 身份验证代理</translation>
+    </message>
+    <message>
+        <source>Polkit authorization failed</source>
+        <translation>Polkit 授权失败</translation>
+    </message>
+    <message>
+        <source>No Quick Unlock provider is available</source>
+        <translation>无可用的快速解锁提供者</translation>
+    </message>
+    <message>
+        <source>Polkit returned an error: %1</source>
+        <translation>Polkit 返回了一个错误：%1</translation>
+    </message>
+    <message>
+        <source>Failed to init KeePassXC crypto.</source>
+        <translation>初始化 KeePassXC 加密失败。</translation>
+    </message>
+    <message>
+        <source>Failed to encrypt key data.</source>
+        <translation>加密密钥数据失败。</translation>
+    </message>
+    <message>
+        <source>Failed to get Windows Hello credential.</source>
+        <translation>获取 Windows Hello 凭据失败。</translation>
+    </message>
+    <message>
+        <source>Failed to decrypt key data.</source>
+        <translation>解密密钥数据失败。</translation>
+    </message>
+    <message>
+        <source>Passkeys</source>
+        <translation>Passkey</translation>
     </message>
 </context>
 <context>
@@ -7772,18 +8263,6 @@ CPU 架构：%2
 </context>
 <context>
     <name>ReportsWidgetBrowserStatistics</name>
-    <message>
-        <source>Exclude expired entries from the report</source>
-        <translation>从报告中排除已过期条目</translation>
-    </message>
-    <message>
-        <source>Show only entries which have URL set</source>
-        <translation>仅显示设置了 URL 的条目</translation>
-    </message>
-    <message>
-        <source>Show only entries which have browser settings in custom data</source>
-        <translation>仅显示自定义数据中有浏览器设置的条目</translation>
-    </message>
     <message>
         <source>Double-click entries to edit.</source>
         <translation>双击条目以编辑。</translation>
@@ -7848,17 +8327,25 @@ CPU 架构：%2
         <source>Exclude from reports</source>
         <translation>从报告中排除</translation>
     </message>
+    <message>
+        <source>Only show entries that have a URL</source>
+        <translation>仅显示含有 URL 的条目</translation>
+    </message>
+    <message>
+        <source>Only show entries that have been explicitly allowed or denied</source>
+        <translation>仅显示明确允许或禁止的条目</translation>
+    </message>
+    <message>
+        <source>Show expired entries</source>
+        <translation>显示过期的条目</translation>
+    </message>
+    <message>
+        <source> (Expired)</source>
+        <translation>（已过期）</translation>
+    </message>
 </context>
 <context>
     <name>ReportsWidgetHealthcheck</name>
-    <message>
-        <source>Exclude expired entries from the report</source>
-        <translation>从报告中排除已过期条目</translation>
-    </message>
-    <message>
-        <source>Also show entries that have been excluded from reports</source>
-        <translation>也显示已从报告中排除的条目</translation>
-    </message>
     <message>
         <source>Hover over reason to show additional details. Double-click entries to edit.</source>
         <translation>将鼠标指针悬停在原因上以显示其他详细信息。双击条目以编辑。</translation>
@@ -7933,6 +8420,18 @@ CPU 架构：%2
     <message>
         <source>Exclude from reports</source>
         <translation>从报告中排除</translation>
+    </message>
+    <message>
+        <source>Show expired entries</source>
+        <translation>显示过期的条目</translation>
+    </message>
+    <message>
+        <source>Show entries that have been excluded from reports</source>
+        <translation>显示已从报告中排除的条目</translation>
+    </message>
+    <message>
+        <source> (Expired)</source>
+        <translation>（已过期）</translation>
     </message>
 </context>
 <context>
@@ -8028,6 +8527,65 @@ CPU 架构：%2
     <message>
         <source>Exclude from reports</source>
         <translation>从报告中排除</translation>
+    </message>
+</context>
+<context>
+    <name>ReportsWidgetPasskeys</name>
+    <message>
+        <source>Export</source>
+        <translation>导出</translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation>导入</translation>
+    </message>
+    <message>
+        <source>List of entry URLs</source>
+        <translation>条目 URL 列表</translation>
+    </message>
+    <message>
+        <source>Please wait, list of entries with Passkeys is being updated…</source>
+        <translation>请稍等，正在更新包含 Passkey 的条目列表…</translation>
+    </message>
+    <message>
+        <source>No entries with Passkeys.</source>
+        <translation>无包含 Passkey 的条目。</translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation>标题</translation>
+    </message>
+    <message>
+        <source>Path</source>
+        <translation>路径</translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>用户名</translation>
+    </message>
+    <message>
+        <source>URLs</source>
+        <translation>URL</translation>
+    </message>
+    <message>
+        <source>Edit Entry…</source>
+        <translation>编辑条目…</translation>
+    </message>
+    <message numerus="yes">
+        <source>Delete Entry(s)…</source>
+        <translation><numerusform>删除条目…</numerusform></translation>
+    </message>
+    <message>
+        <source>Relying Party</source>
+        <translation>依赖方</translation>
+    </message>
+    <message>
+        <source>Show expired entries</source>
+        <translation>显示过期的条目</translation>
+    </message>
+    <message>
+        <source> (Expired)</source>
+        <translation>（已过期）</translation>
     </message>
 </context>
 <context>
@@ -8270,6 +8828,10 @@ CPU 架构：%2
         <translation>搜索帮助</translation>
     </message>
     <message>
+        <source>Save Search</source>
+        <translation>保存搜索</translation>
+    </message>
+    <message>
         <source>Search (%1)…</source>
         <comment>Search placeholder text, %1 is the keyboard shortcut</comment>
         <translation>搜索 (%1)…</translation>
@@ -8503,8 +9065,12 @@ CPU 架构：%2
 <context>
     <name>TagModel</name>
     <message>
-        <source>All</source>
-        <translation>所有</translation>
+        <source>Clear Search</source>
+        <translation>清除搜索</translation>
+    </message>
+    <message>
+        <source>All Entries</source>
+        <translation>所有条目</translation>
     </message>
     <message>
         <source>Expired</source>
@@ -8513,6 +9079,25 @@ CPU 架构：%2
     <message>
         <source>Weak Passwords</source>
         <translation>弱密码</translation>
+    </message>
+</context>
+<context>
+    <name>TagView</name>
+    <message>
+        <source>Remove Search</source>
+        <translation>删除搜索</translation>
+    </message>
+    <message>
+        <source>Remove Tag</source>
+        <translation>删除标签</translation>
+    </message>
+    <message>
+        <source>Confirm Remove Tag</source>
+        <translation>确认删除标签</translation>
+    </message>
+    <message>
+        <source>Remove tag &quot;%1&quot; from all entries in this database?</source>
+        <translation>要删除数据库中所有条目包含的“%1”标签吗？</translation>
     </message>
 </context>
 <context>
@@ -8663,7 +9248,7 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>You have the latest version of KeePassXC</source>
-        <translation>您的 KeePassXC 已经是最版本</translation>
+        <translation>您的 KeePassXC 已经是最新版本</translation>
     </message>
 </context>
 <context>
@@ -8718,25 +9303,6 @@ Example: JBSWY3DPEHPK3PXP</source>
     <message>
         <source>Could not register global shortcut</source>
         <translation>无法注册全局快捷键</translation>
-    </message>
-</context>
-<context>
-    <name>WindowsHello</name>
-    <message>
-        <source>Failed to init KeePassXC crypto.</source>
-        <translation>初始化 KeePassXC 加密失败。</translation>
-    </message>
-    <message>
-        <source>Failed to encrypt key data.</source>
-        <translation>加密密钥数据失败。</translation>
-    </message>
-    <message>
-        <source>Failed to get Windows Hello credential.</source>
-        <translation>获取 Windows Hello 凭据失败。</translation>
-    </message>
-    <message>
-        <source>Failed to decrypt key data.</source>
-        <translation>解密密钥数据失败。</translation>
     </message>
 </context>
 <context>

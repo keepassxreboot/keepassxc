@@ -1,14 +1,19 @@
 [main]
 host = https://www.transifex.com
 
-[keepassxc.share-translations-keepassxc-en-ts--develop]
-source_file = share/translations/keepassxc_en.ts
-file_filter = share/translations/keepassxc_<lang>.ts
-source_lang = en
-type = QT
+[o:keepassxc:p:keepassxc:r:share-translations-keepassxc-en-ts--develop]
+file_filter            = share/translations/keepassxc_<lang>.ts
+source_file            = share/translations/keepassxc_en.ts
+source_lang            = en
+type                   = QT
+replace_edited_strings = false
+keep_translations      = false
 
-[keepassxc.share-translations-keepassxc-en-ts--master]
-source_file = share/translations/keepassxc_en.ts
-file_filter = share/translations/keepassxc_<lang>.ts
-source_lang = en
-type = QT
+[o:keepassxc:p:keepassxc:r:share-translations-keepassxc-en-ts--master]
+file_filter            = share/translations/keepassxc_<lang>.ts
+source_file            = share/translations/keepassxc_en.ts
+source_lang            = en
+type                   = QT
+replace_edited_strings = false
+keep_translations      = false
+

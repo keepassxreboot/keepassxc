@@ -61,6 +61,7 @@ protected:
     void keyPressEvent(QKeyEvent* event) override;
     void focusInEvent(QFocusEvent* event) override;
     void showEvent(QShowEvent* event) override;
+    void startDrag(Qt::DropActions supportedActions) override;
 
 private slots:
     void emitEntryActivated(const QModelIndex& index);
@@ -75,6 +76,7 @@ private slots:
 private:
     void resetFixedColumns();
     bool isColumnHidden(int logicalIndex);
+    void onHeaderChanged();
 
     EntryModel* const m_model;
     SortFilterHideProxyModel* const m_sortModel;

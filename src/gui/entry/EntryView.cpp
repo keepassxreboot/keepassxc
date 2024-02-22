@@ -19,12 +19,18 @@
 #include "EntryView.h"
 
 #include <QAccessible>
+#include <QDrag>
+#include <QGuiApplication>
 #include <QHeaderView>
+#include <QListWidget>
 #include <QMenu>
 #include <QPainter>
+#include <QScreen>
 #include <QShortcut>
 #include <QStyledItemDelegate>
+#include <QWindow>
 
+#include "gui/Icons.h"
 #include "gui/SortFilterHideProxyModel.h"
 
 #define ICON_ONLY_SECTION_SIZE 26
@@ -213,11 +219,12 @@ void EntryView::displaySearch(const QList<Entry*>& entries)
     m_model->setEntries(entries);
     header()->showSection(EntryModel::ParentGroup);
 
+    setFirstEntryActive();
+
     // Reset sort column to 'Group', overrides DatabaseWidgetStateSync
     m_sortModel->sort(EntryModel::ParentGroup, Qt::AscendingOrder);
     sortByColumn(EntryModel::ParentGroup, Qt::AscendingOrder);
 
-    setFirstEntryActive();
     m_inSearchMode = true;
 }
 
@@ -279,8 +286,11 @@ int EntryView::numberOfSelectedEntries()
 
 void EntryView::setCurrentEntry(Entry* entry)
 {
-    selectionModel()->setCurrentIndex(m_sortModel->mapFromSource(m_model->indexFromEntry(entry)),
-                                      QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+    auto index = m_model->indexFromEntry(entry);
+    if (index.isValid()) {
+        selectionModel()->setCurrentIndex(m_sortModel->mapFromSource(index),
+                                          QItemSelectionModel::ClearAndSelect | QItemSelectionModel::Rows);
+    }
 }
 
 Entry* EntryView::entryFromIndex(const QModelIndex& index)
@@ -326,6 +336,7 @@ bool EntryView::setViewState(const QByteArray& state)
     bool status = header()->restoreState(state);
     resetFixedColumns();
     m_columnsNeedRelayout = state.isEmpty();
+    onHeaderChanged();
     return status;
 }
 
@@ -344,6 +355,7 @@ void EntryView::showHeaderMenu(const QPoint& position)
         int columnIndex = action->data().toInt();
         action->setChecked(!isColumnHidden(columnIndex));
     }
+    actions[EntryModel::ParentGroup]->setVisible(inSearchMode());
 
     m_headerMenu->popup(mapToGlobal(position));
 }
@@ -365,6 +377,9 @@ void EntryView::toggleColumnVisibility(QAction* action)
     // least one visible column remains, as the table header will disappear
     // entirely when all columns are hidden
     int columnIndex = action->data().toInt();
+    if (columnIndex == EntryModel::Color) {
+        m_model->setBackgroundColorVisible(!action->isChecked());
+    }
     if (action->isChecked()) {
         header()->showSection(columnIndex);
         if (header()->sectionSize(columnIndex) == 0) {
@@ -436,6 +451,8 @@ void EntryView::resetFixedColumns()
             header()->resizeSection(col, width);
         }
     }
+    header()->setMinimumSectionSize(1);
+    header()->resizeSection(EntryModel::Color, ICON_ONLY_SECTION_SIZE);
 }
 
 /**
@@ -464,6 +481,8 @@ void EntryView::resetViewToDefaults()
     header()->hideSection(EntryModel::Attachments);
     header()->hideSection(EntryModel::Size);
     header()->hideSection(EntryModel::PasswordStrength);
+    header()->hideSection(EntryModel::Color);
+    onHeaderChanged();
 
     // Reset column order to logical indices
     for (int i = 0; i < header()->count(); ++i) {
@@ -491,6 +510,11 @@ void EntryView::resetViewToDefaults()
     }
 }
 
+void EntryView::onHeaderChanged()
+{
+    m_model->setBackgroundColorVisible(isColumnHidden(EntryModel::Color));
+}
+
 void EntryView::showEvent(QShowEvent* event)
 {
     QTreeView::showEvent(event);
@@ -501,6 +525,76 @@ void EntryView::showEvent(QShowEvent* event)
         fitColumnsToWindow();
         m_columnsNeedRelayout = false;
     }
+}
+
+void EntryView::startDrag(Qt::DropActions supportedActions)
+{
+    auto selectedIndexes = selectionModel()->selectedRows(EntryModel::Title);
+    if (selectedIndexes.isEmpty()) {
+        return;
+    }
+
+    // Create a mime data object for the selected rows
+    auto mimeData = m_sortModel->mimeData(selectedIndexes);
+    if (!mimeData) {
+        return;
+    }
+
+    // Create a temporary list widget to display the dragged items
+    int i = 0;
+    QListWidget listWidget;
+    for (auto& index : selectedIndexes) {
+        if (++i > 4) {
+            int remaining = selectedIndexes.size() - i + 1;
+            listWidget.addItem(tr("+ %1 entry(s)...", nullptr, remaining).arg(remaining));
+            break;
+        }
+
+        QIcon icon;
+        icon.addPixmap(m_sortModel->data(index, Qt::DecorationRole).value<QPixmap>());
+
+        auto item = new QListWidgetItem;
+        item->setText(m_sortModel->data(index, Qt::DisplayRole).toString());
+        item->setIcon(icon);
+        listWidget.addItem(item);
+    }
+
+    listWidget.setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    listWidget.setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    listWidget.setStyleSheet("QListWidget { background-color: palette(highlight); border: 1px solid palette(dark); "
+                             "padding: 4px; color: palette(highlighted-text); }");
+    auto width = listWidget.sizeHintForColumn(0) + 2 * listWidget.frameWidth();
+    auto height = listWidget.sizeHintForRow(0) * listWidget.count() + 2 * listWidget.frameWidth();
+    listWidget.setFixedWidth(width);
+    listWidget.setFixedHeight(height);
+
+    // Grab the screen pixel ratio where the window resides
+    // TODO: Use direct call to screen() when moving to Qt 6
+#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
+    auto screen = QGuiApplication::screenAt(window()->geometry().center());
+    if (!screen) {
+        screen = QGuiApplication::primaryScreen();
+    }
+#else
+    auto screen = QGuiApplication::primaryScreen();
+    if (windowHandle()) {
+        screen = windowHandle()->screen();
+    }
+#endif
+
+    auto pixelRatio = screen->devicePixelRatio();
+
+    // Render the list widget to a pixmap
+    QPixmap pixmap(QSize(width, height) * pixelRatio);
+    pixmap.fill(Qt::transparent);
+    pixmap.setDevicePixelRatio(pixelRatio);
+    listWidget.render(&pixmap);
+
+    // Create a drag object and start the drag
+    auto drag = new QDrag(this);
+    drag->setMimeData(mimeData);
+    drag->setPixmap(pixmap);
+    drag->exec(supportedActions, defaultDropAction());
 }
 
 bool EntryView::isColumnHidden(int logicalIndex)

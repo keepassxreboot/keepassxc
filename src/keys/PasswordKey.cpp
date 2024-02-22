@@ -44,7 +44,7 @@ QByteArray PasswordKey::rawKey() const
     if (!m_isInitialized) {
         return {};
     }
-    return QByteArray(m_key.data(), m_key.size());
+    return {m_key.data(), int(m_key.size())};
 }
 
 void PasswordKey::setRawKey(const QByteArray& data)

@@ -21,6 +21,7 @@
 
 #include <QPointer>
 #include <QVariant>
+#include <QVector>
 
 class QSettings;
 
@@ -85,7 +86,6 @@ public:
         GUI_MinimizeOnClose,
         GUI_HideUsernames,
         GUI_HidePasswords,
-        GUI_AdvancedSettings,
         GUI_ColorPasswords,
         GUI_MonospaceNotes,
         GUI_ApplicationTheme,
@@ -119,11 +119,13 @@ public:
         Security_PasswordsHidden,
         Security_PasswordEmptyPlaceholder,
         Security_HidePasswordPreviewPanel,
+        Security_HideTotpPreviewPanel,
         Security_AutoTypeAsk,
         Security_IconDownloadFallback,
         Security_NoConfirmMoveEntryToRecycleBin,
         Security_EnableCopyOnDoubleClick,
         Security_QuickUnlock,
+        Security_DatabasePasswordMinimumQuality,
 
         Browser_Enabled,
         Browser_ShowNotification,
@@ -134,6 +136,7 @@ public:
         Browser_UseCustomProxy,
         Browser_CustomProxyLocation,
         Browser_UpdateBinaryPath,
+        Browser_AllowGetDatabaseEntriesRequest,
         Browser_AllowExpiredCredentials,
         Browser_AlwaysAllowAccess,
         Browser_AlwaysAllowUpdate,
@@ -196,6 +199,12 @@ public:
         Deleted
     };
 
+    struct ShortcutEntry
+    {
+        QString name;
+        QString shortcut;
+    };
+
     ~Config() override;
     QVariant get(ConfigKey key);
     QVariant getDefault(ConfigKey key);
@@ -205,6 +214,9 @@ public:
     bool hasAccessError();
     void sync();
     void resetToDefaults();
+
+    QList<ShortcutEntry> getShortcuts() const;
+    void setShortcuts(const QList<ShortcutEntry>& shortcuts);
 
     static Config* instance();
     static void createConfigFromFile(const QString& configFileName, const QString& localConfigFileName = {});

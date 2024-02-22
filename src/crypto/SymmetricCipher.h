@@ -70,6 +70,7 @@ public:
     static int defaultIvSize(Mode mode);
     static int keySize(Mode mode);
     static int blockSize(Mode mode);
+    static int ivSize(Mode mode);
 
 private:
     static QString modeToString(const Mode mode);

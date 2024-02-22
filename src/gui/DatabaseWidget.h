@@ -1,6 +1,6 @@
 /*
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -50,6 +50,7 @@ class QLabel;
 class MessageWidget;
 class EntryPreviewWidget;
 class TagView;
+class ElidedLabel;
 
 namespace Ui
 {
@@ -116,6 +117,7 @@ public:
 #ifdef WITH_XC_SSHAGENT
     bool currentEntryHasSshKey();
 #endif
+    bool currentEntryHasAutoTypeEnabled();
 
     QByteArray entryViewState() const;
     bool setEntryViewState(const QByteArray& state) const;
@@ -127,6 +129,7 @@ signals:
     // relayed Database signals
     void databaseFilePathChanged(const QString& oldPath, const QString& newPath);
     void databaseModified();
+    void databaseNonDataChanged();
     void databaseSaved();
     void databaseUnlocked();
     void databaseLockRequested();
@@ -209,6 +212,10 @@ public slots:
     void switchToDatabaseSecurity();
     void switchToDatabaseReports();
     void switchToDatabaseSettings();
+#ifdef WITH_XC_BROWSER_PASSKEYS
+    void switchToPasskeys();
+    void showImportPasskeyDialog(bool isEntry = false);
+#endif
     void switchToOpenDatabase();
     void switchToOpenDatabase(const QString& filePath);
     void switchToOpenDatabase(const QString& filePath, const QString& password, const QString& keyFile);
@@ -233,6 +240,7 @@ public slots:
                      int autoHideTimeout = MessageWidget::DefaultAutoHideTimeout);
     void showErrorMessage(const QString& errorMessage);
     void hideMessage();
+    void triggerAutosaveTimer();
 
 protected:
     void closeEvent(QCloseEvent* event) override;
@@ -251,6 +259,8 @@ private slots:
     void onEntryChanged(Entry* entry);
     void onGroupChanged();
     void onDatabaseModified();
+    void onDatabaseNonDataChanged();
+    void onAutosaveDelayTimeout();
     void connectDatabaseSignals();
     void loadDatabase(bool accepted);
     void unlockDatabase(bool accepted);
@@ -277,7 +287,7 @@ private:
     QPointer<EntryPreviewWidget> m_previewView;
     QPointer<QSplitter> m_previewSplitter;
     QPointer<QLabel> m_searchingLabel;
-    QPointer<QLabel> m_shareLabel;
+    QPointer<ElidedLabel> m_shareLabel;
     QPointer<CsvImportWizard> m_csvImportWizard;
     QPointer<EditEntryWidget> m_editEntryWidget;
     QPointer<EditGroupWidget> m_editGroupWidget;
@@ -308,6 +318,9 @@ private:
 
     // Autoreload
     bool m_blockAutoSave;
+
+    // Autosave delay
+    QPointer<QTimer> m_autosaveTimer;
 
     // Auto-Type related
     QString m_searchStringForAutoType;

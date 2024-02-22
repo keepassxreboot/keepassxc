@@ -1,6 +1,6 @@
 /*
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -41,6 +41,7 @@
 #include "core/TimeDelta.h"
 #ifdef WITH_XC_SSHAGENT
 #include "sshagent/OpenSSHKey.h"
+#include "sshagent/OpenSSHKeyGenDialog.h"
 #include "sshagent/SSHAgent.h"
 #endif
 #ifdef WITH_XC_BROWSER
@@ -114,6 +115,7 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     m_entryModifiedTimer.setSingleShot(true);
     m_entryModifiedTimer.setInterval(0);
     connect(&m_entryModifiedTimer, &QTimer::timeout, this, [this] {
+        // TODO: Upon refactor of this widget, this needs to merge unsaved changes in the UI
         if (isVisible() && m_entry) {
             setForms(m_entry);
         }
@@ -135,9 +137,7 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     m_mainUi->passwordEdit->setQualityVisible(true);
 }
 
-EditEntryWidget::~EditEntryWidget()
-{
-}
+EditEntryWidget::~EditEntryWidget() = default;
 
 void EditEntryWidget::setupMain()
 {
@@ -162,6 +162,9 @@ void EditEntryWidget::setupMain()
     connect(m_mainUi->urlEdit, SIGNAL(textChanged(QString)), m_iconsWidget, SLOT(setUrl(QString)));
     m_mainUi->urlEdit->enableVerifyMode();
 #endif
+#ifdef WITH_XC_BROWSER
+    connect(m_mainUi->urlEdit, SIGNAL(textChanged(QString)), this, SLOT(entryURLEdited(const QString&)));
+#endif
     connect(m_mainUi->expireCheck, &QCheckBox::toggled, [&](bool enabled) {
         m_mainUi->expireDatePicker->setEnabled(enabled);
         if (enabled) {
@@ -169,7 +172,7 @@ void EditEntryWidget::setupMain()
         }
     });
 
-    connect(m_mainUi->notesEnabled, SIGNAL(toggled(bool)), this, SLOT(toggleHideNotes(bool)));
+    connect(m_mainUi->revealNotesButton, &QToolButton::clicked, this, &EditEntryWidget::toggleHideNotes);
 
     m_mainUi->expirePresets->setMenu(createPresetsMenu());
     connect(m_mainUi->expirePresets->menu(), SIGNAL(triggered(QAction*)), this, SLOT(useExpiryPreset(QAction*)));
@@ -234,8 +237,7 @@ void EditEntryWidget::setupAutoType()
 
     // clang-format off
     connect(m_autoTypeUi->enableButton, SIGNAL(toggled(bool)), SLOT(updateAutoTypeEnabled()));
-    connect(m_autoTypeUi->customSequenceButton, SIGNAL(toggled(bool)),
-            m_autoTypeUi->sequenceEdit, SLOT(setEnabled(bool)));
+    connect(m_autoTypeUi->customSequenceButton, &QRadioButton::toggled, this, &EditEntryWidget::updateAutoTypeEnabled);
     connect(m_autoTypeUi->openHelpButton, SIGNAL(clicked()), SLOT(openAutotypeHelp()));
     connect(m_autoTypeUi->customWindowSequenceButton, SIGNAL(toggled(bool)),
             m_autoTypeUi->windowSequenceEdit, SLOT(setEnabled(bool)));
@@ -328,17 +330,18 @@ void EditEntryWidget::insertURL()
 {
     Q_ASSERT(!m_history);
 
-    QString name("KP2A_URL");
+    QString name(EntryAttributes::AdditionalUrlAttribute);
     int i = 1;
 
     while (m_entryAttributes->keys().contains(name)) {
-        name = QString("KP2A_URL_%1").arg(i);
+        name = QString("%1_%2").arg(EntryAttributes::AdditionalUrlAttribute, QString::number(i));
         i++;
     }
 
     m_entryAttributes->set(name, tr("<empty URL>"));
     QModelIndex index = m_additionalURLsDataModel->indexByKey(name);
 
+    m_additionalURLsDataModel->setEntryUrl(m_entry->url());
     m_browserUi->additionalURLsView->setCurrentIndex(index);
     m_browserUi->additionalURLsView->edit(index);
 
@@ -398,6 +401,11 @@ void EditEntryWidget::updateCurrentURL()
         m_browserUi->editURLButton->setEnabled(false);
         m_browserUi->removeURLButton->setEnabled(false);
     }
+}
+
+void EditEntryWidget::entryURLEdited(const QString& url)
+{
+    m_additionalURLsDataModel->setEntryUrl(url);
 }
 #endif
 
@@ -538,6 +546,7 @@ void EditEntryWidget::updateHistoryButtons(const QModelIndex& current, const QMo
 #ifdef WITH_XC_SSHAGENT
 void EditEntryWidget::setupSSHAgent()
 {
+    m_pendingPrivateKey = "";
     m_sshAgentUi->setupUi(m_sshAgentWidget);
 
     QFont fixedFont = Font::fixedFont();
@@ -558,6 +567,7 @@ void EditEntryWidget::setupSSHAgent()
     connect(m_sshAgentUi->removeFromAgentButton, &QPushButton::clicked, this, &EditEntryWidget::removeKeyFromAgent);
     connect(m_sshAgentUi->decryptButton, &QPushButton::clicked, this, &EditEntryWidget::decryptPrivateKey);
     connect(m_sshAgentUi->copyToClipboardButton, &QPushButton::clicked, this, &EditEntryWidget::copyPublicKey);
+    connect(m_sshAgentUi->generateButton, &QPushButton::clicked, this, &EditEntryWidget::generatePrivateKey);
 
     connect(m_attachments.data(), &EntryAttachments::modified,
             this, &EditEntryWidget::updateSSHAgentAttachments);
@@ -584,6 +594,12 @@ void EditEntryWidget::updateSSHAgent()
     m_sshAgentSettings.reset();
     m_sshAgentSettings.fromEntry(m_entry);
     setSSHAgentSettings();
+
+    if (!m_pendingPrivateKey.isEmpty()) {
+        m_sshAgentSettings.setAttachmentName(m_pendingPrivateKey);
+        m_sshAgentSettings.setSelectedType("attachment");
+        m_pendingPrivateKey = "";
+    }
 
     updateSSHAgentAttachments();
 }
@@ -696,6 +712,13 @@ void EditEntryWidget::toKeeAgentSettings(KeeAgentSettings& settings) const
     settings.setSaveAttachmentToTempFile(m_sshAgentSettings.saveAttachmentToTempFile());
 }
 
+void EditEntryWidget::updateTotp()
+{
+    if (m_entry) {
+        m_attributesModel->setEntryAttributes(m_entry->attributes());
+    }
+}
+
 void EditEntryWidget::browsePrivateKey()
 {
     auto fileName = fileDialog()->getOpenFileName(this, tr("Select private key"), FileDialog::getLastDir("sshagent"));
@@ -787,6 +810,38 @@ void EditEntryWidget::copyPublicKey()
 {
     clipboard()->setText(m_sshAgentUi->publicKeyEdit->document()->toPlainText());
 }
+
+void EditEntryWidget::generatePrivateKey()
+{
+    auto dialog = new OpenSSHKeyGenDialog(this);
+
+    OpenSSHKey key;
+    dialog->setKey(&key);
+
+    if (dialog->exec()) {
+        // derive openssh naming from type
+        QString keyPrefix = key.type();
+        if (keyPrefix.startsWith("ecdsa")) {
+            keyPrefix = "id_ecdsa";
+        } else {
+            keyPrefix.replace("ssh-", "id_");
+        }
+
+        for (int i = 0; i < 10; i++) {
+            QString keyName = keyPrefix;
+
+            if (i > 0) {
+                keyName += "." + QString::number(i);
+            }
+
+            if (!m_entry->attachments()->hasKey(keyName)) {
+                m_pendingPrivateKey = keyName;
+                m_entry->attachments()->set(m_pendingPrivateKey, key.privateKey().toUtf8());
+                break;
+            }
+        }
+    }
+}
 #endif
 
 void EditEntryWidget::useExpiryPreset(QAction* action)
@@ -801,7 +856,7 @@ void EditEntryWidget::useExpiryPreset(QAction* action)
 void EditEntryWidget::toggleHideNotes(bool visible)
 {
     m_mainUi->notesEdit->setVisible(visible);
-    m_mainUi->notesHint->setVisible(!visible);
+    m_mainUi->revealNotesButton->setIcon(icons()->onOffIcon("password-show", visible));
 }
 
 Entry* EditEntryWidget::currentEntry() const
@@ -820,8 +875,6 @@ void EditEntryWidget::loadEntry(Entry* entry,
     m_create = create;
     m_history = history;
 
-    connect(m_entry, &Entry::modified, this, [this] { m_entryModifiedTimer.start(); });
-
     if (history) {
         setHeadline(QString("%1 \u2022 %2").arg(parentName, tr("Entry history")));
     } else {
@@ -829,6 +882,8 @@ void EditEntryWidget::loadEntry(Entry* entry,
             setHeadline(QString("%1 \u2022 %2").arg(parentName, tr("Add entry")));
         } else {
             setHeadline(QString("%1 \u2022 %2 \u2022 %3").arg(parentName, entry->title(), tr("Edit entry")));
+            // Reload entry details if changed outside of the edit dialog
+            connect(m_entry, &Entry::modified, this, [this] { m_entryModifiedTimer.start(); });
         }
     }
 
@@ -860,10 +915,10 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
     m_mainUi->tagsList->completion(m_db->tagList());
     m_mainUi->expireCheck->setEnabled(!m_history);
     m_mainUi->expireDatePicker->setReadOnly(m_history);
-    m_mainUi->notesEnabled->setChecked(!config()->get(Config::Security_HideNotes).toBool());
+    m_mainUi->revealNotesButton->setIcon(icons()->onOffIcon("password-show", false));
+    m_mainUi->revealNotesButton->setVisible(config()->get(Config::Security_HideNotes).toBool());
     m_mainUi->notesEdit->setReadOnly(m_history);
     m_mainUi->notesEdit->setVisible(!config()->get(Config::Security_HideNotes).toBool());
-    m_mainUi->notesHint->setVisible(config()->get(Config::Security_HideNotes).toBool());
     if (config()->get(Config::GUI_MonospaceNotes).toBool()) {
         m_mainUi->notesEdit->setFont(Font::fixedFont());
     } else {
@@ -1135,6 +1190,7 @@ bool EditEntryWidget::commitEntry()
     }
 
     m_historyModel->setEntries(m_entry->historyItems(), m_entry);
+    setPageHidden(m_historyWidget, m_history || m_entry->historyItems().count() < 1);
     m_advancedUi->attachmentsWidget->linkAttachments(m_entry->attachments());
 
     showMessage(tr("Entry updated successfully."), MessageWidget::Positive);

@@ -1,4 +1,4 @@
-= KeePassXC - Auto-Type
+= KeePassXC – Auto-Type
 :imagesdir: ../images
 
 // tag::content[]

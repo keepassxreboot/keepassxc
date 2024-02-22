@@ -118,23 +118,6 @@
       <string>Private key</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_3">
-      <item row="3" column="0">
-       <widget class="QRadioButton" name="externalFileRadioButton">
-        <property name="text">
-         <string>External file</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="2">
-       <widget class="QPushButton" name="browseButton">
-        <property name="accessibleName">
-         <string>Browser for key file</string>
-        </property>
-        <property name="text">
-         <string extracomment="Button for opening file dialog">Browse…</string>
-        </property>
-       </widget>
-      </item>
       <item row="0" column="0">
        <widget class="QRadioButton" name="attachmentRadioButton">
         <property name="text">
@@ -145,7 +128,7 @@
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
+      <item row="3" column="3">
        <widget class="QLineEdit" name="externalFileEdit">
         <property name="focusPolicy">
          <enum>Qt::ClickFocus</enum>
@@ -155,7 +138,7 @@
         </property>
        </widget>
       </item>
-      <item row="4" column="1">
+      <item row="4" column="3">
        <layout class="QHBoxLayout" name="agentActionsLayout" stretch="0,0">
         <item>
          <widget class="QPushButton" name="addToAgentButton">
@@ -173,7 +156,31 @@
         </item>
        </layout>
       </item>
-      <item row="0" column="1" colspan="2">
+      <item row="3" column="0">
+       <widget class="QRadioButton" name="externalFileRadioButton">
+        <property name="text">
+         <string>External file</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="4">
+       <widget class="QPushButton" name="browseButton">
+        <property name="accessibleName">
+         <string>Browser for key file</string>
+        </property>
+        <property name="text">
+         <string extracomment="Button for opening file dialog">Browse…</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="4">
+       <widget class="QPushButton" name="generateButton">
+        <property name="text">
+         <string>Generate</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
        <widget class="QComboBox" name="attachmentComboBox">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -325,7 +332,6 @@
   <tabstop>lifetimeCheckBox</tabstop>
   <tabstop>lifetimeSpinBox</tabstop>
   <tabstop>attachmentRadioButton</tabstop>
-  <tabstop>attachmentComboBox</tabstop>
   <tabstop>externalFileRadioButton</tabstop>
   <tabstop>browseButton</tabstop>
   <tabstop>addToAgentButton</tabstop>

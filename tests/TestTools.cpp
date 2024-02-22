@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -238,4 +238,31 @@ void TestTools::testConvertToRegex_data()
     QTest::newRow("Wildcard Unlimited Match")
         << input << static_cast<int>(Tools::RegexConvertOpts::WILDCARD_UNLIMITED_MATCH)
         << QString(R"(te\|st.*t\?\[5\]\^\(test\)\;\'\,\.)");
+}
+
+void TestTools::testArrayContainsValues()
+{
+    const auto values = QStringList() << "first"
+                                      << "second"
+                                      << "third";
+
+    // One missing
+    const auto result1 = Tools::getMissingValuesFromList<QString>(values,
+                                                                  QStringList() << "first"
+                                                                                << "second"
+                                                                                << "none");
+    QCOMPARE(result1.length(), 1);
+    QCOMPARE(result1.first(), QString("none"));
+
+    // All found
+    const auto result2 = Tools::getMissingValuesFromList<QString>(values,
+                                                                  QStringList() << "first"
+                                                                                << "second"
+                                                                                << "third");
+    QCOMPARE(result2.length(), 0);
+
+    // None are found
+    const auto numberValues = QList<int>({1, 2, 3, 4, 5});
+    const auto result3 = Tools::getMissingValuesFromList<int>(numberValues, QList<int>({6, 7, 8}));
+    QCOMPARE(result3.length(), 3);
 }

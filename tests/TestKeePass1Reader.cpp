@@ -244,7 +244,7 @@ QDateTime TestKeePass1Reader::genDT(int year, int month, int day, int hour, int 
 {
     QDate date(year, month, day);
     QTime time(hour, min, 0);
-    return QDateTime(date, time, Qt::UTC);
+    return {date, time, Qt::UTC};
 }
 
 void TestKeePass1Reader::reopenDatabase(QSharedPointer<Database> db,

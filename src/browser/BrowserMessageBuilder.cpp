@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,11 +19,14 @@
 #include "BrowserShared.h"
 #include "config-keepassx.h"
 #include "core/Global.h"
-#include "core/Tools.h"
 
+#include <QCryptographicHash>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#ifdef QT_DEBUG
+#include <QDebug>
+#endif
 
 #include <botan/sodium.h>
 
@@ -66,17 +69,24 @@ QJsonObject BrowserMessageBuilder::buildMessage(const QString& nonce) const
 }
 
 QJsonObject BrowserMessageBuilder::buildResponse(const QString& action,
-                                                 const QJsonObject& message,
                                                  const QString& nonce,
+                                                 const Parameters& params,
                                                  const QString& publicKey,
                                                  const QString& secretKey)
 {
-    QJsonObject response;
-    QString encryptedMessage = encryptMessage(message, nonce, publicKey, secretKey);
+    auto message = buildMessage(nonce);
+
+    Parameters::const_iterator i;
+    for (i = params.constBegin(); i != params.constEnd(); ++i) {
+        message[i.key()] = QJsonValue::fromVariant(i.value());
+    }
+
+    const auto encryptedMessage = encryptMessage(message, nonce, publicKey, secretKey);
     if (encryptedMessage.isEmpty()) {
         return getErrorReply(action, ERROR_KEEPASS_CANNOT_ENCRYPT_MESSAGE);
     }
 
+    QJsonObject response;
     response["action"] = action;
     response["message"] = encryptedMessage;
     response["nonce"] = nonce;
@@ -116,6 +126,22 @@ QString BrowserMessageBuilder::getErrorMessage(const int errorCode) const
         return QObject::tr("Cannot create new group");
     case ERROR_KEEPASS_NO_VALID_UUID_PROVIDED:
         return QObject::tr("No valid UUID provided");
+    case ERROR_KEEPASS_ACCESS_TO_ALL_ENTRIES_DENIED:
+        return QObject::tr("Access to all entries is denied");
+    case ERROR_PASSKEYS_ATTESTATION_NOT_SUPPORTED:
+        return QObject::tr("Attestation not supported");
+    case ERROR_PASSKEYS_CREDENTIAL_IS_EXCLUDED:
+        return QObject::tr("Credential is excluded");
+    case ERROR_PASSKEYS_REQUEST_CANCELED:
+        return QObject::tr("Passkeys request canceled");
+    case ERROR_PASSKEYS_INVALID_USER_VERIFICATION:
+        return QObject::tr("Invalid user verification");
+    case ERROR_PASSKEYS_EMPTY_PUBLIC_KEY:
+        return QObject::tr("Empty public key");
+    case ERROR_PASSKEYS_INVALID_URL_PROVIDED:
+        return QObject::tr("Invalid URL provided");
+    case ERROR_PASSKEYS_RESIDENT_KEYS_NOT_SUPPORTED:
+        return QObject::tr("Resident Keys are not supported");
     default:
         return QObject::tr("Unknown error");
     }
@@ -127,7 +153,7 @@ QString BrowserMessageBuilder::encryptMessage(const QJsonObject& message,
                                               const QString& secretKey)
 {
     if (message.isEmpty() || nonce.isEmpty()) {
-        return QString();
+        return {};
     }
 
     const QString reply(QJsonDocument(message).toJson());
@@ -135,7 +161,7 @@ QString BrowserMessageBuilder::encryptMessage(const QJsonObject& message,
         return encrypt(reply, nonce, publicKey, secretKey);
     }
 
-    return QString();
+    return {};
 }
 
 QJsonObject BrowserMessageBuilder::decryptMessage(const QString& message,
@@ -144,12 +170,12 @@ QJsonObject BrowserMessageBuilder::decryptMessage(const QString& message,
                                                   const QString& secretKey)
 {
     if (message.isEmpty() || nonce.isEmpty()) {
-        return QJsonObject();
+        return {};
     }
 
     QByteArray ba = decrypt(message, nonce, publicKey, secretKey);
     if (ba.isEmpty()) {
-        return QJsonObject();
+        return {};
     }
 
     return getJsonObject(ba);
@@ -174,7 +200,7 @@ QString BrowserMessageBuilder::encrypt(const QString& plaintext,
     e.resize(BrowserShared::NATIVEMSG_MAX_LENGTH);
 
     if (m.empty() || n.empty() || ck.empty() || sk.empty()) {
-        return QString();
+        return {};
     }
 
     if (crypto_box_easy(e.data(), m.data(), m.size(), n.data(), ck.data(), sk.data()) == 0) {
@@ -182,7 +208,7 @@ QString BrowserMessageBuilder::encrypt(const QString& plaintext,
         return res.toBase64();
     }
 
-    return QString();
+    return {};
 }
 
 QByteArray BrowserMessageBuilder::decrypt(const QString& encrypted,
@@ -204,14 +230,14 @@ QByteArray BrowserMessageBuilder::decrypt(const QString& encrypted,
     d.resize(BrowserShared::NATIVEMSG_MAX_LENGTH);
 
     if (m.empty() || n.empty() || ck.empty() || sk.empty()) {
-        return QByteArray();
+        return {};
     }
 
     if (crypto_box_open_easy(d.data(), m.data(), ma.length(), n.data(), ck.data(), sk.data()) == 0) {
         return getQByteArray(d.data(), std::char_traits<char>::length(reinterpret_cast<const char*>(d.data())));
     }
 
-    return QByteArray();
+    return {};
 }
 
 QString BrowserMessageBuilder::getBase64FromKey(const uchar* array, const uint len)
@@ -234,6 +260,11 @@ QJsonObject BrowserMessageBuilder::getJsonObject(const uchar* pArray, const uint
     QByteArray arr = getQByteArray(pArray, len);
     QJsonParseError err;
     QJsonDocument doc(QJsonDocument::fromJson(arr, &err));
+#ifdef QT_DEBUG
+    if (doc.isNull()) {
+        qWarning() << "Cannot create QJsonDocument: " << err.errorString();
+    }
+#endif
     return doc.object();
 }
 
@@ -241,6 +272,12 @@ QJsonObject BrowserMessageBuilder::getJsonObject(const QByteArray& ba) const
 {
     QJsonParseError err;
     QJsonDocument doc(QJsonDocument::fromJson(ba, &err));
+#ifdef QT_DEBUG
+    if (doc.isNull()) {
+        qWarning() << "Cannot create QJsonDocument: " << err.errorString();
+    }
+#endif
+
     return doc.object();
 }
 
@@ -256,4 +293,66 @@ QString BrowserMessageBuilder::incrementNonce(const QString& nonce)
 
     sodium_increment(n.data(), n.size());
     return getQByteArray(n.data(), n.size()).toBase64();
+}
+
+QString BrowserMessageBuilder::getRandomBytesAsBase64(int bytes) const
+{
+    if (bytes == 0) {
+        return {};
+    }
+
+    std::shared_ptr<unsigned char[]> buf(new unsigned char[bytes]);
+    Botan::Sodium::randombytes_buf(buf.get(), bytes);
+
+    return getBase64FromArray(reinterpret_cast<const char*>(buf.get()), bytes);
+}
+
+QString BrowserMessageBuilder::getBase64FromArray(const char* arr, int len) const
+{
+    if (len < 1) {
+        return {};
+    }
+
+    auto data = QByteArray::fromRawData(arr, len);
+    return getBase64FromArray(data);
+}
+
+// Returns URL encoded base64 with trailing removed
+QString BrowserMessageBuilder::getBase64FromArray(const QByteArray& byteArray) const
+{
+    if (byteArray.length() < 1) {
+        return {};
+    }
+
+    return byteArray.toBase64(QByteArray::Base64UrlEncoding | QByteArray::OmitTrailingEquals);
+}
+
+QString BrowserMessageBuilder::getBase64FromJson(const QJsonObject& jsonObject) const
+{
+    if (jsonObject.isEmpty()) {
+        return {};
+    }
+
+    const auto dataArray = QJsonDocument(jsonObject).toJson(QJsonDocument::Compact);
+    return getBase64FromArray(dataArray);
+}
+
+QByteArray BrowserMessageBuilder::getArrayFromHexString(const QString& hexString) const
+{
+    return QByteArray::fromHex(hexString.toUtf8());
+}
+
+QByteArray BrowserMessageBuilder::getArrayFromBase64(const QString& base64str) const
+{
+    return QByteArray::fromBase64(base64str.toUtf8(), QByteArray::Base64UrlEncoding | QByteArray::OmitTrailingEquals);
+}
+
+QByteArray BrowserMessageBuilder::getSha256Hash(const QString& str) const
+{
+    return QCryptographicHash::hash(str.toUtf8(), QCryptographicHash::Sha256);
+}
+
+QString BrowserMessageBuilder::getSha256HashAsBase64(const QString& str) const
+{
+    return getBase64FromArray(QCryptographicHash::hash(str.toUtf8(), QCryptographicHash::Sha256));
 }

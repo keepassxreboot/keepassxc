@@ -19,11 +19,11 @@
 
 #include "core/Config.h"
 
+#include <QProcessEnvironment>
+
 FileDialog* FileDialog::m_instance(nullptr);
 
-FileDialog::FileDialog()
-{
-}
+FileDialog::FileDialog() = default;
 
 QString FileDialog::getOpenFileName(QWidget* parent,
                                     const QString& caption,
@@ -37,7 +37,7 @@ QString FileDialog::getOpenFileName(QWidget* parent,
         m_nextFileName.clear();
         return result;
     } else {
-        const auto& workingDir = dir.isEmpty() ? config()->get(Config::LastDir).toString() : dir;
+        const auto& workingDir = dir.isEmpty() ? getLastDir("default") : dir;
         const auto result = QDir::toNativeSeparators(
             QFileDialog::getOpenFileName(parent, caption, workingDir, filter, selectedFilter, options));
 
@@ -63,7 +63,7 @@ QStringList FileDialog::getOpenFileNames(QWidget* parent,
         m_nextFileNames.clear();
         return results;
     } else {
-        const auto& workingDir = dir.isEmpty() ? config()->get(Config::LastDir).toString() : dir;
+        const auto& workingDir = dir.isEmpty() ? getLastDir("default") : dir;
         auto results = QFileDialog::getOpenFileNames(parent, caption, workingDir, filter, selectedFilter, options);
 
         for (auto& path : results) {
@@ -92,7 +92,7 @@ QString FileDialog::getSaveFileName(QWidget* parent,
         m_nextFileName.clear();
         return result;
     } else {
-        const auto& workingDir = dir.isEmpty() ? config()->get(Config::LastDir).toString() : dir;
+        const auto& workingDir = dir.isEmpty() ? getLastDir("default") : dir;
         const auto result = QDir::toNativeSeparators(
             QFileDialog::getSaveFileName(parent, caption, workingDir, filter, selectedFilter, options));
 
@@ -116,7 +116,7 @@ QString FileDialog::getExistingDirectory(QWidget* parent,
         m_nextDirName.clear();
         return result;
     } else {
-        const auto& workingDir = dir.isEmpty() ? config()->get(Config::LastDir).toString() : dir;
+        const auto& workingDir = dir.isEmpty() ? getLastDir("default") : dir;
         const auto result =
             QDir::toNativeSeparators(QFileDialog::getExistingDirectory(parent, caption, workingDir, options));
 
@@ -160,7 +160,15 @@ void FileDialog::saveLastDir(const QString& role, const QString& path, bool sens
 QString FileDialog::getLastDir(const QString& role, const QString& defaultDir)
 {
     auto lastDirs = config()->get(Config::LastDir).toHash();
-    return lastDirs.value(role, defaultDir).toString();
+    auto fallbackDir = defaultDir;
+
+    if (fallbackDir.isEmpty()) {
+        // Fallback to the environment variable, if it exists, otherwise use the home directory
+        const auto& env = QProcessEnvironment::systemEnvironment();
+        fallbackDir = env.value("KPXC_INITIAL_DIR", QDir::homePath());
+    }
+
+    return lastDirs.value(role, fallbackDir).toString();
 }
 
 FileDialog* FileDialog::instance()

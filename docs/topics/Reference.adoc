@@ -1,4 +1,4 @@
-= KeePassXC - Reference
+= KeePassXC – Reference
 include::.sharedheader[]
 :imagesdir: ../images
 
@@ -53,13 +53,13 @@ A reference to another entry's field is possible using the shorthand syntax:
 
 `&lt;FIELD&gt;` and `&lt;SEARCH_IN&gt;` can be one of following:
 
-* T - Title
-* U - Username
-* P - Password
-* A - URL
-* N - Notes
-* I - UUID (found on entry properties page)
-* O - Custom Attribute _(SEARCH_IN only)_
+* T – Title
+* U – Username
+* P – Password
+* A – URL
+* N – Notes
+* I – UUID (found on entry properties page)
+* O – Custom Attribute _(SEARCH_IN only)_
 
 Examples: +
 `{REF:U@I:033054D445C648C59092CC1D661B1B71}` +
