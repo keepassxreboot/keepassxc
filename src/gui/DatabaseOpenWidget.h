@@ -53,7 +53,9 @@ public:
     bool unlockingDatabase();
 
     // Quick Unlock helper functions
-    bool isOnQuickUnlockScreen();
+    bool canPerformQuickUnlock() const;
+    bool isOnQuickUnlockScreen() const;
+    void toggleQuickUnlockScreen();
     void triggerQuickUnlock();
     void resetQuickUnlock();
 
@@ -61,8 +63,7 @@ signals:
     void dialogFinished(bool accepted);
 
 protected:
-    void showEvent(QShowEvent* event) override;
-    void hideEvent(QHideEvent* event) override;
+    bool event(QEvent* event) override;
     QSharedPointer<CompositeKey> buildDatabaseKey();
     void setUserInteractionLock(bool state);
 

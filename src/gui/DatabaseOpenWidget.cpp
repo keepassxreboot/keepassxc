@@ -34,6 +34,7 @@
 #include <QCloseEvent>
 #include <QDesktopServices>
 #include <QFont>
+
 namespace
 {
     constexpr int clearFormsDelay = 30000;
@@ -43,15 +44,6 @@ namespace
         if (config()->get(Config::Security_QuickUnlock).toBool()) {
             return getQuickUnlock()->isAvailable();
         }
-        return false;
-    }
-
-    bool canPerformQuickUnlock(const QUuid& dbUuid)
-    {
-        if (isQuickUnlockAvailable()) {
-            return getQuickUnlock()->hasKey(dbUuid);
-        }
-        Q_UNUSED(dbUuid);
         return false;
     }
 } // namespace
@@ -174,50 +166,57 @@ void DatabaseOpenWidget::toggleHardwareKeyComponent(bool state)
     }
 }
 
-void DatabaseOpenWidget::showEvent(QShowEvent* event)
+bool DatabaseOpenWidget::event(QEvent* event)
 {
-    DialogyWidget::showEvent(event);
-    if (isOnQuickUnlockScreen()) {
-        m_ui->quickUnlockButton->setFocus();
-        if (m_db.isNull() || !canPerformQuickUnlock(m_db->publicUuid())) {
+    bool ret = DialogyWidget::event(event);
+
+    switch (event->type()) {
+    case QEvent::Show:
+    case QEvent::WindowActivate: {
+        if (isOnQuickUnlockScreen() && (m_db.isNull() || !canPerformQuickUnlock())) {
             resetQuickUnlock();
         }
-    } else {
-        m_ui->editPassword->setFocus();
-    }
-    m_hideTimer.stop();
+        toggleQuickUnlockScreen();
+        m_hideTimer.stop();
 
 #ifdef WITH_XC_YUBIKEY
 #ifdef Q_OS_WIN
-    m_deviceListener->registerHotplugCallback(true,
-                                              true,
-                                              YubiKeyInterfaceUSB::YUBICO_USB_VID,
-                                              DeviceListener::MATCH_ANY,
-                                              &DeviceListenerWin::DEV_CLS_KEYBOARD);
-    m_deviceListener->registerHotplugCallback(true,
-                                              true,
-                                              YubiKeyInterfaceUSB::ONLYKEY_USB_VID,
-                                              DeviceListener::MATCH_ANY,
-                                              &DeviceListenerWin::DEV_CLS_KEYBOARD);
+        m_deviceListener->registerHotplugCallback(true,
+                                                  true,
+                                                  YubiKeyInterfaceUSB::YUBICO_USB_VID,
+                                                  DeviceListener::MATCH_ANY,
+                                                  &DeviceListenerWin::DEV_CLS_KEYBOARD);
+        m_deviceListener->registerHotplugCallback(true,
+                                                  true,
+                                                  YubiKeyInterfaceUSB::ONLYKEY_USB_VID,
+                                                  DeviceListener::MATCH_ANY,
+                                                  &DeviceListenerWin::DEV_CLS_KEYBOARD);
 #else
-    m_deviceListener->registerHotplugCallback(true, true, YubiKeyInterfaceUSB::YUBICO_USB_VID);
-    m_deviceListener->registerHotplugCallback(true, true, YubiKeyInterfaceUSB::ONLYKEY_USB_VID);
+        m_deviceListener->registerHotplugCallback(true, true, YubiKeyInterfaceUSB::YUBICO_USB_VID);
+        m_deviceListener->registerHotplugCallback(true, true, YubiKeyInterfaceUSB::ONLYKEY_USB_VID);
 #endif
 #endif
-}
 
-void DatabaseOpenWidget::hideEvent(QHideEvent* event)
-{
-    DialogyWidget::hideEvent(event);
-
-    // Schedule form clearing if we are hidden
-    if (!isVisible()) {
-        m_hideTimer.start();
+        return true;
     }
 
+    case QEvent::Hide: {
+        // Schedule form clearing if we are hidden
+        if (!isVisible()) {
+            m_hideTimer.start();
+        }
+
 #ifdef WITH_XC_YUBIKEY
-    m_deviceListener->deregisterAllHotplugCallbacks();
+        m_deviceListener->deregisterAllHotplugCallbacks();
 #endif
+
+        return true;
+    }
+
+    default:;
+    }
+
+    return ret;
 }
 
 bool DatabaseOpenWidget::unlockingDatabase()
@@ -246,12 +245,7 @@ void DatabaseOpenWidget::load(const QString& filename)
         }
     }
 
-    if (canPerformQuickUnlock(m_db->publicUuid())) {
-        m_ui->centralStack->setCurrentIndex(1);
-        m_ui->quickUnlockButton->setFocus();
-    } else {
-        m_ui->editPassword->setFocus();
-    }
+    toggleQuickUnlockScreen();
 
 #ifdef WITH_XC_YUBIKEY
     // Do initial auto-poll
@@ -268,7 +262,7 @@ void DatabaseOpenWidget::clearForms()
     m_ui->keyFileLineEdit->setShowPassword(false);
     m_ui->keyFileLineEdit->setClearButtonEnabled(true);
     m_ui->hardwareKeyCombo->clear();
-    m_ui->centralStack->setCurrentIndex(0);
+    toggleQuickUnlockScreen();
 
     QString error;
     m_db.reset(new Database());
@@ -387,7 +381,7 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::buildDatabaseKey()
 {
     auto databaseKey = QSharedPointer<CompositeKey>::create();
 
-    if (!m_db.isNull() && canPerformQuickUnlock(m_db->publicUuid())) {
+    if (!m_db.isNull() && canPerformQuickUnlock()) {
         // try to retrieve the stored password using Windows Hello
         QByteArray keyData;
         if (!getQuickUnlock()->getKey(m_db->publicUuid(), keyData)) {
@@ -574,9 +568,25 @@ void DatabaseOpenWidget::setUserInteractionLock(bool state)
     m_unlockingDatabase = state;
 }
 
-bool DatabaseOpenWidget::isOnQuickUnlockScreen()
+bool DatabaseOpenWidget::canPerformQuickUnlock() const
+{
+    return !m_db.isNull() && isQuickUnlockAvailable() && getQuickUnlock()->hasKey(m_db->publicUuid());
+}
+
+bool DatabaseOpenWidget::isOnQuickUnlockScreen() const
 {
     return m_ui->centralStack->currentIndex() == 1;
+}
+
+void DatabaseOpenWidget::toggleQuickUnlockScreen()
+{
+    if (canPerformQuickUnlock()) {
+        m_ui->centralStack->setCurrentIndex(1);
+        m_ui->quickUnlockButton->setFocus();
+    } else {
+        m_ui->centralStack->setCurrentIndex(0);
+        m_ui->editPassword->setFocus();
+    }
 }
 
 void DatabaseOpenWidget::triggerQuickUnlock()
