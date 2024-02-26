@@ -39,6 +39,7 @@ protected:
     static void escape(QWidget* pWidget, int waitMs = 250);
     static void wait(int ms);
     static QString newTempFileName();
+    static void checkStatusBarText(const QString& textFragment);
 
 protected:
     // Have one single main window for all GUI tests.

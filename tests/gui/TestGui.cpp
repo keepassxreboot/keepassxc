@@ -43,9 +43,6 @@
 #include "gui/PasswordGeneratorWidget.h"
 #include "gui/PasswordWidget.h"
 #include "gui/SearchWidget.h"
-#include "gui/ShortcutSettingsPage.h"
-#include "gui/TotpSetupDialog.h"
-#include "gui/databasekey/KeyFileEditWidget.h"
 #include "gui/databasekey/PasswordEditWidget.h"
 #include "gui/dbsettings/DatabaseSettingsDialog.h"
 #include "gui/entry/EditEntryWidget.h"
@@ -54,16 +51,7 @@
 #include "gui/group/GroupModel.h"
 #include "gui/group/GroupView.h"
 #include "gui/tag/TagsEdit.h"
-#include "gui/wizard/NewDatabaseWizard.h"
 #include "keys/FileKey.h"
-
-#define TEST_MODAL_NO_WAIT(TEST_CODE)                                                                                  \
-    bool dialogFinished = false;                                                                                       \
-    QTimer::singleShot(0, [&]() { TEST_CODE dialogFinished = true; })
-
-#define TEST_MODAL(TEST_CODE)                                                                                          \
-    TEST_MODAL_NO_WAIT(TEST_CODE);                                                                                     \
-    QTRY_VERIFY(dialogFinished)
 
 int main(int argc, char* argv[])
 {
@@ -169,145 +157,6 @@ void TestGui::cleanup()
 void TestGui::cleanupTestCase()
 {
     m_dbFile.remove();
-}
-
-void TestGui::testCreateDatabase()
-{
-    TEST_MODAL_NO_WAIT(
-        NewDatabaseWizard * wizard; QTRY_VERIFY(wizard = m_tabWidget->findChild<NewDatabaseWizard*>());
-
-        QTest::keyClicks(wizard->currentPage()->findChild<QLineEdit*>("databaseName"), "Test Name");
-        QTest::keyClicks(wizard->currentPage()->findChild<QLineEdit*>("databaseDescription"), "Test Description");
-        QCOMPARE(wizard->currentId(), 0);
-
-        QTest::keyClick(wizard, Qt::Key_Enter);
-        QCOMPARE(wizard->currentId(), 1);
-
-        // Check that basic encryption settings are visible
-        auto decryptionTimeSlider = wizard->currentPage()->findChild<QSlider*>("decryptionTimeSlider");
-        auto algorithmComboBox = wizard->currentPage()->findChild<QComboBox*>("algorithmComboBox");
-        QTRY_VERIFY(decryptionTimeSlider->isVisible());
-        QVERIFY(!algorithmComboBox->isVisible());
-
-        // Set the encryption settings to the advanced view
-        auto encryptionSettings = wizard->currentPage()->findChild<QTabWidget*>("encryptionSettingsTabWidget");
-        auto advancedTab = encryptionSettings->findChild<QWidget*>("advancedTab");
-        encryptionSettings->setCurrentWidget(advancedTab);
-        QTRY_VERIFY(!decryptionTimeSlider->isVisible());
-        QVERIFY(algorithmComboBox->isVisible());
-
-        auto rounds = wizard->currentPage()->findChild<QSpinBox*>("transformRoundsSpinBox");
-        QVERIFY(rounds);
-        QVERIFY(rounds->isVisible());
-        QTest::mouseClick(rounds, Qt::MouseButton::LeftButton);
-        QTest::keyClick(rounds, Qt::Key_A, Qt::ControlModifier);
-        QTest::keyClicks(rounds, "2");
-        QTest::keyClick(rounds, Qt::Key_Tab);
-        QTest::keyClick(rounds, Qt::Key_Tab);
-
-        auto memory = wizard->currentPage()->findChild<QSpinBox*>("memorySpinBox");
-        QVERIFY(memory);
-        QVERIFY(memory->isVisible());
-        QTest::mouseClick(memory, Qt::MouseButton::LeftButton);
-        QTest::keyClick(memory, Qt::Key_A, Qt::ControlModifier);
-        QTest::keyClicks(memory, "50");
-        QTest::keyClick(memory, Qt::Key_Tab);
-
-        auto parallelism = wizard->currentPage()->findChild<QSpinBox*>("parallelismSpinBox");
-        QVERIFY(parallelism);
-        QVERIFY(parallelism->isVisible());
-        QTest::mouseClick(parallelism, Qt::MouseButton::LeftButton);
-        QTest::keyClick(parallelism, Qt::Key_A, Qt::ControlModifier);
-        QTest::keyClicks(parallelism, "1");
-        QTest::keyClick(parallelism, Qt::Key_Enter);
-
-        QCOMPARE(wizard->currentId(), 2);
-
-        // enter password
-        auto* passwordWidget = wizard->currentPage()->findChild<PasswordEditWidget*>();
-        QCOMPARE(passwordWidget->visiblePage(), KeyFileEditWidget::Page::Edit);
-        auto* passwordEdit =
-            passwordWidget->findChild<PasswordWidget*>("enterPasswordEdit")->findChild<QLineEdit*>("passwordEdit");
-        auto* passwordRepeatEdit =
-            passwordWidget->findChild<PasswordWidget*>("repeatPasswordEdit")->findChild<QLineEdit*>("passwordEdit");
-        QTRY_VERIFY(passwordEdit->isVisible());
-        QTRY_VERIFY(passwordEdit->hasFocus());
-        QTest::keyClicks(passwordEdit, "test");
-        QTest::keyClick(passwordEdit, Qt::Key::Key_Tab);
-        QTest::keyClicks(passwordRepeatEdit, "test");
-
-        // add key file
-        auto* additionalOptionsButton = wizard->currentPage()->findChild<QPushButton*>("additionalKeyOptionsToggle");
-        auto* keyFileWidget = wizard->currentPage()->findChild<KeyFileEditWidget*>();
-        QVERIFY(additionalOptionsButton->isVisible());
-        QTest::mouseClick(additionalOptionsButton, Qt::MouseButton::LeftButton);
-        QTRY_VERIFY(keyFileWidget->isVisible());
-        QTRY_VERIFY(!additionalOptionsButton->isVisible());
-        QCOMPARE(passwordWidget->visiblePage(), KeyFileEditWidget::Page::Edit);
-        QTest::mouseClick(keyFileWidget->findChild<QPushButton*>("addButton"), Qt::MouseButton::LeftButton);
-        auto* fileEdit = keyFileWidget->findChild<QLineEdit*>("keyFileLineEdit");
-        QTRY_VERIFY(fileEdit);
-        QTRY_VERIFY(fileEdit->isVisible());
-        fileDialog()->setNextFileName(QString("%1/%2").arg(QString(KEEPASSX_TEST_DATA_DIR), "FileKeyHashed.key"));
-        QTest::keyClick(keyFileWidget->findChild<QPushButton*>("addButton"), Qt::Key::Key_Enter);
-        QVERIFY(fileEdit->hasFocus());
-        auto* browseButton = keyFileWidget->findChild<QPushButton*>("browseKeyFileButton");
-        QTest::keyClick(browseButton, Qt::Key::Key_Enter);
-        QCOMPARE(fileEdit->text(), QString("%1/%2").arg(QString(KEEPASSX_TEST_DATA_DIR), "FileKeyHashed.key"));
-
-        // save database to temporary file
-        TemporaryFile tmpFile;
-        QVERIFY(tmpFile.open());
-        tmpFile.close();
-        fileDialog()->setNextFileName(tmpFile.fileName());
-
-        // click Continue on the warning due to weak password
-        MessageBox::setNextAnswer(MessageBox::ContinueWithWeakPass);
-        QTest::keyClick(fileEdit, Qt::Key::Key_Enter);
-
-        tmpFile.remove(););
-
-    triggerAction("actionDatabaseNew");
-
-    QCOMPARE(m_tabWidget->count(), 2);
-
-    checkStatusBarText("0 Ent");
-
-    // there is a new empty db
-    m_db = m_tabWidget->currentDatabaseWidget()->database();
-    QCOMPARE(m_db->rootGroup()->children().size(), 0);
-
-    // check meta data
-    QCOMPARE(m_db->metadata()->name(), QString("Test Name"));
-    QCOMPARE(m_db->metadata()->description(), QString("Test Description"));
-
-    // check key and encryption
-    QCOMPARE(m_db->key()->keys().size(), 2);
-    QCOMPARE(m_db->kdf()->rounds(), 2);
-    QCOMPARE(m_db->kdf()->uuid(), KeePass2::KDF_ARGON2D);
-    QCOMPARE(m_db->cipher(), KeePass2::CIPHER_AES256);
-    auto compositeKey = QSharedPointer<CompositeKey>::create();
-    compositeKey->addKey(QSharedPointer<PasswordKey>::create("test"));
-    auto fileKey = QSharedPointer<FileKey>::create();
-    fileKey->load(QString("%1/%2").arg(QString(KEEPASSX_TEST_DATA_DIR), "FileKeyHashed.key"));
-    compositeKey->addKey(fileKey);
-    QCOMPARE(m_db->key()->rawKey(), compositeKey->rawKey());
-
-    checkStatusBarText("0 Ent");
-
-    // Test the switching to other DB tab
-    m_tabWidget->setCurrentIndex(0);
-    checkStatusBarText("1 Ent");
-
-    m_tabWidget->setCurrentIndex(1);
-    checkStatusBarText("0 Ent");
-
-    // close the new database
-    MessageBox::setNextAnswer(MessageBox::No);
-    triggerAction("actionDatabaseClose");
-
-    // Wait for dialog to terminate
-    QTRY_VERIFY(dialogFinished);
 }
 
 void TestGui::testMergeDatabase()
