@@ -124,3 +124,12 @@ QString FixtureBase::newTempFileName()
     TemporaryFile tmpFile;
     return tmpFile.fileName();
 }
+
+void FixtureBase::checkStatusBarText(const QString& textFragment)
+{
+    QApplication::processEvents();
+    REQUIRE(m_statusBarLabel->isVisible());
+    REQUIRE(m_statusBarLabel->text().startsWith(textFragment));
+    // TODO Catch2 does not have a way to print a custom message in case of fail. Implement own way?
+    // qPrintable(QString("'%1' doesn't start with '%2'").arg(m_statusBarLabel->text(), textFragment)));
+}

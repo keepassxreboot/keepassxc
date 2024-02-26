@@ -22,6 +22,7 @@ set(TEST_GUI_SOURCES
         TestPassphraseGeneratorGui.cpp
         TestPasswordGeneratorGui.cpp
         TestAppSettingsGui.cpp
+        TestDbCreatingGui.cpp
         TestDbLockingGui.cpp
         TestDbSavingGui.cpp
         TestDbSettingsGui.cpp
