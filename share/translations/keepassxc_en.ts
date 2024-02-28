@@ -3701,11 +3701,6 @@ This may cause the affected plugins to malfunction.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Attachment &quot;%1&quot; already exists. 
-Would you like to overwrite the existing attachment?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Confirm Attachment</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3732,6 +3727,11 @@ Do you want to save the changes to your database?</source>
     <message>
         <source>Saving updated attachment failed.
 Error: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attachment &quot;%1&quot; already exists. 
+Would you like to overwrite the existing attachment?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5381,6 +5381,10 @@ Are you sure you want to continue with this file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Show Menubar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Show Toolbar</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5716,6 +5720,10 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Set Theme: Classic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle Show Menubar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

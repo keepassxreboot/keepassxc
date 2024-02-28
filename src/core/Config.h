@@ -74,6 +74,7 @@ public:
         LastDir,
 
         GUI_Language,
+        GUI_HideMenubar,
         GUI_HideToolbar,
         GUI_MovableToolbar,
         GUI_HidePreviewPanel,
