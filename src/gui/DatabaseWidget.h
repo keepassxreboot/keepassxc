@@ -318,6 +318,7 @@ private:
 
     // Autoreload
     bool m_blockAutoSave;
+    bool m_blockAutoReload;
 
     // Autosave delay
     QPointer<QTimer> m_autosaveTimer;

@@ -227,6 +227,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     connectDatabaseSignals();
 
     m_blockAutoSave = false;
+    m_blockAutoReload = false;
 
     m_autosaveTimer = new QTimer(this);
     m_autosaveTimer->setSingleShot(true);
@@ -1191,6 +1192,10 @@ void DatabaseWidget::mergeDatabase(bool accepted)
             return;
         }
 
+        // block auto-reload and auto-save while merging
+        m_blockAutoSave = true;
+        m_blockAutoReload = true;
+
         auto* mergeDialog = new MergeDialog(srcDb, m_db, this);
         connect(mergeDialog, &MergeDialog::databaseMerged, [this](bool changed) {
             if (changed) {
@@ -1215,6 +1220,10 @@ void DatabaseWidget::mergeDatabase(bool accepted)
                 });
         connect(mergeDialog, &MergeDialog::rejected, [this]() {
             showMessage(tr("Merge aborted - database was not modified."), MessageWidget::Information);
+        });
+        connect(mergeDialog, &MergeDialog::finished, [this](auto) {
+            m_blockAutoSave = false;
+            m_blockAutoReload = false;
         });
         mergeDialog->open();
     }
@@ -1853,8 +1862,8 @@ bool DatabaseWidget::lock()
 
 void DatabaseWidget::reloadDatabaseFile()
 {
-    // Ignore reload if we are locked, saving, or currently editing an entry or group
-    if (!m_db || isLocked() || isEntryEditActive() || isGroupEditActive() || isSaving()) {
+    // Ignore reload if we are locked, saving, merging or currently editing an entry or group
+    if (!m_db || m_blockAutoReload || isLocked() || isEntryEditActive() || isGroupEditActive() || isSaving()) {
         return;
     }
 
@@ -1893,6 +1902,7 @@ void DatabaseWidget::reloadDatabaseFile()
                 MessageBox::Merge);
 
             if (result == MessageBox::Merge) {
+                // TODO: use MergeDialog
                 // Merge the old database into the new one
                 Merger merger(m_db.data(), db.data());
                 merger.merge();
