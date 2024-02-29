@@ -5827,6 +5827,38 @@ We recommend you use the AppImage available on our downloads page.</source>
 <context>
     <name>Merger</name>
     <message>
+        <source>Creating missing %1 [%2]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Relocating %1 [%2]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Overwriting %1 [%2]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Synchronizing from newer source %1 [%2]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Synchronizing from older source %1 [%2]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deleting child %1 [%2]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Deleting orphan %1 [%2]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Changed deleted objects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Adding missing icon %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5836,70 +5868,6 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Adding custom data %1 [%2]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Added</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Modified</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Moved</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Deleted</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Restoring</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Creating missing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Relocating</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Overwriting group data (name,notes,icon,expiry time,modification time)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Synchronizing from newer source</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Synchronizing from older source</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Inconsistent history - may cause data loss (at &apos;%1&apos; in source database)!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>History conflict - may cause data loss (at &apos;%1&apos;)!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Entry conflict - may cause data loss!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Deleting child</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Deleting orphan</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Updated deleted objects</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

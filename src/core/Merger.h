@@ -27,52 +27,16 @@ class Merger : public QObject
 {
     Q_OBJECT
 public:
-    class Change
-    {
-    public:
-        enum class Type
-        {
-            Unspecified,
-            Added,
-            Modified,
-            Moved,
-            Deleted,
-        };
-
-        using MergeOperation = std::function<void()>;
-
-        Change(Type type, const Group& group, MergeOperation mergeOperation, QString details = "");
-        Change(Type type, const Entry& entry, MergeOperation mergeOperation, QString details = "");
-        explicit Change(MergeOperation mergeOperation, QString details = "");
-
-        [[nodiscard]] Type type() const;
-        [[nodiscard]] QString typeString() const;
-        [[nodiscard]] const QString& title() const;
-        [[nodiscard]] const QString& group() const;
-        [[nodiscard]] const QUuid& uuid() const;
-        [[nodiscard]] const QString& details() const;
-
-        [[nodiscard]] QString toString() const;
-        void merge();
-
-    private:
-        Type m_type{Type::Unspecified};
-        QString m_title;
-        QString m_group;
-        QUuid m_uuid;
-        QString m_details;
-        MergeOperation m_mergeOperation;
-    };
-    using ChangeList = QList<Change>;
-
     Merger(const Database* sourceDb, Database* targetDb);
     Merger(const Group* sourceGroup, Group* targetGroup);
     void setForcedMergeMode(Group::MergeMode mode);
     void resetForcedMergeMode();
-    const ChangeList& changes();
-    const ChangeList& merge(bool recalculateChanges = true);
+    QStringList merge();
 
 private:
+    typedef QString Change;
+    typedef QStringList ChangeList;
+
     struct MergeContext
     {
         QPointer<const Database> m_sourceDb;
@@ -82,15 +46,10 @@ private:
         QPointer<const Group> m_sourceGroup;
         QPointer<Group> m_targetGroup;
     };
-    [[nodiscard]] Group::MergeMode mergeMode(const MergeContext& context) const;
     ChangeList mergeGroup(const MergeContext& context);
     ChangeList mergeDeletions(const MergeContext& context);
     ChangeList mergeMetadata(const MergeContext& context);
-    bool mergeHistory(const Entry* sourceEntry,
-                      Entry* targetEntry,
-                      Group::MergeMode mergeMethod,
-                      const int maxItems,
-                      ChangeList* changes = nullptr);
+    bool mergeHistory(const Entry* sourceEntry, Entry* targetEntry, Group::MergeMode mergeMethod, const int maxItems);
     void moveEntry(Entry* entry, Group* targetGroup);
     void moveGroup(Group* group, Group* targetGroup);
     // remove an entry without a trace in the deletedObjects - needed for elemination cloned entries
@@ -103,25 +62,10 @@ private:
                                                            const Entry* sourceEntry,
                                                            Entry* targetEntry,
                                                            Group::MergeMode mergeMethod);
-    struct PreprocessedDeletion
-    {
-        DeletedObject deletion;
-        Entry* targetEntry = nullptr;
-        const Entry* sourceEntry = nullptr;
-        Group* targetGroup = nullptr;
-        const Group* sourceGroup = nullptr;
-    };
-    static QList<PreprocessedDeletion> preprocessDeletions(const MergeContext& context);
-    void processEntryDeletion(const PreprocessedDeletion& object, QList<DeletedObject>& deletions, ChangeList& changes);
-    void processGroupDeletion(const PreprocessedDeletion& object,
-                              QList<PreprocessedDeletion>& unprocessedDeletions,
-                              QList<DeletedObject>& deletions,
-                              ChangeList& changes);
 
 private:
     MergeContext m_context;
     Group::MergeMode m_mode;
-    std::unique_ptr<ChangeList> m_changes;
 };
 
 #endif // KEEPASSXC_MERGER_H

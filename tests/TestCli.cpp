@@ -1683,8 +1683,8 @@ void TestCli::testMerge()
     m_stderr->readLine(); // Skip password prompt
     QCOMPARE(m_stderr->readAll(), QByteArray());
     QList<QByteArray> outLines1 = m_stdout->readAll().split('\n');
-    QVERIFY(outLines1.at(0).contains("Internet") && outLines1.at(0).contains("Overwriting"));
-    QVERIFY(outLines1.at(1).contains("Some Website") && outLines1.at(1).contains("Creating missing"));
+    QVERIFY(outLines1.at(0).contains("Overwriting Internet"));
+    QVERIFY(outLines1.at(1).contains("Creating missing Some Website"));
     QCOMPARE(outLines1.at(2),
              QString("Successfully merged %1 into %2.").arg(sourceFile.fileName(), targetFile1.fileName()).toUtf8());
 
@@ -1700,8 +1700,8 @@ void TestCli::testMerge()
     setInput("a");
     execCmd(mergeCmd, {"merge", "--dry-run", "-s", targetFile2.fileName(), sourceFile.fileName()});
     QList<QByteArray> outLines2 = m_stdout->readAll().split('\n');
-    QVERIFY(outLines2.at(0).contains("Internet") && outLines2.at(0).contains("Overwriting"));
-    QVERIFY(outLines2.at(1).contains("Some Website") && outLines2.at(1).contains("Creating missing"));
+    QVERIFY(outLines2.at(0).contains("Overwriting Internet"));
+    QVERIFY(outLines2.at(1).contains("Creating missing Some Website"));
     QCOMPARE(outLines2.at(2), QByteArray("Database was not modified by merge operation."));
 
     mergedDb = QSharedPointer<Database>::create();

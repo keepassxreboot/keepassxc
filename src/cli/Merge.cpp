@@ -87,10 +87,10 @@ int Merge::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer
     }
 
     Merger merger(db2.data(), database.data());
-    auto changeList = merger.merge();
+    QStringList changeList = merger.merge();
 
-    for (const auto& mergeChange : changeList) {
-        out << "\t" << mergeChange.toString() << endl;
+    for (auto& mergeChange : changeList) {
+        out << "\t" << mergeChange << endl;
     }
 
     if (!changeList.isEmpty() && !parser->isSet(Merge::DryRunOption)) {

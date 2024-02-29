@@ -35,9 +35,6 @@ private slots:
     void testResolveGroupConflictOlder();
     void testMergeNotModified();
     void testMergeModified();
-    void testMergePrecalculatedChanges();
-    void testMergeRecalculateChanges();
-    void testMergeChangeCalculationDoesNotChangeDatabase();
     void testResolveConflictEntry_Synchronize();
     void testResolveConflictEntry_KeepNewer();
     void testDeletionConflictEntry_Synchronized();

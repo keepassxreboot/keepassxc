@@ -571,7 +571,7 @@ void TestMerge::assertDeletionLocalOnly(Database* db, const QMap<QString, QUuid>
     QVERIFY(mergedRootGroup->findEntryByUuid(identifiers["EntryDeletedInSourceAfterChangedInTarget"]));
     QVERIFY(!db->containsDeletedObject(identifiers["EntryDeletedInSourceAfterChangedInTarget"]));
 
-    // Uuids in db and deletedObjects is intended according to KeePass #1752 # TODO: shouldn't this be #1992?
+    // Uuids in db and deletedObjects is intended according to KeePass #1752
     QVERIFY(mergedRootGroup->findEntryByUuid(identifiers["EntryDeletedInTargetBeforeChangedInSource"]));
     QVERIFY(db->containsDeletedObject(identifiers["EntryDeletedInTargetBeforeChangedInSource"]));
 
@@ -1110,7 +1110,7 @@ void TestMerge::testCustomData()
     m_clock->advanceSecond(1);
 
     Merger merger(dbSource.data(), dbDestination.data());
-    auto changes = merger.merge();
+    QStringList changes = merger.merge();
 
     QVERIFY(!changes.isEmpty());
 
@@ -1131,7 +1131,7 @@ void TestMerge::testCustomData()
     dbSource->metadata()->customData()->set("key3", "oldValue");
     dbSource->metadata()->customData()->set("key3", "newValue");
     Merger merger2(dbSource.data(), dbDestination.data());
-    auto changes2 = merger2.merge();
+    QStringList changes2 = merger2.merge();
     QVERIFY(changes2.isEmpty());
 
     Merger merger3(dbSource2.data(), dbDestination2.data());
@@ -1412,88 +1412,6 @@ void TestMerge::testMergeModified()
     entry->endUpdate();
 
     Merger merger(dbSource.data(), dbDestination.data());
-    merger.merge();
-    QTRY_VERIFY(!modifiedSignalSpy.empty());
-}
-
-void TestMerge::testMergeChangeCalculationDoesNotChangeDatabase()
-{
-    QScopedPointer<Database> dbDestination(createTestDatabase());
-    QScopedPointer<Database> dbSource(
-        createTestDatabaseStructureClone(dbDestination.data(), Entry::CloneNoFlags, Group::CloneIncludeEntries));
-
-    QSignalSpy modifiedSignalSpy(dbDestination.data(), SIGNAL(modified()));
-
-    // Make sure the two changes have a different timestamp.
-    QTest::qSleep(1);
-    Entry* modifiedEntry = dbSource->rootGroup()->findEntryByPath("entry1");
-    modifiedEntry->beginUpdate();
-    modifiedEntry->setTitle("new title");
-    modifiedEntry->endUpdate();
-    auto* newEntry = new Entry();
-    newEntry->setTitle("new entry");
-    newEntry->setUuid(QUuid::createUuid());
-    newEntry->setGroup(dbSource->rootGroup());
-    auto* newGroup = new Group();
-    newGroup->setName("new group");
-    newGroup->setUuid(QUuid::createUuid());
-    newGroup->setParent(dbSource->rootGroup());
-    auto* movedEntry = dbSource->rootGroup()->findEntryByPath("entry2");
-    movedEntry->setParent(newGroup);
-    auto* movedGroup = dbSource->rootGroup()->findGroupByPath("group2");
-    movedGroup->setParent(newGroup);
-    auto* deletedGroup = dbSource->rootGroup()->findGroupByPath("group1");
-    delete deletedGroup;
-    auto* deletedEntry = dbSource->rootGroup()->findEntryByPath("entry2");
-    delete deletedEntry;
-
-    Merger merger(dbSource.data(), dbDestination.data());
-    merger.changes(); // calculate changes
-    QTRY_VERIFY(modifiedSignalSpy.empty());
-}
-
-void TestMerge::testMergePrecalculatedChanges()
-{
-    QScopedPointer<Database> dbDestination(createTestDatabase());
-    QScopedPointer<Database> dbSource(
-        createTestDatabaseStructureClone(dbDestination.data(), Entry::CloneNoFlags, Group::CloneIncludeEntries));
-
-    QSignalSpy modifiedSignalSpy(dbDestination.data(), SIGNAL(modified()));
-
-    Merger merger(dbSource.data(), dbDestination.data());
-    merger.changes(); // Calculate (empty) changes
-
-    // Make sure the two changes have a different timestamp.
-    QTest::qSleep(1);
-    Entry* entry = dbSource->rootGroup()->findEntryByPath("entry1");
-    entry->beginUpdate();
-    entry->setTitle("new title");
-    entry->endUpdate();
-
-    // Since changes were calculated before modification, database should remain unmodified
-    merger.merge(false);
-    QTRY_VERIFY(modifiedSignalSpy.empty());
-}
-
-void TestMerge::testMergeRecalculateChanges()
-{
-    QScopedPointer<Database> dbDestination(createTestDatabase());
-    QScopedPointer<Database> dbSource(
-        createTestDatabaseStructureClone(dbDestination.data(), Entry::CloneNoFlags, Group::CloneIncludeEntries));
-
-    QSignalSpy modifiedSignalSpy(dbDestination.data(), SIGNAL(modified()));
-
-    Merger merger(dbSource.data(), dbDestination.data());
-    merger.changes(); // Calculate (empty) changes
-
-    // Make sure the two changes have a different timestamp.
-    QTest::qSleep(1);
-    Entry* entry = dbSource->rootGroup()->findEntryByPath("entry1");
-    entry->beginUpdate();
-    entry->setTitle("new title");
-    entry->endUpdate();
-
-    // Should result in modified database since changes should be recalculated
     merger.merge();
     QTRY_VERIFY(!modifiedSignalSpy.empty());
 }
