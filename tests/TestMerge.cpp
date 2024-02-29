@@ -1110,7 +1110,7 @@ void TestMerge::testCustomData()
     m_clock->advanceSecond(1);
 
     Merger merger(dbSource.data(), dbDestination.data());
-    QStringList changes = merger.merge();
+    auto changes = merger.merge();
 
     QVERIFY(!changes.isEmpty());
 
@@ -1131,7 +1131,7 @@ void TestMerge::testCustomData()
     dbSource->metadata()->customData()->set("key3", "oldValue");
     dbSource->metadata()->customData()->set("key3", "newValue");
     Merger merger2(dbSource.data(), dbDestination.data());
-    QStringList changes2 = merger2.merge();
+    auto changes2 = merger2.merge();
     QVERIFY(changes2.isEmpty());
 
     Merger merger3(dbSource2.data(), dbDestination2.data());

@@ -27,7 +27,6 @@
 
 MergeDialog::MergeDialog(QSharedPointer<Database> source, QSharedPointer<Database> target, QWidget* parent)
     : QDialog(parent)
-    , m_merger(source.data(), target.data())
     , m_sourceDatabase{std::move(source)}
     , m_targetDatabase{std::move(target)}
 {
@@ -38,7 +37,7 @@ MergeDialog::MergeDialog(QSharedPointer<Database> source, QSharedPointer<Databas
     m_ui.buttonBox->button(QDialogButtonBox::Ok)->setText(tr("Merge"));
     m_ui.buttonBox->button(QDialogButtonBox::Ok)->setFocus();
 
-    connect(m_ui.buttonBox, SIGNAL(rejected()), SLOT(close()));
+    connect(m_ui.buttonBox, SIGNAL(rejected()), SLOT(abortMerge()));
     connect(m_ui.buttonBox, SIGNAL(accepted()), SLOT(performMerge()));
 
     setupChangeTable();
@@ -47,9 +46,32 @@ MergeDialog::MergeDialog(QSharedPointer<Database> source, QSharedPointer<Databas
     setWindowModality(Qt::WindowModality::ApplicationModal);
 }
 
+MergeDialog::MergeDialog(const Merger::ChangeList& changes, QWidget* parent)
+    : QDialog(parent)
+    , m_changes(changes)
+{
+    setAttribute(Qt::WA_DeleteOnClose);
+
+    m_ui.setupUi(this);
+
+    m_ui.buttonBox->button(QDialogButtonBox::Ok)->setFocus();
+    m_ui.buttonBox->button(QDialogButtonBox::Abort)->hide();
+
+    connect(m_ui.buttonBox, SIGNAL(accepted()), SLOT(close()));
+
+    setupChangeTable();
+}
+
 void MergeDialog::setupChangeTable()
 {
-    auto changeList = m_merger.changes();
+    if (m_changes.isEmpty()) {
+        // deep copy of root group with same uuid
+        auto tmpRootGroup = m_targetDatabase->rootGroup()->clone(Entry::CloneFlag::CloneIncludeHistory,
+                                                                 Group::CloneFlag::CloneIncludeEntries);
+        Database tmpDatabase;
+        tmpDatabase.setRootGroup(tmpRootGroup);
+        m_changes = Merger(m_sourceDatabase.data(), &tmpDatabase).merge();
+    }
 
     auto* table = m_ui.changeTable;
     auto columns = QVector<QPair<QString, std::function<QString(const Merger::Change&)>>>{
@@ -65,13 +87,13 @@ void MergeDialog::setupChangeTable()
         qMakePair(tr("Type of change"), [](const auto& change) { return change.typeString(); }),
         qMakePair(tr("Details"), [](const auto& change) { return change.details(); })};
     table->setColumnCount(columns.size());
-    table->setRowCount(changeList.size());
+    table->setRowCount(m_changes.size());
     for (int column = 0; column < columns.size(); ++column) {
         const auto& columnName = columns[column].first;
         table->setHorizontalHeaderItem(column, new QTableWidgetItem(columnName));
     }
-    for (int row = 0; row < changeList.size(); ++row) {
-        const auto& change = changeList[row];
+    for (int row = 0; row < m_changes.size(); ++row) {
+        const auto& change = m_changes[row];
         for (int column = 0; column < columns.size(); ++column) {
             auto changeMember = columns[column].second;
             table->setItem(row, column, new QTableWidgetItem(changeMember(change)));
@@ -91,7 +113,16 @@ void MergeDialog::setupChangeTable()
 
 void MergeDialog::performMerge()
 {
-    auto changelist = m_merger.merge(false);
-    emit databaseMerged(!changelist.isEmpty());
+    auto changes = Merger(m_sourceDatabase.data(), m_targetDatabase.data()).merge();
+    if (changes != m_changes) {
+        emit databaseModifiedMerge(changes, m_changes);
+    } else {
+        emit databaseMerged(!changes.isEmpty());
+    }
     done(QDialog::Accepted);
+}
+
+void MergeDialog::abortMerge()
+{
+    done(QDialog::Rejected);
 }

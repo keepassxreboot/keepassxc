@@ -1199,6 +1199,20 @@ void DatabaseWidget::mergeDatabase(bool accepted)
                 showMessage(tr("Database was not modified by merge operation."), MessageWidget::Information);
             }
         });
+        connect(mergeDialog,
+                &MergeDialog::databaseModifiedMerge,
+                [this](const Merger::ChangeList& actualChanges, const Merger::ChangeList&) {
+                    if (!actualChanges.isEmpty()) {
+                        showMessage(tr("Merged changes do not match displayed changes!"), MessageWidget::Warning);
+                        auto* actualChangesDialog = new MergeDialog(actualChanges, this);
+                        actualChangesDialog->setWindowTitle(tr("Actual Merge Result"));
+                        actualChangesDialog->open();
+                    } else {
+                        showMessage(
+                            tr("Database was not modified by merge operation, displayed changes were not applied!"),
+                            MessageWidget::Warning);
+                    }
+                });
         connect(mergeDialog, &MergeDialog::rejected, [this]() {
             showMessage(tr("Merge aborted - database was not modified."), MessageWidget::Information);
         });

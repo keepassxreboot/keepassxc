@@ -31,13 +31,23 @@ class MergeDialog : public QDialog
     Q_OBJECT
 
 public:
+    /**
+     * Merge source into copy of target and display changes.
+     * On user confirmation, merge source into target.
+     */
     explicit MergeDialog(QSharedPointer<Database> source, QSharedPointer<Database> target, QWidget* parent = nullptr);
+    /**
+     * Display given changes.
+     */
+    explicit MergeDialog(const Merger::ChangeList& changes, QWidget* parent = nullptr);
 
 Q_SIGNALS:
     void databaseMerged(bool databaseChanged);
+    void databaseModifiedMerge(const Merger::ChangeList& actualChanges, const Merger::ChangeList& expectedChanges);
 
 private Q_SLOTS:
     void performMerge();
+    void abortMerge();
 
 private:
     void setupChangeTable();
@@ -45,7 +55,7 @@ private:
 private:
     Ui::MergeDialog m_ui;
 
-    Merger m_merger;
+    Merger::ChangeList m_changes;
     QSharedPointer<Database> m_sourceDatabase;
     QSharedPointer<Database> m_targetDatabase;
 };
