@@ -32,6 +32,10 @@
 #include <QTemporaryFile>
 #include <QTimer>
 
+#ifdef _WIN32
+    #include <Windows.h>
+#endif
+
 QHash<QUuid, QPointer<Database>> Database::s_uuidMap;
 
 Database::Database()
@@ -275,6 +279,11 @@ bool Database::saveAs(const QString& filePath, SaveAction action, const QString&
     QFileInfo fileInfo(filePath);
     auto realFilePath = fileInfo.exists() ? fileInfo.canonicalFilePath() : fileInfo.absoluteFilePath();
     bool isNewFile = !QFile::exists(realFilePath);
+
+#ifdef _WIN32
+    bool isHidden = fileInfo.isHidden();
+#endif
+
     bool ok = AsyncTask::runAndWaitForFuture([&] { return performSave(realFilePath, action, backupFilePath, error); });
     if (ok) {
         setFilePath(filePath);
@@ -282,6 +291,14 @@ bool Database::saveAs(const QString& filePath, SaveAction action, const QString&
         if (isNewFile) {
             QFile::setPermissions(realFilePath, QFile::ReadUser | QFile::WriteUser);
         }
+
+ #ifdef _WIN32
+        if (isHidden)
+        {
+            SetFileAttributes(realFilePath.toStdString().c_str(), FILE_ATTRIBUTE_HIDDEN);
+        }
+#endif
+
         m_fileWatcher->start(realFilePath, 30, 1);
     } else {
         // Saving failed, don't rewatch file since it does not represent our database
