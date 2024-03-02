@@ -2,6 +2,13 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="en_US">
 <context>
+    <name>AESCBCFactorKeyDerivation</name>
+    <message>
+        <source>Performing AES-CBC decryption on wrapped key</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AboutDialog</name>
     <message>
         <source>About KeePassXC</source>
@@ -598,6 +605,13 @@
     </message>
     <message>
         <source>Hide TOTP in the entry preview panel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AuthenticationFactor</name>
+    <message>
+        <source>Validation failed when unwrapping factor &apos;%1&apos;: %2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4487,6 +4501,14 @@ If this reoccurs, then your database file may be corrupt.</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Parsing authentication factors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parsed authentication factors, got %1 group</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Kdbx4Writer</name>
@@ -4572,6 +4594,109 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Unsupported KeePass 2 database version.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>KdbxXmlAuthenticationFactorReader</name>
+    <message>
+        <source>Read authentication factor XML: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>XML parsing failure on authentication factors: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to parse authentication factor info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Read authentication factor compat version: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Incompatible authentication factor version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Secondary authentication factors are comprehensive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comprehensive set to unknown value %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown element type while processing authentication factor info: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to decode validation input for authentication factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to decode validation output for authentication factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown authentication validation type %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to decode challenge for authentication factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown element type while processing authentication factor group: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Authentication factor group is empty!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>An authentication factor group contains only unsupported factors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Factor is a SHA256-hashed password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Factor is a FIDO credential with type ES256</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unrecognized factor UUID %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unrecognized factor key type %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to decode key salt for authentication factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to decode wrapped key for authentication factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Encountered a CredentialID element on factor of non-FIDO type %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to decode FIDO credential ID for authentication factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown element type while processing generic authentication factor: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Factor %1 is missing required fields</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6260,6 +6385,13 @@ Do you want to overwrite it?
         <source>Cannot import Passkey file &quot;%1&quot;.
 The following data is missing:
 %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PasswordAuthenticationFactor</name>
+    <message>
+        <source>Falling back to default user password for factor &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8481,6 +8613,22 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Failed to decrypt key data.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Factor &apos;%1&apos; did not contribute key material</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Got a key part from factor &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attempting to add key material from extra authentication factors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to get keying material from an authentication factor group</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
