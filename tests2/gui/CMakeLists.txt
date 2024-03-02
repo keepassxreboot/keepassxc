@@ -24,6 +24,7 @@ set(TEST_GUI_SOURCES
         TestAppSettingsGui.cpp
         TestDbCreatingGui.cpp
         TestDbLockingGui.cpp
+        TestDbMergingGui.cpp
         TestDbSavingGui.cpp
         TestDbSettingsGui.cpp
         TestTotpGui.cpp)

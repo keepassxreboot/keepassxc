@@ -37,7 +37,6 @@ private slots:
     void cleanup();
     void cleanupTestCase();
 
-    void testMergeDatabase();
     void testAutoreloadDatabase();
     void testEditEntry();
     void testSearchEditEntry();
