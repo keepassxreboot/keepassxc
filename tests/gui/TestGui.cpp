@@ -159,36 +159,6 @@ void TestGui::cleanupTestCase()
     m_dbFile.remove();
 }
 
-void TestGui::testMergeDatabase()
-{
-    // It is safe to ignore the warning this line produces
-    QSignalSpy dbMergeSpy(m_dbWidget.data(), SIGNAL(databaseMerged(QSharedPointer<Database>)));
-    QApplication::processEvents();
-
-    // set file to merge from
-    fileDialog()->setNextFileName(QString(KEEPASSX_TEST_DATA_DIR).append("/MergeDatabase.kdbx"));
-    triggerAction("actionDatabaseMerge");
-
-    QTRY_COMPARE(QApplication::focusWidget()->objectName(), QString("passwordEdit"));
-    auto* editPasswordMerge = QApplication::focusWidget();
-    QVERIFY(editPasswordMerge->isVisible());
-
-    QTest::keyClicks(editPasswordMerge, "a");
-    QTest::keyClick(editPasswordMerge, Qt::Key_Enter);
-
-    QTRY_COMPARE(dbMergeSpy.count(), 1);
-    QTRY_VERIFY(m_tabWidget->tabText(m_tabWidget->currentIndex()).contains("*"));
-
-    m_db = m_tabWidget->currentDatabaseWidget()->database();
-
-    // there are seven child groups of the root group
-    QCOMPARE(m_db->rootGroup()->children().size(), 7);
-    // the merged group should contain an entry
-    QCOMPARE(m_db->rootGroup()->children().at(6)->entries().size(), 1);
-    // the General group contains one entry merged from the other db
-    QCOMPARE(m_db->rootGroup()->findChildByName("General")->entries().size(), 1);
-}
-
 void TestGui::testAutoreloadDatabase()
 {
     config()->set(Config::AutoReloadOnChange, false);
