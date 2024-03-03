@@ -329,6 +329,7 @@ QByteArray BrowserPasskeys::buildSignature(const QByteArray& authenticatorData,
             rawSignature = signer.signature(*randomGen()->getRng());
         } else if (algName == "Ed25519") {
             Botan::Ed25519_PrivateKey privateKey(algId, privateKeyBytes);
+            // "Pure" here means signing message directly. SHA-512 is only used with pre-hashed Ed25519 (Ed25519ph).
             Botan::PK_Signer signer(privateKey, *randomGen()->getRng(), "Pure");
 
             signer.update(reinterpret_cast<const uint8_t*>(attToBeSigned.constData()), attToBeSigned.size());
@@ -390,6 +391,9 @@ QJsonObject BrowserPasskeys::parseFlags(const QByteArray& flags) const
                         {"UP", flagBits.test(AuthenticatorFlags::UP)}});
 }
 
+// https://w3c.github.io/webauthn/#table-authData
+// ED - Extension Data, AT - Attested Credential, BS - Reserved
+// BE - Reserved , UV - User Verified, UP - User Present
 char BrowserPasskeys::setFlagsFromJson(const QJsonObject& flags) const
 {
     if (flags.isEmpty()) {

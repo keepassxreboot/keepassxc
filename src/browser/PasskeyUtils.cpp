@@ -44,7 +44,7 @@ int PasskeyUtils::checkLimits(const QJsonObject& pkOptions) const
         return ERROR_PASSKEYS_INVALID_USER_ID;
     }
 
-    return 0;
+    return PASSKEYS_SUCCESS;
 }
 
 // Basic check for the object that it contains necessary variables in a correct form
@@ -100,7 +100,7 @@ int PasskeyUtils::getEffectiveDomain(const QString& origin, QString* result) con
     }
 
     *result = effectiveDomain;
-    return 0;
+    return PASSKEYS_SUCCESS;
 }
 
 int PasskeyUtils::validateRpId(const QJsonValue& rpIdValue, const QString& effectiveDomain, QString* result) const
@@ -124,11 +124,11 @@ int PasskeyUtils::validateRpId(const QJsonValue& rpIdValue, const QString& effec
 
     if (rpId == effectiveDomain) {
         *result = effectiveDomain;
-        return 0;
+        return PASSKEYS_SUCCESS;
     }
 
     *result = rpId;
-    return 0;
+    return PASSKEYS_SUCCESS;
 }
 
 // https://www.w3.org/TR/2021/REC-webauthn-2-20210408/#dom-publickeycredentialcreationoptions-attestation

@@ -20,6 +20,8 @@
 #include "BrowserPasskeys.h"
 #include "PasskeyUtils.h"
 
+#include <QJsonDocument>
+
 Q_GLOBAL_STATIC(BrowserPasskeysClient, s_browserPasskeysClient);
 
 BrowserPasskeysClient* BrowserPasskeysClient::instance()
@@ -118,7 +120,7 @@ int BrowserPasskeysClient::getCredentialCreationOptions(const QJsonObject& publi
     *result = credentialCreationOptions;
     return 0;
 }
-#include <QJsonDocument>
+
 // Use an existing credential
 // https://www.w3.org/TR/2019/REC-webauthn-1-20190304/#getAssertion
 int BrowserPasskeysClient::getAssertionOptions(const QJsonObject& publicKeyOptions,

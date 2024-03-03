@@ -27,6 +27,7 @@
 
 #define DEFAULT_TIMEOUT 300000
 #define DEFAULT_DISCOURAGED_TIMEOUT 120000
+#define PASSKEYS_SUCCESS 0
 
 class PasskeyUtils : public QObject
 {

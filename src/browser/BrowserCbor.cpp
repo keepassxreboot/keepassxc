@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -243,7 +243,7 @@ unsigned int BrowserCbor::getCurveParameter(int alg) const
     case WebAuthnAlgorithms::EDDSA:
         return WebAuthnCurveKey::ED25519;
     default:
-        return 0;
+        return WebAuthnCurveKey::INVALID_CURVE_KEY;
     }
 }
 
@@ -256,12 +256,12 @@ unsigned int BrowserCbor::getCoseKeyType(int alg) const
         return WebAuthnCoseKeyType::EC2;
     case WebAuthnAlgorithms::ES384:
     case WebAuthnAlgorithms::ES512:
-        return 0;
+        return WebAuthnCoseKeyType::INVALID_COSE_KEY_TYPE;
     case WebAuthnAlgorithms::EDDSA:
         return WebAuthnCoseKeyType::OKP;
     case WebAuthnAlgorithms::RS256:
         return WebAuthnCoseKeyType::RSA;
     default:
-        return 0;
+        return WebAuthnCoseKeyType::INVALID_COSE_KEY_TYPE;
     }
 }
