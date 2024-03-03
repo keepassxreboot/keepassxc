@@ -688,4 +688,8 @@ void TestPasskeys::testAllowLocalhostWithPasskeys()
     QVERIFY(!passkeyUtils()->isOriginAllowedWithLocalhost(true, "http://example.com"));
     QVERIFY(!passkeyUtils()->isOriginAllowedWithLocalhost(false, "http://localhost"));
     QVERIFY(passkeyUtils()->isOriginAllowedWithLocalhost(true, "http://localhost"));
+    QVERIFY(!passkeyUtils()->isOriginAllowedWithLocalhost(true, "http://localhosting"));
+    QVERIFY(passkeyUtils()->isOriginAllowedWithLocalhost(true, "http://test.localhost"));
+    QVERIFY(!passkeyUtils()->isOriginAllowedWithLocalhost(false, "http://test.localhost"));
+    QVERIFY(!passkeyUtils()->isOriginAllowedWithLocalhost(true, "http://localhost.example.com"));
 }

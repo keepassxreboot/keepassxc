@@ -705,7 +705,7 @@ QJsonObject BrowserService::showPasskeysAuthenticationPrompt(const QJsonObject& 
     const auto rpId = assertionOptions["rpId"].toString();
     const auto entries = getPasskeyAllowedEntries(assertionOptions, rpId, keyList);
     if (entries.isEmpty()) {
-        return getPasskeyError(ERROR_PASSKEYS_WAIT_FOR_LIFETIMER);
+        return getPasskeyError(ERROR_KEEPASS_NO_LOGINS_FOUND);
     }
 
     const auto timeout = publicKeyOptions["timeout"].toInt();

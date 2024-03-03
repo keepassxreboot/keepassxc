@@ -265,8 +265,16 @@ bool PasskeyUtils::isUserVerificationValid(const QString& userVerification) cons
 
 bool PasskeyUtils::isOriginAllowedWithLocalhost(bool allowLocalhostWithPasskeys, const QString& origin) const
 {
-    return (!allowLocalhostWithPasskeys && origin.startsWith("https://"))
-           || (allowLocalhostWithPasskeys && (origin.startsWith("https://") || origin.startsWith("http://localhost")));
+    if (origin.startsWith("https://") || (allowLocalhostWithPasskeys && origin.startsWith("file://"))) {
+        return true;
+    }
+
+    if (!allowLocalhostWithPasskeys) {
+        return false;
+    }
+
+    const auto host = QUrl::fromUserInput(origin).host();
+    return host == "localhost" || host == "localhost." || host.endsWith(".localhost") || host.endsWith(".localhost.");
 }
 
 bool PasskeyUtils::isResidentKeyRequired(const QJsonObject& authenticatorSelection) const
