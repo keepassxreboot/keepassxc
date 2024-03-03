@@ -118,6 +118,7 @@ private slots:
     void updateSSHAgentAttachment();
     void updateSSHAgentAttachments();
     void updateSSHAgentKeyInfo();
+    void updateSSHAgentDestinationConstraints();
     void updateTotp();
     void browsePrivateKey();
     void addKeyToAgent();
