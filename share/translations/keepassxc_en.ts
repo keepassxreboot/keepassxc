@@ -976,6 +976,10 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
         <source>KeePassXC - New key association request</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Passkey</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BrowserSettingsWidget</name>

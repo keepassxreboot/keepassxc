@@ -807,7 +807,7 @@ void BrowserService::addPasskeyToEntry(Entry* entry,
     entry->attributes()->set(BrowserPasskeys::KPEX_PASSKEY_PRIVATE_KEY_PEM, privateKey, true);
     entry->attributes()->set(BrowserPasskeys::KPEX_PASSKEY_RELYING_PARTY, rpId);
     entry->attributes()->set(BrowserPasskeys::KPEX_PASSKEY_USER_HANDLE, userHandle, true);
-    entry->addTag("passkey");
+    entry->addTag(tr("Passkey"));
 
     entry->endUpdate();
 }
