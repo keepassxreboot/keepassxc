@@ -339,14 +339,22 @@ quint64 NixUtils::getProcessStartTime() const
     QString processStatInfo = processStatStream.readLine();
     processStatFile.close();
 
-    auto startIndex = processStatInfo.indexOf(')', -1);
+    auto startIndex = processStatInfo.lastIndexOf(')');
     if (startIndex != -1) {
         auto tokens = processStatInfo.midRef(startIndex + 2).split(' ');
         if (tokens.size() >= 20) {
-            return tokens[19].toULongLong();
+            bool ok;
+            auto time = tokens[19].toULongLong(&ok);
+            if (!ok) {
+                qDebug() << "nixutils: failed to convert " << tokens[19] << " to an integer in " << processStatPath;
+                return 0;
+            }
+            return time;
         }
+        qDebug() << "nixutils: failed to find at least 20 values in " << processStatPath;
+        return 0;
     }
 
-    qDebug() << "nixutils: failed to parse " << processStatPath;
+    qDebug() << "nixutils: failed to find ')' in " << processStatPath;
     return 0;
 }
