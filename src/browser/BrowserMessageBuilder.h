@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -55,7 +55,14 @@ namespace
         ERROR_PASSKEYS_INVALID_USER_VERIFICATION = 23,
         ERROR_PASSKEYS_EMPTY_PUBLIC_KEY = 24,
         ERROR_PASSKEYS_INVALID_URL_PROVIDED = 25,
-        ERROR_PASSKEYS_RESIDENT_KEYS_NOT_SUPPORTED = 26,
+        ERROR_PASSKEYS_ORIGIN_NOT_ALLOWED = 26,
+        ERROR_PASSKEYS_DOMAIN_IS_NOT_VALID = 27,
+        ERROR_PASSKEYS_DOMAIN_RPID_MISMATCH = 28,
+        ERROR_PASSKEYS_NO_SUPPORTED_ALGORITHMS = 29,
+        ERROR_PASSKEYS_WAIT_FOR_LIFETIMER = 30,
+        ERROR_PASSKEYS_UNKNOWN_ERROR = 31,
+        ERROR_PASSKEYS_INVALID_CHALLENGE = 32,
+        ERROR_PASSKEYS_INVALID_USER_ID = 33,
     };
 }
 

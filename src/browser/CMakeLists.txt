@@ -1,4 +1,4 @@
-#  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+#  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -35,7 +35,9 @@ if(WITH_XC_BROWSER)
         list(APPEND keepassxcbrowser_SOURCES
                 BrowserCbor.cpp
                 BrowserPasskeys.cpp
-                BrowserPasskeysConfirmationDialog.cpp)
+                BrowserPasskeysClient.cpp
+                BrowserPasskeysConfirmationDialog.cpp
+                PasskeyUtils.cpp)
     endif()
 
     add_library(keepassxcbrowser STATIC ${keepassxcbrowser_SOURCES})

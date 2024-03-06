@@ -44,6 +44,11 @@ struct BrowserRequest
         return decrypted.value(param).toArray();
     }
 
+    inline bool getBool(const QString& param) const
+    {
+        return decrypted.value(param).toBool();
+    }
+
     inline QJsonObject getObject(const QString& param) const
     {
         return decrypted.value(param).toObject();

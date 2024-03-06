@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -66,6 +66,14 @@ void TestTools::testIsBase64()
     QVERIFY(!Tools::isBase64(QByteArray("abcd123==")));
     QVERIFY(!Tools::isBase64(QByteArray("abc_")));
     QVERIFY(!Tools::isBase64(QByteArray("123")));
+}
+
+void TestTools::testIsAsciiString()
+{
+    QVERIFY(Tools::isAsciiString("abcd9876DEFGhijkMNO"));
+    QVERIFY(Tools::isAsciiString("-!&5a?`~"));
+    QVERIFY(!Tools::isAsciiString("Štest"));
+    QVERIFY(!Tools::isAsciiString("Ãß"));
 }
 
 void TestTools::testEnvSubstitute()

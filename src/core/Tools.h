@@ -1,6 +1,6 @@
 /*
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -37,6 +37,7 @@ namespace Tools
     bool readAllFromDevice(QIODevice* device, QByteArray& data);
     bool isHex(const QByteArray& ba);
     bool isBase64(const QByteArray& ba);
+    bool isAsciiString(const QString& str);
     void sleep(int ms);
     void wait(int ms);
     QString uuidToHex(const QUuid& uuid);

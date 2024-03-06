@@ -1,7 +1,7 @@
 /*
- *  Copyright (C) 2013 Francois Ferrand
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
- *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2013 Francois Ferrand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -51,6 +51,8 @@ public:
     void setSupportKphFields(bool supportKphFields);
     bool noMigrationPrompt();
     void setNoMigrationPrompt(bool prompt);
+    bool allowLocalhostWithPasskeys();
+    void setAllowLocalhostWithPasskeys(bool enabled);
 
     bool useCustomProxy();
     void setUseCustomProxy(bool enabled);

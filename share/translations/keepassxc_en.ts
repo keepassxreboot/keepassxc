@@ -976,6 +976,10 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
         <source>KeePassXC - New key association request</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Passkey</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BrowserSettingsWidget</name>
@@ -1220,6 +1224,14 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
     </message>
     <message>
         <source>&lt;b&gt;Error:&lt;/b&gt; The installed proxy executable is missing from the expected location: %1&lt;br/&gt;Please set a custom proxy location in the advanced settings or reinstall the application.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Allows using insecure http://localhost with Passkeys for testing purposes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Allow using localhost with Passkeys</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8420,10 +8432,6 @@ Kernel: %3 %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Resident Keys are not supported</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Passkeys</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8481,6 +8489,38 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Failed to decrypt key data.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Origin is empty or not allowed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Effective domain is not a valid domain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Origin and RP ID do not match</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No supported algorithms were provided</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wait for timer to expire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown Passkeys error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Challenge is shorter than required minimum length</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>user.id does not match the required length</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
