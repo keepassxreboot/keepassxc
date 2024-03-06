@@ -23,7 +23,7 @@ The following libraries are required:
 * libargon2
 * zlib
 * minizip
-* readline (for completion in cli)
+* linenoise (for completion in cli)
 * qtx11extras, libxi, and libxtst (for auto-type on X11)
 * qrencode
 * libusb-1.0, pcsc-lite (for Yubikey support on Linux)

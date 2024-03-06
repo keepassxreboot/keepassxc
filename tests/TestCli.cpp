@@ -802,7 +802,7 @@ void TestCli::testCreate()
     dbFilename = testDir->path() + "/testCreate_key2.kdbx";
     QString keyfilePath = testDir->path() + "/keyfile.txt";
     setInput({"a", "a"});
-    execCmd(createCmd, {"db-create", dbFilename, "-p", "-k", keyfilePath});
+    execCmd(createCmd, {"db-create", dbFilename, "-p", "--set-key-file", keyfilePath});
 
     QCOMPARE(m_stderr->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
     QCOMPARE(m_stderr->readLine(), QByteArray("Repeat password: \n"));
@@ -814,7 +814,7 @@ void TestCli::testCreate()
     // Testing with existing keyfile
     dbFilename = testDir->path() + "/testCreate_key3.kdbx";
     setInput({"a", "a"});
-    execCmd(createCmd, {"db-create", dbFilename, "-p", "-k", keyfilePath});
+    execCmd(createCmd, {"db-create", dbFilename, "-p", "--set-key-file", keyfilePath});
 
     QCOMPARE(m_stderr->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
     QCOMPARE(m_stderr->readLine(), QByteArray("Repeat password: \n"));
@@ -1434,7 +1434,7 @@ void TestCli::testImport()
     databaseFilename = testDir->path() + "/testImport2.kdbx";
     QString keyfilePath = testDir->path() + "/keyfile.txt";
     setInput({"a", "a"});
-    execCmd(importCmd, {"import", "-p", "-k", keyfilePath, m_xmlFile->fileName(), databaseFilename});
+    execCmd(importCmd, {"import", "-p", "--set-key-file", keyfilePath, m_xmlFile->fileName(), databaseFilename});
 
     QCOMPARE(m_stderr->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
     QCOMPARE(m_stderr->readLine(), QByteArray("Repeat password: \n"));
@@ -1446,7 +1446,7 @@ void TestCli::testImport()
     // Testing import with existing keyfile
     databaseFilename = testDir->path() + "/testImport3.kdbx";
     setInput({"a", "a"});
-    execCmd(importCmd, {"import", "-p", "-k", keyfilePath, m_xmlFile->fileName(), databaseFilename});
+    execCmd(importCmd, {"import", "-p", "--set-key-file", keyfilePath, m_xmlFile->fileName(), databaseFilename});
 
     QCOMPARE(m_stderr->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
     QCOMPARE(m_stderr->readLine(), QByteArray("Repeat password: \n"));
@@ -1773,10 +1773,10 @@ void TestCli::testMergeWithKeys()
     QString targetKeyfilePath = testDir->path() + "/testTargetKeyfile.txt";
 
     setInput({"a", "a"});
-    execCmd(createCmd, {"db-create", sourceDatabaseFilename, "-p", "-k", sourceKeyfilePath});
+    execCmd(createCmd, {"db-create", sourceDatabaseFilename, "-p", "--set-key-file", sourceKeyfilePath});
 
     setInput({"b", "b"});
-    execCmd(createCmd, {"db-create", targetDatabaseFilename, "-p", "-k", targetKeyfilePath});
+    execCmd(createCmd, {"db-create", targetDatabaseFilename, "-p", "--set-key-file", targetKeyfilePath});
 
     auto sourceDatabase = readDatabase(sourceDatabaseFilename, "a", sourceKeyfilePath);
     QVERIFY(sourceDatabase);
