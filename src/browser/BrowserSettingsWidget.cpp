@@ -123,6 +123,7 @@ void BrowserSettingsWidget::loadSettings()
     m_ui->httpAuthPermission->setChecked(settings->httpAuthPermission());
     m_ui->searchInAllDatabases->setChecked(settings->searchInAllDatabases());
     m_ui->supportKphFields->setChecked(settings->supportKphFields());
+    m_ui->allowLocalhostWithPasskeys->setChecked(settings->allowLocalhostWithPasskeys());
     m_ui->noMigrationPrompt->setChecked(settings->noMigrationPrompt());
     m_ui->useCustomProxy->setChecked(settings->useCustomProxy());
     m_ui->customProxyLocation->setText(settings->replaceHomePath(settings->customProxyLocation()));
@@ -251,6 +252,7 @@ void BrowserSettingsWidget::saveSettings()
     settings->setHttpAuthPermission(m_ui->httpAuthPermission->isChecked());
     settings->setSearchInAllDatabases(m_ui->searchInAllDatabases->isChecked());
     settings->setSupportKphFields(m_ui->supportKphFields->isChecked());
+    settings->setAllowLocalhostWithPasskeys(m_ui->allowLocalhostWithPasskeys->isChecked());
     settings->setNoMigrationPrompt(m_ui->noMigrationPrompt->isChecked());
 
 #ifdef QT_DEBUG
