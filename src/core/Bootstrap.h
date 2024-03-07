@@ -22,7 +22,7 @@
 
 namespace Bootstrap
 {
-    void bootstrap();
+    void bootstrap(const QString& uiLanguage = "system");
     void disableCoreDumps();
     bool createWindowsDACL();
     void setupSearchPaths();
