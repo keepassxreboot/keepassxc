@@ -176,7 +176,7 @@ int main(int argc, char** argv)
     QGuiApplication::setDesktopFileName(app.property("KPXC_QUALIFIED_APPNAME").toString() + QStringLiteral(".desktop"));
 #endif
 
-    Application::bootstrap();
+    Application::bootstrap(config()->get(Config::GUI_Language).toString());
 
     MainWindow mainWindow;
 #ifdef Q_OS_WIN
