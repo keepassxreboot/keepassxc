@@ -24,6 +24,7 @@
 #include "Utils.h"
 #include "config-keepassx.h"
 #include "core/Bootstrap.h"
+#include "core/Config.h"
 #include "core/Metadata.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
@@ -181,7 +182,7 @@ int main(int argc, char** argv)
     QCoreApplication app(argc, argv);
     QCoreApplication::setApplicationVersion(KEEPASSXC_VERSION);
 
-    Bootstrap::bootstrap();
+    Bootstrap::bootstrap(config()->get(Config::GUI_Language).toString());
     Utils::setDefaultTextStreams();
     Commands::setupCommands(false);
 

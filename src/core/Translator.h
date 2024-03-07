@@ -24,7 +24,7 @@
 class Translator
 {
 public:
-    static void installTranslators();
+    static void installTranslators(const QString& uiLanguage = "system");
     static QList<QPair<QString, QString>> availableLanguages();
 
 private:
