@@ -41,7 +41,7 @@ public:
     Application(int& argc, char** argv);
     ~Application() override;
 
-    static void bootstrap();
+    static void bootstrap(const QString& uiLanguage = "system");
 
     void applyTheme();
 

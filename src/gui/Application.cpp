@@ -147,9 +147,9 @@ Application::~Application()
  * configuration OS security properties, and loading translators.
  * A QApplication object has to be instantiated before calling this function.
  */
-void Application::bootstrap()
+void Application::bootstrap(const QString& uiLanguage)
 {
-    Bootstrap::bootstrap();
+    Bootstrap::bootstrap(uiLanguage);
 
 #ifdef Q_OS_WIN
     // Qt on Windows uses "MS Shell Dlg 2" as the default font for many widgets, which resolves

@@ -87,6 +87,7 @@ void TestGui::initTestCase()
 {
     QVERIFY(Crypto::init());
     Config::createTempFileInstance();
+    QLocale::setDefault(QLocale::c());
     Application::bootstrap();
 
     m_mainWindow.reset(new MainWindow());
