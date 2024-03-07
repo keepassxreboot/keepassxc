@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,7 +18,9 @@
 #include "TestPasskeys.h"
 #include "browser/BrowserCbor.h"
 #include "browser/BrowserMessageBuilder.h"
+#include "browser/BrowserPasskeysClient.h"
 #include "browser/BrowserService.h"
+#include "browser/PasskeyUtils.h"
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Group.h"
@@ -98,6 +100,18 @@ const QString PublicKeyCredentialRequestOptions = R"(
         "userVerification": "required"
     }
 )";
+
+const QJsonArray validPubKeyCredParams = {
+    QJsonObject({
+       {"type", "public-key"},
+       {"alg", -7}
+    }),
+    QJsonObject({
+        {"type", "public-key"},
+        {"alg", -257}
+    }),
+};
+
 // clang-format on
 
 void TestPasskeys::initTestCase()
@@ -252,14 +266,21 @@ void TestPasskeys::testCreatingAttestationObjectWithEC()
     const auto predefinedSecond = QString("4u5_6Q8O6R0Hg0oDCdtCJLEL0yX_GDLhU5m3HUIE54M");
 
     const auto publicKeyCredentialOptions = browserMessageBuilder()->getJsonObject(PublicKeyCredentialOptions.toUtf8());
+    QJsonObject credentialCreationOptions;
+    browserPasskeysClient()->getCredentialCreationOptions(
+        publicKeyCredentialOptions, QString("https://webauthn.io"), &credentialCreationOptions);
 
     auto rpIdHash = browserMessageBuilder()->getSha256HashAsBase64(QString("webauthn.io"));
     QCOMPARE(rpIdHash, QString("dKbqkhPJnC90siSSsyDPQCYqlMGpUKA5fyklC2CEHvA"));
 
     TestingVariables testingVariables = {id, predefinedFirst, predefinedSecond};
-    auto result = browserPasskeys()->buildAttestationObject(publicKeyCredentialOptions, "", id, testingVariables);
+    const auto alg = browserPasskeys()->getAlgorithmFromPublicKey(credentialCreationOptions);
+    const auto credentialPrivateKey =
+        browserPasskeys()->buildCredentialPrivateKey(alg, predefinedFirst, predefinedSecond);
+    auto result = browserPasskeys()->buildAttestationObject(
+        credentialCreationOptions, "", id, credentialPrivateKey.cborEncodedPublicKey, testingVariables);
     QCOMPARE(
-        QString(result.cborEncoded),
+        result,
         QString("\xA3"
                 "cfmtdnonegattStmt\xA0hauthDataX\xA4t\xA6\xEA\x92\x13\xC9\x9C/t\xB2$\x92\xB3 \xCF@&*\x94\xC1\xA9P\xA0"
                 "9\x7F)%\x0B`\x84\x1E\xF0"
@@ -272,7 +293,7 @@ void TestPasskeys::testCreatingAttestationObjectWithEC()
 
     // Double check that the result can be decoded
     BrowserCbor browserCbor;
-    auto attestationJsonObject = browserCbor.getJsonFromCborData(result.cborEncoded);
+    auto attestationJsonObject = browserCbor.getJsonFromCborData(result);
 
     // Parse authData
     auto authDataJsonObject = attestationJsonObject["authData"].toString();
@@ -311,18 +332,25 @@ void TestPasskeys::testCreatingAttestationObjectWithRSA()
     QJsonArray pubKeyCredParams;
     pubKeyCredParams.append(QJsonObject({{"type", "public-key"}, {"alg", -257}}));
 
-    auto publicKeyCredentialOptions = browserMessageBuilder()->getJsonObject(PublicKeyCredentialOptions.toUtf8());
-    publicKeyCredentialOptions["pubKeyCredParams"] = pubKeyCredParams;
+    const auto publicKeyCredentialOptions = browserMessageBuilder()->getJsonObject(PublicKeyCredentialOptions.toUtf8());
+    QJsonObject credentialCreationOptions;
+    browserPasskeysClient()->getCredentialCreationOptions(
+        publicKeyCredentialOptions, QString("https://webauthn.io"), &credentialCreationOptions);
+    credentialCreationOptions["credTypesAndPubKeyAlgs"] = pubKeyCredParams;
 
     auto rpIdHash = browserMessageBuilder()->getSha256HashAsBase64(QString("webauthn.io"));
     QCOMPARE(rpIdHash, QString("dKbqkhPJnC90siSSsyDPQCYqlMGpUKA5fyklC2CEHvA"));
 
     TestingVariables testingVariables = {id, predefinedModulus, predefinedExponent};
-    auto result = browserPasskeys()->buildAttestationObject(publicKeyCredentialOptions, "", id, testingVariables);
+    const auto alg = browserPasskeys()->getAlgorithmFromPublicKey(credentialCreationOptions);
+    auto credentialPrivateKey =
+        browserPasskeys()->buildCredentialPrivateKey(alg, predefinedModulus, predefinedExponent);
+    auto result = browserPasskeys()->buildAttestationObject(
+        credentialCreationOptions, "", id, credentialPrivateKey.cborEncodedPublicKey, testingVariables);
 
     // Double check that the result can be decoded
     BrowserCbor browserCbor;
-    auto attestationJsonObject = browserCbor.getJsonFromCborData(result.cborEncoded);
+    auto attestationJsonObject = browserCbor.getJsonFromCborData(result);
 
     // Parse authData
     auto authDataJsonObject = attestationJsonObject["authData"].toString();
@@ -356,9 +384,13 @@ void TestPasskeys::testRegister()
     const auto testDataResponse = testDataPublicKey["response"];
     const auto publicKeyCredentialOptions = browserMessageBuilder()->getJsonObject(PublicKeyCredentialOptions.toUtf8());
 
+    QJsonObject credentialCreationOptions;
+    const auto creationResult = browserPasskeysClient()->getCredentialCreationOptions(
+        publicKeyCredentialOptions, origin, &credentialCreationOptions);
+    QVERIFY(creationResult == 0);
+
     TestingVariables testingVariables = {predefinedId, predefinedX, predefinedY};
-    auto result =
-        browserPasskeys()->buildRegisterPublicKeyCredential(publicKeyCredentialOptions, origin, testingVariables);
+    auto result = browserPasskeys()->buildRegisterPublicKeyCredential(credentialCreationOptions, testingVariables);
     auto publicKeyCredential = result.response;
     QCOMPARE(publicKeyCredential["type"], QString("public-key"));
     QCOMPARE(publicKeyCredential["authenticatorAttachment"], QString("platform"));
@@ -390,8 +422,12 @@ void TestPasskeys::testGet()
     const auto publicKeyCredentialRequestOptions =
         browserMessageBuilder()->getJsonObject(PublicKeyCredentialRequestOptions.toUtf8());
 
-    auto publicKeyCredential = browserPasskeys()->buildGetPublicKeyCredential(
-        publicKeyCredentialRequestOptions, origin, id, {}, privateKeyPem);
+    QJsonObject assertionOptions;
+    const auto assertionResult =
+        browserPasskeysClient()->getAssertionOptions(publicKeyCredentialRequestOptions, origin, &assertionOptions);
+    QVERIFY(assertionResult == 0);
+
+    auto publicKeyCredential = browserPasskeys()->buildGetPublicKeyCredential(assertionOptions, id, {}, privateKeyPem);
     QVERIFY(!publicKeyCredential.isEmpty());
     QCOMPARE(publicKeyCredential["id"].toString(), id);
 
@@ -414,7 +450,7 @@ void TestPasskeys::testGet()
 void TestPasskeys::testExtensions()
 {
     auto extensions = QJsonObject({{"credProps", true}, {"uvm", true}});
-    auto result = browserPasskeys()->buildExtensionData(extensions);
+    auto result = passkeyUtils()->buildExtensionData(extensions);
 
     BrowserCbor cbor;
     auto extensionJson = cbor.getJsonFromCborData(result);
@@ -425,8 +461,8 @@ void TestPasskeys::testExtensions()
 
     auto partial = QJsonObject({{"props", true}, {"uvm", true}});
     auto faulty = QJsonObject({{"uvx", true}});
-    auto partialData = browserPasskeys()->buildExtensionData(partial);
-    auto faultyData = browserPasskeys()->buildExtensionData(faulty);
+    auto partialData = passkeyUtils()->buildExtensionData(partial);
+    auto faultyData = passkeyUtils()->buildExtensionData(faulty);
 
     auto partialJson = cbor.getJsonFromCborData(partialData);
     QCOMPARE(partialJson["uvm"].toArray().size(), 1);
@@ -495,4 +531,165 @@ void TestPasskeys::testEntry()
                                         QString("privateKey"));
 
     QVERIFY(entry->hasPasskey());
+}
+
+void TestPasskeys::testIsDomain()
+{
+    QVERIFY(passkeyUtils()->isDomain("test.example.com"));
+    QVERIFY(passkeyUtils()->isDomain("example.com"));
+
+    QVERIFY(!passkeyUtils()->isDomain("exa[mple.org"));
+    QVERIFY(!passkeyUtils()->isDomain("example.com."));
+    QVERIFY(!passkeyUtils()->isDomain("127.0.0.1"));
+    QVERIFY(!passkeyUtils()->isDomain("127.0.0.1."));
+}
+
+// List from https://html.spec.whatwg.org/multipage/browsers.html#is-a-registrable-domain-suffix-of-or-is-equal-to
+void TestPasskeys::testRegistrableDomainSuffix()
+{
+    QVERIFY(passkeyUtils()->isRegistrableDomainSuffix(QString("example.com"), QString("example.com")));
+    QVERIFY(!passkeyUtils()->isRegistrableDomainSuffix(QString("example.com"), QString("example.com.")));
+    QVERIFY(!passkeyUtils()->isRegistrableDomainSuffix(QString("example.com."), QString("example.com")));
+    QVERIFY(passkeyUtils()->isRegistrableDomainSuffix(QString("example.com"), QString("www.example.com")));
+    QVERIFY(!passkeyUtils()->isRegistrableDomainSuffix(QString("com"), QString("example.com")));
+    QVERIFY(passkeyUtils()->isRegistrableDomainSuffix(QString("example"), QString("example")));
+    QVERIFY(
+        !passkeyUtils()->isRegistrableDomainSuffix(QString("s3.amazonaws.com"), QString("example.s3.amazonaws.com")));
+    QVERIFY(!passkeyUtils()->isRegistrableDomainSuffix(QString("example.compute.amazonaws.com"),
+                                                       QString("www.example.compute.amazonaws.com")));
+    QVERIFY(!passkeyUtils()->isRegistrableDomainSuffix(QString("amazonaws.com"),
+                                                       QString("www.example.compute.amazonaws.com")));
+    QVERIFY(passkeyUtils()->isRegistrableDomainSuffix(QString("amazonaws.com"), QString("test.amazonaws.com")));
+}
+
+void TestPasskeys::testRpIdValidation()
+{
+    QString result;
+    auto allowedIdentical = passkeyUtils()->validateRpId(QString("example.com"), QString("example.com"), &result);
+    QCOMPARE(result, QString("example.com"));
+    QVERIFY(allowedIdentical == 0);
+
+    result.clear();
+    auto allowedSubdomain = passkeyUtils()->validateRpId(QString("example.com"), QString("www.example.com"), &result);
+    QCOMPARE(result, QString("example.com"));
+    QVERIFY(allowedSubdomain == 0);
+
+    result.clear();
+    auto emptyRpId = passkeyUtils()->validateRpId({}, QString("example.com"), &result);
+    QCOMPARE(result, QString(""));
+    QVERIFY(emptyRpId == ERROR_PASSKEYS_DOMAIN_RPID_MISMATCH);
+
+    result.clear();
+    auto ipRpId = passkeyUtils()->validateRpId(QString("127.0.0.1"), QString("example.com"), &result);
+    QCOMPARE(result, QString(""));
+    QVERIFY(ipRpId == ERROR_PASSKEYS_DOMAIN_RPID_MISMATCH);
+
+    result.clear();
+    auto emptyOrigin = passkeyUtils()->validateRpId(QString("example.com"), QString(""), &result);
+    QVERIFY(result.isEmpty());
+    QCOMPARE(emptyOrigin, ERROR_PASSKEYS_ORIGIN_NOT_ALLOWED);
+
+    result.clear();
+    auto ipOrigin = passkeyUtils()->validateRpId(QString("example.com"), QString("127.0.0.1"), &result);
+    QVERIFY(result.isEmpty());
+    QCOMPARE(ipOrigin, ERROR_PASSKEYS_DOMAIN_RPID_MISMATCH);
+
+    result.clear();
+    auto invalidRpId = passkeyUtils()->validateRpId(QString(".com"), QString("example.com"), &result);
+    QVERIFY(result.isEmpty());
+    QCOMPARE(invalidRpId, ERROR_PASSKEYS_DOMAIN_RPID_MISMATCH);
+
+    result.clear();
+    auto malformedOrigin = passkeyUtils()->validateRpId(QString("example.com."), QString("example.com."), &result);
+    QVERIFY(result.isEmpty());
+    QCOMPARE(malformedOrigin, ERROR_PASSKEYS_DOMAIN_RPID_MISMATCH);
+
+    result.clear();
+    auto malformed = passkeyUtils()->validateRpId(QString("...com."), QString("example...com"), &result);
+    QVERIFY(result.isEmpty());
+    QCOMPARE(malformed, ERROR_PASSKEYS_DOMAIN_RPID_MISMATCH);
+
+    result.clear();
+    auto differentDomain = passkeyUtils()->validateRpId(QString("another.com"), QString("example.com"), &result);
+    QVERIFY(result.isEmpty());
+    QCOMPARE(differentDomain, ERROR_PASSKEYS_DOMAIN_RPID_MISMATCH);
+}
+
+void TestPasskeys::testParseAttestation()
+{
+    QVERIFY(passkeyUtils()->parseAttestation(QString("")) == QString("none"));
+    QVERIFY(passkeyUtils()->parseAttestation(QString("direct")) == QString("direct"));
+    QVERIFY(passkeyUtils()->parseAttestation(QString("none")) == QString("none"));
+    QVERIFY(passkeyUtils()->parseAttestation(QString("indirect")) == QString("none"));
+    QVERIFY(passkeyUtils()->parseAttestation(QString("invalidvalue")) == QString("none"));
+}
+
+void TestPasskeys::testParseCredentialTypes()
+{
+    const QJsonArray invalidPubKeyCredParams = {
+        QJsonObject({{"type", "private-key"}, {"alg", -7}}),
+        QJsonObject({{"type", "private-key"}, {"alg", -257}}),
+    };
+
+    const QJsonArray partiallyInvalidPubKeyCredParams = {
+        QJsonObject({{"type", "private-key"}, {"alg", -7}}),
+        QJsonObject({{"type", "public-key"}, {"alg", -257}}),
+    };
+
+    auto validResponse = passkeyUtils()->parseCredentialTypes(validPubKeyCredParams);
+    QVERIFY(validResponse == validPubKeyCredParams);
+
+    auto invalidResponse = passkeyUtils()->parseCredentialTypes(invalidPubKeyCredParams);
+    QVERIFY(invalidResponse.isEmpty());
+
+    auto partiallyInvalidResponse = passkeyUtils()->parseCredentialTypes(partiallyInvalidPubKeyCredParams);
+    QVERIFY(partiallyInvalidResponse != validPubKeyCredParams);
+    QVERIFY(partiallyInvalidResponse.size() == 1);
+    QVERIFY(partiallyInvalidResponse.first()["type"].toString() == QString("public-key"));
+    QVERIFY(partiallyInvalidResponse.first()["alg"].toInt() == -257);
+
+    auto emptyResponse = passkeyUtils()->parseCredentialTypes({});
+    QVERIFY(emptyResponse == validPubKeyCredParams);
+
+    const auto publicKeyOptions = browserMessageBuilder()->getJsonObject(PublicKeyCredentialOptions.toUtf8());
+    auto responseFromPublicKey = passkeyUtils()->parseCredentialTypes(publicKeyOptions["pubKeyCredParams"].toArray());
+    QVERIFY(responseFromPublicKey == validPubKeyCredParams);
+}
+
+void TestPasskeys::testIsAuthenticatorSelectionValid()
+{
+    QVERIFY(passkeyUtils()->isAuthenticatorSelectionValid({}));
+    QVERIFY(passkeyUtils()->isAuthenticatorSelectionValid(QJsonObject({{"authenticatorAttachment", "platform"}})));
+    QVERIFY(
+        passkeyUtils()->isAuthenticatorSelectionValid(QJsonObject({{"authenticatorAttachment", "cross-platform"}})));
+    QVERIFY(!passkeyUtils()->isAuthenticatorSelectionValid(QJsonObject({{"authenticatorAttachment", "something"}})));
+}
+
+void TestPasskeys::testIsResidentKeyRequired()
+{
+    QVERIFY(passkeyUtils()->isResidentKeyRequired(QJsonObject({{"residentKey", "required"}})));
+    QVERIFY(passkeyUtils()->isResidentKeyRequired(QJsonObject({{"residentKey", "preferred"}})));
+    QVERIFY(!passkeyUtils()->isResidentKeyRequired(QJsonObject({{"residentKey", "discouraged"}})));
+    QVERIFY(passkeyUtils()->isResidentKeyRequired(QJsonObject({{"requireResidentKey", true}})));
+}
+
+void TestPasskeys::testIsUserVerificationRequired()
+{
+    QVERIFY(passkeyUtils()->isUserVerificationRequired(QJsonObject({{"userVerification", "required"}})));
+    QVERIFY(passkeyUtils()->isUserVerificationRequired(QJsonObject({{"userVerification", "preferred"}})));
+    QVERIFY(!passkeyUtils()->isUserVerificationRequired(QJsonObject({{"userVerification", "discouraged"}})));
+}
+
+void TestPasskeys::testAllowLocalhostWithPasskeys()
+{
+    QVERIFY(passkeyUtils()->isOriginAllowedWithLocalhost(false, "https://example.com"));
+    QVERIFY(!passkeyUtils()->isOriginAllowedWithLocalhost(false, "http://example.com"));
+    QVERIFY(passkeyUtils()->isOriginAllowedWithLocalhost(true, "https://example.com"));
+    QVERIFY(!passkeyUtils()->isOriginAllowedWithLocalhost(true, "http://example.com"));
+    QVERIFY(!passkeyUtils()->isOriginAllowedWithLocalhost(false, "http://localhost"));
+    QVERIFY(passkeyUtils()->isOriginAllowedWithLocalhost(true, "http://localhost"));
+    QVERIFY(!passkeyUtils()->isOriginAllowedWithLocalhost(true, "http://localhosting"));
+    QVERIFY(passkeyUtils()->isOriginAllowedWithLocalhost(true, "http://test.localhost"));
+    QVERIFY(!passkeyUtils()->isOriginAllowedWithLocalhost(false, "http://test.localhost"));
+    QVERIFY(!passkeyUtils()->isOriginAllowedWithLocalhost(true, "http://localhost.example.com"));
 }

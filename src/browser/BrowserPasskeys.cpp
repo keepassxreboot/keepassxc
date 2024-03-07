@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,8 +18,8 @@
 #include "BrowserPasskeys.h"
 #include "BrowserMessageBuilder.h"
 #include "BrowserService.h"
+#include "PasskeyUtils.h"
 #include "crypto/Random.h"
-#include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QtEndian>
@@ -40,6 +40,13 @@ Q_GLOBAL_STATIC(BrowserPasskeys, s_browserPasskeys);
 // KeePassXC AAGUID: fdb141b2-5d84-443e-8a35-4698c205a502
 const QString BrowserPasskeys::AAGUID = QStringLiteral("fdb141b25d84443e8a354698c205a502");
 
+// Authenticator capabilities
+const QString BrowserPasskeys::ATTACHMENT_CROSS_PLATFORM = QStringLiteral("cross-platform");
+const QString BrowserPasskeys::ATTACHMENT_PLATFORM = QStringLiteral("platform");
+const QString BrowserPasskeys::AUTHENTICATOR_TRANSPORT = QStringLiteral("internal");
+const bool BrowserPasskeys::SUPPORT_RESIDENT_KEYS = true;
+const bool BrowserPasskeys::SUPPORT_USER_VERIFICATION = true;
+
 const QString BrowserPasskeys::PUBLIC_KEY = QStringLiteral("public-key");
 const QString BrowserPasskeys::REQUIREMENT_DISCOURAGED = QStringLiteral("discouraged");
 const QString BrowserPasskeys::REQUIREMENT_PREFERRED = QStringLiteral("preferred");
@@ -49,7 +56,7 @@ const QString BrowserPasskeys::PASSKEYS_ATTESTATION_DIRECT = QStringLiteral("dir
 const QString BrowserPasskeys::PASSKEYS_ATTESTATION_NONE = QStringLiteral("none");
 
 const QString BrowserPasskeys::KPEX_PASSKEY_USERNAME = QStringLiteral("KPEX_PASSKEY_USERNAME");
-const QString BrowserPasskeys::KPEX_PASSKEY_GENERATED_USER_ID = QStringLiteral("KPEX_PASSKEY_GENERATED_USER_ID");
+const QString BrowserPasskeys::KPEX_PASSKEY_CREDENTIAL_ID = QStringLiteral("KPEX_PASSKEY_CREDENTIAL_ID");
 const QString BrowserPasskeys::KPEX_PASSKEY_PRIVATE_KEY_PEM = QStringLiteral("KPEX_PASSKEY_PRIVATE_KEY_PEM");
 const QString BrowserPasskeys::KPEX_PASSKEY_RELYING_PARTY = QStringLiteral("KPEX_PASSKEY_RELYING_PARTY");
 const QString BrowserPasskeys::KPEX_PASSKEY_USER_HANDLE = QStringLiteral("KPEX_PASSKEY_USER_HANDLE");
@@ -59,56 +66,80 @@ BrowserPasskeys* BrowserPasskeys::instance()
     return s_browserPasskeys;
 }
 
-PublicKeyCredential BrowserPasskeys::buildRegisterPublicKeyCredential(const QJsonObject& publicKeyCredentialOptions,
-                                                                      const QString& origin,
+PublicKeyCredential BrowserPasskeys::buildRegisterPublicKeyCredential(const QJsonObject& credentialCreationOptions,
                                                                       const TestingVariables& testingVariables)
 {
-    QJsonObject publicKeyCredential;
+    if (!passkeyUtils()->checkCredentialCreationOptions(credentialCreationOptions)) {
+        return {};
+    }
+
+    const auto authenticatorAttachment = credentialCreationOptions["authenticatorAttachment"];
+    const auto clientDataJson = credentialCreationOptions["clientDataJSON"].toObject();
+    const auto extensions = credentialCreationOptions["extensions"].toString();
     const auto credentialId = testingVariables.credentialId.isEmpty()
                                   ? browserMessageBuilder()->getRandomBytesAsBase64(ID_BYTES)
                                   : testingVariables.credentialId;
 
-    // Extensions
-    auto extensionObject = publicKeyCredentialOptions["extensions"].toObject();
-    const auto extensionData = buildExtensionData(extensionObject);
-    const auto extensions = browserMessageBuilder()->getBase64FromArray(extensionData);
+    // Credential private key
+    const auto alg = getAlgorithmFromPublicKey(credentialCreationOptions);
+    const auto privateKey = buildCredentialPrivateKey(alg, testingVariables.first, testingVariables.second);
+    if (privateKey.cborEncodedPublicKey.isEmpty() && privateKey.privateKeyPem.isEmpty()) {
+        // Key creation failed
+        return {};
+    }
+
+    // Attestation
+    const auto attestationObject = buildAttestationObject(
+        credentialCreationOptions, extensions, credentialId, privateKey.cborEncodedPublicKey, testingVariables);
+    if (attestationObject.isEmpty()) {
+        return {};
+    }
 
     // Response
     QJsonObject responseObject;
-    const auto clientData = buildClientDataJson(publicKeyCredentialOptions, origin, false);
-    const auto attestationObject =
-        buildAttestationObject(publicKeyCredentialOptions, extensions, credentialId, testingVariables);
-    responseObject["clientDataJSON"] = browserMessageBuilder()->getBase64FromJson(clientData);
-    responseObject["attestationObject"] = browserMessageBuilder()->getBase64FromArray(attestationObject.cborEncoded);
+    responseObject["attestationObject"] = browserMessageBuilder()->getBase64FromArray(attestationObject);
+    responseObject["clientDataJSON"] = browserMessageBuilder()->getBase64FromJson(clientDataJson);
 
     // PublicKeyCredential
-    publicKeyCredential["authenticatorAttachment"] = QString("platform");
+    QJsonObject publicKeyCredential;
+    publicKeyCredential["authenticatorAttachment"] = authenticatorAttachment;
     publicKeyCredential["id"] = credentialId;
     publicKeyCredential["response"] = responseObject;
     publicKeyCredential["type"] = PUBLIC_KEY;
 
-    return {credentialId, publicKeyCredential, attestationObject.pem};
+    PublicKeyCredential result;
+    result.credentialId = credentialId;
+    result.key = privateKey.privateKeyPem;
+    result.response = publicKeyCredential;
+    return result;
 }
 
-QJsonObject BrowserPasskeys::buildGetPublicKeyCredential(const QJsonObject& publicKeyCredentialRequestOptions,
-                                                         const QString& origin,
+QJsonObject BrowserPasskeys::buildGetPublicKeyCredential(const QJsonObject& assertionOptions,
                                                          const QString& credentialId,
                                                          const QString& userHandle,
                                                          const QString& privateKeyPem)
 {
-    const auto authenticatorData = buildGetAttestationObject(publicKeyCredentialRequestOptions);
-    const auto clientData = buildClientDataJson(publicKeyCredentialRequestOptions, origin, true);
-    const auto clientDataArray = QJsonDocument(clientData).toJson(QJsonDocument::Compact);
+    if (!passkeyUtils()->checkCredentialAssertionOptions(assertionOptions)) {
+        return {};
+    }
+
+    const auto authenticatorData = buildAuthenticatorData(assertionOptions);
+    const auto clientDataJson = assertionOptions["clientDataJson"].toObject();
+    const auto clientDataArray = QJsonDocument(clientDataJson).toJson(QJsonDocument::Compact);
+
     const auto signature = buildSignature(authenticatorData, clientDataArray, privateKeyPem);
+    if (signature.isEmpty()) {
+        return {};
+    }
 
     QJsonObject responseObject;
     responseObject["authenticatorData"] = browserMessageBuilder()->getBase64FromArray(authenticatorData);
-    responseObject["clientDataJSON"] = browserMessageBuilder()->getBase64FromArray(clientDataArray);
+    responseObject["clientDataJSON"] = browserMessageBuilder()->getBase64FromJson(clientDataJson);
     responseObject["signature"] = browserMessageBuilder()->getBase64FromArray(signature);
     responseObject["userHandle"] = userHandle;
 
     QJsonObject publicKeyCredential;
-    publicKeyCredential["authenticatorAttachment"] = QString("platform");
+    publicKeyCredential["authenticatorAttachment"] = BrowserPasskeys::ATTACHMENT_PLATFORM;
     publicKeyCredential["id"] = credentialId;
     publicKeyCredential["response"] = responseObject;
     publicKeyCredential["type"] = PUBLIC_KEY;
@@ -116,68 +147,22 @@ QJsonObject BrowserPasskeys::buildGetPublicKeyCredential(const QJsonObject& publ
     return publicKeyCredential;
 }
 
-bool BrowserPasskeys::isUserVerificationValid(const QString& userVerification) const
-{
-    return QStringList({REQUIREMENT_PREFERRED, REQUIREMENT_REQUIRED, REQUIREMENT_DISCOURAGED})
-        .contains(userVerification);
-}
-
-// See https://w3c.github.io/webauthn/#sctn-createCredential for default timeout values when not set in the request
-int BrowserPasskeys::getTimeout(const QString& userVerification, int timeout) const
-{
-    if (timeout == 0) {
-        return userVerification == REQUIREMENT_DISCOURAGED ? DEFAULT_DISCOURAGED_TIMEOUT : DEFAULT_TIMEOUT;
-    }
-
-    return timeout;
-}
-
-QStringList BrowserPasskeys::getAllowedCredentialsFromPublicKey(const QJsonObject& publicKey) const
-{
-    QStringList allowedCredentials;
-    for (const auto& cred : publicKey["allowCredentials"].toArray()) {
-        const auto c = cred.toObject();
-        const auto id = c["id"].toString();
-
-        if (c["type"].toString() == PUBLIC_KEY && !id.isEmpty()) {
-            allowedCredentials << id;
-        }
-    }
-
-    return allowedCredentials;
-}
-
-QJsonObject BrowserPasskeys::buildClientDataJson(const QJsonObject& publicKey, const QString& origin, bool get)
-{
-    QJsonObject clientData;
-    clientData["challenge"] = publicKey["challenge"];
-    clientData["crossOrigin"] = false;
-    clientData["origin"] = origin;
-    clientData["type"] = get ? QString("webauthn.get") : QString("webauthn.create");
-
-    return clientData;
-}
-
 // https://w3c.github.io/webauthn/#attestation-object
-PrivateKey BrowserPasskeys::buildAttestationObject(const QJsonObject& publicKey,
+QByteArray BrowserPasskeys::buildAttestationObject(const QJsonObject& credentialCreationOptions,
                                                    const QString& extensions,
                                                    const QString& credentialId,
+                                                   const QByteArray& cborEncodedPublicKey,
                                                    const TestingVariables& testingVariables)
 {
     QByteArray result;
 
     // Create SHA256 hash from rpId
-    const auto rpIdHash = browserMessageBuilder()->getSha256Hash(publicKey["rp"]["id"].toString());
+    const auto rpIdHash = browserMessageBuilder()->getSha256Hash(credentialCreationOptions["rp"]["id"].toString());
     result.append(rpIdHash);
 
     // Use default flags
-    const auto flags =
-        setFlagsFromJson(QJsonObject({{"ED", !extensions.isEmpty()},
-                                      {"AT", true},
-                                      {"BS", false},
-                                      {"BE", false},
-                                      {"UV", publicKey["userVerification"].toString() != REQUIREMENT_DISCOURAGED},
-                                      {"UP", true}}));
+    const auto flags = setFlagsFromJson(QJsonObject(
+        {{"ED", !extensions.isEmpty()}, {"AT", true}, {"BS", false}, {"BE", false}, {"UV", true}, {"UP", true}}));
     result.append(flags);
 
     // Signature counter (not supported, always 0
@@ -188,7 +173,7 @@ PrivateKey BrowserPasskeys::buildAttestationObject(const QJsonObject& publicKey,
     result.append(browserMessageBuilder()->getArrayFromHexString(AAGUID));
 
     // Credential length
-    const char credentialLength[2] = {0x00, 0x20};
+    const char credentialLength[2] = {0x00, ID_BYTES};
     result.append(QByteArray::fromRawData(credentialLength, 2));
 
     // Credential Id
@@ -196,10 +181,8 @@ PrivateKey BrowserPasskeys::buildAttestationObject(const QJsonObject& publicKey,
         testingVariables.credentialId.isEmpty() ? credentialId.toUtf8() : testingVariables.credentialId.toUtf8(),
         QByteArray::Base64UrlEncoding));
 
-    // Credential private key
-    const auto alg = getAlgorithmFromPublicKey(publicKey);
-    const auto credentialPublicKey = buildCredentialPrivateKey(alg, testingVariables.first, testingVariables.second);
-    result.append(credentialPublicKey.cborEncoded);
+    // Credential public key
+    result.append(cborEncodedPublicKey);
 
     // Add extension data if available
     if (!extensions.isEmpty()) {
@@ -207,35 +190,35 @@ PrivateKey BrowserPasskeys::buildAttestationObject(const QJsonObject& publicKey,
     }
 
     // The final result should be CBOR encoded
-    return {m_browserCbor.cborEncodeAttestation(result), credentialPublicKey.pem};
+    return m_browserCbor.cborEncodeAttestation(result);
 }
 
 // Build a short version of the attestation object for webauthn.get
-QByteArray BrowserPasskeys::buildGetAttestationObject(const QJsonObject& publicKey)
+QByteArray BrowserPasskeys::buildAuthenticatorData(const QJsonObject& publicKey)
 {
     QByteArray result;
 
     const auto rpIdHash = browserMessageBuilder()->getSha256Hash(publicKey["rpId"].toString());
     result.append(rpIdHash);
 
-    const auto flags =
-        setFlagsFromJson(QJsonObject({{"ED", false},
-                                      {"AT", false},
-                                      {"BS", false},
-                                      {"BE", false},
-                                      {"UV", publicKey["userVerification"].toString() != REQUIREMENT_DISCOURAGED},
-                                      {"UP", true}}));
+    const auto extensions = publicKey["extensions"].toString();
+    const auto flags = setFlagsFromJson(QJsonObject(
+        {{"ED", !extensions.isEmpty()}, {"AT", false}, {"BS", false}, {"BE", false}, {"UV", true}, {"UP", true}}));
     result.append(flags);
 
     // Signature counter (not supported, always 0
     const char counter[4] = {0x00, 0x00, 0x00, 0x00};
     result.append(QByteArray::fromRawData(counter, 4));
 
+    if (!extensions.isEmpty()) {
+        result.append(browserMessageBuilder()->getArrayFromBase64(extensions));
+    }
+
     return result;
 }
 
 // See: https://w3c.github.io/webauthn/#sctn-encoded-credPubKey-examples
-PrivateKey
+AttestationKeyPair
 BrowserPasskeys::buildCredentialPrivateKey(int alg, const QString& predefinedFirst, const QString& predefinedSecond)
 {
     // Only support -7, P256 (EC), -8 (EdDSA) and -257 (RSA) for now
@@ -299,7 +282,14 @@ BrowserPasskeys::buildCredentialPrivateKey(int alg, const QString& predefinedFir
     }
 
     auto result = m_browserCbor.cborEncodePublicKey(alg, firstPart, secondPart);
-    return {result, pem};
+    if (result.isEmpty()) {
+        return {};
+    }
+
+    AttestationKeyPair attestationKeyPair;
+    attestationKeyPair.cborEncodedPublicKey = result;
+    attestationKeyPair.privateKeyPem = pem;
+    return attestationKeyPair;
 }
 
 QByteArray BrowserPasskeys::buildSignature(const QByteArray& authenticatorData,
@@ -339,7 +329,8 @@ QByteArray BrowserPasskeys::buildSignature(const QByteArray& authenticatorData,
             rawSignature = signer.signature(*randomGen()->getRng());
         } else if (algName == "Ed25519") {
             Botan::Ed25519_PrivateKey privateKey(algId, privateKeyBytes);
-            Botan::PK_Signer signer(privateKey, *randomGen()->getRng(), "SHA-512");
+            // "Pure" here means signing message directly. SHA-512 is only used with pre-hashed Ed25519 (Ed25519ph).
+            Botan::PK_Signer signer(privateKey, *randomGen()->getRng(), "Pure");
 
             signer.update(reinterpret_cast<const uint8_t*>(attToBeSigned.constData()), attToBeSigned.size());
             rawSignature = signer.signature(*randomGen()->getRng());
@@ -354,26 +345,6 @@ QByteArray BrowserPasskeys::buildSignature(const QByteArray& authenticatorData,
         qWarning("BrowserWebAuthn::buildSignature: Could not sign key: %s", e.what());
         return {};
     }
-}
-
-QByteArray BrowserPasskeys::buildExtensionData(QJsonObject& extensionObject) const
-{
-    // Only supports "credProps" and "uvm" for now
-    const QStringList allowedKeys = {"credProps", "uvm"};
-
-    // Remove unsupported keys
-    for (const auto& key : extensionObject.keys()) {
-        if (!allowedKeys.contains(key)) {
-            extensionObject.remove(key);
-        }
-    }
-
-    auto extensionData = m_browserCbor.cborEncodeExtensionData(extensionObject);
-    if (!extensionData.isEmpty()) {
-        return extensionData;
-    }
-
-    return {};
 }
 
 // Parse authentication data byte array to JSON
@@ -420,6 +391,9 @@ QJsonObject BrowserPasskeys::parseFlags(const QByteArray& flags) const
                         {"UP", flagBits.test(AuthenticatorFlags::UP)}});
 }
 
+// https://w3c.github.io/webauthn/#table-authData
+// ED - Extension Data, AT - Attested Credential, BS - Reserved
+// BE - Reserved , UV - User Verified, UP - User Present
 char BrowserPasskeys::setFlagsFromJson(const QJsonObject& flags) const
 {
     if (flags.isEmpty()) {
@@ -444,9 +418,9 @@ char BrowserPasskeys::setFlagsFromJson(const QJsonObject& flags) const
 }
 
 // Returns the first supported algorithm from the pubKeyCredParams list (only support ES256, RS256 and EdDSA for now)
-WebAuthnAlgorithms BrowserPasskeys::getAlgorithmFromPublicKey(const QJsonObject& publicKey) const
+WebAuthnAlgorithms BrowserPasskeys::getAlgorithmFromPublicKey(const QJsonObject& credentialCreationOptions) const
 {
-    const auto pubKeyCredParams = publicKey["pubKeyCredParams"].toArray();
+    const auto pubKeyCredParams = credentialCreationOptions["credTypesAndPubKeyAlgs"].toArray();
     if (!pubKeyCredParams.isEmpty()) {
         const auto alg = pubKeyCredParams.first()["alg"].toInt();
         if (alg == WebAuthnAlgorithms::ES256 || alg == WebAuthnAlgorithms::RS256 || alg == WebAuthnAlgorithms::EDDSA) {

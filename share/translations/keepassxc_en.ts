@@ -973,6 +973,10 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Passkey</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Abort</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1250,6 +1254,14 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>&lt;b&gt;Error:&lt;/b&gt; The installed proxy executable is missing from the expected location: %1&lt;br/&gt;Please set a custom proxy location in the advanced settings or reinstall the application.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Allows using insecure http://localhost with Passkeys for testing purposes.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Allow using localhost with Passkeys</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8208,11 +8220,7 @@ Kernel: %3 %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cannot remove password: The database does not have a password.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot remove file key: The database does not have a file key.</source>
+        <source>Passkeys</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8229,11 +8237,75 @@ This options is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Passkeys</source>
+        <source>allow screenshots and app recording (Windows/macOS)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>allow screenshots and app recording (Windows/macOS)</source>
+        <source>Origin is empty or not allowed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Effective domain is not a valid domain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Origin and RP ID do not match</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No supported algorithms were provided</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wait for timer to expire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown Passkeys error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Challenge is shorter than required minimum length</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>user.id does not match the required length</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Access to all entries is denied</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attestation not supported</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Credential is excluded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Passkeys request canceled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid user verification</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty public key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid URL provided</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot remove password: The database does not have a password.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot remove file key: The database does not have a file key.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

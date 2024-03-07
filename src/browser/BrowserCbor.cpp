@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -48,6 +48,16 @@ QByteArray BrowserCbor::cborEncodeAttestation(const QByteArray& authData) const
 // https://w3c.github.io/webauthn/#authdata-attestedcredentialdata-credentialpublickey
 QByteArray BrowserCbor::cborEncodePublicKey(int alg, const QByteArray& first, const QByteArray& second) const
 {
+    const auto keyType = getCoseKeyType(alg);
+    if (keyType == 0) {
+        return {};
+    }
+
+    const auto curveParameter = getCurveParameter(alg);
+    if ((alg == WebAuthnAlgorithms::ES256 || alg == WebAuthnAlgorithms::EDDSA) && curveParameter == 0) {
+        return {};
+    }
+
     QByteArray result;
     QCborStreamWriter writer(&result);
 
@@ -56,7 +66,7 @@ QByteArray BrowserCbor::cborEncodePublicKey(int alg, const QByteArray& first, co
 
         // Key type
         writer.append(1);
-        writer.append(getCoseKeyType(alg));
+        writer.append(keyType);
 
         // Signature algorithm
         writer.append(3);
@@ -64,7 +74,7 @@ QByteArray BrowserCbor::cborEncodePublicKey(int alg, const QByteArray& first, co
 
         // Curve parameter
         writer.append(-1);
-        writer.append(getCurveParameter(alg));
+        writer.append(curveParameter);
 
         // Key x-coordinate
         writer.append(-2);
@@ -80,7 +90,7 @@ QByteArray BrowserCbor::cborEncodePublicKey(int alg, const QByteArray& first, co
 
         // Key type
         writer.append(1);
-        writer.append(getCoseKeyType(alg));
+        writer.append(keyType);
 
         // Signature algorithm
         writer.append(3);
@@ -96,20 +106,23 @@ QByteArray BrowserCbor::cborEncodePublicKey(int alg, const QByteArray& first, co
 
         writer.endMap();
     } else if (alg == WebAuthnAlgorithms::EDDSA) {
-        // https://www.rfc-editor.org/rfc/rfc8152#section-13.2
-        writer.startMap(3);
+        writer.startMap(4);
+
+        // Key type
+        writer.append(1);
+        writer.append(keyType);
+
+        // Algorithm
+        writer.append(3);
+        writer.append(alg);
 
         // Curve parameter
         writer.append(-1);
-        writer.append(getCurveParameter(alg));
+        writer.append(curveParameter);
 
         // Public key
         writer.append(-2);
         writer.append(first);
-
-        // Private key
-        writer.append(-4);
-        writer.append(second);
 
         writer.endMap();
     }
@@ -230,7 +243,7 @@ unsigned int BrowserCbor::getCurveParameter(int alg) const
     case WebAuthnAlgorithms::EDDSA:
         return WebAuthnCurveKey::ED25519;
     default:
-        return WebAuthnCurveKey::P256;
+        return WebAuthnCurveKey::INVALID_CURVE_KEY;
     }
 }
 
@@ -240,14 +253,15 @@ unsigned int BrowserCbor::getCoseKeyType(int alg) const
 {
     switch (alg) {
     case WebAuthnAlgorithms::ES256:
+        return WebAuthnCoseKeyType::EC2;
     case WebAuthnAlgorithms::ES384:
     case WebAuthnAlgorithms::ES512:
-        return WebAuthnCoseKeyType::EC2;
+        return WebAuthnCoseKeyType::INVALID_COSE_KEY_TYPE;
     case WebAuthnAlgorithms::EDDSA:
         return WebAuthnCoseKeyType::OKP;
     case WebAuthnAlgorithms::RS256:
         return WebAuthnCoseKeyType::RSA;
     default:
-        return WebAuthnCoseKeyType::EC2;
+        return WebAuthnCoseKeyType::INVALID_COSE_KEY_TYPE;
     }
 }

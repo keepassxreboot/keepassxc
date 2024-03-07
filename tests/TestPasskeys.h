@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -45,5 +45,14 @@ private slots:
     void testSetFlags();
 
     void testEntry();
+    void testIsDomain();
+    void testRegistrableDomainSuffix();
+    void testRpIdValidation();
+    void testParseAttestation();
+    void testParseCredentialTypes();
+    void testIsAuthenticatorSelectionValid();
+    void testIsResidentKeyRequired();
+    void testIsUserVerificationRequired();
+    void testAllowLocalhostWithPasskeys();
 };
 #endif // KEEPASSXC_TESTPASSKEYS_H
