@@ -445,6 +445,7 @@ const Group* Group::parentGroup() const
 void Group::setParent(Group* parent, int index, bool trackPrevious)
 {
     Q_ASSERT(parent);
+    Q_ASSERT(this != parent);
     Q_ASSERT(index >= -1 && index <= parent->children().size());
     // setting a new parent for root groups is not allowed
     Q_ASSERT(!m_db || (m_db->rootGroup() != this));

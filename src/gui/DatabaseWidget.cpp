@@ -42,6 +42,7 @@
 #include "gui/GuiTools.h"
 #include "gui/KeePass1OpenWidget.h"
 #include "gui/MainWindow.h"
+#include "gui/MergeDialog.h"
 #include "gui/MessageBox.h"
 #include "gui/OpVaultOpenWidget.h"
 #include "gui/TotpDialog.h"
@@ -226,6 +227,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     connectDatabaseSignals();
 
     m_blockAutoSave = false;
+    m_blockAutoReload = false;
 
     m_autosaveTimer = new QTimer(this);
     m_autosaveTimer->setSingleShot(true);
@@ -1190,14 +1192,40 @@ void DatabaseWidget::mergeDatabase(bool accepted)
             return;
         }
 
-        Merger merger(srcDb.data(), m_db.data());
-        QStringList changeList = merger.merge();
+        // block auto-reload and auto-save while merging
+        m_blockAutoSave = true;
+        m_blockAutoReload = true;
 
-        if (!changeList.isEmpty()) {
-            showMessage(tr("Successfully merged the database files."), MessageWidget::Information);
-        } else {
-            showMessage(tr("Database was not modified by merge operation."), MessageWidget::Information);
-        }
+        auto* mergeDialog = new MergeDialog(srcDb, m_db, this);
+        connect(mergeDialog, &MergeDialog::databaseMerged, [this](bool changed) {
+            if (changed) {
+                showMessage(tr("Successfully merged the database files."), MessageWidget::Information);
+            } else {
+                showMessage(tr("Database was not modified by merge operation."), MessageWidget::Information);
+            }
+        });
+        connect(mergeDialog,
+                &MergeDialog::databaseModifiedMerge,
+                [this](const Merger::ChangeList& actualChanges, const Merger::ChangeList&) {
+                    if (!actualChanges.isEmpty()) {
+                        showMessage(tr("Merged changes do not match displayed changes!"), MessageWidget::Warning);
+                        auto* actualChangesDialog = new MergeDialog(actualChanges, this);
+                        actualChangesDialog->setWindowTitle(tr("Actual Merge Result"));
+                        actualChangesDialog->open();
+                    } else {
+                        showMessage(
+                            tr("Database was not modified by merge operation, displayed changes were not applied!"),
+                            MessageWidget::Warning);
+                    }
+                });
+        connect(mergeDialog, &MergeDialog::rejected, [this]() {
+            showMessage(tr("Merge aborted - database was not modified."), MessageWidget::Information);
+        });
+        connect(mergeDialog, &MergeDialog::finished, [this](auto) {
+            m_blockAutoSave = false;
+            m_blockAutoReload = false;
+        });
+        mergeDialog->open();
     }
 
     switchToMainView();
@@ -1834,8 +1862,8 @@ bool DatabaseWidget::lock()
 
 void DatabaseWidget::reloadDatabaseFile()
 {
-    // Ignore reload if we are locked, saving, or currently editing an entry or group
-    if (!m_db || isLocked() || isEntryEditActive() || isGroupEditActive() || isSaving()) {
+    // Ignore reload if we are locked, saving, merging or currently editing an entry or group
+    if (!m_db || m_blockAutoReload || isLocked() || isEntryEditActive() || isGroupEditActive() || isSaving()) {
         return;
     }
 
@@ -1874,6 +1902,7 @@ void DatabaseWidget::reloadDatabaseFile()
                 MessageBox::Merge);
 
             if (result == MessageBox::Merge) {
+                // TODO: use MergeDialog
                 // Merge the old database into the new one
                 Merger merger(m_db.data(), db.data());
                 merger.merge();
