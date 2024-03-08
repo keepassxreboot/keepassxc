@@ -26,3 +26,7 @@ CMakeSettings.json
 CMakePresets.json
 .vs/
 out/
+
+# vcpkg
+vcpkg_installed*/
+

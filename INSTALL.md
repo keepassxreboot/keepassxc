@@ -6,34 +6,21 @@ For more information, see also the [_Building KeePassXC_](https://github.com/kee
 
 The [QuickStart Guide](https://keepassxc.org/docs/KeePassXC_GettingStarted.html) gets you started using KeePassXC on your Windows, macOS, or Linux computer using pre-compiled binaries from the [downloads page](https://keepassxc.org/download).
 
-Build Dependencies
-==================
-
-The following tools must exist within your PATH:
-
-* make
-* cmake (>= 3.3.0)
-* g++ (>= 4.7) or clang++ (>= 6.0)
-* asciidoctor (>= 2.0)
-
-The following libraries are required:
-
-* Qt 5 (>= 5.9.5): qtbase5, qtbase5-private, libqt5svg5, qttools5, qt5-image-formats-plugins
-* botan (>= 2.12)
-* libargon2
-* zlib
-* minizip
-* readline (for completion in cli)
-* qtx11extras, libxi, and libxtst (for auto-type on X11)
-* qrencode
-* libusb-1.0, pcsc-lite (for Yubikey support on Linux)
-
-Prepare the Building Environment
+Toolchain and Build Dependencies
 ================================
 
-* [Building Environment on Linux](https://github.com/keepassxreboot/keepassxc/wiki/Set-up-Build-Environment-on-Linux)
-* [Building Environment on Windows](https://github.com/keepassxreboot/keepassxc/wiki/Set-up-Build-Environment-on-Windows)
-* [Building Environment on MacOS](https://github.com/keepassxreboot/keepassxc/wiki/Set-up-Build-Environment-on-macOS)
+The following build tools must exist within your PATH:
+
+* cmake (>= 3.10.0)
+* make (>= 4.2) or ninja (>= 1.10)
+* g++ (>= 4.9) or clang++ (>= 6.0)
+* asciidoctor (>= 2.0)
+
+* Besides a working C++ toolchain, KeePassXC also has a number of direct build and runtime dependencies. For detailed information about how to install them, please refer to the GitHub wiki:
+
+* [Set up Build Environment on Linux](https://github.com/keepassxreboot/keepassxc/wiki/Set-up-Build-Environment-on-Linux)
+* [Set up Build Environment on Windows](https://github.com/keepassxreboot/keepassxc/wiki/Set-up-Build-Environment-on-Windows)
+* [Set up Build Environment on macOS](https://github.com/keepassxreboot/keepassxc/wiki/Set-up-Build-Environment-on-macOS)
 
 Build Steps
 ===========
@@ -63,7 +50,7 @@ To compile from source, open a **Terminal (Linux/MacOS)**, the **MSVC Tools Comm
    git checkout latest
    ```
 
-2. Navigate to the directory where you have downloaded KeePassXC and type these commands:
+2. Navigate to the directory where you have downloaded KeePassXC and run:
 
    ```
    mkdir build
@@ -71,40 +58,37 @@ To compile from source, open a **Terminal (Linux/MacOS)**, the **MSVC Tools Comm
    cmake -DWITH_XC_ALL=ON ..
    make
    ```
+      
+If you have `vcpkg` installed, add `-DCMAKE_TOOLCHAIN_FILE=${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake` to the `cmake` command to automatically download and install all required build and runtime dependencies locally to your build directory before compiling KeePassXC. Using `vcpkg` is the preferred way to install dependencies on macOS and required on Windows if using the MSVC toolchain.
 
-Note: These steps place the compiled KeePassXC binary inside the `./build/src/` directory.
+For more detailed build instructions for each platform, please refer to the [GitHub wiki](https://github.com/keepassxreboot/keepassxc/wiki/Building-KeePassXC).
+
+Note: These steps place the compiled KeePassXC binary inside the `./build/src/` directory (`src/KeePassXC.app/Contents/MacOS` on macOS).
 
 ## MacOS Build Notes
 
-If you installed Qt5 via Homebrew, you should be able to compile KeePassXC without any changes. If CMake fails to find your Qt installation, you can specify it manually by adding the following parameter:
+If you installed Qt5 via Homebrew and CMake fails to find your Qt installation, you can specify it manually by adding the following parameter:
 
 `-DCMAKE_PREFIX_PATH=$(brew --prefix qt5)/lib/cmake`
-
-(or whatever your Qt installation path is)
 
 When building with ASAN support on macOS, you need to use `export ASAN_OPTIONS=detect_leaks=0` before running the tests (LSAN is no supported on macOS).
 
 ## Windows Build Notes
-
-For detailed build steps see the [Windows Build Instructions](https://github.com/keepassxreboot/keepassxc/wiki/Building-KeePassXC#windows).
-
-If you are using MSVC, you may have to specify your Vcpkg toolchain by adding the following CMake parameter: `-DCMAKE_TOOLCHAIN_FILE=C:\vcpkg\scripts\buildsystems\vcpkg.cmake`
 
 If you are using MSYS2, you have to add ```-G "MSYS Makefiles"``` at the beginning of the cmake command.
 
 CMake Configuration Options
 ==========================
 
-## Common Parameters
+## Recommended CMake Build Parameters
 
 ```
--DCMAKE_INSTALL_PREFIX=$(brew --prefix)
 -DCMAKE_VERBOSE_MAKEFILE=ON
 -DCMAKE_BUILD_TYPE=<RelWithDebInfo/Debug/Release>
 -DWITH_GUI_TESTS=ON
 ```
 
-## KeePassXC Parameters
+## Additional CMake Parameters
 
 KeePassXC comes with a variety of build options that can turn on/off features. Most notably, we allow you to build the application with all TCP/IP networking code disabled. Please note that we still require and link against Qt5's network library in order to use local named pipes on all operating systems. Each of these build options are supplied at the time of calling cmake:
 
