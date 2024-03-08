@@ -32,12 +32,14 @@ private slots:
 
     void testBase64WithHexStrings();
     void testDecodeResponseData();
+
     void testLoadingECPrivateKeyFromPem();
     void testLoadingRSAPrivateKeyFromPem();
     void testCreatingAttestationObjectWithEC();
     void testCreatingAttestationObjectWithRSA();
     void testRegister();
     void testGet();
+
     void testExtensions();
     void testParseFlags();
     void testSetFlags();
