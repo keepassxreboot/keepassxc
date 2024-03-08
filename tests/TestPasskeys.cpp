@@ -192,9 +192,11 @@ void TestPasskeys::testDecodeResponseData()
     QCOMPARE(publicKey["-3"], QString("4u5_6Q8O6R0Hg0oDCdtCJLEL0yX_GDLhU5m3HUIE54M"));
 }
 
-#if defined BOTAN_VALID
 void TestPasskeys::testLoadingECPrivateKeyFromPem()
 {
+#if BOTAN_VERSION_CODE < BOTAN_VERSION_CODE_FOR(2, 14, 0)
+    QSKIP("ECDSA Signature is broken on Botan < 2.14.0");
+#endif
     const auto publicKeyCredentialRequestOptions =
         browserMessageBuilder()->getJsonObject(PublicKeyCredentialRequestOptions.toUtf8());
     const auto privateKeyPem = QString("-----BEGIN PRIVATE KEY-----"
@@ -215,7 +217,6 @@ void TestPasskeys::testLoadingECPrivateKeyFromPem()
         browserMessageBuilder()->getBase64FromArray(signature),
         QString("MEYCIQCpbDaYJ4b2ofqWBxfRNbH3XCpsyao7Iui5lVuJRU9HIQIhAPl5moNZgJu5zmurkKK_P900Ct6wd3ahVIqCEqTeeRdE"));
 }
-#endif
 
 void TestPasskeys::testLoadingRSAPrivateKeyFromPem()
 {
@@ -412,9 +413,11 @@ void TestPasskeys::testRegister()
     QCOMPARE(clientDataJsonObject["type"], QString("webauthn.create"));
 }
 
-#if defined BOTAN_VALID
 void TestPasskeys::testGet()
 {
+#if BOTAN_VERSION_CODE < BOTAN_VERSION_CODE_FOR(2, 14, 0)
+    QSKIP("ECDSA Signature is broken on Botan < 2.14.0");
+#endif
     const auto privateKeyPem = QString("-----BEGIN PRIVATE KEY-----"
                                        "MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQg5DX2R6I37nMSZqCp"
                                        "XfHlE3UeitkGGE03FqGsdfxIBoOhRANCAAQG7K80W2KRYW0ZWQOmUCrKMcSVqGnl"
@@ -449,7 +452,6 @@ void TestPasskeys::testGet()
     auto clientDataJsonObject = browserMessageBuilder()->getJsonObject(clientDataByteArray);
     QCOMPARE(clientDataJsonObject["challenge"].toString(), publicKeyCredentialRequestOptions["challenge"].toString());
 }
-#endif
 
 void TestPasskeys::testExtensions()
 {
