@@ -18,9 +18,9 @@
 #ifndef KEEPASSXC_TESTPASSKEYS_H
 #define KEEPASSXC_TESTPASSKEYS_H
 
-#include <QObject>
-
 #include "browser/BrowserPasskeys.h"
+#include <QObject>
+#include <botan/version.h>
 
 class TestPasskeys : public QObject
 {
