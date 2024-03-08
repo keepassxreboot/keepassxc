@@ -194,6 +194,9 @@ void TestPasskeys::testDecodeResponseData()
 
 void TestPasskeys::testLoadingECPrivateKeyFromPem()
 {
+#if BOTAN_VERSION_CODE < BOTAN_VERSION_CODE_FOR(2, 14, 0)
+    QSKIP("ECDSA Signature is broken on Botan < 2.14.0");
+#endif
     const auto publicKeyCredentialRequestOptions =
         browserMessageBuilder()->getJsonObject(PublicKeyCredentialRequestOptions.toUtf8());
     const auto privateKeyPem = QString("-----BEGIN PRIVATE KEY-----"
@@ -412,6 +415,9 @@ void TestPasskeys::testRegister()
 
 void TestPasskeys::testGet()
 {
+#if BOTAN_VERSION_CODE < BOTAN_VERSION_CODE_FOR(2, 14, 0)
+    QSKIP("ECDSA Signature is broken on Botan < 2.14.0");
+#endif
     const auto privateKeyPem = QString("-----BEGIN PRIVATE KEY-----"
                                        "MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQg5DX2R6I37nMSZqCp"
                                        "XfHlE3UeitkGGE03FqGsdfxIBoOhRANCAAQG7K80W2KRYW0ZWQOmUCrKMcSVqGnl"
