@@ -42,6 +42,7 @@ signals:
     void importKeePass1Database();
     void importOpVaultDatabase();
     void importCsv();
+    void openRemoteDatabase();
 
 protected:
     void keyPressEvent(QKeyEvent* event) override;

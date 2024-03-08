@@ -19,11 +19,11 @@
 #ifndef KEEPASSX_DATABASEWIDGET_H
 #define KEEPASSX_DATABASEWIDGET_H
 
+#include "DatabaseOpenDialog.h"
 #include <QFileSystemWatcher>
 #include <QListView>
 #include <QStackedWidget>
 
-#include "DatabaseOpenDialog.h"
 #include "config-keepassx.h"
 #include "gui/MessageWidget.h"
 #include "gui/csvImport/CsvImportWizard.h"
@@ -51,6 +51,8 @@ class MessageWidget;
 class EntryPreviewWidget;
 class TagView;
 class ElidedLabel;
+class RemoteSettings;
+struct RemoteParams;
 
 namespace Ui
 {
@@ -125,6 +127,9 @@ public:
     void setSplitterSizes(const QHash<Config::ConfigKey, QList<int>>& sizes);
     void setSearchStringForAutoType(const QString& search);
 
+    void syncWithRemote(const RemoteParams* params);
+    QList<RemoteParams*> getRemoteParams() const;
+
 signals:
     // relayed Database signals
     void databaseFilePathChanged(const QString& oldPath, const QString& newPath);
@@ -145,6 +150,8 @@ signals:
     void
     requestOpenDatabase(const QString& filePath, bool inBackground, const QString& password, const QString& keyFile);
     void databaseMerged(QSharedPointer<Database> mergedDb);
+    void databaseSyncCompleted(const QString& syncName);
+    void databaseSyncFailed(const QString& syncName, const QString& error);
     void groupContextMenuRequested(const QPoint& globalPos);
     void entryContextMenuRequested(const QPoint& globalPos);
     void listModeAboutToActivate();
@@ -265,6 +272,7 @@ private slots:
     void loadDatabase(bool accepted);
     void unlockDatabase(bool accepted);
     void mergeDatabase(bool accepted);
+    bool syncWithDatabase(const QSharedPointer<Database>& otherDb, QString& error);
     void emitCurrentModeChanged();
     // Database autoreload slots
     void reloadDatabaseFile();
@@ -309,6 +317,8 @@ private:
     QUuid m_entryBeforeLock;
 
     int m_saveAttempts;
+
+    QScopedPointer<RemoteSettings> m_remoteSettings;
 
     // Search state
     QScopedPointer<EntrySearcher> m_entrySearcher;

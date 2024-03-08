@@ -64,9 +64,12 @@ public slots:
     DatabaseWidget* newDatabase();
     void openDatabase();
     void mergeDatabase();
-    void importCsv();
+
     void importKeePass1Database();
     void importOpVaultDatabase();
+    void importCsv();
+    void openRemoteDatabase();
+    void openDatabaseFromFile(const QString& fileName);
     bool saveDatabase(int index = -1);
     bool saveDatabaseAs(int index = -1);
     bool saveDatabaseBackup(int index = -1);
@@ -115,7 +118,7 @@ private slots:
 
 private:
     QSharedPointer<Database> execNewDatabaseWizard();
-    void updateLastDatabases(const QString& filename);
+    void updateLastDatabases(const QSharedPointer<Database>& database);
     bool warnOnExport();
     void displayUnlockDialog();
 

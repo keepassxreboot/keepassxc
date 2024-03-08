@@ -28,9 +28,9 @@
 #include "gui/DatabaseWidget.h"
 #include "gui/DatabaseWidgetStateSync.h"
 #include "gui/FileDialog.h"
-#include "gui/HtmlExporter.h"
 #include "gui/MessageBox.h"
 #include "gui/export/ExportDialog.h"
+#include "gui/remote/RemoteFileDialog.h"
 #ifdef Q_OS_MACOS
 #include "gui/osutils/macutils/MacUtils.h"
 #endif
@@ -183,7 +183,7 @@ void DatabaseTabWidget::addDatabaseTab(const QString& filePath,
     auto* dbWidget = new DatabaseWidget(QSharedPointer<Database>::create(cleanFilePath), this);
     addDatabaseTab(dbWidget, inBackground);
     dbWidget->performUnlockDatabase(password, keyfile);
-    updateLastDatabases(cleanFilePath);
+    updateLastDatabases(dbWidget->database());
 }
 
 /**
@@ -287,6 +287,27 @@ void DatabaseTabWidget::mergeDatabase()
 void DatabaseTabWidget::mergeDatabase(const QString& filePath)
 {
     unlockDatabaseInDialog(currentDatabaseWidget(), DatabaseOpenDialog::Intent::Merge, filePath);
+}
+
+void DatabaseTabWidget::openRemoteDatabase()
+{
+    auto* dialog = new RemoteFileDialog(this);
+    connect(dialog, &RemoteFileDialog::downloadedSuccessfullyTo, [this](const QString& filePath) {
+        auto db = QSharedPointer<Database>::create();
+        db->markAsRemoteDatabase();
+        auto* dbWidget = new DatabaseWidget(db, this);
+        addDatabaseTab(dbWidget);
+        dbWidget->switchToOpenDatabase(filePath);
+    });
+    dialog->open();
+}
+
+void DatabaseTabWidget::openDatabaseFromFile(const QString& fileName)
+{
+    auto db = QSharedPointer<Database>::create();
+    auto* dbWidget = new DatabaseWidget(db, this);
+    addDatabaseTab(dbWidget);
+    dbWidget->switchToOpenDatabase(fileName);
 }
 
 void DatabaseTabWidget::importKeePass1Database()
@@ -424,7 +445,7 @@ bool DatabaseTabWidget::saveDatabaseAs(int index)
     auto* dbWidget = databaseWidgetFromIndex(index);
     bool ok = dbWidget->saveAs();
     if (ok) {
-        updateLastDatabases(dbWidget->database()->filePath());
+        updateLastDatabases(dbWidget->database());
     }
     return ok;
 }
@@ -438,7 +459,7 @@ bool DatabaseTabWidget::saveDatabaseBackup(int index)
     auto* dbWidget = databaseWidgetFromIndex(index);
     bool ok = dbWidget->saveBackup();
     if (ok) {
-        updateLastDatabases(dbWidget->database()->filePath());
+        updateLastDatabases(dbWidget->database());
     }
     return ok;
 }
@@ -647,6 +668,11 @@ QString DatabaseTabWidget::tabName(int index)
         tabName = tr("%1 [Locked]", "Database tab name modifier").arg(tabName);
     }
 
+    if (db->isRemoteDatabase()) {
+        tabName = tr("%1 [Remote]", "Database tab name modifier").arg(tabName);
+    }
+
+    // needs to be last check, as MainWindow may remove the asterisk again
     if (db->isModified()) {
         tabName.append("*");
     }
@@ -795,7 +821,7 @@ void DatabaseTabWidget::handleDatabaseUnlockDialogFinished(bool accepted, Databa
 {
     // change the active tab to the database that was just unlocked in the dialog
     auto intent = m_databaseOpenDialog->intent();
-    if (accepted && intent != DatabaseOpenDialog::Intent::Merge) {
+    if (accepted && intent != DatabaseOpenDialog::Intent::Merge && intent != DatabaseOpenDialog::Intent::RemoteSync) {
         int index = indexOf(dbWidget);
         if (index != -1) {
             setCurrentIndex(index);
@@ -830,8 +856,12 @@ void DatabaseTabWidget::relockPendingDatabase()
     m_dbWidgetPendingLock = nullptr;
 }
 
-void DatabaseTabWidget::updateLastDatabases(const QString& filename)
+void DatabaseTabWidget::updateLastDatabases(const QSharedPointer<Database>& database)
 {
+    if (database->isRemoteDatabase() || database->filePath().isEmpty()) {
+        return;
+    }
+    auto filename = database->filePath();
     if (!config()->get(Config::RememberLastDatabases).toBool()) {
         config()->remove(Config::LastDatabases);
     } else {
@@ -851,10 +881,7 @@ void DatabaseTabWidget::updateLastDatabases()
     auto dbWidget = currentDatabaseWidget();
 
     if (dbWidget) {
-        auto filePath = dbWidget->database()->filePath();
-        if (!filePath.isEmpty()) {
-            updateLastDatabases(filePath);
-        }
+        updateLastDatabases(dbWidget->database());
     }
 }
 
