@@ -192,6 +192,7 @@ void TestPasskeys::testDecodeResponseData()
     QCOMPARE(publicKey["-3"], QString("4u5_6Q8O6R0Hg0oDCdtCJLEL0yX_GDLhU5m3HUIE54M"));
 }
 
+#if defined BOTAN_VALID
 void TestPasskeys::testLoadingECPrivateKeyFromPem()
 {
     const auto publicKeyCredentialRequestOptions =
@@ -214,6 +215,7 @@ void TestPasskeys::testLoadingECPrivateKeyFromPem()
         browserMessageBuilder()->getBase64FromArray(signature),
         QString("MEYCIQCpbDaYJ4b2ofqWBxfRNbH3XCpsyao7Iui5lVuJRU9HIQIhAPl5moNZgJu5zmurkKK_P900Ct6wd3ahVIqCEqTeeRdE"));
 }
+#endif
 
 void TestPasskeys::testLoadingRSAPrivateKeyFromPem()
 {
@@ -410,6 +412,7 @@ void TestPasskeys::testRegister()
     QCOMPARE(clientDataJsonObject["type"], QString("webauthn.create"));
 }
 
+#if defined BOTAN_VALID
 void TestPasskeys::testGet()
 {
     const auto privateKeyPem = QString("-----BEGIN PRIVATE KEY-----"
@@ -446,6 +449,7 @@ void TestPasskeys::testGet()
     auto clientDataJsonObject = browserMessageBuilder()->getJsonObject(clientDataByteArray);
     QCOMPARE(clientDataJsonObject["challenge"].toString(), publicKeyCredentialRequestOptions["challenge"].toString());
 }
+#endif
 
 void TestPasskeys::testExtensions()
 {

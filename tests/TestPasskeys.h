@@ -18,9 +18,13 @@
 #ifndef KEEPASSXC_TESTPASSKEYS_H
 #define KEEPASSXC_TESTPASSKEYS_H
 
-#include <QObject>
-
 #include "browser/BrowserPasskeys.h"
+#include <QObject>
+#include <botan/version.h>
+
+#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(2, 14, 0)
+#define BOTAN_VALID
+#endif
 
 class TestPasskeys : public QObject
 {
@@ -32,14 +36,16 @@ private slots:
 
     void testBase64WithHexStrings();
     void testDecodeResponseData();
-
+#if defined BOTAN_VALID
     void testLoadingECPrivateKeyFromPem();
+#endif
     void testLoadingRSAPrivateKeyFromPem();
     void testCreatingAttestationObjectWithEC();
     void testCreatingAttestationObjectWithRSA();
     void testRegister();
+#if defined BOTAN_VALID
     void testGet();
-
+#endif
     void testExtensions();
     void testParseFlags();
     void testSetFlags();
