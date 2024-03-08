@@ -1,6 +1,6 @@
 {
   "name": "keepassxc",
-  "version-string": "2.8.0",
+  "version-string": "2.7.7",
   "builtin-baseline": "2a6371b01420d8820d158b4707e79931feba27aa",
   "dependencies": [
     {
