@@ -38,6 +38,8 @@
 
 class KeySequenceDialog final : public QDialog
 {
+    Q_OBJECT
+
 public:
     explicit KeySequenceDialog(QWidget* parent = nullptr)
         : QDialog(parent)
@@ -89,6 +91,8 @@ private:
 
 class ShortcutSettingsWidget final : public QWidget
 {
+    Q_OBJECT
+
 public:
     explicit ShortcutSettingsWidget(QWidget* parent = nullptr)
         : QWidget(parent)
