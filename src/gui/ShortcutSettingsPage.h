@@ -22,6 +22,8 @@
 
 class ShortcutSettingsPage : public ISettingsPage
 {
+    Q_OBJECT
+
 public:
     explicit ShortcutSettingsPage() = default;
     ~ShortcutSettingsPage() override = default;
