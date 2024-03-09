@@ -17,8 +17,8 @@
 
 #ifndef SCREENLOCKLISTENERWIN_H
 #define SCREENLOCKLISTENERWIN_H
+
 #include <QAbstractNativeEventFilter>
-#include <QObject>
 #include <QWidget>
 
 #include "gui/osutils/ScreenLockListenerPrivate.h"
@@ -27,9 +27,9 @@ class ScreenLockListenerWin : public ScreenLockListenerPrivate, public QAbstract
 {
     Q_OBJECT
 public:
-    explicit ScreenLockListenerWin(QWidget* parent = nullptr);
+    explicit ScreenLockListenerWin(QWidget* parent);
     ~ScreenLockListenerWin();
-    bool nativeEventFilter(const QByteArray& eventType, void* message, long*) override;
+    virtual bool nativeEventFilter(const QByteArray& eventType, void* message, long* result) override;
 
 private:
     void* m_powerNotificationHandle;

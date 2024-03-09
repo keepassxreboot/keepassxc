@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>520</width>
-    <height>436</height>
+    <width>745</width>
+    <height>544</height>
    </rect>
   </property>
   <property name="accessibleName">
@@ -18,7 +18,7 @@
     <widget class="MessageWidget" name="messageWidget" native="true"/>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,1,0">
+    <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="1,0,1">
      <property name="spacing">
       <number>0</number>
      </property>
@@ -40,18 +40,6 @@
      </item>
      <item>
       <widget class="QWidget" name="formContainer" native="true">
-       <property name="minimumSize">
-        <size>
-         <width>500</width>
-         <height>400</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>700</width>
-         <height>16777215</height>
-        </size>
-       </property>
        <layout class="QVBoxLayout" name="verticalLayout_4" stretch="1,0,0,0,0,2">
         <item>
          <spacer name="verticalSpacer_2">
@@ -71,7 +59,6 @@
           <property name="font">
            <font>
             <pointsize>12</pointsize>
-            <weight>75</weight>
             <bold>true</bold>
            </font>
           </property>
@@ -107,8 +94,8 @@
          <widget class="QStackedWidget" name="centralStack">
           <property name="minimumSize">
            <size>
-            <width>0</width>
-            <height>250</height>
+            <width>650</width>
+            <height>0</height>
            </size>
           </property>
           <property name="frameShape">
@@ -122,172 +109,223 @@
           </property>
           <widget class="QWidget" name="mainPage">
            <layout class="QVBoxLayout" name="verticalLayout_6">
+            <property name="spacing">
+             <number>5</number>
+            </property>
             <property name="leftMargin">
-             <number>20</number>
+             <number>30</number>
             </property>
             <property name="topMargin">
-             <number>15</number>
+             <number>25</number>
             </property>
             <property name="rightMargin">
-             <number>20</number>
+             <number>30</number>
             </property>
             <property name="bottomMargin">
-             <number>15</number>
+             <number>25</number>
             </property>
             <item>
-             <widget class="QLabel" name="label">
-              <property name="text">
-               <string>Enter Password:</string>
+             <widget class="QFrame" name="enterPasswordComponent">
+              <property name="lineWidth">
+               <number>0</number>
               </property>
-              <property name="buddy">
-               <cstring>editPassword</cstring>
-              </property>
+              <layout class="QVBoxLayout" name="enterPasswordComponentLayout">
+               <property name="spacing">
+                <number>10</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QLabel" name="passwordLabel">
+                 <property name="text">
+                  <string>Enter Password:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <layout class="QVBoxLayout" name="verticalLayout_2">
+                 <property name="spacing">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="PasswordWidget" name="editPassword" native="true">
+                   <property name="focusPolicy">
+                    <enum>Qt::StrongFocus</enum>
+                   </property>
+                   <property name="accessibleName">
+                    <string>Password field</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QProgressBar" name="hardwareKeyProgress">
+                   <property name="maximumSize">
+                    <size>
+                     <width>16777215</width>
+                     <height>4</height>
+                    </size>
+                   </property>
+                   <property name="minimum">
+                    <number>0</number>
+                   </property>
+                   <property name="maximum">
+                    <number>0</number>
+                   </property>
+                   <property name="value">
+                    <number>-1</number>
+                   </property>
+                   <property name="textVisible">
+                    <bool>false</bool>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
              </widget>
             </item>
             <item>
-             <widget class="PasswordWidget" name="editPassword" native="true">
-              <property name="focusPolicy">
-               <enum>Qt::StrongFocus</enum>
+             <widget class="QFrame" name="selectKeyFileComponent">
+              <property name="frameShape">
+               <enum>QFrame::NoFrame</enum>
               </property>
-              <property name="accessibleName">
-               <string>Password field</string>
+              <property name="frameShadow">
+               <enum>QFrame::Plain</enum>
               </property>
+              <property name="lineWidth">
+               <number>0</number>
+              </property>
+              <layout class="QVBoxLayout" name="selectKeyFileComponentLayout">
+               <property name="spacing">
+                <number>10</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>10</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>15</number>
+               </property>
+               <item>
+                <widget class="QLabel" name="selectKeyFileLabel">
+                 <property name="text">
+                  <string>Select Key File:</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="1,0">
+                 <item>
+                  <widget class="PasswordWidget" name="keyFileLineEdit" native="true">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="focusPolicy">
+                    <enum>Qt::StrongFocus</enum>
+                   </property>
+                   <property name="accessibleName">
+                    <string>Key file to unlock the database</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="buttonBrowseFile">
+                   <property name="toolTip">
+                    <string>Browse for key file</string>
+                   </property>
+                   <property name="accessibleName">
+                    <string>Browse for key file</string>
+                   </property>
+                   <property name="text">
+                    <string>Browse…</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </item>
+              </layout>
              </widget>
             </item>
             <item>
-             <spacer name="verticalSpacer_4">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
+             <widget class="QFrame" name="addAdditionalKeysComponent">
+              <property name="lineWidth">
+               <number>0</number>
               </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Fixed</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>5</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QLabel" name="label_2">
-              <property name="text">
-               <string>Enter Additional Credentials (if any):</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_5">
-              <item>
-               <spacer name="horizontalSpacer_2">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
-                </property>
-                <property name="sizeType">
-                 <enum>QSizePolicy::Fixed</enum>
-                </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>15</width>
-                  <height>20</height>
-                 </size>
-                </property>
-               </spacer>
-              </item>
-              <item>
-               <layout class="QGridLayout" name="gridLayout_3">
-                <property name="topMargin">
-                 <number>3</number>
-                </property>
-                <item row="0" column="0">
-                 <layout class="QHBoxLayout" name="horizontalLayout_4">
+              <layout class="QHBoxLayout" name="addAdditionalKeysComponentLayout">
+               <property name="sizeConstraint">
+                <enum>QLayout::SetMinimumSize</enum>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QFrame" name="hardwareKeyComponent">
+                 <layout class="QHBoxLayout" name="hardwareKeyComponentLayout">
                   <property name="spacing">
                    <number>5</number>
                   </property>
-                  <item>
-                   <widget class="QLabel" name="keyFileLabel">
-                    <property name="text">
-                     <string>Key File:</string>
-                    </property>
-                    <property name="buddy">
-                     <cstring>keyFileLineEdit</cstring>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QToolButton" name="keyFileLabelHelp">
-                    <property name="cursor">
-                     <cursorShape>PointingHandCursor</cursorShape>
-                    </property>
-                    <property name="focusPolicy">
-                     <enum>Qt::ClickFocus</enum>
-                    </property>
-                    <property name="toolTip">
-                     <string>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database's security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</string>
-                    </property>
-                    <property name="accessibleName">
-                     <string>Key file help</string>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">QToolButton {
-	border: none;
-	background: none;
-}</string>
-                    </property>
-                    <property name="text">
-                     <string notr="true">?</string>
-                    </property>
-                    <property name="iconSize">
-                     <size>
-                      <width>12</width>
-                      <height>12</height>
-                     </size>
-                    </property>
-                    <property name="popupMode">
-                     <enum>QToolButton::InstantPopup</enum>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item row="1" column="3">
-                 <layout class="QGridLayout" name="gridLayout">
-                  <property name="spacing">
+                  <property name="leftMargin">
                    <number>0</number>
                   </property>
-                  <item row="1" column="2">
-                   <widget class="QProgressBar" name="hardwareKeyProgress">
-                    <property name="maximumSize">
-                     <size>
-                      <width>16777215</width>
-                      <height>2</height>
-                     </size>
-                    </property>
-                    <property name="minimum">
-                     <number>0</number>
-                    </property>
-                    <property name="maximum">
-                     <number>0</number>
-                    </property>
-                    <property name="value">
-                     <number>-1</number>
-                    </property>
-                    <property name="textVisible">
-                     <bool>false</bool>
+                  <property name="topMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>0</number>
+                  </property>
+                  <item>
+                   <widget class="QCheckBox" name="useHardwareKeyCheckBox">
+                    <property name="text">
+                     <string notr="true">Use Hardware Security Key [Serial: 11111111]</string>
                     </property>
                    </widget>
                   </item>
-                  <item row="0" column="2">
-                   <widget class="QComboBox" name="challengeResponseCombo">
+                  <item>
+                   <widget class="QComboBox" name="hardwareKeyCombo">
                     <property name="enabled">
                      <bool>false</bool>
                     </property>
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
+                    <property name="minimumSize">
+                     <size>
+                      <width>200</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>300</width>
+                      <height>16777215</height>
+                     </size>
                     </property>
                     <property name="accessibleName">
                      <string>Hardware key slot selection</string>
@@ -298,165 +336,110 @@
                    </widget>
                   </item>
                  </layout>
-                </item>
-                <item row="1" column="0">
-                 <layout class="QVBoxLayout" name="verticalLayout_7">
-                  <property name="spacing">
-                   <number>2</number>
-                  </property>
-                  <item>
-                   <layout class="QHBoxLayout" name="horizontalLayout_6">
-                    <property name="spacing">
-                     <number>5</number>
-                    </property>
-                    <item>
-                     <widget class="QLabel" name="hardwareKeyLabel">
-                      <property name="text">
-                       <string>Hardware Key:</string>
-                      </property>
-                      <property name="buddy">
-                       <cstring>challengeResponseCombo</cstring>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QToolButton" name="hardwareKeyLabelHelp">
-                      <property name="cursor">
-                       <cursorShape>PointingHandCursor</cursorShape>
-                      </property>
-                      <property name="focusPolicy">
-                       <enum>Qt::ClickFocus</enum>
-                      </property>
-                      <property name="toolTip">
-                       <string>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-&lt;p&gt;Click for more information…&lt;/p&gt;</string>
-                      </property>
-                      <property name="accessibleName">
-                       <string>Hardware key help</string>
-                      </property>
-                      <property name="styleSheet">
-                       <string notr="true">QToolButton {
-	border: none;
-	background: none;
-}</string>
-                      </property>
-                      <property name="text">
-                       <string notr="true">?</string>
-                      </property>
-                      <property name="iconSize">
-                       <size>
-                        <width>12</width>
-                        <height>12</height>
-                       </size>
-                      </property>
-                      <property name="popupMode">
-                       <enum>QToolButton::InstantPopup</enum>
-                      </property>
-                     </widget>
-                    </item>
-                   </layout>
-                  </item>
-                  <item>
-                   <spacer name="verticalSpacer_6">
-                    <property name="orientation">
-                     <enum>Qt::Vertical</enum>
-                    </property>
-                    <property name="sizeType">
-                     <enum>QSizePolicy::Fixed</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>0</width>
-                      <height>2</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                 </layout>
-                </item>
-                <item row="0" column="3">
-                 <layout class="QGridLayout" name="gridLayout_2">
-                  <property name="verticalSpacing">
-                   <number>0</number>
-                  </property>
-                  <item row="0" column="1">
-                   <widget class="PasswordWidget" name="keyFileLineEdit" native="true">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="focusPolicy">
-                     <enum>Qt::StrongFocus</enum>
-                    </property>
-                    <property name="accessibleName">
-                     <string>Key file to unlock the database</string>
-                    </property>
-                   </widget>
-                  </item>
-                 </layout>
-                </item>
-                <item row="0" column="4">
-                 <widget class="QPushButton" name="buttonBrowseFile">
-                  <property name="toolTip">
-                   <string>Browse for key file</string>
-                  </property>
-                  <property name="accessibleName">
-                   <string>Browse for key file</string>
-                  </property>
-                  <property name="text">
-                   <string>Browse…</string>
-                  </property>
-                 </widget>
-                </item>
-                <item row="1" column="4">
-                 <layout class="QVBoxLayout" name="verticalLayout_3">
-                  <property name="spacing">
-                   <number>0</number>
-                  </property>
-                  <item>
-                   <widget class="QPushButton" name="buttonRedetectYubikey">
-                    <property name="enabled">
-                     <bool>true</bool>
-                    </property>
-                    <property name="toolTip">
-                     <string>Refresh hardware tokens</string>
-                    </property>
-                    <property name="accessibleName">
-                     <string>Refresh hardware tokens</string>
-                    </property>
-                    <property name="text">
-                     <string>Refresh</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <spacer name="verticalSpacer_5">
-                    <property name="orientation">
-                     <enum>Qt::Vertical</enum>
-                    </property>
-                    <property name="sizeType">
-                     <enum>QSizePolicy::Fixed</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>0</width>
-                      <height>2</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                 </layout>
-                </item>
-               </layout>
-              </item>
-             </layout>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="noHardwareKeysFoundLabel">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string>No hardware keys found.</string>
+                 </property>
+                 <property name="margin">
+                  <number>1</number>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <spacer name="horizontalSpacer">
+                 <property name="orientation">
+                  <enum>Qt::Horizontal</enum>
+                 </property>
+                 <property name="sizeHint" stdset="0">
+                  <size>
+                   <width>40</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                </spacer>
+               </item>
+               <item>
+                <widget class="QPushButton" name="refreshHardwareKeys">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                 <property name="toolTip">
+                  <string>Refresh Hardware Keys</string>
+                 </property>
+                 <property name="accessibleName">
+                  <string>Refresh Hardware Keys</string>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QPushButton { background-color: transparent; border: none; } </string>
+                 </property>
+                 <property name="text">
+                  <string notr="true"/>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="addKeyFileLinkLabel">
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
+                 <property name="focusPolicy">
+                  <enum>Qt::TabFocus</enum>
+                 </property>
+                 <property name="toolTip">
+                  <string>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database's security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;/p&gt;</string>
+                 </property>
+                 <property name="accessibleDescription">
+                  <string>Click to add a key file.</string>
+                 </property>
+                 <property name="text">
+                  <string>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;I have a key file&lt;/a&gt;</string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                 <property name="margin">
+                  <number>1</number>
+                 </property>
+                 <property name="textInteractionFlags">
+                  <set>Qt::LinksAccessibleByKeyboard|Qt::LinksAccessibleByMouse</set>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+            <item>
+             <spacer name="verticalSpacer_4">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>0</width>
+                <height>5</height>
+               </size>
+              </property>
+             </spacer>
             </item>
             <item>
              <layout class="QHBoxLayout" name="dialogButtonsLayout">
+              <property name="spacing">
+               <number>0</number>
+              </property>
               <property name="topMargin">
-               <number>15</number>
+               <number>25</number>
+              </property>
+              <property name="bottomMargin">
+               <number>5</number>
               </property>
               <item alignment="Qt::AlignRight">
                <widget class="QDialogButtonBox" name="buttonBox">
@@ -474,17 +457,20 @@
           </widget>
           <widget class="QWidget" name="quickUnlockPage">
            <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <property name="spacing">
+             <number>0</number>
+            </property>
             <property name="leftMargin">
-             <number>20</number>
+             <number>10</number>
             </property>
             <property name="topMargin">
-             <number>15</number>
+             <number>10</number>
             </property>
             <property name="rightMargin">
-             <number>20</number>
+             <number>10</number>
             </property>
             <property name="bottomMargin">
-             <number>15</number>
+             <number>10</number>
             </property>
             <item>
              <spacer name="horizontalSpacer_5">
@@ -493,8 +479,8 @@
               </property>
               <property name="sizeHint" stdset="0">
                <size>
-                <width>40</width>
-                <height>20</height>
+                <width>30</width>
+                <height>0</height>
                </size>
               </property>
              </spacer>
@@ -508,8 +494,8 @@
                 </property>
                 <property name="sizeHint" stdset="0">
                  <size>
-                  <width>20</width>
-                  <height>40</height>
+                  <width>0</width>
+                  <height>10</height>
                  </size>
                 </property>
                </spacer>
@@ -525,7 +511,6 @@
                 <property name="font">
                  <font>
                   <pointsize>10</pointsize>
-                  <weight>75</weight>
                   <bold>true</bold>
                  </font>
                 </property>
@@ -551,8 +536,8 @@
                 </property>
                 <property name="sizeHint" stdset="0">
                  <size>
-                  <width>20</width>
-                  <height>40</height>
+                  <width>0</width>
+                  <height>10</height>
                  </size>
                 </property>
                </spacer>
@@ -566,8 +551,8 @@
               </property>
               <property name="sizeHint" stdset="0">
                <size>
-                <width>40</width>
-                <height>20</height>
+                <width>30</width>
+                <height>0</height>
                </size>
               </property>
              </spacer>
@@ -635,13 +620,16 @@
   </customwidget>
  </customwidgets>
  <tabstops>
+  <tabstop>quickUnlockButton</tabstop>
+  <tabstop>resetQuickUnlockButton</tabstop>
   <tabstop>editPassword</tabstop>
   <tabstop>keyFileLineEdit</tabstop>
   <tabstop>buttonBrowseFile</tabstop>
-  <tabstop>challengeResponseCombo</tabstop>
-  <tabstop>buttonRedetectYubikey</tabstop>
-  <tabstop>quickUnlockButton</tabstop>
-  <tabstop>resetQuickUnlockButton</tabstop>
+  <tabstop>useHardwareKeyCheckBox</tabstop>
+  <tabstop>hardwareKeyCombo</tabstop>
+  <tabstop>refreshHardwareKeys</tabstop>
+  <tabstop>addKeyFileLinkLabel</tabstop>
+  <tabstop>buttonBox</tabstop>
  </tabstops>
  <resources/>
  <connections/>

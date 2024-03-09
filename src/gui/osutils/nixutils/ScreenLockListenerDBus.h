@@ -17,6 +17,7 @@
 
 #ifndef SCREENLOCKLISTENERDBUS_H
 #define SCREENLOCKLISTENERDBUS_H
+
 #include "gui/osutils/ScreenLockListenerPrivate.h"
 #include <QDBusMessage>
 
@@ -24,7 +25,7 @@ class ScreenLockListenerDBus : public ScreenLockListenerPrivate
 {
     Q_OBJECT
 public:
-    explicit ScreenLockListenerDBus(QWidget* parent = nullptr);
+    explicit ScreenLockListenerDBus(QWidget* parent);
 
 private slots:
     void gnomeSessionStatusChanged(uint status);
