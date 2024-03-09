@@ -1544,9 +1544,9 @@ Database* TestMerge::createTestDatabase()
 
 Database* TestMerge::createTestDatabaseStructureClone(Database* source, int entryFlags, int groupFlags)
 {
-    Database* db = new Database();
-    // the old root group is deleted by QObject::parent relationship
-    db->setRootGroup(source->rootGroup()->clone(static_cast<Entry::CloneFlag>(entryFlags),
-                                                static_cast<Group::CloneFlag>(groupFlags)));
+    auto db = new Database();
+    auto oldGroup = db->setRootGroup(source->rootGroup()->clone(static_cast<Entry::CloneFlag>(entryFlags),
+                                                                static_cast<Group::CloneFlag>(groupFlags)));
+    delete oldGroup;
     return db;
 }

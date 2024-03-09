@@ -1798,7 +1798,8 @@ void TestCli::testMergeWithKeys()
     entry->setPassword("secretsecretsecret");
     group->addEntry(entry);
 
-    sourceDatabase->setRootGroup(rootGroup);
+    auto oldGroup = sourceDatabase->setRootGroup(rootGroup);
+    delete oldGroup;
 
     auto* otherRootGroup = new Group();
     otherRootGroup->setName("root");
@@ -1814,7 +1815,8 @@ void TestCli::testMergeWithKeys()
     otherEntry->setPassword("secretsecretsecret 2");
     otherGroup->addEntry(otherEntry);
 
-    targetDatabase->setRootGroup(otherRootGroup);
+    oldGroup = targetDatabase->setRootGroup(otherRootGroup);
+    delete oldGroup;
 
     sourceDatabase->saveAs(sourceDatabaseFilename);
     targetDatabase->saveAs(targetDatabaseFilename);
