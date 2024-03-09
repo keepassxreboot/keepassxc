@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2022 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,20 +15,21 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_KEEPASS1OPENWIDGET_H
-#define KEEPASSX_KEEPASS1OPENWIDGET_H
+#ifndef TEST_IMPORTS_H
+#define TEST_IMPORTS_H
 
-#include "gui/DatabaseOpenWidget.h"
+#include <QObject>
 
-class KeePass1OpenWidget : public DatabaseOpenWidget
+class TestImports : public QObject
 {
     Q_OBJECT
 
-public:
-    explicit KeePass1OpenWidget(QWidget* parent = nullptr);
-
-protected:
-    void openDatabase() override;
+private slots:
+    void initTestCase();
+    void testOPUX();
+    void testOPVault();
+    void testBitwarden();
+    void testBitwardenEncrypted();
 };
 
-#endif // KEEPASSX_KEEPASS1OPENWIDGET_H
+#endif /* TEST_IMPORTS_H */

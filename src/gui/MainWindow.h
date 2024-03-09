@@ -24,6 +24,7 @@
 #include <QMainWindow>
 #include <QProgressBar>
 #include <QSystemTrayIcon>
+#include <QTimer>
 
 #include "core/SignalMultiplexer.h"
 #include "gui/DatabaseWidget.h"
@@ -124,9 +125,6 @@ private slots:
     void switchToNewDatabase();
     void switchToOpenDatabase();
     void switchToDatabaseFile(const QString& file);
-    void switchToKeePass1Database();
-    void switchToOpVaultDatabase();
-    void switchToCsvImport();
     void databaseStatusChanged(DatabaseWidget* dbWidget);
     void databaseTabChanged(int tabIndex);
     void openRecentDatabase(QAction* action);

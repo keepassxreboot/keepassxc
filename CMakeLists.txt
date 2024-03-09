@@ -567,6 +567,9 @@ if(ZLIB_VERSION_STRING VERSION_LESS "1.2.0")
 endif()
 include_directories(SYSTEM ${ZLIB_INCLUDE_DIR})
 
+# Find Minizip
+find_package(Minizip REQUIRED)
+
 if(WITH_XC_YUBIKEY)
     find_package(PCSC REQUIRED)
     include_directories(SYSTEM ${PCSC_INCLUDE_DIRS})

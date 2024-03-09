@@ -92,7 +92,7 @@ void OpVaultReader::fillFromSectionField(Entry* entry, const QString& sectionNam
             while (attributes.contains(name)) {
                 name = QString("otp_%1").arg(++i);
             }
-            entry->attributes()->set(name, attrValue);
+            entry->attributes()->set(name, attrValue, true);
         } else if (attrValue.startsWith("otpauth://")) {
             QUrlQuery query(attrValue);
             // at least as of 1Password 7, they don't append the digits= and period= which totp.cpp requires
@@ -128,10 +128,14 @@ void OpVaultReader::fillFromSectionField(Entry* entry, const QString& sectionNam
         } else if (kind == "address") {
             // Expand address into multiple attributes
             auto addrFields = field.value("v").toObject().toVariantMap();
-            for (auto part : addrFields.keys()) {
+            for (auto& part : addrFields.keys()) {
                 entry->attributes()->set(attrName + QString("_%1").arg(part), addrFields.value(part).toString());
             }
         } else {
+            if (entry->attributes()->hasKey(attrName)) {
+                // Append a random string to the attribute name to avoid collisions
+                attrName += QString("_%1").arg(QUuid::createUuid().toString().mid(1, 5));
+            }
             entry->attributes()->set(attrName, attrValue, (kind == "password" || kind == "concealed"));
         }
     }
