@@ -81,16 +81,16 @@
         <translation>Yksityiskohdat</translation>
     </message>
     <message>
+        <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
+        <translation>Valintasi muistetaan pyynnön esittäneen päätteen JA KeePassXC käyntiajan.</translation>
+    </message>
+    <message>
         <source>Remember</source>
         <translation>Muista</translation>
     </message>
     <message>
         <source>Allow Selected</source>
         <translation>Salli valitut</translation>
-    </message>
-    <message>
-        <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
-        <translation>Valintasi muistetaan pyynnön esittäneen päätteen JA KeePassXC käyntiajan.</translation>
     </message>
     <message>
         <source>Deny All &amp;&amp; Future</source>
@@ -112,7 +112,7 @@
     <name>AgentSettingsWidget</name>
     <message>
         <source>Enable SSH Agent integration</source>
-        <translation>Ota SSH-agentin integraatio käyttöön</translation>
+        <translation>Ota SSH Agentti käyttöön</translation>
     </message>
     <message>
         <source>Use Pageant</source>
@@ -121,6 +121,10 @@
     <message>
         <source>Use OpenSSH</source>
         <translation>Käytä OpenSSH:ta</translation>
+    </message>
+    <message>
+        <source>Use both agents</source>
+        <translation>Käytä molempia agentteja</translation>
     </message>
     <message>
         <source>SSH_AUTH_SOCK override</source>
@@ -144,15 +148,11 @@
     </message>
     <message>
         <source>No SSH Agent socket available. Either make sure SSH_AUTH_SOCK environment variable exists or set an override.</source>
-        <translation>Yhteystieto SSH-agenttiin puuttuu. Varmista, että SSH_AUTH_SOCK-ympäristömuuttuja on olemassa, tai aseta sille ylikirjoitus</translation>
+        <translation>SSH Agentin socketia ei ole. Varmista, että SSH_AUTH_SOCK-ympäristömuuttuja on olemassa, tai aseta sille ylikirjoitus</translation>
     </message>
     <message>
         <source>SSH Agent connection is working!</source>
-        <translation>Yhteys SSH-agenttiin toimii!</translation>
-    </message>
-    <message>
-        <source>Use both agents</source>
-        <translation>Käytä molempia agentteja</translation>
+        <translation>SSH Agent -yhteys toimii!</translation>
     </message>
 </context>
 <context>
@@ -168,6 +168,10 @@
     <message>
         <source>Security</source>
         <translation>Turvallisuus</translation>
+    </message>
+    <message>
+        <source>This setting cannot be enabled when minimize on unlock is enabled.</source>
+        <translation>Tätä asetusta ei voi ottaa käyttöön, kun ohjelman pienennys lukituksen avauksen jälkeen on otettu käyttöön.</translation>
     </message>
     <message>
         <source>Access error for config file %1</source>
@@ -225,10 +229,6 @@
         <source>Select backup storage directory</source>
         <translation>Valitse varmuuskopion hakemistopolku</translation>
     </message>
-    <message>
-        <source>This setting cannot be enabled when minimize on unlock is enabled.</source>
-        <translation>Tätä asetusta ei voi ottaa käyttöön, kun ohjelman pienennys lukituksen avauksen jälkeen on otettu käyttöön.</translation>
-    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -259,6 +259,10 @@
     <message>
         <source>Remember previously used databases</source>
         <translation>Muista aiemmin käytetyt tietokannat</translation>
+    </message>
+    <message>
+        <source> recent files</source>
+        <translation>viimeisimmät tiedostot</translation>
     </message>
     <message>
         <source>Load previously open databases on startup</source>
@@ -413,6 +417,10 @@
         <translation>Työkalupalkin nappien tyyli:</translation>
     </message>
     <message>
+        <source>Show passwords in color</source>
+        <translation>Näytä salasanat värillisinä</translation>
+    </message>
+    <message>
         <source>Use monospaced font for notes</source>
         <translation>Käytä tasalevyistä fonttia muistiinpanoille</translation>
     </message>
@@ -497,14 +505,6 @@
         <source>Remember last typed entry for:</source>
         <translation>Muista edellinen syötetty tietue:</translation>
     </message>
-    <message>
-        <source> recent files</source>
-        <translation>viimeisimmät tiedostot</translation>
-    </message>
-    <message>
-        <source>Show passwords in color</source>
-        <translation type="unfinished"/>
-    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetSecurity</name>
@@ -532,7 +532,7 @@
     <message>
         <source> min</source>
         <comment>Minutes</comment>
-        <translation> minuuttia</translation>
+        <translation>minuuttia</translation>
     </message>
     <message>
         <source>Clipboard clear seconds</source>
@@ -548,7 +548,7 @@
     </message>
     <message>
         <source>Enable database quick unlock (Touch ID / Windows Hello)</source>
-        <translation>Määritä tietokannan nopea lukituksen avaus (Touch ID / Windows Hello)</translation>
+        <translation>Määritä tietokannan Pika-avaus (Touch ID / Windows Hello)</translation>
     </message>
     <message>
         <source>Lock databases when session is locked or lid is closed</source>
@@ -596,7 +596,7 @@
     </message>
     <message>
         <source>Hide TOTP in the entry preview panel</source>
-        <translation type="unfinished"/>
+        <translation>Piilota TOTP merkinnän esikatselupaneelista</translation>
     </message>
 </context>
 <context>
@@ -642,6 +642,10 @@
         <translation>Erittäin pitkä viive havaittu, maksimi on %1: %2</translation>
     </message>
     <message>
+        <source>Entry does not have attribute for PICKCHARS: %1</source>
+        <translation>Merkintä ei sisällä attribuuttia PICKCHARS: %1</translation>
+    </message>
+    <message>
         <source>Invalid conversion type: %1</source>
         <translation>Virheellinen muunnoksen tyyppi: %1</translation>
     </message>
@@ -658,10 +662,6 @@
     <message>
         <source>Invalid placeholder: %1</source>
         <translation>Virheellinen paikkamerkki: %1</translation>
-    </message>
-    <message>
-        <source>Entry does not have attribute for PICKCHARS: %1</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -738,9 +738,9 @@ Ctrl+1 - Type username&lt;br/&gt;
 Ctrl+2 - Type password&lt;br/&gt;
 Ctrl+3 - Type TOTP&lt;br/&gt;
 Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Voit käyttää haun lisäasetuksia löytääksesi tietueita avoimesta tietokannasta. Seuraavat pikanäppäimet ovat hyödyllisiä:&lt;br/&gt;
+        <translation>&lt;p&gt;Voit etsiä minkä tahansa tietueen avoimista tietokannoistasi käyttämällä haun lisäasetuksia. Seuraavat pikanäppäimet ovat hyödyllisiä:&lt;br/&gt;
 Ctrl+F - Etsi tietokannasta&lt;br/&gt;
-Ctrl+1 - Kirjoita käyttäjänimi&lt;br/&gt;
+Ctrl+1 - Kirjoita käyttäjätunnus&lt;br/&gt;
 Ctrl+2 - Kirjoita salasana&lt;br/&gt;
 Ctrl+3 - Kirjoita TOTP&lt;br/&gt;
 Ctrl+4 - Käytä virtuaalista näppäimistöä (vain Windows)&lt;/p&gt;</translation>
@@ -824,13 +824,13 @@ Ctrl+4 - Käytä virtuaalista näppäimistöä (vain Windows)&lt;/p&gt;</transla
         <source>Disable for this site</source>
         <translation>Ota pois käytöstä tällä sivustolla</translation>
     </message>
+    <message>
+        <source>Undo</source>
+        <translation>Kumoa</translation>
+    </message>
 </context>
 <context>
     <name>BrowserEntrySaveDialog</name>
-    <message>
-        <source>KeePassXC-Browser Save Entry</source>
-        <translation>KeePassXC-Browser - Tallenna tietue</translation>
-    </message>
     <message>
         <source>Ok</source>
         <translation>Ok</translation>
@@ -843,25 +843,78 @@ Ctrl+4 - Käytä virtuaalista näppäimistöä (vain Windows)&lt;/p&gt;</transla
         <source>You have multiple databases open.
 Please select the correct database for saving credentials.</source>
         <translation>Useita tietokantoja on auki
-Valitse oikea tietokanta tietueen tallentamiseksi</translation>
+Valitse tietokanta, johon tiedot tallennetaan.</translation>
+    </message>
+    <message>
+        <source>KeePassXC - Select Database</source>
+        <translation>KeePassXC - Valitse tietokanta</translation>
+    </message>
+</context>
+<context>
+    <name>BrowserPasskeysConfirmationDialog</name>
+    <message>
+        <source>Cancel</source>
+        <translation>Peruuta</translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation>Päivitä</translation>
+    </message>
+    <message>
+        <source>Authenticate</source>
+        <translation>Todenna</translation>
+    </message>
+    <message>
+        <source>Register new</source>
+        <translation>Rekisteröi uusi</translation>
+    </message>
+    <message>
+        <source>Register</source>
+        <translation>Rekisteröi</translation>
+    </message>
+    <message numerus="yes">
+        <source>Timeout in &lt;b&gt;%n&lt;/b&gt; seconds...</source>
+        <translation><numerusform>Aikakatkaisu &lt;b&gt;%n&lt;/b&gt; sekunnin kuluttua...</numerusform><numerusform>Aikakatkaisu &lt;b&gt;%n&lt;/b&gt; sekunnin kuluttua...</numerusform></translation>
+    </message>
+    <message>
+        <source>Do you want to register Passkey for:</source>
+        <translation>Haluatko rekisteröidä suojausavaimen kohteelle:</translation>
+    </message>
+    <message>
+        <source>Existing Passkey found.
+Do you want to register a new Passkey for:</source>
+        <translation>Löytyi olemassa oleva suojausavain.
+Haluatko rekisteröäidä uuden suojausavaimen kohteelle:</translation>
+    </message>
+    <message>
+        <source>Select the existing Passkey and press Update to replace it.</source>
+        <translation>Valitse olemassa oleva suojausavain ja korvaa se painamalla &quot;Päivitä&quot;.</translation>
+    </message>
+    <message>
+        <source>Authenticate Passkey credentials for:</source>
+        <translation>Todenna suojausavaimen tunnistetiedot kohteelle:</translation>
+    </message>
+    <message>
+        <source>Relying Party: %1</source>
+        <translation>Välittävä osapuoli: %1</translation>
+    </message>
+    <message>
+        <source>Username: %1</source>
+        <translation>Käyttäjätunnus: %1</translation>
+    </message>
+    <message>
+        <source>KeePassXC - Passkey credentials</source>
+        <translation>KeePassXC - Suojausavaimen tunnistetiedot</translation>
     </message>
 </context>
 <context>
     <name>BrowserService</name>
-    <message>
-        <source>KeePassXC: Create a new group</source>
-        <translation>KeePassXC: Luo uusi ryhmä</translation>
-    </message>
     <message>
         <source>A request for creating a new group &quot;%1&quot; has been received.
 Do you want to create this group?
 </source>
         <translation>Vastaanotettiin pyyntö luoda uusi ryhmä &quot;%1&quot;.
 Haluatko varmasti luoda tämän ryhmän?</translation>
-    </message>
-    <message>
-        <source>KeePassXC: New key association request</source>
-        <translation>KeePassXC: Uusi avaimenliittämispyyntö</translation>
     </message>
     <message>
         <source>You have received an association request for the following database:
@@ -880,26 +933,14 @@ chrome-läppäri.</translation>
         <translation>Tallenna ja salli pääsy</translation>
     </message>
     <message>
-        <source>KeePassXC: Overwrite existing key?</source>
-        <translation>KeePassXC: Korvataanko olemassa oleva avain?</translation>
-    </message>
-    <message>
         <source>A shared encryption key with the name &quot;%1&quot; already exists.
 Do you want to overwrite it?</source>
         <translation>Jaettu salausavain samalla nimellä &quot;%1&quot; on jo olemassa.
 Haluatko korvata sen?</translation>
     </message>
     <message>
-        <source>KeePassXC: Update Entry</source>
-        <translation>KeePassXC: Päivitä tietue</translation>
-    </message>
-    <message>
         <source>Do you want to update the information in %1 - %2?</source>
         <translation>Haluatko päivittää tiedot osoitteesta %1 - %2?</translation>
-    </message>
-    <message>
-        <source>KeePassXC: Delete entry</source>
-        <translation>KeePassXC: Poista tietue</translation>
     </message>
     <message>
         <source>A request for deleting entry &quot;%1&quot; has been received.
@@ -910,50 +951,46 @@ Haluatko poistaa tietueen?
 </translation>
     </message>
     <message>
-        <source>Converting attributes to custom data…</source>
-        <translation>Muutetaan attribuutteja mukautetuiksi tiedoiksi...</translation>
+        <source>%1 (Passkey)</source>
+        <translation>%1 (suojausavain)</translation>
     </message>
     <message>
-        <source>Abort</source>
-        <translation>Keskeytä</translation>
+        <source>Entry already has a Passkey.
+Do you want to overwrite the Passkey in %1 - %2?</source>
+        <translation>Tietue sisältää jo suojausavaimen.
+Haluatko korvata kohteen %1 - %2 suojausavaimen?</translation>
     </message>
     <message>
-        <source>KeePassXC: Converted KeePassHTTP attributes</source>
-        <translation>KeePassXC: Muutetut KeePassHTTP-attribuutit</translation>
+        <source>KeePassXC - Create a new group</source>
+        <translation>KeePassXC - Luo uusi ryhmä</translation>
     </message>
     <message>
-        <source>Successfully converted attributes from %1 entry(s).
-Moved %2 keys to custom data.</source>
-        <translation>Mukautettiin attribuutit onnistuneesti %1 tietueesta.
-Siirrettiin %2 avainta mukautettuihin tietoihin.</translation>
-    </message>
-    <message numerus="yes">
-        <source>Successfully moved %n keys to custom data.</source>
-        <translation><numerusform>Siirrettiin onnistuneesti %n avainta mukautettuihin tietoihin.</numerusform><numerusform>Siirrettiin onnistuneesti %n avainta mukautettuihin tietoihin.</numerusform></translation>
+        <source>Disable</source>
+        <translation>Kytke pois päältä</translation>
     </message>
     <message>
-        <source>KeePassXC: No entry with KeePassHTTP attributes found!</source>
-        <translation>KeePassXC: Tietueita KeePassHTTP-attribuuteilla ei löytynyt!</translation>
+        <source>KeePassXC - Overwrite existing key?</source>
+        <translation>KeePassXC - Korvataanko olemassa oleva avain?</translation>
     </message>
     <message>
-        <source>The active database does not contain an entry with KeePassHTTP attributes.</source>
-        <translation>Aktiivinen tietokanta ei sisällä tietueita KeePassHTTP-attribuuteilla.</translation>
+        <source>KeePassXC - Update Passkey</source>
+        <translation>KeePassXC - Päivitä suojausavain</translation>
     </message>
     <message>
-        <source>Don&apos;t show this warning again</source>
-        <translation>Älä näytä tätä varoitusta uudelleen</translation>
+        <source>KeePassXC - Update Entry</source>
+        <translation>KeePassXC - Päivitä tietue</translation>
     </message>
     <message>
-        <source>KeePassXC: Legacy browser integration settings detected</source>
-        <translation>KeePassXC: Vanhoja selainintegraatioasetuksia havaittu</translation>
+        <source>KeePassXC - Delete entry</source>
+        <translation>KeePassXC - Poista tietue</translation>
     </message>
     <message>
-        <source>Your KeePassXC-Browser settings need to be moved into the database settings.
-This is necessary to maintain your current browser connections.
-Would you like to migrate your existing settings now?</source>
-        <translation>KeePassXC-Browser:in asetukset täytyy siirtää tietokannan asetuksiin.
-Tämä on välttämätöntä, jotta yhteys selainlaajennukseen säilyy muuttumattomana.
-Haluat siirtää asetukset nyt?</translation>
+        <source>KeePassXC - New key association request</source>
+        <translation>KeePassXC - Uus avaimen liitospyyntö</translation>
+    </message>
+    <message>
+        <source>Passkey</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1013,7 +1050,7 @@ Haluat siirtää asetukset nyt?</translation>
     <message>
         <source>Show a notification when credentials are requested</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Näytä ilmoitus, kun tietueita pyydetään tietokannasta</translation>
+        <translation>Näytä ilmoitus, kun tietueita pyydetään</translation>
     </message>
     <message>
         <source>Request to unlock the database if it is locked</source>
@@ -1033,24 +1070,24 @@ Haluat siirtää asetukset nyt?</translation>
     </message>
     <message>
         <source>Return only best-matching credentials</source>
-        <translation>Palauta vain parhaat osumat tietystä osoitteesta verkkotunnuksen kaikkien osumien sijasta</translation>
+        <translation>Näytä vain sopivimmat tietueet</translation>
     </message>
     <message>
         <source>Returns expired credentials. String [expired] is added to the title.</source>
-        <translation>Salli vanhentuneiden tietueiden noutaminen. Teksti [vanhentunut] lisätään tietueen otsikkoon. </translation>
+        <translation>Näytä vanhentuneet tietueet. Niiden nimiin lisätään teksti [vanhentunut]. </translation>
     </message>
     <message>
         <source>Allow returning expired credentials</source>
-        <translation>Salli vanhentuneiden tietueiden noutaminen</translation>
+        <translation>Salli vanhentuneiden tietueiden näyttö</translation>
     </message>
     <message>
         <source>All databases connected to the extension will return matching credentials.</source>
-        <translation>Sallitaan tietueiden nouto kaikista tietokannoista jotka ovat yhdistetty selainlaajennukseen.</translation>
+        <translation>Salli tietueiden näyttö kaikista selainlaajennukseen yhdistetyistä tietokannoista.</translation>
     </message>
     <message>
         <source>Search in all opened databases for matching credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Etsi osumia kaikista avoimista tietokannoista</translation>
+        <translation>Etsi sopivia tietueita kaikista avoimista tietokannoista</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -1059,12 +1096,12 @@ Haluat siirtää asetukset nyt?</translation>
     <message>
         <source>Never ask before accessing credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Älä koskaan varmista pääsyä tietueisiin</translation>
+        <translation>Älä koskaan vahvista tietueiden käyttöä</translation>
     </message>
     <message>
         <source>Never ask before updating credentials</source>
         <extracomment>Credentials mean login data requested via browser extension</extracomment>
-        <translation>Älä koskaan varmista tietueiden päivitystä</translation>
+        <translation>Älä koskaan vahvista tietueiden päivitystä</translation>
     </message>
     <message>
         <source>Do not ask permission for HTTP Basic Auth</source>
@@ -1178,19 +1215,35 @@ Haluat siirtää asetukset nyt?</translation>
         <translation>Valitse native messaging -isännän hakemiston sijainti</translation>
     </message>
     <message>
+        <source>Allow keepassxc-proxy to list all entries with their title, URL and UUID in connected databases.</source>
+        <translation>Salli keepassxc-proxyn listata kaikki yhdistettyjen tietokantojen merkinnät niiden otsikoilla, URL-osoitteilla ja UUID-tunnisteilla.</translation>
+    </message>
+    <message>
+        <source>Allow limited access to all entries in connected databases (ignores site access restrictions)</source>
+        <translation>Myönnä rajoitettu käyttöoikeus kaikkiin yhdistettyjen tietokantojen merkintöihin (ohittaa sivustokohtaiset rajoitukset)</translation>
+    </message>
+    <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; Only adjust these settings if necessary.</source>
-        <translation type="unfinished"/>
+        <translation>&lt;b&gt;Varoitus:&lt;/b&gt; Muuta näitä asetuksia vain tarvittaessa.</translation>
     </message>
     <message>
         <source>The custom proxy location does not exist.</source>
-        <translation type="unfinished"/>
+        <translation>Mukautetun välityspalvelimen sijaintia ei ole olemassa.</translation>
     </message>
     <message>
         <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location does not exist. Correct this in the advanced settings tab.</source>
-        <translation type="unfinished"/>
+        <translation>&lt;b&gt;Virhe:&lt;/b&gt; Mukautetun välityspalvelimen sijaintia ei ole olemassa. Korjaa tämä lisäasetukset-välilehdeltä.</translation>
     </message>
     <message>
         <source>&lt;b&gt;Error:&lt;/b&gt; The installed proxy executable is missing from the expected location: %1&lt;br/&gt;Please set a custom proxy location in the advanced settings or reinstall the application.</source>
+        <translation>&lt;b&gt;Virhe:&lt;/b&gt; Asennetun välityspalvelimen sovellustiedostoa ei löydy odotetusta sijainnista: %1&lt;br/&gt;Määritä mukautetun välityspalvelimen sijainti lisäasetuksista tai asenna sovellus uudelleen.</translation>
+    </message>
+    <message>
+        <source>Allows using insecure http://localhost with Passkeys for testing purposes.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Allow using localhost with Passkeys</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1206,7 +1259,7 @@ Haluat siirtää asetukset nyt?</translation>
     </message>
     <message>
         <source>Replace username and password with references</source>
-        <translation>Korvaa käyttäjänimi ja salasana viittauksilla</translation>
+        <translation>Korvaa käyttäjätunnus ja salasana viittauksilla</translation>
     </message>
     <message>
         <source>Copy history</source>
@@ -1215,14 +1268,6 @@ Haluat siirtää asetukset nyt?</translation>
 </context>
 <context>
     <name>CsvImportWidget</name>
-    <message>
-        <source>Import CSV fields</source>
-        <translation>Tuo CSV-kentät</translation>
-    </message>
-    <message>
-        <source>filename</source>
-        <translation>tiedostonimi</translation>
-    </message>
     <message>
         <source>size, rows, columns</source>
         <translation>koko, rivit, sarakkeet</translation>
@@ -1331,50 +1376,29 @@ Haluat siirtää asetukset nyt?</translation>
         <source>Column %1</source>
         <translation>Sarake %1</translation>
     </message>
-    <message>
-        <source>Imported from CSV file</source>
-        <translation>Tuotu CSV-tiedostosta</translation>
-    </message>
-    <message>
-        <source>Original data: </source>
-        <translation>Alkuperäiset tiedot: </translation>
-    </message>
-    <message>
-        <source>Error(s) detected in CSV file!</source>
-        <translation>CSV-tiedostossa havaittiin virhe/virheitä!</translation>
-    </message>
     <message numerus="yes">
         <source>[%n more message(s) skipped]</source>
         <translation><numerusform>[%n more message(s) skipped]</numerusform><numerusform>[%n kappaletta viestejä ohitettiin]</numerusform></translation>
     </message>
     <message>
-        <source>Error</source>
-        <translation>Virhe</translation>
+        <source>Failed to parse CSV file: %1</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>CSV import: writer has errors:
-%1</source>
-        <translation>CSV-tuonti: kirjoituksessa on virheitä:
-%1</translation>
+        <source>Imported from CSV file: %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>CsvParserModel</name>
-    <message>
-        <source>%1, %2, %3</source>
-        <comment>file info: bytes, rows, columns</comment>
-        <translation>%1, %2, %3</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n byte(s)</source>
-        <translation><numerusform>%n tavu</numerusform><numerusform>%n tavua</numerusform></translation>
-    </message>
     <message numerus="yes">
         <source>%n row(s)</source>
+        <comment>CSV row count</comment>
         <translation><numerusform>%n rivi</numerusform><numerusform>%n riviä</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n column(s)</source>
+        <comment>CSV column count</comment>
         <translation><numerusform>%n sarake.</numerusform><numerusform>%n saraketta</numerusform></translation>
     </message>
 </context>
@@ -1450,28 +1474,8 @@ Tietokannan varmuuskopio paikannettu: %2</translation>
         <translation>Salasanakenttä</translation>
     </message>
     <message>
-        <source>Enter Additional Credentials (if any):</source>
-        <translation>Syötä lisätietueita (mikäli niitä on):</translation>
-    </message>
-    <message>
-        <source>Key File:</source>
-        <translation>Avaintiedosto:</translation>
-    </message>
-    <message>
-        <source>Key file help</source>
-        <translation>Avaintiedoston ohje</translation>
-    </message>
-    <message>
         <source>Hardware key slot selection</source>
         <translation>Laiteavaimen paikan valinta</translation>
-    </message>
-    <message>
-        <source>Hardware Key:</source>
-        <translation>Laiteavain:</translation>
-    </message>
-    <message>
-        <source>Hardware key help</source>
-        <translation>Laiteavaimen apu</translation>
     </message>
     <message>
         <source>Key file to unlock the database</source>
@@ -1484,14 +1488,6 @@ Tietokannan varmuuskopio paikannettu: %2</translation>
     <message>
         <source>Browse…</source>
         <translation>Selaa...</translation>
-    </message>
-    <message>
-        <source>Refresh hardware tokens</source>
-        <translation>Uudista laitetunnisteet</translation>
-    </message>
-    <message>
-        <source>Refresh</source>
-        <translation>Päivitä</translation>
     </message>
     <message>
         <source>Unlock Database</source>
@@ -1556,10 +1552,6 @@ Jos et halua nähdä tätä virhettä uudestaan, mene &quot;Tietokannan asetukse
         <translation>Yritä uudelleen tyhjällä salasanalla</translation>
     </message>
     <message>
-        <source>Failed to authenticate with Touch ID</source>
-        <translation>Autentikaatio Touch ID:n kautta ei onnistunut</translation>
-    </message>
-    <message>
         <source>Failed to open key file: %1</source>
         <translation>Avaintiedoston avaus epäonnistui: %1</translation>
     </message>
@@ -1592,43 +1584,59 @@ Jos et halua nähdä tätä virhettä uudestaan, mene &quot;Tietokannan asetukse
         <translation>Tietokantaa ei voida käyttää avaintiedostona</translation>
     </message>
     <message>
-        <source>You cannot use your database file as a key file.
-If you do not have a key file, please leave the field empty.</source>
-        <translation>Et voi käyttää tietokantaasi avaintiedostona.
-Jos sinulla ei ole avaintiedostoa, jätä kenttä tyhjäksi.</translation>
-    </message>
-    <message>
-        <source>Detecting hardware keys…</source>
-        <translation>Etsitään laiteavaimia...</translation>
-    </message>
-    <message>
-        <source>No hardware keys detected</source>
-        <translation>Laiteavaimia ei havaittu</translation>
-    </message>
-    <message>
-        <source>Select hardware key…</source>
-        <translation>Valitse laiteavain...</translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Pääsalasanan lisäksi voit käyttää salaista tiedostoa tietokantasi tietoturvan vahvistamiseksi. Tämä tiedosto voidaan tarvittaessa luoda tietokantasi turvallisuusasetuksista.&lt;/p&gt;&lt;p&gt;Tämä salainen tiedosto &lt;strong&gt;ei&lt;/strong&gt; ole *.kdbx -tietokantatiedosto!&lt;br&gt;Jos sinulla ei ole avaintiedostoa, jätä kenttä tyhjäksi.&lt;/p&gt;&lt;p&gt;Lisätietoja tästä...&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Voit käyttää laiteavainta, kuten &lt;strong&gt;Yubikey:tä&lt;/strong&gt; tai &lt;strong&gt;Onlykey:tä&lt;/strong&gt; HMAC-SHA1 -asetuksella olevan paikan kanssa.&lt;/p&gt;
-&lt;p&gt;Lisätietoja tästä...&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>authenticate to access the database</source>
+        <translation>käytä tietokantaa tunnistautumalla</translation>
+    </message>
+    <message>
+        <source>Failed to authenticate with Quick Unlock: %1</source>
+        <translation>Pika-avauksella tunnistautuminen epäonnistui: %1</translation>
+    </message>
+    <message>
+        <source>Select Key File:</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Failed to authenticate with Windows Hello: %1</source>
+        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;/p&gt;</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Windows Hello setup was canceled or failed. Quick unlock has not been enabled.</source>
+        <source>Click to add a key file.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;I have a key file&lt;/a&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use hardware key [Serial: %1]</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use hardware key</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Your database file is NOT a key file!
+If you don&apos;t have a key file or don&apos;t know what that is, you don&apos;t have to select one.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC database file selected</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The file you selected looks like a database file.
+A database file is NOT a key file!
+
+Are you sure you want to continue with this file?.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No hardware keys found.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Refresh Hardware Keys</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1642,10 +1650,6 @@ Jos sinulla ei ole avaintiedostoa, jätä kenttä tyhjäksi.</translation>
 <context>
     <name>DatabaseSettingsDialog</name>
     <message>
-        <source>Advanced Settings</source>
-        <translation>Lisäasetukset</translation>
-    </message>
-    <message>
         <source>General</source>
         <translation>Yleistä</translation>
     </message>
@@ -1655,7 +1659,7 @@ Jos sinulla ei ole avaintiedostoa, jätä kenttä tyhjäksi.</translation>
     </message>
     <message>
         <source>Database Credentials</source>
-        <translation>Tietokannan tietueet</translation>
+        <translation>Tietokannan tunnistetiedot</translation>
     </message>
     <message>
         <source>Encryption Settings</source>
@@ -1677,24 +1681,16 @@ Jos sinulla ei ole avaintiedostoa, jätä kenttä tyhjäksi.</translation>
         <translation>KeePassXC-Browser -asetukset</translation>
     </message>
     <message>
-        <source>Convert KeePassHTTP data</source>
-        <translation>Muuta KeePassHTTP:n tiedot</translation>
-    </message>
-    <message>
-        <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
-        <translation>Siirrä vanhat KeePassHTTP-attribuutit KeePassXC-Browser:in mukautettuihin tietoihin</translation>
-    </message>
-    <message>
-        <source>Refresh database root group ID</source>
-        <translation>Uudista tietokannan juuriryhmän ID</translation>
-    </message>
-    <message>
         <source>Disconnect all browsers</source>
         <translation>Unohda kaikki selaimet</translation>
     </message>
     <message>
         <source>Forget all site-specific settings on entries</source>
         <translation>Unohda kaikki sivustokohtaiset asetukset tietueilta</translation>
+    </message>
+    <message>
+        <source>Refresh database root group ID</source>
+        <translation>Uudista tietokannan juuriryhmän ID</translation>
     </message>
     <message>
         <source>Stored keys</source>
@@ -1745,16 +1741,8 @@ This may prevent connection to the browser plugin.</source>
 Tämä voi estää yhteyden selainlaajennukseen.</translation>
     </message>
     <message>
-        <source>KeePassXC: No keys found</source>
-        <translation>KeePassXC: Avaimia ei löytynyt</translation>
-    </message>
-    <message>
         <source>No shared encryption keys found in KeePassXC settings.</source>
         <translation>Jaettuja salausavaimia ei löytynyt KeePassXC:n asetuksista.</translation>
-    </message>
-    <message>
-        <source>KeePassXC: Removed keys from database</source>
-        <translation>KeePassXC: Poistettiin avaimet tietokannasta</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
@@ -1774,31 +1762,13 @@ Pääsy tietueisiin evätään.</translation>
         <source>Abort</source>
         <translation>Keskeytä</translation>
     </message>
-    <message>
-        <source>KeePassXC: Removed permissions</source>
-        <translation>KeePassXC: Poistetut käyttöoikeudet</translation>
-    </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
         <translation><numerusform>Poistettiin lupa %n tietueelta.</numerusform><numerusform>Poistettiin lupa %n tietueelta.</numerusform></translation>
     </message>
     <message>
-        <source>KeePassXC: No entry with permissions found!</source>
-        <translation>KeePassXC: Tietuetta käyttöoikeuksilla ei löytynyt!</translation>
-    </message>
-    <message>
         <source>The active database does not contain an entry with permissions.</source>
         <translation>Aktiivinen tietokanta ei sisällä yhtään tietuetta käyttöoikeuksien kanssa.</translation>
-    </message>
-    <message>
-        <source>Move KeePassHTTP attributes to custom data</source>
-        <translation>Siirrä KeePassHTTP-attribuutit mukautettuihin tietoihin.</translation>
-    </message>
-    <message>
-        <source>Do you really want to convert all legacy browser integration data to the latest standard?
-This is necessary to maintain compatibility with the browser plugin.</source>
-        <translation>Haluatko todella siirtää vanhat selainlaajennustiedot uuteen muotoon?
-Tämä on välttämätöntä selainintegraation yhteensopivuuden takaamiseksi.</translation>
     </message>
     <message>
         <source>Refresh database ID</source>
@@ -1809,6 +1779,26 @@ Tämä on välttämätöntä selainintegraation yhteensopivuuden takaamiseksi.</
 This is only necessary if your database is a copy of another and the browser extension cannot connect.</source>
         <translation>Haluatko todella uudistaa tietokannan ID:n?
 Tämä on tarpeellista vain, jos tietokantasi on kloonattu toisesta ja selainintegraatio ei pysty yhdistämään siihen.</translation>
+    </message>
+    <message>
+        <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
+        <translation>Siirrä vanhat KeePassHTTP-attribuutit KeePassXC-Browser:in mukautettuihin tietoihin</translation>
+    </message>
+    <message>
+        <source>No keys found</source>
+        <translation>Avaimia ei löytynyt</translation>
+    </message>
+    <message>
+        <source>Removed keys from database</source>
+        <translation>Avaimet poistettiin tietokannasta</translation>
+    </message>
+    <message>
+        <source>Removed permissions</source>
+        <translation>Käyttöoikeudet poistettiin</translation>
+    </message>
+    <message>
+        <source>No entry with permissions found!</source>
+        <translation>Tietuetta käyttöoikeuksilla ei löytynyt!</translation>
     </message>
 </context>
 <context>
@@ -1847,7 +1837,19 @@ Oletko varma, että haluat jatkaa ilman salasanaa?</translation>
     </message>
     <message>
         <source>Failed to change database credentials</source>
-        <translation>Tietokannan tietueiden muuttaminen ei onnistu</translation>
+        <translation>Tietokannan tunnistetietojen vaihto ei onnistu</translation>
+    </message>
+    <message>
+        <source>Weak password</source>
+        <translation>Heikko salasana</translation>
+    </message>
+    <message>
+        <source>You must enter a stronger password to protect your database.</source>
+        <translation>Sinun on syötettävä vahvempi salsana tietokantasi suojaamiseksi.</translation>
+    </message>
+    <message>
+        <source>This is a weak password! For better protection of your secrets, you should choose a stronger password.</source>
+        <translation>Tämä on heikko salsana! SInun tulisi valita vahvempi salsana tietojesi parempaa suojausta varten.</translation>
     </message>
 </context>
 <context>
@@ -1855,14 +1857,6 @@ Oletko varma, että haluat jatkaa ilman salasanaa?</translation>
     <message>
         <source>Decryption Time:</source>
         <translation>Salauksen purkuun kulunut aika:</translation>
-    </message>
-    <message>
-        <source>Change existing decryption time</source>
-        <translation>Muuta olemassa olevaa salauksen purkuun vaadittavaa aikaa</translation>
-    </message>
-    <message>
-        <source>Change</source>
-        <translation>Muuta</translation>
     </message>
     <message>
         <source>Decryption time in seconds</source>
@@ -1945,11 +1939,6 @@ Oletko varma, että haluat jatkaa ilman salasanaa?</translation>
         <translation>KDBX 3</translation>
     </message>
     <message>
-        <source>unchanged</source>
-        <comment>Database decryption time is unchanged</comment>
-        <translation>muuttamaton</translation>
-    </message>
-    <message>
         <source>Number of rounds too high</source>
         <comment>Key transformation rounds</comment>
         <translation>Iteraatioiden lukumäärä on liian suuri</translation>
@@ -2001,6 +1990,18 @@ Jos pidät tämän arvon, tietokanta ei ole välttämättä turvattu brute force
         <comment>Threads for parallel execution (KDF settings)</comment>
         <translation><numerusform>säie</numerusform><numerusform>säiettä</numerusform></translation>
     </message>
+    <message>
+        <source>Encryption Settings:</source>
+        <translation>Salausasetukset:</translation>
+    </message>
+    <message>
+        <source>Basic</source>
+        <translation>Perus</translation>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translation>Lisäasetukset</translation>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetFdoSecrets</name>
@@ -2045,11 +2046,11 @@ Jos pidät tämän arvon, tietokanta ei ole välttämättä turvattu brute force
     </message>
     <message>
         <source>Default username:</source>
-        <translation>Oletuskäyttäjänimi:</translation>
+        <translation>Oletusarvoinen käyttäjätunnus:</translation>
     </message>
     <message>
         <source>Default username field</source>
-        <translation>Oletuskäyttäjänimen kenttä</translation>
+        <translation>Oletusarvoisen käyttäjätunnuksen kenttä</translation>
     </message>
     <message>
         <source>History Settings</source>
@@ -2097,29 +2098,49 @@ This action is not reversible.</source>
 the oldest history items of an entry will be
 removed such that only the specified amount
 of entries remain at most.</source>
-        <translation type="unfinished"/>
+        <translation>Kun tämä asetus tallennetaan tai tietuetta muokataan, poistetaan tietueen historian vanhimmat merkinnät, jolloin niitä säilytetään vain määritetty määrä.</translation>
     </message>
     <message>
         <source>Limit the amount of history items per entry to:</source>
-        <translation type="unfinished"/>
+        <translation>Rajoita tietueiden historiamerkintöjen määrää:</translation>
     </message>
     <message>
         <source>When saving this setting or editing an entry
 the oldest history items of an entry will be
 removed such that the remaining history items
 add up to the specified amount at most.</source>
-        <translation type="unfinished"/>
+        <translation>Kun tämä asetus tallennetaan tai tietuetta muokataan, poistetaan tietueen historian vanhimmat merkinnät, jolloin niitä säilytetään vain määritetty määrä.</translation>
     </message>
     <message>
         <source>Limit the total size of history items per entry to:</source>
-        <translation type="unfinished"/>
+        <translation>Rajoita tietueiden historiamerkintöjen määrää:</translation>
     </message>
     <message>
         <source>Move entries to a recycle bin group
 instead of deleting them from the database.
 Entries deleted from the recycle bin are
 removed from the database.</source>
-        <translation type="unfinished"/>
+        <translation>Siirrä tietueet roskakoriryhmään pysyvän poiston sijaan. Roskakorista poistetut tietueet poistetaan tietokannasta pysyvästi.</translation>
+    </message>
+    <message>
+        <source>Autosave delay since last change</source>
+        <translation>Muutosta seuraavan automaattitallennuksen viive</translation>
+    </message>
+    <message>
+        <source>Autosave delay</source>
+        <translation>Automaattitallennuksen viive</translation>
+    </message>
+    <message>
+        <source>Autosave delay since last change in minutes</source>
+        <translation>Muutosta seuraavan automaattitallennuksen minuuttiviive</translation>
+    </message>
+    <message>
+        <source> min</source>
+        <translation> minuuttia</translation>
+    </message>
+    <message>
+        <source>Autosave delay since last change checkbox</source>
+        <translation>Muutosta seuraavan automaattitallennuksen viiveen valintalaatikko</translation>
     </message>
 </context>
 <context>
@@ -2249,24 +2270,8 @@ Tämä on selkeä virhe, joten ota yhteyttä kehittäjätiimiin.</translation>
         <translation>CSV-tiedosto</translation>
     </message>
     <message>
-        <source>Select CSV file</source>
-        <translation>Valitse CSV-tiedosto</translation>
-    </message>
-    <message>
         <source>Merge database</source>
         <translation>Yhdistä tietokanta</translation>
-    </message>
-    <message>
-        <source>KeePass 1 database</source>
-        <translation>KeePass 1 -tietokanta</translation>
-    </message>
-    <message>
-        <source>Open KeePass 1 database</source>
-        <translation>Avaa KeePass 1 -tietokanta</translation>
-    </message>
-    <message>
-        <source>Open OPVault</source>
-        <translation>Avaa OPVault</translation>
     </message>
     <message>
         <source>Export database to CSV file</source>
@@ -2281,6 +2286,18 @@ Tämä on selkeä virhe, joten ota yhteyttä kehittäjätiimiin.</translation>
         <translation>HTML-tiedoston kirjoittaminen epäonnistui.</translation>
     </message>
     <message>
+        <source>Export database to XML file</source>
+        <translation>Vie tietokanta XML-tiedostoon</translation>
+    </message>
+    <message>
+        <source>XML file</source>
+        <translation>XML-tiedosto</translation>
+    </message>
+    <message>
+        <source>Writing the XML file failed</source>
+        <translation>XML-tiedoston tallennus epäonnistui</translation>
+    </message>
+    <message>
         <source>Export Confirmation</source>
         <translation>Viennin vahvistus</translation>
     </message>
@@ -2289,34 +2306,17 @@ Tämä on selkeä virhe, joten ota yhteyttä kehittäjätiimiin.</translation>
         <translation>Olet viemässä tietokantaasi salaamattomaan tiedostoon. Tämä jättää salasanasi ja minkä tahansa arkaluontoisen tiedon haavoittuvaksi! Oletko varma, että haluat jatkaa?</translation>
     </message>
     <message>
-        <source>New Database</source>
-        <translation>Uusi tietokanta</translation>
-    </message>
-    <message>
-        <source>%1 [New Database]</source>
-        <comment>Database tab name modifier</comment>
-        <translation>%1 [Uusi tietokanta]</translation>
-    </message>
-    <message>
         <source>%1 [Locked]</source>
         <comment>Database tab name modifier</comment>
         <translation>%1 [Lukittu]</translation>
     </message>
-    <message>
-        <source>Export database to XML file</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>XML file</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Writing the XML file failed</source>
-        <translation type="unfinished"/>
-    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
+    <message>
+        <source>Searches and Tags</source>
+        <translation>Haut ja tunnisteet</translation>
+    </message>
     <message>
         <source>Searching…</source>
         <translation>Etsitään...</translation>
@@ -2365,6 +2365,10 @@ Tämä on selkeä virhe, joten ota yhteyttä kehittäjätiimiin.</translation>
         <source>Expired entries</source>
         <translation>Vanhentuneet tietueet</translation>
     </message>
+    <message numerus="yes">
+        <source>Entries expiring within %1 day(s)</source>
+        <translation><numerusform>%1 päivän kuluttua vanhentuva tietue</numerusform><numerusform>%1 päivän kuluttua vanhentuva tietue</numerusform></translation>
+    </message>
     <message>
         <source>No current database.</source>
         <translation>Ei nykyistä tietokantaa.</translation>
@@ -2388,6 +2392,18 @@ Tämä on selkeä virhe, joten ota yhteyttä kehittäjätiimiin.</translation>
     <message>
         <source>No Results</source>
         <translation>Ei tuloksia.</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Tallenna</translation>
+    </message>
+    <message>
+        <source>Enter a unique name or overwrite an existing search from the list:</source>
+        <translation>Syötä yksilöllinen nimi tai korvaa listalla oleva aiempi haku:</translation>
+    </message>
+    <message>
+        <source>Save Search</source>
+        <translation>Tallenna haku</translation>
     </message>
     <message>
         <source>Lock Database?</source>
@@ -2479,25 +2495,14 @@ Ota turvallinen tallennus pois käytöstä ja yritä uudelleen?</translation>
         <source>Could not find database file: %1</source>
         <translation>Tietokantatiedostoa ei löydy: %1</translation>
     </message>
-    <message numerus="yes">
-        <source>Entries expiring within %1 day(s)</source>
-        <translation><numerusform>Tietueet jotka vanhenevat %1 päivässä</numerusform><numerusform>Tietueet jotka vanhenevat %1 päivässä</numerusform></translation>
+    <message>
+        <source>New Database</source>
+        <translation>Uusi tietokanta</translation>
     </message>
     <message>
-        <source>Searches and Tags</source>
-        <translation>Haut ja tunnisteet</translation>
-    </message>
-    <message>
-        <source>Enter a unique name or overwrite an existing search from the list:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Tallenna</translation>
-    </message>
-    <message>
-        <source>Save Search</source>
-        <translation>Tallenna haku</translation>
+        <source>%1 [New Database]</source>
+        <comment>Database tab name modifier</comment>
+        <translation>%1 [Uusi tietokanta]</translation>
     </message>
 </context>
 <context>
@@ -2641,6 +2646,10 @@ Haluatko korjata sen?</translation>
         <translation>Piilota</translation>
     </message>
     <message numerus="yes">
+        <source>%n hour(s)</source>
+        <translation><numerusform>%n tunti</numerusform><numerusform>%n tuntia</numerusform></translation>
+    </message>
+    <message numerus="yes">
         <source>%n week(s)</source>
         <translation><numerusform>%n viikko</numerusform><numerusform>%n viikkoa</numerusform></translation>
     </message>
@@ -2651,10 +2660,6 @@ Haluatko korjata sen?</translation>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>%n vuosi</numerusform><numerusform>%n vuotta</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n hour(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -2775,8 +2780,18 @@ Haluatko korjata sen?</translation>
         <translation>Lisää uusi ikkunan liitos</translation>
     </message>
     <message>
+        <source>+</source>
+        <comment>Add item</comment>
+        <translation>+</translation>
+    </message>
+    <message>
         <source>Remove selected window association</source>
         <translation>Poista valittu ikkunaliitos</translation>
+    </message>
+    <message>
+        <source>-</source>
+        <comment>Remove item</comment>
+        <translation>-</translation>
     </message>
     <message>
         <source>Window title:</source>
@@ -2801,16 +2816,6 @@ Haluatko korjata sen?</translation>
     <message>
         <source>Custom Auto-Type sequence for this window</source>
         <translation>Mukautettu automaattisyötön sekvenssi tälle ikkunalle</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <comment>Add item</comment>
-        <translation>+</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <comment>Remove item</comment>
-        <translation>-</translation>
     </message>
 </context>
 <context>
@@ -2911,7 +2916,7 @@ Haluatko korjata sen?</translation>
     </message>
     <message>
         <source>Notes field</source>
-        <translation>Muistiinpanojen kenttä</translation>
+        <translation>Muistiinpanokenttä</translation>
     </message>
     <message>
         <source>Username field</source>
@@ -2959,35 +2964,35 @@ Haluatko korjata sen?</translation>
     </message>
     <message>
         <source>&amp;Username:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Käyttäjätunnus:</translation>
     </message>
     <message>
         <source>&amp;Title:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Nimi:</translation>
     </message>
     <message>
         <source>&amp;Password:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Salasana:</translation>
     </message>
     <message>
         <source>UR&amp;L:</source>
-        <translation type="unfinished"/>
+        <translation>UR&amp;L-osoite:</translation>
     </message>
     <message>
         <source>&amp;Notes:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Muistiinpanot:</translation>
     </message>
     <message>
         <source>Toggle notes visibility</source>
-        <translation type="unfinished"/>
+        <translation>Kytke muistiinpanojen näyttö</translation>
     </message>
     <message>
         <source>T&amp;ags:</source>
-        <translation type="unfinished"/>
+        <translation>T&amp;unnisteet:</translation>
     </message>
     <message>
         <source>&amp;Expires:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Erääntyy:</translation>
     </message>
 </context>
 <context>
@@ -3029,19 +3034,6 @@ Haluatko korjata sen?</translation>
         <translation>Yksityinen avain</translation>
     </message>
     <message>
-        <source>External file</source>
-        <translation>Ulkoinen tiedosto</translation>
-    </message>
-    <message>
-        <source>Browser for key file</source>
-        <translation>Selaa avaintiedostoa</translation>
-    </message>
-    <message>
-        <source>Browse…</source>
-        <extracomment>Button for opening file dialog</extracomment>
-        <translation>Selaa...</translation>
-    </message>
-    <message>
         <source>Attachment</source>
         <translation>Liite</translation>
     </message>
@@ -3056,6 +3048,23 @@ Haluatko korjata sen?</translation>
     <message>
         <source>Remove from agent</source>
         <translation>Poista agentista</translation>
+    </message>
+    <message>
+        <source>External file</source>
+        <translation>Ulkoinen tiedosto</translation>
+    </message>
+    <message>
+        <source>Browser for key file</source>
+        <translation>Selaa avaintiedostoa</translation>
+    </message>
+    <message>
+        <source>Browse…</source>
+        <extracomment>Button for opening file dialog</extracomment>
+        <translation>Selaa...</translation>
+    </message>
+    <message>
+        <source>Generate</source>
+        <translation>Luo</translation>
     </message>
     <message>
         <source>Select attachment file</source>
@@ -3093,10 +3102,6 @@ Haluatko korjata sen?</translation>
         <translation>Kuvake</translation>
     </message>
     <message>
-        <source>Browser Integration</source>
-        <translation>Selainintegraatio</translation>
-    </message>
-    <message>
         <source>Properties</source>
         <translation>Ominaisuudet</translation>
     </message>
@@ -3111,6 +3116,10 @@ Haluatko korjata sen?</translation>
     <message>
         <source>Group has unsaved changes</source>
         <translation>Ryhmällä on tallentamattomia muutoksia</translation>
+    </message>
+    <message>
+        <source>Browser Integration</source>
+        <translation>Selainintegraatio</translation>
     </message>
     <message>
         <source>Enable</source>
@@ -3165,11 +3174,19 @@ Haluatko korjata sen?</translation>
     </message>
     <message>
         <source>Omit WWW subdomain from matching:</source>
-        <translation type="unfinished"/>
+        <translation>Älä huomioi WWW-aliverkkotunnusta tunnistuksessa:</translation>
     </message>
     <message>
         <source>Omit WWW subdomain from matching toggle for this and sub groups</source>
-        <translation type="unfinished"/>
+        <translation>WWW-aliverkkotunnuksen tunnistuskäytön kytkentä tälle ja aliryhmille</translation>
+    </message>
+    <message>
+        <source>Restrict matching to given browser key:</source>
+        <translation>Rajoita tunnistus annettuun selainavaimeen:</translation>
+    </message>
+    <message>
+        <source>Restrict matching to given browser key toggle for this and sub groups</source>
+        <translation>Tunnistuksen annettuun selainavaimeen rajoituksen kytkentä tälle ja aliryhmille</translation>
     </message>
 </context>
 <context>
@@ -3251,15 +3268,15 @@ Tuetut tyypit ovat: %1.</translation>
     <message>
         <source>KeeShare is currently disabled. You can enable import/export in the application settings.</source>
         <comment>KeeShare is a proper noun</comment>
-        <translation>KeeShare ei ole tällä hetkellä käytössä. Voit ottaa tuonnin/viennin käyttöön ohjelmiston asetuksista.</translation>
+        <translation>KeeShare ei ole tällä hetkellä käytössä. Voit ottaa tuonnin/viennin käyttöön sovelluksen asetuksista.</translation>
     </message>
     <message>
         <source>Database export is currently disabled by application settings.</source>
-        <translation>Tietokannan vienti on poistettu käytöstä ohjelmiston asetuksissa.</translation>
+        <translation>Tietokannan vienti ei ole sovelluksen asetuksissa käytössä.</translation>
     </message>
     <message>
         <source>Database import is currently disabled by application settings.</source>
-        <translation>Tietokannan tuonti on poistettu käytöstä ohjelmiston asetuksista.</translation>
+        <translation>Tietokannan tuonti ei ole sovelluksen asetuksissa käytössä.</translation>
     </message>
     <message>
         <source>KeeShare container</source>
@@ -3330,7 +3347,7 @@ Tuetut tyypit ovat: %1.</translation>
     </message>
     <message>
         <source>Notes field</source>
-        <translation>Muistiinpanojen kenttä</translation>
+        <translation>Muistiinpanokenttä</translation>
     </message>
     <message>
         <source>Name:</source>
@@ -3404,10 +3421,6 @@ Tuetut tyypit ovat: %1.</translation>
         <translation>Faviconin noutaminen ei onnistu</translation>
     </message>
     <message>
-        <source>You can enable the DuckDuckGo website icon service under Tools -&gt; Settings -&gt; Security</source>
-        <translation>Voit asettaa DuckDuckGo:n ikonien lataukseen asetuksen Työkalut&gt;Asetukset&gt;Turvallisuus alta</translation>
-    </message>
-    <message>
         <source>Existing icon selected.</source>
         <translation>Jo olemassa oleva ikoni valittu.</translation>
     </message>
@@ -3438,6 +3451,10 @@ Tuetut tyypit ovat: %1.</translation>
     <message numerus="yes">
         <source>The following icon(s) failed:</source>
         <translation><numerusform>Seuraava ikoni epäonnistui:</numerusform><numerusform>Seuraavat ikonit epäonnistuivat:</numerusform></translation>
+    </message>
+    <message>
+        <source>You can enable the DuckDuckGo website icon service under Application Settings -&gt; Security</source>
+        <translation>Voit ottaa DuckDuckGon sivustokuvakepalvelun käyttöön sovelluksen suojausasetuksista</translation>
     </message>
 </context>
 <context>
@@ -3877,6 +3894,10 @@ Virhe: %1</translation>
         <source>Has TOTP</source>
         <translation>Sisältää TOTP:n</translation>
     </message>
+    <message>
+        <source>Background Color</source>
+        <translation>Taustaväri</translation>
+    </message>
 </context>
 <context>
     <name>EntryPreviewWidget</name>
@@ -3897,8 +3918,8 @@ Virhe: %1</translation>
         <translation>Salasana</translation>
     </message>
     <message>
-        <source>Notes</source>
-        <translation>Muistiinpanot</translation>
+        <source>URL</source>
+        <translation>URL</translation>
     </message>
     <message>
         <source>Expiration</source>
@@ -3917,8 +3938,8 @@ Virhe: %1</translation>
         <translation>Käyttäjätunnus</translation>
     </message>
     <message>
-        <source>URL</source>
-        <translation>URL</translation>
+        <source>Notes</source>
+        <translation>Muistiinpanot</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -3969,6 +3990,10 @@ Virhe: %1</translation>
         <translation>Ei koskaan</translation>
     </message>
     <message>
+        <source>Double click to copy value</source>
+        <translation>Tuplaklikkaa kopioidaksesi arvo</translation>
+    </message>
+    <message>
         <source>Enabled</source>
         <translation>Käytössä</translation>
     </message>
@@ -3977,12 +4002,8 @@ Virhe: %1</translation>
         <translation>Pois käytöstä</translation>
     </message>
     <message>
-        <source>Double click to copy value</source>
-        <translation>Tuplaklikkaa kopioidaksesi arvo</translation>
-    </message>
-    <message>
         <source>Double click to copy to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>Kopioi leikepöydälle kaksoisklikkauksella</translation>
     </message>
 </context>
 <context>
@@ -3993,7 +4014,7 @@ Virhe: %1</translation>
     </message>
     <message>
         <source>Duplicate URL</source>
-        <translation type="unfinished"/>
+        <translation>Monista URL-osoite</translation>
     </message>
 </context>
 <context>
@@ -4012,7 +4033,7 @@ Virhe: %1</translation>
     </message>
     <message numerus="yes">
         <source>+ %1 entry(s)...</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>+ %1 tietuetta...</numerusform><numerusform>+ %1 tietue...</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4124,7 +4145,7 @@ Tämä jättää salasanasi ja minkä tahansa arkaluontoisen tiedon haavoittuvak
     <message numerus="yes">
         <source>%n Entry(s) was used by %1</source>
         <comment>%1 is the name of an application</comment>
-        <translation><numerusform>%1 tietuetta käytettiin %1:n toimesta</numerusform><numerusform>%1 tietuetta käytettiin %1:n toimesta</numerusform></translation>
+        <translation><numerusform>%n tietue käytetiin %1</numerusform><numerusform>%n tietuetta käytettiin %1</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4195,8 +4216,8 @@ Tämä jättää salasanasi ja minkä tahansa arkaluontoisen tiedon haavoittuvak
     <message>
         <source>Having trouble downloading icons?
 You can enable the DuckDuckGo website icon service in the security section of the application settings.</source>
-        <translation>Onko ikonien latauksessa ongelmia?
-Voit käyttää DuckDuckGo:ta ikonien lataukseen ohjelmiston turvallisuusasetuksia muokkaamalla.</translation>
+        <translation>Onko kuvakkeiden latauksessa ongelmia?
+Voit aktivoida DuckDuckGon kuvakepalvelun sovelluksen suojausasetuksista.</translation>
     </message>
     <message>
         <source>Close</source>
@@ -4236,6 +4257,147 @@ Voit käyttää DuckDuckGo:ta ikonien lataukseen ohjelmiston turvallisuusasetuks
     </message>
 </context>
 <context>
+    <name>ImportWizard</name>
+    <message>
+        <source>Import Wizard</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>ImportWizardPageReview</name>
+    <message>
+        <source>WizardPage</source>
+        <translation>Ohjattu sivu</translation>
+    </message>
+    <message>
+        <source>Entry count: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Group</source>
+        <translation>Ryhmä</translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation>Otsikko</translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>Käyttäjätunnus</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Salasana</translation>
+    </message>
+    <message>
+        <source>Url</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>ImportWizardPageSelect</name>
+    <message>
+        <source>Form</source>
+        <translation>Lomake</translation>
+    </message>
+    <message>
+        <source>Import File Selection</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password:</source>
+        <translation>Salasana:</translation>
+    </message>
+    <message>
+        <source>Key File:</source>
+        <translation>Avaintiedosto:</translation>
+    </message>
+    <message>
+        <source>Browse…</source>
+        <translation>Selaa...</translation>
+    </message>
+    <message>
+        <source>Import Into:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>New Database</source>
+        <translation>Uusi tietokanta</translation>
+    </message>
+    <message>
+        <source>No unlocked databases available</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Existing Database:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import File:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Comma Separated Values (.csv)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>1Password Export (.1pux)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>1Password Vault (.opvault)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Bitwarden (.json)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePass 1 Database (.kdb)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open OPVault</source>
+        <translation>Avaa OPVault</translation>
+    </message>
+    <message>
+        <source>Select import file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>All files</source>
+        <translation>Kaikki tiedostot</translation>
+    </message>
+    <message>
+        <source>Key files</source>
+        <translation>Avaintiedostot</translation>
+    </message>
+    <message>
+        <source>Select key file</source>
+        <translation>Valitse avaintiedosto</translation>
+    </message>
+    <message>
+        <source>Comma Separated Values</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>1Password Export</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Bitwarden JSON Export</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>1Password Vault</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePass1 Database</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>KMessageWidget</name>
     <message>
         <source>&amp;Close</source>
@@ -4263,8 +4425,8 @@ Voit käyttää DuckDuckGo:ta ikonien lataukseen ohjelmiston turvallisuusasetuks
     <message>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
-        <translation>Väärät tilitiedot, ole hyvä ja koita uudestaan.
-Jos tämä toistuu, tietokantasi voi olla viallinen.</translation>
+        <translation>Virheelliset tunnistetiedot. Yritä uudelleen.
+Jos tämä toistuu, tietokantasi on saattanut vioittuna.</translation>
     </message>
     <message>
         <source>Header doesn&apos;t match hash</source>
@@ -4320,8 +4482,8 @@ Jos tämä toistuu, tietokantasi voi olla viallinen.</translation>
     <message>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
-        <translation>Väärät tilitiedot, ole hyvä ja koita uudestaan.
-Jos tämä toistuu, tietokantasi voi olla viallinen.</translation>
+        <translation>Virheelliset tunnistetiedot. Yritä uudelleen.
+Jos tämä toistuu, tietokantasi on saattanut vioittuna.</translation>
     </message>
     <message>
         <source>(HMAC mismatch)</source>
@@ -4670,17 +4832,6 @@ Rivi %2, sarake %3</translation>
     </message>
 </context>
 <context>
-    <name>KeePass1OpenWidget</name>
-    <message>
-        <source>Import KeePass1 Database</source>
-        <translation>Tuo KeePass1-tietokanta</translation>
-    </message>
-    <message>
-        <source>Unable to open the database.</source>
-        <translation>Tietokannan avaaminen epäonnistui.</translation>
-    </message>
-</context>
-<context>
     <name>KeePass1Reader</name>
     <message>
         <source>Unable to read keyfile.</source>
@@ -4742,8 +4893,8 @@ Rivi %2, sarake %3</translation>
     <message>
         <source>Invalid credentials were provided, please try again.
 If this reoccurs, then your database file may be corrupt.</source>
-        <translation>Väärät tilitiedot, ole hyvä ja koita uudestaan.
-Jos tämä toistuu, tietokantasi voi olla viallinen.</translation>
+        <translation>Virheelliset tunnistetiedot. Yritä uudelleen.
+Jos tämä toistuu, tietokantasi on saattanut vioittuna.</translation>
     </message>
     <message>
         <source>Key transformation failed</source>
@@ -5037,10 +5188,6 @@ Haluatko jatkaa käyttämällä tätä tiedostoa?</translation>
         <translation>&amp;Viimeisimmät tietokannat</translation>
     </message>
     <message>
-        <source>&amp;Import</source>
-        <translation>&amp;Tuo</translation>
-    </message>
-    <message>
         <source>&amp;Export</source>
         <translation>&amp;Vie</translation>
     </message>
@@ -5059,6 +5206,10 @@ Haluatko jatkaa käyttämällä tätä tiedostoa?</translation>
     <message>
         <source>TOTP</source>
         <translation>TOTP</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation>Tagit</translation>
     </message>
     <message>
         <source>&amp;Groups</source>
@@ -5105,32 +5256,16 @@ Haluatko jatkaa käyttämällä tätä tiedostoa?</translation>
         <translation>&amp;Uusi tietokanta…</translation>
     </message>
     <message>
-        <source>Create a new database</source>
-        <translation>Luo uusi tietokanta</translation>
-    </message>
-    <message>
         <source>&amp;Merge From Database…</source>
         <translation>&amp;Yhdistä tietokannasta…</translation>
-    </message>
-    <message>
-        <source>Merge from another KDBX database</source>
-        <translation>Yhdistä toisesta KDBX-tietokannasta</translation>
     </message>
     <message>
         <source>&amp;New Entry…</source>
         <translation>&amp;Uusi tietue…</translation>
     </message>
     <message>
-        <source>Add a new entry</source>
-        <translation>Lisää uusi tietue</translation>
-    </message>
-    <message>
         <source>&amp;Edit Entry…</source>
         <translation>&amp;Muokkaa tietuetta…</translation>
-    </message>
-    <message>
-        <source>View or edit entry</source>
-        <translation>Katso tai muokkaa tietuetta</translation>
     </message>
     <message>
         <source>&amp;Delete Entry…</source>
@@ -5139,10 +5274,6 @@ Haluatko jatkaa käyttämällä tätä tiedostoa?</translation>
     <message>
         <source>&amp;New Group…</source>
         <translation>&amp;Uusi ryhmä…</translation>
-    </message>
-    <message>
-        <source>Add a new group</source>
-        <translation>Lisää uusi ryhmä</translation>
     </message>
     <message>
         <source>&amp;Edit Group…</source>
@@ -5177,16 +5308,8 @@ Haluatko jatkaa käyttämällä tätä tiedostoa?</translation>
         <translation>Tietokannan &amp;raportit...</translation>
     </message>
     <message>
-        <source>Statistics, health check, etc.</source>
-        <translation>Tilastot, kelvollisuuden tarkastus jne.</translation>
-    </message>
-    <message>
         <source>&amp;Database Settings…</source>
         <translation>&amp;Tietokannan asetukset…</translation>
-    </message>
-    <message>
-        <source>Database settings</source>
-        <translation>Tietokannan asetukset</translation>
     </message>
     <message>
         <source>&amp;Clone Entry…</source>
@@ -5197,32 +5320,16 @@ Haluatko jatkaa käyttämällä tätä tiedostoa?</translation>
         <translation>Siirrä &amp;ylös</translation>
     </message>
     <message>
-        <source>Move entry one step up</source>
-        <translation>Siirrä tietue yksi rivi ylemmäs</translation>
-    </message>
-    <message>
         <source>Move do&amp;wn</source>
         <translation>Siirrä &amp;alas</translation>
-    </message>
-    <message>
-        <source>Move entry one step down</source>
-        <translation>Siirrä tietue yksi rivi alemmas</translation>
     </message>
     <message>
         <source>Copy &amp;Username</source>
         <translation>Kopioi &amp;käyttäjätunnus</translation>
     </message>
     <message>
-        <source>Copy username to clipboard</source>
-        <translation>Kopioi käyttäjätunnus leikepöydälle</translation>
-    </message>
-    <message>
         <source>Copy &amp;Password</source>
         <translation>Kopioi &amp;salasana</translation>
-    </message>
-    <message>
-        <source>Copy password to clipboard</source>
-        <translation>Kopioi salasana leikepöydälle</translation>
     </message>
     <message>
         <source>&amp;Settings</source>
@@ -5257,20 +5364,12 @@ Haluatko jatkaa käyttämällä tätä tiedostoa?</translation>
         <translation>&amp;Otsikko</translation>
     </message>
     <message>
-        <source>Copy title to clipboard</source>
-        <translation>Kopioi nimi leikepöydälle</translation>
-    </message>
-    <message>
-        <source>Copy URL to clipboard</source>
-        <translation>Kopioi osoite leikepöydälle</translation>
+        <source>Copy &amp;URL</source>
+        <translation>Kopioi &amp;URL-osoite</translation>
     </message>
     <message>
         <source>&amp;Notes</source>
         <translation>&amp;Muistiinpanot</translation>
-    </message>
-    <message>
-        <source>Copy notes to clipboard</source>
-        <translation>Kopioi muistiinpanot leikepöydälle</translation>
     </message>
     <message>
         <source>&amp;CSV File…</source>
@@ -5285,24 +5384,12 @@ Haluatko jatkaa käyttämällä tätä tiedostoa?</translation>
         <translation>KeePass 1 -tietokanta</translation>
     </message>
     <message>
-        <source>Import a KeePass 1 database</source>
-        <translation>Tuo KeePass 1 -tietokanta</translation>
-    </message>
-    <message>
         <source>1Password Vault…</source>
         <translation>!Password-holvi...</translation>
     </message>
     <message>
-        <source>Import a 1Password Vault</source>
-        <translation>Tuo 1Password-holvi</translation>
-    </message>
-    <message>
         <source>CSV File…</source>
         <translation>CSV-tiedosto...</translation>
-    </message>
-    <message>
-        <source>Import a CSV file</source>
-        <translation>Tuo CSV-tiedosto</translation>
     </message>
     <message>
         <source>Show TOTP</source>
@@ -5319,6 +5406,10 @@ Haluatko jatkaa käyttämällä tätä tiedostoa?</translation>
     <message>
         <source>Copy &amp;TOTP</source>
         <translation>Kopioi &amp;TOTP</translation>
+    </message>
+    <message>
+        <source>Copy Password and TOTP</source>
+        <translation>Kopioi salasana ja TOTP</translation>
     </message>
     <message>
         <source>E&amp;mpty recycle bin</source>
@@ -5343,10 +5434,6 @@ Haluatko jatkaa käyttämällä tätä tiedostoa?</translation>
     <message>
         <source>&amp;Online Help</source>
         <translation>&amp;Verkko-ohje</translation>
-    </message>
-    <message>
-        <source>Go to online documentation</source>
-        <translation>Siirry online-dokumentaatioon</translation>
     </message>
     <message>
         <source>&amp;User Guide</source>
@@ -5406,7 +5493,7 @@ Haluatko jatkaa käyttämällä tätä tiedostoa?</translation>
     </message>
     <message>
         <source>Hide Usernames</source>
-        <translation>Piilota käyttäjänimet</translation>
+        <translation>Piilota käyttäjätunnukset</translation>
     </message>
     <message>
         <source>Hide Passwords</source>
@@ -5415,6 +5502,10 @@ Haluatko jatkaa käyttämällä tätä tiedostoa?</translation>
     <message>
         <source>Clone Group...</source>
         <translation>Kloonaa ryhmä</translation>
+    </message>
+    <message>
+        <source>&amp;XML File…</source>
+        <translation>&amp;XML-tiedosto…</translation>
     </message>
     <message>
         <source>Clear history</source>
@@ -5448,6 +5539,10 @@ We recommend you use the AppImage available on our downloads page.</source>
         <translation>VAROITUS: Qt-versiosi voi aiheuttaa KeePassXC:n kaatumisen näytöllä näkyvällä näppäimistöllä!
 Suosittelemme, että käytät AppImagea, jonka voit hakea lataussivustoltamme.</translation>
     </message>
+    <message>
+        <source>No Tags</source>
+        <translation>Tunnisteita ei ole</translation>
+    </message>
     <message numerus="yes">
         <source>Restore Entry(s)</source>
         <translation><numerusform>Palauta tietue</numerusform><numerusform>Palauta tietueet</numerusform></translation>
@@ -5476,6 +5571,10 @@ Suosittelemme, että käytät AppImagea, jonka voit hakea lataussivustoltamme.</
         <source>Quit KeePassXC</source>
         <translation>Sulje KeePassXC</translation>
     </message>
+    <message numerus="yes">
+        <source>%1 Entry(s)</source>
+        <translation><numerusform>%1 tietue</numerusform><numerusform>%1 tietuetta</numerusform></translation>
+    </message>
     <message>
         <source>Please present or touch your YubiKey to continue…</source>
         <translation>Ole hyvä ja käytä Yubikeyssä jatkaaksesi...</translation>
@@ -5489,35 +5588,271 @@ Suosittelemme, että käytät AppImagea, jonka voit hakea lataussivustoltamme.</
         <translation>Ohjelma täytyy käynnistää uudelleen, jotta asetus voidaan ottaa käyttöön. Haluatko käynnistää uudelleen nyt?</translation>
     </message>
     <message>
-        <source>Tags</source>
-        <translation>Tagit</translation>
-    </message>
-    <message>
-        <source>No Tags</source>
-        <translation>Ei tunnisteita</translation>
-    </message>
-    <message numerus="yes">
-        <source>%1 Entry(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
-    </message>
-    <message>
-        <source>Copy Password and TOTP</source>
-        <translation>Kopioi salasana ja TOTP</translation>
-    </message>
-    <message>
-        <source>&amp;XML File…</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>XML File…</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Copy &amp;URL</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Allow Screen Capture</source>
+        <translation>Salli kuvankaappaus</translation>
+    </message>
+    <message>
+        <source>1Password 1PUX...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import a 1Password 1PUX file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Passkeys…</source>
+        <translation>Suojausvaimet...</translation>
+    </message>
+    <message>
+        <source>Import Passkey</source>
+        <translation>Tuo suojausavain</translation>
+    </message>
+    <message>
+        <source>Quit Application</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open About Dialog</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open Database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Create Database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Merge From Database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Create Entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Edit Entry</source>
+        <translation>Muokkaa tietuetta</translation>
+    </message>
+    <message>
+        <source>Delete Entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Create Group</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Edit Group</source>
+        <translation>Muokkaa ryhmää</translation>
+    </message>
+    <message>
+        <source>Delete Group</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download All Favicons</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Sort Groups A-Z</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Sort Groups Z-A</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Save Database As</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show Database Security</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show Database Reports</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show Database Settings</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show Passkeys</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Clone Entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Move Entry Up</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Move Entry Down</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy Username</source>
+        <translation>Kopioi käyttäjätunnus</translation>
+    </message>
+    <message>
+        <source>Copy Password</source>
+        <translation>Kopioi salasana</translation>
+    </message>
+    <message>
+        <source>Show Application Settings</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show Password Generator</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Perform Auto-Type: {USERNAME}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Perform Auto-Type: {USERNAME}{ENTER}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Perform Auto-Type: {PASSWORD}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Perform Auto-Type: {PASSWORD}{ENTER}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Perform Auto-Type: {TOTP}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy Title</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy URL</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy Notes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export to CSV</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export to HTML</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import KeePass1 Database</source>
+        <translation>Tuo KeePass1-tietokanta</translation>
+    </message>
+    <message>
+        <source>Import 1Password Vault</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import CSV File</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show TOTP QR Code</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Set up TOTP</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Empty Recycle Bin</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open Donation Website</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open Bug Report</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open Online Documentation</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open Keyboard Shortcuts Guide</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Save Database Backup</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>SSH Agent: Add Key</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>SSH Agent: Remove Key</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle Compact Mode</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Set Theme: Automatic</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Set Theme: Light</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Set Theme: Dark</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Set Theme: Classic</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle Show Toolbar</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle Show Preview Panel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle Always on Top</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle Hide Usernames</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle Hide Passwords</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export to XML</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle Allow Screen Capture</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -5578,26 +5913,6 @@ Suosittelemme, että käytät AppImagea, jonka voit hakea lataussivustoltamme.</
         <translation>Ylikirjoitetaan %1 [%2]</translation>
     </message>
     <message>
-        <source>older entry merged from database &quot;%1&quot;</source>
-        <translation>vanhempi tietue yhdistetty tietokannasta &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>Adding backup for older target %1 [%2]</source>
-        <translation>Lisätään varmuuskopio vanhemmalle kohteelle %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Adding backup for older source %1 [%2]</source>
-        <translation>Lisätään varmuuskopio vanhemmalle lähteelle %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Reapplying older target entry on top of newer source %1 [%2]</source>
-        <translation>Uudelleensijoitetaan vanhempi kohdetietue uuden lähteen päälle %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Reapplying older source entry on top of newer target %1 [%2]</source>
-        <translation>Uudelleensijoitetaan vanhempi lähdetietue uuden kohteen päälle %1 [%2]</translation>
-    </message>
-    <message>
         <source>Synchronizing from newer source %1 [%2]</source>
         <translation>Synkronoidaan uudemmasta lähteestä %1 [%2]</translation>
     </message>
@@ -5656,24 +5971,16 @@ Suosittelemme, että käytät AppImagea, jonka voit hakea lataussivustoltamme.</
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
         <translation>Täällä voit säätää tietokannan salausasetuksia. Voit muokata niitä myöhemmin uudelleen.</translation>
     </message>
-    <message>
-        <source>Advanced Settings</source>
-        <translation>Lisäasetukset</translation>
-    </message>
-    <message>
-        <source>Simple Settings</source>
-        <translation>Yksinkertaiset asetukset</translation>
-    </message>
 </context>
 <context>
     <name>NewDatabaseWizardPageDatabaseKey</name>
     <message>
         <source>Database Credentials</source>
-        <translation>Tietokannan tietueet</translation>
+        <translation>Tietokannan tunnistetiedot</translation>
     </message>
     <message>
         <source>A set of credentials known only to you that protects your database.</source>
-        <translation>Tietokannan suojelemiseksi tarkoitettu tietueiden ryhmä</translation>
+        <translation>Tietokannan suojaukseen määrittämäsi tietueryhmä</translation>
     </message>
 </context>
 <context>
@@ -5742,15 +6049,6 @@ Suosittelemme, että käytät AppImagea, jonka voit hakea lataussivustoltamme.</
     <message>
         <source>Expected %1 bytes of clear-text, found %2</source>
         <translation>Odotettiin %1 tavua selkotekstiä, löydettiin %2</translation>
-    </message>
-</context>
-<context>
-    <name>OpVaultOpenWidget</name>
-    <message>
-        <source>Read Database did not produce an instance
-%1</source>
-        <translation>Tietokannan lukeminen ei luonut instanssia
-%1</translation>
     </message>
 </context>
 <context>
@@ -5827,6 +6125,10 @@ Suosittelemme, että käytät AppImagea, jonka voit hakea lataussivustoltamme.</
         <translation>Tuntematon salausalgoritmi: %1</translation>
     </message>
     <message>
+        <source>AES-256/GCM is currently not supported</source>
+        <translation>AES-256/GCM-salausta ei tällä hetkellä tueta</translation>
+    </message>
+    <message>
         <source>Passphrase is required to decrypt this key</source>
         <translation>Avaimen purkuun vaaditaan salalause</translation>
     </message>
@@ -5890,9 +6192,181 @@ Suosittelemme, että käytät AppImagea, jonka voit hakea lataussivustoltamme.</
         <source>Unexpected EOF when writing private key</source>
         <translation>Odottamaton EOF yksityistä avainta kirjoittaessa</translation>
     </message>
+</context>
+<context>
+    <name>OpenSSHKeyGenDialog</name>
     <message>
-        <source>AES-256/GCM is currently not supported</source>
-        <translation type="unfinished"/>
+        <source>SSH Key Generator</source>
+        <translation>SSH-avaingeneraattori</translation>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>Tyyppi</translation>
+    </message>
+    <message>
+        <source>Bits</source>
+        <translation>Bitit</translation>
+    </message>
+    <message>
+        <source>Comment</source>
+        <translation>Kommentti</translation>
+    </message>
+</context>
+<context>
+    <name>PasskeyExportDialog</name>
+    <message>
+        <source>KeePassXC - Passkey Export</source>
+        <translation>KeePassXC - Suojasavaimen vienti</translation>
+    </message>
+    <message>
+        <source>Export the following Passkey entries.</source>
+        <translation>Vie seuraavat suojausavaintietueet.</translation>
+    </message>
+    <message>
+        <source>Filenames will be generated with title and .passkey file extension.</source>
+        <translation>Tiedostot luodaan tietueiden nimillä ja .passkey-päätteellä.</translation>
+    </message>
+    <message>
+        <source>Export entries</source>
+        <translation>Vie tietueet</translation>
+    </message>
+    <message>
+        <source>Export Selected</source>
+        <translation>Vie valitut</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Peruuta</translation>
+    </message>
+    <message>
+        <source>Export to folder</source>
+        <translation>Vie kansioon</translation>
+    </message>
+</context>
+<context>
+    <name>PasskeyExporter</name>
+    <message>
+        <source>KeePassXC: Passkey Export</source>
+        <translation>KeePassXC: Suojausavainvienti</translation>
+    </message>
+    <message>
+        <source>File &quot;%1.passkey&quot; already exists.
+Do you want to overwrite it?
+</source>
+        <translation>Tiedosto &quot;%1.passkey&quot; on jo olemassa.
+haluatko korvata sen?
+</translation>
+    </message>
+    <message>
+        <source>Cannot open file</source>
+        <translation>Tiedoston avaus ei onnistu</translation>
+    </message>
+    <message>
+        <source>Cannot open file &quot;%1&quot; for writing.</source>
+        <translation>Tiedoston &quot;%1&quot; avaus muokattavaksi ei onnistu.</translation>
+    </message>
+    <message>
+        <source>Cannot write to file</source>
+        <translation>Tiedostoa ei voida tallentaa</translation>
+    </message>
+</context>
+<context>
+    <name>PasskeyImportDialog</name>
+    <message>
+        <source>KeePassXC - Passkey Import</source>
+        <translation>KeePassXC - Suojausavainvienti</translation>
+    </message>
+    <message>
+        <source>Username: %1</source>
+        <translation>Käyttäjätunnus: %1</translation>
+    </message>
+    <message>
+        <source>Group</source>
+        <translation>Ryhmä</translation>
+    </message>
+    <message>
+        <source>Database</source>
+        <translation>Tietokanta</translation>
+    </message>
+    <message>
+        <source>Import Passkey</source>
+        <translation>Tuo suojausavain</translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation>Tuo</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Peruuta</translation>
+    </message>
+    <message>
+        <source>Import the following Passkey:</source>
+        <translation>Tuo seuraava suojausavain:</translation>
+    </message>
+    <message>
+        <source>Entry</source>
+        <translation>Tietue</translation>
+    </message>
+    <message>
+        <source>Import the following Passkey to this entry:</source>
+        <translation>Tuo seuraava suojausavain tähän tietueeseen:</translation>
+    </message>
+    <message>
+        <source>Create new entry</source>
+        <translation>Luo uusi tietue</translation>
+    </message>
+    <message>
+        <source>Default Passkeys group (Imported Passkeys)</source>
+        <translation>Suojausavainten oletusryhmä (tuodut suojausavaimet)</translation>
+    </message>
+    <message>
+        <source>Relying Party: %1</source>
+        <translation>Välittävä osapuoli: %1</translation>
+    </message>
+</context>
+<context>
+    <name>PasskeyImporter</name>
+    <message>
+        <source>Passkey file</source>
+        <translation>Suojausavaintiedosto</translation>
+    </message>
+    <message>
+        <source>All files</source>
+        <translation>Kaikki tiedostot</translation>
+    </message>
+    <message>
+        <source>Open Passkey file</source>
+        <translation>Avaa suojausavaintiedosto</translation>
+    </message>
+    <message>
+        <source>Cannot open file</source>
+        <translation>Tiedoston avaus ei onnistu</translation>
+    </message>
+    <message>
+        <source>Cannot open file &quot;%1&quot; for reading.</source>
+        <translation>Tiedoston &quot;%1&quot; luku ei onnistu.</translation>
+    </message>
+    <message>
+        <source>Cannot import Passkey</source>
+        <translation>Suojausavainta ei voida tuoda</translation>
+    </message>
+    <message>
+        <source>Cannot import Passkey file &quot;%1&quot;. Data is missing.</source>
+        <translation>Suojausavaintiedostoa ei voida tuoda &quot;%1&quot;.
+Tietoja puuttuu.</translation>
+    </message>
+    <message>
+        <source>Cannot import Passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
+        <translation>Suojausavaintiedostoa ei voida tuoda &quot;%1&quot;.
+Yksityinen avain puuttuu tai on muotoiltu väärin.</translation>
+    </message>
+    <message>
+        <source>Cannot import Passkey file &quot;%1&quot;.
+The following data is missing:
+%2</source>
+        <translation>Suojausavaintiedostoa ei voida tuoda &quot;%1&quot;.
+Seuraavat tiedot puuttuvat: %2</translation>
     </message>
 </context>
 <context>
@@ -6074,6 +6548,10 @@ Suosittelemme, että käytät AppImagea, jonka voit hakea lataussivustoltamme.</
         <translation>Valitse myös:</translation>
     </message>
     <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
+        <translation>Poissuljetut kirjaimet: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</translation>
+    </message>
+    <message>
         <source>Exclude look-alike characters</source>
         <translation>Poissulje samannäköiset merkit</translation>
     </message>
@@ -6154,6 +6632,30 @@ Suosittelemme, että käytät AppImagea, jonka voit hakea lataussivustoltamme.</
         <translation>Entropia: %1 bit</translation>
     </message>
     <message>
+        <source>Password Quality: %1</source>
+        <translation>Salasanan laatu: %1</translation>
+    </message>
+    <message>
+        <source>Poor</source>
+        <comment>Password quality</comment>
+        <translation>Huono</translation>
+    </message>
+    <message>
+        <source>Weak</source>
+        <comment>Password quality</comment>
+        <translation>Heikko</translation>
+    </message>
+    <message>
+        <source>Good</source>
+        <comment>Password quality</comment>
+        <translation>Hyvä</translation>
+    </message>
+    <message>
+        <source>Excellent</source>
+        <comment>Password quality</comment>
+        <translation>Erinomainen</translation>
+    </message>
+    <message>
         <source>Confirm Delete Wordlist</source>
         <translation>Vahvista sanalistan poisto</translation>
     </message>
@@ -6198,34 +6700,6 @@ Haluatko ylikirjoittaa sen?</translation>
     <message>
         <source>Special Characters</source>
         <translation>Erikoismerkit</translation>
-    </message>
-    <message>
-        <source>Password Quality: %1</source>
-        <translation>Salasanan laatu: %1</translation>
-    </message>
-    <message>
-        <source>Poor</source>
-        <comment>Password quality</comment>
-        <translation>Huono</translation>
-    </message>
-    <message>
-        <source>Weak</source>
-        <comment>Password quality</comment>
-        <translation>Heikko</translation>
-    </message>
-    <message>
-        <source>Good</source>
-        <comment>Password quality</comment>
-        <translation>Hyvä</translation>
-    </message>
-    <message>
-        <source>Excellent</source>
-        <comment>Password quality</comment>
-        <translation>Erinomainen</translation>
-    </message>
-    <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>Poissuljetut kirjaimet: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</translation>
     </message>
 </context>
 <context>
@@ -6275,8 +6749,8 @@ Haluatko ylikirjoittaa sen?</translation>
         <translation>Erinomainen</translation>
     </message>
     <message>
-        <source>Toggle password visibilty using Control + H. Open the password generator using Control + G.</source>
-        <translation type="unfinished"/>
+        <source>Toggle password visibility using Control + H. Open the password generator using Control + G.</source>
+        <translation>Kytke salasanan näyttö Ctrl+H-näppäinyhdistelmällä. Avaa salasanageneraattori painamalla Ctrl+G.</translation>
     </message>
 </context>
 <context>
@@ -6331,6 +6805,10 @@ Haluatko ylikirjoittaa sen?</translation>
     <message>
         <source>Continue</source>
         <translation>Jatka</translation>
+    </message>
+    <message>
+        <source>Continue with weak password</source>
+        <translation>Jatka heikolla salasalanalla</translation>
     </message>
 </context>
 <context>
@@ -6413,7 +6891,7 @@ Haluatko ylikirjoittaa sen?</translation>
     </message>
     <message>
         <source>Username for the entry.</source>
-        <translation>Tietueen käyttäjänimi.</translation>
+        <translation>Tietueen käyttäjätunnus.</translation>
     </message>
     <message>
         <source>username</source>
@@ -6726,12 +7204,21 @@ Haluatko ylikirjoittaa sen?</translation>
         <translation>Liian monta argumenttia annettu</translation>
     </message>
     <message>
+        <source>Path of the database.</source>
+        <translation>Tietokannan polku.</translation>
+    </message>
+    <message>
         <source>Target decryption time in MS for the database.</source>
         <translation>Kohteen salauksen purkuun kuluva aika millisekunneissa tietokannalle.</translation>
     </message>
     <message>
         <source>time</source>
         <translation>aika</translation>
+    </message>
+    <message>
+        <source>Set the key file for the database.
+This options is deprecated, use --set-key-file instead.</source>
+        <translation>Aseta tietokannan avaintiedosto. Asetus on vanhentunut, käytä sen sijaan &quot;--set-key-file&quot; -määritystä.</translation>
     </message>
     <message>
         <source>Set the key file for the database.</source>
@@ -6744,10 +7231,6 @@ Haluatko ylikirjoittaa sen?</translation>
     <message>
         <source>Create a new database.</source>
         <translation>Luo uusi tietokanta.</translation>
-    </message>
-    <message>
-        <source>Path of the database.</source>
-        <translation>Tietokannan polku.</translation>
     </message>
     <message>
         <source>Invalid decryption time %1.</source>
@@ -6792,6 +7275,158 @@ Haluatko ylikirjoittaa sen?</translation>
     <message>
         <source>Successfully created new database.</source>
         <translation>Luotiin onnistuneesti uusi tietokanta.</translation>
+    </message>
+    <message>
+        <source>Unset the password for the database.</source>
+        <translation>Poista tietokannan salasanamääritys.</translation>
+    </message>
+    <message>
+        <source>Unset the key file for the database.</source>
+        <translation>Poista tietokannan avaintiedostomääritys.</translation>
+    </message>
+    <message>
+        <source>Edit a database.</source>
+        <translation>Muokkaa tietokantaa.</translation>
+    </message>
+    <message>
+        <source>Cannot use %1 and %2 at the same time.</source>
+        <translation>Näitä ei voida käyttää samanaikaisesti: %1 ja %2.</translation>
+    </message>
+    <message>
+        <source>Could not change the database key.</source>
+        <translation>Tietokannan avaintiedostoa ei voitu vaihtaa.</translation>
+    </message>
+    <message>
+        <source>Database was not modified.</source>
+        <translation>Tietokantaa ei muokattu.</translation>
+    </message>
+    <message>
+        <source>Writing the database failed: %1</source>
+        <translation>Tietokannan kirjoittaminen epäonnistui: %1</translation>
+    </message>
+    <message>
+        <source>Successfully edited the database.</source>
+        <translation>Tietokantaa muokattiin.</translation>
+    </message>
+    <message>
+        <source>Cannot remove password: The database does not have a password.</source>
+        <translation>Salasanamääritystä ei voida poistaa: tietokannalla ei ole salasanaa.</translation>
+    </message>
+    <message>
+        <source>Cannot remove file key: The database does not have a file key.</source>
+        <translation>Avaintiedostomääritystä ei voida poistaa: tietokannalla ei ole avaintiedostoa.</translation>
+    </message>
+    <message>
+        <source>Loading the new key file failed: %1</source>
+        <translation>Uuden avaintiedoston lataus epäonnistui: %1</translation>
+    </message>
+    <message>
+        <source>Found unexpected Key type %1</source>
+        <translation>Löytyi odottamaton avaintyyppi %1</translation>
+    </message>
+    <message>
+        <source>Cannot remove all the keys from a database.</source>
+        <translation>Tietokannan kaikkia avaimia ei voida poistaa.</translation>
+    </message>
+    <message>
+        <source>Show a database&apos;s information.</source>
+        <translation>Näytä tietokannan tiedot.</translation>
+    </message>
+    <message>
+        <source>UUID: </source>
+        <translation>UUID:</translation>
+    </message>
+    <message>
+        <source>Name: </source>
+        <translation>Nimi:</translation>
+    </message>
+    <message>
+        <source>Description: </source>
+        <translation>Kuvaus:</translation>
+    </message>
+    <message>
+        <source>Cipher: </source>
+        <translation>Salaus:</translation>
+    </message>
+    <message>
+        <source>KDF: </source>
+        <translation>KDF:</translation>
+    </message>
+    <message>
+        <source>Recycle bin is enabled.</source>
+        <translation>Roskakori on otettu käyttöön.</translation>
+    </message>
+    <message>
+        <source>Recycle bin is not enabled.</source>
+        <translation>Roskakori ei ole käytössä.</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Sijainti</translation>
+    </message>
+    <message>
+        <source>Database created</source>
+        <translation>Tietokanta luotu</translation>
+    </message>
+    <message>
+        <source>Last saved</source>
+        <translation>Viimeksi tallennettu</translation>
+    </message>
+    <message>
+        <source>Unsaved changes</source>
+        <translation>Tallentamattomia muutoksia</translation>
+    </message>
+    <message>
+        <source>yes</source>
+        <translation>kyllä</translation>
+    </message>
+    <message>
+        <source>no</source>
+        <translation>ei</translation>
+    </message>
+    <message>
+        <source>Number of groups</source>
+        <translation>Ryhmien määrä</translation>
+    </message>
+    <message>
+        <source>Number of entries</source>
+        <translation>Tietueiden lukumäärä</translation>
+    </message>
+    <message>
+        <source>Number of expired entries</source>
+        <translation>Vanhentuneiden tietueiden lukumäärä</translation>
+    </message>
+    <message>
+        <source>Unique passwords</source>
+        <translation>Yksilöllisiä salasanoja</translation>
+    </message>
+    <message>
+        <source>Non-unique passwords</source>
+        <translation>Ei-yksilöllisiä salasanoja</translation>
+    </message>
+    <message>
+        <source>Maximum password reuse</source>
+        <translation>Maksimimäärä samoja salasanoja</translation>
+    </message>
+    <message>
+        <source>Number of short passwords</source>
+        <translation>Lyhyiden salasanojen määrä</translation>
+    </message>
+    <message>
+        <source>Number of weak passwords</source>
+        <translation>Heikkojen salasanojen määrä</translation>
+    </message>
+    <message>
+        <source>Entries excluded from reports</source>
+        <translation>Tietueet jotka on poissuljettu raporteista</translation>
+    </message>
+    <message>
+        <source>Average password length</source>
+        <translation>Salasanan keskimääräinen pituus</translation>
+    </message>
+    <message>
+        <source>%1 characters</source>
+        <translation>%1 merkkiä</translation>
     </message>
     <message>
         <source>Word count for the diceware passphrase.</source>
@@ -6843,10 +7478,6 @@ Haluatko ylikirjoittaa sen?</translation>
     <message>
         <source>Enter new password for entry: </source>
         <translation>Anna tietueelle uusi salasana:</translation>
-    </message>
-    <message>
-        <source>Writing the database failed: %1</source>
-        <translation>Tietokannan kirjoittaminen epäonnistui: %1</translation>
     </message>
     <message>
         <source>Successfully edited entry %1.</source>
@@ -7073,106 +7704,6 @@ Haluatko ylikirjoittaa sen?</translation>
         <translation>Tietokanta tuotiin onnistuneesti.</translation>
     </message>
     <message>
-        <source>Show a database&apos;s information.</source>
-        <translation>Näytä tietokannan tiedot.</translation>
-    </message>
-    <message>
-        <source>UUID: </source>
-        <translation>UUID:</translation>
-    </message>
-    <message>
-        <source>Name: </source>
-        <translation>Nimi:</translation>
-    </message>
-    <message>
-        <source>Description: </source>
-        <translation>Kuvaus:</translation>
-    </message>
-    <message>
-        <source>Cipher: </source>
-        <translation>Salaus:</translation>
-    </message>
-    <message>
-        <source>KDF: </source>
-        <translation>KDF:</translation>
-    </message>
-    <message>
-        <source>Recycle bin is enabled.</source>
-        <translation>Roskakori on otettu käyttöön.</translation>
-    </message>
-    <message>
-        <source>Recycle bin is not enabled.</source>
-        <translation>Roskakori ei ole käytössä.</translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation>Sijainti</translation>
-    </message>
-    <message>
-        <source>Database created</source>
-        <translation>Tietokanta luotu</translation>
-    </message>
-    <message>
-        <source>Last saved</source>
-        <translation>Viimeksi tallennettu</translation>
-    </message>
-    <message>
-        <source>Unsaved changes</source>
-        <translation>Tallentamattomia muutoksia</translation>
-    </message>
-    <message>
-        <source>yes</source>
-        <translation>kyllä</translation>
-    </message>
-    <message>
-        <source>no</source>
-        <translation>ei</translation>
-    </message>
-    <message>
-        <source>Number of groups</source>
-        <translation>Ryhmien määrä</translation>
-    </message>
-    <message>
-        <source>Number of entries</source>
-        <translation>Tietueiden lukumäärä</translation>
-    </message>
-    <message>
-        <source>Number of expired entries</source>
-        <translation>Vanhentuneiden tietueiden lukumäärä</translation>
-    </message>
-    <message>
-        <source>Unique passwords</source>
-        <translation>Yksilöllisiä salasanoja</translation>
-    </message>
-    <message>
-        <source>Non-unique passwords</source>
-        <translation>Ei-yksilöllisiä salasanoja</translation>
-    </message>
-    <message>
-        <source>Maximum password reuse</source>
-        <translation>Maksimimäärä samoja salasanoja</translation>
-    </message>
-    <message>
-        <source>Number of short passwords</source>
-        <translation>Lyhyiden salasanojen määrä</translation>
-    </message>
-    <message>
-        <source>Number of weak passwords</source>
-        <translation>Heikkojen salasanojen määrä</translation>
-    </message>
-    <message>
-        <source>Entries excluded from reports</source>
-        <translation>Tietueet jotka on poissuljettu raporteista</translation>
-    </message>
-    <message>
-        <source>Average password length</source>
-        <translation>Salasanan keskimääräinen pituus</translation>
-    </message>
-    <message>
-        <source>%1 characters</source>
-        <translation>%1 merkkiä</translation>
-    </message>
-    <message>
         <source>Unknown command %1</source>
         <translation>Tuntematon komento %1</translation>
     </message>
@@ -7220,7 +7751,7 @@ Käytettävissä olevat komennot:
     </message>
     <message>
         <source>Use the same credentials for both database files.</source>
-        <translation>Käytä samoja tilitietoja molemmille tietokantatiedostoille.</translation>
+        <translation>Käytä samoja tunnistetietoja molemmille tietokantatiedostoille.</translation>
     </message>
     <message>
         <source>Key file of the database to merge from.</source>
@@ -7345,6 +7876,10 @@ Käytettävissä olevat komennot:
         <translation>Näytä suojatut attribuutit selkotekstinä.</translation>
     </message>
     <message>
+        <source>Show all the attributes of the entry.</source>
+        <translation>Näytä tietueen kaikki attribuutit.</translation>
+    </message>
+    <message>
         <source>Show the attachments of the entry.</source>
         <translation>Näytä tietueen liitteet.</translation>
     </message>
@@ -7413,6 +7948,10 @@ Ole hyvä ja harkitse uuden avaintiedoston luomista.</translation>
     <message>
         <source>Invalid YubiKey serial %1</source>
         <translation>Virheellinen Yubikeyn serial %1</translation>
+    </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue.</source>
+        <translation>Jatka kytkemällä YubiKey-avaimesi tai koskettamalla sitä.</translation>
     </message>
     <message>
         <source>Enter password to encrypt database (optional): </source>
@@ -7562,7 +8101,7 @@ Ydin: %3 %4</translation>
     </message>
     <message>
         <source>Quick Unlock</source>
-        <translation>Nopea lukituksen avaus</translation>
+        <translation>Pika-avaus</translation>
     </message>
     <message>
         <source>Secret Service Integration</source>
@@ -7602,7 +8141,7 @@ Ydin: %3 %4</translation>
     </message>
     <message>
         <source>Botan library must be at least %1, found %2.%3.%4</source>
-        <translation type="unfinished"/>
+        <translation>Botan-kirjaston tulee olla ainakin %1, löytyi %2.%3.%4</translation>
     </message>
     <message>
         <source>Cryptographic libraries:</source>
@@ -7855,6 +8394,10 @@ Ydin: %3 %4</translation>
         <translation>Toinen KeePassXC-instanssi on jo käynnissä.</translation>
     </message>
     <message>
+        <source>KeePassXC is not running. No open database to lock</source>
+        <translation>KeePassXC ei ole käynnissä. Avoimia, lukittavia tietokantoja ei ole.</translation>
+    </message>
+    <message>
         <source>Fatal error while testing the cryptographic functions.</source>
         <translation>Vakava virhe kryptografisia toimintoa testattaessa.</translation>
     </message>
@@ -7886,83 +8429,220 @@ Ydin: %3 %4</translation>
     </message>
     <message>
         <source>Warning: Failed to block screenshot capture on a top-level window.</source>
-        <translation type="unfinished"/>
+        <translation>Varoitus: Kuvankaappauksen esto ylätason ikkunasta epäonnistui.</translation>
     </message>
     <message>
         <source>Invalid Cipher</source>
-        <translation type="unfinished"/>
+        <translation>Virheellinen salakirjoitus</translation>
     </message>
     <message>
         <source>Invalid KDF</source>
-        <translation type="unfinished"/>
+        <translation>Virheellinen KDF</translation>
     </message>
     <message>
-        <source>Please present or touch your YubiKey to continue.</source>
-        <translation>Jatka kytkemällä YubiKey-avaimesi tai koskettamalla sitä</translation>
-    </message>
-    <message>
-        <source>Show all the attributes of the entry.</source>
-        <translation>Näytä tietueen kaikki attribuutit.</translation>
-    </message>
-    <message>
-        <source>Edit a database.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Could not change the database key.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Database was not modified.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Successfully edited the database.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Loading the new key file failed: %1</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Unset the password for the database.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Unset the key file for the database.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Cannot use %1 and %2 at the same time.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Cannot remove all the keys from a database.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Cannot remove password: The database does not have a password.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Cannot remove file key: The database does not have a file key.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Found unexpected Key type %1</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Set the key file for the database.
-This options is deprecated, use --set-key-file instead.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>KeePassXC is not running. No open database to lock</source>
-        <translation type="unfinished"/>
+        <source>Access to all entries is denied</source>
+        <translation>Kaikkien tiedoeiden käyttö on estetty</translation>
     </message>
     <message>
         <source>allow screenshots and app recording (Windows/macOS)</source>
+        <translation>salli kuvankaappaukset ja sovelluksen tallennus (Windows/macOS).</translation>
+    </message>
+    <message>
+        <source>Enter Shortcut</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Action</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Shortcuts</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Attestation not supported</source>
+        <translation>Todennusta ei tueta</translation>
+    </message>
+    <message>
+        <source>Credential is excluded</source>
+        <translation>Tietuetta on rajoitettu</translation>
+    </message>
+    <message>
+        <source>Passkeys request canceled</source>
+        <translation>Suojausavainpyyntö peruttiin</translation>
+    </message>
+    <message>
+        <source>Invalid user verification</source>
+        <translation>Virheellinen käyttäjävahvistus</translation>
+    </message>
+    <message>
+        <source>Empty public key</source>
+        <translation>Tyhjä julkinen avain</translation>
+    </message>
+    <message>
+        <source>Invalid URL provided</source>
+        <translation>Ilmoitettu URL-osoite ei kelpaa</translation>
+    </message>
+    <message>
+        <source>Passkeys</source>
+        <translation>Suojausavaimet</translation>
+    </message>
+    <message>
+        <source>AES initialization failed</source>
+        <translation>AES-alustus epäonnistui</translation>
+    </message>
+    <message>
+        <source>AES encrypt failed</source>
+        <translation>AES-salaus epäonnistui</translation>
+    </message>
+    <message>
+        <source>Failed to store in Linux Keyring</source>
+        <translation>Tallennus Linux-avainrenkaaseen epäonnistui</translation>
+    </message>
+    <message>
+        <source>Polkit returned an error: %1</source>
+        <translation>Polkit palautti virheen: %1</translation>
+    </message>
+    <message>
+        <source>Could not locate key in keyring</source>
+        <translation>Avainta ei löytynyt avainrenkaasta</translation>
+    </message>
+    <message>
+        <source>Could not read key in keyring</source>
+        <translation>Avainta ei voitu lukea avainrenkaasta</translation>
+    </message>
+    <message>
+        <source>AES decrypt failed</source>
+        <translation>AES-salauksen purku epäonnistui</translation>
+    </message>
+    <message>
+        <source>No Polkit authentication agent was available</source>
+        <translation>Polkit-todennusagenttia ei ollut käytettävissä</translation>
+    </message>
+    <message>
+        <source>Polkit authorization failed</source>
+        <translation>Polkit-todennus epäonnistui</translation>
+    </message>
+    <message>
+        <source>No Quick Unlock provider is available</source>
+        <translation>Pika-avaustapoja ei ole käytettävissä</translation>
+    </message>
+    <message>
+        <source>Failed to init KeePassXC crypto.</source>
+        <translation>KeePassXC-kryptauksen alustus epäonnistui</translation>
+    </message>
+    <message>
+        <source>Failed to encrypt key data.</source>
+        <translation>Avaindatan salaus epäonnistui</translation>
+    </message>
+    <message>
+        <source>Failed to get Windows Hello credential.</source>
+        <translation>Windows Hello -valtuutuksen hakeminen epäonnistui</translation>
+    </message>
+    <message>
+        <source>Failed to decrypt key data.</source>
+        <translation>Avaindatan salauksen avaus epäonnistui.</translation>
+    </message>
+    <message>
+        <source>Favorite</source>
+        <comment>Tag for favorite entries</comment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>File does not exist.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot open file: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot parse file: %1 at position %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to decrypt json file: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid encKeyValidation field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid cipher list within encKeyValidation field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Wrong password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid encrypted data field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid cipher list within encrypted data field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot initialize cipher</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot decrypt data</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Bitwarden Import</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Archived</source>
+        <comment>Tag for archived entries</comment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid 1PUX file format: Not a valid ZIP file.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid 1PUX file format: Missing export.data</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>1Password Import</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Origin is empty or not allowed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Effective domain is not a valid domain</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Origin and RP ID do not match</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No supported algorithms were provided</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Wait for timer to expire</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unknown Passkeys error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Challenge is shorter than required minimum length</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>user.id does not match the required length</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -8002,18 +8682,6 @@ This options is deprecated, use --set-key-file instead.</source>
 </context>
 <context>
     <name>ReportsWidgetBrowserStatistics</name>
-    <message>
-        <source>Exclude expired entries from the report</source>
-        <translation>Piilota vanhentuneet tietueet raportista</translation>
-    </message>
-    <message>
-        <source>Show only entries which have URL set</source>
-        <translation>Näytä vain tietueet joilla on URL</translation>
-    </message>
-    <message>
-        <source>Show only entries which have browser settings in custom data</source>
-        <translation>Näytä vain tietueet joilla on selaimen tallentamia asetuksia</translation>
-    </message>
     <message>
         <source>Double-click entries to edit.</source>
         <translation>Tuplaklikkaa tietuetta muokataksesi</translation>
@@ -8072,23 +8740,31 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message numerus="yes">
         <source>Delete Entry(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform>Poista tietueet...</numerusform></translation>
+        <translation><numerusform>Poista tietue...</numerusform><numerusform>Poista tietueet...</numerusform></translation>
     </message>
     <message>
         <source>Exclude from reports</source>
         <translation>Poissulje raporteista</translation>
     </message>
+    <message>
+        <source>Only show entries that have a URL</source>
+        <translation>Näytä vain URL-osoitteen sisältävät tietueet</translation>
+    </message>
+    <message>
+        <source>Only show entries that have been explicitly allowed or denied</source>
+        <translation>Näytä vain tietueet, jotka on erikseen sallittu tai estetty</translation>
+    </message>
+    <message>
+        <source>Show expired entries</source>
+        <translation>Näytä erääntyneet tietueet</translation>
+    </message>
+    <message>
+        <source> (Expired)</source>
+        <translation> (erääntynyt)</translation>
+    </message>
 </context>
 <context>
     <name>ReportsWidgetHealthcheck</name>
-    <message>
-        <source>Exclude expired entries from the report</source>
-        <translation>Piilota vanhentuneet tietueet raportista</translation>
-    </message>
-    <message>
-        <source>Also show entries that have been excluded from reports</source>
-        <translation>Näytä myös ne tietueet jotka on poissuljettu raporteista</translation>
-    </message>
     <message>
         <source>Hover over reason to show additional details. Double-click entries to edit.</source>
         <translation>Siirrä kursori syyn päälle nähdäksesi lisätietoja. Tuplaklikkaa tietueita muokataksesi niitä.</translation>
@@ -8163,6 +8839,18 @@ This options is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Exclude from reports</source>
         <translation>Poissulje raporteista</translation>
+    </message>
+    <message>
+        <source>Show expired entries</source>
+        <translation>Näytä erääntyneet tietueet</translation>
+    </message>
+    <message>
+        <source>Show entries that have been excluded from reports</source>
+        <translation>Näytä tietueet, joita ei sisällytetä raportteihin.</translation>
+    </message>
+    <message>
+        <source> (Expired)</source>
+        <translation> (erääntynyt)</translation>
     </message>
 </context>
 <context>
@@ -8258,6 +8946,65 @@ This options is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Exclude from reports</source>
         <translation>Poissulje raporteista</translation>
+    </message>
+</context>
+<context>
+    <name>ReportsWidgetPasskeys</name>
+    <message>
+        <source>Export</source>
+        <translation>Vie</translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation>Tuo</translation>
+    </message>
+    <message>
+        <source>List of entry URLs</source>
+        <translation>Lista tietueen URL:istä</translation>
+    </message>
+    <message>
+        <source>Please wait, list of entries with Passkeys is being updated…</source>
+        <translation>Odota kun suojausavaimia sisältävien tietueiden lista päivittyy...</translation>
+    </message>
+    <message>
+        <source>No entries with Passkeys.</source>
+        <translation>Suojausavaimia sisältäviä tietueita ei ole.</translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation>Otsikko</translation>
+    </message>
+    <message>
+        <source>Path</source>
+        <translation>Polku</translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>Käyttäjätunnus</translation>
+    </message>
+    <message>
+        <source>URLs</source>
+        <translation>URL:t</translation>
+    </message>
+    <message>
+        <source>Edit Entry…</source>
+        <translation>Muokkaa tietuetta...</translation>
+    </message>
+    <message numerus="yes">
+        <source>Delete Entry(s)…</source>
+        <translation><numerusform>Poista tietue...</numerusform><numerusform>Poista tietueet...</numerusform></translation>
+    </message>
+    <message>
+        <source>Relying Party</source>
+        <translation>Välittävät taho</translation>
+    </message>
+    <message>
+        <source>Show expired entries</source>
+        <translation>Näytä erääntyneet tietueet</translation>
+    </message>
+    <message>
+        <source> (Expired)</source>
+        <translation> (erääntynyt)</translation>
     </message>
 </context>
 <context>
@@ -8431,7 +9178,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>No agent running, cannot list identities.</source>
-        <translation>Agentti ei ole päällä, identiteettejä ei voi listata.</translation>
+        <translation>Agentti ei ole päällä, tunnisteita ei voi listata.</translation>
     </message>
 </context>
 <context>
@@ -8500,6 +9247,10 @@ This options is deprecated, use --set-key-file instead.</source>
         <translation>Etsi apua</translation>
     </message>
     <message>
+        <source>Save Search</source>
+        <translation>Tallenna haku</translation>
+    </message>
+    <message>
         <source>Search (%1)…</source>
         <comment>Search placeholder text, %1 is the keyboard shortcut</comment>
         <translation>Etsi (%1)...</translation>
@@ -8511,10 +9262,6 @@ This options is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Limit search to selected group</source>
         <translation>Rajoita haku valittuun ryhmään</translation>
-    </message>
-    <message>
-        <source>Save Search</source>
-        <translation>Tallenna haku</translation>
     </message>
 </context>
 <context>
@@ -8735,7 +9482,38 @@ mutta arvo voi vaihdella ohjelmasta riippuen.)&lt;/p&gt;&lt;/body&gt;&lt;/html&g
     </message>
 </context>
 <context>
+    <name>ShortcutSettingsWidget</name>
+    <message>
+        <source>Double click an action to change its shortcut</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Shortcut Conflict</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Filter...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Shortcut %1 conflicts with &apos;%2&apos;. Overwrite shortcut?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset Shortcuts</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>TagModel</name>
+    <message>
+        <source>Clear Search</source>
+        <translation>Tyhjennä haku</translation>
+    </message>
+    <message>
+        <source>All Entries</source>
+        <translation>Kaikki tietueet</translation>
+    </message>
     <message>
         <source>Expired</source>
         <translation>Vanhentuneet</translation>
@@ -8743,14 +9521,6 @@ mutta arvo voi vaihdella ohjelmasta riippuen.)&lt;/p&gt;&lt;/body&gt;&lt;/html&g
     <message>
         <source>Weak Passwords</source>
         <translation>Heikot salasanat</translation>
-    </message>
-    <message>
-        <source>All Entries</source>
-        <translation>Kaikki tietueet</translation>
-    </message>
-    <message>
-        <source>Clear Search</source>
-        <translation>Tyhjennä haku</translation>
     </message>
 </context>
 <context>
@@ -8769,7 +9539,7 @@ mutta arvo voi vaihdella ohjelmasta riippuen.)&lt;/p&gt;&lt;/body&gt;&lt;/html&g
     </message>
     <message>
         <source>Remove tag &quot;%1&quot; from all entries in this database?</source>
-        <translation>Poistetaanko tunniste &quot;%1&quot; tietokannan kaikilta tietueista?</translation>
+        <translation>Poistetaanko tunniste &quot;%1&quot; tietokannan kaikilta tietueilta?</translation>
     </message>
 </context>
 <context>
@@ -8930,26 +9700,6 @@ Esimerkiksi: JBSWY3DPEHPK3PXP</translation>
         <translation>Aloita salasanojesi turvallinen tallentaminen KeePassXC-tietokantaan</translation>
     </message>
     <message>
-        <source>Create new database</source>
-        <translation>Luo uusi tietokanta</translation>
-    </message>
-    <message>
-        <source>Open existing database</source>
-        <translation>Avaa tietokanta</translation>
-    </message>
-    <message>
-        <source>Import from KeePass 1</source>
-        <translation>Tuo KeePass 1 -tietokanta</translation>
-    </message>
-    <message>
-        <source>Import from 1Password</source>
-        <translation>Tuo 1Passwordista</translation>
-    </message>
-    <message>
-        <source>Import from CSV</source>
-        <translation>Tuo CSV-tiedostosta</translation>
-    </message>
-    <message>
         <source>Recent databases</source>
         <translation>Viimeisimmät tietokannat</translation>
     </message>
@@ -8960,6 +9710,18 @@ Esimerkiksi: JBSWY3DPEHPK3PXP</translation>
     <message>
         <source>Welcome to KeePassXC %1</source>
         <translation>Tervetuloa KeePassXC:n versioon %1</translation>
+    </message>
+    <message>
+        <source>Create Database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open Database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import File</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -8978,30 +9740,7 @@ Esimerkiksi: JBSWY3DPEHPK3PXP</translation>
     </message>
 </context>
 <context>
-    <name>WindowsHello</name>
-    <message>
-        <source>Failed to init KeePassXC crypto.</source>
-        <translation>KeePassXC-kryptauksen alustus epäonnistui</translation>
-    </message>
-    <message>
-        <source>Failed to encrypt key data.</source>
-        <translation>Avaindatan salaus epäonnistui</translation>
-    </message>
-    <message>
-        <source>Failed to get Windows Hello credential.</source>
-        <translation>Windows Hello -valtuutuksen hakeminen epäonnistui</translation>
-    </message>
-    <message>
-        <source>Failed to decrypt key data.</source>
-        <translation>Avaindatan salauksen avaus epäonnistui.</translation>
-    </message>
-</context>
-<context>
     <name>YubiKey</name>
-    <message>
-        <source>%1 No interface, slot %2</source>
-        <translation>%1 Ei liitäntää, paikka %2</translation>
-    </message>
     <message>
         <source>General: </source>
         <translation>Yleiset:</translation>
@@ -9013,14 +9752,6 @@ Esimerkiksi: JBSWY3DPEHPK3PXP</translation>
 </context>
 <context>
     <name>YubiKeyEditWidget</name>
-    <message>
-        <source>Refresh hardware tokens</source>
-        <translation>Uudista laitetunnisteet</translation>
-    </message>
-    <message>
-        <source>Refresh</source>
-        <translation>Päivitä</translation>
-    </message>
     <message>
         <source>Hardware key slot selection</source>
         <translation>Laiteavaimen paikan valinta</translation>
@@ -9054,10 +9785,6 @@ Esimerkiksi: JBSWY3DPEHPK3PXP</translation>
         <translation>Haaste-vastaus asetettu, klikkaa muuttaaksesi tai poistaaksesi</translation>
     </message>
     <message>
-        <source>&lt;p&gt;If you own a &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; or &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt;, you can use it for additional security.&lt;/p&gt;&lt;p&gt;The key requires one of its slots to be programmed as &lt;a href=&quot;https://www.yubico.com/products/services-software/challenge-response/&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Jos omistat &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey:n&lt;/a&gt; tai &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey:n&lt;/a&gt;, voit käyttää sitä lisäturvakeinona.&lt;/p&gt;&lt;p&gt;Avain vaatii yhden paikan asettamista &lt;a href=&quot;https://www.yubico.com/products/services-software/challenge-response/&quot;&gt;HMAC-SHA1 haaste-vastaukseksi&lt;/a&gt;.&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Detecting hardware keys…</source>
         <translation>Etsitään laiteavaimia...</translation>
     </message>
@@ -9065,27 +9792,20 @@ Esimerkiksi: JBSWY3DPEHPK3PXP</translation>
         <source>No hardware keys detected</source>
         <translation>Laiteavaimia ei havaittu</translation>
     </message>
-</context>
-<context>
-    <name>YubiKeyInterface</name>
     <message>
-        <source>%1 Invalid slot specified - %2</source>
-        <translation>%1 Virheellinen paikka määritetty - %2</translation>
+        <source>&lt;p&gt;If you own a &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; or &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt;, you can use it for additional security.&lt;/p&gt;&lt;p&gt;The key requires one of its slots to be programmed as &lt;a href=&quot;https://docs.yubico.com/yesdk/users-manual/application-otp/challenge-response.html&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Refresh hardware keys</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>YubiKeyInterfacePCSC</name>
     <message>
-        <source>(PCSC) %1 [%2] Challenge-Response - Slot %3</source>
-        <translation>(PCSC) %1 [%2] Haaste-vastaus - Paikka %3</translation>
-    </message>
-    <message>
         <source>The YubiKey PCSC interface has not been initialized.</source>
         <translation>Yubikey:n PCSC-käyttöliittymää ei ole alustettu.</translation>
-    </message>
-    <message>
-        <source>Hardware key is currently in use.</source>
-        <translation>Laiteavain on käytössä.</translation>
     </message>
     <message>
         <source>Could not find or access hardware key with serial number %1. Please present it to continue. </source>
@@ -9103,20 +9823,27 @@ Esimerkiksi: JBSWY3DPEHPK3PXP</translation>
         <source>Failed to complete a challenge-response, the PCSC error code was: %1</source>
         <translation>Haaste-vastauksen valmistuminen epäonnistui PCSC:n virheellä: %1</translation>
     </message>
+    <message>
+        <source>(NFC) %1 [%2] - Slot %3, %4</source>
+        <comment>YubiKey display fields</comment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Press</source>
+        <comment>USB Challenge-Response Key interaction request</comment>
+        <translation>Paina</translation>
+    </message>
+    <message>
+        <source>Passive</source>
+        <comment>USB Challenge-Response Key no interaction required</comment>
+        <translation>Passiivi</translation>
+    </message>
 </context>
 <context>
     <name>YubiKeyInterfaceUSB</name>
     <message>
         <source>Unknown</source>
         <translation>Tuntematon</translation>
-    </message>
-    <message>
-        <source>(USB) %1 [%2] Configured Slot - %3</source>
-        <translation>(USB) %1 [%2] Asetettu paikka - %3</translation>
-    </message>
-    <message>
-        <source>(USB) %1 [%2] Challenge-Response - Slot %3 - %4</source>
-        <translation>(USB) %1 [%2] Haaste-vastaus - Paikka %3 - %4</translation>
     </message>
     <message>
         <source>Press</source>
@@ -9133,10 +9860,6 @@ Esimerkiksi: JBSWY3DPEHPK3PXP</translation>
         <translation>Yubikey:n USB-käyttöliittymää ei ole alustettu.</translation>
     </message>
     <message>
-        <source>Hardware key is currently in use.</source>
-        <translation>Laiteavain on käytössä.</translation>
-    </message>
-    <message>
         <source>Could not find hardware key with serial number %1. Please plug it in to continue.</source>
         <translation>Laiteavainta sarjanumerolla %1 ei löydetty. Ole hyvä ja liitä se jatkaaksesi.</translation>
     </message>
@@ -9151,6 +9874,16 @@ Esimerkiksi: JBSWY3DPEHPK3PXP</translation>
     <message>
         <source>Failed to complete a challenge-response, the specific error was: %1</source>
         <translation>Haaste-vastauksen valmistuminen epäonnistui virheellä: %1</translation>
+    </message>
+    <message>
+        <source>%1 [%2] - Slot %3</source>
+        <comment>YubiKey NEO display fields</comment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 [%2] - Slot %3, %4</source>
+        <comment>YubiKey display fields</comment>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

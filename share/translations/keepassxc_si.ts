@@ -3,7 +3,7 @@
     <name>AboutDialog</name>
     <message>
         <source>About KeePassXC</source>
-        <translation>KeePassXC ගැන</translation>
+        <translation>කීපාස්එක්ස්සී ගැන</translation>
     </message>
     <message>
         <source>About</source>
@@ -19,7 +19,7 @@
     </message>
     <message>
         <source>Project Maintainers:</source>
-        <translation>ව්යාපෘති නඩත්තු කරන්නන්:</translation>
+        <translation>ව්‍යාපෘතිය නඩත්තුකරුවන්:</translation>
     </message>
     <message>
         <source>Special thanks from the KeePassXC team go to debfx for creating the original KeePassX.</source>
@@ -31,11 +31,11 @@
     </message>
     <message>
         <source>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;See Contributions on GitHub&lt;/a&gt;</source>
-        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;GitHub&lt;/a&gt;හි දායකත්ව බලන්න</translation>
+        <translation>&lt;a href=&quot;https://github.com/keepassxreboot/keepassxc/graphs/contributors&quot;&gt;දායකත්‍ව ගිට්හබ් හි බලන්න&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Debug Info</source>
-        <translation>දෝශ නිරාකරණ තොරතුරු</translation>
+        <translation>නිදොස්කරණ තොරතුරු</translation>
     </message>
     <message>
         <source>Include the following information whenever you report a bug:</source>
@@ -43,7 +43,7 @@
     </message>
     <message>
         <source>Copy to clipboard</source>
-        <translation>පසුරු පුවරුවට පිටපත් කරන්න</translation>
+        <translation>පසුරු පුවරුවට පිටපතක්</translation>
     </message>
 </context>
 <context>
@@ -81,16 +81,16 @@
         <translation>විස්තර</translation>
     </message>
     <message>
+        <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
+        <translation>ඉල්ලන සේවාලාභියා සහ KeePassXC යන දෙකම ක්‍රියාත්මක වන කාලය සඳහා ඔබේ තීරණය මතක තබා ගනු ඇත.</translation>
+    </message>
+    <message>
         <source>Remember</source>
-        <translation>මතක තියාගන්න</translation>
+        <translation>මතක තබාගන්න</translation>
     </message>
     <message>
         <source>Allow Selected</source>
-        <translation>තෝරාගත් අයට ඉඩ දෙන්න</translation>
-    </message>
-    <message>
-        <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
-        <translation>ඉල්ලන සේවාලාභියා සහ KeePassXC යන දෙකම ක්‍රියාත්මක වන කාලය සඳහා ඔබේ තීරණය මතක තබා ගනු ඇත.</translation>
+        <translation>තේරීම් සඳහා ඉඩදෙන්න</translation>
     </message>
     <message>
         <source>Deny All &amp;&amp; Future</source>
@@ -120,7 +120,11 @@
     </message>
     <message>
         <source>Use OpenSSH</source>
-        <translation>OpenSSH භාවිතා කරන්න</translation>
+        <translation>OpenSSH භාවිතය</translation>
+    </message>
+    <message>
+        <source>Use both agents</source>
+        <translation>නියෝත දෙකම භාවිතය</translation>
     </message>
     <message>
         <source>SSH_AUTH_SOCK override</source>
@@ -150,10 +154,6 @@
         <source>SSH Agent connection is working!</source>
         <translation>SSH නියෝජිත සම්බන්ධතාවය ක්‍රියා කරයි!</translation>
     </message>
-    <message>
-        <source>Use both agents</source>
-        <translation>නියෝජිතයන් දෙකම භාවිතා කරන්න</translation>
-    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidget</name>
@@ -163,11 +163,15 @@
     </message>
     <message>
         <source>General</source>
-        <translation>ජනරාල්</translation>
+        <translation>සාමාන්‍ය</translation>
     </message>
     <message>
         <source>Security</source>
         <translation>ආරක්‍ෂාව</translation>
+    </message>
+    <message>
+        <source>This setting cannot be enabled when minimize on unlock is enabled.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Access error for config file %1</source>
@@ -215,7 +219,7 @@
     </message>
     <message>
         <source>Reset Settings?</source>
-        <translation>සැකසුම් නැවත සකස්?</translation>
+        <translation>සැකසුම් යළි සකසන්නද?</translation>
     </message>
     <message>
         <source>Are you sure you want to reset all general and security settings to default?</source>
@@ -224,10 +228,6 @@
     <message>
         <source>Select backup storage directory</source>
         <translation>උපස්ථ ගබඩා නාමාවලිය තෝරන්න</translation>
-    </message>
-    <message>
-        <source>This setting cannot be enabled when minimize on unlock is enabled.</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -261,6 +261,10 @@
         <translation>කලින් භාවිතා කළ දත්ත සමුදායන් මතක තබා ගන්න</translation>
     </message>
     <message>
+        <source> recent files</source>
+        <translation>මෑත ගොනු</translation>
+    </message>
+    <message>
         <source>Load previously open databases on startup</source>
         <translation>ආරම්භයේදී පෙර විවෘත දත්ත සමුදායන් පූරණය කරන්න</translation>
     </message>
@@ -283,17 +287,17 @@
     <message>
         <source>have expired</source>
         <comment>On database unlock, show entries that...</comment>
-        <translation>කල් ඉකුත් වී ඇත</translation>
+        <translation>ඉකුත් වී ඇත</translation>
     </message>
     <message>
         <source> days</source>
         <comment>On database unlock, show entries that will expire within %1 days</comment>
-        <translation> දින</translation>
+        <translation>දවස්</translation>
     </message>
     <message>
         <source>will expire within </source>
         <comment>On database unlock, show entries that...</comment>
-        <translation>ඇතුළත කල් ඉකුත් වනු ඇත </translation>
+        <translation>ඉකුත් වීම</translation>
     </message>
     <message>
         <source>File Management</source>
@@ -317,11 +321,11 @@
     </message>
     <message>
         <source>Backup database file before saving</source>
-        <translation>සුරැකීමට පෙර දත්ත සමුදා ගොනුව උපස්ථ කරන්න</translation>
+        <translation>සුරැකීමට පෙර දත්තසමුදාය උපස්ථ කරන්න</translation>
     </message>
     <message>
         <source>Backup destination</source>
-        <translation>උපස්ථ ගමනාන්තය</translation>
+        <translation>උපස්ථ ස්ථානය</translation>
     </message>
     <message>
         <source>Specifies the database backup file location. Occurrences of &quot;{DB_FILENAME}&quot; are replaced with the filename of the saved database without extension. {TIME:&lt;format&gt;} is replaced with the backup time, see https://doc.qt.io/qt-5/qdatetime.html#toString. &lt;format&gt; defaults to format string &quot;dd_MM_yyyy_hh-mm-ss&quot;.</source>
@@ -333,7 +337,7 @@
     </message>
     <message>
         <source>Choose...</source>
-        <translation>තෝරා...</translation>
+        <translation>තෝරන්න...</translation>
     </message>
     <message>
         <source>Use alternative saving method (may solve problems with Dropbox, Google Drive, GVFS, etc.)</source>
@@ -349,7 +353,7 @@
     </message>
     <message>
         <source>Entry Management</source>
-        <translation>ඇතුල්වීමේ කළමනාකරණය</translation>
+        <translation>නිවේශිත කළමනාකරණය</translation>
     </message>
     <message>
         <source>Use group icon on entry creation</source>
@@ -357,19 +361,19 @@
     </message>
     <message>
         <source>Minimize when opening a URL</source>
-        <translation>URL එකක් විවෘත කිරීමේදී අවම කරන්න</translation>
+        <translation>ඒ.ස.නි. ඇරීමේදී හකුළන්න</translation>
     </message>
     <message>
         <source>Hide window when copying to clipboard</source>
-        <translation>පසුරු පුවරුවට පිටපත් කිරීමේදී කවුළුව සඟවන්න</translation>
+        <translation>පසුරු පුවරුවට පිටපත් වන විට කවුළුව සඟවන්න</translation>
     </message>
     <message>
         <source>Minimize</source>
-        <translation>අවම කරන්න</translation>
+        <translation>හකුළන්න</translation>
     </message>
     <message>
         <source>Drop to background</source>
-        <translation>පසුබිමට ඇද දමන්න</translation>
+        <translation>පසුබිමට දමන්න</translation>
     </message>
     <message>
         <source>Favicon download timeout:</source>
@@ -386,7 +390,7 @@
     </message>
     <message>
         <source>User Interface</source>
-        <translation>පරිශීලක අතුරුමුහුණත</translation>
+        <translation>පරිශ්‍රීලක අතුරුමුහුණත</translation>
     </message>
     <message>
         <source>Toolbar button style</source>
@@ -411,6 +415,10 @@
     <message>
         <source>Toolbar button style:</source>
         <translation>මෙවලම් තීරු බොත්තම් විලාසය:</translation>
+    </message>
+    <message>
+        <source>Show passwords in color</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Use monospaced font for notes</source>
@@ -442,7 +450,7 @@
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>ස්වයංක්‍රීය වර්ගය</translation>
+        <translation>ස්වයං ලිවීම</translation>
     </message>
     <message>
         <source>Use entry title to match windows for global Auto-Type</source>
@@ -470,7 +478,7 @@
     </message>
     <message>
         <source>Global Auto-Type shortcut:</source>
-        <translation>ගෝලීය ස්වයංක්‍රීය වර්ගයේ කෙටි මග:</translation>
+        <translation>ගෝලීය ස්වයං ලිවීමේ කෙටිමග:</translation>
     </message>
     <message>
         <source>Auto-type start delay milliseconds</source>
@@ -479,15 +487,15 @@
     <message>
         <source> ms</source>
         <comment>Milliseconds</comment>
-        <translation> මෙනෙවිය</translation>
+        <translation>තත්.</translation>
     </message>
     <message>
         <source>Auto-Type typing delay:</source>
-        <translation>ස්වයංක්‍රීය ටයිප් කිරීමේ ප්‍රමාදය:</translation>
+        <translation>ස්වයං ලිවීමේ ප්‍රමාදය:</translation>
     </message>
     <message>
         <source>Global auto-type shortcut</source>
-        <translation>ගෝලීය ස්වයංක්‍රීය ආකාරයේ කෙටි මග</translation>
+        <translation>ගෝලීය ස්වයං ලිවීමේ කෙටිමග</translation>
     </message>
     <message>
         <source>Auto-type character typing delay milliseconds</source>
@@ -496,14 +504,6 @@
     <message>
         <source>Remember last typed entry for:</source>
         <translation>අවසන් වරට ටයිප් කළ ප්‍රවේශය මතක තබා ගන්න:</translation>
-    </message>
-    <message>
-        <source> recent files</source>
-        <translation>මෑත ගොනු</translation>
-    </message>
-    <message>
-        <source>Show passwords in color</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -519,20 +519,20 @@
     <message>
         <source> sec</source>
         <comment>Seconds</comment>
-        <translation> තත්පර</translation>
+        <translation> තත්.</translation>
     </message>
     <message>
         <source>Clear clipboard after</source>
-        <translation>පසු පුවරුව හිස් කරන්න</translation>
+        <translation>පසුරු පුවරුව මැකීම</translation>
     </message>
     <message>
         <source>Clear search query after</source>
-        <translation>පසුව සෙවුම් විමසුම ඉවත් කරන්න</translation>
+        <translation>සෙවුම් විමසුම මැකීම</translation>
     </message>
     <message>
         <source> min</source>
         <comment>Minutes</comment>
-        <translation> මිනි</translation>
+        <translation>විනා.</translation>
     </message>
     <message>
         <source>Clipboard clear seconds</source>
@@ -594,6 +594,10 @@
         <source>Use DuckDuckGo service to download website icons</source>
         <translation>වෙබ් අඩවි අයිකන බාගැනීමට DuckDuckGo සේවාව භාවිතා කරන්න</translation>
     </message>
+    <message>
+        <source>Hide TOTP in the entry preview panel</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
@@ -603,7 +607,7 @@
     </message>
     <message>
         <source>Auto-Type Error</source>
-        <translation>ස්වයංක්‍රීය ටයිප් දෝෂය</translation>
+        <translation>ස්වයං ලිවීමේ දෝෂයකි</translation>
     </message>
     <message>
         <source>Permission Required</source>
@@ -619,7 +623,7 @@
     </message>
     <message>
         <source>Invalid entry provided</source>
-        <translation>වලංගු නොවන ඇතුළත් කිරීමක් සපයා ඇත</translation>
+        <translation>සැපයූ නිවේශිතය වලංගු නොවේ</translation>
     </message>
     <message>
         <source>Bracket imbalance detected, found extra { or }</source>
@@ -638,6 +642,10 @@
         <translation>ඉතා දිගු ප්‍රමාදයක් අනාවරණය විය, උපරිමය %1: %2වේ</translation>
     </message>
     <message>
+        <source>Entry does not have attribute for PICKCHARS: %1</source>
+        <translation>ප්‍රවේශයට PICKCHARS සඳහා ගුණාංග නොමැත: %1</translation>
+    </message>
+    <message>
         <source>Invalid conversion type: %1</source>
         <translation>වලංගු නොවන පරිවර්තන වර්ගය: %1</translation>
     </message>
@@ -654,10 +662,6 @@
     <message>
         <source>Invalid placeholder: %1</source>
         <translation>වලංගු නොවන ස්ථාන දරණ: %1</translation>
-    </message>
-    <message>
-        <source>Entry does not have attribute for PICKCHARS: %1</source>
-        <translation>ප්‍රවේශයට PICKCHARS සඳහා ගුණාංග නොමැත: %1</translation>
     </message>
 </context>
 <context>
@@ -721,7 +725,7 @@
     <name>AutoTypeSelectDialog</name>
     <message>
         <source>Auto-Type - KeePassXC</source>
-        <translation>ස්වයංක්‍රීය වර්ගය - KeePassXC</translation>
+        <translation>ස්වයං ලිවීම - KeePassXC</translation>
     </message>
     <message>
         <source>Double click a row to perform Auto-Type or find an entry using the search:</source>
@@ -743,7 +747,7 @@ Ctrl+4 - Virtual Keyboard භාවිතා කරන්න (Wind පමණි)
     </message>
     <message>
         <source>Search all open databases</source>
-        <translation>සියලුම විවෘත දත්ත සමුදායන් සොයන්න</translation>
+        <translation>විවෘත සියළු දත්තසමුදා සොයන්න</translation>
     </message>
     <message>
         <source>Search…</source>
@@ -779,18 +783,18 @@ Ctrl+4 - Virtual Keyboard භාවිතා කරන්න (Wind පමණි)
     </message>
     <message>
         <source>Copy TOTP</source>
-        <translation>TOTP පිටපත් කරන්න</translation>
+        <translation>TOTP පිටපතක්</translation>
     </message>
     <message>
         <source>Use Virtual Keyboard</source>
-        <translation>අතථ්‍ය යතුරුපුවරුව භාවිතා කරන්න</translation>
+        <translation>අතථ්‍ය යතුරුපුවරුව භාවිතය</translation>
     </message>
 </context>
 <context>
     <name>BrowserAccessControlDialog</name>
     <message>
         <source>KeePassXC - Browser Access Request</source>
-        <translation>KeePassXC - බ්‍රව්සර් ප්‍රවේශ ඉල්ලීම</translation>
+        <translation>KeePassXC - අතිරික්සුවට ප්‍රවේශය ඉල්ලීම</translation>
     </message>
     <message>
         <source>%1 is requesting access to the following entries:</source>
@@ -802,15 +806,15 @@ Ctrl+4 - Virtual Keyboard භාවිතා කරන්න (Wind පමණි)
     </message>
     <message>
         <source>Remember</source>
-        <translation>මතක තියාගන්න</translation>
+        <translation>මතක තබාගන්න</translation>
     </message>
     <message>
         <source>Allow access to entries</source>
-        <translation>ඇතුළත් කිරීම් වලට ප්‍රවේශ වීමට ඉඩ දෙන්න</translation>
+        <translation>නිවේශිත වෙත ප්‍රවේශයට ඉඩදෙන්න</translation>
     </message>
     <message>
         <source>Allow Selected</source>
-        <translation>තෝරාගත් අයට ඉඩ දෙන්න</translation>
+        <translation>තේරීම් සඳහා ඉඩදෙන්න</translation>
     </message>
     <message>
         <source>Deny All</source>
@@ -818,15 +822,15 @@ Ctrl+4 - Virtual Keyboard භාවිතා කරන්න (Wind පමණි)
     </message>
     <message>
         <source>Disable for this site</source>
-        <translation>මෙම අඩවිය සඳහා අබල කරන්න</translation>
+        <translation>මෙම අඩවියට අබල කරන්න</translation>
+    </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>BrowserEntrySaveDialog</name>
-    <message>
-        <source>KeePassXC-Browser Save Entry</source>
-        <translation>KeePassXC-Browser Save Entry</translation>
-    </message>
     <message>
         <source>Ok</source>
         <translation>හරි</translation>
@@ -841,13 +845,69 @@ Please select the correct database for saving credentials.</source>
         <translation>ඔබට බහු දත්ත සමුදායන් විවෘතව ඇත.
 කරුණාකර අක්තපත්‍ර සුරැකීමට නිවැරදි දත්ත සමුදාය තෝරන්න.</translation>
     </message>
+    <message>
+        <source>KeePassXC - Select Database</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>BrowserPasskeysConfirmationDialog</name>
+    <message>
+        <source>Cancel</source>
+        <translation>අවලංගු කරන්න</translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Authenticate</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Register new</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Register</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>Timeout in &lt;b&gt;%n&lt;/b&gt; seconds...</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Do you want to register Passkey for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Existing Passkey found.
+Do you want to register a new Passkey for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Select the existing Passkey and press Update to replace it.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Authenticate Passkey credentials for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Relying Party: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Username: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC - Passkey credentials</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>BrowserService</name>
-    <message>
-        <source>KeePassXC: Create a new group</source>
-        <translation>KeePassXC: නව කණ්ඩායමක් සාදන්න</translation>
-    </message>
     <message>
         <source>A request for creating a new group &quot;%1&quot; has been received.
 Do you want to create this group?
@@ -855,10 +915,6 @@ Do you want to create this group?
         <translation>නව කණ්ඩායමක් &quot;%1&quot; නිර්මාණය කිරීම සඳහා ඉල්ලීමක් ලැබී ඇත.
 ඔබට මෙම කණ්ඩායම නිර්මාණය කිරීමට අවශ්‍යද?
 </translation>
-    </message>
-    <message>
-        <source>KeePassXC: New key association request</source>
-        <translation>KeePassXC: නව යතුරු සංගම් ඉල්ලීම</translation>
     </message>
     <message>
         <source>You have received an association request for the following database:
@@ -874,11 +930,7 @@ chrome-laptop.</translation>
     </message>
     <message>
         <source>Save and allow access</source>
-        <translation>සුරකින්න සහ ප්‍රවේශයට ඉඩ දෙන්න</translation>
-    </message>
-    <message>
-        <source>KeePassXC: Overwrite existing key?</source>
-        <translation>KeePassXC: පවතින යතුර උඩින් ලියන්නද?</translation>
+        <translation>සුරකින්න හා ප්‍රවේශයට ඉඩදෙන්න</translation>
     </message>
     <message>
         <source>A shared encryption key with the name &quot;%1&quot; already exists.
@@ -887,16 +939,8 @@ Do you want to overwrite it?</source>
 ඔබට එය උඩින් ලිවීමට අවශ්‍යද?</translation>
     </message>
     <message>
-        <source>KeePassXC: Update Entry</source>
-        <translation>KeePassXC: ප්‍රවේශය යාවත්කාලීන කරන්න</translation>
-    </message>
-    <message>
         <source>Do you want to update the information in %1 - %2?</source>
         <translation>ඔබට %1 - %2තුළ තොරතුරු යාවත්කාලීන කිරීමට අවශ්‍යද?</translation>
-    </message>
-    <message>
-        <source>KeePassXC: Delete entry</source>
-        <translation>KeePassXC: ඇතුළත් කිරීම මකන්න</translation>
     </message>
     <message>
         <source>A request for deleting entry &quot;%1&quot; has been received.
@@ -907,50 +951,45 @@ Do you want to delete the entry?
 </translation>
     </message>
     <message>
-        <source>Converting attributes to custom data…</source>
-        <translation>අභිරුචි දත්ත…වෙත ගුණාංග පරිවර්තනය කිරීම</translation>
+        <source>%1 (Passkey)</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Abort</source>
-        <translation>ගබ්සා කරන්න</translation>
+        <source>Entry already has a Passkey.
+Do you want to overwrite the Passkey in %1 - %2?</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>KeePassXC: Converted KeePassHTTP attributes</source>
-        <translation>KeePassXC: පරිවර්තනය කරන ලද KeePassHTTP ගුණාංග</translation>
+        <source>KeePassXC - Create a new group</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Successfully converted attributes from %1 entry(s).
-Moved %2 keys to custom data.</source>
-        <translation>%1 ඇතුළත් කිරීම්(ය) වෙතින් උපලක්ෂණ සාර්ථකව පරිවර්තනය කරන ලදී.
-යතුරු %2 අභිරුචි දත්ත වෙත ගෙන යන ලදී.</translation>
-    </message>
-    <message numerus="yes">
-        <source>Successfully moved %n keys to custom data.</source>
-        <translation><numerusform>අභිරුචි දත්ත වෙත යතුරු %n ක් සාර්ථකව ගෙන යන ලදී.</numerusform><numerusform>අභිරුචි දත්ත වෙත යතුරු %n ක් සාර්ථකව ගෙන යන ලදී.</numerusform></translation>
+        <source>Disable</source>
+        <translation>අක්රිය කරන්න</translation>
     </message>
     <message>
-        <source>KeePassXC: No entry with KeePassHTTP attributes found!</source>
-        <translation>KeePassXC: KeePassHTTP ගුණාංග සහිත ප්‍රවේශයක් හමු නොවීය!</translation>
+        <source>KeePassXC - Overwrite existing key?</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>The active database does not contain an entry with KeePassHTTP attributes.</source>
-        <translation>සක්‍රිය දත්ත ගබඩාවේ KeePassHTTP ගුණාංග සහිත ප්‍රවේශයක් අඩංගු නොවේ.</translation>
+        <source>KeePassXC - Update Passkey</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Don&apos;t show this warning again</source>
-        <translation>මෙම අනතුරු&apos;නැවත පෙන්වන්න එපා</translation>
+        <source>KeePassXC - Update Entry</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>KeePassXC: Legacy browser integration settings detected</source>
-        <translation>KeePassXC: Legacy browser integration settings අනාවරණය විය</translation>
+        <source>KeePassXC - Delete entry</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Your KeePassXC-Browser settings need to be moved into the database settings.
-This is necessary to maintain your current browser connections.
-Would you like to migrate your existing settings now?</source>
-        <translation>ඔබගේ KeePassXC-Browser සැකසුම් දත්ත සමුදා සැකසුම් වෙත ගෙන යාමට අවශ්‍ය වේ.
-ඔබගේ වත්මන් බ්‍රවුසර සම්බන්ධතා පවත්වා ගැනීමට මෙය අවශ්‍ය වේ.
-ඔබ දැන් ඔබගේ පවතින සැකසුම් සංක්‍රමණය කිරීමට කැමතිද?</translation>
+        <source>KeePassXC - New key association request</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Passkey</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -965,11 +1004,11 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Enable browser integration</source>
-        <translation>බ්රවුසර ඒකාබද්ධ කිරීම සක්රිය කරන්න</translation>
+        <translation>අතිරික්සු අනුකලනය සබල කරන්න</translation>
     </message>
     <message>
         <source>General</source>
-        <translation>ජනරාල්</translation>
+        <translation>සාමාන්‍ය</translation>
     </message>
     <message>
         <source>Browsers installed as snaps are currently not supported.</source>
@@ -997,7 +1036,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Brave</source>
-        <translation>නිර්භීත</translation>
+        <translation>බ්‍රේව්</translation>
     </message>
     <message>
         <source>Google Chrome</source>
@@ -1051,7 +1090,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>උසස්</translation>
+        <translation>වැඩිදුර</translation>
     </message>
     <message>
         <source>Never ask before accessing credentials</source>
@@ -1159,28 +1198,52 @@ Would you like to migrate your existing settings now?</source>
         <translation>කරුණාකර පහත බ්‍රවුසර දිගු භාවිතය සඳහා විශේෂ උපදෙස් බලන්න</translation>
     </message>
     <message>
-        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location cannot be found!&lt;br/&gt;Browser integration WILL NOT WORK without the proxy application.</source>
-        <translation>&lt;b&gt;දෝෂය:&lt;/b&gt; අභිරුචි ප්‍රොක්සි ස්ථානය සොයාගත නොහැක!&lt;br/&gt;ප්‍රොක්සි යෙදුම නොමැතිව බ්‍රව්සර් ඒකාබද්ධ කිරීම ක්‍රියා නොකරයි.</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Warning:&lt;/b&gt; The following options can be dangerous!</source>
-        <translation>&lt;b&gt;අවවාදයයි:&lt;/b&gt; පහත විකල්ප අනතුරුදායක විය හැක!</translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation>ක්‍රියාත්මක කළ හැකි ගොනු</translation>
     </message>
     <message>
         <source>All Files</source>
-        <translation>සියලුම ගොනු</translation>
+        <translation>සියළුම ගොනු</translation>
     </message>
     <message>
         <source>Select custom proxy location</source>
-        <translation>අභිරුචි ප්‍රොක්සි ස්ථානය තෝරන්න</translation>
+        <translation>අභිරුචි ප්‍රතියුක්ත ස්ථානය තෝරන්න</translation>
     </message>
     <message>
         <source>Select native messaging host folder location</source>
         <translation>ස්වදේශීය පණිවිඩ ධාරක ෆෝල්ඩර ස්ථානය තෝරන්න</translation>
+    </message>
+    <message>
+        <source>Allow keepassxc-proxy to list all entries with their title, URL and UUID in connected databases.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Allow limited access to all entries in connected databases (ignores site access restrictions)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;b&gt;Warning:&lt;/b&gt; Only adjust these settings if necessary.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The custom proxy location does not exist.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The custom proxy location does not exist. Correct this in the advanced settings tab.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;b&gt;Error:&lt;/b&gt; The installed proxy executable is missing from the expected location: %1&lt;br/&gt;Please set a custom proxy location in the advanced settings or reinstall the application.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Allows using insecure http://localhost with Passkeys for testing purposes.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Allow using localhost with Passkeys</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1199,19 +1262,11 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Copy history</source>
-        <translation>ඉතිහාසය පිටපත් කරන්න</translation>
+        <translation>ඉතිහාසයේ පිටපතක්</translation>
     </message>
 </context>
 <context>
     <name>CsvImportWidget</name>
-    <message>
-        <source>Import CSV fields</source>
-        <translation>CSV ක්ෂේත්‍ර ආයාත කරන්න</translation>
-    </message>
-    <message>
-        <source>filename</source>
-        <translation>ගොනුවේ නම</translation>
-    </message>
     <message>
         <source>size, rows, columns</source>
         <translation>ප්‍රමාණය, පේළි, තීරු</translation>
@@ -1250,11 +1305,11 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Created</source>
-        <translation>නිර්මාණය කළා</translation>
+        <translation>සෑදිණි</translation>
     </message>
     <message>
         <source>Last Modified</source>
-        <translation>අවසන් වරට වෙනස් කරන ලදී</translation>
+        <translation>අවසාන සංශෝධනය</translation>
     </message>
     <message>
         <source>Icon</source>
@@ -1320,51 +1375,30 @@ Would you like to migrate your existing settings now?</source>
         <source>Column %1</source>
         <translation>තීරුව %1</translation>
     </message>
-    <message>
-        <source>Imported from CSV file</source>
-        <translation>CSV ගොනුවෙන් ආයාත කර ඇත</translation>
-    </message>
-    <message>
-        <source>Original data: </source>
-        <translation>මුල් දත්ත: </translation>
-    </message>
-    <message>
-        <source>Error(s) detected in CSV file!</source>
-        <translation>CSV ගොනුවේ දෝෂ(ය) අනාවරණය විය!</translation>
-    </message>
     <message numerus="yes">
         <source>[%n more message(s) skipped]</source>
         <translation><numerusform>[තව පණිවිඩ%n ක් මඟ හැරිණි]</numerusform><numerusform>[තව පණිවිඩ%n ක් මඟ හැරිණි]</numerusform></translation>
     </message>
     <message>
-        <source>Error</source>
-        <translation>දෝෂයකි</translation>
+        <source>Failed to parse CSV file: %1</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>CSV import: writer has errors:
-%1</source>
-        <translation>CSV ආයාත: ලේඛකයාට දෝෂ ඇත:
-%1</translation>
+        <source>Imported from CSV file: %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>CsvParserModel</name>
-    <message>
-        <source>%1, %2, %3</source>
-        <comment>file info: bytes, rows, columns</comment>
-        <translation>%1, %2, %3</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n byte(s)</source>
-        <translation><numerusform>%n බයිට්(ය)</numerusform><numerusform>%n බයිට්(ය)</numerusform></translation>
-    </message>
     <message numerus="yes">
         <source>%n row(s)</source>
-        <translation><numerusform>පේළි %n (ය)</numerusform><numerusform>පේළි %n (ය)</numerusform></translation>
+        <comment>CSV row count</comment>
+        <translation><numerusform>පේළි %n</numerusform><numerusform>පේළි %n</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n column(s)</source>
-        <translation><numerusform>%n තීරු(ය)</numerusform><numerusform>%n තීරු(ය)</numerusform></translation>
+        <comment>CSV column count</comment>
+        <translation><numerusform>තීරු %n</numerusform><numerusform>තීරු %n</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1380,11 +1414,11 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message>
         <source>Unable to open file %1.</source>
-        <translation>%1ගොනුව විවෘත කළ නොහැක.</translation>
+        <translation>%1 ගොනුව ඇරීමට නොහැකිය.</translation>
     </message>
     <message>
         <source>Error while reading the database: %1</source>
-        <translation>දත්ත සමුදාය කියවීමේදී දෝෂයකි: %1</translation>
+        <translation>දත්තසමුදාය කියවීමේදී දෝෂයකි: %1</translation>
     </message>
     <message>
         <source>Could not save, database does not point to a valid file.</source>
@@ -1436,31 +1470,11 @@ Backup database located at %2</source>
     </message>
     <message>
         <source>Password field</source>
-        <translation>මුරපද ක්ෂේත්‍රය</translation>
-    </message>
-    <message>
-        <source>Enter Additional Credentials (if any):</source>
-        <translation>අමතර අක්තපත්‍ර ඇතුළත් කරන්න (ඇත්නම්):</translation>
-    </message>
-    <message>
-        <source>Key File:</source>
-        <translation>ප්රධාන ගොනුව:</translation>
-    </message>
-    <message>
-        <source>Key file help</source>
-        <translation>ප්රධාන ගොනු උපකාරය</translation>
+        <translation>මුරපද ක්‍ෂේත්‍රය</translation>
     </message>
     <message>
         <source>Hardware key slot selection</source>
         <translation>දෘඪාංග යතුරු තව් තෝරාගැනීම</translation>
-    </message>
-    <message>
-        <source>Hardware Key:</source>
-        <translation>දෘඪාංග යතුර:</translation>
-    </message>
-    <message>
-        <source>Hardware key help</source>
-        <translation>දෘඪාංග යතුරු උපකාරය</translation>
     </message>
     <message>
         <source>Key file to unlock the database</source>
@@ -1475,16 +1489,8 @@ Backup database located at %2</source>
         <translation>පිරික්සන්න...</translation>
     </message>
     <message>
-        <source>Refresh hardware tokens</source>
-        <translation>දෘඪාංග ටෝකන නැවුම් කරන්න</translation>
-    </message>
-    <message>
-        <source>Refresh</source>
-        <translation>නැවුම් කරන්න</translation>
-    </message>
-    <message>
         <source>Unlock Database</source>
-        <translation>දත්ත සමුදාය අගුළු හරින්න</translation>
+        <translation>දත්තසමුදාය අගුළු හරින්න</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1545,14 +1551,6 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
         <translation>හිස් මුරපදය සමඟ නැවත උත්සාහ කරන්න</translation>
     </message>
     <message>
-        <source>Failed to authenticate with Windows Hello</source>
-        <translation>Windows Hello සමඟ සත්‍යාපනය කිරීමට අසමත් විය</translation>
-    </message>
-    <message>
-        <source>Failed to authenticate with Touch ID</source>
-        <translation>ස්පර්ශ හැඳුනුම්පත සමඟ සත්‍යාපනය කිරීමට අසමත් විය</translation>
-    </message>
-    <message>
         <source>Failed to open key file: %1</source>
         <translation>යතුරු ගොනුව විවෘත කිරීමට අසමත් විය: %1</translation>
     </message>
@@ -1570,11 +1568,11 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
     </message>
     <message>
         <source>All files</source>
-        <translation>සියලුම ගොනු</translation>
+        <translation>සියළුම ගොනු</translation>
     </message>
     <message>
         <source>Key files</source>
-        <translation>ප්රධාන ගොනු</translation>
+        <translation>යතුරු ගොනු</translation>
     </message>
     <message>
         <source>Select key file</source>
@@ -1585,32 +1583,60 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
         <translation>දත්ත සමුදා ගොනුව යතුරු ගොනුවක් ලෙස භාවිතා කළ නොහැක</translation>
     </message>
     <message>
-        <source>You cannot use your database file as a key file.
-If you do not have a key file, please leave the field empty.</source>
-        <translation>ඔබට ඔබේ දත්ත සමුදා ගොනුව ප්‍රධාන ගොනුවක් ලෙස භාවිතා කළ නොහැක.
-ඔබ සතුව යතුරු ගොනුවක් නොමැති නම්, කරුණාකර ක්ෂේත්‍රය හිස්ව තබන්න.</translation>
+        <source>authenticate to access the database</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Detecting hardware keys…</source>
-        <translation>දෘඪාංග යතුරු හඳුනාගැනීම…</translation>
+        <source>Failed to authenticate with Quick Unlock: %1</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>No hardware keys detected</source>
-        <translation>දෘඪාංග යතුරු අනාවරණය කර නොමැත</translation>
+        <source>Select Key File:</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Select hardware key…</source>
-        <translation>දෘඪාංග යතුර…තෝරන්න</translation>
+        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;/p&gt;</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;මුරපදයකට අමතරව, ඔබේ දත්ත සමුදායේ ආරක්ෂාව වැඩි කිරීමට ඔබට රහස් ගොනුවක් භාවිතා කළ හැකිය. මෙම ගොනුව ඔබගේ දත්ත සමුදායේ&apos;ආරක්ෂක සැකසුම් තුළ ජනනය කළ හැක.&lt;/p&gt;&lt;p&gt;මෙය ඔබගේ *.kdbx දත්ත සමුදා ගොනුව &lt;strong&gt;නොවේ&lt;/strong&gt; !&lt;br&gt;ඔබ සතුව යතුරු ගොනුවක් නොමැති නම්, මෙම ක්ෂේත්‍රය හිස්ව තබන්න.&lt;/p&gt;&lt;p&gt;වැඩි විස්තර සඳහා ක්ලික් කරන්න…&lt;/p&gt;</translation>
+        <source>Click to add a key file.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;ඔබට HMAC-SHA1 සඳහා වින්‍යාස කර ඇති තව් සහිත &lt;strong&gt;YubiKey&lt;/strong&gt; හෝ &lt;strong&gt;OnlyKey&lt;/strong&gt; වැනි දෘඪාංග ආරක්ෂණ යතුරක් භාවිත කළ හැක.&lt;/p&gt;
-&lt;p&gt;වැඩි විස්තර සඳහා ක්ලික් කරන්න…&lt;/p&gt;</translation>
+        <source>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;I have a key file&lt;/a&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use hardware key [Serial: %1]</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use hardware key</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Your database file is NOT a key file!
+If you don&apos;t have a key file or don&apos;t know what that is, you don&apos;t have to select one.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC database file selected</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The file you selected looks like a database file.
+A database file is NOT a key file!
+
+Are you sure you want to continue with this file?.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No hardware keys found.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Refresh Hardware Keys</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1622,10 +1648,6 @@ If you do not have a key file, please leave the field empty.</source>
 </context>
 <context>
     <name>DatabaseSettingsDialog</name>
-    <message>
-        <source>Advanced Settings</source>
-        <translation>උසස් සැකසුම්</translation>
-    </message>
     <message>
         <source>General</source>
         <translation>ජනරාල්</translation>
@@ -1658,24 +1680,16 @@ If you do not have a key file, please leave the field empty.</source>
         <translation>KeePassXC-Browser සැකසුම්</translation>
     </message>
     <message>
-        <source>Convert KeePassHTTP data</source>
-        <translation>KeePassHTTP දත්ත පරිවර්තනය කරන්න</translation>
-    </message>
-    <message>
-        <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
-        <translation>පැරණි KeePassHTTP ගුණාංග KeePassXC-බ්‍රවුසරයට ගැළපෙන අභිරුචි දත්ත බවට පරිවර්තනය කරන්න</translation>
-    </message>
-    <message>
-        <source>Refresh database root group ID</source>
-        <translation>දත්ත සමුදා මූල කණ්ඩායම් හැඳුනුම්පත නැවුම් කරන්න</translation>
-    </message>
-    <message>
         <source>Disconnect all browsers</source>
         <translation>සියලුම බ්‍රව්සර් විසන්ධි කරන්න</translation>
     </message>
     <message>
         <source>Forget all site-specific settings on entries</source>
         <translation>ඇතුළත් කිරීම් වල සියලුම අඩවි-විශේෂිත සැකසුම් අමතක කරන්න</translation>
+    </message>
+    <message>
+        <source>Refresh database root group ID</source>
+        <translation>දත්ත සමුදා මූල කණ්ඩායම් හැඳුනුම්පත නැවුම් කරන්න</translation>
     </message>
     <message>
         <source>Stored keys</source>
@@ -1726,16 +1740,8 @@ This may prevent connection to the browser plugin.</source>
 මෙය බ්‍රවුසර ප්ලගිනයට සම්බන්ධ වීම වැළැක්විය හැක.</translation>
     </message>
     <message>
-        <source>KeePassXC: No keys found</source>
-        <translation>KeePassXC: යතුරු කිසිවක් හමු නොවීය</translation>
-    </message>
-    <message>
         <source>No shared encryption keys found in KeePassXC settings.</source>
         <translation>KeePassXC සැකසීම් තුළ හවුල් සංකේතාංකන යතුරු හමු නොවීය.</translation>
-    </message>
-    <message>
-        <source>KeePassXC: Removed keys from database</source>
-        <translation>KeePassXC: දත්ත සමුදායෙන් යතුරු ඉවත් කරන ලදී</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
@@ -1755,31 +1761,13 @@ Permissions to access entries will be revoked.</source>
         <source>Abort</source>
         <translation>ගබ්සා කරන්න</translation>
     </message>
-    <message>
-        <source>KeePassXC: Removed permissions</source>
-        <translation>KeePassXC: අවසර ඉවත් කරන ලදී</translation>
-    </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
         <translation><numerusform>ඇතුළත් කිරීම් %n කින් අවසර සාර්ථකව ඉවත් කරන ලදී.</numerusform><numerusform>ඇතුළත් කිරීම් %n කින් අවසර සාර්ථකව ඉවත් කරන ලදී.</numerusform></translation>
     </message>
     <message>
-        <source>KeePassXC: No entry with permissions found!</source>
-        <translation>KeePassXC: අවසර සහිත ප්‍රවේශයක් හමු නොවීය!</translation>
-    </message>
-    <message>
         <source>The active database does not contain an entry with permissions.</source>
         <translation>සක්‍රිය දත්ත ගබඩාවේ අවසර සහිත ප්‍රවේශයක් අඩංගු නොවේ.</translation>
-    </message>
-    <message>
-        <source>Move KeePassHTTP attributes to custom data</source>
-        <translation>අභිරුචි දත්ත වෙත KeePassHTTP උපලක්ෂණ ගෙන යන්න</translation>
-    </message>
-    <message>
-        <source>Do you really want to convert all legacy browser integration data to the latest standard?
-This is necessary to maintain compatibility with the browser plugin.</source>
-        <translation>ඔබට සැබවින්ම සියලුම පැරණි බ්‍රවුසර ඒකාබද්ධ කිරීමේ දත්ත නවතම ප්‍රමිතියට පරිවර්තනය කිරීමට අවශ්‍යද?
-බ්‍රව්සර් ප්ලගිනය සමඟ ගැළපුම පවත්වා ගැනීමට මෙය අවශ්‍ය වේ.</translation>
     </message>
     <message>
         <source>Refresh database ID</source>
@@ -1790,6 +1778,26 @@ This is necessary to maintain compatibility with the browser plugin.</source>
 This is only necessary if your database is a copy of another and the browser extension cannot connect.</source>
         <translation>ඔබට ඇත්තටම දත්ත සමුදා හැඳුනුම්පත නැවුම් කිරීමට අවශ්‍යද?
 මෙය අවශ්‍ය වන්නේ ඔබගේ දත්ත සමුදාය වෙනත් පිටපතක් නම් සහ බ්‍රවුසර දිගුව සම්බන්ධ කළ නොහැකි නම් පමණි.</translation>
+    </message>
+    <message>
+        <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
+        <translation>පැරණි KeePassHTTP ගුණාංග KeePassXC-බ්‍රවුසරයට ගැළපෙන අභිරුචි දත්ත බවට පරිවර්තනය කරන්න</translation>
+    </message>
+    <message>
+        <source>No keys found</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Removed keys from database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Removed permissions</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No entry with permissions found!</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1830,20 +1838,24 @@ Are you sure you want to continue without a password?</source>
         <source>Failed to change database credentials</source>
         <translation>දත්ත සමුදා අක්තපත්‍ර වෙනස් කිරීමට අසමත් විය</translation>
     </message>
+    <message>
+        <source>Weak password</source>
+        <translation>දුර්වල මුරපදය</translation>
+    </message>
+    <message>
+        <source>You must enter a stronger password to protect your database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>This is a weak password! For better protection of your secrets, you should choose a stronger password.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetEncryption</name>
     <message>
         <source>Decryption Time:</source>
         <translation>විසංකේතන කාලය:</translation>
-    </message>
-    <message>
-        <source>Change existing decryption time</source>
-        <translation>පවතින විකේතන කාලය වෙනස් කරන්න</translation>
-    </message>
-    <message>
-        <source>Change</source>
-        <translation>වෙනස් කරන්න</translation>
     </message>
     <message>
         <source>Decryption time in seconds</source>
@@ -1926,11 +1938,6 @@ Are you sure you want to continue without a password?</source>
         <translation>KDBX 3</translation>
     </message>
     <message>
-        <source>unchanged</source>
-        <comment>Database decryption time is unchanged</comment>
-        <translation>නොවෙනස්ව</translation>
-    </message>
-    <message>
         <source>Number of rounds too high</source>
         <comment>Key transformation rounds</comment>
         <translation>වට ගණන වැඩියි</translation>
@@ -1981,6 +1988,18 @@ If you keep this number, your database will not be protected from brute force at
         <source> thread(s)</source>
         <comment>Threads for parallel execution (KDF settings)</comment>
         <translation><numerusform> නූල්(ය)</numerusform><numerusform> නූල්(ය)</numerusform></translation>
+    </message>
+    <message>
+        <source>Encryption Settings:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Basic</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translation>වැඩිදුර</translation>
     </message>
 </context>
 <context>
@@ -2041,16 +2060,8 @@ If you keep this number, your database will not be protected from brute force at
         <translation>එක් ප්‍රවේශයකට ඉතිහාස අයිතම උපරිම සංඛ්‍යාව</translation>
     </message>
     <message>
-        <source>Max. history items:</source>
-        <translation>උපරිම. ඉතිහාස අයිතම:</translation>
-    </message>
-    <message>
         <source>Maximum size of history per entry</source>
         <translation>එක් ප්‍රවේශයකට ඉතිහාසයේ උපරිම ප්‍රමාණය</translation>
-    </message>
-    <message>
-        <source>Max. history size:</source>
-        <translation>උපරිම. ඉතිහාස ප්රමාණය:</translation>
     </message>
     <message>
         <source> MiB</source>
@@ -2081,6 +2092,55 @@ This action is not reversible.</source>
     <message>
         <source> (old)</source>
         <translation> (පරණ)</translation>
+    </message>
+    <message>
+        <source>When saving this setting or editing an entry
+the oldest history items of an entry will be
+removed such that only the specified amount
+of entries remain at most.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Limit the amount of history items per entry to:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>When saving this setting or editing an entry
+the oldest history items of an entry will be
+removed such that the remaining history items
+add up to the specified amount at most.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Limit the total size of history items per entry to:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Move entries to a recycle bin group
+instead of deleting them from the database.
+Entries deleted from the recycle bin are
+removed from the database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Autosave delay since last change</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Autosave delay</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Autosave delay since last change in minutes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source> min</source>
+        <translation>විනා.</translation>
+    </message>
+    <message>
+        <source>Autosave delay since last change checkbox</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2170,11 +2230,11 @@ This action is not reversible.</source>
     </message>
     <message>
         <source>Description:</source>
-        <translation>විස්තර:</translation>
+        <translation>සවිස්තරය:</translation>
     </message>
     <message>
         <source>Database description field</source>
-        <translation>දත්ත සමුදා විස්තර ක්ෂේත්‍රය</translation>
+        <translation>දත්තසමුදායේ විස්තර ක්‍ෂේත්‍රය</translation>
     </message>
 </context>
 <context>
@@ -2191,15 +2251,15 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message>
         <source>KeePass 2 Database</source>
-        <translation>KeePass 2 දත්ත සමුදාය</translation>
+        <translation>KeePass 2 දත්තසමුදාය</translation>
     </message>
     <message>
         <source>All files</source>
-        <translation>සියලුම ගොනු</translation>
+        <translation>සියළුම ගොනු</translation>
     </message>
     <message>
         <source>Open database</source>
-        <translation>දත්ත සමුදාය විවෘත කරන්න</translation>
+        <translation>දත්තසමුදාය අරින්න</translation>
     </message>
     <message>
         <source>Failed to open %1. It either does not exist or is not accessible.</source>
@@ -2210,28 +2270,12 @@ This is definitely a bug, please report it to the developers.</source>
         <translation>CSV ගොනුව</translation>
     </message>
     <message>
-        <source>Select CSV file</source>
-        <translation>CSV ගොනුව තෝරන්න</translation>
-    </message>
-    <message>
         <source>Merge database</source>
-        <translation>දත්ත සමුදාය ඒකාබද්ධ කරන්න</translation>
-    </message>
-    <message>
-        <source>KeePass 1 database</source>
-        <translation>KeePass 1 දත්ත සමුදාය</translation>
-    </message>
-    <message>
-        <source>Open KeePass 1 database</source>
-        <translation>KeePass 1 දත්ත සමුදාය විවෘත කරන්න</translation>
-    </message>
-    <message>
-        <source>Open OPVault</source>
-        <translation>OPVault විවෘත කරන්න</translation>
+        <translation>දත්තසමුදාය ඒකාබද්ධය</translation>
     </message>
     <message>
         <source>Export database to CSV file</source>
-        <translation>දත්ත සමුදාය CSV ගොනුවට අපනයනය කරන්න</translation>
+        <translation>දත්තසමුදාය CSV ගොනුවකට නිර්යාතය</translation>
     </message>
     <message>
         <source>Writing the CSV file failed.</source>
@@ -2239,29 +2283,7 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message>
         <source>Writing the HTML file failed.</source>
-        <translation>HTML ගොනුව ලිවීම අසාර්ථක විය.</translation>
-    </message>
-    <message>
-        <source>Export Confirmation</source>
-        <translation>අපනයන තහවුරු කිරීම</translation>
-    </message>
-    <message>
-        <source>You are about to export your database to an unencrypted file. This will leave your passwords and sensitive information vulnerable! Are you sure you want to continue?</source>
-        <translation>ඔබ ඔබේ දත්ත සමුදාය සංකේතනය නොකළ ගොනුවකට අපනයනය කිරීමට සූදානම් වේ. මෙය ඔබගේ මුරපද සහ සංවේදී තොරතුරු අවදානමට ලක් කරයි! ඔබට දිගටම කරගෙන යාමට අවශ්‍ය බව විශ්වාසද?</translation>
-    </message>
-    <message>
-        <source>New Database</source>
-        <translation>නව දත්ත සමුදාය</translation>
-    </message>
-    <message>
-        <source>%1 [New Database]</source>
-        <comment>Database tab name modifier</comment>
-        <translation>%1 [නව දත්ත සමුදාය]</translation>
-    </message>
-    <message>
-        <source>%1 [Locked]</source>
-        <comment>Database tab name modifier</comment>
-        <translation>%1 [Locked]</translation>
+        <translation>HTML ගොනුව ලිවීමට අසමත් විය.</translation>
     </message>
     <message>
         <source>Export database to XML file</source>
@@ -2275,9 +2297,26 @@ This is definitely a bug, please report it to the developers.</source>
         <source>Writing the XML file failed</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Export Confirmation</source>
+        <translation>අපනයන තහවුරු කිරීම</translation>
+    </message>
+    <message>
+        <source>You are about to export your database to an unencrypted file. This will leave your passwords and sensitive information vulnerable! Are you sure you want to continue?</source>
+        <translation>ඔබ ඔබේ දත්ත සමුදාය සංකේතනය නොකළ ගොනුවකට අපනයනය කිරීමට සූදානම් වේ. මෙය ඔබගේ මුරපද සහ සංවේදී තොරතුරු අවදානමට ලක් කරයි! ඔබට දිගටම කරගෙන යාමට අවශ්‍ය බව විශ්වාසද?</translation>
+    </message>
+    <message>
+        <source>%1 [Locked]</source>
+        <comment>Database tab name modifier</comment>
+        <translation>%1 [Locked]</translation>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
+    <message>
+        <source>Searches and Tags</source>
+        <translation type="unfinished"/>
+    </message>
     <message>
         <source>Searching…</source>
         <translation>සොයමින්…</translation>
@@ -2288,7 +2327,7 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message>
         <source>Confirm Auto-Type</source>
-        <translation>ස්වයංක්‍රීය වර්ගය තහවුරු කරන්න</translation>
+        <translation>ස්වයං ලිවීම තහවුරුව</translation>
     </message>
     <message>
         <source>Perform Auto-Type into the previously active window?</source>
@@ -2304,7 +2343,7 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message>
         <source>Remember my choice</source>
-        <translation>මගේ තේරීම මතක තබා ගන්න</translation>
+        <translation>තේරීම මතක තබාගන්න</translation>
     </message>
     <message>
         <source>Delete group</source>
@@ -2324,7 +2363,11 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message>
         <source>Expired entries</source>
-        <translation>කල් ඉකුත් වූ ඇතුළත් කිරීම්</translation>
+        <translation>ඉකුත් වූ නිවේශිත</translation>
+    </message>
+    <message numerus="yes">
+        <source>Entries expiring within %1 day(s)</source>
+        <translation><numerusform>නිවේශිත දවස් %1 කින් ඉකුත් වේ</numerusform><numerusform>නිවේශිත දවස් %1 කින්  ඉකුත් වේ</numerusform></translation>
     </message>
     <message>
         <source>No current database.</source>
@@ -2351,8 +2394,20 @@ This is definitely a bug, please report it to the developers.</source>
         <translation>ප්‍රතිපල නැත</translation>
     </message>
     <message>
+        <source>Save</source>
+        <translation>සුරකින්න</translation>
+    </message>
+    <message>
+        <source>Enter a unique name or overwrite an existing search from the list:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Save Search</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Lock Database?</source>
-        <translation>දත්ත සමුදාය අගුළු දමන්නද?</translation>
+        <translation>දත්තසමුදාය අගුළු දමන්නද?</translation>
     </message>
     <message>
         <source>You are editing an entry. Discard changes and lock anyway?</source>
@@ -2422,11 +2477,11 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>KeePass 2 Database</source>
-        <translation>KeePass 2 දත්ත සමුදාය</translation>
+        <translation>KeePass 2 දත්තසමුදාය</translation>
     </message>
     <message>
         <source>Save database backup</source>
-        <translation>දත්ත සමුදා උපස්ථය සුරකින්න</translation>
+        <translation>දත්තසමුදායේ උපස්ථයක් සුරකින්න</translation>
     </message>
     <message>
         <source>Empty recycle bin?</source>
@@ -2440,36 +2495,25 @@ Disable safe saves and try again?</source>
         <source>Could not find database file: %1</source>
         <translation>දත්ත සමුදා ගොනුව සොයා ගැනීමට නොහැකි විය: %1</translation>
     </message>
-    <message numerus="yes">
-        <source>Entries expiring within %1 day(s)</source>
-        <translation><numerusform>ඇතුළත් කිරීම් දින %1 ක් ඇතුළත කල් ඉකුත් වේ</numerusform><numerusform>ඇතුළත් කිරීම් දින %1 ක් ඇතුළත කල් ඉකුත් වේ</numerusform></translation>
+    <message>
+        <source>New Database</source>
+        <translation>නව දත්තසමුදාය</translation>
     </message>
     <message>
-        <source>Searches and Tags</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Enter a unique name or overwrite an existing search from the list:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>සුරකින්න</translation>
-    </message>
-    <message>
-        <source>Save Search</source>
-        <translation type="unfinished"/>
+        <source>%1 [New Database]</source>
+        <comment>Database tab name modifier</comment>
+        <translation>%1 [නව දත්තසමුදාය]</translation>
     </message>
 </context>
 <context>
     <name>EditEntryWidget</name>
     <message>
         <source>Entry</source>
-        <translation>ඇතුල්වීම</translation>
+        <translation>නිවේශිතය</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>උසස්</translation>
+        <translation>වැඩිදුර</translation>
     </message>
     <message>
         <source>Icon</source>
@@ -2477,11 +2521,11 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Auto-Type</source>
-        <translation>ස්වයංක්‍රීය වර්ගය</translation>
+        <translation>ස්වයං ලිවීම</translation>
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation>බ්රවුසර ඒකාබද්ධ කිරීම</translation>
+        <translation>අතිරික්සුවට අනුකලනය</translation>
     </message>
     <message>
         <source>&lt;empty URL&gt;</source>
@@ -2497,7 +2541,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Properties</source>
-        <translation>දේපළ</translation>
+        <translation>ගුණාංග</translation>
     </message>
     <message>
         <source>History</source>
@@ -2505,7 +2549,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>SSH Agent</source>
-        <translation>SSH නියෝජිතයා</translation>
+        <translation>SSH නියෝතය</translation>
     </message>
     <message>
         <source>n/a</source>
@@ -2513,23 +2557,23 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>(encrypted)</source>
-        <translation>(සංකේතනය කළ)</translation>
+        <translation>(සංකේතිතයි)</translation>
     </message>
     <message>
         <source>Select private key</source>
-        <translation>පුද්ගලික යතුර තෝරන්න</translation>
+        <translation>පෞද්. යතුර තෝරන්න</translation>
     </message>
     <message>
         <source>Entry history</source>
-        <translation>ඇතුල්වීමේ ඉතිහාසය</translation>
+        <translation>නිවේශිතයේ ඉතිහාසය</translation>
     </message>
     <message>
         <source>Add entry</source>
-        <translation>ඇතුළත් කිරීම එකතු කරන්න</translation>
+        <translation>නිවේශිතයක් යොදන්න</translation>
     </message>
     <message>
         <source>Edit entry</source>
-        <translation>ඇතුළත් කිරීම සංස්කරණය කරන්න</translation>
+        <translation>නිවේශිතය සංස්කරණය</translation>
     </message>
     <message>
         <source>Some Browser Integration settings are overridden by group settings.</source>
@@ -2571,7 +2615,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Unsaved Changes</source>
-        <translation>නොසුරකින ලද වෙනස්කම්</translation>
+        <translation>නොසුරැකි වෙනස්කම්</translation>
     </message>
     <message>
         <source>Would you like to save changes to this entry?</source>
@@ -2602,6 +2646,10 @@ Would you like to correct it?</source>
         <translation>සඟවන්න</translation>
     </message>
     <message numerus="yes">
+        <source>%n hour(s)</source>
+        <translation><numerusform>පැය %n</numerusform><numerusform>පැය %n</numerusform></translation>
+    </message>
+    <message numerus="yes">
         <source>%n week(s)</source>
         <translation><numerusform>සති %n</numerusform><numerusform>සති %n</numerusform></translation>
     </message>
@@ -2611,11 +2659,7 @@ Would you like to correct it?</source>
     </message>
     <message numerus="yes">
         <source>%n year(s)</source>
-        <translation><numerusform>වසර %n (ය)</numerusform><numerusform>වසර %n (ය)</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n hour(s)</source>
-        <translation><numerusform>පැය %n</numerusform><numerusform>පැය %n</numerusform></translation>
+        <translation><numerusform>වසර %n</numerusform><numerusform>වසර %n</numerusform></translation>
     </message>
 </context>
 <context>
@@ -2736,8 +2780,18 @@ Would you like to correct it?</source>
         <translation>නව කවුළු ඇසුරක් එක් කරන්න</translation>
     </message>
     <message>
+        <source>+</source>
+        <comment>Add item</comment>
+        <translation>+</translation>
+    </message>
+    <message>
         <source>Remove selected window association</source>
         <translation>තෝරාගත් කවුළු සම්බන්ධය ඉවත් කරන්න</translation>
+    </message>
+    <message>
+        <source>-</source>
+        <comment>Remove item</comment>
+        <translation>-</translation>
     </message>
     <message>
         <source>Window title:</source>
@@ -2762,16 +2816,6 @@ Would you like to correct it?</source>
     <message>
         <source>Custom Auto-Type sequence for this window</source>
         <translation>මෙම කවුළුව සඳහා අභිරුචි ස්වයංක්‍රීය ටයිප් අනුපිළිවෙල</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <comment>Add item</comment>
-        <translation>+</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <comment>Remove item</comment>
-        <translation>-</translation>
     </message>
 </context>
 <context>
@@ -2875,20 +2919,8 @@ Would you like to correct it?</source>
         <translation>සටහන් ක්ෂේත්රය</translation>
     </message>
     <message>
-        <source>Toggle the checkbox to reveal the notes section.</source>
-        <translation>සටහන් කොටස හෙළි කිරීමට තේරීම් කොටුව ටොගල් කරන්න.</translation>
-    </message>
-    <message>
         <source>Username field</source>
         <translation>පරිශීලක නාම ක්ෂේත්රය</translation>
-    </message>
-    <message>
-        <source>Toggle notes visible</source>
-        <translation>ටොගල් සටහන් දෘශ්‍යමාන වේ</translation>
-    </message>
-    <message>
-        <source>Notes:</source>
-        <translation>සටහන්:</translation>
     </message>
     <message>
         <source>Expiration field</source>
@@ -2907,14 +2939,6 @@ Would you like to correct it?</source>
         <translation>පෙරසිටුවීම්</translation>
     </message>
     <message>
-        <source>Password:</source>
-        <translation>මුරපදය:</translation>
-    </message>
-    <message>
-        <source>URL:</source>
-        <translation>ඒ.ස.නි.:</translation>
-    </message>
-    <message>
         <source>Url field</source>
         <translation>Url ක්ෂේත්රය</translation>
     </message>
@@ -2923,16 +2947,8 @@ Would you like to correct it?</source>
         <translation>URL සඳහා favicon බාගන්න</translation>
     </message>
     <message>
-        <source>Title:</source>
-        <translation>සිරැසිය:</translation>
-    </message>
-    <message>
         <source>Title field</source>
         <translation>මාතෘකා ක්ෂේත්රය</translation>
-    </message>
-    <message>
-        <source>Username:</source>
-        <translation>පරිශීලක නාමය:</translation>
     </message>
     <message>
         <source>Password field</source>
@@ -2943,16 +2959,40 @@ Would you like to correct it?</source>
         <translation>කල් ඉකුත්වීම ටොගල් කරන්න</translation>
     </message>
     <message>
-        <source>Expires:</source>
-        <translation>කල් ඉකුත් වේ:</translation>
-    </message>
-    <message>
-        <source>Tags:</source>
-        <translation>Tags:</translation>
-    </message>
-    <message>
         <source>Tags list</source>
         <translation>ටැග් ලැයිස්තුව</translation>
+    </message>
+    <message>
+        <source>&amp;Username:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Title:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Password:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>UR&amp;L:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Notes:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle notes visibility</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>T&amp;ags:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Expires:</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2994,19 +3034,6 @@ Would you like to correct it?</source>
         <translation>පුද්ගලික යතුර</translation>
     </message>
     <message>
-        <source>External file</source>
-        <translation>බාහිර ගොනුව</translation>
-    </message>
-    <message>
-        <source>Browser for key file</source>
-        <translation>යතුරු ගොනුව සඳහා බ්‍රව්සරය</translation>
-    </message>
-    <message>
-        <source>Browse…</source>
-        <extracomment>Button for opening file dialog</extracomment>
-        <translation>පිරික්සන්න...</translation>
-    </message>
-    <message>
         <source>Attachment</source>
         <translation>ඇමුණුම</translation>
     </message>
@@ -3021,6 +3048,23 @@ Would you like to correct it?</source>
     <message>
         <source>Remove from agent</source>
         <translation>නියෝජිතයාගෙන් ඉවත් කරන්න</translation>
+    </message>
+    <message>
+        <source>External file</source>
+        <translation>බාහිර ගොනුව</translation>
+    </message>
+    <message>
+        <source>Browser for key file</source>
+        <translation>යතුරු ගොනුව සඳහා බ්‍රව්සරය</translation>
+    </message>
+    <message>
+        <source>Browse…</source>
+        <extracomment>Button for opening file dialog</extracomment>
+        <translation>පිරික්සන්න...</translation>
+    </message>
+    <message>
+        <source>Generate</source>
+        <translation>උත්පාදනය කරන්න</translation>
     </message>
     <message>
         <source>Select attachment file</source>
@@ -3058,10 +3102,6 @@ Would you like to correct it?</source>
         <translation>නිරූපකය</translation>
     </message>
     <message>
-        <source>Browser Integration</source>
-        <translation>බ්රවුසර ඒකාබද්ධ කිරීම</translation>
-    </message>
-    <message>
         <source>Properties</source>
         <translation>දේපළ</translation>
     </message>
@@ -3078,6 +3118,10 @@ Would you like to correct it?</source>
         <translation>සමූහයට නොසුරැකි වෙනස්කම් ඇත</translation>
     </message>
     <message>
+        <source>Browser Integration</source>
+        <translation>බ්රවුසර ඒකාබද්ධ කිරීම</translation>
+    </message>
+    <message>
         <source>Enable</source>
         <translation>සබල කරන්න</translation>
     </message>
@@ -3092,10 +3136,6 @@ Would you like to correct it?</source>
 </context>
 <context>
     <name>EditGroupWidgetBrowser</name>
-    <message>
-        <source>Edit Group</source>
-        <translation>කණ්ඩායම සංස්කරණය කරන්න</translation>
-    </message>
     <message>
         <source>These settings affect to the group&apos;s behaviour with the browser extension.</source>
         <translation>මෙම සැකසීම් බ්‍රවුසර දිගුව සමඟ&apos;කණ්ඩායමේ හැසිරීමට බලපායි.</translation>
@@ -3139,6 +3179,14 @@ Would you like to correct it?</source>
     <message>
         <source>Omit WWW subdomain from matching toggle for this and sub groups</source>
         <translation>මෙය සහ උප කණ්ඩායම් සඳහා ගැළපෙන ටොගල් වලින් WWW උප වසම ඉවත් කරන්න</translation>
+    </message>
+    <message>
+        <source>Restrict matching to given browser key:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Restrict matching to given browser key toggle for this and sub groups</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3373,10 +3421,6 @@ Supported extensions are: %1.</source>
         <translation>ෆේවිකොන් ලබා ගැනීමට නොහැකි විය.</translation>
     </message>
     <message>
-        <source>You can enable the DuckDuckGo website icon service under Tools -&gt; Settings -&gt; Security</source>
-        <translation>ඔබට මෙවලම් -&gt; සිටුවම් -&gt; ආරක්ෂාව යටතේ DuckDuckGo වෙබ් අඩවිය අයිකන සේවාව සබල කළ හැක</translation>
-    </message>
-    <message>
         <source>Existing icon selected.</source>
         <translation>පවතින නිරූපකය තෝරා ඇත.</translation>
     </message>
@@ -3407,6 +3451,10 @@ Supported extensions are: %1.</source>
     <message numerus="yes">
         <source>The following icon(s) failed:</source>
         <translation><numerusform>පහත නිරූපකය(ය) අසාර්ථක විය:</numerusform><numerusform>පහත නිරූපකය(ය) අසාර්ථක විය:</numerusform></translation>
+    </message>
+    <message>
+        <source>You can enable the DuckDuckGo website icon service under Application Settings -&gt; Security</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3846,6 +3894,10 @@ Error: %1</source>
         <source>Has TOTP</source>
         <translation>TOTP ඇත</translation>
     </message>
+    <message>
+        <source>Background Color</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EntryPreviewWidget</name>
@@ -3866,8 +3918,8 @@ Error: %1</source>
         <translation>මුරපදය</translation>
     </message>
     <message>
-        <source>Notes</source>
-        <translation>සටහන්</translation>
+        <source>URL</source>
+        <translation>ඒ.ස.නි.</translation>
     </message>
     <message>
         <source>Expiration</source>
@@ -3886,8 +3938,8 @@ Error: %1</source>
         <translation>පරිශීලක නාමය</translation>
     </message>
     <message>
-        <source>URL</source>
-        <translation>ඒ.ස.නි.</translation>
+        <source>Notes</source>
+        <translation>සටහන්</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -3938,6 +3990,10 @@ Error: %1</source>
         <translation>කවදාවත්</translation>
     </message>
     <message>
+        <source>Double click to copy value</source>
+        <translation>අගය පිටපත් කිරීමට දෙවරක් ක්ලික් කරන්න</translation>
+    </message>
+    <message>
         <source>Enabled</source>
         <translation>සබල කර ඇත</translation>
     </message>
@@ -3946,8 +4002,8 @@ Error: %1</source>
         <translation>ආබාධිතයි</translation>
     </message>
     <message>
-        <source>Double click to copy value</source>
-        <translation>අගය පිටපත් කිරීමට දෙවරක් ක්ලික් කරන්න</translation>
+        <source>Double click to copy to clipboard</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3955,6 +4011,10 @@ Error: %1</source>
     <message>
         <source>Invalid URL</source>
         <translation>වලංගු නැති URL</translation>
+    </message>
+    <message>
+        <source>Duplicate URL</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3970,6 +4030,10 @@ Error: %1</source>
     <message>
         <source>Reset to defaults</source>
         <translation>පෙරනිමියට යළි පිහිටුවන්න</translation>
+    </message>
+    <message numerus="yes">
+        <source>+ %1 entry(s)...</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -4190,6 +4254,147 @@ You can enable the DuckDuckGo website icon service in the security section of th
     <message>
         <source>Downloading favicons (%1/%2)…</source>
         <translation>…බාගත කිරීම (%2)%1</translation>
+    </message>
+</context>
+<context>
+    <name>ImportWizard</name>
+    <message>
+        <source>Import Wizard</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>ImportWizardPageReview</name>
+    <message>
+        <source>WizardPage</source>
+        <translation>විශාරද පිටුව</translation>
+    </message>
+    <message>
+        <source>Entry count: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Group</source>
+        <translation>සමූහය</translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation>සිරැසිය</translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>පරිශීලක නාමය</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>මුරපදය</translation>
+    </message>
+    <message>
+        <source>Url</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>ImportWizardPageSelect</name>
+    <message>
+        <source>Form</source>
+        <translation>පෝරමය</translation>
+    </message>
+    <message>
+        <source>Import File Selection</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password:</source>
+        <translation>මුරපදය:</translation>
+    </message>
+    <message>
+        <source>Key File:</source>
+        <translation>යතුරු ගොනුව:</translation>
+    </message>
+    <message>
+        <source>Browse…</source>
+        <translation>පිරික්සන්න...</translation>
+    </message>
+    <message>
+        <source>Import Into:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>New Database</source>
+        <translation>නව දත්තසමුදාය</translation>
+    </message>
+    <message>
+        <source>No unlocked databases available</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Existing Database:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import File:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Comma Separated Values (.csv)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>1Password Export (.1pux)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>1Password Vault (.opvault)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Bitwarden (.json)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePass 1 Database (.kdb)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open OPVault</source>
+        <translation>OPVault අරින්න</translation>
+    </message>
+    <message>
+        <source>Select import file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>All files</source>
+        <translation>සියළුම ගොනු</translation>
+    </message>
+    <message>
+        <source>Key files</source>
+        <translation>යතුරු ගොනු</translation>
+    </message>
+    <message>
+        <source>Select key file</source>
+        <translation>යතුරු ගොනුව තෝරන්න</translation>
+    </message>
+    <message>
+        <source>Comma Separated Values</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>1Password Export</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Bitwarden JSON Export</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>1Password Vault</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePass1 Database</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4627,17 +4832,6 @@ Line %2, column %3</source>
     </message>
 </context>
 <context>
-    <name>KeePass1OpenWidget</name>
-    <message>
-        <source>Import KeePass1 Database</source>
-        <translation>KeePass1 දත්ත සමුදාය ආයාත කරන්න</translation>
-    </message>
-    <message>
-        <source>Unable to open the database.</source>
-        <translation>දත්ත සමුදාය විවෘත කළ නොහැක.</translation>
-    </message>
-</context>
-<context>
     <name>KeePass1Reader</name>
     <message>
         <source>Unable to read keyfile.</source>
@@ -4994,10 +5188,6 @@ Are you sure you want to continue with this file?</source>
         <translation>&amp;මෑත දත්ත සමුදායන්</translation>
     </message>
     <message>
-        <source>&amp;Import</source>
-        <translation>&amp;ආනයන</translation>
-    </message>
-    <message>
         <source>&amp;Export</source>
         <translation>&amp;අපනයන</translation>
     </message>
@@ -5016,6 +5206,10 @@ Are you sure you want to continue with this file?</source>
     <message>
         <source>TOTP</source>
         <translation>TOTP</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation>අනන්‍යන</translation>
     </message>
     <message>
         <source>&amp;Groups</source>
@@ -5062,32 +5256,16 @@ Are you sure you want to continue with this file?</source>
         <translation>&amp;නව දත්ත සමුදාය…</translation>
     </message>
     <message>
-        <source>Create a new database</source>
-        <translation>නව දත්ත සමුදායක් සාදන්න</translation>
-    </message>
-    <message>
         <source>&amp;Merge From Database…</source>
         <translation>දත්ත සමුදාය…වෙතින් &amp; ඒකාබද්ධ කරන්න</translation>
-    </message>
-    <message>
-        <source>Merge from another KDBX database</source>
-        <translation>වෙනත් KDBX දත්ත සමුදායකින් ඒකාබද්ධ කරන්න</translation>
     </message>
     <message>
         <source>&amp;New Entry…</source>
         <translation>&amp;නව ප්‍රවේශය…</translation>
     </message>
     <message>
-        <source>Add a new entry</source>
-        <translation>නව ප්‍රවේශයක් එක් කරන්න</translation>
-    </message>
-    <message>
         <source>&amp;Edit Entry…</source>
         <translation>ප්‍රවේශය &amp;සංස්කරණය කරන්න…</translation>
-    </message>
-    <message>
-        <source>View or edit entry</source>
-        <translation>ඇතුල්වීම බලන්න හෝ සංස්කරණය කරන්න</translation>
     </message>
     <message>
         <source>&amp;Delete Entry…</source>
@@ -5096,10 +5274,6 @@ Are you sure you want to continue with this file?</source>
     <message>
         <source>&amp;New Group…</source>
         <translation>&amp;නව කණ්ඩායම…</translation>
-    </message>
-    <message>
-        <source>Add a new group</source>
-        <translation>නව කණ්ඩායමක් එක් කරන්න</translation>
     </message>
     <message>
         <source>&amp;Edit Group…</source>
@@ -5134,16 +5308,8 @@ Are you sure you want to continue with this file?</source>
         <translation>දත්ත සමුදාය සහ වාර්තා…</translation>
     </message>
     <message>
-        <source>Statistics, health check, etc.</source>
-        <translation>සංඛ්යා ලේඛන, සෞඛ්ය පරීක්ෂාව, ආදිය.</translation>
-    </message>
-    <message>
         <source>&amp;Database Settings…</source>
         <translation>&amp;දත්ත සමුදාය සැකසීම්…</translation>
-    </message>
-    <message>
-        <source>Database settings</source>
-        <translation>දත්ත සමුදා සැකසුම්</translation>
     </message>
     <message>
         <source>&amp;Clone Entry…</source>
@@ -5154,32 +5320,16 @@ Are you sure you want to continue with this file?</source>
         <translation>u&amp;p ගෙනයන්න</translation>
     </message>
     <message>
-        <source>Move entry one step up</source>
-        <translation>ප්‍රවේශය එක් පියවරක් ඉහළට ගෙන යන්න</translation>
-    </message>
-    <message>
         <source>Move do&amp;wn</source>
         <translation>පහළට ගෙන යන්න</translation>
-    </message>
-    <message>
-        <source>Move entry one step down</source>
-        <translation>ප්‍රවේශය එක් පියවරක් පහළට ගෙන යන්න</translation>
     </message>
     <message>
         <source>Copy &amp;Username</source>
         <translation>&amp;පරිශීලක නාමය පිටපත් කරන්න</translation>
     </message>
     <message>
-        <source>Copy username to clipboard</source>
-        <translation>පරිශීලක නාමය පසුරු පුවරුවට පිටපත් කරන්න</translation>
-    </message>
-    <message>
         <source>Copy &amp;Password</source>
         <translation>&amp; මුරපදය පිටපත් කරන්න</translation>
-    </message>
-    <message>
-        <source>Copy password to clipboard</source>
-        <translation>මුරපදය පසුරු පුවරුවට පිටපත් කරන්න</translation>
     </message>
     <message>
         <source>&amp;Settings</source>
@@ -5214,24 +5364,12 @@ Are you sure you want to continue with this file?</source>
         <translation>&amp;ශීර්ෂය</translation>
     </message>
     <message>
-        <source>Copy title to clipboard</source>
-        <translation>මාතෘකාව පසුරු පුවරුවට පිටපත් කරන්න</translation>
-    </message>
-    <message>
-        <source>&amp;URL</source>
-        <translation>&amp;URL</translation>
-    </message>
-    <message>
-        <source>Copy URL to clipboard</source>
-        <translation>URL එක පසුරු පුවරුවට පිටපත් කරන්න</translation>
+        <source>Copy &amp;URL</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>&amp;Notes</source>
         <translation>&amp;සටහන්</translation>
-    </message>
-    <message>
-        <source>Copy notes to clipboard</source>
-        <translation>සටහන් පසුරු පුවරුවට පිටපත් කරන්න</translation>
     </message>
     <message>
         <source>&amp;CSV File…</source>
@@ -5246,24 +5384,12 @@ Are you sure you want to continue with this file?</source>
         <translation>KeePass 1 දත්ත සමුදාය…</translation>
     </message>
     <message>
-        <source>Import a KeePass 1 database</source>
-        <translation>KeePass 1 දත්ත සමුදායක් ආයාත කරන්න</translation>
-    </message>
-    <message>
         <source>1Password Vault…</source>
         <translation>1මුරපද සුරක්ෂිතාගාරය…</translation>
     </message>
     <message>
-        <source>Import a 1Password Vault</source>
-        <translation>1 මුරපද සුරක්ෂිතාගාරයක් ආනයනය කරන්න</translation>
-    </message>
-    <message>
         <source>CSV File…</source>
         <translation>CSV ගොනුව…</translation>
-    </message>
-    <message>
-        <source>Import a CSV file</source>
-        <translation>CSV ගොනුවක් ආයාත කරන්න</translation>
     </message>
     <message>
         <source>Show TOTP</source>
@@ -5280,6 +5406,10 @@ Are you sure you want to continue with this file?</source>
     <message>
         <source>Copy &amp;TOTP</source>
         <translation>&amp;TOTP පිටපත් කරන්න</translation>
+    </message>
+    <message>
+        <source>Copy Password and TOTP</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>E&amp;mpty recycle bin</source>
@@ -5304,10 +5434,6 @@ Are you sure you want to continue with this file?</source>
     <message>
         <source>&amp;Online Help</source>
         <translation>&amp;ඔන්ලයින් උදව්</translation>
-    </message>
-    <message>
-        <source>Go to online documentation</source>
-        <translation>සබැඳි ලේඛන වෙත යන්න</translation>
     </message>
     <message>
         <source>&amp;User Guide</source>
@@ -5378,6 +5504,10 @@ Are you sure you want to continue with this file?</source>
         <translation>ක්ලෝන සමූහය...</translation>
     </message>
     <message>
+        <source>&amp;XML File…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Clear history</source>
         <translation>ඉතිහාසය පැහැදිලි කරන්න</translation>
     </message>
@@ -5409,6 +5539,10 @@ We recommend you use the AppImage available on our downloads page.</source>
         <translation>අවවාදයයි: ඔබේ Qt අනුවාදය KeePassXC තිරයේ යතුරු පුවරුවක් සමඟ බිඳ වැටීමට හේතු විය හැක.
 අපගේ බාගැනීම් පිටුවේ ඇති AppImage භාවිතා කිරීමට අපි ඔබට නිර්දේශ කරමු.</translation>
     </message>
+    <message>
+        <source>No Tags</source>
+        <translation type="unfinished"/>
+    </message>
     <message numerus="yes">
         <source>Restore Entry(s)</source>
         <translation><numerusform>ප්‍රවේශ(යන්) ප්‍රතිසාධනය කරන්න</numerusform><numerusform>ප්‍රවේශ(යන්) ප්‍රතිසාධනය කරන්න</numerusform></translation>
@@ -5437,6 +5571,10 @@ We recommend you use the AppImage available on our downloads page.</source>
         <source>Quit KeePassXC</source>
         <translation>KeePassXC වලින් ඉවත් වන්න</translation>
     </message>
+    <message numerus="yes">
+        <source>%1 Entry(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
     <message>
         <source>Please present or touch your YubiKey to continue…</source>
         <translation>…ඉදිරියට යාමට කරුණාකර ඔබේ YubiKey ඉදිරිපත් කරන්න හෝ ස්පර්ශ කරන්න</translation>
@@ -5450,27 +5588,271 @@ We recommend you use the AppImage available on our downloads page.</source>
         <translation>මෙම සැකසුම යෙදීමට ඔබ යෙදුම නැවත ආරම්භ කළ යුතුය. ඔබ දැන් නැවත ආරම්භ කිරීමට කැමතිද?</translation>
     </message>
     <message>
-        <source>Tags</source>
-        <translation>අනන්‍යන</translation>
-    </message>
-    <message>
-        <source>No Tags</source>
-        <translation type="unfinished"/>
-    </message>
-    <message numerus="yes">
-        <source>%1 Entry(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
-    </message>
-    <message>
-        <source>Copy Password and TOTP</source>
+        <source>Allow Screen Capture</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>&amp;XML File…</source>
+        <source>1Password 1PUX...</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>XML File…</source>
+        <source>Import a 1Password 1PUX file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Passkeys…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import Passkey</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Quit Application</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open About Dialog</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open Database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Create Database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Merge From Database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Create Entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Edit Entry</source>
+        <translation>ඇතුළත් කිරීම සංස්කරණය කරන්න</translation>
+    </message>
+    <message>
+        <source>Delete Entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Create Group</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Edit Group</source>
+        <translation>කණ්ඩායම සංස්කරණය කරන්න</translation>
+    </message>
+    <message>
+        <source>Delete Group</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download All Favicons</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Sort Groups A-Z</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Sort Groups Z-A</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Save Database As</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show Database Security</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show Database Reports</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show Database Settings</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show Passkeys</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Clone Entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Move Entry Up</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Move Entry Down</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy Username</source>
+        <translation>පරිශීලක නාමය පිටපත් කරන්න</translation>
+    </message>
+    <message>
+        <source>Copy Password</source>
+        <translation>මුරපදය පිටපත් කරන්න</translation>
+    </message>
+    <message>
+        <source>Show Application Settings</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show Password Generator</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Perform Auto-Type: {USERNAME}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Perform Auto-Type: {USERNAME}{ENTER}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Perform Auto-Type: {PASSWORD}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Perform Auto-Type: {PASSWORD}{ENTER}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Perform Auto-Type: {TOTP}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy Title</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy URL</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy Notes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export to CSV</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export to HTML</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import KeePass1 Database</source>
+        <translation>KeePass1 දත්ත සමුදාය ආයාත කරන්න</translation>
+    </message>
+    <message>
+        <source>Import 1Password Vault</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import CSV File</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show TOTP QR Code</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Set up TOTP</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Empty Recycle Bin</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open Donation Website</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open Bug Report</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open Online Documentation</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open Keyboard Shortcuts Guide</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Save Database Backup</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>SSH Agent: Add Key</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>SSH Agent: Remove Key</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle Compact Mode</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Set Theme: Automatic</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Set Theme: Light</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Set Theme: Dark</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Set Theme: Classic</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle Show Toolbar</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle Show Preview Panel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle Always on Top</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle Hide Usernames</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle Hide Passwords</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export to XML</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle Allow Screen Capture</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -5531,26 +5913,6 @@ We recommend you use the AppImage available on our downloads page.</source>
         <translation>උඩින් ලිවීම %1 [%2]</translation>
     </message>
     <message>
-        <source>older entry merged from database &quot;%1&quot;</source>
-        <translation>පැරණි ප්‍රවේශය &quot;%1&quot;දත්ත සමුදායෙන් ඒකාබද්ධ කරන ලදී</translation>
-    </message>
-    <message>
-        <source>Adding backup for older target %1 [%2]</source>
-        <translation>පැරණි ඉලක්කය සඳහා උපස්ථ එකතු කිරීම %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Adding backup for older source %1 [%2]</source>
-        <translation>පැරණි මූලාශ්‍රය සඳහා උපස්ථ එකතු කිරීම %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Reapplying older target entry on top of newer source %1 [%2]</source>
-        <translation>නව මූලාශ්‍ර %1 [%2]මත පැරණි ඉලක්ක ප්‍රවේශය නැවත යෙදීම</translation>
-    </message>
-    <message>
-        <source>Reapplying older source entry on top of newer target %1 [%2]</source>
-        <translation>නව ඉලක්කය %1 [%2]මත පැරණි මූලාශ්‍ර ප්‍රවේශය නැවත යෙදීම</translation>
-    </message>
-    <message>
         <source>Synchronizing from newer source %1 [%2]</source>
         <translation>නව මූලාශ්‍ර %1 [%2]වෙතින් සමමුහුර්ත කිරීම</translation>
     </message>
@@ -5608,14 +5970,6 @@ We recommend you use the AppImage available on our downloads page.</source>
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
         <translation>මෙහිදී ඔබට දත්ත සමුදා සංකේතාංකන සැකසුම් සකස් කළ හැක.&apos;නොවන්න, ඔබට ඒවා පසුව දත්ත සමුදා සැකසුම් තුළ වෙනස් කළ හැක.</translation>
-    </message>
-    <message>
-        <source>Advanced Settings</source>
-        <translation>උසස් සැකසුම්</translation>
-    </message>
-    <message>
-        <source>Simple Settings</source>
-        <translation>සරල සැකසුම්</translation>
     </message>
 </context>
 <context>
@@ -5698,15 +6052,6 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
 </context>
 <context>
-    <name>OpVaultOpenWidget</name>
-    <message>
-        <source>Read Database did not produce an instance
-%1</source>
-        <translation>කියවීමේ දත්ත සමුදාය
-%1නිදර්ශනයක් නිපදවා නැත</translation>
-    </message>
-</context>
-<context>
     <name>OpVaultReader</name>
     <message>
         <source>Directory .opvault must exist</source>
@@ -5780,6 +6125,10 @@ We recommend you use the AppImage available on our downloads page.</source>
         <translation>නොදන්නා කේතාංකය: %1</translation>
     </message>
     <message>
+        <source>AES-256/GCM is currently not supported</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Passphrase is required to decrypt this key</source>
         <translation>මෙම යතුර විකේතනය කිරීමට මුරපදය අවශ්‍ය වේ</translation>
     </message>
@@ -5842,6 +6191,177 @@ We recommend you use the AppImage available on our downloads page.</source>
     <message>
         <source>Unexpected EOF when writing private key</source>
         <translation>පුද්ගලික යතුර ලියන විට අනපේක්ෂිත EOF</translation>
+    </message>
+</context>
+<context>
+    <name>OpenSSHKeyGenDialog</name>
+    <message>
+        <source>SSH Key Generator</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>ලියන්න</translation>
+    </message>
+    <message>
+        <source>Bits</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Comment</source>
+        <translation>අදහස් දක්වන්න</translation>
+    </message>
+</context>
+<context>
+    <name>PasskeyExportDialog</name>
+    <message>
+        <source>KeePassXC - Passkey Export</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export the following Passkey entries.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Filenames will be generated with title and .passkey file extension.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export entries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export Selected</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>අවලංගු කරන්න</translation>
+    </message>
+    <message>
+        <source>Export to folder</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>PasskeyExporter</name>
+    <message>
+        <source>KeePassXC: Passkey Export</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>File &quot;%1.passkey&quot; already exists.
+Do you want to overwrite it?
+</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot open file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot open file &quot;%1&quot; for writing.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot write to file</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>PasskeyImportDialog</name>
+    <message>
+        <source>KeePassXC - Passkey Import</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Username: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Group</source>
+        <translation>සමූහය</translation>
+    </message>
+    <message>
+        <source>Database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import Passkey</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation>ආනයන</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>අවලංගු කරන්න</translation>
+    </message>
+    <message>
+        <source>Import the following Passkey:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entry</source>
+        <translation>නිවේශිතය</translation>
+    </message>
+    <message>
+        <source>Import the following Passkey to this entry:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Create new entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Default Passkeys group (Imported Passkeys)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Relying Party: %1</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>PasskeyImporter</name>
+    <message>
+        <source>Passkey file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>All files</source>
+        <translation>සියළුම ගොනු</translation>
+    </message>
+    <message>
+        <source>Open Passkey file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot open file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot open file &quot;%1&quot; for reading.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot import Passkey</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot import Passkey file &quot;%1&quot;. Data is missing.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot import Passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot import Passkey file &quot;%1&quot;.
+The following data is missing:
+%2</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6023,6 +6543,10 @@ We recommend you use the AppImage available on our downloads page.</source>
         <translation>මේවායින් ද තෝරන්න:</translation>
     </message>
     <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
+        <translation>බැහැර කළ අක්ෂර: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;-&quot;</translation>
+    </message>
+    <message>
         <source>Exclude look-alike characters</source>
         <translation>පෙනුමට සමාන අක්ෂර බැහැර කරන්න</translation>
     </message>
@@ -6103,6 +6627,30 @@ We recommend you use the AppImage available on our downloads page.</source>
         <translation>එන්ට්රොපි: %1 බිට්</translation>
     </message>
     <message>
+        <source>Password Quality: %1</source>
+        <translation>මුරපදයේ ගුණාත්මකභාවය: %1</translation>
+    </message>
+    <message>
+        <source>Poor</source>
+        <comment>Password quality</comment>
+        <translation>දුප්පත්</translation>
+    </message>
+    <message>
+        <source>Weak</source>
+        <comment>Password quality</comment>
+        <translation>දුර්වල</translation>
+    </message>
+    <message>
+        <source>Good</source>
+        <comment>Password quality</comment>
+        <translation>යහපත</translation>
+    </message>
+    <message>
+        <source>Excellent</source>
+        <comment>Password quality</comment>
+        <translation>විශිෂ්ටයි</translation>
+    </message>
+    <message>
         <source>Confirm Delete Wordlist</source>
         <translation>Wordlist මකන්න තහවුරු කරන්න</translation>
     </message>
@@ -6147,34 +6695,6 @@ Do you want to overwrite it?</source>
     <message>
         <source>Special Characters</source>
         <translation>විශේෂ චරිත</translation>
-    </message>
-    <message>
-        <source>Password Quality: %1</source>
-        <translation>මුරපදයේ ගුණාත්මකභාවය: %1</translation>
-    </message>
-    <message>
-        <source>Poor</source>
-        <comment>Password quality</comment>
-        <translation>දුප්පත්</translation>
-    </message>
-    <message>
-        <source>Weak</source>
-        <comment>Password quality</comment>
-        <translation>දුර්වල</translation>
-    </message>
-    <message>
-        <source>Good</source>
-        <comment>Password quality</comment>
-        <translation>යහපත</translation>
-    </message>
-    <message>
-        <source>Excellent</source>
-        <comment>Password quality</comment>
-        <translation>විශිෂ්ටයි</translation>
-    </message>
-    <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>බැහැර කළ අක්ෂර: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;-&quot;</translation>
     </message>
 </context>
 <context>
@@ -6222,6 +6742,10 @@ Do you want to overwrite it?</source>
         <source>Excellent</source>
         <comment>Password quality</comment>
         <translation>විශිෂ්ටයි</translation>
+    </message>
+    <message>
+        <source>Toggle password visibility using Control + H. Open the password generator using Control + G.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6276,6 +6800,10 @@ Do you want to overwrite it?</source>
     <message>
         <source>Continue</source>
         <translation>දිගටම කරගෙන යන්න</translation>
+    </message>
+    <message>
+        <source>Continue with weak password</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6671,12 +7199,21 @@ Do you want to overwrite it?</source>
         <translation>බොහෝ තර්ක සපයා ඇත.</translation>
     </message>
     <message>
+        <source>Path of the database.</source>
+        <translation>දත්ත සමුදායේ මාර්ගය.</translation>
+    </message>
+    <message>
         <source>Target decryption time in MS for the database.</source>
         <translation>දත්ත සමුදාය සඳහා MS හි ඉලක්කගත විකේතන කාලය.</translation>
     </message>
     <message>
         <source>time</source>
         <translation>කාලය</translation>
+    </message>
+    <message>
+        <source>Set the key file for the database.
+This options is deprecated, use --set-key-file instead.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Set the key file for the database.</source>
@@ -6689,10 +7226,6 @@ Do you want to overwrite it?</source>
     <message>
         <source>Create a new database.</source>
         <translation>නව දත්ත සමුදායක් සාදන්න.</translation>
-    </message>
-    <message>
-        <source>Path of the database.</source>
-        <translation>දත්ත සමුදායේ මාර්ගය.</translation>
     </message>
     <message>
         <source>Invalid decryption time %1.</source>
@@ -6737,6 +7270,158 @@ Do you want to overwrite it?</source>
     <message>
         <source>Successfully created new database.</source>
         <translation>නව දත්ත සමුදාය සාර්ථකව නිර්මාණය කරන ලදී.</translation>
+    </message>
+    <message>
+        <source>Unset the password for the database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unset the key file for the database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Edit a database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot use %1 and %2 at the same time.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not change the database key.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Database was not modified.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Writing the database failed: %1</source>
+        <translation>දත්ත සමුදාය ලිවීම අසාර්ථක විය: %1</translation>
+    </message>
+    <message>
+        <source>Successfully edited the database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot remove password: The database does not have a password.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot remove file key: The database does not have a file key.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Loading the new key file failed: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Found unexpected Key type %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot remove all the keys from a database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show a database&apos;s information.</source>
+        <translation>දත්ත සමුදාය&apos;s තොරතුරු පෙන්වන්න.</translation>
+    </message>
+    <message>
+        <source>UUID: </source>
+        <translation>UUID: </translation>
+    </message>
+    <message>
+        <source>Name: </source>
+        <translation>නම: </translation>
+    </message>
+    <message>
+        <source>Description: </source>
+        <translation>විස්තර: </translation>
+    </message>
+    <message>
+        <source>Cipher: </source>
+        <translation>කේතාංකය: </translation>
+    </message>
+    <message>
+        <source>KDF: </source>
+        <translation>KDF: </translation>
+    </message>
+    <message>
+        <source>Recycle bin is enabled.</source>
+        <translation>ප්‍රතිචක්‍රීකරණ බඳුන සක්‍රීය කර ඇත.</translation>
+    </message>
+    <message>
+        <source>Recycle bin is not enabled.</source>
+        <translation>ප්‍රතිචක්‍රීකරණ බඳුන සක්‍රීය කර නැත.</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>ස්ථානය</translation>
+    </message>
+    <message>
+        <source>Database created</source>
+        <translation>දත්ත සමුදාය නිර්මාණය කරන ලදී</translation>
+    </message>
+    <message>
+        <source>Last saved</source>
+        <translation>අවසන් වරට සුරකින ලදී</translation>
+    </message>
+    <message>
+        <source>Unsaved changes</source>
+        <translation>නොසුරකින ලද වෙනස්කම්</translation>
+    </message>
+    <message>
+        <source>yes</source>
+        <translation>ඔව්</translation>
+    </message>
+    <message>
+        <source>no</source>
+        <translation>නැත</translation>
+    </message>
+    <message>
+        <source>Number of groups</source>
+        <translation>කණ්ඩායම් ගණන</translation>
+    </message>
+    <message>
+        <source>Number of entries</source>
+        <translation>ඇතුළත් කිරීම් ගණන</translation>
+    </message>
+    <message>
+        <source>Number of expired entries</source>
+        <translation>කල් ඉකුත් වූ ඇතුළත් කිරීම් ගණන</translation>
+    </message>
+    <message>
+        <source>Unique passwords</source>
+        <translation>අද්විතීය මුරපද</translation>
+    </message>
+    <message>
+        <source>Non-unique passwords</source>
+        <translation>අද්විතීය නොවන මුරපද</translation>
+    </message>
+    <message>
+        <source>Maximum password reuse</source>
+        <translation>උපරිම මුරපදය නැවත භාවිතා කිරීම</translation>
+    </message>
+    <message>
+        <source>Number of short passwords</source>
+        <translation>කෙටි මුරපද ගණන</translation>
+    </message>
+    <message>
+        <source>Number of weak passwords</source>
+        <translation>දුර්වල මුරපද ගණන</translation>
+    </message>
+    <message>
+        <source>Entries excluded from reports</source>
+        <translation>ඇතුළත් කිරීම් වාර්තා වලින් බැහැර කර ඇත</translation>
+    </message>
+    <message>
+        <source>Average password length</source>
+        <translation>සාමාන්ය මුරපද දිග</translation>
+    </message>
+    <message>
+        <source>%1 characters</source>
+        <translation>අක්ෂර %1 යි</translation>
     </message>
     <message>
         <source>Word count for the diceware passphrase.</source>
@@ -6788,10 +7473,6 @@ Do you want to overwrite it?</source>
     <message>
         <source>Enter new password for entry: </source>
         <translation>ඇතුල්වීම සඳහා නව මුරපදය ඇතුළත් කරන්න: </translation>
-    </message>
-    <message>
-        <source>Writing the database failed: %1</source>
-        <translation>දත්ත සමුදාය ලිවීම අසාර්ථක විය: %1</translation>
     </message>
     <message>
         <source>Successfully edited entry %1.</source>
@@ -7018,106 +7699,6 @@ Do you want to overwrite it?</source>
         <translation>දත්ත සමුදාය සාර්ථකව ආනයනය කරන ලදී.</translation>
     </message>
     <message>
-        <source>Show a database&apos;s information.</source>
-        <translation>දත්ත සමුදාය&apos;s තොරතුරු පෙන්වන්න.</translation>
-    </message>
-    <message>
-        <source>UUID: </source>
-        <translation>UUID: </translation>
-    </message>
-    <message>
-        <source>Name: </source>
-        <translation>නම: </translation>
-    </message>
-    <message>
-        <source>Description: </source>
-        <translation>විස්තර: </translation>
-    </message>
-    <message>
-        <source>Cipher: </source>
-        <translation>කේතාංකය: </translation>
-    </message>
-    <message>
-        <source>KDF: </source>
-        <translation>KDF: </translation>
-    </message>
-    <message>
-        <source>Recycle bin is enabled.</source>
-        <translation>ප්‍රතිචක්‍රීකරණ බඳුන සක්‍රීය කර ඇත.</translation>
-    </message>
-    <message>
-        <source>Recycle bin is not enabled.</source>
-        <translation>ප්‍රතිචක්‍රීකරණ බඳුන සක්‍රීය කර නැත.</translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation>ස්ථානය</translation>
-    </message>
-    <message>
-        <source>Database created</source>
-        <translation>දත්ත සමුදාය නිර්මාණය කරන ලදී</translation>
-    </message>
-    <message>
-        <source>Last saved</source>
-        <translation>අවසන් වරට සුරකින ලදී</translation>
-    </message>
-    <message>
-        <source>Unsaved changes</source>
-        <translation>නොසුරකින ලද වෙනස්කම්</translation>
-    </message>
-    <message>
-        <source>yes</source>
-        <translation>ඔව්</translation>
-    </message>
-    <message>
-        <source>no</source>
-        <translation>නැත</translation>
-    </message>
-    <message>
-        <source>Number of groups</source>
-        <translation>කණ්ඩායම් ගණන</translation>
-    </message>
-    <message>
-        <source>Number of entries</source>
-        <translation>ඇතුළත් කිරීම් ගණන</translation>
-    </message>
-    <message>
-        <source>Number of expired entries</source>
-        <translation>කල් ඉකුත් වූ ඇතුළත් කිරීම් ගණන</translation>
-    </message>
-    <message>
-        <source>Unique passwords</source>
-        <translation>අද්විතීය මුරපද</translation>
-    </message>
-    <message>
-        <source>Non-unique passwords</source>
-        <translation>අද්විතීය නොවන මුරපද</translation>
-    </message>
-    <message>
-        <source>Maximum password reuse</source>
-        <translation>උපරිම මුරපදය නැවත භාවිතා කිරීම</translation>
-    </message>
-    <message>
-        <source>Number of short passwords</source>
-        <translation>කෙටි මුරපද ගණන</translation>
-    </message>
-    <message>
-        <source>Number of weak passwords</source>
-        <translation>දුර්වල මුරපද ගණන</translation>
-    </message>
-    <message>
-        <source>Entries excluded from reports</source>
-        <translation>ඇතුළත් කිරීම් වාර්තා වලින් බැහැර කර ඇත</translation>
-    </message>
-    <message>
-        <source>Average password length</source>
-        <translation>සාමාන්ය මුරපද දිග</translation>
-    </message>
-    <message>
-        <source>%1 characters</source>
-        <translation>අක්ෂර %1 යි</translation>
-    </message>
-    <message>
         <source>Unknown command %1</source>
         <translation>නොදන්නා විධානය %1</translation>
     </message>
@@ -7290,6 +7871,10 @@ Available commands:
         <translation>ආරක්ෂිත ගුණාංග පැහැදිලි පෙළකින් පෙන්වන්න.</translation>
     </message>
     <message>
+        <source>Show all the attributes of the entry.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Show the attachments of the entry.</source>
         <translation>ප්‍රවේශයේ ඇමුණුම් පෙන්වන්න.</translation>
     </message>
@@ -7358,6 +7943,10 @@ Please consider generating a new key file.</source>
     <message>
         <source>Invalid YubiKey serial %1</source>
         <translation>වලංගු නොවන YubiKey අනුක්‍රමික %1</translation>
+    </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue.</source>
+        <translation>ඉදිරියට යාමට ඔබගේ YubiKey ඉදිරිපත් කරන්න හෝ ස්පර්ශ කරන්න.</translation>
     </message>
     <message>
         <source>Enter password to encrypt database (optional): </source>
@@ -7546,8 +8135,8 @@ CPU ගෘහ නිර්මාණ ශිල්පය: %2
         <translation><numerusform>මිනිත්තු %1 (ය)</numerusform><numerusform>මිනිත්තු %1 (ය)</numerusform></translation>
     </message>
     <message>
-        <source>Botan library must be at least 2.11.x, found %1.%2.%3</source>
-        <translation>උද්භිද පුස්තකාලය අවම වශයෙන් 2.11.x විය යුතුය, %1සොයා ගත යුතුය.%2.%3</translation>
+        <source>Botan library must be at least %1, found %2.%3.%4</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Cryptographic libraries:</source>
@@ -7788,10 +8377,6 @@ CPU ගෘහ නිර්මාණ ශිල්පය: %2
         <translation>stdin වෙතින් දත්ත සමුදායේ මුරපදය කියවන්න</translation>
     </message>
     <message>
-        <source>allow app screen recordering and screenshots</source>
-        <translation>යෙදුම් තිර පටිගත කිරීම සහ තිරපිටපත් වලට ඉඩ දෙන්න</translation>
-    </message>
-    <message>
         <source>Locked databases.</source>
         <translation>අගුලු දැමූ දත්ත සමුදායන්.</translation>
     </message>
@@ -7804,16 +8389,16 @@ CPU ගෘහ නිර්මාණ ශිල්පය: %2
         <translation>KeePassXC හි තවත් අවස්ථාවක් දැනටමත් ක්‍රියාත්මක වේ.</translation>
     </message>
     <message>
+        <source>KeePassXC is not running. No open database to lock</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Fatal error while testing the cryptographic functions.</source>
         <translation>ගුප්ත ලේඛන කාර්යයන් පරීක්ෂා කිරීමේදී මාරාන්තික දෝෂයක්.</translation>
     </message>
     <message>
         <source>KeePassXC - Error</source>
         <translation>KeePassXC - දෝෂයකි</translation>
-    </message>
-    <message>
-        <source>Warning: Failed to prevent screenshots on a top level window!</source>
-        <translation>අවවාදයයි: ඉහළ මට්ටමේ කවුළුවක තිරපිටපත් වැළැක්වීමට අසමත් විය!</translation>
     </message>
     <message>
         <source>Database password: </source>
@@ -7838,64 +8423,221 @@ CPU ගෘහ නිර්මාණ ශිල්පය: %2
         <translation>Windows Hello භාවිතයෙන් අභියෝගයට අත්සන් කිරීමට අසමත් විය.</translation>
     </message>
     <message>
-        <source>Please present or touch your YubiKey to continue.</source>
-        <translation>ඉදිරියට යාමට ඔබගේ YubiKey ඉදිරිපත් කරන්න හෝ ස්පර්ශ කරන්න.</translation>
-    </message>
-    <message>
-        <source>Show all the attributes of the entry.</source>
+        <source>Warning: Failed to block screenshot capture on a top-level window.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Edit a database.</source>
+        <source>Invalid Cipher</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Could not change the database key.</source>
+        <source>Invalid KDF</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Database was not modified.</source>
+        <source>Access to all entries is denied</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Successfully edited the database.</source>
+        <source>allow screenshots and app recording (Windows/macOS)</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Loading the new key file failed: %1</source>
+        <source>Enter Shortcut</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Unset the password for the database.</source>
+        <source>Action</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Unset the key file for the database.</source>
+        <source>Shortcuts</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot use %1 and %2 at the same time.</source>
+        <source>Attestation not supported</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot remove all the keys from a database.</source>
+        <source>Credential is excluded</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot remove password: The database does not have a password.</source>
+        <source>Passkeys request canceled</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot remove file key: The database does not have a file key.</source>
+        <source>Invalid user verification</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Found unexpected Key type %1</source>
+        <source>Empty public key</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Set the key file for the database.
-This options is deprecated, use --set-key-file instead.</source>
+        <source>Invalid URL provided</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Passkeys</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>AES initialization failed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>AES encrypt failed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to store in Linux Keyring</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Polkit returned an error: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not locate key in keyring</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not read key in keyring</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>AES decrypt failed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No Polkit authentication agent was available</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Polkit authorization failed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No Quick Unlock provider is available</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to init KeePassXC crypto.</source>
+        <translation>KeePassXC crypto ආරම්භ කිරීමට අසමත් විය.</translation>
+    </message>
+    <message>
+        <source>Failed to encrypt key data.</source>
+        <translation>ප්රධාන දත්ත සංකේතනය කිරීමට අසමත් විය.</translation>
+    </message>
+    <message>
+        <source>Failed to get Windows Hello credential.</source>
+        <translation>Windows Hello අක්තපත්‍ර ලබා ගැනීමට අසමත් විය.</translation>
+    </message>
+    <message>
+        <source>Failed to decrypt key data.</source>
+        <translation>ප්රධාන දත්ත විකේතනය කිරීමට අසමත් විය.</translation>
+    </message>
+    <message>
+        <source>Favorite</source>
+        <comment>Tag for favorite entries</comment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>File does not exist.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot open file: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot parse file: %1 at position %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to decrypt json file: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid encKeyValidation field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid cipher list within encKeyValidation field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Wrong password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid encrypted data field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid cipher list within encrypted data field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot initialize cipher</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot decrypt data</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Bitwarden Import</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Archived</source>
+        <comment>Tag for archived entries</comment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid 1PUX file format: Not a valid ZIP file.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid 1PUX file format: Missing export.data</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>1Password Import</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Origin is empty or not allowed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Effective domain is not a valid domain</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Origin and RP ID do not match</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No supported algorithms were provided</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Wait for timer to expire</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unknown Passkeys error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Challenge is shorter than required minimum length</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>user.id does not match the required length</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -7935,18 +8677,6 @@ This options is deprecated, use --set-key-file instead.</source>
 </context>
 <context>
     <name>ReportsWidgetBrowserStatistics</name>
-    <message>
-        <source>Exclude expired entries from the report</source>
-        <translation>වාර්තාවෙන් කල් ඉකුත් වූ ඇතුළත් කිරීම් බැහැර කරන්න</translation>
-    </message>
-    <message>
-        <source>Show only entries which have URL set</source>
-        <translation>URL සකසා ඇති ඇතුළත් කිරීම් පමණක් පෙන්වන්න</translation>
-    </message>
-    <message>
-        <source>Show only entries which have browser settings in custom data</source>
-        <translation>අභිරුචි දත්තවල බ්‍රවුසර සැකසුම් ඇති ඇතුළත් කිරීම් පමණක් පෙන්වන්න</translation>
-    </message>
     <message>
         <source>Double-click entries to edit.</source>
         <translation>සංස්කරණය කිරීමට ඇතුළත් කිරීම් ද්විත්ව ක්ලික් කරන්න.</translation>
@@ -8011,17 +8741,25 @@ This options is deprecated, use --set-key-file instead.</source>
         <source>Exclude from reports</source>
         <translation>වාර්තා වලින් බැහැර කරන්න</translation>
     </message>
+    <message>
+        <source>Only show entries that have a URL</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Only show entries that have been explicitly allowed or denied</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show expired entries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source> (Expired)</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ReportsWidgetHealthcheck</name>
-    <message>
-        <source>Exclude expired entries from the report</source>
-        <translation>වාර්තාවෙන් කල් ඉකුත් වූ ඇතුළත් කිරීම් බැහැර කරන්න</translation>
-    </message>
-    <message>
-        <source>Also show entries that have been excluded from reports</source>
-        <translation>වාර්තාවලින් බැහැර කර ඇති ඇතුළත් කිරීම් ද පෙන්වන්න</translation>
-    </message>
     <message>
         <source>Hover over reason to show additional details. Double-click entries to edit.</source>
         <translation>අමතර විස්තර පෙන්වීමට හේතුව මත සැරිසරන්න. සංස්කරණය කිරීමට ඇතුළත් කිරීම් ද්විත්ව ක්ලික් කරන්න.</translation>
@@ -8096,6 +8834,18 @@ This options is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Exclude from reports</source>
         <translation>වාර්තා වලින් බැහැර කරන්න</translation>
+    </message>
+    <message>
+        <source>Show expired entries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show entries that have been excluded from reports</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source> (Expired)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -8191,6 +8941,65 @@ This options is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Exclude from reports</source>
         <translation>වාර්තා වලින් බැහැර කරන්න</translation>
+    </message>
+</context>
+<context>
+    <name>ReportsWidgetPasskeys</name>
+    <message>
+        <source>Export</source>
+        <translation>අපනයන</translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation>ආනයන</translation>
+    </message>
+    <message>
+        <source>List of entry URLs</source>
+        <translation>ඇතුල්වීමේ URL ලැයිස්තුව</translation>
+    </message>
+    <message>
+        <source>Please wait, list of entries with Passkeys is being updated…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No entries with Passkeys.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation>සිරැසිය</translation>
+    </message>
+    <message>
+        <source>Path</source>
+        <translation>මාර්ගය</translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>පරිශීලක නාමය</translation>
+    </message>
+    <message>
+        <source>URLs</source>
+        <translation>URLs</translation>
+    </message>
+    <message>
+        <source>Edit Entry…</source>
+        <translation>ප්‍රවේශය…සංස්කරණය කරන්න</translation>
+    </message>
+    <message numerus="yes">
+        <source>Delete Entry(s)…</source>
+        <translation><numerusform>ඇතුළත් කිරීම් (ය)…මකන්න</numerusform><numerusform>ඇතුළත් කිරීම් (ය)…මකන්න</numerusform></translation>
+    </message>
+    <message>
+        <source>Relying Party</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show expired entries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source> (Expired)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -8433,6 +9242,10 @@ This options is deprecated, use --set-key-file instead.</source>
         <translation>උදව් සොයන්න</translation>
     </message>
     <message>
+        <source>Save Search</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Search (%1)…</source>
         <comment>Search placeholder text, %1 is the keyboard shortcut</comment>
         <translation>සොයන්න (%1)…</translation>
@@ -8444,10 +9257,6 @@ This options is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Limit search to selected group</source>
         <translation>තෝරාගත් කණ්ඩායමකට සෙවීම සීමා කරන්න</translation>
-    </message>
-    <message>
-        <source>Save Search</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -8668,7 +9477,38 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
 </context>
 <context>
+    <name>ShortcutSettingsWidget</name>
+    <message>
+        <source>Double click an action to change its shortcut</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Shortcut Conflict</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Filter...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Shortcut %1 conflicts with &apos;%2&apos;. Overwrite shortcut?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset Shortcuts</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>TagModel</name>
+    <message>
+        <source>Clear Search</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>All Entries</source>
+        <translation type="unfinished"/>
+    </message>
     <message>
         <source>Expired</source>
         <translation>කල් ඉකුත් වී ඇත</translation>
@@ -8676,14 +9516,6 @@ This options is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Weak Passwords</source>
         <translation>දුර්වල මුරපද</translation>
-    </message>
-    <message>
-        <source>All Entries</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Clear Search</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -8863,26 +9695,6 @@ Example: JBSWY3DPEHPK3PXP</source>
         <translation>ඔබගේ මුරපද KeePassXC දත්ත ගබඩාවක ආරක්ෂිතව ගබඩා කිරීම අරඹන්න</translation>
     </message>
     <message>
-        <source>Create new database</source>
-        <translation>නව දත්ත සමුදායක් සාදන්න</translation>
-    </message>
-    <message>
-        <source>Open existing database</source>
-        <translation>පවතින දත්ත සමුදාය විවෘත කරන්න</translation>
-    </message>
-    <message>
-        <source>Import from KeePass 1</source>
-        <translation>KeePass 1 වෙතින් ආනයනය කරන්න</translation>
-    </message>
-    <message>
-        <source>Import from 1Password</source>
-        <translation>1 මුරපදයෙන් ආයාත කරන්න</translation>
-    </message>
-    <message>
-        <source>Import from CSV</source>
-        <translation>CSV වෙතින් ආයාත කරන්න</translation>
-    </message>
-    <message>
         <source>Recent databases</source>
         <translation>මෑත දත්ත සමුදායන්</translation>
     </message>
@@ -8893,6 +9705,18 @@ Example: JBSWY3DPEHPK3PXP</source>
     <message>
         <source>Welcome to KeePassXC %1</source>
         <translation>KeePassXC %1වෙත සාදරයෙන් පිළිගනිමු</translation>
+    </message>
+    <message>
+        <source>Create Database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open Database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import File</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -8911,30 +9735,7 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
 </context>
 <context>
-    <name>WindowsHello</name>
-    <message>
-        <source>Failed to init KeePassXC crypto.</source>
-        <translation>KeePassXC crypto ආරම්භ කිරීමට අසමත් විය.</translation>
-    </message>
-    <message>
-        <source>Failed to encrypt key data.</source>
-        <translation>ප්රධාන දත්ත සංකේතනය කිරීමට අසමත් විය.</translation>
-    </message>
-    <message>
-        <source>Failed to get Windows Hello credential.</source>
-        <translation>Windows Hello අක්තපත්‍ර ලබා ගැනීමට අසමත් විය.</translation>
-    </message>
-    <message>
-        <source>Failed to decrypt key data.</source>
-        <translation>ප්රධාන දත්ත විකේතනය කිරීමට අසමත් විය.</translation>
-    </message>
-</context>
-<context>
     <name>YubiKey</name>
-    <message>
-        <source>%1 No interface, slot %2</source>
-        <translation>%1 අතුරු මුහුණතක් නැත, තව් %2</translation>
-    </message>
     <message>
         <source>General: </source>
         <translation>ජනරාල්: </translation>
@@ -8946,14 +9747,6 @@ Example: JBSWY3DPEHPK3PXP</source>
 </context>
 <context>
     <name>YubiKeyEditWidget</name>
-    <message>
-        <source>Refresh hardware tokens</source>
-        <translation>දෘඪාංග ටෝකන නැවුම් කරන්න</translation>
-    </message>
-    <message>
-        <source>Refresh</source>
-        <translation>නැවුම් කරන්න</translation>
-    </message>
     <message>
         <source>Hardware key slot selection</source>
         <translation>දෘඪාංග යතුරු තව් තෝරාගැනීම</translation>
@@ -8987,10 +9780,6 @@ Example: JBSWY3DPEHPK3PXP</source>
         <translation>අභියෝග-ප්‍රතිචාර කට්ටලය, වෙනස් කිරීමට හෝ ඉවත් කිරීමට ක්ලික් කරන්න</translation>
     </message>
     <message>
-        <source>&lt;p&gt;If you own a &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; or &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt;, you can use it for additional security.&lt;/p&gt;&lt;p&gt;The key requires one of its slots to be programmed as &lt;a href=&quot;https://www.yubico.com/products/services-software/challenge-response/&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;ඔබ සතුව &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; හෝ &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt;තිබේ නම්, ඔබට එය අමතර ආරක්ෂාව සඳහා භාවිතා කළ හැක.&lt;/p&gt;&lt;p&gt;යතුරට එහි එක් තව් එකක් &lt;a href=&quot;https://www.yubico.com/products/services-software/challenge-response/&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;ලෙස වැඩසටහන්ගත කිරීම අවශ්‍ය වේ.&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Detecting hardware keys…</source>
         <translation>දෘඪාංග යතුරු හඳුනාගැනීම…</translation>
     </message>
@@ -8998,27 +9787,20 @@ Example: JBSWY3DPEHPK3PXP</source>
         <source>No hardware keys detected</source>
         <translation>දෘඩාංග යතුරු අනාවරණය කර නොමැත</translation>
     </message>
-</context>
-<context>
-    <name>YubiKeyInterface</name>
     <message>
-        <source>%1 Invalid slot specified - %2</source>
-        <translation>%1 අවලංගු තව් නිශ්චිතව දක්වා ඇත - %2</translation>
+        <source>&lt;p&gt;If you own a &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; or &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt;, you can use it for additional security.&lt;/p&gt;&lt;p&gt;The key requires one of its slots to be programmed as &lt;a href=&quot;https://docs.yubico.com/yesdk/users-manual/application-otp/challenge-response.html&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Refresh hardware keys</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>YubiKeyInterfacePCSC</name>
     <message>
-        <source>(PCSC) %1 [%2] Challenge-Response - Slot %3</source>
-        <translation>(PCSC) %1 [%2] අභියෝග-ප්‍රතිචාරය - තව් %3</translation>
-    </message>
-    <message>
         <source>The YubiKey PCSC interface has not been initialized.</source>
         <translation>YubiKey PCSC අතුරුමුහුණත ආරම්භ කර නොමැත.</translation>
-    </message>
-    <message>
-        <source>Hardware key is currently in use.</source>
-        <translation>දෘඪාංග යතුර දැනට භාවිතා වේ.</translation>
     </message>
     <message>
         <source>Could not find or access hardware key with serial number %1. Please present it to continue. </source>
@@ -9036,20 +9818,27 @@ Example: JBSWY3DPEHPK3PXP</source>
         <source>Failed to complete a challenge-response, the PCSC error code was: %1</source>
         <translation>අභියෝග-ප්‍රතිචාරයක් සම්පූර්ණ කිරීමට අපොහොසත් විය, PCSC දෝෂ කේතය: %1</translation>
     </message>
+    <message>
+        <source>(NFC) %1 [%2] - Slot %3, %4</source>
+        <comment>YubiKey display fields</comment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Press</source>
+        <comment>USB Challenge-Response Key interaction request</comment>
+        <translation>ඔබන්න</translation>
+    </message>
+    <message>
+        <source>Passive</source>
+        <comment>USB Challenge-Response Key no interaction required</comment>
+        <translation>නිෂ්ක්රීය</translation>
+    </message>
 </context>
 <context>
     <name>YubiKeyInterfaceUSB</name>
     <message>
         <source>Unknown</source>
         <translation>නොදන්නා</translation>
-    </message>
-    <message>
-        <source>(USB) %1 [%2] Configured Slot - %3</source>
-        <translation>(USB) %1 [%2] වින්‍යාස කළ තව් - %3</translation>
-    </message>
-    <message>
-        <source>(USB) %1 [%2] Challenge-Response - Slot %3 - %4</source>
-        <translation>(USB) %1 [%2] අභියෝග-ප්‍රතිචාරය - තව් %3 - %4</translation>
     </message>
     <message>
         <source>Press</source>
@@ -9066,10 +9855,6 @@ Example: JBSWY3DPEHPK3PXP</source>
         <translation>YubiKey USB අතුරුමුහුණත ආරම්භ කර නොමැත.</translation>
     </message>
     <message>
-        <source>Hardware key is currently in use.</source>
-        <translation>දෘඪාංග යතුර දැනට භාවිතා වේ.</translation>
-    </message>
-    <message>
         <source>Could not find hardware key with serial number %1. Please plug it in to continue.</source>
         <translation>අනුක්‍රමික අංක %1සහිත දෘඪාංග යතුර සොයා ගැනීමට නොහැකි විය. ඉදිරියට යාමට කරුණාකර එය පේනුගත කරන්න.</translation>
     </message>
@@ -9084,6 +9869,16 @@ Example: JBSWY3DPEHPK3PXP</source>
     <message>
         <source>Failed to complete a challenge-response, the specific error was: %1</source>
         <translation>අභියෝග ප්‍රතිචාරයක් සම්පූර්ණ කිරීමට අපොහොසත් විය, නිශ්චිත දෝෂය වූයේ: %1</translation>
+    </message>
+    <message>
+        <source>%1 [%2] - Slot %3</source>
+        <comment>YubiKey NEO display fields</comment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 [%2] - Slot %3, %4</source>
+        <comment>YubiKey display fields</comment>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

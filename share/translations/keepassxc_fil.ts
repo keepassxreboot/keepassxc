@@ -81,16 +81,16 @@
         <translation>Mga Detalye</translation>
     </message>
     <message>
+        <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
+        <translation>Ang desisyon mo ay tatandaan sa tagal habang ang humihiling na client AT KeePassXC ay tumatakbo.</translation>
+    </message>
+    <message>
         <source>Remember</source>
         <translation>Tandaan</translation>
     </message>
     <message>
         <source>Allow Selected</source>
         <translation>Payagan ang Napili</translation>
-    </message>
-    <message>
-        <source>Your decision will be remembered for the duration while both the requesting client AND KeePassXC are running.</source>
-        <translation>Ang desisyon mo ay tatandaan sa tagal habang ang humihiling na client AT KeePassXC ay tumatakbo.</translation>
     </message>
     <message>
         <source>Deny All &amp;&amp; Future</source>
@@ -123,6 +123,10 @@
         <translation>Gamitin ang OpenSSH</translation>
     </message>
     <message>
+        <source>Use both agents</source>
+        <translation>Gamitin ang parehong mga agent</translation>
+    </message>
+    <message>
         <source>SSH_AUTH_SOCK override</source>
         <translation>Override ng SSH_AUTH_SOCK</translation>
     </message>
@@ -150,10 +154,6 @@
         <source>SSH Agent connection is working!</source>
         <translation>Gumagana ang koneksyon ng SSH Agent!</translation>
     </message>
-    <message>
-        <source>Use both agents</source>
-        <translation>Gamitin ang parehong mga agent</translation>
-    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidget</name>
@@ -168,6 +168,10 @@
     <message>
         <source>Security</source>
         <translation>Security</translation>
+    </message>
+    <message>
+        <source>This setting cannot be enabled when minimize on unlock is enabled.</source>
+        <translation>Hindi maaaring i-enable ang setting na ito kapag na-enable ang pag-minimize ng pag-unlock.</translation>
     </message>
     <message>
         <source>Access error for config file %1</source>
@@ -225,10 +229,6 @@
         <source>Select backup storage directory</source>
         <translation>Piliin ang direktoryo ng backup na storage</translation>
     </message>
-    <message>
-        <source>This setting cannot be enabled when minimize on unlock is enabled.</source>
-        <translation>Hindi maaaring i-enable ang setting na ito kapag na-enable ang pag-minimize ng pag-unlock.</translation>
-    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetGeneral</name>
@@ -259,6 +259,10 @@
     <message>
         <source>Remember previously used databases</source>
         <translation>Tandaan ang mga dating ginamit na database</translation>
+    </message>
+    <message>
+        <source> recent files</source>
+        <translation> kamakailang mga file</translation>
     </message>
     <message>
         <source>Load previously open databases on startup</source>
@@ -413,6 +417,10 @@
         <translation>Estilo ng button ng toolbar:</translation>
     </message>
     <message>
+        <source>Show passwords in color</source>
+        <translation>Ipakita ang mga password sa kulay</translation>
+    </message>
+    <message>
         <source>Use monospaced font for notes</source>
         <translation>Gumamit ng monospaced na font para sa mga tala</translation>
     </message>
@@ -496,14 +504,6 @@
     <message>
         <source>Remember last typed entry for:</source>
         <translation>Tandaan ang huling na-type na entry para sa:</translation>
-    </message>
-    <message>
-        <source> recent files</source>
-        <translation> kamakailang mga file</translation>
-    </message>
-    <message>
-        <source>Show passwords in color</source>
-        <translation>Ipakita ang mga password sa kulay</translation>
     </message>
 </context>
 <context>
@@ -642,6 +642,10 @@
         <translation>Natukoy ang mahabang pagkaantala, ang max ay %1: %2</translation>
     </message>
     <message>
+        <source>Entry does not have attribute for PICKCHARS: %1</source>
+        <translation>Ang entry ay walang attribute para sa PICKCHARS: %1</translation>
+    </message>
+    <message>
         <source>Invalid conversion type: %1</source>
         <translation>Invalid na uri ng conversion: %1</translation>
     </message>
@@ -658,10 +662,6 @@
     <message>
         <source>Invalid placeholder: %1</source>
         <translation>Invalid na placeholder: %1</translation>
-    </message>
-    <message>
-        <source>Entry does not have attribute for PICKCHARS: %1</source>
-        <translation>Ang entry ay walang attribute para sa PICKCHARS: %1</translation>
     </message>
 </context>
 <context>
@@ -824,13 +824,13 @@ Ctrl+4 - Use Virtual Keyboard (Sa Windows Lang)&lt;/p&gt;</translation>
         <source>Disable for this site</source>
         <translation>I-disable para sa site na ito</translation>
     </message>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>BrowserEntrySaveDialog</name>
-    <message>
-        <source>KeePassXC-Browser Save Entry</source>
-        <translation>KeePassXC-Browser I-save ang Entry</translation>
-    </message>
     <message>
         <source>Ok</source>
         <translation>Ok</translation>
@@ -845,13 +845,69 @@ Please select the correct database for saving credentials.</source>
         <translation>Marami kang nakabukas na database.
 Mangyaring piliin ang tamang database para sa pag-save ng mga kredensyal.</translation>
     </message>
+    <message>
+        <source>KeePassXC - Select Database</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>BrowserPasskeysConfirmationDialog</name>
+    <message>
+        <source>Cancel</source>
+        <translation>Kanselahin</translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Authenticate</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Register new</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Register</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>Timeout in &lt;b&gt;%n&lt;/b&gt; seconds...</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Do you want to register Passkey for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Existing Passkey found.
+Do you want to register a new Passkey for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Select the existing Passkey and press Update to replace it.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Authenticate Passkey credentials for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Relying Party: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Username: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC - Passkey credentials</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>BrowserService</name>
-    <message>
-        <source>KeePassXC: Create a new group</source>
-        <translation>KeePassXC: Lumikha ng bagong group</translation>
-    </message>
     <message>
         <source>A request for creating a new group &quot;%1&quot; has been received.
 Do you want to create this group?
@@ -859,10 +915,6 @@ Do you want to create this group?
         <translation>Isang kahilingan para sa paglikha ng bagong pangkat na &quot;%1&quot; ay natanggap.
 Gusto mo bang likhain ang pangkat na ito?
 </translation>
-    </message>
-    <message>
-        <source>KeePassXC: New key association request</source>
-        <translation>KeePassXC: Bagong kahilingan sa pag-uugnay ng key</translation>
     </message>
     <message>
         <source>You have received an association request for the following database:
@@ -881,26 +933,14 @@ chrome-laptop.</translation>
         <translation>I-save at payagan ang access</translation>
     </message>
     <message>
-        <source>KeePassXC: Overwrite existing key?</source>
-        <translation>KeePassXC: I-overwrite ang kasalukuyang key?</translation>
-    </message>
-    <message>
         <source>A shared encryption key with the name &quot;%1&quot; already exists.
 Do you want to overwrite it?</source>
         <translation>May umiiral nang nakabahaging encryption key na may pangalang &quot;%1&quot;.
 Gusto mo bang i-overwrite ito?</translation>
     </message>
     <message>
-        <source>KeePassXC: Update Entry</source>
-        <translation>KeePassXC: I-update ang Entry</translation>
-    </message>
-    <message>
         <source>Do you want to update the information in %1 - %2?</source>
         <translation>Gusto mo bang i-update ang impormasyon sa %1 - %2?</translation>
-    </message>
-    <message>
-        <source>KeePassXC: Delete entry</source>
-        <translation>KeePassXC: I-delete ang entry</translation>
     </message>
     <message>
         <source>A request for deleting entry &quot;%1&quot; has been received.
@@ -911,50 +951,45 @@ Gusto mo bang i-delete ang entry?
 </translation>
     </message>
     <message>
-        <source>Converting attributes to custom data…</source>
-        <translation>Kino-convert ang mga attribute sa custom data…</translation>
+        <source>%1 (Passkey)</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Abort</source>
-        <translation>I-abort</translation>
+        <source>Entry already has a Passkey.
+Do you want to overwrite the Passkey in %1 - %2?</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>KeePassXC: Converted KeePassHTTP attributes</source>
-        <translation>KeePassXC: Na-convert na mga attribute ng KeePassHTTP</translation>
+        <source>KeePassXC - Create a new group</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Successfully converted attributes from %1 entry(s).
-Moved %2 keys to custom data.</source>
-        <translation>Matagumpay na na-convert ang mga attribute mula sa %1 na (mga) entry.
-Inilipat ang %2 key sa custom na data.</translation>
-    </message>
-    <message numerus="yes">
-        <source>Successfully moved %n keys to custom data.</source>
-        <translation><numerusform>Matagumpay na nailipat ang %n key sa custom na data.</numerusform><numerusform>Matagumpay na nailipat ang %n mga key sa custom na data.</numerusform></translation>
+        <source>Disable</source>
+        <translation>I-disable</translation>
     </message>
     <message>
-        <source>KeePassXC: No entry with KeePassHTTP attributes found!</source>
-        <translation>KeePassXC: Walang nakitang entry na may mga attribute ng KeePassHTTP!</translation>
+        <source>KeePassXC - Overwrite existing key?</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>The active database does not contain an entry with KeePassHTTP attributes.</source>
-        <translation>Ang aktibong database ay hindi naglalaman ng isang entry na may mga attribute ng KeePassHTTP.</translation>
+        <source>KeePassXC - Update Passkey</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Don&apos;t show this warning again</source>
-        <translation>Huwag ipakitang muli ang babalang ito</translation>
+        <source>KeePassXC - Update Entry</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>KeePassXC: Legacy browser integration settings detected</source>
-        <translation>KeePassXC: Natukoy ang mga setting ng legacy browser integration</translation>
+        <source>KeePassXC - Delete entry</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Your KeePassXC-Browser settings need to be moved into the database settings.
-This is necessary to maintain your current browser connections.
-Would you like to migrate your existing settings now?</source>
-        <translation>Ang mga setting ng KeePassXC-Browser mo ay kailangang ilipat sa mga setting ng database.
-Ito ay kinakailangan upang mapanatili ang iyong kasalukuyang mga koneksyon sa browser.
-Gusto mo bang ilipat ang iyong mga kasalukuyang setting ngayon?</translation>
+        <source>KeePassXC - New key association request</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Passkey</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1179,6 +1214,14 @@ Gusto mo bang ilipat ang iyong mga kasalukuyang setting ngayon?</translation>
         <translation>Piliin ang lokasyon ng folder ng host ng native na pagmemensahe</translation>
     </message>
     <message>
+        <source>Allow keepassxc-proxy to list all entries with their title, URL and UUID in connected databases.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Allow limited access to all entries in connected databases (ignores site access restrictions)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>&lt;b&gt;Warning:&lt;/b&gt; Only adjust these settings if necessary.</source>
         <translation type="unfinished"/>
     </message>
@@ -1192,6 +1235,14 @@ Gusto mo bang ilipat ang iyong mga kasalukuyang setting ngayon?</translation>
     </message>
     <message>
         <source>&lt;b&gt;Error:&lt;/b&gt; The installed proxy executable is missing from the expected location: %1&lt;br/&gt;Please set a custom proxy location in the advanced settings or reinstall the application.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Allows using insecure http://localhost with Passkeys for testing purposes.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Allow using localhost with Passkeys</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1216,14 +1267,6 @@ Gusto mo bang ilipat ang iyong mga kasalukuyang setting ngayon?</translation>
 </context>
 <context>
     <name>CsvImportWidget</name>
-    <message>
-        <source>Import CSV fields</source>
-        <translation>Mag-import ng mga CSV field</translation>
-    </message>
-    <message>
-        <source>filename</source>
-        <translation>filename</translation>
-    </message>
     <message>
         <source>size, rows, columns</source>
         <translation>sukat, hilera, hanay</translation>
@@ -1332,50 +1375,29 @@ Gusto mo bang ilipat ang iyong mga kasalukuyang setting ngayon?</translation>
         <source>Column %1</source>
         <translation>Column na %1</translation>
     </message>
-    <message>
-        <source>Imported from CSV file</source>
-        <translation>Na-import mula sa CSV file</translation>
-    </message>
-    <message>
-        <source>Original data: </source>
-        <translation>Orihinal na data: </translation>
-    </message>
-    <message>
-        <source>Error(s) detected in CSV file!</source>
-        <translation>May (mga) error na nakita sa CSV file!</translation>
-    </message>
     <message numerus="yes">
         <source>[%n more message(s) skipped]</source>
         <translation><numerusform>[%n higit pang mensahe ang nilaktawan]</numerusform><numerusform>[%n higit pang (mga) mensahe ang nilaktawan]</numerusform></translation>
     </message>
     <message>
-        <source>Error</source>
-        <translation>Error</translation>
+        <source>Failed to parse CSV file: %1</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>CSV import: writer has errors:
-%1</source>
-        <translation>CSV import: may mga error ang writer:
-%1</translation>
+        <source>Imported from CSV file: %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>CsvParserModel</name>
-    <message>
-        <source>%1, %2, %3</source>
-        <comment>file info: bytes, rows, columns</comment>
-        <translation>%1, %2, %3</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n byte(s)</source>
-        <translation><numerusform>%n byte</numerusform><numerusform>%n (mga)byte</numerusform></translation>
-    </message>
     <message numerus="yes">
         <source>%n row(s)</source>
+        <comment>CSV row count</comment>
         <translation><numerusform>%n row</numerusform><numerusform>%n (mga)row</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n column(s)</source>
+        <comment>CSV column count</comment>
         <translation><numerusform>%n ng column</numerusform><numerusform>%n ng (mga)column</numerusform></translation>
     </message>
 </context>
@@ -1451,28 +1473,8 @@ Backup database na matatagpuan sa %2</translation>
         <translation>Field ng password</translation>
     </message>
     <message>
-        <source>Enter Additional Credentials (if any):</source>
-        <translation>Ipasok ang Mga Karagdagang Kredensyal (kung mayroon man):</translation>
-    </message>
-    <message>
-        <source>Key File:</source>
-        <translation>Key File:</translation>
-    </message>
-    <message>
-        <source>Key file help</source>
-        <translation>Tulong sa key file</translation>
-    </message>
-    <message>
         <source>Hardware key slot selection</source>
         <translation>Pagpili ng hardware key slot</translation>
-    </message>
-    <message>
-        <source>Hardware Key:</source>
-        <translation>Hardware Key:</translation>
-    </message>
-    <message>
-        <source>Hardware key help</source>
-        <translation>Tulong sa hardware key</translation>
     </message>
     <message>
         <source>Key file to unlock the database</source>
@@ -1485,14 +1487,6 @@ Backup database na matatagpuan sa %2</translation>
     <message>
         <source>Browse…</source>
         <translation>Mag-browse…</translation>
-    </message>
-    <message>
-        <source>Refresh hardware tokens</source>
-        <translation>I-refresh ang mga token ng hardware</translation>
-    </message>
-    <message>
-        <source>Refresh</source>
-        <translation>I-refresh</translation>
     </message>
     <message>
         <source>Unlock Database</source>
@@ -1557,10 +1551,6 @@ Para maiwasan ang paglabas ng error na ito, dapat kang pumunta sa &quot;Settings
         <translation>Subukang muli gamit ang walang laman na password</translation>
     </message>
     <message>
-        <source>Failed to authenticate with Touch ID</source>
-        <translation>Nabigong mag-authenticate gamit ang Touch ID</translation>
-    </message>
-    <message>
         <source>Failed to open key file: %1</source>
         <translation>Nabigong buksan ang key file: %1</translation>
     </message>
@@ -1593,43 +1583,59 @@ Para maiwasan ang paglabas ng error na ito, dapat kang pumunta sa &quot;Settings
         <translation>Hindi magagamit ang database file bilang key file</translation>
     </message>
     <message>
-        <source>You cannot use your database file as a key file.
-If you do not have a key file, please leave the field empty.</source>
-        <translation>Hindi mo magagamit ang iyong database file bilang key file.
-Kung wala kang key file, mangyaring iwanang walang laman ang field.</translation>
-    </message>
-    <message>
-        <source>Detecting hardware keys…</source>
-        <translation>Dini-detect ang mga hardware key…</translation>
-    </message>
-    <message>
-        <source>No hardware keys detected</source>
-        <translation>Walang nakitang hardware key</translation>
-    </message>
-    <message>
-        <source>Select hardware key…</source>
-        <translation>Piliin ang hardware key…</translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Bilang karagdagan sa isang password, maaari kang gumamit ng isang secret file upang mapahusay ang seguridad ng database mo. Maaaring mabuo ang file na ito sa mga setting ng database security mo.&lt;/p&gt;&lt;p&gt;Ito ay&lt;strong&gt;hindi&lt;/strong&gt; iyong *.kdbx database file!&lt;br&gt;Kung wala kang key file, iwanang walang laman ang field na ito.&lt;/p&gt;&lt;p&gt;Mag-click para sa karagdagang impormasyon…&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Maaari kang gumamit ng security key ng hardware gaya ng &lt;strong&gt;YubiKey&lt;/strong&gt; o &lt;strong&gt;OnlyKey&lt;/strong&gt; na may slot na naka-configure pa sa HMAC-SHA1.&lt;/p&gt;
-&lt;p&gt;Mag-click para sa karagdagang impormasyon…&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>authenticate to access the database</source>
         <translation>patotohanan para ma-access ang database</translation>
     </message>
     <message>
-        <source>Failed to authenticate with Windows Hello: %1</source>
-        <translation>Nabigong mag-authenticate gamit ang Windows Hello: %1</translation>
+        <source>Failed to authenticate with Quick Unlock: %1</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Windows Hello setup was canceled or failed. Quick unlock has not been enabled.</source>
+        <source>Select Key File:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;/p&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Click to add a key file.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;I have a key file&lt;/a&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use hardware key [Serial: %1]</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use hardware key</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Your database file is NOT a key file!
+If you don&apos;t have a key file or don&apos;t know what that is, you don&apos;t have to select one.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC database file selected</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The file you selected looks like a database file.
+A database file is NOT a key file!
+
+Are you sure you want to continue with this file?.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No hardware keys found.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Refresh Hardware Keys</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1642,10 +1648,6 @@ Kung wala kang key file, mangyaring iwanang walang laman ang field.</translation
 </context>
 <context>
     <name>DatabaseSettingsDialog</name>
-    <message>
-        <source>Advanced Settings</source>
-        <translation>Mga Advanced Setting</translation>
-    </message>
     <message>
         <source>General</source>
         <translation>Pangkalahatan</translation>
@@ -1678,24 +1680,16 @@ Kung wala kang key file, mangyaring iwanang walang laman ang field.</translation
         <translation>KeePassXC-Mga Browser setting</translation>
     </message>
     <message>
-        <source>Convert KeePassHTTP data</source>
-        <translation>I-convert ang data ng KeePassHTTP</translation>
-    </message>
-    <message>
-        <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
-        <translation>I-convert ang mga legacy na attribute ng KeePassHTTP -Browser na tugma sa custom data</translation>
-    </message>
-    <message>
-        <source>Refresh database root group ID</source>
-        <translation>I-refresh ang database root group ID</translation>
-    </message>
-    <message>
         <source>Disconnect all browsers</source>
         <translation>Idiskonekta ang lahat ng browser</translation>
     </message>
     <message>
         <source>Forget all site-specific settings on entries</source>
         <translation>Kalimutan ang lahat ng mga setting na partikular sa site sa mga entry</translation>
+    </message>
+    <message>
+        <source>Refresh database root group ID</source>
+        <translation>I-refresh ang database root group ID</translation>
     </message>
     <message>
         <source>Stored keys</source>
@@ -1746,16 +1740,8 @@ This may prevent connection to the browser plugin.</source>
 Maaaring pigilan nito ang koneksyon sa browser plugin.</translation>
     </message>
     <message>
-        <source>KeePassXC: No keys found</source>
-        <translation>KeePassXC: Walang Nakitang Mga Key</translation>
-    </message>
-    <message>
         <source>No shared encryption keys found in KeePassXC settings.</source>
         <translation>Walang nahanap na nakabahaging encryption key sa settings ng KeePassXC.</translation>
-    </message>
-    <message>
-        <source>KeePassXC: Removed keys from database</source>
-        <translation>KeePassXC: Noi-remove ang mga key mula sa database</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
@@ -1775,31 +1761,13 @@ Ang pahintulot na ma-access ang mga entry ay babawiin.</translation>
         <source>Abort</source>
         <translation>I-abort</translation>
     </message>
-    <message>
-        <source>KeePassXC: Removed permissions</source>
-        <translation>KeePassXC: Ni-remove ang mga pahintulot</translation>
-    </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
         <translation><numerusform>Matagumpay na na-remove ang mga permission mula sa %n na entry.</numerusform><numerusform>Matagumpay na na-remove ang mga permission mula sa %n na (mga) entry.</numerusform></translation>
     </message>
     <message>
-        <source>KeePassXC: No entry with permissions found!</source>
-        <translation>KeePassXC: Walang nakitang entry na may mga pahintulot!</translation>
-    </message>
-    <message>
         <source>The active database does not contain an entry with permissions.</source>
         <translation>Ang aktibong database ay hindi naglalaman ng entry na may mga permission.</translation>
-    </message>
-    <message>
-        <source>Move KeePassHTTP attributes to custom data</source>
-        <translation>Ilipat ang mga attribute ng KeePassHTTP sa custom na data</translation>
-    </message>
-    <message>
-        <source>Do you really want to convert all legacy browser integration data to the latest standard?
-This is necessary to maintain compatibility with the browser plugin.</source>
-        <translation>Gusto mo bang i-convert ang lahat ng legacy browser integration data sa pinakabagong pamantayan?
-Ito ay kinakailangan upang mapanatili ang pagiging tugma sa browser plugin.</translation>
     </message>
     <message>
         <source>Refresh database ID</source>
@@ -1810,6 +1778,26 @@ Ito ay kinakailangan upang mapanatili ang pagiging tugma sa browser plugin.</tra
 This is only necessary if your database is a copy of another and the browser extension cannot connect.</source>
         <translation>Gusto mo bang i-refresh ang database ID?
 Ito ay kinakailangan lamang kung ang iyong database ay isang kopya ng isa pa at ang extension ng browser ay hindi makakonekta.</translation>
+    </message>
+    <message>
+        <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
+        <translation>I-convert ang mga legacy na attribute ng KeePassHTTP -Browser na tugma sa custom data</translation>
+    </message>
+    <message>
+        <source>No keys found</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Removed keys from database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Removed permissions</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No entry with permissions found!</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1850,20 +1838,24 @@ Sigurado ka bang gusto mong magpatuloy nang walang password?</translation>
         <source>Failed to change database credentials</source>
         <translation>Nabigong baguhin ang mga kredensyal ng database</translation>
     </message>
+    <message>
+        <source>Weak password</source>
+        <translation>Mahinang password</translation>
+    </message>
+    <message>
+        <source>You must enter a stronger password to protect your database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>This is a weak password! For better protection of your secrets, you should choose a stronger password.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetEncryption</name>
     <message>
         <source>Decryption Time:</source>
         <translation>Oras ng Pag-decrypt:</translation>
-    </message>
-    <message>
-        <source>Change existing decryption time</source>
-        <translation>Baguhin ang kasalukuyang oras ng pag-decrypt</translation>
-    </message>
-    <message>
-        <source>Change</source>
-        <translation>Palitan</translation>
     </message>
     <message>
         <source>Decryption time in seconds</source>
@@ -1946,11 +1938,6 @@ Sigurado ka bang gusto mong magpatuloy nang walang password?</translation>
         <translation>KDBX 3</translation>
     </message>
     <message>
-        <source>unchanged</source>
-        <comment>Database decryption time is unchanged</comment>
-        <translation>hindi nabago</translation>
-    </message>
-    <message>
         <source>Number of rounds too high</source>
         <comment>Key transformation rounds</comment>
         <translation>Masyadong mataas ang bilang ng mga round</translation>
@@ -2001,6 +1988,18 @@ Kung pananatilihin mo ang numerong ito, hindi mapoprotektahan ang database mo mu
         <source> thread(s)</source>
         <comment>Threads for parallel execution (KDF settings)</comment>
         <translation><numerusform> thread</numerusform><numerusform> (mga)thread</numerusform></translation>
+    </message>
+    <message>
+        <source>Encryption Settings:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Basic</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Advanced</source>
+        <translation>Advanced</translation>
     </message>
 </context>
 <context>
@@ -2132,6 +2131,26 @@ sa halip na tanggalin ang mga ito mula sa database.
 Ang mga entry na na-delete mula sa recycle bin ay
 na-delete mula sa database.</translation>
     </message>
+    <message>
+        <source>Autosave delay since last change</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Autosave delay</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Autosave delay since last change in minutes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source> min</source>
+        <translation> min</translation>
+    </message>
+    <message>
+        <source>Autosave delay since last change checkbox</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetKeeShare</name>
@@ -2260,24 +2279,8 @@ Tiyak na bug ito, mangyaring i-ulat sa mga developer.</translation>
         <translation>CSV file</translation>
     </message>
     <message>
-        <source>Select CSV file</source>
-        <translation>Piliin ang CSV file</translation>
-    </message>
-    <message>
         <source>Merge database</source>
         <translation>Pagsamahin ang dabatase</translation>
-    </message>
-    <message>
-        <source>KeePass 1 database</source>
-        <translation>KeePass 1 database</translation>
-    </message>
-    <message>
-        <source>Open KeePass 1 database</source>
-        <translation>Buksan ang database ng KeePass 1</translation>
-    </message>
-    <message>
-        <source>Open OPVault</source>
-        <translation>Buksan ang OPVault</translation>
     </message>
     <message>
         <source>Export database to CSV file</source>
@@ -2292,28 +2295,6 @@ Tiyak na bug ito, mangyaring i-ulat sa mga developer.</translation>
         <translation>Nabigo ang pagsulat ng HTML file.</translation>
     </message>
     <message>
-        <source>Export Confirmation</source>
-        <translation>I-export ang Kumpirmasyon</translation>
-    </message>
-    <message>
-        <source>You are about to export your database to an unencrypted file. This will leave your passwords and sensitive information vulnerable! Are you sure you want to continue?</source>
-        <translation>Ie-export mo na ang database mo sa isang hindi naka-encrypt na file. Iiwan nitong mahina ang iyong mga password at sensitibong impormasyon! Sigurado ka bang gusto mong magpatuloy?</translation>
-    </message>
-    <message>
-        <source>New Database</source>
-        <translation>Bagong Database</translation>
-    </message>
-    <message>
-        <source>%1 [New Database]</source>
-        <comment>Database tab name modifier</comment>
-        <translation>%1 [Bagong Database]</translation>
-    </message>
-    <message>
-        <source>%1 [Locked]</source>
-        <comment>Database tab name modifier</comment>
-        <translation>%1 [Naka-lock]</translation>
-    </message>
-    <message>
         <source>Export database to XML file</source>
         <translation>I-export ang database sa XML file</translation>
     </message>
@@ -2325,9 +2306,26 @@ Tiyak na bug ito, mangyaring i-ulat sa mga developer.</translation>
         <source>Writing the XML file failed</source>
         <translation>Nabigo ang pagsulat ng XML file</translation>
     </message>
+    <message>
+        <source>Export Confirmation</source>
+        <translation>I-export ang Kumpirmasyon</translation>
+    </message>
+    <message>
+        <source>You are about to export your database to an unencrypted file. This will leave your passwords and sensitive information vulnerable! Are you sure you want to continue?</source>
+        <translation>Ie-export mo na ang database mo sa isang hindi naka-encrypt na file. Iiwan nitong mahina ang iyong mga password at sensitibong impormasyon! Sigurado ka bang gusto mong magpatuloy?</translation>
+    </message>
+    <message>
+        <source>%1 [Locked]</source>
+        <comment>Database tab name modifier</comment>
+        <translation>%1 [Naka-lock]</translation>
+    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
+    <message>
+        <source>Searches and Tags</source>
+        <translation>Mga Paghahanap at Tag</translation>
+    </message>
     <message>
         <source>Searching…</source>
         <translation>Naghahanap…</translation>
@@ -2376,6 +2374,10 @@ Tiyak na bug ito, mangyaring i-ulat sa mga developer.</translation>
         <source>Expired entries</source>
         <translation>Mga nag-expire na entry</translation>
     </message>
+    <message numerus="yes">
+        <source>Entries expiring within %1 day(s)</source>
+        <translation><numerusform>Mag-e-expire ang mga entry sa loob ng %1 na araw</numerusform><numerusform>Mag-e-expire ang mga entry sa loob ng %1 na (mga) araw</numerusform></translation>
+    </message>
     <message>
         <source>No current database.</source>
         <translation>Walang kasalukuyang database.</translation>
@@ -2399,6 +2401,18 @@ Tiyak na bug ito, mangyaring i-ulat sa mga developer.</translation>
     <message>
         <source>No Results</source>
         <translation>Walang Mga Resulta</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>I-save</translation>
+    </message>
+    <message>
+        <source>Enter a unique name or overwrite an existing search from the list:</source>
+        <translation>Maglagay ng natatanging pangalan o i-overwrite ang isang umiiral na nahanap mula sa listahan:</translation>
+    </message>
+    <message>
+        <source>Save Search</source>
+        <translation>I-save ang Search</translation>
     </message>
     <message>
         <source>Lock Database?</source>
@@ -2490,25 +2504,14 @@ I-disable ang safe save at subukang muli?</translation>
         <source>Could not find database file: %1</source>
         <translation>Hindi mahanap ang database file: %1</translation>
     </message>
-    <message numerus="yes">
-        <source>Entries expiring within %1 day(s)</source>
-        <translation><numerusform>Mag-e-expire ang mga entry sa loob ng %1 na araw</numerusform><numerusform>Mag-e-expire ang mga entry sa loob ng %1 na (mga) araw</numerusform></translation>
+    <message>
+        <source>New Database</source>
+        <translation>Bagong Database</translation>
     </message>
     <message>
-        <source>Searches and Tags</source>
-        <translation>Mga Paghahanap at Tag</translation>
-    </message>
-    <message>
-        <source>Enter a unique name or overwrite an existing search from the list:</source>
-        <translation>Maglagay ng natatanging pangalan o i-overwrite ang isang umiiral na nahanap mula sa listahan:</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>I-save</translation>
-    </message>
-    <message>
-        <source>Save Search</source>
-        <translation>I-save ang Search</translation>
+        <source>%1 [New Database]</source>
+        <comment>Database tab name modifier</comment>
+        <translation>%1 [Bagong Database]</translation>
     </message>
 </context>
 <context>
@@ -2652,6 +2655,10 @@ Gusto mo bang itama ito?</translation>
         <translation>Itago</translation>
     </message>
     <message numerus="yes">
+        <source>%n hour(s)</source>
+        <translation><numerusform>%n oras</numerusform><numerusform>%n (mga)oras</numerusform></translation>
+    </message>
+    <message numerus="yes">
         <source>%n week(s)</source>
         <translation><numerusform>%n linggo</numerusform><numerusform>%n (mga)linggo</numerusform></translation>
     </message>
@@ -2662,10 +2669,6 @@ Gusto mo bang itama ito?</translation>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>%n taon</numerusform><numerusform>%n (mga)taon</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n hour(s)</source>
-        <translation><numerusform>%n oras</numerusform><numerusform>%n (mga)oras</numerusform></translation>
     </message>
 </context>
 <context>
@@ -2786,8 +2789,18 @@ Gusto mo bang itama ito?</translation>
         <translation>Magdagdag ng bagong window association</translation>
     </message>
     <message>
+        <source>+</source>
+        <comment>Add item</comment>
+        <translation>+</translation>
+    </message>
+    <message>
         <source>Remove selected window association</source>
         <translation>Alisin ang napiling pagkakaugnay ng window</translation>
+    </message>
+    <message>
+        <source>-</source>
+        <comment>Remove item</comment>
+        <translation>-</translation>
     </message>
     <message>
         <source>Window title:</source>
@@ -2812,16 +2825,6 @@ Gusto mo bang itama ito?</translation>
     <message>
         <source>Custom Auto-Type sequence for this window</source>
         <translation>Custom na Auto-Type sequence para sa window na ito</translation>
-    </message>
-    <message>
-        <source>+</source>
-        <comment>Add item</comment>
-        <translation>+</translation>
-    </message>
-    <message>
-        <source>-</source>
-        <comment>Remove item</comment>
-        <translation>-</translation>
     </message>
 </context>
 <context>
@@ -3040,19 +3043,6 @@ Gusto mo bang itama ito?</translation>
         <translation>Pribadong key</translation>
     </message>
     <message>
-        <source>External file</source>
-        <translation>Panlabas na file</translation>
-    </message>
-    <message>
-        <source>Browser for key file</source>
-        <translation>Browser para sa key file</translation>
-    </message>
-    <message>
-        <source>Browse…</source>
-        <extracomment>Button for opening file dialog</extracomment>
-        <translation>Mag-browse…</translation>
-    </message>
-    <message>
         <source>Attachment</source>
         <translation>Attachment</translation>
     </message>
@@ -3067,6 +3057,23 @@ Gusto mo bang itama ito?</translation>
     <message>
         <source>Remove from agent</source>
         <translation>Alisin mula sa agent</translation>
+    </message>
+    <message>
+        <source>External file</source>
+        <translation>Panlabas na file</translation>
+    </message>
+    <message>
+        <source>Browser for key file</source>
+        <translation>Browser para sa key file</translation>
+    </message>
+    <message>
+        <source>Browse…</source>
+        <extracomment>Button for opening file dialog</extracomment>
+        <translation>Mag-browse…</translation>
+    </message>
+    <message>
+        <source>Generate</source>
+        <translation>Bumuo</translation>
     </message>
     <message>
         <source>Select attachment file</source>
@@ -3104,10 +3111,6 @@ Gusto mo bang itama ito?</translation>
         <translation>Icon</translation>
     </message>
     <message>
-        <source>Browser Integration</source>
-        <translation>Pagsasama ng Browser</translation>
-    </message>
-    <message>
         <source>Properties</source>
         <translation>Mga pag-aari</translation>
     </message>
@@ -3122,6 +3125,10 @@ Gusto mo bang itama ito?</translation>
     <message>
         <source>Group has unsaved changes</source>
         <translation>May mga hindi na-save na pagbabago ng group</translation>
+    </message>
+    <message>
+        <source>Browser Integration</source>
+        <translation>Pagsasama ng Browser</translation>
     </message>
     <message>
         <source>Enable</source>
@@ -3181,6 +3188,14 @@ Gusto mo bang itama ito?</translation>
     <message>
         <source>Omit WWW subdomain from matching toggle for this and sub groups</source>
         <translation>Alisin ang WWW subdomain sa pagtutugma ng toggle para dito at sa mga sub group</translation>
+    </message>
+    <message>
+        <source>Restrict matching to given browser key:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Restrict matching to given browser key toggle for this and sub groups</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3415,10 +3430,6 @@ Ang mga sinusuportahang extension ay: %1.</translation>
         <translation>Hindi makuha ang favicon.</translation>
     </message>
     <message>
-        <source>You can enable the DuckDuckGo website icon service under Tools -&gt; Settings -&gt; Security</source>
-        <translation>Maaari mong paganahin ang serbisyo ng icon ng website ng DuckDuckGo sa ilalim ng Tools -&gt; Settings -&gt; Security</translation>
-    </message>
-    <message>
         <source>Existing icon selected.</source>
         <translation>Pinili ang kasalukuyang icon.</translation>
     </message>
@@ -3449,6 +3460,10 @@ Ang mga sinusuportahang extension ay: %1.</translation>
     <message numerus="yes">
         <source>The following icon(s) failed:</source>
         <translation><numerusform>Nabigo ang sumusunod na icon:</numerusform><numerusform>Nabigo ang sumusunod na (mga) icon:</numerusform></translation>
+    </message>
+    <message>
+        <source>You can enable the DuckDuckGo website icon service under Application Settings -&gt; Security</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3888,6 +3903,10 @@ Error: %1</translation>
         <source>Has TOTP</source>
         <translation>May TOTP</translation>
     </message>
+    <message>
+        <source>Background Color</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EntryPreviewWidget</name>
@@ -3908,8 +3927,8 @@ Error: %1</translation>
         <translation>Password</translation>
     </message>
     <message>
-        <source>Notes</source>
-        <translation>Mga tala</translation>
+        <source>URL</source>
+        <translation>URL</translation>
     </message>
     <message>
         <source>Expiration</source>
@@ -3928,8 +3947,8 @@ Error: %1</translation>
         <translation>Username</translation>
     </message>
     <message>
-        <source>URL</source>
-        <translation>URL</translation>
+        <source>Notes</source>
+        <translation>Mga tala</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -3980,16 +3999,16 @@ Error: %1</translation>
         <translation>Huwag kailanman</translation>
     </message>
     <message>
+        <source>Double click to copy value</source>
+        <translation>I-double click para kopyahin ang value</translation>
+    </message>
+    <message>
         <source>Enabled</source>
         <translation>Na-enable na</translation>
     </message>
     <message>
         <source>Disabled</source>
         <translation>Naka-disable</translation>
-    </message>
-    <message>
-        <source>Double click to copy value</source>
-        <translation>I-double click para kopyahin ang value</translation>
     </message>
     <message>
         <source>Double click to copy to clipboard</source>
@@ -4244,6 +4263,147 @@ Puwede mong i-enable ang icon service ng website ng DuckDuckGo sa seksyon ng seg
     <message>
         <source>Downloading favicons (%1/%2)…</source>
         <translation>Dina-download ang mga favicon na (%1/%2)…</translation>
+    </message>
+</context>
+<context>
+    <name>ImportWizard</name>
+    <message>
+        <source>Import Wizard</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>ImportWizardPageReview</name>
+    <message>
+        <source>WizardPage</source>
+        <translation>WizardPage</translation>
+    </message>
+    <message>
+        <source>Entry count: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Group</source>
+        <translation>Group</translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation>Pamagat</translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>Username</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Password</translation>
+    </message>
+    <message>
+        <source>Url</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>ImportWizardPageSelect</name>
+    <message>
+        <source>Form</source>
+        <translation>Form</translation>
+    </message>
+    <message>
+        <source>Import File Selection</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password:</source>
+        <translation>Password:</translation>
+    </message>
+    <message>
+        <source>Key File:</source>
+        <translation>Key File:</translation>
+    </message>
+    <message>
+        <source>Browse…</source>
+        <translation>Mag-browse…</translation>
+    </message>
+    <message>
+        <source>Import Into:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>New Database</source>
+        <translation>Bagong Database</translation>
+    </message>
+    <message>
+        <source>No unlocked databases available</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Existing Database:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import File:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Comma Separated Values (.csv)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>1Password Export (.1pux)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>1Password Vault (.opvault)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Bitwarden (.json)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePass 1 Database (.kdb)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open OPVault</source>
+        <translation>Buksan ang OPVault</translation>
+    </message>
+    <message>
+        <source>Select import file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>All files</source>
+        <translation>Lahat ng mga file</translation>
+    </message>
+    <message>
+        <source>Key files</source>
+        <translation>Mga key file</translation>
+    </message>
+    <message>
+        <source>Select key file</source>
+        <translation>Piliin ang key file</translation>
+    </message>
+    <message>
+        <source>Comma Separated Values</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>1Password Export</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Bitwarden JSON Export</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>1Password Vault</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePass1 Database</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4681,17 +4841,6 @@ Linya na %2, column na %3</translation>
     </message>
 </context>
 <context>
-    <name>KeePass1OpenWidget</name>
-    <message>
-        <source>Import KeePass1 Database</source>
-        <translation>Mag-import ng KeePass1 Database</translation>
-    </message>
-    <message>
-        <source>Unable to open the database.</source>
-        <translation>Hindi mabuksan ang database.</translation>
-    </message>
-</context>
-<context>
     <name>KeePass1Reader</name>
     <message>
         <source>Unable to read keyfile.</source>
@@ -5048,10 +5197,6 @@ Sigurado ka bang gusto mong magpatuloy sa file na ito?</translation>
         <translation>&amp;Recent Databases</translation>
     </message>
     <message>
-        <source>&amp;Import</source>
-        <translation>&amp;Import</translation>
-    </message>
-    <message>
         <source>&amp;Export</source>
         <translation>&amp;Export</translation>
     </message>
@@ -5070,6 +5215,10 @@ Sigurado ka bang gusto mong magpatuloy sa file na ito?</translation>
     <message>
         <source>TOTP</source>
         <translation>TOTP</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation>Mga tag</translation>
     </message>
     <message>
         <source>&amp;Groups</source>
@@ -5116,32 +5265,16 @@ Sigurado ka bang gusto mong magpatuloy sa file na ito?</translation>
         <translation>&amp;New Database…</translation>
     </message>
     <message>
-        <source>Create a new database</source>
-        <translation>Lumikha ng bagong database</translation>
-    </message>
-    <message>
         <source>&amp;Merge From Database…</source>
         <translation>&amp;Merge From Database…</translation>
-    </message>
-    <message>
-        <source>Merge from another KDBX database</source>
-        <translation>Pagsamahin mula sa isa pang KDBX database</translation>
     </message>
     <message>
         <source>&amp;New Entry…</source>
         <translation>&amp;New Entry…</translation>
     </message>
     <message>
-        <source>Add a new entry</source>
-        <translation>Magdagdag ng bagong entry</translation>
-    </message>
-    <message>
         <source>&amp;Edit Entry…</source>
         <translation>&amp;Edit Entry…</translation>
-    </message>
-    <message>
-        <source>View or edit entry</source>
-        <translation>Tingnan o i-edit ang entry</translation>
     </message>
     <message>
         <source>&amp;Delete Entry…</source>
@@ -5150,10 +5283,6 @@ Sigurado ka bang gusto mong magpatuloy sa file na ito?</translation>
     <message>
         <source>&amp;New Group…</source>
         <translation>&amp;New Group…</translation>
-    </message>
-    <message>
-        <source>Add a new group</source>
-        <translation>Magdagdag ng isang bagong pangkat</translation>
     </message>
     <message>
         <source>&amp;Edit Group…</source>
@@ -5188,16 +5317,8 @@ Sigurado ka bang gusto mong magpatuloy sa file na ito?</translation>
         <translation>Database &amp;Reports…</translation>
     </message>
     <message>
-        <source>Statistics, health check, etc.</source>
-        <translation>Mga statistic, pagsusuri sa kalusugan, atbp.</translation>
-    </message>
-    <message>
         <source>&amp;Database Settings…</source>
         <translation>&amp;Database Settings…</translation>
-    </message>
-    <message>
-        <source>Database settings</source>
-        <translation>Mga database setting</translation>
     </message>
     <message>
         <source>&amp;Clone Entry…</source>
@@ -5208,32 +5329,16 @@ Sigurado ka bang gusto mong magpatuloy sa file na ito?</translation>
         <translation>Ilipat ang u&amp;p</translation>
     </message>
     <message>
-        <source>Move entry one step up</source>
-        <translation>Ilipat ang entry ng isang hakbang pataas</translation>
-    </message>
-    <message>
         <source>Move do&amp;wn</source>
         <translation>Ilipat sa do&amp;wn</translation>
-    </message>
-    <message>
-        <source>Move entry one step down</source>
-        <translation>Ilipat ang entry ng isang hakbang pababa</translation>
     </message>
     <message>
         <source>Copy &amp;Username</source>
         <translation>Kopyahin ang &amp;Username</translation>
     </message>
     <message>
-        <source>Copy username to clipboard</source>
-        <translation>Kopyahin ang username sa clipboard</translation>
-    </message>
-    <message>
         <source>Copy &amp;Password</source>
         <translation>Kopyahin ang &amp;Password</translation>
-    </message>
-    <message>
-        <source>Copy password to clipboard</source>
-        <translation>Kopyahin ang password sa clipboard</translation>
     </message>
     <message>
         <source>&amp;Settings</source>
@@ -5268,20 +5373,12 @@ Sigurado ka bang gusto mong magpatuloy sa file na ito?</translation>
         <translation>&amp;Title</translation>
     </message>
     <message>
-        <source>Copy title to clipboard</source>
-        <translation>Kopyahin ang pamagat sa clipboard</translation>
-    </message>
-    <message>
-        <source>Copy URL to clipboard</source>
-        <translation>kopyahin ang URL sa clipboard</translation>
+        <source>Copy &amp;URL</source>
+        <translation>Kopyahin ang &amp;URL</translation>
     </message>
     <message>
         <source>&amp;Notes</source>
         <translation>&amp;Notes</translation>
-    </message>
-    <message>
-        <source>Copy notes to clipboard</source>
-        <translation>Kopyahin ang mga note sa clipboard</translation>
     </message>
     <message>
         <source>&amp;CSV File…</source>
@@ -5296,24 +5393,12 @@ Sigurado ka bang gusto mong magpatuloy sa file na ito?</translation>
         <translation>KeePass 1 Database…</translation>
     </message>
     <message>
-        <source>Import a KeePass 1 database</source>
-        <translation>Mag-import ng database ng KeePass 1</translation>
-    </message>
-    <message>
         <source>1Password Vault…</source>
         <translation>1Password Vault…</translation>
     </message>
     <message>
-        <source>Import a 1Password Vault</source>
-        <translation>Mag-import ng 1Password Vault</translation>
-    </message>
-    <message>
         <source>CSV File…</source>
         <translation>CSV File…</translation>
-    </message>
-    <message>
-        <source>Import a CSV file</source>
-        <translation>Mag-import ng CSV file</translation>
     </message>
     <message>
         <source>Show TOTP</source>
@@ -5330,6 +5415,10 @@ Sigurado ka bang gusto mong magpatuloy sa file na ito?</translation>
     <message>
         <source>Copy &amp;TOTP</source>
         <translation>Kopyahin ang &amp;TOTP</translation>
+    </message>
+    <message>
+        <source>Copy Password and TOTP</source>
+        <translation>Kopyahin ang Password at TOTP</translation>
     </message>
     <message>
         <source>E&amp;mpty recycle bin</source>
@@ -5354,10 +5443,6 @@ Sigurado ka bang gusto mong magpatuloy sa file na ito?</translation>
     <message>
         <source>&amp;Online Help</source>
         <translation>&amp;Online Help</translation>
-    </message>
-    <message>
-        <source>Go to online documentation</source>
-        <translation>Pumunta sa online na documentation</translation>
     </message>
     <message>
         <source>&amp;User Guide</source>
@@ -5428,6 +5513,10 @@ Sigurado ka bang gusto mong magpatuloy sa file na ito?</translation>
         <translation>I-clond ang Group...</translation>
     </message>
     <message>
+        <source>&amp;XML File…</source>
+        <translation>&amp;XML File…</translation>
+    </message>
+    <message>
         <source>Clear history</source>
         <translation>I-clear ang history</translation>
     </message>
@@ -5459,6 +5548,10 @@ We recommend you use the AppImage available on our downloads page.</source>
         <translation>BABALA: Ang bersyon ng Qt mo ay maaaring magdulot ng pag-crash ng KeePassXC gamit ang On-Screen Keyboard.
 Inirerekomenda naming gamitin mo ang AppImage na available sa aming pahina ng mga pag-download.</translation>
     </message>
+    <message>
+        <source>No Tags</source>
+        <translation>Walang Mga Tag</translation>
+    </message>
     <message numerus="yes">
         <source>Restore Entry(s)</source>
         <translation><numerusform>Ibalik ang Entry</numerusform><numerusform>Ibalik ang (mga) Entry</numerusform></translation>
@@ -5487,6 +5580,10 @@ Inirerekomenda naming gamitin mo ang AppImage na available sa aming pahina ng mg
         <source>Quit KeePassXC</source>
         <translation>Ihinto ang KeePassXC</translation>
     </message>
+    <message numerus="yes">
+        <source>%1 Entry(s)</source>
+        <translation><numerusform>%1 Entry</numerusform><numerusform>%1 (mga)Entry</numerusform></translation>
+    </message>
     <message>
         <source>Please present or touch your YubiKey to continue…</source>
         <translation>Mangyaring ipakita o pindutin ang iyong YubiKey upang magpatuloy…</translation>
@@ -5500,36 +5597,272 @@ Inirerekomenda naming gamitin mo ang AppImage na available sa aming pahina ng mg
         <translation>Dapat mong i-restart ang application upang mailapat ang setting na ito. Gusto mo bang i-restart ngayon?</translation>
     </message>
     <message>
-        <source>Tags</source>
-        <translation>Mga tag</translation>
-    </message>
-    <message>
-        <source>No Tags</source>
-        <translation>Walang Mga Tag</translation>
-    </message>
-    <message numerus="yes">
-        <source>%1 Entry(s)</source>
-        <translation><numerusform>%1 Entry</numerusform><numerusform>%1 (mga)Entry</numerusform></translation>
-    </message>
-    <message>
-        <source>Copy Password and TOTP</source>
-        <translation>Kopyahin ang Password at TOTP</translation>
-    </message>
-    <message>
-        <source>&amp;XML File…</source>
-        <translation>&amp;XML File…</translation>
-    </message>
-    <message>
-        <source>XML File…</source>
-        <translation>XML File…</translation>
-    </message>
-    <message>
-        <source>Copy &amp;URL</source>
-        <translation>Kopyahin ang &amp;URL</translation>
-    </message>
-    <message>
         <source>Allow Screen Capture</source>
         <translation>Payagan ang Screen Capture</translation>
+    </message>
+    <message>
+        <source>1Password 1PUX...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import a 1Password 1PUX file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Passkeys…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import Passkey</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Quit Application</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open About Dialog</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open Database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Create Database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Merge From Database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Create Entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Edit Entry</source>
+        <translation>I-edit ang Entry</translation>
+    </message>
+    <message>
+        <source>Delete Entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Create Group</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Edit Group</source>
+        <translation>I-edit ang Group</translation>
+    </message>
+    <message>
+        <source>Delete Group</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download All Favicons</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Sort Groups A-Z</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Sort Groups Z-A</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Save Database As</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show Database Security</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show Database Reports</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show Database Settings</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show Passkeys</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Clone Entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Move Entry Up</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Move Entry Down</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy Username</source>
+        <translation>kopyahin ang Username</translation>
+    </message>
+    <message>
+        <source>Copy Password</source>
+        <translation>Kopyahin ang Password</translation>
+    </message>
+    <message>
+        <source>Show Application Settings</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show Password Generator</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Perform Auto-Type: {USERNAME}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Perform Auto-Type: {USERNAME}{ENTER}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Perform Auto-Type: {PASSWORD}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Perform Auto-Type: {PASSWORD}{ENTER}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Perform Auto-Type: {TOTP}</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy Title</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy URL</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Copy Notes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export to CSV</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export to HTML</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import KeePass1 Database</source>
+        <translation>Mag-import ng KeePass1 Database</translation>
+    </message>
+    <message>
+        <source>Import 1Password Vault</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import CSV File</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show TOTP QR Code</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Set up TOTP</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Empty Recycle Bin</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open Donation Website</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open Bug Report</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open Online Documentation</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open Keyboard Shortcuts Guide</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Save Database Backup</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>SSH Agent: Add Key</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>SSH Agent: Remove Key</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle Compact Mode</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Set Theme: Automatic</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Set Theme: Light</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Set Theme: Dark</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Set Theme: Classic</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle Show Toolbar</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle Show Preview Panel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle Always on Top</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle Hide Usernames</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle Hide Passwords</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export to XML</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle Allow Screen Capture</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5589,26 +5922,6 @@ Inirerekomenda naming gamitin mo ang AppImage na available sa aming pahina ng mg
         <translation>Ino-overwrite na ang %1 [%2]</translation>
     </message>
     <message>
-        <source>older entry merged from database &quot;%1&quot;</source>
-        <translation>ang mas lumang entry ay pinagsama mula sa database na &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>Adding backup for older target %1 [%2]</source>
-        <translation>Pagdaragdag ng backup para sa lumang target %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Adding backup for older source %1 [%2]</source>
-        <translation>Pagdaragdag ng backup para sa mas lumang source %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Reapplying older target entry on top of newer source %1 [%2]</source>
-        <translation>Muling inilalapat ang mas lumang target na entry sa itaas ng mas bagong pinagmulan na %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Reapplying older source entry on top of newer target %1 [%2]</source>
-        <translation>Muling inilalapat ang mas lumang source entry sa itaas ng mas bagong target na %1 [%2]</translation>
-    </message>
-    <message>
         <source>Synchronizing from newer source %1 [%2]</source>
         <translation>Sini-synchronize mula sa mas bagong source na %1 [%2]</translation>
     </message>
@@ -5666,14 +5979,6 @@ Inirerekomenda naming gamitin mo ang AppImage na available sa aming pahina ng mg
     <message>
         <source>Here you can adjust the database encryption settings. Don&apos;t worry, you can change them later in the database settings.</source>
         <translation>Dito puwede mong ayusin ang mga setting ng pag-encrypt ng database. Huwag mag-alala, puwede mong baguhin ang mga ito sa ibang pagkakataon sa mga setting ng database.</translation>
-    </message>
-    <message>
-        <source>Advanced Settings</source>
-        <translation>Mga Advanced Setting</translation>
-    </message>
-    <message>
-        <source>Simple Settings</source>
-        <translation>Mga Simpleng Setting</translation>
     </message>
 </context>
 <context>
@@ -5756,14 +6061,6 @@ Inirerekomenda naming gamitin mo ang AppImage na available sa aming pahina ng mg
     </message>
 </context>
 <context>
-    <name>OpVaultOpenWidget</name>
-    <message>
-        <source>Read Database did not produce an instance
-%1</source>
-        <translation>Ang Read Database ay hindi gumawa ng isang kahilingan na %1</translation>
-    </message>
-</context>
-<context>
     <name>OpVaultReader</name>
     <message>
         <source>Directory .opvault must exist</source>
@@ -5837,6 +6134,10 @@ Inirerekomenda naming gamitin mo ang AppImage na available sa aming pahina ng mg
         <translation>Hindi kilalang cipher: %1</translation>
     </message>
     <message>
+        <source>AES-256/GCM is currently not supported</source>
+        <translation>AES-256/GCM ay kasalukuyang hindi sinusuportahan</translation>
+    </message>
+    <message>
         <source>Passphrase is required to decrypt this key</source>
         <translation>Kinakailangan ang passphrase para i-decrypt ang key na ito</translation>
     </message>
@@ -5900,9 +6201,176 @@ Inirerekomenda naming gamitin mo ang AppImage na available sa aming pahina ng mg
         <source>Unexpected EOF when writing private key</source>
         <translation>Hindi inaasahang EOF kapag nagsusulat ng private key</translation>
     </message>
+</context>
+<context>
+    <name>OpenSSHKeyGenDialog</name>
     <message>
-        <source>AES-256/GCM is currently not supported</source>
-        <translation>AES-256/GCM ay kasalukuyang hindi sinusuportahan</translation>
+        <source>SSH Key Generator</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Type</source>
+        <translation>Uri</translation>
+    </message>
+    <message>
+        <source>Bits</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Comment</source>
+        <translation>Comment</translation>
+    </message>
+</context>
+<context>
+    <name>PasskeyExportDialog</name>
+    <message>
+        <source>KeePassXC - Passkey Export</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export the following Passkey entries.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Filenames will be generated with title and .passkey file extension.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export entries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export Selected</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Kanselahin</translation>
+    </message>
+    <message>
+        <source>Export to folder</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>PasskeyExporter</name>
+    <message>
+        <source>KeePassXC: Passkey Export</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>File &quot;%1.passkey&quot; already exists.
+Do you want to overwrite it?
+</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot open file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot open file &quot;%1&quot; for writing.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot write to file</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>PasskeyImportDialog</name>
+    <message>
+        <source>KeePassXC - Passkey Import</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Username: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Group</source>
+        <translation>Group</translation>
+    </message>
+    <message>
+        <source>Database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import Passkey</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation>Mag-import</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Kanselahin</translation>
+    </message>
+    <message>
+        <source>Import the following Passkey:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entry</source>
+        <translation>Entry</translation>
+    </message>
+    <message>
+        <source>Import the following Passkey to this entry:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Create new entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Default Passkeys group (Imported Passkeys)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Relying Party: %1</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>PasskeyImporter</name>
+    <message>
+        <source>Passkey file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>All files</source>
+        <translation>Lahat ng mga file</translation>
+    </message>
+    <message>
+        <source>Open Passkey file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot open file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot open file &quot;%1&quot; for reading.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot import Passkey</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot import Passkey file &quot;%1&quot;. Data is missing.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot import Passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot import Passkey file &quot;%1&quot;.
+The following data is missing:
+%2</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6084,6 +6552,10 @@ Inirerekomenda naming gamitin mo ang AppImage na available sa aming pahina ng mg
         <translation>Gayundin, pumili mula sa:</translation>
     </message>
     <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
+        <translation>Mga ibinukod na character: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</translation>
+    </message>
+    <message>
         <source>Exclude look-alike characters</source>
         <translation>Ibukod ang mga halos katulad na karakter</translation>
     </message>
@@ -6164,6 +6636,30 @@ Inirerekomenda naming gamitin mo ang AppImage na available sa aming pahina ng mg
         <translation>Entropy: %1 bit</translation>
     </message>
     <message>
+        <source>Password Quality: %1</source>
+        <translation>Kalidad ng Password: %1</translation>
+    </message>
+    <message>
+        <source>Poor</source>
+        <comment>Password quality</comment>
+        <translation>Mahina</translation>
+    </message>
+    <message>
+        <source>Weak</source>
+        <comment>Password quality</comment>
+        <translation>Mahina</translation>
+    </message>
+    <message>
+        <source>Good</source>
+        <comment>Password quality</comment>
+        <translation>Mabuti</translation>
+    </message>
+    <message>
+        <source>Excellent</source>
+        <comment>Password quality</comment>
+        <translation>Magaling</translation>
+    </message>
+    <message>
         <source>Confirm Delete Wordlist</source>
         <translation>Kumpirmahin ang Delete Wordlist</translation>
     </message>
@@ -6208,34 +6704,6 @@ Gusto mo bang i-overwrite ito?</translation>
     <message>
         <source>Special Characters</source>
         <translation>Mga Espesyal na Character</translation>
-    </message>
-    <message>
-        <source>Password Quality: %1</source>
-        <translation>Kalidad ng Password: %1</translation>
-    </message>
-    <message>
-        <source>Poor</source>
-        <comment>Password quality</comment>
-        <translation>Mahina</translation>
-    </message>
-    <message>
-        <source>Weak</source>
-        <comment>Password quality</comment>
-        <translation>Mahina</translation>
-    </message>
-    <message>
-        <source>Good</source>
-        <comment>Password quality</comment>
-        <translation>Mabuti</translation>
-    </message>
-    <message>
-        <source>Excellent</source>
-        <comment>Password quality</comment>
-        <translation>Magaling</translation>
-    </message>
-    <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>Mga ibinukod na character: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</translation>
     </message>
 </context>
 <context>
@@ -6285,7 +6753,7 @@ Gusto mo bang i-overwrite ito?</translation>
         <translation>Magaling</translation>
     </message>
     <message>
-        <source>Toggle password visibilty using Control + H. Open the password generator using Control + G.</source>
+        <source>Toggle password visibility using Control + H. Open the password generator using Control + G.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -6341,6 +6809,10 @@ Gusto mo bang i-overwrite ito?</translation>
     <message>
         <source>Continue</source>
         <translation>Magpatuloy</translation>
+    </message>
+    <message>
+        <source>Continue with weak password</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6736,12 +7208,22 @@ Gusto mo bang i-overwrite ito?</translation>
         <translation>Masyadong maraming argument ang ibinigay.</translation>
     </message>
     <message>
+        <source>Path of the database.</source>
+        <translation>Path ng database</translation>
+    </message>
+    <message>
         <source>Target decryption time in MS for the database.</source>
         <translation>Target na oras ng pag-decrypt sa MS para sa database.</translation>
     </message>
     <message>
         <source>time</source>
         <translation>oras</translation>
+    </message>
+    <message>
+        <source>Set the key file for the database.
+This options is deprecated, use --set-key-file instead.</source>
+        <translation>Itakda ang key file para sa database.
+Ang pagpipiliang ito ay hindi na ginagamit, gamitin ang --set-key-file sa halip.</translation>
     </message>
     <message>
         <source>Set the key file for the database.</source>
@@ -6754,10 +7236,6 @@ Gusto mo bang i-overwrite ito?</translation>
     <message>
         <source>Create a new database.</source>
         <translation>Lumikha ng bagong database</translation>
-    </message>
-    <message>
-        <source>Path of the database.</source>
-        <translation>Path ng database</translation>
     </message>
     <message>
         <source>Invalid decryption time %1.</source>
@@ -6802,6 +7280,158 @@ Gusto mo bang i-overwrite ito?</translation>
     <message>
         <source>Successfully created new database.</source>
         <translation>Matagumpay na nakagawa ng bagong database.</translation>
+    </message>
+    <message>
+        <source>Unset the password for the database.</source>
+        <translation>I-unset ang password para sa database.</translation>
+    </message>
+    <message>
+        <source>Unset the key file for the database.</source>
+        <translation>I-unset ang key file para sa database</translation>
+    </message>
+    <message>
+        <source>Edit a database.</source>
+        <translation>I-edit ang database</translation>
+    </message>
+    <message>
+        <source>Cannot use %1 and %2 at the same time.</source>
+        <translation>Hindi magagamit ang %1 at %2 nang magkasabay.</translation>
+    </message>
+    <message>
+        <source>Could not change the database key.</source>
+        <translation>Hindi mabago ang database key.</translation>
+    </message>
+    <message>
+        <source>Database was not modified.</source>
+        <translation>Hindi binago ang database.</translation>
+    </message>
+    <message>
+        <source>Writing the database failed: %1</source>
+        <translation>Nabigo ang pagsulat ng database: %1</translation>
+    </message>
+    <message>
+        <source>Successfully edited the database.</source>
+        <translation>Matagumpay na na-edit ang database.</translation>
+    </message>
+    <message>
+        <source>Cannot remove password: The database does not have a password.</source>
+        <translation>Hindi maalis ang password: Walang password ang database.</translation>
+    </message>
+    <message>
+        <source>Cannot remove file key: The database does not have a file key.</source>
+        <translation>Hindi maalis ang file key: Ang database ay walang file key.</translation>
+    </message>
+    <message>
+        <source>Loading the new key file failed: %1</source>
+        <translation>Nabigo ang pag-load ng bagong key file: %1</translation>
+    </message>
+    <message>
+        <source>Found unexpected Key type %1</source>
+        <translation>May nakitang hindi inaasahang uri ng Key %1</translation>
+    </message>
+    <message>
+        <source>Cannot remove all the keys from a database.</source>
+        <translation>Hindi maalis ang lahat ng mga key mula sa database.</translation>
+    </message>
+    <message>
+        <source>Show a database&apos;s information.</source>
+        <translation>Ipakita ang impormasyon ng database</translation>
+    </message>
+    <message>
+        <source>UUID: </source>
+        <translation>UUID: </translation>
+    </message>
+    <message>
+        <source>Name: </source>
+        <translation>Pangalan: </translation>
+    </message>
+    <message>
+        <source>Description: </source>
+        <translation>Paglalarawan: </translation>
+    </message>
+    <message>
+        <source>Cipher: </source>
+        <translation>Cipher: </translation>
+    </message>
+    <message>
+        <source>KDF: </source>
+        <translation>KDF: </translation>
+    </message>
+    <message>
+        <source>Recycle bin is enabled.</source>
+        <translation>Naka-enable ang recycle bin</translation>
+    </message>
+    <message>
+        <source>Recycle bin is not enabled.</source>
+        <translation>Ang recycle bin ay hindi naka-enable.</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation>Lokasyon</translation>
+    </message>
+    <message>
+        <source>Database created</source>
+        <translation>Nalikha na ang database</translation>
+    </message>
+    <message>
+        <source>Last saved</source>
+        <translation>Huling na-save</translation>
+    </message>
+    <message>
+        <source>Unsaved changes</source>
+        <translation>Mga hindi na-save na pagbabago</translation>
+    </message>
+    <message>
+        <source>yes</source>
+        <translation>oo</translation>
+    </message>
+    <message>
+        <source>no</source>
+        <translation>wala</translation>
+    </message>
+    <message>
+        <source>Number of groups</source>
+        <translation>Bilang ng mga grupo</translation>
+    </message>
+    <message>
+        <source>Number of entries</source>
+        <translation>Bilang ng mga entry</translation>
+    </message>
+    <message>
+        <source>Number of expired entries</source>
+        <translation>Bilang ng mga nag-expire na entry</translation>
+    </message>
+    <message>
+        <source>Unique passwords</source>
+        <translation>Natatanging password</translation>
+    </message>
+    <message>
+        <source>Non-unique passwords</source>
+        <translation>Hindi natatanging mga password</translation>
+    </message>
+    <message>
+        <source>Maximum password reuse</source>
+        <translation>Maximum na muling paggamit ng password</translation>
+    </message>
+    <message>
+        <source>Number of short passwords</source>
+        <translation>Bilang ng mabababang password</translation>
+    </message>
+    <message>
+        <source>Number of weak passwords</source>
+        <translation>Bilang ng mahihinang password</translation>
+    </message>
+    <message>
+        <source>Entries excluded from reports</source>
+        <translation>Ang mga entry ay hindi kasama sa mga ulat</translation>
+    </message>
+    <message>
+        <source>Average password length</source>
+        <translation>Average na haba ng password</translation>
+    </message>
+    <message>
+        <source>%1 characters</source>
+        <translation>%1 character</translation>
     </message>
     <message>
         <source>Word count for the diceware passphrase.</source>
@@ -6853,10 +7483,6 @@ Gusto mo bang i-overwrite ito?</translation>
     <message>
         <source>Enter new password for entry: </source>
         <translation>Maglagay ng bagong password para sa entry: </translation>
-    </message>
-    <message>
-        <source>Writing the database failed: %1</source>
-        <translation>Nabigo ang pagsulat ng database: %1</translation>
     </message>
     <message>
         <source>Successfully edited entry %1.</source>
@@ -7083,106 +7709,6 @@ Gusto mo bang i-overwrite ito?</translation>
         <translation>Matagumpay na na-import ang database.</translation>
     </message>
     <message>
-        <source>Show a database&apos;s information.</source>
-        <translation>Ipakita ang impormasyon ng database</translation>
-    </message>
-    <message>
-        <source>UUID: </source>
-        <translation>UUID: </translation>
-    </message>
-    <message>
-        <source>Name: </source>
-        <translation>Pangalan: </translation>
-    </message>
-    <message>
-        <source>Description: </source>
-        <translation>Paglalarawan: </translation>
-    </message>
-    <message>
-        <source>Cipher: </source>
-        <translation>Cipher: </translation>
-    </message>
-    <message>
-        <source>KDF: </source>
-        <translation>KDF: </translation>
-    </message>
-    <message>
-        <source>Recycle bin is enabled.</source>
-        <translation>Naka-enable ang recycle bin</translation>
-    </message>
-    <message>
-        <source>Recycle bin is not enabled.</source>
-        <translation>Ang recycle bin ay hindi naka-enable.</translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation>Lokasyon</translation>
-    </message>
-    <message>
-        <source>Database created</source>
-        <translation>Nalikha na ang database</translation>
-    </message>
-    <message>
-        <source>Last saved</source>
-        <translation>Huling na-save</translation>
-    </message>
-    <message>
-        <source>Unsaved changes</source>
-        <translation>Mga hindi na-save na pagbabago</translation>
-    </message>
-    <message>
-        <source>yes</source>
-        <translation>oo</translation>
-    </message>
-    <message>
-        <source>no</source>
-        <translation>wala</translation>
-    </message>
-    <message>
-        <source>Number of groups</source>
-        <translation>Bilang ng mga grupo</translation>
-    </message>
-    <message>
-        <source>Number of entries</source>
-        <translation>Bilang ng mga entry</translation>
-    </message>
-    <message>
-        <source>Number of expired entries</source>
-        <translation>Bilang ng mga nag-expire na entry</translation>
-    </message>
-    <message>
-        <source>Unique passwords</source>
-        <translation>Natatanging password</translation>
-    </message>
-    <message>
-        <source>Non-unique passwords</source>
-        <translation>Hindi natatanging mga password</translation>
-    </message>
-    <message>
-        <source>Maximum password reuse</source>
-        <translation>Maximum na muling paggamit ng password</translation>
-    </message>
-    <message>
-        <source>Number of short passwords</source>
-        <translation>Bilang ng mabababang password</translation>
-    </message>
-    <message>
-        <source>Number of weak passwords</source>
-        <translation>Bilang ng mahihinang password</translation>
-    </message>
-    <message>
-        <source>Entries excluded from reports</source>
-        <translation>Ang mga entry ay hindi kasama sa mga ulat</translation>
-    </message>
-    <message>
-        <source>Average password length</source>
-        <translation>Average na haba ng password</translation>
-    </message>
-    <message>
-        <source>%1 characters</source>
-        <translation>%1 character</translation>
-    </message>
-    <message>
         <source>Unknown command %1</source>
         <translation>Hindi kilalang utos %1</translation>
     </message>
@@ -7355,6 +7881,10 @@ Mga available command:
         <translation>Ipakita ang mga protektadong attribute sa malinaw na teksto.</translation>
     </message>
     <message>
+        <source>Show all the attributes of the entry.</source>
+        <translation>Ipakita ang lahat ng mga attribute ng entry.</translation>
+    </message>
+    <message>
         <source>Show the attachments of the entry.</source>
         <translation>Ipakita ang mga attachment ng entry.</translation>
     </message>
@@ -7423,6 +7953,10 @@ Mangyaring isaalang-alang ang pagbuo ng bagong key file.</translation>
     <message>
         <source>Invalid YubiKey serial %1</source>
         <translation>Invalid na YubiKey serial na %1</translation>
+    </message>
+    <message>
+        <source>Please present or touch your YubiKey to continue.</source>
+        <translation>Mangyaring ipakita o pindutin ang iyong YubiKey para magpatuloy.</translation>
     </message>
     <message>
         <source>Enter password to encrypt database (optional): </source>
@@ -7865,6 +8399,10 @@ Kernel: %3 %4</translation>
         <translation>Ang isa pang halimbawa ng KeePassXC ay tumatakbo na.</translation>
     </message>
     <message>
+        <source>KeePassXC is not running. No open database to lock</source>
+        <translation>Ang KeePassXC ay hindi tumatakbo. Walang bukas na database upang i-lock</translation>
+    </message>
+    <message>
         <source>Fatal error while testing the cryptographic functions.</source>
         <translation>Fatal na error habang sinusubukan ang mga cryptographic function.</translation>
     </message>
@@ -7907,73 +8445,209 @@ Kernel: %3 %4</translation>
         <translation>Invalid na KDF</translation>
     </message>
     <message>
-        <source>Please present or touch your YubiKey to continue.</source>
-        <translation>Mangyaring ipakita o pindutin ang iyong YubiKey para magpatuloy.</translation>
-    </message>
-    <message>
-        <source>Show all the attributes of the entry.</source>
-        <translation>Ipakita ang lahat ng mga attribute ng entry.</translation>
-    </message>
-    <message>
-        <source>Edit a database.</source>
-        <translation>I-edit ang database</translation>
-    </message>
-    <message>
-        <source>Could not change the database key.</source>
-        <translation>Hindi mabago ang database key.</translation>
-    </message>
-    <message>
-        <source>Database was not modified.</source>
-        <translation>Hindi binago ang database.</translation>
-    </message>
-    <message>
-        <source>Successfully edited the database.</source>
-        <translation>Matagumpay na na-edit ang database.</translation>
-    </message>
-    <message>
-        <source>Loading the new key file failed: %1</source>
-        <translation>Nabigo ang pag-load ng bagong key file: %1</translation>
-    </message>
-    <message>
-        <source>Unset the password for the database.</source>
-        <translation>I-unset ang password para sa database.</translation>
-    </message>
-    <message>
-        <source>Unset the key file for the database.</source>
-        <translation>I-unset ang key file para sa database</translation>
-    </message>
-    <message>
-        <source>Cannot use %1 and %2 at the same time.</source>
-        <translation>Hindi magagamit ang %1 at %2 nang magkasabay.</translation>
-    </message>
-    <message>
-        <source>Cannot remove all the keys from a database.</source>
-        <translation>Hindi maalis ang lahat ng mga key mula sa database.</translation>
-    </message>
-    <message>
-        <source>Cannot remove password: The database does not have a password.</source>
-        <translation>Hindi maalis ang password: Walang password ang database.</translation>
-    </message>
-    <message>
-        <source>Cannot remove file key: The database does not have a file key.</source>
-        <translation>Hindi maalis ang file key: Ang database ay walang file key.</translation>
-    </message>
-    <message>
-        <source>Found unexpected Key type %1</source>
-        <translation>May nakitang hindi inaasahang uri ng Key %1</translation>
-    </message>
-    <message>
-        <source>Set the key file for the database.
-This options is deprecated, use --set-key-file instead.</source>
-        <translation>Itakda ang key file para sa database.
-Ang pagpipiliang ito ay hindi na ginagamit, gamitin ang --set-key-file sa halip.</translation>
-    </message>
-    <message>
-        <source>KeePassXC is not running. No open database to lock</source>
-        <translation>Ang KeePassXC ay hindi tumatakbo. Walang bukas na database upang i-lock</translation>
+        <source>Access to all entries is denied</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>allow screenshots and app recording (Windows/macOS)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Enter Shortcut</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Action</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Shortcuts</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Attestation not supported</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Credential is excluded</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Passkeys request canceled</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid user verification</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Empty public key</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid URL provided</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Passkeys</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>AES initialization failed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>AES encrypt failed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to store in Linux Keyring</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Polkit returned an error: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not locate key in keyring</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Could not read key in keyring</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>AES decrypt failed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No Polkit authentication agent was available</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Polkit authorization failed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No Quick Unlock provider is available</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to init KeePassXC crypto.</source>
+        <translation>Nabigong simulan ang KeePassXC crypto.</translation>
+    </message>
+    <message>
+        <source>Failed to encrypt key data.</source>
+        <translation>Nabigong i-encrypt ang key data.</translation>
+    </message>
+    <message>
+        <source>Failed to get Windows Hello credential.</source>
+        <translation>Nabigong makuha ang kredensyal ng Windows Hello.</translation>
+    </message>
+    <message>
+        <source>Failed to decrypt key data.</source>
+        <translation>Nabigong i-decrypt ang key data.</translation>
+    </message>
+    <message>
+        <source>Favorite</source>
+        <comment>Tag for favorite entries</comment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>File does not exist.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot open file: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot parse file: %1 at position %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to decrypt json file: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid encKeyValidation field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid cipher list within encKeyValidation field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Wrong password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid encrypted data field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid cipher list within encrypted data field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot initialize cipher</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot decrypt data</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Bitwarden Import</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Archived</source>
+        <comment>Tag for archived entries</comment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid 1PUX file format: Not a valid ZIP file.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid 1PUX file format: Missing export.data</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>1Password Import</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Origin is empty or not allowed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Effective domain is not a valid domain</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Origin and RP ID do not match</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No supported algorithms were provided</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Wait for timer to expire</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unknown Passkeys error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Challenge is shorter than required minimum length</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>user.id does not match the required length</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -8013,18 +8687,6 @@ Ang pagpipiliang ito ay hindi na ginagamit, gamitin ang --set-key-file sa halip.
 </context>
 <context>
     <name>ReportsWidgetBrowserStatistics</name>
-    <message>
-        <source>Exclude expired entries from the report</source>
-        <translation>Ibukod ang mga nag-expire na entry mula sa ulat</translation>
-    </message>
-    <message>
-        <source>Show only entries which have URL set</source>
-        <translation>Ipakita lamang ang mga entry na may nakatakdang URL</translation>
-    </message>
-    <message>
-        <source>Show only entries which have browser settings in custom data</source>
-        <translation>Ipakita lamang ang mga entry na may mga setting ng browser sa custom na data</translation>
-    </message>
     <message>
         <source>Double-click entries to edit.</source>
         <translation>I-double click ang mga entry para i-edit.</translation>
@@ -8089,17 +8751,25 @@ Ang pagpipiliang ito ay hindi na ginagamit, gamitin ang --set-key-file sa halip.
         <source>Exclude from reports</source>
         <translation>Ibukod mula sa mga ulat</translation>
     </message>
+    <message>
+        <source>Only show entries that have a URL</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Only show entries that have been explicitly allowed or denied</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show expired entries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source> (Expired)</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ReportsWidgetHealthcheck</name>
-    <message>
-        <source>Exclude expired entries from the report</source>
-        <translation>Ibukod ang mga nag-expire na entry mula sa ulat</translation>
-    </message>
-    <message>
-        <source>Also show entries that have been excluded from reports</source>
-        <translation>Gayundin, ipakita ang mga entry na hindi kasama sa mga ulat</translation>
-    </message>
     <message>
         <source>Hover over reason to show additional details. Double-click entries to edit.</source>
         <translation>Mag-hover sa itaas para makita ng mga karagdagang detalye. I-double click ang mga entry para i-edit.</translation>
@@ -8174,6 +8844,18 @@ Ang pagpipiliang ito ay hindi na ginagamit, gamitin ang --set-key-file sa halip.
     <message>
         <source>Exclude from reports</source>
         <translation>Ibukod mula sa mga ulat</translation>
+    </message>
+    <message>
+        <source>Show expired entries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show entries that have been excluded from reports</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source> (Expired)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -8269,6 +8951,65 @@ Ang pagpipiliang ito ay hindi na ginagamit, gamitin ang --set-key-file sa halip.
     <message>
         <source>Exclude from reports</source>
         <translation>Ibukod mula sa mga ulat</translation>
+    </message>
+</context>
+<context>
+    <name>ReportsWidgetPasskeys</name>
+    <message>
+        <source>Export</source>
+        <translation>I-export</translation>
+    </message>
+    <message>
+        <source>Import</source>
+        <translation>Mag-import</translation>
+    </message>
+    <message>
+        <source>List of entry URLs</source>
+        <translation>Listahan ng mga URL entry</translation>
+    </message>
+    <message>
+        <source>Please wait, list of entries with Passkeys is being updated…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No entries with Passkeys.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation>Pamagat</translation>
+    </message>
+    <message>
+        <source>Path</source>
+        <translation>Path</translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>Username</translation>
+    </message>
+    <message>
+        <source>URLs</source>
+        <translation>URLs</translation>
+    </message>
+    <message>
+        <source>Edit Entry…</source>
+        <translation>I-edit ang Entry…</translation>
+    </message>
+    <message numerus="yes">
+        <source>Delete Entry(s)…</source>
+        <translation><numerusform>I-delete ang Entry…</numerusform><numerusform>I-delete ang (mga)Entry…</numerusform></translation>
+    </message>
+    <message>
+        <source>Relying Party</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Show expired entries</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source> (Expired)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -8511,6 +9252,10 @@ Ang pagpipiliang ito ay hindi na ginagamit, gamitin ang --set-key-file sa halip.
         <translation>Maghanap ng Tulong</translation>
     </message>
     <message>
+        <source>Save Search</source>
+        <translation>I-save ang Search</translation>
+    </message>
+    <message>
         <source>Search (%1)…</source>
         <comment>Search placeholder text, %1 is the keyboard shortcut</comment>
         <translation>Maghanap ng (%1)…</translation>
@@ -8522,10 +9267,6 @@ Ang pagpipiliang ito ay hindi na ginagamit, gamitin ang --set-key-file sa halip.
     <message>
         <source>Limit search to selected group</source>
         <translation>Limitahan ang paghahanap sa napiling group</translation>
-    </message>
-    <message>
-        <source>Save Search</source>
-        <translation>I-save ang Search</translation>
     </message>
 </context>
 <context>
@@ -8746,7 +9487,38 @@ Ang pagpipiliang ito ay hindi na ginagamit, gamitin ang --set-key-file sa halip.
     </message>
 </context>
 <context>
+    <name>ShortcutSettingsWidget</name>
+    <message>
+        <source>Double click an action to change its shortcut</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Shortcut Conflict</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Filter...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Shortcut %1 conflicts with &apos;%2&apos;. Overwrite shortcut?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset Shortcuts</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>TagModel</name>
+    <message>
+        <source>Clear Search</source>
+        <translation>I-clear ang Paghahanap</translation>
+    </message>
+    <message>
+        <source>All Entries</source>
+        <translation>Lahat ng Entry</translation>
+    </message>
     <message>
         <source>Expired</source>
         <translation>Nag-expire na</translation>
@@ -8754,14 +9526,6 @@ Ang pagpipiliang ito ay hindi na ginagamit, gamitin ang --set-key-file sa halip.
     <message>
         <source>Weak Passwords</source>
         <translation>Mga Mahinang Password</translation>
-    </message>
-    <message>
-        <source>All Entries</source>
-        <translation>Lahat ng Entry</translation>
-    </message>
-    <message>
-        <source>Clear Search</source>
-        <translation>I-clear ang Paghahanap</translation>
     </message>
 </context>
 <context>
@@ -8942,26 +9706,6 @@ Halimbawa: JBSWY3DPEHPK3PXP</translation>
         <translation>Simulan ang pag-store ng iyong mga password nang ligtas sa isang database ng KeePassXC</translation>
     </message>
     <message>
-        <source>Create new database</source>
-        <translation>Lumikha ng bagong database</translation>
-    </message>
-    <message>
-        <source>Open existing database</source>
-        <translation>Buksan ang umiiral na database</translation>
-    </message>
-    <message>
-        <source>Import from KeePass 1</source>
-        <translation>Mag-import mula sa KeePass 1</translation>
-    </message>
-    <message>
-        <source>Import from 1Password</source>
-        <translation>Mag-import mula sa 1Password</translation>
-    </message>
-    <message>
-        <source>Import from CSV</source>
-        <translation>Mag-import mula sa CSV</translation>
-    </message>
-    <message>
         <source>Recent databases</source>
         <translation>Mga kamakailang database</translation>
     </message>
@@ -8972,6 +9716,18 @@ Halimbawa: JBSWY3DPEHPK3PXP</translation>
     <message>
         <source>Welcome to KeePassXC %1</source>
         <translation>Welcome sa KeePassXC %1</translation>
+    </message>
+    <message>
+        <source>Create Database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open Database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import File</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -8990,30 +9746,7 @@ Halimbawa: JBSWY3DPEHPK3PXP</translation>
     </message>
 </context>
 <context>
-    <name>WindowsHello</name>
-    <message>
-        <source>Failed to init KeePassXC crypto.</source>
-        <translation>Nabigong simulan ang KeePassXC crypto.</translation>
-    </message>
-    <message>
-        <source>Failed to encrypt key data.</source>
-        <translation>Nabigong i-encrypt ang key data.</translation>
-    </message>
-    <message>
-        <source>Failed to get Windows Hello credential.</source>
-        <translation>Nabigong makuha ang kredensyal ng Windows Hello.</translation>
-    </message>
-    <message>
-        <source>Failed to decrypt key data.</source>
-        <translation>Nabigong i-decrypt ang key data.</translation>
-    </message>
-</context>
-<context>
     <name>YubiKey</name>
-    <message>
-        <source>%1 No interface, slot %2</source>
-        <translation>%1 Walang interface, slot %2</translation>
-    </message>
     <message>
         <source>General: </source>
         <translation>Pangkalahatan: </translation>
@@ -9025,14 +9758,6 @@ Halimbawa: JBSWY3DPEHPK3PXP</translation>
 </context>
 <context>
     <name>YubiKeyEditWidget</name>
-    <message>
-        <source>Refresh hardware tokens</source>
-        <translation>I-refresh ang mga token ng hardware</translation>
-    </message>
-    <message>
-        <source>Refresh</source>
-        <translation>I-refresh</translation>
-    </message>
     <message>
         <source>Hardware key slot selection</source>
         <translation>Pagpili ng hardware key slot</translation>
@@ -9066,10 +9791,6 @@ Halimbawa: JBSWY3DPEHPK3PXP</translation>
         <translation>Challenge-Response set, i-click upang baguhin o alisin</translation>
     </message>
     <message>
-        <source>&lt;p&gt;If you own a &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; or &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt;, you can use it for additional security.&lt;/p&gt;&lt;p&gt;The key requires one of its slots to be programmed as &lt;a href=&quot;https://www.yubico.com/products/services-software/challenge-response/&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Kung mayroon ka ng &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; o &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt;, magagamit mo ito para sa karagdagang seguridad.&lt;/p&gt;&lt;p&gt;Ang key ay nangangailangan ng isa sa mga slot nito upang ma-program bilang &lt;a href=&quot;https://www.yubico.com/products/services-software/challenge-response/&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Detecting hardware keys…</source>
         <translation>Dini-detect ang mga hardware key…</translation>
     </message>
@@ -9077,27 +9798,20 @@ Halimbawa: JBSWY3DPEHPK3PXP</translation>
         <source>No hardware keys detected</source>
         <translation>Walang nakitang hardware key</translation>
     </message>
-</context>
-<context>
-    <name>YubiKeyInterface</name>
     <message>
-        <source>%1 Invalid slot specified - %2</source>
-        <translation>%1 Di-wastong slot ang tinukoy - %2</translation>
+        <source>&lt;p&gt;If you own a &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; or &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt;, you can use it for additional security.&lt;/p&gt;&lt;p&gt;The key requires one of its slots to be programmed as &lt;a href=&quot;https://docs.yubico.com/yesdk/users-manual/application-otp/challenge-response.html&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Refresh hardware keys</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>YubiKeyInterfacePCSC</name>
     <message>
-        <source>(PCSC) %1 [%2] Challenge-Response - Slot %3</source>
-        <translation>(PCSC) %1 [%2] Challenge-Response - Slot %3</translation>
-    </message>
-    <message>
         <source>The YubiKey PCSC interface has not been initialized.</source>
         <translation>Ang interface ng YubiKey PCSC ay hindi pa nasimulan.</translation>
-    </message>
-    <message>
-        <source>Hardware key is currently in use.</source>
-        <translation>Kasalukuyang ginagamit ang hardware key.</translation>
     </message>
     <message>
         <source>Could not find or access hardware key with serial number %1. Please present it to continue. </source>
@@ -9115,20 +9829,27 @@ Halimbawa: JBSWY3DPEHPK3PXP</translation>
         <source>Failed to complete a challenge-response, the PCSC error code was: %1</source>
         <translation>Nabigong makumpleto ang isang challenge-response, ang PCSC error code ay: %1</translation>
     </message>
+    <message>
+        <source>(NFC) %1 [%2] - Slot %3, %4</source>
+        <comment>YubiKey display fields</comment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Press</source>
+        <comment>USB Challenge-Response Key interaction request</comment>
+        <translation>Pindutin</translation>
+    </message>
+    <message>
+        <source>Passive</source>
+        <comment>USB Challenge-Response Key no interaction required</comment>
+        <translation>Passive</translation>
+    </message>
 </context>
 <context>
     <name>YubiKeyInterfaceUSB</name>
     <message>
         <source>Unknown</source>
         <translation>Hindi kilala</translation>
-    </message>
-    <message>
-        <source>(USB) %1 [%2] Configured Slot - %3</source>
-        <translation>(USB) %1 [%2] ng Na-configyre na Slot - %3</translation>
-    </message>
-    <message>
-        <source>(USB) %1 [%2] Challenge-Response - Slot %3 - %4</source>
-        <translation>(USB) %1 [%2] Challenge-Response - Slot %3 - %4</translation>
     </message>
     <message>
         <source>Press</source>
@@ -9145,10 +9866,6 @@ Halimbawa: JBSWY3DPEHPK3PXP</translation>
         <translation>Ang YubiKey USB interface ay hindi pa nasimulan.</translation>
     </message>
     <message>
-        <source>Hardware key is currently in use.</source>
-        <translation>Kasalukuyang ginagamit ang hardware key.</translation>
-    </message>
-    <message>
         <source>Could not find hardware key with serial number %1. Please plug it in to continue.</source>
         <translation>Hindi mahanap ang hardware key na may serial number na %1. Paki-plug ito upang magpatuloy.</translation>
     </message>
@@ -9163,6 +9880,16 @@ Halimbawa: JBSWY3DPEHPK3PXP</translation>
     <message>
         <source>Failed to complete a challenge-response, the specific error was: %1</source>
         <translation>Nabigong makumpleto ang isang challenge-response, ang partikular na error ay: %1</translation>
+    </message>
+    <message>
+        <source>%1 [%2] - Slot %3</source>
+        <comment>YubiKey NEO display fields</comment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 [%2] - Slot %3, %4</source>
+        <comment>YubiKey display fields</comment>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>
