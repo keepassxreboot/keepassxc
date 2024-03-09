@@ -1287,14 +1287,6 @@ Would you like to migrate your existing settings now?</source>
 <context>
     <name>CsvImportWidget</name>
     <message>
-        <source>Import CSV fields</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>filename</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>size, rows, columns</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1402,18 +1394,6 @@ Would you like to migrate your existing settings now?</source>
         <source>Column %1</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Imported from CSV file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Original data: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error(s) detected in CSV file!</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message numerus="yes">
         <source>[%n more message(s) skipped]</source>
         <translation type="unfinished">
@@ -1422,31 +1402,19 @@ Would you like to migrate your existing settings now?</source>
         </translation>
     </message>
     <message>
-        <source>Error</source>
+        <source>Failed to parse CSV file: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>CSV import: writer has errors:
-%1</source>
+        <source>Imported from CSV file: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>CsvParserModel</name>
-    <message>
-        <source>%1, %2, %3</source>
-        <comment>file info: bytes, rows, columns</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n byte(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
     <message numerus="yes">
         <source>%n row(s)</source>
+        <comment>CSV row count</comment>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -1454,6 +1422,7 @@ Would you like to migrate your existing settings now?</source>
     </message>
     <message numerus="yes">
         <source>%n column(s)</source>
+        <comment>CSV column count</comment>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -2316,23 +2285,7 @@ This is definitely a bug, please report it to the developers.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select CSV file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Merge database</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>KeePass 1 database</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open KeePass 1 database</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open OPVault</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2353,15 +2306,6 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message>
         <source>You are about to export your database to an unencrypted file. This will leave your passwords and sensitive information vulnerable! Are you sure you want to continue?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>New Database</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1 [New Database]</source>
-        <comment>Database tab name modifier</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2541,6 +2485,19 @@ Disable safe saves and try again?</source>
         <source>Could not find database file: %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>New Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 [New Database]</source>
+        <comment>Database tab name modifier</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Searches and Tags</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message numerus="yes">
         <source>Entries expiring within %1 day(s)</source>
         <translation type="unfinished">
@@ -2549,15 +2506,11 @@ Disable safe saves and try again?</source>
         </translation>
     </message>
     <message>
-        <source>Searches and Tags</source>
+        <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Enter a unique name or overwrite an existing search from the list:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4312,6 +4265,147 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
 </context>
 <context>
+    <name>ImportWizard</name>
+    <message>
+        <source>Import Wizard</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ImportWizardPageReview</name>
+    <message>
+        <source>WizardPage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Entry count: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Url</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ImportWizardPageSelect</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import File Selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Key File:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Browse…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import Into:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No unlocked databases available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Existing Database:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import File:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comma Separated Values (.csv)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1Password Export (.1pux)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1Password Vault (.opvault)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bitwarden (.json)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeePass 1 Database (.kdb)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open OPVault</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select import file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Key files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select key file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comma Separated Values</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1Password Export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bitwarden JSON Export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1Password Vault</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeePass1 Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>KMessageWidget</name>
     <message>
         <source>&amp;Close</source>
@@ -4739,17 +4833,6 @@ Line %2, column %3</source>
     </message>
 </context>
 <context>
-    <name>KeePass1OpenWidget</name>
-    <message>
-        <source>Import KeePass1 Database</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unable to open the database.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>KeePass1Reader</name>
     <message>
         <source>Unable to read keyfile.</source>
@@ -5100,10 +5183,6 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>&amp;Recent Databases</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5558,7 +5637,19 @@ We recommend you use the AppImage available on our downloads page.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>No Tags</source>
+        <source>1Password 1PUX...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import a 1Password 1PUX file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Passkeys…</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
@@ -5589,15 +5680,15 @@ We recommend you use the AppImage available on our downloads page.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Passkeys…</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Passkeys</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Import Passkey</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No Tags</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5821,14 +5912,6 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Expected %1 bytes of clear-text, found %2</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>OpVaultOpenWidget</name>
-    <message>
-        <source>Read Database did not produce an instance
-%1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8275,7 +8358,73 @@ This options is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Credential is excluded</source>
+        <source>Favorite</source>
+        <comment>Tag for favorite entries</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File does not exist.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot open file: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot parse file: %1 at position %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to decrypt json file: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid encKeyValidation field</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid cipher list within encKeyValidation field</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wrong password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid encrypted data field</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid cipher list within encrypted data field</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot initialize cipher</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot decrypt data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bitwarden Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Archived</source>
+        <comment>Tag for archived entries</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid 1PUX file format: Not a valid ZIP file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid 1PUX file format: Missing export.data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1Password Import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8300,6 +8449,10 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Cannot remove file key: The database does not have a file key.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Credential is excluded</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9340,26 +9493,6 @@ Example: JBSWY3DPEHPK3PXP</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Create new database</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open existing database</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Import from KeePass 1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Import from 1Password</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Import from CSV</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Recent databases</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9369,6 +9502,18 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Welcome to KeePassXC %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import File</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

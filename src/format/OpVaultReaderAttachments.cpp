@@ -229,6 +229,10 @@ void OpVaultReader::fillAttachment(Entry* entry,
             qWarning() << QString("Unexpected type of attachment \"filename\": %1").arg(attFilename.type());
         }
     }
+    if (entry->attachments()->hasKey(attachKey)) {
+        // Prepend a random string to the attachment name to avoid collisions
+        attachKey.prepend(QString("%1_").arg(QUuid::createUuid().toString().mid(1, 5)));
+    }
 
     entry->attachments()->set(attachKey, attachPayload);
 }

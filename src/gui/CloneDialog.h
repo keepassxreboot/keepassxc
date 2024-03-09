@@ -18,6 +18,8 @@
 #ifndef KEEPASSX_CLONEDIALOG_H
 #define KEEPASSX_CLONEDIALOG_H
 
+#include <QDialog>
+
 #include "core/Database.h"
 #include "gui/DatabaseWidget.h"
 
