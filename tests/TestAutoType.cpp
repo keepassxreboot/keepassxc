@@ -62,8 +62,7 @@ void TestAutoType::init()
     m_db = QSharedPointer<Database>::create();
     m_dbList.clear();
     m_dbList.append(m_db);
-    m_group = new Group();
-    m_db->setRootGroup(m_group);
+    m_group = m_db->rootGroup();
 
     AutoTypeAssociations::Association association;
 

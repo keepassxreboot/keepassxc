@@ -463,8 +463,7 @@ bool KdbxXmlReader::parseRoot()
 
             Group* rootGroup = parseGroup();
             if (rootGroup) {
-                Group* oldRoot = m_db->rootGroup();
-                m_db->setRootGroup(rootGroup);
+                auto oldRoot = m_db->setRootGroup(rootGroup);
                 delete oldRoot;
                 groupParsedSuccessfully = true;
             }

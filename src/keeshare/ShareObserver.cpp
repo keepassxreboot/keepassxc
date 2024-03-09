@@ -54,6 +54,7 @@ ShareObserver::ShareObserver(QSharedPointer<Database> db, QObject* parent)
 
 ShareObserver::~ShareObserver()
 {
+    m_db->disconnect(this);
 }
 
 void ShareObserver::deinitialize()
