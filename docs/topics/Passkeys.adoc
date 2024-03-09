@@ -1,0 +1,104 @@
+= KeePassXC – Passkeys
+include::.sharedheader[]
+:imagesdir: ../images
+
+// tag::content[]
+== Passkeys
+
+Passkeys are a secure way for replacing passwords that is supported by all major browser vendors and an increasing number of websites. For more information on what Passkeys are and how they work, please go to the FIDO Alliance's documentation: https://fidoalliance.org/passkeys/
+
+=== Enabling Passkey Support
+
+KeePassXC supports Passkeys directly through the Browser Integration service. Passkeys are only supported with the use of the KeePassXC Browser Extension and a properly connected database. To enable Passkey support on the extension, you must check the _Enable Passkeys_ option in the extension settings page.
+
+.Enable Passkey Support in the KeePassXC Browser Extension
+image::passkeys_enable_from_extension.png[,75%]
+
+Optionally, you can disable falling back to the built-in Passkey support from your browser and operating system. If left enabled, the extension will show the default Passkey dialogs if KeePassXC cannot handle the request or the request is canceled.
+
+=== Create a New Passkey
+
+Creating a new Passkey and authenticating with it is a simple process. This workflow will be demonstrated using GitHub as an example site. Please note that GitHub allows two use cases for Passkeys, one for 2FA only and the other for replacement of username and password entirely. We will be configuring the latter use case in this example.
+
+After navigating to GitHub's _Settings_ -> _Password and authentication_, there is a separate section shown for Passkeys.
+
+.GitHub's Passkey Registration
+image::passkeys_github_1.png[]
+
+After clicking the _Add a Passkey_ button, the user is redirected to another page showing the actual configuration option.
+
+.Configure Passwordless Authentication
+image::passkeys_github_2.png[,50%]
+
+Clicking the _Add Passkey_ button now shows the following popup dialog for the user, asking confirmation for creating a new Passkey.
+
+.Passkey Registration Confirmation Dialog
+image::passkeys_register_dialog.png[,30%]
+
+After the Passkey has been registered, a new entry is created to the database under _KeePassXC-Browser Passwords_ with _(Passkey)_  added to the entry title. The entry holds additional attributes that are used for authenticating the Passkey.
+
+After registration, GitHub will ask a name for the Passkey. This is only relevant for the server.
+
+.GitHub's Passkey Nickname
+image::passkeys_github_3.png[,50%]
+
+Now the Passkey should be shown on the GitHub's Passkey section.
+
+.Registered Passkeys on GitHub
+image::passkeys_github_4.png[]
+
+=== Login With a Passkey
+
+The Passkey created in the previous section can now be used to login to GitHub. Instead of logging in with normal credentials, choose _Sign in with a passkey_ at the bottom of GitHub's login page.
+
+.GitHub's login page with a Passkey option
+image::passkeys_github_5.png[,50%]
+
+After clicking the button, KeePassXC-Browser detects the Passkeys authentication and KeePassXC shows the following dialog for confirmation.
+
+.Passkey authentication confirmation dialog
+image::passkeys_authentication_dialog.png[,50%]
+
+After confirmation user is now authenticated and logged into GitHub.
+
+// tag::advanced[]
+=== Advanced Usage
+
+==== Multiple Passkeys for a Site
+
+Multiple Passkeys can be created for a single site. When registering a new Passkey with a different username, KeePassXC shows an option to register a new Passkey or update the previous one. Updating a Passkey will override the existing entry, so this option should be only used when actually needed.
+
+.Passkey authentication confirmation dialog
+image::passkeys_update_dialog.png[,50%]
+
+==== Exporting Passkeys
+
+All Passkeys in a database can be viewed and accessed from the _Database_ -> _Passkeys..._ menu item. The page shows both _Import_ and _Export_ buttons for Passkeys.
+
+.Passkeys Overview
+image::passkeys_all_passkeys.png[]
+
+After selecting one or more entries, the following dialog is shown. One or multiple Passkeys can be selected for export from the previously selected list of entries.
+
+.Passkeys Export Dialog
+image::passkeys_export_dialog.png[,65%]
+
+Exported Passkeys are stored in JSON format using the `.passkey` file extension. The file includes all relevant information for importing a Passkey to another database or saving a backup. 
+
+WARNING: The exported Passkey file is unencrypted and should be securely stored.
+
+==== Importing Passkeys
+
+An exported Passkey can be imported directly to a database or to an entry. To import directly, use the _Database_ -> _Import Passkey_ menu item.
+When right-clicking an entry, a separate menu item for _Import Passkey_ is shown. This is useful if user wants to import a previously created Passkey to an existing entry.
+
+.Import Passkey to an Entry
+image::passkeys_import_passkey_to_entry.png[,50%]
+
+After selecting a Passkey file to import, a separate dialog is shown where you can select which database, group, and entry to target. By default, the group is set to _Imported Passkeys_. The default action is to create a new entry that contains the imported Passkey.
+
+.Passkey import dialog
+image::passkeys_import_dialog.png[,65%]
+
+// end::advanced[]
+// end::content[]
