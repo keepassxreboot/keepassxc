@@ -19,6 +19,7 @@
 #define KEEPASSX_TRANSLATOR_H
 
 #include <QMetaType>
+#include <QString>
 
 class Translator
 {

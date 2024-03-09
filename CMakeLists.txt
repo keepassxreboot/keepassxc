@@ -570,6 +570,12 @@ include_directories(SYSTEM ${ZLIB_INCLUDE_DIR})
 if(WITH_XC_YUBIKEY)
     find_package(PCSC REQUIRED)
     include_directories(SYSTEM ${PCSC_INCLUDE_DIRS})
+
+    if(UNIX AND NOT APPLE)
+        find_library(LIBUSB_LIBRARIES NAMES usb-1.0 REQUIRED)
+        find_path(LIBUSB_INCLUDE_DIR NAMES libusb.h PATH_SUFFIXES "libusb-1.0" "libusb" REQUIRED)
+        include_directories(SYSTEM ${LIBUSB_INCLUDE_DIR})
+    endif()
 endif()
 
 if(UNIX)

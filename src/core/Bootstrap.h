@@ -18,6 +18,8 @@
 #ifndef KEEPASSXC_BOOTSTRAP_H
 #define KEEPASSXC_BOOTSTRAP_H
 
+#include <QString>
+
 namespace Bootstrap
 {
     void bootstrap();

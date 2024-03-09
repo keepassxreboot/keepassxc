@@ -2252,7 +2252,7 @@ void TestCli::testYubiKeyOption()
 
     YubiKey::instance()->findValidKeys();
 
-    auto keys = YubiKey::instance()->foundKeys();
+    const auto keys = YubiKey::instance()->foundKeys().keys();
     if (keys.isEmpty()) {
         QSKIP("No YubiKey devices were detected.");
     }

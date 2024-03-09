@@ -25,7 +25,6 @@
 #include <QRegularExpression>
 #include <QTranslator>
 
-#include "config-keepassx.h"
 #include "core/Config.h"
 #include "core/Resources.h"
 
