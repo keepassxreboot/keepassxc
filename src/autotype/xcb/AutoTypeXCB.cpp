@@ -606,8 +606,8 @@ AutoTypeAction::Result AutoTypeExecutorX11::execType(const AutoTypeKey* action)
 AutoTypeAction::Result AutoTypeExecutorX11::execClearField(const AutoTypeClearField* action)
 {
     Q_UNUSED(action);
-    execType(new AutoTypeKey(Qt::Key_Home, Qt::ControlModifier));
-    execType(new AutoTypeKey(Qt::Key_End, Qt::ControlModifier | Qt::ShiftModifier));
+    execType(new AutoTypeKey(Qt::Key_Home));
+    execType(new AutoTypeKey(Qt::Key_End, Qt::ShiftModifier));
     execType(new AutoTypeKey(Qt::Key_Backspace));
     return AutoTypeAction::Result::Ok();
 }
