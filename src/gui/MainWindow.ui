@@ -239,8 +239,15 @@
      <addaction name="actionExportHtml"/>
      <addaction name="actionExportXML"/>
     </widget>
+    <widget class="QMenu" name="menuRemoteSync">
+     <property name="title">
+      <string>Remote S&amp;ync…</string>
+     </property>
+     <addaction name="separator"/>
+    </widget>
     <addaction name="actionDatabaseNew"/>
     <addaction name="actionDatabaseOpen"/>
+    <addaction name="actionOpenRemoteDatabase"/>
     <addaction name="menuRecentDatabases"/>
     <addaction name="actionDatabaseSave"/>
     <addaction name="actionDatabaseSaveAs"/>
@@ -258,6 +265,7 @@
     <addaction name="actionImportPasskey"/>
     <addaction name="separator"/>
     <addaction name="actionDatabaseMerge"/>
+    <addaction name="menuRemoteSync"/>
     <addaction name="actionImport"/>
     <addaction name="menuExport"/>
     <addaction name="separator"/>
@@ -960,6 +968,14 @@
    </property>
    <property name="toolTip">
     <string>Import CSV File</string>
+   </property>
+  </action>
+  <action name="actionOpenRemoteDatabase">
+   <property name="text">
+    <string>Open Remote Database…</string>
+   </property>
+   <property name="toolTip">
+    <string>Open remote database</string>
    </property>
   </action>
   <action name="actionEntryTotp">

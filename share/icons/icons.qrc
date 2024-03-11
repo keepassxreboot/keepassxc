@@ -29,6 +29,7 @@
         <file>application/scalable/actions/document-new.svg</file>
         <file>application/scalable/actions/document-open.svg</file>
         <file>application/scalable/actions/document-open-recent.svg</file>
+        <file>application/scalable/actions/document-open-remote.svg</file>
         <file>application/scalable/actions/document-properties.svg</file>
         <file>application/scalable/actions/document-save.svg</file>
         <file>application/scalable/actions/document-save-as.svg</file>
@@ -69,6 +70,7 @@
         <file>application/scalable/actions/password-show-on.svg</file>
         <file>application/scalable/actions/qrcode.svg</file>
         <file>application/scalable/actions/refresh.svg</file>
+        <file>application/scalable/actions/remote-sync.svg</file>
         <file>application/scalable/actions/reports.svg</file>
         <file>application/scalable/actions/reports-exclude.svg</file>
         <file>application/scalable/actions/sort-alphabetical-ascending.svg</file>

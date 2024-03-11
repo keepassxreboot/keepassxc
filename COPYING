@@ -164,6 +164,7 @@ Files: share/icons/application/scalable/actions/application-exit.svg
        share/icons/application/scalable/actions/document-new.svg
        share/icons/application/scalable/actions/document-open.svg
        share/icons/application/scalable/actions/document-open-recent.svg
+       share/icons/application/scalable/actions/document-open-remote.svg
        share/icons/application/scalable/actions/document-properties.svg
        share/icons/application/scalable/actions/document-save.svg
        share/icons/application/scalable/actions/document-save-as.svg
@@ -203,6 +204,7 @@ Files: share/icons/application/scalable/actions/application-exit.svg
        share/icons/application/scalable/actions/password-show-on.svg
        share/icons/application/scalable/actions/qrcode.svg
        share/icons/application/scalable/actions/refresh.svg
+       share/icons/application/scalable/actions/remote-sync.svg
        share/icons/application/scalable/actions/reports.svg
        share/icons/application/scalable/actions/reports-exclude.svg
        share/icons/application/scalable/actions/sort-alphabetical-ascending.svg

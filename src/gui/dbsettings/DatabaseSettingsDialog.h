@@ -31,6 +31,7 @@ class DatabaseSettingsWidgetDatabaseKey;
 class DatabaseSettingsWidgetBrowser;
 #endif
 class DatabaseSettingsWidgetMaintenance;
+class DatabaseSettingsWidgetRemote;
 class QTabWidget;
 
 namespace Ui
@@ -87,6 +88,7 @@ private:
     QPointer<DatabaseSettingsWidgetBrowser> m_browserWidget;
 #endif
     QPointer<DatabaseSettingsWidgetMaintenance> m_maintenanceWidget;
+    QPointer<DatabaseSettingsWidgetRemote> m_remoteWidget;
 
     class ExtraPage;
     QList<ExtraPage> m_extraPages;

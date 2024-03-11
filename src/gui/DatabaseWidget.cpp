@@ -32,6 +32,7 @@
 #include <QTextEdit>
 
 #include "autotype/AutoType.h"
+#include "core/AsyncTask.h"
 #include "core/EntrySearcher.h"
 #include "core/Merger.h"
 #include "core/Tools.h"
@@ -55,6 +56,8 @@
 #include "gui/tag/TagView.h"
 #include "gui/widgets/ElidedLabel.h"
 #include "keeshare/KeeShare.h"
+#include "remote/RemoteHandler.h"
+#include "remote/RemoteSettings.h"
 
 #ifdef WITH_XC_NETWORKING
 #include "gui/IconDownloaderDialog.h"
@@ -88,6 +91,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     , m_groupView(new GroupView(m_db.data(), this))
     , m_tagView(new TagView(this))
     , m_saveAttempts(0)
+    , m_remoteSettings(new RemoteSettings(m_db, this))
     , m_entrySearcher(new EntrySearcher(false))
 {
     Q_ASSERT(m_db);
@@ -457,9 +461,13 @@ void DatabaseWidget::replaceDatabase(QSharedPointer<Database> db)
     // signals triggering dangling pointers.
     auto oldDb = m_db;
     m_db = std::move(db);
+    if (oldDb->isRemoteDatabase()) {
+        m_db->markAsRemoteDatabase();
+    }
     connectDatabaseSignals();
     m_groupView->changeDatabase(m_db);
     m_tagView->setDatabase(m_db);
+    m_remoteSettings->setDatabase(m_db);
 
     // Restore the new parent group pointer, if not found default to the root group
     // this prevents data loss when merging a database while creating a new entry
@@ -1074,6 +1082,64 @@ int DatabaseWidget::addChildWidget(QWidget* w)
     return index;
 }
 
+void DatabaseWidget::syncWithRemote(const RemoteParams* params)
+{
+    setDisabled(true);
+
+    auto result = AsyncTask::runAndWaitForFuture([this, params] {
+        QScopedPointer<RemoteHandler> remoteHandler(new RemoteHandler(this));
+        RemoteHandler::RemoteResult result;
+        result.success = false;
+        result.errorMessage = tr("Remote Sync did not contain any download or upload commands.");
+
+        // Download the database
+        if (!params->downloadCommand.isEmpty()) {
+            // Start a download first then merge and upload in the callback
+            result = remoteHandler->download(params);
+            if (result.success) {
+                QString error;
+                QSharedPointer<Database> remoteDb = QSharedPointer<Database>::create();
+                if (!remoteDb->open(result.filePath, m_db->key(), &error)) {
+                    // Failed to open downloaded remote database
+                    result.success = false;
+                    result.errorMessage = error;
+                    return result;
+                }
+                remoteDb->markAsRemoteDatabase();
+                if (!syncWithDatabase(m_db, error)) {
+                    // Something failed during the sync process
+                    result.success = false;
+                    result.errorMessage = error;
+                    return result;
+                }
+            } else {
+                // Download failed, bail out now
+                return result;
+            }
+        }
+
+        // Upload the database
+        if (!params->uploadCommand.isEmpty()) {
+            result = remoteHandler->upload(m_db, params);
+        }
+        return result;
+    });
+
+    setDisabled(false);
+    if (result.success) {
+        emit databaseSyncCompleted(params->name);
+        showMessage(tr("Remote sync '%1' completed successfully!").arg(params->name), MessageWidget::Positive, false);
+    } else {
+        emit databaseSyncFailed(params->name, result.errorMessage);
+        showErrorMessage(tr("Remote sync '%1' failed: %2").arg(params->name).arg(result.errorMessage));
+    }
+}
+
+QList<RemoteParams*> DatabaseWidget::getRemoteParams() const
+{
+    return m_remoteSettings->getAllRemoteParams();
+}
+
 void DatabaseWidget::switchToMainView(bool previousDialogAccepted)
 {
     setCurrentWidget(m_mainWidget);
@@ -1243,6 +1309,26 @@ void DatabaseWidget::mergeDatabase(bool accepted)
     emit databaseMerged(m_db);
 }
 
+bool DatabaseWidget::syncWithDatabase(const QSharedPointer<Database>& otherDb, QString& error)
+{
+    Merger firstMerge(m_db.data(), otherDb.data());
+    Merger secondMerge(otherDb.data(), m_db.data());
+    QStringList changeList = firstMerge.merge() + secondMerge.merge();
+
+    if (!changeList.isEmpty()) {
+        // Save synced databases
+        if (!m_db->save(Database::Atomic, {}, &error)) {
+            error = tr("Error while saving database %1: %2").arg(m_db->filePath(), error);
+            return false;
+        }
+        if (!otherDb->save(Database::Atomic, {}, &error)) {
+            error = tr("Error while saving database %1: %2").arg(otherDb->filePath(), error);
+            return false;
+        }
+    }
+    return true;
+}
+
 /**
  * Unlock the database.
  *
@@ -1259,9 +1345,11 @@ void DatabaseWidget::unlockDatabase(bool accepted)
         return;
     }
 
-    if (senderDialog && senderDialog->intent() == DatabaseOpenDialog::Intent::Merge) {
-        mergeDatabase(accepted);
-        return;
+    if (senderDialog) {
+        if (senderDialog->intent() == DatabaseOpenDialog::Intent::Merge) {
+            mergeDatabase(accepted);
+            return;
+        }
     }
 
     QSharedPointer<Database> db;
@@ -1596,6 +1684,7 @@ void DatabaseWidget::onGroupChanged()
 void DatabaseWidget::onDatabaseModified()
 {
     refreshSearch();
+    m_remoteSettings->loadSettings();
     int autosaveDelayMs = m_db->metadata()->autosaveDelayMin() * 60 * 1000; // min to msec for QTimer
     bool autosaveAfterEveryChangeConfig = config()->get(Config::AutoSaveAfterEveryChange).toBool();
     if (autosaveDelayMs > 0 && autosaveAfterEveryChangeConfig) {

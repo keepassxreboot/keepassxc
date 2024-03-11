@@ -25,6 +25,7 @@
 #ifdef WITH_XC_BROWSER
 #include "DatabaseSettingsWidgetBrowser.h"
 #endif
+#include "../remote/DatabaseSettingsWidgetRemote.h"
 #include "DatabaseSettingsWidgetMaintenance.h"
 #ifdef WITH_XC_KEESHARE
 #include "keeshare/DatabaseSettingsPageKeeShare.h"
@@ -72,6 +73,7 @@ DatabaseSettingsDialog::DatabaseSettingsDialog(QWidget* parent)
     , m_browserWidget(new DatabaseSettingsWidgetBrowser(this))
 #endif
     , m_maintenanceWidget(new DatabaseSettingsWidgetMaintenance(this))
+    , m_remoteWidget(new DatabaseSettingsWidgetRemote(this))
 {
     m_ui->setupUi(this);
 
@@ -79,9 +81,8 @@ DatabaseSettingsDialog::DatabaseSettingsDialog(QWidget* parent)
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(reject()));
 
     m_ui->categoryList->addCategory(tr("General"), icons()->icon("preferences-other"));
-    m_ui->categoryList->addCategory(tr("Security"), icons()->icon("security-high"));
     m_ui->stackedWidget->addWidget(m_generalWidget);
-
+    m_ui->categoryList->addCategory(tr("Security"), icons()->icon("security-high"));
     m_ui->stackedWidget->addWidget(m_securityTabWidget);
 
     auto* scrollArea = new QScrollArea(parent);
@@ -94,6 +95,9 @@ DatabaseSettingsDialog::DatabaseSettingsDialog(QWidget* parent)
     m_securityTabWidget->addTab(scrollArea, tr("Database Credentials"));
 
     m_securityTabWidget->addTab(m_encryptionWidget, tr("Encryption Settings"));
+
+    m_ui->categoryList->addCategory(tr("Remote Sync"), icons()->icon("remote-sync"));
+    m_ui->stackedWidget->addWidget(m_remoteWidget);
 
 #if defined(WITH_XC_KEESHARE)
     addSettingsPage(new DatabaseSettingsPageKeeShare());
@@ -132,6 +136,7 @@ void DatabaseSettingsDialog::load(const QSharedPointer<Database>& db)
     m_browserWidget->load(db);
 #endif
     m_maintenanceWidget->load(db);
+    m_remoteWidget->load(db);
     for (const ExtraPage& page : asConst(m_extraPages)) {
         page.loadSettings(db);
     }
@@ -169,6 +174,10 @@ void DatabaseSettingsDialog::save()
     }
 
     if (!m_encryptionWidget->save()) {
+        return;
+    }
+
+    if (!m_remoteWidget->save()) {
         return;
     }
 

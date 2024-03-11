@@ -46,6 +46,7 @@ WelcomeWidget::WelcomeWidget(QWidget* parent)
     connect(m_ui->buttonNewDatabase, SIGNAL(clicked()), SIGNAL(newDatabase()));
     connect(m_ui->buttonOpenDatabase, SIGNAL(clicked()), SIGNAL(openDatabase()));
     connect(m_ui->buttonImport, SIGNAL(clicked()), SIGNAL(importFile()));
+    connect(m_ui->buttonOpenRemote, SIGNAL(clicked()), SIGNAL(openRemoteDatabase()));
     connect(m_ui->recentListWidget,
             SIGNAL(itemActivated(QListWidgetItem*)),
             this,
