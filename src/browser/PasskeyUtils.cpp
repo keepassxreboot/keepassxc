@@ -109,12 +109,15 @@ int PasskeyUtils::validateRpId(const QJsonValue& rpIdValue, const QString& effec
         return ERROR_PASSKEYS_DOMAIN_RPID_MISMATCH;
     }
 
-    if (rpIdValue.isUndefined()) {
-        return ERROR_PASSKEYS_DOMAIN_RPID_MISMATCH;
-    }
-
     if (effectiveDomain.isEmpty()) {
         return ERROR_PASSKEYS_ORIGIN_NOT_ALLOWED;
+    }
+
+    //  The RP ID defaults to being the caller's origin's effective domain unless the caller has explicitly set
+    //  options.rp.id
+    if (rpIdValue.isUndefined() || rpIdValue.isNull()) {
+        *result = effectiveDomain;
+        return PASSKEYS_SUCCESS;
     }
 
     const auto rpId = rpIdValue.toString();
