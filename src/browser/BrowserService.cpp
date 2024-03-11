@@ -581,7 +581,7 @@ QJsonObject BrowserService::showPasskeysRegisterPrompt(const QJsonObject& public
     }
 
     const auto excludeCredentials = credentialCreationOptions["excludeCredentials"].toArray();
-    const auto rpId = publicKeyOptions["rp"]["id"].toString();
+    const auto rpId = credentialCreationOptions["rp"].toObject()["id"].toString();
     const auto timeout = publicKeyOptions["timeout"].toInt();
     const auto username = credentialCreationOptions["user"].toObject()["name"].toString();
     const auto user = credentialCreationOptions["user"].toObject();

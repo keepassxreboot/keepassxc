@@ -573,17 +573,18 @@ void TestPasskeys::testRpIdValidation()
     QString result;
     auto allowedIdentical = passkeyUtils()->validateRpId(QString("example.com"), QString("example.com"), &result);
     QCOMPARE(result, QString("example.com"));
-    QVERIFY(allowedIdentical == 0);
+    QVERIFY(allowedIdentical == PASSKEYS_SUCCESS);
 
     result.clear();
     auto allowedSubdomain = passkeyUtils()->validateRpId(QString("example.com"), QString("www.example.com"), &result);
     QCOMPARE(result, QString("example.com"));
-    QVERIFY(allowedSubdomain == 0);
+    QVERIFY(allowedSubdomain == PASSKEYS_SUCCESS);
 
     result.clear();
-    auto emptyRpId = passkeyUtils()->validateRpId({}, QString("example.com"), &result);
-    QCOMPARE(result, QString(""));
-    QVERIFY(emptyRpId == ERROR_PASSKEYS_DOMAIN_RPID_MISMATCH);
+    QJsonValue emptyValue;
+    auto emptyRpId = passkeyUtils()->validateRpId(emptyValue, QString("example.com"), &result);
+    QCOMPARE(result, QString("example.com"));
+    QVERIFY(emptyRpId == PASSKEYS_SUCCESS);
 
     result.clear();
     auto ipRpId = passkeyUtils()->validateRpId(QString("127.0.0.1"), QString("example.com"), &result);
