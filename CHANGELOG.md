@@ -1,5 +1,30 @@
 # Changelog
 
+## 2.7.7 (2024-03-10)
+
+### Changes
+- Support USB Hotplug for Hardware Key interface [#10092]
+- Support 1PUX and Bitwarden import [#9815]
+- Browser: Add support for PassKeys [#8825, #9987, #10318]
+- Build System: Move to vcpkg manifest mode [#10088]
+
+### Fixes
+- Fix multiple TOTP issues [#9874]
+- Fix focus loss on save when the editor is not visible anymore [#10075]
+- Fix visual when removing entry from history [#9947]
+- Fix first entry is not selected when a search is performed [#9868]
+- Prevent scrollbars on entry drag/drop [#9747]
+- Prevent duplicate characters in "Also choose from" field of password generator [#9803]
+- Security: Prevent byte-by-byte and attachment inference side channel attacks [#10266]
+- Browser: Fix raising Update Entry messagebox [#9853]
+- Browser: Fix bugs when returning credentials [#9136]
+- Browser: Fix crash on database open from browser [#9939]
+- Browser: Fix support for referenced URL fields [#8788]
+- MacOS: Fix crash when changing highlight/accent color [#10348]
+- MacOS: Fix TouchID appearance depending on lid open/closed [#10092]
+- Windows: Fix terminating KeePassXC processes with MSI installer [#9822]
+- FdoSecrets: Fix database merge crash when enabled [#10136]
+
 ## 2.7.6 (2023-08-15)
 
 ### Changes
