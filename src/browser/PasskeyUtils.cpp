@@ -340,8 +340,10 @@ QStringList PasskeyUtils::getAllowedCredentialsFromAssertionOptions(const QJsonO
         const auto cred = credential.toObject();
         const auto id = cred["id"].toString();
         const auto transports = cred["transports"].toArray();
-        const auto hasSupportedTransport =
-            transports.isEmpty() || transports.contains(BrowserPasskeys::AUTHENTICATOR_TRANSPORT);
+        const auto hasSupportedTransport = transports.isEmpty()
+                                           || (transports.contains(BrowserPasskeys::AUTHENTICATOR_TRANSPORT_INTERNAL)
+                                               || transports.contains(BrowserPasskeys::AUTHENTICATOR_TRANSPORT_NFC)
+                                               || transports.contains(BrowserPasskeys::AUTHENTICATOR_TRANSPORT_USB));
 
         if (cred["type"].toString() == BrowserPasskeys::PUBLIC_KEY && hasSupportedTransport && !id.isEmpty()) {
             allowedCredentials << id;

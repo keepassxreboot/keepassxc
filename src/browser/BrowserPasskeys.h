@@ -91,7 +91,9 @@ public:
 
     static const QString ATTACHMENT_CROSS_PLATFORM;
     static const QString ATTACHMENT_PLATFORM;
-    static const QString AUTHENTICATOR_TRANSPORT;
+    static const QString AUTHENTICATOR_TRANSPORT_INTERNAL;
+    static const QString AUTHENTICATOR_TRANSPORT_NFC;
+    static const QString AUTHENTICATOR_TRANSPORT_USB;
     static const bool SUPPORT_RESIDENT_KEYS;
     static const bool SUPPORT_USER_VERIFICATION;
 
