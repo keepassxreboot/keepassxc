@@ -250,7 +250,7 @@ static const QString aboutContributors = R"(
     <li><strong>עברית (Hebrew)</strong>: avimar, ronyala, shemeshg, shmag18, ThunderB0lt, tryandtry, ztwersky</li>
     <li><strong>magyar (Hungarian)</strong>: andras_tim, bubu, entaevau, kempelen, meskobalazs, spammy, typingseashell, urbalazs</li>
     <li><strong>Íslenska (Icelandic)</strong>: MannVera</li>
-    <li><strong>Bahasa (Indonesian)</strong>: achmad, algustionesa, bora_ach, racrbmr, zk</li>
+    <li><strong>Bahasa Indonesia (Indonesian)</strong>: achmad, algustionesa, bora_ach, racrbmr, zk</li>
     <li><strong>Italiano (Italian)</strong>: aleb2000, amaxis, bovirus, duncanmid, FranzMari, Gringoarg, idetao, lucaim, NITAL, Peo,
         Pietrog, salvatorecordiano, seatedscribe, Stemby, the.sailor, tosky, VosaxAlo</li>
     <li><strong>日本語 (Japanese)</strong>: AlCooo, gojpdchx, helloguys, masoo, p2635, Shinichirou_Yamada, shortarrow, ssuhung, tadasu,
