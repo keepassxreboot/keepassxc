@@ -9047,6 +9047,14 @@ Kernel: %3 %4</source>
         <source> (Expired)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Export Confirmation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You are about to export passkeys to unencrypted files. This will leave your passkey and other sensitive information vulnerable! Are you sure you want to continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ReportsWidgetStatistics</name>
