@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -33,17 +33,20 @@ public:
     explicit PasskeyImporter() = default;
 
     void importPasskey(QSharedPointer<Database>& database, Entry* entry = nullptr);
-
-private:
-    void importSelectedFile(QFile& file, QSharedPointer<Database>& database, Entry* entry);
-    void showImportDialog(QSharedPointer<Database>& database,
+    bool showImportDialog(QSharedPointer<Database>& database,
                           const QString& url,
                           const QString& relyingParty,
                           const QString& username,
                           const QString& credentialId,
                           const QString& userHandle,
                           const QString& privateKey,
-                          Entry* entry);
+                          Entry* entry,
+                          const QString& titleText = {},
+                          const QString& infoText = {});
+
+private:
+    void importSelectedFile(QFile& file, QSharedPointer<Database>& database, Entry* entry);
+
     Group* getDefaultGroup(QSharedPointer<Database>& database) const;
 };
 

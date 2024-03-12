@@ -903,6 +903,10 @@ Do you want to register a new Passkey for:</source>
         <source>KeePassXC - Passkey credentials</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Add to existing entry</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BrowserService</name>
@@ -978,6 +982,14 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Passkey</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeePassXC - Passkey credentials</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Register a new Passkey to this entry:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
