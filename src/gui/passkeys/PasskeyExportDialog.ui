@@ -23,7 +23,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Export the following Passkey entries.</string>
+      <string>Export the following passkey entries.</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>

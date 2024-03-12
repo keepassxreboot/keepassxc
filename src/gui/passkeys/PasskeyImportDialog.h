@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -39,7 +39,10 @@ public:
     void setInfo(const QString& relyingParty,
                  const QString& username,
                  const QSharedPointer<Database>& database,
-                 bool isEntry);
+                 bool isEntry,
+                 const QString& titleText = {},
+                 const QString& infoText = {},
+                 const QString& importButtonText = {});
     QSharedPointer<Database> getSelectedDatabase() const;
     QUuid getSelectedEntryUuid() const;
     QUuid getSelectedGroupUuid() const;
