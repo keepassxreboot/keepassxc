@@ -180,6 +180,8 @@ private:
 #ifdef WITH_XC_BROWSER_PASSKEYS
     QList<Entry*> getPasskeyEntries(const QString& rpId, const StringPairList& keyList);
     QList<Entry*>
+    getPasskeyEntriesWithUserHandle(const QString& rpId, const QString& userId, const StringPairList& keyList);
+    QList<Entry*>
     getPasskeyAllowedEntries(const QJsonObject& assertionOptions, const QString& rpId, const StringPairList& keyList);
     bool isPasskeyCredentialExcluded(const QJsonArray& excludeCredentials,
                                      const QString& rpId,

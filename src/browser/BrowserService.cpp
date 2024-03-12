@@ -584,12 +584,15 @@ QJsonObject BrowserService::showPasskeysRegisterPrompt(const QJsonObject& public
     const auto rpId = publicKeyOptions["rp"]["id"].toString();
     const auto timeout = publicKeyOptions["timeout"].toInt();
     const auto username = credentialCreationOptions["user"].toObject()["name"].toString();
+    const auto user = credentialCreationOptions["user"].toObject();
+    const auto userId = user["id"].toString();
 
     // Parse excludeCredentialDescriptorList
     if (!excludeCredentials.isEmpty() && isPasskeyCredentialExcluded(excludeCredentials, rpId, keyList)) {
         return getPasskeyError(ERROR_PASSKEYS_CREDENTIAL_IS_EXCLUDED);
     }
-    const auto existingEntries = getPasskeyEntries(rpId, keyList);
+
+    const auto existingEntries = getPasskeyEntriesWithUserHandle(rpId, userId, keyList);
 
     raiseWindow();
     BrowserPasskeysConfirmationDialog confirmDialog;
@@ -605,9 +608,6 @@ QJsonObject BrowserService::showPasskeysRegisterPrompt(const QJsonObject& public
         }
 
         const auto rpName = publicKeyOptions["rp"]["name"].toString();
-        const auto user = credentialCreationOptions["user"].toObject();
-        const auto userId = user["id"].toString();
-
         if (confirmDialog.isPasskeyUpdated()) {
             addPasskeyToEntry(confirmDialog.getSelectedEntry(),
                               rpId,
@@ -1347,6 +1347,22 @@ QList<Entry*> BrowserService::getPasskeyEntries(const QString& rpId, const Strin
     QList<Entry*> entries;
     for (const auto& entry : searchEntries(rpId, "", keyList, true)) {
         if (entry->hasPasskey() && entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_RELYING_PARTY) == rpId) {
+            entries << entry;
+        }
+    }
+
+    return entries;
+}
+
+// Returns all Passkey entries for the current Relying Party and identical user handle
+QList<Entry*> BrowserService::getPasskeyEntriesWithUserHandle(const QString& rpId,
+                                                              const QString& userId,
+                                                              const StringPairList& keyList)
+{
+    QList<Entry*> entries;
+    for (const auto& entry : searchEntries(rpId, "", keyList, true)) {
+        if (entry->hasPasskey() && entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_RELYING_PARTY) == rpId
+            && entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_USER_HANDLE) == userId) {
             entries << entry;
         }
     }
