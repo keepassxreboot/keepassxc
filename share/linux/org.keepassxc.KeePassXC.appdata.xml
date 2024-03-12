@@ -52,7 +52,7 @@
     </screenshots>
 
     <releases>
-        <release version="2.7.7" date="2023-03-09">
+        <release version="2.7.7" date="2024-03-09">
             <description>
                 <ul>                    
                     <li>Support USB Hotplug for Hardware Key interface [#10092]</li>
