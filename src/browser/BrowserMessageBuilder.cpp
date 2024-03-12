@@ -151,7 +151,7 @@ QString BrowserMessageBuilder::getErrorMessage(const int errorCode) const
     case ERROR_PASSKEYS_WAIT_FOR_LIFETIMER:
         return QObject::tr("Wait for timer to expire");
     case ERROR_PASSKEYS_UNKNOWN_ERROR:
-        return QObject::tr("Unknown Passkeys error");
+        return QObject::tr("Unknown passkeys error");
     case ERROR_PASSKEYS_INVALID_CHALLENGE:
         return QObject::tr("Challenge is shorter than required minimum length");
     case ERROR_PASSKEYS_INVALID_USER_ID:

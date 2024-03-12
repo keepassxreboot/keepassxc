@@ -152,7 +152,7 @@ void ReportsWidgetPasskeys::loadSettings(QSharedPointer<Database> db)
     m_rowToEntry.clear();
 
     auto row = QList<QStandardItem*>();
-    row << new QStandardItem(tr("Please wait, list of entries with Passkeys is being updated…"));
+    row << new QStandardItem(tr("Please wait, list of entries with passkeys is being updated…"));
     m_referencesModel->appendRow(row);
 }
 
@@ -188,7 +188,7 @@ void ReportsWidgetPasskeys::updateEntries()
 
     // Set the table header
     if (m_referencesModel->rowCount() == 0) {
-        m_referencesModel->setHorizontalHeaderLabels(QStringList() << tr("No entries with Passkeys."));
+        m_referencesModel->setHorizontalHeaderLabels(QStringList() << tr("No entries with passkeys."));
     } else {
         m_referencesModel->setHorizontalHeaderLabels(QStringList() << tr("Title") << tr("Path") << tr("Username")
                                                                    << tr("Relying Party") << tr("URLs"));
@@ -282,7 +282,7 @@ void ReportsWidgetPasskeys::selectionChanged()
 
 void ReportsWidgetPasskeys::importPasskey()
 {
-    PasskeyImporter passkeyImporter;
+    PasskeyImporter passkeyImporter(this);
     passkeyImporter.importPasskey(m_db);
 
     updateEntries();
@@ -300,6 +300,6 @@ void ReportsWidgetPasskeys::exportPasskey()
         return;
     }
 
-    PasskeyExporter passkeyExporter;
+    PasskeyExporter passkeyExporter(this);
     passkeyExporter.showExportDialog(getSelectedEntries());
 }

@@ -34,6 +34,7 @@
 #include "BrowserPasskeysClient.h"
 #include "BrowserPasskeysConfirmationDialog.h"
 #include "PasskeyUtils.h"
+#include "gui/passkeys/PasskeyImporter.h"
 #endif
 #ifdef Q_OS_MACOS
 #include "gui/osutils/macutils/MacUtils.h"
@@ -658,13 +659,33 @@ QJsonObject BrowserService::showPasskeysRegisterPrompt(const QJsonObject& public
 
         const auto rpName = publicKeyOptions["rp"]["name"].toString();
         if (confirmDialog.isPasskeyUpdated()) {
-            addPasskeyToEntry(confirmDialog.getSelectedEntry(),
-                              rpId,
-                              rpName,
-                              username,
-                              publicKeyCredentials.credentialId,
-                              userId,
-                              publicKeyCredentials.key);
+            // If no entry is selected, show the import dialog for manual entry selection
+            auto selectedEntry = confirmDialog.getSelectedEntry();
+            if (!selectedEntry) {
+                PasskeyImporter passkeyImporter(m_currentDatabaseWidget);
+                const auto result = passkeyImporter.showImportDialog(db,
+                                                                     nullptr,
+                                                                     origin,
+                                                                     rpId,
+                                                                     username,
+                                                                     publicKeyCredentials.credentialId,
+                                                                     userId,
+                                                                     publicKeyCredentials.key,
+                                                                     tr("KeePassXC - Passkey credentials"),
+                                                                     tr("Register a new passkey to this entry:"),
+                                                                     tr("Register"));
+                if (!result) {
+                    return getPasskeyError(ERROR_PASSKEYS_REQUEST_CANCELED);
+                }
+            } else {
+                addPasskeyToEntry(selectedEntry,
+                                  rpId,
+                                  rpName,
+                                  username,
+                                  publicKeyCredentials.credentialId,
+                                  userId,
+                                  publicKeyCredentials.key);
+            }
         } else {
             addPasskeyToGroup(db,
                               nullptr,
@@ -790,8 +811,8 @@ void BrowserService::addPasskeyToEntry(Entry* entry,
     // Ask confirmation if entry already contains a Passkey
     if (entry->hasPasskey()) {
         if (MessageBox::question(m_currentDatabaseWidget,
-                                 tr("KeePassXC - Update Passkey"),
-                                 tr("Entry already has a Passkey.\nDo you want to overwrite the Passkey in %1 - %2?")
+                                 tr("KeePassXC - Update passkey"),
+                                 tr("Entry already has a passkey.\nDo you want to overwrite the passkey in %1 - %2?")
                                      .arg(entry->title(), passkeyUtils()->getUsernameFromEntry(entry)),
                                  MessageBox::Overwrite | MessageBox::Cancel,
                                  MessageBox::Cancel)

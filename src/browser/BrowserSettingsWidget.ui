@@ -313,10 +313,10 @@
        <item>
         <widget class="QCheckBox" name="allowLocalhostWithPasskeys">
          <property name="toolTip">
-          <string>Allows using insecure http://localhost with Passkeys for testing purposes.</string>
+          <string>Allows using insecure http://localhost with passkeys for testing purposes.</string>
          </property>
          <property name="text">
-          <string>Allow using localhost with Passkeys</string>
+          <string>Allow using localhost with passkeys</string>
          </property>
         </widget>
        </item>
