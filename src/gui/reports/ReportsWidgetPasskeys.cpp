@@ -290,13 +290,12 @@ void ReportsWidgetPasskeys::importPasskey()
 
 void ReportsWidgetPasskeys::exportPasskey()
 {
-    auto answer = MessageBox::question(
-        this,
-        tr("Export Confirmation"),
-        tr("You are about to export passkeys to unencrypted files. This will leave your "
-           "passkey and other sensitive information vulnerable! Are you sure you want to continue?"),
-        MessageBox::Yes | MessageBox::No,
-        MessageBox::No);
+    auto answer = MessageBox::question(this,
+                                       tr("Export Confirmation"),
+                                       tr("The passkey file will be vulnerable to theft and unauthorized use, if left "
+                                          "unsecured. Are you sure you want to continue?"),
+                                       MessageBox::Yes | MessageBox::No,
+                                       MessageBox::No);
     if (answer != MessageBox::Yes) {
         return;
     }

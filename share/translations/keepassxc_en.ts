@@ -9052,7 +9052,7 @@ Kernel: %3 %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>You are about to export passkeys to unencrypted files. This will leave your passkey and other sensitive information vulnerable! Are you sure you want to continue?</source>
+        <source>The passkey file will be vulnerable to theft and unauthorized use, if left unsecured. Are you sure you want to continue?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
