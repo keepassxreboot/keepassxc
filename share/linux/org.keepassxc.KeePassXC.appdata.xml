@@ -52,6 +52,31 @@
     </screenshots>
 
     <releases>
+        <release version="2.7.7" date="2024-03-10">
+            <description>
+                <ul>
+                    <li>Support USB Hotplug for Hardware Key interface [#10092]</li>
+                    <li>Support 1PUX and Bitwarden import [#9815]</li>
+                    <li>Browser: Add support for PassKeys [#8825, #9987, #10318]</li>
+                    <li>Build System: Move to vcpkg manifest mode [#10088]</li>
+                    <li>Fix multiple TOTP issues [#9874]</li>
+                    <li>Fix focus loss on save when the editor is not visible anymore [#10075]</li>
+                    <li>Fix visual when removing entry from history [#9947]</li>
+                    <li>Fix first entry is not selected when a search is performed [#9868]</li>
+                    <li>Prevent scrollbars on entry drag/drop [#9747]</li>
+                    <li>Prevent duplicate characters in "Also choose from" field of password generator [#9803]</li>
+                    <li>Security: Prevent byte-by-byte and attachment inference side channel attacks [#10266]</li>
+                    <li>Browser: Fix raising Update Entry messagebox [#9853]</li>
+                    <li>Browser: Fix bugs when returning credentials [#9136]</li>
+                    <li>Browser: Fix crash on database open from browser [#9939]</li>
+                    <li>Browser: Fix support for referenced URL fields [#8788]</li>
+                    <li>MacOS: Fix crash when changing highlight/accent color [#10348]</li>
+                    <li>MacOS: Fix TouchID appearance depending on lid open/closed [#10092]</li>
+                    <li>Windows: Fix terminating KeePassXC processes with MSI installer [#9822]</li>
+                    <li>FdoSecrets: Fix database merge crash when enabled [#10136]</li>
+                </ul>
+            </description>
+        </release>
         <release version="2.7.6" date="2023-08-15">
             <description>
                 <ul>
