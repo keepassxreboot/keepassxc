@@ -350,3 +350,15 @@ QStringList PasskeyUtils::getAllowedCredentialsFromAssertionOptions(const QJsonO
 
     return allowedCredentials;
 }
+
+// For compatibility with StrongBox (and other possible clients in the future)
+QString PasskeyUtils::getCredentialIdFromEntry(const Entry* entry) const
+{
+    if (!entry) {
+        return {};
+    }
+
+    return entry->attributes()->hasKey(BrowserPasskeys::KPEX_PASSKEY_GENERATED_USER_ID)
+               ? entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_GENERATED_USER_ID)
+               : entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_CREDENTIAL_ID);
+}
