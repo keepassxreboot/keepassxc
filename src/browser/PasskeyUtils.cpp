@@ -362,3 +362,15 @@ QString PasskeyUtils::getCredentialIdFromEntry(const Entry* entry) const
                ? entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_GENERATED_USER_ID)
                : entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_CREDENTIAL_ID);
 }
+
+// For compatibility with StrongBox (and other possible clients in the future)
+QString PasskeyUtils::getUsernameFromEntry(const Entry* entry) const
+{
+    if (!entry) {
+        return {};
+    }
+
+    return entry->attributes()->hasKey(BrowserPasskeys::KPXC_PASSKEY_USERNAME)
+               ? entry->attributes()->value(BrowserPasskeys::KPXC_PASSKEY_USERNAME)
+               : entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_USERNAME);
+}

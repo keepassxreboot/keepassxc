@@ -55,6 +55,7 @@ public:
     QJsonObject buildClientDataJson(const QJsonObject& publicKey, const QString& origin, bool get) const;
     QStringList getAllowedCredentialsFromAssertionOptions(const QJsonObject& assertionOptions) const;
     QString getCredentialIdFromEntry(const Entry* entry) const;
+    QString getUsernameFromEntry(const Entry* entry) const;
 
 private:
     Q_DISABLE_COPY(PasskeyUtils);

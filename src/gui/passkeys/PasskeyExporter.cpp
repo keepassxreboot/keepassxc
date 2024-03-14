@@ -91,7 +91,7 @@ void PasskeyExporter::exportSelectedEntry(const Entry* entry, const QString& fol
     QJsonObject passkeyObject;
     passkeyObject["relyingParty"] = entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_RELYING_PARTY);
     passkeyObject["url"] = entry->url();
-    passkeyObject["username"] = entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_USERNAME);
+    passkeyObject["username"] = passkeyUtils()->getUsernameFromEntry(entry);
     passkeyObject["credentialId"] = passkeyUtils()->getCredentialIdFromEntry(entry);
     passkeyObject["userHandle"] = entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_USER_HANDLE);
     passkeyObject["privateKey"] = entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_PRIVATE_KEY_PEM);

@@ -788,13 +788,12 @@ void BrowserService::addPasskeyToEntry(Entry* entry,
 
     // Ask confirmation if entry already contains a Passkey
     if (entry->hasPasskey()) {
-        if (MessageBox::question(
-                m_currentDatabaseWidget,
-                tr("KeePassXC - Update Passkey"),
-                tr("Entry already has a Passkey.\nDo you want to overwrite the Passkey in %1 - %2?")
-                    .arg(entry->title(), entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_USERNAME)),
-                MessageBox::Overwrite | MessageBox::Cancel,
-                MessageBox::Cancel)
+        if (MessageBox::question(m_currentDatabaseWidget,
+                                 tr("KeePassXC - Update Passkey"),
+                                 tr("Entry already has a Passkey.\nDo you want to overwrite the Passkey in %1 - %2?")
+                                     .arg(entry->title(), passkeyUtils()->getUsernameFromEntry(entry)),
+                                 MessageBox::Overwrite | MessageBox::Cancel,
+                                 MessageBox::Cancel)
             != MessageBox::Overwrite) {
             return;
         }
@@ -1129,7 +1128,7 @@ QJsonObject BrowserService::prepareEntry(const Entry* entry)
     QJsonObject res;
 #ifdef WITH_XC_BROWSER_PASSKEYS
     // Use Passkey's username instead if found
-    res["login"] = entry->hasPasskey() ? entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_USERNAME)
+    res["login"] = entry->hasPasskey() ? passkeyUtils()->getUsernameFromEntry(entry)
                                        : entry->resolveMultiplePlaceholders(entry->username());
 #else
     res["login"] = entry->resolveMultiplePlaceholders(entry->username());
