@@ -46,18 +46,18 @@ namespace
     const QString TARGET_DIR_CHROMIUM = QStringLiteral("/Library/Application Support/Chromium/NativeMessagingHosts");
     const QString TARGET_DIR_FIREFOX = QStringLiteral("/Library/Application Support/Mozilla/NativeMessagingHosts");
     const QString TARGET_DIR_VIVALDI = QStringLiteral("/Library/Application Support/Vivaldi/NativeMessagingHosts");
-    const QString TARGET_DIR_TOR_BROWSER =
-        QStringLiteral("/Library/Application Support/TorBrowser-Data/Browser/Mozilla/NativeMessagingHosts");
-    const QString TARGET_DIR_BRAVE =
-        QStringLiteral("/Library/Application Support/BraveSoftware/Brave-Browser/NativeMessagingHosts");
+    const QString TARGET_DIR_TOR_BROWSER = QStringLiteral(
+        "/Library/Application Support/TorBrowser-Data/Browser/Mozilla/NativeMessagingHosts");
+    const QString TARGET_DIR_BRAVE = QStringLiteral(
+        "/Library/Application Support/BraveSoftware/Brave-Browser/NativeMessagingHosts");
     const QString TARGET_DIR_EDGE = QStringLiteral("/Library/Application Support/Microsoft Edge/NativeMessagingHosts");
 #elif defined(Q_OS_WIN)
     const QString TARGET_DIR_CHROME = QStringLiteral(
         "HKEY_CURRENT_USER\\Software\\Google\\Chrome\\NativeMessagingHosts\\org.keepassxc.keepassxc_browser");
-    const QString TARGET_DIR_CHROMIUM =
-        QStringLiteral("HKEY_CURRENT_USER\\Software\\Chromium\\NativeMessagingHosts\\org.keepassxc.keepassxc_browser");
-    const QString TARGET_DIR_FIREFOX =
-        QStringLiteral("HKEY_CURRENT_USER\\Software\\Mozilla\\NativeMessagingHosts\\org.keepassxc.keepassxc_browser");
+    const QString TARGET_DIR_CHROMIUM = QStringLiteral(
+        "HKEY_CURRENT_USER\\Software\\Chromium\\NativeMessagingHosts\\org.keepassxc.keepassxc_browser");
+    const QString TARGET_DIR_FIREFOX = QStringLiteral(
+        "HKEY_CURRENT_USER\\Software\\Mozilla\\NativeMessagingHosts\\org.keepassxc.keepassxc_browser");
     const QString TARGET_DIR_VIVALDI = TARGET_DIR_CHROME;
     const QString TARGET_DIR_TOR_BROWSER = TARGET_DIR_FIREFOX;
     const QString TARGET_DIR_BRAVE = TARGET_DIR_CHROME;
