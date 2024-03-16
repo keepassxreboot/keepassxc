@@ -31,6 +31,9 @@ public:
     static const QCommandLineOption UrlOption;
     static const QCommandLineOption NotesOption;
     static const QCommandLineOption PasswordPromptOption;
+    static const QCommandLineOption AttributeOption;
+    static const QCommandLineOption AttributeValueOption;
+    static const QCommandLineOption AttributeProtectOption;
     static const QCommandLineOption GenerateOption;
 };
 
