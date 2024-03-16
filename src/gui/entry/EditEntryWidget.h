@@ -152,7 +152,6 @@ private:
     void setupEntryUpdate();
     void setupColorButton(bool foreground, const QColor& color);
 
-    bool passwordsEqual();
     void setForms(Entry* entry, bool restore = false);
     QMenu* createPresetsMenu();
     void updateEntryData(Entry* entry) const;

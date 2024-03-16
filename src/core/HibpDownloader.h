@@ -62,8 +62,6 @@ private slots:
     void fetchReadyRead();
 
 private:
-    void fetchPassword(const QString& password);
-
     QStringList m_pwdsToTry; // The list of remaining passwords to validate
     QHash<QNetworkReply*, QPair<QString, QByteArray>> m_replies;
 };

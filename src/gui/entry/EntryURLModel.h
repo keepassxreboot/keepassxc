@@ -46,7 +46,6 @@ public:
     explicit EntryURLModel(QObject* parent = nullptr);
 
     void setEntryAttributes(EntryAttributes* entryAttributes);
-    void insertRow(const QString& key, const QString& value);
     void setEntryUrl(const QString& entryUrl);
     bool setData(const QModelIndex& index, const QVariant& value, int role = Qt::EditRole) override;
     QVariant data(const QModelIndex& index, int role) const override;
