@@ -43,7 +43,9 @@ const QString BrowserPasskeys::AAGUID = QStringLiteral("fdb141b25d84443e8a354698
 // Authenticator capabilities
 const QString BrowserPasskeys::ATTACHMENT_CROSS_PLATFORM = QStringLiteral("cross-platform");
 const QString BrowserPasskeys::ATTACHMENT_PLATFORM = QStringLiteral("platform");
-const QString BrowserPasskeys::AUTHENTICATOR_TRANSPORT = QStringLiteral("internal");
+const QString BrowserPasskeys::AUTHENTICATOR_TRANSPORT_INTERNAL = QStringLiteral("internal");
+const QString BrowserPasskeys::AUTHENTICATOR_TRANSPORT_NFC = QStringLiteral("nfc");
+const QString BrowserPasskeys::AUTHENTICATOR_TRANSPORT_USB = QStringLiteral("usb");
 const bool BrowserPasskeys::SUPPORT_RESIDENT_KEYS = true;
 const bool BrowserPasskeys::SUPPORT_USER_VERIFICATION = true;
 
