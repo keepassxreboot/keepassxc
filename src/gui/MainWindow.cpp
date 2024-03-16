@@ -957,7 +957,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
 #ifdef WITH_XC_BROWSER_PASSKEYS
             m_ui->actionPasskeys->setEnabled(true);
             m_ui->actionImportPasskey->setEnabled(true);
-            m_ui->actionEntryImportPasskey->setEnabled(true);
+            m_ui->actionEntryImportPasskey->setEnabled(singleEntrySelected);
 #endif
 #ifdef WITH_XC_SSHAGENT
             bool singleEntryHasSshKey =
