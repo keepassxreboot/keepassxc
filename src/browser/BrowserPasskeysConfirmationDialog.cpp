@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -56,18 +56,19 @@ void BrowserPasskeysConfirmationDialog::registerCredential(const QString& userna
     m_ui->firstLabel->setText(tr("Do you want to register Passkey for:"));
     m_ui->relyingPartyLabel->setText(tr("Relying Party: %1").arg(relyingParty));
     m_ui->usernameLabel->setText(tr("Username: %1").arg(username));
+    m_ui->updateButton->setVisible(true);
     m_ui->secondLabel->setText("");
 
     if (!existingEntries.isEmpty()) {
         m_ui->firstLabel->setText(tr("Existing Passkey found.\nDo you want to register a new Passkey for:"));
         m_ui->secondLabel->setText(tr("Select the existing Passkey and press Update to replace it."));
 
-        m_ui->updateButton->setVisible(true);
         m_ui->confirmButton->setText(tr("Register new"));
         updateEntriesToTable(existingEntries);
     } else {
         m_ui->verticalLayout->setSizeConstraint(QLayout::SetFixedSize);
         m_ui->confirmButton->setText(tr("Register"));
+        m_ui->updateButton->setText(tr("Add to existing entry"));
         m_ui->credentialsTable->setVisible(false);
     }
 

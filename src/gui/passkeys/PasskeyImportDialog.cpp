@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -48,7 +48,9 @@ PasskeyImportDialog::~PasskeyImportDialog()
 void PasskeyImportDialog::setInfo(const QString& relyingParty,
                                   const QString& username,
                                   const QSharedPointer<Database>& database,
-                                  bool isEntry)
+                                  bool isEntry,
+                                  const QString& titleText,
+                                  const QString& infoText)
 {
     m_ui->relyingPartyLabel->setText(tr("Relying Party: %1").arg(relyingParty));
     m_ui->usernameLabel->setText(tr("Username: %1").arg(username));
@@ -70,6 +72,14 @@ void PasskeyImportDialog::setInfo(const QString& relyingParty,
         }
     }
     m_ui->selectDatabaseCombobBox->setEnabled(openDatabaseCount > 1);
+
+    if (!titleText.isEmpty()) {
+        setWindowTitle(titleText);
+    }
+
+    if (!infoText.isEmpty()) {
+        m_ui->infoLabel->setText(infoText);
+    }
 }
 
 QSharedPointer<Database> PasskeyImportDialog::getSelectedDatabase() const

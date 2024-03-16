@@ -34,6 +34,7 @@
 #include "BrowserPasskeysClient.h"
 #include "BrowserPasskeysConfirmationDialog.h"
 #include "PasskeyUtils.h"
+#include "gui/passkeys/PasskeyImporter.h"
 #endif
 #ifdef Q_OS_MACOS
 #include "gui/osutils/macutils/MacUtils.h"
@@ -658,13 +659,32 @@ QJsonObject BrowserService::showPasskeysRegisterPrompt(const QJsonObject& public
         const auto userId = user["id"].toString();
 
         if (confirmDialog.isPasskeyUpdated()) {
-            addPasskeyToEntry(confirmDialog.getSelectedEntry(),
-                              rpId,
-                              rpName,
-                              username,
-                              publicKeyCredentials.credentialId,
-                              userId,
-                              publicKeyCredentials.key);
+            // If no entry is selected, show the import dialog for manual entry selection
+            auto selectedEntry = confirmDialog.getSelectedEntry();
+            if (!selectedEntry) {
+                PasskeyImporter passkeyImporter;
+                const auto result = passkeyImporter.showImportDialog(db,
+                                                                     origin,
+                                                                     rpId,
+                                                                     username,
+                                                                     publicKeyCredentials.credentialId,
+                                                                     userId,
+                                                                     publicKeyCredentials.key,
+                                                                     nullptr,
+                                                                     tr("KeePassXC - Passkey credentials"),
+                                                                     tr("Register a new Passkey to this entry:"));
+                if (!result) {
+                    return getPasskeyError(ERROR_PASSKEYS_REQUEST_CANCELED);
+                }
+            } else {
+                addPasskeyToEntry(selectedEntry,
+                                  rpId,
+                                  rpName,
+                                  username,
+                                  publicKeyCredentials.credentialId,
+                                  userId,
+                                  publicKeyCredentials.key);
+            }
         } else {
             addPasskeyToGroup(nullptr,
                               origin,

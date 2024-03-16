@@ -92,21 +92,23 @@ void PasskeyImporter::importSelectedFile(QFile& file, QSharedPointer<Database>& 
     }
 }
 
-void PasskeyImporter::showImportDialog(QSharedPointer<Database>& database,
+bool PasskeyImporter::showImportDialog(QSharedPointer<Database>& database,
                                        const QString& url,
                                        const QString& relyingParty,
                                        const QString& username,
                                        const QString& credentialId,
                                        const QString& userHandle,
                                        const QString& privateKey,
-                                       Entry* entry)
+                                       Entry* entry,
+                                       const QString& titleText,
+                                       const QString& infoText)
 {
     PasskeyImportDialog passkeyImportDialog;
-    passkeyImportDialog.setInfo(relyingParty, username, database, entry != nullptr);
+    passkeyImportDialog.setInfo(relyingParty, username, database, entry != nullptr, titleText, infoText);
 
     auto ret = passkeyImportDialog.exec();
     if (ret != QDialog::Accepted) {
-        return;
+        return false;
     }
 
     auto db = passkeyImportDialog.getSelectedDatabase();
@@ -118,7 +120,7 @@ void PasskeyImporter::showImportDialog(QSharedPointer<Database>& database,
     if (entry) {
         browserService()->addPasskeyToEntry(
             entry, relyingParty, relyingParty, username, credentialId, userHandle, privateKey);
-        return;
+        return true;
     }
 
     // Import to entry selected instead of creating a new one
@@ -134,7 +136,7 @@ void PasskeyImporter::showImportDialog(QSharedPointer<Database>& database,
             }
         }
 
-        return;
+        return true;
     }
 
     // Group settings. Use default group "Imported Passkeys" if user did not select a specific one.
@@ -153,6 +155,8 @@ void PasskeyImporter::showImportDialog(QSharedPointer<Database>& database,
 
     browserService()->addPasskeyToGroup(
         group, url, relyingParty, relyingParty, username, credentialId, userHandle, privateKey);
+
+    return true;
 }
 
 Group* PasskeyImporter::getDefaultGroup(QSharedPointer<Database>& database) const
