@@ -67,9 +67,9 @@ Note: These steps place the compiled KeePassXC binary inside the `./build/src/` 
 
 ## MacOS Build Notes
 
-If you installed Qt5 via Homebrew and CMake fails to find your Qt installation, you can specify it manually by adding the following parameter:
+If you installed Qt@5 via Homebrew and CMake fails to find your Qt installation, you can specify it manually by adding the following parameter:
 
-`-DCMAKE_PREFIX_PATH=$(brew --prefix qt5)/lib/cmake`
+`-DCMAKE_PREFIX_PATH=$(brew --prefix qt@5)/lib/cmake`
 
 When building with ASAN support on macOS, you need to use `export ASAN_OPTIONS=detect_leaks=0` before running the tests (LSAN is no supported on macOS).
 
