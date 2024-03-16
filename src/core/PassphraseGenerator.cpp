@@ -145,9 +145,5 @@ QString PassphraseGenerator::generatePassphrase() const
 
 bool PassphraseGenerator::isValid() const
 {
-    if (m_wordCount == 0) {
-        return false;
-    }
-
     return m_wordlist.size() >= 1000;
 }

@@ -44,6 +44,7 @@ class KeeShare : public QObject
 public:
     static KeeShare* instance();
     static void init(QObject* parent);
+    static void destroy();
 
     static QString indicatorSuffix(const Group* group, const QString& text);
     static QPixmap indicatorBadge(const Group* group, QPixmap pixmap);
