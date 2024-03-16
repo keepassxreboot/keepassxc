@@ -29,6 +29,7 @@
 #include <QJsonObject>
 #include <QScopedPointer>
 #include <QUrl>
+#include <QUrlQuery>
 
 #include <minizip/unzip.h>
 
@@ -127,8 +128,15 @@ namespace
                 const auto key = valueMap.firstKey();
                 if (key == "totp") {
                     // Build otpauth url
+                    QString secretValue = valueMap.value(key).toString();
+                    if (secretValue.contains("otpauth://totp/")) {
+                        QUrl url(secretValue);
+                        QUrlQuery query(url);
+                        secretValue = query.queryItemValue("secret");
+                    }
+
                     QUrl otpurl(QString("otpauth://totp/%1:%2?secret=%3")
-                                    .arg(entry->title(), entry->username(), valueMap.value(key).toString()));
+                                    .arg(entry->title(), entry->username(), secretValue));
 
                     if (entry->hasTotp()) {
                         // Store multiple TOTP definitions as additional otp attributes
