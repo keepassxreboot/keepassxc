@@ -19,6 +19,7 @@
 #include "PasskeyExportDialog.h"
 
 #include "browser/BrowserPasskeys.h"
+#include "browser/PasskeyUtils.h"
 #include "core/Entry.h"
 #include "core/Tools.h"
 #include "gui/MessageBox.h"
@@ -90,8 +91,8 @@ void PasskeyExporter::exportSelectedEntry(const Entry* entry, const QString& fol
     QJsonObject passkeyObject;
     passkeyObject["relyingParty"] = entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_RELYING_PARTY);
     passkeyObject["url"] = entry->url();
-    passkeyObject["username"] = entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_USERNAME);
-    passkeyObject["credentialId"] = entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_CREDENTIAL_ID);
+    passkeyObject["username"] = passkeyUtils()->getUsernameFromEntry(entry);
+    passkeyObject["credentialId"] = passkeyUtils()->getCredentialIdFromEntry(entry);
     passkeyObject["userHandle"] = entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_USER_HANDLE);
     passkeyObject["privateKey"] = entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_PRIVATE_KEY_PEM);
 
