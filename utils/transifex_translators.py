@@ -25,7 +25,7 @@ LANGS = {
     "he" : "עברית (Hebrew)",
     "hr_HR" : "hrvatski jezik (Croatian)",
     "hu" : "magyar (Hungarian)",
-    "id" : "Bahasa (Indonesian)",
+    "id" : "Bahasa Indonesia (Indonesian)",
     "is_IS" : "Íslenska (Icelandic)",
     "it" : "Italiano (Italian)",
     "ja" : "日本語 (Japanese)",
