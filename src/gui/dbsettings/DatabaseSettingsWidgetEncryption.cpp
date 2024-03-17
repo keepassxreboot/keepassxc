@@ -101,22 +101,23 @@ void DatabaseSettingsWidgetEncryption::initialize()
     }
 
     auto version = KDBX4;
-    if (m_db->kdf()) {
+    if (m_db->key() && m_db->kdf()) {
         version = (m_db->kdf()->uuid() == KeePass2::KDF_AES_KDBX3) ? KDBX3 : KDBX4;
     }
     m_ui->compatibilitySelection->setCurrentIndex(version);
 
     bool isNewDatabase = false;
 
-    if (!m_db->kdf()) {
+    if (!m_db->key()) {
+        m_db->setKey(QSharedPointer<CompositeKey>::create(), true, false, false);
+        m_db->setKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2D));
+        m_db->setCipher(KeePass2::CIPHER_AES256);
+        isNewDatabase = true;
+    } else if (!m_db->kdf()) {
         m_db->setKdf(KeePass2::uuidToKdf(KeePass2::KDF_ARGON2D));
         isNewDatabase = true;
     }
-    if (!m_db->key()) {
-        m_db->setKey(QSharedPointer<CompositeKey>::create(), true, false, false);
-        m_db->setCipher(KeePass2::CIPHER_AES256);
-        isNewDatabase = true;
-    }
+
     bool kdbx3Enabled = KeePass2Writer::kdbxVersionRequired(m_db.data(), true, true) <= KeePass2::FILE_VERSION_3_1;
 
     // check if the DB's custom data has a decryption time setting stored
