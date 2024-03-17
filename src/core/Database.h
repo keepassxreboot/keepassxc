@@ -187,30 +187,33 @@ private:
         QScopedPointer<PasswordKey> challengeResponseKey;
 
         QSharedPointer<const CompositeKey> key;
-        QSharedPointer<Kdf> kdf = QSharedPointer<AesKdf>::create(true);
+        QSharedPointer<Kdf> kdf;
 
         QVariantMap publicCustomData;
 
         DatabaseData()
-            : masterSeed(new PasswordKey())
-            , transformedDatabaseKey(new PasswordKey())
-            , challengeResponseKey(new PasswordKey())
         {
-            kdf->randomizeSeed();
+            clear();
         }
 
         void clear()
         {
+            resetKeys();
             filePath.clear();
+            publicCustomData.clear();
+        }
 
-            masterSeed.reset();
-            transformedDatabaseKey.reset();
-            challengeResponseKey.reset();
+        void resetKeys()
+        {
+            masterSeed.reset(new PasswordKey());
+            transformedDatabaseKey.reset(new PasswordKey());
+            challengeResponseKey.reset(new PasswordKey());
 
             key.reset();
-            kdf.reset();
 
-            publicCustomData.clear();
+            // Default to AES KDF, KDBX4 databases overwrite this
+            kdf.reset(new AesKdf(true));
+            kdf->randomizeSeed();
         }
     };
 
