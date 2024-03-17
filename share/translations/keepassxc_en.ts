@@ -8674,6 +8674,10 @@ Kernel: %3 %4</source>
         <source>user.id does not match the required length</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Password is %1 old</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
