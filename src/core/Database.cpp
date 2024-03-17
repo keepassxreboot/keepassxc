@@ -396,6 +396,9 @@ bool Database::performSave(const QString& filePath, SaveAction action, const QSt
 
 bool Database::writeDatabase(QIODevice* device, QString* error)
 {
+    Q_ASSERT(m_data.key);
+    Q_ASSERT(m_data.transformedDatabaseKey);
+
     PasswordKey oldTransformedKey;
     if (m_data.key->isEmpty()) {
         oldTransformedKey.setRawKey(m_data.transformedDatabaseKey->rawKey());
@@ -550,6 +553,7 @@ bool Database::restoreDatabase(const QString& filePath, const QString& fromBacku
  */
 bool Database::isInitialized() const
 {
+    Q_ASSERT(m_data.key);
     return m_data.key && !m_data.key->isEmpty() && m_rootGroup;
 }
 
@@ -751,18 +755,29 @@ Database::CompressionAlgorithm Database::compressionAlgorithm() const
 
 QByteArray Database::transformedDatabaseKey() const
 {
+    Q_ASSERT(m_data.transformedDatabaseKey);
+    if (!m_data.transformedDatabaseKey) {
+        return {};
+    }
     return m_data.transformedDatabaseKey->rawKey();
 }
 
 QByteArray Database::challengeResponseKey() const
 {
+    Q_ASSERT(m_data.challengeResponseKey);
+    if (!m_data.challengeResponseKey) {
+        return {};
+    }
     return m_data.challengeResponseKey->rawKey();
 }
 
 bool Database::challengeMasterSeed(const QByteArray& masterSeed)
 {
+    Q_ASSERT(m_data.key);
+    Q_ASSERT(m_data.masterSeed);
+
     m_keyError.clear();
-    if (m_data.key) {
+    if (m_data.key && m_data.masterSeed) {
         m_data.masterSeed->setRawKey(masterSeed);
         QByteArray response;
         bool ok = m_data.key->challenge(masterSeed, response, &m_keyError);
@@ -808,8 +823,7 @@ bool Database::setKey(const QSharedPointer<const CompositeKey>& key,
     m_keyError.clear();
 
     if (!key) {
-        m_data.key.reset();
-        m_data.transformedDatabaseKey.reset(new PasswordKey());
+        m_data.resetKeys();
         return true;
     }
 

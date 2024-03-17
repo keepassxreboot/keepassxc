@@ -264,9 +264,7 @@ void DatabaseOpenWidget::clearForms()
     m_ui->hardwareKeyCombo->clear();
     toggleQuickUnlockScreen();
 
-    QString error;
-    m_db.reset(new Database());
-    m_db->open(m_filename, nullptr, &error);
+    m_db.reset(new Database(m_filename));
 }
 
 QSharedPointer<Database> DatabaseOpenWidget::database()
