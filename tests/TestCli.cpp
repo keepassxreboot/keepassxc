@@ -1278,9 +1278,9 @@ void TestCli::testEstimate()
     setInput(input);
     execCmd(estimateCmd, {"estimate", "-a"});
     auto result = QString(m_stdout->readAll());
-    QVERIFY(result.contains("Length " + length));
-    QVERIFY(result.contains("Entropy " + entropy));
-    QVERIFY(result.contains("Log10 " + log10));
+    QVERIFY2(result.contains("Length " + length), qPrintable(result));
+    QVERIFY2(result.contains("Entropy " + entropy), qPrintable(result));
+    QVERIFY2(result.contains("Log10 " + log10), qPrintable(result));
     for (const auto& string : asConst(searchStrings)) {
         QVERIFY2(result.contains(string), qPrintable("String " + string + " missing"));
     }
