@@ -80,10 +80,12 @@ ShareObserver::Result ShareImport::containerInto(const QString& resolvedPath,
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create(reference.password));
     auto sourceDb = QSharedPointer<Database>::create();
+    sourceDb->setEmitModified(false);
     if (!reader.readDatabase(&buffer, key, sourceDb.data())) {
         qCritical("Error while parsing the database: %s", qPrintable(reader.errorString()));
         return {reference.path, ShareObserver::Result::Error, reader.errorString()};
     }
+    sourceDb->setEmitModified(true);
 
     qDebug("Synchronize %s %s with %s",
            qPrintable(reference.path),
@@ -92,6 +94,7 @@ ShareObserver::Result ShareImport::containerInto(const QString& resolvedPath,
 
     Merger merger(sourceDb->rootGroup(), targetGroup);
     merger.setForcedMergeMode(Group::Synchronize);
+    merger.setSkipDatabaseCustomData(true);
     auto changelist = merger.merge();
     if (!changelist.isEmpty()) {
         return {reference.path, ShareObserver::Result::Success, ShareImport::tr("Successful import")};

@@ -30,6 +30,7 @@ private slots:
     void cleanup();
     void testMergeIntoNew();
     void testMergeNoChanges();
+    void testMergeCustomData();
     void testResolveConflictNewer();
     void testResolveConflictExisting();
     void testResolveGroupConflictOlder();

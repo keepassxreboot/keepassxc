@@ -57,6 +57,11 @@ void Merger::resetForcedMergeMode()
     m_mode = Group::Default;
 }
 
+void Merger::setSkipDatabaseCustomData(bool state)
+{
+    m_skipCustomData = state;
+}
+
 QStringList Merger::merge()
 {
     // Order of merge steps is important - it is possible that we
@@ -512,6 +517,11 @@ Merger::ChangeList Merger::mergeMetadata(const MergeContext& context)
             targetMetadata->addCustomIcon(iconUuid, sourceMetadata->customIcon(iconUuid));
             changes << tr("Adding missing icon %1").arg(QString::fromLatin1(iconUuid.toRfc4122().toHex()));
         }
+    }
+
+    // Some merges shouldn't modify the database custom data
+    if (m_skipCustomData) {
+        return changes;
     }
 
     // Merge Custom Data if source is newer
