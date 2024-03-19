@@ -469,10 +469,7 @@ void Group::setParent(Group* parent, int index, bool trackPrevious)
             recCreateDelObjects();
 
             // copy custom icon to the new database
-            if (!iconUuid().isNull() && parent->m_db && m_db->metadata()->hasCustomIcon(iconUuid())
-                && !parent->m_db->metadata()->hasCustomIcon(iconUuid())) {
-                parent->m_db->metadata()->addCustomIcon(iconUuid(), m_db->metadata()->customIcon(iconUuid()));
-            }
+            parent->m_db->metadata()->copyCustomIcon(iconUuid(), m_db->metadata());
         }
         if (m_db != parent->m_db) {
             connectDatabaseSignalsRecursive(parent->m_db);
@@ -949,9 +946,9 @@ Group* Group::clone(Entry::CloneFlags entryFlags, Group::CloneFlags groupFlags) 
 
         QDateTime now = Clock::currentDateTimeUtc();
         clonedGroup->m_data.timeInfo.setCreationTime(now);
-        clonedGroup->m_data.timeInfo.setLastModificationTime(now);
         clonedGroup->m_data.timeInfo.setLastAccessTime(now);
         clonedGroup->m_data.timeInfo.setLocationChanged(now);
+        // preserve LastModificationTime
     }
 
     if (groupFlags & Group::CloneRenameTitle) {

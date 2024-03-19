@@ -25,6 +25,7 @@
 #include "core/Tools.h"
 #include "gui/DatabaseIcons.h"
 #include "gui/Icons.h"
+#include "gui/MainWindow.h"
 #include "keeshare/KeeShare.h"
 
 GroupModel::GroupModel(Database* db, QObject* parent)
@@ -229,6 +230,13 @@ bool GroupModel::dropMimeData(const QMimeData* data,
 
     Group* parentGroup = groupFromIndex(parent);
 
+    auto showErrorMessage = [](const QString& errorMessage){
+        auto dbWidget = getMainWindow()->currentDatabaseWidget();
+        if(dbWidget) {
+            dbWidget->showErrorMessage(errorMessage);
+        }
+    };
+
     if (isGroup) {
         QUuid dbUuid;
         QUuid groupUuid;
@@ -258,17 +266,49 @@ bool GroupModel::dropMimeData(const QMimeData* data,
         Group* group = dragGroup;
 
         if (sourceDb != targetDb) {
-            QSet<QUuid> customIcons = group->customIconsRecursive();
-            targetDb->metadata()->copyCustomIcons(customIcons, sourceDb->metadata());
-
-            // Always clone the group across db's to reset UUIDs
-            group = dragGroup->clone(Entry::CloneDefault | Entry::CloneIncludeHistory);
             if (action == Qt::MoveAction) {
-                // Remove the original group from the sourceDb
-                delete dragGroup;
+                Group* binGroup = sourceDb->metadata()->recycleBin();
+                if(binGroup && binGroup->uuid() == dragGroup->uuid()) {
+                    showErrorMessage(tr("Move Error: %1 group cannot be moved").arg(tr("Recycle bin")));
+                    return true;
+                }
+
+                // the move is complex when any group or entry is known in the other db
+                bool complexMove = false;
+                for (const Group* g: group->groupsRecursive(true)) {
+                    if (targetDb->containsDeletedObject(g->uuid()) || targetDb->rootGroup()->findGroupByUuid(g->uuid())) {
+                        complexMove = true;
+                        break;
+                    }
+                }
+                for (const Entry* e: group->entriesRecursive(false)) {
+                    if (targetDb->containsDeletedObject(e->uuid()) || targetDb->rootGroup()->findEntryByUuid(e->uuid())) {
+                        complexMove = true;
+                        break;
+                    }
+                }
+                // TODO: unable to handle complex moves until the Merger interface supports single group/entry merging.
+                if (complexMove) {
+                    showErrorMessage(tr("Move Error: (sub-)group(s) and/or entry(s) already present in the other database"));
+                    return true;
+                }
+
+                group = dragGroup->clone(Entry::CloneExactCopy, Group::CloneExactCopy);
             }
-        } else if (action == Qt::CopyAction) {
-            group = dragGroup->clone(Entry::CloneCopy);
+
+            targetDb->metadata()->copyCustomIcons(dragGroup->customIconsRecursive(), sourceDb->metadata());
+        }
+
+        if (action == Qt::MoveAction) {
+            // remove the original group if it moved a clone
+            if (group != dragGroup) {
+                QList<DeletedObject> delObjects(sourceDb->deletedObjects());
+                delete dragGroup;
+                // prevent group, sub-group(s) & entry(s) from ending up on the deleted object list
+                sourceDb->setDeletedObjects(delObjects);
+            }
+        } else { // Action == Qt::CopyAction
+            group = dragGroup->clone(Entry::CloneCopy, Group::CloneCopy); 
         }
 
         group->setParent(parentGroup, row);
@@ -277,11 +317,13 @@ bool GroupModel::dropMimeData(const QMimeData* data,
             return false;
         }
 
+        int numEntries = 0, numEntriesNotMoved = 0;
         while (!stream.atEnd()) {
             QUuid dbUuid;
             QUuid entryUuid;
             stream >> dbUuid >> entryUuid;
-
+            ++numEntries;
+            
             Database* db = Database::databaseByUuid(dbUuid);
             if (!db) {
                 continue;
@@ -298,21 +340,38 @@ bool GroupModel::dropMimeData(const QMimeData* data,
             Entry* entry = dragEntry;
 
             if (sourceDb != targetDb) {
-                QUuid customIcon = entry->iconUuid();
-                if (!customIcon.isNull() && !targetDb->metadata()->hasCustomIcon(customIcon)) {
-                    targetDb->metadata()->addCustomIcon(customIcon, sourceDb->metadata()->customIcon(customIcon).data);
+                if (action == Qt::MoveAction) {
+                    // the move is complex when the entry is known in the other db
+                    bool complexMove = targetDb->containsDeletedObject(entry->uuid()) 
+                        || targetDb->rootGroup()->findEntryByUuid(entry->uuid());
+                    // TODO: unable to handle complex moves until the Merger interface supports single group/entry merging.
+                    if (complexMove) {
+                        ++numEntriesNotMoved;
+                        continue;
+                    }
+                    entry = dragEntry->clone(Entry::CloneExactCopy);
                 }
 
-                // Reset the UUID when moving across db boundary
-                entry = dragEntry->clone(Entry::CloneDefault | Entry::CloneIncludeHistory);
-                if (action == Qt::MoveAction) {
+                targetDb->metadata()->copyCustomIcon(entry->iconUuid(), sourceDb->metadata());
+            }
+
+            if (action == Qt::MoveAction) {
+                // remove the original entry if it moved a clone
+                if (entry != dragEntry) {
+                    QList<DeletedObject> delObjects(sourceDb->deletedObjects());
                     delete dragEntry;
+                    // prevent entry from ending up on the deleted object list
+                    sourceDb->setDeletedObjects(delObjects);
                 }
-            } else if (action == Qt::CopyAction) {
+            } else { // Action == Qt::CopyAction
                 entry = dragEntry->clone(Entry::CloneCopy);
             }
 
             entry->setGroup(parentGroup);
+        }
+
+        if (numEntriesNotMoved) {            
+            showErrorMessage(tr("Move Error: %1 of %2 entry(s) already present in the other database").arg(numEntriesNotMoved).arg(numEntries));
         }
     }
 

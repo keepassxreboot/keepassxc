@@ -947,9 +947,9 @@ Entry* Entry::clone(CloneFlags flags) const
     if (flags & CloneResetTimeInfo) {
         QDateTime now = Clock::currentDateTimeUtc();
         entry->m_data.timeInfo.setCreationTime(now);
-        entry->m_data.timeInfo.setLastModificationTime(now);
         entry->m_data.timeInfo.setLastAccessTime(now);
         entry->m_data.timeInfo.setLocationChanged(now);
+        // preserve LastModificationTime
     }
 
     if (flags & CloneRenameTitle) {
@@ -1267,11 +1267,7 @@ void Entry::setGroup(Group* group, bool trackPrevious)
             m_group->database()->addDeletedObject(m_uuid);
 
             // copy custom icon to the new database
-            if (!iconUuid().isNull() && group->database() && m_group->database()->metadata()->hasCustomIcon(iconUuid())
-                && !group->database()->metadata()->hasCustomIcon(iconUuid())) {
-                group->database()->metadata()->addCustomIcon(iconUuid(),
-                                                             m_group->database()->metadata()->customIcon(iconUuid()));
-            }
+            group->database()->metadata()->copyCustomIcon(iconUuid(), m_group->database()->metadata());
         } else if (trackPrevious && m_group->database() && group != m_group) {
             setPreviousParentGroup(m_group);
         }
