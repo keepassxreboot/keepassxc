@@ -1487,7 +1487,11 @@ QUuid Entry::previousParentGroupUuid() const
 
 void Entry::setPreviousParentGroupUuid(const QUuid& uuid)
 {
+    // prevent set from changing the LastModificationTime
+    bool prevUpdateTimeinfo = m_updateTimeinfo;
+    m_updateTimeinfo = false;
     set(m_data.previousParentGroupUuid, uuid);
+    m_updateTimeinfo = prevUpdateTimeinfo;
 }
 
 void Entry::setPreviousParentGroup(const Group* group)
