@@ -289,7 +289,7 @@ bool GroupModel::dropMimeData(const QMimeData* data,
                 }
                 // TODO: unable to handle complex moves until the Merger interface supports single group/entry merging.
                 if (complexMove) {
-                    showErrorMessage(tr("Move Error: (sub-)group(s) and/or entry(s) already present in the other database"));
+                    showErrorMessage(tr("Move Error: (sub-)group(s) and/or entry(s) already present in this database"));
                     return true;
                 }
 
@@ -371,7 +371,7 @@ bool GroupModel::dropMimeData(const QMimeData* data,
         }
 
         if (numEntriesNotMoved) {            
-            showErrorMessage(tr("Move Error: %1 of %2 entry(s) already present in the other database").arg(numEntriesNotMoved).arg(numEntries));
+            showErrorMessage(tr("Move Error: %1 of %2 entry(s) already present in this database").arg(numEntriesNotMoved).arg(numEntries));
         }
     }
 
