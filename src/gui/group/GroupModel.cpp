@@ -300,11 +300,11 @@ bool GroupModel::dropMimeData(const QMimeData* data,
         }
 
         if (action == Qt::MoveAction) {
-            // remove the original group if it moved a clone
+            // delete the original group when moving a clone
             if (group != dragGroup) {
                 QList<DeletedObject> delObjects(sourceDb->deletedObjects());
                 delete dragGroup;
-                // prevent group, sub-group(s) & entry(s) from ending up on the deleted object list
+                // prevent group(s)/entry(s) from ending up on the deleted object list by restoring the previous list.
                 sourceDb->setDeletedObjects(delObjects);
             }
         } else { // Action == Qt::CopyAction
@@ -356,11 +356,11 @@ bool GroupModel::dropMimeData(const QMimeData* data,
             }
 
             if (action == Qt::MoveAction) {
-                // remove the original entry if it moved a clone
+                // delete the original entry when moving a clone
                 if (entry != dragEntry) {
                     QList<DeletedObject> delObjects(sourceDb->deletedObjects());
                     delete dragEntry;
-                    // prevent entry from ending up on the deleted object list
+                    // prevent entry from ending up on the deleted object list by restoring the previous list.
                     sourceDb->setDeletedObjects(delObjects);
                 }
             } else { // Action == Qt::CopyAction
