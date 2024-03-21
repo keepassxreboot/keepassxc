@@ -223,18 +223,16 @@ Entry* Group::lastTopVisibleEntry() const
 bool Group::isRecycled() const
 {
     auto group = this;
-    if (!group->database()) {
+    if (!group->database() || !group->m_db->metadata()) {
         return false;
     }
 
     do {
-        if (group->m_parent && group->m_db->metadata()) {
-            if (group->m_parent == group->m_db->metadata()->recycleBin()) {
-                return true;
-            }
+        if (group == group->m_db->metadata()->recycleBin()) {
+            return true;
         }
         group = group->m_parent;
-    } while (group && group->m_parent && group->m_parent != group->m_db->rootGroup());
+    } while (group);
 
     return false;
 }

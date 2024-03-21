@@ -1,7 +1,7 @@
 /*
- *  Copyright (C) 2013 Francois Ferrand
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
- *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2013 Francois Ferrand
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -143,6 +143,16 @@ bool BrowserSettings::noMigrationPrompt()
 void BrowserSettings::setNoMigrationPrompt(bool prompt)
 {
     config()->set(Config::Browser_NoMigrationPrompt, prompt);
+}
+
+bool BrowserSettings::allowLocalhostWithPasskeys()
+{
+    return config()->get(Config::Browser_AllowLocalhostWithPasskeys).toBool();
+}
+
+void BrowserSettings::setAllowLocalhostWithPasskeys(bool enabled)
+{
+    config()->set(Config::Browser_AllowLocalhostWithPasskeys, enabled);
 }
 
 bool BrowserSettings::useCustomProxy()

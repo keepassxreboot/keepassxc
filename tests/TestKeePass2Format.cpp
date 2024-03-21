@@ -576,7 +576,9 @@ void TestKeePass2Format::testKdbxKeyChange()
     buffer.seek(0);
     QSharedPointer<Database> db(new Database());
     db->changeKdf(fastKdf(KeePass2::uuidToKdf(m_kdbxSourceDb->kdf()->uuid())));
-    db->setRootGroup(m_kdbxSourceDb->rootGroup()->clone(Entry::CloneNoFlags, Group::CloneIncludeEntries));
+    auto oldGroup =
+        db->setRootGroup(m_kdbxSourceDb->rootGroup()->clone(Entry::CloneNoFlags, Group::CloneIncludeEntries));
+    delete oldGroup;
 
     db->setKey(key1);
     writeKdbx(&buffer, db.data(), hasError, errorString);

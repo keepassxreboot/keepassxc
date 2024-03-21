@@ -18,6 +18,8 @@
 #ifndef KEEPASSX_TotpExportSettingsDialog_H
 #define KEEPASSX_TotpExportSettingsDialog_H
 
+#include <QDialog>
+
 #include "core/Database.h"
 #include "gui/DatabaseWidget.h"
 

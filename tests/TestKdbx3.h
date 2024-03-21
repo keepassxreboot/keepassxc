@@ -30,6 +30,7 @@ private slots:
     void testProtectedStrings();
     void testBrokenHeaderHash();
     void testFormat300();
+    void testAttachmentIndexStability();
 
 protected:
     void initTestCaseImpl() override;

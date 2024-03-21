@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,8 +27,6 @@
 
 #define ID_BYTES 32
 #define HASH_BYTES 32
-#define DEFAULT_TIMEOUT 300000
-#define DEFAULT_DISCOURAGED_TIMEOUT 120000
 #define RSA_BITS 2048
 #define RSA_EXPONENT 65537
 
@@ -59,10 +57,10 @@ struct PublicKeyCredential
     QByteArray key;
 };
 
-struct PrivateKey
+struct AttestationKeyPair
 {
-    QByteArray cborEncoded;
-    QByteArray pem;
+    QByteArray cborEncodedPublicKey;
+    QByteArray privateKeyPem;
 };
 
 // Predefined variables used for testing the class
@@ -82,19 +80,21 @@ public:
     ~BrowserPasskeys() = default;
     static BrowserPasskeys* instance();
 
-    PublicKeyCredential buildRegisterPublicKeyCredential(const QJsonObject& publicKeyCredentialOptions,
-                                                         const QString& origin,
+    PublicKeyCredential buildRegisterPublicKeyCredential(const QJsonObject& credentialCreationOptions,
                                                          const TestingVariables& predefinedVariables = {});
-    QJsonObject buildGetPublicKeyCredential(const QJsonObject& publicKeyCredentialRequestOptions,
-                                            const QString& origin,
+    QJsonObject buildGetPublicKeyCredential(const QJsonObject& assertionOptions,
                                             const QString& credentialId,
                                             const QString& userHandle,
                                             const QString& privateKeyPem);
-    bool isUserVerificationValid(const QString& userVerification) const;
-    int getTimeout(const QString& userVerification, int timeout) const;
-    QStringList getAllowedCredentialsFromPublicKey(const QJsonObject& publicKey) const;
 
     static const QString AAGUID;
+
+    static const QString ATTACHMENT_CROSS_PLATFORM;
+    static const QString ATTACHMENT_PLATFORM;
+    static const QString AUTHENTICATOR_TRANSPORT;
+    static const bool SUPPORT_RESIDENT_KEYS;
+    static const bool SUPPORT_USER_VERIFICATION;
+
     static const QString PUBLIC_KEY;
     static const QString REQUIREMENT_DISCOURAGED;
     static const QString REQUIREMENT_PREFERRED;
@@ -104,28 +104,27 @@ public:
     static const QString PASSKEYS_ATTESTATION_NONE;
 
     static const QString KPEX_PASSKEY_USERNAME;
-    static const QString KPEX_PASSKEY_GENERATED_USER_ID;
+    static const QString KPEX_PASSKEY_CREDENTIAL_ID;
     static const QString KPEX_PASSKEY_PRIVATE_KEY_PEM;
     static const QString KPEX_PASSKEY_RELYING_PARTY;
     static const QString KPEX_PASSKEY_USER_HANDLE;
 
 private:
-    QJsonObject buildClientDataJson(const QJsonObject& publicKey, const QString& origin, bool get);
-    PrivateKey buildAttestationObject(const QJsonObject& publicKey,
+    QByteArray buildAttestationObject(const QJsonObject& credentialCreationOptions,
                                       const QString& extensions,
                                       const QString& credentialId,
+                                      const QByteArray& cborEncodedPublicKey,
                                       const TestingVariables& predefinedVariables = {});
-    QByteArray buildGetAttestationObject(const QJsonObject& publicKey);
-    PrivateKey buildCredentialPrivateKey(int alg,
-                                         const QString& predefinedFirst = QString(),
-                                         const QString& predefinedSecond = QString());
+    QByteArray buildAuthenticatorData(const QJsonObject& publicKey);
+    AttestationKeyPair buildCredentialPrivateKey(int alg,
+                                                 const QString& predefinedFirst = QString(),
+                                                 const QString& predefinedSecond = QString());
     QByteArray
     buildSignature(const QByteArray& authenticatorData, const QByteArray& clientData, const QString& privateKeyPem);
-    QByteArray buildExtensionData(QJsonObject& extensionObject) const;
     QJsonObject parseAuthData(const QByteArray& authData) const;
     QJsonObject parseFlags(const QByteArray& flags) const;
     char setFlagsFromJson(const QJsonObject& flags) const;
-    WebAuthnAlgorithms getAlgorithmFromPublicKey(const QJsonObject& publicKey) const;
+    WebAuthnAlgorithms getAlgorithmFromPublicKey(const QJsonObject& credentialCreationOptions) const;
     QByteArray bigIntToQByteArray(Botan::BigInt& bigInt) const;
 
     Q_DISABLE_COPY(BrowserPasskeys);

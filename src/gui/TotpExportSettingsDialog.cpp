@@ -25,6 +25,7 @@
 
 #include <QBoxLayout>
 #include <QBuffer>
+#include <QDialogButtonBox>
 #include <QLabel>
 #include <QMessageBox>
 #include <QPushButton>

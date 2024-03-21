@@ -29,6 +29,8 @@ include::topics/PasswordGenerator.adoc[tags=*]
 
 include::topics/BrowserPlugin.adoc[tags=*]
 
+include::topics/Passkeys.adoc[tags=*]
+
 include::topics/AutoType.adoc[tags=*]
 
 include::topics/KeeShare.adoc[tags=*]

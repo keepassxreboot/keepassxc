@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -91,7 +91,7 @@ void PasskeyExporter::exportSelectedEntry(const Entry* entry, const QString& fol
     passkeyObject["relyingParty"] = entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_RELYING_PARTY);
     passkeyObject["url"] = entry->url();
     passkeyObject["username"] = entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_USERNAME);
-    passkeyObject["credentialId"] = entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_GENERATED_USER_ID);
+    passkeyObject["credentialId"] = entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_CREDENTIAL_ID);
     passkeyObject["userHandle"] = entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_USER_HANDLE);
     passkeyObject["privateKey"] = entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_PRIVATE_KEY_PEM);
 

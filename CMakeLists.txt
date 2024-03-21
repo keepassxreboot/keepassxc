@@ -14,7 +14,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-cmake_minimum_required(VERSION 3.3.0)
+cmake_minimum_required(VERSION 3.10.0)
 
 project(KeePassXC)
 set(APP_ID "org.keepassxc.${PROJECT_NAME}")
@@ -567,9 +567,18 @@ if(ZLIB_VERSION_STRING VERSION_LESS "1.2.0")
 endif()
 include_directories(SYSTEM ${ZLIB_INCLUDE_DIR})
 
+# Find Minizip
+find_package(Minizip REQUIRED)
+
 if(WITH_XC_YUBIKEY)
     find_package(PCSC REQUIRED)
     include_directories(SYSTEM ${PCSC_INCLUDE_DIRS})
+
+    if(UNIX AND NOT APPLE)
+        find_library(LIBUSB_LIBRARIES NAMES usb-1.0 REQUIRED)
+        find_path(LIBUSB_INCLUDE_DIR NAMES libusb.h PATH_SUFFIXES "libusb-1.0" "libusb" REQUIRED)
+        include_directories(SYSTEM ${LIBUSB_INCLUDE_DIR})
+    endif()
 endif()
 
 if(UNIX)

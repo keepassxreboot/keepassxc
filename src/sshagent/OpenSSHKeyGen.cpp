@@ -65,7 +65,7 @@ namespace OpenSSHKeyGen
             BinaryStream privateStream(&privateData);
             bigIntToStream(rsaKey.get_n(), privateStream, 1);
             bigIntToStream(rsaKey.get_e(), privateStream);
-            bigIntToStream(rsaKey.get_d(), privateStream);
+            bigIntToStream(rsaKey.get_d(), privateStream, 1);
             bigIntToStream(rsaKey.get_c(), privateStream, 1);
             bigIntToStream(rsaKey.get_p(), privateStream, 1);
             bigIntToStream(rsaKey.get_q(), privateStream, 1);

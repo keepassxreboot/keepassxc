@@ -1,0 +1,81 @@
+{
+  "name": "keepassxc",
+  "version-string": "2.8.0",
+  "builtin-baseline": "2a6371b01420d8820d158b4707e79931feba27aa",
+  "dependencies": [
+    {
+      "name": "argon2",
+      "version>=": "20190702"
+    },
+    {
+      "name": "botan",
+      "version>=": "3.1.1"
+    },
+    {
+      "name": "minizip",
+      "version>=": "1.3"
+    },
+    {
+      "name": "libqrencode",
+      "version>=": "4.1.1"
+    },
+    {
+      "name": "libusb",
+      "version>=": "1.0.26.11791",
+      "platform": "linux | freebsd"
+    },
+    {
+      "name": "libxi",
+      "version>=": "1.8",
+      "platform": "linux | freebsd"
+    },
+    {
+      "name": "libxtst",
+      "version>=": "1.2.4",
+      "platform": "linux | freebsd"
+    },
+    {
+      "name": "qt5",
+      "version>=": "5.15.11"
+    },
+    {
+      "name": "qt5-imageformats",
+      "version>=": "5.15.11"
+    },
+    {
+      "name": "qt5-macextras",
+      "version>=": "5.15.11",
+      "platform": "osx"
+    },
+    {
+      "name": "qt5-svg",
+      "version>=": "5.15.11"
+    },
+    {
+      "name": "qt5-tools",
+      "version>=": "5.15.11"
+    },
+    {
+      "name": "qt5-translations",
+      "version>=": "5.15.11"
+    },
+    {
+      "name": "qt5-wayland",
+      "version>=": "5.15.11",
+      "platform": "linux | freebsd"
+    },
+    {
+      "name": "qt5-x11extras",
+      "version>=": "5.15.11",
+      "platform": "linux | freebsd"
+    },
+    {
+      "name": "readline",
+      "version>=": "0#5"
+    },
+    {
+      "name": "zlib",
+      "version>=": "1.3"
+    }
+  ]
+}

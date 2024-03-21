@@ -1,0 +1,180 @@
+{
+  "folders": [
+    {
+      "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+      "name": "My Folder"
+    },
+    {
+      "id": "yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy",
+      "name": "Second Folder"
+    }
+  ],
+  "items": [
+    {
+      "id": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa",
+      "organizationId": null,
+      "folderId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+      "type": 2,
+      "name": "My Secure Note",
+      "notes": "1st line of secure note\n2nd line of secure note\n3rd line of secure note",
+      "favorite": false,
+      "fields": [
+        {
+          "name": "Text Field",
+          "value": "text-field-value",
+          "type": 0
+        },
+        {
+          "name": "Hidden Field",
+          "value": "hidden-field-value",
+          "type": 1
+        },
+        {
+          "name": "Boolean Field",
+          "value": "false",
+          "type": 2
+        }
+      ],
+      "secureNote": {
+        "type": 0
+      },
+      "collectionIds": [
+        null
+      ]
+    },
+    {
+      "id": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb",
+      "organizationId": null,
+      "folderId": "yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy",
+      "type": 3,
+      "name": "Card Name",
+      "notes": "1st line of note text\n2nd line of note text",
+      "favorite": false,
+      "fields": [
+        {
+          "name": "Text Field",
+          "value": "text-field-value",
+          "type": 0
+        },
+        {
+          "name": "Hidden Field",
+          "value": "hidden-field-value",
+          "type": 1
+        },
+        {
+          "name": "Boolean Field",
+          "value": "false",
+          "type": 2
+        }
+      ],
+      "card": {
+        "cardholderName": "Jane Doe",
+        "brand": "Visa",
+        "number": "1234567891011121",
+        "expMonth": "10",
+        "expYear": "2021",
+        "code": "123"
+      },
+      "collectionIds": [
+        null
+      ]
+    },
+    {
+      "id": "cccccccc-cccc-cccc-cccc-cccccccccccc",
+      "organizationId": null,
+      "folderId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+      "type": 4,
+      "name": "My Identity",
+      "notes": "1st line of a note\n2nd line of a note",
+      "favorite": false,
+      "fields": [
+        {
+          "name": "Text Field",
+          "value": "text-field-value",
+          "type": 0
+        },
+        {
+          "name": "Hidden Field",
+          "value": "hidden-field-value",
+          "type": 1
+        },
+        {
+          "name": "Boolean Field",
+          "value": "true",
+          "type": 2
+        }
+      ],
+      "identity": {
+        "title": "Mrs",
+        "firstName": "Jane",
+        "middleName": "A",
+        "lastName": "Doe",
+        "address1": " 1 North Calle Cesar Chavez ",
+        "address2": null,
+        "address3": null,
+        "city": "Santa Barbara",
+        "state": "CA",
+        "postalCode": "93103",
+        "country": "United States ",
+        "company": "My Employer",
+        "email": "myemail@gmail.com",
+        "phone": "123-123-1234",
+        "ssn": "123-12-1234",
+        "username": "myusername",
+        "passportNumber": "123456789",
+        "licenseNumber": "123456789"
+      },
+      "collectionIds": [
+        null
+      ]
+    },
+    {
+      "id": "dddddddd-dddd-dddd-dddd-dddddddddddd",
+      "organizationId": null,
+      "folderId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+      "type": 1,
+      "name": "Login Name",
+      "notes": "1st line of note text\n2nd Line of note text",
+      "favorite": true,
+      "fields": [
+        {
+          "name": "Text Field",
+          "value": "text-field-value",
+          "type": 0
+        },
+        {
+          "name": "Hidden Field",
+          "value": "hidden-field-value",
+          "type": 1
+        },
+        {
+          "name": "Boolean Field",
+          "value": "true",
+          "type": 2
+        }
+      ],
+      "login": {
+        "uris": [
+          {
+            "match": null,
+            "uri": "https://mail.google.com"
+          },
+          {
+            "match": null,
+            "uri": "https://google.com"
+          },
+          {
+            "match": null,
+            "uri": "https://gmail.com"
+          }
+        ],
+        "username": "myusername@gmail.com",
+        "password": "mypassword",
+        "totp": "otpauth://totp/Google:myusername%40gmail.com?secret=DFDFDEF%3D&period=30&digits=6&issuer=Google"
+      },
+      "collectionIds": [
+        null
+      ]
+    }
+  ]
+}

@@ -26,6 +26,7 @@ namespace Ui
     class EntryPreviewWidget;
 }
 
+class QTabWidget;
 class QTextEdit;
 
 class EntryPreviewWidget : public QWidget

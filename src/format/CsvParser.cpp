@@ -24,20 +24,13 @@
 #include "core/Tools.h"
 
 CsvParser::CsvParser()
-    : m_ch(0)
-    , m_comment('#')
-    , m_currCol(1)
-    , m_currRow(1)
+    : m_comment('#')
     , m_isBackslashSyntax(false)
-    , m_isEof(false)
     , m_isFileLoaded(false)
-    , m_isGood(true)
-    , m_lastPos(-1)
-    , m_maxCols(0)
     , m_qualifier('"')
     , m_separator(',')
-    , m_statusMsg("")
 {
+    reset();
     m_csv.setBuffer(&m_array);
     m_ts.setDevice(&m_csv);
     m_csv.open(QIODevice::ReadOnly);
@@ -105,10 +98,10 @@ void CsvParser::reset()
     m_isGood = true;
     m_lastPos = -1;
     m_maxCols = 0;
-    m_statusMsg = "";
+    m_statusMsg.clear();
     m_ts.seek(0);
     m_table.clear();
-    // the following are users' concern :)
+    // the following can be overridden by the user
     // m_comment = '#';
     // m_backslashSyntax = false;
     // m_comment = '#';
@@ -148,7 +141,7 @@ void CsvParser::parseRecord()
     do {
         parseField(row);
         getChar(m_ch);
-    } while (isSeparator(m_ch) && !m_isEof);
+    } while (m_ch == m_separator && !m_isEof);
 
     if (!m_isEof) {
         ungetChar();
@@ -168,7 +161,7 @@ void CsvParser::parseField(CsvRow& row)
 {
     QString field;
     peek(m_ch);
-    if (!isTerminator(m_ch)) {
+    if (m_ch != m_separator && m_ch != '\n' && m_ch != '\r') {
         if (isQualifier(m_ch)) {
             parseQuoted(field);
         } else {
@@ -182,7 +175,7 @@ void CsvParser::parseSimple(QString& s)
 {
     QChar c;
     getChar(c);
-    while ((isText(c)) && (!m_isEof)) {
+    while (c != '\n' && c != m_separator && !m_isEof) {
         s.append(c);
         getChar(c);
     }
@@ -215,7 +208,7 @@ void CsvParser::parseEscaped(QString& s)
 void CsvParser::parseEscapedText(QString& s)
 {
     getChar(m_ch);
-    while ((!isQualifier(m_ch)) && !m_isEof) {
+    while (!isQualifier(m_ch) && !m_isEof) {
         s.append(m_ch);
         getChar(m_ch);
     }
@@ -223,10 +216,9 @@ void CsvParser::parseEscapedText(QString& s)
 
 bool CsvParser::processEscapeMark(QString& s, QChar c)
 {
-    QChar buf;
-    peek(buf);
     QChar c2;
-    if (true == m_isBackslashSyntax) {
+    peek(c2);
+    if (m_isBackslashSyntax) {
         // escape-character syntax, e.g. \"
         if (c != '\\') {
             return false;
@@ -237,25 +229,24 @@ bool CsvParser::processEscapeMark(QString& s, QChar c)
             c2 = '\\';
             s.append('\\');
             return false;
-        } else {
-            s.append(c2);
-            return true;
         }
-    } else {
-        // double quote syntax, e.g. ""
-        if (!isQualifier(c)) {
-            return false;
-        }
-        peek(c2);
-        if (!m_isEof) { // not EOF, can read one char
-            if (isQualifier(c2)) {
-                s.append(c2);
-                getChar(c2);
-                return true;
-            }
-        }
+        s.append(c2);
+        return true;
+    }
+
+    // double quote syntax, e.g. ""
+    if (!isQualifier(c)) {
         return false;
     }
+    peek(c2);
+    if (!m_isEof) { // not EOF, can read one char
+        if (isQualifier(c2)) {
+            s.append(c2);
+            getChar(c2);
+            return true;
+        }
+    }
+    return false;
 }
 
 void CsvParser::fillColumns()
@@ -282,7 +273,7 @@ void CsvParser::skipLine()
 bool CsvParser::skipEndline()
 {
     getChar(m_ch);
-    return (m_ch == '\n');
+    return m_ch == '\n';
 }
 
 void CsvParser::getChar(QChar& c)
@@ -312,11 +303,10 @@ void CsvParser::peek(QChar& c)
 
 bool CsvParser::isQualifier(const QChar& c) const
 {
-    if (true == m_isBackslashSyntax && (c != m_qualifier)) {
-        return (c == '\\');
-    } else {
-        return (c == m_qualifier);
+    if (m_isBackslashSyntax && c != m_qualifier) {
+        return c == '\\';
     }
+    return c == m_qualifier;
 }
 
 bool CsvParser::isComment()
@@ -327,7 +317,7 @@ bool CsvParser::isComment()
 
     do {
         getChar(c2);
-    } while ((isSpace(c2) || isTab(c2)) && (!m_isEof));
+    } while ((c2 == ' ' || c2 == '\t') && !m_isEof);
 
     if (c2 == m_comment) {
         result = true;
@@ -336,45 +326,14 @@ bool CsvParser::isComment()
     return result;
 }
 
-bool CsvParser::isText(QChar c) const
-{
-    return !((isCRLF(c)) || (isSeparator(c)));
-}
-
 bool CsvParser::isEmptyRow(const CsvRow& row) const
 {
-    CsvRow::const_iterator it = row.constBegin();
-    for (; it != row.constEnd(); ++it) {
-        if (((*it) != "\n") && ((*it) != "")) {
+    for (auto it = row.constBegin(); it != row.constEnd(); ++it) {
+        if (*it != "\n" && *it != "") {
             return false;
         }
     }
     return true;
-}
-
-bool CsvParser::isCRLF(const QChar& c) const
-{
-    return (c == '\n');
-}
-
-bool CsvParser::isSpace(const QChar& c) const
-{
-    return (c == ' ');
-}
-
-bool CsvParser::isTab(const QChar& c) const
-{
-    return (c == '\t');
-}
-
-bool CsvParser::isSeparator(const QChar& c) const
-{
-    return (c == m_separator);
-}
-
-bool CsvParser::isTerminator(const QChar& c) const
-{
-    return (isSeparator(c) || (c == '\n') || (c == '\r'));
 }
 
 void CsvParser::setBackslashSyntax(bool set)
@@ -407,7 +366,7 @@ int CsvParser::getFileSize() const
     return m_csv.size();
 }
 
-const CsvTable CsvParser::getCsvTable() const
+CsvTable CsvParser::getCsvTable() const
 {
     return m_table;
 }
@@ -421,9 +380,8 @@ int CsvParser::getCsvCols() const
 {
     if (!m_table.isEmpty() && !m_table.at(0).isEmpty()) {
         return m_table.at(0).size();
-    } else {
-        return 0;
     }
+    return 0;
 }
 
 int CsvParser::getCsvRows() const

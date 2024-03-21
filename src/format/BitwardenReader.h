@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,20 +15,29 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_OPVAULTOPENWIDGET_H
-#define KEEPASSXC_OPVAULTOPENWIDGET_H
+#ifndef BITWARDEN_READER_H
+#define BITWARDEN_READER_H
 
-#include "gui/DatabaseOpenWidget.h"
+#include <QSharedPointer>
 
-class OpVaultOpenWidget : public DatabaseOpenWidget
+class Database;
+
+/*!
+ * Imports a Bitwarden vault in JSON format: https://bitwarden.com/help/encrypted-export/
+ */
+class BitwardenReader
 {
-    Q_OBJECT
-
 public:
-    explicit OpVaultOpenWidget(QWidget* parent = nullptr);
+    explicit BitwardenReader() = default;
+    ~BitwardenReader() = default;
 
-protected:
-    void openDatabase() override;
+    QSharedPointer<Database> convert(const QString& path, const QString& password = {});
+
+    bool hasError();
+    QString errorString();
+
+private:
+    QString m_error;
 };
 
-#endif // KEEPASSXC_OPVAULTOPENWIDGET_H
+#endif // BITWARDEN_READER_H

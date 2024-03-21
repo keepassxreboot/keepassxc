@@ -33,6 +33,7 @@ class PasswordWidget : public QWidget
 {
     Q_OBJECT
 
+    Q_PROPERTY(QString text READ text WRITE setText NOTIFY textChanged USER true)
 public:
     explicit PasswordWidget(QWidget* parent = nullptr);
     ~PasswordWidget() override;

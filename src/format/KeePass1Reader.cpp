@@ -18,6 +18,7 @@
 #include "KeePass1Reader.h"
 
 #include <QFile>
+#include <QFileInfo>
 #include <QTextCodec>
 
 #include "core/Endian.h"
@@ -273,6 +274,10 @@ KeePass1Reader::readDatabase(const QString& filename, const QString& password, c
     if (dbFile.error() != QFile::NoError) {
         raiseError(dbFile.errorString());
         return {};
+    }
+
+    if (db) {
+        db->metadata()->setName(QFileInfo(filename).completeBaseName());
     }
 
     return db;

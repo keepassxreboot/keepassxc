@@ -1,6 +1,6 @@
 /*
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2016 Lennart Glauer <mail@lennart-glauer.de>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -39,14 +39,6 @@
                                                                 object:nil];
 
         [NSApp addObserver:self forKeyPath:@"effectiveAppearance" options:NSKeyValueObservingOptionNew context:nil];
-
-        // Unfortunately, there is no notification for a wallpaper change, which affects
-        // the status bar colour on macOS Big Sur, but we can at least subscribe to this.
-        [[NSDistributedNotificationCenter defaultCenter] addObserver:self
-                                                            selector:@selector(interfaceThemeChanged:)
-                                                                name:@"AppleColorPreferencesChangedNotification"
-                                                              object:nil];
-
     }
     return self;
 }

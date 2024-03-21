@@ -19,35 +19,29 @@
 #ifndef KEEPASSX_DATABASEWIDGET_H
 #define KEEPASSX_DATABASEWIDGET_H
 
-#include <QFileSystemWatcher>
-#include <QListView>
+#include <QBuffer>
 #include <QStackedWidget>
 
-#include "DatabaseOpenDialog.h"
-#include "config-keepassx.h"
+#include "core/Database.h"
+#include "core/Group.h"
+#include "core/Metadata.h"
 #include "gui/MessageWidget.h"
-#include "gui/csvImport/CsvImportWizard.h"
 #include "gui/entry/EntryModel.h"
 
+class DatabaseOpenDialog;
 class DatabaseOpenWidget;
-class KeePass1OpenWidget;
-class OpVaultOpenWidget;
 class DatabaseSettingsDialog;
 class ReportsDialog;
-class Database;
 class FileWatcher;
 class EditEntryWidget;
 class EditGroupWidget;
-class Entry;
 class EntryView;
 class EntrySearcher;
-class Group;
 class GroupView;
 class QFile;
 class QMenu;
 class QSplitter;
 class QLabel;
-class MessageWidget;
 class EntryPreviewWidget;
 class TagView;
 class ElidedLabel;
@@ -67,7 +61,6 @@ public:
     enum class Mode
     {
         None,
-        ImportMode,
         ViewMode,
         EditMode,
         LockedMode
@@ -103,6 +96,10 @@ public:
     bool isRecycleBinSelected() const;
     int numberOfSelectedEntries() const;
     int currentEntryIndex() const;
+
+    QString displayName() const;
+    QString displayFileName() const;
+    QString displayFilePath() const;
 
     QStringList customEntryAttributes() const;
     bool isEditWidgetModified() const;
@@ -219,11 +216,7 @@ public slots:
     void switchToOpenDatabase();
     void switchToOpenDatabase(const QString& filePath);
     void switchToOpenDatabase(const QString& filePath, const QString& password, const QString& keyFile);
-    void switchToCsvImport(const QString& filePath);
     void performUnlockDatabase(const QString& password, const QString& keyfile = {});
-    void csvImportFinished(bool accepted);
-    void switchToImportKeepass1(const QString& filePath);
-    void switchToImportOpVault(const QString& fileName);
     void emptyRecycleBin();
 
     // Search related slots
@@ -288,15 +281,12 @@ private:
     QPointer<QSplitter> m_previewSplitter;
     QPointer<QLabel> m_searchingLabel;
     QPointer<ElidedLabel> m_shareLabel;
-    QPointer<CsvImportWizard> m_csvImportWizard;
     QPointer<EditEntryWidget> m_editEntryWidget;
     QPointer<EditGroupWidget> m_editGroupWidget;
     QPointer<EditEntryWidget> m_historyEditEntryWidget;
     QPointer<ReportsDialog> m_reportsDialog;
     QPointer<DatabaseSettingsDialog> m_databaseSettingDialog;
     QPointer<DatabaseOpenWidget> m_databaseOpenWidget;
-    QPointer<KeePass1OpenWidget> m_keepass1OpenWidget;
-    QPointer<OpVaultOpenWidget> m_opVaultOpenWidget;
     QPointer<GroupView> m_groupView;
     QPointer<TagView> m_tagView;
     QPointer<EntryView> m_entryView;

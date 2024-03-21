@@ -21,7 +21,6 @@
 #include "core/Tools.h"
 #include "crypto/Random.h"
 #include "thirdparty/ykcore/ykcore.h"
-#include "thirdparty/ykcore/ykdef.h"
 #include "thirdparty/ykcore/ykstatus.h"
 
 namespace
@@ -82,7 +81,6 @@ namespace
 } // namespace
 
 YubiKeyInterfaceUSB::YubiKeyInterfaceUSB()
-    : YubiKeyInterface()
 {
     if (!yk_init()) {
         qDebug("YubiKey: Failed to initialize USB interface.");
@@ -107,15 +105,14 @@ YubiKeyInterfaceUSB* YubiKeyInterfaceUSB::instance()
     return m_instance;
 }
 
-bool YubiKeyInterfaceUSB::findValidKeys()
+YubiKey::KeyMap YubiKeyInterfaceUSB::findValidKeys()
 {
     m_error.clear();
     if (!isInitialized()) {
-        return false;
+        return {};
     }
 
-    // Remove all known keys
-    m_foundKeys.clear();
+    YubiKey::KeyMap keyMap;
 
     // Try to detect up to 4 connected hardware keys
     for (int i = 0; i < MAX_KEYS; ++i) {
@@ -133,13 +130,12 @@ bool YubiKeyInterfaceUSB::findValidKeys()
             yk_get_key_vid_pid(yk_key, &vid, &pid);
 
             QString name = m_pid_names.value(pid, tr("Unknown"));
-            if (vid == 0x1d50) {
-                name = QStringLiteral("OnlyKey");
+            if (vid == ONLYKEY_VID) {
+                name = QStringLiteral("OnlyKey %ver");
             }
-            name += QString(" v%1.%2.%3")
-                        .arg(QString::number(ykds_version_major(st)),
-                             QString::number(ykds_version_minor(st)),
-                             QString::number(ykds_version_build(st)));
+            if (name.contains("%ver")) {
+                name = name.replace("%ver", QString::number(ykds_version_major(st)));
+            }
 
             bool wouldBlock;
             for (int slot = 1; slot <= 2; ++slot) {
@@ -151,25 +147,23 @@ bool YubiKeyInterfaceUSB::findValidKeys()
                 // Don't actually challenge a YubiKey Neo or below, they always require button press
                 // if it is enabled for the slot resulting in failed detection
                 if (pid <= NEO_OTP_U2F_CCID_PID) {
-                    auto display = tr("(USB) %1 [%2] Configured Slot - %3")
+                    auto display = tr("%1 [%2] - Slot %3", "YubiKey NEO display fields")
                                        .arg(name, QString::number(serial), QString::number(slot));
-                    m_foundKeys.insert(serial, {slot, display});
+                    keyMap.insert({serial, slot}, display);
                 } else if (performTestChallenge(yk_key, slot, &wouldBlock)) {
                     auto display =
-                        tr("(USB) %1 [%2] Challenge-Response - Slot %3 - %4")
+                        tr("%1 [%2] - Slot %3, %4", "YubiKey display fields")
                             .arg(name,
                                  QString::number(serial),
                                  QString::number(slot),
                                  wouldBlock ? tr("Press", "USB Challenge-Response Key interaction request")
                                             : tr("Passive", "USB Challenge-Response Key no interaction required"));
-                    m_foundKeys.insert(serial, {slot, display});
+                    keyMap.insert({serial, slot}, display);
                 }
             }
 
             ykds_free(st);
             closeKey(yk_key);
-
-            Tools::wait(100);
         } else if (yk_errno == YK_ENOKEY) {
             // No more keys are connected
             break;
@@ -180,7 +174,7 @@ bool YubiKeyInterfaceUSB::findValidKeys()
         }
     }
 
-    return !m_foundKeys.isEmpty();
+    return keyMap;
 }
 
 /**
@@ -198,6 +192,7 @@ bool YubiKeyInterfaceUSB::testChallenge(YubiKeySlot slot, bool* wouldBlock)
     if (yk_key) {
         ret = performTestChallenge(yk_key, slot.second, wouldBlock);
     }
+    closeKey(yk_key);
     return ret;
 }
 
@@ -233,18 +228,11 @@ YubiKeyInterfaceUSB::challenge(YubiKeySlot slot, const QByteArray& challenge, Bo
         return YubiKey::ChallengeResult::YCR_ERROR;
     }
 
-    // Try to grab a lock for 1 second, fail out if not possible
-    if (!m_mutex.tryLock(1000)) {
-        m_error = tr("Hardware key is currently in use.");
-        return YubiKey::ChallengeResult::YCR_ERROR;
-    }
-
     auto* yk_key = openKeySerial(slot.first);
     if (!yk_key) {
         // Key with specified serial number is not connected
         m_error =
             tr("Could not find hardware key with serial number %1. Please plug it in to continue.").arg(slot.first);
-        m_mutex.unlock();
         return YubiKey::ChallengeResult::YCR_ERROR;
     }
 
@@ -253,7 +241,6 @@ YubiKeyInterfaceUSB::challenge(YubiKeySlot slot, const QByteArray& challenge, Bo
 
     closeKey(yk_key);
     emit challengeCompleted();
-    m_mutex.unlock();
 
     return ret;
 }

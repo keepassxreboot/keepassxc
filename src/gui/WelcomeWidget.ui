@@ -71,6 +71,22 @@
     </layout>
    </item>
    <item>
+    <spacer name="verticalSpacer_3">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
     <widget class="QLabel" name="welcomeLabel">
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -104,39 +120,25 @@
     </spacer>
    </item>
    <item>
-    <widget class="QPushButton" name="buttonNewDatabase">
-     <property name="text">
-      <string>Create new database</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QPushButton" name="buttonOpenDatabase">
-     <property name="text">
-      <string>Open existing database</string>
-     </property>
-    </widget>
-   </item>
-   <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <widget class="QPushButton" name="buttonImportKeePass1">
+      <widget class="QPushButton" name="buttonNewDatabase">
        <property name="text">
-        <string>Import from KeePass 1</string>
+        <string>Create Database</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="buttonImportOpVault">
+      <widget class="QPushButton" name="buttonOpenDatabase">
        <property name="text">
-        <string>Import from 1Password</string>
+        <string>Open Database</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="buttonImportCSV">
+      <widget class="QPushButton" name="buttonImport">
        <property name="text">
-        <string>Import from CSV</string>
+        <string>Import File</string>
        </property>
       </widget>
      </item>
@@ -148,12 +150,12 @@
       <enum>Qt::Vertical</enum>
      </property>
      <property name="sizeType">
-      <enum>QSizePolicy::Minimum</enum>
+      <enum>QSizePolicy::Fixed</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
        <width>0</width>
-       <height>5</height>
+       <height>20</height>
       </size>
      </property>
     </spacer>
@@ -193,11 +195,7 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>buttonNewDatabase</tabstop>
-  <tabstop>buttonOpenDatabase</tabstop>
-  <tabstop>buttonImportKeePass1</tabstop>
-  <tabstop>buttonImportOpVault</tabstop>
-  <tabstop>buttonImportCSV</tabstop>
+  <tabstop>buttonImport</tabstop>
   <tabstop>recentListWidget</tabstop>
  </tabstops>
  <resources/>

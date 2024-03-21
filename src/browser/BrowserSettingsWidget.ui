@@ -311,6 +311,16 @@
         </widget>
        </item>
        <item>
+        <widget class="QCheckBox" name="allowLocalhostWithPasskeys">
+         <property name="toolTip">
+          <string>Allows using insecure http://localhost with Passkeys for testing purposes.</string>
+         </property>
+         <property name="text">
+          <string>Allow using localhost with Passkeys</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QCheckBox" name="noMigrationPrompt">
          <property name="toolTip">
           <string>Don't display the popup suggesting migration of legacy KeePassHTTP settings.</string>

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 #include "BrowserMessageBuilder.h"
 #ifdef WITH_XC_BROWSER_PASSKEYS
 #include "BrowserPasskeys.h"
+#include "PasskeyUtils.h"
 #endif
 #include "BrowserSettings.h"
 #include "core/Global.h"
@@ -541,7 +542,7 @@ QJsonObject BrowserAction::handlePasskeysGet(const QJsonObject& json, const QStr
     }
 
     const auto origin = browserRequest.getString("origin");
-    if (!origin.startsWith("https://")) {
+    if (!passkeyUtils()->isOriginAllowedWithLocalhost(browserSettings()->allowLocalhostWithPasskeys(), origin)) {
         return getErrorReply(action, ERROR_PASSKEYS_INVALID_URL_PROVIDED);
     }
 
@@ -574,8 +575,8 @@ QJsonObject BrowserAction::handlePasskeysRegister(const QJsonObject& json, const
     }
 
     const auto origin = browserRequest.getString("origin");
-    if (!origin.startsWith("https://")) {
-        return getErrorReply(action, ERROR_KEEPASS_ACTION_CANCELLED_OR_DENIED);
+    if (!passkeyUtils()->isOriginAllowedWithLocalhost(browserSettings()->allowLocalhostWithPasskeys(), origin)) {
+        return getErrorReply(action, ERROR_PASSKEYS_INVALID_URL_PROVIDED);
     }
 
     const auto keyList = getConnectionKeys(browserRequest);

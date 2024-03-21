@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
  *  Copyright (C) 2013 Francois Ferrand
  *
@@ -88,9 +88,10 @@ public:
     QSharedPointer<Database> selectedDatabase();
     QList<QSharedPointer<Database>> getOpenDatabases();
 #ifdef WITH_XC_BROWSER_PASSKEYS
-    QJsonObject
-    showPasskeysRegisterPrompt(const QJsonObject& publicKey, const QString& origin, const StringPairList& keyList);
-    QJsonObject showPasskeysAuthenticationPrompt(const QJsonObject& publicKey,
+    QJsonObject showPasskeysRegisterPrompt(const QJsonObject& publicKeyOptions,
+                                           const QString& origin,
+                                           const StringPairList& keyList);
+    QJsonObject showPasskeysAuthenticationPrompt(const QJsonObject& publicKeyOptions,
                                                  const QString& origin,
                                                  const StringPairList& keyList);
     void addPasskeyToGroup(Group* group,
@@ -177,18 +178,15 @@ private:
     Access checkAccess(const Entry* entry, const QString& siteHost, const QString& formHost, const QString& realm);
     Group* getDefaultEntryGroup(const QSharedPointer<Database>& selectedDb = {});
     int sortPriority(const QStringList& urls, const QString& siteUrl, const QString& formUrl);
-    bool schemeFound(const QString& url);
     bool removeFirstDomain(QString& hostname);
     bool
     shouldIncludeEntry(Entry* entry, const QString& url, const QString& submitUrl, const bool omitWwwSubdomain = false);
 #ifdef WITH_XC_BROWSER_PASSKEYS
     QList<Entry*> getPasskeyEntries(const QString& rpId, const StringPairList& keyList);
     QList<Entry*>
-    getPasskeyAllowedEntries(const QJsonObject& publicKey, const QString& rpId, const StringPairList& keyList);
-    QJsonObject
-    getPublicKeyCredentialFromEntry(const Entry* entry, const QJsonObject& publicKey, const QString& origin);
+    getPasskeyAllowedEntries(const QJsonObject& assertionOptions, const QString& rpId, const StringPairList& keyList);
     bool isPasskeyCredentialExcluded(const QJsonArray& excludeCredentials,
-                                     const QString& origin,
+                                     const QString& rpId,
                                      const StringPairList& keyList);
     QJsonObject getPasskeyError(int errorCode) const;
 #endif

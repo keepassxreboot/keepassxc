@@ -24,6 +24,7 @@
 
 #include "TagsEdit.h"
 #include "gui/MainWindow.h"
+#include <QAbstractItemView>
 #include <QApplication>
 #include <QClipboard>
 #include <QCompleter>

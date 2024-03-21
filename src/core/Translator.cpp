@@ -25,25 +25,22 @@
 #include <QRegularExpression>
 #include <QTranslator>
 
-#include "config-keepassx.h"
-#include "core/Config.h"
 #include "core/Resources.h"
 
 /**
  * Install all KeePassXC and Qt translators.
  */
-void Translator::installTranslators()
+void Translator::installTranslators(const QString& uiLanguage)
 {
     QStringList languages;
-    QString languageSetting = config()->get(Config::GUI_Language).toString();
-    if (languageSetting.isEmpty() || languageSetting == "system") {
+    if (uiLanguage.isEmpty() || uiLanguage == "system") {
         // NOTE: this is a workaround for the terrible way Qt loads languages
         // using the QLocale::uiLanguages() approach. Instead, we search each
         // language and all country variants in order before moving to the next.
         QLocale locale;
         languages = locale.uiLanguages();
     } else {
-        languages << languageSetting;
+        languages << uiLanguage;
     }
 
     // Always try to load english last

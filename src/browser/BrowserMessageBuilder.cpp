@@ -140,8 +140,22 @@ QString BrowserMessageBuilder::getErrorMessage(const int errorCode) const
         return QObject::tr("Empty public key");
     case ERROR_PASSKEYS_INVALID_URL_PROVIDED:
         return QObject::tr("Invalid URL provided");
-    case ERROR_PASSKEYS_RESIDENT_KEYS_NOT_SUPPORTED:
-        return QObject::tr("Resident Keys are not supported");
+    case ERROR_PASSKEYS_ORIGIN_NOT_ALLOWED:
+        return QObject::tr("Origin is empty or not allowed");
+    case ERROR_PASSKEYS_DOMAIN_IS_NOT_VALID:
+        return QObject::tr("Effective domain is not a valid domain");
+    case ERROR_PASSKEYS_DOMAIN_RPID_MISMATCH:
+        return QObject::tr("Origin and RP ID do not match");
+    case ERROR_PASSKEYS_NO_SUPPORTED_ALGORITHMS:
+        return QObject::tr("No supported algorithms were provided");
+    case ERROR_PASSKEYS_WAIT_FOR_LIFETIMER:
+        return QObject::tr("Wait for timer to expire");
+    case ERROR_PASSKEYS_UNKNOWN_ERROR:
+        return QObject::tr("Unknown Passkeys error");
+    case ERROR_PASSKEYS_INVALID_CHALLENGE:
+        return QObject::tr("Challenge is shorter than required minimum length");
+    case ERROR_PASSKEYS_INVALID_USER_ID:
+        return QObject::tr("user.id does not match the required length");
     default:
         return QObject::tr("Unknown error");
     }

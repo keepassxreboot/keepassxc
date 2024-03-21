@@ -47,7 +47,7 @@ public:
     int getCsvRows() const;
     int getCsvCols() const;
     QString getStatus() const;
-    const CsvTable getCsvTable() const;
+    CsvTable getCsvTable() const;
 
 protected:
     CsvTable m_table;
@@ -74,15 +74,9 @@ private:
     void ungetChar();
     void peek(QChar& c);
     void fillColumns();
-    bool isTerminator(const QChar& c) const;
-    bool isSeparator(const QChar& c) const;
     bool isQualifier(const QChar& c) const;
     bool processEscapeMark(QString& s, QChar c);
-    bool isText(QChar c) const;
     bool isComment();
-    bool isCRLF(const QChar& c) const;
-    bool isSpace(const QChar& c) const;
-    bool isTab(const QChar& c) const;
     bool isEmptyRow(const CsvRow& row) const;
     bool parseFile();
     void parseRecord();

@@ -52,7 +52,7 @@ class YubiKeyInterfacePCSC : public YubiKeyInterface
 public:
     static YubiKeyInterfacePCSC* instance();
 
-    bool findValidKeys() override;
+    YubiKey::KeyMap findValidKeys() override;
 
     YubiKey::ChallengeResult
     challenge(YubiKeySlot slot, const QByteArray& challenge, Botan::secure_vector<char>& response) override;
@@ -71,7 +71,7 @@ private:
                                               Botan::secure_vector<char>& response) override;
     bool performTestChallenge(void* key, int slot, bool* wouldBlock) override;
 
-    SCARDCONTEXT m_sc_context;
+    SCARDCONTEXT m_sc_context{};
 
     // This list contains all the AID (application identifier) codes for the Yubikey HMAC-SHA1 applet
     //  and also for compatible third-party ones. They will be tried one by one.
@@ -86,16 +86,13 @@ private:
     const QHash<QByteArray, QString> m_atr_names = {
         // Yubico Yubikeys
         {QByteArrayLiteral("\x3B\x8C\x80\x01\x59\x75\x62\x69\x6B\x65\x79\x4E\x45\x4F\x72\x33\x58"), "YubiKey NEO"},
-        {QByteArrayLiteral("\x3B\x8C\x80\x01\x59\x75\x62\x69\x6B\x65\x79\x4E\x45\x4F\x72\xFF\x94"),
-         "YubiKey NEO via NFC"},
-        {QByteArrayLiteral("\x3B\x8D\x80\x01\x80\x73\xC0\x21\xC0\x57\x59\x75\x62\x69\x4B\x65\x79\xF9"),
-         "YubiKey 5 NFC via NFC"},
-        {QByteArrayLiteral("\x3B\x8D\x80\x01\x80\x73\xC0\x21\xC0\x57\x59\x75\x62\x69\x4B\x65\xFF\x7F"),
-         "YubiKey 5 NFC via ACR122U"},
+        {QByteArrayLiteral("\x3B\x8C\x80\x01\x59\x75\x62\x69\x6B\x65\x79\x4E\x45\x4F\x72\xFF\x94"), "YubiKey NEO"},
+        {QByteArrayLiteral("\x3B\x8D\x80\x01\x80\x73\xC0\x21\xC0\x57\x59\x75\x62\x69\x4B\x65\x79\xF9"), "YubiKey 5"},
+        {QByteArrayLiteral("\x3B\x8D\x80\x01\x80\x73\xC0\x21\xC0\x57\x59\x75\x62\x69\x4B\x65\xFF\x7F"), "YubiKey 5"},
         {QByteArrayLiteral("\x3B\xF8\x13\x00\x00\x81\x31\xFE\x15\x59\x75\x62\x69\x6B\x65\x79\x34\xD4"),
-         "YubiKey 4 OTP+CCID"},
+         "YubiKey 4 - OTP+CCID"},
         {QByteArrayLiteral("\x3B\xF9\x18\x00\xFF\x81\x31\xFE\x45\x50\x56\x5F\x4A\x33\x41\x30\x34\x30\x40"),
-         "YubiKey NEO OTP+U2F+CCID (PKI)"},
+         "YubiKey NEO - OTP+U2F+CCID (PKI)"},
         {QByteArrayLiteral("\x3B\xFA\x13\x00\x00\x81\x31\xFE\x15\x59\x75\x62\x69\x6B\x65\x79\x4E\x45\x4F\xA6"),
          "YubiKey NEO"},
         {QByteArrayLiteral("\x3B\xFC\x13\x00\x00\x81\x31\xFE\x15\x59\x75\x62\x69\x6B\x65\x79\x4E\x45\x4F\x72\x33\xE1"),
@@ -104,7 +101,7 @@ private:
          "YubiKey NEO"},
         {QByteArrayLiteral(
              "\x3B\xFD\x13\x00\x00\x81\x31\xFE\x15\x80\x73\xC0\x21\xC0\x57\x59\x75\x62\x69\x4B\x65\x79\x40"),
-         "YubiKey 5 NFC (PKI)"},
+         "YubiKey 5 (PKI)"},
         {QByteArrayLiteral(
              "\x3B\xFD\x13\x00\x00\x81\x31\xFE\x45\x41\x37\x30\x30\x36\x43\x47\x20\x32\x34\x32\x52\x31\xD6"),
          "YubiKey NEO (token)"},

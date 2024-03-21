@@ -16,21 +16,30 @@
  */
 
 #include "YubiKeyEditWidget.h"
+
 #include "ui_KeyComponentWidget.h"
 #include "ui_YubiKeyEditWidget.h"
 
-#include "config-keepassx.h"
 #include "core/AsyncTask.h"
+#include "gui/Icons.h"
 #include "keys/ChallengeResponseKey.h"
 #include "keys/CompositeKey.h"
+#ifdef WITH_XC_YUBIKEY
+#include "keys/drivers/YubiKeyInterfaceUSB.h"
+#endif
 
 YubiKeyEditWidget::YubiKeyEditWidget(QWidget* parent)
     : KeyComponentWidget(parent)
     , m_compUi(new Ui::YubiKeyEditWidget())
+#ifdef WITH_XC_YUBIKEY
+    , m_deviceListener(new DeviceListener(this))
+#endif
 {
     initComponent();
-
+#ifdef WITH_XC_YUBIKEY
     connect(YubiKey::instance(), SIGNAL(detectComplete(bool)), SLOT(hardwareKeyResponse(bool)), Qt::QueuedConnection);
+    connect(m_deviceListener, &DeviceListener::devicePlugged, this, [&](bool, void*, void*) { pollYubikey(); });
+#endif
 }
 
 YubiKeyEditWidget::~YubiKeyEditWidget() = default;
@@ -74,12 +83,38 @@ QWidget* YubiKeyEditWidget::componentEditWidget()
     m_compUi->yubikeyProgress->setSizePolicy(sp);
     m_compUi->yubikeyProgress->setVisible(false);
 
-#ifdef WITH_XC_YUBIKEY
-    connect(m_compUi->buttonRedetectYubikey, SIGNAL(clicked()), SLOT(pollYubikey()));
-    pollYubikey();
-#endif
-
     return m_compEditWidget;
+}
+
+void YubiKeyEditWidget::showEvent(QShowEvent* event)
+{
+    KeyComponentWidget::showEvent(event);
+
+#ifdef WITH_XC_YUBIKEY
+#ifdef Q_OS_WIN
+    m_deviceListener->registerHotplugCallback(true,
+                                              true,
+                                              YubiKeyInterfaceUSB::YUBICO_USB_VID,
+                                              DeviceListener::MATCH_ANY,
+                                              &DeviceListenerWin::DEV_CLS_KEYBOARD);
+    m_deviceListener->registerHotplugCallback(true,
+                                              true,
+                                              YubiKeyInterfaceUSB::ONLYKEY_USB_VID,
+                                              DeviceListener::MATCH_ANY,
+                                              &DeviceListenerWin::DEV_CLS_KEYBOARD);
+#else
+    m_deviceListener->registerHotplugCallback(true, true, YubiKeyInterfaceUSB::YUBICO_USB_VID);
+    m_deviceListener->registerHotplugCallback(true, true, YubiKeyInterfaceUSB::ONLYKEY_USB_VID);
+#endif
+#endif
+}
+
+void YubiKeyEditWidget::hideEvent(QHideEvent* event)
+{
+    KeyComponentWidget::hideEvent(event);
+#ifdef WITH_XC_YUBIKEY
+    m_deviceListener->deregisterAllHotplugCallbacks();
+#endif
 }
 
 void YubiKeyEditWidget::initComponentEditWidget(QWidget* widget)
@@ -87,6 +122,9 @@ void YubiKeyEditWidget::initComponentEditWidget(QWidget* widget)
     Q_UNUSED(widget);
     Q_ASSERT(m_compEditWidget);
     m_compUi->comboChallengeResponse->setFocus();
+    m_compUi->refreshHardwareKeys->setIcon(icons()->icon("yubikey-refresh", true));
+    connect(m_compUi->refreshHardwareKeys, &QPushButton::clicked, this, &YubiKeyEditWidget::pollYubikey);
+    pollYubikey();
 }
 
 void YubiKeyEditWidget::initComponent()
@@ -116,9 +154,9 @@ void YubiKeyEditWidget::pollYubikey()
     m_isDetected = false;
     m_compUi->comboChallengeResponse->clear();
     m_compUi->comboChallengeResponse->addItem(tr("Detecting hardware keys…"));
-    m_compUi->buttonRedetectYubikey->setEnabled(false);
     m_compUi->comboChallengeResponse->setEnabled(false);
     m_compUi->yubikeyProgress->setVisible(true);
+    m_compUi->refreshHardwareKeys->setEnabled(false);
 
     YubiKey::instance()->findValidKeysAsync();
 #endif
@@ -131,20 +169,22 @@ void YubiKeyEditWidget::hardwareKeyResponse(bool found)
     }
 
     m_compUi->comboChallengeResponse->clear();
-    m_compUi->buttonRedetectYubikey->setEnabled(true);
-    m_compUi->yubikeyProgress->setVisible(false);
+    m_compUi->refreshHardwareKeys->setEnabled(true);
 
     if (!found) {
+        m_compUi->yubikeyProgress->setVisible(false);
         m_compUi->comboChallengeResponse->addItem(tr("No hardware keys detected"));
         m_isDetected = false;
         return;
     }
 
-    for (auto& slot : YubiKey::instance()->foundKeys()) {
+    const auto foundKeys = YubiKey::instance()->foundKeys();
+    for (auto i = foundKeys.cbegin(); i != foundKeys.cend(); ++i) {
         // add detected YubiKey to combo box and encode blocking mode in LSB, slot number in second LSB
-        m_compUi->comboChallengeResponse->addItem(YubiKey::instance()->getDisplayName(slot), QVariant::fromValue(slot));
+        m_compUi->comboChallengeResponse->addItem(i.value(), QVariant::fromValue(i.key()));
     }
 
     m_isDetected = true;
+    m_compUi->yubikeyProgress->setVisible(false);
     m_compUi->comboChallengeResponse->setEnabled(true);
 }

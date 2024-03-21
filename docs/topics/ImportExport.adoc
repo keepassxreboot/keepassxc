@@ -6,53 +6,66 @@ include::.sharedheader[]
 == Importing External Databases
 KeePassXC allows you to import external databases from the following options:
 
-* Comma-Separated Values (CSV) file
-* 1Password OPVault
-* KeePass 1 Database
+* Comma Separated Values (.csv)
+* 1Password Export (.1pux)
+* 1Password Vault (.opvault)
+* Bitwarden (.json)
+* KeePass 1 Database (.kdb)
+
+To import any of these files, start KeePassXC and either click the `Import File` button on the welcome screen or use the menu Database > Import... to launch the Import Wizard.
+
+.Import Wizard
+image::import_wizard.png[]
+
+For each of the import options, you will be prompted to select the file to import and then provide credentials to unlock the file, if necessary. You can then choose to import the file into a new database or into an existing database that is already unlocked in KeePassXC.
 
 === Importing CSV File
-If you have been saving your URLs, usernames, passwords, and so on in a CSV file, you can migrate all that information from the CSV file to KeePassXC and start using KeePassXC to maintain your data.
+WARNING: A CSV file is unencrypted and you should securely delete this file after successfully importing it into KeePassXC.
 
-To open the CSV file, perform the following steps:
+1. Follow the steps above and click `Continue`. The CSV import wizard will appear.
 
-1. Open KeePassXC.
-
-2. Click Import from CSV button on the welcome screen or use the menu Database > Import > CSV File.
-
-3. Navigate to the location of your CSV file on your computer and open the file. The new database wizard will appear. Follow the steps of creating a new database in Chapter 1.
-
-4. After saving your new database file, the CSV import wizard will appear. On this dialog you can choose the various options for properly importing the data. You may need to select the _First line has field names_ checkbox before starting. Analyze the output in the preview at the bottom to determine the correct import settings.
+2. On this dialog you can choose the various options for properly importing the data. Analyze the output in the preview at the bottom to determine the correct import settings. You may need to re-map the column associations to match the data in your CSV file.
 +
 .CSV Import Wizard
 image::csv_import.png[]
 
-Your CSV file gets imported to KeePassXC and the data is converted to the KeePassXC format for further usage and maintenance. The new database file is saved on to your computer with the default `.kdbx` extension.
+3. Click `Done` to complete the import. If you chose to create a new database, the New Database dialog will appear. Otherwise your entries will be nested under the group you chose for the existing database.
+
+=== Importing 1Password Export
+WARNING: A 1Password Export file is unencrypted and you should securely delete this file after successfully importing it into KeePassXC.
+
+1. Open the Import Wizard as shown above. Select the 1Password Export option.
+
+2. Click `Continue` to unlock and preview the import. Click `Done` to complete the import.
 
 === Importing 1Password OPVault
+NOTE: You must have 1Password version 7 or 8 to export your data to an OPVault. If you are using a newer version of 1Password, you should use the 1Password Export (1PUX) format instead.
+
 Save your 1Password Vault locally to create an OPVault directory. Please see 1Password instructions on how to do this. Once an OPVault is created, perform the following steps:
 
-1. Open KeePassXC.
+1. Open the Import Wizard as shown above. Select the 1Password Vault option.
 
-2. Use the menu Database > Import > 1Password Vault. Select the OPVault to import.
+2. Enter the password for your vault and click `Continue` to unlock and preview the import. Click `Done` to complete the import.
 
-3. Enter the password for your OPVault to unlock and import.
+=== Importing Bitwarden
+WARNING: A Bitwarden Export file may be unencrypted and you should securely delete this file after successfully importing it into KeePassXC.
+
+1. Open the Import Wizard as shown above. Select the Bitwarden option.
+
+2. Optionally provide a password to decrypt the Bitwarden export file. You should only need to do this if you have chosen the encrypted json export option within Bitwarden.
+
+3. Click `Continue` to unlock and preview the import. Click `Done` to complete the import.
 
 === Importing KeePass 1 Database
-KeePass 1 database is an older format of the database created using legacy version of KeePass. KeePassXC lets your import this older format of the database and you can seamlessly start using this database in your new KeePassXC application.
+KeePass 1 database is an older format of the database created using a legacy version of KeePass. KeePassXC lets your import this older format of the database and you can seamlessly start using this database in your new KeePassXC application.
 
 To import a KeePass 1 database file in KeePassXC, perform the following steps:
 
-1. Open KeePassXC.
+1. Open the Import Wizard as shown above. Select the KeePass1 Database option.
 
-2. Click Import from KeePass 1 button on the welcome screen or use the menu Database > Import > KeePass 1 Database.
+2. Enter the password for your database and optionally provide a key file if it was configured for your KeePass1 database.
 
-3. Navigate to the location of your legacy KeePass 1 database file (`.kdb`) on your computer and open the file. You are prompted for the password and the Key file for your `.kdb` file.
-
-4. Enter the password for your old `.kdb` file and click *OK*. You are prompted to provide a name for the new database format that KeePassXC recognizes.
-
-5. Provide a name for the new database format, select a folder on your computer to save the file, and click Save.
-
-6. The data from the `.kdb` file gets imported and converted to the new format, which is compatible with KeePassXC. You can now start using the new database file (`.kdbx`) in KeePassXC.
+3. Click `Continue` to unlock and preview the import. Click `Done` to complete the import.
 
 == Exporting Databases
 KeePassXC supports multiple ways to export your database for transfer to another program or to print out and archive.

@@ -20,7 +20,6 @@
 #define KEEPASSX_YUBIKEY_INTERFACE_H
 
 #include "YubiKey.h"
-
 #include <QMultiMap>
 
 /**
@@ -32,11 +31,8 @@ class YubiKeyInterface : public QObject
 
 public:
     bool isInitialized() const;
-    QMultiMap<unsigned int, QPair<int, QString>> foundKeys();
-    bool hasFoundKey(YubiKeySlot slot);
-    QString getDisplayName(YubiKeySlot slot);
 
-    virtual bool findValidKeys() = 0;
+    virtual YubiKey::KeyMap findValidKeys() = 0;
     virtual YubiKey::ChallengeResult
     challenge(YubiKeySlot slot, const QByteArray& challenge, Botan::secure_vector<char>& response) = 0;
     virtual bool testChallenge(YubiKeySlot slot, bool* wouldBlock) = 0;
@@ -60,7 +56,6 @@ signals:
 
 protected:
     explicit YubiKeyInterface();
-
     virtual YubiKey::ChallengeResult performChallenge(void* key,
                                                       int slot,
                                                       bool mayBlock,
@@ -68,10 +63,6 @@ protected:
                                                       Botan::secure_vector<char>& response) = 0;
     virtual bool performTestChallenge(void* key, int slot, bool* wouldBlock) = 0;
 
-    QMultiMap<unsigned int, QPair<int, QString>> m_foundKeys;
-
-    QMutex m_mutex;
-    QTimer m_interactionTimer;
     bool m_initialized = false;
     QString m_error;
 

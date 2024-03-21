@@ -64,9 +64,7 @@ public slots:
     DatabaseWidget* newDatabase();
     void openDatabase();
     void mergeDatabase();
-    void importCsv();
-    void importKeePass1Database();
-    void importOpVaultDatabase();
+    DatabaseWidget* importFile();
     bool saveDatabase(int index = -1);
     bool saveDatabaseAs(int index = -1);
     bool saveDatabaseBackup(int index = -1);

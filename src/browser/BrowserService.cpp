@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
  *  Copyright (C) 2013 Francois Ferrand
  *
@@ -31,7 +31,9 @@
 #include "gui/osutils/OSUtils.h"
 #ifdef WITH_XC_BROWSER_PASSKEYS
 #include "BrowserPasskeys.h"
+#include "BrowserPasskeysClient.h"
 #include "BrowserPasskeysConfirmationDialog.h"
+#include "PasskeyUtils.h"
 #endif
 #ifdef Q_OS_MACOS
 #include "gui/osutils/macutils/MacUtils.h"
@@ -611,7 +613,7 @@ QString BrowserService::getKey(const QString& id)
 
 #ifdef WITH_XC_BROWSER_PASSKEYS
 // Passkey registration
-QJsonObject BrowserService::showPasskeysRegisterPrompt(const QJsonObject& publicKey,
+QJsonObject BrowserService::showPasskeysRegisterPrompt(const QJsonObject& publicKeyOptions,
                                                        const QString& origin,
                                                        const StringPairList& keyList)
 {
@@ -620,39 +622,23 @@ QJsonObject BrowserService::showPasskeysRegisterPrompt(const QJsonObject& public
         return getPasskeyError(ERROR_KEEPASS_DATABASE_NOT_OPENED);
     }
 
-    const auto userJson = publicKey["user"].toObject();
-    const auto username = userJson["name"].toString();
-    const auto userHandle = userJson["id"].toString();
-    const auto rpId = publicKey["rp"]["id"].toString();
-    const auto rpName = publicKey["rp"]["name"].toString();
-    const auto timeoutValue = publicKey["timeout"].toInt();
-    const auto excludeCredentials = publicKey["excludeCredentials"].toArray();
-    const auto attestation = publicKey["attestation"].toString();
-
-    // Check Resident Key requirement
-    const auto authenticatorSelection = publicKey["authenticatorSelection"].toObject();
-    const auto requireResidentKey = authenticatorSelection["requireResidentKey"].toBool();
-    if (requireResidentKey) {
-        return getPasskeyError(ERROR_PASSKEYS_RESIDENT_KEYS_NOT_SUPPORTED);
+    QJsonObject credentialCreationOptions;
+    const auto pkOptionsResult =
+        browserPasskeysClient()->getCredentialCreationOptions(publicKeyOptions, origin, &credentialCreationOptions);
+    if (pkOptionsResult > 0 || credentialCreationOptions.isEmpty()) {
+        return getPasskeyError(pkOptionsResult);
     }
 
-    // Only support these two for now
-    if (attestation != BrowserPasskeys::PASSKEYS_ATTESTATION_NONE
-        && attestation != BrowserPasskeys::PASSKEYS_ATTESTATION_DIRECT) {
-        return getPasskeyError(ERROR_PASSKEYS_ATTESTATION_NOT_SUPPORTED);
-    }
+    const auto excludeCredentials = credentialCreationOptions["excludeCredentials"].toArray();
+    const auto rpId = publicKeyOptions["rp"]["id"].toString();
+    const auto timeout = publicKeyOptions["timeout"].toInt();
+    const auto username = credentialCreationOptions["user"].toObject()["name"].toString();
 
-    const auto userVerification = authenticatorSelection["userVerification"].toString();
-    if (!browserPasskeys()->isUserVerificationValid(userVerification)) {
-        return getPasskeyError(ERROR_PASSKEYS_INVALID_USER_VERIFICATION);
-    }
-
-    if (!excludeCredentials.isEmpty() && isPasskeyCredentialExcluded(excludeCredentials, origin, keyList)) {
+    // Parse excludeCredentialDescriptorList
+    if (!excludeCredentials.isEmpty() && isPasskeyCredentialExcluded(excludeCredentials, rpId, keyList)) {
         return getPasskeyError(ERROR_PASSKEYS_CREDENTIAL_IS_EXCLUDED);
     }
-
     const auto existingEntries = getPasskeyEntries(rpId, keyList);
-    const auto timeout = browserPasskeys()->getTimeout(userVerification, timeoutValue);
 
     raiseWindow();
     BrowserPasskeysConfirmationDialog confirmDialog;
@@ -660,7 +646,16 @@ QJsonObject BrowserService::showPasskeysRegisterPrompt(const QJsonObject& public
 
     auto dialogResult = confirmDialog.exec();
     if (dialogResult == QDialog::Accepted) {
-        const auto publicKeyCredentials = browserPasskeys()->buildRegisterPublicKeyCredential(publicKey, origin);
+        const auto publicKeyCredentials =
+            browserPasskeys()->buildRegisterPublicKeyCredential(credentialCreationOptions);
+        if (publicKeyCredentials.credentialId.isEmpty() || publicKeyCredentials.key.isEmpty()
+            || publicKeyCredentials.response.isEmpty()) {
+            return getPasskeyError(ERROR_PASSKEYS_UNKNOWN_ERROR);
+        }
+
+        const auto rpName = publicKeyOptions["rp"]["name"].toString();
+        const auto user = credentialCreationOptions["user"].toObject();
+        const auto userId = user["id"].toString();
 
         if (confirmDialog.isPasskeyUpdated()) {
             addPasskeyToEntry(confirmDialog.getSelectedEntry(),
@@ -668,7 +663,7 @@ QJsonObject BrowserService::showPasskeysRegisterPrompt(const QJsonObject& public
                               rpName,
                               username,
                               publicKeyCredentials.credentialId,
-                              userHandle,
+                              userId,
                               publicKeyCredentials.key);
         } else {
             addPasskeyToGroup(nullptr,
@@ -677,7 +672,7 @@ QJsonObject BrowserService::showPasskeysRegisterPrompt(const QJsonObject& public
                               rpName,
                               username,
                               publicKeyCredentials.credentialId,
-                              userHandle,
+                              userId,
                               publicKeyCredentials.key);
         }
 
@@ -690,7 +685,7 @@ QJsonObject BrowserService::showPasskeysRegisterPrompt(const QJsonObject& public
 }
 
 // Passkey authentication
-QJsonObject BrowserService::showPasskeysAuthenticationPrompt(const QJsonObject& publicKey,
+QJsonObject BrowserService::showPasskeysAuthenticationPrompt(const QJsonObject& publicKeyOptions,
                                                              const QString& origin,
                                                              const StringPairList& keyList)
 {
@@ -699,24 +694,21 @@ QJsonObject BrowserService::showPasskeysAuthenticationPrompt(const QJsonObject& 
         return getPasskeyError(ERROR_KEEPASS_DATABASE_NOT_OPENED);
     }
 
-    const auto userVerification = publicKey["userVerification"].toString();
-    if (!browserPasskeys()->isUserVerificationValid(userVerification)) {
-        return getPasskeyError(ERROR_PASSKEYS_INVALID_USER_VERIFICATION);
+    QJsonObject assertionOptions;
+    const auto assertionResult =
+        browserPasskeysClient()->getAssertionOptions(publicKeyOptions, origin, &assertionOptions);
+    if (assertionResult > 0 || assertionOptions.isEmpty()) {
+        return getPasskeyError(assertionResult);
     }
 
-    // Parse "allowCredentials"
-    const auto rpId = publicKey["rpId"].toString();
-    const auto entries = getPasskeyAllowedEntries(publicKey, rpId, keyList);
+    // Get allowed entries from RP ID
+    const auto rpId = assertionOptions["rpId"].toString();
+    const auto entries = getPasskeyAllowedEntries(assertionOptions, rpId, keyList);
     if (entries.isEmpty()) {
         return getPasskeyError(ERROR_KEEPASS_NO_LOGINS_FOUND);
     }
 
-    // With single entry, if no verification is needed, return directly
-    if (entries.count() == 1 && userVerification == BrowserPasskeys::REQUIREMENT_DISCOURAGED) {
-        return getPublicKeyCredentialFromEntry(entries.first(), publicKey, origin);
-    }
-
-    const auto timeout = browserPasskeys()->getTimeout(userVerification, publicKey["timeout"].toInt());
+    const auto timeout = publicKeyOptions["timeout"].toInt();
 
     raiseWindow();
     BrowserPasskeysConfirmationDialog confirmDialog;
@@ -725,7 +717,21 @@ QJsonObject BrowserService::showPasskeysAuthenticationPrompt(const QJsonObject& 
     if (dialogResult == QDialog::Accepted) {
         hideWindow();
         const auto selectedEntry = confirmDialog.getSelectedEntry();
-        return getPublicKeyCredentialFromEntry(selectedEntry, publicKey, origin);
+        if (!selectedEntry) {
+            return getPasskeyError(ERROR_PASSKEYS_UNKNOWN_ERROR);
+        }
+
+        const auto privateKeyPem = selectedEntry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_PRIVATE_KEY_PEM);
+        const auto credentialId = selectedEntry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_CREDENTIAL_ID);
+        const auto userHandle = selectedEntry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_USER_HANDLE);
+
+        auto publicKeyCredential =
+            browserPasskeys()->buildGetPublicKeyCredential(assertionOptions, credentialId, userHandle, privateKeyPem);
+        if (publicKeyCredential.isEmpty()) {
+            return getPasskeyError(ERROR_PASSKEYS_UNKNOWN_ERROR);
+        }
+
+        return publicKeyCredential;
     }
 
     hideWindow();
@@ -797,10 +803,11 @@ void BrowserService::addPasskeyToEntry(Entry* entry,
     entry->beginUpdate();
 
     entry->attributes()->set(BrowserPasskeys::KPEX_PASSKEY_USERNAME, username);
-    entry->attributes()->set(BrowserPasskeys::KPEX_PASSKEY_GENERATED_USER_ID, credentialId, true);
+    entry->attributes()->set(BrowserPasskeys::KPEX_PASSKEY_CREDENTIAL_ID, credentialId, true);
     entry->attributes()->set(BrowserPasskeys::KPEX_PASSKEY_PRIVATE_KEY_PEM, privateKey, true);
     entry->attributes()->set(BrowserPasskeys::KPEX_PASSKEY_RELYING_PARTY, rpId);
     entry->attributes()->set(BrowserPasskeys::KPEX_PASSKEY_USER_HANDLE, userHandle, true);
+    entry->addTag(tr("Passkey"));
 
     entry->endUpdate();
 }
@@ -1342,18 +1349,21 @@ QList<Entry*> BrowserService::getPasskeyEntries(const QString& rpId, const Strin
 }
 
 // Get all entries for the site that are allowed by the server
-QList<Entry*> BrowserService::getPasskeyAllowedEntries(const QJsonObject& publicKey,
+QList<Entry*> BrowserService::getPasskeyAllowedEntries(const QJsonObject& assertionOptions,
                                                        const QString& rpId,
                                                        const StringPairList& keyList)
 {
     QList<Entry*> entries;
-    const auto allowedCredentials = browserPasskeys()->getAllowedCredentialsFromPublicKey(publicKey);
+    const auto allowedCredentials = passkeyUtils()->getAllowedCredentialsFromAssertionOptions(assertionOptions);
+    if (!assertionOptions["allowCredentials"].toArray().isEmpty() && allowedCredentials.isEmpty()) {
+        return {};
+    }
 
     for (const auto& entry : getPasskeyEntries(rpId, keyList)) {
         // If allowedCredentials.isEmpty() check if entry contains an extra attribute for user handle.
         // If that is found, the entry should be allowed.
         // See: https://w3c.github.io/webauthn/#dom-authenticatorassertionresponse-userhandle
-        if (allowedCredentials.contains(entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_GENERATED_USER_ID))
+        if (allowedCredentials.contains(entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_CREDENTIAL_ID))
             || (allowedCredentials.isEmpty()
                 && entry->attributes()->hasKey(BrowserPasskeys::KPEX_PASSKEY_USER_HANDLE))) {
             entries << entry;
@@ -1363,18 +1373,9 @@ QList<Entry*> BrowserService::getPasskeyAllowedEntries(const QJsonObject& public
     return entries;
 }
 
-QJsonObject
-BrowserService::getPublicKeyCredentialFromEntry(const Entry* entry, const QJsonObject& publicKey, const QString& origin)
-{
-    const auto privateKeyPem = entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_PRIVATE_KEY_PEM);
-    const auto credentialId = entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_GENERATED_USER_ID);
-    const auto userHandle = entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_USER_HANDLE);
-    return browserPasskeys()->buildGetPublicKeyCredential(publicKey, origin, credentialId, userHandle, privateKeyPem);
-}
-
-// Checks if the same user ID already exists for the current site
+// Checks if the same user ID already exists for the current RP ID
 bool BrowserService::isPasskeyCredentialExcluded(const QJsonArray& excludeCredentials,
-                                                 const QString& origin,
+                                                 const QString& rpId,
                                                  const StringPairList& keyList)
 {
     QStringList allIds;
@@ -1382,9 +1383,9 @@ bool BrowserService::isPasskeyCredentialExcluded(const QJsonArray& excludeCreden
         allIds << cred["id"].toString();
     }
 
-    const auto passkeyEntries = getPasskeyEntries(origin, keyList);
+    const auto passkeyEntries = getPasskeyEntries(rpId, keyList);
     return std::any_of(passkeyEntries.begin(), passkeyEntries.end(), [&](const auto& entry) {
-        return allIds.contains(entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_GENERATED_USER_ID));
+        return allIds.contains(entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_CREDENTIAL_ID));
     });
 }
 

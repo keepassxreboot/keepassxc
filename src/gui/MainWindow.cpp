@@ -354,7 +354,7 @@ MainWindow::MainWindow()
     m_ui->actionLockAllDatabases->setIcon(icons()->icon("database-lock-all"));
     m_ui->actionQuit->setIcon(icons()->icon("application-exit"));
     m_ui->actionDatabaseMerge->setIcon(icons()->icon("database-merge"));
-    m_ui->menuImport->setIcon(icons()->icon("document-import"));
+    m_ui->actionImport->setIcon(icons()->icon("document-import"));
     m_ui->menuExport->setIcon(icons()->icon("document-export"));
 
     m_ui->actionEntryNew->setIcon(icons()->icon("entry-new"));
@@ -464,9 +464,7 @@ MainWindow::MainWindow()
     connect(m_ui->actionImportPasskey, SIGNAL(triggered()), m_ui->tabWidget, SLOT(importPasskey()));
     connect(m_ui->actionEntryImportPasskey, SIGNAL(triggered()), m_ui->tabWidget, SLOT(importPasskeyToEntry()));
 #endif
-    connect(m_ui->actionImportCsv, SIGNAL(triggered()), m_ui->tabWidget, SLOT(importCsv()));
-    connect(m_ui->actionImportKeePass1, SIGNAL(triggered()), m_ui->tabWidget, SLOT(importKeePass1Database()));
-    connect(m_ui->actionImportOpVault, SIGNAL(triggered()), m_ui->tabWidget, SLOT(importOpVaultDatabase()));
+    connect(m_ui->actionImport, SIGNAL(triggered()), m_ui->tabWidget, SLOT(importFile()));
     connect(m_ui->actionExportCsv, SIGNAL(triggered()), m_ui->tabWidget, SLOT(exportToCsv()));
     connect(m_ui->actionExportHtml, SIGNAL(triggered()), m_ui->tabWidget, SLOT(exportToHtml()));
     connect(m_ui->actionExportXML, SIGNAL(triggered()), m_ui->tabWidget, SLOT(exportToXML()));
@@ -532,9 +530,7 @@ MainWindow::MainWindow()
     connect(m_ui->welcomeWidget, SIGNAL(newDatabase()), SLOT(switchToNewDatabase()));
     connect(m_ui->welcomeWidget, SIGNAL(openDatabase()), SLOT(switchToOpenDatabase()));
     connect(m_ui->welcomeWidget, SIGNAL(openDatabaseFile(QString)), SLOT(switchToDatabaseFile(QString)));
-    connect(m_ui->welcomeWidget, SIGNAL(importKeePass1Database()), SLOT(switchToKeePass1Database()));
-    connect(m_ui->welcomeWidget, SIGNAL(importOpVaultDatabase()), SLOT(switchToOpVaultDatabase()));
-    connect(m_ui->welcomeWidget, SIGNAL(importCsv()), SLOT(switchToCsvImport()));
+    connect(m_ui->welcomeWidget, SIGNAL(importFile()), m_ui->tabWidget, SLOT(importFile()));
 
     connect(m_ui->actionAbout, SIGNAL(triggered()), SLOT(showAboutDialog()));
     connect(m_ui->actionDonate, SIGNAL(triggered()), SLOT(openDonateUrl()));
@@ -863,7 +859,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
     m_ui->actionDatabaseNew->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
     m_ui->actionDatabaseOpen->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
     m_ui->menuRecentDatabases->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
-    m_ui->menuImport->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
+    m_ui->actionImport->setEnabled(inDatabaseTabWidgetOrWelcomeWidget);
     m_ui->actionLockDatabase->setEnabled(m_ui->tabWidget->hasLockableDatabases());
     m_ui->actionLockDatabaseToolbar->setEnabled(m_ui->tabWidget->hasLockableDatabases());
     m_ui->actionLockAllDatabases->setEnabled(m_ui->tabWidget->hasLockableDatabases());
@@ -977,7 +973,6 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             break;
         }
         case DatabaseWidget::Mode::EditMode:
-        case DatabaseWidget::Mode::ImportMode:
         case DatabaseWidget::Mode::LockedMode: {
             // Enable select actions when editing an entry
             bool editEntryActive = dbWidget->isEntryEditActive();
@@ -1288,24 +1283,6 @@ void MainWindow::switchToOpenDatabase()
 void MainWindow::switchToDatabaseFile(const QString& file)
 {
     m_ui->tabWidget->addDatabaseTab(file);
-    switchToDatabases();
-}
-
-void MainWindow::switchToKeePass1Database()
-{
-    m_ui->tabWidget->importKeePass1Database();
-    switchToDatabases();
-}
-
-void MainWindow::switchToOpVaultDatabase()
-{
-    m_ui->tabWidget->importOpVaultDatabase();
-    switchToDatabases();
-}
-
-void MainWindow::switchToCsvImport()
-{
-    m_ui->tabWidget->importCsv();
     switchToDatabases();
 }
 

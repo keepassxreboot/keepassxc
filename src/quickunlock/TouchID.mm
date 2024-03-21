@@ -338,9 +338,7 @@ bool TouchID::isAvailable() const
    // note: we cannot cache the check results because the configuration
    // is dynamic in its nature. User can close the laptop lid or take off
    // the watch, thus making one (or both) of the authentication types unavailable.
-   const bool watchAvailable = isWatchAvailable();
-   const bool touchIdAvailable = isTouchIdAvailable();
-   return  watchAvailable || touchIdAvailable;
+   return  isWatchAvailable() || isTouchIdAvailable();
 }
 
 /**

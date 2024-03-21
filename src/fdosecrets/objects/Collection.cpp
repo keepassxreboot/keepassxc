@@ -408,7 +408,7 @@ namespace FdoSecrets
 
         auto newUuid = FdoSecrets::settings()->exposedGroup(m_backend->database());
         auto newGroup = m_backend->database()->rootGroup()->findGroupByUuid(newUuid);
-        if (!newGroup || inRecycleBin(newGroup)) {
+        if (!newGroup || newGroup->isRecycled()) {
             // no exposed group, delete self
             removeFromDBus();
             return;
@@ -444,7 +444,7 @@ namespace FdoSecrets
         });
         // Another possibility is the group being moved to recycle bin.
         connect(m_exposedGroup.data(), &Group::modified, this, [this]() {
-            if (inRecycleBin(m_exposedGroup)) {
+            if (m_exposedGroup->isRecycled()) {
                 // reset the exposed group to none
                 FdoSecrets::settings()->setExposedGroup(m_backend->database().data(), {});
             }
@@ -490,7 +490,7 @@ namespace FdoSecrets
 
     void Collection::onEntryAdded(Entry* entry, bool emitSignal)
     {
-        if (inRecycleBin(entry)) {
+        if (entry->isRecycled()) {
             return;
         }
 
@@ -524,7 +524,7 @@ namespace FdoSecrets
 
     void Collection::connectGroupSignalRecursive(Group* group)
     {
-        if (inRecycleBin(group)) {
+        if (group->isRecycled()) {
             return;
         }
 
@@ -627,7 +627,7 @@ namespace FdoSecrets
     bool Collection::doDeleteEntry(Entry* entry)
     {
         // Confirm entry removal before moving forward
-        bool permanent = inRecycleBin(entry) || !m_backend->database()->metadata()->recycleBinEnabled();
+        bool permanent = entry->isRecycled() || !m_backend->database()->metadata()->recycleBinEnabled();
         if (FdoSecrets::settings()->confirmDeleteItem()
             && !GuiTools::confirmDeleteEntries(m_backend, {entry}, permanent)) {
             return false;
@@ -662,29 +662,6 @@ namespace FdoSecrets
         group->setParent(parentGroup);
 
         return group;
-    }
-
-    bool Collection::inRecycleBin(Group* group) const
-    {
-        Q_ASSERT(m_backend);
-        Q_ASSERT(group);
-
-        if (!m_backend->database()->metadata()) {
-            return false;
-        }
-
-        auto recycleBin = m_backend->database()->metadata()->recycleBin();
-        if (!recycleBin) {
-            return false;
-        }
-
-        return group->uuid() == recycleBin->uuid() || group->isRecycled();
-    }
-
-    bool Collection::inRecycleBin(Entry* entry) const
-    {
-        Q_ASSERT(entry);
-        return inRecycleBin(entry->group());
     }
 
     Item* Collection::doNewItem(const DBusClientPtr& client, QString itemPath)

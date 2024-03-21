@@ -21,6 +21,7 @@
 #define KEEPASSX_APPLICATION_H
 
 #include <QApplication>
+#include <QString>
 #include <QtNetwork/qlocalserver.h>
 
 #if defined(Q_OS_WIN) || (defined(Q_OS_UNIX) && !defined(Q_OS_MACOS))
@@ -40,7 +41,7 @@ public:
     Application(int& argc, char** argv);
     ~Application() override;
 
-    static void bootstrap();
+    static void bootstrap(const QString& uiLanguage = "system");
 
     void applyTheme();
 

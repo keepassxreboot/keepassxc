@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -35,6 +35,7 @@ void TestUrlTools::testTopLevelDomain()
     QList<QPair<QString, QString>> tldUrls{
         {QString("https://another.example.co.uk"), QString("co.uk")},
         {QString("https://www.example.com"), QString("com")},
+        {QString("https://example.com"), QString("com")},
         {QString("https://github.com"), QString("com")},
         {QString("http://test.net"), QString("net")},
         {QString("http://so.many.subdomains.co.jp"), QString("co.jp")},
@@ -81,6 +82,9 @@ void TestUrlTools::testIsIpAddress()
     auto host6 = "fe80::1ff:fe23:4567:890a";
     auto host7 = "2001:20::1";
     auto host8 = "2001:0db8:85y3:0000:0000:8a2e:0370:7334"; // Not valid
+    auto host9 = "[::]";
+    auto host10 = "::";
+    auto host11 = "[2001:20::1]";
 
     QVERIFY(!urlTools()->isIpAddress(host1));
     QVERIFY(urlTools()->isIpAddress(host2));
@@ -90,6 +94,9 @@ void TestUrlTools::testIsIpAddress()
     QVERIFY(urlTools()->isIpAddress(host6));
     QVERIFY(urlTools()->isIpAddress(host7));
     QVERIFY(!urlTools()->isIpAddress(host8));
+    QVERIFY(urlTools()->isIpAddress(host9));
+    QVERIFY(urlTools()->isIpAddress(host10));
+    QVERIFY(urlTools()->isIpAddress(host11));
 }
 
 void TestUrlTools::testIsUrlIdentical()
@@ -117,6 +124,7 @@ void TestUrlTools::testIsUrlValid()
     urls["//github.com"] = true;
     urls["github.com/{}<>"] = false;
     urls["http:/example.com"] = false;
+    urls["http:/example.com."] = false;
     urls["cmd://C:/Toolchains/msys2/usr/bin/mintty \"ssh jon@192.168.0.1:22\""] = true;
     urls["file:///Users/testUser/Code/test.html"] = true;
     urls["{REF:A@I:46C9B1FFBD4ABC4BBB260C6190BAD20C} "] = true;
@@ -126,4 +134,11 @@ void TestUrlTools::testIsUrlValid()
         i.next();
         QCOMPARE(urlTools()->isUrlValid(i.key()), i.value());
     }
+}
+
+void TestUrlTools::testDomainHasIllegalCharacters()
+{
+    QVERIFY(!urlTools()->domainHasIllegalCharacters("example.com"));
+    QVERIFY(urlTools()->domainHasIllegalCharacters("domain has spaces.com"));
+    QVERIFY(urlTools()->domainHasIllegalCharacters("example#|.com"));
 }

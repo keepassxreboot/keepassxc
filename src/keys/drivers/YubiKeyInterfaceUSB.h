@@ -32,8 +32,10 @@ class YubiKeyInterfaceUSB : public YubiKeyInterface
 
 public:
     static YubiKeyInterfaceUSB* instance();
+    static constexpr int YUBICO_USB_VID = YUBICO_VID;
+    static constexpr int ONLYKEY_USB_VID = ONLYKEY_VID;
 
-    bool findValidKeys() override;
+    YubiKey::KeyMap findValidKeys() override;
 
     YubiKey::ChallengeResult
     challenge(YubiKeySlot slot, const QByteArray& challenge, Botan::secure_vector<char>& response) override;
@@ -53,22 +55,22 @@ private:
     bool performTestChallenge(void* key, int slot, bool* wouldBlock) override;
 
     // This map provides display names for the various USB PIDs of the Yubikeys
-    const QHash<int, QString> m_pid_names = {{YUBIKEY_PID, "YubiKey 1/2"},
-                                             {NEO_OTP_PID, "YubiKey NEO - OTP only"},
-                                             {NEO_OTP_CCID_PID, "YubiKey NEO - OTP and CCID"},
-                                             {NEO_CCID_PID, "YubiKey NEO - CCID only"},
-                                             {NEO_U2F_PID, "YubiKey NEO - U2F only"},
-                                             {NEO_OTP_U2F_PID, "YubiKey NEO - OTP and U2F"},
-                                             {NEO_U2F_CCID_PID, "YubiKey NEO - U2F and CCID"},
-                                             {NEO_OTP_U2F_CCID_PID, "YubiKey NEO - OTP, U2F and CCID"},
-                                             {YK4_OTP_PID, "YubiKey 4/5 - OTP only"},
-                                             {YK4_U2F_PID, "YubiKey 4/5 - U2F only"},
-                                             {YK4_OTP_U2F_PID, "YubiKey 4/5 - OTP and U2F"},
-                                             {YK4_CCID_PID, "YubiKey 4/5 - CCID only"},
-                                             {YK4_OTP_CCID_PID, "YubiKey 4/5 - OTP and CCID"},
-                                             {YK4_U2F_CCID_PID, "YubiKey 4/5 - U2F and CCID"},
-                                             {YK4_OTP_U2F_CCID_PID, "YubiKey 4/5 - OTP, U2F and CCID"},
-                                             {PLUS_U2F_OTP_PID, "YubiKey plus - OTP+U2F"}};
+    const QHash<int, QString> m_pid_names = {{YUBIKEY_PID, "YubiKey %ver"},
+                                             {NEO_OTP_PID, "YubiKey NEO - OTP"},
+                                             {NEO_OTP_CCID_PID, "YubiKey NEO - OTP+CCID"},
+                                             {NEO_CCID_PID, "YubiKey NEO - CCID"},
+                                             {NEO_U2F_PID, "YubiKey NEO - FIDO"},
+                                             {NEO_OTP_U2F_PID, "YubiKey NEO - OTP+FIDO"},
+                                             {NEO_U2F_CCID_PID, "YubiKey NEO - FIDO+CCID"},
+                                             {NEO_OTP_U2F_CCID_PID, "YubiKey NEO - OTP+FIDO+CCID"},
+                                             {YK4_OTP_PID, "YubiKey %ver - OTP"},
+                                             {YK4_U2F_PID, "YubiKey %ver - U2F"},
+                                             {YK4_OTP_U2F_PID, "YubiKey %ver - OTP+FIDO"},
+                                             {YK4_CCID_PID, "YubiKey %ver - CCID"},
+                                             {YK4_OTP_CCID_PID, "YubiKey %ver - OTP+CCID"},
+                                             {YK4_U2F_CCID_PID, "YubiKey %ver - FIDO+CCID"},
+                                             {YK4_OTP_U2F_CCID_PID, "YubiKey %ver - OTP+FIDO+CCID"},
+                                             {PLUS_U2F_OTP_PID, "YubiKey plus - OTP+FIDO"}};
 };
 
 #endif // KEEPASSX_YUBIKEY_INTERFACE_USB_H

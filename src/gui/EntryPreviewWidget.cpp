@@ -31,7 +31,7 @@
 #endif
 
 #include <QScrollBar>
-
+#include <QTabWidget>
 namespace
 {
     constexpr int GeneralTabIndex = 0;

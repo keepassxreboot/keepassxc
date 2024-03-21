@@ -19,6 +19,8 @@
 #ifndef KEEPASSX_TOTPDIALOG_H
 #define KEEPASSX_TOTPDIALOG_H
 
+#include <QDialog>
+
 #include "core/Database.h"
 #include "gui/DatabaseWidget.h"
 

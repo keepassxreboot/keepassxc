@@ -44,6 +44,7 @@ DatabaseSettingsWidgetDatabaseKey::DatabaseSettingsWidgetDatabaseKey(QWidget* pa
 {
     auto* vbox = new QVBoxLayout(this);
     vbox->setSizeConstraint(QLayout::SetMinimumSize);
+    vbox->setSpacing(20);
 
     // primary password option
     vbox->addWidget(m_passwordEditWidget);
@@ -55,6 +56,7 @@ DatabaseSettingsWidgetDatabaseKey::DatabaseSettingsWidgetDatabaseKey(QWidget* pa
     vbox->setSizeConstraint(QLayout::SetMinimumSize);
     m_additionalKeyOptions->setLayout(new QVBoxLayout());
     m_additionalKeyOptions->layout()->setMargin(0);
+    m_additionalKeyOptions->layout()->setSpacing(20);
     m_additionalKeyOptions->layout()->addWidget(m_keyFileEditWidget);
 #ifdef WITH_XC_YUBIKEY
     m_additionalKeyOptions->layout()->addWidget(m_yubiKeyEditWidget);

@@ -24,51 +24,84 @@
     <number>0</number>
    </property>
    <item>
-    <layout class="QGridLayout" name="gridLayout_4">
-     <property name="verticalSpacing">
-      <number>0</number>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="spacing">
+      <number>6</number>
      </property>
-     <item row="0" column="1">
-      <widget class="QPushButton" name="buttonRedetectYubikey">
-       <property name="accessibleName">
-        <string>Refresh hardware tokens</string>
-       </property>
-       <property name="text">
-        <string>Refresh</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="QComboBox" name="comboChallengeResponse">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="accessibleName">
-        <string>Hardware key slot selection</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QProgressBar" name="yubikeyProgress">
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>2</height>
-        </size>
-       </property>
-       <property name="maximum">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="spacing">
         <number>0</number>
        </property>
-       <property name="value">
-        <number>-1</number>
+       <item>
+        <widget class="QComboBox" name="comboChallengeResponse">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="accessibleName">
+          <string>Hardware key slot selection</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QProgressBar" name="yubikeyProgress">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>2</height>
+          </size>
+         </property>
+         <property name="maximum">
+          <number>0</number>
+         </property>
+         <property name="value">
+          <number>-1</number>
+         </property>
+         <property name="textVisible">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <property name="spacing">
+        <number>0</number>
        </property>
-       <property name="textVisible">
-        <bool>false</bool>
-       </property>
-      </widget>
+       <item>
+        <widget class="QPushButton" name="refreshHardwareKeys">
+         <property name="toolTip">
+          <string>Refresh hardware keys</string>
+         </property>
+         <property name="accessibleName">
+          <string>Refresh hardware keys</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Fixed</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>0</width>
+           <height>2</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
      </item>
     </layout>
    </item>
@@ -87,10 +120,6 @@
    </item>
   </layout>
  </widget>
- <tabstops>
-  <tabstop>comboChallengeResponse</tabstop>
-  <tabstop>buttonRedetectYubikey</tabstop>
- </tabstops>
  <resources/>
  <connections/>
 </ui>
