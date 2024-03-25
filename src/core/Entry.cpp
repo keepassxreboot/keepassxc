@@ -1267,7 +1267,9 @@ void Entry::setGroup(Group* group, bool trackPrevious)
             m_group->database()->addDeletedObject(m_uuid);
 
             // copy custom icon to the new database
-            group->database()->metadata()->copyCustomIcon(iconUuid(), m_group->database()->metadata());
+            if (group->database()) {
+                group->database()->metadata()->copyCustomIcon(iconUuid(), m_group->database()->metadata());
+            }
         } else if (trackPrevious && m_group->database() && group != m_group) {
             setPreviousParentGroup(m_group);
         }

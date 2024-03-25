@@ -469,7 +469,9 @@ void Group::setParent(Group* parent, int index, bool trackPrevious)
             recCreateDelObjects();
 
             // copy custom icon to the new database
-            parent->m_db->metadata()->copyCustomIcon(iconUuid(), m_db->metadata());
+            if (parent->m_db) {
+                parent->m_db->metadata()->copyCustomIcon(iconUuid(), m_db->metadata());
+            }
         }
         if (m_db != parent->m_db) {
             connectDatabaseSignalsRecursive(parent->m_db);
