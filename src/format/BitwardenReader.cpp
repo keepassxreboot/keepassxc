@@ -25,6 +25,7 @@
 #include "core/Totp.h"
 #include "crypto/CryptoHash.h"
 #include "crypto/SymmetricCipher.h"
+#include "crypto/kdf/Argon2Kdf.h"
 
 #include <botan/kdf.h>
 #include <botan/pwdhash.h>
@@ -44,6 +45,13 @@ namespace
         // Create the item map and extract the folder id
         const auto itemMap = item.toVariantMap();
         folderId = itemMap.value("folderId").toString();
+        if (folderId.isEmpty()) {
+            // Bitwarden organization vaults use collectionId instead of folderId
+            auto collectionIds = itemMap.value("collectionIds").toStringList();
+            if (!collectionIds.empty()) {
+                folderId = collectionIds.first();
+            }
+        }
 
         // Create entry and assign basic values
         QScopedPointer<Entry> entry(new Entry());
@@ -61,8 +69,12 @@ namespace
             entry->setUsername(loginMap.value("username").toString());
             entry->setPassword(loginMap.value("password").toString());
             if (loginMap.contains("totp")) {
-                // Bitwarden stores TOTP as otpauth string
-                entry->setTotp(Totp::parseSettings(loginMap.value("totp").toString()));
+                auto totp = loginMap.value("totp").toString();
+                if (!totp.startsWith("otpauth://")) {
+                    QUrl url(QString("otpauth://totp/%1:%2?secret=%3").arg(entry->title(), entry->username(), totp));
+                    totp = url.toEncoded();
+                }
+                entry->setTotp(Totp::parseSettings(totp));
             }
 
             // Set the entry url(s)
@@ -160,14 +172,20 @@ namespace
 
     void writeVaultToDatabase(const QJsonObject& vault, QSharedPointer<Database> db)
     {
-        if (!vault.contains("folders") || !vault.contains("items")) {
+        auto folderField = QString("folders");
+        if (!vault.contains(folderField)) {
+            // Handle Bitwarden organization vaults
+            folderField = "collections";
+        }
+
+        if (!vault.contains(folderField) || !vault.contains("items")) {
             // Early out if the vault is missing critical items
             return;
         }
 
         // Create groups from folders and store a temporary map of id -> uuid
         QMap<QString, Group*> folderMap;
-        for (const auto& folder : vault.value("folders").toArray()) {
+        for (const auto& folder : vault.value(folderField).toArray()) {
             auto group = new Group();
             group->setUuid(QUuid::createUuid());
             group->setName(folder.toObject().value("name").toString());
@@ -232,24 +250,43 @@ QSharedPointer<Database> BitwardenReader::convert(const QString& path, const QSt
 
         QByteArray key(32, '\0');
         auto salt = json.value("salt").toString().toUtf8();
-
-        auto pwd_fam = Botan::PasswordHashFamily::create_or_throw("PBKDF2(SHA-256)");
-        auto kdf = Botan::KDF::create_or_throw("HKDF-Expand(SHA-256)");
+        auto kdfType = json.value("kdfType").toInt();
 
         // Derive the Master Key
-        auto pwd_hash = pwd_fam->from_params(json.value("kdfIterations").toInt());
-        pwd_hash->derive_key(reinterpret_cast<uint8_t*>(key.data()),
-                             key.size(),
-                             password.toUtf8().data(),
-                             password.toUtf8().size(),
-                             reinterpret_cast<uint8_t*>(salt.data()),
-                             salt.size());
+        if (kdfType == 0) {
+            auto pwd_fam = Botan::PasswordHashFamily::create_or_throw("PBKDF2(SHA-256)");
+            auto pwd_hash = pwd_fam->from_params(json.value("kdfIterations").toInt());
+            pwd_hash->derive_key(reinterpret_cast<uint8_t*>(key.data()),
+                                 key.size(),
+                                 password.toUtf8().data(),
+                                 password.toUtf8().size(),
+                                 reinterpret_cast<uint8_t*>(salt.data()),
+                                 salt.size());
+        } else if (kdfType == 1) {
+            // Bitwarden hashes the salt for Argon2 for some reason
+            CryptoHash saltHash(CryptoHash::Sha256);
+            saltHash.addData(salt);
+            salt = saltHash.result();
+
+            Argon2Kdf argon2(Argon2Kdf::Type::Argon2id);
+            argon2.setSeed(salt);
+            argon2.setRounds(json.value("kdfIterations").toInt());
+            argon2.setMemory(json.value("kdfMemory").toInt() * 1024);
+            argon2.setParallelism(json.value("kdfParallelism").toInt());
+            argon2.transform(password.toUtf8(), key);
+        } else {
+            m_error = buildError(QObject::tr("Unsupported KDF type, cannot decrypt json file"));
+            return {};
+        }
+
+        auto hkdf = Botan::KDF::create_or_throw("HKDF-Expand(SHA-256)");
+
         // Derive the MAC Key
-        auto stretched_mac = kdf->derive_key(32, reinterpret_cast<const uint8_t*>(key.data()), key.size(), "", "mac");
+        auto stretched_mac = hkdf->derive_key(32, reinterpret_cast<const uint8_t*>(key.data()), key.size(), "", "mac");
         auto mac = QByteArray(reinterpret_cast<const char*>(stretched_mac.data()), stretched_mac.size());
 
         // Stretch the Master Key
-        auto stretched_key = kdf->derive_key(32, reinterpret_cast<const uint8_t*>(key.data()), key.size(), "", "enc");
+        auto stretched_key = hkdf->derive_key(32, reinterpret_cast<const uint8_t*>(key.data()), key.size(), "", "enc");
         key = QByteArray(reinterpret_cast<const char*>(stretched_key.data()), stretched_key.size());
 
         // Validate the encryption key

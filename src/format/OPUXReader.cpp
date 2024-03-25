@@ -126,9 +126,13 @@ namespace
                 const auto valueMap = fieldMap.value("value").toMap();
                 const auto key = valueMap.firstKey();
                 if (key == "totp") {
-                    // Build otpauth url
-                    QUrl otpurl(QString("otpauth://totp/%1:%2?secret=%3")
-                                    .arg(entry->title(), entry->username(), valueMap.value(key).toString()));
+                    auto totp = valueMap.value(key).toString();
+                    if (!totp.startsWith("otpauth://")) {
+                        // Build otpauth url
+                        QUrl url(
+                            QString("otpauth://totp/%1:%2?secret=%3").arg(entry->title(), entry->username(), totp));
+                        totp = url.toEncoded();
+                    }
 
                     if (entry->hasTotp()) {
                         // Store multiple TOTP definitions as additional otp attributes
@@ -138,10 +142,10 @@ namespace
                         while (attributes.contains(name)) {
                             name = QString("otp_%1").arg(++i);
                         }
-                        entry->attributes()->set(name, otpurl.toEncoded(), true);
+                        entry->attributes()->set(name, totp, true);
                     } else {
                         // First otp value encountered gets formal storage
-                        entry->setTotp(Totp::parseSettings(otpurl.toEncoded()));
+                        entry->setTotp(Totp::parseSettings(totp));
                     }
                 } else if (key == "file") {
                     // Add a file to the entry attachments
