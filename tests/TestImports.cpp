@@ -255,11 +255,23 @@ void TestImports::testBitwarden()
 void TestImports::testBitwardenEncrypted()
 {
     // We already tested the parser so just test that decryption works properly
+
+    // First test PBKDF2 password stretching (KDF Type 0)
     auto bitwardenPath =
         QStringLiteral("%1/%2").arg(KEEPASSX_TEST_DATA_DIR, QStringLiteral("/bitwarden_encrypted_export.json"));
 
     BitwardenReader reader;
     auto db = reader.convert(bitwardenPath, "a");
+    if (reader.hasError()) {
+        QFAIL(qPrintable(reader.errorString()));
+    }
+    QVERIFY(db);
+
+    // Now test Argon2id password stretching (KDF Type 1)
+    bitwardenPath = QStringLiteral("%1/%2").arg(KEEPASSX_TEST_DATA_DIR,
+                                                QStringLiteral("/bitwarden_encrypted_argon2id_export.json"));
+
+    db = reader.convert(bitwardenPath, "a");
     if (reader.hasError()) {
         QFAIL(qPrintable(reader.errorString()));
     }

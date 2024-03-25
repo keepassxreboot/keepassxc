@@ -8466,6 +8466,10 @@ This option is deprecated, use --set-key-file instead.</source>
         <source>Cannot remove file key: The database does not have a file key.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Unsupported KDF type, cannot decrypt json file</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
