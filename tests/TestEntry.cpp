@@ -123,6 +123,8 @@ void TestEntry::testClone()
     QCOMPARE(entryCloneResetTime->title(), QString("New Title"));
     QCOMPARE(entryCloneResetTime->historyItems().size(), 0);
     QVERIFY(entryCloneResetTime->timeInfo().creationTime() != entryOrg->timeInfo().creationTime());
+    // Cloning with CloneResetTimeInfo should not affect the LastModificationTime
+    QCOMPARE(entryCloneResetTime->timeInfo().lastModificationTime(), entryOrg->timeInfo().lastModificationTime());
 
     // Date back history of original entry
     Entry* firstHistoryItem = entryOrg->historyItems()[0];
