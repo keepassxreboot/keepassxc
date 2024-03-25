@@ -1074,7 +1074,12 @@ void Group::cleanupParent()
     if (m_parent) {
         emit groupAboutToRemove(this);
         m_parent->m_children.removeAll(this);
+
+        bool prevUpdateTimeinfo = m_updateTimeinfo;
+        m_updateTimeinfo = false; // prevent update of LastModificationTime
         emitModified();
+        m_updateTimeinfo = prevUpdateTimeinfo;
+        
         emit groupRemoved();
     }
 }
