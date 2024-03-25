@@ -52,7 +52,6 @@ public:
     ~MainWindow() override;
 
     QList<DatabaseWidget*> getOpenDatabases();
-    DatabaseWidget* currentDatabaseWidget();
     void restoreConfigState();
     void setAllowScreenCapture(bool state);
 

@@ -49,11 +49,8 @@ public:
         CloneNewUuid = 1, // generate a random uuid for the clone
         CloneResetTimeInfo = 2, // set all TimeInfo attributes except LastModificationTime to the current time
         CloneIncludeEntries = 4, // clone the group entries
+        CloneDefault = CloneNewUuid | CloneResetTimeInfo | CloneIncludeEntries,
         CloneRenameTitle = 8, // add "- Clone" after the original title
-
-        CloneCopy = CloneNewUuid | CloneResetTimeInfo | CloneIncludeEntries,
-        CloneExactCopy = CloneIncludeEntries,
-        CloneDefault = CloneCopy,
     };
     Q_DECLARE_FLAGS(CloneFlags, CloneFlag)
 
