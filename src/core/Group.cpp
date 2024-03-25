@@ -494,7 +494,11 @@ void Group::setParent(Group* parent, int index, bool trackPrevious)
         m_data.timeInfo.setLocationChanged(Clock::currentDateTimeUtc());
     }
 
+    bool prevUpdateTimeInfo = m_updateTimeinfo;
+    m_updateTimeinfo = false; // prevent update of LastModificationTime
     emitModified();
+    m_updateTimeinfo = prevUpdateTimeInfo;
+    
 
     if (!moveWithinDatabase) {
         emit groupAdded();
@@ -1237,9 +1241,8 @@ QUuid Group::previousParentGroupUuid() const
 
 void Group::setPreviousParentGroupUuid(const QUuid& uuid)
 {
-    // prevent set from changing the LastModificationTime
     bool prevUpdateTimeinfo = m_updateTimeinfo;
-    m_updateTimeinfo = false;
+    m_updateTimeinfo = false; // prevent update of LastModificationTime
     set(m_data.previousParentGroupUuid, uuid);
     m_updateTimeinfo = prevUpdateTimeinfo;
 }
