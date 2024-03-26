@@ -322,6 +322,7 @@ void DatabaseOpenWidget::openDatabase()
             auto btn = msgBox->addButton(tr("Open database anyway"), QMessageBox::ButtonRole::AcceptRole);
             msgBox->setDefaultButton(btn);
             msgBox->addButton(QMessageBox::Cancel);
+            msgBox->layout()->setSizeConstraint(QLayout::SetMinimumSize);
             msgBox->exec();
             if (msgBox->clickedButton() != btn) {
                 m_db.reset(new Database());

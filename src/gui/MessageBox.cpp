@@ -19,6 +19,7 @@
 #include "MessageBox.h"
 
 #include <QCheckBox>
+#include <QLayout>
 #include <QMap>
 #include <QPushButton>
 #include <QWindow>
@@ -126,6 +127,7 @@ MessageBox::Button MessageBox::messageBox(QWidget* parent,
             msgBox.activateWindow();
             msgBox.raise();
         }
+        msgBox.layout()->setSizeConstraint(QLayout::SetMinimumSize);
         msgBox.exec();
 
         Button returnButton = m_addedButtonLookup[msgBox.clickedButton()];
