@@ -1,6 +1,5 @@
 /*
- *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
- *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -37,7 +36,9 @@ using namespace BrowserShared;
 namespace
 {
     const QString HOST_NAME = QStringLiteral("org.keepassxc.keepassxc_browser");
-    const QStringList ALLOWED_EXTENSIONS = QStringList() << QStringLiteral("keepassxc-browser@keepassxc.org");
+    const QString FIREFOX_EXTENSION = QStringLiteral("keepassxc-browser@keepassxc.org");
+    const QString THUNDERBIRD_HOST_NAME = QStringLiteral("org.keepassxc.keepassxc_mail");
+    const QString THUNDERBIRD_EXTENSION = QStringLiteral("keepassxc-mail@kkapsner.de");
     const QStringList ALLOWED_ORIGINS = QStringList()
                                         << QStringLiteral("chrome-extension://pdffhmdngciaglkoonimfcmckehcpafo/")
                                         << QStringLiteral("chrome-extension://oboonakemofpalcgghocfoadofidjkkk/");
@@ -45,6 +46,7 @@ namespace
     const QString TARGET_DIR_CHROME = QStringLiteral("/Library/Application Support/Google/Chrome/NativeMessagingHosts");
     const QString TARGET_DIR_CHROMIUM = QStringLiteral("/Library/Application Support/Chromium/NativeMessagingHosts");
     const QString TARGET_DIR_FIREFOX = QStringLiteral("/Library/Application Support/Mozilla/NativeMessagingHosts");
+    const QString TARGET_DIR_THUNDERBIRD = QStringLiteral("/Library/Mozilla/NativeMessagingHosts");
     const QString TARGET_DIR_VIVALDI = QStringLiteral("/Library/Application Support/Vivaldi/NativeMessagingHosts");
     const QString TARGET_DIR_TOR_BROWSER =
         QStringLiteral("/Library/Application Support/TorBrowser-Data/Browser/Mozilla/NativeMessagingHosts");
@@ -63,6 +65,8 @@ namespace
     const QString TARGET_DIR_BRAVE = TARGET_DIR_CHROME;
     const QString TARGET_DIR_EDGE = QStringLiteral(
         "HKEY_CURRENT_USER\\Software\\Microsoft\\Edge\\NativeMessagingHosts\\org.keepassxc.keepassxc_browser");
+    const QString TARGET_DIR_THUNDERBIRD =
+        QStringLiteral("HKEY_CURRENT_USER\\Software\\Mozilla\\NativeMessagingHosts\\org.keepassxc.keepassxc_mail");
 #else
     const QString TARGET_DIR_CHROME = QStringLiteral("/google-chrome/NativeMessagingHosts");
     const QString TARGET_DIR_CHROMIUM = QStringLiteral("/chromium/NativeMessagingHosts");
@@ -72,6 +76,7 @@ namespace
         "/torbrowser/tbb/x86_64/tor-browser_en-US/Browser/TorBrowser/Data/Browser/.mozilla/native-messaging-hosts");
     const QString TARGET_DIR_BRAVE = QStringLiteral("/BraveSoftware/Brave-Browser/NativeMessagingHosts");
     const QString TARGET_DIR_EDGE = QStringLiteral("/microsoft-edge/NativeMessagingHosts");
+    const QString TARGET_DIR_THUNDERBIRD = QStringLiteral("/.mozilla/native-messaging-hosts");
 #endif
 } // namespace
 
@@ -160,6 +165,8 @@ QString NativeMessageInstaller::getTargetPath(SupportedBrowsers browser) const
         return TARGET_DIR_BRAVE;
     case SupportedBrowsers::EDGE:
         return TARGET_DIR_EDGE;
+    case SupportedBrowsers::THUNDERBIRD:
+        return TARGET_DIR_THUNDERBIRD;
     case SupportedBrowsers::CUSTOM:
         return browserSettings()->customBrowserLocation();
     default:
@@ -191,6 +198,8 @@ QString NativeMessageInstaller::getBrowserName(SupportedBrowsers browser) const
         return QStringLiteral("brave");
     case SupportedBrowsers::EDGE:
         return QStringLiteral("edge");
+    case SupportedBrowsers::THUNDERBIRD:
+        return QStringLiteral("thunderbird");
     case SupportedBrowsers::CUSTOM:
         return QStringLiteral("custom");
     default:
@@ -214,7 +223,7 @@ QString NativeMessageInstaller::getNativeMessagePath(SupportedBrowsers browser) 
     } else {
         basePath = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
     }
-    return QStringLiteral("%1/%2_%3.json").arg(basePath, HOST_NAME, getBrowserName(browser));
+    return QStringLiteral("%1/%2_%3.json").arg(basePath, getHostName(browser), getBrowserName(browser));
 #elif defined(KEEPASSXC_DIST_FLATPAK)
     // Flatpak sandboxes do not have access to the XDG_DATA_HOME and XDG_CONFIG_HOME variables
     // defined in the host, so we must hardcode them here.
@@ -237,10 +246,10 @@ QString NativeMessageInstaller::getNativeMessagePath(SupportedBrowsers browser) 
     basePath = QDir::homePath();
 #endif
     if (browser == SupportedBrowsers::CUSTOM) {
-        return QString("%1/%2.json").arg(getTargetPath(browser), HOST_NAME);
+        return QString("%1/%2.json").arg(getTargetPath(browser), getHostName(browser));
     }
 
-    return QStringLiteral("%1%2/%3.json").arg(basePath, getTargetPath(browser), HOST_NAME);
+    return QStringLiteral("%1%2/%3.json").arg(basePath, getTargetPath(browser), getHostName(browser));
 }
 
 #ifdef KEEPASSXC_DIST_FLATPAK
@@ -306,6 +315,17 @@ QString NativeMessageInstaller::getInstalledProxyPath() const
 }
 
 /**
+ * Returns name of the extension. Thunderbird differs from the default.
+ *
+ * @param browser Selected browser
+ * @return QString Name of the extension
+ */
+QString NativeMessageInstaller::getHostName(BrowserShared::SupportedBrowsers browser) const
+{
+    return browser == SupportedBrowsers::THUNDERBIRD ? THUNDERBIRD_HOST_NAME : HOST_NAME;
+}
+
+/**
  * Constructs the JSON script file used with native messaging
  *
  * @param browser Browser (Chromium- and Firefox-based browsers need a different parameters for the script)
@@ -315,18 +335,14 @@ QString NativeMessageInstaller::getInstalledProxyPath() const
 QJsonObject NativeMessageInstaller::constructFile(SupportedBrowsers browser)
 {
     QJsonObject script;
-    script["name"] = HOST_NAME;
+    script["name"] = getHostName(browser);
     script["description"] = QStringLiteral("KeePassXC integration with native messaging support");
     script["path"] = getProxyPath();
     script["type"] = QStringLiteral("stdio");
 
     QJsonArray arr;
-    if (browser == SupportedBrowsers::FIREFOX || browser == SupportedBrowsers::TOR_BROWSER
-        || (browser == SupportedBrowsers::CUSTOM
-            && browserSettings()->customBrowserType() == SupportedBrowsers::FIREFOX)) {
-        for (const QString& extension : ALLOWED_EXTENSIONS) {
-            arr.append(extension);
-        }
+    if (isFirefoxBrowser(browser)) {
+        arr.append(browser == SupportedBrowsers::THUNDERBIRD ? THUNDERBIRD_EXTENSION : FIREFOX_EXTENSION);
         script["allowed_extensions"] = arr;
     } else {
         for (const QString& origin : ALLOWED_ORIGINS) {
@@ -372,4 +388,12 @@ bool NativeMessageInstaller::createNativeMessageFile(SupportedBrowsers browser)
         return false;
     }
     return true;
+}
+
+bool NativeMessageInstaller::isFirefoxBrowser(BrowserShared::SupportedBrowsers browser) const
+{
+    return browser == SupportedBrowsers::FIREFOX || browser == SupportedBrowsers::TOR_BROWSER
+           || browser == SupportedBrowsers::THUNDERBIRD
+           || (browser == SupportedBrowsers::CUSTOM
+               && browserSettings()->customBrowserType() == SupportedBrowsers::FIREFOX);
 }
