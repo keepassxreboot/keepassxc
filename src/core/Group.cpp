@@ -469,9 +469,8 @@ void Group::setParent(Group* parent, int index, bool trackPrevious)
             recCreateDelObjects();
 
             // copy custom icon to the new database
-            if (!iconUuid().isNull() && parent->m_db && m_db->metadata()->hasCustomIcon(iconUuid())
-                && !parent->m_db->metadata()->hasCustomIcon(iconUuid())) {
-                parent->m_db->metadata()->addCustomIcon(iconUuid(), m_db->metadata()->customIcon(iconUuid()));
+            if (parent->m_db) {
+                parent->m_db->metadata()->copyCustomIcon(iconUuid(), m_db->metadata());
             }
         }
         if (m_db != parent->m_db) {
@@ -497,7 +496,11 @@ void Group::setParent(Group* parent, int index, bool trackPrevious)
         m_data.timeInfo.setLocationChanged(Clock::currentDateTimeUtc());
     }
 
+    bool prevUpdateTimeInfo = m_updateTimeinfo;
+    m_updateTimeinfo = false; // prevent update of LastModificationTime
     emitModified();
+    m_updateTimeinfo = prevUpdateTimeInfo;
+    
 
     if (!moveWithinDatabase) {
         emit groupAdded();
@@ -946,12 +949,16 @@ Group* Group::clone(Entry::CloneFlags entryFlags, Group::CloneFlags groupFlags) 
 
     clonedGroup->setUpdateTimeinfo(true);
     if (groupFlags & Group::CloneResetTimeInfo) {
-
         QDateTime now = Clock::currentDateTimeUtc();
-        clonedGroup->m_data.timeInfo.setCreationTime(now);
-        clonedGroup->m_data.timeInfo.setLastModificationTime(now);
-        clonedGroup->m_data.timeInfo.setLastAccessTime(now);
-        clonedGroup->m_data.timeInfo.setLocationChanged(now);
+        if (groupFlags & Group::CloneResetCreationTime) {
+            clonedGroup->m_data.timeInfo.setCreationTime(now);
+        }
+        if (groupFlags & Group::CloneResetLastAccessTime) {
+            clonedGroup->m_data.timeInfo.setLastAccessTime(now);
+        }
+        if (groupFlags & Group::CloneResetLocationChangedTime) {
+            clonedGroup->m_data.timeInfo.setLocationChanged(now);
+        }
     }
 
     if (groupFlags & Group::CloneRenameTitle) {
@@ -1071,7 +1078,12 @@ void Group::cleanupParent()
     if (m_parent) {
         emit groupAboutToRemove(this);
         m_parent->m_children.removeAll(this);
+
+        bool prevUpdateTimeinfo = m_updateTimeinfo;
+        m_updateTimeinfo = false; // prevent update of LastModificationTime
         emitModified();
+        m_updateTimeinfo = prevUpdateTimeinfo;
+        
         emit groupRemoved();
     }
 }
@@ -1240,7 +1252,10 @@ QUuid Group::previousParentGroupUuid() const
 
 void Group::setPreviousParentGroupUuid(const QUuid& uuid)
 {
+    bool prevUpdateTimeinfo = m_updateTimeinfo;
+    m_updateTimeinfo = false; // prevent update of LastModificationTime
     set(m_data.previousParentGroupUuid, uuid);
+    m_updateTimeinfo = prevUpdateTimeinfo;
 }
 
 void Group::setPreviousParentGroup(const Group* group)
