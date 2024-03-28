@@ -949,12 +949,16 @@ Group* Group::clone(Entry::CloneFlags entryFlags, Group::CloneFlags groupFlags) 
 
     clonedGroup->setUpdateTimeinfo(true);
     if (groupFlags & Group::CloneResetTimeInfo) {
-
         QDateTime now = Clock::currentDateTimeUtc();
-        clonedGroup->m_data.timeInfo.setCreationTime(now);
-        clonedGroup->m_data.timeInfo.setLastAccessTime(now);
-        clonedGroup->m_data.timeInfo.setLocationChanged(now);
-        // preserve LastModificationTime
+        if (groupFlags & Group::CloneResetCreationTime) {
+            clonedGroup->m_data.timeInfo.setCreationTime(now);
+        }
+        if (groupFlags & Group::CloneResetLastAccessTime) {
+            clonedGroup->m_data.timeInfo.setLastAccessTime(now);
+        }
+        if (groupFlags & Group::CloneResetLocationChangedTime) {
+            clonedGroup->m_data.timeInfo.setLocationChanged(now);
+        }
     }
 
     if (groupFlags & Group::CloneRenameTitle) {

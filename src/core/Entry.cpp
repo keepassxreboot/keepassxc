@@ -946,10 +946,15 @@ Entry* Entry::clone(CloneFlags flags) const
 
     if (flags & CloneResetTimeInfo) {
         QDateTime now = Clock::currentDateTimeUtc();
-        entry->m_data.timeInfo.setCreationTime(now);
-        entry->m_data.timeInfo.setLastAccessTime(now);
-        entry->m_data.timeInfo.setLocationChanged(now);
-        // preserve LastModificationTime
+        if (flags & CloneResetCreationTime) {
+            entry->m_data.timeInfo.setCreationTime(now);
+        }
+        if (flags & CloneResetLastAccessTime) {
+            entry->m_data.timeInfo.setLastAccessTime(now);
+        }
+        if (flags & CloneResetLocationChangedTime) {
+            entry->m_data.timeInfo.setLocationChanged(now);
+        }
     }
 
     if (flags & CloneRenameTitle) {
