@@ -180,7 +180,7 @@ Group* GroupModel::groupFromIndex(const QModelIndex& index) const
 
 Qt::DropActions GroupModel::supportedDropActions() const
 {
-    return Qt::MoveAction | Qt::CopyAction;
+    return Qt::MoveAction | Qt::CopyAction | Qt::LinkAction;
 }
 
 Qt::ItemFlags GroupModel::flags(const QModelIndex& modelIndex) const
@@ -206,7 +206,7 @@ bool GroupModel::dropMimeData(const QMimeData* data,
         return true;
     }
 
-    if (!data || (action != Qt::MoveAction && action != Qt::CopyAction) || !parent.isValid()) {
+    if (!data || !(action & (Qt::MoveAction | Qt::CopyAction | Qt::LinkAction)) || !parent.isValid()) {
         return false;
     }
 
@@ -261,11 +261,20 @@ bool GroupModel::dropMimeData(const QMimeData* data,
             targetDb->metadata()->copyCustomIcons(group->customIconsRecursive(), sourceDb->metadata());
 
             if (action == Qt::MoveAction) {
-                // For cross-db moves use a clone with new UUID but original CreationTime
+                // -- Tracked move
+                // A clone with new UUID but original CreationTime
                 group = dragGroup->clone(Entry::CloneFlags(Entry::CloneCopy & ~Entry::CloneResetCreationTime),
                                          Group::CloneFlags(Group::CloneCopy & ~Group::CloneResetCreationTime));
-                // Remove the original from the sourceDb to allow this change to sync to other dbs
+                // Original UUID is marked as deleted to remove it from dbs that merge with this one
                 delete dragGroup;
+            } else if (action == Qt::LinkAction) {
+                // -- Untracked move
+                QList<DeletedObject> deletedObjects(sourceDb->deletedObjects());
+                // Exact copy of original
+                group = dragGroup->clone(Entry::CloneExactCopy, Group::CloneExactCopy);
+                delete dragGroup;
+                // Unmark UUID(s) as deleted by restoring the previous list
+                sourceDb->setDeletedObjects(deletedObjects);
             } else {
                 group = dragGroup->clone(Entry::CloneCopy);
             }
@@ -302,12 +311,20 @@ bool GroupModel::dropMimeData(const QMimeData* data,
             if (sourceDb != targetDb) {
                 targetDb->metadata()->copyCustomIcon(entry->iconUuid(), sourceDb->metadata());
 
-                // Reset the UUID when moving across db boundary
                 if (action == Qt::MoveAction) {
-                    // For cross-db moves use a clone with new UUID but original CreationTime
+                    // -- Tracked move
+                    // A clone with new UUID but original CreationTime
                     entry = dragEntry->clone(Entry::CloneFlags(Entry::CloneCopy & ~Entry::CloneResetCreationTime));
-                    // Remove the original from the sourceDb to allow this change to sync to other dbs
+                    // Original UUID is marked as deleted to remove it from dbs that merge with this one
                     delete dragEntry;
+                } else if (action == Qt::LinkAction) {
+                    // -- Untracked move
+                    QList<DeletedObject> deletedObjects(sourceDb->deletedObjects());
+                    // Exact copy of original
+                    entry = dragEntry->clone(Entry::CloneExactCopy);
+                    delete dragEntry;
+                    // Unmark UUID as deleted by restoring the previous list
+                    sourceDb->setDeletedObjects(deletedObjects);
                 } else {
                     entry = dragEntry->clone(Entry::CloneCopy);
                 }
