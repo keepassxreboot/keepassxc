@@ -486,7 +486,7 @@ void SSHAgent::setAutoRemoveOnLock(const OpenSSHKey& key, bool autoRemove)
     }
 }
 
-void SSHAgent::databaseLocked(QSharedPointer<Database> db)
+void SSHAgent::databaseLocked(const QSharedPointer<Database>& db)
 {
     if (!db) {
         return;
@@ -508,20 +508,20 @@ void SSHAgent::databaseLocked(QSharedPointer<Database> db)
     }
 }
 
-void SSHAgent::databaseUnlocked(QSharedPointer<Database> db)
+void SSHAgent::databaseUnlocked(const QSharedPointer<Database>& db)
 {
     if (!db || !isEnabled()) {
         return;
     }
 
-    for (Entry* e : db->rootGroup()->entriesRecursive()) {
-        if (db->metadata()->recycleBinEnabled() && e->group() == db->metadata()->recycleBin()) {
+    for (auto entry : db->rootGroup()->entriesRecursive()) {
+        if (entry->isRecycled()) {
             continue;
         }
 
         KeeAgentSettings settings;
 
-        if (!settings.fromEntry(e)) {
+        if (!settings.fromEntry(entry)) {
             continue;
         }
 
@@ -531,7 +531,7 @@ void SSHAgent::databaseUnlocked(QSharedPointer<Database> db)
 
         OpenSSHKey key;
 
-        if (!settings.toOpenSSHKey(e, key, true)) {
+        if (!settings.toOpenSSHKey(entry, key, true)) {
             continue;
         }
 
