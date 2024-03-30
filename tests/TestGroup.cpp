@@ -1367,4 +1367,17 @@ void TestGroup::testTimeinfoChanges()
     QCOMPARE(subgroup2->timeInfo().lastModificationTime(), startTime);
     QCOMPARE(subgroup2->timeInfo().locationChanged(), Clock::currentDateTimeUtc());
     QCOMPARE(db2.rootGroup()->timeInfo(), startTimeinfo);
+
+    QScopedPointer<Entry> entry1(new Entry());
+    entry1->setGroup(subgroup1);
+    // adding/removing an entry should not affect the LastModificationTime
+    QCOMPARE(subgroup1->timeInfo().lastModificationTime(), startTime);
+    entry1.reset(); // delete
+    QCOMPARE(subgroup1->timeInfo().lastModificationTime(), startTime);
+
+    // sorting should not affect the LastModificationTime
+    root->sortChildrenRecursively(true);
+    root->sortChildrenRecursively(false);
+    QCOMPARE(root->timeInfo().lastModificationTime(), startTime);
+    QCOMPARE(subgroup1->timeInfo().lastModificationTime(), startTime);
 }

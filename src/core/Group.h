@@ -210,8 +210,9 @@ private slots:
     void updateTimeinfo();
 
 private:
-    template <class P, class V> bool set(P& property, const V& value);
+    template <class P, class V> bool set(P& property, const V& value, bool preserveTimeinfo = false);
 
+    void emitModifiedEx(bool preserveTimeinfo);
     void setParent(Database* db);
 
     void connectDatabaseSignalsRecursive(Database* db);
