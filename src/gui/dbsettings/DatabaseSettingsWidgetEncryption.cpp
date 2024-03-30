@@ -269,6 +269,7 @@ bool DatabaseSettingsWidgetEncryption::save()
         auto ok = warning.addButton(tr("Understood, keep number"), QMessageBox::ButtonRole::AcceptRole);
         auto cancel = warning.addButton(tr("Cancel"), QMessageBox::ButtonRole::RejectRole);
         warning.setDefaultButton(cancel);
+        warning.layout()->setSizeConstraint(QLayout::SetMinimumSize);
         warning.exec();
         if (warning.clickedButton() != ok) {
             return false;
@@ -282,6 +283,7 @@ bool DatabaseSettingsWidgetEncryption::save()
         auto ok = warning.addButton(tr("Understood, keep number"), QMessageBox::ButtonRole::AcceptRole);
         auto cancel = warning.addButton(tr("Cancel"), QMessageBox::ButtonRole::RejectRole);
         warning.setDefaultButton(cancel);
+        warning.layout()->setSizeConstraint(QLayout::SetMinimumSize);
         warning.exec();
         if (warning.clickedButton() != ok) {
             return false;
