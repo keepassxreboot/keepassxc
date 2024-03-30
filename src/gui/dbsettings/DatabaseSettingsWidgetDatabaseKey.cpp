@@ -168,6 +168,7 @@ bool DatabaseSettingsWidgetDatabaseKey::save()
         auto btn = msgBox->addButton(tr("Continue without password"), QMessageBox::ButtonRole::AcceptRole);
         msgBox->addButton(QMessageBox::Cancel);
         msgBox->setDefaultButton(QMessageBox::Cancel);
+        msgBox->layout()->setSizeConstraint(QLayout::SetMinimumSize);
         msgBox->exec();
         if (msgBox->clickedButton() != btn) {
             return false;
