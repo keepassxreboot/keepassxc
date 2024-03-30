@@ -17,10 +17,6 @@ QSpinBox {
     min-width: 90px;
 }
 
-QDialogButtonBox QPushButton {
-    min-width: 55px;
-}
-
 QCheckBox, QRadioButton {
     spacing: 10px;
 }
