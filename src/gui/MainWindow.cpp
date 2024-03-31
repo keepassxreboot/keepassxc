@@ -2202,9 +2202,9 @@ bool MainWindowEventFilter::eventFilter(QObject* watched, QEvent* event)
 
     auto eventType = event->type();
     if (eventType == QEvent::MouseButtonPress) {
+        auto mouseEvent = dynamic_cast<QMouseEvent*>(event);
         if (watched == mainWindow->m_ui->menubar) {
-            auto* m = static_cast<QMouseEvent*>(event);
-            if (!mainWindow->m_ui->menubar->actionAt(m->pos())) {
+            if (!mainWindow->m_ui->menubar->actionAt(mouseEvent->pos())) {
                 mainWindow->windowHandle()->startSystemMove();
                 return false;
             }
@@ -2214,18 +2214,21 @@ bool MainWindowEventFilter::eventFilter(QObject* watched, QEvent* event)
                 return false;
             }
         } else if (watched == mainWindow->m_ui->tabWidget->tabBar()) {
-            auto* m = static_cast<QMouseEvent*>(event);
-            if (mainWindow->m_ui->tabWidget->tabBar()->tabAt(m->pos()) == -1) {
+            if (mainWindow->m_ui->tabWidget->tabBar()->tabAt(mouseEvent->pos()) == -1) {
                 mainWindow->windowHandle()->startSystemMove();
                 return true;
             }
         }
     } else if (eventType == QEvent::KeyRelease) {
         if (watched == mainWindow) {
-            auto m = static_cast<QKeyEvent*>(event);
-            if (m->key() == Qt::Key_Alt && config()->get(Config::GUI_HideMenubar).toBool()) {
+            auto keyEvent = dynamic_cast<QKeyEvent*>(event);
+            if (keyEvent->key() == Qt::Key_Alt && !keyEvent->modifiers()
+                && config()->get(Config::GUI_HideMenubar).toBool()) {
                 auto menubar = mainWindow->m_ui->menubar;
                 menubar->setVisible(!menubar->isVisible());
+                if (menubar->isVisible()) {
+                    menubar->setActiveAction(mainWindow->m_ui->menuFile->menuAction());
+                }
                 return false;
             }
         }
