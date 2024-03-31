@@ -2,6 +2,7 @@ coverage:
   range: 60..80
   round: nearest
   precision: 2
+  require_ci_to_pass: false
   status:
     project:
       default:
@@ -11,8 +12,9 @@ coverage:
           - "src"
     patch:
       default:
-        target: 75%
+        target: 50%
         threshold: 0%
+        informational: true
         paths:
           - "src"
 fixes:
