@@ -9047,6 +9047,14 @@ Kernel: %3 %4</source>
         <source> (Expired)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Export Confirmation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The passkey file will be vulnerable to theft and unauthorized use, if left unsecured. Are you sure you want to continue?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ReportsWidgetStatistics</name>

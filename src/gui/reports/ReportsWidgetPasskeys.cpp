@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@
 #include "core/Metadata.h"
 #include "gui/GuiTools.h"
 #include "gui/Icons.h"
+#include "gui/MessageBox.h"
 #include "gui/passkeys/PasskeyExporter.h"
 #include "gui/passkeys/PasskeyImporter.h"
 #include "gui/styles/StateColorPalette.h"
@@ -289,6 +290,16 @@ void ReportsWidgetPasskeys::importPasskey()
 
 void ReportsWidgetPasskeys::exportPasskey()
 {
+    auto answer = MessageBox::question(this,
+                                       tr("Export Confirmation"),
+                                       tr("The passkey file will be vulnerable to theft and unauthorized use, if left "
+                                          "unsecured. Are you sure you want to continue?"),
+                                       MessageBox::Yes | MessageBox::No,
+                                       MessageBox::No);
+    if (answer != MessageBox::Yes) {
+        return;
+    }
+
     PasskeyExporter passkeyExporter;
     passkeyExporter.showExportDialog(getSelectedEntries());
 }
