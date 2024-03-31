@@ -673,7 +673,7 @@ QJsonObject BrowserService::showPasskeysAuthenticationPrompt(const QJsonObject& 
         }
 
         const auto privateKeyPem = selectedEntry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_PRIVATE_KEY_PEM);
-        const auto credentialId = selectedEntry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_CREDENTIAL_ID);
+        const auto credentialId = passkeyUtils()->getCredentialIdFromEntry(selectedEntry);
         const auto userHandle = selectedEntry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_USER_HANDLE);
 
         auto publicKeyCredential =
@@ -739,13 +739,12 @@ void BrowserService::addPasskeyToEntry(Entry* entry,
 
     // Ask confirmation if entry already contains a Passkey
     if (entry->hasPasskey()) {
-        if (MessageBox::question(
-                m_currentDatabaseWidget,
-                tr("KeePassXC - Update Passkey"),
-                tr("Entry already has a Passkey.\nDo you want to overwrite the Passkey in %1 - %2?")
-                    .arg(entry->title(), entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_USERNAME)),
-                MessageBox::Overwrite | MessageBox::Cancel,
-                MessageBox::Cancel)
+        if (MessageBox::question(m_currentDatabaseWidget,
+                                 tr("KeePassXC - Update Passkey"),
+                                 tr("Entry already has a Passkey.\nDo you want to overwrite the Passkey in %1 - %2?")
+                                     .arg(entry->title(), passkeyUtils()->getUsernameFromEntry(entry)),
+                                 MessageBox::Overwrite | MessageBox::Cancel,
+                                 MessageBox::Cancel)
             != MessageBox::Overwrite) {
             return;
         }
@@ -1136,7 +1135,7 @@ QJsonObject BrowserService::prepareEntry(const Entry* entry)
     QJsonObject res;
 #ifdef WITH_XC_BROWSER_PASSKEYS
     // Use Passkey's username instead if found
-    res["login"] = entry->hasPasskey() ? entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_USERNAME)
+    res["login"] = entry->hasPasskey() ? passkeyUtils()->getUsernameFromEntry(entry)
                                        : entry->resolveMultiplePlaceholders(entry->username());
 #else
     res["login"] = entry->resolveMultiplePlaceholders(entry->username());
@@ -1370,7 +1369,7 @@ QList<Entry*> BrowserService::getPasskeyAllowedEntries(const QJsonObject& assert
         // If allowedCredentials.isEmpty() check if entry contains an extra attribute for user handle.
         // If that is found, the entry should be allowed.
         // See: https://w3c.github.io/webauthn/#dom-authenticatorassertionresponse-userhandle
-        if (allowedCredentials.contains(entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_CREDENTIAL_ID))
+        if (allowedCredentials.contains(passkeyUtils()->getCredentialIdFromEntry(entry))
             || (allowedCredentials.isEmpty()
                 && entry->attributes()->hasKey(BrowserPasskeys::KPEX_PASSKEY_USER_HANDLE))) {
             entries << entry;
@@ -1392,7 +1391,7 @@ bool BrowserService::isPasskeyCredentialExcluded(const QJsonArray& excludeCreden
 
     const auto passkeyEntries = getPasskeyEntries(rpId, keyList);
     return std::any_of(passkeyEntries.begin(), passkeyEntries.end(), [&](const auto& entry) {
-        return allIds.contains(entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_CREDENTIAL_ID));
+        return allIds.contains(passkeyUtils()->getCredentialIdFromEntry(entry));
     });
 }
 

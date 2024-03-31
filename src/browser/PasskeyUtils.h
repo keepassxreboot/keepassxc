@@ -24,6 +24,7 @@
 #include <QStringList>
 
 #include "BrowserCbor.h"
+#include "core/Entry.h"
 
 #define DEFAULT_TIMEOUT 300000
 #define DEFAULT_DISCOURAGED_TIMEOUT 120000
@@ -53,6 +54,8 @@ public:
     QByteArray buildExtensionData(QJsonObject& extensionObject) const;
     QJsonObject buildClientDataJson(const QJsonObject& publicKey, const QString& origin, bool get) const;
     QStringList getAllowedCredentialsFromAssertionOptions(const QJsonObject& assertionOptions) const;
+    QString getCredentialIdFromEntry(const Entry* entry) const;
+    QString getUsernameFromEntry(const Entry* entry) const;
 
 private:
     Q_DISABLE_COPY(PasskeyUtils);
