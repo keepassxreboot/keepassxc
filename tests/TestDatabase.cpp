@@ -30,9 +30,9 @@
 #include "format/KeePass2Writer.h"
 #include "util/TemporaryFile.h"
 
-#ifdef _WIN32
-    #include <QFileInfo>
-    #include <Windows.h>
+#ifdef Q_OS_WIN
+#include <QFileInfo>
+#include <Windows.h>
 #endif
 
 QTEST_GUILESS_MAIN(TestDatabase)
@@ -123,7 +123,7 @@ void TestDatabase::testSaveAs()
     QVERIFY(!db->isModified());
     QCOMPARE(spyFilePathChanged.count(), 1);
     QVERIFY(QFile::exists(newDbFileName));
-#ifdef _WIN32
+#ifdef Q_OS_WIN
     QVERIFY(!QFileInfo::QFileInfo(newDbFileName).isHidden());
     SetFileAttributes(newDbFileName.toStdString().c_str(), FILE_ATTRIBUTE_HIDDEN);
     QVERIFY2(db->saveAs(newDbFileName, Database::Atomic, QString(), &error), error.toLatin1());

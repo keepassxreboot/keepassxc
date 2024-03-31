@@ -33,8 +33,8 @@
 #include <QTemporaryFile>
 #include <QTimer>
 
-#ifdef _WIN32
-    #include <Windows.h>
+#ifdef Q_OS_WIN
+#include <Windows.h>
 #endif
 
 QHash<QUuid, QPointer<Database>> Database::s_uuidMap;
@@ -285,7 +285,7 @@ bool Database::saveAs(const QString& filePath, SaveAction action, const QString&
     auto realFilePath = fileInfo.exists() ? fileInfo.canonicalFilePath() : fileInfo.absoluteFilePath();
     bool isNewFile = !QFile::exists(realFilePath);
 
-#ifdef _WIN32
+#ifdef Q_OS_WIN
     bool isHidden = fileInfo.isHidden();
 #endif
 
@@ -297,9 +297,8 @@ bool Database::saveAs(const QString& filePath, SaveAction action, const QString&
             QFile::setPermissions(realFilePath, QFile::ReadUser | QFile::WriteUser);
         }
 
- #ifdef _WIN32
-        if (isHidden)
-        {
+#ifdef Q_OS_WIN
+        if (isHidden) {
             SetFileAttributes(realFilePath.toStdString().c_str(), FILE_ATTRIBUTE_HIDDEN);
         }
 #endif
