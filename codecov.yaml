@@ -1,8 +1,9 @@
+codecov:
+  require_ci_to_pass: false
 coverage:
   range: 60..80
   round: nearest
   precision: 2
-  require_ci_to_pass: false
   status:
     project:
       default:
