@@ -1,6 +1,6 @@
 /*
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2017 Toni Spets <toni.spets@iki.fi>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -24,10 +24,9 @@
 #include "core/Tools.h"
 
 #include <QCoreApplication>
-#include <QDebug>
 #include <QDir>
 #include <QProcessEnvironment>
-#include <QTextCodec>
+#include <QStringConverter>
 #include <QXmlStreamReader>
 
 KeeAgentSettings::KeeAgentSettings()
@@ -292,9 +291,6 @@ QByteArray KeeAgentSettings::toXml() const
     QByteArray ba;
     QXmlStreamWriter writer(&ba);
 
-    // real KeeAgent can only read UTF-16
-    // TODO: Set to UTF-16
-    //writer.setCodec(QTextCodec::codecForName("UTF-16"));
     writer.setAutoFormatting(true);
     writer.setAutoFormattingIndent(2);
 
@@ -332,7 +328,12 @@ QByteArray KeeAgentSettings::toXml() const
     writer.writeEndElement(); // EntrySettings
     writer.writeEndDocument();
 
-    return ba;
+    // Real KeeAgent can only read UTF-16
+    auto toDecUtf16 = QStringDecoder(QStringConverter::Utf8);
+    auto sUtf16 = toDecUtf16(ba);
+    auto toEncUtf16 = QStringEncoder(QStringEncoder::Utf16);
+    auto baUtf16 = toEncUtf16(sUtf16);
+    return baUtf16;
 }
 
 /**

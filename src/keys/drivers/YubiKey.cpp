@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2014 Kyle Manna <kyle@kylemanna.com>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -23,8 +23,6 @@
 #include <QMutexLocker>
 #include <QSet>
 #include <QtConcurrent>
-
-QMutex YubiKey::s_interfaceMutex(QMutex::Recursive);
 
 YubiKey::YubiKey()
 {
@@ -73,7 +71,7 @@ bool YubiKey::isInitialized()
 
 bool YubiKey::findValidKeys()
 {
-    QMutexLocker lock(&s_interfaceMutex);
+    QMutexLocker lock(&m_interfaces_detect_mutex);
 
     m_usbKeys = YubiKeyInterfaceUSB::instance()->findValidKeys();
     m_pcscKeys = YubiKeyInterfacePCSC::instance()->findValidKeys();
@@ -88,7 +86,7 @@ void YubiKey::findValidKeysAsync()
 
 YubiKey::KeyMap YubiKey::foundKeys()
 {
-    QMutexLocker lock(&s_interfaceMutex);
+    QMutexLocker lock(&m_interfaces_detect_mutex);
     KeyMap foundKeys;
 
     for (auto i = m_usbKeys.cbegin(); i != m_usbKeys.cend(); ++i) {
@@ -104,7 +102,7 @@ YubiKey::KeyMap YubiKey::foundKeys()
 
 QString YubiKey::errorMessage()
 {
-    QMutexLocker lock(&s_interfaceMutex);
+    QMutexLocker lock(&m_interfaces_detect_mutex);
 
     QString error;
     error.clear();
@@ -141,7 +139,7 @@ QString YubiKey::errorMessage()
  */
 bool YubiKey::testChallenge(YubiKeySlot slot, bool* wouldBlock)
 {
-    QMutexLocker lock(&s_interfaceMutex);
+    QMutexLocker lock(&m_interfaces_detect_mutex);
 
     if (m_usbKeys.contains(slot)) {
         return YubiKeyInterfaceUSB::instance()->testChallenge(slot, wouldBlock);
@@ -166,7 +164,7 @@ bool YubiKey::testChallenge(YubiKeySlot slot, bool* wouldBlock)
 YubiKey::ChallengeResult
 YubiKey::challenge(YubiKeySlot slot, const QByteArray& challenge, Botan::secure_vector<char>& response)
 {
-    QMutexLocker lock(&s_interfaceMutex);
+    QMutexLocker lock(&m_interfaces_detect_mutex);
 
     m_error.clear();
 

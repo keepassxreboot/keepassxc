@@ -347,9 +347,15 @@ void CsvParser::setComment(const QChar& c)
 
 void CsvParser::setCodec(const QString& s)
 {
-    Q_UNUSED(s)
-    // TODO: Solve
-    //m_ts.setCodec(QTextCodec::codecForName(s.toLocal8Bit()));
+    if (s.toLocal8Bit().compare(QByteArray("UTF-8"), Qt::CaseInsensitive) == 0) {
+        m_ts.setEncoding(QStringConverter::Utf8);
+    } else if (s.toLocal8Bit().compare(QByteArray("Windows-1252"), Qt::CaseInsensitive) == 0) {
+        m_ts.setEncoding(QStringConverter::System);
+    } else if (s.toLocal8Bit().compare(QByteArray("UTF-16"), Qt::CaseInsensitive) == 0) {
+        m_ts.setEncoding(QStringConverter::Utf16);
+    } else if (s.toLocal8Bit().compare(QByteArray("UTF-16LE"), Qt::CaseInsensitive) == 0) {
+        m_ts.setEncoding(QStringConverter::Utf16LE);
+    }
 }
 
 void CsvParser::setFieldSeparator(const QChar& c)

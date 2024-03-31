@@ -267,7 +267,7 @@ MainWindow::MainWindow()
     connect(m_inactivityTimer, SIGNAL(inactivityDetected()), this, SLOT(lockDatabasesAfterInactivity()));
     applySettingsChanges();
 
-    / Prevent conflicts with global Mac shortcuts (force Control on all platforms)
+    // Prevent conflicts with global Mac shortcuts (force Control on all platforms)
 #ifdef Q_OS_MAC
     auto modifier = Qt::META;
 #else

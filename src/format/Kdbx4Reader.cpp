@@ -412,7 +412,6 @@ QVariantMap Kdbx4Reader::readVariantMap(QIODevice* device)
             break;
 
         case KeePass2::VariantMapFieldType::String:
-            //vm.insert(name, QVariant(QString::fromUtf8(valueBytes)));
             vm.insert(name, QVariant(QString::fromUtf8(valueBytes.toStdString().c_str())));
             break;
 
