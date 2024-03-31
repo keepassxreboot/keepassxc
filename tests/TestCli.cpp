@@ -26,6 +26,7 @@
 #include "crypto/Crypto.h"
 #include "keys/FileKey.h"
 #include "keys/drivers/YubiKey.h"
+#include "zxcvbn/zxcvbn.h"
 
 #include "cli/Add.h"
 #include "cli/AddGroup.h"
@@ -1187,89 +1188,71 @@ void TestCli::testEdit()
 
 void TestCli::testEstimate_data()
 {
+    // clang-format off
     QTest::addColumn<QString>("input");
-    QTest::addColumn<QString>("length");
-    QTest::addColumn<QString>("entropy");
-    QTest::addColumn<QString>("log10");
     QTest::addColumn<QStringList>("searchStrings");
 
-    QTest::newRow("Dictionary") << "password"
-                                << "8"
-                                << "1.0"
-                                << "0.3" << QStringList{"Type: Dictionary", "\tpassword"};
+    QTest::newRow("Dictionary")
+        << "password"
+        << QStringList{"Type: Dictionary", "\tpassword"};
 
-    QTest::newRow("Spatial") << "zxcv"
-                             << "4"
-                             << "10.3"
-                             << "3.1" << QStringList{"Type: Spatial", "\tzxcv"};
+    QTest::newRow("Spatial")
+        << "sdfg"
+        << QStringList{"Type: Spatial", "\tsdfg"};
 
-    QTest::newRow("Spatial(Rep)") << "sdfgsdfg"
-                                  << "8"
-                                  << "11.3"
-                                  << "3.4" << QStringList{"Type: Spatial(Rep)", "\tsdfgsdfg"};
+    QTest::newRow("Spatial(Rep)")
+        << "sdfgsdfg"
+        << QStringList{"Type: Spatial(Rep)", "\tsdfgsdfg"};
 
     QTest::newRow("Dictionary / Sequence")
         << "password123"
-        << "11"
-        << "4.5"
-        << "1.3" << QStringList{"Type: Dictionary", "Type: Sequence", "\tpassword", "\t123"};
+        << QStringList{"Type: Dictionary", "Type: Sequence", "\tpassword", "\t123"};
 
-    QTest::newRow("Dict+Leet") << "p455w0rd"
-                               << "8"
-                               << "2.5"
-                               << "0.7" << QStringList{"Type: Dict+Leet", "\tp455w0rd"};
+    QTest::newRow("Dict+Leet")
+        << "p455w0rd"
+        << QStringList{"Type: Dict+Leet", "\tp455w0rd"};
 
-    QTest::newRow("Dictionary(Rep)") << "hellohello"
-                                     << "10"
-                                     << "7.3"
-                                     << "2.2" << QStringList{"Type: Dictionary(Rep)", "\thellohello"};
+    QTest::newRow("Dictionary(Rep)")
+        << "hellohello"
+        << QStringList{"Type: Dictionary(Rep)", "\thellohello"};
 
     QTest::newRow("Sequence(Rep) / Dictionary")
         << "456456foobar"
-        << "12"
-        << "16.7"
-        << "5.0" << QStringList{"Type: Sequence(Rep)", "Type: Dictionary", "\t456456", "\tfoobar"};
+        << QStringList{"Type: Sequence(Rep)", "Type: Dictionary", "\t456456", "\tfoobar"};
 
     QTest::newRow("Bruteforce(Rep) / Bruteforce")
         << "xzxzy"
-        << "5"
-        << "16.1"
-        << "4.8" << QStringList{"Type: Bruteforce(Rep)", "Type: Bruteforce", "\txzxz", "\ty"};
+        << QStringList{"Type: Bruteforce(Rep)", "Type: Bruteforce", "\txzxz", "\ty"};
 
     QTest::newRow("Dictionary / Date(Rep)")
         << "pass20182018"
-        << "12"
-        << "15.1"
-        << "4.56" << QStringList{"Type: Dictionary", "Type: Date(Rep)", "\tpass", "\t20182018"};
+        << QStringList{"Type: Dictionary", "Type: Date(Rep)", "\tpass", "\t20182018"};
 
     QTest::newRow("Dictionary / Date / Bruteforce")
         << "mypass2018-2"
-        << "12"
-        << "32.9"
-        << "9.9" << QStringList{"Type: Dictionary", "Type: Date", "Type: Bruteforce", "\tmypass", "\t2018", "\t-2"};
+        << QStringList{"Type: Dictionary", "Type: Date", "Type: Bruteforce", "\tmypass", "\t2018", "\t-2"};
 
-    QTest::newRow("Strong Password") << "E*!%.Qw{t.X,&bafw)\"Q!ah$%;U/"
-                                     << "28"
-                                     << "165.7"
-                                     << "49.8" << QStringList{"Type: Bruteforce", "\tE*"};
+    QTest::newRow("Strong Password")
+        << "E*!%.Qw{t.X,&bafw)\"Q!ah$%;U/"
+        << QStringList{"Type: Bruteforce", "\tE*"};
 
     // TODO: detect passphrases and adjust entropy calculation accordingly (issue #2347)
     QTest::newRow("Strong Passphrase")
         << "squint wooing resupply dangle isolation axis headsman"
-        << "53"
-        << "151.2"
-        << "45.5"
-        << QStringList{
-               "Type: Dictionary", "Type: Bruteforce", "Multi-word extra bits 22.0", "\tsquint", "\t ", "\twooing"};
+        << QStringList{"Type: Dictionary", "Type: Bruteforce", "Multi-word extra bits 22.0", "\tsquint", "\t ", "\twooing"};
+    // clang-format on
 }
 
 void TestCli::testEstimate()
 {
     QFETCH(QString, input);
-    QFETCH(QString, length);
-    QFETCH(QString, entropy);
-    QFETCH(QString, log10);
     QFETCH(QStringList, searchStrings);
+
+    // Calculate expected values since zxcvbn output can vary by platform if different wordlists are used
+    const auto e = ZxcvbnMatch(input.toUtf8(), nullptr, nullptr);
+    auto length = QString::number(input.length());
+    auto entropy = QString("%1").arg(e, 0, 'f', 3);
+    auto log10 = QString("%1").arg(e * 0.301029996, 0, 'f', 3);
 
     Estimate estimateCmd;
     QVERIFY(!estimateCmd.name.isEmpty());
