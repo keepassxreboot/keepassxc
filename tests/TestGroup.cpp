@@ -20,6 +20,7 @@
 #include "mock/MockClock.h"
 
 #include <QSet>
+#include <QVector>
 #include <QSignalSpy>
 #include <QtTestGui>
 
@@ -1380,4 +1381,102 @@ void TestGroup::testTimeinfoChanges()
     root->sortChildrenRecursively(false);
     QCOMPARE(root->timeInfo().lastModificationTime(), startTime);
     QCOMPARE(subgroup1->timeInfo().lastModificationTime(), startTime);
+}
+
+void TestGroup::testWalk()
+{
+    QScopedPointer<Group> root(new Group());
+    size_t totalGroups{1}, totalEntries{0};
+    for (int i = 0; i < 3; ++i) {
+        Group* subgroup = new Group();
+        subgroup->setParent(root.data());
+        ++totalGroups;
+        int rows = i + 1;
+        int columns = i;
+        QVector<Group*> groupsVec;
+        groupsVec.resize(rows * columns);
+        for (int r = 0; r < rows; ++r) {
+            for (int c = 0; c < columns; ++c) {
+                int index = r * columns + c;
+                Group* group = new Group();
+                groupsVec[index] = group;
+                group->setParent(c > 0 ? groupsVec[index - 1] : subgroup);
+                int entryCount = std::max<int>(1, c + 1 >= columns ? 20 - (i * 3) : c + r);
+                for (int e = 0; e < entryCount; ++e) {
+                    Entry* entry = new Entry();
+                    entry->setGroup(group);
+                }
+                totalEntries += entryCount;
+            }
+        }
+        totalGroups += groupsVec.size();
+    }
+    
+    
+    size_t groupCount{0}, entryCount{0};
+    auto groupCounter = [&](Group* group){ groupCount += 1; };
+    auto entryCounter = [&](const Entry* entry){ entryCount += 1; };
+    bool shouldHaveStopped = false;
+    bool calledAfterStopped = false;
+    auto groupStopHalfway = [&](Group* group) {
+        groupCounter(group);
+        if (groupCount >= totalGroups / 2) {
+            if (shouldHaveStopped) {
+                calledAfterStopped = true;
+            } else {
+                shouldHaveStopped = true;
+                calledAfterStopped = false;
+            }
+            return true;
+        }
+        return false;
+    };
+    auto entryStopHalfWay = [&](Entry* entry) {
+        entryCounter(entry);
+        if (entryCount >= totalEntries / 2) {
+            if (shouldHaveStopped) {
+                calledAfterStopped = true;
+            } else {
+                shouldHaveStopped = true;
+                calledAfterStopped = false;
+            }
+            return true;
+        }
+        return false;
+    };
+
+
+    bool result = root->walk(true, groupCounter, entryCounter);
+    // walk should not stopped
+    QCOMPARE(result, false);
+    // walk should have visited all groups & entries
+    QCOMPARE(groupCount, totalGroups);
+    QCOMPARE(entryCount, totalEntries);
+
+    groupCount = entryCount = 0;
+    result = root->walkGroups(true, groupCounter);
+    QCOMPARE(result, false);
+    QCOMPARE(groupCount, totalGroups);
+    result = const_cast<const Group*>(root.data())->walkEntries(entryCounter);
+    QCOMPARE(result, false);
+    QCOMPARE(entryCount, totalEntries);
+
+    groupCount = entryCount = 0;
+    result = root->walk(false, groupStopHalfway, entryStopHalfWay);
+    // should have stopped
+    QCOMPARE(result, true);
+    // should not have been called after stopped
+    QCOMPARE(calledAfterStopped, false);
+
+    groupCount = entryCount = 0;
+    shouldHaveStopped = false;
+    result = root->walkGroups(false, groupStopHalfway);
+    QCOMPARE(result, true);
+    QCOMPARE(calledAfterStopped, false);
+
+    groupCount = entryCount = 0;
+    shouldHaveStopped = false;
+    result = root->walkEntries(entryStopHalfWay);
+    QCOMPARE(result, true);
+    QCOMPARE(calledAfterStopped, false);
 }

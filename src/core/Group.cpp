@@ -558,6 +558,16 @@ bool Group::hasChildren() const
     return !children().isEmpty();
 }
 
+bool Group::isDescendantOf(const Group* group) const
+{
+    for(const Group* parent = m_parent; parent; parent = parent->m_parent) {
+        if (parent == group) {
+            return true;
+        }
+    }
+    return false;
+}
+
 Database* Group::database()
 {
     return m_db;

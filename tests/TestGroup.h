@@ -51,6 +51,7 @@ private slots:
     void testPreviousParentGroup();
     void testAutoTypeState();
     void testTimeinfoChanges();
+    void testWalk();
 };
 
 #endif // KEEPASSX_TESTGROUP_H
