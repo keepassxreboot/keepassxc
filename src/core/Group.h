@@ -180,7 +180,19 @@ public:
     QList<const Group*> groupsRecursive(bool includeSelf) const;
     QList<Group*> groupsRecursive(bool includeSelf);
 
-    // walk methods for traversing the tree efficiently (depth-first search)
+    /**
+    * Walk methods for traversing the tree (depth-first search)
+    *
+    * @param[in] includeSelf is the current group to be included or excluded
+    *     if `false` the current group's entries will not be included either
+    * @param[in] groupVisitor functor that takes a single argument: ([const] Group*)
+    *     the functor may return a bool to indicate whether to stop=`true` or continue=`false` traversing
+    *     for a non-`bool` return-type the value is ignored and the traversing will continue as if `false` had been returned
+    * @param[in] entryVisitor functor that takes a single argument: ([const] Entry*)
+    *     the functor may return a bool to indicate whether to stop=`true` or continue=`false` traversing
+    *     for a non-`bool` return-type the value is ignored and the traversing will continue as if `false` had been returned
+    * @return `false` if the traversing completed without stop, or `true` otherwise
+    */
     template <CGroupVisitor TGroupCallable, CEntryVisitor TEntryCallable>
     bool walk(bool includeSelf, TGroupCallable&& groupVisitor, TEntryCallable&& entryVisitor)
     {
