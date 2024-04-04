@@ -106,6 +106,7 @@ PublicKeyCredential BrowserPasskeys::buildRegisterPublicKeyCredential(const QJso
     QJsonObject responseObject;
     responseObject["attestationObject"] = browserMessageBuilder()->getBase64FromArray(attestationObject);
     responseObject["clientDataJSON"] = browserMessageBuilder()->getBase64FromJson(clientDataJson);
+    responseObject["clientExtensionResults"] = credentialCreationOptions["clientExtensionResults"];
 
     // PublicKeyCredential
     QJsonObject publicKeyCredential;
@@ -142,6 +143,7 @@ QJsonObject BrowserPasskeys::buildGetPublicKeyCredential(const QJsonObject& asse
     QJsonObject responseObject;
     responseObject["authenticatorData"] = browserMessageBuilder()->getBase64FromArray(authenticatorData);
     responseObject["clientDataJSON"] = browserMessageBuilder()->getBase64FromJson(clientDataJson);
+    responseObject["clientExtensionResults"] = assertionOptions["clientExtensionResults"];
     responseObject["signature"] = browserMessageBuilder()->getBase64FromArray(signature);
     responseObject["userHandle"] = userHandle;
 
