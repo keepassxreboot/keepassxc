@@ -17,6 +17,7 @@
 #include "../streams.h"
 #include "FixtureWithDb.h"
 #include "catch2/catch_all.hpp"
+#include "core/PasswordHealth.h"
 #include "gui/PasswordGeneratorWidget.h"
 #include "gui/PasswordWidget.h"
 #include "gui/entry/EditEntryWidget.h"
@@ -509,35 +510,34 @@ SCENARIO_METHOD(FixtureBase, "Password Generator in standalone mode", "[gui]")
             // Data generator lets to reuse the same assertions of entropy and quality across different input passwords.
             struct TestData {
                 QString password;
-                QString expectedEntropyLabel;
                 QString expectedStrengthLabel;
             };
 
             auto data = GENERATE(
                 // Empty password
-                TestData{"", "Entropy: 0.00 bit", "Password Quality: Poor"},
+                TestData{"", "Password Quality: Poor"},
                 // Well-known password
-                TestData{"hello", "Entropy: 6.38 bit", "Password Quality: Poor"},
+                TestData{"hello", "Password Quality: Poor"},
                 // Password composed of well-known words
-                TestData{"helloworld", "Entropy: 13.10 bit", "Password Quality: Poor"},
+                TestData{"helloworld", "Password Quality: Poor"},
                 // Password composed of well-known words with number
-                TestData{"password1", "Entropy: 4.00 bit", "Password Quality: Poor"},
+                TestData{"password1", "Password Quality: Poor"},
                 // Password out of small character space
-                TestData{"D0g..................", "Entropy: 19.02 bit", "Password Quality: Poor"},
+                TestData{"D0g..................", "Password Quality: Poor"},
                 // XKCD, easy substitutions
-                TestData{"Tr0ub4dour&3", "Entropy: 30.87 bit", "Password Quality: Poor"},
+                TestData{"Tr0ub4dour&3", "Password Quality: Poor"},
                 // XKCD, word generator
-                TestData{"correcthorsebatterystaple", "Entropy: 47.98 bit", "Password Quality: Weak"},
+                TestData{"correcthorsebatterystaple", "Password Quality: Weak"},
                 // Random characters, medium length
-                TestData{"YQC3kbXbjC652dTDH", "Entropy: 95.83 bit", "Password Quality: Good"},
+                TestData{"YQC3kbXbjC652dTDH", "Password Quality: Good"},
                 // Random characters, long
-                TestData{"Bs5ZFfthWzR8DGFEjaCM6bGqhmCT4km", "Entropy: 174.59 bit", "Password Quality: Excellent"},
+                TestData{"Bs5ZFfthWzR8DGFEjaCM6bGqhmCT4km", "Password Quality: Excellent"},
                 // Long password using Zxcvbn chunk estimation
                 TestData{"quintet-tamper-kinswoman-humility-vengeful-haven-tastiness-aspire-widget-ipad-cussed-reaffirm-ladylike-"
                          "ashamed-anatomy-daybed-jam-swear-strudel-neatness-stalemate-unbundle-flavored-relation-emergency-underrate-"
                          "registry-getting-award-unveiled-unshaken-stagnate-cartridge-magnitude-ointment-hardener-enforced-scrubbed-"
                          "radial-fiddling-envelope-unpaved-moisture-unused-crawlers-quartered-crushed-kangaroo-tiptop-doily" ,
-                         "Entropy: 1205.85 bit", "Password Quality: Excellent"},
+                         "Password Quality: Excellent"},
                 // Longer password above Zxcvbn threshold
                 TestData{"quintet-tamper-kinswoman-humility-vengeful-haven-tastiness-aspire-widget-ipad-cussed-reaffirm-ladylike-"
                          "ashamed-anatomy-daybed-jam-swear-strudel-neatness-stalemate-unbundle-flavored-relation-emergency-underrate-"
@@ -552,15 +552,19 @@ SCENARIO_METHOD(FixtureBase, "Password Generator in standalone mode", "[gui]")
                          "unfocused-sympathy-doily-election-ambulance-polish-subtype-grumbling-neon-stooge-reanalyze-rockfish-"
                          "disparate-decorated-washroom-threefold-muzzle-buckwheat-kerosene-swell-why-reprocess-correct-shady-"
                          "impatient-slit-banshee-scrubbed-dreadful-unlocking-urologist-hurried-citable-fragment-septic-lapped-"
-                         "prankish-phantom-unpaved-moisture-unused-crawlers-quartered-crushed-kangaroo-lapel-emporium-renounce" ,
-                         "Entropy: 4210.27 bit", "Password Quality: Excellent"}
+                         "prankish-phantom-unpaved-moisture-unused-crawlers-quartered-crushed-kangaroo-lapel-emporium-renounce",
+                         "Password Quality: Excellent"}
             );
 
             pPasswordEdit->setText(data.password);
 
             THEN("Entropy and password quality (strength) have expected values")
             {
-                REQUIRE(findLabelText(pPwdGenWidget, "entropyLabel") == data.expectedEntropyLabel);
+                // Dynamically calculate entropy due to variances with zxcvbn wordlists
+                PasswordHealth health(data.password);
+                auto expectedEntropy = QString("Entropy: %1 bit").arg(QString::number(health.entropy(), 'f', 2));
+
+                REQUIRE(findLabelText(pPwdGenWidget, "entropyLabel") == expectedEntropy);
                 REQUIRE(findLabelText(pPwdGenWidget, "strengthLabel") == data.expectedStrengthLabel);
             }
         }
