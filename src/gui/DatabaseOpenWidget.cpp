@@ -470,7 +470,11 @@ bool DatabaseOpenWidget::browseKeyFile()
     if (filename.isEmpty()) {
         return false;
     }
-    FileDialog::saveLastDir("keyfile", filename, true);
+    if (config()->get(Config::RememberLastKeyFiles).toBool()) {
+        FileDialog::saveLastDir("keyfile", filename, true);
+    } else {
+        FileDialog::saveLastDir("keyfile", {});
+    }
 
     if (QFileInfo(filename).canonicalFilePath() == QFileInfo(m_filename).canonicalFilePath()) {
         MessageBox::warning(this,
