@@ -54,6 +54,7 @@ public:
 private slots:
     void handleColorSchemeRead(QDBusVariant value);
     void handleColorSchemeChanged(QString ns, QString key, QDBusVariant value);
+    void launchAtStartupRequested(uint response, const QVariantMap& results);
 
 private:
     explicit NixUtils(QObject* parent = nullptr);
