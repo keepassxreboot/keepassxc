@@ -34,10 +34,8 @@ class TestGui : public QObject
 private slots:
     void initTestCase();
     void init();
-    void cleanup();
     void cleanupTestCase();
 
-    void testAutoreloadDatabase();
     void testEditEntry();
     void testSearchEditEntry();
     void testAddEntry();

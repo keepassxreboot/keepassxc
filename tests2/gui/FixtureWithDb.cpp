@@ -30,6 +30,7 @@
 #include <QComboBox>
 #include <QPushButton>
 #include <QTest>
+#include <QToolBar>
 
 FixtureWithDb::FixtureWithDb()
     : FixtureBase()
@@ -159,4 +160,48 @@ void FixtureWithDb::saveAndCheckDatabase(int attempts)
     } while (++i < attempts);
 
     FAIL("Could not save database.");
+}
+
+void FixtureWithDb::updateEntry(int row, const QString& newTitle)
+{
+    auto* entryView = m_dbWidget->findChild<EntryView*>("entryView");
+    entryView->setFocus();
+    REQUIRE(entryView->hasFocus());
+
+    // Select the given row in the view
+    QModelIndex entryItem = entryView->model()->index(row, 1);
+    Entry* entry = entryView->entryFromIndex(entryItem);
+    clickIndex(entryItem, entryView, Qt::LeftButton);
+
+    // Confirm the edit action button is enabled
+    auto* entryEditAction = m_mainWindow->findChild<QAction*>("actionEntryEdit");
+    REQUIRE(entryEditAction->isEnabled());
+    QWidget* entryEditWidget = findToolBar()->widgetForAction(entryEditAction);
+    REQUIRE(entryEditWidget->isVisible());
+    REQUIRE(entryEditWidget->isEnabled());
+
+    // Record the current history count
+    int editCount = entry->historyItems().size();
+
+    // Edit the selected entry: set the new title
+    QTest::mouseClick(entryEditWidget, Qt::LeftButton);
+    REQUIRE(m_dbWidget->currentMode() == DatabaseWidget::Mode::EditMode);
+    auto* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
+    editEntryWidget->findChild<QLineEdit*>("titleEdit")->setText(newTitle);
+
+    auto* editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
+    auto* okButton = editEntryWidgetButtonBox->button(QDialogButtonBox::Ok);
+    auto* applyButton = editEntryWidgetButtonBox->button(QDialogButtonBox::Apply);
+    REQUIRE(applyButton->isEnabled());
+
+    // Apply the edit
+    QTest::mouseClick(applyButton, Qt::LeftButton);
+    REQUIRE(m_dbWidget->currentMode() == DatabaseWidget::Mode::EditMode);
+    REQUIRE(entry->title() == QString(newTitle));
+    REQUIRE(entry->historyItems().size() == ++editCount);
+    REQUIRE_FALSE(applyButton->isEnabled());
+
+    // Save the edit (press OK)
+    QTest::mouseClick(okButton, Qt::LeftButton);
+    QApplication::processEvents();
 }

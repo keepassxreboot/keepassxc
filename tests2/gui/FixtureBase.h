@@ -19,6 +19,7 @@
 
 #include "core/Tools.h"
 #include "gui/MainWindow.h"
+#include <QAbstractItemView>
 
 // A base fixture with initialized MainWindow and default config with custom settings for GUI tests.
 // Can be used as standalone fixture for scenario where open and unlocked DB is not needed.
@@ -34,6 +35,10 @@ protected:
     static QAction* findAction(const QString& actionName);
     static void triggerAction(const QString& name);
     static void clickToolbarButton(const QString& actionName);
+    static void clickIndex(const QModelIndex& index,
+                    QAbstractItemView* view,
+                    Qt::MouseButton button,
+                    Qt::KeyboardModifiers stateKey = 0);
 
     static QString findLabelText(const QWidget* pWidget, const QString& labelName);
     static void escape(QWidget* pWidget, int waitMs = 250);

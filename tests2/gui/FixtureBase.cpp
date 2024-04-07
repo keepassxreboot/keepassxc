@@ -99,6 +99,15 @@ void FixtureBase::clickToolbarButton(const QString& actionName)
     wait(100); // let the action to be completed
 }
 
+void FixtureBase::clickIndex(const QModelIndex& index,
+                             QAbstractItemView* view,
+                             Qt::MouseButton button,
+                             Qt::KeyboardModifiers stateKey)
+{
+    view->scrollTo(index);
+    QTest::mouseClick(view->viewport(), button, stateKey, view->visualRect(index).center());
+}
+
 QString FixtureBase::findLabelText(const QWidget* pWidget, const QString& labelName)
 {
     auto* pLabel = pWidget->findChild<QLabel*>(labelName);

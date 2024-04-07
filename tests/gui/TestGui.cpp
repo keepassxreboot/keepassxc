@@ -139,77 +139,9 @@ void TestGui::init()
     QApplication::processEvents();
 }
 
-// Every test ends with closing the temp database without saving
-void TestGui::cleanup()
-{
-    // DO NOT save the database
-    m_db->markAsClean();
-    MessageBox::setNextAnswer(MessageBox::No);
-    triggerAction("actionDatabaseClose");
-    QApplication::processEvents();
-    MessageBox::setNextAnswer(MessageBox::NoButton);
-
-    if (m_dbWidget) {
-        delete m_dbWidget;
-    }
-}
-
 void TestGui::cleanupTestCase()
 {
     m_dbFile.remove();
-}
-
-void TestGui::testAutoreloadDatabase()
-{
-    config()->set(Config::AutoReloadOnChange, false);
-
-    // Test accepting new file in autoreload
-    MessageBox::setNextAnswer(MessageBox::Yes);
-    // Overwrite the current database with the temp data
-    QVERIFY(m_dbFile.copyFromFile(QString(KEEPASSX_TEST_DATA_DIR).append("/MergeDatabase.kdbx")));
-
-    QTRY_VERIFY(m_db != m_dbWidget->database());
-    m_db = m_dbWidget->database();
-
-    // the General group contains one entry from the new db data
-    QCOMPARE(m_db->rootGroup()->findChildByName("General")->entries().size(), 1);
-    QVERIFY(!m_tabWidget->tabText(m_tabWidget->currentIndex()).endsWith("*"));
-
-    // Reset the state
-    cleanup();
-    init();
-
-    config()->set(Config::AutoReloadOnChange, false);
-
-    // Test rejecting new file in autoreload
-    MessageBox::setNextAnswer(MessageBox::No);
-    // Overwrite the current database with the temp data
-    QVERIFY(m_dbFile.copyFromFile(QString(KEEPASSX_TEST_DATA_DIR).append("/MergeDatabase.kdbx")));
-
-    // Ensure the merge did not take place
-    QCOMPARE(m_db->rootGroup()->findChildByName("General")->entries().size(), 0);
-    QTRY_VERIFY(m_tabWidget->tabText(m_tabWidget->currentIndex()).endsWith("*"));
-
-    // Reset the state
-    cleanup();
-    init();
-
-    // Test accepting a merge of edits into autoreload
-    // Turn on autoload so we only get one messagebox (for the merge)
-    config()->set(Config::AutoReloadOnChange, true);
-    // Modify some entries
-    testEditEntry();
-
-    // This is saying yes to merging the entries
-    MessageBox::setNextAnswer(MessageBox::Merge);
-    // Overwrite the current database with the temp data
-    QVERIFY(m_dbFile.copyFromFile(QString(KEEPASSX_TEST_DATA_DIR).append("/MergeDatabase.kdbx")));
-
-    QTRY_VERIFY(m_db != m_dbWidget->database());
-    m_db = m_dbWidget->database();
-
-    QCOMPARE(m_db->rootGroup()->findChildByName("General")->entries().size(), 1);
-    QTRY_VERIFY(m_tabWidget->tabText(m_tabWidget->currentIndex()).endsWith("*"));
 }
 
 void TestGui::testEditEntry()

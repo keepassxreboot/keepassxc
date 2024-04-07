@@ -38,6 +38,7 @@ protected:
     void checkDatabase(const QString& filePath, const QString& expectedDbName);
     void checkDatabase(const QString& filePath = {});
     void saveAndCheckDatabase(int attempts = 2);
+    void updateEntry(int row, const QString& newTitle);
 
 protected:
     QPointer<DatabaseTabWidget> m_tabWidget;
