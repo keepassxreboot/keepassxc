@@ -79,6 +79,9 @@ public:
         GUI_HidePreviewPanel,
         GUI_AlwaysOnTop,
         GUI_ToolButtonStyle,
+#ifdef KEEPASSXC_DIST_FLATPAK
+        GUI_LaunchAtStartup,
+#endif
         GUI_ShowTrayIcon,
         GUI_TrayIconAppearance,
         GUI_MinimizeToTray,
