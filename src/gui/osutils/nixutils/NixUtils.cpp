@@ -21,11 +21,16 @@
 
 #include <QApplication>
 #include <QDBusInterface>
+#include <QDebug>
 #include <QDir>
 #include <QPointer>
 #include <QStandardPaths>
 #include <QStyle>
 #include <QTextStream>
+#ifdef KEEPASSXC_DIST_FLATPAK
+#include "core/Config.h"
+#include <QRandomGenerator>
+#endif
 #ifdef WITH_XC_X11
 #include <QX11Info>
 
@@ -124,12 +129,17 @@ QString NixUtils::getAutostartDesktopFilename(bool createDirs) const
 
 bool NixUtils::isLaunchAtStartupEnabled() const
 {
+#if !defined(KEEPASSXC_DIST_FLATPAK)
     return QFile::exists(getAutostartDesktopFilename());
     ;
+#else
+    return config()->get(Config::GUI_LaunchAtStartup).toBool();
+#endif
 }
 
 void NixUtils::setLaunchAtStartup(bool enable)
 {
+#if !defined(KEEPASSXC_DIST_FLATPAK)
     if (enable) {
         QFile desktopFile(getAutostartDesktopFilename(true));
         if (!desktopFile.open(QIODevice::WriteOnly)) {
@@ -164,6 +174,49 @@ void NixUtils::setLaunchAtStartup(bool enable)
     } else if (isLaunchAtStartupEnabled()) {
         QFile::remove(getAutostartDesktopFilename());
     }
+#else
+    QDBusConnection sessionBus = QDBusConnection::sessionBus();
+    QDBusMessage msg = QDBusMessage::createMethodCall("org.freedesktop.portal.Desktop",
+                                                      "/org/freedesktop/portal/desktop",
+                                                      "org.freedesktop.portal.Background",
+                                                      "RequestBackground");
+
+    QMap<QString, QVariant> options;
+    options["autostart"] = QVariant(enable);
+    options["reason"] = QVariant("Launch KeePassXC at startup");
+    int token = QRandomGenerator::global()->bounded(1000, 9999);
+    options["handle_token"] = QVariant(QString("org/keepassxc/KeePassXC/%1").arg(token));
+
+    msg << "" << options;
+
+    QDBusMessage response = sessionBus.call(msg);
+
+    QDBusObjectPath handle = response.arguments().at(0).value<QDBusObjectPath>();
+
+    bool res = sessionBus.connect("org.freedesktop.portal.Desktop",
+                                  handle.path(),
+                                  "org.freedesktop.portal.Request",
+                                  "Response",
+                                  this,
+                                  SLOT(launchAtStartupRequested(uint, QVariantMap)));
+
+    if (!res) {
+        qDebug() << "Could not connect to org.freedesktop.portal.Request::Response signal";
+    }
+#endif
+}
+
+void NixUtils::launchAtStartupRequested(uint response, const QVariantMap& results)
+{
+    if (response > 0) {
+        qDebug() << "The interaction was cancelled";
+        return;
+    }
+    bool isLauchedAtStartup = results["autostart"].value<bool>();
+    qDebug() << "The autostart value is set to:" << isLauchedAtStartup;
+#if defined(KEEPASSXC_DIST_FLATPAK)
+    config()->set(Config::GUI_LaunchAtStartup, isLauchedAtStartup);
+#endif
 }
 
 bool NixUtils::isCapslockEnabled()
