@@ -110,7 +110,9 @@ namespace
         targetRoot->setUpdateTimeinfo(updateTimeinfo);
         cloneIcon(targetMetadata, sourceRoot->database(), targetRoot->iconUuid());
         cloneEntries(targetMetadata, sourceRoot, targetRoot);
-        cloneChildren(targetMetadata, sourceRoot, targetRoot);
+        if(reference.recurse) {
+            cloneChildren(targetMetadata, sourceRoot, targetRoot);
+        }
 
         auto key = QSharedPointer<CompositeKey>::create();
         key->addKey(QSharedPointer<PasswordKey>::create(reference.password));
