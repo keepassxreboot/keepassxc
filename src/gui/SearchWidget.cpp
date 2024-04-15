@@ -21,6 +21,7 @@
 
 #include <QKeyEvent>
 #include <QMenu>
+#include <QShortcut>
 #include <QToolButton>
 
 #include "core/SignalMultiplexer.h"
@@ -42,6 +43,8 @@ SearchWidget::SearchWidget(QWidget* parent)
 
     m_searchTimer->setSingleShot(true);
     m_clearSearchTimer->setSingleShot(true);
+
+    new QShortcut(Qt::CTRL + Qt::Key_J, this, SLOT(toggleHelp()), nullptr, Qt::WidgetWithChildrenShortcut);
 
     connect(m_ui->searchEdit, SIGNAL(textChanged(QString)), SLOT(startSearchTimer()));
     connect(m_ui->helpIcon, SIGNAL(triggered()), SLOT(toggleHelp()));
