@@ -124,10 +124,10 @@ void TestDatabase::testSaveAs()
     QCOMPARE(spyFilePathChanged.count(), 1);
     QVERIFY(QFile::exists(newDbFileName));
 #ifdef Q_OS_WIN
-    QVERIFY(!QFileInfo::QFileInfo(newDbFileName).isHidden());
+    QVERIFY(!QFileInfo(newDbFileName).isHidden());
     SetFileAttributes(newDbFileName.toStdString().c_str(), FILE_ATTRIBUTE_HIDDEN);
     QVERIFY2(db->saveAs(newDbFileName, Database::Atomic, QString(), &error), error.toLatin1());
-    QVERIFY(QFileInfo::QFileInfo(newDbFileName).isHidden());
+    QVERIFY(QFileInfo(newDbFileName).isHidden());
 #endif
     QFile::remove(newDbFileName);
     QVERIFY(!QFile::exists(newDbFileName));
@@ -164,7 +164,7 @@ void TestDatabase::testSignals()
     // Short delay to allow file system settling to reduce test failures
     Tools::wait(100);
 
-    QSignalSpy spyFileChanged(db.data(), SIGNAL(databaseFileChanged()));
+    QSignalSpy spyFileChanged(db.data(), &Database::databaseFileChanged);
     QVERIFY(tempFile.copyFromFile(dbFileName));
     QTRY_COMPARE(spyFileChanged.count(), 1);
     QTRY_VERIFY(!db->isModified());
