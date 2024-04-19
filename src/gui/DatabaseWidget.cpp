@@ -1785,7 +1785,7 @@ bool DatabaseWidget::lock()
             if (!saved) {
                 // detect if a reload was triggered
                 bool reloadTriggered = false;
-                auto connection = QObject::connect(this, &DatabaseWidget::reloadBegin, [&reloadTriggered](bool){
+                auto connection = QObject::connect(this, &DatabaseWidget::reloadBegin, [&reloadTriggered] {
                     reloadTriggered = true;
                 });
                 QApplication::processEvents();
