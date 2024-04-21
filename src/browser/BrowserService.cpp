@@ -617,7 +617,8 @@ QJsonObject BrowserService::showPasskeysRegisterPrompt(const QJsonObject& public
                               userId,
                               publicKeyCredentials.key);
         } else {
-            addPasskeyToGroup(nullptr,
+            addPasskeyToGroup(db,
+                              nullptr,
                               origin,
                               rpId,
                               rpName,
@@ -640,7 +641,7 @@ QJsonObject BrowserService::showPasskeysAuthenticationPrompt(const QJsonObject& 
                                                              const QString& origin,
                                                              const StringPairList& keyList)
 {
-    auto db = selectedDatabase();
+    auto db = getDatabase();
     if (!db) {
         return getPasskeyError(ERROR_KEEPASS_DATABASE_NOT_OPENED);
     }
@@ -689,7 +690,8 @@ QJsonObject BrowserService::showPasskeysAuthenticationPrompt(const QJsonObject& 
     return getPasskeyError(ERROR_PASSKEYS_REQUEST_CANCELED);
 }
 
-void BrowserService::addPasskeyToGroup(Group* group,
+void BrowserService::addPasskeyToGroup(const QSharedPointer<Database>& db,
+                                       Group* group,
                                        const QString& url,
                                        const QString& rpId,
                                        const QString& rpName,
@@ -700,7 +702,6 @@ void BrowserService::addPasskeyToGroup(Group* group,
 {
     // If no group provided, use the default browser group of the selected database
     if (!group) {
-        auto db = selectedDatabase();
         if (!db) {
             return;
         }
