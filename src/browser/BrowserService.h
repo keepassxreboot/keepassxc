@@ -94,7 +94,8 @@ public:
     QJsonObject showPasskeysAuthenticationPrompt(const QJsonObject& publicKeyOptions,
                                                  const QString& origin,
                                                  const StringPairList& keyList);
-    void addPasskeyToGroup(Group* group,
+    void addPasskeyToGroup(const QSharedPointer<Database>& db,
+                           Group* group,
                            const QString& url,
                            const QString& rpId,
                            const QString& rpName,
