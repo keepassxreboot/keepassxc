@@ -644,7 +644,7 @@ QJsonObject BrowserService::showPasskeysRegisterPrompt(const QJsonObject& public
     const auto existingEntries = getPasskeyEntriesWithUserHandle(rpId, userId, keyList);
 
     raiseWindow();
-    BrowserPasskeysConfirmationDialog confirmDialog;
+    BrowserPasskeysConfirmationDialog confirmDialog(m_currentDatabaseWidget);
     confirmDialog.registerCredential(username, rpId, existingEntries, timeout);
 
     auto dialogResult = confirmDialog.exec();
@@ -712,7 +712,7 @@ QJsonObject BrowserService::showPasskeysAuthenticationPrompt(const QJsonObject& 
     const auto timeout = publicKeyOptions["timeout"].toInt();
 
     raiseWindow();
-    BrowserPasskeysConfirmationDialog confirmDialog;
+    BrowserPasskeysConfirmationDialog confirmDialog(m_currentDatabaseWidget);
     confirmDialog.authenticateCredential(entries, rpId, timeout);
     auto dialogResult = confirmDialog.exec();
     if (dialogResult == QDialog::Accepted) {
