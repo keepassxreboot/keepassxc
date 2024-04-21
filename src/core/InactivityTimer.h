@@ -29,8 +29,7 @@ class InactivityTimer : public QObject
 
 public:
     explicit InactivityTimer(QObject* parent = nullptr);
-    void setInactivityTimeout(int inactivityTimeout);
-    void activate();
+    void activate(int inactivityTimeout);
     void deactivate();
 
 signals:
@@ -44,7 +43,8 @@ private slots:
 
 private:
     QTimer* m_timer;
-    bool m_active;
+    bool m_active = false;
+    bool m_resetBlocked = false;
     QMutex m_emitMutx;
 };
 

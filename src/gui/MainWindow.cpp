@@ -273,7 +273,7 @@ MainWindow::MainWindow()
     m_ui->actionAllowScreenCapture->setVisible(osUtils->canPreventScreenCapture());
 
     m_inactivityTimer = new InactivityTimer(this);
-    connect(m_inactivityTimer, SIGNAL(inactivityDetected()), this, SLOT(lockDatabasesAfterInactivity()));
+    connect(m_inactivityTimer, SIGNAL(inactivityDetected()), this, SLOT(lockAllDatabases()));
     applySettingsChanges();
 
     // Qt 5.10 introduced a new "feature" to hide shortcuts in context menus
@@ -1656,14 +1656,9 @@ void MainWindow::showGroupContextMenu(const QPoint& globalPos)
 
 void MainWindow::applySettingsChanges()
 {
-    int timeout = config()->get(Config::Security_LockDatabaseIdleSeconds).toInt() * 1000;
-    if (timeout <= 0) {
-        timeout = 60;
-    }
-
-    m_inactivityTimer->setInactivityTimeout(timeout);
     if (config()->get(Config::Security_LockDatabaseIdle).toBool()) {
-        m_inactivityTimer->activate();
+        auto timeout = config()->get(Config::Security_LockDatabaseIdleSeconds).toInt() * 1000;
+        m_inactivityTimer->activate(timeout);
     } else {
         m_inactivityTimer->deactivate();
     }
@@ -1833,13 +1828,6 @@ void MainWindow::closeModalWindow()
     }
 }
 
-void MainWindow::lockDatabasesAfterInactivity()
-{
-    if (!m_ui->tabWidget->lockDatabases()) {
-        m_inactivityTimer->activate();
-    }
-}
-
 bool MainWindow::isTrayIconEnabled() const
 {
     return m_trayIcon && m_trayIcon->isVisible();
@@ -1894,7 +1882,7 @@ void MainWindow::bringToFront()
 void MainWindow::handleScreenLock()
 {
     if (config()->get(Config::Security_LockDatabaseScreenLock).toBool()) {
-        lockDatabasesAfterInactivity();
+        lockAllDatabases();
     }
 }
 
@@ -1944,7 +1932,7 @@ void MainWindow::closeAllDatabases()
 
 void MainWindow::lockAllDatabases()
 {
-    lockDatabasesAfterInactivity();
+    m_ui->tabWidget->lockDatabases();
 }
 
 void MainWindow::displayDesktopNotification(const QString& msg, QString title, int msTimeoutHint)

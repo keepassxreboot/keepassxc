@@ -20,28 +20,28 @@
 #include <QCoreApplication>
 #include <QTimer>
 
+namespace
+{
+    // Minimum timeout is 10 seconds
+    constexpr int MIN_TIMEOUT = 10000;
+} // namespace
+
 InactivityTimer::InactivityTimer(QObject* parent)
     : QObject(parent)
     , m_timer(new QTimer(this))
-    , m_active(false)
 {
-    m_timer->setSingleShot(true);
+    m_timer->setSingleShot(false);
     connect(m_timer, SIGNAL(timeout()), SLOT(timeout()));
 }
 
-void InactivityTimer::setInactivityTimeout(int inactivityTimeout)
-{
-    Q_ASSERT(inactivityTimeout > 0);
-
-    m_timer->setInterval(inactivityTimeout);
-}
-
-void InactivityTimer::activate()
+void InactivityTimer::activate(int inactivityTimeout)
 {
     if (!m_active) {
         qApp->installEventFilter(this);
     }
     m_active = true;
+    m_resetBlocked = false;
+    m_timer->setInterval(qMax(MIN_TIMEOUT, inactivityTimeout));
     m_timer->start();
 }
 
@@ -54,12 +54,15 @@ void InactivityTimer::deactivate()
 
 bool InactivityTimer::eventFilter(QObject* watched, QEvent* event)
 {
-    const QEvent::Type type = event->type();
+    const auto type = event->type();
     // clang-format off
-    if ((type >= QEvent::MouseButtonPress && type <= QEvent::KeyRelease)
-        || (type >= QEvent::HoverEnter && type <= QEvent::HoverMove)
-        || (type == QEvent::Wheel)) {
+    if (!m_resetBlocked && 
+        ((type >= QEvent::MouseButtonPress && type <= QEvent::KeyRelease) ||
+         (type >= QEvent::HoverEnter && type <= QEvent::HoverMove) ||
+          type == QEvent::Wheel)) {
         m_timer->start();
+        m_resetBlocked = true;
+        QTimer::singleShot(500, this, [this]() { m_resetBlocked = false; });
     }
     // clang-format on
 
@@ -73,7 +76,7 @@ void InactivityTimer::timeout()
         return;
     }
 
-    if (m_active && !m_timer->isActive()) {
+    if (m_active) {
         emit inactivityDetected();
     }
 
