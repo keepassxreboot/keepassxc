@@ -138,7 +138,9 @@ namespace Tools
             i++;
         }
 
-        return QString("%1 %2").arg(QLocale().toString(size, 'f', precision), units.at(i));
+        // do not display decimals for smallest unit bytes identified by index i==0
+        const quint32 displayPrecision = (i == 0 ? 0 : precision);
+        return QString("%1 %2").arg(QLocale().toString(size, 'f', displayPrecision), units.at(i));
     }
 
     QString humanReadableTimeDifference(qint64 seconds)
