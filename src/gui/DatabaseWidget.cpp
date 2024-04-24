@@ -971,7 +971,11 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
     } else {
         QUrl url = QUrl::fromUserInput(entry->resolveMultiplePlaceholders(entry->url()));
         if (!url.isEmpty()) {
+#ifdef KEEPASSXC_DIST_APPIMAGE
+            QProcess::execute("xdg-open", {url.toString(QUrl::FullyEncoded)});
+#else
             QDesktopServices::openUrl(url);
+#endif
 
             if (config()->get(Config::MinimizeOnOpenUrl).toBool()) {
                 getMainWindow()->minimizeOrHide();
