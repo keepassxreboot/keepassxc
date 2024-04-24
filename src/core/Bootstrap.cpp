@@ -129,6 +129,8 @@ namespace Bootstrap
         DWORD cbBufferSize = 0;
         PSID pLocalSystemSid = nullptr;
         DWORD pLocalSystemSidSize = SECURITY_MAX_SID_SIZE;
+        PSID pOwnerRightsSid = nullptr;
+        DWORD pOwnerRightsSidSize = SECURITY_MAX_SID_SIZE;
 
         // Access control list
         PACL pACL = nullptr;
@@ -165,9 +167,20 @@ namespace Bootstrap
             goto Cleanup;
         }
 
+        // Retrieve CreaterOwnerRights SID
+        pOwnerRightsSid = static_cast<PSID>(HeapAlloc(GetProcessHeap(), 0, pOwnerRightsSidSize));
+        if (pOwnerRightsSid == nullptr) {
+            goto Cleanup;
+        }
+
+        if (!CreateWellKnownSid(WinCreatorOwnerRightsSid, nullptr, pOwnerRightsSid, &pOwnerRightsSidSize)) {
+            auto error = GetLastError();
+            goto Cleanup;
+        }
+
         // Calculate the amount of memory that must be allocated for the DACL
         cbACL = sizeof(ACL) + sizeof(ACCESS_ALLOWED_ACE) + GetLengthSid(pTokenUser->User.Sid)
-                + sizeof(ACCESS_ALLOWED_ACE) + GetLengthSid(pLocalSystemSid);
+                + sizeof(ACCESS_ALLOWED_ACE) + GetLengthSid(pLocalSystemSid) + GetLengthSid(pOwnerRightsSid);
 
         // Create and initialize an ACL
         pACL = static_cast<PACL>(HeapAlloc(GetProcessHeap(), 0, cbACL));
@@ -186,6 +199,11 @@ namespace Bootstrap
                 SYNCHRONIZE | PROCESS_QUERY_LIMITED_INFORMATION | PROCESS_TERMINATE, // same as protected process
                 pTokenUser->User.Sid // pointer to the trustee's SID
                 )) {
+            goto Cleanup;
+        }
+
+        // Explicitly set "Process Owner" rights to Read Only. The default is Full Control.
+        if (!AddAccessAllowedAce(pACL, ACL_REVISION, READ_CONTROL, pOwnerRightsSid)) {
             goto Cleanup;
         }
 
@@ -213,16 +231,19 @@ namespace Bootstrap
 
     Cleanup:
 
-        if (pACL != nullptr) {
+        if (pACL) {
             HeapFree(GetProcessHeap(), 0, pACL);
         }
-        if (pLocalSystemSid != nullptr) {
+        if (pLocalSystemSid) {
             HeapFree(GetProcessHeap(), 0, pLocalSystemSid);
         }
-        if (pTokenUser != nullptr) {
+        if (pOwnerRightsSid) {
+            HeapFree(GetProcessHeap(), 0, pOwnerRightsSid);
+        }
+        if (pTokenUser) {
             HeapFree(GetProcessHeap(), 0, pTokenUser);
         }
-        if (hToken != nullptr) {
+        if (hToken) {
             CloseHandle(hToken);
         }
 #endif
