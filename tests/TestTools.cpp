@@ -38,7 +38,7 @@ void TestTools::testHumanReadableFileSize()
     constexpr auto kibibyte = 1024u;
     using namespace Tools;
 
-    QCOMPARE(createDecimal("1", "00", "B"), humanReadableFileSize(1));
+    QCOMPARE(QString("1 B"), humanReadableFileSize(1));
     QCOMPARE(createDecimal("1", "00", "KiB"), humanReadableFileSize(kibibyte));
     QCOMPARE(createDecimal("1", "00", "MiB"), humanReadableFileSize(kibibyte * kibibyte));
     QCOMPARE(createDecimal("1", "00", "GiB"), humanReadableFileSize(kibibyte * kibibyte * kibibyte));

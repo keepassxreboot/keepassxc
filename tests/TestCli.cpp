@@ -2112,7 +2112,7 @@ void TestCli::testShow()
                         "Tags: \n"
                         "\n"
                         "Attachments:\n"
-                        "  Sample attachment.txt (15.0 B)\n"));
+                        "  Sample attachment.txt (15 B)\n"));
 
     setInput("a");
     execCmd(showCmd, {"show", m_dbFile->fileName(), "--show-attachments", "/Homebanking/Subgroup/Subgroup Entry"});
