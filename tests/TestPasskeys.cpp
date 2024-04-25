@@ -459,9 +459,9 @@ void TestPasskeys::testExtensions()
     auto result = passkeyUtils()->buildExtensionData(extensions);
 
     BrowserCbor cbor;
-    auto extensionJson = cbor.getJsonFromCborData(result);
-    auto uvmArray = extensionJson["uvm"].toArray();
-    QCOMPARE(extensionJson["credProps"].toObject()["rk"].toBool(), true);
+    auto extensionJson = cbor.getJsonFromCborData(result.extensionData);
+    auto uvmArray = result.extensionObject["uvm"].toArray();
+    QCOMPARE(result.extensionObject["credProps"].toObject()["rk"].toBool(), true);
     QCOMPARE(uvmArray.size(), 1);
     QCOMPARE(uvmArray.first().toArray().size(), 3);
 
@@ -470,10 +470,10 @@ void TestPasskeys::testExtensions()
     auto partialData = passkeyUtils()->buildExtensionData(partial);
     auto faultyData = passkeyUtils()->buildExtensionData(faulty);
 
-    auto partialJson = cbor.getJsonFromCborData(partialData);
+    auto partialJson = cbor.getJsonFromCborData(partialData.extensionData);
     QCOMPARE(partialJson["uvm"].toArray().size(), 1);
 
-    auto faultyJson = cbor.getJsonFromCborData(faultyData);
+    auto faultyJson = cbor.getJsonFromCborData(faultyData.extensionData);
     QCOMPARE(faultyJson.size(), 0);
 }
 

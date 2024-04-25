@@ -30,6 +30,12 @@
 #define DEFAULT_DISCOURAGED_TIMEOUT 120000
 #define PASSKEYS_SUCCESS 0
 
+struct ExtensionResult
+{
+    QByteArray extensionData;
+    QJsonObject extensionObject;
+};
+
 class PasskeyUtils : public QObject
 {
     Q_OBJECT
@@ -51,7 +57,7 @@ public:
     bool isResidentKeyRequired(const QJsonObject& authenticatorSelection) const;
     bool isUserVerificationRequired(const QJsonObject& authenticatorSelection) const;
     bool isOriginAllowedWithLocalhost(bool allowLocalhostWithPasskeys, const QString& origin) const;
-    QByteArray buildExtensionData(QJsonObject& extensionObject) const;
+    ExtensionResult buildExtensionData(QJsonObject& extensionObject) const;
     QJsonObject buildClientDataJson(const QJsonObject& publicKey, const QString& origin, bool get) const;
     QStringList getAllowedCredentialsFromAssertionOptions(const QJsonObject& assertionOptions) const;
     QString getCredentialIdFromEntry(const Entry* entry) const;
