@@ -1944,7 +1944,11 @@ void DatabaseWidget::reloadDatabaseFile(bool triggeredBySave)
     bool openResult = db->open(database()->key());
 
     // skip if the db is unchanged, or the db file is gone or for sure not a kp-db
-    if (db->fileBlockHash() == m_db->fileBlockHash() || db->fileBlockHash().isEmpty()) {
+    if (bool sameHash = db->fileBlockHash() == m_db->fileBlockHash() || db->fileBlockHash().isEmpty()) {
+        if (!sameHash) {
+            // db file gone or invalid so mark modified
+            m_db->markAsModified();
+        }
         m_blockAutoSave = false;
         reloadFinish();
         return;
@@ -1954,11 +1958,12 @@ void DatabaseWidget::reloadDatabaseFile(bool triggeredBySave)
     QString changesActionStr;
     if (triggeredBySave || m_db->isModified() || m_db->hasNonDataChanges()) {
         // Ask how to proceed
+        auto prefix = triggeredBySave ? tr("Cannot save because the") : tr("The");
         auto result = MessageBox::question(
             this,
             tr("Reload database"),
-            QString("%1.\n%2\n\n%3.\n%4.\n%5.").arg(
-                tr("The database file \"%1\" was modified externally").arg(displayFileName()),
+            QString("%1 %2.\n%3\n\n%4.\n%5.\n%6.").arg(
+                prefix, tr("database file \"%1\" was modified externally").arg(displayFileName()),
                 tr("How to proceed with your unsaved changes?"),
                 tr("Merge all changes together"),
                 tr("Discard your changes"),
