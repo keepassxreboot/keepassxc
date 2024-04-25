@@ -60,8 +60,7 @@ public slots:
 
 signals:
     void globalAutoTypeTriggered(const QString& search);
-    void autotypePerformed();
-    void autotypeRejected();
+    void autotypeFinished();
     void autotypeRetypeTimeout();
 
 private slots:

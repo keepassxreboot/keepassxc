@@ -582,7 +582,9 @@ void TestKeePass2Format::testKdbxKeyChange()
 
     db->setKey(key1);
     writeKdbx(&buffer, db.data(), hasError, errorString);
-    QVERIFY(!hasError);
+    if (hasError) {
+        QFAIL(qPrintable(QStringLiteral("Error while reading database: ").append(errorString)));
+    }
 
     // read database
     db = QSharedPointer<Database>::create();
@@ -599,7 +601,9 @@ void TestKeePass2Format::testKdbxKeyChange()
     // write database
     buffer.seek(0);
     writeKdbx(&buffer, db.data(), hasError, errorString);
-    QVERIFY(!hasError);
+    if (hasError) {
+        QFAIL(qPrintable(QStringLiteral("Error while reading database: ").append(errorString)));
+    }
 
     // read database
     db = QSharedPointer<Database>::create();

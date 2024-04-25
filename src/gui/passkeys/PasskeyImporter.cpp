@@ -152,7 +152,7 @@ void PasskeyImporter::showImportDialog(QSharedPointer<Database>& database,
     }
 
     browserService()->addPasskeyToGroup(
-        group, url, relyingParty, relyingParty, username, credentialId, userHandle, privateKey);
+        db, group, url, relyingParty, relyingParty, username, credentialId, userHandle, privateKey);
 }
 
 Group* PasskeyImporter::getDefaultGroup(QSharedPointer<Database>& database) const
