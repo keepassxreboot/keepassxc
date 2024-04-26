@@ -143,7 +143,9 @@ void TestAutoType::testSingleAutoType()
 
     QCOMPARE(m_test->actionCount(), 14);
     QCOMPARE(m_test->actionChars(),
-             QStringLiteral("myuser%1mypass%2").arg(m_test->keyToString(Qt::Key_Tab)).arg(m_test->keyToString(Qt::Key_Enter)));
+             QStringLiteral("myuser%1mypass%2")
+                 .arg(m_test->keyToString(Qt::Key_Tab))
+                 .arg(m_test->keyToString(Qt::Key_Enter)));
 }
 
 void TestAutoType::testGlobalAutoTypeWithNoMatch()
@@ -161,7 +163,8 @@ void TestAutoType::testGlobalAutoTypeWithOneMatch()
     emit osUtils->globalShortcutTriggered("autotype");
     m_autoType->performGlobalAutoType(m_dbList);
 
-    QCOMPARE(m_test->actionChars(), QStringLiteral("%1association%2").arg(m_entry1->username()).arg(m_entry1->password()));
+    QCOMPARE(m_test->actionChars(),
+             QStringLiteral("%1association%2").arg(m_entry1->username()).arg(m_entry1->password()));
 }
 
 void TestAutoType::testGlobalAutoTypeTitleMatch()
@@ -172,7 +175,8 @@ void TestAutoType::testGlobalAutoTypeTitleMatch()
     emit osUtils->globalShortcutTriggered("autotype");
     m_autoType->performGlobalAutoType(m_dbList);
 
-    QCOMPARE(m_test->actionChars(), QStringLiteral("%1%2").arg(m_entry2->password(), m_test->keyToString(Qt::Key_Enter)));
+    QCOMPARE(m_test->actionChars(),
+             QStringLiteral("%1%2").arg(m_entry2->password(), m_test->keyToString(Qt::Key_Enter)));
 }
 
 void TestAutoType::testGlobalAutoTypeUrlMatch()
@@ -183,7 +187,8 @@ void TestAutoType::testGlobalAutoTypeUrlMatch()
     emit osUtils->globalShortcutTriggered("autotype");
     m_autoType->performGlobalAutoType(m_dbList);
 
-    QCOMPARE(m_test->actionChars(), QStringLiteral("%1%2").arg(m_entry5->password(), m_test->keyToString(Qt::Key_Enter)));
+    QCOMPARE(m_test->actionChars(),
+             QStringLiteral("%1%2").arg(m_entry5->password(), m_test->keyToString(Qt::Key_Enter)));
 }
 
 void TestAutoType::testGlobalAutoTypeUrlSubdomainMatch()
@@ -194,7 +199,8 @@ void TestAutoType::testGlobalAutoTypeUrlSubdomainMatch()
     emit osUtils->globalShortcutTriggered("autotype");
     m_autoType->performGlobalAutoType(m_dbList);
 
-    QCOMPARE(m_test->actionChars(), QStringLiteral("%1%2").arg(m_entry5->password(), m_test->keyToString(Qt::Key_Enter)));
+    QCOMPARE(m_test->actionChars(),
+             QStringLiteral("%1%2").arg(m_entry5->password(), m_test->keyToString(Qt::Key_Enter)));
 }
 
 void TestAutoType::testGlobalAutoTypeTitleMatchDisabled()
@@ -310,9 +316,11 @@ void TestAutoType::testAutoTypeResults_data()
     QTest::newRow("T-CONV LOWER") << QStringLiteral("{T-CONV:/{USERNAME}/LOWER/}") << QStringLiteral("username");
     QTest::newRow("T-CONV BASE64") << QStringLiteral("{T-CONV:/{USERNAME}/BASE64/}") << QStringLiteral("VXNlcm5hbWU=");
     QTest::newRow("T-CONV HEX") << QStringLiteral("{T-CONV:/{USERNAME}/HEX/}") << QStringLiteral("557365726e616d65");
-    QTest::newRow("T-CONV URI ENCODE") << QStringLiteral("{T-CONV:/{URL}/URI/}") << QStringLiteral("https%3A%2F%2Fexample.com");
+    QTest::newRow("T-CONV URI ENCODE") << QStringLiteral("{T-CONV:/{URL}/URI/}")
+                                       << QStringLiteral("https%3A%2F%2Fexample.com");
     QTest::newRow("T-CONV URI DECODE") << QStringLiteral("{T-CONV:/{S:attr2}/URI-DEC/}") << QStringLiteral("decode me");
-    QTest::newRow("T-REPLACE-RX") << QStringLiteral("{T-REPLACE-RX:/{USERNAME}/(User)/$1Pass/}") << QStringLiteral("UserPassname");
+    QTest::newRow("T-REPLACE-RX") << QStringLiteral("{T-REPLACE-RX:/{USERNAME}/(User)/$1Pass/}")
+                                  << QStringLiteral("UserPassname");
 }
 
 void TestAutoType::testAutoTypeSyntaxChecks()

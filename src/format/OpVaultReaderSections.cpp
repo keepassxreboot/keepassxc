@@ -122,8 +122,8 @@ void OpVaultReader::fillFromSectionField(Entry* entry, const QString& sectionNam
             if (date.isValid()) {
                 entry->attributes()->set(attrName, date.toString(Qt::SystemLocaleShortDate));
             } else {
-                qWarning()
-                    << QStringLiteral("[%1] Invalid date attribute found: %2 = %3").arg(entry->title(), attrName, attrValue);
+                qWarning() << QStringLiteral("[%1] Invalid date attribute found: %2 = %3")
+                                  .arg(entry->title(), attrName, attrValue);
             }
         } else if (kind == "address") {
             // Expand address into multiple attributes

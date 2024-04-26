@@ -30,7 +30,7 @@ QTEST_GUILESS_MAIN(TestCsvExporter)
 
 const QString TestCsvExporter::ExpectedHeaderLine =
     QLatin1String("\"Group\",\"Title\",\"Username\",\"Password\",\"URL\",\"Notes\",\"TOTP\",\"Icon\",\"Last "
-            "Modified\",\"Created\"\n");
+                  "Modified\",\"Created\"\n");
 
 void TestCsvExporter::init()
 {

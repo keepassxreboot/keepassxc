@@ -61,7 +61,8 @@ void TestUrlTools::testTopLevelDomain()
         {QLatin1String("https://192.168.0.1"), QLatin1String("192.168.0.1")},
         {QLatin1String("https://192.168.0.1:8000"), QLatin1String("192.168.0.1")},
         {QLatin1String("https://www.nic.ar"), QLatin1String("nic.ar")},
-        {QLatin1String("https://www.blogspot.com.ar"), QLatin1String("www.blogspot.com.ar")}, // blogspot.com.ar is a TLD
+        {QLatin1String("https://www.blogspot.com.ar"),
+         QLatin1String("www.blogspot.com.ar")}, // blogspot.com.ar is a TLD
         {QLatin1String("https://www.arpa"), QLatin1String("www.arpa")},
         {QLatin1String("https://jap.an.ide.kyoto.jp"), QLatin1String("an.ide.kyoto.jp")}, // ide.kyoto.jp is a TLD
         {QLatin1String("https://kobe.jp"), QLatin1String("kobe.jp")},

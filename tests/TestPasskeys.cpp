@@ -213,37 +213,38 @@ void TestPasskeys::testLoadingECPrivateKeyFromPem()
         "aW4iOmZhbHNlfQ");
 
     const auto signature = browserPasskeys()->buildSignature(authenticatorData, clientData, privateKeyPem);
-    QCOMPARE(
-        browserMessageBuilder()->getBase64FromArray(signature),
-        QLatin1String("MEYCIQCpbDaYJ4b2ofqWBxfRNbH3XCpsyao7Iui5lVuJRU9HIQIhAPl5moNZgJu5zmurkKK_P900Ct6wd3ahVIqCEqTeeRdE"));
+    QCOMPARE(browserMessageBuilder()->getBase64FromArray(signature),
+             QLatin1String(
+                 "MEYCIQCpbDaYJ4b2ofqWBxfRNbH3XCpsyao7Iui5lVuJRU9HIQIhAPl5moNZgJu5zmurkKK_P900Ct6wd3ahVIqCEqTeeRdE"));
 }
 
 void TestPasskeys::testLoadingRSAPrivateKeyFromPem()
 {
-    const auto privateKeyPem = QLatin1String("-----BEGIN PRIVATE KEY-----"
-                                             "MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQC5OHjBHQaRfxxX\n4WHRmqq7e7JgT"
-                                             "FRs1bd4dIOFAOZnhNE3vAg2IF5VurmeB+9ye9xh7frw8ubrL0cv\nsBWiJfN5CY3SYGRLbGTtBC0fZ6"
-                                             "OhhhjwvVM1GW6nVeRU66atzuo4NBfYXJWIYECd\npRBU4+xsDL4vJnn1mj05+v/Tqp6Uo1HrEPx9+Dc"
-                                             "oYJD+cw7+OQ83XeGmjD+Dtm5z\nNIyYdweaafVR4PEUlB3CYZuOq9xcpxay3ps2MuYT1zGoiQqk6fla"
-                                             "d+0tBWGY8Lwp\nCVulXCv7ljNJ4gxgQtOqWX8j2hC0hBxeqNYDYbrkECid3TsMTEMcV5uaVJXULg4t"
-                                             "\nn6UItA11AgMBAAECggEAC3B0WBxHuieIfllOOOC4H9/7S7fDH2f7+W2cFtQ6pqo9\nCq0WBmkYMmw"
-                                             "Xx9hpHoq4TnhhHyL9WzPzuKYD0Vx4gvacV/ckkppFScnQKJ2hF+99\nLax1DbU+UImSknfDDFPYbYld"
-                                             "b1CD2rpJG1i6X2fRQ6NuK+F7jE05mqcIyE+ZajK+\nIpx8XFmE+tI1EEWsn3CzxMLiTQfXyFt/drM9i"
-                                             "GYfcDjYY+q5vzGU3Kxj68gjc96A\nOra79DGOmwX+4zIwo5sSzI3noHnhWPLsaRtE5jWu21Qkb+1BvB"
-                                             "jPmbQfN274OQfy\n8/BNNR/NZM1mJm/8x4Mt+h5d946XlIo0AkyYZXY/UQKBgQDYI3G3BCwaYk6MDMe"
-                                             "T\nIamRZo25phPtr3if47dhT2xFWJplIt35sW+6KjD6c1Qpb2aGOUh7JPmb57H54OgJ\nmojkS5tv9Y"
-                                             "EQZFfgCCZoeuqBx+ArqtJdkXOiNEFS0dpt44I+eO3Do5pnwKRemH+Y\ncqJ/eMH96UMzYDO7WNsyOyo"
-                                             "5UQKBgQDbYU0KbGbTrMEV4T9Q41rZ2TnWzs5moqn2\nCRtB8LOdKAZUG7FRsw5KgC1CvFn3Xuk+qphY"
-                                             "GUQeJvv7FjxMRUv4BktNpXju6eUj\n3tWHzI2QOkHaeq/XibwbNomfkdyTjtLX2+v8DBHcZnCSlukxc"
-                                             "JISyPqZ6CnTjXGE\nEGB+itBI5QKBgQCA+gWttOusguVkZWvivL+3aH9CPXy+5WsR3o1boE13xDu+Bm"
-                                             "R3\n0A5gBTVc/t1GLJf9mMlL0vCwvD5UYoWU1YbC1OtYkCQIaBiYM8TXrCGseF2pMTJ/\na4CZVp10k"
-                                             "o3J7W2XYgpgKIzHRQnQ+SeLDT0y3BjHMB9N1SaJsah7/RphQQKBgQCr\nL+4yKAzFOJUjQbVqpT8Lp5"
-                                             "qeqJofNOdzef+vIOjHxafKkiF4I0UPlZ276cY6ZfGU\nWQKwHGcvMDSI5fz/d0OksySn3mvT4uhPaV8"
-                                             "urMv6s7sXhY0Zn/0NLy2NOwDolBar\nIo2vDKwTVEyb1u75CWKzDemfl66ryj++Uhk6JZAKkQKBgQCc"
-                                             "NYVe7m648DzD0nu9\n3lgetBTaAS1zZmMs8Cinj44v0ksfqxrRBzBZcO9kCQqiJZ7uCAaVYcQ+PwkY+"
-                                             "05C\n+w1+KvdGcKM+8TQYTQM3s2B9IyKExRS/dbQf9F7stJL+k5vbt6OUerwfmbNI9R3t\ngDZ4DEfo"
-                                             "pPivs9dnequ9wfaPOw=="
-                                             "-----END PRIVATE KEY-----");
+    const auto privateKeyPem =
+        QLatin1String("-----BEGIN PRIVATE KEY-----"
+                      "MIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQC5OHjBHQaRfxxX\n4WHRmqq7e7JgT"
+                      "FRs1bd4dIOFAOZnhNE3vAg2IF5VurmeB+9ye9xh7frw8ubrL0cv\nsBWiJfN5CY3SYGRLbGTtBC0fZ6"
+                      "OhhhjwvVM1GW6nVeRU66atzuo4NBfYXJWIYECd\npRBU4+xsDL4vJnn1mj05+v/Tqp6Uo1HrEPx9+Dc"
+                      "oYJD+cw7+OQ83XeGmjD+Dtm5z\nNIyYdweaafVR4PEUlB3CYZuOq9xcpxay3ps2MuYT1zGoiQqk6fla"
+                      "d+0tBWGY8Lwp\nCVulXCv7ljNJ4gxgQtOqWX8j2hC0hBxeqNYDYbrkECid3TsMTEMcV5uaVJXULg4t"
+                      "\nn6UItA11AgMBAAECggEAC3B0WBxHuieIfllOOOC4H9/7S7fDH2f7+W2cFtQ6pqo9\nCq0WBmkYMmw"
+                      "Xx9hpHoq4TnhhHyL9WzPzuKYD0Vx4gvacV/ckkppFScnQKJ2hF+99\nLax1DbU+UImSknfDDFPYbYld"
+                      "b1CD2rpJG1i6X2fRQ6NuK+F7jE05mqcIyE+ZajK+\nIpx8XFmE+tI1EEWsn3CzxMLiTQfXyFt/drM9i"
+                      "GYfcDjYY+q5vzGU3Kxj68gjc96A\nOra79DGOmwX+4zIwo5sSzI3noHnhWPLsaRtE5jWu21Qkb+1BvB"
+                      "jPmbQfN274OQfy\n8/BNNR/NZM1mJm/8x4Mt+h5d946XlIo0AkyYZXY/UQKBgQDYI3G3BCwaYk6MDMe"
+                      "T\nIamRZo25phPtr3if47dhT2xFWJplIt35sW+6KjD6c1Qpb2aGOUh7JPmb57H54OgJ\nmojkS5tv9Y"
+                      "EQZFfgCCZoeuqBx+ArqtJdkXOiNEFS0dpt44I+eO3Do5pnwKRemH+Y\ncqJ/eMH96UMzYDO7WNsyOyo"
+                      "5UQKBgQDbYU0KbGbTrMEV4T9Q41rZ2TnWzs5moqn2\nCRtB8LOdKAZUG7FRsw5KgC1CvFn3Xuk+qphY"
+                      "GUQeJvv7FjxMRUv4BktNpXju6eUj\n3tWHzI2QOkHaeq/XibwbNomfkdyTjtLX2+v8DBHcZnCSlukxc"
+                      "JISyPqZ6CnTjXGE\nEGB+itBI5QKBgQCA+gWttOusguVkZWvivL+3aH9CPXy+5WsR3o1boE13xDu+Bm"
+                      "R3\n0A5gBTVc/t1GLJf9mMlL0vCwvD5UYoWU1YbC1OtYkCQIaBiYM8TXrCGseF2pMTJ/\na4CZVp10k"
+                      "o3J7W2XYgpgKIzHRQnQ+SeLDT0y3BjHMB9N1SaJsah7/RphQQKBgQCr\nL+4yKAzFOJUjQbVqpT8Lp5"
+                      "qeqJofNOdzef+vIOjHxafKkiF4I0UPlZ276cY6ZfGU\nWQKwHGcvMDSI5fz/d0OksySn3mvT4uhPaV8"
+                      "urMv6s7sXhY0Zn/0NLy2NOwDolBar\nIo2vDKwTVEyb1u75CWKzDemfl66ryj++Uhk6JZAKkQKBgQCc"
+                      "NYVe7m648DzD0nu9\n3lgetBTaAS1zZmMs8Cinj44v0ksfqxrRBzBZcO9kCQqiJZ7uCAaVYcQ+PwkY+"
+                      "05C\n+w1+KvdGcKM+8TQYTQM3s2B9IyKExRS/dbQf9F7stJL+k5vbt6OUerwfmbNI9R3t\ngDZ4DEfo"
+                      "pPivs9dnequ9wfaPOw=="
+                      "-----END PRIVATE KEY-----");
 
     const auto authenticatorData =
         browserMessageBuilder()->getArrayFromBase64("dKbqkhPJnC90siSSsyDPQCYqlMGpUKA5fyklC2CEHvAFAAAAAA");
@@ -255,10 +256,11 @@ void TestPasskeys::testLoadingRSAPrivateKeyFromPem()
     const auto signature = browserPasskeys()->buildSignature(authenticatorData, clientData, privateKeyPem);
     QCOMPARE(
         browserMessageBuilder()->getBase64FromArray(signature),
-        QLatin1String("MOGw6KrerCgPf2mPig7FOTFIUDXYAU1v2uZj89_NgQTg2UddWnAB3JId3pa4zXghj8CkjjadVOI_LvweJGCEpmPQnRby71yFXnja6j"
-                      "Y3woX2b2klG2fB2alGZHHrVg6yVEmnAii4kYSdmoWxI7SmzLftoZfCJNFPFHujx2Pbr-6dIB02sZhtncetT0cpyWobtj9r7C5dIGfm"
-                      "J5n-LccP-F9gXGqtbN605VrIkC2WNztjdk3dAt5FGM_dlIwSe-vP1dKfIuNqAEbgr2IVZAUFn_ZfzUo-XbXTysksuz9JZfEopJBiUi"
-                      "9tjQDNvrYQFqB6wDPqkZAomkbRCohUb3TzCg"));
+        QLatin1String(
+            "MOGw6KrerCgPf2mPig7FOTFIUDXYAU1v2uZj89_NgQTg2UddWnAB3JId3pa4zXghj8CkjjadVOI_LvweJGCEpmPQnRby71yFXnja6j"
+            "Y3woX2b2klG2fB2alGZHHrVg6yVEmnAii4kYSdmoWxI7SmzLftoZfCJNFPFHujx2Pbr-6dIB02sZhtncetT0cpyWobtj9r7C5dIGfm"
+            "J5n-LccP-F9gXGqtbN605VrIkC2WNztjdk3dAt5FGM_dlIwSe-vP1dKfIuNqAEbgr2IVZAUFn_ZfzUo-XbXTysksuz9JZfEopJBiUi"
+            "9tjQDNvrYQFqB6wDPqkZAomkbRCohUb3TzCg"));
 }
 
 void TestPasskeys::testCreatingAttestationObjectWithEC()
@@ -282,17 +284,17 @@ void TestPasskeys::testCreatingAttestationObjectWithEC()
         browserPasskeys()->buildCredentialPrivateKey(alg, predefinedFirst, predefinedSecond);
     auto result = browserPasskeys()->buildAttestationObject(
         credentialCreationOptions, "", id, credentialPrivateKey.cborEncodedPublicKey, testingVariables);
-    QCOMPARE(
-        result,
-        QStringLiteral("\xA3"
-                       "cfmtdnonegattStmt\xA0hauthDataX\xA4t\xA6\xEA\x92\x13\xC9\x9C/t\xB2$\x92\xB3 \xCF@&*\x94\xC1\xA9P\xA0"
-                       "9\x7F)%\x0B`\x84\x1E\xF0"
-                       "E\x00\x00\x00\x01\x01\x02\x03\x04\x05\x06\x07\b\x01\x02\x03\x04\x05\x06\x07\b\x00 \x8B\xB0\xCA"
-                       "6\x17\xD6\xDE\x01\x11|\xEA\x94\r\xA0R\xC0\x80_\xF3r\xFBr\xB5\x02\x03:"
-                       "\xBAr\x0Fi\x81\xFE\xA5\x01\x02\x03& \x01!X "
-                       "e\xE2\xF2\x1F:cq\xD3G\xEA\xE0\xF7\x1F\xCF\xFA\\\xABO\xF6\x86\x88\x80\t\xAE\x81\x8BT\xB2\x9B\x15\x85~"
-                       "\"X \\\x8E\x1E@\xDB\x97T-\xF8\x9B\xB0\xAD"
-                       "5\xDC\x12^\xC3\x95\x05\xC6\xDF^\x03\xCB\xB4Q\x91\xFF|\xDB\x94\xB7"));
+    QCOMPARE(result,
+             QStringLiteral(
+                 "\xA3"
+                 "cfmtdnonegattStmt\xA0hauthDataX\xA4t\xA6\xEA\x92\x13\xC9\x9C/t\xB2$\x92\xB3 \xCF@&*\x94\xC1\xA9P\xA0"
+                 "9\x7F)%\x0B`\x84\x1E\xF0"
+                 "E\x00\x00\x00\x01\x01\x02\x03\x04\x05\x06\x07\b\x01\x02\x03\x04\x05\x06\x07\b\x00 \x8B\xB0\xCA"
+                 "6\x17\xD6\xDE\x01\x11|\xEA\x94\r\xA0R\xC0\x80_\xF3r\xFBr\xB5\x02\x03:"
+                 "\xBAr\x0Fi\x81\xFE\xA5\x01\x02\x03& \x01!X "
+                 "e\xE2\xF2\x1F:cq\xD3G\xEA\xE0\xF7\x1F\xCF\xFA\\\xABO\xF6\x86\x88\x80\t\xAE\x81\x8BT\xB2\x9B\x15\x85~"
+                 "\"X \\\x8E\x1E@\xDB\x97T-\xF8\x9B\xB0\xAD"
+                 "5\xDC\x12^\xC3\x95\x05\xC6\xDF^\x03\xCB\xB4Q\x91\xFF|\xDB\x94\xB7"));
 
     // Double check that the result can be decoded
     BrowserCbor browserCbor;
@@ -324,11 +326,12 @@ void TestPasskeys::testCreatingAttestationObjectWithRSA()
 {
     // Predefined values for a desired outcome
     const auto id = QLatin1String("yrzFJ5lwcpTwYMOdXSmxF5b5cYQlqBMzbbU_d-oFLO8");
-    const auto predefinedModulus = QLatin1String("vUhOZnyn8yn7U-nuHlsXZ6WDWLuYvevWWnwtoHxDEQq27vlp7yAfeVvAPkcvhxRcwoCEUespoa5"
-                                                 "5IDbkpp2Ypd6b15KbB4C-_4gM4r2FK9gfXghLPAXsMhstYv4keNFb4ghdlY5oUU3JCqUSMyOpmd"
-                                                 "HeX-RikLL0wgGv_tLT2DaDiWeyQCAtiDblr6COuTAU2kTpLc3Bn35geV9Iqw4iT8DwBQ-f8vjnI"
-                                                 "EDANXKUiRPojfy1q7WwEl-zMv6Ke2jFHxf68u82BSy3u9DOQaa24FAHoCm8Yd0n5IazMyoxyttl"
-                                                 "tRt8un8myVOGxcXMiR9_kQb9pu1RRLQMQLd-icE1Qw");
+    const auto predefinedModulus =
+        QLatin1String("vUhOZnyn8yn7U-nuHlsXZ6WDWLuYvevWWnwtoHxDEQq27vlp7yAfeVvAPkcvhxRcwoCEUespoa5"
+                      "5IDbkpp2Ypd6b15KbB4C-_4gM4r2FK9gfXghLPAXsMhstYv4keNFb4ghdlY5oUU3JCqUSMyOpmd"
+                      "HeX-RikLL0wgGv_tLT2DaDiWeyQCAtiDblr6COuTAU2kTpLc3Bn35geV9Iqw4iT8DwBQ-f8vjnI"
+                      "EDANXKUiRPojfy1q7WwEl-zMv6Ke2jFHxf68u82BSy3u9DOQaa24FAHoCm8Yd0n5IazMyoxyttl"
+                      "tRt8un8myVOGxcXMiR9_kQb9pu1RRLQMQLd-icE1Qw");
     const auto predefinedExponent = QLatin1String("AQAB");
 
     // Force algorithm to RSA
@@ -438,14 +441,16 @@ void TestPasskeys::testGet()
     QCOMPARE(publicKeyCredential["id"].toString(), id);
 
     auto response = publicKeyCredential["response"].toObject();
-    QCOMPARE(response["authenticatorData"].toString(), QLatin1String("dKbqkhPJnC90siSSsyDPQCYqlMGpUKA5fyklC2CEHvAFAAAAAA"));
+    QCOMPARE(response["authenticatorData"].toString(),
+             QLatin1String("dKbqkhPJnC90siSSsyDPQCYqlMGpUKA5fyklC2CEHvAFAAAAAA"));
     QCOMPARE(response["clientDataJSON"].toString(),
-             QLatin1String("eyJjaGFsbGVuZ2UiOiI5ejM2dlRmUVRMOTVMZjdXblpneXRlN29oR2VGLVhSaUx4a0wtTHVHVTF6b3BSbU1JVUExTFZ3ekdwe"
-                           "UltMWZPQm4xUW5SYTBRSDI3QURBYUpHSHlzUSIsImNyb3NzT3JpZ2luIjpmYWxzZSwib3JpZ2luIjoiaHR0cHM6Ly93ZWJhdX"
-                           "Robi5pbyIsInR5cGUiOiJ3ZWJhdXRobi5nZXQifQ"));
-    QCOMPARE(
-        response["signature"].toString(),
-        QLatin1String("MEUCIHFv0lOOGGloi_XoH5s3QDSs__8yAp9ZTMEjNiacMpOxAiEA04LAfO6TE7j12XNxd3zHQpn4kZN82jQFPntPiPBSD5c"));
+             QLatin1String(
+                 "eyJjaGFsbGVuZ2UiOiI5ejM2dlRmUVRMOTVMZjdXblpneXRlN29oR2VGLVhSaUx4a0wtTHVHVTF6b3BSbU1JVUExTFZ3ekdwe"
+                 "UltMWZPQm4xUW5SYTBRSDI3QURBYUpHSHlzUSIsImNyb3NzT3JpZ2luIjpmYWxzZSwib3JpZ2luIjoiaHR0cHM6Ly93ZWJhdX"
+                 "Robi5pbyIsInR5cGUiOiJ3ZWJhdXRobi5nZXQifQ"));
+    QCOMPARE(response["signature"].toString(),
+             QLatin1String(
+                 "MEUCIHFv0lOOGGloi_XoH5s3QDSs__8yAp9ZTMEjNiacMpOxAiEA04LAfO6TE7j12XNxd3zHQpn4kZN82jQFPntPiPBSD5c"));
 
     auto clientDataJson = response["clientDataJSON"].toString();
     auto clientDataByteArray = browserMessageBuilder()->getArrayFromBase64(clientDataJson);
@@ -559,24 +564,27 @@ void TestPasskeys::testRegistrableDomainSuffix()
     QVERIFY(passkeyUtils()->isRegistrableDomainSuffix(QLatin1String("example.com"), QLatin1String("www.example.com")));
     QVERIFY(!passkeyUtils()->isRegistrableDomainSuffix(QLatin1String("com"), QLatin1String("example.com")));
     QVERIFY(passkeyUtils()->isRegistrableDomainSuffix(QLatin1String("example"), QLatin1String("example")));
-    QVERIFY(
-        !passkeyUtils()->isRegistrableDomainSuffix(QLatin1String("s3.amazonaws.com"), QLatin1String("example.s3.amazonaws.com")));
+    QVERIFY(!passkeyUtils()->isRegistrableDomainSuffix(QLatin1String("s3.amazonaws.com"),
+                                                       QLatin1String("example.s3.amazonaws.com")));
     QVERIFY(!passkeyUtils()->isRegistrableDomainSuffix(QLatin1String("example.compute.amazonaws.com"),
                                                        QLatin1String("www.example.compute.amazonaws.com")));
     QVERIFY(!passkeyUtils()->isRegistrableDomainSuffix(QLatin1String("amazonaws.com"),
                                                        QLatin1String("www.example.compute.amazonaws.com")));
-    QVERIFY(passkeyUtils()->isRegistrableDomainSuffix(QLatin1String("amazonaws.com"), QLatin1String("test.amazonaws.com")));
+    QVERIFY(
+        passkeyUtils()->isRegistrableDomainSuffix(QLatin1String("amazonaws.com"), QLatin1String("test.amazonaws.com")));
 }
 
 void TestPasskeys::testRpIdValidation()
 {
     QString result;
-    auto allowedIdentical = passkeyUtils()->validateRpId(QLatin1String("example.com"), QLatin1String("example.com"), &result);
+    auto allowedIdentical =
+        passkeyUtils()->validateRpId(QLatin1String("example.com"), QLatin1String("example.com"), &result);
     QCOMPARE(result, QLatin1String("example.com"));
     QVERIFY(allowedIdentical == PASSKEYS_SUCCESS);
 
     result.clear();
-    auto allowedSubdomain = passkeyUtils()->validateRpId(QLatin1String("example.com"), QLatin1String("www.example.com"), &result);
+    auto allowedSubdomain =
+        passkeyUtils()->validateRpId(QLatin1String("example.com"), QLatin1String("www.example.com"), &result);
     QCOMPARE(result, QLatin1String("example.com"));
     QVERIFY(allowedSubdomain == PASSKEYS_SUCCESS);
 
@@ -607,7 +615,8 @@ void TestPasskeys::testRpIdValidation()
     QCOMPARE(invalidRpId, ERROR_PASSKEYS_DOMAIN_RPID_MISMATCH);
 
     result.clear();
-    auto malformedOrigin = passkeyUtils()->validateRpId(QLatin1String("example.com."), QLatin1String("example.com."), &result);
+    auto malformedOrigin =
+        passkeyUtils()->validateRpId(QLatin1String("example.com."), QLatin1String("example.com."), &result);
     QVERIFY(result.isEmpty());
     QCOMPARE(malformedOrigin, ERROR_PASSKEYS_DOMAIN_RPID_MISMATCH);
 
@@ -617,7 +626,8 @@ void TestPasskeys::testRpIdValidation()
     QCOMPARE(malformed, ERROR_PASSKEYS_DOMAIN_RPID_MISMATCH);
 
     result.clear();
-    auto differentDomain = passkeyUtils()->validateRpId(QLatin1String("another.com"), QLatin1String("example.com"), &result);
+    auto differentDomain =
+        passkeyUtils()->validateRpId(QLatin1String("another.com"), QLatin1String("example.com"), &result);
     QVERIFY(result.isEmpty());
     QCOMPARE(differentDomain, ERROR_PASSKEYS_DOMAIN_RPID_MISMATCH);
 }

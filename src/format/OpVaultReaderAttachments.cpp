@@ -199,8 +199,8 @@ void OpVaultReader::fillAttachment(Entry* entry,
             qWarning() << "Expected JSON Object in \"overview\" but nope: " << overDoc;
         }
     } else {
-        qCritical()
-            << QStringLiteral("Unable to decode attach.overview for \"%1\": %2").arg(info.fileName(), over01.errorString());
+        qCritical() << QStringLiteral("Unable to decode attach.overview for \"%1\": %2")
+                           .arg(info.fileName(), over01.errorString());
     }
 
     QByteArray payload;

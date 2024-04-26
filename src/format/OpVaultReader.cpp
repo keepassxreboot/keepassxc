@@ -225,7 +225,8 @@ bool OpVaultReader::processFolderJson(QJsonObject& foldersJson, Group* rootGroup
         if (overviewJs.contains("smart") && overviewJs["smart"].toBool()) {
             if (!overviewJs.contains("predicate_b64")) {
                 const QString& errMsg =
-                    QStringLiteral(R"(Expected a predicate in smart folder[uuid="%1"; title="%2"]))").arg(key, folderTitle);
+                    QStringLiteral(R"(Expected a predicate in smart folder[uuid="%1"; title="%2"]))")
+                        .arg(key, folderTitle);
                 qWarning() << errMsg;
                 myGroup->setNotes(errMsg);
             } else {

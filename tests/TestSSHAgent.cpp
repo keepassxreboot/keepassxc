@@ -72,14 +72,15 @@ void TestSSHAgent::initTestCase()
     qDebug() << "ssh-agent initialized in" << timer.elapsed() << "ms";
 
     // initialize test key
-    const QLatin1String keyString = QLatin1String("-----BEGIN OPENSSH PRIVATE KEY-----\n"
-                                                  "b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW\n"
-                                                  "QyNTUxOQAAACDdlO5F2kF2WzedrBAHBi9wBHeISzXZ0IuIqrp0EzeazAAAAKjgCfj94An4\n"
-                                                  "/QAAAAtzc2gtZWQyNTUxOQAAACDdlO5F2kF2WzedrBAHBi9wBHeISzXZ0IuIqrp0EzeazA\n"
-                                                  "AAAEBe1iilZFho8ZGAliiSj5URvFtGrgvmnEKdiLZow5hOR92U7kXaQXZbN52sEAcGL3AE\n"
-                                                  "d4hLNdnQi4iqunQTN5rMAAAAH29wZW5zc2hrZXktdGVzdC1wYXJzZUBrZWVwYXNzeGMBAg\n"
-                                                  "MEBQY=\n"
-                                                  "-----END OPENSSH PRIVATE KEY-----\n");
+    const QLatin1String keyString =
+        QLatin1String("-----BEGIN OPENSSH PRIVATE KEY-----\n"
+                      "b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW\n"
+                      "QyNTUxOQAAACDdlO5F2kF2WzedrBAHBi9wBHeISzXZ0IuIqrp0EzeazAAAAKjgCfj94An4\n"
+                      "/QAAAAtzc2gtZWQyNTUxOQAAACDdlO5F2kF2WzedrBAHBi9wBHeISzXZ0IuIqrp0EzeazA\n"
+                      "AAAEBe1iilZFho8ZGAliiSj5URvFtGrgvmnEKdiLZow5hOR92U7kXaQXZbN52sEAcGL3AE\n"
+                      "d4hLNdnQi4iqunQTN5rMAAAAH29wZW5zc2hrZXktdGVzdC1wYXJzZUBrZWVwYXNzeGMBAg\n"
+                      "MEBQY=\n"
+                      "-----END OPENSSH PRIVATE KEY-----\n");
 
     const QByteArray keyData = keyString.latin1();
 

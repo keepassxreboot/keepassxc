@@ -269,7 +269,8 @@ void TestKeePass2Format::testXmlEntry2()
     QVERIFY(attrs.removeOne("Notes"));
     QCOMPARE(entry->attributes()->value("Password"), QLatin1String("Jer60Hz8o9XHvxBGcRqT"));
     QVERIFY(attrs.removeOne("Password"));
-    QCOMPARE(entry->attributes()->value("Protected String"), QLatin1String("y")); // TODO: should have a protection attribute
+    QCOMPARE(entry->attributes()->value("Protected String"),
+             QLatin1String("y")); // TODO: should have a protection attribute
     QVERIFY(attrs.removeOne("Protected String"));
     QCOMPARE(entry->attributes()->value("Title"), QLatin1String("Sample Entry 2"));
     QVERIFY(attrs.removeOne("Title"));

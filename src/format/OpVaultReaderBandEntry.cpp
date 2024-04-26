@@ -130,7 +130,8 @@ Entry* OpVaultReader::processBandEntry(const QJsonObject& bandEntry, const QDir&
                 }
             }
             if (!found) {
-                qWarning() << QStringLiteral("Unable to place Entry.Category \"%1\" so using the Root instead").arg(category);
+                qWarning()
+                    << QStringLiteral("Unable to place Entry.Category \"%1\" so using the Root instead").arg(category);
                 entry->setGroup(rootGroup);
             }
         } else {

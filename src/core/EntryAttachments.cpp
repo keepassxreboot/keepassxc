@@ -86,7 +86,8 @@ void EntryAttachments::set(const QString& key, const QByteArray& value)
 void EntryAttachments::remove(const QString& key)
 {
     if (!m_attachments.contains(key)) {
-        Q_ASSERT_X(false, "EntryAttachments::remove", qPrintable(QStringLiteral("Can't find attachment for key %1").arg(key)));
+        Q_ASSERT_X(
+            false, "EntryAttachments::remove", qPrintable(QStringLiteral("Can't find attachment for key %1").arg(key)));
         return;
     }
 
@@ -220,8 +221,8 @@ bool EntryAttachments::openAttachment(const QString& key, QString* errorMessage)
         auto ext = key.contains(".") ? "." + key.split(".").last() : "";
 
 #if defined(KEEPASSXC_DIST_SNAP)
-        const QString tmpFileTemplate =
-            QStringLiteral("%1/XXXXXXXXXXXX%2").arg(QProcessEnvironment::systemEnvironment().value("SNAP_USER_DATA"), ext);
+        const QString tmpFileTemplate = QStringLiteral("%1/XXXXXXXXXXXX%2")
+                                            .arg(QProcessEnvironment::systemEnvironment().value("SNAP_USER_DATA"), ext);
 #elif defined(KEEPASSXC_DIST_FLATPAK)
         const QString tmpFileTemplate =
             QStringLiteral("%1/app/%2/XXXXXX.%3")

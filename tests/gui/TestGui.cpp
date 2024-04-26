@@ -278,12 +278,14 @@ void TestGui::testCreateDatabase()
         auto* fileEdit = keyFileWidget->findChild<QLineEdit*>("keyFileLineEdit");
         QTRY_VERIFY(fileEdit);
         QTRY_VERIFY(fileEdit->isVisible());
-        fileDialog()->setNextFileName(QStringLiteral("%1/%2").arg(QStringLiteral(KEEPASSX_TEST_DATA_DIR), "FileKeyHashed.key"));
+        fileDialog()->setNextFileName(
+            QStringLiteral("%1/%2").arg(QStringLiteral(KEEPASSX_TEST_DATA_DIR), "FileKeyHashed.key"));
         QTest::keyClick(keyFileWidget->findChild<QPushButton*>("addButton"), Qt::Key::Key_Enter);
         QVERIFY(fileEdit->hasFocus());
         auto* browseButton = keyFileWidget->findChild<QPushButton*>("browseKeyFileButton");
         QTest::keyClick(browseButton, Qt::Key::Key_Enter);
-        QCOMPARE(fileEdit->text(), QStringLiteral("%1/%2").arg(QStringLiteral(KEEPASSX_TEST_DATA_DIR), "FileKeyHashed.key"));
+        QCOMPARE(fileEdit->text(),
+                 QStringLiteral("%1/%2").arg(QStringLiteral(KEEPASSX_TEST_DATA_DIR), "FileKeyHashed.key"));
 
         // save database to temporary file
         TemporaryFile tmpFile;
@@ -2091,8 +2093,9 @@ void TestGui::checkStatusBarText(const QString& textFragment)
 {
     QApplication::processEvents();
     QVERIFY(m_statusBarLabel->isVisible());
-    QTRY_VERIFY2(m_statusBarLabel->text().startsWith(textFragment),
-                 qPrintable(QStringLiteral("'%1' doesn't start with '%2'").arg(m_statusBarLabel->text(), textFragment)));
+    QTRY_VERIFY2(
+        m_statusBarLabel->text().startsWith(textFragment),
+        qPrintable(QStringLiteral("'%1' doesn't start with '%2'").arg(m_statusBarLabel->text(), textFragment)));
 }
 
 void TestGui::triggerAction(const QString& name)

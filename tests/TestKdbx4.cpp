@@ -409,16 +409,20 @@ void TestKdbx4Format::testUpgradeMasterKeyIntegrity_data()
 
     QTest::newRow("Upgrade: none") << QStringLiteral("none") << KeePass2::FILE_VERSION_3_1;
     QTest::newRow("Upgrade: none (meta-customdata)") << QStringLiteral("meta-customdata") << KeePass2::FILE_VERSION_3_1;
-    QTest::newRow("Upgrade: none (explicit kdf-aes-kdbx3)") << QStringLiteral("kdf-aes-kdbx3") << KeePass2::FILE_VERSION_3_1;
+    QTest::newRow("Upgrade: none (explicit kdf-aes-kdbx3)")
+        << QStringLiteral("kdf-aes-kdbx3") << KeePass2::FILE_VERSION_3_1;
     QTest::newRow("Upgrade (explicit): kdf-argon2") << QStringLiteral("kdf-argon2") << KeePass2::FILE_VERSION_4;
     QTest::newRow("Upgrade (explicit): kdf-aes-kdbx4") << QStringLiteral("kdf-aes-kdbx4") << KeePass2::FILE_VERSION_4;
-    QTest::newRow("Upgrade (implicit): public-customdata") << QStringLiteral("public-customdata") << KeePass2::FILE_VERSION_4;
+    QTest::newRow("Upgrade (implicit): public-customdata")
+        << QStringLiteral("public-customdata") << KeePass2::FILE_VERSION_4;
     QTest::newRow("Upgrade (implicit): rootgroup-customdata")
         << QStringLiteral("rootgroup-customdata") << KeePass2::FILE_VERSION_4;
-    QTest::newRow("Upgrade (implicit): group-customdata") << QStringLiteral("group-customdata") << KeePass2::FILE_VERSION_4;
+    QTest::newRow("Upgrade (implicit): group-customdata")
+        << QStringLiteral("group-customdata") << KeePass2::FILE_VERSION_4;
     QTest::newRow("Upgrade (implicit): rootentry-customdata")
         << QStringLiteral("rootentry-customdata") << KeePass2::FILE_VERSION_4;
-    QTest::newRow("Upgrade (implicit): entry-customdata") << QStringLiteral("entry-customdata") << KeePass2::FILE_VERSION_4;
+    QTest::newRow("Upgrade (implicit): entry-customdata")
+        << QStringLiteral("entry-customdata") << KeePass2::FILE_VERSION_4;
 }
 
 void TestKdbx4Format::testAttachmentIndexStability()

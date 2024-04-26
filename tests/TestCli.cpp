@@ -569,10 +569,11 @@ void TestCli::testAttachmentImport()
         {"attachment-import", "-f", m_dbFile->fileName(), "/Sample Entry", "Sample attachment.txt", attachmentPath});
     m_stderr->readLine(); // skip password prompt
     QCOMPARE(m_stderr->readAll(), QByteArray());
-    QCOMPARE(m_stdout->readAll(),
-             QByteArray(qPrintable(
-                 QStringLiteral("Successfully imported attachment %1 as Sample attachment.txt to entry /Sample Entry.\n")
-                     .arg(attachmentPath))));
+    QCOMPARE(
+        m_stdout->readAll(),
+        QByteArray(qPrintable(
+            QStringLiteral("Successfully imported attachment %1 as Sample attachment.txt to entry /Sample Entry.\n")
+                .arg(attachmentPath))));
 
     // Try importing an attachment with an unoccupied name
     setInput("a");
@@ -580,10 +581,10 @@ void TestCli::testAttachmentImport()
             {"attachment-import", m_dbFile->fileName(), "/Sample Entry", "Attachment.txt", attachmentPath});
     m_stderr->readLine(); // skip password prompt
     QCOMPARE(m_stderr->readAll(), QByteArray());
-    QCOMPARE(
-        m_stdout->readAll(),
-        QByteArray(qPrintable(QStringLiteral("Successfully imported attachment %1 as Attachment.txt to entry /Sample Entry.\n")
-                                  .arg(attachmentPath))));
+    QCOMPARE(m_stdout->readAll(),
+             QByteArray(qPrintable(
+                 QStringLiteral("Successfully imported attachment %1 as Attachment.txt to entry /Sample Entry.\n")
+                     .arg(attachmentPath))));
 }
 
 void TestCli::testAttachmentRemove()
@@ -1669,8 +1670,9 @@ void TestCli::testMerge()
     QList<QByteArray> outLines1 = m_stdout->readAll().split('\n');
     QVERIFY(outLines1.at(0).contains("Overwriting Internet"));
     QVERIFY(outLines1.at(1).contains("Creating missing Some Website"));
-    QCOMPARE(outLines1.at(2),
-             QStringLiteral("Successfully merged %1 into %2.").arg(sourceFile.fileName(), targetFile1.fileName()).toUtf8());
+    QCOMPARE(
+        outLines1.at(2),
+        QStringLiteral("Successfully merged %1 into %2.").arg(sourceFile.fileName(), targetFile1.fileName()).toUtf8());
 
     auto mergedDb = QSharedPointer<Database>::create();
     QVERIFY(mergedDb->open(targetFile1.fileName(), oldKey));
@@ -1708,8 +1710,9 @@ void TestCli::testMerge()
     setInput({"b", "a"});
     execCmd(mergeCmd, {"merge", targetFile3.fileName(), sourceFile.fileName()});
     QList<QByteArray> outLines3 = m_stdout->readAll().split('\n');
-    QCOMPARE(outLines3.at(2),
-             QStringLiteral("Successfully merged %1 into %2.").arg(sourceFile.fileName(), targetFile3.fileName()).toUtf8());
+    QCOMPARE(
+        outLines3.at(2),
+        QStringLiteral("Successfully merged %1 into %2.").arg(sourceFile.fileName(), targetFile3.fileName()).toUtf8());
 
     mergedDb = QSharedPointer<Database>::create();
     QVERIFY(mergedDb->open(targetFile3.fileName(), key));
@@ -1816,8 +1819,9 @@ void TestCli::testMergeWithKeys()
              sourceDatabaseFilename});
 
     QList<QByteArray> lines = m_stdout->readAll().split('\n');
-    QVERIFY(lines.contains(
-        QStringLiteral("Successfully merged %1 into %2.").arg(sourceDatabaseFilename, targetDatabaseFilename).toUtf8()));
+    QVERIFY(lines.contains(QStringLiteral("Successfully merged %1 into %2.")
+                               .arg(sourceDatabaseFilename, targetDatabaseFilename)
+                               .toUtf8()));
 }
 
 void TestCli::testMove()
@@ -1898,7 +1902,8 @@ void TestCli::testRemove()
     readBackDb = readDatabase(fileCopy.fileName(), "a");
     QVERIFY(readBackDb);
     QVERIFY(!readBackDb->rootGroup()->findEntryByPath("/Sample Entry"));
-    QVERIFY(!readBackDb->rootGroup()->findEntryByPath(QStringLiteral("/%1/Sample Entry").arg(Group::tr("Recycle Bin"))));
+    QVERIFY(
+        !readBackDb->rootGroup()->findEntryByPath(QStringLiteral("/%1/Sample Entry").arg(Group::tr("Recycle Bin"))));
 
     // finally, try deleting a non-existent entry
     setInput("a");
@@ -1978,7 +1983,8 @@ void TestCli::testRemoveQuiet()
 
     // remove the entry completely
     setInput("a");
-    execCmd(removeCmd, {"rm", "-q", m_dbFile->fileName(), QStringLiteral("/%1/Sample Entry").arg(Group::tr("Recycle Bin"))});
+    execCmd(removeCmd,
+            {"rm", "-q", m_dbFile->fileName(), QStringLiteral("/%1/Sample Entry").arg(Group::tr("Recycle Bin"))});
     QCOMPARE(m_stderr->readAll(), QByteArray());
     QCOMPARE(m_stdout->readAll(), QByteArray());
 

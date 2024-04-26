@@ -227,7 +227,8 @@ void EditGroupWidgetKeeShare::launchPathSelectionDialog()
 
     QStringList knownFilters;
     knownFilters << QStringLiteral("%1 (*.%2)").arg(tr("KeeShare container"), KeeShare::unsignedContainerFileType());
-    knownFilters << QStringLiteral("%1 (*.%2)").arg(tr("KeeShare signed container"), KeeShare::signedContainerFileType());
+    knownFilters
+        << QStringLiteral("%1 (*.%2)").arg(tr("KeeShare signed container"), KeeShare::signedContainerFileType());
     knownFilters << QStringLiteral("%1 (*)").arg("All files");
 
     const auto filters = knownFilters.join(";;");

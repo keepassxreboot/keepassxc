@@ -28,7 +28,8 @@ AttachmentRemove::AttachmentRemove()
     description = QObject::tr("Remove an attachment of an entry.");
     positionalArguments.append(
         {QLatin1String("entry"), QObject::tr("Path of the entry with the target attachment."), QString()});
-    positionalArguments.append({QLatin1String("name"), QObject::tr("Name of the attachment to be removed."), QString()});
+    positionalArguments.append(
+        {QLatin1String("name"), QObject::tr("Name of the attachment to be removed."), QString()});
 }
 
 int AttachmentRemove::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)
