@@ -284,11 +284,11 @@ namespace Utils
 #endif
 
 #ifdef Q_OS_MACOS
-        clipPrograms << qMakePair(QStringLiteral("pbcopy"), QStringLiteral(""));
+        clipPrograms << qMakePair(QStringLiteral("pbcopy"), QString());
 #endif
 
 #ifdef Q_OS_WIN
-        clipPrograms << qMakePair(QStringLiteral("clip"), QStringLiteral(""));
+        clipPrograms << qMakePair(QStringLiteral("clip"), QString());
 #endif
 
         if (clipPrograms.isEmpty()) {

@@ -145,7 +145,7 @@ const QString OpenSSHKey::privateKey()
     stream.writeString(QString("none"));
 
     // kdf options
-    stream.writeString(QString(""));
+    stream.writeString(QString());
 
     // number of keys
     stream.write(static_cast<quint32>(1));

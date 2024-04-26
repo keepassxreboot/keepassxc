@@ -72,12 +72,12 @@ void TestKeePass1Reader::testBasic()
     QCOMPARE(entry11->attachments()->value("attachment.txt"), QByteArray("hello world\n"));
 
     Entry* entry12 = group1->entries().at(1);
-    QCOMPARE(entry12->title(), QString(""));
+    QCOMPARE(entry12->title(), QString());
     QCOMPARE(entry12->iconNumber(), 0);
-    QCOMPARE(entry12->username(), QString(""));
-    QCOMPARE(entry12->url(), QString(""));
-    QCOMPARE(entry12->password(), QString(""));
-    QCOMPARE(entry12->notes(), QString(""));
+    QCOMPARE(entry12->username(), QString());
+    QCOMPARE(entry12->url(), QString());
+    QCOMPARE(entry12->password(), QString());
+    QCOMPARE(entry12->notes(), QString());
     QVERIFY(!entry12->timeInfo().expires());
     QCOMPARE(entry12->attachments()->keys().size(), 0);
 
@@ -138,24 +138,24 @@ void TestKeePass1Reader::testAutoType()
     QCOMPARE(entry1->notes(), QString("last line"));
     QCOMPARE(entry1->defaultAutoTypeSequence(), QString("{USERNAME}{ENTER}"));
     QCOMPARE(entry1->autoTypeAssociations()->size(), 5);
-    QCOMPARE(entry1->autoTypeAssociations()->get(0).sequence, QString(""));
+    QCOMPARE(entry1->autoTypeAssociations()->get(0).sequence, QString());
     QCOMPARE(entry1->autoTypeAssociations()->get(0).window, QString("a window"));
-    QCOMPARE(entry1->autoTypeAssociations()->get(1).sequence, QString(""));
+    QCOMPARE(entry1->autoTypeAssociations()->get(1).sequence, QString());
     QCOMPARE(entry1->autoTypeAssociations()->get(1).window, QString("a second window"));
     QCOMPARE(entry1->autoTypeAssociations()->get(2).sequence, QString("{PASSWORD}{ENTER}"));
     QCOMPARE(entry1->autoTypeAssociations()->get(2).window, QString("Window Nr 1a"));
     QCOMPARE(entry1->autoTypeAssociations()->get(3).sequence, QString("{PASSWORD}{ENTER}"));
     QCOMPARE(entry1->autoTypeAssociations()->get(3).window, QString("Window Nr 1b"));
-    QCOMPARE(entry1->autoTypeAssociations()->get(4).sequence, QString(""));
+    QCOMPARE(entry1->autoTypeAssociations()->get(4).sequence, QString());
     QCOMPARE(entry1->autoTypeAssociations()->get(4).window, QString("Window 2"));
 
     Entry* entry2 = group->entries().at(1);
     QCOMPARE(entry2->notes(), QString("start line\nend line"));
-    QCOMPARE(entry2->defaultAutoTypeSequence(), QString(""));
+    QCOMPARE(entry2->defaultAutoTypeSequence(), QString());
     QCOMPARE(entry2->autoTypeAssociations()->size(), 2);
-    QCOMPARE(entry2->autoTypeAssociations()->get(0).sequence, QString(""));
+    QCOMPARE(entry2->autoTypeAssociations()->get(0).sequence, QString());
     QCOMPARE(entry2->autoTypeAssociations()->get(0).window, QString("Main Window"));
-    QCOMPARE(entry2->autoTypeAssociations()->get(1).sequence, QString(""));
+    QCOMPARE(entry2->autoTypeAssociations()->get(1).sequence, QString());
     QCOMPARE(entry2->autoTypeAssociations()->get(1).window, QString("Test Window"));
 }
 

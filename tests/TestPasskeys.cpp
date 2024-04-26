@@ -588,11 +588,11 @@ void TestPasskeys::testRpIdValidation()
 
     result.clear();
     auto ipRpId = passkeyUtils()->validateRpId(QString("127.0.0.1"), QString("example.com"), &result);
-    QCOMPARE(result, QString(""));
+    QCOMPARE(result, QString());
     QVERIFY(ipRpId == ERROR_PASSKEYS_DOMAIN_RPID_MISMATCH);
 
     result.clear();
-    auto emptyOrigin = passkeyUtils()->validateRpId(QString("example.com"), QString(""), &result);
+    auto emptyOrigin = passkeyUtils()->validateRpId(QString("example.com"), QString(), &result);
     QVERIFY(result.isEmpty());
     QCOMPARE(emptyOrigin, ERROR_PASSKEYS_ORIGIN_NOT_ALLOWED);
 
@@ -624,7 +624,7 @@ void TestPasskeys::testRpIdValidation()
 
 void TestPasskeys::testParseAttestation()
 {
-    QVERIFY(passkeyUtils()->parseAttestation(QString("")) == QString("none"));
+    QVERIFY(passkeyUtils()->parseAttestation(QString()) == QString("none"));
     QVERIFY(passkeyUtils()->parseAttestation(QString("direct")) == QString("direct"));
     QVERIFY(passkeyUtils()->parseAttestation(QString("none")) == QString("none"));
     QVERIFY(passkeyUtils()->parseAttestation(QString("indirect")) == QString("none"));

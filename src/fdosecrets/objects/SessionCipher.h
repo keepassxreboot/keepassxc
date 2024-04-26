@@ -65,7 +65,7 @@ namespace FdoSecrets
 
         QVariant negotiationOutput() const override
         {
-            return QStringLiteral("");
+            return QString();
         }
     };
 

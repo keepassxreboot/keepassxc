@@ -125,7 +125,7 @@ void TestKeePass2Format::testXmlGroupRoot()
     QVERIFY(group);
     QCOMPARE(group->uuid(), QUuid::fromRfc4122(QByteArray::fromBase64("lmU+9n0aeESKZvcEze+bRg==")));
     QCOMPARE(group->name(), QString("NewDatabase"));
-    QCOMPARE(group->notes(), QString(""));
+    QCOMPARE(group->notes(), QString());
     QCOMPARE(group->iconNumber(), 49);
     QCOMPARE(group->iconUuid(), QUuid());
     QVERIFY(group->isExpanded());
@@ -137,7 +137,7 @@ void TestKeePass2Format::testXmlGroupRoot()
     QVERIFY(!ti.expires());
     QCOMPARE(ti.usageCount(), 52);
     QCOMPARE(ti.locationChanged(), MockClock::datetimeUtc(2010, 8, 8, 17, 24, 27));
-    QCOMPARE(group->defaultAutoTypeSequence(), QString(""));
+    QCOMPARE(group->defaultAutoTypeSequence(), QString());
     QCOMPARE(group->autoTypeEnabled(), Group::Inherit);
     QCOMPARE(group->searchingEnabled(), Group::Inherit);
     QCOMPARE(group->lastTopVisibleEntry()->uuid(),
@@ -194,7 +194,7 @@ void TestKeePass2Format::testXmlEntry1()
     QCOMPARE(entry->iconUuid(), QUuid());
     QVERIFY(entry->foregroundColor().isEmpty());
     QVERIFY(entry->backgroundColor().isEmpty());
-    QCOMPARE(entry->overrideUrl(), QString(""));
+    QCOMPARE(entry->overrideUrl(), QString());
     QCOMPARE(entry->tags(), QString("a b c"));
 
     const TimeInfo ti = entry->timeInfo();
@@ -216,7 +216,7 @@ void TestKeePass2Format::testXmlEntry1()
     QCOMPARE(entry->attributes()->value("Title"), QString("Sample Entry 1"));
     QVERIFY(!entry->attributes()->isProtected("Title"));
     QVERIFY(attrs.removeOne("Title"));
-    QCOMPARE(entry->attributes()->value("URL"), QString(""));
+    QCOMPARE(entry->attributes()->value("URL"), QString());
     QVERIFY(entry->attributes()->isProtected("URL"));
     QVERIFY(attrs.removeOne("URL"));
     QCOMPARE(entry->attributes()->value("UserName"), QString("User Name"));
@@ -239,11 +239,11 @@ void TestKeePass2Format::testXmlEntry1()
 
     QCOMPARE(entry->autoTypeEnabled(), false);
     QCOMPARE(entry->autoTypeObfuscation(), 0);
-    QCOMPARE(entry->defaultAutoTypeSequence(), QString(""));
+    QCOMPARE(entry->defaultAutoTypeSequence(), QString());
     QCOMPARE(entry->autoTypeAssociations()->size(), 1);
     const AutoTypeAssociations::Association assoc1 = entry->autoTypeAssociations()->get(0);
     QCOMPARE(assoc1.window, QString("Target Window"));
-    QCOMPARE(assoc1.sequence, QString(""));
+    QCOMPARE(assoc1.sequence, QString());
 }
 
 void TestKeePass2Format::testXmlEntry2()
@@ -257,7 +257,7 @@ void TestKeePass2Format::testXmlEntry2()
     QCOMPARE(entry->foregroundColor(), QString("#FF0000"));
     QCOMPARE(entry->backgroundColor(), QString("#FFFF00"));
     QCOMPARE(entry->overrideUrl(), QString("http://override.net/"));
-    QCOMPARE(entry->tags(), QString(""));
+    QCOMPARE(entry->tags(), QString());
 
     const TimeInfo ti = entry->timeInfo();
     QCOMPARE(ti.usageCount(), 7);
@@ -265,7 +265,7 @@ void TestKeePass2Format::testXmlEntry2()
     QList<QString> attrs = entry->attributes()->keys();
     QCOMPARE(entry->attributes()->value("CustomString"), QString("isavalue"));
     QVERIFY(attrs.removeOne("CustomString"));
-    QCOMPARE(entry->attributes()->value("Notes"), QString(""));
+    QCOMPARE(entry->attributes()->value("Notes"), QString());
     QVERIFY(attrs.removeOne("Notes"));
     QCOMPARE(entry->attributes()->value("Password"), QString("Jer60Hz8o9XHvxBGcRqT"));
     QVERIFY(attrs.removeOne("Password"));

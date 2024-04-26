@@ -52,7 +52,7 @@ Clip::Clip()
     options.append(Clip::TotpOption);
     options.append(Clip::BestMatchOption);
     positionalArguments.append(
-        {QString("entry"), QObject::tr("Path of the entry to clip.", "clip = copy to clipboard"), QString("")});
+        {QString("entry"), QObject::tr("Path of the entry to clip.", "clip = copy to clipboard"), QString()});
     optionalArguments.append(
         {QString("timeout"),
          QObject::tr("Timeout before clearing the clipboard (default is %1 seconds, set to 0 for unlimited).")

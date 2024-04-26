@@ -56,7 +56,7 @@ Show::Show()
     options.append(Show::ProtectedAttributesOption);
     options.append(Show::AllAttributesOption);
     options.append(Show::AttachmentsOption);
-    positionalArguments.append({QString("entry"), QObject::tr("Name of the entry to show."), QString("")});
+    positionalArguments.append({QString("entry"), QObject::tr("Name of the entry to show."), QString()});
 }
 
 int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)

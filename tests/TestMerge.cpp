@@ -602,9 +602,9 @@ void TestMerge::assertDeletionLocalOnly(Database* db, const QMap<QString, QUuid>
 void TestMerge::assertUpdateMergedEntry1(Entry* mergedEntry1, const QMap<const char*, QDateTime>& timestamps)
 {
     QCOMPARE(mergedEntry1->historyItems().count(), 4);
-    QCOMPARE(mergedEntry1->historyItems().at(0)->notes(), QString(""));
+    QCOMPARE(mergedEntry1->historyItems().at(0)->notes(), QString());
     QCOMPARE(mergedEntry1->historyItems().at(0)->timeInfo().lastModificationTime(), timestamps["initialTime"]);
-    QCOMPARE(mergedEntry1->historyItems().at(1)->notes(), QString(""));
+    QCOMPARE(mergedEntry1->historyItems().at(1)->notes(), QString());
     QCOMPARE(mergedEntry1->historyItems().at(1)->timeInfo().lastModificationTime(),
              timestamps["oldestCommonHistoryTime"]);
     QCOMPARE(mergedEntry1->historyItems().at(2)->notes(), QString("1 Common"));
@@ -620,9 +620,9 @@ void TestMerge::assertUpdateMergedEntry1(Entry* mergedEntry1, const QMap<const c
 void TestMerge::assertUpdateReappliedEntry2(Entry* mergedEntry2, const QMap<const char*, QDateTime>& timestamps)
 {
     QCOMPARE(mergedEntry2->historyItems().count(), 5);
-    QCOMPARE(mergedEntry2->historyItems().at(0)->notes(), QString(""));
+    QCOMPARE(mergedEntry2->historyItems().at(0)->notes(), QString());
     QCOMPARE(mergedEntry2->historyItems().at(0)->timeInfo().lastModificationTime(), timestamps["initialTime"]);
-    QCOMPARE(mergedEntry2->historyItems().at(1)->notes(), QString(""));
+    QCOMPARE(mergedEntry2->historyItems().at(1)->notes(), QString());
     QCOMPARE(mergedEntry2->historyItems().at(1)->timeInfo().lastModificationTime(),
              timestamps["oldestCommonHistoryTime"]);
     QCOMPARE(mergedEntry2->historyItems().at(2)->notes(), QString("1 Common"));
@@ -641,9 +641,9 @@ void TestMerge::assertUpdateReappliedEntry2(Entry* mergedEntry2, const QMap<cons
 void TestMerge::assertUpdateReappliedEntry1(Entry* mergedEntry1, const QMap<const char*, QDateTime>& timestamps)
 {
     QCOMPARE(mergedEntry1->historyItems().count(), 5);
-    QCOMPARE(mergedEntry1->historyItems().at(0)->notes(), QString(""));
+    QCOMPARE(mergedEntry1->historyItems().at(0)->notes(), QString());
     QCOMPARE(mergedEntry1->historyItems().at(0)->timeInfo().lastModificationTime(), timestamps["initialTime"]);
-    QCOMPARE(mergedEntry1->historyItems().at(1)->notes(), QString(""));
+    QCOMPARE(mergedEntry1->historyItems().at(1)->notes(), QString());
     QCOMPARE(mergedEntry1->historyItems().at(1)->timeInfo().lastModificationTime(),
              timestamps["oldestCommonHistoryTime"]);
     QCOMPARE(mergedEntry1->historyItems().at(2)->notes(), QString("1 Common"));
@@ -662,9 +662,9 @@ void TestMerge::assertUpdateReappliedEntry1(Entry* mergedEntry1, const QMap<cons
 void TestMerge::assertUpdateMergedEntry2(Entry* mergedEntry2, const QMap<const char*, QDateTime>& timestamps)
 {
     QCOMPARE(mergedEntry2->historyItems().count(), 4);
-    QCOMPARE(mergedEntry2->historyItems().at(0)->notes(), QString(""));
+    QCOMPARE(mergedEntry2->historyItems().at(0)->notes(), QString());
     QCOMPARE(mergedEntry2->historyItems().at(0)->timeInfo().lastModificationTime(), timestamps["initialTime"]);
-    QCOMPARE(mergedEntry2->historyItems().at(1)->notes(), QString(""));
+    QCOMPARE(mergedEntry2->historyItems().at(1)->notes(), QString());
     QCOMPARE(mergedEntry2->historyItems().at(1)->timeInfo().lastModificationTime(),
              timestamps["oldestCommonHistoryTime"]);
     QCOMPARE(mergedEntry2->historyItems().at(2)->notes(), QString("1 Common"));

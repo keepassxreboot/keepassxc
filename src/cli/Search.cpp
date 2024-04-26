@@ -27,7 +27,7 @@ Search::Search()
 {
     name = QString("search");
     description = QObject::tr("Find entries quickly.");
-    positionalArguments.append({QString("term"), QObject::tr("Search term."), QString("")});
+    positionalArguments.append({QString("term"), QObject::tr("Search term."), QString()});
 }
 
 int Search::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)

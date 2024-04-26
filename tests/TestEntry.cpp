@@ -182,7 +182,7 @@ void TestEntry::testResolveUrl()
     QString noUrl("random text inserted here");
 
     // Test standard URL's
-    QCOMPARE(entry->resolveUrl(""), QString(""));
+    QCOMPARE(entry->resolveUrl(""), QString());
     QCOMPARE(entry->resolveUrl(testUrl), "https://" + testUrl);
     QCOMPARE(entry->resolveUrl("http://" + testUrl), "http://" + testUrl);
     // Test file:// URL's
@@ -191,15 +191,15 @@ void TestEntry::testResolveUrl()
     QCOMPARE(entry->resolveUrl("file:///" + testFileWindows), "file:///" + testFileWindows);
     QCOMPARE(entry->resolveUrl(testFileWindows), "file:///" + testFileWindows);
     // Test cmd:// with no URL
-    QCOMPARE(entry->resolveUrl("cmd://firefox"), QString(""));
-    QCOMPARE(entry->resolveUrl("cmd://firefox --no-url"), QString(""));
+    QCOMPARE(entry->resolveUrl("cmd://firefox"), QString());
+    QCOMPARE(entry->resolveUrl("cmd://firefox --no-url"), QString());
     // Test cmd:// with URL's
     QCOMPARE(entry->resolveUrl(testCmd), "https://" + testUrl);
     QCOMPARE(entry->resolveUrl(testComplexCmd), "http://" + testUrl);
     // Test non-http URL
-    QCOMPARE(entry->resolveUrl(nonHttpUrl), QString(""));
+    QCOMPARE(entry->resolveUrl(nonHttpUrl), QString());
     // Test no URL
-    QCOMPARE(entry->resolveUrl(noUrl), QString(""));
+    QCOMPARE(entry->resolveUrl(noUrl), QString());
 }
 
 void TestEntry::testResolveUrlPlaceholders()

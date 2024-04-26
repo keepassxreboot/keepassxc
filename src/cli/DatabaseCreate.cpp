@@ -48,7 +48,7 @@ DatabaseCreate::DatabaseCreate()
 {
     name = QString("db-create");
     description = QObject::tr("Create a new database.");
-    positionalArguments.append({QString("database"), QObject::tr("Path of the database."), QString("")});
+    positionalArguments.append({QString("database"), QObject::tr("Path of the database."), QString()});
     options.append(DatabaseCreate::SetKeyFileOption);
     options.append(DatabaseCreate::SetKeyFileShortOption);
     options.append(DatabaseCreate::SetPasswordOption);

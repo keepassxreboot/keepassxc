@@ -694,7 +694,7 @@ void TestCli::testClip()
     // clang-format on
 
     QTRY_COMPARE(clipboard->text(), QString("Password"));
-    QTRY_COMPARE_WITH_TIMEOUT(clipboard->text(), QString(""), 3000);
+    QTRY_COMPARE_WITH_TIMEOUT(clipboard->text(), QString(), 3000);
 
     future.waitForFinished();
 
@@ -705,7 +705,7 @@ void TestCli::testClip()
                                QStringList{"clip", m_dbFile->fileName(), "/Sample Entry", "1", "-t"});
 
     QTRY_VERIFY(isTotp(clipboard->text()));
-    QTRY_COMPARE_WITH_TIMEOUT(clipboard->text(), QString(""), 3000);
+    QTRY_COMPARE_WITH_TIMEOUT(clipboard->text(), QString(), 3000);
 
     future.waitForFinished();
 

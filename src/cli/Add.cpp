@@ -52,7 +52,7 @@ Add::Add()
     options.append(Add::UrlOption);
     options.append(Add::NotesOption);
     options.append(Add::PasswordPromptOption);
-    positionalArguments.append({QString("entry"), QObject::tr("Path of the entry to add."), QString("")});
+    positionalArguments.append({QString("entry"), QObject::tr("Path of the entry to add."), QString()});
 
     // Password generation options.
     options.append(Add::GenerateOption);

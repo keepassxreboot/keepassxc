@@ -33,11 +33,11 @@ AttachmentImport::AttachmentImport()
     name = QString("attachment-import");
     description = QObject::tr("Imports an attachment to an entry.");
     options.append(AttachmentImport::ForceOption);
-    positionalArguments.append({QString("entry"), QObject::tr("Path of the entry."), QString("")});
+    positionalArguments.append({QString("entry"), QObject::tr("Path of the entry."), QString()});
     positionalArguments.append(
-        {QString("attachment-name"), QObject::tr("Name of the attachment to be added."), QString("")});
+        {QString("attachment-name"), QObject::tr("Name of the attachment to be added."), QString()});
     positionalArguments.append(
-        {QString("import-file"), QObject::tr("Path of the attachment to be imported."), QString("")});
+        {QString("import-file"), QObject::tr("Path of the attachment to be imported."), QString()});
 }
 
 int AttachmentImport::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)

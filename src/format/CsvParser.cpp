@@ -257,7 +257,7 @@ void CsvParser::fillColumns()
         if (gap > 0) {
             CsvRow r = m_table.at(i);
             for (int j = 0; j < gap; ++j) {
-                r.append(QString(""));
+                r.append(QString());
             }
             m_table.replace(i, r);
         }

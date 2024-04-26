@@ -133,9 +133,9 @@ void TestTools::testBackupFilePatternSubstitution_data()
     auto DEFAULT_FORMATTED_TIME = NOW.toString("dd_MM_yyyy_hh-mm-ss");
 
     QTest::newRow("Null pattern") << QString() << DEFAULT_DB_FILE_PATH << QString();
-    QTest::newRow("Empty pattern") << QString("") << DEFAULT_DB_FILE_PATH << QString("");
+    QTest::newRow("Empty pattern") << QString() << DEFAULT_DB_FILE_PATH << QString();
     QTest::newRow("Null database path") << "valid_pattern" << QString() << QString();
-    QTest::newRow("Empty database path") << "valid_pattern" << QString("") << QString();
+    QTest::newRow("Empty database path") << "valid_pattern" << QString() << QString();
     QTest::newRow("Unclosed/invalid pattern") << "{DB_FILENAME" << DEFAULT_DB_FILE_PATH << "{DB_FILENAME";
     QTest::newRow("Unknown pattern") << "{NO_MATCH}" << DEFAULT_DB_FILE_PATH << "{NO_MATCH}";
     QTest::newRow("Do not replace escaped patterns (filename)")

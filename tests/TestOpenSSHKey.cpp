@@ -85,7 +85,7 @@ void TestOpenSSHKey::testParseDSA()
     QVERIFY(!key.encrypted());
     QCOMPARE(key.cipherName(), QString("none"));
     QCOMPARE(key.type(), QString("ssh-dss"));
-    QCOMPARE(key.comment(), QString(""));
+    QCOMPARE(key.comment(), QString());
     QCOMPARE(key.fingerprint(), QString("SHA256:tbbNuLN1hja8JNASDTlLOZQsbTlJDzJlz/oAGK3sX18"));
 }
 
@@ -131,7 +131,7 @@ void TestOpenSSHKey::testDecryptRSAAES128CBC()
     QVERIFY(!key.openKey("incorrectpassphrase"));
     QVERIFY(key.openKey("correctpassphrase"));
     QCOMPARE(key.type(), QString("ssh-rsa"));
-    QCOMPARE(key.comment(), QString(""));
+    QCOMPARE(key.comment(), QString());
     QCOMPARE(key.fingerprint(), QString("SHA256:1Hsebt2WWnmc72FERsUOgvaajIGHkrMONxXylcmk87U"));
 }
 
@@ -172,7 +172,7 @@ void TestOpenSSHKey::testParseRSA()
     QVERIFY(!key.encrypted());
     QCOMPARE(key.cipherName(), QString("none"));
     QCOMPARE(key.type(), QString("ssh-rsa"));
-    QCOMPARE(key.comment(), QString(""));
+    QCOMPARE(key.comment(), QString());
     QCOMPARE(key.fingerprint(), QString("SHA256:DYdaZciYNxCejr+/8x+OKYxeTU1D5UsuIFUG4PWRFkk"));
     QCOMPARE(key.fingerprint(QCryptographicHash::Md5), QString("MD5:c2:26:5b:3d:62:19:56:b0:c3:67:99:7a:a6:4c:66:06"));
 }
@@ -408,7 +408,7 @@ void TestOpenSSHKey::testDecryptRSAAES256CBC()
     QVERIFY(!key.openKey("incorrectpassphrase"));
     QVERIFY(key.openKey("correctpassphrase"));
     QCOMPARE(key.type(), QString("ssh-rsa"));
-    QCOMPARE(key.comment(), QString(""));
+    QCOMPARE(key.comment(), QString());
     QCOMPARE(key.fingerprint(), QString("SHA256:1Hsebt2WWnmc72FERsUOgvaajIGHkrMONxXylcmk87U"));
 }
 
@@ -486,7 +486,7 @@ void TestOpenSSHKey::testDecryptRSAAES256CTR()
     QVERIFY(!key.openKey("incorrectpassphrase"));
     QVERIFY(key.openKey("correctpassphrase"));
     QCOMPARE(key.type(), QString("ssh-rsa"));
-    QCOMPARE(key.comment(), QString(""));
+    QCOMPARE(key.comment(), QString());
     QCOMPARE(key.fingerprint(), QString("SHA256:1Hsebt2WWnmc72FERsUOgvaajIGHkrMONxXylcmk87U"));
 }
 

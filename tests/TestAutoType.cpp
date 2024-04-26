@@ -248,7 +248,7 @@ void TestAutoType::testGlobalAutoTypeRegExp()
     m_test->setActiveWindowTitle("CustomAttr2");
     emit osUtils->globalShortcutTriggered("autotype");
     m_autoType->performGlobalAutoType(m_dbList);
-    QCOMPARE(m_test->actionChars(), QString(""));
+    QCOMPARE(m_test->actionChars(), QString());
     m_test->clearActions();
 
     // with mixedcase default attributes

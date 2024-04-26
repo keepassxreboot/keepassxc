@@ -1429,7 +1429,7 @@ void TestGui::testSaveBackupPath_data()
     QTest::newRow("Path with placeholders") << "{DB_FILENAME}.old.kdbx"
                                             << "KeePassXC.old.kdbx";
     // empty path should be replaced with default pattern
-    QTest::newRow("Empty path") << QString("") << config()->getDefault(Config::BackupFilePathPattern).toString();
+    QTest::newRow("Empty path") << QString() << config()->getDefault(Config::BackupFilePathPattern).toString();
     // {DB_FILENAME} should be replaced with database filename
     QTest::newRow("") << "{DB_FILENAME}_.old.kdbx"
                       << "{DB_FILENAME}_.old.kdbx";

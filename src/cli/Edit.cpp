@@ -40,7 +40,7 @@ Edit::Edit()
     options.append(Add::NotesOption);
     options.append(Add::PasswordPromptOption);
     options.append(Edit::TitleOption);
-    positionalArguments.append({QString("entry"), QObject::tr("Path of the entry to edit."), QString("")});
+    positionalArguments.append({QString("entry"), QObject::tr("Path of the entry to edit."), QString()});
 
     // Password generation options.
     options.append(Add::GenerateOption);
