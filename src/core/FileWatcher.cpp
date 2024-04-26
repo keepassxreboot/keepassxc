@@ -53,7 +53,7 @@ void FileWatcher::start(const QString& filePath, int checksumIntervalSeconds, in
         // if we can't get the fs type let's fall back to polling
         forcePolling = true;
     }
-    auto objectName = forcePolling ? QLatin1String("_qt_autotest_force_engine_poller") : QLatin1String("");
+    auto objectName = forcePolling ? QLatin1String("_qt_autotest_force_engine_poller") : QString();
     m_fileWatcher.setObjectName(objectName);
 #endif
 

@@ -24,7 +24,7 @@
 
 DatabaseCommand::DatabaseCommand()
 {
-    positionalArguments.append({QLatin1String("database"), QObject::tr("Path of the database."), QLatin1String()});
+    positionalArguments.append({QLatin1String("database"), QObject::tr("Path of the database."), QString()});
     options.append(Command::KeyFileOption);
     options.append(Command::NoPasswordOption);
 #ifdef WITH_XC_YUBIKEY

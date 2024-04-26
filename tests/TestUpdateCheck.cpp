@@ -57,5 +57,5 @@ void TestUpdateCheck::testCompareVersion()
     // Snapshot and invalid data
     QCOMPARE(UpdateChecker::compareVersions(QLatin1String("2.3.4-snapshot"), QLatin1String("2.4.0")), false);
     QCOMPARE(UpdateChecker::compareVersions(QLatin1String("2.4.0"), QLatin1String("invalid")), false);
-    QCOMPARE(UpdateChecker::compareVersions(QLatin1String("2.4.0"), QLatin1String()), false);
+    QCOMPARE(UpdateChecker::compareVersions(QLatin1String("2.4.0"), QString()), false);
 }

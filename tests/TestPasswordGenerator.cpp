@@ -183,7 +183,7 @@ void TestPasswordGenerator::testValidity_data()
     QTest::addRow("One from every class with excluded classes")
         << (PasswordGenerator::CharClass::LowerLetters | PasswordGenerator::CharClass::UpperLetters
             | PasswordGenerator::CharClass::Numbers)
-        << to_flags(PasswordGenerator::GeneratorFlag::CharFromEveryGroup) << QStringLiteral() << QStringLiteral("0123456789") << 2
+        << to_flags(PasswordGenerator::GeneratorFlag::CharFromEveryGroup) << QString() << QStringLiteral("0123456789") << 2
         << true;
     QTest::addRow("Defaults valid") << to_flags(PasswordGenerator::CharClass::DefaultCharset)
                                     << to_flags(PasswordGenerator::GeneratorFlag::DefaultFlags)
@@ -192,7 +192,7 @@ void TestPasswordGenerator::testValidity_data()
                                     << true;
     QTest::addRow("No active classes but custom charset")
         << to_flags(PasswordGenerator::CharClass::NoClass) << to_flags(PasswordGenerator::GeneratorFlag::DefaultFlags)
-        << QStringLiteral("a") << QStringLiteral() << 1 << true;
+        << QStringLiteral("a") << QString() << 1 << true;
 }
 
 void TestPasswordGenerator::testValidity()

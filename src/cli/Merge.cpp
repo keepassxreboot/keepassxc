@@ -54,7 +54,7 @@ Merge::Merge()
 #ifdef WITH_XC_YUBIKEY
     options.append(Merge::YubiKeyFromOption);
 #endif
-    positionalArguments.append({QLatin1String("database2"), QObject::tr("Path of the database to merge from."), QLatin1String()});
+    positionalArguments.append({QLatin1String("database2"), QObject::tr("Path of the database to merge from."), QString()});
 }
 
 int Merge::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)
