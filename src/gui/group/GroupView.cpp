@@ -44,8 +44,9 @@ GroupView::GroupView(Database* db, QWidget* parent)
     // clang-format on
 
     new QShortcut(Qt::CTRL + Qt::Key_F10, this, SLOT(contextMenuShortcutPressed()), nullptr, Qt::WidgetShortcut);
-    new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_PageUp, this, SLOT(prevGroup()), nullptr, Qt::WindowShortcut);
-    new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_PageDown, this, SLOT(nextGroup()), nullptr, Qt::WindowShortcut);
+    new QShortcut(
+        Qt::CTRL + Qt::SHIFT + Qt::Key_PageUp, this, SLOT(selectPreviousGroup()), nullptr, Qt::WindowShortcut);
+    new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_PageDown, this, SLOT(selectNextGroup()), nullptr, Qt::WindowShortcut);
 
     // keyboard shortcuts to sort children of a group
     auto shortcut = new QShortcut(Qt::CTRL + Qt::Key_Down, this, nullptr, nullptr, Qt::WidgetShortcut);
@@ -62,24 +63,22 @@ GroupView::GroupView(Database* db, QWidget* parent)
     setDefaultDropAction(Qt::MoveAction);
 }
 
-void GroupView::prevGroup()
+void GroupView::selectPreviousGroup()
 {
-    auto prevIndex = indexAbove(currentIndex());
-    if (!prevIndex.isValid())
-        return;
-
-    Group* prevGroup = m_model->groupFromIndex(prevIndex);
-    setCurrentGroup(prevGroup);
+    auto previousIndex = indexAbove(currentIndex());
+    if (previousIndex.isValid()) {
+        auto previousGroup = m_model->groupFromIndex(previousIndex);
+        setCurrentGroup(previousGroup);
+    }
 }
 
-void GroupView::nextGroup()
+void GroupView::selectNextGroup()
 {
     auto nextIndex = indexBelow(currentIndex());
-    if (!nextIndex.isValid())
-        return;
-
-    Group* nextGroup = m_model->groupFromIndex(nextIndex);
-    setCurrentGroup(nextGroup);
+    if (nextIndex.isValid()) {
+        auto nextGroup = m_model->groupFromIndex(nextIndex);
+        setCurrentGroup(nextGroup);
+    }
 }
 
 void GroupView::contextMenuShortcutPressed()
