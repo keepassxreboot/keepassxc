@@ -36,7 +36,7 @@ namespace
         QByteArray a;
         QBuffer buffer(&a);
         pixmap.save(&buffer, "PNG");
-        return QString("<img src=\"data:image/png;base64,") + a.toBase64() + "\"/>";
+        return QLatin1String("<img src=\"data:image/png;base64,") + a.toBase64() + "\"/>";
     }
 
     QString formatEntry(const Entry& entry)
@@ -138,43 +138,46 @@ bool HtmlExporter::exportDatabase(QIODevice* device,
         return false;
     }
 
-    const auto header = QString("<html>"
-                                "<head>"
-                                "<meta charset=\"UTF-8\">"
-                                "<title>"
-                                + meta->name().toHtmlEscaped()
-                                + "</title>"
-                                  "<style>"
-                                  "body "
-                                  "{ font-family: \"Open Sans\", Helvetica, Arial, sans-serif; }"
-                                  "h3 "
-                                  "{ margin-left: 2em; }"
-                                  "table "
-                                  "{ margin-left: 1em; } "
-                                  "caption "
-                                  "{ text-align: left; font-weight: bold; font-size: 150%; border-bottom: .15em solid "
-                                  "#4ca; margin-bottom: .5em;} "
-                                  "th, td "
-                                  "{ text-align: left; vertical-align: top; padding: 1px; }"
-                                  "th "
-                                  "{ min-width: 7em; width: 15%; } "
-                                  ".username, .password, .url, .attr "
-                                  "{ font-size: larger; font-family: monospace; } "
-                                  ".notes "
-                                  "{ font-size: small; } "
-                                  "</style>"
-                                  "</head>\n"
-                                  "<body>"
-                                  "<h1>"
-                                + meta->name().toHtmlEscaped()
-                                + "</h1>"
-                                  "<p>"
-                                + meta->description().toHtmlEscaped().replace("\n", "<br>")
-                                + "</p>"
-                                  "<p><code>"
-                                + db->filePath().toHtmlEscaped() + "</code></p>");
-    const auto footer = QString("</body>"
-                                "</html>");
+    const auto header = QStringLiteral("<html>"
+                                       "<head>"
+                                       "<meta charset=\"UTF-8\">"
+                                       "<title>"
+                                       "%1"
+                                       "</title>"
+                                       "<style>"
+                                       "body "
+                                       "{ font-family: \"Open Sans\", Helvetica, Arial, sans-serif; }"
+                                       "h3 "
+                                       "{ margin-left: 2em; }"
+                                       "table "
+                                       "{ margin-left: 1em; } "
+                                       "caption "
+                                       "{ text-align: left; font-weight: bold; font-size: 150%; border-bottom: .15em solid "
+                                       "#4ca; margin-bottom: .5em;} "
+                                       "th, td "
+                                       "{ text-align: left; vertical-align: top; padding: 1px; }"
+                                       "th "
+                                       "{ min-width: 7em; width: 15%; } "
+                                       ".username, .password, .url, .attr "
+                                       "{ font-size: larger; font-family: monospace; } "
+                                       ".notes "
+                                       "{ font-size: small; } "
+                                       "</style>"
+                                       "</head>\n"
+                                       "<body>"
+                                       "<h1>"
+                                       "%1"
+                                       "</h1>"
+                                       "<p>"
+                                       "%2"
+                                       "</p>"
+                                       "<p><code>"
+                                       "%3"
+                                       "</code></p>").arg(meta->name().toHtmlEscaped())
+                                                     .arg(meta->description().toHtmlEscaped().replace("\n", "<br>"))
+                                                     .arg(db->filePath().toHtmlEscaped() + "</code></p>");
+    const auto footer = QStringLiteral("</body>"
+                                       "</html>");
 
     if (device->write(header.toUtf8()) == -1) {
         m_error = device->errorString();
@@ -213,7 +216,7 @@ bool HtmlExporter::writeGroup(QIODevice& device, const Group& group, QString pat
     const auto notes = group.notes();
     if (!group.entries().empty() || !notes.isEmpty()) {
         // Header line
-        auto header = QLatin1String("<hr><h2>");
+        auto header = QStringLiteral("<hr><h2>");
         header.append(PixmapToHTML(Icons::groupIconPixmap(&group, IconSize::Medium)));
         header.append("&nbsp;");
         header.append(path);
@@ -234,7 +237,7 @@ bool HtmlExporter::writeGroup(QIODevice& device, const Group& group, QString pat
     }
 
     // Begin the table for the entries in this group
-    auto table = QString("<table width=\"95%\">");
+    auto table = QStringLiteral("<table width=\"95%\">");
 
     auto entries = group.entries();
     if (sorted) {

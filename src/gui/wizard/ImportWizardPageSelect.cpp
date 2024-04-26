@@ -143,7 +143,7 @@ void ImportWizardPageSelect::updateDatabaseChoices() const
             // Add the root group as a special line item
             auto db = dbWidget->database();
             m_ui->existingDatabaseChoice->addItem(
-                QString("%1 (%2)").arg(dbWidget->displayName(), db->rootGroup()->name()),
+                QStringLiteral("%1 (%2)").arg(dbWidget->displayName(), db->rootGroup()->name()),
                 QList<QVariant>() << db->uuid() << db->rootGroup()->uuid());
 
             if (dbWidget->isVisible()) {
@@ -155,7 +155,7 @@ void ImportWizardPageSelect::updateDatabaseChoices() const
                 if (!group->isRecycled()) {
                     auto path = group->hierarchy();
                     path.removeFirst();
-                    m_ui->existingDatabaseChoice->addItem(QString("  / %1").arg(path.join(" / ")),
+                    m_ui->existingDatabaseChoice->addItem(QStringLiteral("  / %1").arg(path.join(" / ")),
                                                           QList<QVariant>() << db->uuid() << group->uuid());
                 }
             }
@@ -184,7 +184,7 @@ void ImportWizardPageSelect::chooseImportFile()
 
 void ImportWizardPageSelect::chooseKeyFile()
 {
-    auto filter = QString("%1 (*);;%2 (*.keyx; *.key)").arg(tr("All files"), tr("Key files"));
+    auto filter = QStringLiteral("%1 (*);;%2 (*.keyx; *.key)").arg(tr("All files"), tr("Key files"));
     auto file = fileDialog()->getOpenFileName(this, tr("Select key file"), QDir::homePath(), filter);
     if (!file.isEmpty()) {
         m_ui->keyFileEdit->setText(file);
@@ -221,15 +221,15 @@ QString ImportWizardPageSelect::importFileFilter()
 {
     switch (field("ImportType").toInt()) {
     case ImportWizard::IMPORT_CSV:
-        return QString("%1 (*.csv);;%2 (*)").arg(tr("Comma Separated Values"), tr("All files"));
+        return QStringLiteral("%1 (*.csv);;%2 (*)").arg(tr("Comma Separated Values"), tr("All files"));
     case ImportWizard::IMPORT_OPUX:
-        return QString("%1 (*.1pux)").arg(tr("1Password Export"));
+        return QStringLiteral("%1 (*.1pux)").arg(tr("1Password Export"));
     case ImportWizard::IMPORT_BITWARDEN:
-        return QString("%1 (*.json)").arg(tr("Bitwarden JSON Export"));
+        return QStringLiteral("%1 (*.json)").arg(tr("Bitwarden JSON Export"));
     case ImportWizard::IMPORT_OPVAULT:
-        return QString("%1 (*.opvault)").arg(tr("1Password Vault"));
+        return QStringLiteral("%1 (*.opvault)").arg(tr("1Password Vault"));
     case ImportWizard::IMPORT_KEEPASS1:
-        return QString("%1 (*.kdb)").arg(tr("KeePass1 Database"));
+        return QStringLiteral("%1 (*.kdb)").arg(tr("KeePass1 Database"));
     default:
         return {};
     }

@@ -67,7 +67,7 @@ void PasskeyExporter::showExportDialog(const QList<Entry*>& items)
  */
 void PasskeyExporter::exportSelectedEntry(const Entry* entry, const QString& folder)
 {
-    const auto fullPath = QString("%1/%2.passkey").arg(folder, Tools::cleanFilename(entry->title()));
+    const auto fullPath = QStringLiteral("%1/%2.passkey").arg(folder, Tools::cleanFilename(entry->title()));
     if (QFile::exists(fullPath)) {
         auto dialogResult = MessageBox::warning(nullptr,
                                                 tr("KeePassXC: Passkey Export"),

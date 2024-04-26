@@ -250,7 +250,7 @@ void EditWidgetIcons::addCustomIconFromFile()
         return;
     }
 
-    auto filter = QString("%1 (%2);;%3 (*)").arg(tr("Images"), Icons::imageFormatsFilter(), tr("All files"));
+    auto filter = QStringLiteral("%1 (%2);;%3 (*)").arg(tr("Images"), Icons::imageFormatsFilter(), tr("All files"));
     auto filenames =
         fileDialog()->getOpenFileNames(this, tr("Select Image(s)"), FileDialog::getLastDir("icons"), filter);
     if (!filenames.empty()) {

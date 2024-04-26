@@ -183,7 +183,7 @@ void NixUtils::setLaunchAtStartup(bool enable)
     options["autostart"] = QVariant(enable);
     options["reason"] = QVariant("Launch KeePassXC at startup");
     int token = QRandomGenerator::global()->bounded(1000, 9999);
-    options["handle_token"] = QVariant(QString("org/keepassxc/KeePassXC/%1").arg(token));
+    options["handle_token"] = QVariant(QStringLiteral("org/keepassxc/KeePassXC/%1").arg(token));
 
     msg << "" << options;
 
@@ -379,7 +379,7 @@ void NixUtils::setColorScheme(QDBusVariant value)
 
 quint64 NixUtils::getProcessStartTime() const
 {
-    QString processStatPath = QString("/proc/%1/stat").arg(QCoreApplication::applicationPid());
+    QString processStatPath = QStringLiteral("/proc/%1/stat").arg(QCoreApplication::applicationPid());
     QFile processStatFile(processStatPath);
 
     if (!processStatFile.open(QIODevice::ReadOnly | QIODevice::Text)) {

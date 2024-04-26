@@ -99,7 +99,7 @@ QSharedPointer<Database> OpVaultReader::convert(QDir& opdataDir, const QString& 
             const QJsonObject bandEnt = bandJs[entryKey].toObject();
             const QString uuid = bandEnt["uuid"].toString();
             if (entryKey != uuid) {
-                qWarning() << QString("Mismatched Entry UUID, its JSON key <<%1>> and its UUID <<%2>>")
+                qWarning() << QStringLiteral("Mismatched Entry UUID, its JSON key <<%1>> and its UUID <<%2>>")
                                   .arg(entryKey)
                                   .arg(uuid);
             }
@@ -225,7 +225,7 @@ bool OpVaultReader::processFolderJson(QJsonObject& foldersJson, Group* rootGroup
         if (overviewJs.contains("smart") && overviewJs["smart"].toBool()) {
             if (!overviewJs.contains("predicate_b64")) {
                 const QString& errMsg =
-                    QString(R"(Expected a predicate in smart folder[uuid="%1"; title="%2"]))").arg(key, folderTitle);
+                    QStringLiteral(R"(Expected a predicate in smart folder[uuid="%1"; title="%2"]))").arg(key, folderTitle);
                 qWarning() << errMsg;
                 myGroup->setNotes(errMsg);
             } else {
@@ -270,16 +270,16 @@ QJsonObject OpVaultReader::readAndAssertJsonFile(QFile& file, const QString& str
     const QFileInfo& fileInfo = QFileInfo(file);
     auto absFilePath = fileInfo.absoluteFilePath();
     if (!fileInfo.exists()) {
-        qCritical() << QString("File \"%1\" must exist").arg(absFilePath);
+        qCritical() << QStringLiteral("File \"%1\" must exist").arg(absFilePath);
         return {};
     }
     if (!fileInfo.isReadable()) {
-        qCritical() << QString("File \"%1\" must be readable").arg(absFilePath);
+        qCritical() << QStringLiteral("File \"%1\" must be readable").arg(absFilePath);
         return {};
     }
 
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qCritical() << QString("Unable to open \"%1\" readonly+text").arg(absFilePath);
+        qCritical() << QStringLiteral("Unable to open \"%1\" readonly+text").arg(absFilePath);
     }
     filePayload = file.readAll();
     file.close();

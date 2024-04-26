@@ -488,7 +488,7 @@ void Config::init(const QString& configFileName, const QString& localConfigFileN
 #ifdef QT_DEBUG
         suffix = "_debug";
 #endif
-        oldLocalConfigPath += QString("/keepassxc%1.ini").arg(suffix);
+        oldLocalConfigPath += QStringLiteral("/keepassxc%1.ini").arg(suffix);
         oldLocalConfigPath = QDir::toNativeSeparators(oldLocalConfigPath);
         if (QFile::exists(oldLocalConfigPath)) {
             QDir().mkpath(QFileInfo(localConfigFileName).absolutePath());
@@ -556,8 +556,8 @@ QPair<QString, QString> Config::defaultConfigFiles()
     suffix = "_debug";
 #endif
 
-    configPath += QString("/keepassxc%1.ini").arg(suffix);
-    localConfigPath += QString("/keepassxc%1.ini").arg(suffix);
+    configPath += QStringLiteral("/keepassxc%1.ini").arg(suffix);
+    localConfigPath += QStringLiteral("/keepassxc%1.ini").arg(suffix);
 
     // Allow overriding the default location with env vars
     const auto& env = QProcessEnvironment::systemEnvironment();

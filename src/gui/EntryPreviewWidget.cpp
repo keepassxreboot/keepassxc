@@ -276,7 +276,7 @@ void EntryPreviewWidget::setUsernameVisible(bool state)
         m_ui->entryUsernameLabel->setFont(Font::defaultFont());
         m_ui->entryUsernameLabel->setCursorPosition(0);
     } else {
-        m_ui->entryUsernameLabel->setText(QString("\u25cf").repeated(6));
+        m_ui->entryUsernameLabel->setText(QStringLiteral("\u25cf").repeated(6));
         m_ui->entryUsernameLabel->setFont(Font::fixedFont());
     }
 
@@ -310,7 +310,7 @@ void EntryPreviewWidget::setPasswordVisible(bool state)
     } else if (password.isEmpty() && !config()->get(Config::Security_PasswordEmptyPlaceholder).toBool()) {
         m_ui->entryPasswordLabel->setText("");
     } else {
-        m_ui->entryPasswordLabel->setText(QString("\u25cf").repeated(6));
+        m_ui->entryPasswordLabel->setText(QStringLiteral("\u25cf").repeated(6));
     }
 
     m_ui->passwordScrollArea->setMaximumHeight(m_ui->entryPasswordLabel->sizeHint().height()
@@ -339,7 +339,7 @@ void EntryPreviewWidget::setNotesVisible(QTextEdit* notesWidget, const QString& 
         notesWidget->ensureCursorVisible();
     } else {
         if (!notes.isEmpty()) {
-            notesWidget->setPlainText(QString("\u25cf").repeated(6));
+            notesWidget->setPlainText(QStringLiteral("\u25cf").repeated(6));
         } else {
             notesWidget->setPlainText("");
         }
@@ -443,7 +443,7 @@ void EntryPreviewWidget::updateEntryAdvancedTab()
                     if (state) {
                         item->setText(item->data(Qt::UserRole).toString());
                     } else {
-                        item->setText(QString("\u25cf").repeated(6));
+                        item->setText(QStringLiteral("\u25cf").repeated(6));
                     }
                     // Maintain button height while showing contents of cell
                     auto size = btn->size();
@@ -452,7 +452,7 @@ void EntryPreviewWidget::updateEntryAdvancedTab()
                 });
 
                 m_ui->entryAttributesTable->setCellWidget(i, 1, button);
-                m_ui->entryAttributesTable->setItem(i, 2, new QTableWidgetItem(QString("\u25cf").repeated(6)));
+                m_ui->entryAttributesTable->setItem(i, 2, new QTableWidgetItem(QStringLiteral("\u25cf").repeated(6)));
             } else {
                 m_ui->entryAttributesTable->setItem(i, 2, new QTableWidgetItem(attributes->value(key)));
             }
@@ -587,8 +587,8 @@ void EntryPreviewWidget::setTabEnabled(QTabWidget* tabWidget, QWidget* widget, b
 QString EntryPreviewWidget::hierarchy(const Group* group, const QString& title)
 {
     if (group) {
-        QString groupList = QString("%1").arg(group->hierarchy().join(" / "));
-        return title.isEmpty() ? groupList : QString("%1 / %2").arg(groupList, title);
+        QString groupList = QStringLiteral("%1").arg(group->hierarchy().join(" / "));
+        return title.isEmpty() ? groupList : QStringLiteral("%1 / %2").arg(groupList, title);
     }
     return {};
 }

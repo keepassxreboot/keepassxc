@@ -80,7 +80,7 @@ void TestGuiBrowser::initTestCase()
 void TestGuiBrowser::init()
 {
     m_dbFile.reset(new TemporaryFile());
-    m_dbFile->copyFromFile(QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabaseBrowser.kdbx"));
+    m_dbFile->copyFromFile(QStringLiteral(KEEPASSX_TEST_DATA_DIR).append("/NewDatabaseBrowser.kdbx"));
 
     // make sure window is activated or focus tests may fail
     m_mainWindow->activateWindow();

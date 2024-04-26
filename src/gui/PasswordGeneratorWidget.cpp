@@ -403,7 +403,7 @@ void PasswordGeneratorWidget::deleteWordList()
 
 void PasswordGeneratorWidget::addWordList()
 {
-    auto filter = QString("%1 (*.txt *.asc *.wordlist);;%2 (*)").arg(tr("Wordlists"), tr("All files"));
+    auto filter = QStringLiteral("%1 (*.txt *.asc *.wordlist);;%2 (*)").arg(tr("Wordlists"), tr("All files"));
     auto filePath = fileDialog()->getOpenFileName(this, tr("Select Custom Wordlist"), "", filter);
     if (filePath.isEmpty()) {
         return;

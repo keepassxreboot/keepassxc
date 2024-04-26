@@ -179,7 +179,7 @@ void TestDatabase::testSignals()
 
 void TestDatabase::testEmptyRecycleBinOnDisabled()
 {
-    QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/RecycleBinDisabled.kdbx");
+    QString filename = QStringLiteral(KEEPASSX_TEST_DATA_DIR).append("/RecycleBinDisabled.kdbx");
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create("123"));
     auto db = QSharedPointer<Database>::create();
@@ -194,7 +194,7 @@ void TestDatabase::testEmptyRecycleBinOnDisabled()
 
 void TestDatabase::testEmptyRecycleBinOnNotCreated()
 {
-    QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/RecycleBinNotYetCreated.kdbx");
+    QString filename = QStringLiteral(KEEPASSX_TEST_DATA_DIR).append("/RecycleBinNotYetCreated.kdbx");
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create("123"));
     auto db = QSharedPointer<Database>::create();
@@ -209,7 +209,7 @@ void TestDatabase::testEmptyRecycleBinOnNotCreated()
 
 void TestDatabase::testEmptyRecycleBinOnEmpty()
 {
-    QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/RecycleBinEmpty.kdbx");
+    QString filename = QStringLiteral(KEEPASSX_TEST_DATA_DIR).append("/RecycleBinEmpty.kdbx");
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create("123"));
     auto db = QSharedPointer<Database>::create();
@@ -224,7 +224,7 @@ void TestDatabase::testEmptyRecycleBinOnEmpty()
 
 void TestDatabase::testEmptyRecycleBinWithHierarchicalData()
 {
-    QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/RecycleBinWithData.kdbx");
+    QString filename = QStringLiteral(KEEPASSX_TEST_DATA_DIR).append("/RecycleBinWithData.kdbx");
     auto key = QSharedPointer<CompositeKey>::create();
     key->addKey(QSharedPointer<PasswordKey>::create("123"));
     auto db = QSharedPointer<Database>::create();

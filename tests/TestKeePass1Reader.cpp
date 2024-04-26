@@ -36,7 +36,7 @@ void TestKeePass1Reader::initTestCase()
 {
     QVERIFY(Crypto::init());
 
-    QString filename = QString(KEEPASSX_TEST_DATA_DIR).append("/basic.kdb");
+    QString filename = QStringLiteral(KEEPASSX_TEST_DATA_DIR).append("/basic.kdb");
 
     KeePass1Reader reader;
     m_db = reader.readDatabase(filename, "masterpw", nullptr);
@@ -64,7 +64,7 @@ void TestKeePass1Reader::testBasic()
     QCOMPARE(entry11->username(), QLatin1String("I"));
     QCOMPARE(entry11->url(), QLatin1String("http://example.com/"));
     QCOMPARE(entry11->password(), QLatin1String("secretpassword"));
-    QCOMPARE(entry11->notes(), QString("Lorem ipsum\ndolor sit amet"));
+    QCOMPARE(entry11->notes(), QLatin1String("Lorem ipsum\ndolor sit amet"));
     QVERIFY(entry11->timeInfo().expires());
     QCOMPARE(entry11->timeInfo().expiryTime(), genDT(2012, 5, 9, 10, 32));
     QCOMPARE(entry11->attachments()->keys().size(), 1);
@@ -163,12 +163,12 @@ void TestKeePass1Reader::testFileKey()
 {
     QFETCH(QString, type);
 
-    QLatin1String name = QLatin1String("FileKey").append(type);
+    QString name = QStringLiteral("FileKey").append(type);
 
     KeePass1Reader reader;
 
-    QString dbFilename = QString("%1/%2.kdb").arg(QString(KEEPASSX_TEST_DATA_DIR), name);
-    QString keyFilename = QString("%1/%2.key").arg(QString(KEEPASSX_TEST_DATA_DIR), name);
+    QString dbFilename = QStringLiteral("%1/%2.kdb").arg(QStringLiteral(KEEPASSX_TEST_DATA_DIR), name);
+    QString keyFilename = QStringLiteral("%1/%2.key").arg(QStringLiteral(KEEPASSX_TEST_DATA_DIR), name);
 
     auto db = reader.readDatabase(dbFilename, QString(), keyFilename);
     QVERIFY(db);
@@ -182,9 +182,9 @@ void TestKeePass1Reader::testFileKey()
 void TestKeePass1Reader::testFileKey_data()
 {
     QTest::addColumn<QString>("type");
-    QTest::newRow("Binary") << QLatin1String("Binary");
-    QTest::newRow("Hex") << QLatin1String("Hex");
-    QTest::newRow("Hashed") << QLatin1String("Hashed");
+    QTest::newRow("Binary") << QStringLiteral("Binary");
+    QTest::newRow("Hex") << QStringLiteral("Hex");
+    QTest::newRow("Hashed") << QStringLiteral("Hashed");
 }
 
 void TestKeePass1Reader::testCompositeKey()
@@ -193,8 +193,8 @@ void TestKeePass1Reader::testCompositeKey()
 
     KeePass1Reader reader;
 
-    QString dbFilename = QString("%1/%2.kdb").arg(QString(KEEPASSX_TEST_DATA_DIR), name);
-    QString keyFilename = QString("%1/FileKeyHex.key").arg(QString(KEEPASSX_TEST_DATA_DIR));
+    QString dbFilename = QStringLiteral("%1/%2.kdb").arg(QStringLiteral(KEEPASSX_TEST_DATA_DIR), name);
+    QString keyFilename = QStringLiteral("%1/FileKeyHex.key").arg(QStringLiteral(KEEPASSX_TEST_DATA_DIR));
 
     auto db = reader.readDatabase(dbFilename, "mypassword", keyFilename);
     QVERIFY(db);
@@ -211,7 +211,7 @@ void TestKeePass1Reader::testTwofish()
 
     KeePass1Reader reader;
 
-    QString dbFilename = QString("%1/%2.kdb").arg(QString(KEEPASSX_TEST_DATA_DIR), name);
+    QString dbFilename = QStringLiteral("%1/%2.kdb").arg(QStringLiteral(KEEPASSX_TEST_DATA_DIR), name);
 
     auto db = reader.readDatabase(dbFilename, "masterpw", nullptr);
     QVERIFY(db);
@@ -226,7 +226,7 @@ void TestKeePass1Reader::testCP1252Password()
 
     KeePass1Reader reader;
 
-    QString dbFilename = QString("%1/%2.kdb").arg(QString(KEEPASSX_TEST_DATA_DIR), name);
+    QString dbFilename = QStringLiteral("%1/%2.kdb").arg(QStringLiteral(KEEPASSX_TEST_DATA_DIR), name);
     QString password = QString::fromUtf8("\xe2\x80\x9e\x70\x61\x73\x73\x77\x6f\x72\x64\xe2\x80\x9d");
 
     auto db = reader.readDatabase(dbFilename, password, nullptr);

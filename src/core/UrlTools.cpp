@@ -73,7 +73,7 @@ QString UrlTools::getBaseDomainFromUrl(const QString& url) const
     // Split the URL and select the last part, e.g. https://another.example -> example
     QString baseDomain = host.split('.').last();
     // Append the top level domain back to the URL, e.g. example -> example.co.uk
-    baseDomain.append(QString(".%1").arg(tld));
+    baseDomain.append(QStringLiteral(".%1").arg(tld));
 
     return baseDomain;
 }

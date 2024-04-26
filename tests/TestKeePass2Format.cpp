@@ -36,9 +36,9 @@ void TestKeePass2Format::initTestCase()
     // read raw XML database
     bool hasError;
     QString errorString;
-    m_xmlDb = readXml(QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.xml"), true, hasError, errorString);
+    m_xmlDb = readXml(QStringLiteral(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.xml"), true, hasError, errorString);
     if (hasError) {
-        QFAIL(qPrintable(QLatin1String("Error while reading XML: ").append(errorString)));
+        QFAIL(qPrintable(QStringLiteral("Error while reading XML: ").append(errorString)));
     }
     QVERIFY(m_xmlDb.data());
 
@@ -69,7 +69,7 @@ void TestKeePass2Format::initTestCase()
     m_kdbxTargetBuffer.open(QBuffer::ReadWrite);
     writeKdbx(&m_kdbxTargetBuffer, m_kdbxSourceDb.data(), hasError, errorString);
     if (hasError) {
-        QFAIL(qPrintable(QLatin1String("Error while writing database: ").append(errorString)));
+        QFAIL(qPrintable(QStringLiteral("Error while writing database: ").append(errorString)));
     }
 
     // call sub class init method
@@ -280,7 +280,7 @@ void TestKeePass2Format::testXmlEntry2()
     QVERIFY(attrs.isEmpty());
 
     QCOMPARE(entry->attachments()->keys().size(), 1);
-    QCOMPARE(QLatin1String::fromLatin1(entry->attachments()->value("myattach.txt")), QLatin1String("abcdefghijk"));
+    QCOMPARE(QLatin1String(entry->attachments()->value("myattach.txt")), QLatin1String("abcdefghijk"));
 
     QCOMPARE(entry->autoTypeEnabled(), true);
     QCOMPARE(entry->autoTypeObfuscation(), 1);
@@ -342,7 +342,7 @@ void TestKeePass2Format::testXmlBroken()
     QFETCH(bool, strictMode);
     QFETCH(bool, expectError);
 
-    QString xmlFile = QString("%1/%2.xml").arg(KEEPASSX_TEST_DATA_DIR, baseName);
+    QString xmlFile = QStringLiteral("%1/%2.xml").arg(KEEPASSX_TEST_DATA_DIR, baseName);
     QVERIFY(QFile::exists(xmlFile));
     bool hasError;
     QString errorString;
@@ -383,7 +383,7 @@ void TestKeePass2Format::testXmlBroken_data()
 void TestKeePass2Format::testXmlEmptyUuids()
 {
 
-    QString xmlFile = QString("%1/%2.xml").arg(KEEPASSX_TEST_DATA_DIR, "EmptyUuids");
+    QString xmlFile = QStringLiteral("%1/%2.xml").arg(KEEPASSX_TEST_DATA_DIR, "EmptyUuids");
     QVERIFY(QFile::exists(xmlFile));
     bool hasError;
     QString errorString;
@@ -465,7 +465,7 @@ void TestKeePass2Format::testXmlInvalidXmlChars()
 
 void TestKeePass2Format::testXmlRepairUuidHistoryItem()
 {
-    QString xmlFile = QString("%1/%2.xml").arg(KEEPASSX_TEST_DATA_DIR, "BrokenDifferentEntryHistoryUuid");
+    QString xmlFile = QStringLiteral("%1/%2.xml").arg(KEEPASSX_TEST_DATA_DIR, "BrokenDifferentEntryHistoryUuid");
     QVERIFY(QFile::exists(xmlFile));
     bool hasError;
     QString errorString;
@@ -501,7 +501,7 @@ void TestKeePass2Format::testReadBackTargetDb()
     m_kdbxTargetDb = QSharedPointer<Database>::create();
     readKdbx(&m_kdbxTargetBuffer, key, m_kdbxTargetDb, hasError, errorString);
     if (hasError) {
-        QFAIL(qPrintable(QLatin1String("Error while reading database: ").append(errorString)));
+        QFAIL(qPrintable(QStringLiteral("Error while reading database: ").append(errorString)));
     }
     QVERIFY(m_kdbxTargetDb.data());
 }
@@ -773,13 +773,13 @@ void TestKeePass2Format::testDuplicateAttachments()
     QString errorString;
     writeKdbx(&buffer, db.data(), hasError, errorString);
     if (hasError) {
-        QFAIL(qPrintable(QString("Error while writing database: %1").arg(errorString)));
+        QFAIL(qPrintable(QStringLiteral("Error while writing database: %1").arg(errorString)));
     }
 
     buffer.seek(0);
     readKdbx(&buffer, QSharedPointer<CompositeKey>::create(), db, hasError, errorString);
     if (hasError) {
-        QFAIL(qPrintable(QString("Error while reading database: %1").arg(errorString)));
+        QFAIL(qPrintable(QStringLiteral("Error while reading database: %1").arg(errorString)));
     }
 
     QCOMPARE(db->rootGroup()->entries()[0]->attachments()->value("a"), attachment1);

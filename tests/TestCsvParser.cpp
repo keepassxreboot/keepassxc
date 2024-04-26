@@ -334,7 +334,7 @@ void TestCsvParser::testUnicode()
     parser->setFieldSeparator(QChar('A'));
     QTextStream out(file.data());
     out.setCodec("UTF-8");
-    out << QString("€1A2śA\"3śAż\"Ażac");
+    out << QStringLiteral("€1A2śA\"3śAż\"Ażac");
 
     QVERIFY(parser->parse(file.data()));
     t = parser->getCsvTable();

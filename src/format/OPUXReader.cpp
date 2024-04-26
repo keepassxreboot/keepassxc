@@ -76,7 +76,7 @@ namespace
                 const auto url = urlMap.value("url").toString();
                 if (entry->url() != url) {
                     entry->attributes()->set(
-                        QString("%1_%2").arg(EntryAttributes::AdditionalUrlAttribute, QString::number(i)), url);
+                        QStringLiteral("%1_%2").arg(EntryAttributes::AdditionalUrlAttribute, QString::number(i)), url);
                     ++i;
                 }
             }
@@ -121,13 +121,13 @@ namespace
                 if (name.isEmpty()) {
                     name = fieldMap.value("id").toString();
                 }
-                name = QString("%1_%2").arg(prefix, name);
+                name = QStringLiteral("%1_%2").arg(prefix, name);
 
                 const auto valueMap = fieldMap.value("value").toMap();
                 const auto key = valueMap.firstKey();
                 if (key == "totp") {
                     // Build otpauth url
-                    QUrl otpurl(QString("otpauth://totp/%1:%2?secret=%3")
+                    QUrl otpurl(QStringLiteral("otpauth://totp/%1:%2?secret=%3")
                                     .arg(entry->title(), entry->username(), valueMap.value(key).toString()));
 
                     if (entry->hasTotp()) {
@@ -136,7 +136,7 @@ namespace
                         name = "otp";
                         const auto attributes = entry->attributes()->keys();
                         while (attributes.contains(name)) {
-                            name = QString("otp_%1").arg(++i);
+                            name = QStringLiteral("otp_%1").arg(++i);
                         }
                         entry->attributes()->set(name, otpurl.toEncoded(), true);
                     } else {
@@ -148,7 +148,7 @@ namespace
                     const auto fileMap = valueMap.value(key).toMap();
                     const auto fileName = fileMap.value("fileName").toString();
                     const auto docId = fileMap.value("documentId").toString();
-                    const auto data = extractFile(uf, QString("files/%1__%2").arg(docId, fileName));
+                    const auto data = extractFile(uf, QStringLiteral("files/%1__%2").arg(docId, fileName));
                     if (!data.isNull()) {
                         entry->attachments()->set(fileName, data);
                     }
@@ -180,7 +180,7 @@ namespace
             const auto document = detailsMap.value("documentAttributes").toMap();
             const auto fileName = document.value("fileName").toString();
             const auto docId = document.value("documentId").toString();
-            const auto data = extractFile(uf, QString("files/%1__%2").arg(docId, fileName));
+            const auto data = extractFile(uf, QStringLiteral("files/%1__%2").arg(docId, fileName));
             if (!data.isNull()) {
                 entry->attachments()->set(fileName, data);
             }
@@ -227,7 +227,7 @@ namespace
         // Add the group icon if present
         const auto icon = attr.value("avatar").toString();
         if (!icon.isEmpty()) {
-            auto data = extractFile(uf, QString("files/%1").arg(icon));
+            auto data = extractFile(uf, QStringLiteral("files/%1").arg(icon));
             if (!data.isNull()) {
                 const auto uuid = QUuid::createUuid();
                 db->metadata()->addCustomIcon(uuid, data);

@@ -32,8 +32,8 @@ BrowserEntrySaveDialog::BrowserEntrySaveDialog(QWidget* parent)
     connect(m_ui->cancelButton, SIGNAL(clicked()), this, SLOT(reject()));
 
     m_ui->itemsList->setSelectionMode(QAbstractItemView::SingleSelection);
-    m_ui->label->setText(QString(tr("You have multiple databases open.\n"
-                                    "Please select the correct database for saving credentials.")));
+    m_ui->label->setText(tr("You have multiple databases open.\n"
+                            "Please select the correct database for saving credentials."));
 }
 
 BrowserEntrySaveDialog::~BrowserEntrySaveDialog()
@@ -55,7 +55,7 @@ int BrowserEntrySaveDialog::setItems(QList<DatabaseWidget*>& databaseWidgets, Da
         if (databaseName == databaseFileName) {
             item->setText(databaseFileName);
         } else {
-            item->setText(QString("%1 (%2)").arg(databaseName, databaseFileName));
+            item->setText(QStringLiteral("%1 (%2)").arg(databaseName, databaseFileName));
         }
 
         if (currentWidget == dbWidget) {

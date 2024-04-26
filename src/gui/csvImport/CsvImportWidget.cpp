@@ -155,12 +155,12 @@ void CsvImportWidget::updatePreview()
         if (m_ui->checkBoxFieldNames->isChecked()) {
             auto columnName = parser->getCsvTable().at(0).at(i);
             if (columnName.isEmpty()) {
-                csvColumns << QString(tr("Column %1").arg(i));
+                csvColumns << tr("Column %1").arg(i);
             } else {
                 csvColumns << columnName;
             }
         } else {
-            csvColumns << QString(tr("Column %1").arg(i));
+            csvColumns << tr("Column %1").arg(i);
         }
     }
     m_comboModel->setStringList(csvColumns);
@@ -299,7 +299,7 @@ QString CsvImportWidget::formatStatusText() const
         return text.section('\n', 0, 1).append("\n").append(tr("[%n more message(s) skipped]", "", items - 2));
     }
     if (items == 1) {
-        text.append(QString("\n"));
+        text.append(QLatin1String("\n"));
     }
     return text;
 }

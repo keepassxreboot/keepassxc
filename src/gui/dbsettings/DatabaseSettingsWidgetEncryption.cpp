@@ -269,7 +269,7 @@ bool DatabaseSettingsWidgetEncryption::save()
 
         QApplication::restoreOverrideCursor();
 
-        m_db->metadata()->customData()->set(CD_DECRYPTION_TIME_PREFERENCE_KEY, QString("%1").arg(time));
+        m_db->metadata()->customData()->set(CD_DECRYPTION_TIME_PREFERENCE_KEY, QStringLiteral("%1").arg(time));
 
         return ok;
     }

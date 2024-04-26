@@ -252,7 +252,7 @@ void TestEntry::testResolveRecursivePlaceholders()
     entry2->setUuid(QUuid::createUuid());
     entry2->setTitle("Entry2Title");
     entry2->setUsername("{S:CustomUserNameAttribute}");
-    entry2->setPassword(QString("{REF:P@I:%1}").arg(entry1->uuidToHex()));
+    entry2->setPassword(QStringLiteral("{REF:P@I:%1}").arg(entry1->uuidToHex()));
     entry2->setUrl("http://{S:IpAddress}:{S:Port}/{S:Uri}");
     entry2->attributes()->set("CustomUserNameAttribute", "CustomUserNameValue");
     entry2->attributes()->set("IpAddress", "127.0.0.1");
@@ -262,10 +262,10 @@ void TestEntry::testResolveRecursivePlaceholders()
     auto* entry3 = new Entry();
     entry3->setGroup(root);
     entry3->setUuid(QUuid::createUuid());
-    entry3->setTitle(QString("{REF:T@I:%1}").arg(entry2->uuidToHex()));
-    entry3->setUsername(QString("{REF:U@I:%1}").arg(entry2->uuidToHex()));
-    entry3->setPassword(QString("{REF:P@I:%1}").arg(entry2->uuidToHex()));
-    entry3->setUrl(QString("{REF:A@I:%1}").arg(entry2->uuidToHex()));
+    entry3->setTitle(QStringLiteral("{REF:T@I:%1}").arg(entry2->uuidToHex()));
+    entry3->setUsername(QStringLiteral("{REF:U@I:%1}").arg(entry2->uuidToHex()));
+    entry3->setPassword(QStringLiteral("{REF:P@I:%1}").arg(entry2->uuidToHex()));
+    entry3->setUrl(QStringLiteral("{REF:A@I:%1}").arg(entry2->uuidToHex()));
 
     QCOMPARE(entry3->resolveMultiplePlaceholders(entry3->title()), QLatin1String("Entry2Title"));
     QCOMPARE(entry3->resolveMultiplePlaceholders(entry3->username()), QLatin1String("CustomUserNameValue"));
@@ -275,10 +275,10 @@ void TestEntry::testResolveRecursivePlaceholders()
     auto* entry4 = new Entry();
     entry4->setGroup(root);
     entry4->setUuid(QUuid::createUuid());
-    entry4->setTitle(QString("{REF:T@I:%1}").arg(entry3->uuidToHex()));
-    entry4->setUsername(QString("{REF:U@I:%1}").arg(entry3->uuidToHex()));
-    entry4->setPassword(QString("{REF:P@I:%1}").arg(entry3->uuidToHex()));
-    entry4->setUrl(QString("{REF:A@I:%1}").arg(entry3->uuidToHex()));
+    entry4->setTitle(QStringLiteral("{REF:T@I:%1}").arg(entry3->uuidToHex()));
+    entry4->setUsername(QStringLiteral("{REF:U@I:%1}").arg(entry3->uuidToHex()));
+    entry4->setPassword(QStringLiteral("{REF:P@I:%1}").arg(entry3->uuidToHex()));
+    entry4->setUrl(QStringLiteral("{REF:A@I:%1}").arg(entry3->uuidToHex()));
 
     QCOMPARE(entry4->resolveMultiplePlaceholders(entry4->title()), QLatin1String("Entry2Title"));
     QCOMPARE(entry4->resolveMultiplePlaceholders(entry4->username()), QLatin1String("CustomUserNameValue"));
@@ -306,7 +306,7 @@ void TestEntry::testResolveRecursivePlaceholders()
     auto* entry6 = new Entry();
     entry6->setGroup(root);
     entry6->setUuid(QUuid::createUuid());
-    entry6->setTitle(QString("{REF:T@I:%1}").arg(entry3->uuidToHex()));
+    entry6->setTitle(QStringLiteral("{REF:T@I:%1}").arg(entry3->uuidToHex()));
     entry6->setUsername(QLatin1String("{TITLE}"));
     entry6->setPassword(QLatin1String("{PASSWORD}"));
 
@@ -317,7 +317,7 @@ void TestEntry::testResolveRecursivePlaceholders()
     auto* entry7 = new Entry();
     entry7->setGroup(root);
     entry7->setUuid(QUuid::createUuid());
-    entry7->setTitle(QString("{REF:T@I:%1} and something else").arg(entry3->uuidToHex()));
+    entry7->setTitle(QStringLiteral("{REF:T@I:%1} and something else").arg(entry3->uuidToHex()));
     entry7->setUsername(QLatin1String("{TITLE}"));
     entry7->setPassword(QLatin1String("PASSWORD"));
 
@@ -371,74 +371,74 @@ void TestEntry::testResolveReferencePlaceholders()
     tstEntry->setGroup(root);
     tstEntry->setUuid(QUuid::createUuid());
 
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:T@I:%1}").arg(entry1->uuidToHex())), entry1->title());
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:T@T:%1}").arg(entry1->title())), entry1->title());
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:T@U:%1}").arg(entry1->username())), entry1->title());
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:T@P:%1}").arg(entry1->password())), entry1->title());
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:T@A:%1}").arg(entry1->url())), entry1->title());
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:T@N:%1}").arg(entry1->notes())), entry1->title());
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QStringLiteral("{REF:T@I:%1}").arg(entry1->uuidToHex())), entry1->title());
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QStringLiteral("{REF:T@T:%1}").arg(entry1->title())), entry1->title());
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QStringLiteral("{REF:T@U:%1}").arg(entry1->username())), entry1->title());
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QStringLiteral("{REF:T@P:%1}").arg(entry1->password())), entry1->title());
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QStringLiteral("{REF:T@A:%1}").arg(entry1->url())), entry1->title());
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QStringLiteral("{REF:T@N:%1}").arg(entry1->notes())), entry1->title());
     QCOMPARE(tstEntry->resolveMultiplePlaceholders(
-                 QString("{REF:T@O:%1}").arg(entry1->attributes()->value("CustomAttribute1"))),
+                 QStringLiteral("{REF:T@O:%1}").arg(entry1->attributes()->value("CustomAttribute1"))),
              entry1->title());
 
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:T@I:%1}").arg(entry1->uuidToHex())), entry1->title());
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:T@T:%1}").arg(entry1->title())), entry1->title());
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:U@U:%1}").arg(entry1->username())),
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QStringLiteral("{REF:T@I:%1}").arg(entry1->uuidToHex())), entry1->title());
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QStringLiteral("{REF:T@T:%1}").arg(entry1->title())), entry1->title());
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QStringLiteral("{REF:U@U:%1}").arg(entry1->username())),
              entry1->username());
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:P@P:%1}").arg(entry1->password())),
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QStringLiteral("{REF:P@P:%1}").arg(entry1->password())),
              entry1->password());
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:A@A:%1}").arg(entry1->url())), entry1->url());
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:N@N:%1}").arg(entry1->notes())), entry1->notes());
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QStringLiteral("{REF:A@A:%1}").arg(entry1->url())), entry1->url());
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QStringLiteral("{REF:N@N:%1}").arg(entry1->notes())), entry1->notes());
 
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:T@I:%1}").arg(entry2->uuidToHex())), entry2->title());
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:T@T:%1}").arg(entry2->title())), entry2->title());
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:T@U:%1}").arg(entry2->username())), entry2->title());
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:T@P:%1}").arg(entry2->password())), entry2->title());
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:T@A:%1}").arg(entry2->url())), entry2->title());
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:T@N:%1}").arg(entry2->notes())), entry2->title());
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QStringLiteral("{REF:T@I:%1}").arg(entry2->uuidToHex())), entry2->title());
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QStringLiteral("{REF:T@T:%1}").arg(entry2->title())), entry2->title());
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QStringLiteral("{REF:T@U:%1}").arg(entry2->username())), entry2->title());
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QStringLiteral("{REF:T@P:%1}").arg(entry2->password())), entry2->title());
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QStringLiteral("{REF:T@A:%1}").arg(entry2->url())), entry2->title());
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QStringLiteral("{REF:T@N:%1}").arg(entry2->notes())), entry2->title());
     QCOMPARE(tstEntry->resolveMultiplePlaceholders(
-                 QString("{REF:T@O:%1}").arg(entry2->attributes()->value("CustomAttribute2"))),
+                 QStringLiteral("{REF:T@O:%1}").arg(entry2->attributes()->value("CustomAttribute2"))),
              entry2->title());
 
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:T@T:%1}").arg(entry2->title())), entry2->title());
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:U@U:%1}").arg(entry2->username())),
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QStringLiteral("{REF:T@T:%1}").arg(entry2->title())), entry2->title());
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QStringLiteral("{REF:U@U:%1}").arg(entry2->username())),
              entry2->username());
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:P@P:%1}").arg(entry2->password())),
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QStringLiteral("{REF:P@P:%1}").arg(entry2->password())),
              entry2->password());
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:A@A:%1}").arg(entry2->url())), entry2->url());
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:N@N:%1}").arg(entry2->notes())), entry2->notes());
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QStringLiteral("{REF:A@A:%1}").arg(entry2->url())), entry2->url());
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QStringLiteral("{REF:N@N:%1}").arg(entry2->notes())), entry2->notes());
 
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:T@I:%1}").arg(entry3->uuidToHex())),
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QStringLiteral("{REF:T@I:%1}").arg(entry3->uuidToHex())),
              entry3->attributes()->value("AttributeTitle"));
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:U@I:%1}").arg(entry3->uuidToHex())),
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QStringLiteral("{REF:U@I:%1}").arg(entry3->uuidToHex())),
              entry3->attributes()->value("AttributeUsername"));
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:P@I:%1}").arg(entry3->uuidToHex())),
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QStringLiteral("{REF:P@I:%1}").arg(entry3->uuidToHex())),
              entry3->attributes()->value("AttributePassword"));
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:A@I:%1}").arg(entry3->uuidToHex())),
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QStringLiteral("{REF:A@I:%1}").arg(entry3->uuidToHex())),
              entry3->attributes()->value("AttributeUrl"));
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:N@I:%1}").arg(entry3->uuidToHex())),
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QStringLiteral("{REF:N@I:%1}").arg(entry3->uuidToHex())),
              entry3->attributes()->value("AttributeNotes"));
 
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:T@I:%1}").arg(entry3->uuidToHex().toUpper())),
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QStringLiteral("{REF:T@I:%1}").arg(entry3->uuidToHex().toUpper())),
              entry3->attributes()->value("AttributeTitle"));
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:U@I:%1}").arg(entry3->uuidToHex().toUpper())),
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QStringLiteral("{REF:U@I:%1}").arg(entry3->uuidToHex().toUpper())),
              entry3->attributes()->value("AttributeUsername"));
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:P@I:%1}").arg(entry3->uuidToHex().toUpper())),
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QStringLiteral("{REF:P@I:%1}").arg(entry3->uuidToHex().toUpper())),
              entry3->attributes()->value("AttributePassword"));
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:A@I:%1}").arg(entry3->uuidToHex().toUpper())),
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QStringLiteral("{REF:A@I:%1}").arg(entry3->uuidToHex().toUpper())),
              entry3->attributes()->value("AttributeUrl"));
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:N@I:%1}").arg(entry3->uuidToHex().toUpper())),
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QStringLiteral("{REF:N@I:%1}").arg(entry3->uuidToHex().toUpper())),
              entry3->attributes()->value("AttributeNotes"));
 
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:t@i:%1}").arg(entry3->uuidToHex().toLower())),
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QStringLiteral("{REF:t@i:%1}").arg(entry3->uuidToHex().toLower())),
              entry3->attributes()->value("AttributeTitle"));
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:u@i:%1}").arg(entry3->uuidToHex().toLower())),
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QStringLiteral("{REF:u@i:%1}").arg(entry3->uuidToHex().toLower())),
              entry3->attributes()->value("AttributeUsername"));
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:p@i:%1}").arg(entry3->uuidToHex().toLower())),
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QStringLiteral("{REF:p@i:%1}").arg(entry3->uuidToHex().toLower())),
              entry3->attributes()->value("AttributePassword"));
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:a@i:%1}").arg(entry3->uuidToHex().toLower())),
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QStringLiteral("{REF:a@i:%1}").arg(entry3->uuidToHex().toLower())),
              entry3->attributes()->value("AttributeUrl"));
-    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QString("{REF:n@i:%1}").arg(entry3->uuidToHex().toLower())),
+    QCOMPARE(tstEntry->resolveMultiplePlaceholders(QStringLiteral("{REF:n@i:%1}").arg(entry3->uuidToHex().toLower())),
              entry3->attributes()->value("AttributeNotes"));
 }
 

@@ -226,9 +226,9 @@ void EditGroupWidgetKeeShare::launchPathSelectionDialog()
     supportedExtensions << KeeShare::unsignedContainerFileType() << KeeShare::signedContainerFileType();
 
     QStringList knownFilters;
-    knownFilters << QString("%1 (*.%2)").arg(tr("KeeShare container"), KeeShare::unsignedContainerFileType());
-    knownFilters << QString("%1 (*.%2)").arg(tr("KeeShare signed container"), KeeShare::signedContainerFileType());
-    knownFilters << QString("%1 (*)").arg("All files");
+    knownFilters << QStringLiteral("%1 (*.%2)").arg(tr("KeeShare container"), KeeShare::unsignedContainerFileType());
+    knownFilters << QStringLiteral("%1 (*.%2)").arg(tr("KeeShare signed container"), KeeShare::signedContainerFileType());
+    knownFilters << QStringLiteral("%1 (*)").arg("All files");
 
     const auto filters = knownFilters.join(";;");
     auto defaultDirPath = FileDialog::getLastDir("keeshare");

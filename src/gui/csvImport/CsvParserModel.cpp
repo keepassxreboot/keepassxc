@@ -44,7 +44,7 @@ void CsvParserModel::setFilename(const QString& filename)
 
 QString CsvParserModel::getFileInfo()
 {
-    return QString("%1, %2, %3")
+    return QStringLiteral("%1, %2, %3")
         .arg(Tools::humanReadableFileSize(m_parser->getFileSize()),
              tr("%n row(s)", "CSV row count", m_parser->getCsvRows()),
              tr("%n column(s)", "CSV column count", qMax(0, m_parser->getCsvCols() - 1)));

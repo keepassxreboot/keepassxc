@@ -334,7 +334,7 @@ void EditEntryWidget::insertURL()
     int i = 1;
 
     while (m_entryAttributes->keys().contains(name)) {
-        name = QString("%1_%2").arg(EntryAttributes::AdditionalUrlAttribute, QString::number(i));
+        name = QStringLiteral("%1_%2").arg(EntryAttributes::AdditionalUrlAttribute, QString::number(i));
         i++;
     }
 
@@ -876,12 +876,12 @@ void EditEntryWidget::loadEntry(Entry* entry,
     m_history = history;
 
     if (history) {
-        setHeadline(QString("%1 \u2022 %2").arg(parentName, tr("Entry history")));
+        setHeadline(QStringLiteral("%1 \u2022 %2").arg(parentName, tr("Entry history")));
     } else {
         if (create) {
-            setHeadline(QString("%1 \u2022 %2").arg(parentName, tr("Add entry")));
+            setHeadline(QStringLiteral("%1 \u2022 %2").arg(parentName, tr("Add entry")));
         } else {
-            setHeadline(QString("%1 \u2022 %2 \u2022 %3").arg(parentName, entry->title(), tr("Edit entry")));
+            setHeadline(QStringLiteral("%1 \u2022 %2 \u2022 %3").arg(parentName, entry->title(), tr("Edit entry")));
             // Reload entry details if changed outside of the edit dialog
             connect(m_entry, &Entry::modified, this, [this] { m_entryModifiedTimer.start(); });
         }
@@ -1660,7 +1660,7 @@ void EditEntryWidget::setupColorButton(bool foreground, const QColor& color)
     }
 
     if (color.isValid()) {
-        button->setStyleSheet(QString("background-color:%1").arg(color.name()));
+        button->setStyleSheet(QStringLiteral("background-color:%1").arg(color.name()));
         button->setProperty("color", color.name());
         checkBox->setChecked(true);
     } else {

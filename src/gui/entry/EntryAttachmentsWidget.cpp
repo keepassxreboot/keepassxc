@@ -252,7 +252,7 @@ void EntryAttachmentsWidget::saveSelectedAttachments()
         const bool saveOk = file.open(QIODevice::WriteOnly) && file.setPermissions(QFile::ReadUser | QFile::WriteUser)
                             && file.write(attachmentData) == attachmentData.size();
         if (!saveOk) {
-            errors.append(QString("%1 - %2").arg(filename, file.errorString()));
+            errors.append(QStringLiteral("%1 - %2").arg(filename, file.errorString()));
         }
     }
 
@@ -286,7 +286,7 @@ void EntryAttachmentsWidget::openSelectedAttachments()
         QString errorMessage;
         if (!m_entryAttachments->openAttachment(m_attachmentsModel->keyByIndex(index), &errorMessage)) {
             const QString filename = m_attachmentsModel->keyByIndex(index);
-            errors.append(QString("%1 - %2").arg(filename, errorMessage));
+            errors.append(QStringLiteral("%1 - %2").arg(filename, errorMessage));
         };
     }
 
@@ -330,7 +330,7 @@ bool EntryAttachmentsWidget::insertAttachments(const QStringList& filenames, QSt
         if (readOk) {
             m_entryAttachments->set(fInfo.fileName(), data);
         } else {
-            errors.append(QString("%1 - %2").arg(fInfo.fileName(), file.errorString()));
+            errors.append(QStringLiteral("%1 - %2").arg(fInfo.fileName(), file.errorString()));
         }
     }
 

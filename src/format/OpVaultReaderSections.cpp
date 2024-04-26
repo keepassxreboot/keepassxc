@@ -90,17 +90,17 @@ void OpVaultReader::fillFromSectionField(Entry* entry, const QString& sectionNam
             QString name("otp");
             auto attributes = entry->attributes()->keys();
             while (attributes.contains(name)) {
-                name = QString("otp_%1").arg(++i);
+                name = QStringLiteral("otp_%1").arg(++i);
             }
             entry->attributes()->set(name, attrValue, true);
         } else if (attrValue.startsWith("otpauth://")) {
             QUrlQuery query(attrValue);
             // at least as of 1Password 7, they don't append the digits= and period= which totp.cpp requires
             if (!query.hasQueryItem("digits")) {
-                query.addQueryItem("digits", QString("%1").arg(Totp::DEFAULT_DIGITS));
+                query.addQueryItem("digits", QStringLiteral("%1").arg(Totp::DEFAULT_DIGITS));
             }
             if (!query.hasQueryItem("period")) {
-                query.addQueryItem("period", QString("%1").arg(Totp::DEFAULT_STEP));
+                query.addQueryItem("period", QStringLiteral("%1").arg(Totp::DEFAULT_STEP));
             }
             attrValue = query.toString(QUrl::FullyEncoded);
             entry->setTotp(Totp::parseSettings(attrValue));
@@ -114,7 +114,7 @@ void OpVaultReader::fillFromSectionField(Entry* entry, const QString& sectionNam
             entry->setExpiryTime(expiry);
             entry->setExpires(true);
         } else {
-            qWarning() << QString("[%1] Invalid expiration date found: %2").arg(entry->title(), attrValue);
+            qWarning() << QStringLiteral("[%1] Invalid expiration date found: %2").arg(entry->title(), attrValue);
         }
     } else {
         if (kind == "date" || kind == "monthYear") {
@@ -123,18 +123,18 @@ void OpVaultReader::fillFromSectionField(Entry* entry, const QString& sectionNam
                 entry->attributes()->set(attrName, date.toString(Qt::SystemLocaleShortDate));
             } else {
                 qWarning()
-                    << QString("[%1] Invalid date attribute found: %2 = %3").arg(entry->title(), attrName, attrValue);
+                    << QStringLiteral("[%1] Invalid date attribute found: %2 = %3").arg(entry->title(), attrName, attrValue);
             }
         } else if (kind == "address") {
             // Expand address into multiple attributes
             auto addrFields = field.value("v").toObject().toVariantMap();
             for (auto& part : addrFields.keys()) {
-                entry->attributes()->set(attrName + QString("_%1").arg(part), addrFields.value(part).toString());
+                entry->attributes()->set(attrName + QStringLiteral("_%1").arg(part), addrFields.value(part).toString());
             }
         } else {
             if (entry->attributes()->hasKey(attrName)) {
                 // Append a random string to the attribute name to avoid collisions
-                attrName += QString("_%1").arg(QUuid::createUuid().toString().mid(1, 5));
+                attrName += QStringLiteral("_%1").arg(QUuid::createUuid().toString().mid(1, 5));
             }
             entry->attributes()->set(attrName, attrValue, (kind == "password" || kind == "concealed"));
         }
@@ -164,5 +164,5 @@ QString OpVaultReader::resolveAttributeName(const QString& section, const QStrin
         return text;
     }
 
-    return QString("%1_%2").arg(section, text);
+    return QStringLiteral("%1_%2").arg(section, text);
 }

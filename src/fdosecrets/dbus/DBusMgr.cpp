@@ -449,7 +449,7 @@ namespace FdoSecrets
         auto path = DBUS_PATH_TEMPLATE_COLLECTION.arg(DBUS_PATH_SECRETS, name);
         if (!registerObject(path, coll)) {
             // try again with a suffix
-            name.append(QString("_%1").arg(Tools::uuidToHex(QUuid::createUuid()).left(4)));
+            name.append(QStringLiteral("_%1").arg(Tools::uuidToHex(QUuid::createUuid()).left(4)));
             path = DBUS_PATH_TEMPLATE_COLLECTION.arg(DBUS_PATH_SECRETS, name);
 
             if (!registerObject(path, coll)) {

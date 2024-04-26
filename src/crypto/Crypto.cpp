@@ -267,7 +267,7 @@ namespace Crypto
     QString debugInfo()
     {
         QString debugInfo = QObject::tr("Cryptographic libraries:").append("\n");
-        debugInfo.append(QString("- Botan %1.%2.%3\n")
+        debugInfo.append(QStringLiteral("- Botan %1.%2.%3\n")
                              .arg(Botan::version_major())
                              .arg(Botan::version_minor())
                              .arg(Botan::version_patch()));

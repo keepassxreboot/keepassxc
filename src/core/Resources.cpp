@@ -102,8 +102,8 @@ Resources::Resources()
 {
     const QString appDirPath = QCoreApplication::applicationDirPath();
 #if defined(Q_OS_UNIX) && !(defined(Q_OS_MACOS) && defined(WITH_APP_BUNDLE))
-    trySetResourceDir(KEEPASSX_DATA_DIR) || trySetResourceDir(QString("%1/../%2").arg(appDirPath, KEEPASSX_DATA_DIR))
-        || trySetResourceDir(QString("%1/%2").arg(KEEPASSX_PREFIX_DIR, KEEPASSX_DATA_DIR));
+    trySetResourceDir(KEEPASSX_DATA_DIR) || trySetResourceDir(QStringLiteral("%1/../%2").arg(appDirPath, KEEPASSX_DATA_DIR))
+        || trySetResourceDir(QStringLiteral("%1/%2").arg(KEEPASSX_PREFIX_DIR, KEEPASSX_DATA_DIR));
 #elif defined(Q_OS_MACOS) && defined(WITH_APP_BUNDLE)
     trySetResourceDir(appDirPath + QStringLiteral("/../Resources"));
 #elif defined(Q_OS_WIN)

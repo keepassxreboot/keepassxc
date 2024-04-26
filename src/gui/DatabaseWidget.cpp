@@ -1173,7 +1173,7 @@ void DatabaseWidget::loadDatabase(bool accepted)
                 m_nextSearchLabelText =
                     tr("Entries expiring within %1 day(s)", "", expirationOffset).arg(expirationOffset);
             }
-            requestSearch(QString("is:expired-%1").arg(expirationOffset));
+            requestSearch(QStringLiteral("is:expired-%1").arg(expirationOffset));
         }
 
         m_groupBeforeLock = QUuid();

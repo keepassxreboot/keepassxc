@@ -69,7 +69,7 @@ bool OpVaultReader::decryptBandEntry(const QJsonObject& bandEntry,
     const QByteArray& realHmacSig =
         CryptoHash::hmac(kBA.mid(0, kBA.size() - hmacSig.size()), m_masterHmacKey, CryptoHash::Sha256);
     if (realHmacSig != hmacSig) {
-        qCritical() << QString(R"(Entry "k" failed its HMAC in UUID "%1", wanted "%2" got "%3")")
+        qCritical() << QStringLiteral(R"(Entry "k" failed its HMAC in UUID "%1", wanted "%2" got "%3")")
                            .arg(uuid)
                            .arg(QString::fromUtf8(hmacSig.toHex()))
                            .arg(QString::fromUtf8(realHmacSig));
@@ -107,7 +107,7 @@ Entry* OpVaultReader::processBandEntry(const QJsonObject& bandEntry, const QDir&
 {
     const QString uuid = bandEntry.value("uuid").toString();
     if (!(uuid.size() == 32 || uuid.size() == 36)) {
-        qWarning() << QString("Skipping suspicious band UUID <<%1>> with length %2").arg(uuid).arg(uuid.size());
+        qWarning() << QStringLiteral("Skipping suspicious band UUID <<%1>> with length %2").arg(uuid).arg(uuid.size());
         return nullptr;
     }
 
@@ -130,11 +130,11 @@ Entry* OpVaultReader::processBandEntry(const QJsonObject& bandEntry, const QDir&
                 }
             }
             if (!found) {
-                qWarning() << QString("Unable to place Entry.Category \"%1\" so using the Root instead").arg(category);
+                qWarning() << QStringLiteral("Unable to place Entry.Category \"%1\" so using the Root instead").arg(category);
                 entry->setGroup(rootGroup);
             }
         } else {
-            qWarning() << QString(R"(Skipping non-String Category type "%1" in UUID "%2")")
+            qWarning() << QStringLiteral(R"(Skipping non-String Category type "%1" in UUID "%2")")
                               .arg(categoryValue.type())
                               .arg(uuid);
             entry->setGroup(rootGroup);
@@ -244,7 +244,7 @@ bool OpVaultReader::fillAttributes(Entry* entry, const QJsonObject& bandEntry)
             if (newUrl != url) {
                 // Add this url if it isn't the base one
                 entry->attributes()->set(
-                    QString("%1_%2").arg(EntryAttributes::AdditionalUrlAttribute, QString::number(i)), newUrl);
+                    QStringLiteral("%1_%2").arg(EntryAttributes::AdditionalUrlAttribute, QString::number(i)), newUrl);
                 ++i;
             }
         }

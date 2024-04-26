@@ -761,7 +761,7 @@ QString Group::print(bool recursive, bool flatten, int depth)
             prefix += separator;
         }
     } else {
-        prefix = QLatin1String("  ").repeated(depth);
+        prefix = QStringLiteral("  ").repeated(depth);
     }
 
     if (entries().isEmpty() && children().isEmpty()) {
@@ -991,7 +991,7 @@ void Group::removeEntry(Entry* entry)
 {
     Q_ASSERT_X(m_entries.contains(entry),
                Q_FUNC_INFO,
-               QString("Group %1 does not contain %2").arg(this->name(), entry->title()).toLatin1());
+               QStringLiteral("Group %1 does not contain %2").arg(this->name(), entry->title()).toLatin1());
 
     emit entryAboutToRemove(entry);
 

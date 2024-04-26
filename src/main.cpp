@@ -122,7 +122,7 @@ int main(int argc, char** argv)
         const wchar_t* absolutePathWchar = reinterpret_cast<const wchar_t*>(fileInfo.absoluteFilePath().utf16());
         hFind = FindFirstFileW(absolutePathWchar, &findFileData);
         if (hFind != INVALID_HANDLE_VALUE) {
-            fileNames << QString("%1/%2").arg(fileInfo.absolutePath(), QString::fromWCharArray(findFileData.cFileName));
+            fileNames << QStringLiteral("%1/%2").arg(fileInfo.absolutePath(), QString::fromWCharArray(findFileData.cFileName));
             FindClose(hFind);
         }
     }

@@ -75,7 +75,7 @@ namespace
                 } else {
                     // Subsequent urls
                     entry->attributes()->set(
-                        QString("%1_%2").arg(EntryAttributes::AdditionalUrlAttribute, QString::number(i)), url);
+                        QStringLiteral("%1_%2").arg(EntryAttributes::AdditionalUrlAttribute, QString::number(i)), url);
                     ++i;
                 }
             }
@@ -143,7 +143,7 @@ namespace
             const auto fieldMap = field.toMap();
             auto name = fieldMap.value("name").toString();
             if (entry->attributes()->hasKey(name)) {
-                name = QString("%1_%2").arg(name, QUuid::createUuid().toString().mid(1, 5));
+                name = QStringLiteral("%1_%2").arg(name, QUuid::createUuid().toString().mid(1, 5));
             }
 
             const auto value = fieldMap.value("value").toString();

@@ -1127,7 +1127,7 @@ void MainWindow::updateWindowTitle()
     if (customWindowTitlePart.isEmpty()) {
         windowTitle = BaseWindowTitle;
     } else {
-        windowTitle = QString("%1[*] - %2").arg(customWindowTitlePart, BaseWindowTitle);
+        windowTitle = QStringLiteral("%1[*] - %2").arg(customWindowTitlePart, BaseWindowTitle);
     }
 
     if (customWindowTitlePart.isEmpty() || stackedWidgetIndex == 1) {
@@ -1219,12 +1219,12 @@ void MainWindow::openBugReportUrl()
 
 void MainWindow::openGettingStartedGuide()
 {
-    customOpenUrl(QString("file:///%1").arg(resources()->dataPath("docs/KeePassXC_GettingStarted.html")));
+    customOpenUrl(QStringLiteral("file:///%1").arg(resources()->dataPath("docs/KeePassXC_GettingStarted.html")));
 }
 
 void MainWindow::openUserGuide()
 {
-    customOpenUrl(QString("file:///%1").arg(resources()->dataPath("docs/KeePassXC_UserGuide.html")));
+    customOpenUrl(QStringLiteral("file:///%1").arg(resources()->dataPath("docs/KeePassXC_UserGuide.html")));
 }
 
 void MainWindow::openOnlineHelp()
@@ -1234,7 +1234,7 @@ void MainWindow::openOnlineHelp()
 
 void MainWindow::openKeyboardShortcuts()
 {
-    customOpenUrl(QString("file:///%1").arg(resources()->dataPath("docs/KeePassXC_KeyboardShortcuts.html")));
+    customOpenUrl(QStringLiteral("file:///%1").arg(resources()->dataPath("docs/KeePassXC_KeyboardShortcuts.html")));
 }
 
 void MainWindow::switchToDatabases()

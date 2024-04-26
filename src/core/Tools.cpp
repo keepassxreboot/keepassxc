@@ -56,7 +56,7 @@ namespace Tools
 #endif
 
         QString commitHash;
-        if (!QString(GIT_HEAD).isEmpty()) {
+        if (!QLatin1String(GIT_HEAD).isEmpty()) {
             commitHash = GIT_HEAD;
         }
         if (!commitHash.isEmpty()) {
@@ -140,7 +140,7 @@ namespace Tools
 
         // do not display decimals for smallest unit bytes identified by index i==0
         const quint32 displayPrecision = (i == 0 ? 0 : precision);
-        return QString("%1 %2").arg(QLocale().toString(size, 'f', displayPrecision), units.at(i));
+        return QStringLiteral("%1 %2").arg(QLocale().toString(size, 'f', displayPrecision), units.at(i));
     }
 
     QString humanReadableTimeDifference(qint64 seconds)
@@ -466,7 +466,7 @@ namespace Tools
         auto match = re.match(pattern);
         while (match.hasMatch()) {
             // Extract time format specifier
-            auto formatSpecifier = QLatin1String("dd_MM_yyyy_hh-mm-ss");
+            auto formatSpecifier = QStringLiteral("dd_MM_yyyy_hh-mm-ss");
             if (!match.captured(1).isEmpty()) {
                 formatSpecifier = match.captured(1);
             }

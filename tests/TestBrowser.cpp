@@ -339,8 +339,8 @@ void TestBrowser::testSearchEntriesByReference()
 
     auto firstEntryUuid = entries.first()->uuidToHex();
     auto secondEntryUuid = entries[1]->uuidToHex();
-    auto fullReference = QString("{REF:A@I:%1}").arg(firstEntryUuid);
-    auto partialReference = QString("https://subdomain.{REF:A@I:%1}").arg(secondEntryUuid);
+    auto fullReference = QStringLiteral("{REF:A@I:%1}").arg(firstEntryUuid);
+    auto partialReference = QStringLiteral("https://subdomain.{REF:A@I:%1}").arg(secondEntryUuid);
     entries[2]->attributes()->set(EntryAttributes::AdditionalUrlAttribute, fullReference);
     entries[3]->attributes()->set(EntryAttributes::AdditionalUrlAttribute, partialReference);
     entries[4]->setUrl(fullReference);
@@ -528,9 +528,9 @@ QList<Entry*> TestBrowser::createEntries(QStringList& urls, Group* root) const
         entry->setGroup(root);
         entry->beginUpdate();
         entry->setUrl(urls[i]);
-        entry->setUsername(QString("User %1").arg(i));
+        entry->setUsername(QStringLiteral("User %1").arg(i));
         entry->setUuid(QUuid::createUuid());
-        entry->setTitle(QString("Name_%1").arg(entry->uuidToHex()));
+        entry->setTitle(QStringLiteral("Name_%1").arg(entry->uuidToHex()));
         entry->endUpdate();
         entries.push_back(entry);
     }

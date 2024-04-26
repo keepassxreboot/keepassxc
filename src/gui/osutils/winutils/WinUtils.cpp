@@ -125,7 +125,7 @@ void WinUtils::setLaunchAtStartup(bool enable)
 {
     QSettings reg(R"(HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run)", QSettings::NativeFormat);
     if (enable) {
-        reg.setValue(qAppName(), QString("\"%1\"").arg(QDir::toNativeSeparators(QApplication::applicationFilePath())));
+        reg.setValue(qAppName(), QStringLiteral("\"%1\"").arg(QDir::toNativeSeparators(QApplication::applicationFilePath())));
     } else {
         reg.remove(qAppName());
     }

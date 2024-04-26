@@ -24,7 +24,7 @@
 
 QTEST_GUILESS_MAIN(TestConfig)
 
-const QString oldTrueConfigPath = QString(KEEPASSX_TEST_DATA_DIR).append("/OutdatedConfig.ini");
+const QString oldTrueConfigPath = QStringLiteral(KEEPASSX_TEST_DATA_DIR).append("/OutdatedConfig.ini");
 
 // upgrade config file with deprecated settings (all of which are set to non-default values)
 void TestConfig::testUpgrade()

@@ -24,7 +24,7 @@ bool AutoTypePlatformTest::isAvailable()
 
 QString AutoTypePlatformTest::keyToString(Qt::Key key)
 {
-    return QString("[Key0x%1]").arg(key, 0, 16);
+    return QStringLiteral("[Key0x%1]").arg(key, 0, 16);
 }
 
 QStringList AutoTypePlatformTest::windowTitles()

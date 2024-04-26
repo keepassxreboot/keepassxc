@@ -145,7 +145,7 @@ namespace
                 auto s = signer.signature(*randomGen()->getRng());
 
                 auto hex = QByteArray(reinterpret_cast<char*>(s.data()), s.size()).toHex();
-                signature = QString("rsa|%1").arg(QString::fromLatin1(hex));
+                signature = QStringLiteral("rsa|%1").arg(QString::fromLatin1(hex));
                 return true;
             } catch (std::exception& e) {
                 qWarning("KeeShare: Failed to sign data: %s", e.what());

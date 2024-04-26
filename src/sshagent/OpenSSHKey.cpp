@@ -135,7 +135,7 @@ const QString OpenSSHKey::privateKey()
     BinaryStream stream(&sshKey);
 
     // magic
-    stream.write(QLatin1String("openssh-key-v1").toUtf8());
+    stream.write(QStringLiteral("openssh-key-v1").toUtf8());
     stream.write(static_cast<quint8>(0));
 
     // cipher name

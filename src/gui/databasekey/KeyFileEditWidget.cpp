@@ -106,7 +106,7 @@ void KeyFileEditWidget::createKeyFile()
     if (!m_compEditWidget) {
         return;
     }
-    QString filters = QString("%1 (*.keyx *.key);;%2 (*)").arg(tr("Key files"), tr("All files"));
+    QString filters = QStringLiteral("%1 (*.keyx *.key);;%2 (*)").arg(tr("Key files"), tr("All files"));
     QString fileName = fileDialog()->getSaveFileName(this, tr("Create Key File…"), QString(), filters);
 
     if (!fileName.isEmpty()) {
@@ -129,7 +129,7 @@ void KeyFileEditWidget::browseKeyFile()
     if (!m_compEditWidget) {
         return;
     }
-    QString filters = QString("%1 (*.keyx *.key);;%2 (*)").arg(tr("Key files"), tr("All files"));
+    QString filters = QStringLiteral("%1 (*.keyx *.key);;%2 (*)").arg(tr("Key files"), tr("All files"));
     QString fileName = fileDialog()->getOpenFileName(this, tr("Select a key file"), QString(), filters);
 
     if (QFileInfo(fileName).canonicalFilePath() == m_parent->getDatabase()->canonicalFilePath()) {

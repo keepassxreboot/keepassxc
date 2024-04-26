@@ -124,7 +124,7 @@ QString Entry::buildReference(const QUuid& uuid, const QString& field)
         return {};
     }
 
-    return QString("{REF:%1@I:%2}").arg(shortField, uuidStr);
+    return QStringLiteral("{REF:%1@I:%2}").arg(shortField, uuidStr);
 }
 
 EntryReferenceType Entry::referenceType(const QString& referenceStr)
@@ -386,7 +386,7 @@ QStringList Entry::getAllUrls() const
 
     for (const auto& key : m_attributes->keys()) {
         if (key.startsWith(EntryAttributes::AdditionalUrlAttribute)
-            || key == QString("%1_RELYING_PARTY").arg(EntryAttributes::PasskeyAttribute)) {
+            || key == QStringLiteral("%1_RELYING_PARTY").arg(EntryAttributes::PasskeyAttribute)) {
             auto additionalUrl = m_attributes->value(key);
             if (!additionalUrl.isEmpty()) {
                 urlList << resolveMultiplePlaceholders(additionalUrl);

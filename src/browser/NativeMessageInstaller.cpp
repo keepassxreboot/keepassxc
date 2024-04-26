@@ -237,7 +237,7 @@ QString NativeMessageInstaller::getNativeMessagePath(SupportedBrowsers browser) 
     basePath = QDir::homePath();
 #endif
     if (browser == SupportedBrowsers::CUSTOM) {
-        return QString("%1/%2.json").arg(getTargetPath(browser), HOST_NAME);
+        return QStringLiteral("%1/%2.json").arg(getTargetPath(browser), HOST_NAME);
     }
 
     return QStringLiteral("%1%2/%3.json").arg(basePath, getTargetPath(browser), HOST_NAME);
@@ -335,7 +335,7 @@ QJsonObject NativeMessageInstaller::constructFile(SupportedBrowsers browser)
 #ifdef QT_DEBUG
         auto customId = browserSettings()->customExtensionId();
         if (!customId.isEmpty()) {
-            arr.append(QString("chrome-extension://%1/").arg(customId));
+            arr.append(QStringLiteral("chrome-extension://%1/").arg(customId));
         }
 #endif
         script["allowed_origins"] = arr;

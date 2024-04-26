@@ -32,7 +32,7 @@ static const QString IMPORTED_PASSKEYS_GROUP = QStringLiteral("Imported Passkeys
 
 void PasskeyImporter::importPasskey(QSharedPointer<Database>& database, Entry* entry)
 {
-    auto filter = QString("%1 (*.passkey);;%2 (*)").arg(tr("Passkey file"), tr("All files"));
+    auto filter = QStringLiteral("%1 (*.passkey);;%2 (*)").arg(tr("Passkey file"), tr("All files"));
     auto fileName =
         fileDialog()->getOpenFileName(nullptr, tr("Open Passkey file"), FileDialog::getLastDir("passkey"), filter);
     if (fileName.isEmpty()) {

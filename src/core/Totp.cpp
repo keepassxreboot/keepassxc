@@ -159,7 +159,7 @@ QString Totp::writeSettings(const QSharedPointer<Totp::Settings>& settings,
 
     // OTP Url output
     if (settings->format == StorageFormat::OTPURL || forceOtp) {
-        auto urlstring = QString("otpauth://totp/%1:%2?secret=%3&period=%4&digits=%5&issuer=%1")
+        auto urlstring = QStringLiteral("otpauth://totp/%1:%2?secret=%3&period=%4&digits=%5&issuer=%1")
                              .arg(title.isEmpty() ? "KeePassXC" : QString(QUrl::toPercentEncoding(title)),
                                   username.isEmpty() ? "none" : QString(QUrl::toPercentEncoding(username)),
                                   QString(QUrl::toPercentEncoding(Base32::sanitizeInput(settings->key.toLatin1()))),
@@ -175,7 +175,7 @@ QString Totp::writeSettings(const QSharedPointer<Totp::Settings>& settings,
         return urlstring;
     } else if (settings->format == StorageFormat::KEEOTP) {
         // KeeOtp output
-        auto keyString = QString("key=%1&size=%2&step=%3")
+        auto keyString = QStringLiteral("key=%1&size=%2&step=%3")
                              .arg(QString(Base32::sanitizeInput(settings->key.toLatin1())))
                              .arg(settings->digits)
                              .arg(settings->step);
@@ -185,10 +185,10 @@ QString Totp::writeSettings(const QSharedPointer<Totp::Settings>& settings,
         return keyString;
     } else if (!settings->encoder.shortName.isEmpty()) {
         // Semicolon output [step];[encoder]
-        return QString("%1;%2").arg(settings->step).arg(settings->encoder.shortName);
+        return QStringLiteral("%1;%2").arg(settings->step).arg(settings->encoder.shortName);
     } else {
         // Semicolon output [step];[digits]
-        return QString("%1;%2").arg(settings->step).arg(settings->digits);
+        return QStringLiteral("%1;%2").arg(settings->step).arg(settings->digits);
     }
 }
 

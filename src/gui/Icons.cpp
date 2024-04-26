@@ -88,18 +88,18 @@ QIcon Icons::trayIcon(bool unlocked)
 
     auto iconApperance = trayIconAppearance();
     if (!iconApperance.startsWith("monochrome")) {
-        return icon(QString("%1%2").arg(applicationIconName(), suffix), false);
+        return icon(QStringLiteral("%1%2").arg(applicationIconName(), suffix), false);
     }
 
     QIcon i;
 #if defined(Q_OS_MACOS) || defined(Q_OS_WIN)
     if (osUtils->isStatusBarDark()) {
-        i = icon(QString("keepassxc-monochrome-light%1").arg(suffix), false);
+        i = icon(QStringLiteral("keepassxc-monochrome-light%1").arg(suffix), false);
     } else {
-        i = icon(QString("keepassxc-monochrome-dark%1").arg(suffix), false);
+        i = icon(QStringLiteral("keepassxc-monochrome-dark%1").arg(suffix), false);
     }
 #else
-    i = icon(QString("%1-%2%3").arg(applicationIconName(), iconApperance, suffix), false);
+    i = icon(QStringLiteral("%1-%2%3").arg(applicationIconName(), iconApperance, suffix), false);
 #endif
 #if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
     // Set as mask to allow the operating system to recolour the tray icon. This may look weird
@@ -181,7 +181,7 @@ QIcon Icons::icon(const QString& name, bool recolor, const QColor& overrideColor
 #endif
 
     QString cacheName =
-        QString("%1:%2:%3").arg(recolor ? "1" : "0", overrideColor.isValid() ? overrideColor.name() : "#", name);
+        QStringLiteral("%1:%2:%3").arg(recolor ? "1" : "0", overrideColor.isValid() ? overrideColor.name() : "#", name);
     QIcon icon = m_iconCache.value(cacheName);
 
     if (!icon.isNull() && !overrideColor.isValid()) {

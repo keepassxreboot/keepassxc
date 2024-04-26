@@ -38,7 +38,7 @@ bool OpVaultReader::readAttachment(const QString& filePath,
 {
     QFile file(filePath);
     if (!file.open(QIODevice::ReadOnly)) {
-        qCritical() << QString("Unable to open \"%s\" for reading").arg(file.fileName());
+        qCritical() << QStringLiteral("Unable to open \"%s\" for reading").arg(file.fileName());
         return false;
     }
 
@@ -146,7 +146,7 @@ void OpVaultReader::fillAttachments(Entry* entry,
      * Attachment files are named with the UUID of the item that they are attached to followed by an underscore
      * and then followed by the UUID of the attachment itself. The file is then given the extension .attachment.
      */
-    auto fileFilter = QString("%1_*.attachment").arg(entry->uuidToHex().toUpper());
+    auto fileFilter = QStringLiteral("%1_*.attachment").arg(entry->uuidToHex().toUpper());
     const auto& attachInfoList = attachmentDir.entryInfoList(QStringList() << fileFilter, QDir::Files);
     int attachmentCount = attachInfoList.size();
     if (attachmentCount == 0) {
@@ -155,7 +155,7 @@ void OpVaultReader::fillAttachments(Entry* entry,
 
     for (const auto& info : attachInfoList) {
         if (!info.isReadable()) {
-            qCritical() << QString("Attachment file \"%1\" is not readable").arg(info.absoluteFilePath());
+            qCritical() << QStringLiteral("Attachment file \"%1\" is not readable").arg(info.absoluteFilePath());
             continue;
         }
         fillAttachment(entry, info, entryKey, entryHmacKey);
@@ -191,7 +191,7 @@ void OpVaultReader::fillAttachment(Entry* entry,
                 const QJsonValueRef& value = overObj[key];
                 QString insertAs = key;
                 for (int aa = 0; attachMetadata.contains(insertAs) && aa < 5; ++aa) {
-                    insertAs = QString("%1_%2").arg(key, aa);
+                    insertAs = QStringLiteral("%1_%2").arg(key, aa);
                 }
                 attachMetadata[insertAs] = value;
             }
@@ -200,22 +200,22 @@ void OpVaultReader::fillAttachment(Entry* entry,
         }
     } else {
         qCritical()
-            << QString("Unable to decode attach.overview for \"%1\": %2").arg(info.fileName(), over01.errorString());
+            << QStringLiteral("Unable to decode attach.overview for \"%1\": %2").arg(info.fileName(), over01.errorString());
     }
 
     QByteArray payload;
-    payload.append(QString("attachment file is actually %1 bytes\n").arg(info.size()).toUtf8());
+    payload.append(QStringLiteral("attachment file is actually %1 bytes\n").arg(info.size()).toUtf8());
     for (QString& key : attachMetadata.keys()) {
         const QJsonValueRef& value = attachMetadata[key];
         QByteArray valueBytes;
         if (value.isString()) {
             valueBytes = value.toString().toUtf8();
         } else if (value.isDouble()) {
-            valueBytes = QString("%1").arg(value.toInt()).toUtf8();
+            valueBytes = QStringLiteral("%1").arg(value.toInt()).toUtf8();
         } else if (value.isBool()) {
             valueBytes = value.toBool() ? "true" : "false";
         } else {
-            valueBytes = QString("Unexpected metadata type in attachment: %1").arg(value.type()).toUtf8();
+            valueBytes = QStringLiteral("Unexpected metadata type in attachment: %1").arg(value.type()).toUtf8();
         }
         payload.append(key.toUtf8()).append(":=").append(valueBytes).append("\n");
     }
@@ -226,12 +226,12 @@ void OpVaultReader::fillAttachment(Entry* entry,
         if (attFilename.isString()) {
             attachKey = attFilename.toString();
         } else {
-            qWarning() << QString("Unexpected type of attachment \"filename\": %1").arg(attFilename.type());
+            qWarning() << QStringLiteral("Unexpected type of attachment \"filename\": %1").arg(attFilename.type());
         }
     }
     if (entry->attachments()->hasKey(attachKey)) {
         // Prepend a random string to the attachment name to avoid collisions
-        attachKey.prepend(QString("%1_").arg(QUuid::createUuid().toString().mid(1, 5)));
+        attachKey.prepend(QStringLiteral("%1_").arg(QUuid::createUuid().toString().mid(1, 5)));
     }
 
     entry->attachments()->set(attachKey, attachPayload);

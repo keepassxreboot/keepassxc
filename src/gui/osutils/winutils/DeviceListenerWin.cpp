@@ -51,9 +51,9 @@ void DeviceListenerWin::registerHotplugCallback(bool arrived,
 
     QString regex = R"(^\\{2}\?\\[A-Z]+#)";
     if (vendorId > 0) {
-        regex += QString("VID_%1&").arg(vendorId, 0, 16).toUpper();
+        regex += QStringLiteral("VID_%1&").arg(vendorId, 0, 16).toUpper();
         if (productId > 0) {
-            regex += QString("PID_%1&").arg(productId, 0, 16).toUpper();
+            regex += QStringLiteral("PID_%1&").arg(productId, 0, 16).toUpper();
         }
     }
     m_deviceIdMatch = QRegularExpression(regex);

@@ -124,7 +124,7 @@ void DatabaseSettingsWidgetBrowser::updateModel()
         if (key.startsWith(CustomData::BrowserKeyPrefix)) {
             QString strippedKey = key;
             strippedKey.remove(CustomData::BrowserKeyPrefix);
-            auto created = customData()->value(QString("%1_%2").arg(CustomData::Created, strippedKey));
+            auto created = customData()->value(QStringLiteral("%1_%2").arg(CustomData::Created, strippedKey));
             auto createdItem = new QStandardItem(created);
             createdItem->setEditable(false);
             m_customDataModel->appendRow(QList<QStandardItem*>()

@@ -212,7 +212,7 @@ void BrowserSettingsWidget::validateProxyLocation()
             if (!QFile::exists(resolveCustomProxyLocation())) {
                 StateColorPalette statePalette;
                 auto color = statePalette.color(StateColorPalette::ColorRole::Error);
-                m_ui->customProxyLocation->setStyleSheet(QString("QLineEdit { background: %1; }").arg(color.name()));
+                m_ui->customProxyLocation->setStyleSheet(QStringLiteral("QLineEdit { background: %1; }").arg(color.name()));
                 m_ui->customProxyLocation->setToolTip(tr("The custom proxy location does not exist."));
 
                 m_ui->messageWidget->showMessage(tr("<b>Error:</b> The custom proxy location does not exist. Correct "
@@ -283,9 +283,9 @@ void BrowserSettingsWidget::saveSettings()
 void BrowserSettingsWidget::showProxyLocationFileDialog()
 {
 #ifdef Q_OS_WIN
-    QString fileTypeFilter(QString("%1 (*.exe);;%2 (*.*)").arg(tr("Executable Files"), tr("All Files")));
+    QString fileTypeFilter(QStringLiteral("%1 (*.exe);;%2 (*.*)").arg(tr("Executable Files"), tr("All Files")));
 #else
-    QString fileTypeFilter(QString("%1 (*)").arg(tr("Executable Files")));
+    QString fileTypeFilter(QStringLiteral("%1 (*)").arg(tr("Executable Files")));
 #endif
 
     auto initialFilePath = resolveCustomProxyLocation();

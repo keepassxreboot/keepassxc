@@ -55,7 +55,7 @@ void UpdateChecker::checkForUpdates(bool manuallyRequested)
     if (m_isManuallyRequested || Clock::currentSecondsSinceEpoch() >= nextCheck) {
         m_bytesReceived.clear();
 
-        QLatin1String apiUrlStr = QLatin1String("https://api.github.com/repos/keepassxreboot/keepassxc/releases");
+        QString apiUrlStr = QStringLiteral("https://api.github.com/repos/keepassxreboot/keepassxc/releases");
 
         if (!config()->get(Config::GUI_CheckForUpdatesIncludeBetas).toBool()) {
             apiUrlStr += "/latest";
@@ -99,7 +99,7 @@ void UpdateChecker::fetchFinished()
 
         if (!jsonObject.value("tag_name").isUndefined()) {
             version = jsonObject.value("tag_name").toString();
-            hasNewVersion = compareVersions(QString(KEEPASSXC_VERSION), version);
+            hasNewVersion = compareVersions(QLatin1String(KEEPASSXC_VERSION), version);
         }
 
         // Check again in 7 days

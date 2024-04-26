@@ -79,12 +79,12 @@ void TestKeys::testFileKey()
     QFETCH(QString, keyExt);
     QFETCH(bool, fileKeyOk);
 
-    QLatin1String name = QLatin1String("FileKey").append(QTest::currentDataTag());
+    QString name = QStringLiteral("FileKey").append(QTest::currentDataTag());
 
     KeePass2Reader reader;
 
-    QString dbFilename = QString("%1/%2.kdbx").arg(QString(KEEPASSX_TEST_DATA_DIR), name);
-    QString keyFilename = QString("%1/%2.%3").arg(QString(KEEPASSX_TEST_DATA_DIR), name, keyExt);
+    QString dbFilename = QStringLiteral("%1/%2.kdbx").arg(QStringLiteral(KEEPASSX_TEST_DATA_DIR), name);
+    QString keyFilename = QStringLiteral("%1/%2.%3").arg(QStringLiteral(KEEPASSX_TEST_DATA_DIR), name, keyExt);
 
     auto compositeKey = QSharedPointer<CompositeKey>::create();
     auto fileKey = QSharedPointer<FileKey>::create();
@@ -111,7 +111,7 @@ void TestKeys::testFileKey()
     auto db = QSharedPointer<Database>::create();
     QVERIFY(db->open(dbFilename, compositeKey, nullptr));
     QVERIFY(!reader.hasError());
-    QCOMPARE(db->metadata()->name(), QString("%1 Database").arg(name));
+    QCOMPARE(db->metadata()->name(), QStringLiteral("%1 Database").arg(name));
 }
 
 // clang-format off
@@ -120,14 +120,14 @@ void TestKeys::testFileKey_data()
     QTest::addColumn<FileKey::Type>("type");
     QTest::addColumn<QString>("keyExt");
     QTest::addColumn<bool>("fileKeyOk");
-    QTest::newRow("Xml")             << FileKey::KeePass2XML    << QLatin1String("key")  << true;
-    QTest::newRow("XmlBrokenBase64") << FileKey::KeePass2XML    << QLatin1String("key")  << false;
-    QTest::newRow("XmlV2")           << FileKey::KeePass2XMLv2  << QLatin1String("keyx") << true;
-    QTest::newRow("XmlV2HashFail")   << FileKey::KeePass2XMLv2  << QLatin1String("keyx") << false;
-    QTest::newRow("XmlV2BrokenHex")  << FileKey::KeePass2XMLv2  << QLatin1String("keyx") << false;
-    QTest::newRow("Binary")          << FileKey::FixedBinary    << QLatin1String("key")  << true;
-    QTest::newRow("Hex")             << FileKey::FixedBinaryHex << QLatin1String("key")  << true;
-    QTest::newRow("Hashed")          << FileKey::Hashed         << QLatin1String("key")  << true;
+    QTest::newRow("Xml")             << FileKey::KeePass2XML    << QStringLiteral("key")  << true;
+    QTest::newRow("XmlBrokenBase64") << FileKey::KeePass2XML    << QStringLiteral("key")  << false;
+    QTest::newRow("XmlV2")           << FileKey::KeePass2XMLv2  << QStringLiteral("keyx") << true;
+    QTest::newRow("XmlV2HashFail")   << FileKey::KeePass2XMLv2  << QStringLiteral("keyx") << false;
+    QTest::newRow("XmlV2BrokenHex")  << FileKey::KeePass2XMLv2  << QStringLiteral("keyx") << false;
+    QTest::newRow("Binary")          << FileKey::FixedBinary    << QStringLiteral("key")  << true;
+    QTest::newRow("Hex")             << FileKey::FixedBinaryHex << QStringLiteral("key")  << true;
+    QTest::newRow("Hashed")          << FileKey::Hashed         << QStringLiteral("key")  << true;
 }
 // clang-format on
 
@@ -206,7 +206,7 @@ void TestKeys::testFileKeyError()
 {
     bool result;
     QString errorMsg;
-    const QString fileName(QString(KEEPASSX_TEST_DATA_DIR).append("/does/not/exist"));
+    const QString fileName(QStringLiteral(KEEPASSX_TEST_DATA_DIR).append("/does/not/exist"));
 
     FileKey fileKey;
     result = fileKey.load(fileName, &errorMsg);
@@ -251,7 +251,7 @@ void TestKeys::testCompositeKeyComponents()
     auto passwordKeyEnc = QSharedPointer<PasswordKey>::create("password");
     auto fileKeyEnc = QSharedPointer<FileKey>::create();
     QString error;
-    fileKeyEnc->load(QString("%1/%2").arg(QString(KEEPASSX_TEST_DATA_DIR), "FileKeyHashed.key"), &error);
+    fileKeyEnc->load(QStringLiteral("%1/%2").arg(QStringLiteral(KEEPASSX_TEST_DATA_DIR), "FileKeyHashed.key"), &error);
     if (!error.isEmpty()) {
         QFAIL(qPrintable(error));
     }
@@ -309,7 +309,7 @@ void TestKeys::testCompositeKeyComponents()
     auto compositeKeyDec3 = QSharedPointer<CompositeKey>::create();
     compositeKeyDec3->addKey(passwordKeyEnc);
     auto fileKeyWrong = QSharedPointer<FileKey>::create();
-    fileKeyWrong->load(QString("%1/%2").arg(QString(KEEPASSX_TEST_DATA_DIR), "FileKeyHashed2.key"), &error);
+    fileKeyWrong->load(QStringLiteral("%1/%2").arg(QStringLiteral(KEEPASSX_TEST_DATA_DIR), "FileKeyHashed2.key"), &error);
     if (!error.isEmpty()) {
         QFAIL(qPrintable(error));
     }

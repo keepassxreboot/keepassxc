@@ -70,7 +70,7 @@ QString CsvExporter::exportHeader()
     addColumn(header, "Icon");
     addColumn(header, "Last Modified");
     addColumn(header, "Created");
-    return header + QString("\n");
+    return header + QLatin1String("\n");
 }
 
 QString CsvExporter::exportGroup(const Group* group, QString groupPath)

@@ -266,7 +266,7 @@ void AutoType::executeAutoTypeActions(const Entry* entry,
 
     if (!error.isEmpty()) {
         auto errorMsg = tr("The requested Auto-Type sequence cannot be used due to an error:");
-        errorMsg.append(QString("\n%1\n%2").arg(sequence, error));
+        errorMsg.append(QStringLiteral("\n%1\n%2").arg(sequence, error));
         if (getMainWindow()) {
             MessageBox::critical(getMainWindow(), tr("Auto-Type Error"), errorMsg);
         }

@@ -464,7 +464,7 @@ void DatabaseOpenWidget::reject()
 
 bool DatabaseOpenWidget::browseKeyFile()
 {
-    QString filters = QString("%1 (*);;%2 (*.keyx; *.key)").arg(tr("All files"), tr("Key files"));
+    QString filters = QStringLiteral("%1 (*);;%2 (*.keyx; *.key)").arg(tr("All files"), tr("Key files"));
     QString filename =
         fileDialog()->getOpenFileName(this, tr("Select key file"), FileDialog::getLastDir("keyfile"), filters);
     if (filename.isEmpty()) {

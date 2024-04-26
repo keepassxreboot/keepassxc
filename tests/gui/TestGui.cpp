@@ -278,12 +278,12 @@ void TestGui::testCreateDatabase()
         auto* fileEdit = keyFileWidget->findChild<QLineEdit*>("keyFileLineEdit");
         QTRY_VERIFY(fileEdit);
         QTRY_VERIFY(fileEdit->isVisible());
-        fileDialog()->setNextFileName(QString("%1/%2").arg(QString(KEEPASSX_TEST_DATA_DIR), "FileKeyHashed.key"));
+        fileDialog()->setNextFileName(QStringLiteral("%1/%2").arg(QStringLiteral(KEEPASSX_TEST_DATA_DIR), "FileKeyHashed.key"));
         QTest::keyClick(keyFileWidget->findChild<QPushButton*>("addButton"), Qt::Key::Key_Enter);
         QVERIFY(fileEdit->hasFocus());
         auto* browseButton = keyFileWidget->findChild<QPushButton*>("browseKeyFileButton");
         QTest::keyClick(browseButton, Qt::Key::Key_Enter);
-        QCOMPARE(fileEdit->text(), QString("%1/%2").arg(QString(KEEPASSX_TEST_DATA_DIR), "FileKeyHashed.key"));
+        QCOMPARE(fileEdit->text(), QStringLiteral("%1/%2").arg(QStringLiteral(KEEPASSX_TEST_DATA_DIR), "FileKeyHashed.key"));
 
         // save database to temporary file
         TemporaryFile tmpFile;
@@ -319,7 +319,7 @@ void TestGui::testCreateDatabase()
     auto compositeKey = QSharedPointer<CompositeKey>::create();
     compositeKey->addKey(QSharedPointer<PasswordKey>::create("test"));
     auto fileKey = QSharedPointer<FileKey>::create();
-    fileKey->load(QString("%1/%2").arg(QString(KEEPASSX_TEST_DATA_DIR), "FileKeyHashed.key"));
+    fileKey->load(QStringLiteral("%1/%2").arg(QStringLiteral(KEEPASSX_TEST_DATA_DIR), "FileKeyHashed.key"));
     compositeKey->addKey(fileKey);
     QCOMPARE(m_db->key()->rawKey(), compositeKey->rawKey());
 
@@ -347,7 +347,7 @@ void TestGui::testMergeDatabase()
     QApplication::processEvents();
 
     // set file to merge from
-    fileDialog()->setNextFileName(QString(KEEPASSX_TEST_DATA_DIR).append("/MergeDatabase.kdbx"));
+    fileDialog()->setNextFileName(QStringLiteral(KEEPASSX_TEST_DATA_DIR).append("/MergeDatabase.kdbx"));
     triggerAction("actionDatabaseMerge");
 
     QTRY_COMPARE(QApplication::focusWidget()->objectName(), QLatin1String("passwordEdit"));
@@ -377,7 +377,7 @@ void TestGui::testAutoreloadDatabase()
     // Test accepting new file in autoreload
     MessageBox::setNextAnswer(MessageBox::Yes);
     // Overwrite the current database with the temp data
-    QVERIFY(m_dbFile.copyFromFile(QString(KEEPASSX_TEST_DATA_DIR).append("/MergeDatabase.kdbx")));
+    QVERIFY(m_dbFile.copyFromFile(QStringLiteral(KEEPASSX_TEST_DATA_DIR).append("/MergeDatabase.kdbx")));
 
     QTRY_VERIFY(m_db != m_dbWidget->database());
     m_db = m_dbWidget->database();
@@ -395,7 +395,7 @@ void TestGui::testAutoreloadDatabase()
     // Test rejecting new file in autoreload
     MessageBox::setNextAnswer(MessageBox::No);
     // Overwrite the current database with the temp data
-    QVERIFY(m_dbFile.copyFromFile(QString(KEEPASSX_TEST_DATA_DIR).append("/MergeDatabase.kdbx")));
+    QVERIFY(m_dbFile.copyFromFile(QStringLiteral(KEEPASSX_TEST_DATA_DIR).append("/MergeDatabase.kdbx")));
 
     // Ensure the merge did not take place
     QCOMPARE(m_db->rootGroup()->findChildByName("General")->entries().size(), 0);
@@ -414,7 +414,7 @@ void TestGui::testAutoreloadDatabase()
     // This is saying yes to merging the entries
     MessageBox::setNextAnswer(MessageBox::Merge);
     // Overwrite the current database with the temp data
-    QVERIFY(m_dbFile.copyFromFile(QString(KEEPASSX_TEST_DATA_DIR).append("/MergeDatabase.kdbx")));
+    QVERIFY(m_dbFile.copyFromFile(QStringLiteral(KEEPASSX_TEST_DATA_DIR).append("/MergeDatabase.kdbx")));
 
     QTRY_VERIFY(m_db != m_dbWidget->database());
     m_db = m_dbWidget->database();
@@ -541,7 +541,7 @@ void TestGui::testEditEntry()
     QCOMPARE(entry->historyItems().size(), ++editCount);
 
     // Confirm modified indicator is showing
-    QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("%1*").arg(m_dbFileName));
+    QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QStringLiteral("%1*").arg(m_dbFileName));
 
     // Test copy & paste newline sanitization
     QTest::mouseClick(entryEditWidget, Qt::LeftButton);
@@ -557,7 +557,7 @@ void TestGui::testEditEntry()
     QCOMPARE(entry->title(), QLatin1String("multiline title"));
     QCOMPARE(entry->username(), QLatin1String("multiline username"));
     // here we keep newlines, so users can't lock themselves out accidentally
-    QCOMPARE(entry->password(), QString("multiline\npassword"));
+    QCOMPARE(entry->password(), QLatin1String("multiline\npassword"));
     QCOMPARE(entry->url(), QLatin1String("multiline url"));
 }
 
@@ -795,7 +795,7 @@ void TestGui::testPasswordEntryEntropy()
 
         // Dynamically calculate entropy due to variances with zxcvbn wordlists
         PasswordHealth health(password);
-        auto expectedEntropy = QString("Entropy: %1 bit").arg(QString::number(health.entropy(), 'f', 2));
+        auto expectedEntropy = QStringLiteral("Entropy: %1 bit").arg(QString::number(health.entropy(), 'f', 2));
 
         generatedPassword->setText(password);
         QCOMPARE(entropyLabel->text(), expectedEntropy);
@@ -1667,8 +1667,8 @@ void TestGui::testDragAndDropKdbxFiles()
 {
     const int openedDatabasesCount = m_tabWidget->count();
 
-    const QString badDatabaseFilePath(QString(KEEPASSX_TEST_DATA_DIR).append("/NotDatabase.notkdbx"));
-    const QString goodDatabaseFilePath(QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.kdbx"));
+    const QString badDatabaseFilePath(QStringLiteral(KEEPASSX_TEST_DATA_DIR).append("/NotDatabase.notkdbx"));
+    const QString goodDatabaseFilePath(QStringLiteral(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.kdbx"));
 
     QMimeData badMimeData;
     badMimeData.setUrls({QUrl::fromLocalFile(badDatabaseFilePath)});
@@ -2092,7 +2092,7 @@ void TestGui::checkStatusBarText(const QString& textFragment)
     QApplication::processEvents();
     QVERIFY(m_statusBarLabel->isVisible());
     QTRY_VERIFY2(m_statusBarLabel->text().startsWith(textFragment),
-                 qPrintable(QString("'%1' doesn't start with '%2'").arg(m_statusBarLabel->text(), textFragment)));
+                 qPrintable(QStringLiteral("'%1' doesn't start with '%2'").arg(m_statusBarLabel->text(), textFragment)));
 }
 
 void TestGui::triggerAction(const QString& name)

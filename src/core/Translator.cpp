@@ -123,7 +123,7 @@ QList<QPair<QString, QString>> Translator::availableLanguages()
                 languageStr = "Latin";
             }
             if (langcode.contains("_")) {
-                languageStr += QString(" (%1)").arg(QLocale::countryToString(locale.country()));
+                languageStr += QStringLiteral(" (%1)").arg(QLocale::countryToString(locale.country()));
             }
 
             QPair<QString, QString> language(langcode, languageStr);

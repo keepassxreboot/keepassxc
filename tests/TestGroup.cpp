@@ -621,10 +621,10 @@ void TestGroup::testPrint()
     QScopedPointer<Database> db(new Database());
 
     QString output = db->rootGroup()->print();
-    QCOMPARE(output, QString("[empty]\n"));
+    QCOMPARE(output, QLatin1String("[empty]\n"));
 
     output = db->rootGroup()->print(true);
-    QCOMPARE(output, QString("[empty]\n"));
+    QCOMPARE(output, QLatin1String("[empty]\n"));
 
     auto entry1 = new Entry();
     entry1->setTitle(QLatin1String("entry1"));
@@ -632,7 +632,7 @@ void TestGroup::testPrint()
     entry1->setUuid(QUuid::createUuid());
 
     output = db->rootGroup()->print();
-    QCOMPARE(output, QString("entry1\n"));
+    QCOMPARE(output, QLatin1String("entry1\n"));
 
     auto group1 = new Group();
     group1->setName("group1");
@@ -657,36 +657,36 @@ void TestGroup::testPrint()
     entry3->setUuid(QUuid::createUuid());
 
     output = db->rootGroup()->print();
-    QVERIFY(output.contains(QString("entry1\n")));
-    QVERIFY(output.contains(QString("group1/\n")));
-    QVERIFY(!output.contains(QString("  entry2\n")));
-    QVERIFY(output.contains(QString("group2/\n")));
-    QVERIFY(!output.contains(QString("  subgroup\n")));
+    QVERIFY(output.contains(QLatin1String("entry1\n")));
+    QVERIFY(output.contains(QLatin1String("group1/\n")));
+    QVERIFY(!output.contains(QLatin1String("  entry2\n")));
+    QVERIFY(output.contains(QLatin1String("group2/\n")));
+    QVERIFY(!output.contains(QLatin1String("  subgroup\n")));
 
     output = db->rootGroup()->print(true);
-    QVERIFY(output.contains(QString("entry1\n")));
-    QVERIFY(output.contains(QString("group1/\n")));
-    QVERIFY(output.contains(QString("  entry2\n")));
-    QVERIFY(output.contains(QString("group2/\n")));
-    QVERIFY(output.contains(QString("  subgroup/\n")));
-    QVERIFY(output.contains(QString("    entry3\n")));
+    QVERIFY(output.contains(QLatin1String("entry1\n")));
+    QVERIFY(output.contains(QLatin1String("group1/\n")));
+    QVERIFY(output.contains(QLatin1String("  entry2\n")));
+    QVERIFY(output.contains(QLatin1String("group2/\n")));
+    QVERIFY(output.contains(QLatin1String("  subgroup/\n")));
+    QVERIFY(output.contains(QLatin1String("    entry3\n")));
 
     output = db->rootGroup()->print(true, true);
-    QVERIFY(output.contains(QString("entry1\n")));
-    QVERIFY(output.contains(QString("group1/\n")));
-    QVERIFY(output.contains(QString("group1/entry2\n")));
-    QVERIFY(output.contains(QString("group2/\n")));
-    QVERIFY(output.contains(QString("group2/subgroup/\n")));
-    QVERIFY(output.contains(QString("group2/subgroup/entry3\n")));
+    QVERIFY(output.contains(QLatin1String("entry1\n")));
+    QVERIFY(output.contains(QLatin1String("group1/\n")));
+    QVERIFY(output.contains(QLatin1String("group1/entry2\n")));
+    QVERIFY(output.contains(QLatin1String("group2/\n")));
+    QVERIFY(output.contains(QLatin1String("group2/subgroup/\n")));
+    QVERIFY(output.contains(QLatin1String("group2/subgroup/entry3\n")));
 
     output = group1->print();
-    QVERIFY(!output.contains(QString("group1/\n")));
-    QVERIFY(output.contains(QString("entry2\n")));
+    QVERIFY(!output.contains(QLatin1String("group1/\n")));
+    QVERIFY(output.contains(QLatin1String("entry2\n")));
 
     output = group2->print(true, true);
-    QVERIFY(!output.contains(QString("group2/\n")));
-    QVERIFY(output.contains(QString("subgroup/\n")));
-    QVERIFY(output.contains(QString("subgroup/entry3\n")));
+    QVERIFY(!output.contains(QLatin1String("group2/\n")));
+    QVERIFY(output.contains(QLatin1String("subgroup/\n")));
+    QVERIFY(output.contains(QLatin1String("subgroup/entry3\n")));
 }
 
 void TestGroup::testAddEntryWithPath()

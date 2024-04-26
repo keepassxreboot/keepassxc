@@ -909,7 +909,7 @@ void TestMerge::testUpdateGroup()
     groupSourceInitial->setName("group2 renamed");
     groupSourceInitial->setNotes("updated notes");
     QUuid customIconId = QUuid::createUuid();
-    dbSource->metadata()->addCustomIcon(customIconId, QLatin1String("custom icon").toLocal8Bit());
+    dbSource->metadata()->addCustomIcon(customIconId, QLatin1String("custom icon").latin1());
     groupSourceInitial->setIcon(customIconId);
 
     QPointer<Entry> entrySourceInitial = dbSource->rootGroup()->findEntryByPath("entry1");
@@ -1024,7 +1024,7 @@ void TestMerge::testMergeCustomIcons()
 
     QUuid customIconId = QUuid::createUuid();
 
-    dbSource->metadata()->addCustomIcon(customIconId, QLatin1String("custom icon").toLocal8Bit());
+    dbSource->metadata()->addCustomIcon(customIconId, QLatin1String("custom icon").latin1());
     // Sanity check.
     QVERIFY(dbSource->metadata()->hasCustomIcon(customIconId));
 

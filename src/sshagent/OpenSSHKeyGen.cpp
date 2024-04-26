@@ -84,10 +84,10 @@ namespace OpenSSHKeyGen
     bool generateECDSA(OpenSSHKey& key, int bits)
     {
         auto rng = randomGen()->getRng();
-        QString group = QString("nistp%1").arg(bits);
+        QString group = QStringLiteral("nistp%1").arg(bits);
 
         try {
-            Botan::EC_Group domain(QString("secp%1r1").arg(bits).toStdString());
+            Botan::EC_Group domain(QStringLiteral("secp%1r1").arg(bits).toStdString());
             Botan::ECDSA_PrivateKey ecdsaKey(*rng, domain);
 
             QByteArray publicData;

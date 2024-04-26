@@ -32,7 +32,7 @@ KeySym qcharToNativeKeyCode(const QChar& ch)
     }
 
     /* request other characters from X server */
-    QString ustr = QString("U%1").arg(unicode, 4, 16, QLatin1Char('0'));
+    QString ustr = QStringLiteral("U%1").arg(unicode, 4, 16, QLatin1Char('0'));
     return XStringToKeysym(ustr.toStdString().c_str());
 }
 

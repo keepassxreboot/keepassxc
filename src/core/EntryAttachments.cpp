@@ -86,7 +86,7 @@ void EntryAttachments::set(const QString& key, const QByteArray& value)
 void EntryAttachments::remove(const QString& key)
 {
     if (!m_attachments.contains(key)) {
-        Q_ASSERT_X(false, "EntryAttachments::remove", qPrintable(QString("Can't find attachment for key %1").arg(key)));
+        Q_ASSERT_X(false, "EntryAttachments::remove", qPrintable(QStringLiteral("Can't find attachment for key %1").arg(key)));
         return;
     }
 
@@ -221,13 +221,13 @@ bool EntryAttachments::openAttachment(const QString& key, QString* errorMessage)
 
 #if defined(KEEPASSXC_DIST_SNAP)
         const QString tmpFileTemplate =
-            QString("%1/XXXXXXXXXXXX%2").arg(QProcessEnvironment::systemEnvironment().value("SNAP_USER_DATA"), ext);
+            QStringLiteral("%1/XXXXXXXXXXXX%2").arg(QProcessEnvironment::systemEnvironment().value("SNAP_USER_DATA"), ext);
 #elif defined(KEEPASSXC_DIST_FLATPAK)
         const QString tmpFileTemplate =
-            QString("%1/app/%2/XXXXXX.%3")
+            QStringLiteral("%1/app/%2/XXXXXX.%3")
                 .arg(QStandardPaths::writableLocation(QStandardPaths::RuntimeLocation), "org.keepassxc.KeePassXC", ext);
 #else
-        const QLatin1String tmpFileTemplate = QDir::temp().absoluteFilePath(QLatin1String("XXXXXXXXXXXX").append(ext));
+        const QString tmpFileTemplate = QDir::temp().absoluteFilePath(QStringLiteral("XXXXXXXXXXXX").append(ext));
 #endif
 
         QTemporaryFile tmpFile(tmpFileTemplate);
@@ -236,7 +236,7 @@ bool EntryAttachments::openAttachment(const QString& key, QString* errorMessage)
                             && tmpFile.write(attachmentData) == attachmentData.size() && tmpFile.flush();
 
         if (!saveOk && errorMessage) {
-            *errorMessage = QString("%1 - %2").arg(key, tmpFile.errorString());
+            *errorMessage = QStringLiteral("%1 - %2").arg(key, tmpFile.errorString());
             return false;
         }
 

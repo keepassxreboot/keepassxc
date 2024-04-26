@@ -134,7 +134,7 @@ DatabaseWidget* DatabaseTabWidget::newDatabase()
 
 void DatabaseTabWidget::openDatabase()
 {
-    auto filter = QString("%1 (*.kdbx);;%2 (*)").arg(tr("KeePass 2 Database"), tr("All files"));
+    auto filter = QStringLiteral("%1 (*.kdbx);;%2 (*)").arg(tr("KeePass 2 Database"), tr("All files"));
     auto fileName = fileDialog()->getOpenFileName(this, tr("Open database"), FileDialog::getLastDir("db"), filter);
     if (!fileName.isEmpty()) {
         FileDialog::saveLastDir("db", fileName, true);
@@ -303,7 +303,7 @@ void DatabaseTabWidget::mergeDatabase()
 {
     auto dbWidget = currentDatabaseWidget();
     if (dbWidget && !dbWidget->isLocked()) {
-        auto filter = QString("%1 (*.kdbx);;%2 (*)").arg(tr("KeePass 2 Database"), tr("All files"));
+        auto filter = QStringLiteral("%1 (*.kdbx);;%2 (*)").arg(tr("KeePass 2 Database"), tr("All files"));
         auto fileName =
             fileDialog()->getOpenFileName(this, tr("Merge database"), FileDialog::getLastDir("merge"), filter);
         if (!fileName.isEmpty()) {
