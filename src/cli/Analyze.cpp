@@ -38,7 +38,7 @@ const QCommandLineOption Analyze::OkonOption =
 
 Analyze::Analyze()
 {
-    name = QString("analyze");
+    name = QLatin1String("analyze");
     description = QObject::tr("Analyze passwords for weaknesses and problems.");
     options.append(Analyze::HIBPDatabaseOption);
     options.append(Analyze::OkonOption);

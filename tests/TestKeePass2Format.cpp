@@ -38,7 +38,7 @@ void TestKeePass2Format::initTestCase()
     QString errorString;
     m_xmlDb = readXml(QString(KEEPASSX_TEST_DATA_DIR).append("/NewDatabase.xml"), true, hasError, errorString);
     if (hasError) {
-        QFAIL(qPrintable(QString("Error while reading XML: ").append(errorString)));
+        QFAIL(qPrintable(QLatin1String("Error while reading XML: ").append(errorString)));
     }
     QVERIFY(m_xmlDb.data());
 
@@ -69,7 +69,7 @@ void TestKeePass2Format::initTestCase()
     m_kdbxTargetBuffer.open(QBuffer::ReadWrite);
     writeKdbx(&m_kdbxTargetBuffer, m_kdbxSourceDb.data(), hasError, errorString);
     if (hasError) {
-        QFAIL(qPrintable(QString("Error while writing database: ").append(errorString)));
+        QFAIL(qPrintable(QLatin1String("Error while writing database: ").append(errorString)));
     }
 
     // call sub class init method
@@ -78,15 +78,15 @@ void TestKeePass2Format::initTestCase()
 
 void TestKeePass2Format::testXmlMetadata()
 {
-    QCOMPARE(m_xmlDb->metadata()->generator(), QString("KeePass"));
-    QCOMPARE(m_xmlDb->metadata()->name(), QString("ANAME"));
+    QCOMPARE(m_xmlDb->metadata()->generator(), QLatin1String("KeePass"));
+    QCOMPARE(m_xmlDb->metadata()->name(), QLatin1String("ANAME"));
     QCOMPARE(m_xmlDb->metadata()->nameChanged(), MockClock::datetimeUtc(2010, 8, 8, 17, 24, 53));
-    QCOMPARE(m_xmlDb->metadata()->description(), QString("ADESC"));
+    QCOMPARE(m_xmlDb->metadata()->description(), QLatin1String("ADESC"));
     QCOMPARE(m_xmlDb->metadata()->descriptionChanged(), MockClock::datetimeUtc(2010, 8, 8, 17, 27, 12));
-    QCOMPARE(m_xmlDb->metadata()->defaultUserName(), QString("DEFUSERNAME"));
+    QCOMPARE(m_xmlDb->metadata()->defaultUserName(), QLatin1String("DEFUSERNAME"));
     QCOMPARE(m_xmlDb->metadata()->defaultUserNameChanged(), MockClock::datetimeUtc(2010, 8, 8, 17, 27, 45));
     QCOMPARE(m_xmlDb->metadata()->maintenanceHistoryDays(), 127);
-    QCOMPARE(m_xmlDb->metadata()->color(), QString("#FFEF00"));
+    QCOMPARE(m_xmlDb->metadata()->color(), QLatin1String("#FFEF00"));
     QCOMPARE(m_xmlDb->metadata()->databaseKeyChanged(), MockClock::datetimeUtc(2012, 4, 5, 17, 9, 34));
     QCOMPARE(m_xmlDb->metadata()->databaseKeyChangeRec(), 101);
     QCOMPARE(m_xmlDb->metadata()->databaseKeyChangeForce(), -1);
@@ -97,12 +97,12 @@ void TestKeePass2Format::testXmlMetadata()
     QCOMPARE(m_xmlDb->metadata()->protectNotes(), false);
     QCOMPARE(m_xmlDb->metadata()->recycleBinEnabled(), true);
     QVERIFY(m_xmlDb->metadata()->recycleBin() != nullptr);
-    QCOMPARE(m_xmlDb->metadata()->recycleBin()->name(), QString("Recycle Bin"));
+    QCOMPARE(m_xmlDb->metadata()->recycleBin()->name(), QLatin1String("Recycle Bin"));
     QCOMPARE(m_xmlDb->metadata()->recycleBinChanged(), MockClock::datetimeUtc(2010, 8, 25, 16, 12, 57));
     QVERIFY(m_xmlDb->metadata()->entryTemplatesGroup() == nullptr);
     QCOMPARE(m_xmlDb->metadata()->entryTemplatesGroupChanged(), MockClock::datetimeUtc(2010, 8, 8, 17, 24, 19));
     QVERIFY(m_xmlDb->metadata()->lastSelectedGroup() != nullptr);
-    QCOMPARE(m_xmlDb->metadata()->lastSelectedGroup()->name(), QString("NewDatabase"));
+    QCOMPARE(m_xmlDb->metadata()->lastSelectedGroup()->name(), QLatin1String("NewDatabase"));
     QVERIFY(m_xmlDb->metadata()->lastTopVisibleGroup() == m_xmlDb->metadata()->lastSelectedGroup());
     QCOMPARE(m_xmlDb->metadata()->historyMaxItems(), -1);
     QCOMPARE(m_xmlDb->metadata()->historyMaxSize(), 5242880);
@@ -124,7 +124,7 @@ void TestKeePass2Format::testXmlGroupRoot()
     const Group* group = m_xmlDb->rootGroup();
     QVERIFY(group);
     QCOMPARE(group->uuid(), QUuid::fromRfc4122(QByteArray::fromBase64("lmU+9n0aeESKZvcEze+bRg==")));
-    QCOMPARE(group->name(), QString("NewDatabase"));
+    QCOMPARE(group->name(), QLatin1String("NewDatabase"));
     QCOMPARE(group->notes(), QString());
     QCOMPARE(group->iconNumber(), 49);
     QCOMPARE(group->iconUuid(), QUuid());
@@ -153,12 +153,12 @@ void TestKeePass2Format::testXmlGroup1()
     const Group* group = m_xmlDb->rootGroup()->children().at(0);
 
     QCOMPARE(group->uuid(), QUuid::fromRfc4122(QByteArray::fromBase64("AaUYVdXsI02h4T1RiAlgtg==")));
-    QCOMPARE(group->name(), QString("General"));
-    QCOMPARE(group->notes(), QString("Group Notez"));
+    QCOMPARE(group->name(), QLatin1String("General"));
+    QCOMPARE(group->notes(), QLatin1String("Group Notez"));
     QCOMPARE(group->iconNumber(), 48);
     QCOMPARE(group->iconUuid(), QUuid());
     QCOMPARE(group->isExpanded(), true);
-    QCOMPARE(group->defaultAutoTypeSequence(), QString("{Password}{ENTER}"));
+    QCOMPARE(group->defaultAutoTypeSequence(), QLatin1String("{Password}{ENTER}"));
     QCOMPARE(group->autoTypeEnabled(), Group::Enable);
     QCOMPARE(group->searchingEnabled(), Group::Disable);
     QVERIFY(!group->lastTopVisibleEntry());
@@ -169,19 +169,19 @@ void TestKeePass2Format::testXmlGroup2()
     const Group* group = m_xmlDb->rootGroup()->children().at(1);
 
     QCOMPARE(group->uuid(), QUuid::fromRfc4122(QByteArray::fromBase64("1h4NtL5DK0yVyvaEnN//4A==")));
-    QCOMPARE(group->name(), QString("Windows"));
+    QCOMPARE(group->name(), QLatin1String("Windows"));
     QCOMPARE(group->isExpanded(), false);
 
     QCOMPARE(group->children().size(), 1);
     const Group* child = group->children().first();
 
     QCOMPARE(child->uuid(), QUuid::fromRfc4122(QByteArray::fromBase64("HoYE/BjLfUSW257pCHJ/eA==")));
-    QCOMPARE(child->name(), QString("Subsub"));
+    QCOMPARE(child->name(), QLatin1String("Subsub"));
     QCOMPARE(child->entries().size(), 1);
 
     const Entry* entry = child->entries().first();
     QCOMPARE(entry->uuid(), QUuid::fromRfc4122(QByteArray::fromBase64("GZpdQvGXOU2kaKRL/IVAGg==")));
-    QCOMPARE(entry->title(), QString("Subsub Entry"));
+    QCOMPARE(entry->title(), QLatin1String("Subsub Entry"));
 }
 
 void TestKeePass2Format::testXmlEntry1()
@@ -195,7 +195,7 @@ void TestKeePass2Format::testXmlEntry1()
     QVERIFY(entry->foregroundColor().isEmpty());
     QVERIFY(entry->backgroundColor().isEmpty());
     QCOMPARE(entry->overrideUrl(), QString());
-    QCOMPARE(entry->tags(), QString("a b c"));
+    QCOMPARE(entry->tags(), QLatin1String("a b c"));
 
     const TimeInfo ti = entry->timeInfo();
     QCOMPARE(ti.lastModificationTime(), MockClock::datetimeUtc(2010, 8, 25, 16, 19, 25));
@@ -207,19 +207,19 @@ void TestKeePass2Format::testXmlEntry1()
     QCOMPARE(ti.locationChanged(), MockClock::datetimeUtc(2010, 8, 25, 16, 13, 54));
 
     QList<QString> attrs = entry->attributes()->keys();
-    QCOMPARE(entry->attributes()->value("Notes"), QString("Notes"));
+    QCOMPARE(entry->attributes()->value("Notes"), QLatin1String("Notes"));
     QVERIFY(!entry->attributes()->isProtected("Notes"));
     QVERIFY(attrs.removeOne("Notes"));
-    QCOMPARE(entry->attributes()->value("Password"), QString("Password"));
+    QCOMPARE(entry->attributes()->value("Password"), QLatin1String("Password"));
     QVERIFY(!entry->attributes()->isProtected("Password"));
     QVERIFY(attrs.removeOne("Password"));
-    QCOMPARE(entry->attributes()->value("Title"), QString("Sample Entry 1"));
+    QCOMPARE(entry->attributes()->value("Title"), QLatin1String("Sample Entry 1"));
     QVERIFY(!entry->attributes()->isProtected("Title"));
     QVERIFY(attrs.removeOne("Title"));
     QCOMPARE(entry->attributes()->value("URL"), QString());
     QVERIFY(entry->attributes()->isProtected("URL"));
     QVERIFY(attrs.removeOne("URL"));
-    QCOMPARE(entry->attributes()->value("UserName"), QString("User Name"));
+    QCOMPARE(entry->attributes()->value("UserName"), QLatin1String("User Name"));
     QVERIFY(entry->attributes()->isProtected("UserName"));
     QVERIFY(attrs.removeOne("UserName"));
     QVERIFY(attrs.isEmpty());
@@ -242,7 +242,7 @@ void TestKeePass2Format::testXmlEntry1()
     QCOMPARE(entry->defaultAutoTypeSequence(), QString());
     QCOMPARE(entry->autoTypeAssociations()->size(), 1);
     const AutoTypeAssociations::Association assoc1 = entry->autoTypeAssociations()->get(0);
-    QCOMPARE(assoc1.window, QString("Target Window"));
+    QCOMPARE(assoc1.window, QLatin1String("Target Window"));
     QCOMPARE(assoc1.sequence, QString());
 }
 
@@ -254,44 +254,44 @@ void TestKeePass2Format::testXmlEntry2()
     QCOMPARE(entry->iconNumber(), 0);
     QCOMPARE(entry->iconUuid(), QUuid::fromRfc4122(QByteArray::fromBase64("++vyI+daLk6omox4a6kQGA==")));
     // TODO: test entry->icon()
-    QCOMPARE(entry->foregroundColor(), QString("#FF0000"));
-    QCOMPARE(entry->backgroundColor(), QString("#FFFF00"));
-    QCOMPARE(entry->overrideUrl(), QString("http://override.net/"));
+    QCOMPARE(entry->foregroundColor(), QLatin1String("#FF0000"));
+    QCOMPARE(entry->backgroundColor(), QLatin1String("#FFFF00"));
+    QCOMPARE(entry->overrideUrl(), QLatin1String("http://override.net/"));
     QCOMPARE(entry->tags(), QString());
 
     const TimeInfo ti = entry->timeInfo();
     QCOMPARE(ti.usageCount(), 7);
 
     QList<QString> attrs = entry->attributes()->keys();
-    QCOMPARE(entry->attributes()->value("CustomString"), QString("isavalue"));
+    QCOMPARE(entry->attributes()->value("CustomString"), QLatin1String("isavalue"));
     QVERIFY(attrs.removeOne("CustomString"));
     QCOMPARE(entry->attributes()->value("Notes"), QString());
     QVERIFY(attrs.removeOne("Notes"));
-    QCOMPARE(entry->attributes()->value("Password"), QString("Jer60Hz8o9XHvxBGcRqT"));
+    QCOMPARE(entry->attributes()->value("Password"), QLatin1String("Jer60Hz8o9XHvxBGcRqT"));
     QVERIFY(attrs.removeOne("Password"));
-    QCOMPARE(entry->attributes()->value("Protected String"), QString("y")); // TODO: should have a protection attribute
+    QCOMPARE(entry->attributes()->value("Protected String"), QLatin1String("y")); // TODO: should have a protection attribute
     QVERIFY(attrs.removeOne("Protected String"));
-    QCOMPARE(entry->attributes()->value("Title"), QString("Sample Entry 2"));
+    QCOMPARE(entry->attributes()->value("Title"), QLatin1String("Sample Entry 2"));
     QVERIFY(attrs.removeOne("Title"));
-    QCOMPARE(entry->attributes()->value("URL"), QString("http://www.keepassx.org/"));
+    QCOMPARE(entry->attributes()->value("URL"), QLatin1String("http://www.keepassx.org/"));
     QVERIFY(attrs.removeOne("URL"));
-    QCOMPARE(entry->attributes()->value("UserName"), QString("notDEFUSERNAME"));
+    QCOMPARE(entry->attributes()->value("UserName"), QLatin1String("notDEFUSERNAME"));
     QVERIFY(attrs.removeOne("UserName"));
     QVERIFY(attrs.isEmpty());
 
     QCOMPARE(entry->attachments()->keys().size(), 1);
-    QCOMPARE(QString::fromLatin1(entry->attachments()->value("myattach.txt")), QString("abcdefghijk"));
+    QCOMPARE(QLatin1String::fromLatin1(entry->attachments()->value("myattach.txt")), QLatin1String("abcdefghijk"));
 
     QCOMPARE(entry->autoTypeEnabled(), true);
     QCOMPARE(entry->autoTypeObfuscation(), 1);
-    QCOMPARE(entry->defaultAutoTypeSequence(), QString("{USERNAME}{TAB}{PASSWORD}{ENTER}"));
+    QCOMPARE(entry->defaultAutoTypeSequence(), QLatin1String("{USERNAME}{TAB}{PASSWORD}{ENTER}"));
     QCOMPARE(entry->autoTypeAssociations()->size(), 2);
     const AutoTypeAssociations::Association assoc1 = entry->autoTypeAssociations()->get(0);
-    QCOMPARE(assoc1.window, QString("Target Window"));
-    QCOMPARE(assoc1.sequence, QString("{Title}{UserName}"));
+    QCOMPARE(assoc1.window, QLatin1String("Target Window"));
+    QCOMPARE(assoc1.sequence, QLatin1String("{Title}{UserName}"));
     const AutoTypeAssociations::Association assoc2 = entry->autoTypeAssociations()->get(1);
-    QCOMPARE(assoc2.window, QString("Target Window 2"));
-    QCOMPARE(assoc2.sequence, QString("{Title}{UserName} test"));
+    QCOMPARE(assoc2.window, QLatin1String("Target Window 2"));
+    QCOMPARE(assoc2.sequence, QLatin1String("{Title}{UserName} test"));
 }
 
 void TestKeePass2Format::testXmlEntryHistory()
@@ -305,8 +305,8 @@ void TestKeePass2Format::testXmlEntryHistory()
         QVERIFY(!entry->parent());
         QCOMPARE(entry->timeInfo().lastModificationTime(), MockClock::datetimeUtc(2010, 8, 25, 16, 13, 54));
         QCOMPARE(entry->timeInfo().usageCount(), 3);
-        QCOMPARE(entry->title(), QString("Sample Entry"));
-        QCOMPARE(entry->url(), QString("http://www.somesite.com/"));
+        QCOMPARE(entry->title(), QLatin1String("Sample Entry"));
+        QCOMPARE(entry->url(), QLatin1String("http://www.somesite.com/"));
     }
 
     {
@@ -315,8 +315,8 @@ void TestKeePass2Format::testXmlEntryHistory()
         QVERIFY(!entry->parent());
         QCOMPARE(entry->timeInfo().lastModificationTime(), MockClock::datetimeUtc(2010, 8, 25, 16, 15, 43));
         QCOMPARE(entry->timeInfo().usageCount(), 7);
-        QCOMPARE(entry->title(), QString("Sample Entry 1"));
-        QCOMPARE(entry->url(), QString("http://www.somesite.com/"));
+        QCOMPARE(entry->title(), QLatin1String("Sample Entry 1"));
+        QCOMPARE(entry->url(), QLatin1String("http://www.somesite.com/"));
     }
 }
 
@@ -454,10 +454,10 @@ void TestKeePass2Format::testXmlInvalidXmlChars()
     QCOMPARE(attrRead->value("PlainInvalid"), QString());
     QCOMPARE(attrRead->value("PlainValid"), strPlainValid);
     QCOMPARE(attrRead->value("SingleHighSurrogate1"), QString());
-    QCOMPARE(attrRead->value("SingleHighSurrogate2"), QString("12"));
+    QCOMPARE(attrRead->value("SingleHighSurrogate2"), QLatin1String("12"));
     QCOMPARE(attrRead->value("HighHighSurrogate"), QString());
     QCOMPARE(attrRead->value("SingleLowSurrogate1"), QString());
-    QCOMPARE(attrRead->value("SingleLowSurrogate2"), QString("12"));
+    QCOMPARE(attrRead->value("SingleLowSurrogate2"), QLatin1String("12"));
     QCOMPARE(attrRead->value("LowLowSurrogate"), QString());
     QCOMPARE(attrRead->value("SurrogateValid1"), strSurrogateValid1);
     QCOMPARE(attrRead->value("SurrogateValid2"), strSurrogateValid2);
@@ -501,7 +501,7 @@ void TestKeePass2Format::testReadBackTargetDb()
     m_kdbxTargetDb = QSharedPointer<Database>::create();
     readKdbx(&m_kdbxTargetBuffer, key, m_kdbxTargetDb, hasError, errorString);
     if (hasError) {
-        QFAIL(qPrintable(QString("Error while reading database: ").append(errorString)));
+        QFAIL(qPrintable(QLatin1String("Error while reading database: ").append(errorString)));
     }
     QVERIFY(m_kdbxTargetDb.data());
 }
@@ -519,7 +519,7 @@ void TestKeePass2Format::testKdbxProtectedAttributes()
 {
     QCOMPARE(m_kdbxTargetDb->rootGroup()->entries().size(), 1);
     Entry* entry = m_kdbxTargetDb->rootGroup()->entries().at(0);
-    QCOMPARE(entry->attributes()->value("test"), QString("protectedTest"));
+    QCOMPARE(entry->attributes()->value("test"), QLatin1String("protectedTest"));
     QCOMPARE(entry->attributes()->isProtected("test"), true);
 }
 
@@ -557,7 +557,7 @@ void TestKeePass2Format::testKdbxDeviceFailure()
     QString errorString;
     writeKdbx(&failDevice, db.data(), hasError, errorString);
     QVERIFY(hasError);
-    QCOMPARE(errorString, QString("FAILDEVICE"));
+    QCOMPARE(errorString, QLatin1String("FAILDEVICE"));
 }
 
 Q_DECLARE_METATYPE(QSharedPointer<CompositeKey>)

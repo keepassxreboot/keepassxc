@@ -25,9 +25,9 @@
 
 RemoveGroup::RemoveGroup()
 {
-    name = QString("rmdir");
-    description = QString("Removes a group from a database.");
-    positionalArguments.append({QString("group"), QObject::tr("Path of the group to remove."), QString()});
+    name = QLatin1String("rmdir");
+    description = QLatin1String("Removes a group from a database.");
+    positionalArguments.append({QLatin1String("group"), QObject::tr("Path of the group to remove."), QLatin1String()});
 }
 
 RemoveGroup::~RemoveGroup() = default;

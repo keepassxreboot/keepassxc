@@ -96,7 +96,7 @@ void HibpDownloader::validate()
         // The URL we query is https://api.pwnedpasswords.com/range/XXXXX,
         // where XXXXX is the first five bytes of the hex representation of
         // the password's SHA1.
-        const auto url = QString("https://api.pwnedpasswords.com/range/") + sha1Hex(password).left(5);
+        const auto url = QLatin1String("https://api.pwnedpasswords.com/range/") + sha1Hex(password).left(5);
 
         // HIBP requires clients to specify a user agent in the request
         // (https://haveibeenpwned.com/API/v3#UserAgent); however, in order

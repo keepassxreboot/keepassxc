@@ -33,19 +33,19 @@ void TestUrlTools::testTopLevelDomain()
 {
     // Create list of URLs and expected TLD responses
     QList<QPair<QString, QString>> tldUrls{
-        {QString("https://another.example.co.uk"), QString("co.uk")},
-        {QString("https://www.example.com"), QString("com")},
-        {QString("https://example.com"), QString("com")},
-        {QString("https://github.com"), QString("com")},
-        {QString("http://test.net"), QString("net")},
-        {QString("http://so.many.subdomains.co.jp"), QString("co.jp")},
-        {QString("https://192.168.0.1"), QString("192.168.0.1")},
-        {QString("https://192.168.0.1:8000"), QString("192.168.0.1")},
-        {QString("https://www.nic.ar"), QString("ar")},
-        {QString("https://no.no.no"), QString("no")},
-        {QString("https://www.blogspot.com.ar"), QString("blogspot.com.ar")}, // blogspot.com.ar is a TLD
-        {QString("https://jap.an.ide.kyoto.jp"), QString("ide.kyoto.jp")}, // ide.kyoto.jp is a TLD
-        {QString("ar"), QString("ar")},
+        {QLatin1String("https://another.example.co.uk"), QLatin1String("co.uk")},
+        {QLatin1String("https://www.example.com"), QLatin1String("com")},
+        {QLatin1String("https://example.com"), QLatin1String("com")},
+        {QLatin1String("https://github.com"), QLatin1String("com")},
+        {QLatin1String("http://test.net"), QLatin1String("net")},
+        {QLatin1String("http://so.many.subdomains.co.jp"), QLatin1String("co.jp")},
+        {QLatin1String("https://192.168.0.1"), QLatin1String("192.168.0.1")},
+        {QLatin1String("https://192.168.0.1:8000"), QLatin1String("192.168.0.1")},
+        {QLatin1String("https://www.nic.ar"), QLatin1String("ar")},
+        {QLatin1String("https://no.no.no"), QLatin1String("no")},
+        {QLatin1String("https://www.blogspot.com.ar"), QLatin1String("blogspot.com.ar")}, // blogspot.com.ar is a TLD
+        {QLatin1String("https://jap.an.ide.kyoto.jp"), QLatin1String("ide.kyoto.jp")}, // ide.kyoto.jp is a TLD
+        {QLatin1String("ar"), QLatin1String("ar")},
     };
 
     for (const auto& u : tldUrls) {
@@ -54,17 +54,17 @@ void TestUrlTools::testTopLevelDomain()
 
     // Create list of URLs and expected base URL responses
     QList<QPair<QString, QString>> baseUrls{
-        {QString("https://another.example.co.uk"), QString("example.co.uk")},
-        {QString("https://www.example.com"), QString("example.com")},
-        {QString("http://test.net"), QString("test.net")},
-        {QString("http://so.many.subdomains.co.jp"), QString("subdomains.co.jp")},
-        {QString("https://192.168.0.1"), QString("192.168.0.1")},
-        {QString("https://192.168.0.1:8000"), QString("192.168.0.1")},
-        {QString("https://www.nic.ar"), QString("nic.ar")},
-        {QString("https://www.blogspot.com.ar"), QString("www.blogspot.com.ar")}, // blogspot.com.ar is a TLD
-        {QString("https://www.arpa"), QString("www.arpa")},
-        {QString("https://jap.an.ide.kyoto.jp"), QString("an.ide.kyoto.jp")}, // ide.kyoto.jp is a TLD
-        {QString("https://kobe.jp"), QString("kobe.jp")},
+        {QLatin1String("https://another.example.co.uk"), QLatin1String("example.co.uk")},
+        {QLatin1String("https://www.example.com"), QLatin1String("example.com")},
+        {QLatin1String("http://test.net"), QLatin1String("test.net")},
+        {QLatin1String("http://so.many.subdomains.co.jp"), QLatin1String("subdomains.co.jp")},
+        {QLatin1String("https://192.168.0.1"), QLatin1String("192.168.0.1")},
+        {QLatin1String("https://192.168.0.1:8000"), QLatin1String("192.168.0.1")},
+        {QLatin1String("https://www.nic.ar"), QLatin1String("nic.ar")},
+        {QLatin1String("https://www.blogspot.com.ar"), QLatin1String("www.blogspot.com.ar")}, // blogspot.com.ar is a TLD
+        {QLatin1String("https://www.arpa"), QLatin1String("www.arpa")},
+        {QLatin1String("https://jap.an.ide.kyoto.jp"), QLatin1String("an.ide.kyoto.jp")}, // ide.kyoto.jp is a TLD
+        {QLatin1String("https://kobe.jp"), QLatin1String("kobe.jp")},
     };
 
     for (const auto& u : baseUrls) {

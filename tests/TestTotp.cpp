@@ -39,7 +39,7 @@ void TestTotp::testParseSecret()
                      "SHA1&digits=6&period=30";
     auto settings = Totp::parseSettings(secret);
     QVERIFY(!settings.isNull());
-    QCOMPARE(settings->key, QString("HXDMVJECJJWSRB3HWIZR4IFUGFTMXBOZ"));
+    QCOMPARE(settings->key, QLatin1String("HXDMVJECJJWSRB3HWIZR4IFUGFTMXBOZ"));
     QCOMPARE(settings->custom, false);
     QCOMPARE(settings->format, Totp::StorageFormat::OTPURL);
     QCOMPARE(settings->digits, 6u);
@@ -52,7 +52,7 @@ void TestTotp::testParseSecret()
              "SHA512&digits=6&period=30";
     settings = Totp::parseSettings(secret);
     QVERIFY(!settings.isNull());
-    QCOMPARE(settings->key, QString("HXDMVJECJJWSRB3HWIZR4IFUGFTMXBOZ"));
+    QCOMPARE(settings->key, QLatin1String("HXDMVJECJJWSRB3HWIZR4IFUGFTMXBOZ"));
     QCOMPARE(settings->custom, true);
     QCOMPARE(settings->format, Totp::StorageFormat::OTPURL);
     QCOMPARE(settings->digits, 6u);
@@ -69,7 +69,7 @@ void TestTotp::testParseSecret()
     secret = "key=HXDMVJECJJWSRBY%3d&step=25&size=8&otpHashMode=Sha256";
     settings = Totp::parseSettings(secret);
     QVERIFY(!settings.isNull());
-    QCOMPARE(settings->key, QString("HXDMVJECJJWSRBY="));
+    QCOMPARE(settings->key, QLatin1String("HXDMVJECJJWSRBY="));
     QCOMPARE(settings->custom, true);
     QCOMPARE(settings->format, Totp::StorageFormat::KEEOTP);
     QCOMPARE(settings->digits, 8u);
@@ -80,7 +80,7 @@ void TestTotp::testParseSecret()
     secret = "gezdgnbvgy3tqojqgezdgnbvgy3tqojq";
     settings = Totp::parseSettings("30;8", secret);
     QVERIFY(!settings.isNull());
-    QCOMPARE(settings->key, QString("gezdgnbvgy3tqojqgezdgnbvgy3tqojq"));
+    QCOMPARE(settings->key, QLatin1String("gezdgnbvgy3tqojqgezdgnbvgy3tqojq"));
     QCOMPARE(settings->custom, true);
     QCOMPARE(settings->format, Totp::StorageFormat::LEGACY);
     QCOMPARE(settings->digits, 8u);
@@ -91,7 +91,7 @@ void TestTotp::testParseSecret()
     secret = "gezdgnbvgy3tqojqgezdgnbvgy3tqojq";
     settings = Totp::parseSettings("", secret);
     QVERIFY(!settings.isNull());
-    QCOMPARE(settings->key, QString("gezdgnbvgy3tqojqgezdgnbvgy3tqojq"));
+    QCOMPARE(settings->key, QLatin1String("gezdgnbvgy3tqojqgezdgnbvgy3tqojq"));
     QCOMPARE(settings->custom, false);
     QCOMPARE(settings->format, Totp::StorageFormat::LEGACY);
     QCOMPARE(settings->digits, 6u);
@@ -115,19 +115,19 @@ void TestTotp::testTotpCode()
 
     // Test 6 digit TOTP (default)
     quint64 time = 1234567890;
-    QCOMPARE(Totp::generateTotp(settings, time), QString("005924"));
+    QCOMPARE(Totp::generateTotp(settings, time), QLatin1String("005924"));
 
     time = 1111111109;
-    QCOMPARE(Totp::generateTotp(settings, time), QString("081804"));
+    QCOMPARE(Totp::generateTotp(settings, time), QLatin1String("081804"));
 
     // Test 8 digit TOTP (custom)
     settings->digits = 8;
     settings->custom = true;
     time = 1111111111;
-    QCOMPARE(Totp::generateTotp(settings, time), QString("14050471"));
+    QCOMPARE(Totp::generateTotp(settings, time), QLatin1String("14050471"));
 
     time = 2000000000;
-    QCOMPARE(Totp::generateTotp(settings, time), QString("69279037"));
+    QCOMPARE(Totp::generateTotp(settings, time), QLatin1String("69279037"));
 }
 
 void TestTotp::testSteamTotp()
@@ -138,7 +138,7 @@ void TestTotp::testSteamTotp()
                      "SHA1&digits=5&period=30&encoder=steam";
     auto settings = Totp::parseSettings(secret);
 
-    QCOMPARE(settings->key, QString("63BEDWCQZKTQWPESARIERL5DTTQFCJTK"));
+    QCOMPARE(settings->key, QLatin1String("63BEDWCQZKTQWPESARIERL5DTTQFCJTK"));
     QCOMPARE(settings->encoder.shortName, Totp::STEAM_SHORTNAME);
     QCOMPARE(settings->format, Totp::StorageFormat::OTPURL);
     QCOMPARE(settings->digits, Totp::STEAM_DIGITS);
@@ -148,9 +148,9 @@ void TestTotp::testSteamTotp()
     // Steam mobile app with a throw-away steam account. The above secret was extracted
     // from the Steam app's data for use in testing here.
     quint64 time = 1511200518;
-    QCOMPARE(Totp::generateTotp(settings, time), QString("FR8RV"));
+    QCOMPARE(Totp::generateTotp(settings, time), QLatin1String("FR8RV"));
     time = 1511200714;
-    QCOMPARE(Totp::generateTotp(settings, time), QString("9P3VP"));
+    QCOMPARE(Totp::generateTotp(settings, time), QLatin1String("9P3VP"));
 }
 
 void TestTotp::testEntryHistory()
@@ -166,12 +166,12 @@ void TestTotp::testEntryHistory()
     entry.setTotp(settings);
     QCOMPARE(entry.historyItems().size(), 1);
     QVERIFY(entry.hasTotp());
-    QCOMPARE(entry.totpSettings()->key, QString("GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ"));
+    QCOMPARE(entry.totpSettings()->key, QLatin1String("GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ"));
     // Change key and verify settings changed
     settings->key = "foo";
     entry.setTotp(settings);
     QCOMPARE(entry.historyItems().size(), 2);
-    QCOMPARE(entry.totpSettings()->key, QString("foo"));
+    QCOMPARE(entry.totpSettings()->key, QLatin1String("foo"));
     // Nullptr Settings (expected reset of TOTP)
     entry.setTotp(nullptr);
     QVERIFY(!entry.hasTotp());

@@ -1601,7 +1601,7 @@ void BrowserService::databaseLocked(DatabaseWidget* dbWidget)
 {
     if (dbWidget) {
         QJsonObject msg;
-        msg["action"] = QString("database-locked");
+        msg["action"] = QLatin1String("database-locked");
         m_browserHost->broadcastClientMessage(msg);
     }
 }
@@ -1615,7 +1615,7 @@ void BrowserService::databaseUnlocked(DatabaseWidget* dbWidget)
         }
 
         QJsonObject msg;
-        msg["action"] = QString("database-unlocked");
+        msg["action"] = QLatin1String("database-unlocked");
         m_browserHost->broadcastClientMessage(msg);
     }
 }

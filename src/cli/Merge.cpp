@@ -45,7 +45,7 @@ const QCommandLineOption Merge::YubiKeyFromOption(QStringList() << "yubikey-from
                                                   QObject::tr("slot"));
 Merge::Merge()
 {
-    name = QString("merge");
+    name = QLatin1String("merge");
     description = QObject::tr("Merge two databases.");
     options.append(Merge::SameCredentialsOption);
     options.append(Merge::KeyFileFromOption);
@@ -54,7 +54,7 @@ Merge::Merge()
 #ifdef WITH_XC_YUBIKEY
     options.append(Merge::YubiKeyFromOption);
 #endif
-    positionalArguments.append({QString("database2"), QObject::tr("Path of the database to merge from."), QString()});
+    positionalArguments.append({QLatin1String("database2"), QObject::tr("Path of the database to merge from."), QLatin1String()});
 }
 
 int Merge::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)

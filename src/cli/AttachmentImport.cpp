@@ -30,14 +30,14 @@ const QCommandLineOption AttachmentImport::ForceOption =
 
 AttachmentImport::AttachmentImport()
 {
-    name = QString("attachment-import");
+    name = QLatin1String("attachment-import");
     description = QObject::tr("Imports an attachment to an entry.");
     options.append(AttachmentImport::ForceOption);
-    positionalArguments.append({QString("entry"), QObject::tr("Path of the entry."), QString()});
+    positionalArguments.append({QLatin1String("entry"), QObject::tr("Path of the entry."), QLatin1String()});
     positionalArguments.append(
-        {QString("attachment-name"), QObject::tr("Name of the attachment to be added."), QString()});
+        {QLatin1String("attachment-name"), QObject::tr("Name of the attachment to be added."), QLatin1String()});
     positionalArguments.append(
-        {QString("import-file"), QObject::tr("Path of the attachment to be imported."), QString()});
+        {QLatin1String("import-file"), QObject::tr("Path of the attachment to be imported."), QLatin1String()});
 }
 
 int AttachmentImport::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)

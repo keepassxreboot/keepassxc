@@ -151,7 +151,7 @@ void TestEntryModel::testAttachmentsModel()
     entryAttachments->set("2nd", QByteArray("7890"));
 
     const int firstRow = 0;
-    QCOMPARE(model->data(model->index(firstRow, EntryAttachmentsModel::NameColumn)).toString(), QString("2nd"));
+    QCOMPARE(model->data(model->index(firstRow, EntryAttachmentsModel::NameColumn)).toString(), QLatin1String("2nd"));
     QCOMPARE(model->data(model->index(firstRow, EntryAttachmentsModel::SizeColumn), Qt::EditRole).toInt(), 4);
 
     entryAttachments->remove("first");
@@ -195,7 +195,7 @@ void TestEntryModel::testAttributesModel()
     entryAttributes->set("2nd", "456");
     entryAttributes->set("2nd", "789");
 
-    QCOMPARE(model->data(model->index(0, 0)).toString(), QString("2nd"));
+    QCOMPARE(model->data(model->index(0, 0)).toString(), QLatin1String("2nd"));
 
     entryAttributes->remove("first");
 
@@ -280,14 +280,14 @@ void TestEntryModel::testAutoTypeAssociationsModel()
     associations->add(assoc);
 
     QCOMPARE(model->rowCount(), 1);
-    QCOMPARE(model->data(model->index(0, 0)).toString(), QString("1"));
-    QCOMPARE(model->data(model->index(0, 1)).toString(), QString("2"));
+    QCOMPARE(model->data(model->index(0, 0)).toString(), QLatin1String("1"));
+    QCOMPARE(model->data(model->index(0, 1)).toString(), QLatin1String("2"));
 
     assoc.window = "3";
     assoc.sequence = "4";
     associations->update(0, assoc);
-    QCOMPARE(model->data(model->index(0, 0)).toString(), QString("3"));
-    QCOMPARE(model->data(model->index(0, 1)).toString(), QString("4"));
+    QCOMPARE(model->data(model->index(0, 0)).toString(), QLatin1String("3"));
+    QCOMPARE(model->data(model->index(0, 1)).toString(), QLatin1String("4"));
 
     associations->add(assoc);
     associations->remove(0);

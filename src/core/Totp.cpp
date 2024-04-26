@@ -36,10 +36,10 @@ static QList<Totp::Encoder> totpEncoders{
 
 static Totp::Algorithm getHashTypeByName(const QString& name)
 {
-    if (name.compare(QString("SHA512"), Qt::CaseInsensitive) == 0) {
+    if (name.compare(QLatin1String("SHA512"), Qt::CaseInsensitive) == 0) {
         return Totp::Algorithm::Sha512;
     }
-    if (name.compare(QString("SHA256"), Qt::CaseInsensitive) == 0) {
+    if (name.compare(QLatin1String("SHA256"), Qt::CaseInsensitive) == 0) {
         return Totp::Algorithm::Sha256;
     }
     return Totp::Algorithm::Sha1;

@@ -33,7 +33,7 @@ const QCommandLineOption DatabaseEdit::UnsetKeyFileOption =
 
 DatabaseEdit::DatabaseEdit()
 {
-    name = QString("db-edit");
+    name = QLatin1String("db-edit");
     description = QObject::tr("Edit a database.");
     options.append(DatabaseCreate::SetKeyFileOption);
     options.append(DatabaseCreate::SetPasswordOption);

@@ -66,7 +66,7 @@ const QCommandLineOption Generate::IncludeEveryGroupOption =
     QCommandLineOption(QStringList() << "every-group", QObject::tr("Include characters from every selected group"));
 Generate::Generate()
 {
-    name = QString("generate");
+    name = QLatin1String("generate");
     description = QObject::tr("Generate a new random password.");
     options.append(Generate::PasswordLengthOption);
     options.append(Generate::LowerCaseOption);

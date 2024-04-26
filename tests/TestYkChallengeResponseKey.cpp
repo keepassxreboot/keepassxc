@@ -87,5 +87,5 @@ void TestYubiKeyChallengeResponse::testKeyChallenge()
     QVERIFY(key->challenge(ba));
     QCOMPARE(key->rawKey().size(), 20);
     auto hash = QString(QCryptographicHash::hash(key->rawKey(), QCryptographicHash::Sha256).toHex());
-    QCOMPARE(hash, QString("2f7802c7112c301303526e7737b54d546c905076dca6e9538edf761a2264cd70"));
+    QCOMPARE(hash, QLatin1String("2f7802c7112c301303526e7737b54d546c905076dca6e9538edf761a2264cd70"));
 }

@@ -21,7 +21,7 @@
 
 Help::Help()
 {
-    name = QString("help");
+    name = QLatin1String("help");
     description = QObject::tr("Display command help.");
 }
 

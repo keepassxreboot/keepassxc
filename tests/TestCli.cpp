@@ -310,10 +310,10 @@ void TestCli::testAdd()
     auto db = readDatabase();
     auto* entry = db->rootGroup()->findEntryByPath("/newuser-entry");
     QVERIFY(entry);
-    QCOMPARE(entry->username(), QString("newuser"));
-    QCOMPARE(entry->url(), QString("https://example.com/"));
+    QCOMPARE(entry->username(), QLatin1String("newuser"));
+    QCOMPARE(entry->url(), QLatin1String("https://example.com/"));
     QCOMPARE(entry->password().size(), 20);
-    QCOMPARE(entry->notes(), QString("some notes"));
+    QCOMPARE(entry->notes(), QLatin1String("some notes"));
 
     // Quiet option
     setInput("a");
@@ -333,9 +333,9 @@ void TestCli::testAdd()
     db = readDatabase();
     entry = db->rootGroup()->findEntryByPath("/newuser-entry2");
     QVERIFY(entry);
-    QCOMPARE(entry->username(), QString("newuser2"));
-    QCOMPARE(entry->url(), QString("https://example.net/"));
-    QCOMPARE(entry->password(), QString("newpassword"));
+    QCOMPARE(entry->username(), QLatin1String("newuser2"));
+    QCOMPARE(entry->url(), QLatin1String("https://example.net/"));
+    QCOMPARE(entry->password(), QLatin1String("newpassword"));
 
     // Password generation options
     setInput("a");
@@ -345,7 +345,7 @@ void TestCli::testAdd()
     db = readDatabase();
     entry = db->rootGroup()->findEntryByPath("/newuser-entry3");
     QVERIFY(entry);
-    QCOMPARE(entry->username(), QString("newuser3"));
+    QCOMPARE(entry->username(), QLatin1String("newuser3"));
     QCOMPARE(entry->password().size(), 34);
     QRegularExpression defaultPasswordClassesRegex("^[a-zA-Z0-9]+$");
     QVERIFY(defaultPasswordClassesRegex.match(entry->password()).hasMatch());
@@ -370,7 +370,7 @@ void TestCli::testAdd()
     db = readDatabase();
     entry = db->rootGroup()->findEntryByPath("/newuser-entry4");
     QVERIFY(entry);
-    QCOMPARE(entry->username(), QString("newuser4"));
+    QCOMPARE(entry->username(), QLatin1String("newuser4"));
     QCOMPARE(entry->password().size(), 20);
     QVERIFY(!defaultPasswordClassesRegex.match(entry->password()).hasMatch());
 
@@ -383,7 +383,7 @@ void TestCli::testAdd()
     db = readDatabase();
     entry = db->rootGroup()->findEntryByPath("/newuser-entry5");
     QVERIFY(entry);
-    QCOMPARE(entry->username(), QString("newuser5"));
+    QCOMPARE(entry->username(), QLatin1String("newuser5"));
     QCOMPARE(entry->notes(), QString("test\nnew line"));
 }
 
@@ -402,7 +402,7 @@ void TestCli::testAddGroup()
     auto db = readDatabase();
     auto* group = db->rootGroup()->findGroupByPath("new_group");
     QVERIFY(group);
-    QCOMPARE(group->name(), QString("new_group"));
+    QCOMPARE(group->name(), QLatin1String("new_group"));
 
     // Trying to add the same group should fail.
     setInput("a");
@@ -418,7 +418,7 @@ void TestCli::testAddGroup()
     db = readDatabase();
     group = db->rootGroup()->findGroupByPath("new_group/newer_group");
     QVERIFY(group);
-    QCOMPARE(group->name(), QString("newer_group"));
+    QCOMPARE(group->name(), QLatin1String("newer_group"));
 
     // Should fail if the path is invalid.
     setInput("a");
@@ -654,7 +654,7 @@ void TestCli::testClip()
 
     m_stderr->readLine(); // Skip password prompt
     QCOMPARE(m_stderr->readAll(), QByteArray());
-    QTRY_COMPARE(clipboard->text(), QString("Password"));
+    QTRY_COMPARE(clipboard->text(), QLatin1String("Password"));
     QCOMPARE(m_stdout->readLine(), QByteArray("Entry's \"Password\" attribute copied to the clipboard!\n"));
 
     // Quiet option
@@ -662,17 +662,17 @@ void TestCli::testClip()
     execCmd(clipCmd, {"clip", m_dbFile->fileName(), "/Sample Entry", "0", "-q"});
     QCOMPARE(m_stderr->readAll(), QByteArray());
     QCOMPARE(m_stdout->readAll(), QByteArray());
-    QTRY_COMPARE(clipboard->text(), QString("Password"));
+    QTRY_COMPARE(clipboard->text(), QLatin1String("Password"));
 
     // Username
     setInput("a");
     execCmd(clipCmd, {"clip", m_dbFile->fileName(), "/Sample Entry", "0", "-a", "username"});
-    QTRY_COMPARE(clipboard->text(), QString("User Name"));
+    QTRY_COMPARE(clipboard->text(), QLatin1String("User Name"));
 
     // Uuid (top-level field)
     setInput("a");
     execCmd(clipCmd, {"clip", m_dbFile->fileName(), "/Sample Entry", "0", "-a", "Uuid"});
-    QTRY_COMPARE(clipboard->text(), QString("{9f4544c2-ab00-c74a-8a1a-6eaf26cf57e9}"));
+    QTRY_COMPARE(clipboard->text(), QLatin1String("{9f4544c2-ab00-c74a-8a1a-6eaf26cf57e9}"));
 
     // TOTP
     setInput("a");
@@ -693,7 +693,7 @@ void TestCli::testClip()
                                              QStringList{"clip", m_dbFile->fileName(), "/Sample Entry", "1"});
     // clang-format on
 
-    QTRY_COMPARE(clipboard->text(), QString("Password"));
+    QTRY_COMPARE(clipboard->text(), QLatin1String("Password"));
     QTRY_COMPARE_WITH_TIMEOUT(clipboard->text(), QString(), 3000);
 
     future.waitForFinished();
@@ -734,7 +734,7 @@ void TestCli::testClip()
 
     setInput("a");
     execCmd(clipCmd, {"clip", m_dbFileMulti->fileName(), "Entry 2", "0", "-b"});
-    QTRY_COMPARE(clipboard->text(), QString("Password2"));
+    QTRY_COMPARE(clipboard->text(), QLatin1String("Password2"));
 }
 
 void TestCli::testCreate()
@@ -859,12 +859,12 @@ void TestCli::testDatabaseEdit()
 {
     TemporaryFile firstKeyFile;
     firstKeyFile.open();
-    firstKeyFile.write(QString("keyFilePassword").toLatin1());
+    firstKeyFile.write(QLatin1String("keyFilePassword").toLatin1());
     firstKeyFile.close();
 
     TemporaryFile secondKeyFile;
     secondKeyFile.open();
-    secondKeyFile.write(QString("newKeyFilePassword").toLatin1());
+    secondKeyFile.write(QLatin1String("newKeyFilePassword").toLatin1());
     secondKeyFile.close();
 
     QScopedPointer<QTemporaryDir> testDir(new QTemporaryDir());
@@ -1115,10 +1115,10 @@ void TestCli::testEdit()
     auto db = readDatabase();
     auto* entry = db->rootGroup()->findEntryByPath("/newtitle");
     QVERIFY(entry);
-    QCOMPARE(entry->username(), QString("newuser"));
-    QCOMPARE(entry->url(), QString("https://otherurl.example.com/"));
-    QCOMPARE(entry->password(), QString("Password"));
-    QCOMPARE(entry->notes(), QString("newnotes"));
+    QCOMPARE(entry->username(), QLatin1String("newuser"));
+    QCOMPARE(entry->url(), QLatin1String("https://otherurl.example.com/"));
+    QCOMPARE(entry->password(), QLatin1String("Password"));
+    QCOMPARE(entry->notes(), QLatin1String("newnotes"));
 
     // Quiet option
     setInput("a");
@@ -1131,19 +1131,19 @@ void TestCli::testEdit()
     db = readDatabase();
     entry = db->rootGroup()->findEntryByPath("/newertitle");
     QVERIFY(entry);
-    QCOMPARE(entry->username(), QString("newuser"));
-    QCOMPARE(entry->url(), QString("https://otherurl.example.com/"));
+    QCOMPARE(entry->username(), QLatin1String("newuser"));
+    QCOMPARE(entry->url(), QLatin1String("https://otherurl.example.com/"));
     QVERIFY(!entry->password().isEmpty());
-    QVERIFY(entry->password() != QString("Password"));
+    QVERIFY(entry->password() != QLatin1String("Password"));
 
     setInput("a");
     execCmd(editCmd, {"edit", "-g", "-L", "34", "-t", "evennewertitle", m_dbFile->fileName(), "/newertitle"});
     db = readDatabase();
     entry = db->rootGroup()->findEntryByPath("/evennewertitle");
     QVERIFY(entry);
-    QCOMPARE(entry->username(), QString("newuser"));
-    QCOMPARE(entry->url(), QString("https://otherurl.example.com/"));
-    QVERIFY(entry->password() != QString("Password"));
+    QCOMPARE(entry->username(), QLatin1String("newuser"));
+    QCOMPARE(entry->url(), QLatin1String("https://otherurl.example.com/"));
+    QVERIFY(entry->password() != QLatin1String("Password"));
     QCOMPARE(entry->password().size(), 34);
     QRegularExpression defaultPasswordClassesRegex("^[a-zA-Z0-9]+$");
     QVERIFY(defaultPasswordClassesRegex.match(entry->password()).hasMatch());
@@ -1175,7 +1175,7 @@ void TestCli::testEdit()
     QVERIFY(db);
     entry = db->rootGroup()->findEntryByPath("/evennewertitle");
     QVERIFY(entry);
-    QCOMPARE(entry->password(), QString("newpassword"));
+    QCOMPARE(entry->password(), QLatin1String("newpassword"));
 
     // with line break in notes
     setInput("a");
@@ -1288,7 +1288,7 @@ void TestCli::testExport()
 
     auto* entry = db->rootGroup()->findEntryByPath("/Sample Entry");
     QVERIFY(entry);
-    QCOMPARE(entry->password(), QString("Password"));
+    QCOMPARE(entry->password(), QLatin1String("Password"));
 
     // Quiet option
     QScopedPointer<Database> dbQuiet(new Database());
@@ -1405,7 +1405,7 @@ void TestCli::testImport()
     QVERIFY(db);
     auto* entry = db->rootGroup()->findEntryByPath("/Sample Entry 1");
     QVERIFY(entry);
-    QCOMPARE(entry->username(), QString("User Name"));
+    QCOMPARE(entry->username(), QLatin1String("User Name"));
 
     // Should refuse to create the database if it already exists.
     execCmd(importCmd, {"import", m_xmlFile->fileName(), databaseFilename});
@@ -1677,8 +1677,8 @@ void TestCli::testMerge()
 
     auto* entry1 = mergedDb->rootGroup()->findEntryByPath("/Internet/Some Website");
     QVERIFY(entry1);
-    QCOMPARE(entry1->title(), QString("Some Website"));
-    QCOMPARE(entry1->password(), QString("secretsecretsecret"));
+    QCOMPARE(entry1->title(), QLatin1String("Some Website"));
+    QCOMPARE(entry1->password(), QLatin1String("secretsecretsecret"));
 
     // the dry run option should not modify the target database.
     setInput("a");
@@ -1716,8 +1716,8 @@ void TestCli::testMerge()
 
     entry1 = mergedDb->rootGroup()->findEntryByPath("/Internet/Some Website");
     QVERIFY(entry1);
-    QCOMPARE(entry1->title(), QString("Some Website"));
-    QCOMPARE(entry1->password(), QString("secretsecretsecret"));
+    QCOMPARE(entry1->title(), QLatin1String("Some Website"));
+    QCOMPARE(entry1->password(), QLatin1String("secretsecretsecret"));
 
     // making sure that the message is different if the database was not
     // modified by the merge operation.

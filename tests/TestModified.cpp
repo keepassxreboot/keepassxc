@@ -307,13 +307,13 @@ void TestModified::testEntrySets()
     entry->setDefaultAutoTypeSequence(entry->defaultAutoTypeSequence());
     QTRY_COMPARE(spyModified.count(), spyCount);
 
-    entry->setForegroundColor(QString("#FF0000"));
+    entry->setForegroundColor(QLatin1String("#FF0000"));
     ++spyCount;
     QTRY_COMPARE(spyModified.count(), spyCount);
     entry->setForegroundColor(entry->foregroundColor());
     QTRY_COMPARE(spyModified.count(), spyCount);
 
-    entry->setBackgroundColor(QString("#FF0000"));
+    entry->setBackgroundColor(QLatin1String("#FF0000"));
     ++spyCount;
     QTRY_COMPARE(spyModified.count(), spyCount);
     entry->setBackgroundColor(entry->backgroundColor());
@@ -370,7 +370,7 @@ void TestModified::testHistoryItems()
     entry->endUpdate();
     QCOMPARE(entry->historyItems().size(), ++historyItemsSize);
     auto* historyEntry = entry->historyItems().at(historyItemsSize - 1);
-    QCOMPARE(historyEntry->title(), QString("a"));
+    QCOMPARE(historyEntry->title(), QLatin1String("a"));
     QCOMPARE(historyEntry->uuid(), entry->uuid());
     QCOMPARE(historyEntry->tags(), entry->tags());
     QCOMPARE(historyEntry->overrideUrl(), entry->overrideUrl());
@@ -382,7 +382,7 @@ void TestModified::testHistoryItems()
     entry->setTags("b");
     entry->endUpdate();
     QCOMPARE(entry->historyItems().size(), ++historyItemsSize);
-    QCOMPARE(entry->historyItems().at(historyItemsSize - 1)->tags(), QString("a"));
+    QCOMPARE(entry->historyItems().at(historyItemsSize - 1)->tags(), QLatin1String("a"));
 
     entry->beginUpdate();
     entry->attachments()->set("test", QByteArray("value"));
@@ -429,7 +429,7 @@ void TestModified::testHistoryItems()
     QCOMPARE(entry2->historyItems().size(), 1);
 
     auto* historyEntry2 = entry2->historyItems().at(0);
-    QCOMPARE(historyEntry2->title(), QString("4"));
+    QCOMPARE(historyEntry2->title(), QLatin1String("4"));
 
     db->metadata()->setHistoryMaxItems(-1);
 
@@ -463,7 +463,7 @@ void TestModified::testHistoryItems()
     QCOMPARE(entry2->historyItems().size(), 1);
 
     historyEntry2 = entry2->historyItems().at(0);
-    QCOMPARE(historyEntry2->title(), QString("7"));
+    QCOMPARE(historyEntry2->title(), QLatin1String("7"));
 
     entry2->beginUpdate();
     entry2->setTitle("8");

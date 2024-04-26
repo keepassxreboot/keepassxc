@@ -210,7 +210,7 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
                     result.append(attachment);
                     continue;
                 }
-                result.append(QString(", ") + attachment);
+                result.append(QLatin1String(", ") + attachment);
             }
             return result;
         }

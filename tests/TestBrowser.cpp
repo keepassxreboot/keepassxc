@@ -64,7 +64,7 @@ void TestBrowser::testChangePublicKeys()
     json["nonce"] = NONCE;
 
     auto response = m_browserAction->processClientMessage(nullptr, json);
-    QCOMPARE(response["action"].toString(), QString("change-public-keys"));
+    QCOMPARE(response["action"].toString(), QLatin1String("change-public-keys"));
     QCOMPARE(response["publicKey"].toString() == PUBLICKEY, false);
     QCOMPARE(response["success"].toString(), TRUE_STR);
 }
@@ -79,7 +79,7 @@ void TestBrowser::testEncryptMessage()
     m_browserAction->m_clientPublicKey = PUBLICKEY;
     auto encrypted = browserMessageBuilder()->encryptMessage(message, NONCE, PUBLICKEY, SERVERSECRETKEY);
 
-    QCOMPARE(encrypted, QString("+zjtntnk4rGWSl/Ph7Vqip/swvgeupk4lNgHEm2OO3ujNr0OMz6eQtGwjtsj+/rP"));
+    QCOMPARE(encrypted, QLatin1String("+zjtntnk4rGWSl/Ph7Vqip/swvgeupk4lNgHEm2OO3ujNr0OMz6eQtGwjtsj+/rP"));
 }
 
 void TestBrowser::testDecryptMessage()
@@ -90,7 +90,7 @@ void TestBrowser::testDecryptMessage()
     m_browserAction->m_clientPublicKey = PUBLICKEY;
     auto decrypted = browserMessageBuilder()->decryptMessage(message, NONCE, PUBLICKEY, SERVERSECRETKEY);
 
-    QCOMPARE(decrypted["action"].toString(), QString("test-action"));
+    QCOMPARE(decrypted["action"].toString(), QLatin1String("test-action"));
 }
 
 void TestBrowser::testGetBase64FromKey()
@@ -102,7 +102,7 @@ void TestBrowser::testGetBase64FromKey()
     }
 
     auto response = browserMessageBuilder()->getBase64FromKey(pk, crypto_box_PUBLICKEYBYTES);
-    QCOMPARE(response, QString("AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8="));
+    QCOMPARE(response, QLatin1String("AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8="));
 }
 
 void TestBrowser::testIncrementNonce()
@@ -115,13 +115,13 @@ void TestBrowser::testBuildResponse()
 {
     const auto object = QJsonObject{{"test", true}};
     const QJsonArray arr = {QJsonObject{{"test", true}}};
-    const auto val = QString("value1");
+    const auto val = QLatin1String("value1");
 
     // Note: Passing a const QJsonObject will fail
     const Parameters params{
         {"test-param-1", val}, {"test-param-2", 2}, {"test-param-3", false}, {"object", object}, {"arr", arr}};
 
-    const auto action = QString("test-action");
+    const auto action = QLatin1String("test-action");
     const auto message = browserMessageBuilder()->buildResponse(action, NONCE, params, PUBLICKEY, SERVERSECRETKEY);
     QVERIFY(!message.isEmpty());
     QCOMPARE(message["action"].toString(), action);
@@ -130,7 +130,7 @@ void TestBrowser::testBuildResponse()
     const auto decrypted =
         browserMessageBuilder()->decryptMessage(message["message"].toString(), NONCE, PUBLICKEY, SERVERSECRETKEY);
     QVERIFY(!decrypted.isEmpty());
-    QCOMPARE(decrypted["test-param-1"].toString(), QString("value1"));
+    QCOMPARE(decrypted["test-param-1"].toString(), QLatin1String("value1"));
     QCOMPARE(decrypted["test-param-2"].toInt(), 2);
     QCOMPARE(decrypted["test-param-3"].toBool(), false);
 
@@ -219,21 +219,21 @@ void TestBrowser::testSearchEntries()
         m_browserService->searchEntries(db, "https://github.com", "https://github.com/session"); // db, url, submitUrl
 
     QCOMPARE(result.length(), 9);
-    QCOMPARE(result[0]->url(), QString("https://github.com/login_page"));
-    QCOMPARE(result[1]->url(), QString("https://github.com/login"));
-    QCOMPARE(result[2]->url(), QString("https://github.com/"));
-    QCOMPARE(result[3]->url(), QString("github.com/login"));
-    QCOMPARE(result[4]->url(), QString("http://github.com"));
-    QCOMPARE(result[5]->url(), QString("http://github.com/login"));
+    QCOMPARE(result[0]->url(), QLatin1String("https://github.com/login_page"));
+    QCOMPARE(result[1]->url(), QLatin1String("https://github.com/login"));
+    QCOMPARE(result[2]->url(), QLatin1String("https://github.com/"));
+    QCOMPARE(result[3]->url(), QLatin1String("github.com/login"));
+    QCOMPARE(result[4]->url(), QLatin1String("http://github.com"));
+    QCOMPARE(result[5]->url(), QLatin1String("http://github.com/login"));
 
     // With matching there should be only 3 results + 4 without a scheme
     browserSettings()->setMatchUrlScheme(true);
     result = m_browserService->searchEntries(db, "https://github.com", "https://github.com/session");
     QCOMPARE(result.length(), 7);
-    QCOMPARE(result[0]->url(), QString("https://github.com/login_page"));
-    QCOMPARE(result[1]->url(), QString("https://github.com/login"));
-    QCOMPARE(result[2]->url(), QString("https://github.com/"));
-    QCOMPARE(result[3]->url(), QString("github.com/login"));
+    QCOMPARE(result[0]->url(), QLatin1String("https://github.com/login_page"));
+    QCOMPARE(result[1]->url(), QLatin1String("https://github.com/login"));
+    QCOMPARE(result[2]->url(), QLatin1String("https://github.com/"));
+    QCOMPARE(result[3]->url(), QLatin1String("github.com/login"));
 }
 
 void TestBrowser::testSearchEntriesByPath()
@@ -375,7 +375,7 @@ void TestBrowser::testSearchEntriesWithPort()
 
     auto result = m_browserService->searchEntries(db, "http://127.0.0.1:443", "http://127.0.0.1");
     QCOMPARE(result.length(), 1);
-    QCOMPARE(result[0]->url(), QString("http://127.0.0.1:443"));
+    QCOMPARE(result[0]->url(), QLatin1String("http://127.0.0.1:443"));
 }
 
 void TestBrowser::testSearchEntriesWithAdditionalURLs()
@@ -392,12 +392,12 @@ void TestBrowser::testSearchEntriesWithAdditionalURLs()
 
     auto result = m_browserService->searchEntries(db, "https://github.com", "https://github.com/session");
     QCOMPARE(result.length(), 1);
-    QCOMPARE(result[0]->url(), QString("https://github.com/"));
+    QCOMPARE(result[0]->url(), QLatin1String("https://github.com/"));
 
     // Search the additional URL. It should return the same entry
     auto additionalResult = m_browserService->searchEntries(db, "https://keepassxc.org", "https://keepassxc.org");
     QCOMPARE(additionalResult.length(), 1);
-    QCOMPARE(additionalResult[0]->url(), QString("https://github.com/"));
+    QCOMPARE(additionalResult[0]->url(), QLatin1String("https://github.com/"));
 }
 
 void TestBrowser::testInvalidEntries()
@@ -422,8 +422,8 @@ void TestBrowser::testInvalidEntries()
     browserSettings()->setMatchUrlScheme(true);
     auto result = m_browserService->searchEntries(db, "https://github.com", "https://github.com/session");
     QCOMPARE(result.length(), 2);
-    QCOMPARE(result[0]->url(), QString("https://github.com/login"));
-    QCOMPARE(result[1]->url(), QString("//github.com"));
+    QCOMPARE(result[0]->url(), QLatin1String("https://github.com/login"));
+    QCOMPARE(result[1]->url(), QLatin1String("//github.com"));
 
     // Test the URL's directly
     QCOMPARE(m_browserService->handleURL(urls[0], url, submitUrl), true);
@@ -456,31 +456,31 @@ void TestBrowser::testSubdomainsAndPaths()
     browserSettings()->setMatchUrlScheme(false);
     auto result = m_browserService->searchEntries(db, "https://github.com", "https://github.com/session");
     QCOMPARE(result.length(), 1);
-    QCOMPARE(result[0]->url(), QString("https://github.com"));
+    QCOMPARE(result[0]->url(), QLatin1String("https://github.com"));
 
     // With www subdomain
     result = m_browserService->searchEntries(db, "https://www.github.com", "https://www.github.com/session");
     QCOMPARE(result.length(), 4);
-    QCOMPARE(result[0]->url(), QString("https://www.github.com/login/page.xml"));
-    QCOMPARE(result[1]->url(), QString("https://github.com")); // Accepts any subdomain
-    QCOMPARE(result[2]->url(), QString("http://www.github.com"));
-    QCOMPARE(result[3]->url(), QString("www.github.com/"));
+    QCOMPARE(result[0]->url(), QLatin1String("https://www.github.com/login/page.xml"));
+    QCOMPARE(result[1]->url(), QLatin1String("https://github.com")); // Accepts any subdomain
+    QCOMPARE(result[2]->url(), QLatin1String("http://www.github.com"));
+    QCOMPARE(result[3]->url(), QLatin1String("www.github.com/"));
 
     // With www subdomain omitted
     root->setCustomDataTriState(BrowserService::OPTION_OMIT_WWW, Group::Enable);
     result = m_browserService->searchEntries(db, "https://github.com", "https://github.com/session");
     root->setCustomDataTriState(BrowserService::OPTION_OMIT_WWW, Group::Inherit);
     QCOMPARE(result.length(), 4);
-    QCOMPARE(result[0]->url(), QString("https://www.github.com/login/page.xml"));
-    QCOMPARE(result[1]->url(), QString("https://github.com"));
-    QCOMPARE(result[2]->url(), QString("http://www.github.com"));
-    QCOMPARE(result[3]->url(), QString("www.github.com/"));
+    QCOMPARE(result[0]->url(), QLatin1String("https://www.github.com/login/page.xml"));
+    QCOMPARE(result[1]->url(), QLatin1String("https://github.com"));
+    QCOMPARE(result[2]->url(), QLatin1String("http://www.github.com"));
+    QCOMPARE(result[3]->url(), QLatin1String("www.github.com/"));
 
     // With scheme matching there should be only 1 result
     browserSettings()->setMatchUrlScheme(true);
     result = m_browserService->searchEntries(db, "https://github.com", "https://github.com/session");
     QCOMPARE(result.length(), 1);
-    QCOMPARE(result[0]->url(), QString("https://github.com"));
+    QCOMPARE(result[0]->url(), QLatin1String("https://github.com"));
 
     // Test site with subdomain in the site URL
     QStringList entryURLs = {
@@ -497,18 +497,18 @@ void TestBrowser::testSubdomainsAndPaths()
 
     result = m_browserService->searchEntries(db, "https://accounts.example.com/", "https://accounts.example.com/");
     QCOMPARE(result.length(), 3);
-    QCOMPARE(result[0]->url(), QString("https://accounts.example.com"));
-    QCOMPARE(result[1]->url(), QString("https://accounts.example.com/path"));
-    QCOMPARE(result[2]->url(), QString("https://example.com/")); // Accepts any subdomain
+    QCOMPARE(result[0]->url(), QLatin1String("https://accounts.example.com"));
+    QCOMPARE(result[1]->url(), QLatin1String("https://accounts.example.com/path"));
+    QCOMPARE(result[2]->url(), QLatin1String("https://example.com/")); // Accepts any subdomain
 
     result = m_browserService->searchEntries(
         db, "https://another.accounts.example.com/", "https://another.accounts.example.com/");
     QCOMPARE(result.length(), 4);
     QCOMPARE(result[0]->url(),
-             QString("https://accounts.example.com")); // Accepts any subdomain under accounts.example.com
-    QCOMPARE(result[1]->url(), QString("https://accounts.example.com/path"));
-    QCOMPARE(result[2]->url(), QString("https://another.accounts.example.com/"));
-    QCOMPARE(result[3]->url(), QString("https://example.com/")); // Accepts one or more subdomains
+             QLatin1String("https://accounts.example.com")); // Accepts any subdomain under accounts.example.com
+    QCOMPARE(result[1]->url(), QLatin1String("https://accounts.example.com/path"));
+    QCOMPARE(result[2]->url(), QLatin1String("https://another.accounts.example.com/"));
+    QCOMPARE(result[3]->url(), QLatin1String("https://example.com/")); // Accepts one or more subdomains
 
     // Test local files. It should be a direct match.
     QStringList localFiles = {"file:///Users/testUser/tests/test.html"};
@@ -603,15 +603,15 @@ void TestBrowser::testBestMatchingCredentials()
     result = m_browserService->searchEntries(db, siteUrl, siteUrl);
     sorted = m_browserService->sortEntries(result, siteUrl, siteUrl);
     QCOMPARE(sorted.size(), 1);
-    QCOMPARE(sorted[0]->url(), QString("https://sub.github.com/justsomepage"));
+    QCOMPARE(sorted[0]->url(), QLatin1String("https://sub.github.com/justsomepage"));
 
     // The matching should not care if there's a / path or not.
     siteUrl = "https://subdomain.example.com/";
     result = m_browserService->searchEntries(db, siteUrl, siteUrl);
     sorted = m_browserService->sortEntries(result, siteUrl, siteUrl);
     QCOMPARE(sorted.size(), 2);
-    QCOMPARE(sorted[0]->url(), QString("https://subdomain.example.com"));
-    QCOMPARE(sorted[1]->url(), QString("https://subdomain.example.com/"));
+    QCOMPARE(sorted[0]->url(), QLatin1String("https://subdomain.example.com"));
+    QCOMPARE(sorted[1]->url(), QLatin1String("https://subdomain.example.com/"));
 
     // Entries with https://example.com should be still returned even if the site URL has a subdomain. Those have the
     // best match.
@@ -624,8 +624,8 @@ void TestBrowser::testBestMatchingCredentials()
     sorted = m_browserService->sortEntries(result, siteUrl, siteUrl);
 
     QCOMPARE(sorted.size(), 2);
-    QCOMPARE(sorted[0]->url(), QString("https://example.com"));
-    QCOMPARE(sorted[1]->url(), QString("https://example.com"));
+    QCOMPARE(sorted[0]->url(), QLatin1String("https://example.com"));
+    QCOMPARE(sorted[1]->url(), QLatin1String("https://example.com"));
 
     // https://github.com/keepassxreboot/keepassxc/issues/4754
     db = QSharedPointer<Database>::create();
@@ -716,27 +716,27 @@ void TestBrowser::testRestrictBrowserKey()
     auto entries3 = createEntries(urls3, group3);
 
     // Browser 'key0': Groups 1 and 2 are excluded, so entries 0 and 3 will be found
-    auto siteUrl = QString("https://example.com");
+    auto siteUrl = QLatin1String("https://example.com");
     auto result = m_browserService->searchEntries(db, siteUrl, siteUrl, {"key0"});
     auto sorted = m_browserService->sortEntries(result, siteUrl, siteUrl);
     QCOMPARE(sorted.size(), 2);
-    QCOMPARE(sorted[0]->url(), QString("https://example.com/3"));
-    QCOMPARE(sorted[1]->url(), QString("https://example.com/0"));
+    QCOMPARE(sorted[0]->url(), QLatin1String("https://example.com/3"));
+    QCOMPARE(sorted[1]->url(), QLatin1String("https://example.com/0"));
 
     // Browser 'key1': Group 2 will be excluded, so entries 0, 1, and 3 will be found
     result = m_browserService->searchEntries(db, siteUrl, siteUrl, {"key1"});
     sorted = m_browserService->sortEntries(result, siteUrl, siteUrl);
     QCOMPARE(sorted.size(), 3);
-    QCOMPARE(sorted[0]->url(), QString("https://example.com/3"));
-    QCOMPARE(sorted[1]->url(), QString("https://example.com/1"));
-    QCOMPARE(sorted[2]->url(), QString("https://example.com/0"));
+    QCOMPARE(sorted[0]->url(), QLatin1String("https://example.com/3"));
+    QCOMPARE(sorted[1]->url(), QLatin1String("https://example.com/1"));
+    QCOMPARE(sorted[2]->url(), QLatin1String("https://example.com/0"));
 
     // Browser 'key2': Group 1 will be excluded, so entries 0, 2, 2b, 3 will be found
     result = m_browserService->searchEntries(db, siteUrl, siteUrl, {"key2"});
     sorted = m_browserService->sortEntries(result, siteUrl, siteUrl);
     QCOMPARE(sorted.size(), 4);
-    QCOMPARE(sorted[0]->url(), QString("https://example.com/3"));
-    QCOMPARE(sorted[1]->url(), QString("https://example.com/2b"));
-    QCOMPARE(sorted[2]->url(), QString("https://example.com/2"));
-    QCOMPARE(sorted[3]->url(), QString("https://example.com/0"));
+    QCOMPARE(sorted[0]->url(), QLatin1String("https://example.com/3"));
+    QCOMPARE(sorted[1]->url(), QLatin1String("https://example.com/2b"));
+    QCOMPARE(sorted[2]->url(), QLatin1String("https://example.com/2"));
+    QCOMPARE(sorted[3]->url(), QLatin1String("https://example.com/0"));
 }

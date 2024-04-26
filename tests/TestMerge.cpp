@@ -157,7 +157,7 @@ void TestMerge::testResolveConflictNewer()
     QPointer<Entry> entryDestinationMerged = dbDestination->rootGroup()->findEntryByPath("entry1");
     QVERIFY(entryDestinationMerged != nullptr);
     QVERIFY(entryDestinationMerged->group() != nullptr);
-    QCOMPARE(entryDestinationMerged->password(), QString("password"));
+    QCOMPARE(entryDestinationMerged->password(), QLatin1String("password"));
     QCOMPARE(entryDestinationMerged->timeInfo(), entrySourceUpdatedTimeInfo);
 
     // When updating an entry, it should not end up in the
@@ -241,7 +241,7 @@ void TestMerge::testResolveConflictExisting()
 
     QPointer<Entry> entryDestinationMerged = dbDestination->rootGroup()->findEntryByPath("entry1");
     QVERIFY(entryDestinationMerged != nullptr);
-    QCOMPARE(entryDestinationMerged->password(), QString("password2"));
+    QCOMPARE(entryDestinationMerged->password(), QLatin1String("password2"));
     QCOMPARE(entryDestinationMerged->timeInfo(), entryDestinationUpdatedNewerTimeInfo);
 
     // When updating an entry, it should not end up in the
@@ -607,13 +607,13 @@ void TestMerge::assertUpdateMergedEntry1(Entry* mergedEntry1, const QMap<const c
     QCOMPARE(mergedEntry1->historyItems().at(1)->notes(), QString());
     QCOMPARE(mergedEntry1->historyItems().at(1)->timeInfo().lastModificationTime(),
              timestamps["oldestCommonHistoryTime"]);
-    QCOMPARE(mergedEntry1->historyItems().at(2)->notes(), QString("1 Common"));
+    QCOMPARE(mergedEntry1->historyItems().at(2)->notes(), QLatin1String("1 Common"));
     QCOMPARE(mergedEntry1->historyItems().at(2)->timeInfo().lastModificationTime(),
              timestamps["newestCommonHistoryTime"]);
-    QCOMPARE(mergedEntry1->historyItems().at(3)->notes(), QString("2 Source"));
+    QCOMPARE(mergedEntry1->historyItems().at(3)->notes(), QLatin1String("2 Source"));
     QCOMPARE(mergedEntry1->historyItems().at(3)->timeInfo().lastModificationTime(),
              timestamps["oldestDivergingHistoryTime"]);
-    QCOMPARE(mergedEntry1->notes(), QString("3 Destination"));
+    QCOMPARE(mergedEntry1->notes(), QLatin1String("3 Destination"));
     QCOMPARE(mergedEntry1->timeInfo().lastModificationTime(), timestamps["newestDivergingHistoryTime"]);
 }
 
@@ -625,16 +625,16 @@ void TestMerge::assertUpdateReappliedEntry2(Entry* mergedEntry2, const QMap<cons
     QCOMPARE(mergedEntry2->historyItems().at(1)->notes(), QString());
     QCOMPARE(mergedEntry2->historyItems().at(1)->timeInfo().lastModificationTime(),
              timestamps["oldestCommonHistoryTime"]);
-    QCOMPARE(mergedEntry2->historyItems().at(2)->notes(), QString("1 Common"));
+    QCOMPARE(mergedEntry2->historyItems().at(2)->notes(), QLatin1String("1 Common"));
     QCOMPARE(mergedEntry2->historyItems().at(2)->timeInfo().lastModificationTime(),
              timestamps["newestCommonHistoryTime"]);
-    QCOMPARE(mergedEntry2->historyItems().at(3)->notes(), QString("2 Destination"));
+    QCOMPARE(mergedEntry2->historyItems().at(3)->notes(), QLatin1String("2 Destination"));
     QCOMPARE(mergedEntry2->historyItems().at(3)->timeInfo().lastModificationTime(),
              timestamps["oldestDivergingHistoryTime"]);
-    QCOMPARE(mergedEntry2->historyItems().at(4)->notes(), QString("3 Source"));
+    QCOMPARE(mergedEntry2->historyItems().at(4)->notes(), QLatin1String("3 Source"));
     QCOMPARE(mergedEntry2->historyItems().at(4)->timeInfo().lastModificationTime(),
              timestamps["newestDivergingHistoryTime"]);
-    QCOMPARE(mergedEntry2->notes(), QString("2 Destination"));
+    QCOMPARE(mergedEntry2->notes(), QLatin1String("2 Destination"));
     QCOMPARE(mergedEntry2->timeInfo().lastModificationTime(), timestamps["mergeTime"]);
 }
 
@@ -646,16 +646,16 @@ void TestMerge::assertUpdateReappliedEntry1(Entry* mergedEntry1, const QMap<cons
     QCOMPARE(mergedEntry1->historyItems().at(1)->notes(), QString());
     QCOMPARE(mergedEntry1->historyItems().at(1)->timeInfo().lastModificationTime(),
              timestamps["oldestCommonHistoryTime"]);
-    QCOMPARE(mergedEntry1->historyItems().at(2)->notes(), QString("1 Common"));
+    QCOMPARE(mergedEntry1->historyItems().at(2)->notes(), QLatin1String("1 Common"));
     QCOMPARE(mergedEntry1->historyItems().at(2)->timeInfo().lastModificationTime(),
              timestamps["newestCommonHistoryTime"]);
-    QCOMPARE(mergedEntry1->historyItems().at(3)->notes(), QString("2 Source"));
+    QCOMPARE(mergedEntry1->historyItems().at(3)->notes(), QLatin1String("2 Source"));
     QCOMPARE(mergedEntry1->historyItems().at(3)->timeInfo().lastModificationTime(),
              timestamps["oldestDivergingHistoryTime"]);
-    QCOMPARE(mergedEntry1->historyItems().at(4)->notes(), QString("3 Destination"));
+    QCOMPARE(mergedEntry1->historyItems().at(4)->notes(), QLatin1String("3 Destination"));
     QCOMPARE(mergedEntry1->historyItems().at(4)->timeInfo().lastModificationTime(),
              timestamps["newestDivergingHistoryTime"]);
-    QCOMPARE(mergedEntry1->notes(), QString("2 Source"));
+    QCOMPARE(mergedEntry1->notes(), QLatin1String("2 Source"));
     QCOMPARE(mergedEntry1->timeInfo().lastModificationTime(), timestamps["mergeTime"]);
 }
 
@@ -667,13 +667,13 @@ void TestMerge::assertUpdateMergedEntry2(Entry* mergedEntry2, const QMap<const c
     QCOMPARE(mergedEntry2->historyItems().at(1)->notes(), QString());
     QCOMPARE(mergedEntry2->historyItems().at(1)->timeInfo().lastModificationTime(),
              timestamps["oldestCommonHistoryTime"]);
-    QCOMPARE(mergedEntry2->historyItems().at(2)->notes(), QString("1 Common"));
+    QCOMPARE(mergedEntry2->historyItems().at(2)->notes(), QLatin1String("1 Common"));
     QCOMPARE(mergedEntry2->historyItems().at(2)->timeInfo().lastModificationTime(),
              timestamps["newestCommonHistoryTime"]);
-    QCOMPARE(mergedEntry2->historyItems().at(3)->notes(), QString("2 Destination"));
+    QCOMPARE(mergedEntry2->historyItems().at(3)->notes(), QLatin1String("2 Destination"));
     QCOMPARE(mergedEntry2->historyItems().at(3)->timeInfo().lastModificationTime(),
              timestamps["oldestDivergingHistoryTime"]);
-    QCOMPARE(mergedEntry2->notes(), QString("3 Source"));
+    QCOMPARE(mergedEntry2->notes(), QLatin1String("3 Source"));
     QCOMPARE(mergedEntry2->timeInfo().lastModificationTime(), timestamps["newestDivergingHistoryTime"]);
 }
 
@@ -730,7 +730,7 @@ void TestMerge::testMoveEntry()
     m_clock->advanceSecond(1);
 
     entrySourceInitial->setGroup(groupSourceInitial);
-    QCOMPARE(entrySourceInitial->group()->name(), QString("group2"));
+    QCOMPARE(entrySourceInitial->group()->name(), QLatin1String("group2"));
 
     m_clock->advanceSecond(1);
 
@@ -739,7 +739,7 @@ void TestMerge::testMoveEntry()
 
     QPointer<Entry> entryDestinationMerged = dbDestination->rootGroup()->findEntryByPath("entry1");
     QVERIFY(entryDestinationMerged != nullptr);
-    QCOMPARE(entryDestinationMerged->group()->name(), QString("group2"));
+    QCOMPARE(entryDestinationMerged->group()->name(), QLatin1String("group2"));
     QCOMPARE(dbDestination->rootGroup()->entriesRecursive().size(), 2);
 }
 
@@ -763,7 +763,7 @@ void TestMerge::testMoveEntryPreserveChanges()
     m_clock->advanceSecond(1);
 
     entrySourceInitial->setGroup(group2Source);
-    QCOMPARE(entrySourceInitial->group()->name(), QString("group2"));
+    QCOMPARE(entrySourceInitial->group()->name(), QLatin1String("group2"));
 
     QPointer<Entry> entryDestinationInitial = dbDestination->rootGroup()->findEntryByPath("entry1");
     QVERIFY(entryDestinationInitial != nullptr);
@@ -781,9 +781,9 @@ void TestMerge::testMoveEntryPreserveChanges()
 
     QPointer<Entry> entryDestinationMerged = dbDestination->rootGroup()->findEntryByPath("entry1");
     QVERIFY(entryDestinationMerged != nullptr);
-    QCOMPARE(entryDestinationMerged->group()->name(), QString("group2"));
+    QCOMPARE(entryDestinationMerged->group()->name(), QLatin1String("group2"));
     QCOMPARE(dbDestination->rootGroup()->entriesRecursive().size(), 2);
-    QCOMPARE(entryDestinationMerged->password(), QString("password"));
+    QCOMPARE(entryDestinationMerged->password(), QLatin1String("password"));
 }
 
 void TestMerge::testCreateNewGroups()
@@ -806,7 +806,7 @@ void TestMerge::testCreateNewGroups()
 
     QPointer<Group> groupDestinationMerged = dbDestination->rootGroup()->findChildByName("group3");
     QVERIFY(groupDestinationMerged != nullptr);
-    QCOMPARE(groupDestinationMerged->name(), QString("group3"));
+    QCOMPARE(groupDestinationMerged->name(), QLatin1String("group3"));
 }
 
 void TestMerge::testMoveEntryIntoNewGroup()
@@ -834,12 +834,12 @@ void TestMerge::testMoveEntryIntoNewGroup()
 
     QPointer<Group> groupDestinationMerged = dbDestination->rootGroup()->findChildByName("group3");
     QVERIFY(groupDestinationMerged != nullptr);
-    QCOMPARE(groupDestinationMerged->name(), QString("group3"));
+    QCOMPARE(groupDestinationMerged->name(), QLatin1String("group3"));
     QCOMPARE(groupDestinationMerged->entries().size(), 1);
 
     QPointer<Entry> entryDestinationMerged = dbDestination->rootGroup()->findEntryByPath("entry1");
     QVERIFY(entryDestinationMerged != nullptr);
-    QCOMPARE(entryDestinationMerged->group()->name(), QString("group3"));
+    QCOMPARE(entryDestinationMerged->group()->name(), QLatin1String("group3"));
 }
 
 /**
@@ -887,8 +887,8 @@ void TestMerge::testUpdateEntryDifferentLocation()
     QPointer<Entry> entryDestinationMerged = dbDestination->rootGroup()->findEntryByPath("entry1");
     QVERIFY(entryDestinationMerged != nullptr);
     QVERIFY(entryDestinationMerged->group() != nullptr);
-    QCOMPARE(entryDestinationMerged->username(), QString("username"));
-    QCOMPARE(entryDestinationMerged->group()->name(), QString("group3"));
+    QCOMPARE(entryDestinationMerged->username(), QLatin1String("username"));
+    QCOMPARE(entryDestinationMerged->group()->name(), QLatin1String("group3"));
     QCOMPARE(uuidBeforeSyncing, entryDestinationMerged->uuid());
     // default merge strategy is KeepNewer - therefore the older location is used!
     QCOMPARE(entryDestinationMerged->timeInfo().locationChanged(), sourceLocationChanged);
@@ -909,7 +909,7 @@ void TestMerge::testUpdateGroup()
     groupSourceInitial->setName("group2 renamed");
     groupSourceInitial->setNotes("updated notes");
     QUuid customIconId = QUuid::createUuid();
-    dbSource->metadata()->addCustomIcon(customIconId, QString("custom icon").toLocal8Bit());
+    dbSource->metadata()->addCustomIcon(customIconId, QLatin1String("custom icon").toLocal8Bit());
     groupSourceInitial->setIcon(customIconId);
 
     QPointer<Entry> entrySourceInitial = dbSource->rootGroup()->findEntryByPath("entry1");
@@ -928,11 +928,11 @@ void TestMerge::testUpdateGroup()
     QPointer<Entry> entryDestinationMerged = dbDestination->rootGroup()->findEntryByPath("entry1 renamed");
     QVERIFY(entryDestinationMerged != nullptr);
     QVERIFY(entryDestinationMerged->group() != nullptr);
-    QCOMPARE(entryDestinationMerged->group()->name(), QString("group2 renamed"));
+    QCOMPARE(entryDestinationMerged->group()->name(), QLatin1String("group2 renamed"));
     QCOMPARE(uuidBeforeSyncing, entryDestinationMerged->uuid());
 
     QPointer<Group> groupMerged = dbDestination->rootGroup()->findChildByName("group2 renamed");
-    QCOMPARE(groupMerged->notes(), QString("updated notes"));
+    QCOMPARE(groupMerged->notes(), QLatin1String("updated notes"));
     QCOMPARE(groupMerged->iconUuid(), customIconId);
 }
 
@@ -1024,7 +1024,7 @@ void TestMerge::testMergeCustomIcons()
 
     QUuid customIconId = QUuid::createUuid();
 
-    dbSource->metadata()->addCustomIcon(customIconId, QString("custom icon").toLocal8Bit());
+    dbSource->metadata()->addCustomIcon(customIconId, QLatin1String("custom icon").toLocal8Bit());
     // Sanity check.
     QVERIFY(dbSource->metadata()->hasCustomIcon(customIconId));
 
@@ -1120,11 +1120,11 @@ void TestMerge::testCustomData()
     QVERIFY(dbDestination->metadata()->customData()->contains("key2"));
     QVERIFY(dbDestination->metadata()->customData()->contains("Browser"));
     QVERIFY(!dbDestination->metadata()->customData()->contains("toBeDeleted"));
-    QCOMPARE(dbDestination->metadata()->customData()->value("key1"), QString("value1"));
-    QCOMPARE(dbDestination->metadata()->customData()->value("key2"), QString("value2"));
-    QCOMPARE(dbDestination->metadata()->customData()->value("Browser"), QString("n'8=3W@L^6d->d.]St_>]"));
+    QCOMPARE(dbDestination->metadata()->customData()->value("key1"), QLatin1String("value1"));
+    QCOMPARE(dbDestination->metadata()->customData()->value("key2"), QLatin1String("value2"));
+    QCOMPARE(dbDestination->metadata()->customData()->value("Browser"), QLatin1String("n'8=3W@L^6d->d.]St_>]"));
     QCOMPARE(dbDestination->metadata()->customData()->value("key3"),
-             QString("newValue")); // Old value should be replaced
+             QLatin1String("newValue")); // Old value should be replaced
 
     // Merging again should not do anything if the values are the same.
     m_clock->advanceSecond(1);
@@ -1144,7 +1144,7 @@ void TestMerge::testCustomData()
     QVERIFY(!dbDestination2->metadata()->customData()->contains("Browser"));
     QVERIFY(dbDestination2->metadata()->customData()->contains("notToBeDeleted"));
     QCOMPARE(dbDestination2->metadata()->customData()->value("key3"),
-             QString("oldValue")); // Old value should not be replaced
+             QLatin1String("oldValue")); // Old value should not be replaced
 }
 
 void TestMerge::testDeletedEntry()

@@ -717,7 +717,7 @@ Group* Group::findGroupByPath(const QString& groupPath)
     QString normalizedGroupPath;
 
     if (groupPath.isEmpty()) {
-        normalizedGroupPath = QString("/"); // root group
+        normalizedGroupPath = QLatin1String("/"); // root group
     } else {
         // clang-format off
         normalizedGroupPath = (groupPath.startsWith("/") ? "" : "/")
@@ -761,7 +761,7 @@ QString Group::print(bool recursive, bool flatten, int depth)
             prefix += separator;
         }
     } else {
-        prefix = QString("  ").repeated(depth);
+        prefix = QLatin1String("  ").repeated(depth);
     }
 
     if (entries().isEmpty() && children().isEmpty()) {

@@ -79,7 +79,7 @@ void TestKeys::testFileKey()
     QFETCH(QString, keyExt);
     QFETCH(bool, fileKeyOk);
 
-    QString name = QString("FileKey").append(QTest::currentDataTag());
+    QLatin1String name = QLatin1String("FileKey").append(QTest::currentDataTag());
 
     KeePass2Reader reader;
 
@@ -120,14 +120,14 @@ void TestKeys::testFileKey_data()
     QTest::addColumn<FileKey::Type>("type");
     QTest::addColumn<QString>("keyExt");
     QTest::addColumn<bool>("fileKeyOk");
-    QTest::newRow("Xml")             << FileKey::KeePass2XML    << QString("key")  << true;
-    QTest::newRow("XmlBrokenBase64") << FileKey::KeePass2XML    << QString("key")  << false;
-    QTest::newRow("XmlV2")           << FileKey::KeePass2XMLv2  << QString("keyx") << true;
-    QTest::newRow("XmlV2HashFail")   << FileKey::KeePass2XMLv2  << QString("keyx") << false;
-    QTest::newRow("XmlV2BrokenHex")  << FileKey::KeePass2XMLv2  << QString("keyx") << false;
-    QTest::newRow("Binary")          << FileKey::FixedBinary    << QString("key")  << true;
-    QTest::newRow("Hex")             << FileKey::FixedBinaryHex << QString("key")  << true;
-    QTest::newRow("Hashed")          << FileKey::Hashed         << QString("key")  << true;
+    QTest::newRow("Xml")             << FileKey::KeePass2XML    << QLatin1String("key")  << true;
+    QTest::newRow("XmlBrokenBase64") << FileKey::KeePass2XML    << QLatin1String("key")  << false;
+    QTest::newRow("XmlV2")           << FileKey::KeePass2XMLv2  << QLatin1String("keyx") << true;
+    QTest::newRow("XmlV2HashFail")   << FileKey::KeePass2XMLv2  << QLatin1String("keyx") << false;
+    QTest::newRow("XmlV2BrokenHex")  << FileKey::KeePass2XMLv2  << QLatin1String("keyx") << false;
+    QTest::newRow("Binary")          << FileKey::FixedBinary    << QLatin1String("key")  << true;
+    QTest::newRow("Hex")             << FileKey::FixedBinaryHex << QLatin1String("key")  << true;
+    QTest::newRow("Hashed")          << FileKey::Hashed         << QLatin1String("key")  << true;
 }
 // clang-format on
 

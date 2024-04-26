@@ -36,10 +36,10 @@
 
 Import::Import()
 {
-    name = QString("import");
+    name = QLatin1String("import");
     description = QObject::tr("Import the contents of an XML database.");
-    positionalArguments.append({QString("xml"), QObject::tr("Path of the XML database export."), QString()});
-    positionalArguments.append({QString("database"), QObject::tr("Path of the new database."), QString()});
+    positionalArguments.append({QLatin1String("xml"), QObject::tr("Path of the XML database export."), QLatin1String()});
+    positionalArguments.append({QLatin1String("database"), QObject::tr("Path of the new database."), QLatin1String()});
     options.append(DatabaseCreate::SetKeyFileOption);
     options.append(DatabaseCreate::SetKeyFileShortOption);
     options.append(DatabaseCreate::SetPasswordOption);

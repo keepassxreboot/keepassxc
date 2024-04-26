@@ -46,18 +46,18 @@ const QCommandLineOption Clip::BestMatchOption =
 
 Clip::Clip()
 {
-    name = QString("clip");
+    name = QLatin1String("clip");
     description = QObject::tr("Copy an entry's attribute to the clipboard.");
     options.append(Clip::AttributeOption);
     options.append(Clip::TotpOption);
     options.append(Clip::BestMatchOption);
     positionalArguments.append(
-        {QString("entry"), QObject::tr("Path of the entry to clip.", "clip = copy to clipboard"), QString()});
+        {QLatin1String("entry"), QObject::tr("Path of the entry to clip.", "clip = copy to clipboard"), QLatin1String()});
     optionalArguments.append(
-        {QString("timeout"),
+        {QLatin1String("timeout"),
          QObject::tr("Timeout before clearing the clipboard (default is %1 seconds, set to 0 for unlimited).")
              .arg(CLI_DEFAULT_CLIP_TIMEOUT),
-         QString("[timeout]")});
+         QLatin1String("[timeout]")});
 }
 
 int Clip::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)

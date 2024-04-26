@@ -46,9 +46,9 @@ const QCommandLineOption DatabaseCreate::SetPasswordOption =
 
 DatabaseCreate::DatabaseCreate()
 {
-    name = QString("db-create");
+    name = QLatin1String("db-create");
     description = QObject::tr("Create a new database.");
-    positionalArguments.append({QString("database"), QObject::tr("Path of the database."), QString()});
+    positionalArguments.append({QLatin1String("database"), QObject::tr("Path of the database."), QLatin1String()});
     options.append(DatabaseCreate::SetKeyFileOption);
     options.append(DatabaseCreate::SetKeyFileShortOption);
     options.append(DatabaseCreate::SetPasswordOption);

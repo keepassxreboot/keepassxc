@@ -19,7 +19,7 @@
 
 Close::Close()
 {
-    name = QString("close");
+    name = QLatin1String("close");
     description = QObject::tr("Close the currently opened database.");
 }
 

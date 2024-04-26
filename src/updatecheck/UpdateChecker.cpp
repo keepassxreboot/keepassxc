@@ -55,7 +55,7 @@ void UpdateChecker::checkForUpdates(bool manuallyRequested)
     if (m_isManuallyRequested || Clock::currentSecondsSinceEpoch() >= nextCheck) {
         m_bytesReceived.clear();
 
-        QString apiUrlStr = QString("https://api.github.com/repos/keepassxreboot/keepassxc/releases");
+        QLatin1String apiUrlStr = QLatin1String("https://api.github.com/repos/keepassxreboot/keepassxc/releases");
 
         if (!config()->get(Config::GUI_CheckForUpdatesIncludeBetas).toBool()) {
             apiUrlStr += "/latest";

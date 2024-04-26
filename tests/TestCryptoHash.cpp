@@ -35,13 +35,13 @@ void TestCryptoHash::test()
     QCOMPARE(cryptoHash1.result(),
              QByteArray::fromHex("e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"));
 
-    QByteArray source2 = QString("KeePassX").toLatin1();
+    QByteArray source2 = QLatin1String("KeePassX").toLatin1();
     QByteArray result2 = CryptoHash::hash(source2, CryptoHash::Sha256);
     QCOMPARE(result2, QByteArray::fromHex("0b56e5f65263e747af4a833bd7dd7ad26a64d7a4de7c68e52364893dca0766b4"));
 
     CryptoHash cryptoHash3(CryptoHash::Sha256);
-    cryptoHash3.addData(QString("KeePa").toLatin1());
-    cryptoHash3.addData(QString("ssX").toLatin1());
+    cryptoHash3.addData(QLatin1String("KeePa").toLatin1());
+    cryptoHash3.addData(QLatin1String("ssX").toLatin1());
     QCOMPARE(cryptoHash3.result(),
              QByteArray::fromHex("0b56e5f65263e747af4a833bd7dd7ad26a64d7a4de7c68e52364893dca0766b4"));
 
@@ -56,8 +56,8 @@ void TestCryptoHash::test()
                                  "d777970e282871c25a549a2763e5b724794f312c97021c42f91d"));
 
     CryptoHash cryptoHash4(CryptoHash::Sha512);
-    cryptoHash4.addData(QString("KeePa").toLatin1());
-    cryptoHash4.addData(QString("ssX").toLatin1());
+    cryptoHash4.addData(QLatin1String("KeePa").toLatin1());
+    cryptoHash4.addData(QLatin1String("ssX").toLatin1());
     QCOMPARE(cryptoHash4.result(),
              QByteArray::fromHex("0d41b612584ed39ff72944c29494573e40f4bb95283455fae2e0be1e3565aa9f48057d59e6ffd777970e2"
                                  "82871c25a549a2763e5b724794f312c97021c42f91d"));

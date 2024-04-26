@@ -32,7 +32,7 @@ const QCommandLineOption Edit::TitleOption = QCommandLineOption(QStringList() <<
 
 Edit::Edit()
 {
-    name = QString("edit");
+    name = QLatin1String("edit");
     description = QObject::tr("Edit an entry.");
     // Using some of the options from the Add command since they are the same.
     options.append(Add::UsernameOption);
@@ -40,7 +40,7 @@ Edit::Edit()
     options.append(Add::NotesOption);
     options.append(Add::PasswordPromptOption);
     options.append(Edit::TitleOption);
-    positionalArguments.append({QString("entry"), QObject::tr("Path of the entry to edit."), QString()});
+    positionalArguments.append({QLatin1String("entry"), QObject::tr("Path of the entry to edit."), QLatin1String()});
 
     // Password generation options.
     options.append(Add::GenerateOption);

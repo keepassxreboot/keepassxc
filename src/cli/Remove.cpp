@@ -25,9 +25,9 @@
 
 Remove::Remove()
 {
-    name = QString("rm");
-    description = QString("Remove an entry from the database.");
-    positionalArguments.append({QString("entry"), QObject::tr("Path of the entry to remove."), QString()});
+    name = QLatin1String("rm");
+    description = QLatin1String("Remove an entry from the database.");
+    positionalArguments.append({QLatin1String("entry"), QObject::tr("Path of the entry to remove."), QLatin1String()});
 }
 
 int Remove::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)

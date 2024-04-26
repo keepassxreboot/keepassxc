@@ -67,7 +67,7 @@ void TestImports::testOPUX()
     entry = db->rootGroup()->findEntryByPath("/Personal/KeePassXC Logo");
     auto attachments = entry->attachments();
     QCOMPARE(attachments->keys().count(), 1);
-    QCOMPARE(attachments->keys()[0], QString("keepassxc.png"));
+    QCOMPARE(attachments->keys()[0], QLatin1String("keepassxc.png"));
 
     // Confirm advanced attributes
     // NOTE: 1PUX does not support an explicit expiration field

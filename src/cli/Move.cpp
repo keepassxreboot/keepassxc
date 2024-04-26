@@ -24,10 +24,10 @@
 
 Move::Move()
 {
-    name = QString("mv");
+    name = QLatin1String("mv");
     description = QObject::tr("Moves an entry to a new group.");
-    positionalArguments.append({QString("entry"), QObject::tr("Path of the entry to move."), QString()});
-    positionalArguments.append({QString("group"), QObject::tr("Path of the destination group."), QString()});
+    positionalArguments.append({QLatin1String("entry"), QObject::tr("Path of the entry to move."), QLatin1String()});
+    positionalArguments.append({QLatin1String("group"), QObject::tr("Path of the destination group."), QLatin1String()});
 }
 
 Move::~Move() = default;

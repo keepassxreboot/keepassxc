@@ -52,23 +52,23 @@ void TestKeePass1Reader::testBasic()
 
     Group* group1 = m_db->rootGroup()->children().at(0);
     QVERIFY(!group1->uuid().isNull());
-    QCOMPARE(group1->name(), QString("Internet"));
+    QCOMPARE(group1->name(), QLatin1String("Internet"));
     QCOMPARE(group1->children().size(), 2);
     QCOMPARE(group1->entries().size(), 2);
     QCOMPARE(group1->iconNumber(), 1);
 
     Entry* entry11 = group1->entries().at(0);
     QVERIFY(!entry11->uuid().isNull());
-    QCOMPARE(entry11->title(), QString("Test entry"));
+    QCOMPARE(entry11->title(), QLatin1String("Test entry"));
     QCOMPARE(entry11->iconNumber(), 1);
-    QCOMPARE(entry11->username(), QString("I"));
-    QCOMPARE(entry11->url(), QString("http://example.com/"));
-    QCOMPARE(entry11->password(), QString("secretpassword"));
+    QCOMPARE(entry11->username(), QLatin1String("I"));
+    QCOMPARE(entry11->url(), QLatin1String("http://example.com/"));
+    QCOMPARE(entry11->password(), QLatin1String("secretpassword"));
     QCOMPARE(entry11->notes(), QString("Lorem ipsum\ndolor sit amet"));
     QVERIFY(entry11->timeInfo().expires());
     QCOMPARE(entry11->timeInfo().expiryTime(), genDT(2012, 5, 9, 10, 32));
     QCOMPARE(entry11->attachments()->keys().size(), 1);
-    QCOMPARE(entry11->attachments()->keys().at(0), QString("attachment.txt"));
+    QCOMPARE(entry11->attachments()->keys().at(0), QLatin1String("attachment.txt"));
     QCOMPARE(entry11->attachments()->value("attachment.txt"), QByteArray("hello world\n"));
 
     Entry* entry12 = group1->entries().at(1);
@@ -82,23 +82,23 @@ void TestKeePass1Reader::testBasic()
     QCOMPARE(entry12->attachments()->keys().size(), 0);
 
     Group* group11 = group1->children().at(0);
-    QCOMPARE(group11->name(), QString("Subgroup 1"));
+    QCOMPARE(group11->name(), QLatin1String("Subgroup 1"));
     QCOMPARE(group11->children().size(), 1);
 
     Group* group111 = group11->children().at(0);
-    QCOMPARE(group111->name(), QString("Unexpanded"));
+    QCOMPARE(group111->name(), QLatin1String("Unexpanded"));
     QCOMPARE(group111->children().size(), 1);
 
     Group* group1111 = group111->children().at(0);
-    QCOMPARE(group1111->name(), QString("abc"));
+    QCOMPARE(group1111->name(), QLatin1String("abc"));
     QCOMPARE(group1111->children().size(), 0);
 
     Group* group12 = group1->children().at(1);
-    QCOMPARE(group12->name(), QString("Subgroup 2"));
+    QCOMPARE(group12->name(), QLatin1String("Subgroup 2"));
     QCOMPARE(group12->children().size(), 0);
 
     Group* group2 = m_db->rootGroup()->children().at(1);
-    QCOMPARE(group2->name(), QString("eMail"));
+    QCOMPARE(group2->name(), QLatin1String("eMail"));
     QCOMPARE(group2->entries().size(), 1);
     QCOMPARE(group2->iconNumber(), 19);
 
@@ -135,35 +135,35 @@ void TestKeePass1Reader::testAutoType()
     QCOMPARE(group->entries().size(), 2);
 
     Entry* entry1 = group->entries().at(0);
-    QCOMPARE(entry1->notes(), QString("last line"));
-    QCOMPARE(entry1->defaultAutoTypeSequence(), QString("{USERNAME}{ENTER}"));
+    QCOMPARE(entry1->notes(), QLatin1String("last line"));
+    QCOMPARE(entry1->defaultAutoTypeSequence(), QLatin1String("{USERNAME}{ENTER}"));
     QCOMPARE(entry1->autoTypeAssociations()->size(), 5);
     QCOMPARE(entry1->autoTypeAssociations()->get(0).sequence, QString());
-    QCOMPARE(entry1->autoTypeAssociations()->get(0).window, QString("a window"));
+    QCOMPARE(entry1->autoTypeAssociations()->get(0).window, QLatin1String("a window"));
     QCOMPARE(entry1->autoTypeAssociations()->get(1).sequence, QString());
-    QCOMPARE(entry1->autoTypeAssociations()->get(1).window, QString("a second window"));
-    QCOMPARE(entry1->autoTypeAssociations()->get(2).sequence, QString("{PASSWORD}{ENTER}"));
-    QCOMPARE(entry1->autoTypeAssociations()->get(2).window, QString("Window Nr 1a"));
-    QCOMPARE(entry1->autoTypeAssociations()->get(3).sequence, QString("{PASSWORD}{ENTER}"));
-    QCOMPARE(entry1->autoTypeAssociations()->get(3).window, QString("Window Nr 1b"));
+    QCOMPARE(entry1->autoTypeAssociations()->get(1).window, QLatin1String("a second window"));
+    QCOMPARE(entry1->autoTypeAssociations()->get(2).sequence, QLatin1String("{PASSWORD}{ENTER}"));
+    QCOMPARE(entry1->autoTypeAssociations()->get(2).window, QLatin1String("Window Nr 1a"));
+    QCOMPARE(entry1->autoTypeAssociations()->get(3).sequence, QLatin1String("{PASSWORD}{ENTER}"));
+    QCOMPARE(entry1->autoTypeAssociations()->get(3).window, QLatin1String("Window Nr 1b"));
     QCOMPARE(entry1->autoTypeAssociations()->get(4).sequence, QString());
-    QCOMPARE(entry1->autoTypeAssociations()->get(4).window, QString("Window 2"));
+    QCOMPARE(entry1->autoTypeAssociations()->get(4).window, QLatin1String("Window 2"));
 
     Entry* entry2 = group->entries().at(1);
     QCOMPARE(entry2->notes(), QString("start line\nend line"));
     QCOMPARE(entry2->defaultAutoTypeSequence(), QString());
     QCOMPARE(entry2->autoTypeAssociations()->size(), 2);
     QCOMPARE(entry2->autoTypeAssociations()->get(0).sequence, QString());
-    QCOMPARE(entry2->autoTypeAssociations()->get(0).window, QString("Main Window"));
+    QCOMPARE(entry2->autoTypeAssociations()->get(0).window, QLatin1String("Main Window"));
     QCOMPARE(entry2->autoTypeAssociations()->get(1).sequence, QString());
-    QCOMPARE(entry2->autoTypeAssociations()->get(1).window, QString("Test Window"));
+    QCOMPARE(entry2->autoTypeAssociations()->get(1).window, QLatin1String("Test Window"));
 }
 
 void TestKeePass1Reader::testFileKey()
 {
     QFETCH(QString, type);
 
-    QString name = QString("FileKey").append(type);
+    QLatin1String name = QLatin1String("FileKey").append(type);
 
     KeePass1Reader reader;
 
@@ -182,9 +182,9 @@ void TestKeePass1Reader::testFileKey()
 void TestKeePass1Reader::testFileKey_data()
 {
     QTest::addColumn<QString>("type");
-    QTest::newRow("Binary") << QString("Binary");
-    QTest::newRow("Hex") << QString("Hex");
-    QTest::newRow("Hashed") << QString("Hashed");
+    QTest::newRow("Binary") << QLatin1String("Binary");
+    QTest::newRow("Hex") << QLatin1String("Hex");
+    QTest::newRow("Hashed") << QLatin1String("Hashed");
 }
 
 void TestKeePass1Reader::testCompositeKey()

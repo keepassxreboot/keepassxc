@@ -41,7 +41,7 @@ void TestKdbx2::initTestCase()
 void TestKdbx2::verifyKdbx2Db(QSharedPointer<Database> db)
 {
     QVERIFY(db);
-    QCOMPARE(db->rootGroup()->name(), QString("Format200"));
+    QCOMPARE(db->rootGroup()->name(), QLatin1String("Format200"));
     QVERIFY(!db->metadata()->protectTitle());
     QVERIFY(db->metadata()->protectUsername());
     QVERIFY(!db->metadata()->protectPassword());
@@ -51,8 +51,8 @@ void TestKdbx2::verifyKdbx2Db(QSharedPointer<Database> db)
     QCOMPARE(db->rootGroup()->entries().size(), 1);
     auto entry = db->rootGroup()->entries().at(0);
 
-    QCOMPARE(entry->title(), QString("Sample Entry"));
-    QCOMPARE(entry->username(), QString("User Name"));
+    QCOMPARE(entry->title(), QLatin1String("Sample Entry"));
+    QCOMPARE(entry->username(), QLatin1String("User Name"));
     QCOMPARE(entry->attachments()->keys().size(), 2);
     QCOMPARE(entry->attachments()->value("myattach.txt"), QByteArray("abcdefghijk"));
     QCOMPARE(entry->attachments()->value("test.txt"), QByteArray("this is a test"));

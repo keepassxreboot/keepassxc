@@ -135,7 +135,7 @@ void TestDatabase::testSaveAs()
     // Negative case when try to save not initialized DB.
     db->releaseData();
     QVERIFY2(!db->saveAs(newDbFileName, Database::Atomic, QString(), &error), error.toLatin1());
-    QCOMPARE(error, QString("Could not save, database has not been initialized!"));
+    QCOMPARE(error, QLatin1String("Could not save, database has not been initialized!"));
 }
 
 void TestDatabase::testSignals()
@@ -265,6 +265,6 @@ void TestDatabase::testCustomIcons()
     db.metadata()->addCustomIcon(uuid2, icon2, "Test", date);
     iconData = db.metadata()->customIcon(uuid2);
     QCOMPARE(iconData.data, icon2);
-    QCOMPARE(iconData.name, QString("Test"));
+    QCOMPARE(iconData.name, QLatin1String("Test"));
     QCOMPARE(iconData.lastModified, date);
 }

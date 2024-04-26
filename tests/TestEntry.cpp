@@ -69,17 +69,17 @@ void TestEntry::testCopyDataFrom()
     QScopedPointer<Entry> entry2(new Entry());
     entry2->copyDataFrom(entry.data());
 
-    QCOMPARE(entry2->title(), QString("testtitle"));
-    QCOMPARE(entry2->attributes()->value("attr1"), QString("abc"));
-    QCOMPARE(entry2->attributes()->value("attr2"), QString("def"));
+    QCOMPARE(entry2->title(), QLatin1String("testtitle"));
+    QCOMPARE(entry2->attributes()->value("attr1"), QLatin1String("abc"));
+    QCOMPARE(entry2->attributes()->value("attr2"), QLatin1String("def"));
 
     QCOMPARE(entry2->attachments()->keys().size(), 2);
     QCOMPARE(entry2->attachments()->value("test"), QByteArray("123"));
     QCOMPARE(entry2->attachments()->value("test2"), QByteArray("456"));
 
     QCOMPARE(entry2->autoTypeAssociations()->size(), 2);
-    QCOMPARE(entry2->autoTypeAssociations()->get(0).window, QString("1"));
-    QCOMPARE(entry2->autoTypeAssociations()->get(1).window, QString("3"));
+    QCOMPARE(entry2->autoTypeAssociations()->get(0).window, QLatin1String("1"));
+    QCOMPARE(entry2->autoTypeAssociations()->get(1).window, QLatin1String("3"));
 }
 
 void TestEntry::testClone()
@@ -97,14 +97,14 @@ void TestEntry::testClone()
 
     QScopedPointer<Entry> entryCloneNone(entryOrg->clone(Entry::CloneNoFlags));
     QCOMPARE(entryCloneNone->uuid(), entryOrg->uuid());
-    QCOMPARE(entryCloneNone->title(), QString("New Title"));
+    QCOMPARE(entryCloneNone->title(), QLatin1String("New Title"));
     QCOMPARE(entryCloneNone->historyItems().size(), 0);
     QCOMPARE(entryCloneNone->timeInfo().creationTime(), entryOrg->timeInfo().creationTime());
 
     QScopedPointer<Entry> entryCloneNewUuid(entryOrg->clone(Entry::CloneNewUuid));
     QVERIFY(entryCloneNewUuid->uuid() != entryOrg->uuid());
     QVERIFY(!entryCloneNewUuid->uuid().isNull());
-    QCOMPARE(entryCloneNewUuid->title(), QString("New Title"));
+    QCOMPARE(entryCloneNewUuid->title(), QLatin1String("New Title"));
     QCOMPARE(entryCloneNewUuid->historyItems().size(), 0);
     QCOMPARE(entryCloneNewUuid->timeInfo().creationTime(), entryOrg->timeInfo().creationTime());
 
@@ -114,13 +114,13 @@ void TestEntry::testClone()
 
     QScopedPointer<Entry> entryCloneRename(entryOrg->clone(Entry::CloneRenameTitle));
     QCOMPARE(entryCloneRename->uuid(), entryOrg->uuid());
-    QCOMPARE(entryCloneRename->title(), QString("New Title - Clone"));
+    QCOMPARE(entryCloneRename->title(), QLatin1String("New Title - Clone"));
     // Cloning should not modify time info unless explicitly requested
     QCOMPARE(entryCloneRename->timeInfo(), entryOrg->timeInfo());
 
     QScopedPointer<Entry> entryCloneResetTime(entryOrg->clone(Entry::CloneResetTimeInfo));
     QCOMPARE(entryCloneResetTime->uuid(), entryOrg->uuid());
-    QCOMPARE(entryCloneResetTime->title(), QString("New Title"));
+    QCOMPARE(entryCloneResetTime->title(), QLatin1String("New Title"));
     QCOMPARE(entryCloneResetTime->historyItems().size(), 0);
     QVERIFY(entryCloneResetTime->timeInfo().creationTime() != entryOrg->timeInfo().creationTime());
 
@@ -134,9 +134,9 @@ void TestEntry::testClone()
 
     QScopedPointer<Entry> entryCloneHistory(entryOrg->clone(Entry::CloneIncludeHistory | Entry::CloneResetTimeInfo));
     QCOMPARE(entryCloneHistory->uuid(), entryOrg->uuid());
-    QCOMPARE(entryCloneHistory->title(), QString("New Title"));
+    QCOMPARE(entryCloneHistory->title(), QLatin1String("New Title"));
     QCOMPARE(entryCloneHistory->historyItems().size(), entryOrg->historyItems().size());
-    QCOMPARE(entryCloneHistory->historyItems().at(0)->title(), QString("Original Title"));
+    QCOMPARE(entryCloneHistory->historyItems().at(0)->title(), QLatin1String("Original Title"));
     QVERIFY(entryCloneHistory->timeInfo().creationTime() != entryOrg->timeInfo().creationTime());
     // Timeinfo of history items should not be modified
     QList<Entry*> entryOrgHistory = entryOrg->historyItems(), clonedHistory = entryCloneHistory->historyItems();
@@ -153,7 +153,7 @@ void TestEntry::testClone()
     Entry* entryCloneUserRef = entryOrgClone->clone(Entry::CloneUserAsRef);
     entryCloneUserRef->setGroup(db.rootGroup());
     QCOMPARE(entryCloneUserRef->uuid(), entryOrgClone->uuid());
-    QCOMPARE(entryCloneUserRef->title(), QString("New Title"));
+    QCOMPARE(entryCloneUserRef->title(), QLatin1String("New Title"));
     QCOMPARE(entryCloneUserRef->historyItems().size(), 0);
     QCOMPARE(entryCloneUserRef->timeInfo().creationTime(), entryOrgClone->timeInfo().creationTime());
     QVERIFY(entryCloneUserRef->attributes()->isReference(EntryAttributes::UserNameKey));
@@ -162,7 +162,7 @@ void TestEntry::testClone()
     Entry* entryClonePassRef = entryOrgClone->clone(Entry::ClonePassAsRef);
     entryClonePassRef->setGroup(db.rootGroup());
     QCOMPARE(entryClonePassRef->uuid(), entryOrgClone->uuid());
-    QCOMPARE(entryClonePassRef->title(), QString("New Title"));
+    QCOMPARE(entryClonePassRef->title(), QLatin1String("New Title"));
     QCOMPARE(entryClonePassRef->historyItems().size(), 0);
     QCOMPARE(entryClonePassRef->timeInfo().creationTime(), entryOrgClone->timeInfo().creationTime());
     QVERIFY(entryClonePassRef->attributes()->isReference(EntryAttributes::PasswordKey));
@@ -245,7 +245,7 @@ void TestEntry::testResolveRecursivePlaceholders()
     entry1->setPassword("{URL}");
     entry1->setUrl("{S:CustomTitle}");
     entry1->attributes()->set("CustomTitle", "RecursiveValue");
-    QCOMPARE(entry1->resolveMultiplePlaceholders(entry1->title()), QString("RecursiveValue"));
+    QCOMPARE(entry1->resolveMultiplePlaceholders(entry1->title()), QLatin1String("RecursiveValue"));
 
     auto* entry2 = new Entry();
     entry2->setGroup(root);
@@ -267,10 +267,10 @@ void TestEntry::testResolveRecursivePlaceholders()
     entry3->setPassword(QString("{REF:P@I:%1}").arg(entry2->uuidToHex()));
     entry3->setUrl(QString("{REF:A@I:%1}").arg(entry2->uuidToHex()));
 
-    QCOMPARE(entry3->resolveMultiplePlaceholders(entry3->title()), QString("Entry2Title"));
-    QCOMPARE(entry3->resolveMultiplePlaceholders(entry3->username()), QString("CustomUserNameValue"));
-    QCOMPARE(entry3->resolveMultiplePlaceholders(entry3->password()), QString("RecursiveValue"));
-    QCOMPARE(entry3->resolveMultiplePlaceholders(entry3->url()), QString("http://127.0.0.1:1234/uri/path"));
+    QCOMPARE(entry3->resolveMultiplePlaceholders(entry3->title()), QLatin1String("Entry2Title"));
+    QCOMPARE(entry3->resolveMultiplePlaceholders(entry3->username()), QLatin1String("CustomUserNameValue"));
+    QCOMPARE(entry3->resolveMultiplePlaceholders(entry3->password()), QLatin1String("RecursiveValue"));
+    QCOMPARE(entry3->resolveMultiplePlaceholders(entry3->url()), QLatin1String("http://127.0.0.1:1234/uri/path"));
 
     auto* entry4 = new Entry();
     entry4->setGroup(root);
@@ -280,10 +280,10 @@ void TestEntry::testResolveRecursivePlaceholders()
     entry4->setPassword(QString("{REF:P@I:%1}").arg(entry3->uuidToHex()));
     entry4->setUrl(QString("{REF:A@I:%1}").arg(entry3->uuidToHex()));
 
-    QCOMPARE(entry4->resolveMultiplePlaceholders(entry4->title()), QString("Entry2Title"));
-    QCOMPARE(entry4->resolveMultiplePlaceholders(entry4->username()), QString("CustomUserNameValue"));
-    QCOMPARE(entry4->resolveMultiplePlaceholders(entry4->password()), QString("RecursiveValue"));
-    QCOMPARE(entry4->resolveMultiplePlaceholders(entry4->url()), QString("http://127.0.0.1:1234/uri/path"));
+    QCOMPARE(entry4->resolveMultiplePlaceholders(entry4->title()), QLatin1String("Entry2Title"));
+    QCOMPARE(entry4->resolveMultiplePlaceholders(entry4->username()), QLatin1String("CustomUserNameValue"));
+    QCOMPARE(entry4->resolveMultiplePlaceholders(entry4->password()), QLatin1String("RecursiveValue"));
+    QCOMPARE(entry4->resolveMultiplePlaceholders(entry4->url()), QLatin1String("http://127.0.0.1:1234/uri/path"));
 
     auto* entry5 = new Entry();
     entry5->setGroup(root);
@@ -301,29 +301,29 @@ void TestEntry::testResolveRecursivePlaceholders()
 
     const QString url("http://username:password@host.org:2017/some/path?q=e&t=s#fragment");
     QCOMPARE(entry5->resolveMultiplePlaceholders(entry5->url()), url);
-    QCOMPARE(entry5->resolveMultiplePlaceholders(entry5->title()), QString("title+/some/path+fragment+title"));
+    QCOMPARE(entry5->resolveMultiplePlaceholders(entry5->title()), QLatin1String("title+/some/path+fragment+title"));
 
     auto* entry6 = new Entry();
     entry6->setGroup(root);
     entry6->setUuid(QUuid::createUuid());
     entry6->setTitle(QString("{REF:T@I:%1}").arg(entry3->uuidToHex()));
-    entry6->setUsername(QString("{TITLE}"));
-    entry6->setPassword(QString("{PASSWORD}"));
+    entry6->setUsername(QLatin1String("{TITLE}"));
+    entry6->setPassword(QLatin1String("{PASSWORD}"));
 
-    QCOMPARE(entry6->resolvePlaceholder(entry6->title()), QString("Entry2Title"));
-    QCOMPARE(entry6->resolvePlaceholder(entry6->username()), QString("Entry2Title"));
-    QCOMPARE(entry6->resolvePlaceholder(entry6->password()), QString("{PASSWORD}"));
+    QCOMPARE(entry6->resolvePlaceholder(entry6->title()), QLatin1String("Entry2Title"));
+    QCOMPARE(entry6->resolvePlaceholder(entry6->username()), QLatin1String("Entry2Title"));
+    QCOMPARE(entry6->resolvePlaceholder(entry6->password()), QLatin1String("{PASSWORD}"));
 
     auto* entry7 = new Entry();
     entry7->setGroup(root);
     entry7->setUuid(QUuid::createUuid());
     entry7->setTitle(QString("{REF:T@I:%1} and something else").arg(entry3->uuidToHex()));
-    entry7->setUsername(QString("{TITLE}"));
-    entry7->setPassword(QString("PASSWORD"));
+    entry7->setUsername(QLatin1String("{TITLE}"));
+    entry7->setPassword(QLatin1String("PASSWORD"));
 
-    QCOMPARE(entry7->resolvePlaceholder(entry7->title()), QString("Entry2Title and something else"));
-    QCOMPARE(entry7->resolvePlaceholder(entry7->username()), QString("Entry2Title and something else"));
-    QCOMPARE(entry7->resolvePlaceholder(entry7->password()), QString("PASSWORD"));
+    QCOMPARE(entry7->resolvePlaceholder(entry7->title()), QLatin1String("Entry2Title and something else"));
+    QCOMPARE(entry7->resolvePlaceholder(entry7->username()), QLatin1String("Entry2Title and something else"));
+    QCOMPARE(entry7->resolvePlaceholder(entry7->password()), QLatin1String("PASSWORD"));
 }
 
 void TestEntry::testResolveReferencePlaceholders()

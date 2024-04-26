@@ -99,5 +99,5 @@ void TestHashedBlockStream::testWriteFailure()
     QCOMPARE(writer.write(input.left(900)), qint64(900));
     writer.write(input.left(900));
     QVERIFY(!writer.reset());
-    QCOMPARE(writer.errorString(), QString("FAILDEVICE"));
+    QCOMPARE(writer.errorString(), QLatin1String("FAILDEVICE"));
 }

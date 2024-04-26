@@ -24,11 +24,11 @@
 
 AttachmentRemove::AttachmentRemove()
 {
-    name = QString("attachment-rm");
+    name = QLatin1String("attachment-rm");
     description = QObject::tr("Remove an attachment of an entry.");
     positionalArguments.append(
-        {QString("entry"), QObject::tr("Path of the entry with the target attachment."), QString()});
-    positionalArguments.append({QString("name"), QObject::tr("Name of the attachment to be removed."), QString()});
+        {QLatin1String("entry"), QObject::tr("Path of the entry with the target attachment."), QLatin1String()});
+    positionalArguments.append({QLatin1String("name"), QObject::tr("Name of the attachment to be removed."), QLatin1String()});
 }
 
 int AttachmentRemove::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<QCommandLineParser> parser)

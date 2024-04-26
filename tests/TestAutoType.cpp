@@ -134,7 +134,7 @@ void TestAutoType::testInternal()
     QVERIFY(m_platform->activeWindowTitle().isEmpty());
 
     m_test->setActiveWindowTitle("Test");
-    QCOMPARE(m_platform->activeWindowTitle(), QString("Test"));
+    QCOMPARE(m_platform->activeWindowTitle(), QLatin1String("Test"));
 }
 
 void TestAutoType::testSingleAutoType()
@@ -213,35 +213,35 @@ void TestAutoType::testGlobalAutoTypeRegExp()
     m_test->setActiveWindowTitle("lorem REGEX1 ipsum");
     emit osUtils->globalShortcutTriggered("autotype");
     m_autoType->performGlobalAutoType(m_dbList);
-    QCOMPARE(m_test->actionChars(), QString("regex1"));
+    QCOMPARE(m_test->actionChars(), QLatin1String("regex1"));
     m_test->clearActions();
 
     // should be case-insensitive
     m_test->setActiveWindowTitle("lorem regex1 ipsum");
     emit osUtils->globalShortcutTriggered("autotype");
     m_autoType->performGlobalAutoType(m_dbList);
-    QCOMPARE(m_test->actionChars(), QString("regex1"));
+    QCOMPARE(m_test->actionChars(), QLatin1String("regex1"));
     m_test->clearActions();
 
     // exact match
     m_test->setActiveWindowTitle("REGEX2");
     emit osUtils->globalShortcutTriggered("autotype");
     m_autoType->performGlobalAutoType(m_dbList);
-    QCOMPARE(m_test->actionChars(), QString("regex2"));
+    QCOMPARE(m_test->actionChars(), QLatin1String("regex2"));
     m_test->clearActions();
 
     // a bit more complicated regex
     m_test->setActiveWindowTitle("REGEX3-R2D2");
     emit osUtils->globalShortcutTriggered("autotype");
     m_autoType->performGlobalAutoType(m_dbList);
-    QCOMPARE(m_test->actionChars(), QString("regex3"));
+    QCOMPARE(m_test->actionChars(), QLatin1String("regex3"));
     m_test->clearActions();
 
     // with custom attributes
     m_test->setActiveWindowTitle("CustomAttr1");
     emit osUtils->globalShortcutTriggered("autotype");
     m_autoType->performGlobalAutoType(m_dbList);
-    QCOMPARE(m_test->actionChars(), QString("custom_attr:Attribute"));
+    QCOMPARE(m_test->actionChars(), QLatin1String("custom_attr:Attribute"));
     m_test->clearActions();
 
     // with (non uppercase) undefined custom attributes
@@ -255,26 +255,26 @@ void TestAutoType::testGlobalAutoTypeRegExp()
     m_test->setActiveWindowTitle("CustomAttr3");
     emit osUtils->globalShortcutTriggered("autotype");
     m_autoType->performGlobalAutoType(m_dbList);
-    QCOMPARE(m_test->actionChars(), QString("custom_attr"));
+    QCOMPARE(m_test->actionChars(), QLatin1String("custom_attr"));
     m_test->clearActions();
 
     // with resolve placeholders in window association title
     m_test->setActiveWindowTitle("AttrValueFirst");
     emit osUtils->globalShortcutTriggered("autotype");
     m_autoType->performGlobalAutoType(m_dbList);
-    QCOMPARE(m_test->actionChars(), QString("custom_attr_first"));
+    QCOMPARE(m_test->actionChars(), QLatin1String("custom_attr_first"));
     m_test->clearActions();
 
     m_test->setActiveWindowTitle("lorem AttrValueFirstAndAttrValueSecond ipsum");
     emit osUtils->globalShortcutTriggered("autotype");
     m_autoType->performGlobalAutoType(m_dbList);
-    QCOMPARE(m_test->actionChars(), QString("custom_attr_first_and_second"));
+    QCOMPARE(m_test->actionChars(), QLatin1String("custom_attr_first_and_second"));
     m_test->clearActions();
 
     m_test->setActiveWindowTitle("lorem AttrValueThird ipsum");
     emit osUtils->globalShortcutTriggered("autotype");
     m_autoType->performGlobalAutoType(m_dbList);
-    QCOMPARE(m_test->actionChars(), QString("custom_attr_third"));
+    QCOMPARE(m_test->actionChars(), QLatin1String("custom_attr_third"));
     m_test->clearActions();
 }
 
@@ -300,19 +300,19 @@ void TestAutoType::testAutoTypeResults_data()
     QTest::addColumn<QString>("expectedResult");
 
     // Normal Sequences
-    QTest::newRow("Sequence with Attributes") << QString("{USERNAME} {PASSWORD} {URL} {S:attr1}")
-                                              << QString("Username Password@1 https://example.com value1");
-    QTest::newRow("Sequence with Comment") << QString("{USERNAME}{TAB}{C:Extra Tab}{TAB}{S:attr1}")
-                                           << QString("Username[Key0x1000001][Key0x1000001]value1");
+    QTest::newRow("Sequence with Attributes") << QLatin1String("{USERNAME} {PASSWORD} {URL} {S:attr1}")
+                                              << QLatin1String("Username Password@1 https://example.com value1");
+    QTest::newRow("Sequence with Comment") << QLatin1String("{USERNAME}{TAB}{C:Extra Tab}{TAB}{S:attr1}")
+                                           << QLatin1String("Username[Key0x1000001][Key0x1000001]value1");
 
     // Conversions and Replacements
-    QTest::newRow("T-CONV UPPER") << QString("{T-CONV:/{USERNAME}/UPPER/}") << QString("USERNAME");
-    QTest::newRow("T-CONV LOWER") << QString("{T-CONV:/{USERNAME}/LOWER/}") << QString("username");
-    QTest::newRow("T-CONV BASE64") << QString("{T-CONV:/{USERNAME}/BASE64/}") << QString("VXNlcm5hbWU=");
-    QTest::newRow("T-CONV HEX") << QString("{T-CONV:/{USERNAME}/HEX/}") << QString("557365726e616d65");
-    QTest::newRow("T-CONV URI ENCODE") << QString("{T-CONV:/{URL}/URI/}") << QString("https%3A%2F%2Fexample.com");
-    QTest::newRow("T-CONV URI DECODE") << QString("{T-CONV:/{S:attr2}/URI-DEC/}") << QString("decode me");
-    QTest::newRow("T-REPLACE-RX") << QString("{T-REPLACE-RX:/{USERNAME}/(User)/$1Pass/}") << QString("UserPassname");
+    QTest::newRow("T-CONV UPPER") << QLatin1String("{T-CONV:/{USERNAME}/UPPER/}") << QLatin1String("USERNAME");
+    QTest::newRow("T-CONV LOWER") << QLatin1String("{T-CONV:/{USERNAME}/LOWER/}") << QLatin1String("username");
+    QTest::newRow("T-CONV BASE64") << QLatin1String("{T-CONV:/{USERNAME}/BASE64/}") << QLatin1String("VXNlcm5hbWU=");
+    QTest::newRow("T-CONV HEX") << QLatin1String("{T-CONV:/{USERNAME}/HEX/}") << QLatin1String("557365726e616d65");
+    QTest::newRow("T-CONV URI ENCODE") << QLatin1String("{T-CONV:/{URL}/URI/}") << QLatin1String("https%3A%2F%2Fexample.com");
+    QTest::newRow("T-CONV URI DECODE") << QLatin1String("{T-CONV:/{S:attr2}/URI-DEC/}") << QLatin1String("decode me");
+    QTest::newRow("T-REPLACE-RX") << QLatin1String("{T-REPLACE-RX:/{USERNAME}/(User)/$1Pass/}") << QLatin1String("UserPassname");
 }
 
 void TestAutoType::testAutoTypeSyntaxChecks()

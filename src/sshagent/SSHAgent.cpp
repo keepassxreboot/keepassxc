@@ -301,7 +301,7 @@ bool SSHAgent::addIdentity(OpenSSHKey& key, const KeeAgentSettings& settings, co
 
     if (isSecurityKey) {
         request.write(SSH_AGENT_CONSTRAIN_EXTENSION);
-        request.writeString(QString("sk-provider@openssh.com"));
+        request.writeString(QLatin1String("sk-provider@openssh.com"));
         request.writeString(securityKeyProvider());
     }
 

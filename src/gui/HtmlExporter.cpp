@@ -213,7 +213,7 @@ bool HtmlExporter::writeGroup(QIODevice& device, const Group& group, QString pat
     const auto notes = group.notes();
     if (!group.entries().empty() || !notes.isEmpty()) {
         // Header line
-        auto header = QString("<hr><h2>");
+        auto header = QLatin1String("<hr><h2>");
         header.append(PixmapToHTML(Icons::groupIconPixmap(&group, IconSize::Medium)));
         header.append("&nbsp;");
         header.append(path);

@@ -38,12 +38,12 @@ void TestTools::testHumanReadableFileSize()
     constexpr auto kibibyte = 1024u;
     using namespace Tools;
 
-    QCOMPARE(QString("1 B"), humanReadableFileSize(1));
+    QCOMPARE(QLatin1String("1 B"), humanReadableFileSize(1));
     QCOMPARE(createDecimal("1", "00", "KiB"), humanReadableFileSize(kibibyte));
     QCOMPARE(createDecimal("1", "00", "MiB"), humanReadableFileSize(kibibyte * kibibyte));
     QCOMPARE(createDecimal("1", "00", "GiB"), humanReadableFileSize(kibibyte * kibibyte * kibibyte));
 
-    QCOMPARE(QString("100 B"), humanReadableFileSize(100, 0));
+    QCOMPARE(QLatin1String("100 B"), humanReadableFileSize(100, 0));
     QCOMPARE(createDecimal("1", "10", "KiB"), humanReadableFileSize(kibibyte + 100));
     QCOMPARE(createDecimal("1", "001", "KiB"), humanReadableFileSize(kibibyte + 1, 3));
     QCOMPARE(createDecimal("15", "00", "KiB"), humanReadableFileSize(kibibyte * 15));
@@ -92,12 +92,12 @@ void TestTools::testEnvSubstitute()
              QString("C:\\Users\\User\\.ssh\\id_rsa"));
     QCOMPARE(Tools::envSubstitute("~\\.ssh\\id_rsa", environment), QString("C:\\Users\\User\\.ssh\\id_rsa"));
 #else
-    environment.insert("HOME", QString("/home/user"));
-    environment.insert("USER", QString("user"));
+    environment.insert("HOME", QLatin1String("/home/user"));
+    environment.insert("USER", QLatin1String("user"));
 
-    QCOMPARE(Tools::envSubstitute("~/.ssh/id_rsa", environment), QString("/home/user/.ssh/id_rsa"));
-    QCOMPARE(Tools::envSubstitute("$HOME/.ssh/id_rsa", environment), QString("/home/user/.ssh/id_rsa"));
-    QCOMPARE(Tools::envSubstitute("start/$EMPTY$$EMPTY$HOME/end", environment), QString("start/$/home/user/end"));
+    QCOMPARE(Tools::envSubstitute("~/.ssh/id_rsa", environment), QLatin1String("/home/user/.ssh/id_rsa"));
+    QCOMPARE(Tools::envSubstitute("$HOME/.ssh/id_rsa", environment), QLatin1String("/home/user/.ssh/id_rsa"));
+    QCOMPARE(Tools::envSubstitute("start/$EMPTY$$EMPTY$HOME/end", environment), QLatin1String("start/$/home/user/end"));
 #endif
 }
 
@@ -260,7 +260,7 @@ void TestTools::testArrayContainsValues()
                                                                                 << "second"
                                                                                 << "none");
     QCOMPARE(result1.length(), 1);
-    QCOMPARE(result1.first(), QString("none"));
+    QCOMPARE(result1.first(), QLatin1String("none"));
 
     // All found
     const auto result2 = Tools::getMissingValuesFromList<QString>(values,

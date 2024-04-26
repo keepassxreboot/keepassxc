@@ -3095,7 +3095,7 @@ QIcon BaseStyle::standardIcon(StandardPixmap sp, const QStyleOption* opt, const 
         return icons()->icon("chevron-double-right");
     case SP_LineEditClearButton:
         return icons()->icon(
-            QString("edit-clear-locationbar-").append((opt->direction == Qt::LeftToRight) ? "rtl" : "ltr"));
+            QLatin1String("edit-clear-locationbar-").append((opt->direction == Qt::LeftToRight) ? "rtl" : "ltr"));
     default:
         return QCommonStyle::standardIcon(sp, opt, widget);
     }

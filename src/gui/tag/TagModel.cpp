@@ -28,9 +28,9 @@
 TagModel::TagModel(QObject* parent)
     : QAbstractListModel(parent)
 {
-    m_defaultSearches << qMakePair(tr("Clear Search"), QString()) << qMakePair(tr("All Entries"), QString("*"))
-                      << qMakePair(tr("Expired"), QString("is:expired"))
-                      << qMakePair(tr("Weak Passwords"), QString("is:weak"));
+    m_defaultSearches << qMakePair(tr("Clear Search"), QLatin1String()) << qMakePair(tr("All Entries"), QLatin1String("*"))
+                      << qMakePair(tr("Expired"), QLatin1String("is:expired"))
+                      << qMakePair(tr("Weak Passwords"), QLatin1String("is:weak"));
 }
 
 TagModel::~TagModel() = default;

@@ -101,8 +101,8 @@ void TestKdbx3::testFormat300()
     QVERIFY(db.data());
     QVERIFY(!reader.hasError());
 
-    QCOMPARE(db->rootGroup()->name(), QString("Format300"));
-    QCOMPARE(db->metadata()->name(), QString("Test Database Format 0x00030000"));
+    QCOMPARE(db->rootGroup()->name(), QLatin1String("Format300"));
+    QCOMPARE(db->metadata()->name(), QLatin1String("Test Database Format 0x00030000"));
 }
 
 void TestKdbx3::testNonAscii()
@@ -115,7 +115,7 @@ void TestKdbx3::testNonAscii()
     QVERIFY(db->open(filename, key, nullptr));
     QVERIFY(db.data());
     QVERIFY(!reader.hasError());
-    QCOMPARE(db->metadata()->name(), QString("NonAsciiTest"));
+    QCOMPARE(db->metadata()->name(), QLatin1String("NonAsciiTest"));
     QCOMPARE(db->compressionAlgorithm(), Database::CompressionNone);
 }
 
@@ -129,7 +129,7 @@ void TestKdbx3::testCompressed()
     QVERIFY(db->open(filename, key, nullptr));
     QVERIFY(db.data());
     QVERIFY(!reader.hasError());
-    QCOMPARE(db->metadata()->name(), QString("Compressed"));
+    QCOMPARE(db->metadata()->name(), QLatin1String("Compressed"));
     QCOMPARE(db->compressionAlgorithm(), Database::CompressionGZip);
 }
 
@@ -143,15 +143,15 @@ void TestKdbx3::testProtectedStrings()
     QVERIFY(db->open(filename, key, nullptr));
     QVERIFY(db.data());
     QVERIFY(!reader.hasError());
-    QCOMPARE(db->metadata()->name(), QString("Protected Strings Test"));
+    QCOMPARE(db->metadata()->name(), QLatin1String("Protected Strings Test"));
 
     Entry* entry = db->rootGroup()->entries().at(0);
 
-    QCOMPARE(entry->title(), QString("Sample Entry"));
-    QCOMPARE(entry->username(), QString("Protected User Name"));
-    QCOMPARE(entry->password(), QString("ProtectedPassword"));
-    QCOMPARE(entry->attributes()->value("TestProtected"), QString("ABC"));
-    QCOMPARE(entry->attributes()->value("TestUnprotected"), QString("DEF"));
+    QCOMPARE(entry->title(), QLatin1String("Sample Entry"));
+    QCOMPARE(entry->username(), QLatin1String("Protected User Name"));
+    QCOMPARE(entry->password(), QLatin1String("ProtectedPassword"));
+    QCOMPARE(entry->attributes()->value("TestProtected"), QLatin1String("ABC"));
+    QCOMPARE(entry->attributes()->value("TestUnprotected"), QLatin1String("DEF"));
 
     QVERIFY(db->metadata()->protectPassword());
     QVERIFY(entry->attributes()->isProtected("TestProtected"));

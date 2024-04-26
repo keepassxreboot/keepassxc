@@ -202,7 +202,7 @@ void TestEntrySearcher::testSearchTermParser()
     QCOMPARE(terms.length(), 5);
 
     QCOMPARE(terms[0].field, EntrySearcher::Field::Undefined);
-    QCOMPARE(terms[0].word, QString("test"));
+    QCOMPARE(terms[0].word, QLatin1String("test"));
     QCOMPARE(terms[0].exclude, true);
 
     QCOMPARE(terms[1].field, EntrySearcher::Field::Undefined);
@@ -210,13 +210,13 @@ void TestEntrySearcher::testSearchTermParser()
     QCOMPARE(terms[1].exclude, false);
 
     QCOMPARE(terms[2].field, EntrySearcher::Field::Username);
-    QCOMPARE(terms[2].word, QString("user"));
+    QCOMPARE(terms[2].word, QLatin1String("user"));
 
     QCOMPARE(terms[3].field, EntrySearcher::Field::Password);
-    QCOMPARE(terms[3].word, QString("test me"));
+    QCOMPARE(terms[3].word, QLatin1String("test me"));
 
     QCOMPARE(terms[4].field, EntrySearcher::Field::Undefined);
-    QCOMPARE(terms[4].word, QString("noquote"));
+    QCOMPARE(terms[4].word, QLatin1String("noquote"));
 
     // Test wildcard and regex search terms
     m_entrySearcher.parseSearchTerms("+url:*.google.com *user:\\d+\\w{2}");
@@ -237,12 +237,12 @@ void TestEntrySearcher::testSearchTermParser()
     QCOMPARE(terms.length(), 2);
 
     QCOMPARE(terms[0].field, EntrySearcher::Field::AttributeValue);
-    QCOMPARE(terms[0].word, QString("abc"));
+    QCOMPARE(terms[0].word, QLatin1String("abc"));
     QCOMPARE(terms[0].regex.pattern(), QString("^(?:efg)$"));
 
     QCOMPARE(terms[1].field, EntrySearcher::Field::AttributeValue);
-    QCOMPARE(terms[1].word, QString("def"));
-    QCOMPARE(terms[1].regex.pattern(), QString("ddd"));
+    QCOMPARE(terms[1].word, QLatin1String("def"));
+    QCOMPARE(terms[1].regex.pattern(), QLatin1String("ddd"));
 }
 
 void TestEntrySearcher::testCustomAttributesAreSearched()

@@ -231,18 +231,18 @@ void TestGuiBrowser::testGetDatabaseGroups()
     auto groups = result["groups"].toArray();
     auto first = groups.at(0);
     auto children = first.toObject()["children"].toArray();
-    QCOMPARE(first.toObject()["name"].toString(), QString("NewDatabase"));
+    QCOMPARE(first.toObject()["name"].toString(), QLatin1String("NewDatabase"));
     QCOMPARE(children.size(), 6);
 
     auto firstChild = children.at(0).toObject();
     auto secondChild = children.at(1).toObject();
-    QCOMPARE(firstChild["name"].toString(), QString("General"));
-    QCOMPARE(secondChild["name"].toString(), QString("Windows"));
+    QCOMPARE(firstChild["name"].toString(), QLatin1String("General"));
+    QCOMPARE(secondChild["name"].toString(), QLatin1String("Windows"));
 
     auto subGroups = firstChild["children"].toArray();
     QCOMPARE(subGroups.count(), 1);
     auto subGroupObj = subGroups.at(0).toObject();
-    QCOMPARE(subGroupObj["name"].toString(), QString("SubGroup"));
+    QCOMPARE(subGroupObj["name"].toString(), QLatin1String("SubGroup"));
 }
 
 void TestGuiBrowser::triggerAction(const QString& name)

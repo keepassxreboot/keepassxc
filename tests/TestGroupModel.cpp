@@ -71,17 +71,17 @@ void TestGroupModel::test()
     QPersistentModelIndex index12 = model->index(1, 0, index1);
     QModelIndex index121 = model->index(0, 0, index12);
 
-    QCOMPARE(model->data(indexRoot).toString(), QString("groupRoot"));
-    QCOMPARE(model->data(index1).toString(), QString("group1"));
-    QCOMPARE(model->data(index11).toString(), QString("group11"));
-    QCOMPARE(model->data(index12).toString(), QString("group12"));
-    QCOMPARE(model->data(index121).toString(), QString("group121"));
+    QCOMPARE(model->data(indexRoot).toString(), QLatin1String("groupRoot"));
+    QCOMPARE(model->data(index1).toString(), QLatin1String("group1"));
+    QCOMPARE(model->data(index11).toString(), QLatin1String("group11"));
+    QCOMPARE(model->data(index12).toString(), QLatin1String("group12"));
+    QCOMPARE(model->data(index121).toString(), QLatin1String("group121"));
 
     QSignalSpy spy1(model, SIGNAL(dataChanged(QModelIndex, QModelIndex)));
     group11->setName("test");
     group121->setIcon(4);
     QCOMPARE(spy1.count(), 2);
-    QCOMPARE(model->data(index11).toString(), QString("test"));
+    QCOMPARE(model->data(index11).toString(), QLatin1String("test"));
 
     QSignalSpy spyAboutToAdd(model, SIGNAL(rowsAboutToBeInserted(QModelIndex, int, int)));
     QSignalSpy spyAdded(model, SIGNAL(rowsInserted(QModelIndex, int, int)));
@@ -101,7 +101,7 @@ void TestGroupModel::test()
     QCOMPARE(spyRemoved.count(), 0);
     QCOMPARE(spyAboutToMove.count(), 0);
     QCOMPARE(spyMoved.count(), 0);
-    QCOMPARE(model->data(index2).toString(), QString("group2"));
+    QCOMPARE(model->data(index2).toString(), QLatin1String("group2"));
 
     group12->setParent(group1, 0);
     QCOMPARE(spyAboutToAdd.count(), 1);
@@ -110,7 +110,7 @@ void TestGroupModel::test()
     QCOMPARE(spyRemoved.count(), 0);
     QCOMPARE(spyAboutToMove.count(), 1);
     QCOMPARE(spyMoved.count(), 1);
-    QCOMPARE(model->data(index12).toString(), QString("group12"));
+    QCOMPARE(model->data(index12).toString(), QLatin1String("group12"));
 
     group12->setParent(group1, 1);
     QCOMPARE(spyAboutToAdd.count(), 1);
@@ -119,7 +119,7 @@ void TestGroupModel::test()
     QCOMPARE(spyRemoved.count(), 0);
     QCOMPARE(spyAboutToMove.count(), 2);
     QCOMPARE(spyMoved.count(), 2);
-    QCOMPARE(model->data(index12).toString(), QString("group12"));
+    QCOMPARE(model->data(index12).toString(), QLatin1String("group12"));
 
     group12->setParent(group2);
     QCOMPARE(spyAboutToAdd.count(), 1);
@@ -129,8 +129,8 @@ void TestGroupModel::test()
     QCOMPARE(spyAboutToMove.count(), 3);
     QCOMPARE(spyMoved.count(), 3);
     QVERIFY(index12.isValid());
-    QCOMPARE(model->data(index12).toString(), QString("group12"));
-    QCOMPARE(model->data(index12.model()->index(0, 0, index12)).toString(), QString("group121"));
+    QCOMPARE(model->data(index12).toString(), QLatin1String("group12"));
+    QCOMPARE(model->data(index12.model()->index(0, 0, index12)).toString(), QLatin1String("group121"));
 
     delete group12;
     QCOMPARE(spyAboutToAdd.count(), 1);

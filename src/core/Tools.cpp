@@ -460,13 +460,13 @@ namespace Tools
         QFileInfo dbFileInfo(databasePath);
         QString baseName = dbFileInfo.completeBaseName();
 
-        pattern.replace(QString("{DB_FILENAME}"), baseName);
+        pattern.replace(QLatin1String("{DB_FILENAME}"), baseName);
 
         auto re = QRegularExpression(R"(\{TIME(?::([^\\]*))?\})");
         auto match = re.match(pattern);
         while (match.hasMatch()) {
             // Extract time format specifier
-            auto formatSpecifier = QString("dd_MM_yyyy_hh-mm-ss");
+            auto formatSpecifier = QLatin1String("dd_MM_yyyy_hh-mm-ss");
             if (!match.captured(1).isEmpty()) {
                 formatSpecifier = match.captured(1);
             }

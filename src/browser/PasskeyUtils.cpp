@@ -357,7 +357,7 @@ QJsonObject PasskeyUtils::buildClientDataJson(const QJsonObject& publicKey, cons
     clientData["challenge"] = publicKey["challenge"];
     clientData["crossOrigin"] = false;
     clientData["origin"] = origin;
-    clientData["type"] = get ? QString("webauthn.get") : QString("webauthn.create");
+    clientData["type"] = get ? QLatin1String("webauthn.get") : QLatin1String("webauthn.create");
 
     return clientData;
 }

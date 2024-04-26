@@ -308,8 +308,8 @@ void TestGui::testCreateDatabase()
     QCOMPARE(m_db->rootGroup()->children().size(), 0);
 
     // check meta data
-    QCOMPARE(m_db->metadata()->name(), QString("Test Name"));
-    QCOMPARE(m_db->metadata()->description(), QString("Test Description"));
+    QCOMPARE(m_db->metadata()->name(), QLatin1String("Test Name"));
+    QCOMPARE(m_db->metadata()->description(), QLatin1String("Test Description"));
 
     // check key and encryption
     QCOMPARE(m_db->key()->keys().size(), 2);
@@ -350,7 +350,7 @@ void TestGui::testMergeDatabase()
     fileDialog()->setNextFileName(QString(KEEPASSX_TEST_DATA_DIR).append("/MergeDatabase.kdbx"));
     triggerAction("actionDatabaseMerge");
 
-    QTRY_COMPARE(QApplication::focusWidget()->objectName(), QString("passwordEdit"));
+    QTRY_COMPARE(QApplication::focusWidget()->objectName(), QLatin1String("passwordEdit"));
     auto* editPasswordMerge = QApplication::focusWidget();
     QVERIFY(editPasswordMerge->isVisible());
 
@@ -470,7 +470,7 @@ void TestGui::testEditEntry()
     QTRY_VERIFY(applyButton->isEnabled());
     QTest::mouseClick(applyButton, Qt::LeftButton);
     QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::EditMode);
-    QCOMPARE(entry->title(), QString("Sample Entry_test"));
+    QCOMPARE(entry->title(), QLatin1String("Sample Entry_test"));
     QCOMPARE(entry->historyItems().size(), ++editCount);
     QVERIFY(!applyButton->isEnabled());
 
@@ -488,19 +488,19 @@ void TestGui::testEditEntry()
     auto* tags = editEntryWidget->findChild<TagsEdit*>("tagsList");
     QTest::keyClicks(tags, "_tag1");
     QTest::keyClick(tags, Qt::Key_Return);
-    QCOMPARE(tags->tags().last(), QString("_tag1"));
+    QCOMPARE(tags->tags().last(), QLatin1String("_tag1"));
     QTest::keyClicks(tags, "tag 2"); // adds another tag
     QTest::keyClick(tags, Qt::Key_Return);
-    QCOMPARE(tags->tags().last(), QString("tag 2"));
+    QCOMPARE(tags->tags().last(), QLatin1String("tag 2"));
     QTest::keyClick(tags, Qt::Key_Backspace); // Back into editing last tag
     QTest::keyClicks(tags, "_is!awesome");
     QTest::keyClick(tags, Qt::Key_Return);
-    QCOMPARE(tags->tags().last(), QString("tag 2_is!awesome"));
+    QCOMPARE(tags->tags().last(), QLatin1String("tag 2_is!awesome"));
 
     // Test entry colors (simulate choosing a color)
     editEntryWidget->setCurrentPage(1);
-    auto fgColor = QString("#FF0000");
-    auto bgColor = QString("#0000FF");
+    auto fgColor = QLatin1String("#FF0000");
+    auto bgColor = QLatin1String("#0000FF");
     // Set foreground color
     auto colorButton = editEntryWidget->findChild<QPushButton*>("fgColorButton");
     auto colorCheckBox = editEntryWidget->findChild<QCheckBox*>("fgColorCheckBox");
@@ -533,7 +533,7 @@ void TestGui::testEditEntry()
 
     // Confirm edit was made
     QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::ViewMode);
-    QCOMPARE(entry->title(), QString("Sample Entry_test"));
+    QCOMPARE(entry->title(), QLatin1String("Sample Entry_test"));
     QCOMPARE(entry->foregroundColor().toUpper(), fgColor.toUpper());
     QCOMPARE(entryItem.data(Qt::ForegroundRole), QVariant(fgColor));
     QCOMPARE(entry->backgroundColor().toUpper(), bgColor.toUpper());
@@ -554,11 +554,11 @@ void TestGui::testEditEntry()
     editEntryWidget->findChild<QLineEdit*>("urlEdit")->setText("multiline\nurl");
     QTest::mouseClick(okButton, Qt::LeftButton);
 
-    QCOMPARE(entry->title(), QString("multiline title"));
-    QCOMPARE(entry->username(), QString("multiline username"));
+    QCOMPARE(entry->title(), QLatin1String("multiline title"));
+    QCOMPARE(entry->username(), QLatin1String("multiline username"));
     // here we keep newlines, so users can't lock themselves out accidentally
     QCOMPARE(entry->password(), QString("multiline\npassword"));
-    QCOMPARE(entry->url(), QString("multiline url"));
+    QCOMPARE(entry->url(), QLatin1String("multiline url"));
 }
 
 void TestGui::testSearchEditEntry()
@@ -588,13 +588,13 @@ void TestGui::testSearchEditEntry()
     auto* editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
 
     // Create "Doggy" in "Good"
-    Group* goodGroup = m_dbWidget->currentGroup()->findChildByName(QString("Good"));
+    Group* goodGroup = m_dbWidget->currentGroup()->findChildByName(QLatin1String("Good"));
     m_dbWidget->groupView()->setCurrentGroup(goodGroup);
     QTest::mouseClick(entryNewWidget, Qt::LeftButton);
     QTest::keyClicks(titleEdit, "Doggy");
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
     // Select "Bad" group in groupView
-    Group* badGroup = m_db->rootGroup()->findChildByName(QString("Bad"));
+    Group* badGroup = m_db->rootGroup()->findChildByName(QLatin1String("Bad"));
     m_dbWidget->groupView()->setCurrentGroup(badGroup);
 
     // Search for "Doggy" entry
@@ -649,8 +649,8 @@ void TestGui::testAddEntry()
     QModelIndex item = entryView->model()->index(1, 1);
     Entry* entry = entryView->entryFromIndex(item);
 
-    QCOMPARE(entry->title(), QString("test"));
-    QCOMPARE(entry->username(), QString("AutocompletionUsername"));
+    QCOMPARE(entry->title(), QLatin1String("test"));
+    QCOMPARE(entry->username(), QLatin1String("AutocompletionUsername"));
     QCOMPARE(entry->historyItems().size(), 0);
 
     m_db->updateCommonUsernames();
@@ -673,8 +673,8 @@ void TestGui::testAddEntry()
     item = entryView->model()->index(1, 1);
     entry = entryView->entryFromIndex(item);
 
-    QCOMPARE(entry->title(), QString("something 2"));
-    QCOMPARE(entry->username(), QString("AutocompletionUsername"));
+    QCOMPARE(entry->title(), QLatin1String("something 2"));
+    QCOMPARE(entry->username(), QLatin1String("AutocompletionUsername"));
     QCOMPARE(entry->historyItems().size(), 0);
 
     // Add entry "something 5" but click cancel button (does NOT add entry)
@@ -862,8 +862,8 @@ void TestGui::testDicewareEntryEntropy()
         auto* strengthLabel = pwGeneratorWidget->findChild<QLabel*>("strengthLabel");
         auto* wordLengthLabel = pwGeneratorWidget->findChild<QLabel*>("charactersInPassphraseLabel");
 
-        QTRY_COMPARE_WITH_TIMEOUT(entropyLabel->text(), QString("Entropy: 77.55 bit"), 200);
-        QCOMPARE(strengthLabel->text(), QString("Password Quality: Good"));
+        QTRY_COMPARE_WITH_TIMEOUT(entropyLabel->text(), QLatin1String("Entropy: 77.55 bit"), 200);
+        QCOMPARE(strengthLabel->text(), QLatin1String("Password Quality: Good"));
         QCOMPARE(wordLengthLabel->text().toInt(), pwGeneratorWidget->getGeneratedPassword().size());
 
         QTest::mouseClick(generatedPassword, Qt::LeftButton);
@@ -979,7 +979,7 @@ void TestGui::testSearch()
 
     // Search for "ZZZ"
     QTest::keyClicks(searchTextEdit, "ZZZ");
-    QTRY_COMPARE(searchTextEdit->text(), QString("ZZZ"));
+    QTRY_COMPARE(searchTextEdit->text(), QLatin1String("ZZZ"));
     QTRY_VERIFY(m_dbWidget->isSearchActive());
     QTRY_COMPARE(entryView->model()->rowCount(), 0);
     // Press the search clear button
@@ -1018,7 +1018,7 @@ void TestGui::testSearch()
     // Restore focus using F3 key and search text selection
     QTest::keyClick(m_mainWindow.data(), Qt::Key_F3);
     QTRY_VERIFY(searchTextEdit->hasFocus());
-    QTRY_COMPARE(searchTextEdit->selectedText(), QString("someTHING"));
+    QTRY_COMPARE(searchTextEdit->selectedText(), QLatin1String("someTHING"));
 
     searchedEntry->setPassword("password");
     QClipboard* clipboard = QApplication::clipboard();
@@ -1046,7 +1046,7 @@ void TestGui::testSearch()
     // Test that password does not copy
     searchTextEdit->selectAll();
     QTest::keyClick(searchTextEdit, Qt::Key_C, Qt::ControlModifier);
-    QTRY_COMPARE(clipboard->text(), QString("someTHING"));
+    QTRY_COMPARE(clipboard->text(), QLatin1String("someTHING"));
 
     // Test case sensitive search
     searchWidget->setCaseSensitive(true);
@@ -1060,7 +1060,7 @@ void TestGui::testSearch()
     QCOMPARE(groupView->currentGroup(), m_db->rootGroup());
     QModelIndex rootGroupIndex = groupView->model()->index(0, 0);
     clickIndex(groupView->model()->index(0, 0, rootGroupIndex), groupView, Qt::LeftButton);
-    QCOMPARE(groupView->currentGroup()->name(), QString("General"));
+    QCOMPARE(groupView->currentGroup()->name(), QLatin1String("General"));
     // Selecting a group should cancel search
     QTRY_COMPARE(entryView->model()->rowCount(), 0);
     // Restore search
@@ -1236,7 +1236,7 @@ void TestGui::testCloneEntry()
     QCOMPARE(entryView->model()->rowCount(), 2);
     Entry* entryClone = entryView->entryFromIndex(entryView->model()->index(1, 1));
     QVERIFY(entryOrg->uuid() != entryClone->uuid());
-    QCOMPARE(entryClone->title(), entryOrg->title() + QString(" - Clone"));
+    QCOMPARE(entryClone->title(), entryOrg->title() + QLatin1String(" - Clone"));
     QVERIFY(m_dbWidget->currentSelectedEntry()->uuid() == entryClone->uuid());
 }
 
@@ -1275,13 +1275,13 @@ void TestGui::testEntryPlaceholders()
     QModelIndex item = entryView->model()->index(1, 1);
     Entry* entry = entryView->entryFromIndex(item);
 
-    QCOMPARE(entry->title(), QString("test"));
-    QCOMPARE(entry->url(), QString("{TITLE}.{USERNAME}"));
+    QCOMPARE(entry->title(), QLatin1String("test"));
+    QCOMPARE(entry->url(), QLatin1String("{TITLE}.{USERNAME}"));
 
     // Test password copy
     QClipboard* clipboard = QApplication::clipboard();
     m_dbWidget->copyURL();
-    QTRY_COMPARE(clipboard->text(), QString("test.john"));
+    QTRY_COMPARE(clipboard->text(), QLatin1String("test.john"));
 }
 
 void TestGui::testDragAndDropEntry()
@@ -1320,9 +1320,9 @@ void TestGui::testDragAndDropEntry()
     mimeData.setData("application/x-keepassx-entry", encoded);
 
     // Test Move, entry pointer should remain the same
-    QCOMPARE(entry->group()->name(), QString("NewDatabase"));
+    QCOMPARE(entry->group()->name(), QLatin1String("NewDatabase"));
     QVERIFY(groupModel->dropMimeData(&mimeData, Qt::MoveAction, -1, 0, targetIndex));
-    QCOMPARE(entry->group()->name(), QString("General"));
+    QCOMPARE(entry->group()->name(), QLatin1String("General"));
     QCOMPARE(entry->uuid(), uuid);
     QCOMPARE(entry->historyItems().count(), history);
 }
@@ -1364,7 +1364,7 @@ void TestGui::testSaveAs()
 
     triggerAction("actionDatabaseSaveAs");
 
-    QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("testSaveAs"));
+    QCOMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QLatin1String("testSaveAs"));
 
     checkDatabase(tmpFileName);
 
@@ -1387,13 +1387,13 @@ void TestGui::testSaveBackup()
     tmpFile.remove();
 
     // wait for modified timer
-    QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("testSaveBackup*"));
+    QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QLatin1String("testSaveBackup*"));
 
     fileDialog()->setNextFileName(tmpFileName);
 
     triggerAction("actionDatabaseSaveBackup");
 
-    QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("testSaveBackup*"));
+    QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QLatin1String("testSaveBackup*"));
 
     checkDatabase(tmpFileName);
 
@@ -1729,63 +1729,63 @@ void TestGui::testSortGroups()
 
     triggerAction("actionGroupSortAsc");
     QList<Group*> children = rootGroup->children();
-    QCOMPARE(children[0]->name(), QString("eMail"));
-    QCOMPARE(children[1]->name(), QString("General"));
-    QCOMPARE(children[2]->name(), QString("Homebanking"));
-    QCOMPARE(children[3]->name(), QString("Internet"));
-    QCOMPARE(children[4]->name(), QString("Network"));
-    QCOMPARE(children[5]->name(), QString("Windows"));
+    QCOMPARE(children[0]->name(), QLatin1String("eMail"));
+    QCOMPARE(children[1]->name(), QLatin1String("General"));
+    QCOMPARE(children[2]->name(), QLatin1String("Homebanking"));
+    QCOMPARE(children[3]->name(), QLatin1String("Internet"));
+    QCOMPARE(children[4]->name(), QLatin1String("Network"));
+    QCOMPARE(children[5]->name(), QLatin1String("Windows"));
     QList<Group*> subChildren = internetGroup->children();
-    QCOMPARE(subChildren[0]->name(), QString("Amazon"));
-    QCOMPARE(subChildren[1]->name(), QString("eBay"));
-    QCOMPARE(subChildren[2]->name(), QString("Facebook"));
-    QCOMPARE(subChildren[3]->name(), QString("Google"));
+    QCOMPARE(subChildren[0]->name(), QLatin1String("Amazon"));
+    QCOMPARE(subChildren[1]->name(), QLatin1String("eBay"));
+    QCOMPARE(subChildren[2]->name(), QLatin1String("Facebook"));
+    QCOMPARE(subChildren[3]->name(), QLatin1String("Google"));
 
     triggerAction("actionGroupSortDesc");
     children = rootGroup->children();
-    QCOMPARE(children[0]->name(), QString("Windows"));
-    QCOMPARE(children[1]->name(), QString("Network"));
-    QCOMPARE(children[2]->name(), QString("Internet"));
-    QCOMPARE(children[3]->name(), QString("Homebanking"));
-    QCOMPARE(children[4]->name(), QString("General"));
-    QCOMPARE(children[5]->name(), QString("eMail"));
+    QCOMPARE(children[0]->name(), QLatin1String("Windows"));
+    QCOMPARE(children[1]->name(), QLatin1String("Network"));
+    QCOMPARE(children[2]->name(), QLatin1String("Internet"));
+    QCOMPARE(children[3]->name(), QLatin1String("Homebanking"));
+    QCOMPARE(children[4]->name(), QLatin1String("General"));
+    QCOMPARE(children[5]->name(), QLatin1String("eMail"));
     subChildren = internetGroup->children();
-    QCOMPARE(subChildren[0]->name(), QString("Google"));
-    QCOMPARE(subChildren[1]->name(), QString("Facebook"));
-    QCOMPARE(subChildren[2]->name(), QString("eBay"));
-    QCOMPARE(subChildren[3]->name(), QString("Amazon"));
+    QCOMPARE(subChildren[0]->name(), QLatin1String("Google"));
+    QCOMPARE(subChildren[1]->name(), QLatin1String("Facebook"));
+    QCOMPARE(subChildren[2]->name(), QLatin1String("eBay"));
+    QCOMPARE(subChildren[3]->name(), QLatin1String("Amazon"));
 
     m_dbWidget->groupView()->setCurrentGroup(internetGroup);
     triggerAction("actionGroupSortAsc");
     children = rootGroup->children();
-    QCOMPARE(children[0]->name(), QString("Windows"));
-    QCOMPARE(children[1]->name(), QString("Network"));
-    QCOMPARE(children[2]->name(), QString("Internet"));
-    QCOMPARE(children[3]->name(), QString("Homebanking"));
-    QCOMPARE(children[4]->name(), QString("General"));
-    QCOMPARE(children[5]->name(), QString("eMail"));
+    QCOMPARE(children[0]->name(), QLatin1String("Windows"));
+    QCOMPARE(children[1]->name(), QLatin1String("Network"));
+    QCOMPARE(children[2]->name(), QLatin1String("Internet"));
+    QCOMPARE(children[3]->name(), QLatin1String("Homebanking"));
+    QCOMPARE(children[4]->name(), QLatin1String("General"));
+    QCOMPARE(children[5]->name(), QLatin1String("eMail"));
     subChildren = internetGroup->children();
-    QCOMPARE(subChildren[0]->name(), QString("Amazon"));
-    QCOMPARE(subChildren[1]->name(), QString("eBay"));
-    QCOMPARE(subChildren[2]->name(), QString("Facebook"));
-    QCOMPARE(subChildren[3]->name(), QString("Google"));
+    QCOMPARE(subChildren[0]->name(), QLatin1String("Amazon"));
+    QCOMPARE(subChildren[1]->name(), QLatin1String("eBay"));
+    QCOMPARE(subChildren[2]->name(), QLatin1String("Facebook"));
+    QCOMPARE(subChildren[3]->name(), QLatin1String("Google"));
 
     m_dbWidget->groupView()->setCurrentGroup(rootGroup);
     triggerAction("actionGroupSortAsc");
     m_dbWidget->groupView()->setCurrentGroup(internetGroup);
     triggerAction("actionGroupSortDesc");
     children = rootGroup->children();
-    QCOMPARE(children[0]->name(), QString("eMail"));
-    QCOMPARE(children[1]->name(), QString("General"));
-    QCOMPARE(children[2]->name(), QString("Homebanking"));
-    QCOMPARE(children[3]->name(), QString("Internet"));
-    QCOMPARE(children[4]->name(), QString("Network"));
-    QCOMPARE(children[5]->name(), QString("Windows"));
+    QCOMPARE(children[0]->name(), QLatin1String("eMail"));
+    QCOMPARE(children[1]->name(), QLatin1String("General"));
+    QCOMPARE(children[2]->name(), QLatin1String("Homebanking"));
+    QCOMPARE(children[3]->name(), QLatin1String("Internet"));
+    QCOMPARE(children[4]->name(), QLatin1String("Network"));
+    QCOMPARE(children[5]->name(), QLatin1String("Windows"));
     subChildren = internetGroup->children();
-    QCOMPARE(subChildren[0]->name(), QString("Google"));
-    QCOMPARE(subChildren[1]->name(), QString("Facebook"));
-    QCOMPARE(subChildren[2]->name(), QString("eBay"));
-    QCOMPARE(subChildren[3]->name(), QString("Amazon"));
+    QCOMPARE(subChildren[0]->name(), QLatin1String("Google"));
+    QCOMPARE(subChildren[1]->name(), QLatin1String("Facebook"));
+    QCOMPARE(subChildren[2]->name(), QLatin1String("eBay"));
+    QCOMPARE(subChildren[3]->name(), QLatin1String("Amazon"));
 }
 
 void TestGui::testTrayRestoreHide()
