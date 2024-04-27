@@ -831,6 +831,16 @@ void DatabaseWidget::removeFromAgent()
         m_messageWidget->showMessage(settings.errorString(), MessageWidget::Error);
     }
 }
+
+void DatabaseWidget::flushSSHAgent()
+{
+    SSHAgent* agent = SSHAgent::instance();
+    if (!agent->flushAllAgentIdentities()) {
+        showMessage(agent->errorString(), MessageWidget::Error);
+    } else {
+        showMessage(agent->errorString(), MessageWidget::Positive);
+    }
+}
 #endif
 
 void DatabaseWidget::performAutoType(const QString& sequence)

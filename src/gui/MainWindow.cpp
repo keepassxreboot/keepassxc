@@ -420,6 +420,7 @@ MainWindow::MainWindow()
 
     m_ui->actionSettings->setIcon(icons()->icon("configure"));
     m_ui->actionPasswordGenerator->setIcon(icons()->icon("password-generator"));
+    m_ui->actionFlushSSHAgent->setIcon(icons()->icon("utilities-terminal"));
 
     m_ui->actionAbout->setIcon(icons()->icon("help-about"));
     m_ui->actionDonate->setIcon(icons()->icon("donate"));
@@ -533,6 +534,7 @@ MainWindow::MainWindow()
 #ifdef WITH_XC_SSHAGENT
     m_actionMultiplexer.connect(m_ui->actionEntryAddToAgent, SIGNAL(triggered()), SLOT(addToAgent()));
     m_actionMultiplexer.connect(m_ui->actionEntryRemoveFromAgent, SIGNAL(triggered()), SLOT(removeFromAgent()));
+    m_actionMultiplexer.connect(m_ui->actionFlushSSHAgent, SIGNAL(triggered()), SLOT(flushSSHAgent()));
 #endif
 
     m_actionMultiplexer.connect(m_ui->actionGroupNew, SIGNAL(triggered()), SLOT(createGroup()));
@@ -990,6 +992,8 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionEntryAddToAgent->setEnabled(singleEntryHasSshKey);
             m_ui->actionEntryRemoveFromAgent->setVisible(singleEntryHasSshKey);
             m_ui->actionEntryRemoveFromAgent->setEnabled(singleEntryHasSshKey);
+            m_ui->actionFlushSSHAgent->setVisible(true);
+            m_ui->actionFlushSSHAgent->setEnabled(true);
 #endif
 
             m_searchWidgetAction->setEnabled(true);
@@ -1663,6 +1667,7 @@ void MainWindow::agentEnabled(bool enabled)
 {
     m_ui->actionEntryAddToAgent->setVisible(enabled);
     m_ui->actionEntryRemoveFromAgent->setVisible(enabled);
+    m_ui->actionFlushSSHAgent->setVisible(enabled);
 }
 
 void MainWindow::showEntryContextMenu(const QPoint& globalPos)
@@ -2147,6 +2152,7 @@ void MainWindow::initActionCollection()
                     m_ui->actionGroupEmptyRecycleBin,
                     // Tools Menu
                     m_ui->actionPasswordGenerator,
+                    m_ui->actionFlushSSHAgent,
                     m_ui->actionSettings,
                     // View Menu
                     m_ui->actionThemeAuto,

@@ -122,6 +122,7 @@ private slots:
     void browsePrivateKey();
     void addKeyToAgent();
     void removeKeyFromAgent();
+    void flushAgent();
     void decryptPrivateKey();
     void copyPublicKey();
     void generatePrivateKey();
