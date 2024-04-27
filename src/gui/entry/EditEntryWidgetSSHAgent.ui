@@ -155,9 +155,9 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="flushAgentButton">
+         <widget class="QPushButton" name="clearAgentButton">
           <property name="text">
-           <string>Flush agent</string>
+           <string>Clear agent</string>
           </property>
          </widget>
         </item>

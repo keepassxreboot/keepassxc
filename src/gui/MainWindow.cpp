@@ -230,12 +230,12 @@ MainWindow::MainWindow()
     connect(sshAgent(), SIGNAL(enabledChanged(bool)), this, SLOT(agentEnabled(bool)));
     m_ui->settingsWidget->addSettingsPage(new AgentSettingsPage());
     if (!sshAgent()->isEnabled()) {
-        m_ui->actionFlushSSHAgent->setEnabled(false);
-        m_ui->actionFlushSSHAgent->setVisible(false);
+        m_ui->actionClearSSHAgent->setEnabled(false);
+        m_ui->actionClearSSHAgent->setVisible(false);
     }
 #else
-    m_ui->actionFlushSSHAgent->setVisible(false);
-    m_ui->actionFlushSSHAgent->setEnabled(false);
+    m_ui->actionClearSSHAgent->setVisible(false);
+    m_ui->actionClearSSHAgent->setEnabled(false);
 #endif
 
 #if defined(WITH_XC_KEESHARE)
@@ -427,7 +427,7 @@ MainWindow::MainWindow()
 
     m_ui->actionSettings->setIcon(icons()->icon("configure"));
 #ifdef WITH_XC_SSHAGENT
-    m_ui->actionFlushSSHAgent->setIcon(icons()->icon("utilities-terminal"));
+    m_ui->actionClearSSHAgent->setIcon(icons()->icon("utilities-terminal"));
 #endif
     m_ui->actionPasswordGenerator->setIcon(icons()->icon("password-generator"));
 
@@ -543,7 +543,7 @@ MainWindow::MainWindow()
 #ifdef WITH_XC_SSHAGENT
     m_actionMultiplexer.connect(m_ui->actionEntryAddToAgent, SIGNAL(triggered()), SLOT(addToAgent()));
     m_actionMultiplexer.connect(m_ui->actionEntryRemoveFromAgent, SIGNAL(triggered()), SLOT(removeFromAgent()));
-    m_actionMultiplexer.connect(m_ui->actionFlushSSHAgent, SIGNAL(triggered()), SLOT(flushSSHAgent()));
+    m_actionMultiplexer.connect(m_ui->actionClearSSHAgent, SIGNAL(triggered()), SLOT(clearSSHAgent()));
 #endif
 
     m_actionMultiplexer.connect(m_ui->actionGroupNew, SIGNAL(triggered()), SLOT(createGroup()));
@@ -1674,8 +1674,8 @@ void MainWindow::agentEnabled(bool enabled)
 {
     m_ui->actionEntryAddToAgent->setVisible(enabled);
     m_ui->actionEntryRemoveFromAgent->setVisible(enabled);
-    m_ui->actionFlushSSHAgent->setEnabled(enabled);
-    m_ui->actionFlushSSHAgent->setVisible(enabled);
+    m_ui->actionClearSSHAgent->setEnabled(enabled);
+    m_ui->actionClearSSHAgent->setVisible(enabled);
 }
 
 void MainWindow::showEntryContextMenu(const QPoint& globalPos)
@@ -2161,7 +2161,7 @@ void MainWindow::initActionCollection()
                     // Tools Menu
                     m_ui->actionPasswordGenerator,
 #ifdef WITH_XC_SSHAGENT
-                    m_ui->actionFlushSSHAgent,
+                    m_ui->actionClearSSHAgent,
 #endif
                     m_ui->actionSettings,
                     // View Menu

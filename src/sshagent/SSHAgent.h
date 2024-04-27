@@ -56,7 +56,7 @@ public:
     bool checkIdentity(const OpenSSHKey& key, bool& loaded);
     bool removeIdentity(OpenSSHKey& key);
     void removeAllIdentities();
-    bool flushAllAgentIdentities();
+    bool clearAllAgentIdentities();
     void setAutoRemoveOnLock(const OpenSSHKey& key, bool autoRemove);
 
 signals:

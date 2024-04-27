@@ -832,10 +832,10 @@ void DatabaseWidget::removeFromAgent()
     }
 }
 
-void DatabaseWidget::flushSSHAgent()
+void DatabaseWidget::clearSSHAgent()
 {
     SSHAgent* agent = SSHAgent::instance();
-    if (!agent->flushAllAgentIdentities()) {
+    if (!agent->clearAllAgentIdentities()) {
         showMessage(agent->errorString(), MessageWidget::Error);
     } else {
         showMessage(agent->errorString(), MessageWidget::Positive);

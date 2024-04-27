@@ -372,7 +372,7 @@
      <string>&amp;Tools</string>
     </property>
     <addaction name="actionPasswordGenerator"/>
-    <addaction name="actionFlushSSHAgent"/>
+    <addaction name="actionClearSSHAgent"/>
     <addaction name="actionSettings"/>
    </widget>
    <widget class="QMenu" name="menuView">
@@ -1395,12 +1395,12 @@
     <string>Import…</string>
    </property>
   </action>
-  <action name="actionFlushSSHAgent">
+  <action name="actionClearSSHAgent">
    <property name="text">
-    <string>Flush SSH Agent</string>
+    <string>Clear SSH Agent</string>
    </property>
    <property name="toolTip">
-    <string>Flush identities like ssh-add -D</string>
+    <string>Clear all identities like ssh-add -D</string>
    </property>
    <property name="menuRole">
     <enum>QAction::TextHeuristicRole</enum>
