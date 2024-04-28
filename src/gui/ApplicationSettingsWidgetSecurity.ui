@@ -187,13 +187,6 @@
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="passwordsRepeatVisibleCheckBox">
-        <property name="text">
-         <string>Require password repeat when it is visible</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QCheckBox" name="passwordsHiddenCheckBox">
         <property name="text">
          <string>Hide passwords when editing them</string>
@@ -288,7 +281,6 @@
   <tabstop>clearSearchSpinBox</tabstop>
   <tabstop>lockDatabaseOnScreenLockCheckBox</tabstop>
   <tabstop>lockDatabaseMinimizeCheckBox</tabstop>
-  <tabstop>passwordsRepeatVisibleCheckBox</tabstop>
   <tabstop>passwordsHiddenCheckBox</tabstop>
   <tabstop>passwordShowDotsCheckBox</tabstop>
   <tabstop>passwordPreviewCleartextCheckBox</tabstop>

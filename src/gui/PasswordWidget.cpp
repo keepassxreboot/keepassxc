@@ -148,8 +148,6 @@ void PasswordWidget::setRepeatPartner(PasswordWidget* repeatPartner)
     m_repeatPasswordWidget = repeatPartner;
     m_repeatPasswordWidget->setParentPasswordEdit(this);
 
-    connect(
-        m_ui->passwordEdit, SIGNAL(textChanged(QString)), m_repeatPasswordWidget, SLOT(autocompletePassword(QString)));
     connect(m_ui->passwordEdit, SIGNAL(textChanged(QString)), m_repeatPasswordWidget, SLOT(updateRepeatStatus()));
 }
 
@@ -178,12 +176,6 @@ void PasswordWidget::setShowPassword(bool show)
 
     if (m_repeatPasswordWidget) {
         m_repeatPasswordWidget->setEchoMode(show ? QLineEdit::Normal : QLineEdit::Password);
-        if (!config()->get(Config::Security_PasswordsRepeatVisible).toBool()) {
-            m_repeatPasswordWidget->setEnabled(!show);
-            m_repeatPasswordWidget->setText(text());
-        } else {
-            m_repeatPasswordWidget->setEnabled(true);
-        }
     }
 }
 
@@ -228,14 +220,6 @@ void PasswordWidget::updateRepeatStatus()
         m_correctAction->setVisible(false);
         m_errorAction->setVisible(false);
         setStyleSheet("");
-    }
-}
-
-void PasswordWidget::autocompletePassword(const QString& password)
-{
-    if (!config()->get(Config::Security_PasswordsRepeatVisible).toBool()
-        && m_ui->passwordEdit->echoMode() == QLineEdit::Normal) {
-        setText(password);
     }
 }
 

@@ -118,7 +118,6 @@ public:
         Security_LockDatabaseMinimize,
         Security_LockDatabaseScreenLock,
         Security_RelockAutoType,
-        Security_PasswordsRepeatVisible,
         Security_PasswordsHidden,
         Security_PasswordEmptyPlaceholder,
         Security_HidePasswordPreviewPanel,
