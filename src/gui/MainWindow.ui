@@ -384,6 +384,7 @@
     <addaction name="actionAlwaysOnTop"/>
     <addaction name="actionAllowScreenCapture"/>
     <addaction name="actionShowPreviewPanel"/>
+    <addaction name="actionShowMenubar"/>
     <addaction name="actionShowToolbar"/>
     <addaction name="actionHideUsernames"/>
     <addaction name="actionHidePasswords"/>
@@ -1128,6 +1129,20 @@
    </property>
    <property name="toolTip">
     <string>Set Theme: Classic</string>
+   </property>
+  </action>
+  <action name="actionShowMenubar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show Menubar</string>
+   </property>
+   <property name="toolTip">
+    <string>Toggle Show Menubar</string>
    </property>
   </action>
   <action name="actionShowToolbar">

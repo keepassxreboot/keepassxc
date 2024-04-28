@@ -549,6 +549,7 @@ MainWindow::MainWindow()
     m_ui->menubar->installEventFilter(eventFilter);
     m_ui->toolBar->installEventFilter(eventFilter);
     m_ui->tabWidget->tabBar()->installEventFilter(eventFilter);
+    installEventFilter(eventFilter);
 #endif
 
 #ifdef Q_OS_MACOS
@@ -1632,6 +1633,7 @@ void MainWindow::applySettingsChanges()
         m_inactivityTimer->deactivate();
     }
 
+    m_ui->menubar->setHidden(config()->get(Config::GUI_HideMenubar).toBool());
     m_ui->toolBar->setHidden(config()->get(Config::GUI_HideToolbar).toBool());
     auto movable = config()->get(Config::GUI_MovableToolbar).toBool();
     m_ui->toolBar->setMovable(movable);
@@ -1994,6 +1996,16 @@ void MainWindow::initViewMenu()
         }
     });
 
+#ifdef Q_OS_MACOS
+    m_ui->actionShowMenubar->setVisible(false);
+#else
+    m_ui->actionShowMenubar->setChecked(!config()->get(Config::GUI_HideMenubar).toBool());
+    connect(m_ui->actionShowMenubar, &QAction::toggled, this, [this](bool checked) {
+        config()->set(Config::GUI_HideMenubar, !checked);
+        applySettingsChanges();
+    });
+#endif
+
     m_ui->actionShowToolbar->setChecked(!config()->get(Config::GUI_HideToolbar).toBool());
     connect(m_ui->actionShowToolbar, &QAction::toggled, this, [this](bool checked) {
         config()->set(Config::GUI_HideToolbar, !checked);
@@ -2099,6 +2111,9 @@ void MainWindow::initActionCollection()
                     m_ui->actionThemeDark,
                     m_ui->actionThemeClassic,
                     m_ui->actionCompactMode,
+#ifndef Q_OS_MACOS
+                    m_ui->actionShowMenubar,
+#endif
                     m_ui->actionShowToolbar,
                     m_ui->actionShowPreviewPanel,
                     m_ui->actionAllowScreenCapture,
@@ -2176,6 +2191,7 @@ MainWindowEventFilter::MainWindowEventFilter(QObject* parent)
 
 /**
  * MainWindow event filter to initiate empty-area drag on the toolbar, menubar, and tabbar.
+ * Also shows menubar with Alt when menubar itself is hidden.
  */
 bool MainWindowEventFilter::eventFilter(QObject* watched, QEvent* event)
 {
@@ -2184,10 +2200,11 @@ bool MainWindowEventFilter::eventFilter(QObject* watched, QEvent* event)
         return QObject::eventFilter(watched, event);
     }
 
-    if (event->type() == QEvent::MouseButtonPress) {
+    auto eventType = event->type();
+    if (eventType == QEvent::MouseButtonPress) {
+        auto mouseEvent = dynamic_cast<QMouseEvent*>(event);
         if (watched == mainWindow->m_ui->menubar) {
-            auto* m = static_cast<QMouseEvent*>(event);
-            if (!mainWindow->m_ui->menubar->actionAt(m->pos())) {
+            if (!mainWindow->m_ui->menubar->actionAt(mouseEvent->pos())) {
                 mainWindow->windowHandle()->startSystemMove();
                 return false;
             }
@@ -2197,10 +2214,22 @@ bool MainWindowEventFilter::eventFilter(QObject* watched, QEvent* event)
                 return false;
             }
         } else if (watched == mainWindow->m_ui->tabWidget->tabBar()) {
-            auto* m = static_cast<QMouseEvent*>(event);
-            if (mainWindow->m_ui->tabWidget->tabBar()->tabAt(m->pos()) == -1) {
+            if (mainWindow->m_ui->tabWidget->tabBar()->tabAt(mouseEvent->pos()) == -1) {
                 mainWindow->windowHandle()->startSystemMove();
                 return true;
+            }
+        }
+    } else if (eventType == QEvent::KeyRelease) {
+        if (watched == mainWindow) {
+            auto keyEvent = dynamic_cast<QKeyEvent*>(event);
+            if (keyEvent->key() == Qt::Key_Alt && !keyEvent->modifiers()
+                && config()->get(Config::GUI_HideMenubar).toBool()) {
+                auto menubar = mainWindow->m_ui->menubar;
+                menubar->setVisible(!menubar->isVisible());
+                if (menubar->isVisible()) {
+                    menubar->setActiveAction(mainWindow->m_ui->menuFile->menuAction());
+                }
+                return false;
             }
         }
     }
