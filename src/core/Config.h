@@ -89,7 +89,6 @@ public:
         GUI_MinimizeOnClose,
         GUI_HideUsernames,
         GUI_HidePasswords,
-        GUI_AdvancedSettings,
         GUI_ColorPasswords,
         GUI_MonospaceNotes,
         GUI_ApplicationTheme,

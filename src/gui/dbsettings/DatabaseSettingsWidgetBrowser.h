@@ -43,10 +43,6 @@ public:
     ~DatabaseSettingsWidgetBrowser() override;
 
     CustomData* customData() const;
-    inline bool hasAdvancedMode() const override
-    {
-        return false;
-    }
 
 public slots:
     void initialize() override;

@@ -192,7 +192,7 @@ void TestGui::testSettingsDefaultTabOrder()
     QVERIFY(dbSettingsWidget->isVisible());
     QCOMPARE(dbSettingsWidget->findChild<CategoryListWidget*>("categoryList")->currentCategory(), 0);
     for (auto* w : dbSettingsWidget->findChildren<QTabWidget*>()) {
-        if (w->currentIndex() != 0) {
+        if (w->currentIndex() != 0 && w->objectName() != "encryptionSettingsTabWidget") {
             QFAIL("Database settings contain QTabWidgets whose default index is not 0");
         }
     }
@@ -211,12 +211,16 @@ void TestGui::testCreateDatabase()
         QTest::keyClick(wizard, Qt::Key_Enter);
         QCOMPARE(wizard->currentId(), 1);
 
+        // Check that basic encryption settings are visible
         auto decryptionTimeSlider = wizard->currentPage()->findChild<QSlider*>("decryptionTimeSlider");
         auto algorithmComboBox = wizard->currentPage()->findChild<QComboBox*>("algorithmComboBox");
         QTRY_VERIFY(decryptionTimeSlider->isVisible());
         QVERIFY(!algorithmComboBox->isVisible());
-        auto advancedToggle = wizard->currentPage()->findChild<QPushButton*>("advancedSettingsButton");
-        QTest::mouseClick(advancedToggle, Qt::MouseButton::LeftButton);
+
+        // Set the encryption settings to the advanced view
+        auto encryptionSettings = wizard->currentPage()->findChild<QTabWidget*>("encryptionSettingsTabWidget");
+        auto advancedTab = encryptionSettings->findChild<QWidget*>("advancedTab");
+        encryptionSettings->setCurrentWidget(advancedTab);
         QTRY_VERIFY(!decryptionTimeSlider->isVisible());
         QVERIFY(algorithmComboBox->isVisible());
 
@@ -1467,17 +1471,26 @@ void TestGui::testDatabaseSettings()
     m_db->metadata()->setName("testDatabaseSettings");
     triggerAction("actionDatabaseSettings");
     auto* dbSettingsDialog = m_dbWidget->findChild<QWidget*>("databaseSettingsDialog");
-    auto* transformRoundsSpinBox = dbSettingsDialog->findChild<QSpinBox*>("transformRoundsSpinBox");
-    auto advancedToggle = dbSettingsDialog->findChild<QCheckBox*>("advancedSettingsToggle");
+    auto* dbSettingsCategoryList = dbSettingsDialog->findChild<CategoryListWidget*>("categoryList");
+    auto* dbSettingsStackedWidget = dbSettingsDialog->findChild<QStackedWidget*>("stackedWidget");
     auto* autosaveDelayCheckBox = dbSettingsDialog->findChild<QCheckBox*>("autosaveDelayCheckBox");
     auto* autosaveDelaySpinBox = dbSettingsDialog->findChild<QSpinBox*>("autosaveDelaySpinBox");
     auto* dbSettingsButtonBox = dbSettingsDialog->findChild<QDialogButtonBox*>("buttonBox");
     int autosaveDelayTestValue = 2;
 
-    advancedToggle->setChecked(true);
+    dbSettingsCategoryList->setCurrentCategory(1); // go into security category
+    dbSettingsStackedWidget->findChild<QTabWidget*>()->setCurrentIndex(1); // go into encryption tab
+
+    auto encryptionSettings = dbSettingsDialog->findChild<QTabWidget*>("encryptionSettingsTabWidget");
+    auto advancedTab = encryptionSettings->findChild<QWidget*>("advancedTab");
+    encryptionSettings->setCurrentWidget(advancedTab);
+
     QApplication::processEvents();
 
-    QVERIFY(transformRoundsSpinBox != nullptr);
+    auto transformRoundsSpinBox = advancedTab->findChild<QSpinBox*>("transformRoundsSpinBox");
+    QVERIFY(transformRoundsSpinBox);
+    QVERIFY(transformRoundsSpinBox->isVisible());
+
     transformRoundsSpinBox->setValue(123456);
     QTest::keyClick(transformRoundsSpinBox, Qt::Key_Enter);
     QTRY_COMPARE(m_db->kdf()->rounds(), 123456);

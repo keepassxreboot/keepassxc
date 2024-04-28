@@ -108,7 +108,6 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::GUI_MinimizeOnClose, {QS("GUI/MinimizeOnClose"), Roaming, false}},
     {Config::GUI_HideUsernames, {QS("GUI/HideUsernames"), Roaming, false}},
     {Config::GUI_HidePasswords, {QS("GUI/HidePasswords"), Roaming, true}},
-    {Config::GUI_AdvancedSettings, {QS("GUI/AdvancedSettings"), Roaming, false}},
     {Config::GUI_ColorPasswords, {QS("GUI/ColorPasswords"), Roaming, false}},
     {Config::GUI_MonospaceNotes, {QS("GUI/MonospaceNotes"), Roaming, false}},
     {Config::GUI_ApplicationTheme, {QS("GUI/ApplicationTheme"), Roaming, QS("auto")}},
@@ -374,8 +373,11 @@ static const QHash<QString, Config::ConfigKey> deprecationMap = {
     {QS("UseTouchID"), Config::Deleted},
     {QS("Security/ResetTouchId"), Config::Deleted},
     {QS("Security/ResetTouchIdTimeout"), Config::Deleted},
-    {QS("Security/ResetTouchIdScreenlock"), Config::Deleted},
+
+    // 2.7.8
+    {QS("GUI/AdvancedSettings"), Config::Deleted},
     {QS("Security/PasswordsRepeatVisible"), Config::Deleted}};
+
 /**
  * Migrate settings from previous versions.
  */
