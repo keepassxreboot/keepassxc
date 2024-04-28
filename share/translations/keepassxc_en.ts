@@ -2669,6 +2669,10 @@ Would you like to correct it?</source>
             <numerusform></numerusform>
         </translation>
     </message>
+    <message>
+        <source>(comment is encrypted)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetAdvanced</name>

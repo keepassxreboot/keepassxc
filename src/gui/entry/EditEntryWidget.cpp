@@ -665,18 +665,18 @@ void EditEntryWidget::updateSSHAgentKeyInfo()
         m_sshAgentUi->fingerprintTextLabel->setText(tr("(encrypted)"));
     }
 
-    if (!key.comment().isEmpty() || !key.encrypted()) {
+    if (!key.comment().isEmpty()) {
         m_sshAgentUi->commentTextLabel->setText(key.comment());
-    } else {
+    } else if (key.encrypted()) {
         m_sshAgentUi->commentTextLabel->setText(tr("(encrypted)"));
         m_sshAgentUi->decryptButton->setEnabled(true);
     }
 
-    if (!key.publicKey().isEmpty()) {
+    if (!key.publicKey().isEmpty() && !key.encrypted()) {
         m_sshAgentUi->publicKeyEdit->document()->setPlainText(key.publicKey());
         m_sshAgentUi->copyToClipboardButton->setEnabled(true);
     } else {
-        m_sshAgentUi->publicKeyEdit->document()->setPlainText(tr("(encrypted)"));
+        m_sshAgentUi->publicKeyEdit->document()->setPlainText(key.publicKey() + tr("(comment is encrypted)"));
         m_sshAgentUi->copyToClipboardButton->setDisabled(true);
     }
 
