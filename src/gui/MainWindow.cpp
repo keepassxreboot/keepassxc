@@ -229,6 +229,13 @@ MainWindow::MainWindow()
     connect(sshAgent(), SIGNAL(error(QString)), this, SLOT(showErrorMessage(QString)));
     connect(sshAgent(), SIGNAL(enabledChanged(bool)), this, SLOT(agentEnabled(bool)));
     m_ui->settingsWidget->addSettingsPage(new AgentSettingsPage());
+    if (!sshAgent()->isEnabled()) {
+        m_ui->actionFlushSSHAgent->setEnabled(false);
+        m_ui->actionFlushSSHAgent->setVisible(false);
+    }
+#else
+    m_ui->actionFlushSSHAgent->setVisible(false);
+    m_ui->actionFlushSSHAgent->setEnabled(false);
 #endif
 
 #if defined(WITH_XC_KEESHARE)
@@ -419,8 +426,10 @@ MainWindow::MainWindow()
     m_ui->actionGroupDownloadFavicons->setIcon(icons()->icon("favicon-download"));
 
     m_ui->actionSettings->setIcon(icons()->icon("configure"));
-    m_ui->actionPasswordGenerator->setIcon(icons()->icon("password-generator"));
+#ifdef WITH_XC_SSHAGENT
     m_ui->actionFlushSSHAgent->setIcon(icons()->icon("utilities-terminal"));
+#endif
+    m_ui->actionPasswordGenerator->setIcon(icons()->icon("password-generator"));
 
     m_ui->actionAbout->setIcon(icons()->icon("help-about"));
     m_ui->actionDonate->setIcon(icons()->icon("donate"));
@@ -992,8 +1001,6 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionEntryAddToAgent->setEnabled(singleEntryHasSshKey);
             m_ui->actionEntryRemoveFromAgent->setVisible(singleEntryHasSshKey);
             m_ui->actionEntryRemoveFromAgent->setEnabled(singleEntryHasSshKey);
-            m_ui->actionFlushSSHAgent->setVisible(true);
-            m_ui->actionFlushSSHAgent->setEnabled(true);
 #endif
 
             m_searchWidgetAction->setEnabled(true);
@@ -1667,6 +1674,7 @@ void MainWindow::agentEnabled(bool enabled)
 {
     m_ui->actionEntryAddToAgent->setVisible(enabled);
     m_ui->actionEntryRemoveFromAgent->setVisible(enabled);
+    m_ui->actionFlushSSHAgent->setEnabled(enabled);
     m_ui->actionFlushSSHAgent->setVisible(enabled);
 }
 
@@ -2152,7 +2160,9 @@ void MainWindow::initActionCollection()
                     m_ui->actionGroupEmptyRecycleBin,
                     // Tools Menu
                     m_ui->actionPasswordGenerator,
+#ifdef WITH_XC_SSHAGENT
                     m_ui->actionFlushSSHAgent,
+#endif
                     m_ui->actionSettings,
                     // View Menu
                     m_ui->actionThemeAuto,
