@@ -121,7 +121,7 @@ void PasswordGeneratorWidget::closeEvent(QCloseEvent* event)
 {
     // Emits closed signal when clicking X from title bar
     emit closed();
-    event->accept();
+    QWidget::closeEvent(event);
 }
 
 PasswordGeneratorWidget* PasswordGeneratorWidget::popupGenerator(QWidget* parent)

@@ -278,6 +278,8 @@ QJsonObject BrowserAction::handleGeneratePassword(QLocalSocket* socket, const QJ
             errorReply["requestID"] = requestId;
         }
 
+        // Show the existing password generator
+        browserService()->showPasswordGenerator({});
         return errorReply;
     }
 

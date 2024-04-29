@@ -70,6 +70,9 @@ public slots:
     void deleteWordList();
     void addWordList();
 
+protected:
+    void closeEvent(QCloseEvent* event) override;
+
 private slots:
     void updateButtonsEnabled(const QString& password);
     void updatePasswordStrength();
@@ -86,7 +89,6 @@ private:
     bool m_passwordGenerated = false;
     int m_firstCustomWordlistIndex;
 
-    void closeEvent(QCloseEvent* event);
     PasswordGenerator::CharClasses charClasses();
     PasswordGenerator::GeneratorFlags generatorFlags();
 
