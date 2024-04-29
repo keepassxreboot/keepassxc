@@ -138,8 +138,9 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     m_mainSplitter->setChildrenCollapsible(true);
     m_mainSplitter->addWidget(m_groupSplitter);
     m_mainSplitter->addWidget(rightHandSideWidget);
-    m_mainSplitter->setStretchFactor(0, 30);
-    m_mainSplitter->setStretchFactor(1, 70);
+    m_mainSplitter->setStretchFactor(0, 0);
+    m_mainSplitter->setStretchFactor(1, 100);
+    m_mainSplitter->setSizes({1, 1});
 
     m_previewSplitter->setOrientation(Qt::Vertical);
     m_previewSplitter->setChildrenCollapsible(true);
