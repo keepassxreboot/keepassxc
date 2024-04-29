@@ -276,7 +276,7 @@ bool Database::saveAs(const QString& filePath, SaveAction action, const QString&
 
     // Add random data to prevent side-channel data deduplication attacks
     int length = Random::instance()->randomUIntRange(64, 512);
-    m_metadata->customData()->set("KPXC_RANDOM_SLUG", Random::instance()->randomArray(length).toHex());
+    m_metadata->customData()->set(CustomData::RandomSlug, Random::instance()->randomArray(length).toHex());
 
     // Prevent destructive operations while saving
     QMutexLocker locker(&m_saveMutex);
