@@ -87,19 +87,15 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(openDatabase()));
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(reject()));
 
-    connect(m_ui->addKeyFileLinkLabel, &QLabel::linkActivated, this, [&](const QString&) {
-        if (browseKeyFile()) {
-            toggleKeyFileComponent(true);
-        }
-    });
+    connect(m_ui->addKeyFileLinkLabel, &QLabel::linkActivated, this, &DatabaseOpenWidget::browseKeyFile);
     connect(m_ui->keyFileLineEdit, &PasswordWidget::textChanged, this, [&](const QString& text) {
-        if (text.isEmpty() && m_ui->keyFileLineEdit->isVisible()) {
-            toggleKeyFileComponent(false);
-        }
+        bool state = !text.isEmpty();
+        m_ui->addKeyFileLinkLabel->setVisible(!state);
+        m_ui->selectKeyFileComponent->setVisible(state);
     });
     connect(m_ui->useHardwareKeyCheckBox, &QCheckBox::toggled, m_ui->hardwareKeyCombo, &QComboBox::setEnabled);
 
-    toggleKeyFileComponent(false);
+    m_ui->selectKeyFileComponent->setVisible(false);
     toggleHardwareKeyComponent(false);
 
     QSizePolicy sp = m_ui->hardwareKeyProgress->sizePolicy();
@@ -139,12 +135,6 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
 }
 
 DatabaseOpenWidget::~DatabaseOpenWidget() = default;
-
-void DatabaseOpenWidget::toggleKeyFileComponent(bool state)
-{
-    m_ui->addKeyFileLinkLabel->setVisible(!state);
-    m_ui->selectKeyFileComponent->setVisible(state);
-}
 
 void DatabaseOpenWidget::toggleHardwareKeyComponent(bool state)
 {
@@ -241,7 +231,6 @@ void DatabaseOpenWidget::load(const QString& filename)
         auto lastKeyFiles = config()->get(Config::LastKeyFiles).toHash();
         if (lastKeyFiles.contains(m_filename)) {
             m_ui->keyFileLineEdit->setText(lastKeyFiles[m_filename].toString());
-            toggleKeyFileComponent(true);
         }
     }
 
