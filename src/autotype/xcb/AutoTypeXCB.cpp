@@ -485,7 +485,7 @@ bool AutoTypePlatformX11::RemapKeycode(KeySym keysym)
 AutoTypeAction::Result AutoTypePlatformX11::sendKey(KeySym keysym, unsigned int modifiers)
 {
     if (keysym == NoSymbol) {
-        return AutoTypeAction::Result::Failed(tr("Trying to send invalid keysym."));
+        return AutoTypeAction::Result::Failed(tr("Trying to send invalid keyboard symbol."));
     }
 
     int keycode;

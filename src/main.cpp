@@ -138,7 +138,7 @@ int main(int argc, char** argv)
     if (app.isAlreadyRunning()) {
         if (parser.isSet(lockOption)) {
             if (app.sendLockToInstance()) {
-                qInfo() << QObject::tr("Locked databases.").toUtf8().constData();
+                qInfo() << QObject::tr("Databases have been locked.").toUtf8().constData();
             } else {
                 qWarning() << QObject::tr("Database failed to lock.").toUtf8().constData();
                 return EXIT_FAILURE;
