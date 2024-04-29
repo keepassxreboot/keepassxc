@@ -274,6 +274,7 @@ DatabaseWidget* DatabaseTabWidget::importFile()
         if (newDb) {
             // Merge the imported db into the new one
             Merger merger(db.data(), newDb.data());
+            merger.setSkipDatabaseCustomData(true);
             merger.merge();
             // Show the new database
             auto dbWidget = new DatabaseWidget(newDb, this);

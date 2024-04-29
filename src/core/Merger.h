@@ -31,6 +31,7 @@ public:
     Merger(const Group* sourceGroup, Group* targetGroup);
     void setForcedMergeMode(Group::MergeMode mode);
     void resetForcedMergeMode();
+    void setSkipDatabaseCustomData(bool state);
     QStringList merge();
 
 private:
@@ -73,6 +74,7 @@ private:
 private:
     MergeContext m_context;
     Group::MergeMode m_mode;
+    bool m_skipCustomData = false;
 };
 
 #endif // KEEPASSXC_MERGER_H
