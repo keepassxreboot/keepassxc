@@ -2557,10 +2557,6 @@ Disable safe saves and try again?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>(encrypted)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Select private key</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2668,10 +2664,6 @@ Would you like to correct it?</source>
             <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
-    </message>
-    <message>
-        <source>(comment is encrypted)</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6206,6 +6198,10 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Unexpected EOF when writing private key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(encrypted)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

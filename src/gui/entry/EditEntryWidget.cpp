@@ -661,23 +661,19 @@ void EditEntryWidget::updateSSHAgentKeyInfo()
     if (!key.fingerprint().isEmpty()) {
         m_sshAgentUi->fingerprintTextLabel->setText(key.fingerprint(QCryptographicHash::Md5) + "\n"
                                                     + key.fingerprint(QCryptographicHash::Sha256));
-    } else {
-        m_sshAgentUi->fingerprintTextLabel->setText(tr("(encrypted)"));
     }
 
     if (!key.comment().isEmpty()) {
         m_sshAgentUi->commentTextLabel->setText(key.comment());
-    } else if (key.encrypted()) {
-        m_sshAgentUi->commentTextLabel->setText(tr("(encrypted)"));
+    }
+
+    if (key.encrypted()) {
         m_sshAgentUi->decryptButton->setEnabled(true);
     }
 
-    if (!key.publicKey().isEmpty() && !key.encrypted()) {
+    if (!key.publicKey().isEmpty()) {
         m_sshAgentUi->publicKeyEdit->document()->setPlainText(key.publicKey());
         m_sshAgentUi->copyToClipboardButton->setEnabled(true);
-    } else {
-        m_sshAgentUi->publicKeyEdit->document()->setPlainText(key.publicKey() + tr("(comment is encrypted)"));
-        m_sshAgentUi->copyToClipboardButton->setDisabled(true);
     }
 
     // enable agent buttons only if we have an agent running
