@@ -269,23 +269,10 @@ DatabaseWidget* DatabaseTabWidget::importFile()
         return nullptr;
     }
 
-    auto importInto = wizard->importInto();
-    if (importInto.first.isNull()) {
-        // Start the new database wizard with the imported database
-        auto newDb = execNewDatabaseWizard();
-        if (newDb) {
-            // Merge the imported db into the new one
-            Merger merger(db.data(), newDb.data());
-            merger.setSkipDatabaseCustomData(true);
-            merger.merge();
-            // Show the new database
-            auto dbWidget = new DatabaseWidget(newDb, this);
-            addDatabaseTab(dbWidget);
-            newDb->markAsModified();
-            return dbWidget;
-        }
-    } else {
+    switch (wizard->importIntoType()) {
+    case ImportWizard::EXISTING_DATABASE:
         for (int i = 0, c = count(); i < c; ++i) {
+            auto importInto = wizard->importInto();
             // Find the database and group to import into based on import wizard choice
             auto dbWidget = databaseWidgetFromIndex(i);
             if (!dbWidget->isLocked() && dbWidget->database()->uuid() == importInto.first) {
@@ -298,6 +285,27 @@ DatabaseWidget* DatabaseTabWidget::importFile()
                     return dbWidget;
                 }
             }
+        }
+        break;
+    case ImportWizard::TEMPORARY_DATABASE: {
+        // Use the already created database as temporary database
+        auto dbWidgetTemp = new DatabaseWidget(db, this);
+        addDatabaseTab(dbWidgetTemp);
+        return dbWidgetTemp;
+    }
+    default:
+        // Start the new database wizard with the imported database
+        auto newDb = execNewDatabaseWizard();
+        if (newDb) {
+            // Merge the imported db into the new one
+            Merger merger(db.data(), newDb.data());
+            merger.setSkipDatabaseCustomData(true);
+            merger.merge();
+            // Show the new database
+            auto dbWidget = new DatabaseWidget(newDb, this);
+            addDatabaseTab(dbWidget);
+            newDb->markAsModified();
+            return dbWidget;
         }
     }
 

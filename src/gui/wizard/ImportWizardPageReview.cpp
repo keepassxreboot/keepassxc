@@ -27,14 +27,23 @@
 #include "gui/csvImport/CsvImportWidget.h"
 #include "gui/wizard/ImportWizard.h"
 
+#include "cli/Utils.h"
+#include "keys/FileKey.h"
+#include "keys/PasswordKey.h"
+
 #include <QBoxLayout>
 #include <QDir>
 #include <QHeaderView>
 #include <QTableWidget>
 
+#include "gui/remote/RemoteSettings.h"
+
+struct RemoteParams;
+
 ImportWizardPageReview::ImportWizardPageReview(QWidget* parent)
     : QWizardPage(parent)
     , m_ui(new Ui::ImportWizardPageReview)
+    , m_remoteHandler(new RemoteHandler(this))
 {
 }
 
@@ -80,6 +89,12 @@ void ImportWizardPageReview::initializePage()
         m_db = importBitwarden(filename, field("ImportPassword").toString());
         setupDatabasePreview();
         break;
+    case ImportWizard::IMPORT_REMOTE:
+        m_db = importRemote(field("DownloadCommand").toString(),
+                            field("DownloadInput").toString(),
+                            field("ImportPassword").toString(),
+                            field("ImportKeyFile").toString());
+        setupDatabasePreview();
     default:
         break;
     }
@@ -199,4 +214,44 @@ ImportWizardPageReview::importKeePass1(const QString& filename, const QString& p
     }
 
     return db;
+}
+
+QSharedPointer<Database> ImportWizardPageReview::importRemote(const QString& downloadCommand,
+                                                              const QString& downloadInput,
+                                                              const QString& password,
+                                                              const QString& keyfile)
+{
+    auto* params = new RemoteParams();
+    params->downloadCommand = downloadCommand;
+    params->downloadInput = downloadInput;
+
+    auto result = m_remoteHandler->download(params);
+
+    if (!result.success) {
+        m_ui->messageWidget->showMessage(result.errorMessage, KMessageWidget::Error, -1);
+    }
+
+    auto key = QSharedPointer<CompositeKey>::create();
+
+    if (!password.isEmpty()) {
+        key->addKey(QSharedPointer<PasswordKey>::create(password));
+    }
+    if (!keyfile.isEmpty()) {
+        QSharedPointer<FileKey> fileKey = QSharedPointer<FileKey>::create();
+        if (Utils::loadFileKey(keyfile, fileKey)) {
+            key->addKey(fileKey);
+        } else {
+            m_ui->messageWidget->showMessage(tr("Could not load key file."), KMessageWidget::Error, -1);
+        }
+    }
+
+    QString error;
+    QSharedPointer<Database> remoteDb = QSharedPointer<Database>::create();
+    remoteDb->markAsTemporaryDatabase();
+    if (!remoteDb->open(result.filePath, key, &error)) {
+        m_ui->messageWidget->showMessage(
+            tr("Could not open remote database. Password or key file may be incorrect."), KMessageWidget::Error, -1);
+    }
+
+    return remoteDb;
 }

@@ -19,6 +19,7 @@
 #define KEEPASSXC_IMPORTWIZARD_H
 
 #include <QPointer>
+#include <QUuid>
 #include <QWizard>
 
 class Database;
@@ -39,7 +40,6 @@ public:
     bool validateCurrentPage() override;
 
     QSharedPointer<Database> database();
-    QPair<QUuid, QUuid> importInto();
 
     enum ImportType
     {
@@ -48,8 +48,19 @@ public:
         IMPORT_OPVAULT,
         IMPORT_OPUX,
         IMPORT_BITWARDEN,
-        IMPORT_KEEPASS1
+        IMPORT_KEEPASS1,
+        IMPORT_REMOTE,
     };
+
+    enum ImportIntoType
+    {
+        NEW_DATABASE = 1,
+        EXISTING_DATABASE,
+        TEMPORARY_DATABASE,
+    };
+
+    ImportWizard::ImportIntoType importIntoType();
+    QPair<QUuid, QUuid> importInto();
 
 private:
     QSharedPointer<Database> m_db;
