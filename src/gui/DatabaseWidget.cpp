@@ -31,6 +31,8 @@
 #include <QTextDocumentFragment>
 #include <QTextEdit>
 
+#include <QDebug>
+
 #include "autotype/AutoType.h"
 #include "core/AsyncTask.h"
 #include "core/EntrySearcher.h"
@@ -1086,44 +1088,75 @@ void DatabaseWidget::syncWithRemote(const RemoteParams* params)
 {
     setDisabled(true);
 
-    auto result = AsyncTask::runAndWaitForFuture([this, params] {
-        QScopedPointer<RemoteHandler> remoteHandler(new RemoteHandler(this));
-        RemoteHandler::RemoteResult result;
-        result.success = false;
-        result.errorMessage = tr("Remote Sync did not contain any download or upload commands.");
+    //    auto result = AsyncTask::runAndWaitForFuture([this, params] {
+    //        QScopedPointer<RemoteHandler> remoteHandler(new RemoteHandler(this));
+    //        RemoteHandler::RemoteResult result;
+    //        result.success = false;
+    //        result.errorMessage = tr("Remote Sync did not contain any download or upload commands.");
+    //
+    //        // Download the database
+    //        if (!params->downloadCommand.isEmpty()) {
+    //            // Start a download first then merge and upload in the callback
+    //            result = remoteHandler->download(params);
+    //            if (result.success) {
+    //                QString error;
+    //                QSharedPointer<Database> remoteDb = QSharedPointer<Database>::create();
+    //                if (!remoteDb->open(result.filePath, m_db->key(), &error)) {
+    //                    // Failed to open downloaded remote database
+    //                    result.success = false;
+    //                    result.errorMessage = error;
+    //                    return result;
+    //                }
+    //                remoteDb->markAsRemoteDatabase();
+    //                if (!syncWithDatabase(remoteDb, error)) {
+    //                    // Something failed during the sync process
+    //                    result.success = false;
+    //                    result.errorMessage = error;
+    //                    return result;
+    //                }
+    //            } else {
+    //                // Download failed, bail out now
+    //                return result;
+    //            }
+    //        }
+    //
+    //        // Upload the database
+    //        if (!params->uploadCommand.isEmpty()) {
+    //            result = remoteHandler->upload(m_db, params);
+    //        }
+    //        return result;
+    //    });
 
-        // Download the database
-        if (!params->downloadCommand.isEmpty()) {
-            // Start a download first then merge and upload in the callback
-            result = remoteHandler->download(params);
-            if (result.success) {
-                QString error;
-                QSharedPointer<Database> remoteDb = QSharedPointer<Database>::create();
-                if (!remoteDb->open(result.filePath, m_db->key(), &error)) {
-                    // Failed to open downloaded remote database
-                    result.success = false;
-                    result.errorMessage = error;
-                    return result;
-                }
-                remoteDb->markAsRemoteDatabase();
-                if (!syncWithDatabase(m_db, error)) {
-                    // Something failed during the sync process
-                    result.success = false;
-                    result.errorMessage = error;
-                    return result;
-                }
-            } else {
-                // Download failed, bail out now
-                return result;
+    QScopedPointer<RemoteHandler> remoteHandler(new RemoteHandler(this));
+    RemoteHandler::RemoteResult result;
+    result.success = false;
+    result.errorMessage = tr("Remote Sync did not contain any download or upload commands.");
+
+    // Download the database
+    if (!params->downloadCommand.isEmpty()) {
+        // Start a download first then merge and upload in the callback
+        result = remoteHandler->download(params);
+        if (result.success) {
+            QString error;
+            QSharedPointer<Database> remoteDb = QSharedPointer<Database>::create();
+            if (!remoteDb->open(result.filePath, m_db->key(), &error)) {
+                // Failed to open downloaded remote database
+                result.success = false;
+                result.errorMessage = error;
+            }
+            remoteDb->markAsRemoteDatabase();
+            if (!syncWithDatabase(remoteDb, error)) {
+                // Something failed during the sync process
+                result.success = false;
+                result.errorMessage = error;
             }
         }
+    }
 
-        // Upload the database
-        if (!params->uploadCommand.isEmpty()) {
-            result = remoteHandler->upload(m_db, params);
-        }
-        return result;
-    });
+    // Upload the database
+    if (result.success && !params->uploadCommand.isEmpty()) {
+        result = remoteHandler->upload(m_db, params);
+    }
 
     setDisabled(false);
     if (result.success) {
@@ -1311,9 +1344,13 @@ void DatabaseWidget::mergeDatabase(bool accepted)
 
 bool DatabaseWidget::syncWithDatabase(const QSharedPointer<Database>& otherDb, QString& error)
 {
+    qDebug() << m_db->filePath();
+    qDebug() << otherDb->filePath();
     Merger firstMerge(m_db.data(), otherDb.data());
     Merger secondMerge(otherDb.data(), m_db.data());
     QStringList changeList = firstMerge.merge() + secondMerge.merge();
+
+    qDebug() << changeList;
 
     if (!changeList.isEmpty()) {
         // Save synced databases

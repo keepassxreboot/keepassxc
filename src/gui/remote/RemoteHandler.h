@@ -42,10 +42,7 @@ public:
     };
 
     RemoteResult download(const RemoteParams* params);
-    void downloadAsync(const RemoteParams* params);
-
     RemoteResult upload(const QSharedPointer<Database>& db, const RemoteParams* params);
-    void uploadAsync(const QSharedPointer<Database>& db, const RemoteParams* params);
 
     // Used for testing only
     static void setRemoteProcessFunc(std::function<QScopedPointer<RemoteProcess>(QObject*)> func);

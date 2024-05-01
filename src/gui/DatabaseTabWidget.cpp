@@ -341,44 +341,6 @@ void DatabaseTabWidget::openDatabaseFromFile(const QString& fileName)
     dbWidget->switchToOpenDatabase(fileName);
 }
 
-void DatabaseTabWidget::importKeePass1Database()
-{
-    auto filter = QString("%1 (*.kdb);;%2 (*)").arg(tr("KeePass 1 database"), tr("All files"));
-    auto fileName =
-        fileDialog()->getOpenFileName(this, tr("Open KeePass 1 database"), FileDialog::getLastDir("kp1"), filter);
-    if (fileName.isEmpty()) {
-        return;
-    }
-
-    FileDialog::saveLastDir("kp1", fileName, true);
-
-    auto db = QSharedPointer<Database>::create();
-    auto* dbWidget = new DatabaseWidget(db, this);
-    addDatabaseTab(dbWidget);
-    dbWidget->switchToImportKeepass1(fileName);
-}
-
-void DatabaseTabWidget::importOpVaultDatabase()
-{
-    auto defaultDir = FileDialog::getLastDir("opvault");
-#ifdef Q_OS_MACOS
-    QString fileName = fileDialog()->getOpenFileName(this, tr("Open OPVault"), defaultDir, "OPVault (*.opvault)");
-#else
-    QString fileName = fileDialog()->getExistingDirectory(this, tr("Open OPVault"), defaultDir);
-#endif
-
-    if (fileName.isEmpty()) {
-        return;
-    }
-
-    FileDialog::saveLastDir("opvault", fileName);
-
-    auto db = QSharedPointer<Database>::create();
-    auto* dbWidget = new DatabaseWidget(db, this);
-    addDatabaseTab(dbWidget);
-    dbWidget->switchToImportOpVault(fileName);
-}
-
 /**
  * Attempt to close the current database and remove its tab afterwards.
  *
@@ -679,12 +641,12 @@ QString DatabaseTabWidget::tabName(int index)
         tabName = tr("%1 [Locked]", "Database tab name modifier").arg(tabName);
     }
 
-    if (db->isRemoteDatabase()) {
+    if (dbWidget->database()->isRemoteDatabase()) {
         tabName = tr("%1 [Remote]", "Database tab name modifier").arg(tabName);
     }
 
     // needs to be last check, as MainWindow may remove the asterisk again
-    if (db->isModified()) {
+    if (dbWidget->database()->isModified()) {
         tabName.append("*");
     }
 

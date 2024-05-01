@@ -1310,24 +1310,6 @@ void MainWindow::switchToDatabaseFile(const QString& file)
     switchToDatabases();
 }
 
-void MainWindow::switchToKeePass1Database()
-{
-    m_ui->tabWidget->importKeePass1Database();
-    switchToDatabases();
-}
-
-void MainWindow::switchToOpVaultDatabase()
-{
-    m_ui->tabWidget->importOpVaultDatabase();
-    switchToDatabases();
-}
-
-void MainWindow::switchToCsvImport()
-{
-    m_ui->tabWidget->importCsv();
-    switchToDatabases();
-}
-
 void MainWindow::switchToRemoteDatabase()
 {
     m_ui->tabWidget->openRemoteDatabase();
