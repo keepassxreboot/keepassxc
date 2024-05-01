@@ -142,13 +142,6 @@
        </property>
       </widget>
      </item>
-     <item>
-      <widget class="QPushButton" name="buttonOpenRemote">
-       <property name="text">
-        <string>Open Remote</string>
-       </property>
-      </widget>
-     </item>
     </layout>
    </item>
    <item>

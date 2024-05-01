@@ -31,7 +31,6 @@
 #include "gui/FileDialog.h"
 #include "gui/MessageBox.h"
 #include "gui/export/ExportDialog.h"
-#include "gui/remote/RemoteFileDialog.h"
 #ifdef Q_OS_MACOS
 #include "gui/osutils/macutils/MacUtils.h"
 #endif
@@ -318,19 +317,6 @@ void DatabaseTabWidget::mergeDatabase()
 void DatabaseTabWidget::mergeDatabase(const QString& filePath)
 {
     unlockDatabaseInDialog(currentDatabaseWidget(), DatabaseOpenDialog::Intent::Merge, filePath);
-}
-
-void DatabaseTabWidget::openRemoteDatabase()
-{
-    auto* dialog = new RemoteFileDialog(this);
-    connect(dialog, &RemoteFileDialog::downloadedSuccessfullyTo, [this](const QString& filePath) {
-        auto db = QSharedPointer<Database>::create();
-        db->markAsRemoteDatabase();
-        auto* dbWidget = new DatabaseWidget(db, this);
-        addDatabaseTab(dbWidget);
-        dbWidget->switchToOpenDatabase(filePath);
-    });
-    dialog->open();
 }
 
 void DatabaseTabWidget::openDatabaseFromFile(const QString& fileName)

@@ -49,7 +49,7 @@ void RemoteHandler::setRemoteProcessFunc(std::function<QScopedPointer<RemoteProc
 
 RemoteHandler::RemoteResult RemoteHandler::download(const RemoteParams* params)
 {
-    return AsyncTask::runAndWaitForFuture([this, params] {
+    return AsyncTask::runAndWaitForFuture([params] {
         RemoteResult result;
         if (!params) {
             result.success = false;
@@ -95,23 +95,22 @@ RemoteHandler::RemoteResult RemoteHandler::download(const RemoteParams* params)
                 tr("Command `%1` did not finish in time. Process was killed.").arg(params->downloadCommand);
         }
 
-        emit downloadFinished(result);
         return result;
     });
 }
 
-RemoteHandler::RemoteResult RemoteHandler::upload(const QSharedPointer<Database>& db, const RemoteParams* params)
+RemoteHandler::RemoteResult RemoteHandler::upload(const QString& filePath, const RemoteParams* params)
 {
-    return AsyncTask::runAndWaitForFuture([this, db, params] {
+    return AsyncTask::runAndWaitForFuture([filePath, params] {
         RemoteResult result;
-        if (!db || !params) {
+        if (!params) {
             result.success = false;
             result.errorMessage = tr("Invalid database pointer or upload parameters provided.");
             return result;
         }
 
         auto remoteProcess = m_createRemoteProcess(nullptr); // use nullptr parent, otherwise there is a warning
-        remoteProcess->setTempFileLocation(db->filePath());
+        remoteProcess->setTempFileLocation(filePath);
         remoteProcess->start(params->uploadCommand);
         if (!params->uploadInput.isEmpty()) {
             remoteProcess->write(params->uploadInput + "\n");
@@ -142,8 +141,6 @@ RemoteHandler::RemoteResult RemoteHandler::upload(const QSharedPointer<Database>
                     .arg(statusCode);
         }
 
-        // TODO: is this signal needed?
-        emit uploadFinished(result);
         return result;
     });
 }

@@ -153,7 +153,6 @@ set(keepassx_SOURCES
         gui/dbsettings/DatabaseSettingsWidgetEncryption.cpp
         gui/dbsettings/DatabaseSettingsWidgetDatabaseKey.cpp
         gui/remote/DatabaseSettingsWidgetRemote.cpp
-        gui/remote/RemoteFileDialog.cpp
         gui/remote/RemoteHandler.cpp
         gui/remote/RemoteProcess.cpp
         gui/remote/RemoteSettings.cpp

@@ -65,7 +65,6 @@ public slots:
     void openDatabase();
     void mergeDatabase();
     DatabaseWidget* importFile();
-    void openRemoteDatabase();
     void openDatabaseFromFile(const QString& fileName);
     bool saveDatabase(int index = -1);
     bool saveDatabaseAs(int index = -1);

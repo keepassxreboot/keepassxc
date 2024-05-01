@@ -47,11 +47,6 @@ public:
     // Used for testing only
     static void setRemoteProcessFunc(std::function<QScopedPointer<RemoteProcess>(QObject*)> func);
 
-signals:
-    void syncFinished(RemoteResult result);
-    void downloadFinished(RemoteResult result);
-    void uploadFinished(RemoteResult result);
-
 private:
     static std::function<QScopedPointer<RemoteProcess>(QObject*)> m_createRemoteProcess;
     static QString m_tempFileLocation;

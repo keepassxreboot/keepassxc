@@ -40,7 +40,6 @@ signals:
     void openDatabase();
     void openDatabaseFile(QString);
     void importFile();
-    void openRemoteDatabase();
 
 protected:
     void keyPressEvent(QKeyEvent* event) override;

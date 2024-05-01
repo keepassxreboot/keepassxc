@@ -345,7 +345,6 @@ MainWindow::MainWindow()
 
     m_ui->actionDatabaseNew->setIcon(icons()->icon("document-new"));
     m_ui->actionDatabaseOpen->setIcon(icons()->icon("document-open"));
-    m_ui->actionOpenRemoteDatabase->setIcon(icons()->icon("document-open-remote"));
     m_ui->menuRecentDatabases->setIcon(icons()->icon("document-open-recent"));
     m_ui->actionDatabaseSave->setIcon(icons()->icon("document-save"));
     m_ui->actionDatabaseSaveAs->setIcon(icons()->icon("document-save-as"));
@@ -473,7 +472,6 @@ MainWindow::MainWindow()
     connect(m_ui->actionEntryRemovePasskey, SIGNAL(triggered()), m_ui->tabWidget, SLOT(removePasskeyFromEntry()));
 #endif
     connect(m_ui->actionImport, SIGNAL(triggered()), m_ui->tabWidget, SLOT(importFile()));
-    connect(m_ui->actionOpenRemoteDatabase, SIGNAL(triggered()), m_ui->tabWidget, SLOT(openRemoteDatabase()));
     connect(m_ui->actionExportCsv, SIGNAL(triggered()), m_ui->tabWidget, SLOT(exportToCsv()));
     connect(m_ui->actionExportHtml, SIGNAL(triggered()), m_ui->tabWidget, SLOT(exportToHtml()));
     connect(m_ui->actionExportXML, SIGNAL(triggered()), m_ui->tabWidget, SLOT(exportToXML()));
@@ -540,7 +538,6 @@ MainWindow::MainWindow()
     connect(m_ui->welcomeWidget, SIGNAL(openDatabase()), SLOT(switchToOpenDatabase()));
     connect(m_ui->welcomeWidget, SIGNAL(openDatabaseFile(QString)), SLOT(switchToDatabaseFile(QString)));
     connect(m_ui->welcomeWidget, SIGNAL(importFile()), m_ui->tabWidget, SLOT(importFile()));
-    connect(m_ui->welcomeWidget, SIGNAL(openRemoteDatabase()), SLOT(switchToRemoteDatabase()));
 
     connect(m_ui->actionAbout, SIGNAL(triggered()), SLOT(showAboutDialog()));
     connect(m_ui->actionDonate, SIGNAL(triggered()), SLOT(openDonateUrl()));
@@ -1307,12 +1304,6 @@ void MainWindow::switchToOpenDatabase()
 void MainWindow::switchToDatabaseFile(const QString& file)
 {
     m_ui->tabWidget->addDatabaseTab(file);
-    switchToDatabases();
-}
-
-void MainWindow::switchToRemoteDatabase()
-{
-    m_ui->tabWidget->openRemoteDatabase();
     switchToDatabases();
 }
 
