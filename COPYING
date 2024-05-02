@@ -164,7 +164,6 @@ Files: share/icons/application/scalable/actions/application-exit.svg
        share/icons/application/scalable/actions/document-new.svg
        share/icons/application/scalable/actions/document-open.svg
        share/icons/application/scalable/actions/document-open-recent.svg
-       share/icons/application/scalable/actions/document-open-remote.svg
        share/icons/application/scalable/actions/document-properties.svg
        share/icons/application/scalable/actions/document-save.svg
        share/icons/application/scalable/actions/document-save-as.svg

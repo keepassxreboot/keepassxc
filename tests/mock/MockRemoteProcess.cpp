@@ -15,16 +15,19 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QFile>
+
 #include "MockRemoteProcess.h"
 
 MockRemoteProcess::MockRemoteProcess(QObject* parent, const QString& dbPath)
     : RemoteProcess(parent)
+    , m_dbPath(dbPath)
 {
 }
 
 void MockRemoteProcess::start(const QString&)
 {
-    // TODO: Fake "download" the previously supplied database
+    QFile ::copy(m_dbPath, m_tempFileLocation);
 }
 
 qint64 MockRemoteProcess::write(const QString& data)

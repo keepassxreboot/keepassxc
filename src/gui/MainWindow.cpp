@@ -1317,21 +1317,13 @@ void MainWindow::updateRemoteSyncMenuEntries()
         auto action = m_ui->menuRemoteSync->addAction(tr("Setup new sync…"));
         connect(action, &QAction::triggered, dbWidget, &DatabaseWidget::switchToDatabaseSettings);
 
-        // TODO: Sync all shortcut
-        // action = m_ui->menuRemoteSync->addAction(tr("Run every sync…"));
-        // connect(action, &QAction::triggered, dbWidget, [=] {
-        //     dbWidget->syncWithAllRemotes(remoteProgramEntries);
-        // });
-
         m_ui->menuRemoteSync->addSeparator();
 
         // Build remote sync menu
         for (const auto params : dbWidget->getRemoteParams()) {
             auto* remoteSyncAction = new QAction(params->name, this);
             m_ui->menuRemoteSync->addAction(remoteSyncAction);
-            connect(remoteSyncAction, &QAction::triggered, dbWidget, [=] {
-                dbWidget->syncWithRemote(params);
-            });
+            connect(remoteSyncAction, &QAction::triggered, dbWidget, [=] { dbWidget->syncWithRemote(params); });
         }
     }
 }

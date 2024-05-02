@@ -26,6 +26,7 @@
 #include "core/Metadata.h"
 #include "gui/MessageWidget.h"
 #include "gui/entry/EntryModel.h"
+#include "remote/RemoteHandler.h"
 
 class DatabaseOpenDialog;
 class DatabaseOpenWidget;
@@ -124,6 +125,7 @@ public:
     void setSearchStringForAutoType(const QString& search);
 
     void syncWithRemote(const RemoteParams* params);
+    void syncDatabaseWithLockedDatabase(const QString& filePath, const RemoteParams* params);
     QList<RemoteParams*> getRemoteParams() const;
 
 signals:
@@ -148,6 +150,8 @@ signals:
     void databaseMerged(QSharedPointer<Database> mergedDb);
     void databaseSyncCompleted(const QString& syncName);
     void databaseSyncFailed(const QString& syncName, const QString& error);
+    void databaseSyncUnlocked(const RemoteHandler::RemoteResult& result);
+    void unlockDatabaseInDialogForSync(const QString& filePath);
     void groupContextMenuRequested(const QPoint& globalPos);
     void entryContextMenuRequested(const QPoint& globalPos);
     void listModeAboutToActivate();
@@ -266,7 +270,9 @@ private slots:
     void loadDatabase(bool accepted);
     void unlockDatabase(bool accepted);
     void mergeDatabase(bool accepted);
+    void syncUnlockedDatabase(bool accepted);
     bool syncWithDatabase(const QSharedPointer<Database>& otherDb, QString& error);
+    void uploadAndFinishSync(const RemoteParams* params, RemoteHandler::RemoteResult result);
     void emitCurrentModeChanged();
     // Database autoreload slots
     void reloadDatabaseFile();

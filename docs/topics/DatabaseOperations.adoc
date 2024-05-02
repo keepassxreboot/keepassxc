@@ -391,28 +391,12 @@ You will be asked to enter the HMAC key you created earlier, copy/paste they key
 KeePassXC comes with the command line tool *keepassxc-cli* to access, view, and manipulate your database directly from a terminal window. The tool is documented through a separate man page, which can be shown using `man keepassxc-cli`, or through the on-demand help using `keepassxc-cli [command] -h`. An online version of the man page is https://github.com/keepassxreboot/keepassxc/blob/master/docs/man/keepassxc-cli.1.adoc[available on GitHub].
 
 == Remote database support
-KeePassXC provides support for opening and syncing database files that reside in a remote location. If you can download/upload the database file via a commandline tool (e.g. rsync, ssh, scp etc.) KeePassXC offers easy to use functionality to open the remote database and/or sync it.
-
-=== Open remote database
-
-To open a remote database, click on the "Open from remote" button on the welcome screen or via the menu select _Database > Import > Open remote database…_
-
-.Open remote database via menu or welcome screen
-image::open_remote_database.png[]
-
-A dialog appears that allows you to specify a command to download the remote file. Specify a placeholder `{TEMP_DATABASE}` as file location to download the database to. KeepassXC will replace `{TEMP_DATABASE}` with a temporary file location on your system, it will expect the database to be downloaded to.
-
-.Open from remote dialog
-image::open_remote_database_dialog.png[]
-
-Depending on the command/script you are calling, you may need to specify input that is passed to your command/script.
-
-NOTE: Opening a remote database creates a temporary local copy. No changes are made to the remote database automatically. You need to sync to the remote database to update it with changes made to the temporary local copy.
+KeePassXC provides support for syncing database files that reside in a remote location. If you can download/upload the database file via a commandline tool (e.g. rsync, ssh, scp etc.) KeePassXC offers easy to use functionality to sync the remote database.
 
 === Sync with remote database
 Open the remote sync settings via _Database > Database Settings… > Remote_ to create commands to sync a local database or a temporary local copy of a remote database.
 
-Define a name for your sync command and specify a download *(A)* as well as an upload command *(B)*. Similar to opening a remote database, the command and/or input need a `{TEMP_DATABASE}` placeholder specified where the remote database is temporarily stored. Do not forget to save the command settings with the save button *\(C)*. Remote settings are added as menu entries below the _Remote Sync…_ menu for quick access.
+Define a name for your sync command and specify a download *(A)* as well as an upload command *(B)*. The command and/or input need a `{TEMP_DATABASE}` placeholder specified where the remote database is temporarily stored. Do not forget to save the command settings with the save button *\(C)*. Remote settings are added as menu entries below the _Remote Sync…_ menu for quick access.
 
 .Remote sync settings
 image::sync_remote_settings.png[]

@@ -26,6 +26,7 @@
  */
 namespace AsyncTask
 {
+
     /**
      * Wait for the given future without blocking the event loop.
      *

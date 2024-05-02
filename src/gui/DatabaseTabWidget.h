@@ -65,7 +65,6 @@ public slots:
     void openDatabase();
     void mergeDatabase();
     DatabaseWidget* importFile();
-    void openDatabaseFromFile(const QString& fileName);
     bool saveDatabase(int index = -1);
     bool saveDatabaseAs(int index = -1);
     bool saveDatabaseBackup(int index = -1);
@@ -78,6 +77,7 @@ public slots:
     void closeDatabaseFromSender();
     void unlockDatabaseInDialog(DatabaseWidget* dbWidget, DatabaseOpenDialog::Intent intent);
     void unlockDatabaseInDialog(DatabaseWidget* dbWidget, DatabaseOpenDialog::Intent intent, const QString& filePath);
+    void unlockDatabaseInDialogForSync(const QString& filePath);
     void unlockAnyDatabaseInDialog(DatabaseOpenDialog::Intent intent);
     void relockPendingDatabase();
 

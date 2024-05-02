@@ -249,6 +249,10 @@ void DatabaseTabWidget::addDatabaseTab(DatabaseWidget* dbWidget, bool inBackgrou
     connect(dbWidget, SIGNAL(databaseUnlocked()), SLOT(emitDatabaseLockChanged()));
     connect(dbWidget, SIGNAL(databaseLocked()), SLOT(updateTabName()));
     connect(dbWidget, SIGNAL(databaseLocked()), SLOT(emitDatabaseLockChanged()));
+    connect(dbWidget,
+            &DatabaseWidget::unlockDatabaseInDialogForSync,
+            this,
+            &DatabaseTabWidget::unlockDatabaseInDialogForSync);
 }
 
 DatabaseWidget* DatabaseTabWidget::importFile()
@@ -317,14 +321,6 @@ void DatabaseTabWidget::mergeDatabase()
 void DatabaseTabWidget::mergeDatabase(const QString& filePath)
 {
     unlockDatabaseInDialog(currentDatabaseWidget(), DatabaseOpenDialog::Intent::Merge, filePath);
-}
-
-void DatabaseTabWidget::openDatabaseFromFile(const QString& fileName)
-{
-    auto db = QSharedPointer<Database>::create();
-    auto* dbWidget = new DatabaseWidget(db, this);
-    addDatabaseTab(dbWidget);
-    dbWidget->switchToOpenDatabase(fileName);
 }
 
 /**
@@ -753,6 +749,11 @@ void DatabaseTabWidget::unlockAnyDatabaseInDialog(DatabaseOpenDialog::Intent int
     // default to the current tab
     m_databaseOpenDialog->setActiveDatabaseTab(currentDatabaseWidget());
     displayUnlockDialog();
+}
+
+void DatabaseTabWidget::unlockDatabaseInDialogForSync(const QString& filePath)
+{
+    unlockDatabaseInDialog(currentDatabaseWidget(), DatabaseOpenDialog::Intent::RemoteSync, filePath);
 }
 
 /**

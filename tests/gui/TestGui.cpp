@@ -386,7 +386,7 @@ void TestGui::prepareAndTriggerRemoteSync(const QString& sourceToSync)
     auto* dbSettingsDialog = m_dbWidget->findChild<QWidget*>("databaseSettingsDialog");
     auto* dbSettingsCategoryList = dbSettingsDialog->findChild<CategoryListWidget*>("categoryList");
     auto* dbSettingsStackedWidget = dbSettingsDialog->findChild<QStackedWidget*>("stackedWidget");
-    dbSettingsCategoryList->setCurrentCategory(5); // go into remote category
+    dbSettingsCategoryList->setCurrentCategory(2); // go into remote category
     auto name = "testCommand";
     auto* nameEdit = dbSettingsStackedWidget->findChild<QLineEdit*>("nameLineEdit");
     auto* downloadCommandEdit = dbSettingsStackedWidget->findChild<QLineEdit*>("downloadCommand");
@@ -405,7 +405,7 @@ void TestGui::prepareAndTriggerRemoteSync(const QString& sourceToSync)
             break;
         }
     }
-    QApplication::processEvents();
+    QTRY_COMPARE(m_dbWidget->getRemoteParams().size(), 1);
 
     // trigger aboutToShow to create remote actions
     menuRemoteSync->popup(QPoint(0, 0));
@@ -429,9 +429,9 @@ void TestGui::testRemoteSyncDatabaseSameKey()
     QString sourceToSync = "sftp user@server:Database.kdbx";
     RemoteHandler::setRemoteProcessFunc([sourceToSync](QObject* parent) {
         return QScopedPointer<RemoteProcess>(
-            new MockRemoteProcess(parent, QString(KEEPASSX_TEST_DATA_DIR).append("/SyncDatabase.kdbx"), sourceToSync));
+            new MockRemoteProcess(parent, QString(KEEPASSX_TEST_DATA_DIR).append("/SyncDatabase.kdbx")));
     });
-    QSignalSpy dbSyncSpy(m_dbWidget.data(), &DatabaseWidget::databaseSyncedWith);
+    QSignalSpy dbSyncSpy(m_dbWidget.data(), &DatabaseWidget::databaseSyncCompleted);
     prepareAndTriggerRemoteSync(sourceToSync);
     QTRY_COMPARE(dbSyncSpy.count(), 1);
 
@@ -450,9 +450,9 @@ void TestGui::testRemoteSyncDatabaseRequiresPassword()
     QString sourceToSync = "sftp user@server:Database.kdbx";
     RemoteHandler::setRemoteProcessFunc([sourceToSync](QObject* parent) {
         return QScopedPointer<RemoteProcess>(new MockRemoteProcess(
-            parent, QString(KEEPASSX_TEST_DATA_DIR).append("/SyncDatabaseDifferentPassword.kdbx"), sourceToSync));
+            parent, QString(KEEPASSX_TEST_DATA_DIR).append("/SyncDatabaseDifferentPassword.kdbx")));
     });
-    QSignalSpy dbSyncSpy(m_dbWidget.data(), &DatabaseWidget::databaseSyncedWith);
+    QSignalSpy dbSyncSpy(m_dbWidget.data(), &DatabaseWidget::databaseSyncCompleted);
     prepareAndTriggerRemoteSync(sourceToSync);
 
     // need to process more events as opening with the same key did not work and more events have been fired
@@ -1736,65 +1736,6 @@ void TestGui::testDatabaseSettings()
 
     // 5 Cleanup
     config()->set(Config::AutoSaveAfterEveryChange, false);
-}
-
-void TestGui::testKeePass1Import()
-{
-    fileDialog()->setNextFileName(QString(KEEPASSX_TEST_DATA_DIR).append("/basic.kdb"));
-    triggerAction("actionImportKeePass1");
-
-    auto* keepass1OpenWidget = m_tabWidget->currentDatabaseWidget()->findChild<QWidget*>("keepass1OpenWidget");
-    auto* editPassword =
-        keepass1OpenWidget->findChild<PasswordWidget*>("editPassword")->findChild<QLineEdit*>("passwordEdit");
-    QVERIFY(editPassword);
-
-    QTest::keyClicks(editPassword, "masterpw");
-    QTest::keyClick(editPassword, Qt::Key_Enter);
-
-    QTRY_COMPARE(m_tabWidget->count(), 2);
-    QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("basic [New Database]*"));
-
-    // Close the KeePass1 Database
-    MessageBox::setNextAnswer(MessageBox::No);
-    triggerAction("actionDatabaseClose");
-    QApplication::processEvents();
-}
-
-void TestGui::testOpenRemoteDatabase()
-{
-    // close current database
-    cleanup();
-
-    // TODO: Replace with listening for the remote result and extracting the database file
-    // TODO: MockRemoteProcess should be able to return the contents of a database
-    QString remoteFileToOpen = "sftp user@server:Database.kdbx";
-    RemoteHandler::setRemoteProcessFunc([remoteFileToOpen](QObject* parent) {
-        return QScopedPointer<RemoteProcess>(new MockRemoteProcess(
-            parent, QString(KEEPASSX_TEST_DATA_DIR).append("/SyncDatabase.kdbx")));
-    });
-    auto* openRemoteButton = QApplication::activeWindow()->findChild<QPushButton*>("buttonOpenRemote");
-    QTest::mouseClick(openRemoteButton, Qt::LeftButton);
-    QApplication::processEvents();
-
-    auto* downloadCommandEdit = QApplication::activeModalWidget()->findChild<QLineEdit*>("downloadCommand");
-    QTest::keyClicks(downloadCommandEdit, remoteFileToOpen);
-    auto* dialogButtonBox = QApplication::activeModalWidget()->findChild<QDialogButtonBox*>("buttonBox");
-    QTest::mouseClick(dialogButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
-    QApplication::processEvents();
-
-    // set active window explicitly, as this seems to get lost in the test after the dialog has been accepted and closed
-    // this only fails in the CI pipeline (Ubuntu and Windows)
-    QApplication::setActiveWindow(m_mainWindow.data());
-
-    QTRY_COMPARE(QApplication::focusWidget()->objectName(), QString("passwordEdit"));
-    auto* editPasswordSync = QApplication::focusWidget();
-    QVERIFY(editPasswordSync->isVisible());
-
-    QTest::keyClicks(editPasswordSync, "a");
-    QTest::keyClick(editPasswordSync, Qt::Key_Enter);
-
-    // remote database has been opened
-    QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("SyncDatabase.kdbx [Remote]"));
 }
 
 void TestGui::testDatabaseLocking()
