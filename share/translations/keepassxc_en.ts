@@ -2409,18 +2409,6 @@ This is definitely a bug, please report it to the developers.</source>
         <comment>Database tab name modifier</comment>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>KeePass 1 database</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open KeePass 1 database</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open OPVault</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>DatabaseWidget</name>
@@ -6004,23 +5992,15 @@ We recommend you use the AppImage available on our downloads page.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Open remote database</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Remote S&amp;ync…</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Remove Passkey From Entry</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open Remote Database…</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Setup new sync…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove Passkey From Entry</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8890,51 +8870,6 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Internal zlib error: </source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RemoteFileDialog</name>
-    <message>
-        <source>Downloading...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Download command:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Download command field</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>e.g.: &quot;sftp user@hostname&quot; or &quot;scp user@hostname:DatabaseOnRemote.kdbx {TEMP_DATABASE}&quot;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Input:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Download input field</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>e.g.:
-get DatabaseOnRemote.kdbx {TEMP_DATABASE}
-exit
----
-{TEMP_DATABASE} is used as placeholder to store the database in a temporary location
-The command has to exit. In case of `sftp` as last commend `exit` has to be sent
-        </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No download command specified.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Open Remote Database</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
