@@ -50,10 +50,22 @@ namespace
         yk_close_key(key);
     }
 
+    void printError()
+    {
+        if (yk_errno == YK_EUSBERR) {
+            qWarning("Hardware key USB error: %s", yk_usb_strerror());
+        } else {
+            qWarning("Hardware key error: %s", yk_strerror(yk_errno));
+        }
+    }
+
     unsigned int getSerial(YK_KEY* key)
     {
         unsigned int serial;
-        yk_get_serial(key, 1, 0, &serial);
+        if (!yk_get_serial(key, 1, 0, &serial)) {
+            printError();
+            return 0;
+        }
         return serial;
     }
 
@@ -70,11 +82,8 @@ namespace
             } else if (yk_errno == YK_ENOKEY) {
                 // No more connected keys
                 break;
-            } else if (yk_errno == YK_EUSBERR) {
-                qWarning("Hardware key USB error: %s", yk_usb_strerror());
-            } else {
-                qWarning("Hardware key error: %s", yk_strerror(yk_errno));
             }
+            printError();
         }
         return nullptr;
     }
