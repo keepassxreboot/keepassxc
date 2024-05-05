@@ -126,10 +126,16 @@ void ImportWizardPageSelect::updateDatabaseChoices() const
     auto mainWindow = getMainWindow();
     if (mainWindow) {
         for (auto dbWidget : mainWindow->getOpenDatabases()) {
+            // Remove all connections
+            disconnect(dbWidget, nullptr, nullptr, nullptr);
+
             // Skip over locked databases
             if (dbWidget->isLocked()) {
                 continue;
             }
+
+            connect(dbWidget, &DatabaseWidget::databaseLocked, this, &ImportWizardPageSelect::updateDatabaseChoices);
+            connect(dbWidget, &DatabaseWidget::databaseModified, this, &ImportWizardPageSelect::updateDatabaseChoices);
 
             // Enable the selection of an existing database
             m_ui->existingDatabaseRadio->setEnabled(true);
@@ -160,6 +166,11 @@ void ImportWizardPageSelect::updateDatabaseChoices() const
                 }
             }
         }
+    }
+
+    if (m_ui->existingDatabaseChoice->count() == 0) {
+        m_ui->existingDatabaseRadio->setEnabled(false);
+        m_ui->newDatabaseRadio->setChecked(true);
     }
 }
 
