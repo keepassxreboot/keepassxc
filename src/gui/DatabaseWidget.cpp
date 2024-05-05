@@ -1755,9 +1755,17 @@ bool DatabaseWidget::lock()
 
     emit databaseLockRequested();
 
-    // ignore event if we are active and a modal dialog is still open (such as a message box or file dialog)
-    if (isVisible() && QApplication::activeModalWidget()) {
-        return false;
+    // Force close any modal widgets associated with this widget
+    auto modalWidget = QApplication::activeModalWidget();
+    if (modalWidget) {
+        auto parent = modalWidget->parentWidget();
+        while (parent) {
+            if (parent == this) {
+                modalWidget->close();
+                break;
+            }
+            parent = parent->parentWidget();
+        }
     }
 
     clipboard()->clearCopiedText();
