@@ -386,7 +386,7 @@
     <message>
         <source> sec</source>
         <comment>Seconds</comment>
-        <translation>сек</translation>
+        <translation> сек</translation>
     </message>
     <message>
         <source>User Interface</source>
@@ -519,7 +519,7 @@
     <message>
         <source> sec</source>
         <comment>Seconds</comment>
-        <translation>сек</translation>
+        <translation> сек</translation>
     </message>
     <message>
         <source>Clear clipboard after</source>
@@ -532,7 +532,7 @@
     <message>
         <source> min</source>
         <comment>Minutes</comment>
-        <translation>мин</translation>
+        <translation> мин</translation>
     </message>
     <message>
         <source>Clipboard clear seconds</source>
@@ -557,10 +557,6 @@
     <message>
         <source>Lock databases after minimizing the window</source>
         <translation>Заключи на хранилищата след минимизиране на прозореца</translation>
-    </message>
-    <message>
-        <source>Require password repeat when it is visible</source>
-        <translation>Изискване на парола, когато е видима</translation>
     </message>
     <message>
         <source>Hide passwords when editing them</source>
@@ -592,7 +588,7 @@
     </message>
     <message>
         <source>Use DuckDuckGo service to download website icons</source>
-        <translation>Иконите да се изтеглят през DuckDuckGo</translation>
+        <translation>Пиктограмите да се изтеглят през услугата на DuckDuckGo</translation>
     </message>
     <message>
         <source>Hide TOTP in the entry preview panel</source>
@@ -680,7 +676,7 @@
     </message>
     <message>
         <source>Default sequence</source>
-        <translation>Последователност по подразбиране</translation>
+        <translation>Подразбирана последователност</translation>
     </message>
 </context>
 <context>
@@ -705,10 +701,6 @@
 <context>
     <name>AutoTypePlatformX11</name>
     <message>
-        <source>Trying to send invalid keysym.</source>
-        <translation>Опит за изпращане на неправилен символ</translation>
-    </message>
-    <message>
         <source>Sequence aborted: Caps Lock is on</source>
         <translation>Прекъсната поредица: режим Caps Lock е включен</translation>
     </message>
@@ -719,6 +711,10 @@
     <message>
         <source>Unable to get valid keycode for key: </source>
         <translation>Неуспешно получаване на правилен код за клавишите:</translation>
+    </message>
+    <message>
+        <source>Trying to send invalid keyboard symbol.</source>
+        <translation>Опит за изпращане на неприемлив символ от клавиатурата.</translation>
     </message>
 </context>
 <context>
@@ -874,25 +870,7 @@ Please select the correct database for saving credentials.</source>
     </message>
     <message numerus="yes">
         <source>Timeout in &lt;b&gt;%n&lt;/b&gt; seconds...</source>
-        <translation><numerusform>Времето изтича след &lt;b&gt;%n&lt;/b&gt; секунда…</numerusform><numerusform>Времето изтича след &lt;b&gt;%n&lt;/b&gt; секунди…</numerusform></translation>
-    </message>
-    <message>
-        <source>Do you want to register Passkey for:</source>
-        <translation>Желаете ли да регистрирате Passkey за:</translation>
-    </message>
-    <message>
-        <source>Existing Passkey found.
-Do you want to register a new Passkey for:</source>
-        <translation>Съществува друг Passkey.
-Желаете ли да регистрирате нов Passkey за:</translation>
-    </message>
-    <message>
-        <source>Select the existing Passkey and press Update to replace it.</source>
-        <translation>Изберете съществуващ Passkey и изберете „Обновяване“, за да бъде заменен.</translation>
-    </message>
-    <message>
-        <source>Authenticate Passkey credentials for:</source>
-        <translation>Удостоверяване на самоличността на Passkey за: </translation>
+        <translation><numerusform>Изтича след &lt;b&gt;%n&lt;/b&gt; секунда…</numerusform><numerusform>Изтича след &lt;b&gt;%n&lt;/b&gt; секунди…</numerusform></translation>
     </message>
     <message>
         <source>Relying Party: %1</source>
@@ -905,6 +883,27 @@ Do you want to register a new Passkey for:</source>
     <message>
         <source>KeePassXC - Passkey credentials</source>
         <translation>KeePassXC - Самоличност на Passkey</translation>
+    </message>
+    <message>
+        <source>Add to existing entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Existing passkey found.
+Do you want to register a new passkey for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Select the existing passkey and press Update to replace it.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Authenticate passkey credentials for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to register a passkey for:</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -956,12 +955,6 @@ Do you want to delete the entry?
         <translation>%1 (Passkey)</translation>
     </message>
     <message>
-        <source>Entry already has a Passkey.
-Do you want to overwrite the Passkey in %1 - %2?</source>
-        <translation>Записът има Passkey.
-Желаете ли този Passkey да бъде презаписан в %1 - %2?</translation>
-    </message>
-    <message>
         <source>KeePassXC - Create a new group</source>
         <translation>KeePassXC - Създаване на група</translation>
     </message>
@@ -972,10 +965,6 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
     <message>
         <source>KeePassXC - Overwrite existing key?</source>
         <translation>KeePassXC - Презаписване на ключ?</translation>
-    </message>
-    <message>
-        <source>KeePassXC - Update Passkey</source>
-        <translation>KeePassXC - Обновяване на Passkey</translation>
     </message>
     <message>
         <source>KeePassXC - Update Entry</source>
@@ -992,6 +981,27 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
     <message>
         <source>Passkey</source>
         <translation>Passkey</translation>
+    </message>
+    <message>
+        <source>KeePassXC - Passkey credentials</source>
+        <translation>KeePassXC - Самоличност на Passkey</translation>
+    </message>
+    <message>
+        <source>Register a new passkey to this entry:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC - Update passkey</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entry already has a passkey.
+Do you want to overwrite the passkey in %1 - %2?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Register</source>
+        <translation>Регистриране</translation>
     </message>
 </context>
 <context>
@@ -1240,12 +1250,12 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
         <translation>&lt;b&gt;Грешка:&lt;/b&gt; Инсталираният изпълним файл на прокси сървъра липсва на очакваното местоположение: %1&lt;br/&gt;Задайте местоположение на прокси сървъра по избор в разширените настройки или преинсталирайте приложението.</translation>
     </message>
     <message>
-        <source>Allows using insecure http://localhost with Passkeys for testing purposes.</source>
-        <translation>Позволява използване на незащитения адрес http://localhost с Passkeys с цел изпитване</translation>
+        <source>Allows using insecure http://localhost with passkeys for testing purposes.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Allow using localhost with Passkeys</source>
-        <translation>Използване на Passkeys през localhost</translation>
+        <source>Allow using localhost with passkeys</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1379,15 +1389,15 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
     </message>
     <message numerus="yes">
         <source>[%n more message(s) skipped]</source>
-        <translation><numerusform>[%n повече съобщения пропуснати]</numerusform><numerusform>[пропуснати %n съобщения]</numerusform></translation>
+        <translation><numerusform>[друго %n съобщение пропуснато]</numerusform><numerusform>[други %n съобщения пропуснати]</numerusform></translation>
     </message>
     <message>
         <source>Failed to parse CSV file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Грешка при разбора на файл с разделители: %1</translation>
     </message>
     <message>
         <source>Imported from CSV file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Внесено от файл с разделители: %1</translation>
     </message>
 </context>
 <context>
@@ -1592,51 +1602,53 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
     </message>
     <message>
         <source>Select Key File:</source>
-        <translation type="unfinished"/>
+        <translation>Изберете файл с ключ:</translation>
     </message>
     <message>
         <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;В допълнение към паролата, можете да използвате таен файл за подобряване на защитата на хранилището. Този файл може да бъде създаден в настройките за защита на хранилището.&lt;/p&gt;&lt;p&gt;Това &lt;strong&gt;не&lt;/strong&gt; е файл на *.kdbx с хранилище!&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Click to add a key file.</source>
-        <translation type="unfinished"/>
+        <translation>За да добавите файл с ключ щракнете тук.</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;I have a key file&lt;/a&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;Имам файл с ключ&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Use hardware key [Serial: %1]</source>
-        <translation type="unfinished"/>
+        <translation>Използване на хардуерен ключ [Сериен № %1]</translation>
     </message>
     <message>
         <source>Use hardware key</source>
-        <translation type="unfinished"/>
+        <translation>Използване на хардуерен ключ</translation>
     </message>
     <message>
         <source>Your database file is NOT a key file!
 If you don&apos;t have a key file or don&apos;t know what that is, you don&apos;t have to select one.</source>
-        <translation type="unfinished"/>
+        <translation>Хранилището НЕ Е файл с ключ!
+Ако не разполагате с файл с ключ или не знаете какво е това, оставете полето празно.</translation>
     </message>
     <message>
         <source>KeePassXC database file selected</source>
-        <translation type="unfinished"/>
+        <translation>Избрано е хранилище на KeePassXC</translation>
     </message>
     <message>
         <source>The file you selected looks like a database file.
 A database file is NOT a key file!
 
 Are you sure you want to continue with this file?.</source>
-        <translation type="unfinished"/>
+        <translation>Избраният файл прилича на файл на хранилище.
+Хранилището НЕ Е файл с ключ!</translation>
     </message>
     <message>
         <source>No hardware keys found.</source>
-        <translation type="unfinished"/>
+        <translation>Не са открити хардуерни ключове.</translation>
     </message>
     <message>
         <source>Refresh Hardware Keys</source>
-        <translation type="unfinished"/>
+        <translation>Презареждане на хардуерните ключове</translation>
     </message>
 </context>
 <context>
@@ -1820,7 +1832,7 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>Continue without password</source>
-        <translation>Продължаване без парола</translation>
+        <translation>Напред без парола</translation>
     </message>
     <message>
         <source>No encryption key added</source>
@@ -1982,7 +1994,7 @@ If you keep this number, your database will not be protected from brute force at
     <message numerus="yes">
         <source> MiB</source>
         <comment>Abbreviation for Mebibytes (KDF settings)</comment>
-        <translation><numerusform> МБ</numerusform><numerusform> МБ</numerusform></translation>
+        <translation><numerusform> МБ</numerusform><numerusform> МиБ</numerusform></translation>
     </message>
     <message numerus="yes">
         <source> thread(s)</source>
@@ -2065,7 +2077,7 @@ If you keep this number, your database will not be protected from brute force at
     </message>
     <message>
         <source> MiB</source>
-        <translation>Мб</translation>
+        <translation> МиБ</translation>
     </message>
     <message>
         <source>Use recycle bin</source>
@@ -2186,19 +2198,19 @@ removed from the database.</source>
     <name>DatabaseSettingsWidgetMaintenance</name>
     <message>
         <source>Manage Custom Icons</source>
-        <translation>Управление на потребителски икони</translation>
+        <translation>Управление на потребителски пиктограми</translation>
     </message>
     <message>
         <source>Delete selected icon(s)</source>
-        <translation>Премахване на избраните(та) икони(а)</translation>
+        <translation>Премахване на избраните пиктограми</translation>
     </message>
     <message>
         <source>Delete all custom icons not in use by any entry or group</source>
-        <translation>Премахва всички неизползвани потребителски икони</translation>
+        <translation>Премахва всички неизползвани потребителски пиктограми</translation>
     </message>
     <message>
         <source>Purge unused icons</source>
-        <translation>Изчистване на неизползвани икони</translation>
+        <translation>Изчистване на неизползвани пиктограми</translation>
     </message>
     <message>
         <source>Confirm Deletion</source>
@@ -2206,19 +2218,19 @@ removed from the database.</source>
     </message>
     <message>
         <source>At least one of the selected icons is currently in use by at least one entry or group. The icons of all affected entries and groups will be replaced by the default icon. Are you sure you want to delete icons that are currently in use?</source>
-        <translation>Най-малко една от избраните икони се използва от най-малко един запис или група. Иконите на всички засегнати записи или групи ще бъдат заменени с тази по подразбиране. Сигурни ли сте, че желаете иконите, които в момента се използват да бъдат премахнати?</translation>
+        <translation>Най-малко една от избраните пиктограми се използва от най-малко един запис или група. Пиктограмите на всички засегнати записи или групи ще бъдат заменени с тази по подразбиране. Сигурни ли сте, че желаете пиктограмите, които в момента се използват да бъдат премахнати?</translation>
     </message>
     <message>
         <source>Custom Icons Are In Use</source>
-        <translation>Използват се потребителски икони</translation>
+        <translation>Потребителски пиктограми се използват</translation>
     </message>
     <message>
         <source>All custom icons are in use by at least one entry or group.</source>
-        <translation>Всички потребителски икони се използват от най-малко един запис или група.</translation>
+        <translation>Всички потребителски пиктограми се използват от най-малко един запис или група.</translation>
     </message>
     <message>
         <source>Purged Unused Icons</source>
-        <translation>Изчистени неизползвани икони</translation>
+        <translation>Неизползваните пиктограми са изчистени</translation>
     </message>
     <message numerus="yes">
         <source>Purged %n icon(s) from the database.</source>
@@ -2828,10 +2840,6 @@ Would you like to correct it?</source>
 <context>
     <name>EditEntryWidgetBrowser</name>
     <message>
-        <source>These settings affect to the entry&apos;s behaviour with the browser extension.</source>
-        <translation>Тези настройки променят поведението на записа спрямо разширението на мрежовия четец.</translation>
-    </message>
-    <message>
         <source>General</source>
         <translation>Основни</translation>
     </message>
@@ -2860,10 +2868,6 @@ Would you like to correct it?</source>
         <translation>Без използване на записа с HTTP Basic Auth</translation>
     </message>
     <message>
-        <source>Additional URL&apos;s</source>
-        <translation>Допълнителни адреси</translation>
-    </message>
-    <message>
         <source>Add</source>
         <translation>Добавяне</translation>
     </message>
@@ -2874,6 +2878,14 @@ Would you like to correct it?</source>
     <message>
         <source>Edit</source>
         <translation>Променяне</translation>
+    </message>
+    <message>
+        <source>These settings affect the entry&apos;s behaviour with the browser extension.</source>
+        <translation>Тези настройки променят поведението на записа спрямо разширението на мрежовия четец.</translation>
+    </message>
+    <message>
+        <source>Additional URLs</source>
+        <translation>Допълнителни адреси</translation>
     </message>
 </context>
 <context>
@@ -2943,7 +2955,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Presets</source>
-        <translation>Предваритерни настройки</translation>
+        <translation>Предварителни настройки</translation>
     </message>
     <message>
         <source>Url field</source>
@@ -3330,7 +3342,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>Use default Auto-Type sequence of parent group</source>
-        <translation>Използване на последователността за автоматично въвеждане по подразбиране от родителската група</translation>
+        <translation>Използване на подразбираната последователност за автоматично въвеждане на родителската група</translation>
     </message>
     <message>
         <source>Auto-Type:</source>
@@ -3668,13 +3680,6 @@ This may cause the affected plugins to malfunction.</source>
         <translation>Потвърждаване на презаписване на прикачен файл</translation>
     </message>
     <message>
-        <source>Attachment &quot;%1&quot; already exists. 
-Would you like to overwrite the existing attachment?</source>
-        <translation>Прикаченият файл „%1“ вече съществува.
-Желаете ли 
-Желаете ли съществуващият прикачен файл да бъде презаписан?</translation>
-    </message>
-    <message>
         <source>Confirm Attachment</source>
         <translation>Потвърждаване на прикачения файл</translation>
     </message>
@@ -3707,6 +3712,13 @@ Do you want to save the changes to your database?</source>
 Error: %1</source>
         <translation>Грешка при запазване на обновения прикачен файл.
 %1</translation>
+    </message>
+    <message>
+        <source>Attachment &quot;%1&quot; already exists. 
+Would you like to overwrite the existing attachment?</source>
+        <translation>Прикаченият файл „%1“ вече съществува.
+Желаете ли 
+Желаете ли съществуващият прикачен файл да бъде презаписан?</translation>
     </message>
 </context>
 <context>
@@ -3967,7 +3979,7 @@ Error: %1</source>
     </message>
     <message>
         <source>Default Sequence</source>
-        <translation>Последователност по подразбиране</translation>
+        <translation>Подразбирана последователност</translation>
     </message>
     <message>
         <source>Window</source>
@@ -4223,7 +4235,7 @@ This will leave your passwords and sensitive information vulnerable!
     <message>
         <source>Having trouble downloading icons?
 You can enable the DuckDuckGo website icon service in the security section of the application settings.</source>
-        <translation>Имате проблеми с изтеглянето на икони?
+        <translation>Има ли трудности с изтеглянето на пиктограми?
 Можете да включите услугата за пиктограми на DuckDuckGo от настройки на приложението -&gt; Сигурност.</translation>
     </message>
     <message>
@@ -4267,7 +4279,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     <name>ImportWizard</name>
     <message>
         <source>Import Wizard</source>
-        <translation type="unfinished"/>
+        <translation>Помощник при внасяне</translation>
     </message>
 </context>
 <context>
@@ -4278,7 +4290,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Entry count: %1</source>
-        <translation type="unfinished"/>
+        <translation>Брой записи: %1</translation>
     </message>
     <message>
         <source>Group</source>
@@ -4298,7 +4310,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Url</source>
-        <translation type="unfinished"/>
+        <translation>Адрес</translation>
     </message>
 </context>
 <context>
@@ -4309,7 +4321,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Import File Selection</source>
-        <translation type="unfinished"/>
+        <translation>Внасяне - избор на файл</translation>
     </message>
     <message>
         <source>Password:</source>
@@ -4325,7 +4337,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Import Into:</source>
-        <translation type="unfinished"/>
+        <translation>Внасяне в:</translation>
     </message>
     <message>
         <source>New Database</source>
@@ -4333,35 +4345,35 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>No unlocked databases available</source>
-        <translation type="unfinished"/>
+        <translation>Няма отключени хранилища</translation>
     </message>
     <message>
         <source>Existing Database:</source>
-        <translation type="unfinished"/>
+        <translation>Съществуващо хранилище:</translation>
     </message>
     <message>
         <source>Import File:</source>
-        <translation type="unfinished"/>
+        <translation>Файл:</translation>
     </message>
     <message>
         <source>Comma Separated Values (.csv)</source>
-        <translation type="unfinished"/>
+        <translation>Файл с разделители (.csv)</translation>
     </message>
     <message>
         <source>1Password Export (.1pux)</source>
-        <translation type="unfinished"/>
+        <translation>Изнесен файл от 1Password (.1pux)</translation>
     </message>
     <message>
         <source>1Password Vault (.opvault)</source>
-        <translation type="unfinished"/>
+        <translation>Хранилище на 1Password (.opvault)</translation>
     </message>
     <message>
         <source>Bitwarden (.json)</source>
-        <translation type="unfinished"/>
+        <translation>Bitwarden (.json)</translation>
     </message>
     <message>
         <source>KeePass 1 Database (.kdb)</source>
-        <translation type="unfinished"/>
+        <translation>Хранилище на KeePass 1 (.kdb)</translation>
     </message>
     <message>
         <source>Open OPVault</source>
@@ -4369,7 +4381,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Select import file</source>
-        <translation type="unfinished"/>
+        <translation>Избор на файл при внасяне</translation>
     </message>
     <message>
         <source>All files</source>
@@ -4385,23 +4397,23 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Comma Separated Values</source>
-        <translation type="unfinished"/>
+        <translation>Файл с разделители</translation>
     </message>
     <message>
         <source>1Password Export</source>
-        <translation type="unfinished"/>
+        <translation>Изнесен файл от 1Password</translation>
     </message>
     <message>
         <source>Bitwarden JSON Export</source>
-        <translation type="unfinished"/>
+        <translation>Изнесен файл с JSON от Bitwarden</translation>
     </message>
     <message>
         <source>1Password Vault</source>
-        <translation type="unfinished"/>
+        <translation>Хранилище на 1Password</translation>
     </message>
     <message>
         <source>KeePass1 Database</source>
-        <translation type="unfinished"/>
+        <translation>Хранилище на KeePass 1</translation>
     </message>
 </context>
 <context>
@@ -5189,7 +5201,7 @@ Are you sure you want to continue with this file?</source>
     <name>MainWindow</name>
     <message>
         <source>&amp;Database</source>
-        <translation>&amp;Хранилище</translation>
+        <translation>&amp;Хранилища</translation>
     </message>
     <message>
         <source>&amp;Recent Databases</source>
@@ -5349,7 +5361,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Perform &amp;Auto-Type</source>
-        <translation>Извършване на &amp;автом. въвеждане</translation>
+        <translation>&amp;Автоматично въвеждане</translation>
     </message>
     <message>
         <source>Download &amp;Favicon</source>
@@ -5488,6 +5500,10 @@ Are you sure you want to continue with this file?</source>
         <translation>Класическа (от платформата)</translation>
     </message>
     <message>
+        <source>Show Menubar</source>
+        <translation>Лента с менюто</translation>
+    </message>
+    <message>
         <source>Show Toolbar</source>
         <translation>Лентата с инструменти</translation>
     </message>
@@ -5601,15 +5617,15 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>1Password 1PUX...</source>
-        <translation type="unfinished"/>
+        <translation>1PUX от 1Password…</translation>
     </message>
     <message>
         <source>Import a 1Password 1PUX file</source>
-        <translation type="unfinished"/>
+        <translation>Внасяне на 1PUX файл от 1Password</translation>
     </message>
     <message>
         <source>Import…</source>
-        <translation type="unfinished"/>
+        <translation>Внасяне…</translation>
     </message>
     <message>
         <source>Passkeys…</source>
@@ -5834,6 +5850,10 @@ We recommend you use the AppImage available on our downloads page.</source>
     <message>
         <source>Set Theme: Classic</source>
         <translation>Задава тема: класическа</translation>
+    </message>
+    <message>
+        <source>Toggle Show Menubar</source>
+        <translation>Превключва лентата с менюто</translation>
     </message>
     <message>
         <source>Toggle Show Toolbar</source>
@@ -6227,10 +6247,6 @@ We recommend you use the AppImage available on our downloads page.</source>
         <translation>KeePassXC - Изнасяне на Passkey</translation>
     </message>
     <message>
-        <source>Export the following Passkey entries.</source>
-        <translation>Изнасяне на следните записи на Passkey.</translation>
-    </message>
-    <message>
         <source>Filenames will be generated with title and .passkey file extension.</source>
         <translation>Имената на файловете ще бъдат създадени от заглавието и .passkey като разширение.</translation>
     </message>
@@ -6249,6 +6265,10 @@ We recommend you use the AppImage available on our downloads page.</source>
     <message>
         <source>Export to folder</source>
         <translation>Изнасяне в папка</translation>
+    </message>
+    <message>
+        <source>Export the following passkey entries.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6309,28 +6329,28 @@ Do you want to overwrite it?
         <translation>Отказ</translation>
     </message>
     <message>
-        <source>Import the following Passkey:</source>
-        <translation>Внасяне на следния Passkey:</translation>
-    </message>
-    <message>
         <source>Entry</source>
         <translation>Запис</translation>
-    </message>
-    <message>
-        <source>Import the following Passkey to this entry:</source>
-        <translation>Внасяне на следния Passkey в този запис:</translation>
     </message>
     <message>
         <source>Create new entry</source>
         <translation>Създаване на запис</translation>
     </message>
     <message>
-        <source>Default Passkeys group (Imported Passkeys)</source>
-        <translation>Подразбирана група за Passkeys (Внесени Passkeys)</translation>
-    </message>
-    <message>
         <source>Relying Party: %1</source>
         <translation>Зависеща страна: %1</translation>
+    </message>
+    <message>
+        <source>Import the following passkey:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import the following passkey to this entry:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Default passkeys group (Imported Passkeys)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6344,10 +6364,6 @@ Do you want to overwrite it?
         <translation>Всички файлове</translation>
     </message>
     <message>
-        <source>Open Passkey file</source>
-        <translation>Отваряне на файл с Passkey</translation>
-    </message>
-    <message>
         <source>Cannot open file</source>
         <translation>Файлът не може да бъде отворен</translation>
     </message>
@@ -6356,24 +6372,26 @@ Do you want to overwrite it?
         <translation>Файлът „%1“ не може да бъде отворен за четене.</translation>
     </message>
     <message>
-        <source>Cannot import Passkey</source>
-        <translation>Грешка при внасяне на Passkey</translation>
+        <source>Open passkey file</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;. Data is missing.</source>
-        <translation>Грешка при внасяне на файл с Passkey „%1“. Липсват данни.</translation>
+        <source>Cannot import passkey</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
-        <translation>Грешка при внасяне на файл с Passkey „%1“. Липсва / повреден частен ключ</translation>
+        <source>Cannot import passkey file &quot;%1&quot;. Data is missing.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;.
+        <source>Cannot import passkey file &quot;%1&quot;.
 The following data is missing:
 %2</source>
-        <translation>Грешка при внасяне на файл с Passkey „%1“.
-Следните данни липсват:
-%2</translation>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot import passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6540,7 +6558,7 @@ The following data is missing:
     </message>
     <message>
         <source>Hex</source>
-        <translation>Шестнадесетичени</translation>
+        <translation>Шестнадесетични</translation>
     </message>
     <message>
         <source>Character set to exclude from generated password</source>
@@ -6811,11 +6829,11 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Continue</source>
-        <translation>Продължаване</translation>
+        <translation>Напред</translation>
     </message>
     <message>
         <source>Continue with weak password</source>
-        <translation>Продължаване със слаба парола</translation>
+        <translation>Напред със слаба парола</translation>
     </message>
 </context>
 <context>
@@ -7221,12 +7239,6 @@ Do you want to overwrite it?</source>
     <message>
         <source>time</source>
         <translation>време</translation>
-    </message>
-    <message>
-        <source>Set the key file for the database.
-This options is deprecated, use --set-key-file instead.</source>
-        <translation>Задава файл с ключ за хранилището.
-Тази настройка е изведена от употреба, вместо нея използвайте „--set-key-file“.</translation>
     </message>
     <message>
         <source>Set the key file for the database.</source>
@@ -8389,10 +8401,6 @@ Kernel: %3 %4</source>
         <translation>вземане на паролата за хранилището от стандартния вход</translation>
     </message>
     <message>
-        <source>Locked databases.</source>
-        <translation>Хранилищата са заключени.</translation>
-    </message>
-    <message>
         <source>Database failed to lock.</source>
         <translation>Неуспешно заключване на хранилище.</translation>
     </message>
@@ -8455,16 +8463,14 @@ Kernel: %3 %4</source>
         <translation>разрешаване на екранни снимки и запис на приложения (Windows/macOS)</translation>
     </message>
     <message>
-        <source>Enter Shortcut</source>
-        <translation>Въведете клавишна комбинация</translation>
+        <source>Set the key file for the database.
+This option is deprecated, use --set-key-file instead.</source>
+        <translation>Задава файл с ключ за хранилището.
+Тази настройка е изведена от употреба, вместо нея използвайте „--set-key-file“.</translation>
     </message>
     <message>
-        <source>Action</source>
-        <translation>Действие</translation>
-    </message>
-    <message>
-        <source>Shortcuts</source>
-        <translation>Клавишни комбинации</translation>
+        <source>Databases have been locked.</source>
+        <translation>Хранилището е заключено.</translation>
     </message>
     <message>
         <source>Attestation not supported</source>
@@ -8551,76 +8557,6 @@ Kernel: %3 %4</source>
         <translation>Неуспешно дешифриране на данните на ключа.</translation>
     </message>
     <message>
-        <source>Favorite</source>
-        <comment>Tag for favorite entries</comment>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>File does not exist.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Cannot open file: %1</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Cannot parse file: %1 at position %2</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Failed to decrypt json file: %1</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Invalid encKeyValidation field</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Invalid cipher list within encKeyValidation field</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Wrong password</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Invalid encrypted data field</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Invalid cipher list within encrypted data field</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Cannot initialize cipher</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Cannot decrypt data</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Bitwarden Import</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Archived</source>
-        <comment>Tag for archived entries</comment>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Invalid 1PUX file format: Not a valid ZIP file.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Invalid 1PUX file format: Missing export.data</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>1Password Import</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Origin is empty or not allowed</source>
         <translation>Източникът е празен или забранен</translation>
     </message>
@@ -8641,16 +8577,102 @@ Kernel: %3 %4</source>
         <translation>Изчакайте отброяването да приключи</translation>
     </message>
     <message>
-        <source>Unknown Passkeys error</source>
-        <translation>Неочаквана грешка на Passkey</translation>
-    </message>
-    <message>
         <source>Challenge is shorter than required minimum length</source>
         <translation>Предизвикването е по-късо от изискваната минимална дължина</translation>
     </message>
     <message>
         <source>user.id does not match the required length</source>
         <translation>user.id не отговаря на изискваната дължина</translation>
+    </message>
+    <message>
+        <source>Favorite</source>
+        <comment>Tag for favorite entries</comment>
+        <translation>Избрани</translation>
+    </message>
+    <message>
+        <source>File does not exist.</source>
+        <translation>Файлът не съществува.</translation>
+    </message>
+    <message>
+        <source>Cannot open file: %1</source>
+        <translation>Файлът не може да бъде отворен: %1</translation>
+    </message>
+    <message>
+        <source>Cannot parse file: %1 at position %2</source>
+        <translation>Грешка при разбор на файл: %1 на позиция %2</translation>
+    </message>
+    <message>
+        <source>Failed to decrypt json file: %1</source>
+        <translation>Грешка при разшифроване на файл с JSON: %1</translation>
+    </message>
+    <message>
+        <source>Invalid encKeyValidation field</source>
+        <translation>Полето encKeyValidation е неприемливо</translation>
+    </message>
+    <message>
+        <source>Invalid cipher list within encKeyValidation field</source>
+        <translation>Полето encKeyValidation съдържа неприемлив списък с шифри.</translation>
+    </message>
+    <message>
+        <source>Wrong password</source>
+        <translation>Грешна парола</translation>
+    </message>
+    <message>
+        <source>Invalid encrypted data field</source>
+        <translation>Шифрованата стойност на полето data е неприемлива</translation>
+    </message>
+    <message>
+        <source>Invalid cipher list within encrypted data field</source>
+        <translation>Криптираните шифри в полето data са неприемливи</translation>
+    </message>
+    <message>
+        <source>Cannot initialize cipher</source>
+        <translation>Грешка при подготовка на шифър</translation>
+    </message>
+    <message>
+        <source>Cannot decrypt data</source>
+        <translation>Данните не могат да бъдат разшифровани</translation>
+    </message>
+    <message>
+        <source>Bitwarden Import</source>
+        <translation>Внасяне от Bitwarden</translation>
+    </message>
+    <message>
+        <source>Archived</source>
+        <comment>Tag for archived entries</comment>
+        <translation>Архивни</translation>
+    </message>
+    <message>
+        <source>Invalid 1PUX file format: Not a valid ZIP file.</source>
+        <translation>Форматът на файла 1PUX е неприемлив: недействителен ZIP.</translation>
+    </message>
+    <message>
+        <source>Invalid 1PUX file format: Missing export.data</source>
+        <translation>Форматът на файла 1PUX е неприемлив: липсва export.data</translation>
+    </message>
+    <message>
+        <source>1Password Import</source>
+        <translation>Внасяне от 1Password</translation>
+    </message>
+    <message>
+        <source>Enter Shortcut</source>
+        <translation>Въведете клавишна комбинация</translation>
+    </message>
+    <message>
+        <source>Action</source>
+        <translation>Действие</translation>
+    </message>
+    <message>
+        <source>Shortcuts</source>
+        <translation>Клавишни комбинации</translation>
+    </message>
+    <message>
+        <source>Unsupported KDF type, cannot decrypt json file</source>
+        <translation>Неподдържан вид на ФИК, файлът с JSON не може да бъде разшифрован</translation>
+    </message>
+    <message>
+        <source>Unknown passkeys error</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -8970,14 +8992,6 @@ Kernel: %3 %4</source>
         <translation>Списък с адресите от всички записи</translation>
     </message>
     <message>
-        <source>Please wait, list of entries with Passkeys is being updated…</source>
-        <translation>Изчакайте, обновява се списъкът със записи с Passkeys…</translation>
-    </message>
-    <message>
-        <source>No entries with Passkeys.</source>
-        <translation>Липсват записи с Passkeys.</translation>
-    </message>
-    <message>
         <source>Title</source>
         <translation>Заглавие</translation>
     </message>
@@ -9012,6 +9026,22 @@ Kernel: %3 %4</source>
     <message>
         <source> (Expired)</source>
         <translation>(Изтекла давност)</translation>
+    </message>
+    <message>
+        <source>Export Confirmation</source>
+        <translation>Потвърждаване</translation>
+    </message>
+    <message>
+        <source>The passkey file will be vulnerable to theft and unauthorized use, if left unsecured. Are you sure you want to continue?</source>
+        <translation>Ако остане незащитен, файлът с passkey може да стане обект на кражба или неправомерен достъп. Желаете ли да продължите?</translation>
+    </message>
+    <message>
+        <source>Please wait, list of entries with passkeys is being updated…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No entries with passkeys.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -9332,26 +9362,8 @@ Kernel: %3 %4</source>
         <translation>Потвърждаване при достъп на клиенти до паролите</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;
-           font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Helvetica','Arial','sans-serif','Apple Color
-           Emoji','Segoe UI Emoji'; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;This setting does
-           not override disabling recycle bin prompts&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;
-           font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color
-           Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;Тази настройка не отменя изключването на въпроса за преместване в кошчето&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
-    </message>
-    <message>
         <source>Confirm when clients request entry deletion</source>
         <translation>Потвърждаване при заявено от клиенти премахване на запис</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications
-           which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also
-           crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a
-           different value set in applications.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Подобрява съвместимостта с някои приложения, които търсят парола без предварително отключване на хранилището.&lt;/p&gt;&lt;p&gt;Ако е отметнато обаче може да причини срив на клиента, ако хранилището не може да бъде отключено в определен интервал от време (обикновено 25 секунди, но стойността може да е различна за различните приложения).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Prompt to unlock database before searching</source>
@@ -9376,6 +9388,14 @@ Kernel: %3 %4</source>
     <message>
         <source>Save current changes to activate the plugin and enable editing of this section.</source>
         <translation>За да включите разширението и да можете да променяте тази секция, запазете текущите промени.</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This setting does not override disabling recycle bin prompts &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Тази настройка не променя настройката, изключваща запитванията от кошчето &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a different value set in applications.) &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Подобрява съвместимостта с някои приложения, които търсят парола без предварително отключване на хранилището.&lt;/p&gt;&lt;p&gt;Ако е отметнато обаче може да причини срив на клиента, ако хранилището не може да бъде отключено в определен интервал от време (обикновено 25 секунди, но стойността може да е различна за различните приложения).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -9722,7 +9742,7 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Import File</source>
-        <translation type="unfinished"/>
+        <translation>Внасяне от файл</translation>
     </message>
 </context>
 <context>
@@ -9799,7 +9819,7 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Refresh hardware keys</source>
-        <translation type="unfinished"/>
+        <translation>Презареждане на хардуерните ключове</translation>
     </message>
 </context>
 <context>
@@ -9827,7 +9847,7 @@ Example: JBSWY3DPEHPK3PXP</source>
     <message>
         <source>(NFC) %1 [%2] - Slot %3, %4</source>
         <comment>YubiKey display fields</comment>
-        <translation type="unfinished"/>
+        <translation>(NFC) %1 [%2] - Позиция %3, %4</translation>
     </message>
     <message>
         <source>Press</source>
@@ -9879,12 +9899,12 @@ Example: JBSWY3DPEHPK3PXP</source>
     <message>
         <source>%1 [%2] - Slot %3</source>
         <comment>YubiKey NEO display fields</comment>
-        <translation type="unfinished"/>
+        <translation>%1 [%2] - Позиция %3</translation>
     </message>
     <message>
         <source>%1 [%2] - Slot %3, %4</source>
         <comment>YubiKey display fields</comment>
-        <translation type="unfinished"/>
+        <translation>%1 [%2] - Позиция %3, %4</translation>
     </message>
 </context>
 </TS>

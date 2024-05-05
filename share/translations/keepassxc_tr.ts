@@ -559,10 +559,6 @@
         <translation>Simge durumuna küçültüldüğünde veri tabanları kilitlensin</translation>
     </message>
     <message>
-        <source>Require password repeat when it is visible</source>
-        <translation>Görünür olduğunda parola yinelemesi istensin</translation>
-    </message>
-    <message>
         <source>Hide passwords when editing them</source>
         <translation>Parolalar düzenlenirken gizlensin</translation>
     </message>
@@ -705,10 +701,6 @@
 <context>
     <name>AutoTypePlatformX11</name>
     <message>
-        <source>Trying to send invalid keysym.</source>
-        <translation>Geçersiz keysym değeri gönderilmeye çalışıldı.</translation>
-    </message>
-    <message>
         <source>Sequence aborted: Caps Lock is on</source>
         <translation>Sıra kesildi: Büyük harf tuşu açık</translation>
     </message>
@@ -719,6 +711,10 @@
     <message>
         <source>Unable to get valid keycode for key: </source>
         <translation>Tuş için geçerli bir tuş kodu alınamadı:</translation>
+    </message>
+    <message>
+        <source>Trying to send invalid keyboard symbol.</source>
+        <translation>Geçersiz klavye simgesi gönderilmeye çalışıldı.</translation>
     </message>
 </context>
 <context>
@@ -877,24 +873,6 @@ Lütfen kimlik bilgilerinin kaydedileceği doğru veri tabanını seçin.</trans
         <translation><numerusform>&lt;b&gt;%n&lt;/b&gt; saniye sonra süresi dolacak...</numerusform><numerusform>&lt;b&gt;%n&lt;/b&gt; saniye sonra süresi dolacak...</numerusform></translation>
     </message>
     <message>
-        <source>Do you want to register Passkey for:</source>
-        <translation>Şunun için geçiş anahtarı kaydetmek ister misiniz:</translation>
-    </message>
-    <message>
-        <source>Existing Passkey found.
-Do you want to register a new Passkey for:</source>
-        <translation>Var olan bir geçiş anahtarı bulundu.
-Şunun için yeni bir geçiş anahtarı kaydetmek ister misiniz:</translation>
-    </message>
-    <message>
-        <source>Select the existing Passkey and press Update to replace it.</source>
-        <translation>Var olan geçiş anahtarını seçin ve değiştirmek için Güncelle üzerine basın.</translation>
-    </message>
-    <message>
-        <source>Authenticate Passkey credentials for:</source>
-        <translation>Şunun için geçiş anahtarı kimlik doğrulama bilgilerine izin verilsin:</translation>
-    </message>
-    <message>
         <source>Relying Party: %1</source>
         <translation>Güvenilen taraf: %1</translation>
     </message>
@@ -905,6 +883,27 @@ Do you want to register a new Passkey for:</source>
     <message>
         <source>KeePassXC - Passkey credentials</source>
         <translation>KeePassXC - Geçiş anahtarı kimlik doğrulama bilgileri</translation>
+    </message>
+    <message>
+        <source>Add to existing entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Existing passkey found.
+Do you want to register a new passkey for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Select the existing passkey and press Update to replace it.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Authenticate passkey credentials for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to register a passkey for:</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -956,12 +955,6 @@ Bu kaydın silinmesini ister misiniz?
         <translation>%1 (geçiş anahtarı)</translation>
     </message>
     <message>
-        <source>Entry already has a Passkey.
-Do you want to overwrite the Passkey in %1 - %2?</source>
-        <translation>Kaydın zaten bir geçiş anahtarı kaydı var.
-%1 - %2 geçiş anahtarı kaydını değiştirmek istiyor musunuz?</translation>
-    </message>
-    <message>
         <source>KeePassXC - Create a new group</source>
         <translation>KeePassXC - Yeni bir grup ekle</translation>
     </message>
@@ -972,10 +965,6 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
     <message>
         <source>KeePassXC - Overwrite existing key?</source>
         <translation>KeePassXC - Var olan anahtarın üzerine yazılsın mı?</translation>
-    </message>
-    <message>
-        <source>KeePassXC - Update Passkey</source>
-        <translation>KeePassXC - Geçiş anahtarı kaydını güncelle</translation>
     </message>
     <message>
         <source>KeePassXC - Update Entry</source>
@@ -992,6 +981,27 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
     <message>
         <source>Passkey</source>
         <translation>Geçiş anahtarı</translation>
+    </message>
+    <message>
+        <source>KeePassXC - Passkey credentials</source>
+        <translation>KeePassXC - Geçiş anahtarı kimlik doğrulama bilgileri</translation>
+    </message>
+    <message>
+        <source>Register a new passkey to this entry:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC - Update passkey</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entry already has a passkey.
+Do you want to overwrite the passkey in %1 - %2?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Register</source>
+        <translation>Kaydet</translation>
     </message>
 </context>
 <context>
@@ -1240,12 +1250,12 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
         <translation>&lt;b&gt;Hata:&lt;/b&gt; Kurulmuş vekil sunucunun çalıştırılan dosyası beklenen konumda değil: %1&lt;br/&gt;Lütfen gelişmiş ayarlar bölümünden bir özel vekil sunucu konumu ayarlayın ya da uygulamayı yeniden kurun.</translation>
     </message>
     <message>
-        <source>Allows using insecure http://localhost with Passkeys for testing purposes.</source>
-        <translation>Deneme amacıyla geçiş anahtarları ile güvenli olmayan http://localhost kullanılabilsin.</translation>
+        <source>Allows using insecure http://localhost with passkeys for testing purposes.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Allow using localhost with Passkeys</source>
-        <translation>Geçiş anahtarları ile localhost kullanılabilsin</translation>
+        <source>Allow using localhost with passkeys</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1383,11 +1393,11 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Failed to parse CSV file: %1</source>
-        <translation type="unfinished"/>
+        <translation>CSV dosyası işlenemedi: %1</translation>
     </message>
     <message>
         <source>Imported from CSV file: %1</source>
-        <translation type="unfinished"/>
+        <translation>CSV dosyasından içe aktarıldı: %1</translation>
     </message>
 </context>
 <context>
@@ -2314,7 +2324,7 @@ Bu kesinlikle bir uygulama hatasıdır. Lütfen geliştiricilere bildirin.</tran
     </message>
     <message>
         <source>Export Confirmation</source>
-        <translation>Dışa aktarım onayı</translation>
+        <translation>Dışa aktarma onayı</translation>
     </message>
     <message>
         <source>You are about to export your database to an unencrypted file. This will leave your passwords and sensitive information vulnerable! Are you sure you want to continue?</source>
@@ -2836,10 +2846,6 @@ Düzeltmek ister misiniz?</translation>
 <context>
     <name>EditEntryWidgetBrowser</name>
     <message>
-        <source>These settings affect to the entry&apos;s behaviour with the browser extension.</source>
-        <translation>Bu ayarlar, kaydın tarayıcı eklentisindeki davranışını etkiler.</translation>
-    </message>
-    <message>
         <source>General</source>
         <translation>Genel</translation>
     </message>
@@ -2868,10 +2874,6 @@ Düzeltmek ister misiniz?</translation>
         <translation>Bu kayıt HTTP temel kimlik doğrulaması ile kullanılmasın</translation>
     </message>
     <message>
-        <source>Additional URL&apos;s</source>
-        <translation>Ek adresler</translation>
-    </message>
-    <message>
         <source>Add</source>
         <translation>Ekle</translation>
     </message>
@@ -2882,6 +2884,14 @@ Düzeltmek ister misiniz?</translation>
     <message>
         <source>Edit</source>
         <translation>Düzenle</translation>
+    </message>
+    <message>
+        <source>These settings affect the entry&apos;s behaviour with the browser extension.</source>
+        <translation>Bu ayarlar, kaydın tarayıcı eklentisindeki davranışını etkiler.</translation>
+    </message>
+    <message>
+        <source>Additional URLs</source>
+        <translation>Ek adresler</translation>
     </message>
 </context>
 <context>
@@ -3676,12 +3686,6 @@ Bu işlem etkilenecek eklentilerin bozulmasına neden olabilir.</translation>
         <translation>Ek dosya üzerine yazmayı onayla</translation>
     </message>
     <message>
-        <source>Attachment &quot;%1&quot; already exists. 
-Would you like to overwrite the existing attachment?</source>
-        <translation>&quot;%1&quot; ek dosyası zaten var. 
-Var olan ek dosyanın üzerine yazılmasını ister misiniz?</translation>
-    </message>
-    <message>
         <source>Confirm Attachment</source>
         <translation>Ek dosyayı onayla</translation>
     </message>
@@ -3714,6 +3718,12 @@ Değişiklikleri veri tabanına kaydetmek ister misiniz?</translation>
 Error: %1</source>
         <translation>Güncellenmiş ek dosya kaydedilemedi.
 Hata: %1</translation>
+    </message>
+    <message>
+        <source>Attachment &quot;%1&quot; already exists. 
+Would you like to overwrite the existing attachment?</source>
+        <translation>&quot;%1&quot; ek dosyası zaten var. 
+Var olan ek dosyanın üzerine yazılmasını ister misiniz?</translation>
     </message>
 </context>
 <context>
@@ -4275,7 +4285,7 @@ Uygulama ayarlarındaki güvenlik bölümünden DuckDuckGo site simge hizmetini 
     <name>ImportWizard</name>
     <message>
         <source>Import Wizard</source>
-        <translation type="unfinished"/>
+        <translation>İçe aktarma yardımcısı</translation>
     </message>
 </context>
 <context>
@@ -4286,7 +4296,7 @@ Uygulama ayarlarındaki güvenlik bölümünden DuckDuckGo site simge hizmetini 
     </message>
     <message>
         <source>Entry count: %1</source>
-        <translation type="unfinished"/>
+        <translation>Kayıt sayısı: %1</translation>
     </message>
     <message>
         <source>Group</source>
@@ -4306,7 +4316,7 @@ Uygulama ayarlarındaki güvenlik bölümünden DuckDuckGo site simge hizmetini 
     </message>
     <message>
         <source>Url</source>
-        <translation type="unfinished"/>
+        <translation>Adres</translation>
     </message>
 </context>
 <context>
@@ -4317,7 +4327,7 @@ Uygulama ayarlarındaki güvenlik bölümünden DuckDuckGo site simge hizmetini 
     </message>
     <message>
         <source>Import File Selection</source>
-        <translation type="unfinished"/>
+        <translation>İçe aktarma dosyası seçimi</translation>
     </message>
     <message>
         <source>Password:</source>
@@ -4333,7 +4343,7 @@ Uygulama ayarlarındaki güvenlik bölümünden DuckDuckGo site simge hizmetini 
     </message>
     <message>
         <source>Import Into:</source>
-        <translation type="unfinished"/>
+        <translation>Şuraya içe aktar:</translation>
     </message>
     <message>
         <source>New Database</source>
@@ -4341,35 +4351,35 @@ Uygulama ayarlarındaki güvenlik bölümünden DuckDuckGo site simge hizmetini 
     </message>
     <message>
         <source>No unlocked databases available</source>
-        <translation type="unfinished"/>
+        <translation>Kullanılabilecek kilitlenmemiş bir veri tabanı yok</translation>
     </message>
     <message>
         <source>Existing Database:</source>
-        <translation type="unfinished"/>
+        <translation>Var olan veri tabanı:</translation>
     </message>
     <message>
         <source>Import File:</source>
-        <translation type="unfinished"/>
+        <translation>İçe aktarma dosyası:</translation>
     </message>
     <message>
         <source>Comma Separated Values (.csv)</source>
-        <translation type="unfinished"/>
+        <translation>Virgül ile ayrılmış değerler (.csv)</translation>
     </message>
     <message>
         <source>1Password Export (.1pux)</source>
-        <translation type="unfinished"/>
+        <translation>1Password dışa aktarımı (.1pux)</translation>
     </message>
     <message>
         <source>1Password Vault (.opvault)</source>
-        <translation type="unfinished"/>
+        <translation>1Password kasası (.opvault)</translation>
     </message>
     <message>
         <source>Bitwarden (.json)</source>
-        <translation type="unfinished"/>
+        <translation>Bitwarden (.json)</translation>
     </message>
     <message>
         <source>KeePass 1 Database (.kdb)</source>
-        <translation type="unfinished"/>
+        <translation>KeePass 1 veri tabanı (.kdb)</translation>
     </message>
     <message>
         <source>Open OPVault</source>
@@ -4377,7 +4387,7 @@ Uygulama ayarlarındaki güvenlik bölümünden DuckDuckGo site simge hizmetini 
     </message>
     <message>
         <source>Select import file</source>
-        <translation type="unfinished"/>
+        <translation>İçe aktarma dosyasını seçin</translation>
     </message>
     <message>
         <source>All files</source>
@@ -4393,23 +4403,23 @@ Uygulama ayarlarındaki güvenlik bölümünden DuckDuckGo site simge hizmetini 
     </message>
     <message>
         <source>Comma Separated Values</source>
-        <translation type="unfinished"/>
+        <translation>Virgül ile ayrılmış değerler</translation>
     </message>
     <message>
         <source>1Password Export</source>
-        <translation type="unfinished"/>
+        <translation>1Password dışa aktarımı</translation>
     </message>
     <message>
         <source>Bitwarden JSON Export</source>
-        <translation type="unfinished"/>
+        <translation>Bitwarden JSON dışa aktarımı</translation>
     </message>
     <message>
         <source>1Password Vault</source>
-        <translation type="unfinished"/>
+        <translation>1Password dışa aktarımı</translation>
     </message>
     <message>
         <source>KeePass1 Database</source>
-        <translation type="unfinished"/>
+        <translation>KeePass1 veri tabanı</translation>
     </message>
 </context>
 <context>
@@ -5495,6 +5505,10 @@ Bu dosyayı kullanarak ilerlemek istediğinize emin misiniz?</translation>
         <translation>Klasik (sistem için doğal)</translation>
     </message>
     <message>
+        <source>Show Menubar</source>
+        <translation>Menü çubuğu görüntülensin</translation>
+    </message>
+    <message>
         <source>Show Toolbar</source>
         <translation>Araç çubuğu görüntülensin</translation>
     </message>
@@ -5608,15 +5622,15 @@ KeePassXC indirme sayfasında bulunan AppImage paketini kullanmanız önerilir.<
     </message>
     <message>
         <source>1Password 1PUX...</source>
-        <translation type="unfinished"/>
+        <translation>1Password 1PUX...</translation>
     </message>
     <message>
         <source>Import a 1Password 1PUX file</source>
-        <translation type="unfinished"/>
+        <translation>1Password 1PUX dosyasını içe aktar</translation>
     </message>
     <message>
         <source>Import…</source>
-        <translation type="unfinished"/>
+        <translation>İçe aktar…</translation>
     </message>
     <message>
         <source>Passkeys…</source>
@@ -5841,6 +5855,10 @@ KeePassXC indirme sayfasında bulunan AppImage paketini kullanmanız önerilir.<
     <message>
         <source>Set Theme: Classic</source>
         <translation>Temayı ayarla: Klasik</translation>
+    </message>
+    <message>
+        <source>Toggle Show Menubar</source>
+        <translation>Menü çubuğunu görüntüle/gizle</translation>
     </message>
     <message>
         <source>Toggle Show Toolbar</source>
@@ -6234,10 +6252,6 @@ KeePassXC indirme sayfasında bulunan AppImage paketini kullanmanız önerilir.<
         <translation>KeePassXC - Geçiş anahtarı dışa aktar</translation>
     </message>
     <message>
-        <source>Export the following Passkey entries.</source>
-        <translation>Şu geçiş anahtarı kayıtlarını dışa aktar.</translation>
-    </message>
-    <message>
         <source>Filenames will be generated with title and .passkey file extension.</source>
         <translation>Dosya adları başlık ve .passkey uzantısı ile oluşturulacak.</translation>
     </message>
@@ -6256,6 +6270,10 @@ KeePassXC indirme sayfasında bulunan AppImage paketini kullanmanız önerilir.<
     <message>
         <source>Export to folder</source>
         <translation>Klasöre dışa aktar</translation>
+    </message>
+    <message>
+        <source>Export the following passkey entries.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6316,28 +6334,28 @@ Do you want to overwrite it?
         <translation>İptal</translation>
     </message>
     <message>
-        <source>Import the following Passkey:</source>
-        <translation>Şu geçiş anahtarı kaydını içe aktar:</translation>
-    </message>
-    <message>
         <source>Entry</source>
         <translation>Kayıt</translation>
-    </message>
-    <message>
-        <source>Import the following Passkey to this entry:</source>
-        <translation>Bu kayıt için şu geçiş anahtarı kaydını içe aktar: </translation>
     </message>
     <message>
         <source>Create new entry</source>
         <translation>Yeni kayıt ekle</translation>
     </message>
     <message>
-        <source>Default Passkeys group (Imported Passkeys)</source>
-        <translation>Varsayılan geçiş anahtarı grubu (içe aktarılmış geçiş anahtarları)</translation>
-    </message>
-    <message>
         <source>Relying Party: %1</source>
         <translation>Güvenilen taraf: %1</translation>
+    </message>
+    <message>
+        <source>Import the following passkey:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import the following passkey to this entry:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Default passkeys group (Imported Passkeys)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6351,10 +6369,6 @@ Do you want to overwrite it?
         <translation>Tüm dosyalar</translation>
     </message>
     <message>
-        <source>Open Passkey file</source>
-        <translation>Geçiş anahtarı dosyasını açın</translation>
-    </message>
-    <message>
         <source>Cannot open file</source>
         <translation>Dosya açılamadı</translation>
     </message>
@@ -6363,24 +6377,26 @@ Do you want to overwrite it?
         <translation>&quot;%1&quot; dosyası okunmak üzere açılamadı.</translation>
     </message>
     <message>
-        <source>Cannot import Passkey</source>
-        <translation>Geçiş anahtarı içe aktarılamadı</translation>
+        <source>Open passkey file</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;. Data is missing.</source>
-        <translation>&quot;%1&quot; geçiş anahtarı dosyası içe aktarılamadı. Veriler eksik.</translation>
+        <source>Cannot import passkey</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
-        <translation>&quot;%1&quot; geçiş anahtarı dosyası içe aktarılamadı. Kişisel anahtar eksik ya da bozuk.</translation>
+        <source>Cannot import passkey file &quot;%1&quot;. Data is missing.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;.
+        <source>Cannot import passkey file &quot;%1&quot;.
 The following data is missing:
 %2</source>
-        <translation>&quot;%1&quot; geçiş anahtarı dosyası içe aktarılamadı.
-Şu veriler eksik:
-%2</translation>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot import passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7228,12 +7244,6 @@ Do you want to overwrite it?</source>
     <message>
         <source>time</source>
         <translation>zaman</translation>
-    </message>
-    <message>
-        <source>Set the key file for the database.
-This options is deprecated, use --set-key-file instead.</source>
-        <translation>Veri tabanının anahtar dosyasını ayarla.
-Bu seçenekler kullanımdan kaldırıldı. yerine --set-key-file kullanın.</translation>
     </message>
     <message>
         <source>Set the key file for the database.</source>
@@ -8397,10 +8407,6 @@ Kernel: %3 %4</source>
         <translation>veri tabanının parolası stdin üzerinden okunsun</translation>
     </message>
     <message>
-        <source>Locked databases.</source>
-        <translation>Kilitli veri tabanları.</translation>
-    </message>
-    <message>
         <source>Database failed to lock.</source>
         <translation>Veri tabanı kilitlenemedi.</translation>
     </message>
@@ -8463,16 +8469,14 @@ Kernel: %3 %4</source>
         <translation>ekran görüntüsü ve uygulama kaydı alınabilsin (Windows/macOS)</translation>
     </message>
     <message>
-        <source>Enter Shortcut</source>
-        <translation>Kısayolu yazın</translation>
+        <source>Set the key file for the database.
+This option is deprecated, use --set-key-file instead.</source>
+        <translation>Veri tabanının anahtar dosyasını ayarla.
+Bu seçenekler kullanımdan kaldırıldı. yerine --set-key-file kullanın.</translation>
     </message>
     <message>
-        <source>Action</source>
-        <translation>İşlem</translation>
-    </message>
-    <message>
-        <source>Shortcuts</source>
-        <translation>Kısayollar</translation>
+        <source>Databases have been locked.</source>
+        <translation>Veri tabanları kilitlendi.</translation>
     </message>
     <message>
         <source>Attestation not supported</source>
@@ -8559,76 +8563,6 @@ Kernel: %3 %4</source>
         <translation>Anahtar verilerinin şifresi çözülemedi</translation>
     </message>
     <message>
-        <source>Favorite</source>
-        <comment>Tag for favorite entries</comment>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>File does not exist.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Cannot open file: %1</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Cannot parse file: %1 at position %2</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Failed to decrypt json file: %1</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Invalid encKeyValidation field</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Invalid cipher list within encKeyValidation field</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Wrong password</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Invalid encrypted data field</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Invalid cipher list within encrypted data field</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Cannot initialize cipher</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Cannot decrypt data</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Bitwarden Import</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Archived</source>
-        <comment>Tag for archived entries</comment>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Invalid 1PUX file format: Not a valid ZIP file.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Invalid 1PUX file format: Missing export.data</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>1Password Import</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Origin is empty or not allowed</source>
         <translation>Kaynak boş ya da izin verilmiyor</translation>
     </message>
@@ -8649,16 +8583,102 @@ Kernel: %3 %4</source>
         <translation>Zamanlayıcının sona ermesini bekleyin</translation>
     </message>
     <message>
-        <source>Unknown Passkeys error</source>
-        <translation>Bilinmeyen geçiş anahtarları sorunu</translation>
-    </message>
-    <message>
         <source>Challenge is shorter than required minimum length</source>
         <translation>Yanıt gerekli en kısa uzunluktan daha kısa</translation>
     </message>
     <message>
         <source>user.id does not match the required length</source>
         <translation>user.id istenilen uzunluğa uygun değil</translation>
+    </message>
+    <message>
+        <source>Favorite</source>
+        <comment>Tag for favorite entries</comment>
+        <translation>Sık kullanılanlara ekle</translation>
+    </message>
+    <message>
+        <source>File does not exist.</source>
+        <translation>Dosya bulunamadı</translation>
+    </message>
+    <message>
+        <source>Cannot open file: %1</source>
+        <translation>Dosya açılamadı: %1</translation>
+    </message>
+    <message>
+        <source>Cannot parse file: %1 at position %2</source>
+        <translation>Dosya işlenemedi: %1, %2 konumunda</translation>
+    </message>
+    <message>
+        <source>Failed to decrypt json file: %1</source>
+        <translation>JSON dosyasının kodu çözülemedi: %1</translation>
+    </message>
+    <message>
+        <source>Invalid encKeyValidation field</source>
+        <translation>encKeyValidation alanı geçersiz</translation>
+    </message>
+    <message>
+        <source>Invalid cipher list within encKeyValidation field</source>
+        <translation>encKeyValidation alanındaki şifreleyici listesi geçersiz</translation>
+    </message>
+    <message>
+        <source>Wrong password</source>
+        <translation>Parola yanlış</translation>
+    </message>
+    <message>
+        <source>Invalid encrypted data field</source>
+        <translation>Şifrelenmiş veri alanı geçersiz</translation>
+    </message>
+    <message>
+        <source>Invalid cipher list within encrypted data field</source>
+        <translation>Şifrelenmiş veri alanındaki şifreleyici listesi geçersiz</translation>
+    </message>
+    <message>
+        <source>Cannot initialize cipher</source>
+        <translation>Şifreleyici hazırlanamadı</translation>
+    </message>
+    <message>
+        <source>Cannot decrypt data</source>
+        <translation>Verilerin şifresi çözülemedi</translation>
+    </message>
+    <message>
+        <source>Bitwarden Import</source>
+        <translation>Bitwarden içe aktarımı</translation>
+    </message>
+    <message>
+        <source>Archived</source>
+        <comment>Tag for archived entries</comment>
+        <translation>Arşivlenmiş</translation>
+    </message>
+    <message>
+        <source>Invalid 1PUX file format: Not a valid ZIP file.</source>
+        <translation>1PUX dosyasının biçimi geçersiz: ZIP dosyası geçersiz.</translation>
+    </message>
+    <message>
+        <source>Invalid 1PUX file format: Missing export.data</source>
+        <translation>1PUX dosyasının biçimi geçersiz: export.data eksik</translation>
+    </message>
+    <message>
+        <source>1Password Import</source>
+        <translation>1Password içe aktarımı</translation>
+    </message>
+    <message>
+        <source>Enter Shortcut</source>
+        <translation>Kısayolu yazın</translation>
+    </message>
+    <message>
+        <source>Action</source>
+        <translation>İşlem</translation>
+    </message>
+    <message>
+        <source>Shortcuts</source>
+        <translation>Kısayollar</translation>
+    </message>
+    <message>
+        <source>Unsupported KDF type, cannot decrypt json file</source>
+        <translation>KDF türü desteklenmiyor. JSON dosyasının şifresi çözülemedi</translation>
+    </message>
+    <message>
+        <source>Unknown passkeys error</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -8978,14 +8998,6 @@ Kernel: %3 %4</source>
         <translation>Kayıt adreslerinin listesi</translation>
     </message>
     <message>
-        <source>Please wait, list of entries with Passkeys is being updated…</source>
-        <translation>Lütfen geçiş anahtarı bulunan kayıtların listesi güncellenirken bekleyin...</translation>
-    </message>
-    <message>
-        <source>No entries with Passkeys.</source>
-        <translation>Geçiş anahtarı bulunan bir kayıt yok.</translation>
-    </message>
-    <message>
         <source>Title</source>
         <translation>Başlık</translation>
     </message>
@@ -9020,6 +9032,22 @@ Kernel: %3 %4</source>
     <message>
         <source> (Expired)</source>
         <translation>(Süresi geçmiş)</translation>
+    </message>
+    <message>
+        <source>Export Confirmation</source>
+        <translation>Dışa aktarma onayı</translation>
+    </message>
+    <message>
+        <source>The passkey file will be vulnerable to theft and unauthorized use, if left unsecured. Are you sure you want to continue?</source>
+        <translation>Geçiş anahtarı dosyası, güvenli duruma getirilmeden bırakılırsa hırsızlığa ve yetkisiz kullanıma karşı savunmasız kalır. İlerlemek istediğinize emin misiniz?</translation>
+    </message>
+    <message>
+        <source>Please wait, list of entries with passkeys is being updated…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No entries with passkeys.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -9340,32 +9368,8 @@ Kernel: %3 %4</source>
         <translation>Uygulamalar parola istediğinde onay sorulsun</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;
-           font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Helvetica','Arial','sans-serif','Apple Color
-           Emoji','Segoe UI Emoji'; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;This setting does
-           not override disabling recycle bin prompts&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;
-           font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color
-           Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;Bu seçenek çöp
-           kutusu ile ilgili soruları kapatmaz&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </translation>
-    </message>
-    <message>
         <source>Confirm when clients request entry deletion</source>
         <translation>Uygulamalar kayıt silmek istediğinde onay sorulsun</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications
-           which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also
-           crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a
-           different value set in applications.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Böylece, önce veri tabanı kilidini açmadan 
-           parola arayan belirli uygulamalar ile daha iyi uyumluluk sağlanabilir.&lt;/p&gt;&lt;p&gt;Ancak bu seçenek açıldığında,
-           belirli bir süre içinde veri tabanının kilidi açılamazsa uygulama çökebilir. (Genellikle 25s. Ancak uygulamalarda
-           farklı bir değer ayarlanmış olabilir.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </translation>
     </message>
     <message>
         <source>Prompt to unlock database before searching</source>
@@ -9390,6 +9394,14 @@ Kernel: %3 %4</source>
     <message>
         <source>Save current changes to activate the plugin and enable editing of this section.</source>
         <translation>Eklentiyi kullanıma almak için yapılmış değişiklikleri kaydedin ve bu bölümü düzenlemeyi açın.</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This setting does not override disabling recycle bin prompts &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Bu ayar, geri dönüşüm kutusu sorularının kapatılmasını değiştirmez &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a different value set in applications.) &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Böylece, önce veri tabanı kilidini açmadan parola arayan belirli uygulamalar ile daha iyi uyumluluk sağlanabilir.&lt;/p&gt;&lt;p&gt;Ancak bu seçenek açıldığında, belirli bir süre içinde veri tabanının kilidi açılamazsa uygulama çökebilir. (Genellikle 25s. Ancak uygulamalarda farklı bir değer ayarlanmış olabilir.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -9736,7 +9748,7 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Import File</source>
-        <translation type="unfinished"/>
+        <translation>İçe aktarma dosyası</translation>
     </message>
 </context>
 <context>

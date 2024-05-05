@@ -559,10 +559,6 @@
         <translation>I-lock ang mga database matapos i-minimize ang window</translation>
     </message>
     <message>
-        <source>Require password repeat when it is visible</source>
-        <translation>Hilingin ang pag-ulit ng password kapag ito ay nakikita na</translation>
-    </message>
-    <message>
         <source>Hide passwords when editing them</source>
         <translation>Itago ang mga password kapag ine-edit ang mga ito</translation>
     </message>
@@ -705,10 +701,6 @@
 <context>
     <name>AutoTypePlatformX11</name>
     <message>
-        <source>Trying to send invalid keysym.</source>
-        <translation>Sinusubukang magpadala ng invalid keysym.</translation>
-    </message>
-    <message>
         <source>Sequence aborted: Caps Lock is on</source>
         <translation>Na-abort ang sequence: Naka-on ang Caps Lock</translation>
     </message>
@@ -719,6 +711,10 @@
     <message>
         <source>Unable to get valid keycode for key: </source>
         <translation>Hindi makakuha ng valid keycode para sa key: </translation>
+    </message>
+    <message>
+        <source>Trying to send invalid keyboard symbol.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -877,23 +873,6 @@ Mangyaring piliin ang tamang database para sa pag-save ng mga kredensyal.</trans
         <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
-        <source>Do you want to register Passkey for:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Existing Passkey found.
-Do you want to register a new Passkey for:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Select the existing Passkey and press Update to replace it.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Authenticate Passkey credentials for:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Relying Party: %1</source>
         <translation type="unfinished"/>
     </message>
@@ -903,6 +882,27 @@ Do you want to register a new Passkey for:</source>
     </message>
     <message>
         <source>KeePassXC - Passkey credentials</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Add to existing entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Existing passkey found.
+Do you want to register a new passkey for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Select the existing passkey and press Update to replace it.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Authenticate passkey credentials for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to register a passkey for:</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -955,11 +955,6 @@ Gusto mo bang i-delete ang entry?
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Entry already has a Passkey.
-Do you want to overwrite the Passkey in %1 - %2?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>KeePassXC - Create a new group</source>
         <translation type="unfinished"/>
     </message>
@@ -969,10 +964,6 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
     </message>
     <message>
         <source>KeePassXC - Overwrite existing key?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>KeePassXC - Update Passkey</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -989,6 +980,27 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Passkey</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC - Passkey credentials</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Register a new passkey to this entry:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC - Update passkey</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entry already has a passkey.
+Do you want to overwrite the passkey in %1 - %2?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Register</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1238,11 +1250,11 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Allows using insecure http://localhost with Passkeys for testing purposes.</source>
+        <source>Allows using insecure http://localhost with passkeys for testing purposes.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Allow using localhost with Passkeys</source>
+        <source>Allow using localhost with passkeys</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -2830,10 +2842,6 @@ Gusto mo bang itama ito?</translation>
 <context>
     <name>EditEntryWidgetBrowser</name>
     <message>
-        <source>These settings affect to the entry&apos;s behaviour with the browser extension.</source>
-        <translation>Nakakaapekto ang mga setting na ito sa gawi ng entry sa extension ng browser.</translation>
-    </message>
-    <message>
         <source>General</source>
         <translation>Pangkalahatan</translation>
     </message>
@@ -2862,10 +2870,6 @@ Gusto mo bang itama ito?</translation>
         <translation>Huwag gamitin ang entry na ito sa HTTP Basic Auth</translation>
     </message>
     <message>
-        <source>Additional URL&apos;s</source>
-        <translation>Karagdagang URL&apos;s</translation>
-    </message>
-    <message>
         <source>Add</source>
         <translation>Magdagdag</translation>
     </message>
@@ -2876,6 +2880,14 @@ Gusto mo bang itama ito?</translation>
     <message>
         <source>Edit</source>
         <translation>I-edit</translation>
+    </message>
+    <message>
+        <source>These settings affect the entry&apos;s behaviour with the browser extension.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Additional URLs</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3670,12 +3682,6 @@ Maaari itong maging sanhi ng hindi paggana ng mga apektadong plugin.</translatio
         <translation>Kumpirmahin ang Overwrite Attachment</translation>
     </message>
     <message>
-        <source>Attachment &quot;%1&quot; already exists. 
-Would you like to overwrite the existing attachment?</source>
-        <translation>Umiiral na ang attachment na &quot;%1&quot;.
-Gusto mo bang i-overwrite ang kasalukuyang attachment?</translation>
-    </message>
-    <message>
         <source>Confirm Attachment</source>
         <translation>Kumpirmahin ang Attachment</translation>
     </message>
@@ -3708,6 +3714,12 @@ Gusto mo bang i-save ang mga pagbabago sa database mo?</translation>
 Error: %1</source>
         <translation>Nabigo ang pag-save ng na-update na attachment.
 Error: %1</translation>
+    </message>
+    <message>
+        <source>Attachment &quot;%1&quot; already exists. 
+Would you like to overwrite the existing attachment?</source>
+        <translation>Umiiral na ang attachment na &quot;%1&quot;.
+Gusto mo bang i-overwrite ang kasalukuyang attachment?</translation>
     </message>
 </context>
 <context>
@@ -5489,6 +5501,10 @@ Sigurado ka bang gusto mong magpatuloy sa file na ito?</translation>
         <translation>Classic (Platform-native)</translation>
     </message>
     <message>
+        <source>Show Menubar</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Show Toolbar</source>
         <translation>Ipakita ang Toolbar</translation>
     </message>
@@ -5834,6 +5850,10 @@ Inirerekomenda naming gamitin mo ang AppImage na available sa aming pahina ng mg
     </message>
     <message>
         <source>Set Theme: Classic</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle Show Menubar</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -6228,10 +6248,6 @@ Inirerekomenda naming gamitin mo ang AppImage na available sa aming pahina ng mg
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Export the following Passkey entries.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Filenames will be generated with title and .passkey file extension.</source>
         <translation type="unfinished"/>
     </message>
@@ -6249,6 +6265,10 @@ Inirerekomenda naming gamitin mo ang AppImage na available sa aming pahina ng mg
     </message>
     <message>
         <source>Export to folder</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export the following passkey entries.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -6308,27 +6328,27 @@ Do you want to overwrite it?
         <translation>Kanselahin</translation>
     </message>
     <message>
-        <source>Import the following Passkey:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Entry</source>
         <translation>Entry</translation>
-    </message>
-    <message>
-        <source>Import the following Passkey to this entry:</source>
-        <translation type="unfinished"/>
     </message>
     <message>
         <source>Create new entry</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Default Passkeys group (Imported Passkeys)</source>
+        <source>Relying Party: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Relying Party: %1</source>
+        <source>Import the following passkey:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import the following passkey to this entry:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Default passkeys group (Imported Passkeys)</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -6343,10 +6363,6 @@ Do you want to overwrite it?
         <translation>Lahat ng mga file</translation>
     </message>
     <message>
-        <source>Open Passkey file</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Cannot open file</source>
         <translation type="unfinished"/>
     </message>
@@ -6355,21 +6371,25 @@ Do you want to overwrite it?
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey</source>
+        <source>Open passkey file</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;. Data is missing.</source>
+        <source>Cannot import passkey</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
+        <source>Cannot import passkey file &quot;%1&quot;. Data is missing.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;.
+        <source>Cannot import passkey file &quot;%1&quot;.
 The following data is missing:
 %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot import passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -7218,12 +7238,6 @@ Gusto mo bang i-overwrite ito?</translation>
     <message>
         <source>time</source>
         <translation>oras</translation>
-    </message>
-    <message>
-        <source>Set the key file for the database.
-This options is deprecated, use --set-key-file instead.</source>
-        <translation>Itakda ang key file para sa database.
-Ang pagpipiliang ito ay hindi na ginagamit, gamitin ang --set-key-file sa halip.</translation>
     </message>
     <message>
         <source>Set the key file for the database.</source>
@@ -8387,10 +8401,6 @@ Kernel: %3 %4</translation>
         <translation>basahin ang password ng database mula sa stdin</translation>
     </message>
     <message>
-        <source>Locked databases.</source>
-        <translation>Mga naka-lock na database.</translation>
-    </message>
-    <message>
         <source>Database failed to lock.</source>
         <translation>Nabigong i-lock ang database.</translation>
     </message>
@@ -8453,15 +8463,12 @@ Kernel: %3 %4</translation>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Enter Shortcut</source>
+        <source>Set the key file for the database.
+This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Action</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Shortcuts</source>
+        <source>Databases have been locked.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -8549,6 +8556,34 @@ Kernel: %3 %4</translation>
         <translation>Nabigong i-decrypt ang key data.</translation>
     </message>
     <message>
+        <source>Origin is empty or not allowed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Effective domain is not a valid domain</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Origin and RP ID do not match</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No supported algorithms were provided</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Wait for timer to expire</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Challenge is shorter than required minimum length</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>user.id does not match the required length</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Favorite</source>
         <comment>Tag for favorite entries</comment>
         <translation type="unfinished"/>
@@ -8619,35 +8654,23 @@ Kernel: %3 %4</translation>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Origin is empty or not allowed</source>
+        <source>Enter Shortcut</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Effective domain is not a valid domain</source>
+        <source>Action</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Origin and RP ID do not match</source>
+        <source>Shortcuts</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>No supported algorithms were provided</source>
+        <source>Unsupported KDF type, cannot decrypt json file</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Wait for timer to expire</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Unknown Passkeys error</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Challenge is shorter than required minimum length</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>user.id does not match the required length</source>
+        <source>Unknown passkeys error</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -8968,14 +8991,6 @@ Kernel: %3 %4</translation>
         <translation>Listahan ng mga URL entry</translation>
     </message>
     <message>
-        <source>Please wait, list of entries with Passkeys is being updated…</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>No entries with Passkeys.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Title</source>
         <translation>Pamagat</translation>
     </message>
@@ -9009,6 +9024,22 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source> (Expired)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export Confirmation</source>
+        <translation>I-export ang Kumpirmasyon</translation>
+    </message>
+    <message>
+        <source>The passkey file will be vulnerable to theft and unauthorized use, if left unsecured. Are you sure you want to continue?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please wait, list of entries with passkeys is being updated…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No entries with passkeys.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -9330,32 +9361,8 @@ Kernel: %3 %4</translation>
         <translation>Kumpirmahin kapag ang mga password ay nabawi na ng mga client</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;
-           font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Helvetica','Arial','sans-serif','Apple Color
-           Emoji','Segoe UI Emoji'; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;This setting does
-           not override disabling recycle bin prompts&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;
-           font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color
-           Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;Ang setting na ito ay hindi
-           magpapawalang-bisa sa paggana ng mga promt sa recycle bin&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </translation>
-    </message>
-    <message>
         <source>Confirm when clients request entry deletion</source>
         <translation>Kumpirmahin kapag humiling ang mga client ng pag-delete ng entry</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications
-           which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also
-           crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a
-           different value set in applications.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Pinapabuti nito ang pagiging tugma sa mga partikular na application
-           na naghahanap para sa password nang hindi muna ina-unlock ang database.&lt;/p&gt;&lt;p&gt;Ngunit ang pagpapagana nito ay maaari ding
-           makasira ng database ng kliyente kung hindi pa ito bukas sa loob ng tinukoy na timeout. (Kadalasan 25s, ngunit maaaring
-           magkaibang value set sa applications.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </translation>
     </message>
     <message>
         <source>Prompt to unlock database before searching</source>
@@ -9380,6 +9387,14 @@ Kernel: %3 %4</translation>
     <message>
         <source>Save current changes to activate the plugin and enable editing of this section.</source>
         <translation>I-save ang mga kasalukuyang pagbabago para i-activate ang plugin at i-enable ang pag-edit ng seksyong ito.</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This setting does not override disabling recycle bin prompts &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a different value set in applications.) &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

@@ -559,10 +559,6 @@
         <translation>Suskleidus langą, užrakinti duomenų bazes</translation>
     </message>
     <message>
-        <source>Require password repeat when it is visible</source>
-        <translation>Reikalauti pakartoti slaptažodį, kai jis yra matomas</translation>
-    </message>
-    <message>
         <source>Hide passwords when editing them</source>
         <translation>Slėpti slaptažodžius juos redaguojant</translation>
     </message>
@@ -704,10 +700,6 @@
 <context>
     <name>AutoTypePlatformX11</name>
     <message>
-        <source>Trying to send invalid keysym.</source>
-        <translation>Keysym netinkamas</translation>
-    </message>
-    <message>
         <source>Sequence aborted: Caps Lock is on</source>
         <translation>Seka nutraukta: įjungtas Caps Lock</translation>
     </message>
@@ -718,6 +710,10 @@
     <message>
         <source>Unable to get valid keycode for key: </source>
         <translation>Nepavyksta gauti galiojančio rakto kodo</translation>
+    </message>
+    <message>
+        <source>Trying to send invalid keyboard symbol.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -876,23 +872,6 @@ Prisijungimo duomenų įrašymui, pasirinkite teisingą duomenų bazę.</transla
         <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
-        <source>Do you want to register Passkey for:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Existing Passkey found.
-Do you want to register a new Passkey for:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Select the existing Passkey and press Update to replace it.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Authenticate Passkey credentials for:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Relying Party: %1</source>
         <translation type="unfinished"/>
     </message>
@@ -902,6 +881,27 @@ Do you want to register a new Passkey for:</source>
     </message>
     <message>
         <source>KeePassXC - Passkey credentials</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Add to existing entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Existing passkey found.
+Do you want to register a new passkey for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Select the existing passkey and press Update to replace it.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Authenticate passkey credentials for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to register a passkey for:</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -953,11 +953,6 @@ Ar norite ištrinti įrašą?</translation>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Entry already has a Passkey.
-Do you want to overwrite the Passkey in %1 - %2?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>KeePassXC - Create a new group</source>
         <translation type="unfinished"/>
     </message>
@@ -967,10 +962,6 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
     </message>
     <message>
         <source>KeePassXC - Overwrite existing key?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>KeePassXC - Update Passkey</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -987,6 +978,27 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Passkey</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC - Passkey credentials</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Register a new passkey to this entry:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC - Update passkey</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entry already has a passkey.
+Do you want to overwrite the passkey in %1 - %2?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Register</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1236,11 +1248,11 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Allows using insecure http://localhost with Passkeys for testing purposes.</source>
+        <source>Allows using insecure http://localhost with passkeys for testing purposes.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Allow using localhost with Passkeys</source>
+        <source>Allow using localhost with passkeys</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -2819,10 +2831,6 @@ Ar norėtumėte ją ištaisyti?</translation>
 <context>
     <name>EditEntryWidgetBrowser</name>
     <message>
-        <source>These settings affect to the entry&apos;s behaviour with the browser extension.</source>
-        <translation>Šie nustatymai turi įtakos įrašo elgsenai su naršyklės plėtiniu.</translation>
-    </message>
-    <message>
         <source>General</source>
         <translation>Bendra</translation>
     </message>
@@ -2851,10 +2859,6 @@ Ar norėtumėte ją ištaisyti?</translation>
         <translation>Nenaudokite šio įrašo su HTTP Basic Auth</translation>
     </message>
     <message>
-        <source>Additional URL&apos;s</source>
-        <translation>Papildomi URL adresai</translation>
-    </message>
-    <message>
         <source>Add</source>
         <translation>Pridėti</translation>
     </message>
@@ -2865,6 +2869,14 @@ Ar norėtumėte ją ištaisyti?</translation>
     <message>
         <source>Edit</source>
         <translation>Keisti</translation>
+    </message>
+    <message>
+        <source>These settings affect the entry&apos;s behaviour with the browser extension.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Additional URLs</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3661,12 +3673,6 @@ Dėl to gali sutrikti paveiktų papildinių veikimas.</translation>
         <translation>Patvirtinti priedo perrašymą</translation>
     </message>
     <message>
-        <source>Attachment &quot;%1&quot; already exists. 
-Would you like to overwrite the existing attachment?</source>
-        <translation>Priedas &quot;%1&quot; jau egzistuoja. 
-Ar norite perrašyti esamą priedą?</translation>
-    </message>
-    <message>
         <source>Confirm Attachment</source>
         <translation>Patvirtinti priedą</translation>
     </message>
@@ -3699,6 +3705,12 @@ Ar norite išsaugoti pakeitimus savo duomenų bazėje?</translation>
 Error: %1</source>
         <translation>Nepavyko išsaugoti atnaujinto priedo.
 Klaida: %1</translation>
+    </message>
+    <message>
+        <source>Attachment &quot;%1&quot; already exists. 
+Would you like to overwrite the existing attachment?</source>
+        <translation>Priedas &quot;%1&quot; jau egzistuoja. 
+Ar norite perrašyti esamą priedą?</translation>
     </message>
 </context>
 <context>
@@ -5479,6 +5491,10 @@ Ar tikrai norite tęsti darbą su šiuo failu?</translation>
         <translation>Klasikinis (platformos gimtoji)</translation>
     </message>
     <message>
+        <source>Show Menubar</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Show Toolbar</source>
         <translation>Rodyti įrankių juostą</translation>
     </message>
@@ -5824,6 +5840,10 @@ Rekomenduojame naudoti &quot;AppImage&quot;, pasiekiamą mūsų atsisiuntimų pu
     </message>
     <message>
         <source>Set Theme: Classic</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle Show Menubar</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -6218,10 +6238,6 @@ Rekomenduojame naudoti &quot;AppImage&quot;, pasiekiamą mūsų atsisiuntimų pu
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Export the following Passkey entries.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Filenames will be generated with title and .passkey file extension.</source>
         <translation type="unfinished"/>
     </message>
@@ -6239,6 +6255,10 @@ Rekomenduojame naudoti &quot;AppImage&quot;, pasiekiamą mūsų atsisiuntimų pu
     </message>
     <message>
         <source>Export to folder</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export the following passkey entries.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -6298,27 +6318,27 @@ Do you want to overwrite it?
         <translation>Atsisakyti</translation>
     </message>
     <message>
-        <source>Import the following Passkey:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Entry</source>
         <translation>Įrašas</translation>
-    </message>
-    <message>
-        <source>Import the following Passkey to this entry:</source>
-        <translation type="unfinished"/>
     </message>
     <message>
         <source>Create new entry</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Default Passkeys group (Imported Passkeys)</source>
+        <source>Relying Party: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Relying Party: %1</source>
+        <source>Import the following passkey:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import the following passkey to this entry:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Default passkeys group (Imported Passkeys)</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -6333,10 +6353,6 @@ Do you want to overwrite it?
         <translation>Visi failai</translation>
     </message>
     <message>
-        <source>Open Passkey file</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Cannot open file</source>
         <translation type="unfinished"/>
     </message>
@@ -6345,21 +6361,25 @@ Do you want to overwrite it?
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey</source>
+        <source>Open passkey file</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;. Data is missing.</source>
+        <source>Cannot import passkey</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
+        <source>Cannot import passkey file &quot;%1&quot;. Data is missing.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;.
+        <source>Cannot import passkey file &quot;%1&quot;.
 The following data is missing:
 %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot import passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -7208,11 +7228,6 @@ Ar norite jį perrašyti?</translation>
     <message>
         <source>time</source>
         <translation>laikas</translation>
-    </message>
-    <message>
-        <source>Set the key file for the database.
-This options is deprecated, use --set-key-file instead.</source>
-        <translation type="unfinished"/>
     </message>
     <message>
         <source>Set the key file for the database.</source>
@@ -8375,10 +8390,6 @@ Branduolys: %3 %4</translation>
         <translation>nuskaityti duomenų bazės slaptažodį iš stdin</translation>
     </message>
     <message>
-        <source>Locked databases.</source>
-        <translation>Užrakintos duomenų bazės.</translation>
-    </message>
-    <message>
         <source>Database failed to lock.</source>
         <translation>Duomenų bazės nepavyko užrakinti.</translation>
     </message>
@@ -8441,15 +8452,12 @@ Branduolys: %3 %4</translation>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Enter Shortcut</source>
+        <source>Set the key file for the database.
+This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Action</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Shortcuts</source>
+        <source>Databases have been locked.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -8537,6 +8545,34 @@ Branduolys: %3 %4</translation>
         <translation>Nepavyko iššifruoti rakto duomenų.</translation>
     </message>
     <message>
+        <source>Origin is empty or not allowed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Effective domain is not a valid domain</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Origin and RP ID do not match</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No supported algorithms were provided</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Wait for timer to expire</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Challenge is shorter than required minimum length</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>user.id does not match the required length</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Favorite</source>
         <comment>Tag for favorite entries</comment>
         <translation type="unfinished"/>
@@ -8607,35 +8643,23 @@ Branduolys: %3 %4</translation>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Origin is empty or not allowed</source>
+        <source>Enter Shortcut</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Effective domain is not a valid domain</source>
+        <source>Action</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Origin and RP ID do not match</source>
+        <source>Shortcuts</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>No supported algorithms were provided</source>
+        <source>Unsupported KDF type, cannot decrypt json file</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Wait for timer to expire</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Unknown Passkeys error</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Challenge is shorter than required minimum length</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>user.id does not match the required length</source>
+        <source>Unknown passkeys error</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -8956,14 +8980,6 @@ Branduolys: %3 %4</translation>
         <translation>Įrašo URL adresų sąrašas</translation>
     </message>
     <message>
-        <source>Please wait, list of entries with Passkeys is being updated…</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>No entries with Passkeys.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Title</source>
         <translation>Antraštė</translation>
     </message>
@@ -8997,6 +9013,22 @@ Branduolys: %3 %4</translation>
     </message>
     <message>
         <source> (Expired)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export Confirmation</source>
+        <translation>Eksporto Patvirtinimas</translation>
+    </message>
+    <message>
+        <source>The passkey file will be vulnerable to theft and unauthorized use, if left unsecured. Are you sure you want to continue?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please wait, list of entries with passkeys is being updated…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No entries with passkeys.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -9318,32 +9350,8 @@ Branduolys: %3 %4</translation>
         <translation>Patvirtinti, kai klientai gauna slaptažodžius</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;
-           font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Helvetica','Arial','sans-serif','Apple Color
-           Emoji','Segoe UI Emoji'; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;This setting does
-           not override disabling recycle bin prompts&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;
-           font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color
-           Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;Šis parametras veikia
-           nepaisykite šiukšlinės raginimų išjungimo&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </translation>
-    </message>
-    <message>
         <source>Confirm when clients request entry deletion</source>
         <translation>Patvirtinti, kai klientai prašo ištrinti įrašą</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications
-           which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also
-           crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a
-           different value set in applications.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tai pagerina suderinamumą su tam tikromis programomis
-           kurie ieško slaptažodžio prieš tai neatrakindami duomenų bazės.&lt;/p&gt;&lt;p&gt;Tačiau tai taip pat gali būti įgalinimas
-           sugesti klientą, jei duomenų bazės negalima atrakinti per tam tikrą skirtąjį laiką. (Paprastai 25-eri, bet gali būti
-           skirtingos vertės, nustatytos programose.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </translation>
     </message>
     <message>
         <source>Prompt to unlock database before searching</source>
@@ -9368,6 +9376,14 @@ Branduolys: %3 %4</translation>
     <message>
         <source>Save current changes to activate the plugin and enable editing of this section.</source>
         <translation>Išsaugoti esamus pakeitimus, kad papildinys būtų įjungtas ir būtų galima redaguoti šį skyrių.</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This setting does not override disabling recycle bin prompts &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a different value set in applications.) &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

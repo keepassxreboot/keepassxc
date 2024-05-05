@@ -559,10 +559,6 @@
         <translation>Andmebaasid lukustatakse akna minimeerimisel</translation>
     </message>
     <message>
-        <source>Require password repeat when it is visible</source>
-        <translation>Ka nähtava paroolivälja korral nõutakse parooli kordamist</translation>
-    </message>
-    <message>
         <source>Hide passwords when editing them</source>
         <translation>Paroolid on muutmise ajal peidetud</translation>
     </message>
@@ -705,10 +701,6 @@
 <context>
     <name>AutoTypePlatformX11</name>
     <message>
-        <source>Trying to send invalid keysym.</source>
-        <translation>Prooviti saata vigast klahvisümbolit.</translation>
-    </message>
-    <message>
         <source>Sequence aborted: Caps Lock is on</source>
         <translation>Jada sisestamine katkestati: suurtähelukk on sisse lülitatud</translation>
     </message>
@@ -719,6 +711,10 @@
     <message>
         <source>Unable to get valid keycode for key: </source>
         <translation>Ei leitud korrektset klahvikoodi klahvile </translation>
+    </message>
+    <message>
+        <source>Trying to send invalid keyboard symbol.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -877,24 +873,6 @@ Vali, millisesse neist tunnused salvestada tuleks.</translation>
         <translation><numerusform>Oodatakse veel &lt;b&gt;%n&lt;/b&gt; sekund...</numerusform><numerusform>Oodatakse veel &lt;b&gt;%n&lt;/b&gt; sekundit...</numerusform></translation>
     </message>
     <message>
-        <source>Do you want to register Passkey for:</source>
-        <translation>Kirje, millele uus pääsuvõti registreerida:</translation>
-    </message>
-    <message>
-        <source>Existing Passkey found.
-Do you want to register a new Passkey for:</source>
-        <translation>Leiti olemasolev pääsuvõti.
-Vali kirje, millele uus pääsuvõti registreerida:</translation>
-    </message>
-    <message>
-        <source>Select the existing Passkey and press Update to replace it.</source>
-        <translation>Vali olemasolev pääsuvõti ja klõpsa selle asendamiseks „Uuenda”.</translation>
-    </message>
-    <message>
-        <source>Authenticate Passkey credentials for:</source>
-        <translation>Pääsuvõtme tunnuste autentimine:</translation>
-    </message>
-    <message>
         <source>Relying Party: %1</source>
         <translation>Sõltlane: %1</translation>
     </message>
@@ -905,6 +883,27 @@ Vali kirje, millele uus pääsuvõti registreerida:</translation>
     <message>
         <source>KeePassXC - Passkey credentials</source>
         <translation>Pääsuvõtme tunnused – KeePassXC</translation>
+    </message>
+    <message>
+        <source>Add to existing entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Existing passkey found.
+Do you want to register a new passkey for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Select the existing passkey and press Update to replace it.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Authenticate passkey credentials for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to register a passkey for:</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -956,12 +955,6 @@ Kas lubad selle kirje kustutada?
         <translation>%1 (pääsuvõti)</translation>
     </message>
     <message>
-        <source>Entry already has a Passkey.
-Do you want to overwrite the Passkey in %1 - %2?</source>
-        <translation>Kirjel „%1” on juba pääsuvõti.
-Kas soovid selle uue pääsuvõtmega (%2) üle kirjutada?</translation>
-    </message>
-    <message>
         <source>KeePassXC - Create a new group</source>
         <translation>Uue grupi loomine – KeePassXC</translation>
     </message>
@@ -972,10 +965,6 @@ Kas soovid selle uue pääsuvõtmega (%2) üle kirjutada?</translation>
     <message>
         <source>KeePassXC - Overwrite existing key?</source>
         <translation>Kirje ülekirjutamise kinnitus – KeePassXC</translation>
-    </message>
-    <message>
-        <source>KeePassXC - Update Passkey</source>
-        <translation>Pääsuvõtme uuendamine – KeePassXC</translation>
     </message>
     <message>
         <source>KeePassXC - Update Entry</source>
@@ -991,7 +980,28 @@ Kas soovid selle uue pääsuvõtmega (%2) üle kirjutada?</translation>
     </message>
     <message>
         <source>Passkey</source>
+        <translation>Pääsuvõti</translation>
+    </message>
+    <message>
+        <source>KeePassXC - Passkey credentials</source>
+        <translation>Pääsuvõtme tunnused – KeePassXC</translation>
+    </message>
+    <message>
+        <source>Register a new passkey to this entry:</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC - Update passkey</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entry already has a passkey.
+Do you want to overwrite the passkey in %1 - %2?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Register</source>
+        <translation>Registreeri</translation>
     </message>
 </context>
 <context>
@@ -1240,11 +1250,11 @@ Kas soovid selle uue pääsuvõtmega (%2) üle kirjutada?</translation>
         <translation>&lt;b&gt;Viga:&lt;/b&gt; paigaldatud puhverrakendust ei leitud ootuspärasest asukohast: %1&lt;br/&gt;Palun määra lisaseadete all kohandatud puhverrakenduse asukoht või paigalda puhverrakendus uuesti.</translation>
     </message>
     <message>
-        <source>Allows using insecure http://localhost with Passkeys for testing purposes.</source>
+        <source>Allows using insecure http://localhost with passkeys for testing purposes.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Allow using localhost with Passkeys</source>
+        <source>Allow using localhost with passkeys</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1383,11 +1393,11 @@ Kas soovid selle uue pääsuvõtmega (%2) üle kirjutada?</translation>
     </message>
     <message>
         <source>Failed to parse CSV file: %1</source>
-        <translation type="unfinished"/>
+        <translation>CSV-faili parsimine ebaõnnestus: %1</translation>
     </message>
     <message>
         <source>Imported from CSV file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Imporditud CSV-failist: %1</translation>
     </message>
 </context>
 <context>
@@ -1594,51 +1604,55 @@ Selle veateate ilmumise vältimiseks peaksid avama andmebaasi seadetes turvalisu
     </message>
     <message>
         <source>Select Key File:</source>
-        <translation type="unfinished"/>
+        <translation>Võtmefaili valimine:</translation>
     </message>
     <message>
         <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;Lisaks paroolile saab andmebaasi turvalisuse suurendamiseks kasutada võtmefaili. Selle saab genereerida andmebaasi turvaseadetes.&lt;/p&gt;&lt;p&gt;See &lt;strong&gt;ei ole&lt;/strong&gt; sinu *.kdbx andmebaasifail!&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Click to add a key file.</source>
-        <translation type="unfinished"/>
+        <translation>Klõpsa võtmefaili lisamiseks.</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;I have a key file&lt;/a&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;Mul on võtmefail&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Use hardware key [Serial: %1]</source>
-        <translation type="unfinished"/>
+        <translation>Riistvaralise võtme kasutamine (seerianumber: %1)</translation>
     </message>
     <message>
         <source>Use hardware key</source>
-        <translation type="unfinished"/>
+        <translation>Riistvaralise võtme kasutamine</translation>
     </message>
     <message>
         <source>Your database file is NOT a key file!
 If you don&apos;t have a key file or don&apos;t know what that is, you don&apos;t have to select one.</source>
-        <translation type="unfinished"/>
+        <translation>Andmebaasifail ise EI OLE võtmefail!
+Kui andmebaasi avamiseks pole võtmefaili vaja, ära vali seda.</translation>
     </message>
     <message>
         <source>KeePassXC database file selected</source>
-        <translation type="unfinished"/>
+        <translation>Valitud on KeePassXC andmebaasifail</translation>
     </message>
     <message>
         <source>The file you selected looks like a database file.
 A database file is NOT a key file!
 
 Are you sure you want to continue with this file?.</source>
-        <translation type="unfinished"/>
+        <translation>Valitud fail näeb välja nagu andmebaasifail.
+Andmebaasifail EI OLE võtmefail!
+
+Kas oled kindel, et soovid selle failiga jätkata?</translation>
     </message>
     <message>
         <source>No hardware keys found.</source>
-        <translation type="unfinished"/>
+        <translation>Riistvaralisi võtmeid ei leitud.</translation>
     </message>
     <message>
         <source>Refresh Hardware Keys</source>
-        <translation type="unfinished"/>
+        <translation>Värskenda riistvaraliste võtmete loendit</translation>
     </message>
 </context>
 <context>
@@ -2834,10 +2848,6 @@ isegi kui see ei vasta kvaliteedinõuetele. Märgi see ruut, kui parooli keeruku
 <context>
     <name>EditEntryWidgetBrowser</name>
     <message>
-        <source>These settings affect to the entry&apos;s behaviour with the browser extension.</source>
-        <translation>Need seaded mõjutavad kirje käitumist brauserilaiendusega.</translation>
-    </message>
-    <message>
         <source>General</source>
         <translation>Üldine</translation>
     </message>
@@ -2866,10 +2876,6 @@ isegi kui see ei vasta kvaliteedinõuetele. Märgi see ruut, kui parooli keeruku
         <translation>Seda kirjet HTTP lihtautentimisel ei kasutata</translation>
     </message>
     <message>
-        <source>Additional URL&apos;s</source>
-        <translation>Lisa-URL-id</translation>
-    </message>
-    <message>
         <source>Add</source>
         <translation>Lisa</translation>
     </message>
@@ -2880,6 +2886,14 @@ isegi kui see ei vasta kvaliteedinõuetele. Märgi see ruut, kui parooli keeruku
     <message>
         <source>Edit</source>
         <translation>Muuda</translation>
+    </message>
+    <message>
+        <source>These settings affect the entry&apos;s behaviour with the browser extension.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Additional URLs</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3674,12 +3688,6 @@ See võib põhjustada asjaomaste pluginate töös tõrkeid.</translation>
         <translation>Kaasatud faili ülekirjutamise kinnitus</translation>
     </message>
     <message>
-        <source>Attachment &quot;%1&quot; already exists. 
-Would you like to overwrite the existing attachment?</source>
-        <translation>Kaasatud fail nimega „%1” on juba olemas.
-Kas soovid selle faili uuega üle kirjutada?</translation>
-    </message>
-    <message>
         <source>Confirm Attachment</source>
         <translation>Faili kaasamise kinnitus</translation>
     </message>
@@ -3712,6 +3720,12 @@ Kas soovid muudatused oma andmebaasi salvestada?</translation>
 Error: %1</source>
         <translation>Kaasatud faili uuendamine ebaõnnestus.
 Viga: %1</translation>
+    </message>
+    <message>
+        <source>Attachment &quot;%1&quot; already exists. 
+Would you like to overwrite the existing attachment?</source>
+        <translation>Kaasatud fail nimega „%1” on juba olemas.
+Kas soovid selle faili uuega üle kirjutada?</translation>
     </message>
 </context>
 <context>
@@ -4272,22 +4286,22 @@ You can enable the DuckDuckGo website icon service in the security section of th
     <name>ImportWizard</name>
     <message>
         <source>Import Wizard</source>
-        <translation type="unfinished"/>
+        <translation>Impordinõustaja</translation>
     </message>
 </context>
 <context>
     <name>ImportWizardPageReview</name>
     <message>
         <source>WizardPage</source>
-        <translation>Andmebaasinõustaja</translation>
+        <translation>Nõustaja</translation>
     </message>
     <message>
         <source>Entry count: %1</source>
-        <translation type="unfinished"/>
+        <translation>Kirjete arv: %1</translation>
     </message>
     <message>
         <source>Group</source>
-        <translation>Grupp:</translation>
+        <translation>Grupp</translation>
     </message>
     <message>
         <source>Title</source>
@@ -4299,11 +4313,11 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Password</source>
-        <translation>Parool:</translation>
+        <translation>Parool</translation>
     </message>
     <message>
         <source>Url</source>
-        <translation type="unfinished"/>
+        <translation>URL</translation>
     </message>
 </context>
 <context>
@@ -4314,7 +4328,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Import File Selection</source>
-        <translation type="unfinished"/>
+        <translation>Imporditava faili valimine</translation>
     </message>
     <message>
         <source>Password:</source>
@@ -4330,43 +4344,43 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Import Into:</source>
-        <translation type="unfinished"/>
+        <translation>Imporditakse:</translation>
     </message>
     <message>
         <source>New Database</source>
-        <translation>Uus andmebaas</translation>
+        <translation>Uude andmebaasi</translation>
     </message>
     <message>
         <source>No unlocked databases available</source>
-        <translation type="unfinished"/>
+        <translation>Ühtegi avatud lukuga andmebaasi pole saadaval.</translation>
     </message>
     <message>
         <source>Existing Database:</source>
-        <translation type="unfinished"/>
+        <translation>Olemasolevasse andmebaasi:</translation>
     </message>
     <message>
         <source>Import File:</source>
-        <translation type="unfinished"/>
+        <translation>Imporditav fail:</translation>
     </message>
     <message>
         <source>Comma Separated Values (.csv)</source>
-        <translation type="unfinished"/>
+        <translation>Komaga eraldatud väärtused (.csv)</translation>
     </message>
     <message>
         <source>1Password Export (.1pux)</source>
-        <translation type="unfinished"/>
+        <translation>1Passwordi eksport (.1pux)</translation>
     </message>
     <message>
         <source>1Password Vault (.opvault)</source>
-        <translation type="unfinished"/>
+        <translation>1Passwordi turvalaegas (.opvault)</translation>
     </message>
     <message>
         <source>Bitwarden (.json)</source>
-        <translation type="unfinished"/>
+        <translation>Bitwarden (.json)</translation>
     </message>
     <message>
         <source>KeePass 1 Database (.kdb)</source>
-        <translation type="unfinished"/>
+        <translation>KeePass 1 andmebaas (.kdb)</translation>
     </message>
     <message>
         <source>Open OPVault</source>
@@ -4374,7 +4388,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Select import file</source>
-        <translation type="unfinished"/>
+        <translation>Imporditava faili valimine</translation>
     </message>
     <message>
         <source>All files</source>
@@ -4390,23 +4404,23 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Comma Separated Values</source>
-        <translation type="unfinished"/>
+        <translation>Komaga eraldatud väärtused</translation>
     </message>
     <message>
         <source>1Password Export</source>
-        <translation type="unfinished"/>
+        <translation>1Passwordi eksport</translation>
     </message>
     <message>
         <source>Bitwarden JSON Export</source>
-        <translation type="unfinished"/>
+        <translation>Bitwardeni JSON-eksport</translation>
     </message>
     <message>
         <source>1Password Vault</source>
-        <translation type="unfinished"/>
+        <translation>1Passwordi turvalaegas</translation>
     </message>
     <message>
         <source>KeePass1 Database</source>
-        <translation type="unfinished"/>
+        <translation>KeePass 1 andmebaas</translation>
     </message>
 </context>
 <context>
@@ -5492,6 +5506,10 @@ Kas oled kindel, et soovid selle failiga jätkata?</translation>
         <translation>Klassikaline (platvormiomane)</translation>
     </message>
     <message>
+        <source>Show Menubar</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Show Toolbar</source>
         <translation>&amp;Tööriistariba nähtaval</translation>
     </message>
@@ -5606,15 +5624,15 @@ Võiksid kaaluda KeePassXC allalaadimislehel oleva AppImage’i kasutamist.</tra
     </message>
     <message>
         <source>1Password 1PUX...</source>
-        <translation type="unfinished"/>
+        <translation>1Passwordi 1PUX...</translation>
     </message>
     <message>
         <source>Import a 1Password 1PUX file</source>
-        <translation type="unfinished"/>
+        <translation>Impordi 1Passwordi 1PUX-fail</translation>
     </message>
     <message>
         <source>Import…</source>
-        <translation type="unfinished"/>
+        <translation>Impordi…</translation>
     </message>
     <message>
         <source>Passkeys…</source>
@@ -5839,6 +5857,10 @@ Võiksid kaaluda KeePassXC allalaadimislehel oleva AppImage’i kasutamist.</tra
     <message>
         <source>Set Theme: Classic</source>
         <translation>Rakenda kujundus: klassikaline</translation>
+    </message>
+    <message>
+        <source>Toggle Show Menubar</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Toggle Show Toolbar</source>
@@ -6232,10 +6254,6 @@ Võiksid kaaluda KeePassXC allalaadimislehel oleva AppImage’i kasutamist.</tra
         <translation>Pääsuvõtme eksportimine – KeePassXC</translation>
     </message>
     <message>
-        <source>Export the following Passkey entries.</source>
-        <translation>Eksportimisel on järgnevad pääsuvõtmekirjed.</translation>
-    </message>
-    <message>
         <source>Filenames will be generated with title and .passkey file extension.</source>
         <translation>Failinimed luuakse pealkirja järgi ja faililaiendiga „.passkey”.</translation>
     </message>
@@ -6254,6 +6272,10 @@ Võiksid kaaluda KeePassXC allalaadimislehel oleva AppImage’i kasutamist.</tra
     <message>
         <source>Export to folder</source>
         <translation>Eksportimiskaust</translation>
+    </message>
+    <message>
+        <source>Export the following passkey entries.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6313,28 +6335,28 @@ Kas soovid selle üle kirjutada?</translation>
         <translation>Loobu</translation>
     </message>
     <message>
-        <source>Import the following Passkey:</source>
-        <translation>Importimisel on järgnev pääsuvõti:</translation>
-    </message>
-    <message>
         <source>Entry</source>
         <translation>Kirje:</translation>
-    </message>
-    <message>
-        <source>Import the following Passkey to this entry:</source>
-        <translation>Importimisel on järgnev pääsuvõti sellesse kirjesse:</translation>
     </message>
     <message>
         <source>Create new entry</source>
         <translation>Luuakse uus kirje</translation>
     </message>
     <message>
-        <source>Default Passkeys group (Imported Passkeys)</source>
-        <translation>Vaikimisi pääsuvõtmete grupp („Imporditud pääsuvõtmed”)</translation>
-    </message>
-    <message>
         <source>Relying Party: %1</source>
         <translation>Sõltlane: %1</translation>
+    </message>
+    <message>
+        <source>Import the following passkey:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import the following passkey to this entry:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Default passkeys group (Imported Passkeys)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6348,10 +6370,6 @@ Kas soovid selle üle kirjutada?</translation>
         <translation>Kõik failid</translation>
     </message>
     <message>
-        <source>Open Passkey file</source>
-        <translation>Pääsuvõtmefaili avamine</translation>
-    </message>
-    <message>
         <source>Cannot open file</source>
         <translation>Faili avamine pole võimalik</translation>
     </message>
@@ -6360,24 +6378,26 @@ Kas soovid selle üle kirjutada?</translation>
         <translation>Faili „%1” lugemiseks avamine pole võimalik.</translation>
     </message>
     <message>
-        <source>Cannot import Passkey</source>
-        <translation>Pääsuvõtme importimine pole võimalik</translation>
+        <source>Open passkey file</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;. Data is missing.</source>
-        <translation>Pääsuvõtmefaili „%1” importimine pole võimalik. Andmed on puudu.</translation>
+        <source>Cannot import passkey</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
-        <translation>Pääsuvõtmefaili „%1” importimine pole võimalik. Privaatvõti on puudu või vigane.</translation>
+        <source>Cannot import passkey file &quot;%1&quot;. Data is missing.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;.
+        <source>Cannot import passkey file &quot;%1&quot;.
 The following data is missing:
 %2</source>
-        <translation>Pääsuvõtmefaili „%1” importimine pole võimalik.
-Järgmised andmed on puudu:
-%2</translation>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot import passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7225,12 +7245,6 @@ Kas soovid selle üle kirjutada?</translation>
     <message>
         <source>time</source>
         <translation>aeg</translation>
-    </message>
-    <message>
-        <source>Set the key file for the database.
-This options is deprecated, use --set-key-file instead.</source>
-        <translation>Andmebaasile võtmefaili määramine.
-See argument on iganenud, kasuta parem &quot;--set-key-file&quot;.</translation>
     </message>
     <message>
         <source>Set the key file for the database.</source>
@@ -8394,10 +8408,6 @@ Kernel: %3 %4</translation>
         <translation>Andmebaasi parooli lugemine standardsisendist (stdin).</translation>
     </message>
     <message>
-        <source>Locked databases.</source>
-        <translation>Andmebaasid lukustatud.</translation>
-    </message>
-    <message>
         <source>Database failed to lock.</source>
         <translation>Andmebaasi lukustamine ebaõnnestus.</translation>
     </message>
@@ -8460,16 +8470,13 @@ Kernel: %3 %4</translation>
         <translation>Rakendusest ekraanipiltide ja -videote tegemise lubamine (Windowsis/macOS-is).</translation>
     </message>
     <message>
-        <source>Enter Shortcut</source>
-        <translation>Sisesta kiirklahv:</translation>
+        <source>Set the key file for the database.
+This option is deprecated, use --set-key-file instead.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Action</source>
-        <translation>Toiming</translation>
-    </message>
-    <message>
-        <source>Shortcuts</source>
-        <translation>Kiirklahvid</translation>
+        <source>Databases have been locked.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Attestation not supported</source>
@@ -8556,82 +8563,12 @@ Kernel: %3 %4</translation>
         <translation>Võtme andmete lahtikrüptimine ebaõnnestus.</translation>
     </message>
     <message>
-        <source>Favorite</source>
-        <comment>Tag for favorite entries</comment>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>File does not exist.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Cannot open file: %1</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Cannot parse file: %1 at position %2</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Failed to decrypt json file: %1</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Invalid encKeyValidation field</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Invalid cipher list within encKeyValidation field</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Wrong password</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Invalid encrypted data field</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Invalid cipher list within encrypted data field</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Cannot initialize cipher</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Cannot decrypt data</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Bitwarden Import</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Archived</source>
-        <comment>Tag for archived entries</comment>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Invalid 1PUX file format: Not a valid ZIP file.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Invalid 1PUX file format: Missing export.data</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>1Password Import</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Origin is empty or not allowed</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>Effective domain is not a valid domain</source>
-        <translation type="unfinished"/>
+        <translation>Kehtiv domeen pole korrektne domeen</translation>
     </message>
     <message>
         <source>Origin and RP ID do not match</source>
@@ -8639,22 +8576,108 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>No supported algorithms were provided</source>
-        <translation type="unfinished"/>
+        <translation>Toetatud algoritme ei antud</translation>
     </message>
     <message>
         <source>Wait for timer to expire</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Unknown Passkeys error</source>
-        <translation type="unfinished"/>
+        <translation>Oota taimeri aegumist</translation>
     </message>
     <message>
         <source>Challenge is shorter than required minimum length</source>
-        <translation type="unfinished"/>
+        <translation>Pretensioon on lühem kui nõutav miinimumpikkus</translation>
     </message>
     <message>
         <source>user.id does not match the required length</source>
+        <translation>„user.id” ei vasta nõutavale pikkusele</translation>
+    </message>
+    <message>
+        <source>Favorite</source>
+        <comment>Tag for favorite entries</comment>
+        <translation>Lemmik</translation>
+    </message>
+    <message>
+        <source>File does not exist.</source>
+        <translation>Faili pole olemas.</translation>
+    </message>
+    <message>
+        <source>Cannot open file: %1</source>
+        <translation>Faili pole võimalik avada: %1</translation>
+    </message>
+    <message>
+        <source>Cannot parse file: %1 at position %2</source>
+        <translation>Faili pole võimalik parsida: %1 asukohas %2</translation>
+    </message>
+    <message>
+        <source>Failed to decrypt json file: %1</source>
+        <translation>JSON-faili lahtikrüptimine ebaõnnestus: %1</translation>
+    </message>
+    <message>
+        <source>Invalid encKeyValidation field</source>
+        <translation>sobimatu väli „encKeyValidation”</translation>
+    </message>
+    <message>
+        <source>Invalid cipher list within encKeyValidation field</source>
+        <translation>sobimatu šifriloend väljal „encKeyValidation”</translation>
+    </message>
+    <message>
+        <source>Wrong password</source>
+        <translation>vale parool</translation>
+    </message>
+    <message>
+        <source>Invalid encrypted data field</source>
+        <translation>sobimatu krüptitud andmeväli</translation>
+    </message>
+    <message>
+        <source>Invalid cipher list within encrypted data field</source>
+        <translation>sobimatu šifriloend krüptitud andmeväljal</translation>
+    </message>
+    <message>
+        <source>Cannot initialize cipher</source>
+        <translation>šifri initsialiseerimine ebaõnnestus</translation>
+    </message>
+    <message>
+        <source>Cannot decrypt data</source>
+        <translation>andmete lahtikrüptimine pole võimalik</translation>
+    </message>
+    <message>
+        <source>Bitwarden Import</source>
+        <translation>Bitwardenist imporditud</translation>
+    </message>
+    <message>
+        <source>Archived</source>
+        <comment>Tag for archived entries</comment>
+        <translation>Arhiivitud</translation>
+    </message>
+    <message>
+        <source>Invalid 1PUX file format: Not a valid ZIP file.</source>
+        <translation>Sobimatu 1PUX-faili vorming: pole korrektne ZIP-fail.</translation>
+    </message>
+    <message>
+        <source>Invalid 1PUX file format: Missing export.data</source>
+        <translation>Sobimatu 1PUX-faili vorming: „export.data” puudub.</translation>
+    </message>
+    <message>
+        <source>1Password Import</source>
+        <translation>1Passwordist imporditud</translation>
+    </message>
+    <message>
+        <source>Enter Shortcut</source>
+        <translation>Sisesta kiirklahv:</translation>
+    </message>
+    <message>
+        <source>Action</source>
+        <translation>Toiming</translation>
+    </message>
+    <message>
+        <source>Shortcuts</source>
+        <translation>Kiirklahvid</translation>
+    </message>
+    <message>
+        <source>Unsupported KDF type, cannot decrypt json file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unknown passkeys error</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -8975,14 +8998,6 @@ Kernel: %3 %4</translation>
         <translation>Kirje URL-ide loend</translation>
     </message>
     <message>
-        <source>Please wait, list of entries with Passkeys is being updated…</source>
-        <translation>Palun oota, pääsuvõtmega kirjete nimekirja uuendatakse…</translation>
-    </message>
-    <message>
-        <source>No entries with Passkeys.</source>
-        <translation>Ühtegi pääsuvõtmega kirjet pole.</translation>
-    </message>
-    <message>
         <source>Title</source>
         <translation>Pealkiri</translation>
     </message>
@@ -9017,6 +9032,22 @@ Kernel: %3 %4</translation>
     <message>
         <source> (Expired)</source>
         <translation> (aegunud)</translation>
+    </message>
+    <message>
+        <source>Export Confirmation</source>
+        <translation>Eksportimise kinnitus</translation>
+    </message>
+    <message>
+        <source>The passkey file will be vulnerable to theft and unauthorized use, if left unsecured. Are you sure you want to continue?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please wait, list of entries with passkeys is being updated…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No entries with passkeys.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -9337,32 +9368,8 @@ Kernel: %3 %4</translation>
         <translation>Küsitakse kinnitust, kui klient paroolile juurdepääsu soovib</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;
-           font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Helvetica','Arial','sans-serif','Apple Color
-           Emoji','Segoe UI Emoji'; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;This setting does
-           not override disabling recycle bin prompts&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;
-           font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color
-           Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;Selle ruudu märkimisel
-           pole mõju, kui prügikasti viskamisel kinnituse küsimine on välja lülitatud&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </translation>
-    </message>
-    <message>
         <source>Confirm when clients request entry deletion</source>
         <translation>Küsitakse kinnitust, kui klient soovib kirjet kustutada</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications
-           which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also
-           crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a
-           different value set in applications.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Märkimine parandab ühilduvust teatud rakendustega,
-           mis otsivad parooli ilma esmalt andmebaasi lukku avamata.&lt;/p&gt;&lt;p&gt;Samas võib see
-           põhjustada kliendi kokkujooksmise, kui andmebaasi lukku piisavalt kiiresti ei avata.
-            (Tavaline ajalimiit on 25 s, aga see võib eri rakenduste puhul erineda.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </translation>
     </message>
     <message>
         <source>Prompt to unlock database before searching</source>
@@ -9387,6 +9394,14 @@ Kernel: %3 %4</translation>
     <message>
         <source>Save current changes to activate the plugin and enable editing of this section.</source>
         <translation>Plugina aktiveerimiseks ja selle jaotise muutmise võimaldamiseks salvesta esmalt tehtud muudatused.</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This setting does not override disabling recycle bin prompts &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a different value set in applications.) &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -9733,7 +9748,7 @@ Näide: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Import File</source>
-        <translation type="unfinished"/>
+        <translation>Impordi fail</translation>
     </message>
 </context>
 <context>
@@ -9806,11 +9821,11 @@ Näide: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>&lt;p&gt;If you own a &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; or &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt;, you can use it for additional security.&lt;/p&gt;&lt;p&gt;The key requires one of its slots to be programmed as &lt;a href=&quot;https://docs.yubico.com/yesdk/users-manual/application-otp/challenge-response.html&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Kui sul on olemas &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; või &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt; turvavõti, võid lisaturvalisuse nimel neid kasutada.&lt;/p&gt;&lt;p&gt;Võtme ühe pesa pead programmeerima &lt;a href=&quot;https://docs.yubico.com/yesdk/users-manual/application-otp/challenge-response.html&quot;&gt;HMAC-SHA1 pretensiooni ja vastusena&lt;/a&gt;.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;Kui sul on &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; või &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt; turvavõti, võid lisaturvalisuse nimel seda kasutada.&lt;/p&gt;&lt;p&gt;Võtme ühe pesa peab programmeerima &lt;a href=&quot;https://docs.yubico.com/yesdk/users-manual/application-otp/challenge-response.html&quot;&gt;HMAC-SHA1 pretensiooni ja vastusena&lt;/a&gt;.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Refresh hardware keys</source>
-        <translation type="unfinished"/>
+        <translation>Värskenda riistvaraliste võtmete loendit</translation>
     </message>
 </context>
 <context>
@@ -9838,7 +9853,7 @@ Näide: JBSWY3DPEHPK3PXP</translation>
     <message>
         <source>(NFC) %1 [%2] - Slot %3, %4</source>
         <comment>YubiKey display fields</comment>
-        <translation type="unfinished"/>
+        <translation>(NFC) %1 [%2] – pesa %3, %4</translation>
     </message>
     <message>
         <source>Press</source>
@@ -9890,12 +9905,12 @@ Näide: JBSWY3DPEHPK3PXP</translation>
     <message>
         <source>%1 [%2] - Slot %3</source>
         <comment>YubiKey NEO display fields</comment>
-        <translation type="unfinished"/>
+        <translation>%1 [%2] – pesa %3</translation>
     </message>
     <message>
         <source>%1 [%2] - Slot %3, %4</source>
         <comment>YubiKey display fields</comment>
-        <translation type="unfinished"/>
+        <translation>%1 [%2] – pesa %3, %4</translation>
     </message>
 </context>
 </TS>

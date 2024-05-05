@@ -560,10 +560,6 @@
         <translation>قفل قواعد البيانات عند تصغير النافذة</translation>
     </message>
     <message>
-        <source>Require password repeat when it is visible</source>
-        <translation>يلزم تكرار كلمة المرور عندما تكون مرئية</translation>
-    </message>
-    <message>
         <source>Hide passwords when editing them</source>
         <translation>إخفاء كلمات المرور عند تعديلها</translation>
     </message>
@@ -707,10 +703,6 @@
 <context>
     <name>AutoTypePlatformX11</name>
     <message>
-        <source>Trying to send invalid keysym.</source>
-        <translation>محاولة إرسال رمز غير صالح.</translation>
-    </message>
-    <message>
         <source>Sequence aborted: Caps Lock is on</source>
         <translation>تم إحباط التسلسل: Caps Lock قيد التشغيل</translation>
     </message>
@@ -721,6 +713,10 @@
     <message>
         <source>Unable to get valid keycode for key: </source>
         <translation>غير قادر على الحصول على رمز مفتاح صالح للمفتاح: </translation>
+    </message>
+    <message>
+        <source>Trying to send invalid keyboard symbol.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -855,7 +851,7 @@ Please select the correct database for saving credentials.</source>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished"/>
+        <translation>حدّث</translation>
     </message>
     <message>
         <source>Authenticate</source>
@@ -867,28 +863,11 @@ Please select the correct database for saving credentials.</source>
     </message>
     <message>
         <source>Register</source>
-        <translation type="unfinished"/>
+        <translation>سجّل</translation>
     </message>
     <message numerus="yes">
         <source>Timeout in &lt;b&gt;%n&lt;/b&gt; seconds...</source>
         <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
-    </message>
-    <message>
-        <source>Do you want to register Passkey for:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Existing Passkey found.
-Do you want to register a new Passkey for:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Select the existing Passkey and press Update to replace it.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Authenticate Passkey credentials for:</source>
-        <translation type="unfinished"/>
     </message>
     <message>
         <source>Relying Party: %1</source>
@@ -896,10 +875,31 @@ Do you want to register a new Passkey for:</source>
     </message>
     <message>
         <source>Username: %1</source>
-        <translation type="unfinished"/>
+        <translation>اسم المستخدم: %1</translation>
     </message>
     <message>
         <source>KeePassXC - Passkey credentials</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Add to existing entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Existing passkey found.
+Do you want to register a new passkey for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Select the existing passkey and press Update to replace it.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Authenticate passkey credentials for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to register a passkey for:</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -950,13 +950,8 @@ Do you want to delete the entry?
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Entry already has a Passkey.
-Do you want to overwrite the Passkey in %1 - %2?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>KeePassXC - Create a new group</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC - أنشِئ مجموعة جديدة</translation>
     </message>
     <message>
         <source>Disable</source>
@@ -964,10 +959,6 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
     </message>
     <message>
         <source>KeePassXC - Overwrite existing key?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>KeePassXC - Update Passkey</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -985,6 +976,27 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
     <message>
         <source>Passkey</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC - Passkey credentials</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Register a new passkey to this entry:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC - Update passkey</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entry already has a passkey.
+Do you want to overwrite the passkey in %1 - %2?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Register</source>
+        <translation>سجّل</translation>
     </message>
 </context>
 <context>
@@ -1233,11 +1245,11 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
         <translation>&lt;b&gt;خطأ:&lt;/b&gt; الملف التنفيذي للپروكسي المثبت مفقود من الموقع المتوقع: ٪1&lt;br/&gt;يرجى تعيين موقع پروكسي مخصص في الإعدادات المتقدمة أو إعادة تثبيت التطبيق.</translation>
     </message>
     <message>
-        <source>Allows using insecure http://localhost with Passkeys for testing purposes.</source>
+        <source>Allows using insecure http://localhost with passkeys for testing purposes.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Allow using localhost with Passkeys</source>
+        <source>Allow using localhost with passkeys</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1380,7 +1392,7 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Imported from CSV file: %1</source>
-        <translation type="unfinished"/>
+        <translation>مُستورد من CSV ملف: %1</translation>
     </message>
 </context>
 <context>
@@ -2825,10 +2837,6 @@ Would you like to correct it?</source>
 <context>
     <name>EditEntryWidgetBrowser</name>
     <message>
-        <source>These settings affect to the entry&apos;s behaviour with the browser extension.</source>
-        <translation>تؤثر هذه الإعدادات على سلوك الإدخال مع امتداد المتصفح.</translation>
-    </message>
-    <message>
         <source>General</source>
         <translation>العام</translation>
     </message>
@@ -2857,10 +2865,6 @@ Would you like to correct it?</source>
         <translation>لا تستخدم هذا الإدخال مع مصادقة HTTP البدائية</translation>
     </message>
     <message>
-        <source>Additional URL&apos;s</source>
-        <translation>روابط URL إضافية</translation>
-    </message>
-    <message>
         <source>Add</source>
         <translation>إضافة</translation>
     </message>
@@ -2871,6 +2875,14 @@ Would you like to correct it?</source>
     <message>
         <source>Edit</source>
         <translation>تعديل</translation>
+    </message>
+    <message>
+        <source>These settings affect the entry&apos;s behaviour with the browser extension.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Additional URLs</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3669,12 +3681,6 @@ This may cause the affected plugins to malfunction.</source>
         <translation>تأكيد الكتابة فوق المرفق</translation>
     </message>
     <message>
-        <source>Attachment &quot;%1&quot; already exists. 
-Would you like to overwrite the existing attachment?</source>
-        <translation>المرفق &quot;%1&quot; موجود بالفعل.
-هل ترغب في الكتابة فوق المرفق الموجود؟</translation>
-    </message>
-    <message>
         <source>Confirm Attachment</source>
         <translation>تأكيد المرفق</translation>
     </message>
@@ -3707,6 +3713,12 @@ Do you want to save the changes to your database?</source>
 Error: %1</source>
         <translation>فشل حفظ المرفق المحدث.
 الخطأ: %1</translation>
+    </message>
+    <message>
+        <source>Attachment &quot;%1&quot; already exists. 
+Would you like to overwrite the existing attachment?</source>
+        <translation>المرفق &quot;%1&quot; موجود بالفعل.
+هل ترغب في الكتابة فوق المرفق الموجود؟</translation>
     </message>
 </context>
 <context>
@@ -4298,7 +4310,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Url</source>
-        <translation type="unfinished"/>
+        <translation>عنوان Url</translation>
     </message>
 </context>
 <context>
@@ -4325,7 +4337,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Import Into:</source>
-        <translation type="unfinished"/>
+        <translation>استيراد إلى:</translation>
     </message>
     <message>
         <source>New Database</source>
@@ -4341,7 +4353,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Import File:</source>
-        <translation type="unfinished"/>
+        <translation>استورد ملف:</translation>
     </message>
     <message>
         <source>Comma Separated Values (.csv)</source>
@@ -5274,7 +5286,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>&amp;New Group…</source>
-        <translation type="unfinished"/>
+        <translation>&amp;مجموعة جديدة…</translation>
     </message>
     <message>
         <source>&amp;Edit Group…</source>
@@ -5282,7 +5294,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>&amp;Delete Group…</source>
-        <translation type="unfinished"/>
+        <translation>&amp;احذف المجموعة…</translation>
     </message>
     <message>
         <source>Download All &amp;Favicons…</source>
@@ -5346,7 +5358,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Download &amp;Favicon</source>
-        <translation type="unfinished"/>
+        <translation>نزّل &amp;أيقونة</translation>
     </message>
     <message>
         <source>Open &amp;URL</source>
@@ -5398,7 +5410,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Show QR Code</source>
-        <translation type="unfinished"/>
+        <translation>أظهِر رمز QR</translation>
     </message>
     <message>
         <source>Set up TOTP…</source>
@@ -5422,15 +5434,15 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Report a &amp;Bug</source>
-        <translation type="unfinished"/>
+        <translation>الإبلاغ عن علَّة</translation>
     </message>
     <message>
         <source>&amp;Getting Started</source>
-        <translation type="unfinished"/>
+        <translation>&amp;ابدء</translation>
     </message>
     <message>
         <source>Open Getting Started Guide</source>
-        <translation type="unfinished"/>
+        <translation>افتح دليل البدء</translation>
     </message>
     <message>
         <source>&amp;Online Help</source>
@@ -5450,7 +5462,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Save Database Backup…</source>
-        <translation type="unfinished"/>
+        <translation>احفظ النسخة الاحتياطية لقاعدة البيانات...</translation>
     </message>
     <message>
         <source>Add key to SSH Agent</source>
@@ -5462,7 +5474,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Compact Mode</source>
-        <translation type="unfinished"/>
+        <translation>الوضع المضغوط</translation>
     </message>
     <message>
         <source>Automatic</source>
@@ -5481,12 +5493,16 @@ Are you sure you want to continue with this file?</source>
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Show Menubar</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Show Toolbar</source>
         <translation>أظهِر شريط الأدوات</translation>
     </message>
     <message>
         <source>Show Preview Panel</source>
-        <translation type="unfinished"/>
+        <translation>أظهِر لوحة المعاينة</translation>
     </message>
     <message>
         <source>Always on Top</source>
@@ -5538,7 +5554,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>No Tags</source>
-        <translation type="unfinished"/>
+        <translation>لا وسوم</translation>
     </message>
     <message numerus="yes">
         <source>Restore Entry(s)</source>
@@ -5578,15 +5594,15 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Restart Application?</source>
-        <translation type="unfinished"/>
+        <translation>إعادة تشغيل التطبيق؟</translation>
     </message>
     <message>
         <source>You must restart the application to apply this setting. Would you like to restart now?</source>
-        <translation type="unfinished"/>
+        <translation>يجب عليك إعادة تشغيل التطبيق لتطبيق هذا الإعداد. هل ترغب في إعادة تشغيل الآن؟</translation>
     </message>
     <message>
         <source>Allow Screen Capture</source>
-        <translation type="unfinished"/>
+        <translation>اسمح بالتقاط الشاشة</translation>
     </message>
     <message>
         <source>1Password 1PUX...</source>
@@ -5606,7 +5622,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Import Passkey</source>
-        <translation type="unfinished"/>
+        <translation>استورِد Passkey</translation>
     </message>
     <message>
         <source>Quit Application</source>
@@ -5822,6 +5838,10 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Set Theme: Classic</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle Show Menubar</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -6147,7 +6167,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Decryption failed: %1</source>
-        <translation type="unfinished"/>
+        <translation>فشل فك التعمية: %1</translation>
     </message>
     <message>
         <source>Decryption failed, wrong passphrase?</source>
@@ -6216,10 +6236,6 @@ We recommend you use the AppImage available on our downloads page.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Export the following Passkey entries.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Filenames will be generated with title and .passkey file extension.</source>
         <translation type="unfinished"/>
     </message>
@@ -6237,6 +6253,10 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Export to folder</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export the following passkey entries.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -6273,7 +6293,7 @@ Do you want to overwrite it?
     </message>
     <message>
         <source>Username: %1</source>
-        <translation type="unfinished"/>
+        <translation>اسم المستخدم: %1</translation>
     </message>
     <message>
         <source>Group</source>
@@ -6285,7 +6305,7 @@ Do you want to overwrite it?
     </message>
     <message>
         <source>Import Passkey</source>
-        <translation type="unfinished"/>
+        <translation>استورِد Passkey</translation>
     </message>
     <message>
         <source>Import</source>
@@ -6296,27 +6316,27 @@ Do you want to overwrite it?
         <translation>ألغأ</translation>
     </message>
     <message>
-        <source>Import the following Passkey:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Entry</source>
         <translation>مُدخلة</translation>
-    </message>
-    <message>
-        <source>Import the following Passkey to this entry:</source>
-        <translation type="unfinished"/>
     </message>
     <message>
         <source>Create new entry</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Default Passkeys group (Imported Passkeys)</source>
+        <source>Relying Party: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Relying Party: %1</source>
+        <source>Import the following passkey:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import the following passkey to this entry:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Default passkeys group (Imported Passkeys)</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -6331,10 +6351,6 @@ Do you want to overwrite it?
         <translation>كل الملفات</translation>
     </message>
     <message>
-        <source>Open Passkey file</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Cannot open file</source>
         <translation type="unfinished"/>
     </message>
@@ -6343,21 +6359,25 @@ Do you want to overwrite it?
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey</source>
+        <source>Open passkey file</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;. Data is missing.</source>
+        <source>Cannot import passkey</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
+        <source>Cannot import passkey file &quot;%1&quot;. Data is missing.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;.
+        <source>Cannot import passkey file &quot;%1&quot;.
 The following data is missing:
 %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot import passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -6412,7 +6432,7 @@ The following data is missing:
     <name>PasswordGeneratorWidget</name>
     <message>
         <source>Generate Password</source>
-        <translation type="unfinished"/>
+        <translation>ولّد كلمة مرور</translation>
     </message>
     <message>
         <source>strength</source>
@@ -6425,7 +6445,7 @@ The following data is missing:
     </message>
     <message>
         <source>Generated password</source>
-        <translation type="unfinished"/>
+        <translation>كلمة المرور المولّدة</translation>
     </message>
     <message>
         <source>%p%</source>
@@ -6709,7 +6729,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Generate Password (%1)</source>
-        <translation type="unfinished"/>
+        <translation>ولد</translation>
     </message>
     <message>
         <source>Warning: Caps Lock enabled!</source>
@@ -6717,7 +6737,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Quality: %1</source>
-        <translation type="unfinished"/>
+        <translation>الجودة: %1</translation>
     </message>
     <message>
         <source>Poor</source>
@@ -6858,7 +6878,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Cannot create new group</source>
-        <translation type="unfinished"/>
+        <translation>لا يمكن إنشاء مجموعة جديدة</translation>
     </message>
     <message>
         <source>No valid UUID provided</source>
@@ -6922,7 +6942,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Cannot generate a password and prompt at the same time.</source>
-        <translation type="unfinished"/>
+        <translation>لا يمكن توليد كلمة مرور والمطالبة في نفس الوقت.</translation>
     </message>
     <message>
         <source>Could not create entry with path %1.</source>
@@ -6942,7 +6962,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Adds a new group to a database.</source>
-        <translation type="unfinished"/>
+        <translation>يضيف مجموعة جديدة إلى قاعدة البيانات.</translation>
     </message>
     <message>
         <source>Path of the group to add.</source>
@@ -7087,7 +7107,7 @@ Do you want to overwrite it?</source>
     <message>
         <source>Copy the given attribute to the clipboard. Defaults to &quot;password&quot; if not specified.</source>
         <comment>Don't translate &quot;password&quot;, it refers to the attribute.</comment>
-        <translation type="unfinished"/>
+        <translation>انسخ الصفة المحددة إلى الحافظة. الإعدادات الافتراضية هي &quot;كلمة المرور&quot; إذا لم يتم تحديدها.</translation>
     </message>
     <message>
         <source>Copy the current TOTP to the clipboard (equivalent to &quot;-a totp&quot;).</source>
@@ -7099,7 +7119,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Copy an entry&apos;s attribute to the clipboard.</source>
-        <translation type="unfinished"/>
+        <translation>انسخ سمة الإدخال إلى الحافظة.</translation>
     </message>
     <message>
         <source>Path of the entry to clip.</source>
@@ -7108,7 +7128,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Timeout before clearing the clipboard (default is %1 seconds, set to 0 for unlimited).</source>
-        <translation type="unfinished"/>
+        <translation>انتهت المهلة قبل مسح الحافظة (الافتراضي هو %1 ثانية، وتم ضبطه على 0 لعدد غير محدود).</translation>
     </message>
     <message>
         <source>Invalid timeout value %1.</source>
@@ -7128,7 +7148,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>ERROR: Please specify one of --attribute or --totp, not both.</source>
-        <translation type="unfinished"/>
+        <translation>خطأ: يُرجى تحديد أحد --attribute أو --totp، وليس كليهما.</translation>
     </message>
     <message>
         <source>Entry with path %1 has no TOTP set up.</source>
@@ -7136,15 +7156,15 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>ERROR: attribute %1 is ambiguous, it matches %2.</source>
-        <translation type="unfinished"/>
+        <translation>خطأ: الصفة %1 غامضة، وهي تطابق %2.</translation>
     </message>
     <message>
         <source>Attribute &quot;%1&quot; not found.</source>
-        <translation type="unfinished"/>
+        <translation>لم يتم العثور على صفة &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>Entry&apos;s &quot;%1&quot; attribute copied to the clipboard!</source>
-        <translation type="unfinished"/>
+        <translation>نسخت صفة الإدخال &quot;%1&quot; إلى الحافظة!</translation>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)...</source>
@@ -7207,11 +7227,6 @@ Do you want to overwrite it?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Set the key file for the database.
-This options is deprecated, use --set-key-file instead.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Set the key file for the database.</source>
         <translation type="unfinished"/>
     </message>
@@ -7261,7 +7276,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Failed to save the database: %1.</source>
-        <translation type="unfinished"/>
+        <translation>فشل حفظ قاعدة البيانات: %1.</translation>
     </message>
     <message>
         <source>Successfully created new database.</source>
@@ -7361,11 +7376,11 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Last saved</source>
-        <translation type="unfinished"/>
+        <translation>آخر حفظ</translation>
     </message>
     <message>
         <source>Unsaved changes</source>
-        <translation type="unfinished"/>
+        <translation>التغييرات غير المحفوظة</translation>
     </message>
     <message>
         <source>yes</source>
@@ -7608,7 +7623,7 @@ This options is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Length of the generated password</source>
-        <translation type="unfinished"/>
+        <translation>طول كلمة المرور التي ولّدتها</translation>
     </message>
     <message>
         <source>length</source>
@@ -7779,7 +7794,7 @@ Available commands:
     </message>
     <message>
         <source>Unable to save database to file : %1</source>
-        <translation type="unfinished"/>
+        <translation>غير قادر على حفظ قاعدة البيانات في الملف : %1</translation>
     </message>
     <message>
         <source>Successfully merged %1 into %2.</source>
@@ -7823,7 +7838,7 @@ Available commands:
     </message>
     <message>
         <source>Unable to save database to file: %1</source>
-        <translation type="unfinished"/>
+        <translation>غير قادر على حفظ قاعدة البيانات في الملف: %1</translation>
     </message>
     <message>
         <source>Successfully recycled entry %1.</source>
@@ -7839,7 +7854,7 @@ Available commands:
     </message>
     <message>
         <source>Cannot remove root group from database.</source>
-        <translation type="unfinished"/>
+        <translation>لا يمكن إزالة المجموعة الجذرية من قاعدة البيانات.</translation>
     </message>
     <message>
         <source>Successfully recycled group %1.</source>
@@ -7847,7 +7862,7 @@ Available commands:
     </message>
     <message>
         <source>Successfully deleted group %1.</source>
-        <translation type="unfinished"/>
+        <translation>حذفت المجموعة %1 بنجاح.</translation>
     </message>
     <message>
         <source>Find entries quickly.</source>
@@ -7863,7 +7878,7 @@ Available commands:
     </message>
     <message>
         <source>Show the protected attributes in clear text.</source>
-        <translation type="unfinished"/>
+        <translation>أظهِر الصفات المحمية بنص واضح.</translation>
     </message>
     <message>
         <source>Show all the attributes of the entry.</source>
@@ -7891,7 +7906,7 @@ Available commands:
     </message>
     <message>
         <source>ERROR: unknown attribute %1.</source>
-        <translation type="unfinished"/>
+        <translation>خطأ: الصفة %1 غير معروفة.</translation>
     </message>
     <message>
         <source>No attachments present.</source>
@@ -8031,7 +8046,7 @@ Please consider generating a new key file.</source>
     </message>
     <message numerus="yes">
         <source>Password expires in %1 day(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>تنتهي صلاحية كلمة المرور في ٪1 يوم (أيام)</numerusform><numerusform>تنتهي صلاحية كلمة المرور في ٪1 يوم (أيام)</numerusform><numerusform>تنتهي صلاحية كلمة المرور في ٪1 يوم (أيام)</numerusform><numerusform>تنتهي صلاحية كلمة المرور في ٪1 يوم (أيام)</numerusform><numerusform>تنتهي صلاحية كلمة المرور في ٪1 يوم (أيام)</numerusform><numerusform>تنتهي صلاحية كلمة المرور في %1 يوم/أيام</numerusform></translation>
     </message>
     <message>
         <source>Password will expire soon</source>
@@ -8368,10 +8383,6 @@ Kernel: %3 %4</source>
         <translation>قراءة كلمة سر قاعدة البيانات من الدخل القياسي &quot;stdin&quot;</translation>
     </message>
     <message>
-        <source>Locked databases.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Database failed to lock.</source>
         <translation>فشل قفل قاعدة البيانات.</translation>
     </message>
@@ -8434,15 +8445,12 @@ Kernel: %3 %4</source>
         <translation>السماح بلقطات الشاشة وتسجيل التطبيق (Windows/macOS)</translation>
     </message>
     <message>
-        <source>Enter Shortcut</source>
+        <source>Set the key file for the database.
+This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Action</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Shortcuts</source>
+        <source>Databases have been locked.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -8467,7 +8475,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Invalid URL provided</source>
-        <translation type="unfinished"/>
+        <translation>عنوان URL المقدم غير صالح</translation>
     </message>
     <message>
         <source>Passkeys</source>
@@ -8527,6 +8535,34 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Failed to decrypt key data.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Origin is empty or not allowed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Effective domain is not a valid domain</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Origin and RP ID do not match</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No supported algorithms were provided</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Wait for timer to expire</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Challenge is shorter than required minimum length</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>user.id does not match the required length</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -8600,35 +8636,23 @@ Kernel: %3 %4</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Origin is empty or not allowed</source>
+        <source>Enter Shortcut</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Effective domain is not a valid domain</source>
+        <source>Action</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Origin and RP ID do not match</source>
+        <source>Shortcuts</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>No supported algorithms were provided</source>
+        <source>Unsupported KDF type, cannot decrypt json file</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Wait for timer to expire</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Unknown Passkeys error</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Challenge is shorter than required minimum length</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>user.id does not match the required length</source>
+        <source>Unknown passkeys error</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -8734,7 +8758,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Only show entries that have a URL</source>
-        <translation type="unfinished"/>
+        <translation>أظهر الإدخالات التي لها عنوان URL فقط</translation>
     </message>
     <message>
         <source>Only show entries that have been explicitly allowed or denied</source>
@@ -8949,14 +8973,6 @@ Kernel: %3 %4</source>
         <translation>قائمة روابط URL الإدخالات</translation>
     </message>
     <message>
-        <source>Please wait, list of entries with Passkeys is being updated…</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>No entries with Passkeys.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Title</source>
         <translation>العنوان</translation>
     </message>
@@ -8990,6 +9006,22 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source> (Expired)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export Confirmation</source>
+        <translation>تأكيد التصدير</translation>
+    </message>
+    <message>
+        <source>The passkey file will be vulnerable to theft and unauthorized use, if left unsecured. Are you sure you want to continue?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please wait, list of entries with passkeys is being updated…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No entries with passkeys.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -9029,11 +9061,11 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Last saved</source>
-        <translation type="unfinished"/>
+        <translation>آخر حفظ</translation>
     </message>
     <message>
         <source>Unsaved changes</source>
-        <translation type="unfinished"/>
+        <translation>التغييرات غير المحفوظة</translation>
     </message>
     <message>
         <source>yes</source>
@@ -9045,7 +9077,7 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>The database was modified, but the changes have not yet been saved to disk.</source>
-        <translation type="unfinished"/>
+        <translation>عدلّت قاعدة البيانات، ولكن لم تُحفظ التغييرات على القرص بعد.</translation>
     </message>
     <message>
         <source>Number of groups</source>
@@ -9304,30 +9336,14 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If enabled, any attempt to read a password must be confirmed. Otherwise, clients can read passwords without confirmation when the database is unlocked.&lt;/p&gt;&lt;p&gt;This option only covers the access to the password of an entry. Clients can always enumerate the items of exposed databases and query their attributes.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; في حالة التفعيل، يجب تأكيد أي محاولة لقراءة كلمة المرور. وبخلاف ذلك، يمكن للعملاء قراءة كلمات المرور دون تأكيد عند إلغاء قفل قاعدة البيانات.&lt;/p&gt;&lt;p&gt; يُغطي هذا الخيار فقط الوصول إلى كلمة المرور الخاصة بالإدخال. يمكن للعملاء دائمًا تعداد عناصر قواعد البيانات المكشوفة والاستعلام عن صفاتها. enable&quot; dir=&quot;ltr&quot; contenteditable=&quot;false&quot; data-copy-tag=&quot;&quot; data-index=&quot;5&quot; data-position=&quot;2&quot; data-type=&quot;end&quot; title=&quot;&lt;/p&gt;&quot; data-tag=&quot;p&quot; data-translatable=&quot;{TX-PL-TRANSLATABLE}&quot; spellcheck=&quot;false&quot;&gt;5enable&quot; dir=&quot;ltr&quot; contenteditable=&quot;false&quot; data-copy-tag=&quot;&quot; data-index=&quot;3&quot; data-position=&quot;2&quot; data-type=&quot;end&quot; title=&quot;&lt;/body&gt;&quot; data-tag=&quot;body&quot; data-translatable=&quot;{TX-PL-TRANSLATABLE}&quot; spellcheck=&quot;false&quot;&gt;3enable&quot; dir=&quot;ltr&quot; contenteditable=&quot;false&quot; data-copy-tag=&quot;&quot; data-index=&quot;1&quot; data-position=&quot;2&quot; data-type=&quot;end&quot; title=&quot;&lt;/html&gt;&quot; data-tag=&quot;html&quot; data-translatable=&quot;{TX-PL-TRANSLATABLE}&quot; spellcheck=&quot;false&quot;&gt;1</translation>
     </message>
     <message>
         <source>Confirm when passwords are retrieved by clients</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;
-           font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Helvetica','Arial','sans-serif','Apple Color
-           Emoji','Segoe UI Emoji'; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;This setting does
-           not override disabling recycle bin prompts&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Confirm when clients request entry deletion</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications
-           which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also
-           crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a
-           different value set in applications.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -9353,6 +9369,14 @@ Kernel: %3 %4</source>
     <message>
         <source>Save current changes to activate the plugin and enable editing of this section.</source>
         <translation>حفظ التغييرات الحالية لتفعيل المكوّن الإضافي وتفعيل تعديل هذا القسم.</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This setting does not override disabling recycle bin prompts &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a different value set in applications.) &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -9387,11 +9411,11 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Signer:</source>
-        <translation type="unfinished"/>
+        <translation>المُوقّع</translation>
     </message>
     <message>
         <source>Generate new certificate</source>
-        <translation type="unfinished"/>
+        <translation>ولّد شهادة جديدة</translation>
     </message>
     <message>
         <source>Generate</source>
@@ -9399,11 +9423,11 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>Fingerprint:</source>
-        <translation type="unfinished"/>
+        <translation>البصمة:</translation>
     </message>
     <message>
         <source>Signer name field</source>
-        <translation type="unfinished"/>
+        <translation>حقل اسم المُوقّع</translation>
     </message>
     <message>
         <source>Fingerprint</source>
@@ -9532,7 +9556,7 @@ Kernel: %3 %4</source>
     </message>
     <message numerus="yes">
         <source>Expires in &lt;b&gt;%n&lt;/b&gt; second(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>تنتهي صلاحيته في &lt;b&gt;٪n&lt;/b&gt; ثانية (ثوان)</numerusform><numerusform>تنتهي صلاحيته في &lt;b&gt;٪n&lt;/b&gt; ثانية (ثوان)</numerusform><numerusform>تنتهي صلاحيته في &lt;b&gt;٪n&lt;/b&gt; ثانية (ثوان)</numerusform><numerusform>تنتهي صلاحيته في &lt;b&gt;٪n&lt;/b&gt; ثانية (ثوان)</numerusform><numerusform>تنتهي صلاحيته في &lt;b&gt;٪n&lt;/b&gt; ثانية (ثوان)</numerusform><numerusform>تنتهي صلاحيته في &lt;b&gt;%n&lt;/b&gt; ثانية/ثواني</numerusform></translation>
     </message>
 </context>
 <context>

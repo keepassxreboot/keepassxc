@@ -559,10 +559,6 @@
         <translation>ウィンドウを最小化したらデータベースをロックする</translation>
     </message>
     <message>
-        <source>Require password repeat when it is visible</source>
-        <translation>パスワードが表示されていても再入力を要求する</translation>
-    </message>
-    <message>
         <source>Hide passwords when editing them</source>
         <translation>編集時にパスワードを非表示にする</translation>
     </message>
@@ -705,10 +701,6 @@
 <context>
     <name>AutoTypePlatformX11</name>
     <message>
-        <source>Trying to send invalid keysym.</source>
-        <translation>無効なキーシムを送信しようとしています。</translation>
-    </message>
-    <message>
         <source>Sequence aborted: Caps Lock is on</source>
         <translation>シーケンスを中止しました: Caps Lock がオンになっています</translation>
     </message>
@@ -719,6 +711,10 @@
     <message>
         <source>Unable to get valid keycode for key: </source>
         <translation>キーの正常なキーコードを取得できません: </translation>
+    </message>
+    <message>
+        <source>Trying to send invalid keyboard symbol.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -877,33 +873,36 @@ Please select the correct database for saving credentials.</source>
         <translation><numerusform>&lt;b&gt;%n&lt;/b&gt; 秒でタイムアウト...</numerusform></translation>
     </message>
     <message>
-        <source>Do you want to register Passkey for:</source>
-        <translation>パスキーを登録しますか:</translation>
-    </message>
-    <message>
-        <source>Existing Passkey found.
-Do you want to register a new Passkey for:</source>
-        <translation>既存のパスキーが見つかりました。
-本当に新しいパスキーを登録しますか:</translation>
-    </message>
-    <message>
-        <source>Select the existing Passkey and press Update to replace it.</source>
-        <translation>置き換えるには、既存のパスキーを選択して更新を押してください。</translation>
-    </message>
-    <message>
-        <source>Authenticate Passkey credentials for:</source>
-        <translation>パスキー認証資格情報で認証:</translation>
-    </message>
-    <message>
         <source>Relying Party: %1</source>
-        <translation type="unfinished"/>
+        <translation>対象サイト (Relying Party): %1</translation>
     </message>
     <message>
         <source>Username: %1</source>
-        <translation type="unfinished"/>
+        <translation>ユーザー名: %1</translation>
     </message>
     <message>
         <source>KeePassXC - Passkey credentials</source>
+        <translation>KeePassXC - パスキー認証資格情報</translation>
+    </message>
+    <message>
+        <source>Add to existing entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Existing passkey found.
+Do you want to register a new passkey for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Select the existing passkey and press Update to replace it.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Authenticate passkey credentials for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to register a passkey for:</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -956,13 +955,8 @@ Do you want to delete the entry?
         <translation>%1 (パスキー)</translation>
     </message>
     <message>
-        <source>Entry already has a Passkey.
-Do you want to overwrite the Passkey in %1 - %2?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>KeePassXC - Create a new group</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC - 新しいグループを作成</translation>
     </message>
     <message>
         <source>Disable</source>
@@ -970,27 +964,44 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
     </message>
     <message>
         <source>KeePassXC - Overwrite existing key?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>KeePassXC - Update Passkey</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC - 既存の鍵を上書きしますか？</translation>
     </message>
     <message>
         <source>KeePassXC - Update Entry</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC - エントリーを更新</translation>
     </message>
     <message>
         <source>KeePassXC - Delete entry</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC - エントリーを削除</translation>
     </message>
     <message>
         <source>KeePassXC - New key association request</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC - 新しいキーのアソシエーション要求</translation>
     </message>
     <message>
         <source>Passkey</source>
+        <translation>パスキー</translation>
+    </message>
+    <message>
+        <source>KeePassXC - Passkey credentials</source>
+        <translation>KeePassXC - パスキー認証資格情報</translation>
+    </message>
+    <message>
+        <source>Register a new passkey to this entry:</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC - Update passkey</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entry already has a passkey.
+Do you want to overwrite the passkey in %1 - %2?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Register</source>
+        <translation>登録</translation>
     </message>
 </context>
 <context>
@@ -1239,11 +1250,11 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
         <translation>&lt;b&gt;警告:&lt;/b&gt; インストールされているプロキシーの実行ファイルは予期していた場所に存在しません: %1&lt;br/&gt;カスタムプロキシーの場所を詳細設定で変更するか、アプリを再インストールしてください。</translation>
     </message>
     <message>
-        <source>Allows using insecure http://localhost with Passkeys for testing purposes.</source>
+        <source>Allows using insecure http://localhost with passkeys for testing purposes.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Allow using localhost with Passkeys</source>
+        <source>Allow using localhost with passkeys</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1382,11 +1393,11 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Failed to parse CSV file: %1</source>
-        <translation type="unfinished"/>
+        <translation>CSV ファイルの解析に失敗しました: %1</translation>
     </message>
     <message>
         <source>Imported from CSV file: %1</source>
-        <translation type="unfinished"/>
+        <translation>CSV ファイルからインポートしました: %1</translation>
     </message>
 </context>
 <context>
@@ -1592,51 +1603,55 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
     </message>
     <message>
         <source>Select Key File:</source>
-        <translation type="unfinished"/>
+        <translation>キーファイルを選択:</translation>
     </message>
     <message>
         <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;パスワードだけでなくシークレットファイルを使用することで、データベースのセキュリティを向上させることができます。シークレットファイルはデータベースのセキュリティ設定で生成できます。&lt;/p&gt;&lt;p&gt;これは *.kdbx データベースファイル&lt;strong&gt;ではありません&lt;/strong&gt;！&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Click to add a key file.</source>
-        <translation type="unfinished"/>
+        <translation>クリックしてキーファイルを追加します。</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;I have a key file&lt;/a&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;キーファイルがあります&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Use hardware key [Serial: %1]</source>
-        <translation type="unfinished"/>
+        <translation>ハードウェアキーを使用する [Serial: %1]</translation>
     </message>
     <message>
         <source>Use hardware key</source>
-        <translation type="unfinished"/>
+        <translation>ハードウェアキーを使用する</translation>
     </message>
     <message>
         <source>Your database file is NOT a key file!
 If you don&apos;t have a key file or don&apos;t know what that is, you don&apos;t have to select one.</source>
-        <translation type="unfinished"/>
+        <translation>データベースファイルはキーファイルとは違います！
+キーファイルを設定していない場合や何かわからない場合は、何も選択しないでください。</translation>
     </message>
     <message>
         <source>KeePassXC database file selected</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC データベースファイルが選択されました</translation>
     </message>
     <message>
         <source>The file you selected looks like a database file.
 A database file is NOT a key file!
 
 Are you sure you want to continue with this file?.</source>
-        <translation type="unfinished"/>
+        <translation>選択したファイルはデータベースファイルのようです。
+データベースファイルはキーファイルとは違います！
+
+本当にこのファイルを選択したまま続行しますか？</translation>
     </message>
     <message>
         <source>No hardware keys found.</source>
-        <translation type="unfinished"/>
+        <translation>ハードウェアキーが見つかりませんでした。</translation>
     </message>
     <message>
         <source>Refresh Hardware Keys</source>
-        <translation type="unfinished"/>
+        <translation>ハードウェアキーを初期化</translation>
     </message>
 </context>
 <context>
@@ -1785,19 +1800,19 @@ This is only necessary if your database is a copy of another and the browser ext
     </message>
     <message>
         <source>No keys found</source>
-        <translation type="unfinished"/>
+        <translation>鍵が見つかりません</translation>
     </message>
     <message>
         <source>Removed keys from database</source>
-        <translation type="unfinished"/>
+        <translation>鍵をデータベースから削除しました</translation>
     </message>
     <message>
         <source>Removed permissions</source>
-        <translation type="unfinished"/>
+        <translation>許可を削除しました</translation>
     </message>
     <message>
         <source>No entry with permissions found!</source>
-        <translation type="unfinished"/>
+        <translation>アクセス許可があるエントリーは見つかりません</translation>
     </message>
 </context>
 <context>
@@ -2098,22 +2113,28 @@ This action is not reversible.</source>
 the oldest history items of an entry will be
 removed such that only the specified amount
 of entries remain at most.</source>
-        <translation type="unfinished"/>
+        <translation>この設定を保存するか、設定以降に
+エントリーを編集すると、
+履歴が古い順に削除され、
+指定した数だけ残るようになります。</translation>
     </message>
     <message>
         <source>Limit the amount of history items per entry to:</source>
-        <translation type="unfinished"/>
+        <translation>各エントリーの履歴の数を制限する:</translation>
     </message>
     <message>
         <source>When saving this setting or editing an entry
 the oldest history items of an entry will be
 removed such that the remaining history items
 add up to the specified amount at most.</source>
-        <translation type="unfinished"/>
+        <translation>この設定を保存するか、設定以降に
+エントリーを編集すると、サイズの
+合計が指定した値の範囲内になるまで
+履歴を古い順に削除します。</translation>
     </message>
     <message>
         <source>Limit the total size of history items per entry to:</source>
-        <translation type="unfinished"/>
+        <translation>各エントリーの履歴の合計サイズを制限する:</translation>
     </message>
     <message>
         <source>Move entries to a recycle bin group
@@ -2821,10 +2842,6 @@ Would you like to correct it?</source>
 <context>
     <name>EditEntryWidgetBrowser</name>
     <message>
-        <source>These settings affect to the entry&apos;s behaviour with the browser extension.</source>
-        <translation>これらの設定はエントリーの挙動 (ブラウザー拡張機能) に影響します。</translation>
-    </message>
-    <message>
         <source>General</source>
         <translation>全般</translation>
     </message>
@@ -2853,10 +2870,6 @@ Would you like to correct it?</source>
         <translation>このエントリーは HTTP ベーシック認証で使用しない</translation>
     </message>
     <message>
-        <source>Additional URL&apos;s</source>
-        <translation>追加の URL</translation>
-    </message>
-    <message>
         <source>Add</source>
         <translation>追加</translation>
     </message>
@@ -2867,6 +2880,14 @@ Would you like to correct it?</source>
     <message>
         <source>Edit</source>
         <translation>編集</translation>
+    </message>
+    <message>
+        <source>These settings affect the entry&apos;s behaviour with the browser extension.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Additional URLs</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2964,23 +2985,23 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>&amp;Username:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;ユーザー名:</translation>
     </message>
     <message>
         <source>&amp;Title:</source>
-        <translation type="unfinished"/>
+        <translation>タイトル(&amp;T):</translation>
     </message>
     <message>
         <source>&amp;Password:</source>
-        <translation type="unfinished"/>
+        <translation>パスワード(&amp;P):</translation>
     </message>
     <message>
         <source>UR&amp;L:</source>
-        <translation type="unfinished"/>
+        <translation>URL(&amp;L):</translation>
     </message>
     <message>
         <source>&amp;Notes:</source>
-        <translation type="unfinished"/>
+        <translation>メモ(&amp;N):</translation>
     </message>
     <message>
         <source>Toggle notes visibility</source>
@@ -2988,11 +3009,11 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>T&amp;ags:</source>
-        <translation type="unfinished"/>
+        <translation>タグ(T):</translation>
     </message>
     <message>
         <source>&amp;Expires:</source>
-        <translation type="unfinished"/>
+        <translation>期限(&amp;E):</translation>
     </message>
 </context>
 <context>
@@ -3174,7 +3195,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Omit WWW subdomain from matching:</source>
-        <translation type="unfinished"/>
+        <translation>WWW サブドメインをマッチングから除外</translation>
     </message>
     <message>
         <source>Omit WWW subdomain from matching toggle for this and sub groups</source>
@@ -3454,7 +3475,7 @@ Supported extensions are: %1.</source>
     </message>
     <message>
         <source>You can enable the DuckDuckGo website icon service under Application Settings -&gt; Security</source>
-        <translation type="unfinished"/>
+        <translation>設定 -&gt; セキュリティで DuckDuckGo のウェブサイトアイコンサービスを有効にできます</translation>
     </message>
 </context>
 <context>
@@ -3660,12 +3681,6 @@ This may cause the affected plugins to malfunction.</source>
         <translation>添付ファイルの上書きの確認</translation>
     </message>
     <message>
-        <source>Attachment &quot;%1&quot; already exists. 
-Would you like to overwrite the existing attachment?</source>
-        <translation>添付ファイル &quot;%1&quot; は既に存在します。
-既存の添付ファイルを上書きしますか？</translation>
-    </message>
-    <message>
         <source>Confirm Attachment</source>
         <translation>添付の確認</translation>
     </message>
@@ -3698,6 +3713,12 @@ Do you want to save the changes to your database?</source>
 Error: %1</source>
         <translation>更新された添付ファイルの保存に失敗しました。
 エラー: %1</translation>
+    </message>
+    <message>
+        <source>Attachment &quot;%1&quot; already exists. 
+Would you like to overwrite the existing attachment?</source>
+        <translation>添付ファイル &quot;%1&quot; は既に存在します。
+既存の添付ファイルを上書きしますか？</translation>
     </message>
 </context>
 <context>
@@ -3751,7 +3772,7 @@ Error: %1</source>
     </message>
     <message>
         <source>Custom Attributes</source>
-        <translation type="unfinished"/>
+        <translation>属性をカスタムする</translation>
     </message>
     <message>
         <source>Icon</source>
@@ -4032,7 +4053,7 @@ Error: %1</source>
     </message>
     <message numerus="yes">
         <source>+ %1 entry(s)...</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>+ %1 個のエントリー...</numerusform></translation>
     </message>
 </context>
 <context>
@@ -4259,7 +4280,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     <name>ImportWizard</name>
     <message>
         <source>Import Wizard</source>
-        <translation type="unfinished"/>
+        <translation>インポートウィザード</translation>
     </message>
 </context>
 <context>
@@ -4290,7 +4311,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Url</source>
-        <translation type="unfinished"/>
+        <translation>Url</translation>
     </message>
 </context>
 <context>
@@ -4301,7 +4322,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Import File Selection</source>
-        <translation type="unfinished"/>
+        <translation>インポートするファイルの選択</translation>
     </message>
     <message>
         <source>Password:</source>
@@ -4317,7 +4338,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Import Into:</source>
-        <translation type="unfinished"/>
+        <translation>インポート先:</translation>
     </message>
     <message>
         <source>New Database</source>
@@ -4333,27 +4354,27 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Import File:</source>
-        <translation type="unfinished"/>
+        <translation>インポートするファイル:</translation>
     </message>
     <message>
         <source>Comma Separated Values (.csv)</source>
-        <translation type="unfinished"/>
+        <translation>カンマ区切りテキスト (.csv)</translation>
     </message>
     <message>
         <source>1Password Export (.1pux)</source>
-        <translation type="unfinished"/>
+        <translation>1Password エクスポート (.1pux)</translation>
     </message>
     <message>
         <source>1Password Vault (.opvault)</source>
-        <translation type="unfinished"/>
+        <translation>1Password Vault (.opvault)</translation>
     </message>
     <message>
         <source>Bitwarden (.json)</source>
-        <translation type="unfinished"/>
+        <translation>Bitwarden (.json)</translation>
     </message>
     <message>
         <source>KeePass 1 Database (.kdb)</source>
-        <translation type="unfinished"/>
+        <translation>KeePass 1 データベース (.kdb)</translation>
     </message>
     <message>
         <source>Open OPVault</source>
@@ -4361,7 +4382,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Select import file</source>
-        <translation type="unfinished"/>
+        <translation>インポートするファイルを選択</translation>
     </message>
     <message>
         <source>All files</source>
@@ -4381,19 +4402,19 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>1Password Export</source>
-        <translation type="unfinished"/>
+        <translation>1Password エクスポート</translation>
     </message>
     <message>
         <source>Bitwarden JSON Export</source>
-        <translation type="unfinished"/>
+        <translation>Bitwarden JSON エクスポート</translation>
     </message>
     <message>
         <source>1Password Vault</source>
-        <translation type="unfinished"/>
+        <translation>1Password 保管庫</translation>
     </message>
     <message>
         <source>KeePass1 Database</source>
-        <translation type="unfinished"/>
+        <translation>KeePass1 データベース</translation>
     </message>
 </context>
 <context>
@@ -5364,7 +5385,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Copy &amp;URL</source>
-        <translation type="unfinished"/>
+        <translation>URL をコピー(&amp;U)</translation>
     </message>
     <message>
         <source>&amp;Notes</source>
@@ -5479,6 +5500,10 @@ Are you sure you want to continue with this file?</source>
         <translation>クラシック (プラットフォームネイティブ)</translation>
     </message>
     <message>
+        <source>Show Menubar</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Show Toolbar</source>
         <translation>ツールバーを表示</translation>
     </message>
@@ -5572,7 +5597,7 @@ KeePassXC の配布ページから AppImage をダウンロードして使用す
     </message>
     <message numerus="yes">
         <source>%1 Entry(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>エントリー %1 件</numerusform></translation>
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue…</source>
@@ -5588,27 +5613,27 @@ KeePassXC の配布ページから AppImage をダウンロードして使用す
     </message>
     <message>
         <source>Allow Screen Capture</source>
-        <translation type="unfinished"/>
+        <translation>スクリーンキャプチャを許可</translation>
     </message>
     <message>
         <source>1Password 1PUX...</source>
-        <translation type="unfinished"/>
+        <translation>1Password 1PUX...</translation>
     </message>
     <message>
         <source>Import a 1Password 1PUX file</source>
-        <translation type="unfinished"/>
+        <translation>1Password 1PUX ファイルをインポート</translation>
     </message>
     <message>
         <source>Import…</source>
-        <translation type="unfinished"/>
+        <translation>インポート…</translation>
     </message>
     <message>
         <source>Passkeys…</source>
-        <translation type="unfinished"/>
+        <translation>パスキー…</translation>
     </message>
     <message>
         <source>Import Passkey</source>
-        <translation type="unfinished"/>
+        <translation>パスキーをインポート</translation>
     </message>
     <message>
         <source>Quit Application</source>
@@ -5620,11 +5645,11 @@ KeePassXC の配布ページから AppImage をダウンロードして使用す
     </message>
     <message>
         <source>Open Database</source>
-        <translation type="unfinished"/>
+        <translation>データベースを開く</translation>
     </message>
     <message>
         <source>Create Database</source>
-        <translation type="unfinished"/>
+        <translation>データベースを作成</translation>
     </message>
     <message>
         <source>Merge From Database</source>
@@ -5688,7 +5713,7 @@ KeePassXC の配布ページから AppImage をダウンロードして使用す
     </message>
     <message>
         <source>Clone Entry</source>
-        <translation type="unfinished"/>
+        <translation>エントリーを複製</translation>
     </message>
     <message>
         <source>Move Entry Up</source>
@@ -5736,23 +5761,23 @@ KeePassXC の配布ページから AppImage をダウンロードして使用す
     </message>
     <message>
         <source>Copy Title</source>
-        <translation type="unfinished"/>
+        <translation>タイトルをコピー</translation>
     </message>
     <message>
         <source>Copy URL</source>
-        <translation type="unfinished"/>
+        <translation>URL をコピー</translation>
     </message>
     <message>
         <source>Copy Notes</source>
-        <translation type="unfinished"/>
+        <translation>メモをコピー</translation>
     </message>
     <message>
         <source>Export to CSV</source>
-        <translation type="unfinished"/>
+        <translation>CSV にエクスポート</translation>
     </message>
     <message>
         <source>Export to HTML</source>
-        <translation type="unfinished"/>
+        <translation>HTML にエクスポート</translation>
     </message>
     <message>
         <source>Import KeePass1 Database</source>
@@ -5760,11 +5785,11 @@ KeePassXC の配布ページから AppImage をダウンロードして使用す
     </message>
     <message>
         <source>Import 1Password Vault</source>
-        <translation type="unfinished"/>
+        <translation>1Password 保管庫をインポート</translation>
     </message>
     <message>
         <source>Import CSV File</source>
-        <translation type="unfinished"/>
+        <translation>CSV ファイルをインポート</translation>
     </message>
     <message>
         <source>Show TOTP QR Code</source>
@@ -5824,6 +5849,10 @@ KeePassXC の配布ページから AppImage をダウンロードして使用す
     </message>
     <message>
         <source>Set Theme: Classic</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle Show Menubar</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -6125,7 +6154,7 @@ KeePassXC の配布ページから AppImage をダウンロードして使用す
     </message>
     <message>
         <source>AES-256/GCM is currently not supported</source>
-        <translation type="unfinished"/>
+        <translation>AES-256/GCM は現在非対応です</translation>
     </message>
     <message>
         <source>Passphrase is required to decrypt this key</source>
@@ -6215,23 +6244,19 @@ KeePassXC の配布ページから AppImage をダウンロードして使用す
     <name>PasskeyExportDialog</name>
     <message>
         <source>KeePassXC - Passkey Export</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Export the following Passkey entries.</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC - パスキーのエクスポート</translation>
     </message>
     <message>
         <source>Filenames will be generated with title and .passkey file extension.</source>
-        <translation type="unfinished"/>
+        <translation>ファイル名は「タイトル + .passkey 拡張子」で生成されます。</translation>
     </message>
     <message>
         <source>Export entries</source>
-        <translation type="unfinished"/>
+        <translation>エントリーをエクスポート</translation>
     </message>
     <message>
         <source>Export Selected</source>
-        <translation type="unfinished"/>
+        <translation>選択したものをエクスポート</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -6239,6 +6264,10 @@ KeePassXC の配布ページから AppImage をダウンロードして使用す
     </message>
     <message>
         <source>Export to folder</source>
+        <translation>フォルダーにエクスポート</translation>
+    </message>
+    <message>
+        <source>Export the following passkey entries.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -6246,36 +6275,38 @@ KeePassXC の配布ページから AppImage をダウンロードして使用す
     <name>PasskeyExporter</name>
     <message>
         <source>KeePassXC: Passkey Export</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: パスキーのエクスポート</translation>
     </message>
     <message>
         <source>File &quot;%1.passkey&quot; already exists.
 Do you want to overwrite it?
 </source>
-        <translation type="unfinished"/>
+        <translation>ファイル「%1.passkey」は既に存在しています。
+上書きしますか？
+</translation>
     </message>
     <message>
         <source>Cannot open file</source>
-        <translation type="unfinished"/>
+        <translation>ファイルを開けませんでした</translation>
     </message>
     <message>
         <source>Cannot open file &quot;%1&quot; for writing.</source>
-        <translation type="unfinished"/>
+        <translation>ファイル「%1」は書き込み用として開けません。</translation>
     </message>
     <message>
         <source>Cannot write to file</source>
-        <translation type="unfinished"/>
+        <translation>ファイルに書き込めません</translation>
     </message>
 </context>
 <context>
     <name>PasskeyImportDialog</name>
     <message>
         <source>KeePassXC - Passkey Import</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC - パスキーのインポート</translation>
     </message>
     <message>
         <source>Username: %1</source>
-        <translation type="unfinished"/>
+        <translation>ユーザー名: %1</translation>
     </message>
     <message>
         <source>Group</source>
@@ -6287,7 +6318,7 @@ Do you want to overwrite it?
     </message>
     <message>
         <source>Import Passkey</source>
-        <translation type="unfinished"/>
+        <translation>パスキーをインポート</translation>
     </message>
     <message>
         <source>Import</source>
@@ -6298,27 +6329,27 @@ Do you want to overwrite it?
         <translation>キャンセル</translation>
     </message>
     <message>
-        <source>Import the following Passkey:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Entry</source>
         <translation>エントリー</translation>
     </message>
     <message>
-        <source>Import the following Passkey to this entry:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Create new entry</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Default Passkeys group (Imported Passkeys)</source>
-        <translation type="unfinished"/>
+        <translation>新しいエントリーを作成</translation>
     </message>
     <message>
         <source>Relying Party: %1</source>
+        <translation>対象サイト (Relying Party): %1</translation>
+    </message>
+    <message>
+        <source>Import the following passkey:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import the following passkey to this entry:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Default passkeys group (Imported Passkeys)</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -6326,40 +6357,40 @@ Do you want to overwrite it?
     <name>PasskeyImporter</name>
     <message>
         <source>Passkey file</source>
-        <translation type="unfinished"/>
+        <translation>パスキーファイル</translation>
     </message>
     <message>
         <source>All files</source>
         <translation>すべてのファイル</translation>
     </message>
     <message>
-        <source>Open Passkey file</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Cannot open file</source>
-        <translation type="unfinished"/>
+        <translation>ファイルを開けませんでした</translation>
     </message>
     <message>
         <source>Cannot open file &quot;%1&quot; for reading.</source>
+        <translation>ファイル「%1」は読み込み用として開けません。</translation>
+    </message>
+    <message>
+        <source>Open passkey file</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey</source>
+        <source>Cannot import passkey</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;. Data is missing.</source>
+        <source>Cannot import passkey file &quot;%1&quot;. Data is missing.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Cannot import Passkey file &quot;%1&quot;.
+        <source>Cannot import passkey file &quot;%1&quot;.
 The following data is missing:
 %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot import passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -7209,11 +7240,6 @@ Do you want to overwrite it?</source>
     <message>
         <source>time</source>
         <translation>時間</translation>
-    </message>
-    <message>
-        <source>Set the key file for the database.
-This options is deprecated, use --set-key-file instead.</source>
-        <translation type="unfinished"/>
     </message>
     <message>
         <source>Set the key file for the database.</source>
@@ -8377,10 +8403,6 @@ CPU アーキテクチャー: %2
         <translation>標準入力からデータベースのパスワードを読み込む</translation>
     </message>
     <message>
-        <source>Locked databases.</source>
-        <translation>データベースをロックしました。</translation>
-    </message>
-    <message>
         <source>Database failed to lock.</source>
         <translation>データベースのロックに失敗しました。</translation>
     </message>
@@ -8416,15 +8438,15 @@ CPU アーキテクチャー: %2
     </message>
     <message>
         <source>Failed to create Windows Hello credential.</source>
-        <translation type="unfinished"/>
+        <translation>Windows Hello の認証情報の作成に失敗しました。</translation>
     </message>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
-        <translation type="unfinished"/>
+        <translation>Windows Hello を使用したチャレンジの署名に失敗しました。</translation>
     </message>
     <message>
         <source>Warning: Failed to block screenshot capture on a top-level window.</source>
-        <translation type="unfinished"/>
+        <translation>警告: トップレベルウィンドウのスクリーンショット撮影を防げませんでした！</translation>
     </message>
     <message>
         <source>Invalid Cipher</source>
@@ -8443,15 +8465,12 @@ CPU アーキテクチャー: %2
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Enter Shortcut</source>
+        <source>Set the key file for the database.
+This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Action</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Shortcuts</source>
+        <source>Databases have been locked.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -8480,7 +8499,7 @@ CPU アーキテクチャー: %2
     </message>
     <message>
         <source>Passkeys</source>
-        <translation type="unfinished"/>
+        <translation>パスキー</translation>
     </message>
     <message>
         <source>AES initialization failed</source>
@@ -8539,6 +8558,34 @@ CPU アーキテクチャー: %2
         <translation>鍵データの復号に失敗しました。</translation>
     </message>
     <message>
+        <source>Origin is empty or not allowed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Effective domain is not a valid domain</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Origin and RP ID do not match</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No supported algorithms were provided</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Wait for timer to expire</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Challenge is shorter than required minimum length</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>user.id does not match the required length</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Favorite</source>
         <comment>Tag for favorite entries</comment>
         <translation type="unfinished"/>
@@ -8589,7 +8636,7 @@ CPU アーキテクチャー: %2
     </message>
     <message>
         <source>Bitwarden Import</source>
-        <translation type="unfinished"/>
+        <translation>Bitwarden のインポート</translation>
     </message>
     <message>
         <source>Archived</source>
@@ -8606,38 +8653,26 @@ CPU アーキテクチャー: %2
     </message>
     <message>
         <source>1Password Import</source>
+        <translation>1Password のインポート</translation>
+    </message>
+    <message>
+        <source>Enter Shortcut</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Origin is empty or not allowed</source>
+        <source>Action</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Effective domain is not a valid domain</source>
+        <source>Shortcuts</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Origin and RP ID do not match</source>
+        <source>Unsupported KDF type, cannot decrypt json file</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>No supported algorithms were provided</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Wait for timer to expire</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Unknown Passkeys error</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Challenge is shorter than required minimum length</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>user.id does not match the required length</source>
+        <source>Unknown passkeys error</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -8755,7 +8790,7 @@ CPU アーキテクチャー: %2
     </message>
     <message>
         <source> (Expired)</source>
-        <translation type="unfinished"/>
+        <translation> (期限切れ)</translation>
     </message>
 </context>
 <context>
@@ -8845,7 +8880,7 @@ CPU アーキテクチャー: %2
     </message>
     <message>
         <source> (Expired)</source>
-        <translation type="unfinished"/>
+        <translation> (期限切れ)</translation>
     </message>
 </context>
 <context>
@@ -8958,14 +8993,6 @@ CPU アーキテクチャー: %2
         <translation>エントリーのURLの一覧</translation>
     </message>
     <message>
-        <source>Please wait, list of entries with Passkeys is being updated…</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>No entries with Passkeys.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Title</source>
         <translation>タイトル</translation>
     </message>
@@ -8991,7 +9018,7 @@ CPU アーキテクチャー: %2
     </message>
     <message>
         <source>Relying Party</source>
-        <translation type="unfinished"/>
+        <translation>対象サイト (Relying Party)</translation>
     </message>
     <message>
         <source>Show expired entries</source>
@@ -8999,6 +9026,22 @@ CPU アーキテクチャー: %2
     </message>
     <message>
         <source> (Expired)</source>
+        <translation> (期限切れ)</translation>
+    </message>
+    <message>
+        <source>Export Confirmation</source>
+        <translation>エクスポートの確認</translation>
+    </message>
+    <message>
+        <source>The passkey file will be vulnerable to theft and unauthorized use, if left unsecured. Are you sure you want to continue?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please wait, list of entries with passkeys is being updated…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No entries with passkeys.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -9320,29 +9363,8 @@ CPU アーキテクチャー: %2
         <translation>クライアントがパスワードを取得する際に確認する</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;
-           font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Helvetica','Arial','sans-serif','Apple Color
-           Emoji','Segoe UI Emoji'; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;This setting does
-           not override disabling recycle bin prompts&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;
-           font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color
-           Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;この設定は
-           ゴミ箱の確認ダイアログの無効化を上書きしません&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </translation>
-    </message>
-    <message>
         <source>Confirm when clients request entry deletion</source>
         <translation>クライアントがエントリーの削除を要求する際に確認する</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications
-           which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also
-           crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a
-           different value set in applications.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;これは、まずデータベースのロックを解除せずにパスワードを検索する特定のアプリケーションとの互換性を改善します。&lt;/p&gt;&lt;p&gt;しかしながら、これを有効にすると一定時間経過してタイムアウトするまでにデータベースのロックが解除されなかった場合にクライアントがクラッシュする可能性があります。 (通常は 25 秒ですがアプリケーションによっては異なる値が設定されている可能性があります)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </translation>
     </message>
     <message>
         <source>Prompt to unlock database before searching</source>
@@ -9367,6 +9389,14 @@ CPU アーキテクチャー: %2
     <message>
         <source>Save current changes to activate the plugin and enable editing of this section.</source>
         <translation>プラグインをアクティブにするために現在の変更を保存し、このセクションの編集を有効にしてください。</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This setting does not override disabling recycle bin prompts &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a different value set in applications.) &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -9705,15 +9735,15 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Create Database</source>
-        <translation type="unfinished"/>
+        <translation>データベースを作成</translation>
     </message>
     <message>
         <source>Open Database</source>
-        <translation type="unfinished"/>
+        <translation>データベースを開く</translation>
     </message>
     <message>
         <source>Import File</source>
-        <translation type="unfinished"/>
+        <translation>ファイルをインポート</translation>
     </message>
 </context>
 <context>
@@ -9790,7 +9820,7 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Refresh hardware keys</source>
-        <translation type="unfinished"/>
+        <translation>ハードウェアトークンを初期化</translation>
     </message>
 </context>
 <context>
@@ -9818,7 +9848,7 @@ Example: JBSWY3DPEHPK3PXP</source>
     <message>
         <source>(NFC) %1 [%2] - Slot %3, %4</source>
         <comment>YubiKey display fields</comment>
-        <translation type="unfinished"/>
+        <translation>(NFC) %1 [%2] - スロット %3, %4</translation>
     </message>
     <message>
         <source>Press</source>
@@ -9870,12 +9900,12 @@ Example: JBSWY3DPEHPK3PXP</source>
     <message>
         <source>%1 [%2] - Slot %3</source>
         <comment>YubiKey NEO display fields</comment>
-        <translation type="unfinished"/>
+        <translation>%1 [%2] - スロット %3</translation>
     </message>
     <message>
         <source>%1 [%2] - Slot %3, %4</source>
         <comment>YubiKey display fields</comment>
-        <translation type="unfinished"/>
+        <translation>%1 [%2] - スロット %3, %4</translation>
     </message>
 </context>
 </TS>

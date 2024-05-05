@@ -559,10 +559,6 @@
         <translation>Lås databaser når vinduet minimeres</translation>
     </message>
     <message>
-        <source>Require password repeat when it is visible</source>
-        <translation>Krev repetering av passord når synlig</translation>
-    </message>
-    <message>
         <source>Hide passwords when editing them</source>
         <translation>Skjul passord ved redigering</translation>
     </message>
@@ -705,10 +701,6 @@
 <context>
     <name>AutoTypePlatformX11</name>
     <message>
-        <source>Trying to send invalid keysym.</source>
-        <translation>Prøver å sende ugyldig keysym-navn.</translation>
-    </message>
-    <message>
         <source>Sequence aborted: Caps Lock is on</source>
         <translation>Sekvens avbrutt: Store bokstaver er på</translation>
     </message>
@@ -719,6 +711,10 @@
     <message>
         <source>Unable to get valid keycode for key: </source>
         <translation>Mottar ikke gyldig nøkkelkode for nøkkel:</translation>
+    </message>
+    <message>
+        <source>Trying to send invalid keyboard symbol.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -877,24 +873,6 @@ Vennligst velge riktig database for å lagre identifikasjon.</translation>
         <translation><numerusform>Tidsavbrudd om &lt;b&gt;%n&lt;/b&gt; sekund…</numerusform><numerusform>Tidsavbrudd om &lt;b&gt;%n&lt;/b&gt; sekunder…</numerusform></translation>
     </message>
     <message>
-        <source>Do you want to register Passkey for:</source>
-        <translation>Ønsker du å registrere tilgangsnøkkel for:</translation>
-    </message>
-    <message>
-        <source>Existing Passkey found.
-Do you want to register a new Passkey for:</source>
-        <translation>Eksisterende tilgangsnøkkel funnet.
-Vil du registrere en ny tilgangsnøkkel for:</translation>
-    </message>
-    <message>
-        <source>Select the existing Passkey and press Update to replace it.</source>
-        <translation>Velg den eksisterende tilgangsnøkkelen, og trykk oppdater for å erstatte den.</translation>
-    </message>
-    <message>
-        <source>Authenticate Passkey credentials for:</source>
-        <translation>Autentiser tilgangsnøkkel-identifikasjon for:</translation>
-    </message>
-    <message>
         <source>Relying Party: %1</source>
         <translation>Tiltrodd part: %1</translation>
     </message>
@@ -905,6 +883,27 @@ Vil du registrere en ny tilgangsnøkkel for:</translation>
     <message>
         <source>KeePassXC - Passkey credentials</source>
         <translation>KeePassXC - Tilgangsnøkkel-identifikasjon</translation>
+    </message>
+    <message>
+        <source>Add to existing entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Existing passkey found.
+Do you want to register a new passkey for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Select the existing passkey and press Update to replace it.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Authenticate passkey credentials for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to register a passkey for:</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -954,12 +953,6 @@ Vil du slette oppføringen?</translation>
         <translation>%1 (tilgangsnøkkel)</translation>
     </message>
     <message>
-        <source>Entry already has a Passkey.
-Do you want to overwrite the Passkey in %1 - %2?</source>
-        <translation>Oppføringen har allerede en tilgangsnøkkel.
-Vil du erstatte tilgangsnøkkelen i %1 - %2?</translation>
-    </message>
-    <message>
         <source>KeePassXC - Create a new group</source>
         <translation>KeePassXC - Opprett en ny gruppe</translation>
     </message>
@@ -970,10 +963,6 @@ Vil du erstatte tilgangsnøkkelen i %1 - %2?</translation>
     <message>
         <source>KeePassXC - Overwrite existing key?</source>
         <translation>KeePassXC - Erstatte eksisterende nøkkel?</translation>
-    </message>
-    <message>
-        <source>KeePassXC - Update Passkey</source>
-        <translation>KeePassXC - Oppdater tilgangsnøkkel</translation>
     </message>
     <message>
         <source>KeePassXC - Update Entry</source>
@@ -990,6 +979,27 @@ Vil du erstatte tilgangsnøkkelen i %1 - %2?</translation>
     <message>
         <source>Passkey</source>
         <translation>Tilgangsnøkkel</translation>
+    </message>
+    <message>
+        <source>KeePassXC - Passkey credentials</source>
+        <translation>KeePassXC - Tilgangsnøkkel-identifikasjon</translation>
+    </message>
+    <message>
+        <source>Register a new passkey to this entry:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC - Update passkey</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entry already has a passkey.
+Do you want to overwrite the passkey in %1 - %2?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Register</source>
+        <translation>Registrer</translation>
     </message>
 </context>
 <context>
@@ -1238,12 +1248,12 @@ Vil du erstatte tilgangsnøkkelen i %1 - %2?</translation>
         <translation>&lt;b&gt;Feil:&lt;/b&gt; Den installerte eksekverbare proxyen finnes ikke på den forventede plasseringen: %1&lt;br/&gt;Angi en egendefinert proxy-lokasjon i de avanserte innstillingene, eller installer applikasjonen på nytt.</translation>
     </message>
     <message>
-        <source>Allows using insecure http://localhost with Passkeys for testing purposes.</source>
-        <translation>Tillater bruk av usikker http://localhost med tilgangsnøkler for testformål.</translation>
+        <source>Allows using insecure http://localhost with passkeys for testing purposes.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Allow using localhost with Passkeys</source>
-        <translation>Tillat bruk av localhost med tilgangsnøkler</translation>
+        <source>Allow using localhost with passkeys</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2830,10 +2840,6 @@ Vil du rette den?</translation>
 <context>
     <name>EditEntryWidgetBrowser</name>
     <message>
-        <source>These settings affect to the entry&apos;s behaviour with the browser extension.</source>
-        <translation>Disse innstillingene påvirker oppføringens funksjon mot nettleserutvidelsen.</translation>
-    </message>
-    <message>
         <source>General</source>
         <translation>Generelt</translation>
     </message>
@@ -2862,10 +2868,6 @@ Vil du rette den?</translation>
         <translation>Ikke bruk denne oppføringen med «HTTP Basic Auth»</translation>
     </message>
     <message>
-        <source>Additional URL&apos;s</source>
-        <translation>Ytterligere URL&apos;er</translation>
-    </message>
-    <message>
         <source>Add</source>
         <translation>Legg til</translation>
     </message>
@@ -2876,6 +2878,14 @@ Vil du rette den?</translation>
     <message>
         <source>Edit</source>
         <translation>Endring</translation>
+    </message>
+    <message>
+        <source>These settings affect the entry&apos;s behaviour with the browser extension.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Additional URLs</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3670,12 +3680,6 @@ Dette kan føre til feil for de berørte programtilleggene.</translation>
         <translation>Bekreft erstatting av vedlegg</translation>
     </message>
     <message>
-        <source>Attachment &quot;%1&quot; already exists. 
-Would you like to overwrite the existing attachment?</source>
-        <translation>Vedlegg %1 finnes allerede. 
-Vil du erstatte det eksisterende vedlegget?</translation>
-    </message>
-    <message>
         <source>Confirm Attachment</source>
         <translation>Bekreft vedlegg</translation>
     </message>
@@ -3708,6 +3712,12 @@ Vil du lagre endringene i databasen?</translation>
 Error: %1</source>
         <translation>Lagring av oppdatert vedlegg mislyktes.
 Feil: %1</translation>
+    </message>
+    <message>
+        <source>Attachment &quot;%1&quot; already exists. 
+Would you like to overwrite the existing attachment?</source>
+        <translation>Vedlegg %1 finnes allerede. 
+Vil du erstatte det eksisterende vedlegget?</translation>
     </message>
 </context>
 <context>
@@ -5489,6 +5499,10 @@ Er du sikker på at du vil fortsette med denne filen?</translation>
         <translation>Klassisk (plattformbasert)</translation>
     </message>
     <message>
+        <source>Show Menubar</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Show Toolbar</source>
         <translation>Vis verktøylinje</translation>
     </message>
@@ -5835,6 +5849,10 @@ Vi anbefaler at du bruker det AppImage som er tilgjengelig på nedlastingssidene
     <message>
         <source>Set Theme: Classic</source>
         <translation>Angi tema: klassisk</translation>
+    </message>
+    <message>
+        <source>Toggle Show Menubar</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Toggle Show Toolbar</source>
@@ -6228,10 +6246,6 @@ Vi anbefaler at du bruker det AppImage som er tilgjengelig på nedlastingssidene
         <translation>KeePassXC - Eksport av tilgangsnøkkel</translation>
     </message>
     <message>
-        <source>Export the following Passkey entries.</source>
-        <translation>Eksporter disse tilgangsnøkkel-oppføringene</translation>
-    </message>
-    <message>
         <source>Filenames will be generated with title and .passkey file extension.</source>
         <translation>Filnavn vil bli generert med tittel og .passkey-filtype.</translation>
     </message>
@@ -6250,6 +6264,10 @@ Vi anbefaler at du bruker det AppImage som er tilgjengelig på nedlastingssidene
     <message>
         <source>Export to folder</source>
         <translation>Eksporter til mappe</translation>
+    </message>
+    <message>
+        <source>Export the following passkey entries.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6309,28 +6327,28 @@ Vil du erstatte den?</translation>
         <translation>Avbryt</translation>
     </message>
     <message>
-        <source>Import the following Passkey:</source>
-        <translation>Importer følgende tilgangsnøkkel:</translation>
-    </message>
-    <message>
         <source>Entry</source>
         <translation>Oppføring</translation>
-    </message>
-    <message>
-        <source>Import the following Passkey to this entry:</source>
-        <translation>Importer følgende tilgangsnøkkel til denne oppføringen:</translation>
     </message>
     <message>
         <source>Create new entry</source>
         <translation>Opprett ny oppføring</translation>
     </message>
     <message>
-        <source>Default Passkeys group (Imported Passkeys)</source>
-        <translation>Standardgruppe for tilgangsnøkler (importerte tilgangsnøkler)</translation>
-    </message>
-    <message>
         <source>Relying Party: %1</source>
         <translation>Tiltrodd part: %1</translation>
+    </message>
+    <message>
+        <source>Import the following passkey:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import the following passkey to this entry:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Default passkeys group (Imported Passkeys)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6344,10 +6362,6 @@ Vil du erstatte den?</translation>
         <translation>Alle filer</translation>
     </message>
     <message>
-        <source>Open Passkey file</source>
-        <translation>Åpne tilgangsnøkkelfil</translation>
-    </message>
-    <message>
         <source>Cannot open file</source>
         <translation>Kan ikke åpne fil</translation>
     </message>
@@ -6356,24 +6370,26 @@ Vil du erstatte den?</translation>
         <translation>Kan ikke åpne filen &quot;%1&quot; for lesing.</translation>
     </message>
     <message>
-        <source>Cannot import Passkey</source>
-        <translation>Kan ikke importere tilgangsnøkkel</translation>
+        <source>Open passkey file</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;. Data is missing.</source>
-        <translation>Kan ikke importere tilgangsnøkkelfil &quot;%1&quot;. Data mangler.</translation>
+        <source>Cannot import passkey</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
-        <translation>Kan ikke importere tilgangsnøkkelfil &quot;%1&quot;. Privat nøkkel mangler eller er deformert.</translation>
+        <source>Cannot import passkey file &quot;%1&quot;. Data is missing.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;.
+        <source>Cannot import passkey file &quot;%1&quot;.
 The following data is missing:
 %2</source>
-        <translation>Kan ikke importere tilgangsnøkkelfil &quot;%1&quot;.
-Følgende data mangler:
-%2</translation>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot import passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7221,12 +7237,6 @@ Vil du erstatte den?</translation>
     <message>
         <source>time</source>
         <translation>tid</translation>
-    </message>
-    <message>
-        <source>Set the key file for the database.
-This options is deprecated, use --set-key-file instead.</source>
-        <translation>Angi nøkkelfilen for databasen.
-Disse alternativene er utdatert, bruk --set-key-file i stedet.</translation>
     </message>
     <message>
         <source>Set the key file for the database.</source>
@@ -8390,10 +8400,6 @@ Kjerne: %3 %4</translation>
         <translation>Les database-passord fra standard input</translation>
     </message>
     <message>
-        <source>Locked databases.</source>
-        <translation>Låste databaser.</translation>
-    </message>
-    <message>
         <source>Database failed to lock.</source>
         <translation>Databasen kunne ikke låses.</translation>
     </message>
@@ -8456,15 +8462,12 @@ Kjerne: %3 %4</translation>
         <translation>tillat skjermdumper og app-opptak (Windows/macOS)</translation>
     </message>
     <message>
-        <source>Enter Shortcut</source>
+        <source>Set the key file for the database.
+This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Action</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Shortcuts</source>
+        <source>Databases have been locked.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -8552,6 +8555,34 @@ Kjerne: %3 %4</translation>
         <translation>Dekryptering av nøkkeldata feilet.</translation>
     </message>
     <message>
+        <source>Origin is empty or not allowed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Effective domain is not a valid domain</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Origin and RP ID do not match</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No supported algorithms were provided</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Wait for timer to expire</source>
+        <translation>Vent til tidtakeren utløper</translation>
+    </message>
+    <message>
+        <source>Challenge is shorter than required minimum length</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>user.id does not match the required length</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Favorite</source>
         <comment>Tag for favorite entries</comment>
         <translation type="unfinished"/>
@@ -8622,35 +8653,23 @@ Kjerne: %3 %4</translation>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Origin is empty or not allowed</source>
+        <source>Enter Shortcut</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Effective domain is not a valid domain</source>
+        <source>Action</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Origin and RP ID do not match</source>
+        <source>Shortcuts</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>No supported algorithms were provided</source>
+        <source>Unsupported KDF type, cannot decrypt json file</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Wait for timer to expire</source>
-        <translation>Vent til tidtakeren utløper</translation>
-    </message>
-    <message>
-        <source>Unknown Passkeys error</source>
-        <translation>Ukjent feil med tilgangsnøkler</translation>
-    </message>
-    <message>
-        <source>Challenge is shorter than required minimum length</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>user.id does not match the required length</source>
+        <source>Unknown passkeys error</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -8971,14 +8990,6 @@ Kjerne: %3 %4</translation>
         <translation>Liste over URL&apos;er i oppføringer</translation>
     </message>
     <message>
-        <source>Please wait, list of entries with Passkeys is being updated…</source>
-        <translation>Vent litt, oppdaterer liste over oppføringer med tilgangsnøkler…</translation>
-    </message>
-    <message>
-        <source>No entries with Passkeys.</source>
-        <translation>Ingen oppføringer med tilgangsnøkler.</translation>
-    </message>
-    <message>
         <source>Title</source>
         <translation>Tittel</translation>
     </message>
@@ -9013,6 +9024,22 @@ Kjerne: %3 %4</translation>
     <message>
         <source> (Expired)</source>
         <translation> (Utløpt)</translation>
+    </message>
+    <message>
+        <source>Export Confirmation</source>
+        <translation>Eksportbekreftelse</translation>
+    </message>
+    <message>
+        <source>The passkey file will be vulnerable to theft and unauthorized use, if left unsecured. Are you sure you want to continue?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please wait, list of entries with passkeys is being updated…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No entries with passkeys.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -9333,32 +9360,8 @@ Kjerne: %3 %4</translation>
         <translation>Bekreft når passord hentes av klienter</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;
-           font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Helvetica','Arial','sans-serif','Apple Color
-           Emoji','Segoe UI Emoji'; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;This setting does
-           not override disabling recycle bin prompts&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;
-           font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color
-           Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;Denne innstillingen vil
-           ikke overstyre bekreftelser ved deaktivering av papirkurven&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-</translation>
-    </message>
-    <message>
         <source>Confirm when clients request entry deletion</source>
         <translation>Bekreft når klienter ber om sletting av oppføring</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications
-           which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also
-           crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a
-           different value set in applications.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dette forbedrer kompatibiliteten med visse programmer
-           som søker etter passord uten å låse opp databasen først.&lt;/p&gt;&lt;p&gt;Men aktivering av dette kan også
-           krasje klienten hvis databasen ikke kan låses opp iløpet av et bestemt tidsrom. (Vanligvis 25s, men kan være en
-           annen verdi dersom angitt i programmer.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </translation>
     </message>
     <message>
         <source>Prompt to unlock database before searching</source>
@@ -9383,6 +9386,14 @@ Kjerne: %3 %4</translation>
     <message>
         <source>Save current changes to activate the plugin and enable editing of this section.</source>
         <translation>Lagre endringer for å aktivere utvidelsen og for å redigere denne delen.</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This setting does not override disabling recycle bin prompts &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a different value set in applications.) &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

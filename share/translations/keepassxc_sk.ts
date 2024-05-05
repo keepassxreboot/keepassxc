@@ -559,10 +559,6 @@
         <translation>Zamknúť databázu pri minimalizovaní okna</translation>
     </message>
     <message>
-        <source>Require password repeat when it is visible</source>
-        <translation>Vyžadovať opakovanie hesla, aj ak je viditeľné</translation>
-    </message>
-    <message>
         <source>Hide passwords when editing them</source>
         <translation>Skryť heslo pri jeho úprave</translation>
     </message>
@@ -705,10 +701,6 @@
 <context>
     <name>AutoTypePlatformX11</name>
     <message>
-        <source>Trying to send invalid keysym.</source>
-        <translation>Pokúša sa poslať neplatný symbol klávesy</translation>
-    </message>
-    <message>
         <source>Sequence aborted: Caps Lock is on</source>
         <translation>Postupnosť zrušená: je zapnutý Caps Lock</translation>
     </message>
@@ -719,6 +711,10 @@
     <message>
         <source>Unable to get valid keycode for key: </source>
         <translation>Nemožno získať platný klávesový kód klávesy: </translation>
+    </message>
+    <message>
+        <source>Trying to send invalid keyboard symbol.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -872,23 +868,6 @@ Prosím, vyberte správnu databázu na uloženie prihlasovacích údajov.</trans
         <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
-        <source>Do you want to register Passkey for:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Existing Passkey found.
-Do you want to register a new Passkey for:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Select the existing Passkey and press Update to replace it.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Authenticate Passkey credentials for:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Relying Party: %1</source>
         <translation type="unfinished"/>
     </message>
@@ -898,6 +877,27 @@ Do you want to register a new Passkey for:</source>
     </message>
     <message>
         <source>KeePassXC - Passkey credentials</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Add to existing entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Existing passkey found.
+Do you want to register a new passkey for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Select the existing passkey and press Update to replace it.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Authenticate passkey credentials for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to register a passkey for:</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -950,11 +950,6 @@ Chcete odstrániť položku?
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Entry already has a Passkey.
-Do you want to overwrite the Passkey in %1 - %2?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>KeePassXC - Create a new group</source>
         <translation type="unfinished"/>
     </message>
@@ -964,10 +959,6 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
     </message>
     <message>
         <source>KeePassXC - Overwrite existing key?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>KeePassXC - Update Passkey</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -984,6 +975,27 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Passkey</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC - Passkey credentials</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Register a new passkey to this entry:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC - Update passkey</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entry already has a passkey.
+Do you want to overwrite the passkey in %1 - %2?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Register</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1233,11 +1245,11 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Allows using insecure http://localhost with Passkeys for testing purposes.</source>
+        <source>Allows using insecure http://localhost with passkeys for testing purposes.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Allow using localhost with Passkeys</source>
+        <source>Allow using localhost with passkeys</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -2809,10 +2821,6 @@ Chcete to opraviť?</translation>
 <context>
     <name>EditEntryWidgetBrowser</name>
     <message>
-        <source>These settings affect to the entry&apos;s behaviour with the browser extension.</source>
-        <translation>Tieto nastavenia ovplyvňujú správanie položky s doplnkom prehliadača.</translation>
-    </message>
-    <message>
         <source>General</source>
         <translation>Všeobecné</translation>
     </message>
@@ -2841,10 +2849,6 @@ Chcete to opraviť?</translation>
         <translation>Nepoužiť túto položku pre HTTP Basic Auth</translation>
     </message>
     <message>
-        <source>Additional URL&apos;s</source>
-        <translation>Ďalšie URL</translation>
-    </message>
-    <message>
         <source>Add</source>
         <translation>Pridať</translation>
     </message>
@@ -2855,6 +2859,14 @@ Chcete to opraviť?</translation>
     <message>
         <source>Edit</source>
         <translation>Upraviť</translation>
+    </message>
+    <message>
+        <source>These settings affect the entry&apos;s behaviour with the browser extension.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Additional URLs</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3651,12 +3663,6 @@ Môže to spôsobiť nefunkčnosť dotknutých zásuvných modulov.</translation
         <translation>Potvrďte Prepísanie Prílohy</translation>
     </message>
     <message>
-        <source>Attachment &quot;%1&quot; already exists. 
-Would you like to overwrite the existing attachment?</source>
-        <translation>Príloha &quot;%1&quot; už existuje.
-Prepísať existujúcu prílohu?</translation>
-    </message>
-    <message>
         <source>Confirm Attachment</source>
         <translation>Potvrdiť prílohu</translation>
     </message>
@@ -3689,6 +3695,12 @@ Chcete uložiť zmeny vo svojej databáze?</translation>
 Error: %1</source>
         <translation>Uloženie aktualizovanej prílohy zlyhalo.
 Chyba: %1</translation>
+    </message>
+    <message>
+        <source>Attachment &quot;%1&quot; already exists. 
+Would you like to overwrite the existing attachment?</source>
+        <translation>Príloha &quot;%1&quot; už existuje.
+Prepísať existujúcu prílohu?</translation>
     </message>
 </context>
 <context>
@@ -5471,6 +5483,10 @@ Naozaj chcete pokračovať s týmto súborom?</translation>
         <translation>Klasický (podľa platformy)</translation>
     </message>
     <message>
+        <source>Show Menubar</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Show Toolbar</source>
         <translation>Zobraziť panel nástrojov</translation>
     </message>
@@ -5816,6 +5832,10 @@ Odporúčame použiť AppImage dostupný na našej stránke sťahovaní.</transl
     </message>
     <message>
         <source>Set Theme: Classic</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle Show Menubar</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -6210,10 +6230,6 @@ Odporúčame použiť AppImage dostupný na našej stránke sťahovaní.</transl
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Export the following Passkey entries.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Filenames will be generated with title and .passkey file extension.</source>
         <translation type="unfinished"/>
     </message>
@@ -6231,6 +6247,10 @@ Odporúčame použiť AppImage dostupný na našej stránke sťahovaní.</transl
     </message>
     <message>
         <source>Export to folder</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export the following passkey entries.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -6290,27 +6310,27 @@ Do you want to overwrite it?
         <translation>Zrušiť</translation>
     </message>
     <message>
-        <source>Import the following Passkey:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Entry</source>
         <translation>Položka</translation>
-    </message>
-    <message>
-        <source>Import the following Passkey to this entry:</source>
-        <translation type="unfinished"/>
     </message>
     <message>
         <source>Create new entry</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Default Passkeys group (Imported Passkeys)</source>
+        <source>Relying Party: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Relying Party: %1</source>
+        <source>Import the following passkey:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import the following passkey to this entry:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Default passkeys group (Imported Passkeys)</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -6325,10 +6345,6 @@ Do you want to overwrite it?
         <translation>Všetky súbory</translation>
     </message>
     <message>
-        <source>Open Passkey file</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Cannot open file</source>
         <translation type="unfinished"/>
     </message>
@@ -6337,21 +6353,25 @@ Do you want to overwrite it?
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey</source>
+        <source>Open passkey file</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;. Data is missing.</source>
+        <source>Cannot import passkey</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
+        <source>Cannot import passkey file &quot;%1&quot;. Data is missing.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;.
+        <source>Cannot import passkey file &quot;%1&quot;.
 The following data is missing:
 %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot import passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -7199,11 +7219,6 @@ Do you want to overwrite it?</source>
     <message>
         <source>time</source>
         <translation>čas</translation>
-    </message>
-    <message>
-        <source>Set the key file for the database.
-This options is deprecated, use --set-key-file instead.</source>
-        <translation type="unfinished"/>
     </message>
     <message>
         <source>Set the key file for the database.</source>
@@ -8366,10 +8381,6 @@ Jadro: %3 %4</translation>
         <translation>čítať heslo databázy zo stdin</translation>
     </message>
     <message>
-        <source>Locked databases.</source>
-        <translation>Zamknuté databázy.</translation>
-    </message>
-    <message>
         <source>Database failed to lock.</source>
         <translation>Zamknutie databázy zlyhalo.</translation>
     </message>
@@ -8432,15 +8443,12 @@ Jadro: %3 %4</translation>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Enter Shortcut</source>
+        <source>Set the key file for the database.
+This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Action</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Shortcuts</source>
+        <source>Databases have been locked.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -8528,6 +8536,34 @@ Jadro: %3 %4</translation>
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Origin is empty or not allowed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Effective domain is not a valid domain</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Origin and RP ID do not match</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No supported algorithms were provided</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Wait for timer to expire</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Challenge is shorter than required minimum length</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>user.id does not match the required length</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Favorite</source>
         <comment>Tag for favorite entries</comment>
         <translation type="unfinished"/>
@@ -8598,35 +8634,23 @@ Jadro: %3 %4</translation>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Origin is empty or not allowed</source>
+        <source>Enter Shortcut</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Effective domain is not a valid domain</source>
+        <source>Action</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Origin and RP ID do not match</source>
+        <source>Shortcuts</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>No supported algorithms were provided</source>
+        <source>Unsupported KDF type, cannot decrypt json file</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Wait for timer to expire</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Unknown Passkeys error</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Challenge is shorter than required minimum length</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>user.id does not match the required length</source>
+        <source>Unknown passkeys error</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -8947,14 +8971,6 @@ Jadro: %3 %4</translation>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Please wait, list of entries with Passkeys is being updated…</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>No entries with Passkeys.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Title</source>
         <translation>Nadpis</translation>
     </message>
@@ -8988,6 +9004,22 @@ Jadro: %3 %4</translation>
     </message>
     <message>
         <source> (Expired)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export Confirmation</source>
+        <translation>Potvrdenie exportu</translation>
+    </message>
+    <message>
+        <source>The passkey file will be vulnerable to theft and unauthorized use, if left unsecured. Are you sure you want to continue?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please wait, list of entries with passkeys is being updated…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No entries with passkeys.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -9309,23 +9341,7 @@ Jadro: %3 %4</translation>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;
-           font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Helvetica','Arial','sans-serif','Apple Color
-           Emoji','Segoe UI Emoji'; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;This setting does
-           not override disabling recycle bin prompts&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Confirm when clients request entry deletion</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications
-           which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also
-           crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a
-           different value set in applications.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -9351,6 +9367,14 @@ Jadro: %3 %4</translation>
     <message>
         <source>Save current changes to activate the plugin and enable editing of this section.</source>
         <translation>Uložte aktuálne zmeny na aktiváciu zásuvného modulu a zapnutie úpravy tejto sekcie.</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This setting does not override disabling recycle bin prompts &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a different value set in applications.) &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

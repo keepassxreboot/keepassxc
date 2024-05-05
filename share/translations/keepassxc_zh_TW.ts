@@ -559,10 +559,6 @@
         <translation>最小化視窗後鎖上資料庫</translation>
     </message>
     <message>
-        <source>Require password repeat when it is visible</source>
-        <translation>密碼可見時仍要求重複輸入密碼</translation>
-    </message>
-    <message>
         <source>Hide passwords when editing them</source>
         <translation>編輯密碼時將其隱藏</translation>
     </message>
@@ -705,10 +701,6 @@
 <context>
     <name>AutoTypePlatformX11</name>
     <message>
-        <source>Trying to send invalid keysym.</source>
-        <translation>嘗試傳送無效的 keysym。</translation>
-    </message>
-    <message>
         <source>Sequence aborted: Caps Lock is on</source>
         <translation>序列中止：Caps Lock 為開</translation>
     </message>
@@ -719,6 +711,10 @@
     <message>
         <source>Unable to get valid keycode for key: </source>
         <translation>無法得到有效的 keycode，按鍵為: </translation>
+    </message>
+    <message>
+        <source>Trying to send invalid keyboard symbol.</source>
+        <translation>嘗試傳送無效的鍵盤符號。</translation>
     </message>
 </context>
 <context>
@@ -877,24 +873,6 @@ Please select the correct database for saving credentials.</source>
         <translation><numerusform>在 &lt;b&gt;%n&lt;/b&gt; 秒後過期…</numerusform></translation>
     </message>
     <message>
-        <source>Do you want to register Passkey for:</source>
-        <translation>是否要註冊通行密鑰至：</translation>
-    </message>
-    <message>
-        <source>Existing Passkey found.
-Do you want to register a new Passkey for:</source>
-        <translation>找到已存在的通行密鑰。
-是否要註冊新的通行密鑰至：</translation>
-    </message>
-    <message>
-        <source>Select the existing Passkey and press Update to replace it.</source>
-        <translation>選擇已存在的通行密鑰並按下「更新」來替換。</translation>
-    </message>
-    <message>
-        <source>Authenticate Passkey credentials for:</source>
-        <translation>認證通行密鑰憑證：</translation>
-    </message>
-    <message>
         <source>Relying Party: %1</source>
         <translation>依賴方：%1</translation>
     </message>
@@ -905,6 +883,27 @@ Do you want to register a new Passkey for:</source>
     <message>
         <source>KeePassXC - Passkey credentials</source>
         <translation>KeePassXC - 通行密鑰憑證</translation>
+    </message>
+    <message>
+        <source>Add to existing entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Existing passkey found.
+Do you want to register a new passkey for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Select the existing passkey and press Update to replace it.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Authenticate passkey credentials for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to register a passkey for:</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -956,12 +955,6 @@ Do you want to delete the entry?
         <translation>%1（通行密鑰）</translation>
     </message>
     <message>
-        <source>Entry already has a Passkey.
-Do you want to overwrite the Passkey in %1 - %2?</source>
-        <translation>項目已有一組通行密鑰。
-是否覆蓋 %1 - %2 中的通行密鑰？</translation>
-    </message>
-    <message>
         <source>KeePassXC - Create a new group</source>
         <translation>KeePassXC - 建立新群組</translation>
     </message>
@@ -972,10 +965,6 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
     <message>
         <source>KeePassXC - Overwrite existing key?</source>
         <translation>KeePassXC - 覆蓋現有金鑰？</translation>
-    </message>
-    <message>
-        <source>KeePassXC - Update Passkey</source>
-        <translation>KeePassXC - 更新通行密鑰</translation>
     </message>
     <message>
         <source>KeePassXC - Update Entry</source>
@@ -992,6 +981,27 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
     <message>
         <source>Passkey</source>
         <translation>通行密鑰</translation>
+    </message>
+    <message>
+        <source>KeePassXC - Passkey credentials</source>
+        <translation>KeePassXC - 通行密鑰憑證</translation>
+    </message>
+    <message>
+        <source>Register a new passkey to this entry:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC - Update passkey</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entry already has a passkey.
+Do you want to overwrite the passkey in %1 - %2?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Register</source>
+        <translation>註冊</translation>
     </message>
 </context>
 <context>
@@ -1240,12 +1250,12 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
         <translation>&lt;b&gt;錯誤：&lt;/b&gt;代理的執行檔遺失，之前曾安裝於此位置：%1&lt;br/&gt;請至進階設定調整自定義代理位置，或者重新安裝應用程序。</translation>
     </message>
     <message>
-        <source>Allows using insecure http://localhost with Passkeys for testing purposes.</source>
-        <translation>允許通行密鑰使用不安全的 http://localhost 用於測試目的。</translation>
+        <source>Allows using insecure http://localhost with passkeys for testing purposes.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Allow using localhost with Passkeys</source>
-        <translation>允許通行密鑰使用 localhost</translation>
+        <source>Allow using localhost with passkeys</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1383,11 +1393,11 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Failed to parse CSV file: %1</source>
-        <translation type="unfinished"/>
+        <translation>剖析 CSV 檔失敗：%1</translation>
     </message>
     <message>
         <source>Imported from CSV file: %1</source>
-        <translation type="unfinished"/>
+        <translation>匯入自 CSV 檔案：%1</translation>
     </message>
 </context>
 <context>
@@ -2836,10 +2846,6 @@ Would you like to correct it?</source>
 <context>
     <name>EditEntryWidgetBrowser</name>
     <message>
-        <source>These settings affect to the entry&apos;s behaviour with the browser extension.</source>
-        <translation>這些設定影響了項目在瀏覽器擴充下的行為。</translation>
-    </message>
-    <message>
         <source>General</source>
         <translation>一般</translation>
     </message>
@@ -2868,10 +2874,6 @@ Would you like to correct it?</source>
         <translation>HTTP 基本認證不要使用此項目</translation>
     </message>
     <message>
-        <source>Additional URL&apos;s</source>
-        <translation>其他 URL</translation>
-    </message>
-    <message>
         <source>Add</source>
         <translation>加入</translation>
     </message>
@@ -2882,6 +2884,14 @@ Would you like to correct it?</source>
     <message>
         <source>Edit</source>
         <translation>編輯</translation>
+    </message>
+    <message>
+        <source>These settings affect the entry&apos;s behaviour with the browser extension.</source>
+        <translation>這些設定影響了項目在瀏覧器擴充下的行為。</translation>
+    </message>
+    <message>
+        <source>Additional URLs</source>
+        <translation>其他 URL</translation>
     </message>
 </context>
 <context>
@@ -3675,12 +3685,6 @@ This may cause the affected plugins to malfunction.</source>
         <translation>確認覆蓋附件</translation>
     </message>
     <message>
-        <source>Attachment &quot;%1&quot; already exists. 
-Would you like to overwrite the existing attachment?</source>
-        <translation>附件「%1」已存在。
-是否要覆改既存的附件？</translation>
-    </message>
-    <message>
         <source>Confirm Attachment</source>
         <translation>確認附件</translation>
     </message>
@@ -3712,6 +3716,12 @@ Do you want to save the changes to your database?</source>
 Error: %1</source>
         <translation>儲存更新的附件失敗。
 錯誤：%1</translation>
+    </message>
+    <message>
+        <source>Attachment &quot;%1&quot; already exists. 
+Would you like to overwrite the existing attachment?</source>
+        <translation>附件「%1」已存在。
+是否要覆改既存的附件？</translation>
     </message>
 </context>
 <context>
@@ -4273,7 +4283,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     <name>ImportWizard</name>
     <message>
         <source>Import Wizard</source>
-        <translation type="unfinished"/>
+        <translation>匯入精靈</translation>
     </message>
 </context>
 <context>
@@ -4284,7 +4294,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Entry count: %1</source>
-        <translation type="unfinished"/>
+        <translation>項目數：%1</translation>
     </message>
     <message>
         <source>Group</source>
@@ -4304,7 +4314,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Url</source>
-        <translation type="unfinished"/>
+        <translation>Url</translation>
     </message>
 </context>
 <context>
@@ -4315,7 +4325,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Import File Selection</source>
-        <translation type="unfinished"/>
+        <translation>匯入檔案選擇</translation>
     </message>
     <message>
         <source>Password:</source>
@@ -4331,7 +4341,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Import Into:</source>
-        <translation type="unfinished"/>
+        <translation>匯入至：</translation>
     </message>
     <message>
         <source>New Database</source>
@@ -4339,35 +4349,35 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>No unlocked databases available</source>
-        <translation type="unfinished"/>
+        <translation>沒有可用的已解鎖資料庫</translation>
     </message>
     <message>
         <source>Existing Database:</source>
-        <translation type="unfinished"/>
+        <translation>存在資料庫：</translation>
     </message>
     <message>
         <source>Import File:</source>
-        <translation type="unfinished"/>
+        <translation>匯入檔案：</translation>
     </message>
     <message>
         <source>Comma Separated Values (.csv)</source>
-        <translation type="unfinished"/>
+        <translation>逗號分隔值 (.csv)</translation>
     </message>
     <message>
         <source>1Password Export (.1pux)</source>
-        <translation type="unfinished"/>
+        <translation>1Password 匯出 (.1pux)</translation>
     </message>
     <message>
         <source>1Password Vault (.opvault)</source>
-        <translation type="unfinished"/>
+        <translation>1Password 保險庫 (.opvault)</translation>
     </message>
     <message>
         <source>Bitwarden (.json)</source>
-        <translation type="unfinished"/>
+        <translation>Bitwarden (.json)</translation>
     </message>
     <message>
         <source>KeePass 1 Database (.kdb)</source>
-        <translation type="unfinished"/>
+        <translation>KeePass 1 資料庫 (.kdb)</translation>
     </message>
     <message>
         <source>Open OPVault</source>
@@ -4375,7 +4385,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Select import file</source>
-        <translation type="unfinished"/>
+        <translation>選擇匯入檔案</translation>
     </message>
     <message>
         <source>All files</source>
@@ -4391,23 +4401,23 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Comma Separated Values</source>
-        <translation type="unfinished"/>
+        <translation>逗號分隔值</translation>
     </message>
     <message>
         <source>1Password Export</source>
-        <translation type="unfinished"/>
+        <translation>1Password 匯出</translation>
     </message>
     <message>
         <source>Bitwarden JSON Export</source>
-        <translation type="unfinished"/>
+        <translation>Bitwarden JSON 匯出</translation>
     </message>
     <message>
         <source>1Password Vault</source>
-        <translation type="unfinished"/>
+        <translation>1Password 保險庫</translation>
     </message>
     <message>
         <source>KeePass1 Database</source>
-        <translation type="unfinished"/>
+        <translation>KeePass1 資料庫</translation>
     </message>
 </context>
 <context>
@@ -5493,6 +5503,10 @@ Are you sure you want to continue with this file?</source>
         <translation>經典（平台原生）</translation>
     </message>
     <message>
+        <source>Show Menubar</source>
+        <translation>顯示選單列</translation>
+    </message>
+    <message>
         <source>Show Toolbar</source>
         <translation>顯示工具列</translation>
     </message>
@@ -5606,15 +5620,15 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>1Password 1PUX...</source>
-        <translation type="unfinished"/>
+        <translation>1Password 1PUX...</translation>
     </message>
     <message>
         <source>Import a 1Password 1PUX file</source>
-        <translation type="unfinished"/>
+        <translation>匯入 1Password 1PUX 檔案</translation>
     </message>
     <message>
         <source>Import…</source>
-        <translation type="unfinished"/>
+        <translation>匯入…</translation>
     </message>
     <message>
         <source>Passkeys…</source>
@@ -5839,6 +5853,10 @@ We recommend you use the AppImage available on our downloads page.</source>
     <message>
         <source>Set Theme: Classic</source>
         <translation>設定主題：經典</translation>
+    </message>
+    <message>
+        <source>Toggle Show Menubar</source>
+        <translation>切換顯示選單列</translation>
     </message>
     <message>
         <source>Toggle Show Toolbar</source>
@@ -6232,10 +6250,6 @@ We recommend you use the AppImage available on our downloads page.</source>
         <translation>KeePassXC - 通行密鑰匯出</translation>
     </message>
     <message>
-        <source>Export the following Passkey entries.</source>
-        <translation>匯出以下通行密鑰項目。</translation>
-    </message>
-    <message>
         <source>Filenames will be generated with title and .passkey file extension.</source>
         <translation>檔案名稱將以標題與 .passkey 副檔名生成。</translation>
     </message>
@@ -6254,6 +6268,10 @@ We recommend you use the AppImage available on our downloads page.</source>
     <message>
         <source>Export to folder</source>
         <translation>匯出至資料夾</translation>
+    </message>
+    <message>
+        <source>Export the following passkey entries.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6314,28 +6332,28 @@ Do you want to overwrite it?
         <translation>取消</translation>
     </message>
     <message>
-        <source>Import the following Passkey:</source>
-        <translation>匯入以下通行密鑰：</translation>
-    </message>
-    <message>
         <source>Entry</source>
         <translation>項目</translation>
-    </message>
-    <message>
-        <source>Import the following Passkey to this entry:</source>
-        <translation>匯入以下通行密鑰到此項目：</translation>
     </message>
     <message>
         <source>Create new entry</source>
         <translation>建立新項目</translation>
     </message>
     <message>
-        <source>Default Passkeys group (Imported Passkeys)</source>
-        <translation>預設通行密鑰群組（匯入的通行密鑰）</translation>
-    </message>
-    <message>
         <source>Relying Party: %1</source>
         <translation>依賴方：%1</translation>
+    </message>
+    <message>
+        <source>Import the following passkey:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import the following passkey to this entry:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Default passkeys group (Imported Passkeys)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6349,10 +6367,6 @@ Do you want to overwrite it?
         <translation>所有檔案</translation>
     </message>
     <message>
-        <source>Open Passkey file</source>
-        <translation>開啟通行密鑰檔案</translation>
-    </message>
-    <message>
         <source>Cannot open file</source>
         <translation>無法開啟檔案</translation>
     </message>
@@ -6361,24 +6375,26 @@ Do you want to overwrite it?
         <translation>無法開啟檔案「%1」以讀取。</translation>
     </message>
     <message>
-        <source>Cannot import Passkey</source>
-        <translation>無法匯入通行密鑰</translation>
+        <source>Open passkey file</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;. Data is missing.</source>
-        <translation>無法匯入通行密鑰檔案「%1」。資料缺失。</translation>
+        <source>Cannot import passkey</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
-        <translation>無法匯入通行密鑰檔案「%1」。私鑰缺失或格式錯誤。</translation>
+        <source>Cannot import passkey file &quot;%1&quot;. Data is missing.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;.
+        <source>Cannot import passkey file &quot;%1&quot;.
 The following data is missing:
 %2</source>
-        <translation>無法匯入通行密鑰檔案「%1」。
-以下資料遺失：
-%2</translation>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot import passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7226,12 +7242,6 @@ Do you want to overwrite it?</source>
     <message>
         <source>time</source>
         <translation>時間</translation>
-    </message>
-    <message>
-        <source>Set the key file for the database.
-This options is deprecated, use --set-key-file instead.</source>
-        <translation>設定資料庫的金鑰檔案。
-此選項已經棄用，請用 --set-key-file 代替。</translation>
     </message>
     <message>
         <source>Set the key file for the database.</source>
@@ -8395,10 +8405,6 @@ Kernel: %3 %4</source>
         <translation>從 stdin 讀取資料庫密碼</translation>
     </message>
     <message>
-        <source>Locked databases.</source>
-        <translation>已鎖定的資料庫。</translation>
-    </message>
-    <message>
         <source>Database failed to lock.</source>
         <translation>資料庫鎖定失敗。</translation>
     </message>
@@ -8461,16 +8467,14 @@ Kernel: %3 %4</source>
         <translation>允許螢幕截圖與錄製 (Windows/macOS)</translation>
     </message>
     <message>
-        <source>Enter Shortcut</source>
-        <translation>輸入快捷鍵</translation>
+        <source>Set the key file for the database.
+This option is deprecated, use --set-key-file instead.</source>
+        <translation>設定資料庫的金鑰檔案。
+此選項已棄用，請用 --set-key-file 代替。</translation>
     </message>
     <message>
-        <source>Action</source>
-        <translation>動作</translation>
-    </message>
-    <message>
-        <source>Shortcuts</source>
-        <translation>快捷鍵</translation>
+        <source>Databases have been locked.</source>
+        <translation>資料庫已被鎖定。</translation>
     </message>
     <message>
         <source>Attestation not supported</source>
@@ -8557,76 +8561,6 @@ Kernel: %3 %4</source>
         <translation>解密金鑰資料失敗。</translation>
     </message>
     <message>
-        <source>Favorite</source>
-        <comment>Tag for favorite entries</comment>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>File does not exist.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Cannot open file: %1</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Cannot parse file: %1 at position %2</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Failed to decrypt json file: %1</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Invalid encKeyValidation field</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Invalid cipher list within encKeyValidation field</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Wrong password</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Invalid encrypted data field</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Invalid cipher list within encrypted data field</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Cannot initialize cipher</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Cannot decrypt data</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Bitwarden Import</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Archived</source>
-        <comment>Tag for archived entries</comment>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Invalid 1PUX file format: Not a valid ZIP file.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Invalid 1PUX file format: Missing export.data</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>1Password Import</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Origin is empty or not allowed</source>
         <translation>Origin 為空或不被允許</translation>
     </message>
@@ -8647,16 +8581,102 @@ Kernel: %3 %4</source>
         <translation>等待計時器過期</translation>
     </message>
     <message>
-        <source>Unknown Passkeys error</source>
-        <translation>未知的通行密鑰錯誤</translation>
-    </message>
-    <message>
         <source>Challenge is shorter than required minimum length</source>
         <translation>挑戰短於所需最小長度</translation>
     </message>
     <message>
         <source>user.id does not match the required length</source>
         <translation>user.id 不匹配所需長度</translation>
+    </message>
+    <message>
+        <source>Favorite</source>
+        <comment>Tag for favorite entries</comment>
+        <translation>喜愛</translation>
+    </message>
+    <message>
+        <source>File does not exist.</source>
+        <translation>檔案不存在。</translation>
+    </message>
+    <message>
+        <source>Cannot open file: %1</source>
+        <translation>無法開啟檔案：%1</translation>
+    </message>
+    <message>
+        <source>Cannot parse file: %1 at position %2</source>
+        <translation>無法剖析檔案：%1 於位置 %2</translation>
+    </message>
+    <message>
+        <source>Failed to decrypt json file: %1</source>
+        <translation>解密 json 檔案失敗：%1</translation>
+    </message>
+    <message>
+        <source>Invalid encKeyValidation field</source>
+        <translation>無效 encKeyValidation 欄</translation>
+    </message>
+    <message>
+        <source>Invalid cipher list within encKeyValidation field</source>
+        <translation>無效加密法列表出現於 encKeyValidation 欄</translation>
+    </message>
+    <message>
+        <source>Wrong password</source>
+        <translation>錯誤密碼</translation>
+    </message>
+    <message>
+        <source>Invalid encrypted data field</source>
+        <translation>無效的加密資料欄</translation>
+    </message>
+    <message>
+        <source>Invalid cipher list within encrypted data field</source>
+        <translation>無效加密法列表出現於加密資料欄</translation>
+    </message>
+    <message>
+        <source>Cannot initialize cipher</source>
+        <translation>無法初始化加密</translation>
+    </message>
+    <message>
+        <source>Cannot decrypt data</source>
+        <translation>無法解密資料</translation>
+    </message>
+    <message>
+        <source>Bitwarden Import</source>
+        <translation>Bitwarden 匯入</translation>
+    </message>
+    <message>
+        <source>Archived</source>
+        <comment>Tag for archived entries</comment>
+        <translation>封存</translation>
+    </message>
+    <message>
+        <source>Invalid 1PUX file format: Not a valid ZIP file.</source>
+        <translation>無效 1PUX 檔案格式：不是有效 ZIP 檔案。</translation>
+    </message>
+    <message>
+        <source>Invalid 1PUX file format: Missing export.data</source>
+        <translation>無效 1PUX 檔案格式：遺失 export.data</translation>
+    </message>
+    <message>
+        <source>1Password Import</source>
+        <translation>1Password 匯入</translation>
+    </message>
+    <message>
+        <source>Enter Shortcut</source>
+        <translation>輸入快捷鍵</translation>
+    </message>
+    <message>
+        <source>Action</source>
+        <translation>動作</translation>
+    </message>
+    <message>
+        <source>Shortcuts</source>
+        <translation>快捷鍵</translation>
+    </message>
+    <message>
+        <source>Unsupported KDF type, cannot decrypt json file</source>
+        <translation>不支援的 KDF 類型，無法解密 JSON 檔案</translation>
+    </message>
+    <message>
+        <source>Unknown passkeys error</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -8976,14 +8996,6 @@ Kernel: %3 %4</source>
         <translation>項目 URL 清單</translation>
     </message>
     <message>
-        <source>Please wait, list of entries with Passkeys is being updated…</source>
-        <translation>請稍候，正在更新包含通行密鑰的項目清單…</translation>
-    </message>
-    <message>
-        <source>No entries with Passkeys.</source>
-        <translation>沒有包含通行密鑰的項目。</translation>
-    </message>
-    <message>
         <source>Title</source>
         <translation>標題</translation>
     </message>
@@ -9018,6 +9030,22 @@ Kernel: %3 %4</source>
     <message>
         <source> (Expired)</source>
         <translation>（過期）</translation>
+    </message>
+    <message>
+        <source>Export Confirmation</source>
+        <translation>匯出確認</translation>
+    </message>
+    <message>
+        <source>The passkey file will be vulnerable to theft and unauthorized use, if left unsecured. Are you sure you want to continue?</source>
+        <translation>通行密鑰檔案若不加上保護，將無法防止盜取或越權使用。您確定要繼續進行？</translation>
+    </message>
+    <message>
+        <source>Please wait, list of entries with passkeys is being updated…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No entries with passkeys.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -9338,32 +9366,8 @@ Kernel: %3 %4</source>
         <translation>客戶端收到密碼時確認</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;
-           font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Helvetica','Arial','sans-serif','Apple Color
-           Emoji','Segoe UI Emoji'; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;This setting does
-           not override disabling recycle bin prompts&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;
-           font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color
-           Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;此設定不會
-           覆蓋取消回收桶提示&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </translation>
-    </message>
-    <message>
         <source>Confirm when clients request entry deletion</source>
         <translation>客戶端要求刪除項目時確認</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications
-           which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also
-           crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a
-           different value set in applications.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;針對在搜尋密碼前不先解鎖資料庫的特定應用，
-           此選項將提高其相容性。&lt;/p&gt;&lt;p&gt;但啟用後，
-           若資料庫無法在一定時間內解鎖（通常為 25 秒，但此值
-           可能因應用程式的設定而有異），有可能導致客戶端崩潰。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </translation>
     </message>
     <message>
         <source>Prompt to unlock database before searching</source>
@@ -9388,6 +9392,14 @@ Kernel: %3 %4</source>
     <message>
         <source>Save current changes to activate the plugin and enable editing of this section.</source>
         <translation>儲存目前變更，以啟用插件並編輯此區域。</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This setting does not override disabling recycle bin prompts &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;此設定不會覆蓋禁用回收桶提示&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a different value set in applications.) &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;針對在搜索密碼前不會解鎖資料庫的特定應用，此選項將提高其相容性。&lt;/p&gt;&lt;p&gt;但啟用後，如果資料庫無法在一定時間內解鎖（通常為 25 秒，但應用可能會設定不同的值），有可能導致客戶端崩潰。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -9734,7 +9746,7 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Import File</source>
-        <translation type="unfinished"/>
+        <translation>匯入檔案</translation>
     </message>
 </context>
 <context>

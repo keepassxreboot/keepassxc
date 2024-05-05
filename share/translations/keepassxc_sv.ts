@@ -559,10 +559,6 @@
         <translation>Lås databaserna när fönstret minimeras</translation>
     </message>
     <message>
-        <source>Require password repeat when it is visible</source>
-        <translation>Kräv lösenordsupprepning när det är synligt</translation>
-    </message>
-    <message>
         <source>Hide passwords when editing them</source>
         <translation>Dölj lösenord när de redigeras</translation>
     </message>
@@ -705,10 +701,6 @@
 <context>
     <name>AutoTypePlatformX11</name>
     <message>
-        <source>Trying to send invalid keysym.</source>
-        <translation>Försöker skicka en ogiltig tangentbordssymbol</translation>
-    </message>
-    <message>
         <source>Sequence aborted: Caps Lock is on</source>
         <translation>Sekvensen avbröts: Caps Lock är på</translation>
     </message>
@@ -719,6 +711,10 @@
     <message>
         <source>Unable to get valid keycode for key: </source>
         <translation>Kunde inte hämta giltig nyckelkod för nyckeln: </translation>
+    </message>
+    <message>
+        <source>Trying to send invalid keyboard symbol.</source>
+        <translation>Försöker skicka ogiltig tangentbordssymbol.</translation>
     </message>
 </context>
 <context>
@@ -877,24 +873,6 @@ Välj rätt databas för att spara inloggningsuppgifterna.</translation>
         <translation><numerusform>Tidsgränsen löper ut om &lt;b&gt;%n&lt;/b&gt; sekund...</numerusform><numerusform>Tidsgränsen löper ut om &lt;b&gt;%n&lt;/b&gt; sekunder...</numerusform></translation>
     </message>
     <message>
-        <source>Do you want to register Passkey for:</source>
-        <translation>Vill du registrera passnyckel för:</translation>
-    </message>
-    <message>
-        <source>Existing Passkey found.
-Do you want to register a new Passkey for:</source>
-        <translation>Befintlig passnyckel hittad.
-Vill du registrera en ny passnyckel för:</translation>
-    </message>
-    <message>
-        <source>Select the existing Passkey and press Update to replace it.</source>
-        <translation>Markera den befintliga passnyckeln och tryck &quot;Uppdatera&quot; för att ersätta den.</translation>
-    </message>
-    <message>
-        <source>Authenticate Passkey credentials for:</source>
-        <translation>Autentisera passnyckeluppgifter för: </translation>
-    </message>
-    <message>
         <source>Relying Party: %1</source>
         <translation>Förlitande part: %1</translation>
     </message>
@@ -905,6 +883,27 @@ Vill du registrera en ny passnyckel för:</translation>
     <message>
         <source>KeePassXC - Passkey credentials</source>
         <translation>KeePassXC - Passnyckeluppgifter</translation>
+    </message>
+    <message>
+        <source>Add to existing entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Existing passkey found.
+Do you want to register a new passkey for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Select the existing passkey and press Update to replace it.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Authenticate passkey credentials for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to register a passkey for:</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -956,12 +955,6 @@ Vill du ta bort posten?
         <translation>%1 (Passnyckel)</translation>
     </message>
     <message>
-        <source>Entry already has a Passkey.
-Do you want to overwrite the Passkey in %1 - %2?</source>
-        <translation>Posten har redan en passnyckel.
-Vill du skriva över passnyckeln i %1 - %2?</translation>
-    </message>
-    <message>
         <source>KeePassXC - Create a new group</source>
         <translation>KeePassXC - Skapa en ny grupp</translation>
     </message>
@@ -972,10 +965,6 @@ Vill du skriva över passnyckeln i %1 - %2?</translation>
     <message>
         <source>KeePassXC - Overwrite existing key?</source>
         <translation>KeePassXC - Vill du skriva över befintlig nyckel?</translation>
-    </message>
-    <message>
-        <source>KeePassXC - Update Passkey</source>
-        <translation>KeePassXC - Uppdatera Passnyckel</translation>
     </message>
     <message>
         <source>KeePassXC - Update Entry</source>
@@ -992,6 +981,27 @@ Vill du skriva över passnyckeln i %1 - %2?</translation>
     <message>
         <source>Passkey</source>
         <translation>Passnyckel</translation>
+    </message>
+    <message>
+        <source>KeePassXC - Passkey credentials</source>
+        <translation>KeePassXC - Passnyckeluppgifter</translation>
+    </message>
+    <message>
+        <source>Register a new passkey to this entry:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC - Update passkey</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entry already has a passkey.
+Do you want to overwrite the passkey in %1 - %2?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Register</source>
+        <translation>Registrera</translation>
     </message>
 </context>
 <context>
@@ -1240,12 +1250,12 @@ Vill du skriva över passnyckeln i %1 - %2?</translation>
         <translation>&lt;b&gt;Fel:&lt;/b&gt; Den installerade körbara proxyfilen saknas på den förväntade platsen: %1&lt;br/&gt;Ange en anpassad proxyplats i de avancerade inställningarna eller installera om programmet.</translation>
     </message>
     <message>
-        <source>Allows using insecure http://localhost with Passkeys for testing purposes.</source>
-        <translation>Tillåter användning av osäker http://localhost med passnycklar för teständamål.</translation>
+        <source>Allows using insecure http://localhost with passkeys for testing purposes.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Allow using localhost with Passkeys</source>
-        <translation>Tillåt användning av localhost med passnycklar</translation>
+        <source>Allow using localhost with passkeys</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1383,11 +1393,11 @@ Vill du skriva över passnyckeln i %1 - %2?</translation>
     </message>
     <message>
         <source>Failed to parse CSV file: %1</source>
-        <translation type="unfinished"/>
+        <translation>CSV-filen kunde inte tolkas: %1</translation>
     </message>
     <message>
         <source>Imported from CSV file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Importerat från CSV-fil: %1</translation>
     </message>
 </context>
 <context>
@@ -2663,7 +2673,7 @@ Vill du korrigera det?</translation>
     </message>
     <message numerus="yes">
         <source>%n hour(s)</source>
-        <translation><numerusform>%1 timma</numerusform><numerusform>%1 timmar</numerusform></translation>
+        <translation><numerusform>%1 timma</numerusform><numerusform>%n timmar</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
@@ -2837,10 +2847,6 @@ Vill du korrigera det?</translation>
 <context>
     <name>EditEntryWidgetBrowser</name>
     <message>
-        <source>These settings affect to the entry&apos;s behaviour with the browser extension.</source>
-        <translation>Dessa inställningar påverkar posternas beteende i webbläsartillägget.</translation>
-    </message>
-    <message>
         <source>General</source>
         <translation>Allmänt</translation>
     </message>
@@ -2869,10 +2875,6 @@ Vill du korrigera det?</translation>
         <translation>Använd inte här posten med HTTP Basic Auth</translation>
     </message>
     <message>
-        <source>Additional URL&apos;s</source>
-        <translation>Ytterligare URL:er</translation>
-    </message>
-    <message>
         <source>Add</source>
         <translation>Lägg till</translation>
     </message>
@@ -2883,6 +2885,14 @@ Vill du korrigera det?</translation>
     <message>
         <source>Edit</source>
         <translation>Redigera</translation>
+    </message>
+    <message>
+        <source>These settings affect the entry&apos;s behaviour with the browser extension.</source>
+        <translation>Dessa inställningar påverkar postens beteende med webbläsartillägget.</translation>
+    </message>
+    <message>
+        <source>Additional URLs</source>
+        <translation>Ytterligare URL:er</translation>
     </message>
 </context>
 <context>
@@ -3676,12 +3686,6 @@ Det kan medföra att de berörda tilläggen inte fungerar.</translation>
         <translation>Bekräfta överskrivning av bilaga</translation>
     </message>
     <message>
-        <source>Attachment &quot;%1&quot; already exists. 
-Would you like to overwrite the existing attachment?</source>
-        <translation>Bilagan &quot;%1&quot; finns redan.
-Vill du skriva över den befintliga bilagan?</translation>
-    </message>
-    <message>
         <source>Confirm Attachment</source>
         <translation>Bekräfta bilaga</translation>
     </message>
@@ -3714,6 +3718,12 @@ Vill du spara ändringarna i databasen?</translation>
 Error: %1</source>
         <translation>Kunde inte spara uppdaterad bilaga.
 Fel: %1</translation>
+    </message>
+    <message>
+        <source>Attachment &quot;%1&quot; already exists. 
+Would you like to overwrite the existing attachment?</source>
+        <translation>Bilagan &quot;%1&quot; finns redan.
+Vill du skriva över den befintliga bilagan?</translation>
     </message>
 </context>
 <context>
@@ -4274,7 +4284,7 @@ Du kan aktivera ikontjänsten från DuckDuckGo, i säkerhetssektionen av program
     <name>ImportWizard</name>
     <message>
         <source>Import Wizard</source>
-        <translation type="unfinished"/>
+        <translation>Importguide</translation>
     </message>
 </context>
 <context>
@@ -4285,7 +4295,7 @@ Du kan aktivera ikontjänsten från DuckDuckGo, i säkerhetssektionen av program
     </message>
     <message>
         <source>Entry count: %1</source>
-        <translation type="unfinished"/>
+        <translation>Antal poster: %1</translation>
     </message>
     <message>
         <source>Group</source>
@@ -4305,7 +4315,7 @@ Du kan aktivera ikontjänsten från DuckDuckGo, i säkerhetssektionen av program
     </message>
     <message>
         <source>Url</source>
-        <translation type="unfinished"/>
+        <translation>URL</translation>
     </message>
 </context>
 <context>
@@ -4316,7 +4326,7 @@ Du kan aktivera ikontjänsten från DuckDuckGo, i säkerhetssektionen av program
     </message>
     <message>
         <source>Import File Selection</source>
-        <translation type="unfinished"/>
+        <translation>Val av importfil</translation>
     </message>
     <message>
         <source>Password:</source>
@@ -4332,7 +4342,7 @@ Du kan aktivera ikontjänsten från DuckDuckGo, i säkerhetssektionen av program
     </message>
     <message>
         <source>Import Into:</source>
-        <translation type="unfinished"/>
+        <translation>Importera till:</translation>
     </message>
     <message>
         <source>New Database</source>
@@ -4340,35 +4350,35 @@ Du kan aktivera ikontjänsten från DuckDuckGo, i säkerhetssektionen av program
     </message>
     <message>
         <source>No unlocked databases available</source>
-        <translation type="unfinished"/>
+        <translation>Inga upplåsta databaser tillgängliga</translation>
     </message>
     <message>
         <source>Existing Database:</source>
-        <translation type="unfinished"/>
+        <translation>Befintlig databas:</translation>
     </message>
     <message>
         <source>Import File:</source>
-        <translation type="unfinished"/>
+        <translation>Importera fil:</translation>
     </message>
     <message>
         <source>Comma Separated Values (.csv)</source>
-        <translation type="unfinished"/>
+        <translation>Kommaseparerade värden (.csv)</translation>
     </message>
     <message>
         <source>1Password Export (.1pux)</source>
-        <translation type="unfinished"/>
+        <translation>1Password-export (.1pux)</translation>
     </message>
     <message>
         <source>1Password Vault (.opvault)</source>
-        <translation type="unfinished"/>
+        <translation>1Password-valv (.opvault)</translation>
     </message>
     <message>
         <source>Bitwarden (.json)</source>
-        <translation type="unfinished"/>
+        <translation>Bitwarden (.json)</translation>
     </message>
     <message>
         <source>KeePass 1 Database (.kdb)</source>
-        <translation type="unfinished"/>
+        <translation>KeePass 1-databas (.kdb)</translation>
     </message>
     <message>
         <source>Open OPVault</source>
@@ -4376,7 +4386,7 @@ Du kan aktivera ikontjänsten från DuckDuckGo, i säkerhetssektionen av program
     </message>
     <message>
         <source>Select import file</source>
-        <translation type="unfinished"/>
+        <translation>Välj importfil</translation>
     </message>
     <message>
         <source>All files</source>
@@ -4392,23 +4402,23 @@ Du kan aktivera ikontjänsten från DuckDuckGo, i säkerhetssektionen av program
     </message>
     <message>
         <source>Comma Separated Values</source>
-        <translation type="unfinished"/>
+        <translation>Kommaseparerade värden</translation>
     </message>
     <message>
         <source>1Password Export</source>
-        <translation type="unfinished"/>
+        <translation>1Password-export</translation>
     </message>
     <message>
         <source>Bitwarden JSON Export</source>
-        <translation type="unfinished"/>
+        <translation>Bitwarden JSON-export</translation>
     </message>
     <message>
         <source>1Password Vault</source>
-        <translation type="unfinished"/>
+        <translation>1Password-valv</translation>
     </message>
     <message>
         <source>KeePass1 Database</source>
-        <translation type="unfinished"/>
+        <translation>KeePass 1-databas</translation>
     </message>
 </context>
 <context>
@@ -5494,6 +5504,10 @@ Vill du verkligen fortsätta med den här filen?</translation>
         <translation>Klassisk (Platfformsintegration)</translation>
     </message>
     <message>
+        <source>Show Menubar</source>
+        <translation>Visa menyfält</translation>
+    </message>
+    <message>
         <source>Show Toolbar</source>
         <translation>Visa verktygsfält</translation>
     </message>
@@ -5607,15 +5621,15 @@ Vi rekommenderar att du använder den AppImage som finns på vår nerladdningssi
     </message>
     <message>
         <source>1Password 1PUX...</source>
-        <translation type="unfinished"/>
+        <translation>1Password 1PUX...</translation>
     </message>
     <message>
         <source>Import a 1Password 1PUX file</source>
-        <translation type="unfinished"/>
+        <translation>Importera en 1Password 1PUX-fil</translation>
     </message>
     <message>
         <source>Import…</source>
-        <translation type="unfinished"/>
+        <translation>Importera...</translation>
     </message>
     <message>
         <source>Passkeys…</source>
@@ -5840,6 +5854,10 @@ Vi rekommenderar att du använder den AppImage som finns på vår nerladdningssi
     <message>
         <source>Set Theme: Classic</source>
         <translation>Ange tema: Klassiskt</translation>
+    </message>
+    <message>
+        <source>Toggle Show Menubar</source>
+        <translation>Menyfält på/av</translation>
     </message>
     <message>
         <source>Toggle Show Toolbar</source>
@@ -6233,10 +6251,6 @@ Vi rekommenderar att du använder den AppImage som finns på vår nerladdningssi
         <translation>KeePassXC - Passnyckelexport</translation>
     </message>
     <message>
-        <source>Export the following Passkey entries.</source>
-        <translation>Exportera följande passnyckelposter.</translation>
-    </message>
-    <message>
         <source>Filenames will be generated with title and .passkey file extension.</source>
         <translation>Filnamn genereras med namn och .passkey som filnamnstillägg.</translation>
     </message>
@@ -6255,6 +6269,10 @@ Vi rekommenderar att du använder den AppImage som finns på vår nerladdningssi
     <message>
         <source>Export to folder</source>
         <translation>Exportera till mapp</translation>
+    </message>
+    <message>
+        <source>Export the following passkey entries.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6315,28 +6333,28 @@ Vill du skriva över den?
         <translation>Avbryt</translation>
     </message>
     <message>
-        <source>Import the following Passkey:</source>
-        <translation>Importera följande passnyckel:</translation>
-    </message>
-    <message>
         <source>Entry</source>
         <translation>Post</translation>
-    </message>
-    <message>
-        <source>Import the following Passkey to this entry:</source>
-        <translation>Importera följande passnyckel till denna post:</translation>
     </message>
     <message>
         <source>Create new entry</source>
         <translation>Skapa ny post</translation>
     </message>
     <message>
-        <source>Default Passkeys group (Imported Passkeys)</source>
-        <translation>Ordinarie passnyckelgrupp (Importerade passnycklar)</translation>
-    </message>
-    <message>
         <source>Relying Party: %1</source>
         <translation>Förlitande part: %1</translation>
+    </message>
+    <message>
+        <source>Import the following passkey:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import the following passkey to this entry:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Default passkeys group (Imported Passkeys)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6350,10 +6368,6 @@ Vill du skriva över den?
         <translation>Alla filer</translation>
     </message>
     <message>
-        <source>Open Passkey file</source>
-        <translation>Öppna passnyckelfil</translation>
-    </message>
-    <message>
         <source>Cannot open file</source>
         <translation>Kan inte öppna fil</translation>
     </message>
@@ -6362,24 +6376,26 @@ Vill du skriva över den?
         <translation>Kan inte öppna filen &quot;%1&quot; för läsning.</translation>
     </message>
     <message>
-        <source>Cannot import Passkey</source>
-        <translation>Kan inte importera passnyckel</translation>
+        <source>Open passkey file</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;. Data is missing.</source>
-        <translation>Kan inte importera passnyckelfil &quot;%1&quot;. Data saknas.</translation>
+        <source>Cannot import passkey</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
-        <translation>Kan inte importera passnyckelfil &quot;%1&quot;. Privat nyckel saknas eller är felaktig.</translation>
+        <source>Cannot import passkey file &quot;%1&quot;. Data is missing.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;.
+        <source>Cannot import passkey file &quot;%1&quot;.
 The following data is missing:
 %2</source>
-        <translation>Kan inte importera passnyckelfil &quot;%1&quot;.
-Följande data saknas:
-%2</translation>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot import passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7227,12 +7243,6 @@ Vill du skriva över den?</translation>
     <message>
         <source>time</source>
         <translation>tid</translation>
-    </message>
-    <message>
-        <source>Set the key file for the database.
-This options is deprecated, use --set-key-file instead.</source>
-        <translation>Ange nyckelfil för databasen.
-Det här alternativet är inaktuellt, använd --set-key-file istället.</translation>
     </message>
     <message>
         <source>Set the key file for the database.</source>
@@ -8396,10 +8406,6 @@ Kärna: %3 %4</translation>
         <translation>hämta databaslösenordet från stdin</translation>
     </message>
     <message>
-        <source>Locked databases.</source>
-        <translation>Låste databaser.</translation>
-    </message>
-    <message>
         <source>Database failed to lock.</source>
         <translation>Databas kunde inte låsas.</translation>
     </message>
@@ -8462,16 +8468,14 @@ Kärna: %3 %4</translation>
         <translation>tillåt skärmklipp och programinspelning (Windows/macOS)</translation>
     </message>
     <message>
-        <source>Enter Shortcut</source>
-        <translation>Ange genväg</translation>
+        <source>Set the key file for the database.
+This option is deprecated, use --set-key-file instead.</source>
+        <translation>Ange nyckelfil för databasen.
+Det här alternativet är föråldrat, använd --set-key-file istället.</translation>
     </message>
     <message>
-        <source>Action</source>
-        <translation>Åtgärd</translation>
-    </message>
-    <message>
-        <source>Shortcuts</source>
-        <translation>Genvägar</translation>
+        <source>Databases have been locked.</source>
+        <translation>Databaserna har låsts.</translation>
     </message>
     <message>
         <source>Attestation not supported</source>
@@ -8558,76 +8562,6 @@ Kärna: %3 %4</translation>
         <translation>Kunde inte avkryptera nyckeldata.</translation>
     </message>
     <message>
-        <source>Favorite</source>
-        <comment>Tag for favorite entries</comment>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>File does not exist.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Cannot open file: %1</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Cannot parse file: %1 at position %2</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Failed to decrypt json file: %1</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Invalid encKeyValidation field</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Invalid cipher list within encKeyValidation field</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Wrong password</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Invalid encrypted data field</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Invalid cipher list within encrypted data field</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Cannot initialize cipher</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Cannot decrypt data</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Bitwarden Import</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Archived</source>
-        <comment>Tag for archived entries</comment>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Invalid 1PUX file format: Not a valid ZIP file.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Invalid 1PUX file format: Missing export.data</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>1Password Import</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Origin is empty or not allowed</source>
         <translation>Ursprung är tomt eller inte tillåtet</translation>
     </message>
@@ -8648,16 +8582,102 @@ Kärna: %3 %4</translation>
         <translation>Vänta tills tiduret löper ut</translation>
     </message>
     <message>
-        <source>Unknown Passkeys error</source>
-        <translation>Okänt passnyckelfel</translation>
-    </message>
-    <message>
         <source>Challenge is shorter than required minimum length</source>
         <translation>Utmaningen är kortare än den minimilängd söm krävs</translation>
     </message>
     <message>
         <source>user.id does not match the required length</source>
         <translation>user.id matchar inte den längd som krävs</translation>
+    </message>
+    <message>
+        <source>Favorite</source>
+        <comment>Tag for favorite entries</comment>
+        <translation>Favorit</translation>
+    </message>
+    <message>
+        <source>File does not exist.</source>
+        <translation>Filen finns inte.</translation>
+    </message>
+    <message>
+        <source>Cannot open file: %1</source>
+        <translation>Kan inte öppna filen: %1</translation>
+    </message>
+    <message>
+        <source>Cannot parse file: %1 at position %2</source>
+        <translation>Kan inte tolka filen: %1 på position %2</translation>
+    </message>
+    <message>
+        <source>Failed to decrypt json file: %1</source>
+        <translation>Kunde inte avkryptera json-fil: %1</translation>
+    </message>
+    <message>
+        <source>Invalid encKeyValidation field</source>
+        <translation>Ogiltigt encKeyValidation-fält</translation>
+    </message>
+    <message>
+        <source>Invalid cipher list within encKeyValidation field</source>
+        <translation>Ogiltig chifferlista i encKeyValidation-fältet</translation>
+    </message>
+    <message>
+        <source>Wrong password</source>
+        <translation>Fel lösenord</translation>
+    </message>
+    <message>
+        <source>Invalid encrypted data field</source>
+        <translation>Ogiltigt krypterat datafält</translation>
+    </message>
+    <message>
+        <source>Invalid cipher list within encrypted data field</source>
+        <translation>Ogiltig chifferlista i krypterat datafält</translation>
+    </message>
+    <message>
+        <source>Cannot initialize cipher</source>
+        <translation>Kan inte initiera chiffer</translation>
+    </message>
+    <message>
+        <source>Cannot decrypt data</source>
+        <translation>Kan inte avkryptera data</translation>
+    </message>
+    <message>
+        <source>Bitwarden Import</source>
+        <translation>Bitwarden-import</translation>
+    </message>
+    <message>
+        <source>Archived</source>
+        <comment>Tag for archived entries</comment>
+        <translation>Arkiverat</translation>
+    </message>
+    <message>
+        <source>Invalid 1PUX file format: Not a valid ZIP file.</source>
+        <translation>Ogiltigt 1PUX-filformat: Inte en giltig ZIP-fil.</translation>
+    </message>
+    <message>
+        <source>Invalid 1PUX file format: Missing export.data</source>
+        <translation>Ogiltigt 1PUX-filformat:  Exportdata saknas</translation>
+    </message>
+    <message>
+        <source>1Password Import</source>
+        <translation>1Password-import</translation>
+    </message>
+    <message>
+        <source>Enter Shortcut</source>
+        <translation>Ange genväg</translation>
+    </message>
+    <message>
+        <source>Action</source>
+        <translation>Åtgärd</translation>
+    </message>
+    <message>
+        <source>Shortcuts</source>
+        <translation>Genvägar</translation>
+    </message>
+    <message>
+        <source>Unsupported KDF type, cannot decrypt json file</source>
+        <translation>KDF-typen stöds inte, det går inte att dekryptera json-filen</translation>
+    </message>
+    <message>
+        <source>Unknown passkeys error</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -8977,14 +8997,6 @@ Kärna: %3 %4</translation>
         <translation>Lista över posters URL:er</translation>
     </message>
     <message>
-        <source>Please wait, list of entries with Passkeys is being updated…</source>
-        <translation>Vänta! Listan över poster med passnycklar uppdateras...</translation>
-    </message>
-    <message>
-        <source>No entries with Passkeys.</source>
-        <translation>Det finns inga poster med passnycklar.</translation>
-    </message>
-    <message>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
@@ -9019,6 +9031,22 @@ Kärna: %3 %4</translation>
     <message>
         <source> (Expired)</source>
         <translation>(Förfallen)</translation>
+    </message>
+    <message>
+        <source>Export Confirmation</source>
+        <translation>Exportbekräftelse</translation>
+    </message>
+    <message>
+        <source>The passkey file will be vulnerable to theft and unauthorized use, if left unsecured. Are you sure you want to continue?</source>
+        <translation>Passnyckelfilen kommer att vara sårbar för stöld och obehörig användning om den lämnas oskyddad. Vill du verkligen fortsätta?</translation>
+    </message>
+    <message>
+        <source>Please wait, list of entries with passkeys is being updated…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No entries with passkeys.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -9339,31 +9367,8 @@ Kärna: %3 %4</translation>
         <translation>Bekräfta när lösenord tas emot av klienter</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;
-           font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Helvetica','Arial','sans-serif','Apple Color
-           Emoji','Segoe UI Emoji'; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;This setting does
-           not override disabling recycle bin prompts&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;
-           font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color
-           Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;Denna inställning åsidosätter inte 
-inaktivering av papperskorgsmeddelanden&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </translation>
-    </message>
-    <message>
         <source>Confirm when clients request entry deletion</source>
         <translation>Bekräfta när klienter begär borttagning av poster</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications
-           which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also
-           crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a
-           different value set in applications.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Detta förbättrar kompatibiliteten med vissa program
-som söker efter lösenord utan att först låsa upp databasen.&lt;/p&gt;&lt;p&gt;
-Men aktivering av detta kan också få klienten att krascha om databasen
-inte kan låsas upp inom en viss tidsgräns (Vanligen 25s, men kan vara ett annar värde, angivet i programmet.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Prompt to unlock database before searching</source>
@@ -9388,6 +9393,14 @@ inte kan låsas upp inom en viss tidsgräns (Vanligen 25s, men kan vara ett anna
     <message>
         <source>Save current changes to activate the plugin and enable editing of this section.</source>
         <translation>Spara aktuella ändringar för att aktivera insticksmodulen och aktivera redigering av det här avsnittet.</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This setting does not override disabling recycle bin prompts &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Den här inställningen åsidosätter inte inaktivering av avisering från papperskorgen&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a different value set in applications.) &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Detta förbättrar kompatibiliteten med vissa program som söker efter lösenord utan att först låsa upp databasen.&lt;/p&gt;&lt;/p&gt;Men aktivering av detta kan också få klienten att krascha om databasen inte kan låsas upp inom en viss tidsgräns (Vanligen 25s, men kan vara ett annat värde, angivet i programmet.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -9734,7 +9747,7 @@ Exempel: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Import File</source>
-        <translation type="unfinished"/>
+        <translation>Importera fil</translation>
     </message>
 </context>
 <context>

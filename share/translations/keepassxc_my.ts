@@ -559,10 +559,6 @@
         <translation>ဝင်းဒိုးကို ချုံ့ပြီးနောက် ဒေတာဘေ့စ်များကို လော့ချပါ</translation>
     </message>
     <message>
-        <source>Require password repeat when it is visible</source>
-        <translation>စကားဝှက် မြင်ရချိန်တွင် ထပ်ရိုက်ရန် လိုအပ်သည်</translation>
-    </message>
-    <message>
         <source>Hide passwords when editing them</source>
         <translation>စကားဝှက်များကို တည်းဖြတ်ချိန်တွင် ဝှက်ထားပါ</translation>
     </message>
@@ -705,10 +701,6 @@
 <context>
     <name>AutoTypePlatformX11</name>
     <message>
-        <source>Trying to send invalid keysym.</source>
-        <translation>မမှန်ကန်သော ကီးသင်္ကေတ ပို့ရန် ကြိုးစားနေသည်။</translation>
-    </message>
-    <message>
         <source>Sequence aborted: Caps Lock is on</source>
         <translation>အစဉ်ကို ဖျက်လိုက်သည် - Caps Lock ဖွင့်ထားသည်</translation>
     </message>
@@ -719,6 +711,10 @@
     <message>
         <source>Unable to get valid keycode for key: </source>
         <translation>ကီးအတွက် မှန်ကန်သော ကီးကုဒ် မရနိုင်ပါ -</translation>
+    </message>
+    <message>
+        <source>Trying to send invalid keyboard symbol.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -877,23 +873,6 @@ Please select the correct database for saving credentials.</source>
         <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message>
-        <source>Do you want to register Passkey for:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Existing Passkey found.
-Do you want to register a new Passkey for:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Select the existing Passkey and press Update to replace it.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Authenticate Passkey credentials for:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Relying Party: %1</source>
         <translation type="unfinished"/>
     </message>
@@ -903,6 +882,27 @@ Do you want to register a new Passkey for:</source>
     </message>
     <message>
         <source>KeePassXC - Passkey credentials</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Add to existing entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Existing passkey found.
+Do you want to register a new passkey for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Select the existing passkey and press Update to replace it.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Authenticate passkey credentials for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to register a passkey for:</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -955,11 +955,6 @@ Do you want to delete the entry?
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Entry already has a Passkey.
-Do you want to overwrite the Passkey in %1 - %2?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>KeePassXC - Create a new group</source>
         <translation type="unfinished"/>
     </message>
@@ -969,10 +964,6 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
     </message>
     <message>
         <source>KeePassXC - Overwrite existing key?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>KeePassXC - Update Passkey</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -989,6 +980,27 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Passkey</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC - Passkey credentials</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Register a new passkey to this entry:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC - Update passkey</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entry already has a passkey.
+Do you want to overwrite the passkey in %1 - %2?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Register</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1238,11 +1250,11 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Allows using insecure http://localhost with Passkeys for testing purposes.</source>
+        <source>Allows using insecure http://localhost with passkeys for testing purposes.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Allow using localhost with Passkeys</source>
+        <source>Allow using localhost with passkeys</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -2815,10 +2827,6 @@ Would you like to correct it?</source>
 <context>
     <name>EditEntryWidgetBrowser</name>
     <message>
-        <source>These settings affect to the entry&apos;s behaviour with the browser extension.</source>
-        <translation>ဤဆက်တင်များသည် ဘရောက်ဇာအဆက်နှင့်ဆိုင်သော ဖြည့်သွင်းချက်၏ အပြုအမူပေါ် သက်ရောက်သည်။</translation>
-    </message>
-    <message>
         <source>General</source>
         <translation>ယေဘုယျ</translation>
     </message>
@@ -2847,10 +2855,6 @@ Would you like to correct it?</source>
         <translation>ဤဖြည့်သွင်းချက်ကို HTTP Basic Auth ဖြင့် မသုံးပါနှင့်။</translation>
     </message>
     <message>
-        <source>Additional URL&apos;s</source>
-        <translation>ထပ်ဆောင်း URL များ</translation>
-    </message>
-    <message>
         <source>Add</source>
         <translation>ထည့်ရန်</translation>
     </message>
@@ -2861,6 +2865,14 @@ Would you like to correct it?</source>
     <message>
         <source>Edit</source>
         <translation>တည်းဖြတ်ရန်</translation>
+    </message>
+    <message>
+        <source>These settings affect the entry&apos;s behaviour with the browser extension.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Additional URLs</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3654,12 +3666,6 @@ This may cause the affected plugins to malfunction.</source>
         <translation>ထပ်ပေါင်းရေးထားသောဖိုင်တွဲကို အတည်ပြု</translation>
     </message>
     <message>
-        <source>Attachment &quot;%1&quot; already exists. 
-Would you like to overwrite the existing attachment?</source>
-        <translation>ဖိုင်တွဲ&quot;%1&quot; ရှိနေပါပြီ။
-သင်လက်ရှိဖိုင်တွဲပေါ်တွင် ထပ်ရေးချင်ပါသလား?</translation>
-    </message>
-    <message>
         <source>Confirm Attachment</source>
         <translation>ပူးတွဲဖိုင်ကို အတည်ပြုရန်</translation>
     </message>
@@ -3692,6 +3698,12 @@ Do you want to save the changes to your database?</source>
 Error: %1</source>
         <translation>အပ်ဒိတ်လုပ်ထားသော ပူးတွဲဖိုင်သိမ်းခြင်း မအောင်မြင်ပါ။
 ပြဿနာ - %1</translation>
+    </message>
+    <message>
+        <source>Attachment &quot;%1&quot; already exists. 
+Would you like to overwrite the existing attachment?</source>
+        <translation>ဖိုင်တွဲ&quot;%1&quot; ရှိနေပါပြီ။
+သင်လက်ရှိဖိုင်တွဲပေါ်တွင် ထပ်ရေးချင်ပါသလား?</translation>
     </message>
 </context>
 <context>
@@ -5471,6 +5483,10 @@ Are you sure you want to continue with this file?</source>
         <translation>ဂန္ဓဝင် (ပလက်ဖောင်းမူလ)</translation>
     </message>
     <message>
+        <source>Show Menubar</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Show Toolbar</source>
         <translation>တူးလ်ဘား ပြရန်</translation>
     </message>
@@ -5816,6 +5832,10 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Set Theme: Classic</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle Show Menubar</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -6210,10 +6230,6 @@ We recommend you use the AppImage available on our downloads page.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Export the following Passkey entries.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Filenames will be generated with title and .passkey file extension.</source>
         <translation type="unfinished"/>
     </message>
@@ -6231,6 +6247,10 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Export to folder</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export the following passkey entries.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -6290,27 +6310,27 @@ Do you want to overwrite it?
         <translation>ပယ်ဖျက်ရန်</translation>
     </message>
     <message>
-        <source>Import the following Passkey:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Entry</source>
         <translation>ဖြည့်သွင်းချက်</translation>
-    </message>
-    <message>
-        <source>Import the following Passkey to this entry:</source>
-        <translation type="unfinished"/>
     </message>
     <message>
         <source>Create new entry</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Default Passkeys group (Imported Passkeys)</source>
+        <source>Relying Party: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Relying Party: %1</source>
+        <source>Import the following passkey:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import the following passkey to this entry:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Default passkeys group (Imported Passkeys)</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -6325,10 +6345,6 @@ Do you want to overwrite it?
         <translation>ဖိုင်အားလုံး</translation>
     </message>
     <message>
-        <source>Open Passkey file</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Cannot open file</source>
         <translation type="unfinished"/>
     </message>
@@ -6337,21 +6353,25 @@ Do you want to overwrite it?
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey</source>
+        <source>Open passkey file</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;. Data is missing.</source>
+        <source>Cannot import passkey</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
+        <source>Cannot import passkey file &quot;%1&quot;. Data is missing.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;.
+        <source>Cannot import passkey file &quot;%1&quot;.
 The following data is missing:
 %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot import passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -7200,12 +7220,6 @@ Do you want to overwrite it?</source>
     <message>
         <source>time</source>
         <translation>ကြာချိန်</translation>
-    </message>
-    <message>
-        <source>Set the key file for the database.
-This options is deprecated, use --set-key-file instead.</source>
-        <translation>ဒေတာဘေ့စ်အတွက် သော့ဖိုင်ကို သတ်မှတ်ပါ။
-ဤရွေးချယ်မှုများကို ရပ်တန့်ထားပြီး၊ ၎င်းအစား --set-key-file ကို အသုံးပြုပါ။</translation>
     </message>
     <message>
         <source>Set the key file for the database.</source>
@@ -8368,10 +8382,6 @@ CPU တည်ဆောက်ပုံ - %2
         <translation>စံထည့်သွင်းမှုမှ ဒေတာဘေ့စ်၏ စကားဝှက်ကို ဖတ်ပါ</translation>
     </message>
     <message>
-        <source>Locked databases.</source>
-        <translation>လော့ချထားသော ဒေတာဘေ့စ်များ။</translation>
-    </message>
-    <message>
         <source>Database failed to lock.</source>
         <translation>ဒေတာဘေ့စ်ကို လော့ချ၍မရပါ။</translation>
     </message>
@@ -8434,15 +8444,12 @@ CPU တည်ဆောက်ပုံ - %2
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Enter Shortcut</source>
+        <source>Set the key file for the database.
+This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Action</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Shortcuts</source>
+        <source>Databases have been locked.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -8530,6 +8537,34 @@ CPU တည်ဆောက်ပုံ - %2
         <translation>အချက်အလက်များကို ကုဒ်ပြန်ဖြည်ခြင်း မအောင်မြင်ခဲ့ပါ</translation>
     </message>
     <message>
+        <source>Origin is empty or not allowed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Effective domain is not a valid domain</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Origin and RP ID do not match</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No supported algorithms were provided</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Wait for timer to expire</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Challenge is shorter than required minimum length</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>user.id does not match the required length</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Favorite</source>
         <comment>Tag for favorite entries</comment>
         <translation type="unfinished"/>
@@ -8600,35 +8635,23 @@ CPU တည်ဆောက်ပုံ - %2
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Origin is empty or not allowed</source>
+        <source>Enter Shortcut</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Effective domain is not a valid domain</source>
+        <source>Action</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Origin and RP ID do not match</source>
+        <source>Shortcuts</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>No supported algorithms were provided</source>
+        <source>Unsupported KDF type, cannot decrypt json file</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Wait for timer to expire</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Unknown Passkeys error</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Challenge is shorter than required minimum length</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>user.id does not match the required length</source>
+        <source>Unknown passkeys error</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -8949,14 +8972,6 @@ CPU တည်ဆောက်ပုံ - %2
         <translation>URL ထည့်သွင်းမှုများစာရင်း</translation>
     </message>
     <message>
-        <source>Please wait, list of entries with Passkeys is being updated…</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>No entries with Passkeys.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Title</source>
         <translation>ခေါင်းစဉ်</translation>
     </message>
@@ -8990,6 +9005,22 @@ CPU တည်ဆောက်ပုံ - %2
     </message>
     <message>
         <source> (Expired)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export Confirmation</source>
+        <translation>ပို့ရန် အတည်ပြုချက်</translation>
+    </message>
+    <message>
+        <source>The passkey file will be vulnerable to theft and unauthorized use, if left unsecured. Are you sure you want to continue?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please wait, list of entries with passkeys is being updated…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No entries with passkeys.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -9311,32 +9342,8 @@ CPU တည်ဆောက်ပုံ - %2
         <translation>စကားဝှက်များကို လက်ခံစက်များက ပြန်လည်ရယူချိန်တွင် အတည်ပြုပါ</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;
-           font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Helvetica','Arial','sans-serif','Apple Color
-           Emoji','Segoe UI Emoji'; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;This setting does
-           not override disabling recycle bin prompts&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;
-           font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color
-           Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;ဤဆက်တင်သည်
-အမှိုက်ပုံး အသိပေးချက်များကို ပယ်ဖျက်ထားခြင်းအား အစားမထိုးပါ&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-</translation>
-    </message>
-    <message>
         <source>Confirm when clients request entry deletion</source>
         <translation>လက်ခံစက်များက ဖြည့်သွင်းချက်ကို ဖျက်ရန် တောင်းဆိုသောအခါ အတည်ပြုပါ</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications
-           which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also
-           crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a
-           different value set in applications.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;ယင်းသည် ဒေတာဘေ့စ်ကို ဦးစွာ လော့မဖြည်ဘဲ စကားဝှက်ရှာဖွေသည့်
- အချို့သော အက်ပလီကေးရှင်းများနှင့် ကိုက်ညီမှုကို ပိုမိုကောင်းမွန်စေသည်။&lt;/p&gt;&lt;p&gt;သို့သော် တိကျသော အချိန်ကန့်သတ်ချက်တစ်ခုအတွင်း ဒေတာဘေ့စ်ကို လော့မဖြည်နိုင်ပါက
-၎င်းကို ဖွင့်ခြင်းသည် လက်ခံစက်ကိုလည်း ရပ်စေနိုင်သည်။ (၂၅ စက္ကန့် ဖြစ်လေ့ရှိသော်လည်း
-အက်ပလီကေးရှင်းများတွင် သတ်မှတ်ထားသော ကွဲပြားသည့် တန်ဖိုးတစ်ခု ဖြစ်နိုင်သည်။)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-</translation>
     </message>
     <message>
         <source>Prompt to unlock database before searching</source>
@@ -9361,6 +9368,14 @@ CPU တည်ဆောက်ပုံ - %2
     <message>
         <source>Save current changes to activate the plugin and enable editing of this section.</source>
         <translation>ချိတ်ဆက်ပရိုဂရမ်ကို သက်ဝင်လုပ်ဆောင်ရန်နှင့် ဤအပိုင်းကို တည်းဖြတ်နိုင်ရန် လတ်တလော အပြောင်းအလဲများကို သိမ်းပါ။</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This setting does not override disabling recycle bin prompts &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a different value set in applications.) &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

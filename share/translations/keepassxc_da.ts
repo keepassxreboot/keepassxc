@@ -559,10 +559,6 @@
         <translation>Lås databaser efter vinduet er blevet minimeret</translation>
     </message>
     <message>
-        <source>Require password repeat when it is visible</source>
-        <translation>Kræv adgangskodegentagelse når den er synlig</translation>
-    </message>
-    <message>
         <source>Hide passwords when editing them</source>
         <translation>Skjul adgangskoder når de redigeres</translation>
     </message>
@@ -705,10 +701,6 @@
 <context>
     <name>AutoTypePlatformX11</name>
     <message>
-        <source>Trying to send invalid keysym.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Sequence aborted: Caps Lock is on</source>
         <translation type="unfinished"/>
     </message>
@@ -718,6 +710,10 @@
     </message>
     <message>
         <source>Unable to get valid keycode for key: </source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Trying to send invalid keyboard symbol.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -877,23 +873,6 @@ Venligst vælg den korrekte database for at gemme loginoplysninger.</translation
         <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
-        <source>Do you want to register Passkey for:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Existing Passkey found.
-Do you want to register a new Passkey for:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Select the existing Passkey and press Update to replace it.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Authenticate Passkey credentials for:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Relying Party: %1</source>
         <translation type="unfinished"/>
     </message>
@@ -903,6 +882,27 @@ Do you want to register a new Passkey for:</source>
     </message>
     <message>
         <source>KeePassXC - Passkey credentials</source>
+        <translation>KeePassXC - Adgangsnøgle-legitimationsoplysninger</translation>
+    </message>
+    <message>
+        <source>Add to existing entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Existing passkey found.
+Do you want to register a new passkey for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Select the existing passkey and press Update to replace it.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Authenticate passkey credentials for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to register a passkey for:</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -950,12 +950,7 @@ Do you want to delete the entry?
     </message>
     <message>
         <source>%1 (Passkey)</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Entry already has a Passkey.
-Do you want to overwrite the Passkey in %1 - %2?</source>
-        <translation type="unfinished"/>
+        <translation>%1 (Adgangsnøgle)</translation>
     </message>
     <message>
         <source>KeePassXC - Create a new group</source>
@@ -967,10 +962,6 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
     </message>
     <message>
         <source>KeePassXC - Overwrite existing key?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>KeePassXC - Update Passkey</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -987,6 +978,27 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Passkey</source>
+        <translation>Adgangsnøgle</translation>
+    </message>
+    <message>
+        <source>KeePassXC - Passkey credentials</source>
+        <translation>KeePassXC - Adgangsnøgle-legitimationsoplysninger</translation>
+    </message>
+    <message>
+        <source>Register a new passkey to this entry:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC - Update passkey</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entry already has a passkey.
+Do you want to overwrite the passkey in %1 - %2?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Register</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1236,11 +1248,11 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Allows using insecure http://localhost with Passkeys for testing purposes.</source>
+        <source>Allows using insecure http://localhost with passkeys for testing purposes.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Allow using localhost with Passkeys</source>
+        <source>Allow using localhost with passkeys</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1583,7 +1595,7 @@ For at forhindre, at denne fejl vises, skal du gå til &quot;Databaseindstilling
     </message>
     <message>
         <source>Select Key File:</source>
-        <translation type="unfinished"/>
+        <translation>Vælg nøglefil:</translation>
     </message>
     <message>
         <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;/p&gt;</source>
@@ -2801,10 +2813,6 @@ Would you like to correct it?</source>
 <context>
     <name>EditEntryWidgetBrowser</name>
     <message>
-        <source>These settings affect to the entry&apos;s behaviour with the browser extension.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>General</source>
         <translation>Generelt</translation>
     </message>
@@ -2833,10 +2841,6 @@ Would you like to correct it?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Additional URL&apos;s</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Add</source>
         <translation>Tilføj</translation>
     </message>
@@ -2847,6 +2851,14 @@ Would you like to correct it?</source>
     <message>
         <source>Edit</source>
         <translation>Rediger</translation>
+    </message>
+    <message>
+        <source>These settings affect the entry&apos;s behaviour with the browser extension.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Additional URLs</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3640,11 +3652,6 @@ Det kan få de påvirkede plugins til at svigte.</translation>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Attachment &quot;%1&quot; already exists. 
-Would you like to overwrite the existing attachment?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Confirm Attachment</source>
         <translation type="unfinished"/>
     </message>
@@ -3672,6 +3679,11 @@ Do you want to save the changes to your database?</source>
     <message>
         <source>Saving updated attachment failed.
 Error: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Attachment &quot;%1&quot; already exists. 
+Would you like to overwrite the existing attachment?</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -5450,6 +5462,10 @@ Are you sure you want to continue with this file?</source>
         <translation>Klassisk</translation>
     </message>
     <message>
+        <source>Show Menubar</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Show Toolbar</source>
         <translation>Vis værktøjsbjælke</translation>
     </message>
@@ -5571,11 +5587,11 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Passkeys…</source>
-        <translation type="unfinished"/>
+        <translation>Adgangsnøgler…</translation>
     </message>
     <message>
         <source>Import Passkey</source>
-        <translation type="unfinished"/>
+        <translation>Importér adgangsnøgle</translation>
     </message>
     <message>
         <source>Quit Application</source>
@@ -5791,6 +5807,10 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Set Theme: Classic</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle Show Menubar</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -6182,15 +6202,11 @@ We recommend you use the AppImage available on our downloads page.</source>
     <name>PasskeyExportDialog</name>
     <message>
         <source>KeePassXC - Passkey Export</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Export the following Passkey entries.</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC - Adgangsnøgle-eksport</translation>
     </message>
     <message>
         <source>Filenames will be generated with title and .passkey file extension.</source>
-        <translation type="unfinished"/>
+        <translation>Filnavne vil blive genereret med titel og filendelsen .passkey.</translation>
     </message>
     <message>
         <source>Export entries</source>
@@ -6208,18 +6224,24 @@ We recommend you use the AppImage available on our downloads page.</source>
         <source>Export to folder</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Export the following passkey entries.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>PasskeyExporter</name>
     <message>
         <source>KeePassXC: Passkey Export</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Adgangsnøgle-eksport</translation>
     </message>
     <message>
         <source>File &quot;%1.passkey&quot; already exists.
 Do you want to overwrite it?
 </source>
-        <translation type="unfinished"/>
+        <translation>Filen &quot;%1.passkey&quot; findes allerede.
+Ønsker du at overskrive den?
+</translation>
     </message>
     <message>
         <source>Cannot open file</source>
@@ -6238,7 +6260,7 @@ Do you want to overwrite it?
     <name>PasskeyImportDialog</name>
     <message>
         <source>KeePassXC - Passkey Import</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC - Adgangsnøgle-import</translation>
     </message>
     <message>
         <source>Username: %1</source>
@@ -6254,7 +6276,7 @@ Do you want to overwrite it?
     </message>
     <message>
         <source>Import Passkey</source>
-        <translation type="unfinished"/>
+        <translation>Importér adgangsnøgle</translation>
     </message>
     <message>
         <source>Import</source>
@@ -6265,27 +6287,27 @@ Do you want to overwrite it?
         <translation>Annuller</translation>
     </message>
     <message>
-        <source>Import the following Passkey:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Entry</source>
         <translation>Post</translation>
-    </message>
-    <message>
-        <source>Import the following Passkey to this entry:</source>
-        <translation type="unfinished"/>
     </message>
     <message>
         <source>Create new entry</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Default Passkeys group (Imported Passkeys)</source>
+        <source>Relying Party: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Relying Party: %1</source>
+        <source>Import the following passkey:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import the following passkey to this entry:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Default passkeys group (Imported Passkeys)</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -6293,15 +6315,11 @@ Do you want to overwrite it?
     <name>PasskeyImporter</name>
     <message>
         <source>Passkey file</source>
-        <translation type="unfinished"/>
+        <translation>Adgangsnøglefil</translation>
     </message>
     <message>
         <source>All files</source>
         <translation>Alle filer</translation>
-    </message>
-    <message>
-        <source>Open Passkey file</source>
-        <translation type="unfinished"/>
     </message>
     <message>
         <source>Cannot open file</source>
@@ -6312,21 +6330,25 @@ Do you want to overwrite it?
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey</source>
+        <source>Open passkey file</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;. Data is missing.</source>
+        <source>Cannot import passkey</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
+        <source>Cannot import passkey file &quot;%1&quot;. Data is missing.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;.
+        <source>Cannot import passkey file &quot;%1&quot;.
 The following data is missing:
 %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot import passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -7174,12 +7196,6 @@ Do you want to overwrite it?</source>
     <message>
         <source>time</source>
         <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Set the key file for the database.
-This options is deprecated, use --set-key-file instead.</source>
-        <translation>Indstil nøglefilen for databasen.
-Denne indstilling er forældet, brug i stedet --set-key-file.</translation>
     </message>
     <message>
         <source>Set the key file for the database.</source>
@@ -8339,10 +8355,6 @@ Kerne: %3 %4</translation>
         <translation>læs adgangskode til databasen fra stdin</translation>
     </message>
     <message>
-        <source>Locked databases.</source>
-        <translation>Låste databaser.</translation>
-    </message>
-    <message>
         <source>Database failed to lock.</source>
         <translation>Låsning af database mislykkedes.</translation>
     </message>
@@ -8405,15 +8417,12 @@ Kerne: %3 %4</translation>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Enter Shortcut</source>
+        <source>Set the key file for the database.
+This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Action</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Shortcuts</source>
+        <source>Databases have been locked.</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -8426,7 +8435,7 @@ Kerne: %3 %4</translation>
     </message>
     <message>
         <source>Passkeys request canceled</source>
-        <translation type="unfinished"/>
+        <translation>Anmodning om pasnøgler annulleret</translation>
     </message>
     <message>
         <source>Invalid user verification</source>
@@ -8442,7 +8451,7 @@ Kerne: %3 %4</translation>
     </message>
     <message>
         <source>Passkeys</source>
-        <translation type="unfinished"/>
+        <translation>Adgangsnøgler</translation>
     </message>
     <message>
         <source>AES initialization failed</source>
@@ -8498,6 +8507,34 @@ Kerne: %3 %4</translation>
     </message>
     <message>
         <source>Failed to decrypt key data.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Origin is empty or not allowed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Effective domain is not a valid domain</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Origin and RP ID do not match</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No supported algorithms were provided</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Wait for timer to expire</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Challenge is shorter than required minimum length</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>user.id does not match the required length</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -8571,35 +8608,23 @@ Kerne: %3 %4</translation>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Origin is empty or not allowed</source>
+        <source>Enter Shortcut</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Effective domain is not a valid domain</source>
+        <source>Action</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Origin and RP ID do not match</source>
+        <source>Shortcuts</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>No supported algorithms were provided</source>
+        <source>Unsupported KDF type, cannot decrypt json file</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Wait for timer to expire</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Unknown Passkeys error</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Challenge is shorter than required minimum length</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>user.id does not match the required length</source>
+        <source>Unknown passkeys error</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -8920,14 +8945,6 @@ Kerne: %3 %4</translation>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Please wait, list of entries with Passkeys is being updated…</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>No entries with Passkeys.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
@@ -8961,6 +8978,22 @@ Kerne: %3 %4</translation>
     </message>
     <message>
         <source> (Expired)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Export Confirmation</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The passkey file will be vulnerable to theft and unauthorized use, if left unsecured. Are you sure you want to continue?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Please wait, list of entries with passkeys is being updated…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No entries with passkeys.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -9282,27 +9315,7 @@ Kerne: %3 %4</translation>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;
-           font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Helvetica','Arial','sans-serif','Apple Color
-           Emoji','Segoe UI Emoji'; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;This setting does
-           not override disabling recycle bin prompts&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;
-           font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color
-           Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;Denne indstilling
-           tilsidesætter ikke deaktivering af papirkurvs-prompter&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </translation>
-    </message>
-    <message>
         <source>Confirm when clients request entry deletion</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications
-           which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also
-           crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a
-           different value set in applications.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -9327,6 +9340,14 @@ Kerne: %3 %4</translation>
     </message>
     <message>
         <source>Save current changes to activate the plugin and enable editing of this section.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This setting does not override disabling recycle bin prompts &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a different value set in applications.) &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"/>
     </message>
 </context>

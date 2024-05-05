@@ -559,10 +559,6 @@
         <translation>Блокировать базы данных при сворачивании окна</translation>
     </message>
     <message>
-        <source>Require password repeat when it is visible</source>
-        <translation>Требовать повтора пароля, когда он виден</translation>
-    </message>
-    <message>
         <source>Hide passwords when editing them</source>
         <translation>Скрыть пароли при их редактировании</translation>
     </message>
@@ -705,10 +701,6 @@
 <context>
     <name>AutoTypePlatformX11</name>
     <message>
-        <source>Trying to send invalid keysym.</source>
-        <translation>Попытка отправить неверный символ клавиши.</translation>
-    </message>
-    <message>
         <source>Sequence aborted: Caps Lock is on</source>
         <translation>Последовательность прервана: включён режим CAPS LOCK</translation>
     </message>
@@ -719,6 +711,10 @@
     <message>
         <source>Unable to get valid keycode for key: </source>
         <translation>Не удалось получить корректный код клавиши для клавиши: </translation>
+    </message>
+    <message>
+        <source>Trying to send invalid keyboard symbol.</source>
+        <translation>Попытка отправить неверный символ клавиши.</translation>
     </message>
 </context>
 <context>
@@ -877,23 +873,6 @@ Please select the correct database for saving credentials.</source>
         <translation><numerusform>Тайм-аут через &lt;b&gt;%n&lt;/b&gt; секунду...</numerusform><numerusform>Тайм-аут через &lt;b&gt;%n&lt;/b&gt; секунды...</numerusform><numerusform>Тайм-аут через &lt;b&gt;%n&lt;/b&gt; секунд...</numerusform><numerusform>Тайм-аут через &lt;b&gt;%n&lt;/b&gt; секунд...</numerusform></translation>
     </message>
     <message>
-        <source>Do you want to register Passkey for:</source>
-        <translation>Вы хотите зарегистрировать Passkey для:</translation>
-    </message>
-    <message>
-        <source>Existing Passkey found.
-Do you want to register a new Passkey for:</source>
-        <translation>Существующий Passkey найден.  Хотите зарегистрировать новый Passkey для:</translation>
-    </message>
-    <message>
-        <source>Select the existing Passkey and press Update to replace it.</source>
-        <translation>Выберите существующий Passkey и нажмите Обновить, чтобы заменить его.</translation>
-    </message>
-    <message>
-        <source>Authenticate Passkey credentials for:</source>
-        <translation>Аутентификация учетных данных Passkey для:</translation>
-    </message>
-    <message>
         <source>Relying Party: %1</source>
         <translation>Доверенная сторона: %1</translation>
     </message>
@@ -904,6 +883,27 @@ Do you want to register a new Passkey for:</source>
     <message>
         <source>KeePassXC - Passkey credentials</source>
         <translation>KeePassXC - учетные данные Passkey</translation>
+    </message>
+    <message>
+        <source>Add to existing entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Existing passkey found.
+Do you want to register a new passkey for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Select the existing passkey and press Update to replace it.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Authenticate passkey credentials for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to register a passkey for:</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -954,11 +954,6 @@ Do you want to delete the entry?
         <translation>%1 (Passkey)</translation>
     </message>
     <message>
-        <source>Entry already has a Passkey.
-Do you want to overwrite the Passkey in %1 - %2?</source>
-        <translation>У записи уже есть Passkey. Хотите перезаписать Passkey в %1 - %2?</translation>
-    </message>
-    <message>
         <source>KeePassXC - Create a new group</source>
         <translation>KeePassXC - Создать новую группу</translation>
     </message>
@@ -969,10 +964,6 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
     <message>
         <source>KeePassXC - Overwrite existing key?</source>
         <translation>KeePassXC - Перезаписать существующий ключ?</translation>
-    </message>
-    <message>
-        <source>KeePassXC - Update Passkey</source>
-        <translation>KeePassXC - Обновить Passkey</translation>
     </message>
     <message>
         <source>KeePassXC - Update Entry</source>
@@ -988,7 +979,28 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Passkey</source>
+        <translation>Passkey</translation>
+    </message>
+    <message>
+        <source>KeePassXC - Passkey credentials</source>
+        <translation>KeePassXC - учетные данные Passkey</translation>
+    </message>
+    <message>
+        <source>Register a new passkey to this entry:</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC - Update passkey</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entry already has a passkey.
+Do you want to overwrite the passkey in %1 - %2?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Register</source>
+        <translation>Зарегистрироваться</translation>
     </message>
 </context>
 <context>
@@ -1237,11 +1249,11 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
         <translation>&lt;b&gt;Ошибка:&lt;/b&gt; Установленный исполняемый файл прокси отсутствует в ожидаемом месте: %1&lt;br/&gt; Укажите собственное расположение прокси-сервера в дополнительных настройках или переустановите приложение.</translation>
     </message>
     <message>
-        <source>Allows using insecure http://localhost with Passkeys for testing purposes.</source>
+        <source>Allows using insecure http://localhost with passkeys for testing purposes.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Allow using localhost with Passkeys</source>
+        <source>Allow using localhost with passkeys</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1380,11 +1392,11 @@ Do you want to overwrite the Passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Failed to parse CSV file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Ошибка при разборе файла CSV: %1</translation>
     </message>
     <message>
         <source>Imported from CSV file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Импортировано из CSV-файла: %1</translation>
     </message>
 </context>
 <context>
@@ -1591,51 +1603,55 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
     </message>
     <message>
         <source>Select Key File:</source>
-        <translation type="unfinished"/>
+        <translation>Выберите файл-ключ:</translation>
     </message>
     <message>
         <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;Кроме пароля, вы можете использовать секретный файл для усиления безопасности вашей базы данных. Этот файл может быть сгенерирован в настройках безопасности вашей базы данных. &lt;/p&gt;&lt;p&gt;Это &lt;strong&gt;не&lt;/strong&gt; ваш файл базы данных *.kdbx!&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Click to add a key file.</source>
-        <translation type="unfinished"/>
+        <translation>Нажмите, чтобы добавить файл-ключ.</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;I have a key file&lt;/a&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;У меня есть файл-ключ&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Use hardware key [Serial: %1]</source>
-        <translation type="unfinished"/>
+        <translation>Использовать аппаратный ключ [Серийный номер: %1]</translation>
     </message>
     <message>
         <source>Use hardware key</source>
-        <translation type="unfinished"/>
+        <translation>Выберите аппаратный ключ</translation>
     </message>
     <message>
         <source>Your database file is NOT a key file!
 If you don&apos;t have a key file or don&apos;t know what that is, you don&apos;t have to select one.</source>
-        <translation type="unfinished"/>
+        <translation>Ваш файл базы данных НЕ файл-ключ!
+Если у вас нет ключевого файла или вы не знаете, что это такое, вам не нужно его выбирать.</translation>
     </message>
     <message>
         <source>KeePassXC database file selected</source>
-        <translation type="unfinished"/>
+        <translation>Выбран файл базы данных KeePassXC</translation>
     </message>
     <message>
         <source>The file you selected looks like a database file.
 A database file is NOT a key file!
 
 Are you sure you want to continue with this file?.</source>
-        <translation type="unfinished"/>
+        <translation>Выбранный вами файл похож на файл базы данных.
+Файл базы данных НЕ файл-ключ!
+
+Вы уверены, что хотите продолжить с этим файлом?</translation>
     </message>
     <message>
         <source>No hardware keys found.</source>
-        <translation type="unfinished"/>
+        <translation>Аппаратные ключи не найдены.</translation>
     </message>
     <message>
         <source>Refresh Hardware Keys</source>
-        <translation type="unfinished"/>
+        <translation>Обновить аппаратные ключи</translation>
     </message>
 </context>
 <context>
@@ -1847,7 +1863,7 @@ Are you sure you want to continue without a password?</source>
     </message>
     <message>
         <source>This is a weak password! For better protection of your secrets, you should choose a stronger password.</source>
-        <translation type="unfinished"/>
+        <translation>Это слабый пароль! Для лучшей защиты ваших секретов вам следует выбрать более надежный пароль.</translation>
     </message>
 </context>
 <context>
@@ -2828,10 +2844,6 @@ Would you like to correct it?</source>
 <context>
     <name>EditEntryWidgetBrowser</name>
     <message>
-        <source>These settings affect to the entry&apos;s behaviour with the browser extension.</source>
-        <translation>Эти параметры влияют на данные, возвращаемые при запросе из расширения браузера.</translation>
-    </message>
-    <message>
         <source>General</source>
         <translation>Общие</translation>
     </message>
@@ -2860,10 +2872,6 @@ Would you like to correct it?</source>
         <translation>Не использовать эту запись для базовой HTTP-авторизации</translation>
     </message>
     <message>
-        <source>Additional URL&apos;s</source>
-        <translation>Дополнительные URL-адреса</translation>
-    </message>
-    <message>
         <source>Add</source>
         <translation>Создать</translation>
     </message>
@@ -2874,6 +2882,14 @@ Would you like to correct it?</source>
     <message>
         <source>Edit</source>
         <translation>Изменить</translation>
+    </message>
+    <message>
+        <source>These settings affect the entry&apos;s behaviour with the browser extension.</source>
+        <translation>Эти параметры влияют на данные, возвращаемые при запросе из расширения для браузера.</translation>
+    </message>
+    <message>
+        <source>Additional URLs</source>
+        <translation>Дополнительные URL-адреса</translation>
     </message>
 </context>
 <context>
@@ -3193,7 +3209,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Restrict matching to given browser key toggle for this and sub groups</source>
-        <translation type="unfinished"/>
+        <translation>Ограничить сопоставление данным переключателем клавиши браузера для этой и подгрупп</translation>
     </message>
 </context>
 <context>
@@ -3670,12 +3686,6 @@ This may cause the affected plugins to malfunction.</source>
         <translation>Подтвердить перезапись вложения</translation>
     </message>
     <message>
-        <source>Attachment &quot;%1&quot; already exists. 
-Would you like to overwrite the existing attachment?</source>
-        <translation>Вложение «%1» уже существует.
-Перезаписать существующее вложение?</translation>
-    </message>
-    <message>
         <source>Confirm Attachment</source>
         <translation>Подтвердить вложение</translation>
     </message>
@@ -3708,6 +3718,12 @@ Do you want to save the changes to your database?</source>
 Error: %1</source>
         <translation>Не удалось сохранить обновлённое вложение.
 Ошибка: %1</translation>
+    </message>
+    <message>
+        <source>Attachment &quot;%1&quot; already exists. 
+Would you like to overwrite the existing attachment?</source>
+        <translation>Вложение «%1» уже существует.
+Перезаписать существующее вложение?</translation>
     </message>
 </context>
 <context>
@@ -4268,7 +4284,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     <name>ImportWizard</name>
     <message>
         <source>Import Wizard</source>
-        <translation type="unfinished"/>
+        <translation>Мастер импорта</translation>
     </message>
 </context>
 <context>
@@ -4279,7 +4295,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Entry count: %1</source>
-        <translation type="unfinished"/>
+        <translation>Количество записей: %1</translation>
     </message>
     <message>
         <source>Group</source>
@@ -4299,7 +4315,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Url</source>
-        <translation type="unfinished"/>
+        <translation>URL-адрес</translation>
     </message>
 </context>
 <context>
@@ -4310,7 +4326,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Import File Selection</source>
-        <translation type="unfinished"/>
+        <translation>Выбор файла импорта</translation>
     </message>
     <message>
         <source>Password:</source>
@@ -4326,7 +4342,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Import Into:</source>
-        <translation type="unfinished"/>
+        <translation>Импортировать в:</translation>
     </message>
     <message>
         <source>New Database</source>
@@ -4334,35 +4350,35 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>No unlocked databases available</source>
-        <translation type="unfinished"/>
+        <translation>Нет разблокированных баз данных</translation>
     </message>
     <message>
         <source>Existing Database:</source>
-        <translation type="unfinished"/>
+        <translation>Существующая база данных:</translation>
     </message>
     <message>
         <source>Import File:</source>
-        <translation type="unfinished"/>
+        <translation>Импортировать файл:</translation>
     </message>
     <message>
         <source>Comma Separated Values (.csv)</source>
-        <translation type="unfinished"/>
+        <translation>Значения, разделенные запятыми (.csv)</translation>
     </message>
     <message>
         <source>1Password Export (.1pux)</source>
-        <translation type="unfinished"/>
+        <translation>Экспорт из 1Password (.1pux)</translation>
     </message>
     <message>
         <source>1Password Vault (.opvault)</source>
-        <translation type="unfinished"/>
+        <translation>Хранилище 1Password (.opvault)</translation>
     </message>
     <message>
         <source>Bitwarden (.json)</source>
-        <translation type="unfinished"/>
+        <translation>Bitwarden (.json)</translation>
     </message>
     <message>
         <source>KeePass 1 Database (.kdb)</source>
-        <translation type="unfinished"/>
+        <translation>База данных KeePass 1 (.kdb)</translation>
     </message>
     <message>
         <source>Open OPVault</source>
@@ -4370,7 +4386,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Select import file</source>
-        <translation type="unfinished"/>
+        <translation>Выберите файл для импорта</translation>
     </message>
     <message>
         <source>All files</source>
@@ -4386,23 +4402,23 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Comma Separated Values</source>
-        <translation type="unfinished"/>
+        <translation>Значения, разделенные запятыми</translation>
     </message>
     <message>
         <source>1Password Export</source>
-        <translation type="unfinished"/>
+        <translation>Экспорт из 1Password</translation>
     </message>
     <message>
         <source>Bitwarden JSON Export</source>
-        <translation type="unfinished"/>
+        <translation>Экспорт из Bitwarden в JSON</translation>
     </message>
     <message>
         <source>1Password Vault</source>
-        <translation type="unfinished"/>
+        <translation>Хранилище 1Password</translation>
     </message>
     <message>
         <source>KeePass1 Database</source>
-        <translation type="unfinished"/>
+        <translation>База данных KeePass1</translation>
     </message>
 </context>
 <context>
@@ -5489,12 +5505,16 @@ Are you sure you want to continue with this file?</source>
         <translation>Классическая (зависимая от платформы)</translation>
     </message>
     <message>
+        <source>Show Menubar</source>
+        <translation>Отображать меню</translation>
+    </message>
+    <message>
         <source>Show Toolbar</source>
         <translation>Показать панель инструментов</translation>
     </message>
     <message>
         <source>Show Preview Panel</source>
-        <translation>Показывать панель предварительного просмотра</translation>
+        <translation>Показать панель предварительного просмотра</translation>
     </message>
     <message>
         <source>Always on Top</source>
@@ -5602,15 +5622,15 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>1Password 1PUX...</source>
-        <translation type="unfinished"/>
+        <translation>1Password 1PUX...</translation>
     </message>
     <message>
         <source>Import a 1Password 1PUX file</source>
-        <translation type="unfinished"/>
+        <translation>Импортировать 1PUX файл из 1Password</translation>
     </message>
     <message>
         <source>Import…</source>
-        <translation type="unfinished"/>
+        <translation>Импорт…</translation>
     </message>
     <message>
         <source>Passkeys…</source>
@@ -5622,27 +5642,27 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Quit Application</source>
-        <translation type="unfinished"/>
+        <translation>Закрыть приложение</translation>
     </message>
     <message>
         <source>Open About Dialog</source>
-        <translation type="unfinished"/>
+        <translation>Открыть диалог «О программе»</translation>
     </message>
     <message>
         <source>Open Database</source>
-        <translation type="unfinished"/>
+        <translation>Открыть базу данных</translation>
     </message>
     <message>
         <source>Create Database</source>
-        <translation type="unfinished"/>
+        <translation>Создать базу данных</translation>
     </message>
     <message>
         <source>Merge From Database</source>
-        <translation type="unfinished"/>
+        <translation>Объединить из базы данных</translation>
     </message>
     <message>
         <source>Create Entry</source>
-        <translation type="unfinished"/>
+        <translation>Создать запись</translation>
     </message>
     <message>
         <source>Edit Entry</source>
@@ -5650,11 +5670,11 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Delete Entry</source>
-        <translation type="unfinished"/>
+        <translation>Удалить запись</translation>
     </message>
     <message>
         <source>Create Group</source>
-        <translation type="unfinished"/>
+        <translation>Создать группу</translation>
     </message>
     <message>
         <source>Edit Group</source>
@@ -5662,51 +5682,51 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Delete Group</source>
-        <translation type="unfinished"/>
+        <translation>Удалить группу</translation>
     </message>
     <message>
         <source>Download All Favicons</source>
-        <translation type="unfinished"/>
+        <translation>Загрузить значки сайтов для всех записей</translation>
     </message>
     <message>
         <source>Sort Groups A-Z</source>
-        <translation type="unfinished"/>
+        <translation>Сортировать группы А-Я</translation>
     </message>
     <message>
         <source>Sort Groups Z-A</source>
-        <translation type="unfinished"/>
+        <translation>Сортировать группы Я-А</translation>
     </message>
     <message>
         <source>Save Database As</source>
-        <translation type="unfinished"/>
+        <translation>Сохранить базу данных как</translation>
     </message>
     <message>
         <source>Show Database Security</source>
-        <translation type="unfinished"/>
+        <translation>Безопасность базы данных</translation>
     </message>
     <message>
         <source>Show Database Reports</source>
-        <translation type="unfinished"/>
+        <translation>Отчёты по базе данных</translation>
     </message>
     <message>
         <source>Show Database Settings</source>
-        <translation type="unfinished"/>
+        <translation>Параметры базы данных</translation>
     </message>
     <message>
         <source>Show Passkeys</source>
-        <translation type="unfinished"/>
+        <translation>Показать Passkey</translation>
     </message>
     <message>
         <source>Clone Entry</source>
-        <translation type="unfinished"/>
+        <translation>Клонировать запись</translation>
     </message>
     <message>
         <source>Move Entry Up</source>
-        <translation type="unfinished"/>
+        <translation>Переместить выше</translation>
     </message>
     <message>
         <source>Move Entry Down</source>
-        <translation type="unfinished"/>
+        <translation>Переместить ниже</translation>
     </message>
     <message>
         <source>Copy Username</source>
@@ -5718,51 +5738,51 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Show Application Settings</source>
-        <translation type="unfinished"/>
+        <translation>Открыть параметры приложения</translation>
     </message>
     <message>
         <source>Show Password Generator</source>
-        <translation type="unfinished"/>
+        <translation>Открыть генератор паролей</translation>
     </message>
     <message>
         <source>Perform Auto-Type: {USERNAME}</source>
-        <translation type="unfinished"/>
+        <translation>Автоматический ввод: {USERNAME}</translation>
     </message>
     <message>
         <source>Perform Auto-Type: {USERNAME}{ENTER}</source>
-        <translation type="unfinished"/>
+        <translation>Автоматический ввод: {USERNAME}{ENTER}</translation>
     </message>
     <message>
         <source>Perform Auto-Type: {PASSWORD}</source>
-        <translation type="unfinished"/>
+        <translation>Автоматический ввод: {PASSWORD}</translation>
     </message>
     <message>
         <source>Perform Auto-Type: {PASSWORD}{ENTER}</source>
-        <translation type="unfinished"/>
+        <translation>Автоматический ввод: {PASSWORD}{ENTER}</translation>
     </message>
     <message>
         <source>Perform Auto-Type: {TOTP}</source>
-        <translation type="unfinished"/>
+        <translation>Автоматический ввод: {TOTP}</translation>
     </message>
     <message>
         <source>Copy Title</source>
-        <translation type="unfinished"/>
+        <translation>Скопировать название</translation>
     </message>
     <message>
         <source>Copy URL</source>
-        <translation type="unfinished"/>
+        <translation>Скопировать URL</translation>
     </message>
     <message>
         <source>Copy Notes</source>
-        <translation type="unfinished"/>
+        <translation>Скопировать заметки</translation>
     </message>
     <message>
         <source>Export to CSV</source>
-        <translation type="unfinished"/>
+        <translation>Экспорт в CSV</translation>
     </message>
     <message>
         <source>Export to HTML</source>
-        <translation type="unfinished"/>
+        <translation>Экспорт в HTML</translation>
     </message>
     <message>
         <source>Import KeePass1 Database</source>
@@ -5770,99 +5790,103 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Import 1Password Vault</source>
-        <translation type="unfinished"/>
+        <translation>Импорт хранилища 1Password</translation>
     </message>
     <message>
         <source>Import CSV File</source>
-        <translation type="unfinished"/>
+        <translation>Импорт CSV-файла</translation>
     </message>
     <message>
         <source>Show TOTP QR Code</source>
-        <translation type="unfinished"/>
+        <translation>Показать QR-код TOTP</translation>
     </message>
     <message>
         <source>Set up TOTP</source>
-        <translation>Настроить ВРП</translation>
+        <translation>Настроить TOTP</translation>
     </message>
     <message>
         <source>Empty Recycle Bin</source>
-        <translation type="unfinished"/>
+        <translation>Очистить корзину</translation>
     </message>
     <message>
         <source>Open Donation Website</source>
-        <translation type="unfinished"/>
+        <translation>Открыть сайт для пожертвований</translation>
     </message>
     <message>
         <source>Open Bug Report</source>
-        <translation type="unfinished"/>
+        <translation>Открыть отчёт об ошибке</translation>
     </message>
     <message>
         <source>Open Online Documentation</source>
-        <translation type="unfinished"/>
+        <translation>Открыть онлайн-документацию</translation>
     </message>
     <message>
         <source>Open Keyboard Shortcuts Guide</source>
-        <translation type="unfinished"/>
+        <translation>Открыть руководство по сочетаниям клавиш</translation>
     </message>
     <message>
         <source>Save Database Backup</source>
-        <translation type="unfinished"/>
+        <translation>Сохранить резервную копию базы</translation>
     </message>
     <message>
         <source>SSH Agent: Add Key</source>
-        <translation type="unfinished"/>
+        <translation>SSH-агент: добавить ключ</translation>
     </message>
     <message>
         <source>SSH Agent: Remove Key</source>
-        <translation type="unfinished"/>
+        <translation>SSH-агент: убрать ключ</translation>
     </message>
     <message>
         <source>Toggle Compact Mode</source>
-        <translation type="unfinished"/>
+        <translation>Компактный режим</translation>
     </message>
     <message>
         <source>Set Theme: Automatic</source>
-        <translation type="unfinished"/>
+        <translation>Установить тему: Автоматически</translation>
     </message>
     <message>
         <source>Set Theme: Light</source>
-        <translation type="unfinished"/>
+        <translation>Установить тему: Светлая</translation>
     </message>
     <message>
         <source>Set Theme: Dark</source>
-        <translation type="unfinished"/>
+        <translation>Установить тему: Тёмная</translation>
     </message>
     <message>
         <source>Set Theme: Classic</source>
-        <translation type="unfinished"/>
+        <translation>Установить тему: Классическая</translation>
+    </message>
+    <message>
+        <source>Toggle Show Menubar</source>
+        <translation>Отображать меню</translation>
     </message>
     <message>
         <source>Toggle Show Toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Отображать панель инструментов</translation>
     </message>
     <message>
         <source>Toggle Show Preview Panel</source>
-        <translation type="unfinished"/>
+        <translation>Отображать панель предварительного просмотра</translation>
     </message>
     <message>
         <source>Toggle Always on Top</source>
-        <translation type="unfinished"/>
+        <translation>Всегда поверх других окон</translation>
     </message>
     <message>
         <source>Toggle Hide Usernames</source>
-        <translation type="unfinished"/>
+        <translation>Скрыть логины</translation>
     </message>
     <message>
         <source>Toggle Hide Passwords</source>
-        <translation type="unfinished"/>
+        <translation>Скрыть пароли</translation>
     </message>
     <message>
         <source>Export to XML</source>
-        <translation type="unfinished"/>
+        <translation>Экспорт в XML</translation>
     </message>
     <message>
         <source>Toggle Allow Screen Capture</source>
-        <translation type="unfinished"/>
+        <translation>Разрешить скриншоты</translation>
     </message>
 </context>
 <context>
@@ -6228,10 +6252,6 @@ We recommend you use the AppImage available on our downloads page.</source>
         <translation>KeePassXC - Экспорт Passkey</translation>
     </message>
     <message>
-        <source>Export the following Passkey entries.</source>
-        <translation>Экспортировать следующие записи Passkey.</translation>
-    </message>
-    <message>
         <source>Filenames will be generated with title and .passkey file extension.</source>
         <translation>Имена файлов будут сгенерированы с заголовком и расширением файла .passkey</translation>
     </message>
@@ -6250,6 +6270,10 @@ We recommend you use the AppImage available on our downloads page.</source>
     <message>
         <source>Export to folder</source>
         <translation>Экспортировать в папку</translation>
+    </message>
+    <message>
+        <source>Export the following passkey entries.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6310,28 +6334,28 @@ Do you want to overwrite it?
         <translation>Отмена</translation>
     </message>
     <message>
-        <source>Import the following Passkey:</source>
-        <translation>Импортируйте следующий Passkey:</translation>
-    </message>
-    <message>
         <source>Entry</source>
         <translation>Запись</translation>
-    </message>
-    <message>
-        <source>Import the following Passkey to this entry:</source>
-        <translation>Импортируйте следующий Passkey в эту запись.</translation>
     </message>
     <message>
         <source>Create new entry</source>
         <translation>Создать новую запись</translation>
     </message>
     <message>
-        <source>Default Passkeys group (Imported Passkeys)</source>
-        <translation>Группа Passkeys по умолчанию (Импортированные Passkeys)</translation>
-    </message>
-    <message>
         <source>Relying Party: %1</source>
         <translation>Доверенная сторона: %1</translation>
+    </message>
+    <message>
+        <source>Import the following passkey:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import the following passkey to this entry:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Default passkeys group (Imported Passkeys)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6345,10 +6369,6 @@ Do you want to overwrite it?
         <translation>Все файлы</translation>
     </message>
     <message>
-        <source>Open Passkey file</source>
-        <translation>Открыть Passkey файл</translation>
-    </message>
-    <message>
         <source>Cannot open file</source>
         <translation>Не удается открыть файл</translation>
     </message>
@@ -6357,24 +6377,26 @@ Do you want to overwrite it?
         <translation>Не могу открыть файл &quot;%1&quot; для чтения.</translation>
     </message>
     <message>
-        <source>Cannot import Passkey</source>
-        <translation>Не могу импортировать Passkey</translation>
+        <source>Open passkey file</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;. Data is missing.</source>
-        <translation>Не могу импортировать Passkey файл &quot;%1&quot;. Данные отсутствуют.</translation>
+        <source>Cannot import passkey</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
-        <translation>Не могу импортировать Passkey файл &quot;%1&quot;. Приватный ключ отсутствует или поврежден.</translation>
+        <source>Cannot import passkey file &quot;%1&quot;. Data is missing.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;.
+        <source>Cannot import passkey file &quot;%1&quot;.
 The following data is missing:
 %2</source>
-        <translation>Не могу импортировать Passkey файл &quot;%1&quot;.
-Следующие данные отсутствуют:
-%2</translation>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot import passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6758,7 +6780,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Toggle password visibility using Control + H. Open the password generator using Control + G.</source>
-        <translation type="unfinished"/>
+        <translation>Переключить видимость пароля Ctrl + H. Открыть генератор паролей Ctrl + G.</translation>
     </message>
 </context>
 <context>
@@ -6816,7 +6838,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Continue with weak password</source>
-        <translation type="unfinished"/>
+        <translation>Продолжить со слабыми паролем</translation>
     </message>
 </context>
 <context>
@@ -7222,12 +7244,6 @@ Do you want to overwrite it?</source>
     <message>
         <source>time</source>
         <translation>время</translation>
-    </message>
-    <message>
-        <source>Set the key file for the database.
-This options is deprecated, use --set-key-file instead.</source>
-        <translation>Установить файл-ключ для базы данных.
-Эта опция устарела, вместо неё используйте --set-key-file.</translation>
     </message>
     <message>
         <source>Set the key file for the database.</source>
@@ -8391,10 +8407,6 @@ Kernel: %3 %4</source>
         <translation>читать пароли базы данных с stdin</translation>
     </message>
     <message>
-        <source>Locked databases.</source>
-        <translation>Базы данных заблокированы.</translation>
-    </message>
-    <message>
         <source>Database failed to lock.</source>
         <translation>Не удалось заблокировать базы данных.</translation>
     </message>
@@ -8457,40 +8469,38 @@ Kernel: %3 %4</source>
         <translation>разрешить снимки экрана и запись приложений (Windows/macOS)</translation>
     </message>
     <message>
-        <source>Enter Shortcut</source>
-        <translation type="unfinished"/>
+        <source>Set the key file for the database.
+This option is deprecated, use --set-key-file instead.</source>
+        <translation>Установить файл-ключ для базы данных.
+Эта опция устарела, вместо неё используйте --set-key-file.</translation>
     </message>
     <message>
-        <source>Action</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Shortcuts</source>
-        <translation type="unfinished"/>
+        <source>Databases have been locked.</source>
+        <translation>Базы данных заблокированы.</translation>
     </message>
     <message>
         <source>Attestation not supported</source>
-        <translation type="unfinished"/>
+        <translation>Аттестация не поддерживается</translation>
     </message>
     <message>
         <source>Credential is excluded</source>
-        <translation type="unfinished"/>
+        <translation>Учётные данные исключены</translation>
     </message>
     <message>
         <source>Passkeys request canceled</source>
-        <translation type="unfinished"/>
+        <translation>Запрос на создание Passkeys отменён</translation>
     </message>
     <message>
         <source>Invalid user verification</source>
-        <translation type="unfinished"/>
+        <translation>Неверная проверка пользователя</translation>
     </message>
     <message>
         <source>Empty public key</source>
-        <translation type="unfinished"/>
+        <translation>Пустой публичный ключ</translation>
     </message>
     <message>
         <source>Invalid URL provided</source>
-        <translation type="unfinished"/>
+        <translation>Неверный URL-адрес</translation>
     </message>
     <message>
         <source>Passkeys</source>
@@ -8498,43 +8508,43 @@ Kernel: %3 %4</source>
     </message>
     <message>
         <source>AES initialization failed</source>
-        <translation type="unfinished"/>
+        <translation>Ошибка при инициализации AES</translation>
     </message>
     <message>
         <source>AES encrypt failed</source>
-        <translation type="unfinished"/>
+        <translation>Ошибка шифрования AES</translation>
     </message>
     <message>
         <source>Failed to store in Linux Keyring</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось сохранить в Linux Keyring</translation>
     </message>
     <message>
         <source>Polkit returned an error: %1</source>
-        <translation type="unfinished"/>
+        <translation>Polkit вернул ошибку: %1</translation>
     </message>
     <message>
         <source>Could not locate key in keyring</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось найти ключ в keyring</translation>
     </message>
     <message>
         <source>Could not read key in keyring</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось прочитать ключ в keyring</translation>
     </message>
     <message>
         <source>AES decrypt failed</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось расшифровать AES</translation>
     </message>
     <message>
         <source>No Polkit authentication agent was available</source>
-        <translation type="unfinished"/>
+        <translation>Агент аутентификации Polkit был недоступен</translation>
     </message>
     <message>
         <source>Polkit authorization failed</source>
-        <translation type="unfinished"/>
+        <translation>Ошибка авторизации Polkit</translation>
     </message>
     <message>
         <source>No Quick Unlock provider is available</source>
-        <translation type="unfinished"/>
+        <translation>Служба быстрой разблокировки не доступна</translation>
     </message>
     <message>
         <source>Failed to init KeePassXC crypto.</source>
@@ -8553,105 +8563,121 @@ Kernel: %3 %4</source>
         <translation>Не удалось расшифровать данные ключа.</translation>
     </message>
     <message>
+        <source>Origin is empty or not allowed</source>
+        <translation>Источник пуст или не разрешён</translation>
+    </message>
+    <message>
+        <source>Effective domain is not a valid domain</source>
+        <translation>Эффективный домен не допустимый домен</translation>
+    </message>
+    <message>
+        <source>Origin and RP ID do not match</source>
+        <translation>Bcnjxybr и RP ID не совпадают</translation>
+    </message>
+    <message>
+        <source>No supported algorithms were provided</source>
+        <translation>Не было предоставлено поддерживаемых алгоритмов</translation>
+    </message>
+    <message>
+        <source>Wait for timer to expire</source>
+        <translation>Дождитесь истечения таймера</translation>
+    </message>
+    <message>
+        <source>Challenge is shorter than required minimum length</source>
+        <translation>Вызов короче требуемой минимальной длины</translation>
+    </message>
+    <message>
+        <source>user.id does not match the required length</source>
+        <translation>user.id не соответствует требуемой длине</translation>
+    </message>
+    <message>
         <source>Favorite</source>
         <comment>Tag for favorite entries</comment>
-        <translation type="unfinished"/>
+        <translation>Избранное</translation>
     </message>
     <message>
         <source>File does not exist.</source>
-        <translation type="unfinished"/>
+        <translation>Файл не существует.</translation>
     </message>
     <message>
         <source>Cannot open file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Не удается открыть файл: %1</translation>
     </message>
     <message>
         <source>Cannot parse file: %1 at position %2</source>
-        <translation type="unfinished"/>
+        <translation>Не удается разобрать файл: %1 в позиции %2</translation>
     </message>
     <message>
         <source>Failed to decrypt json file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Не удалось расшифровать файл json: %1</translation>
     </message>
     <message>
         <source>Invalid encKeyValidation field</source>
-        <translation type="unfinished"/>
+        <translation>Неверное поле encKeyValidation</translation>
     </message>
     <message>
         <source>Invalid cipher list within encKeyValidation field</source>
-        <translation type="unfinished"/>
+        <translation>Неверный список шифров в поле encKeyValidation</translation>
     </message>
     <message>
         <source>Wrong password</source>
-        <translation type="unfinished"/>
+        <translation>Неверный пароль</translation>
     </message>
     <message>
         <source>Invalid encrypted data field</source>
-        <translation type="unfinished"/>
+        <translation>Недопустимое поле зашифрованных данных</translation>
     </message>
     <message>
         <source>Invalid cipher list within encrypted data field</source>
-        <translation type="unfinished"/>
+        <translation>Неверный список шифров в поле зашифрованных данных</translation>
     </message>
     <message>
         <source>Cannot initialize cipher</source>
-        <translation type="unfinished"/>
+        <translation>Не удается инициализировать шифр</translation>
     </message>
     <message>
         <source>Cannot decrypt data</source>
-        <translation type="unfinished"/>
+        <translation>Не удается расшифровать данные</translation>
     </message>
     <message>
         <source>Bitwarden Import</source>
-        <translation type="unfinished"/>
+        <translation>Импорт из Bitwarden</translation>
     </message>
     <message>
         <source>Archived</source>
         <comment>Tag for archived entries</comment>
-        <translation type="unfinished"/>
+        <translation>Архивировано</translation>
     </message>
     <message>
         <source>Invalid 1PUX file format: Not a valid ZIP file.</source>
-        <translation type="unfinished"/>
+        <translation>Неверный формат файла 1PUX: Недопустимый ZIP-файл.</translation>
     </message>
     <message>
         <source>Invalid 1PUX file format: Missing export.data</source>
-        <translation type="unfinished"/>
+        <translation>Неверный формат файла 1PUX: отсутствует export.data</translation>
     </message>
     <message>
         <source>1Password Import</source>
-        <translation type="unfinished"/>
+        <translation>Импорт из 1Password</translation>
     </message>
     <message>
-        <source>Origin is empty or not allowed</source>
-        <translation type="unfinished"/>
+        <source>Enter Shortcut</source>
+        <translation>Введите комбинацию</translation>
     </message>
     <message>
-        <source>Effective domain is not a valid domain</source>
-        <translation type="unfinished"/>
+        <source>Action</source>
+        <translation>Действие</translation>
     </message>
     <message>
-        <source>Origin and RP ID do not match</source>
-        <translation type="unfinished"/>
+        <source>Shortcuts</source>
+        <translation>Комбинации клавиш</translation>
     </message>
     <message>
-        <source>No supported algorithms were provided</source>
-        <translation type="unfinished"/>
+        <source>Unsupported KDF type, cannot decrypt json file</source>
+        <translation>Неподдерживаемый тип KDF, не удаётся расшифровать json-файл</translation>
     </message>
     <message>
-        <source>Wait for timer to expire</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Unknown Passkeys error</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Challenge is shorter than required minimum length</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>user.id does not match the required length</source>
+        <source>Unknown passkeys error</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -8972,14 +8998,6 @@ Kernel: %3 %4</source>
         <translation>Список записей URL</translation>
     </message>
     <message>
-        <source>Please wait, list of entries with Passkeys is being updated…</source>
-        <translation>Пожалуйста, подождите, список записей с Passkeys обновляется...</translation>
-    </message>
-    <message>
-        <source>No entries with Passkeys.</source>
-        <translation>Ytn pfgbctq c Passkeys.</translation>
-    </message>
-    <message>
         <source>Title</source>
         <translation>Название</translation>
     </message>
@@ -9014,6 +9032,22 @@ Kernel: %3 %4</source>
     <message>
         <source> (Expired)</source>
         <translation>(Истекший)</translation>
+    </message>
+    <message>
+        <source>Export Confirmation</source>
+        <translation>Подтверждение экспорта</translation>
+    </message>
+    <message>
+        <source>The passkey file will be vulnerable to theft and unauthorized use, if left unsecured. Are you sure you want to continue?</source>
+        <translation>Если оставить passkey файл без защиты, он будет уязвим для кражи и несанкционированного использования. Вы уверены, что хотите продолжить?</translation>
+    </message>
+    <message>
+        <source>Please wait, list of entries with passkeys is being updated…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No entries with passkeys.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -9334,31 +9368,8 @@ Kernel: %3 %4</source>
         <translation>Подтверждать получение паролей клиентами</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;
-           font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Helvetica','Arial','sans-serif','Apple Color
-           Emoji','Segoe UI Emoji'; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;This setting does
-           not override disabling recycle bin prompts&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;
-           font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color
-           Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;Эта настройка не
-           подавляет запросы на прекращение использования корзины&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </translation>
-    </message>
-    <message>
         <source>Confirm when clients request entry deletion</source>
         <translation>Подтверждать запрос удаления записей клиентами</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications
-           which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also
-           crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a
-           different value set in applications.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Это улучшает совместимость с некоторыми приложениями,
-которые ищут пароль без предварительного открытия базы данных.&lt;/p&gt;&lt;p&gt;Включение настройки может также
-вызвать сбой клиента, если база данных не может быть открыта в течение определённого времени. (Обычно 25 с, другое значение устанавливается в приложениях.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </translation>
     </message>
     <message>
         <source>Prompt to unlock database before searching</source>
@@ -9383,6 +9394,14 @@ Kernel: %3 %4</source>
     <message>
         <source>Save current changes to activate the plugin and enable editing of this section.</source>
         <translation>Сохраните изменения для активации подключаемого модуля и редактирования этого раздела.</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This setting does not override disabling recycle bin prompts &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Этот параметр не отменяет отключение подсказок корзины&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a different value set in applications.) &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Это улучшает совместимость с некоторыми приложениями, которые ищут пароль без предварительной разблокировки базы данных.&lt;/p&gt;&lt;p&gt;Но включение этой функции может привести к аварийному завершению работы клиента, если база данных не может быть разблокирована в течение определенного таймаута. (Обычно 25 с, но в приложениях может быть установлено другое значение).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -9493,23 +9512,23 @@ Kernel: %3 %4</source>
     <name>ShortcutSettingsWidget</name>
     <message>
         <source>Double click an action to change its shortcut</source>
-        <translation type="unfinished"/>
+        <translation>Дважды щелкните по действию, чтобы изменить его комбинацию</translation>
     </message>
     <message>
         <source>Shortcut Conflict</source>
-        <translation type="unfinished"/>
+        <translation>Конфликт комбинации</translation>
     </message>
     <message>
         <source>Filter...</source>
-        <translation type="unfinished"/>
+        <translation>Фильтр...</translation>
     </message>
     <message>
         <source>Shortcut %1 conflicts with &apos;%2&apos;. Overwrite shortcut?</source>
-        <translation type="unfinished"/>
+        <translation>Комбинация клавиш %1 конфликтует с &apos;%2&apos;. Перезаписать комбинацию?</translation>
     </message>
     <message>
         <source>Reset Shortcuts</source>
-        <translation type="unfinished"/>
+        <translation>Сброс комбинаций</translation>
     </message>
 </context>
 <context>
@@ -9720,15 +9739,15 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Create Database</source>
-        <translation type="unfinished"/>
+        <translation>Создать базу данных</translation>
     </message>
     <message>
         <source>Open Database</source>
-        <translation type="unfinished"/>
+        <translation>Открыть базу данных</translation>
     </message>
     <message>
         <source>Import File</source>
-        <translation type="unfinished"/>
+        <translation>Импортировать файл</translation>
     </message>
 </context>
 <context>
@@ -9801,11 +9820,11 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>&lt;p&gt;If you own a &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; or &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt;, you can use it for additional security.&lt;/p&gt;&lt;p&gt;The key requires one of its slots to be programmed as &lt;a href=&quot;https://docs.yubico.com/yesdk/users-manual/application-otp/challenge-response.html&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;Если у вас есть &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; или &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt;, его можно использовать для дополнительной безопасности.&lt;/p&gt;&lt;p&gt;Для работы ключа необходимо, чтобы один из его слотов был запрограммирован как &lt;a href=&quot;https://docs.yubico.com/yesdk/users-manual/application-otp/challenge-response.html&quot;&gt;вызов-ответ HMAC-SHA1&lt;/a&gt;.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Refresh hardware keys</source>
-        <translation type="unfinished"/>
+        <translation>Обновить аппаратные ключи</translation>
     </message>
 </context>
 <context>
@@ -9833,7 +9852,7 @@ Example: JBSWY3DPEHPK3PXP</source>
     <message>
         <source>(NFC) %1 [%2] - Slot %3, %4</source>
         <comment>YubiKey display fields</comment>
-        <translation type="unfinished"/>
+        <translation>(NFC) %1 [%2] - Слот %3, %4</translation>
     </message>
     <message>
         <source>Press</source>
@@ -9885,12 +9904,12 @@ Example: JBSWY3DPEHPK3PXP</source>
     <message>
         <source>%1 [%2] - Slot %3</source>
         <comment>YubiKey NEO display fields</comment>
-        <translation type="unfinished"/>
+        <translation>%1 [%2] - Слот %3</translation>
     </message>
     <message>
         <source>%1 [%2] - Slot %3, %4</source>
         <comment>YubiKey display fields</comment>
-        <translation type="unfinished"/>
+        <translation>%1 [%2] - Слот %3, %4</translation>
     </message>
 </context>
 </TS>

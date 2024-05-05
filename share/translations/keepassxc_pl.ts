@@ -559,10 +559,6 @@
         <translation>Zablokuj bazę danych po zminimalizowaniu okna</translation>
     </message>
     <message>
-        <source>Require password repeat when it is visible</source>
-        <translation>Wymagaj powtórzenia hasła, gdy jest widoczne</translation>
-    </message>
-    <message>
         <source>Hide passwords when editing them</source>
         <translation>Ukryj hasła podczas ich edycji</translation>
     </message>
@@ -705,10 +701,6 @@
 <context>
     <name>AutoTypePlatformX11</name>
     <message>
-        <source>Trying to send invalid keysym.</source>
-        <translation>Próba wysłania nieprawidłowego keysym.</translation>
-    </message>
-    <message>
         <source>Sequence aborted: Caps Lock is on</source>
         <translation>Sekwencja przerwana: Caps Lock jest włączony</translation>
     </message>
@@ -719,6 +711,10 @@
     <message>
         <source>Unable to get valid keycode for key: </source>
         <translation>Nie można uzyskać prawidłowego keycode&apos;u dla klawisza: </translation>
+    </message>
+    <message>
+        <source>Trying to send invalid keyboard symbol.</source>
+        <translation>Próba wysłania nieprawidłowego symbolu klawiaturowego.</translation>
     </message>
 </context>
 <context>
@@ -877,24 +873,6 @@ Wybierz właściwą bazę danych do zapisania danych uwierzytelniających.</tran
         <translation><numerusform>Limit czasu za &lt;b&gt;%n&lt;/b&gt; sekundę...</numerusform><numerusform>Limit czasu za &lt;b&gt;%n&lt;/b&gt; sekundy...</numerusform><numerusform>Limit czasu za &lt;b&gt;%n&lt;/b&gt; sekund...</numerusform><numerusform>Limit czasu za &lt;b&gt;%n&lt;/b&gt; sekund...</numerusform></translation>
     </message>
     <message>
-        <source>Do you want to register Passkey for:</source>
-        <translation>Czy chcesz zarejestrować klucz dostępu dla:</translation>
-    </message>
-    <message>
-        <source>Existing Passkey found.
-Do you want to register a new Passkey for:</source>
-        <translation>Znaleziono istniejący klucz dostępu.
-Czy chcesz zarejestrować nowy klucz dostępu dla:</translation>
-    </message>
-    <message>
-        <source>Select the existing Passkey and press Update to replace it.</source>
-        <translation>Wybierz istniejący klucz dostępu i naciśnij przycisk Zaktualizuj, aby go zastąpić.</translation>
-    </message>
-    <message>
-        <source>Authenticate Passkey credentials for:</source>
-        <translation>Uwierzytelnij dane uwierzytelniające klucza dostępu dla:</translation>
-    </message>
-    <message>
         <source>Relying Party: %1</source>
         <translation>Strona ufająca: %1</translation>
     </message>
@@ -905,6 +883,27 @@ Czy chcesz zarejestrować nowy klucz dostępu dla:</translation>
     <message>
         <source>KeePassXC - Passkey credentials</source>
         <translation>KeePassXC - Dane uwierzytelniające klucza dostępu</translation>
+    </message>
+    <message>
+        <source>Add to existing entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Existing passkey found.
+Do you want to register a new passkey for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Select the existing passkey and press Update to replace it.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Authenticate passkey credentials for:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to register a passkey for:</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -956,12 +955,6 @@ Czy chcesz usunąć wpis?
         <translation>%1 (klucz dostępu)</translation>
     </message>
     <message>
-        <source>Entry already has a Passkey.
-Do you want to overwrite the Passkey in %1 - %2?</source>
-        <translation>Wpis ma już klucz dostępu.
-Czy chcesz zastąpić klucz dostępu w %1 - %2?</translation>
-    </message>
-    <message>
         <source>KeePassXC - Create a new group</source>
         <translation>KeePassXC - Utwórz nową grupę</translation>
     </message>
@@ -972,10 +965,6 @@ Czy chcesz zastąpić klucz dostępu w %1 - %2?</translation>
     <message>
         <source>KeePassXC - Overwrite existing key?</source>
         <translation>KeePassXC - Zastąpić istniejący klucz?</translation>
-    </message>
-    <message>
-        <source>KeePassXC - Update Passkey</source>
-        <translation>KeePassXC - Zaktualizuj klucz dostępu</translation>
     </message>
     <message>
         <source>KeePassXC - Update Entry</source>
@@ -992,6 +981,27 @@ Czy chcesz zastąpić klucz dostępu w %1 - %2?</translation>
     <message>
         <source>Passkey</source>
         <translation>Klucz dostępu</translation>
+    </message>
+    <message>
+        <source>KeePassXC - Passkey credentials</source>
+        <translation>KeePassXC - Dane uwierzytelniające klucza dostępu</translation>
+    </message>
+    <message>
+        <source>Register a new passkey to this entry:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC - Update passkey</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Entry already has a passkey.
+Do you want to overwrite the passkey in %1 - %2?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Register</source>
+        <translation>Zarejestruj</translation>
     </message>
 </context>
 <context>
@@ -1240,12 +1250,12 @@ Czy chcesz zastąpić klucz dostępu w %1 - %2?</translation>
         <translation>&lt;b&gt;Błąd:&lt;/b&gt; Brak pliku wykonywalnego zainstalowanego proxy w oczekiwanej lokalizacji: %1&lt;br/&gt;Ustaw lokalizację niestandardowego proxy w ustawieniach zaawansowanych lub zainstaluj ponownie aplikację.</translation>
     </message>
     <message>
-        <source>Allows using insecure http://localhost with Passkeys for testing purposes.</source>
-        <translation>Umożliwia używanie niezabezpieczonego http://localhost z kluczami dostępu do celów testowych.</translation>
+        <source>Allows using insecure http://localhost with passkeys for testing purposes.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Allow using localhost with Passkeys</source>
-        <translation>Zezwalaj na używanie localhost z kluczami dostępu</translation>
+        <source>Allow using localhost with passkeys</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2836,10 +2846,6 @@ Czy chcesz go poprawić?</translation>
 <context>
     <name>EditEntryWidgetBrowser</name>
     <message>
-        <source>These settings affect to the entry&apos;s behaviour with the browser extension.</source>
-        <translation>Te ustawienia wpływają na zachowanie wpisu z rozszerzeniem przeglądarki.</translation>
-    </message>
-    <message>
         <source>General</source>
         <translation>Ogólne</translation>
     </message>
@@ -2868,10 +2874,6 @@ Czy chcesz go poprawić?</translation>
         <translation>Nie używaj tego wpisu z podstawowym uwierzytelnianiem HTTP</translation>
     </message>
     <message>
-        <source>Additional URL&apos;s</source>
-        <translation>Dodatkowe adresy URL</translation>
-    </message>
-    <message>
         <source>Add</source>
         <translation>Dodaj</translation>
     </message>
@@ -2882,6 +2884,14 @@ Czy chcesz go poprawić?</translation>
     <message>
         <source>Edit</source>
         <translation>Edytuj</translation>
+    </message>
+    <message>
+        <source>These settings affect the entry&apos;s behaviour with the browser extension.</source>
+        <translation>Te ustawienia wpływają na zachowanie wpisu z rozszerzeniem przeglądarki.</translation>
+    </message>
+    <message>
+        <source>Additional URLs</source>
+        <translation>Dodatkowe adresy URL</translation>
     </message>
 </context>
 <context>
@@ -3678,12 +3688,6 @@ Może to spowodować nieprawidłowe działanie wtyczek.</translation>
         <translation>Potwierdź zastąpienie załącznika</translation>
     </message>
     <message>
-        <source>Attachment &quot;%1&quot; already exists. 
-Would you like to overwrite the existing attachment?</source>
-        <translation>Załącznik &quot;%1&quot; już istnieje.
-Czy chcesz zastąpić istniejący załącznik?</translation>
-    </message>
-    <message>
         <source>Confirm Attachment</source>
         <translation>Potwierdź załącznik</translation>
     </message>
@@ -3716,6 +3720,12 @@ Czy chcesz zapisać zmiany w bazie danych?</translation>
 Error: %1</source>
         <translation>Zapisywanie zaktualizowanego załącznika nie powiodło się.
 Błąd: %1</translation>
+    </message>
+    <message>
+        <source>Attachment &quot;%1&quot; already exists. 
+Would you like to overwrite the existing attachment?</source>
+        <translation>Załącznik &quot;%1&quot; już istnieje.
+Czy chcesz zastąpić istniejący załącznik?</translation>
     </message>
 </context>
 <context>
@@ -4355,7 +4365,7 @@ Możesz włączyć usługę ikon witryn DuckDuckGo w sekcji bezpieczeństwa usta
     </message>
     <message>
         <source>Comma Separated Values (.csv)</source>
-        <translation>Wartości rozdzielane przecinkami (.csv)</translation>
+        <translation>Format CSV (.csv)</translation>
     </message>
     <message>
         <source>1Password Export (.1pux)</source>
@@ -4395,7 +4405,7 @@ Możesz włączyć usługę ikon witryn DuckDuckGo w sekcji bezpieczeństwa usta
     </message>
     <message>
         <source>Comma Separated Values</source>
-        <translation>Wartości rozdzielane przecinkami</translation>
+        <translation>Format CSV</translation>
     </message>
     <message>
         <source>1Password Export</source>
@@ -5497,6 +5507,10 @@ Czy na pewno chcesz kontynuować z tym plikiem?</translation>
         <translation>Klasyczny (natywny dla platformy)</translation>
     </message>
     <message>
+        <source>Show Menubar</source>
+        <translation>Pokaż pasek menu</translation>
+    </message>
+    <message>
         <source>Show Toolbar</source>
         <translation>Pokaż pasek narzędzi</translation>
     </message>
@@ -5843,6 +5857,10 @@ Zalecamy korzystanie z AppImage dostępnego na naszej stronie pobierania.</trans
     <message>
         <source>Set Theme: Classic</source>
         <translation>Ustaw motyw: Klasyczny</translation>
+    </message>
+    <message>
+        <source>Toggle Show Menubar</source>
+        <translation>Przełącz pokazywanie paska menu</translation>
     </message>
     <message>
         <source>Toggle Show Toolbar</source>
@@ -6236,10 +6254,6 @@ Zalecamy korzystanie z AppImage dostępnego na naszej stronie pobierania.</trans
         <translation>KeePassXC - Eksport kluczy dostępu</translation>
     </message>
     <message>
-        <source>Export the following Passkey entries.</source>
-        <translation>Eksportuj następujące wpisy klucza dostępu.</translation>
-    </message>
-    <message>
         <source>Filenames will be generated with title and .passkey file extension.</source>
         <translation>Nazwy plików zostaną wygenerowane z tytułem i rozszerzeniem pliku .passkey.</translation>
     </message>
@@ -6258,6 +6272,10 @@ Zalecamy korzystanie z AppImage dostępnego na naszej stronie pobierania.</trans
     <message>
         <source>Export to folder</source>
         <translation>Eksportuj do folderu</translation>
+    </message>
+    <message>
+        <source>Export the following passkey entries.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6317,28 +6335,28 @@ Czy chcesz go zastąpić?</translation>
         <translation>Anuluj</translation>
     </message>
     <message>
-        <source>Import the following Passkey:</source>
-        <translation>Importuj następujący klucz dostępu:</translation>
-    </message>
-    <message>
         <source>Entry</source>
         <translation>Wpis</translation>
-    </message>
-    <message>
-        <source>Import the following Passkey to this entry:</source>
-        <translation>Importuj następujący klucz dostępu do tego wpisu:</translation>
     </message>
     <message>
         <source>Create new entry</source>
         <translation>Utwórz nowy wpis</translation>
     </message>
     <message>
-        <source>Default Passkeys group (Imported Passkeys)</source>
-        <translation>Domyślna grupa kluczy dostępu (importowane klucze dostępu)</translation>
-    </message>
-    <message>
         <source>Relying Party: %1</source>
         <translation>Strona ufająca: %1</translation>
+    </message>
+    <message>
+        <source>Import the following passkey:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Import the following passkey to this entry:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Default passkeys group (Imported Passkeys)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6352,10 +6370,6 @@ Czy chcesz go zastąpić?</translation>
         <translation>Wszystkie pliki</translation>
     </message>
     <message>
-        <source>Open Passkey file</source>
-        <translation>Otwórz plik klucza dostępu</translation>
-    </message>
-    <message>
         <source>Cannot open file</source>
         <translation>Nie można otworzyć pliku</translation>
     </message>
@@ -6364,24 +6378,26 @@ Czy chcesz go zastąpić?</translation>
         <translation>Nie można otworzyć pliku &quot;%1&quot; do odczytu.</translation>
     </message>
     <message>
-        <source>Cannot import Passkey</source>
-        <translation>Nie można zaimportować klucza dostępu</translation>
+        <source>Open passkey file</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;. Data is missing.</source>
-        <translation>Nie można zaimportować pliku klucza dostępu &quot;%1&quot;. Brak danych.</translation>
+        <source>Cannot import passkey</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
-        <translation>Nie można zaimportować pliku klucza dostępu &quot;%1&quot;. Brak klucza prywatnego lub jest on źle sformatowany.</translation>
+        <source>Cannot import passkey file &quot;%1&quot;. Data is missing.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;.
+        <source>Cannot import passkey file &quot;%1&quot;.
 The following data is missing:
 %2</source>
-        <translation>Nie można zaimportować pliku klucza dostępu &quot;%1&quot;.
-Brakuje następujących danych:
-%2</translation>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cannot import passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7229,12 +7245,6 @@ Czy chcesz ją zastąpić?</translation>
     <message>
         <source>time</source>
         <translation>czas</translation>
-    </message>
-    <message>
-        <source>Set the key file for the database.
-This options is deprecated, use --set-key-file instead.</source>
-        <translation>Ustaw plik klucza do bazy danych.
-Ta opcja jest przestarzała, zamiast jej użyj --set-key-file.</translation>
     </message>
     <message>
         <source>Set the key file for the database.</source>
@@ -8398,10 +8408,6 @@ Jądro: %3 %4</translation>
         <translation>odczytaj hasło bazy danych z stdin</translation>
     </message>
     <message>
-        <source>Locked databases.</source>
-        <translation>Zablokowane bazy danych.</translation>
-    </message>
-    <message>
         <source>Database failed to lock.</source>
         <translation>Nie udało się zablokować bazy danych.</translation>
     </message>
@@ -8464,16 +8470,14 @@ Jądro: %3 %4</translation>
         <translation>zezwól na zrzuty ekranu i nagrywanie aplikacji (Windows/macOS)</translation>
     </message>
     <message>
-        <source>Enter Shortcut</source>
-        <translation>Wprowadź skrót</translation>
+        <source>Set the key file for the database.
+This option is deprecated, use --set-key-file instead.</source>
+        <translation>Ustaw plik klucza do bazy danych.
+Ta opcja jest przestarzała, zamiast jej użyj --set-key-file.</translation>
     </message>
     <message>
-        <source>Action</source>
-        <translation>Czynność</translation>
-    </message>
-    <message>
-        <source>Shortcuts</source>
-        <translation>Skróty</translation>
+        <source>Databases have been locked.</source>
+        <translation>Bazy danych zostały zablokowane.</translation>
     </message>
     <message>
         <source>Attestation not supported</source>
@@ -8560,6 +8564,34 @@ Jądro: %3 %4</translation>
         <translation>Nie udało się odszyfrować danych klucza.</translation>
     </message>
     <message>
+        <source>Origin is empty or not allowed</source>
+        <translation>Źródło jest puste lub niedozwolone</translation>
+    </message>
+    <message>
+        <source>Effective domain is not a valid domain</source>
+        <translation>Domena efektywna nie jest domeną prawidłową</translation>
+    </message>
+    <message>
+        <source>Origin and RP ID do not match</source>
+        <translation>Źródło i identyfikator RP nie są zgodne</translation>
+    </message>
+    <message>
+        <source>No supported algorithms were provided</source>
+        <translation>Nie zapewniono obsługiwanych algorytmów</translation>
+    </message>
+    <message>
+        <source>Wait for timer to expire</source>
+        <translation>Poczekaj, aż upłynie limit czasu</translation>
+    </message>
+    <message>
+        <source>Challenge is shorter than required minimum length</source>
+        <translation>Wyzwanie jest krótsze niż wymagana długość minimalna</translation>
+    </message>
+    <message>
+        <source>user.id does not match the required length</source>
+        <translation>user.id nie ma wymaganej długości</translation>
+    </message>
+    <message>
         <source>Favorite</source>
         <comment>Tag for favorite entries</comment>
         <translation>Ulubiony</translation>
@@ -8630,36 +8662,24 @@ Jądro: %3 %4</translation>
         <translation>Import 1Password</translation>
     </message>
     <message>
-        <source>Origin is empty or not allowed</source>
-        <translation>Źródło jest puste lub niedozwolone</translation>
+        <source>Enter Shortcut</source>
+        <translation>Wprowadź skrót</translation>
     </message>
     <message>
-        <source>Effective domain is not a valid domain</source>
-        <translation>Domena efektywna nie jest domeną prawidłową</translation>
+        <source>Action</source>
+        <translation>Czynność</translation>
     </message>
     <message>
-        <source>Origin and RP ID do not match</source>
-        <translation>Źródło i identyfikator RP nie są zgodne</translation>
+        <source>Shortcuts</source>
+        <translation>Skróty</translation>
     </message>
     <message>
-        <source>No supported algorithms were provided</source>
-        <translation>Nie zapewniono obsługiwanych algorytmów</translation>
+        <source>Unsupported KDF type, cannot decrypt json file</source>
+        <translation>Nieobsługiwany typ KDF, nie można odszyfrować pliku JSON</translation>
     </message>
     <message>
-        <source>Wait for timer to expire</source>
-        <translation>Poczekaj, aż upłynie limit czasu</translation>
-    </message>
-    <message>
-        <source>Unknown Passkeys error</source>
-        <translation>Nieznany błąd klucza dostępu</translation>
-    </message>
-    <message>
-        <source>Challenge is shorter than required minimum length</source>
-        <translation>Wyzwanie jest krótsze niż wymagana długość minimalna</translation>
-    </message>
-    <message>
-        <source>user.id does not match the required length</source>
-        <translation>user.id nie ma wymaganej długości</translation>
+        <source>Unknown passkeys error</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -8979,14 +8999,6 @@ Jądro: %3 %4</translation>
         <translation>Lista adresów URL wpisu</translation>
     </message>
     <message>
-        <source>Please wait, list of entries with Passkeys is being updated…</source>
-        <translation>Proszę czekać, lista wpisów z kluczami dostępu jest aktualizowana…</translation>
-    </message>
-    <message>
-        <source>No entries with Passkeys.</source>
-        <translation>Brak wpisów z kluczami dostępu.</translation>
-    </message>
-    <message>
         <source>Title</source>
         <translation>Tytuł</translation>
     </message>
@@ -9021,6 +9033,22 @@ Jądro: %3 %4</translation>
     <message>
         <source> (Expired)</source>
         <translation> (Wygasłe)</translation>
+    </message>
+    <message>
+        <source>Export Confirmation</source>
+        <translation>Potwierdzenie eksportu</translation>
+    </message>
+    <message>
+        <source>The passkey file will be vulnerable to theft and unauthorized use, if left unsecured. Are you sure you want to continue?</source>
+        <translation>Plik klucza dostępu będzie narażony na kradzież i nieupoważnione użycie, jeśli pozostanie niezabezpieczony. Czy na pewno chcesz kontynuować?</translation>
+    </message>
+    <message>
+        <source>Please wait, list of entries with passkeys is being updated…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No entries with passkeys.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -9341,32 +9369,8 @@ Jądro: %3 %4</translation>
         <translation>Potwierdź, gdy hasła są pobierane przez klientów</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;
-           font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Helvetica','Arial','sans-serif','Apple Color
-           Emoji','Segoe UI Emoji'; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;This setting does
-           not override disabling recycle bin prompts&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;
-           font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color
-           Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;To ustawienie
-           nie zastępuje wyłączania monitów dotyczących kosza&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </translation>
-    </message>
-    <message>
         <source>Confirm when clients request entry deletion</source>
         <translation>Potwierdź, gdy klienty zażądają usunięcia wpisu</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications
-           which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also
-           crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a
-           different value set in applications.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Poprawia to kompatybilność z niektórymi aplikacjami,
-            które szukają hasła bez uprzedniego odblokowania bazy danych.&lt;/p&gt;&lt;p&gt;Ale włączenie tego może również
-           spowodować awarię klienta, jeśli bazy danych nie można odblokować w określonym czasie. (Zwykle 25 s, ale
-           w aplikacjach może to być inna wartość.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </translation>
     </message>
     <message>
         <source>Prompt to unlock database before searching</source>
@@ -9391,6 +9395,14 @@ Jądro: %3 %4</translation>
     <message>
         <source>Save current changes to activate the plugin and enable editing of this section.</source>
         <translation>Zapisz bieżące zmiany, aby aktywować wtyczkę i włączyć edycję tej sekcji.</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This setting does not override disabling recycle bin prompts &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;To ustawienie nie zastępuje wyłączenia monitów kosza &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a different value set in applications.) &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Poprawia to kompatybilność z niektórymi aplikacjami, które szukają hasła bez uprzedniego odblokowania bazy danych.&lt;/p&gt;&lt;p&gt;Ale włączenie tego może również spowodować awarię klienta, jeśli bazy danych nie można odblokować w określonym czasie (zwykle 25 s, ale w aplikacjach może to być inna wartość). &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;      </translation>
     </message>
 </context>
 <context>
