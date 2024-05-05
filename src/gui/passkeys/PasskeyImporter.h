@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,7 +21,9 @@
 #include "core/Database.h"
 #include <QFile>
 #include <QObject>
+#include <QPointer>
 #include <QUuid>
+#include <QWidget>
 
 class Entry;
 
@@ -30,21 +32,27 @@ class PasskeyImporter : public QObject
     Q_OBJECT
 
 public:
-    explicit PasskeyImporter() = default;
+    explicit PasskeyImporter(QWidget* parent = nullptr);
 
     void importPasskey(QSharedPointer<Database>& database, Entry* entry = nullptr);
-
-private:
-    void importSelectedFile(QFile& file, QSharedPointer<Database>& database, Entry* entry);
-    void showImportDialog(QSharedPointer<Database>& database,
+    bool showImportDialog(QSharedPointer<Database>& database,
+                          Entry* entry,
                           const QString& url,
                           const QString& relyingParty,
                           const QString& username,
                           const QString& credentialId,
                           const QString& userHandle,
                           const QString& privateKey,
-                          Entry* entry);
+                          const QString& titleText = {},
+                          const QString& infoText = {},
+                          const QString& importButtonText = {});
+
+private:
+    void importSelectedFile(QFile& file, QSharedPointer<Database>& database, Entry* entry);
     Group* getDefaultGroup(QSharedPointer<Database>& database) const;
+
+private:
+    QPointer<QWidget> m_parent;
 };
 
 #endif // KEEPASSXC_PASSKEYIMPORTER_H

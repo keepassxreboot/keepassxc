@@ -27,13 +27,18 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
+PasskeyExporter::PasskeyExporter(QWidget* parent)
+    : m_parent(parent)
+{
+}
+
 void PasskeyExporter::showExportDialog(const QList<Entry*>& items)
 {
     if (items.isEmpty()) {
         return;
     }
 
-    PasskeyExportDialog passkeyExportDialog;
+    PasskeyExportDialog passkeyExportDialog(m_parent);
     passkeyExportDialog.setEntries(items);
     auto ret = passkeyExportDialog.exec();
 
@@ -69,7 +74,7 @@ void PasskeyExporter::exportSelectedEntry(const Entry* entry, const QString& fol
 {
     const auto fullPath = QString("%1/%2.passkey").arg(folder, Tools::cleanFilename(entry->title()));
     if (QFile::exists(fullPath)) {
-        auto dialogResult = MessageBox::warning(nullptr,
+        auto dialogResult = MessageBox::warning(m_parent,
                                                 tr("KeePassXC: Passkey Export"),
                                                 tr("File \"%1.passkey\" already exists.\n"
                                                    "Do you want to overwrite it?\n")
@@ -84,7 +89,7 @@ void PasskeyExporter::exportSelectedEntry(const Entry* entry, const QString& fol
     QFile passkeyFile(fullPath);
     if (!passkeyFile.open(QIODevice::WriteOnly)) {
         MessageBox::information(
-            nullptr, tr("Cannot open file"), tr("Cannot open file \"%1\" for writing.").arg(fullPath));
+            m_parent, tr("Cannot open file"), tr("Cannot open file \"%1\" for writing.").arg(fullPath));
         return;
     }
 

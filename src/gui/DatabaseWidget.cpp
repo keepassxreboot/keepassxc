@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ * Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  * Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -1415,7 +1415,7 @@ void DatabaseWidget::switchToPasskeys()
 
 void DatabaseWidget::showImportPasskeyDialog(bool isEntry)
 {
-    PasskeyImporter passkeyImporter;
+    PasskeyImporter passkeyImporter(this);
 
     if (isEntry) {
         auto currentEntry = currentSelectedEntry();

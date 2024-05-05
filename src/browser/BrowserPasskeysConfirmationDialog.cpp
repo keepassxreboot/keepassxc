@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -32,7 +32,6 @@ BrowserPasskeysConfirmationDialog::BrowserPasskeysConfirmationDialog(QWidget* pa
     setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
 
     m_ui->setupUi(this);
-    m_ui->updateButton->setVisible(false);
     m_ui->verticalLayout->setAlignment(Qt::AlignTop);
 
     connect(m_ui->credentialsTable, SIGNAL(cellDoubleClicked(int, int)), this, SLOT(accept()));
@@ -53,21 +52,22 @@ void BrowserPasskeysConfirmationDialog::registerCredential(const QString& userna
                                                            const QList<Entry*>& existingEntries,
                                                            int timeout)
 {
-    m_ui->firstLabel->setText(tr("Do you want to register Passkey for:"));
+    m_ui->firstLabel->setText(tr("Do you want to register a passkey for:"));
     m_ui->relyingPartyLabel->setText(tr("Relying Party: %1").arg(relyingParty));
     m_ui->usernameLabel->setText(tr("Username: %1").arg(username));
+    m_ui->updateButton->setVisible(true);
     m_ui->secondLabel->setText("");
 
     if (!existingEntries.isEmpty()) {
-        m_ui->firstLabel->setText(tr("Existing Passkey found.\nDo you want to register a new Passkey for:"));
-        m_ui->secondLabel->setText(tr("Select the existing Passkey and press Update to replace it."));
-
-        m_ui->updateButton->setVisible(true);
+        m_ui->firstLabel->setText(tr("Existing passkey found.\nDo you want to register a new passkey for:"));
+        m_ui->secondLabel->setText(tr("Select the existing passkey and press Update to replace it."));
+        m_ui->updateButton->setText(tr("Update"));
         m_ui->confirmButton->setText(tr("Register new"));
         updateEntriesToTable(existingEntries);
     } else {
         m_ui->verticalLayout->setSizeConstraint(QLayout::SetFixedSize);
         m_ui->confirmButton->setText(tr("Register"));
+        m_ui->updateButton->setText(tr("Add to existing entry"));
         m_ui->credentialsTable->setVisible(false);
     }
 
@@ -78,9 +78,10 @@ void BrowserPasskeysConfirmationDialog::authenticateCredential(const QList<Entry
                                                                const QString& relyingParty,
                                                                int timeout)
 {
-    m_ui->firstLabel->setText(tr("Authenticate Passkey credentials for:"));
+    m_ui->firstLabel->setText(tr("Authenticate passkey credentials for:"));
     m_ui->relyingPartyLabel->setText(tr("Relying Party: %1").arg(relyingParty));
     m_ui->usernameLabel->setVisible(false);
+    m_ui->updateButton->setVisible(false);
     m_ui->secondLabel->setText("");
     updateEntriesToTable(entries);
     startCounter(timeout);

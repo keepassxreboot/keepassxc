@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,11 +30,16 @@
 
 static const QString IMPORTED_PASSKEYS_GROUP = QStringLiteral("Imported Passkeys");
 
+PasskeyImporter::PasskeyImporter(QWidget* parent)
+    : m_parent(parent)
+{
+}
+
 void PasskeyImporter::importPasskey(QSharedPointer<Database>& database, Entry* entry)
 {
     auto filter = QString("%1 (*.passkey);;%2 (*)").arg(tr("Passkey file"), tr("All files"));
     auto fileName =
-        fileDialog()->getOpenFileName(nullptr, tr("Open Passkey file"), FileDialog::getLastDir("passkey"), filter);
+        fileDialog()->getOpenFileName(nullptr, tr("Open passkey file"), FileDialog::getLastDir("passkey"), filter);
     if (fileName.isEmpty()) {
         return;
     }
@@ -56,9 +61,9 @@ void PasskeyImporter::importSelectedFile(QFile& file, QSharedPointer<Database>& 
     const auto fileData = file.readAll();
     const auto passkeyObject = browserMessageBuilder()->getJsonObject(fileData);
     if (passkeyObject.isEmpty()) {
-        MessageBox::information(nullptr,
-                                tr("Cannot import Passkey"),
-                                tr("Cannot import Passkey file \"%1\". Data is missing.").arg(file.fileName()));
+        MessageBox::information(m_parent,
+                                tr("Cannot import passkey"),
+                                tr("Cannot import passkey file \"%1\". Data is missing.").arg(file.fileName()));
         return;
     }
 
@@ -70,43 +75,46 @@ void PasskeyImporter::importSelectedFile(QFile& file, QSharedPointer<Database>& 
                                                                                     << "credentialId"
                                                                                     << "userHandle"
                                                                                     << "privateKey");
-
     if (!missingKeys.isEmpty()) {
-        MessageBox::information(nullptr,
-                                tr("Cannot import Passkey"),
-                                tr("Cannot import Passkey file \"%1\".\nThe following data is missing:\n%2")
+        MessageBox::information(m_parent,
+                                tr("Cannot import passkey"),
+                                tr("Cannot import passkey file \"%1\".\nThe following data is missing:\n%2")
                                     .arg(file.fileName(), missingKeys.join(", ")));
     } else if (!privateKey.startsWith("-----BEGIN PRIVATE KEY-----")
                || !privateKey.trimmed().endsWith("-----END PRIVATE KEY-----")) {
         MessageBox::information(
-            nullptr,
-            tr("Cannot import Passkey"),
-            tr("Cannot import Passkey file \"%1\". Private key is missing or malformed.").arg(file.fileName()));
+            m_parent,
+            tr("Cannot import passkey"),
+            tr("Cannot import passkey file \"%1\". Private key is missing or malformed.").arg(file.fileName()));
     } else {
         const auto relyingParty = passkeyObject["relyingParty"].toString();
         const auto url = passkeyObject["url"].toString();
         const auto username = passkeyObject["username"].toString();
         const auto credentialId = passkeyObject["credentialId"].toString();
         const auto userHandle = passkeyObject["userHandle"].toString();
-        showImportDialog(database, url, relyingParty, username, credentialId, userHandle, privateKey, entry);
+        showImportDialog(database, entry, url, relyingParty, username, credentialId, userHandle, privateKey);
     }
 }
 
-void PasskeyImporter::showImportDialog(QSharedPointer<Database>& database,
+bool PasskeyImporter::showImportDialog(QSharedPointer<Database>& database,
+                                       Entry* entry,
                                        const QString& url,
                                        const QString& relyingParty,
                                        const QString& username,
                                        const QString& credentialId,
                                        const QString& userHandle,
                                        const QString& privateKey,
-                                       Entry* entry)
+                                       const QString& titleText,
+                                       const QString& infoText,
+                                       const QString& importButtonText)
 {
-    PasskeyImportDialog passkeyImportDialog;
-    passkeyImportDialog.setInfo(relyingParty, username, database, entry != nullptr);
+    PasskeyImportDialog passkeyImportDialog(m_parent);
+    passkeyImportDialog.setInfo(
+        relyingParty, username, database, entry != nullptr, titleText, infoText, importButtonText);
 
     auto ret = passkeyImportDialog.exec();
     if (ret != QDialog::Accepted) {
-        return;
+        return false;
     }
 
     auto db = passkeyImportDialog.getSelectedDatabase();
@@ -118,7 +126,7 @@ void PasskeyImporter::showImportDialog(QSharedPointer<Database>& database,
     if (entry) {
         browserService()->addPasskeyToEntry(
             entry, relyingParty, relyingParty, username, credentialId, userHandle, privateKey);
-        return;
+        return true;
     }
 
     // Import to entry selected instead of creating a new one
@@ -134,7 +142,7 @@ void PasskeyImporter::showImportDialog(QSharedPointer<Database>& database,
             }
         }
 
-        return;
+        return true;
     }
 
     // Group settings. Use default group "Imported Passkeys" if user did not select a specific one.
@@ -153,6 +161,8 @@ void PasskeyImporter::showImportDialog(QSharedPointer<Database>& database,
 
     browserService()->addPasskeyToGroup(
         db, group, url, relyingParty, relyingParty, username, credentialId, userHandle, privateKey);
+
+    return true;
 }
 
 Group* PasskeyImporter::getDefaultGroup(QSharedPointer<Database>& database) const
