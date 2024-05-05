@@ -1821,7 +1821,9 @@ void MainWindow::closeModalWindow()
 
 void MainWindow::lockDatabasesAfterInactivity()
 {
-    m_ui->tabWidget->lockDatabases();
+    if (!m_ui->tabWidget->lockDatabases()) {
+        m_inactivityTimer->activate();
+    }
 }
 
 bool MainWindow::isTrayIconEnabled() const
