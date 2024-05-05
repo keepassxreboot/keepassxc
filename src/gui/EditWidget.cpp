@@ -96,16 +96,19 @@ void EditWidget::setPageHidden(QWidget* widget, bool hidden)
         }
     }
 
-    if (index != -1) {
-        m_ui->categoryList->setCategoryHidden(index, hidden);
+    if (index == -1) {
+        return;
     }
 
-    if (index == m_ui->stackedWidget->currentIndex()) {
+    bool changed = m_ui->categoryList->isCategoryHidden(index) != hidden;
+    m_ui->categoryList->setCategoryHidden(index, hidden);
+
+    if (changed && index == m_ui->stackedWidget->currentIndex()) {
         int newIndex = m_ui->stackedWidget->currentIndex() - 1;
         if (newIndex < 0) {
             newIndex = m_ui->stackedWidget->count() - 1;
         }
-        m_ui->stackedWidget->setCurrentIndex(newIndex);
+        m_ui->categoryList->setCurrentCategory(newIndex);
     }
 }
 

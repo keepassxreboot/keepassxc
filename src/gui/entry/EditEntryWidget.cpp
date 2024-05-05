@@ -1134,21 +1134,23 @@ bool EditEntryWidget::commitEntry()
     toKeeAgentSettings(m_sshAgentSettings);
 #endif
 
+    // Begin entry update
+    if (!m_create) {
+        m_entry->beginUpdate();
+    }
+
 #ifdef WITH_XC_BROWSER
     if (config()->get(Config::Browser_Enabled).toBool()) {
         updateBrowser();
     }
 #endif
 
-    if (!m_create) {
-        m_entry->beginUpdate();
-    }
-
     updateEntryData(m_entry);
 
     if (!m_create) {
         m_entry->endUpdate();
     }
+    // End entry update
 
     m_historyModel->setEntries(m_entry->historyItems(), m_entry);
     setPageHidden(m_historyWidget, m_history || m_entry->historyItems().count() < 1);
@@ -1156,6 +1158,9 @@ bool EditEntryWidget::commitEntry()
 
     showMessage(tr("Entry updated successfully."), MessageWidget::Positive);
     setModified(false);
+    // Prevent a reload due to entry modified signals
+    m_entryModifiedTimer.stop();
+
     return true;
 }
 
