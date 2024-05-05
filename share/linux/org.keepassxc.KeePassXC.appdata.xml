@@ -52,6 +52,74 @@
     </screenshots>
 
     <releases>
+        <release version="2.7.8" date="2024-05-05">
+            <description>
+                <ul>
+                    <li>Add hotkey for showing search help [#10591]</li>
+                    <li>Add hotkey for group switching (Ctrl+Shift+PgUp/PgDown) [#10625]</li>
+                    <li>Add per-database auto-save delay setting [#9100]</li>
+                    <li>Add setting to hide menubar [#10341]</li>
+                    <li>Improve Bitwarden 1PUX import and support organization collections [#10499]</li>
+                    <li>Show advanced settings checkbox only for settings that have them [#6513]</li>
+                    <li>Remove obsolete setting for requiring repeated password entry [#9722]</li>
+                    <li>Passkeys: Allow registering Passkeys to existing entries [#10408]</li>
+                    <li>Passkeys: Show warning about data being unencrypted before Passkey export [#10411]</li>
+                    <li>Passkeys: Support NFC and USB transports [#10402]</li>
+                    <li>Passkeys: Pass extension JSON data to browser [#10615]</li>
+                    <li>SSH Agent: Do not use entries from recycle bin [#10518]</li>
+                    <li>Linux: Change hotkey sequence used for {CLEARFIELD} Auto-Type [#10008]</li>
+                    <li>Windows: Improve DACL memory access protection [#10618]</li>
+                    <li>Fix crash when deleting history items [#10451]</li>
+                    <li>Fix crash on screen lock or computer sleep [#10458]</li>
+                    <li>Fix search field not being focused after unlock [#10459]</li>
+                    <li>Fix loss of window focus when Auto-Type needs to unlock a database [#10555]</li>
+                    <li>Fix inconsistent TOTP visibility on unlock [#10009]</li>
+                    <li>Fix CSV import skipping over single-name groups [#10575]</li>
+                    <li>Fix key file folder being remembered even if disabled in settings [#10636]</li>
+                    <li>Fix issues with entry editing and database locking [#10667]</li>
+                    <li>Fix key file text when provided on command line [#10642]</li>
+                    <li>Fix issues with hardware key auto detection [#10663]</li>
+                    <li>Do not override monospace font size [#10282]</li>
+                    <li>Perform group sort only when group view is in focus [#10202]</li>
+                    <li>Do not show decimals for attachment sizes in Bytes [#10595]</li>
+                    <li>Prevent merging of global custom data when merging databases [#10452]</li>
+                    <li>Fix minor translation issues [#10635]</li>
+                    <li>Passkeys: Fix StrongBox incompatibility [#10420]</li>
+                    <li>Passkeys: Set RP ID to effective domain if unset instead of returning an error [#10384]</li>
+                    <li>Passkeys: Various UI fixes and improvements [#10427, #10608, #10609]</li>
+                    <li>AppImage: Fix URL opening [#10624]</li>
+                    <li>Flatpak: Fix application autostart [#10563]</li>
+                    <li>Linux/macOS: Fix button sizes on modal alert popups [#10500]</li>
+                    <li>Linux: Fix clipboard clear on Wayland [#10500]</li>
+                    <li>Windows: Preserve file-hidden attribute [#10343]</li>
+                </ul>
+            </description>
+        </release>
+        <release version="2.7.7" date="2024-03-09">
+            <description>
+                <ul>                    
+                    <li>Support USB Hotplug for Hardware Key interface [#10092]</li>
+                    <li>Support 1PUX and Bitwarden import [#9815]</li>
+                    <li>Browser: Add support for PassKeys [#8825, #9987, #10318]</li>
+                    <li>Build System: Move to vcpkg manifest mode [#10088]</li>
+                    <li>Fix multiple TOTP issues [#9874]</li>
+                    <li>Fix focus loss on save when the editor is not visible anymore [#10075]</li>
+                    <li>Fix visual when removing entry from history [#9947]</li>
+                    <li>Fix first entry is not selected when a search is performed [#9868]</li>
+                    <li>Prevent scrollbars on entry drag/drop [#9747]</li>
+                    <li>Prevent duplicate characters in "Also choose from" field of password generator  [#9803]</li>
+                    <li>Security: Prevent byte-by-byte and attachment inference side channel attacks [#10266]</li>
+                    <li>Browser: Fix raising Update Entry messagebox [#9853]</li>
+                    <li>Browser: Fix bugs when returning credentials [#9136]</li>
+                    <li>Browser: Fix crash on database open from browser [#9939]</li>
+                    <li>Browser: Fix support for referenced URL fields [#8788]</li>
+                    <li>MacOS: Fix crash when changing highlight/accent color [#10348]</li>
+                    <li>MacOS: Fix TouchID appearing even though lid is closed [#10092]</li>
+                    <li>Windows: Fix terminating KeePassXC processes with MSI installer [#9822]</li>
+                    <li>FdoSecrets: Fix database merge crash when enabled [#10136]</li>
+                </ul>
+            </description>
+        </release>
         <release version="2.7.6" date="2023-08-15">
             <description>
                 <ul>

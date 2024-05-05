@@ -1,5 +1,73 @@
 # Changelog
 
+## 2.7.8 (2024-05-05)
+
+### Changes
+- Add hotkey for showing search help [#10591]
+- Add hotkey for group switching (Ctrl+Shift+PgUp/PgDown) [#10625]
+- Add per-database auto-save delay setting [#9100]
+- Add setting to hide menubar [#10341]
+- Improve Bitwarden 1PUX import and support organization collections [#10499]
+- Show advanced settings checkbox only for settings that have them [#6513]
+- Remove obsolete setting for requiring repeated password entry [#9722]
+- Passkeys: Allow registering Passkeys to existing entries [#10408]
+- Passkeys: Show warning about data being unencrypted before Passkey export [#10411]
+- Passkeys: Support NFC and USB transports [#10402]
+- Passkeys: Pass extension JSON data to browser [#10615]
+- SSH Agent: Do not use entries from recycle bin [#10518]
+- Linux: Change hotkey sequence used for {CLEARFIELD} Auto-Type [#10008]
+- Windows: Improve DACL memory access protection [#10618]
+
+### Fixes
+- Fix crash when deleting history items [#10451]
+- Fix crash on screen lock or computer sleep [#10458]
+- Fix search field not being focused after unlock [#10459]
+- Fix loss of window focus when Auto-Type needs to unlock a database [#10555]
+- Fix inconsistent TOTP visibility on unlock [#10009]
+- Fix CSV import skipping over single-name groups [#10575]
+- Fix key file folder being remembered even if disabled in settings [#10636]
+- Fix issues with entry editing and database locking [#10667]
+- Fix key file text when provided on command line [#10642]
+- Fix issues with hardware key auto detection [#10663]
+- Do not override monospace font size [#10282]
+- Perform group sort only when group view is in focus [#10202]
+- Do not show decimals for attachment sizes in Bytes [#10595]
+- Prevent merging of global custom data when merging databases [#10452]
+- Fix minor translation issues [#10635]
+- Passkeys: Fix StrongBox incompatibility [#10420]
+- Passkeys: Set RP ID to effective domain if unset instead of returning an error [#10384]
+- Passkeys: Various UI fixes and improvements [#10427, #10608, #10609]
+- AppImage: Fix URL opening [#10624]
+- Flatpak: Fix application autostart [#10563]
+- Linux/macOS: Fix button sizes on modal alert popups [#10500]
+- Linux: Fix clipboard clear on Wayland [#10500]
+- Windows: Preserve file-hidden attribute [#10343]
+
+## 2.7.7 (2024-03-09)
+
+### Changes
+- Support USB Hotplug for Hardware Key interface [#10092]
+- Support 1PUX and Bitwarden import [#9815]
+- Browser: Add support for PassKeys [#8825, #9987, #10318]
+- Build System: Move to vcpkg manifest mode [#10088]
+
+### Fixes
+- Fix multiple TOTP issues [#9874]
+- Fix focus loss on save when the editor is not visible anymore [#10075]
+- Fix visual when removing entry from history [#9947]
+- Fix first entry is not selected when a search is performed [#9868]
+- Prevent scrollbars on entry drag/drop [#9747]
+- Prevent duplicate characters in "Also choose from" field of password generator  [#9803]
+- Security: Prevent byte-by-byte and attachment inference side channel attacks [#10266]
+- Browser: Fix raising Update Entry messagebox [#9853]
+- Browser: Fix bugs when returning credentials [#9136]
+- Browser: Fix crash on database open from browser [#9939]
+- Browser: Fix support for referenced URL fields [#8788]
+- MacOS: Fix crash when changing highlight/accent color [#10348]
+- MacOS: Fix TouchID appearing even though lid is closed [#10092]
+- Windows: Fix terminating KeePassXC processes with MSI installer [#9822]
+- FdoSecrets: Fix database merge crash when enabled [#10136]
+
 ## 2.7.6 (2023-08-15)
 
 ### Changes
