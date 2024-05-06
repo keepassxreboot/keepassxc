@@ -35,7 +35,7 @@ BrowserSettingsWidget::BrowserSettingsWidget(QWidget* parent)
     m_ui->extensionLabel->setText(
         tr("KeePassXC-Browser is needed for the browser integration to work. <br />Download it for %1 and %2 and %3.")
             .arg("<a href=\"https://addons.mozilla.org/firefox/addon/keepassxc-browser/\">Firefox</a>",
-                 "<a href=\"https://chrome.google.com/webstore/detail/keepassxc-browser/oboonakemofpalcgghocfoadofidjkkk\">"
+                 "<a href=\"https://chromewebstore.google.com/detail/keepassxc-browser/oboonakemofpalcgghocfoadofidjkkk\">"
                  "Google Chrome / Chromium / Vivaldi / Brave</a>",
                  "<a href=\"https://microsoftedge.microsoft.com/addons/detail/pdffhmdngciaglkoonimfcmckehcpafo\">Microsoft Edge</a>"));
     // clang-format on
