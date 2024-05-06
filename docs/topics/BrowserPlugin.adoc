@@ -17,7 +17,7 @@ The KeePassXC-Browser extension is available on the following web browsers:
 You can download the KeePassXC-Browser extension from your web browser. To download the KeePassXC-Browser extension, perform the following steps:
 
 1. Click the link corresponding to your browser:
-  * https://chrome.google.com/webstore/detail/keepassxc-browser/oboonakemofpalcgghocfoadofidjkkk[Chrome, Chromium, Vivaldi, and Brave]
+  * https://chromewebstore.google.com/detail/keepassxc-browser/oboonakemofpalcgghocfoadofidjkkk[Chrome, Chromium, Vivaldi, and Brave]
   * https://addons.mozilla.org/en-US/firefox/addon/keepassxc-browser[Mozilla Firefox and Tor-Browser]
   * https://microsoftedge.microsoft.com/addons/detail/keepassxcbrowser/pdffhmdngciaglkoonimfcmckehcpafo[Microsoft Edge]
 
