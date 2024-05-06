@@ -152,6 +152,7 @@ signals:
     void databaseSyncFailed(const QString& syncName, const QString& error);
     void databaseSyncUnlocked(const RemoteHandler::RemoteResult& result);
     void unlockDatabaseInDialogForSync(const QString& filePath);
+    void updateSyncProgress(int percentage, QString message);
     void groupContextMenuRequested(const QPoint& globalPos);
     void entryContextMenuRequested(const QPoint& globalPos);
     void listModeAboutToActivate();

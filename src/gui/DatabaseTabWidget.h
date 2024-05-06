@@ -104,6 +104,7 @@ signals:
     void messageGlobal(const QString&, MessageWidget::MessageType type);
     void messageDismissGlobal();
     void databaseUnlockDialogFinished(bool accepted, DatabaseWidget* dbWidget);
+    void updateProgressBar(int percentage, QString message);
 
 private slots:
     void toggleTabbar();

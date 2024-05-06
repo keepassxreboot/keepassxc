@@ -1093,6 +1093,7 @@ void DatabaseWidget::syncWithRemote(const RemoteParams* params)
 
     // Download the database
     if (!params->downloadCommand.isEmpty()) {
+        emit updateSyncProgress(25, tr("Downloading..."));
         // Start a download first then merge and upload in the callback
         result = remoteHandler->download(params);
         if (result.success) {
@@ -1132,10 +1133,12 @@ void DatabaseWidget::uploadAndFinishSync(const RemoteParams* params, RemoteHandl
 {
     QScopedPointer<RemoteHandler> remoteHandler(new RemoteHandler(this));
     if (result.success && !params->uploadCommand.isEmpty()) {
+        emit updateSyncProgress(75, tr("Uploading..."));
         result = remoteHandler->upload(result.filePath, params);
     }
 
     setDisabled(false);
+    emit updateSyncProgress(-1, "");
     if (result.success) {
         emit databaseSyncCompleted(params->name);
         showMessage(tr("Remote sync '%1' completed successfully!").arg(params->name), MessageWidget::Positive, false);
@@ -1353,6 +1356,7 @@ void DatabaseWidget::syncUnlockedDatabase(bool accepted)
 
 bool DatabaseWidget::syncWithDatabase(const QSharedPointer<Database>& otherDb, QString& error)
 {
+    emit updateSyncProgress(50, tr("Syncing..."));
     Merger firstMerge(m_db.data(), otherDb.data());
     Merger secondMerge(otherDb.data(), m_db.data());
     QStringList changeList = firstMerge.merge() + secondMerge.merge();

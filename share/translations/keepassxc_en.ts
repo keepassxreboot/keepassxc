@@ -2618,6 +2618,18 @@ Disable safe saves and try again?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Downloading...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Uploading...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Syncing...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Remove passkey from entry</source>
         <translation type="unfinished"></translation>
     </message>
