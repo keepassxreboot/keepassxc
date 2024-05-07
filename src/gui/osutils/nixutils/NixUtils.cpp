@@ -18,19 +18,17 @@
 #include "NixUtils.h"
 
 #include "config-keepassx.h"
+#include "core/Config.h"
 
 #include <QApplication>
 #include <QDBusInterface>
 #include <QDebug>
 #include <QDir>
 #include <QPointer>
+#include <QRandomGenerator>
 #include <QStandardPaths>
 #include <QStyle>
 #include <QTextStream>
-#ifdef KEEPASSXC_DIST_FLATPAK
-#include "core/Config.h"
-#include <QRandomGenerator>
-#endif
 #ifdef WITH_XC_X11
 #include <QX11Info>
 
@@ -127,9 +125,8 @@ QString NixUtils::getAutostartDesktopFilename(bool createDirs) const
 
 bool NixUtils::isLaunchAtStartupEnabled() const
 {
-#if !defined(KEEPASSXC_DIST_FLATPAK)
+#ifndef KEEPASSXC_DIST_FLATPAK
     return QFile::exists(getAutostartDesktopFilename());
-    ;
 #else
     return config()->get(Config::GUI_LaunchAtStartup).toBool();
 #endif
@@ -137,7 +134,7 @@ bool NixUtils::isLaunchAtStartupEnabled() const
 
 void NixUtils::setLaunchAtStartup(bool enable)
 {
-#if !defined(KEEPASSXC_DIST_FLATPAK)
+#ifndef KEEPASSXC_DIST_FLATPAK
     if (enable) {
         QFile desktopFile(getAutostartDesktopFilename(true));
         if (!desktopFile.open(QIODevice::WriteOnly)) {
@@ -199,7 +196,7 @@ void NixUtils::setLaunchAtStartup(bool enable)
                                   SLOT(launchAtStartupRequested(uint, QVariantMap)));
 
     if (!res) {
-        qDebug() << "Could not connect to org.freedesktop.portal.Request::Response signal";
+        qDebug() << "DBus Error: could not connect to org.freedesktop.portal.Request";
     }
 #endif
 }
@@ -207,14 +204,11 @@ void NixUtils::setLaunchAtStartup(bool enable)
 void NixUtils::launchAtStartupRequested(uint response, const QVariantMap& results)
 {
     if (response > 0) {
-        qDebug() << "The interaction was cancelled";
+        qDebug() << "DBus Error: the request to autostart was cancelled.";
         return;
     }
-    bool isLauchedAtStartup = results["autostart"].value<bool>();
-    qDebug() << "The autostart value is set to:" << isLauchedAtStartup;
-#if defined(KEEPASSXC_DIST_FLATPAK)
-    config()->set(Config::GUI_LaunchAtStartup, isLauchedAtStartup);
-#endif
+
+    config()->set(Config::GUI_LaunchAtStartup, results["autostart"].value<bool>());
 }
 
 bool NixUtils::isCapslockEnabled()
