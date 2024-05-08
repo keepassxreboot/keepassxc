@@ -185,6 +185,9 @@ bool DatabaseOpenWidget::event(QEvent* event)
             m_deviceListener->registerHotplugCallback(true, true, YubiKeyInterfaceUSB::ONLYKEY_USB_VID);
 #endif
 #endif
+        }
+
+        if (isVisible()) {
             m_hideTimer.stop();
             pollHardwareKey();
         }
