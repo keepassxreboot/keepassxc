@@ -613,6 +613,12 @@ endif()
 
 include_directories(SYSTEM ${ZLIB_INCLUDE_DIR})
 
+find_library(ZXCVBN_LIBRARIES zxcvbn)
+if(NOT ZXCVBN_LIBRARIES)
+    add_subdirectory(src/zxcvbn)
+    set(ZXCVBN_LIBRARIES zxcvbn)
+endif(NOT ZXCVBN_LIBRARIES)
+
 add_subdirectory(src)
 add_subdirectory(share)
 if(WITH_TESTS)

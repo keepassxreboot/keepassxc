@@ -16,20 +16,6 @@
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
 
-find_library(ZXCVBN_LIBRARIES zxcvbn)
-if(NOT ZXCVBN_LIBRARIES)
-    add_library(zxcvbn STATIC zxcvbn/zxcvbn.c)
-    # Disable error-level shadow issues
-    if(CC_HAS_Wshadow_compatible_local)
-        set_property(SOURCE zxcvbn/zxcvbn.c APPEND PROPERTY COMPILE_OPTIONS "-Wno-shadow-compatible-local")
-    endif()
-    if(CC_HAS_Wshadow_local)
-        set_property(SOURCE zxcvbn/zxcvbn.c APPEND PROPERTY COMPILE_OPTIONS "-Wno-shadow-local")
-    endif()
-    include_directories(${CMAKE_CURRENT_SOURCE_DIR}/zxcvbn)
-    set(ZXCVBN_LIBRARIES zxcvbn)
-endif(NOT ZXCVBN_LIBRARIES)
-
 set(keepassx_SOURCES
         core/Alloc.cpp
         core/AutoTypeAssociations.cpp
