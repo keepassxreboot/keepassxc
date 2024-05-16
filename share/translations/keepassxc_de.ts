@@ -1070,7 +1070,7 @@ Möchten Sie den Eintrag löschen?
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Fortgeschritten</translation>
+        <translation>Erweitert</translation>
     </message>
     <message>
         <source>Never ask before accessing credentials</source>
@@ -1991,7 +1991,7 @@ Wenn Sie diese Zahl beibehalten, ist Ihre Datenbank nicht vor Brute-Force-Angrif
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Fortgeschritten</translation>
+        <translation>Erweitert</translation>
     </message>
 </context>
 <context>
@@ -2531,7 +2531,7 @@ Sicheres Speichern deaktivieren und erneut versuchen?</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Fortgeschritten</translation>
+        <translation>Erweitert</translation>
     </message>
     <message>
         <source>Icon</source>
@@ -3953,7 +3953,7 @@ Fehler: %1</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Fortgeschritten</translation>
+        <translation>Erweitert</translation>
     </message>
     <message>
         <source>Attachments</source>
@@ -6186,11 +6186,11 @@ Do you want to overwrite it?
     </message>
     <message>
         <source>Switch to advanced mode</source>
-        <translation>Zum fortgeschrittenen Modus wechseln</translation>
+        <translation>Zum erweiterten Modus wechseln</translation>
     </message>
     <message>
         <source>Advanced</source>
-        <translation>Fortgeschritten</translation>
+        <translation>Erweitert</translation>
     </message>
     <message>
         <source>Character Types</source>
@@ -7207,7 +7207,7 @@ Diese Option ist veraltet, verwenden Sie stattdessen --set-key-file.</translatio
     </message>
     <message>
         <source>Perform advanced analysis on the password.</source>
-        <translation>Fortgeschrittene Analyse des Passworts ausführen.</translation>
+        <translation>Erweiterte Analyse des Passworts ausführen.</translation>
     </message>
     <message>
         <source>Password for which to estimate the entropy.</source>
