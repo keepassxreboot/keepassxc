@@ -388,7 +388,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="label_17">
+         <widget class="QLabel" name="label_26">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
             <horstretch>0</horstretch>

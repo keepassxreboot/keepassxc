@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -34,6 +34,7 @@ public:
     QList<QString> keys() const;
     bool hasKey(const QString& key) const;
     bool hasPasskey() const;
+    void removePasskeyAttributes();
     QList<QString> customKeys() const;
     QString value(const QString& key) const;
     QList<QString> values(const QList<QString>& keys) const;
