@@ -49,7 +49,7 @@ namespace
     }
 } // namespace
 
-int DeviceListenerLibUsb::registerHotplugCallback(bool arrived, bool left, int vendorId, int productId, const QUuid*)
+qintptr DeviceListenerLibUsb::registerHotplugCallback(bool arrived, bool left, int vendorId, int productId, const QUuid*)
 {
     if (!m_ctx) {
         if (libusb_init(reinterpret_cast<libusb_context**>(&m_ctx)) != LIBUSB_SUCCESS) {
@@ -66,7 +66,7 @@ int DeviceListenerLibUsb::registerHotplugCallback(bool arrived, bool left, int v
         events |= LIBUSB_HOTPLUG_EVENT_DEVICE_LEFT;
     }
 
-    int handle = 0;
+    Handle handle = 0;
     const QPointer that = this;
     const int ret = libusb_hotplug_register_callback(
         static_cast<libusb_context*>(m_ctx),
@@ -84,7 +84,7 @@ int DeviceListenerLibUsb::registerHotplugCallback(bool arrived, bool left, int v
             return 0;
         },
         that,
-        &handle);
+        &static_cast<libusb_hotplug_callback_handle>(handle));
     if (ret != LIBUSB_SUCCESS) {
         qWarning("Failed to register USB listener callback.");
         handle = 0;
@@ -102,12 +102,12 @@ int DeviceListenerLibUsb::registerHotplugCallback(bool arrived, bool left, int v
     return handle;
 }
 
-void DeviceListenerLibUsb::deregisterHotplugCallback(int handle)
+void DeviceListenerLibUsb::deregisterHotplugCallback(Handle handle)
 {
     if (!m_ctx || !m_callbackHandles.contains(handle)) {
         return;
     }
-    libusb_hotplug_deregister_callback(static_cast<libusb_context*>(m_ctx), handle);
+    libusb_hotplug_deregister_callback(static_cast<libusb_context*>(m_ctx), static_cast<libusb_hotplug_callback_handle>(handle));
     m_callbackHandles.remove(handle);
 
     if (m_callbackHandles.isEmpty() && m_usbEvents.isRunning()) {
