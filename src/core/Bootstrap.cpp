@@ -180,7 +180,8 @@ namespace Bootstrap
 
         // Calculate the amount of memory that must be allocated for the DACL
         cbACL = sizeof(ACL) + sizeof(ACCESS_ALLOWED_ACE) + GetLengthSid(pTokenUser->User.Sid)
-                + sizeof(ACCESS_ALLOWED_ACE) + GetLengthSid(pLocalSystemSid) + GetLengthSid(pOwnerRightsSid);
+                + sizeof(ACCESS_ALLOWED_ACE) + GetLengthSid(pLocalSystemSid) + sizeof(ACCESS_ALLOWED_ACE)
+                + GetLengthSid(pOwnerRightsSid);
 
         // Create and initialize an ACL
         pACL = static_cast<PACL>(HeapAlloc(GetProcessHeap(), 0, cbACL));
