@@ -49,7 +49,7 @@ namespace
     }
 } // namespace
 
-qintptr DeviceListenerLibUsb::registerHotplugCallback(bool arrived, bool left, int vendorId, int productId, const QUuid*)
+Handle DeviceListenerLibUsb::registerHotplugCallback(bool arrived, bool left, int vendorId, int productId, const QUuid*)
 {
     if (!m_ctx) {
         if (libusb_init(reinterpret_cast<libusb_context**>(&m_ctx)) != LIBUSB_SUCCESS) {
