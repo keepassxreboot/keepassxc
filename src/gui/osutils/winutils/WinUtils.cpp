@@ -234,6 +234,8 @@ WORD WinUtils::qtToNativeKeyCode(Qt::Key key)
         return VK_SHIFT;    // 0x10
     case Qt::Key_Control:
         return VK_CONTROL;  // 0x11
+    case Qt::Key_Alt:
+        return VK_MENU;     // 0x12
     case Qt::Key_Pause:
         return VK_PAUSE;    // 0x13
     case Qt::Key_CapsLock:
