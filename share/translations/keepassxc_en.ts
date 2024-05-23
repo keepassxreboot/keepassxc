@@ -8871,11 +8871,19 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unsupported KDF type, cannot decrypt json file</source>
+        <source>Unknown passkeys error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unknown passkeys error</source>
+        <source>Invalid KDF iterations, cannot decrypt json file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unsupported format, ensure your Bitwarden export is password-protected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Only PBKDF and Argon2 are supported, cannot decrypt json file</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
