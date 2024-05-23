@@ -252,14 +252,25 @@ QSharedPointer<Database> BitwardenReader::convert(const QString& path, const QSt
             return QObject::tr("Failed to decrypt json file: %1").arg(errorString);
         };
 
+        if (!json.contains("kdfType") || !json.contains("salt")) {
+            m_error = buildError(QObject::tr("Unsupported format, ensure your Bitwarden export is password-protected"));
+            return {};
+        }
+
         QByteArray key(32, '\0');
         auto salt = json.value("salt").toString().toUtf8();
         auto kdfType = json.value("kdfType").toInt();
 
         // Derive the Master Key
         if (kdfType == 0) {
+            // PBKDF2
+            auto iterations = json.value("kdfIterations").toInt();
+            if (iterations <= 0) {
+                m_error = buildError(QObject::tr("Invalid KDF iterations, cannot decrypt json file"));
+                return {};
+            }
             auto pwd_fam = Botan::PasswordHashFamily::create_or_throw("PBKDF2(SHA-256)");
-            auto pwd_hash = pwd_fam->from_params(json.value("kdfIterations").toInt());
+            auto pwd_hash = pwd_fam->from_params(iterations);
             pwd_hash->derive_key(reinterpret_cast<uint8_t*>(key.data()),
                                  key.size(),
                                  password.toUtf8().data(),
@@ -267,7 +278,8 @@ QSharedPointer<Database> BitwardenReader::convert(const QString& path, const QSt
                                  reinterpret_cast<uint8_t*>(salt.data()),
                                  salt.size());
         } else if (kdfType == 1) {
-            // Bitwarden hashes the salt for Argon2 for some reason
+            // Argon2
+            // Bitwarden hashes the salt prior to use
             CryptoHash saltHash(CryptoHash::Sha256);
             saltHash.addData(salt);
             salt = saltHash.result();
@@ -279,7 +291,7 @@ QSharedPointer<Database> BitwardenReader::convert(const QString& path, const QSt
             argon2.setParallelism(json.value("kdfParallelism").toInt());
             argon2.transform(password.toUtf8(), key);
         } else {
-            m_error = buildError(QObject::tr("Unsupported KDF type, cannot decrypt json file"));
+            m_error = buildError(QObject::tr("Only PBKDF and Argon2 are supported, cannot decrypt json file"));
             return {};
         }
 
