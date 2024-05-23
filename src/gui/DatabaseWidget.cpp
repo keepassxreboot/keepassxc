@@ -115,7 +115,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     tagsWidget->setLayout(tagsLayout);
     tagsLayout->addWidget(tagsTitle);
     tagsLayout->addWidget(m_tagView);
-    tagsLayout->setMargin(0);
+    tagsLayout->setContentsMargins(0, 0, 0, 0);
 
     m_groupSplitter->setOrientation(Qt::Vertical);
     m_groupSplitter->setChildrenCollapsible(true);
@@ -126,7 +126,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
 
     auto rightHandSideWidget = new QWidget(m_mainSplitter);
     auto rightHandSideVBox = new QVBoxLayout();
-    rightHandSideVBox->setMargin(0);
+    rightHandSideVBox->setContentsMargins(0, 0, 0, 0);
     rightHandSideVBox->addWidget(m_searchingLabel);
 #ifdef WITH_XC_KEESHARE
     rightHandSideVBox->addWidget(m_shareLabel);
@@ -960,7 +960,16 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
         }
 
         if (launch) {
-            QProcess::startDetached(cmdString.mid(6));
+            const QString cmd = cmdString.mid(6);
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+            QStringList cmdList = QProcess::splitCommand(cmd);
+            if (!cmdList.isEmpty()) {
+                const QString program = cmdList.takeFirst();
+                QProcess::startDetached(program, cmdList);
+            }
+#else
+            QProcess::startDetached(cmd);
+#endif
 
             if (config()->get(Config::MinimizeOnOpenUrl).toBool()) {
                 getMainWindow()->minimizeOrHide();
@@ -2132,7 +2141,7 @@ bool DatabaseWidget::saveAs()
                                      + (defaultFileName.isEmpty() ? tr("Passwords").append(".kdbx") : defaultFileName));
     }
     const QString newFilePath = fileDialog()->getSaveFileName(
-        this, tr("Save database as"), oldFilePath, tr("KeePass 2 Database").append(" (*.kdbx)"), nullptr, nullptr);
+        this, tr("Save database as"), oldFilePath, tr("KeePass 2 Database").append(" (*.kdbx)"));
 
     bool ok = false;
     if (!newFilePath.isEmpty()) {
@@ -2224,10 +2233,8 @@ bool DatabaseWidget::saveBackup()
 
         const QString newFilePath = fileDialog()->getSaveFileName(this,
                                                                   tr("Save database backup"),
-                                                                  FileDialog::getLastDir("backup", oldFilePath),
-                                                                  tr("KeePass 2 Database").append(" (*.kdbx)"),
-                                                                  nullptr,
-                                                                  nullptr);
+                                                                  FileDialog::getLastDir("backup"),
+                                                                  tr("KeePass 2 Database").append(" (*.kdbx)"));
 
         if (!newFilePath.isEmpty()) {
             // Ensure we don't recurse back into this function

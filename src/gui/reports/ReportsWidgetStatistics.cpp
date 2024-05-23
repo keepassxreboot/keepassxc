@@ -19,6 +19,7 @@
 #include "ui_ReportsWidgetStatistics.h"
 
 #include "core/AsyncTask.h"
+#include "core/Clock.h"
 #include "core/DatabaseStats.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
@@ -86,9 +87,8 @@ void ReportsWidgetStatistics::calculateStats()
     addStatsRow(tr("Database name"), m_db->metadata()->name());
     addStatsRow(tr("Description"), m_db->metadata()->description());
     addStatsRow(tr("Location"), m_db->filePath());
-    addStatsRow(tr("Database created"),
-                m_db->rootGroup()->timeInfo().creationTime().toString(Qt::DefaultLocaleShortDate));
-    addStatsRow(tr("Last saved"), stats->modified.toString(Qt::DefaultLocaleShortDate));
+    addStatsRow(tr("Database created"), Clock::toString(m_db->rootGroup()->timeInfo().creationTime()));
+    addStatsRow(tr("Last saved"), Clock::toString(stats->modified));
     addStatsRow(tr("Unsaved changes"),
                 m_db->isModified() ? tr("yes") : tr("no"),
                 m_db->isModified(),

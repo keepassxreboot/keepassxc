@@ -42,12 +42,12 @@
 
 #include <QCheckBox>
 #include <QCryptographicHash>
-#include <QHostAddress>
 #include <QInputDialog>
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QListWidget>
 #include <QLocalSocket>
+#include <QLocale>
 #include <QProgressDialog>
 #include <QUrl>
 
@@ -598,7 +598,7 @@ QString BrowserService::storeKey(const QString& key)
     hideWindow();
     db->metadata()->customData()->set(CustomData::BrowserKeyPrefix + id, key);
     db->metadata()->customData()->set(QString("%1_%2").arg(CustomData::Created, id),
-                                      Clock::currentDateTime().toString(Qt::SystemLocaleShortDate));
+                                      QLocale::system().toString(Clock::currentDateTime(), QLocale::ShortFormat));
     return id;
 }
 
@@ -1417,7 +1417,7 @@ bool BrowserService::isPasskeyCredentialExcluded(const QJsonArray& excludeCreden
 {
     QStringList allIds;
     for (const auto& cred : excludeCredentials) {
-        allIds << cred["id"].toString();
+        allIds << cred.toObject().value("id").toString();
     }
 
     const auto passkeyEntries = getPasskeyEntries(rpId, keyList);
@@ -1666,7 +1666,7 @@ void BrowserService::processClientMessage(QLocalSocket* socket, const QJsonObjec
         m_browserClients.insert(clientID, QSharedPointer<BrowserAction>::create());
     }
 
-    auto& action = m_browserClients.value(clientID);
+    const auto& action = m_browserClients.value(clientID);
     auto response = action->processClientMessage(socket, message);
     m_browserHost->sendClientMessage(socket, response);
 }

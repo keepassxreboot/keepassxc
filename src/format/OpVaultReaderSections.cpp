@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@
 #include <QDebug>
 #include <QJsonArray>
 #include <QJsonObject>
+#include <QLocale>
 #include <QUrlQuery>
 
 namespace
@@ -36,9 +37,9 @@ namespace
             date = QDateTime::fromString(dateValue, "yyyyMM");
             date.setTimeSpec(Qt::UTC);
         } else if (value.isString()) {
-            date = QDateTime::fromTime_t(value.toString().toUInt(), Qt::UTC);
+            date = QDateTime::fromSecsSinceEpoch(value.toString().toUInt(), Qt::UTC);
         } else {
-            date = QDateTime::fromTime_t(value.toInt(), Qt::UTC);
+            date = QDateTime::fromSecsSinceEpoch(value.toInt(), Qt::UTC);
         }
         return date;
     }
@@ -120,7 +121,7 @@ void OpVaultReader::fillFromSectionField(Entry* entry, const QString& sectionNam
         if (kind == "date" || kind == "monthYear") {
             QDateTime date = resolveDate(kind, field.value("v"));
             if (date.isValid()) {
-                entry->attributes()->set(attrName, date.toString(Qt::SystemLocaleShortDate));
+                entry->attributes()->set(attrName, QLocale::system().toString(date, QLocale::ShortFormat));
             } else {
                 qWarning()
                     << QString("[%1] Invalid date attribute found: %2 = %3").arg(entry->title(), attrName, attrValue);

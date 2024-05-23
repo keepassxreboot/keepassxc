@@ -1,6 +1,6 @@
-/*
+﻿/*
  *  Copyright (C) 2016 Enrico Mariotti <enricomariotti@yahoo.it>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ namespace
             return group;
         }
 
-        auto nameList = groupPath.split("/", QString::SkipEmptyParts);
+        auto nameList = groupPath.split("/", Qt::SkipEmptyParts);
         // Skip over first group name if root
         if (nameList.first().compare("root", Qt::CaseInsensitive) == 0) {
             nameList.removeFirst();
