@@ -206,6 +206,7 @@ public slots:
     void performAutoTypePassword();
     void performAutoTypePasswordEnter();
     void performAutoTypeTOTP();
+    void setClipboardTextAndMinimize(const QString& text);
     void openUrl();
     void downloadSelectedFavicons();
     void downloadAllFavicons();
@@ -285,7 +286,6 @@ private slots:
 
 private:
     int addChildWidget(QWidget* w);
-    void setClipboardTextAndMinimize(const QString& text);
     void processAutoOpen();
     void openDatabaseFromEntry(const Entry* entry, bool inBackground = true);
     void performIconDownloads(const QList<Entry*>& entries, bool force = false, bool downloadInBackground = false);
