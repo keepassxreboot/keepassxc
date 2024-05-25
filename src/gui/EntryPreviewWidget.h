@@ -46,6 +46,7 @@ public slots:
 
 signals:
     void entryUrlActivated(Entry* entry);
+    void copyTextRequested(const QString& text);
 
 protected:
     bool eventFilter(QObject* object, QEvent* event) override;

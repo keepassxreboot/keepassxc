@@ -22,7 +22,6 @@
 #include "Application.h"
 #include "core/Config.h"
 #include "core/Totp.h"
-#include "gui/Clipboard.h"
 #include "gui/Font.h"
 #include "gui/Icons.h"
 #if defined(WITH_XC_KEESHARE)
@@ -85,10 +84,10 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
     });
     connect(&m_totpTimer, SIGNAL(timeout()), SLOT(updateTotpLabel()));
 
-    connect(m_ui->entryAttributesTable, &QTableWidget::itemDoubleClicked, this, [](QTableWidgetItem* item) {
+    connect(m_ui->entryAttributesTable, &QTableWidget::itemDoubleClicked, this, [this](QTableWidgetItem* item) {
         auto userData = item->data(Qt::UserRole);
         if (userData.isValid()) {
-            clipboard()->setText(userData.toString());
+            emit copyTextRequested(userData.toString());
         }
     });
 
@@ -117,7 +116,7 @@ bool EntryPreviewWidget::eventFilter(QObject* object, QEvent* event)
 {
     if (object == m_ui->entryTotpLabel && event->type() == QEvent::MouseButtonDblClick) {
         if (m_currentEntry && m_currentEntry->hasTotp()) {
-            clipboard()->setText(m_currentEntry->totp());
+            emit copyTextRequested(m_currentEntry->totp());
             m_ui->entryTotpLabel->clearFocus();
             return true;
         }
