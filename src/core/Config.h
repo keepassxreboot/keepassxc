@@ -225,6 +225,8 @@ public:
     static Config* instance();
     static void createConfigFromFile(const QString& configFileName, const QString& localConfigFileName = {});
     static void createTempFileInstance();
+    static bool isPortable();
+    static QString portableConfigDir();
 
 signals:
     void changed(ConfigKey key);
