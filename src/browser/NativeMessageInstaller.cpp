@@ -19,6 +19,7 @@
 #include "NativeMessageInstaller.h"
 #include "BrowserSettings.h"
 #include "config-keepassx.h"
+#include "core/Config.h"
 
 #include <QCoreApplication>
 #include <QDebug>
@@ -209,8 +210,8 @@ QString NativeMessageInstaller::getNativeMessagePath(SupportedBrowsers browser) 
     QString basePath;
 #if defined(Q_OS_WIN)
     // If portable settings file exists save the JSON scripts to the application folder
-    if (QFile::exists(QCoreApplication::applicationDirPath() + QStringLiteral("/keepassxc.ini"))) {
-        basePath = QCoreApplication::applicationDirPath();
+    if (Config::isPortable()) {
+        basePath = Config::portableConfigDir();
     } else {
         basePath = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
     }
