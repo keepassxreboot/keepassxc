@@ -84,7 +84,7 @@ const QString OpenSSHKey::type() const
 const QString OpenSSHKey::fingerprint(QCryptographicHash::Algorithm algo) const
 {
     if (m_rawPublicData.isEmpty()) {
-        return {tr("(encrypted)")};
+        return tr("(encrypted)");
     }
 
     QByteArray publicKey;

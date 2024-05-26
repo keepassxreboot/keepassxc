@@ -2665,6 +2665,10 @@ Would you like to correct it?</source>
             <numerusform></numerusform>
         </translation>
     </message>
+    <message>
+        <source>Failed to decrypt SSH key, ensure password is correct.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetAdvanced</name>

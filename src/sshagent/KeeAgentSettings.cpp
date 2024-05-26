@@ -490,11 +490,7 @@ bool KeeAgentSettings::toOpenSSHKey(const QString& username,
     }
 
     if (key.comment().isEmpty()) {
-        key.setComment(username);
-    }
-
-    if (key.comment().isEmpty()) {
-        key.setComment(fileName);
+        key.setComment(QString("%1@%2").arg(username, fileName));
     }
 
     return true;

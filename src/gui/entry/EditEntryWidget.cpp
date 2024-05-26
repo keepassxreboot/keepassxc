@@ -667,9 +667,7 @@ void EditEntryWidget::updateSSHAgentKeyInfo()
         m_sshAgentUi->commentTextLabel->setText(key.comment());
     }
 
-    if (key.encrypted()) {
-        m_sshAgentUi->decryptButton->setEnabled(true);
-    }
+    m_sshAgentUi->decryptButton->setEnabled(key.encrypted());
 
     if (!key.publicKey().isEmpty()) {
         m_sshAgentUi->publicKeyEdit->document()->setPlainText(key.publicKey());
@@ -787,6 +785,7 @@ void EditEntryWidget::decryptPrivateKey()
     OpenSSHKey key;
 
     if (!getOpenSSHKey(key, true)) {
+        showMessage(tr("Failed to decrypt SSH key, ensure password is correct."), MessageWidget::Error);
         return;
     }
 
@@ -800,6 +799,7 @@ void EditEntryWidget::decryptPrivateKey()
                                                 + key.fingerprint(QCryptographicHash::Sha256));
     m_sshAgentUi->publicKeyEdit->document()->setPlainText(key.publicKey());
     m_sshAgentUi->copyToClipboardButton->setEnabled(true);
+    m_sshAgentUi->decryptButton->setEnabled(false);
 }
 
 void EditEntryWidget::copyPublicKey()
