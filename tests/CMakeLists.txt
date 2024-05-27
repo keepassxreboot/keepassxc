@@ -249,7 +249,7 @@ if(WITH_XC_NETWORKING OR WITH_XC_BROWSER)
 endif()
 
 add_unit_test(NAME testcli SOURCES TestCli.cpp
-        LIBS testsupport cli ${TEST_LIBRARIES})
+        LIBS testsupport cli ${ZXCVBN_LIBRARIES} ${TEST_LIBRARIES})
 target_compile_definitions(testcli PRIVATE KEEPASSX_CLI_PATH="$<TARGET_FILE:keepassxc-cli>")
 
 if(WITH_GUI_TESTS)

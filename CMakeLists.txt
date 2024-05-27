@@ -467,7 +467,7 @@ if(WITH_COVERAGE)
     append_coverage_compiler_flags()
 
     set(COVERAGE_EXCLUDES
-            "'^(.+/)?(thirdparty|zxcvbn)/.*'"
+            "'^(.+/)?thirdparty/.*'"
             "'^(.+/)?main\\.cpp$$'"
             "'^(.+/)?cli/keepassxc-cli\\.cpp$$'"
             "'^(.+/)?proxy/keepassxc-proxy\\.cpp$$'")
@@ -612,6 +612,12 @@ if(UNIX)
 endif()
 
 include_directories(SYSTEM ${ZLIB_INCLUDE_DIR})
+
+find_library(ZXCVBN_LIBRARIES zxcvbn)
+if(NOT ZXCVBN_LIBRARIES)
+    add_subdirectory(src/thirdparty/zxcvbn)
+    set(ZXCVBN_LIBRARIES zxcvbn)
+endif(NOT ZXCVBN_LIBRARIES)
 
 add_subdirectory(src)
 add_subdirectory(share)
