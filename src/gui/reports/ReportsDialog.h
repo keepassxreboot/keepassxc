@@ -79,7 +79,9 @@ private:
     QSharedPointer<Database> m_db;
     const QScopedPointer<Ui::ReportsDialog> m_ui;
     const QSharedPointer<ReportsPageHealthcheck> m_healthPage;
+#ifdef WITH_XC_NETWORKING
     const QSharedPointer<ReportsPageHibp> m_hibpPage;
+#endif
     const QSharedPointer<ReportsPageStatistics> m_statPage;
 #ifdef WITH_XC_BROWSER
     const QSharedPointer<ReportsPageBrowserStatistics> m_browserStatPage;

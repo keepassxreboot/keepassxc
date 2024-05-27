@@ -170,8 +170,6 @@ set(keepassx_SOURCES
         gui/reports/ReportsDialog.cpp
         gui/reports/ReportsWidgetHealthcheck.cpp
         gui/reports/ReportsPageHealthcheck.cpp
-        gui/reports/ReportsWidgetHibp.cpp
-        gui/reports/ReportsPageHibp.cpp
         gui/reports/ReportsWidgetStatistics.cpp
         gui/reports/ReportsPageStatistics.cpp
         gui/osutils/OSUtilsBase.cpp
@@ -361,6 +359,8 @@ if(WITH_XC_NETWORKING)
             gui/UpdateCheckDialog.cpp
             gui/IconDownloader.cpp
             gui/IconDownloaderDialog.cpp
+            gui/reports/ReportsWidgetHibp.cpp
+            gui/reports/ReportsPageHibp.cpp
             updatecheck/UpdateChecker.cpp)
 endif()
 

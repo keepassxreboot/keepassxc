@@ -18,14 +18,10 @@
 #ifndef KEEPASSXC_REPORTSWIDGETHIBP_H
 #define KEEPASSXC_REPORTSWIDGETHIBP_H
 
-#include "config-keepassx.h"
+#include "core/HibpDownloader.h"
 #include "gui/entry/EntryModel.h"
 
 #include <QWidget>
-
-#ifdef WITH_XC_NETWORKING
-#include "core/HibpDownloader.h"
-#endif
 
 class Database;
 class Entry;
@@ -75,10 +71,7 @@ private:
     QPointer<Entry> m_editedEntry; // The entry we're currently editing
     QString m_editedPassword; // The old password of the entry we're editing
     bool m_editedExcluded; // The old "known bad" flag of the entry we're editing
-
-#ifdef WITH_XC_NETWORKING
     HibpDownloader m_downloader; // This performs the actual HIBP online query
-#endif
 };
 
 #endif // KEEPASSXC_REPORTSWIDGETHIBP_H

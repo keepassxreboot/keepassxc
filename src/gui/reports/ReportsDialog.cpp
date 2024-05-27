@@ -19,7 +19,10 @@
 #include "ui_ReportsDialog.h"
 
 #include "ReportsPageHealthcheck.h"
+#ifdef WITH_XC_NETWORKING
 #include "ReportsPageHibp.h"
+#include "ReportsWidgetHibp.h"
+#endif
 #include "ReportsPageStatistics.h"
 #ifdef WITH_XC_BROWSER
 #include "ReportsPageBrowserStatistics.h"
@@ -30,7 +33,6 @@
 #include "ReportsWidgetPasskeys.h"
 #endif
 #include "ReportsWidgetHealthcheck.h"
-#include "ReportsWidgetHibp.h"
 
 #include "core/Global.h"
 #include "core/Group.h"
@@ -61,7 +63,9 @@ ReportsDialog::ReportsDialog(QWidget* parent)
     : DialogyWidget(parent)
     , m_ui(new Ui::ReportsDialog())
     , m_healthPage(new ReportsPageHealthcheck())
+#ifdef WITH_XC_NETWORKING
     , m_hibpPage(new ReportsPageHibp())
+#endif
     , m_statPage(new ReportsPageStatistics())
 #ifdef WITH_XC_BROWSER
     , m_browserStatPage(new ReportsPageBrowserStatistics())
@@ -82,7 +86,9 @@ ReportsDialog::ReportsDialog(QWidget* parent)
 #ifdef WITH_XC_BROWSER
     addPage(m_browserStatPage);
 #endif
+#ifdef WITH_XC_NETWORKING
     addPage(m_hibpPage);
+#endif
 
     m_ui->stackedWidget->setCurrentIndex(0);
 
@@ -93,7 +99,9 @@ ReportsDialog::ReportsDialog(QWidget* parent)
 
     connect(m_ui->categoryList, SIGNAL(categoryChanged(int)), m_ui->stackedWidget, SLOT(setCurrentIndex(int)));
     connect(m_healthPage->m_healthWidget, SIGNAL(entryActivated(Entry*)), SLOT(entryActivationSignalReceived(Entry*)));
+#ifdef WITH_XC_NETWORKING
     connect(m_hibpPage->m_hibpWidget, SIGNAL(entryActivated(Entry*)), SLOT(entryActivationSignalReceived(Entry*)));
+#endif
 #ifdef WITH_XC_BROWSER
     connect(m_browserStatPage->m_browserWidget,
             SIGNAL(entryActivated(Entry*)),
@@ -164,9 +172,12 @@ void ReportsDialog::switchToMainView(bool previousDialogAccepted)
     if (previousDialogAccepted) {
         if (m_sender == m_healthPage->m_healthWidget) {
             m_healthPage->m_healthWidget->calculateHealth();
-        } else if (m_sender == m_hibpPage->m_hibpWidget) {
+        }
+#ifdef WITH_XC_NETWORKING
+        if (m_sender == m_hibpPage->m_hibpWidget) {
             m_hibpPage->m_hibpWidget->refreshAfterEdit();
         }
+#endif
 #ifdef WITH_XC_BROWSER
         if (m_sender == m_browserStatPage->m_browserWidget) {
             m_browserStatPage->m_browserWidget->calculateBrowserStatistics();
