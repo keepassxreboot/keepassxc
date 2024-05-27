@@ -123,7 +123,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     m_groupSplitter->addWidget(tagsWidget);
     m_groupSplitter->setStretchFactor(0, 100);
     m_groupSplitter->setStretchFactor(1, 0);
-    m_groupSplitter->setSizes({1,1});
+    m_groupSplitter->setSizes({1, 1});
 
     auto rightHandSideWidget = new QWidget(m_mainSplitter);
     auto rightHandSideVBox = new QVBoxLayout();
