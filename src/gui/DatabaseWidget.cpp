@@ -1440,7 +1440,7 @@ void DatabaseWidget::removePasskeyFromEntry()
                                        tr("Remove passkey from entry"),
                                        tr("Do you want to remove the passkey from this entry?"),
                                        MessageBox::Remove | MessageBox::Cancel);
-    if (result == MessageBox::Yes) {
+    if (result == MessageBox::Remove) {
         currentEntry->removePasskey();
     }
 }
