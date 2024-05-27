@@ -38,7 +38,7 @@ EntryPreviewWidget TagsEdit
     padding-left: 0px;
 }
 
-DatabaseOpenWidget #centralStack {
+DatabaseOpenWidget #centralStack, DatabaseOpenWidget #publicSummaryLabel {
     border: 1px solid palette(mid);
     background: palette(light);
 }

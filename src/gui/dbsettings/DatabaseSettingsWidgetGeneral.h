@@ -40,6 +40,9 @@ public slots:
     void uninitialize() override;
     bool saveSettings() override;
 
+private slots:
+    void pickColor();
+
 protected:
     void showEvent(QShowEvent* event) override;
 

@@ -74,6 +74,8 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     m_ui->labelHeadline->setFont(font);
     m_ui->labelHeadline->setText(tr("Unlock KeePassXC Database"));
 
+    m_ui->publicSummaryLabel->setVisible(false);
+
     m_ui->quickUnlockButton->setFont(font);
     m_ui->quickUnlockButton->setIcon(
         icons()->icon("fingerprint", true, palette().color(QPalette::Active, QPalette::HighlightedText)));
@@ -228,6 +230,28 @@ void DatabaseOpenWidget::load(const QString& filename)
     m_db->open(m_filename, nullptr, &error);
 
     m_ui->fileNameLabel->setRawText(m_filename);
+
+    if (!m_db->publicSummary().isEmpty()) {
+        m_ui->publicSummaryLabel->setVisible(true);
+        m_ui->publicSummaryLabel->setText(m_db->publicSummary());
+    }
+
+    m_ui->publicSummaryLabel->setStyleSheet("");
+
+    if (!m_db->publicColor().isEmpty()) {
+        QColor userColor = QColor(m_db->publicColor());
+
+        if (userColor.isValid()) {
+            float luminance = (0.299 * userColor.redF() + 0.587 * userColor.greenF() + 0.114 * userColor.blueF());
+
+            QColor textColor = Qt::white;
+            if (luminance > 0.5) {
+                textColor = Qt::black;
+            }
+
+            m_ui->publicSummaryLabel->setStyleSheet(QString("background-color:%1;color:%2;border-color:%1;").arg(userColor.name(), textColor.name()));
+        }
+    }
 
     if (config()->get(Config::RememberLastKeyFiles).toBool()) {
         auto lastKeyFiles = config()->get(Config::LastKeyFiles).toHash();

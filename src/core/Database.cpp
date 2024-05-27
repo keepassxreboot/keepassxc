@@ -1060,3 +1060,33 @@ bool Database::isTemporaryDatabase()
 {
     return m_isTemporaryDatabase;
 }
+
+QString Database::publicSummary()
+{
+    if (!publicCustomData().contains("KPXC_PUBLIC_SUMMARY")) {
+        return QString();
+    }
+
+    return publicCustomData()["KPXC_PUBLIC_SUMMARY"].toString();
+}
+
+void Database::setPublicSummary(const QString& newSummary)
+{
+    publicCustomData().insert("KPXC_PUBLIC_SUMMARY", newSummary);
+    markAsModified();
+}
+
+QString Database::publicColor()
+{
+    if (!publicCustomData().contains("KPXC_PUBLIC_COLOR")) {
+        return QString();
+    }
+
+    return publicCustomData()["KPXC_PUBLIC_COLOR"].toString();
+}
+
+void Database::setPublicColor(const QString& newSummary)
+{
+    publicCustomData().insert("KPXC_PUBLIC_COLOR", newSummary);
+    markAsModified();
+}

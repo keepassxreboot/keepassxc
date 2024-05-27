@@ -18,6 +18,8 @@
 #include "DatabaseSettingsWidgetGeneral.h"
 #include "ui_DatabaseSettingsWidgetGeneral.h"
 
+#include <QColorDialog>
+
 #include "core/Clock.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
@@ -28,6 +30,8 @@ DatabaseSettingsWidgetGeneral::DatabaseSettingsWidgetGeneral(QWidget* parent)
     , m_ui(new Ui::DatabaseSettingsWidgetGeneral())
 {
     m_ui->setupUi(this);
+
+    connect(m_ui->dbPublicColorChooseButton, SIGNAL(clicked()), SLOT(pickColor()));
 
     connect(m_ui->historyMaxItemsCheckBox, SIGNAL(toggled(bool)), m_ui->historyMaxItemsSpinBox, SLOT(setEnabled(bool)));
     connect(m_ui->historyMaxSizeCheckBox, SIGNAL(toggled(bool)), m_ui->historyMaxSizeSpinBox, SLOT(setEnabled(bool)));
@@ -45,6 +49,9 @@ void DatabaseSettingsWidgetGeneral::initialize()
     m_ui->recycleBinEnabledCheckBox->setChecked(meta->recycleBinEnabled());
     m_ui->defaultUsernameEdit->setText(meta->defaultUserName());
     m_ui->compressionCheckbox->setChecked(m_db->compressionAlgorithm() != Database::CompressionNone);
+
+    m_ui->dbPublicSummary->setText(m_db->publicSummary());
+    m_ui->dbPublicColor->setText(m_db->publicColor());
 
     if (meta->historyMaxItems() > -1) {
         m_ui->historyMaxItemsSpinBox->setValue(meta->historyMaxItems());
@@ -116,6 +123,9 @@ bool DatabaseSettingsWidgetGeneral::saveSettings()
     meta->setRecycleBinEnabled(m_ui->recycleBinEnabledCheckBox->isChecked());
     meta->setSettingsChanged(Clock::currentDateTimeUtc());
 
+    m_db->setPublicSummary(m_ui->dbPublicSummary->text());
+    m_db->setPublicColor(m_ui->dbPublicColor->text());
+
     bool truncate = false;
 
     int historyMaxItems;
@@ -154,4 +164,11 @@ bool DatabaseSettingsWidgetGeneral::saveSettings()
     }
 
     return true;
+}
+
+void DatabaseSettingsWidgetGeneral::pickColor()
+{
+    QColor oldColor = QColor(m_ui->dbPublicColor->text());
+    QColor newColor = QColorDialog::getColor(oldColor);
+    m_ui->dbPublicColor->setText(newColor.name());
 }
