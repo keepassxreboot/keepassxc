@@ -661,23 +661,17 @@ void EditEntryWidget::updateSSHAgentKeyInfo()
     if (!key.fingerprint().isEmpty()) {
         m_sshAgentUi->fingerprintTextLabel->setText(key.fingerprint(QCryptographicHash::Md5) + "\n"
                                                     + key.fingerprint(QCryptographicHash::Sha256));
-    } else {
-        m_sshAgentUi->fingerprintTextLabel->setText(tr("(encrypted)"));
     }
 
-    if (!key.comment().isEmpty() || !key.encrypted()) {
+    if (!key.comment().isEmpty()) {
         m_sshAgentUi->commentTextLabel->setText(key.comment());
-    } else {
-        m_sshAgentUi->commentTextLabel->setText(tr("(encrypted)"));
-        m_sshAgentUi->decryptButton->setEnabled(true);
     }
+
+    m_sshAgentUi->decryptButton->setEnabled(key.encrypted());
 
     if (!key.publicKey().isEmpty()) {
         m_sshAgentUi->publicKeyEdit->document()->setPlainText(key.publicKey());
         m_sshAgentUi->copyToClipboardButton->setEnabled(true);
-    } else {
-        m_sshAgentUi->publicKeyEdit->document()->setPlainText(tr("(encrypted)"));
-        m_sshAgentUi->copyToClipboardButton->setDisabled(true);
     }
 
     // enable agent buttons only if we have an agent running
@@ -791,6 +785,7 @@ void EditEntryWidget::decryptPrivateKey()
     OpenSSHKey key;
 
     if (!getOpenSSHKey(key, true)) {
+        showMessage(tr("Failed to decrypt SSH key, ensure password is correct."), MessageWidget::Error);
         return;
     }
 
@@ -804,6 +799,7 @@ void EditEntryWidget::decryptPrivateKey()
                                                 + key.fingerprint(QCryptographicHash::Sha256));
     m_sshAgentUi->publicKeyEdit->document()->setPlainText(key.publicKey());
     m_sshAgentUi->copyToClipboardButton->setEnabled(true);
+    m_sshAgentUi->decryptButton->setEnabled(false);
 }
 
 void EditEntryWidget::copyPublicKey()
