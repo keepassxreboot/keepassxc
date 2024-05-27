@@ -335,6 +335,7 @@
     <addaction name="actionEntryAutoType"/>
     <addaction name="separator"/>
     <addaction name="actionEntryImportPasskey"/>
+    <addaction name="actionEntryRemovePasskey"/>
     <addaction name="separator"/>
     <addaction name="actionEntryOpenUrl"/>
     <addaction name="actionEntryDownloadIcon"/>
@@ -773,6 +774,14 @@
    </property>
    <property name="text">
     <string>Import Passkey</string>
+   </property>
+  </action>
+  <action name="actionEntryRemovePasskey">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Remove Passkey From Entry</string>
    </property>
   </action>
   <action name="actionEntryAutoTypeUsername">

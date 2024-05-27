@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -63,6 +63,16 @@ bool EntryAttributes::hasPasskey() const
     }
 
     return false;
+}
+
+void EntryAttributes::removePasskeyAttributes()
+{
+    const auto keyList = keys();
+    for (const auto& key : keyList) {
+        if (isPasskeyAttribute(key)) {
+            remove(key);
+        }
+    }
 }
 
 QList<QString> EntryAttributes::customKeys() const

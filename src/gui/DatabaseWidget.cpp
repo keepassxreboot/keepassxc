@@ -1428,6 +1428,22 @@ void DatabaseWidget::showImportPasskeyDialog(bool isEntry)
         passkeyImporter.importPasskey(m_db);
     }
 }
+
+void DatabaseWidget::removePasskeyFromEntry()
+{
+    auto currentEntry = currentSelectedEntry();
+    if (!currentEntry) {
+        return;
+    }
+
+    auto result = MessageBox::question(this,
+                                       tr("Remove passkey from entry"),
+                                       tr("Do you want to remove the passkey from this entry?"),
+                                       MessageBox::Remove | MessageBox::Cancel);
+    if (result == MessageBox::Remove) {
+        currentEntry->removePasskey();
+    }
+}
 #endif
 
 void DatabaseWidget::performUnlockDatabase(const QString& password, const QString& keyfile)
@@ -2017,6 +2033,14 @@ bool DatabaseWidget::currentEntryHasSshKey()
     }
 
     return KeeAgentSettings::inEntryAttachments(currentEntry->attachments());
+}
+#endif
+
+#ifdef WITH_XC_BROWSER_PASSKEYS
+bool DatabaseWidget::currentEntryHasPasskey()
+{
+    auto currentEntry = m_entryView->currentEntry();
+    return currentEntry && currentEntry->hasPasskey();
 }
 #endif
 
