@@ -1607,12 +1607,20 @@ void TestGui::testDatabaseSettings()
     passwordWidgets[0]->setText("b");
     passwordWidgets[1]->setText("b");
 
-    // Cancel password change
+    // Toggle between tabs to ensure the password remains
+    securityTabWidget->setCurrentIndex(1);
+    QApplication::processEvents();
+    securityTabWidget->setCurrentIndex(0);
+    QApplication::processEvents();
+    QCOMPARE(passwordWidgets[0]->text(), QString("b"));
+
+    // Cancel password change and confirm password is cleared
     auto cancelPasswordButton = passwordEditWidget->findChild<QPushButton*>("cancelButton");
     QVERIFY(cancelPasswordButton);
     QTest::mouseClick(cancelPasswordButton, Qt::LeftButton);
     QApplication::processEvents();
     QVERIFY(!passwordWidgets[0]->isVisible());
+    QCOMPARE(passwordWidgets[0]->text(), QString(""));
     QVERIFY(editPasswordButton->isVisible());
 
     // Switch to encryption tab and interact with various settings

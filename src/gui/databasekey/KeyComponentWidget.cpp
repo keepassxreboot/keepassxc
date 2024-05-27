@@ -73,6 +73,10 @@ KeyComponentWidget::Page KeyComponentWidget::visiblePage() const
 
 void KeyComponentWidget::updateAddStatus(bool added)
 {
+    if (m_ui->stackedWidget->currentIndex() == Page::Edit) {
+        emit editCanceled();
+    }
+
     if (added) {
         m_ui->stackedWidget->setCurrentIndex(Page::LeaveOrRemove);
     } else {
@@ -99,12 +103,6 @@ void KeyComponentWidget::cancelEdit()
 {
     m_ui->stackedWidget->setCurrentIndex(m_previousPage);
     emit editCanceled();
-}
-
-void KeyComponentWidget::showEvent(QShowEvent* event)
-{
-    resetComponentEditWidget();
-    QWidget::showEvent(event);
 }
 
 void KeyComponentWidget::resetComponentEditWidget()

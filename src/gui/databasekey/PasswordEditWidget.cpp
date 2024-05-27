@@ -27,6 +27,9 @@ PasswordEditWidget::PasswordEditWidget(QWidget* parent)
     , m_compUi(new Ui::PasswordEditWidget())
 {
     initComponent();
+
+    // Explicitly clear password on cancel
+    connect(this, &PasswordEditWidget::editCanceled, this, [this] { setPassword({}); });
 }
 
 PasswordEditWidget::~PasswordEditWidget() = default;
@@ -59,7 +62,7 @@ bool PasswordEditWidget::isPasswordVisible() const
 
 bool PasswordEditWidget::isEmpty() const
 {
-    return (visiblePage() == Page::Edit) && m_compUi->enterPasswordEdit->text().isEmpty();
+    return visiblePage() != Page::Edit || m_compUi->enterPasswordEdit->text().isEmpty();
 }
 
 PasswordHealth::Quality PasswordEditWidget::getPasswordQuality() const
@@ -83,8 +86,7 @@ void PasswordEditWidget::initComponentEditWidget(QWidget* widget)
 {
     Q_UNUSED(widget);
     Q_ASSERT(m_compEditWidget);
-    m_compUi->enterPasswordEdit->setFocus();
-
+    setFocusProxy(m_compUi->enterPasswordEdit);
     m_compUi->enterPasswordEdit->setQualityVisible(true);
     m_compUi->repeatPasswordEdit->setQualityVisible(false);
 }
@@ -101,16 +103,6 @@ void PasswordEditWidget::initComponent()
     m_ui->componentDescription->setText(
         tr("<p>A password is the primary method for securing your database.</p>"
            "<p>Good passwords are long and unique. KeePassXC can generate one for you.</p>"));
-}
-
-void PasswordEditWidget::hideEvent(QHideEvent* event)
-{
-    if (!isVisible() && m_compUi->enterPasswordEdit) {
-        m_compUi->enterPasswordEdit->setText("");
-        m_compUi->repeatPasswordEdit->setText("");
-    }
-
-    QWidget::hideEvent(event);
 }
 
 bool PasswordEditWidget::validate(QString& errorMessage) const
