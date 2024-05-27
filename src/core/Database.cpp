@@ -1041,6 +1041,13 @@ void Database::stopModifiedTimer()
 
 QUuid Database::publicUuid()
 {
+    // This feature requires KDBX4
+    if (m_data.formatVersion < KeePass2::FILE_VERSION_4) {
+        // Return the file path hash as a UUID for KDBX3
+        QCryptographicHash hasher(QCryptographicHash::Sha256);
+        hasher.addData(filePath().toUtf8());
+        return QUuid::fromRfc4122(hasher.result().left(16));
+    }
 
     if (!publicCustomData().contains("KPXC_PUBLIC_UUID")) {
         publicCustomData().insert("KPXC_PUBLIC_UUID", QUuid::createUuid().toRfc4122());
