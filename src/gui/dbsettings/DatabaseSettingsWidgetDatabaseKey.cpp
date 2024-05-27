@@ -79,28 +79,30 @@ void DatabaseSettingsWidgetDatabaseKey::load(QSharedPointer<Database> db)
         // database has no key, we are about to add a new one
         m_passwordEditWidget->changeVisiblePage(KeyComponentWidget::Page::Edit);
         m_passwordEditWidget->setPasswordVisible(true);
-    }
-
-    bool hasAdditionalKeys = false;
-    for (const auto& key : m_db->key()->keys()) {
-        if (key->uuid() == PasswordKey::UUID) {
-            m_passwordEditWidget->setComponentAdded(true);
-        } else if (key->uuid() == FileKey::UUID) {
-            m_keyFileEditWidget->setComponentAdded(true);
-            hasAdditionalKeys = true;
+        // Focus won't work until the UI settles
+        QTimer::singleShot(0, m_passwordEditWidget, SLOT(setFocus()));
+    } else {
+        bool hasAdditionalKeys = false;
+        for (const auto& key : m_db->key()->keys()) {
+            if (key->uuid() == PasswordKey::UUID) {
+                m_passwordEditWidget->setComponentAdded(true);
+            } else if (key->uuid() == FileKey::UUID) {
+                m_keyFileEditWidget->setComponentAdded(true);
+                hasAdditionalKeys = true;
+            }
         }
-    }
 
 #ifdef WITH_XC_YUBIKEY
-    for (const auto& key : m_db->key()->challengeResponseKeys()) {
-        if (key->uuid() == ChallengeResponseKey::UUID) {
-            m_yubiKeyEditWidget->setComponentAdded(true);
-            hasAdditionalKeys = true;
+        for (const auto& key : m_db->key()->challengeResponseKeys()) {
+            if (key->uuid() == ChallengeResponseKey::UUID) {
+                m_yubiKeyEditWidget->setComponentAdded(true);
+                hasAdditionalKeys = true;
+            }
         }
-    }
 #endif
 
-    setAdditionalKeyOptionsVisible(hasAdditionalKeys);
+        setAdditionalKeyOptionsVisible(hasAdditionalKeys);
+    }
 
     connect(m_passwordEditWidget->findChild<QPushButton*>("removeButton"), SIGNAL(clicked()), SLOT(markDirty()));
     connect(m_keyFileEditWidget->findChild<QPushButton*>("removeButton"), SIGNAL(clicked()), SLOT(markDirty()));
@@ -177,31 +179,32 @@ bool DatabaseSettingsWidgetDatabaseKey::save()
         return false;
     }
 
-    // Show warning if database password is weak
-    if (!m_passwordEditWidget->isEmpty()
-        && m_passwordEditWidget->getPasswordQuality() < PasswordHealth::Quality::Good) {
-        auto dialogResult = MessageBox::warning(this,
-                                                tr("Weak password"),
-                                                tr("This is a weak password! For better protection of your secrets, "
-                                                   "you should choose a stronger password."),
-                                                MessageBox::ContinueWithWeakPass | MessageBox::Cancel,
-                                                MessageBox::Cancel);
-
-        if (dialogResult == MessageBox::Cancel) {
+    if (!m_passwordEditWidget->isEmpty()) {
+        // Prevent setting password with a quality less than the minimum required
+        auto minQuality = qBound(0, config()->get(Config::Security_DatabasePasswordMinimumQuality).toInt(), 4);
+        if (m_passwordEditWidget->getPasswordQuality() < static_cast<PasswordHealth::Quality>(minQuality)) {
+            MessageBox::critical(this,
+                                 tr("Weak password"),
+                                 tr("The provided password does not meet the minimum quality requirement."),
+                                 MessageBox::Ok,
+                                 MessageBox::Ok);
             return false;
         }
-    }
 
-    // If enforced in the config file, deny users from continuing with a weak password
-    auto minQuality =
-        static_cast<PasswordHealth::Quality>(config()->get(Config::Security_DatabasePasswordMinimumQuality).toInt());
-    if (!m_passwordEditWidget->isEmpty() && m_passwordEditWidget->getPasswordQuality() < minQuality) {
-        MessageBox::critical(this,
-                             tr("Weak password"),
-                             tr("You must enter a stronger password to protect your database."),
-                             MessageBox::Ok,
-                             MessageBox::Ok);
-        return false;
+        // Show warning if database password is weak or poor
+        if (m_passwordEditWidget->getPasswordQuality() < PasswordHealth::Quality::Good) {
+            auto dialogResult =
+                MessageBox::warning(this,
+                                    tr("Weak password"),
+                                    tr("This is a weak password! For better protection of your secrets, "
+                                       "you should choose a stronger password."),
+                                    MessageBox::ContinueWithWeakPass | MessageBox::Cancel,
+                                    MessageBox::Cancel);
+
+            if (dialogResult == MessageBox::Cancel) {
+                return false;
+            }
+        }
     }
 
     if (!addToCompositeKey(m_keyFileEditWidget, newKey, oldFileKey)) {
@@ -232,11 +235,16 @@ bool DatabaseSettingsWidgetDatabaseKey::save()
         m_db->markAsModified();
     }
 
+    // Reset fields
+    initialize();
+
     return true;
 }
 
 void DatabaseSettingsWidgetDatabaseKey::discard()
 {
+    // Reset fields
+    initialize();
     emit editFinished(false);
 }
 

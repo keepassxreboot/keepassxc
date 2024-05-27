@@ -92,36 +92,32 @@ DatabaseSettingsDialog::DatabaseSettingsDialog(QWidget* parent)
     scrollArea->setSizeAdjustPolicy(QScrollArea::AdjustToContents);
     scrollArea->setWidgetResizable(true);
     scrollArea->setWidget(m_databaseKeyWidget);
-    m_securityTabWidget->addTab(scrollArea, tr("Database Credentials"));
 
+    m_securityTabWidget->addTab(scrollArea, tr("Database Credentials"));
     m_securityTabWidget->addTab(m_encryptionWidget, tr("Encryption Settings"));
+    m_securityTabWidget->setCurrentIndex(0);
 
     m_ui->categoryList->addCategory(tr("Remote Sync"), icons()->icon("remote-sync"));
     m_ui->stackedWidget->addWidget(m_remoteWidget);
-
-#if defined(WITH_XC_KEESHARE)
-    addSettingsPage(new DatabaseSettingsPageKeeShare());
-#endif
-
-#if defined(WITH_XC_FDOSECRETS)
-    addSettingsPage(new DatabaseSettingsPageFdoSecrets());
-#endif
-
-    m_ui->stackedWidget->setCurrentIndex(0);
-    m_securityTabWidget->setCurrentIndex(0);
-
-    connect(m_securityTabWidget, SIGNAL(currentChanged(int)), SLOT(pageChanged()));
-    connect(m_ui->categoryList, SIGNAL(categoryChanged(int)), m_ui->stackedWidget, SLOT(setCurrentIndex(int)));
 
 #ifdef WITH_XC_BROWSER
     m_ui->categoryList->addCategory(tr("Browser Integration"), icons()->icon("internet-web-browser"));
     m_ui->stackedWidget->addWidget(m_browserWidget);
 #endif
 
+#ifdef WITH_XC_KEESHARE
+    addSettingsPage(new DatabaseSettingsPageKeeShare());
+#endif
+
+#ifdef WITH_XC_FDOSECRETS
+    addSettingsPage(new DatabaseSettingsPageFdoSecrets());
+#endif
+
     m_ui->categoryList->addCategory(tr("Maintenance"), icons()->icon("hammer-wrench"));
     m_ui->stackedWidget->addWidget(m_maintenanceWidget);
 
-    pageChanged();
+    m_ui->stackedWidget->setCurrentIndex(0);
+    connect(m_ui->categoryList, SIGNAL(categoryChanged(int)), m_ui->stackedWidget, SLOT(setCurrentIndex(int)));
 }
 
 DatabaseSettingsDialog::~DatabaseSettingsDialog() = default;
@@ -171,20 +167,28 @@ void DatabaseSettingsDialog::showRemoteSettings()
 void DatabaseSettingsDialog::save()
 {
     if (!m_generalWidget->save()) {
+        m_ui->categoryList->setCurrentCategory(0);
         return;
     }
 
     if (!m_databaseKeyWidget->save()) {
+        m_ui->categoryList->setCurrentCategory(1);
+        m_securityTabWidget->setCurrentIndex(0);
         return;
     }
 
     if (!m_encryptionWidget->save()) {
+        m_ui->categoryList->setCurrentCategory(1);
+        m_securityTabWidget->setCurrentIndex(1);
         return;
     }
 
     if (!m_remoteWidget->save()) {
+        m_ui->categoryList->setCurrentCategory(2);
         return;
     }
+
+    // Browser settings don't have anything to save
 
     for (const ExtraPage& extraPage : asConst(m_extraPages)) {
         extraPage.saveSettings();
@@ -195,10 +199,13 @@ void DatabaseSettingsDialog::save()
 
 void DatabaseSettingsDialog::reject()
 {
-    emit editFinished(false);
-}
+    m_generalWidget->discard();
+    m_databaseKeyWidget->discard();
+    m_encryptionWidget->discard();
+    m_remoteWidget->discard();
+#ifdef WITH_XC_BROWSER
+    m_browserWidget->discard();
+#endif
 
-void DatabaseSettingsDialog::pageChanged()
-{
-    m_ui->stackedWidget->currentIndex();
+    emit editFinished(false);
 }

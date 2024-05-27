@@ -1856,11 +1856,11 @@ Are you sure you want to continue without a password?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>You must enter a stronger password to protect your database.</source>
+        <source>This is a weak password! For better protection of your secrets, you should choose a stronger password.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>This is a weak password! For better protection of your secrets, you should choose a stronger password.</source>
+        <source>The provided password does not meet the minimum quality requirement.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
