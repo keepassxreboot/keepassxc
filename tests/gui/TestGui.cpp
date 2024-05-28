@@ -1590,24 +1590,74 @@ void TestGui::testDatabaseSettings()
     int autosaveDelayTestValue = 2;
 
     dbSettingsCategoryList->setCurrentCategory(1); // go into security category
-    dbSettingsStackedWidget->findChild<QTabWidget*>()->setCurrentIndex(1); // go into encryption tab
+    auto securityTabWidget = dbSettingsStackedWidget->findChild<QTabWidget*>();
+    QCOMPARE(securityTabWidget->currentIndex(), 0);
 
-    auto encryptionSettings = dbSettingsDialog->findChild<QTabWidget*>("encryptionSettingsTabWidget");
+    // Interact with the password edit option
+    auto passwordEditWidget = securityTabWidget->findChild<PasswordEditWidget*>();
+    QVERIFY(passwordEditWidget);
+    auto editPasswordButton = passwordEditWidget->findChild<QPushButton*>("changeButton");
+    QVERIFY(editPasswordButton);
+    QVERIFY(editPasswordButton->isVisible());
+    QTest::mouseClick(editPasswordButton, Qt::LeftButton);
+    QApplication::processEvents();
+    auto passwordWidgets = dbSettingsDialog->findChildren<PasswordWidget*>();
+    QVERIFY(passwordWidgets.count() == 2);
+    QVERIFY(passwordWidgets[0]->isVisible());
+    passwordWidgets[0]->setText("b");
+    passwordWidgets[1]->setText("b");
+
+    // Cancel password change
+    auto cancelPasswordButton = passwordEditWidget->findChild<QPushButton*>("cancelButton");
+    QVERIFY(cancelPasswordButton);
+    QTest::mouseClick(cancelPasswordButton, Qt::LeftButton);
+    QApplication::processEvents();
+    QVERIFY(!passwordWidgets[0]->isVisible());
+    QVERIFY(editPasswordButton->isVisible());
+
+    // Switch to encryption tab and interact with various settings
+    securityTabWidget->setCurrentIndex(1);
+    QApplication::processEvents();
+
+    // Verify database is KDBX3
+    auto compatibilitySelection = securityTabWidget->findChild<QComboBox*>("compatibilitySelection");
+    QVERIFY(compatibilitySelection);
+    QVERIFY(compatibilitySelection->isEnabled());
+    QCOMPARE(compatibilitySelection->currentText(), QString("KDBX 3"));
+
+    // Verify advanced settings
+    auto encryptionSettings = securityTabWidget->findChild<QTabWidget*>("encryptionSettingsTabWidget");
     auto advancedTab = encryptionSettings->findChild<QWidget*>("advancedTab");
     encryptionSettings->setCurrentWidget(advancedTab);
-
     QApplication::processEvents();
+
+    // Verify KDF is AES KDBX3
+    auto kdfSelection = advancedTab->findChild<QComboBox*>("kdfComboBox");
+    QVERIFY(kdfSelection->isVisible());
+    QCOMPARE(kdfSelection->currentText(), QString("AES-KDF (KDBX 3)"));
 
     auto transformRoundsSpinBox = advancedTab->findChild<QSpinBox*>("transformRoundsSpinBox");
     QVERIFY(transformRoundsSpinBox);
-    QVERIFY(transformRoundsSpinBox->isVisible());
 
+    // Adjust compatibility to KDBX4 and wait for KDF to update
+    compatibilitySelection->setCurrentIndex(0);
+    QTRY_VERIFY(transformRoundsSpinBox->isEnabled());
+    QCOMPARE(compatibilitySelection->currentText().left(6), QString("KDBX 4"));
+    QCOMPARE(kdfSelection->currentText().left(7), QString("Argon2d"));
+
+    // Switch to AES KDBX4, change rounds, then accept
+    kdfSelection->setCurrentIndex(2);
+    QCOMPARE(kdfSelection->currentText(), QString("AES-KDF (KDBX 4)"));
     transformRoundsSpinBox->setValue(123456);
     QTest::keyClick(transformRoundsSpinBox, Qt::Key_Enter);
     QTRY_COMPARE(m_db->kdf()->rounds(), 123456);
+    QVERIFY(m_db->formatVersion() >= KeePass2::FILE_VERSION_4);
+    QCOMPARE(m_db->kdf()->uuid(), KeePass2::KDF_AES_KDBX4);
+
+    // Go back into database settings
+    triggerAction("actionDatabaseSettings");
 
     // test disable and default values for maximum history items and size
-    triggerAction("actionDatabaseSettings");
     auto* historyMaxItemsCheckBox = dbSettingsDialog->findChild<QCheckBox*>("historyMaxItemsCheckBox");
     auto* historyMaxItemsSpinBox = dbSettingsDialog->findChild<QSpinBox*>("historyMaxItemsSpinBox");
     auto* historyMaxSizeCheckBox = dbSettingsDialog->findChild<QCheckBox*>("historyMaxSizeCheckBox");

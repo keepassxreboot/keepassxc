@@ -47,13 +47,10 @@ protected:
 
 private slots:
     void benchmarkTransformRounds(int millisecs = Kdf::DEFAULT_ENCRYPTION_TIME);
-    void changeKdf(int index);
     void memoryChanged(int value);
     void parallelismChanged(int value);
     void updateDecryptionTime(int value);
-    void updateFormatCompatibility(int index, bool retransform = true);
-    void setupAlgorithmComboBox();
-    void setupKdfComboBox(bool enableKdbx3);
+    void loadKdfAlgorithms();
     void loadKdfParameters();
     void updateKdfFields();
     void markDirty();
@@ -71,7 +68,6 @@ private:
 
     bool m_isDirty = false;
     bool m_initWithAdvanced = false;
-    bool m_formatCompatibilityDirty = false;
     const QScopedPointer<Ui::DatabaseSettingsWidgetEncryption> m_ui;
 };
 
