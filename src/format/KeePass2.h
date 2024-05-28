@@ -67,7 +67,8 @@ namespace KeePass2
     extern const QString KDFPARAM_ARGON2_ASSOCDATA;
 
     extern const QList<QUuid> CIPHERS;
-    extern const QList<QUuid> KDFS;
+    extern const QList<QUuid> KDBX4_KDFS;
+    extern const QList<QUuid> KDBX3_KDFS;
 
     enum class HeaderFieldID
     {
