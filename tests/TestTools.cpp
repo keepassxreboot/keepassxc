@@ -150,6 +150,12 @@ void TestTools::testBackupFilePatternSubstitution_data()
     QTest::newRow("Default time pattern (empty formatter)")
         << "{TIME:}" << DEFAULT_DB_FILE_PATH << DEFAULT_FORMATTED_TIME;
     QTest::newRow("Custom time pattern") << "{TIME:dd-ss}" << DEFAULT_DB_FILE_PATH << NOW.toString("dd-ss");
+    QTest::newRow("Time pattern twice") << "{TIME:yy} {TIME}" << DEFAULT_DB_FILE_PATH
+                                        << NOW.toString("yy") + QStringLiteral(" ") + DEFAULT_FORMATTED_TIME;
+    QTest::newRow("Complex custom time pattern")
+        << "./{TIME:yy}/{DB_FILENAME}_{TIME:yyyyMMdd_HHmmss}.old.kdbx" << DEFAULT_DB_FILE_PATH
+        << QStringLiteral("./") + NOW.toString("yy") + QStringLiteral("/") + DEFAULT_DB_FILE_NAME + QStringLiteral("_")
+               + NOW.toString("yyyyMMdd_HHmmss") + QStringLiteral(".old.kdbx");
     QTest::newRow("Invalid custom time pattern") << "{TIME:dd/-ss}" << DEFAULT_DB_FILE_PATH << NOW.toString("dd/-ss");
     QTest::newRow("Recursive substitution") << "{TIME:'{TIME}'}" << DEFAULT_DB_FILE_PATH << DEFAULT_FORMATTED_TIME;
     QTest::newRow("{DB_FILENAME} substitution")
@@ -161,7 +167,7 @@ void TestTools::testBackupFilePatternSubstitution_data()
     // Not relevant right now, added test anyway
     QTest::newRow("There should be no substitution loops") << "{DB_FILENAME}"
                                                            << "{TIME:'{DB_FILENAME}'}.ext"
-                                                           << "{DB_FILENAME}";
+                                                           << "{TIME:'{DB_FILENAME}'}";
 }
 
 void TestTools::testBackupFilePatternSubstitution()
