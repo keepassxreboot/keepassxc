@@ -94,6 +94,11 @@ void CsvParserModel::setSkippedRows(int skipped)
     emit layoutChanged();
 }
 
+int CsvParserModel::skippedRows() const
+{
+    return m_skipped;
+}
+
 void CsvParserModel::setHeaderLabels(const QStringList& labels)
 {
     m_columnHeader = labels;

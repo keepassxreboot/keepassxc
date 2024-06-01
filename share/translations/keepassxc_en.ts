@@ -1421,6 +1421,15 @@ Would you like to migrate your existing settings now?</source>
         <source>Imported from CSV file: %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>No Title Selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No title column was selected, entries will be hard to tell apart.
+Are you sure you want to import?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CsvParserModel</name>
