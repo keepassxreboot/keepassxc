@@ -19,6 +19,7 @@
 #include "BrowserMessageBuilder.h"
 #include "BrowserService.h"
 #include "PasskeyUtils.h"
+#include "config-keepassx.h"
 #include "crypto/Random.h"
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -276,7 +277,11 @@ BrowserPasskeys::buildCredentialPrivateKey(int alg, const QString& predefinedFir
             try {
                 Botan::Ed25519_PrivateKey key(*randomGen()->getRng());
                 auto publicKey = key.get_public_key();
+#ifdef WITH_XC_BOTAN3
+                auto privateKey = key.raw_private_key_bits();
+#else
                 auto privateKey = key.get_private_key();
+#endif
                 firstPart = browserMessageBuilder()->getQByteArray(publicKey.data(), publicKey.size());
                 secondPart = browserMessageBuilder()->getQByteArray(privateKey.data(), privateKey.size());
 
