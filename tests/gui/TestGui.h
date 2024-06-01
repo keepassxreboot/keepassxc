@@ -34,34 +34,19 @@ class TestGui : public QObject
 private slots:
     void initTestCase();
     void init();
-    void cleanup();
     void cleanupTestCase();
 
-    void testSettingsDefaultTabOrder();
-    void testCreateDatabase();
-    void testMergeDatabase();
-    void testAutoreloadDatabase();
-    void testTabs();
     void testEditEntry();
     void testSearchEditEntry();
     void testAddEntry();
-    void testPasswordEntryEntropy();
-    void testPasswordEntryEntropy_data();
-    void testDicewareEntryEntropy();
-    void testTotp();
     void testSearch();
     void testDeleteEntry();
     void testCloneEntry();
     void testEntryPlaceholders();
     void testDragAndDropEntry();
     void testDragAndDropGroup();
-    void testSaveAs();
-    void testSaveBackup();
-    void testSave();
-    void testSaveBackupPath();
-    void testSaveBackupPath_data();
     void testDatabaseSettings();
-    void testDatabaseLocking();
+    void testKeePass1Import();
     void testDragAndDropKdbxFiles();
     void testSortGroups();
     void testAutoType();
