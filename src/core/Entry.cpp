@@ -28,6 +28,7 @@
 
 #include <QDir>
 #include <QRegularExpression>
+#include <QStringBuilder>
 #include <QUrl>
 
 const int Entry::DefaultIconNumber = 0;
@@ -1043,8 +1044,11 @@ QString Entry::resolvePlaceholderRecursive(const QString& placeholder, int maxDe
     const PlaceholderType typeOfPlaceholder = placeholderType(placeholder);
     switch (typeOfPlaceholder) {
     case PlaceholderType::NotPlaceholder:
-    case PlaceholderType::Unknown:
         return resolveMultiplePlaceholdersRecursive(placeholder, maxDepth - 1);
+    case PlaceholderType::Unknown: {
+        return "{" % resolveMultiplePlaceholdersRecursive(placeholder.mid(1, placeholder.length() - 2), maxDepth - 1)
+               % "}";
+    }
     case PlaceholderType::Title:
         return resolveMultiplePlaceholdersRecursive(title(), maxDepth - 1);
     case PlaceholderType::UserName:
