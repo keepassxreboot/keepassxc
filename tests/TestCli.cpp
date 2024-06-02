@@ -26,7 +26,6 @@
 #include "crypto/Crypto.h"
 #include "keys/FileKey.h"
 #include "keys/drivers/YubiKey.h"
-#include "zxcvbn/zxcvbn.h"
 
 #include "cli/Add.h"
 #include "cli/AddGroup.h"
@@ -59,6 +58,7 @@
 #include <QSignalSpy>
 #include <QTest>
 #include <QtConcurrent>
+#include <zxcvbn.h>
 
 QTEST_MAIN(TestCli)
 

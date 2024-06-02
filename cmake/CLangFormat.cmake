@@ -16,7 +16,6 @@
 set(EXCLUDED_DIRS
         # third-party directories
         src/thirdparty
-        src/zxcvbn
         # objective-c directories
         src/touchid
         src/autotype/mac
