@@ -81,7 +81,7 @@ const QString OpenSSHKey::type() const
 const QString OpenSSHKey::fingerprint(QCryptographicHash::Algorithm algo) const
 {
     if (m_rawPublicData.isEmpty()) {
-        return {};
+        return tr("(encrypted)");
     }
 
     QByteArray publicKey;
@@ -285,6 +285,8 @@ bool OpenSSHKey::parsePKCS1PEM(const QByteArray& in)
     // load private if no encryption
     if (!encrypted()) {
         return openKey();
+    } else {
+        m_comment = tr("(encrypted)");
     }
 
     return true;
