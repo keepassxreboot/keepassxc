@@ -141,6 +141,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     m_mainSplitter->addWidget(rightHandSideWidget);
     m_mainSplitter->setStretchFactor(0, 0);
     m_mainSplitter->setStretchFactor(1, 100);
+    m_mainSplitter->setCollapsible(1, false);
     m_mainSplitter->setSizes({1, 1});
 
     m_previewSplitter->setOrientation(Qt::Vertical);
@@ -363,20 +364,27 @@ QHash<Config::ConfigKey, QList<int>> DatabaseWidget::splitterSizes() const
 
 void DatabaseWidget::setSplitterSizes(const QHash<Config::ConfigKey, QList<int>>& sizes)
 {
+    // Set the splitter sizes, if the size is invalid set a default ratio based on this widget size
     for (auto itr = sizes.constBegin(); itr != sizes.constEnd(); ++itr) {
-        // Less than two sizes indicates an invalid value
-        if (itr.value().size() < 2) {
-            continue;
-        }
+        auto value = itr.value();
         switch (itr.key()) {
         case Config::GUI_SplitterState:
-            m_mainSplitter->setSizes(itr.value());
+            if (value.size() < 2) {
+                value = QList({static_cast<int>(width() * 0.25), static_cast<int>(width() * 0.75)});
+            }
+            m_mainSplitter->setSizes(value);
             break;
         case Config::GUI_PreviewSplitterState:
-            m_previewSplitter->setSizes(itr.value());
+            if (value.size() < 2) {
+                value = QList({static_cast<int>(height() * 0.8), static_cast<int>(height() * 0.2)});
+            }
+            m_previewSplitter->setSizes(value);
             break;
         case Config::GUI_GroupSplitterState:
-            m_groupSplitter->setSizes(itr.value());
+            if (value.size() < 2) {
+                value = QList({static_cast<int>(height() * 0.6), static_cast<int>(height() * 0.4)});
+            }
+            m_groupSplitter->setSizes(value);
             break;
         default:
             break;
