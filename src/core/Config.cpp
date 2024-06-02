@@ -490,20 +490,8 @@ void Config::init(const QString& configFileName, const QString& localConfigFileN
 QPair<QString, QString> Config::defaultConfigFiles()
 {
     // Check if we are running in portable mode, if so store the config files local to the app
-#ifdef Q_OS_WIN
-    // Enable QFileInfo::isWritable check on Windows
-    extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
-    qt_ntfs_permission_lookup++;
-#endif
-    auto portablePath = QCoreApplication::applicationDirPath().append("/%1");
-    auto portableFile = portablePath.arg(".portable");
-    bool isPortable = QFile::exists(portableFile) && QFileInfo(portableFile).isWritable();
-#ifdef Q_OS_WIN
-    qt_ntfs_permission_lookup--;
-#endif
-
-    if (isPortable) {
-        return {portablePath.arg("config/keepassxc.ini"), portablePath.arg("config/keepassxc_local.ini")};
+    if (isPortable()) {
+        return {portableConfigDir().append("/keepassxc.ini"), portableConfigDir().append("/keepassxc_local.ini")};
     }
 
     QString configPath;
@@ -569,6 +557,27 @@ void Config::createTempFileInstance()
     Q_UNUSED(openResult);
     m_instance = new Config(tmpFile->fileName(), "", qApp);
     tmpFile->setParent(m_instance);
+}
+
+bool Config::isPortable()
+{
+#ifdef Q_OS_WIN
+    // Enable QFileInfo::isWritable check on Windows
+    extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
+    qt_ntfs_permission_lookup++;
+#endif
+    auto portablePath = QCoreApplication::applicationDirPath().append("/%1");
+    auto portableFile = portablePath.arg(".portable");
+    auto isPortable = QFile::exists(portableFile) && QFileInfo(portableFile).isWritable();
+#ifdef Q_OS_WIN
+    qt_ntfs_permission_lookup--;
+#endif
+    return isPortable;
+}
+
+QString Config::portableConfigDir()
+{
+    return QCoreApplication::applicationDirPath().append("/config");
 }
 
 #undef QS
