@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -212,6 +212,8 @@ public slots:
 #ifdef WITH_XC_BROWSER_PASSKEYS
     void switchToPasskeys();
     void showImportPasskeyDialog(bool isEntry = false);
+    void removePasskeyFromEntry();
+    bool currentEntryHasPasskey();
 #endif
     void switchToOpenDatabase();
     void switchToOpenDatabase(const QString& filePath);

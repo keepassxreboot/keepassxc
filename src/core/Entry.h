@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -120,8 +120,10 @@ public:
     bool excludeFromReports() const;
     void setExcludeFromReports(bool state);
 
-    bool hasTotp() const;
     bool hasPasskey() const;
+    void removePasskey();
+
+    bool hasTotp() const;
     bool isExpired() const;
     bool willExpireInDays(int days) const;
     bool isRecycled() const;

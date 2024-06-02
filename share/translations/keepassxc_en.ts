@@ -2534,6 +2534,14 @@ Disable safe saves and try again?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Remove passkey from entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to remove the passkey from this entry?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Searches and Tags</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3584,6 +3592,10 @@ This may cause the affected plugins to malfunction.</source>
     <name>Entry</name>
     <message>
         <source>%1 - Clone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Passkey</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5736,6 +5748,10 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Toggle Show Menubar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove Passkey From Entry</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

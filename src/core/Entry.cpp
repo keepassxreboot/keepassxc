@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -549,6 +549,12 @@ bool Entry::hasTotp() const
 bool Entry::hasPasskey() const
 {
     return m_attributes->hasPasskey();
+}
+
+void Entry::removePasskey()
+{
+    m_attributes->removePasskeyAttributes();
+    removeTag(tr("Passkey"));
 }
 
 QString Entry::totp() const
