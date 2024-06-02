@@ -1028,11 +1028,6 @@ QString Entry::resolveMultiplePlaceholdersRecursive(const QString& str, int maxD
         const auto found = match.captured(1);
         result.replace(found, resolvePlaceholderRecursive(found, maxDepth - 1));
     }
-
-    if (result != str) {
-        result = resolveMultiplePlaceholdersRecursive(result, maxDepth - 1);
-    }
-
     return result;
 }
 
