@@ -72,9 +72,6 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     font.setPointSize(font.pointSize() + 4);
     font.setBold(true);
     m_ui->labelHeadline->setFont(font);
-    m_ui->labelHeadline->setText(tr("Unlock KeePassXC Database"));
-
-    m_ui->publicSummaryLabel->setVisible(false);
 
     m_ui->quickUnlockButton->setFont(font);
     m_ui->quickUnlockButton->setIcon(
@@ -231,27 +228,18 @@ void DatabaseOpenWidget::load(const QString& filename)
 
     m_ui->fileNameLabel->setRawText(m_filename);
 
-    if (!m_db->publicSummary().isEmpty()) {
-        m_ui->publicSummaryLabel->setVisible(true);
-        m_ui->publicSummaryLabel->setText(m_db->publicSummary());
+    auto label = tr("Unlock KeePassXC Database");
+    if (!m_db->publicName().isEmpty()) {
+        label.append(QString(": %1").arg(m_db->publicName()));
     }
+    m_ui->labelHeadline->setText(label);
 
-    m_ui->publicSummaryLabel->setStyleSheet("");
+    auto color = m_db->publicColor();
+    m_ui->displayColorLabel->setVisible(!color.isEmpty());
+    m_ui->displayColorLabel->setStyleSheet(
+        QString("background: %1; border: 1px solid palette(dark); border-radius: 4px").arg(color));
 
-    if (!m_db->publicColor().isEmpty()) {
-        QColor userColor = QColor(m_db->publicColor());
-
-        if (userColor.isValid()) {
-            float luminance = (0.299 * userColor.redF() + 0.587 * userColor.greenF() + 0.114 * userColor.blueF());
-
-            QColor textColor = Qt::white;
-            if (luminance > 0.5) {
-                textColor = Qt::black;
-            }
-
-            m_ui->publicSummaryLabel->setStyleSheet(QString("background-color:%1;color:%2;border-color:%1;").arg(userColor.name(), textColor.name()));
-        }
-    }
+    // m_ui->centralStack->setStyleSheet(QString("QStackedWidget {border: 4px solid %1}").arg(color));
 
     if (config()->get(Config::RememberLastKeyFiles).toBool()) {
         auto lastKeyFiles = config()->get(Config::LastKeyFiles).toHash();

@@ -1051,6 +1051,36 @@ QUuid Database::publicUuid()
     return QUuid::fromRfc4122(publicCustomData()["KPXC_PUBLIC_UUID"].toByteArray());
 }
 
+QString Database::publicName()
+{
+    return publicCustomData().value("KPXC_PUBLIC_NAME").toString();
+}
+
+void Database::setPublicName(const QString& name)
+{
+    if (name.isEmpty()) {
+        publicCustomData().remove("KPXC_PUBLIC_NAME");
+    } else {
+        publicCustomData().insert("KPXC_PUBLIC_NAME", name);
+    }
+    markAsModified();
+}
+
+QString Database::publicColor()
+{
+    return publicCustomData().value("KPXC_PUBLIC_COLOR").toString();
+}
+
+void Database::setPublicColor(const QString& color)
+{
+    if (color.isEmpty()) {
+        publicCustomData().remove("KPXC_PUBLIC_COLOR");
+    } else {
+        publicCustomData().insert("KPXC_PUBLIC_COLOR", color);
+    }
+    markAsModified();
+}
+
 void Database::markAsTemporaryDatabase()
 {
     m_isTemporaryDatabase = true;
@@ -1059,34 +1089,4 @@ void Database::markAsTemporaryDatabase()
 bool Database::isTemporaryDatabase()
 {
     return m_isTemporaryDatabase;
-}
-
-QString Database::publicSummary()
-{
-    if (!publicCustomData().contains("KPXC_PUBLIC_SUMMARY")) {
-        return QString();
-    }
-
-    return publicCustomData()["KPXC_PUBLIC_SUMMARY"].toString();
-}
-
-void Database::setPublicSummary(const QString& newSummary)
-{
-    publicCustomData().insert("KPXC_PUBLIC_SUMMARY", newSummary);
-    markAsModified();
-}
-
-QString Database::publicColor()
-{
-    if (!publicCustomData().contains("KPXC_PUBLIC_COLOR")) {
-        return QString();
-    }
-
-    return publicCustomData()["KPXC_PUBLIC_COLOR"].toString();
-}
-
-void Database::setPublicColor(const QString& newSummary)
-{
-    publicCustomData().insert("KPXC_PUBLIC_COLOR", newSummary);
-    markAsModified();
 }

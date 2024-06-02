@@ -100,8 +100,13 @@
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>
        <widget class="QLabel" name="warningLabel">
+        <property name="font">
+         <font>
+          <italic>true</italic>
+         </font>
+        </property>
         <property name="text">
-         <string>Warning: the following settings are stored unencrypted.</string>
+         <string>Warning: the following settings are not encrypted.</string>
         </property>
        </widget>
       </item>
@@ -113,42 +118,67 @@
         <item row="0" column="0">
          <widget class="QLabel" name="dbPublicSummaryLabel">
           <property name="text">
-           <string>Database summary:</string>
+           <string>Display name:</string>
           </property>
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="QLineEdit" name="dbPublicSummary">
+         <widget class="QLineEdit" name="dbPublicName">
+          <property name="toolTip">
+           <string>Publically visible display name used on the unlock dialog</string>
+          </property>
           <property name="accessibleName">
-           <string>Database summary field</string>
+           <string>Database public display name</string>
           </property>
          </widget>
         </item>
         <item row="1" column="0">
          <widget class="QLabel" name="dbPublicColorLabel">
           <property name="text">
-           <string>Database color:</string>
+           <string>Display color:</string>
           </property>
          </widget>
         </item>
         <item row="1" column="1">
          <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <property name="topMargin">
-           <number>0</number>
-          </property>
           <item>
-           <widget class="QLineEdit" name="dbPublicColor">
+           <widget class="QPushButton" name="dbPublicColorButton">
+            <property name="maximumSize">
+             <size>
+              <width>25</width>
+              <height>25</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string>Publically visible color used on the unlock dialog</string>
+            </property>
             <property name="accessibleName">
-             <string>Database color field</string>
+             <string>Database public display color chooser</string>
+            </property>
+            <property name="text">
+             <string/>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="dbPublicColorChooseButton">
+           <widget class="QPushButton" name="dbPublicColorClearButton">
             <property name="text">
-             <string>Pick color...</string>
+             <string>Clear</string>
             </property>
            </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
           </item>
          </layout>
         </item>
@@ -175,6 +205,19 @@ of entries remain at most.</string>
           </property>
           <property name="text">
            <string>Limit the amount of history items per entry to:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QCheckBox" name="recycleBinEnabledCheckBox">
+          <property name="toolTip">
+           <string>Move entries to a recycle bin group
+instead of deleting them from the database.
+Entries deleted from the recycle bin are
+removed from the database.</string>
+          </property>
+          <property name="text">
+           <string>Use recycle bin</string>
           </property>
          </widget>
         </item>
@@ -220,19 +263,6 @@ add up to the specified amount at most.</string>
           </property>
           <property name="maximum">
            <number>2000000000</number>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="0">
-         <widget class="QCheckBox" name="recycleBinEnabledCheckBox">
-          <property name="toolTip">
-           <string>Move entries to a recycle bin group
-instead of deleting them from the database.
-Entries deleted from the recycle bin are
-removed from the database.</string>
-          </property>
-          <property name="text">
-           <string>Use recycle bin</string>
           </property>
          </widget>
         </item>

@@ -108,10 +108,10 @@ public:
     QString canonicalFilePath() const;
     void setFilePath(const QString& filePath);
 
-    QString publicSummary();
-    void setPublicSummary(const QString& newSummary);
+    QString publicName();
+    void setPublicName(const QString& name);
     QString publicColor();
-    void setPublicColor(const QString& newSummary);
+    void setPublicColor(const QString& color);
 
     Metadata* metadata();
     const Metadata* metadata() const;
