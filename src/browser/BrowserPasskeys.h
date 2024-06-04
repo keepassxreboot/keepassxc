@@ -119,7 +119,7 @@ private:
                                       const QString& credentialId,
                                       const QByteArray& cborEncodedPublicKey,
                                       const TestingVariables& predefinedVariables = {});
-    QByteArray buildAuthenticatorData(const QJsonObject& publicKey);
+    QByteArray buildAuthenticatorData(const QString& rpId, const QString& extensions);
     AttestationKeyPair buildCredentialPrivateKey(int alg,
                                                  const QString& predefinedFirst = QString(),
                                                  const QString& predefinedSecond = QString());
