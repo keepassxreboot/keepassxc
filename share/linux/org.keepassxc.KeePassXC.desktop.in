@@ -47,3 +47,5 @@ Categories=Utility;Security;Qt;
 MimeType=application/x-keepass2;
 SingleMainWindow=true
 X-GNOME-SingleWindow=true
+Keywords=security;privacy;password-manager;yubikey;password;keepass;
+Keywords[de]=sicherheit;privatsphäre;passwort-manager;yubikey;passwort;keepass;
