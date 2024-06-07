@@ -57,7 +57,6 @@ signals:
     void caseSensitiveChanged(bool state);
     void limitGroupChanged(bool state);
     void escapePressed();
-    void copyPressed();
     void downPressed();
     void enterPressed();
     void lostFocus();
