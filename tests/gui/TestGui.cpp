@@ -1129,15 +1129,15 @@ void TestGui::testSearch()
     searchedEntry->setPassword("password");
     QClipboard* clipboard = QApplication::clipboard();
 
-    // Attempt password copy with selected test (should fail)
+    // Copy to clipboard: should copy search text (not password)
     QTest::keyClick(searchTextEdit, Qt::Key_C, Qt::ControlModifier);
-    QVERIFY(clipboard->text() != searchedEntry->password());
+    QCOMPARE(clipboard->text(), QString("someTHING"));
     // Deselect text and confirm password copies
     QTest::mouseClick(searchTextEdit, Qt::LeftButton);
     QTRY_VERIFY(searchTextEdit->selectedText().isEmpty());
     QTRY_VERIFY(searchTextEdit->hasFocus());
     QTest::keyClick(searchTextEdit, Qt::Key_C, Qt::ControlModifier);
-    QCOMPARE(searchedEntry->password(), clipboard->text());
+    QCOMPARE(clipboard->text(), searchedEntry->password());
     // Ensure Down focuses on entry view when search text is selected
     QTest::keyClick(searchTextEdit, Qt::Key_A, Qt::ControlModifier);
     QTest::keyClick(searchTextEdit, Qt::Key_Down);
@@ -1145,11 +1145,11 @@ void TestGui::testSearch()
     QCOMPARE(entryView->currentEntry(), searchedEntry);
     // Test that password copies with entry focused
     QTest::keyClick(entryView, Qt::Key_C, Qt::ControlModifier);
-    QCOMPARE(searchedEntry->password(), clipboard->text());
+    QCOMPARE(clipboard->text(), searchedEntry->password());
     // Refocus back to search edit
     QTest::mouseClick(searchTextEdit, Qt::LeftButton);
     QTRY_VERIFY(searchTextEdit->hasFocus());
-    // Test that password does not copy
+    // Select search text and test that password does not copy
     searchTextEdit->selectAll();
     QTest::keyClick(searchTextEdit, Qt::Key_C, Qt::ControlModifier);
     QTRY_COMPARE(clipboard->text(), QString("someTHING"));
