@@ -97,11 +97,13 @@ DeviceListenerLibUsb::registerHotplugCallback(bool arrived, bool left, int vendo
         // Avoid race conditions
         m_usbEvents.waitForFinished();
     }
-    if (!m_usbEvents.isRunning()) {
-        m_completed = false;
-        m_usbEvents = QtConcurrent::run(handleUsbEvents, static_cast<libusb_context*>(m_ctx), &m_completed);
+    if (handle > 0) {
+        m_callbackHandles.insert(handle);
+        if (!m_usbEvents.isRunning()) {
+            m_completed = false;
+            m_usbEvents = QtConcurrent::run(handleUsbEvents, static_cast<libusb_context*>(m_ctx), &m_completed);
+        }
     }
-    m_callbackHandles.insert(handle);
     return handle;
 }
 
