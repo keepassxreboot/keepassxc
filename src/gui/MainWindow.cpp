@@ -673,7 +673,7 @@ MainWindow::MainWindow()
     m_progressBar->setMaximum(100);
     statusBar()->addPermanentWidget(m_progressBar);
     connect(clipboard(), &Clipboard::updateCountdown, this, &MainWindow::updateProgressBar);
-    connect(m_ui->tabWidget, &DatabaseTabWidget::updateProgressBar, this, &MainWindow::updateProgressBar);
+    m_actionMultiplexer.connect(SIGNAL(updateSyncProgress(int, QString)), this, SLOT(updateProgressBar(int, QString)));
     m_statusBarLabel = new QLabel(statusBar());
     m_statusBarLabel->setObjectName("statusBarLabel");
     statusBar()->addPermanentWidget(m_statusBarLabel);

@@ -253,7 +253,6 @@ void DatabaseTabWidget::addDatabaseTab(DatabaseWidget* dbWidget, bool inBackgrou
             &DatabaseWidget::unlockDatabaseInDialogForSync,
             this,
             &DatabaseTabWidget::unlockDatabaseInDialogForSync);
-    connect(dbWidget, &DatabaseWidget::updateSyncProgress, this, &DatabaseTabWidget::updateProgressBar);
 }
 
 DatabaseWidget* DatabaseTabWidget::importFile()
