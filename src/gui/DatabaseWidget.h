@@ -153,6 +153,8 @@ signals:
     void clearSearch();
     void requestGlobalAutoType(const QString& search);
     void requestSearch(const QString& search);
+    void reloadBegin();
+    void reloadEnd();
 
 public slots:
     bool lock();
@@ -262,7 +264,7 @@ private slots:
     void mergeDatabase(bool accepted);
     void emitCurrentModeChanged();
     // Database autoreload slots
-    void reloadDatabaseFile();
+    void reloadDatabaseFile(bool triggeredBySave);
     void restoreGroupEntryFocus(const QUuid& groupUuid, const QUuid& EntryUuid);
 
 private:
@@ -310,6 +312,7 @@ private:
 
     // Autoreload
     bool m_blockAutoSave;
+    bool m_reloading;
 
     // Autosave delay
     QPointer<QTimer> m_autosaveTimer;
