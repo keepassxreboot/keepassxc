@@ -67,7 +67,7 @@ The KeePassXC-Browser extension lets you automatically populate the entries from
 2. Open your web browser. The KeePassXC-Browser extension icon in your browser window will change based on its connection state. The figure below shows the different states.
 +
 *(A)* KeePassXC is not running or is disconnected. +
-*(B)* KeePassXC is running but current database is not connected to it. +
+*(B)* KeePassXC is running, but KeePassXC Browser Extension is not connected to the current database. +
 *\(C)* Connected to KeePassXC, but database is locked. +
 *(D)* Connected to KeePassXC and ready to use. If the icon is shown with a number, it indicates the number of credentials found for the current site.
 +
