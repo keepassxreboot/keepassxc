@@ -27,7 +27,7 @@ const QString CustomData::BrowserLegacyKeyPrefix = QStringLiteral("Public Key: "
 const QString CustomData::ExcludeFromReportsLegacy = QStringLiteral("KnownBad");
 const QString CustomData::FdoSecretsExposedGroup = QStringLiteral("FDO_SECRETS_EXPOSED_GROUP");
 const QString CustomData::RandomSlug = QStringLiteral("KPXC_RANDOM_SLUG");
-const QString CustomData::RemoteProgramSettings = QStringLiteral("Remote_Program_Settings");
+const QString CustomData::RemoteProgramSettings = QStringLiteral("KPXC_REMOTE_SYNC_SETTINGS");
 
 // Fallback item for return by reference
 static const CustomData::CustomDataItem NULL_ITEM{};
