@@ -398,6 +398,8 @@ Open the remote sync settings via _Database > Database Settings… > Remote_ to 
 
 Define a name for your sync command and specify a download *(A)* as well as an upload command *(B)*. The command and/or input need a `{TEMP_DATABASE}` placeholder specified where the remote database is temporarily stored. Do not forget to save the command settings with the save button *\(C)*. Remote settings are added as menu entries below the _Remote Sync…_ menu for quick access.
 
+WARNING: If your download or upload command require a password prompt, the command will most likely not succeed. In case of an SSH connection (e.g. sftp), it is recommended to use <<KeePassXC – SSH Agent integration,SSH agent>> so that no password prompt is needed.
+
 .Remote sync settings
 image::sync_remote_settings.png[]
 
