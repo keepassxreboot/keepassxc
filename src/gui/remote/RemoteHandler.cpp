@@ -87,7 +87,7 @@ RemoteHandler::RemoteResult RemoteHandler::download(const RemoteParams* params)
         } else if (finished) {
             result.success = false;
             result.errorMessage =
-                tr("Command `%1` exited with status code: %3").arg(params->downloadCommand).arg(statusCode);
+                tr("Command `%1` exited with status code: %2").arg(params->downloadCommand).arg(statusCode);
         } else {
             remoteProcess->kill();
             result.success = false;
@@ -129,7 +129,7 @@ RemoteHandler::RemoteResult RemoteHandler::upload(const QString& filePath, const
             result.success = true;
         } else if (finished) {
             result.success = false;
-            result.errorMessage = tr("Failed to upload merged database. Command `%1` exited with status code: %3")
+            result.errorMessage = tr("Failed to upload merged database. Command `%1` exited with status code: %2")
                                       .arg(params->uploadCommand)
                                       .arg(statusCode);
         } else {
@@ -137,8 +137,7 @@ RemoteHandler::RemoteResult RemoteHandler::upload(const QString& filePath, const
             result.success = false;
             result.errorMessage =
                 tr("Failed to upload merged database. Command `%1` did not finish in time. Process was killed.")
-                    .arg(params->uploadCommand)
-                    .arg(statusCode);
+                    .arg(params->uploadCommand);
         }
 
         return result;
