@@ -21,6 +21,7 @@
 #include "core/Global.h"
 #include "core/Metadata.h"
 
+#include "RemoteHandler.h"
 #include "RemoteSettings.h"
 
 DatabaseSettingsWidgetRemote::DatabaseSettingsWidgetRemote(QWidget* parent)
@@ -38,6 +39,7 @@ DatabaseSettingsWidgetRemote::DatabaseSettingsWidgetRemote(QWidget* parent)
             &QListWidget::itemSelectionChanged,
             this,
             &DatabaseSettingsWidgetRemote::editCurrentSettings);
+    connect(m_ui->testDownloadCommandButton, &QPushButton::clicked, this, &DatabaseSettingsWidgetRemote::testDownload);
 }
 
 DatabaseSettingsWidgetRemote::~DatabaseSettingsWidgetRemote() = default;
@@ -142,4 +144,33 @@ void DatabaseSettingsWidgetRemote::clearFields()
     m_ui->inputForDownload->setPlainText("");
     m_ui->uploadCommand->setText("");
     m_ui->inputForUpload->setPlainText("");
+}
+
+void DatabaseSettingsWidgetRemote::testDownload()
+{
+    auto* params = new RemoteParams();
+    params->name = m_ui->nameLineEdit->text();
+    params->downloadCommand = m_ui->downloadCommand->text();
+    params->downloadInput = m_ui->inputForDownload->toPlainText();
+
+    QScopedPointer<RemoteHandler> remoteHandler(new RemoteHandler(this));
+    if (params->downloadCommand.isEmpty()) {
+        m_ui->messageWidget->showMessage(tr("Download command cannot be empty."), MessageWidget::Warning);
+        return;
+    }
+
+    RemoteHandler::RemoteResult result = remoteHandler->download(params);
+    if (!result.success) {
+        m_ui->messageWidget->showMessage(tr("Download failed with error: %1").arg(result.errorMessage),
+                                         MessageWidget::Error);
+        return;
+    }
+
+    if (!QFile::exists(result.filePath)) {
+        m_ui->messageWidget->showMessage(tr("Download finished, but file %1 could not be found.").arg(result.filePath),
+                                         MessageWidget::Error);
+        return;
+    }
+
+    m_ui->messageWidget->showMessage(tr("Download successful."), MessageWidget::Positive);
 }

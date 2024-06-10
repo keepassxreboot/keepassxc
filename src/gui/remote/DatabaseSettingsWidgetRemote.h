@@ -49,6 +49,7 @@ private slots:
     void saveCurrentSettings();
     void removeCurrentSettings();
     void editCurrentSettings();
+    void testDownload();
 
 private:
     void updateSettingsList();
