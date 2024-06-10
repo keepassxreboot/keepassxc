@@ -461,9 +461,6 @@ void DatabaseWidget::replaceDatabase(QSharedPointer<Database> db)
     // signals triggering dangling pointers.
     auto oldDb = m_db;
     m_db = std::move(db);
-    if (oldDb->isTemporaryDatabase()) {
-        m_db->markAsTemporaryDatabase();
-    }
     connectDatabaseSignals();
     m_groupView->changeDatabase(m_db);
     m_tagView->setDatabase(m_db);
