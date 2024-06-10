@@ -151,6 +151,7 @@ signals:
     void databaseSyncInProgress();
     void databaseSyncCompleted(const QString& syncName);
     void databaseSyncFailed(const QString& syncName, const QString& error);
+    void databaseSyncUnlockFailed(const RemoteHandler::RemoteResult& result);
     void databaseSyncUnlocked(const RemoteHandler::RemoteResult& result);
     void unlockDatabaseInDialogForSync(const QString& filePath);
     void updateSyncProgress(int percentage, QString message);
@@ -275,6 +276,7 @@ private slots:
     void syncUnlockedDatabase(bool accepted);
     bool syncWithDatabase(const QSharedPointer<Database>& otherDb, QString& error);
     void uploadAndFinishSync(const RemoteParams* params, RemoteHandler::RemoteResult result);
+    void finishSync(const RemoteParams* params, RemoteHandler::RemoteResult result);
     void emitCurrentModeChanged();
     // Database autoreload slots
     void reloadDatabaseFile();

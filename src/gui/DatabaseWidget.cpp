@@ -1120,11 +1120,15 @@ void DatabaseWidget::syncWithRemote(const RemoteParams* params)
 
 void DatabaseWidget::syncDatabaseWithLockedDatabase(const QString& filePath, const RemoteParams* params)
 {
-    // disconnect any previously added slots to this signal
+    // disconnect any previously added slots to these signal
     disconnect(this, &DatabaseWidget::databaseSyncUnlocked, nullptr, nullptr);
+    disconnect(this, &DatabaseWidget::databaseSyncUnlockFailed, nullptr, nullptr);
 
     connect(this, &DatabaseWidget::databaseSyncUnlocked, [this, params](const RemoteHandler::RemoteResult& result) {
         uploadAndFinishSync(params, result);
+    });
+    connect(this, &DatabaseWidget::databaseSyncUnlockFailed, [this, params](const RemoteHandler::RemoteResult& result) {
+        finishSync(params, result);
     });
 
     emit unlockDatabaseInDialogForSync(filePath);
@@ -1138,6 +1142,11 @@ void DatabaseWidget::uploadAndFinishSync(const RemoteParams* params, RemoteHandl
         result = remoteHandler->upload(result.filePath, params);
     }
 
+    finishSync(params, result);
+}
+
+void DatabaseWidget::finishSync(const RemoteParams* params, RemoteHandler::RemoteResult result)
+{
     setDisabled(false);
     emit updateSyncProgress(-1, "");
     if (result.success) {
@@ -1145,7 +1154,7 @@ void DatabaseWidget::uploadAndFinishSync(const RemoteParams* params, RemoteHandl
         showMessage(tr("Remote sync '%1' completed successfully!").arg(params->name), MessageWidget::Positive, false);
     } else {
         emit databaseSyncFailed(params->name, result.errorMessage);
-        showErrorMessage(tr("Remote sync '%1' failed: %2").arg(params->name).arg(result.errorMessage));
+        showErrorMessage(tr("Remote sync '%1' failed: %2").arg(params->name, result.errorMessage));
     }
 }
 
@@ -1390,7 +1399,10 @@ void DatabaseWidget::unlockDatabase(bool accepted)
             emit closeRequest();
         }
         if (senderDialog && senderDialog->intent() == DatabaseOpenDialog::Intent::RemoteSync) {
-            setDisabled(false);
+            RemoteHandler::RemoteResult result;
+            result.success = false;
+            result.errorMessage = "Remote database unlock cancelled.";
+            emit databaseSyncUnlockFailed(result);
         }
         return;
     }
