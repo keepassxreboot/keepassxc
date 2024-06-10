@@ -151,6 +151,8 @@ private slots:
     void updateProgressBar(int percentage, QString message);
     void updateEntryCountLabel();
     void focusSearchWidget();
+    void enableMenuAndToolbar();
+    void disableMenuAndToolbar();
 
 private:
     static const QString BaseWindowTitle;

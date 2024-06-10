@@ -148,6 +148,7 @@ signals:
     void
     requestOpenDatabase(const QString& filePath, bool inBackground, const QString& password, const QString& keyFile);
     void databaseMerged(QSharedPointer<Database> mergedDb);
+    void databaseSyncInProgress();
     void databaseSyncCompleted(const QString& syncName);
     void databaseSyncFailed(const QString& syncName, const QString& error);
     void databaseSyncUnlocked(const RemoteHandler::RemoteResult& result);

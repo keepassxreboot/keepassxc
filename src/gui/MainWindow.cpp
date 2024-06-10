@@ -674,6 +674,9 @@ MainWindow::MainWindow()
     statusBar()->addPermanentWidget(m_progressBar);
     connect(clipboard(), &Clipboard::updateCountdown, this, &MainWindow::updateProgressBar);
     m_actionMultiplexer.connect(SIGNAL(updateSyncProgress(int, QString)), this, SLOT(updateProgressBar(int, QString)));
+    m_actionMultiplexer.connect(SIGNAL(databaseSyncInProgress()), this, SLOT(disableMenuAndToolbar()));
+    m_actionMultiplexer.connect(SIGNAL(databaseSyncCompleted(QString)), this, SLOT(enableMenuAndToolbar()));
+    m_actionMultiplexer.connect(SIGNAL(databaseSyncFailed(QString, const QString)), this, SLOT(enableMenuAndToolbar()));
     m_statusBarLabel = new QLabel(statusBar());
     m_statusBarLabel->setObjectName("statusBarLabel");
     statusBar()->addPermanentWidget(m_statusBarLabel);
@@ -1513,6 +1516,18 @@ void MainWindow::focusSearchWidget()
         m_ui->toolBar->setExpanded(true);
         m_searchWidget->focusSearch();
     }
+}
+
+void MainWindow::enableMenuAndToolbar()
+{
+    m_ui->toolBar->setDisabled(false);
+    m_ui->menubar->setDisabled(false);
+}
+
+void MainWindow::disableMenuAndToolbar()
+{
+    m_ui->toolBar->setDisabled(true);
+    m_ui->menubar->setDisabled(true);
 }
 
 void MainWindow::saveWindowInformation()

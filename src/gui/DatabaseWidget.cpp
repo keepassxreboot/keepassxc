@@ -1085,6 +1085,7 @@ int DatabaseWidget::addChildWidget(QWidget* w)
 void DatabaseWidget::syncWithRemote(const RemoteParams* params)
 {
     setDisabled(true);
+    emit databaseSyncInProgress();
 
     QScopedPointer<RemoteHandler> remoteHandler(new RemoteHandler(this));
     RemoteHandler::RemoteResult result;
