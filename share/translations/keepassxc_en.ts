@@ -2331,6 +2331,26 @@ The command has to exit. In case of `sftp` as last commend `exit` has to be sent
         <source>Name cannot be empty.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Test</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Download command cannot be empty.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Download failed with error: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Download finished, but file %1 could not be found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Download successful.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DatabaseTabWidget</name>
@@ -8888,15 +8908,7 @@ This option is deprecated, use --set-key-file instead.</source>
 <context>
     <name>RemoteHandler</name>
     <message>
-        <source>Command `%1` exited with status code: %3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Command `%1` did not finish in time. Process was killed.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to upload merged database. Command `%1` exited with status code: %3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8913,6 +8925,14 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Invalid database pointer or upload parameters provided.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Command `%1` exited with status code: %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to upload merged database. Command `%1` exited with status code: %2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
