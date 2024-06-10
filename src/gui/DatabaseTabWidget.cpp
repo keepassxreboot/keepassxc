@@ -623,8 +623,8 @@ QString DatabaseTabWidget::tabName(int index)
         tabName = tr("%1 [Locked]", "Database tab name modifier").arg(tabName);
     }
 
-    if (dbWidget->database()->isRemoteDatabase()) {
-        tabName = tr("%1 [Remote]", "Database tab name modifier").arg(tabName);
+    if (dbWidget->database()->isTemporaryDatabase()) {
+        tabName = tr("%1 [Temporary]", "Database tab name modifier").arg(tabName);
     }
 
     // needs to be last check, as MainWindow may remove the asterisk again
@@ -819,7 +819,7 @@ void DatabaseTabWidget::relockPendingDatabase()
 
 void DatabaseTabWidget::updateLastDatabases(const QSharedPointer<Database>& database)
 {
-    if (database->isRemoteDatabase() || database->filePath().isEmpty()) {
+    if (database->isTemporaryDatabase() || database->filePath().isEmpty()) {
         return;
     }
     auto filename = database->filePath();

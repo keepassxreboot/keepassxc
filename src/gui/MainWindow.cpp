@@ -1542,7 +1542,7 @@ bool MainWindow::saveLastDatabases()
 {
     if (config()->get(Config::OpenPreviousDatabasesOnStartup).toBool()) {
         auto currentDbWidget = m_ui->tabWidget->currentDatabaseWidget();
-        if (currentDbWidget && !currentDbWidget->database()->isRemoteDatabase()) {
+        if (currentDbWidget && !currentDbWidget->database()->isTemporaryDatabase()) {
             config()->set(Config::LastActiveDatabase, currentDbWidget->database()->filePath());
         } else {
             config()->remove(Config::LastActiveDatabase);
@@ -1551,7 +1551,7 @@ bool MainWindow::saveLastDatabases()
         QStringList openDatabases;
         for (int i = 0; i < m_ui->tabWidget->count(); ++i) {
             auto dbWidget = m_ui->tabWidget->databaseWidgetFromIndex(i);
-            if (!dbWidget->database()->isRemoteDatabase()) {
+            if (!dbWidget->database()->isTemporaryDatabase()) {
                 openDatabases.append(QDir::toNativeSeparators(dbWidget->database()->filePath()));
             }
         }

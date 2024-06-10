@@ -973,7 +973,7 @@ void Database::markAsClean()
     m_modified = false;
     stopModifiedTimer();
     m_hasNonDataChange = false;
-    if (emitSignal && !m_isRemoteDatabase) {
+    if (emitSignal) {
         emit databaseSaved();
     }
 }
@@ -1050,12 +1050,12 @@ QUuid Database::publicUuid()
     return QUuid::fromRfc4122(publicCustomData()["KPXC_PUBLIC_UUID"].toByteArray());
 }
 
-void Database::markAsRemoteDatabase()
+void Database::markAsTemporaryDatabase()
 {
-    m_isRemoteDatabase = true;
+    m_isTemporaryDatabase = true;
 }
 
-bool Database::isRemoteDatabase()
+bool Database::isTemporaryDatabase()
 {
-    return m_isRemoteDatabase;
+    return m_isTemporaryDatabase;
 }
