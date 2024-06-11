@@ -1153,6 +1153,19 @@ void TestGui::testSearch()
     searchTextEdit->selectAll();
     QTest::keyClick(searchTextEdit, Qt::Key_C, Qt::ControlModifier);
     QTRY_COMPARE(clipboard->text(), QString("someTHING"));
+    // Ensure password copies when clicking on copy password button despite selected text
+    auto copyPasswordAction = m_mainWindow->findChild<QAction*>("actionEntryCopyPassword");
+    QVERIFY(copyPasswordAction);
+    auto copyPasswordWidget = toolBar->widgetForAction(copyPasswordAction);
+    QVERIFY(copyPasswordWidget);
+    QTest::mouseClick(copyPasswordWidget, Qt::LeftButton);
+    QCOMPARE(clipboard->text(), searchedEntry->password());
+    // Deselect text and deselect entry, Ctrl+C should now do nothing
+    clipboard->clear();
+    QTest::mouseClick(searchTextEdit, Qt::LeftButton);
+    entryView->clearSelection();
+    QTest::keyClick(searchTextEdit, Qt::Key_C, Qt::ControlModifier);
+    QCOMPARE(clipboard->text(), QString());
 
     // Test case sensitive search
     searchWidget->setCaseSensitive(true);

@@ -189,6 +189,7 @@ public slots:
     void copyURL();
     void copyNotes();
     void copyAttribute(QAction* action);
+    bool copyFocusedTextSelection();
     void filterByTag();
     void setTag(QAction* action);
     void showTotp();

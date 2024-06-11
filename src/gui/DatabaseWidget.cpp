@@ -674,29 +674,6 @@ void DatabaseWidget::copyUsername()
 
 void DatabaseWidget::copyPassword()
 {
-    // Some platforms do not properly trap Ctrl+C copy shortcut
-    // if a text edit or label has focus pass the copy operation to it
-
-    bool clearClipboard = config()->get(Config::Security_ClearClipboard).toBool();
-
-    auto plainTextEdit = qobject_cast<QPlainTextEdit*>(focusWidget());
-    if (plainTextEdit && plainTextEdit->textCursor().hasSelection()) {
-        clipboard()->setText(plainTextEdit->textCursor().selectedText(), clearClipboard);
-        return;
-    }
-
-    auto label = qobject_cast<QLabel*>(focusWidget());
-    if (label && label->hasSelectedText()) {
-        clipboard()->setText(label->selectedText(), clearClipboard);
-        return;
-    }
-
-    auto textEdit = qobject_cast<QTextEdit*>(focusWidget());
-    if (textEdit && textEdit->textCursor().hasSelection()) {
-        clipboard()->setText(textEdit->textCursor().selection().toPlainText(), clearClipboard);
-        return;
-    }
-
     auto currentEntry = currentSelectedEntry();
     if (currentEntry) {
         setClipboardTextAndMinimize(currentEntry->resolveMultiplePlaceholders(currentEntry->password()));
@@ -735,6 +712,34 @@ void DatabaseWidget::copyAttribute(QAction* action)
         setClipboardTextAndMinimize(
             currentEntry->resolveMultiplePlaceholders(currentEntry->attributes()->value(action->data().toString())));
     }
+}
+
+bool DatabaseWidget::copyFocusedTextSelection()
+{
+    // If a focused child widget has text selected, copy that text to the clipboard
+    // and return true. Otherwise, return false.
+
+    const bool clearClipboard = config()->get(Config::Security_ClearClipboard).toBool();
+
+    const auto plainTextEdit = qobject_cast<QPlainTextEdit*>(focusWidget());
+    if (plainTextEdit && plainTextEdit->textCursor().hasSelection()) {
+        clipboard()->setText(plainTextEdit->textCursor().selectedText(), clearClipboard);
+        return true;
+    }
+
+    const auto label = qobject_cast<QLabel*>(focusWidget());
+    if (label && label->hasSelectedText()) {
+        clipboard()->setText(label->selectedText(), clearClipboard);
+        return true;
+    }
+
+    const auto textEdit = qobject_cast<QTextEdit*>(focusWidget());
+    if (textEdit && textEdit->textCursor().hasSelection()) {
+        clipboard()->setText(textEdit->textCursor().selection().toPlainText(), clearClipboard);
+        return true;
+    }
+
+    return false;
 }
 
 void DatabaseWidget::filterByTag()
