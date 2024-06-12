@@ -49,6 +49,6 @@ void TestPassphraseGenerator::testWordCase()
 
     generator.setWordCase(PassphraseGenerator::TITLECASE);
     passphrase = generator.generatePassphrase();
-    QRegularExpression regex("^([A-Z][a-z]* ?)+$");
-    QVERIFY(regex.match(passphrase).hasMatch());
+    QRegularExpression regex("^(?:[A-Z][a-z-]* )*[A-Z][a-z-]*$");
+    QVERIFY2(regex.match(passphrase).hasMatch(), qPrintable(passphrase));
 }
