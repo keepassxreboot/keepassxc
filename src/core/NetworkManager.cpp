@@ -32,4 +32,9 @@ QNetworkAccessManager* getNetMgr()
     }
     return g_netMgr;
 }
+
+NetworkRequestBuilder buildRequest(const QUrl& url)
+{
+    return NetworkRequestBuilder(url);
+}
 #endif

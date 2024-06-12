@@ -22,9 +22,14 @@
 
 #ifdef WITH_XC_NETWORKING
 
+#include "core/NetworkRequest.h"
+
 class QNetworkAccessManager;
 
 QNetworkAccessManager* getNetMgr();
+
+NetworkRequestBuilder buildRequest(const QUrl& targetUrl);
+
 #else
 Q_STATIC_ASSERT_X(false, "Qt Networking used when WITH_XC_NETWORKING is disabled!");
 #endif
