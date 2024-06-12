@@ -515,6 +515,8 @@ void BrowserService::showPasswordGenerator(const KeyPairMessage& keyPairMessage)
     if (!m_passwordGenerator) {
         m_passwordGenerator = PasswordGeneratorWidget::popupGenerator();
 
+        connect(m_currentDatabaseWidget, SIGNAL(databaseLockRequested()), m_passwordGenerator.data(), SIGNAL(closed()));
+
         connect(m_passwordGenerator.data(), &PasswordGeneratorWidget::closed, m_passwordGenerator.data(), [=] {
             if (!m_passwordGenerator->isPasswordGenerated()) {
                 auto errorMessage = browserMessageBuilder()->getErrorReply("generate-password",
