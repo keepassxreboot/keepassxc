@@ -101,7 +101,7 @@ AccessControlDialog::AccessControlDialog(QWindow* parent,
     connect(cancelButton, &QPushButton::clicked, this, [this]() { done(DenyAll); });
     connect(allowButton, &QPushButton::clicked, this, [this]() { done(AllowSelected); });
     connect(allowAllButton, &QPushButton::clicked, this, [this]() { done(AllowAll); });
-    connect(detailsButton, &QPushButton::clicked, this, [=](bool checked) {
+    connect(detailsButton, &QPushButton::clicked, this, [this, detailsButton, detailsButtonText](bool checked) {
         m_ui->detailsContainer->setVisible(checked);
         if (checked) {
             detailsButton->setText(detailsButtonText + QStringLiteral(" <<"));

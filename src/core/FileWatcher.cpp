@@ -116,9 +116,9 @@ void FileWatcher::checkFileChanged()
     // Prevent reentrance
     m_ignoreFileChange = true;
 
-    AsyncTask::runThenCallback([=] { return calculateChecksum(); },
+    AsyncTask::runThenCallback([this] { return calculateChecksum(); },
                                this,
-                               [=](QByteArray checksum) {
+                               [this](QByteArray checksum) {
                                    if (checksum != m_fileChecksum) {
                                        m_fileChecksum = checksum;
                                        m_fileChangeDelayTimer.start(0);
