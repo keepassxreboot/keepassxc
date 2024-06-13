@@ -2351,6 +2351,14 @@ The command has to exit. In case of `sftp` as last commend `exit` has to be sent
         <source>Download successful.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Save Remote Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You have unsaved changes. Do you want to save them?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DatabaseTabWidget</name>
@@ -6028,11 +6036,11 @@ We recommend you use the AppImage available on our downloads page.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Setup new sync…</source>
+        <source>Remove Passkey From Entry</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Remove Passkey From Entry</source>
+        <source>Setup Remote Sync…</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

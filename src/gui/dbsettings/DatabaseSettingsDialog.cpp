@@ -163,6 +163,11 @@ void DatabaseSettingsDialog::showDatabaseKeySettings()
     m_securityTabWidget->setCurrentIndex(0);
 }
 
+void DatabaseSettingsDialog::showRemoteSettings()
+{
+    m_ui->categoryList->setCurrentCategory(2);
+}
+
 void DatabaseSettingsDialog::save()
 {
     if (!m_generalWidget->save()) {

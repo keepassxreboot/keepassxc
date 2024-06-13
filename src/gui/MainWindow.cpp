@@ -1317,8 +1317,8 @@ void MainWindow::updateRemoteSyncMenuEntries()
     auto dbWidget = m_ui->tabWidget->currentDatabaseWidget();
     if (dbWidget) {
         // Setup sync shortcut
-        auto action = m_ui->menuRemoteSync->addAction(tr("Setup new sync…"));
-        connect(action, &QAction::triggered, dbWidget, &DatabaseWidget::switchToDatabaseSettings);
+        auto action = m_ui->menuRemoteSync->addAction(tr("Setup Remote Sync…"));
+        connect(action, &QAction::triggered, dbWidget, &DatabaseWidget::switchToRemoteSettings);
 
         m_ui->menuRemoteSync->addSeparator();
 

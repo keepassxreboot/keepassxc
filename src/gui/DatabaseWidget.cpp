@@ -1566,6 +1566,12 @@ void DatabaseWidget::switchToDatabaseSecurity()
     m_databaseSettingDialog->showDatabaseKeySettings();
 }
 
+void DatabaseWidget::switchToRemoteSettings()
+{
+    switchToDatabaseSettings();
+    m_databaseSettingDialog->showRemoteSettings();
+}
+
 #ifdef WITH_XC_BROWSER_PASSKEYS
 void DatabaseWidget::switchToPasskeys()
 {

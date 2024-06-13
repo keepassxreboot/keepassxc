@@ -58,6 +58,7 @@ private:
 
     QScopedPointer<RemoteSettings> m_remoteSettings;
     const QScopedPointer<Ui::DatabaseSettingsWidgetRemote> m_ui;
+    bool m_modified = false;
 };
 
 #endif // KEEPASSX_DATABASESETTINGSWIDGETREMOTE_H

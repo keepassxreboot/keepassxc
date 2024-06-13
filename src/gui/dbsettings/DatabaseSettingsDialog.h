@@ -62,6 +62,7 @@ public:
     void load(const QSharedPointer<Database>& db);
     void addSettingsPage(IDatabaseSettingsPage* page);
     void showDatabaseKeySettings();
+    void showRemoteSettings();
 
 signals:
     void editFinished(bool accepted);

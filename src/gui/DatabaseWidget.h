@@ -222,6 +222,7 @@ public slots:
     void switchToDatabaseSecurity();
     void switchToDatabaseReports();
     void switchToDatabaseSettings();
+    void switchToRemoteSettings();
 #ifdef WITH_XC_BROWSER_PASSKEYS
     void switchToPasskeys();
     void showImportPasskeyDialog(bool isEntry = false);

@@ -23,6 +23,7 @@
 
 #include "RemoteHandler.h"
 #include "RemoteSettings.h"
+#include "gui/MessageBox.h"
 
 DatabaseSettingsWidgetRemote::DatabaseSettingsWidgetRemote(QWidget* parent)
     : DatabaseSettingsWidget(parent)
@@ -40,6 +41,13 @@ DatabaseSettingsWidgetRemote::DatabaseSettingsWidgetRemote(QWidget* parent)
             this,
             &DatabaseSettingsWidgetRemote::editCurrentSettings);
     connect(m_ui->testDownloadCommandButton, &QPushButton::clicked, this, &DatabaseSettingsWidgetRemote::testDownload);
+
+    auto setModified = [this]() { m_modified = true; };
+    connect(m_ui->nameLineEdit, &QLineEdit::textChanged, setModified);
+    connect(m_ui->downloadCommand, &QLineEdit::textChanged, setModified);
+    connect(m_ui->inputForDownload, &QPlainTextEdit::textChanged, setModified);
+    connect(m_ui->uploadCommand, &QLineEdit::textChanged, setModified);
+    connect(m_ui->inputForUpload, &QPlainTextEdit::textChanged, setModified);
 }
 
 DatabaseSettingsWidgetRemote::~DatabaseSettingsWidgetRemote() = default;
@@ -63,6 +71,19 @@ void DatabaseSettingsWidgetRemote::uninitialize()
 
 bool DatabaseSettingsWidgetRemote::save()
 {
+    if (m_modified) {
+        auto ans = MessageBox::question(this,
+                                        tr("Save Remote Settings"),
+                                        tr("You have unsaved changes. Do you want to save them?"),
+                                        MessageBox::Save | MessageBox::Discard | MessageBox::Cancel,
+                                        MessageBox::Save);
+        if (ans == MessageBox::Save) {
+            saveCurrentSettings();
+        } else if (ans == MessageBox::Cancel) {
+            return false;
+        }
+    }
+
     m_remoteSettings->saveSettings();
     return true;
 }
@@ -88,6 +109,7 @@ void DatabaseSettingsWidgetRemote::saveCurrentSettings()
     auto item = findItemByName(name);
     m_ui->settingsListWidget->setCurrentItem(item);
     m_ui->removeSettingsButton->setEnabled(true);
+    m_modified = false;
 }
 
 QListWidgetItem* DatabaseSettingsWidgetRemote::findItemByName(const QString& name)
@@ -125,6 +147,7 @@ void DatabaseSettingsWidgetRemote::editCurrentSettings()
     m_ui->inputForDownload->setPlainText(params->downloadInput);
     m_ui->uploadCommand->setText(params->uploadCommand);
     m_ui->inputForUpload->setPlainText(params->uploadInput);
+    m_modified = false;
 }
 
 void DatabaseSettingsWidgetRemote::updateSettingsList()
@@ -144,6 +167,7 @@ void DatabaseSettingsWidgetRemote::clearFields()
     m_ui->inputForDownload->setPlainText("");
     m_ui->uploadCommand->setText("");
     m_ui->inputForUpload->setPlainText("");
+    m_modified = false;
 }
 
 void DatabaseSettingsWidgetRemote::testDownload()
