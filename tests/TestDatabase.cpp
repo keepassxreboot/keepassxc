@@ -124,10 +124,10 @@ void TestDatabase::testSaveAs()
     QCOMPARE(spyFilePathChanged.count(), 1);
     QVERIFY(QFile::exists(newDbFileName));
 #ifdef Q_OS_WIN
-    QVERIFY(!QFileInfo::QFileInfo(newDbFileName).isHidden());
+    QVERIFY(!QFileInfo(newDbFileName).isHidden());
     SetFileAttributes(newDbFileName.toStdString().c_str(), FILE_ATTRIBUTE_HIDDEN);
     QVERIFY2(db->saveAs(newDbFileName, Database::Atomic, QString(), &error), error.toLatin1());
-    QVERIFY(QFileInfo::QFileInfo(newDbFileName).isHidden());
+    QVERIFY(QFileInfo(newDbFileName).isHidden());
 #endif
     QFile::remove(newDbFileName);
     QVERIFY(!QFile::exists(newDbFileName));
