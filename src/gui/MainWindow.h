@@ -125,6 +125,7 @@ private slots:
     void switchToNewDatabase();
     void switchToOpenDatabase();
     void switchToDatabaseFile(const QString& file);
+    void updateRemoteSyncMenuEntries();
     void databaseStatusChanged(DatabaseWidget* dbWidget);
     void databaseTabChanged(int tabIndex);
     void openRecentDatabase(QAction* action);
@@ -150,6 +151,8 @@ private slots:
     void updateProgressBar(int percentage, QString message);
     void updateEntryCountLabel();
     void focusSearchWidget();
+    void enableMenuAndToolbar();
+    void disableMenuAndToolbar();
 
 private:
     static const QString BaseWindowTitle;

@@ -389,6 +389,24 @@ You will be asked to enter the HMAC key you created earlier, copy/paste they key
 
 == Command Line Tool
 KeePassXC comes with the command line tool *keepassxc-cli* to access, view, and manipulate your database directly from a terminal window. The tool is documented through a separate man page, which can be shown using `man keepassxc-cli`, or through the on-demand help using `keepassxc-cli [command] -h`. An online version of the man page is https://github.com/keepassxreboot/keepassxc/blob/master/docs/man/keepassxc-cli.1.adoc[available on GitHub].
+
+== Remote database support
+KeePassXC provides support for syncing database files that reside in a remote location. If you can download/upload the database file via a commandline tool (e.g. rsync, ssh, scp etc.) KeePassXC offers easy to use functionality to sync the remote database.
+
+=== Sync with remote database
+Open the remote sync settings via _Database > Database Settings… > Remote_ to create commands to sync a local database or a temporary local copy of a remote database.
+
+Define a name for your sync command and specify a download *(A)* as well as an upload command *(B)*. The command and/or input need a `{TEMP_DATABASE}` placeholder specified where the remote database is temporarily stored. Do not forget to save the command settings with the save button *\(C)*. Remote settings are added as menu entries below the _Remote Sync…_ menu for quick access.
+
+WARNING: If your download or upload command require a password prompt, the command will most likely not succeed. In case of an SSH connection (e.g. sftp), it is recommended to use <<KeePassXC – SSH Agent integration,SSH agent>> so that no password prompt is needed.
+
+.Remote sync settings
+image::sync_remote_settings.png[]
+
+Select the remote sync command from the _Database > Remote Sync…_ menu to start the syncing process and a progress bar will show up in the lower right corner.
+
+WARNING: In case the remote database is changed by another user/process after the downloading command finishes and before uploading again, those changes will be overwritten. Syncing is not an atomic operation.
+
 // end::advanced[]
 
 == Storing a Database File

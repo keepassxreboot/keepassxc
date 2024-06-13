@@ -71,6 +71,7 @@ public:
     static const QString BrowserLegacyKeyPrefix;
     static const QString FdoSecretsExposedGroup;
     static const QString RandomSlug;
+    static const QString RemoteProgramSettings;
 
     // Pre-KDBX 4.1
     static const QString ExcludeFromReportsLegacy;

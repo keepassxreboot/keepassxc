@@ -150,6 +150,9 @@ public:
     bool changeKdf(const QSharedPointer<Kdf>& kdf);
     QByteArray transformedDatabaseKey() const;
 
+    void markAsTemporaryDatabase();
+    bool isTemporaryDatabase();
+
     static Database* databaseByUuid(const QUuid& uuid);
 
 public slots:
@@ -233,6 +236,7 @@ private:
     bool m_modified = false;
     bool m_hasNonDataChange = false;
     QString m_keyError;
+    bool m_isTemporaryDatabase = false;
 
     QStringList m_commonUsernames;
     QStringList m_tagList;

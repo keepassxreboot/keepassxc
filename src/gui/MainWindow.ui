@@ -239,6 +239,12 @@
      <addaction name="actionExportHtml"/>
      <addaction name="actionExportXML"/>
     </widget>
+    <widget class="QMenu" name="menuRemoteSync">
+     <property name="title">
+      <string>Remote S&amp;ync…</string>
+     </property>
+     <addaction name="separator"/>
+    </widget>
     <addaction name="actionDatabaseNew"/>
     <addaction name="actionDatabaseOpen"/>
     <addaction name="menuRecentDatabases"/>
@@ -258,6 +264,7 @@
     <addaction name="actionImportPasskey"/>
     <addaction name="separator"/>
     <addaction name="actionDatabaseMerge"/>
+    <addaction name="menuRemoteSync"/>
     <addaction name="actionImport"/>
     <addaction name="menuExport"/>
     <addaction name="separator"/>

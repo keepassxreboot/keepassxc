@@ -31,6 +31,7 @@ class DatabaseSettingsWidgetDatabaseKey;
 class DatabaseSettingsWidgetBrowser;
 #endif
 class DatabaseSettingsWidgetMaintenance;
+class DatabaseSettingsWidgetRemote;
 class QTabWidget;
 
 namespace Ui
@@ -61,6 +62,7 @@ public:
     void load(const QSharedPointer<Database>& db);
     void addSettingsPage(IDatabaseSettingsPage* page);
     void showDatabaseKeySettings();
+    void showRemoteSettings();
 
 signals:
     void editFinished(bool accepted);
@@ -87,6 +89,7 @@ private:
     QPointer<DatabaseSettingsWidgetBrowser> m_browserWidget;
 #endif
     QPointer<DatabaseSettingsWidgetMaintenance> m_maintenanceWidget;
+    QPointer<DatabaseSettingsWidgetRemote> m_remoteWidget;
 
     class ExtraPage;
     QList<ExtraPage> m_extraPages;

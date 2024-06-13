@@ -184,7 +184,7 @@ void DatabaseTabWidget::addDatabaseTab(const QString& filePath,
     auto* dbWidget = new DatabaseWidget(QSharedPointer<Database>::create(cleanFilePath), this);
     addDatabaseTab(dbWidget, inBackground);
     dbWidget->performUnlockDatabase(password, keyfile);
-    updateLastDatabases(cleanFilePath);
+    updateLastDatabases(dbWidget->database());
 }
 
 /**
@@ -249,6 +249,10 @@ void DatabaseTabWidget::addDatabaseTab(DatabaseWidget* dbWidget, bool inBackgrou
     connect(dbWidget, SIGNAL(databaseUnlocked()), SLOT(emitDatabaseLockChanged()));
     connect(dbWidget, SIGNAL(databaseLocked()), SLOT(updateTabName()));
     connect(dbWidget, SIGNAL(databaseLocked()), SLOT(emitDatabaseLockChanged()));
+    connect(dbWidget,
+            &DatabaseWidget::unlockDatabaseInDialogForSync,
+            this,
+            &DatabaseTabWidget::unlockDatabaseInDialogForSync);
 }
 
 DatabaseWidget* DatabaseTabWidget::importFile()
@@ -416,7 +420,7 @@ bool DatabaseTabWidget::saveDatabaseAs(int index)
     auto* dbWidget = databaseWidgetFromIndex(index);
     bool ok = dbWidget->saveAs();
     if (ok) {
-        updateLastDatabases(dbWidget->database()->filePath());
+        updateLastDatabases(dbWidget->database());
     }
     return ok;
 }
@@ -430,7 +434,7 @@ bool DatabaseTabWidget::saveDatabaseBackup(int index)
     auto* dbWidget = databaseWidgetFromIndex(index);
     bool ok = dbWidget->saveBackup();
     if (ok) {
-        updateLastDatabases(dbWidget->database()->filePath());
+        updateLastDatabases(dbWidget->database());
     }
     return ok;
 }
@@ -619,6 +623,11 @@ QString DatabaseTabWidget::tabName(int index)
         tabName = tr("%1 [Locked]", "Database tab name modifier").arg(tabName);
     }
 
+    if (dbWidget->database()->isTemporaryDatabase()) {
+        tabName = tr("%1 [Temporary]", "Database tab name modifier").arg(tabName);
+    }
+
+    // needs to be last check, as MainWindow may remove the asterisk again
     if (dbWidget->database()->isModified()) {
         tabName.append("*");
     }
@@ -742,6 +751,11 @@ void DatabaseTabWidget::unlockAnyDatabaseInDialog(DatabaseOpenDialog::Intent int
     displayUnlockDialog();
 }
 
+void DatabaseTabWidget::unlockDatabaseInDialogForSync(const QString& filePath)
+{
+    unlockDatabaseInDialog(currentDatabaseWidget(), DatabaseOpenDialog::Intent::RemoteSync, filePath);
+}
+
 /**
  * Display the unlock dialog after it's been initialized.
  * This is an internal method, it should only be called by unlockDatabaseInDialog or unlockAnyDatabaseInDialog.
@@ -768,7 +782,7 @@ void DatabaseTabWidget::handleDatabaseUnlockDialogFinished(bool accepted, Databa
 {
     // change the active tab to the database that was just unlocked in the dialog
     auto intent = m_databaseOpenDialog->intent();
-    if (accepted && intent != DatabaseOpenDialog::Intent::Merge) {
+    if (accepted && intent != DatabaseOpenDialog::Intent::Merge && intent != DatabaseOpenDialog::Intent::RemoteSync) {
         int index = indexOf(dbWidget);
         if (index != -1) {
             setCurrentIndex(index);
@@ -803,8 +817,12 @@ void DatabaseTabWidget::relockPendingDatabase()
     m_dbWidgetPendingLock = nullptr;
 }
 
-void DatabaseTabWidget::updateLastDatabases(const QString& filename)
+void DatabaseTabWidget::updateLastDatabases(const QSharedPointer<Database>& database)
 {
+    if (database->isTemporaryDatabase() || database->filePath().isEmpty()) {
+        return;
+    }
+    auto filename = database->filePath();
     if (!config()->get(Config::RememberLastDatabases).toBool()) {
         config()->remove(Config::LastDatabases);
     } else {
@@ -824,10 +842,7 @@ void DatabaseTabWidget::updateLastDatabases()
     auto dbWidget = currentDatabaseWidget();
 
     if (dbWidget) {
-        auto filePath = dbWidget->database()->filePath();
-        if (!filePath.isEmpty()) {
-            updateLastDatabases(filePath);
-        }
+        updateLastDatabases(dbWidget->database());
     }
 }
 

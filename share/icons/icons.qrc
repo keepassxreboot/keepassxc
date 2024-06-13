@@ -69,6 +69,7 @@
         <file>application/scalable/actions/password-show-on.svg</file>
         <file>application/scalable/actions/qrcode.svg</file>
         <file>application/scalable/actions/refresh.svg</file>
+        <file>application/scalable/actions/remote-sync.svg</file>
         <file>application/scalable/actions/reports.svg</file>
         <file>application/scalable/actions/reports-exclude.svg</file>
         <file>application/scalable/actions/sort-alphabetical-ascending.svg</file>

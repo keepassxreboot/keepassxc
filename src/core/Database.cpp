@@ -1049,3 +1049,13 @@ QUuid Database::publicUuid()
 
     return QUuid::fromRfc4122(publicCustomData()["KPXC_PUBLIC_UUID"].toByteArray());
 }
+
+void Database::markAsTemporaryDatabase()
+{
+    m_isTemporaryDatabase = true;
+}
+
+bool Database::isTemporaryDatabase()
+{
+    return m_isTemporaryDatabase;
+}
