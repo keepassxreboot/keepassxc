@@ -62,17 +62,24 @@ void DatabaseWidgetStateSync::setActive(DatabaseWidget* dbWidget)
     m_activeDbWidget = dbWidget;
 
     if (m_activeDbWidget) {
-        m_blockUpdates = true;
+        // Give the database widget a chance to render itself before restoring the state
+        QTimer::singleShot(0, this, [this] {
+            if (!m_activeDbWidget) {
+                return;
+            }
 
-        m_activeDbWidget->setSplitterSizes(m_splitterSizes);
+            m_blockUpdates = true;
 
-        if (m_activeDbWidget->isSearchActive()) {
-            restoreSearchView();
-        } else {
-            restoreListView();
-        }
+            m_activeDbWidget->setSplitterSizes(m_splitterSizes);
 
-        m_blockUpdates = false;
+            if (m_activeDbWidget->isSearchActive()) {
+                restoreSearchView();
+            } else {
+                restoreListView();
+            }
+
+            m_blockUpdates = false;
+        });
 
         connect(m_activeDbWidget, SIGNAL(splitterSizesChanged()), SLOT(updateSplitterSizes()));
         connect(m_activeDbWidget, SIGNAL(entryViewStateChanged()), SLOT(updateViewState()));
