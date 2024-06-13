@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -42,8 +42,9 @@ BrowserSettingsWidget::BrowserSettingsWidget(QWidget* parent)
 
     m_ui->extensionLabel->setOpenExternalLinks(true);
     m_ui->extensionLabel->setText(
-        tr("KeePassXC-Browser is needed for the browser integration to work. <br />Download it for %1 and %2 and %3. %4")
+        tr("KeePassXC-Browser is needed for the browser integration to work. <br />Download it for %1 and %2 and %3 and %4. %5")
             .arg("<a href=\"https://addons.mozilla.org/firefox/addon/keepassxc-browser/\">Firefox</a>",
+                 "<a href=\"https://addons.thunderbird.net/thunderbird/addon/keepassxc-mail/\">Thunderbird</a>",
                  "<a href=\"https://chrome.google.com/webstore/detail/keepassxc-browser/oboonakemofpalcgghocfoadofidjkkk\">"
                  "Google Chrome / Chromium / Vivaldi / Brave</a>",
                  "<a href=\"https://microsoftedge.microsoft.com/addons/detail/pdffhmdngciaglkoonimfcmckehcpafo\">Microsoft Edge</a>",
@@ -134,6 +135,7 @@ void BrowserSettingsWidget::loadSettings()
     m_ui->chromiumSupport->setChecked(settings->browserSupport(BrowserShared::CHROMIUM));
     m_ui->firefoxSupport->setChecked(settings->browserSupport(BrowserShared::FIREFOX));
     m_ui->edgeSupport->setChecked(settings->browserSupport(BrowserShared::EDGE));
+    m_ui->thunderBirdSupport->setChecked(settings->browserSupport(BrowserShared::THUNDERBIRD));
 #ifndef Q_OS_WIN
     m_ui->braveSupport->setChecked(settings->browserSupport(BrowserShared::BRAVE));
     m_ui->vivaldiSupport->setChecked(settings->browserSupport(BrowserShared::VIVALDI));
@@ -265,6 +267,7 @@ void BrowserSettingsWidget::saveSettings()
     settings->setBrowserSupport(BrowserShared::CHROMIUM, m_ui->chromiumSupport->isChecked());
     settings->setBrowserSupport(BrowserShared::FIREFOX, m_ui->firefoxSupport->isChecked());
     settings->setBrowserSupport(BrowserShared::EDGE, m_ui->edgeSupport->isChecked());
+    settings->setBrowserSupport(BrowserShared::THUNDERBIRD, m_ui->thunderBirdSupport->isChecked());
 #ifndef Q_OS_WIN
     settings->setBrowserSupport(BrowserShared::BRAVE, m_ui->braveSupport->isChecked());
     settings->setBrowserSupport(BrowserShared::VIVALDI, m_ui->vivaldiSupport->isChecked());

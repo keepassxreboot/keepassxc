@@ -1,6 +1,5 @@
 /*
- *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -40,8 +39,10 @@ private:
     QString getTargetPath(BrowserShared::SupportedBrowsers browser) const;
     QString getBrowserName(BrowserShared::SupportedBrowsers browser) const;
     QString getNativeMessagePath(BrowserShared::SupportedBrowsers browser) const;
+    QString getHostName(BrowserShared::SupportedBrowsers browser) const;
     QJsonObject constructFile(BrowserShared::SupportedBrowsers browser);
     bool createNativeMessageFile(BrowserShared::SupportedBrowsers browser);
+    bool isFirefoxBrowser(BrowserShared::SupportedBrowsers browser) const;
 
     Q_DISABLE_COPY(NativeMessageInstaller);
 };
