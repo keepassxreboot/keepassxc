@@ -41,8 +41,8 @@ DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
     , m_dbWidgetStateSync(new DatabaseWidgetStateSync(this))
     , m_dbWidgetPendingLock(nullptr)
     , m_databaseOpenDialog(new DatabaseOpenDialog(this))
-    , m_databaseOpenInProgress(false)
     , m_importWizard(nullptr)
+    , m_databaseOpenInProgress(false)
 {
     auto* tabBar = new QTabBar(this);
     tabBar->setAcceptDrops(true);
