@@ -39,12 +39,6 @@
 
 #include <cassert>
 
-#if QT_VERSION < QT_VERSION_CHECK(5, 11, 0)
-#define FONT_METRICS_WIDTH(fmt, ...) fmt.width(__VA_ARGS__)
-#else
-#define FONT_METRICS_WIDTH(fmt, ...) fmt.horizontalAdvance(__VA_ARGS__)
-#endif
-
 namespace
 {
 
@@ -255,7 +249,7 @@ struct TagsEdit::Impl
     {
         for (auto it = range.first; it != range.second; ++it) {
             // calc text rect
-            const auto text_w = FONT_METRICS_WIDTH(fm, it->text);
+            const auto text_w = fm.horizontalAdvance(it->text);
             auto const text_h = fm.height() + fm.leading();
             auto const w = cross_deleter
                                ? tag_inner.left() + tag_inner.right() + tag_cross_padding * 2 + tag_cross_width
@@ -280,7 +274,7 @@ struct TagsEdit::Impl
 
     template <class It> void calcEditorRect(QPoint& lt, size_t& row, QRect r, QFontMetrics const& fm, It it) const
     {
-        auto const text_w = FONT_METRICS_WIDTH(fm, text_layout.text());
+        auto const text_w = fm.horizontalAdvance(text_layout.text());
         auto const text_h = fm.height() + fm.leading();
         auto const w = tag_inner.left() + tag_inner.right();
         auto const h = tag_inner.top() + tag_inner.bottom();

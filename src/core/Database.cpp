@@ -318,10 +318,8 @@ bool Database::performSave(const QString& filePath, SaveAction action, const QSt
         backupDatabase(filePath, backupFilePath);
     }
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
     QFileInfo info(filePath);
     auto createTime = info.exists() ? info.birthTime() : QDateTime::currentDateTime();
-#endif
 
     switch (action) {
     case Atomic: {
@@ -332,10 +330,8 @@ bool Database::performSave(const QString& filePath, SaveAction action, const QSt
                 return false;
             }
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
             // Retain original creation time
             saveFile.setFileTime(createTime, QFile::FileBirthTime);
-#endif
 
             if (saveFile.commit()) {
                 // successfully saved database file
@@ -368,10 +364,8 @@ bool Database::performSave(const QString& filePath, SaveAction action, const QSt
                 // successfully saved the database
                 tempFile.setAutoRemove(false);
                 QFile::setPermissions(filePath, perms);
-#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
                 // Retain original creation time
                 tempFile.setFileTime(createTime, QFile::FileBirthTime);
-#endif
                 return true;
             } else if (backupFilePath.isEmpty() || !restoreDatabase(filePath, backupFilePath)) {
                 // Failed to copy new database in place, and

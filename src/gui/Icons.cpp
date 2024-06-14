@@ -101,13 +101,11 @@ QIcon Icons::trayIcon(bool unlocked)
 #else
     i = icon(QString("%1-%2%3").arg(applicationIconName(), iconApperance, suffix), false);
 #endif
-#if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
     // Set as mask to allow the operating system to recolour the tray icon. This may look weird
     // if we failed to detect the status bar background colour correctly, but it is certainly
     // better than a barely visible icon and even if we did guess correctly, it allows for better
     // integration should the system's preferred colours not be 100% black or white.
     i.setIsMask(true);
-#endif
     return i;
 }
 
@@ -121,11 +119,7 @@ AdaptiveIconEngine::AdaptiveIconEngine(QIcon baseIcon, QColor overrideColor)
 void AdaptiveIconEngine::paint(QPainter* painter, const QRect& rect, QIcon::Mode mode, QIcon::State state)
 {
     // Temporary image canvas to ensure that the background is transparent and alpha blending works.
-#if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
     auto scale = painter->device()->devicePixelRatioF();
-#else
-    auto scale = painter->device()->devicePixelRatio();
-#endif
     QImage img(rect.size() * scale, QImage::Format_ARGB32_Premultiplied);
     img.fill(0);
     QPainter p(&img);
@@ -191,9 +185,7 @@ QIcon Icons::icon(const QString& name, bool recolor, const QColor& overrideColor
     icon = QIcon::fromTheme(name);
     if (recolor) {
         icon = QIcon(new AdaptiveIconEngine(icon, overrideColor));
-#if QT_VERSION >= QT_VERSION_CHECK(5, 6, 0)
         icon.setIsMask(true);
-#endif
     }
 
     m_iconCache.insert(cacheName, icon);

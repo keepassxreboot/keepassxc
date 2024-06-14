@@ -51,11 +51,9 @@ QPalette LightStyle::standardPalette() const
     palette.setColor(QPalette::Inactive, QPalette::Text, QRgb(0x252528));
     palette.setColor(QPalette::Disabled, QPalette::Text, QRgb(0x8C8C92));
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 12, 0))
     palette.setColor(QPalette::Active, QPalette::PlaceholderText, QRgb(0x71727D));
     palette.setColor(QPalette::Inactive, QPalette::PlaceholderText, QRgb(0x878893));
     palette.setColor(QPalette::Disabled, QPalette::PlaceholderText, QRgb(0xA3A4AC));
-#endif
 
     palette.setColor(QPalette::Active, QPalette::BrightText, QRgb(0xF3F3F4));
     palette.setColor(QPalette::Inactive, QPalette::BrightText, QRgb(0xEAEAEB));

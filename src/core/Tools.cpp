@@ -77,7 +77,6 @@ namespace Tools
 #endif
         debugInfo.append("\n");
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 4, 0)
         debugInfo.append(QObject::tr("Operating system: %1\nCPU architecture: %2\nKernel: %3 %4")
                              .arg(QSysInfo::prettyProductName(),
                                   QSysInfo::currentCpuArchitecture(),
@@ -85,7 +84,6 @@ namespace Tools
                                   QSysInfo::kernelVersion()));
 
         debugInfo.append("\n\n");
-#endif
 
         QString extensions;
 #ifdef WITH_XC_AUTOTYPE

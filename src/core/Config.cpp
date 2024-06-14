@@ -219,7 +219,6 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
 
     // Messages
     {Config::Messages_NoLegacyKeyFileWarning, {QS("Messages/NoLegacyKeyFileWarning"), Roaming, false}},
-    {Config::Messages_Qt55CompatibilityWarning, {QS("Messages/Qt55CompatibilityWarning"), Local, false}},
     {Config::Messages_HidePreReleaseWarning, {QS("Messages/HidePreReleaseWarning"), Local, {}}}};
 
 // clang-format on
@@ -360,7 +359,7 @@ static const QHash<QString, Config::ConfigKey> deprecationMap = {
     {QS("generator/WordList"), Config::PasswordGenerator_WordList},
     {QS("generator/WordCase"), Config::PasswordGenerator_WordCase},
     {QS("generator/Type"), Config::PasswordGenerator_Type},
-    {QS("QtErrorMessageShown"), Config::Messages_Qt55CompatibilityWarning},
+    {QS("QtErrorMessageShown"), Config::Deleted},
     {QS("GUI/HidePasswords"), Config::Deleted},
     {QS("GUI/DarkTrayIcon"), Config::Deleted},
 
