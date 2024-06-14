@@ -59,7 +59,7 @@ ImportWizardPageSelect::ImportWizardPageSelect(QWidget* parent)
     updateDatabaseChoices();
 
     m_ui->downloadCommandHelpButton->setIcon(icons()->icon("system-help"));
-    connect(m_ui->downloadCommandHelpButton, &QToolButton::clicked, this, [this] {
+    connect(m_ui->downloadCommandHelpButton, &QToolButton::clicked, this, [] {
         QDesktopServices::openUrl(QUrl("https://keepassxc.org/docs/KeePassXC_UserGuide#_remote_database_support"));
     });
 
