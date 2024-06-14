@@ -1030,7 +1030,7 @@ void TestGui::testTotp()
     auto* totpDialog = m_dbWidget->findChild<TotpDialog*>("TotpDialog");
     auto* totpLabel = totpDialog->findChild<QLabel*>("totpLabel");
 
-    QCOMPARE(totpLabel->text().replace(" ", ""), entry->totp());
+    QTRY_COMPARE(totpLabel->text().replace(" ", ""), entry->totp());
     QTest::keyClick(totpDialog, Qt::Key_Escape);
 
     // Test the QR code
