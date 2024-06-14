@@ -5702,11 +5702,6 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>WARNING: Your Qt version may cause KeePassXC to crash with an On-Screen Keyboard.
-We recommend you use the AppImage available on our downloads page.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>No Tags</source>
         <translation type="unfinished"></translation>
     </message>

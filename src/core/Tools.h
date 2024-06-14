@@ -88,20 +88,6 @@ namespace Tools
         }
     }
 
-    inline int qtRuntimeVersion()
-    {
-        // Cache the result since the Qt version can't change during
-        // the execution, computing it once will be enough
-        const static int version = []() {
-            const auto sq = QString::fromLatin1(qVersion());
-            return (sq.section(QChar::fromLatin1('.'), 0, 0).toInt() << 16)
-                   + (sq.section(QChar::fromLatin1('.'), 1, 1).toInt() << 8)
-                   + (sq.section(QChar::fromLatin1('.'), 2, 2).toInt());
-        }();
-
-        return version;
-    }
-
     // Checks if all values are found inside the list. Returns a list of values not found.
     template <typename T> QList<T> getMissingValuesFromList(const QList<T>& list, const QList<T>& required)
     {

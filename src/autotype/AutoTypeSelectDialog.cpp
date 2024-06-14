@@ -21,12 +21,8 @@
 
 #include <QCloseEvent>
 #include <QMenu>
-#include <QShortcut>
-#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
 #include <QScreen>
-#else
-#include <QDesktopWidget>
-#endif
+#include <QShortcut>
 
 #include "core/Config.h"
 #include "core/Database.h"
@@ -334,7 +330,6 @@ void AutoTypeSelectDialog::buildActionMenu()
     });
 #endif
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
     // Qt 5.10 introduced a new "feature" to hide shortcuts in context menus
     // Unfortunately, Qt::AA_DontShowShortcutsInContextMenus is broken, have to manually enable them
     typeUsernameAction->setShortcutVisibleInContextMenu(true);
@@ -342,7 +337,6 @@ void AutoTypeSelectDialog::buildActionMenu()
     typeTotpAction->setShortcutVisibleInContextMenu(true);
 #if defined(Q_OS_WIN) || defined(Q_OS_MAC)
     typeVirtualAction->setShortcutVisibleInContextMenu(true);
-#endif
 #endif
 
     copyUsernameAction->setProperty(MENU_FIELD_PROP_NAME, MENU_FIELD::USERNAME);
@@ -377,16 +371,12 @@ void AutoTypeSelectDialog::showEvent(QShowEvent* event)
 {
     QDialog::showEvent(event);
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
     auto screen = QApplication::screenAt(QCursor::pos());
     if (!screen) {
         // screenAt can return a nullptr, default to the primary screen
         screen = QApplication::primaryScreen();
     }
     QRect screenGeometry = screen->availableGeometry();
-#else
-    QRect screenGeometry = QApplication::desktop()->availableGeometry(QCursor::pos());
-#endif
 
     // Resize to last used size
     QSize size = config()->get(Config::GUI_AutoTypeSelectDialogSize).toSize();

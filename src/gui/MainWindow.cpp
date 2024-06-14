@@ -38,7 +38,6 @@
 #include "autotype/AutoType.h"
 #include "core/InactivityTimer.h"
 #include "core/Resources.h"
-#include "core/Tools.h"
 #include "gui/AboutDialog.h"
 #include "gui/ActionCollection.h"
 #include "gui/Icons.h"
@@ -293,7 +292,6 @@ MainWindow::MainWindow()
     connect(m_inactivityTimer, SIGNAL(inactivityDetected()), this, SLOT(lockDatabasesAfterInactivity()));
     applySettingsChanges();
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
     // Qt 5.10 introduced a new "feature" to hide shortcuts in context menus
     // Unfortunately, Qt::AA_DontShowShortcutsInContextMenus is broken, have to manually enable them
     m_ui->actionEntryNew->setShortcutVisibleInContextMenu(true);
@@ -315,7 +313,6 @@ MainWindow::MainWindow()
     m_ui->actionEntryCopyTitle->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryAddToAgent->setShortcutVisibleInContextMenu(true);
     m_ui->actionEntryRemoveFromAgent->setShortcutVisibleInContextMenu(true);
-#endif
 
     connect(m_ui->menuEntries, SIGNAL(aboutToShow()), SLOT(obtainContextFocusLock()));
     connect(m_ui->menuEntries, SIGNAL(aboutToHide()), SLOT(releaseContextFocusLock()));
@@ -665,15 +662,6 @@ MainWindow::MainWindow()
                "Expect some bugs and minor issues, this version is meant for testing purposes."),
             MessageWidget::Information,
             -1);
-    }
-#elif (QT_VERSION >= QT_VERSION_CHECK(5, 5, 0) && QT_VERSION < QT_VERSION_CHECK(5, 6, 0))
-    if (!config()->get(Config::Messages_Qt55CompatibilityWarning).toBool()) {
-        m_ui->globalMessageWidget->showMessage(
-            tr("WARNING: Your Qt version may cause KeePassXC to crash with an On-Screen Keyboard.\n"
-               "We recommend you use the AppImage available on our downloads page."),
-            MessageWidget::Warning,
-            -1);
-        config()->set(Config::Messages_Qt55CompatibilityWarning, true);
     }
 #endif
 
@@ -1864,27 +1852,6 @@ void MainWindow::toggleWindow()
         hideWindow();
     } else {
         bringToFront();
-
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS) && !defined(QT_NO_DBUS) && (QT_VERSION < QT_VERSION_CHECK(5, 9, 0))
-        // re-register global D-Bus menu (needed on Ubuntu with Unity)
-        // see https://github.com/keepassxreboot/keepassxc/issues/271
-        // and https://bugreports.qt.io/browse/QTBUG-58723
-        // check for !isVisible(), because isNativeMenuBar() does not work with appmenu-qt5
-        static const auto isDesktopSessionUnity = qgetenv("XDG_CURRENT_DESKTOP") == "Unity";
-
-        if (isDesktopSessionUnity && Tools::qtRuntimeVersion() < QT_VERSION_CHECK(5, 9, 0)
-            && !m_ui->menubar->isVisible()) {
-            QDBusMessage msg = QDBusMessage::createMethodCall(QStringLiteral("com.canonical.AppMenu.Registrar"),
-                                                              QStringLiteral("/com/canonical/AppMenu/Registrar"),
-                                                              QStringLiteral("com.canonical.AppMenu.Registrar"),
-                                                              QStringLiteral("RegisterWindow"));
-            QList<QVariant> args;
-            args << QVariant::fromValue(static_cast<uint32_t>(winId()))
-                 << QVariant::fromValue(QDBusObjectPath("/MenuBar/1"));
-            msg.setArguments(args);
-            QDBusConnection::sessionBus().send(msg);
-        }
-#endif
     }
 }
 
@@ -2019,11 +1986,7 @@ void MainWindow::displayDesktopNotification(const QString& msg, QString title, i
         title = BaseWindowTitle;
     }
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 9, 0)
     m_trayIcon->showMessage(title, msg, icons()->applicationIcon(), msTimeoutHint);
-#else
-    m_trayIcon->showMessage(title, msg, QSystemTrayIcon::Information, msTimeoutHint);
-#endif
 }
 
 void MainWindow::restartApp(const QString& message)

@@ -512,14 +512,8 @@ else()
     find_package(Qt5 COMPONENTS ${QT_COMPONENTS} REQUIRED)
 endif()
 
-if(Qt5Core_VERSION VERSION_LESS "5.2.0")
-    message(FATAL_ERROR "Qt version 5.2.0 or higher is required")
-endif()
-
-# CBOR for Passkeys requires Qt 5.12
 if(Qt5Core_VERSION VERSION_LESS "5.12.0")
-    message(STATUS "Qt version 5.12.0 or higher is required for Passkeys support")
-    set(WITH_XC_BROWSER_PASSKEYS OFF)
+    message(FATAL_ERROR "Qt version 5.12.0 or higher is required")
 endif()
 
 get_filename_component(Qt5_PREFIX ${Qt5_DIR}/../../.. REALPATH)
