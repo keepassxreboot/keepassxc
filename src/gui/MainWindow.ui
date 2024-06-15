@@ -731,7 +731,7 @@
     <string>Clone Entry</string>
    </property>
    <property name="shortcut">
-    <string notr="true">Ctrl+K</string>
+    <string notr="true">Ctrl+D</string>
    </property>
   </action>
   <action name="actionEntryMoveUp">
