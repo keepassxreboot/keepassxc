@@ -992,17 +992,17 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         case DatabaseWidget::Mode::LockedMode: {
             // Enable select actions when editing an entry
             bool editEntryActive = dbWidget->isEntryEditActive();
-            const auto editEntryActionsMask = QList<QAction*>({m_ui->actionEntryCopyUsername,
-                                                               m_ui->actionEntryCopyPassword,
-                                                               m_ui->actionEntryCopyURL,
-                                                               m_ui->actionEntryOpenUrl,
-                                                               m_ui->actionEntryAutoType,
-                                                               m_ui->actionEntryDownloadIcon,
-                                                               m_ui->actionEntryCopyNotes,
-                                                               m_ui->actionEntryCopyTitle,
-                                                               m_ui->menuEntryCopyAttribute->menuAction(),
-                                                               m_ui->menuEntryTotp->menuAction(),
-                                                               m_ui->actionEntrySetupTotp});
+            const QList<QAction*> editEntryActionsMask{m_ui->actionEntryCopyUsername,
+                                                       m_ui->actionEntryCopyPassword,
+                                                       m_ui->actionEntryCopyURL,
+                                                       m_ui->actionEntryOpenUrl,
+                                                       m_ui->actionEntryAutoType,
+                                                       m_ui->actionEntryDownloadIcon,
+                                                       m_ui->actionEntryCopyNotes,
+                                                       m_ui->actionEntryCopyTitle,
+                                                       m_ui->menuEntryCopyAttribute->menuAction(),
+                                                       m_ui->menuEntryTotp->menuAction(),
+                                                       m_ui->actionEntrySetupTotp};
 
             auto entryActions = m_ui->menuEntries->actions();
             entryActions << m_ui->menuEntryCopyAttribute->actions();
