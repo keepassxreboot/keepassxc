@@ -438,6 +438,14 @@ void AutoType::performGlobalAutoType(const QList<QSharedPointer<Database>>& dbLi
         return;
     }
 
+    if (!m_inGlobalAutoTypeDialog.tryLock()) {
+        return;
+    }
+    if (m_windowTitleForGlobal.isEmpty() && QApplication::platformName().compare("wayland", Qt::CaseInsensitive) == 0) {
+        m_inGlobalAutoTypeDialog.unlock();
+        return;
+    }
+    
     QList<AutoTypeMatch> matchList;
     // Generate entry/sequence match list if there is a valid window title
     if (!m_windowTitleForGlobal.isEmpty()) {
