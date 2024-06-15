@@ -992,17 +992,17 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         case DatabaseWidget::Mode::LockedMode: {
             // Enable select actions when editing an entry
             bool editEntryActive = dbWidget->isEntryEditActive();
-            const auto editEntryActionsMask = QList<QAction*>({m_ui->actionEntryCopyUsername,
-                                                               m_ui->actionEntryCopyPassword,
-                                                               m_ui->actionEntryCopyURL,
-                                                               m_ui->actionEntryOpenUrl,
-                                                               m_ui->actionEntryAutoType,
-                                                               m_ui->actionEntryDownloadIcon,
-                                                               m_ui->actionEntryCopyNotes,
-                                                               m_ui->actionEntryCopyTitle,
-                                                               m_ui->menuEntryCopyAttribute->menuAction(),
-                                                               m_ui->menuEntryTotp->menuAction(),
-                                                               m_ui->actionEntrySetupTotp});
+            const QList<QAction*> editEntryActionsMask{m_ui->actionEntryCopyUsername,
+                                                       m_ui->actionEntryCopyPassword,
+                                                       m_ui->actionEntryCopyURL,
+                                                       m_ui->actionEntryOpenUrl,
+                                                       m_ui->actionEntryAutoType,
+                                                       m_ui->actionEntryDownloadIcon,
+                                                       m_ui->actionEntryCopyNotes,
+                                                       m_ui->actionEntryCopyTitle,
+                                                       m_ui->menuEntryCopyAttribute->menuAction(),
+                                                       m_ui->menuEntryTotp->menuAction(),
+                                                       m_ui->actionEntrySetupTotp};
 
             auto entryActions = m_ui->menuEntries->actions();
             entryActions << m_ui->menuEntryCopyAttribute->actions();
@@ -2190,54 +2190,29 @@ void MainWindow::initActionCollection()
                     m_ui->actionBugReport,
                     m_ui->actionAbout});
 
-    // Add actions whose shortcuts were set in the .ui file
+    // Register as default any shortcuts that were set in the .ui file
     for (const auto action : ac->actions()) {
         if (!action->shortcut().isEmpty()) {
             ac->setDefaultShortcut(action, action->shortcut());
         }
     }
 
-    // Actions with standard shortcuts
-    ac->setDefaultShortcut(m_ui->actionDatabaseOpen, QKeySequence::Open, Qt::CTRL + Qt::Key_O);
-    ac->setDefaultShortcut(m_ui->actionDatabaseSave, QKeySequence::Save, Qt::CTRL + Qt::Key_S);
-    ac->setDefaultShortcut(m_ui->actionDatabaseSaveAs, QKeySequence::SaveAs, Qt::CTRL + Qt::SHIFT + Qt::Key_S);
-    ac->setDefaultShortcut(m_ui->actionDatabaseClose, QKeySequence::Close, Qt::CTRL + Qt::Key_W);
-    ac->setDefaultShortcut(m_ui->actionSettings, QKeySequence::Preferences, Qt::CTRL + Qt::Key_Comma);
-    ac->setDefaultShortcut(m_ui->actionQuit, QKeySequence::Quit, Qt::CTRL + Qt::Key_Q);
-    ac->setDefaultShortcut(m_ui->actionEntryNew, QKeySequence::New, Qt::CTRL + Qt::Key_N);
+    // Actions with standard shortcuts (if no standard shortcut exists, leave the existing
+    // shortcuts from the .ui file in place)
+    ac->setDefaultShortcut(m_ui->actionDatabaseOpen, QKeySequence::Open);
+    ac->setDefaultShortcut(m_ui->actionDatabaseSave, QKeySequence::Save);
+    ac->setDefaultShortcut(m_ui->actionDatabaseSaveAs, QKeySequence::SaveAs);
+    ac->setDefaultShortcut(m_ui->actionDatabaseClose, QKeySequence::Close);
+    ac->setDefaultShortcut(m_ui->actionSettings, QKeySequence::Preferences);
+    ac->setDefaultShortcut(m_ui->actionQuit, QKeySequence::Quit);
+    ac->setDefaultShortcut(m_ui->actionEntryNew, QKeySequence::New);
 
     // Prevent conflicts with global Mac shortcuts (force Control on all platforms)
+    // Note: Qt::META means Ctrl on Mac.
 #ifdef Q_OS_MAC
-    auto modifier = Qt::META;
-#else
-    auto modifier = Qt::CTRL;
+    ac->setDefaultShortcut(m_ui->actionEntryAddToAgent, Qt::META + Qt::Key_H);
+    ac->setDefaultShortcut(m_ui->actionEntryRemoveFromAgent, Qt::META + Qt::SHIFT + Qt::Key_H);
 #endif
-
-    // All other actions with default shortcuts
-    ac->setDefaultShortcut(m_ui->actionDatabaseNew, Qt::CTRL + Qt::SHIFT + Qt::Key_N);
-    ac->setDefaultShortcut(m_ui->actionDatabaseSettings, Qt::CTRL + Qt::SHIFT + Qt::Key_Comma);
-    ac->setDefaultShortcut(m_ui->actionReports, Qt::CTRL + Qt::SHIFT + Qt::Key_R);
-    ac->setDefaultShortcut(m_ui->actionLockDatabase, Qt::CTRL + Qt::Key_L);
-    ac->setDefaultShortcut(m_ui->actionLockAllDatabases, Qt::CTRL + Qt::SHIFT + Qt::Key_L);
-    ac->setDefaultShortcut(m_ui->actionEntryEdit, Qt::CTRL + Qt::Key_E);
-    ac->setDefaultShortcut(m_ui->actionEntryDelete, Qt::CTRL + Qt::Key_D);
-    ac->setDefaultShortcut(m_ui->actionEntryDelete, Qt::Key_Delete);
-    ac->setDefaultShortcut(m_ui->actionEntryClone, Qt::CTRL + Qt::Key_K);
-    ac->setDefaultShortcut(m_ui->actionEntryTotp, Qt::CTRL + Qt::SHIFT + Qt::Key_T);
-    ac->setDefaultShortcut(m_ui->actionEntryDownloadIcon, Qt::CTRL + Qt::SHIFT + Qt::Key_D);
-    ac->setDefaultShortcut(m_ui->actionEntryCopyTotp, Qt::CTRL + Qt::Key_T);
-    ac->setDefaultShortcut(m_ui->actionEntryCopyPasswordTotp, Qt::CTRL + Qt::Key_Y);
-    ac->setDefaultShortcut(m_ui->actionEntryMoveUp, Qt::CTRL + Qt::ALT + Qt::Key_Up);
-    ac->setDefaultShortcut(m_ui->actionEntryMoveDown, Qt::CTRL + Qt::ALT + Qt::Key_Down);
-    ac->setDefaultShortcut(m_ui->actionEntryCopyUsername, Qt::CTRL + Qt::Key_B);
-    ac->setDefaultShortcut(m_ui->actionEntryCopyPassword, Qt::CTRL + Qt::Key_C);
-    ac->setDefaultShortcut(m_ui->actionEntryCopyTitle, Qt::CTRL + Qt::Key_I);
-    ac->setDefaultShortcut(m_ui->actionEntryAutoTypeSequence, Qt::CTRL + Qt::SHIFT + Qt::Key_V);
-    ac->setDefaultShortcut(m_ui->actionEntryOpenUrl, Qt::CTRL + Qt::SHIFT + Qt::Key_U);
-    ac->setDefaultShortcut(m_ui->actionEntryCopyURL, Qt::CTRL + Qt::Key_U);
-    ac->setDefaultShortcut(m_ui->actionEntryRestore, Qt::CTRL + Qt::Key_R);
-    ac->setDefaultShortcut(m_ui->actionEntryAddToAgent, modifier + Qt::Key_H);
-    ac->setDefaultShortcut(m_ui->actionEntryRemoveFromAgent, modifier + Qt::SHIFT + Qt::Key_H);
 
     QTimer::singleShot(1, ac, &ActionCollection::restoreShortcuts);
 }

@@ -61,14 +61,10 @@ void ActionCollection::setDefaultShortcut(QAction* action, const QKeySequence& s
     setDefaultShortcuts(action, {shortcut});
 }
 
-void ActionCollection::setDefaultShortcut(QAction* action,
-                                          QKeySequence::StandardKey standard,
-                                          const QKeySequence& fallback)
+void ActionCollection::setDefaultShortcut(QAction* action, QKeySequence::StandardKey standard)
 {
     if (!QKeySequence::keyBindings(standard).isEmpty()) {
         setDefaultShortcuts(action, QKeySequence::keyBindings(standard));
-    } else if (fallback != 0) {
-        setDefaultShortcut(action, QKeySequence(fallback));
     }
 }
 
