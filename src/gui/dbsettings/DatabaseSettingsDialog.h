@@ -70,7 +70,6 @@ signals:
 private slots:
     void save();
     void reject();
-    void pageChanged();
 
 private:
     enum Page

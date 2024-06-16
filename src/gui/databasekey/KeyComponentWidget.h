@@ -104,9 +104,6 @@ signals:
     void editCanceled();
     void componentRemovalRequested();
 
-protected:
-    void showEvent(QShowEvent* event) override;
-
 private slots:
     void updateAddStatus(bool added);
     void doAdd();
