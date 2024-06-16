@@ -31,7 +31,7 @@ plugs:
       - $HOME/.config/microsoft-edge/NativeMessagingHosts/org.keepassxc.keepassxc_browser.json
       - $HOME/.config/vivaldi/NativeMessagingHosts/org.keepassxc.keepassxc_browser.json
       - $HOME/.config/BraveSoftware/Brave-Browser/NativeMessagingHosts/org.keepassxc.keepassxc_browser.json
-      - $HOME/.local/share/torbrowser/tbb/x86_64/tor-browser_en-US/Browser/TorBrowser/Data/Browser/.mozilla/native-messaging-hosts
+      - $HOME/.local/share/torbrowser/tbb/x86_64/tor-browser_en-US/Browser/TorBrowser/Data/Browser/.mozilla/native-messaging-hosts/org.keepassxc.keepassxc_browser.json
 
 slots:
   session-dbus-interface:
