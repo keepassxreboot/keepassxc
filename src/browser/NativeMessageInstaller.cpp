@@ -230,7 +230,7 @@ QString NativeMessageInstaller::getNativeMessagePath(SupportedBrowsers browser) 
     // Same as Flatpak above, with the exception that Snap also redefines $HOME
     // Therefore we must explicitly reference $SNAP_REAL_HOME
     if (browser == SupportedBrowsers::TOR_BROWSER) {
-	basePath = qEnvironmentVariable("SNAP_REAL_HOME") + "/.local/share";
+        basePath = qEnvironmentVariable("SNAP_REAL_HOME") + "/.local/share";
     } else if (browser == SupportedBrowsers::FIREFOX) {
         basePath = qEnvironmentVariable("SNAP_REAL_HOME");
     } else {

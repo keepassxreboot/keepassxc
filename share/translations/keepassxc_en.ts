@@ -1187,18 +1187,6 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3. %4</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please see special instructions for browser extension use below</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1244,6 +1232,10 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Allow using localhost with passkeys</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
