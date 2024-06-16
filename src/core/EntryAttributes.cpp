@@ -309,8 +309,8 @@ bool EntryAttributes::operator!=(const EntryAttributes& other) const
 
 QRegularExpressionMatch EntryAttributes::matchReference(const QString& text)
 {
-    static QRegularExpression referenceRegExp(
-        "\\{REF:(?<WantedField>[TUPANI])@(?<SearchIn>[TUPANIO]):(?<SearchText>[^}]+)\\}",
+    static const QRegularExpression referenceRegExp(
+        R"(\{REF:(?<WantedField>[TUPANI])@(?<SearchIn>[TUPANIO]):(?<SearchText>[^}]+)\})",
         QRegularExpression::CaseInsensitiveOption);
 
     return referenceRegExp.match(text);

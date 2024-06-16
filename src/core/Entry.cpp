@@ -28,12 +28,18 @@
 
 #include <QDir>
 #include <QRegularExpression>
+#include <QStringBuilder>
 #include <QUrl>
 
 const int Entry::DefaultIconNumber = 0;
-const int Entry::ResolveMaximumDepth = 10;
-const QString Entry::AutoTypeSequenceUsername = "{USERNAME}{ENTER}";
-const QString Entry::AutoTypeSequencePassword = "{PASSWORD}{ENTER}";
+
+namespace
+{
+    const int ResolveMaximumDepth = 10;
+    const QString AutoTypeSequenceUsername = "{USERNAME}{ENTER}";
+    const QString AutoTypeSequencePassword = "{PASSWORD}{ENTER}";
+    const QRegularExpression TagDelimiterRegex(R"([,;\t])");
+} // namespace
 
 Entry::Entry()
     : m_attributes(new EntryAttributes(this))
@@ -432,14 +438,11 @@ QString Entry::attribute(const QString& key) const
 int Entry::size() const
 {
     int size = 0;
-    const QRegularExpression delimiter(",|:|;");
-
-    size += this->attributes()->attributesSize();
-    size += this->autoTypeAssociations()->associationsSize();
-    size += this->attachments()->attachmentsSize();
-    size += this->customData()->dataSize();
-    const QStringList tags = this->tags().split(delimiter, QString::SkipEmptyParts);
-    for (const QString& tag : tags) {
+    size += attributes()->attributesSize();
+    size += autoTypeAssociations()->associationsSize();
+    size += attachments()->attachmentsSize();
+    size += customData()->dataSize();
+    for (const QString& tag : tags().split(TagDelimiterRegex, QString::SkipEmptyParts)) {
         size += tag.toUtf8().size();
     }
 
@@ -482,8 +485,7 @@ bool Entry::isAttributeReferenceOf(const QString& key, const QUuid& uuid) const
 
 bool Entry::hasReferences() const
 {
-    const QList<QString> keyList = EntryAttributes::DefaultAttributes;
-    for (const QString& key : keyList) {
+    for (const QString& key : EntryAttributes::DefaultAttributes) {
         if (m_attributes->isReference(key)) {
             return true;
         }
@@ -493,8 +495,7 @@ bool Entry::hasReferences() const
 
 bool Entry::hasReferencesTo(const QUuid& uuid) const
 {
-    const QList<QString> keyList = EntryAttributes::DefaultAttributes;
-    for (const QString& key : keyList) {
+    for (const QString& key : EntryAttributes::DefaultAttributes) {
         if (isAttributeReferenceOf(key, uuid)) {
             return true;
         }
@@ -670,11 +671,10 @@ void Entry::setOverrideUrl(const QString& url)
 
 void Entry::setTags(const QString& tags)
 {
-    static QRegExp rx("(\\,|\\t|\\;)");
-    auto taglist = tags.split(rx, QString::SkipEmptyParts);
+    auto taglist = tags.split(TagDelimiterRegex, QString::SkipEmptyParts);
     // Trim whitespace before/after tag text
-    for (auto itr = taglist.begin(); itr != taglist.end(); ++itr) {
-        *itr = itr->trimmed();
+    for (auto& tag : taglist) {
+        tag = tag.trimmed();
     }
     // Remove duplicates
     auto tagSet = QSet<QString>::fromList(taglist);
@@ -687,7 +687,7 @@ void Entry::setTags(const QString& tags)
 void Entry::addTag(const QString& tag)
 {
     auto cleanTag = tag.trimmed();
-    cleanTag.remove(QRegExp("(\\,|\\t|\\;)"));
+    cleanTag.remove(TagDelimiterRegex);
 
     auto taglist = m_data.tags;
     if (!taglist.contains(cleanTag)) {
@@ -700,7 +700,7 @@ void Entry::addTag(const QString& tag)
 void Entry::removeTag(const QString& tag)
 {
     auto cleanTag = tag.trimmed();
-    cleanTag.remove(QRegExp("(\\,|\\t|\\;)"));
+    cleanTag.remove(TagDelimiterRegex);
 
     auto taglist = m_data.tags;
     if (taglist.removeAll(tag) > 0) {
@@ -1014,25 +1014,23 @@ void Entry::updateModifiedSinceBegin()
 
 QString Entry::resolveMultiplePlaceholdersRecursive(const QString& str, int maxDepth) const
 {
-    static QRegularExpression placeholderRegEx("(\\{[^\\}]+?\\})", QRegularExpression::CaseInsensitiveOption);
+    static const QRegularExpression placeholderRegEx(R"(\{[^}]+\})");
 
     if (maxDepth <= 0) {
         qWarning("Maximum depth of replacement has been reached. Entry uuid: %s", uuid().toString().toLatin1().data());
         return str;
     }
 
-    QString result = str;
+    QString result;
     auto matches = placeholderRegEx.globalMatch(str);
+    int capEnd = 0;
     while (matches.hasNext()) {
-        auto match = matches.next();
-        const auto found = match.captured(1);
-        result.replace(found, resolvePlaceholderRecursive(found, maxDepth - 1));
+        const auto match = matches.next();
+        result += str.midRef(capEnd, match.capturedStart() - capEnd);
+        result += resolvePlaceholderRecursive(match.captured(), maxDepth - 1);
+        capEnd = match.capturedEnd();
     }
-
-    if (result != str) {
-        result = resolveMultiplePlaceholdersRecursive(result, maxDepth - 1);
-    }
-
+    result += str.rightRef(str.length() - capEnd);
     return result;
 }
 
@@ -1046,32 +1044,20 @@ QString Entry::resolvePlaceholderRecursive(const QString& placeholder, int maxDe
     const PlaceholderType typeOfPlaceholder = placeholderType(placeholder);
     switch (typeOfPlaceholder) {
     case PlaceholderType::NotPlaceholder:
-    case PlaceholderType::Unknown:
         return resolveMultiplePlaceholdersRecursive(placeholder, maxDepth - 1);
+    case PlaceholderType::Unknown: {
+        return "{" % resolveMultiplePlaceholdersRecursive(placeholder.mid(1, placeholder.length() - 2), maxDepth - 1)
+               % "}";
+    }
     case PlaceholderType::Title:
-        if (placeholderType(title()) == PlaceholderType::Title) {
-            return title();
-        }
         return resolveMultiplePlaceholdersRecursive(title(), maxDepth - 1);
     case PlaceholderType::UserName:
-        if (placeholderType(username()) == PlaceholderType::UserName) {
-            return username();
-        }
         return resolveMultiplePlaceholdersRecursive(username(), maxDepth - 1);
     case PlaceholderType::Password:
-        if (placeholderType(password()) == PlaceholderType::Password) {
-            return password();
-        }
         return resolveMultiplePlaceholdersRecursive(password(), maxDepth - 1);
     case PlaceholderType::Notes:
-        if (placeholderType(notes()) == PlaceholderType::Notes) {
-            return notes();
-        }
         return resolveMultiplePlaceholdersRecursive(notes(), maxDepth - 1);
     case PlaceholderType::Url:
-        if (placeholderType(url()) == PlaceholderType::Url) {
-            return url();
-        }
         return resolveMultiplePlaceholdersRecursive(url(), maxDepth - 1);
     case PlaceholderType::DbDir: {
         QFileInfo fileInfo(database()->filePath());
@@ -1121,60 +1107,45 @@ QString Entry::resolvePlaceholderRecursive(const QString& placeholder, int maxDe
 
 QString Entry::resolveDateTimePlaceholder(Entry::PlaceholderType placeholderType) const
 {
-    QDateTime time = Clock::currentDateTime();
-    QDateTime time_utc = Clock::currentDateTimeUtc();
-    QString date_formatted{};
+    const QDateTime time = Clock::currentDateTime();
+    const QDateTime time_utc = Clock::currentDateTimeUtc();
 
     switch (placeholderType) {
     case PlaceholderType::DateTimeSimple:
-        date_formatted = time.toString("yyyyMMddhhmmss");
-        break;
+        return time.toString("yyyyMMddhhmmss");
     case PlaceholderType::DateTimeYear:
-        date_formatted = time.toString("yyyy");
-        break;
+        return time.toString("yyyy");
     case PlaceholderType::DateTimeMonth:
-        date_formatted = time.toString("MM");
-        break;
+        return time.toString("MM");
     case PlaceholderType::DateTimeDay:
-        date_formatted = time.toString("dd");
-        break;
+        return time.toString("dd");
     case PlaceholderType::DateTimeHour:
-        date_formatted = time.toString("hh");
-        break;
+        return time.toString("hh");
     case PlaceholderType::DateTimeMinute:
-        date_formatted = time.toString("mm");
-        break;
+        return time.toString("mm");
     case PlaceholderType::DateTimeSecond:
-        date_formatted = time.toString("ss");
-        break;
+        return time.toString("ss");
     case PlaceholderType::DateTimeUtcSimple:
-        date_formatted = time_utc.toString("yyyyMMddhhmmss");
-        break;
+        return time_utc.toString("yyyyMMddhhmmss");
     case PlaceholderType::DateTimeUtcYear:
-        date_formatted = time_utc.toString("yyyy");
-        break;
+        return time_utc.toString("yyyy");
     case PlaceholderType::DateTimeUtcMonth:
-        date_formatted = time_utc.toString("MM");
-        break;
+        return time_utc.toString("MM");
     case PlaceholderType::DateTimeUtcDay:
-        date_formatted = time_utc.toString("dd");
-        break;
+        return time_utc.toString("dd");
     case PlaceholderType::DateTimeUtcHour:
-        date_formatted = time_utc.toString("hh");
-        break;
+        return time_utc.toString("hh");
     case PlaceholderType::DateTimeUtcMinute:
-        date_formatted = time_utc.toString("mm");
-        break;
+        return time_utc.toString("mm");
     case PlaceholderType::DateTimeUtcSecond:
-        date_formatted = time_utc.toString("ss");
-        break;
+        return time_utc.toString("ss");
     default: {
         Q_ASSERT_X(false, "Entry::resolveDateTimePlaceholder", "Bad DateTime placeholder type");
         break;
     }
     }
 
-    return date_formatted;
+    return {};
 }
 
 QString Entry::resolveReferencePlaceholderRecursive(const QString& placeholder, int maxDepth) const
@@ -1187,7 +1158,7 @@ QString Entry::resolveReferencePlaceholderRecursive(const QString& placeholder, 
     // resolving references in format: {REF:<WantedField>@<SearchIn>:<SearchText>}
     // using format from http://keepass.info/help/base/fieldrefs.html at the time of writing
 
-    QRegularExpressionMatch match = EntryAttributes::matchReference(placeholder);
+    const QRegularExpressionMatch match = EntryAttributes::matchReference(placeholder);
     if (!match.hasMatch() || !m_group || !m_group->database()) {
         return placeholder;
     }
@@ -1316,9 +1287,7 @@ Database* Entry::database()
 
 QString Entry::maskPasswordPlaceholders(const QString& str) const
 {
-    QString result = str;
-    result.replace(QRegExp("(\\{PASSWORD\\})", Qt::CaseInsensitive, QRegExp::RegExp2), "******");
-    return result;
+    return QString{str}.replace(QStringLiteral("{PASSWORD}"), QStringLiteral("******"), Qt::CaseInsensitive);
 }
 
 Entry* Entry::resolveReference(const QString& str) const
@@ -1436,17 +1405,19 @@ QString Entry::resolveUrl(const QString& url) const
 {
     QString newUrl = url;
 
-    QRegExp fileRegEx("^([a-z]:)?[\\\\/]", Qt::CaseInsensitive, QRegExp::RegExp2);
-    if (fileRegEx.indexIn(newUrl) != -1) {
+    static const QRegularExpression fileRegEx(R"(^(?:[A-Za-z]:)?[\\/])");
+    if (url.contains(fileRegEx)) {
         // Match possible file paths without the scheme and convert it to a file URL
         newUrl = QDir::fromNativeSeparators(newUrl);
         newUrl = QUrl::fromLocalFile(newUrl).toString();
-    } else if (newUrl.startsWith("cmd://")) {
+    } else if (url.startsWith("cmd://")) {
         QStringList cmdList = newUrl.split(" ");
         for (int i = 1; i < cmdList.size(); ++i) {
+            QString& cmd = cmdList[i];
             // Don't pass arguments to the resolveUrl function (they look like URL's)
-            if (!cmdList[i].startsWith("-") && !cmdList[i].startsWith("/")) {
-                return resolveUrl(cmdList[i].remove(QRegExp("'|\"")));
+            if (!cmd.startsWith("-") && !cmd.startsWith("/")) {
+                static const QRegularExpression quotesRegEx("['\"]");
+                return resolveUrl(cmd.remove(quotesRegEx));
             }
         }
 
@@ -1460,13 +1431,13 @@ QString Entry::resolveUrl(const QString& url) const
     }
 
     // Validate the URL
-    QUrl tempUrl = QUrl(newUrl);
+    QUrl tempUrl(newUrl);
     if (tempUrl.isValid()
         && (tempUrl.scheme() == "http" || tempUrl.scheme() == "https" || tempUrl.scheme() == "file")) {
         return tempUrl.url();
     }
 
-    // No valid http URL's found
+    // No valid http URLs found
     return {};
 }
 
