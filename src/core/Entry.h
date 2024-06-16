@@ -227,9 +227,6 @@ public:
     };
 
     static const int DefaultIconNumber;
-    static const int ResolveMaximumDepth;
-    static const QString AutoTypeSequenceUsername;
-    static const QString AutoTypeSequencePassword;
 
     /**
      * Creates a duplicate of this entry except that the returned entry isn't

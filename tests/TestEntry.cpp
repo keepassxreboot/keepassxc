@@ -86,6 +86,7 @@ void TestEntry::testClone()
 {
     QScopedPointer<Entry> entryOrg(new Entry());
     entryOrg->setUuid(QUuid::createUuid());
+    entryOrg->setPassword("pass");
     entryOrg->setTitle("Original Title");
     entryOrg->beginUpdate();
     entryOrg->setTitle("New Title");
@@ -320,10 +321,12 @@ void TestEntry::testResolveRecursivePlaceholders()
     entry7->setTitle(QString("{REF:T@I:%1} and something else").arg(entry3->uuidToHex()));
     entry7->setUsername(QString("{TITLE}"));
     entry7->setPassword(QString("PASSWORD"));
+    entry7->setNotes(QString("{lots} {of} {braces}"));
 
     QCOMPARE(entry7->resolvePlaceholder(entry7->title()), QString("Entry2Title and something else"));
     QCOMPARE(entry7->resolvePlaceholder(entry7->username()), QString("Entry2Title and something else"));
     QCOMPARE(entry7->resolvePlaceholder(entry7->password()), QString("PASSWORD"));
+    QCOMPARE(entry7->resolvePlaceholder(entry7->notes()), QString("{lots} {of} {braces}"));
 }
 
 void TestEntry::testResolveReferencePlaceholders()
