@@ -1,5 +1,33 @@
 # Changelog
 
+## 2.7.9 (2024-06-19)
+
+### Changes
+* Passkeys: Ability to easily remove a passkey from an entry [#10777]
+* Snap: Use new desktop portal for native messaging integration [#10906]
+
+### Fixes
+* Improve entry placeholder/reference feature [#10846]
+* Improve CSV importing when title field isn't specified [#10843]
+* Improve encrypted Bitwarden importing [#10800]
+* Improve database settings UX [#10821]
+* Improve handling of clipboard actions from entry preview [#10810]
+* Improve group/entry view resize behavior and set sensible defaults [#10641]
+* Passkeys: Fix incorrect username fill [#10874]
+* Passkeys: Return additional data to the extension [#10857]
+* Fix password clear timer inconsistency on unlock view [#10708]
+* Fix portability check [#10760]
+* Fix page overflow on HTML exports [#10735]
+* Fix broken builds when using system provided zxcvbn [#10717]
+* Fix copy password button when text is selected [#10853]
+* Fix tab ordering on application settings pages [#10907]
+* SSH Agent: Fix broken decrypt button [#10638]
+* Windows: Fix ALT Auto-Type modifier [#10795]
+* Windows: Fix wrong DACL memory size allocation [#10712]
+* macOS: Fix monospace font sizing [#10739]
+* Flatpak: Fix configuration settings off-by-one error [#10688]
+* BSD: Fix compiling with libusb implementation [#10736]
+
 ## 2.7.8 (2024-05-05)
 
 ### Changes
