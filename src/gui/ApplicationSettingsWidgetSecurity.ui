@@ -279,12 +279,16 @@
   <tabstop>lockDatabaseIdleSpinBox</tabstop>
   <tabstop>clearSearchCheckBox</tabstop>
   <tabstop>clearSearchSpinBox</tabstop>
+  <tabstop>quickUnlockCheckBox</tabstop>
   <tabstop>lockDatabaseOnScreenLockCheckBox</tabstop>
   <tabstop>lockDatabaseMinimizeCheckBox</tabstop>
   <tabstop>passwordsHiddenCheckBox</tabstop>
   <tabstop>passwordShowDotsCheckBox</tabstop>
   <tabstop>passwordPreviewCleartextCheckBox</tabstop>
+  <tabstop>hideTotpCheckBox</tabstop>
   <tabstop>hideNotesCheckBox</tabstop>
+  <tabstop>NoConfirmMoveEntryToRecycleBinCheckBox</tabstop>
+  <tabstop>EnableCopyOnDoubleClickCheckBox</tabstop>
   <tabstop>fallbackToSearch</tabstop>
  </tabstops>
  <resources/>
