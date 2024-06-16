@@ -1280,6 +1280,7 @@
   <tabstop>languageComboBox</tabstop>
   <tabstop>toolButtonStyleComboBox</tabstop>
   <tabstop>toolbarMovableCheckBox</tabstop>
+  <tabstop>colorPasswordsCheckBox</tabstop>
   <tabstop>monospaceNotesCheckBox</tabstop>
   <tabstop>minimizeOnCloseCheckBox</tabstop>
   <tabstop>systrayShowCheckBox</tabstop>
