@@ -438,11 +438,11 @@ QString Entry::attribute(const QString& key) const
 int Entry::size() const
 {
     int size = 0;
-    size += this->attributes()->attributesSize();
-    size += this->autoTypeAssociations()->associationsSize();
-    size += this->attachments()->attachmentsSize();
-    size += this->customData()->dataSize();
-    for (const QString& tag : this->tags().split(TagDelimiterRegex, QString::SkipEmptyParts)) {
+    size += attributes()->attributesSize();
+    size += autoTypeAssociations()->associationsSize();
+    size += attachments()->attachmentsSize();
+    size += customData()->dataSize();
+    for (const QString& tag : tags().split(TagDelimiterRegex, QString::SkipEmptyParts)) {
         size += tag.toUtf8().size();
     }
 
