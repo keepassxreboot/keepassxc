@@ -18,6 +18,7 @@
 #include "DatabaseSettingsWidgetRemote.h"
 #include "ui_DatabaseSettingsWidgetRemote.h"
 
+#include "core/Database.h"
 #include "core/Global.h"
 #include "core/Metadata.h"
 
@@ -191,10 +192,24 @@ void DatabaseSettingsWidgetRemote::testDownload()
     }
 
     if (!QFile::exists(result.filePath)) {
-        m_ui->messageWidget->showMessage(tr("Download finished, but file %1 could not be found.").arg(result.filePath),
+        m_ui->messageWidget->showMessage(tr("Command finished, but downloaded file does not exist."),
+                                         MessageWidget::Error);
+        return;
+    }
+
+    if (!hasValidPublicHeaders(result.filePath)) {
+        m_ui->messageWidget->showMessage(tr("Download finished, but file failed KeePass header check. File is not a "
+                                            "KeePass file or it's an unsupported version"),
                                          MessageWidget::Error);
         return;
     }
 
     m_ui->messageWidget->showMessage(tr("Download successful."), MessageWidget::Positive);
+}
+
+bool DatabaseSettingsWidgetRemote::hasValidPublicHeaders(QString& filePath) {
+    // Read public headers
+    QString error;
+    QScopedPointer<Database> db(new Database());
+    return db->open(filePath, nullptr, &error);
 }
