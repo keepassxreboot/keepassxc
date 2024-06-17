@@ -23,16 +23,6 @@
 #include "core/AsyncTask.h"
 #include "core/Database.h"
 
-namespace
-{
-    QString getTempFileLocation()
-    {
-        QString uuid = QUuid::createUuid().toString().remove(0, 1);
-        uuid.chop(1);
-        return QDir::toNativeSeparators(QDir::temp().absoluteFilePath("RemoteDatabase-" + uuid + ".kdbx"));
-    }
-} // namespace
-
 std::function<QScopedPointer<RemoteProcess>(QObject*)> RemoteHandler::m_createRemoteProcess([](QObject* parent) {
     return QScopedPointer<RemoteProcess>(new RemoteProcess(parent));
 });
@@ -103,6 +93,7 @@ RemoteHandler::RemoteResult RemoteHandler::upload(const QString& filePath, const
 {
     return AsyncTask::runAndWaitForFuture([filePath, params] {
         RemoteResult result;
+        result.filePath = filePath;
         if (!params) {
             result.success = false;
             result.errorMessage = tr("Invalid database pointer or upload parameters provided.");
@@ -142,4 +133,28 @@ RemoteHandler::RemoteResult RemoteHandler::upload(const QString& filePath, const
 
         return result;
     });
+}
+
+QString RemoteHandler::getTempFileLocation()
+{
+    QString uuid = QUuid::createUuid().toString().remove(0, 1);
+    uuid.chop(1);
+    QString writableLocation = QStandardPaths::writableLocation(QStandardPaths::RuntimeLocation);
+    if (writableLocation.isEmpty()) {
+        writableLocation = QStandardPaths::writableLocation(QStandardPaths::TempLocation);
+    }
+    QString tempLocation = QDir(writableLocation).absoluteFilePath(PREFIX + uuid);
+    QDir().mkdir(tempLocation);
+    QDir uuidPath(tempLocation);
+    QFile(uuidPath.path()).setPermissions(QFileDevice::ReadOwner | QFileDevice::WriteOwner | QFileDevice::ExeOwner);
+
+    return QDir::toNativeSeparators(uuidPath.absoluteFilePath("RemoteDatabase-" + uuid + ".kdbx"));
+}
+
+void RemoteHandler::cleanup(QString& tempFileLocation)
+{
+    QFileInfo file(tempFileLocation);
+    if (file.absoluteDir().exists() && file.absoluteDir().dirName().startsWith(PREFIX)) {
+        file.absoluteDir().removeRecursively();
+    }
 }

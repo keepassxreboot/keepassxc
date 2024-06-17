@@ -196,5 +196,6 @@ void DatabaseSettingsWidgetRemote::testDownload()
         return;
     }
 
+    remoteHandler->cleanup(result.filePath);
     m_ui->messageWidget->showMessage(tr("Download successful."), MessageWidget::Positive);
 }
