@@ -37,7 +37,8 @@ public:
     DeviceListenerLibUsb(const DeviceListenerLibUsb&) = delete;
     ~DeviceListenerLibUsb() override;
 
-    Handle registerHotplugCallback(bool arrived, bool left, int vendorId = -1, int productId = -1, const QUuid* = nullptr);
+    Handle
+    registerHotplugCallback(bool arrived, bool left, int vendorId = -1, int productId = -1, const QUuid* = nullptr);
     void deregisterHotplugCallback(Handle handle);
     void deregisterAllHotplugCallbacks();
 
