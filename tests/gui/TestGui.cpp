@@ -397,14 +397,10 @@ void TestGui::prepareAndTriggerRemoteSync(const QString& sourceToSync)
     QVERIFY(saveSettingsButton != nullptr);
     QTest::mouseClick(saveSettingsButton, Qt::LeftButton);
 
-    // find and click dialog OK button
-    auto buttons = dbSettingsDialog->findChild<QDialogButtonBox*>()->findChildren<QPushButton*>();
-    for (QPushButton* b : buttons) {
-        if (b->text() == "OK") {
-            QTest::mouseClick(b, Qt::LeftButton);
-            break;
-        }
-    }
+    auto okButton = dbSettingsDialog->findChild<QDialogButtonBox*>("buttonBox")->button(QDialogButtonBox::Ok);
+    QVERIFY(okButton);
+    QTest::mouseClick(okButton, Qt::LeftButton);
+
     QTRY_COMPARE(m_dbWidget->getRemoteParams().size(), 1);
 
     // trigger aboutToShow to create remote actions
