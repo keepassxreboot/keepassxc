@@ -44,12 +44,16 @@ public:
     RemoteResult download(const RemoteParams* params);
     RemoteResult upload(const QString& filePath, const RemoteParams* params);
 
+    void cleanup(QString& tempFileLocation);
+
     // Used for testing only
     static void setRemoteProcessFunc(std::function<QScopedPointer<RemoteProcess>(QObject*)> func);
 
 private:
+    static QString getTempFileLocation();
+
     static std::function<QScopedPointer<RemoteProcess>(QObject*)> m_createRemoteProcess;
-    static QString m_tempFileLocation;
+    inline static const QString PREFIX = "KPXC-Sync-";
 
     Q_DISABLE_COPY(RemoteHandler)
 };

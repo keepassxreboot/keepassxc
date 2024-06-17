@@ -1215,6 +1215,8 @@ void DatabaseWidget::uploadAndFinishSync(const RemoteParams* params, RemoteHandl
 
 void DatabaseWidget::finishSync(const RemoteParams* params, RemoteHandler::RemoteResult result)
 {
+    QScopedPointer<RemoteHandler> remoteHandler(new RemoteHandler(this));
+    remoteHandler->cleanup(result.filePath);
     setDisabled(false);
     emit updateSyncProgress(-1, "");
     if (result.success) {
