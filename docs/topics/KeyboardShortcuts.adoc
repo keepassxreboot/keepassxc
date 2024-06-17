@@ -22,7 +22,7 @@ NOTE: On macOS please substitute `Ctrl` with `Cmd` (aka `⌘`).
 |New Entry                    | Ctrl + N
 |Edit Entry                   | Enter ; Ctrl + E
 |Delete Entry                 | Delete
-|Clone Entry                  | Ctrl + K
+|Clone Entry                  | Ctrl + D
 |Copy Username                | Ctrl + B
 |Copy Password                | Ctrl + C
 |Copy URL                     | Ctrl + U
