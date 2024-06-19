@@ -300,8 +300,7 @@ void TestGui::testCreateDatabase()
         MessageBox::setNextAnswer(MessageBox::ContinueWithWeakPass);
         QTest::keyClick(fileEdit, Qt::Key::Key_Enter);
 
-        tmpFile.remove();
-    );
+        tmpFile.remove(););
 
     triggerAction("actionDatabaseNew");
 
@@ -519,8 +518,7 @@ void TestGui::testOpenRemoteDatabase()
 
         QVERIFY(wizard->currentPage()->findChildren<QTableWidget*>().count() > 0);
 
-        QTest::keyClick(passwordEdit, Qt::Key_Enter);
-    );
+        QTest::keyClick(passwordEdit, Qt::Key_Enter););
 
     // remote database has been opened
     QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("SyncDatabase [Temporary]"));
