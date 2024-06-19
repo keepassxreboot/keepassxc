@@ -491,28 +491,36 @@ void TestGui::testOpenRemoteDatabase()
     QTest::mouseClick(openRemoteButton, Qt::LeftButton);
     QApplication::processEvents();
 
-    auto* importTypeList = QApplication::activeWindow()->findChild<QListWidget*>("importTypeList");
-    QVERIFY(importTypeList);
-    importTypeList->scrollToBottom();
+    TEST_MODAL_NO_WAIT(
+        ImportWizard * wizard; QTRY_VERIFY(wizard = m_tabWidget->findChild<ImportWizard*>());
 
-    QListWidgetItem* remoteOption = importTypeList->item(importTypeList->count() - 1);
-    QRect remoteOptionRect = importTypeList->visualItemRect(remoteOption);
-    QTest::mouseClick(importTypeList->viewport(), Qt::LeftButton, nullptr, remoteOptionRect.center());
+        auto* importTypeList = wizard->currentPage()->findChild<QListWidget*>("importTypeList");
+        QVERIFY(importTypeList);
+        importTypeList->scrollToBottom();
 
-    auto* downloadCommandEdit = QApplication::activeWindow()->findChild<QLineEdit*>("downloadCommand");
-    QTest::keyClicks(downloadCommandEdit, sourceToSync);
+        QListWidgetItem* remoteOption = importTypeList->item(importTypeList->count() - 1);
+        QRect remoteOptionRect = importTypeList->visualItemRect(remoteOption);
+        QTest::mouseClick(importTypeList->viewport(), Qt::LeftButton, nullptr, remoteOptionRect.center());
 
-    auto* temporaryDatabaseRadio = QApplication::activeWindow()->findChild<QRadioButton*>("temporaryDatabaseRadio");
-    QTest::mouseClick(temporaryDatabaseRadio, Qt::LeftButton);
+        auto* downloadCommandEdit = wizard->currentPage()->findChild<QLineEdit*>("downloadCommand");
+        QVERIFY(downloadCommandEdit);
+        QTest::keyClicks(downloadCommandEdit, sourceToSync);
 
-    auto* passwordEdit = QApplication::activeWindow()->findChild<QLineEdit*>("passwordEdit");
-    QTest::keyClicks(passwordEdit, "a");
-    QTest::keyClick(passwordEdit, Qt::Key_Enter);
+        auto* temporaryDatabaseRadio = wizard->currentPage()->findChild<QRadioButton*>("temporaryDatabaseRadio");
+        QVERIFY(temporaryDatabaseRadio);
+        QTest::mouseClick(temporaryDatabaseRadio, Qt::LeftButton);
 
-    // check that we landed on review page
-    QVERIFY(QApplication::activeWindow()->findChildren<QTableWidget*>().count() > 0);
+        auto* passwordEdit = wizard->currentPage()->findChild<QLineEdit*>("passwordEdit");
+        QVERIFY(passwordEdit);
+        QTest::keyClicks(passwordEdit, "a");
+        QTest::keyClick(passwordEdit, Qt::Key_Enter);
 
-    QTest::keyClick(passwordEdit, Qt::Key_Enter);
+        QApplication::processEvents();
+
+        QVERIFY(wizard->currentPage()->findChildren<QTableWidget*>().count() > 0);
+
+        QTest::keyClick(passwordEdit, Qt::Key_Enter);
+    );
 
     // remote database has been opened
     QTRY_COMPARE(m_tabWidget->tabText(m_tabWidget->currentIndex()), QString("SyncDatabase [Temporary]"));
