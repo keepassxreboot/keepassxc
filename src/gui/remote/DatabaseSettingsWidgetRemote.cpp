@@ -178,12 +178,12 @@ void DatabaseSettingsWidgetRemote::testDownload()
     params->downloadCommand = m_ui->downloadCommand->text();
     params->downloadInput = m_ui->inputForDownload->toPlainText();
 
-    QScopedPointer<RemoteHandler> remoteHandler(new RemoteHandler(this));
     if (params->downloadCommand.isEmpty()) {
         m_ui->messageWidget->showMessage(tr("Download command cannot be empty."), MessageWidget::Warning);
         return;
     }
 
+    QScopedPointer<RemoteHandler> remoteHandler(new RemoteHandler(this));
     RemoteHandler::RemoteResult result = remoteHandler->download(params);
     if (!result.success) {
         m_ui->messageWidget->showMessage(tr("Download failed with error: %1").arg(result.errorMessage),
@@ -197,19 +197,20 @@ void DatabaseSettingsWidgetRemote::testDownload()
         return;
     }
 
-    if (!hasValidPublicHeaders(result.filePath)) {
-        m_ui->messageWidget->showMessage(tr("Download finished, but file failed KeePass header check. File is not a "
-                                            "KeePass file or it's an unsupported version"),
-                                         MessageWidget::Error);
+    QString error;
+    if (!hasValidPublicHeader(result.filePath, &error)) {
+        m_ui->messageWidget->showMessage(
+            tr("Downloaded file is not a KeePass file or it's an unsupported version: %1").arg(error),
+            MessageWidget::Error);
         return;
     }
 
     m_ui->messageWidget->showMessage(tr("Download successful."), MessageWidget::Positive);
 }
 
-bool DatabaseSettingsWidgetRemote::hasValidPublicHeaders(QString& filePath) {
+bool DatabaseSettingsWidgetRemote::hasValidPublicHeader(QString& filePath, QString* error)
+{
     // Read public headers
-    QString error;
     QScopedPointer<Database> db(new Database());
-    return db->open(filePath, nullptr, &error);
+    return db->open(filePath, nullptr, error);
 }

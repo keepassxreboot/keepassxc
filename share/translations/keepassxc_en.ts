@@ -2369,7 +2369,7 @@ The command has to exit. In case of `sftp` as last command `exit` has to be sent
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Download finished, but file failed KeePass header check. File is not a KeePass file or it&apos;s an unsupported version</source>
+        <source>Downloaded file is not a KeePass file or it&apos;s an unsupported version: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
