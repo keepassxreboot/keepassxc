@@ -31,23 +31,13 @@ BrowserSettingsWidget::BrowserSettingsWidget(QWidget* parent)
     m_ui->setupUi(this);
 
     // clang-format off
-    QString snapInstructions;
-#if defined(KEEPASSXC_DIST_SNAP)
-    snapInstructions = "<br /><br />" +
-            tr("Due to Snap sandboxing, you must run a script to enable browser integration."
-               "<br />"
-               "You can obtain this script from %1")
-               .arg("<a href=\"https://keepassxc.org/download#linux\">https://keepassxc.org</a>");
-#endif
-
     m_ui->extensionLabel->setOpenExternalLinks(true);
     m_ui->extensionLabel->setText(
-        tr("KeePassXC-Browser is needed for the browser integration to work. <br />Download it for %1 and %2 and %3. %4")
+        tr("KeePassXC-Browser is needed for the browser integration to work. <br />Download it for %1 and %2 and %3.")
             .arg("<a href=\"https://addons.mozilla.org/firefox/addon/keepassxc-browser/\">Firefox</a>",
                  "<a href=\"https://chrome.google.com/webstore/detail/keepassxc-browser/oboonakemofpalcgghocfoadofidjkkk\">"
                  "Google Chrome / Chromium / Vivaldi / Brave</a>",
-                 "<a href=\"https://microsoftedge.microsoft.com/addons/detail/pdffhmdngciaglkoonimfcmckehcpafo\">Microsoft Edge</a>",
-                 snapInstructions));
+                 "<a href=\"https://microsoftedge.microsoft.com/addons/detail/pdffhmdngciaglkoonimfcmckehcpafo\">Microsoft Edge</a>"));
     // clang-format on
 
     m_ui->tabWidget->setEnabled(m_ui->enableBrowserSupport->isChecked());
@@ -149,16 +139,11 @@ void BrowserSettingsWidget::loadSettings()
     m_ui->useCustomProxy->setVisible(false);
     m_ui->customProxyLocation->setVisible(false);
     m_ui->customProxyLocationBrowseButton->setVisible(false);
-    m_ui->browsersGroupBox->setVisible(false);
-    m_ui->browsersGroupBox->setEnabled(false);
     m_ui->updateBinaryPath->setChecked(false);
     m_ui->updateBinaryPath->setVisible(false);
     // No custom browser for snaps
     m_ui->customBrowserSupport->setVisible(false);
     m_ui->customBrowserGroupBox->setVisible(false);
-    // Show notice to user
-    m_ui->messageWidget->showMessage(tr("Please see special instructions for browser extension use below"),
-                                     MessageWidget::Warning);
 #endif
 #ifdef KEEPASSXC_DIST_FLATPAK
     // The sandbox makes custom proxy locations very unintuitive
