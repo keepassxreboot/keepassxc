@@ -714,7 +714,7 @@
     </message>
     <message>
         <source>Trying to send invalid keyboard symbol.</source>
-        <translation type="unfinished"/>
+        <translation>Yritettiin lähettää virheellistä näppäimistösymbolia.</translation>
     </message>
 </context>
 <context>
@@ -886,24 +886,25 @@ Valitse tietokanta, johon tiedot tallennetaan.</translation>
     </message>
     <message>
         <source>Add to existing entry</source>
-        <translation type="unfinished"/>
+        <translation>Lisää olemassa olevaan tietueeseen</translation>
     </message>
     <message>
         <source>Existing passkey found.
 Do you want to register a new passkey for:</source>
-        <translation type="unfinished"/>
+        <translation>Olemassa oleva passkey löytyi
+Haluatko rekisteröidä uuden passkeyn sivustolle:</translation>
     </message>
     <message>
         <source>Select the existing passkey and press Update to replace it.</source>
-        <translation type="unfinished"/>
+        <translation>Valitse olemassa oleva passkey ja klikkaa Päivitä korvataksesi se.</translation>
     </message>
     <message>
         <source>Authenticate passkey credentials for:</source>
-        <translation type="unfinished"/>
+        <translation>Kirjaudu passkey-tunnuksilla sivustolle:</translation>
     </message>
     <message>
         <source>Do you want to register a passkey for:</source>
-        <translation type="unfinished"/>
+        <translation>Haluatko rekisteröidä passkeyn sivustolle:</translation>
     </message>
 </context>
 <context>
@@ -987,16 +988,17 @@ Haluatko poistaa tietueen?
     </message>
     <message>
         <source>Register a new passkey to this entry:</source>
-        <translation type="unfinished"/>
+        <translation>Rekisteröi uusi passkey tähän tietueeseen:</translation>
     </message>
     <message>
         <source>KeePassXC - Update passkey</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC - Päivitä passkey</translation>
     </message>
     <message>
         <source>Entry already has a passkey.
 Do you want to overwrite the passkey in %1 - %2?</source>
-        <translation type="unfinished"/>
+        <translation>Tietueella on jo passkey.
+Haluatko ylikirjoittaa passkeyn %1 - %2?</translation>
     </message>
     <message>
         <source>Register</source>
@@ -1197,18 +1199,6 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation>Mukautetun selainlaajennuksen ID</translation>
     </message>
     <message>
-        <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
-        <translation>Snap:in hiekkalaatikon takia sinun täytyy suorittaa komentosarja jotta voit aktivoida selainintegraation.&lt;br /&gt;Voit ladata komentosarjan osoitteesta %1</translation>
-    </message>
-    <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3. %4</source>
-        <translation>KeePassXC-Browser tarvitaan selainintegraation toimimista varten.&lt;br /&gt;Lataa se seuraaville selaimille: %1, %2 ja %3. %4</translation>
-    </message>
-    <message>
-        <source>Please see special instructions for browser extension use below</source>
-        <translation>Katso yksityiskohtaisemmat ohjeet selainlaajennuksen käyttöön alta</translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation>Suoritettavat tiedostot</translation>
     </message>
@@ -1250,10 +1240,14 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Allows using insecure http://localhost with passkeys for testing purposes.</source>
-        <translation type="unfinished"/>
+        <translation>Sallii turvattoman http://localhost:in käyttämisen passkeyn kanssa testaamistarkoituksessa.</translation>
     </message>
     <message>
         <source>Allow using localhost with passkeys</source>
+        <translation>Salli localhostin käyttö passkeyn kanssa</translation>
+    </message>
+    <message>
+        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1397,6 +1391,15 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     <message>
         <source>Imported from CSV file: %1</source>
         <translation>Tuotu CSV-tiedostosta: %1</translation>
+    </message>
+    <message>
+        <source>No Title Selected</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No title column was selected, entries will be hard to tell apart.
+Are you sure you want to import?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1687,6 +1690,10 @@ Oletko varma, että haluat jatkaa tämän tiedoston käyttämistä?</translation
         <source>Maintenance</source>
         <translation>Ylläpito</translation>
     </message>
+    <message>
+        <source>Remote Sync</source>
+        <translation>Etäsynkronointi</translation>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetBrowser</name>
@@ -1858,12 +1865,12 @@ Oletko varma, että haluat jatkaa ilman salasanaa?</translation>
         <translation>Heikko salasana</translation>
     </message>
     <message>
-        <source>You must enter a stronger password to protect your database.</source>
-        <translation>Sinun on syötettävä vahvempi salsana tietokantasi suojaamiseksi.</translation>
-    </message>
-    <message>
         <source>This is a weak password! For better protection of your secrets, you should choose a stronger password.</source>
         <translation>Tämä on heikko salsana! SInun tulisi valita vahvempi salsana tietojesi parempaa suojausta varten.</translation>
+    </message>
+    <message>
+        <source>The provided password does not meet the minimum quality requirement.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2252,6 +2259,133 @@ removed from the database.</source>
     </message>
 </context>
 <context>
+    <name>DatabaseSettingsWidgetRemote</name>
+    <message>
+        <source>Sync Commands</source>
+        <translation>Synkronoinnin komennot</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Poista</translation>
+    </message>
+    <message>
+        <source>Command Settings</source>
+        <translation>Komentoasetukset</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nimi</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Tallenna</translation>
+    </message>
+    <message>
+        <source>Download</source>
+        <translation>Lataa</translation>
+    </message>
+    <message>
+        <source>Command:</source>
+        <translation>Komento:</translation>
+    </message>
+    <message>
+        <source>Download command field</source>
+        <translation>Latauskomento epäonnistui</translation>
+    </message>
+    <message>
+        <source>e.g.: &quot;sftp user@hostname&quot; or &quot;scp user@hostname:DatabaseOnRemote.kdbx {TEMP_DATABASE}&quot;</source>
+        <translation>Esim. &quot;sftp user@hostname&quot; tai &quot;scp user@hostname:DatabaseOnRemote.kdbx {TEMP_DATABASE}&quot;</translation>
+    </message>
+    <message>
+        <source>Input:</source>
+        <translation>Syöte:</translation>
+    </message>
+    <message>
+        <source>Download input field</source>
+        <translation>Lataa syöte</translation>
+    </message>
+    <message>
+        <source>Upload</source>
+        <translation>Lähetä</translation>
+    </message>
+    <message>
+        <source>Upload command field</source>
+        <translation>Lähetä-komento epäonnistui</translation>
+    </message>
+    <message>
+        <source>e.g.: &quot;sftp user@hostname&quot; or &quot;scp {TEMP_DATABASE} user@hostname:DatabaseOnRemote.kdbx&quot;</source>
+        <translation>Esim. &quot;sftp user@hostname&quot; tai &quot;scp {TEMP_DATABASE user@hostname:DatabaseOnRemote.kdbx&quot;</translation>
+    </message>
+    <message>
+        <source>Upload input field</source>
+        <translation>Lähetyksen syöte</translation>
+    </message>
+    <message>
+        <source>Name cannot be empty.</source>
+        <translation>Nimi ei voi olla tyhjä.</translation>
+    </message>
+    <message>
+        <source>Test</source>
+        <translation>Testaa</translation>
+    </message>
+    <message>
+        <source>Download command cannot be empty.</source>
+        <translation>Latauskomento ei voi olla tyhjä.</translation>
+    </message>
+    <message>
+        <source>Download failed with error: %1</source>
+        <translation>Lataus epäonnistui virheellä:</translation>
+    </message>
+    <message>
+        <source>Download finished, but file %1 could not be found.</source>
+        <translation>Lataus päättyi, mutta tiedostoa %1 ei löydy.</translation>
+    </message>
+    <message>
+        <source>Download successful.</source>
+        <translation>Lataus onnistui.</translation>
+    </message>
+    <message>
+        <source>Save Remote Settings</source>
+        <translation>Tallenna asetukset</translation>
+    </message>
+    <message>
+        <source>You have unsaved changes. Do you want to save them?</source>
+        <translation>Sinulla on tallentamattomia asetuksia. Haluatko tallettaa ne?</translation>
+    </message>
+    <message>
+        <source>e.g.:
+get DatabaseOnRemote.kdbx {TEMP_DATABASE}
+exit
+---
+{TEMP_DATABASE} is used as placeholder to store the database in a temporary location
+The command has to exit. In case of `sftp` as last command `exit` has to be sent
+            </source>
+        <translation>Esim.
+get DatabaseOnRemote.kdbx {TEMP_DATABASE}
+exit
+---
+{TEMP_DATABASE} -muuttujaa käytetään paikkamerkkinä tietokannan välikaikaisena sijaintina.
+Komennon täytyy suoriutua. `sftp` -komennon ollessa viimeinen komento, `exit` täytyy lähettää.
+</translation>
+    </message>
+    <message>
+        <source>e.g.:
+put {TEMP_DATABASE} DatabaseOnRemote.kdbx
+exit
+---
+{TEMP_DATABASE} is used as placeholder to store the database in a temporary location
+The command has to exit. In case of `sftp` as last command `exit` has to be sent
+            </source>
+        <translation>Esim.
+put {TEMP_DATABASE} DatabaseOnRemote.kdbx
+exit
+---
+{TEMP_DATABASE} -muuttujaa käytetään paikkamerkkinä tietokannan välikaikaisena sijaintina.
+Komennon täytyy suoriutua. `sftp` -komennon ollessa viimeinen komento, `exit` täytyy lähettää.
+</translation>
+    </message>
+</context>
+<context>
     <name>DatabaseTabWidget</name>
     <message>
         <source>Database creation error</source>
@@ -2323,6 +2457,11 @@ Tämä on selkeä virhe, joten ota yhteyttä kehittäjätiimiin.</translation>
         <source>%1 [Locked]</source>
         <comment>Database tab name modifier</comment>
         <translation>%1 [Lukittu]</translation>
+    </message>
+    <message>
+        <source>%1 [Temporary]</source>
+        <comment>Database tab name modifier</comment>
+        <translation>%1 [Väliaikainen]</translation>
     </message>
 </context>
 <context>
@@ -2518,6 +2657,42 @@ Ota turvallinen tallennus pois käytöstä ja yritä uudelleen?</translation>
         <comment>Database tab name modifier</comment>
         <translation>%1 [Uusi tietokanta]</translation>
     </message>
+    <message>
+        <source>Remote Sync did not contain any download or upload commands.</source>
+        <translation>Etäsynkronointi ei sisältänyt yhtään lataus- tai lähetyskomentoa.</translation>
+    </message>
+    <message>
+        <source>Remote sync &apos;%1&apos; completed successfully!</source>
+        <translation>Etäsynkronointi &apos;%1&apos; suoritettiin onnistuneesti!</translation>
+    </message>
+    <message>
+        <source>Remote sync &apos;%1&apos; failed: %2</source>
+        <translation>Etäsynkronointi &apos;%1&apos; epäonnistui: %2</translation>
+    </message>
+    <message>
+        <source>Error while saving database %1: %2</source>
+        <translation>Tietokannan %1 tallennus epäonnistui: %2</translation>
+    </message>
+    <message>
+        <source>Downloading...</source>
+        <translation>Ladataan...</translation>
+    </message>
+    <message>
+        <source>Uploading...</source>
+        <translation>Lähetetään...</translation>
+    </message>
+    <message>
+        <source>Syncing...</source>
+        <translation>Synkronoidaan...</translation>
+    </message>
+    <message>
+        <source>Remove passkey from entry</source>
+        <translation>Poista passkey tietueesta</translation>
+    </message>
+    <message>
+        <source>Do you want to remove the passkey from this entry?</source>
+        <translation>Haluatko poistaa passkeyn tästä tietueesta?</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidget</name>
@@ -2568,10 +2743,6 @@ Ota turvallinen tallennus pois käytöstä ja yritä uudelleen?</translation>
     <message>
         <source>n/a</source>
         <translation>ei saatavilla</translation>
-    </message>
-    <message>
-        <source>(encrypted)</source>
-        <translation>(salattu)</translation>
     </message>
     <message>
         <source>Select private key</source>
@@ -2674,6 +2845,10 @@ Haluatko korjata sen?</translation>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>%n vuosi</numerusform><numerusform>%n vuotta</numerusform></translation>
+    </message>
+    <message>
+        <source>Failed to decrypt SSH key, ensure password is correct.</source>
+        <translation>SSH-avaimen purku epäonnistui. Varmista, että salasana on oikein.</translation>
     </message>
 </context>
 <context>
@@ -2876,11 +3051,11 @@ Haluatko korjata sen?</translation>
     </message>
     <message>
         <source>These settings affect the entry&apos;s behaviour with the browser extension.</source>
-        <translation type="unfinished"/>
+        <translation>Nämä asetukset vaikuttavat tietueen käytökseen selainlaajennuksen kanssa.</translation>
     </message>
     <message>
         <source>Additional URLs</source>
-        <translation type="unfinished"/>
+        <translation>Lisäosoitteet</translation>
     </message>
 </context>
 <context>
@@ -3545,6 +3720,10 @@ Tämä voi vikaannuttaa tietoa käyttävän liitännäisen.</translation>
     <message>
         <source>%1 - Clone</source>
         <translation>%1 - Klooni</translation>
+    </message>
+    <message>
+        <source>Passkey</source>
+        <translation>Passkey</translation>
     </message>
 </context>
 <context>
@@ -5495,7 +5674,7 @@ Haluatko jatkaa käyttämällä tätä tiedostoa?</translation>
     </message>
     <message>
         <source>Show Menubar</source>
-        <translation type="unfinished"/>
+        <translation>Näytä työkalupalkki</translation>
     </message>
     <message>
         <source>Show Toolbar</source>
@@ -5847,7 +6026,7 @@ Suosittelemme, että käytät AppImagea, jonka voit hakea lataussivustoltamme.</
     </message>
     <message>
         <source>Toggle Show Menubar</source>
-        <translation type="unfinished"/>
+        <translation>Aseta: näytä työkalupalkki</translation>
     </message>
     <message>
         <source>Toggle Show Toolbar</source>
@@ -5876,6 +6055,18 @@ Suosittelemme, että käytät AppImagea, jonka voit hakea lataussivustoltamme.</
     <message>
         <source>Toggle Allow Screen Capture</source>
         <translation>Aseta: salli kuvankaappaus</translation>
+    </message>
+    <message>
+        <source>Remote S&amp;ync…</source>
+        <translation>Etäs&amp;ynkronointi...</translation>
+    </message>
+    <message>
+        <source>Remove Passkey From Entry</source>
+        <translation>Poista passkey tietueesta</translation>
+    </message>
+    <message>
+        <source>Setup Remote Sync…</source>
+        <translation>Määritä etäsynkronointi</translation>
     </message>
 </context>
 <context>
@@ -6214,6 +6405,10 @@ Suosittelemme, että käytät AppImagea, jonka voit hakea lataussivustoltamme.</
         <source>Unexpected EOF when writing private key</source>
         <translation>Odottamaton EOF yksityistä avainta kirjoittaessa</translation>
     </message>
+    <message>
+        <source>(encrypted)</source>
+        <translation>(salattu)</translation>
+    </message>
 </context>
 <context>
     <name>OpenSSHKeyGenDialog</name>
@@ -6262,7 +6457,7 @@ Suosittelemme, että käytät AppImagea, jonka voit hakea lataussivustoltamme.</
     </message>
     <message>
         <source>Export the following passkey entries.</source>
-        <translation type="unfinished"/>
+        <translation>Vie seuraavat passkey-tietueet.</translation>
     </message>
 </context>
 <context>
@@ -6336,15 +6531,15 @@ haluatko korvata sen?
     </message>
     <message>
         <source>Import the following passkey:</source>
-        <translation type="unfinished"/>
+        <translation>Tuo seuraava passkey:</translation>
     </message>
     <message>
         <source>Import the following passkey to this entry:</source>
-        <translation type="unfinished"/>
+        <translation>Tuo seuraava passkey tähän tietueeseen:</translation>
     </message>
     <message>
         <source>Default passkeys group (Imported Passkeys)</source>
-        <translation type="unfinished"/>
+        <translation>Passkeys-oletusryhmä (Tuodut passkeyt)</translation>
     </message>
 </context>
 <context>
@@ -6367,25 +6562,27 @@ haluatko korvata sen?
     </message>
     <message>
         <source>Open passkey file</source>
-        <translation type="unfinished"/>
+        <translation>Avaa passkey-tiedosto</translation>
     </message>
     <message>
         <source>Cannot import passkey</source>
-        <translation type="unfinished"/>
+        <translation>Passkeytä ei voitu tuoda</translation>
     </message>
     <message>
         <source>Cannot import passkey file &quot;%1&quot;. Data is missing.</source>
-        <translation type="unfinished"/>
+        <translation>Passkey-tiedostoa &quot;%1&quot; ei voitu tuoda. Tietoja puuttuu.</translation>
     </message>
     <message>
         <source>Cannot import passkey file &quot;%1&quot;.
 The following data is missing:
 %2</source>
-        <translation type="unfinished"/>
+        <translation>Passkey-tiedostoa ei voida tuoda &quot;%1&quot;.
+Seuraavat tiedot puuttuvat:
+%2</translation>
     </message>
     <message>
         <source>Cannot import passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
-        <translation type="unfinished"/>
+        <translation>Passkey-tiedostoa ei voida tuoda &quot;%1&quot;. Yksityinen avain puuttuu tai on virheellinen.</translation>
     </message>
 </context>
 <context>
@@ -8460,11 +8657,12 @@ Ydin: %3 %4</translation>
     <message>
         <source>Set the key file for the database.
 This option is deprecated, use --set-key-file instead.</source>
-        <translation type="unfinished"/>
+        <translation>Aseta tietokannan avaintiedosto.
+Asetus on vanhentunut, käytä sen sijaan &quot;--set-key-file&quot; -määritystä.</translation>
     </message>
     <message>
         <source>Databases have been locked.</source>
-        <translation type="unfinished"/>
+        <translation>Tietokannat on lukittu.</translation>
     </message>
     <message>
         <source>Attestation not supported</source>
@@ -8661,11 +8859,19 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation>Pikanäppäimet</translation>
     </message>
     <message>
-        <source>Unsupported KDF type, cannot decrypt json file</source>
+        <source>Unknown passkeys error</source>
+        <translation>Tuntematon passkeys-virhe</translation>
+    </message>
+    <message>
+        <source>Invalid KDF iterations, cannot decrypt json file</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Unknown passkeys error</source>
+        <source>Unsupported format, ensure your Bitwarden export is password-protected</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Only PBKDF and Argon2 are supported, cannot decrypt json file</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -8701,6 +8907,37 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Internal zlib error: </source>
         <translation>Sisäinen zlib-virhe: </translation>
+    </message>
+</context>
+<context>
+    <name>RemoteHandler</name>
+    <message>
+        <source>Command `%1` did not finish in time. Process was killed.</source>
+        <translation>Komento &apos;%1&apos; ei suoritutunut määritetyssä ajassa. Prosessi tuhottiin.</translation>
+    </message>
+    <message>
+        <source>Failed to upload merged database. Command `%1` did not finish in time. Process was killed.</source>
+        <translation>Yhdistetyn tietokannan lähetys epäonnistui. Komento &apos;%1&apos; ei suoriutunut määritetyssä ajassa. Prosessi tuhottin.</translation>
+    </message>
+    <message>
+        <source>Invalid download parameters provided.</source>
+        <translation>Väärät latausparametrit.</translation>
+    </message>
+    <message>
+        <source>Command `%1` failed to download database.</source>
+        <translation>Komento &apos;%1&apos; epäonnistui tietokannan lataamisessa.</translation>
+    </message>
+    <message>
+        <source>Invalid database pointer or upload parameters provided.</source>
+        <translation>Virheellinen tietokannan osoitin, tai lähetyksen parametrit.</translation>
+    </message>
+    <message>
+        <source>Command `%1` exited with status code: %2</source>
+        <translation>Komento &apos;%1&apos; suoriutui paluuarvolla: %2</translation>
+    </message>
+    <message>
+        <source>Failed to upload merged database. Command `%1` exited with status code: %2</source>
+        <translation>Yhdistetyn tietokannan lähetys epäonnistui. Komento &apos;%1&apos; loppui paluuarvolla: %2</translation>
     </message>
 </context>
 <context>
@@ -9027,15 +9264,15 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>The passkey file will be vulnerable to theft and unauthorized use, if left unsecured. Are you sure you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Passkey-tiedosto on altis varkauksille ja väärinkäyttöön, jos sitä ei suojata. Oletko varma, että haluat jatkaa?</translation>
     </message>
     <message>
         <source>Please wait, list of entries with passkeys is being updated…</source>
-        <translation type="unfinished"/>
+        <translation>Odota kun passkey-tietueiden lista päivittyy...</translation>
     </message>
     <message>
         <source>No entries with passkeys.</source>
-        <translation type="unfinished"/>
+        <translation>Passkeyn sisältäviä tietueita ei ole.</translation>
     </message>
 </context>
 <context>
@@ -9385,11 +9622,11 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This setting does not override disabling recycle bin prompts &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tämä asetus ei ylikirjoita roskakorin ilmoitusten poistamista&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a different value set in applications.) &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Tämä parantaa yhteensopivuutta joidenkin ohjelmien kanssa, jotka etsivät salasanoja ilman tietokannan avaamista etukäteen.&lt;/p&gt;&lt;p&gt;Tämän päälle laittaminen saattaa myös kaataa asiakkaan, mikäli tietokantaa ei voitu avata tiettyyn aikaan mennessä. (Yleensä 25 sekuntia, mutta arvo voi vaihdella ohjelmasta riippuen.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>

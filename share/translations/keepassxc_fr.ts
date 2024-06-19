@@ -714,7 +714,7 @@
     </message>
     <message>
         <source>Trying to send invalid keyboard symbol.</source>
-        <translation type="unfinished"/>
+        <translation>Tentative d&apos;envoi d&apos;un caractère de clavier non reconnu.</translation>
     </message>
 </context>
 <context>
@@ -887,24 +887,25 @@ Veuillez sélectionner la base de données souhaitée pour enregistrer les ident
     </message>
     <message>
         <source>Add to existing entry</source>
-        <translation type="unfinished"/>
+        <translation>Ajout d&apos;une entrée existante</translation>
     </message>
     <message>
         <source>Existing passkey found.
 Do you want to register a new passkey for:</source>
-        <translation type="unfinished"/>
+        <translation>Clé d&apos;accès existante trouvée.
+Voulez-vous enregistrer la nouvelle clé pour :</translation>
     </message>
     <message>
         <source>Select the existing passkey and press Update to replace it.</source>
-        <translation type="unfinished"/>
+        <translation>Sélectionnez la clé d&apos;accès existante puis cliquez sur Mettre à jour pour la remplacer.</translation>
     </message>
     <message>
         <source>Authenticate passkey credentials for:</source>
-        <translation type="unfinished"/>
+        <translation>Authentifier les identifiants de la clé d&apos;accès pour :</translation>
     </message>
     <message>
         <source>Do you want to register a passkey for:</source>
-        <translation type="unfinished"/>
+        <translation>Voulez-vous enregistrer la clé d&apos;accès pour :</translation>
     </message>
 </context>
 <context>
@@ -981,7 +982,7 @@ Voulez-vous la supprimer ?
     </message>
     <message>
         <source>Passkey</source>
-        <translation type="unfinished"/>
+        <translation>Clé d&apos;accès</translation>
     </message>
     <message>
         <source>KeePassXC - Passkey credentials</source>
@@ -989,16 +990,16 @@ Voulez-vous la supprimer ?
     </message>
     <message>
         <source>Register a new passkey to this entry:</source>
-        <translation type="unfinished"/>
+        <translation>Enregistrer la nouvelle clé d&apos;accès pour cette entrée :</translation>
     </message>
     <message>
         <source>KeePassXC - Update passkey</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC - Mise à jour de la clé d&apos;accès</translation>
     </message>
     <message>
         <source>Entry already has a passkey.
 Do you want to overwrite the passkey in %1 - %2?</source>
-        <translation type="unfinished"/>
+        <translation>Cette entrée a déjà une clé d&apos;accès. Remplacer la clé dans %1 - %2 ?</translation>
     </message>
     <message>
         <source>Register</source>
@@ -1199,18 +1200,6 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation>ID d’extension personnalisé</translation>
     </message>
     <message>
-        <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
-        <translation>En raison du bac à sable de Snap, vous devez exécuter un script afin d’activer l’intégration aux navigateurs.&lt;br /&gt;Vous pouvez obtenir ce script sur %1</translation>
-    </message>
-    <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3. %4</source>
-        <translation>KeePassXC-Browser est nécessaire pour que l’intégration aux navigateurs fonctionne. &lt;br /&gt;Téléchargez-la pour %1, %2 et %3. %4</translation>
-    </message>
-    <message>
-        <source>Please see special instructions for browser extension use below</source>
-        <translation>Veuillez consulter ci-dessous les instructions spéciales de l’extension pour navigateurs</translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation>Fichiers exécutables</translation>
     </message>
@@ -1252,10 +1241,14 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Allows using insecure http://localhost with passkeys for testing purposes.</source>
-        <translation type="unfinished"/>
+        <translation>Autoriser l&apos;utilisation peu sûre de http://localhost avec les clés d&apos;accès à des fins de test ?</translation>
     </message>
     <message>
         <source>Allow using localhost with passkeys</source>
+        <translation>Autoriser l&apos;utilisation de localhost avec les clés d&apos;accès</translation>
+    </message>
+    <message>
+        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1398,6 +1391,15 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Imported from CSV file: %1</source>
+        <translation>Importé du fichier CSV : %1</translation>
+    </message>
+    <message>
+        <source>No Title Selected</source>
+        <translation>Aucun titre séléctionné</translation>
+    </message>
+    <message>
+        <source>No title column was selected, entries will be hard to tell apart.
+Are you sure you want to import?</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1603,51 +1605,54 @@ Afin d’empêcher que cette erreur survienne, vous devez accéder à « Param�
     </message>
     <message>
         <source>Select Key File:</source>
-        <translation type="unfinished"/>
+        <translation>Sélectionner le fichier clé :</translation>
     </message>
     <message>
         <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;Vous pouvez utiliser un fichier secret en plus du mot de passe pour renforcer la sécurité de votre base de données. Ce fichier peut être généré à partir des paramètres de sécurité de votre base.&lt;/p&gt;&lt;p&gt;Il ne s&apos;agit &lt;strong&gt;pas&lt;/strong&gt; de votre fichier de base de données *.kdbx !&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Click to add a key file.</source>
-        <translation type="unfinished"/>
+        <translation>Cliquer pour ajouter un fichier clé</translation>
     </message>
     <message>
         <source>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;I have a key file&lt;/a&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;Je dispose d&apos;un fichier clé&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Use hardware key [Serial: %1]</source>
-        <translation type="unfinished"/>
+        <translation>Utiliser une clé matérielle [N° de série : %1]</translation>
     </message>
     <message>
         <source>Use hardware key</source>
-        <translation type="unfinished"/>
+        <translation>Utiliser une clé logicielle</translation>
     </message>
     <message>
         <source>Your database file is NOT a key file!
 If you don&apos;t have a key file or don&apos;t know what that is, you don&apos;t have to select one.</source>
-        <translation type="unfinished"/>
+        <translation>Votre fichier de base de données n&apos;est PAS un fichier clé !
+Si vous ne disposez pas de fichier clé ou ne savez pas de quoi il s&apos;agit, n&apos;en sélectionnez pas.</translation>
     </message>
     <message>
         <source>KeePassXC database file selected</source>
-        <translation type="unfinished"/>
+        <translation>Fichier de base de données KeePassXC sélectionné</translation>
     </message>
     <message>
         <source>The file you selected looks like a database file.
 A database file is NOT a key file!
 
 Are you sure you want to continue with this file?.</source>
-        <translation type="unfinished"/>
+        <translation>Le fichier sélectionné ne semble pas être une base de données.
+Un fichier de base de données n&apos;est pas un fichier clé !
+Voulez-vous poursuivre avec ce fichier ?</translation>
     </message>
     <message>
         <source>No hardware keys found.</source>
-        <translation type="unfinished"/>
+        <translation>Aucune clé matérielle trouvée.</translation>
     </message>
     <message>
         <source>Refresh Hardware Keys</source>
-        <translation type="unfinished"/>
+        <translation>Actualiser les clés logicielles</translation>
     </message>
 </context>
 <context>
@@ -1682,6 +1687,10 @@ Are you sure you want to continue with this file?.</source>
     <message>
         <source>Maintenance</source>
         <translation>Maintenance</translation>
+    </message>
+    <message>
+        <source>Remote Sync</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1853,12 +1862,12 @@ Voulez-vous vraiment poursuivre sans mot de passe ?</translation>
         <translation>Mot de passe faible</translation>
     </message>
     <message>
-        <source>You must enter a stronger password to protect your database.</source>
-        <translation>Vous devez saisir un mot de passe plus fort pour protéger votre base de données.</translation>
-    </message>
-    <message>
         <source>This is a weak password! For better protection of your secrets, you should choose a stronger password.</source>
         <translation>Le mot de passe est trop faible ! Pour une protection efficace, choisissez un mot de passe plus fort.</translation>
+    </message>
+    <message>
+        <source>The provided password does not meet the minimum quality requirement.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2257,6 +2266,121 @@ de la base de données.</translation>
     </message>
 </context>
 <context>
+    <name>DatabaseSettingsWidgetRemote</name>
+    <message>
+        <source>Sync Commands</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Supprimer</translation>
+    </message>
+    <message>
+        <source>Command Settings</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nom</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Enregistrer</translation>
+    </message>
+    <message>
+        <source>Download</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Command:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download command field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>e.g.: &quot;sftp user@hostname&quot; or &quot;scp user@hostname:DatabaseOnRemote.kdbx {TEMP_DATABASE}&quot;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Input:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download input field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Upload</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Upload command field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>e.g.: &quot;sftp user@hostname&quot; or &quot;scp {TEMP_DATABASE} user@hostname:DatabaseOnRemote.kdbx&quot;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Upload input field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Name cannot be empty.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Test</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download command cannot be empty.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download failed with error: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download finished, but file %1 could not be found.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download successful.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Save Remote Settings</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You have unsaved changes. Do you want to save them?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>e.g.:
+get DatabaseOnRemote.kdbx {TEMP_DATABASE}
+exit
+---
+{TEMP_DATABASE} is used as placeholder to store the database in a temporary location
+The command has to exit. In case of `sftp` as last command `exit` has to be sent
+            </source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>e.g.:
+put {TEMP_DATABASE} DatabaseOnRemote.kdbx
+exit
+---
+{TEMP_DATABASE} is used as placeholder to store the database in a temporary location
+The command has to exit. In case of `sftp` as last command `exit` has to be sent
+            </source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>DatabaseTabWidget</name>
     <message>
         <source>Database creation error</source>
@@ -2328,6 +2452,11 @@ C’est très certainement un bogue, veuillez le signaler aux développeurs.</tr
         <source>%1 [Locked]</source>
         <comment>Database tab name modifier</comment>
         <translation>%1 [verrouillé]</translation>
+    </message>
+    <message>
+        <source>%1 [Temporary]</source>
+        <comment>Database tab name modifier</comment>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2523,6 +2652,42 @@ Désactiver les enregistrements sécurisés et réessayer ?</translation>
         <comment>Database tab name modifier</comment>
         <translation>%1 [nouvelle base de données]</translation>
     </message>
+    <message>
+        <source>Remote Sync did not contain any download or upload commands.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remote sync &apos;%1&apos; completed successfully!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remote sync &apos;%1&apos; failed: %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Error while saving database %1: %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Downloading...</source>
+        <translation>Téléchargement…</translation>
+    </message>
+    <message>
+        <source>Uploading...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Syncing...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove passkey from entry</source>
+        <translation>Supprimer la clé d&apos;accès de l&apos;entrée</translation>
+    </message>
+    <message>
+        <source>Do you want to remove the passkey from this entry?</source>
+        <translation>Voulez-vous supprimer la clé d&apos;accès de cette entrée ?</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidget</name>
@@ -2573,10 +2738,6 @@ Désactiver les enregistrements sécurisés et réessayer ?</translation>
     <message>
         <source>n/a</source>
         <translation>s.o.</translation>
-    </message>
-    <message>
-        <source>(encrypted)</source>
-        <translation>(chiffrée)</translation>
     </message>
     <message>
         <source>Select private key</source>
@@ -2679,6 +2840,10 @@ Voulez-vous la corriger ?</translation>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>%n an</numerusform><numerusform>%n d’années</numerusform><numerusform>%n ans</numerusform></translation>
+    </message>
+    <message>
+        <source>Failed to decrypt SSH key, ensure password is correct.</source>
+        <translation>Échec lors du décryptage de la clé SSH, assurez-vous de la validité du mot de passe.</translation>
     </message>
 </context>
 <context>
@@ -2881,11 +3046,11 @@ Voulez-vous la corriger ?</translation>
     </message>
     <message>
         <source>These settings affect the entry&apos;s behaviour with the browser extension.</source>
-        <translation type="unfinished"/>
+        <translation>Ces paramètres ont un impact sur le comportement des entrées avec l&apos;extension du navigateur.</translation>
     </message>
     <message>
         <source>Additional URLs</source>
-        <translation type="unfinished"/>
+        <translation>Autres URL</translation>
     </message>
 </context>
 <context>
@@ -3548,6 +3713,10 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source>%1 - Clone</source>
         <translation>%1 – Cloner</translation>
+    </message>
+    <message>
+        <source>Passkey</source>
+        <translation>Clé d&apos;accès</translation>
     </message>
 </context>
 <context>
@@ -4277,7 +4446,7 @@ Vous pouvez activer le service d’icônes de sites Web de DuckDuckGo dans la se
     <name>ImportWizard</name>
     <message>
         <source>Import Wizard</source>
-        <translation type="unfinished"/>
+        <translation>Assistant d&apos;importation</translation>
     </message>
 </context>
 <context>
@@ -4288,7 +4457,7 @@ Vous pouvez activer le service d’icônes de sites Web de DuckDuckGo dans la se
     </message>
     <message>
         <source>Entry count: %1</source>
-        <translation type="unfinished"/>
+        <translation>Nombre d&apos;entrées : %1</translation>
     </message>
     <message>
         <source>Group</source>
@@ -4308,7 +4477,7 @@ Vous pouvez activer le service d’icônes de sites Web de DuckDuckGo dans la se
     </message>
     <message>
         <source>Url</source>
-        <translation type="unfinished"/>
+        <translation>URL</translation>
     </message>
 </context>
 <context>
@@ -4319,7 +4488,7 @@ Vous pouvez activer le service d’icônes de sites Web de DuckDuckGo dans la se
     </message>
     <message>
         <source>Import File Selection</source>
-        <translation type="unfinished"/>
+        <translation>Sélection du fichier à importer</translation>
     </message>
     <message>
         <source>Password:</source>
@@ -4335,7 +4504,7 @@ Vous pouvez activer le service d’icônes de sites Web de DuckDuckGo dans la se
     </message>
     <message>
         <source>Import Into:</source>
-        <translation type="unfinished"/>
+        <translation>Importer vers :</translation>
     </message>
     <message>
         <source>New Database</source>
@@ -4347,31 +4516,31 @@ Vous pouvez activer le service d’icônes de sites Web de DuckDuckGo dans la se
     </message>
     <message>
         <source>Existing Database:</source>
-        <translation type="unfinished"/>
+        <translation>Base de données existante :</translation>
     </message>
     <message>
         <source>Import File:</source>
-        <translation type="unfinished"/>
+        <translation>Fichier à importer :</translation>
     </message>
     <message>
         <source>Comma Separated Values (.csv)</source>
-        <translation type="unfinished"/>
+        <translation>Valeurs séparées par des virgules (.csv)</translation>
     </message>
     <message>
         <source>1Password Export (.1pux)</source>
-        <translation type="unfinished"/>
+        <translation>Exportation 1Password (.1pux)</translation>
     </message>
     <message>
         <source>1Password Vault (.opvault)</source>
-        <translation type="unfinished"/>
+        <translation>Coffre-fort 1Password (.opvault)</translation>
     </message>
     <message>
         <source>Bitwarden (.json)</source>
-        <translation type="unfinished"/>
+        <translation>Bitwarden (.json)</translation>
     </message>
     <message>
         <source>KeePass 1 Database (.kdb)</source>
-        <translation type="unfinished"/>
+        <translation>Base de données KeePass 1 (.kdb)</translation>
     </message>
     <message>
         <source>Open OPVault</source>
@@ -4379,7 +4548,7 @@ Vous pouvez activer le service d’icônes de sites Web de DuckDuckGo dans la se
     </message>
     <message>
         <source>Select import file</source>
-        <translation type="unfinished"/>
+        <translation>Sélectionner le fichier à importer</translation>
     </message>
     <message>
         <source>All files</source>
@@ -4395,23 +4564,23 @@ Vous pouvez activer le service d’icônes de sites Web de DuckDuckGo dans la se
     </message>
     <message>
         <source>Comma Separated Values</source>
-        <translation type="unfinished"/>
+        <translation>Valeurs séparées par une virgule</translation>
     </message>
     <message>
         <source>1Password Export</source>
-        <translation type="unfinished"/>
+        <translation>Exportation 1Password</translation>
     </message>
     <message>
         <source>Bitwarden JSON Export</source>
-        <translation type="unfinished"/>
+        <translation>exportation Bitwarden JSON</translation>
     </message>
     <message>
         <source>1Password Vault</source>
-        <translation type="unfinished"/>
+        <translation>Coffre-fort 1Password</translation>
     </message>
     <message>
         <source>KeePass1 Database</source>
-        <translation type="unfinished"/>
+        <translation>Base de données KeePass1</translation>
     </message>
 </context>
 <context>
@@ -5498,7 +5667,7 @@ Voulez-vous vraiment poursuivre avec ce fichier ?</translation>
     </message>
     <message>
         <source>Show Menubar</source>
-        <translation type="unfinished"/>
+        <translation>Afficher la barre de menus</translation>
     </message>
     <message>
         <source>Show Toolbar</source>
@@ -5614,15 +5783,15 @@ Nous vous recommandons d’utiliser l’AppImage proposée sur notre page de té
     </message>
     <message>
         <source>1Password 1PUX...</source>
-        <translation type="unfinished"/>
+        <translation>1Password 1PUX...</translation>
     </message>
     <message>
         <source>Import a 1Password 1PUX file</source>
-        <translation type="unfinished"/>
+        <translation>Importer un fichier 1Password 1PUX</translation>
     </message>
     <message>
         <source>Import…</source>
-        <translation type="unfinished"/>
+        <translation>Importer…</translation>
     </message>
     <message>
         <source>Passkeys…</source>
@@ -5642,11 +5811,11 @@ Nous vous recommandons d’utiliser l’AppImage proposée sur notre page de té
     </message>
     <message>
         <source>Open Database</source>
-        <translation type="unfinished"/>
+        <translation>Ouvrir une base de données</translation>
     </message>
     <message>
         <source>Create Database</source>
-        <translation type="unfinished"/>
+        <translation>Créer une base de données</translation>
     </message>
     <message>
         <source>Merge From Database</source>
@@ -5850,7 +6019,7 @@ Nous vous recommandons d’utiliser l’AppImage proposée sur notre page de té
     </message>
     <message>
         <source>Toggle Show Menubar</source>
-        <translation type="unfinished"/>
+        <translation>Permuter l&apos;affichage de la barre de menus</translation>
     </message>
     <message>
         <source>Toggle Show Toolbar</source>
@@ -5878,6 +6047,18 @@ Nous vous recommandons d’utiliser l’AppImage proposée sur notre page de té
     </message>
     <message>
         <source>Toggle Allow Screen Capture</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remote S&amp;ync…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove Passkey From Entry</source>
+        <translation>Supprimer la clé d&apos;accès de l&apos;entrée</translation>
+    </message>
+    <message>
+        <source>Setup Remote Sync…</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -6217,6 +6398,10 @@ Nous vous recommandons d’utiliser l’AppImage proposée sur notre page de té
         <source>Unexpected EOF when writing private key</source>
         <translation>Fin de fichier inattendue lors de l’écriture de la clé privée</translation>
     </message>
+    <message>
+        <source>(encrypted)</source>
+        <translation>(chiffrée)</translation>
+    </message>
 </context>
 <context>
     <name>OpenSSHKeyGenDialog</name>
@@ -6265,7 +6450,7 @@ Nous vous recommandons d’utiliser l’AppImage proposée sur notre page de té
     </message>
     <message>
         <source>Export the following passkey entries.</source>
-        <translation type="unfinished"/>
+        <translation>Exporter les entrées avec clé d&apos;accès suivantes.</translation>
     </message>
 </context>
 <context>
@@ -6338,15 +6523,15 @@ Le remplacer ?</translation>
     </message>
     <message>
         <source>Import the following passkey:</source>
-        <translation type="unfinished"/>
+        <translation>Importer les clés d&apos;accès suivantes :</translation>
     </message>
     <message>
         <source>Import the following passkey to this entry:</source>
-        <translation type="unfinished"/>
+        <translation>Exporter la clé d&apos;accès de cette entrée :</translation>
     </message>
     <message>
         <source>Default passkeys group (Imported Passkeys)</source>
-        <translation type="unfinished"/>
+        <translation>Groupe par défaut des clés d&apos;accès (clés importées)</translation>
     </message>
 </context>
 <context>
@@ -6369,25 +6554,27 @@ Le remplacer ?</translation>
     </message>
     <message>
         <source>Open passkey file</source>
-        <translation type="unfinished"/>
+        <translation>Ouvrir un fichier de clé d&apos;accès</translation>
     </message>
     <message>
         <source>Cannot import passkey</source>
-        <translation type="unfinished"/>
+        <translation>Impossible d&apos;importer la clé d&apos;accès</translation>
     </message>
     <message>
         <source>Cannot import passkey file &quot;%1&quot;. Data is missing.</source>
-        <translation type="unfinished"/>
+        <translation>Impossible d&apos;importer le fichier de clé d&apos;accès « %1 ». Données manquantes.</translation>
     </message>
     <message>
         <source>Cannot import passkey file &quot;%1&quot;.
 The following data is missing:
 %2</source>
-        <translation type="unfinished"/>
+        <translation>Impossible d&apos;importer le fichier de clé d&apos;accès « %1 ».
+La donnée suivante est manquante :
+%2</translation>
     </message>
     <message>
         <source>Cannot import passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
-        <translation type="unfinished"/>
+        <translation>Impossible d&apos;importer le fichier de clé d&apos;accès « %1 ». La clé privée est manquante ou incorrecte.</translation>
     </message>
 </context>
 <context>
@@ -8461,11 +8648,12 @@ Noyau : %3 %4</translation>
     <message>
         <source>Set the key file for the database.
 This option is deprecated, use --set-key-file instead.</source>
-        <translation type="unfinished"/>
+        <translation>Définir le fichier clé pour la base.
+Cette option est obsolète, utilisez plutôt --set-key-file.</translation>
     </message>
     <message>
         <source>Databases have been locked.</source>
-        <translation type="unfinished"/>
+        <translation>Les bases de données ont été verrouillées.</translation>
     </message>
     <message>
         <source>Attestation not supported</source>
@@ -8553,101 +8741,101 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Origin is empty or not allowed</source>
-        <translation type="unfinished"/>
+        <translation>La source est vide ou non autorisée</translation>
     </message>
     <message>
         <source>Effective domain is not a valid domain</source>
-        <translation type="unfinished"/>
+        <translation>Le véritable domaine est invalide</translation>
     </message>
     <message>
         <source>Origin and RP ID do not match</source>
-        <translation type="unfinished"/>
+        <translation>La source et l&apos;identifiant du tiers ne correspondent pas</translation>
     </message>
     <message>
         <source>No supported algorithms were provided</source>
-        <translation type="unfinished"/>
+        <translation>Aucun algorithme pris en charge n&apos;a été proposé</translation>
     </message>
     <message>
         <source>Wait for timer to expire</source>
-        <translation type="unfinished"/>
+        <translation>Veuillez attendre l&apos;expiration du délai</translation>
     </message>
     <message>
         <source>Challenge is shorter than required minimum length</source>
-        <translation type="unfinished"/>
+        <translation>La longueur de l&apos;interrogation subsidiaire est inférieure au minium requis </translation>
     </message>
     <message>
         <source>user.id does not match the required length</source>
-        <translation type="unfinished"/>
+        <translation>utilisateur.identifiant n&apos;a pas la longueur requise</translation>
     </message>
     <message>
         <source>Favorite</source>
         <comment>Tag for favorite entries</comment>
-        <translation type="unfinished"/>
+        <translation>Favori</translation>
     </message>
     <message>
         <source>File does not exist.</source>
-        <translation type="unfinished"/>
+        <translation>Le fichier n&apos;existe pas.</translation>
     </message>
     <message>
         <source>Cannot open file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Ouverture du fichier impossible : %1</translation>
     </message>
     <message>
         <source>Cannot parse file: %1 at position %2</source>
-        <translation type="unfinished"/>
+        <translation>Analyse impossible du fichier : %1 à la position %2</translation>
     </message>
     <message>
         <source>Failed to decrypt json file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Échec lors du décryptage du fichier JSON : %1</translation>
     </message>
     <message>
         <source>Invalid encKeyValidation field</source>
-        <translation type="unfinished"/>
+        <translation>Champ encKeyValidation invalide</translation>
     </message>
     <message>
         <source>Invalid cipher list within encKeyValidation field</source>
-        <translation type="unfinished"/>
+        <translation>Liste de chiffrement invalide dans le champ encKeyValidation</translation>
     </message>
     <message>
         <source>Wrong password</source>
-        <translation type="unfinished"/>
+        <translation>Mot de passe erroné</translation>
     </message>
     <message>
         <source>Invalid encrypted data field</source>
-        <translation type="unfinished"/>
+        <translation>Champ de données cryptées invalide</translation>
     </message>
     <message>
         <source>Invalid cipher list within encrypted data field</source>
-        <translation type="unfinished"/>
+        <translation>Liste de chiffrement invalide dans le champ des données chiffrées</translation>
     </message>
     <message>
         <source>Cannot initialize cipher</source>
-        <translation type="unfinished"/>
+        <translation>Impossible d&apos;initialiser le chiffrement</translation>
     </message>
     <message>
         <source>Cannot decrypt data</source>
-        <translation type="unfinished"/>
+        <translation>Impossible de décrypter les données</translation>
     </message>
     <message>
         <source>Bitwarden Import</source>
-        <translation type="unfinished"/>
+        <translation>Importation Bitwarden</translation>
     </message>
     <message>
         <source>Archived</source>
         <comment>Tag for archived entries</comment>
-        <translation type="unfinished"/>
+        <translation>Archivé</translation>
     </message>
     <message>
         <source>Invalid 1PUX file format: Not a valid ZIP file.</source>
-        <translation type="unfinished"/>
+        <translation>Format de fichier 1PUX : fichier ZIP invalide.</translation>
     </message>
     <message>
         <source>Invalid 1PUX file format: Missing export.data</source>
-        <translation type="unfinished"/>
+        <translation>Format de fichier 1PUX : export.data manquant.</translation>
     </message>
     <message>
         <source>1Password Import</source>
-        <translation type="unfinished"/>
+        <translation>Importation 1Password</translation>
     </message>
     <message>
         <source>Enter Shortcut</source>
@@ -8662,11 +8850,19 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Unsupported KDF type, cannot decrypt json file</source>
+        <source>Unknown passkeys error</source>
+        <translation>Erreur de clés d&apos;accès inconnue</translation>
+    </message>
+    <message>
+        <source>Invalid KDF iterations, cannot decrypt json file</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Unknown passkeys error</source>
+        <source>Unsupported format, ensure your Bitwarden export is password-protected</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Only PBKDF and Argon2 are supported, cannot decrypt json file</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -8702,6 +8898,37 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Internal zlib error: </source>
         <translation>Erreur interne zlib :</translation>
+    </message>
+</context>
+<context>
+    <name>RemoteHandler</name>
+    <message>
+        <source>Command `%1` did not finish in time. Process was killed.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to upload merged database. Command `%1` did not finish in time. Process was killed.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid download parameters provided.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Command `%1` failed to download database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid database pointer or upload parameters provided.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Command `%1` exited with status code: %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to upload merged database. Command `%1` exited with status code: %2</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -9028,15 +9255,15 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>The passkey file will be vulnerable to theft and unauthorized use, if left unsecured. Are you sure you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Le fichier de clé d&apos;accès sera exposé au vol où à une utilisation non autorisée s&apos;il n&apos;est pas sécurisé. Êtes-vous sûr·e de vouloir continuer ?</translation>
     </message>
     <message>
         <source>Please wait, list of entries with passkeys is being updated…</source>
-        <translation type="unfinished"/>
+        <translation>Veuillez patienter pendant la mise à jour de la liste des entrées avec clé d&apos;accès…</translation>
     </message>
     <message>
         <source>No entries with passkeys.</source>
-        <translation type="unfinished"/>
+        <translation>Aucun entrée avec clé d&apos;accès.</translation>
     </message>
 </context>
 <context>
@@ -9386,11 +9613,12 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This setting does not override disabling recycle bin prompts &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ce paramètre ne se substitue pas à la désactivation des confirmations de suppression vers la corbeille. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a different value set in applications.) &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Permet d&apos;améliorer la compatibilité avec certaines applications recherchant le mot de passe sans avoir à déverrouiller la base de données.
+&lt;/p&gt;&lt;p&gt;L&apos;activation de cette fonction peut toutefois faire planter la partie client si la base de données ne peut être déverrouillée en temps imparti (habituellement 25 secondes, mais peut varier selon les applications).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -9729,15 +9957,15 @@ Exemple : JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Create Database</source>
-        <translation type="unfinished"/>
+        <translation>Créer une base de données</translation>
     </message>
     <message>
         <source>Open Database</source>
-        <translation type="unfinished"/>
+        <translation>Ouvrir une base de données</translation>
     </message>
     <message>
         <source>Import File</source>
-        <translation type="unfinished"/>
+        <translation>Importer un fichier</translation>
     </message>
 </context>
 <context>
@@ -9814,7 +10042,7 @@ Exemple : JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Refresh hardware keys</source>
-        <translation type="unfinished"/>
+        <translation>Actualiser les clés matérielles</translation>
     </message>
 </context>
 <context>
@@ -9842,7 +10070,7 @@ Exemple : JBSWY3DPEHPK3PXP</translation>
     <message>
         <source>(NFC) %1 [%2] - Slot %3, %4</source>
         <comment>YubiKey display fields</comment>
-        <translation type="unfinished"/>
+        <translation>(NFC) %1 [%2] - Emplacement %3, %4</translation>
     </message>
     <message>
         <source>Press</source>
@@ -9894,12 +10122,12 @@ Exemple : JBSWY3DPEHPK3PXP</translation>
     <message>
         <source>%1 [%2] - Slot %3</source>
         <comment>YubiKey NEO display fields</comment>
-        <translation type="unfinished"/>
+        <translation>%1 [%2] - Emplacement %3</translation>
     </message>
     <message>
         <source>%1 [%2] - Slot %3, %4</source>
         <comment>YubiKey display fields</comment>
-        <translation type="unfinished"/>
+        <translation>%1 [%2] - Emplacement %3, %4</translation>
     </message>
 </context>
 </TS>

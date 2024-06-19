@@ -886,24 +886,25 @@ Please select the correct database for saving credentials.</source>
     </message>
     <message>
         <source>Add to existing entry</source>
-        <translation type="unfinished"/>
+        <translation>Добавить к существующей записи</translation>
     </message>
     <message>
         <source>Existing passkey found.
 Do you want to register a new passkey for:</source>
-        <translation type="unfinished"/>
+        <translation>Существующий passkey найден.
+Хотите зарегистрировать новый passkey для:</translation>
     </message>
     <message>
         <source>Select the existing passkey and press Update to replace it.</source>
-        <translation type="unfinished"/>
+        <translation>Выберите существующий passkey и нажмите Обновить, чтобы заменить его.</translation>
     </message>
     <message>
         <source>Authenticate passkey credentials for:</source>
-        <translation type="unfinished"/>
+        <translation>Аутентификация учетных данных passkey для:</translation>
     </message>
     <message>
         <source>Do you want to register a passkey for:</source>
-        <translation type="unfinished"/>
+        <translation>Вы хотите зарегистрировать passkey для:</translation>
     </message>
 </context>
 <context>
@@ -987,16 +988,17 @@ Do you want to delete the entry?
     </message>
     <message>
         <source>Register a new passkey to this entry:</source>
-        <translation type="unfinished"/>
+        <translation>Зарегистрировать новый passkey для этой записи:</translation>
     </message>
     <message>
         <source>KeePassXC - Update passkey</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC - Обновить passkey</translation>
     </message>
     <message>
         <source>Entry already has a passkey.
 Do you want to overwrite the passkey in %1 - %2?</source>
-        <translation type="unfinished"/>
+        <translation>У записи уже есть passkey. 
+Хотите перезаписать passkey в %1 - %2?</translation>
     </message>
     <message>
         <source>Register</source>
@@ -1197,18 +1199,6 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation>Пользовательский идентификатор расширения</translation>
     </message>
     <message>
-        <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
-        <translation>Так как Snap это песочница, для включения браузерной интеграции нужно выполнить сценарий.&lt;br /&gt;Этот сценарий можно получить с %1</translation>
-    </message>
-    <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3. %4</source>
-        <translation>Для интеграции требуется установить расширение для браузера «KeePassXC-Browser». &lt;br /&gt;Установите его для %1,  %2 и %3. %4</translation>
-    </message>
-    <message>
-        <source>Please see special instructions for browser extension use below</source>
-        <translation>Ознакомьтесь с инструкциями по использованию расширения браузера ниже</translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation>Исполняемые файлы</translation>
     </message>
@@ -1250,10 +1240,14 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Allows using insecure http://localhost with passkeys for testing purposes.</source>
-        <translation type="unfinished"/>
+        <translation>Позволяет использовать небезопасный http://localhost с passkeys для тестирования.</translation>
     </message>
     <message>
         <source>Allow using localhost with passkeys</source>
+        <translation>Разрешить использование localhost с passkeys</translation>
+    </message>
+    <message>
+        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1397,6 +1391,16 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     <message>
         <source>Imported from CSV file: %1</source>
         <translation>Импортировано из CSV-файла: %1</translation>
+    </message>
+    <message>
+        <source>No Title Selected</source>
+        <translation>Не выбрано название</translation>
+    </message>
+    <message>
+        <source>No title column was selected, entries will be hard to tell apart.
+Are you sure you want to import?</source>
+        <translation>Не выбрано название столбца, записи будет трудно различить.
+Хотите импортировать?</translation>
     </message>
 </context>
 <context>
@@ -1687,6 +1691,10 @@ Are you sure you want to continue with this file?.</source>
         <source>Maintenance</source>
         <translation>Обслуживание</translation>
     </message>
+    <message>
+        <source>Remote Sync</source>
+        <translation>Удалённая синхронизация</translation>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetBrowser</name>
@@ -1858,12 +1866,12 @@ Are you sure you want to continue without a password?</source>
         <translation>Слабый пароль</translation>
     </message>
     <message>
-        <source>You must enter a stronger password to protect your database.</source>
-        <translation>Вам нужно ввести более надежный пароль для защиты вашей базы данных.</translation>
-    </message>
-    <message>
         <source>This is a weak password! For better protection of your secrets, you should choose a stronger password.</source>
         <translation>Это слабый пароль! Для лучшей защиты ваших секретов вам следует выбрать более надежный пароль.</translation>
+    </message>
+    <message>
+        <source>The provided password does not meet the minimum quality requirement.</source>
+        <translation>Предоставленный пароль не соответствует минимальным требованиям к качеству.</translation>
     </message>
 </context>
 <context>
@@ -2262,6 +2270,133 @@ removed from the database.</source>
     </message>
 </context>
 <context>
+    <name>DatabaseSettingsWidgetRemote</name>
+    <message>
+        <source>Sync Commands</source>
+        <translation>Команды синхронизации</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Удалить</translation>
+    </message>
+    <message>
+        <source>Command Settings</source>
+        <translation>Параметры команд</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Имя</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Сохранить</translation>
+    </message>
+    <message>
+        <source>Download</source>
+        <translation>Загрузить</translation>
+    </message>
+    <message>
+        <source>Command:</source>
+        <translation>Команда:</translation>
+    </message>
+    <message>
+        <source>Download command field</source>
+        <translation>Поле команды загрузки</translation>
+    </message>
+    <message>
+        <source>e.g.: &quot;sftp user@hostname&quot; or &quot;scp user@hostname:DatabaseOnRemote.kdbx {TEMP_DATABASE}&quot;</source>
+        <translation>Например: &quot;sftp user@hostname&quot; или &quot;scp user@hostname:DatabaseOnRemote.kdbx {TEMP_DATABASE}&quot;</translation>
+    </message>
+    <message>
+        <source>Input:</source>
+        <translation>Ввод:</translation>
+    </message>
+    <message>
+        <source>Download input field</source>
+        <translation>Поле ввода загрузки</translation>
+    </message>
+    <message>
+        <source>Upload</source>
+        <translation>Выгрузить</translation>
+    </message>
+    <message>
+        <source>Upload command field</source>
+        <translation>Поле команды выгрузки</translation>
+    </message>
+    <message>
+        <source>e.g.: &quot;sftp user@hostname&quot; or &quot;scp {TEMP_DATABASE} user@hostname:DatabaseOnRemote.kdbx&quot;</source>
+        <translation>Напимер: &quot;sftp user@hostname&quot; или &quot;scp {TEMP_DATABASE} user@hostname:DatabaseOnRemote.kdbx&quot;</translation>
+    </message>
+    <message>
+        <source>Upload input field</source>
+        <translation>Поле команды выгрузки</translation>
+    </message>
+    <message>
+        <source>Name cannot be empty.</source>
+        <translation>Имя не может быть пустым.</translation>
+    </message>
+    <message>
+        <source>Test</source>
+        <translation>Тест</translation>
+    </message>
+    <message>
+        <source>Download command cannot be empty.</source>
+        <translation>Команда загрузки не может быть пустой.</translation>
+    </message>
+    <message>
+        <source>Download failed with error: %1</source>
+        <translation>Загрузка завершилась с ошибкой: %1</translation>
+    </message>
+    <message>
+        <source>Download finished, but file %1 could not be found.</source>
+        <translation>Загрузка завершена, но файл %1 не найден.</translation>
+    </message>
+    <message>
+        <source>Download successful.</source>
+        <translation>Загрузка завершена.</translation>
+    </message>
+    <message>
+        <source>Save Remote Settings</source>
+        <translation>Сохранить удаленные параметры</translation>
+    </message>
+    <message>
+        <source>You have unsaved changes. Do you want to save them?</source>
+        <translation>У вас есть несохраненные изменения. Хотите сохранить их?</translation>
+    </message>
+    <message>
+        <source>e.g.:
+get DatabaseOnRemote.kdbx {TEMP_DATABASE}
+exit
+---
+{TEMP_DATABASE} is used as placeholder to store the database in a temporary location
+The command has to exit. In case of `sftp` as last command `exit` has to be sent
+            </source>
+        <translation>Например:
+get DatabaseOnRemote.kdbx {TEMP_DATABASE}
+exit
+---
+{TEMP_DATABASE} используется в качестве заполнителя для хранения базы данных во временном месте.
+Команда должна завершиться. В случае с `sftp` в качестве последней команды необходимо отправить `exit`.
+</translation>
+    </message>
+    <message>
+        <source>e.g.:
+put {TEMP_DATABASE} DatabaseOnRemote.kdbx
+exit
+---
+{TEMP_DATABASE} is used as placeholder to store the database in a temporary location
+The command has to exit. In case of `sftp` as last command `exit` has to be sent
+            </source>
+        <translation>Например:
+put {TEMP_DATABASE} DatabaseOnRemote.kdbx
+exit
+---
+{TEMP_DATABASE} используется в качестве заполнителя для хранения базы данных во временном месте.
+Команда должна завершиться. В случае с `sftp` в качестве последней команды необходимо отправить `exit`.
+</translation>
+    </message>
+</context>
+<context>
     <name>DatabaseTabWidget</name>
     <message>
         <source>Database creation error</source>
@@ -2333,6 +2468,11 @@ This is definitely a bug, please report it to the developers.</source>
         <source>%1 [Locked]</source>
         <comment>Database tab name modifier</comment>
         <translation>%1 [заблокировано]</translation>
+    </message>
+    <message>
+        <source>%1 [Temporary]</source>
+        <comment>Database tab name modifier</comment>
+        <translation>%1 [Временный]</translation>
     </message>
 </context>
 <context>
@@ -2528,6 +2668,42 @@ Disable safe saves and try again?</source>
         <comment>Database tab name modifier</comment>
         <translation>%1 [новая база данных]</translation>
     </message>
+    <message>
+        <source>Remote Sync did not contain any download or upload commands.</source>
+        <translation>Удаленная синхронизация не содержала команд загрузки или выгрузки.</translation>
+    </message>
+    <message>
+        <source>Remote sync &apos;%1&apos; completed successfully!</source>
+        <translation>Удаленная синхронизация &apos;%1&apos; успешно завершена!</translation>
+    </message>
+    <message>
+        <source>Remote sync &apos;%1&apos; failed: %2</source>
+        <translation>Удаленная синхронизация &apos;%1&apos; не удалась: %2</translation>
+    </message>
+    <message>
+        <source>Error while saving database %1: %2</source>
+        <translation>Ошибка при сохранении базы данных %1: %2</translation>
+    </message>
+    <message>
+        <source>Downloading...</source>
+        <translation>Загрузка...</translation>
+    </message>
+    <message>
+        <source>Uploading...</source>
+        <translation>Выгрузка...</translation>
+    </message>
+    <message>
+        <source>Syncing...</source>
+        <translation>Синхронизация...</translation>
+    </message>
+    <message>
+        <source>Remove passkey from entry</source>
+        <translation>Удалить passkey из записи</translation>
+    </message>
+    <message>
+        <source>Do you want to remove the passkey from this entry?</source>
+        <translation>Удалить passkey из этой записи?</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidget</name>
@@ -2578,10 +2754,6 @@ Disable safe saves and try again?</source>
     <message>
         <source>n/a</source>
         <translation>н/д</translation>
-    </message>
-    <message>
-        <source>(encrypted)</source>
-        <translation>(зашифровано)</translation>
     </message>
     <message>
         <source>Select private key</source>
@@ -2683,6 +2855,10 @@ Would you like to correct it?</source>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>%n год</numerusform><numerusform>%n лет</numerusform><numerusform>%n лет</numerusform><numerusform>%n лет</numerusform></translation>
+    </message>
+    <message>
+        <source>Failed to decrypt SSH key, ensure password is correct.</source>
+        <translation>Не удалось расшифровать ключ SSH, проверьте правильность пароля.</translation>
     </message>
 </context>
 <context>
@@ -3554,6 +3730,10 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source>%1 - Clone</source>
         <translation>%1 — клон</translation>
+    </message>
+    <message>
+        <source>Passkey</source>
+        <translation>Passkey</translation>
     </message>
 </context>
 <context>
@@ -5888,6 +6068,18 @@ We recommend you use the AppImage available on our downloads page.</source>
         <source>Toggle Allow Screen Capture</source>
         <translation>Разрешить скриншоты</translation>
     </message>
+    <message>
+        <source>Remote S&amp;ync…</source>
+        <translation>Удаленная с&amp;инхронизация…</translation>
+    </message>
+    <message>
+        <source>Remove Passkey From Entry</source>
+        <translation>Удалить passkey из записи</translation>
+    </message>
+    <message>
+        <source>Setup Remote Sync…</source>
+        <translation>Настройка удаленной синхронизации…</translation>
+    </message>
 </context>
 <context>
     <name>ManageDatabase</name>
@@ -6225,6 +6417,10 @@ We recommend you use the AppImage available on our downloads page.</source>
         <source>Unexpected EOF when writing private key</source>
         <translation>Неожиданный конец файла при записи закрытого (личного) ключа</translation>
     </message>
+    <message>
+        <source>(encrypted)</source>
+        <translation>(зашифровано)</translation>
+    </message>
 </context>
 <context>
     <name>OpenSSHKeyGenDialog</name>
@@ -6273,7 +6469,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Export the following passkey entries.</source>
-        <translation type="unfinished"/>
+        <translation>Экспортировать следующие записи passkey.</translation>
     </message>
 </context>
 <context>
@@ -6347,15 +6543,15 @@ Do you want to overwrite it?
     </message>
     <message>
         <source>Import the following passkey:</source>
-        <translation type="unfinished"/>
+        <translation>Импортировать следующий passkey:</translation>
     </message>
     <message>
         <source>Import the following passkey to this entry:</source>
-        <translation type="unfinished"/>
+        <translation>Импортировать следующий passkey в эту запись:</translation>
     </message>
     <message>
         <source>Default passkeys group (Imported Passkeys)</source>
-        <translation type="unfinished"/>
+        <translation>Группа passkeys по умолчанию (Импортированные Passkeys)</translation>
     </message>
 </context>
 <context>
@@ -6378,25 +6574,27 @@ Do you want to overwrite it?
     </message>
     <message>
         <source>Open passkey file</source>
-        <translation type="unfinished"/>
+        <translation>Открыть passkey файл</translation>
     </message>
     <message>
         <source>Cannot import passkey</source>
-        <translation type="unfinished"/>
+        <translation>Не удаётся импортировать passkey</translation>
     </message>
     <message>
         <source>Cannot import passkey file &quot;%1&quot;. Data is missing.</source>
-        <translation type="unfinished"/>
+        <translation>Не удаётся импортировать passkey файл &quot;%1&quot;. Данные отсутствуют.</translation>
     </message>
     <message>
         <source>Cannot import passkey file &quot;%1&quot;.
 The following data is missing:
 %2</source>
-        <translation type="unfinished"/>
+        <translation>Не удаётся импортировать passkey файл &quot;%1&quot;.
+Следующие данные отсутствуют:
+%2</translation>
     </message>
     <message>
         <source>Cannot import passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
-        <translation type="unfinished"/>
+        <translation>Не удаётся импортировать passkey файл &quot;%1&quot;. Приватный ключ отсутствует или поврежден.</translation>
     </message>
 </context>
 <context>
@@ -8673,12 +8871,20 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation>Комбинации клавиш</translation>
     </message>
     <message>
-        <source>Unsupported KDF type, cannot decrypt json file</source>
-        <translation>Неподдерживаемый тип KDF, не удаётся расшифровать json-файл</translation>
+        <source>Unknown passkeys error</source>
+        <translation>Неизвестная ошибка passkeys</translation>
     </message>
     <message>
-        <source>Unknown passkeys error</source>
-        <translation type="unfinished"/>
+        <source>Invalid KDF iterations, cannot decrypt json file</source>
+        <translation>Недопустимые итерации KDF, невозможно расшифровать json-файл</translation>
+    </message>
+    <message>
+        <source>Unsupported format, ensure your Bitwarden export is password-protected</source>
+        <translation>Неподдерживаемый формат. Убедитесь, что экспорт Bitwarden защищен паролем</translation>
+    </message>
+    <message>
+        <source>Only PBKDF and Argon2 are supported, cannot decrypt json file</source>
+        <translation>Поддерживаются только PBKDF и Argon2, невозможно расшифровать json-файл</translation>
     </message>
 </context>
 <context>
@@ -8713,6 +8919,37 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Internal zlib error: </source>
         <translation>Внутренняя ошибка zlib: </translation>
+    </message>
+</context>
+<context>
+    <name>RemoteHandler</name>
+    <message>
+        <source>Command `%1` did not finish in time. Process was killed.</source>
+        <translation>Команда `%1` не завершилась вовремя. Процесс был завершен.</translation>
+    </message>
+    <message>
+        <source>Failed to upload merged database. Command `%1` did not finish in time. Process was killed.</source>
+        <translation>Не удалось загрузить объединенную базу данных. Команда `%1` не завершилась вовремя. Процесс был завершен.</translation>
+    </message>
+    <message>
+        <source>Invalid download parameters provided.</source>
+        <translation>Указаны недопустимые параметры загрузки.</translation>
+    </message>
+    <message>
+        <source>Command `%1` failed to download database.</source>
+        <translation>Команде `%1` не удалось загрузить базу данных.</translation>
+    </message>
+    <message>
+        <source>Invalid database pointer or upload parameters provided.</source>
+        <translation>Неверный указатель базы данных или указанные параметры выгрузки.</translation>
+    </message>
+    <message>
+        <source>Command `%1` exited with status code: %2</source>
+        <translation>Команда `%1` завершилась с кодом состояния: %2</translation>
+    </message>
+    <message>
+        <source>Failed to upload merged database. Command `%1` exited with status code: %2</source>
+        <translation>Не удалось загрузить объединенную базу данных. Команда `%1` завершилась с кодом состояния: %2</translation>
     </message>
 </context>
 <context>
@@ -9043,11 +9280,11 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Please wait, list of entries with passkeys is being updated…</source>
-        <translation type="unfinished"/>
+        <translation>Пожалуйста, подождите, список записей с passkeys обновляется...</translation>
     </message>
     <message>
         <source>No entries with passkeys.</source>
-        <translation type="unfinished"/>
+        <translation>Нет записей c passkeys.</translation>
     </message>
 </context>
 <context>

@@ -886,24 +886,25 @@ Please select the correct database for saving credentials.</source>
     </message>
     <message>
         <source>Add to existing entry</source>
-        <translation type="unfinished"/>
+        <translation>加入至現有項目</translation>
     </message>
     <message>
         <source>Existing passkey found.
 Do you want to register a new passkey for:</source>
-        <translation type="unfinished"/>
+        <translation>發現既有的通行密鑰。
+是否要註冊新的通行密鑰：</translation>
     </message>
     <message>
         <source>Select the existing passkey and press Update to replace it.</source>
-        <translation type="unfinished"/>
+        <translation>選擇既有的通行密鑰並按下「更新」來替換它。</translation>
     </message>
     <message>
         <source>Authenticate passkey credentials for:</source>
-        <translation type="unfinished"/>
+        <translation>驗證通行密鑰憑證：</translation>
     </message>
     <message>
         <source>Do you want to register a passkey for:</source>
-        <translation type="unfinished"/>
+        <translation>是否要註冊通行密鑰：</translation>
     </message>
 </context>
 <context>
@@ -988,16 +989,17 @@ Do you want to delete the entry?
     </message>
     <message>
         <source>Register a new passkey to this entry:</source>
-        <translation type="unfinished"/>
+        <translation>註冊新的通行密鑰至此項目：</translation>
     </message>
     <message>
         <source>KeePassXC - Update passkey</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC - 更新通行密鑰</translation>
     </message>
     <message>
         <source>Entry already has a passkey.
 Do you want to overwrite the passkey in %1 - %2?</source>
-        <translation type="unfinished"/>
+        <translation>項目已經擁有一組通行密鑰。
+是否要覆寫位於 %1 - %2 的通行密鑰？</translation>
     </message>
     <message>
         <source>Register</source>
@@ -1198,18 +1200,6 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation>自定義擴充 ID</translation>
     </message>
     <message>
-        <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
-        <translation>由於 Snap 的沙盒機制，您必須執行一個腳本來啟用瀏覽器整合。&lt;br /&gt;您可以從 %1 取得這個腳本</translation>
-    </message>
-    <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3. %4</source>
-        <translation>需要 KeePassXC 瀏覽器擴充才能使用整合功能。&lt;br /&gt;可供 %1 和 %2 和 %3 下載。%4</translation>
-    </message>
-    <message>
-        <source>Please see special instructions for browser extension use below</source>
-        <translation>請參閱以下的具體指示，學習如何使用瀏覽器擴展</translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation>可執行檔案</translation>
     </message>
@@ -1251,10 +1241,14 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Allows using insecure http://localhost with passkeys for testing purposes.</source>
-        <translation type="unfinished"/>
+        <translation>允許通行密鑰使用不安全的 http://localhost 作為測試用途。</translation>
     </message>
     <message>
         <source>Allow using localhost with passkeys</source>
+        <translation>允許通行密鑰使用 localhost</translation>
+    </message>
+    <message>
+        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1398,6 +1392,16 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     <message>
         <source>Imported from CSV file: %1</source>
         <translation>匯入自 CSV 檔案：%1</translation>
+    </message>
+    <message>
+        <source>No Title Selected</source>
+        <translation>未選擇標題</translation>
+    </message>
+    <message>
+        <source>No title column was selected, entries will be hard to tell apart.
+Are you sure you want to import?</source>
+        <translation>未選擇標題欄，項目將難以區分。
+您確定要匯入嗎？</translation>
     </message>
 </context>
 <context>
@@ -1688,6 +1692,10 @@ Are you sure you want to continue with this file?.</source>
         <source>Maintenance</source>
         <translation>維護</translation>
     </message>
+    <message>
+        <source>Remote Sync</source>
+        <translation>遠端同步</translation>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetBrowser</name>
@@ -1859,12 +1867,12 @@ Are you sure you want to continue without a password?</source>
         <translation>弱密碼</translation>
     </message>
     <message>
-        <source>You must enter a stronger password to protect your database.</source>
-        <translation>您必須輸入更強的密碼來保護資料庫。</translation>
-    </message>
-    <message>
         <source>This is a weak password! For better protection of your secrets, you should choose a stronger password.</source>
         <translation>這是一個弱密碼！為了更好地保護您的祕密，您應該選擇更強的密碼。</translation>
+    </message>
+    <message>
+        <source>The provided password does not meet the minimum quality requirement.</source>
+        <translation>提供的密碼未達到最低強度要求。</translation>
     </message>
 </context>
 <context>
@@ -2263,6 +2271,133 @@ removed from the database.</source>
     </message>
 </context>
 <context>
+    <name>DatabaseSettingsWidgetRemote</name>
+    <message>
+        <source>Sync Commands</source>
+        <translation>同步指令</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>移除</translation>
+    </message>
+    <message>
+        <source>Command Settings</source>
+        <translation>指令設定</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>名稱</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>儲存</translation>
+    </message>
+    <message>
+        <source>Download</source>
+        <translation>下載</translation>
+    </message>
+    <message>
+        <source>Command:</source>
+        <translation>指令：</translation>
+    </message>
+    <message>
+        <source>Download command field</source>
+        <translation>下載指令欄</translation>
+    </message>
+    <message>
+        <source>e.g.: &quot;sftp user@hostname&quot; or &quot;scp user@hostname:DatabaseOnRemote.kdbx {TEMP_DATABASE}&quot;</source>
+        <translation>範例：&quot;sftp user@hostname&quot; 或者 &quot;scp user@hostname:DatabaseOnRemote.kdbx {TEMP_DATABASE}&quot;</translation>
+    </message>
+    <message>
+        <source>Input:</source>
+        <translation>輸入：</translation>
+    </message>
+    <message>
+        <source>Download input field</source>
+        <translation>下載輸入欄</translation>
+    </message>
+    <message>
+        <source>Upload</source>
+        <translation>上傳</translation>
+    </message>
+    <message>
+        <source>Upload command field</source>
+        <translation>上傳指令欄</translation>
+    </message>
+    <message>
+        <source>e.g.: &quot;sftp user@hostname&quot; or &quot;scp {TEMP_DATABASE} user@hostname:DatabaseOnRemote.kdbx&quot;</source>
+        <translation>範例：&quot;sftp user@hostname&quot; 或者 &quot;scp {TEMP_DATABASE} user@hostname:DatabaseOnRemote.kdbx&quot;</translation>
+    </message>
+    <message>
+        <source>Upload input field</source>
+        <translation>上傳輸入欄</translation>
+    </message>
+    <message>
+        <source>Name cannot be empty.</source>
+        <translation>名稱不可爲空。</translation>
+    </message>
+    <message>
+        <source>Test</source>
+        <translation>測試</translation>
+    </message>
+    <message>
+        <source>Download command cannot be empty.</source>
+        <translation>下載命令不可爲空。</translation>
+    </message>
+    <message>
+        <source>Download failed with error: %1</source>
+        <translation>下載失敗，錯誤：%1</translation>
+    </message>
+    <message>
+        <source>Download finished, but file %1 could not be found.</source>
+        <translation>下載完成，但無法找到檔案 %1。</translation>
+    </message>
+    <message>
+        <source>Download successful.</source>
+        <translation>下載成功。</translation>
+    </message>
+    <message>
+        <source>Save Remote Settings</source>
+        <translation>儲存遠端設定</translation>
+    </message>
+    <message>
+        <source>You have unsaved changes. Do you want to save them?</source>
+        <translation>您有未保存的更改。是否要保存它們？</translation>
+    </message>
+    <message>
+        <source>e.g.:
+get DatabaseOnRemote.kdbx {TEMP_DATABASE}
+exit
+---
+{TEMP_DATABASE} is used as placeholder to store the database in a temporary location
+The command has to exit. In case of `sftp` as last command `exit` has to be sent
+            </source>
+        <translation>示例：
+get DatabaseOnRemote.kdbx {TEMP_DATABASE}
+exit
+---
+{TEMP_DATABASE} 作為占位符，表示保存資料庫的臨時位置
+命令必須可以退出。如果最後一個指令爲 `sftp` 則必須發送 `exit` 指令
+            </translation>
+    </message>
+    <message>
+        <source>e.g.:
+put {TEMP_DATABASE} DatabaseOnRemote.kdbx
+exit
+---
+{TEMP_DATABASE} is used as placeholder to store the database in a temporary location
+The command has to exit. In case of `sftp` as last command `exit` has to be sent
+            </source>
+        <translation>示例：
+put {TEMP_DATABASE} DatabaseOnRemote.kdbx
+exit
+---
+{TEMP_DATABASE} 作為占位符，表示保存資料庫的臨時位置
+命令必須可以退出。如果最後一個指令爲 `sftp` 則必須發送 `exit` 指令
+            </translation>
+    </message>
+</context>
+<context>
     <name>DatabaseTabWidget</name>
     <message>
         <source>Database creation error</source>
@@ -2334,6 +2469,11 @@ This is definitely a bug, please report it to the developers.</source>
         <source>%1 [Locked]</source>
         <comment>Database tab name modifier</comment>
         <translation>%1 [已鎖定]</translation>
+    </message>
+    <message>
+        <source>%1 [Temporary]</source>
+        <comment>Database tab name modifier</comment>
+        <translation>%1 [臨時]</translation>
     </message>
 </context>
 <context>
@@ -2529,6 +2669,42 @@ Disable safe saves and try again?</source>
         <comment>Database tab name modifier</comment>
         <translation>%1 [新資料庫]</translation>
     </message>
+    <message>
+        <source>Remote Sync did not contain any download or upload commands.</source>
+        <translation>遠端同步未包含任何下載或上傳指令。</translation>
+    </message>
+    <message>
+        <source>Remote sync &apos;%1&apos; completed successfully!</source>
+        <translation>遠端同步「%1」成功完成！</translation>
+    </message>
+    <message>
+        <source>Remote sync &apos;%1&apos; failed: %2</source>
+        <translation>遠端同步「%1」失敗：%2</translation>
+    </message>
+    <message>
+        <source>Error while saving database %1: %2</source>
+        <translation>儲存資料庫 %1 時發生錯誤：%2</translation>
+    </message>
+    <message>
+        <source>Downloading...</source>
+        <translation>正在下載...</translation>
+    </message>
+    <message>
+        <source>Uploading...</source>
+        <translation>正在上傳...</translation>
+    </message>
+    <message>
+        <source>Syncing...</source>
+        <translation>正在同步...</translation>
+    </message>
+    <message>
+        <source>Remove passkey from entry</source>
+        <translation>從項目移除通行密鑰</translation>
+    </message>
+    <message>
+        <source>Do you want to remove the passkey from this entry?</source>
+        <translation>是否要從此項目移除通行密鑰？</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidget</name>
@@ -2579,10 +2755,6 @@ Disable safe saves and try again?</source>
     <message>
         <source>n/a</source>
         <translation>無</translation>
-    </message>
-    <message>
-        <source>(encrypted)</source>
-        <translation>（已加密）</translation>
     </message>
     <message>
         <source>Select private key</source>
@@ -2686,6 +2858,10 @@ Would you like to correct it?</source>
         <source>%n year(s)</source>
         <translation><numerusform>%n 年</numerusform></translation>
     </message>
+    <message>
+        <source>Failed to decrypt SSH key, ensure password is correct.</source>
+        <translation>解密 SSH 金鑰失敗，確認密碼是否正確。</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetAdvanced</name>
@@ -2747,7 +2923,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>If checked, the entry will not appear in reports like Health Check and HIBP even if it doesn&apos;t match the quality requirements.</source>
-        <translation>勾選後，項目將不會出現在「健康檢查」或 HIBP 等報告，即使它不符合品質要求。</translation>
+        <translation>勾選後，項目將不會出現在「健康檢查」或 HIBP 等報告，即使它不符合強度要求。</translation>
     </message>
     <message>
         <source>Exclude from database reports</source>
@@ -3556,6 +3732,10 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source>%1 - Clone</source>
         <translation>%1 - 複製</translation>
+    </message>
+    <message>
+        <source>Passkey</source>
+        <translation>通行密鑰</translation>
     </message>
 </context>
 <context>
@@ -5886,6 +6066,18 @@ We recommend you use the AppImage available on our downloads page.</source>
         <source>Toggle Allow Screen Capture</source>
         <translation>切換允許螢幕截圖</translation>
     </message>
+    <message>
+        <source>Remote S&amp;ync…</source>
+        <translation>遠端同步(&amp;Y)…</translation>
+    </message>
+    <message>
+        <source>Remove Passkey From Entry</source>
+        <translation>從項目移除通行密鑰</translation>
+    </message>
+    <message>
+        <source>Setup Remote Sync…</source>
+        <translation>設定遠端同步…</translation>
+    </message>
 </context>
 <context>
     <name>ManageDatabase</name>
@@ -6223,6 +6415,10 @@ We recommend you use the AppImage available on our downloads page.</source>
         <source>Unexpected EOF when writing private key</source>
         <translation>寫入私密金鑰時出現意外的檔案結尾</translation>
     </message>
+    <message>
+        <source>(encrypted)</source>
+        <translation>（已加密）</translation>
+    </message>
 </context>
 <context>
     <name>OpenSSHKeyGenDialog</name>
@@ -6271,7 +6467,7 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Export the following passkey entries.</source>
-        <translation type="unfinished"/>
+        <translation>匯出以下通行密鑰項目。</translation>
     </message>
 </context>
 <context>
@@ -6345,15 +6541,15 @@ Do you want to overwrite it?
     </message>
     <message>
         <source>Import the following passkey:</source>
-        <translation type="unfinished"/>
+        <translation>匯入以下通行密鑰：</translation>
     </message>
     <message>
         <source>Import the following passkey to this entry:</source>
-        <translation type="unfinished"/>
+        <translation>將以下通行密鑰匯入至此項目：</translation>
     </message>
     <message>
         <source>Default passkeys group (Imported Passkeys)</source>
-        <translation type="unfinished"/>
+        <translation>預設的通行密鑰群組（匯入的通行密鑰）</translation>
     </message>
 </context>
 <context>
@@ -6376,25 +6572,27 @@ Do you want to overwrite it?
     </message>
     <message>
         <source>Open passkey file</source>
-        <translation type="unfinished"/>
+        <translation>開啟通行密鑰檔案</translation>
     </message>
     <message>
         <source>Cannot import passkey</source>
-        <translation type="unfinished"/>
+        <translation>無法匯入通行密鑰</translation>
     </message>
     <message>
         <source>Cannot import passkey file &quot;%1&quot;. Data is missing.</source>
-        <translation type="unfinished"/>
+        <translation>無法匯入通行密鑰檔案「%1」。資料遺失。</translation>
     </message>
     <message>
         <source>Cannot import passkey file &quot;%1&quot;.
 The following data is missing:
 %2</source>
-        <translation type="unfinished"/>
+        <translation>無法匯入通行密鑰檔案「%1」。
+以下資料有遺失：
+%2</translation>
     </message>
     <message>
         <source>Cannot import passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
-        <translation type="unfinished"/>
+        <translation>無法匯入通行密鑰檔案「%1」。私鑰遺失或格式有誤。</translation>
     </message>
 </context>
 <context>
@@ -6661,7 +6859,7 @@ The following data is missing:
     </message>
     <message>
         <source>Password Quality: %1</source>
-        <translation>密碼品質：%1</translation>
+        <translation>密碼強度：%1</translation>
     </message>
     <message>
         <source>Poor</source>
@@ -6754,7 +6952,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Quality: %1</source>
-        <translation>密碼品質：%1</translation>
+        <translation>密碼強度：%1</translation>
     </message>
     <message>
         <source>Poor</source>
@@ -8671,12 +8869,20 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation>快捷鍵</translation>
     </message>
     <message>
-        <source>Unsupported KDF type, cannot decrypt json file</source>
-        <translation>不支援的 KDF 類型，無法解密 JSON 檔案</translation>
+        <source>Unknown passkeys error</source>
+        <translation>未知的通行密鑰錯誤</translation>
     </message>
     <message>
-        <source>Unknown passkeys error</source>
-        <translation type="unfinished"/>
+        <source>Invalid KDF iterations, cannot decrypt json file</source>
+        <translation>無效的 KDF 迭代數，無法解密 JSON 檔案</translation>
+    </message>
+    <message>
+        <source>Unsupported format, ensure your Bitwarden export is password-protected</source>
+        <translation>不支援的格式，確保您的 Bitwarden 匯出檔爲密碼保護</translation>
+    </message>
+    <message>
+        <source>Only PBKDF and Argon2 are supported, cannot decrypt json file</source>
+        <translation>只支援 PBKDF 與 Argon2，無法解密 JSON 檔案</translation>
     </message>
 </context>
 <context>
@@ -8711,6 +8917,37 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Internal zlib error: </source>
         <translation>內部 zlib 錯誤: </translation>
+    </message>
+</context>
+<context>
+    <name>RemoteHandler</name>
+    <message>
+        <source>Command `%1` did not finish in time. Process was killed.</source>
+        <translation>指令 `%1` 未能及時完成。程序已被強制結束。</translation>
+    </message>
+    <message>
+        <source>Failed to upload merged database. Command `%1` did not finish in time. Process was killed.</source>
+        <translation>上傳已合併的資料庫失敗。指令 `%1` 未能及時完成。程序已被強制結束。</translation>
+    </message>
+    <message>
+        <source>Invalid download parameters provided.</source>
+        <translation>提供的下載參數無效。</translation>
+    </message>
+    <message>
+        <source>Command `%1` failed to download database.</source>
+        <translation>指令 `%1` 下載資料庫失敗。</translation>
+    </message>
+    <message>
+        <source>Invalid database pointer or upload parameters provided.</source>
+        <translation>提供的資料庫指針或上傳參數無效。</translation>
+    </message>
+    <message>
+        <source>Command `%1` exited with status code: %2</source>
+        <translation>指令 `%1` 以此狀態碼退出：%2</translation>
+    </message>
+    <message>
+        <source>Failed to upload merged database. Command `%1` exited with status code: %2</source>
+        <translation>上傳已合併的資料庫失敗。指令 `%1` 以此狀態碼退出：%2</translation>
     </message>
 </context>
 <context>
@@ -9041,11 +9278,11 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Please wait, list of entries with passkeys is being updated…</source>
-        <translation type="unfinished"/>
+        <translation>請稍候，正在更新擁有通行密鑰的項目清單…</translation>
     </message>
     <message>
         <source>No entries with passkeys.</source>
-        <translation type="unfinished"/>
+        <translation>沒有附帶通行密鑰的項目。</translation>
     </message>
 </context>
 <context>

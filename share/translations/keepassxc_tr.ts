@@ -886,24 +886,25 @@ Lütfen kimlik bilgilerinin kaydedileceği doğru veri tabanını seçin.</trans
     </message>
     <message>
         <source>Add to existing entry</source>
-        <translation type="unfinished"/>
+        <translation>Var olan kayda ekle</translation>
     </message>
     <message>
         <source>Existing passkey found.
 Do you want to register a new passkey for:</source>
-        <translation type="unfinished"/>
+        <translation>Var olan bir geçiş anahtarı bulundu.
+Şunun için yeni bir geçiş anahtarı kaydetmek ister misiniz:</translation>
     </message>
     <message>
         <source>Select the existing passkey and press Update to replace it.</source>
-        <translation type="unfinished"/>
+        <translation>Var olan geçiş anahtarını seçin ve değiştirmek için Güncelle üzerine basın.</translation>
     </message>
     <message>
         <source>Authenticate passkey credentials for:</source>
-        <translation type="unfinished"/>
+        <translation>Şunun için geçiş anahtarı kimlik doğrulama bilgilerine izin verilsin:</translation>
     </message>
     <message>
         <source>Do you want to register a passkey for:</source>
-        <translation type="unfinished"/>
+        <translation>Şunun için geçiş anahtarı kaydetmek ister misiniz:</translation>
     </message>
 </context>
 <context>
@@ -988,16 +989,17 @@ Bu kaydın silinmesini ister misiniz?
     </message>
     <message>
         <source>Register a new passkey to this entry:</source>
-        <translation type="unfinished"/>
+        <translation>Şu kayıt için yeni bir geçiş anahtarı kaydet:</translation>
     </message>
     <message>
         <source>KeePassXC - Update passkey</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC - Geçiş anahtarı kaydını güncelle</translation>
     </message>
     <message>
         <source>Entry already has a passkey.
 Do you want to overwrite the passkey in %1 - %2?</source>
-        <translation type="unfinished"/>
+        <translation>Kaydın zaten bir geçiş anahtarı kaydı var.
+%1 - %2 geçiş anahtarı kaydını değiştirmek istiyor musunuz?</translation>
     </message>
     <message>
         <source>Register</source>
@@ -1198,18 +1200,6 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation>Özel eklenti kimliği</translation>
     </message>
     <message>
-        <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
-        <translation>Geçici kum havuzu kullanılması nedeniyle, tarayıcı bütünleşmesini kullanmak için bir betik çalıştırmalısınız.&lt;br /&gt;Bu betiği %1 adresinden alabilirsiniz.</translation>
-    </message>
-    <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3. %4</source>
-        <translation>Tarayıcı bütünleşmesinin çalışması için KeePassXC-Browser gereklidir. &lt;br /&gt;%1, %2 ve %3 tarayıcıları için indirebilirsiniz. %4</translation>
-    </message>
-    <message>
-        <source>Please see special instructions for browser extension use below</source>
-        <translation>Lütfen aşağıdan tarayıcı eklentisi kullanımı ile ilgili özel yönergelere bakın</translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation>Çalıştırılabilir dosyalar</translation>
     </message>
@@ -1251,10 +1241,14 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Allows using insecure http://localhost with passkeys for testing purposes.</source>
-        <translation type="unfinished"/>
+        <translation>Deneme amacıyla geçiş anahtarları ile güvenli olmayan http://localhost kullanılabilsin.</translation>
     </message>
     <message>
         <source>Allow using localhost with passkeys</source>
+        <translation>Geçiş anahtarları ile localhost kullanılabilsin</translation>
+    </message>
+    <message>
+        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1398,6 +1392,16 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     <message>
         <source>Imported from CSV file: %1</source>
         <translation>CSV dosyasından içe aktarıldı: %1</translation>
+    </message>
+    <message>
+        <source>No Title Selected</source>
+        <translation>Herhangi bir başlık seçilmemiş</translation>
+    </message>
+    <message>
+        <source>No title column was selected, entries will be hard to tell apart.
+Are you sure you want to import?</source>
+        <translation>Herhangi bir başlık sütunu seçilmemiş. Kayıtları ayırmak zor olacak.
+İçe aktarmak istediğinize emin misiniz?</translation>
     </message>
 </context>
 <context>
@@ -1688,6 +1692,10 @@ Bu dosya ile ilerlemek istediğinize emin misiniz?</translation>
         <source>Maintenance</source>
         <translation>Bakım</translation>
     </message>
+    <message>
+        <source>Remote Sync</source>
+        <translation>Uzak eşitleme</translation>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetBrowser</name>
@@ -1859,12 +1867,12 @@ Bir parola ayarlamadan ilerlemek istediğinize emin misiniz?</translation>
         <translation>Parola kolay</translation>
     </message>
     <message>
-        <source>You must enter a stronger password to protect your database.</source>
-        <translation>Veri tabanınızı korumak için daha zor bir parola yazmalısınız.</translation>
-    </message>
-    <message>
         <source>This is a weak password! For better protection of your secrets, you should choose a stronger password.</source>
         <translation>Bu parola kolay! Bilgilerinizi daha iyi korumak için daha zor bir parola seçmelisiniz.</translation>
+    </message>
+    <message>
+        <source>The provided password does not meet the minimum quality requirement.</source>
+        <translation>Belirtilen parola en düşük kalite gereksinimini karşılamıyor.</translation>
     </message>
 </context>
 <context>
@@ -2263,6 +2271,121 @@ veri tabanından kaldırılır.</translation>
     </message>
 </context>
 <context>
+    <name>DatabaseSettingsWidgetRemote</name>
+    <message>
+        <source>Sync Commands</source>
+        <translation>Eşitleme komutları</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Kaldır</translation>
+    </message>
+    <message>
+        <source>Command Settings</source>
+        <translation>Komut ayarları</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Ad</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Kaydet</translation>
+    </message>
+    <message>
+        <source>Download</source>
+        <translation>İndir</translation>
+    </message>
+    <message>
+        <source>Command:</source>
+        <translation>Komut:</translation>
+    </message>
+    <message>
+        <source>Download command field</source>
+        <translation>İndirme komutu alanı</translation>
+    </message>
+    <message>
+        <source>e.g.: &quot;sftp user@hostname&quot; or &quot;scp user@hostname:DatabaseOnRemote.kdbx {TEMP_DATABASE}&quot;</source>
+        <translation>Örnek: &quot;sftp kullaniciadi@sunucu&quot; ya da &quot;scp kullaniciadi@sunucu:UzakVeriTabanı.kdbx {TEMP_DATABASE}&quot;</translation>
+    </message>
+    <message>
+        <source>Input:</source>
+        <translation>Giriş:</translation>
+    </message>
+    <message>
+        <source>Download input field</source>
+        <translation>İndirme giriş alanı</translation>
+    </message>
+    <message>
+        <source>Upload</source>
+        <translation>Yükle</translation>
+    </message>
+    <message>
+        <source>Upload command field</source>
+        <translation>Yükleme komutu alanı</translation>
+    </message>
+    <message>
+        <source>e.g.: &quot;sftp user@hostname&quot; or &quot;scp {TEMP_DATABASE} user@hostname:DatabaseOnRemote.kdbx&quot;</source>
+        <translation>Örnek: &quot;sftp kullaniciadi@sunucu&quot; ya da &quot;scp {TEMP_DATABASE} kullaniciadi@sunucu:UzakVeriTabanı.kdbx&quot;</translation>
+    </message>
+    <message>
+        <source>Upload input field</source>
+        <translation>Yükleme giriş alanı</translation>
+    </message>
+    <message>
+        <source>Name cannot be empty.</source>
+        <translation>Ad boş olamaz.</translation>
+    </message>
+    <message>
+        <source>Test</source>
+        <translation>Sına</translation>
+    </message>
+    <message>
+        <source>Download command cannot be empty.</source>
+        <translation>İndirme komutu boş olamaz.</translation>
+    </message>
+    <message>
+        <source>Download failed with error: %1</source>
+        <translation>İndirme sırasında sorun çıktı: %1</translation>
+    </message>
+    <message>
+        <source>Download finished, but file %1 could not be found.</source>
+        <translation>İndirme tamamlandı ancak %1 dosyası bulunamadı.</translation>
+    </message>
+    <message>
+        <source>Download successful.</source>
+        <translation>İndirme tamamlandı.</translation>
+    </message>
+    <message>
+        <source>Save Remote Settings</source>
+        <translation>Uzak ayarları kaydet</translation>
+    </message>
+    <message>
+        <source>You have unsaved changes. Do you want to save them?</source>
+        <translation>Kaydedilmemiş değişiklikler var. Kaydetmek ister misiniz?</translation>
+    </message>
+    <message>
+        <source>e.g.:
+get DatabaseOnRemote.kdbx {TEMP_DATABASE}
+exit
+---
+{TEMP_DATABASE} is used as placeholder to store the database in a temporary location
+The command has to exit. In case of `sftp` as last command `exit` has to be sent
+            </source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>e.g.:
+put {TEMP_DATABASE} DatabaseOnRemote.kdbx
+exit
+---
+{TEMP_DATABASE} is used as placeholder to store the database in a temporary location
+The command has to exit. In case of `sftp` as last command `exit` has to be sent
+            </source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>DatabaseTabWidget</name>
     <message>
         <source>Database creation error</source>
@@ -2334,6 +2457,11 @@ Bu kesinlikle bir uygulama hatasıdır. Lütfen geliştiricilere bildirin.</tran
         <source>%1 [Locked]</source>
         <comment>Database tab name modifier</comment>
         <translation>%1 [Kilitli]</translation>
+    </message>
+    <message>
+        <source>%1 [Temporary]</source>
+        <comment>Database tab name modifier</comment>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2529,6 +2657,42 @@ Güvenli kaydetme kapatılarak yeniden denensin mi?</translation>
         <comment>Database tab name modifier</comment>
         <translation>%1 [Yeni veri tabanı]</translation>
     </message>
+    <message>
+        <source>Remote Sync did not contain any download or upload commands.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remote sync &apos;%1&apos; completed successfully!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remote sync &apos;%1&apos; failed: %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Error while saving database %1: %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Downloading...</source>
+        <translation>İndiriliyor...</translation>
+    </message>
+    <message>
+        <source>Uploading...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Syncing...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove passkey from entry</source>
+        <translation>Kaydın geçiş anahtarını kaldır</translation>
+    </message>
+    <message>
+        <source>Do you want to remove the passkey from this entry?</source>
+        <translation>Geçiş anahtarını bu kayıttan kaldırmak istediğinize emin misiniz?</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidget</name>
@@ -2579,10 +2743,6 @@ Güvenli kaydetme kapatılarak yeniden denensin mi?</translation>
     <message>
         <source>n/a</source>
         <translation>yok</translation>
-    </message>
-    <message>
-        <source>(encrypted)</source>
-        <translation>(şifrelenmiş)</translation>
     </message>
     <message>
         <source>Select private key</source>
@@ -2685,6 +2845,10 @@ Düzeltmek ister misiniz?</translation>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>%n yıl</numerusform><numerusform>%n yıl</numerusform></translation>
+    </message>
+    <message>
+        <source>Failed to decrypt SSH key, ensure password is correct.</source>
+        <translation>SSH anahtarının şifresi çözülemedi. Parolanın doğru olduğundan emin olun.</translation>
     </message>
 </context>
 <context>
@@ -3557,6 +3721,10 @@ Bu işlem etkilenecek eklentilerin bozulmasına neden olabilir.</translation>
         <source>%1 - Clone</source>
         <translation>Kopya - %1</translation>
     </message>
+    <message>
+        <source>Passkey</source>
+        <translation>Geçiş anahtarı</translation>
+    </message>
 </context>
 <context>
     <name>EntryAttachments</name>
@@ -4225,7 +4393,7 @@ Bu işlem, parolalarınızı ve önemli bilgilerinizi korumasız kılacak!
     <name>HibpDownloader</name>
     <message>
         <source>Online password validation failed</source>
-        <translation>Parola çevrimiçi olarak onaylanamadı</translation>
+        <translation>Parola çevrim içi olarak onaylanamadı</translation>
     </message>
 </context>
 <context>
@@ -5458,7 +5626,7 @@ Bu dosyayı kullanarak ilerlemek istediğinize emin misiniz?</translation>
     </message>
     <message>
         <source>&amp;Online Help</source>
-        <translation>&amp;Çevrimiçi yardım</translation>
+        <translation>&amp;Çevrim içi yardım</translation>
     </message>
     <message>
         <source>&amp;User Guide</source>
@@ -5888,6 +6056,18 @@ KeePassXC indirme sayfasında bulunan AppImage paketini kullanmanız önerilir.<
         <source>Toggle Allow Screen Capture</source>
         <translation>Ekran görüntüsü almayı aç/kapat</translation>
     </message>
+    <message>
+        <source>Remote S&amp;ync…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove Passkey From Entry</source>
+        <translation>Kaydın geçiş anahtarını kaldır</translation>
+    </message>
+    <message>
+        <source>Setup Remote Sync…</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ManageDatabase</name>
@@ -6225,6 +6405,10 @@ KeePassXC indirme sayfasında bulunan AppImage paketini kullanmanız önerilir.<
         <source>Unexpected EOF when writing private key</source>
         <translation>Kişisel anahtar yazılırken dosya beklenmedik şekilde sonlandı</translation>
     </message>
+    <message>
+        <source>(encrypted)</source>
+        <translation>(şifrelenmiş)</translation>
+    </message>
 </context>
 <context>
     <name>OpenSSHKeyGenDialog</name>
@@ -6273,7 +6457,7 @@ KeePassXC indirme sayfasında bulunan AppImage paketini kullanmanız önerilir.<
     </message>
     <message>
         <source>Export the following passkey entries.</source>
-        <translation type="unfinished"/>
+        <translation>Şu geçiş anahtarı kayıtlarını dışa aktar.</translation>
     </message>
 </context>
 <context>
@@ -6347,15 +6531,15 @@ Do you want to overwrite it?
     </message>
     <message>
         <source>Import the following passkey:</source>
-        <translation type="unfinished"/>
+        <translation>Şu geçiş anahtarı kaydını içe aktar:</translation>
     </message>
     <message>
         <source>Import the following passkey to this entry:</source>
-        <translation type="unfinished"/>
+        <translation>Bu kayıt için şu geçiş anahtarı kaydını içe aktar: </translation>
     </message>
     <message>
         <source>Default passkeys group (Imported Passkeys)</source>
-        <translation type="unfinished"/>
+        <translation>Varsayılan geçiş anahtarı grubu (içe aktarılmış geçiş anahtarları)</translation>
     </message>
 </context>
 <context>
@@ -6378,25 +6562,27 @@ Do you want to overwrite it?
     </message>
     <message>
         <source>Open passkey file</source>
-        <translation type="unfinished"/>
+        <translation>Geçiş anahtarı dosyasını aç</translation>
     </message>
     <message>
         <source>Cannot import passkey</source>
-        <translation type="unfinished"/>
+        <translation>Geçiş anahtarı içe aktarılamadı</translation>
     </message>
     <message>
         <source>Cannot import passkey file &quot;%1&quot;. Data is missing.</source>
-        <translation type="unfinished"/>
+        <translation>&quot;%1&quot; geçiş anahtarı dosyası içe aktarılamadı. Veriler eksik.</translation>
     </message>
     <message>
         <source>Cannot import passkey file &quot;%1&quot;.
 The following data is missing:
 %2</source>
-        <translation type="unfinished"/>
+        <translation>&quot;%1&quot; geçiş anahtarı dosyası içe aktarılamadı.
+Şu veriler eksik:
+%2</translation>
     </message>
     <message>
         <source>Cannot import passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
-        <translation type="unfinished"/>
+        <translation>&quot;%1&quot; geçiş anahtarı dosyası içe aktarılamadı. Kişisel anahtar eksik ya da bozuk.</translation>
     </message>
 </context>
 <context>
@@ -8673,12 +8859,20 @@ Bu seçenekler kullanımdan kaldırıldı. yerine --set-key-file kullanın.</tra
         <translation>Kısayollar</translation>
     </message>
     <message>
-        <source>Unsupported KDF type, cannot decrypt json file</source>
-        <translation>KDF türü desteklenmiyor. JSON dosyasının şifresi çözülemedi</translation>
+        <source>Unknown passkeys error</source>
+        <translation>Bilinmeyen geçiş anahtarları sorunu</translation>
     </message>
     <message>
-        <source>Unknown passkeys error</source>
-        <translation type="unfinished"/>
+        <source>Invalid KDF iterations, cannot decrypt json file</source>
+        <translation>Anahtar türetme işlevi döngüleri geçersiz. JSON dosyasının şifresi çözülemedi</translation>
+    </message>
+    <message>
+        <source>Unsupported format, ensure your Bitwarden export is password-protected</source>
+        <translation>Biçim desteklenmiyor. Bitwarden dışa aktarımınızın parola ile korunduğundan emin olun</translation>
+    </message>
+    <message>
+        <source>Only PBKDF and Argon2 are supported, cannot decrypt json file</source>
+        <translation>Yalnızca PBKDF ve Argon2 desteklenir. JSON dosyasının şifresi çözülemedi</translation>
     </message>
 </context>
 <context>
@@ -8713,6 +8907,37 @@ Bu seçenekler kullanımdan kaldırıldı. yerine --set-key-file kullanın.</tra
     <message>
         <source>Internal zlib error: </source>
         <translation>İç zlib sorunu çıktı:</translation>
+    </message>
+</context>
+<context>
+    <name>RemoteHandler</name>
+    <message>
+        <source>Command `%1` did not finish in time. Process was killed.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to upload merged database. Command `%1` did not finish in time. Process was killed.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid download parameters provided.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Command `%1` failed to download database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid database pointer or upload parameters provided.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Command `%1` exited with status code: %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to upload merged database. Command `%1` exited with status code: %2</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -8892,11 +9117,11 @@ Bu seçenekler kullanımdan kaldırıldı. yerine --set-key-file kullanın.</tra
     <name>ReportsWidgetHibp</name>
     <message>
         <source>CAUTION: This report requires sending information to the Have I Been Pwned online service (https://haveibeenpwned.com). If you proceed, your database passwords will be cryptographically hashed and the first five characters of those hashes will be sent securely to this service. Your database remains secure and cannot be reconstituted from this information. However, the number of passwords you send and your IP address will be exposed to this service.</source>
-        <translation>UYARI: Bu rapor için &quot;Have I Been Pwned&quot; çevrimiçi hizmetine (https://haveibeenpwned.com) bilgi gönderilmesi gerekir.  İlerlediğinizde, veri tabanı parolalarınız şifreli olarak karıştırılır ve bu karmanın ilk beş karakteri güvenli olarak bu hizmete gönderilir. Veri tabanınız güvende kalır ve gönderilen bilgiler ile yeniden oluşturulamaz. Yalnızca, gönderdiğiniz parolaların sayısı ve IP adresiniz bu hizmete bildirilir.</translation>
+        <translation>UYARI: Bu rapor için &quot;Have I Been Pwned&quot; çevrim içi hizmetine (https://haveibeenpwned.com) bilgi gönderilmesi gerekir.  İlerlediğinizde, veri tabanı parolalarınız şifreli olarak karıştırılır ve bu karmanın ilk beş karakteri güvenli olarak bu hizmete gönderilir. Veri tabanınız güvende kalır ve gönderilen bilgiler ile yeniden oluşturulamaz. Yalnızca, gönderdiğiniz parolaların sayısı ve IP adresiniz bu hizmete bildirilir.</translation>
     </message>
     <message>
         <source>Perform Online Analysis</source>
-        <translation>Çevrimiçi incelemeden geçirin</translation>
+        <translation>Çevrim içi incelemeden geçirin</translation>
     </message>
     <message>
         <source>Also show entries that have been excluded from reports</source>
@@ -9043,11 +9268,11 @@ Bu seçenekler kullanımdan kaldırıldı. yerine --set-key-file kullanın.</tra
     </message>
     <message>
         <source>Please wait, list of entries with passkeys is being updated…</source>
-        <translation type="unfinished"/>
+        <translation>Lütfen geçiş anahtarı bulunan kayıtların listesi güncellenirken bekleyin...</translation>
     </message>
     <message>
         <source>No entries with passkeys.</source>
-        <translation type="unfinished"/>
+        <translation>Geçiş anahtarı bulunan bir kayıt yok.</translation>
     </message>
 </context>
 <context>

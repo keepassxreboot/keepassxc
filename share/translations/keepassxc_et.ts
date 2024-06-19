@@ -714,7 +714,7 @@
     </message>
     <message>
         <source>Trying to send invalid keyboard symbol.</source>
-        <translation type="unfinished"/>
+        <translation>Prooviti saata vigast klahvisümbolit.</translation>
     </message>
 </context>
 <context>
@@ -886,24 +886,25 @@ Vali, millisesse neist tunnused salvestada tuleks.</translation>
     </message>
     <message>
         <source>Add to existing entry</source>
-        <translation type="unfinished"/>
+        <translation>Lisa olemasolevale kirjele</translation>
     </message>
     <message>
         <source>Existing passkey found.
 Do you want to register a new passkey for:</source>
-        <translation type="unfinished"/>
+        <translation>Leidsime olemasoleva pääsuvõtme.
+Kas sa soovid siia registreerida uue pääsuvõtme:</translation>
     </message>
     <message>
         <source>Select the existing passkey and press Update to replace it.</source>
-        <translation type="unfinished"/>
+        <translation>Asendamiseks vali olemasolev pääsuvõti ning vajuta „Uuenda“.</translation>
     </message>
     <message>
         <source>Authenticate passkey credentials for:</source>
-        <translation type="unfinished"/>
+        <translation>Autendi pääsuvõtme tunnused kirjele:</translation>
     </message>
     <message>
         <source>Do you want to register a passkey for:</source>
-        <translation type="unfinished"/>
+        <translation>Kas sa soovid sellele kirjele registreerida uue pääsuvõtme:</translation>
     </message>
 </context>
 <context>
@@ -988,16 +989,17 @@ Kas lubad selle kirje kustutada?
     </message>
     <message>
         <source>Register a new passkey to this entry:</source>
-        <translation type="unfinished"/>
+        <translation>Registreeri uus pääsuvõti selle kirje jaoks:</translation>
     </message>
     <message>
         <source>KeePassXC - Update passkey</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC - Uuenda pääsuvõti</translation>
     </message>
     <message>
         <source>Entry already has a passkey.
 Do you want to overwrite the passkey in %1 - %2?</source>
-        <translation type="unfinished"/>
+        <translation>Kirjel „%1“ on juba pääsuvõti.
+Kas soovid %1 uue pääsuvõtmega %2 üle kirjutada?</translation>
     </message>
     <message>
         <source>Register</source>
@@ -1198,18 +1200,6 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation>Kohandatud laienduse-ID</translation>
     </message>
     <message>
-        <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
-        <translation>&lt;i&gt;Snap&lt;/i&gt;’ide isoleerituse tõttu tuleb brauserilõimingu võimaldamiseks esmalt teatud skript käivitada.&lt;br /&gt;Vajaliku skripti saab aadressilt %1.</translation>
-    </message>
-    <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3. %4</source>
-        <translation>Lõimingu toimimiseks peab brauserile olema paigaldatud laiendus KeePassXC-Browser. &lt;br /&gt;See on saadaval %1i, %2’i ja %3’i jaoks. %4</translation>
-    </message>
-    <message>
-        <source>Please see special instructions for browser extension use below</source>
-        <translation>Vaata allpool brauserilaienduse kasutamise erijuhiseid.</translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation>Rakendusfailid</translation>
     </message>
@@ -1251,10 +1241,14 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Allows using insecure http://localhost with passkeys for testing purposes.</source>
-        <translation type="unfinished"/>
+        <translation>Märkimisel saad pääsuvõtmete testimiseks kasutada ebaturvalist aadressi http://localhost.</translation>
     </message>
     <message>
         <source>Allow using localhost with passkeys</source>
+        <translation>Lubata localhosti kasutamist pääsuvõtmetega</translation>
+    </message>
+    <message>
+        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1398,6 +1392,15 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     <message>
         <source>Imported from CSV file: %1</source>
         <translation>Imporditud CSV-failist: %1</translation>
+    </message>
+    <message>
+        <source>No Title Selected</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No title column was selected, entries will be hard to tell apart.
+Are you sure you want to import?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1688,6 +1691,10 @@ Kas oled kindel, et soovid selle failiga jätkata?</translation>
         <source>Maintenance</source>
         <translation>Hooldus</translation>
     </message>
+    <message>
+        <source>Remote Sync</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetBrowser</name>
@@ -1859,12 +1866,12 @@ Kas oled kindel, et soovid jätkata ilma paroolita?</translation>
         <translation>Nõrk parool</translation>
     </message>
     <message>
-        <source>You must enter a stronger password to protect your database.</source>
-        <translation>Andmebaasi kaitsmiseks tuleb kasutada tugevamat parooli.</translation>
-    </message>
-    <message>
         <source>This is a weak password! For better protection of your secrets, you should choose a stronger password.</source>
         <translation>See on liiga nõrk parool! Oma saladuste paremaks kaitsmiseks peaksid valima tugevama parooli.</translation>
+    </message>
+    <message>
+        <source>The provided password does not meet the minimum quality requirement.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2263,6 +2270,121 @@ eemaldatakse kirje andmebaasist.</translation>
     </message>
 </context>
 <context>
+    <name>DatabaseSettingsWidgetRemote</name>
+    <message>
+        <source>Sync Commands</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Eemalda</translation>
+    </message>
+    <message>
+        <source>Command Settings</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nimi</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Salvesta</translation>
+    </message>
+    <message>
+        <source>Download</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Command:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download command field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>e.g.: &quot;sftp user@hostname&quot; or &quot;scp user@hostname:DatabaseOnRemote.kdbx {TEMP_DATABASE}&quot;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Input:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download input field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Upload</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Upload command field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>e.g.: &quot;sftp user@hostname&quot; or &quot;scp {TEMP_DATABASE} user@hostname:DatabaseOnRemote.kdbx&quot;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Upload input field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Name cannot be empty.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Test</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download command cannot be empty.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download failed with error: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download finished, but file %1 could not be found.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download successful.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Save Remote Settings</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You have unsaved changes. Do you want to save them?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>e.g.:
+get DatabaseOnRemote.kdbx {TEMP_DATABASE}
+exit
+---
+{TEMP_DATABASE} is used as placeholder to store the database in a temporary location
+The command has to exit. In case of `sftp` as last command `exit` has to be sent
+            </source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>e.g.:
+put {TEMP_DATABASE} DatabaseOnRemote.kdbx
+exit
+---
+{TEMP_DATABASE} is used as placeholder to store the database in a temporary location
+The command has to exit. In case of `sftp` as last command `exit` has to be sent
+            </source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>DatabaseTabWidget</name>
     <message>
         <source>Database creation error</source>
@@ -2334,6 +2456,11 @@ See on kahtlemata programmiviga – palun anna sellest arendajatele teada!</tran
         <source>%1 [Locked]</source>
         <comment>Database tab name modifier</comment>
         <translation>%1 [lukus]</translation>
+    </message>
+    <message>
+        <source>%1 [Temporary]</source>
+        <comment>Database tab name modifier</comment>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2529,6 +2656,42 @@ Kas keelata turvaline salvestamine ja proovida seejärel uuesti?</translation>
         <comment>Database tab name modifier</comment>
         <translation>%1 [uus andmebaas]</translation>
     </message>
+    <message>
+        <source>Remote Sync did not contain any download or upload commands.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remote sync &apos;%1&apos; completed successfully!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remote sync &apos;%1&apos; failed: %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Error while saving database %1: %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Downloading...</source>
+        <translation>Allalaadimine...</translation>
+    </message>
+    <message>
+        <source>Uploading...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Syncing...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove passkey from entry</source>
+        <translation>Eemalda pääsuvõti kirjelt</translation>
+    </message>
+    <message>
+        <source>Do you want to remove the passkey from this entry?</source>
+        <translation>Kas sa soovid eemalda selle pääsuvõtme sellelt kirjelt?</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidget</name>
@@ -2579,10 +2742,6 @@ Kas keelata turvaline salvestamine ja proovida seejärel uuesti?</translation>
     <message>
         <source>n/a</source>
         <translation>–</translation>
-    </message>
-    <message>
-        <source>(encrypted)</source>
-        <translation>(krüptitud)</translation>
     </message>
     <message>
         <source>Select private key</source>
@@ -2685,6 +2844,10 @@ Kas soovid vea parandada?</translation>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>%n aasta pärast</numerusform><numerusform>%n aasta pärast</numerusform></translation>
+    </message>
+    <message>
+        <source>Failed to decrypt SSH key, ensure password is correct.</source>
+        <translation>SSH-võtme dekrüptimine ei õnnestunud. Palun kontrolli, et kasutad õiget salasõna.</translation>
     </message>
 </context>
 <context>
@@ -2889,11 +3052,11 @@ isegi kui see ei vasta kvaliteedinõuetele. Märgi see ruut, kui parooli keeruku
     </message>
     <message>
         <source>These settings affect the entry&apos;s behaviour with the browser extension.</source>
-        <translation type="unfinished"/>
+        <translation>Need seaded mõjutavad kirje käitumist brauserilaiendusega.</translation>
     </message>
     <message>
         <source>Additional URLs</source>
-        <translation type="unfinished"/>
+        <translation>Täiendavad URLid</translation>
     </message>
 </context>
 <context>
@@ -3558,6 +3721,10 @@ See võib põhjustada asjaomaste pluginate töös tõrkeid.</translation>
     <message>
         <source>%1 - Clone</source>
         <translation>%1 – koopia</translation>
+    </message>
+    <message>
+        <source>Passkey</source>
+        <translation>Pääsuvõti</translation>
     </message>
 </context>
 <context>
@@ -5507,7 +5674,7 @@ Kas oled kindel, et soovid selle failiga jätkata?</translation>
     </message>
     <message>
         <source>Show Menubar</source>
-        <translation type="unfinished"/>
+        <translation>Näita menüüriba</translation>
     </message>
     <message>
         <source>Show Toolbar</source>
@@ -5860,7 +6027,7 @@ Võiksid kaaluda KeePassXC allalaadimislehel oleva AppImage’i kasutamist.</tra
     </message>
     <message>
         <source>Toggle Show Menubar</source>
-        <translation type="unfinished"/>
+        <translation>Lülita menüüriba nähtavust</translation>
     </message>
     <message>
         <source>Toggle Show Toolbar</source>
@@ -5889,6 +6056,18 @@ Võiksid kaaluda KeePassXC allalaadimislehel oleva AppImage’i kasutamist.</tra
     <message>
         <source>Toggle Allow Screen Capture</source>
         <translation>Lülita akna pildistamise lubamist</translation>
+    </message>
+    <message>
+        <source>Remote S&amp;ync…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove Passkey From Entry</source>
+        <translation>Eemalda pääsuvõti kirjelt</translation>
+    </message>
+    <message>
+        <source>Setup Remote Sync…</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6227,6 +6406,10 @@ Võiksid kaaluda KeePassXC allalaadimislehel oleva AppImage’i kasutamist.</tra
         <source>Unexpected EOF when writing private key</source>
         <translation>Ootamatu faililõpp privaatvõtme kirjutamisel</translation>
     </message>
+    <message>
+        <source>(encrypted)</source>
+        <translation>(krüptitud)</translation>
+    </message>
 </context>
 <context>
     <name>OpenSSHKeyGenDialog</name>
@@ -6275,7 +6458,7 @@ Võiksid kaaluda KeePassXC allalaadimislehel oleva AppImage’i kasutamist.</tra
     </message>
     <message>
         <source>Export the following passkey entries.</source>
-        <translation type="unfinished"/>
+        <translation>Ekspordi järgnevad pääsuvõtme kirjed.</translation>
     </message>
 </context>
 <context>
@@ -6348,15 +6531,15 @@ Kas soovid selle üle kirjutada?</translation>
     </message>
     <message>
         <source>Import the following passkey:</source>
-        <translation type="unfinished"/>
+        <translation>Impordi järgnev pääsuvõti:</translation>
     </message>
     <message>
         <source>Import the following passkey to this entry:</source>
-        <translation type="unfinished"/>
+        <translation>Impordi järgnev pääsuvõti sellele kirjele:</translation>
     </message>
     <message>
         <source>Default passkeys group (Imported Passkeys)</source>
-        <translation type="unfinished"/>
+        <translation>Vaikimisi pääsuvõtmete grupp („Imporditud pääsuvõtmed“)</translation>
     </message>
 </context>
 <context>
@@ -6379,25 +6562,27 @@ Kas soovid selle üle kirjutada?</translation>
     </message>
     <message>
         <source>Open passkey file</source>
-        <translation type="unfinished"/>
+        <translation>Ava pääsuvõtme fail</translation>
     </message>
     <message>
         <source>Cannot import passkey</source>
-        <translation type="unfinished"/>
+        <translation>Pääsuvõtme importimine pole võimalik</translation>
     </message>
     <message>
         <source>Cannot import passkey file &quot;%1&quot;. Data is missing.</source>
-        <translation type="unfinished"/>
+        <translation>Pääsuvõtmefaili „%1“ importimine pole võimalik. Andmed on puudu.</translation>
     </message>
     <message>
         <source>Cannot import passkey file &quot;%1&quot;.
 The following data is missing:
 %2</source>
-        <translation type="unfinished"/>
+        <translation>Pääsuvõtmefaili „%1“ importimine pole võimalik.
+Järgmised andmed on puudu:
+%2</translation>
     </message>
     <message>
         <source>Cannot import passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
-        <translation type="unfinished"/>
+        <translation>Pääsuvõtmefaili „%1“ importimine pole võimalik. Privaatvõti on puudu või vigane.</translation>
     </message>
 </context>
 <context>
@@ -8472,11 +8657,12 @@ Kernel: %3 %4</translation>
     <message>
         <source>Set the key file for the database.
 This option is deprecated, use --set-key-file instead.</source>
-        <translation type="unfinished"/>
+        <translation>Määra andmebaasi jaoks võtmefail.
+See valik on aegunud, pigem kasuta „--set-key-file“.</translation>
     </message>
     <message>
         <source>Databases have been locked.</source>
-        <translation type="unfinished"/>
+        <translation>Andmebaasid on lukustatud.</translation>
     </message>
     <message>
         <source>Attestation not supported</source>
@@ -8564,7 +8750,7 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Origin is empty or not allowed</source>
-        <translation type="unfinished"/>
+        <translation>Lähtedomeen on puudu või keelatud</translation>
     </message>
     <message>
         <source>Effective domain is not a valid domain</source>
@@ -8572,7 +8758,7 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Origin and RP ID do not match</source>
-        <translation type="unfinished"/>
+        <translation>Lähtedomeen ja RP ID ei kattu omavahel</translation>
     </message>
     <message>
         <source>No supported algorithms were provided</source>
@@ -8673,11 +8859,19 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation>Kiirklahvid</translation>
     </message>
     <message>
-        <source>Unsupported KDF type, cannot decrypt json file</source>
+        <source>Unknown passkeys error</source>
+        <translation>Pääsuvõtmega seotud tundmatu viga</translation>
+    </message>
+    <message>
+        <source>Invalid KDF iterations, cannot decrypt json file</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Unknown passkeys error</source>
+        <source>Unsupported format, ensure your Bitwarden export is password-protected</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Only PBKDF and Argon2 are supported, cannot decrypt json file</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -8713,6 +8907,37 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Internal zlib error: </source>
         <translation>Sisemine zlib-i tõrge: </translation>
+    </message>
+</context>
+<context>
+    <name>RemoteHandler</name>
+    <message>
+        <source>Command `%1` did not finish in time. Process was killed.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to upload merged database. Command `%1` did not finish in time. Process was killed.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid download parameters provided.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Command `%1` failed to download database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid database pointer or upload parameters provided.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Command `%1` exited with status code: %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to upload merged database. Command `%1` exited with status code: %2</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -8779,19 +9004,19 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Exclude from reports</source>
-        <translation>Jäetakse aruannetest välja</translation>
+        <translation>Jäta aruannetest välja</translation>
     </message>
     <message>
         <source>Only show entries that have a URL</source>
-        <translation>Näidatakse ainult kirjeid, millel on URL määratud</translation>
+        <translation>Näita ainult kirjeid, millel on URL määratud</translation>
     </message>
     <message>
         <source>Only show entries that have been explicitly allowed or denied</source>
-        <translation>Näidatakse ainult kirjeid, millel on lubatud või keelatud URL</translation>
+        <translation>Näita ainult kirjeid, mis on üheselt lubatud või keelatud</translation>
     </message>
     <message>
         <source>Show expired entries</source>
-        <translation>Näidatakse ka aegunud kirjeid</translation>
+        <translation>Näita ka aegunud kirjeid</translation>
     </message>
     <message>
         <source> (Expired)</source>
@@ -9039,15 +9264,15 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>The passkey file will be vulnerable to theft and unauthorized use, if left unsecured. Are you sure you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Kui pääsuvõtme fail jääb turvamata, siis on võimalik teda varastada ja väärkasutada. Kas sa oled kindel, et soovid jätkata?</translation>
     </message>
     <message>
         <source>Please wait, list of entries with passkeys is being updated…</source>
-        <translation type="unfinished"/>
+        <translation>Palun oota, uuendame pääsuvõtmega kirjete nimekirja…</translation>
     </message>
     <message>
         <source>No entries with passkeys.</source>
-        <translation type="unfinished"/>
+        <translation>Ühtegi pääsuvõtmega kirjet ei leidu.</translation>
     </message>
 </context>
 <context>
@@ -9397,11 +9622,15 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This setting does not override disabling recycle bin prompts &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;See valik ei asenda prügikasti kasutuselt eemaldamise kinnitusi&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a different value set in applications.) &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;See valik parandab ühilduvust teatud rakendustega,
+           mis otsivad parooli ilma esmalt andmebaasi lukku avamata.&lt;/p&gt;&lt;p&gt;Samas võib see
+           põhjustada kliendi kokkujooksmise, kui andmebaasi lukku piisavalt kiiresti ei õnnestu avada.
+            (Tavaline ajalimiit on 25 s, aga selle võib eri rakenduste puhul erinevalt määrata.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
+          </translation>
     </message>
 </context>
 <context>

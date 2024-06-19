@@ -714,7 +714,7 @@
     </message>
     <message>
         <source>Trying to send invalid keyboard symbol.</source>
-        <translation type="unfinished"/>
+        <translation>Pokus o odeslání neplatného symbolu.</translation>
     </message>
 </context>
 <context>
@@ -853,19 +853,19 @@ Vyberte databázi, do které chcete přihlašovací údaje uložit.</translation
     </message>
     <message>
         <source>Authenticate</source>
-        <translation type="unfinished"/>
+        <translation>Ověřit</translation>
     </message>
     <message>
         <source>Register new</source>
-        <translation type="unfinished"/>
+        <translation>Zaregistrovat nové</translation>
     </message>
     <message>
         <source>Register</source>
-        <translation type="unfinished"/>
+        <translation>Registrovat</translation>
     </message>
     <message numerus="yes">
         <source>Timeout in &lt;b&gt;%n&lt;/b&gt; seconds...</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Časový limit v &lt;b&gt;%n&lt;/b&gt; sekundách...</numerusform><numerusform>Časový limit v &lt;b&gt;%n&lt;/b&gt; sekundách...</numerusform><numerusform>Časový limit v &lt;b&gt;%n&lt;/b&gt; sekundách...</numerusform><numerusform>Časový limit vyprší za &lt;b&gt;%n&lt;/b&gt; sekundy...</numerusform></translation>
     </message>
     <message>
         <source>Relying Party: %1</source>
@@ -873,7 +873,7 @@ Vyberte databázi, do které chcete přihlašovací údaje uložit.</translation
     </message>
     <message>
         <source>Username: %1</source>
-        <translation type="unfinished"/>
+        <translation>Uživatelské jméno: %1</translation>
     </message>
     <message>
         <source>KeePassXC - Passkey credentials</source>
@@ -886,11 +886,12 @@ Vyberte databázi, do které chcete přihlašovací údaje uložit.</translation
     <message>
         <source>Existing passkey found.
 Do you want to register a new passkey for:</source>
-        <translation type="unfinished"/>
+        <translation>Byl nalezen existující přístupový klíč.
+Chcete uložit nový přístupový klíč pro:</translation>
     </message>
     <message>
         <source>Select the existing passkey and press Update to replace it.</source>
-        <translation type="unfinished"/>
+        <translation>Vyberte existující přístupový klíč a stisknutím Aktualizovat jej nahraďte.</translation>
     </message>
     <message>
         <source>Authenticate passkey credentials for:</source>
@@ -898,7 +899,7 @@ Do you want to register a new passkey for:</source>
     </message>
     <message>
         <source>Do you want to register a passkey for:</source>
-        <translation type="unfinished"/>
+        <translation>Chcete uložit přístupový klíč pro:</translation>
     </message>
 </context>
 <context>
@@ -951,7 +952,8 @@ Opravdu chcete tuto položku smazat?
     </message>
     <message>
         <source>KeePassXC - Create a new group</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC - Vytvořit novou skupinu
+</translation>
     </message>
     <message>
         <source>Disable</source>
@@ -996,7 +998,7 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Register</source>
-        <translation type="unfinished"/>
+        <translation>Registrovat</translation>
     </message>
 </context>
 <context>
@@ -1193,18 +1195,6 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation>Identif. uživatelsky určeného rozšíření</translation>
     </message>
     <message>
-        <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
-        <translation>Z důvodu, že software ze Snap balíčku je provozován v ohraničeném prostředí, je třeba spustit skript, který zapíná napojení na webový prohlížeč. &lt;br /&gt;Tento skript je možné získat z %1</translation>
-    </message>
-    <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3. %4</source>
-        <translation>Aby fungovalo napojení na prohlížeč, je třeba KeePassXC. &lt;br /&gt; Stáhnete ho pro %1 a %2 a %3. %4</translation>
-    </message>
-    <message>
-        <source>Please see special instructions for browser extension use below</source>
-        <translation>Níže si přečtěte konkrétní pokyny pro rozšíření do webového prohlížeče</translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation>Spustitelné soubory</translation>
     </message>
@@ -1250,6 +1240,10 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Allow using localhost with passkeys</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1392,6 +1386,15 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Imported from CSV file: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No Title Selected</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No title column was selected, entries will be hard to tell apart.
+Are you sure you want to import?</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1597,7 +1600,7 @@ Abyste tomu, aby se tato chyba objevovala, je třeba přejít do „Nastavení d
     </message>
     <message>
         <source>Select Key File:</source>
-        <translation type="unfinished"/>
+        <translation>Vyberte soubor klíče:</translation>
     </message>
     <message>
         <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;/p&gt;</source>
@@ -1609,39 +1612,43 @@ Abyste tomu, aby se tato chyba objevovala, je třeba přejít do „Nastavení d
     </message>
     <message>
         <source>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;I have a key file&lt;/a&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;Mám klíčový soubor&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Use hardware key [Serial: %1]</source>
-        <translation type="unfinished"/>
+        <translation>Použít hardwarový klíč [Serial: %1]</translation>
     </message>
     <message>
         <source>Use hardware key</source>
-        <translation type="unfinished"/>
+        <translation>Použít hardwarový klíč</translation>
     </message>
     <message>
         <source>Your database file is NOT a key file!
 If you don&apos;t have a key file or don&apos;t know what that is, you don&apos;t have to select one.</source>
-        <translation type="unfinished"/>
+        <translation>Váš databázový soubor NENÍ klíčový soubor!
+Pokud nemáte klíčový soubor nebo nevíte, co to je, nemusíte ho vybrat.</translation>
     </message>
     <message>
         <source>KeePassXC database file selected</source>
-        <translation type="unfinished"/>
+        <translation>Vybraný databázový soubor KeePassXC</translation>
     </message>
     <message>
         <source>The file you selected looks like a database file.
 A database file is NOT a key file!
 
 Are you sure you want to continue with this file?.</source>
-        <translation type="unfinished"/>
+        <translation>Soubor, který jste vybrali, vypadá jako databázový soubor.
+Databázový soubor NENÍ klíčový soubor!
+
+Opravdu chcete pokračovat s tímto souborem?.</translation>
     </message>
     <message>
         <source>No hardware keys found.</source>
-        <translation type="unfinished"/>
+        <translation>Nebyly nalezeny žádné hardwarové klíče.</translation>
     </message>
     <message>
         <source>Refresh Hardware Keys</source>
-        <translation type="unfinished"/>
+        <translation>Aktualizace hardwarových klíčů</translation>
     </message>
 </context>
 <context>
@@ -1676,6 +1683,10 @@ Are you sure you want to continue with this file?.</source>
     <message>
         <source>Maintenance</source>
         <translation>Údržba</translation>
+    </message>
+    <message>
+        <source>Remote Sync</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1790,11 +1801,11 @@ Toto je nutné pouze v případě, že vaše databáze je kopií jiné a nefungu
     </message>
     <message>
         <source>No keys found</source>
-        <translation type="unfinished"/>
+        <translation>Nebyly nalezeny žádné klíče</translation>
     </message>
     <message>
         <source>Removed keys from database</source>
-        <translation type="unfinished"/>
+        <translation>Odstraněné klíče z databáze</translation>
     </message>
     <message>
         <source>Removed permissions</source>
@@ -1802,7 +1813,7 @@ Toto je nutné pouze v případě, že vaše databáze je kopií jiné a nefungu
     </message>
     <message>
         <source>No entry with permissions found!</source>
-        <translation type="unfinished"/>
+        <translation>Nebyl nalezen žádný záznam s oprávnění!</translation>
     </message>
 </context>
 <context>
@@ -1848,11 +1859,11 @@ Opravdu chcete pokračovat bez hesla?</translation>
         <translation>Slabé heslo</translation>
     </message>
     <message>
-        <source>You must enter a stronger password to protect your database.</source>
+        <source>This is a weak password! For better protection of your secrets, you should choose a stronger password.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>This is a weak password! For better protection of your secrets, you should choose a stronger password.</source>
+        <source>The provided password does not meet the minimum quality requirement.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -2000,7 +2011,7 @@ Pokud tento počet ponecháte, vaše databáze nebude chráněna před útoky zk
     </message>
     <message>
         <source>Basic</source>
-        <translation type="unfinished"/>
+        <translation>Základní</translation>
     </message>
     <message>
         <source>Advanced</source>
@@ -2243,6 +2254,121 @@ removed from the database.</source>
     </message>
 </context>
 <context>
+    <name>DatabaseSettingsWidgetRemote</name>
+    <message>
+        <source>Sync Commands</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Odebrat</translation>
+    </message>
+    <message>
+        <source>Command Settings</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Název</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Uložit</translation>
+    </message>
+    <message>
+        <source>Download</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Command:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download command field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>e.g.: &quot;sftp user@hostname&quot; or &quot;scp user@hostname:DatabaseOnRemote.kdbx {TEMP_DATABASE}&quot;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Input:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download input field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Upload</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Upload command field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>e.g.: &quot;sftp user@hostname&quot; or &quot;scp {TEMP_DATABASE} user@hostname:DatabaseOnRemote.kdbx&quot;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Upload input field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Name cannot be empty.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Test</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download command cannot be empty.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download failed with error: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download finished, but file %1 could not be found.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download successful.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Save Remote Settings</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You have unsaved changes. Do you want to save them?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>e.g.:
+get DatabaseOnRemote.kdbx {TEMP_DATABASE}
+exit
+---
+{TEMP_DATABASE} is used as placeholder to store the database in a temporary location
+The command has to exit. In case of `sftp` as last command `exit` has to be sent
+            </source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>e.g.:
+put {TEMP_DATABASE} DatabaseOnRemote.kdbx
+exit
+---
+{TEMP_DATABASE} is used as placeholder to store the database in a temporary location
+The command has to exit. In case of `sftp` as last command `exit` has to be sent
+            </source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>DatabaseTabWidget</name>
     <message>
         <source>Database creation error</source>
@@ -2314,6 +2440,11 @@ Toto je nepochybně chyba, nahlaste ji prosím vývojářům.</translation>
         <source>%1 [Locked]</source>
         <comment>Database tab name modifier</comment>
         <translation>%1 [uzamčeno]</translation>
+    </message>
+    <message>
+        <source>%1 [Temporary]</source>
+        <comment>Database tab name modifier</comment>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2509,6 +2640,42 @@ Vypnout bezpečné ukládání a zkusit to znovu?</translation>
         <comment>Database tab name modifier</comment>
         <translation>%1 [nová databáze]</translation>
     </message>
+    <message>
+        <source>Remote Sync did not contain any download or upload commands.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remote sync &apos;%1&apos; completed successfully!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remote sync &apos;%1&apos; failed: %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Error while saving database %1: %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Downloading...</source>
+        <translation>Stahování…</translation>
+    </message>
+    <message>
+        <source>Uploading...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Syncing...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove passkey from entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to remove the passkey from this entry?</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditEntryWidget</name>
@@ -2559,10 +2726,6 @@ Vypnout bezpečné ukládání a zkusit to znovu?</translation>
     <message>
         <source>n/a</source>
         <translation>neaplikovatelné</translation>
-    </message>
-    <message>
-        <source>(encrypted)</source>
-        <translation>(šifrováno)</translation>
     </message>
     <message>
         <source>Select private key</source>
@@ -2665,6 +2828,10 @@ Chcete ji opravit?</translation>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>%n rok</numerusform><numerusform>%n roky</numerusform><numerusform>%n let</numerusform><numerusform>%n roky</numerusform></translation>
+    </message>
+    <message>
+        <source>Failed to decrypt SSH key, ensure password is correct.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3536,6 +3703,10 @@ Dotčený zásuvný modul to může rozbít.</translation>
     <message>
         <source>%1 - Clone</source>
         <translation>%1 – klon</translation>
+    </message>
+    <message>
+        <source>Passkey</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5632,11 +5803,11 @@ Doporučujeme použít AppImage, které je k dispozici v sekci stahování naši
     </message>
     <message>
         <source>Open Database</source>
-        <translation type="unfinished"/>
+        <translation>Otevřít databázi</translation>
     </message>
     <message>
         <source>Create Database</source>
-        <translation type="unfinished"/>
+        <translation>Vytvořit databázi</translation>
     </message>
     <message>
         <source>Merge From Database</source>
@@ -5868,6 +6039,18 @@ Doporučujeme použít AppImage, které je k dispozici v sekci stahování naši
     </message>
     <message>
         <source>Toggle Allow Screen Capture</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remote S&amp;ync…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove Passkey From Entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Setup Remote Sync…</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -6207,6 +6390,10 @@ Doporučujeme použít AppImage, které je k dispozici v sekci stahování naši
         <source>Unexpected EOF when writing private key</source>
         <translation>Neočekávaný konec souboru při zápisu soukromé části klíče</translation>
     </message>
+    <message>
+        <source>(encrypted)</source>
+        <translation>(šifrováno)</translation>
+    </message>
 </context>
 <context>
     <name>OpenSSHKeyGenDialog</name>
@@ -6291,7 +6478,7 @@ Do you want to overwrite it?
     </message>
     <message>
         <source>Username: %1</source>
-        <translation type="unfinished"/>
+        <translation>Uživatelské jméno: %1</translation>
     </message>
     <message>
         <source>Group</source>
@@ -8653,11 +8840,19 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Unsupported KDF type, cannot decrypt json file</source>
+        <source>Unknown passkeys error</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Unknown passkeys error</source>
+        <source>Invalid KDF iterations, cannot decrypt json file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unsupported format, ensure your Bitwarden export is password-protected</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Only PBKDF and Argon2 are supported, cannot decrypt json file</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -8693,6 +8888,37 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Internal zlib error: </source>
         <translation>Vnitřní chyba v knihovně zlib:</translation>
+    </message>
+</context>
+<context>
+    <name>RemoteHandler</name>
+    <message>
+        <source>Command `%1` did not finish in time. Process was killed.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to upload merged database. Command `%1` did not finish in time. Process was killed.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid download parameters provided.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Command `%1` failed to download database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid database pointer or upload parameters provided.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Command `%1` exited with status code: %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to upload merged database. Command `%1` exited with status code: %2</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -8775,7 +9001,7 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source> (Expired)</source>
-        <translation type="unfinished"/>
+        <translation> (Platnost vypršela)</translation>
     </message>
 </context>
 <context>
@@ -8865,7 +9091,7 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source> (Expired)</source>
-        <translation type="unfinished"/>
+        <translation> (Platnost vypršela)</translation>
     </message>
 </context>
 <context>
@@ -9003,7 +9229,7 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Relying Party</source>
-        <translation type="unfinished"/>
+        <translation>Předávající strana</translation>
     </message>
     <message>
         <source>Show expired entries</source>
@@ -9011,7 +9237,7 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source> (Expired)</source>
-        <translation type="unfinished"/>
+        <translation> (Platnost vypršela)</translation>
     </message>
     <message>
         <source>Export Confirmation</source>
@@ -9019,15 +9245,15 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>The passkey file will be vulnerable to theft and unauthorized use, if left unsecured. Are you sure you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>Soubor přístupového klíče bude zranitelný vůči krádeži a neoprávněnému použití, pokud zůstane nezabezpečený. Jste si jistý, že chcete pokračovat?</translation>
     </message>
     <message>
         <source>Please wait, list of entries with passkeys is being updated…</source>
-        <translation type="unfinished"/>
+        <translation>Čekejte prosím, seznam záznamů s přístupovými klíči se aktualizuje...</translation>
     </message>
     <message>
         <source>No entries with passkeys.</source>
-        <translation type="unfinished"/>
+        <translation>Žádné záznamy s přístupovými klíči.</translation>
     </message>
 </context>
 <context>
@@ -9377,11 +9603,11 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This setting does not override disabling recycle bin prompts &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Toto nastavení nezmění deaktivace výzev koše &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a different value set in applications.) &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Toto zlepšuje kompatibilitu s určitými aplikacemi, které hledají heslo bez předchozího odemknutí databáze.&lt;/p&gt;&lt;p&gt; Povolením může také dojít k chybě klienta, pokud databázi nelze odemknout během určitého časového limitu. (Obvykle 25s, ale hodnota může být jinak nastavená v aplikacích.) &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -9720,15 +9946,15 @@ Příklad: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Create Database</source>
-        <translation type="unfinished"/>
+        <translation>Vytvořit databázi</translation>
     </message>
     <message>
         <source>Open Database</source>
-        <translation type="unfinished"/>
+        <translation>Otevřít databázi</translation>
     </message>
     <message>
         <source>Import File</source>
-        <translation type="unfinished"/>
+        <translation>Importovat soubor</translation>
     </message>
 </context>
 <context>
@@ -9805,7 +10031,7 @@ Příklad: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Refresh hardware keys</source>
-        <translation type="unfinished"/>
+        <translation>Znovu načíst hardwarové klíče</translation>
     </message>
 </context>
 <context>

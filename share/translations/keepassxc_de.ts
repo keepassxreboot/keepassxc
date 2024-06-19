@@ -888,24 +888,25 @@ Bitte wählen Sie die richtige Datenbank zum Speichern der Anmeldedaten.</transl
     </message>
     <message>
         <source>Add to existing entry</source>
-        <translation type="unfinished"/>
+        <translation>Einem bestehenden Eintrag hinzufügen</translation>
     </message>
     <message>
         <source>Existing passkey found.
 Do you want to register a new passkey for:</source>
-        <translation type="unfinished"/>
+        <translation>Vorhandenen Passkey gefunden.
+Möchten Sie einen neuen Passkey registrieren für:</translation>
     </message>
     <message>
         <source>Select the existing passkey and press Update to replace it.</source>
-        <translation type="unfinished"/>
+        <translation>Wählen Sie den vorhandenen Passkey aus und drücken Sie Update, um ihn zu ersetzen.</translation>
     </message>
     <message>
         <source>Authenticate passkey credentials for:</source>
-        <translation type="unfinished"/>
+        <translation>Passkey-Anmeldedaten authentifizieren für:</translation>
     </message>
     <message>
         <source>Do you want to register a passkey for:</source>
-        <translation type="unfinished"/>
+        <translation>Möchten Sie ein Passkey registrieren für:</translation>
     </message>
 </context>
 <context>
@@ -989,16 +990,17 @@ Möchten Sie den Eintrag löschen?
     </message>
     <message>
         <source>Register a new passkey to this entry:</source>
-        <translation type="unfinished"/>
+        <translation>Registrieren Sie einen neuen Passkey für diesen Eintrag:</translation>
     </message>
     <message>
         <source>KeePassXC - Update passkey</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC - Passkey aktualisieren</translation>
     </message>
     <message>
         <source>Entry already has a passkey.
 Do you want to overwrite the passkey in %1 - %2?</source>
-        <translation type="unfinished"/>
+        <translation>Eintrag hat bereits einen Passkey.
+Möchten Sie den Passkey in %1 - %2 überschreiben?</translation>
     </message>
     <message>
         <source>Register</source>
@@ -1199,18 +1201,6 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation>Benutzerdefinierte Erweiterungs-ID</translation>
     </message>
     <message>
-        <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
-        <translation>Aufgrund von Snap Sandboxing müssen Sie ein Skript ausführen, um die Browser-Integration zu aktivieren.&lt;br /&gt;Sie können dieses Skript erhalten unter %1</translation>
-    </message>
-    <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3. %4</source>
-        <translation>KeePassXC-Browser wird für die Browserintegration benötigt. &lt;br /&gt;Laden Sie es für %1 und %2 und %3 herunter. %4</translation>
-    </message>
-    <message>
-        <source>Please see special instructions for browser extension use below</source>
-        <translation>Bitte beachten Sie die untenstehenden speziellen Anweisungen für die Verwendung der Browser-Erweiterung</translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation>Ausführbare Dateien</translation>
     </message>
@@ -1252,10 +1242,14 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Allows using insecure http://localhost with passkeys for testing purposes.</source>
-        <translation type="unfinished"/>
+        <translation>Nutzung von unsicheren http://localhost mit Passkeys zu Testzwecken zulassen.</translation>
     </message>
     <message>
         <source>Allow using localhost with passkeys</source>
+        <translation>Nutzung von localhost mit Passkeys zulassen</translation>
+    </message>
+    <message>
+        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1399,6 +1393,16 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     <message>
         <source>Imported from CSV file: %1</source>
         <translation>Aus CSV-Datei: %1 importiert</translation>
+    </message>
+    <message>
+        <source>No Title Selected</source>
+        <translation>Kein Titel ausgewählt</translation>
+    </message>
+    <message>
+        <source>No title column was selected, entries will be hard to tell apart.
+Are you sure you want to import?</source>
+        <translation>Es wurde keine Titelspalte ausgewählt, so dass die Einträge schwer zu unterscheiden sind.
+Sind Sie sicher, dass Sie importieren möchten?</translation>
     </message>
 </context>
 <context>
@@ -1689,6 +1693,10 @@ Sind Sie sicher, dass Sie mit dieser Datei fortfahren wollen?</translation>
         <source>Maintenance</source>
         <translation>Wartung</translation>
     </message>
+    <message>
+        <source>Remote Sync</source>
+        <translation>Fernsynchronisierung</translation>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetBrowser</name>
@@ -1860,12 +1868,12 @@ Wollen Sie wirklich ohne Passwort fortfahren?</translation>
         <translation>Schwaches Passwort</translation>
     </message>
     <message>
-        <source>You must enter a stronger password to protect your database.</source>
-        <translation>Sie müssen ein stärkeres Passwort eingeben, um Ihre Datenbank zu schützen.</translation>
-    </message>
-    <message>
         <source>This is a weak password! For better protection of your secrets, you should choose a stronger password.</source>
         <translation>Dies ist ein schwaches Passwort! Um Ihre Geheimnisse besser zu schützen, sollten Sie ein stärkeres Passwort wählen.</translation>
+    </message>
+    <message>
+        <source>The provided password does not meet the minimum quality requirement.</source>
+        <translation>Das übermittelte Passwort entspricht nicht den Mindestanforderungen.</translation>
     </message>
 </context>
 <context>
@@ -2264,6 +2272,133 @@ aus der Datenbank entfernt.</translation>
     </message>
 </context>
 <context>
+    <name>DatabaseSettingsWidgetRemote</name>
+    <message>
+        <source>Sync Commands</source>
+        <translation>Synchronisierungsbefehle</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Entfernen</translation>
+    </message>
+    <message>
+        <source>Command Settings</source>
+        <translation>Befehlseinstellungen</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Name</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Speichern</translation>
+    </message>
+    <message>
+        <source>Download</source>
+        <translation>Herunterladen</translation>
+    </message>
+    <message>
+        <source>Command:</source>
+        <translation>Befehl:</translation>
+    </message>
+    <message>
+        <source>Download command field</source>
+        <translation>Feld für den Download-Befehl</translation>
+    </message>
+    <message>
+        <source>e.g.: &quot;sftp user@hostname&quot; or &quot;scp user@hostname:DatabaseOnRemote.kdbx {TEMP_DATABASE}&quot;</source>
+        <translation>z. B.: „sftp user@hostname“ or „scp user@hostname:DatabaseOnRemote.kdbx {TEMP_DATABASE}“</translation>
+    </message>
+    <message>
+        <source>Input:</source>
+        <translation>Eingabe:</translation>
+    </message>
+    <message>
+        <source>Download input field</source>
+        <translation>Eingabefeld für den Download</translation>
+    </message>
+    <message>
+        <source>Upload</source>
+        <translation>Hochladen</translation>
+    </message>
+    <message>
+        <source>Upload command field</source>
+        <translation>Feld für den Upload-Befehl</translation>
+    </message>
+    <message>
+        <source>e.g.: &quot;sftp user@hostname&quot; or &quot;scp {TEMP_DATABASE} user@hostname:DatabaseOnRemote.kdbx&quot;</source>
+        <translation>z. B.: „sftp user@hostname“ oder „scp {TEMP_DATABASE} user@hostname:DatabaseOnRemote.kdbx“</translation>
+    </message>
+    <message>
+        <source>Upload input field</source>
+        <translation>Eingabefeld für den Upload</translation>
+    </message>
+    <message>
+        <source>Name cannot be empty.</source>
+        <translation>Der Name darf nicht leer sein.</translation>
+    </message>
+    <message>
+        <source>Test</source>
+        <translation>Test</translation>
+    </message>
+    <message>
+        <source>Download command cannot be empty.</source>
+        <translation>Der Download-Befehl darf nicht leer sein.</translation>
+    </message>
+    <message>
+        <source>Download failed with error: %1</source>
+        <translation>Herunterladen fehlgeschlagen mit Fehler: %1</translation>
+    </message>
+    <message>
+        <source>Download finished, but file %1 could not be found.</source>
+        <translation>Herunterladen beendet, aber Datei %1 konnte nicht gefunden werden.</translation>
+    </message>
+    <message>
+        <source>Download successful.</source>
+        <translation>Herunterladen erfolgreich.</translation>
+    </message>
+    <message>
+        <source>Save Remote Settings</source>
+        <translation>Ferneinstellungen speichern</translation>
+    </message>
+    <message>
+        <source>You have unsaved changes. Do you want to save them?</source>
+        <translation>Sie haben ungespeicherte Änderungen. Möchten Sie sie speichern?</translation>
+    </message>
+    <message>
+        <source>e.g.:
+get DatabaseOnRemote.kdbx {TEMP_DATABASE}
+exit
+---
+{TEMP_DATABASE} is used as placeholder to store the database in a temporary location
+The command has to exit. In case of `sftp` as last command `exit` has to be sent
+            </source>
+        <translation>z. B.:
+get DatabaseOnRemote.kdbx {TEMP_DATABASE}
+exit
+---
+{TEMP_DATABASE} wird als Platzhalter verwendet, um die Datenbank an einem temporären Ort zu speichern
+Der Befehl muss beendet werden. Im Falle von `sftp` muss als letzter Befehl `exit` gesendet werden
+            </translation>
+    </message>
+    <message>
+        <source>e.g.:
+put {TEMP_DATABASE} DatabaseOnRemote.kdbx
+exit
+---
+{TEMP_DATABASE} is used as placeholder to store the database in a temporary location
+The command has to exit. In case of `sftp` as last command `exit` has to be sent
+            </source>
+        <translation>z. B.:
+put {TEMP_DATABASE} DatabaseOnRemote.kdbx
+exit
+---
+{TEMP_DATABASE} wird als Platzhalter verwendet, um die Datenbank an einem temporären Ort zu speichern
+Der Befehl muss beendet werden. Im Falle von `sftp` muss als letzter Befehl `exit` gesendet werden
+            </translation>
+    </message>
+</context>
+<context>
     <name>DatabaseTabWidget</name>
     <message>
         <source>Database creation error</source>
@@ -2335,6 +2470,11 @@ Das ist definitiv ein Programmfehler, bitte benachrichtigen Sie die Entwickler.<
         <source>%1 [Locked]</source>
         <comment>Database tab name modifier</comment>
         <translation>%1 [Gesperrt]</translation>
+    </message>
+    <message>
+        <source>%1 [Temporary]</source>
+        <comment>Database tab name modifier</comment>
+        <translation>%1 [Temporär]</translation>
     </message>
 </context>
 <context>
@@ -2531,6 +2671,42 @@ Sicheres Speichern deaktivieren und erneut versuchen?</translation>
         <comment>Database tab name modifier</comment>
         <translation>%1 [Neue Datenbank]</translation>
     </message>
+    <message>
+        <source>Remote Sync did not contain any download or upload commands.</source>
+        <translation>Fernsynchronisierung enthielt keine Download- oder Upload-Befehle.</translation>
+    </message>
+    <message>
+        <source>Remote sync &apos;%1&apos; completed successfully!</source>
+        <translation>Fernsynchronisierung &apos;%1&apos; erfolgreich abgeschlossen!</translation>
+    </message>
+    <message>
+        <source>Remote sync &apos;%1&apos; failed: %2</source>
+        <translation>Fernsynchronisierung &apos;%1&apos; fehlgeschlagen: %2</translation>
+    </message>
+    <message>
+        <source>Error while saving database %1: %2</source>
+        <translation>Fehler beim Speichern der Datenbank %1: %2</translation>
+    </message>
+    <message>
+        <source>Downloading...</source>
+        <translation>Herunterladen...</translation>
+    </message>
+    <message>
+        <source>Uploading...</source>
+        <translation>Hochladen...</translation>
+    </message>
+    <message>
+        <source>Syncing...</source>
+        <translation>Synchronisieren...</translation>
+    </message>
+    <message>
+        <source>Remove passkey from entry</source>
+        <translation>Passkey aus Eintrag entfernen</translation>
+    </message>
+    <message>
+        <source>Do you want to remove the passkey from this entry?</source>
+        <translation>Möchten Sie den Passkey aus diesem Eintrag entfernen?</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidget</name>
@@ -2581,10 +2757,6 @@ Sicheres Speichern deaktivieren und erneut versuchen?</translation>
     <message>
         <source>n/a</source>
         <translation>-</translation>
-    </message>
-    <message>
-        <source>(encrypted)</source>
-        <translation>(verschlüsselt)</translation>
     </message>
     <message>
         <source>Select private key</source>
@@ -2687,6 +2859,10 @@ Korrigieren?</translation>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>%n Jahre</numerusform><numerusform>%n Jahr(e)</numerusform></translation>
+    </message>
+    <message>
+        <source>Failed to decrypt SSH key, ensure password is correct.</source>
+        <translation>Entschlüsselung des SSH-Schlüssels fehlgeschlagen. Stellen Sie sicher, dass das Passwort korrekt ist.</translation>
     </message>
 </context>
 <context>
@@ -3558,6 +3734,10 @@ Das kann dazu führen, dass die betroffenen Plugins nicht mehr richtig funktioni
     <message>
         <source>%1 - Clone</source>
         <translation>%1 - Klon</translation>
+    </message>
+    <message>
+        <source>Passkey</source>
+        <translation>Passkey</translation>
     </message>
 </context>
 <context>
@@ -5843,19 +6023,19 @@ Wir empfehlen Ihnen, das AppImage zu verwenden, das auf unserer Download-Seite v
     </message>
     <message>
         <source>Set Theme: Automatic</source>
-        <translation>Design festlegen: Automatisch</translation>
+        <translation>Design festlegen: automatisch</translation>
     </message>
     <message>
         <source>Set Theme: Light</source>
-        <translation>Design festlegen: Hell</translation>
+        <translation>Design festlegen: hell</translation>
     </message>
     <message>
         <source>Set Theme: Dark</source>
-        <translation>Design festlegen: Dunkel</translation>
+        <translation>Design festlegen: dunkel</translation>
     </message>
     <message>
         <source>Set Theme: Classic</source>
-        <translation>Design festlegen: Klassisch</translation>
+        <translation>Design festlegen: klassisch</translation>
     </message>
     <message>
         <source>Toggle Show Menubar</source>
@@ -5863,7 +6043,7 @@ Wir empfehlen Ihnen, das AppImage zu verwenden, das auf unserer Download-Seite v
     </message>
     <message>
         <source>Toggle Show Toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Symbolleiste ausblenden</translation>
     </message>
     <message>
         <source>Toggle Show Preview Panel</source>
@@ -5871,7 +6051,7 @@ Wir empfehlen Ihnen, das AppImage zu verwenden, das auf unserer Download-Seite v
     </message>
     <message>
         <source>Toggle Always on Top</source>
-        <translation type="unfinished"/>
+        <translation>Immer im Vordergrund umschalten</translation>
     </message>
     <message>
         <source>Toggle Hide Usernames</source>
@@ -5887,7 +6067,19 @@ Wir empfehlen Ihnen, das AppImage zu verwenden, das auf unserer Download-Seite v
     </message>
     <message>
         <source>Toggle Allow Screen Capture</source>
-        <translation type="unfinished"/>
+        <translation>Bildschirmaufnahme zulassen umschalten</translation>
+    </message>
+    <message>
+        <source>Remote S&amp;ync…</source>
+        <translation>Ferns&amp;ynchronisierung...</translation>
+    </message>
+    <message>
+        <source>Remove Passkey From Entry</source>
+        <translation>Passkey aus Eintrag entfernen</translation>
+    </message>
+    <message>
+        <source>Setup Remote Sync…</source>
+        <translation>Fernsynchronisierung einrichten...</translation>
     </message>
 </context>
 <context>
@@ -6226,6 +6418,10 @@ Wir empfehlen Ihnen, das AppImage zu verwenden, das auf unserer Download-Seite v
         <source>Unexpected EOF when writing private key</source>
         <translation>Unerwartetes Dateiende beim Schreiben des privaten Schlüssels</translation>
     </message>
+    <message>
+        <source>(encrypted)</source>
+        <translation>(verschlüsselt)</translation>
+    </message>
 </context>
 <context>
     <name>OpenSSHKeyGenDialog</name>
@@ -6274,7 +6470,7 @@ Wir empfehlen Ihnen, das AppImage zu verwenden, das auf unserer Download-Seite v
     </message>
     <message>
         <source>Export the following passkey entries.</source>
-        <translation type="unfinished"/>
+        <translation>Die folgenden Passkey-Einträge exportieren.</translation>
     </message>
 </context>
 <context>
@@ -6348,15 +6544,15 @@ Möchten Sie sie überschreiben?
     </message>
     <message>
         <source>Import the following passkey:</source>
-        <translation type="unfinished"/>
+        <translation>Den folgenden Passkey importieren:</translation>
     </message>
     <message>
         <source>Import the following passkey to this entry:</source>
-        <translation type="unfinished"/>
+        <translation>Den folgenden Passkey in diesen Eintrag importieren:</translation>
     </message>
     <message>
         <source>Default passkeys group (Imported Passkeys)</source>
-        <translation type="unfinished"/>
+        <translation>Standard-Passkeys-Gruppe (importierte Passkeys)</translation>
     </message>
 </context>
 <context>
@@ -6379,25 +6575,27 @@ Möchten Sie sie überschreiben?
     </message>
     <message>
         <source>Open passkey file</source>
-        <translation type="unfinished"/>
+        <translation>Passkey-Datei öffnen</translation>
     </message>
     <message>
         <source>Cannot import passkey</source>
-        <translation type="unfinished"/>
+        <translation>Passkey kann nicht importiert werden</translation>
     </message>
     <message>
         <source>Cannot import passkey file &quot;%1&quot;. Data is missing.</source>
-        <translation type="unfinished"/>
+        <translation>Passkey-Datei „%1“ kann nicht importiert werden. Es fehlen Daten.</translation>
     </message>
     <message>
         <source>Cannot import passkey file &quot;%1&quot;.
 The following data is missing:
 %2</source>
-        <translation type="unfinished"/>
+        <translation>Passkey-Datei „%1“ kann nicht importiert werden.
+Die folgenden Daten fehlen:
+%2</translation>
     </message>
     <message>
         <source>Cannot import passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
-        <translation type="unfinished"/>
+        <translation>Passkey-Datei „%1“ kann nicht importiert werden. Privater Schlüssel fehlt oder ist beschädigt.</translation>
     </message>
 </context>
 <context>
@@ -7611,7 +7809,7 @@ Möchten Sie diese überschreiben?</translation>
     </message>
     <message>
         <source>Type: Unknown (%1)</source>
-        <translation>Typ: Unbekannt (%1)</translation>
+        <translation>Typ: unbekannt (%1)</translation>
     </message>
     <message>
         <source>Entropy %1 (%2)</source>
@@ -8674,12 +8872,20 @@ Diese Option ist veraltet, verwenden Sie stattdessen --set-key-file.</translatio
         <translation>Tastenkürzel</translation>
     </message>
     <message>
-        <source>Unsupported KDF type, cannot decrypt json file</source>
-        <translation>Nicht unterstützter KDF-Typ, kann JSON-Datei nicht entschlüsseln</translation>
+        <source>Unknown passkeys error</source>
+        <translation>Unbekannter Passkey-Fehler</translation>
     </message>
     <message>
-        <source>Unknown passkeys error</source>
-        <translation type="unfinished"/>
+        <source>Invalid KDF iterations, cannot decrypt json file</source>
+        <translation>Ungültige KDF-Iterationen, JSON-Datei kann nicht entschlüsselt werden.</translation>
+    </message>
+    <message>
+        <source>Unsupported format, ensure your Bitwarden export is password-protected</source>
+        <translation>Nicht unterstütztes Format, stelle sicher, dass dein Bitwarden-Export passwortgeschützt ist.</translation>
+    </message>
+    <message>
+        <source>Only PBKDF and Argon2 are supported, cannot decrypt json file</source>
+        <translation>Nur PBKDF und Argon2 werden unterstützt, JSON-Datei kann nicht entschlüsselt werden.</translation>
     </message>
 </context>
 <context>
@@ -8714,6 +8920,37 @@ Diese Option ist veraltet, verwenden Sie stattdessen --set-key-file.</translatio
     <message>
         <source>Internal zlib error: </source>
         <translation>Interner Fehler in zlib:</translation>
+    </message>
+</context>
+<context>
+    <name>RemoteHandler</name>
+    <message>
+        <source>Command `%1` did not finish in time. Process was killed.</source>
+        <translation>Der Befehl `%1` wurde nicht rechtzeitig beendet. Der Prozess wurde beendet.</translation>
+    </message>
+    <message>
+        <source>Failed to upload merged database. Command `%1` did not finish in time. Process was killed.</source>
+        <translation>Das Hochladen der zusammengeführten Datenbank ist fehlgeschlagen. Der Befehl `%1` wurde nicht rechtzeitig beendet. Prozess wurde beendet.</translation>
+    </message>
+    <message>
+        <source>Invalid download parameters provided.</source>
+        <translation>Ungültige Download-Parameter angegeben.</translation>
+    </message>
+    <message>
+        <source>Command `%1` failed to download database.</source>
+        <translation>Der Befehl `%1` ist beim Herunterladen der Datenbank fehlgeschlagen.</translation>
+    </message>
+    <message>
+        <source>Invalid database pointer or upload parameters provided.</source>
+        <translation>Ungültiger Datenbankzeiger oder ungültige Upload-Parameter angegeben.</translation>
+    </message>
+    <message>
+        <source>Command `%1` exited with status code: %2</source>
+        <translation>Der Befehl `%1` wurde mit Statuscode beendet: %2</translation>
+    </message>
+    <message>
+        <source>Failed to upload merged database. Command `%1` exited with status code: %2</source>
+        <translation>Das Hochladen der zusammengeführten Datenbank ist fehlgeschlagen. Der Befehl `%1` wurde mit Statuscode beendet: %2</translation>
     </message>
 </context>
 <context>
@@ -9044,11 +9281,11 @@ Diese Option ist veraltet, verwenden Sie stattdessen --set-key-file.</translatio
     </message>
     <message>
         <source>Please wait, list of entries with passkeys is being updated…</source>
-        <translation type="unfinished"/>
+        <translation>Bitte warten Sie, die Liste der Einträge mit Passkeys wird gerade aktualisiert…</translation>
     </message>
     <message>
         <source>No entries with passkeys.</source>
-        <translation type="unfinished"/>
+        <translation>Keine Einträge mit Passkeys.</translation>
     </message>
 </context>
 <context>
@@ -9297,7 +9534,7 @@ Diese Option ist veraltet, verwenden Sie stattdessen --set-key-file.</translatio
     <message>
         <source>Search (%1)…</source>
         <comment>Search placeholder text, %1 is the keyboard shortcut</comment>
-        <translation>Suchen (%1) …</translation>
+        <translation>Suchen (%1)…</translation>
     </message>
     <message>
         <source>Case sensitive</source>

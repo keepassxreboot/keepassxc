@@ -714,7 +714,7 @@
     </message>
     <message>
         <source>Trying to send invalid keyboard symbol.</source>
-        <translation type="unfinished"/>
+        <translation>無効なキーボード記号を送信しようとしています。</translation>
     </message>
 </context>
 <context>
@@ -886,24 +886,25 @@ Please select the correct database for saving credentials.</source>
     </message>
     <message>
         <source>Add to existing entry</source>
-        <translation type="unfinished"/>
+        <translation>既存のエントリーに追加</translation>
     </message>
     <message>
         <source>Existing passkey found.
 Do you want to register a new passkey for:</source>
-        <translation type="unfinished"/>
+        <translation>既にパスキーが存在しています。
+新しいパスキーを追加しますか？:</translation>
     </message>
     <message>
         <source>Select the existing passkey and press Update to replace it.</source>
-        <translation type="unfinished"/>
+        <translation>パスキーを置き換えたい場合、既存のパスキーを選択して更新を押してください。</translation>
     </message>
     <message>
         <source>Authenticate passkey credentials for:</source>
-        <translation type="unfinished"/>
+        <translation>パスキー認証情報で認証:</translation>
     </message>
     <message>
         <source>Do you want to register a passkey for:</source>
-        <translation type="unfinished"/>
+        <translation>パスキーを登録しますか？:</translation>
     </message>
 </context>
 <context>
@@ -988,16 +989,17 @@ Do you want to delete the entry?
     </message>
     <message>
         <source>Register a new passkey to this entry:</source>
-        <translation type="unfinished"/>
+        <translation>パスキーを追加するエントリー:</translation>
     </message>
     <message>
         <source>KeePassXC - Update passkey</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC - パスキーを更新</translation>
     </message>
     <message>
         <source>Entry already has a passkey.
 Do you want to overwrite the passkey in %1 - %2?</source>
-        <translation type="unfinished"/>
+        <translation>既にパスキーがあるエントリーです。
+%1 - %2 のパスキーを上書きしますか？</translation>
     </message>
     <message>
         <source>Register</source>
@@ -1198,18 +1200,6 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation>カスタム拡張機能 ID</translation>
     </message>
     <message>
-        <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
-        <translation>Snap によってサンドボックス化されているため、&lt;br /&gt;ブラウザー統合を有効にするにはスクリプトを実行する必要があります。&lt;br /&gt;スクリプトは次の場所から入手できます: %1</translation>
-    </message>
-    <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3. %4</source>
-        <translation>ブラウザー統合の動作には KeePassXC-Browser が必要です。&lt;br /&gt;KeePassXC-Browser は %1 用、%2 用、%3 用の 3 種類あります。%4</translation>
-    </message>
-    <message>
-        <source>Please see special instructions for browser extension use below</source>
-        <translation>ブラウザー拡張機能を使用するには以下の手順を参照してください</translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation>実行ファイル</translation>
     </message>
@@ -1251,10 +1241,14 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Allows using insecure http://localhost with passkeys for testing purposes.</source>
-        <translation type="unfinished"/>
+        <translation>安全ではない http://localhost で、テスト向けにパスキーの使用を許可します。</translation>
     </message>
     <message>
         <source>Allow using localhost with passkeys</source>
+        <translation>ローカルホストでのパスキーの使用を許可する</translation>
+    </message>
+    <message>
+        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1398,6 +1392,15 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     <message>
         <source>Imported from CSV file: %1</source>
         <translation>CSV ファイルからインポートしました: %1</translation>
+    </message>
+    <message>
+        <source>No Title Selected</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No title column was selected, entries will be hard to tell apart.
+Are you sure you want to import?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1687,6 +1690,10 @@ Are you sure you want to continue with this file?.</source>
         <source>Maintenance</source>
         <translation>メンテナンス</translation>
     </message>
+    <message>
+        <source>Remote Sync</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetBrowser</name>
@@ -1858,11 +1865,11 @@ Are you sure you want to continue without a password?</source>
         <translation>弱いパスワード</translation>
     </message>
     <message>
-        <source>You must enter a stronger password to protect your database.</source>
-        <translation type="unfinished"/>
+        <source>This is a weak password! For better protection of your secrets, you should choose a stronger password.</source>
+        <translation>脆弱なパスワードです！ 秘密をより最適に保護するために、強固なパスワードを選択することを強くお勧めします。</translation>
     </message>
     <message>
-        <source>This is a weak password! For better protection of your secrets, you should choose a stronger password.</source>
+        <source>The provided password does not meet the minimum quality requirement.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -2141,19 +2148,22 @@ add up to the specified amount at most.</source>
 instead of deleting them from the database.
 Entries deleted from the recycle bin are
 removed from the database.</source>
-        <translation type="unfinished"/>
+        <translation>エントリーをデータベースから削除せず
+ゴミ箱グループに移動させます。
+ゴミ箱からエントリーを削除すると
+データベースから完全に削除されます。</translation>
     </message>
     <message>
         <source>Autosave delay since last change</source>
-        <translation type="unfinished"/>
+        <translation>最終更新後、自動保存までの遅延時間</translation>
     </message>
     <message>
         <source>Autosave delay</source>
-        <translation type="unfinished"/>
+        <translation>自動保存までの遅延時間</translation>
     </message>
     <message>
         <source>Autosave delay since last change in minutes</source>
-        <translation type="unfinished"/>
+        <translation>最終更新後、自動保存までの遅延時間 (分)</translation>
     </message>
     <message>
         <source> min</source>
@@ -2161,7 +2171,7 @@ removed from the database.</source>
     </message>
     <message>
         <source>Autosave delay since last change checkbox</source>
-        <translation type="unfinished"/>
+        <translation>最終更新後、自動保存を遅延させるチェックボックス</translation>
     </message>
 </context>
 <context>
@@ -2259,6 +2269,121 @@ removed from the database.</source>
     </message>
 </context>
 <context>
+    <name>DatabaseSettingsWidgetRemote</name>
+    <message>
+        <source>Sync Commands</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>削除</translation>
+    </message>
+    <message>
+        <source>Command Settings</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>名前</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>保存</translation>
+    </message>
+    <message>
+        <source>Download</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Command:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download command field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>e.g.: &quot;sftp user@hostname&quot; or &quot;scp user@hostname:DatabaseOnRemote.kdbx {TEMP_DATABASE}&quot;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Input:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download input field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Upload</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Upload command field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>e.g.: &quot;sftp user@hostname&quot; or &quot;scp {TEMP_DATABASE} user@hostname:DatabaseOnRemote.kdbx&quot;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Upload input field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Name cannot be empty.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Test</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download command cannot be empty.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download failed with error: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download finished, but file %1 could not be found.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download successful.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Save Remote Settings</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You have unsaved changes. Do you want to save them?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>e.g.:
+get DatabaseOnRemote.kdbx {TEMP_DATABASE}
+exit
+---
+{TEMP_DATABASE} is used as placeholder to store the database in a temporary location
+The command has to exit. In case of `sftp` as last command `exit` has to be sent
+            </source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>e.g.:
+put {TEMP_DATABASE} DatabaseOnRemote.kdbx
+exit
+---
+{TEMP_DATABASE} is used as placeholder to store the database in a temporary location
+The command has to exit. In case of `sftp` as last command `exit` has to be sent
+            </source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>DatabaseTabWidget</name>
     <message>
         <source>Database creation error</source>
@@ -2330,6 +2455,11 @@ This is definitely a bug, please report it to the developers.</source>
         <source>%1 [Locked]</source>
         <comment>Database tab name modifier</comment>
         <translation>%1 [ロック]</translation>
+    </message>
+    <message>
+        <source>%1 [Temporary]</source>
+        <comment>Database tab name modifier</comment>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2420,7 +2550,7 @@ This is definitely a bug, please report it to the developers.</source>
     </message>
     <message>
         <source>Enter a unique name or overwrite an existing search from the list:</source>
-        <translation type="unfinished"/>
+        <translation>独自の名前を入力するか、リストから検索結果を上書きする</translation>
     </message>
     <message>
         <source>Save Search</source>
@@ -2525,6 +2655,42 @@ Disable safe saves and try again?</source>
         <comment>Database tab name modifier</comment>
         <translation>%1 [新しいデータベース]</translation>
     </message>
+    <message>
+        <source>Remote Sync did not contain any download or upload commands.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remote sync &apos;%1&apos; completed successfully!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remote sync &apos;%1&apos; failed: %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Error while saving database %1: %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Downloading...</source>
+        <translation>ダウンロード中...</translation>
+    </message>
+    <message>
+        <source>Uploading...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Syncing...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove passkey from entry</source>
+        <translation>エントリーからパスキーを削除する</translation>
+    </message>
+    <message>
+        <source>Do you want to remove the passkey from this entry?</source>
+        <translation>本当にこのエントリーからパスキーを削除しますか？</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidget</name>
@@ -2575,10 +2741,6 @@ Disable safe saves and try again?</source>
     <message>
         <source>n/a</source>
         <translation>N/A</translation>
-    </message>
-    <message>
-        <source>(encrypted)</source>
-        <translation>(暗号化)</translation>
     </message>
     <message>
         <source>Select private key</source>
@@ -2681,6 +2843,10 @@ Would you like to correct it?</source>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>%n 年</numerusform></translation>
+    </message>
+    <message>
+        <source>Failed to decrypt SSH key, ensure password is correct.</source>
+        <translation>SSHキーの複合に失敗しました。パスワードが正しいことを確認してください。</translation>
     </message>
 </context>
 <context>
@@ -2883,11 +3049,11 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>These settings affect the entry&apos;s behaviour with the browser extension.</source>
-        <translation type="unfinished"/>
+        <translation>これらの設定はブラウザー拡張機能でのエントリーの動作に影響します。</translation>
     </message>
     <message>
         <source>Additional URLs</source>
-        <translation type="unfinished"/>
+        <translation>追加 URL</translation>
     </message>
 </context>
 <context>
@@ -3553,6 +3719,10 @@ This may cause the affected plugins to malfunction.</source>
         <source>%1 - Clone</source>
         <translation>%1 - 複製</translation>
     </message>
+    <message>
+        <source>Passkey</source>
+        <translation>パスキー</translation>
+    </message>
 </context>
 <context>
     <name>EntryAttachments</name>
@@ -4011,7 +4181,7 @@ Would you like to overwrite the existing attachment?</source>
     </message>
     <message>
         <source>Double click to copy value</source>
-        <translation type="unfinished"/>
+        <translation>ダブルクリックすると値をコピーします</translation>
     </message>
     <message>
         <source>Enabled</source>
@@ -4023,7 +4193,7 @@ Would you like to overwrite the existing attachment?</source>
     </message>
     <message>
         <source>Double click to copy to clipboard</source>
-        <translation type="unfinished"/>
+        <translation>ダブルクリックすると、クリップボードにコピーします</translation>
     </message>
 </context>
 <context>
@@ -4034,7 +4204,7 @@ Would you like to overwrite the existing attachment?</source>
     </message>
     <message>
         <source>Duplicate URL</source>
-        <translation type="unfinished"/>
+        <translation>重複した URL</translation>
     </message>
 </context>
 <context>
@@ -4291,7 +4461,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Entry count: %1</source>
-        <translation type="unfinished"/>
+        <translation>エントリーカウント: %1</translation>
     </message>
     <message>
         <source>Group</source>
@@ -4350,7 +4520,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Existing Database:</source>
-        <translation type="unfinished"/>
+        <translation>既存のデータベース:</translation>
     </message>
     <message>
         <source>Import File:</source>
@@ -4398,7 +4568,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Comma Separated Values</source>
-        <translation type="unfinished"/>
+        <translation>カンマ区切りテキスト (.csv)</translation>
     </message>
     <message>
         <source>1Password Export</source>
@@ -5501,7 +5671,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Show Menubar</source>
-        <translation type="unfinished"/>
+        <translation>メニューバーを表示</translation>
     </message>
     <message>
         <source>Show Toolbar</source>
@@ -5853,7 +6023,7 @@ KeePassXC の配布ページから AppImage をダウンロードして使用す
     </message>
     <message>
         <source>Toggle Show Menubar</source>
-        <translation type="unfinished"/>
+        <translation>メニューバーの表示を切り替え</translation>
     </message>
     <message>
         <source>Toggle Show Toolbar</source>
@@ -5881,6 +6051,18 @@ KeePassXC の配布ページから AppImage をダウンロードして使用す
     </message>
     <message>
         <source>Toggle Allow Screen Capture</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remote S&amp;ync…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove Passkey From Entry</source>
+        <translation>エントリーからパスキーを削除する</translation>
+    </message>
+    <message>
+        <source>Setup Remote Sync…</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -6220,6 +6402,10 @@ KeePassXC の配布ページから AppImage をダウンロードして使用す
         <source>Unexpected EOF when writing private key</source>
         <translation>秘密鍵の書き込み時に予期しない EOF がありました</translation>
     </message>
+    <message>
+        <source>(encrypted)</source>
+        <translation>(暗号化)</translation>
+    </message>
 </context>
 <context>
     <name>OpenSSHKeyGenDialog</name>
@@ -6268,7 +6454,7 @@ KeePassXC の配布ページから AppImage をダウンロードして使用す
     </message>
     <message>
         <source>Export the following passkey entries.</source>
-        <translation type="unfinished"/>
+        <translation>次のパスキーをエクスポートします。</translation>
     </message>
 </context>
 <context>
@@ -6342,15 +6528,15 @@ Do you want to overwrite it?
     </message>
     <message>
         <source>Import the following passkey:</source>
-        <translation type="unfinished"/>
+        <translation>次のパスキーをインポートします:</translation>
     </message>
     <message>
         <source>Import the following passkey to this entry:</source>
-        <translation type="unfinished"/>
+        <translation>このエントリーに次のパスキーをインポートします:</translation>
     </message>
     <message>
         <source>Default passkeys group (Imported Passkeys)</source>
-        <translation type="unfinished"/>
+        <translation>デフォルトのパスキーグループ (インポートしたパスキー)</translation>
     </message>
 </context>
 <context>
@@ -6373,25 +6559,27 @@ Do you want to overwrite it?
     </message>
     <message>
         <source>Open passkey file</source>
-        <translation type="unfinished"/>
+        <translation>パスキーファイルを開く</translation>
     </message>
     <message>
         <source>Cannot import passkey</source>
-        <translation type="unfinished"/>
+        <translation>パスキーをインポートできません</translation>
     </message>
     <message>
         <source>Cannot import passkey file &quot;%1&quot;. Data is missing.</source>
-        <translation type="unfinished"/>
+        <translation>パスキーファイル「%1」をインポートできません。データが存在しません。</translation>
     </message>
     <message>
         <source>Cannot import passkey file &quot;%1&quot;.
 The following data is missing:
 %2</source>
-        <translation type="unfinished"/>
+        <translation>パスキーファイル「%1」をインポートできません。
+次のデータが存在しません:
+%2</translation>
     </message>
     <message>
         <source>Cannot import passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
-        <translation type="unfinished"/>
+        <translation>パスキーファイル「%1」をインポートできません。秘密鍵が存在しないか形式に問題があります。</translation>
     </message>
 </context>
 <context>
@@ -6582,7 +6770,7 @@ The following data is missing:
     </message>
     <message>
         <source>Pick characters from every group</source>
-        <translation>すべてする全ての文字種から文字を選ぶ</translation>
+        <translation>選択したすべての文字種から文字を選ぶ</translation>
     </message>
     <message>
         <source>Passphrase</source>
@@ -6833,7 +7021,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Continue with weak password</source>
-        <translation type="unfinished"/>
+        <translation>脆弱なパスワードで続行</translation>
     </message>
 </context>
 <context>
@@ -7331,15 +7519,15 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Cannot remove password: The database does not have a password.</source>
-        <translation type="unfinished"/>
+        <translation>パスワードは削除できません: データベースにパスワードがありません。</translation>
     </message>
     <message>
         <source>Cannot remove file key: The database does not have a file key.</source>
-        <translation type="unfinished"/>
+        <translation>キーファイルは削除できません: データベースにキーファイルがありません。</translation>
     </message>
     <message>
         <source>Loading the new key file failed: %1</source>
-        <translation type="unfinished"/>
+        <translation>新しいキーファイルの読み込みに失敗しました: %1</translation>
     </message>
     <message>
         <source>Found unexpected Key type %1</source>
@@ -7347,7 +7535,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Cannot remove all the keys from a database.</source>
-        <translation type="unfinished"/>
+        <translation>パスキーをデータベースから削除できません。</translation>
     </message>
     <message>
         <source>Show a database&apos;s information.</source>
@@ -7898,7 +8086,7 @@ Available commands:
     </message>
     <message>
         <source>Show all the attributes of the entry.</source>
-        <translation type="unfinished"/>
+        <translation>エントリーの属性を表示する。</translation>
     </message>
     <message>
         <source>Show the attachments of the entry.</source>
@@ -7972,7 +8160,7 @@ Please consider generating a new key file.</source>
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue.</source>
-        <translation type="unfinished"/>
+        <translation>YubiKey を挿入・タッチして続行してください。</translation>
     </message>
     <message>
         <source>Enter password to encrypt database (optional): </source>
@@ -8467,11 +8655,12 @@ CPU アーキテクチャー: %2
     <message>
         <source>Set the key file for the database.
 This option is deprecated, use --set-key-file instead.</source>
-        <translation type="unfinished"/>
+        <translation>データベースにキーファイルを設定します。
+このオプションは非推奨です。--set-key-file の使用を検討してください。</translation>
     </message>
     <message>
         <source>Databases have been locked.</source>
-        <translation type="unfinished"/>
+        <translation>データベースがロックされました。</translation>
     </message>
     <message>
         <source>Attestation not supported</source>
@@ -8588,7 +8777,7 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Favorite</source>
         <comment>Tag for favorite entries</comment>
-        <translation type="unfinished"/>
+        <translation>お気に入り</translation>
     </message>
     <message>
         <source>File does not exist.</source>
@@ -8641,7 +8830,7 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Archived</source>
         <comment>Tag for archived entries</comment>
-        <translation type="unfinished"/>
+        <translation>アーカイブ</translation>
     </message>
     <message>
         <source>Invalid 1PUX file format: Not a valid ZIP file.</source>
@@ -8668,11 +8857,19 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Unsupported KDF type, cannot decrypt json file</source>
+        <source>Unknown passkeys error</source>
+        <translation>不明なパスキーエラーが発生しました</translation>
+    </message>
+    <message>
+        <source>Invalid KDF iterations, cannot decrypt json file</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Unknown passkeys error</source>
+        <source>Unsupported format, ensure your Bitwarden export is password-protected</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Only PBKDF and Argon2 are supported, cannot decrypt json file</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -8708,6 +8905,37 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Internal zlib error: </source>
         <translation>内部 zlib エラー: </translation>
+    </message>
+</context>
+<context>
+    <name>RemoteHandler</name>
+    <message>
+        <source>Command `%1` did not finish in time. Process was killed.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to upload merged database. Command `%1` did not finish in time. Process was killed.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid download parameters provided.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Command `%1` failed to download database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid database pointer or upload parameters provided.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Command `%1` exited with status code: %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to upload merged database. Command `%1` exited with status code: %2</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -8778,15 +9006,15 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Only show entries that have a URL</source>
-        <translation type="unfinished"/>
+        <translation>URL が登録されたエントリーのみ表示する</translation>
     </message>
     <message>
         <source>Only show entries that have been explicitly allowed or denied</source>
-        <translation type="unfinished"/>
+        <translation>明確に許可または拒否されたエントリーのみ表示する</translation>
     </message>
     <message>
         <source>Show expired entries</source>
-        <translation type="unfinished"/>
+        <translation>期限切れのエントリーを表示する</translation>
     </message>
     <message>
         <source> (Expired)</source>
@@ -8872,11 +9100,11 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Show expired entries</source>
-        <translation type="unfinished"/>
+        <translation>期限切れのエントリーを表示する</translation>
     </message>
     <message>
         <source>Show entries that have been excluded from reports</source>
-        <translation type="unfinished"/>
+        <translation>レポートから除外されたエントリーを表示</translation>
     </message>
     <message>
         <source> (Expired)</source>
@@ -9022,7 +9250,7 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Show expired entries</source>
-        <translation type="unfinished"/>
+        <translation>期限切れのエントリーを表示する</translation>
     </message>
     <message>
         <source> (Expired)</source>
@@ -9034,15 +9262,15 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>The passkey file will be vulnerable to theft and unauthorized use, if left unsecured. Are you sure you want to continue?</source>
-        <translation type="unfinished"/>
+        <translation>パスキーファイルを安全でない環境に保存すると、盗難や不正使用の被害を受ける可能性があります。本当に続行しますか？</translation>
     </message>
     <message>
         <source>Please wait, list of entries with passkeys is being updated…</source>
-        <translation type="unfinished"/>
+        <translation>しばらくお待ちください。パスキーを持つエントリーは更新中です...</translation>
     </message>
     <message>
         <source>No entries with passkeys.</source>
-        <translation type="unfinished"/>
+        <translation>パスキーが登録されたエントリーはありません。</translation>
     </message>
 </context>
 <context>

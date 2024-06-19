@@ -714,7 +714,7 @@
     </message>
     <message>
         <source>Trying to send invalid keyboard symbol.</source>
-        <translation type="unfinished"/>
+        <translation>ניסיון לשלוח סמל מקלדת לא תקין.</translation>
     </message>
 </context>
 <context>
@@ -886,7 +886,7 @@ Please select the correct database for saving credentials.</source>
     </message>
     <message>
         <source>Add to existing entry</source>
-        <translation type="unfinished"/>
+        <translation>הוספה לרשומה קיימת</translation>
     </message>
     <message>
         <source>Existing passkey found.
@@ -1197,18 +1197,6 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <translation>מזהה הרחבה מותאם אישית</translation>
     </message>
     <message>
-        <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
-        <translation>עקב ארגז־חול Snap, יש להריץ תסריט בכדי לאפשר שילוב דפדפן. &lt;br /&gt; ניתן להפיק את התסריט מ־%1</translation>
-    </message>
-    <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3. %4</source>
-        <translation>על מנת ששילוב הדפדפן יעבוד, נדרשKeePassXC־Browser &lt;br /&gt; ניתן להורד אותו ל־%1 ו־%2 ו־%3. %4</translation>
-    </message>
-    <message>
-        <source>Please see special instructions for browser extension use below</source>
-        <translation>נא לעיין בהוראות מיוחדות לשימוש בהרחבת הדפדפן להלן</translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation>קבצי הפעלה</translation>
     </message>
@@ -1254,6 +1242,10 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Allow using localhost with passkeys</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1396,6 +1388,15 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Imported from CSV file: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No Title Selected</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No title column was selected, entries will be hard to tell apart.
+Are you sure you want to import?</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1683,6 +1684,10 @@ Are you sure you want to continue with this file?.</source>
         <source>Maintenance</source>
         <translation>תחזוקה</translation>
     </message>
+    <message>
+        <source>Remote Sync</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetBrowser</name>
@@ -1853,11 +1858,11 @@ Are you sure you want to continue without a password?</source>
         <translation>ססמה חלשה</translation>
     </message>
     <message>
-        <source>You must enter a stronger password to protect your database.</source>
+        <source>This is a weak password! For better protection of your secrets, you should choose a stronger password.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>This is a weak password! For better protection of your secrets, you should choose a stronger password.</source>
+        <source>The provided password does not meet the minimum quality requirement.</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -2255,6 +2260,121 @@ removed from the database.</source>
     </message>
 </context>
 <context>
+    <name>DatabaseSettingsWidgetRemote</name>
+    <message>
+        <source>Sync Commands</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>הסרה</translation>
+    </message>
+    <message>
+        <source>Command Settings</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>שם</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>שמירה</translation>
+    </message>
+    <message>
+        <source>Download</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Command:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download command field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>e.g.: &quot;sftp user@hostname&quot; or &quot;scp user@hostname:DatabaseOnRemote.kdbx {TEMP_DATABASE}&quot;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Input:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download input field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Upload</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Upload command field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>e.g.: &quot;sftp user@hostname&quot; or &quot;scp {TEMP_DATABASE} user@hostname:DatabaseOnRemote.kdbx&quot;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Upload input field</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Name cannot be empty.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Test</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download command cannot be empty.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download failed with error: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download finished, but file %1 could not be found.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download successful.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Save Remote Settings</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You have unsaved changes. Do you want to save them?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>e.g.:
+get DatabaseOnRemote.kdbx {TEMP_DATABASE}
+exit
+---
+{TEMP_DATABASE} is used as placeholder to store the database in a temporary location
+The command has to exit. In case of `sftp` as last command `exit` has to be sent
+            </source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>e.g.:
+put {TEMP_DATABASE} DatabaseOnRemote.kdbx
+exit
+---
+{TEMP_DATABASE} is used as placeholder to store the database in a temporary location
+The command has to exit. In case of `sftp` as last command `exit` has to be sent
+            </source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>DatabaseTabWidget</name>
     <message>
         <source>Database creation error</source>
@@ -2326,6 +2446,11 @@ This is definitely a bug, please report it to the developers.</source>
         <source>%1 [Locked]</source>
         <comment>Database tab name modifier</comment>
         <translation>%1 [נעול]</translation>
+    </message>
+    <message>
+        <source>%1 [Temporary]</source>
+        <comment>Database tab name modifier</comment>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2521,6 +2646,42 @@ Disable safe saves and try again?</source>
         <comment>Database tab name modifier</comment>
         <translation>%1 [מסד־נתונים חדש]</translation>
     </message>
+    <message>
+        <source>Remote Sync did not contain any download or upload commands.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remote sync &apos;%1&apos; completed successfully!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remote sync &apos;%1&apos; failed: %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Error while saving database %1: %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Downloading...</source>
+        <translation>הורדה...</translation>
+    </message>
+    <message>
+        <source>Uploading...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Syncing...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove passkey from entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to remove the passkey from this entry?</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EditEntryWidget</name>
@@ -2571,10 +2732,6 @@ Disable safe saves and try again?</source>
     <message>
         <source>n/a</source>
         <translation>ל/ז</translation>
-    </message>
-    <message>
-        <source>(encrypted)</source>
-        <translation>(מוצפן)</translation>
     </message>
     <message>
         <source>Select private key</source>
@@ -2677,6 +2834,10 @@ Would you like to correct it?</source>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>שנה %n</numerusform><numerusform>%n שנים</numerusform><numerusform>%n שנים</numerusform></translation>
+    </message>
+    <message>
+        <source>Failed to decrypt SSH key, ensure password is correct.</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3549,6 +3710,10 @@ This may cause the affected plugins to malfunction.</source>
         <source>%1 - Clone</source>
         <translation>שכפול %1 - </translation>
     </message>
+    <message>
+        <source>Passkey</source>
+        <translation>Passkey</translation>
+    </message>
 </context>
 <context>
     <name>EntryAttachments</name>
@@ -4349,7 +4514,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Existing Database:</source>
-        <translation type="unfinished"/>
+        <translation>מסד נתונים קיים:</translation>
     </message>
     <message>
         <source>Import File:</source>
@@ -4357,7 +4522,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Comma Separated Values (.csv)</source>
-        <translation type="unfinished"/>
+        <translation>ערכים מופרדים בפסיקים (.csv)</translation>
     </message>
     <message>
         <source>1Password Export (.1pux)</source>
@@ -4397,7 +4562,7 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Comma Separated Values</source>
-        <translation type="unfinished"/>
+        <translation>ערכים מופרדים בפסיקים</translation>
     </message>
     <message>
         <source>1Password Export</source>
@@ -5500,7 +5665,7 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Show Menubar</source>
-        <translation type="unfinished"/>
+        <translation>הצגת סרגל תפריט</translation>
     </message>
     <message>
         <source>Show Toolbar</source>
@@ -5636,11 +5801,11 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Quit Application</source>
-        <translation type="unfinished"/>
+        <translation>לצאת מהיישומון</translation>
     </message>
     <message>
         <source>Open About Dialog</source>
-        <translation type="unfinished"/>
+        <translation>פתיחת דו־שיח על אודות</translation>
     </message>
     <message>
         <source>Open Database</source>
@@ -5652,11 +5817,11 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Merge From Database</source>
-        <translation type="unfinished"/>
+        <translation>למזג ממסד נתונים</translation>
     </message>
     <message>
         <source>Create Entry</source>
-        <translation type="unfinished"/>
+        <translation>יצירת רשומה</translation>
     </message>
     <message>
         <source>Edit Entry</source>
@@ -5680,19 +5845,19 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Download All Favicons</source>
-        <translation type="unfinished"/>
+        <translation>הורדת כל הפביקון</translation>
     </message>
     <message>
         <source>Sort Groups A-Z</source>
-        <translation type="unfinished"/>
+        <translation>סינון קבוצות א–ת</translation>
     </message>
     <message>
         <source>Sort Groups Z-A</source>
-        <translation type="unfinished"/>
+        <translation>סינון קבוצות ת–א</translation>
     </message>
     <message>
         <source>Save Database As</source>
-        <translation type="unfinished"/>
+        <translation>שמירת מסד נתונים בשם</translation>
     </message>
     <message>
         <source>Show Database Security</source>
@@ -5880,6 +6045,18 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Toggle Allow Screen Capture</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remote S&amp;ync…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remove Passkey From Entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Setup Remote Sync…</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -6218,6 +6395,10 @@ We recommend you use the AppImage available on our downloads page.</source>
     <message>
         <source>Unexpected EOF when writing private key</source>
         <translation>EOF לא צפוי בעת כתיבת מפתח פרטי</translation>
+    </message>
+    <message>
+        <source>(encrypted)</source>
+        <translation>(מוצפן)</translation>
     </message>
 </context>
 <context>
@@ -8627,7 +8808,7 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Cannot decrypt data</source>
-        <translation type="unfinished"/>
+        <translation>לא ניתן לפענח נתונים</translation>
     </message>
     <message>
         <source>Bitwarden Import</source>
@@ -8648,26 +8829,34 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>1Password Import</source>
-        <translation type="unfinished"/>
+        <translation>1Password יובא</translation>
     </message>
     <message>
         <source>Enter Shortcut</source>
-        <translation type="unfinished"/>
+        <translation>הזנת קיצור־דרך</translation>
     </message>
     <message>
         <source>Action</source>
-        <translation type="unfinished"/>
+        <translation>פעולה</translation>
     </message>
     <message>
         <source>Shortcuts</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Unsupported KDF type, cannot decrypt json file</source>
-        <translation type="unfinished"/>
+        <translation>קיצורי־דרך</translation>
     </message>
     <message>
         <source>Unknown passkeys error</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid KDF iterations, cannot decrypt json file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unsupported format, ensure your Bitwarden export is password-protected</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Only PBKDF and Argon2 are supported, cannot decrypt json file</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -8703,6 +8892,37 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Internal zlib error: </source>
         <translation>שגיאת zlib פנימית: </translation>
+    </message>
+</context>
+<context>
+    <name>RemoteHandler</name>
+    <message>
+        <source>Command `%1` did not finish in time. Process was killed.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to upload merged database. Command `%1` did not finish in time. Process was killed.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid download parameters provided.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Command `%1` failed to download database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid database pointer or upload parameters provided.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Command `%1` exited with status code: %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to upload merged database. Command `%1` exited with status code: %2</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -9506,19 +9726,19 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Shortcut Conflict</source>
-        <translation type="unfinished"/>
+        <translation>התנגשות קיצור־דרך</translation>
     </message>
     <message>
         <source>Filter...</source>
-        <translation type="unfinished"/>
+        <translation>סינון...</translation>
     </message>
     <message>
         <source>Shortcut %1 conflicts with &apos;%2&apos;. Overwrite shortcut?</source>
-        <translation type="unfinished"/>
+        <translation>קיצור־דרך %1 מתנגש עם %2&apos;. לכתוב על קיצור־הדרך?</translation>
     </message>
     <message>
         <source>Reset Shortcuts</source>
-        <translation type="unfinished"/>
+        <translation>שיצוב קיצורי־דרך</translation>
     </message>
 </context>
 <context>
@@ -9843,7 +10063,7 @@ Example: JBSWY3DPEHPK3PXP</source>
     <message>
         <source>(NFC) %1 [%2] - Slot %3, %4</source>
         <comment>YubiKey display fields</comment>
-        <translation type="unfinished"/>
+        <translation>(NFC) %1 [%2] - חריץ %3, %4</translation>
     </message>
     <message>
         <source>Press</source>
@@ -9895,12 +10115,12 @@ Example: JBSWY3DPEHPK3PXP</source>
     <message>
         <source>%1 [%2] - Slot %3</source>
         <comment>YubiKey NEO display fields</comment>
-        <translation type="unfinished"/>
+        <translation>%1 [%2] - חריץ %3</translation>
     </message>
     <message>
         <source>%1 [%2] - Slot %3, %4</source>
         <comment>YubiKey display fields</comment>
-        <translation type="unfinished"/>
+        <translation>%1 [%2] - חריץ %3, %4</translation>
     </message>
 </context>
 </TS>
