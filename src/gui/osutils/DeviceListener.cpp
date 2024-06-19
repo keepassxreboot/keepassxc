@@ -57,7 +57,7 @@ DeviceListener::registerHotplugCallback(bool arrived, bool left, int vendorId, i
 void DeviceListener::deregisterHotplugCallback(Handle handle)
 {
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS)
-    m_listeners[0]->deregisterHotplugCallback(static_cast<int>(handle));
+    m_listeners[0]->deregisterHotplugCallback(handle);
 #else
     if (m_listeners.contains(handle)) {
         m_listeners[handle]->deregisterHotplugCallback();
