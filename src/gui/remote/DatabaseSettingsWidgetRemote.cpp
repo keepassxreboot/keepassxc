@@ -177,22 +177,24 @@ void DatabaseSettingsWidgetRemote::testDownload()
     params->downloadCommand = m_ui->downloadCommand->text();
     params->downloadInput = m_ui->inputForDownload->toPlainText();
 
-    QScopedPointer<RemoteHandler> remoteHandler(new RemoteHandler(this));
     if (params->downloadCommand.isEmpty()) {
         m_ui->messageWidget->showMessage(tr("Download command cannot be empty."), MessageWidget::Warning);
         return;
     }
 
+    QScopedPointer<RemoteHandler> remoteHandler(new RemoteHandler(this));
     RemoteHandler::RemoteResult result = remoteHandler->download(params);
     if (!result.success) {
         m_ui->messageWidget->showMessage(tr("Download failed with error: %1").arg(result.errorMessage),
                                          MessageWidget::Error);
+        remoteHandler->cleanup(result.filePath);
         return;
     }
 
     if (!QFile::exists(result.filePath)) {
         m_ui->messageWidget->showMessage(tr("Download finished, but file %1 could not be found.").arg(result.filePath),
                                          MessageWidget::Error);
+        remoteHandler->cleanup(result.filePath);
         return;
     }
 

@@ -47,7 +47,15 @@ RemoteHandler::RemoteResult RemoteHandler::download(const RemoteParams* params)
             return result;
         }
 
-        auto filePath = getTempFileLocation();
+        QString error;
+        auto filePath = getTempFileLocation(&error);
+        result.filePath = filePath;
+        if (!error.isEmpty()) {
+            result.success = false;
+            result.errorMessage = error;
+            return result;
+        }
+
         auto remoteProcess = m_createRemoteProcess(nullptr); // use nullptr parent, otherwise there is a warning
         remoteProcess->setTempFileLocation(filePath);
         remoteProcess->start(params->downloadCommand);
@@ -72,7 +80,6 @@ RemoteHandler::RemoteResult RemoteHandler::download(const RemoteParams* params)
                 result.errorMessage = tr("Command `%1` failed to download database.").arg(params->downloadCommand);
             } else {
                 result.success = true;
-                result.filePath = filePath;
             }
         } else if (finished) {
             result.success = false;
@@ -135,7 +142,7 @@ RemoteHandler::RemoteResult RemoteHandler::upload(const QString& filePath, const
     });
 }
 
-QString RemoteHandler::getTempFileLocation()
+QString RemoteHandler::getTempFileLocation(QString* error)
 {
     QString uuid = QUuid::createUuid().toString().remove(0, 1);
     uuid.chop(1);
@@ -143,12 +150,24 @@ QString RemoteHandler::getTempFileLocation()
     if (writableLocation.isEmpty()) {
         writableLocation = QStandardPaths::writableLocation(QStandardPaths::TempLocation);
     }
-    QString tempLocation = QDir(writableLocation).absoluteFilePath(PREFIX + uuid);
-    QDir().mkdir(tempLocation);
-    QDir uuidPath(tempLocation);
-    QFile(uuidPath.path()).setPermissions(QFileDevice::ReadOwner | QFileDevice::WriteOwner | QFileDevice::ExeOwner);
 
-    return QDir::toNativeSeparators(uuidPath.absoluteFilePath("RemoteDatabase-" + uuid + ".kdbx"));
+    QString tempDirLocation = QDir(writableLocation).absoluteFilePath(PREFIX + uuid);
+    QString tempFileLocation =
+        QDir::toNativeSeparators(QDir(tempDirLocation).absoluteFilePath("RemoteDatabase-" + uuid + ".kdbx"));
+
+    if (!QDir().mkdir(tempDirLocation)) {
+        *error = tr("Could not create temporary directory '%1'").arg(tempDirLocation);
+        return "";
+    }
+
+    if (!QFile::setPermissions(tempDirLocation,
+                               QFileDevice::ReadOwner | QFileDevice::WriteOwner | QFileDevice::ExeOwner)) {
+        QDir(tempDirLocation).removeRecursively();
+        *error = tr("Could not change permissions of temporary directory '%1' to owner").arg(tempDirLocation);
+        return "";
+    }
+
+    return tempFileLocation;
 }
 
 void RemoteHandler::cleanup(QString& tempFileLocation)

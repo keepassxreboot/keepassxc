@@ -50,7 +50,7 @@ public:
     static void setRemoteProcessFunc(std::function<QScopedPointer<RemoteProcess>(QObject*)> func);
 
 private:
-    static QString getTempFileLocation();
+    static QString getTempFileLocation(QString* error);
 
     static std::function<QScopedPointer<RemoteProcess>(QObject*)> m_createRemoteProcess;
     inline static const QString PREFIX = "KPXC-Sync-";
