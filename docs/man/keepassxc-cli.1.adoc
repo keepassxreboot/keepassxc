@@ -200,6 +200,20 @@ The same password generation options as documented for the generate command can 
 *--notes* <__notes__>::
   Specifies the notes of the entry.
 
+*-a*, *--attribute* <__attribute__>::
+  Specifies the attribute of the entry.
+
+*-A*, *--attribute-value* <__attribute_value__>::
+  Specifies value of the new attribute for the entry.
+  Value must be base64 encoded.
+
+*-P*, *--protect*::
+  Protect value of the new attribute for the entry.
+
+*--unprotect*::
+  Unprotect value of the attribute for the entry.
+  By default new attributes are not protected.
+
 *-p*, *--password-prompt*::
   Uses a password prompt for the entry's password.
 
