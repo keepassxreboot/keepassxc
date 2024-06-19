@@ -32,6 +32,14 @@ RemoteHandler::RemoteHandler(QObject* parent)
 {
 }
 
+RemoteHandler::~RemoteHandler()
+{
+    QFileInfo file(m_tempFileLocation);
+    if (file.absoluteDir().exists() && file.absoluteDir().dirName().startsWith(PREFIX)) {
+        file.absoluteDir().removeRecursively();
+    }
+}
+
 void RemoteHandler::setRemoteProcessFunc(std::function<QScopedPointer<RemoteProcess>(QObject*)> func)
 {
     m_createRemoteProcess = std::move(func);
@@ -39,7 +47,7 @@ void RemoteHandler::setRemoteProcessFunc(std::function<QScopedPointer<RemoteProc
 
 RemoteHandler::RemoteResult RemoteHandler::download(const RemoteParams* params)
 {
-    return AsyncTask::runAndWaitForFuture([params] {
+    return AsyncTask::runAndWaitForFuture([this, params] {
         RemoteResult result;
         if (!params) {
             result.success = false;
@@ -48,8 +56,8 @@ RemoteHandler::RemoteResult RemoteHandler::download(const RemoteParams* params)
         }
 
         QString error;
-        auto filePath = getTempFileLocation(&error);
-        result.filePath = filePath;
+        m_tempFileLocation = getTempFileLocation(&error);
+        result.filePath = m_tempFileLocation;
         if (!error.isEmpty()) {
             result.success = false;
             result.errorMessage = error;
@@ -57,7 +65,7 @@ RemoteHandler::RemoteResult RemoteHandler::download(const RemoteParams* params)
         }
 
         auto remoteProcess = m_createRemoteProcess(nullptr); // use nullptr parent, otherwise there is a warning
-        remoteProcess->setTempFileLocation(filePath);
+        remoteProcess->setTempFileLocation(m_tempFileLocation);
         remoteProcess->start(params->downloadCommand);
         if (!params->downloadInput.isEmpty()) {
             remoteProcess->write(params->downloadInput + "\n");
@@ -74,7 +82,7 @@ RemoteHandler::RemoteResult RemoteHandler::download(const RemoteParams* params)
 
         if (finished && statusCode == 0) {
             // Check if the file actually downloaded
-            QFileInfo fileInfo(filePath);
+            QFileInfo fileInfo(m_tempFileLocation);
             if (!fileInfo.exists() || fileInfo.size() == 0) {
                 result.success = false;
                 result.errorMessage = tr("Command `%1` failed to download database.").arg(params->downloadCommand);
@@ -96,11 +104,11 @@ RemoteHandler::RemoteResult RemoteHandler::download(const RemoteParams* params)
     });
 }
 
-RemoteHandler::RemoteResult RemoteHandler::upload(const QString& filePath, const RemoteParams* params)
+RemoteHandler::RemoteResult RemoteHandler::upload(const RemoteParams* params)
 {
-    return AsyncTask::runAndWaitForFuture([filePath, params] {
+    return AsyncTask::runAndWaitForFuture([this, params] {
         RemoteResult result;
-        result.filePath = filePath;
+        result.filePath = m_tempFileLocation;
         if (!params) {
             result.success = false;
             result.errorMessage = tr("Invalid database pointer or upload parameters provided.");
@@ -108,7 +116,7 @@ RemoteHandler::RemoteResult RemoteHandler::upload(const QString& filePath, const
         }
 
         auto remoteProcess = m_createRemoteProcess(nullptr); // use nullptr parent, otherwise there is a warning
-        remoteProcess->setTempFileLocation(filePath);
+        remoteProcess->setTempFileLocation(m_tempFileLocation);
         remoteProcess->start(params->uploadCommand);
         if (!params->uploadInput.isEmpty()) {
             remoteProcess->write(params->uploadInput + "\n");
@@ -168,12 +176,4 @@ QString RemoteHandler::getTempFileLocation(QString* error)
     }
 
     return tempFileLocation;
-}
-
-void RemoteHandler::cleanup(QString& tempFileLocation)
-{
-    QFileInfo file(tempFileLocation);
-    if (file.absoluteDir().exists() && file.absoluteDir().dirName().startsWith(PREFIX)) {
-        file.absoluteDir().removeRecursively();
-    }
 }
