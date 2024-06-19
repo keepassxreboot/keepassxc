@@ -321,6 +321,7 @@ private:
     int m_saveAttempts;
 
     QScopedPointer<RemoteSettings> m_remoteSettings;
+    QScopedPointer<RemoteHandler> m_remoteHandler;
 
     // Search state
     QScopedPointer<EntrySearcher> m_entrySearcher;

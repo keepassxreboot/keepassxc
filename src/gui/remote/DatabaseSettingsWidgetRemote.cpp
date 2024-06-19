@@ -187,17 +187,14 @@ void DatabaseSettingsWidgetRemote::testDownload()
     if (!result.success) {
         m_ui->messageWidget->showMessage(tr("Download failed with error: %1").arg(result.errorMessage),
                                          MessageWidget::Error);
-        remoteHandler->cleanup(result.filePath);
         return;
     }
 
     if (!QFile::exists(result.filePath)) {
         m_ui->messageWidget->showMessage(tr("Download finished, but file %1 could not be found.").arg(result.filePath),
                                          MessageWidget::Error);
-        remoteHandler->cleanup(result.filePath);
         return;
     }
 
-    remoteHandler->cleanup(result.filePath);
     m_ui->messageWidget->showMessage(tr("Download successful."), MessageWidget::Positive);
 }
