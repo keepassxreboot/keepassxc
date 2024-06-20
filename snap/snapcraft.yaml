@@ -19,7 +19,6 @@ apps:
   proxy:
     command: usr/bin/keepassxc-proxy
     extensions: [kde-neon]
-    plugs: [home]
 
 plugs:
   browser-native-messaging:
