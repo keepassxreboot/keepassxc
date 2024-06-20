@@ -19,6 +19,7 @@
 #include "ui_ReportsWidgetPasskeys.h"
 
 #include "browser/BrowserPasskeys.h"
+#include "browser/PasskeyUtils.h"
 #include "core/AsyncTask.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
@@ -132,7 +133,7 @@ void ReportsWidgetPasskeys::addPasskeyRow(Group* group, Entry* entry)
     auto row = QList<QStandardItem*>();
     row << new QStandardItem(Icons::entryIconPixmap(entry), title);
     row << new QStandardItem(Icons::groupIconPixmap(group), group->hierarchy().join("/"));
-    row << new QStandardItem(entry->username());
+    row << new QStandardItem(passkeyUtils()->getUsernameFromEntry(entry));
     row << new QStandardItem(entry->attributes()->value(BrowserPasskeys::KPEX_PASSKEY_RELYING_PARTY));
     row << new QStandardItem(urlList.join('\n'));
 
