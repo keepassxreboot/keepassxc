@@ -1817,7 +1817,7 @@ void MainWindow::hide()
 {
 #ifndef Q_OS_WIN
     qint64 current_time = Clock::currentMilliSecondsSinceEpoch();
-    if (current_time - m_lastShowTime < 50) {
+    if (current_time - m_lastShowTime < 250) {
         return;
     }
 #endif
