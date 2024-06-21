@@ -10,12 +10,12 @@ apps:
     command: usr/bin/keepassxc
     common-id: org.keepassxc.KeePassXC.desktop
     extensions: [kde-neon]
-    plugs: [home, unity7, network, network-bind, removable-media, raw-usb, password-manager-service, browser-native-messaging]
+    plugs: [home, unity7, network, network-bind, removable-media, raw-usb, password-manager-service, browser-native-messaging, u2f-devices]
     autostart: org.keepassxc.KeePassXC.desktop
   cli:
     command: usr/bin/keepassxc-cli
     extensions: [kde-neon]
-    plugs: [home, removable-media, raw-usb]
+    plugs: [home, removable-media, raw-usb, u2f-devices]
   proxy:
     command: usr/bin/keepassxc-proxy
     extensions: [kde-neon]
