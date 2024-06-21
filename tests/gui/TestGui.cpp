@@ -895,6 +895,7 @@ void TestGui::testPasswordEntryEntropy()
             pwGeneratorWidget->findChild<PasswordWidget*>("editNewPassword")->findChild<QLineEdit*>("passwordEdit");
         auto* entropyLabel = pwGeneratorWidget->findChild<QLabel*>("entropyLabel");
         auto* strengthLabel = pwGeneratorWidget->findChild<QLabel*>("strengthLabel");
+        auto* passwordLengthLabel = pwGeneratorWidget->findChild<QLabel*>("passwordLengthLabel");
 
         QFETCH(QString, password);
         QFETCH(QString, expectedStrengthLabel);
@@ -902,10 +903,12 @@ void TestGui::testPasswordEntryEntropy()
         // Dynamically calculate entropy due to variances with zxcvbn wordlists
         PasswordHealth health(password);
         auto expectedEntropy = QString("Entropy: %1 bit").arg(QString::number(health.entropy(), 'f', 2));
+        auto expectedPasswordLength = QString("Characters: %1").arg(QString::number(password.length()));
 
         generatedPassword->setText(password);
         QCOMPARE(entropyLabel->text(), expectedEntropy);
         QCOMPARE(strengthLabel->text(), expectedStrengthLabel);
+        QCOMPARE(passwordLengthLabel->text(), expectedPasswordLength);
 
         QTest::mouseClick(generatedPassword, Qt::LeftButton);
         QTest::keyClick(generatedPassword, Qt::Key_Escape););
