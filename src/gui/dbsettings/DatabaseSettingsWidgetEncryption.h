@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ public:
 public slots:
     void initialize() override;
     void uninitialize() override;
-    bool save() override;
+    bool saveSettings() override;
 
 protected:
     void showEvent(QShowEvent* event) override;

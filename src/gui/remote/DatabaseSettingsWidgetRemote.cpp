@@ -69,7 +69,7 @@ void DatabaseSettingsWidgetRemote::uninitialize()
 {
 }
 
-bool DatabaseSettingsWidgetRemote::save()
+bool DatabaseSettingsWidgetRemote::saveSettings()
 {
     if (m_modified) {
         auto ans = MessageBox::question(this,

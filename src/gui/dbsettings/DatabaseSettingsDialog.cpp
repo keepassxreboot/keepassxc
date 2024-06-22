@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -17,8 +17,6 @@
  */
 
 #include "DatabaseSettingsDialog.h"
-#include "ui_DatabaseSettingsDialog.h"
-
 #include "DatabaseSettingsWidgetDatabaseKey.h"
 #include "DatabaseSettingsWidgetEncryption.h"
 #include "DatabaseSettingsWidgetGeneral.h"
@@ -28,10 +26,10 @@
 #include "../remote/DatabaseSettingsWidgetRemote.h"
 #include "DatabaseSettingsWidgetMaintenance.h"
 #ifdef WITH_XC_KEESHARE
-#include "keeshare/DatabaseSettingsPageKeeShare.h"
+#include "keeshare/DatabaseSettingsWidgetKeeShare.h"
 #endif
 #ifdef WITH_XC_FDOSECRETS
-#include "fdosecrets/DatabaseSettingsPageFdoSecrets.h"
+#include "fdosecrets/widgets/DatabaseSettingsWidgetFdoSecrets.h"
 #endif
 
 #include "core/Database.h"
@@ -40,31 +38,8 @@
 
 #include <QScrollArea>
 
-class DatabaseSettingsDialog::ExtraPage
-{
-public:
-    ExtraPage(IDatabaseSettingsPage* page, QWidget* widget)
-        : settingsPage(page)
-        , widget(widget)
-    {
-    }
-    void loadSettings(QSharedPointer<Database> db) const
-    {
-        settingsPage->loadSettings(widget, db);
-    }
-    void saveSettings() const
-    {
-        settingsPage->saveSettings(widget);
-    }
-
-private:
-    QSharedPointer<IDatabaseSettingsPage> settingsPage;
-    QWidget* widget;
-};
-
 DatabaseSettingsDialog::DatabaseSettingsDialog(QWidget* parent)
-    : DialogyWidget(parent)
-    , m_ui(new Ui::DatabaseSettingsDialog())
+    : EditWidget(parent)
     , m_generalWidget(new DatabaseSettingsWidgetGeneral(this))
     , m_securityTabWidget(new QTabWidget(this))
     , m_databaseKeyWidget(new DatabaseSettingsWidgetDatabaseKey(this))
@@ -72,18 +47,20 @@ DatabaseSettingsDialog::DatabaseSettingsDialog(QWidget* parent)
 #ifdef WITH_XC_BROWSER
     , m_browserWidget(new DatabaseSettingsWidgetBrowser(this))
 #endif
+#ifdef WITH_XC_KEESHARE
+    , m_keeShareWidget(new DatabaseSettingsWidgetKeeShare(this))
+#endif
+#ifdef WITH_XC_FDOSECRETS
+    , m_fdoSecretsWidget(new DatabaseSettingsWidgetFdoSecrets(this))
+#endif
     , m_maintenanceWidget(new DatabaseSettingsWidgetMaintenance(this))
     , m_remoteWidget(new DatabaseSettingsWidgetRemote(this))
 {
-    m_ui->setupUi(this);
+    connect(this, SIGNAL(accepted()), SLOT(save()));
+    connect(this, SIGNAL(rejected()), SLOT(reject()));
 
-    connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(save()));
-    connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(reject()));
-
-    m_ui->categoryList->addCategory(tr("General"), icons()->icon("preferences-other"));
-    m_ui->stackedWidget->addWidget(m_generalWidget);
-    m_ui->categoryList->addCategory(tr("Security"), icons()->icon("security-high"));
-    m_ui->stackedWidget->addWidget(m_securityTabWidget);
+    addPage(tr("General"), icons()->icon("preferences-other"), m_generalWidget);
+    addPage(tr("Security"), icons()->icon("security-high"), m_securityTabWidget);
 
     auto* scrollArea = new QScrollArea(parent);
     scrollArea->setFrameShape(QFrame::NoFrame);
@@ -93,106 +70,99 @@ DatabaseSettingsDialog::DatabaseSettingsDialog(QWidget* parent)
     scrollArea->setWidgetResizable(true);
     scrollArea->setWidget(m_databaseKeyWidget);
 
+    m_securityTabWidget->setObjectName("securityTabWidget");
     m_securityTabWidget->addTab(scrollArea, tr("Database Credentials"));
     m_securityTabWidget->addTab(m_encryptionWidget, tr("Encryption Settings"));
+
     m_securityTabWidget->setCurrentIndex(0);
 
-    m_ui->categoryList->addCategory(tr("Remote Sync"), icons()->icon("remote-sync"));
-    m_ui->stackedWidget->addWidget(m_remoteWidget);
+    addPage(tr("Remote Sync"), icons()->icon("remote-sync"), m_remoteWidget);
 
 #ifdef WITH_XC_BROWSER
-    m_ui->categoryList->addCategory(tr("Browser Integration"), icons()->icon("internet-web-browser"));
-    m_ui->stackedWidget->addWidget(m_browserWidget);
+    addPage(tr("Browser Integration"), icons()->icon("internet-web-browser"), m_browserWidget);
 #endif
 
 #ifdef WITH_XC_KEESHARE
-    addSettingsPage(new DatabaseSettingsPageKeeShare());
+    addPage(tr("KeeShare"), icons()->icon("preferences-system-network-sharing"), m_keeShareWidget);
 #endif
 
 #ifdef WITH_XC_FDOSECRETS
-    addSettingsPage(new DatabaseSettingsPageFdoSecrets());
+    addPage(tr("Secret Service Integration"), icons()->icon(QStringLiteral("freedesktop")), m_fdoSecretsWidget);
 #endif
 
-    m_ui->categoryList->addCategory(tr("Maintenance"), icons()->icon("hammer-wrench"));
-    m_ui->stackedWidget->addWidget(m_maintenanceWidget);
+    addPage(tr("Maintenance"), icons()->icon("hammer-wrench"), m_maintenanceWidget);
 
-    m_ui->stackedWidget->setCurrentIndex(0);
-    connect(m_ui->categoryList, SIGNAL(categoryChanged(int)), m_ui->stackedWidget, SLOT(setCurrentIndex(int)));
+    setCurrentPage(0);
 }
 
 DatabaseSettingsDialog::~DatabaseSettingsDialog() = default;
 
 void DatabaseSettingsDialog::load(const QSharedPointer<Database>& db)
 {
-    m_ui->categoryList->setCurrentCategory(0);
-    m_generalWidget->load(db);
-    m_databaseKeyWidget->load(db);
-    m_encryptionWidget->load(db);
+    m_generalWidget->loadSettings(db);
+    m_databaseKeyWidget->loadSettings(db);
+    m_encryptionWidget->loadSettings(db);
+    m_remoteWidget->loadSettings(db);
 #ifdef WITH_XC_BROWSER
-    m_browserWidget->load(db);
+    m_browserWidget->loadSettings(db);
 #endif
-    m_maintenanceWidget->load(db);
-    m_remoteWidget->load(db);
-    for (const ExtraPage& page : asConst(m_extraPages)) {
-        page.loadSettings(db);
-    }
-    m_db = db;
-}
+#ifdef WITH_XC_KEESHARE
+    m_keeShareWidget->loadSettings(db);
+#endif
+#ifdef WITH_XC_FDOSECRETS
+    m_fdoSecretsWidget->loadSettings(db);
+#endif
+    m_maintenanceWidget->loadSettings(db);
 
-void DatabaseSettingsDialog::addSettingsPage(IDatabaseSettingsPage* page)
-{
-    const int category = m_ui->categoryList->currentCategory();
-    QWidget* widget = page->createWidget();
-    widget->setParent(this);
-    m_extraPages.append(ExtraPage(page, widget));
-    m_ui->stackedWidget->addWidget(widget);
-    m_ui->categoryList->addCategory(page->name(), page->icon());
-    m_ui->categoryList->setCurrentCategory(category);
+    m_db = db;
 }
 
 /**
  * Show page and tab with database database key settings.
  */
-void DatabaseSettingsDialog::showDatabaseKeySettings()
+void DatabaseSettingsDialog::showDatabaseKeySettings(int index)
 {
-    m_ui->categoryList->setCurrentCategory(1);
-    m_securityTabWidget->setCurrentIndex(0);
+    setCurrentPage(1);
+    m_securityTabWidget->setCurrentIndex(index);
 }
 
 void DatabaseSettingsDialog::showRemoteSettings()
 {
-    m_ui->categoryList->setCurrentCategory(2);
+    setCurrentPage(2);
 }
 
 void DatabaseSettingsDialog::save()
 {
-    if (!m_generalWidget->save()) {
-        m_ui->categoryList->setCurrentCategory(0);
+    if (!m_generalWidget->saveSettings()) {
+        setCurrentPage(0);
         return;
     }
 
-    if (!m_databaseKeyWidget->save()) {
-        m_ui->categoryList->setCurrentCategory(1);
+    if (!m_databaseKeyWidget->saveSettings()) {
+        setCurrentPage(1);
         m_securityTabWidget->setCurrentIndex(0);
         return;
     }
 
-    if (!m_encryptionWidget->save()) {
-        m_ui->categoryList->setCurrentCategory(1);
+    if (!m_encryptionWidget->saveSettings()) {
+        setCurrentPage(1);
         m_securityTabWidget->setCurrentIndex(1);
         return;
     }
 
-    if (!m_remoteWidget->save()) {
-        m_ui->categoryList->setCurrentCategory(2);
+    if (!m_remoteWidget->saveSettings()) {
+        setCurrentPage(2);
         return;
     }
 
     // Browser settings don't have anything to save
 
-    for (const ExtraPage& extraPage : asConst(m_extraPages)) {
-        extraPage.saveSettings();
-    }
+#ifdef WITH_XC_KEESHARE
+    m_keeShareWidget->saveSettings();
+#endif
+#ifdef WITH_XC_FDOSECRETS
+    m_fdoSecretsWidget->saveSettings();
+#endif
 
     emit editFinished(true);
 }

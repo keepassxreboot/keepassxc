@@ -54,6 +54,7 @@
 #include "gui/databasekey/KeyFileEditWidget.h"
 #include "gui/databasekey/PasswordEditWidget.h"
 #include "gui/dbsettings/DatabaseSettingsDialog.h"
+#include "gui/dbsettings/DatabaseSettingsWidgetEncryption.h"
 #include "gui/entry/EditEntryWidget.h"
 #include "gui/entry/EntryView.h"
 #include "gui/group/EditGroupWidget.h"
@@ -1604,7 +1605,7 @@ void TestGui::testDatabaseSettings()
     int autosaveDelayTestValue = 2;
 
     dbSettingsCategoryList->setCurrentCategory(1); // go into security category
-    auto securityTabWidget = dbSettingsStackedWidget->findChild<QTabWidget*>();
+    auto securityTabWidget = dbSettingsStackedWidget->findChild<QTabWidget*>("securityTabWidget");
     QCOMPARE(securityTabWidget->currentIndex(), 0);
 
     // Interact with the password edit option

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,19 +15,13 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_DATABASESETTINGSPAGEKEESHARE_H
-#define KEEPASSXC_DATABASESETTINGSPAGEKEESHARE_H
+#include "SettingsWidget.h"
 
-#include "gui/dbsettings/DatabaseSettingsDialog.h"
-
-class DatabaseSettingsPageKeeShare : public IDatabaseSettingsPage
+SettingsWidget::SettingsWidget(QWidget* parent)
+    : QWidget(parent)
 {
-public:
-    QString name() override;
-    QIcon icon() override;
-    QWidget* createWidget() override;
-    void loadSettings(QWidget* widget, QSharedPointer<Database> db) override;
-    void saveSettings(QWidget* widget) override;
-};
+}
 
-#endif // KEEPASSXC_DATABASESETTINGSPAGEKEESHARE_H
+void SettingsWidget::discard()
+{
+}

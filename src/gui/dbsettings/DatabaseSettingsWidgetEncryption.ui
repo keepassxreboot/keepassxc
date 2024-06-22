@@ -537,6 +537,7 @@
   <tabstop>transformBenchmarkButton</tabstop>
   <tabstop>memorySpinBox</tabstop>
   <tabstop>parallelismSpinBox</tabstop>
+  <tabstop>advancedSettingsButton</tabstop>
  </tabstops>
  <resources/>
  <connections/>

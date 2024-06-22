@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -73,7 +73,7 @@ DatabaseSettingsWidgetEncryption::DatabaseSettingsWidgetEncryption(QWidget* pare
 
     connect(m_ui->decryptionTimeSlider, SIGNAL(valueChanged(int)), SLOT(updateDecryptionTime(int)));
 
-    // conditions under which a key re-transformation is needed
+    // Conditions under which a key re-transformation is needed
     connect(m_ui->decryptionTimeSlider, SIGNAL(valueChanged(int)), SLOT(markDirty()));
     connect(m_ui->compatibilitySelection, SIGNAL(currentIndexChanged(int)), SLOT(markDirty()));
     connect(m_ui->algorithmComboBox, SIGNAL(currentIndexChanged(int)), SLOT(markDirty()));
@@ -256,7 +256,7 @@ void DatabaseSettingsWidgetEncryption::markDirty()
     m_isDirty = true;
 }
 
-bool DatabaseSettingsWidgetEncryption::save()
+bool DatabaseSettingsWidgetEncryption::saveSettings()
 {
     Q_ASSERT(m_db);
     if (!m_db) {
@@ -269,7 +269,7 @@ bool DatabaseSettingsWidgetEncryption::save()
     }
 
     if (m_db->key() && !m_db->key()->keys().isEmpty() && !m_isDirty) {
-        // nothing has changed, don't re-transform
+        // Nothing has changed, don't re-transform
         return true;
     }
 

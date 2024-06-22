@@ -72,7 +72,6 @@
 
 #ifdef WITH_XC_BROWSER
 #include "browser/BrowserService.h"
-#include "browser/BrowserSettingsPage.h"
 #endif
 
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS) && !defined(QT_NO_DBUS)
@@ -222,7 +221,6 @@ MainWindow::MainWindow()
     m_ui->settingsWidget->addSettingsPage(new ShortcutSettingsPage());
 
 #ifdef WITH_XC_BROWSER
-    m_ui->settingsWidget->addSettingsPage(new BrowserSettingsPage());
     connect(
         browserService(), &BrowserService::requestUnlock, m_ui->tabWidget, &DatabaseTabWidget::performBrowserUnlock);
 #endif
