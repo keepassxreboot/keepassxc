@@ -31,8 +31,7 @@ class SettingsWidget : public QWidget
 
 public:
     explicit SettingsWidget(QWidget* parent = nullptr);
-    Q_DISABLE_COPY(SettingsWidget);
-    ~SettingsWidget() override;
+    ~SettingsWidget() override = default;
 
 public slots:
     /**
@@ -62,6 +61,8 @@ signals:
 
 private:
     bool m_advancedMode = false;
+
+    Q_DISABLE_COPY(SettingsWidget);
 };
 
 #endif // KEEPASSXC_SETTINGSWIDGET_H

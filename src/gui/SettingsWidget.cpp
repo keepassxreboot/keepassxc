@@ -16,14 +16,11 @@
  */
 
 #include "SettingsWidget.h"
-#include "core/Config.h"
 
 SettingsWidget::SettingsWidget(QWidget* parent)
     : QWidget(parent)
 {
 }
-
-SettingsWidget::~SettingsWidget() = default;
 
 void SettingsWidget::discard()
 {

@@ -31,10 +31,10 @@ class DatabaseSettingsWidgetDatabaseKey;
 #ifdef WITH_XC_BROWSER
 class DatabaseSettingsWidgetBrowser;
 #endif
-#if defined(WITH_XC_KEESHARE)
+#ifdef WITH_XC_KEESHARE
 class DatabaseSettingsWidgetKeeShare;
 #endif
-#if defined(WITH_XC_FDOSECRETS)
+#ifdef WITH_XC_FDOSECRETS
 class DatabaseSettingsWidgetFdoSecrets;
 #endif
 class DatabaseSettingsWidgetMaintenance;
@@ -51,7 +51,7 @@ public:
     Q_DISABLE_COPY(DatabaseSettingsDialog);
 
     void load(const QSharedPointer<Database>& db);
-    void showDatabaseKeySettings();
+    void showDatabaseKeySettings(int index = 0);
     void showRemoteSettings();
 
 signals:
@@ -70,10 +70,10 @@ private:
 #ifdef WITH_XC_BROWSER
     QPointer<DatabaseSettingsWidgetBrowser> m_browserWidget;
 #endif
-#if defined(WITH_XC_KEESHARE)
+#ifdef WITH_XC_KEESHARE
     QPointer<DatabaseSettingsWidgetKeeShare> m_keeShareWidget;
 #endif
-#if defined(WITH_XC_FDOSECRETS)
+#ifdef WITH_XC_FDOSECRETS
     QPointer<DatabaseSettingsWidgetFdoSecrets> m_fdoSecretsWidget;
 #endif
     QPointer<DatabaseSettingsWidgetMaintenance> m_maintenanceWidget;

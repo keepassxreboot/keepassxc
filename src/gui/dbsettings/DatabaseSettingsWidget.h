@@ -18,7 +18,7 @@
 #ifndef KEEPASSXC_DATABASESETTINGSWIDGET_H
 #define KEEPASSXC_DATABASESETTINGSWIDGET_H
 
-#include "gui/settings/SettingsWidget.h"
+#include "gui/SettingsWidget.h"
 
 class Database;
 

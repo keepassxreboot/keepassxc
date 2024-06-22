@@ -50,7 +50,7 @@ DatabaseSettingsDialog::DatabaseSettingsDialog(QWidget* parent)
 #ifdef WITH_XC_KEESHARE
     , m_keeShareWidget(new DatabaseSettingsWidgetKeeShare(this))
 #endif
-#if defined(WITH_XC_FDOSECRETS)
+#ifdef WITH_XC_FDOSECRETS
     , m_fdoSecretsWidget(new DatabaseSettingsWidgetFdoSecrets(this))
 #endif
     , m_maintenanceWidget(new DatabaseSettingsWidgetMaintenance(this))
@@ -70,29 +70,29 @@ DatabaseSettingsDialog::DatabaseSettingsDialog(QWidget* parent)
     scrollArea->setWidgetResizable(true);
     scrollArea->setWidget(m_databaseKeyWidget);
 
+    m_securityTabWidget->setObjectName("securityTabWidget");
     m_securityTabWidget->addTab(scrollArea, tr("Database Credentials"));
     m_securityTabWidget->addTab(m_encryptionWidget, tr("Encryption Settings"));
 
     m_securityTabWidget->setCurrentIndex(0);
 
-    m_ui->categoryList->addCategory(tr("Remote Sync"), icons()->icon("remote-sync"));
-    m_ui->stackedWidget->addWidget(m_remoteWidget);
+    addPage(tr("Remote Sync"), icons()->icon("remote-sync"), m_remoteWidget);
 
 #ifdef WITH_XC_BROWSER
     addPage(tr("Browser Integration"), icons()->icon("internet-web-browser"), m_browserWidget);
 #endif
 
-#if defined(WITH_XC_KEESHARE)
+#ifdef WITH_XC_KEESHARE
     addPage(tr("KeeShare"), icons()->icon("preferences-system-network-sharing"), m_keeShareWidget);
 #endif
 
-#if defined(WITH_XC_FDOSECRETS)
+#ifdef WITH_XC_FDOSECRETS
     addPage(tr("Secret Service Integration"), icons()->icon(QStringLiteral("freedesktop")), m_fdoSecretsWidget);
 #endif
 
     addPage(tr("Maintenance"), icons()->icon("hammer-wrench"), m_maintenanceWidget);
 
-    connect(m_ui->categoryList, SIGNAL(categoryChanged(int)), m_ui->stackedWidget, SLOT(setCurrentIndex(int)));
+    setCurrentPage(0);
 }
 
 DatabaseSettingsDialog::~DatabaseSettingsDialog() = default;
@@ -102,13 +102,14 @@ void DatabaseSettingsDialog::load(const QSharedPointer<Database>& db)
     m_generalWidget->loadSettings(db);
     m_databaseKeyWidget->loadSettings(db);
     m_encryptionWidget->loadSettings(db);
+    m_remoteWidget->loadSettings(db);
 #ifdef WITH_XC_BROWSER
     m_browserWidget->loadSettings(db);
 #endif
-#if defined(WITH_XC_KEESHARE)
+#ifdef WITH_XC_KEESHARE
     m_keeShareWidget->loadSettings(db);
 #endif
-#if defined(WITH_XC_FDOSECRETS)
+#ifdef WITH_XC_FDOSECRETS
     m_fdoSecretsWidget->loadSettings(db);
 #endif
     m_maintenanceWidget->loadSettings(db);
@@ -119,51 +120,47 @@ void DatabaseSettingsDialog::load(const QSharedPointer<Database>& db)
 /**
  * Show page and tab with database database key settings.
  */
-void DatabaseSettingsDialog::showDatabaseKeySettings(int index, bool enabledAdvancedMode)
+void DatabaseSettingsDialog::showDatabaseKeySettings(int index)
 {
     setCurrentPage(1);
     m_securityTabWidget->setCurrentIndex(index);
-
-    if (enabledAdvancedMode) {
-        m_encryptionWidget->setAdvancedMode(true);
-    }
 }
 
 void DatabaseSettingsDialog::showRemoteSettings()
 {
-    m_ui->categoryList->setCurrentCategory(2);
+    setCurrentPage(2);
 }
 
 void DatabaseSettingsDialog::save()
 {
     if (!m_generalWidget->saveSettings()) {
-        m_ui->categoryList->setCurrentCategory(0);
+        setCurrentPage(0);
         return;
     }
 
     if (!m_databaseKeyWidget->saveSettings()) {
-        m_ui->categoryList->setCurrentCategory(1);
+        setCurrentPage(1);
         m_securityTabWidget->setCurrentIndex(0);
         return;
     }
 
     if (!m_encryptionWidget->saveSettings()) {
-        m_ui->categoryList->setCurrentCategory(1);
+        setCurrentPage(1);
         m_securityTabWidget->setCurrentIndex(1);
         return;
     }
 
-    if (!m_remoteWidget->save()) {
-        m_ui->categoryList->setCurrentCategory(2);
+    if (!m_remoteWidget->saveSettings()) {
+        setCurrentPage(2);
         return;
     }
 
     // Browser settings don't have anything to save
 
-#if defined(WITH_XC_KEESHARE)
+#ifdef WITH_XC_KEESHARE
     m_keeShareWidget->saveSettings();
 #endif
-#if defined(WITH_XC_FDOSECRETS)
+#ifdef WITH_XC_FDOSECRETS
     m_fdoSecretsWidget->saveSettings();
 #endif
 

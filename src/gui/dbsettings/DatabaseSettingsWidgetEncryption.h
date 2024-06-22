@@ -54,7 +54,6 @@ private slots:
     void loadKdfParameters();
     void updateKdfFields();
     void markDirty();
-    void toggleAdvancedSettings();
 
 private:
     bool isAdvancedMode();

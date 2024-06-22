@@ -93,11 +93,6 @@ void DatabaseSettingsWidgetEncryption::showBasicEncryption(int decryptionMillise
     m_initWithAdvanced = false;
 }
 
-void DatabaseSettingsWidgetEncryption::showAdvancedModeButton(bool show)
-{
-    m_ui->advancedSettingsButton->setVisible(show);
-}
-
 void DatabaseSettingsWidgetEncryption::initialize()
 {
     Q_ASSERT(m_db);
