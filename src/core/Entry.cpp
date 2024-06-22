@@ -443,7 +443,7 @@ int Entry::size() const
     size += autoTypeAssociations()->associationsSize();
     size += attachments()->attachmentsSize();
     size += customData()->dataSize();
-    for (const QString& tag : tags().split(TagDelimiterRegex, QString::SkipEmptyParts)) {
+    for (const QString& tag : tags().split(TagDelimiterRegex, Qt::SkipEmptyParts)) {
         size += tag.toUtf8().size();
     }
 
@@ -672,7 +672,7 @@ void Entry::setOverrideUrl(const QString& url)
 
 void Entry::setTags(const QString& tags)
 {
-    auto taglist = tags.split(TagDelimiterRegex, QString::SkipEmptyParts);
+    auto taglist = tags.split(TagDelimiterRegex, Qt::SkipEmptyParts);
     // Trim whitespace before/after tag text
     for (auto& tag : taglist) {
         tag = tag.trimmed();
