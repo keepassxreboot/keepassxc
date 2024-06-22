@@ -6888,6 +6888,14 @@ Do you want to overwrite it?</source>
         <source>Special Characters</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>passwordLength</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Characters: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PasswordWidget</name>
