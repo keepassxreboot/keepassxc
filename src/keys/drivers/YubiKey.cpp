@@ -24,7 +24,7 @@
 #include <QSet>
 #include <QtConcurrent>
 
-QMutex YubiKey::s_interfaceMutex(QMutex::Recursive);
+QMutex YubiKey::s_interfaceMutex;
 
 YubiKey::YubiKey()
 {

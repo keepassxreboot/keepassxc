@@ -18,6 +18,7 @@
 
 #include "EntryAttributes.h"
 #include "core/Global.h"
+#include "core/Tools.h"
 
 #include <QRegularExpression>
 #include <QUuid>
@@ -248,7 +249,7 @@ void EntryAttributes::copyCustomKeysFrom(const EntryAttributes* other)
 bool EntryAttributes::areCustomKeysDifferent(const EntryAttributes* other)
 {
     // check if they are equal ignoring the order of the keys
-    if (keys().toSet() != other->keys().toSet()) {
+    if (Tools::asSet(keys()) != Tools::asSet(other->keys())) {
         return true;
     }
 

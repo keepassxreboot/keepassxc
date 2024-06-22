@@ -736,7 +736,7 @@ void Database::updateTagList()
         }
     }
 
-    m_tagList = tagSet.toList();
+    m_tagList = tagSet.values();
     m_tagList.sort();
     emit tagListUpdated();
 }

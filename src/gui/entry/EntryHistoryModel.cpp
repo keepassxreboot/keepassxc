@@ -26,6 +26,7 @@
 
 EntryHistoryModel::EntryHistoryModel(QObject* parent)
     : QAbstractTableModel(parent)
+    , m_systemLocale(QLocale::system())
 {
 }
 
@@ -67,7 +68,7 @@ QVariant EntryHistoryModel::data(const QModelIndex& index, int role) const
         switch (index.column()) {
         case 0:
             if (role == Qt::DisplayRole) {
-                return lastModified.toString(Qt::SystemLocaleShortDate);
+                return m_systemLocale.toString(lastModified, QLocale::ShortFormat);
             } else {
                 return lastModified;
             }

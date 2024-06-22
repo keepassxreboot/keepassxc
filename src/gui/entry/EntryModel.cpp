@@ -21,6 +21,7 @@
 #include <QMimeData>
 #include <QPalette>
 
+#include "core/Clock.h"
 #include "core/Entry.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
@@ -36,7 +37,6 @@ EntryModel::EntryModel(QObject* parent)
     : QAbstractTableModel(parent)
     , m_group(nullptr)
     , HiddenContentDisplay(QString("\u25cf").repeated(6))
-    , DateFormat(Qt::DefaultLocaleShortDate)
 {
     connect(config(), &Config::changed, this, &EntryModel::onConfigChanged);
 }
@@ -189,18 +189,17 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             return result;
         case Expires:
             // Display either date of expiry or 'Never'
-            result = entry->timeInfo().expires()
-                         ? entry->timeInfo().expiryTime().toLocalTime().toString(EntryModel::DateFormat)
-                         : tr("Never");
+            result = entry->timeInfo().expires() ? Clock::toString(entry->timeInfo().expiryTime().toLocalTime())
+                                                 : tr("Never");
             return result;
         case Created:
-            result = entry->timeInfo().creationTime().toLocalTime().toString(EntryModel::DateFormat);
+            result = Clock::toString(entry->timeInfo().creationTime().toLocalTime());
             return result;
         case Modified:
-            result = entry->timeInfo().lastModificationTime().toLocalTime().toString(EntryModel::DateFormat);
+            result = Clock::toString(entry->timeInfo().lastModificationTime().toLocalTime());
             return result;
         case Accessed:
-            result = entry->timeInfo().lastAccessTime().toLocalTime().toString(EntryModel::DateFormat);
+            result = Clock::toString(entry->timeInfo().lastAccessTime().toLocalTime());
             return result;
         case Attachments: {
             // Display comma-separated list of attachments
@@ -251,8 +250,13 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             return 0;
         }
         case Expires:
+            return entry->timeInfo().expires() ? entry->timeInfo().expiryTime()
             // There seems to be no better way of expressing 'infinity'
-            return entry->timeInfo().expires() ? entry->timeInfo().expiryTime() : QDateTime(QDate(9999, 1, 1));
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+                                               : QDate(9999, 1, 1).startOfDay();
+#else
+                                               : QDateTime(QDate(9999, 1, 1));
+#endif
         case Created:
             return entry->timeInfo().creationTime();
         case Modified:

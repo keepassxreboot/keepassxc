@@ -19,6 +19,7 @@
 #include "KeePass2RandomStream.h"
 #include "core/Clock.h"
 #include "core/Endian.h"
+#include "core/Global.h"
 #include "core/Group.h"
 #include "core/Tools.h"
 #include "streams/qtiocompressor.h"
@@ -120,8 +121,8 @@ void KdbxXmlReader::readDatabase(QIODevice* device, Database* db, KeePass2Random
         qWarning("KdbxXmlReader::readDatabase: found %d invalid entry reference(s)", m_tmpParent->children().size());
     }
 
-    const QSet<QString> poolKeys = asConst(m_binaryPool).keys().toSet();
-    const QSet<QString> entryKeys = asConst(m_binaryMap).keys().toSet();
+    const QSet<QString> poolKeys = Tools::asSet(m_binaryPool.keys());
+    const QSet<QString> entryKeys = Tools::asSet(m_binaryMap.keys());
     const QSet<QString> unmappedKeys = entryKeys - poolKeys;
     const QSet<QString> unusedKeys = poolKeys - entryKeys;
 
@@ -133,7 +134,7 @@ void KdbxXmlReader::readDatabase(QIODevice* device, Database* db, KeePass2Random
         qWarning("KdbxXmlReader::readDatabase: found unused key \"%s\"", qPrintable(key));
     }
 
-    QHash<QString, QPair<Entry*, QString>>::const_iterator i;
+    QMultiHash<QString, QPair<Entry*, QString>>::const_iterator i;
     for (i = m_binaryMap.constBegin(); i != m_binaryMap.constEnd(); ++i) {
         const QPair<Entry*, QString>& target = i.value();
         target.first->attachments()->set(target.second, m_binaryPool[i.key()]);
@@ -814,7 +815,7 @@ Entry* KdbxXmlReader::parseEntry(bool history)
     }
 
     for (const StringPair& ref : asConst(binaryRefs)) {
-        m_binaryMap.insertMulti(ref.first, qMakePair(entry, ref.second));
+        m_binaryMap.insert(ref.first, qMakePair(entry, ref.second));
     }
 
     return entry;

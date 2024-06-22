@@ -24,6 +24,7 @@
 #include <QMutex>
 #include <QObject>
 #include <QTimer>
+
 #include <botan/secmem.h>
 
 typedef QPair<unsigned int, int> YubiKeySlot;

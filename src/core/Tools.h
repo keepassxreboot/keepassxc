@@ -24,6 +24,7 @@
 #include <QDateTime>
 #include <QList>
 #include <QProcessEnvironment>
+#include <QSet>
 
 class QIODevice;
 class QRegularExpression;
@@ -46,6 +47,15 @@ namespace Tools
     QString envSubstitute(const QString& filepath,
                           QProcessEnvironment environment = QProcessEnvironment::systemEnvironment());
     QString cleanFilename(QString filename);
+
+    template <class T> QSet<T> asSet(const QList<T>& a)
+    {
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+        return QSet<T>(a.begin(), a.end());
+#else
+        return QSet<T>::fromList(a);
+#endif
+    }
 
     /**
      * Escapes all characters in regex such that they do not receive any special treatment when used

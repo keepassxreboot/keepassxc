@@ -40,7 +40,7 @@ namespace
             return group;
         }
 
-        auto nameList = groupPath.split("/", QString::SkipEmptyParts);
+        auto nameList = groupPath.split("/", Qt::SkipEmptyParts);
         // Skip over first group name if root
         if (nameList.first().compare("root", Qt::CaseInsensitive) == 0) {
             nameList.removeFirst();

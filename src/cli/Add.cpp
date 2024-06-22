@@ -19,6 +19,7 @@
 
 #include "Generate.h"
 #include "Utils.h"
+#include "core/Global.h"
 #include "core/Group.h"
 #include "core/PasswordGenerator.h"
 
@@ -78,7 +79,7 @@ int Add::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<Q
 
     // Cannot use those 2 options at the same time!
     if (parser->isSet(Add::GenerateOption) && parser->isSet(Add::PasswordPromptOption)) {
-        err << QObject::tr("Cannot generate a password and prompt at the same time.") << endl;
+        err << QObject::tr("Cannot generate a password and prompt at the same time.") << Qt::endl;
         return EXIT_FAILURE;
     }
 
@@ -94,7 +95,7 @@ int Add::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<Q
 
     Entry* entry = database->rootGroup()->addEntryWithPath(entryPath);
     if (!entry) {
-        err << QObject::tr("Could not create entry with path %1.").arg(entryPath) << endl;
+        err << QObject::tr("Could not create entry with path %1.").arg(entryPath) << Qt::endl;
         return EXIT_FAILURE;
     }
 
@@ -112,7 +113,7 @@ int Add::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<Q
 
     if (parser->isSet(Add::PasswordPromptOption)) {
         if (!parser->isSet(Command::QuietOption)) {
-            out << QObject::tr("Enter password for new entry: ") << flush;
+            out << QObject::tr("Enter password for new entry: ") << Qt::flush;
         }
         QString password = Utils::getPassword(parser->isSet(Command::QuietOption));
         entry->setPassword(password);
@@ -123,12 +124,12 @@ int Add::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<Q
 
     QString errorMessage;
     if (!database->save(Database::Atomic, {}, &errorMessage)) {
-        err << QObject::tr("Writing the database failed %1.").arg(errorMessage) << endl;
+        err << QObject::tr("Writing the database failed %1.").arg(errorMessage) << Qt::endl;
         return EXIT_FAILURE;
     }
 
     if (!parser->isSet(Command::QuietOption)) {
-        out << QObject::tr("Successfully added entry %1.").arg(entry->title()) << endl;
+        out << QObject::tr("Successfully added entry %1.").arg(entry->title()) << Qt::endl;
     }
     return EXIT_SUCCESS;
 }
