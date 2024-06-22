@@ -36,7 +36,17 @@ void RemoteProcess::setTempFileLocation(const QString& tempFile)
 
 void RemoteProcess::start(const QString& command)
 {
-    m_process->start(resolveTemplateVariables(command));
+    const QString commandResolved = resolveTemplateVariables(command);
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+    QStringList cmdList = QProcess::splitCommand(commandResolved);
+    if (!cmdList.isEmpty()) {
+        const QString program = cmdList.takeFirst();
+        m_process->start(program, cmdList);
+    }
+#else
+    m_process->start(resolveTemplateVariables(commandResolved));
+#endif
+
     m_process->waitForStarted();
 }
 
