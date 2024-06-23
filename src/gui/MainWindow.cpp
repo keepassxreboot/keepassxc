@@ -78,28 +78,6 @@
 #include "mainwindowadaptor.h"
 #endif
 
-// This filter gets installed on all the QAction objects within the MainWindow.
-bool ActionEventFilter::eventFilter(QObject* watched, QEvent* event)
-{
-    auto databaseWidget = getMainWindow()->m_ui->tabWidget->currentDatabaseWidget();
-    if (databaseWidget && event->type() == QEvent::Shortcut) {
-        // We check if we got a Shortcut event that uses the same key sequence as the
-        // OS default copy-to-clipboard shortcut.
-        static const auto stdCopyShortcuts = QKeySequence::keyBindings(QKeySequence::Copy);
-        if (stdCopyShortcuts.contains(static_cast<QShortcutEvent*>(event)->key())) {
-            // If so, we ask the database widget to check if any of its sub-widgets has text
-            // selected, and to copy it to the clipboard if that is the case. We do this
-            // because that is what the user likely expects to happen, yet Qt does not
-            // behave like that on all platforms.
-            if (databaseWidget->copyFocusedTextSelection()) {
-                // In that case, we return true to stop further processing of this event.
-                return true;
-            }
-        }
-    }
-    return QObject::eventFilter(watched, event);
-}
-
 const QString MainWindow::BaseWindowTitle = "KeePassXC";
 
 MainWindow* g_MainWindow = nullptr;
@@ -1391,6 +1369,33 @@ void MainWindow::databaseTabChanged(int tabIndex)
     updateEntryCountLabel();
 }
 
+bool MainWindow::event(QEvent* event)
+{
+    if (event->type() == QEvent::ShortcutOverride) {
+        const auto keyevent = static_cast<QKeyEvent*>(event);
+        // Did we get a ShortcutOverride event with the same key sequence as the OS default
+        // copy-to-clipboard shortcut?
+        if (keyevent->matches(QKeySequence::Copy)) {
+            // If so, we ask the database widget to check if any of its sub-widgets has
+            // text selected, and to copy it to the clipboard if that is the case.
+            // We do this because that is what the user likely expects to happen, yet Qt does not
+            // behave like that (at least on some platforms).
+            auto dbWidget = m_ui->tabWidget->currentDatabaseWidget();
+            if (dbWidget && dbWidget->copyFocusedTextSelection()) {
+                // Note: instead of actively copying the selected text to the clipboard
+                // above, simply accepting the event would have a similar effect (Qt
+                // would deliver it as a key press to the current widget, which would
+                // trigger the built-in copy-to-clipboard behaviour). However, that
+                // would not come with our special (configurable) behaviour of
+                // clearing the clipboard after a certain time period.
+                keyevent->accept();
+                return true;
+            }
+        }
+    }
+    return QMainWindow::event(event);
+}
+
 void MainWindow::showEvent(QShowEvent* event)
 {
     Q_UNUSED(event)
@@ -1476,7 +1481,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
         }
     }
 
-    QWidget::keyPressEvent(event);
+    QMainWindow::keyPressEvent(event);
 }
 
 bool MainWindow::focusNextPrevChild(bool next)
@@ -2196,14 +2201,6 @@ void MainWindow::initActionCollection()
     ac->setDefaultShortcut(m_ui->actionEntryAddToAgent, Qt::META + Qt::Key_H);
     ac->setDefaultShortcut(m_ui->actionEntryRemoveFromAgent, Qt::META + Qt::SHIFT + Qt::Key_H);
 #endif
-
-    // Install an event filter on every action. It improves handling of keyboard
-    // shortcuts that match the system copy-to-clipboard key sequence; by default
-    // this applies to actionEntryCopyPassword, but this could differ based on
-    // shortcuts the user has configured, or may configure later.
-    for (auto action : ac->actions()) {
-        action->installEventFilter(&m_actionEventFilter);
-    }
 
     QTimer::singleShot(1, ac, &ActionCollection::restoreShortcuts);
 }
