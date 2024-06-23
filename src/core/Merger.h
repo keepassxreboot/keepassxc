@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_MERGER_H
-#define KEEPASSXC_MERGER_H
+#pragma once
 
 #include "core/Group.h"
 
@@ -69,5 +68,3 @@ private:
     Group::MergeMode m_mode;
     bool m_skipCustomData = false;
 };
-
-#endif // KEEPASSXC_MERGER_H

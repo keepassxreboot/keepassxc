@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_TESTSHARING_H
-#define KEEPASSXC_TESTSHARING_H
+#pragma once
 
 #include <QObject>
 
@@ -40,5 +39,3 @@ private slots:
 private:
     const QSharedPointer<Botan::RSA_PrivateKey> stubkey(int index = 0);
 };
-
-#endif // KEEPASSXC_TESTSHARING_H

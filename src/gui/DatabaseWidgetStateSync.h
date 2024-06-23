@@ -17,8 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_DATABASEWIDGETSTATESYNC_H
-#define KEEPASSX_DATABASEWIDGETSTATESYNC_H
+#pragma once
 
 #include "gui/DatabaseWidget.h"
 
@@ -53,5 +52,3 @@ private:
     QByteArray m_listViewState;
     QByteArray m_searchViewState;
 };
-
-#endif // KEEPASSX_DATABASEWIDGETSTATESYNC_H

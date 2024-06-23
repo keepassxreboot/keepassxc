@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_EXPORTDIALOG_H
-#define KEEPASSXC_EXPORTDIALOG_H
+#pragma once
 
 #include "core/Database.h"
 #include "gui/DatabaseTabWidget.h"
@@ -54,5 +53,3 @@ private:
     QScopedPointer<Ui::ExportDialog> m_ui;
     QSharedPointer<const Database> m_db;
 };
-
-#endif // KEEPASSXC_EXPORTDIALOG_H

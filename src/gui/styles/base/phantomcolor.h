@@ -26,8 +26,7 @@
  * IN THE SOFTWARE.
  */
 
-#ifndef PHANTOMCOLOR_H
-#define PHANTOMCOLOR_H
+#pragma once
 
 #include <QColor>
 
@@ -157,5 +156,3 @@ namespace Phantom
     }
 
 } // namespace Phantom
-
-#endif

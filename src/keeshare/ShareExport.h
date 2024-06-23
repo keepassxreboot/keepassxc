@@ -14,8 +14,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef KEEPASSXC_SHAREEXPORT_H
-#define KEEPASSXC_SHAREEXPORT_H
+#pragma once
 
 #include <QCoreApplication>
 
@@ -33,5 +32,3 @@ public:
 private:
     ShareExport() = delete;
 };
-
-#endif // KEEPASSXC_SHAREEXPORT_H

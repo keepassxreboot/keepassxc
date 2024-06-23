@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_DATABASESTATS_H
-#define KEEPASSXC_DATABASESTATS_H
+#pragma once
 #include "PasswordHealth.h"
 #include "core/Group.h"
 #include <QFileInfo>
@@ -56,4 +55,3 @@ private:
 
     void gatherStats(const QList<Group*>& groups);
 };
-#endif // KEEPASSXC_DATABASESTATS_H

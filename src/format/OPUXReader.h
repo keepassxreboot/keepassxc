@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OPUX_READER_H
-#define OPUX_READER_H
+#pragma once
 
 #include <QSharedPointer>
 
@@ -39,5 +38,3 @@ public:
 private:
     QString m_error;
 };
-
-#endif // OPUX_READER_H

@@ -15,8 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_KDBXWRITER_H
-#define KEEPASSXC_KDBXWRITER_H
+#pragma once
 
 #include "KeePass2.h"
 #include "core/Endian.h"
@@ -87,5 +86,3 @@ protected:
     bool m_error = false;
     QString m_errorStr = "";
 };
-
-#endif // KEEPASSXC_KDBXWRITER_H

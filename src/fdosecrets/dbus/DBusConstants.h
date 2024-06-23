@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_FDOSECRETS_DBUSCONSTANTS_H
-#define KEEPASSXC_FDOSECRETS_DBUSCONSTANTS_H
+#pragma once
 
 #include <QString>
 
@@ -45,5 +44,3 @@ static const auto DBUS_PATH_TEMPLATE_SESSION = QStringLiteral("%1/session/%2");
 static const auto DBUS_PATH_TEMPLATE_COLLECTION = QStringLiteral("%1/collection/%2");
 static const auto DBUS_PATH_TEMPLATE_ITEM = QStringLiteral("%1/%2");
 static const auto DBUS_PATH_TEMPLATE_PROMPT = QStringLiteral("%1/prompt/%2");
-
-#endif // KEEPASSXC_FDOSECRETS_DBUSCONSTANTS_H

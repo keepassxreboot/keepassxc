@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTMERGE_H
-#define KEEPASSX_TESTMERGE_H
+#pragma once
 
 #include "core/Database.h"
 #include <functional>
@@ -71,5 +70,3 @@ private:
     static void assertUpdateReappliedEntry1(Entry* entry, const QMap<const char*, QDateTime>& timestamps);
     static void assertUpdateMergedEntry2(Entry* entry, const QMap<const char*, QDateTime>& timestamps);
 };
-
-#endif // KEEPASSX_TESTMERGE_H

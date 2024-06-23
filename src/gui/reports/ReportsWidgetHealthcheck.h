@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_REPORTSWIDGETHEALTHCHECK_H
-#define KEEPASSXC_REPORTSWIDGETHEALTHCHECK_H
+#pragma once
 
 #include "gui/entry/EntryModel.h"
 #include <QWidget>
@@ -66,5 +65,3 @@ private:
     QSharedPointer<Database> m_db;
     QList<QPair<Group*, Entry*>> m_rowToEntry;
 };
-
-#endif // KEEPASSXC_REPORTSWIDGETHEALTHCHECK_H

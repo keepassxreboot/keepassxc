@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_KEYFILEEDITWIDGET_H
-#define KEEPASSXC_KEYFILEEDITWIDGET_H
+#pragma once
 
 #include "KeyComponentWidget.h"
 
@@ -53,5 +52,3 @@ private:
     QPointer<QWidget> m_compEditWidget;
     const QPointer<DatabaseSettingsWidget> m_parent;
 };
-
-#endif // KEEPASSXC_KEYFILEEDITWIDGET_H

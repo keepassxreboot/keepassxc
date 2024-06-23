@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_BROWSERENTRYSAVEDIALOG_H
-#define KEEPASSXC_BROWSERENTRYSAVEDIALOG_H
+#pragma once
 
 #include "gui/DatabaseTabWidget.h"
 
@@ -44,5 +43,3 @@ public:
 private:
     QScopedPointer<Ui::BrowserEntrySaveDialog> m_ui;
 };
-
-#endif // KEEPASSXC_BROWSERENTRYSAVEDIALOG_H

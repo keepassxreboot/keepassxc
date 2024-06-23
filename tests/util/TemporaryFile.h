@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_TEMPORARYFILE_H
-#define KEEPASSXC_TEMPORARYFILE_H
+#pragma once
 
 #include <QTemporaryFile>
 
@@ -35,5 +34,3 @@ public:
     bool open();
     bool copyFromFile(const QString& otherFileName);
 };
-
-#endif // KEEPASSXC_TEMPORARYFILE_H

@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_COMMAND_H
-#define KEEPASSXC_COMMAND_H
+#pragma once
 
 #include <QCommandLineOption>
 
@@ -63,5 +62,3 @@ namespace Commands
     QList<QSharedPointer<Command>> getCommands();
     QSharedPointer<Command> getCommand(const QString& commandName);
 } // namespace Commands
-
-#endif // KEEPASSXC_COMMAND_H

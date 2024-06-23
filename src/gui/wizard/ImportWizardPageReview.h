@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_IMPORTWIZARDPAGEREVIEW_H
-#define KEEPASSXC_IMPORTWIZARDPAGEREVIEW_H
+#pragma once
 
 #include <QPointer>
 #include <QWizardPage>
@@ -56,5 +55,3 @@ private:
     QSharedPointer<Database> m_db;
     QPointer<CsvImportWidget> m_csvWidget;
 };
-
-#endif

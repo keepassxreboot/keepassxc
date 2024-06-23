@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_TESTGUIFDOSECRETS_H
-#define KEEPASSXC_TESTGUIFDOSECRETS_H
+#pragma once
 
 #include <QByteArray>
 #include <QDBusConnection>
@@ -158,5 +157,3 @@ private:
     QByteArray m_dbData;
     QScopedPointer<TemporaryFile> m_dbFile;
 };
-
-#endif // KEEPASSXC_TESTGUIFDOSECRETS_H

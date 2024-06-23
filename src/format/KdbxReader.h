@@ -15,8 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_KDBXREADER_H
-#define KEEPASSXC_KDBXREADER_H
+#pragma once
 
 #include "KeePass2.h"
 
@@ -96,5 +95,3 @@ private:
     bool m_error = false;
     QString m_errorStr = "";
 };
-
-#endif // KEEPASSXC_KDBXREADER_H

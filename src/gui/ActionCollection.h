@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_ACTION_COLLECTION_H
-#define KEEPASSXC_ACTION_COLLECTION_H
+#pragma once
 
 #include <QAction>
 #include <QKeySequence>
@@ -57,5 +56,3 @@ public slots:
 private:
     QList<QAction*> m_actions;
 };
-
-#endif

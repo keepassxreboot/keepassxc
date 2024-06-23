@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_FAILDEVICE_H
-#define KEEPASSX_FAILDEVICE_H
+#pragma once
 
 #include <QBuffer>
 
@@ -37,5 +36,3 @@ private:
     int m_readCount;
     int m_writeCount;
 };
-
-#endif // KEEPASSX_FAILDEVICE_H

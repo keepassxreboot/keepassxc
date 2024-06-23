@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_DATABASESETTINGSWIDGETENCRYPTION_H
-#define KEEPASSXC_DATABASESETTINGSWIDGETENCRYPTION_H
+#pragma once
 
 #include "DatabaseSettingsWidget.h"
 
@@ -70,5 +69,3 @@ private:
     bool m_initWithAdvanced = false;
     const QScopedPointer<Ui::DatabaseSettingsWidgetEncryption> m_ui;
 };
-
-#endif // KEEPASSXC_DATABASESETTINGSWIDGETENCRYPTION_H

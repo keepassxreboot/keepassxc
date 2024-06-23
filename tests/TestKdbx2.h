@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_TEST_KDBX2_H
-#define KEEPASSXC_TEST_KDBX2_H
+#pragma once
 
 #include <QObject>
 
@@ -34,5 +33,3 @@ private slots:
 private:
     void verifyKdbx2Db(QSharedPointer<Database> db);
 };
-
-#endif // KEEPASSXC_TEST_KDBX2_H

@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_MAINWINDOW_H
-#define KEEPASSX_MAINWINDOW_H
+#pragma once
 
 #include <QActionGroup>
 #include <QLabel>
@@ -224,5 +223,3 @@ public:
  * @return MainWindow instance or nullptr
  */
 MainWindow* getMainWindow();
-
-#endif // KEEPASSX_MAINWINDOW_H

@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_OPENSSHKEYGEN_H
-#define KEEPASSXC_OPENSSHKEYGEN_H
+#pragma once
 
 class OpenSSHKey;
 
@@ -26,5 +25,3 @@ namespace OpenSSHKeyGen
     bool generateECDSA(OpenSSHKey& key, int bits);
     bool generateEd25519(OpenSSHKey& key);
 } // namespace OpenSSHKeyGen
-
-#endif

@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_BROWSERACCESSCONTROLDIALOG_H
-#define KEEPASSXC_BROWSERACCESSCONTROLDIALOG_H
+#pragma once
 
 #include <QDialog>
 #include <QTableWidget>
@@ -63,5 +62,3 @@ private:
     QScopedPointer<Ui::BrowserAccessControlDialog> m_ui;
     QList<Entry*> m_entriesToConfirm;
 };
-
-#endif // KEEPASSXC_BROWSERACCESSCONTROLDIALOG_H

@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef ENTRYATTACHMENTSWIDGET_H
-#define ENTRYATTACHMENTSWIDGET_H
+#pragma once
 
 #include <QPointer>
 #include <QWidget>
@@ -80,5 +79,3 @@ private:
     bool m_readOnly;
     bool m_buttonsVisible;
 };
-
-#endif // ENTRYATTACHMENTSWIDGET_H

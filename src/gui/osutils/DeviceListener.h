@@ -15,8 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DEVICELISTENER_H
-#define DEVICELISTENER_H
+#pragma once
 
 #include <QHash>
 #include <QPair>
@@ -74,5 +73,3 @@ private:
     QHash<Handle, QPointer<DEVICELISTENER_IMPL>> m_listeners;
     void connectSignals(DEVICELISTENER_IMPL* listener);
 };
-
-#endif // DEVICELISTENER_H

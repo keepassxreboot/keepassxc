@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef PASSKEYUTILS_H
-#define PASSKEYUTILS_H
+#pragma once
 
 #include <QJsonArray>
 #include <QJsonObject>
@@ -79,5 +78,3 @@ static inline PasskeyUtils* passkeyUtils()
 {
     return PasskeyUtils::instance();
 }
-
-#endif // PASSKEYUTILS_H

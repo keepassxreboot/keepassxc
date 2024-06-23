@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_KDBX3READER_H
-#define KEEPASSX_KDBX3READER_H
+#pragma once
 
 #include "format/KdbxReader.h"
 
@@ -37,5 +36,3 @@ public:
 protected:
     bool readHeaderField(StoreDataStream& headerStream, Database* db) override;
 };
-
-#endif // KEEPASSX_KDBX3READER_H

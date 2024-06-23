@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_DATABASESETTINGSWIDGETKEESHARE_H
-#define KEEPASSXC_DATABASESETTINGSWIDGETKEESHARE_H
+#pragma once
 
 #include <QPointer>
 #include <QWidget>
@@ -46,5 +45,3 @@ private:
     QScopedPointer<QStandardItemModel> m_referencesModel;
     QSharedPointer<Database> m_db;
 };
-
-#endif // KEEPASSXC_DATABASESETTINGSWIDGETKEESHARE_H

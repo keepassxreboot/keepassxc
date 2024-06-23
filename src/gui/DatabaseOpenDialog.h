@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_UNLOCKDATABASEDIALOG_H
-#define KEEPASSX_UNLOCKDATABASEDIALOG_H
+#pragma once
 
 #include "core/Global.h"
 
@@ -73,5 +72,3 @@ private:
     QPointer<DatabaseWidget> m_currentDbWidget;
     Intent m_intent = Intent::None;
 };
-
-#endif // KEEPASSX_UNLOCKDATABASEDIALOG_H

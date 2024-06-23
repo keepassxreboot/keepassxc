@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTMODIFIED_H
-#define KEEPASSX_TESTMODIFIED_H
+#pragma once
 
 #include <QObject>
 
@@ -36,5 +35,3 @@ private slots:
     void testCustomData();
     void testBlockModifiedSignal();
 };
-
-#endif // KEEPASSX_TESTMODIFIED_H

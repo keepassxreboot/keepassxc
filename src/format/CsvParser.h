@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_CSVPARSER_H
-#define KEEPASSX_CSVPARSER_H
+#pragma once
 
 #include <QBuffer>
 #include <QTextStream>
@@ -92,5 +91,3 @@ private:
     void skipLine();
     void appendStatusMsg(const QString& s, bool isCritical = false);
 };
-
-#endif // CSVPARSER_H

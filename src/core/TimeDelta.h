@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TIMEDELTA_H
-#define KEEPASSX_TIMEDELTA_H
+#pragma once
 
 #include <QMetaType>
 
@@ -49,5 +48,3 @@ private:
 };
 
 Q_DECLARE_METATYPE(TimeDelta)
-
-#endif // KEEPASSX_TIMEDELTA_H

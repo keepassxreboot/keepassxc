@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_TESTGUIBROWSER_H
-#define KEEPASSXC_TESTGUIBROWSER_H
+#pragma once
 
 #include "gui/MainWindow.h"
 #include "util/TemporaryFile.h"
@@ -54,5 +53,3 @@ private:
     QSharedPointer<Database> m_db;
     QScopedPointer<TemporaryFile> m_dbFile;
 };
-
-#endif // KEEPASSXC_TESTGUIBROWSER_H

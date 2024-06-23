@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTSYMMETRICCIPHER_H
-#define KEEPASSX_TESTSYMMETRICCIPHER_H
+#pragma once
 
 #include <QObject>
 
@@ -40,5 +39,3 @@ private slots:
     void testPadding();
     void testStreamReset();
 };
-
-#endif // KEEPASSX_TESTSYMMETRICCIPHER_H

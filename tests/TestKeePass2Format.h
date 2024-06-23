@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_TESTKEEPASS2FORMAT_H
-#define KEEPASSXC_TESTKEEPASS2FORMAT_H
+#pragma once
 
 #include <QBuffer>
 
@@ -87,5 +86,3 @@ private:
 };
 
 QSharedPointer<Kdf> fastKdf(QSharedPointer<Kdf> kdf);
-
-#endif // KEEPASSXC_TESTKEEPASS2FORMAT_H

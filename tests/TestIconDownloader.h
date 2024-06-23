@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_TESTICONDOWNLOADER_HPP
-#define KEEPASSXC_TESTICONDOWNLOADER_HPP
+#pragma once
 
 #include <QList>
 #include <QObject>
@@ -30,5 +29,3 @@ private slots:
     void testIconDownloader();
     void testIconDownloader_data();
 };
-
-#endif // KEEPASSXC_TESTICONDOWNLOADER_HPP

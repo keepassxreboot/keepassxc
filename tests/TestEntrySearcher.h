@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTENTRYSEARCHER_H
-#define KEEPASSX_TESTENTRYSEARCHER_H
+#pragma once
 
 #include <QObject>
 
@@ -45,5 +44,3 @@ private:
     EntrySearcher m_entrySearcher;
     QList<Entry*> m_searchResult;
 };
-
-#endif // KEEPASSX_TESTENTRYSEARCHER_H

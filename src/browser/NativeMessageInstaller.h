@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NATIVEMESSAGEINSTALLER_H
-#define NATIVEMESSAGEINSTALLER_H
+#pragma once
 
 #include "BrowserShared.h"
 #include <QtGlobal>
@@ -45,5 +44,3 @@ private:
 
     Q_DISABLE_COPY(NativeMessageInstaller);
 };
-
-#endif // NATIVEMESSAGEINSTALLER_H

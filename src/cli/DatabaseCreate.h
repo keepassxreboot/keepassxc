@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_DATABASECREATE_H
-#define KEEPASSXC_DATABASECREATE_H
+#pragma once
 
 #include "Command.h"
 
@@ -33,5 +32,3 @@ public:
     static const QCommandLineOption SetPasswordOption;
     static const QCommandLineOption DecryptionTimeOption;
 };
-
-#endif // KEEPASSXC_DATABASECREATE_H

@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_AESKDF_H
-#define KEEPASSX_AESKDF_H
+#pragma once
 
 #include "Kdf.h"
 
@@ -38,5 +37,3 @@ private:
     Q_REQUIRED_RESULT static bool
     transformKeyRaw(const QByteArray& key, const QByteArray& seed, int rounds, QByteArray* result);
 };
-
-#endif // KEEPASSX_AESKDF_H

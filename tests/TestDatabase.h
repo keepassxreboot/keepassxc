@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTDATABASE_H
-#define KEEPASSX_TESTDATABASE_H
+#pragma once
 
 #include <QObject>
 
@@ -37,5 +36,3 @@ private slots:
     void testEmptyRecycleBinWithHierarchicalData();
     void testCustomIcons();
 };
-
-#endif // KEEPASSX_TESTDATABASE_H

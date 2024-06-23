@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_FDOSECRETSPROXY_H
-#define KEEPASSXC_FDOSECRETSPROXY_H
+#pragma once
 
 #include "fdosecrets/dbus/DBusTypes.h"
 
@@ -389,5 +388,3 @@ Q_SIGNALS: // SIGNALS
 
 #undef IMPL_GET_PROPERTY
 #undef IMPL_SET_PROPERTY
-
-#endif // KEEPASSXC_FDOSECRETSPROXY_H

@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_PASSKEYEXPORTDIALOG_H
-#define KEEPASSXC_PASSKEYEXPORTDIALOG_H
+#pragma once
 
 #include <QDialog>
 #include <QTableWidget>
@@ -48,5 +47,3 @@ private:
     QList<Entry*> m_entriesToConfirm;
     QList<Entry*> m_allowedEntries;
 };
-
-#endif // KEEPASSXC_PASSKEYEXPORTDIALOG_H

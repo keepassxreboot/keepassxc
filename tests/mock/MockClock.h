@@ -15,8 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_TESTCLOCK_H
-#define KEEPASSXC_TESTCLOCK_H
+#pragma once
 
 #include "core/Clock.h"
 
@@ -46,5 +45,3 @@ protected:
 private:
     QDateTime m_utcCurrent;
 };
-
-#endif // KEEPASSXC_TESTCLOCK_H

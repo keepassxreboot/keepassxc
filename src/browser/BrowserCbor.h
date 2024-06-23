@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_BROWSERCBOR_H
-#define KEEPASSXC_BROWSERCBOR_H
+#pragma once
 
 #include <QByteArray>
 #include <QCborArray>
@@ -68,5 +67,3 @@ public:
     unsigned int getCoseKeyType(int alg) const;
     unsigned int getCurveParameter(int alg) const;
 };
-
-#endif // KEEPASSXC_BROWSERCBOR_H

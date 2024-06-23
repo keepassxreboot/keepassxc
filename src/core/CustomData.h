@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_CUSTOMDATA_H
-#define KEEPASSXC_CUSTOMDATA_H
+#pragma once
 
 #include <QDateTime>
 #include <QHash>
@@ -92,5 +91,3 @@ private slots:
 private:
     QHash<QString, CustomDataItem> m_data;
 };
-
-#endif // KEEPASSXC_CUSTOMDATA_H

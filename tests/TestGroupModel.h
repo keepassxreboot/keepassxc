@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTGROUPMODEL_H
-#define KEEPASSX_TESTGROUPMODEL_H
+#pragma once
 
 #include <QObject>
 
@@ -28,5 +27,3 @@ private slots:
     void initTestCase();
     void test();
 };
-
-#endif // KEEPASSX_TESTGROUPMODEL_H

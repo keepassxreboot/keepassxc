@@ -18,8 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
  * 02110-1301  USA
  */
-#ifndef KMESSAGEWIDGET_H
-#define KMESSAGEWIDGET_H
+#pragma once
 
 #include <QFrame>
 
@@ -338,5 +337,3 @@ private:
     Q_PRIVATE_SLOT(d, void slotTimeLineChanged(qreal))
     Q_PRIVATE_SLOT(d, void slotTimeLineFinished())
 };
-
-#endif /* KMESSAGEWIDGET_H */

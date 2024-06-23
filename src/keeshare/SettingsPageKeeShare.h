@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_SETTINGSPAGEKEESHARE_H
-#define KEEPASSXC_SETTINGSPAGEKEESHARE_H
+#pragma once
 
 #include <QPointer>
 
@@ -37,5 +36,3 @@ public:
 private:
     QPointer<DatabaseTabWidget> m_tabWidget;
 };
-
-#endif // KEEPASSXC_SETTINGSPAGEKEESHARE_H

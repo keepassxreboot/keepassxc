@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_UTILS_H
-#define KEEPASSXC_UTILS_H
+#pragma once
 
 #include <QTextStream>
 
@@ -65,5 +64,3 @@ namespace Utils
      */
     QString getTopLevelField(const Entry* entry, const QString& fieldName);
 }; // namespace Utils
-
-#endif // KEEPASSXC_UTILS_H

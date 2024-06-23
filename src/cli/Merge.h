@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_MERGE_H
-#define KEEPASSXC_MERGE_H
+#pragma once
 
 #include "DatabaseCommand.h"
 
@@ -33,5 +32,3 @@ public:
     static const QCommandLineOption YubiKeyFromOption;
     static const QCommandLineOption DryRunOption;
 };
-
-#endif // KEEPASSXC_MERGE_H

@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TOOLS_H
-#define KEEPASSX_TOOLS_H
+#pragma once
 
 #include "core/Global.h"
 
@@ -115,5 +114,3 @@ namespace Tools
 
     QString substituteBackupFilePath(QString pattern, const QString& databasePath);
 } // namespace Tools
-
-#endif // KEEPASSX_TOOLS_H

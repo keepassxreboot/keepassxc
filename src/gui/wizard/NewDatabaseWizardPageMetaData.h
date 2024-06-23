@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_NEWDATABASEWIZARDPAGEMETADATA_H
-#define KEEPASSXC_NEWDATABASEWIZARDPAGEMETADATA_H
+#pragma once
 
 #include "NewDatabaseWizardPage.h"
 
@@ -31,5 +30,3 @@ public:
     Q_DISABLE_COPY(NewDatabaseWizardPageMetaData);
     ~NewDatabaseWizardPageMetaData() override;
 };
-
-#endif // KEEPASSXC_NEWDATABASEWIZARDPAGEMETADATA_H

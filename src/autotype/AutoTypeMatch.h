@@ -15,13 +15,10 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KPXC_AUTOTYPEMATCH_H
-#define KPXC_AUTOTYPEMATCH_H
+#pragma once
 
 #include <QPair>
 #include <QPointer>
 
 class Entry;
 typedef QPair<QPointer<Entry>, QString> AutoTypeMatch;
-
-#endif // KPXC_AUTOTYPEMATCH_H

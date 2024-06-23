@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEAGENTSETTINGS_H
-#define KEEAGENTSETTINGS_H
+#pragma once
 
 #include <QProcessEnvironment>
 
@@ -95,5 +94,3 @@ private:
     QString m_fileName;
     QString m_error;
 };
-
-#endif // KEEAGENTSETTINGS_H

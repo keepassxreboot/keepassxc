@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_MODIFIABLEOBJECT_H
-#define KEEPASSXC_MODIFIABLEOBJECT_H
+#pragma once
 
 #include <QObject>
 
@@ -55,5 +54,3 @@ signals:
 private:
     bool m_emitModified{true};
 };
-
-#endif // KEEPASSXC_MODIFIABLEOBJECT_H

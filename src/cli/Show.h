@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_SHOW_H
-#define KEEPASSXC_SHOW_H
+#pragma once
 
 #include "DatabaseCommand.h"
 
@@ -33,5 +32,3 @@ public:
     static const QCommandLineOption ProtectedAttributesOption;
     static const QCommandLineOption AttachmentsOption;
 };
-
-#endif // KEEPASSXC_SHOW_H

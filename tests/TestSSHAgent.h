@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TESTSSHAGENT_H
-#define TESTSSHAGENT_H
+#pragma once
 
 #include "sshagent/OpenSSHKey.h"
 #include <QProcess>
@@ -47,5 +46,3 @@ private:
     OpenSSHKey m_key;
     QUuid m_uuid;
 };
-
-#endif // TESTSSHAGENT_H

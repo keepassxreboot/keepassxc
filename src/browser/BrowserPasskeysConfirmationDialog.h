@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_BROWSERPASSKEYSCONFIRMATIONDIALOG_H
-#define KEEPASSXC_BROWSERPASSKEYSCONFIRMATIONDIALOG_H
+#pragma once
 
 #include <QDialog>
 #include <QTableWidget>
@@ -62,5 +61,3 @@ private:
     int m_counter;
     bool m_passkeyUpdated;
 };
-
-#endif // KEEPASSXC_BROWSERPASSKEYSCONFIRMATIONDIALOG_H

@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_FDOSECRETS_ROWBUTTONHELPER_H
-#define KEEPASSXC_FDOSECRETS_ROWBUTTONHELPER_H
+#pragma once
 
 #include <functional>
 
@@ -38,5 +37,3 @@ void installWidgetItemDelegate(QAbstractItemView* view,
 {
     installWidgetItemDelegate(view, column, [create](QWidget* p, const QModelIndex& idx) { return create(p, idx); });
 }
-
-#endif // KEEPASSXC_FDOSECRETS_ROWBUTTONHELPER_H

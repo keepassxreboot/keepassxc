@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTCONFIG_H
-#define KEEPASSX_TESTCONFIG_H
+#pragma once
 
 #include "core/Config.h"
 
@@ -26,5 +25,3 @@ class TestConfig : public QObject
 private slots:
     void testUpgrade();
 };
-
-#endif // KEEPASSX_TESTCONFIG_H

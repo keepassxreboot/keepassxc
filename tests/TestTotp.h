@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTTOTP_H
-#define KEEPASSX_TESTTOTP_H
+#pragma once
 
 #include <QObject>
 
@@ -32,5 +31,3 @@ private slots:
     void testSteamTotp();
     void testEntryHistory();
 };
-
-#endif // KEEPASSX_TESTTOTP_H

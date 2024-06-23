@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_NEWDATABASEWIZARDPAGE_H
-#define KEEPASSXC_NEWDATABASEWIZARDPAGE_H
+#pragma once
 
 #include <QPointer>
 #include <QWizardPage>
@@ -53,5 +52,3 @@ protected:
 
     const QScopedPointer<Ui::NewDatabaseWizardPage> m_ui;
 };
-
-#endif // KEEPASSXC_NEWDATABASEWIZARDPAGE_H

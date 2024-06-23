@@ -15,8 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DEVICELISTENER_MAC_H
-#define DEVICELISTENER_MAC_H
+#pragma once
 
 #define DEVICELISTENER_IMPL DeviceListenerMac
 
@@ -47,5 +46,3 @@ private:
     void onDeviceStateChanged(bool state, void* device);
     IOHIDManagerRef m_mgr;
 };
-
-#endif // DEVICELISTENER_MAC_H

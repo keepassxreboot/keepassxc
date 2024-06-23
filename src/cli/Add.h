@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_ADD_H
-#define KEEPASSXC_ADD_H
+#pragma once
 
 #include "DatabaseCommand.h"
 
@@ -33,5 +32,3 @@ public:
     static const QCommandLineOption PasswordPromptOption;
     static const QCommandLineOption GenerateOption;
 };
-
-#endif // KEEPASSXC_ADD_H

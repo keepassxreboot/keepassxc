@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_AUTOTYPEASSOCIATIONS_H
-#define KEEPASSX_AUTOTYPEASSOCIATIONS_H
+#pragma once
 
 #include "core/ModifiableObject.h"
 
@@ -63,5 +62,3 @@ signals:
 };
 
 Q_DECLARE_TYPEINFO(AutoTypeAssociations::Association, Q_MOVABLE_TYPE);
-
-#endif // KEEPASSX_AUTOTYPEASSOCIATIONS_H

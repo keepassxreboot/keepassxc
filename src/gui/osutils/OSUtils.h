@@ -15,8 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_OSUTILS_H
-#define KEEPASSXC_OSUTILS_H
+#pragma once
 
 #if defined(Q_OS_WIN)
 
@@ -34,5 +33,3 @@
 #define osUtils static_cast<OSUtilsBase*>(nixUtils())
 
 #endif
-
-#endif // KEEPASSXC_OSUTILS_H

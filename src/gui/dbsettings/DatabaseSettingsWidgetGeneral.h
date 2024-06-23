@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_DATABASESETTINGSWIDGETGENERAL_H
-#define KEEPASSXC_DATABASESETTINGSWIDGETGENERAL_H
+#pragma once
 
 #include "DatabaseSettingsWidget.h"
 
@@ -45,5 +44,3 @@ protected:
 
     const QScopedPointer<Ui::DatabaseSettingsWidgetGeneral> m_ui;
 };
-
-#endif // KEEPASSXC_DATABASESETTINGSWIDGETGENERAL_H

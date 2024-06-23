@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_ICONDOWNLOADER_H
-#define KEEPASSXC_ICONDOWNLOADER_H
+#pragma once
 
 #include <QImage>
 #include <QTimer>
@@ -59,5 +58,3 @@ private:
 
     friend class TestIconDownloader;
 };
-
-#endif // KEEPASSXC_ICONDOWNLOADER_H

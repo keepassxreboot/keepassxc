@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_BROWSERMESSAGEBUILDER_H
-#define KEEPASSXC_BROWSERMESSAGEBUILDER_H
+#pragma once
 
 #include <QPair>
 #include <QString>
@@ -117,5 +116,3 @@ static inline BrowserMessageBuilder* browserMessageBuilder()
 {
     return BrowserMessageBuilder::instance();
 }
-
-#endif // KEEPASSXC_BROWSERMESSAGEBUILDER_H

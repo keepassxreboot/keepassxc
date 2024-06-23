@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_CLIP_H
-#define KEEPASSXC_CLIP_H
+#pragma once
 
 #include "DatabaseCommand.h"
 
@@ -31,5 +30,3 @@ public:
     static const QCommandLineOption TotpOption;
     static const QCommandLineOption BestMatchOption;
 };
-
-#endif // KEEPASSXC_CLIP_H

@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_EDITGROUPWIDGETKEESHARE_H
-#define KEEPASSXC_EDITGROUPWIDGETKEESHARE_H
+#pragma once
 
 #include <QPointer>
 #include <QWidget>
@@ -54,5 +53,3 @@ private:
     QPointer<Group> m_temporaryGroup;
     QSharedPointer<Database> m_database;
 };
-
-#endif // KEEPASSXC_EDITGROUPWIDGETKEESHARE_H

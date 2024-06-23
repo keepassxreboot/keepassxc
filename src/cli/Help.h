@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_HELP_H
-#define KEEPASSXC_HELP_H
+#pragma once
 
 #include "Command.h"
 
@@ -27,5 +26,3 @@ public:
     ~Help() override = default;
     int execute(const QStringList& arguments) override;
 };
-
-#endif // KEEPASSXC_HELP_H

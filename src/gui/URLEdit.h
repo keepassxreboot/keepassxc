@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_URLEDIT_H
-#define KEEPASSX_URLEDIT_H
+#pragma once
 
 #include <QAction>
 #include <QLineEdit>
@@ -37,5 +36,3 @@ private slots:
 private:
     QPointer<QAction> m_errorAction;
 };
-
-#endif // KEEPASSX_URLEDIT_H

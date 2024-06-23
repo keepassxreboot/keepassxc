@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_PASSKEYIMPORTDIALOG_H
-#define KEEPASSXC_PASSKEYIMPORTDIALOG_H
+#pragma once
 
 #include "core/Database.h"
 #include "core/Group.h"
@@ -70,5 +69,3 @@ private:
     QUuid m_selectedEntryUuid;
     QUuid m_selectedGroupUuid;
 };
-
-#endif // KEEPASSXC_PASSKEYIMPORTDIALOG_H

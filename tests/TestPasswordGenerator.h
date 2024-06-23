@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_TESTPASSWORDGENERATOR_H
-#define KEEPASSXC_TESTPASSWORDGENERATOR_H
+#pragma once
 
 #include "core/PasswordGenerator.h"
 #include <QObject>
@@ -44,5 +43,3 @@ private slots:
     void testValidity();
     void testReset();
 };
-
-#endif // KEEPASSXC_TESTPASSWORDGENERATOR_H

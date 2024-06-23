@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_GUITOOLS_H
-#define KEEPASSXC_GUITOOLS_H
+#pragma once
 
 #include <QList>
 #include <QWidget>
@@ -28,4 +27,3 @@ namespace GuiTools
     bool confirmDeleteEntries(QWidget* parent, const QList<Entry*>& entries, bool permanent);
     size_t deleteEntriesResolveReferences(QWidget* parent, const QList<Entry*>& entries, bool permanent);
 } // namespace GuiTools
-#endif // KEEPASSXC_GUITOOLS_H

@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_KEEPASS2READER_H
-#define KEEPASSX_KEEPASS2READER_H
+#pragma once
 
 #include "KdbxReader.h"
 
@@ -45,5 +44,3 @@ private:
     QSharedPointer<KdbxReader> m_reader;
     quint32 m_version = 0;
 };
-
-#endif // KEEPASSX_KEEPASS2READER_H

@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTKEEPASS1READER_H
-#define KEEPASSX_TESTKEEPASS1READER_H
+#pragma once
 
 #include <QDateTime>
 #include <QObject>
@@ -48,5 +47,3 @@ private:
 
     QSharedPointer<Database> m_db;
 };
-
-#endif // KEEPASSX_TESTKEEPASS1READER_H

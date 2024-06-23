@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_STATECOLORPALETTE_H
-#define KEEPASSXC_STATECOLORPALETTE_H
+#pragma once
 
 #include <QColor>
 #include <QHash>
@@ -64,5 +63,3 @@ private:
 
     QHash<ColorRole, QColor> m_colorMap;
 };
-
-#endif // KEEPASSXC_STATECOLORPALETTE_H

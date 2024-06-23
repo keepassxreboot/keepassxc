@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_MOVE_H
-#define KEEPASSXC_MOVE_H
+#pragma once
 
 #include "DatabaseCommand.h"
 
@@ -28,5 +27,3 @@ public:
 
     int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser) override;
 };
-
-#endif // KEEPASSXC_MOVE_H

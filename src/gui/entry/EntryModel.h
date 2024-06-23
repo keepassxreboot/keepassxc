@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_ENTRYMODEL_H
-#define KEEPASSX_ENTRYMODEL_H
+#pragma once
 
 #include <QAbstractTableModel>
 #include <QPixmap>
@@ -95,5 +94,3 @@ private:
 
     const QString HiddenContentDisplay;
 };
-
-#endif // KEEPASSX_ENTRYMODEL_H

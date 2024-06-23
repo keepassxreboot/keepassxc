@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KPXC_CHALLENGE_RESPONSE_KEY_H
-#define KPXC_CHALLENGE_RESPONSE_KEY_H
+#pragma once
 
 #include "Key.h"
 #include "drivers/YubiKey.h"
@@ -47,5 +46,3 @@ private:
     Botan::secure_vector<char> m_key;
     YubiKeySlot m_keySlot;
 };
-
-#endif // KPXC_CHALLENGE_RESPONSE_KEY_H

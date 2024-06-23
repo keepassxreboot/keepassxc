@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_ICONDOWNLOADERDIALOG_H
-#define KEEPASSX_ICONDOWNLOADERDIALOG_H
+#pragma once
 
 #include <QDialog>
 #include <QMap>
@@ -65,5 +64,3 @@ private:
 
     Q_DISABLE_COPY(IconDownloaderDialog)
 };
-
-#endif // KEEPASSX_ICONDOWNLOADERDIALOG_H

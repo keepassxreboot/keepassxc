@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_FDOSECRETSSETTINGS_H
-#define KEEPASSXC_FDOSECRETSSETTINGS_H
+#pragma once
 
 #include <QSharedPointer>
 #include <QUuid>
@@ -64,5 +63,3 @@ namespace FdoSecrets
     }
 
 } // namespace FdoSecrets
-
-#endif // KEEPASSXC_FDOSECRETSSETTINGS_H

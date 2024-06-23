@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef OPVAULT_READER_H_
-#define OPVAULT_READER_H_
+#pragma once
 
 #include <QDir>
 
@@ -114,5 +113,3 @@ private:
 
     friend class TestImports;
 };
-
-#endif /* OPVAULT_READER_H_ */

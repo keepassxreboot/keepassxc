@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BITWARDEN_READER_H
-#define BITWARDEN_READER_H
+#pragma once
 
 #include <QSharedPointer>
 
@@ -39,5 +38,3 @@ public:
 private:
     QString m_error;
 };
-
-#endif // BITWARDEN_READER_H

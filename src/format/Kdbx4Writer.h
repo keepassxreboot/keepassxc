@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_KDBX4WRITER_H
-#define KEEPASSX_KDBX4WRITER_H
+#pragma once
 
 #include "KdbxWriter.h"
 #include "format/KdbxXmlWriter.h"
@@ -36,5 +35,3 @@ private:
     KdbxXmlWriter::BinaryIdxMap writeAttachments(QIODevice* device, Database* db);
     static bool serializeVariantMap(const QVariantMap& map, QByteArray& outputBytes);
 };
-
-#endif // KEEPASSX_KDBX4WRITER_H

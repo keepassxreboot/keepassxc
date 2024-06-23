@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BROWSERPASSKEYS_H
-#define BROWSERPASSKEYS_H
+#pragma once
 
 #include "BrowserCbor.h"
 #include <QJsonObject>
@@ -143,5 +142,3 @@ static inline BrowserPasskeys* browserPasskeys()
 {
     return BrowserPasskeys::instance();
 }
-
-#endif // BROWSERPASSKEYS_H

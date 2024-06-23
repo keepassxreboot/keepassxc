@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_SSHAGENT_H
-#define KEEPASSXC_SSHAGENT_H
+#pragma once
 
 #include <QHash>
 
@@ -96,5 +95,3 @@ static inline SSHAgent* sshAgent()
 {
     return SSHAgent::instance();
 }
-
-#endif // KEEPASSXC_SSHAGENT_H

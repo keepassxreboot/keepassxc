@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_IMPORTWIZARDPAGESELECT_H
-#define KEEPASSXC_IMPORTWIZARDPAGESELECT_H
+#pragma once
 
 #include <QPointer>
 #include <QWizardPage>
@@ -52,5 +51,3 @@ private:
 
     QScopedPointer<Ui::ImportWizardPageSelect> m_ui;
 };
-
-#endif

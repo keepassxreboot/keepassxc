@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTYUBIKEYCHALRESP_H
-#define KEEPASSX_TESTYUBIKEYCHALRESP_H
+#pragma once
 
 #include <QObject>
 
@@ -31,5 +30,3 @@ private slots:
     void testDetectDevices();
     void testKeyChallenge();
 };
-
-#endif // KEEPASSX_TESTYUBIKEYCHALRESP_H

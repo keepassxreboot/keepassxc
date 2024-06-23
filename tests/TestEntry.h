@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTENTRY_H
-#define KEEPASSX_TESTENTRY_H
+#pragma once
 
 #include <QObject>
 
@@ -41,5 +40,3 @@ private slots:
     void testMoveUpDown();
     void testPreviousParentGroup();
 };
-
-#endif // KEEPASSX_TESTENTRY_H

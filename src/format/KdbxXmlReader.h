@@ -15,8 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_KDBXXMLREADER_H
-#define KEEPASSXC_KDBXXMLREADER_H
+#pragma once
 
 #include "core/Database.h"
 #include "core/Metadata.h"
@@ -116,5 +115,3 @@ protected:
     bool m_error = false;
     QString m_errorStr = "";
 };
-
-#endif // KEEPASSXC_KDBXXMLREADER_H

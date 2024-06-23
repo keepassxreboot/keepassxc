@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_CLOSE_H
-#define KEEPASSXC_CLOSE_H
+#pragma once
 
 #include "Command.h"
 
@@ -26,5 +25,3 @@ public:
     Close();
     int execute(const QStringList& arguments) override;
 };
-
-#endif // KEEPASSXC_CLOSE_H

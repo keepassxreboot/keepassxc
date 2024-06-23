@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_CLIPBOARD_H
-#define KEEPASSX_CLIPBOARD_H
+#pragma once
 
 #include <QElapsedTimer>
 #include <QObject>
@@ -69,5 +68,3 @@ inline Clipboard* clipboard()
 {
     return Clipboard::instance();
 }
-
-#endif // KEEPASSX_CLIPBOARD_H

@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTAUTOTYPE_H
-#define KEEPASSX_TESTAUTOTYPE_H
+#pragma once
 
 #include <QObject>
 #include <QSharedPointer>
@@ -65,5 +64,3 @@ private:
     Entry* m_entry4;
     Entry* m_entry5;
 };
-
-#endif // KEEPASSX_TESTAUTOTYPE_H

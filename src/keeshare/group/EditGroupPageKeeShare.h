@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_EDITGROUPPAGEKEESHARE_H
-#define KEEPASSXC_EDITGROUPPAGEKEESHARE_H
+#pragma once
 
 #include "gui/group/EditGroupWidget.h"
 
@@ -33,5 +32,3 @@ public:
     void set(QWidget* widget, Group* temporaryGroup, QSharedPointer<Database> database) override;
     void assign(QWidget* widget) override;
 };
-
-#endif // KEEPASSXC_EDITGROUPPAGEKEESHARE_H

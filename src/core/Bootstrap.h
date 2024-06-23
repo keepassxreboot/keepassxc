@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_BOOTSTRAP_H
-#define KEEPASSXC_BOOTSTRAP_H
+#pragma once
 
 #include <QString>
 
@@ -27,5 +26,3 @@ namespace Bootstrap
     bool createWindowsDACL();
     void setupSearchPaths();
 }; // namespace Bootstrap
-
-#endif // KEEPASSXC_BOOTSTRAP_H

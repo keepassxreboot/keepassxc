@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_SETTINGSWIDGET_H
-#define KEEPASSXC_SETTINGSWIDGET_H
+#pragma once
 
 #include <QWidget>
 
@@ -64,5 +63,3 @@ private:
 
     Q_DISABLE_COPY(SettingsWidget);
 };
-
-#endif // KEEPASSXC_SETTINGSWIDGET_H

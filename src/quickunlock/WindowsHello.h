@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_WINDOWSHELLO_H
-#define KEEPASSXC_WINDOWSHELLO_H
+#pragma once
 
 #include "QuickUnlockInterface.h"
 
@@ -41,5 +40,3 @@ private:
     QHash<QUuid, QByteArray> m_encryptedKeys;
     Q_DISABLE_COPY(WindowsHello);
 };
-
-#endif // KEEPASSXC_WINDOWSHELLO_H

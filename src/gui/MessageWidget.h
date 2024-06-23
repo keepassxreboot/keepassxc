@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef MESSAGEWIDGET_H
-#define MESSAGEWIDGET_H
+#pragma once
 
 #include "gui/KMessageWidget.h"
 
@@ -54,5 +53,3 @@ private:
     int m_autoHideTimeout;
     bool m_animate = true;
 };
-
-#endif // MESSAGEWIDGET_H

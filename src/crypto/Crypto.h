@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_CRYPTO_H
-#define KEEPASSXC_CRYPTO_H
+#pragma once
 
 #include <QString>
 
@@ -27,5 +26,3 @@ namespace Crypto
     QString errorString();
     QString debugInfo();
 }; // namespace Crypto
-
-#endif // KEEPASSXC_CRYPTO_H

@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_UPDATECHECKDIALOG_H
-#define KEEPASSXC_UPDATECHECKDIALOG_H
+#pragma once
 
 #include "config-keepassx.h"
 #include "core/Global.h"
@@ -41,5 +40,3 @@ public slots:
 private:
     QScopedPointer<Ui::UpdateCheckDialog> m_ui;
 };
-
-#endif // KEEPASSXC_UPDATECHECKDIALOG_H

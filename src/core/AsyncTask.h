@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_ASYNCTASK_HPP
-#define KEEPASSXC_ASYNCTASK_HPP
+#pragma once
 
 #include <QFutureWatcher>
 #include <QtConcurrent>
@@ -76,5 +75,3 @@ namespace AsyncTask
     }
 
 }; // namespace AsyncTask
-
-#endif // KEEPASSXC_ASYNCTASK_HPP

@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_IMPORTWIZARD_H
-#define KEEPASSXC_IMPORTWIZARD_H
+#pragma once
 
 #include <QPointer>
 #include <QWizard>
@@ -56,5 +55,3 @@ private:
     QPointer<ImportWizardPageSelect> m_pageSelect;
     QPointer<ImportWizardPageReview> m_pageReview;
 };
-
-#endif // KEEPASSXC_IMPORTWIZARD_H

@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_RANDOM_H
-#define KEEPASSX_RANDOM_H
+#pragma once
 
 #include <QSharedPointer>
 
@@ -54,5 +53,3 @@ static inline QSharedPointer<Random> randomGen()
 {
     return Random::instance();
 }
-
-#endif // KEEPASSX_RANDOM_H

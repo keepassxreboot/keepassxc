@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_EXPORT_H
-#define KEEPASSXC_EXPORT_H
+#pragma once
 
 #include "DatabaseCommand.h"
 
@@ -29,5 +28,3 @@ public:
 
     static const QCommandLineOption FormatOption;
 };
-
-#endif // KEEPASSXC_EXPORT_H

@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_AUTOTYPETESTINTERFACE_H
-#define KEEPASSX_AUTOTYPETESTINTERFACE_H
+#pragma once
 
 #include "autotype/AutoTypeAction.h"
 
@@ -34,5 +33,3 @@ public:
 };
 
 Q_DECLARE_INTERFACE(AutoTypeTestInterface, "org.keepassx.AutoTypeTestInterface/1")
-
-#endif // KEEPASSX_AUTOTYPETESTINTERFACE_H

@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_KDBX3WRITER_H
-#define KEEPASSX_KDBX3WRITER_H
+#pragma once
 
 #include "KdbxWriter.h"
 
@@ -30,5 +29,3 @@ class Kdbx3Writer : public KdbxWriter
 public:
     bool writeDatabase(QIODevice* device, Database* db) override;
 };
-
-#endif // KEEPASSX_KDBX3WRITER_H

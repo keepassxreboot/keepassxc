@@ -15,8 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DEVICELISTENER_LIBUSB_H
-#define DEVICELISTENER_LIBUSB_H
+#pragma once
 
 #define DEVICELISTENER_IMPL DeviceListenerLibUsb
 
@@ -51,5 +50,3 @@ private:
     QFuture<void> m_usbEvents;
     QAtomicInt m_completed;
 };
-
-#endif // DEVICELISTENER_LIBUSB_H

@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_YUBIKEY_INTERFACE_PCSC_H
-#define KEEPASSX_YUBIKEY_INTERFACE_PCSC_H
+#pragma once
 
 #include "YubiKeyInterface.h"
 
@@ -114,5 +113,3 @@ private:
          "Nitrokey 3"},
     };
 };
-
-#endif // KEEPASSX_YUBIKEY_INTERFACE_PCSC_H

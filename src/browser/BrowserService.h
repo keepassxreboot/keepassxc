@@ -17,8 +17,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_BROWSERSERVICE_H
-#define KEEPASSXC_BROWSERSERVICE_H
+#pragma once
 
 #include "BrowserAccessControlDialog.h"
 #include "config-keepassx.h"
@@ -226,5 +225,3 @@ static inline BrowserService* browserService()
 {
     return BrowserService::instance();
 }
-
-#endif // KEEPASSXC_BROWSERSERVICE_H

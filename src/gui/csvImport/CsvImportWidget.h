@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_CSVIMPORTWIDGET_H
-#define KEEPASSX_CSVIMPORTWIDGET_H
+#pragma once
 
 #include <QStringListModel>
 #include <QWidget>
@@ -69,5 +68,3 @@ private:
 
     Q_DISABLE_COPY(CsvImportWidget)
 };
-
-#endif // KEEPASSX_CSVIMPORTWIDGET_H

@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_YUBIKEY_INTERFACE_H
-#define KEEPASSX_YUBIKEY_INTERFACE_H
+#pragma once
 
 #include "YubiKey.h"
 #include <QMultiMap>
@@ -68,5 +67,3 @@ protected:
 
     Q_DISABLE_COPY(YubiKeyInterface)
 };
-
-#endif // KEEPASSX_YUBIKEY_INTERFACE_H

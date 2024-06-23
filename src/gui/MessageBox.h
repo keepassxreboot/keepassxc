@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_MESSAGEBOX_H
-#define KEEPASSX_MESSAGEBOX_H
+#pragma once
 
 #include <QMap>
 #include <QMessageBox>
@@ -132,5 +131,3 @@ private:
 
     static QString stdButtonText(QMessageBox::StandardButton button);
 };
-
-#endif // KEEPASSX_MESSAGEBOX_H

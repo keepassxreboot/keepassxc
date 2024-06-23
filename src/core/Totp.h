@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef QTOTP_H
-#define QTOTP_H
+#pragma once
 
 #include <QMetaType>
 #include <QString>
@@ -94,5 +93,3 @@ namespace Totp
     Encoder& getEncoderByShortName(const QString& shortName);
     Encoder& getEncoderByName(const QString& name);
 } // namespace Totp
-
-#endif // QTOTP_H

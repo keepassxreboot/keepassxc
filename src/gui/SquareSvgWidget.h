@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_SquareSvgWidget_H
-#define KEEPASSX_SquareSvgWidget_H
+#pragma once
 
 #include <QSvgWidget>
 
@@ -31,5 +30,3 @@ public:
 
     void resizeEvent(QResizeEvent* event) override;
 };
-
-#endif // KEEPASSX_SquareSvgWidget_H

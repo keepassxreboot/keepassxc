@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SCREENLOCKLISTENERPRIVATE_H
-#define SCREENLOCKLISTENERPRIVATE_H
+#pragma once
 #include <QWidget>
 
 class ScreenLockListenerPrivate : public QObject
@@ -31,5 +30,3 @@ protected:
 signals:
     void screenLocked();
 };
-
-#endif // SCREENLOCKLISTENERPRIVATE_H

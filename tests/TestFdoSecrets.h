@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_TESTFDOSECRETS_H
-#define KEEPASSXC_TESTFDOSECRETS_H
+#pragma once
 
 #include <QObject>
 
@@ -30,5 +29,3 @@ private slots:
     void testSpecialCharsInAttributeValue();
     void testDBusPathParse();
 };
-
-#endif // KEEPASSXC_TESTFDOSECRETS_H

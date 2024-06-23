@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_EDITENTRYWIDGET_P_H
-#define KEEPASSX_EDITENTRYWIDGET_P_H
+#pragma once
 
 #include <QListView>
 #include <QScrollBar>
@@ -43,5 +42,3 @@ public:
         return sizeHint;
     }
 };
-
-#endif // KEEPASSX_EDITENTRYWIDGET_P_H

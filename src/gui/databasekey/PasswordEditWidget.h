@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_PASSWORDEDITWIDGET_H
-#define KEEPASSXC_PASSWORDEDITWIDGET_H
+#pragma once
 
 #include "KeyComponentWidget.h"
 
@@ -55,5 +54,3 @@ private:
     const QScopedPointer<Ui::PasswordEditWidget> m_compUi;
     QPointer<QWidget> m_compEditWidget;
 };
-
-#endif // KEEPASSXC_PASSWORDEDITWIDGET_H

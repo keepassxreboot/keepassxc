@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_KEYCOMPONENTWIDGET_H
-#define KEEPASSXC_KEYCOMPONENTWIDGET_H
+#pragma once
 
 #include <QPointer>
 #include <QWidget>
@@ -120,5 +119,3 @@ private:
 
     Q_DISABLE_COPY(KeyComponentWidget);
 };
-
-#endif // KEEPASSXC_KEYCOMPONENTWIDGET_H

@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTDELETEDOBJECTS_H
-#define KEEPASSX_TESTDELETEDOBJECTS_H
+#pragma once
 
 #include <QObject>
 
@@ -36,5 +35,3 @@ private slots:
     void testDatabaseChange();
     void testCustomIconDeletion();
 };
-
-#endif // KEEPASSX_TESTDELETEDOBJECTS_H

@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TOTPDIALOG_H
-#define KEEPASSX_TOTPDIALOG_H
+#pragma once
 
 #include <QDialog>
 
@@ -52,5 +51,3 @@ private:
     uint m_step;
     QTimer m_totpUpdateTimer;
 };
-
-#endif // KEEPASSX_TOTPDIALOG_H

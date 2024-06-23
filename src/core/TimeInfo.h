@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TIMEINFO_H
-#define KEEPASSX_TIMEINFO_H
+#pragma once
 
 #include <QDateTime>
 
@@ -56,5 +55,3 @@ private:
     int m_usageCount;
     QDateTime m_locationChanged;
 };
-
-#endif // KEEPASSX_TIMEINFO_H

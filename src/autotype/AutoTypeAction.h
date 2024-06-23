@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_AUTOTYPEACTION_H
-#define KEEPASSX_AUTOTYPEACTION_H
+#pragma once
 
 #include "core/Global.h"
 
@@ -145,5 +144,3 @@ public:
 
     const AutoTypeExecutor::Mode mode;
 };
-
-#endif // KEEPASSX_AUTOTYPEACTION_H

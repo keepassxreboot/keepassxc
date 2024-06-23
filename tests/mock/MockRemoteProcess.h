@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_MOCKREMOTEPROCESS_H
-#define KEEPASSXC_MOCKREMOTEPROCESS_H
+#pragma once
 
 #include "gui/remote/RemoteProcess.h"
 
@@ -37,5 +36,3 @@ private:
     QByteArray m_data;
     QString m_dbPath;
 };
-
-#endif // KEEPASSXC_MOCKREMOTEPROCESS_H

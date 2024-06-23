@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_EXIT_H
-#define KEEPASSXC_EXIT_H
+#pragma once
 
 #include "Command.h"
 
@@ -26,5 +25,3 @@ public:
     Exit(const QString& name);
     int execute(const QStringList& arguments) override;
 };
-
-#endif // KEEPASSXC_EXIT_H

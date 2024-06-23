@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_ENTRYSEARCHER_H
-#define KEEPASSX_ENTRYSEARCHER_H
+#pragma once
 
 #include <QRegularExpression>
 
@@ -76,5 +75,3 @@ private:
 
     friend class TestEntrySearcher;
 };
-
-#endif // KEEPASSX_ENTRYSEARCHER_H

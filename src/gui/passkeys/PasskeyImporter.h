@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_PASSKEYIMPORTER_H
-#define KEEPASSXC_PASSKEYIMPORTER_H
+#pragma once
 
 #include "core/Database.h"
 #include <QFile>
@@ -54,5 +53,3 @@ private:
 private:
     QPointer<QWidget> m_parent;
 };
-
-#endif // KEEPASSXC_PASSKEYIMPORTER_H

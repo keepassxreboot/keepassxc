@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TOUCHID_H
-#define KEEPASSX_TOUCHID_H
+#pragma once
 
 #include "QuickUnlockInterface.h"
 #include <QHash>
@@ -43,5 +42,3 @@ private:
 
     QHash<QUuid, QByteArray> m_encryptedMasterKeys;
 };
-
-#endif // KEEPASSX_TOUCHID_H

@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_ENDIAN_H
-#define KEEPASSX_ENDIAN_H
+#pragma once
 
 #include <QIODevice>
 #include <QtEndian>
@@ -69,5 +68,3 @@ namespace Endian
     }
 
 } // namespace Endian
-
-#endif // KEEPASSX_ENDIAN_H

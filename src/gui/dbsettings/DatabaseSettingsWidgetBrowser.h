@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_DATABASESETTINGSWIDGETBROWSER_H
-#define KEEPASSXC_DATABASESETTINGSWIDGETBROWSER_H
+#pragma once
 
 #include "DatabaseSettingsWidget.h"
 
@@ -73,5 +72,3 @@ private:
     QPointer<QStandardItemModel> m_customDataModel;
     QString m_valueInEdit;
 };
-
-#endif // KEEPASSXC_DATABASESETTINGSWIDGETBROWSER_H

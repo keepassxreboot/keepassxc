@@ -15,8 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_TAGVIEW_H
-#define KEEPASSXC_TAGVIEW_H
+#pragma once
 
 #include <QListView>
 #include <QPointer>
@@ -43,5 +42,3 @@ private:
     QSharedPointer<Database> m_db;
     QPointer<TagModel> m_model;
 };
-
-#endif // KEEPASSX_ENTRYVIEW_H

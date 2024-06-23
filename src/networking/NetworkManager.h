@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_NETWORKMANAGER_H
-#define KEEPASSXC_NETWORKMANAGER_H
+#pragma once
 
 #include "config-keepassx.h"
 
@@ -28,5 +27,3 @@ QNetworkAccessManager* getNetMgr();
 #else
 Q_STATIC_ASSERT_X(false, "Qt Networking used when WITH_XC_NETWORKING is disabled!");
 #endif
-
-#endif // KEEPASSXC_NETWORKMANAGER_H

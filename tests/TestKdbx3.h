@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_TEST_KDBX3_H
-#define KEEPASSXC_TEST_KDBX3_H
+#pragma once
 
 #include "TestKeePass2Format.h"
 
@@ -47,5 +46,3 @@ protected:
                   QString& errorString) override;
     void writeKdbx(QIODevice* device, Database* db, bool& hasError, QString& errorString) override;
 };
-
-#endif // KEEPASSXC_TEST_KDBX3_H

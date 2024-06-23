@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_TESTCLI_H
-#define KEEPASSXC_TESTCLI_H
+#pragma once
 
 #include <QBuffer>
 
@@ -97,5 +96,3 @@ private:
     QScopedPointer<QBuffer> m_stderr;
     QScopedPointer<QBuffer> m_stdin;
 };
-
-#endif // KEEPASSXC_TESTCLI_H
