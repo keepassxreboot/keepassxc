@@ -552,7 +552,7 @@ void DatabaseTabWidget::showDatabaseSettings()
     currentDatabaseWidget()->switchToDatabaseSettings();
 }
 
-#ifdef WITH_XC_BROWSER_PASSKEYS
+#ifdef KPXC_FEATURE_BROWSER_PASSKEYS
 void DatabaseTabWidget::showPasskeys()
 {
     currentDatabaseWidget()->switchToPasskeys();

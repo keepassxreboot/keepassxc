@@ -29,10 +29,10 @@ class QTabWidget;
 class ReportsPageHealthcheck;
 class ReportsPageHibp;
 class ReportsPageStatistics;
-#ifdef WITH_XC_BROWSER
+#ifdef KPXC_FEATURE_BROWSER
 class ReportsPageBrowserStatistics;
 #endif
-#ifdef WITH_XC_BROWSER_PASSKEYS
+#ifdef KPXC_FEATURE_BROWSER_PASSKEYS
 class ReportsPagePasskeys;
 #endif
 
@@ -63,7 +63,7 @@ public:
 
     void load(const QSharedPointer<Database>& db);
     void addPage(QSharedPointer<IReportsPage> page);
-#ifdef WITH_XC_BROWSER_PASSKEYS
+#ifdef KPXC_FEATURE_BROWSER_PASSKEYS
     void activatePasskeysPage();
 #endif
 
@@ -81,10 +81,10 @@ private:
     const QSharedPointer<ReportsPageHealthcheck> m_healthPage;
     const QSharedPointer<ReportsPageHibp> m_hibpPage;
     const QSharedPointer<ReportsPageStatistics> m_statPage;
-#ifdef WITH_XC_BROWSER
+#ifdef KPXC_FEATURE_BROWSER
     const QSharedPointer<ReportsPageBrowserStatistics> m_browserStatPage;
 #endif
-#ifdef WITH_XC_BROWSER_PASSKEYS
+#ifdef KPXC_FEATURE_BROWSER_PASSKEYS
     const QSharedPointer<ReportsPagePasskeys> m_passkeysPage;
 #endif
     QPointer<EditEntryWidget> m_editEntryWidget;

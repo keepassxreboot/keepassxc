@@ -84,7 +84,7 @@ public slots:
     void showDatabaseSecurity();
     void showDatabaseReports();
     void showDatabaseSettings();
-#ifdef WITH_XC_BROWSER_PASSKEYS
+#ifdef KPXC_FEATURE_BROWSER_PASSKEYS
     void showPasskeys();
     void importPasskey();
     void importPasskeyToEntry();

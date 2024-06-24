@@ -47,30 +47,25 @@
 #include "gui/entry/EntryView.h"
 #include "gui/osutils/OSUtils.h"
 #include "gui/remote/RemoteSettings.h"
+#include "keeshare/KeeShare.h"
+#include "keeshare/SettingsPageKeeShare.h"
+#include "keys/drivers/YubiKey.h"
 
-#ifdef WITH_XC_UPDATECHECK
+#ifdef KPXC_FEATURE_UPDATES
 #include "gui/UpdateCheckDialog.h"
 #include "networking/UpdateChecker.h"
 #endif
 
-#ifdef WITH_XC_SSHAGENT
+#ifdef KPXC_FEATURE_SSHAGENT
 #include "sshagent/AgentSettingsPage.h"
 #include "sshagent/SSHAgent.h"
 #endif
-#ifdef WITH_XC_KEESHARE
-#include "keeshare/KeeShare.h"
-#include "keeshare/SettingsPageKeeShare.h"
-#endif
 
-#ifdef WITH_XC_FDOSECRETS
+#ifdef KPXC_FEATURE_FDOSECRETS
 #include "fdosecrets/FdoSecretsPlugin.h"
 #endif
 
-#ifdef WITH_XC_YUBIKEY
-#include "keys/drivers/YubiKey.h"
-#endif
-
-#ifdef WITH_XC_BROWSER
+#ifdef KPXC_FEATURE_BROWSER
 #include "browser/BrowserService.h"
 #endif
 
@@ -158,7 +153,7 @@ MainWindow::MainWindow()
     m_entryContextMenu->addSeparator();
     m_entryContextMenu->addAction(m_ui->actionEntryAutoType);
     m_entryContextMenu->addSeparator();
-#ifdef WITH_XC_BROWSER_PASSKEYS
+#ifdef KPXC_FEATURE_BROWSER_PASSKEYS
     m_entryContextMenu->addAction(m_ui->actionEntryImportPasskey);
     m_entryContextMenu->addAction(m_ui->actionEntryRemovePasskey);
     m_entryContextMenu->addSeparator();
@@ -220,26 +215,24 @@ MainWindow::MainWindow()
 
     m_ui->settingsWidget->addSettingsPage(new ShortcutSettingsPage());
 
-#ifdef WITH_XC_BROWSER
+#ifdef KPXC_FEATURE_BROWSER
     connect(
         browserService(), &BrowserService::requestUnlock, m_ui->tabWidget, &DatabaseTabWidget::performBrowserUnlock);
 #endif
 
-#ifdef WITH_XC_SSHAGENT
+#ifdef KPXC_FEATURE_SSHAGENT
     connect(sshAgent(), SIGNAL(error(QString)), this, SLOT(showErrorMessage(QString)));
     connect(sshAgent(), SIGNAL(enabledChanged(bool)), this, SLOT(agentEnabled(bool)));
     m_ui->settingsWidget->addSettingsPage(new AgentSettingsPage());
 #endif
 
-#if defined(WITH_XC_KEESHARE)
     KeeShare::init(this);
     m_ui->settingsWidget->addSettingsPage(new SettingsPageKeeShare(m_ui->tabWidget));
     connect(KeeShare::instance(),
             SIGNAL(sharingMessage(QString, MessageWidget::MessageType)),
             SLOT(displayGlobalMessage(QString, MessageWidget::MessageType)));
-#endif
 
-#ifdef WITH_XC_FDOSECRETS
+#ifdef KPXC_FEATURE_FDOSECRETS
     auto fdoSS = new FdoSecretsPlugin(m_ui->tabWidget);
     connect(fdoSS, &FdoSecretsPlugin::error, this, &MainWindow::showErrorMessage);
     connect(fdoSS, &FdoSecretsPlugin::requestSwitchToDatabases, this, &MainWindow::switchToDatabases);
@@ -248,10 +241,8 @@ MainWindow::MainWindow()
     m_ui->settingsWidget->addSettingsPage(fdoSS);
 #endif
 
-#ifdef WITH_XC_YUBIKEY
     connect(YubiKey::instance(), SIGNAL(userInteractionRequest()), SLOT(showYubiKeyPopup()), Qt::QueuedConnection);
     connect(YubiKey::instance(), SIGNAL(challengeCompleted()), SLOT(hideYubiKeyPopup()), Qt::QueuedConnection);
-#endif
 
     setWindowIcon(icons()->applicationIcon());
     m_ui->globalMessageWidget->hideMessage();
@@ -430,7 +421,7 @@ MainWindow::MainWindow()
     m_ui->actionKeyboardShortcuts->setIcon(icons()->icon("keyboard-shortcuts"));
     m_ui->actionCheckForUpdates->setIcon(icons()->icon("system-software-update"));
 
-#ifdef WITH_XC_BROWSER_PASSKEYS
+#ifdef KPXC_FEATURE_BROWSER_PASSKEYS
     m_ui->actionPasskeys->setIcon(icons()->icon("passkey"));
     m_ui->actionImportPasskey->setIcon(icons()->icon("document-import"));
     m_ui->actionEntryImportPasskey->setIcon(icons()->icon("document-import"));
@@ -482,7 +473,7 @@ MainWindow::MainWindow()
     connect(m_ui->actionDatabaseSecurity, SIGNAL(triggered()), m_ui->tabWidget, SLOT(showDatabaseSecurity()));
     connect(m_ui->actionReports, SIGNAL(triggered()), m_ui->tabWidget, SLOT(showDatabaseReports()));
     connect(m_ui->actionDatabaseSettings, SIGNAL(triggered()), m_ui->tabWidget, SLOT(showDatabaseSettings()));
-#ifdef WITH_XC_BROWSER_PASSKEYS
+#ifdef KPXC_FEATURE_BROWSER_PASSKEYS
     connect(m_ui->actionPasskeys, SIGNAL(triggered()), m_ui->tabWidget, SLOT(showPasskeys()));
     connect(m_ui->actionImportPasskey, SIGNAL(triggered()), m_ui->tabWidget, SLOT(importPasskey()));
     connect(m_ui->actionEntryImportPasskey, SIGNAL(triggered()), m_ui->tabWidget, SLOT(importPasskeyToEntry()));
@@ -530,7 +521,7 @@ MainWindow::MainWindow()
     m_actionMultiplexer.connect(m_ui->actionEntryAutoTypeTOTP, SIGNAL(triggered()), SLOT(performAutoTypeTOTP()));
     m_actionMultiplexer.connect(m_ui->actionEntryOpenUrl, SIGNAL(triggered()), SLOT(openUrl()));
     m_actionMultiplexer.connect(m_ui->actionEntryDownloadIcon, SIGNAL(triggered()), SLOT(downloadSelectedFavicons()));
-#ifdef WITH_XC_SSHAGENT
+#ifdef KPXC_FEATURE_SSHAGENT
     m_actionMultiplexer.connect(m_ui->actionEntryAddToAgent, SIGNAL(triggered()), SLOT(addToAgent()));
     m_actionMultiplexer.connect(m_ui->actionEntryRemoveFromAgent, SIGNAL(triggered()), SLOT(removeFromAgent()));
 #endif
@@ -580,7 +571,7 @@ MainWindow::MainWindow()
     setUnifiedTitleAndToolBarOnMac(true);
 #endif
 
-#ifdef WITH_XC_UPDATECHECK
+#ifdef KPXC_FEATURE_UPDATES
     connect(m_ui->actionCheckForUpdates, SIGNAL(triggered()), SLOT(showUpdateCheckDialog()));
     connect(UpdateChecker::instance(),
             SIGNAL(updateCheckFinished(bool, QString, bool)),
@@ -594,11 +585,11 @@ MainWindow::MainWindow()
     m_ui->actionCheckForUpdates->setVisible(false);
 #endif
 
-#ifndef WITH_XC_NETWORKING
+#ifndef KPXC_FEATURE_NETWORK
     m_ui->actionGroupDownloadFavicons->setVisible(false);
     m_ui->actionEntryDownloadIcon->setVisible(false);
 #endif
-#ifndef WITH_XC_DOCS
+#ifndef KPXC_FEATURE_DOCS
     m_ui->actionGettingStarted->setVisible(false);
     m_ui->actionUserGuide->setVisible(false);
     m_ui->actionKeyboardShortcuts->setVisible(false);
@@ -630,36 +621,27 @@ MainWindow::MainWindow()
     // Properly shutdown on logoff, restart, and shutdown
     connect(qApp, &QGuiApplication::commitDataRequest, this, [this] { m_appExitCalled = true; });
 
-#if defined(KEEPASSXC_BUILD_TYPE_SNAPSHOT) || defined(KEEPASSXC_BUILD_TYPE_PRE_RELEASE)
+#ifdef KEEPASSXC_BUILD_TYPE_SNAPSHOT
     auto* hidePreRelWarn = new QAction(tr("Don't show again for this version"), m_ui->globalMessageWidget);
     m_ui->globalMessageWidget->addAction(hidePreRelWarn);
     auto hidePreRelWarnConn = QSharedPointer<QMetaObject::Connection>::create();
-    *hidePreRelWarnConn = connect(m_ui->globalMessageWidget, &KMessageWidget::hideAnimationFinished, [=] {
+    *hidePreRelWarnConn = connect(m_ui->globalMessageWidget, &MessageWidget::hideAnimationStarted, [=] {
         m_ui->globalMessageWidget->removeAction(hidePreRelWarn);
         disconnect(*hidePreRelWarnConn);
         hidePreRelWarn->deleteLater();
     });
+
     connect(hidePreRelWarn, &QAction::triggered, [=] {
-        m_ui->globalMessageWidget->animatedHide();
+        m_ui->globalMessageWidget->hideMessage();
         config()->set(Config::Messages_HidePreReleaseWarning, KEEPASSXC_VERSION);
     });
-#endif
-#if defined(KEEPASSXC_BUILD_TYPE_SNAPSHOT)
+
     if (config()->get(Config::Messages_HidePreReleaseWarning) != KEEPASSXC_VERSION) {
-        m_ui->globalMessageWidget->showMessage(
-            tr("WARNING: You are using an unstable build of KeePassXC.\n"
-               "There is a high risk of corruption, maintain a backup of your databases.\n"
-               "This version is not meant for production use."),
-            MessageWidget::Warning,
-            -1);
-    }
-#elif defined(KEEPASSXC_BUILD_TYPE_PRE_RELEASE)
-    if (config()->get(Config::Messages_HidePreReleaseWarning) != KEEPASSXC_VERSION) {
-        m_ui->globalMessageWidget->showMessage(
-            tr("NOTE: You are using a pre-release version of KeePassXC.\n"
-               "Expect some bugs and minor issues, this version is meant for testing purposes."),
-            MessageWidget::Information,
-            -1);
+        m_ui->globalMessageWidget->showMessage(tr("WARNING: You are using a development snapshot build of KeePassXC.\n"
+                                                  "Maintain a backup of your databases in the event of unknown bugs.\n"
+                                                  "This version is not meant for production use."),
+                                               MessageWidget::Warning,
+                                               -1);
     }
 #endif
 
@@ -695,7 +677,7 @@ MainWindow::MainWindow()
 
 MainWindow::~MainWindow()
 {
-#ifdef WITH_XC_SSHAGENT
+#ifdef KPXC_FEATURE_SSHAGENT
     sshAgent()->removeAllIdentities();
 #endif
 }
@@ -747,11 +729,7 @@ void MainWindow::appExit()
  */
 bool MainWindow::isHardwareKeySupported()
 {
-#ifdef WITH_XC_YUBIKEY
     return true;
-#else
-    return false;
-#endif
 }
 
 /**
@@ -763,7 +741,6 @@ bool MainWindow::isHardwareKeySupported()
  */
 bool MainWindow::refreshHardwareKeys()
 {
-#ifdef WITH_XC_YUBIKEY
     auto yk = YubiKey::instance();
     // find keys sync to allow returning if any key was found
     bool found = yk->findValidKeys();
@@ -771,9 +748,6 @@ bool MainWindow::refreshHardwareKeys()
     // emit here manually because sync findValidKeys() cannot do that properly
     emit yk->detectComplete(found);
     return found;
-#else
-    return false;
-#endif
 }
 
 void MainWindow::updateLastDatabasesMenu()
@@ -959,7 +933,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionGroupSortDesc->setEnabled(groupSelected && currentGroupHasChildren);
             m_ui->actionGroupEmptyRecycleBin->setVisible(recycleBinSelected);
             m_ui->actionGroupEmptyRecycleBin->setEnabled(recycleBinSelected);
-#ifdef WITH_XC_NETWORKING
+#ifdef KPXC_FEATURE_NETWORK
             m_ui->actionGroupDownloadFavicons->setVisible(!recycleBinSelected);
 #endif
             m_ui->actionGroupDownloadFavicons->setEnabled(groupSelected && currentGroupHasEntries
@@ -975,7 +949,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionExportHtml->setEnabled(true);
             m_ui->actionExportXML->setEnabled(true);
             m_ui->actionDatabaseMerge->setEnabled(m_ui->tabWidget->currentIndex() != -1);
-#ifdef WITH_XC_BROWSER_PASSKEYS
+#ifdef KPXC_FEATURE_BROWSER_PASSKEYS
             bool singleEntryHasPasskey = singleEntrySelected && dbWidget->currentEntryHasPasskey();
             m_ui->actionPasskeys->setEnabled(true);
             m_ui->actionImportPasskey->setEnabled(true);
@@ -983,7 +957,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionEntryRemovePasskey->setEnabled(singleEntryHasPasskey);
 #endif
             m_ui->menuRemoteSync->setEnabled(true);
-#ifdef WITH_XC_SSHAGENT
+#ifdef KPXC_FEATURE_SSHAGENT
             bool singleEntryHasSshKey =
                 singleEntrySelected && sshAgent()->isEnabled() && dbWidget->currentEntryHasSshKey();
             m_ui->actionEntryAddToAgent->setVisible(singleEntryHasSshKey);
@@ -1050,7 +1024,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionEntryRemoveFromAgent->setVisible(false);
             m_ui->actionGroupEmptyRecycleBin->setVisible(false);
 
-#ifdef WITH_XC_BROWSER_PASSKEYS
+#ifdef KPXC_FEATURE_BROWSER_PASSKEYS
             m_ui->actionPasskeys->setEnabled(false);
             m_ui->actionImportPasskey->setEnabled(false);
             m_ui->actionEntryImportPasskey->setEnabled(false);
@@ -1185,7 +1159,7 @@ void MainWindow::showAboutDialog()
 
 void MainWindow::performUpdateCheck()
 {
-#ifdef WITH_XC_UPDATECHECK
+#ifdef KPXC_FEATURE_UPDATES
     if (!config()->get(Config::UpdateCheckMessageShown).toBool()) {
         auto result =
             MessageBox::question(this,
@@ -1208,7 +1182,7 @@ void MainWindow::performUpdateCheck()
 
 void MainWindow::hasUpdateAvailable(bool hasUpdate, const QString& version, bool isManuallyRequested)
 {
-#ifdef WITH_XC_UPDATECHECK
+#ifdef KPXC_FEATURE_UPDATES
     if (hasUpdate && !isManuallyRequested) {
         auto* updateCheckDialog = new UpdateCheckDialog(this);
         updateCheckDialog->showUpdateCheckResponse(hasUpdate, version);
@@ -1223,7 +1197,7 @@ void MainWindow::hasUpdateAvailable(bool hasUpdate, const QString& version, bool
 
 void MainWindow::showUpdateCheckDialog()
 {
-#ifdef WITH_XC_UPDATECHECK
+#ifdef KPXC_FEATURE_UPDATES
     updateCheck()->checkForUpdates(true);
     auto* updateCheckDialog = new UpdateCheckDialog(this);
     updateCheckDialog->show();
