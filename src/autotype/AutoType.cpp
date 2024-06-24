@@ -151,9 +151,7 @@ AutoType::AutoType(QObject* parent, bool test)
     QString pluginPath = resources()->pluginPath(pluginName);
 
     if (!pluginPath.isEmpty()) {
-#ifdef WITH_XC_AUTOTYPE
         loadPlugin(pluginPath);
-#endif
     }
 
     connect(this, SIGNAL(autotypeFinished()), SLOT(resetAutoTypeState()));

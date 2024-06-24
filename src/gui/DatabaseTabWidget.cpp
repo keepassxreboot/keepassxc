@@ -576,7 +576,6 @@ void DatabaseTabWidget::showDatabaseSecurity()
     currentDatabaseWidget()->switchToDatabaseSecurity();
 }
 
-#ifdef WITH_XC_BROWSER_PASSKEYS
 void DatabaseTabWidget::showPasskeys()
 {
     currentDatabaseWidget()->switchToPasskeys();
@@ -596,7 +595,6 @@ void DatabaseTabWidget::removePasskeyFromEntry()
 {
     currentDatabaseWidget()->removePasskeyFromEntry();
 }
-#endif
 
 bool DatabaseTabWidget::isModified(int index) const
 {

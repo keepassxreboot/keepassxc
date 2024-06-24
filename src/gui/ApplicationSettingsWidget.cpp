@@ -36,7 +36,7 @@
 
 #include "FileDialog.h"
 #include "MessageBox.h"
-#ifdef WITH_XC_BROWSER
+#ifdef KPXC_FEATURE_BROWSER
 #include "browser/BrowserSettingsPage.h"
 #endif
 
@@ -80,7 +80,7 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
     m_generalUi->setupUi(m_generalWidget);
     addPage(tr("General"), icons()->icon("preferences-other"), m_generalWidget);
     addPage(tr("Security"), icons()->icon("security-high"), m_secWidget);
-#ifdef WITH_XC_BROWSER
+#ifdef KPXC_FEATURE_BROWSER
     addSettingsPage(new BrowserSettingsPage());
 #endif
 
@@ -162,7 +162,7 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
     m_generalUi->menubarShowCheckBox->setVisible(false);
 #endif
 
-#ifdef WITH_XC_UPDATECHECK
+#ifdef KPXC_FEATURE_UPDATES
     connect(m_generalUi->checkForUpdatesOnStartupCheckBox, SIGNAL(toggled(bool)), SLOT(checkUpdatesToggled(bool)));
 #else
     m_generalUi->checkForUpdatesOnStartupCheckBox->setVisible(false);
@@ -170,7 +170,7 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
     m_generalUi->checkUpdatesSpacer->changeSize(0, 0, QSizePolicy::Fixed, QSizePolicy::Fixed);
 #endif
 
-#ifndef WITH_XC_NETWORKING
+#ifndef KPXC_FEATURE_NETWORK
     m_secUi->privacy->setVisible(false);
     m_generalUi->faviconTimeoutLabel->setVisible(false);
     m_generalUi->faviconTimeoutSpinBox->setVisible(false);

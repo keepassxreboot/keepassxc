@@ -1,4 +1,5 @@
 # <img src="https://keepassxc.org/assets/img/keepassxc.svg" width="40" height="40"/> KeePassXC
+
 [![OpenSSF Best Practices](https://bestpractices.coreinfrastructure.org/projects/6326/badge)](https://bestpractices.coreinfrastructure.org/projects/6326)
 [![TeamCity Build Status](https://ci.keepassxc.org/app/rest/builds/buildType:\(project:KeepassXC\)/statusIcon)](https://ci.keepassxc.org/?guest=1)
 [![codecov](https://codecov.io/gh/keepassxreboot/keepassxc/branch/develop/graph/badge.svg)](https://codecov.io/gh/keepassxreboot/keepassxc)
@@ -10,16 +11,22 @@
 [KeePassXC](https://keepassxc.org) is a modern, secure, and open-source password manager that stores and manages your most sensitive information. You can run KeePassXC on Windows, macOS, and Linux systems. KeePassXC is for people with extremely high demands of secure personal data management. It saves many different types of information, such as usernames, passwords, URLs, attachments, and notes in an offline, encrypted file that can be stored in any location, including private and public cloud solutions. For easy identification and management, user-defined titles and icons can be specified for entries. In addition, entries are sorted into customizable groups. An integrated search function allows you to use advanced patterns to easily find any entry in your database. A customizable, fast, and easy-to-use password generator utility allows you to create passwords with any combination of characters or easy to remember passphrases.
 
 ## Quick Start
+
 The [QuickStart Guide](https://keepassxc.org/docs/KeePassXC_GettingStarted.html) gets you started using KeePassXC on your Windows, macOS, or Linux computer using pre-compiled binaries from the [downloads page](https://keepassxc.org/download). Additionally, individual Linux distributions may ship their own versions, so please check your distribution's package list to see if KeePassXC is available. Detailed documentation is available in the [User Guide](https://keepassxc.org/docs/KeePassXC_UserGuide.html).
 
 ## Features List
+
 KeePassXC has numerous features for novice and power users alike. Our goal is to create an application that can be used by anyone while still offering advanced features to those that need them.
 
-### Basic
+### Core Features
+
 * Create, open, and save databases in the KDBX format (KeePass-compatible with KDBX4 and KDBX3)
+* All information is encrypted at rest and never exposed outside the program
 * Store sensitive information in entries that are organized by groups
-* Search for entries
 * Password generator
+* Search for entries
+* TOTP storage and generation
+* YubiKey/OnlyKey challenge-response support
 * Auto-Type passwords into applications
 * Browser integration with Google Chrome, Mozilla Firefox, Microsoft Edge, Chromium, Vivaldi, Brave, and Tor-Browser
 * Support for passkeys using the browser integration
@@ -33,10 +40,7 @@ KeePassXC has numerous features for novice and power users alike. Our goal is to
 * Field references between entries
 * File attachments and custom attributes
 * Entry history and data restoration
-* YubiKey/OnlyKey challenge-response support
 * Command line interface (keepassxc-cli)
-* Auto-Open databases
-* KeeShare shared databases (import, export, and synchronize)
 * SSH Agent integration
 * FreeDesktop.org Secret Service (replace Gnome keyring, etc.)
 * Additional encryption choices: Twofish and ChaCha20

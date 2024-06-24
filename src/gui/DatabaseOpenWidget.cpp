@@ -25,9 +25,7 @@
 #include "gui/MessageBox.h"
 #include "keys/ChallengeResponseKey.h"
 #include "keys/FileKey.h"
-#ifdef WITH_XC_YUBIKEY
 #include "keys/drivers/YubiKeyInterfaceUSB.h"
-#endif
 #include "quickunlock/QuickUnlockInterface.h"
 
 #include <QCheckBox>
@@ -52,9 +50,7 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     : DialogyWidget(parent)
     , m_ui(new Ui::DatabaseOpenWidget())
     , m_db(nullptr)
-#ifdef WITH_XC_YUBIKEY
     , m_deviceListener(new DeviceListener(this))
-#endif
 {
     m_ui->setupUi(this);
 
@@ -101,7 +97,6 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     sp.setRetainSizeWhenHidden(true);
     m_ui->hardwareKeyProgress->setSizePolicy(sp);
 
-#ifdef WITH_XC_YUBIKEY
     connect(m_deviceListener, &DeviceListener::devicePlugged, this, [this] { pollHardwareKey(false, 500); });
     connect(YubiKey::instance(), SIGNAL(detectComplete(bool)), SLOT(hardwareKeyResponse(bool)), Qt::QueuedConnection);
 
@@ -122,10 +117,6 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     connect(&m_hideNoHardwareKeysFoundTimer, &QTimer::timeout, this, [this] {
         m_ui->noHardwareKeysFoundLabel->setVisible(false);
     });
-#else
-    m_ui->noHardwareKeysFoundLabel->setVisible(false);
-    m_ui->refreshHardwareKeys->setVisible(false);
-#endif
 
     // QuickUnlock actions
     connect(m_ui->quickUnlockButton, &QPushButton::pressed, this, [this] { openDatabase(); });
@@ -195,7 +186,6 @@ bool DatabaseOpenWidget::event(QEvent* event)
         toggleQuickUnlockScreen();
 
         if (type == QEvent::Show) {
-#ifdef WITH_XC_YUBIKEY
 #ifdef Q_OS_WIN
             m_deviceListener->registerHotplugCallback(true,
                                                       true,
@@ -211,7 +201,6 @@ bool DatabaseOpenWidget::event(QEvent* event)
             m_deviceListener->registerHotplugCallback(true, true, YubiKeyInterfaceUSB::YUBICO_USB_VID);
             m_deviceListener->registerHotplugCallback(true, true, YubiKeyInterfaceUSB::ONLYKEY_USB_VID);
 #endif
-#endif
         }
 
         if (isVisible()) {
@@ -226,11 +215,9 @@ bool DatabaseOpenWidget::event(QEvent* event)
             m_hideTimer.start();
         }
 
-#ifdef WITH_XC_YUBIKEY
         if (type == QEvent::Hide) {
             m_deviceListener->deregisterAllHotplugCallbacks();
         }
-#endif
 
         ret = true;
     }
@@ -295,10 +282,8 @@ void DatabaseOpenWidget::load(const QString& filename)
 
     toggleQuickUnlockScreen();
 
-#ifdef WITH_XC_YUBIKEY
     // Do initial auto-poll
     pollHardwareKey();
-#endif
 }
 
 void DatabaseOpenWidget::clearForms()
@@ -489,7 +474,6 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::buildDatabaseKey()
         config()->set(Config::LastKeyFiles, lastKeyFiles);
     }
 
-#ifdef WITH_XC_YUBIKEY
     auto lastChallengeResponse = config()->get(Config::LastChallengeResponse).toHash();
     lastChallengeResponse.remove(m_filename);
 
@@ -506,7 +490,6 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::buildDatabaseKey()
     if (config()->get(Config::RememberLastKeyFiles).toBool()) {
         config()->set(Config::LastChallengeResponse, lastChallengeResponse);
     }
-#endif
 
     return databaseKey;
 }

@@ -298,7 +298,7 @@ AttestationKeyPair BrowserPasskeys::buildCredentialPrivateKey(int alg, const Tes
             try {
                 Botan::Ed25519_PrivateKey privateKey(*randomGen()->getRng());
                 auto publicKeyBits = privateKey.get_public_key();
-#ifdef WITH_XC_BOTAN3
+#ifdef WITH_BOTAN3
                 auto privateKeyBits = privateKey.raw_private_key_bits();
 #else
                 auto privateKeyBits = privateKey.get_private_key();
@@ -353,7 +353,7 @@ QByteArray BrowserPasskeys::buildSignature(const QByteArray& authenticatorData,
         std::vector<uint8_t> rawSignature;
         if (algName == "ECDSA") {
             Botan::ECDSA_PrivateKey privateKey(algId, privateKeyBytes);
-#ifdef WITH_XC_BOTAN3
+#ifdef WITH_BOTAN3
             Botan::PK_Signer signer(
                 privateKey, *randomGen()->getRng(), "EMSA1(SHA-256)", Botan::Signature_Format::DerSequence);
 #else
