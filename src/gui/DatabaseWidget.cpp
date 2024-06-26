@@ -1135,7 +1135,10 @@ void DatabaseWidget::syncDatabaseWithLockedDatabase(const QString& filePath, con
 
 void DatabaseWidget::uploadAndFinishSync(const RemoteParams* params, RemoteHandler::RemoteResult result)
 {
-    if (result.success && !params->uploadCommand.isEmpty()) {
+    if (!m_remoteHandler) {
+        result.success = false;
+        result.errorMessage = tr("Could not upload the database. Remote handler was not initialized.");
+    } else if (result.success && !params->uploadCommand.isEmpty()) {
         emit updateSyncProgress(75, tr("Uploading..."));
         result = m_remoteHandler->upload(params);
     }

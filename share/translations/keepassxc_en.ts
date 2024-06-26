@@ -2674,6 +2674,10 @@ Disable safe saves and try again?</source>
         <source>Do you want to remove the passkey from this entry?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Could not upload the database. Remote handler was not initialized.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidget</name>
