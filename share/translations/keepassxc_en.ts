@@ -2908,6 +2908,10 @@ Disable safe saves and try again?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Could not upload the database. Remote handler was not initialized.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>The database file &quot;%1&quot; was modified externally</source>
         <translation type="unfinished"></translation>
     </message>
