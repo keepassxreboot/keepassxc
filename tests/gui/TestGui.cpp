@@ -354,8 +354,9 @@ void TestGui::testMergeDatabase()
     fileDialog()->setNextFileName(QString(KEEPASSX_TEST_DATA_DIR).append("/MergeDatabase.kdbx"));
     triggerAction("actionDatabaseMerge");
 
-    QTRY_COMPARE(QApplication::focusWidget()->objectName(), QString("passwordEdit"));
     auto* editPasswordMerge = QApplication::focusWidget();
+    QVERIFY(editPasswordMerge);
+    QTRY_COMPARE(editPasswordMerge->objectName(), QString("passwordEdit"));
     QVERIFY(editPasswordMerge->isVisible());
 
     QTest::keyClicks(editPasswordMerge, "a");
@@ -457,8 +458,9 @@ void TestGui::testRemoteSyncDatabaseRequiresPassword()
     // need to process more events as opening with the same key did not work and more events have been fired
     QApplication::processEvents(QEventLoop::WaitForMoreEvents);
 
-    QTRY_COMPARE(QApplication::focusWidget()->objectName(), QString("passwordEdit"));
     auto* editPasswordSync = QApplication::focusWidget();
+    QVERIFY(editPasswordSync);
+    QTRY_COMPARE(editPasswordSync->objectName(), QString("passwordEdit"));
     QVERIFY(editPasswordSync->isVisible());
 
     QTest::keyClicks(editPasswordSync, "b");
