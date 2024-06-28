@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_PASSPHRASEGENERATOR_H
 #define KEEPASSX_PASSPHRASEGENERATOR_H
 
-#include <QVector>
+#include <QList>
 
 class PassphraseGenerator
 {
@@ -43,15 +43,18 @@ public:
 
     QString generatePassphrase() const;
 
-    static constexpr int DefaultWordCount = 7;
+    static const int DefaultWordCount;
     static const char* DefaultSeparator;
     static const char* DefaultWordList;
 
 private:
     int m_wordCount;
+    int m_minimum_wordlist_length = 4000;
     PassphraseWordCase m_wordCase;
     QString m_separator;
-    QVector<QString> m_wordlist;
+    QList<QString> m_wordlist;
+
+    friend class TestPassphraseGenerator;
 };
 
 #endif // KEEPASSX_PASSPHRASEGENERATOR_H

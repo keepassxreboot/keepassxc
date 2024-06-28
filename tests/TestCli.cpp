@@ -1088,7 +1088,7 @@ void TestCli::testDiceware()
     smallWordFile.close();
 
     execCmd(dicewareCmd, {"diceware", "-W", "11", "-w", smallWordFile.fileName()});
-    QCOMPARE(m_stderr->readLine(), QByteArray("The word list is too small (< 1000 items)\n"));
+    QCOMPARE(m_stderr->readLine(), QByteArray("Cannot generate valid passphrases because the wordlist is too short\n"));
 }
 
 void TestCli::testEdit()

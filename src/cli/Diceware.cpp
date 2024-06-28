@@ -71,7 +71,7 @@ int Diceware::execute(const QStringList& arguments)
     if (!dicewareGenerator.isValid()) {
         // We already validated the word count input so if the generator is invalid, it
         // must be because the word list is too small.
-        err << QObject::tr("The word list is too small (< 1000 items)") << Qt::endl;
+        err << QObject::tr("Cannot generate valid passphrases because the wordlist is too short") << Qt::endl;
         return EXIT_FAILURE;
     }
 
