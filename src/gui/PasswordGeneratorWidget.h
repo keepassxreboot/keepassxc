@@ -48,6 +48,7 @@ public:
     explicit PasswordGeneratorWidget(QWidget* parent = nullptr);
     ~PasswordGeneratorWidget() override;
 
+    bool confirmDiscard();
     void loadSettings();
     void saveSettings();
     void setPasswordLength(int length);
@@ -63,6 +64,7 @@ signals:
     void closed();
 
 public slots:
+    void confirmClose();
     void regeneratePassword();
     void applyPassword();
     void copyPassword();

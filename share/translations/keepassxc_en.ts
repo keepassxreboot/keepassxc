@@ -6903,6 +6903,14 @@ Do you want to overwrite it?</source>
         <source>Characters: %1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Confirm Close Password Generator</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Discard this password forever?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PasswordWidget</name>

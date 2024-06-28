@@ -902,6 +902,7 @@ void TestGui::testPasswordEntryEntropy()
         QCOMPARE(strengthLabel->text(), expectedStrengthLabel);
         QCOMPARE(passwordLengthLabel->text(), expectedPasswordLength);
 
+        MessageBox::setNextAnswer(MessageBox::Discard);
         QTest::mouseClick(generatedPassword, Qt::LeftButton);
         QTest::keyClick(generatedPassword, Qt::Key_Escape););
 }
@@ -967,6 +968,7 @@ void TestGui::testDicewareEntryEntropy()
         QCOMPARE(strengthLabel->text(), QString("Password Quality: Good"));
         QCOMPARE(wordLengthLabel->text().toInt(), pwGeneratorWidget->getGeneratedPassword().size());
 
+        MessageBox::setNextAnswer(MessageBox::Discard);
         QTest::mouseClick(generatedPassword, Qt::LeftButton);
         QTest::keyClick(generatedPassword, Qt::Key_Escape););
 }

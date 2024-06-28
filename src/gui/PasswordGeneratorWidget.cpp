@@ -67,7 +67,7 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     connect(m_ui->buttonGenerate, SIGNAL(clicked()), SLOT(regeneratePassword()));
     connect(m_ui->buttonDeleteWordList, SIGNAL(clicked()), SLOT(deleteWordList()));
     connect(m_ui->buttonAddWordList, SIGNAL(clicked()), SLOT(addWordList()));
-    connect(m_ui->buttonClose, SIGNAL(clicked()), SIGNAL(closed()));
+    connect(m_ui->buttonClose, SIGNAL(clicked()), SLOT(confirmClose()));
 
     connect(m_ui->sliderLength, SIGNAL(valueChanged(int)), SLOT(passwordLengthChanged(int)));
     connect(m_ui->spinBoxLength, SIGNAL(valueChanged(int)), SLOT(passwordLengthChanged(int)));
@@ -119,11 +119,32 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
 
 PasswordGeneratorWidget::~PasswordGeneratorWidget() = default;
 
+bool PasswordGeneratorWidget::confirmDiscard()
+{
+    auto result = MessageBox::warning(this,
+                                      tr("Confirm Close Password Generator"),
+                                      tr("Discard this password forever?"),
+                                      MessageBox::Discard | MessageBox::Cancel,
+                                      MessageBox::Cancel);
+    return (result == MessageBox::Discard);
+}
+
+void PasswordGeneratorWidget::confirmClose()
+{
+    if (confirmDiscard()) {
+        emit closed();
+    }
+}
+
 void PasswordGeneratorWidget::closeEvent(QCloseEvent* event)
 {
-    // Emits closed signal when clicking X from title bar
-    emit closed();
-    QWidget::closeEvent(event);
+    if (confirmDiscard()) {
+        // Emits closed signal when clicking X from title bar
+        emit closed();
+        QWidget::closeEvent(event);
+    } else {
+        event->ignore();
+    }
 }
 
 PasswordGeneratorWidget* PasswordGeneratorWidget::popupGenerator(QWidget* parent)
