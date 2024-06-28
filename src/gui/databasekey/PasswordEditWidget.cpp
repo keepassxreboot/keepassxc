@@ -62,7 +62,7 @@ bool PasswordEditWidget::isPasswordVisible() const
 
 bool PasswordEditWidget::isEmpty() const
 {
-    return visiblePage() != Page::Edit || m_compUi->enterPasswordEdit->text().isEmpty();
+    return m_compUi->enterPasswordEdit->text().isEmpty();
 }
 
 PasswordHealth::Quality PasswordEditWidget::getPasswordQuality() const
