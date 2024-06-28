@@ -168,7 +168,9 @@ bool DatabaseSettingsWidgetDatabaseKey::save()
     }
 
     // Show warning if database password has not been set
-    if (m_passwordEditWidget->visiblePage() == KeyComponentWidget::Page::AddNew || m_passwordEditWidget->isEmpty()) {
+    if (m_passwordEditWidget->visiblePage() == KeyComponentWidget::Page::AddNew
+        || (m_passwordEditWidget->visiblePage() == KeyComponentWidget::Page::Edit && m_passwordEditWidget->isEmpty())) {
+
         QScopedPointer<QMessageBox> msgBox(new QMessageBox(this));
         msgBox->setIcon(QMessageBox::Warning);
         msgBox->setWindowTitle(tr("No password set"));
@@ -187,7 +189,7 @@ bool DatabaseSettingsWidgetDatabaseKey::save()
         return false;
     }
 
-    if (!m_passwordEditWidget->isEmpty()) {
+    if (m_passwordEditWidget->visiblePage() == KeyComponentWidget::Page::Edit && !m_passwordEditWidget->isEmpty()) {
         // Prevent setting password with a quality less than the minimum required
         auto minQuality = qBound(0, config()->get(Config::Security_DatabasePasswordMinimumQuality).toInt(), 4);
         if (m_passwordEditWidget->getPasswordQuality() < static_cast<PasswordHealth::Quality>(minQuality)) {
