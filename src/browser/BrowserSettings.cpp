@@ -85,16 +85,6 @@ void BrowserSettings::setMatchUrlScheme(bool matchUrlScheme)
     config()->set(Config::Browser_MatchUrlScheme, matchUrlScheme);
 }
 
-bool BrowserSettings::alwaysAllowAccess()
-{
-    return config()->get(Config::Browser_AlwaysAllowAccess).toBool();
-}
-
-void BrowserSettings::setAlwaysAllowAccess(bool alwaysAllowAccess)
-{
-    config()->set(Config::Browser_AlwaysAllowAccess, alwaysAllowAccess);
-}
-
 bool BrowserSettings::alwaysAllowUpdate()
 {
     return config()->get(Config::Browser_AlwaysAllowUpdate).toBool();
@@ -235,16 +225,6 @@ bool BrowserSettings::updateBinaryPath()
 void BrowserSettings::setUpdateBinaryPath(bool enabled)
 {
     config()->set(Config::Browser_UpdateBinaryPath, enabled);
-}
-
-bool BrowserSettings::allowGetDatabaseEntriesRequest()
-{
-    return config()->get(Config::Browser_AllowGetDatabaseEntriesRequest).toBool();
-}
-
-void BrowserSettings::setAllowGetDatabaseEntriesRequest(bool enabled)
-{
-    config()->set(Config::Browser_AllowGetDatabaseEntriesRequest, enabled);
 }
 
 bool BrowserSettings::allowExpiredCredentials()

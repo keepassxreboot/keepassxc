@@ -19,6 +19,7 @@
 
 #include "browser/BrowserMessageBuilder.h"
 #include "browser/BrowserSettings.h"
+#include "core/DatabaseSettings.h"
 #include "core/Group.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
@@ -739,4 +740,26 @@ void TestBrowser::testRestrictBrowserKey()
     QCOMPARE(sorted[1]->url(), QString("https://example.com/2b"));
     QCOMPARE(sorted[2]->url(), QString("https://example.com/2"));
     QCOMPARE(sorted[3]->url(), QString("https://example.com/0"));
+}
+
+void TestBrowser::testGetDatabaseEntries()
+{
+    auto db = QSharedPointer<Database>::create();
+    auto* root = db->rootGroup();
+
+    QStringList urls = {"https://github.com/loginpage", "https://test.github.com/", "https://github.com/"};
+    auto entries = createEntries(urls, root);
+    Q_UNUSED(entries)
+
+    bool accessDenied = true;
+
+    databaseSettings()->setAllowGetDatabaseEntriesRequest(db, false);
+    auto result = browserService()->getDatabaseEntries(&accessDenied, db);
+    QCOMPARE(accessDenied, true);
+    QCOMPARE(result.isEmpty(), true);
+
+    databaseSettings()->setAllowGetDatabaseEntriesRequest(db, true);
+    result = browserService()->getDatabaseEntries(&accessDenied, db);
+    QCOMPARE(accessDenied, false);
+    QCOMPARE(result.isEmpty(), false);
 }

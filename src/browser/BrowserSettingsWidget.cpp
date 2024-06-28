@@ -108,7 +108,6 @@ void BrowserSettingsWidget::loadSettings()
     // TODO: fix this
     m_ui->showNotification->hide();
 
-    m_ui->alwaysAllowAccess->setChecked(settings->alwaysAllowAccess());
     m_ui->alwaysAllowUpdate->setChecked(settings->alwaysAllowUpdate());
     m_ui->httpAuthPermission->setChecked(settings->httpAuthPermission());
     m_ui->searchInAllDatabases->setChecked(settings->searchInAllDatabases());
@@ -118,7 +117,6 @@ void BrowserSettingsWidget::loadSettings()
     m_ui->useCustomProxy->setChecked(settings->useCustomProxy());
     m_ui->customProxyLocation->setText(settings->replaceHomePath(settings->customProxyLocation()));
     m_ui->updateBinaryPath->setChecked(settings->updateBinaryPath());
-    m_ui->allowGetDatabaseEntriesRequest->setChecked(settings->allowGetDatabaseEntriesRequest());
     m_ui->allowExpiredCredentials->setChecked(settings->allowExpiredCredentials());
     m_ui->chromeSupport->setChecked(settings->browserSupport(BrowserShared::CHROME));
     m_ui->chromiumSupport->setChecked(settings->browserSupport(BrowserShared::CHROMIUM));
@@ -232,9 +230,7 @@ void BrowserSettingsWidget::saveSettings()
     settings->setCustomProxyLocation(resolveCustomProxyLocation());
 
     settings->setUpdateBinaryPath(m_ui->updateBinaryPath->isChecked());
-    settings->setAllowGetDatabaseEntriesRequest(m_ui->allowGetDatabaseEntriesRequest->isChecked());
     settings->setAllowExpiredCredentials(m_ui->allowExpiredCredentials->isChecked());
-    settings->setAlwaysAllowAccess(m_ui->alwaysAllowAccess->isChecked());
     settings->setAlwaysAllowUpdate(m_ui->alwaysAllowUpdate->isChecked());
     settings->setHttpAuthPermission(m_ui->httpAuthPermission->isChecked());
     settings->setSearchInAllDatabases(m_ui->searchInAllDatabases->isChecked());

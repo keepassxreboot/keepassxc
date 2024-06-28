@@ -155,7 +155,9 @@ void DatabaseSettingsDialog::save()
         return;
     }
 
-    // Browser settings don't have anything to save
+#ifdef WITH_XC_BROWSER
+    m_browserWidget->saveSettings();
+#endif
 
 #ifdef WITH_XC_KEESHARE
     m_keeShareWidget->saveSettings();

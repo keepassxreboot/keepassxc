@@ -39,8 +39,6 @@ public:
     void setUnlockDatabase(bool unlockDatabase);
     bool matchUrlScheme();
     void setMatchUrlScheme(bool matchUrlScheme);
-    bool alwaysAllowAccess();
-    void setAlwaysAllowAccess(bool alwaysAllowAccess);
     bool alwaysAllowUpdate();
     void setAlwaysAllowUpdate(bool alwaysAllowUpdate);
     bool searchInAllDatabases();
@@ -66,8 +64,6 @@ public:
 #endif
     bool updateBinaryPath();
     void setUpdateBinaryPath(bool enabled);
-    bool allowGetDatabaseEntriesRequest();
-    void setAllowGetDatabaseEntriesRequest(bool enabled);
     bool allowExpiredCredentials();
     void setAllowExpiredCredentials(bool enabled);
 
