@@ -7654,10 +7654,6 @@ Do you want to overwrite it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>The word list is too small (&lt; 1000 items)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Title for the entry.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8900,6 +8896,10 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Only PBKDF and Argon2 are supported, cannot decrypt json file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot generate valid passphrases because the wordlist is too short</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

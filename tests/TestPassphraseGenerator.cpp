@@ -16,6 +16,7 @@
  */
 
 #include "TestPassphraseGenerator.h"
+#include "config-keepassx-tests.h"
 #include "core/PassphraseGenerator.h"
 #include "crypto/Crypto.h"
 
@@ -51,4 +52,19 @@ void TestPassphraseGenerator::testWordCase()
     passphrase = generator.generatePassphrase();
     QRegularExpression regex("^(?:[A-Z][a-z-]* )*[A-Z][a-z-]*$");
     QVERIFY2(regex.match(passphrase).hasMatch(), qPrintable(passphrase));
+}
+
+void TestPassphraseGenerator::testUniqueEntriesInWordlist()
+{
+    PassphraseGenerator generator;
+    // set the limit down, so we don;t have to do a very large file
+    generator.m_minimum_wordlist_length = 4;
+
+    // link to bad wordlist
+    QString path = QString(KEEPASSX_TEST_DATA_DIR).append("/wordlists/bad_wordlist_with_duplicate_entries.wordlist");
+
+    // setting will work, it creates the warning however, and isValid will fail
+    generator.setWordList(path);
+    // so this fails
+    QVERIFY(!generator.isValid());
 }
