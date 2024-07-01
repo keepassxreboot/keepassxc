@@ -137,6 +137,7 @@ signals:
     void databaseModified();
     void databaseNonDataChanged();
     void databaseSaved();
+    void databaseAboutToUnlock();
     void databaseUnlocked();
     void databaseLockRequested();
     void databaseLocked();
