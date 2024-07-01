@@ -76,6 +76,7 @@ protected:
 private slots:
     void updateButtonsEnabled(const QString& password);
     void updatePasswordStrength();
+    void updatePasswordLengthLabel(const QString& password);
     void setAdvancedMode(bool advanced);
     void excludeHexChars();
 
