@@ -258,8 +258,7 @@ endif()
 if(WIN32)
     list(APPEND gui_SOURCES
             gui/osutils/winutils/ScreenLockListenerWin.cpp
-            gui/osutils/winutils/WinUtils.cpp
-            ../share/windows/icon.rc)
+            gui/osutils/winutils/WinUtils.cpp)
     if (MSVC)
         list(APPEND gui_SOURCES quickunlock/WindowsHello.cpp)
     endif()
@@ -413,16 +412,17 @@ endif()
 if(WIN32)
     include(GenerateProductVersion)
     generate_product_version(
-            WIN32_ProductVersionFiles
+            WIN32_ResourceFiles
             NAME "KeePassXC"
             COMPANY_NAME "KeePassXC Team"
             VERSION_MAJOR ${KEEPASSXC_VERSION_MAJOR}
             VERSION_MINOR ${KEEPASSXC_VERSION_MINOR}
             VERSION_PATCH ${KEEPASSXC_VERSION_PATCH}
     )
+    list(APPEND WIN32_ResourceFiles "${CMAKE_SOURCE_DIR}/share/windows/icon.rc")
 endif()
 
-add_executable(${PROGNAME} WIN32 main.cpp ${WIN32_ProductVersionFiles})
+add_executable(${PROGNAME} WIN32 main.cpp ${WIN32_ResourceFiles})
 target_link_libraries(${PROGNAME} keepassxc_gui)
 set_target_properties(${PROGNAME} PROPERTIES ENABLE_EXPORTS ON)
 
