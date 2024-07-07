@@ -127,7 +127,7 @@ void ImportWizardPageSelect::updateDatabaseChoices() const
     if (mainWindow) {
         for (auto dbWidget : mainWindow->getOpenDatabases()) {
             // Remove all connections
-            disconnect(dbWidget, nullptr, nullptr, nullptr);
+            disconnect(dbWidget, nullptr, this, nullptr);
 
             // Skip over locked databases
             if (dbWidget->isLocked()) {
