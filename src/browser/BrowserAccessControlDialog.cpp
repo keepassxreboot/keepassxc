@@ -74,7 +74,8 @@ void BrowserAccessControlDialog::setEntries(const QList<Entry*>& entriesToConfir
 void BrowserAccessControlDialog::addEntryToList(Entry* entry, int row)
 {
     auto item = new QTableWidgetItem();
-    item->setText(entry->title() + " - " + entry->username());
+    item->setText(entry->resolveMultiplePlaceholders(entry->title()) + " - "
+                  + entry->resolveMultiplePlaceholders(entry->username()));
     item->setData(Qt::UserRole, row);
     item->setFlags(item->flags() | Qt::ItemIsSelectable);
     m_ui->itemsTable->setItem(row, 0, item);
