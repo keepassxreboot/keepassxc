@@ -285,7 +285,16 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             break;
         case Title:
             return Icons::entryIconPixmap(entry);
-
+        case Paperclip:
+            if (!entry->attachments()->isEmpty()) {
+                return icons()->icon("paperclip");
+            }
+            break;
+        case Totp:
+            if (entry->hasTotp()) {
+                return icons()->icon("totp");
+            }
+            break;
         case PasswordStrength:
             if (!entry->password().isEmpty() && !entry->excludeFromReports()) {
                 QString iconName = "lock-question";
@@ -312,16 +321,6 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
                 if (color.isValid()) {
                     return icons()->icon(iconName, true, color);
                 }
-            }
-            break;
-        case Paperclip:
-            if (!entry->attachments()->isEmpty()) {
-                return icons()->icon("paperclip");
-            }
-            break;
-        case Totp:
-            if (entry->hasTotp()) {
-                return icons()->icon("totp");
             }
             break;
         }
