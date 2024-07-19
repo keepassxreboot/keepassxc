@@ -70,7 +70,8 @@ namespace
         rv = SCardListReaders(context, nullptr, nullptr, &dwReaders);
         // On windows, USB hot-plugging causes the underlying API server to die
         // So on every USB unplug event, the API context has to be recreated
-        if (rv == SCARD_E_SERVICE_STOPPED) {
+        // On Linux, restarting the pcsc daemon causes the API server to die as well
+        if (rv == SCARD_E_SERVICE_STOPPED || rv == SCARD_E_NO_SERVICE) {
             // Dont care if the release works since the handle might be broken
             SCardReleaseContext(context);
             rv = SCardEstablishContext(SCARD_SCOPE_SYSTEM, nullptr, nullptr, &context);
