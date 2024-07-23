@@ -1,6 +1,9 @@
 #include "TestIconDownloader.h"
+
 #include <QTest>
-#include <gui/IconDownloader.h>
+
+#include "core/Config.h"
+#include "gui/IconDownloader.h"
 
 QTEST_GUILESS_MAIN(TestIconDownloader)
 
@@ -8,6 +11,7 @@ void TestIconDownloader::testIconDownloader()
 {
     QFETCH(QString, url);
     QFETCH(QStringList, expectation);
+    config()->set(Config::Security_IconDownloadFallback, false);
 
     IconDownloader downloader;
     downloader.setUrl(url);
