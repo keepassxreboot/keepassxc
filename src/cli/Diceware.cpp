@@ -24,14 +24,12 @@
 #include <QCommandLineParser>
 
 const QCommandLineOption Diceware::WordCountOption =
-    QCommandLineOption(QStringList() << "W"
-                                     << "words",
+    QCommandLineOption(QStringList() << "W" << "words",
                        QObject::tr("Word count for the diceware passphrase."),
                        QObject::tr("count", "CLI parameter"));
 
 const QCommandLineOption Diceware::WordListOption =
-    QCommandLineOption(QStringList() << "w"
-                                     << "word-list",
+    QCommandLineOption(QStringList() << "w" << "word-list",
                        QObject::tr("Wordlist for the diceware generator.\n[Default: EFF English]"),
                        QObject::tr("path"));
 

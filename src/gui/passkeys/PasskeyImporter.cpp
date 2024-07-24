@@ -68,13 +68,9 @@ void PasskeyImporter::importSelectedFile(QFile& file, QSharedPointer<Database>& 
     }
 
     const auto privateKey = passkeyObject["privateKey"].toString();
-    const auto missingKeys = Tools::getMissingValuesFromList<QString>(passkeyObject.keys(),
-                                                                      QStringList() << "relyingParty"
-                                                                                    << "url"
-                                                                                    << "username"
-                                                                                    << "credentialId"
-                                                                                    << "userHandle"
-                                                                                    << "privateKey");
+    const auto missingKeys = Tools::getMissingValuesFromList<QString>(
+        passkeyObject.keys(),
+        QStringList() << "relyingParty" << "url" << "username" << "credentialId" << "userHandle" << "privateKey");
     if (!missingKeys.isEmpty()) {
         MessageBox::information(m_parent,
                                 tr("Cannot import passkey"),

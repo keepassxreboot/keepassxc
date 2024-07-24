@@ -24,13 +24,10 @@
 #include <QCommandLineParser>
 
 const QCommandLineOption List::RecursiveOption =
-    QCommandLineOption(QStringList() << "R"
-                                     << "recursive",
-                       QObject::tr("Recursively list the elements of the group."));
+    QCommandLineOption(QStringList() << "R" << "recursive", QObject::tr("Recursively list the elements of the group."));
 
-const QCommandLineOption List::FlattenOption = QCommandLineOption(QStringList() << "f"
-                                                                                << "flatten",
-                                                                  QObject::tr("Flattens the output to single lines."));
+const QCommandLineOption List::FlattenOption =
+    QCommandLineOption(QStringList() << "f" << "flatten", QObject::tr("Flattens the output to single lines."));
 
 List::List()
 {

@@ -24,41 +24,30 @@
 #include <QCommandLineParser>
 
 const QCommandLineOption Generate::PasswordLengthOption =
-    QCommandLineOption(QStringList() << "L"
-                                     << "length",
+    QCommandLineOption(QStringList() << "L" << "length",
                        QObject::tr("Length of the generated password"),
                        QObject::tr("length"));
 
-const QCommandLineOption Generate::LowerCaseOption = QCommandLineOption(QStringList() << "l"
-                                                                                      << "lower",
-                                                                        QObject::tr("Use lowercase characters"));
+const QCommandLineOption Generate::LowerCaseOption =
+    QCommandLineOption(QStringList() << "l" << "lower", QObject::tr("Use lowercase characters"));
 
-const QCommandLineOption Generate::UpperCaseOption = QCommandLineOption(QStringList() << "U"
-                                                                                      << "upper",
-                                                                        QObject::tr("Use uppercase characters"));
+const QCommandLineOption Generate::UpperCaseOption =
+    QCommandLineOption(QStringList() << "U" << "upper", QObject::tr("Use uppercase characters"));
 
-const QCommandLineOption Generate::NumbersOption = QCommandLineOption(QStringList() << "n"
-                                                                                    << "numeric",
-                                                                      QObject::tr("Use numbers"));
+const QCommandLineOption Generate::NumbersOption =
+    QCommandLineOption(QStringList() << "n" << "numeric", QObject::tr("Use numbers"));
 
-const QCommandLineOption Generate::SpecialCharsOption = QCommandLineOption(QStringList() << "s"
-                                                                                         << "special",
-                                                                           QObject::tr("Use special characters"));
+const QCommandLineOption Generate::SpecialCharsOption =
+    QCommandLineOption(QStringList() << "s" << "special", QObject::tr("Use special characters"));
 
-const QCommandLineOption Generate::ExtendedAsciiOption = QCommandLineOption(QStringList() << "e"
-                                                                                          << "extended",
-                                                                            QObject::tr("Use extended ASCII"));
+const QCommandLineOption Generate::ExtendedAsciiOption =
+    QCommandLineOption(QStringList() << "e" << "extended", QObject::tr("Use extended ASCII"));
 
-const QCommandLineOption Generate::ExcludeCharsOption = QCommandLineOption(QStringList() << "x"
-                                                                                         << "exclude",
-                                                                           QObject::tr("Exclude character set"),
-                                                                           QObject::tr("chars"));
+const QCommandLineOption Generate::ExcludeCharsOption =
+    QCommandLineOption(QStringList() << "x" << "exclude", QObject::tr("Exclude character set"), QObject::tr("chars"));
 
 const QCommandLineOption Generate::CustomCharacterSetOption =
-    QCommandLineOption(QStringList() << "c"
-                                     << "custom",
-                       QObject::tr("Use custom character set"),
-                       QObject::tr("chars"));
+    QCommandLineOption(QStringList() << "c" << "custom", QObject::tr("Use custom character set"), QObject::tr("chars"));
 
 const QCommandLineOption Generate::ExcludeSimilarCharsOption =
     QCommandLineOption(QStringList() << "exclude-similar", QObject::tr("Exclude similar looking characters"));

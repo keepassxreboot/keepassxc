@@ -24,8 +24,7 @@
 #include <QCommandLineParser>
 
 const QCommandLineOption Merge::SameCredentialsOption =
-    QCommandLineOption(QStringList() << "s"
-                                     << "same-credentials",
+    QCommandLineOption(QStringList() << "s" << "same-credentials",
                        QObject::tr("Use the same credentials for both database files."));
 
 const QCommandLineOption Merge::KeyFileFromOption =

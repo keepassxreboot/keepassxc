@@ -42,8 +42,7 @@ void TestSSHAgent::initTestCase()
     QVERIFY(m_agentSocketFile.remove());
 
     QStringList arguments;
-    arguments << "-D"
-              << "-a" << m_agentSocketFileName;
+    arguments << "-D" << "-a" << m_agentSocketFileName;
 
     QElapsedTimer timer;
     timer.start();

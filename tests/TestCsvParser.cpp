@@ -74,8 +74,7 @@ void TestCsvParser::testBackslashSyntax()
     QTextStream out(file.data());
     // attended result: one"\t\"wo
     out << "Xone\\\"\\\\t\\\\\\\"w\noX\n"
-        << "X13X,X2\\X,X,\"\"3\"X\r"
-        << "3,X\"4\"X,,\n"
+        << "X13X,X2\\X,X,\"\"3\"X\r" << "3,X\"4\"X,,\n"
         << "XX\n"
         << "\\";
     QVERIFY(parser->parse(file.data()));
@@ -195,8 +194,7 @@ void TestCsvParser::testComments()
     QTextStream out(file.data());
     out << "  #one\n"
         << " \t  # two, three \r\n"
-        << " #, sing\t with\r"
-        << " #\t  me!\n"
+        << " #, sing\t with\r" << " #\t  me!\n"
         << "useful,text #1!";
     QVERIFY(parser->parse(file.data()));
     t = parser->getCsvTable();
@@ -311,8 +309,7 @@ void TestCsvParser::testQualifier()
 {
     parser->setTextQualifier(QChar('X'));
     QTextStream out(file.data());
-    out << "X1X,X2XX,X,\"\"3\"\"\"X\r"
-        << "3,X\"4\"X,,\n";
+    out << "X1X,X2XX,X,\"\"3\"\"\"X\r" << "3,X\"4\"X,,\n";
     QVERIFY(parser->parse(file.data()));
     t = parser->getCsvTable();
     QVERIFY(t.size() == 2);

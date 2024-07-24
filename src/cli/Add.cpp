@@ -25,8 +25,7 @@
 
 #include <QCommandLineParser>
 
-const QCommandLineOption Add::UsernameOption = QCommandLineOption(QStringList() << "u"
-                                                                                << "username",
+const QCommandLineOption Add::UsernameOption = QCommandLineOption(QStringList() << "u" << "username",
                                                                   QObject::tr("Username for the entry."),
                                                                   QObject::tr("username"));
 
@@ -37,13 +36,10 @@ const QCommandLineOption Add::NotesOption =
     QCommandLineOption(QStringList() << "notes", QObject::tr("Notes for the entry."), QObject::tr("Notes"));
 
 const QCommandLineOption Add::PasswordPromptOption =
-    QCommandLineOption(QStringList() << "p"
-                                     << "password-prompt",
-                       QObject::tr("Prompt for the entry's password."));
+    QCommandLineOption(QStringList() << "p" << "password-prompt", QObject::tr("Prompt for the entry's password."));
 
-const QCommandLineOption Add::GenerateOption = QCommandLineOption(QStringList() << "g"
-                                                                                << "generate",
-                                                                  QObject::tr("Generate a password for the entry."));
+const QCommandLineOption Add::GenerateOption =
+    QCommandLineOption(QStringList() << "g" << "generate", QObject::tr("Generate a password for the entry."));
 
 Add::Add()
 {

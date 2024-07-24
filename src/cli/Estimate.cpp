@@ -25,9 +25,7 @@
 #include <zxcvbn.h>
 
 const QCommandLineOption Estimate::AdvancedOption =
-    QCommandLineOption(QStringList() << "a"
-                                     << "advanced",
-                       QObject::tr("Perform advanced analysis on the password."));
+    QCommandLineOption(QStringList() << "a" << "advanced", QObject::tr("Perform advanced analysis on the password."));
 
 Estimate::Estimate()
 {

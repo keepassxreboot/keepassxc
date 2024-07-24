@@ -25,8 +25,7 @@
 #include <QCommandLineParser>
 
 const QCommandLineOption Export::FormatOption = QCommandLineOption(
-    QStringList() << "f"
-                  << "format",
+    QStringList() << "f" << "format",
     QObject::tr("Format to use when exporting. Available choices are 'xml' or 'csv'. Defaults to 'xml'."),
     QStringLiteral("xml|csv"));
 

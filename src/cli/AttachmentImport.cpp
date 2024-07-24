@@ -25,9 +25,7 @@
 #include <QFile>
 
 const QCommandLineOption AttachmentImport::ForceOption =
-    QCommandLineOption(QStringList() << "f"
-                                     << "force",
-                       QObject::tr("Overwrite existing attachments."));
+    QCommandLineOption(QStringList() << "f" << "force", QObject::tr("Overwrite existing attachments."));
 
 AttachmentImport::AttachmentImport()
 {
