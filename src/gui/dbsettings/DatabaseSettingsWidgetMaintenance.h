@@ -39,7 +39,7 @@ public:
 
 public slots:
     void initialize() override;
-    void uninitialize() override{};
+    void uninitialize() override {};
     inline bool saveSettings() override
     {
         return true;

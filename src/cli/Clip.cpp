@@ -27,21 +27,18 @@
 #define CLI_DEFAULT_CLIP_TIMEOUT 10
 
 const QCommandLineOption Clip::AttributeOption = QCommandLineOption(
-    QStringList() << "a"
-                  << "attribute",
+    QStringList() << "a" << "attribute",
     QObject::tr("Copy the given attribute to the clipboard. Defaults to \"password\" if not specified.",
                 "Don't translate \"password\", it refers to the attribute."),
     "attr",
     "password");
 
 const QCommandLineOption Clip::TotpOption =
-    QCommandLineOption(QStringList() << "t"
-                                     << "totp",
+    QCommandLineOption(QStringList() << "t" << "totp",
                        QObject::tr("Copy the current TOTP to the clipboard (equivalent to \"-a totp\")."));
 
 const QCommandLineOption Clip::BestMatchOption =
-    QCommandLineOption(QStringList() << "b"
-                                     << "best-match",
+    QCommandLineOption(QStringList() << "b" << "best-match",
                        QObject::tr("Must match only one entry, otherwise a list of possible matches is shown."));
 
 Clip::Clip()

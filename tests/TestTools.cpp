@@ -161,13 +161,11 @@ void TestTools::testBackupFilePatternSubstitution_data()
     QTest::newRow("{DB_FILENAME} substitution")
         << "some {DB_FILENAME} thing" << DEFAULT_DB_FILE_PATH
         << QStringLiteral("some ") + DEFAULT_DB_FILE_NAME + QStringLiteral(" thing");
-    QTest::newRow("{DB_FILENAME} substitution with multiple extensions") << "some {DB_FILENAME} thing"
-                                                                         << "/tmp/KeePassXC.kdbx.ext"
-                                                                         << "some KeePassXC.kdbx thing";
+    QTest::newRow("{DB_FILENAME} substitution with multiple extensions")
+        << "some {DB_FILENAME} thing" << "/tmp/KeePassXC.kdbx.ext" << "some KeePassXC.kdbx thing";
     // Not relevant right now, added test anyway
-    QTest::newRow("There should be no substitution loops") << "{DB_FILENAME}"
-                                                           << "{TIME:'{DB_FILENAME}'}.ext"
-                                                           << "{TIME:'{DB_FILENAME}'}";
+    QTest::newRow("There should be no substitution loops")
+        << "{DB_FILENAME}" << "{TIME:'{DB_FILENAME}'}.ext" << "{TIME:'{DB_FILENAME}'}";
 }
 
 void TestTools::testBackupFilePatternSubstitution()
@@ -193,8 +191,8 @@ void TestTools::testEscapeRegex_data()
     }
 
     QTest::newRow("Regular characters should not be escaped") << all_regular_characters << all_regular_characters;
-    QTest::newRow("Special characters should be escaped") << R"(.^$*+-?()[]{}|\)"
-                                                          << R"(\.\^\$\*\+\-\?\(\)\[\]\{\}\|\\)";
+    QTest::newRow("Special characters should be escaped")
+        << R"(.^$*+-?()[]{}|\)" << R"(\.\^\$\*\+\-\?\(\)\[\]\{\}\|\\)";
     QTest::newRow("Null character") << QString::fromLatin1("ab\0c", 4) << "ab\\0c";
 }
 
@@ -256,23 +254,17 @@ void TestTools::testConvertToRegex_data()
 
 void TestTools::testArrayContainsValues()
 {
-    const auto values = QStringList() << "first"
-                                      << "second"
-                                      << "third";
+    const auto values = QStringList() << "first" << "second" << "third";
 
     // One missing
-    const auto result1 = Tools::getMissingValuesFromList<QString>(values,
-                                                                  QStringList() << "first"
-                                                                                << "second"
-                                                                                << "none");
+    const auto result1 =
+        Tools::getMissingValuesFromList<QString>(values, QStringList() << "first" << "second" << "none");
     QCOMPARE(result1.length(), 1);
     QCOMPARE(result1.first(), QString("none"));
 
     // All found
-    const auto result2 = Tools::getMissingValuesFromList<QString>(values,
-                                                                  QStringList() << "first"
-                                                                                << "second"
-                                                                                << "third");
+    const auto result2 =
+        Tools::getMissingValuesFromList<QString>(values, QStringList() << "first" << "second" << "third");
     QCOMPARE(result2.length(), 0);
 
     // None are found

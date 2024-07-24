@@ -119,8 +119,8 @@ class FakeClient : public DBusClient
 public:
     explicit FakeClient(DBusMgr* dbus)
         : DBusClient(
-            dbus,
-            {QStringLiteral("local"), 0, true, {ProcInfo{0, 0, QStringLiteral("fake-client"), QString{}, QString{}}}})
+              dbus,
+              {QStringLiteral("local"), 0, true, {ProcInfo{0, 0, QStringLiteral("fake-client"), QString{}, QString{}}}})
     {
     }
 };

@@ -117,12 +117,9 @@ void TestSharing::testReferenceSerialization_data()
     QTest::addColumn<QString>("path");
     QTest::addColumn<QUuid>("uuid");
     QTest::addColumn<int>("type");
-    QTest::newRow("1") << "Password"
-                       << "/some/path" << QUuid::createUuid() << int(KeeShareSettings::Inactive);
-    QTest::newRow("2") << ""
-                       << "" << QUuid() << int(KeeShareSettings::SynchronizeWith);
-    QTest::newRow("3") << ""
-                       << "/some/path" << QUuid() << int(KeeShareSettings::ExportTo);
+    QTest::newRow("1") << "Password" << "/some/path" << QUuid::createUuid() << int(KeeShareSettings::Inactive);
+    QTest::newRow("2") << "" << "" << QUuid() << int(KeeShareSettings::SynchronizeWith);
+    QTest::newRow("3") << "" << "/some/path" << QUuid() << int(KeeShareSettings::ExportTo);
 }
 
 void TestSharing::testSettingsSerialization()
