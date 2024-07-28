@@ -131,6 +131,7 @@ PasswordGeneratorWidget* PasswordGeneratorWidget::popupGenerator(QWidget* parent
     auto pwGenerator = new PasswordGeneratorWidget(parent);
     pwGenerator->setWindowModality(Qt::ApplicationModal);
     pwGenerator->setWindowFlags(Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
+    pwGenerator->setFixedSize(pwGenerator->size());
     pwGenerator->setStandaloneMode(false);
 
     connect(pwGenerator, SIGNAL(closed()), pwGenerator, SLOT(deleteLater()));
