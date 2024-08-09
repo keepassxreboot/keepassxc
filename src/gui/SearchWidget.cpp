@@ -97,7 +97,7 @@ bool SearchWidget::eventFilter(QObject* obj, QEvent* event)
         } else if (keyEvent->matches(QKeySequence::Copy)) {
             // If the system Copy shortcut (typically Ctrl+C or Cmd+C) is pressed
             // in the search edit when no text is selected, route the event to the
-            // main window. With the default shorcut configuration, this will copy
+            // main window. With the default shortcut configuration, this will copy
             // the password of the current entry to the clipboard.
             if (!m_ui->searchEdit->hasSelectedText()) {
                 // Prevent infinite recursion, in case the main window ends up

@@ -1244,7 +1244,7 @@ static const char *Formats[] =
     0
 };
 /* Possible separator characters that could be used */
-static const char DateSeperators[] = "/\\-_. ";
+static const char DateSeparators[] = "/\\-_. ";
 
 /**********************************************************************************
  * Try to match the password with the formats above.
@@ -1273,7 +1273,7 @@ static void DateMatch(ZxcMatch_t **Result, const uint8_t *Passwd, int Start, int
         {
             if (*Fmt == '?')
             {
-                if (!Sep && strchr(DateSeperators, *p))
+                if (!Sep && strchr(DateSeparators, *p))
                         Sep = *p;
                 Fail = (*p != Sep);
             }

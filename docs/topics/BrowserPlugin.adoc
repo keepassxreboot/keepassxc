@@ -99,11 +99,11 @@ You can then choose to update/add the credentials to your KeePassXC database dir
 
 1. Ensure your database is unlocked and configured to use the Browser extension as shown above.
 
-2. Right click on a password field and from the KeePassXC sub-menu choose _Show Password Generater_. The standard KeePassXC password generator will appear.
+2. Right click on a password field and from the KeePassXC sub-menu choose _Show Password Generator_. The standard KeePassXC password generator will appear.
 
 3. Configure the password generation options and click _Apply Password_ when done. The generated password will be filled into the previously selected field.
 
-4. When you have succussfully submitted the password on the website, a popup will appear asking you to either udpate an existing entry or add a new one.
+4. When you have successfully submitted the password on the website, a popup will appear asking you to either update an existing entry or add a new one.
 
 // tag::advanced[]
 === Browser statistics

@@ -409,7 +409,7 @@ if(WIN32)
     endif()
 endif()
 
-# Main Executable Defintion
+# Main Executable Definition
 if(WIN32)
     include(GenerateProductVersion)
     generate_product_version(

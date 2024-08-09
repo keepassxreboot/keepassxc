@@ -75,9 +75,9 @@ void IconDownloader::setUrl(const QString& entryUrl)
     // Determine if host portion of URL is an IP address by resolving it and
     // searching for a match with the returned address(es).
     bool hostIsIp = false;
-    QList<QHostAddress> hostAddressess = QHostInfo::fromName(fullyQualifiedDomain).addresses();
+    QList<QHostAddress> hostAddresses = QHostInfo::fromName(fullyQualifiedDomain).addresses();
     hostIsIp =
-        std::any_of(hostAddressess.begin(), hostAddressess.end(), [&fullyQualifiedDomain](const QHostAddress& addr) {
+        std::any_of(hostAddresses.begin(), hostAddresses.end(), [&fullyQualifiedDomain](const QHostAddress& addr) {
             return addr.toString() == fullyQualifiedDomain;
         });
 

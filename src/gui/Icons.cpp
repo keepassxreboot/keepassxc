@@ -86,8 +86,8 @@ QIcon Icons::trayIcon(bool unlocked)
         suffix = "-locked";
     }
 
-    auto iconApperance = trayIconAppearance();
-    if (!iconApperance.startsWith("monochrome")) {
+    auto iconAppearance = trayIconAppearance();
+    if (!iconAppearance.startsWith("monochrome")) {
         return icon(QString("%1%2").arg(applicationIconName(), suffix), false);
     }
 
@@ -99,7 +99,7 @@ QIcon Icons::trayIcon(bool unlocked)
         i = icon(QString("keepassxc-monochrome-dark%1").arg(suffix), false);
     }
 #else
-    i = icon(QString("%1-%2%3").arg(applicationIconName(), iconApperance, suffix), false);
+    i = icon(QString("%1-%2%3").arg(applicationIconName(), iconAppearance, suffix), false);
 #endif
     // Set as mask to allow the operating system to recolour the tray icon. This may look weird
     // if we failed to detect the status bar background colour correctly, but it is certainly
