@@ -70,7 +70,7 @@ class MouseWheelEventFilter : public QObject
 {
 public:
     explicit MouseWheelEventFilter(QObject* parent)
-        : QObject(parent){};
+        : QObject(parent) {};
 
 protected:
     bool eventFilter(QObject* obj, QEvent* event) override

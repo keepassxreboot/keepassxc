@@ -80,7 +80,7 @@ namespace
     {
     public:
         ReportSortProxyModel(QObject* parent)
-            : QSortFilterProxyModel(parent){};
+            : QSortFilterProxyModel(parent) {};
         ~ReportSortProxyModel() override = default;
 
     protected:
