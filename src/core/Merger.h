@@ -53,9 +53,9 @@ private:
     bool mergeHistory(const Entry* sourceEntry, Entry* targetEntry, Group::MergeMode mergeMethod, const int maxItems);
     void moveEntry(Entry* entry, Group* targetGroup);
     void moveGroup(Group* group, Group* targetGroup);
-    // remove an entry without a trace in the deletedObjects - needed for elemination cloned entries
+    // remove an entry without a trace in the deletedObjects - needed for elimination of cloned entries
     void eraseEntry(Entry* entry);
-    // remove an entry without a trace in the deletedObjects - needed for elemination cloned entries
+    // remove an entry without a trace in the deletedObjects - needed for elimination of cloned entries
     void eraseGroup(Group* group);
     ChangeList resolveEntryConflict(const MergeContext& context, const Entry* existingEntry, Entry* otherEntry);
     ChangeList resolveGroupConflict(const MergeContext& context, const Group* existingGroup, Group* otherGroup);

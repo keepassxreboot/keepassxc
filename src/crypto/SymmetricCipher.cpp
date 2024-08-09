@@ -63,15 +63,15 @@ bool SymmetricCipher::init(Mode mode, Direction direction, const QByteArray& key
     return true;
 }
 
-bool SymmetricCipher::isInitalized() const
+bool SymmetricCipher::isInitialized() const
 {
     return m_cipher;
 }
 
 bool SymmetricCipher::process(char* data, int len)
 {
-    Q_ASSERT(isInitalized());
-    if (!isInitalized()) {
+    Q_ASSERT(isInitialized());
+    if (!isInitialized()) {
         m_error = QObject::tr("Cipher not initialized prior to use.");
         return false;
     }
@@ -97,8 +97,8 @@ bool SymmetricCipher::process(QByteArray& data)
 
 bool SymmetricCipher::finish(QByteArray& data)
 {
-    Q_ASSERT(isInitalized());
-    if (!isInitalized()) {
+    Q_ASSERT(isInitialized());
+    if (!isInitialized()) {
         m_error = QObject::tr("Cipher not initialized prior to use.");
         return false;
     }
@@ -121,7 +121,7 @@ bool SymmetricCipher::finish(QByteArray& data)
 void SymmetricCipher::reset()
 {
     m_error.clear();
-    if (isInitalized()) {
+    if (isInitialized()) {
         m_cipher.reset();
     }
 }

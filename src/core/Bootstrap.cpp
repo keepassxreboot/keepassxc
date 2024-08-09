@@ -167,7 +167,7 @@ namespace Bootstrap
             goto Cleanup;
         }
 
-        // Retrieve CreaterOwnerRights SID
+        // Retrieve CreatorOwnerRights SID
         pOwnerRightsSid = static_cast<PSID>(HeapAlloc(GetProcessHeap(), 0, pOwnerRightsSidSize));
         if (pOwnerRightsSid == nullptr) {
             goto Cleanup;

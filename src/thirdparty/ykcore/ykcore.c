@@ -155,7 +155,7 @@ int yk_get_status(YK_KEY *k, YK_STATUS *status)
 }
 
 /* Read the factory programmed serial number from a YubiKey.
- * The possibility to retreive the serial number might be disabled
+ * The possibility to retrieve the serial number might be disabled
  * using configuration, so it should not be considered a fatal error
  * to not be able to read the serial number using this function.
  *

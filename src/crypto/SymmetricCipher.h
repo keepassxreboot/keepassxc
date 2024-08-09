@@ -52,7 +52,7 @@ public:
     explicit SymmetricCipher() = default;
     ~SymmetricCipher() = default;
 
-    bool isInitalized() const;
+    bool isInitialized() const;
     Q_REQUIRED_RESULT bool init(Mode mode, Direction direction, const QByteArray& key, const QByteArray& iv);
     Q_REQUIRED_RESULT bool process(char* data, int len);
     Q_REQUIRED_RESULT bool process(QByteArray& data);
