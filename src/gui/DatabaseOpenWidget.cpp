@@ -235,11 +235,11 @@ void DatabaseOpenWidget::load(const QString& filename)
     m_ui->labelHeadline->setText(label);
 
     auto color = m_db->publicColor();
-    m_ui->displayColorLabel->setVisible(!color.isEmpty());
-    m_ui->displayColorLabel->setStyleSheet(
-        QString("background: %1; border: 1px solid palette(dark); border-radius: 4px").arg(color));
-
-    // m_ui->centralStack->setStyleSheet(QString("QStackedWidget {border: 4px solid %1}").arg(color));
+    if (!color.isEmpty()) {
+        m_ui->centralStack->setStyleSheet(QString("QStackedWidget {border: 4px solid %1}").arg(color));
+    } else {
+        m_ui->centralStack->setStyleSheet("");
+    }
 
     if (config()->get(Config::RememberLastKeyFiles).toBool()) {
         auto lastKeyFiles = config()->get(Config::LastKeyFiles).toHash();

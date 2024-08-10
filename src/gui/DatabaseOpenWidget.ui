@@ -40,7 +40,7 @@
      </item>
      <item>
       <widget class="QWidget" name="formContainer" native="true">
-       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="1,0,0,0,0,0,2">
+       <layout class="QVBoxLayout" name="verticalLayout_4" stretch="1,0,0,0,0,2">
         <item>
          <spacer name="verticalSpacer_2">
           <property name="orientation">
@@ -87,22 +87,6 @@
            </spacer>
           </item>
          </layout>
-        </item>
-        <item>
-         <widget class="QLabel" name="displayColorLabel">
-          <property name="maximumSize">
-           <size>
-            <width>16777215</width>
-            <height>8</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background:cyan; border: 1px solid black; border-radius: 4px</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
         </item>
         <item>
          <widget class="ElidedLabel" name="fileNameLabel">
