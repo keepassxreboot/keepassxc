@@ -19,6 +19,7 @@
 #include <QCommandLineParser>
 #include <QDir>
 #include <QFile>
+#include <QThreadPool>
 #include <QWindow>
 
 #include "cli/Utils.h"
@@ -63,6 +64,12 @@ int main(int argc, char** argv)
     Application::setApplicationName("KeePassXC");
     Application::setApplicationVersion(KEEPASSXC_VERSION);
     app.setProperty("KPXC_QUALIFIED_APPNAME", "org.keepassxc.KeePassXC");
+
+    // HACK: Prevent long-running threads from deadlocking the program with only 1 CPU
+    // See https://github.com/keepassxreboot/keepassxc/issues/10391
+    if (QThreadPool::globalInstance()->maxThreadCount() < 2) {
+        QThreadPool::globalInstance()->setMaxThreadCount(2);
+    }
 
     QCommandLineParser parser;
     parser.setApplicationDescription(QObject::tr("KeePassXC - cross-platform password manager"));
