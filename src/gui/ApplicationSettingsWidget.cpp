@@ -1,6 +1,6 @@
 /*
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -317,6 +317,13 @@ void ApplicationSettingsWidget::loadSettings()
                                                       && config()->get(Config::Security_LockDatabaseMinimize).toBool());
     m_secUi->lockDatabaseOnScreenLockCheckBox->setChecked(
         config()->get(Config::Security_LockDatabaseScreenLock).toBool());
+#if defined(Q_OS_MACOS)
+    m_secUi->lockDatabasesOnUserSwitchCheckBox->setVisible(true);
+#else
+    m_secUi->lockDatabasesOnUserSwitchCheckBox->setVisible(false);
+#endif
+    m_secUi->lockDatabasesOnUserSwitchCheckBox->setChecked(
+        config()->get(Config::Security_LockDatabaseOnUserSwitch).toBool());
     m_secUi->fallbackToSearch->setChecked(config()->get(Config::Security_IconDownloadFallback).toBool());
 
     m_secUi->passwordsHiddenCheckBox->setChecked(config()->get(Config::Security_PasswordsHidden).toBool());
@@ -430,6 +437,7 @@ void ApplicationSettingsWidget::saveSettings()
     config()->set(Config::Security_LockDatabaseIdleSeconds, m_secUi->lockDatabaseIdleSpinBox->value());
     config()->set(Config::Security_LockDatabaseMinimize, m_secUi->lockDatabaseMinimizeCheckBox->isChecked());
     config()->set(Config::Security_LockDatabaseScreenLock, m_secUi->lockDatabaseOnScreenLockCheckBox->isChecked());
+    config()->set(Config::Security_LockDatabaseOnUserSwitch, m_secUi->lockDatabasesOnUserSwitchCheckBox->isChecked());
     config()->set(Config::Security_IconDownloadFallback, m_secUi->fallbackToSearch->isChecked());
 
     config()->set(Config::Security_PasswordsHidden, m_secUi->passwordsHiddenCheckBox->isChecked());

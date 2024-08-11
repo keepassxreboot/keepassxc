@@ -187,6 +187,13 @@
        </widget>
       </item>
       <item>
+       <widget class="QCheckBox" name="lockDatabasesOnUserSwitchCheckBox">
+        <property name="text">
+         <string>Lock databases when switching user</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QCheckBox" name="passwordsHiddenCheckBox">
         <property name="text">
          <string>Hide passwords when editing them</string>
@@ -277,6 +284,7 @@
   <tabstop>clearClipboardSpinBox</tabstop>
   <tabstop>lockDatabaseIdleCheckBox</tabstop>
   <tabstop>lockDatabaseIdleSpinBox</tabstop>
+  <tabstop>lockDatabasesOnUserSwitchCheckBox</tabstop>
   <tabstop>clearSearchCheckBox</tabstop>
   <tabstop>clearSearchSpinBox</tabstop>
   <tabstop>quickUnlockCheckBox</tabstop>
