@@ -32,7 +32,7 @@
                                                            selector:@selector(didDeactivateApplicationObserver:)
                                                                name:NSWorkspaceDidDeactivateApplicationNotification
                                                              object:nil];
-    
+
         [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self
                                                             selector:@selector(userSwitchHandler:)
                                                                 name:NSWorkspaceSessionDidResignActiveNotification
@@ -160,7 +160,7 @@
 {
     if ([[notification name] isEqualToString:NSWorkspaceSessionDidResignActiveNotification] && m_appkit)
     {
-        emit m_appkit->lockDatabases();
+        emit m_appkit->userSwitched();
     }
 }
 
@@ -188,7 +188,7 @@
         // Request screen recording permission on macOS 10.15+
         // This is necessary to get the current window title
         CGDisplayStreamRef stream = CGDisplayStreamCreate(CGMainDisplayID(), 1, 1, kCVPixelFormatType_32BGRA, nil,
-                                                          ^(CGDisplayStreamFrameStatus status, uint64_t displayTime, 
+                                                          ^(CGDisplayStreamFrameStatus status, uint64_t displayTime,
                                                                   IOSurfaceRef frameSurface, CGDisplayStreamUpdateRef updateRef) {
                                                               Q_UNUSED(status);
                                                               Q_UNUSED(displayTime);

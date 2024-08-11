@@ -596,6 +596,10 @@
         <source>Hide TOTP in the entry preview panel</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Lock databases when switching user</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AutoType</name>

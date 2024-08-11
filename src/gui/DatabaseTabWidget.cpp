@@ -63,7 +63,7 @@ DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
     // clang-format on
 
 #ifdef Q_OS_MACOS
-    connect(macUtils(), SIGNAL(lockDatabases()), SLOT(lockDatabases()));
+    connect(macUtils(), SIGNAL(userSwitched()), SLOT(lockDatabasesOnUserSwitch()));
 #endif
 
     m_lockDelayTimer.setSingleShot(true);
@@ -690,6 +690,13 @@ void DatabaseTabWidget::lockDatabasesDelayed()
     m_lockDelayTimer.setInterval(lockDelay * 1000);
     if (!m_lockDelayTimer.isActive()) {
         m_lockDelayTimer.start();
+    }
+}
+
+void DatabaseTabWidget::lockDatabasesOnUserSwitch()
+{
+    if (config()->get(Config::Security_LockDatabaseOnUserSwitch).toBool()) {
+        lockDatabases();
     }
 }
 

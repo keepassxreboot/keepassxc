@@ -115,6 +115,7 @@ public:
         Security_LockDatabaseIdleSeconds,
         Security_LockDatabaseMinimize,
         Security_LockDatabaseScreenLock,
+        Security_LockDatabaseOnUserSwitch,
         Security_RelockAutoType,
         Security_PasswordsHidden,
         Security_PasswordEmptyPlaceholder,
