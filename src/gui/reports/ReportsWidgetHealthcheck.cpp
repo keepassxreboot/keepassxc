@@ -165,31 +165,32 @@ void ReportsWidgetHealthcheck::addHealthRow(QSharedPointer<PasswordHealth> healt
                                             Entry* entry,
                                             bool excluded)
 {
-    QString descr, tip;
+    QString tip;
+    QString iconName = "lock-question";
     QColor qualityColor;
     StateColorPalette statePalette;
     const auto quality = health->quality();
     switch (quality) {
     case PasswordHealth::Quality::Bad:
-        descr = tr("Bad", "Password quality");
         tip = tr("Bad — password must be changed");
+        iconName = "lock-open-alert";
         qualityColor = statePalette.color(StateColorPalette::HealthCritical);
         break;
-
     case PasswordHealth::Quality::Poor:
-        descr = tr("Poor", "Password quality");
         tip = tr("Poor — password should be changed");
+        iconName = "lock-open-alert";
         qualityColor = statePalette.color(StateColorPalette::HealthBad);
         break;
 
     case PasswordHealth::Quality::Weak:
-        descr = tr("Weak", "Password quality");
         tip = tr("Weak — consider changing the password");
+        iconName = "lock-open";
         qualityColor = statePalette.color(StateColorPalette::HealthWeak);
         break;
 
     case PasswordHealth::Quality::Good:
     case PasswordHealth::Quality::Excellent:
+        iconName = "lock";
         qualityColor = statePalette.color(StateColorPalette::HealthOk);
         break;
     }
@@ -203,7 +204,7 @@ void ReportsWidgetHealthcheck::addHealthRow(QSharedPointer<PasswordHealth> healt
     }
 
     auto row = QList<QStandardItem*>();
-    row << new QStandardItem(descr);
+    row << new QStandardItem(Icons::instance()->icon(iconName, true, qualityColor), "");
     row << new QStandardItem(Icons::entryIconPixmap(entry), title);
     row << new QStandardItem(Icons::groupIconPixmap(group), group->hierarchy().join("/"));
     row << new QStandardItem(QString::number(health->score()));
@@ -214,7 +215,6 @@ void ReportsWidgetHealthcheck::addHealthRow(QSharedPointer<PasswordHealth> healt
     // invisible, it's just for screen readers etc.
     QBrush brush(qualityColor);
     row[0]->setForeground(brush);
-    row[0]->setBackground(brush);
 
     // Set tooltips
     row[0]->setToolTip(tip);

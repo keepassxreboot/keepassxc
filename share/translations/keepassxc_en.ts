@@ -9061,26 +9061,11 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Bad</source>
-        <comment>Password quality</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Bad — password must be changed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Poor</source>
-        <comment>Password quality</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Poor — password should be changed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Weak</source>
-        <comment>Password quality</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
