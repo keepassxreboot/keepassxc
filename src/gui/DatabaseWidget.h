@@ -113,7 +113,7 @@ public:
     bool currentEntryHasUrl();
     bool currentEntryHasNotes();
     bool currentEntryHasTotp();
-#ifdef WITH_XC_SSHAGENT
+#ifdef KPXC_FEATURE_SSHAGENT
     bool currentEntryHasSshKey();
 #endif
     bool currentEntryHasAutoTypeEnabled();
@@ -197,7 +197,7 @@ public slots:
     void copyTotp();
     void copyPasswordTotp();
     void setupTotp();
-#ifdef WITH_XC_SSHAGENT
+#ifdef KPXC_FEATURE_SSHAGENT
     void addToAgent();
     void removeFromAgent();
 #endif
@@ -225,7 +225,7 @@ public slots:
     void switchToDatabaseReports();
     void switchToDatabaseSettings();
     void switchToRemoteSettings();
-#ifdef WITH_XC_BROWSER_PASSKEYS
+#ifdef KPXC_FEATURE_BROWSER_PASSKEYS
     void switchToPasskeys();
     void showImportPasskeyDialog(bool isEntry = false);
     void removePasskeyFromEntry();

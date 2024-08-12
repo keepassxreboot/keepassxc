@@ -253,7 +253,6 @@ function Invoke-GpgSignFiles([string[]] $files, [string] $key) {
     }
 }
 
-
 # Handle errors and restore state
 $OrigDir = (Get-Location).Path
 $OrigBranch = & git rev-parse --abbrev-ref HEAD
@@ -345,6 +344,7 @@ if ($Merge) {
     Write-Host "All done!"
     Write-Host "Please merge the release branch back into the develop branch now and then push your changes."
     Write-Host "Don't forget to also push the tags using 'git push --tags'."
+
 } elseif ($Build) {
     $Vcpkg = (Resolve-Path "$Vcpkg/scripts/buildsystems/vcpkg.cmake").Path
 
@@ -357,6 +357,13 @@ if ($Merge) {
 
     Test-RequiredPrograms
 
+    # Create directories
+    New-Item "$OutDir" -ItemType Directory -Force | Out-Null
+    $OutDir = (Resolve-Path $OutDir).Path
+
+    $BuildDir = "$OutDir\build-release"
+    New-Item "$BuildDir" -ItemType Directory -Force | Out-Null
+
     if ($Snapshot) {
         $Tag = "HEAD"
         $SourceBranch = & git rev-parse --abbrev-ref HEAD
@@ -366,38 +373,26 @@ if ($Merge) {
     } else {
         Test-WorkingTreeClean
 
-        # Clear output directory
-        if (Test-Path $OutDir) {
-            Remove-Item $OutDir -Recurse
+        # Clear build directory except for installed vcpkg files to prevent having to re-sign everything
+        if (Test-Path $BuildDir) {
+            Get-ChildItem $BuildDir -Recurse | Where-Object {$_.FullName -notlike "$BuildDir\vcpkg_installed*"} | Remove-Item -Recurse -Force
         }
         
-        if ($Version -match "-beta\d*$") {
-            $CMakeOptions = "-DKEEPASSXC_BUILD_TYPE=PreRelease $CMakeOptions"
-        } else {
-            $CMakeOptions = "-DKEEPASSXC_BUILD_TYPE=Release $CMakeOptions"
-        }
+        $CMakeOptions = "-DKEEPASSXC_BUILD_TYPE=Release $CMakeOptions"
 
         # Setup Tag if not defined then checkout tag
-        if ($Tag -eq "" -or $Tag -eq $null) {
+        if ($Tag -eq "" -or $null -eq $Tag) {
             $Tag = $Version
         }
         Write-Host "Checking out tag 'tags/$Tag' to build." -ForegroundColor Cyan
         Invoke-Cmd "git" "checkout `"tags/$Tag`""
     }
 
-    # Create directories
-    New-Item "$OutDir" -ItemType Directory -Force | Out-Null
-    $OutDir = (Resolve-Path $OutDir).Path
-
-    $BuildDir = "$OutDir\build-release"
-    New-Item "$BuildDir" -ItemType Directory -Force | Out-Null
-
     # Enter build directory
     Set-Location "$BuildDir"
 
     # Setup CMake options
-    $CMakeOptions = "-DWITH_XC_ALL=ON -DWITH_TESTS=OFF -DCMAKE_BUILD_TYPE=Release $CMakeOptions"
-    $CMakeOptions = "-DCMAKE_TOOLCHAIN_FILE:FILEPATH=`"$Vcpkg`" -DX_VCPKG_APPLOCAL_DEPS_INSTALL=ON $CMakeOptions"
+    $CMakeOptions = "-DWITH_TESTS=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE:FILEPATH=`"$Vcpkg`" -DX_VCPKG_APPLOCAL_DEPS_INSTALL=ON"
 
     Write-Host "Configuring build..." -ForegroundColor Cyan
     Invoke-Cmd "cmake" "-G `"$CMakeGenerator`" $CMakeOptions `"$SourceDir`""
@@ -436,6 +431,7 @@ if ($Merge) {
     # Restore state
     Invoke-Command {git checkout $OrigBranch}
     Set-Location "$OrigDir"
+
 } elseif ($Sign) {
     Test-RequiredPrograms
 
@@ -459,8 +455,8 @@ if ($Merge) {
 # SIG # Begin signature block
 # MIIm2gYJKoZIhvcNAQcCoIImyzCCJscCAQExDzANBglghkgBZQMEAgEFADB5Bgor
 # BgEEAYI3AgEEoGswaTA0BgorBgEEAYI3AgEeMCYCAwEAAAQQH8w7YFlLCE63JNLG
-# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCDuejql+mhHrYzE
-# MGUrjGMbUzkTkzwhj8dkNuT2x9j8+KCCH8cwggVvMIIEV6ADAgECAhBI/JO0YFWU
+# KX7zUQIBAAIBAAIBAAIBAAIBADAxMA0GCWCGSAFlAwQCAQUABCCHsQKXRYSHXkaZ
+# Cl/5OsdoM/QUjsgM3oA8v9vQYqsrh6CCH8cwggVvMIIEV6ADAgECAhBI/JO0YFWU
 # jTanyYqJ1pQWMA0GCSqGSIb3DQEBDAUAMHsxCzAJBgNVBAYTAkdCMRswGQYDVQQI
 # DBJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAOBgNVBAcMB1NhbGZvcmQxGjAYBgNVBAoM
 # EUNvbW9kbyBDQSBMaW1pdGVkMSEwHwYDVQQDDBhBQUEgQ2VydGlmaWNhdGUgU2Vy
@@ -634,35 +630,35 @@ if ($Merge) {
 # TGltaXRlZDErMCkGA1UEAxMiU2VjdGlnbyBQdWJsaWMgQ29kZSBTaWduaW5nIENB
 # IFIzNgIQBkM/zMzkM6iSzBe3RqWMZTANBglghkgBZQMEAgEFAKCBhDAYBgorBgEE
 # AYI3AgEMMQowCKACgAChAoAAMBkGCSqGSIb3DQEJAzEMBgorBgEEAYI3AgEEMBwG
-# CisGAQQBgjcCAQsxDjAMBgorBgEEAYI3AgEVMC8GCSqGSIb3DQEJBDEiBCCn5BDd
-# F+7Q6LMoJuJxenFHgWAZjm1CET9oBKnlZKClzjANBgkqhkiG9w0BAQEFAASCAgAS
-# ypiTBQb39I43fGdH6t2OYAl53TSbJfPG99/11OYS+6nMTKhy7dHtzzgMFxBQmL/L
-# P4eJJMqh1yIYEjrjhNLLddRhVP2lfsuQ1OkLVx5lS8M32I3SzpskOe+SywMLDYJy
-# sYHEcZkyQX0Q2J/RGzF8/tDcltZodYEdZrQdaAKo7bGv1JcYpW7B6JZnNjquE90d
-# WVNAsQ6Mc3kzkjbs2qDaRAdkOmX5uENWbNf1GgTRpud7Ic5hMyb4v9qfWAptlFuO
-# pLHyuINNsBuTfzD/cGVR9qecDPIE90UnHQHZWws9U+m84CzAmqpptp4VhrAWc7Hc
-# bHsbmg4tGA41ythKyERpW9YlwID6fJYMigEVmJihXdM/qRGO2XdfbPAr0C0AMPIV
-# re8r86BJw1lxJJYL2gsS/ttgrnW2C8aFq+IxxXWnv/7maPG69K/jmRLQGZuLIZCl
-# 7rT6hob37zZMsdnqDZ0DjJb/FGonJr7GpyeMEWPy8eVwZydMbC9hBl8HNgQ04sp7
-# ouskM1nCco9DV+d1Y6Oyje6IylZjD+xgX7VfsDa2O3Lw27cfyxJBW359meYHytkJ
-# oYqh4Y4fC9YlYTD3913ryqTbPaWtWjvFV+GR8biHxDoTmTRuNaeN6RDyyZJkdON7
-# CnR/8X8y4C9BXdesvjfIdhHZsGwLJcZ87cnYGb7oYqGCA0swggNHBgkqhkiG9w0B
+# CisGAQQBgjcCAQsxDjAMBgorBgEEAYI3AgEVMC8GCSqGSIb3DQEJBDEiBCDx8XCN
+# KVtldJ+NDiAODkb0Q9ZluUXrd7Zx2r9yvpCKbDANBgkqhkiG9w0BAQEFAASCAgBV
+# BsZnlSJw3Iogiz/QG9cX//zPpUC0BssOPhodd8DWiZcxOihYpO/phFvRoMyljcp3
+# kjgVpk9572BD0ot+W4NT4gG2GOf287lYswaAY9Keh/NT3HXRdBD8esYnG0PNK2ZN
+# F9F+6Pt9IvcxxUQd/YTmThFnFPQOn1hxrapOwskESEpM7F4ifNaGDkkWoAFWb0kw
+# czX4tngvX+v+z7/jtW5ULClxiyahT26+Hvm2MiJGuSf1M6OBl5WmuXe1WgcIGGIh
+# nXEzAHzdGghJU7g6f94fgLQT5NUmw993AhPh3WCzBF8Jt6R6DYfPiJMLHix92PHx
+# 9IWVdIF1rcM2a7S82ffKLqU46dcvdcAWxE7B6ivFtP/wy9dFNpHyNvqe8rbZsVxO
+# axxOsD6VCoJrdUJf8DZAWDAdMxbxXUeh20l89yISp+95+Cni0E6OcaztH+mDANvj
+# uAg8RX2SB0/frjf1YFTzCxw0fkjPTp0KexptiYmsKdQkTsXBOMyF6gRTupkMzdnn
+# SO3fsnEqsxogtqlbcHmlcTXtkn9DjdiOUAkhfwWjv9UughSvVKFO/4KDaEliMV4h
+# KD8nZ9XLpxSUaTGqARZtzkgXrgbL6P4rr0qV0atW+zhol3H+BJ+B0xksH5HNFn9C
+# owH9kBQH3v2tl7eFW7Uw3c2jx5BLLIwzC8QOaoecaqGCA0swggNHBgkqhkiG9w0B
 # CQYxggM4MIIDNAIBATCBkTB9MQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRl
 # ciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdv
 # IExpbWl0ZWQxJTAjBgNVBAMTHFNlY3RpZ28gUlNBIFRpbWUgU3RhbXBpbmcgQ0EC
 # EDlMJeF8oG0nqGXiO9kdItQwDQYJYIZIAWUDBAICBQCgeTAYBgkqhkiG9w0BCQMx
-# CwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0yNDA0MjgyMjE0MzdaMD8GCSqG
-# SIb3DQEJBDEyBDARWlO4ZY7Qij7x/efLB7SJrHgfXJwezYW7sskwZhfhnoQ8JQ8Q
-# HfefvIk4nF1+1PkwDQYJKoZIhvcNAQEBBQAEggIAWpBgtEaYVRayRmCTjyOoKg0b
-# 2vXn3dqpcpckspX4t58xHLbhapGm3Akg9N6C0xZWm9qQ9vhjoOeuLZ0Z+017JRUe
-# YExYYIYcyNGlxyt/uXiBst8KiAFFzn6RwIjycQcsnOsGRBAz2E9/k7wGtdg8kqBI
-# Q71cDl+seRjWVcTR4JgthphZuRTKS1Jxn3tjDNJuK+LFo4jL38ojxhhdOnb3xzZ0
-# M1AQ+l2YuDxBX4H9aZsbiTfdI1mxvmPgmZbq4fjV28TUCiBhD1UYuHUPN3Ff9Fwo
-# 9BMbTLvKqED8Mm9A25S4M8kVZsGt8j3EAt0AJaWbdHLpLC0l0ykDAcSiwZNYsdMu
-# vN0q6z5knfhKv4M8FXQ2wu8pbPww7/4kBqqy9L8VMI8UIazG9Z/R7yhkZjEz3jgc
-# a/VZMcsDn41B79/9eSx4wED7NYtc0T6DB8WFH1a2CqlORSHnRolnms+VjWerfmZP
-# a9lV7Sk1gGZ+MePsWwXj7liURI/ubTtPtxWElWuYookkQMmrOJYj+IZCW4RvV3I3
-# utzHUwfbBaON3Mq46ADayLxKP2SE9j3JXpl4mZeWXdYUrywt2TgQktCXT7iZOinl
-# dbx1tso5uDAj1DQDiTm4Nps+UWjyo2bZB/g1ONMqxPDIuY75HryfmJDlvCMp80Tk
-# cJchA5s/dVwNSWKti4Q=
+# CwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0yNDA3MDEwMjA3MDdaMD8GCSqG
+# SIb3DQEJBDEyBDDZlndFw9BTnL5meJayzDKbYwynb3s25wAwJ0SbCyKa8h3oU8+3
+# UeRdN5e4LPfA+EgwDQYJKoZIhvcNAQEBBQAEggIAWpzFpzUStjRIGjooryRlFXn1
+# kffDTsl3zqPsVpjjLi6wZk49FZJJqJTkFKGnrVkY+iPTPm2wHQyHBdDa9+LhLq2W
+# Pm4blEDJR9ow3kpuv+XwW1xyYCh9iYGX5dcaS3e6CKTIa/Ay7CpG7uNA2mlbvdKn
+# RzMbjpoerxrfyfSIy8rGWKoj4QOB+l2H51rjG4VpD5jUJg+fjdKADvolbm2Vjhap
+# PqTRk/2fwW66L3yr4urUYT1rWQ3Elm85oUHZeJxe9ZebzxLb01cARybyPZ1n4pl0
+# Aa0xm4l44RoHyqSINeh6NeICNjp2Ii/Bf/znO5ndogTbGAAgbSDbotlswfy9gZxh
+# qoR9P8PZ9QXId1xqLAXw7IUJHDdXtoxlLpYtGJlaj/tgSEOG3FfRen5fJxFMNsTD
+# J+Cv+hWcSlQEBo4pZyW8SPlYkUX1AuXwN7VyheD5G8Wpj+9lLbwqyN7JqAydr33w
+# P6e/BPbh23tGHMl43sYkdCwE4qekbdCiHiUjHeeoldfNb5CzCZkuCkBIAE4XNcie
+# v6FEB81V7+/a+gPJ72lh1LLKJixm+5S+qirBY+AQVbkigP/1ZcJZXYnEek9TRYsV
+# uWTlGYhWZTQwPB3hnp5ohptoeVzywld6a/obTuQiYKU5xoyG2/UIdxRycRFsoLy4
+# SrWzgFjLb4ejgF3fIMM=
 # SIG # End signature block
