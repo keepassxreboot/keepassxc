@@ -28,7 +28,9 @@ if(WITH_XC_BROWSER)
             BrowserService.cpp
             BrowserSettings.cpp
             BrowserShared.cpp
-            NativeMessageInstaller.cpp)
+            CustomTableWidget.cpp
+            NativeMessageInstaller.cpp
+            )
 
     if(WITH_XC_BROWSER_PASSKEYS)
         list(APPEND keepassxcbrowser_SOURCES
