@@ -24,8 +24,7 @@
 #include <QFileInfo>
 
 const QCommandLineOption DatabaseCreate::DecryptionTimeOption =
-    QCommandLineOption(QStringList() << "t"
-                                     << "decryption-time",
+    QCommandLineOption(QStringList() << "t" << "decryption-time",
                        QObject::tr("Target decryption time in MS for the database."),
                        QObject::tr("time"));
 
@@ -40,9 +39,7 @@ const QCommandLineOption DatabaseCreate::SetKeyFileOption =
                        QObject::tr("path"));
 
 const QCommandLineOption DatabaseCreate::SetPasswordOption =
-    QCommandLineOption(QStringList() << "p"
-                                     << "set-password",
-                       QObject::tr("Set a password for the database."));
+    QCommandLineOption(QStringList() << "p" << "set-password", QObject::tr("Set a password for the database."));
 
 DatabaseCreate::DatabaseCreate()
 {

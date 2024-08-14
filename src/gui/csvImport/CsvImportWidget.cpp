@@ -77,12 +77,7 @@ CsvImportWidget::CsvImportWidget(QWidget* parent)
                    << QObject::tr("URL") << QObject::tr("Notes") << QObject::tr("TOTP") << QObject::tr("Icon")
                    << QObject::tr("Last Modified") << QObject::tr("Created");
 
-    m_fieldSeparatorList << ","
-                         << ";"
-                         << "-"
-                         << ":"
-                         << "."
-                         << "\t";
+    m_fieldSeparatorList << "," << ";" << "-" << ":" << "." << "\t";
 
     m_combos << m_ui->groupCombo << m_ui->titleCombo << m_ui->usernameCombo << m_ui->passwordCombo << m_ui->urlCombo
              << m_ui->notesCombo << m_ui->totpCombo << m_ui->iconCombo << m_ui->lastModifiedCombo << m_ui->createdCombo;

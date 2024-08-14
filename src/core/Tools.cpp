@@ -126,10 +126,7 @@ namespace Tools
         constexpr auto kibibyte = 1024;
         double size = bytes;
 
-        QStringList units = QStringList() << "B"
-                                          << "KiB"
-                                          << "MiB"
-                                          << "GiB";
+        QStringList units = QStringList() << "B" << "KiB" << "MiB" << "GiB";
         int i = 0;
         int maxI = units.size() - 1;
 

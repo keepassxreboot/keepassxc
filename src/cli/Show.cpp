@@ -23,13 +23,11 @@
 
 #include <QCommandLineParser>
 
-const QCommandLineOption Show::TotpOption = QCommandLineOption(QStringList() << "t"
-                                                                             << "totp",
-                                                               QObject::tr("Show the entry's current TOTP."));
+const QCommandLineOption Show::TotpOption =
+    QCommandLineOption(QStringList() << "t" << "totp", QObject::tr("Show the entry's current TOTP."));
 
 const QCommandLineOption Show::ProtectedAttributesOption =
-    QCommandLineOption(QStringList() << "s"
-                                     << "show-protected",
+    QCommandLineOption(QStringList() << "s" << "show-protected",
                        QObject::tr("Show the protected attributes in clear text."));
 
 const QCommandLineOption Show::AllAttributesOption =
@@ -39,8 +37,7 @@ const QCommandLineOption Show::AttachmentsOption =
     QCommandLineOption(QStringList() << "show-attachments", QObject::tr("Show the attachments of the entry."));
 
 const QCommandLineOption Show::AttributesOption = QCommandLineOption(
-    QStringList() << "a"
-                  << "attributes",
+    QStringList() << "a" << "attributes",
     QObject::tr(
         "Names of the attributes to show. "
         "This option can be specified more than once, with each attribute shown one-per-line in the given order. "

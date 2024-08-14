@@ -25,10 +25,8 @@
 
 #include <QCommandLineParser>
 
-const QCommandLineOption Edit::TitleOption = QCommandLineOption(QStringList() << "t"
-                                                                              << "title",
-                                                                QObject::tr("Title for the entry."),
-                                                                QObject::tr("title"));
+const QCommandLineOption Edit::TitleOption =
+    QCommandLineOption(QStringList() << "t" << "title", QObject::tr("Title for the entry."), QObject::tr("title"));
 
 Edit::Edit()
 {

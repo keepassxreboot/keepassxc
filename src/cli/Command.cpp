@@ -56,12 +56,10 @@ const QCommandLineOption Command::HelpOption = QCommandLineOption(QStringList()
                                                                   QObject::tr("Display this help."));
 
 const QCommandLineOption Command::QuietOption =
-    QCommandLineOption(QStringList() << "q"
-                                     << "quiet",
+    QCommandLineOption(QStringList() << "q" << "quiet",
                        QObject::tr("Silence password prompt and other secondary outputs."));
 
-const QCommandLineOption Command::KeyFileOption = QCommandLineOption(QStringList() << "k"
-                                                                                   << "key-file",
+const QCommandLineOption Command::KeyFileOption = QCommandLineOption(QStringList() << "k" << "key-file",
                                                                      QObject::tr("Key file of the database."),
                                                                      QObject::tr("path"));
 
@@ -69,8 +67,7 @@ const QCommandLineOption Command::NoPasswordOption =
     QCommandLineOption(QStringList() << "no-password", QObject::tr("Deactivate password key for the database."));
 
 const QCommandLineOption Command::YubiKeyOption =
-    QCommandLineOption(QStringList() << "y"
-                                     << "yubikey",
+    QCommandLineOption(QStringList() << "y" << "yubikey",
                        QObject::tr("Yubikey slot and optional serial used to access the database (e.g., 1:7370001)."),
                        QObject::tr("slot[:serial]"));
 
