@@ -37,7 +37,7 @@ const QCommandLineOption Merge::NoPasswordFromOption =
                        QObject::tr("Deactivate password key for the database to merge from."));
 
 const QCommandLineOption Merge::DryRunOption =
-    QCommandLineOption(QStringList() << "dry-run",
+    QCommandLineOption(QStringList() << "d" << "dry-run",
                        QObject::tr("Only print the changes detected by the merge operation."));
 
 const QCommandLineOption Merge::YubiKeyFromOption(QStringList() << "yubikey-from",
