@@ -4636,6 +4636,14 @@ You can enable the DuckDuckGo website icon service in the security section of th
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Proton Pass (.json)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Proton Pass JSON Export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Temporary Database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4652,10 +4660,6 @@ You can enable the DuckDuckGo website icon service in the security section of th
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Remote Database (.kdbx)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>e.g.:
 get DatabaseOnRemote.kdbx {TEMP_DATABASE}
 exit
@@ -4663,6 +4667,10 @@ exit
 {TEMP_DATABASE} is used as placeholder to store the database in a temporary location
 The command has to exit. In case of `sftp` as last commend `exit` has to be sent
          </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remote Database (.kdbx)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9000,6 +9008,14 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Cannot generate valid passphrases because the wordlist is too short</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Encrypted files are not supported.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Proton Pass Import</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
