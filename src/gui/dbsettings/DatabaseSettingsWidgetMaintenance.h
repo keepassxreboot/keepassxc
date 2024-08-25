@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_DATABASESETTINGSWIDGETMAINTENANCE_H
-#define KEEPASSXC_DATABASESETTINGSWIDGETMAINTENANCE_H
+#pragma once
 
 #include "DatabaseSettingsWidget.h"
 
@@ -61,5 +60,3 @@ private:
     CustomIconModel* const m_customIconModel;
     uint64_t m_deletionDecision;
 };
-
-#endif // KEEPASSXC_DATABASESETTINGSWIDGETMAINTENANCE_H

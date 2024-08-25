@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_CLONEDIALOG_H
-#define KEEPASSX_CLONEDIALOG_H
+#pragma once
 
 #include <QDialog>
 
@@ -50,5 +49,3 @@ protected:
     Entry* m_entry;
     DatabaseWidget* m_parent;
 };
-
-#endif // KEEPASSX_CLONEDIALOG_H

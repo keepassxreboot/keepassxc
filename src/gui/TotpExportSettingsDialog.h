@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TotpExportSettingsDialog_H
-#define KEEPASSX_TotpExportSettingsDialog_H
+#pragma once
 
 #include <QDialog>
 
@@ -52,5 +51,3 @@ private:
     QLabel* m_warningLabel;
     QDialogButtonBox* m_buttonBox;
 };
-
-#endif // KEEPASSX_TOTPEXPORTSETTINGSDIALOG_H

@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_MACUTILS_H
-#define KEEPASSXC_MACUTILS_H
+#pragma once
 
 #include "AppKit.h"
 #include "gui/osutils/OSUtilsBase.h"
@@ -97,5 +96,3 @@ inline MacUtils* macUtils()
 {
     return MacUtils::instance();
 }
-
-#endif // KEEPASSXC_MACUTILS_H

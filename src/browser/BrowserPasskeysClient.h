@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BROWSERPASSKEYSCLIENT_H
-#define BROWSERPASSKEYSCLIENT_H
+#pragma once
 
 #include <QJsonArray>
 #include <QJsonObject>
@@ -45,5 +44,3 @@ static inline BrowserPasskeysClient* browserPasskeysClient()
 {
     return BrowserPasskeysClient::instance();
 }
-
-#endif // BROWSERPASSKEYSCLIENT_H

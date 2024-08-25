@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_COMPARE_H
-#define KEEPASSXC_COMPARE_H
+#pragma once
 
 #include "core/Clock.h"
 
@@ -76,5 +75,3 @@ inline short compare(bool lhsEnabled,
     }
     return enabled;
 }
-
-#endif // KEEPASSX_COMPARE_H

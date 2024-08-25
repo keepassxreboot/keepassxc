@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_FDOSECRETS_DBUSCLIENT_H
-#define KEEPASSXC_FDOSECRETS_DBUSCLIENT_H
+#pragma once
 
 #include <QPointer>
 #include <QSet>
@@ -188,5 +187,3 @@ namespace FdoSecrets
     using DBusClientPtr = QSharedPointer<DBusClient>;
 } // namespace FdoSecrets
 Q_DECLARE_METATYPE(FdoSecrets::DBusClientPtr);
-
-#endif // KEEPASSXC_FDOSECRETS_DBUSCLIENT_H

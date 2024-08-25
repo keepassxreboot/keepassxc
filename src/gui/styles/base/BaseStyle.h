@@ -19,8 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_BASESTYLE_H
-#define KEEPASSXC_BASESTYLE_H
+#pragma once
 
 #include <QCommonStyle>
 
@@ -107,5 +106,3 @@ protected:
 
     BaseStylePrivate* d;
 };
-
-#endif

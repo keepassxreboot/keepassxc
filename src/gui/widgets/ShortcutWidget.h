@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_SHORTCUTWIDGET_H
-#define KEEPASSX_SHORTCUTWIDGET_H
+#pragma once
 
 #include <QKeySequence>
 #include <QLineEdit>
@@ -51,5 +50,3 @@ private:
     Qt::KeyboardModifiers m_modifiers = Qt::NoModifier;
     bool m_locked = false;
 };
-
-#endif // KEEPASSX_SHORTCUTWIDGET_H

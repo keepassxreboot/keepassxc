@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_APPKIT_H
-#define KEEPASSX_APPKIT_H
+#pragma once
 
 #include <QColor>
 #include <QObject>
@@ -53,5 +52,3 @@ signals:
 private:
     void* self;
 };
-
-#endif // KEEPASSX_APPKIT_H

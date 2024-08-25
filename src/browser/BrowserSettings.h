@@ -17,8 +17,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_BROWSERSETTINGS_H
-#define KEEPASSXC_BROWSERSETTINGS_H
+#pragma once
 
 #include "NativeMessageInstaller.h"
 
@@ -93,5 +92,3 @@ inline BrowserSettings* browserSettings()
 {
     return BrowserSettings::instance();
 }
-
-#endif // KEEPASSXC_BROWSERSETTINGS_H

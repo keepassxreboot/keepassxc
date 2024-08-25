@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_FDOSECRETS_ITEM_H
-#define KEEPASSXC_FDOSECRETS_ITEM_H
+#pragma once
 
 #include "fdosecrets/dbus/DBusClient.h"
 #include "fdosecrets/dbus/DBusObject.h"
@@ -117,5 +116,3 @@ namespace FdoSecrets
 
 } // namespace FdoSecrets
 Q_DECLARE_METATYPE(FdoSecrets::ItemSecretMap);
-
-#endif // KEEPASSXC_FDOSECRETS_ITEM_H

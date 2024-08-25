@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_KEEPASS2RANDOMSTREAM_H
-#define KEEPASSX_KEEPASS2RANDOMSTREAM_H
+#pragma once
 
 #include "crypto/SymmetricCipher.h"
 
@@ -38,5 +37,3 @@ private:
     QByteArray m_buffer;
     int m_offset = 0;
 };
-
-#endif // KEEPASSX_KEEPASS2RANDOMSTREAM_H

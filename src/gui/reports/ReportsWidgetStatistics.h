@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_REPORTSWIDGETSTATISTICS_H
-#define KEEPASSXC_REPORTSWIDGETSTATISTICS_H
+#pragma once
 
 #include <QIcon>
 #include <QWidget>
@@ -55,5 +54,3 @@ private:
 
     void addStatsRow(QString name, QString value, bool bad = false, QString badMsg = "");
 };
-
-#endif // KEEPASSXC_REPORTSWIDGETSTATISTICS_H

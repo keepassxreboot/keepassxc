@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_OPENSSHKEY_H
-#define KEEPASSXC_OPENSSHKEY_H
+#pragma once
 
 #include <QCryptographicHash>
 #include <QObject>
@@ -88,5 +87,3 @@ private:
 };
 
 uint qHash(const OpenSSHKey& key);
-
-#endif // KEEPASSXC_OPENSSHKEY_H

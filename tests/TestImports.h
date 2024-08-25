@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TEST_IMPORTS_H
-#define TEST_IMPORTS_H
+#pragma once
 
 #include <QObject>
 
@@ -31,5 +30,3 @@ private slots:
     void testBitwarden();
     void testBitwardenEncrypted();
 };
-
-#endif /* TEST_IMPORTS_H */

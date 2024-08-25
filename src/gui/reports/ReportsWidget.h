@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_REPORTSWIDGET_H
-#define KEEPASSXC_REPORTSWIDGET_H
+#pragma once
 
 #include "gui/SettingsWidget.h"
 
@@ -47,5 +46,3 @@ signals:
 protected:
     QSharedPointer<Database> m_db;
 };
-
-#endif // KEEPASSXC_REPORTSWIDGET_H

@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CUSTOMTABLEWIDGET_H
-#define CUSTOMTABLEWIDGET_H
+#pragma once
 
 #include <QFocusEvent>
 #include <QKeyEvent>
@@ -37,5 +36,3 @@ protected:
     void keyPressEvent(QKeyEvent* event) override;
     void focusInEvent(QFocusEvent* event) override;
 };
-
-#endif // CUSTOMTABLEWIDGET_H

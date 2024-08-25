@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef BROWSERSETTINGSWIDGET_H
-#define BROWSERSETTINGSWIDGET_H
+#pragma once
 
 #include <QPointer>
 #include <QWidget>
@@ -48,5 +47,3 @@ private:
 
     QScopedPointer<Ui::BrowserSettingsWidget> m_ui;
 };
-
-#endif // BROWSERSETTINGSWIDGET_H

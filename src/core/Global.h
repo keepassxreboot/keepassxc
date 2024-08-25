@@ -17,8 +17,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_GLOBAL_H
-#define KEEPASSX_GLOBAL_H
+#pragma once
 
 #include <QString>
 #include <QTextStream>
@@ -84,5 +83,3 @@ template <typename T> constexpr typename AddConst<T>::Type& asConst(T& t) noexce
 }
 // prevent rvalue arguments:
 template <typename T> void asConst(const T&&) = delete;
-
-#endif // KEEPASSX_GLOBAL_H

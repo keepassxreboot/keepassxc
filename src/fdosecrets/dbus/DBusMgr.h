@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_FDOSECRETS_DBUSMGR_H
-#define KEEPASSXC_FDOSECRETS_DBUSMGR_H
+#pragma once
 
 #include "fdosecrets/dbus/DBusClient.h"
 
@@ -320,5 +319,3 @@ namespace FdoSecrets
         friend class ::TestFdoSecrets;
     };
 } // namespace FdoSecrets
-
-#endif // KEEPASSXC_FDOSECRETS_DBUSMGR_H

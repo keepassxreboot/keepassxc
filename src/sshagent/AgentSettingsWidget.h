@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef AGENTSETTINGSWIDGET_H
-#define AGENTSETTINGSWIDGET_H
+#pragma once
 
 #include <QScopedPointer>
 #include <QUuid>
@@ -43,5 +42,3 @@ public slots:
 private:
     QScopedPointer<Ui::AgentSettingsWidget> m_ui;
 };
-
-#endif // AGENTSETTINGSWIDGET_H

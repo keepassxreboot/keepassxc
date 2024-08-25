@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_DICEWARE_H
-#define KEEPASSXC_DICEWARE_H
+#pragma once
 
 #include "Command.h"
 
@@ -30,5 +29,3 @@ public:
     static const QCommandLineOption WordCountOption;
     static const QCommandLineOption WordListOption;
 };
-
-#endif // KEEPASSXC_DICEWARE_H

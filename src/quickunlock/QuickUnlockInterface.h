@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_QUICKUNLOCKINTERFACE_H
-#define KEEPASSXC_QUICKUNLOCKINTERFACE_H
+#pragma once
 
 #include <QUuid>
 
@@ -54,5 +53,3 @@ public:
 };
 
 QuickUnlockInterface* getQuickUnlock();
-
-#endif // KEEPASSXC_QUICKUNLOCKINTERFACE_H

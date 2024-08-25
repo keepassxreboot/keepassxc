@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_KEESHARE_H
-#define KEEPASSXC_KEESHARE_H
+#pragma once
 
 #include <QFileInfo>
 #include <QUuid>
@@ -86,5 +85,3 @@ private:
 
     QMap<QUuid, QPointer<ShareObserver>> m_observersByDatabase;
 };
-
-#endif // KEEPASSXC_KEESHARE_H

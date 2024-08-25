@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_BROWSERSETTINGSPAGE_H
-#define KEEPASSXC_BROWSERSETTINGSPAGE_H
+#pragma once
 
 #include "gui/ApplicationSettingsWidget.h"
 
@@ -32,5 +31,3 @@ public:
     void loadSettings(QWidget* widget) override;
     void saveSettings(QWidget* widget) override;
 };
-
-#endif // KEEPASSXC_BROWSERSETTINGSPAGE_H

@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_SETTINGSWIDGETKEESHARE_H
-#define KEEPASSXC_SETTINGSWIDGETKEESHARE_H
+#pragma once
 
 #include <QPointer>
 #include <QWidget>
@@ -58,5 +57,3 @@ private:
 
     KeeShareSettings::Own m_own;
 };
-
-#endif // KEEPASSXC_SETTINGSWIDGETKEESHARE_H

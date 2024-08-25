@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_REPORTSPAGEHIBP_H
-#define KEEPASSXC_REPORTSPAGEHIBP_H
+#pragma once
 
 #include "ReportsDialog.h"
 
@@ -35,5 +34,3 @@ public:
     void loadSettings(QWidget* widget, QSharedPointer<Database> db) override;
     void saveSettings(QWidget* widget) override;
 };
-
-#endif // KEEPASSXC_REPORTSPAGEHIBP_H

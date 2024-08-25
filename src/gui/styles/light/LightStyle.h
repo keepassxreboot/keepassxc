@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_LIGHTSTYLE_H
-#define KEEPASSXC_LIGHTSTYLE_H
+#pragma once
 
 #include "gui/styles/base/BaseStyle.h"
 
@@ -34,5 +33,3 @@ public:
 protected:
     QString getAppStyleSheet() const override;
 };
-
-#endif // KEEPASSXC_LIGHTSTYLE_H

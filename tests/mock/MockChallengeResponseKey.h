@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_MOCKCHALLENGERESPONSEKEY_H
-#define KEEPASSXC_MOCKCHALLENGERESPONSEKEY_H
+#pragma once
 
 #include "keys/ChallengeResponseKey.h"
 
@@ -40,5 +39,3 @@ private:
 
     Q_DISABLE_COPY(MockChallengeResponseKey);
 };
-
-#endif // KEEPASSXC_MOCKCHALLENGERESPONSEKEY_H

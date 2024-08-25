@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_DATABASEEDIT_H
-#define KEEPASSXC_DATABASEEDIT_H
+#pragma once
 
 #include "DatabaseCommand.h"
 
@@ -37,5 +36,3 @@ private:
                                                    QString newFileKeyPath,
                                                    bool removeKeyFile);
 };
-
-#endif // KEEPASSXC_DATABASEEDIT_H

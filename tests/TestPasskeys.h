@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_TESTPASSKEYS_H
-#define KEEPASSXC_TESTPASSKEYS_H
+#pragma once
 
 #include "browser/BrowserPasskeys.h"
 #include <QObject>
@@ -55,4 +54,3 @@ private slots:
     void testIsUserVerificationRequired();
     void testAllowLocalhostWithPasskeys();
 };
-#endif // KEEPASSXC_TESTPASSKEYS_H

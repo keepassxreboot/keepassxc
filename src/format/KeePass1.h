@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_KEEPASS1_H
-#define KEEPASSX_KEEPASS1_H
+#pragma once
 
 #include <QSysInfo>
 
@@ -36,5 +35,3 @@ namespace KeePass1
         Twofish = 8
     };
 } // namespace KeePass1
-
-#endif // KEEPASSX_KEEPASS1_H

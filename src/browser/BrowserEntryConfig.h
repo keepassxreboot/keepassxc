@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_BROWSERENTRYCONFIG_H
-#define KEEPASSXC_BROWSERENTRYCONFIG_H
+#pragma once
 
 #include <QObject>
 #include <QSet>
@@ -54,5 +53,3 @@ private:
     QSet<QString> m_deniedHosts;
     QString m_realm;
 };
-
-#endif // KEEPASSXC_BROWSERENTRYCONFIG_H

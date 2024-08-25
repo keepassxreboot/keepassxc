@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_POPUPHELPWIDGET_H
-#define KEEPASSXC_POPUPHELPWIDGET_H
+#pragma once
 
 #include <QFrame>
 #include <QPointer>
@@ -42,5 +41,3 @@ private:
     QPoint m_offset;
     Qt::Corner m_corner;
 };
-
-#endif // KEEPASSXC_POPUPHELPWIDGET_H

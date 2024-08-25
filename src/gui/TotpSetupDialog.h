@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_SETUPTOTPDIALOG_H
-#define KEEPASSX_SETUPTOTPDIALOG_H
+#pragma once
 
 #include <QDialog>
 
@@ -49,5 +48,3 @@ private:
     QScopedPointer<Ui::TotpSetupDialog> m_ui;
     Entry* m_entry;
 };
-
-#endif // KEEPASSX_SETUPTOTPDIALOG_H

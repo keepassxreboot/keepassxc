@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_HIBPOFFLINE_H
-#define KEEPASSXC_HIBPOFFLINE_H
+#pragma once
 
 #include <QSharedPointer>
 
@@ -38,5 +37,3 @@ namespace HibpOffline
                     QList<QPair<const Entry*, int>>& findings,
                     QString* error);
 } // namespace HibpOffline
-
-#endif // KEEPASSXC_HIBPOFFLINE_H

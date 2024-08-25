@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_NEWDATABASEWIZARDPAGEENCRYPTION_H
-#define KEEPASSXC_NEWDATABASEWIZARDPAGEENCRYPTION_H
+#pragma once
 
 #include "NewDatabaseWizardPage.h"
 
@@ -29,5 +28,3 @@ public:
     Q_DISABLE_COPY(NewDatabaseWizardPageEncryption);
     ~NewDatabaseWizardPageEncryption() override;
 };
-
-#endif // KEEPASSXC_NEWDATABASEWIZARDPAGEENCRYPTION_H

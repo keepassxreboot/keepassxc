@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_TESTURLTOOLS_H
-#define KEEPASSXC_TESTURLTOOLS_H
+#pragma once
 
 #include "gui/UrlTools.h"
 #include <QObject>
@@ -39,4 +38,3 @@ private slots:
 private:
     QPointer<UrlTools> m_urlTools;
 };
-#endif // KEEPASSXC_TESTURLTOOLS_H

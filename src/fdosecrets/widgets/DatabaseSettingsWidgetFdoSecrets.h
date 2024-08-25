@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_DATABASESETTINGSWIDGETFDOSECRETS_H
-#define KEEPASSXC_DATABASESETTINGSWIDGETFDOSECRETS_H
+#pragma once
 
 #include <QScopedPointer>
 #include <QSharedPointer>
@@ -49,5 +48,3 @@ private:
     class GroupModelNoRecycle;
     QScopedPointer<GroupModelNoRecycle> m_model;
 };
-
-#endif // KEEPASSXC_DATABASESETTINGSWIDGETFDOSECRETS_H

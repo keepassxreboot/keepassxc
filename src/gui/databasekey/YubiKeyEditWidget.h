@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_YUBIKEYEDITWIDGET_H
-#define KEEPASSXC_YUBIKEYEDITWIDGET_H
+#pragma once
 
 #include "KeyComponentWidget.h"
 #include "config-keepassx.h"
@@ -62,5 +61,3 @@ private:
 #endif
     bool m_isDetected = false;
 };
-
-#endif // KEEPASSXC_YUBIKEYEDITWIDGET_H

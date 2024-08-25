@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_QRCODE_H
-#define KEEPASSX_QRCODE_H
+#pragma once
 
 #include <QScopedPointer>
 
@@ -73,5 +72,3 @@ private:
 
     QScopedPointer<QrCodePrivate> d_ptr;
 };
-
-#endif // KEEPASSX_QRCODE_H

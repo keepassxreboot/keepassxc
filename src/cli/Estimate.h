@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_ESTIMATE_H
-#define KEEPASSXC_ESTIMATE_H
+#pragma once
 
 #include "Command.h"
 
@@ -28,5 +27,3 @@ public:
 
     static const QCommandLineOption AdvancedOption;
 };
-
-#endif // KEEPASSXC_ESTIMATE_H

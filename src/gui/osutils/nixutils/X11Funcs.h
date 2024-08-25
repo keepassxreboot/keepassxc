@@ -15,8 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_X11FUNCS_H
-#define KEEPASSXC_X11FUNCS_H
+#pragma once
 
 #include <qnamespace.h>
 
@@ -27,5 +26,3 @@ class QChar;
 KeySym qcharToNativeKeyCode(const QChar& ch);
 KeySym qtToNativeKeyCode(Qt::Key key);
 uint qtToNativeModifiers(Qt::KeyboardModifiers modifiers);
-
-#endif

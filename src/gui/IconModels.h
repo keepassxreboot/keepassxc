@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_ICONMODELS_H
-#define KEEPASSX_ICONMODELS_H
+#pragma once
 
 #include <QAbstractListModel>
 #include <QPixmap>
@@ -49,5 +48,3 @@ private:
     QHash<QUuid, QPixmap> m_icons;
     QList<QUuid> m_iconsOrder;
 };
-
-#endif // KEEPASSX_ICONMODELS_H

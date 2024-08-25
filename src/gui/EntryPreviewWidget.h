@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_DETAILSWIDGET_H
-#define KEEPASSX_DETAILSWIDGET_H
+#pragma once
 
 #include "config-keepassx.h"
 #include "gui/DatabaseWidget.h"
@@ -87,5 +86,3 @@ private:
     quint8 m_selectedTabEntry;
     quint8 m_selectedTabGroup;
 };
-
-#endif // KEEPASSX_DETAILSWIDGET_H

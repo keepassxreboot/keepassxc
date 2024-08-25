@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTKEYS_H
-#define KEEPASSX_TESTKEYS_H
+#pragma once
 
 #include <QObject>
 
@@ -37,5 +36,3 @@ private slots:
     void testCompositeKeyComponents();
     void benchmarkTransformKey();
 };
-
-#endif // KEEPASSX_TESTKEYS_H

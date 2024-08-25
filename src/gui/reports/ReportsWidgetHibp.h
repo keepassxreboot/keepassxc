@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_REPORTSWIDGETHIBP_H
-#define KEEPASSXC_REPORTSWIDGETHIBP_H
+#pragma once
 
 #include "config-keepassx.h"
 #include "gui/entry/EntryModel.h"
@@ -80,5 +79,3 @@ private:
     HibpDownloader m_downloader; // This performs the actual HIBP online query
 #endif
 };
-
-#endif // KEEPASSXC_REPORTSWIDGETHIBP_H

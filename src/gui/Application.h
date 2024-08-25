@@ -17,8 +17,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_APPLICATION_H
-#define KEEPASSX_APPLICATION_H
+#pragma once
 
 #include <QApplication>
 #include <QString>
@@ -85,5 +84,3 @@ private:
 };
 
 #define kpxcApp qobject_cast<Application*>(Application::instance())
-
-#endif // KEEPASSX_APPLICATION_H

@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTGROUP_H
-#define KEEPASSX_TESTGROUP_H
+#pragma once
 
 #include "core/Database.h"
 
@@ -51,5 +50,3 @@ private slots:
     void testPreviousParentGroup();
     void testAutoTypeState();
 };
-
-#endif // KEEPASSX_TESTGROUP_H

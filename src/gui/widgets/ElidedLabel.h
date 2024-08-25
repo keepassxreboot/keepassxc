@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_ELIDEDLABEL_H
-#define KEEPASSX_ELIDEDLABEL_H
+#pragma once
 
 #include <QLabel>
 
@@ -57,5 +56,3 @@ private:
     QString m_rawText;
     QString m_url;
 };
-
-#endif // KEEPASSX_ELIDEDLABEL_H

@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTGUIPIXMAPS_H
-#define KEEPASSX_TESTGUIPIXMAPS_H
+#pragma once
 
 #include <QImage>
 
@@ -30,5 +29,3 @@ private slots:
     void testEntryIcons();
     void testGroupIcons();
 };
-
-#endif // KEEPASSX_TESTGUIPIXMAPS_H

@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_CSVPARSERMODEL_H
-#define KEEPASSX_CSVPARSERMODEL_H
+#pragma once
 
 #include <QAbstractTableModel>
 
@@ -57,5 +56,3 @@ private:
     void addEmptyColumn();
     QMap<int, int> m_columnMap;
 };
-
-#endif // KEEPASSX_CSVPARSERMODEL_H

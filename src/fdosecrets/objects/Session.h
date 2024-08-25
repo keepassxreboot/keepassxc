@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_FDOSECRETS_SESSION_H
-#define KEEPASSXC_FDOSECRETS_SESSION_H
+#pragma once
 
 #include "fdosecrets/dbus/DBusObject.h"
 
@@ -82,5 +81,3 @@ namespace FdoSecrets
     };
 
 } // namespace FdoSecrets
-
-#endif // KEEPASSXC_FDOSECRETS_SESSION_H

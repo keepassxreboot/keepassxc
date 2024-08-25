@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_TESTPASSPHRASEGENERATOR_H
-#define KEEPASSXC_TESTPASSPHRASEGENERATOR_H
+#pragma once
 
 #include <QObject>
 
@@ -29,5 +28,3 @@ private slots:
     void testWordCase();
     void testUniqueEntriesInWordlist();
 };
-
-#endif // KEEPASSXC_TESTPASSPHRASEGENERATOR_H

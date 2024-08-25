@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTRANDOMGENERATOR_H
-#define KEEPASSX_TESTRANDOMGENERATOR_H
+#pragma once
 
 #include <QObject>
 
@@ -29,5 +28,3 @@ private slots:
     void testUInt();
     void testUIntRange();
 };
-
-#endif // KEEPASSX_TESTRANDOMGENERATOR_H

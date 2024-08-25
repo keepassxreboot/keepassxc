@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_EDITENTRYWIDGET_H
-#define KEEPASSX_EDITENTRYWIDGET_H
+#pragma once
 
 #include <QButtonGroup>
 #include <QCheckBox>
@@ -209,5 +208,3 @@ private:
 
     Q_DISABLE_COPY(EditEntryWidget)
 };
-
-#endif // KEEPASSX_EDITENTRYWIDGET_H

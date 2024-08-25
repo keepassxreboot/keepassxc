@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_REPORTSWIDGET_H
-#define KEEPASSX_REPORTSWIDGET_H
+#pragma once
 
 #include "config-keepassx.h"
 #include "gui/DialogyWidget.h"
@@ -93,5 +92,3 @@ private:
     class ExtraPage;
     QList<ExtraPage> m_extraPages;
 };
-
-#endif // KEEPASSX_REPORTSWIDGET_H

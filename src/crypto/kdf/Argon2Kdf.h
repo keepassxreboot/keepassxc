@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_ARGON2KDF_H
-#define KEEPASSX_ARGON2KDF_H
+#pragma once
 
 #include "Kdf.h"
 
@@ -51,5 +50,3 @@ public:
     quint64 m_memory;
     quint32 m_parallelism;
 };
-
-#endif // KEEPASSX_ARGON2KDF_H

@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_SYMMETRICCIPHERSTREAM_H
-#define KEEPASSX_SYMMETRICCIPHERSTREAM_H
+#pragma once
 
 #include <QByteArray>
 #include <QScopedPointer>
@@ -56,5 +55,3 @@ private:
     bool m_dataWritten;
     bool m_streamCipher;
 };
-
-#endif // KEEPASSX_SYMMETRICCIPHERSTREAM_H

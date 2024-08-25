@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_YUBIKEY_H
-#define KEEPASSX_YUBIKEY_H
+#pragma once
 
 #include <QHash>
 #include <QMultiMap>
@@ -95,5 +94,3 @@ private:
 
     Q_DISABLE_COPY(YubiKey)
 };
-
-#endif // KEEPASSX_YUBIKEY_H

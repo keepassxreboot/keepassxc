@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTENTRYMODEL_H
-#define KEEPASSX_TESTENTRYMODEL_H
+#pragma once
 
 #include <QObject>
 
@@ -35,5 +34,3 @@ private slots:
     void testProxyModel();
     void testDatabaseDelete();
 };
-
-#endif // KEEPASSX_TESTENTRYMODEL_H

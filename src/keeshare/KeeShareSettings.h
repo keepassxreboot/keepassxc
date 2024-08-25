@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_KEESHARESETTINGS_H
-#define KEEPASSXC_KEESHARESETTINGS_H
+#pragma once
 
 #include <QSharedPointer>
 #include <QUuid>
@@ -139,5 +138,3 @@ namespace KeeShareSettings
         static Reference deserialize(const QString& raw);
     };
 }; // namespace KeeShareSettings
-
-#endif // KEEPASSXC_KEESHARESETTINGS_H

@@ -21,8 +21,7 @@
  * applications (e.g. to use with Google Authenticator).
  */
 
-#ifndef BASE32_H
-#define BASE32_H
+#pragma once
 
 #include <QByteArray>
 #include <QVariant>
@@ -37,5 +36,3 @@ public:
     Q_REQUIRED_RESULT static QByteArray removePadding(const QByteArray&);
     Q_REQUIRED_RESULT static QByteArray sanitizeInput(const QByteArray&);
 };
-
-#endif // BASE32_H

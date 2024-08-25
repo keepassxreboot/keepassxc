@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_DATABASECOMMAND_H
-#define KEEPASSXC_DATABASECOMMAND_H
+#pragma once
 
 #include "Command.h"
 
@@ -27,5 +26,3 @@ public:
     int execute(const QStringList& arguments) override;
     virtual int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser) = 0;
 };
-
-#endif // KEEPASSXC_DATABASECOMMAND_H

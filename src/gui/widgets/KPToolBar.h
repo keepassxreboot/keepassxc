@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_KPTOOLBAR_H
-#define KEEPASSXC_KPTOOLBAR_H
+#pragma once
 
 #include <QPointer>
 #include <QTimer>
@@ -48,5 +47,3 @@ private:
     QTimer m_expandTimer;
     QPointer<QAbstractButton> m_expandButton;
 };
-
-#endif // KEEPASSXC_KPTOOLBAR_H

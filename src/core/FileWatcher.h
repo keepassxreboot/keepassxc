@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_FILEWATCHER_H
-#define KEEPASSXC_FILEWATCHER_H
+#pragma once
 
 #include <QFileSystemWatcher>
 #include <QTimer>
@@ -57,5 +56,3 @@ private:
     int m_fileChecksumSizeBytes = -1;
     bool m_ignoreFileChange = false;
 };
-
-#endif // KEEPASSXC_FILEWATCHER_H

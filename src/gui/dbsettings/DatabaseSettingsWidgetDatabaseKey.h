@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_DATABASESETTINGSWIDGETDATABASEKEY_H
-#define KEEPASSXC_DATABASESETTINGSWIDGETDATABASEKEY_H
+#pragma once
 
 #include "DatabaseSettingsWidget.h"
 #include "config-keepassx.h"
@@ -76,5 +75,3 @@ private:
     const QPointer<YubiKeyEditWidget> m_yubiKeyEditWidget;
 #endif
 };
-
-#endif // KEEPASSXC_DATABASESETTINGSWIDGETDATABASEKEY_H

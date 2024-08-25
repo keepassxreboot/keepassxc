@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_PASSWORDKEY_H
-#define KEEPASSX_PASSWORDKEY_H
+#pragma once
 
 #include <botan/secmem.h>
 
@@ -47,5 +46,3 @@ private:
     Botan::secure_vector<char> m_key;
     bool m_isInitialized = false;
 };
-
-#endif // KEEPASSX_PASSWORDKEY_H

@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_PASSWORDGENERATORWIDGET_H
-#define KEEPASSX_PASSWORDGENERATORWIDGET_H
+#pragma once
 
 #include <QComboBox>
 #include <QTimer>
@@ -97,5 +96,3 @@ private:
     const QScopedPointer<PassphraseGenerator> m_dicewareGenerator;
     const QScopedPointer<Ui::PasswordGeneratorWidget> m_ui;
 };
-
-#endif // KEEPASSX_PASSWORDGENERATORWIDGET_H

@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_MACPASTEBOARD_H
-#define KEEPASSXC_MACPASTEBOARD_H
+#pragma once
 
 #include <QObject>
 #include <QTextCodec>
@@ -37,5 +36,3 @@ public:
     QVariant convertToMime(const QString& mime, QList<QByteArray> data, QString flav) override;
     QList<QByteArray> convertFromMime(const QString& mime, QVariant data, QString flav) override;
 };
-
-#endif // KEEPASSXC_MACPASTEBOARD_H

@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_TEST_KDBX4_H
-#define KEEPASSXC_TEST_KDBX4_H
+#pragma once
 
 #include "TestKeePass2Format.h"
 
@@ -67,5 +66,3 @@ private slots:
     void testAttachmentIndexStability();
     void testCustomData();
 };
-
-#endif // KEEPASSXC_TEST_KDBX4_H

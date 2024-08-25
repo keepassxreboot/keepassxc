@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_CLOCK_H
-#define KEEPASSXC_CLOCK_H
+#pragma once
 
 #include <QDateTime>
 #include <QSharedPointer>
@@ -57,5 +56,3 @@ protected:
 private:
     static QSharedPointer<Clock> m_instance;
 };
-
-#endif // KEEPASSX_ENTRY_H

@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_SHAREOBSERVER_H
-#define KEEPASSXC_SHAREOBSERVER_H
+#pragma once
 
 #include <QMap>
 #include <QObject>
@@ -83,5 +82,3 @@ private:
     QMap<QString, QSharedPointer<FileWatcher>> m_fileWatchers;
     bool m_inFileUpdate = false;
 };
-
-#endif // KEEPASSXC_SHAREOBSERVER_H

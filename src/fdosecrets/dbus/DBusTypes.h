@@ -17,8 +17,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_FDOSECRETS_DBUSTYPES_H
-#define KEEPASSXC_FDOSECRETS_DBUSTYPES_H
+#pragma once
 
 #include <QDBusArgument>
 
@@ -100,5 +99,3 @@ Q_DECLARE_METATYPE(FdoSecrets::wire::StringStringMap);
 Q_DECLARE_METATYPE(FdoSecrets::wire::ObjectPathSecretMap);
 
 Q_DECLARE_METATYPE(FdoSecrets::Secret)
-
-#endif // KEEPASSXC_FDOSECRETS_DBUSTYPES_H

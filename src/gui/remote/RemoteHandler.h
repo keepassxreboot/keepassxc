@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_REMOTEHANDLER_H
-#define KEEPASSXC_REMOTEHANDLER_H
+#pragma once
 
 #include <QObject>
 
@@ -53,5 +52,3 @@ private:
 
     Q_DISABLE_COPY(RemoteHandler)
 };
-
-#endif // KEEPASSXC_REMOTEHANDLER_H

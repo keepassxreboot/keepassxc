@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTCSVPARSER_H
-#define KEEPASSX_TESTCSVPARSER_H
+#pragma once
 
 #include <QTemporaryFile>
 
@@ -62,5 +61,3 @@ private:
     QScopedPointer<CsvParser> parser;
     CsvTable t;
 };
-
-#endif // KEEPASSX_TESTCSVPARSER_H

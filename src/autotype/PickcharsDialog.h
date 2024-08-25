@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_PICKCHARSDIALOG_H
-#define KEEPASSXC_PICKCHARSDIALOG_H
+#pragma once
 
 #include <QDialog>
 
@@ -46,5 +45,3 @@ private:
     QSharedPointer<Ui::PickcharsDialog> m_ui;
     int m_lastSelected;
 };
-
-#endif // KEEPASSXC_PICKCHARSDIALOG_H

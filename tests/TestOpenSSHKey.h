@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TESTOPENSSHKEY_H
-#define TESTOPENSSHKEY_H
+#pragma once
 
 #include <QObject>
 
@@ -44,5 +43,3 @@ private slots:
     void testParseECDSASecurityKey();
     void testParseED25519SecurityKey();
 };
-
-#endif // TESTOPENSSHKEY_H

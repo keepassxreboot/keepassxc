@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_KEY_H
-#define KEEPASSX_KEY_H
+#pragma once
 
 #include <QUuid>
 
@@ -40,5 +39,3 @@ public:
 private:
     QUuid m_uuid;
 };
-
-#endif // KEEPASSX_KEY_H

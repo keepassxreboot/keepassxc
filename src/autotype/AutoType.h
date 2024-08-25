@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_AUTOTYPE_H
-#define KEEPASSX_AUTOTYPE_H
+#pragma once
 
 #include "AutoTypeAction.h"
 
@@ -108,5 +107,3 @@ inline AutoType* autoType()
 {
     return AutoType::instance();
 }
-
-#endif // KEEPASSX_AUTOTYPE_H

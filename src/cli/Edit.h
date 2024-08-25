@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_EDIT_H
-#define KEEPASSXC_EDIT_H
+#pragma once
 
 #include "DatabaseCommand.h"
 
@@ -28,5 +27,3 @@ public:
 
     static const QCommandLineOption TitleOption;
 };
-
-#endif // KEEPASSXC_EDIT_H

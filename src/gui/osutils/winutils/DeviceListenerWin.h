@@ -15,8 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef DEVICELISTENER_WIN_H
-#define DEVICELISTENER_WIN_H
+#pragma once
 
 #define DEVICELISTENER_IMPL DeviceListenerWin
 
@@ -59,5 +58,3 @@ private:
     bool m_handleRemoval = false;
     QRegularExpression m_deviceIdMatch;
 };
-
-#endif // DEVICELISTENER_WIN_H

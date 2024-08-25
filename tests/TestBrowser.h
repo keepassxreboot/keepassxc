@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_TESTBROWSER_H
-#define KEEPASSXC_TESTBROWSER_H
+#pragma once
 
 #include <QObject>
 
@@ -58,4 +57,3 @@ private:
     QScopedPointer<BrowserAction> m_browserAction;
     QPointer<BrowserService> m_browserService;
 };
-#endif // KEEPASSXC_TESTBROWSER_H

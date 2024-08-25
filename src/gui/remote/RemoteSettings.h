@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_REMOTESETTINGS_H
-#define KEEPASSXC_REMOTESETTINGS_H
+#pragma once
 
 #include <QObject>
 #include <QSharedPointer>
@@ -57,5 +56,3 @@ private:
     QHash<QString, RemoteParams*> m_remoteParams;
     QSharedPointer<Database> m_db;
 };
-
-#endif // KEEPASSXC_REMOTESETTINGS_H

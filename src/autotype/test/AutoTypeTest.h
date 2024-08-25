@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_AUTOTYPETEST_H
-#define KEEPASSX_AUTOTYPETEST_H
+#pragma once
 
 #include <QtPlugin>
 
@@ -70,5 +69,3 @@ public:
 private:
     AutoTypePlatformTest* const m_platform;
 };
-
-#endif // KEEPASSX_AUTOTYPETEST_H

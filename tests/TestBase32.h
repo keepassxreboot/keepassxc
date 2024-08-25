@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTBASE32_H
-#define KEEPASSX_TESTBASE32_H
+#pragma once
 
 #include <QObject>
 
@@ -33,5 +32,3 @@ private slots:
     void testRemovePadding();
     void testSanitizeInput();
 };
-
-#endif // KEEPASSX_TESTBASE32_H

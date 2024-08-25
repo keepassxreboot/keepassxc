@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_FILEDIALOG_H
-#define KEEPASSX_FILEDIALOG_H
+#pragma once
 
 #include <QFileDialog>
 
@@ -75,5 +74,3 @@ inline FileDialog* fileDialog()
 {
     return FileDialog::instance();
 }
-
-#endif // KEEPASSX_FILEDIALOG_H

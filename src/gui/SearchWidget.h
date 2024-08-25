@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_SEARCHWIDGET_H
-#define KEEPASSX_SEARCHWIDGET_H
+#pragma once
 
 #include <QTimer>
 #include <QWidget>
@@ -85,5 +84,3 @@ private:
     QAction* m_actionLimitGroup;
     QMenu* m_searchMenu;
 };
-
-#endif // SEARCHWIDGET_H

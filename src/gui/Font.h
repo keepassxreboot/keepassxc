@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_FONT_H
-#define KEEPASSX_FONT_H
+#pragma once
 
 class QFont;
 
@@ -29,5 +28,3 @@ public:
 private:
     Font() = default;
 };
-
-#endif // KEEPASSX_FONT_H

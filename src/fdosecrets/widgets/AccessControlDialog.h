@@ -17,8 +17,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_FDOSECRETS_ACCESSCONTROLDIALOG_H
-#define KEEPASSXC_FDOSECRETS_ACCESSCONTROLDIALOG_H
+#pragma once
 
 #include <QAbstractTableModel>
 #include <QCheckBox>
@@ -130,5 +129,3 @@ public:
 signals:
     void clicked(Entry*, const QModelIndex& idx);
 };
-
-#endif // KEEPASSXC_FDOSECRETS_ACCESSCONTROLDIALOG_H

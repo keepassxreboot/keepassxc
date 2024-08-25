@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_GENERATE_H
-#define KEEPASSXC_GENERATE_H
+#pragma once
 
 #include "Command.h"
 
@@ -41,5 +40,3 @@ public:
     static const QCommandLineOption IncludeEveryGroupOption;
     static const QCommandLineOption CustomCharacterSetOption;
 };
-
-#endif // KEEPASSXC_GENERATE_H

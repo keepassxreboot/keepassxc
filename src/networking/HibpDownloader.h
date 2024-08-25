@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_HIBPDOWNLOADER_H
-#define KEEPASSXC_HIBPDOWNLOADER_H
+#pragma once
 
 #include "config-keepassx.h"
 #include <QHash>
@@ -65,5 +64,3 @@ private:
     QStringList m_pwdsToTry; // The list of remaining passwords to validate
     QHash<QNetworkReply*, QPair<QString, QByteArray>> m_replies;
 };
-
-#endif // KEEPASSXC_HIBPDOWNLOADER_H

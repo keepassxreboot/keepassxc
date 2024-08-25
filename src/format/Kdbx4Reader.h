@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_KDBX4READER_H
-#define KEEPASSX_KDBX4READER_H
+#pragma once
 
 #include "format/KdbxReader.h"
 
@@ -43,5 +42,3 @@ private:
 
     QHash<QString, QByteArray> m_binaryPool;
 };
-
-#endif // KEEPASSX_KDBX4READER_H

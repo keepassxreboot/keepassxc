@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_PASSWORDGENERATOR_H
-#define KEEPASSX_PASSWORDGENERATOR_H
+#pragma once
 
 #include <QObject>
 #include <QVector>
@@ -94,5 +93,3 @@ private:
 Q_DECLARE_OPERATORS_FOR_FLAGS(PasswordGenerator::CharClasses)
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(PasswordGenerator::GeneratorFlags)
-
-#endif // KEEPASSX_PASSWORDGENERATOR_H

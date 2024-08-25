@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_WINDOWSELECTCOMBOBOX_H
-#define KEEPASSX_WINDOWSELECTCOMBOBOX_H
+#pragma once
 
 #include <QComboBox>
 
@@ -32,5 +31,3 @@ public:
     QSize sizeHint() const override;
     QSize minimumSizeHint() const override;
 };
-
-#endif // KEEPASSX_WINDOWSELECTCOMBOBOX_H

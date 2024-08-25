@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_DATABASESETTINGSDIALOG_H
-#define KEEPASSXC_DATABASESETTINGSDIALOG_H
+#pragma once
 
 #include "config-keepassx.h"
 #include "gui/EditWidget.h"
@@ -79,5 +78,3 @@ private:
     QPointer<DatabaseSettingsWidgetMaintenance> m_maintenanceWidget;
     QPointer<DatabaseSettingsWidgetRemote> m_remoteWidget;
 };
-
-#endif // KEEPASSXC_DATABASESETTINGSDIALOG_H

@@ -15,8 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_NIXUTILS_H
-#define KEEPASSXC_NIXUTILS_H
+#pragma once
 
 #include "gui/osutils/OSUtilsBase.h"
 #include <QAbstractNativeEventFilter>
@@ -94,5 +93,3 @@ inline NixUtils* nixUtils()
 {
     return NixUtils::instance();
 }
-
-#endif // KEEPASSXC_NIXUTILS_H

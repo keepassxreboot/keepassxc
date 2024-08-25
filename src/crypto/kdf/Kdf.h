@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_KDF_H
-#define KEEPASSX_KDF_H
+#pragma once
 
 #include <QUuid>
 #include <QVariant>
@@ -68,4 +67,3 @@ protected:
 private:
     const QUuid m_uuid;
 };
-#endif // KEEPASSX_KDF_H

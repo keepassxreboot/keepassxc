@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_DATABASEWIDGET_H
-#define KEEPASSX_DATABASEWIDGET_H
+#pragma once
 
 #include <QStackedWidget>
 
@@ -338,5 +337,3 @@ private:
     // Auto-Type related
     QString m_searchStringForAutoType;
 };
-
-#endif // KEEPASSX_DATABASEWIDGET_H

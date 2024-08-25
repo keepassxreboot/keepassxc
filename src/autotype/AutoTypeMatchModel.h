@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_AUTOTYPEMATCHMODEL_H
-#define KEEPASSX_AUTOTYPEMATCHMODEL_H
+#pragma once
 
 #include <QAbstractTableModel>
 
@@ -63,5 +62,3 @@ private:
     QList<AutoTypeMatch> m_matches;
     QList<const Group*> m_allGroups;
 };
-
-#endif // KEEPASSX_AUTOTYPEMATCHMODEL_H

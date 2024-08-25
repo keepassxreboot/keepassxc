@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_CONFIG_H
-#define KEEPASSX_CONFIG_H
+#pragma once
 
 #include <QPointer>
 #include <QVariant>
@@ -247,5 +246,3 @@ inline Config* config()
 {
     return Config::instance();
 }
-
-#endif // KEEPASSX_CONFIG_H

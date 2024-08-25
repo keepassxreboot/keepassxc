@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_OPENSSHKEYGENDIALOG_H
-#define KEEPASSXC_OPENSSHKEYGENDIALOG_H
+#pragma once
 
 #include <QDialog>
 class OpenSSHKey;
@@ -44,5 +43,3 @@ private:
     QScopedPointer<Ui::OpenSSHKeyGenDialog> m_ui;
     OpenSSHKey* m_key;
 };
-
-#endif // KEEPASSXC_OPENSSHKEYGENDIALOG_H

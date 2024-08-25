@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_GROUP_H
-#define KEEPASSX_GROUP_H
+#pragma once
 
 #include <QPointer>
 
@@ -232,5 +231,3 @@ private:
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(Group::CloneFlags)
-
-#endif // KEEPASSX_GROUP_H

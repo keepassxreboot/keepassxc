@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_FDOSECRETS_PROMPT_H
-#define KEEPASSXC_FDOSECRETS_PROMPT_H
+#pragma once
 
 #include "core/Global.h"
 #include "fdosecrets/dbus/DBusClient.h"
@@ -226,5 +225,3 @@ namespace FdoSecrets
     };
 
 } // namespace FdoSecrets
-
-#endif // KEEPASSXC_FDOSECRETS_PROMPT_H

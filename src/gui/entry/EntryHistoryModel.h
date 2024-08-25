@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_ENTRYHISTORYMODEL_H
-#define KEEPASSX_ENTRYHISTORYMODEL_H
+#pragma once
 
 #include <QAbstractTableModel>
 #include <QLocale>
@@ -52,5 +51,3 @@ private:
     QStringList m_historyModifications;
     const Entry* m_parentEntry;
 };
-
-#endif // KEEPASSX_ENTRYHISTORYMODEL_H

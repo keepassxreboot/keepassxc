@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_METADATA_H
-#define KEEPASSX_METADATA_H
+#pragma once
 
 #include <QDateTime>
 #include <QHash>
@@ -193,5 +192,3 @@ private:
 
     bool m_updateDatetime;
 };
-
-#endif // KEEPASSX_METADATA_H

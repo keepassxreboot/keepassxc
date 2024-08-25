@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_BROWSERSHARED_H
-#define KEEPASSXC_BROWSERSHARED_H
+#pragma once
 
 #include <QString>
 
@@ -39,5 +38,3 @@ namespace BrowserShared
 
     QString localServerPath();
 } // namespace BrowserShared
-
-#endif // KEEPASSXC_BROWSERSHARED_H

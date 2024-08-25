@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_ENTRYURLMODEL_H
-#define KEEPASSXC_ENTRYURLMODEL_H
+#pragma once
 
 #include "core/Entry.h"
 #include <QStandardItemModel>
@@ -61,5 +60,3 @@ private:
     QIcon m_errorIcon;
     QString m_entryUrl;
 };
-
-#endif // KEEPASSXC_ENTRYURLMODEL_H

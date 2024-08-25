@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_NEWDATABASEWIZARD_H
-#define KEEPASSXC_NEWDATABASEWIZARD_H
+#pragma once
 
 #include <QPointer>
 #include <QWizard>
@@ -45,5 +44,3 @@ private:
     QSharedPointer<Database> m_db;
     QList<QPointer<NewDatabaseWizardPage>> m_pages;
 };
-
-#endif // KEEPASSXC_NEWDATABASEWIZARD_H

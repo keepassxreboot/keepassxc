@@ -15,8 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_DATABASETABWIDGET_H
-#define KEEPASSX_DATABASETABWIDGET_H
+#pragma once
 
 #include "DatabaseOpenDialog.h"
 #include "config-keepassx.h"
@@ -126,5 +125,3 @@ private:
     QTimer m_lockDelayTimer;
     bool m_databaseOpenInProgress;
 };
-
-#endif // KEEPASSX_DATABASETABWIDGET_H

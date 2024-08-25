@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_ENTRYATTACHMENTS_H
-#define KEEPASSX_ENTRYATTACHMENTS_H
+#pragma once
 
 #include "core/FileWatcher.h"
 #include "core/ModifiableObject.h"
@@ -72,5 +71,3 @@ private:
     QHash<QString, QString> m_openedAttachmentsInverse;
     QHash<QString, QSharedPointer<FileWatcher>> m_attachmentFileWatchers;
 };
-
-#endif // KEEPASSX_ENTRYATTACHMENTS_H

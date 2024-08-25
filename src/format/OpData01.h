@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_OPDATA01_H
-#define KEEPASSXC_OPDATA01_H
+#pragma once
 
 #include <QObject>
 
@@ -55,5 +54,3 @@ private:
     QByteArray m_clearText;
     QString m_errorStr;
 };
-
-#endif // KEEPASSXC_OPDATA01_H

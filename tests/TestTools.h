@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTTOOLS_H
-#define KEEPASSX_TESTTOOLS_H
+#pragma once
 
 #include "core/Tools.h"
 
@@ -38,5 +37,3 @@ private slots:
     void testConvertToRegex_data();
     void testArrayContainsValues();
 };
-
-#endif // KEEPASSX_TESTTOOLS_H

@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTPASSWORDHEALTH_H
-#define KEEPASSX_TESTPASSWORDHEALTH_H
+#pragma once
 
 #include <QObject>
 
@@ -28,5 +27,3 @@ private slots:
     void initTestCase();
     void testNoDb();
 };
-
-#endif // KEEPASSX_TESTPASSWORDHEALTH_H

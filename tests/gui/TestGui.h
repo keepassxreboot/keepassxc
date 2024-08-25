@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTGUI_H
-#define KEEPASSX_TESTGUI_H
+#pragma once
 
 #include "gui/MainWindow.h"
 #include "util/TemporaryFile.h"
@@ -98,5 +97,3 @@ private:
     QString m_dbFileName;
     QString m_dbFilePath;
 };
-
-#endif // KEEPASSX_TESTGUI_H

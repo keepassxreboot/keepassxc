@@ -15,8 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_WINUTILS_H
-#define KEEPASSXC_WINUTILS_H
+#pragma once
 
 #include "gui/osutils/OSUtilsBase.h"
 
@@ -90,5 +89,3 @@ inline WinUtils* winUtils()
 {
     return WinUtils::instance();
 }
-
-#endif // KEEPASSXC_WINUTILS_H

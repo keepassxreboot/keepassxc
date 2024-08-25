@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_REMOTEPROCESS_H
-#define KEEPASSXC_REMOTEPROCESS_H
+#pragma once
 
 #include <QProcess>
 
@@ -46,5 +45,3 @@ private:
 
     QScopedPointer<QProcess> m_process;
 };
-
-#endif // KEEPASSXC_REMOTEPROCESS_H

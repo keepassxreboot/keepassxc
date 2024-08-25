@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTCSVEXPORTER_H
-#define KEEPASSX_TESTCSVEXPORTER_H
+#pragma once
 
 #include <QObject>
 #include <QSharedPointer>
@@ -44,5 +43,3 @@ private:
     QSharedPointer<Database> m_db;
     QSharedPointer<CsvExporter> m_csvExporter;
 };
-
-#endif // KEEPASSX_TESTCSVEXPORTER_H

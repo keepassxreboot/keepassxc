@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_ANALYZE_H
-#define KEEPASSXC_ANALYZE_H
+#pragma once
 
 #include "DatabaseCommand.h"
 
@@ -29,5 +28,3 @@ public:
     static const QCommandLineOption HIBPDatabaseOption;
     static const QCommandLineOption OkonOption;
 };
-
-#endif // KEEPASSXC_HIBP_H

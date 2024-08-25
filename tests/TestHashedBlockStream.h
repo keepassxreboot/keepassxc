@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_TESTHASHEDBLOCKSTREAM_H
-#define KEEPASSX_TESTHASHEDBLOCKSTREAM_H
+#pragma once
 
 #include <QObject>
 
@@ -30,5 +29,3 @@ private slots:
     void testReset();
     void testWriteFailure();
 };
-
-#endif // KEEPASSX_TESTHASHEDBLOCKSTREAM_H

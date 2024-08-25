@@ -1,5 +1,4 @@
-#ifndef KEEPASSX_POLKITDBUSTYPES_H
-#define KEEPASSX_POLKITDBUSTYPES_H
+#pragma once
 
 #include <QtDBus>
 
@@ -32,5 +31,3 @@ public:
 
 Q_DECLARE_METATYPE(PolkitSubject);
 Q_DECLARE_METATYPE(PolkitAuthorizationResults);
-
-#endif // KEEPASSX_POLKITDBUSTYPES_H

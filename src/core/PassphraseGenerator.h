@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_PASSPHRASEGENERATOR_H
-#define KEEPASSX_PASSPHRASEGENERATOR_H
+#pragma once
 
 #include <QList>
 
@@ -56,5 +55,3 @@ private:
 
     friend class TestPassphraseGenerator;
 };
-
-#endif // KEEPASSX_PASSPHRASEGENERATOR_H

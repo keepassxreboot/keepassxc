@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_REPORTSPAGEHEALTHCHECK_H
-#define KEEPASSXC_REPORTSPAGEHEALTHCHECK_H
+#pragma once
 
 #include "ReportsDialog.h"
 
@@ -35,5 +34,3 @@ public:
     void loadSettings(QWidget* widget, QSharedPointer<Database> db) override;
     void saveSettings(QWidget* widget) override;
 };
-
-#endif // KEEPASSXC_REPORTSPAGEHEALTHCHECK_H

@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_WELCOMEWIDGET_H
-#define KEEPASSX_WELCOMEWIDGET_H
+#pragma once
 
 #include <QListWidgetItem>
 
@@ -52,5 +51,3 @@ private:
     const QScopedPointer<Ui::WelcomeWidget> m_ui;
     void removeFromLastDatabases(QListWidgetItem* item);
 };
-
-#endif // KEEPASSX_WELCOMEWIDGET_H

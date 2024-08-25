@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_TEXTSTREAM_H
-#define KEEPASSXC_TEXTSTREAM_H
+#pragma once
 
 #include <QTextStream>
 
@@ -48,5 +47,3 @@ public:
 private:
     void detectCodec();
 };
-
-#endif // KEEPASSXC_TEXTSTREAM_H

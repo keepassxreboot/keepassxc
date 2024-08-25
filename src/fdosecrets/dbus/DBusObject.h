@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_FDOSECRETS_DBUSOBJECT_H
-#define KEEPASSXC_FDOSECRETS_DBUSOBJECT_H
+#pragma once
 
 #include "DBusConstants.h"
 #include "DBusMgr.h"
@@ -117,5 +116,3 @@ namespace FdoSecrets
 } // namespace FdoSecrets
 
 Q_DECLARE_METATYPE(FdoSecrets::DBusResult);
-
-#endif // KEEPASSXC_FDOSECRETS_DBUSOBJECT_H

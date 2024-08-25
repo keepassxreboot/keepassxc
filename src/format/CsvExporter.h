@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_CSVEXPORTER_H
-#define KEEPASSX_CSVEXPORTER_H
+#pragma once
 
 #include <QSharedPointer>
 #include <QString>
@@ -41,5 +40,3 @@ private:
 
     QString m_error;
 };
-
-#endif // KEEPASSX_CSVEXPORTER_H

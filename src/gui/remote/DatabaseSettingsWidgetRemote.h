@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_DATABASESETTINGSWIDGETREMOTE_H
-#define KEEPASSX_DATABASESETTINGSWIDGETREMOTE_H
+#pragma once
 
 #include "gui/dbsettings/DatabaseSettingsWidget.h"
 
@@ -60,5 +59,3 @@ private:
     const QScopedPointer<Ui::DatabaseSettingsWidgetRemote> m_ui;
     bool m_modified = false;
 };
-
-#endif // KEEPASSX_DATABASESETTINGSWIDGETREMOTE_H

@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_ENTRYATTRIBUTESMODEL_H
-#define KEEPASSX_ENTRYATTRIBUTESMODEL_H
+#pragma once
 
 #include <QAbstractListModel>
 
@@ -56,5 +55,3 @@ private:
     QList<QString> m_attributes;
     bool m_nextRenameDataChange;
 };
-
-#endif // KEEPASSX_ENTRYATTRIBUTESMODEL_H

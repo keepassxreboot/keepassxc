@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_PASSKEYEXPORTER_H
-#define KEEPASSXC_PASSKEYEXPORTER_H
+#pragma once
 
 #include <QList>
 #include <QObject>
@@ -40,5 +39,3 @@ private:
 private:
     QPointer<QWidget> m_parent;
 };
-
-#endif // KEEPASSXC_PASSKEYEXPORTER_H

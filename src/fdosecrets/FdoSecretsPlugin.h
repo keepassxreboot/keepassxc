@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_FDOSECRETSPLUGIN_H
-#define KEEPASSXC_FDOSECRETSPLUGIN_H
+#pragma once
 
 #include "gui/ApplicationSettingsWidget.h"
 #include "gui/Icons.h"
@@ -95,5 +94,3 @@ private:
     QSharedPointer<FdoSecrets::DBusMgr> m_dbus;
     QSharedPointer<FdoSecrets::Service> m_secretService;
 };
-
-#endif // KEEPASSXC_FDOSECRETSPLUGIN_H

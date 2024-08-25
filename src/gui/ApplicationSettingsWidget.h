@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_SETTINGSWIDGET_H
-#define KEEPASSX_SETTINGSWIDGET_H
+#pragma once
 
 #include "gui/EditWidget.h"
 
@@ -73,5 +72,3 @@ private:
     class ExtraPage;
     QList<ExtraPage> m_extraPages;
 };
-
-#endif // KEEPASSX_SETTINGSWIDGET_H

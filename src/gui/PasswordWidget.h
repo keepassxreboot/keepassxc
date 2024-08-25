@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_PASSWORDWIDGET_H
-#define KEEPASSX_PASSWORDWIDGET_H
+#pragma once
 
 #include <QAction>
 #include <QLineEdit>
@@ -81,5 +80,3 @@ private:
 
     bool m_capslockState = false;
 };
-
-#endif // KEEPASSX_PASSWORDWIDGET_H

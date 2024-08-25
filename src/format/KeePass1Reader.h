@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_KEEPASS1READER_H
-#define KEEPASSX_KEEPASS1READER_H
+#pragma once
 
 #include <QCoreApplication>
 #include <QSharedPointer>
@@ -79,5 +78,3 @@ private:
     bool m_error;
     QString m_errorStr;
 };
-
-#endif // KEEPASSX_KEEPASS1READER_H

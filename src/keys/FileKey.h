@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_FILEKEY_H
-#define KEEPASSX_FILEKEY_H
+#pragma once
 
 #include <botan/mem_ops.h>
 #include <botan/secmem.h>
@@ -67,5 +66,3 @@ private:
     Type m_type = None;
     QString m_file;
 };
-
-#endif // KEEPASSX_FILEKEY_H

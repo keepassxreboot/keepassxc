@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_AUTOTYPEMATCHVIEW_H
-#define KEEPASSX_AUTOTYPEMATCHVIEW_H
+#pragma once
 
 #include <QTableView>
 
@@ -55,5 +54,3 @@ private:
     AutoTypeMatchModel* const m_model;
     QSortFilterProxyModel* const m_sortModel;
 };
-
-#endif // KEEPASSX_AUTOTYPEMATCHVIEW_H

@@ -16,8 +16,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_ABOUTDIALOG_H
-#define KEEPASSX_ABOUTDIALOG_H
+#pragma once
 
 #include <QDialog>
 
@@ -40,5 +39,3 @@ protected slots:
 private:
     QScopedPointer<Ui::AboutDialog> m_ui;
 };
-
-#endif // KEEPASSX_ABOUTDIALOG_H

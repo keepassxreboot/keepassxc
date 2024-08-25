@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SCREENLOCKLISTENERMAC_H
-#define SCREENLOCKLISTENERMAC_H
+#pragma once
 #include <QObject>
 #include <QWidget>
 
@@ -40,5 +39,3 @@ private:
     ScreenLockListenerMac(QWidget* parent = nullptr);
     void onSignalReception();
 };
-
-#endif // SCREENLOCKLISTENERMAC_H
