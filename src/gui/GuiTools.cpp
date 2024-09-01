@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -64,6 +64,21 @@ namespace GuiTools
 
             return answer == MessageBox::Move;
         }
+    }
+
+    bool confirmDeletePluginData(QWidget* parent, const QList<Entry*>& entries)
+    {
+        if (!parent || entries.isEmpty()) {
+            return false;
+        }
+
+        auto answer = MessageBox::question(parent,
+                                           QObject::tr("Delete plugin data?"),
+                                           QObject::tr("Delete plugin data from Entry(s)?", "", entries.size()),
+                                           MessageBox::Delete | MessageBox::Cancel,
+                                           MessageBox::Cancel);
+
+        return answer == MessageBox::Delete;
     }
 
     size_t deleteEntriesResolveReferences(QWidget* parent, const QList<Entry*>& entries, bool permanent)
