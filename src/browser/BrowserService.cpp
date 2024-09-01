@@ -977,6 +977,15 @@ bool BrowserService::deleteEntry(const QString& uuid)
     return true;
 }
 
+void BrowserService::removePluginData(Entry* entry) const
+{
+    if (entry) {
+        entry->beginUpdate();
+        entry->customData()->remove(BrowserService::KEEPASSXCBROWSER_NAME);
+        entry->endUpdate();
+    }
+}
+
 QList<Entry*> BrowserService::searchEntries(const QSharedPointer<Database>& db,
                                             const QString& siteUrl,
                                             const QString& formUrl,
