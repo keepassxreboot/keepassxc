@@ -230,6 +230,9 @@ QVariant Config::get(ConfigKey key)
 {
     auto cfg = configStrings[key];
     auto defaultValue = configStrings[key].defaultValue;
+    if (this->isManaged(key)) {
+        return m_managedSettings->value(cfg.name, defaultValue);
+    }
     if (m_localSettings && cfg.type == Local) {
         return m_localSettings->value(cfg.name, defaultValue);
     }
@@ -239,6 +242,16 @@ QVariant Config::get(ConfigKey key)
 QVariant Config::getDefault(Config::ConfigKey key)
 {
     return configStrings[key].defaultValue;
+}
+
+bool Config::isManaged(ConfigKey key)
+{
+#if defined(Q_OS_WIN)
+    auto cfg = configStrings[key];
+    return m_managedSettings && m_managedSettings->contains(cfg.name);
+#else
+    return false;
+#endif
 }
 
 bool Config::hasAccessError()
@@ -502,6 +515,11 @@ void Config::init(const QString& configFileName, const QString& localConfigFileN
     if (!localConfigFileName.isEmpty() && configFileName != localConfigFileName) {
         m_localSettings.reset(new QSettings(localConfigFileName, QSettings::IniFormat));
     }
+
+#if defined(Q_OS_WIN)
+    m_managedSettings.reset(
+        new QSettings("HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\KeePassXC", QSettings::NativeFormat));
+#endif
 
     migrate();
     connect(qApp, &QCoreApplication::aboutToQuit, this, &Config::sync);
