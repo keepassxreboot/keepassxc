@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,7 +27,6 @@
 #include "gui/styles/StateColorPalette.h"
 
 #include <QJsonDocument>
-#include <QJsonObject>
 #include <QMenu>
 #include <QShortcut>
 #include <QSortFilterProxyModel>
@@ -277,9 +276,19 @@ void ReportsWidgetBrowserStatistics::customMenuRequested(QPoint pos)
     }
 
     // Create the "delete entry" menu item
-    const auto delEntry = new QAction(icons()->icon("entry-delete"), tr("Delete Entry(s)…", "", selected.size()), this);
-    menu->addAction(delEntry);
-    connect(delEntry, &QAction::triggered, this, &ReportsWidgetBrowserStatistics::deleteSelectedEntries);
+    const auto deleteEntry =
+        new QAction(icons()->icon("entry-delete"), tr("Delete Entry(s)…", "", selected.size()), this);
+    menu->addAction(deleteEntry);
+    connect(deleteEntry, &QAction::triggered, this, &ReportsWidgetBrowserStatistics::deleteSelectedEntries);
+
+    // Create the "delete plugin data" menu item
+    const auto deletePluginData =
+        new QAction(icons()->icon("entry-delete"), tr("Delete plugin data from Entry(s)…", "", selected.size()), this);
+    menu->addAction(deletePluginData);
+    connect(deletePluginData,
+            &QAction::triggered,
+            this,
+            &ReportsWidgetBrowserStatistics::deletePluginDataFromSelectedEntries);
 
     // Create the "exclude from reports" menu item
     const auto exclude = new QAction(icons()->icon("reports-exclude"), tr("Exclude from reports"), this);
@@ -320,18 +329,23 @@ void ReportsWidgetBrowserStatistics::saveSettings()
 
 void ReportsWidgetBrowserStatistics::deleteSelectedEntries()
 {
-    QList<Entry*> selectedEntries;
-    for (auto index : m_ui->browserStatisticsTableView->selectionModel()->selectedRows()) {
-        auto row = m_modelProxy->mapToSource(index).row();
-        auto entry = m_rowToEntry[row].second;
-        if (entry) {
-            selectedEntries << entry;
-        }
-    }
-
+    const auto& selectedEntries = getSelectedEntries();
     bool permanent = !m_db->metadata()->recycleBinEnabled();
+
     if (GuiTools::confirmDeleteEntries(this, selectedEntries, permanent)) {
         GuiTools::deleteEntriesResolveReferences(this, selectedEntries, permanent);
+    }
+
+    calculateBrowserStatistics();
+}
+
+void ReportsWidgetBrowserStatistics::deletePluginDataFromSelectedEntries()
+{
+    const auto& selectedEntries = getSelectedEntries();
+    if (GuiTools::confirmDeletePluginData(this, selectedEntries)) {
+        for (auto& entry : selectedEntries) {
+            browserService()->removePluginData(entry);
+        }
     }
 
     calculateBrowserStatistics();
@@ -371,4 +385,18 @@ QMap<QString, QStringList> ReportsWidgetBrowserStatistics::getBrowserConfigFromE
     }
 
     return configList;
+}
+
+QList<Entry*> ReportsWidgetBrowserStatistics::getSelectedEntries() const
+{
+    QList<Entry*> selectedEntries;
+    for (auto index : m_ui->browserStatisticsTableView->selectionModel()->selectedRows()) {
+        auto row = m_modelProxy->mapToSource(index).row();
+        auto entry = m_rowToEntry[row].second;
+        if (entry) {
+            selectedEntries << entry;
+        }
+    }
+
+    return selectedEntries;
 }
