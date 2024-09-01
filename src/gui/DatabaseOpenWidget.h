@@ -74,10 +74,11 @@ protected:
 
 protected slots:
     virtual void openDatabase();
-    void reject();
 
 private slots:
     bool browseKeyFile();
+    void cancelDatabaseUnlock();
+    void reject();
     void toggleHardwareKeyComponent(bool state);
     void pollHardwareKey(bool manualTrigger = false);
     void hardwareKeyResponse(bool found);

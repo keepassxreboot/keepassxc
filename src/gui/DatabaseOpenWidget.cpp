@@ -85,7 +85,7 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     okBtn->setText(tr("Unlock"));
     okBtn->setDefault(true);
     connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(openDatabase()));
-    connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(reject()));
+    connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(cancelDatabaseUnlock()));
 
     connect(m_ui->addKeyFileLinkLabel, &QLabel::linkActivated, this, &DatabaseOpenWidget::browseKeyFile);
     connect(m_ui->keyFileLineEdit, &PasswordWidget::textChanged, this, [&](const QString& text) {
@@ -446,6 +446,18 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::buildDatabaseKey()
 #endif
 
     return databaseKey;
+}
+
+void DatabaseOpenWidget::cancelDatabaseUnlock()
+{
+    auto result = MessageBox::question(this,
+                                       tr("Cancel Database Unlock"),
+                                       tr("Would you like to cancel unlocking this database?"),
+                                       MessageBox::Cancel | MessageBox::Ok,
+                                       MessageBox::Cancel);
+    if (result == MessageBox::Ok) {
+        reject();
+    }
 }
 
 void DatabaseOpenWidget::reject()
