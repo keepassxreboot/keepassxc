@@ -231,7 +231,7 @@ QVariant Config::get(ConfigKey key)
     auto cfg = configStrings[key];
     auto defaultValue = configStrings[key].defaultValue;
 #if defined(Q_OS_WIN)
-    if (this->isManaged(key)) {
+    if (isManaged(key)) {
         return m_managedSettings->value(cfg.name, defaultValue);
     }
 #endif
