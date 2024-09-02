@@ -1081,6 +1081,24 @@ void Database::setPublicColor(const QString& color)
     markAsModified();
 }
 
+int Database::publicIcon()
+{
+    if (publicCustomData().contains("KPXC_PUBLIC_ICON")) {
+        return publicCustomData().value("KPXC_PUBLIC_ICON").toInt();
+    }
+    return -1;
+}
+
+void Database::setPublicIcon(int iconIndex)
+{
+    if (iconIndex < 0) {
+        publicCustomData().remove("KPXC_PUBLIC_ICON");
+    } else {
+        publicCustomData().insert("KPXC_PUBLIC_ICON", iconIndex);
+    }
+    markAsModified();
+}
+
 void Database::markAsTemporaryDatabase()
 {
     m_isTemporaryDatabase = true;

@@ -2230,6 +2230,14 @@ removed from the database.</source>
         <source>Clear</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Display icon:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Database Icon</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetKeeShare</name>

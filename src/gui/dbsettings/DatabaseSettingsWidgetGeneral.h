@@ -46,8 +46,10 @@ protected:
     void showEvent(QShowEvent* event) override;
 
 private slots:
-    void pickColor();
-    void setupColorButton(const QColor& color);
+    void pickPublicColor();
+    void setupPublicColorButton(const QColor& color);
+    void pickPublicIcon();
+    void setupPublicIconButton(int iconIndex);
 
 private:
     const QScopedPointer<Ui::DatabaseSettingsWidgetGeneral> m_ui;

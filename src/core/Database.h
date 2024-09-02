@@ -112,6 +112,8 @@ public:
     void setPublicName(const QString& name);
     QString publicColor();
     void setPublicColor(const QString& color);
+    int publicIcon();
+    void setPublicIcon(int iconIndex);
 
     Metadata* metadata();
     const Metadata* metadata() const;
