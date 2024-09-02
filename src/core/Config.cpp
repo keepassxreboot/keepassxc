@@ -248,8 +248,8 @@ QVariant Config::getDefault(Config::ConfigKey key)
 
 bool Config::isManaged(ConfigKey key)
 {
-#if defined(Q_OS_WIN)
     auto cfg = configStrings[key];
+#if defined(Q_OS_WIN)
     return m_managedSettings && m_managedSettings->contains(cfg.name);
 #else
     return false;
