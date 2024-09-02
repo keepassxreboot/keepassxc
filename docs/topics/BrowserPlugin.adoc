@@ -138,6 +138,23 @@ WARNING: We do not recommend changing any of these settings as they may break th
 image::browser_advanced_settings.png[]
 
 === Advanced Setup
+
+==== Custom Browser option
+
+It is possible to enable support for a custom browser (e.g. LibreWolf, WaterFox, Arc, beta and nightly browsers, etc.) using this feature.
+This feature is only available for Linux and macOS.
+
+.Custom browser configuration
+image::browser_custom_browser_configuration.png[]
+
+The native messaging script file needed for the custom browser depends on the browser type. For Firefox based browsers like Librefox the _Browser type_ must be _Firefox_. For Arc, Opera, etc. the type must be set to _Chromium_.
+
+_Config location_ must have the exact path for the browser's _native-messaging-hosts_ folder. If you are unsure, refer to our https://github.com/keepassxreboot/keepassxc-browser/wiki/Troubleshooting-guide#1-after-enabling-browser-integration-and-support-for-your-browser[Troubleshooting Guide] for listing of the most common paths, and a few ways for finding a path when it's not known.
+
+When a Custom Browser has been successfully set, KeePassXC will automatically write the needed native messaging script file to the folder.
+
+If you wish to support multiple custom browsers, you can copy the native messaging script files manually to the _native-messaging-hosts_ folder from other browsers.
+
 ==== Managed Microsoft Edge on Windows
 1. Deploy *org.keepassxc.keepassxc_browser_edge.json* to, for example, `C:\ProgramData\KeepassXC` on all managed platforms.
 +
