@@ -597,6 +597,11 @@ void Entry::updateTotp()
                                                   m_attributes->value(Totp::ATTRIBUTE_SEED));
     } else if (m_attributes->contains(Totp::ATTRIBUTE_OTP)) {
         m_data.totpSettings = Totp::parseSettings(m_attributes->value(Totp::ATTRIBUTE_OTP));
+    } else if (m_attributes->contains(Totp::KP2_TOTP_SECRET)) {
+        m_data.totpSettings = Totp::fromKeePass2Totp(m_attributes->value(Totp::KP2_TOTP_SECRET),
+                                                     m_attributes->value(Totp::KP2_TOTP_ALGORITHM),
+                                                     m_attributes->value(Totp::KP2_TOTP_LENGTH),
+                                                     m_attributes->value(Totp::KP2_TOTP_PERIOD));
     } else {
         m_data.totpSettings.reset();
     }

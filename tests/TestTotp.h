@@ -31,6 +31,7 @@ private slots:
     void testTotpCode();
     void testSteamTotp();
     void testEntryHistory();
+    void testKeePass2();
 };
 
 #endif // KEEPASSX_TESTTOTP_H

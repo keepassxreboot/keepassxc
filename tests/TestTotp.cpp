@@ -40,11 +40,11 @@ void TestTotp::testParseSecret()
     auto settings = Totp::parseSettings(secret);
     QVERIFY(!settings.isNull());
     QCOMPARE(settings->key, QString("HXDMVJECJJWSRB3HWIZR4IFUGFTMXBOZ"));
-    QCOMPARE(settings->custom, false);
     QCOMPARE(settings->format, Totp::StorageFormat::OTPURL);
     QCOMPARE(settings->digits, 6u);
     QCOMPARE(settings->step, 30u);
     QCOMPARE(settings->algorithm, Totp::Algorithm::Sha1);
+    QCOMPARE(Totp::hasCustomSettings(settings), false);
 
     // OTP URL with non-default hash type
     secret = "otpauth://totp/"
@@ -53,11 +53,11 @@ void TestTotp::testParseSecret()
     settings = Totp::parseSettings(secret);
     QVERIFY(!settings.isNull());
     QCOMPARE(settings->key, QString("HXDMVJECJJWSRB3HWIZR4IFUGFTMXBOZ"));
-    QCOMPARE(settings->custom, true);
     QCOMPARE(settings->format, Totp::StorageFormat::OTPURL);
     QCOMPARE(settings->digits, 6u);
     QCOMPARE(settings->step, 30u);
     QCOMPARE(settings->algorithm, Totp::Algorithm::Sha512);
+    QCOMPARE(Totp::hasCustomSettings(settings), true);
 
     // Max TOTP step of 24-hours
     secret.replace("period=30", "period=90000");
@@ -70,33 +70,33 @@ void TestTotp::testParseSecret()
     settings = Totp::parseSettings(secret);
     QVERIFY(!settings.isNull());
     QCOMPARE(settings->key, QString("HXDMVJECJJWSRBY="));
-    QCOMPARE(settings->custom, true);
     QCOMPARE(settings->format, Totp::StorageFormat::KEEOTP);
     QCOMPARE(settings->digits, 8u);
     QCOMPARE(settings->step, 25u);
     QCOMPARE(settings->algorithm, Totp::Algorithm::Sha256);
+    QCOMPARE(Totp::hasCustomSettings(settings), true);
 
     // Semi-colon delineated "TOTP Settings"
     secret = "gezdgnbvgy3tqojqgezdgnbvgy3tqojq";
     settings = Totp::parseSettings("30;8", secret);
     QVERIFY(!settings.isNull());
     QCOMPARE(settings->key, QString("gezdgnbvgy3tqojqgezdgnbvgy3tqojq"));
-    QCOMPARE(settings->custom, true);
     QCOMPARE(settings->format, Totp::StorageFormat::LEGACY);
     QCOMPARE(settings->digits, 8u);
     QCOMPARE(settings->step, 30u);
     QCOMPARE(settings->algorithm, Totp::Algorithm::Sha1);
+    QCOMPARE(Totp::hasCustomSettings(settings), true);
 
     // Bare secret (no "TOTP Settings" attribute)
     secret = "gezdgnbvgy3tqojqgezdgnbvgy3tqojq";
     settings = Totp::parseSettings("", secret);
     QVERIFY(!settings.isNull());
     QCOMPARE(settings->key, QString("gezdgnbvgy3tqojqgezdgnbvgy3tqojq"));
-    QCOMPARE(settings->custom, false);
     QCOMPARE(settings->format, Totp::StorageFormat::LEGACY);
     QCOMPARE(settings->digits, 6u);
     QCOMPARE(settings->step, 30u);
     QCOMPARE(settings->algorithm, Totp::Algorithm::Sha1);
+    QCOMPARE(Totp::hasCustomSettings(settings), false);
 
     // Blank settings (expected failure)
     settings = Totp::parseSettings("", "");
@@ -122,7 +122,6 @@ void TestTotp::testTotpCode()
 
     // Test 8 digit TOTP (custom)
     settings->digits = 8;
-    settings->custom = true;
     time = 1111111111;
     QCOMPARE(Totp::generateTotp(settings, time), QString("14050471"));
 
@@ -132,11 +131,19 @@ void TestTotp::testTotpCode()
 
 void TestTotp::testSteamTotp()
 {
+    // Legacy parsing
+    auto settings = Totp::parseSettings("30;S", "63BEDWCQZKTQWPESARIERL5DTTQFCJTK");
+    QCOMPARE(settings->key, QString("63BEDWCQZKTQWPESARIERL5DTTQFCJTK"));
+    QCOMPARE(settings->encoder.shortName, Totp::STEAM_SHORTNAME);
+    QCOMPARE(settings->format, Totp::StorageFormat::LEGACY);
+    QCOMPARE(settings->digits, Totp::STEAM_DIGITS);
+    QCOMPARE(settings->step, 30u);
+
     // OTP URL Parsing
     QString secret = "otpauth://totp/"
                      "test:test@example.com?secret=63BEDWCQZKTQWPESARIERL5DTTQFCJTK&issuer=Valve&algorithm="
                      "SHA1&digits=5&period=30&encoder=steam";
-    auto settings = Totp::parseSettings(secret);
+    settings = Totp::parseSettings(secret);
 
     QCOMPARE(settings->key, QString("63BEDWCQZKTQWPESARIERL5DTTQFCJTK"));
     QCOMPARE(settings->encoder.shortName, Totp::STEAM_SHORTNAME);
@@ -176,4 +183,40 @@ void TestTotp::testEntryHistory()
     entry.setTotp(nullptr);
     QVERIFY(!entry.hasTotp());
     QCOMPARE(entry.historyItems().size(), 3);
+}
+
+void TestTotp::testKeePass2()
+{
+    Entry entry;
+    auto attr = entry.attributes();
+
+    // Default settings
+    attr->set("TimeOtp-Secret-Base32", "GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ");
+
+    auto settings = entry.totpSettings();
+    QVERIFY(settings);
+    QCOMPARE(settings->key, QString("GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ"));
+    QCOMPARE(settings->algorithm, Totp::Algorithm::Sha1);
+    QCOMPARE(settings->digits, 6u);
+    QCOMPARE(settings->step, 30u);
+    QCOMPARE(Totp::hasCustomSettings(settings), false);
+
+    // Custom settings
+    attr->set("TimeOtp-Algorithm", "HMAC-SHA-256");
+    attr->set("TimeOtp-Length", "8");
+
+    settings = entry.totpSettings();
+    QVERIFY(settings);
+    QCOMPARE(settings->key, QString("GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ"));
+    QCOMPARE(settings->algorithm, Totp::Algorithm::Sha256);
+    QCOMPARE(settings->digits, 8u);
+    QCOMPARE(settings->step, 30u);
+    QCOMPARE(Totp::hasCustomSettings(settings), true);
+
+    // Base64 and other encodings are not supported
+    attr->remove("TimeOtp-Secret-Base32");
+    attr->set("TimeOtp-Secret-Base64", "GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ");
+
+    settings = entry.totpSettings();
+    QVERIFY(!settings);
 }
