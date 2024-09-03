@@ -36,10 +36,11 @@ static QList<Totp::Encoder> totpEncoders{
 
 static Totp::Algorithm getHashTypeByName(const QString& name)
 {
-    if (name.compare(QString("SHA512"), Qt::CaseInsensitive) == 0) {
+    auto nameUpper = name.toUpper();
+    if (nameUpper == "SHA512" || nameUpper == "HMAC-SHA-512") {
         return Totp::Algorithm::Sha512;
     }
-    if (name.compare(QString("SHA256"), Qt::CaseInsensitive) == 0) {
+    if (nameUpper == "SHA256" || nameUpper == "HMAC-SHA-256") {
         return Totp::Algorithm::Sha256;
     }
     return Totp::Algorithm::Sha1;
@@ -57,6 +58,30 @@ static QString getNameForHashType(const Totp::Algorithm hashType)
     }
 }
 
+QSharedPointer<Totp::Settings>
+Totp::fromKeePass2Totp(const QString& secret, const QString& algorithm, const QString& length, const QString& period)
+{
+    // Must have at least a secret to continue
+    if (secret.isEmpty()) {
+        return {};
+    }
+
+    // Create default settings
+    auto settings = createSettings(secret);
+
+    if (!algorithm.isEmpty()) {
+        settings->algorithm = getHashTypeByName(algorithm);
+    }
+    if (!length.isEmpty()) {
+        settings->digits = length.toUInt();
+    }
+    if (!period.isEmpty()) {
+        settings->step = period.toUInt();
+    }
+
+    return settings;
+}
+
 QSharedPointer<Totp::Settings> Totp::parseSettings(const QString& rawSettings, const QString& key)
 {
     // Early out if both strings are empty
@@ -65,7 +90,7 @@ QSharedPointer<Totp::Settings> Totp::parseSettings(const QString& rawSettings, c
     }
 
     // Create default settings
-    auto settings = createSettings(key, DEFAULT_DIGITS, DEFAULT_STEP);
+    auto settings = createSettings(key);
 
     QUrl url(rawSettings);
     if (url.isValid() && url.scheme() == "otpauth") {
@@ -113,6 +138,7 @@ QSharedPointer<Totp::Settings> Totp::parseSettings(const QString& rawSettings, c
                 if (vars[1] == STEAM_SHORTNAME) {
                     // Explicit steam encoder
                     settings->encoder = steamEncoder();
+                    settings->digits = STEAM_DIGITS;
                 } else {
                     // Extract step and digits
                     settings->step = vars[0].toUInt();
@@ -126,13 +152,6 @@ QSharedPointer<Totp::Settings> Totp::parseSettings(const QString& rawSettings, c
     settings->digits = qBound(1u, settings->digits, 10u);
     settings->step = qBound(1u, settings->step, 86400u);
 
-    // Detect custom settings, used by setup GUI
-    if (settings->encoder.shortName.isEmpty()
-        && (settings->digits != DEFAULT_DIGITS || settings->step != DEFAULT_STEP
-            || settings->algorithm != DEFAULT_ALGORITHM)) {
-        settings->custom = true;
-    }
-
     return settings;
 }
 
@@ -143,9 +162,8 @@ QSharedPointer<Totp::Settings> Totp::createSettings(const QString& key,
                                                     const QString& encoderShortName,
                                                     const Totp::Algorithm algorithm)
 {
-    bool isCustom = digits != DEFAULT_DIGITS || step != DEFAULT_STEP || algorithm != DEFAULT_ALGORITHM;
     return QSharedPointer<Totp::Settings>(
-        new Totp::Settings{format, getEncoderByShortName(encoderShortName), algorithm, key, isCustom, digits, step});
+        new Totp::Settings{format, getEncoderByShortName(encoderShortName), algorithm, key, digits, step});
 }
 
 QString Totp::writeSettings(const QSharedPointer<Totp::Settings>& settings,
@@ -200,8 +218,8 @@ QString Totp::generateTotp(const QSharedPointer<Totp::Settings>& settings, const
     }
 
     const Encoder& encoder = settings->encoder;
-    uint step = settings->custom ? settings->step : encoder.step;
-    uint digits = settings->custom ? settings->digits : encoder.digits;
+    uint step = settings->step;
+    uint digits = settings->digits;
 
     quint64 current;
     if (time == 0) {
@@ -275,6 +293,13 @@ QList<QPair<QString, Totp::Algorithm>> Totp::supportedAlgorithms()
     algorithms << QPair<QString, Algorithm>(QStringLiteral("SHA-256"), Algorithm::Sha256);
     algorithms << QPair<QString, Algorithm>(QStringLiteral("SHA-512"), Algorithm::Sha512);
     return algorithms;
+}
+
+bool Totp::hasCustomSettings(const QSharedPointer<Totp::Settings>& settings)
+{
+    return settings
+           && (settings->digits != DEFAULT_DIGITS || settings->step != DEFAULT_STEP
+               || settings->algorithm != DEFAULT_ALGORITHM);
 }
 
 Totp::Encoder& Totp::defaultEncoder()

@@ -56,7 +56,6 @@ namespace Totp
         Totp::Encoder encoder;
         Totp::Algorithm algorithm;
         QString key;
-        bool custom;
         uint digits;
         uint step;
     };
@@ -72,10 +71,19 @@ namespace Totp
     static const QString ATTRIBUTE_SEED = "TOTP Seed";
     static const QString ATTRIBUTE_SETTINGS = "TOTP Settings";
 
+    // Support for KeePass2 TOTP
+    static const QString KP2_TOTP_SECRET = "TimeOtp-Secret-Base32";
+    static const QString KP2_TOTP_ALGORITHM = "TimeOtp-Algorithm";
+    static const QString KP2_TOTP_LENGTH = "TimeOtp-Length";
+    static const QString KP2_TOTP_PERIOD = "TimeOtp-Period";
+
+    QSharedPointer<Totp::Settings>
+    fromKeePass2Totp(const QString& secret, const QString& algorithm, const QString& length, const QString& period);
+
     QSharedPointer<Totp::Settings> parseSettings(const QString& rawSettings, const QString& key = {});
     QSharedPointer<Totp::Settings> createSettings(const QString& key,
-                                                  const uint digits,
-                                                  const uint step,
+                                                  const uint digits = DEFAULT_DIGITS,
+                                                  const uint step = DEFAULT_STEP,
                                                   const Totp::StorageFormat format = DEFAULT_FORMAT,
                                                   const QString& encoderShortName = {},
                                                   const Totp::Algorithm algorithm = DEFAULT_ALGORITHM);
@@ -85,6 +93,8 @@ namespace Totp
                           bool forceOtp = false);
 
     QString generateTotp(const QSharedPointer<Totp::Settings>& settings, const quint64 time = 0ull);
+
+    bool hasCustomSettings(const QSharedPointer<Totp::Settings>& settings);
 
     QList<QPair<QString, QString>> supportedEncoders();
     QList<QPair<QString, Algorithm>> supportedAlgorithms();

@@ -119,7 +119,7 @@ void TotpSetupDialog::init()
 
         if (settings->encoder.shortName == Totp::STEAM_SHORTNAME) {
             m_ui->radioSteam->setChecked(true);
-        } else if (settings->custom) {
+        } else if (Totp::hasCustomSettings(settings)) {
             m_ui->radioCustom->setChecked(true);
             m_ui->digitsSpinBox->setValue(settings->digits);
             int index = m_ui->algorithmComboBox->findData(settings->algorithm);
