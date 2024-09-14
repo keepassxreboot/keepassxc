@@ -58,6 +58,7 @@ static const QString KEEPASSXCBROWSER_GROUP_NAME = QStringLiteral("KeePassXC-Bro
 static int KEEPASSXCBROWSER_DEFAULT_ICON = 1;
 #ifdef WITH_XC_BROWSER_PASSKEYS
 static int KEEPASSXCBROWSER_PASSKEY_ICON = 13;
+static const QString PASSKEYS_DEFAULT_GROUP_NAME = QStringLiteral("KeePassXC-Browser Passkeys");
 #endif
 // These are for the settings and password conversion
 static const QString KEEPASSHTTP_NAME = QStringLiteral("KeePassHttp Settings");
@@ -258,8 +259,12 @@ QJsonArray BrowserService::getDatabaseEntries()
     return entries;
 }
 
-QJsonObject BrowserService::createNewGroup(const QString& groupName)
+QJsonObject BrowserService::createNewGroup(const QString& groupName, bool isPasskeysGroup)
 {
+    if (groupName.isEmpty()) {
+        return {};
+    }
+
     auto db = getDatabase();
     if (!db) {
         return {};
@@ -309,10 +314,15 @@ QJsonObject BrowserService::createNewGroup(const QString& groupName)
         QString gName = getGroupName(i);
         auto tempGroup = rootGroup->findGroupByPath(gName);
         if (!tempGroup) {
-            Group* newGroup = new Group();
+            auto newGroup = new Group();
             newGroup->setName(groups[i]);
             newGroup->setUuid(QUuid::createUuid());
             newGroup->setParent(previousGroup);
+#ifdef WITH_XC_BROWSER_PASSKEYS
+            if (isPasskeysGroup && i == groups.length() - 1) {
+                newGroup->setIcon(KEEPASSXCBROWSER_PASSKEY_ICON);
+            }
+#endif
             name = newGroup->name();
             uuid = Tools::uuidToHex(newGroup->uuid());
             previousGroup = newGroup;
@@ -620,6 +630,7 @@ QString BrowserService::getKey(const QString& id)
 // Passkey registration
 QJsonObject BrowserService::showPasskeysRegisterPrompt(const QJsonObject& publicKeyOptions,
                                                        const QString& origin,
+                                                       const QString& groupName,
                                                        const StringPairList& keyList)
 {
     auto db = selectedDatabase();
@@ -691,8 +702,13 @@ QJsonObject BrowserService::showPasskeysRegisterPrompt(const QJsonObject& public
                                   publicKeyCredentials.key);
             }
         } else {
+            // Handle new/existing group
+            const auto createResponse =
+                createNewGroup(groupName.isEmpty() ? PASSKEYS_DEFAULT_GROUP_NAME : groupName, true);
+            const auto group = db->rootGroup()->findGroupByUuid(Tools::hexToUuid(createResponse["uuid"].toString()));
+
             addPasskeyToGroup(db,
-                              nullptr,
+                              group,
                               origin,
                               rpId,
                               rpName,
