@@ -579,8 +579,9 @@ QJsonObject BrowserAction::handlePasskeysRegister(const QJsonObject& json, const
         return getErrorReply(action, ERROR_PASSKEYS_INVALID_URL_PROVIDED);
     }
 
+    const auto groupName = browserRequest.getString("groupName");
     const auto keyList = getConnectionKeys(browserRequest);
-    const auto response = browserService()->showPasskeysRegisterPrompt(publicKey, origin, keyList);
+    const auto response = browserService()->showPasskeysRegisterPrompt(publicKey, origin, groupName, keyList);
 
     const Parameters params{{"response", response}};
     return buildResponse(action, browserRequest.incrementedNonce, params);
