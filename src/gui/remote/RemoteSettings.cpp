@@ -89,8 +89,10 @@ QString RemoteSettings::toConfig() const
         object["name"] = params->name;
         object["downloadCommand"] = params->downloadCommand;
         object["downloadCommandInput"] = params->downloadInput;
+        object["downloadTimeout"] = params->downloadTimeout;
         object["uploadCommand"] = params->uploadCommand;
         object["uploadCommandInput"] = params->uploadInput;
+        object["uploadTimeout"] = params->uploadTimeout;
         config << object;
     }
     QJsonDocument doc(config);
@@ -108,8 +110,10 @@ void RemoteSettings::fromConfig(const QString& data)
         params->name = itemMap["name"].toString();
         params->downloadCommand = itemMap["downloadCommand"].toString();
         params->downloadInput = itemMap["downloadCommandInput"].toString();
+        params->downloadTimeout = itemMap.value("downloadTimeout", 10).toInt();
         params->uploadCommand = itemMap["uploadCommand"].toString();
         params->uploadInput = itemMap["uploadCommandInput"].toString();
+        params->uploadTimeout = itemMap.value("uploadTimeout", 10).toInt();
 
         m_remoteParams.insert(params->name, params);
     }

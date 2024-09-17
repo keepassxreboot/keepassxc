@@ -2372,6 +2372,14 @@ The command has to exit. In case of `sftp` as last command `exit` has to be sent
             </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Timeout:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> seconds</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DatabaseTabWidget</name>
