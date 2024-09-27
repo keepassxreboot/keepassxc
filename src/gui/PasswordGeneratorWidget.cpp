@@ -67,7 +67,7 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     connect(m_ui->buttonGenerate, SIGNAL(clicked()), SLOT(regeneratePassword()));
     connect(m_ui->buttonDeleteWordList, SIGNAL(clicked()), SLOT(deleteWordList()));
     connect(m_ui->buttonAddWordList, SIGNAL(clicked()), SLOT(addWordList()));
-    connect(m_ui->buttonClose, SIGNAL(clicked()), SIGNAL(closed()));
+    connect(m_ui->buttonClose, SIGNAL(clicked()), SLOT(confirmClose()));
 
     connect(m_ui->sliderLength, SIGNAL(valueChanged(int)), SLOT(passwordLengthChanged(int)));
     connect(m_ui->spinBoxLength, SIGNAL(valueChanged(int)), SLOT(passwordLengthChanged(int)));
@@ -121,9 +121,25 @@ PasswordGeneratorWidget::~PasswordGeneratorWidget() = default;
 
 void PasswordGeneratorWidget::closeEvent(QCloseEvent* event)
 {
-    // Emits closed signal when clicking X from title bar
+    confirmClose();
+    event->ignore();
+}
+
+void PasswordGeneratorWidget::confirmClose()
+{
+    // Only ask for discard confirmation if in popup mode
+    if (!m_standalone) {
+        auto result = MessageBox::question(this,
+                                           tr("Confirm Discard"),
+                                           tr("Do you want to discard this password?"),
+                                           MessageBox::Discard | MessageBox::Cancel,
+                                           MessageBox::Cancel);
+        if (result == MessageBox::Cancel) {
+            return;
+        }
+    }
+
     emit closed();
-    QWidget::closeEvent(event);
 }
 
 PasswordGeneratorWidget* PasswordGeneratorWidget::popupGenerator(QWidget* parent)
@@ -325,10 +341,12 @@ void PasswordGeneratorWidget::updatePasswordLengthLabel(const QString& password)
 
 void PasswordGeneratorWidget::applyPassword()
 {
-    saveSettings();
-    m_passwordGenerated = true;
-    emit appliedPassword(m_ui->editNewPassword->text());
-    emit closed();
+    if (!m_standalone) {
+        saveSettings();
+        m_passwordGenerated = true;
+        emit appliedPassword(m_ui->editNewPassword->text());
+        emit closed();
+    }
 }
 
 void PasswordGeneratorWidget::copyPassword()

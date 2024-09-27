@@ -69,6 +69,7 @@ public slots:
     void setPasswordVisible(bool visible);
     void deleteWordList();
     void addWordList();
+    void confirmClose();
 
 protected:
     void closeEvent(QCloseEvent* event) override;

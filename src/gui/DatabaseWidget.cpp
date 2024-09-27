@@ -1973,7 +1973,11 @@ bool DatabaseWidget::lock()
         auto parent = modalWidget->parentWidget();
         while (parent) {
             if (parent == this) {
+                // Preempt any popup questions
+                // TODO: Figure out a way to "reject" or "accept" instead of specific buttons
+                MessageBox::setNextAnswer(MessageBox::Discard);
                 modalWidget->close();
+                MessageBox::setNextAnswer(MessageBox::NoButton);
                 break;
             }
             parent = parent->parentWidget();
