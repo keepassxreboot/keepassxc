@@ -33,6 +33,7 @@ GroupView::GroupView(Database* db, QWidget* parent)
     QTreeView::setModel(m_model);
     setHeaderHidden(true);
     setUniformRowHeights(true);
+    setTextElideMode(Qt::ElideNone);
 
     // clang-format off
     connect(this, SIGNAL(expanded(QModelIndex)), SLOT(expandedChanged(QModelIndex)));
@@ -92,6 +93,7 @@ void GroupView::contextMenuShortcutPressed()
 void GroupView::changeDatabase(const QSharedPointer<Database>& newDb)
 {
     m_model->changeDatabase(newDb.data());
+    setColumnWidth(0, sizeHintForColumn(0));
 }
 
 void GroupView::dragMoveEvent(QDragMoveEvent* event)
@@ -134,6 +136,7 @@ void GroupView::expandedChanged(const QModelIndex& index)
 
     Group* group = m_model->groupFromIndex(index);
     group->setExpanded(isExpanded(index));
+    setColumnWidth(0, sizeHintForColumn(0));
 }
 
 void GroupView::recInitExpanded(Group* group)
