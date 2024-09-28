@@ -305,6 +305,7 @@ private:
     QUuid m_entryBeforeLock;
 
     int m_saveAttempts;
+    bool m_attemptingLock = false;
 
     // Search state
     QScopedPointer<EntrySearcher> m_entrySearcher;
