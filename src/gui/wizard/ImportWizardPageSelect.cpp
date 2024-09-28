@@ -68,8 +68,8 @@ ImportWizardPageSelect::ImportWizardPageSelect(QWidget* parent)
 
     registerField("ImportType", this);
     registerField("ImportFile", m_ui->importFileEdit);
-    registerField("ImportIntoType", m_ui->importIntoLabel);
-    registerField("ImportInto", m_ui->existingDatabaseRadio);
+    registerField("ImportIntoType", m_ui->importIntoGroupBox); // This is intentional
+    registerField("ImportInto", m_ui->importIntoLabel); // This is intentional
     registerField("ImportPassword", m_ui->passwordEdit, "text", "textChanged");
     registerField("ImportKeyFile", m_ui->keyFileEdit);
     registerField("DownloadCommand", m_ui->downloadCommand);
