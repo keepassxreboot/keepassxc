@@ -323,6 +323,7 @@ private:
     QUuid m_entryBeforeLock;
 
     int m_saveAttempts;
+    bool m_attemptingLock = false;
 
     QScopedPointer<RemoteSettings> m_remoteSettings;
 
