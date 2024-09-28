@@ -1941,8 +1941,8 @@ bool DatabaseWidget::focusNextPrevChild(bool next)
 
 bool DatabaseWidget::lock()
 {
-    if (isLocked()) {
-        return true;
+    if (isLocked() || m_attemptingLock) {
+        return isLocked();
     }
 
     // Don't try to lock the database while saving, this will cause a deadlock
@@ -1950,6 +1950,8 @@ bool DatabaseWidget::lock()
         QTimer::singleShot(200, this, SLOT(lock()));
         return false;
     }
+
+    m_attemptingLock = true;
 
     emit databaseLockRequested();
 
@@ -1975,6 +1977,7 @@ bool DatabaseWidget::lock()
                                            MessageBox::Discard | MessageBox::Cancel,
                                            MessageBox::Cancel);
         if (result == MessageBox::Cancel) {
+            m_attemptingLock = false;
             return false;
         }
     }
@@ -2001,9 +2004,11 @@ bool DatabaseWidget::lock()
                                                MessageBox::Save);
             if (result == MessageBox::Save) {
                 if (!save()) {
+                    m_attemptingLock = false;
                     return false;
                 }
             } else if (result == MessageBox::Cancel) {
+                m_attemptingLock = false;
                 return false;
             }
         }
@@ -2035,6 +2040,7 @@ bool DatabaseWidget::lock()
     auto newDb = QSharedPointer<Database>::create(m_db->filePath());
     replaceDatabase(newDb);
 
+    m_attemptingLock = false;
     emit databaseLocked();
 
     return true;
