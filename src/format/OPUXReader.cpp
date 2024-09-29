@@ -102,6 +102,9 @@ namespace
                 entry->setPassword(fieldMap.value("value").toString());
             }
         }
+        if (entry->password().isEmpty() && detailsMap.contains("password")) {
+            entry->setPassword(detailsMap.value("password").toString());
+        }
         entry->setNotes(detailsMap.value("notesPlain").toString());
 
         // Dive into the item sections to pull out advanced attributes
