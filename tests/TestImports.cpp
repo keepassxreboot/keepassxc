@@ -96,6 +96,11 @@ void TestImports::testOPUX()
     QVERIFY(entry);
     // Check custom group icon
     QVERIFY(!entry->group()->iconUuid().isNull());
+
+    // Check Category UUID 05 Passwords
+    entry = db->rootGroup()->findEntryByPath("/Personal/UUID 005 Password");
+    QVERIFY(entry);
+    QCOMPARE(entry->password(), QStringLiteral("uuid005password"));
 }
 
 void TestImports::testOPVault()
