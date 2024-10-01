@@ -2337,10 +2337,6 @@ removed from the database.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Download finished, but file %1 could not be found.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Download successful.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2370,6 +2366,14 @@ exit
 {TEMP_DATABASE} is used as placeholder to store the database in a temporary location
 The command has to exit. In case of `sftp` as last command `exit` has to be sent
             </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Command finished, but downloaded file does not exist.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Downloaded file is not a KeePass file or it&apos;s an unsupported version: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
