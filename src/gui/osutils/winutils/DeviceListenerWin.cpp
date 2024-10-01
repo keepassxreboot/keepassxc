@@ -56,6 +56,7 @@ void DeviceListenerWin::registerHotplugCallback(bool arrived,
             regex += QString("PID_%1&").arg(productId, 0, 16).toUpper();
         }
     }
+    regex += QString(".*$"); // Qt won't match otherwise
     m_deviceIdMatch = QRegularExpression(regex);
 
     DEV_BROADCAST_DEVICEINTERFACE_W notificationFilter{
