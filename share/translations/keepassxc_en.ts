@@ -6891,10 +6891,6 @@ The following data is missing:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Character Count:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Word Case:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6904,10 +6900,6 @@ The following data is missing:
     </message>
     <message>
         <source>Add custom wordlist</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>character</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
