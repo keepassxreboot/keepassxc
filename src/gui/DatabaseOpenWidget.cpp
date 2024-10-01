@@ -253,6 +253,7 @@ void DatabaseOpenWidget::clearForms()
     m_ui->keyFileLineEdit->setShowPassword(false);
     m_ui->keyFileLineEdit->setClearButtonEnabled(true);
     m_ui->hardwareKeyCombo->clear();
+    toggleHardwareKeyComponent(false);
     toggleQuickUnlockScreen();
 
     m_db.reset(new Database(m_filename));
@@ -497,6 +498,7 @@ void DatabaseOpenWidget::pollHardwareKey(bool manualTrigger)
     }
 
     m_ui->hardwareKeyCombo->setEnabled(false);
+    m_ui->useHardwareKeyCheckBox->setEnabled(false);
     m_ui->hardwareKeyProgress->setVisible(true);
     m_ui->refreshHardwareKeys->setEnabled(false);
     m_ui->noHardwareKeysFoundLabel->setVisible(false);
@@ -511,6 +513,7 @@ void DatabaseOpenWidget::pollHardwareKey(bool manualTrigger)
 
 void DatabaseOpenWidget::hardwareKeyResponse(bool found)
 {
+    m_ui->useHardwareKeyCheckBox->setEnabled(true);
     m_ui->hardwareKeyProgress->setVisible(false);
     m_ui->refreshHardwareKeys->setEnabled(true);
     m_ui->hardwareKeyCombo->clear();
