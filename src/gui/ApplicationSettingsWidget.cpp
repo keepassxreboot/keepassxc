@@ -100,6 +100,70 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
     m_generalUi->setupUi(m_generalWidget);
     addPage(tr("General"), icons()->icon("preferences-other"), m_generalWidget);
     addPage(tr("Security"), icons()->icon("security-high"), m_secWidget);
+
+    // Map configuration keys to their respective widgets
+    m_configWidgetMap = {
+        {Config::SingleInstance, m_generalUi->singleInstanceCheckBox},
+        {Config::RememberLastDatabases, m_generalUi->rememberLastDatabasesCheckBox},
+        {Config::NumberOfRememberedLastDatabases, m_generalUi->rememberLastDatabasesSpinbox},
+        {Config::RememberLastKeyFiles, m_generalUi->rememberLastKeyFilesCheckBox},
+        {Config::OpenPreviousDatabasesOnStartup, m_generalUi->openPreviousDatabasesOnStartupCheckBox},
+        {Config::AutoSaveAfterEveryChange, m_generalUi->autoSaveAfterEveryChangeCheckBox},
+        {Config::AutoSaveOnExit, m_generalUi->autoSaveOnExitCheckBox},
+        {Config::AutoSaveNonDataChanges, m_generalUi->autoSaveNonDataChangesCheckBox},
+        {Config::BackupBeforeSave, m_generalUi->backupBeforeSaveCheckBox},
+        {Config::BackupFilePathPattern, m_generalUi->backupFilePath},
+        {Config::UseAtomicSaves, m_generalUi->useAlternativeSaveCheckBox},
+        {Config::UseDirectWriteSaves, m_generalUi->alternativeSaveComboBox},
+        {Config::AutoReloadOnChange, m_generalUi->autoReloadOnChangeCheckBox},
+        {Config::MinimizeAfterUnlock, m_generalUi->minimizeAfterUnlockCheckBox},
+        {Config::MinimizeOnOpenUrl, m_generalUi->minimizeOnOpenUrlCheckBox},
+        {Config::HideWindowOnCopy, m_generalUi->hideWindowOnCopyCheckBox},
+        {Config::MinimizeOnCopy, m_generalUi->minimizeOnCopyRadioButton},
+        {Config::DropToBackgroundOnCopy, m_generalUi->dropToBackgroundOnCopyRadioButton},
+        {Config::UseGroupIconOnEntryCreation, m_generalUi->useGroupIconOnEntryCreationCheckBox},
+        {Config::AutoTypeEntryTitleMatch, m_generalUi->autoTypeEntryTitleMatchCheckBox},
+        {Config::AutoTypeEntryURLMatch, m_generalUi->autoTypeEntryURLMatchCheckBox},
+        {Config::AutoTypeHideExpiredEntry, m_generalUi->autoTypeHideExpiredEntryCheckBox},
+        {Config::FaviconDownloadTimeout, m_generalUi->faviconTimeoutSpinBox},
+        {Config::GUI_MovableToolbar, m_generalUi->toolbarMovableCheckBox},
+        {Config::GUI_MonospaceNotes, m_generalUi->monospaceNotesCheckBox},
+        {Config::GUI_ColorPasswords, m_generalUi->colorPasswordsCheckBox},
+        {Config::GUI_ShowTrayIcon, m_generalUi->systrayShowCheckBox},
+        {Config::GUI_MinimizeToTray, m_generalUi->systrayMinimizeToTrayCheckBox},
+        {Config::GUI_MinimizeOnClose, m_generalUi->minimizeOnCloseCheckBox},
+        {Config::GUI_MinimizeOnStartup, m_generalUi->systrayMinimizeOnStartup},
+        {Config::GUI_CheckForUpdates, m_generalUi->checkForUpdatesOnStartupCheckBox},
+        {Config::GUI_CheckForUpdatesIncludeBetas, m_generalUi->checkForUpdatesIncludeBetasCheckBox},
+        {Config::GUI_ShowExpiredEntriesOnDatabaseUnlock, m_generalUi->showExpiredEntriesOnDatabaseUnlockCheckBox},
+        {Config::GUI_ShowExpiredEntriesOnDatabaseUnlockOffsetDays,
+         m_generalUi->showExpiredEntriesOnDatabaseUnlockOffsetSpinBox},
+        {Config::Security_AutoTypeAsk, m_generalUi->autoTypeAskCheckBox},
+        {Config::Security_RelockAutoType, m_generalUi->autoTypeRelockDatabaseCheckBox},
+        {Config::Security_ClearClipboard, m_secUi->clearClipboardCheckBox},
+        {Config::Security_ClearClipboardTimeout, m_secUi->clearClipboardSpinBox},
+        {Config::Security_ClearSearch, m_secUi->clearSearchCheckBox},
+        {Config::Security_ClearSearchTimeout, m_secUi->clearSearchSpinBox},
+        {Config::Security_LockDatabaseIdle, m_secUi->lockDatabaseIdleCheckBox},
+        {Config::Security_LockDatabaseIdleSeconds, m_secUi->lockDatabaseIdleSpinBox},
+        {Config::Security_LockDatabaseMinimize, m_secUi->lockDatabaseMinimizeCheckBox},
+        {Config::Security_LockDatabaseScreenLock, m_secUi->lockDatabaseOnScreenLockCheckBox},
+        {Config::Security_LockDatabaseOnUserSwitch, m_secUi->lockDatabasesOnUserSwitchCheckBox},
+        {Config::Security_IconDownloadFallback, m_secUi->fallbackToSearch},
+        {Config::Security_PasswordsHidden, m_secUi->passwordsHiddenCheckBox},
+        {Config::Security_PasswordEmptyPlaceholder, m_secUi->passwordShowDotsCheckBox},
+        {Config::Security_HidePasswordPreviewPanel, m_secUi->passwordPreviewCleartextCheckBox},
+        {Config::Security_HideTotpPreviewPanel, m_secUi->hideTotpCheckBox},
+        {Config::Security_HideNotes, m_secUi->hideNotesCheckBox},
+        {Config::Security_NoConfirmMoveEntryToRecycleBin, m_secUi->NoConfirmMoveEntryToRecycleBinCheckBox},
+        {Config::Security_EnableCopyOnDoubleClick, m_secUi->EnableCopyOnDoubleClickCheckBox},
+        {Config::Security_QuickUnlock, m_secUi->quickUnlockCheckBox},
+
+        // Custom logic
+        {Config::GUI_ToolButtonStyle, m_generalUi->toolButtonStyleComboBox},
+        {Config::GUI_Language, m_generalUi->languageComboBox},
+        {Config::GUI_TrayIconAppearance, m_generalUi->trayIconAppearance}};
+
 #ifdef WITH_XC_BROWSER
     addSettingsPage(new BrowserSettingsPage());
 #endif
@@ -204,81 +268,78 @@ void ApplicationSettingsWidget::loadSettings()
     m_generalUi->singleInstanceCheckBox->setEnabled(false);
     m_generalUi->launchAtStartup->setEnabled(false);
 #endif
-    m_generalUi->singleInstanceCheckBox->setChecked(config()->get(Config::SingleInstance).toBool());
-    m_generalUi->launchAtStartup->setChecked(osUtils->isLaunchAtStartupEnabled());
-    m_generalUi->rememberLastDatabasesCheckBox->setChecked(config()->get(Config::RememberLastDatabases).toBool());
-    m_generalUi->rememberLastDatabasesSpinbox->setValue(config()->get(Config::NumberOfRememberedLastDatabases).toInt());
-    m_generalUi->rememberLastKeyFilesCheckBox->setChecked(config()->get(Config::RememberLastKeyFiles).toBool());
-    m_generalUi->openPreviousDatabasesOnStartupCheckBox->setChecked(
-        config()->get(Config::OpenPreviousDatabasesOnStartup).toBool());
-    m_generalUi->autoSaveAfterEveryChangeCheckBox->setChecked(config()->get(Config::AutoSaveAfterEveryChange).toBool());
-    m_generalUi->autoSaveOnExitCheckBox->setChecked(config()->get(Config::AutoSaveOnExit).toBool());
-    m_generalUi->autoSaveNonDataChangesCheckBox->setChecked(config()->get(Config::AutoSaveNonDataChanges).toBool());
-    m_generalUi->backupBeforeSaveCheckBox->setChecked(config()->get(Config::BackupBeforeSave).toBool());
 
-    m_generalUi->backupFilePath->setText(config()->get(Config::BackupFilePathPattern).toString());
+    // Set the values for each config
+    for (auto it = m_configWidgetMap.cbegin(); it != m_configWidgetMap.cend(); ++it) {
+        Config::ConfigKey configKey = it.key();
+        QWidget* widget = it.value();
+        QVariant value = config()->get(configKey);
 
-    m_generalUi->useAlternativeSaveCheckBox->setChecked(!config()->get(Config::UseAtomicSaves).toBool());
-    m_generalUi->alternativeSaveComboBox->setCurrentIndex(config()->get(Config::UseDirectWriteSaves).toBool() ? 1 : 0);
-    m_generalUi->autoReloadOnChangeCheckBox->setChecked(config()->get(Config::AutoReloadOnChange).toBool());
-    m_generalUi->minimizeAfterUnlockCheckBox->setChecked(config()->get(Config::MinimizeAfterUnlock).toBool());
-    m_generalUi->minimizeOnOpenUrlCheckBox->setChecked(config()->get(Config::MinimizeOnOpenUrl).toBool());
-    m_generalUi->hideWindowOnCopyCheckBox->setChecked(config()->get(Config::HideWindowOnCopy).toBool());
-    hideWindowOnCopyCheckBoxToggled(m_generalUi->hideWindowOnCopyCheckBox->isChecked());
-    m_generalUi->minimizeOnCopyRadioButton->setChecked(config()->get(Config::MinimizeOnCopy).toBool());
-    m_generalUi->dropToBackgroundOnCopyRadioButton->setChecked(config()->get(Config::DropToBackgroundOnCopy).toBool());
-    m_generalUi->useGroupIconOnEntryCreationCheckBox->setChecked(
-        config()->get(Config::UseGroupIconOnEntryCreation).toBool());
-    m_generalUi->autoTypeEntryTitleMatchCheckBox->setChecked(config()->get(Config::AutoTypeEntryTitleMatch).toBool());
-    m_generalUi->autoTypeEntryURLMatchCheckBox->setChecked(config()->get(Config::AutoTypeEntryURLMatch).toBool());
-    m_generalUi->autoTypeHideExpiredEntryCheckBox->setChecked(config()->get(Config::AutoTypeHideExpiredEntry).toBool());
-    m_generalUi->faviconTimeoutSpinBox->setValue(config()->get(Config::FaviconDownloadTimeout).toInt());
+        // Check if the config requires a custom logic for drawing the related widgets
+        switch (configKey) {
+        case Config::GUI_ToolButtonStyle: {
+            QComboBox* comboBox = qobject_cast<QComboBox*>(widget);
+            comboBox->clear();
+            comboBox->addItem(tr("Icon only"), Qt::ToolButtonIconOnly);
+            comboBox->addItem(tr("Text only"), Qt::ToolButtonTextOnly);
+            comboBox->addItem(tr("Text beside icon"), Qt::ToolButtonTextBesideIcon);
+            comboBox->addItem(tr("Text under icon"), Qt::ToolButtonTextUnderIcon);
+            comboBox->addItem(tr("Follow style"), Qt::ToolButtonFollowStyle);
+            int toolButtonStyleIndex = comboBox->findData(value);
+            if (toolButtonStyleIndex > 0) {
+                comboBox->setCurrentIndex(toolButtonStyleIndex);
+            }
+            break;
+        }
+        case Config::GUI_Language: {
+            QComboBox* comboBox = qobject_cast<QComboBox*>(widget);
+            comboBox->clear();
+            QList<QPair<QString, QString>> languages = Translator::availableLanguages();
+            for (const auto& language : languages) {
+                comboBox->addItem(language.second, language.first);
+            }
+            int defaultIndex = comboBox->findData(value);
+            if (defaultIndex > 0) {
+                comboBox->setCurrentIndex(defaultIndex);
+            }
+            break;
+        }
+        case Config::GUI_TrayIconAppearance: {
+            QComboBox* comboBox = qobject_cast<QComboBox*>(widget);
+            comboBox->clear();
+#if defined(Q_OS_MACOS) || defined(Q_OS_WIN)
+            comboBox->addItem(tr("Monochrome"), "monochrome");
+#else
+            comboBox->addItem(tr("Monochrome (light)"), "monochrome-light");
+            comboBox->addItem(tr("Monochrome (dark)"), "monochrome-dark");
+#endif
+            comboBox->addItem(tr("Colorful"), "colorful");
+            int trayIconIndex = comboBox->findData(icons()->trayIconAppearance());
+            if (trayIconIndex > 0) {
+                comboBox->setCurrentIndex(trayIconIndex);
+            }
+            break;
+        }
+        default: {
+            if (QCheckBox* checkBox = qobject_cast<QCheckBox*>(widget)) {
+                checkBox->setChecked(value.toBool());
+            } else if (QSpinBox* spinBox = qobject_cast<QSpinBox*>(widget)) {
+                spinBox->setValue(value.toInt());
+            } else if (QComboBox* comboBox = qobject_cast<QComboBox*>(widget)) {
+                comboBox->setCurrentIndex(value.toInt());
+            } else if (QLineEdit* lineEdit = qobject_cast<QLineEdit*>(widget)) {
+                lineEdit->setText(value.toString());
+            }
+        }
+        }
 
-    m_generalUi->languageComboBox->clear();
-    QList<QPair<QString, QString>> languages = Translator::availableLanguages();
-    for (const auto& language : languages) {
-        m_generalUi->languageComboBox->addItem(language.second, language.first);
+        if (config()->isManaged(configKey)) {
+            widget->setEnabled(false);
+            widget->setToolTip("This setting is managed by your organization.");
+        }
     }
-    int defaultIndex = m_generalUi->languageComboBox->findData(config()->get(Config::GUI_Language));
-    if (defaultIndex > 0) {
-        m_generalUi->languageComboBox->setCurrentIndex(defaultIndex);
-    }
 
-    m_generalUi->toolbarMovableCheckBox->setChecked(config()->get(Config::GUI_MovableToolbar).toBool());
-    m_generalUi->monospaceNotesCheckBox->setChecked(config()->get(Config::GUI_MonospaceNotes).toBool());
-    m_generalUi->colorPasswordsCheckBox->setChecked(config()->get(Config::GUI_ColorPasswords).toBool());
-
-    m_generalUi->toolButtonStyleComboBox->clear();
-    m_generalUi->toolButtonStyleComboBox->addItem(tr("Icon only"), Qt::ToolButtonIconOnly);
-    m_generalUi->toolButtonStyleComboBox->addItem(tr("Text only"), Qt::ToolButtonTextOnly);
-    m_generalUi->toolButtonStyleComboBox->addItem(tr("Text beside icon"), Qt::ToolButtonTextBesideIcon);
-    m_generalUi->toolButtonStyleComboBox->addItem(tr("Text under icon"), Qt::ToolButtonTextUnderIcon);
-    m_generalUi->toolButtonStyleComboBox->addItem(tr("Follow style"), Qt::ToolButtonFollowStyle);
-    int toolButtonStyleIndex =
-        m_generalUi->toolButtonStyleComboBox->findData(config()->get(Config::GUI_ToolButtonStyle));
-    if (toolButtonStyleIndex > 0) {
-        m_generalUi->toolButtonStyleComboBox->setCurrentIndex(toolButtonStyleIndex);
-    }
-
-    m_generalUi->systrayShowCheckBox->setChecked(config()->get(Config::GUI_ShowTrayIcon).toBool());
-    systrayToggled(m_generalUi->systrayShowCheckBox->isChecked());
-    m_generalUi->systrayMinimizeToTrayCheckBox->setChecked(config()->get(Config::GUI_MinimizeToTray).toBool());
-    m_generalUi->minimizeOnCloseCheckBox->setChecked(config()->get(Config::GUI_MinimizeOnClose).toBool());
-    m_generalUi->systrayMinimizeOnStartup->setChecked(config()->get(Config::GUI_MinimizeOnStartup).toBool());
-    m_generalUi->checkForUpdatesOnStartupCheckBox->setChecked(config()->get(Config::GUI_CheckForUpdates).toBool());
-    checkUpdatesToggled(m_generalUi->checkForUpdatesOnStartupCheckBox->isChecked());
-    m_generalUi->checkForUpdatesIncludeBetasCheckBox->setChecked(
-        config()->get(Config::GUI_CheckForUpdatesIncludeBetas).toBool());
-
-    m_generalUi->showExpiredEntriesOnDatabaseUnlockCheckBox->setChecked(
-        config()->get(Config::GUI_ShowExpiredEntriesOnDatabaseUnlock).toBool());
-    m_generalUi->showExpiredEntriesOnDatabaseUnlockOffsetSpinBox->setValue(
-        config()->get(Config::GUI_ShowExpiredEntriesOnDatabaseUnlockOffsetDays).toInt());
-    showExpiredEntriesOnDatabaseUnlockToggled(m_generalUi->showExpiredEntriesOnDatabaseUnlockCheckBox->isChecked());
-
-    m_generalUi->autoTypeAskCheckBox->setChecked(config()->get(Config::Security_AutoTypeAsk).toBool());
-    m_generalUi->autoTypeRelockDatabaseCheckBox->setChecked(config()->get(Config::Security_RelockAutoType).toBool());
-
+    // Custom handling for auto-type related settings
     if (autoType()->isAvailable()) {
         m_globalAutoTypeKey = static_cast<Qt::Key>(config()->get(Config::GlobalAutoTypeKey).toInt());
         m_globalAutoTypeModifiers =
@@ -292,54 +353,6 @@ void ApplicationSettingsWidget::loadSettings()
         m_generalUi->autoTypeStartDelaySpinBox->setValue(config()->get(Config::AutoTypeStartDelay).toInt());
     }
 
-    m_generalUi->trayIconAppearance->clear();
-#if defined(Q_OS_MACOS) || defined(Q_OS_WIN)
-    m_generalUi->trayIconAppearance->addItem(tr("Monochrome"), "monochrome");
-#else
-    m_generalUi->trayIconAppearance->addItem(tr("Monochrome (light)"), "monochrome-light");
-    m_generalUi->trayIconAppearance->addItem(tr("Monochrome (dark)"), "monochrome-dark");
-#endif
-    m_generalUi->trayIconAppearance->addItem(tr("Colorful"), "colorful");
-    int trayIconIndex = m_generalUi->trayIconAppearance->findData(icons()->trayIconAppearance());
-    if (trayIconIndex > 0) {
-        m_generalUi->trayIconAppearance->setCurrentIndex(trayIconIndex);
-    }
-
-    m_secUi->clearClipboardCheckBox->setChecked(config()->get(Config::Security_ClearClipboard).toBool());
-    m_secUi->clearClipboardSpinBox->setValue(config()->get(Config::Security_ClearClipboardTimeout).toInt());
-
-    m_secUi->clearSearchCheckBox->setChecked(config()->get(Config::Security_ClearSearch).toBool());
-    m_secUi->clearSearchSpinBox->setValue(config()->get(Config::Security_ClearSearchTimeout).toInt());
-
-    m_secUi->lockDatabaseIdleCheckBox->setChecked(config()->get(Config::Security_LockDatabaseIdle).toBool());
-    m_secUi->lockDatabaseIdleSpinBox->setValue(config()->get(Config::Security_LockDatabaseIdleSeconds).toInt());
-    m_secUi->lockDatabaseMinimizeCheckBox->setChecked(m_secUi->lockDatabaseMinimizeCheckBox->isEnabled()
-                                                      && config()->get(Config::Security_LockDatabaseMinimize).toBool());
-    m_secUi->lockDatabaseOnScreenLockCheckBox->setChecked(
-        config()->get(Config::Security_LockDatabaseScreenLock).toBool());
-#if defined(Q_OS_MACOS)
-    m_secUi->lockDatabasesOnUserSwitchCheckBox->setVisible(true);
-#else
-    m_secUi->lockDatabasesOnUserSwitchCheckBox->setVisible(false);
-#endif
-    m_secUi->lockDatabasesOnUserSwitchCheckBox->setChecked(
-        config()->get(Config::Security_LockDatabaseOnUserSwitch).toBool());
-    m_secUi->fallbackToSearch->setChecked(config()->get(Config::Security_IconDownloadFallback).toBool());
-
-    m_secUi->passwordsHiddenCheckBox->setChecked(config()->get(Config::Security_PasswordsHidden).toBool());
-    m_secUi->passwordShowDotsCheckBox->setChecked(config()->get(Config::Security_PasswordEmptyPlaceholder).toBool());
-    m_secUi->passwordPreviewCleartextCheckBox->setChecked(
-        config()->get(Config::Security_HidePasswordPreviewPanel).toBool());
-    m_secUi->hideTotpCheckBox->setChecked(config()->get(Config::Security_HideTotpPreviewPanel).toBool());
-    m_secUi->hideNotesCheckBox->setChecked(config()->get(Config::Security_HideNotes).toBool());
-    m_secUi->NoConfirmMoveEntryToRecycleBinCheckBox->setChecked(
-        config()->get(Config::Security_NoConfirmMoveEntryToRecycleBin).toBool());
-    m_secUi->EnableCopyOnDoubleClickCheckBox->setChecked(
-        config()->get(Config::Security_EnableCopyOnDoubleClick).toBool());
-
-    m_secUi->quickUnlockCheckBox->setEnabled(getQuickUnlock()->isAvailable());
-    m_secUi->quickUnlockCheckBox->setChecked(config()->get(Config::Security_QuickUnlock).toBool());
-
     for (const ExtraPage& page : asConst(m_extraPages)) {
         page.loadSettings();
     }
@@ -351,74 +364,53 @@ void ApplicationSettingsWidget::saveSettings()
 {
     if (config()->hasAccessError()) {
         showMessage(tr("Access error for config file %1").arg(config()->getFileName()), MessageWidget::Error);
-        // We prevent closing the settings page if we could not write to
-        // the config file.
-        return;
+        return; // Prevent closing the settings page if we could not write to the config file.
     }
 
 #ifndef QT_DEBUG
     osUtils->setLaunchAtStartup(m_generalUi->launchAtStartup->isChecked());
 #endif
 
-    config()->set(Config::SingleInstance, m_generalUi->singleInstanceCheckBox->isChecked());
-    config()->set(Config::RememberLastDatabases, m_generalUi->rememberLastDatabasesCheckBox->isChecked());
-    config()->set(Config::NumberOfRememberedLastDatabases, m_generalUi->rememberLastDatabasesSpinbox->value());
-    config()->set(Config::RememberLastKeyFiles, m_generalUi->rememberLastKeyFilesCheckBox->isChecked());
-    config()->set(Config::OpenPreviousDatabasesOnStartup,
-                  m_generalUi->openPreviousDatabasesOnStartupCheckBox->isChecked());
-    config()->set(Config::AutoSaveAfterEveryChange, m_generalUi->autoSaveAfterEveryChangeCheckBox->isChecked());
-    config()->set(Config::AutoSaveOnExit, m_generalUi->autoSaveOnExitCheckBox->isChecked());
-    config()->set(Config::AutoSaveNonDataChanges, m_generalUi->autoSaveNonDataChangesCheckBox->isChecked());
-    config()->set(Config::BackupBeforeSave, m_generalUi->backupBeforeSaveCheckBox->isChecked());
+    // Iterate over the config-to-widget map
+    for (auto it = m_configWidgetMap.cbegin(); it != m_configWidgetMap.cend(); ++it) {
+        Config::ConfigKey configKey = it.key();
+        QWidget* widget = it.value();
 
-    config()->set(Config::BackupFilePathPattern, m_generalUi->backupFilePath->text());
-
-    config()->set(Config::UseAtomicSaves, !m_generalUi->useAlternativeSaveCheckBox->isChecked());
-    config()->set(Config::UseDirectWriteSaves, m_generalUi->alternativeSaveComboBox->currentIndex() == 1);
-    config()->set(Config::AutoReloadOnChange, m_generalUi->autoReloadOnChangeCheckBox->isChecked());
-    config()->set(Config::MinimizeAfterUnlock, m_generalUi->minimizeAfterUnlockCheckBox->isChecked());
-    config()->set(Config::MinimizeOnOpenUrl, m_generalUi->minimizeOnOpenUrlCheckBox->isChecked());
-    config()->set(Config::HideWindowOnCopy, m_generalUi->hideWindowOnCopyCheckBox->isChecked());
-    config()->set(Config::MinimizeOnCopy, m_generalUi->minimizeOnCopyRadioButton->isChecked());
-    config()->set(Config::DropToBackgroundOnCopy, m_generalUi->dropToBackgroundOnCopyRadioButton->isChecked());
-    config()->set(Config::UseGroupIconOnEntryCreation, m_generalUi->useGroupIconOnEntryCreationCheckBox->isChecked());
-    config()->set(Config::AutoTypeEntryTitleMatch, m_generalUi->autoTypeEntryTitleMatchCheckBox->isChecked());
-    config()->set(Config::AutoTypeEntryURLMatch, m_generalUi->autoTypeEntryURLMatchCheckBox->isChecked());
-    config()->set(Config::AutoTypeHideExpiredEntry, m_generalUi->autoTypeHideExpiredEntryCheckBox->isChecked());
-    config()->set(Config::FaviconDownloadTimeout, m_generalUi->faviconTimeoutSpinBox->value());
-
-    auto language = m_generalUi->languageComboBox->currentData().toString();
-    if (config()->get(Config::GUI_Language) != language) {
-        QTimer::singleShot(200, [] {
-            getMainWindow()->restartApp(
-                tr("You must restart the application to set the new language. Would you like to restart now?"));
-        });
+        // Custom logic for specific configurations
+        switch (configKey) {
+        case Config::GUI_Language: {
+            auto language = qobject_cast<QComboBox*>(widget)->currentData().toString();
+            if (config()->get(Config::GUI_Language) != language) {
+                QTimer::singleShot(200, [] {
+                    getMainWindow()->restartApp(
+                        tr("You must restart the application to set the new language. Would you like to restart now?"));
+                });
+            }
+            config()->set(configKey, language);
+            break;
+        }
+        case Config::GUI_ToolButtonStyle:
+        case Config::GUI_TrayIconAppearance: {
+            QComboBox* comboBox = qobject_cast<QComboBox*>(widget);
+            config()->set(configKey, comboBox->currentData().toString());
+            break;
+        }
+        default: {
+            if (QCheckBox* checkBox = qobject_cast<QCheckBox*>(widget)) {
+                config()->set(configKey, checkBox->isChecked());
+            } else if (QSpinBox* spinBox = qobject_cast<QSpinBox*>(widget)) {
+                config()->set(configKey, spinBox->value());
+            } else if (QComboBox* comboBox = qobject_cast<QComboBox*>(widget)) {
+                config()->set(configKey, comboBox->currentIndex());
+            } else if (QLineEdit* lineEdit = qobject_cast<QLineEdit*>(widget)) {
+                config()->set(configKey, lineEdit->text());
+            }
+            break;
+        }
+        }
     }
-    config()->set(Config::GUI_Language, language);
 
-    config()->set(Config::GUI_MovableToolbar, m_generalUi->toolbarMovableCheckBox->isChecked());
-    config()->set(Config::GUI_MonospaceNotes, m_generalUi->monospaceNotesCheckBox->isChecked());
-    config()->set(Config::GUI_ColorPasswords, m_generalUi->colorPasswordsCheckBox->isChecked());
-
-    config()->set(Config::GUI_ToolButtonStyle, m_generalUi->toolButtonStyleComboBox->currentData().toString());
-
-    config()->set(Config::GUI_ShowTrayIcon, m_generalUi->systrayShowCheckBox->isChecked());
-    config()->set(Config::GUI_TrayIconAppearance, m_generalUi->trayIconAppearance->currentData().toString());
-    config()->set(Config::GUI_MinimizeToTray, m_generalUi->systrayMinimizeToTrayCheckBox->isChecked());
-    config()->set(Config::GUI_MinimizeOnClose, m_generalUi->minimizeOnCloseCheckBox->isChecked());
-    config()->set(Config::GUI_MinimizeOnStartup, m_generalUi->systrayMinimizeOnStartup->isChecked());
-    config()->set(Config::GUI_CheckForUpdates, m_generalUi->checkForUpdatesOnStartupCheckBox->isChecked());
-    config()->set(Config::GUI_CheckForUpdatesIncludeBetas,
-                  m_generalUi->checkForUpdatesIncludeBetasCheckBox->isChecked());
-
-    config()->set(Config::GUI_ShowExpiredEntriesOnDatabaseUnlock,
-                  m_generalUi->showExpiredEntriesOnDatabaseUnlockCheckBox->isChecked());
-    config()->set(Config::GUI_ShowExpiredEntriesOnDatabaseUnlockOffsetDays,
-                  m_generalUi->showExpiredEntriesOnDatabaseUnlockOffsetSpinBox->value());
-
-    config()->set(Config::Security_AutoTypeAsk, m_generalUi->autoTypeAskCheckBox->isChecked());
-    config()->set(Config::Security_RelockAutoType, m_generalUi->autoTypeRelockDatabaseCheckBox->isChecked());
-
+    // Handle auto-type settings
     if (autoType()->isAvailable()) {
         config()->set(Config::GlobalAutoTypeKey, m_generalUi->autoTypeShortcutWidget->key());
         config()->set(Config::GlobalAutoTypeModifiers,
@@ -426,32 +418,6 @@ void ApplicationSettingsWidget::saveSettings()
         config()->set(Config::GlobalAutoTypeRetypeTime, m_generalUi->autoTypeRetypeTimeSpinBox->value());
         config()->set(Config::AutoTypeDelay, m_generalUi->autoTypeDelaySpinBox->value());
         config()->set(Config::AutoTypeStartDelay, m_generalUi->autoTypeStartDelaySpinBox->value());
-    }
-    config()->set(Config::Security_ClearClipboard, m_secUi->clearClipboardCheckBox->isChecked());
-    config()->set(Config::Security_ClearClipboardTimeout, m_secUi->clearClipboardSpinBox->value());
-
-    config()->set(Config::Security_ClearSearch, m_secUi->clearSearchCheckBox->isChecked());
-    config()->set(Config::Security_ClearSearchTimeout, m_secUi->clearSearchSpinBox->value());
-
-    config()->set(Config::Security_LockDatabaseIdle, m_secUi->lockDatabaseIdleCheckBox->isChecked());
-    config()->set(Config::Security_LockDatabaseIdleSeconds, m_secUi->lockDatabaseIdleSpinBox->value());
-    config()->set(Config::Security_LockDatabaseMinimize, m_secUi->lockDatabaseMinimizeCheckBox->isChecked());
-    config()->set(Config::Security_LockDatabaseScreenLock, m_secUi->lockDatabaseOnScreenLockCheckBox->isChecked());
-    config()->set(Config::Security_LockDatabaseOnUserSwitch, m_secUi->lockDatabasesOnUserSwitchCheckBox->isChecked());
-    config()->set(Config::Security_IconDownloadFallback, m_secUi->fallbackToSearch->isChecked());
-
-    config()->set(Config::Security_PasswordsHidden, m_secUi->passwordsHiddenCheckBox->isChecked());
-    config()->set(Config::Security_PasswordEmptyPlaceholder, m_secUi->passwordShowDotsCheckBox->isChecked());
-
-    config()->set(Config::Security_HidePasswordPreviewPanel, m_secUi->passwordPreviewCleartextCheckBox->isChecked());
-    config()->set(Config::Security_HideTotpPreviewPanel, m_secUi->hideTotpCheckBox->isChecked());
-    config()->set(Config::Security_HideNotes, m_secUi->hideNotesCheckBox->isChecked());
-    config()->set(Config::Security_NoConfirmMoveEntryToRecycleBin,
-                  m_secUi->NoConfirmMoveEntryToRecycleBinCheckBox->isChecked());
-    config()->set(Config::Security_EnableCopyOnDoubleClick, m_secUi->EnableCopyOnDoubleClickCheckBox->isChecked());
-
-    if (m_secUi->quickUnlockCheckBox->isEnabled()) {
-        config()->set(Config::Security_QuickUnlock, m_secUi->quickUnlockCheckBox->isChecked());
     }
 
     // Security: clear storage if related settings are disabled
@@ -467,6 +433,7 @@ void ApplicationSettingsWidget::saveSettings()
         config()->remove(Config::LastChallengeResponse);
     }
 
+    // Save settings for additional pages
     for (const ExtraPage& page : asConst(m_extraPages)) {
         page.saveSettings();
     }
