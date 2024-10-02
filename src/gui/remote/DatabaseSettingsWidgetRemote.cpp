@@ -46,10 +46,10 @@ DatabaseSettingsWidgetRemote::DatabaseSettingsWidgetRemote(QWidget* parent)
     connect(m_ui->nameLineEdit, &QLineEdit::textChanged, setModified);
     connect(m_ui->downloadCommand, &QLineEdit::textChanged, setModified);
     connect(m_ui->inputForDownload, &QPlainTextEdit::textChanged, setModified);
-    connect(m_ui->downloadTimeout, QOverload<int>::of(&QSpinBox::valueChanged), setModified);
+    connect(m_ui->downloadTimeoutSec, QOverload<int>::of(&QSpinBox::valueChanged), setModified);
     connect(m_ui->uploadCommand, &QLineEdit::textChanged, setModified);
     connect(m_ui->inputForUpload, &QPlainTextEdit::textChanged, setModified);
-    connect(m_ui->uploadTimeout, QOverload<int>::of(&QSpinBox::valueChanged), setModified);
+    connect(m_ui->uploadTimeoutSec, QOverload<int>::of(&QSpinBox::valueChanged), setModified);
 }
 
 DatabaseSettingsWidgetRemote::~DatabaseSettingsWidgetRemote() = default;
@@ -102,10 +102,10 @@ void DatabaseSettingsWidgetRemote::saveCurrentSettings()
     params->name = m_ui->nameLineEdit->text();
     params->downloadCommand = m_ui->downloadCommand->text();
     params->downloadInput = m_ui->inputForDownload->toPlainText();
-    params->downloadTimeout = m_ui->downloadTimeout->value();
+    params->downloadTimeoutMsec = m_ui->downloadTimeoutSec->value() * 1000;
     params->uploadCommand = m_ui->uploadCommand->text();
     params->uploadInput = m_ui->inputForUpload->toPlainText();
-    params->uploadTimeout = m_ui->uploadTimeout->value();
+    params->uploadTimeoutMsec = m_ui->uploadTimeoutSec->value() * 1000;
 
     m_remoteSettings->addRemoteParams(params);
     updateSettingsList();
@@ -149,10 +149,10 @@ void DatabaseSettingsWidgetRemote::editCurrentSettings()
     m_ui->nameLineEdit->setText(params->name);
     m_ui->downloadCommand->setText(params->downloadCommand);
     m_ui->inputForDownload->setPlainText(params->downloadInput);
-    m_ui->downloadTimeout->setValue(params->downloadTimeout);
+    m_ui->downloadTimeoutSec->setValue(params->downloadTimeoutMsec / 1000);
     m_ui->uploadCommand->setText(params->uploadCommand);
     m_ui->inputForUpload->setPlainText(params->uploadInput);
-    m_ui->uploadTimeout->setValue(params->uploadTimeout);
+    m_ui->uploadTimeoutSec->setValue(params->uploadTimeoutMsec / 1000);
     m_modified = false;
 }
 
@@ -171,10 +171,10 @@ void DatabaseSettingsWidgetRemote::clearFields()
     m_ui->nameLineEdit->setText("");
     m_ui->downloadCommand->setText("");
     m_ui->inputForDownload->setPlainText("");
-    m_ui->downloadTimeout->setValue(10);
+    m_ui->downloadTimeoutSec->setValue(10);
     m_ui->uploadCommand->setText("");
     m_ui->inputForUpload->setPlainText("");
-    m_ui->uploadTimeout->setValue(10);
+    m_ui->uploadTimeoutSec->setValue(10);
     m_modified = false;
 }
 
@@ -184,7 +184,7 @@ void DatabaseSettingsWidgetRemote::testDownload()
     params->name = m_ui->nameLineEdit->text();
     params->downloadCommand = m_ui->downloadCommand->text();
     params->downloadInput = m_ui->inputForDownload->toPlainText();
-    params->downloadTimeout = m_ui->downloadTimeout->value();
+    params->downloadTimeoutMsec = m_ui->downloadTimeoutSec->value() * 1000;
 
     QScopedPointer<RemoteHandler> remoteHandler(new RemoteHandler(this));
     if (params->downloadCommand.isEmpty()) {

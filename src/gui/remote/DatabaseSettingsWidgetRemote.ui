@@ -194,7 +194,7 @@ The command has to exit. In case of `sftp` as last command `exit` has to be sent
              </widget>
             </item>
             <item row="2" column="1">
-             <widget class="QSpinBox" name="downloadTimeout">
+             <widget class="QSpinBox" name="downloadTimeoutSec">
               <property name="suffix">
                <string> seconds</string>
               </property>
@@ -267,7 +267,7 @@ The command has to exit. In case of `sftp` as last command `exit` has to be sent
              </widget>
             </item>
             <item row="2" column="1">
-             <widget class="QSpinBox" name="uploadTimeout">
+             <widget class="QSpinBox" name="uploadTimeoutSec">
               <property name="suffix">
                <string> seconds</string>
               </property>

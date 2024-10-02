@@ -67,7 +67,7 @@ RemoteHandler::RemoteResult RemoteHandler::download(const RemoteParams* params)
             remoteProcess->closeWriteChannel();
         }
 
-        bool finished = remoteProcess->waitForFinished(params->downloadTimeout * 1000);
+        bool finished = remoteProcess->waitForFinished(params->downloadTimeoutMsec);
         int statusCode = remoteProcess->exitCode();
 
         // TODO: For future use
@@ -118,7 +118,7 @@ RemoteHandler::RemoteResult RemoteHandler::upload(const QString& filePath, const
             remoteProcess->closeWriteChannel();
         }
 
-        bool finished = remoteProcess->waitForFinished(params->uploadTimeout * 1000);
+        bool finished = remoteProcess->waitForFinished(params->uploadTimeoutMsec);
         int statusCode = remoteProcess->exitCode();
 
         // TODO: For future use
