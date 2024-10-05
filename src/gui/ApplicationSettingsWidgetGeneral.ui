@@ -58,8 +58,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>566</width>
-            <height>975</height>
+            <width>568</width>
+            <height>1153</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -268,30 +268,24 @@
                </layout>
               </item>
               <item>
-               <layout class="QGridLayout" name="showExpiredEntriesSubLayout">
-                <property name="sizeConstraint">
-                 <enum>QLayout::SetMaximumSize</enum>
-                </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_5">
                 <property name="spacing">
                  <number>6</number>
                 </property>
-                <item row="0" column="0">
+                <property name="sizeConstraint">
+                 <enum>QLayout::SetMaximumSize</enum>
+                </property>
+                <item>
                  <widget class="QCheckBox" name="showExpiredEntriesOnDatabaseUnlockCheckBox">
                   <property name="text">
                    <string>On database unlock, show entries that will expire within</string>
                   </property>
                  </widget>
                 </item>
-                <item row="0" column="1">
+                <item>
                  <widget class="QSpinBox" name="showExpiredEntriesOnDatabaseUnlockOffsetSpinBox">
                   <property name="enabled">
                    <bool>true</bool>
-                  </property>
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
                   </property>
                   <property name="focusPolicy">
                    <enum>Qt::StrongFocus</enum>
@@ -313,7 +307,7 @@
                   </property>
                  </widget>
                 </item>
-                <item row="0" column="2">
+                <item>
                  <spacer name="showExpiredEntriesSpacer">
                   <property name="orientation">
                    <enum>Qt::Horizontal</enum>
@@ -374,6 +368,25 @@
               </item>
               <item>
                <layout class="QHBoxLayout" name="horizontalLayout_4">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <item>
+                 <spacer name="horizontalSpacer_11">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeType">
+                   <enum>QSizePolicy::Fixed</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>30</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
                 <item>
                  <widget class="QLabel" name="label">
                   <property name="sizePolicy">
@@ -383,7 +396,7 @@
                    </sizepolicy>
                   </property>
                   <property name="text">
-                   <string>Backup destination</string>
+                   <string>Destination format:</string>
                   </property>
                   <property name="buddy">
                    <cstring>backupFilePath</cstring>
@@ -391,12 +404,28 @@
                  </widget>
                 </item>
                 <item>
+                 <spacer name="horizontalSpacer_13">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeType">
+                   <enum>QSizePolicy::Fixed</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>6</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
                  <widget class="QLineEdit" name="backupFilePath">
                   <property name="enabled">
                    <bool>false</bool>
                   </property>
                   <property name="toolTip">
-                   <string>Specifies the database backup file location. Occurrences of &quot;{DB_FILENAME}&quot; are replaced with the filename of the saved database without extension. {TIME:&lt;format&gt;} is replaced with the backup time, see https://doc.qt.io/qt-5/qdatetime.html#toString. &lt;format&gt; defaults to format string &quot;dd_MM_yyyy_hh-mm-ss&quot;.</string>
+                   <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;{DB_FILENAME}&lt;/span&gt; is replaced with the filename of the saved database without extension&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;{TIME:&amp;lt;format&amp;gt;}&lt;/span&gt; is replaced with the specified time format (default: dd_MM_yyyy_hh-mm-ss)&lt;/p&gt;&lt;p&gt;See the User Guide for more details&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                   </property>
                   <property name="placeholderText">
                    <string>{DB_FILENAME}.old.kdbx</string>
@@ -404,19 +433,32 @@
                  </widget>
                 </item>
                 <item>
+                 <spacer name="horizontalSpacer_12">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeType">
+                   <enum>QSizePolicy::Fixed</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>6</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
                  <widget class="QPushButton" name="backupFilePathPicker">
                   <property name="enabled">
                    <bool>false</bool>
                   </property>
                   <property name="text">
-                   <string>Choose...</string>
+                   <string>Choose folder...</string>
                   </property>
                  </widget>
                 </item>
                </layout>
-              </item>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_5"/>
               </item>
               <item>
                <widget class="QCheckBox" name="useAlternativeSaveCheckBox">
@@ -487,6 +529,20 @@
               <string>Entry Management</string>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_6">
+              <item>
+               <widget class="QCheckBox" name="ConfirmMoveEntryToRecycleBinCheckBox">
+                <property name="text">
+                 <string>Show confirmation before moving entries to recycle bin</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="EnableCopyOnDoubleClickCheckBox">
+                <property name="text">
+                 <string>Copy data on double clicking field in entry view</string>
+                </property>
+               </widget>
+              </item>
               <item>
                <widget class="QCheckBox" name="useGroupIconOnEntryCreationCheckBox">
                 <property name="text">
@@ -643,6 +699,35 @@
                 <property name="horizontalSpacing">
                  <number>10</number>
                 </property>
+                <item row="1" column="2">
+                 <widget class="QCheckBox" name="toolbarMovableCheckBox">
+                  <property name="enabled">
+                   <bool>true</bool>
+                  </property>
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="text">
+                   <string>Movable toolbar</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="3">
+                 <spacer name="horizontalSpacer_5">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
                 <item row="1" column="1">
                  <widget class="QComboBox" name="toolButtonStyleComboBox">
                   <property name="sizePolicy">
@@ -662,19 +747,28 @@
                   </property>
                  </widget>
                 </item>
-                <item row="1" column="2">
-                 <widget class="QCheckBox" name="toolbarMovableCheckBox">
+                <item row="1" column="0">
+                 <widget class="QLabel" name="toolButtonStyleLabel">
                   <property name="enabled">
                    <bool>true</bool>
                   </property>
                   <property name="sizePolicy">
-                   <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                    </sizepolicy>
                   </property>
+                  <property name="styleSheet">
+                   <string notr="true">margin-right: 5px</string>
+                  </property>
                   <property name="text">
-                   <string>Movable toolbar</string>
+                   <string>Toolbar button style:</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  </property>
+                  <property name="buddy">
+                   <cstring>toolButtonStyleComboBox</cstring>
                   </property>
                  </widget>
                 </item>
@@ -720,45 +814,24 @@
                   </property>
                  </widget>
                 </item>
-                <item row="0" column="3">
-                 <spacer name="horizontalSpacer_5">
-                  <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>40</width>
-                    <height>20</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-                <item row="1" column="0">
-                 <widget class="QLabel" name="toolButtonStyleLabel">
-                  <property name="enabled">
-                   <bool>true</bool>
-                  </property>
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true">margin-right: 5px</string>
-                  </property>
-                  <property name="text">
-                   <string>Toolbar button style:</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                  </property>
-                  <property name="buddy">
-                   <cstring>toolButtonStyleComboBox</cstring>
-                  </property>
-                 </widget>
-                </item>
                </layout>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="toolbarShowCheckBox">
+                <property name="text">
+                 <string>Show toolbar</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="menubarShowCheckBox">
+                <property name="toolTip">
+                 <string>Show the menu bar by pressing the Alt key</string>
+                </property>
+                <property name="text">
+                 <string>Show menubar</string>
+                </property>
+               </widget>
               </item>
               <item>
                <widget class="QCheckBox" name="colorPasswordsCheckBox">
@@ -941,7 +1014,7 @@
            <item>
             <layout class="QHBoxLayout" name="resetSettingsSubLayout">
              <property name="spacing">
-              <number>0</number>
+              <number>6</number>
              </property>
              <property name="sizeConstraint">
               <enum>QLayout::SetMaximumSize</enum>
@@ -954,20 +1027,31 @@
               </widget>
              </item>
              <item>
-              <spacer name="spacer4">
+              <spacer name="horizontalSpacer_10">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
-               <property name="sizeType">
-                <enum>QSizePolicy::Expanding</enum>
-               </property>
                <property name="sizeHint" stdset="0">
                 <size>
-                 <width>50</width>
+                 <width>40</width>
                  <height>20</height>
                 </size>
                </property>
               </spacer>
+             </item>
+             <item>
+              <widget class="QPushButton" name="importSettingsButton">
+               <property name="text">
+                <string>Import settings…</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="exportSettingsButton">
+               <property name="text">
+                <string>Export settings…</string>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
@@ -1265,6 +1349,8 @@
   <tabstop>backupFilePathPicker</tabstop>
   <tabstop>useAlternativeSaveCheckBox</tabstop>
   <tabstop>alternativeSaveComboBox</tabstop>
+  <tabstop>ConfirmMoveEntryToRecycleBinCheckBox</tabstop>
+  <tabstop>EnableCopyOnDoubleClickCheckBox</tabstop>
   <tabstop>useGroupIconOnEntryCreationCheckBox</tabstop>
   <tabstop>minimizeOnOpenUrlCheckBox</tabstop>
   <tabstop>hideWindowOnCopyCheckBox</tabstop>
@@ -1274,6 +1360,8 @@
   <tabstop>languageComboBox</tabstop>
   <tabstop>toolButtonStyleComboBox</tabstop>
   <tabstop>toolbarMovableCheckBox</tabstop>
+  <tabstop>toolbarShowCheckBox</tabstop>
+  <tabstop>menubarShowCheckBox</tabstop>
   <tabstop>colorPasswordsCheckBox</tabstop>
   <tabstop>monospaceNotesCheckBox</tabstop>
   <tabstop>minimizeOnCloseCheckBox</tabstop>
@@ -1281,6 +1369,8 @@
   <tabstop>trayIconAppearance</tabstop>
   <tabstop>systrayMinimizeToTrayCheckBox</tabstop>
   <tabstop>resetSettingsButton</tabstop>
+  <tabstop>importSettingsButton</tabstop>
+  <tabstop>exportSettingsButton</tabstop>
   <tabstop>autoTypeEntryTitleMatchCheckBox</tabstop>
   <tabstop>autoTypeEntryURLMatchCheckBox</tabstop>
   <tabstop>autoTypeAskCheckBox</tabstop>
