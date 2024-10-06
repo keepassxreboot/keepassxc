@@ -17,49 +17,40 @@
 
 #include "Prompt.h"
 
+#include "fdosecrets/FdoSecretsPlugin.h"
 #include "fdosecrets/objects/Collection.h"
 #include "fdosecrets/objects/Item.h"
 #include "fdosecrets/objects/Service.h"
 #include "fdosecrets/objects/Session.h"
-#include "fdosecrets/widgets/AccessControlDialog.h"
 
 #include "FdoSecretsSettings.h"
 #include "core/Entry.h"
-#include "gui/MessageBox.h"
 
 #include <QThread>
 #include <QTimer>
-#include <QWindow>
 
 namespace FdoSecrets
 {
-    const PromptResult PromptResult::Pending{PromptResult::AsyncPending};
-
     PromptBase::PromptBase(Service* parent)
         : DBusObject(parent)
     {
         connect(this, &PromptBase::completed, this, &PromptBase::deleteLater);
     }
 
-    QWindow* PromptBase::findWindow(const QString& windowId)
-    {
-        // find parent window, or nullptr if not found
-        bool ok = false;
-        WId wid = windowId.toULongLong(&ok, 0);
-        QWindow* parent = nullptr;
-        if (ok) {
-            parent = QWindow::fromWinId(wid);
-        }
-        if (parent) {
-            // parent is not the child of any object, so make sure it gets deleted at some point
-            QObject::connect(this, &QObject::destroyed, parent, &QObject::deleteLater);
-        }
-        return parent;
-    }
-
     Service* PromptBase::service() const
     {
         return qobject_cast<Service*>(parent());
+    }
+
+    PromptBase::OverrideParentWindow::OverrideParentWindow(PromptBase* prompt, const QString& newParentWindowId)
+        : m_prompt(prompt)
+        , m_oldParentWindowId(prompt->service()->plugin()->overrideMessageBoxParent(newParentWindowId))
+    {
+    }
+
+    PromptBase::OverrideParentWindow::~OverrideParentWindow()
+    {
+        m_prompt->service()->plugin()->overrideMessageBoxParent(m_oldParentWindowId);
     }
 
     DBusResult PromptBase::prompt(const DBusClientPtr& client, const QString& windowId)
@@ -78,20 +69,25 @@ namespace FdoSecrets
             if (!c) {
                 return;
             }
+
             if (m_signalSent) {
                 return;
             }
+
             auto res = promptSync(c, windowId);
-            if (!res.isPending()) {
-                finishPrompt(res.isDismiss());
+            if (m_signalSent) {
+                return;
             }
+            m_signalSent = true;
+            emit completed(!res.ok(), currentResult());
         });
         return {};
     }
 
     DBusResult PromptBase::dismiss()
     {
-        finishPrompt(true);
+        m_signalSent = true;
+        emit completed(true, currentResult());
         return {};
     }
 
@@ -100,31 +96,22 @@ namespace FdoSecrets
         return "";
     }
 
-    void PromptBase::finishPrompt(bool dismissed)
-    {
-        if (m_signalSent) {
-            return;
-        }
-        m_signalSent = true;
-        emit completed(dismissed, currentResult());
-    }
-
     DeleteCollectionPrompt::DeleteCollectionPrompt(Service* parent, Collection* coll)
         : PromptBase(parent)
         , m_collection(coll)
     {
     }
 
-    PromptResult DeleteCollectionPrompt::promptSync(const DBusClientPtr&, const QString& windowId)
+    DBusResult DeleteCollectionPrompt::promptSync(const DBusClientPtr&, const QString& windowId)
     {
-        MessageBox::OverrideParent override(findWindow(windowId));
+        OverrideParentWindow override(this, windowId);
 
-        // if m_collection is already gone then treat as deletion accepted
-        auto accepted = true;
         if (m_collection) {
-            accepted = m_collection->doDelete();
+            // Collection removal is just disconnecting it from D-Bus.
+            // GUI then reacts with potentially closing the database.
+            m_collection->removeFromDBus();
         }
-        return PromptResult::accepted(accepted);
+        return {};
     }
 
     CreateCollectionPrompt::CreateCollectionPrompt(Service* parent, QVariantMap properties, QString alias)
@@ -139,9 +126,9 @@ namespace FdoSecrets
         return QVariant::fromValue(DBusMgr::objectPathSafe(m_coll));
     }
 
-    PromptResult CreateCollectionPrompt::promptSync(const DBusClientPtr&, const QString& windowId)
+    DBusResult CreateCollectionPrompt::promptSync(const DBusClientPtr& client, const QString& windowId)
     {
-        MessageBox::OverrideParent override(findWindow(windowId));
+        OverrideParentWindow override(this, windowId);
 
         bool created = false;
         // collection with the alias may be created since the prompt was created
@@ -149,13 +136,15 @@ namespace FdoSecrets
         if (ret.err()) {
             return ret;
         }
+
         if (!m_coll) {
             created = true;
-            m_coll = service()->doNewDatabase();
+            m_coll = service()->doNewDatabase(client);
             if (!m_coll) {
-                return PromptResult::accepted(false);
+                return {QDBusError::AccessDenied};
             }
         }
+
         ret = m_coll->setProperties(m_properties);
         if (ret.err()) {
             if (created) {
@@ -164,7 +153,7 @@ namespace FdoSecrets
             return ret;
         }
         if (!m_alias.isEmpty()) {
-            ret = m_coll->addAlias(m_alias);
+            ret = service()->setAlias(m_alias, m_coll);
             if (ret.err()) {
                 if (created) {
                     m_coll->removeFromDBus();
@@ -190,19 +179,19 @@ namespace FdoSecrets
         return QVariant::fromValue(m_locked);
     }
 
-    PromptResult LockCollectionsPrompt::promptSync(const DBusClientPtr&, const QString& windowId)
+    DBusResult LockCollectionsPrompt::promptSync(const DBusClientPtr& client, const QString& windowId)
     {
-        MessageBox::OverrideParent override(findWindow(windowId));
+        OverrideParentWindow override(this, windowId);
 
         for (const auto& c : asConst(m_collections)) {
             if (c) {
-                auto accepted = c->doLock();
+                auto accepted = c->doLock(client);
                 if (accepted) {
                     m_locked << c->objectPath();
                 }
             }
         }
-        return PromptResult::accepted(m_locked.size() == m_collections.size());
+        return {m_locked.size() == m_collections.size() ? QDBusError::NoError : QDBusError::AccessDenied};
     }
 
     UnlockPrompt::UnlockPrompt(Service* parent, const QSet<Collection*>& colls, const QSet<Item*>& items)
@@ -222,71 +211,22 @@ namespace FdoSecrets
         return QVariant::fromValue(m_unlocked);
     }
 
-    PromptResult UnlockPrompt::promptSync(const DBusClientPtr& client, const QString& windowId)
+    DBusResult UnlockPrompt::promptSync(const DBusClientPtr& client, const QString& windowId)
     {
-        MessageBox::OverrideParent override(findWindow(windowId));
-
-        // for use in unlockItems
-        m_windowId = windowId;
-        m_client = client;
+        OverrideParentWindow override(this, windowId);
 
         // first unlock any collections
-        bool waitingForCollections = false;
         for (const auto& c : asConst(m_collections)) {
             if (c) {
-                connect(c, &Collection::doneUnlockCollection, this, &UnlockPrompt::collectionUnlockFinished);
-                // doUnlock is nonblocking, execution will continue in collectionUnlockFinished
-                // it is ok to call doUnlock multiple times before it's actually unlocked by the user
-                c->doUnlock();
-                waitingForCollections = true;
+                bool accepted = c->doUnlock(client);
+                if (accepted) {
+                    m_unlocked << c->objectPath();
+                } else {
+                    m_numRejected += 1;
+                    // no longer need to unlock the item if its containing collection didn't unlock.
+                    m_items.remove(c);
+                }
             }
-        }
-
-        // unlock items directly if no collection unlocking pending
-        // o.w. doing it in collectionUnlockFinished
-        if (!waitingForCollections) {
-            unlockItems();
-        }
-
-        return PromptResult::Pending;
-    }
-
-    void UnlockPrompt::collectionUnlockFinished(bool accepted)
-    {
-        auto coll = qobject_cast<Collection*>(sender());
-        if (!coll) {
-            return;
-        }
-
-        // one shot
-        coll->disconnect(this);
-
-        if (!m_collections.contains(coll)) {
-            // should not happen
-            return;
-        }
-
-        if (accepted) {
-            m_unlocked << coll->objectPath();
-        } else {
-            m_numRejected += 1;
-            // no longer need to unlock the item if its containing collection didn't unlock.
-            m_items.remove(coll);
-        }
-
-        // if we got response for all collections
-        if (m_numRejected + m_unlocked.size() == m_collections.size()) {
-            // next step is to unlock items
-            unlockItems();
-        }
-    }
-
-    void UnlockPrompt::unlockItems()
-    {
-        auto client = m_client.lock();
-        if (!client) {
-            // client already gone
-            return;
         }
 
         // flatten to list of entries
@@ -310,50 +250,40 @@ namespace FdoSecrets
                 entries << entry;
             }
         }
+
         if (!entries.isEmpty()) {
-            QString app = tr("%1 (PID: %2)").arg(client->name()).arg(client->pid());
-            auto ac = new AccessControlDialog(
-                findWindow(m_windowId), entries, app, client->processInfo(), AuthOption::Remember);
-            connect(ac, &AccessControlDialog::finished, this, &UnlockPrompt::itemUnlockFinished);
-            connect(ac, &AccessControlDialog::finished, ac, &AccessControlDialog::deleteLater);
-            ac->open();
-        } else {
-            itemUnlockFinished({}, AuthDecision::Undecided);
-        }
-    }
-
-    void UnlockPrompt::itemUnlockFinished(const QHash<Entry*, AuthDecision>& decisions, AuthDecision forFutureEntries)
-    {
-        auto client = m_client.lock();
-        if (!client) {
-            // client already gone
-            qDebug() << "DBus client gone before item unlocking finish";
-            return;
-        }
-        for (auto it = decisions.constBegin(); it != decisions.constEnd(); ++it) {
-            auto entry = it.key();
-            auto uuid = entry->uuid();
-            // get back the corresponding item
-            auto item = m_entryToItems.value(uuid);
-            if (!item) {
-                continue;
+            QHash<Entry*, AuthDecision> decisions{};
+            AuthDecision forFutureEntries{};
+            if (!service()->plugin()->requestEntriesUnlock(client, windowId, entries, decisions, forFutureEntries)) {
+                return {QDBusError::InternalError};
             }
 
-            // set auth
-            client->setItemAuthorized(uuid, it.value());
+            for (auto it = decisions.constBegin(); it != decisions.constEnd(); ++it) {
+                auto entry = it.key();
+                auto uuid = entry->uuid();
+                // get back the corresponding item
+                auto item = m_entryToItems.value(uuid);
+                if (!item) {
+                    continue;
+                }
 
-            if (client->itemAuthorized(uuid)) {
-                m_unlocked += item->objectPath();
-            } else {
-                m_numRejected += 1;
+                // set auth
+                client->setItemAuthorized(uuid, it.value());
+
+                if (client->itemAuthorized(uuid)) {
+                    m_unlocked += item->objectPath();
+                } else {
+                    m_numRejected += 1;
+                }
+            }
+            if (forFutureEntries != AuthDecision::Undecided) {
+                client->setAllAuthorized(forFutureEntries);
             }
         }
-        if (forFutureEntries != AuthDecision::Undecided) {
-            client->setAllAuthorized(forFutureEntries);
-        }
+
         // if anything is not unlocked, treat the whole prompt as dismissed
         // so the client has a chance to handle the error
-        finishPrompt(m_numRejected > 0);
+        return {!m_numRejected ? QDBusError::NoError : QDBusError::AccessDenied};
     }
 
     DeleteItemPrompt::DeleteItemPrompt(Service* parent, Item* item)
@@ -362,16 +292,16 @@ namespace FdoSecrets
     {
     }
 
-    PromptResult DeleteItemPrompt::promptSync(const DBusClientPtr&, const QString& windowId)
+    DBusResult DeleteItemPrompt::promptSync(const DBusClientPtr& client, const QString& windowId)
     {
-        MessageBox::OverrideParent override(findWindow(windowId));
+        OverrideParentWindow override(this, windowId);
 
         // if m_item is gone, assume it's already deleted
         bool deleted = true;
         if (m_item) {
-            deleted = m_item->doDelete();
+            deleted = m_item->doDelete(client);
         }
-        return PromptResult::accepted(deleted);
+        return {deleted ? QDBusError::NoError : QDBusError::AccessDenied};
     }
 
     CreateItemPrompt::CreateItemPrompt(Service* parent,
@@ -384,9 +314,7 @@ namespace FdoSecrets
         , m_properties(std::move(properties))
         , m_secret(std::move(secret))
         , m_replace(replace)
-        , m_item(nullptr)
-        // session aliveness also need to be tracked, for potential use later in updateItem
-        , m_sess(m_secret.session)
+        , m_item{nullptr}
     {
     }
 
@@ -395,53 +323,34 @@ namespace FdoSecrets
         return QVariant::fromValue(DBusMgr::objectPathSafe(m_item));
     }
 
-    PromptResult CreateItemPrompt::promptSync(const DBusClientPtr& client, const QString& windowId)
+    DBusResult CreateItemPrompt::promptSync(const DBusClientPtr& client, const QString& windowId)
     {
         if (!m_coll) {
-            return PromptResult::accepted(false);
+            return DBusResult{DBUS_ERROR_SECRET_NO_SUCH_OBJECT};
         }
-
-        // save a weak reference to the client which may be used asynchronously later
-        m_client = client;
 
         // give the user a chance to unlock the collection
         // UnlockPrompt will handle the case of collection already unlocked
         auto prompt = PromptBase::Create<UnlockPrompt>(service(), QSet<Collection*>{m_coll.data()}, QSet<Item*>{});
         if (!prompt) {
-            return DBusResult{QDBusError::InternalError};
+            return {QDBusError::InternalError};
         }
-        // postpone anything after the prompt
-        connect(prompt, &PromptBase::completed, this, [this, windowId](bool dismissed) {
-            if (dismissed) {
-                finishPrompt(dismissed);
-            } else {
-                auto res = createItem(windowId);
-                if (res.err()) {
-                    qWarning() << "FdoSecrets:" << res;
-                    finishPrompt(true);
-                }
-            }
-        });
 
-        auto ret = prompt->prompt(client, windowId);
+        auto ret = prompt->promptSync(client, windowId);
         if (ret.err()) {
             return ret;
         }
-        return PromptResult::Pending;
+
+        auto res = createItem(client, windowId);
+        if (res.err()) {
+            qWarning() << "FdoSecrets:" << res;
+        }
+
+        return {res.ok() ? QDBusError::NoError : QDBusError::InternalError};
     }
 
-    DBusResult CreateItemPrompt::createItem(const QString& windowId)
+    DBusResult CreateItemPrompt::createItem(const DBusClientPtr& client, const QString& windowId)
     {
-        auto client = m_client.lock();
-        if (!client) {
-            // client already gone
-            return {};
-        }
-
-        if (!m_coll) {
-            return DBusResult{DBUS_ERROR_SECRET_NO_SUCH_OBJECT};
-        }
-
         // get itemPath to create item and
         // try to find an existing item using attributes
         QString itemPath{};
@@ -481,51 +390,19 @@ namespace FdoSecrets
         if (!prompt) {
             return DBusResult{QDBusError::InternalError};
         }
-        // postpone anything after the confirmation
-        connect(prompt, &PromptBase::completed, this, [this](bool dismissed) {
-            if (dismissed) {
-                finishPrompt(dismissed);
-            } else {
-                auto res = updateItem();
-                if (res.err()) {
-                    qWarning() << "FdoSecrets:" << res;
-                    finishPrompt(true);
-                }
-            }
-        });
 
-        auto ret = prompt->prompt(client, windowId);
+        auto ret = prompt->promptSync(client, windowId);
         if (ret.err()) {
             return ret;
         }
-        return {};
-    }
 
-    DBusResult CreateItemPrompt::updateItem()
-    {
-        auto client = m_client.lock();
-        if (!client) {
-            // client already gone
-            return {};
-        }
-
-        if (!m_sess || m_sess != m_secret.session) {
-            return DBusResult(DBUS_ERROR_SECRET_NO_SESSION);
-        }
-        if (!m_item) {
-            return {};
-        }
-        auto ret = m_item->setProperties(m_properties);
+        ret = m_item->setProperties(m_properties);
         if (ret.err()) {
             return ret;
         }
+
         ret = m_item->setSecret(client, m_secret);
-        if (ret.err()) {
-            return ret;
-        }
-
-        // finally can finish the prompt without dismissing it
-        finishPrompt(false);
-        return {};
+        return ret;
     }
+
 } // namespace FdoSecrets

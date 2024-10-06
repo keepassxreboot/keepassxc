@@ -18,39 +18,35 @@
 #ifndef KEEPASSXC_FDOSECRETSPLUGIN_H
 #define KEEPASSXC_FDOSECRETSPLUGIN_H
 
-#include "gui/ApplicationSettingsWidget.h"
-#include "gui/Icons.h"
-
+#include "core/Global.h"
 #include <QPointer>
 
-class DatabaseTabWidget;
+class Database;
+class Entry;
+class FdoSecretsPluginRequestHandler;
 
 namespace FdoSecrets
 {
-    class Service;
+    class Collection;
+    class DBusClient;
     class DBusMgr;
+    class Service;
+    class UnlockPrompt;
+    class PromptBase;
 } // namespace FdoSecrets
 
-class FdoSecretsPlugin : public QObject, public ISettingsPage
+class FdoSecretsPlugin : public QObject
 {
     Q_OBJECT
+
+    friend class FdoSecrets::Collection;
+    friend class FdoSecrets::Service;
+    friend class FdoSecrets::UnlockPrompt;
+    friend class FdoSecrets::PromptBase;
+
 public:
-    explicit FdoSecretsPlugin(DatabaseTabWidget* tabWidget);
+    FdoSecretsPlugin(QObject* parent);
     ~FdoSecretsPlugin() override = default;
-
-    QString name() override
-    {
-        return QObject::tr("Secret Service Integration");
-    }
-
-    QIcon icon() override
-    {
-        return icons()->icon("freedesktop");
-    }
-
-    QWidget* createWidget() override;
-    void loadSettings(QWidget* widget) override;
-    void saveSettings(QWidget* widget) override;
 
     void updateServiceState();
 
@@ -60,38 +56,53 @@ public:
     FdoSecrets::Service* serviceInstance() const;
 
     /**
-     * @return The db tabs widget, containing opened databases. Can be nullptr.
-     */
-    DatabaseTabWidget* dbTabs() const;
-
-    /**
-     * @brief The dbus manager instance
+     * @brief The D-Bus manager instance
      * @return
      */
     const QSharedPointer<FdoSecrets::DBusMgr>& dbus() const;
 
-    // TODO: Only used for testing. Need to split service functions away from settings page.
-    static FdoSecretsPlugin* getPlugin();
-
 public slots:
-    void emitRequestSwitchToDatabases();
     void emitRequestShowNotification(const QString& msg, const QString& title = {});
 
+    void registerDatabase(const QString& name);
+    void unregisterDatabase(const QString& name);
+
+    void databaseLocked(const QString& name);
+    void databaseUnlocked(const QString& name, QSharedPointer<Database> db);
+
     /**
-     * @brief Show error in the GUI
+     * @brief Show error in the UI
      * @param msg
      */
     void emitError(const QString& msg);
 
 signals:
     void error(const QString& msg);
-    void requestSwitchToDatabases();
     void requestShowNotification(const QString& msg, const QString& title, int msTimeoutHint);
     void secretServiceStarted();
     void secretServiceStopped();
 
 private:
-    QPointer<DatabaseTabWidget> m_dbTabs;
+    virtual size_t requestEntriesRemove(const QSharedPointer<FdoSecrets::DBusClient>& client,
+                                        const QString& name,
+                                        const QList<Entry*>& entries,
+                                        bool permanent) const = 0;
+
+    virtual bool requestEntriesUnlock(const QSharedPointer<FdoSecrets::DBusClient>& client,
+                                      const QString& windowId,
+                                      const QList<Entry*>& entries,
+                                      QHash<Entry*, AuthDecision>& decisions,
+                                      AuthDecision& forFutureEntries) const = 0;
+
+    virtual bool doLockDatabase(const QSharedPointer<FdoSecrets::DBusClient>& client, const QString& name) = 0;
+    virtual bool doUnlockDatabase(const QSharedPointer<FdoSecrets::DBusClient>& client, const QString& name) = 0;
+
+    virtual bool requestUnlockAnyDatabase(const QSharedPointer<FdoSecrets::DBusClient>& client) const = 0;
+    virtual QString requestNewDatabase(const QSharedPointer<FdoSecrets::DBusClient>& client) = 0;
+
+    virtual QString overrideMessageBoxParent(const QString& windowId) const = 0;
+
+private:
     QSharedPointer<FdoSecrets::DBusMgr> m_dbus;
     QSharedPointer<FdoSecrets::Service> m_secretService;
 };

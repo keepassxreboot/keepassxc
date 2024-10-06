@@ -63,7 +63,8 @@
 #endif
 
 #ifdef WITH_XC_FDOSECRETS
-#include "fdosecrets/FdoSecretsPlugin.h"
+#include "fdosecrets/FdoSecretsPluginGUI.h"
+#include "fdosecrets/FdoSecretsSettingsPage.h"
 #endif
 
 #ifdef WITH_XC_YUBIKEY
@@ -218,12 +219,14 @@ MainWindow::MainWindow()
 #endif
 
 #ifdef WITH_XC_FDOSECRETS
-    auto fdoSS = new FdoSecretsPlugin(m_ui->tabWidget);
+    auto fdoSS = new FdoSecretsPluginGUI(m_ui->tabWidget);
     connect(fdoSS, &FdoSecretsPlugin::error, this, &MainWindow::showErrorMessage);
-    connect(fdoSS, &FdoSecretsPlugin::requestSwitchToDatabases, this, &MainWindow::switchToDatabases);
     connect(fdoSS, &FdoSecretsPlugin::requestShowNotification, this, &MainWindow::displayDesktopNotification);
     fdoSS->updateServiceState();
-    m_ui->settingsWidget->addSettingsPage(fdoSS);
+
+    auto fdoSSP = new FdoSecretsSettingsPage(fdoSS, m_ui->tabWidget);
+    connect(fdoSSP, &FdoSecretsSettingsPage::requestSwitchToDatabases, this, &MainWindow::switchToDatabases);
+    m_ui->settingsWidget->addSettingsPage(fdoSSP);
 #endif
 
 #ifdef WITH_XC_YUBIKEY
@@ -719,7 +722,7 @@ void MainWindow::appExit()
 
 /**
  * Returns if application was built with hardware key support.
- * Intended to be used by 3rd-party applications using DBus.
+ * Intended to be used by 3rd-party applications using D-Bus.
  *
  * @return True if built with hardware key support, false otherwise
  */
@@ -735,7 +738,7 @@ bool MainWindow::isHardwareKeySupported()
 /**
  * Refreshes list of hardware keys known.
  * Triggers the DatabaseOpenWidget to automatically select the key last used for a database if found.
- * Intended to be used by 3rd-party applications using DBus.
+ * Intended to be used by 3rd-party applications using D-Bus.
  *
  * @return True if any key was found, false otherwise or if application lacks hardware key support
  */

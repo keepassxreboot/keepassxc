@@ -17,48 +17,45 @@
 
 #include "Collection.h"
 
+#include "fdosecrets/FdoSecretsPlugin.h"
 #include "fdosecrets/FdoSecretsSettings.h"
 #include "fdosecrets/objects/Item.h"
 #include "fdosecrets/objects/Prompt.h"
 #include "fdosecrets/objects/Service.h"
 
+#include "core/Database.h"
+#include "core/Group.h"
+#include "core/Metadata.h"
 #include "core/Tools.h"
-#include "gui/DatabaseWidget.h"
-#include "gui/GuiTools.h"
 
 #include <QEventLoop>
 #include <QFileInfo>
 
 namespace FdoSecrets
 {
-    Collection* Collection::Create(Service* parent, DatabaseWidget* backend)
+    Collection* Collection::Create(Service* parent, const QString& name)
     {
-        return new Collection(parent, backend);
+        QScopedPointer<Collection> res{new Collection(parent, name)};
+        if (!res->dbus()->registerObject(res.data())) {
+            return nullptr;
+        }
+
+        return res.take();
     }
 
-    Collection::Collection(Service* parent, DatabaseWidget* backend)
+    Collection::Collection(Service* parent, const QString& name)
         : DBusObject(parent)
-        , m_backend(backend)
-        , m_exposedGroup(nullptr)
+        , m_backend()
+        , m_name{name}
+        , m_exposedGroup()
+        , m_items{}
+        , m_entryToItem{}
     {
-        // whenever the file path or the database object itself change, we do a full reload.
-        connect(backend, &DatabaseWidget::databaseFilePathChanged, this, &Collection::reloadBackendOrDelete);
-        connect(backend, &DatabaseWidget::databaseReplaced, this, &Collection::reloadBackendOrDelete);
-
-        // also remember to clear/populate the database when lock state changes.
-        connect(backend, &DatabaseWidget::databaseUnlocked, this, &Collection::onDatabaseLockChanged);
-        connect(backend, &DatabaseWidget::databaseLocked, this, &Collection::onDatabaseLockChanged);
-
-        // get notified whenever unlock db dialog finishes
-        connect(parent, &Service::doneUnlockDatabaseInDialog, this, [this](bool accepted, DatabaseWidget* dbWidget) {
-            if (!dbWidget || dbWidget != m_backend) {
-                return;
-            }
-            emit doneUnlockCollection(accepted);
-        });
     }
 
-    bool Collection::reloadBackend()
+    Collection::~Collection() = default;
+
+    void Collection::reloadBackend()
     {
         Q_ASSERT(m_backend);
 
@@ -69,49 +66,22 @@ namespace FdoSecrets
             m_items.first()->removeFromDBus();
         }
         cleanupConnections();
-        dbus()->unregisterObject(this);
-
-        // make sure we have updated copy of the filepath, which is used to identify the database.
-        m_backendPath = m_backend->database()->canonicalFilePath();
-
-        // register the object, handling potentially duplicated name
-        if (!dbus()->registerObject(this)) {
-            return false;
-        }
-
-        // populate contents after expose on dbus, because items rely on parent's dbus object path
-        if (!backendLocked()) {
-            populateContents();
-        } else {
-            cleanupConnections();
-        }
+        populateContents();
 
         emit collectionChanged();
-        return true;
-    }
-
-    void Collection::reloadBackendOrDelete()
-    {
-        if (!reloadBackend()) {
-            removeFromDBus();
-        }
     }
 
     DBusResult Collection::ensureBackend() const
     {
         if (!m_backend) {
-            return DBusResult(DBUS_ERROR_SECRET_NO_SUCH_OBJECT);
-        }
-        return {};
-    }
-
-    DBusResult Collection::ensureUnlocked() const
-    {
-        if (backendLocked()) {
             return DBusResult(DBUS_ERROR_SECRET_IS_LOCKED);
         }
         return {};
     }
+
+    /**
+     * D-Bus Properties
+     */
 
     DBusResult Collection::items(QList<Item*>& items) const
     {
@@ -130,11 +100,12 @@ namespace FdoSecrets
             return ret;
         }
 
-        if (backendLocked()) {
+        if (!m_backend) {
             label = name();
         } else {
-            label = m_backend->database()->metadata()->name();
+            label = m_backend->metadata()->name();
         }
+
         return {};
     }
 
@@ -144,22 +115,14 @@ namespace FdoSecrets
         if (ret.err()) {
             return ret;
         }
-        ret = ensureUnlocked();
-        if (ret.err()) {
-            return ret;
-        }
 
-        m_backend->database()->metadata()->setName(label);
+        m_backend->metadata()->setName(label);
         return {};
     }
 
     DBusResult Collection::locked(bool& locked) const
     {
-        auto ret = ensureBackend();
-        if (ret.err()) {
-            return ret;
-        }
-        locked = backendLocked();
+        locked = !m_backend;
         return {};
     }
 
@@ -169,12 +132,7 @@ namespace FdoSecrets
         if (ret.err()) {
             return ret;
         }
-        ret = ensureUnlocked();
-        if (ret.err()) {
-            return ret;
-        }
-        created = static_cast<qulonglong>(
-            m_backend->database()->rootGroup()->timeInfo().creationTime().toMSecsSinceEpoch() / 1000);
+        created = static_cast<qulonglong>(m_backend->rootGroup()->timeInfo().creationTime().toMSecsSinceEpoch() / 1000);
 
         return {};
     }
@@ -185,16 +143,16 @@ namespace FdoSecrets
         if (ret.err()) {
             return ret;
         }
-        ret = ensureUnlocked();
-        if (ret.err()) {
-            return ret;
-        }
         // FIXME: there seems not to have a global modified time.
         // Use a more accurate time, considering all metadata, group, entry.
-        modified = static_cast<qulonglong>(
-            m_backend->database()->rootGroup()->timeInfo().lastModificationTime().toMSecsSinceEpoch() / 1000);
+        modified = static_cast<qulonglong>(m_backend->rootGroup()->timeInfo().lastModificationTime().toMSecsSinceEpoch()
+                                           / 1000);
         return {};
     }
+
+    /**
+     * D-Bus Methods
+     */
 
     DBusResult Collection::remove(PromptBase*& prompt)
     {
@@ -217,13 +175,6 @@ namespace FdoSecrets
         auto ret = ensureBackend();
         if (ret.err()) {
             return ret;
-        }
-
-        if (backendLocked()) {
-            // searchItems should work, whether `this` is locked or not.
-            // however, we can't search items the same way as in gnome-keying,
-            // because there's no database at all when locked.
-            return {};
         }
 
         // shortcut logic for Uuid/Path attributes, as they can uniquely identify an item.
@@ -294,11 +245,6 @@ namespace FdoSecrets
                                       Item*& item,
                                       PromptBase*& prompt)
     {
-        auto ret = ensureBackend();
-        if (ret.err()) {
-            return ret;
-        }
-
         item = nullptr;
 
         prompt = PromptBase::Create<CreateItemPrompt>(service(), this, properties, secret, replace);
@@ -320,84 +266,6 @@ namespace FdoSecrets
         return {};
     }
 
-    const QSet<QString> Collection::aliases() const
-    {
-        return m_aliases;
-    }
-
-    DBusResult Collection::addAlias(QString alias)
-    {
-        auto ret = ensureBackend();
-        if (ret.err()) {
-            return ret;
-        }
-
-        alias = encodePath(alias);
-
-        if (m_aliases.contains(alias)) {
-            return {};
-        }
-
-        emit aliasAboutToAdd(alias);
-
-        if (dbus()->registerAlias(this, alias)) {
-            m_aliases.insert(alias);
-            emit aliasAdded(alias);
-        } else {
-            return QDBusError::InvalidObjectPath;
-        }
-
-        return {};
-    }
-
-    DBusResult Collection::removeAlias(QString alias)
-    {
-        auto ret = ensureBackend();
-        if (ret.err()) {
-            return ret;
-        }
-
-        alias = encodePath(alias);
-
-        if (!m_aliases.contains(alias)) {
-            return {};
-        }
-
-        dbus()->unregisterAlias(alias);
-        m_aliases.remove(alias);
-        emit aliasRemoved(alias);
-
-        return {};
-    }
-
-    QString Collection::name() const
-    {
-        if (m_backendPath.isEmpty()) {
-            // This is a newly created db without saving to file,
-            // but we have to give a name, which is used to register dbus path.
-            // We use database name for this purpose. For simplicity, we don't monitor the name change.
-            // So the dbus object path is not updated if the db name changes.
-            // This should not be a problem because once the database gets saved,
-            // the dbus path will be updated to use filename and everything back to normal.
-            return m_backend->database()->metadata()->name();
-        }
-        return QFileInfo(m_backendPath).completeBaseName();
-    }
-
-    DatabaseWidget* Collection::backend() const
-    {
-        return m_backend;
-    }
-
-    void Collection::onDatabaseLockChanged()
-    {
-        if (!reloadBackend()) {
-            removeFromDBus();
-            return;
-        }
-        emit collectionLockChanged(backendLocked());
-    }
-
     void Collection::populateContents()
     {
         if (!m_backend) {
@@ -406,8 +274,8 @@ namespace FdoSecrets
 
         // we have an unlocked db
 
-        auto newUuid = FdoSecrets::settings()->exposedGroup(m_backend->database());
-        auto newGroup = m_backend->database()->rootGroup()->findGroupByUuid(newUuid);
+        auto newUuid = FdoSecrets::settings()->exposedGroup(m_backend.data());
+        auto newGroup = m_backend->rootGroup()->findGroupByUuid(newUuid);
         if (!newGroup || newGroup->isRecycled()) {
             // no exposed group, delete self
             removeFromDBus();
@@ -425,89 +293,74 @@ namespace FdoSecrets
         // signal should be first emitted, and we will clean up connection in reloadDatabase,
         // so this handler won't be triggered.
         connect(m_exposedGroup.data(), &Group::groupAboutToRemove, this, [this](Group* toBeRemoved) {
-            if (backendLocked()) {
+            if (!m_backend) {
                 return;
             }
-            auto db = m_backend->database();
-            if (toBeRemoved->database() != db) {
+
+            Q_ASSERT(toBeRemoved->database() == m_backend);
+            if (toBeRemoved->database() != m_backend) {
                 // should not happen, but anyway.
                 // somehow our current database has been changed, and the old group is being deleted
                 // possibly logic changes in replaceDatabase.
                 return;
             }
-            auto uuid = FdoSecrets::settings()->exposedGroup(db);
-            auto exposedGroup = db->rootGroup()->findGroupByUuid(uuid);
+            auto uuid = FdoSecrets::settings()->exposedGroup(m_backend.data());
+            auto exposedGroup = m_backend->rootGroup()->findGroupByUuid(uuid);
             if (toBeRemoved == exposedGroup) {
                 // reset the exposed group to none
-                FdoSecrets::settings()->setExposedGroup(db, {});
+                FdoSecrets::settings()->setExposedGroup(m_backend.data(), {});
             }
         });
         // Another possibility is the group being moved to recycle bin.
         connect(m_exposedGroup.data(), &Group::modified, this, [this]() {
             if (m_exposedGroup->isRecycled()) {
                 // reset the exposed group to none
-                FdoSecrets::settings()->setExposedGroup(m_backend->database().data(), {});
+                FdoSecrets::settings()->setExposedGroup(m_backend.data(), {});
             }
         });
 
         // Monitor exposed group settings
-        connect(m_backend->database()->metadata()->customData(), &CustomData::modified, this, [this]() {
-            if (!m_exposedGroup || backendLocked()) {
+        connect(m_backend->metadata()->customData(), &CustomData::modified, this, [this]() {
+            if (!m_exposedGroup || !m_backend) {
                 return;
             }
-            if (m_exposedGroup->uuid() == FdoSecrets::settings()->exposedGroup(m_backend->database())) {
+            if (m_exposedGroup->uuid() == FdoSecrets::settings()->exposedGroup(m_backend.data())) {
                 // no change
                 return;
             }
-            onDatabaseExposedGroupChanged();
+            reloadBackend();
         });
 
         // Add items for existing entry
         const auto entries = m_exposedGroup->entriesRecursive(false);
         for (const auto& entry : entries) {
-            onEntryAdded(entry, false);
+            onEntryAdded(entry);
         }
 
         // Do not connect to Database::modified signal because we only want signals for the subset under m_exposedGroup
-        connect(m_backend->database()->metadata(), &Metadata::modified, this, &Collection::collectionChanged);
+        connect(m_backend->metadata(), &Metadata::modified, this, &Collection::collectionChanged);
         connectGroupSignalRecursive(m_exposedGroup);
     }
 
-    void Collection::onDatabaseExposedGroupChanged()
-    {
-        // delete all items
-        // this has to be done because the backend is actually still there
-        // just we don't expose them
-        for (const auto& item : asConst(m_items)) {
-            item->removeFromDBus();
-        }
-
-        // repopulate
-        if (!backendLocked()) {
-            populateContents();
-        }
-    }
-
-    void Collection::onEntryAdded(Entry* entry, bool emitSignal)
+    Item* Collection::onEntryAdded(Entry* entry)
     {
         if (entry->isRecycled()) {
-            return;
+            return nullptr;
         }
 
-        auto item = Item::Create(this, entry);
+        auto item = m_entryToItem.value(entry);
+        // Entry already has corresponding Item
+        if (item) {
+            return item;
+        }
+
+        item = Item::Create(this, entry);
         if (!item) {
-            return;
+            return nullptr;
         }
 
         m_items << item;
         m_entryToItem[entry] = item;
-
-        // forward delete signals
-        connect(entry->group(), &Group::entryAboutToRemove, item, [item](Entry* toBeRemoved) {
-            if (item->backend() == toBeRemoved) {
-                item->removeFromDBus();
-            }
-        });
 
         // relay signals
         connect(item, &Item::itemChanged, this, [this, item]() { emit itemChanged(item); });
@@ -517,9 +370,7 @@ namespace FdoSecrets
             emit itemDeleted(item);
         });
 
-        if (emitSignal) {
-            emit itemCreated(item);
-        }
+        return item;
     }
 
     void Collection::connectGroupSignalRecursive(Group* group)
@@ -529,7 +380,11 @@ namespace FdoSecrets
         }
 
         connect(group, &Group::modified, this, &Collection::collectionChanged);
-        connect(group, &Group::entryAdded, this, [this](Entry* entry) { onEntryAdded(entry, true); });
+        connect(group, &Group::entryAdded, this, [this](Entry* entry) {
+            if (Item* item = onEntryAdded(entry)) {
+                emit itemCreated(item);
+            }
+        });
 
         const auto children = group->children();
         for (const auto& cg : children) {
@@ -537,81 +392,75 @@ namespace FdoSecrets
         }
     }
 
-    Service* Collection::service() const
+    FdoSecretsPlugin* Collection::plugin() const
     {
-        return qobject_cast<Service*>(parent());
+        return service()->plugin();
     }
 
-    bool Collection::doLock()
+    bool Collection::doLock(const DBusClientPtr& client) const
     {
-        Q_ASSERT(m_backend);
+        // Already locked
+        if (!m_backend) {
+            return true;
+        }
 
-        // do not call m_backend->lock() directly
-        // let the service handle locking which handles concurrent calls
-        return service()->doLockDatabase(m_backend);
+        return plugin()->doLockDatabase(client, m_name);
     }
 
-    void Collection::doUnlock()
+    bool Collection::doUnlock(const DBusClientPtr& client) const
     {
-        Q_ASSERT(m_backend);
+        // Already unlocked
+        if (m_backend) {
+            return true;
+        }
 
-        return service()->doUnlockDatabaseInDialog(m_backend);
-    }
-
-    bool Collection::doDelete()
-    {
-        Q_ASSERT(m_backend);
-
-        return service()->doCloseDatabase(m_backend);
+        return plugin()->doUnlockDatabase(client, m_name);
     }
 
     void Collection::removeFromDBus()
     {
-        if (!m_backend) {
+        if (!m_backend && !m_exposedGroup) {
             // I'm already deleted
             return;
         }
 
         emit collectionAboutToDelete();
 
-        // remove from dbus early
+        // remove from D-Bus early
         dbus()->unregisterObject(this);
-
-        // remove alias manually to trigger signal
-        for (const auto& a : aliases()) {
-            removeAlias(a).okOrDie();
-        }
 
         // cleanup connection on Database
         cleanupConnections();
-        // cleanup connection on Backend itself
-        m_backend->disconnect(this);
+
+        // items will be removed automatically as they are children objects
+        m_items.clear();
+
         parent()->disconnect(this);
 
         m_exposedGroup = nullptr;
 
-        // reset backend and delete self
+        // reset database and delete self
         m_backend = nullptr;
-        deleteLater();
 
-        // items will be removed automatically as they are children objects
+        deleteLater();
     }
 
     void Collection::cleanupConnections()
     {
-        m_backend->database()->metadata()->customData()->disconnect(this);
+        if (m_backend && m_backend->metadata() && m_backend->metadata()->customData()) {
+            m_backend->metadata()->customData()->disconnect(this);
+        }
+
         if (m_exposedGroup) {
             for (const auto group : m_exposedGroup->groupsRecursive(true)) {
                 group->disconnect(this);
             }
         }
-
-        m_items.clear();
     }
 
-    QString Collection::backendFilePath() const
+    QString Collection::dbusName() const
     {
-        return m_backendPath;
+        return QFileInfo(m_name).completeBaseName();
     }
 
     Group* Collection::exposedRootGroup() const
@@ -619,23 +468,13 @@ namespace FdoSecrets
         return m_exposedGroup;
     }
 
-    bool Collection::backendLocked() const
+    bool Collection::doDeleteItem(const DBusClientPtr& client, const Item* item) const
     {
-        return !m_backend || !m_backend->database()->isInitialized() || m_backend->isLocked();
-    }
+        Q_ASSERT(m_backend);
 
-    bool Collection::doDeleteEntry(Entry* entry)
-    {
-        // Confirm entry removal before moving forward
-        bool permanent = entry->isRecycled() || !m_backend->database()->metadata()->recycleBinEnabled();
-        if (FdoSecrets::settings()->confirmDeleteItem()
-            && !GuiTools::confirmDeleteEntries(m_backend, {entry}, permanent)) {
-            return false;
-        }
-
-        auto num = GuiTools::deleteEntriesResolveReferences(m_backend, {entry}, permanent);
-
-        return num != 0;
+        auto entry = item->backend();
+        bool permanent = entry->isRecycled() || !m_backend->metadata()->recycleBinEnabled();
+        return plugin()->requestEntriesRemove(client, m_name, {entry}, permanent);
     }
 
     Group* Collection::findCreateGroupByPath(const QString& groupPath)
@@ -682,7 +521,7 @@ namespace FdoSecrets
         auto* entry = new Entry();
         entry->setUuid(QUuid::createUuid());
         entry->setTitle(itemName);
-        entry->setUsername(m_backend->database()->metadata()->defaultUserName());
+        entry->setUsername(m_backend->metadata()->defaultUserName());
         group->applyGroupIconOnCreateTo(entry);
 
         entry->setGroup(group);
@@ -691,9 +530,27 @@ namespace FdoSecrets
         client->setItemAuthorized(entry->uuid(), AuthDecision::Allowed);
 
         // when creation finishes in backend, we will already have item
-        auto created = m_entryToItem.value(entry, nullptr);
-
+        auto created = m_entryToItem.value(entry);
         return created;
+    }
+
+    void Collection::databaseLocked()
+    {
+        if (!m_backend) {
+            return;
+        }
+
+        m_backend = nullptr;
+        emit collectionChanged();
+        emit collectionLockChanged(false);
+    }
+
+    void Collection::databaseUnlocked(QSharedPointer<Database> db)
+    {
+        Q_ASSERT(!m_backend);
+        m_backend = db;
+        reloadBackend();
+        emit collectionLockChanged(true);
     }
 
 } // namespace FdoSecrets

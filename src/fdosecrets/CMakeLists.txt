@@ -2,8 +2,11 @@ if(WITH_XC_FDOSECRETS)
     include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
 
     add_library(fdosecrets STATIC
-        # app settings page
         FdoSecretsPlugin.cpp
+        FdoSecretsPluginGUI.cpp
+
+        # app settings page
+        FdoSecretsSettingsPage.cpp
         widgets/SettingsModels.cpp
         widgets/SettingsWidgetFdoSecrets.cpp
         widgets/RowButtonHelper.cpp
@@ -17,7 +20,7 @@ if(WITH_XC_FDOSECRETS)
         # setting storage
         FdoSecretsSettings.cpp
 
-        # dbus objects
+        # D-Bus objects
         dbus/DBusClient.cpp
         dbus/DBusMgr.cpp
         dbus/DBusDispatch.cpp

@@ -122,7 +122,7 @@ void DatabaseSettingsWidgetFdoSecrets::loadSettings(QSharedPointer<Database> db)
         recycleBin = m_db->metadata()->recycleBin();
     }
 
-    auto group = m_db->rootGroup()->findGroupByUuid(FdoSecrets::settings()->exposedGroup(m_db));
+    auto group = m_db->rootGroup()->findGroupByUuid(FdoSecrets::settings()->exposedGroup(m_db.data()));
     if (!group || group->isRecycled() || (recycleBin && group->uuid() == recycleBin->uuid())) {
         m_ui->radioDonotExpose->setChecked(true);
     } else {
@@ -157,7 +157,7 @@ void DatabaseSettingsWidgetFdoSecrets::saveSettings()
     }
     }
 
-    FdoSecrets::settings()->setExposedGroup(m_db, exposedGroup);
+    FdoSecrets::settings()->setExposedGroup(m_db.data(), exposedGroup);
 }
 
 void DatabaseSettingsWidgetFdoSecrets::settingsWarning()

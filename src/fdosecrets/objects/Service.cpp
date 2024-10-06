@@ -24,9 +24,6 @@
 #include "fdosecrets/objects/Prompt.h"
 #include "fdosecrets/objects/Session.h"
 
-#include "gui/DatabaseTabWidget.h"
-#include "gui/DatabaseWidget.h"
-
 namespace
 {
     constexpr auto DEFAULT_ALIAS = "default";
@@ -34,149 +31,36 @@ namespace
 
 namespace FdoSecrets
 {
-    QSharedPointer<Service>
-    Service::Create(FdoSecretsPlugin* plugin, QPointer<DatabaseTabWidget> dbTabs, QSharedPointer<DBusMgr> dbus)
+    QSharedPointer<Service> Service::Create(FdoSecretsPlugin* plugin, QSharedPointer<DBusMgr> dbus)
     {
-        QSharedPointer<Service> res{new Service(plugin, std::move(dbTabs), std::move(dbus))};
-        if (!res->initialize()) {
-            return {};
+        QSharedPointer<Service> res{new Service(plugin, std::move(dbus))};
+        if (!res->dbus()->registerObject(res.data())) {
+            return nullptr;
         }
+
         return res;
     }
 
     Service::Service(FdoSecretsPlugin* plugin,
-                     QPointer<DatabaseTabWidget> dbTabs,
                      QSharedPointer<DBusMgr> dbus) // clazy: exclude=ctor-missing-parent-argument
         : DBusObject(std::move(dbus))
         , m_plugin(plugin)
-        , m_databases(std::move(dbTabs))
-        , m_insideEnsureDefaultAlias(false)
     {
-        connect(m_databases,
-                &DatabaseTabWidget::databaseUnlockDialogFinished,
-                this,
-                &Service::onDatabaseUnlockDialogFinished);
     }
 
     Service::~Service() = default;
 
-    bool Service::initialize()
-    {
-        if (!dbus()->registerObject(this)) {
-            return false;
-        }
-
-        // Add existing database tabs
-        for (int idx = 0; idx != m_databases->count(); ++idx) {
-            auto dbWidget = m_databases->databaseWidgetFromIndex(idx);
-            onDatabaseTabOpened(dbWidget, false);
-        }
-
-        // Connect to new database signal
-        // No need to connect to close signal, as collection will remove itself when backend delete/close database tab.
-        connect(m_databases.data(), &DatabaseTabWidget::databaseOpened, this, [this](DatabaseWidget* dbWidget) {
-            onDatabaseTabOpened(dbWidget, true);
-        });
-
-        // make default alias track current activated database
-        connect(m_databases.data(), &DatabaseTabWidget::activeDatabaseChanged, this, &Service::ensureDefaultAlias);
-
-        return true;
-    }
-
-    void Service::onDatabaseTabOpened(DatabaseWidget* dbWidget, bool emitSignal)
-    {
-        // The Collection will monitor the database's exposed group.
-        // When the Collection finds that no exposed group, it will delete itself.
-        // Thus, the service also needs to monitor it and recreate the collection if the user changes
-        // from no exposed to exposed something.
-        connect(dbWidget, &DatabaseWidget::databaseReplaced, this, [this, dbWidget]() {
-            monitorDatabaseExposedGroup(dbWidget);
-        });
-        if (!dbWidget->isLocked()) {
-            monitorDatabaseExposedGroup(dbWidget);
-        }
-
-        auto coll = Collection::Create(this, dbWidget);
-        if (!coll) {
-            return;
-        }
-
-        m_collections << coll;
-        m_dbToCollection[dbWidget] = coll;
-
-        // keep record of the collection existence
-        connect(coll, &Collection::collectionAboutToDelete, this, [this, coll]() {
-            m_collections.removeAll(coll);
-            m_dbToCollection.remove(coll->backend());
-        });
-
-        // keep record of alias
-        connect(coll, &Collection::aliasAboutToAdd, this, &Service::onCollectionAliasAboutToAdd);
-        connect(coll, &Collection::aliasAdded, this, &Service::onCollectionAliasAdded);
-        connect(coll, &Collection::aliasRemoved, this, &Service::onCollectionAliasRemoved);
-
-        // Forward delete signal, we have to rely on filepath to identify the database being closed,
-        // but we can not access m_backend safely because during the databaseClosed signal,
-        // m_backend may already be reset to nullptr
-        // We want to remove the collection object from dbus as early as possible, to avoid
-        // race conditions when deleteLater was called on the m_backend, but not delivered yet,
-        // and new method calls from dbus occurred. Therefore, we can't rely on the destroyed
-        // signal on m_backend.
-        // bind to coll lifespan
-        connect(m_databases.data(), &DatabaseTabWidget::databaseClosed, coll, [coll](const QString& filePath) {
-            if (filePath == coll->backendFilePath()) {
-                coll->removeFromDBus();
-            }
-        });
-
-        // actual load, must after updates to m_collections, because reloading may trigger
-        // another onDatabaseTabOpen, and m_collections will be used to prevent recursion.
-        if (!coll->reloadBackend()) {
-            // error in dbus
-            return;
-        }
-        if (!coll->backend()) {
-            // no exposed group on this db
-            return;
-        }
-
-        ensureDefaultAlias();
-
-        // only start relay signals when the collection is fully setup
-        connect(coll, &Collection::collectionChanged, this, [this, coll]() { emit collectionChanged(coll); });
-        connect(coll, &Collection::collectionAboutToDelete, this, [this, coll]() { emit collectionDeleted(coll); });
-        if (emitSignal) {
-            emit collectionCreated(coll);
-        }
-    }
-
-    void Service::monitorDatabaseExposedGroup(DatabaseWidget* dbWidget)
-    {
-        Q_ASSERT(dbWidget);
-        connect(dbWidget->database()->metadata()->customData(), &CustomData::modified, this, [this, dbWidget]() {
-            if (!FdoSecrets::settings()->exposedGroup(dbWidget->database()).isNull() && !findCollection(dbWidget)) {
-                onDatabaseTabOpened(dbWidget, true);
-            }
-        });
-    }
-
     void Service::ensureDefaultAlias()
     {
-        if (m_insideEnsureDefaultAlias) {
-            return;
+        auto coll = m_aliasToCollection.value(DEFAULT_ALIAS);
+        if (!m_collections.isEmpty() && !coll) {
+            m_aliasToCollection[DEFAULT_ALIAS] = m_collections.first();
         }
-
-        m_insideEnsureDefaultAlias = true;
-
-        auto coll = findCollection(m_databases->currentDatabaseWidget());
-        if (coll) {
-            // adding alias will automatically remove the association with previous collection.
-            coll->addAlias(DEFAULT_ALIAS).okOrDie();
-        }
-
-        m_insideEnsureDefaultAlias = false;
     }
+
+    /**
+     * D-Bus Properties
+     */
 
     DBusResult Service::collections(QList<Collection*>& collections) const
     {
@@ -207,6 +91,10 @@ namespace FdoSecrets
         }
         return {};
     }
+
+    /**
+     * D-Bus Methods
+     */
 
     DBusResult Service::openSession(const DBusClientPtr& client,
                                     const QString& algorithm,
@@ -253,7 +141,7 @@ namespace FdoSecrets
         prompt = nullptr;
 
         // return existing collection if alias is non-empty and exists.
-        collection = findCollection(alias);
+        collection = m_aliasToCollection.value(alias);
         if (!collection) {
             prompt = PromptBase::Create<CreateCollectionPrompt>(this, properties, alias);
             if (!prompt) {
@@ -277,17 +165,7 @@ namespace FdoSecrets
 
         while (unlockedColls.isEmpty() && settings()->unlockBeforeSearch()) {
             // enable compatibility mode by making sure at least one database is unlocked
-            QEventLoop loop;
-            bool wasAccepted = false;
-            connect(this, &Service::doneUnlockDatabaseInDialog, &loop, [&](bool accepted) {
-                wasAccepted = accepted;
-                loop.quit();
-            });
-
-            doUnlockAnyDatabaseInDialog();
-
-            // blocking wait
-            loop.exec();
+            bool wasAccepted = plugin()->requestUnlockAnyDatabase(client);
 
             if (!wasAccepted) {
                 // user cancelled, do not proceed
@@ -446,66 +324,22 @@ namespace FdoSecrets
 
     DBusResult Service::readAlias(const QString& name, Collection*& collection) const
     {
-        collection = findCollection(name);
+        collection = m_aliasToCollection.value(name);
         return {};
     }
 
     DBusResult Service::setAlias(const QString& name, Collection* collection)
     {
         if (!collection) {
-            // remove alias name from its collection
-            collection = findCollection(name);
-            if (!collection) {
+            if (!m_aliasToCollection.remove(name)) {
                 return DBusResult(DBUS_ERROR_SECRET_NO_SUCH_OBJECT);
             }
-            return collection->removeAlias(name);
-        }
-        return collection->addAlias(name);
-    }
-
-    Collection* Service::findCollection(const QString& alias) const
-    {
-        if (alias.isEmpty()) {
-            return nullptr;
+            ensureDefaultAlias();
+            return {};
         }
 
-        auto it = m_aliases.find(alias);
-        if (it != m_aliases.end()) {
-            return it.value();
-        }
-        return nullptr;
-    }
-
-    void Service::onCollectionAliasAboutToAdd(const QString& alias)
-    {
-        auto coll = qobject_cast<Collection*>(sender());
-
-        auto it = m_aliases.constFind(alias);
-        if (it != m_aliases.constEnd() && it.value() != coll) {
-            // another collection holds the alias
-            // remove it first
-            it.value()->removeAlias(alias).okOrDie();
-
-            // onCollectionAliasRemoved called through signal
-            // `it` becomes invalidated now
-        }
-    }
-
-    void Service::onCollectionAliasAdded(const QString& alias)
-    {
-        auto coll = qobject_cast<Collection*>(sender());
-        m_aliases[alias] = coll;
-    }
-
-    void Service::onCollectionAliasRemoved(const QString& alias)
-    {
-        m_aliases.remove(alias);
-        ensureDefaultAlias();
-    }
-
-    Collection* Service::findCollection(const DatabaseWidget* db) const
-    {
-        return m_dbToCollection.value(db, nullptr);
+        m_aliasToCollection[name] = collection;
+        return {};
     }
 
     QList<Session*> Service::sessions() const
@@ -513,111 +347,100 @@ namespace FdoSecrets
         return m_sessions;
     }
 
-    bool Service::doCloseDatabase(DatabaseWidget* dbWidget)
+    Collection* Service::doNewDatabase(const DBusClientPtr& client)
     {
-        return m_databases->closeDatabaseTab(dbWidget);
+        auto name = plugin()->requestNewDatabase(client);
+        return m_nameToCollection.value(name);
     }
 
-    Collection* Service::doNewDatabase()
+    bool Service::setAlias(const QString& alias, const QString& name)
     {
-        auto dbWidget = m_databases->newDatabase();
-        if (!dbWidget) {
+        Q_ASSERT(!name.isEmpty());
+        return !setAlias(alias, m_nameToCollection.value(name)).err();
+    }
+
+    QStringList Service::collectionAliases(const Collection* collection) const
+    {
+        QStringList result;
+        for (auto it = m_aliasToCollection.constBegin(); it != m_aliasToCollection.constEnd(); ++it) {
+            if (it.value() == collection) {
+                result << it.key();
+            }
+        }
+
+        return result;
+    }
+
+    Collection* Service::createCollection(const QString& name)
+    {
+        Q_ASSERT(!name.isEmpty());
+        auto coll = m_nameToCollection.value(name);
+        if (coll) {
+            return coll;
+        }
+
+        coll = Collection::Create(this, name);
+        if (!coll) {
             return nullptr;
         }
 
-        // database created through dbus will be exposed to dbus by default
-        auto db = dbWidget->database();
-        FdoSecrets::settings()->setExposedGroup(db, db->rootGroup()->uuid());
+        m_collections << coll;
+        m_nameToCollection[name] = coll;
 
-        auto collection = findCollection(dbWidget);
+        // keep record of the collection existence
+        connect(coll, &Collection::collectionChanged, this, [this, coll]() { emit collectionChanged(coll); });
+        connect(coll, &Collection::collectionAboutToDelete, this, [this, coll]() {
+            m_collections.removeAll(coll);
+            m_nameToCollection.remove(coll->name());
+            emit collectionDeleted(coll);
 
-        Q_ASSERT(collection);
+            for (auto it = m_aliasToCollection.begin(); it != m_aliasToCollection.end();) {
+                if (*it == coll) {
+                    it = m_aliasToCollection.erase(it);
+                } else {
+                    ++it;
+                }
+            }
+        });
 
-        return collection;
+        ensureDefaultAlias();
+        emit collectionCreated(coll);
+        return coll;
     }
 
-    void Service::doSwitchToDatabaseSettings(DatabaseWidget* dbWidget)
+    void Service::registerDatabase(const QString& name)
     {
-        if (dbWidget->isLocked()) {
-            return;
+        Q_ASSERT(!name.isEmpty());
+        if (!m_nameToCollection.value(name)) {
+            createCollection(name);
         }
-        // switch selected to current
-        m_databases->setCurrentWidget(dbWidget);
-        m_databases->showDatabaseSettings();
-
-        // open settings (switch from app settings to m_dbTabs)
-        m_plugin->emitRequestSwitchToDatabases();
     }
 
-    bool Service::doLockDatabase(DatabaseWidget* dbWidget)
+    void Service::unregisterDatabase(const QString& name)
     {
-        // return immediately if the db is already unlocked
-        if (dbWidget && dbWidget->isLocked()) {
-            return true;
+        auto coll = m_nameToCollection.value(name);
+        if (coll) {
+            coll->removeFromDBus();
         }
-
-        // mark the db as being unlocked to prevent multiple dialogs for the same db
-        if (m_lockingDb.contains(dbWidget)) {
-            return true;
-        }
-        m_lockingDb.insert(dbWidget);
-        auto ret = dbWidget->lock();
-        m_lockingDb.remove(dbWidget);
-
-        return ret;
     }
 
-    void Service::doUnlockDatabaseInDialog(DatabaseWidget* dbWidget)
+    void Service::databaseLocked(const QString& name)
     {
-        // return immediately if the db is already unlocked
-        if (dbWidget && !dbWidget->isLocked()) {
-            emit doneUnlockDatabaseInDialog(true, dbWidget);
-            return;
+        auto coll = m_nameToCollection.value(name);
+        if (coll) {
+            coll->databaseLocked();
         }
-
-        // check if the db is already being unlocked to prevent multiple dialogs for the same db
-        if (m_unlockingAnyDatabase || m_unlockingDb.contains(dbWidget)) {
-            return;
-        }
-
-        // insert a dummy one here, just to prevent multiple dialogs
-        // the real one will be inserted in onDatabaseUnlockDialogFinished
-        m_unlockingDb[dbWidget] = {};
-
-        // actually show the dialog
-        m_databases->unlockDatabaseInDialog(dbWidget, DatabaseOpenDialog::Intent::None);
     }
 
-    void Service::doUnlockAnyDatabaseInDialog()
+    void Service::databaseUnlocked(const QString& name, QSharedPointer<Database> db)
     {
-        if (m_unlockingAnyDatabase || !m_unlockingDb.isEmpty()) {
-            return;
+        Q_ASSERT(!name.isEmpty());
+        auto coll = m_nameToCollection.value(name);
+        if (!coll) {
+            coll = createCollection(name);
         }
-        m_unlockingAnyDatabase = true;
 
-        m_databases->unlockAnyDatabaseInDialog(DatabaseOpenDialog::Intent::None);
+        coll->databaseUnlocked(db);
     }
 
-    void Service::onDatabaseUnlockDialogFinished(bool accepted, DatabaseWidget* dbWidget)
-    {
-        if (!m_unlockingAnyDatabase && !m_unlockingDb.contains(dbWidget)) {
-            // not our concern
-            return;
-        }
-
-        if (!accepted) {
-            emit doneUnlockDatabaseInDialog(false, dbWidget);
-            m_unlockingAnyDatabase = false;
-            m_unlockingDb.remove(dbWidget);
-        } else {
-            // delay the done signal to when the database is actually done with unlocking
-            // this is a oneshot connection to prevent superfluous signals
-            auto conn = connect(dbWidget, &DatabaseWidget::databaseUnlocked, this, [dbWidget, this]() {
-                emit doneUnlockDatabaseInDialog(true, dbWidget);
-                m_unlockingAnyDatabase = false;
-                disconnect(m_unlockingDb.take(dbWidget));
-            });
-            m_unlockingDb[dbWidget] = conn;
-        }
-    }
 } // namespace FdoSecrets

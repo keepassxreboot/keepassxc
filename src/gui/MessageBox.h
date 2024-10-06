@@ -24,6 +24,8 @@
 
 class MessageBox
 {
+    friend class FdoSecretsPluginGUI;
+
 public:
     enum Button : uint64_t
     {
@@ -104,16 +106,6 @@ public:
                            Button defaultButton = MessageBox::Cancel,
                            Action action = MessageBox::None,
                            QCheckBox* checkbox = nullptr);
-
-    class OverrideParent
-    {
-    public:
-        explicit OverrideParent(QWindow* newParent);
-        ~OverrideParent();
-
-    private:
-        QWindow* m_oldParent;
-    };
 
 private:
     static QWindow* m_overrideParent;

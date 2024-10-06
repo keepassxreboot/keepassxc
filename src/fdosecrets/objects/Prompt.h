@@ -22,8 +22,6 @@
 #include "fdosecrets/dbus/DBusClient.h"
 #include "fdosecrets/dbus/DBusObject.h"
 
-class QWindow;
-
 class DatabaseWidget;
 class Entry;
 
@@ -32,58 +30,15 @@ namespace FdoSecrets
 
     class Service;
 
-    // a simple helper class to auto convert
-    // true/false, DBusResult and Pending values
-    class PromptResult
-    {
-        enum Value
-        {
-            Accepted,
-            Dismissed,
-            AsyncPending,
-        };
-        const Value value;
-
-        explicit PromptResult(Value v) noexcept
-            : value(v)
-        {
-        }
-        explicit PromptResult(bool accepted)
-            : value(accepted ? Accepted : Dismissed)
-        {
-        }
-
-    public:
-        PromptResult()
-            : PromptResult(true)
-        {
-        }
-        PromptResult(const DBusResult& res) // NOLINT(google-explicit-constructor)
-            : PromptResult(res.ok())
-        {
-        }
-
-        static const PromptResult Pending;
-        static PromptResult accepted(bool accepted)
-        {
-            return PromptResult{accepted};
-        }
-
-        bool isDismiss() const
-        {
-            return value == Dismissed;
-        }
-        bool isPending() const
-        {
-            return value == AsyncPending;
-        }
-    };
-
     class PromptBase : public DBusObject
     {
         Q_OBJECT
         Q_CLASSINFO("D-Bus Interface", DBUS_INTERFACE_SECRET_PROMPT_LITERAL)
     public:
+        /**
+         * D-Bus Methods
+         */
+
         Q_INVOKABLE DBusResult prompt(const DBusClientPtr& client, const QString& windowId);
         Q_INVOKABLE DBusResult dismiss();
 
@@ -97,18 +52,29 @@ namespace FdoSecrets
             return res.take();
         }
 
+        virtual DBusResult promptSync(const DBusClientPtr& client, const QString& windowId) = 0;
+
     signals:
         void completed(bool dismissed, const QVariant& result);
 
     protected:
         explicit PromptBase(Service* parent);
 
-        virtual PromptResult promptSync(const DBusClientPtr& client, const QString& windowId) = 0;
         virtual QVariant currentResult() const;
 
-        QWindow* findWindow(const QString& windowId);
         Service* service() const;
-        void finishPrompt(bool dismissed);
+
+        // For overriding MessageBox parent window in GUI
+        class OverrideParentWindow
+        {
+        public:
+            explicit OverrideParentWindow(PromptBase* prompt, const QString& newParentWindowId);
+            ~OverrideParentWindow();
+
+        private:
+            PromptBase const* m_prompt;
+            const QString m_oldParentWindowId;
+        };
 
     private:
         bool m_signalSent = false;
@@ -123,7 +89,7 @@ namespace FdoSecrets
 
         explicit DeleteCollectionPrompt(Service* parent, Collection* coll);
 
-        PromptResult promptSync(const DBusClientPtr& client, const QString& windowId) override;
+        DBusResult promptSync(const DBusClientPtr& client, const QString& windowId) override;
 
         QPointer<Collection> m_collection;
     };
@@ -135,12 +101,12 @@ namespace FdoSecrets
 
         explicit CreateCollectionPrompt(Service* parent, QVariantMap properties, QString alias);
 
-        PromptResult promptSync(const DBusClientPtr& client, const QString& windowId) override;
+        DBusResult promptSync(const DBusClientPtr& client, const QString& windowId) override;
         QVariant currentResult() const override;
 
         QVariantMap m_properties;
         QString m_alias;
-        Collection* m_coll{};
+        Collection* m_coll;
     };
 
     class LockCollectionsPrompt : public PromptBase
@@ -150,7 +116,7 @@ namespace FdoSecrets
 
         explicit LockCollectionsPrompt(Service* parent, const QList<Collection*>& colls);
 
-        PromptResult promptSync(const DBusClientPtr& client, const QString& windowId) override;
+        DBusResult promptSync(const DBusClientPtr& client, const QString& windowId) override;
         QVariant currentResult() const override;
 
         QList<QPointer<Collection>> m_collections;
@@ -165,12 +131,8 @@ namespace FdoSecrets
 
         explicit UnlockPrompt(Service* parent, const QSet<Collection*>& colls, const QSet<Item*>& items);
 
-        PromptResult promptSync(const DBusClientPtr& client, const QString& windowId) override;
+        DBusResult promptSync(const DBusClientPtr& client, const QString& windowId) override;
         QVariant currentResult() const override;
-
-        void collectionUnlockFinished(bool accepted);
-        void itemUnlockFinished(const QHash<Entry*, AuthDecision>& results, AuthDecision forFutureEntries);
-        void unlockItems();
 
         QList<QPointer<Collection>> m_collections;
         QHash<Collection*, QList<QPointer<Item>>> m_items;
@@ -178,10 +140,6 @@ namespace FdoSecrets
 
         QList<QDBusObjectPath> m_unlocked;
         int m_numRejected = 0;
-
-        // info about calling client
-        QWeakPointer<DBusClient> m_client;
-        QString m_windowId;
     };
 
     class Item;
@@ -192,7 +150,7 @@ namespace FdoSecrets
 
         explicit DeleteItemPrompt(Service* parent, Item* item);
 
-        PromptResult promptSync(const DBusClientPtr& client, const QString& windowId) override;
+        DBusResult promptSync(const DBusClientPtr& client, const QString& windowId) override;
 
         QPointer<Item> m_item;
     };
@@ -208,11 +166,10 @@ namespace FdoSecrets
                                   Secret secret,
                                   bool replace);
 
-        PromptResult promptSync(const DBusClientPtr& client, const QString& windowId) override;
+        DBusResult promptSync(const DBusClientPtr& client, const QString& windowId) override;
         QVariant currentResult() const override;
 
-        DBusResult createItem(const QString& windowId);
-        DBusResult updateItem();
+        DBusResult createItem(const DBusClientPtr& client, const QString& windowId);
 
         QPointer<Collection> m_coll;
         QVariantMap m_properties;
@@ -220,9 +177,6 @@ namespace FdoSecrets
         bool m_replace;
 
         QPointer<Item> m_item;
-
-        QPointer<const Session> m_sess;
-        QWeakPointer<DBusClient> m_client;
     };
 
 } // namespace FdoSecrets

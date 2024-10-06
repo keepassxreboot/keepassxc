@@ -93,7 +93,7 @@ namespace FdoSecrets
         static constexpr const char* ColumnNames[] = {
             QT_TRANSLATE_NOOP("SettingsClientModel", "Application"),
             QT_TRANSLATE_NOOP("SettingsClientModel", "PID"),
-            QT_TRANSLATE_NOOP("SettingsClientModel", "DBus Address"),
+            QT_TRANSLATE_NOOP("SettingsClientModel", "D-Bus Address"),
             QT_TRANSLATE_NOOP("SettingsClientModel", "Manage"),
         };
 

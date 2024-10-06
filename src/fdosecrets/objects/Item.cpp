@@ -74,7 +74,19 @@ namespace FdoSecrets
         , m_backend(backend)
     {
         connect(m_backend, &Entry::modified, this, &Item::itemChanged);
+        // Remove from D-Bus when deleted
+        connect(m_backend->group(), &Group::entryAboutToRemove, this, [this](Entry* toBeRemoved) {
+            if (m_backend == toBeRemoved) {
+                removeFromDBus();
+            }
+        });
     }
+
+    Item::~Item() = default;
+
+    /**
+     * D-Bus Properties
+     */
 
     DBusResult Item::locked(const DBusClientPtr& client, bool& locked) const
     {
@@ -232,6 +244,10 @@ namespace FdoSecrets
         return {};
     }
 
+    /**
+     * D-Bus Methods
+     */
+
     DBusResult Item::remove(PromptBase*& prompt)
     {
         auto ret = ensureBackend();
@@ -249,9 +265,8 @@ namespace FdoSecrets
     {
         auto ret = getSecretNoNotification(client, session, secret);
         if (ret.ok()) {
-            service()->plugin()->emitRequestShowNotification(
-                tr(R"(Entry "%1" from database "%2" was used by %3)")
-                    .arg(m_backend->title(), collection()->name(), client->name()));
+            plugin()->emitRequestShowNotification(tr(R"(Entry "%1" from database "%2" was used by %3)")
+                                                      .arg(m_backend->title(), collection()->name(), client->name()));
         }
         return ret;
     }
@@ -331,11 +346,6 @@ namespace FdoSecrets
         return {};
     }
 
-    Collection* Item::collection() const
-    {
-        return qobject_cast<Collection*>(parent());
-    }
-
     DBusResult Item::ensureBackend() const
     {
         if (!m_backend) {
@@ -362,11 +372,11 @@ namespace FdoSecrets
         return m_backend;
     }
 
-    bool Item::doDelete()
+    bool Item::doDelete(const DBusClientPtr& client) const
     {
         Q_ASSERT(m_backend);
 
-        return collection()->doDeleteEntry(m_backend);
+        return collection()->doDeleteItem(client, this);
     }
 
     void Item::removeFromDBus()
@@ -374,9 +384,11 @@ namespace FdoSecrets
         emit itemAboutToDelete();
 
         // Unregister current path early, do not rely on deleteLater's call to destructor
-        // as in case of Entry moving between groups, new Item will be created at the same DBus path
+        // as in case of Entry moving between groups, new Item will be created at the same D-Bus path
         // before the current Item is deleted in the event loop.
         dbus()->unregisterObject(this);
+
+        m_backend->group()->disconnect(this);
 
         m_backend = nullptr;
         deleteLater();
@@ -385,6 +397,11 @@ namespace FdoSecrets
     Service* Item::service() const
     {
         return collection()->service();
+    }
+
+    FdoSecretsPlugin* Item::plugin() const
+    {
+        return service()->plugin();
     }
 
     QString Item::path() const
@@ -404,6 +421,10 @@ namespace FdoSecrets
 
         return pathComponents.join('/');
     }
+
+    /**
+     * Helper functions
+     */
 
     DBusResult setEntrySecret(Entry* entry, const QByteArray& data, const QString& contentType)
     {
