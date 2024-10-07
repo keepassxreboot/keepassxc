@@ -40,6 +40,7 @@
 #include "core/Resources.h"
 #include "gui/AboutDialog.h"
 #include "gui/ActionCollection.h"
+#include "gui/GlobalTotpDialog.h"
 #include "gui/Icons.h"
 #include "gui/MessageBox.h"
 #include "gui/SearchWidget.h"
@@ -398,6 +399,7 @@ MainWindow::MainWindow()
 
     m_ui->actionSettings->setIcon(icons()->icon("configure"));
     m_ui->actionPasswordGenerator->setIcon(icons()->icon("password-generator"));
+    m_ui->actionGlobalTotp->setIcon(icons()->icon("totp"));
 
     m_ui->actionAbout->setIcon(icons()->icon("help-about"));
     m_ui->actionDonate->setIcon(icons()->icon("donate"));
@@ -526,6 +528,12 @@ MainWindow::MainWindow()
     connect(m_ui->actionPasswordGenerator, SIGNAL(toggled(bool)), SLOT(togglePasswordGenerator(bool)));
     connect(m_ui->passwordGeneratorWidget, &PasswordGeneratorWidget::closed, this, [this] {
         togglePasswordGenerator(false);
+    });
+    m_ui->passwordGeneratorWidget->setStandaloneMode(true);
+
+    connect(m_ui->actionGlobalTotp, SIGNAL(toggled(bool)), SLOT(toggleGlobalTotp(bool)));
+    connect(m_ui->globalTotpDialog, &GlobalTotpDialog::closed, this, [this] {
+        toggleGlobalTotp(false);
     });
     m_ui->passwordGeneratorWidget->setStandaloneMode(true);
 
@@ -953,6 +961,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
             m_ui->actionExportHtml->setEnabled(true);
             m_ui->actionExportXML->setEnabled(true);
             m_ui->actionDatabaseMerge->setEnabled(m_ui->tabWidget->currentIndex() != -1);
+            m_ui->actionGlobalTotp->setEnabled(true);
 #ifdef WITH_XC_BROWSER_PASSKEYS
             bool singleEntryHasPasskey = singleEntrySelected && dbWidget->currentEntryHasPasskey();
             m_ui->actionPasskeys->setEnabled(true);
@@ -1041,6 +1050,7 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
 #endif
 
             m_searchWidgetAction->setEnabled(false);
+            m_ui->actionGlobalTotp->setEnabled(false);
             break;
         }
         default:
@@ -1084,6 +1094,10 @@ void MainWindow::setMenuActionState(DatabaseWidget::Mode mode)
         bool blocked = m_ui->actionPasswordGenerator->blockSignals(true);
         m_ui->actionPasswordGenerator->toggle();
         m_ui->actionPasswordGenerator->blockSignals(blocked);
+    } else if ((currentIndex == GlobalTotpScreen) != m_ui->actionGlobalTotp->isChecked()) {
+        bool blocked = m_ui->actionGlobalTotp->blockSignals(true);
+        m_ui->actionGlobalTotp->toggle();
+        m_ui->actionGlobalTotp->blockSignals(blocked);
     } else if ((currentIndex == SettingsScreen) != m_ui->actionSettings->isChecked()) {
         bool blocked = m_ui->actionSettings->blockSignals(true);
         m_ui->actionSettings->toggle();
@@ -1274,6 +1288,16 @@ void MainWindow::togglePasswordGenerator(bool enabled)
         m_ui->stackedWidget->setCurrentIndex(PasswordGeneratorScreen);
     } else {
         m_ui->passwordGeneratorWidget->saveSettings();
+        switchToDatabases();
+    }
+}
+
+void MainWindow::toggleGlobalTotp(bool enabled)
+{
+    if (enabled) {
+        m_ui->globalTotpDialog->setDatabaseWidget(m_ui->tabWidget->currentDatabaseWidget());
+        m_ui->stackedWidget->setCurrentIndex(GlobalTotpScreen);
+    } else {
         switchToDatabases();
     }
 }

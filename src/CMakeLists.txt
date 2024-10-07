@@ -126,6 +126,7 @@ set(gui_SOURCES
         gui/EditWidgetProperties.cpp
         gui/FileDialog.cpp
         gui/Font.cpp
+        gui/GlobalTotpDialog.cpp
         gui/GuiTools.cpp
         gui/HtmlExporter.cpp
         gui/IconModels.cpp
