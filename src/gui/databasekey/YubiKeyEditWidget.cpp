@@ -141,9 +141,9 @@ void YubiKeyEditWidget::initComponent()
     m_ui->componentDescription->setText(
         tr("<p>If you own a <a href=\"https://www.yubico.com/\">YubiKey</a> or "
            "<a href=\"https://onlykey.io\">OnlyKey</a>, you can use it for additional security.</p>"
-           "<p>The key requires one of its slots to be programmed as "
-           "<a href=\"https://www.yubico.com/products/services-software/challenge-response/\">"
-           "HMAC-SHA1 Challenge-Response</a>.</p>"));
+           "<p>The key requires one of its slots to be programmed with "
+           "<a href=\"https://keepassxc.org/docs/#faq-yubikey-howto\">"
+           "Challenge-Response</a>.</p>"));
 }
 
 void YubiKeyEditWidget::pollYubikey()

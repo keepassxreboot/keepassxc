@@ -86,7 +86,6 @@ void DatabaseSettingsWidgetDatabaseKey::load(QSharedPointer<Database> db)
     if (!m_db->key() || m_db->key()->keys().isEmpty()) {
         // database has no key, we are about to add a new one
         m_passwordEditWidget->changeVisiblePage(KeyComponentWidget::Page::Edit);
-        m_passwordEditWidget->setPasswordVisible(true);
         // Focus won't work until the UI settles
         QTimer::singleShot(0, m_passwordEditWidget, SLOT(setFocus()));
     } else {

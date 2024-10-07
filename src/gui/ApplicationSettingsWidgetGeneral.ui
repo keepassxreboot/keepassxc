@@ -278,7 +278,7 @@
                 <item row="0" column="0">
                  <widget class="QCheckBox" name="showExpiredEntriesOnDatabaseUnlockCheckBox">
                   <property name="text">
-                   <string>On database unlock, show entries that </string>
+                   <string>On database unlock, show entries that will expire within</string>
                   </property>
                  </widget>
                 </item>
@@ -297,25 +297,19 @@
                    <enum>Qt::StrongFocus</enum>
                   </property>
                   <property name="accessibleName">
-                   <string>On database unlock, show entries that </string>
-                  </property>
-                  <property name="specialValueText">
-                   <string comment="On database unlock, show entries that...">have expired</string>
+                   <string>On database unlock, show entries that will expire within </string>
                   </property>
                   <property name="suffix">
-                   <string comment="On database unlock, show entries that will expire within %1 days"> days</string>
-                  </property>
-                  <property name="prefix">
-                   <string comment="On database unlock, show entries that...">will expire within </string>
+                   <string comment="number of days warning for password expiration"> days</string>
                   </property>
                   <property name="minimum">
                    <number>0</number>
                   </property>
                   <property name="maximum">
-                   <number>30</number>
+                   <number>90</number>
                   </property>
                   <property name="value">
-                   <number>0</number>
+                   <number>3</number>
                   </property>
                  </widget>
                 </item>
