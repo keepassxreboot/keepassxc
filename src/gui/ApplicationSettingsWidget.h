@@ -56,6 +56,8 @@ signals:
 private slots:
     void saveSettings();
     void resetSettings();
+    void importSettings();
+    void exportSettings();
     void reject();
     void autoSaveToggled(bool checked);
     void hideWindowOnCopyCheckBoxToggled(bool checked);

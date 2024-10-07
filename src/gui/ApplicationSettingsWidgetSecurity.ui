@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>364</width>
-    <height>493</height>
+    <height>505</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -31,7 +31,7 @@
      <property name="title">
       <string>Timeouts</string>
      </property>
-     <layout class="QGridLayout" name="gridLayout" columnstretch="0,0,0">
+     <layout class="QGridLayout" name="gridLayout" columnstretch="0,0,1">
       <item row="1" column="1">
        <widget class="QSpinBox" name="lockDatabaseIdleSpinBox">
         <property name="enabled">
@@ -160,11 +160,11 @@
     </widget>
    </item>
    <item>
-    <widget class="QGroupBox" name="groupBox_2">
+    <widget class="QGroupBox" name="lockOptionsGroup">
      <property name="title">
-      <string>Convenience</string>
+      <string>Lock Options</string>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
+     <layout class="QVBoxLayout" name="verticalLayout_4">
       <item>
        <widget class="QCheckBox" name="quickUnlockCheckBox">
         <property name="text">
@@ -180,13 +180,6 @@
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="lockDatabaseMinimizeCheckBox">
-        <property name="text">
-         <string>Lock databases after minimizing the window</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QCheckBox" name="lockDatabasesOnUserSwitchCheckBox">
         <property name="text">
          <string>Lock databases when switching user</string>
@@ -194,16 +187,32 @@
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="passwordsHiddenCheckBox">
+       <widget class="QCheckBox" name="lockDatabaseMinimizeCheckBox">
         <property name="text">
-         <string>Hide passwords when editing them</string>
+         <string>Lock databases after minimizing the window</string>
         </property>
        </widget>
       </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
+      <string>Convenience</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
        <widget class="QCheckBox" name="passwordShowDotsCheckBox">
         <property name="text">
          <string>Use placeholder for empty password fields</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="passwordsHiddenCheckBox">
+        <property name="text">
+         <string>Hide passwords when editing them</string>
         </property>
        </widget>
       </item>
@@ -224,21 +233,7 @@
       <item>
        <widget class="QCheckBox" name="hideNotesCheckBox">
         <property name="text">
-         <string>Hide entry notes by default</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="NoConfirmMoveEntryToRecycleBinCheckBox">
-        <property name="text">
-         <string>Move entries to recycle bin without confirmation</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="EnableCopyOnDoubleClickCheckBox">
-        <property name="text">
-         <string>Enable double click to copy the username/password entry columns</string>
+         <string>Hide notes in the entry preview panel</string>
         </property>
        </widget>
       </item>
@@ -284,19 +279,17 @@
   <tabstop>clearClipboardSpinBox</tabstop>
   <tabstop>lockDatabaseIdleCheckBox</tabstop>
   <tabstop>lockDatabaseIdleSpinBox</tabstop>
-  <tabstop>lockDatabasesOnUserSwitchCheckBox</tabstop>
   <tabstop>clearSearchCheckBox</tabstop>
   <tabstop>clearSearchSpinBox</tabstop>
   <tabstop>quickUnlockCheckBox</tabstop>
   <tabstop>lockDatabaseOnScreenLockCheckBox</tabstop>
+  <tabstop>lockDatabasesOnUserSwitchCheckBox</tabstop>
   <tabstop>lockDatabaseMinimizeCheckBox</tabstop>
-  <tabstop>passwordsHiddenCheckBox</tabstop>
   <tabstop>passwordShowDotsCheckBox</tabstop>
+  <tabstop>passwordsHiddenCheckBox</tabstop>
   <tabstop>passwordPreviewCleartextCheckBox</tabstop>
   <tabstop>hideTotpCheckBox</tabstop>
   <tabstop>hideNotesCheckBox</tabstop>
-  <tabstop>NoConfirmMoveEntryToRecycleBinCheckBox</tabstop>
-  <tabstop>EnableCopyOnDoubleClickCheckBox</tabstop>
   <tabstop>fallbackToSearch</tabstop>
  </tabstops>
  <resources/>

@@ -115,6 +115,8 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
     connect(m_generalUi->systrayShowCheckBox, SIGNAL(toggled(bool)), SLOT(systrayToggled(bool)));
     connect(m_generalUi->rememberLastDatabasesCheckBox, SIGNAL(toggled(bool)), SLOT(rememberDatabasesToggled(bool)));
     connect(m_generalUi->resetSettingsButton, SIGNAL(clicked()), SLOT(resetSettings()));
+    connect(m_generalUi->importSettingsButton, SIGNAL(clicked()), SLOT(importSettings()));
+    connect(m_generalUi->exportSettingsButton, SIGNAL(clicked()), SLOT(exportSettings()));
     connect(m_generalUi->useAlternativeSaveCheckBox, SIGNAL(toggled(bool)),
             m_generalUi->alternativeSaveComboBox, SLOT(setEnabled(bool)));
 
@@ -217,6 +219,10 @@ void ApplicationSettingsWidget::loadSettings()
     m_generalUi->autoTypeEntryURLMatchCheckBox->setChecked(config()->get(Config::AutoTypeEntryURLMatch).toBool());
     m_generalUi->autoTypeHideExpiredEntryCheckBox->setChecked(config()->get(Config::AutoTypeHideExpiredEntry).toBool());
     m_generalUi->faviconTimeoutSpinBox->setValue(config()->get(Config::FaviconDownloadTimeout).toInt());
+    m_generalUi->ConfirmMoveEntryToRecycleBinCheckBox->setChecked(
+        !config()->get(Config::Security_NoConfirmMoveEntryToRecycleBin).toBool());
+    m_generalUi->EnableCopyOnDoubleClickCheckBox->setChecked(
+        config()->get(Config::Security_EnableCopyOnDoubleClick).toBool());
 
     m_generalUi->languageComboBox->clear();
     QList<QPair<QString, QString>> languages = Translator::availableLanguages();
@@ -228,6 +234,8 @@ void ApplicationSettingsWidget::loadSettings()
         m_generalUi->languageComboBox->setCurrentIndex(defaultIndex);
     }
 
+    m_generalUi->menubarShowCheckBox->setChecked(!config()->get(Config::GUI_HideMenubar).toBool());
+    m_generalUi->toolbarShowCheckBox->setChecked(!config()->get(Config::GUI_HideToolbar).toBool());
     m_generalUi->toolbarMovableCheckBox->setChecked(config()->get(Config::GUI_MovableToolbar).toBool());
     m_generalUi->monospaceNotesCheckBox->setChecked(config()->get(Config::GUI_MonospaceNotes).toBool());
     m_generalUi->colorPasswordsCheckBox->setChecked(config()->get(Config::GUI_ColorPasswords).toBool());
@@ -316,10 +324,6 @@ void ApplicationSettingsWidget::loadSettings()
         config()->get(Config::Security_HidePasswordPreviewPanel).toBool());
     m_secUi->hideTotpCheckBox->setChecked(config()->get(Config::Security_HideTotpPreviewPanel).toBool());
     m_secUi->hideNotesCheckBox->setChecked(config()->get(Config::Security_HideNotes).toBool());
-    m_secUi->NoConfirmMoveEntryToRecycleBinCheckBox->setChecked(
-        config()->get(Config::Security_NoConfirmMoveEntryToRecycleBin).toBool());
-    m_secUi->EnableCopyOnDoubleClickCheckBox->setChecked(
-        config()->get(Config::Security_EnableCopyOnDoubleClick).toBool());
 
     bool quickUnlockAvailable = false;
 #if defined(Q_OS_MACOS)
@@ -377,6 +381,9 @@ void ApplicationSettingsWidget::saveSettings()
     config()->set(Config::AutoTypeEntryURLMatch, m_generalUi->autoTypeEntryURLMatchCheckBox->isChecked());
     config()->set(Config::AutoTypeHideExpiredEntry, m_generalUi->autoTypeHideExpiredEntryCheckBox->isChecked());
     config()->set(Config::FaviconDownloadTimeout, m_generalUi->faviconTimeoutSpinBox->value());
+    config()->set(Config::Security_NoConfirmMoveEntryToRecycleBin,
+                  !m_generalUi->ConfirmMoveEntryToRecycleBinCheckBox->isChecked());
+    config()->set(Config::Security_EnableCopyOnDoubleClick, m_generalUi->EnableCopyOnDoubleClickCheckBox->isChecked());
 
     auto language = m_generalUi->languageComboBox->currentData().toString();
     if (config()->get(Config::GUI_Language) != language) {
@@ -387,6 +394,8 @@ void ApplicationSettingsWidget::saveSettings()
     }
     config()->set(Config::GUI_Language, language);
 
+    config()->set(Config::GUI_HideMenubar, !m_generalUi->menubarShowCheckBox->isChecked());
+    config()->set(Config::GUI_HideToolbar, !m_generalUi->toolbarShowCheckBox->isChecked());
     config()->set(Config::GUI_MovableToolbar, m_generalUi->toolbarMovableCheckBox->isChecked());
     config()->set(Config::GUI_MonospaceNotes, m_generalUi->monospaceNotesCheckBox->isChecked());
     config()->set(Config::GUI_ColorPasswords, m_generalUi->colorPasswordsCheckBox->isChecked());
@@ -437,9 +446,6 @@ void ApplicationSettingsWidget::saveSettings()
     config()->set(Config::Security_HidePasswordPreviewPanel, m_secUi->passwordPreviewCleartextCheckBox->isChecked());
     config()->set(Config::Security_HideTotpPreviewPanel, m_secUi->hideTotpCheckBox->isChecked());
     config()->set(Config::Security_HideNotes, m_secUi->hideNotesCheckBox->isChecked());
-    config()->set(Config::Security_NoConfirmMoveEntryToRecycleBin,
-                  m_secUi->NoConfirmMoveEntryToRecycleBinCheckBox->isChecked());
-    config()->set(Config::Security_EnableCopyOnDoubleClick, m_secUi->EnableCopyOnDoubleClickCheckBox->isChecked());
 
     if (m_secUi->quickUnlockCheckBox->isEnabled()) {
         config()->set(Config::Security_QuickUnlock, m_secUi->quickUnlockCheckBox->isChecked());
@@ -467,8 +473,8 @@ void ApplicationSettingsWidget::resetSettings()
 {
     // Confirm reset
     auto ans = MessageBox::question(this,
-                                    tr("Reset Settings?"),
-                                    tr("Are you sure you want to reset all general and security settings to default?"),
+                                    tr("Confirm Reset"),
+                                    tr("Are you sure you want to reset all settings to default?"),
                                     MessageBox::Reset | MessageBox::Cancel,
                                     MessageBox::Cancel);
     if (ans == MessageBox::Cancel) {
@@ -501,6 +507,33 @@ void ApplicationSettingsWidget::resetSettings()
     // Refresh the settings widget and notify listeners
     loadSettings();
     emit settingsReset();
+}
+
+void ApplicationSettingsWidget::importSettings()
+{
+    auto file = fileDialog()->getOpenFileName(this, tr("Import KeePassXC Settings"), {}, "*.ini");
+    if (file.isEmpty()) {
+        return;
+    }
+
+    if (!config()->importSettings(file)) {
+        showMessage(tr("Failed to import settings from %1, not a valid settings file.").arg(file),
+                    MessageWidget::Error);
+        return;
+    }
+
+    loadSettings();
+    emit settingsReset();
+}
+
+void ApplicationSettingsWidget::exportSettings()
+{
+    auto file = fileDialog()->getSaveFileName(this, tr("Export KeePassXC Settings"), {}, "*.ini");
+    if (file.isEmpty()) {
+        return;
+    }
+
+    config()->exportSettings(file);
 }
 
 void ApplicationSettingsWidget::reject()

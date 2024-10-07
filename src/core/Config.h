@@ -210,6 +210,9 @@ public:
     void sync();
     void resetToDefaults();
 
+    bool importSettings(const QString& fileName);
+    void exportSettings(const QString& fileName) const;
+
     static Config* instance();
     static void createConfigFromFile(const QString& configFileName, const QString& localConfigFileName = {});
     static void createTempFileInstance();

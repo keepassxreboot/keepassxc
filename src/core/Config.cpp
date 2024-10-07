@@ -302,6 +302,45 @@ void Config::resetToDefaults()
     }
 }
 
+bool Config::importSettings(const QString& fileName)
+{
+    // Ensure file is valid ini with values
+    QSettings settings(fileName, QSettings::IniFormat);
+    if (settings.status() != QSettings::NoError || settings.allKeys().isEmpty()) {
+        return false;
+    }
+
+    // Only import valid roaming settings
+    auto isValidSetting = [](const QString& key) {
+        for (const auto& value : configStrings.values()) {
+            if (value.type == ConfigType::Roaming && value.name == key) {
+                return true;
+            }
+        }
+        return false;
+    };
+
+    // Clear existing settings and set valid items
+    m_settings->clear();
+    for (const auto& key : settings.allKeys()) {
+        if (isValidSetting(key)) {
+            m_settings->setValue(key, settings.value(key));
+        }
+    }
+
+    sync();
+
+    return true;
+}
+
+void Config::exportSettings(const QString& fileName) const
+{
+    QSettings settings(fileName, QSettings::IniFormat);
+    for (const auto& key : m_settings->allKeys()) {
+        settings.setValue(key, m_settings->value(key));
+    }
+}
+
 /**
  * Map of configuration file settings that are either deprecated, or have
  * had their name changed to their new config enum values.
