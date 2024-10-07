@@ -81,9 +81,9 @@ public slots:
     void unlockAnyDatabaseInDialog(DatabaseOpenDialog::Intent intent);
     void relockPendingDatabase();
 
+    void showDatabaseReports(bool state);
+    void showDatabaseSettings(bool state);
     void showDatabaseSecurity();
-    void showDatabaseReports();
-    void showDatabaseSettings();
 #ifdef WITH_XC_BROWSER_PASSKEYS
     void showPasskeys();
     void importPasskey();

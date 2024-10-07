@@ -20,6 +20,7 @@
         <file>application/scalable/actions/database-lock-all.svg</file>
         <file>application/scalable/actions/database-merge.svg</file>
         <file>application/scalable/actions/database-search.svg</file>
+        <file>application/scalable/actions/database-settings.svg</file>
         <file>application/scalable/actions/dialog-close.svg</file>
         <file>application/scalable/actions/dialog-ok.svg</file>
         <file>application/scalable/actions/document-close.svg</file>

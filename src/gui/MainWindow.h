@@ -106,7 +106,7 @@ protected:
     bool focusNextPrevChild(bool next) override;
 
 private slots:
-    void setMenuActionState(DatabaseWidget::Mode mode = DatabaseWidget::Mode::None);
+    void updateMenuActionState();
     void updateToolbarSeparatorVisibility();
     void updateWindowTitle();
     void showAboutDialog();

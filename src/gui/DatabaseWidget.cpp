@@ -261,15 +261,26 @@ QSharedPointer<Database> DatabaseWidget::database() const
 
 DatabaseWidget::Mode DatabaseWidget::currentMode() const
 {
-    if (currentWidget() == nullptr) {
-        return Mode::None;
-    } else if (currentWidget() == m_mainWidget) {
-        return Mode::ViewMode;
-    } else if (currentWidget() == m_databaseOpenWidget) {
-        return Mode::LockedMode;
+    auto mode = Mode::None;
+    auto widget = currentWidget();
+    if (widget == m_mainWidget) {
+        mode = Mode::ViewMode;
+    } else if (widget == m_databaseOpenWidget) {
+        mode = Mode::LockedMode;
+    } else if (widget == m_reportsDialog) {
+        mode = Mode::ReportsMode;
+    } else if (widget == m_databaseSettingDialog) {
+        mode = Mode::DatabaseSettingsMode;
+    } else if (widget == m_editEntryWidget) {
+        mode = Mode::EditEntryMode;
+    } else if (widget == m_editGroupWidget) {
+        mode = Mode::EditGroupMode;
     } else {
-        return Mode::EditMode;
+        // We are missing a condition if we reach here
+        Q_ASSERT(false);
     }
+
+    return mode;
 }
 
 bool DatabaseWidget::isLocked() const
@@ -1000,7 +1011,7 @@ void DatabaseWidget::openUrlForEntry(Entry* entry)
     }
 }
 
-Entry* DatabaseWidget::currentSelectedEntry()
+Entry* DatabaseWidget::currentSelectedEntry() const
 {
     if (currentWidget() == m_editEntryWidget) {
         return m_editEntryWidget->currentEntry();
@@ -1357,14 +1368,18 @@ void DatabaseWidget::entryActivationSignalReceived(Entry* entry, EntryModel::Mod
 
 void DatabaseWidget::switchToDatabaseReports()
 {
-    m_reportsDialog->load(m_db);
-    setCurrentWidget(m_reportsDialog);
+    if (currentMode() != Mode::ReportsMode) {
+        m_reportsDialog->load(m_db);
+        setCurrentWidget(m_reportsDialog);
+    }
 }
 
 void DatabaseWidget::switchToDatabaseSettings()
 {
-    m_databaseSettingDialog->load(m_db);
-    setCurrentWidget(m_databaseSettingDialog);
+    if (currentMode() != Mode::DatabaseSettingsMode) {
+        m_databaseSettingDialog->load(m_db);
+        setCurrentWidget(m_databaseSettingDialog);
+    }
 }
 
 void DatabaseWidget::switchToOpenDatabase()
@@ -1699,16 +1714,13 @@ void DatabaseWidget::onEntryChanged(Entry* entry)
 
 bool DatabaseWidget::canCloneCurrentGroup() const
 {
-    bool isRootGroup = m_db->rootGroup() == m_groupView->currentGroup();
-    // bool isRecycleBin = isRecycleBinSelected();
-
-    return !isRootGroup;
+    auto currentGroup = m_groupView->currentGroup();
+    return currentGroup != m_db->rootGroup() && currentGroup != m_db->metadata()->recycleBin();
 }
 
 bool DatabaseWidget::canDeleteCurrentGroup() const
 {
-    bool isRootGroup = m_db->rootGroup() == m_groupView->currentGroup();
-    return !isRootGroup;
+    return currentGroup() != m_db->rootGroup();
 }
 
 Group* DatabaseWidget::currentGroup() const
@@ -2319,7 +2331,9 @@ void DatabaseWidget::hideMessage()
 
 bool DatabaseWidget::isRecycleBinSelected() const
 {
-    return m_groupView->currentGroup() && m_groupView->currentGroup() == m_db->metadata()->recycleBin();
+    auto group = currentGroup();
+    auto entry = currentSelectedEntry();
+    return (group && group->isRecycled()) || (entry && entry->isRecycled());
 }
 
 void DatabaseWidget::emptyRecycleBin()

@@ -1749,6 +1749,10 @@ Are you sure you want to continue with this file?.</source>
         <source>Maintenance</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Database Settings: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetBrowser</name>
@@ -5791,6 +5795,10 @@ We recommend you use the AppImage available on our downloads page.</source>
     </message>
     <message>
         <source>Remove Passkey From Entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Empty Recycle Bin</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

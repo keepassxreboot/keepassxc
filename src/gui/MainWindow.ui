@@ -250,9 +250,9 @@
     <addaction name="actionLockDatabase"/>
     <addaction name="actionLockAllDatabases"/>
     <addaction name="separator"/>
-    <addaction name="actionReports"/>
     <addaction name="actionDatabaseSettings"/>
     <addaction name="actionDatabaseSecurity"/>
+    <addaction name="actionReports"/>
     <addaction name="separator"/>
     <addaction name="actionPasskeys"/>
     <addaction name="actionImportPasskey"/>
@@ -286,9 +286,6 @@
      <bool>true</bool>
     </property>
     <widget class="QMenu" name="menuEntryCopyAttribute">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
      <property name="toolTip">
       <string/>
      </property>
@@ -300,9 +297,6 @@
      <addaction name="separator"/>
     </widget>
     <widget class="QMenu" name="menuEntryTotp">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
      <property name="title">
       <string>TOTP</string>
      </property>
@@ -317,6 +311,7 @@
       <string>Tags</string>
      </property>
     </widget>
+    <addaction name="separator"/>
     <addaction name="actionEntryNew"/>
     <addaction name="actionEntryEdit"/>
     <addaction name="actionEntryClone"/>
@@ -349,16 +344,17 @@
     <property name="title">
      <string>&amp;Groups</string>
     </property>
+    <addaction name="actionGroupEmptyRecycleBin"/>
+    <addaction name="separator"/>
     <addaction name="actionGroupNew"/>
     <addaction name="actionGroupEdit"/>
     <addaction name="actionGroupClone"/>
     <addaction name="actionGroupDelete"/>
-    <addaction name="actionGroupEmptyRecycleBin"/>
-    <addaction name="separator"/>
-    <addaction name="actionGroupDownloadFavicons"/>
     <addaction name="separator"/>
     <addaction name="actionGroupSortAsc"/>
     <addaction name="actionGroupSortDesc"/>
+    <addaction name="separator"/>
+    <addaction name="actionGroupDownloadFavicons"/>
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="title">
@@ -429,6 +425,9 @@
    <addaction name="actionEntryCopyURL"/>
    <addaction name="actionEntryAutoType"/>
    <addaction name="separator"/>
+   <addaction name="actionDatabaseSettings"/>
+   <addaction name="actionReports"/>
+   <addaction name="separator"/>
    <addaction name="actionPasswordGenerator"/>
    <addaction name="actionSettings"/>
    <addaction name="separator"/>
@@ -463,17 +462,11 @@
    </property>
   </action>
   <action name="actionDatabaseSave">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>&amp;Save Database</string>
    </property>
   </action>
   <action name="actionDatabaseClose">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>&amp;Close Database</string>
    </property>
@@ -495,9 +488,6 @@
    </property>
   </action>
   <action name="actionEntryNew">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>&amp;New Entry…</string>
    </property>
@@ -506,9 +496,6 @@
    </property>
   </action>
   <action name="actionEntryEdit">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>&amp;Edit Entry…</string>
    </property>
@@ -517,17 +504,11 @@
    </property>
   </action>
   <action name="actionEntryDelete">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>&amp;Delete Entry…</string>
    </property>
   </action>
   <action name="actionGroupNew">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>&amp;New Group…</string>
    </property>
@@ -536,64 +517,43 @@
    </property>
   </action>
   <action name="actionGroupEdit">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>&amp;Edit Group…</string>
    </property>
   </action>
   <action name="actionGroupDelete">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>&amp;Delete Group…</string>
    </property>
   </action>
   <action name="actionGroupDownloadFavicons">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>Download All &amp;Favicons…</string>
    </property>
   </action>
   <action name="actionGroupSortAsc">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>Sort &amp;A-Z</string>
    </property>
   </action>
   <action name="actionGroupSortDesc">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>Sort &amp;Z-A</string>
    </property>
   </action>
   <action name="actionDatabaseSaveAs">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>Sa&amp;ve Database As…</string>
    </property>
   </action>
   <action name="actionDatabaseSecurity">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>Database &amp;Security…</string>
    </property>
   </action>
   <action name="actionReports">
-   <property name="enabled">
-    <bool>false</bool>
+   <property name="checkable">
+    <bool>true</bool>
    </property>
    <property name="text">
     <string>Database &amp;Reports…</string>
@@ -606,8 +566,8 @@
    </property>
   </action>
   <action name="actionDatabaseSettings">
-   <property name="enabled">
-    <bool>false</bool>
+   <property name="checkable">
+    <bool>true</bool>
    </property>
    <property name="text">
     <string>&amp;Database Settings…</string>
@@ -620,9 +580,6 @@
    </property>
   </action>
   <action name="actionPasskeys">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>Passkeys…</string>
    </property>
@@ -634,9 +591,6 @@
    </property>
   </action>
   <action name="actionImportPasskey">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>Import Passkey</string>
    </property>
@@ -648,17 +602,11 @@
    </property>
   </action>
   <action name="actionEntryClone">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>&amp;Clone Entry…</string>
    </property>
   </action>
   <action name="actionEntryMoveUp">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>Move u&amp;p</string>
    </property>
@@ -667,9 +615,6 @@
    </property>
   </action>
   <action name="actionEntryMoveDown">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>Move do&amp;wn</string>
    </property>
@@ -678,9 +623,6 @@
    </property>
   </action>
   <action name="actionEntryCopyUsername">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>Copy &amp;Username</string>
    </property>
@@ -689,9 +631,6 @@
    </property>
   </action>
   <action name="actionEntryCopyPassword">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>Copy &amp;Password</string>
    </property>
@@ -719,25 +658,16 @@
    </property>
   </action>
   <action name="actionEntryAutoType">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>Perform &amp;Auto-Type</string>
    </property>
   </action>
   <action name="actionEntryImportPasskey">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>Import Passkey</string>
    </property>
   </action>
   <action name="actionEntryRemovePasskey">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>Remove Passkey From Entry</string>
    </property>
@@ -818,33 +748,21 @@
    </property>
   </action>
   <action name="actionEntryOpenUrl">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>Open &amp;URL</string>
    </property>
   </action>
   <action name="actionLockDatabase">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>&amp;Lock Database</string>
    </property>
   </action>
   <action name="actionLockAllDatabases">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>Lock &amp;All Databases</string>
    </property>
   </action>
   <action name="actionEntryCopyTitle">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>&amp;Title</string>
    </property>
@@ -853,9 +771,6 @@
    </property>
   </action>
   <action name="actionEntryCopyURL">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>Copy &amp;URL</string>
    </property>
@@ -864,9 +779,6 @@
    </property>
   </action>
   <action name="actionEntryCopyNotes">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>&amp;Notes</string>
    </property>
@@ -875,17 +787,11 @@
    </property>
   </action>
   <action name="actionExportCsv">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>&amp;CSV File…</string>
    </property>
   </action>
   <action name="actionExportHtml">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>&amp;HTML File…</string>
    </property>
@@ -943,8 +849,8 @@
    <property name="text">
     <string>E&amp;mpty recycle bin</string>
    </property>
-   <property name="visible">
-    <bool>false</bool>
+   <property name="toolTip">
+    <string>Empty Recycle Bin</string>
    </property>
   </action>
   <action name="actionDonate">
@@ -990,9 +896,6 @@
    </property>
   </action>
   <action name="actionDatabaseSaveBackup">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>Save Database Backup…</string>
    </property>
@@ -1134,9 +1037,6 @@
    </property>
   </action>
   <action name="actionGroupClone">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>Clone Group...</string>
    </property>
@@ -1153,17 +1053,11 @@
    </property>
   </action>
   <action name="actionLockDatabaseToolbar">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>&amp;Lock Database</string>
    </property>
   </action>
   <action name="actionExportXML">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
    <property name="text">
     <string>&amp;XML File…</string>
    </property>

@@ -62,8 +62,11 @@ public:
     {
         None,
         ViewMode,
-        EditMode,
-        LockedMode
+        EditEntryMode,
+        EditGroupMode,
+        LockedMode,
+        ReportsMode,
+        DatabaseSettingsMode
     };
 
     explicit DatabaseWidget(QSharedPointer<Database> db, QWidget* parent = nullptr);
@@ -104,7 +107,7 @@ public:
     QStringList customEntryAttributes() const;
     bool isEditWidgetModified() const;
     void clearAllWidgets();
-    Entry* currentSelectedEntry();
+    Entry* currentSelectedEntry() const;
     bool currentEntryHasTitle();
     bool currentEntryHasUsername();
     bool currentEntryHasPassword();
