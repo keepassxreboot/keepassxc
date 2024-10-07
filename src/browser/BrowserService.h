@@ -79,7 +79,8 @@ public:
     void lockDatabase();
 
     QJsonObject getDatabaseGroups();
-    QJsonObject createNewGroup(const QString& groupName);
+    QJsonArray getDatabaseEntries();
+    QJsonObject createNewGroup(const QString& groupName, bool isPasskeysGroup = false);
     QString getCurrentTotp(const QString& uuid);
     void showPasswordGenerator(const KeyPairMessage& keyPairMessage);
     bool isPasswordGeneratorRequested() const;
@@ -89,6 +90,7 @@ public:
 #ifdef WITH_XC_BROWSER_PASSKEYS
     QJsonObject showPasskeysRegisterPrompt(const QJsonObject& publicKeyOptions,
                                            const QString& origin,
+                                           const QString& groupName,
                                            const StringPairList& keyList);
     QJsonObject showPasskeysAuthenticationPrompt(const QJsonObject& publicKeyOptions,
                                                  const QString& origin,
