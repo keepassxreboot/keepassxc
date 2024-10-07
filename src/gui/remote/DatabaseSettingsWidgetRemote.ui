@@ -132,10 +132,36 @@
             <string>Download</string>
            </attribute>
            <layout class="QGridLayout" name="gridLayout_4">
+            <item row="1" column="0">
+             <widget class="QLabel" name="downloadCommandInputLabel">
+              <property name="text">
+               <string>Input:</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+              </property>
+             </widget>
+            </item>
             <item row="0" column="0">
              <widget class="QLabel" name="downloadCommandLabel">
               <property name="text">
                <string>Command:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QPlainTextEdit" name="inputForDownload">
+              <property name="accessibleName">
+               <string>Download input field</string>
+              </property>
+              <property name="placeholderText">
+               <string>e.g.:
+get DatabaseOnRemote.kdbx {TEMP_DATABASE}
+exit
+---
+{TEMP_DATABASE} is used as placeholder to store the database in a temporary location
+The command has to exit. In case of `sftp` as last command `exit` has to be sent
+            </string>
               </property>
              </widget>
             </item>
@@ -160,29 +186,26 @@
               </item>
              </layout>
             </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="downloadCommandInputLabel">
+            <item row="2" column="0">
+             <widget class="QLabel" name="downloadTimeoutLabel">
               <property name="text">
-               <string>Input:</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+               <string>Timeout:</string>
               </property>
              </widget>
             </item>
-            <item row="1" column="1">
-             <widget class="QPlainTextEdit" name="inputForDownload">
-              <property name="accessibleName">
-               <string>Download input field</string>
+            <item row="2" column="1">
+             <widget class="QSpinBox" name="downloadTimeoutSec">
+              <property name="suffix">
+               <string> seconds</string>
               </property>
-              <property name="placeholderText">
-               <string>e.g.:
-get DatabaseOnRemote.kdbx {TEMP_DATABASE}
-exit
----
-{TEMP_DATABASE} is used as placeholder to store the database in a temporary location
-The command has to exit. In case of `sftp` as last command `exit` has to be sent
-            </string>
+              <property name="minimum">
+               <number>1</number>
+              </property>
+              <property name="maximum">
+               <number>300</number>
+              </property>
+              <property name="value">
+               <number>10</number>
               </property>
              </widget>
             </item>
@@ -193,33 +216,6 @@ The command has to exit. In case of `sftp` as last command `exit` has to be sent
             <string>Upload</string>
            </attribute>
            <layout class="QGridLayout" name="gridLayout_5">
-            <item row="1" column="0">
-             <widget class="QLabel" name="uploadCommandInputLabel">
-              <property name="text">
-               <string>Input:</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="0">
-             <widget class="QLabel" name="uploadCommandLabel">
-              <property name="text">
-               <string>Command:</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QLineEdit" name="uploadCommand">
-              <property name="accessibleName">
-               <string>Upload command field</string>
-              </property>
-              <property name="placeholderText">
-               <string>e.g.: &quot;sftp user@hostname&quot; or &quot;scp {TEMP_DATABASE} user@hostname:DatabaseOnRemote.kdbx&quot;</string>
-              </property>
-             </widget>
-            </item>
             <item row="1" column="1">
              <widget class="QPlainTextEdit" name="inputForUpload">
               <property name="accessibleName">
@@ -233,6 +229,56 @@ exit
 {TEMP_DATABASE} is used as placeholder to store the database in a temporary location
 The command has to exit. In case of `sftp` as last command `exit` has to be sent
             </string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="uploadCommandInputLabel">
+              <property name="text">
+               <string>Input:</string>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLineEdit" name="uploadCommand">
+              <property name="accessibleName">
+               <string>Upload command field</string>
+              </property>
+              <property name="placeholderText">
+               <string>e.g.: &quot;sftp user@hostname&quot; or &quot;scp {TEMP_DATABASE} user@hostname:DatabaseOnRemote.kdbx&quot;</string>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="uploadCommandLabel">
+              <property name="text">
+               <string>Command:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLabel" name="uploadTimeoutLabel">
+              <property name="text">
+               <string>Timeout:</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QSpinBox" name="uploadTimeoutSec">
+              <property name="suffix">
+               <string> seconds</string>
+              </property>
+              <property name="minimum">
+               <number>1</number>
+              </property>
+              <property name="maximum">
+               <number>300</number>
+              </property>
+              <property name="value">
+               <number>10</number>
               </property>
              </widget>
             </item>
