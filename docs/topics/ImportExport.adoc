@@ -11,6 +11,7 @@ KeePassXC allows you to import external databases from the following options:
 * 1Password Vault (.opvault)
 * Bitwarden (.json)
 * KeePass 1 Database (.kdb)
+* Remote database (.kdbx)
 
 To import any of these files, start KeePassXC and either click the `Import File` button on the welcome screen or use the menu Database > Import... to launch the Import Wizard.
 
@@ -66,6 +67,21 @@ To import a KeePass 1 database file in KeePassXC, perform the following steps:
 2. Enter the password for your database and optionally provide a key file if it was configured for your KeePass1 database.
 
 3. Click `Continue` to unlock and preview the import. Click `Done` to complete the import.
+
+=== Importing Remote Database
+Database files that are stored in a remote location can be imported or opened with KeePassXC if you provide a command to download the file from the remote location.
+
+To import (or temporarily open) a remote database file in KeePassXC, perform the following steps:
+
+1. Open the Import Wizard as shown above. Select the Remote Database option.
+
+2. Enter a command to download the remote database. If necessary, enter input that needs to be passed to the command. The command and/or input need a `{TEMP_DATABASE}` placeholder specified where the remote database is temporarily stored.
+
+3. Enter the password for your database and optionally provide a key file.
+
+4. Click `Continue` to unlock and preview the import. Click `Done` to complete the import.
+
+Opening without importing a remote database is possible by selecting Temporary Database in the Import Into section of the wizard.
 
 == Exporting Databases
 KeePassXC supports multiple ways to export your database for transfer to another program or to print out and archive.

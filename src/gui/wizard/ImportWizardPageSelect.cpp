@@ -25,6 +25,8 @@
 #include "gui/Icons.h"
 #include "gui/MainWindow.h"
 
+#include <QDesktopServices>
+
 ImportWizardPageSelect::ImportWizardPageSelect(QWidget* parent)
     : QWizardPage(parent)
     , m_ui(new Ui::ImportWizardPageSelect())
@@ -36,12 +38,14 @@ ImportWizardPageSelect::ImportWizardPageSelect(QWidget* parent)
     new QListWidgetItem(icons()->icon("onepassword"), tr("1Password Vault (.opvault)"), m_ui->importTypeList);
     new QListWidgetItem(icons()->icon("bitwarden"), tr("Bitwarden (.json)"), m_ui->importTypeList);
     new QListWidgetItem(icons()->icon("object-locked"), tr("KeePass 1 Database (.kdb)"), m_ui->importTypeList);
+    new QListWidgetItem(icons()->icon("web"), tr("Remote Database (.kdbx)"), m_ui->importTypeList);
 
     m_ui->importTypeList->item(0)->setData(Qt::UserRole, ImportWizard::IMPORT_CSV);
     m_ui->importTypeList->item(1)->setData(Qt::UserRole, ImportWizard::IMPORT_OPUX);
     m_ui->importTypeList->item(2)->setData(Qt::UserRole, ImportWizard::IMPORT_OPVAULT);
     m_ui->importTypeList->item(3)->setData(Qt::UserRole, ImportWizard::IMPORT_BITWARDEN);
     m_ui->importTypeList->item(4)->setData(Qt::UserRole, ImportWizard::IMPORT_KEEPASS1);
+    m_ui->importTypeList->item(5)->setData(Qt::UserRole, ImportWizard::IMPORT_REMOTE);
 
     connect(m_ui->importTypeList, &QListWidget::currentItemChanged, this, &ImportWizardPageSelect::itemSelected);
     m_ui->importTypeList->setCurrentRow(0);
@@ -54,11 +58,22 @@ ImportWizardPageSelect::ImportWizardPageSelect(QWidget* parent)
 
     updateDatabaseChoices();
 
+    m_ui->downloadCommandHelpButton->setIcon(icons()->icon("system-help"));
+    connect(m_ui->downloadCommandHelpButton, &QToolButton::clicked, this, [] {
+        QDesktopServices::openUrl(QUrl("https://keepassxc.org/docs/KeePassXC_UserGuide#_remote_database_support"));
+    });
+
+    connect(m_ui->importFileEdit, &QLineEdit::textChanged, this, &QWizardPage::completeChanged);
+    connect(m_ui->downloadCommand, &QLineEdit::textChanged, this, &QWizardPage::completeChanged);
+
     registerField("ImportType", this);
-    registerField("ImportFile*", m_ui->importFileEdit);
-    registerField("ImportInto", m_ui->importIntoLabel);
+    registerField("ImportFile", m_ui->importFileEdit);
+    registerField("ImportIntoType", m_ui->importIntoGroupBox); // This is intentional
+    registerField("ImportInto", m_ui->importIntoLabel); // This is intentional
     registerField("ImportPassword", m_ui->passwordEdit, "text", "textChanged");
     registerField("ImportKeyFile", m_ui->keyFileEdit);
+    registerField("DownloadCommand", m_ui->downloadCommand);
+    registerField("DownloadInput", m_ui->downloadCommandInput, "plainText", "textChanged");
 }
 
 ImportWizardPageSelect::~ImportWizardPageSelect()
@@ -77,12 +92,25 @@ bool ImportWizardPageSelect::validatePage()
         if (m_ui->existingDatabaseChoice->currentIndex() == -1) {
             return false;
         }
+        setField("ImportIntoType", ImportWizard::EXISTING_DATABASE);
         setField("ImportInto", m_ui->existingDatabaseChoice->currentData());
+    } else if (m_ui->temporaryDatabaseRadio->isChecked()) {
+        setField("ImportIntoType", ImportWizard::TEMPORARY_DATABASE);
+        setField("ImportInto", {});
     } else {
+        setField("ImportIntoType", ImportWizard::NEW_DATABASE);
         setField("ImportInto", {});
     }
 
     return true;
+}
+
+bool ImportWizardPageSelect::isComplete() const
+{
+    if (field("ImportType").toInt() == ImportWizard::IMPORT_REMOTE) {
+        return !field("DownloadCommand").toString().isEmpty();
+    }
+    return !field("ImportFile").toString().isEmpty();
 }
 
 void ImportWizardPageSelect::itemSelected(QListWidgetItem* current, QListWidgetItem* previous)
@@ -105,15 +133,22 @@ void ImportWizardPageSelect::itemSelected(QListWidgetItem* current, QListWidgetI
     case ImportWizard::IMPORT_CSV:
     case ImportWizard::IMPORT_OPUX:
         setCredentialState(false);
+        setDownloadCommand(false);
         break;
     // Password may be required
     case ImportWizard::IMPORT_BITWARDEN:
     case ImportWizard::IMPORT_OPVAULT:
         setCredentialState(true);
+        setDownloadCommand(false);
         break;
     // Password and/or Key File may be required
     case ImportWizard::IMPORT_KEEPASS1:
         setCredentialState(true, true);
+        setDownloadCommand(false);
+        break;
+    case ImportWizard::IMPORT_REMOTE:
+        setCredentialState(true, true);
+        setDownloadCommand(true);
         break;
     default:
         Q_ASSERT(false);
@@ -223,6 +258,33 @@ void ImportWizardPageSelect::setCredentialState(bool passwordEnabled, bool keyFi
         if (keyFileStateChanged) {
             auto diff = m_ui->keyFileEdit->height() + m_ui->inputFields->layout()->spacing();
             height += keyFileEnable ? diff : -diff;
+        }
+        window()->resize(window()->width(), height);
+    }
+}
+
+void ImportWizardPageSelect::setDownloadCommand(bool downloadCommandEnabled)
+{
+    bool downloadCommandStateChanged = m_ui->downloadCommandLabel->isVisible() != downloadCommandEnabled;
+    m_ui->downloadCommandLabel->setVisible(downloadCommandEnabled);
+    m_ui->downloadCommand->setVisible(downloadCommandEnabled);
+    m_ui->downloadCommandInputLabel->setVisible(downloadCommandEnabled);
+    m_ui->downloadCommandInput->setVisible(downloadCommandEnabled);
+    m_ui->downloadCommandHelpButton->setVisible(downloadCommandEnabled);
+
+    m_ui->temporaryDatabaseRadio->setVisible(downloadCommandEnabled);
+
+    m_ui->importFileLabel->setVisible(!downloadCommandEnabled);
+    m_ui->importFileEdit->setVisible(!downloadCommandEnabled);
+    m_ui->importFileButton->setVisible(!downloadCommandEnabled);
+
+    // Workaround Qt bug where the wizard window is not updated when the internal layout changes
+    if (window()) {
+        int height = window()->height();
+        if (downloadCommandStateChanged) {
+            auto diff = m_ui->downloadCommand->height() + m_ui->downloadCommandInput->height()
+                        + m_ui->temporaryDatabaseRadio->height() + m_ui->inputFields->layout()->spacing();
+            height += downloadCommandEnabled ? diff : -diff;
         }
         window()->resize(window()->width(), height);
     }

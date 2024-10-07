@@ -39,6 +39,7 @@ public:
 
     void initializePage() override;
     bool validatePage() override;
+    bool isComplete() const override;
 
 private slots:
     void itemSelected(QListWidgetItem* current, QListWidgetItem* previous);
@@ -49,6 +50,7 @@ private slots:
 private:
     QString importFileFilter();
     void setCredentialState(bool passwordEnabled, bool keyFileEnable = false);
+    void setDownloadCommand(bool downloadCommandEnabled);
 
     QScopedPointer<Ui::ImportWizardPageSelect> m_ui;
 };

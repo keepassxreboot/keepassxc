@@ -35,13 +35,13 @@
 #include "gui/osutils/macutils/MacUtils.h"
 #endif
 #include "gui/wizard/NewDatabaseWizard.h"
-#include "wizard/ImportWizard.h"
 
 DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
     : QTabWidget(parent)
     , m_dbWidgetStateSync(new DatabaseWidgetStateSync(this))
     , m_dbWidgetPendingLock(nullptr)
     , m_databaseOpenDialog(new DatabaseOpenDialog(this))
+    , m_importWizard(nullptr)
     , m_databaseOpenInProgress(false)
 {
     auto* tabBar = new QTabBar(this);
@@ -255,53 +255,65 @@ void DatabaseTabWidget::addDatabaseTab(DatabaseWidget* dbWidget, bool inBackgrou
             &DatabaseTabWidget::unlockDatabaseInDialogForSync);
 }
 
-DatabaseWidget* DatabaseTabWidget::importFile()
+void DatabaseTabWidget::importFile()
 {
     // Show the import wizard
-    QScopedPointer wizard(new ImportWizard(this));
-    if (!wizard->exec()) {
-        return nullptr;
-    }
+    m_importWizard = new ImportWizard(this);
 
-    auto db = wizard->database();
-    if (!db) {
-        // Import wizard was cancelled
-        return nullptr;
-    }
-
-    auto importInto = wizard->importInto();
-    if (importInto.first.isNull()) {
-        // Start the new database wizard with the imported database
-        auto newDb = execNewDatabaseWizard();
-        if (newDb) {
-            // Merge the imported db into the new one
-            Merger merger(db.data(), newDb.data());
-            merger.setSkipDatabaseCustomData(true);
-            merger.merge();
-            // Show the new database
-            auto dbWidget = new DatabaseWidget(newDb, this);
-            addDatabaseTab(dbWidget);
-            newDb->markAsModified();
-            return dbWidget;
+    connect(m_importWizard.data(), &QWizard::finished, [&](int result) {
+        if (result != QDialog::Accepted) {
+            return;
         }
-    } else {
-        for (int i = 0, c = count(); i < c; ++i) {
-            // Find the database and group to import into based on import wizard choice
-            auto dbWidget = databaseWidgetFromIndex(i);
-            if (!dbWidget->isLocked() && dbWidget->database()->uuid() == importInto.first) {
-                auto group = dbWidget->database()->rootGroup()->findGroupByUuid(importInto.second);
-                if (group) {
-                    // Extract the root group from the import database
-                    auto importGroup = db->setRootGroup(new Group());
-                    importGroup->setParent(group);
-                    setCurrentIndex(i);
-                    return dbWidget;
+
+        auto db = m_importWizard->database();
+        if (!db) {
+            // Import wizard was cancelled
+            return;
+        }
+
+        switch (m_importWizard->importIntoType()) {
+        case ImportWizard::EXISTING_DATABASE:
+            for (int i = 0, c = count(); i < c; ++i) {
+                auto importInto = m_importWizard->importInto();
+                // Find the database and group to import into based on import wizard choice
+                auto dbWidget = databaseWidgetFromIndex(i);
+                if (!dbWidget->isLocked() && dbWidget->database()->uuid() == importInto.first) {
+                    auto group = dbWidget->database()->rootGroup()->findGroupByUuid(importInto.second);
+                    if (group) {
+                        // Extract the root group from the import database
+                        auto importGroup = db->setRootGroup(new Group());
+                        importGroup->setParent(group);
+                        setCurrentIndex(i);
+                        return;
+                    }
                 }
             }
+            break;
+        case ImportWizard::TEMPORARY_DATABASE: {
+            // Use the already created database as temporary database
+            auto dbWidget = new DatabaseWidget(db, this);
+            addDatabaseTab(dbWidget);
+            return;
         }
-    }
+        default:
+            // Start the new database wizard with the imported database
+            auto newDb = execNewDatabaseWizard();
+            if (newDb) {
+                // Merge the imported db into the new one
+                Merger merger(db.data(), newDb.data());
+                merger.setSkipDatabaseCustomData(true);
+                merger.merge();
+                // Show the new database
+                auto dbWidget = new DatabaseWidget(newDb, this);
+                addDatabaseTab(dbWidget);
+                newDb->markAsModified();
+                return;
+            }
+        }
+    });
 
-    return nullptr;
+    // use `open` instead of `exec`. `exec` should not be used, see https://doc.qt.io/qt-6/qdialog.html#exec
+    m_importWizard->show();
 }
 
 void DatabaseTabWidget::mergeDatabase()
