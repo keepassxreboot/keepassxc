@@ -20,6 +20,8 @@
 
 #include "DatabaseSettingsWidget.h"
 
+#include <QColor>
+
 class Database;
 namespace Ui
 {
@@ -43,6 +45,13 @@ public slots:
 protected:
     void showEvent(QShowEvent* event) override;
 
+private slots:
+    void pickPublicColor();
+    void setupPublicColorButton(const QColor& color);
+    void pickPublicIcon();
+    void setupPublicIconButton(int iconIndex);
+
+private:
     const QScopedPointer<Ui::DatabaseSettingsWidgetGeneral> m_ui;
 };
 

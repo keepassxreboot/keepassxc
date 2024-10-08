@@ -1036,3 +1036,51 @@ void Database::stopModifiedTimer()
 {
     QMetaObject::invokeMethod(&m_modifiedTimer, "stop");
 }
+
+QString Database::publicName()
+{
+    return publicCustomData().value("KPXC_PUBLIC_NAME").toString();
+}
+
+void Database::setPublicName(const QString& name)
+{
+    if (name.isEmpty()) {
+        publicCustomData().remove("KPXC_PUBLIC_NAME");
+    } else {
+        publicCustomData().insert("KPXC_PUBLIC_NAME", name);
+    }
+    markAsModified();
+}
+
+QString Database::publicColor()
+{
+    return publicCustomData().value("KPXC_PUBLIC_COLOR").toString();
+}
+
+void Database::setPublicColor(const QString& color)
+{
+    if (color.isEmpty()) {
+        publicCustomData().remove("KPXC_PUBLIC_COLOR");
+    } else {
+        publicCustomData().insert("KPXC_PUBLIC_COLOR", color);
+    }
+    markAsModified();
+}
+
+int Database::publicIcon()
+{
+    if (publicCustomData().contains("KPXC_PUBLIC_ICON")) {
+        return publicCustomData().value("KPXC_PUBLIC_ICON").toInt();
+    }
+    return -1;
+}
+
+void Database::setPublicIcon(int iconIndex)
+{
+    if (iconIndex < 0) {
+        publicCustomData().remove("KPXC_PUBLIC_ICON");
+    } else {
+        publicCustomData().insert("KPXC_PUBLIC_ICON", iconIndex);
+    }
+    markAsModified();
+}
