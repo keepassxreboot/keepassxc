@@ -57,9 +57,9 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>0</y>
-            <width>568</width>
-            <height>1153</height>
+            <y>-419</y>
+            <width>573</width>
+            <height>1397</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -557,6 +557,13 @@
                <widget class="QCheckBox" name="minimizeOnOpenUrlCheckBox">
                 <property name="text">
                  <string>Minimize when opening a URL</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="openUrlOnDoubleClick">
+                <property name="text">
+                 <string>Double clicking &quot;URL&quot; column opens a browser window</string>
                 </property>
                </widget>
               </item>
