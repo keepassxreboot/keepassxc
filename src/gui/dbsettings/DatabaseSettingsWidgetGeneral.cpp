@@ -18,9 +18,16 @@
 #include "DatabaseSettingsWidgetGeneral.h"
 #include "ui_DatabaseSettingsWidgetGeneral.h"
 
+#include <QColorDialog>
+#include <QDialogButtonBox>
+#include <QInputDialog>
+#include <QListView>
+
 #include "core/Clock.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
+#include "gui/DatabaseIcons.h"
+#include "gui/IconModels.h"
 #include "gui/MessageBox.h"
 
 DatabaseSettingsWidgetGeneral::DatabaseSettingsWidgetGeneral(QWidget* parent)
@@ -28,6 +35,11 @@ DatabaseSettingsWidgetGeneral::DatabaseSettingsWidgetGeneral(QWidget* parent)
     , m_ui(new Ui::DatabaseSettingsWidgetGeneral())
 {
     m_ui->setupUi(this);
+
+    connect(m_ui->dbPublicColorButton, &QPushButton::clicked, this, &DatabaseSettingsWidgetGeneral::pickPublicColor);
+    connect(m_ui->dbPublicColorClearButton, &QPushButton::clicked, this, [this] { setupPublicColorButton({}); });
+    connect(m_ui->dbPublicIconButton, &QPushButton::clicked, this, &DatabaseSettingsWidgetGeneral::pickPublicIcon);
+    connect(m_ui->dbPublicIconClearButton, &QPushButton::clicked, this, [this] { setupPublicIconButton(-1); });
 
     connect(m_ui->historyMaxItemsCheckBox, SIGNAL(toggled(bool)), m_ui->historyMaxItemsSpinBox, SLOT(setEnabled(bool)));
     connect(m_ui->historyMaxSizeCheckBox, SIGNAL(toggled(bool)), m_ui->historyMaxSizeSpinBox, SLOT(setEnabled(bool)));
@@ -45,6 +57,10 @@ void DatabaseSettingsWidgetGeneral::initialize()
     m_ui->recycleBinEnabledCheckBox->setChecked(meta->recycleBinEnabled());
     m_ui->defaultUsernameEdit->setText(meta->defaultUserName());
     m_ui->compressionCheckbox->setChecked(m_db->compressionAlgorithm() != Database::CompressionNone);
+
+    m_ui->dbPublicName->setText(m_db->publicName());
+    setupPublicColorButton(m_db->publicColor());
+    setupPublicIconButton(m_db->publicIcon());
 
     if (meta->historyMaxItems() > -1) {
         m_ui->historyMaxItemsSpinBox->setValue(meta->historyMaxItems());
@@ -116,6 +132,10 @@ bool DatabaseSettingsWidgetGeneral::saveSettings()
     meta->setRecycleBinEnabled(m_ui->recycleBinEnabledCheckBox->isChecked());
     meta->setSettingsChanged(Clock::currentDateTimeUtc());
 
+    m_db->setPublicName(m_ui->dbPublicName->text());
+    m_db->setPublicColor(m_ui->dbPublicColorButton->property("color").toString());
+    m_db->setPublicIcon(m_ui->dbPublicIconButton->property("iconIndex").toInt());
+
     bool truncate = false;
 
     int historyMaxItems;
@@ -154,4 +174,80 @@ bool DatabaseSettingsWidgetGeneral::saveSettings()
     }
 
     return true;
+}
+
+void DatabaseSettingsWidgetGeneral::pickPublicColor()
+{
+    auto oldColor = QColor(m_ui->dbPublicColorButton->property("color").toString());
+    auto newColor = QColorDialog::getColor(oldColor);
+    if (newColor.isValid()) {
+        setupPublicColorButton(newColor);
+    }
+}
+
+void DatabaseSettingsWidgetGeneral::setupPublicColorButton(const QColor& color)
+{
+    m_ui->dbPublicColorClearButton->setVisible(color.isValid());
+    if (color.isValid()) {
+        m_ui->dbPublicColorButton->setStyleSheet(QString("background-color:%1").arg(color.name()));
+        m_ui->dbPublicColorButton->setProperty("color", color.name());
+    } else {
+        m_ui->dbPublicColorButton->setStyleSheet("");
+        m_ui->dbPublicColorButton->setProperty("color", {});
+    }
+}
+
+void DatabaseSettingsWidgetGeneral::pickPublicIcon()
+{
+    QDialog dialog(this);
+    dialog.setSizeGripEnabled(false);
+    dialog.setWindowTitle(tr("Select Database Icon"));
+
+    auto iconList = new QListView;
+    iconList->setFlow(QListView::LeftToRight);
+    iconList->setMovement(QListView::Static);
+    iconList->setResizeMode(QListView::Adjust);
+    iconList->setWrapping(true);
+    iconList->setSpacing(4);
+
+    auto iconModel = new DefaultIconModel;
+    iconList->setModel(iconModel);
+    if (m_ui->dbPublicIconButton->property("iconIndex").toInt() >= 0) {
+        iconList->setCurrentIndex(iconModel->index(m_ui->dbPublicIconButton->property("iconIndex").toInt(), 0));
+    } else {
+        iconList->setCurrentIndex(iconModel->index(0, 0));
+    }
+
+    auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    auto layout = new QVBoxLayout(&dialog);
+    layout->addWidget(iconList);
+    layout->addWidget(buttonBox);
+
+    // Resize the dialog to fit the default icon list
+    auto cellSize = iconList->sizeHintForIndex(iconModel->index(0, 0));
+    auto spacing = iconList->spacing() * 2;
+    dialog.resize((cellSize.width() + spacing) * 15, (cellSize.height() + spacing) * 6 + 16);
+
+    connect(iconList, &QListView::doubleClicked, &dialog, &QDialog::accept);
+    connect(buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+    connect(buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+    connect(
+        &dialog, &QDialog::accepted, this, [this, iconList] { setupPublicIconButton(iconList->currentIndex().row()); });
+
+    dialog.exec();
+}
+
+void DatabaseSettingsWidgetGeneral::setupPublicIconButton(int iconIndex)
+{
+    auto valid = iconIndex >= 0 && iconIndex < databaseIcons()->count();
+    m_ui->dbPublicIconClearButton->setVisible(valid);
+    if (valid) {
+        m_ui->dbPublicIconButton->setIcon(databaseIcons()->icon(iconIndex));
+        m_ui->dbPublicIconButton->setProperty("iconIndex", iconIndex);
+        m_ui->dbPublicIconClearButton->setVisible(true);
+    } else {
+        m_ui->dbPublicIconButton->setIcon(QIcon());
+        m_ui->dbPublicIconButton->setProperty("iconIndex", -1);
+        m_ui->dbPublicIconClearButton->setVisible(false);
+    }
 }
