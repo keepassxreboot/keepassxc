@@ -1495,11 +1495,6 @@ void DatabaseWidget::entryActivationSignalReceived(Entry* entry, EntryModel::Mod
             switchToEntryEdit(entry);
         }
         break;
-    case EntryModel::Url:
-        if (!entry->url().isEmpty()) {
-            openUrlForEntry(entry);
-        }
-        break;
     case EntryModel::Totp:
         if (entry->hasTotp()) {
             setClipboardTextAndMinimize(entry->totp());
@@ -1520,6 +1515,13 @@ void DatabaseWidget::entryActivationSignalReceived(Entry* entry, EntryModel::Mod
     // TODO: switch to 'Attachments' tab in details view/pane
     // case EntryModel::Attachments:
     //    break;
+    case EntryModel::Url:
+        if (!entry->url().isEmpty() && config()->get(Config::OpenURLOnDoubleClick).toBool()) {
+            openUrlForEntry(entry);
+            break;
+        }
+        // Note, order matters here. We want to fall into the default case.
+        [[fallthrough]];
     default:
         switchToEntryEdit(entry);
     }

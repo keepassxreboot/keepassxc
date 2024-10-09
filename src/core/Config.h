@@ -49,6 +49,7 @@ public:
         UseDirectWriteSaves,
         SearchLimitGroup,
         MinimizeOnOpenUrl,
+        OpenURLOnDoubleClick,
         HideWindowOnCopy,
         MinimizeOnCopy,
         MinimizeAfterUnlock,

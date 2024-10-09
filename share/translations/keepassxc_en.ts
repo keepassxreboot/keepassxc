@@ -541,6 +541,10 @@
         <source>Export settings…</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Open browser on double clicking URL field in entry view</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetSecurity</name>

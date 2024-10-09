@@ -57,9 +57,9 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>0</y>
-            <width>568</width>
-            <height>1153</height>
+            <y>-419</y>
+            <width>573</width>
+            <height>1397</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -540,6 +540,16 @@
                <widget class="QCheckBox" name="EnableCopyOnDoubleClickCheckBox">
                 <property name="text">
                  <string>Copy data on double clicking field in entry view</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QCheckBox" name="openUrlOnDoubleClick">
+                <property name="text">
+                 <string>Open browser on double clicking URL field in entry view</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
                 </property>
                </widget>
               </item>
@@ -1351,6 +1361,7 @@
   <tabstop>alternativeSaveComboBox</tabstop>
   <tabstop>ConfirmMoveEntryToRecycleBinCheckBox</tabstop>
   <tabstop>EnableCopyOnDoubleClickCheckBox</tabstop>
+  <tabstop>openUrlOnDoubleClick</tabstop>
   <tabstop>useGroupIconOnEntryCreationCheckBox</tabstop>
   <tabstop>minimizeOnOpenUrlCheckBox</tabstop>
   <tabstop>hideWindowOnCopyCheckBox</tabstop>
