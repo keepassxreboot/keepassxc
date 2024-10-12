@@ -534,6 +534,10 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Open browser on double clicking URL field in entry view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source> recent files</source>
         <translation type="unfinished"></translation>
     </message>

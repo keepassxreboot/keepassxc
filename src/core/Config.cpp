@@ -66,6 +66,7 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::UseDirectWriteSaves,{QS("UseDirectWriteSaves"), Local, false}},
     {Config::SearchLimitGroup,{QS("SearchLimitGroup"), Roaming, false}},
     {Config::MinimizeOnOpenUrl,{QS("MinimizeOnOpenUrl"), Roaming, false}},
+    {Config::OpenURLOnDoubleClick, {QS("OpenURLOnDoubleClick"), Roaming, true}},
     {Config::HideWindowOnCopy,{QS("HideWindowOnCopy"), Roaming, false}},
     {Config::MinimizeOnCopy,{QS("MinimizeOnCopy"), Roaming, true}},
     {Config::MinimizeAfterUnlock,{QS("MinimizeAfterUnlock"), Roaming, false}},

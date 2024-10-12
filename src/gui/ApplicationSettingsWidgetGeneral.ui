@@ -544,6 +544,16 @@
                </widget>
               </item>
               <item>
+               <widget class="QCheckBox" name="openUrlOnDoubleClick">
+                <property name="text">
+                 <string>Open browser on double clicking URL field in entry view</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
                <widget class="QCheckBox" name="useGroupIconOnEntryCreationCheckBox">
                 <property name="text">
                  <string>Use group icon on entry creation</string>
@@ -1351,6 +1361,7 @@
   <tabstop>alternativeSaveComboBox</tabstop>
   <tabstop>ConfirmMoveEntryToRecycleBinCheckBox</tabstop>
   <tabstop>EnableCopyOnDoubleClickCheckBox</tabstop>
+  <tabstop>openUrlOnDoubleClick</tabstop>
   <tabstop>useGroupIconOnEntryCreationCheckBox</tabstop>
   <tabstop>minimizeOnOpenUrlCheckBox</tabstop>
   <tabstop>hideWindowOnCopyCheckBox</tabstop>
