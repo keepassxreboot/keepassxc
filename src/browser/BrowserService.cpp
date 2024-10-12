@@ -611,7 +611,7 @@ QString BrowserService::storeKey(const QString& key)
 
     hideWindow();
     db->metadata()->customData()->set(CustomData::BrowserKeyPrefix + id, key);
-    db->metadata()->customData()->set(QString("%1_%2").arg(CustomData::Created, id),
+    db->metadata()->customData()->set(QString("%1%2").arg(CustomData::Created, id),
                                       QLocale::system().toString(Clock::currentDateTime(), QLocale::ShortFormat));
     return id;
 }
