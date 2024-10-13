@@ -102,9 +102,10 @@ void DatabaseSettingsWidgetBrowser::removeSelectedKey()
     const QItemSelectionModel* itemSelectionModel = m_ui->customDataTable->selectionModel();
     if (itemSelectionModel) {
         for (const QModelIndex& index : itemSelectionModel->selectedRows(0)) {
-            QString key = index.data().toString();
-            key.insert(0, CustomData::BrowserKeyPrefix);
+            const auto key = CustomData::getKeyWithPrefix(CustomData::BrowserKeyPrefix, index.data().toString());
+            const auto createdKey = CustomData::getKeyWithPrefix(CustomData::Created, index.data().toString());
             customData()->remove(key);
+            customData()->remove(createdKey);
         }
         updateModel();
     }
@@ -124,7 +125,7 @@ void DatabaseSettingsWidgetBrowser::updateModel()
         if (key.startsWith(CustomData::BrowserKeyPrefix)) {
             QString strippedKey = key;
             strippedKey.remove(CustomData::BrowserKeyPrefix);
-            auto created = customData()->value(getKeyWithPrefix(CustomData::Created, strippedKey));
+            auto created = customData()->value(CustomData::getKeyWithPrefix(CustomData::Created, strippedKey));
             auto createdItem = new QStandardItem(created);
             createdItem->setEditable(false);
             m_customDataModel->appendRow(QList<QStandardItem*>()
@@ -305,14 +306,9 @@ void DatabaseSettingsWidgetBrowser::replaceKey(const QString& prefix,
                                                const QString& oldName,
                                                const QString& newName) const
 {
-    const auto oldKey = getKeyWithPrefix(prefix, oldName);
-    const auto newKey = getKeyWithPrefix(prefix, newName);
+    const auto oldKey = CustomData::getKeyWithPrefix(prefix, oldName);
+    const auto newKey = CustomData::getKeyWithPrefix(prefix, newName);
     const auto tempValue = customData()->value(oldKey);
     m_db->metadata()->customData()->remove(oldKey);
     m_db->metadata()->customData()->set(newKey, tempValue);
-}
-
-QString DatabaseSettingsWidgetBrowser::getKeyWithPrefix(const QString& prefix, const QString& key) const
-{
-    return QString("%1%2").arg(prefix, key);
 }

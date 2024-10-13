@@ -63,7 +63,6 @@ private:
     void updateModel();
     void settingsWarning();
     void replaceKey(const QString& prefix, const QString& oldName, const QString& newName) const;
-    QString getKeyWithPrefix(const QString& prefix, const QString& key) const;
 
 protected:
     void showEvent(QShowEvent* event) override;
