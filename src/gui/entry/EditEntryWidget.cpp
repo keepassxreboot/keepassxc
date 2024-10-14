@@ -913,6 +913,7 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
     m_mainUi->expireDatePicker->setReadOnly(m_history);
     m_mainUi->revealNotesButton->setIcon(icons()->onOffIcon("password-show", false));
     m_mainUi->revealNotesButton->setVisible(config()->get(Config::Security_HideNotes).toBool());
+    m_mainUi->revealNotesButton->setChecked(false);
     m_mainUi->notesEdit->setReadOnly(m_history);
     m_mainUi->notesEdit->setVisible(!config()->get(Config::Security_HideNotes).toBool());
     if (config()->get(Config::GUI_MonospaceNotes).toBool()) {
