@@ -22,7 +22,6 @@ When reporting, please ensure the issue falls under what can be considered a gen
 - Unauthorized access to sensitive user data (e.g., passwords).
 - Remote code execution or escalation of privileges.
 - Bypassing authentication or encryption mechanisms.
-- Code injection vulnerabilities (e.g., SQL injection).
 
 ### Non-Security Issues
 
