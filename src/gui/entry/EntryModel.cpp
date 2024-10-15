@@ -116,7 +116,7 @@ int EntryModel::columnCount(const QModelIndex& parent) const
         return 0;
     }
 
-    return 16;
+    return 17;
 }
 
 QVariant EntryModel::data(const QModelIndex& index, int role) const
@@ -134,6 +134,11 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
         case ParentGroup:
             if (entry->group()) {
                 return entry->group()->name();
+            }
+            break;
+        case ParentGroupPath:
+            if (entry->group()) {
+                return entry->group()->fullPath();
             }
             break;
         case Title:
@@ -377,6 +382,8 @@ QVariant EntryModel::headerData(int section, Qt::Orientation orientation, int ro
         switch (section) {
         case ParentGroup:
             return tr("Group");
+        case ParentGroupPath:
+            return tr("Group full path");
         case Title:
             return tr("Title");
         case Username:
@@ -414,6 +421,8 @@ QVariant EntryModel::headerData(int section, Qt::Orientation orientation, int ro
         switch (section) {
         case ParentGroup:
             return tr("Group name");
+        case ParentGroupPath:
+            return tr("Group full path");
         case Title:
             return tr("Entry title");
         case Username:
