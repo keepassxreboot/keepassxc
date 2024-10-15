@@ -2530,16 +2530,14 @@ void DatabaseWidget::processAutoOpen()
 {
     Q_ASSERT(m_db);
 
+    // check if AutoOpen group exists
     auto* autoopenGroup = m_db->rootGroup()->findGroupByPath("/AutoOpen");
     if (!autoopenGroup) {
         return;
     }
 
+    // iterate over each entry in AutoOpen group
     for (const auto* entry : autoopenGroup->entries()) {
-        if (entry->url().isEmpty() || (entry->password().isEmpty() && entry->username().isEmpty())) {
-            continue;
-        }
-
         // Support ifDevice advanced entry, a comma separated list of computer names
         // that control whether to perform AutoOpen on this entry or not. Can be
         // negated using '!'
@@ -2567,7 +2565,17 @@ void DatabaseWidget::processAutoOpen()
                 continue;
             }
         }
+        // if entry starts with 'cmd://' execute openUrlForEntry
+        // this will allow triggering any application/script on db open
+        if (entry->url().startsWith("cmd://")) {
+            auto current_entry = entry->clone();
+            openUrlForEntry(current_entry);
+            continue;
+        }
 
+        if (entry->url().isEmpty() || (entry->password().isEmpty() && entry->username().isEmpty())) {
+            continue;
+        }
         openDatabaseFromEntry(entry);
     }
 }
