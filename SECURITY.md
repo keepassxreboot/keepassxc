@@ -1,4 +1,4 @@
-# Reporting Security Issues
+### Reporting Security Issues
 
 The KeePassXC team takes security vulnerabilities very seriously and appreciates your responsible disclosure efforts. We will make every effort to acknowledge your contributions and handle them promptly.
 
@@ -10,12 +10,32 @@ To report a security issue, please use one of the following methods:
   - [@varjolintu](https://matrix.to/#/@varjolintu:matrix.org)
   - [@phoerious](https://matrix.to/#/@phoerious:matrix.org)
 - **Send an Email:** Send your report to team@keepassxc.org. We recommend encrypting the email if possible.
- 
-Please **do not** use public channels (e.g., GitHub issues) for initial reporting of bona fide security vulnerabilities.
+
+Please **DO NOT** use public channels (e.g., GitHub issues) for initial reporting of bona fide security vulnerabilities.
 
 Once you report a security issue, our team will respond with the next steps. After our initial reply, we will keep you informed of the progress towards a fix and full announcement. We may ask for additional information or guidance during this process. If we disagree that your report constitutes a genuine security vulnerability, we will inform you and close the report. Your report may be turned into an issue for further tracking.
 
-Please DO NOT submit a report to a Common Vulnerabilities and Exposures (CVE) Numbering Authority (CNA) prior to confirming the security vulnerability with the KeePassXC Team. If we do not respond to your report within 30 days then this restriction no longer applies.
+### Valid Security Vulnerabilities
+
+When reporting, please ensure the issue falls under what can be considered a genuine security vulnerability. Valid examples include:
+
+- Unauthorized access to sensitive user data (e.g., passwords).
+- Remote code execution or escalation of privileges.
+- Bypassing authentication or encryption mechanisms.
+- Code injection vulnerabilities (e.g., SQL injection).
+
+### Non-Security Issues
+
+The following issues are **not** considered security vulnerabilities:
+
+- Bugs caused by modifying the application (e.g., injecting DLLs, altering code).
+- Crashes or misbehavior resulting from abnormal use or misconfiguration.
+- Vulnerabilities found in third-party modules (should be reported to the module’s maintainers).
+  
+### CVE Reporting Policy
+
+Please **DO NOT** submit a report to a Common Vulnerabilities and Exposures (CVE) Numbering Authority (CNA) before confirming the security vulnerability with the KeePassXC team. If we do not respond to your report within 30 days, this restriction no longer applies.
+
 
 If you discover vulnerabilities in third-party modules used by KeePassXC, please report them to the maintainers of the respective modules. If the vulnerability impacts KeePassXC directly, we encourage you to notify us using the above methods. We will validate if the vulnerability is exploitable from KeePassXC code; please note that not all vulnerabilities are actually exploitable and do not constitute an immediate concern for the KeePassXC application.
 
