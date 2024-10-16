@@ -10,6 +10,15 @@ EntryPreviewWidget TagsEdit:disabled {
     background-color: #424242;
 }
 
+QMenu {
+    border: 1px solid #56565A;
+}
+
+QMenu::separator {
+    height: 1px;
+    background-color: #56565A;
+}
+
 QPushButton:!default:hover {
     /* Using slightly darker shade from palette(button) */
     background: #252528;

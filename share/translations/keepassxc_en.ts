@@ -541,6 +541,10 @@
         <source>Export settings…</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Open browser on double clicking URL field in entry view</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetSecurity</name>
@@ -2192,6 +2196,50 @@ removed from the database.</source>
     </message>
     <message>
         <source>Autosave delay since last change checkbox</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Public Database Metadata</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning: the following settings are not encrypted.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Publically visible display name used on the unlock dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Database public display name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display color:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Publically visible color used on the unlock dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Database public display color chooser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display icon:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select Database Icon</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
