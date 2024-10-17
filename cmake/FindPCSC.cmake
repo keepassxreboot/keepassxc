@@ -21,16 +21,52 @@ endif()
 
 if(NOT PCSC_FOUND)
    # Search for PC/SC headers on Mac and Windows
+
+   if (WIN32) # some special handling on windows for finding the SDK
+
+      # Resolve the ambiguity of using two names for one architechture
+      if(CMAKE_SYSTEM_PROCESSOR STREQUAL "AMD64" OR CMAKE_SYSTEM_PROCESSOR STREQUAL "x64")
+         set(ARCH_DIR "x64")
+      else()
+         set(ARCH_DIR "${CMAKE_SYSTEM_PROCESSOR}")
+      endif()
+
+      # LOCATE WINDOWS SDK PATHs
+      if (CMAKE_WINDOWS_KITS_10_DIR)
+         set (WINSDKROOTC_INCLUDE "${CMAKE_WINDOWS_KITS_10_DIR}/Include/${CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION}/um")
+         set (WINSDKROOTC_LIB     "${CMAKE_WINDOWS_KITS_10_DIR}/LIB/${CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION}/um/${ARCH_DIR}")
+      else()
+         set (WINSDKROOTC_INCLUDE "$ENV{ProgramFiles\(x86\)}/Windows Kits/10/Include/${CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION}/um")
+         set (WINSDKROOTC_LIB     "$ENV{ProgramFiles\(x86\)}/Windows Kits/10/LIB/${CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION}/um/${ARCH_DIR}")
+      endif()
+   endif()
+
    find_path(PCSC_INCLUDE_DIRS winscard.h
       HINTS
-      ${CMAKE_C_IMPLICIT_INCLUDE_DIRECTORIES}
-      /usr/include/PCSC
+         ${CMAKE_C_IMPLICIT_INCLUDE_DIRECTORIES}
+         /usr/include/PCSC
+         ${WINSDKROOTC_INCLUDE}
       PATH_SUFFIXES PCSC)
+
+   # Check if the library was found
+   if (PCSC_INCLUDE_DIRS)
+      message(STATUS "pcsc-header FOUND")
+   else()
+      message(FATAL_ERROR "pcsc-header not found")
+   endif()
 
    # MAC library is PCSC, Windows library is WinSCard
    find_library(PCSC_LIBRARIES NAMES pcsclite libpcsclite WinSCard PCSC
       HINTS   
-      ${CMAKE_C_IMPLICIT_LINK_DIRECTORIES})
+         ${CMAKE_C_IMPLICIT_LINK_DIRECTORIES}
+         ${WINSDKROOTC_LIB}
+      )
+
+   if (PCSC_LIBRARIES)
+      message(STATUS "PCSC_LIBRARIES FOUND")
+   else()
+      message(FATAL_ERROR "PCSC_LIBRARIES _NOT_ FOUND")
+   endif()
 endif()
 
 include(FindPackageHandleStandardArgs)
