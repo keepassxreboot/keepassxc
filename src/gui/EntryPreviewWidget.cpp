@@ -50,7 +50,7 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
 
     // Entry
     m_ui->entryTotpButton->setIcon(icons()->icon("totp"));
-    m_ui->entryCloseButton->setIcon(icons()->icon("dialog-close"));
+    m_ui->entryCloseButton->setIcon(icons()->icon("arrow-collapse-down"));
     m_ui->toggleUsernameButton->setIcon(icons()->onOffIcon("password-show", true));
     m_ui->togglePasswordButton->setIcon(icons()->onOffIcon("password-show", true));
     m_ui->toggleEntryNotesButton->setIcon(icons()->onOffIcon("password-show", true));
