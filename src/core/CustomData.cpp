@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,9 +21,8 @@
 #include "core/Global.h"
 
 const QString CustomData::LastModified = QStringLiteral("_LAST_MODIFIED");
-const QString CustomData::Created = QStringLiteral("_CREATED");
+const QString CustomData::Created = QStringLiteral("_CREATED_");
 const QString CustomData::BrowserKeyPrefix = QStringLiteral("KPXC_BROWSER_");
-const QString CustomData::BrowserLegacyKeyPrefix = QStringLiteral("Public Key: ");
 const QString CustomData::ExcludeFromReportsLegacy = QStringLiteral("KnownBad");
 const QString CustomData::FdoSecretsExposedGroup = QStringLiteral("FDO_SECRETS_EXPOSED_GROUP");
 const QString CustomData::RandomSlug = QStringLiteral("KPXC_RANDOM_SLUG");
@@ -50,6 +49,15 @@ bool CustomData::hasKey(const QString& key) const
 QString CustomData::value(const QString& key) const
 {
     return m_data.value(key).value;
+}
+
+QString CustomData::getKeyWithPrefix(const QString& prefix, const QString& key)
+{
+    QString keyWithPrefix;
+    keyWithPrefix.reserve(prefix.length() + key.length());
+    keyWithPrefix.append(prefix);
+    keyWithPrefix.append(key);
+    return keyWithPrefix;
 }
 
 const CustomData::CustomDataItem& CustomData::item(const QString& key) const
