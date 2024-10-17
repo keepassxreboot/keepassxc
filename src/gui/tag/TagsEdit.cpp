@@ -337,7 +337,7 @@ struct TagsEdit::Impl
         assert(i < tags.size());
         auto occurrencesOfCurrentText =
             std::count_if(tags.cbegin(), tags.cend(), [this](const auto& tag) { return tag.text == currentText(); });
-        if (currentText().isEmpty() || occurrencesOfCurrentText > 1) {
+        if ((currentText().isEmpty() && tags.size() > 1) || occurrencesOfCurrentText > 1) {
             tags.erase(std::next(tags.begin(), std::ptrdiff_t(editing_index)));
             if (editing_index <= i) { // Do we shift positions after `i`?
                 --i;
