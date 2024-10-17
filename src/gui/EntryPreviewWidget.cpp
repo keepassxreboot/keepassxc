@@ -321,7 +321,8 @@ void EntryPreviewWidget::setPasswordVisible(bool state)
 
 void EntryPreviewWidget::setEntryNotesVisible(bool state)
 {
-    setNotesVisible(m_ui->entryNotesTextEdit, m_currentEntry->notes(), state);
+    setNotesVisible(
+        m_ui->entryNotesTextEdit, m_currentEntry->resolveMultiplePlaceholders(m_currentEntry->notes()), state);
     m_ui->toggleEntryNotesButton->setIcon(icons()->onOffIcon("password-show", state));
 }
 
@@ -427,6 +428,8 @@ void EntryPreviewWidget::updateEntryAdvancedTab()
             m_ui->entryAttributesTable->item(i, 0)->setFont(font);
             m_ui->entryAttributesTable->item(i, 0)->setTextAlignment(Qt::AlignTop | Qt::AlignLeft);
 
+            auto value = m_currentEntry->resolveMultiplePlaceholders(attributes->value(key));
+
             if (attributes->isProtected(key)) {
                 // only show the reveal button on protected attributes
                 auto button = new QToolButton();
@@ -453,10 +456,10 @@ void EntryPreviewWidget::updateEntryAdvancedTab()
                 m_ui->entryAttributesTable->setCellWidget(i, 1, button);
                 m_ui->entryAttributesTable->setItem(i, 2, new QTableWidgetItem(QString("\u25cf").repeated(6)));
             } else {
-                m_ui->entryAttributesTable->setItem(i, 2, new QTableWidgetItem(attributes->value(key)));
+                m_ui->entryAttributesTable->setItem(i, 2, new QTableWidgetItem(value));
             }
 
-            m_ui->entryAttributesTable->item(i, 2)->setData(Qt::UserRole, attributes->value(key));
+            m_ui->entryAttributesTable->item(i, 2)->setData(Qt::UserRole, value);
             m_ui->entryAttributesTable->item(i, 2)->setToolTip(tr("Double click to copy value"));
             m_ui->entryAttributesTable->item(i, 2)->setTextAlignment(Qt::AlignTop | Qt::AlignLeft);
 
