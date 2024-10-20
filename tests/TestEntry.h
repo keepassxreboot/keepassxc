@@ -28,6 +28,8 @@ class TestEntry : public QObject
 
 private slots:
     void initTestCase();
+    void init();
+    void cleanup();
     void testHistoryItemDeletion();
     void testCopyDataFrom();
     void testClone();
@@ -40,6 +42,7 @@ private slots:
     void testIsRecycled();
     void testMoveUpDown();
     void testPreviousParentGroup();
+    void testTimeinfoChanges();
 };
 
 #endif // KEEPASSX_TESTENTRY_H
