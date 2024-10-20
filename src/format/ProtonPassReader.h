@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,22 +15,29 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TEST_IMPORTS_H
-#define TEST_IMPORTS_H
+#ifndef PROTONPASS_READER_H
+#define PROTONPASS_READER_H
 
-#include <QObject>
+#include <QSharedPointer>
 
-class TestImports : public QObject
+class Database;
+
+/*!
+ * Imports a Proton Pass vault in JSON format: https://proton.me/support/pass-export
+ */
+class ProtonPassReader
 {
-    Q_OBJECT
+public:
+    explicit ProtonPassReader() = default;
+    ~ProtonPassReader() = default;
 
-private slots:
-    void initTestCase();
-    void testOPUX();
-    void testOPVault();
-    void testBitwarden();
-    void testBitwardenEncrypted();
-    void testProtonPass();
+    QSharedPointer<Database> convert(const QString& path);
+
+    bool hasError();
+    QString errorString();
+
+private:
+    QString m_error;
 };
 
-#endif /* TEST_IMPORTS_H */
+#endif // PROTONPASS_READER_H
