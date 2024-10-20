@@ -44,6 +44,11 @@ struct ConfigDirective
     QVariant defaultValue;
 };
 
+enum DialogSortOrder {
+    SORT_ORDER_ASCENDING,
+    SORT_ORDER_DESCENDING
+};
+
 // clang-format off
 
 /**
@@ -77,6 +82,8 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::AutoTypeDelay,{QS("AutoTypeDelay"), Roaming, 25}},
     {Config::AutoTypeStartDelay,{QS("AutoTypeStartDelay"), Roaming, 500}},
     {Config::AutoTypeHideExpiredEntry,{QS("AutoTypeHideExpiredEntry"), Roaming, false}},
+    {Config::AutoTypeDialogSortColumn,{QS("AutoTypeDialogSortColumn"), Roaming, 0}},
+    {Config::AutoTypeDialogSortOrder,{QS("AutoTypeDialogSortOrder"), Roaming, SORT_ORDER_ASCENDING}},
     {Config::GlobalAutoTypeKey,{QS("GlobalAutoTypeKey"), Roaming, 0}},
     {Config::GlobalAutoTypeModifiers,{QS("GlobalAutoTypeModifiers"), Roaming, 0}},
     {Config::GlobalAutoTypeRetypeTime,{QS("GlobalAutoTypeRetypeTime"), Roaming, 15}},

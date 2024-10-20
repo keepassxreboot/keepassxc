@@ -85,6 +85,10 @@ AutoTypeSelectDialog::AutoTypeSelectDialog(QWidget* parent)
     connect(m_ui->action, &QToolButton::clicked, this, &AutoTypeSelectDialog::activateCurrentMatch);
 
     connect(m_ui->cancelButton, SIGNAL(clicked()), SLOT(reject()));
+
+    auto sortColumn = config()->get(Config::AutoTypeDialogSortColumn).toInt();
+    auto sortOrder = static_cast<Qt::SortOrder> (config()->get(Config::AutoTypeDialogSortOrder).toInt());
+    m_ui->view->sortByColumn(sortColumn, sortOrder);
 }
 
 // Required for QScopedPointer
@@ -391,6 +395,8 @@ void AutoTypeSelectDialog::showEvent(QShowEvent* event)
 void AutoTypeSelectDialog::hideEvent(QHideEvent* event)
 {
     config()->set(Config::GUI_AutoTypeSelectDialogSize, size());
+    config()->set(Config::AutoTypeDialogSortColumn, m_ui->view->horizontalHeader()->sortIndicatorSection());
+    config()->set(Config::AutoTypeDialogSortOrder, m_ui->view->horizontalHeader()->sortIndicatorOrder());
     if (!m_accepted) {
         emit rejected();
     }
