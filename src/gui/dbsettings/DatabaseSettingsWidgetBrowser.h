@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2018 Sami Vänttinen <sami.vanttinen@protonmail.com>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -62,6 +62,7 @@ private slots:
 private:
     void updateModel();
     void settingsWarning();
+    void replaceKey(const QString& prefix, const QString& oldName, const QString& newName) const;
 
 protected:
     void showEvent(QShowEvent* event) override;
