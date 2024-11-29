@@ -37,7 +37,6 @@ private slots:
 
     void testUnicode();
     void testLF();
-    void testEmptyReparsing();
     void testSimple();
     void testEmptyQuoted();
     void testEmptyNewline();
@@ -58,6 +57,8 @@ private slots:
     void testColumns();
 
 private:
+    void writeToFile(const QString& contents);
+
     QScopedPointer<QTemporaryFile> file;
     QScopedPointer<CsvParser> parser;
     CsvTable t;

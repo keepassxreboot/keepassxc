@@ -1,4 +1,4 @@
-﻿/*
+/*
  *  Copyright (C) 2016 Enrico Mariotti <enricomariotti@yahoo.it>
  *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
@@ -53,7 +53,7 @@ bool CsvParser::reparse()
     return parseFile();
 }
 
-bool CsvParser::parse(QFile* device)
+bool CsvParser::parse(QIODevice* device)
 {
     clear();
     if (!device) {
@@ -66,7 +66,7 @@ bool CsvParser::parse(QFile* device)
     return parseFile();
 }
 
-bool CsvParser::readFile(QFile* device)
+bool CsvParser::readFile(QIODevice* device)
 {
     if (device->isOpen()) {
         device->close();
@@ -79,6 +79,7 @@ bool CsvParser::readFile(QFile* device)
     } else {
         device->close();
 
+        // Normalize on newline endings
         m_array.replace("\r\n", "\n");
         m_array.replace("\r", "\n");
         if (m_array.isEmpty()) {
@@ -121,7 +122,7 @@ bool CsvParser::parseFile()
     parseRecord();
     while (!m_isEof) {
         if (!skipEndline()) {
-            appendStatusMsg(QObject::tr("malformed string"), true);
+            appendStatusMsg(QObject::tr("malformed string, possible unescaped delimiter"), true);
         }
         m_currRow++;
         m_currCol = 1;
@@ -161,7 +162,7 @@ void CsvParser::parseField(CsvRow& row)
 {
     QString field;
     peek(m_ch);
-    if (m_ch != m_separator && m_ch != '\n' && m_ch != '\r') {
+    if (m_ch != m_separator && m_ch != '\n') {
         if (isQualifier(m_ch)) {
             parseQuoted(field);
         } else {
@@ -190,7 +191,7 @@ void CsvParser::parseQuoted(QString& s)
     getChar(m_ch);
     parseEscaped(s);
     if (!isQualifier(m_ch)) {
-        appendStatusMsg(QObject::tr("missing closing quote"), true);
+        appendStatusMsg(QObject::tr("missing closing delimiter"), true);
     }
 }
 
@@ -391,6 +392,12 @@ int CsvParser::getCsvRows() const
 
 void CsvParser::appendStatusMsg(const QString& s, bool isCritical)
 {
-    m_statusMsg += QObject::tr("%1: (row, col) %2,%3").arg(s, m_currRow, m_currCol).append("\n");
+    if (!m_statusMsg.isEmpty()) {
+        m_statusMsg.append("\n");
+    }
+
+    m_statusMsg +=
+        QObject::tr("%1, row: %2, column: %3").arg(s, QString::number(m_currRow), QString::number(m_currCol));
+
     m_isGood = !isCritical;
 }

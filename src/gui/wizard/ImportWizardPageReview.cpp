@@ -122,7 +122,11 @@ void ImportWizardPageReview::setupCsvImport(const QString& filename)
 
     m_csvWidget = new CsvImportWidget();
     connect(m_csvWidget, &CsvImportWidget::message, m_ui->messageWidget, [this](QString message) {
-        m_ui->messageWidget->showMessage(message, KMessageWidget::Error, -1);
+        if (message.isEmpty()) {
+            m_ui->messageWidget->hideMessage();
+        } else {
+            m_ui->messageWidget->showMessage(message, MessageWidget::Error, -1);
+        }
     });
 
     m_csvWidget->load(filename);

@@ -8683,18 +8683,6 @@ Kernel: %3 %4</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>malformed string</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>missing closing quote</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1: (row, col) %2,%3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>AES 256-bit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9230,6 +9218,18 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>start minimized to the system tray</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>malformed string, possible unescaped delimiter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>missing closing delimiter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1, row: %2, column: %3</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

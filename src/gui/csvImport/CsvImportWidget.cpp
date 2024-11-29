@@ -17,6 +17,7 @@
  */
 
 #include "CsvImportWidget.h"
+
 #include "ui_CsvImportWidget.h"
 
 #include "core/Clock.h"
@@ -145,6 +146,13 @@ void CsvImportWidget::updatePreview()
     m_ui->spinBoxSkip->setRange(minSkip, qMax(minSkip, m_parserModel->rowCount() - 1));
     m_ui->spinBoxSkip->setValue(minSkip);
 
+    // Store the previous column information for comparison later
+    auto prevColumns = m_comboModel->stringList();
+    QList<int> prevComboIndexes;
+    for (auto combo : m_combos) {
+        prevComboIndexes << combo->currentIndex();
+    }
+
     QStringList csvColumns(tr("Not Present"));
     auto parser = m_parserModel->parser();
     for (int i = 0; i < parser->getCsvCols(); ++i) {
@@ -159,6 +167,8 @@ void CsvImportWidget::updatePreview()
             csvColumns << QString(tr("Column %1").arg(i));
         }
     }
+    // Before setting new columns, see if they changed
+    bool newColumns = prevColumns != csvColumns;
     m_comboModel->setStringList(csvColumns);
 
     // Try to match named columns to the combo boxes
@@ -177,9 +187,10 @@ void CsvImportWidget::updatePreview()
                 break;
             }
         }
-        // Named column not found, default to "Not Present"
+        // Named column not found, default to "Not Present" or previous index
         if (!found) {
-            m_combos.at(i)->setCurrentIndex(0);
+            auto idx = newColumns ? 0 : prevComboIndexes.at(i);
+            m_combos.at(i)->setCurrentIndex(idx);
         }
     }
 
@@ -196,15 +207,19 @@ void CsvImportWidget::load(const QString& filename)
 
 void CsvImportWidget::parse()
 {
-    configParser();
+    // Hide any previous messages
+    emit message("");
+
     QApplication::setOverrideCursor(Qt::WaitCursor);
     QApplication::processEvents();
-    bool good = m_parserModel->parse();
-    updatePreview();
-    QApplication::restoreOverrideCursor();
-    if (!good) {
+
+    configParser();
+    if (!m_parserModel->parse()) {
         emit message(tr("Failed to parse CSV file: %1").arg(formatStatusText()));
     }
+    updatePreview();
+
+    QApplication::restoreOverrideCursor();
 }
 
 QSharedPointer<Database> CsvImportWidget::buildDatabase()
