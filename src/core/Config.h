@@ -143,6 +143,7 @@ public:
         Security_EnableCopyOnDoubleClick,
         Security_QuickUnlock,
         Security_QuickUnlockRemember,
+        Security_DatabasePasswordMinimumQuality,
 
         Browser_Enabled,
         Browser_ShowNotification,

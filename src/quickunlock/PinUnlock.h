@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,15 +15,17 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_WINDOWSHELLO_H
-#define KEEPASSXC_WINDOWSHELLO_H
+#ifndef KEEPASSXC_PINUNLOCK_H
+#define KEEPASSXC_PINUNLOCK_H
 
 #include "QuickUnlockInterface.h"
 
-class WindowsHello : public QuickUnlockInterface
+#include <QHash>
+
+class PinUnlock : public QuickUnlockInterface
 {
 public:
-    WindowsHello() = default;
+    PinUnlock() = default;
 
     bool isAvailable() const override;
     QString errorString() const override;
@@ -39,8 +41,9 @@ public:
 
 private:
     QString m_error;
+    QHash<QUuid, QPair<int, QByteArray>> m_encryptedKeys;
 
-    Q_DISABLE_COPY(WindowsHello)
+    Q_DISABLE_COPY(PinUnlock)
 };
 
-#endif // KEEPASSXC_WINDOWSHELLO_H
+#endif // KEEPASSXC_PINUNLOCK_H

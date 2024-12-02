@@ -36,14 +36,6 @@
 namespace
 {
     constexpr int clearFormsDelay = 30000;
-
-    bool isQuickUnlockAvailable()
-    {
-        if (config()->get(Config::Security_QuickUnlock).toBool()) {
-            return getQuickUnlock()->isAvailable();
-        }
-        return false;
-    }
 } // namespace
 
 DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
@@ -64,17 +56,10 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
         m_ui->editPassword->setShowPassword(false);
     });
 
-    QFont font;
-    font.setPointSize(font.pointSize() + 4);
-    font.setBold(true);
-    m_ui->labelHeadline->setFont(font);
-
-    m_ui->quickUnlockButton->setFont(font);
-    m_ui->quickUnlockButton->setIcon(
-        icons()->icon("fingerprint", true, palette().color(QPalette::Active, QPalette::HighlightedText)));
-    m_ui->quickUnlockButton->setIconSize({32, 32});
-
-    connect(m_ui->buttonBrowseFile, SIGNAL(clicked()), SLOT(browseKeyFile()));
+    QFont largeFont;
+    largeFont.setPointSize(largeFont.pointSize() + 4);
+    largeFont.setBold(true);
+    m_ui->labelHeadline->setFont(largeFont);
 
     auto okBtn = m_ui->buttonBox->button(QDialogButtonBox::Ok);
     okBtn->setText(tr("Unlock"));
@@ -82,16 +67,19 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(openDatabase()));
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(reject()));
 
+    // Key file components
+    m_ui->selectKeyFileComponent->setVisible(false);
     connect(m_ui->addKeyFileLinkLabel, &QLabel::linkActivated, this, &DatabaseOpenWidget::browseKeyFile);
+    connect(m_ui->buttonBrowseFile, SIGNAL(clicked()), SLOT(browseKeyFile()));
     connect(m_ui->keyFileLineEdit, &PasswordWidget::textChanged, this, [&](const QString& text) {
         bool state = !text.isEmpty();
         m_ui->addKeyFileLinkLabel->setVisible(!state);
         m_ui->selectKeyFileComponent->setVisible(state);
     });
-    connect(m_ui->useHardwareKeyCheckBox, &QCheckBox::toggled, m_ui->hardwareKeyCombo, &QComboBox::setEnabled);
 
-    m_ui->selectKeyFileComponent->setVisible(false);
+    // Hardware key components
     toggleHardwareKeyComponent(false);
+    connect(m_ui->useHardwareKeyCheckBox, &QCheckBox::toggled, m_ui->hardwareKeyCombo, &QComboBox::setEnabled);
 
     QSizePolicy sp = m_ui->hardwareKeyProgress->sizePolicy();
     sp.setRetainSizeWhenHidden(true);
@@ -118,13 +106,24 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
         m_ui->noHardwareKeysFoundLabel->setVisible(false);
     });
 
-    // QuickUnlock actions
+    // QuickUnlock components
+    m_ui->quickUnlockButton->setFont(largeFont);
+    m_ui->quickUnlockButton->setIcon(
+        icons()->icon("fingerprint", true, palette().color(QPalette::Active, QPalette::HighlightedText)));
+
     connect(m_ui->quickUnlockButton, &QPushButton::pressed, this, [this] { openDatabase(); });
     connect(m_ui->resetQuickUnlockButton, &QPushButton::pressed, this, [this] { resetQuickUnlock(); });
+    connect(m_ui->closeQuickUnlockButton, &QPushButton::pressed, this, [this] { reject(); });
     m_ui->resetQuickUnlockButton->setShortcut(Qt::Key_Escape);
 }
 
-DatabaseOpenWidget::~DatabaseOpenWidget() = default;
+DatabaseOpenWidget::~DatabaseOpenWidget()
+{
+    // Reset quick unlock if we are not remembering it
+    if (!config()->get(Config::Security_QuickUnlockRemember).toBool()) {
+        resetQuickUnlock();
+    }
+}
 
 void DatabaseOpenWidget::toggleHardwareKeyComponent(bool state)
 {
@@ -180,7 +179,7 @@ bool DatabaseOpenWidget::event(QEvent* event)
     auto type = event->type();
 
     if (type == QEvent::Show || type == QEvent::WindowActivate) {
-        if (isOnQuickUnlockScreen() && (m_db.isNull() || !canPerformQuickUnlock())) {
+        if (isOnQuickUnlockScreen() && !canPerformQuickUnlock()) {
             resetQuickUnlock();
         }
         toggleQuickUnlockScreen();
@@ -281,6 +280,7 @@ void DatabaseOpenWidget::load(const QString& filename)
     }
 
     toggleQuickUnlockScreen();
+    m_ui->enableQuickUnlockCheckBox->setChecked(config()->get(Config::Security_QuickUnlock).toBool());
 
     // Do initial auto-poll
     pollHardwareKey();
@@ -320,16 +320,12 @@ void DatabaseOpenWidget::enterKey(const QString& pw, const QString& keyFile)
 
     m_ui->editPassword->setText(pw);
     m_ui->keyFileLineEdit->setText(keyFile);
-    m_blockQuickUnlock = true;
+    m_ui->enableQuickUnlockCheckBox->setChecked(false);
     openDatabase();
 }
 
 void DatabaseOpenWidget::openDatabase()
 {
-    // Cache this variable for future use then reset
-    bool blockQuickUnlock = m_blockQuickUnlock || isOnQuickUnlockScreen();
-    m_blockQuickUnlock = false;
-
     setUserInteractionLock(true);
     m_ui->editPassword->setShowPassword(false);
     m_ui->messageWidget->hide();
@@ -371,12 +367,12 @@ void DatabaseOpenWidget::openDatabase()
             }
         }
 
-        // Save Quick Unlock credentials if available
-        if (!blockQuickUnlock && isQuickUnlockAvailable()) {
+        // Save Quick Unlock credentials if available and enabled
+        if (!isOnQuickUnlockScreen() && isQuickUnlockAvailable() && m_ui->enableQuickUnlockCheckBox->isChecked()) {
             auto keyData = databaseKey->serialize();
-            if (!getQuickUnlock()->setKey(m_db->publicUuid(), keyData) && !getQuickUnlock()->errorString().isEmpty()) {
-                getMainWindow()->displayTabMessage(getQuickUnlock()->errorString(),
-                                                   MessageWidget::MessageType::Warning);
+            auto qu = getQuickUnlock()->interface();
+            if (!qu->setKey(m_db->publicUuid(), keyData) && !qu->errorString().isEmpty()) {
+                getMainWindow()->displayTabMessage(qu->errorString(), MessageWidget::MessageType::Warning);
             }
             m_ui->messageWidget->hideMessage();
         }
@@ -422,13 +418,16 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::buildDatabaseKey()
 {
     auto databaseKey = QSharedPointer<CompositeKey>::create();
 
-    if (!m_db.isNull() && canPerformQuickUnlock()) {
-        // try to retrieve the stored password using Windows Hello
+    if (canPerformQuickUnlock()) {
+        // try to retrieve the stored password using quick unlock
         QByteArray keyData;
-        if (!getQuickUnlock()->getKey(m_db->publicUuid(), keyData)) {
-            m_ui->messageWidget->showMessage(
-                tr("Failed to authenticate with Quick Unlock: %1").arg(getQuickUnlock()->errorString()),
-                MessageWidget::Error);
+        auto qu = getQuickUnlock()->interface();
+        if (!qu->getKey(m_db->publicUuid(), keyData)) {
+            m_ui->messageWidget->showMessage(tr("Failed to authenticate with Quick Unlock: %1").arg(qu->errorString()),
+                                             MessageWidget::Error);
+            if (!qu->hasKey(m_db->publicUuid())) {
+                resetQuickUnlock();
+            }
             return {};
         }
         databaseKey->setRawKey(keyData);
@@ -613,9 +612,15 @@ void DatabaseOpenWidget::setUserInteractionLock(bool state)
     m_unlockingDatabase = state;
 }
 
+bool DatabaseOpenWidget::isQuickUnlockAvailable() const
+{
+    auto qu = getQuickUnlock()->interface();
+    return qu && qu->isAvailable();
+}
+
 bool DatabaseOpenWidget::canPerformQuickUnlock() const
 {
-    return !m_db.isNull() && isQuickUnlockAvailable() && getQuickUnlock()->hasKey(m_db->publicUuid());
+    return m_db && isQuickUnlockAvailable() && getQuickUnlock()->interface()->hasKey(m_db->publicUuid());
 }
 
 bool DatabaseOpenWidget::isOnQuickUnlockScreen() const
@@ -642,7 +647,7 @@ void DatabaseOpenWidget::toggleQuickUnlockScreen()
 
 void DatabaseOpenWidget::triggerQuickUnlock()
 {
-    if (isOnQuickUnlockScreen()) {
+    if (isOnQuickUnlockScreen() && !unlockingDatabase()) {
         m_ui->quickUnlockButton->click();
     }
 }
@@ -654,11 +659,9 @@ void DatabaseOpenWidget::triggerQuickUnlock()
  */
 void DatabaseOpenWidget::resetQuickUnlock()
 {
-    if (!isQuickUnlockAvailable()) {
-        return;
-    }
-    if (!m_db.isNull()) {
-        getQuickUnlock()->reset(m_db->publicUuid());
+    auto qu = getQuickUnlock()->interface();
+    if (m_db && qu) {
+        qu->reset(m_db->publicUuid());
     }
     load(m_filename);
 }

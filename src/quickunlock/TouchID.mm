@@ -102,6 +102,7 @@ QString TouchID::errorString() const
 
 void TouchID::reset()
 {
+    // TODO: Clear all credentials associated with KeePassXC
     m_encryptedMasterKeys.clear();
 }
 
@@ -194,17 +195,15 @@ bool TouchID::setKey(const QUuid& dbUuid, const QByteArray& key, const bool igno
 
     CFRelease(sacObject);
     CFRelease(attributes);
-    
-    // Cleanse the key information from the memory
-    Botan::secure_scrub_memory(randomKey.data(), randomKey.size());
-    Botan::secure_scrub_memory(randomIV.data(), randomIV.size());
 
+    // Cleanse the key information from the memory
     if (status != errSecSuccess) {
         return false;
     }
 
     // memorize which database the stored key is for
-    m_encryptedMasterKeys.insert(dbUuid, encryptedMasterKey);
+    // TODO: Do we need to store the db uuid's to do a full reset later?
+    //m_encryptedMasterKeys.insert(dbUuid, encryptedMasterKey);
     debug("TouchID::setKey - Success!");
     return true;
 }
