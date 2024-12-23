@@ -68,7 +68,7 @@ namespace
             targetMetadata->addCustomIcon(iconUuid, sourceDb->metadata()->customIcon(iconUuid));
         }
     }
-    
+
     void cloneEntries(Metadata* targetMetadata, const Group* sourceGroup, Group* targetGroup)
     {
         for (const Entry* sourceEntry : sourceGroup->entries()) {
@@ -110,7 +110,7 @@ namespace
         targetRoot->setUpdateTimeinfo(updateTimeinfo);
         cloneIcon(targetMetadata, sourceRoot->database(), targetRoot->iconUuid());
         cloneEntries(targetMetadata, sourceRoot, targetRoot);
-        if(reference.recurse) {
+        if (reference.recurse) {
             cloneChildren(targetMetadata, sourceRoot, targetRoot);
         }
 
