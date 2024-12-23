@@ -53,18 +53,12 @@ namespace
     {
     public:
         Tag() = default;
-        Tag(const QString& text) : text(text.trimmed()), rect(), row() {}
-
-        bool isEmpty() const noexcept
-        {
-            return text.isEmpty();
-        }
+        Tag(const QString& text) : text(text.trimmed()) {}
 
         QString text;
-    public:
-        // Render state
+        // Render state allow writing even if const
         mutable QRect rect;
-        mutable size_t row;
+        mutable size_t row = 0;
     };
 
 } // namespace
@@ -112,7 +106,7 @@ public:
     const_iterator editingIndex() const { return editing_index; }
 
     bool isCurrentTextEmpty() const {
-        return editing_index->isEmpty();
+        return editing_index->text.isEmpty();
     }
 
     void setEditingIndex(const iterator& it) {
@@ -648,7 +642,7 @@ public:
                 if (drawCursor) {
                     text_layout.drawCursor(&p, txt_p - scrollOffsets, cursor);
                 }
-            } else if(!it->isEmpty()) {
+            } else if(!it->text.isEmpty()) {
                 drawTag(p, *it);
             }
         }
@@ -958,7 +952,7 @@ QStringList TagsEdit::tags() const
 {
     QStringList ret;
     for (const auto& tag : *impl) {
-        if (!tag.isEmpty()) {
+        if (!tag.text.isEmpty()) {
             ret.push_back(tag.text);
         }
     }
