@@ -190,6 +190,7 @@ void EditGroupWidgetKeeShare::update()
         m_ui->typeComboBox->setCurrentIndex(reference.type);
         m_ui->passwordEdit->setText(reference.password);
         m_ui->pathEdit->setText(reference.path);
+        m_ui->recurseIntoGroupsCheckbox->setChecked(reference.recurse);
     }
 
     updateSharingState();
