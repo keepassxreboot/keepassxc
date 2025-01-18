@@ -1,12 +1,12 @@
 DatabaseWidget:!active,
 DatabaseWidget #groupView:!active, DatabaseWidget #tagView:!active,
-EntryPreviewWidget *:!active[blendIn="true"], QStatusBar:!active {
+EntryPreviewWidget *:!active[blendIn="true"] {
     background-color: #FCFCFC;
 }
 
 DatabaseWidget:disabled,
 DatabaseWidget #groupView:disabled, DatabaseWidget #tagView:disabled,
-EntryPreviewWidget *:disabled[blendIn="true"], QStatusBar:disabled {
+EntryPreviewWidget *:disabled[blendIn="true"] {
     background-color: #EDEDED;
 }
 
