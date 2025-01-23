@@ -1500,28 +1500,56 @@ void MainWindow::updateTrayIcon()
     if (config()->get(Config::GUI_ShowTrayIcon).toBool()) {
         if (!m_trayIcon) {
             m_trayIcon = new QSystemTrayIcon(this);
-            auto* menu = new QMenu(this);
-
-            auto* actionToggle = new QAction(tr("Toggle window"), menu);
-            menu->addAction(actionToggle);
-            actionToggle->setIcon(icons()->icon("keepassxc-monochrome-dark"));
-
-            menu->addAction(m_ui->actionLockAllDatabases);
-
-#ifdef Q_OS_MACOS
-            auto actionQuit = new QAction(tr("Quit KeePassXC"), menu);
-            connect(actionQuit, SIGNAL(triggered()), SLOT(appExit()));
-            menu->addAction(actionQuit);
-#else
-            menu->addAction(m_ui->actionQuit);
-#endif
-            m_trayIcon->setContextMenu(menu);
 
             connect(m_trayIcon,
                     SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
                     SLOT(trayIconTriggered(QSystemTrayIcon::ActivationReason)));
-            connect(actionToggle, SIGNAL(triggered()), SLOT(toggleWindow()));
         }
+
+        auto* menu = new QMenu(this);
+
+        auto* actionToggle = new QAction(tr("Toggle window"), menu);
+        menu->addAction(actionToggle);
+        actionToggle->setIcon(icons()->icon("keepassxc-monochrome-dark"));
+        connect(actionToggle, SIGNAL(triggered()), SLOT(toggleWindow()));
+
+        if (m_ui->tabWidget->count() > 1) {
+            menu->addSeparator();
+            auto* databaseGroup = new QActionGroup(menu);
+
+            for (auto i = 0; i != m_ui->tabWidget->count(); ++i) {
+                const auto& tabName = m_ui->tabWidget->tabName(i);
+                auto* action = new QAction(tabName, menu);
+                action->setCheckable(true);
+                action->setChecked(i == m_ui->tabWidget->currentIndex());
+                action->setActionGroup(databaseGroup);
+                menu->addAction(action);
+
+                connect(action, &QAction::triggered, this, [this, i]() {
+                    // This has to be checked as this connection will exist until
+                    // the next updateTrayIcon regardless of the tab count.
+                    if (i > m_ui->tabWidget->count())
+                        return;
+
+                    m_ui->tabWidget->setCurrentIndex(i);
+                });
+            }
+
+            menu->addSeparator();
+        }
+
+        menu->addAction(m_ui->actionLockAllDatabases);
+
+#ifdef Q_OS_MACOS
+        auto actionQuit = new QAction(tr("Quit KeePassXC"), menu);
+        connect(actionQuit, SIGNAL(triggered()), SLOT(appExit()));
+        menu->addAction(actionQuit);
+#else
+        menu->addAction(m_ui->actionQuit);
+#endif
+        auto* oldContextMenu = m_trayIcon->contextMenu();
+        m_trayIcon->setContextMenu(menu);
+        delete oldContextMenu;
 
         bool showUnlocked = m_ui->tabWidget->hasLockableDatabases();
         m_trayIcon->setIcon(icons()->trayIcon(showUnlocked));
@@ -1540,6 +1568,7 @@ void MainWindow::updateTrayIcon()
     } else {
         if (m_trayIcon) {
             m_trayIcon->hide();
+            delete m_trayIcon->contextMenu();
             delete m_trayIcon;
         }
     }
