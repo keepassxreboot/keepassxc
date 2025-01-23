@@ -84,6 +84,7 @@ int main(int argc, char** argv)
     QCommandLineOption pwstdinOption("pw-stdin", QObject::tr("read password of the database from stdin"));
     QCommandLineOption allowScreenCaptureOption("allow-screencapture",
                                                 QObject::tr("allow screenshots and app recording (Windows/macOS)"));
+    QCommandLineOption startMinimized("minimized", QObject::tr("start minimized to the system tray"));
 
     QCommandLineOption helpOption = parser.addHelpOption();
     QCommandLineOption versionOption = parser.addVersionOption();
@@ -95,6 +96,7 @@ int main(int argc, char** argv)
     parser.addOption(pwstdinOption);
     parser.addOption(debugInfoOption);
     parser.addOption(allowScreenCaptureOption);
+    parser.addOption(startMinimized);
 
     parser.process(app);
 
@@ -207,7 +209,7 @@ int main(int argc, char** argv)
     }
 
     // start minimized if configured
-    if (config()->get(Config::GUI_MinimizeOnStartup).toBool()) {
+    if (parser.isSet(startMinimized) || config()->get(Config::GUI_MinimizeOnStartup).toBool()) {
         mainWindow.hideWindow();
     } else {
         mainWindow.bringToFront();

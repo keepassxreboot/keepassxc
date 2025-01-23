@@ -58,6 +58,9 @@ Your database works offline and requires no internet connection.
 *--pw-stdin*::
   Reads password of the database from stdin.
 
+*--minimized*::
+  Starts KeePassXC minimized to the system tray.
+
 *--debug-info*::
   Displays debugging information.
 
