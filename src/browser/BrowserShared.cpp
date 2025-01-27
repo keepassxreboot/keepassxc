@@ -53,7 +53,18 @@ namespace BrowserShared
 #elif defined(Q_OS_WIN)
         // Windows uses named pipes
         return serverName + "_" + qgetenv("USERNAME");
-#else // Q_OS_MACOS and others
+#elif defined(Q_OS_MACOS)
+        // Get the home directory and append the desired subdirectory
+        QString homePath = QDir::homePath();
+        QString subPath = homePath + "/Library/Group Containers/org.keepassxc.KeePassXC";
+
+        // Make sure the directory exists
+        QDir().mkpath(subPath);
+
+        QString socketPath = subPath + serverName;
+
+        return socketPath;
+#else // others
         return QStandardPaths::writableLocation(QStandardPaths::TempLocation) + serverName;
 #endif
     }
