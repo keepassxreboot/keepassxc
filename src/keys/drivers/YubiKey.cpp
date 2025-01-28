@@ -75,11 +75,19 @@ bool YubiKey::findValidKeys()
 {
     QMutexLocker lock(&s_interfaceMutex);
 
+    findValidKeys(lock);
+
+    return !m_usbKeys.isEmpty() || !m_pcscKeys.isEmpty();
+}
+
+void YubiKey::findValidKeys(const QMutexLocker& locker)
+{
+    // Check QMutexLocker since version 6.4
+    Q_UNUSED(locker);
+
     m_connectedKeys = 0;
     m_usbKeys = YubiKeyInterfaceUSB::instance()->findValidKeys(m_connectedKeys);
     m_pcscKeys = YubiKeyInterfacePCSC::instance()->findValidKeys(m_connectedKeys);
-
-    return !m_usbKeys.isEmpty() || !m_pcscKeys.isEmpty();
 }
 
 void YubiKey::findValidKeysAsync()
@@ -98,6 +106,8 @@ YubiKey::KeyMap YubiKey::foundKeys()
 
 int YubiKey::connectedKeys()
 {
+    QMutexLocker lock(&s_interfaceMutex);
+
     return m_connectedKeys;
 }
 
@@ -171,7 +181,7 @@ YubiKey::challenge(YubiKeySlot slot, const QByteArray& challenge, Botan::secure_
 
     // Make sure we tried to find available keys
     if (m_usbKeys.isEmpty() && m_pcscKeys.isEmpty()) {
-        findValidKeys();
+        findValidKeys(lock);
     }
 
     if (m_usbKeys.contains(slot)) {

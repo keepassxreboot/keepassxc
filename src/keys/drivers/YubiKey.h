@@ -84,6 +84,8 @@ signals:
 private:
     explicit YubiKey();
 
+    void findValidKeys(const QMutexLocker& locker);
+
     static YubiKey* m_instance;
 
     QTimer m_interactionTimer;
