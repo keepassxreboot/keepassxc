@@ -62,7 +62,7 @@ namespace BrowserShared
         QDir().mkpath(subPath);
 
         // The path will become too long therefore we must cut off serverName
-        QString socketPath = subPath + "KeePassXC.BrowserServer";
+        QString socketPath = subPath + "/KeePassXC.BrowserServer";
 
         return socketPath;
 #else // others
