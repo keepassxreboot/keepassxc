@@ -56,12 +56,13 @@ namespace BrowserShared
 #elif defined(Q_OS_MACOS)
         // Get the home directory and append the desired subdirectory
         QString homePath = QDir::homePath();
-        QString subPath = homePath + "/Library/Group Containers/org.keepassxc.KeePassXC";
+        QString subPath = homePath + "/Library/Group Containers/G2S7P7J672.org.keepassxc.KeePassXC";
 
         // Make sure the directory exists
         QDir().mkpath(subPath);
 
-        QString socketPath = subPath + serverName;
+        // The path will become too long therefore we must cut off serverName
+        QString socketPath = subPath + "KeePassXC.BrowserServer";
 
         return socketPath;
 #else // others
