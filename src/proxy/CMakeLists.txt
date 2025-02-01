@@ -15,7 +15,7 @@
 
 if(WITH_XC_BROWSER)
     set(proxy_SOURCES
-        ../browser/BrowserShared.cpp
+        ../browser/BrowserShared.mm
         keepassxc-proxy.cpp
         NativeMessagingProxy.cpp)
 
@@ -39,6 +39,8 @@ if(WITH_XC_BROWSER)
 
         set_property(GLOBAL APPEND PROPERTY
             _MACDEPLOYQT_EXTRA_BINARIES "${PROXY_INSTALL_DIR}/keepassxc-proxy")
+
+        target_link_libraries(keepassxc-proxy "-framework Foundation")
     endif()
 
     if(WIN32)

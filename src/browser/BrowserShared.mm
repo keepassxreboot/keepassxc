@@ -15,6 +15,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <Foundation/Foundation.h>
+
 #include "BrowserShared.h"
 
 #include "config-keepassx.h"
@@ -54,15 +56,22 @@ namespace BrowserShared
         // Windows uses named pipes
         return serverName + "_" + qgetenv("USERNAME");
 #elif defined(Q_OS_MACOS)
-        // Get the home directory and append the desired subdirectory
-        QString homePath = QDir::homePath();
-        QString subPath = homePath + "/Library/Group Containers/G2S7P7J672.org.keepassxc.KeePassXC";
+        NSString *appGroupIdentifier = @"G2S7P7J672.org.keepassxc.KeePassXC";
+
+        // Get the container URL for the app group identifier
+        NSURL *containerURL = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:appGroupIdentifier];
+
+        // Convert the NSURL to a string (path)
+        NSString *containerPath = [containerURL path];
+
+        // Convert NSString to QString
+        QString homePath = QString::fromNSString(containerPath);
 
         // Make sure the directory exists
-        QDir().mkpath(subPath);
+        QDir().mkpath(homePath);
 
         // The path will become too long therefore we must cut off serverName
-        QString socketPath = subPath + "/KeePassXC.BrowserServer";
+        QString socketPath = homePath + "/KeePassXC.BrowserServer";
 
         return socketPath;
 #else // others

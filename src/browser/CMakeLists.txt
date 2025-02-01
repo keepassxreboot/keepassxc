@@ -27,7 +27,7 @@ if(WITH_XC_BROWSER)
             BrowserSettingsWidget.cpp
             BrowserService.cpp
             BrowserSettings.cpp
-            BrowserShared.cpp
+            BrowserShared.mm
             CustomTableWidget.cpp
             NativeMessageInstaller.cpp)
 
