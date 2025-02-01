@@ -15,8 +15,6 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <Foundation/Foundation.h>
-
 #include "BrowserShared.h"
 
 #include "config-keepassx.h"
@@ -25,6 +23,10 @@
 #include <QStandardPaths>
 #if defined(KEEPASSXC_DIST_SNAP)
 #include <QProcessEnvironment>
+#endif
+
+#if defined(Q_OS_MACOS)
+#include <Foundation/Foundation.h>
 #endif
 
 namespace BrowserShared
