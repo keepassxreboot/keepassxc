@@ -48,11 +48,7 @@ For users with smaller screens or those who desire seeing more entries at once, 
 image::compact_mode_comparison.png[]
 
 === Screenshot Security
-By default, KeePassXC prevents recordings and screenshots of the application window on Windows and macOS. This prevents inadvertent spillage of information during meetings and disallows other applications to capture the window contents. If you would like to enable screen capture, navigate to _View_ menu and select _Allow Screen Capture_.
-
-NOTE: As a security measure, the _Allow Screen Capture_ option will automatically be disabled after closure.
-
-Alternatively, you can start the application with the `--allow-screencapture` command line flag and create a shortcut to enable _Screen Capture_ every time you launch KeePassXC.
+By default, KeePassXC prevents recordings and screenshots of the application window on Windows and macOS. This prevents inadvertent spillage of information during meetings and disallows other applications to capture the window contents. If you would like to enable screen capture temporarily, navigate to _View_ menu and select _Allow Screen Capture_. Alternatively, you can start the application with the `--allow-screencapture` command line flag.
 
 === Keyboard Shortcuts
 include::KeyboardShortcuts.adoc[tag=content, leveloffset=+1]
