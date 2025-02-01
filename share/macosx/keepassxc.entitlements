@@ -6,7 +6,7 @@
 	<string>G2S7P7J672.org.keepassxc.keepassxc</string>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>G2S7P7J672.org.keepassxc.keepassxc</string>
+		<string>G2S7P7J672.org.keepassxc.KeePassXC</string>
 	</array>
 </dict>
 </plist>
