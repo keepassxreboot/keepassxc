@@ -25,6 +25,7 @@
 #include "core/Tools.h"
 #include "format/CsvExporter.h"
 #include "gui/Clipboard.h"
+#include "gui/DatabaseIcons.h"
 #include "gui/DatabaseOpenDialog.h"
 #include "gui/DatabaseWidget.h"
 #include "gui/DatabaseWidgetStateSync.h"
@@ -675,6 +676,12 @@ void DatabaseTabWidget::updateTabName(int index)
     index = indexOf(dbWidget);
     setTabText(index, tabName(index));
     setTabToolTip(index, dbWidget->displayFilePath());
+    auto iconIndex = dbWidget->database()->publicIcon();
+    if (iconIndex >= 0 && iconIndex < databaseIcons()->count()) {
+        setTabIcon(index, databaseIcons()->icon(iconIndex));
+    } else {
+        setTabIcon(index, {});
+    }
     emit tabNameChanged();
 }
 
