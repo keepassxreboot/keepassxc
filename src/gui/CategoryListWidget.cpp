@@ -232,7 +232,7 @@ void CategoryListWidgetDelegate::paint(QPainter* painter,
     auto mode = QIcon::Normal;
     if ((opt.state & QStyle::State_Enabled) == 0) {
         mode = QIcon::Disabled;
-    } else if (opt.state & QStyle::State_HasFocus) {
+    } else if (opt.state & QStyle::State_Selected) {
         mode = QIcon::Selected;
     } else if (opt.state & QStyle::State_Active) {
         mode = QIcon::Active;
