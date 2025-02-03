@@ -192,7 +192,7 @@ bool UrlTools::isUrlValid(const QString& urlField, bool looseComparison) const
     }
 
     // Prevent TLD wildcards
-    if (looseComparison) {
+    if (looseComparison && url.contains(UrlTools::URL_WILDCARD)) {
         const auto tld = getTopLevelDomainFromUrl(url);
         if (qUrl.host() == QString("%1.%2").arg(UrlTools::URL_WILDCARD, tld)) {
             return false;
