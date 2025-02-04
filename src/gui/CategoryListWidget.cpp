@@ -232,9 +232,9 @@ void CategoryListWidgetDelegate::paint(QPainter* painter,
     auto mode = QIcon::Normal;
     if ((opt.state & QStyle::State_Enabled) == 0) {
         mode = QIcon::Disabled;
-    } else if (opt.state & QStyle::State_Selected) {
+    } else if (opt.state & QStyle::State_HasFocus) {
         mode = QIcon::Selected;
-    } else if (opt.state & QStyle::State_Active) {
+    } else if (opt.state & QStyle::State_Active || opt.state & QStyle::State_Selected) {
         mode = QIcon::Active;
     }
     painter->drawPixmap(left, opt.rect.top() + paddingTop, icon.pixmap(iconSize, mode));
