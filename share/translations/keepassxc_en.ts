@@ -9839,6 +9839,10 @@ This option is deprecated, use --set-key-file instead.</source>
         <source>All SSH identities removed from agent.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Destination constraints are invalid or not supported by the agent (check options).</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SearchHelpWidget</name>
