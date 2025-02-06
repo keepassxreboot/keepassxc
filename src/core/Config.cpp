@@ -183,6 +183,7 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::SSHAgent_Enabled, {QS("SSHAgent/Enabled"), Roaming, false}},
     {Config::SSHAgent_UseOpenSSH, {QS("SSHAgent/UseOpenSSH"), Roaming, false}},
     {Config::SSHAgent_UsePageant, {QS("SSHAgent/UsePageant"), Roaming, true} },
+    {Config::SSHAgent_EnableDestinationConstraints, {QS("SSHAgent/EnableDestinationConstraints"), Roaming, false} },
     {Config::SSHAgent_AuthSockOverride, {QS("SSHAgent/AuthSockOverride"), Local, {}}},
     {Config::SSHAgent_SecurityKeyProviderOverride, {QS("SSHAgent/SecurityKeyProviderOverride"), Local, {}}},
 

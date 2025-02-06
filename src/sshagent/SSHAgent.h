@@ -48,6 +48,8 @@ public:
     void setUseOpenSSH(bool useOpenSSH);
     void setUsePageant(bool usePageant);
 #endif
+    bool enableDestinationConstraints() const;
+    void setEnableDestinationConstraints(bool enableDestinationConstraints);
 
     const QString errorString() const;
     bool isAgentRunning() const;

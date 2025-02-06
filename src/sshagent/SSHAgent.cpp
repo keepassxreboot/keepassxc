@@ -98,6 +98,16 @@ void SSHAgent::setUsePageant(bool usePageant)
 }
 #endif
 
+bool SSHAgent::enableDestinationConstraints() const
+{
+    return config()->get(Config::SSHAgent_EnableDestinationConstraints).toBool();
+}
+
+void SSHAgent::setEnableDestinationConstraints(bool enableDestinationConstraints)
+{
+    config()->set(Config::SSHAgent_EnableDestinationConstraints, enableDestinationConstraints);
+}
+
 QString SSHAgent::socketPath(bool allowOverride) const
 {
     QString socketPath;
@@ -305,7 +315,7 @@ bool SSHAgent::addIdentity(OpenSSHKey& key, const KeeAgentSettings& settings, co
         request.writeString(securityKeyProvider());
     }
 
-    if (settings.useDestinationConstraintsWhenAdding()) {
+    if (enableDestinationConstraints() && settings.useDestinationConstraintsWhenAdding()) {
         request.write(SSH_AGENT_CONSTRAIN_EXTENSION);
         request.writeString(QString("restrict-destination-v00@openssh.com"));
         encodeDestinationConstraints(settings.destinationConstraints(), request);
@@ -328,7 +338,7 @@ bool SSHAgent::addIdentity(OpenSSHKey& key, const KeeAgentSettings& settings, co
             m_error += "\n" + tr("A confirmation request is not supported by the agent (check options).");
         }
 
-        if (settings.useDestinationConstraintsWhenAdding()) {
+        if (enableDestinationConstraints() && settings.useDestinationConstraintsWhenAdding()) {
             m_error += "\n" + tr("Destination constraints are invalid or not supported by the agent (check options).");
         }
 

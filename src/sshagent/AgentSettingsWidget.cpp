@@ -35,7 +35,21 @@ AgentSettingsWidget::AgentSettingsWidget(QWidget* parent)
     m_ui->sshAuthSockMessageWidget->setVisible(sshAgent()->isEnabled());
     m_ui->sshAuthSockMessageWidget->setCloseButtonVisible(false);
     m_ui->sshAuthSockMessageWidget->setAutoHideTimeout(-1);
+
+    m_ui->destinationConstraintsMessageWidget->setCloseButtonVisible(false);
+    m_ui->destinationConstraintsMessageWidget->setAutoHideTimeout(-1);
+    m_ui->destinationConstraintsMessageWidget->showMessage(
+        tr("Destination contrains can have unexpected side effects. "
+           "Make sure to read the "
+           "<a "
+           "href=\"https://keepassxc.org/docs/KeePassXC_UserGuide#_using_destination_constraints\">documentation</a>."),
+        MessageWidget::Warning);
+    m_ui->destinationConstraintsMessageWidget->setVisible(sshAgent()->enableDestinationConstraints());
+
     connect(m_ui->enableSSHAgentCheckBox, SIGNAL(stateChanged(int)), SLOT(toggleSettingsEnabled()));
+    connect(m_ui->enableDestinationConstraintsCheckBox,
+            SIGNAL(stateChanged(int)),
+            SLOT(toggleDestinationConstraintsEnabled()));
 }
 
 AgentSettingsWidget::~AgentSettingsWidget()
@@ -65,6 +79,9 @@ void AgentSettingsWidget::loadSettings()
 #endif
 
     m_ui->sshAuthSockMessageWidget->setVisible(sshAgentEnabled);
+
+    auto destinationConstraintsEnabled = sshAgent()->enableDestinationConstraints();
+    m_ui->enableDestinationConstraintsCheckBox->setChecked(destinationConstraintsEnabled);
 
     if (sshAgentEnabled) {
 #ifndef Q_OS_WIN
@@ -98,10 +115,16 @@ void AgentSettingsWidget::saveSettings()
     sshAgent()->setUsePageant(m_ui->usePageantRadioButton->isChecked() || m_ui->useBothRadioButton->isChecked());
     sshAgent()->setUseOpenSSH(m_ui->useOpenSSHRadioButton->isChecked() || m_ui->useBothRadioButton->isChecked());
 #endif
+    sshAgent()->setEnableDestinationConstraints(m_ui->enableDestinationConstraintsCheckBox->isChecked());
     sshAgent()->setEnabled(m_ui->enableSSHAgentCheckBox->isChecked());
 }
 
 void AgentSettingsWidget::toggleSettingsEnabled()
 {
     m_ui->agentConfigPageBody->setEnabled(m_ui->enableSSHAgentCheckBox->isChecked());
+}
+
+void AgentSettingsWidget::toggleDestinationConstraintsEnabled()
+{
+    m_ui->destinationConstraintsMessageWidget->setVisible(m_ui->enableDestinationConstraintsCheckBox->isChecked());
 }

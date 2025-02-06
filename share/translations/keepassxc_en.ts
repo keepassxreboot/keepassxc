@@ -156,6 +156,14 @@
         <source>SSH Agent connection is working!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Enable destination constraints</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Destination contrains can have unexpected side effects. Make sure to read the &lt;a href=&quot;https://keepassxc.org/docs/KeePassXC_UserGuide#_using_destination_constraints&quot;&gt;documentation&lt;/a&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidget</name>

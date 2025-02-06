@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>300</height>
+    <height>443</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -94,6 +94,16 @@
        </widget>
       </item>
       <item>
+       <widget class="QCheckBox" name="enableDestinationConstraintsCheckBox">
+        <property name="text">
+         <string>Enable destination constraints</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="MessageWidget" name="destinationConstraintsMessageWidget" native="true"/>
+      </item>
+      <item>
        <layout class="QGridLayout" name="agentValues">
         <property name="topMargin">
          <number>10</number>
@@ -107,41 +117,28 @@
         <property name="verticalSpacing">
          <number>8</number>
         </property>
-        <item row="1" column="0">
-         <widget class="QLabel" name="sshAuthSockOverrideLabel">
+        <item row="3" column="0">
+         <widget class="QLabel" name="sshSecurityKeyProviderOverrideLabel">
           <property name="text">
-           <string>SSH_AUTH_SOCK override</string>
+           <string>SSH_SK_PROVIDER override</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
          </widget>
-        </item>
-        <item row="0" column="0">
-         <widget class="QLabel" name="sshAuthSockValueLabel">
-          <property name="text">
-           <string>SSH_AUTH_SOCK value</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="0">
-         <spacer name="verticalSpacer">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>20</width>
-            <height>40</height>
-           </size>
-          </property>
-         </spacer>
         </item>
         <item row="1" column="1">
          <widget class="QLineEdit" name="sshAuthSockOverrideEdit"/>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="sshSecurityKeyProviderValueLabel">
+          <property name="text">
+           <string>SSH_SK_PROVIDER value</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
         </item>
         <item row="0" column="1">
          <widget class="QLabel" name="sshAuthSockLabel">
@@ -158,10 +155,36 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="0">
-         <widget class="QLabel" name="sshSecurityKeyProviderValueLabel">
+        <item row="3" column="1">
+         <widget class="QLineEdit" name="sshSecurityKeyProviderOverrideEdit"/>
+        </item>
+        <item row="4" column="0">
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="sshAuthSockValueLabel">
           <property name="text">
-           <string>SSH_SK_PROVIDER value</string>
+           <string>SSH_AUTH_SOCK value</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="sshAuthSockOverrideLabel">
+          <property name="text">
+           <string>SSH_AUTH_SOCK override</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -182,19 +205,6 @@
            <set>Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
           </property>
          </widget>
-        </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="sshSecurityKeyProviderOverrideLabel">
-          <property name="text">
-           <string>SSH_SK_PROVIDER override</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="1">
-         <widget class="QLineEdit" name="sshSecurityKeyProviderOverrideEdit"/>
         </item>
        </layout>
       </item>
