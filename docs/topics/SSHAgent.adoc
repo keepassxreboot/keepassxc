@@ -177,4 +177,85 @@ If you chose to not autoload the key on database unlock, you can manually make t
 
 .SSH Agent Load Key from Context Menu
 image::sshagent_context_menu.png[]
+
+
+=== Using destination constraints
+SSH Agent destination constraints may be used to restrict the usage of an SSH key to specific hosts or to specific destinations.
+This is especially useful when forwarding the SSH agent to machines that are not fully trustworthy.
+The feature requires OpenSSH 8.9 or later on the client and server.
+Please refer to https://www.openssh.com/agent-restrict.html for more details.
+
+To enable support for SSH Agent destination constraints, follow the steps below:
+
+ 1. Select _Tools > Settings_ from the menu
+ 2. Select _SSH Agent_ category on the left sidebar
+ 3. Check _Enable destination contraints_
+
+As of now KeepassXC lacks a UI for configuring the destination constraints on a specific SSH key.
+However, the settings format is compatible to the Keepass plugin https://lechnology.com/software/keeagent/[KeeAgent].
+Therefore you could either load your database in _Keepass_ with _KeeAgent_ and use the _KeeAgent_ UI to configure the destination constraints.
+
+Alternatively you could alter the settings file manually:
+
+  1. Create a new entry, or open an existing entry in edit mode.
+  2. Go to the advanced category and _Save_ the _KeeAgent.settings_ file to your filesystem
+  3. Edit the file with your editor (see below)
+  4. Add the edited file back to the SSH key entry in the database, overwriting the old version.
+  5. Go to the SSH agent category and _Remove from agent_ and then _Add to agent_
+
+The settings file is an UTF-16 encoded XML file consisting a large `EntrySettings` block.
+This block contains an `UseDestinationConstraintWhenAdding` tag the is set to `false` by default.
+You must set that to `true` to enable destination constraints on the specific SSH key entry.
+ The `DestinationConstraints` is a list of zero or more `Constraint` blocks.
+ Each `Constraint` block contains the origin and destination host both identified by their name (`FromHost` / `ToHost`) and their host keys (`FromHostKeys` / `ToHostKeys`).
+ An empty origin host (`FromHost` / `FromHostKeys`) depicts the machine the SSH agent running on.
+ The destination can be further restricted to a specific user by setting the user name in `ToUser`.
+The host keys are in the format `$algorithm $pubkey` and can be retrieved with the command `ssh-keyscan $HOST` or from the `known_hosts` file.
+
+NOTE: Both return the format `$hostname $algorithm $pubkey`. Therefore the hostname must be omitted.
+
+The following example corresponds to the command
+    `ssh-add -h 'perseus@cetus.example.org' -h 'cetus.example.org>github.com'  ~/.ssh/id_ed25519`:
+
+     <?xml version="1.0" encoding="UTF-16"?>
+     <EntrySettings …>
+        …
+        <UseDestinationConstraintWhenAdding>true</UseDestinationConstraintWhenAdding>
+        <DestinationConstraints>
+            <Constraint>
+                <FromHost/>
+                <FromHostKeys/>
+                <ToUser>perseus</ToUser>
+                <ToHost>cetus.example.org</ToHost>
+                <ToHostKeys>
+                    <KeySpec>
+                        <HostKey>ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAZEGN4X9luxQr0Q+xEiB8NLK+E2m2/9DeT98hhiT8wn</HostKey>
+                        <IsCA>false</IsCA>
+                    </KeySpec>
+                </ToHostKeys>
+            </Constraint>
+            <Constraint>
+                <FromHost>cetus.example.org</FromHost>
+                <FromHostKeys>
+                    <KeySpec>
+                        <HostKey>ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAZEGN4X9luxQr0Q+xEiB8NLK+E2m2/9DeT98hhiT8wn</HostKey>
+                        <IsCA>false</IsCA>
+                    </KeySpec>
+                </FromHostKeys>
+                <ToUser/>
+                <ToHost>github.com</ToHost>
+                <ToHostKeys>
+                    <KeySpec>
+                        <HostKey>ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEmKSENjQEezOmxkZMy7opKgwFB9nkt5YRrYMjNuG5N87uRgg6CLrbo5wAdT/y6v0mKV0U2w0WZ2YB/++Tpockg=</HostKey>
+                        <IsCA>false</IsCA>
+                    </KeySpec>
+                    <KeySpec>
+                        <HostKey>ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEmKSENjQEezOmxkZMy7opKgwFB9nkt5YRrYMjNuG5N87uRgg6CLrbo5wAdT/y6v0mKV0U2w0WZ2YB/++Tpockg=</HostKey>
+                        <IsCA>false</IsCA>
+                    </KeySpec>
+                </ToHostKeys>
+            </Constraint>
+        </DestinationConstraints>
+    </EntrySettings>
+
 // end::content[]
