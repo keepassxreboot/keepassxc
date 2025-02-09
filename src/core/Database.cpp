@@ -107,10 +107,6 @@ QUuid Database::uuid() const
  */
 bool Database::open(QSharedPointer<const CompositeKey> key, QString* error)
 {
-    Q_ASSERT(!m_data.filePath.isEmpty());
-    if (m_data.filePath.isEmpty()) {
-        return false;
-    }
     return open(m_data.filePath, std::move(key), error);
 }
 
@@ -128,6 +124,13 @@ bool Database::open(QSharedPointer<const CompositeKey> key, QString* error)
  */
 bool Database::open(const QString& filePath, QSharedPointer<const CompositeKey> key, QString* error)
 {
+    if (filePath.isEmpty()) {
+        if (error) {
+            *error = tr("No file path was provided.");
+        }
+        return false;
+    }
+
     QFile dbFile(filePath);
     if (!dbFile.exists()) {
         if (error) {

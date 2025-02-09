@@ -1517,6 +1517,10 @@ Backup database located at %2</source>
         <source>Database file read error.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>No file path was provided.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DatabaseOpenDialog</name>
