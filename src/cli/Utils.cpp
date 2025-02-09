@@ -226,7 +226,7 @@ namespace Utils
 #ifdef __AFL_COMPILER
         // Fuzz test build takes password from environment variable to
         // allow non-interactive operation
-        const auto env = getenv("KEYPASSXC_AFL_PASSWORD");
+        const auto env = getenv("KEEPASSXC_AFL_PASSWORD");
         return env ? env : "";
 #else
         auto& in = STDIN;

@@ -27,7 +27,7 @@ A special "instrumented build" is used that allows the fuzzer to look into the p
     $ CXX=afl-g++ AFL_HARDEN=1 cmake -DWITH_XC_ALL=ON ..
     $ make
 
-In the source code, special behavior for fuzz testing can be implemented with `#ifdef __AFL_COMPILER`. For example, in fuzz builds, the KeePassXC CLI takes the database password from environment variable `KEYPASSXC_AFL_PASSWORD` to allow non-interactive operation.
+In the source code, special behavior for fuzz testing can be implemented with `#ifdef __AFL_COMPILER`. For example, in fuzz builds, the KeePassXC CLI takes the database password from environment variable `KEEPASSXC_AFL_PASSWORD` to allow non-interactive operation.
 
 ## Prepare Fuzzer Input
 
@@ -35,18 +35,18 @@ To get the fuzzer started, we provide empty password database files (the passwor
 
     $ cd buildafl
     $ mkdir -p findings/testcases
-    $ cp ../share/empty*.kdbx findings/testcases
+    $ cp ../utils/fuzz-testing/empty*.kdbx findings/testcases
 
 The fuzzer works by running KeePassXC with variations of this input, mutated in ways that make the program crash or hang.
 
 ## Run The Fuzzer
 
     $ cd buildafl
-    $ KEYPASSXC_AFL_PASSWORD=secret afl-fuzz -i findings/testcases -o findings -m 2000 -t 1000 src/cli/keepassxc-cli ls @@
+    $ KEEPASSXC_AFL_PASSWORD=secret afl-fuzz -i findings/testcases -o findings -m 2000 -t 1000 src/cli/keepassxc-cli ls @@
 
 This fuzz-tests the `ls` command of the KeePassXC CLI, which loads and decrypts a database file and then lists its contents. The parameters mean:
 
-* `KEYPASSXC_AFL_PASSWORD=secret`: In fuzz test builds, the KeePassXC CLI takes the database password from this environment variable.
+* `KEEPASSXC_AFL_PASSWORD=secret`: In fuzz test builds, the KeePassXC CLI takes the database password from this environment variable.
 * `-i findings/testcases`: The directory which contains the initial fuzzer input.
 * `-o findings`: The directory in which to store fuzzer results.
 * `-m 2000`: Fuzzer memory (in megabytes). Adjust as required if the fuzzer fails to start up.
