@@ -191,6 +191,7 @@ bool UrlTools::isUrlValid(const QString& urlField, bool looseComparison) const
         return false;
     }
 
+#if defined(WITH_XC_NETWORKING) || defined(WITH_XC_BROWSER)
     // Prevent TLD wildcards
     if (looseComparison && url.contains(UrlTools::URL_WILDCARD)) {
         const auto tld = getTopLevelDomainFromUrl(url);
@@ -198,6 +199,7 @@ bool UrlTools::isUrlValid(const QString& urlField, bool looseComparison) const
             return false;
         }
     }
+#endif
 
     // Check for illegal characters. Adds also the wildcard * to the list
     QRegularExpression re("[<>\\^`{|}\\*]");
