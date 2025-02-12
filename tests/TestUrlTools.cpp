@@ -158,6 +158,10 @@ void TestUrlTools::testIsUrlValidWithLooseComparison()
     urls["*.com/"] = false;
     urls["*.com/*"] = false;
     urls["**.com/**"] = false;
+    urls["*.*"] = false;
+    urls["https://example.*"] = false;
+    urls["https://*.example.*"] = false;
+    urls["https://example.c*"] = false;
 
     QHashIterator<QString, bool> i(urls);
     while (i.hasNext()) {
