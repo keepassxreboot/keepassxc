@@ -61,6 +61,7 @@ public:
 
     static bool inEntryAttachments(const EntryAttachments* attachments);
     bool fromEntry(const Entry* entry);
+    bool fromEntryAttachments(const EntryAttachments* attachments);
     void toEntry(Entry* entry) const;
     bool keyConfigured() const;
     bool toOpenSSHKey(const Entry* entry, OpenSSHKey& key, bool decrypt);

@@ -533,7 +533,19 @@ bool KeeAgentSettings::inEntryAttachments(const EntryAttachments* attachments)
  */
 bool KeeAgentSettings::fromEntry(const Entry* entry)
 {
-    const auto attachments = entry->attachments();
+    return KeeAgentSettings::fromEntryAttachments(entry->attachments());
+}
+
+/**
+ * Read settings from entry attachments as an XML attachment.
+ *
+ * Sets error string on error.
+ *
+ * @param entry EntryAttachments to read the attachment from
+ * @return true if XML document was loaded
+ */
+bool KeeAgentSettings::fromEntryAttachments(const EntryAttachments* attachments)
+{
     if (attachments->hasKey("KeeAgent.settings")) {
         return fromXml(attachments->value("KeeAgent.settings"));
     }

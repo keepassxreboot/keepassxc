@@ -661,6 +661,12 @@ void EditEntryWidget::updateSSHAgentAttachments()
         setSSHAgentSettings();
     }
 
+    if (KeeAgentSettings::inEntryAttachments(m_attachments.data())) {
+        m_sshAgentSettings.reset();
+        m_sshAgentSettings.fromEntryAttachments(m_attachments.data());
+        setSSHAgentSettings();
+    }
+
     m_sshAgentUi->attachmentComboBox->clear();
     m_sshAgentUi->attachmentComboBox->addItem("");
 
