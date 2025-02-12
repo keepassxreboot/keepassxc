@@ -734,6 +734,12 @@ void EditEntryWidget::updateSSHAgentKeyInfo()
 
 void EditEntryWidget::toKeeAgentSettings(KeeAgentSettings& settings) const
 {
+    // set from attachment to load settings aren't supported by the UI (e.g.
+    // destination constraints)
+    if (KeeAgentSettings::inEntryAttachments(m_attachments.data())) {
+        settings.fromEntryAttachments(m_attachments.data());
+    }
+
     settings.setAddAtDatabaseOpen(m_sshAgentUi->addKeyToAgentCheckBox->isChecked());
     settings.setRemoveAtDatabaseClose(m_sshAgentUi->removeKeyFromAgentCheckBox->isChecked());
     settings.setUseConfirmConstraintWhenAdding(m_sshAgentUi->requireUserConfirmationCheckBox->isChecked());
