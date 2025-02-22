@@ -52,7 +52,7 @@
        <item>
         <widget class="QLabel" name="snapWarningLabel">
          <property name="text">
-          <string>Browsers installed as snaps are currently not supported.</string>
+          <string>Browsers installed using Snap or Flatpak are not supported with exception to Firefox installed using Snap.</string>
          </property>
         </widget>
        </item>
