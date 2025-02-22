@@ -22,12 +22,13 @@ KeePassXC has numerous features for novice and power users alike. Our goal is to
 * Password generator
 * Auto-Type passwords into applications
 * Browser integration with Google Chrome, Mozilla Firefox, Microsoft Edge, Chromium, Vivaldi, Brave, and Tor-Browser
+* Support for passkeys using the browser integration
 * Entry icon download
-* Import databases from CSV, 1Password, and KeePass1 formats
+* Import databases from CSV, 1Password, Bitwarden, Proton Pass, and KeePass1 formats
 
 ### Advanced
 * Database reports (password health, HIBP, and statistics)
-* Database export to CSV and HTML formats
+* Database export to CSV, XML, and HTML formats
 * TOTP storage and generation
 * Field references between entries
 * File attachments and custom attributes

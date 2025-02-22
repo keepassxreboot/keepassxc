@@ -26,8 +26,8 @@ include::topics/DownloadInstall.adoc[tags=*;!advanced]
 
 include::topics/UserInterface.adoc[tags=*;!advanced]
 
-include::topics/PasswordGenerator.adoc[tags=*;!advanced]
-
 include::topics/DatabaseOperations.adoc[tags=*;!advanced]
 
-include::topics/BrowserPlugin.adoc[tags=*;!advanced]
+include::topics/PasswordGenerator.adoc[tags=*;!advanced]
+
+include::topics/BrowserIntegration.adoc[tags=*;!advanced]

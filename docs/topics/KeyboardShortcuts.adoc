@@ -15,7 +15,8 @@ NOTE: On macOS please substitute `Ctrl` with `Cmd` (aka `⌘`).
 |Save Database As             | Ctrl + Shift + S
 |New Database                 | Ctrl + Shift + N
 |Close Database               | Ctrl + W ; Ctrl + F4
-|Lock All Databases           | Ctrl + L
+|Lock Current Database        | Ctrl + L
+|Lock All Databases           | Ctrl + Shift + L
 |Database Settings            | Ctrl + Shift + ,
 |Database Reports             | Ctrl + Shift + R
 |Quit                         | Ctrl + Q

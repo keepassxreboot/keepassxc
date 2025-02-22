@@ -126,5 +126,21 @@ Use regular expressions to find and replace data from a resolved placeholder. Re
 `C:\Backups\MyDatabase\01-05-2022.kdbx`
 |===
 
+=== Creating a YubiKey backup
+It is advisable to have a backup replica YubiKey In case your main YubiKey gets damaged, lost, or stolen. The same HMAC key will need to be written to both keys. To do this you can either use the YubiKey Personalization Tool GUI or the ykpersonalize CLI tool. The steps for the CLI tool are shown:
+
+1. Create a 20 byte HMAC key:
++
+```
+dd status=none if=/dev/random bs=20 count=1 | xxd -p -c 40
+```
+
+2. Write the HMAC key to slot 2 _(Set through the first switch. Out of the box the YubiKey OTP resides in slot 1)_:
++
+```
+ykpersonalize -2 -a -ochal-resp -ochal-hmac -ohmac-lt64 -oserial-api-visible -oallow-update
+```
+
+You will be asked to enter the HMAC key you created earlier, copy/paste they key output in the first step. Repeat step 2 for your second YubiKey using the same HMAC key from before. We recommend storing your HMAC key in a safe place (e.g., printed on paper) in case you need to recreate another key.
 
 // end::content[]

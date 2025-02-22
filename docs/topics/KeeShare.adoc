@@ -16,7 +16,7 @@ To use sharing, you need to enable it for the application.
 .KeeShare Application Settings
 image::keeshare_application_settings.png[]
 
-=== Sharing Credentials
+=== Setup a Shared Group
 If you checked _Allow export_ in the Sharing settings you can now share a group of passwords. Sharing is always defined on a particular group. If you enable sharing on a group, every entry under this group, and its children, are shared. If you enable sharing on the root node, **every password** inside your database gets shared!
 
 NOTE: KeeShare does not synchronize group structure after the initial share is created. At this time, KeeShare operates at the entry level; shared entries moved outside of a shared group are still synchronized.

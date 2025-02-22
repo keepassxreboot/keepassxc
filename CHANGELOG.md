@@ -178,7 +178,7 @@
 - Browser: Revert code causing connection problems [#8665]
 - Browser: Fix socket file symbolic link on Linux [#8656]
 - Flatpak: Fix launching browser proxy service [#8680]
-- SSH Agent: Fix paegent support on Windows [#8619]
+- SSH Agent: Fix pageant support on Windows [#8619]
 
 ## 2.7.3 (2022-10-23)
 
@@ -1061,7 +1061,7 @@
 - Compare window title to entry URLs #556
 - Implemented inline error messages #162
 - Ignore group expansion and other minor changes when making database "dirty" #464
-- Updated license and copyright information on souce files #632
+- Updated license and copyright information on source files #632
 - Added contributors list to about dialog #629
 
 ## 2.1.4 (2017-04-09)

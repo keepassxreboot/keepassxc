@@ -36,6 +36,13 @@ NOTE: Keep this password for your database safe. Either memorize it or note it d
 
 5. Click Done. You will be prompted to select a location to save your database file. The database file is saved on to your computer with the default `.kdbx` extension. You can store your database wherever you wish, it is fully encrypted at all times preventing unauthorized access.
 
+=== Storing Your Database
+The database file that you create might contain highly sensitive data and must be stored in a very secure way. You must make sure that the database is always protected with a strong and long password. The database file that is protected with a strong and long password is secure and encrypted while stored on your computer or cloud storage service.
+
+Make sure that you or someone else does not accidentally delete the database file. Deletion of the database file will result in the total loss of all your information (including all your passwords!) and a lot of inconvenience to manually retrieve your logins for various web applications. Do not share the credentials to access your database file with anyone unless you absolutely trust them (spouse, child, etc.).
+
+TIP: You can safely store your database file in the cloud (OneDrive, Dropbox, Google Drive, Nextcloud, Syncthing, etc.). The database file is always fully encrypted; unencrypted data is never written to disk and is never accessible to your cloud storage provider. We recommend using a storage service that keeps automatic backups (version history) of your database file in the event of corruption or accidental deletion.
+
 === Opening an Existing Database
 To open an existing database, perform the following steps:
 
@@ -51,9 +58,11 @@ image::unlock_database.png[]
 
 3. Enter the password for your database.
 
-4. _(Optional)_ Browse for the Key File if you have chosen it as an additional authentication factor while creating the database. Refer to the KeePassXC User Guide for more information on setting a Key File as an additional authentication factor.
+4. _(Optional)_ Click *I have a key file (A)* if you have one as an additional authentication factor for your database.
 
-5. Click *OK*. The database opens and the following screen is displayed:
+5. _(Optional)_ Plug in your configured YubiKey or OnlyKey to use it as an additional authentication factor. If you don't see it listed, press the refresh button *(B)*.
+
+6. Click *OK*. The database opens and the following screen is displayed:
 +
 .Unlocked database
 image::database_view.png[]
@@ -72,24 +81,13 @@ When your database is locked, you will see the following unlock dialog. Simply p
 image::quick_unlock.png[]
 
 // tag::advanced[]
-=== Expired Entries
-By default, KeePassXC will show entries that are expired or will be expiring within 3 days after unlocking the database. This feature allows you to change your passwords before they expire and be aware of passwords that are no longer valid. You can disable or change this feature in the Application Settings.
+NOTE: By default, KeePassXC will show entries that are expired or will be expiring within 3 days after unlocking the database. This feature allows you to change your passwords before they expire and be aware of passwords that are no longer valid. You can disable or change this feature in the Application Settings.
 
-=== Advanced Save Options
-There are three ways that KeePassXC can handle database files. This behavior is set in the Application Settings under _File Operations_.
-
-1. _(Default)_ *Safe saves* create a temporary database file alongside the existing one and atomically move it into place when all writing is complete. This prevents database corruption in the case of application crashes, loss of power, or other interruptions.
-
-2. *Temporary file saves* create a database in the temporary files folder. This database is then moved into place overtop of the existing file. Although rare, interruptions in this move process could leave your database in an unknown state. This option is useful for overcoming poorly behaved cloud sync tools.
-
-3. *Direct-write saves* write directly to the existing database file. This is an unsafe operation since any interruption can leave your entire database inaccessible. We only recommend using this option when interfacing with Linux GVFS services (e.g. Google Cloud on Gnome) and other types of storage services that host a virtual drive system.
-
-In addition to these save options, KeePassXC can create a backup of your existing database file just prior to saving. This backup will be saved at the path specified in the *Backup destination* field. This path can be absolute or relative. The latter will be resolved according to the databases path. It is possible to specify a custom naming scheme with placeholders. See <<Backup Path Placeholders, Backup Path Placeholders>> for available placeholders and examples.
-
-image::save_options.png[]
 // end::advanced[]
+=== Entry Handling
+Entries in KeePassXC are the fundamental units where all your sensitive information is stored. Each entry can contain various fields such as usernames, passwords, URLs, attachments, and notes. You can create, edit, clone, and delete entries as needed. Additionally, KeePassXC supports advanced features like TOTP for two-factor authentication, custom attributes, and entry history to track changes over time. Proper management of entries ensures that your data is organized, secure, and easily accessible when needed.
 
-=== Adding an Entry
+==== Adding an Entry
 All the details such as usernames, passwords, URLs, attachments, notes, and so on are stored in database entries. You can create as many entries as you want in the database.
 
 To add an entry, perform the following step:
@@ -112,7 +110,7 @@ image::edit_entry.png[]
 
 5. Click *OK* to add the entry to your database.
 
-=== Editing an Entry
+==== Editing an Entry
 To edit the details in an entry, perform the following steps:
 
 1. Select the entry you want to edit.
@@ -123,7 +121,7 @@ To edit the details in an entry, perform the following steps:
 
 4. Click *OK*.
 
-=== Adding TOTP to an Entry
+==== Adding TOTP to an Entry
 Timed One-Time Passwords (TOTP) are a popular choice for two-factor authentication methods. These codes are typically six digits long and change every 30 seconds. They are derived from a shared secret value and the current time. Once set up, KeePassXC can calculate TOTP codes like any authenticator app, such as Google Authenticator. The codes can be used with copy/paste, browser extension, and Auto-Type.
 
 TIP: Your computer time must be synchronized with an internet time source to generate valid TOTP codes, https://www.nist.gov/pml/time-and-frequency-division/time-distribution/internet-time-service-its[read more here].
@@ -145,7 +143,17 @@ After an entry is configured with TOTP, you will see a clock icon in that entry'
 .TOTP Usage
 image::totp_usage_examples.png[]
 
-=== Deleting an Entry
+==== Entry Icons
+You can select an icon to be displayed with each entry for easy identification. KeePassXC comes with a set of default icons that you can use or you can use your own custom icons. If you defined a URL with an entry, you can also download the favorite icon for that particular website.
+
+NOTE: To delete a custom icon, go to <<Database Maintenance>> where you can purge unused icons and delete one or more icons at a time.
+
+.Entry icon selection
+image::edit_entry_icons.png[]
+
+TIP: Each KeePass application has different default icons. If you use a mobile app or KeePass2, be aware that the default icons may not be exactly correspond to the KeePassXC icons.
+
+==== Deleting an Entry
 To delete an entry, perform the following steps:
 
 1. Select the entry you want to delete and press the `Delete` button on your keyboard.
@@ -157,7 +165,7 @@ NOTE: You can disable the recycle bin within the Database Settings. If the recyc
 3. To permanently delete the entry, navigate to the Recycle Bin, select the entry you want to delete and press the `Delete` button on your keyboard.
 
 // tag::advanced[]
-=== Clone an Entry
+==== Clone an Entry
 Creating a clone of an entry provides you a ready-to-use template for creating new entries with similar details of a master entry.
 
 To create a clone of an existing entry, perform the following steps:
@@ -182,10 +190,71 @@ image::clone_entry_references.png[]
 
 4. You can create your own references using the <<Entry Cross-Reference, Entry Reference Syntax>>
 
-== Searching the Database
-KeePassXC provides an enhanced and granular search features the enables you to search for specific entries in the databases using the different modifiers, wild card characters, and logical operators.
+==== Entry URL Handling
+KeePassXC can handle URLs in various ways. Standard URLs will be opened in your default browser. URLs that start with schemas handled by your Operating System will launch the associated application, for example `ftp://` or `ssh://`. You can also use the following URL schemas to perform specific actions:
 
-=== Modifiers and Fields
+|===
+|Schema    | Example   | Description
+
+|cmd://
+|`cmd://ssh {USERNAME}@example.com -p 2222`
+|Launches the specified command line executable with the specified arguments. The executable must be present on your PATH or an absolute path must be specified.
+
+|kdbx://
+|`kdbx://~/dbs/passwords.kdbx`
+|Opens the specified database file. Set the entry's username to the keyfile path (if required) and password to the database password. The database will open in a new tab.
+
+|===
+
+=== Advanced Entry Handling
+KeePassXC offers several advanced options for managing your database entries. Additional Attributes allow you to store extra information required by some applications and websites. Attachments enable you to attach files to entries, stored as encrypted binaries, which can be previewed directly in the application (text and images). Icons can be selected or downloaded for easy identification of entries. The Properties section lets you view basic properties such as creation, modification, and last accessed times, and retrieve an entry's UUID for references. KeePassXC also maintains a history of changes to entries, allowing you to view, restore, or delete previous versions of an entry.
+
+==== Additional Attributes
+A lot of applications and web sites now require providing additional information when you create accounts. The additional information is used to block hackers if any suspicious activity is detected. In addition, the additional information you provide can be used to reset passwords if you forget them. You can also store arbitrary information here that can be copied to the clipboard or Auto-Typed using the `{S:<ATTR_NAME>}` action code.
+
+To protect an attribute from being displayed by default, activate the _Protect_ checkbox *(A)*. To show the contents of the attribute while keeping it protected, press the _Reveal_ button *(B)*.
+
+.Additional attributes example
+image::edit_entry_attributes.png[]
+
+==== Attachments
+You can attach files to any entry in your database by pressing the _Add_ button *(A)*. These files are added to the database and stored as encrypted binaries. You can open, save, or delete attachments from this interface *(B)*.
+
+NOTE: When you try to open the attached file, KeePassXC extracts the attachment to a temporary file and opens it using the default application associated with the file type. After finishing viewing or editing the file, you can choose between importing or discarding the changes that you made to the temporary file. KeePassXC securely deletes the temporary file by overwriting it.
+
+.Attachments interface
+image::edit_entry_attachments.png[]
+
+==== Foreground and Background Color
+You can change the foreground *(A)* and/or background *(B)* color that this entry will use in the entry lists. Click the corresponding box to open the color picker dialog.
+
+.Color picker dialog
+image::edit_entry_colors.png[]
+
+==== Properties
+KeePassXC lets you view the basic properties such as date and time of creation, modification, and when last accessed. This is also where you can retrieve an entry's UUID for use in references.
+
+.Entry properties view
+image::edit_entry_properties.png[]
+
+==== History
+KeePassXC maintains a history of changes you make to your entries. Each time you change an entry, KeePassXC automatically creates a backup copy of the current, non-modified entry before saving the new values. You can view the changes you made previously, restore, and delete the history of changes you made. The age of the history item, the changes that were made, and the entry's size are shown in the table view.
+
+ * Show: Display this history item for review, a read-only copy of the entry will be shown.
+ * Restore: Reinstate the selected history item as the active entry details.
+ * Delete: Delete the selected history item.
+ * Delete All: Delete the entire history for this entry.
+
+.Entry history view
+image::edit_entry_history.png[]
+
+NOTE: Restoring an old history item will store the current entry settings as a new history item.
+
+// end::advanced[]
+=== Search
+KeePassXC provides a robust search that enables you to find specific entries in the databases using different modifiers, wild card characters, and logical operators. By default, search considers the following fields when matching your query: Title, Username, URL, Tags, and Notes. To include other fields and/or narrow your search to specific fields, you can use the search syntax described below.
+
+==== Modifiers and Fields
 [grid=rows, frame=none, width=70%]
 |===
 |Modifier   |Description
@@ -201,14 +270,15 @@ The following fields can be searched along with their abbreviated name in parent
 * Title (t)
 * Username (u)
 * Password (p, pw)
-* URL
+* URL (url)
 * Notes (n)
 * Attribute names and values (attr)
 * Attachment (attach)
 * Group (g)
+* Tags (tag)
 * Entry State (is:expired, is:weak)
 
-=== Wild Card Characters and Logical Operators
+==== Wild Card Characters and Logical Operators
 [grid=rows, frame=none, width=70%]
 |===
 |Wild Card Character    |Description
@@ -218,7 +288,7 @@ The following fields can be searched along with their abbreviated name in parent
 |\|	                    |Logical OR
 |===
 
-=== Sample Search Queries
+==== Sample Search Queries
 The following tables lists a few samples search queries for your reference:
 
 |===
@@ -236,63 +306,39 @@ The following tables lists a few samples search queries for your reference:
 |`+attr:mystring123`
 |Searches all additional attributes for any name OR value equal to mystring123.
 
+|`+tag:personal`
+| Search exactly for the 'personal' tag and do not include tags such as 'my personal'.
+
 |`is:expired is:weak`
 |Searches for all expired entries with weak passwords.
 |===
 
-== Advanced Entry Options
-=== Additional Attributes
-A lot of applications and web sites now require providing additional information when you create accounts. The additional information is used to block hackers if any suspicious activity is detected. In addition, the additional information you provide can be used to reset passwords if you forget them. You can also store arbitrary information here that can be copied to the clipboard or Auto-Typed using the `{S:<ATTR_NAME>}` action code.
+// tag::advanced[]
+=== Merging Databases
+KeePassXC allows you to merge entries from one database into another through the _Database_ -> _Merge From Database_ menu item. When merging, entries from the specified database will be imported into your currently open database. The merge process compares entries based on their unique identifiers (UUIDs) and modified timestamp. When an entry UUID matches, no matter which group it is in, the most recently modified version will be made the current and the previous version will be placed into the entry's history. Any new entries and/or groups will be added to the open database. This feature is useful for consolidating multiple databases or synchronizing databases from conflict files in a cloud storage system.
 
-To protect an attribute from being displayed by default, activate the _Protect_ checkbox *(A)*. To show the contents of the attribute while keeping it protected, press the _Reveal_ button *(B)*.
+NOTE: When you delete entries, a record of that deletion (the entry UUID) is stored to prevent that entry from reappearing from a merge operation. An existing entry that has the same UUID as a deleted item will be removed from the database without prompt.
 
-.Additional attributes example
-image::edit_entry_attributes.png[]
+=== Advanced Save Options
+There are three ways that KeePassXC can handle database files. This behavior is set in the Application Settings under _File Operations_.
 
-=== Attachments
-You can attach files to any entry in your database by pressing the _Add_ button *(A)*. These files are added to the database and stored as encrypted binaries. You can open, save, or delete attachments from this interface *(B)*.
+1. _(Default)_ *Safe saves* create a temporary database file alongside the existing one and atomically move it into place when all writing is complete. This prevents database corruption in the case of application crashes, loss of power, or other interruptions.
 
-NOTE: When you try to open the attached file, KeePassXC extracts the attachment to a temporary file and opens it using the default application associated with the file type. After finishing viewing or editing the file, you can choose between importing or discarding the changes that you made to the temporary file. KeePassXC securely deletes the temporary file by overwriting it.
+2. *Temporary file saves* create a database in the temporary files folder. This database is then moved into place overtop of the existing file. Although rare, interruptions in this move process could leave your database in an unknown state. This option is useful for overcoming poorly behaved cloud sync tools.
 
-.Attachments interface
-image::edit_entry_attachments.png[]
+3. *Direct-write saves* write directly to the existing database file. This is an unsafe operation since any interruption can leave your entire database inaccessible. We only recommend using this option when interfacing with Linux GVFS services (e.g. Google Cloud on Gnome) and other types of storage services that host a virtual drive system.
 
-=== Foreground and Background Color
-You can change the foreground *(A)* and/or background *(B)* color that this entry will use in the entry lists. Click the corresponding box to open the color picker dialog.
+=== Database Backup Options
+In addition to these save options, KeePassXC can create a backup of your existing database file just prior to saving. This backup will be saved at the path specified in the *Backup destination* field. This path can be absolute or relative. The latter will be resolved according to the databases path. It is possible to specify a custom naming scheme with placeholders. See <<Backup Path Placeholders, Backup Path Placeholders>> for available placeholders and examples.
 
-.Color picker dialog
-image::edit_entry_colors.png[]
+image::save_options.png[]
 
-=== Icons
-You can select an icon to be displayed with each entry for easy identification. KeePassXC comes with a set of default icons that you can use or you can use your own custom icons. If you defined a URL with an entry, you can also download the favorite icon for that particular website.
+Alternatively, backups can be created on-demand using the _Database_ -> _Save Database Backup..._ menu feature.
 
-NOTE: To delete a custom icon, go to <<Database Maintenance>> where you can purge unused icons and delete one or more icons at a time.
+.Saving a database backup
+image::save_database_backup.png[,40%]
 
-.Entry icon selection
-image::edit_entry_icons.png[]
-
-TIP: Each KeePass application has different default icons. If you use a mobile app or KeePass2, be aware that the default icons may not be exactly correspond to the KeePassXC icons.
-
-=== Properties
-KeePassXC lets you view the basic properties such as date and time of creation, modification, and when last accessed. This is also where you can retrieve an entry's UUID for use in references.
-
-.Entry properties view
-image::edit_entry_properties.png[]
-
-=== History
-KeePassXC maintains a history of changes you make to your entries. Each time you change an entry, KeePassXC automatically creates a backup copy of the current, non-modified entry before saving the new values. You can view the changes you made previously, restore, and delete the history of changes you made. The age of the history item, the changes that were made, and the entry's size are shown in the table view.
-
- * Show: Display this history item for review, a read-only copy of the entry will be shown.
- * Restore: Reinstate the selected history item as the active entry details.
- * Delete: Delete the selected history item.
- * Delete All: Delete the entire history for this entry.
-
-.Entry history view
-image::edit_entry_history.png[]
-
-NOTE: Restoring an old history item will store the current entry settings as a new history item.
-
-== Automatic Database Opening
+=== Automatic Database Opening
 You can setup one or more databases to open automatically when you unlock a single database. This is done by *(1)* defining a special group named `AutoOpen` with *(2)* entries that contain the file path and credentials for each database that should be opened. There is no limit to the number of databases that can be opened.
 
 TIP: Case matters with auto open, the group name must be exactly `AutoOpen` and it must be a child of the root group.
@@ -329,6 +375,7 @@ image::database_settings.png[]
  * *Database name:* This is the default identifier for your database and is shown in the tab bar and title bar (when active). You can change this name as desired.
  * *Database description:* Provide some meaningful description for your database.
  * *Default username:* Provide a default username for all new entries that you create in this database.
+ * *Public Databse Metadata:* Here you can set a public (unencrypted) name, icon, and color for your database. This is used on the database unlock screen to help distinguish multiple databases from each other.
  * *Max history items:* This is the maximum number of history items that are stored for each entry. When you set this to 0, no history will be saved. Set this value to a low value to prevent the database from getting too large (we recommend no more than 10).
  * *Max. history size:* When the history of an entry gets above this size, it is truncated. For example, this happens when entries have large attachments. Set this value small to prevent the database from getting too large (we recommend 6 MiB).
  * *Use recycle bin:* Select this check-box if you want deleted entries to move to the recycle bin instead of being permanently removed. The recycle bin will be created if it does not already exist after your first deletion. To delete entries permanently, you must empty the recycle bin manually.
@@ -365,30 +412,10 @@ The following key derivation functions are supported:
 
  * Argon2 (KDBX 4 – recommended): KDBX 4, the Argon2 key derivation function can be used for transforming the composite master key (as protection against dictionary attacks). The main advantage of Argon2 over AES-KDF is that it provides a better resistance against GPU/ASIC attacks (due to being a memory-hard function). The number of iterations scales linearly with the required time. By increasing the memory parameter, GPU/ASIC attacks become harder and the required time increases. The parallelism parameter can be used to specify how many threads should be used. We recommend using Argon2id to prevent against timing-based attacks. Argon2d offers maximum compatibility with other KeePass-based apps, the default settings provide sufficient protection against any known attacks.
 
-== Database Maintenance
+=== Database Maintenance
 KeePassXC offers some maintenance features that can be applied to clean up your database. Navigate to _Database_ -> _Database settings_ then click on _Maintenance_ on the left hand panel. The following screen appears. On this screen you can delete multiple icons at once and purge any unused icons in your database.
 
 image::database_maintenance.png[]
-
-=== Creating a YubiKey backup
-It is advisable to have a backup replica YubiKey In case your main YubiKey gets damaged, lost, or stolen. The same HMAC key will need to be written to both keys. To do this you can either use the YubiKey Personalization Tool GUI or the ykpersonalize CLI tool. The steps for the CLI tool are shown:
-
-1. Create a 20 byte HMAC key:
-+
-```
-dd status=none if=/dev/random bs=20 count=1 | xxd -p -c 40
-```
-
-2. Write the HMAC key to slot 2 _(Set through the first switch. Out of the box the YubiKey OTP resides in slot 1)_:
-+
-```
-ykpersonalize -2 -a -ochal-resp -ochal-hmac -ohmac-lt64 -oserial-api-visible -oallow-update
-```
-
-You will be asked to enter the HMAC key you created earlier, copy/paste they key output in the first step. Repeat step 2 for your second YubiKey using the same HMAC key from before. We recommend storing your HMAC key in a safe place (e.g., printed on paper) in case you need to recreate another key.
-
-== Command Line Tool
-KeePassXC comes with the command line tool *keepassxc-cli* to access, view, and manipulate your database directly from a terminal window. The tool is documented through a separate man page, which can be shown using `man keepassxc-cli`, or through the on-demand help using `keepassxc-cli [command] -h`. An online version of the man page is https://github.com/keepassxreboot/keepassxc/blob/master/docs/man/keepassxc-cli.1.adoc[available on GitHub].
 
 == Remote database support
 KeePassXC provides support for syncing database files that reside in a remote location. If you can download/upload the database file via a commandline tool (e.g. rsync, ssh, scp etc.) KeePassXC offers easy to use functionality to sync the remote database.
@@ -408,17 +435,4 @@ Select the remote sync command from the _Database > Remote Sync…_ menu to star
 WARNING: In case the remote database is changed by another user/process after the downloading command finishes and before uploading again, those changes will be overwritten. Syncing is not an atomic operation.
 
 // end::advanced[]
-
-== Storing a Database File
-The database file that you create might contain highly sensitive data and must be stored in a very secure way. You must make sure that the database is always protected with a strong and long password. The database file that is protected with a strong and long password is secure and encrypted while stored on your computer or cloud storage service.
-
-Make sure that you or someone else does not accidentally delete the database file. Deletion of the database file will result in the total loss of all your information (including all your passwords!) and a lot of inconvenience to manually retrieve your logins for various web applications. Do not share the credentials to access your database file with anyone unless you absolutely trust them (spouse, child, etc.).
-
-TIP: You can safely store your database file in the cloud (OneDrive, Dropbox, Google Drive, Nextcloud, Syncthing, etc.). The database file is always fully encrypted; unencrypted data is never written to disk and is never accessible to your cloud storage provider. We recommend using a storage service that keeps automatic backups (version history) of your database file in the event of corruption or accidental deletion.
-
-== Backing up a Database File
-It is a good practice to create copies of your database file and store the copies of your database on a different computer, smart phone, or cloud storage space such a Google Drive or Microsoft OneDrive. Backups can be created automatically by selecting the _Backup database file before saving_ option in the application settings. Additionally, you can create a backup on-demand using the _Database_ -> _Save Database Backup..._ menu feature.
-
-.Saving a database backup
-image::save_database_backup.png[,40%]
 // end::content[]

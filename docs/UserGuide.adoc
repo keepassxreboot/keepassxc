@@ -6,6 +6,7 @@ KeePassXC Team <team@keepassxc.org>
 :imagesdir: images
 :stylesheet: styles/dark.css
 :toc: left
+:sectanchors:
 ifdef::backend-pdf[]
 :title-page:
 :title-logo-image: {imagesdir}/kpxc_logo.png
@@ -23,17 +24,17 @@ include::topics/UserInterface.adoc[tags=*]
 
 include::topics/DatabaseOperations.adoc[tags=*]
 
-include::topics/ImportExport.adoc[tags=*]
-
 include::topics/PasswordGenerator.adoc[tags=*]
 
-include::topics/BrowserPlugin.adoc[tags=*]
+include::topics/ImportExport.adoc[tags=*]
+
+include::topics/KeeShare.adoc[tags=*]
+
+include::topics/BrowserIntegration.adoc[tags=*]
 
 include::topics/Passkeys.adoc[tags=*]
 
 include::topics/AutoType.adoc[tags=*]
-
-include::topics/KeeShare.adoc[tags=*]
 
 include::topics/SSHAgent.adoc[tags=*]
 
