@@ -37,7 +37,7 @@ jobs:
       run: |
         sudo apt update
         sudo apt install build-essential cmake g++
-        sudo apt install qtbase5-dev qtbase5-private-dev qttools5-dev qttools5-dev-tools libqt5svg5-dev libargon2-dev libkeyutils-dev libminizip-dev libbotan-2-dev libqrencode-dev zlib1g-dev asciidoctor libreadline-dev libpcsclite-dev libusb-1.0-0-dev libxi-dev libxtst-dev  libqt5x11extras5-dev
+        sudo apt install qtbase5-dev qtbase5-private-dev qttools5-dev qttools5-dev-tools libqt5svg5-dev libargon2-dev libkeyutils-dev libminizip-dev libbotan-2-dev libqrencode-dev zlib1g-dev asciidoctor libreadline-dev libpcsclite-dev libusb-1.0-0-dev libxi-dev libxtst-dev libqt5x11extras5-dev libpoppler-cpp-dev
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
