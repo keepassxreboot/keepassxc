@@ -375,26 +375,27 @@ void TestGui::testMergeDatabase()
     QCOMPARE(m_db->rootGroup()->findChildByName("General")->entries().size(), 1);
 }
 
-void TestGui::prepareAndTriggerRemoteSync(const QString& sourceToSync)
+void TestGui::prepareAndTriggerRemoteSync()
 {
-    auto* menuRemoteSync = m_mainWindow->findChild<QMenu*>("menuRemoteSync");
-    QSignalSpy remoteAboutToShow(menuRemoteSync, &QMenu::aboutToShow);
-    QApplication::processEvents();
-
     // create remote settings in settings dialog
     triggerAction("actionDatabaseSettings");
-    auto* dbSettingsDialog = m_dbWidget->findChild<QWidget*>("databaseSettingsDialog");
-    auto* dbSettingsCategoryList = dbSettingsDialog->findChild<CategoryListWidget*>("categoryList");
-    auto* dbSettingsStackedWidget = dbSettingsDialog->findChild<QStackedWidget*>("stackedWidget");
-    dbSettingsCategoryList->setCurrentCategory(2); // go into remote category
+
+    auto dbSettingsDialog = m_dbWidget->findChild<DatabaseSettingsDialog*>("databaseSettingsDialog");
+    QVERIFY(dbSettingsDialog);
+    dbSettingsDialog->showRemoteSettings();
+
     auto name = "testCommand";
-    auto* nameEdit = dbSettingsStackedWidget->findChild<QLineEdit*>("nameLineEdit");
-    auto* downloadCommandEdit = dbSettingsStackedWidget->findChild<QLineEdit*>("downloadCommand");
-    QVERIFY(downloadCommandEdit != nullptr);
-    downloadCommandEdit->setText(sourceToSync);
+    auto nameEdit = dbSettingsDialog->findChild<QLineEdit*>("nameLineEdit");
+    QVERIFY(nameEdit);
+    QVERIFY(nameEdit->isVisible());
     nameEdit->setText(name);
-    auto* saveSettingsButton = dbSettingsStackedWidget->findChild<QPushButton*>("saveSettingsButton");
-    QVERIFY(saveSettingsButton != nullptr);
+
+    auto downloadCommandEdit = dbSettingsDialog->findChild<QLineEdit*>("downloadCommand");
+    QVERIFY(downloadCommandEdit);
+    downloadCommandEdit->setText("sftp user@server:Database.kdbx");
+
+    auto saveSettingsButton = dbSettingsDialog->findChild<QPushButton*>("saveSettingsButton");
+    QVERIFY(saveSettingsButton);
     QTest::mouseClick(saveSettingsButton, Qt::LeftButton);
 
     auto okButton = dbSettingsDialog->findChild<QDialogButtonBox*>("buttonBox")->button(QDialogButtonBox::Ok);
@@ -403,32 +404,33 @@ void TestGui::prepareAndTriggerRemoteSync(const QString& sourceToSync)
 
     QTRY_COMPARE(m_dbWidget->getRemoteParams().size(), 1);
 
-    // trigger aboutToShow to create remote actions
-    menuRemoteSync->popup(QPoint(0, 0));
+    // Show menu to trigger populating with remote sync action
+    auto menuRemoteSync = m_mainWindow->findChild<QMenu*>("menuRemoteSync");
+    QVERIFY(menuRemoteSync);
+    menuRemoteSync->popup({0, 0});
     QApplication::processEvents();
-    QTRY_COMPARE(remoteAboutToShow.count(), 1);
-    // close the opened menu
-    QTest::keyClick(menuRemoteSync, Qt::Key::Key_Escape);
+    menuRemoteSync->close();
 
-    // trigger remote sync action
-    for (auto* remoteAction : menuRemoteSync->actions()) {
+    // Trigger the remote sync action
+    for (const auto remoteAction : menuRemoteSync->actions()) {
         if (remoteAction->text() == name) {
             remoteAction->trigger();
-            break;
+            return;
         }
     }
-    QApplication::processEvents();
+
+    // If we get here then something didn't work properly
+    QFAIL("Remote sync action not present in menu.");
 }
 
 void TestGui::testRemoteSyncDatabaseSameKey()
 {
-    QString sourceToSync = "sftp user@server:Database.kdbx";
-    RemoteHandler::setRemoteProcessFunc([sourceToSync](QObject* parent) {
+    RemoteHandler::setRemoteProcessFunc([](QObject* parent) {
         return QScopedPointer<RemoteProcess>(
             new MockRemoteProcess(parent, QString(KEEPASSX_TEST_DATA_DIR).append("/SyncDatabase.kdbx")));
     });
     QSignalSpy dbSyncSpy(m_dbWidget.data(), &DatabaseWidget::databaseSyncCompleted);
-    prepareAndTriggerRemoteSync(sourceToSync);
+    prepareAndTriggerRemoteSync();
     QTRY_COMPARE(dbSyncSpy.count(), 1);
 
     m_db = m_tabWidget->currentDatabaseWidget()->database();
@@ -443,13 +445,12 @@ void TestGui::testRemoteSyncDatabaseSameKey()
 
 void TestGui::testRemoteSyncDatabaseRequiresPassword()
 {
-    QString sourceToSync = "sftp user@server:Database.kdbx";
-    RemoteHandler::setRemoteProcessFunc([sourceToSync](QObject* parent) {
+    RemoteHandler::setRemoteProcessFunc([](QObject* parent) {
         return QScopedPointer<RemoteProcess>(new MockRemoteProcess(
             parent, QString(KEEPASSX_TEST_DATA_DIR).append("/SyncDatabaseDifferentPassword.kdbx")));
     });
     QSignalSpy dbSyncSpy(m_dbWidget.data(), &DatabaseWidget::databaseSyncCompleted);
-    prepareAndTriggerRemoteSync(sourceToSync);
+    prepareAndTriggerRemoteSync();
 
     // need to process more events as opening with the same key did not work and more events have been fired
     QApplication::processEvents(QEventLoop::WaitForMoreEvents);

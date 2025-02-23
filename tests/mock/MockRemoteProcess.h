@@ -23,7 +23,7 @@
 class MockRemoteProcess : public RemoteProcess
 {
 public:
-    explicit MockRemoteProcess(QObject* parent, const QString& dbPath);
+    explicit MockRemoteProcess(QObject* parent, QString dbPath);
     ~MockRemoteProcess() override = default;
 
     void start(const QString& program) override;
