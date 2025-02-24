@@ -26,7 +26,7 @@
 #endif
 
 #if defined(Q_OS_MACOS)
-#include <Foundation/Foundation.h>
+#include "BrowserSharedMac.h"
 #endif
 
 namespace BrowserShared
@@ -58,24 +58,7 @@ namespace BrowserShared
         // Windows uses named pipes
         return serverName + "_" + qgetenv("USERNAME");
 #elif defined(Q_OS_MACOS)
-        NSString *appGroupIdentifier = @"G2S7P7J672.org.keepassxc.KeePassXC";
-
-        // Get the container URL for the app group identifier
-        NSURL *containerURL = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:appGroupIdentifier];
-
-        // Convert the NSURL to a string (path)
-        NSString *containerPath = [containerURL path];
-
-        // Convert NSString to QString
-        QString homePath = QString::fromNSString(containerPath);
-
-        // Make sure the directory exists
-        QDir().mkpath(homePath);
-
-        // The path will become too long therefore we must cut off serverName
-        QString socketPath = homePath + "/KeePassXC.BrowserServer";
-
-        return socketPath;
+        return macOSLocalServerPath();
 #else // others
         return QStandardPaths::writableLocation(QStandardPaths::TempLocation) + serverName;
 #endif
