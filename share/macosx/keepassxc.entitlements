@@ -4,7 +4,7 @@
 <dict>
 	<key>com.apple.application-identifier</key>
 	<string>G2S7P7J672.org.keepassxc.keepassxc</string>
-        <key>keychain-access-groups</key>
+	<key>keychain-access-groups</key>
  	<array>
  		<string>G2S7P7J672.org.keepassxc.keepassxc</string>
  	</array>
