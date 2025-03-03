@@ -59,6 +59,69 @@
                 </ul>
             </description>
         </release>
+        <release version="2.7.10" date="2025-03-02">
+            <description>
+                <ul>
+                    <li>Allow adjusting application font size [#11567]</li>
+                    <li>Add Proton Pass importer [#11197]</li>
+                    <li>Support KeePass2 TOTP settings [#11229]</li>
+                    <li>Add New/Preview Entry Attachments dialog and functionality [#11637, #11699, #11650]</li>
+                    <li>Add database name, color, and icon options for unlock view [#10819, #11725]</li>
+                    <li>Show entry background color as column [#6798]</li>
+                    <li>Use icons for password strength [#9844]</li>
+                    <li>Add "Group Full Path" column in entry view [#10278]</li>
+                    <li>Passphrase "MIXED case" Type [#11255]</li>
+                    <li>Allow deleting extension plugin data from Browser Statistics [#11218]</li>
+                    <li>Add --minimized option to keepassxc [#11693]</li>
+                    <li>Implement T-CONV and T-REPLACE-RX entry placeholders [#11453]</li>
+                    <li>Option to disable opening browser when URL field double-clicked [#11332]</li>
+                    <li>Overhaul action states and add icons to toolbar [#11047]</li>
+                    <li>Show character count in password generator dialog [#10940]</li>
+                    <li>Add ability to expire entries from context menu [#8731]</li>
+                    <li>Add copy field shortcuts to Auto-Type select dialog [#11518]</li>
+                    <li>Passkeys: Add support for selecting group on creation [#11260]</li>
+                    <li>Browser: Refactor Access Control Dialog [#9607]</li>
+                    <li>Browser: Add support for URL wildcards and exact URL [#9835, #11752]</li>
+                    <li>Browser: Allow groups to restrict by browser integration key [#9852]</li>
+                    <li>CLI: Add `-d` dry-run shortcut to merge command [#11192]</li>
+                    <li>CLI: HTML export [#11590]</li>
+                    <li>macOS: Add option to disable database lock when switching user [#9707]</li>
+                    <li>SSH Agent: Implement feature to clear all identities [#10649]</li>
+                    <li>Major enhancements to documentation [#11745, #10875]</li>
+                    <li>Various UI and style fixes [#11535, #11672, #11511, #11445, #11426, #11273, #11455, #11321, #11594, #11539, #11351, #11354, #10748, #11602, #11303, #11291, #10091, #9417]</li>
+                    <li>Various improvements to tags [#11676, #11652, #11625]</li>
+                    <li>Reset splitter sizes on database unlock [#11014]</li>
+                    <li>Remember sort order in Auto-type popup dialog [#9508]</li>
+                    <li>Fix database password clearing when modifying key file / hardware key [#11001]</li>
+                    <li>Fix issues with reloading and handling of externally modified db file [#10612]</li>
+                    <li>Support passkeys with Bitwarden import [#11401]</li>
+                    <li>Fix various quirks with CSV import [#11787]</li>
+                    <li>Show Auto-Type select dialog even if window title is empty [#11603]</li>
+                    <li>Refactor hardware key code to avoid deadlock [#11703, #10872]</li>
+                    <li>Show a clear error if hardware key is found slots are not configured [#11609]</li>
+                    <li>Fix signal/slot disconnect when opening import wizard [#11039]</li>
+                    <li>Fix setting window title as modified [#11542]</li>
+                    <li>Fix assert hit when viewing entry history [#11413]</li>
+                    <li>Fix multiple crashes on Linux [#11513]</li>
+                    <li>Fix backup file path time substitution [#10834]</li>
+                    <li>Prevent long-running threads from deadlocking the program with only 1 CPU [#11155]</li>
+                    <li>Hide the menubar when menus lose focus (if toggled off) [#11355, #11605]</li>
+                    <li>CLI: Restore the original codepage on windows [#11470]</li>
+                    <li>Passkeys: Various fixes [#10934, #10951]</li>
+                    <li>Browser: Fix cancel with database unlock dialog [#11435]</li>
+                    <li>Browser: Resolve references in Access Confirm dialog [#11055]</li>
+                    <li>SSH Agent: Add timeout to streams to prevent deadlock [#11290]</li>
+                    <li>macOS: Replace legacy code for screen recording permissions [#11428]</li>
+                    <li>macOS: Implement Secure Input Mode [#11623]</li>
+                    <li>macOS: Fix showing ambigious name in settings [#11373]</li>
+                    <li>macOS: Fix copy-to-clipboard shortcut in entry preview widget [#10966]</li>
+                    <li>Linux: Prevent multiple lock requests [#11306]</li>
+                    <li>Snap: Prevent need for snap helper script to configure browser extension [#10924]</li>
+                    <li>Windows: Detect outdated VC Redist with MSI installer [#11469]</li>
+                    <li>Windows: Additional exclusion fields for clipboard [#11521]</li>
+                </ul>
+            </description>
+        </release>
         <release version="2.7.9" date="2024-06-19">
             <description>
                 <ul>
