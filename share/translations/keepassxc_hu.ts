@@ -218,16 +218,48 @@
         <translation>Az új nyelv beállításának érvényesítéséhez újra kell indítani az alkalmazást. Indítsuk újra most?</translation>
     </message>
     <message>
-        <source>Reset Settings?</source>
-        <translation>Beállítások visszaállítása?</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to reset all general and security settings to default?</source>
-        <translation>Biztos, hogy vissza akarja állítani az összes általános és biztonsági beállítást az alapértelmezésre?</translation>
-    </message>
-    <message>
         <source>Select backup storage directory</source>
         <translation>Válassza ki a biztonsági mentés könyvtárát.</translation>
+    </message>
+    <message>
+        <source>Confirm Reset</source>
+        <translation>Visszaállítás megerősítése</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to reset all settings to default?</source>
+        <translation>Valóban visszaállítja az összes beállítást az alapértelmezésre?</translation>
+    </message>
+    <message>
+        <source>Import KeePassXC Settings</source>
+        <translation>KeePassXC-beállítások importálása</translation>
+    </message>
+    <message>
+        <source>Failed to import settings from %1, not a valid settings file.</source>
+        <translation>A beállítások importálása sikertelen, mivel a beállításfájl nem érvényes: %1.</translation>
+    </message>
+    <message>
+        <source>Export KeePassXC Settings</source>
+        <translation>KeePassXC-beállítások exportálása</translation>
+    </message>
+    <message>
+        <source>Small</source>
+        <translation>Kicsi</translation>
+    </message>
+    <message>
+        <source>Normal</source>
+        <translation>Normál</translation>
+    </message>
+    <message>
+        <source>Medium</source>
+        <translation>Közepes</translation>
+    </message>
+    <message>
+        <source>Large</source>
+        <translation>Nagy</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation>Egyéni</translation>
     </message>
 </context>
 <context>
@@ -281,25 +313,6 @@
         <translation>A frissítések keresése a béta kiadásokra is terjedjen ki</translation>
     </message>
     <message>
-        <source>On database unlock, show entries that </source>
-        <translation>Az adatbázis feloldásakor azon bejegyzések megjelenítése, amelyek</translation>
-    </message>
-    <message>
-        <source>have expired</source>
-        <comment>On database unlock, show entries that...</comment>
-        <translation>lejártak</translation>
-    </message>
-    <message>
-        <source> days</source>
-        <comment>On database unlock, show entries that will expire within %1 days</comment>
-        <translation> napon belül</translation>
-    </message>
-    <message>
-        <source>will expire within </source>
-        <comment>On database unlock, show entries that...</comment>
-        <translation>lejárnak </translation>
-    </message>
-    <message>
         <source>File Management</source>
         <translation>Fájlkezelés</translation>
     </message>
@@ -324,20 +337,8 @@
         <translation>Készüljön biztonsági mentés az adatbázisról mentés előtt</translation>
     </message>
     <message>
-        <source>Backup destination</source>
-        <translation>Biztonsági mentés célja</translation>
-    </message>
-    <message>
-        <source>Specifies the database backup file location. Occurrences of &quot;{DB_FILENAME}&quot; are replaced with the filename of the saved database without extension. {TIME:&lt;format&gt;} is replaced with the backup time, see https://doc.qt.io/qt-5/qdatetime.html#toString. &lt;format&gt; defaults to format string &quot;dd_MM_yyyy_hh-mm-ss&quot;.</source>
-        <translation>Megadja az adatbázis biztonsági mentési fájljának helyét. A „{DB_FILENAME}” le lesz cserélve a mentett adatbázis nevére, kiterjesztés nélkül. A {TIME:&lt;formátum&gt;} le lesz cserélve a biztonsági mentés idejére, lásd a következő oldalt: https://doc.qt.io/qt-5/qdatetime.html#toString. A &lt;formátum&gt; alapértelmezett értéke „dd_MM_yyyy_hh-mm-ss”.</translation>
-    </message>
-    <message>
         <source>{DB_FILENAME}.old.kdbx</source>
         <translation>{DB_FILENAME}.old.kdbx</translation>
-    </message>
-    <message>
-        <source>Choose...</source>
-        <translation>Válasszon…</translation>
     </message>
     <message>
         <source>Use alternative saving method (may solve problems with Dropbox, Google Drive, GVFS, etc.)</source>
@@ -361,7 +362,7 @@
     </message>
     <message>
         <source>Minimize when opening a URL</source>
-        <translation>Kicsinyítés URL megnyitásakor</translation>
+        <translation>Kis méret egy webcím megnyitásakor</translation>
     </message>
     <message>
         <source>Hide window when copying to clipboard</source>
@@ -377,7 +378,7 @@
     </message>
     <message>
         <source>Favicon download timeout:</source>
-        <translation>Favicon letöltési időtúllépés:</translation>
+        <translation>Weblapikonok letöltési időtúllépése:</translation>
     </message>
     <message>
         <source>Website icon download timeout in seconds</source>
@@ -430,7 +431,7 @@
     </message>
     <message>
         <source>Show a system tray icon</source>
-        <translation>Rendszertálca-ikon megjelenítése</translation>
+        <translation>Rendszertálcaikon megjelenítése</translation>
     </message>
     <message>
         <source>Tray icon type</source>
@@ -458,7 +459,7 @@
     </message>
     <message>
         <source>Use entry URL to match windows for global Auto-Type</source>
-        <translation>Bejegyzések URL-jének alkalmazása az ablakok illesztésénél a globális automatikus beírás számára. </translation>
+        <translation>Bejegyzések webcímének használata az ablakok illesztésénél a globális automatikus beírás számára</translation>
     </message>
     <message>
         <source>Always ask before performing Auto-Type</source>
@@ -504,6 +505,71 @@
     <message>
         <source>Remember last typed entry for:</source>
         <translation>Utolsó beírt bejegyzés megjegyzése ehhez:</translation>
+    </message>
+    <message>
+        <source>On database unlock, show entries that will expire within</source>
+        <translation>Az ennyi időn belül lejáró bejegyzések megjelenítése az adatbázis feloldásakor:</translation>
+    </message>
+    <message>
+        <source>On database unlock, show entries that will expire within </source>
+        <translation>Az ennyi időn belül lejáró bejegyzések megjelenítése az adatbázis feloldásakor:</translation>
+    </message>
+    <message>
+        <source> days</source>
+        <comment>number of days warning for password expiration</comment>
+        <translation> napon belül</translation>
+    </message>
+    <message>
+        <source>Destination format:</source>
+        <translation>Célformátum:</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;{DB_FILENAME}&lt;/span&gt; is replaced with the filename of the saved database without extension&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;{TIME:&amp;lt;format&amp;gt;}&lt;/span&gt; is replaced with the specified time format (default: dd_MM_yyyy_hh-mm-ss)&lt;/p&gt;&lt;p&gt;See the User Guide for more details&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A &lt;span style=&quot; font-weight:600;&quot;&gt;{DB_FILENAME}&lt;/span&gt; le lesz cserélve a mentett adatbázis kiterjesztés nélküli nevére&lt;/p&gt;&lt;p&gt;A &lt;span style=&quot; font-weight:600;&quot;&gt;{TIME:&amp;lt;format&amp;gt;}&lt;/span&gt; le lesz cserélve a megadott időformátumra (alapértelmezés: dd_MM_yyyy_hh-mm-ss)&lt;/p&gt;&lt;p&gt;További részletekért lásd a felhasználói útmutatót&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Choose folder...</source>
+        <translation>Válasszon mappát…</translation>
+    </message>
+    <message>
+        <source>Show confirmation before moving entries to recycle bin</source>
+        <translation>Megerősítés megjelenítése a bejegyzések kukába dobása előtt</translation>
+    </message>
+    <message>
+        <source>Copy data on double clicking field in entry view</source>
+        <translation>Adatok másolása a mezőre való dupla kattintásra bejegyzésnézetben</translation>
+    </message>
+    <message>
+        <source>Show toolbar</source>
+        <translation>Eszköztár megjelenítése</translation>
+    </message>
+    <message>
+        <source>Show the menu bar by pressing the Alt key</source>
+        <translation>A menü megjelenítése az Alt gomb lenyomásakor</translation>
+    </message>
+    <message>
+        <source>Show menubar</source>
+        <translation>Menü megjelenítése</translation>
+    </message>
+    <message>
+        <source>Import settings…</source>
+        <translation>Beállítások importálása…</translation>
+    </message>
+    <message>
+        <source>Export settings…</source>
+        <translation>Beállítások exportálása…</translation>
+    </message>
+    <message>
+        <source>Open browser on double clicking URL field in entry view</source>
+        <translation>Böngésző megnyitása az URL mezőre való dupla kattintásra bejegyzésnézetben</translation>
+    </message>
+    <message>
+        <source>Font size:</source>
+        <translation>Betűméret:</translation>
+    </message>
+    <message>
+        <source>Font size selection</source>
+        <translation>Betűméret kijelölése</translation>
     </message>
 </context>
 <context>
@@ -559,10 +625,6 @@
         <translation>Adatbázis zárolása az ablak lekicsinyítésekor</translation>
     </message>
     <message>
-        <source>Require password repeat when it is visible</source>
-        <translation>Jelszóismétlés szükséges látható jelszó esetén</translation>
-    </message>
-    <message>
         <source>Hide passwords when editing them</source>
         <translation>Jelszavak elrejtése szerkesztés alatt</translation>
     </message>
@@ -575,18 +637,6 @@
         <translation>Jelszavak elrejtése a bejegyzés előnézeti panelen</translation>
     </message>
     <message>
-        <source>Hide entry notes by default</source>
-        <translation>Bejegyzések jegyzeteinek elrejtése alapértelmezetten</translation>
-    </message>
-    <message>
-        <source>Move entries to recycle bin without confirmation</source>
-        <translation>Bejegyzések kukába dobása megerősítés nélkül.</translation>
-    </message>
-    <message>
-        <source>Enable double click to copy the username/password entry columns</source>
-        <translation>Dupla kattintás engedélyezése a felhasználónév/jelszó bejegyzésoszlopok másolására</translation>
-    </message>
-    <message>
         <source>Privacy</source>
         <translation>Adatvédelem</translation>
     </message>
@@ -597,6 +647,18 @@
     <message>
         <source>Hide TOTP in the entry preview panel</source>
         <translation>TOTP elrejtése a bejegyzés előnézeti panelen</translation>
+    </message>
+    <message>
+        <source>Lock databases when switching user</source>
+        <translation>Adatbázis zárolása felhasználóváltáskor</translation>
+    </message>
+    <message>
+        <source>Lock Options</source>
+        <translation>Zárolási beállítások</translation>
+    </message>
+    <message>
+        <source>Hide notes in the entry preview panel</source>
+        <translation>Jegyzetek elrejtése a bejegyzés-előnézeti panelen</translation>
     </message>
 </context>
 <context>
@@ -646,20 +708,6 @@
         <translation>A bejegyzés nem rendelkezik PICKCHARS attribútummal: %1</translation>
     </message>
     <message>
-        <source>Invalid conversion type: %1</source>
-        <translation>Érvénytelen átalakítási típus: %1</translation>
-    </message>
-    <message>
-        <source>Invalid conversion syntax: %1</source>
-        <translation>Érvénytelen átalakítási szintaxis: %1</translation>
-    </message>
-    <message>
-        <source>Invalid regular expression syntax %1
-%2</source>
-        <translation>Érvénytelen reguláriskifejezés-szintaxis %1
-%2</translation>
-    </message>
-    <message>
         <source>Invalid placeholder: %1</source>
         <translation>Érvénytelen helykitöltő: %1</translation>
     </message>
@@ -705,10 +753,6 @@
 <context>
     <name>AutoTypePlatformX11</name>
     <message>
-        <source>Trying to send invalid keysym.</source>
-        <translation>Kísérlet érvénytelen kulcsszó elküldésére.</translation>
-    </message>
-    <message>
         <source>Sequence aborted: Caps Lock is on</source>
         <translation>Sorrend megszakítva: a Caps Lock be van kapcsolva</translation>
     </message>
@@ -719,6 +763,10 @@
     <message>
         <source>Unable to get valid keycode for key: </source>
         <translation>Sikertelen érvényes kulcskód kérés a kulcshoz:</translation>
+    </message>
+    <message>
+        <source>Trying to send invalid keyboard symbol.</source>
+        <translation>Kísérlet érvénytelen billentyűzetszimbólum elküldésére.</translation>
     </message>
 </context>
 <context>
@@ -847,77 +895,78 @@ Válassza ki a helyes adatbázist a hitelesítő adatok mentéséhez.</translati
     </message>
     <message>
         <source>KeePassXC - Select Database</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC – Adatbázis kiválasztása</translation>
     </message>
 </context>
 <context>
     <name>BrowserPasskeysConfirmationDialog</name>
-    <message>
-        <source>KeePassXC: Passkey credentials</source>
-        <translation type="unfinished"/>
-    </message>
     <message>
         <source>Cancel</source>
         <translation>Mégse</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished"/>
+        <translation>Frissítés</translation>
     </message>
     <message>
         <source>Authenticate</source>
-        <translation type="unfinished"/>
+        <translation>Hitelesítés</translation>
     </message>
     <message>
         <source>Register new</source>
-        <translation type="unfinished"/>
+        <translation>Új regisztráció</translation>
     </message>
     <message>
         <source>Register</source>
-        <translation type="unfinished"/>
+        <translation>Regisztráció</translation>
     </message>
     <message numerus="yes">
         <source>Timeout in &lt;b&gt;%n&lt;/b&gt; seconds...</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Időkorlát &lt;b&gt;%n&lt;/b&gt; másodpercen belül...</numerusform><numerusform>Időkorlát &lt;b&gt;%n&lt;/b&gt; másodpercen belül...</numerusform></translation>
     </message>
     <message>
-        <source>Do you want to register Passkey for:</source>
-        <translation type="unfinished"/>
+        <source>Relying Party: %1</source>
+        <translation>Közvetítő fél: %1</translation>
     </message>
     <message>
-        <source>%1 (%2)</source>
-        <translation type="unfinished"/>
+        <source>Username: %1</source>
+        <translation>Felhasználónév: %1</translation>
     </message>
     <message>
-        <source>Existing Passkey found.
-Do you want to register a new Passkey for:</source>
-        <translation type="unfinished"/>
+        <source>KeePassXC - Passkey credentials</source>
+        <translation>KeePassXC – Jelkulcs hitelesítési adatai</translation>
     </message>
     <message>
-        <source>Select the existing Passkey and press Update to replace it.</source>
-        <translation type="unfinished"/>
+        <source>Add to existing entry</source>
+        <translation>Hozzáadás egy meglévő bejegyzéshez</translation>
     </message>
     <message>
-        <source>Authenticate Passkey credentials for:</source>
-        <translation type="unfinished"/>
+        <source>Existing passkey found.
+Do you want to register a new passkey for:</source>
+        <translation>Létező jelkulcs található.
+Regisztrál ehhez egy új jelkulcsot:</translation>
+    </message>
+    <message>
+        <source>Select the existing passkey and press Update to replace it.</source>
+        <translation>Válassza ki a jelenlegi jelkulcsot, és nyomja meg a Frissítést a cseréjéhez.</translation>
+    </message>
+    <message>
+        <source>Authenticate passkey credentials for:</source>
+        <translation>A jelkulcs hitelesítési adatainak használata ehhez:</translation>
+    </message>
+    <message>
+        <source>Do you want to register a passkey for:</source>
+        <translation>Ehhez szeretne jelkulcsot regisztrálni:</translation>
     </message>
 </context>
 <context>
     <name>BrowserService</name>
-    <message>
-        <source>KeePassXC: Create a new group</source>
-        <translation>KeePassXC: Új csoport létrehozása</translation>
-    </message>
     <message>
         <source>A request for creating a new group &quot;%1&quot; has been received.
 Do you want to create this group?
 </source>
         <translation>Az új „%1” csoport létrehozási kérése fogadva.
 Biztos, hogy létrehozza ezt a csoportot?</translation>
-    </message>
-    <message>
-        <source>KeePassXC: New key association request</source>
-        <translation>KeePassXC: Új kulcstársítási kérés</translation>
     </message>
     <message>
         <source>You have received an association request for the following database:
@@ -936,26 +985,14 @@ A kapcsolatnak egy olyan egyedi nevet, ill. azonosítót szükség adni, mint am
         <translation>Engedélyezési hozzáférés mentése</translation>
     </message>
     <message>
-        <source>KeePassXC: Overwrite existing key?</source>
-        <translation>KeePassXC: Felülírja a létező kulcsot?</translation>
-    </message>
-    <message>
         <source>A shared encryption key with the name &quot;%1&quot; already exists.
 Do you want to overwrite it?</source>
         <translation>Létezik már egy megosztott titkosítási kulcs ezzel a névvel: „%1”.
 Valóban felülírható?</translation>
     </message>
     <message>
-        <source>KeePassXC: Update Entry</source>
-        <translation>KeePassXC: Bejegyzés frissítése</translation>
-    </message>
-    <message>
         <source>Do you want to update the information in %1 - %2?</source>
         <translation>Frissíti az információt ebben: %1 – %2?</translation>
-    </message>
-    <message>
-        <source>KeePassXC: Delete entry</source>
-        <translation>KeePassXC: Bejegyzés törlése</translation>
     </message>
     <message>
         <source>A request for deleting entry &quot;%1&quot; has been received.
@@ -966,7 +1003,57 @@ Valóban törli a bejegyzést?</translation>
     </message>
     <message>
         <source>%1 (Passkey)</source>
-        <translation type="unfinished"/>
+        <translation>%1 (jelkulcs)</translation>
+    </message>
+    <message>
+        <source>KeePassXC - Create a new group</source>
+        <translation>KeePassXC – Új csoport létrehozása</translation>
+    </message>
+    <message>
+        <source>Disable</source>
+        <translation>Letiltás</translation>
+    </message>
+    <message>
+        <source>KeePassXC - Overwrite existing key?</source>
+        <translation>KeePassXC – Felülírja a meglévő kulcsot?</translation>
+    </message>
+    <message>
+        <source>KeePassXC - Update Entry</source>
+        <translation>KeePassXC – Bejegyzés frissítése</translation>
+    </message>
+    <message>
+        <source>KeePassXC - Delete entry</source>
+        <translation>KeePassXC – Bejegyzés törlése</translation>
+    </message>
+    <message>
+        <source>KeePassXC - New key association request</source>
+        <translation>KeePassXC – Új kulcshozzárendelési kérés</translation>
+    </message>
+    <message>
+        <source>Passkey</source>
+        <translation>Jelkulcso</translation>
+    </message>
+    <message>
+        <source>KeePassXC - Passkey credentials</source>
+        <translation>KeePassXC – Jelkulcs hitelesítési adatai</translation>
+    </message>
+    <message>
+        <source>Register a new passkey to this entry:</source>
+        <translation>Új jelkulcs regisztrálása ehhez a bejegyzéshez:</translation>
+    </message>
+    <message>
+        <source>KeePassXC - Update passkey</source>
+        <translation>KeePassXC – Jelkulcs frissítése</translation>
+    </message>
+    <message>
+        <source>Entry already has a passkey.
+Do you want to overwrite the passkey in %1 - %2?</source>
+        <translation>A bejegyzéshez már tartozik jelkulcs.
+Felülírja az itt található jelkulcsot: %1 – %2?</translation>
+    </message>
+    <message>
+        <source>Register</source>
+        <translation>Regisztráció</translation>
     </message>
 </context>
 <context>
@@ -986,10 +1073,6 @@ Valóban törli a bejegyzést?</translation>
     <message>
         <source>General</source>
         <translation>Általános</translation>
-    </message>
-    <message>
-        <source>Browsers installed as snaps are currently not supported.</source>
-        <translation>A snappal telepített böngészők jelenleg nem támogatottak. </translation>
     </message>
     <message>
         <source>Enable integration for these browsers:</source>
@@ -1038,11 +1121,11 @@ Valóban törli a bejegyzést?</translation>
     </message>
     <message>
         <source>Match URL scheme (e.g., https://example.com)</source>
-        <translation>URL sémákra illeszkedés (pl. https://példa.com)</translation>
+        <translation>Webcímsémákra illeszkedés (például https://example.com)</translation>
     </message>
     <message>
         <source>Only returns the best matches for a specific URL instead of all entries for the whole domain.</source>
-        <translation>Egy konkrét URL-hez tartozó legjobb találatokat adja vissza, a teljes domainhoz tartozó összes bejegyzés helyett.</translation>
+        <translation>Egy konkrét webcímhez tartozó legjobb találatokat adja vissza, a teljes domainhoz tartozó összes bejegyzés helyett.</translation>
     </message>
     <message>
         <source>Return only best-matching credentials</source>
@@ -1082,7 +1165,7 @@ Valóban törli a bejegyzést?</translation>
     <message>
         <source>Do not ask permission for HTTP Basic Auth</source>
         <extracomment>An extra HTTP Basic Auth setting</extracomment>
-        <translation>Ne kérjen engedélyt a HTTP Basic Auth számára</translation>
+        <translation>Ne kérjen engedélyt a HTTP Basic hitelesítés számára</translation>
     </message>
     <message>
         <source>Automatically creating or updating string fields is not supported.</source>
@@ -1163,18 +1246,6 @@ Valóban törli a bejegyzést?</translation>
         <translation>Egyéni kiterjesztésazonosító</translation>
     </message>
     <message>
-        <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
-        <translation>A Snap homokozó miatt egy parancsfájlt kell futtatni a böngészőintegráció engedélyezéséhez.&lt;br /&gt;Ezt innen szerezheti be: %1</translation>
-    </message>
-    <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3. %4</source>
-        <translation>A böngészőintegráció működéséhez a KeePassXC-böngészőre van szükség. &lt;br /&gt;Letölthető ezen böngészőkre: %1, %2, %3, 4%</translation>
-    </message>
-    <message>
-        <source>Please see special instructions for browser extension use below</source>
-        <translation>Olvassa el a böngészőkiegészítő használatáról szóló különleges utasításokat alább</translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation>Végrehajtható fájlok</translation>
     </message>
@@ -1214,6 +1285,22 @@ Valóban törli a bejegyzést?</translation>
         <source>&lt;b&gt;Error:&lt;/b&gt; The installed proxy executable is missing from the expected location: %1&lt;br/&gt;Please set a custom proxy location in the advanced settings or reinstall the application.</source>
         <translation>&lt;b&gt;Hiba:&lt;/b&gt; A telepített proxy futtatható fájl hiányzik a várt helyről: %1&lt;br/&gt; Kérjük, állítson be egy egyéni proxy-helyet a Speciális beállításokban, vagy telepítse újra az alkalmazást.</translation>
     </message>
+    <message>
+        <source>Allows using insecure http://localhost with passkeys for testing purposes.</source>
+        <translation>A nem biztonságos http://localhost engedélyezése a jelkulcsokkal tesztelési célokból.</translation>
+    </message>
+    <message>
+        <source>Allow using localhost with passkeys</source>
+        <translation>Localhost használatának engedélyezése a jelkulcsokkal</translation>
+    </message>
+    <message>
+        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
+        <translation>A böngészőintegráció működéséhez a KeePassXC-böngészőre van szükség. &lt;br /&gt;Letölthető ezen böngészőkre: %1, %2 és %3.</translation>
+    </message>
+    <message>
+        <source>Browsers installed using Snap or Flatpak are not supported with exception to Firefox installed using Snap.</source>
+        <translation>A Snap vagy Flatpak segítségével telepített böngészők nem támogatottak, kivéve a Snap által telepített Firefoxot.</translation>
+    </message>
 </context>
 <context>
     <name>CloneDialog</name>
@@ -1236,14 +1323,6 @@ Valóban törli a bejegyzést?</translation>
 </context>
 <context>
     <name>CsvImportWidget</name>
-    <message>
-        <source>Import CSV fields</source>
-        <translation>CSV-mezők importálása</translation>
-    </message>
-    <message>
-        <source>filename</source>
-        <translation>fájlnév</translation>
-    </message>
     <message>
         <source>size, rows, columns</source>
         <translation>méret, sorok, oszlopok</translation>
@@ -1270,7 +1349,7 @@ Valóban törli a bejegyzést?</translation>
     </message>
     <message>
         <source>URL</source>
-        <translation>URL</translation>
+        <translation>Webcím</translation>
     </message>
     <message>
         <source>Notes</source>
@@ -1352,50 +1431,43 @@ Valóban törli a bejegyzést?</translation>
         <source>Column %1</source>
         <translation>%1. oszlop</translation>
     </message>
-    <message>
-        <source>Imported from CSV file</source>
-        <translation>CSV-fájlból importálva</translation>
-    </message>
-    <message>
-        <source>Original data: </source>
-        <translation>Eredeti adatok:</translation>
-    </message>
-    <message>
-        <source>Error(s) detected in CSV file!</source>
-        <translation>Hibák találhatók a CSV-fájlban!</translation>
-    </message>
     <message numerus="yes">
         <source>[%n more message(s) skipped]</source>
         <translation><numerusform>[%n további üzenet mellőzve]</numerusform><numerusform>[%n további üzenet mellőzve]</numerusform></translation>
     </message>
     <message>
-        <source>Error</source>
-        <translation>Hiba</translation>
+        <source>Failed to parse CSV file: %1</source>
+        <translation>A CSV-fájl feldolgozása sikertelen: %1</translation>
     </message>
     <message>
-        <source>CSV import: writer has errors:
-%1</source>
-        <translation>CSV importálás: a mentés hibába ütközött:
-%1</translation>
+        <source>Imported from CSV file: %1</source>
+        <translation>CSV-fájlból importálva: %1</translation>
+    </message>
+    <message>
+        <source>No Title Selected</source>
+        <translation>Nincs cím kiválasztva</translation>
+    </message>
+    <message>
+        <source>No title column was selected, entries will be hard to tell apart.
+Are you sure you want to import?</source>
+        <translation>Nincs címoszlop kiválasztva, a bejegyzéseket nehéz lesz megkülönböztetni.
+Valóban importálja?</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation>Címkék</translation>
     </message>
 </context>
 <context>
     <name>CsvParserModel</name>
-    <message>
-        <source>%1, %2, %3</source>
-        <comment>file info: bytes, rows, columns</comment>
-        <translation>%1, %2, %3</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n byte(s)</source>
-        <translation><numerusform>%n bájt</numerusform><numerusform>%n bájt</numerusform></translation>
-    </message>
     <message numerus="yes">
         <source>%n row(s)</source>
+        <comment>CSV row count</comment>
         <translation><numerusform>%n sor</numerusform><numerusform>%n sor</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n column(s)</source>
+        <comment>CSV column count</comment>
         <translation><numerusform>%n oszlop</numerusform><numerusform>%n oszlop</numerusform></translation>
     </message>
 </context>
@@ -1448,6 +1520,14 @@ Az adatbázis biztonsági másolata:  %2</translation>
         <source>Recycle Bin</source>
         <translation>Kuka</translation>
     </message>
+    <message>
+        <source>Database file read error.</source>
+        <translation>Adatbázisfájl olvasási hiba.</translation>
+    </message>
+    <message>
+        <source>No file path was provided.</source>
+        <translation>Nem volt fájlútvonal megadva.</translation>
+    </message>
 </context>
 <context>
     <name>DatabaseOpenDialog</name>
@@ -1471,38 +1551,8 @@ Az adatbázis biztonsági másolata:  %2</translation>
         <translation>Jelszó mező</translation>
     </message>
     <message>
-        <source>Enter Additional Credentials (if any):</source>
-        <translation>További hitelesítési adatok megadása (ha vannak):</translation>
-    </message>
-    <message>
-        <source>Key File:</source>
-        <translation>Kulcsfájl:</translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;A mesterkulcs mellett egy titkos fájlt is használhat, hogy javítsa az adatbázisa biztonságát. Ez a fájl az adatbázis biztonsági beállításaiban állítható elő.&lt;/p&gt;&lt;p&gt;Ez &lt;strong&gt;nem&lt;/strong&gt; a *.kdbx adatbázisfájlja!&lt;br&gt;Ha nincs kulcsfájlja, akkor hagyja üresen ezt a mezőt.&lt;/p&gt;&lt;p&gt;Kattintson a további információkért…&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <source>Key file help</source>
-        <translation>Kulcsfájlok súgója</translation>
-    </message>
-    <message>
         <source>Hardware key slot selection</source>
         <translation>Hardverkulcsfoglalat kijelölése</translation>
-    </message>
-    <message>
-        <source>Hardware Key:</source>
-        <translation>Hardverkulcs:</translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;A &lt;strong&gt;YubiKey&lt;/strong&gt; vagy az &lt;strong&gt;OnlyKey&lt;/strong&gt; biztonsági hardverkulcsok alkalmazhatóak a HMAC-SHA1-re konfigurált foglalattal.&lt;/p&gt;
-&lt;p&gt;További információk…&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <source>Hardware key help</source>
-        <translation>Hardverkulcs súgó</translation>
     </message>
     <message>
         <source>Key file to unlock the database</source>
@@ -1515,14 +1565,6 @@ Az adatbázis biztonsági másolata:  %2</translation>
     <message>
         <source>Browse…</source>
         <translation>Tallózás…</translation>
-    </message>
-    <message>
-        <source>Refresh hardware tokens</source>
-        <translation>Hardveres jelsorok frissítése</translation>
-    </message>
-    <message>
-        <source>Refresh</source>
-        <translation>Frissítés</translation>
     </message>
     <message>
         <source>Unlock Database</source>
@@ -1619,29 +1661,68 @@ Ezen hiba megjelenése megelőzhető az Adatbázis-beállítások → Biztonság
         <translation>Adatbázisfájl nem használható kulcsfájlként</translation>
     </message>
     <message>
-        <source>You cannot use your database file as a key file.
-If you do not have a key file, please leave the field empty.</source>
-        <translation>Nem használhatja az adatbázisfájlt kulcsfájlként. Ha nincs kulcsfájlja, akkor hagyja üresen a mezőt.</translation>
-    </message>
-    <message>
-        <source>Detecting hardware keys…</source>
-        <translation>Hardverkulcsok felismerése…</translation>
-    </message>
-    <message>
-        <source>No hardware keys detected</source>
-        <translation>Nincsenek felismert hardverkulcsok.</translation>
-    </message>
-    <message>
-        <source>Select hardware key…</source>
-        <translation>Hardverkulcs kijelölése…</translation>
-    </message>
-    <message>
         <source>authenticate to access the database</source>
         <translation>hitelesítsen az adatbázis eléréséhez</translation>
     </message>
     <message>
         <source>Failed to authenticate with Quick Unlock: %1</source>
-        <translation type="unfinished"/>
+        <translation>Nem sikerült a hitelesítés a Gyors feloldással: %1</translation>
+    </message>
+    <message>
+        <source>Select Key File:</source>
+        <translation>Kulcsfájl kiválasztása:</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;/p&gt;</source>
+        <translation>&lt;p&gt;A jelszó mellett egy titkos fájlt is használhat, hogy növelje az adatbázisa biztonságát. Ez a fájl az adatbázis biztonsági beállításaiban állítható elő.&lt;/p&gt;&lt;p&gt;Ez &lt;strong&gt;nem&lt;/strong&gt; a *.kdbx adatbázisfájlja!</translation>
+    </message>
+    <message>
+        <source>Use hardware key [Serial: %1]</source>
+        <translation>Hardverkulcs használata [Sorozatszám: %1]</translation>
+    </message>
+    <message>
+        <source>Use hardware key</source>
+        <translation>Hardverkulcs használata</translation>
+    </message>
+    <message>
+        <source>Your database file is NOT a key file!
+If you don&apos;t have a key file or don&apos;t know what that is, you don&apos;t have to select one.</source>
+        <translation>Az adatbázisa NEM kulcsfájl.
+Ha nincs kulcsfájlja, vagy nem tudja mi az, akkor nem kell kiválasztania.</translation>
+    </message>
+    <message>
+        <source>KeePassXC database file selected</source>
+        <translation>KeePassXC adatbázisfájl kiválasztva</translation>
+    </message>
+    <message>
+        <source>The file you selected looks like a database file.
+A database file is NOT a key file!
+
+Are you sure you want to continue with this file?.</source>
+        <translation>A kiválasztott fájl adatbázisfájlnak tűnik.
+Az adatbázis NEM egy kulcsfájl.
+
+Valóban folytatja ezzel a fájllal?</translation>
+    </message>
+    <message>
+        <source>No hardware keys found.</source>
+        <translation>Nem találhatók hardverkulcsok</translation>
+    </message>
+    <message>
+        <source>Refresh Hardware Keys</source>
+        <translation>Hardverkulcsok frissítése</translation>
+    </message>
+    <message>
+        <source>Click to add a key file.</source>
+        <translation>Kattintson egy kulcsfájl hozzáadásához.</translation>
+    </message>
+    <message>
+        <source>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;I have a key file&lt;/a&gt;</source>
+        <translation>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;Van kulcsfájlom&lt;/a&gt;</translation>
+    </message>
+    <message>
+        <source>Hardware keys found, but no slots are configured.</source>
+        <translation>A hardverkulcs megtalálva, de a foglalatok nincsenek beállítva.</translation>
     </message>
 </context>
 <context>
@@ -1676,6 +1757,22 @@ If you do not have a key file, please leave the field empty.</source>
     <message>
         <source>Maintenance</source>
         <translation>Karbantartás</translation>
+    </message>
+    <message>
+        <source>KeeShare</source>
+        <translation>KeeShare</translation>
+    </message>
+    <message>
+        <source>Secret Service Integration</source>
+        <translation>Titkosító szolgáltatás integrációja</translation>
+    </message>
+    <message>
+        <source>Remote Sync</source>
+        <translation>Távoli szinkronizálás</translation>
+    </message>
+    <message>
+        <source>Database Settings: %1</source>
+        <translation>Adatbázis-beállítások: %1</translation>
     </message>
 </context>
 <context>
@@ -1745,16 +1842,8 @@ This may prevent connection to the browser plugin.</source>
 Ez megakadályozhatja a böngésző bővítményhez történő kapcsolódást.</translation>
     </message>
     <message>
-        <source>KeePassXC: No keys found</source>
-        <translation>KeePassXC: Nincs találat a kulcsok között</translation>
-    </message>
-    <message>
         <source>No shared encryption keys found in KeePassXC settings.</source>
         <translation>Nem található megosztott titkosítási kulcs a KeePassXC beállításaiban.</translation>
-    </message>
-    <message>
-        <source>KeePassXC: Removed keys from database</source>
-        <translation>KeePassXC: Kulcsok eltávolítva az adatbázisból</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
@@ -1774,17 +1863,9 @@ A bejegyzések elérési engedélyei vissza lesznek vonva. </translation>
         <source>Abort</source>
         <translation>Megszakítás</translation>
     </message>
-    <message>
-        <source>KeePassXC: Removed permissions</source>
-        <translation>KeePassXC: Jogosultságok eltávolítva</translation>
-    </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
         <translation><numerusform>Sikeresen el lett távolítva a jogosultság %n elemről.</numerusform><numerusform>Sikeresen el lett távolítva a jogosultság %n elemről.</numerusform></translation>
-    </message>
-    <message>
-        <source>KeePassXC: No entry with permissions found!</source>
-        <translation>KeePassXC: Nem található bejegyzés ilyen jogosultsággal!</translation>
     </message>
     <message>
         <source>The active database does not contain an entry with permissions.</source>
@@ -1799,6 +1880,26 @@ A bejegyzések elérési engedélyei vissza lesznek vonva. </translation>
 This is only necessary if your database is a copy of another and the browser extension cannot connect.</source>
         <translation>Valóban frissíthető az adatbázis-azonosító?
 Erre csak akkor lehet szükség, ha az adatbázis egy másik másolata és a böngésző kiterjesztés nem tud kapcsolódni.</translation>
+    </message>
+    <message>
+        <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
+        <translation>Az örökölt KeePassHTTP attribútumok konvertálása KeePassXC-böngésző kompatibilis egyéni adatokká</translation>
+    </message>
+    <message>
+        <source>No keys found</source>
+        <translation>Nem találhatók kulcsok</translation>
+    </message>
+    <message>
+        <source>Removed keys from database</source>
+        <translation>A kulcsok eltávolítva az adatbázisból</translation>
+    </message>
+    <message>
+        <source>Removed permissions</source>
+        <translation>Engedélyek eltávolítva</translation>
+    </message>
+    <message>
+        <source>No entry with permissions found!</source>
+        <translation> Nincs bejegyzés ilyen jogosultsággal!</translation>
     </message>
 </context>
 <context>
@@ -1838,6 +1939,18 @@ Valóban jelszó nélkül folytatja?</translation>
     <message>
         <source>Failed to change database credentials</source>
         <translation>Az adatbázis hitelesítési adatainak módosítása sikertelen</translation>
+    </message>
+    <message>
+        <source>Weak password</source>
+        <translation>Gyenge jelszó</translation>
+    </message>
+    <message>
+        <source>This is a weak password! For better protection of your secrets, you should choose a stronger password.</source>
+        <translation>Ez egy gyenge jelszó! A titkai jobb védelme érdekében adjon meg erősebb jelszót.</translation>
+    </message>
+    <message>
+        <source>The provided password does not meet the minimum quality requirement.</source>
+        <translation>A megadott jelszó nem felel meg a minimális minőségi elvárásoknak.</translation>
     </message>
 </context>
 <context>
@@ -2140,6 +2253,50 @@ kerülnek az adatbázisból.</translation>
         <source>Autosave delay since last change checkbox</source>
         <translation>Automatikus mentési késleltetés az utolsó módosítás óta jelölőnégyzet</translation>
     </message>
+    <message>
+        <source>Public Database Metadata</source>
+        <translation>Nyilvános adatbázis-metaadatok</translation>
+    </message>
+    <message>
+        <source>Warning: the following settings are not encrypted.</source>
+        <translation>Figyelmeztetés: a következő beállítások nincsenek titkosítva.</translation>
+    </message>
+    <message>
+        <source>Display name:</source>
+        <translation>Megjelenítendő név:</translation>
+    </message>
+    <message>
+        <source>Publically visible display name used on the unlock dialog</source>
+        <translation>Nyilvánosan látható megjelenítendő név, amely a feloldási párbeszédablakon használatos</translation>
+    </message>
+    <message>
+        <source>Database public display name</source>
+        <translation>Adatbázis nyilvános megjelenítendő neve</translation>
+    </message>
+    <message>
+        <source>Display color:</source>
+        <translation>Megjelenítendő szín:</translation>
+    </message>
+    <message>
+        <source>Publically visible color used on the unlock dialog</source>
+        <translation>Nyilvánosan látható szín, amely a feloldási párbeszédablakon használatos</translation>
+    </message>
+    <message>
+        <source>Database public display color chooser</source>
+        <translation>Adatbázis nyilvános megjelenítendő színének választója</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation>Törlés</translation>
+    </message>
+    <message>
+        <source>Display icon:</source>
+        <translation>Megjelenítendő ikon:</translation>
+    </message>
+    <message>
+        <source>Select Database Icon</source>
+        <translation>Válasszon adatbázisikont</translation>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetKeeShare</name>
@@ -2236,6 +2393,141 @@ kerülnek az adatbázisból.</translation>
     </message>
 </context>
 <context>
+    <name>DatabaseSettingsWidgetRemote</name>
+    <message>
+        <source>Sync Commands</source>
+        <translation>Szinkronizálási parancs</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Eltávolítás</translation>
+    </message>
+    <message>
+        <source>Command Settings</source>
+        <translation>Parancsbeállítások</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Név</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Mentés</translation>
+    </message>
+    <message>
+        <source>Download</source>
+        <translation>Letöltés</translation>
+    </message>
+    <message>
+        <source>Command:</source>
+        <translation>Parancs:</translation>
+    </message>
+    <message>
+        <source>Download command field</source>
+        <translation>Letöltő parancs mező</translation>
+    </message>
+    <message>
+        <source>e.g.: &quot;sftp user@hostname&quot; or &quot;scp user@hostname:DatabaseOnRemote.kdbx {TEMP_DATABASE}&quot;</source>
+        <translation>pl.: „sftp felhasznalo@kiszolgalo” vagy „scp felhasznalo@kiszolgalo:TavoliAdatbazis.kdbx {TEMP_DATABASE}”</translation>
+    </message>
+    <message>
+        <source>Input:</source>
+        <translation>Bemenet:</translation>
+    </message>
+    <message>
+        <source>Download input field</source>
+        <translation>Letöltő bemeneti mező</translation>
+    </message>
+    <message>
+        <source>Upload</source>
+        <translation>Feltöltés</translation>
+    </message>
+    <message>
+        <source>Upload command field</source>
+        <translation>Feltöltő parancs mező</translation>
+    </message>
+    <message>
+        <source>e.g.: &quot;sftp user@hostname&quot; or &quot;scp {TEMP_DATABASE} user@hostname:DatabaseOnRemote.kdbx&quot;</source>
+        <translation>pl.: „sftp felhasznalo@kiszolgalo” vagy „scp {TEMP_DATABASE}felhasznalo@kiszolgalo:TavoliAdatbazis.kdbx”</translation>
+    </message>
+    <message>
+        <source>Upload input field</source>
+        <translation>Feltöltő bemeneti mező</translation>
+    </message>
+    <message>
+        <source>Name cannot be empty.</source>
+        <translation>A név nem lehet üres.</translation>
+    </message>
+    <message>
+        <source>Test</source>
+        <translation>Tesztelés</translation>
+    </message>
+    <message>
+        <source>Download command cannot be empty.</source>
+        <translation>A letöltő parancs nem lehet üres.</translation>
+    </message>
+    <message>
+        <source>Download failed with error: %1</source>
+        <translation>A letöltés hibába ütközött: %1</translation>
+    </message>
+    <message>
+        <source>Download finished, but file %1 could not be found.</source>
+        <translation>A letöltés sikeres, de a fájl nem található: %1.</translation>
+    </message>
+    <message>
+        <source>Download successful.</source>
+        <translation>Letöltés sikeres.</translation>
+    </message>
+    <message>
+        <source>Save Remote Settings</source>
+        <translation>Távoli beállítások mentése</translation>
+    </message>
+    <message>
+        <source>You have unsaved changes. Do you want to save them?</source>
+        <translation>El nem mentett módosítások vannak. Szeretné elmenteni őket?</translation>
+    </message>
+    <message>
+        <source>e.g.:
+get DatabaseOnRemote.kdbx {TEMP_DATABASE}
+exit
+---
+{TEMP_DATABASE} is used as placeholder to store the database in a temporary location
+The command has to exit. In case of `sftp` as last command `exit` has to be sent
+            </source>
+        <translation>pl.:
+get TavoliAdatbazis.kdbx {TEMP_DATABASE}
+exit
+---
+{TEMP_DATABASE} helyőrzőként szolgál az adatbázis ideiglenes helyen történő tárolására.
+A parancsnak ki kell lépnie, ezért az „sftp” esetében utolsó parancsként az „exit” parancsot el kell küldeni.
+            </translation>
+    </message>
+    <message>
+        <source>e.g.:
+put {TEMP_DATABASE} DatabaseOnRemote.kdbx
+exit
+---
+{TEMP_DATABASE} is used as placeholder to store the database in a temporary location
+The command has to exit. In case of `sftp` as last command `exit` has to be sent
+            </source>
+        <translation>pl.:
+put {TEMP_DATABASE} TavoliAdatbazis.kdbx
+exit
+---
+{TEMP_DATABASE} helyőrzőként szolgál az adatbázis ideiglenes helyen történő tárolására.
+A parancsnak ki kell lépnie, ezért az „sftp” esetében utolsó parancsként az „exit” parancsot el kell küldeni.
+            </translation>
+    </message>
+    <message>
+        <source>Timeout:</source>
+        <translation>Időtúllépés:</translation>
+    </message>
+    <message>
+        <source> seconds</source>
+        <translation>másodperc</translation>
+    </message>
+</context>
+<context>
     <name>DatabaseTabWidget</name>
     <message>
         <source>Database creation error</source>
@@ -2268,24 +2560,8 @@ Ez határozottan hiba, jelentse a fejlesztőknek.</translation>
         <translation>CSV-fájl</translation>
     </message>
     <message>
-        <source>Select CSV file</source>
-        <translation>Válasszon CSV-fájlt</translation>
-    </message>
-    <message>
         <source>Merge database</source>
         <translation>Adatbázis egyesítése</translation>
-    </message>
-    <message>
-        <source>KeePass 1 database</source>
-        <translation>KeePass 1 adatbázis</translation>
-    </message>
-    <message>
-        <source>Open KeePass 1 database</source>
-        <translation>KeePass 1 adatbázis megnyitása</translation>
-    </message>
-    <message>
-        <source>Open OPVault</source>
-        <translation>OPVault megnyitása</translation>
     </message>
     <message>
         <source>Export database to CSV file</source>
@@ -2320,18 +2596,14 @@ Ez határozottan hiba, jelentse a fejlesztőknek.</translation>
         <translation>Az adatbázis nem titkosított fájlba lesz exportálva. Így sebezhetőek lesznek a jelszavak és más érzékeny információk. Valóban folytatható a művelet?</translation>
     </message>
     <message>
-        <source>New Database</source>
-        <translation>Új adatbázis</translation>
-    </message>
-    <message>
-        <source>%1 [New Database]</source>
-        <comment>Database tab name modifier</comment>
-        <translation>%1 [Új adatbázis]</translation>
-    </message>
-    <message>
         <source>%1 [Locked]</source>
         <comment>Database tab name modifier</comment>
         <translation>%1 [Zárolva]</translation>
+    </message>
+    <message>
+        <source>%1 [Temporary]</source>
+        <comment>Database tab name modifier</comment>
+        <translation>%1 [Ideiglenes]</translation>
     </message>
 </context>
 <context>
@@ -2457,26 +2729,6 @@ Menti a változásokat?</translation>
         <translation>A fájl módosult</translation>
     </message>
     <message>
-        <source>The database file has changed. Do you want to load the changes?</source>
-        <translation>Az adatbázisfájl módosult. Betölti a módosításokat? </translation>
-    </message>
-    <message>
-        <source>Merge Request</source>
-        <translation>Egyesítési kérelem</translation>
-    </message>
-    <message>
-        <source>The database file has changed and you have unsaved changes.
-Do you want to merge your changes?</source>
-        <translation>Az adatbázisfájl módosult és vannak nem mentett változások. 
-Egyesíti a módosításokat?</translation>
-    </message>
-    <message>
-        <source>Could not open the new database file while attempting to autoreload.
-Error: %1</source>
-        <translation>Nem lehet megnyitni az új adatbázisfájlt egy újranyitási kísérlet közben.
-Hiba: %1</translation>
-    </message>
-    <message>
         <source>Disable safe saves?</source>
         <translation>Letiltható a biztonságos mentés?</translation>
     </message>
@@ -2518,6 +2770,95 @@ Letiltható a biztonságos mentés és úgy megkísérelhető a mentés?</transl
         <source>Could not find database file: %1</source>
         <translation>Az adatbázis-fájl nem található: %1</translation>
     </message>
+    <message>
+        <source>New Database</source>
+        <translation>Új adatbázis</translation>
+    </message>
+    <message>
+        <source>%1 [New Database]</source>
+        <comment>Database tab name modifier</comment>
+        <translation>%1 [Új adatbázis]</translation>
+    </message>
+    <message>
+        <source>Remote Sync did not contain any download or upload commands.</source>
+        <translation>A távoli szinkronizálás nem tartalmazott le- vagy feltöltési parancsokat.</translation>
+    </message>
+    <message>
+        <source>Remote sync &apos;%1&apos; completed successfully!</source>
+        <translation>A távoli szinkronizálás sikeresen befejeződött: %1!</translation>
+    </message>
+    <message>
+        <source>Remote sync &apos;%1&apos; failed: %2</source>
+        <translation>A távoli szinkronizálás (%1) sikertelen: %2</translation>
+    </message>
+    <message>
+        <source>Error while saving database %1: %2</source>
+        <translation>Hiba az adatbázis (%1) mentése közben: %2</translation>
+    </message>
+    <message>
+        <source>Downloading...</source>
+        <translation>Letöltés…</translation>
+    </message>
+    <message>
+        <source>Uploading...</source>
+        <translation>Feltöltés…</translation>
+    </message>
+    <message>
+        <source>Syncing...</source>
+        <translation>Szinkronizálás…</translation>
+    </message>
+    <message>
+        <source>Remove passkey from entry</source>
+        <translation>Jelkulcs eltávolítása a bejegyzésből</translation>
+    </message>
+    <message>
+        <source>Do you want to remove the passkey from this entry?</source>
+        <translation>Valóban eltávolítja a jelkulcsot ebből a bejegyzésből?</translation>
+    </message>
+    <message>
+        <source>The database file &quot;%1&quot; was modified externally</source>
+        <translation>A(z) „%1” adatbázisfájl kívülről lett módosítva</translation>
+    </message>
+    <message>
+        <source>Do you want to load the changes?</source>
+        <translation>Betölti a módosításokat? </translation>
+    </message>
+    <message>
+        <source>Reload database</source>
+        <translation>Adatbázis újratöltése</translation>
+    </message>
+    <message>
+        <source>Reloading database…</source>
+        <translation>Adatbázis újratöltése…</translation>
+    </message>
+    <message>
+        <source>Reload canceled</source>
+        <translation>Újratöltés megszakítva</translation>
+    </message>
+    <message>
+        <source>Reload successful</source>
+        <translation>Újratöltés sikeres</translation>
+    </message>
+    <message>
+        <source>Reload pending user action…</source>
+        <translation>Függőben lévő felhasználói művelet újratöltése…</translation>
+    </message>
+    <message>
+        <source>The database file &quot;%1&quot; was modified externally.&lt;br&gt;How would you like to proceed?&lt;br&gt;&lt;br&gt;Merge all changes&lt;br&gt;Ignore the changes on disk until save&lt;br&gt;Discard unsaved changes</source>
+        <translation>A(z) „%1” adatbázisfájl külsőleg módosítva volt.&lt;br&gt;Hogyan folytatja?&lt;br&gt;&lt;br&gt;Összes módosítás egyesítése&lt;br&gt;A módosítások figyelmen kívül hagyása a lemezre mentésig&lt;br&gt;Mentetlen módosítások elvetése </translation>
+    </message>
+    <message>
+        <source>The database file &quot;%1&quot; was modified externally.&lt;br&gt;How would you like to proceed?&lt;br&gt;&lt;br&gt;Merge all changes then save&lt;br&gt;Overwrite the changes on disk&lt;br&gt;Discard unsaved changes</source>
+        <translation>A(z) „%1” adatbázisfájl külsőleg módosítva volt.&lt;br&gt;Hogyan folytatja?&lt;br&gt;&lt;br&gt;Összes módosítás egyesítése, majd mentés&lt;br&gt;A lemezen lévő módosítások felülírása&lt;br&gt;Mentetlen módosítások elvetése </translation>
+    </message>
+    <message>
+        <source>Database file overwritten.</source>
+        <translation>Adatbázisfájl felülírva.</translation>
+    </message>
+    <message>
+        <source>Database file on disk cannot be unlocked with current credentials.&lt;br&gt;Enter new credentials and/or present hardware key to continue.</source>
+        <translation>A lemezen lévő adatbázisfájl nem oldható fel a jelenlegi hitelesítő adatokkal.&lt;br&gt;A folytatáshoz adjon meg új hitelesítő adatokat, vagy mutasson fel hardverkulcsot.</translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidget</name>
@@ -2551,7 +2892,7 @@ Letiltható a biztonságos mentés és úgy megkísérelhető a mentés?</transl
     </message>
     <message>
         <source>Are you sure you want to remove this URL?</source>
-        <translation>Valóban eltávolítja ezt az URL?</translation>
+        <translation>Valóban eltávolítja ezt a webcímet?</translation>
     </message>
     <message>
         <source>Properties</source>
@@ -2570,12 +2911,8 @@ Letiltható a biztonságos mentés és úgy megkísérelhető a mentés?</transl
         <translation>nincs</translation>
     </message>
     <message>
-        <source>(encrypted)</source>
-        <translation>(titkosított)</translation>
-    </message>
-    <message>
         <source>Select private key</source>
-        <translation>Személyes kulcs kijelölése</translation>
+        <translation>Titkos kulcs kijelölése</translation>
     </message>
     <message>
         <source>Entry history</source>
@@ -2674,6 +3011,10 @@ Szeretné kijavítani?</translation>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>%n év</numerusform><numerusform>%n év</numerusform></translation>
+    </message>
+    <message>
+        <source>Failed to decrypt SSH key, ensure password is correct.</source>
+        <translation>Az SSH-kulcs visszafejtése sikertelen, győződjön meg arról, hogy a jelszó helyes.</translation>
     </message>
 </context>
 <context>
@@ -2835,10 +3176,6 @@ Szeretné kijavítani?</translation>
 <context>
     <name>EditEntryWidgetBrowser</name>
     <message>
-        <source>These settings affect to the entry&apos;s behaviour with the browser extension.</source>
-        <translation>Ezek a beállítások befolyásolják a bejegyzés viselkedését a böngésző kiterjesztésével.</translation>
-    </message>
-    <message>
         <source>General</source>
         <translation>Általános</translation>
     </message>
@@ -2851,24 +3188,12 @@ Szeretné kijavítani?</translation>
         <translation>Automatikus küldés kihagyása ennél a bejegyzésnél</translation>
     </message>
     <message>
-        <source>Only send this setting to the browser for HTTP Auth dialogs. If enabled, normal login forms will not show this entry for selection.</source>
-        <translation>Ezt a beállítást csak a böngésző HTTP Auth párbeszédablakának küldje. Bejelölve a normál bejelentkezési űrlapokon ez a bejegyzés nem fog kiválaszthatóként feltűnni.</translation>
-    </message>
-    <message>
         <source>Use this entry only with HTTP Basic Auth</source>
-        <translation>Bejegyzés alkalmazása csak HTTP Basic Auth-tal</translation>
-    </message>
-    <message>
-        <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
-        <translation>Ne küldje ezt a beállítást a böngésző HTTP Auth párbeszédablakának. Bejelölve a HTTP Auth párbeszédablakokban ez a bejegyzés nem fog kiválaszthatóként feltűnni.</translation>
+        <translation>Bejegyzés alkalmazása csak HTTP Basic hitelesítéssel</translation>
     </message>
     <message>
         <source>Do not use this entry with HTTP Basic Auth</source>
-        <translation>Bejegyzés tiltása HTTP Basic Auth-tal</translation>
-    </message>
-    <message>
-        <source>Additional URL&apos;s</source>
-        <translation>További URL-ek</translation>
+        <translation>Bejegyzés tiltása HTTP Basic hitelesítéssel</translation>
     </message>
     <message>
         <source>Add</source>
@@ -2881,6 +3206,22 @@ Szeretné kijavítani?</translation>
     <message>
         <source>Edit</source>
         <translation>Szerkesztés</translation>
+    </message>
+    <message>
+        <source>These settings affect the entry&apos;s behaviour with the browser extension.</source>
+        <translation>Ezek a beállítások hatással vannak a böngészőkiterjesztés viselkedésére.</translation>
+    </message>
+    <message>
+        <source>Additional URLs</source>
+        <translation>További webcímek</translation>
+    </message>
+    <message>
+        <source>Only send this entry to the browser for HTTP Auth dialogs. If enabled, normal login forms will not show this entry for selection.</source>
+        <translation>Ezt a bejegyzést csak a böngésző HTTP hitelesítési párbeszédablakának küldje el. Bejelölve a normál bejelentkezési űrlapokon ez a bejegyzés nem fog kiválaszthatóként feltűnni.</translation>
+    </message>
+    <message>
+        <source>Do not send this entry to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
+        <translation>Ne küldje ezt a bejegyzést a böngésző HTTP hitelesítési párbeszédablakának. Bejelölve a HTTP hitelesítési párbeszédablakokban ez a bejegyzés nem fog kiválaszthatóként feltűnni.</translation>
     </message>
 </context>
 <context>
@@ -2954,11 +3295,11 @@ Szeretné kijavítani?</translation>
     </message>
     <message>
         <source>Url field</source>
-        <translation>URL mező</translation>
+        <translation>Webcím mező</translation>
     </message>
     <message>
         <source>Download favicon for URL</source>
-        <translation>URL faviconjának letöltése</translation>
+        <translation>Webcím weblapikonjának letöltése</translation>
     </message>
     <message>
         <source>Title field</source>
@@ -3045,7 +3386,7 @@ Szeretné kijavítani?</translation>
     </message>
     <message>
         <source>Private key</source>
-        <translation>Személyes kulcs</translation>
+        <translation>Titkos kulcs</translation>
     </message>
     <message>
         <source>Attachment</source>
@@ -3103,6 +3444,10 @@ Szeretné kijavítani?</translation>
     <message>
         <source> seconds</source>
         <translation>másodperc</translation>
+    </message>
+    <message>
+        <source>Clear agent</source>
+        <translation>Ügynök törlése</translation>
     </message>
 </context>
 <context>
@@ -3172,19 +3517,19 @@ Szeretné kijavítani?</translation>
     </message>
     <message>
         <source>Use entries only with HTTP Basic Auth:</source>
-        <translation>Bejegyzések alkalmazása csak HTTP Basic Auth-tal:</translation>
+        <translation>Bejegyzések alkalmazása csak HTTP Basic hitelesítéssel:</translation>
     </message>
     <message>
         <source>Only HTTP Auth toggle for this and sub groups</source>
-        <translation>Csak HTTP Auth kapcsoló ennél a csoportnál és alcsoportjainál</translation>
+        <translation>Csak HTTP hitelesítési kapcsoló ennél a csoportnál és alcsoportjainál</translation>
     </message>
     <message>
         <source>Do not use entries with HTTP Basic Auth:</source>
-        <translation>Bejegyzések tiltása HTTP Basic Auth-tal:</translation>
+        <translation>Bejegyzések tiltása HTTP Basic hitelesítéssel:</translation>
     </message>
     <message>
         <source>Do not use HTTP Auth toggle for this and sub groups</source>
-        <translation>HTTP Auth kapcsoló tiltása ennél a csoportnál és alcsoportjainál</translation>
+        <translation>A HTTP hitelesítési kapcsoló tiltása ennél a csoportnál és alcsoportjainál</translation>
     </message>
     <message>
         <source>Omit WWW subdomain from matching:</source>
@@ -3193,6 +3538,14 @@ Szeretné kijavítani?</translation>
     <message>
         <source>Omit WWW subdomain from matching toggle for this and sub groups</source>
         <translation>A WWW altartomány kihagyása a megfeleltetésből átkapcsolása ennél a csoportnál és alcsoportjainál</translation>
+    </message>
+    <message>
+        <source>Restrict matching to given browser key:</source>
+        <translation>A megfeleltetés az adott böngészőkulcsra korlátozása:</translation>
+    </message>
+    <message>
+        <source>Restrict matching to given browser key toggle for this and sub groups</source>
+        <translation>A megfeleltetés az adott böngészőkulcsra korlátozása beállítás be/ki ennél a csoportnál és az alcsoportjainál</translation>
     </message>
 </context>
 <context>
@@ -3384,19 +3737,19 @@ Támogatott kiterjesztések: %1.</translation>
     </message>
     <message>
         <source>Set the URL to use to search for a favicon</source>
-        <translation>URL beállítása a weblapikon kereséséhez</translation>
+        <translation>Webcím beállítása a weblapikon kereséséhez</translation>
     </message>
     <message>
         <source>Favicon URL</source>
-        <translation>Weblapikon URL</translation>
+        <translation>Weblapikon webcíme</translation>
     </message>
     <message>
         <source>Download favicon for URL</source>
-        <translation>URL faviconjának letöltése</translation>
+        <translation>Webcím weblapikonjának letöltése</translation>
     </message>
     <message>
         <source>Download favicon</source>
-        <translation>Favicon letöltése</translation>
+        <translation>Weblapikon letöltése</translation>
     </message>
     <message>
         <source>Apply selected icon to subgroups and entries</source>
@@ -3424,11 +3777,7 @@ Támogatott kiterjesztések: %1.</translation>
     </message>
     <message>
         <source>Unable to fetch favicon.</source>
-        <translation>A favicon letöltése sikertelen.</translation>
-    </message>
-    <message>
-        <source>You can enable the DuckDuckGo website icon service under Tools -&gt; Settings -&gt; Security</source>
-        <translation>A DuckDuckGo weboldal ikon szolgáltatást az Eszközök → Beállítások → Biztonság pontban lehet engedélyezni</translation>
+        <translation>A weblapikon letöltése sikertelen.</translation>
     </message>
     <message>
         <source>Existing icon selected.</source>
@@ -3461,6 +3810,10 @@ Támogatott kiterjesztések: %1.</translation>
     <message numerus="yes">
         <source>The following icon(s) failed:</source>
         <translation><numerusform>A következő ikonnál hiba történt:</numerusform><numerusform>A következő ikonoknál hiba történt:</numerusform></translation>
+    </message>
+    <message>
+        <source>You can enable the DuckDuckGo website icon service under Application Settings -&gt; Security</source>
+        <translation>A DuckDuckGo weboldalikon szolgáltatást az Alkalmazásbeállítások → Biztonság pontban lehet engedélyezni</translation>
     </message>
 </context>
 <context>
@@ -3538,12 +3891,45 @@ Ez a kijelölt bővítmény hibás működését eredményezheti.</translation>
         <source>%1 - Clone</source>
         <translation>%1 – Klón</translation>
     </message>
+    <message>
+        <source>Passkey</source>
+        <translation>Jelkulcso</translation>
+    </message>
+    <message>
+        <source>Invalid conversion type: %1</source>
+        <translation>Érvénytelen átalakítási típus: %1</translation>
+    </message>
+    <message>
+        <source>Invalid conversion syntax: %1</source>
+        <translation>Érvénytelen átalakítási szintaxis: %1</translation>
+    </message>
+    <message>
+        <source>Invalid regular expression syntax %1
+%2</source>
+        <translation>Érvénytelen reguláriskifejezés-szintaxis %1
+%2</translation>
+    </message>
 </context>
 <context>
     <name>EntryAttachments</name>
     <message>
         <source>Cannot open file &quot;%1&quot;</source>
         <translation>A(z) „%1” fájl nem nyitható meg</translation>
+    </message>
+</context>
+<context>
+    <name>EntryAttachmentsDialog</name>
+    <message>
+        <source>Form</source>
+        <translation>Űrlap</translation>
+    </message>
+    <message>
+        <source>File name</source>
+        <translation>Fájlnév</translation>
+    </message>
+    <message>
+        <source>File contents...</source>
+        <translation>Fájltartalom…</translation>
     </message>
 </context>
 <context>
@@ -3582,14 +3968,6 @@ Ez a kijelölt bővítmény hibás működését eredményezheti.</translation>
     <message>
         <source>Remove</source>
         <translation>Eltávolítás</translation>
-    </message>
-    <message>
-        <source>Rename selected attachment</source>
-        <translation>Kijelölt melléklet átnevezése</translation>
-    </message>
-    <message>
-        <source>Rename</source>
-        <translation>Átnevezés</translation>
     </message>
     <message>
         <source>Open selected attachment</source>
@@ -3631,7 +4009,7 @@ Ez a kijelölt bővítmény hibás működését eredményezheti.</translation>
     </message>
     <message>
         <source>Are you sure you want to overwrite the existing file &quot;%1&quot; with the attachment?</source>
-        <translation>Valóban felül kívánja írni a meglévő „%1” fájl a melléklettel?</translation>
+        <translation>Valóban felülírja a meglévő „%1” fájlt a melléklettel?</translation>
     </message>
     <message>
         <source>Confirm overwrite</source>
@@ -3667,12 +4045,6 @@ Ez a kijelölt bővítmény hibás működését eredményezheti.</translation>
         <translation>Melléklet felülírásának megerősítése</translation>
     </message>
     <message>
-        <source>Attachment &quot;%1&quot; already exists. 
-Would you like to overwrite the existing attachment?</source>
-        <translation>A mellélket már létezik: „%1”.
-Valóban felülírható a meglévő melléklet?</translation>
-    </message>
-    <message>
         <source>Confirm Attachment</source>
         <translation>Melléklet megerősítése</translation>
     </message>
@@ -3681,10 +4053,10 @@ Valóban felülírható a meglévő melléklet?</translation>
 Your database may get very large and reduce performance.
 
 Are you sure to add this file?</source>
-        <translation>%1 egy nagy fájl (%2 MB).
-Az adatbázis így nagyon nagy lesz és rontani fogja a teljesítményt.
+        <translation>A(z) %1 egy nagy fájl (%2 MB).
+Az adatbázis így nagyon nagy lesz, és rontani fogja a teljesítményt.
 
-Biztosan hozzáadható ez a fájl?</translation>
+Valóban hozzáadja ezt a fájlt?</translation>
     </message>
     <message>
         <source>Attachment modified</source>
@@ -3705,6 +4077,24 @@ Menti a változásokat az adatbázisba?</translation>
 Error: %1</source>
         <translation>A frissült melléklet mentése sikertelen.
 Hiba: %1</translation>
+    </message>
+    <message>
+        <source>Attachment &quot;%1&quot; already exists. 
+Would you like to overwrite the existing attachment?</source>
+        <translation>A mellélket már létezik: „%1”.
+Valóban felülírható a meglévő melléklet?</translation>
+    </message>
+    <message>
+        <source>New</source>
+        <translation>Új</translation>
+    </message>
+    <message>
+        <source>Preview</source>
+        <translation>Előnézet</translation>
+    </message>
+    <message>
+        <source>Failed to preview an attachment: Attachment not found</source>
+        <translation>A melléklet előnézete sikertelen: a melléklet nem található</translation>
     </message>
 </context>
 <context>
@@ -3750,7 +4140,7 @@ Hiba: %1</translation>
     </message>
     <message>
         <source>URL</source>
-        <translation>URL</translation>
+        <translation>Webcím</translation>
     </message>
     <message>
         <source>Notes</source>
@@ -3822,7 +4212,7 @@ Hiba: %1</translation>
     </message>
     <message>
         <source>URL</source>
-        <translation>URL</translation>
+        <translation>Webcím</translation>
     </message>
     <message>
         <source>Notes</source>
@@ -3904,6 +4294,10 @@ Hiba: %1</translation>
         <source>Background Color</source>
         <translation>Háttérszín</translation>
     </message>
+    <message>
+        <source>Group Path</source>
+        <translation>Csoportútvonal</translation>
+    </message>
 </context>
 <context>
     <name>EntryPreviewWidget</name>
@@ -3925,7 +4319,7 @@ Hiba: %1</translation>
     </message>
     <message>
         <source>URL</source>
-        <translation>URL</translation>
+        <translation>Webcím</translation>
     </message>
     <message>
         <source>Expiration</source>
@@ -4016,11 +4410,11 @@ Hiba: %1</translation>
     <name>EntryURLModel</name>
     <message>
         <source>Invalid URL</source>
-        <translation>Érvénytelen URL</translation>
+        <translation>Érvénytelen webcím</translation>
     </message>
     <message>
         <source>Duplicate URL</source>
-        <translation>Ismételt URL</translation>
+        <translation>Ismételt webcím</translation>
     </message>
 </context>
 <context>
@@ -4212,7 +4606,7 @@ This will leave your passwords and sensitive information vulnerable!
     <name>IconDownloaderDialog</name>
     <message>
         <source>Download Favicons</source>
-        <translation>Faviconok letöltése</translation>
+        <translation>Weblapikonok letöltése</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -4230,7 +4624,7 @@ A DuckDuckGo weboldal ikon szolgáltatást az alkalmazás beállításai közöt
     </message>
     <message>
         <source>URL</source>
-        <translation>URL</translation>
+        <translation>Webcím</translation>
     </message>
     <message>
         <source>Status</source>
@@ -4259,6 +4653,199 @@ A DuckDuckGo weboldal ikon szolgáltatást az alkalmazás beállításai közöt
     <message>
         <source>Downloading favicons (%1/%2)…</source>
         <translation>Weblapikonok letöltése (%1/%2)…</translation>
+    </message>
+</context>
+<context>
+    <name>ImportWizard</name>
+    <message>
+        <source>Import Wizard</source>
+        <translation>Importálási varázsló</translation>
+    </message>
+</context>
+<context>
+    <name>ImportWizardPageReview</name>
+    <message>
+        <source>WizardPage</source>
+        <translation>Varázsló oldal</translation>
+    </message>
+    <message>
+        <source>Entry count: %1</source>
+        <translation>Bejegyzésszám: %1</translation>
+    </message>
+    <message>
+        <source>Group</source>
+        <translation>Csoport</translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation>Cím</translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>Felhasználónév</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Jelszó</translation>
+    </message>
+    <message>
+        <source>Url</source>
+        <translation>Webcím</translation>
+    </message>
+    <message>
+        <source>Could not load key file.</source>
+        <translation>A kulcsfájl nem tölthető be.</translation>
+    </message>
+    <message>
+        <source>Could not open remote database. Password or key file may be incorrect.</source>
+        <translation>A távoli adatbázis nem nyitható meg. A jelszó vagy a kulcsfájl helytelen lehet.</translation>
+    </message>
+</context>
+<context>
+    <name>ImportWizardPageSelect</name>
+    <message>
+        <source>Form</source>
+        <translation>Űrlap</translation>
+    </message>
+    <message>
+        <source>Import File Selection</source>
+        <translation>Fájlkiválasztás importálása</translation>
+    </message>
+    <message>
+        <source>Password:</source>
+        <translation>Jelszó:</translation>
+    </message>
+    <message>
+        <source>Key File:</source>
+        <translation>Kulcsfájl:</translation>
+    </message>
+    <message>
+        <source>Browse…</source>
+        <translation>Tallózás…</translation>
+    </message>
+    <message>
+        <source>Import Into:</source>
+        <translation>Importálás ide:</translation>
+    </message>
+    <message>
+        <source>New Database</source>
+        <translation>Új adatbázis</translation>
+    </message>
+    <message>
+        <source>No unlocked databases available</source>
+        <translation>Nem érhetők el feloldott adatbázisok</translation>
+    </message>
+    <message>
+        <source>Existing Database:</source>
+        <translation>Meglévő adatbázis:</translation>
+    </message>
+    <message>
+        <source>Import File:</source>
+        <translation>Fájl importálása</translation>
+    </message>
+    <message>
+        <source>Comma Separated Values (.csv)</source>
+        <translation>Vesszővel elválasztott értékek (.csv)</translation>
+    </message>
+    <message>
+        <source>1Password Export (.1pux)</source>
+        <translation>1Password export (.1pux)</translation>
+    </message>
+    <message>
+        <source>1Password Vault (.opvault)</source>
+        <translation>1Password széf (.opvault)</translation>
+    </message>
+    <message>
+        <source>Bitwarden (.json)</source>
+        <translation>Bitwarden (.json)</translation>
+    </message>
+    <message>
+        <source>KeePass 1 Database (.kdb)</source>
+        <translation>KeePass 1 adatbázis (.kdb)</translation>
+    </message>
+    <message>
+        <source>Open OPVault</source>
+        <translation>OPVault megnyitása</translation>
+    </message>
+    <message>
+        <source>Select import file</source>
+        <translation>Importálási fájl kiválasztása</translation>
+    </message>
+    <message>
+        <source>All files</source>
+        <translation>Minden fájl</translation>
+    </message>
+    <message>
+        <source>Key files</source>
+        <translation>Kulcsfájlok</translation>
+    </message>
+    <message>
+        <source>Select key file</source>
+        <translation>Kulcsfájl kiválasztása</translation>
+    </message>
+    <message>
+        <source>Comma Separated Values</source>
+        <translation>Vesszővel elválasztott értékek</translation>
+    </message>
+    <message>
+        <source>1Password Export</source>
+        <translation>1Password export</translation>
+    </message>
+    <message>
+        <source>Bitwarden JSON Export</source>
+        <translation>Bitwarden JSON-export</translation>
+    </message>
+    <message>
+        <source>1Password Vault</source>
+        <translation>1Password széf</translation>
+    </message>
+    <message>
+        <source>KeePass1 Database</source>
+        <translation>KeePass 1 adatbázis</translation>
+    </message>
+    <message>
+        <source>Proton Pass (.json)</source>
+        <translation>Proton Pass (.json)</translation>
+    </message>
+    <message>
+        <source>Proton Pass JSON Export</source>
+        <translation>Proton Pass JSON-export</translation>
+    </message>
+    <message>
+        <source>Temporary Database</source>
+        <translation>Ideiglenes adatbázis</translation>
+    </message>
+    <message>
+        <source>Command:</source>
+        <translation>Parancs:</translation>
+    </message>
+    <message>
+        <source>e.g.: &quot;sftp user@hostname&quot; or &quot;scp user@hostname:DatabaseOnRemote.kdbx {TEMP_DATABASE}&quot;</source>
+        <translation>pl.: „sftp felhasznalo@kiszolgalo” vagy „scp felhasznalo@kiszolgalo:TavoliAdatbazis.kdbx {TEMP_DATABASE}”</translation>
+    </message>
+    <message>
+        <source>Input:</source>
+        <translation>Bemenet:</translation>
+    </message>
+    <message>
+        <source>e.g.:
+get DatabaseOnRemote.kdbx {TEMP_DATABASE}
+exit
+---
+{TEMP_DATABASE} is used as placeholder to store the database in a temporary location
+The command has to exit. In case of `sftp` as last commend `exit` has to be sent
+         </source>
+        <translation>például:
+get TavoliAdatbazis.kdbx {TEMP_DATABASE}
+exit
+---
+A {TEMP_DATABASE} helyőrzőként szolgál az adatbázis ideiglenes helyen történő tárolására.
+A parancsnak ki kell lépnie, ezért az „sftp” esetén utolsó parancsként el kell küldeni az „exit” parancsot.
+            </translation>
+    </message>
+    <message>
+        <source>Remote Database (.kdbx)</source>
+        <translation>Távoli adatbázis (.kdbx)</translation>
     </message>
 </context>
 <context>
@@ -4680,30 +5267,19 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Private key is an attachment but no attachments provided.</source>
-        <translation>A személyes kulcs egy melléklet lenne, de nincs melléklet.</translation>
+        <translation>A titkos kulcs egy melléklet lenne, de nincs melléklet.</translation>
     </message>
     <message>
         <source>Private key is empty</source>
-        <translation>Üres a személyes kulcs</translation>
+        <translation>Üres a titkos kulcs</translation>
     </message>
     <message>
         <source>File too large to be a private key</source>
-        <translation>A fájl túl nagy ahhoz, hogy személyes kulcs legyen</translation>
+        <translation>A fájl túl nagy ahhoz, hogy titkos kulcs legyen</translation>
     </message>
     <message>
         <source>Failed to open private key</source>
-        <translation>Személyes kulcs megnyitása meghiúsult</translation>
-    </message>
-</context>
-<context>
-    <name>KeePass1OpenWidget</name>
-    <message>
-        <source>Import KeePass1 Database</source>
-        <translation>KeePass1 adatbázis importálása</translation>
-    </message>
-    <message>
-        <source>Unable to open the database.</source>
-        <translation>Nem lehet megnyitni az adatbázist.</translation>
+        <translation>A titkos kulcs megnyitása sikertelen</translation>
     </message>
 </context>
 <context>
@@ -5063,10 +5639,6 @@ Valóban folytatható a művelet ezzel a fájllal?</translation>
         <translation>&amp;Legutóbb használt adatbázisok</translation>
     </message>
     <message>
-        <source>&amp;Import</source>
-        <translation>&amp;Importálás</translation>
-    </message>
-    <message>
         <source>&amp;Export</source>
         <translation>&amp;Exportálás</translation>
     </message>
@@ -5135,32 +5707,16 @@ Valóban folytatható a művelet ezzel a fájllal?</translation>
         <translation>Ú&amp;j adatbázis</translation>
     </message>
     <message>
-        <source>Create a new database</source>
-        <translation>Új adatbázis létrehozása</translation>
-    </message>
-    <message>
         <source>&amp;Merge From Database…</source>
         <translation>&amp;Egyesítés adatbázisból…</translation>
-    </message>
-    <message>
-        <source>Merge from another KDBX database</source>
-        <translation>Egyesítés egy másik KeePassX adatbázisból</translation>
     </message>
     <message>
         <source>&amp;New Entry…</source>
         <translation>Új b&amp;ejegyzés…</translation>
     </message>
     <message>
-        <source>Add a new entry</source>
-        <translation>Új bejegyzés hozzáadása</translation>
-    </message>
-    <message>
         <source>&amp;Edit Entry…</source>
         <translation>Bejegyzés sze&amp;rkesztése…</translation>
-    </message>
-    <message>
-        <source>View or edit entry</source>
-        <translation>Bejegyzés megtekintése vagy szerkesztése</translation>
     </message>
     <message>
         <source>&amp;Delete Entry…</source>
@@ -5169,10 +5725,6 @@ Valóban folytatható a művelet ezzel a fájllal?</translation>
     <message>
         <source>&amp;New Group…</source>
         <translation>Ú&amp;j csoport…</translation>
-    </message>
-    <message>
-        <source>Add a new group</source>
-        <translation>Új csoport hozzáadása</translation>
     </message>
     <message>
         <source>&amp;Edit Group…</source>
@@ -5184,7 +5736,7 @@ Valóban folytatható a művelet ezzel a fájllal?</translation>
     </message>
     <message>
         <source>Download All &amp;Favicons…</source>
-        <translation>Minden favicon &amp;letöltése…</translation>
+        <translation>Összes weblapikon &amp;letöltése…</translation>
     </message>
     <message>
         <source>Sort &amp;A-Z</source>
@@ -5207,16 +5759,8 @@ Valóban folytatható a művelet ezzel a fájllal?</translation>
         <translation>Adatbázis &amp;jelentések…</translation>
     </message>
     <message>
-        <source>Statistics, health check, etc.</source>
-        <translation>Statisztika, állapotfelmérés, stb.</translation>
-    </message>
-    <message>
         <source>&amp;Database Settings…</source>
         <translation>Adatbázis-&amp;beállítások…</translation>
-    </message>
-    <message>
-        <source>Database settings</source>
-        <translation>Adatbázis-beállítások</translation>
     </message>
     <message>
         <source>&amp;Clone Entry…</source>
@@ -5227,32 +5771,16 @@ Valóban folytatható a művelet ezzel a fájllal?</translation>
         <translation>Mozgatás &amp;fel</translation>
     </message>
     <message>
-        <source>Move entry one step up</source>
-        <translation>Bejegyzés mozgatása egy lépéssel feljebb</translation>
-    </message>
-    <message>
         <source>Move do&amp;wn</source>
         <translation>Mozgatás &amp;le</translation>
-    </message>
-    <message>
-        <source>Move entry one step down</source>
-        <translation>Bejegyzés mozgatása egy lépéssel lejebb</translation>
     </message>
     <message>
         <source>Copy &amp;Username</source>
         <translation>&amp;Felhasználónév másolása</translation>
     </message>
     <message>
-        <source>Copy username to clipboard</source>
-        <translation>Felhasználónév másolása a vágólapra</translation>
-    </message>
-    <message>
         <source>Copy &amp;Password</source>
         <translation>&amp;Jelszó másolása</translation>
-    </message>
-    <message>
-        <source>Copy password to clipboard</source>
-        <translation>Jelszó másolása a vágólapra</translation>
     </message>
     <message>
         <source>&amp;Settings</source>
@@ -5268,11 +5796,11 @@ Valóban folytatható a művelet ezzel a fájllal?</translation>
     </message>
     <message>
         <source>Download &amp;Favicon</source>
-        <translation>&amp;Favicon letöltése</translation>
+        <translation>&amp;Weblapikon letöltése</translation>
     </message>
     <message>
         <source>Open &amp;URL</source>
-        <translation>&amp;URL megnyitása</translation>
+        <translation>&amp;Webcím megnyitása</translation>
     </message>
     <message>
         <source>&amp;Lock Database</source>
@@ -5287,24 +5815,12 @@ Valóban folytatható a művelet ezzel a fájllal?</translation>
         <translation>&amp;Cím</translation>
     </message>
     <message>
-        <source>Copy title to clipboard</source>
-        <translation>Cím másolása a vágólapra</translation>
-    </message>
-    <message>
         <source>Copy &amp;URL</source>
-        <translation>&amp;URL másolása</translation>
-    </message>
-    <message>
-        <source>Copy URL to clipboard</source>
-        <translation>URL másolása a vágólapra</translation>
+        <translation>&amp;Webcím másolása</translation>
     </message>
     <message>
         <source>&amp;Notes</source>
         <translation>&amp;Jegyzetek</translation>
-    </message>
-    <message>
-        <source>Copy notes to clipboard</source>
-        <translation>Jegyzetek másolása a vágólapra</translation>
     </message>
     <message>
         <source>&amp;CSV File…</source>
@@ -5319,24 +5835,12 @@ Valóban folytatható a művelet ezzel a fájllal?</translation>
         <translation>KeePass 1 adatbázis…</translation>
     </message>
     <message>
-        <source>Import a KeePass 1 database</source>
-        <translation>KeePass 1 adatbázis importálása</translation>
-    </message>
-    <message>
         <source>1Password Vault…</source>
         <translation>1Password Vault…</translation>
     </message>
     <message>
-        <source>Import a 1Password Vault</source>
-        <translation>1Password Vault importálása</translation>
-    </message>
-    <message>
         <source>CSV File…</source>
         <translation>CSV-fájl…</translation>
-    </message>
-    <message>
-        <source>Import a CSV file</source>
-        <translation>CSV-fájl importálása</translation>
     </message>
     <message>
         <source>Show TOTP</source>
@@ -5383,10 +5887,6 @@ Valóban folytatható a művelet ezzel a fájllal?</translation>
         <translation>&amp;Online súgó</translation>
     </message>
     <message>
-        <source>Go to online documentation</source>
-        <translation>Ugrás az online dokumentációra</translation>
-    </message>
-    <message>
         <source>&amp;User Guide</source>
         <translation>Felhasználói &amp;kézikönyv</translation>
     </message>
@@ -5431,6 +5931,10 @@ Valóban folytatható a művelet ezzel a fájllal?</translation>
         <translation>Klasszikus (platform natív)</translation>
     </message>
     <message>
+        <source>Show Menubar</source>
+        <translation>Menü megjelenítése</translation>
+    </message>
+    <message>
         <source>Show Toolbar</source>
         <translation>Eszköztár megjelenítése</translation>
     </message>
@@ -5459,10 +5963,6 @@ Valóban folytatható a művelet ezzel a fájllal?</translation>
         <translation>&amp;XML-fájl…</translation>
     </message>
     <message>
-        <source>XML File…</source>
-        <translation>XML-fájl…</translation>
-    </message>
-    <message>
         <source>Clear history</source>
         <translation>Előzmények törlése</translation>
     </message>
@@ -5486,12 +5986,6 @@ Ez a verzió nem felhasználóknak készült.</translation>
 Expect some bugs and minor issues, this version is meant for testing purposes.</source>
         <translation>MEGJEGYZÉS: Ez egy előzetes kiadású KeePassXC verzió.
 Néhány hiba és kisebb nehézségek várhatóak, ezért ez a verzió tesztelési célra való.</translation>
-    </message>
-    <message>
-        <source>WARNING: Your Qt version may cause KeePassXC to crash with an On-Screen Keyboard.
-We recommend you use the AppImage available on our downloads page.</source>
-        <translation>FIGYELMEZTETÉS: A Qt verziója miatt a KeePassXC összeomolhat egy képernyő-billentyűzettel.
-Javasoljuk az AppImage alkalmazását, amely elérhető a letöltések oldalon.</translation>
     </message>
     <message>
         <source>No Tags</source>
@@ -5546,16 +6040,308 @@ Javasoljuk az AppImage alkalmazását, amely elérhető a letöltések oldalon.<
         <translation>Képernyőrögzítés engedélyezése</translation>
     </message>
     <message>
-        <source>Passkeys…</source>
-        <translation type="unfinished"/>
+        <source>1Password 1PUX...</source>
+        <translation>1Password 1PUX...</translation>
     </message>
     <message>
-        <source>Passkeys</source>
-        <translation type="unfinished"/>
+        <source>Import a 1Password 1PUX file</source>
+        <translation>1Password 1PUX-fájl importálása</translation>
+    </message>
+    <message>
+        <source>Import…</source>
+        <translation>Importálás…</translation>
+    </message>
+    <message>
+        <source>Passkeys…</source>
+        <translation>Jelkulcsok…</translation>
     </message>
     <message>
         <source>Import Passkey</source>
-        <translation type="unfinished"/>
+        <translation>Jelkulcs importálása</translation>
+    </message>
+    <message>
+        <source>Remote S&amp;ync…</source>
+        <translation>Távoli &amp;szinkronizálás…</translation>
+    </message>
+    <message>
+        <source>Quit Application</source>
+        <translation>Kilépés az alkalmazásból</translation>
+    </message>
+    <message>
+        <source>Open About Dialog</source>
+        <translation>Névjegy párbeszédablak megnyitása</translation>
+    </message>
+    <message>
+        <source>Open Database</source>
+        <translation>Adatbázis megnyitása</translation>
+    </message>
+    <message>
+        <source>Create Database</source>
+        <translation>Adatbázis létrehozása</translation>
+    </message>
+    <message>
+        <source>Merge From Database</source>
+        <translation>Egyesítés adatbázisból</translation>
+    </message>
+    <message>
+        <source>Create Entry</source>
+        <translation>Bejegyzés létrehozása</translation>
+    </message>
+    <message>
+        <source>Edit Entry</source>
+        <translation>Bejegyzés szerkesztése</translation>
+    </message>
+    <message>
+        <source>Delete Entry</source>
+        <translation>Bejegyzés törlése</translation>
+    </message>
+    <message>
+        <source>Create Group</source>
+        <translation>Csoport létrehozása</translation>
+    </message>
+    <message>
+        <source>Edit Group</source>
+        <translation>Csoport szerkesztése</translation>
+    </message>
+    <message>
+        <source>Delete Group</source>
+        <translation>Csoport törlése</translation>
+    </message>
+    <message>
+        <source>Download All Favicons</source>
+        <translation>Kedvenc weblapikonok letöltése</translation>
+    </message>
+    <message>
+        <source>Sort Groups A-Z</source>
+        <translation>Rendezés: csoportok A–Z</translation>
+    </message>
+    <message>
+        <source>Sort Groups Z-A</source>
+        <translation>Rendezés: csoportok Z–A</translation>
+    </message>
+    <message>
+        <source>Save Database As</source>
+        <translation>Adatbázis mentése más néven</translation>
+    </message>
+    <message>
+        <source>Show Database Security</source>
+        <translation>Adatbázis biztonságának megjelenítése</translation>
+    </message>
+    <message>
+        <source>Show Database Reports</source>
+        <translation>Adatbázis-jelentések megjelenítése</translation>
+    </message>
+    <message>
+        <source>Show Database Settings</source>
+        <translation>Adatbázis-beállítások megjelenítése</translation>
+    </message>
+    <message>
+        <source>Show Passkeys</source>
+        <translation>Jelkulcsok megjelenítése</translation>
+    </message>
+    <message>
+        <source>Clone Entry</source>
+        <translation>Bejegyzés klónozása</translation>
+    </message>
+    <message>
+        <source>Move Entry Up</source>
+        <translation>Bejegyzés feljebb helyezése</translation>
+    </message>
+    <message>
+        <source>Move Entry Down</source>
+        <translation>Bejegyzés lentebb helyezése</translation>
+    </message>
+    <message>
+        <source>Copy Username</source>
+        <translation>Felhasználónév másolása</translation>
+    </message>
+    <message>
+        <source>Copy Password</source>
+        <translation>Jelszó másolása</translation>
+    </message>
+    <message>
+        <source>Show Application Settings</source>
+        <translation>Alkalmazásbeállítások megjelenítése</translation>
+    </message>
+    <message>
+        <source>Show Password Generator</source>
+        <translation>Jelszó-előállító megjelenítése</translation>
+    </message>
+    <message>
+        <source>Remove Passkey From Entry</source>
+        <translation>Jelkulcs eltávolítása a bejegyzésből</translation>
+    </message>
+    <message>
+        <source>Perform Auto-Type: {USERNAME}</source>
+        <translation>Automatikus beírás végrehajtása: {USERNAME}</translation>
+    </message>
+    <message>
+        <source>Perform Auto-Type: {USERNAME}{ENTER}</source>
+        <translation>Automatikus beírás végrehajtása: {USERNAME}{ENTER}</translation>
+    </message>
+    <message>
+        <source>Perform Auto-Type: {PASSWORD}</source>
+        <translation>Automatikus beírás végrehajtása: {PASSWORD}</translation>
+    </message>
+    <message>
+        <source>Perform Auto-Type: {PASSWORD}{ENTER}</source>
+        <translation>Automatikus beírás végrehajtása: {PASSWORD}{ENTER}</translation>
+    </message>
+    <message>
+        <source>Perform Auto-Type: {TOTP}</source>
+        <translation>Automatikus beírás végrehajtása: {TOTP}</translation>
+    </message>
+    <message>
+        <source>Copy Title</source>
+        <translation>Cím másolása</translation>
+    </message>
+    <message>
+        <source>Copy URL</source>
+        <translation>Webcím másolása</translation>
+    </message>
+    <message>
+        <source>Copy Notes</source>
+        <translation>Jegyzetek másolása</translation>
+    </message>
+    <message>
+        <source>Export to CSV</source>
+        <translation>Exportálás CSV-be</translation>
+    </message>
+    <message>
+        <source>Export to HTML</source>
+        <translation>Exportálás HTML-be</translation>
+    </message>
+    <message>
+        <source>Import KeePass1 Database</source>
+        <translation>KeePass1 adatbázis importálása</translation>
+    </message>
+    <message>
+        <source>Import 1Password Vault</source>
+        <translation>1Password széf importálása</translation>
+    </message>
+    <message>
+        <source>Import CSV File</source>
+        <translation>CSV-fájl importálása</translation>
+    </message>
+    <message>
+        <source>Show TOTP QR Code</source>
+        <translation>TOTP QR-kód megjelenítése</translation>
+    </message>
+    <message>
+        <source>Set up TOTP</source>
+        <translation>TOTP beállítása</translation>
+    </message>
+    <message>
+        <source>Empty Recycle Bin</source>
+        <translation>Kuka ürítése</translation>
+    </message>
+    <message>
+        <source>Open Donation Website</source>
+        <translation>Adományozási weblap megnyitása</translation>
+    </message>
+    <message>
+        <source>Open Bug Report</source>
+        <translation>Hibajelentés megnyitása</translation>
+    </message>
+    <message>
+        <source>Open Online Documentation</source>
+        <translation>Online dokumentáció megjelenítése</translation>
+    </message>
+    <message>
+        <source>Open Keyboard Shortcuts Guide</source>
+        <translation>Gyorsbillentyűk útmutatójának megnyitása</translation>
+    </message>
+    <message>
+        <source>Save Database Backup</source>
+        <translation>Biztonsági mentés az adatbázisról</translation>
+    </message>
+    <message>
+        <source>SSH Agent: Add Key</source>
+        <translation>SSH ügynök: kulcs hozzáadása</translation>
+    </message>
+    <message>
+        <source>SSH Agent: Remove Key</source>
+        <translation>SSH ügynök: kulcs eltávolítása</translation>
+    </message>
+    <message>
+        <source>Toggle Compact Mode</source>
+        <translation>Kompakt mód be/ki</translation>
+    </message>
+    <message>
+        <source>Set Theme: Automatic</source>
+        <translation>Téma beállítása: automatikus</translation>
+    </message>
+    <message>
+        <source>Set Theme: Light</source>
+        <translation>Téma beállítása: világos</translation>
+    </message>
+    <message>
+        <source>Set Theme: Dark</source>
+        <translation>Téma beállítása: sötét</translation>
+    </message>
+    <message>
+        <source>Set Theme: Classic</source>
+        <translation>Téma beállítása: klasszikus</translation>
+    </message>
+    <message>
+        <source>Toggle Show Menubar</source>
+        <translation>Menü megjelenítésének átkapcsolása</translation>
+    </message>
+    <message>
+        <source>Toggle Show Toolbar</source>
+        <translation>Eszköztár megjelenítése be/ki</translation>
+    </message>
+    <message>
+        <source>Toggle Show Preview Panel</source>
+        <translation>Előnézeti panel megjelenítése be/ki</translation>
+    </message>
+    <message>
+        <source>Toggle Always on Top</source>
+        <translation>Mindig felül be/ki</translation>
+    </message>
+    <message>
+        <source>Toggle Hide Usernames</source>
+        <translation>Felhasználónevek elrejtése be/ki</translation>
+    </message>
+    <message>
+        <source>Toggle Hide Passwords</source>
+        <translation>Jelszavak elrejtése be/ki</translation>
+    </message>
+    <message>
+        <source>Export to XML</source>
+        <translation>Exportálás XML-be</translation>
+    </message>
+    <message>
+        <source>Toggle Allow Screen Capture</source>
+        <translation>Képernyőrögzítés engedélyezése be/ki</translation>
+    </message>
+    <message>
+        <source>Show Group Panel</source>
+        <translation>Csoport panel megjelenítése</translation>
+    </message>
+    <message>
+        <source>Toggle Show Group Panel</source>
+        <translation>Csoport panel megjelenítése be/ki</translation>
+    </message>
+    <message>
+        <source>Setup Remote Sync…</source>
+        <translation>Távoli szinkronizálás beállításai</translation>
+    </message>
+    <message>
+        <source>Password Generator</source>
+        <translation>Jelszógenerátor</translation>
+    </message>
+    <message>
+        <source>E&amp;xpire Entry…</source>
+        <translation>Bejegyzés &amp;elévültté tétele…</translation>
+    </message>
+    <message>
+        <source>Clear SSH Agent</source>
+        <translation>SSH-ügynök törlése</translation>
+    </message>
+    <message>
+        <source>Clear all identities in ssh-agent</source>
+        <translation>Az ssh-agentben található összes személyazonosság törlése</translation>
     </message>
 </context>
 <context>
@@ -5613,26 +6399,6 @@ Javasoljuk az AppImage alkalmazását, amely elérhető a letöltések oldalon.<
     <message>
         <source>Overwriting %1 [%2]</source>
         <translation>%1 felülírása [%2]</translation>
-    </message>
-    <message>
-        <source>older entry merged from database &quot;%1&quot;</source>
-        <translation>régebbi bejegyzés összeolvasztva a(z) „%1” adatbázisból</translation>
-    </message>
-    <message>
-        <source>Adding backup for older target %1 [%2]</source>
-        <translation>Biztonsági mentés hozzáadása a régebbi %1 célhoz [%2]</translation>
-    </message>
-    <message>
-        <source>Adding backup for older source %1 [%2]</source>
-        <translation>Biztonsági mentés hozzáadása a régebbi %1 forráshoz [%2]</translation>
-    </message>
-    <message>
-        <source>Reapplying older target entry on top of newer source %1 [%2]</source>
-        <translation>A régebbi cél újra alkalmazása az újabb %1 forráson [%2]</translation>
-    </message>
-    <message>
-        <source>Reapplying older source entry on top of newer target %1 [%2]</source>
-        <translation>A régebbi forrás újra alkalmazása az újabb %1 célon [%2]</translation>
     </message>
     <message>
         <source>Synchronizing from newer source %1 [%2]</source>
@@ -5728,6 +6494,25 @@ Javasoljuk az AppImage alkalmazását, amely elérhető a letöltések oldalon.<
     </message>
 </context>
 <context>
+    <name>NewEntryAttachmentsDialog</name>
+    <message>
+        <source>Attachment name cannot be empty</source>
+        <translation>A melléklet neve nem lehet üres</translation>
+    </message>
+    <message>
+        <source>Attachment with the same name already exists</source>
+        <translation>Már létezik ugyanilyen nevű melléklet</translation>
+    </message>
+    <message>
+        <source>Save attachment</source>
+        <translation>Melléklet mentése</translation>
+    </message>
+    <message>
+        <source>New entry attachment</source>
+        <translation>Új bejegyzésmelléklet</translation>
+    </message>
+</context>
+<context>
     <name>NixUtils</name>
     <message>
         <source>Password Manager</source>
@@ -5774,15 +6559,6 @@ Javasoljuk az AppImage alkalmazását, amely elérhető a letöltések oldalon.<
     </message>
 </context>
 <context>
-    <name>OpVaultOpenWidget</name>
-    <message>
-        <source>Read Database did not produce an instance
-%1</source>
-        <translation>Az adatbázis olvasása nem hozott létre példányt:
-%1</translation>
-    </message>
-</context>
-<context>
     <name>OpVaultReader</name>
     <message>
         <source>Directory .opvault must exist</source>
@@ -5790,7 +6566,7 @@ Javasoljuk az AppImage alkalmazását, amely elérhető a letöltések oldalon.<
     </message>
     <message>
         <source>Directory .opvault must be readable</source>
-        <translation>A .opvault mappa olvasható kell legyen</translation>
+        <translation>A .opvault mappa olvashatónak kell lennie</translation>
     </message>
     <message>
         <source>Directory .opvault/default must exist</source>
@@ -5798,11 +6574,11 @@ Javasoljuk az AppImage alkalmazását, amely elérhető a letöltések oldalon.<
     </message>
     <message>
         <source>Directory .opvault/default must be readable</source>
-        <translation>A .opvault/default mappa olvasható kell legyen</translation>
+        <translation>A .opvault/default mappa olvashatónak kell lennie</translation>
     </message>
     <message>
         <source>Unable to decode masterKey: %1</source>
-        <translation>Nem dekódolható a mesterkulcs: %1</translation>
+        <translation>A mesterkulcs nem dekódolható: %1</translation>
     </message>
     <message>
         <source>Unable to derive master key: %1</source>
@@ -5825,11 +6601,11 @@ Javasoljuk az AppImage alkalmazását, amely elérhető a letöltések oldalon.<
     </message>
     <message>
         <source>Key file way too small.</source>
-        <translation>A kulcsfájl útja túl kicsi.</translation>
+        <translation>A kulcsfájl túl kicsi.</translation>
     </message>
     <message>
         <source>Key file magic header id invalid</source>
-        <translation>Érvénytelen a kulcsfájl mágikus fejlécazonosítója</translation>
+        <translation>Érvénytelen a kulcsfájl mágikus fejléc-azonosítója</translation>
     </message>
     <message>
         <source>Found zero keys</source>
@@ -5837,7 +6613,7 @@ Javasoljuk az AppImage alkalmazását, amely elérhető a letöltések oldalon.<
     </message>
     <message>
         <source>Failed to read public key.</source>
-        <translation>Nyilvános kulcs olvasása sikertelen.</translation>
+        <translation>A nyilvános kulcs olvasása sikertelen.</translation>
     </message>
     <message>
         <source>Corrupted key file, reading private key failed</source>
@@ -5849,7 +6625,7 @@ Javasoljuk az AppImage alkalmazását, amely elérhető a letöltések oldalon.<
     </message>
     <message>
         <source>No private key payload to decrypt</source>
-        <translation>Nincs dekódolható adat a személyes kulcsból</translation>
+        <translation>Nincs titkos kulcs megadva a visszafejtéshez</translation>
     </message>
     <message>
         <source>Unknown cipher: %1</source>
@@ -5877,7 +6653,7 @@ Javasoljuk az AppImage alkalmazását, amely elérhető a letöltések oldalon.<
     </message>
     <message>
         <source>Failed to initialize cipher: %1</source>
-        <translation>Titkosító indítása sikertelen: %1</translation>
+        <translation>A titkosító előkészítése sikertelen: %1</translation>
     </message>
     <message>
         <source>Decryption failed: %1</source>
@@ -5905,7 +6681,7 @@ Javasoljuk az AppImage alkalmazását, amely elérhető a letöltések oldalon.<
     </message>
     <message>
         <source>Unexpected EOF while reading private key</source>
-        <translation>Nem várt EOF a személyes kulcs olvasása közben</translation>
+        <translation>Nem várt EOF a titkos kulcs olvasása közben</translation>
     </message>
     <message>
         <source>Can&apos;t write public key as it is empty</source>
@@ -5917,11 +6693,15 @@ Javasoljuk az AppImage alkalmazását, amely elérhető a letöltések oldalon.<
     </message>
     <message>
         <source>Can&apos;t write private key as it is empty</source>
-        <translation>Nem lehet írni a személyes kulcs, mivel üres</translation>
+        <translation>Nem lehet írni a titkos kulcsot, mivel üres</translation>
     </message>
     <message>
         <source>Unexpected EOF when writing private key</source>
-        <translation>Nem várt EOF a személyes kulcs írásakor</translation>
+        <translation>Nem várt EOF a titkos kulcs írásakor</translation>
+    </message>
+    <message>
+        <source>(encrypted)</source>
+        <translation>(titkosított)</translation>
     </message>
 </context>
 <context>
@@ -5947,23 +6727,19 @@ Javasoljuk az AppImage alkalmazását, amely elérhető a letöltések oldalon.<
     <name>PasskeyExportDialog</name>
     <message>
         <source>KeePassXC - Passkey Export</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Export the following Passkey entries.</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC – Jelkulcs exportálása</translation>
     </message>
     <message>
         <source>Filenames will be generated with title and .passkey file extension.</source>
-        <translation type="unfinished"/>
+        <translation>A fájlnevek a cím alapján lesznek előállítva, és .passkey kiterjesztésűek lesznek.</translation>
     </message>
     <message>
         <source>Export entries</source>
-        <translation type="unfinished"/>
+        <translation>Bejegyzések exportálása</translation>
     </message>
     <message>
         <source>Export Selected</source>
-        <translation type="unfinished"/>
+        <translation>Kijelöltek exportálása</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -5971,55 +6747,49 @@ Javasoljuk az AppImage alkalmazását, amely elérhető a letöltések oldalon.<
     </message>
     <message>
         <source>Export to folder</source>
-        <translation type="unfinished"/>
+        <translation>Exportálás mappába</translation>
+    </message>
+    <message>
+        <source>Export the following passkey entries.</source>
+        <translation>A következő jelkulcsot tartalmazó bejegyzések exportálása.</translation>
     </message>
 </context>
 <context>
     <name>PasskeyExporter</name>
     <message>
         <source>KeePassXC: Passkey Export</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC: Jelkulcs exportálása</translation>
     </message>
     <message>
         <source>File &quot;%1.passkey&quot; already exists.
 Do you want to overwrite it?
 </source>
-        <translation type="unfinished"/>
+        <translation>A(z) „%1.passkey” fájl már létezik.
+Felülírja?
+</translation>
     </message>
     <message>
         <source>Cannot open file</source>
-        <translation type="unfinished"/>
+        <translation>A fájl nem nyitható meg</translation>
     </message>
     <message>
         <source>Cannot open file &quot;%1&quot; for writing.</source>
-        <translation type="unfinished"/>
+        <translation>A(z) „%1” fájl nem nyitható meg írásra.</translation>
     </message>
     <message>
         <source>Cannot write to file</source>
-        <translation type="unfinished"/>
+        <translation>Nem lehet a fájlba írni</translation>
     </message>
 </context>
 <context>
     <name>PasskeyImportDialog</name>
     <message>
         <source>KeePassXC - Passkey Import</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Do you want to import the Passkey?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>URL: %1</source>
-        <translation type="unfinished"/>
+        <translation>KeePassXC – Jelkulcs importálása</translation>
     </message>
     <message>
         <source>Username: %1</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Use default group (Imported Passkeys)</source>
-        <translation type="unfinished"/>
+        <translation>Felhasználónév: %1</translation>
     </message>
     <message>
         <source>Group</source>
@@ -6027,15 +6797,11 @@ Do you want to overwrite it?
     </message>
     <message>
         <source>Database</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Select Database</source>
-        <translation type="unfinished"/>
+        <translation>Adatbázis</translation>
     </message>
     <message>
         <source>Import Passkey</source>
-        <translation type="unfinished"/>
+        <translation>Jelkulcs importálása</translation>
     </message>
     <message>
         <source>Import</source>
@@ -6046,47 +6812,71 @@ Do you want to overwrite it?
         <translation>Mégse</translation>
     </message>
     <message>
-        <source>Database: %1</source>
-        <translation type="unfinished"/>
+        <source>Entry</source>
+        <translation>Bejegyzés</translation>
     </message>
     <message>
-        <source>Group:</source>
-        <translation type="unfinished"/>
+        <source>Create new entry</source>
+        <translation>Új bejegyzés importálása</translation>
+    </message>
+    <message>
+        <source>Relying Party: %1</source>
+        <translation>Közvetítő fél: %1</translation>
+    </message>
+    <message>
+        <source>Import the following passkey:</source>
+        <translation>A következő jelkulcs importálása:</translation>
+    </message>
+    <message>
+        <source>Import the following passkey to this entry:</source>
+        <translation>A következő jelkulcs importálása ebbe a bejegyzésbe:</translation>
+    </message>
+    <message>
+        <source>Default passkeys group (Imported Passkeys)</source>
+        <translation>Jelkulcsok alapértelmezett csoportja (importált jelkulcsok)</translation>
     </message>
 </context>
 <context>
     <name>PasskeyImporter</name>
     <message>
         <source>Passkey file</source>
-        <translation type="unfinished"/>
+        <translation>Jelkulcsfájl</translation>
     </message>
     <message>
         <source>All files</source>
         <translation>Minden fájl</translation>
     </message>
     <message>
-        <source>Open Passkey file</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Cannot open file</source>
-        <translation type="unfinished"/>
+        <translation>A fájl nem nyitható meg</translation>
     </message>
     <message>
         <source>Cannot open file &quot;%1&quot; for reading.</source>
-        <translation type="unfinished"/>
+        <translation>A(z) „%1” fájl nem nyitható meg olvasásra.</translation>
     </message>
     <message>
-        <source>Cannot import Passkey</source>
-        <translation type="unfinished"/>
+        <source>Open passkey file</source>
+        <translation>Jelkulcsfájl megnyitása</translation>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;. Data is missing.</source>
-        <translation type="unfinished"/>
+        <source>Cannot import passkey</source>
+        <translation>A jelkulcs nem importálható</translation>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
-        <translation type="unfinished"/>
+        <source>Cannot import passkey file &quot;%1&quot;. Data is missing.</source>
+        <translation>A(z) „%1” jelkulcsfájl nem importálható. Az adatok hiányoznak.</translation>
+    </message>
+    <message>
+        <source>Cannot import passkey file &quot;%1&quot;.
+The following data is missing:
+%2</source>
+        <translation>A(z) „%1” jelkulcsfájl nem importálható.
+A következő adatok hiányoznak:
+%2</translation>
+    </message>
+    <message>
+        <source>Cannot import passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
+        <translation>A(z) „%1” jelkulcsfájl nem importálható. A titkos kulcs hiányzik vagy hibás.</translation>
     </message>
 </context>
 <context>
@@ -6268,10 +7058,6 @@ Do you want to overwrite it?
         <translation>Tartalmazhat ezekből is:</translation>
     </message>
     <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>Kihagyott karakterek: „0”, „1”, „l”, „I”, „O”, „|”, „﹒”</translation>
-    </message>
-    <message>
         <source>Exclude look-alike characters</source>
         <translation>Hasonlóan kinéző karakterek kizárása</translation>
     </message>
@@ -6296,10 +7082,6 @@ Do you want to overwrite it?
         <translation>Szavak száma:</translation>
     </message>
     <message>
-        <source>Character Count:</source>
-        <translation>Karakterszám:</translation>
-    </message>
-    <message>
         <source>Word Case:</source>
         <translation>Minden Szó Nagybetűs</translation>
     </message>
@@ -6310,10 +7092,6 @@ Do you want to overwrite it?
     <message>
         <source>Add custom wordlist</source>
         <translation>Egyéni szólista hozzáadása</translation>
-    </message>
-    <message>
-        <source>character</source>
-        <translation>karakter</translation>
     </message>
     <message>
         <source>Close</source>
@@ -6421,6 +7199,22 @@ Valóban felülírja?</translation>
         <source>Special Characters</source>
         <translation>Speciális karakterek</translation>
     </message>
+    <message>
+        <source>passwordLength</source>
+        <translation>jelszóhossz</translation>
+    </message>
+    <message>
+        <source>Characters: %1</source>
+        <translation>Karakterszám: %1</translation>
+    </message>
+    <message>
+        <source>MIXED case</source>
+        <translation>VEGYES eset</translation>
+    </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;, &quot;B&quot;, &quot;8&quot;, &quot;G&quot;, &quot;6&quot;</source>
+        <translation>Kihagyott karakterek: „0”, „1”, „l”, „I”, „O”, „|”, „﹒”, „B”, „8”, „G”, „6”</translation>
+    </message>
 </context>
 <context>
     <name>PasswordWidget</name>
@@ -6469,8 +7263,8 @@ Valóban felülírja?</translation>
         <translation>Kiváló</translation>
     </message>
     <message>
-        <source>Toggle password visibilty using Control + H. Open the password generator using Control + G.</source>
-        <translation>Jelszavak láthatóságának átváltása Control + H-val. Jelszó-előállító megnyitása Control + G-vel.</translation>
+        <source>Toggle password visibility using Control + H. Open the password generator using Control + G.</source>
+        <translation>Jelszó láthatóságának átváltása Ctrl + H-val. Jelszó-előállító megnyitása Ctrl + G-vel.</translation>
     </message>
 </context>
 <context>
@@ -6486,6 +7280,21 @@ Valóban felülírja?</translation>
     <message>
         <source>Press &amp;Tab between characters</source>
         <translation>Nyomja meg a &amp;Tab billentyűt a karakterek között</translation>
+    </message>
+</context>
+<context>
+    <name>PreviewEntryAttachmentsDialog</name>
+    <message>
+        <source>Preview entry attachment</source>
+        <translation>Bejegyzésmelléklet előnézete</translation>
+    </message>
+    <message>
+        <source>No preview available</source>
+        <translation>Nem érhető el előnézet</translation>
+    </message>
+    <message>
+        <source>Image format not supported</source>
+        <translation>A képformátum nem támogatott</translation>
     </message>
 </context>
 <context>
@@ -6525,6 +7334,10 @@ Valóban felülírja?</translation>
     <message>
         <source>Continue</source>
         <translation>Folytatás</translation>
+    </message>
+    <message>
+        <source>Continue with weak password</source>
+        <translation>Folytatás gyenge jelszóval</translation>
     </message>
 </context>
 <context>
@@ -6571,7 +7384,7 @@ Valóban felülírja?</translation>
     </message>
     <message>
         <source>No URL provided</source>
-        <translation>Nincs URL biztosítva</translation>
+        <translation>Nincs megadva webcím</translation>
     </message>
     <message>
         <source>No logins found</source>
@@ -6615,11 +7428,11 @@ Valóban felülírja?</translation>
     </message>
     <message>
         <source>URL for the entry.</source>
-        <translation>Bejegyzés URL-je.</translation>
+        <translation>A bejegyzés webcíme.</translation>
     </message>
     <message>
         <source>URL</source>
-        <translation>URL</translation>
+        <translation>Webcím</translation>
     </message>
     <message>
         <source>Notes for the entry.</source>
@@ -6925,17 +7738,11 @@ Valóban felülírja?</translation>
     </message>
     <message>
         <source>Target decryption time in MS for the database.</source>
-        <translation>Megcélzott visszafejtési idő a ms-ban az adatbázis számára.</translation>
+        <translation>Megcélzott visszafejtési idő ms-ban az adatbázis számára.</translation>
     </message>
     <message>
         <source>time</source>
         <translation>idő</translation>
-    </message>
-    <message>
-        <source>Set the key file for the database.
-This options is deprecated, use --set-key-file instead.</source>
-        <translation>A kulcsfájl beállítása az adatbázishoz.
-Ez a kapcsoló elavult, használja helyette a --set-key-file kapcsolót.</translation>
     </message>
     <message>
         <source>Set the key file for the database.</source>
@@ -7169,10 +7976,6 @@ Ez a kapcsoló elavult, használja helyette a --set-key-file kapcsolót.</transl
         <translation>Érvénytelen a szavak száma: %1</translation>
     </message>
     <message>
-        <source>The word list is too small (&lt; 1000 items)</source>
-        <translation>A szavak listája túl rövid (&lt; 1000 elem)</translation>
-    </message>
-    <message>
         <source>Title for the entry.</source>
         <translation>Bejegyzés címe.</translation>
     </message>
@@ -7315,10 +8118,6 @@ Ez a kapcsoló elavult, használja helyette a --set-key-file kapcsolót.</transl
     <message>
         <source>Exit interactive mode.</source>
         <translation>Kilépés az interaktív módból.</translation>
-    </message>
-    <message>
-        <source>Format to use when exporting. Available choices are &apos;xml&apos; or &apos;csv&apos;. Defaults to &apos;xml&apos;.</source>
-        <translation>Exportálási formátum. Lehetőségek: „xml” vagy „csv”. Az alapértelmezett az „xml”.</translation>
     </message>
     <message>
         <source>Exports the content of a database to standard output in the specified format.</source>
@@ -7909,18 +8708,6 @@ Kernel: %3 %4</translation>
         <translation>a fájl üres</translation>
     </message>
     <message>
-        <source>malformed string</source>
-        <translation>rosszul formázott karakterlánc</translation>
-    </message>
-    <message>
-        <source>missing closing quote</source>
-        <translation>hiányzó lezáró idézőjel</translation>
-    </message>
-    <message>
-        <source>%1: (row, col) %2,%3</source>
-        <translation>%1: (sor, oszlop) %2,%3</translation>
-    </message>
-    <message>
         <source>AES 256-bit</source>
         <translation>256 bites AES</translation>
     </message>
@@ -8099,10 +8886,6 @@ Kernel: %3 %4</translation>
         <translation>adatbázis jelszó beolvasása az stdin-ről</translation>
     </message>
     <message>
-        <source>Locked databases.</source>
-        <translation>Zárolt adatbázisok.</translation>
-    </message>
-    <message>
         <source>Database failed to lock.</source>
         <translation>Adatbázis-zárolás sikertelen.</translation>
     </message>
@@ -8142,7 +8925,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Failed to sign challenge using Windows Hello.</source>
-        <translation>Nem sikerült a bejelentkezés a Windows Hello-val.</translation>
+        <translation>Nem sikerült a bejelentkezés a Windows Hellóval.</translation>
     </message>
     <message>
         <source>Warning: Failed to block screenshot capture on a top-level window.</source>
@@ -8165,44 +8948,82 @@ Kernel: %3 %4</translation>
         <translation>képernyőképek és alkalmazásrögzítés engedélyezése (Windows/macOS)</translation>
     </message>
     <message>
+        <source>Set the key file for the database.
+This option is deprecated, use --set-key-file instead.</source>
+        <translation>A kulcsfájl beállítása az adatbázishoz.
+Ez a kapcsoló elavult, használja helyette a --set-key-file kapcsolót.</translation>
+    </message>
+    <message>
+        <source>Databases have been locked.</source>
+        <translation>Az adatbázisok zárolva vannak.</translation>
+    </message>
+    <message>
+        <source>Attestation not supported</source>
+        <translation>Az igazolás nem támogatott</translation>
+    </message>
+    <message>
+        <source>Credential is excluded</source>
+        <translation>A hitelesítési adat ki van zárva</translation>
+    </message>
+    <message>
+        <source>Passkeys request canceled</source>
+        <translation>A jelkulcskérés megszakítva</translation>
+    </message>
+    <message>
+        <source>Invalid user verification</source>
+        <translation>Érvénytelen felhasználóellenőrzés</translation>
+    </message>
+    <message>
+        <source>Empty public key</source>
+        <translation>Üres nyilvános kulcs</translation>
+    </message>
+    <message>
+        <source>Invalid URL provided</source>
+        <translation>Érvénytelen webcím lett megadva</translation>
+    </message>
+    <message>
+        <source>Passkeys</source>
+        <translation>Jelkulcsok</translation>
+    </message>
+    <message>
         <source>AES initialization failed</source>
-        <translation type="unfinished"/>
+        <translation>Az AES előkészítése sikertelen</translation>
     </message>
     <message>
         <source>AES encrypt failed</source>
-        <translation type="unfinished"/>
+        <translation>Az AES-titkosítás sikertelen</translation>
     </message>
     <message>
         <source>Failed to store in Linux Keyring</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Could not locate key in keyring</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Could not read key in keyring</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>AES decrypt failed</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>No Polkit authentication agent was available</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Polkit authorization failed</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>No Quick Unlock provider is available</source>
-        <translation type="unfinished"/>
+        <translation>A linuxos kulcstartó tárolása sikertelen</translation>
     </message>
     <message>
         <source>Polkit returned an error: %1</source>
-        <translation type="unfinished"/>
+        <translation>A Polkit hibát adott vissza: %1</translation>
+    </message>
+    <message>
+        <source>Could not locate key in keyring</source>
+        <translation>A kulcstartóban lévő kulcs nem található</translation>
+    </message>
+    <message>
+        <source>Could not read key in keyring</source>
+        <translation>A kulcstartóban lévő kulcs nem olvasható</translation>
+    </message>
+    <message>
+        <source>AES decrypt failed</source>
+        <translation>Az AES-titkosítás feloldása sikertelen</translation>
+    </message>
+    <message>
+        <source>No Polkit authentication agent was available</source>
+        <translation>Nem érhető el Polkit hitelesítési ügynök</translation>
+    </message>
+    <message>
+        <source>Polkit authorization failed</source>
+        <translation>A Polkit-hitelesítés sikertelen</translation>
+    </message>
+    <message>
+        <source>No Quick Unlock provider is available</source>
+        <translation>Nem érhető el gyors feloldási szolgáltató</translation>
     </message>
     <message>
         <source>Failed to init KeePassXC crypto.</source>
@@ -8221,8 +9042,198 @@ Kernel: %3 %4</translation>
         <translation>A kulcsadatok visszafejtése sikertelen.</translation>
     </message>
     <message>
-        <source>Passkeys</source>
+        <source>Origin is empty or not allowed</source>
+        <translation>Az eredet üres vagy nem engedélyezett</translation>
+    </message>
+    <message>
+        <source>Effective domain is not a valid domain</source>
+        <translation>Az effektív tartomány érvénytelen</translation>
+    </message>
+    <message>
+        <source>Origin and RP ID do not match</source>
+        <translation>Az eredet és az RP azonosító nem egyezik</translation>
+    </message>
+    <message>
+        <source>No supported algorithms were provided</source>
+        <translation>Nem lett támogatott algoritmus megadva</translation>
+    </message>
+    <message>
+        <source>Wait for timer to expire</source>
+        <translation>Várakozás az időzítő lejáratára</translation>
+    </message>
+    <message>
+        <source>Challenge is shorter than required minimum length</source>
+        <translation>A kihívás rövidebb mint a legrövidebb várt hossz</translation>
+    </message>
+    <message>
+        <source>user.id does not match the required length</source>
+        <translation>A user.id nem a szükséges hosszúságú</translation>
+    </message>
+    <message>
+        <source>Favorite</source>
+        <comment>Tag for favorite entries</comment>
+        <translation>Kedvenc</translation>
+    </message>
+    <message>
+        <source>File does not exist.</source>
+        <translation>A fájl nem létezik</translation>
+    </message>
+    <message>
+        <source>Cannot open file: %1</source>
+        <translation>A fájl nem nyitható meg: %1</translation>
+    </message>
+    <message>
+        <source>Cannot parse file: %1 at position %2</source>
+        <translation>A fájl nem dolgozható fel: %1, ennél a pozíciónál: %2</translation>
+    </message>
+    <message>
+        <source>Failed to decrypt json file: %1</source>
+        <translation>A JSON-fájl visszafejtése sikertelen: %1</translation>
+    </message>
+    <message>
+        <source>Invalid encKeyValidation field</source>
+        <translation>Érvénytelen encKeyValidation mező</translation>
+    </message>
+    <message>
+        <source>Invalid cipher list within encKeyValidation field</source>
+        <translation>Érvénytelen titkosítólista az encKeyValidation mezőben</translation>
+    </message>
+    <message>
+        <source>Wrong password</source>
+        <translation>Hibás jelszó</translation>
+    </message>
+    <message>
+        <source>Invalid encrypted data field</source>
+        <translation>Érvénytelen titkosított adatmező</translation>
+    </message>
+    <message>
+        <source>Invalid cipher list within encrypted data field</source>
+        <translation>Érvénytelen titkosítólista a titkosított adatmezőben</translation>
+    </message>
+    <message>
+        <source>Cannot initialize cipher</source>
+        <translation>A titkosító előkészítése sikertelen</translation>
+    </message>
+    <message>
+        <source>Cannot decrypt data</source>
+        <translation>Nem lehet visszafejteni az adatokat</translation>
+    </message>
+    <message>
+        <source>Bitwarden Import</source>
+        <translation>Bitwarden import</translation>
+    </message>
+    <message>
+        <source>Archived</source>
+        <comment>Tag for archived entries</comment>
+        <translation>Archiválva</translation>
+    </message>
+    <message>
+        <source>Invalid 1PUX file format: Not a valid ZIP file.</source>
+        <translation>Érvénytelen 1PUX-fájlformátum: nem érvényes ZIP-fájl.</translation>
+    </message>
+    <message>
+        <source>Invalid 1PUX file format: Missing export.data</source>
+        <translation>Érvénytelen 1PUX-fájlformátum: hiányzó export.data.</translation>
+    </message>
+    <message>
+        <source>1Password Import</source>
+        <translation>1Password import</translation>
+    </message>
+    <message>
+        <source>Enter Shortcut</source>
+        <translation>Gyorsbillentyű megadása</translation>
+    </message>
+    <message>
+        <source>Action</source>
+        <translation>Művelet</translation>
+    </message>
+    <message>
+        <source>Shortcuts</source>
+        <translation>Gyorsbillentyűk</translation>
+    </message>
+    <message>
+        <source>Unknown passkeys error</source>
+        <translation>Ismeretlen, jelkulcsokkal kapcsolatos hiba</translation>
+    </message>
+    <message>
+        <source>Invalid KDF iterations, cannot decrypt json file</source>
+        <translation>Érvénytelen KDF iterációk, a JSON-fájl nem fejthető vissza</translation>
+    </message>
+    <message>
+        <source>Unsupported format, ensure your Bitwarden export is password-protected</source>
+        <translation>Nem támogatott formátum, győződjön meg róla, hogy a Bitwarden exportja jelszóval védett.</translation>
+    </message>
+    <message>
+        <source>Only PBKDF and Argon2 are supported, cannot decrypt json file</source>
+        <translation>Csak a PBKDF és az Argon2 támogatott, a JSON-fájl nem fejthető vissza</translation>
+    </message>
+    <message>
+        <source>Reset Shortcuts</source>
+        <translation>Gyorsbillentyűk visszaállítása</translation>
+    </message>
+    <message>
+        <source>Double click an action to change its shortcut</source>
+        <translation>Kattintson duplán egy műveletre a gyorsbillentyűje módosításához</translation>
+    </message>
+    <message>
+        <source>Filter...</source>
+        <translation>Szűrő…</translation>
+    </message>
+    <message>
+        <source>Shortcut Conflict</source>
+        <translation>Gyorsbillentyű-ütközés</translation>
+    </message>
+    <message>
+        <source>Shortcut %1 conflicts with &apos;%2&apos;. Overwrite shortcut?</source>
+        <translation>A(z) %1 gyorsbillentyű ütközik ezzel: „%2”. Felülírja?</translation>
+    </message>
+    <message>
+        <source>Cannot generate valid passphrases because the wordlist is too short</source>
+        <translation>Nem lehet érvényes jelszavakat generálni, mert a szólista túl rövid</translation>
+    </message>
+    <message>
+        <source>Encrypted files are not supported.</source>
+        <translation>A titkosított fájlok nem támogatottak</translation>
+    </message>
+    <message>
+        <source>Proton Pass Import</source>
+        <translation>Proton Pass importálás</translation>
+    </message>
+    <message>
+        <source>Delete plugin data?</source>
+        <translation>Törölhetők a bővítmény adatai?</translation>
+    </message>
+    <message numerus="yes">
+        <source>Delete plugin data from Entry(s)?</source>
+        <translation><numerusform>Törölhetők a bővítmény adatai a bejegyzésekből?</numerusform><numerusform>Törölhetők a bővítmény adatai a bejegyzésekből?</numerusform></translation>
+    </message>
+    <message>
+        <source>Passkey</source>
+        <translation>Jelkulcso</translation>
+    </message>
+    <message>
+        <source>Format to use when exporting. Available choices are &apos;xml&apos;, &apos;csv&apos; or &apos;html&apos;. Defaults to &apos;xml&apos;.</source>
+        <translation>Exportálási formátum. Lehetőségek: „xml”, „csv” vagy „html”. Az alapértelmezett az „xml”.</translation>
+    </message>
+    <message>
+        <source>start minimized to the system tray</source>
+        <translation>indítás a rendszertálcára minimalizálva</translation>
+    </message>
+    <message>
+        <source>malformed string, possible unescaped delimiter</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>missing closing delimiter</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1, row: %2, column: %3</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation>Címkék</translation>
     </message>
 </context>
 <context>
@@ -8260,6 +9271,37 @@ Kernel: %3 %4</translation>
     </message>
 </context>
 <context>
+    <name>RemoteHandler</name>
+    <message>
+        <source>Command `%1` did not finish in time. Process was killed.</source>
+        <translation>A parancs nem fejeződött be időben: „%1”. A folyamat kilőve.</translation>
+    </message>
+    <message>
+        <source>Failed to upload merged database. Command `%1` did not finish in time. Process was killed.</source>
+        <translation>Nem sikerült feltölteni az egyesített adatbázist. A parancs nem fejeződött be időben: „%1”. A folyamat kilőve.</translation>
+    </message>
+    <message>
+        <source>Invalid download parameters provided.</source>
+        <translation>Érvénytelen letöltési paraméterek lettek megadva.</translation>
+    </message>
+    <message>
+        <source>Command `%1` failed to download database.</source>
+        <translation>A parancs nem tudta letölteni az adatbázist: „%1”.</translation>
+    </message>
+    <message>
+        <source>Invalid database pointer or upload parameters provided.</source>
+        <translation>Érvénytelen adatbázismutató vagy feltöltési paraméterek lettek megadva.</translation>
+    </message>
+    <message>
+        <source>Command `%1` exited with status code: %2</source>
+        <translation>A parancs (%1) ezzel az állapotkóddal lépett ki: %2</translation>
+    </message>
+    <message>
+        <source>Failed to upload merged database. Command `%1` exited with status code: %2</source>
+        <translation>Az egyesített adatbázis feltöltése sikertelen. A parancs (%1) ezzel az állapotkóddal lépett ki: %2</translation>
+    </message>
+</context>
+<context>
     <name>ReportsWidgetBrowserStatistics</name>
     <message>
         <source>Double-click entries to edit.</source>
@@ -8267,15 +9309,15 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>List of entry URLs</source>
-        <translation>Bejegyzések URL-jeinek listája</translation>
+        <translation>Bejegyzések webcímeinek listája</translation>
     </message>
     <message>
         <source>Entry has no URLs set</source>
-        <translation>A bejegyzésnél nincs URL beállítva</translation>
+        <translation>A bejegyzésnél nincs beállítva webcím</translation>
     </message>
     <message>
         <source>Allowed URLs</source>
-        <translation>Engedélyezett URL-ek</translation>
+        <translation>Engedélyezett webcímek</translation>
     </message>
     <message>
         <source>Entry has no Browser Integration settings</source>
@@ -8283,7 +9325,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Denied URLs</source>
-        <translation>Tiltott URL-ek</translation>
+        <translation>Tiltott webcímek</translation>
     </message>
     <message>
         <source> (Excluded)</source>
@@ -8299,7 +9341,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>No entries with a URL, or none has browser extension settings saved.</source>
-        <translation>Nincsenek URL-t tartalmazó bejegyzések, vagy egyikhez sem lettek böngészőbeállítások mentve</translation>
+        <translation>Nincsenek webcímet tartalmazó bejegyzések, vagy egyikhez sem lettek böngészőbeállítások mentve</translation>
     </message>
     <message>
         <source>Title</source>
@@ -8311,7 +9353,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>URLs</source>
-        <translation>URL-ek</translation>
+        <translation>Webcímek</translation>
     </message>
     <message>
         <source>Edit Entry…</source>
@@ -8325,51 +9367,52 @@ Kernel: %3 %4</translation>
         <source>Exclude from reports</source>
         <translation>Kizárás a jelentésekből</translation>
     </message>
+    <message numerus="yes">
+        <source>Expire Entry(s)…</source>
+        <translation><numerusform>Bejegyzés elévültté tétele…</numerusform><numerusform>Bejegyzések elévültté tétele…</numerusform></translation>
+    </message>
     <message>
         <source>Only show entries that have a URL</source>
-        <translation type="unfinished"/>
+        <translation>Csak a webcímmel rendelkező bejegyzések megjelenítése</translation>
     </message>
     <message>
         <source>Only show entries that have been explicitly allowed or denied</source>
-        <translation type="unfinished"/>
+        <translation>Csak a kifejezetten engedélyezett vagy tiltott bejegyzések megjelenítése</translation>
     </message>
     <message>
         <source>Show expired entries</source>
-        <translation type="unfinished"/>
+        <translation>Lejárt bejegyzések megjelenítése</translation>
     </message>
     <message>
         <source> (Expired)</source>
-        <translation type="unfinished"/>
+        <translation>(Lejárt)</translation>
+    </message>
+    <message numerus="yes">
+        <source>Delete plugin data from Entry(s)…</source>
+        <translation><numerusform>Bővítmény adatainak törlése a bejegyzésekből…</numerusform><numerusform>Bővítmény adatainak törlése a bejegyzésekből…</numerusform></translation>
     </message>
 </context>
 <context>
     <name>ReportsWidgetHealthcheck</name>
     <message>
-        <source>Hover over reason to show additional details. Double-click entries to edit.</source>
-        <translation>Vigye az egérmutatót az ok felé a további részletek megjelenítéséhez. Kattintson duplán a bejegyzésekre a szerkesztéshez.</translation>
+        <source>Show expired entries</source>
+        <translation>Lejárt bejegyzések megjelenítése</translation>
     </message>
     <message>
-        <source>Bad</source>
-        <comment>Password quality</comment>
-        <translation>Rossz</translation>
+        <source> (Expired)</source>
+        <translation>(Lejárt)</translation>
+    </message>
+    <message>
+        <source>Hover over reason to show additional details. Double-click entries to edit.</source>
+        <translation>Vigye az egérmutatót az ok felé a további részletek megjelenítéséhez. Kattintson duplán a bejegyzésekre a szerkesztéshez.</translation>
     </message>
     <message>
         <source>Bad — password must be changed</source>
         <translation>Rossz – a jelszót meg kell változtatni</translation>
     </message>
     <message>
-        <source>Poor</source>
-        <comment>Password quality</comment>
-        <translation>Silány</translation>
-    </message>
-    <message>
         <source>Poor — password should be changed</source>
         <translation>Silány – a jelszót meg kellene változtatni</translation>
-    </message>
-    <message>
-        <source>Weak</source>
-        <comment>Password quality</comment>
-        <translation>Gyenge</translation>
     </message>
     <message>
         <source>Weak — consider changing the password</source>
@@ -8419,17 +9462,13 @@ Kernel: %3 %4</translation>
         <source>Exclude from reports</source>
         <translation>Kizárás a jelentésekből</translation>
     </message>
-    <message>
-        <source>Show expired entries</source>
-        <translation type="unfinished"/>
+    <message numerus="yes">
+        <source>Expire Entry(s)…</source>
+        <translation><numerusform>Bejegyzés elévültté tétele…</numerusform><numerusform>Bejegyzések elévültté tétele…</numerusform></translation>
     </message>
     <message>
         <source>Show entries that have been excluded from reports</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source> (Expired)</source>
-        <translation type="unfinished"/>
+        <translation>A jelentésekből kizárt bejegyzések megjelenítése</translation>
     </message>
 </context>
 <context>
@@ -8526,6 +9565,10 @@ Kernel: %3 %4</translation>
         <source>Exclude from reports</source>
         <translation>Kizárás a jelentésekből</translation>
     </message>
+    <message numerus="yes">
+        <source>Expire Entry(s)…</source>
+        <translation><numerusform>Bejegyzés elévültté tétele…</numerusform><numerusform>Bejegyzések elévültté tétele…</numerusform></translation>
+    </message>
 </context>
 <context>
     <name>ReportsWidgetPasskeys</name>
@@ -8539,15 +9582,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>List of entry URLs</source>
-        <translation>Bejegyzések URL-jeinek listája</translation>
-    </message>
-    <message>
-        <source>Please wait, list of entries with Passkeys is being updated…</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>No entries with Passkeys.</source>
-        <translation type="unfinished"/>
+        <translation>Bejegyzések webcímeinek listája</translation>
     </message>
     <message>
         <source>Title</source>
@@ -8563,7 +9598,7 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>URLs</source>
-        <translation>URL-ek</translation>
+        <translation>Webcímek</translation>
     </message>
     <message>
         <source>Edit Entry…</source>
@@ -8575,15 +9610,31 @@ Kernel: %3 %4</translation>
     </message>
     <message>
         <source>Relying Party</source>
-        <translation type="unfinished"/>
+        <translation>Közvetítő fél</translation>
     </message>
     <message>
         <source>Show expired entries</source>
-        <translation type="unfinished"/>
+        <translation>Lejárt bejegyzések megjelenítése</translation>
     </message>
     <message>
         <source> (Expired)</source>
-        <translation type="unfinished"/>
+        <translation>(Lejárt)</translation>
+    </message>
+    <message>
+        <source>Export Confirmation</source>
+        <translation>Exportálás megerősítése</translation>
+    </message>
+    <message>
+        <source>The passkey file will be vulnerable to theft and unauthorized use, if left unsecured. Are you sure you want to continue?</source>
+        <translation>A jelkulcsfájl védtelenül hagyva lopásnak és illetéktelen használatnak van kitéve. Valóban folytatja?</translation>
+    </message>
+    <message>
+        <source>Please wait, list of entries with passkeys is being updated…</source>
+        <translation>Kis türelmet, a jelkulcsot tartalmazó elemek listája frissül…</translation>
+    </message>
+    <message>
+        <source>No entries with passkeys.</source>
+        <translation>Nincsenek jelkulcsot tartalmazó elemek.</translation>
     </message>
 </context>
 <context>
@@ -8759,6 +9810,14 @@ Kernel: %3 %4</translation>
         <source>No agent running, cannot list identities.</source>
         <translation>Nincs működő ügynök, identitások nem listázhatóak.</translation>
     </message>
+    <message>
+        <source>Failed to remove all SSH identities from agent.</source>
+        <translation>Az ügynök összes személyazonosságának törlése sikertelen</translation>
+    </message>
+    <message>
+        <source>All SSH identities removed from agent.</source>
+        <translation>Az ügynök összes személyazonossága törölve.</translation>
+    </message>
 </context>
 <context>
     <name>SearchHelpWidget</name>
@@ -8904,32 +9963,8 @@ Kernel: %3 %4</translation>
         <translation>Megerősítés, ha jelszavakat kérnek le a kliensek</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;
-           font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Helvetica','Arial','sans-serif','Apple Color
-           Emoji','Segoe UI Emoji'; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;This setting does
-           not override disabling recycle bin prompts&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;
-           font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color
-           Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;Ez a beállítás nem
-írja felül a kuka kérdéseinek letiltását.&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-</translation>
-    </message>
-    <message>
         <source>Confirm when clients request entry deletion</source>
         <translation>Megerősítés, ha a kliensek törlést kérnek</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications
-           which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also
-           crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a
-           different value set in applications.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ez növeli a kompatibilitást bizonyos alkalmazásokkal,
-           melyek az adatbázis előzetes feloldása nélkül keresnek jelszót.&lt;/p&gt;&lt;p&gt;De az engedélyezése miatt összeomolhat
-           a kliens, ha az adatbázis nem kerül feloldásra egy bizonyos időtúllépésen belül. (Általában 25 mp, de más érték lehet
-           megadva az alkalmazásokban.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </translation>
     </message>
     <message>
         <source>Prompt to unlock database before searching</source>
@@ -8954,6 +9989,15 @@ Kernel: %3 %4</translation>
     <message>
         <source>Save current changes to activate the plugin and enable editing of this section.</source>
         <translation>Mentse el a módosításokat a beépülő aktiválásához és ezen rész szerkesztésének engedélyezéséhez.</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This setting does not override disabling recycle bin prompts &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ez a beállítás nem bírálja felül a kukába helyezési kérdések letiltását &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a different value set in applications.) &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Ez növeli a kompatibilitást bizonyos alkalmazásokkal,           melyek az adatbázis előzetes feloldása nélkül keresnek jelszót.&lt;/p&gt;&lt;p&gt;De az engedélyezése miatt összeomolhat a kliens, ha az adatbázis nem kerül feloldásra egy bizonyos időtúllépésen belül. (Általában 25 mp, de más érték lehet megadva az alkalmazásokban.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
+          </translation>
     </message>
 </context>
 <context>
@@ -9215,7 +10259,7 @@ Példa: JBSWY3DPEHPK3PXP</translation>
     <name>URLEdit</name>
     <message>
         <source>Invalid URL</source>
-        <translation>Érvénytelen URL</translation>
+        <translation>Érvénytelen webcím</translation>
     </message>
 </context>
 <context>
@@ -9256,26 +10300,6 @@ Példa: JBSWY3DPEHPK3PXP</translation>
         <translation>Máris elkezdhető a jelszavak titkosított tárolása a KeePassXC adatbázisban</translation>
     </message>
     <message>
-        <source>Create new database</source>
-        <translation>Új adatbázis létrehozása</translation>
-    </message>
-    <message>
-        <source>Open existing database</source>
-        <translation>Meglévő adatbázis megnyitása</translation>
-    </message>
-    <message>
-        <source>Import from KeePass 1</source>
-        <translation>Importálás KeePass 1-ből</translation>
-    </message>
-    <message>
-        <source>Import from 1Password</source>
-        <translation>Importálás 1Password-ből</translation>
-    </message>
-    <message>
-        <source>Import from CSV</source>
-        <translation>Importálás CSV-ből</translation>
-    </message>
-    <message>
         <source>Recent databases</source>
         <translation>Legutóbb használt adatbázisok</translation>
     </message>
@@ -9286,6 +10310,18 @@ Példa: JBSWY3DPEHPK3PXP</translation>
     <message>
         <source>Welcome to KeePassXC %1</source>
         <translation>Üdvözöljük a KeePassXC %1 verzióban!</translation>
+    </message>
+    <message>
+        <source>Create Database</source>
+        <translation>Adatbázis létrehozása</translation>
+    </message>
+    <message>
+        <source>Open Database</source>
+        <translation>Adatbázis megnyitása</translation>
+    </message>
+    <message>
+        <source>Import File</source>
+        <translation>Fájl importálása</translation>
     </message>
 </context>
 <context>
@@ -9306,10 +10342,6 @@ Példa: JBSWY3DPEHPK3PXP</translation>
 <context>
     <name>YubiKey</name>
     <message>
-        <source>%1 No interface, slot %2</source>
-        <translation>%1 nincs csatolófelület, foglalat:  %2</translation>
-    </message>
-    <message>
         <source>General: </source>
         <translation>Általános:</translation>
     </message>
@@ -9320,14 +10352,6 @@ Példa: JBSWY3DPEHPK3PXP</translation>
 </context>
 <context>
     <name>YubiKeyEditWidget</name>
-    <message>
-        <source>Refresh hardware tokens</source>
-        <translation>Hardveres jelsorok frissítése</translation>
-    </message>
-    <message>
-        <source>Refresh</source>
-        <translation>Frissítés</translation>
-    </message>
     <message>
         <source>Hardware key slot selection</source>
         <translation>Hardverkulcsfoglalat kijelölése</translation>
@@ -9361,10 +10385,6 @@ Példa: JBSWY3DPEHPK3PXP</translation>
         <translation>Kihívás-válasz beállítva, kattintson a módosításhoz vagy eltávolításhoz</translation>
     </message>
     <message>
-        <source>&lt;p&gt;If you own a &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; or &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt;, you can use it for additional security.&lt;/p&gt;&lt;p&gt;The key requires one of its slots to be programmed as &lt;a href=&quot;https://www.yubico.com/products/services-software/challenge-response/&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Ha van &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; vagy  &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt; eszköze, akkor használhatja a további biztonság érdekében.&lt;/p&gt;&lt;p&gt;Kulcs szükséges, hogy az egyik foglalata &lt;a href=&quot;https://www.yubico.com/products/services-software/challenge-response/&quot;&gt;HMAC-SHA1 kihívás-válaszként&lt;/a&gt; legyen beállítva.&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Detecting hardware keys…</source>
         <translation>Hardverkulcsok felismerése…</translation>
     </message>
@@ -9372,27 +10392,24 @@ Példa: JBSWY3DPEHPK3PXP</translation>
         <source>No hardware keys detected</source>
         <translation>Nincsenek felismert hardverkulcsok.</translation>
     </message>
-</context>
-<context>
-    <name>YubiKeyInterface</name>
     <message>
-        <source>%1 Invalid slot specified - %2</source>
-        <translation>%1 Érvénytelen a megadott foglalat – %2</translation>
+        <source>Refresh hardware keys</source>
+        <translation>Hardverkulcsok frissítése</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;If you own a &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; or &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt;, you can use it for additional security.&lt;/p&gt;&lt;p&gt;The key requires one of its slots to be programmed with &lt;a href=&quot;https://keepassxc.org/docs/#faq-yubikey-howto&quot;&gt;Challenge-Response&lt;/a&gt;.&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Ha van &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; vagy  &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt; eszköze, akkor használhatja a további biztonság érdekében.&lt;/p&gt;&lt;p&gt;A kulcs megköveteli, hogy az egyik foglalata &lt;a href=&quot;https://keepassxc.org/docs/#faq-yubikey-howto&quot;&gt;kihívás-válaszként&lt;/a&gt; legyen beprogramozva.&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>Hardware keys found, but no slots are configured</source>
+        <translation>A hardverkulcs megtalálva, de a foglalatok nincsenek beállítva</translation>
     </message>
 </context>
 <context>
     <name>YubiKeyInterfacePCSC</name>
     <message>
-        <source>(PCSC) %1 [%2] Challenge-Response - Slot %3</source>
-        <translation>(PCSC) %1 [%2] kihívás-válasz – foglalat %3</translation>
-    </message>
-    <message>
         <source>The YubiKey PCSC interface has not been initialized.</source>
         <translation>A YubiKey PCSC csatolófelülete nem lett elindítva.</translation>
-    </message>
-    <message>
-        <source>Hardware key is currently in use.</source>
-        <translation>A hardverkulcs jelenleg használatban van.</translation>
     </message>
     <message>
         <source>Could not find or access hardware key with serial number %1. Please present it to continue. </source>
@@ -9410,20 +10427,27 @@ Példa: JBSWY3DPEHPK3PXP</translation>
         <source>Failed to complete a challenge-response, the PCSC error code was: %1</source>
         <translation>A kihívás-válasz befejezése sikertelen. A PCSC hibakód: %1</translation>
     </message>
+    <message>
+        <source>(NFC) %1 [%2] - Slot %3, %4</source>
+        <comment>YubiKey display fields</comment>
+        <translation>(NFC) %1 [%2] - %3. foglalat, %4</translation>
+    </message>
+    <message>
+        <source>Press</source>
+        <comment>USB Challenge-Response Key interaction request</comment>
+        <translation>Lenyomás</translation>
+    </message>
+    <message>
+        <source>Passive</source>
+        <comment>USB Challenge-Response Key no interaction required</comment>
+        <translation>Passzív</translation>
+    </message>
 </context>
 <context>
     <name>YubiKeyInterfaceUSB</name>
     <message>
         <source>Unknown</source>
         <translation>Ismeretlen</translation>
-    </message>
-    <message>
-        <source>(USB) %1 [%2] Configured Slot - %3</source>
-        <translation>(USB) %1 [%2] Beállított foglalat – %3</translation>
-    </message>
-    <message>
-        <source>(USB) %1 [%2] Challenge-Response - Slot %3 - %4</source>
-        <translation>(USB) %1 [%2] kihívás-válasz – foglalat %3 - %4</translation>
     </message>
     <message>
         <source>Press</source>
@@ -9440,10 +10464,6 @@ Példa: JBSWY3DPEHPK3PXP</translation>
         <translation>A YubiKey USB csatolófelülete nem lett elindítva.</translation>
     </message>
     <message>
-        <source>Hardware key is currently in use.</source>
-        <translation>A hardverkulcs jelenleg használatban van.</translation>
-    </message>
-    <message>
         <source>Could not find hardware key with serial number %1. Please plug it in to continue.</source>
         <translation>Nem található hardverkulcs ezzel a sorozatszámmal: %1. A folytatáshoz, kérjük, csatlakoztassa.</translation>
     </message>
@@ -9458,6 +10478,16 @@ Példa: JBSWY3DPEHPK3PXP</translation>
     <message>
         <source>Failed to complete a challenge-response, the specific error was: %1</source>
         <translation>A kihívás-válasz befejezése sikertelen. A pontos hiba: %1</translation>
+    </message>
+    <message>
+        <source>%1 [%2] - Slot %3</source>
+        <comment>YubiKey NEO display fields</comment>
+        <translation>%1 [%2] – %3. foglalat</translation>
+    </message>
+    <message>
+        <source>%1 [%2] - Slot %3, %4</source>
+        <comment>YubiKey display fields</comment>
+        <translation>%1 [%2] – %3. foglalat, %4</translation>
     </message>
 </context>
 </TS>
