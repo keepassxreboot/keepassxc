@@ -150,14 +150,13 @@ void BrowserAccessControlDialog::selectionChanged()
 
 bool BrowserAccessControlDialog::areAllDisabled() const
 {
-    auto areAllDisabled = true;
     for (const auto& item : getAllItems()) {
         if (item->flags() != Qt::NoItemFlags) {
-            areAllDisabled = false;
+            return false;
         }
     }
 
-    return areAllDisabled;
+    return true;
 }
 
 QList<QTableWidgetItem*> BrowserAccessControlDialog::getAllItems() const
