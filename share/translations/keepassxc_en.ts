@@ -2274,19 +2274,11 @@ removed from the database.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Publically visible display name used on the unlock dialog</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Database public display name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Display color:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Publically visible color used on the unlock dialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2303,6 +2295,14 @@ removed from the database.</source>
     </message>
     <message>
         <source>Select Database Icon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Publicly visible display name used on the unlock dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Publicly visible color used on the unlock dialog</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

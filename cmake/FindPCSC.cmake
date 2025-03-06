@@ -24,7 +24,7 @@ if(NOT PCSC_FOUND)
 
    # Additional search paths for Windows if not running in Visual Studio environment
    if (WIN32) 
-      # Resolve the ambiguity of using two names for one architechture
+      # Resolve the ambiguity of using two names for one architecture
       if(CMAKE_SYSTEM_PROCESSOR STREQUAL "AMD64" OR CMAKE_SYSTEM_PROCESSOR STREQUAL "x64")
          set(ARCH_DIR "x64")
       else()

@@ -125,7 +125,7 @@
         <item row="0" column="1">
          <widget class="QLineEdit" name="dbPublicName">
           <property name="toolTip">
-           <string>Publically visible display name used on the unlock dialog</string>
+           <string>Publicly visible display name used on the unlock dialog</string>
           </property>
           <property name="accessibleName">
            <string>Database public display name</string>
@@ -150,7 +150,7 @@
              </size>
             </property>
             <property name="toolTip">
-             <string>Publically visible color used on the unlock dialog</string>
+             <string>Publicly visible color used on the unlock dialog</string>
             </property>
             <property name="accessibleName">
              <string>Database public display color chooser</string>

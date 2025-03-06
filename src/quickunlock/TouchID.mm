@@ -139,7 +139,7 @@ bool TouchID::setKey(const QUuid& dbUuid, const QByteArray& passwordKey, const b
     // At least on a Hackintosh the enrolled-check does not work, there LAErrorBiometryNotAvailable gets returned instead of
     // LAErrorBiometryNotEnrolled.
     //
-    // Thats kinda unfortunate, because now you cannot know for sure if TouchID hardware is either temporarily unavailable or not present
+    // That's kinda unfortunate, because now you cannot know for sure if TouchID hardware is either temporarily unavailable or not present
     // at all, because LAErrorBiometryNotAvailable is used for both cases.
     //
     // So to make quick unlock fallbacks possible on these machines you have to try to save the key a second time without this flag, if the
