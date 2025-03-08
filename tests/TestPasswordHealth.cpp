@@ -54,13 +54,13 @@ void TestPasswordHealth::testNoDb()
     QCOMPARE(good.score(), 78);
     QCOMPARE(int(good.entropy()), 78);
     QCOMPARE(good.quality(), PasswordHealth::Quality::Good);
-    QVERIFY(good.scoreReason().isEmpty());
-    QVERIFY(good.scoreDetails().isEmpty());
+    QVERIFY(!good.scoreReason().isEmpty());
+    QVERIFY(!good.scoreDetails().isEmpty());
 
     const auto excellent = PasswordHealth("prompter-ream-oversleep-step-extortion-quarrel-reflected-prefix");
     QCOMPARE(excellent.score(), 164);
     QCOMPARE(int(excellent.entropy()), 164);
     QCOMPARE(excellent.quality(), PasswordHealth::Quality::Excellent);
-    QVERIFY(excellent.scoreReason().isEmpty());
-    QVERIFY(excellent.scoreDetails().isEmpty());
+    QVERIFY(!excellent.scoreReason().isEmpty());
+    QVERIFY(!excellent.scoreDetails().isEmpty());
 }

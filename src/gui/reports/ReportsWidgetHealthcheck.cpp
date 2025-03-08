@@ -124,10 +124,7 @@ Health::Health(QSharedPointer<Database> db)
                 m_anyExcludedEntries = true;
             }
 
-            // Add entry if its password isn't at least "good"
-            if (item->health->quality() < PasswordHealth::Quality::Good) {
-                m_items.append(item);
-            }
+            m_items.append(item);
         }
     }
 
@@ -154,6 +151,7 @@ ReportsWidgetHealthcheck::ReportsWidgetHealthcheck(QWidget* parent)
     connect(m_ui->healthcheckTableView, SIGNAL(doubleClicked(QModelIndex)), SLOT(emitEntryActivated(QModelIndex)));
     connect(m_ui->showExcluded, SIGNAL(stateChanged(int)), this, SLOT(calculateHealth()));
     connect(m_ui->showExpired, SIGNAL(stateChanged(int)), this, SLOT(calculateHealth()));
+    connect(m_ui->showWeakOnly, SIGNAL(stateChanged(int)), this, SLOT(calculateHealth()));
 
     new QShortcut(Qt::Key_Delete, this, SLOT(deleteSelectedEntries()));
 }
@@ -265,6 +263,16 @@ void ReportsWidgetHealthcheck::calculateHealth()
         if ((!m_ui->showExcluded->isChecked() && item->exclude)
             || (!m_ui->showExpired->isChecked() && item->entry->isExpired())) {
             continue;
+        }
+
+        if (m_ui->showWeakOnly->isChecked()) {
+            switch (item->entry->passwordHealth()->quality()) {
+            case PasswordHealth::Quality::Good:
+            case PasswordHealth::Quality::Excellent:
+                continue;
+            default:
+                break;
+            }
         }
 
         // Show the entry in the report
