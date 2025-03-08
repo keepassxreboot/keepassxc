@@ -238,6 +238,8 @@ void ReportsWidgetHealthcheck::loadSettings(QSharedPointer<Database> db)
     auto row = QList<QStandardItem*>();
     row << new QStandardItem(tr("Please wait, health data is being calculated…"));
     m_referencesModel->appendRow(row);
+    // Default sort by first column (health score)
+    m_ui->healthcheckTableView->sortByColumn(0, Qt::AscendingOrder);
 }
 
 void ReportsWidgetHealthcheck::showEvent(QShowEvent* event)
@@ -253,6 +255,11 @@ void ReportsWidgetHealthcheck::showEvent(QShowEvent* event)
 
 void ReportsWidgetHealthcheck::calculateHealth()
 {
+    // Save current sort order before clearing the model so we can restore it later
+    int sortColumn = m_ui->healthcheckTableView->horizontalHeader()->sortIndicatorSection();
+    Qt::SortOrder sortOrder = m_ui->healthcheckTableView->horizontalHeader()->sortIndicatorOrder();
+
+    // Safe to clear
     m_referencesModel->clear();
 
     // Perform the health check
@@ -277,8 +284,10 @@ void ReportsWidgetHealthcheck::calculateHealth()
     } else {
         m_referencesModel->setHorizontalHeaderLabels(QStringList() << tr("") << tr("Title") << tr("Path") << tr("Score")
                                                                    << tr("Reason"));
-        m_ui->healthcheckTableView->sortByColumn(0, Qt::AscendingOrder);
     }
+
+    // Restore sorting options that was stored before the model was cleared
+    m_ui->healthcheckTableView->sortByColumn(sortColumn, sortOrder);
 
     m_ui->healthcheckTableView->resizeColumnsToContents();
     m_ui->healthcheckTableView->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Fixed);
