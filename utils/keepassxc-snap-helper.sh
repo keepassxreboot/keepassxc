@@ -94,6 +94,11 @@ setupEdge() {
     INSTALL_DIR="${BASE_DIR}/.config/microsoft-edge/NativeMessagingHosts"
 }
 
+setupLibreWolf() {
+    JSON_OUT=${JSON_FIREFOX}
+    INSTALL_DIR="${BASE_DIR}/.librewolf/native-messaging-hosts"
+}
+
 # --------------------------------
 # Start of script
 # --------------------------------
@@ -109,6 +114,7 @@ BROWSER=$(whiptail \
             "5" "Brave" \
             "6" "Tor Browser" \
             "7" "Microsoft Edge" \
+            "8" "LibreWolf" \
             3>&1 1>&2 2>&3)
 
 exitstatus=$?
@@ -125,6 +131,7 @@ if [[ $exitstatus == 0 ]]; then
         5) setupBrave ;;
         6) setupTorBrowser ;;
         7) setupEdge ;;
+        8) setupLibreWolf ;;
     esac
 
     # Install the JSON file
