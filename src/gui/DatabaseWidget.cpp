@@ -1426,7 +1426,7 @@ bool DatabaseWidget::syncWithDatabase(const QSharedPointer<Database>& otherDb, Q
 
     if (!changeList.isEmpty()) {
         // Save synced databases
-        if (!m_db->save(Database::Atomic, {}, &error)) {
+        if (!save()) {
             error = tr("Error while saving database %1: %2").arg(m_db->filePath(), error);
             return false;
         }

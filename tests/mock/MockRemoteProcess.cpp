@@ -32,6 +32,7 @@ void MockRemoteProcess::start(const QString&)
 
 qint64 MockRemoteProcess::write(const QString& data)
 {
+    m_data.append(data.toUtf8());
     return data.length();
 }
 
@@ -53,4 +54,14 @@ bool MockRemoteProcess::waitForFinished(int)
 int MockRemoteProcess::exitCode() const
 {
     return 0; // always return success
+}
+
+QString MockRemoteProcess::readOutput()
+{
+    return {};
+}
+
+QString MockRemoteProcess::readError()
+{
+    return {};
 }
