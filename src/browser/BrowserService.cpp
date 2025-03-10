@@ -413,7 +413,7 @@ BrowserService::findEntries(const EntryParameters& entryParameters, const String
             continue;
 
         case Unknown:
-            if (alwaysAllowAccess) {
+            if (alwaysAllowAccess || (entryParameters.httpAuth && ignoreHttpAuth)) {
                 allowedEntries.append(entry);
             } else {
                 entriesToConfirm.append(entry);
