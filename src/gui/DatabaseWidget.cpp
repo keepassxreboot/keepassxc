@@ -2615,45 +2615,45 @@ bool DatabaseWidget::performSave(QString& errorMessage, const QString& fileName)
  */
 bool DatabaseWidget::saveBackup()
 {
-    while (true) {
-        QString oldFilePath = m_db->filePath();
-        if (!QFileInfo::exists(oldFilePath)) {
-            QString defaultFileName = config()->get(Config::DefaultDatabaseFileName).toString();
-            oldFilePath = QDir::toNativeSeparators(
-                FileDialog::getLastDir("db") + "/"
-                + (defaultFileName.isEmpty() ? tr("Passwords").append(".kdbx") : defaultFileName));
-        }
+    QString oldFilePath = m_db->filePath();
+    if (!QFileInfo::exists(oldFilePath)) {
+        QString defaultFileName = config()->get(Config::DefaultDatabaseFileName).toString();
+        oldFilePath =
+            QDir::toNativeSeparators(FileDialog::getLastDir("db") + "/"
+                                     + (defaultFileName.isEmpty() ? tr("Passwords").append(".kdbx") : defaultFileName));
+    }
 
-        const QString newFilePath = fileDialog()->getSaveFileName(this,
-                                                                  tr("Save database backup"),
-                                                                  FileDialog::getLastDir("backup", oldFilePath),
-                                                                  tr("KeePass 2 Database").append(" (*.kdbx)"));
+    const QString newFilePath = fileDialog()->getSaveFileName(this,
+                                                              tr("Save database backup"),
+                                                              FileDialog::getLastDir("backup", oldFilePath),
+                                                              tr("KeePass 2 Database").append(" (*.kdbx)"));
 
-        if (!newFilePath.isEmpty()) {
-            // Ensure we don't recurse back into this function
-            m_db->setFilePath(newFilePath);
-            m_saveAttempts = 0;
-
-            bool modified = m_db->isModified();
-
-            if (!save()) {
-                // Failed to save, try again
-                m_db->setFilePath(oldFilePath);
-                continue;
-            }
-
-            m_db->setFilePath(oldFilePath);
-            if (modified) {
-                // Source database is marked as clean when copy is saved, even if source has unsaved changes
-                m_db->markAsModified();
-            }
-            FileDialog::saveLastDir("backup", newFilePath, true);
-            return true;
-        }
-
-        // Canceled file selection
+    // Early out if we canceled the file selection
+    if (newFilePath.isEmpty()) {
         return false;
     }
+
+    // Record modified state so we can restore after save
+    bool modified = m_db->isModified();
+
+    QString error;
+    bool ok = m_db->saveAs(newFilePath, Database::DirectWrite, {}, &error);
+
+    // Restore database to original state
+    m_db->setFilePath(oldFilePath);
+    if (modified) {
+        // Source database is marked as clean when copy is saved, even if source has unsaved changes
+        m_db->markAsModified();
+    }
+
+    if (!ok) {
+        // Failed to save backup, post the error
+        showErrorMessage(tr("Failed to save backup database: %1").arg(error));
+        return false;
+    }
+
+    FileDialog::saveLastDir("backup", newFilePath, true);
+    return true;
 }
 
 void DatabaseWidget::showMessage(const QString& text,
