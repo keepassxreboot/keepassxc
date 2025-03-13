@@ -73,7 +73,13 @@ namespace
             }
 
             if (loginMap.contains("itemEmail")) {
-                entry->attributes()->set("login_email", loginMap.value("itemEmail").toString());
+                // Place the email value as the username if empty, otherwise set it as an attribute
+                const auto email = loginMap.value("itemEmail").toString();
+                if (entry->username().isEmpty()) {
+                    entry->setUsername(email);
+                } else if (!email.isEmpty()) {
+                    entry->attributes()->set("login_email", email);
+                }
             }
 
             // Set the entry url(s)
