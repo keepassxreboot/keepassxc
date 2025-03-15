@@ -619,21 +619,6 @@ void Config::createConfigFromFile(const QString& configFileName, const QString& 
                             qApp);
 }
 
-void Config::createTempFileInstance()
-{
-    if (m_instance) {
-        delete m_instance;
-    }
-    auto tmpFileName = QString("%1/%2_settings.XXXXXX").arg(QDir::tempPath(), QCoreApplication::applicationName());
-    auto tmpFile = new QTemporaryFile(tmpFileName);
-    if (!tmpFile->open()) {
-        Q_ASSERT_X(false, __func__, "Failed to create temporary config settings file");
-    }
-    tmpFile->close();
-    m_instance = new Config(tmpFileName, "", qApp);
-    tmpFile->setParent(m_instance);
-}
-
 bool Config::isPortable()
 {
 #ifdef Q_OS_WIN

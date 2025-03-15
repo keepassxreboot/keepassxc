@@ -30,13 +30,15 @@
 #include "crypto/Crypto.h"
 #include "gui/MessageBox.h"
 #include "gui/osutils/OSUtils.h"
+#include "util/TemporaryFile.h"
 
 QTEST_GUILESS_MAIN(TestAutoType)
 
 void TestAutoType::initTestCase()
 {
     QVERIFY(Crypto::init());
-    Config::createTempFileInstance();
+    // Create temporary config file
+    Config::createConfigFromFile(TemporaryFile::createTempConfigFile(), {});
     config()->set(Config::AutoTypeDelay, 1);
     config()->set(Config::Security_AutoTypeAsk, false);
     AutoType::createTestInstance();

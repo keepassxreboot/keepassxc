@@ -154,16 +154,16 @@ endif()
 
 if(WITH_XC_AUTOTYPE)
     add_unit_test(NAME testautotype SOURCES TestAutoType.cpp
-            LIBS ${TEST_LIBRARIES})
+            LIBS testsupport ${TEST_LIBRARIES})
     set_target_properties(testautotype PROPERTIES ENABLE_EXPORTS ON)
 endif()
 
 if(WITH_XC_SSHAGENT)
     add_unit_test(NAME testopensshkey SOURCES TestOpenSSHKey.cpp
-            LIBS sshagent ${TEST_LIBRARIES})
+            LIBS sshagent testsupport ${TEST_LIBRARIES})
     if(NOT WIN32)
         add_unit_test(NAME testsshagent SOURCES TestSSHAgent.cpp
-                LIBS sshagent ${TEST_LIBRARIES})
+                LIBS sshagent testsupport ${TEST_LIBRARIES})
     endif()
 endif()
 

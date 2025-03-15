@@ -30,16 +30,18 @@ QTEST_GUILESS_MAIN(TestSSHAgent)
 void TestSSHAgent::initTestCase()
 {
     QVERIFY(Crypto::init());
-    Config::createTempFileInstance();
 
-    m_agentSocketFile.setAutoRemove(true);
-    QVERIFY(m_agentSocketFile.open());
+    // Create temporary config file
+    Config::createConfigFromFile(TemporaryFile::createTempConfigFile(), {});
 
-    m_agentSocketFileName = m_agentSocketFile.fileName();
+    // default config must not enable agent
+    SSHAgent agent;
+    QVERIFY(!agent.isEnabled());
+
+    m_agentSocketFile.reset(new TemporaryFile(this));
+
+    m_agentSocketFileName = m_agentSocketFile->fileName();
     QVERIFY(!m_agentSocketFileName.isEmpty());
-
-    // let ssh-agent re-create it as a socket
-    QVERIFY(m_agentSocketFile.remove());
 
     QStringList arguments;
     arguments << "-D" << "-a" << m_agentSocketFileName;
@@ -85,13 +87,18 @@ void TestSSHAgent::initTestCase()
     QVERIFY(m_key.parsePKCS1PEM(keyData));
 }
 
+void TestSSHAgent::init()
+{
+    // Reset the config state
+    SSHAgent agent;
+    agent.setEnabled(false);
+    QString empty;
+    agent.setAuthSockOverride(empty);
+}
+
 void TestSSHAgent::testConfiguration()
 {
     SSHAgent agent;
-
-    // default config must not enable agent
-    QVERIFY(!agent.isEnabled());
-
     agent.setEnabled(true);
     QVERIFY(agent.isEnabled());
 
@@ -291,6 +298,4 @@ void TestSSHAgent::cleanupTestCase()
         m_agentProcess.terminate();
         m_agentProcess.waitForFinished();
     }
-
-    m_agentSocketFile.remove();
 }

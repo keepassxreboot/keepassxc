@@ -66,7 +66,9 @@ void TestCli::initTestCase()
 {
     QVERIFY(Crypto::init());
 
-    Config::createTempFileInstance();
+    // Create temporary config file
+    Config::createConfigFromFile(TemporaryFile::createTempConfigFile(), {});
+
     QLocale::setDefault(QLocale::c());
     Bootstrap::bootstrap();
 

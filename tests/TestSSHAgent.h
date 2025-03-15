@@ -19,8 +19,8 @@
 #define TESTSSHAGENT_H
 
 #include "sshagent/OpenSSHKey.h"
+#include "util/TemporaryFile.h"
 #include <QProcess>
-#include <QTemporaryFile>
 #include <QUuid>
 
 class TestSSHAgent : public QObject
@@ -29,6 +29,7 @@ class TestSSHAgent : public QObject
 
 private slots:
     void initTestCase();
+    void init();
     void testConfiguration();
     void testIdentity();
     void testRemoveOnClose();
@@ -41,7 +42,7 @@ private slots:
     void cleanupTestCase();
 
 private:
-    QTemporaryFile m_agentSocketFile;
+    QScopedPointer<TemporaryFile> m_agentSocketFile;
     QString m_agentSocketFileName;
     QProcess m_agentProcess;
     OpenSSHKey m_key;

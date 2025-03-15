@@ -58,7 +58,8 @@ int main(int argc, char* argv[])
 void TestGuiBrowser::initTestCase()
 {
     QVERIFY(Crypto::init());
-    Config::createTempFileInstance();
+    // Create temporary config file
+    Config::createConfigFromFile(TemporaryFile::createTempConfigFile(), {});
     // Disable autosave so we can test the modified file indicator
     config()->set(Config::AutoSaveAfterEveryChange, false);
     config()->set(Config::AutoSaveOnExit, false);
