@@ -49,6 +49,8 @@ This section contains full details on advanced features available in KeePassXC.
 |{DB_DIR}	     |Absolute directory path of database file
 |===
 
+NOTE: You can insert literal placeholder strings by escaping the beginning and ending curly braces. For example, to insert the string `{USERNAME}`, you would type `++\{USERNAME\}++`.
+
 === Entry Cross-Reference
 A reference to another entry's field is possible using the shorthand syntax:
 `{REF:&lt;FIELD&gt;@&lt;SEARCH_IN&gt;:&lt;SEARCH_TEXT&gt;}`

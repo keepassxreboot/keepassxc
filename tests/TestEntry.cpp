@@ -626,6 +626,17 @@ void TestEntry::testResolveReplacePlaceholders()
     // Test complicated and nested replacements
     QCOMPARE(entry2->resolveMultiplePlaceholders(entry2->url()),
              QString("cmd://sap.exe -system=server1 -client=12345 -user=Username2 -pw=Password1"));
+
+    auto* entry3 = new Entry();
+    entry3->setGroup(root);
+    entry3->setUuid(QUuid::createUuid());
+    entry3->setTitle("Entry 3");
+    entry3->setUsername("HMAC-SHA-256");
+    entry3->setUrl("{T-REPLACE-RX:!{USERNAME}!\\{USERNAME\\}!!}");
+
+    // Test escaped enclosures
+    QCOMPARE(entry3->resolveMultiplePlaceholders(entry3->url()), entry3->username());
+
     // Test invalid syntax
     QString error;
     entry1->resolveRegexPlaceholder("{T-REPLACE-RX:/{USERNAME}/.*+?/test/}", &error); // invalid regex
