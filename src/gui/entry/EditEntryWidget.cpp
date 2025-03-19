@@ -970,6 +970,7 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
     } else {
         m_mainUi->notesEdit->setFont(Font::defaultFont());
     }
+    m_mainUi->notesEdit->setTabStopDistance(10.0);
 
     m_advancedUi->attachmentsWidget->setReadOnly(m_history);
     m_advancedUi->addAttributeButton->setEnabled(!m_history);

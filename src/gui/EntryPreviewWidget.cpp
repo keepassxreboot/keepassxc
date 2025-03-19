@@ -388,6 +388,7 @@ void EntryPreviewWidget::updateEntryGeneralTab()
     } else {
         m_ui->entryNotesTextEdit->setFont(Font::defaultFont());
     }
+    m_ui->entryNotesTextEdit->setTabStopDistance(10.0);
 
     m_ui->entryUrlLabel->setRawText(m_currentEntry->displayUrl().toHtmlEscaped());
     const QString url = m_currentEntry->url();
