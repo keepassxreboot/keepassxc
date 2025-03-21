@@ -152,11 +152,18 @@ bool MacUtils::isCapslockEnabled()
 
 void MacUtils::setUserInputProtection(bool enable)
 {
+    static bool secureInputEnabled = false;
     if (enable) {
+        // Always keep the internal counter set to 1
+        if (secureInputEnabled) {
+            DisableSecureEventInput();
+        }
         EnableSecureEventInput();
     } else {
         DisableSecureEventInput();
     }
+    // Store our last known state
+    secureInputEnabled = enable;
 }
 
 /**

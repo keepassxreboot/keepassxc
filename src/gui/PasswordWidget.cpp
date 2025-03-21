@@ -231,7 +231,7 @@ bool PasswordWidget::eventFilter(QObject* watched, QEvent* event)
         if (isVisible() && (type == QEvent::KeyPress || type == QEvent::KeyRelease || type == QEvent::FocusIn)) {
             checkCapslockState();
         }
-        if (type == QEvent::FocusIn || type == QEvent::FocusOut) {
+        if (type == QEvent::FocusIn || type == QEvent::FocusOut || type == QEvent::Hide) {
             osUtils->setUserInputProtection(type == QEvent::FocusIn);
         }
     }
