@@ -30,6 +30,7 @@
 namespace
 {
     constexpr auto DEFAULT_ALIAS = "default";
+    constexpr auto SESSION_ALIAS = "session";
 }
 
 namespace FdoSecrets
@@ -173,6 +174,7 @@ namespace FdoSecrets
         if (coll) {
             // adding alias will automatically remove the association with previous collection.
             coll->addAlias(DEFAULT_ALIAS).okOrDie();
+            coll->addAlias(SESSION_ALIAS).okOrDie();
         }
 
         m_insideEnsureDefaultAlias = false;
