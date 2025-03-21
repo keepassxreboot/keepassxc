@@ -375,7 +375,7 @@ image::database_settings.png[]
  * *Database name:* This is the default identifier for your database and is shown in the tab bar and title bar (when active). You can change this name as desired.
  * *Database description:* Provide some meaningful description for your database.
  * *Default username:* Provide a default username for all new entries that you create in this database.
- * *Public Databse Metadata:* Here you can set a public (unencrypted) name, icon, and color for your database. This is used on the database unlock screen to help distinguish multiple databases from each other.
+ * *Public Database Metadata:* Here you can set a public (unencrypted) name, icon, and color for your database. This is used on the database unlock screen to help distinguish multiple databases from each other.
  * *Max history items:* This is the maximum number of history items that are stored for each entry. When you set this to 0, no history will be saved. Set this value to a low value to prevent the database from getting too large (we recommend no more than 10).
  * *Max. history size:* When the history of an entry gets above this size, it is truncated. For example, this happens when entries have large attachments. Set this value small to prevent the database from getting too large (we recommend 6 MiB).
  * *Use recycle bin:* Select this check-box if you want deleted entries to move to the recycle bin instead of being permanently removed. The recycle bin will be created if it does not already exist after your first deletion. To delete entries permanently, you must empty the recycle bin manually.

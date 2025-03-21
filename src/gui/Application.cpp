@@ -113,7 +113,7 @@ Application::Application(int& argc, char** argv)
                                   .toUtf8()
                                   .constData();
 
-                // forceably reset the lock file
+                // forcibly reset the lock file
                 m_lockFile->removeStaleLockFile();
                 m_lockFile->tryLock();
                 // start the listen server

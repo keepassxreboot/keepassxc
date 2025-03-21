@@ -2242,7 +2242,7 @@ removed from the database.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Publically visible display name used on the unlock dialog</source>
+        <source>Publicly visible display name used on the unlock dialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2254,7 +2254,7 @@ removed from the database.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Publically visible color used on the unlock dialog</source>
+        <source>Publicly visible color used on the unlock dialog</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4810,7 +4810,7 @@ get DatabaseOnRemote.kdbx {TEMP_DATABASE}
 exit
 ---
 {TEMP_DATABASE} is used as placeholder to store the database in a temporary location
-The command has to exit. In case of `sftp` as last commend `exit` has to be sent
+The command has to exit. In case of `sftp` as last command `exit` has to be sent
          </source>
         <translation type="unfinished"></translation>
     </message>
