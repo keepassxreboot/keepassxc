@@ -105,6 +105,9 @@
         <property name="accessibleName">
          <string>Notes field</string>
         </property>
+        <property name="tabStopDistance">
+         <double>10.000000000000000</double>
+        </property>
        </widget>
       </item>
      </layout>

@@ -415,6 +415,9 @@
                   <property name="readOnly">
                    <bool>true</bool>
                   </property>
+                  <property name="tabStopDistance">
+                   <double>10.000000000000000</double>
+                  </property>
                   <property name="blendIn" stdset="0">
                    <bool>true</bool>
                   </property>
