@@ -66,6 +66,7 @@ signals:
 
 protected:
     bool event(QEvent* event) override;
+    void keyPressEvent(QKeyEvent* event) override;
     QSharedPointer<CompositeKey> buildDatabaseKey();
     void setUserInteractionLock(bool state);
 
@@ -81,6 +82,7 @@ protected slots:
 private slots:
     bool browseKeyFile();
     void toggleHardwareKeyComponent(bool state);
+    void closeDatabase();
     void pollHardwareKey(bool manualTrigger = false, int delay = 0);
     void hardwareKeyResponse(bool found);
 
@@ -92,6 +94,7 @@ private:
     bool m_manualHardwareKeyRefresh = false;
     bool m_blockQuickUnlock = false;
     bool m_unlockingDatabase = false;
+    bool m_triedToQuit = false;
     QTimer m_hideTimer;
     QTimer m_hideNoHardwareKeysFoundTimer;
 

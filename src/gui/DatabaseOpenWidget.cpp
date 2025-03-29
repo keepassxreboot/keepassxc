@@ -159,6 +159,29 @@ void DatabaseOpenWidget::toggleHardwareKeyComponent(bool state)
         m_ui->useHardwareKeyCheckBox->setText(tr("Use hardware key"));
     }
 }
+void DatabaseOpenWidget::closeDatabase()
+{
+    int closeWarningInterval = 3000;
+
+    if (!m_triedToQuit && window() == getMainWindow()) {
+        m_triedToQuit = true;
+        m_ui->messageWidget->showMessage(
+            tr("Press ESC again to close this database"), MessageWidget::Warning, closeWarningInterval);
+
+        QTimer::singleShot(closeWarningInterval, this, [this]() { m_triedToQuit = false; });
+        return;
+    }
+    reject();
+}
+
+void DatabaseOpenWidget::keyPressEvent(QKeyEvent* event)
+{
+    if (event->key() == Qt::Key_Escape) {
+        closeDatabase();
+    } else {
+        DialogyWidget::keyPressEvent(event);
+    }
+}
 
 bool DatabaseOpenWidget::event(QEvent* event)
 {
