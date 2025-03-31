@@ -31,6 +31,7 @@
 #include "gui/Icons.h"
 #include "gui/MainWindow.h"
 #include "gui/osutils/OSUtils.h"
+#include "gui/styles/StateColorPalette.h"
 #include "quickunlock/QuickUnlockInterface.h"
 
 #include "FileDialog.h"
@@ -136,7 +137,9 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
                 m_generalUi->autoTypeShortcutWidget->setStyleSheet("");
             } else {
                 QToolTip::showText(mapToGlobal(rect().bottomLeft()), error);
-                m_generalUi->autoTypeShortcutWidget->setStyleSheet("background-color: #FF9696;");
+                StateColorPalette statePalette;
+                auto color = statePalette.color(StateColorPalette::ColorRole::Error);
+                m_generalUi->autoTypeShortcutWidget->setStyleSheet(QString("QLineEdit { background: %1; }").arg(color.name()));
             }
         });
     connect(m_generalUi->autoTypeShortcutWidget, &ShortcutWidget::shortcutReset, this, [this] {
