@@ -672,7 +672,9 @@ appimage() {
 export PATH="$(dirname $0)/usr/bin:${PATH}"
 export LD_LIBRARY_PATH="$(dirname $0)/usr/lib:${LD_LIBRARY_PATH}"
 
-if [ "$1" == "cli" ]; then
+if command -v "${ARGV0#./}" >/dev/null 2>&1; then
+    exec "${ARGV0#./}" "$@"
+elif [ "$1" == "cli" ]; then
     shift
     exec keepassxc-cli "$@"
 elif [ "$1" == "proxy" ]; then
