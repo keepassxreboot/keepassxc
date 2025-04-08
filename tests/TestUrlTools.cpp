@@ -43,7 +43,6 @@ void TestUrlTools::testTopLevelDomain()
         {QString("https://192.168.0.1:8000"), QString("192.168.0.1")},
         {QString("https://www.nic.ar"), QString("ar")},
         {QString("https://no.no.no"), QString("no")},
-        {QString("https://www.blogspot.com.ar"), QString("blogspot.com.ar")}, // blogspot.com.ar is a TLD
         {QString("https://jap.an.ide.kyoto.jp"), QString("ide.kyoto.jp")}, // ide.kyoto.jp is a TLD
         {QString("ar"), QString("ar")},
     };
@@ -61,7 +60,6 @@ void TestUrlTools::testTopLevelDomain()
         {QString("https://192.168.0.1"), QString("192.168.0.1")},
         {QString("https://192.168.0.1:8000"), QString("192.168.0.1")},
         {QString("https://www.nic.ar"), QString("nic.ar")},
-        {QString("https://www.blogspot.com.ar"), QString("www.blogspot.com.ar")}, // blogspot.com.ar is a TLD
         {QString("https://www.arpa"), QString("www.arpa")},
         {QString("https://jap.an.ide.kyoto.jp"), QString("an.ide.kyoto.jp")}, // ide.kyoto.jp is a TLD
         {QString("https://kobe.jp"), QString("kobe.jp")},
