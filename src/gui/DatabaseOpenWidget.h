@@ -49,7 +49,7 @@ public:
     void load(const QString& filename);
     QString filename();
     void clearForms();
-    void enterKey(const QString& pw, const QString& keyFile);
+    void enterKey(const QString& pw, const QString& keyFile, bool explicitQuickUnlock);
     QSharedPointer<Database> database();
     bool unlockingDatabase();
     void showMessage(const QString& text, MessageWidget::MessageType type, int autoHideTimeout);

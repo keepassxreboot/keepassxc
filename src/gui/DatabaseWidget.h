@@ -240,8 +240,11 @@ public slots:
 #endif
     void switchToOpenDatabase();
     void switchToOpenDatabase(const QString& filePath);
-    void switchToOpenDatabase(const QString& filePath, const QString& password, const QString& keyFile);
-    void performUnlockDatabase(const QString& password, const QString& keyfile = {});
+    void switchToOpenDatabase(const QString& filePath,
+                              const QString& password,
+                              const QString& keyFile,
+                              bool explicitQuickUnlock);
+    void performUnlockDatabase(const QString& password, const QString& keyfile = {}, bool explicitQuickUnlock = false);
     void emptyRecycleBin();
 
     // Search related slots

@@ -876,9 +876,12 @@ void MainWindow::clearLastDatabases()
     }
 }
 
-void MainWindow::openDatabase(const QString& filePath, const QString& password, const QString& keyfile)
+void MainWindow::openDatabase(const QString& filePath,
+                              const QString& password,
+                              const QString& keyfile,
+                              bool explicitQuickUnlock)
 {
-    m_ui->tabWidget->addDatabaseTab(filePath, false, password, keyfile);
+    m_ui->tabWidget->addDatabaseTab(filePath, false, password, keyfile, explicitQuickUnlock);
 }
 
 void MainWindow::updateMenuActionState()
