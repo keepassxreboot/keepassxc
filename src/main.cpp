@@ -82,7 +82,8 @@ int main(int argc, char** argv)
     QCommandLineOption lockOption("lock", QObject::tr("lock all open databases"));
     QCommandLineOption keyfileOption("keyfile", QObject::tr("key file of the database"), "keyfile");
     QCommandLineOption pwstdinOption("pw-stdin", QObject::tr("read password of the database from stdin"));
-    QCommandLineOption explicitQuickUnlockOption("quick-unlock", QObject::tr("enable quick unlock also when --pw-stdin is set"));
+    QCommandLineOption explicitQuickUnlockOption("quick-unlock",
+                                                 QObject::tr("enable quick unlock also when --pw-stdin is set"));
     QCommandLineOption allowScreenCaptureOption("allow-screencapture",
                                                 QObject::tr("allow screenshots and app recording (Windows/macOS)"));
     QCommandLineOption startMinimized("minimized", QObject::tr("start minimized to the system tray"));

@@ -63,17 +63,17 @@ public:
         PasswordGeneratorScreen = 3
     };
 
-    signals:
+signals:
     void databaseUnlocked(DatabaseWidget* dbWidget);
     void databaseLocked(DatabaseWidget* dbWidget);
     void activeDatabaseChanged(DatabaseWidget* dbWidget);
     void databaseUnlockDialogFinished(bool accepted, DatabaseWidget* dbWidget);
 
-    public slots:
-        void openDatabase(const QString& filePath,
-            const QString& password = {},
-            const QString& keyfile = {},
-            bool explicitQuickUnlock = false);
+public slots:
+    void openDatabase(const QString& filePath,
+                      const QString& password = {},
+                      const QString& keyfile = {},
+                      bool explicitQuickUnlock = false);
     void appExit();
     bool isHardwareKeySupported();
     bool refreshHardwareKeys();
