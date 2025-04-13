@@ -1357,6 +1357,9 @@
            <property name="text">
             <string>Remember last typed entry for:</string>
            </property>
+           <property name="alignment">
+            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+           </property>
           </widget>
          </item>
          <item row="1" column="1">
