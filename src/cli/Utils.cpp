@@ -105,7 +105,9 @@ namespace Utils
         SetConsoleMode(hIn, mode);
 #else
         struct termios t;
-        tcgetattr(STDIN_FILENO, &t);
+        if (tcgetattr(STDIN_FILENO, &t) < 0) {
+            return;
+        }
 
         if (enable) {
             t.c_lflag |= ECHO;
