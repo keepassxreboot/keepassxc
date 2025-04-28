@@ -44,7 +44,8 @@ public:
     {
         YCR_ERROR = 0,
         YCR_SUCCESS = 1,
-        YCR_WOULDBLOCK = 2
+        YCR_WOULDBLOCK = 2,
+        YCR_KEYNOTFOUND = 3,
     };
 
     static YubiKey* instance();
@@ -84,14 +85,14 @@ signals:
 private:
     explicit YubiKey();
 
-    void findValidKeys(const QMutexLocker& locker);
-
     static YubiKey* m_instance;
 
     QTimer m_interactionTimer;
     bool m_initialized = false;
+    bool m_findingKeys = false;
     QString m_error;
 
+    // Prevents multiple simultaneous operations on hardware keys
     static QMutex s_interfaceMutex;
 
     KeyMap m_usbKeys;
