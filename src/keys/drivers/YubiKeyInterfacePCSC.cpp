@@ -679,7 +679,7 @@ YubiKeyInterfacePCSC::challenge(YubiKeySlot slot, const QByteArray& challenge, B
     m_error.clear();
     if (!m_initialized) {
         m_error = tr("The YubiKey PC/SC interface has not been initialized.");
-        return YubiKey::ChallengeResult::YCR_ERROR;
+        return YubiKey::ChallengeResult::YCR_KEYNOTFOUND;
     }
 
     // Try for a few seconds to find the key
@@ -710,11 +710,8 @@ YubiKeyInterfacePCSC::challenge(YubiKeySlot slot, const QByteArray& challenge, B
         }
     }
 
-    m_error = tr("Could not find or access hardware key with serial number %1. Please present it to continue. ")
-                  .arg(slot.first)
-              + m_error;
     emit challengeCompleted();
-    return YubiKey::ChallengeResult::YCR_ERROR;
+    return YubiKey::ChallengeResult::YCR_KEYNOTFOUND;
 }
 
 YubiKey::ChallengeResult YubiKeyInterfacePCSC::performChallenge(void* key,

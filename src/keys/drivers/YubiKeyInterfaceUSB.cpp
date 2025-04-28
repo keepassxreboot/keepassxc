@@ -237,7 +237,7 @@ YubiKeyInterfaceUSB::challenge(YubiKeySlot slot, const QByteArray& challenge, Bo
     m_error.clear();
     if (!m_initialized) {
         m_error = tr("The YubiKey USB interface has not been initialized.");
-        return YubiKey::ChallengeResult::YCR_ERROR;
+        return YubiKey::ChallengeResult::YCR_KEYNOTFOUND;
     }
 
     auto yk_key = openKeySerial(slot.first);
@@ -245,12 +245,11 @@ YubiKeyInterfaceUSB::challenge(YubiKeySlot slot, const QByteArray& challenge, Bo
         // Key with specified serial number is not connected
         m_error =
             tr("Could not find hardware key with serial number %1. Please plug it in to continue.").arg(slot.first);
-        return YubiKey::ChallengeResult::YCR_ERROR;
+        return YubiKey::ChallengeResult::YCR_KEYNOTFOUND;
     }
 
     emit challengeStarted();
     auto ret = performChallenge(yk_key.get(), slot.second, true, challenge, response);
-
     emit challengeCompleted();
 
     return ret;
