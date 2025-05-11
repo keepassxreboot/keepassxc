@@ -2835,6 +2835,25 @@ Disable safe saves and try again?</source>
     </message>
 </context>
 <context>
+    <name>EditEntryAttachmentsDialog</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to create attachment widget for file %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attachment not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>EditEntryWidget</name>
     <message>
         <source>Entry</source>
@@ -3905,21 +3924,6 @@ This may cause the affected plugins to malfunction.</source>
     </message>
 </context>
 <context>
-    <name>EntryAttachmentsDialog</name>
-    <message>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>File name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>File contents...</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>EntryAttachmentsModel</name>
     <message>
         <source>Name</source>
@@ -4075,6 +4079,14 @@ Would you like to overwrite the existing attachment?</source>
     </message>
     <message>
         <source>Failed to preview an attachment: Attachment not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to edit an attachment: Attachment not found</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6467,25 +6479,6 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
     </message>
 </context>
 <context>
-    <name>EditEntryAttachmentsDialog</name>
-    <message>
-        <source>Attachment name cannot be empty</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Attachment with the same name already exists</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save attachment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>New entry attachment</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>NixUtils</name>
     <message>
         <source>Password Manager</source>
@@ -7253,15 +7246,19 @@ Do you want to overwrite it?</source>
 <context>
     <name>PreviewEntryAttachmentsDialog</name>
     <message>
-        <source>Preview entry attachment</source>
+        <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>No preview available</source>
+        <source>Attachment not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Image format not supported</source>
+        <source>Preview: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to create attachment widget for file %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10179,6 +10176,17 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
 </context>
 <context>
+    <name>TextAttachmentsWidget</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File contents...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>TotpDialog</name>
     <message>
         <source>Timed Password</source>
@@ -10297,6 +10305,17 @@ Example: JBSWY3DPEHPK3PXP</source>
     <name>URLEdit</name>
     <message>
         <source>Invalid URL</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UnknownAttachmentTypeWidget</name>
+    <message>
+        <source>Form</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown attachment type</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
