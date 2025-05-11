@@ -6467,7 +6467,7 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
     </message>
 </context>
 <context>
-    <name>NewEntryAttachmentsDialog</name>
+    <name>EditEntryAttachmentsDialog</name>
     <message>
         <source>Attachment name cannot be empty</source>
         <translation type="unfinished"></translation>

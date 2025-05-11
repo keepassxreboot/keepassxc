@@ -19,34 +19,31 @@
 
 #include "attachments/AttachmentWidgetFactory.h"
 
-#include <core/Tools.h>
-
 #include <QDialog>
 #include <QPointer>
 
 namespace Ui
 {
-    class PreviewEntryAttachmentsDialog;
+    class EditEntryAttachmentsDialog;
 }
 
-class PreviewEntryAttachmentsDialog : public QDialog
+class EntryAttachments;
+
+class EditEntryAttachmentsDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit PreviewEntryAttachmentsDialog(std::unique_ptr<attachments::AttachmentsWidgetFactory> widgetsFactory,
-                                           QWidget* parent = nullptr);
-    ~PreviewEntryAttachmentsDialog() override;
+    explicit EditEntryAttachmentsDialog(std::unique_ptr<attachments::AttachmentsWidgetFactory> widgetsFactory,
+                                        QWidget* parent = nullptr);
+    ~EditEntryAttachmentsDialog() override;
 
     void setAttachment(attachments::Attachment attachment);
-
-signals:
-    void openAttachment(const QString& name);
-    void saveAttachment(const QString& name);
+    attachments::Attachment getAttachment() const;
 
 private:
-    QScopedPointer<Ui::PreviewEntryAttachmentsDialog> m_ui;
+    QScopedPointer<Ui::EditEntryAttachmentsDialog> m_ui{};
 
-    std::unique_ptr<attachments::AttachmentsWidgetFactory> m_widgetFactory{};
-    QPointer<attachments::AbstractAttachmentWidget> m_attachmentWidget;
+    std::unique_ptr<attachments::AttachmentsWidgetFactory> m_widgetsFactory{};
+    QPointer<attachments::AbstractAttachmentWidget> m_attachmentWidget{};
 };

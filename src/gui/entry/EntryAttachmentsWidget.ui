@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>337</width>
-    <height>258</height>
+    <width>332</width>
+    <height>306</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -47,7 +47,7 @@
    </item>
    <item>
     <widget class="QWidget" name="actionsWidget" native="true">
-     <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,1,0,0,0,1,0,0">
+     <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0,0,0,0,0,0,0">
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -71,6 +71,16 @@
        </widget>
       </item>
       <item>
+       <widget class="QPushButton" name="editAttachmentButton">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>Edit</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="addAttachmentButton">
         <property name="enabled">
          <bool>false</bool>
@@ -84,17 +94,11 @@
        </widget>
       </item>
       <item>
-       <spacer name="previewVSpacer">
+       <widget class="Line" name="editPreviewLine">
         <property name="orientation">
-         <enum>Qt::Vertical</enum>
+         <enum>Qt::Horizontal</enum>
         </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>40</height>
-         </size>
-        </property>
-       </spacer>
+       </widget>
       </item>
       <item>
        <widget class="QPushButton" name="previewAttachmentButton">
@@ -133,17 +137,14 @@
        </widget>
       </item>
       <item>
-       <spacer name="verticalSpacer_2">
+       <widget class="Line" name="previewRemoveLine">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
         <property name="orientation">
-         <enum>Qt::Vertical</enum>
+         <enum>Qt::Horizontal</enum>
         </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-          <height>173</height>
-         </size>
-        </property>
-       </spacer>
+       </widget>
       </item>
       <item>
        <widget class="QPushButton" name="removeAttachmentButton">
@@ -164,7 +165,7 @@
          <enum>Qt::Vertical</enum>
         </property>
         <property name="sizeType">
-         <enum>QSizePolicy::Minimum</enum>
+         <enum>QSizePolicy::Expanding</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>

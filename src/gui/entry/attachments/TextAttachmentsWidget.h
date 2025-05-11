@@ -17,32 +17,30 @@
 
 #pragma once
 
-#include <QDialog>
-#include <QPointer>
+#include "AbstractAttachmentWidget.h"
+
+#include <QScopedPointer>
 
 namespace Ui
 {
-    class EntryAttachmentsDialog;
+    class TextAttachmentsWidget;
 }
 
-class QByteArray;
-class EntryAttachments;
-
-class NewEntryAttachmentsDialog : public QDialog
+class TextAttachmentsWidget : public attachments::AbstractAttachmentWidget
 {
-    Q_OBJECT
-
 public:
-    explicit NewEntryAttachmentsDialog(QPointer<EntryAttachments> attachments, QWidget* parent = nullptr);
-    ~NewEntryAttachmentsDialog() override;
+    explicit TextAttachmentsWidget(QWidget* parent = nullptr);
+    ~TextAttachmentsWidget() override;
 
-private slots:
-    void saveAttachment();
-    void fileNameTextChanged(const QString& fileName);
+    void openAttachment(attachments::Attachment attachment, attachments::OpenMode mode) override;
+    attachments::Attachment getAttachment() const override;
 
 private:
-    bool validateFileName(const QString& fileName, QString& error) const;
+    void updateWidget();
 
-    QPointer<EntryAttachments> m_attachments;
-    QScopedPointer<Ui::EntryAttachmentsDialog> m_ui;
+private:
+    QScopedPointer<Ui::TextAttachmentsWidget> m_ui{};
+
+    attachments::Attachment m_attachment{};
+    attachments::OpenMode m_mode{};
 };

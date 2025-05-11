@@ -130,6 +130,15 @@ QString EntryAttachmentsModel::keyByIndex(const QModelIndex& index) const
     return m_entryAttachments->keys().at(index.row());
 }
 
+int EntryAttachmentsModel::rowByKey(const QString& key) const
+{
+    if (!m_entryAttachments) {
+        return -1;
+    }
+
+    return m_entryAttachments->keys().indexOf(key);
+}
+
 void EntryAttachmentsModel::attachmentChange(const QString& key)
 {
     int row = m_entryAttachments->keys().indexOf(key);

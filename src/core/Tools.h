@@ -123,6 +123,8 @@ namespace Tools
     };
 
     MimeType toMimeType(const QString& mimeName);
+    MimeType getMimeType(const QByteArray& data);
+
 } // namespace Tools
 
 #endif // KEEPASSX_TOOLS_H

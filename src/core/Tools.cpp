@@ -35,6 +35,7 @@
 #include <QIODevice>
 #include <QLocale>
 #include <QMetaProperty>
+#include <QMimeDatabase>
 #include <QRegularExpression>
 #include <QStringList>
 #include <QUrl>
@@ -503,4 +504,13 @@ namespace Tools
 
         return MimeType::Unknown;
     }
+
+    MimeType getMimeType(const QByteArray& data)
+    {
+        QMimeDatabase mimeDb;
+        const auto mime = mimeDb.mimeTypeForData(data);
+
+        return toMimeType(mime.name());
+    }
+
 } // namespace Tools
