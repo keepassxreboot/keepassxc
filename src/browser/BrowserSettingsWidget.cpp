@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -166,6 +166,7 @@ void BrowserSettingsWidget::loadSettings()
         m_ui->browserTypeComboBox->setCurrentIndex(typeIndex);
     }
     m_ui->customBrowserLocation->setText(settings->replaceHomePath(settings->customBrowserLocation()));
+    m_ui->webSocketSupport->setChecked(settings->webSocketSupport());
 
 #ifdef QT_DEBUG
     m_ui->customExtensionId->setText(settings->customExtensionId());
@@ -241,6 +242,7 @@ void BrowserSettingsWidget::saveSettings()
     settings->setSupportKphFields(m_ui->supportKphFields->isChecked());
     settings->setAllowLocalhostWithPasskeys(m_ui->allowLocalhostWithPasskeys->isChecked());
     settings->setNoMigrationPrompt(m_ui->noMigrationPrompt->isChecked());
+    settings->setWebSocketSupport(m_ui->webSocketSupport->isChecked());
 
 #ifdef QT_DEBUG
     settings->setCustomExtensionId(m_ui->customExtensionId->text());

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
  *  Copyright (C) 2013 Francois Ferrand
  *
@@ -294,4 +294,13 @@ QString BrowserSettings::replaceTildeHomePath(QString location)
 #endif
 
     return location;
+}
+
+void BrowserSettings:: setWebSocketSupport(bool enabled)
+{
+    config()->set(Config::Browser_WebSocketSupport, enabled);
+}
+bool BrowserSettings::webSocketSupport()
+{
+    return config()->get(Config::Browser_WebSocketSupport).toBool();
 }
