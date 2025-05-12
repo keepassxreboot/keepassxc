@@ -1,4 +1,5 @@
 #include "AttachmentWidgetFactory.h"
+#include "ImageAttachmentsWidget.h"
 #include "TextAttachmentsWidget.h"
 #include "UnknownAttachmentTypeWidget.h"
 
@@ -11,6 +12,8 @@ namespace attachments
     {
         if (type == Tools::MimeType::PlainText) {
             return new TextAttachmentsWidget(parent);
+        } else if (type == Tools::MimeType::Image) {
+            return new ImageAttachmentsWidget(parent);
         }
 
         return new UnknownAttachmentTypeWidget(parent);
