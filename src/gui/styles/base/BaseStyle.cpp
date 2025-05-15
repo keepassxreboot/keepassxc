@@ -319,6 +319,7 @@ namespace Phantom
                 S_sliderHandle_pressed,
                 S_sliderHandle_specular,
                 S_sliderHandle_pressed_specular,
+                S_splitterHandle,
                 S_base_shadow,
                 S_base_divider,
                 S_windowText_disabled,
@@ -435,7 +436,8 @@ namespace Phantom
                 isLight ? colors[S_button_pressed] : Dc::adjustLightness(colors[S_button_pressed], 0.03);
             colors[S_sliderHandle_pressed_specular] = isLight ? Dc::specularOf(colors[S_sliderHandle_pressed])
                                                               : Dc::lightSpecularOf(colors[S_sliderHandle_pressed]);
-
+            colors[S_splitterHandle] = isLight ? Dc::adjustLightness(colors[S_window], -0.1)
+                                               : Dc::adjustLightness(colors[S_window], 0.15);
             colors[S_base_shadow] = Dc::overhangShadowOf(colors[S_base]);
             colors[S_base_divider] = colors[S_window_divider];
             colors[S_windowText_disabled] = pal.color(QPalette::Disabled, QPalette::WindowText);
@@ -2218,8 +2220,8 @@ void BaseStyle::drawControl(ControlElement element,
             size = QSize(length, thickness);
         }
         QRect filledRect = QStyle::alignedRect(option->direction, Qt::AlignCenter, size, r);
-        painter->fillRect(filledRect, swatch.color(S_button_specular));
-        Ph::fillRectOutline(painter, filledRect.adjusted(-1, 0, 1, 0), 1, swatch.color(S_window_divider));
+        painter->fillRect(filledRect, swatch.color(S_splitterHandle));
+        Ph::fillRectOutline(painter, filledRect.adjusted(-1, -1, 1, 1), 1, swatch.color(S_splitterHandle));
         break;
     }
     // TODO update this for phantom
