@@ -821,6 +821,8 @@ void MainWindow::updateSetTagsMenu()
         return nullptr;
     };
 
+    m_ui->menuTags->setTearOffEnabled(true);
+
     auto dbWidget = m_ui->tabWidget->currentDatabaseWidget();
     if (dbWidget) {
         // Enumerate tags applied to the selected entries
@@ -831,31 +833,30 @@ void MainWindow::updateSetTagsMenu()
             }
         }
 
-        // Add known database tags as actions and set checked if
-        // a selected entry has that tag
+        // Remove missing tags
         const auto tagList = dbWidget->database()->tagList();
-        for (const auto& tag : tagList) {
-            auto action = actionForTag(m_ui->menuTags, tag);
-            if (action) {
-                action->setChecked(selectedTags.contains(tag));
-            } else {
-                action = m_ui->menuTags->addAction(icons()->icon("tag"), tag);
-                action->setCheckable(true);
-                action->setChecked(selectedTags.contains(tag));
-                m_setTagsMenuActions->addAction(action);
+        for (const auto action : m_ui->menuTags->actions()) {
+            if (!tagList.contains(action->text()) || !action->isEnabled()) {
+                delete action;
             }
         }
 
-        // Remove missing tags
-        for (const auto action : m_ui->menuTags->actions()) {
-            if (!tagList.contains(action->text())) {
-                action->deleteLater();
+        // Add known database tags as actions and set checked if
+        // a selected entry has that tag
+        for (const auto& tag : tagList) {
+            auto action = actionForTag(m_ui->menuTags, tag);
+            if (!action) {
+                action = m_ui->menuTags->addAction(icons()->icon("tag"), tag);
+                action->setCheckable(true);
+                m_setTagsMenuActions->addAction(action);
             }
+            action->setChecked(selectedTags.contains(tag));
         }
     }
 
     // If no tags exist in the database then show a tip to the user
     if (m_ui->menuTags->isEmpty()) {
+        m_ui->menuTags->setTearOffEnabled(false);
         auto action = m_ui->menuTags->addAction(tr("No Tags"));
         action->setEnabled(false);
     }
@@ -1314,6 +1315,11 @@ void MainWindow::databaseTabChanged(int tabIndex)
 
     m_actionMultiplexer.setCurrentObject(m_ui->tabWidget->currentDatabaseWidget());
     updateEntryCountLabel();
+
+    // Clear the tags menu to prevent re-use between databases
+    for (const auto action : m_ui->menuTags->actions()) {
+        delete action;
+    }
 }
 
 bool MainWindow::event(QEvent* event)
