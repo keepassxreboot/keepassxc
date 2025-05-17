@@ -1017,7 +1017,7 @@ void MainWindow::updateMenuActionState()
     m_ui->actionGroupDownloadFavicons->setEnabled(groupSelected && groupHasEntries && !inRecycleBin);
 
     // Database Menu
-    m_ui->actionDatabaseSave->setEnabled(m_ui->tabWidget->canSave());
+    m_ui->actionDatabaseSave->setEnabled(databaseUnlocked && m_ui->tabWidget->canSave());
     m_ui->actionDatabaseSaveAs->setEnabled(databaseUnlocked);
     m_ui->actionDatabaseSaveBackup->setEnabled(databaseUnlocked);
     m_ui->actionDatabaseClose->setEnabled(dbWidget);
