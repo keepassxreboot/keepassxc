@@ -84,7 +84,7 @@ int EditWidget::pageIndex(const QWidget* widget) const
 
     for (int i = 0; i < m_ui->stackedWidget->count(); i++) {
         auto* scrollArea = qobject_cast<QScrollArea*>(m_ui->stackedWidget->widget(i));
-        if (scrollArea && scrollArea->widget() == widget) {
+        if (scrollArea && (scrollArea == widget || scrollArea->widget() == widget)) {
             return i;
         }
     }
