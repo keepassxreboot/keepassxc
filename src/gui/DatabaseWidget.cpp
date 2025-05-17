@@ -1527,7 +1527,7 @@ void DatabaseWidget::entryActivationSignalReceived(Entry* entry, EntryModel::Mod
         }
         break;
     case EntryModel::Totp:
-        if (entry->hasTotp()) {
+        if (entry->hasValidTotp()) {
             setClipboardTextAndMinimize(entry->totp());
         } else {
             setupTotp();
@@ -2386,7 +2386,7 @@ bool DatabaseWidget::currentEntryHasTotp()
     if (!currentEntry) {
         return false;
     }
-    return currentEntry->hasTotp();
+    return currentEntry->hasValidTotp();
 }
 
 #ifdef WITH_XC_SSHAGENT

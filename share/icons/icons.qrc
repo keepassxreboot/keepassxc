@@ -92,6 +92,7 @@
         <file>application/scalable/actions/totp-copy.svg</file>
         <file>application/scalable/actions/totp-copy-password.svg</file>
         <file>application/scalable/actions/totp-edit.svg</file>
+        <file>application/scalable/actions/totp-invalid.svg</file>
         <file>application/scalable/actions/trash.svg</file>
         <file>application/scalable/actions/url-copy.svg</file>
         <file>application/scalable/actions/user-guide.svg</file>

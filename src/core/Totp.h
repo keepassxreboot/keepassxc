@@ -91,8 +91,10 @@ namespace Totp
                           const QString& title = {},
                           const QString& username = {},
                           bool forceOtp = false);
-
-    QString generateTotp(const QSharedPointer<Totp::Settings>& settings, const quint64 time = 0ull);
+    // Returns an empty string if settings are valid, otherwise an error message is supplied
+    QString checkValidSettings(const QSharedPointer<Totp::Settings>& settings);
+    QString
+    generateTotp(const QSharedPointer<Totp::Settings>& settings, bool* isValid = nullptr, const quint64 time = 0ull);
 
     bool hasCustomSettings(const QSharedPointer<Totp::Settings>& settings);
 

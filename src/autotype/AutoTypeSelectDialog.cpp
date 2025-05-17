@@ -264,7 +264,7 @@ void AutoTypeSelectDialog::updateActionMenu(const AutoTypeMatch& match)
 
     bool hasUsername = !match.first->username().isEmpty();
     bool hasPassword = !match.first->password().isEmpty();
-    bool hasTotp = match.first->hasTotp();
+    bool hasTotp = match.first->hasValidTotp();
 
     for (auto action : m_actionMenu->actions()) {
         auto prop = action->property(MENU_FIELD_PROP_NAME);

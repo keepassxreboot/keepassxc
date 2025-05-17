@@ -125,7 +125,7 @@ namespace FdoSecrets
         // add some informative and readonly attributes
         attrs[ItemAttributes::UuidKey] = m_backend->uuidToHex();
         attrs[ItemAttributes::PathKey] = path();
-        if (m_backend->hasTotp()) {
+        if (m_backend->hasValidTotp()) {
             attrs[ItemAttributes::TotpKey] = m_backend->totp();
         }
         return {};

@@ -1192,7 +1192,7 @@ QJsonObject BrowserService::prepareEntry(const Entry* entry)
     res["uuid"] = entry->resolveMultiplePlaceholders(entry->uuidToHex());
     res["group"] = entry->resolveMultiplePlaceholders(entry->group()->name());
 
-    if (entry->hasTotp()) {
+    if (entry->hasValidTotp()) {
         res["totp"] = entry->totp();
     }
 

@@ -210,11 +210,32 @@ QString Totp::writeSettings(const QSharedPointer<Totp::Settings>& settings,
     }
 }
 
-QString Totp::generateTotp(const QSharedPointer<Totp::Settings>& settings, const quint64 time)
+QString Totp::checkValidSettings(const QSharedPointer<Totp::Settings>& settings)
 {
-    Q_ASSERT(!settings.isNull());
     if (settings.isNull()) {
         return QObject::tr("Invalid Settings", "TOTP");
+    }
+    QVariant secret = Base32::decode(Base32::sanitizeInput(settings->key.toLatin1()));
+    if (secret.isNull()) {
+        return QObject::tr("Invalid Key", "TOTP");
+    }
+    if (settings->step == 0) {
+        return QObject::tr("Invalid Step", "TOTP");
+    }
+    if (settings->digits == 0) {
+        return QObject::tr("Invalid Digits", "TOTP");
+    }
+    return {};
+}
+
+QString Totp::generateTotp(const QSharedPointer<Totp::Settings>& settings, bool* isValid, const quint64 time)
+{
+    auto error = checkValidSettings(settings);
+    if (!error.isEmpty()) {
+        if (isValid) {
+            *isValid = false;
+        }
+        return error;
     }
 
     const Encoder& encoder = settings->encoder;
@@ -229,9 +250,6 @@ QString Totp::generateTotp(const QSharedPointer<Totp::Settings>& settings, const
     }
 
     QVariant secret = Base32::decode(Base32::sanitizeInput(settings->key.toLatin1()));
-    if (secret.isNull()) {
-        return QObject::tr("Invalid Key", "TOTP");
-    }
 
     QCryptographicHash::Algorithm cryptoHash;
     switch (settings->algorithm) {
@@ -273,6 +291,9 @@ QString Totp::generateTotp(const QSharedPointer<Totp::Settings>& settings, const
     for (quint8 pos = startpos; password > 0; pos += direction) {
         retval[pos] = encoder.alphabet[int(password % encoder.alphabet.size())];
         password /= encoder.alphabet.size();
+    }
+    if (isValid) {
+        *isValid = true;
     }
     return retval;
 }

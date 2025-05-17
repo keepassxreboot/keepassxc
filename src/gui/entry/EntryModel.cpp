@@ -297,7 +297,7 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             break;
         case Totp:
             if (entry->hasTotp()) {
-                return icons()->icon("totp");
+                return entry->hasValidTotp() ? icons()->icon("totp") : icons()->icon("totp-invalid");
             }
             break;
         case PasswordStrength:

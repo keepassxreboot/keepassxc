@@ -570,6 +570,12 @@ bool Entry::hasTotp() const
     return !m_data.totpSettings.isNull();
 }
 
+bool Entry::hasValidTotp() const
+{
+    auto error = Totp::checkValidSettings(m_data.totpSettings);
+    return error.isEmpty();
+}
+
 bool Entry::hasPasskey() const
 {
     return m_attributes->hasPasskey();
@@ -581,10 +587,13 @@ void Entry::removePasskey()
     removeTag(tr("Passkey"));
 }
 
-QString Entry::totp() const
+QString Entry::totp(bool* isValid) const
 {
     if (hasTotp()) {
-        return Totp::generateTotp(m_data.totpSettings);
+        return Totp::generateTotp(m_data.totpSettings, isValid);
+    }
+    if (isValid) {
+        *isValid = false;
     }
     return {};
 }

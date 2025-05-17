@@ -127,5 +127,8 @@ void TotpSetupDialog::init()
                 m_ui->algorithmComboBox->setCurrentIndex(index);
             }
         }
+
+        auto error = Totp::checkValidSettings(settings);
+        m_ui->invalidKeyLabel->setVisible(!error.isEmpty());
     }
 }

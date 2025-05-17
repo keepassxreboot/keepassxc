@@ -70,8 +70,7 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
 
     m_ui->entryTotpLabel->installEventFilter(this);
 
-    connect(m_ui->entryTotpButton, SIGNAL(toggled(bool)), m_ui->entryTotpLabel, SLOT(setVisible(bool)));
-    connect(m_ui->entryTotpButton, SIGNAL(toggled(bool)), m_ui->entryTotpProgress, SLOT(setVisible(bool)));
+    connect(m_ui->entryTotpButton, SIGNAL(toggled(bool)), m_ui->entryTotp, SLOT(setVisible(bool)));
     connect(m_ui->entryCloseButton, SIGNAL(clicked()), SLOT(hide()));
     connect(m_ui->toggleUsernameButton, SIGNAL(clicked(bool)), SLOT(setUsernameVisible(bool)));
     connect(m_ui->togglePasswordButton, SIGNAL(clicked(bool)), SLOT(setPasswordVisible(bool)));
@@ -260,8 +259,7 @@ void EntryPreviewWidget::updateEntryTotp()
         m_ui->entryTotpProgress->setMaximum(m_currentEntry->totpSettings()->step);
         updateTotpLabel();
     } else {
-        m_ui->entryTotpLabel->hide();
-        m_ui->entryTotpProgress->hide();
+        m_ui->entryTotp->hide();
         m_ui->entryTotpButton->setChecked(false);
         m_ui->entryTotpLabel->clear();
         m_totpTimer.stop();
@@ -546,16 +544,23 @@ void EntryPreviewWidget::updateGroupSharingTab()
 void EntryPreviewWidget::updateTotpLabel()
 {
     if (!m_locked && m_currentEntry && m_currentEntry->hasTotp()) {
-        auto totpCode = m_currentEntry->totp();
-        totpCode.insert(totpCode.size() / 2, " ");
-        m_ui->entryTotpLabel->setText(totpCode);
+        bool isValid = false;
+        auto totpCode = m_currentEntry->totp(&isValid);
+        if (isValid) {
+            totpCode.insert(totpCode.size() / 2, " ");
 
-        auto step = m_currentEntry->totpSettings()->step;
-        auto timeleft = step - (Clock::currentSecondsSinceEpoch() % step);
-        m_ui->entryTotpProgress->setValue(timeleft);
-        m_ui->entryTotpProgress->update();
+            auto step = m_currentEntry->totpSettings()->step;
+            auto timeleft = step - (Clock::currentSecondsSinceEpoch() % step);
+            m_ui->entryTotpProgress->setValue(timeleft);
+            m_ui->entryTotpProgress->update();
+        } else {
+            m_totpTimer.stop();
+        }
+
+        m_ui->entryTotpProgress->setVisible(isValid);
+        m_ui->entryTotpLabel->setText(totpCode);
     } else {
-        m_ui->entryTotpLabel->clear();
+        m_ui->entryTotp->setVisible(false);
         m_totpTimer.stop();
     }
 }

@@ -115,18 +115,18 @@ void TestTotp::testTotpCode()
 
     // Test 6 digit TOTP (default)
     quint64 time = 1234567890;
-    QCOMPARE(Totp::generateTotp(settings, time), QString("005924"));
+    QCOMPARE(Totp::generateTotp(settings, nullptr, time), QString("005924"));
 
     time = 1111111109;
-    QCOMPARE(Totp::generateTotp(settings, time), QString("081804"));
+    QCOMPARE(Totp::generateTotp(settings, nullptr, time), QString("081804"));
 
     // Test 8 digit TOTP (custom)
     settings->digits = 8;
     time = 1111111111;
-    QCOMPARE(Totp::generateTotp(settings, time), QString("14050471"));
+    QCOMPARE(Totp::generateTotp(settings, nullptr, time), QString("14050471"));
 
     time = 2000000000;
-    QCOMPARE(Totp::generateTotp(settings, time), QString("69279037"));
+    QCOMPARE(Totp::generateTotp(settings, nullptr, time), QString("69279037"));
 }
 
 void TestTotp::testSteamTotp()
@@ -155,9 +155,9 @@ void TestTotp::testSteamTotp()
     // Steam mobile app with a throw-away steam account. The above secret was extracted
     // from the Steam app's data for use in testing here.
     quint64 time = 1511200518;
-    QCOMPARE(Totp::generateTotp(settings, time), QString("FR8RV"));
+    QCOMPARE(Totp::generateTotp(settings, nullptr, time), QString("FR8RV"));
     time = 1511200714;
-    QCOMPARE(Totp::generateTotp(settings, time), QString("9P3VP"));
+    QCOMPARE(Totp::generateTotp(settings, nullptr, time), QString("9P3VP"));
 }
 
 void TestTotp::testEntryHistory()

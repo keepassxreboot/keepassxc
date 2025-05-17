@@ -223,6 +223,7 @@ Files: share/icons/application/scalable/actions/application-exit.svg
        share/icons/application/scalable/actions/totp-copy.svg
        share/icons/application/scalable/actions/totp-copy-password.svg
        share/icons/application/scalable/actions/totp-edit.svg
+       share/icons/application/scalable/actions/totp-invalid.svg
        share/icons/application/scalable/actions/trash.svg
        share/icons/application/scalable/actions/url-copy.svg
        share/icons/application/scalable/actions/user-guide.svg

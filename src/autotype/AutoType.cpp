@@ -637,10 +637,16 @@ AutoType::parseSequence(const QString& entrySequence, const Entry* entry, QStrin
             // Platform-specific field clearing
             actions << QSharedPointer<AutoTypeClearField>::create();
         } else if (placeholder == "totp") {
-            // Entry totp (requires special handling)
-            QString totp = entry->totp();
-            for (const auto& ch : totp) {
-                actions << QSharedPointer<AutoTypeKey>::create(ch);
+            if (entry->hasValidTotp()) {
+                // Entry totp (requires special handling)
+                QString totp = entry->totp();
+                for (const auto& ch : totp) {
+                    actions << QSharedPointer<AutoTypeKey>::create(ch);
+                }
+            } else if (entry->hasTotp()) {
+                // Entry has TOTP configured but invalid settings
+                error = tr("Entry has invalid TOTP settings");
+                return {};
             }
         } else if (placeholder.startsWith("pickchars")) {
             // Reset to the original capture to preserve case
