@@ -73,6 +73,7 @@
                             Name="KeePassXC - User Guide"
                             Target="[#CM_FP_share.docs.KeePassXC_UserGuide.html]"
                             WorkingDirectory="INSTALL_ROOT" />
+                        <RemoveFile Id="RemoveShortcuts" Name="*.*" On="uninstall" />
                         <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall" />
                         <RegistryValue Root="HKCU" Key="Software\KeePassXC" Name="StartMenuShortcut" Type="integer" Value="1" KeyPath="yes"/>
                     </Component>
