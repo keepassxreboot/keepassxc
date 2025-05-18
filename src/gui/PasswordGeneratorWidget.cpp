@@ -65,7 +65,7 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     connect(m_ui->buttonApply, SIGNAL(clicked()), SLOT(applyPassword()));
     connect(m_ui->buttonCopy, SIGNAL(clicked()), SLOT(copyPassword()));
     connect(m_ui->buttonGenerate, SIGNAL(clicked()), SLOT(regeneratePassword()));
-    connect(m_ui->buttonDeleteWordList, SIGNAL(clicked()), SLOT(deleteWordList()));
+    connect(m_ui->buttonDeleteWordList, SIGNAL(clicked()), SLOT(removeCustomWordList()));
     connect(m_ui->buttonAddWordList, SIGNAL(clicked()), SLOT(addWordList()));
     connect(m_ui->buttonClose, SIGNAL(clicked()), SIGNAL(closed()));
 
@@ -114,6 +114,11 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     for (const auto& fileName : path.entryList(QDir::Files)) {
         m_ui->comboBoxWordList->addItem(fileName, path.absolutePath() + QDir::separator() + fileName);
     }
+
+    // Set color of wordlist warning
+    StateColorPalette statePalette;
+    auto color = statePalette.color(StateColorPalette::ColorRole::False);
+    m_ui->labelWordListWarning->setStyleSheet(QString("QLabel { color: %1; }").arg(color.name()));
 
     loadSettings();
 }
@@ -257,9 +262,7 @@ void PasswordGeneratorWidget::regeneratePassword()
             m_ui->editNewPassword->setText(m_passwordGenerator->generatePassword());
         }
     } else {
-        if (m_dicewareGenerator->isValid()) {
-            m_ui->editNewPassword->setText(m_dicewareGenerator->generatePassphrase());
-        }
+        m_ui->editNewPassword->setText(m_dicewareGenerator->generatePassphrase());
     }
 }
 
@@ -379,33 +382,28 @@ bool PasswordGeneratorWidget::isPasswordGenerated() const
     return m_passwordGenerated;
 }
 
-void PasswordGeneratorWidget::deleteWordList()
+void PasswordGeneratorWidget::removeCustomWordList()
 {
     if (m_ui->comboBoxWordList->currentIndex() < m_firstCustomWordlistIndex) {
         return;
     }
 
-    QFile file(m_ui->comboBoxWordList->currentData().toString());
-    if (!file.exists()) {
-        return;
-    }
-
+    auto wordlist = m_ui->comboBoxWordList->currentText();
     auto result = MessageBox::question(this,
-                                       tr("Confirm Delete Wordlist"),
-                                       tr("Do you really want to delete the wordlist \"%1\"?").arg(file.fileName()),
-                                       MessageBox::Delete | MessageBox::Cancel,
+                                       tr("Confirm Remove Wordlist"),
+                                       tr("Do you really want to remove the wordlist \"%1\"?").arg(wordlist),
+                                       MessageBox::Remove | MessageBox::Cancel,
                                        MessageBox::Cancel);
-    if (result != MessageBox::Delete) {
-        return;
-    }
 
-    if (!file.remove()) {
-        MessageBox::critical(this, tr("Failed to delete wordlist"), file.errorString());
-        return;
-    }
+    if (result == MessageBox::Remove) {
+        QFile file(m_ui->comboBoxWordList->currentData().toString());
+        if (file.exists() && !file.remove()) {
+            MessageBox::critical(this, tr("Failed to delete wordlist"), file.errorString());
+        }
 
-    m_ui->comboBoxWordList->removeItem(m_ui->comboBoxWordList->currentIndex());
-    updateGenerator();
+        m_ui->comboBoxWordList->removeItem(m_ui->comboBoxWordList->currentIndex());
+        updateGenerator();
+    }
 }
 
 void PasswordGeneratorWidget::addWordList()
@@ -589,11 +587,7 @@ void PasswordGeneratorWidget::updateGenerator()
         }
         m_passwordGenerator->setFlags(flags);
 
-        if (m_passwordGenerator->isValid()) {
-            m_ui->buttonGenerate->setEnabled(true);
-        } else {
-            m_ui->buttonGenerate->setEnabled(false);
-        }
+        m_ui->buttonGenerate->setEnabled(m_passwordGenerator->isValid());
     } else {
         m_dicewareGenerator->setWordCase(
             static_cast<PassphraseGenerator::PassphraseWordCase>(m_ui->wordCaseComboBox->currentData().toInt()));
@@ -610,11 +604,8 @@ void PasswordGeneratorWidget::updateGenerator()
 
         m_dicewareGenerator->setWordSeparator(m_ui->editWordSeparator->text());
 
-        if (m_dicewareGenerator->isValid()) {
-            m_ui->buttonGenerate->setEnabled(true);
-        } else {
-            m_ui->buttonGenerate->setEnabled(false);
-        }
+        m_ui->labelWordListWarning->setVisible(!m_dicewareGenerator->isWordListValid());
+        m_ui->buttonGenerate->setEnabled(true);
     }
 
     regeneratePassword();

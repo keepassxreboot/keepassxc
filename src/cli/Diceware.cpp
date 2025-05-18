@@ -68,11 +68,9 @@ int Diceware::execute(const QStringList& arguments)
         dicewareGenerator.setWordList(wordListFile);
     }
 
-    if (!dicewareGenerator.isValid()) {
-        // We already validated the word count input so if the generator is invalid, it
-        // must be because the word list is too small.
-        err << QObject::tr("Cannot generate valid passphrases because the wordlist is too short") << Qt::endl;
-        return EXIT_FAILURE;
+    // Show a warning if the wordlist is smaller than the recommended size
+    if (!dicewareGenerator.isWordListValid()) {
+        err << QObject::tr("Warning: the chosen wordlist is smaller than the minimum recommended size!") << Qt::endl;
     }
 
     QString password = dicewareGenerator.generatePassphrase();

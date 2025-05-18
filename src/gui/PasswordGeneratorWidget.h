@@ -67,7 +67,7 @@ public slots:
     void applyPassword();
     void copyPassword();
     void setPasswordVisible(bool visible);
-    void deleteWordList();
+    void removeCustomWordList();
     void addWordList();
 
 protected:

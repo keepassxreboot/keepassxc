@@ -40,7 +40,7 @@ public:
     void setWordCase(PassphraseWordCase wordCase);
     void setDefaultWordList();
     void setWordSeparator(const QString& separator);
-    bool isValid() const;
+    bool isWordListValid() const;
 
     QString generatePassphrase() const;
 
@@ -50,7 +50,7 @@ public:
 
 private:
     int m_wordCount;
-    int m_minimum_wordlist_length = 4000;
+    int m_minWordListSize = 1296;
     PassphraseWordCase m_wordCase;
     QString m_separator;
     QList<QString> m_wordlist;

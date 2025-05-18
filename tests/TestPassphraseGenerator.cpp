@@ -34,7 +34,7 @@ void TestPassphraseGenerator::testWordCase()
 {
     PassphraseGenerator generator;
     generator.setWordSeparator(" ");
-    QVERIFY(generator.isValid());
+    QVERIFY(generator.isWordListValid());
 
     QString passphrase;
     passphrase = generator.generatePassphrase();
@@ -57,14 +57,14 @@ void TestPassphraseGenerator::testWordCase()
 void TestPassphraseGenerator::testUniqueEntriesInWordlist()
 {
     PassphraseGenerator generator;
-    // set the limit down, so we don;t have to do a very large file
-    generator.m_minimum_wordlist_length = 4;
+    // set the limit down, so we don't have to do a very large file
+    generator.m_minWordListSize = 4;
 
     // link to bad wordlist
     QString path = QString(KEEPASSX_TEST_DATA_DIR).append("/wordlists/bad_wordlist_with_duplicate_entries.wordlist");
 
-    // setting will work, it creates the warning however, and isValid will fail
+    // setting will work, it creates the warning however, and isWordListValid will fail
     generator.setWordList(path);
     // so this fails
-    QVERIFY(!generator.isValid());
+    QVERIFY(!generator.isWordListValid());
 }

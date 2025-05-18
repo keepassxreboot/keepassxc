@@ -99,7 +99,7 @@ void PassphraseGenerator::setWordList(const QString& path)
 
     m_wordlist = wordset.toList();
 
-    if (m_wordlist.size() < m_minimum_wordlist_length) {
+    if (!isWordListValid()) {
         qWarning("Wordlist is less than minimum acceptable size: %s", qPrintable(path));
     }
 }
@@ -117,8 +117,7 @@ void PassphraseGenerator::setWordSeparator(const QString& separator)
 
 QString PassphraseGenerator::generatePassphrase() const
 {
-    // In case there was an error loading the wordlist
-    if (!isValid() || m_wordlist.empty()) {
+    if (m_wordlist.isEmpty()) {
         return {};
     }
 
@@ -149,7 +148,7 @@ QString PassphraseGenerator::generatePassphrase() const
     return words.join(m_separator);
 }
 
-bool PassphraseGenerator::isValid() const
+bool PassphraseGenerator::isWordListValid() const
 {
-    return m_wordCount > 0 && m_wordlist.size() >= m_minimum_wordlist_length;
+    return m_wordlist.size() >= m_minWordListSize;
 }
