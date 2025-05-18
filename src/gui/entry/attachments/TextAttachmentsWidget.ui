@@ -29,13 +29,6 @@
    <property name="bottomMargin">
     <number>0</number>
    </property>
-   <item>
-    <widget class="QTextEdit" name="attachmentTextEdit">
-     <property name="placeholderText">
-      <string>File contents...</string>
-     </property>
-    </widget>
-   </item>
   </layout>
  </widget>
  <resources/>

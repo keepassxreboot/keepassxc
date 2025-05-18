@@ -479,14 +479,13 @@ namespace Tools
 
     MimeType toMimeType(const QString& mimeName)
     {
-        static QStringList textFormats = {
-            "text/",
-            "application/json",
-            "application/xml",
-            "application/soap+xml",
-            "application/x-yaml",
-            "application/protobuf",
-        };
+        static QStringList textFormats = {"text/",
+                                          "application/json",
+                                          "application/xml",
+                                          "application/soap+xml",
+                                          "application/x-yaml",
+                                          "application/protobuf",
+                                          "application/x-zerosize"};
         static QStringList imageFormats = {"image/"};
 
         static auto isCompatible = [](const QString& format, const QStringList& list) {

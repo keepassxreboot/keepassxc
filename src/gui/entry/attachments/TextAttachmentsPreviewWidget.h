@@ -19,37 +19,40 @@
 
 #include "AbstractAttachmentWidget.h"
 
-#include <QPointer>
 #include <QScopedPointer>
 
 namespace Ui
 {
-    class TextAttachmentsWidget;
+    class TextAttachmentsPreviewWidget;
 }
 
-class QSplitter;
-class QTextEdit;
-class TextAttachmentsPreviewWidget;
-
-class TextAttachmentsWidget : public attachments::AbstractAttachmentWidget
+class TextAttachmentsPreviewWidget : public attachments::AbstractAttachmentWidget
 {
+    Q_OBJECT
 public:
-    explicit TextAttachmentsWidget(QWidget* parent = nullptr);
-    ~TextAttachmentsWidget() override;
+    explicit TextAttachmentsPreviewWidget(QWidget* parent = nullptr);
+    ~TextAttachmentsPreviewWidget() override;
 
     void openAttachment(attachments::Attachment attachment, attachments::OpenMode mode) override;
     attachments::Attachment getAttachment() const override;
 
-private:
-    void updateWidget();
-    void initWidget();
+    enum PreviewTextType: int
+    {
+        Html,
+        PlainText,
+        Markdown
+    };
+
+    Q_ENUM(PreviewTextType)
+
+private Q_SLOTS:
+    void onTypeChanged(int index);
 
 private:
-    QScopedPointer<Ui::TextAttachmentsWidget> m_ui{};
-    QPointer<QSplitter> m_splitter{};
-    QPointer<QTextEdit> m_textEdit{};
-    QPointer<TextAttachmentsPreviewWidget> m_previewWidget{};
+    void initTypeCombobox();
+
+private:
+    QScopedPointer<Ui::TextAttachmentsPreviewWidget> m_ui{};
 
     attachments::Attachment m_attachment{};
-    attachments::OpenMode m_mode{};
 };
