@@ -29,6 +29,8 @@ public:
     void disableAutoFitInView();
     bool isAutoFitInViewActivated() const;
 
+    double calculateFitInViewFactor() const;
+
 Q_SIGNALS:
     void ctrlWheelEvent(QWheelEvent* event);
 

@@ -20,6 +20,7 @@
 #include "EditEntryAttachmentsDialog.h"
 #include "EntryAttachmentsModel.h"
 #include "PreviewEntryAttachmentsDialog.h"
+#include "gui/entry/attachments/AttachmentWidgetFactory.h"
 #include "ui_EntryAttachmentsWidget.h"
 
 #include <QDebug>
@@ -33,6 +34,9 @@
 #include "core/Tools.h"
 #include "gui/FileDialog.h"
 #include "gui/MessageBox.h"
+
+#include <memory.h>
+#include <memory>
 
 namespace
 {
@@ -58,6 +62,7 @@ EntryAttachmentsWidget::EntryAttachmentsWidget(QWidget* parent)
     , m_attachmentsModel(new EntryAttachmentsModel(this))
     , m_readOnly(false)
     , m_buttonsVisible(true)
+    , m_attachmentsWidgetFactory(std::make_shared<attachments::AttachmentsWidgetFactory>())
 {
     m_ui->setupUi(this);
 
@@ -225,7 +230,7 @@ void EntryAttachmentsWidget::previewSelectedAttachment()
     auto name = m_attachmentsModel->keyByIndex(index);
     auto data = m_entryAttachments->value(name);
 
-    PreviewEntryAttachmentsDialog previewDialog(std::make_unique<attachments::AttachmentsWidgetFactory>(), this);
+    PreviewEntryAttachmentsDialog previewDialog(m_attachmentsWidgetFactory, this);
     previewDialog.setAttachment({name, data});
 
     connect(&previewDialog, SIGNAL(openAttachment(QString)), SLOT(openSelectedAttachments()));
@@ -250,7 +255,14 @@ void EntryAttachmentsWidget::editSelectedAttachment()
 {
     Q_ASSERT(m_entryAttachments);
 
-    const auto index = m_ui->attachmentsView->selectionModel()->selectedIndexes().first();
+    const auto selectedIndexes = m_ui->attachmentsView->selectionModel()->selectedIndexes();
+    if (selectedIndexes.isEmpty()) {
+        qWarning() << tr("Failed to edit an attachment: No attachment selected");
+        return;
+    }
+
+    const auto index = selectedIndexes.first();
+
     if (!index.isValid()) {
         qWarning() << tr("Failed to edit an attachment: Attachment not found");
         return;
@@ -262,7 +274,7 @@ void EntryAttachmentsWidget::editSelectedAttachment()
     auto name = m_attachmentsModel->keyByIndex(index);
     auto data = m_entryAttachments->value(name);
 
-    EditEntryAttachmentsDialog editDialog(std::make_unique<attachments::AttachmentsWidgetFactory>(), this);
+    EditEntryAttachmentsDialog editDialog(m_attachmentsWidgetFactory, this);
     editDialog.setAttachment({name, data});
 
     if (editDialog.exec() == QDialog::Accepted) {
@@ -406,16 +418,17 @@ void EntryAttachmentsWidget::openSelectedAttachments()
 
 void EntryAttachmentsWidget::updateButtonsEnabled()
 {
-    const bool hasSelection = m_ui->attachmentsView->selectionModel()->hasSelection();
+    const auto selectionModel = m_ui->attachmentsView->selectionModel();
+    const bool hasSelection = selectionModel->hasSelection();
 
     m_ui->addAttachmentButton->setEnabled(!m_readOnly);
     m_ui->newAttachmentButton->setEnabled(!m_readOnly);
     m_ui->removeAttachmentButton->setEnabled(hasSelection && !m_readOnly);
 
+    const auto indexes = selectionModel->selectedIndexes();
     m_ui->editAttachmentButton->setEnabled(
-        hasSelection && !m_readOnly
-        && Tools::getMimeType(m_entryAttachments->value(
-               m_attachmentsModel->keyByIndex(m_ui->attachmentsView->selectionModel()->selectedIndexes().first())))
+        hasSelection && !m_readOnly && !indexes.empty()
+        && Tools::getMimeType(m_entryAttachments->value(m_attachmentsModel->keyByIndex(indexes.first())))
                == Tools::MimeType::PlainText);
 
     m_ui->saveAttachmentButton->setEnabled(hasSelection);

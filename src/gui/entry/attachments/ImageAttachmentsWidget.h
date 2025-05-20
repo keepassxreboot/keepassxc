@@ -76,8 +76,6 @@ private Q_SLOTS:
 private:
     void loadImage();
 
-    double calculateMinZoomFactor(double maxZoomFactor = 1.0) const;
-
     void initZoomComboBox();
 
 private:

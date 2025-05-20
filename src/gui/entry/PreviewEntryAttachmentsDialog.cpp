@@ -24,7 +24,7 @@
 #include <QPushButton>
 
 PreviewEntryAttachmentsDialog::PreviewEntryAttachmentsDialog(
-    std::unique_ptr<attachments::AttachmentsWidgetFactory> widgetsFactory,
+    std::shared_ptr<attachments::IAttachmentWidgetFactory> widgetsFactory,
     QWidget* parent)
     : QDialog(parent)
     , m_ui(new Ui::PreviewEntryAttachmentsDialog)
@@ -43,10 +43,10 @@ PreviewEntryAttachmentsDialog::PreviewEntryAttachmentsDialog(
     auto closeButton = m_ui->dialogButtons->button(QDialogButtonBox::Close);
     closeButton->setDefault(true);
 
-    connect(m_ui->dialogButtons, SIGNAL(rejected()), this, SLOT(reject()));
+    connect(m_ui->dialogButtons, &QDialogButtonBox::rejected, this, &PreviewEntryAttachmentsDialog::reject);
     connect(m_ui->dialogButtons, &QDialogButtonBox::clicked, [this](QAbstractButton* button) {
         auto pressedButton = m_ui->dialogButtons->standardButton(button);
-        if (m_attachmentWidget == nullptr) {
+        if (!m_attachmentWidget) {
             qWarning() << tr("Attachment not found");
             return;
         }

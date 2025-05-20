@@ -34,7 +34,7 @@ class PreviewEntryAttachmentsDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit PreviewEntryAttachmentsDialog(std::unique_ptr<attachments::AttachmentsWidgetFactory> widgetsFactory,
+    explicit PreviewEntryAttachmentsDialog(std::shared_ptr<attachments::IAttachmentWidgetFactory> widgetsFactory,
                                            QWidget* parent = nullptr);
     ~PreviewEntryAttachmentsDialog() override;
 
@@ -47,6 +47,6 @@ signals:
 private:
     QScopedPointer<Ui::PreviewEntryAttachmentsDialog> m_ui;
 
-    std::unique_ptr<attachments::AttachmentsWidgetFactory> m_widgetFactory{};
+    std::shared_ptr<attachments::IAttachmentWidgetFactory> m_widgetFactory{};
     QPointer<attachments::AbstractAttachmentWidget> m_attachmentWidget;
 };

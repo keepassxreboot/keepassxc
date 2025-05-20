@@ -26,8 +26,10 @@
 #include <QMimeDatabase>
 #include <QPushButton>
 
+#include <memory>
+
 EditEntryAttachmentsDialog::EditEntryAttachmentsDialog(
-    std::unique_ptr<attachments::AttachmentsWidgetFactory> widgetsFactory,
+    std::shared_ptr<attachments::IAttachmentWidgetFactory> widgetsFactory,
     QWidget* parent)
     : QDialog(parent)
     , m_ui(new Ui::EditEntryAttachmentsDialog)

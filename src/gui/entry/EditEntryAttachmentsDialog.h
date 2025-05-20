@@ -17,7 +17,7 @@
 
 #pragma once
 
-#include "attachments/AttachmentWidgetFactory.h"
+#include "attachments/IAttachmentWidgetFactory.h"
 
 #include <QDialog>
 #include <QPointer>
@@ -36,7 +36,7 @@ class EditEntryAttachmentsDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit EditEntryAttachmentsDialog(std::unique_ptr<attachments::AttachmentsWidgetFactory> widgetsFactory,
+    explicit EditEntryAttachmentsDialog(std::shared_ptr<attachments::IAttachmentWidgetFactory> widgetsFactory,
                                         QWidget* parent = nullptr);
     ~EditEntryAttachmentsDialog() override;
 
@@ -46,6 +46,6 @@ public:
 private:
     QScopedPointer<Ui::EditEntryAttachmentsDialog> m_ui{};
 
-    std::unique_ptr<attachments::AttachmentsWidgetFactory> m_widgetsFactory{};
+    std::shared_ptr<attachments::IAttachmentWidgetFactory> m_widgetsFactory{};
     QPointer<attachments::AbstractAttachmentWidget> m_attachmentWidget{};
 };

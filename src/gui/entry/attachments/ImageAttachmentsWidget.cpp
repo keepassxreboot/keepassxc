@@ -103,7 +103,7 @@ void ImageAttachmentsWidget::initZoomComboBox()
         }
     });
 
-    // Default to 100%
+    // Fit by default
     m_ui->zoomComboBox->setCurrentIndex(m_ui->zoomComboBox->findData(0.0));
     onZoomChanged(m_ui->zoomComboBox->currentText());
 }
@@ -111,7 +111,10 @@ void ImageAttachmentsWidget::initZoomComboBox()
 void ImageAttachmentsWidget::onWheelZoomEvent(QWheelEvent* event)
 {
     m_ui->imagesView->disableAutoFitInView();
-    m_zoomHelper->setMinZoomOutFactor(calculateMinZoomFactor(1.0));
+
+    auto finInViewFactor = m_ui->imagesView->calculateFitInViewFactor();
+    // Limit the fit-in-view factor to a maximum of 100%
+    m_zoomHelper->setMinZoomOutFactor(std::isnan(finInViewFactor) ? 1.0 : std::min(finInViewFactor, 1.0));
 
     event->angleDelta().y() > 0 ? m_zoomHelper->zoomIn() : m_zoomHelper->zoomOut();
 }
@@ -166,20 +169,6 @@ void ImageAttachmentsWidget::loadImage()
     m_scene->addPixmap(std::move(pixmap));
 }
 
-double ImageAttachmentsWidget::calculateMinZoomFactor(double maxZoomFactor) const
-{
-    auto size = m_ui->imagesView->viewport()->size();
-    auto imageRect = m_scene->itemsBoundingRect().size();
-
-    // If the image rect is empty, return 1.0 as the zoom factor
-    if (imageRect.isEmpty()) {
-        return maxZoomFactor;
-    }
-
-    // Calculate the zoom factor based on the current size and the image rect
-    return std::min(std::min(size.width() / imageRect.width(), size.height() / imageRect.height()), maxZoomFactor);
-}
-
 attachments::Attachment ImageAttachmentsWidget::getAttachment() const
 {
     return m_attachment;
@@ -210,7 +199,7 @@ void ZoomHelper::zoomIn()
 void ZoomHelper::zoomOut()
 {
     const auto newZoomFactor = m_zoomFactor / m_step;
-    setZoomFactor(std::isless(newZoomFactor, m_minZoomOut) ? m_zoomFactor: newZoomFactor);
+    setZoomFactor(std::isless(newZoomFactor, m_minZoomOut) ? m_zoomFactor : newZoomFactor);
 }
 
 void ZoomHelper::setZoomFactor(double zoomFactor)
