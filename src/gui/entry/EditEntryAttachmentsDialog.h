@@ -22,6 +22,8 @@
 #include <QDialog>
 #include <QPointer>
 
+#include <memory>
+
 namespace Ui
 {
     class EditEntryAttachmentsDialog;
