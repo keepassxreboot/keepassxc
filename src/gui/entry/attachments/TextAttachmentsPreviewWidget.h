@@ -36,7 +36,7 @@ public:
     void openAttachment(attachments::Attachment attachment, attachments::OpenMode mode) override;
     attachments::Attachment getAttachment() const override;
 
-    enum PreviewTextType: int
+    enum PreviewTextType : int
     {
         Html,
         PlainText,
