@@ -4089,6 +4089,10 @@ Would you like to overwrite the existing attachment?</source>
         <source>Failed to edit an attachment: Attachment not found</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Failed to edit an attachment: No attachment selected</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EntryAttributesModel</name>
@@ -10191,13 +10195,20 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
 </context>
 <context>
-    <name>TextAttachmentsWidget</name>
+    <name>TextAttachmentsPreviewWidget</name>
     <message>
         <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>File contents...</source>
+        <source>Type:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TextAttachmentsWidget</name>
+    <message>
+        <source>Form</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -39,8 +39,8 @@ EditEntryAttachmentsDialog::EditEntryAttachmentsDialog(
 
     m_ui->dialogButtons->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
 
-    connect(m_ui->dialogButtons, SIGNAL(accepted()), this, SLOT(accept()));
-    connect(m_ui->dialogButtons, SIGNAL(rejected()), this, SLOT(reject()));
+    connect(m_ui->dialogButtons, &QDialogButtonBox::accepted, this, &EditEntryAttachmentsDialog::accept);
+    connect(m_ui->dialogButtons, &QDialogButtonBox::rejected, this, &EditEntryAttachmentsDialog::reject);
 }
 
 EditEntryAttachmentsDialog::~EditEntryAttachmentsDialog() = default;

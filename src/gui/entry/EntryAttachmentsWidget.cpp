@@ -207,7 +207,13 @@ void EntryAttachmentsWidget::previewSelectedAttachment()
 {
     Q_ASSERT(m_entryAttachments);
 
-    const auto index = m_ui->attachmentsView->selectionModel()->selectedIndexes().first();
+    const auto indexes = m_ui->attachmentsView->selectionModel()->selectedIndexes();
+    if (indexes.empty()) {
+        qWarning() << tr("Failed to edit an attachment: No attachment selected");
+        return;
+    }
+
+    const auto index = indexes.first();
     if (!index.isValid()) {
         qWarning() << tr("Failed to preview an attachment: Attachment not found");
         return;
