@@ -436,8 +436,8 @@ namespace Phantom
                 isLight ? colors[S_button_pressed] : Dc::adjustLightness(colors[S_button_pressed], 0.03);
             colors[S_sliderHandle_pressed_specular] = isLight ? Dc::specularOf(colors[S_sliderHandle_pressed])
                                                               : Dc::lightSpecularOf(colors[S_sliderHandle_pressed]);
-            colors[S_splitterHandle] = isLight ? Dc::adjustLightness(colors[S_window], -0.1)
-                                               : Dc::adjustLightness(colors[S_window], 0.15);
+            colors[S_splitterHandle] =
+                isLight ? Dc::adjustLightness(colors[S_window], -0.1) : Dc::adjustLightness(colors[S_window], 0.15);
             colors[S_base_shadow] = Dc::overhangShadowOf(colors[S_base]);
             colors[S_base_divider] = colors[S_window_divider];
             colors[S_windowText_disabled] = pal.color(QPalette::Disabled, QPalette::WindowText);

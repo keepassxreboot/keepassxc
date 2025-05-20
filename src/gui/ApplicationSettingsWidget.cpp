@@ -139,7 +139,8 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
                 QToolTip::showText(mapToGlobal(rect().bottomLeft()), error);
                 StateColorPalette statePalette;
                 auto color = statePalette.color(StateColorPalette::ColorRole::Error);
-                m_generalUi->autoTypeShortcutWidget->setStyleSheet(QString("QLineEdit { background: %1; }").arg(color.name()));
+                m_generalUi->autoTypeShortcutWidget->setStyleSheet(
+                    QString("QLineEdit { background: %1; }").arg(color.name()));
             }
         });
     connect(m_generalUi->autoTypeShortcutWidget, &ShortcutWidget::shortcutReset, this, [this] {
