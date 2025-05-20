@@ -38,6 +38,7 @@ private slots:
     void testConvertToRegex_data();
     void testArrayContainsValues();
     void testMimeTypes();
+    void testGetMimeType();
 };
 
 #endif // KEEPASSX_TESTTOOLS_H

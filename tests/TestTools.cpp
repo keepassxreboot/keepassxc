@@ -339,3 +339,41 @@ void TestTools::testMimeTypes()
         QCOMPARE(Tools::toMimeType(mime), Tools::MimeType::Unknown);
     }
 }
+
+void TestTools::testGetMimeType()
+{
+    const QStringList Text = {"0x42", ""};
+
+    for (const auto& text : Text) {
+        QCOMPARE(Tools::getMimeType(text.toUtf8()), Tools::MimeType::PlainText);
+    }
+
+    const QByteArrayList ImageHeaders = {
+        // JPEG: starts with 0xFF 0xD8 0xFF (Start of Image marker)
+        QByteArray::fromHex("FFD8FF"),
+        // PNG: starts with 0x89 0x50 0x4E 0x47 0D 0A 1A 0A (PNG signature)
+        QByteArray::fromHex("89504E470D0A1A0A"),
+        // GIF87a: original GIF format (1987 standard)
+        QByteArray("GIF87a"),
+        // GIF89a: extended GIF format (1989, supports animation, transparency, etc.)
+        QByteArray("GIF89a"),
+    };
+
+    for (const auto& image : ImageHeaders) {
+        QCOMPARE(Tools::getMimeType(image), Tools::MimeType::Image);
+    }
+
+    const QByteArrayList UnknownHeaders = {
+        // MP3: typically starts with ID3 tag (ID3v2)
+        QByteArray("ID3"),
+        // MP4: usually starts with a 'ftyp' box (ISO base media file format)
+        // Common major brands: isom, mp42, avc1, etc.
+        QByteArray::fromHex("000000186674797069736F6D"), // size + 'ftyp' + 'isom'
+        // PDF: starts with "%PDF-" followed by version (e.g., %PDF-1.7)
+        QByteArray("%PDF-"),
+    };
+
+    for (const auto& unknown : UnknownHeaders) {
+        QCOMPARE(Tools::getMimeType(unknown), Tools::MimeType::Unknown);
+    }
+}
