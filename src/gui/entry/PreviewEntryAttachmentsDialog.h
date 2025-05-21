@@ -17,12 +17,14 @@
 
 #pragma once
 
-#include "attachments/AttachmentWidgetFactory.h"
+#include "attachments/IAttachmentWidgetFactory.h"
 
 #include <core/Tools.h>
 
 #include <QDialog>
 #include <QPointer>
+
+#include <memory>
 
 namespace Ui
 {
