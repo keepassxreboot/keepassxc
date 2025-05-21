@@ -1,9 +1,9 @@
 #include "TextAttachmentsPreviewWidget.h"
 #include "ui_TextAttachmentsPreviewWidget.h"
 
+#include <QComboBox>
 #include <QDebug>
 #include <QMetaEnum>
-#include <QComboBox>
 
 TextAttachmentsPreviewWidget::TextAttachmentsPreviewWidget(QWidget* parent)
     : attachments::AbstractAttachmentWidget(parent)
@@ -58,9 +58,15 @@ void TextAttachmentsPreviewWidget::onTypeChanged(int index)
     const auto fileType = m_ui->typeComboBox->itemData(index).toInt();
     if (fileType == TextAttachmentsPreviewWidget::PreviewTextType::PlainText) {
         m_ui->previewTextBrowser->setPlainText(m_attachment.data);
-    } else if (fileType == TextAttachmentsPreviewWidget::PreviewTextType::Html) {
+    }
+
+    if (fileType == TextAttachmentsPreviewWidget::PreviewTextType::Html) {
         m_ui->previewTextBrowser->setHtml(m_attachment.data);
-    } else if (fileType == TextAttachmentsPreviewWidget::PreviewTextType::Markdown) {
+    }
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+    if (fileType == TextAttachmentsPreviewWidget::PreviewTextType::Markdown) {
         m_ui->previewTextBrowser->setMarkdown(m_attachment.data);
     }
+#endif
 }
