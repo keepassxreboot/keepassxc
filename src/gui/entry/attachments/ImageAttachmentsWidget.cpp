@@ -93,14 +93,7 @@ void ImageAttachmentsWidget::initZoomComboBox()
     connect(m_ui->zoomComboBox, &QComboBox::currentTextChanged, this, &ImageAttachmentsWidget::onZoomChanged);
 
     connect(m_ui->zoomComboBox->lineEdit(), &QLineEdit::editingFinished, [this]() {
-        const auto zoomText = m_ui->zoomComboBox->lineEdit()->text();
-        if (zoomText == FitText) {
-            return;
-        }
-
-        if (auto parsedZoomFactor = parseZoomText(zoomText); !std::isnan(parsedZoomFactor)) {
-            m_zoomHelper->setZoomFactor(parsedZoomFactor);
-        }
+        onZoomChanged(m_ui->zoomComboBox->lineEdit()->text());
     });
 
     // Fit by default
@@ -121,6 +114,10 @@ void ImageAttachmentsWidget::onWheelZoomEvent(QWheelEvent* event)
 
 void ImageAttachmentsWidget::onZoomFactorChanged(double zoomFactor)
 {
+    if (m_ui->imagesView->isAutoFitInViewActivated()) {
+        return;
+    }
+
     m_ui->imagesView->setTransform(QTransform::fromScale(zoomFactor, zoomFactor));
 
     // Update the zoom combo box to reflect the current zoom factor
@@ -131,12 +128,19 @@ void ImageAttachmentsWidget::onZoomFactorChanged(double zoomFactor)
 
 void ImageAttachmentsWidget::onZoomChanged(const QString& zoomText)
 {
+    auto zoomFactor = 1.0;
+
     if (zoomText == FitText) {
         m_ui->imagesView->enableAutoFitInView();
-        return;
+
+        zoomFactor = std::min(m_ui->imagesView->calculateFitInViewFactor(), zoomFactor);
+    } else {
+        zoomFactor = parseZoomText(zoomText);
+        if (!std::isnan(zoomFactor)) {
+            m_ui->imagesView->disableAutoFitInView();
+        }
     }
 
-    auto zoomFactor = parseZoomText(zoomText);
     if (std::isnan(zoomFactor)) {
         qWarning() << "Invalid zoom factor:" << zoomText;
         return;

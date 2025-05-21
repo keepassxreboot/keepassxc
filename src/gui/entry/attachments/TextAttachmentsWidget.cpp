@@ -1,4 +1,5 @@
 #include "TextAttachmentsWidget.h"
+#include "TextAttachmentsEditWidget.h"
 #include "TextAttachmentsPreviewWidget.h"
 
 #include "ui_TextAttachmentsWidget.h"
@@ -33,33 +34,39 @@ attachments::Attachment TextAttachmentsWidget::getAttachment() const
 
 void TextAttachmentsWidget::updateWidget()
 {
-    m_textEdit->setReadOnly(m_mode == attachments::OpenMode::ReadOnly);
-
     if (m_mode == attachments::OpenMode::ReadOnly) {
         m_splitter->setSizes({0, 1});
-        m_textEdit->hide();
+        m_editWidget->hide();
     } else {
         m_splitter->setSizes({1, 0});
-        m_textEdit->show();
+        m_editWidget->show();
     }
 
-    m_textEdit->setText(m_attachment.data);
+    m_editWidget->openAttachment(m_attachment, m_mode);
     m_previewWidget->openAttachment(m_attachment, attachments::OpenMode::ReadOnly);
 }
 
 void TextAttachmentsWidget::initWidget()
 {
     m_splitter = new QSplitter(this);
-    m_textEdit = new QTextEdit(this);
+    auto editWidget = new TextAttachmentsEditWidget(this);
+    m_editWidget = editWidget;
 
     m_previewWidget = new TextAttachmentsPreviewWidget(this);
 
-    connect(m_textEdit, &QTextEdit::textChanged, [this]() {
-        m_attachment.data = m_textEdit->toPlainText().toUtf8();
+    connect(editWidget, &TextAttachmentsEditWidget::textChanged, [this]() {
+        m_attachment = m_editWidget->getAttachment();
         m_previewWidget->openAttachment(m_attachment, attachments::OpenMode::ReadOnly);
     });
 
-    m_splitter->addWidget(m_textEdit);
+    connect(editWidget, &TextAttachmentsEditWidget::previewButtonClicked, [this]() {
+        const auto sizes = m_splitter->sizes();
+
+        const auto previewSize = sizes.value(1, 0) > 0 ? 0 : 1;
+        m_splitter->setSizes({1, previewSize});
+    });
+
+    m_splitter->addWidget(m_editWidget);
     m_splitter->addWidget(m_previewWidget);
 
     m_ui->verticalLayout->addWidget(m_splitter);

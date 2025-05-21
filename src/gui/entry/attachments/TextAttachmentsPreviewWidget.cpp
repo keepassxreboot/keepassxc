@@ -3,8 +3,7 @@
 
 #include <QDebug>
 #include <QMetaEnum>
-#include <qcombobox.h>
-#include <qglobal.h>
+#include <QComboBox>
 
 TextAttachmentsPreviewWidget::TextAttachmentsPreviewWidget(QWidget* parent)
     : attachments::AbstractAttachmentWidget(parent)

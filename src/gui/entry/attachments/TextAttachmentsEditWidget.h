@@ -19,36 +19,32 @@
 
 #include "AbstractAttachmentWidget.h"
 
-#include <QPointer>
 #include <QScopedPointer>
 
 namespace Ui
 {
-    class TextAttachmentsWidget;
+    class TextAttachmentsEditWidget;
 }
 
-class QSplitter;
-class QTextEdit;
-class TextAttachmentsPreviewWidget;
-
-class TextAttachmentsWidget : public attachments::AbstractAttachmentWidget
+class TextAttachmentsEditWidget : public attachments::AbstractAttachmentWidget
 {
+    Q_OBJECT
 public:
-    explicit TextAttachmentsWidget(QWidget* parent = nullptr);
-    ~TextAttachmentsWidget() override;
+    explicit TextAttachmentsEditWidget(QWidget* parent = nullptr);
+    ~TextAttachmentsEditWidget() override;
 
     void openAttachment(attachments::Attachment attachment, attachments::OpenMode mode) override;
     attachments::Attachment getAttachment() const override;
 
-private:
-    void updateWidget();
-    void initWidget();
+Q_SIGNALS:
+    void textChanged();
+    void previewButtonClicked(bool isChecked);
 
 private:
-    QScopedPointer<Ui::TextAttachmentsWidget> m_ui{};
-    QPointer<QSplitter> m_splitter{};
-    QPointer<attachments::AbstractAttachmentWidget> m_editWidget{};
-    QPointer<attachments::AbstractAttachmentWidget> m_previewWidget{};
+    void updateUi();
+
+private:
+    QScopedPointer<Ui::TextAttachmentsEditWidget> m_ui{};
 
     attachments::Attachment m_attachment{};
     attachments::OpenMode m_mode{};
