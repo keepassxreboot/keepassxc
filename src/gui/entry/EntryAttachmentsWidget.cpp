@@ -35,7 +35,6 @@
 #include "gui/FileDialog.h"
 #include "gui/MessageBox.h"
 
-#include <memory.h>
 #include <memory>
 
 namespace
@@ -419,13 +418,13 @@ void EntryAttachmentsWidget::openSelectedAttachments()
 void EntryAttachmentsWidget::updateButtonsEnabled()
 {
     const auto selectionModel = m_ui->attachmentsView->selectionModel();
-    const bool hasSelection = selectionModel->hasSelection();
+    const bool hasSelection = selectionModel && selectionModel->hasSelection();
 
     m_ui->addAttachmentButton->setEnabled(!m_readOnly);
     m_ui->newAttachmentButton->setEnabled(!m_readOnly);
     m_ui->removeAttachmentButton->setEnabled(hasSelection && !m_readOnly);
 
-    const auto indexes = selectionModel->selectedIndexes();
+    const auto indexes = selectionModel ? selectionModel->selectedIndexes() : QModelIndexList{};
     m_ui->editAttachmentButton->setEnabled(
         hasSelection && !m_readOnly && !indexes.empty()
         && Tools::getMimeType(m_entryAttachments->value(m_attachmentsModel->keyByIndex(indexes.first())))
