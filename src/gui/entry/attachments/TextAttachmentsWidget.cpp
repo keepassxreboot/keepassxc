@@ -67,6 +67,10 @@ void TextAttachmentsWidget::initWidget()
     });
 
     m_splitter->addWidget(m_editWidget);
+
+    // Prevent collapsing of the edit widget
+    m_splitter->setCollapsible(0, false);
+
     m_splitter->addWidget(m_previewWidget);
 
     m_ui->verticalLayout->addWidget(m_splitter);
