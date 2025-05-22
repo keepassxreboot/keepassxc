@@ -17,29 +17,27 @@
 
 #pragma once
 
-#include "AbstractAttachmentWidget.h"
+#include "PreviewEntryAttachmentsDialog.h"
+#include <attachments/IAttachmentWidgetFactory.h>
 
-#include <QScopedPointer>
-#include <QWidget>
+#include <QObject>
 
-namespace Ui
-{
-    class UnknownAttachmentTypeWidget;
-}
+#include <memory>
+#include <qscopedpointer.h>
 
-class UnknownAttachmentTypeWidget : public attachments::AbstractAttachmentWidget
+class TestPreviewEntryAttachmentsDialog : public QObject
 {
     Q_OBJECT
-public:
-    explicit UnknownAttachmentTypeWidget(QWidget* parent = nullptr);
 
-    ~UnknownAttachmentTypeWidget() override;
+private slots:
+    void initTestCase();
 
-    void openAttachment(attachments::Attachment attachment, [[maybe_unused]] attachments::OpenMode mode) override;
-    attachments::Attachment getAttachment() const override;
+    void testSetAttachment();
+    void testSetAttachmentTwice();
+
+    void testBottonsBox();
 
 private:
-    QScopedPointer<Ui::UnknownAttachmentTypeWidget> m_ui{};
-
-    attachments::Attachment m_attachment{};
+    std::shared_ptr<attachments::IAttachmentWidgetFactory> m_factory{};
+    QScopedPointer<PreviewEntryAttachmentsDialog> m_previewDialog{};
 };

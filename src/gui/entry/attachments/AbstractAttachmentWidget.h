@@ -42,11 +42,9 @@ namespace attachments
      */
     class AbstractAttachmentWidget : public QWidget
     {
+        Q_OBJECT
     public:
-        explicit AbstractAttachmentWidget(QWidget* parent = nullptr)
-            : QWidget(parent)
-        {
-        }
+        explicit AbstractAttachmentWidget(QWidget* parent = nullptr);
 
         /**
          * @brief Opens an attachment in the specified mode.

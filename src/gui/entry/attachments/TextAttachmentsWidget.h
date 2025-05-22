@@ -33,6 +33,7 @@ class TextAttachmentsPreviewWidget;
 
 class TextAttachmentsWidget : public attachments::AbstractAttachmentWidget
 {
+    Q_OBJECT
 public:
     explicit TextAttachmentsWidget(QWidget* parent = nullptr);
     ~TextAttachmentsWidget() override;

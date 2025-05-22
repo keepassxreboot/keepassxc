@@ -72,11 +72,14 @@ void TextAttachmentsPreviewWidget::initTypeCombobox()
 
 void TextAttachmentsPreviewWidget::updateUi()
 {
-    const auto mimeType = Tools::getMimeType(QFileInfo(m_attachment.name));
+    if (!m_attachment.name.isEmpty()) {
+        const auto mimeType = Tools::getMimeType(QFileInfo(m_attachment.name));
 
-    auto index = m_ui->typeComboBox->findData(ConvertToPreviewTextType(mimeType));
-    m_ui->typeComboBox->setCurrentIndex(index);
-    onTypeChanged(index);
+        auto index = m_ui->typeComboBox->findData(ConvertToPreviewTextType(mimeType));
+        m_ui->typeComboBox->setCurrentIndex(index);
+    }
+
+    onTypeChanged(m_ui->typeComboBox->currentIndex());
 }
 
 void TextAttachmentsPreviewWidget::onTypeChanged(int index)

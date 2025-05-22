@@ -18,6 +18,10 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/..)
 add_unit_test(NAME testgui SOURCES TestGui.cpp ../util/TemporaryFile.cpp ../mock/MockRemoteProcess.cpp LIBS ${TEST_LIBRARIES})
 add_unit_test(NAME testguipixmaps SOURCES TestGuiPixmaps.cpp LIBS ${TEST_LIBRARIES})
 
+file(GLOB_RECURSE ATTACHMENTS_TEST_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/attachments/*.cpp)
+add_unit_test(NAME testguiattachments SOURCES ${ATTACHMENTS_TEST_SOURCES} LIBS ${TEST_LIBRARIES})
+include_directories(testguiattachments PRIVATE ${PROJECT_SOURCE_DIR}/src/gui/entry)
+
 if(WITH_XC_BROWSER)
     add_unit_test(NAME testguibrowser SOURCES TestGuiBrowser.cpp ../util/TemporaryFile.cpp LIBS ${TEST_LIBRARIES})
 endif()

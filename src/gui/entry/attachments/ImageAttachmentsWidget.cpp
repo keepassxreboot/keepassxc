@@ -142,7 +142,6 @@ void ImageAttachmentsWidget::onZoomChanged(const QString& zoomText)
     }
 
     if (std::isnan(zoomFactor)) {
-        qWarning() << "Invalid zoom factor:" << zoomText;
         return;
     }
 

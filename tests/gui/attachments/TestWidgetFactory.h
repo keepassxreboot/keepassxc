@@ -17,29 +17,22 @@
 
 #pragma once
 
-#include "AbstractAttachmentWidget.h"
+#include <QObject>
 
-#include <QScopedPointer>
-#include <QWidget>
+#include <attachments/AttachmentWidgetFactory.h>
+#include <memory>
 
-namespace Ui
-{
-    class UnknownAttachmentTypeWidget;
-}
-
-class UnknownAttachmentTypeWidget : public attachments::AbstractAttachmentWidget
+class TestAttachmentWidgetFactory : public QObject
 {
     Q_OBJECT
-public:
-    explicit UnknownAttachmentTypeWidget(QWidget* parent = nullptr);
 
-    ~UnknownAttachmentTypeWidget() override;
+private slots:
+    void initTestCase();
 
-    void openAttachment(attachments::Attachment attachment, [[maybe_unused]] attachments::OpenMode mode) override;
-    attachments::Attachment getAttachment() const override;
+    void testCreateImageWidget();
+    void testCreateTextWidget();
+    void testCreateUnknownWidget();
 
 private:
-    QScopedPointer<Ui::UnknownAttachmentTypeWidget> m_ui{};
-
-    attachments::Attachment m_attachment{};
+    std::unique_ptr<attachments::AttachmentsWidgetFactory> m_factory{};
 };

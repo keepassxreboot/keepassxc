@@ -168,6 +168,7 @@ set(gui_SOURCES
         gui/entry/attachments/ImageAttachmentsView.cpp
         gui/entry/attachments/TextAttachmentsPreviewWidget.cpp
         gui/entry/attachments/TextAttachmentsEditWidget.cpp
+        gui/entry/attachments/AbstractAttachmentWidget.cpp
         gui/entry/EntryHistoryModel.cpp
         gui/entry/EntryModel.cpp
         gui/entry/EntryView.cpp

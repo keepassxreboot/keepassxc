@@ -9,11 +9,14 @@ UnknownAttachmentTypeWidget::UnknownAttachmentTypeWidget(QWidget* parent)
     m_ui->setupUi(this);
 }
 
+UnknownAttachmentTypeWidget ::~UnknownAttachmentTypeWidget() = default;
+
 void UnknownAttachmentTypeWidget::openAttachment(attachments::Attachment attachment,
                                                  [[maybe_unused]] attachments::OpenMode mode)
 {
     m_attachment = std::move(attachment);
 }
+
 attachments::Attachment UnknownAttachmentTypeWidget::getAttachment() const
 {
     return m_attachment;
