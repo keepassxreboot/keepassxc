@@ -330,6 +330,7 @@ QJsonObject BrowserService::createNewGroup(const QString& groupName, bool isPass
             }
 #endif
             name = newGroup->name();
+            newGroup->setCustomDataTriState(BrowserService::OPTION_HIDE_ENTRY, Group::Disable);
             uuid = Tools::uuidToHex(newGroup->uuid());
             previousGroup = newGroup;
             continue;
