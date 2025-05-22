@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -71,7 +71,7 @@ PublicKeyCredential BrowserPasskeys::buildRegisterPublicKeyCredential(const QJso
     }
 
     const auto authenticatorAttachment = credentialCreationOptions["authenticatorAttachment"];
-    const auto clientDataJson = credentialCreationOptions["clientDataJSON"].toObject();
+    const auto clientDataJson = credentialCreationOptions["clientDataJSON"].toString();
     const auto extensions = credentialCreationOptions["extensions"].toString();
     const auto credentialId = testingVariables.credentialId.isEmpty()
                                   ? browserMessageBuilder()->getRandomBytesAsBase64(ID_BYTES)
@@ -98,7 +98,7 @@ PublicKeyCredential BrowserPasskeys::buildRegisterPublicKeyCredential(const QJso
     // Response
     QJsonObject responseObject;
     responseObject["attestationObject"] = browserMessageBuilder()->getBase64FromArray(attestationObject);
-    responseObject["clientDataJSON"] = browserMessageBuilder()->getBase64FromJson(clientDataJson);
+    responseObject["clientDataJSON"] = browserMessageBuilder()->getBase64FromArray(clientDataJson.toUtf8());
     responseObject["clientExtensionResults"] = credentialCreationOptions["clientExtensionResults"];
 
     // Additions for extension side functions
@@ -130,8 +130,8 @@ QJsonObject BrowserPasskeys::buildGetPublicKeyCredential(const QJsonObject& asse
 
     const auto authenticatorData =
         buildAuthenticatorData(assertionOptions["rpId"].toString(), assertionOptions["extensions"].toString());
-    const auto clientDataJson = assertionOptions["clientDataJson"].toObject();
-    const auto clientDataArray = QJsonDocument(clientDataJson).toJson(QJsonDocument::Compact);
+    const auto clientDataJson = assertionOptions["clientDataJson"].toString();
+    const auto clientDataArray = clientDataJson.toUtf8();
 
     const auto signature = buildSignature(authenticatorData, clientDataArray, privateKeyPem);
     if (signature.isEmpty()) {
@@ -140,7 +140,7 @@ QJsonObject BrowserPasskeys::buildGetPublicKeyCredential(const QJsonObject& asse
 
     QJsonObject responseObject;
     responseObject["authenticatorData"] = browserMessageBuilder()->getBase64FromArray(authenticatorData);
-    responseObject["clientDataJSON"] = browserMessageBuilder()->getBase64FromJson(clientDataJson);
+    responseObject["clientDataJSON"] = browserMessageBuilder()->getBase64FromArray(clientDataArray);
     responseObject["clientExtensionResults"] = assertionOptions["clientExtensionResults"];
     responseObject["signature"] = browserMessageBuilder()->getBase64FromArray(signature);
     responseObject["userHandle"] = userHandle;

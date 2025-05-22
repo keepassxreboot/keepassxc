@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -53,8 +53,8 @@ bool PasskeyUtils::checkCredentialCreationOptions(const QJsonObject& credentialC
 {
     if (!credentialCreationOptions["attestation"].isString()
         || credentialCreationOptions["attestation"].toString().isEmpty()
-        || !credentialCreationOptions["clientDataJSON"].isObject()
-        || credentialCreationOptions["clientDataJSON"].toObject().isEmpty()
+        || !credentialCreationOptions["clientDataJSON"].isString()
+        || credentialCreationOptions["clientDataJSON"].toString().isEmpty()
         || !credentialCreationOptions["rp"].isObject() || credentialCreationOptions["rp"].toObject().isEmpty()
         || !credentialCreationOptions["user"].isObject() || credentialCreationOptions["user"].toObject().isEmpty()
         || !credentialCreationOptions["residentKey"].isBool() || credentialCreationOptions["residentKey"].isUndefined()
@@ -75,7 +75,7 @@ bool PasskeyUtils::checkCredentialCreationOptions(const QJsonObject& credentialC
 // Basic check for the object that it contains necessary variables in a correct form
 bool PasskeyUtils::checkCredentialAssertionOptions(const QJsonObject& assertionOptions) const
 {
-    if (!assertionOptions["clientDataJson"].isObject() || assertionOptions["clientDataJson"].toObject().isEmpty()
+    if (!assertionOptions["clientDataJson"].isString() || assertionOptions["clientDataJson"].toString().isEmpty()
         || !assertionOptions["rpId"].isString() || assertionOptions["rpId"].toString().isEmpty()
         || !assertionOptions["userPresence"].isBool() || assertionOptions["userPresence"].isUndefined()
         || !assertionOptions["userVerification"].isBool() || assertionOptions["userVerification"].isUndefined()) {
@@ -352,15 +352,11 @@ ExtensionResult PasskeyUtils::buildExtensionData(QJsonObject& extensionObject) c
     return {};
 }
 
-QJsonObject PasskeyUtils::buildClientDataJson(const QJsonObject& publicKey, const QString& origin, bool get) const
+// Serialization order: https://w3c.github.io/webauthn/#clientdatajson-serialization
+QString PasskeyUtils::buildClientDataJson(const QJsonObject& publicKey, const QString& origin, bool get) const
 {
-    QJsonObject clientData;
-    clientData["challenge"] = publicKey["challenge"];
-    clientData["crossOrigin"] = false;
-    clientData["origin"] = origin;
-    clientData["type"] = get ? QString("webauthn.get") : QString("webauthn.create");
-
-    return clientData;
+    return QString("{\"type\":\"%1\",\"challenge\":\"%2\",\"origin\":\"%3\",\"crossOrigin\":false}")
+        .arg((get ? QString("webauthn.get") : QString("webauthn.create")), publicKey["challenge"].toString(), origin);
 }
 
 QStringList PasskeyUtils::getAllowedCredentialsFromAssertionOptions(const QJsonObject& assertionOptions) const

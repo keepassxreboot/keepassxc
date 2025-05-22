@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -58,7 +58,7 @@ public:
     bool isUserVerificationRequired(const QJsonObject& authenticatorSelection) const;
     bool isOriginAllowedWithLocalhost(bool allowLocalhostWithPasskeys, const QString& origin) const;
     ExtensionResult buildExtensionData(QJsonObject& extensionObject) const;
-    QJsonObject buildClientDataJson(const QJsonObject& publicKey, const QString& origin, bool get) const;
+    QString buildClientDataJson(const QJsonObject& publicKey, const QString& origin, bool get) const;
     QStringList getAllowedCredentialsFromAssertionOptions(const QJsonObject& assertionOptions) const;
     QString getCredentialIdFromEntry(const Entry* entry) const;
     QString getUsernameFromEntry(const Entry* entry) const;
