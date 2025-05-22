@@ -424,11 +424,14 @@ void EntryAttachmentsWidget::updateButtonsEnabled()
     m_ui->newAttachmentButton->setEnabled(!m_readOnly);
     m_ui->removeAttachmentButton->setEnabled(hasSelection && !m_readOnly);
 
-    const auto indexes = selectionModel ? selectionModel->selectedIndexes() : QModelIndexList{};
-    m_ui->editAttachmentButton->setEnabled(
-        hasSelection && !m_readOnly && !indexes.empty()
-        && Tools::getMimeType(m_entryAttachments->value(m_attachmentsModel->keyByIndex(indexes.first())))
-               == Tools::MimeType::PlainText);
+    m_ui->editAttachmentButton->setEnabled(hasSelection && !m_readOnly);
+    if (const auto indexes = selectionModel ? selectionModel->selectedIndexes() : QModelIndexList{}; !indexes.empty()) {
+        auto mimeType = Tools::getMimeType(m_entryAttachments->value(m_attachmentsModel->keyByIndex(indexes.first())));
+        m_ui->editAttachmentButton->setEnabled(hasSelection && !m_readOnly
+                                               && (mimeType == Tools::MimeType::PlainText
+                                                   || mimeType == Tools::MimeType::Html
+                                                   || mimeType == Tools::MimeType::Markdown));
+    }
 
     m_ui->saveAttachmentButton->setEnabled(hasSelection);
     m_ui->previewAttachmentButton->setEnabled(hasSelection);

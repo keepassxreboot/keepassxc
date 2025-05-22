@@ -479,25 +479,33 @@ namespace Tools
 
     MimeType toMimeType(const QString& mimeName)
     {
-        static QStringList textFormats = {"text/",
-                                          "application/json",
-                                          "application/xml",
-                                          "application/soap+xml",
-                                          "application/x-yaml",
-                                          "application/protobuf",
-                                          "application/x-zerosize"};
-        static QStringList imageFormats = {"image/"};
+        const static QStringList TextFormats = {"text/",
+                                                "application/json",
+                                                "application/xml",
+                                                "application/soap+xml",
+                                                "application/x-yaml",
+                                                "application/protobuf",
+                                                "application/x-zerosize"};
+        const static QStringList HtmlFormats = {"text/html"};
+        const static QStringList MarkdownFormats = {"text/markdown"};
+        const static QStringList ImageFormats = {"image/"};
 
         static auto isCompatible = [](const QString& format, const QStringList& list) {
             return std::any_of(
                 list.cbegin(), list.cend(), [&format](const auto& item) { return format.startsWith(item); });
         };
 
-        if (isCompatible(mimeName, imageFormats)) {
+        if (isCompatible(mimeName, ImageFormats)) {
             return MimeType::Image;
         }
 
-        if (isCompatible(mimeName, textFormats)) {
+        if (isCompatible(mimeName, TextFormats)) {
+            if (isCompatible(mimeName, HtmlFormats)) {
+                return MimeType::Html;
+            } else if (isCompatible(mimeName, MarkdownFormats)) {
+                return MimeType::Markdown;
+            }
+
             return MimeType::PlainText;
         }
 
@@ -508,7 +516,13 @@ namespace Tools
     {
         QMimeDatabase mimeDb;
         const auto mime = mimeDb.mimeTypeForData(data);
+        return toMimeType(mime.name());
+    }
 
+    MimeType getMimeType(const QFileInfo& fileInfo)
+    {
+        QMimeDatabase mimeDb;
+        const auto mime = mimeDb.mimeTypeForFile(fileInfo);
         return toMimeType(mime.name());
     }
 

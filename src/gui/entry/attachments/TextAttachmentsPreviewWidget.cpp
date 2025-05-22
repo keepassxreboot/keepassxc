@@ -1,9 +1,30 @@
 #include "TextAttachmentsPreviewWidget.h"
 #include "ui_TextAttachmentsPreviewWidget.h"
 
+#include <core/Tools.h>
+
 #include <QComboBox>
 #include <QDebug>
 #include <QMetaEnum>
+
+namespace
+{
+    constexpr TextAttachmentsPreviewWidget::PreviewTextType ConvertToPreviewTextType(Tools::MimeType mimeType) noexcept
+    {
+        if (mimeType == Tools::MimeType::Html) {
+            return TextAttachmentsPreviewWidget::Html;
+        }
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+        if (mimeType == Tools::MimeType::Markdown) {
+            return TextAttachmentsPreviewWidget::Markdown;
+        }
+#endif
+
+        return TextAttachmentsPreviewWidget::PlainText;
+    }
+
+} // namespace
 
 TextAttachmentsPreviewWidget::TextAttachmentsPreviewWidget(QWidget* parent)
     : attachments::AbstractAttachmentWidget(parent)
@@ -24,7 +45,7 @@ void TextAttachmentsPreviewWidget::openAttachment(attachments::Attachment attach
 
     m_attachment = std::move(attachments);
 
-    onTypeChanged(m_ui->typeComboBox->currentIndex());
+    updateUi();
 }
 
 attachments::Attachment TextAttachmentsPreviewWidget::getAttachment() const
@@ -47,6 +68,15 @@ void TextAttachmentsPreviewWidget::initTypeCombobox()
     m_ui->typeComboBox->setCurrentIndex(m_ui->typeComboBox->findData(PlainText));
 
     onTypeChanged(m_ui->typeComboBox->currentIndex());
+}
+
+void TextAttachmentsPreviewWidget::updateUi()
+{
+    const auto mimeType = Tools::getMimeType(QFileInfo(m_attachment.name));
+
+    auto index = m_ui->typeComboBox->findData(ConvertToPreviewTextType(mimeType));
+    m_ui->typeComboBox->setCurrentIndex(index);
+    onTypeChanged(index);
 }
 
 void TextAttachmentsPreviewWidget::onTypeChanged(int index)

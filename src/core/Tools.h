@@ -22,6 +22,7 @@
 #include "core/Global.h"
 
 #include <QDateTime>
+#include <QFileInfo>
 #include <QList>
 #include <QProcessEnvironment>
 #include <QSet>
@@ -119,11 +120,14 @@ namespace Tools
     {
         Image,
         PlainText,
+        Html,
+        Markdown,
         Unknown
     };
 
     MimeType toMimeType(const QString& mimeName);
     MimeType getMimeType(const QByteArray& data);
+    MimeType getMimeType(const QFileInfo& fileInfo);
 
 } // namespace Tools
 

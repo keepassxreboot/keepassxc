@@ -52,7 +52,7 @@ void EditEntryAttachmentsDialog::setAttachment(attachments::Attachment attachmen
     setWindowTitle(tr("Edit: %1").arg(attachment.name));
 
     if (auto widget = m_widgetsFactory->createAttachmentWidget(Tools::getMimeType(attachment.data), this)) {
-        widget->openAttachment(std::move(attachment), attachments::OpenMode::ReadWrite);
+        widget->openAttachment(attachment, attachments::OpenMode::ReadWrite);
         widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
         if (auto lastWidget = std::exchange(m_attachmentWidget, widget)) {

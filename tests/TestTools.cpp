@@ -18,7 +18,9 @@
 #include "TestTools.h"
 
 #include "core/Clock.h"
+#include "core/Tools.h"
 
+#include <QFileInfo>
 #include <QRegularExpression>
 #include <QTest>
 #include <QUuid>
@@ -277,10 +279,8 @@ void TestTools::testMimeTypes()
 {
     const QStringList TextMimeTypes = {
         "text/plain", // Plain text
-        "text/html", // HTML documents
         "text/css", // CSS stylesheets
         "text/javascript", // JavaScript files
-        "text/markdown", // Markdown documents
         "text/xml", // XML documents
         "text/rtf", // Rich Text Format
         "text/vcard", // vCard files
@@ -327,6 +327,9 @@ void TestTools::testMimeTypes()
         "application/x-shellscript", // Shell scripts
     };
 
+    QCOMPARE(Tools::toMimeType("text/html"), Tools::MimeType::Html);
+    QCOMPARE(Tools::toMimeType("text/markdown"), Tools::MimeType::Markdown);
+
     for (const auto& mime : TextMimeTypes) {
         QCOMPARE(Tools::toMimeType(mime), Tools::MimeType::PlainText);
     }
@@ -372,6 +375,39 @@ void TestTools::testGetMimeType()
         // PDF: starts with "%PDF-" followed by version (e.g., %PDF-1.7)
         QByteArray("%PDF-"),
     };
+
+    for (const auto& unknown : UnknownHeaders) {
+        QCOMPARE(Tools::getMimeType(unknown), Tools::MimeType::Unknown);
+    }
+}
+
+void TestTools::testGetMimeTypeByFileInfo()
+{
+    const QStringList Text = {"test.txt", "test.csv", "test.xml", "test.json"};
+
+    for (const auto& text : Text) {
+        QCOMPARE(Tools::getMimeType(QFileInfo(text)), Tools::MimeType::PlainText);
+    }
+
+    const QStringList Images = {"test.jpg", "test.png", "test.bmp", "test.svg"};
+
+    for (const auto& image : Images) {
+        QCOMPARE(Tools::getMimeType(QFileInfo(image)), Tools::MimeType::Image);
+    }
+
+    const QStringList Htmls = {"test.html", "test.htm"};
+
+    for (const auto& html : Htmls) {
+        QCOMPARE(Tools::getMimeType(QFileInfo(html)), Tools::MimeType::Html);
+    }
+
+    const QStringList Markdowns = {"test.md", "test.markdown"};
+
+    for (const auto& makdown : Markdowns) {
+        QCOMPARE(Tools::getMimeType(QFileInfo(makdown)), Tools::MimeType::Markdown);
+    }
+
+    const QStringList UnknownHeaders = {"test.doc", "test.pdf", "test.docx"};
 
     for (const auto& unknown : UnknownHeaders) {
         QCOMPARE(Tools::getMimeType(unknown), Tools::MimeType::Unknown);

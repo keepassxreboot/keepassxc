@@ -39,6 +39,7 @@ private slots:
     void testArrayContainsValues();
     void testMimeTypes();
     void testGetMimeType();
+    void testGetMimeTypeByFileInfo();
 };
 
 #endif // KEEPASSX_TESTTOOLS_H

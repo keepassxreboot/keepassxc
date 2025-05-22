@@ -67,7 +67,7 @@ void PreviewEntryAttachmentsDialog::setAttachment(attachments::Attachment attach
     setWindowTitle(tr("Preview: %1").arg(attachment.name));
 
     if (auto attachWidget = m_widgetFactory->createAttachmentWidget(Tools::getMimeType(attachment.data), this)) {
-        attachWidget->openAttachment(std::move(attachment), attachments::OpenMode::ReadOnly);
+        attachWidget->openAttachment(attachment, attachments::OpenMode::ReadOnly);
         attachWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
         if (auto lastWidget = std::exchange(m_attachmentWidget, attachWidget)) {

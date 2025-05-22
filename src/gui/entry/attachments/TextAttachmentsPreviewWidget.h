@@ -52,6 +52,7 @@ private Q_SLOTS:
 
 private:
     void initTypeCombobox();
+    void updateUi();
 
 private:
     QScopedPointer<Ui::TextAttachmentsPreviewWidget> m_ui{};
