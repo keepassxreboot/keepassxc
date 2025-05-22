@@ -4659,10 +4659,6 @@ You can enable the DuckDuckGo website icon service in the security section of th
 <context>
     <name>ImageAttachmentsWidget</name>
     <message>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Zoom:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10213,13 +10209,6 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
 </context>
 <context>
-    <name>TextAttachmentsWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>TotpDialog</name>
     <message>
         <source>Timed Password</source>
@@ -10343,10 +10332,6 @@ Example: JBSWY3DPEHPK3PXP</source>
 </context>
 <context>
     <name>UnknownAttachmentTypeWidget</name>
-    <message>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Unknown attachment type</source>
         <translation type="unfinished"></translation>
