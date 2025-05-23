@@ -24,13 +24,13 @@ You can also set the time to remember the last used entry between presses of the
 === Configure Auto-Type Sequences
 Each entry in your database can have multiple Auto-Type sequences associated with various window titles. Simulated key presses can be sent to any other currently open window of your choice (web browser windows, login dialogs boxes, and so on). When the Global Auto-Type hotkey is pressed, KeePassXC will search your database for entries matching the current selected window title.
 
-NOTE: The default Auto-Type sequence is `{USERNAME}{TAB}{PASSWORD}{ENTER}`. This means that it first types the username of the selected entry, then presses the `Tab` key, then types the password of the entry and finally presses the `Enter` key.
+NOTE: The default Auto-Type sequence is `{USERNAME}{TAB}{PASSWORD}{ENTER}`. This means that it first types the username of the selected entry, then presses the kbd:[Tab] key, then types the password of the entry and finally presses the kbd:[Enter] key.
 
 TIP: To change the default Auto-Type sequence for all entries of your database, edit the root (top-most) group of your database and set a specific sequence. Child groups and entries will inherit this sequence by default.
 
 To configure Auto-Type sequences for your entries, perform the following steps:
 
-1.	Navigate to the entries list and open the desired entry for editing. Click the _Auto-Type_ item from the left-hand menu bar *(1)*. Press the `+` button *(2)* to add a new sequence entry. Select the desired window using the drop-down menu, or simply type a window title in the box *(3)*.
+1.	Navigate to the entries list and open the desired entry for editing. Click the _Auto-Type_ item from the left-hand menu bar *(1)*. Press the kbd:[+] button *(2)* to add a new sequence entry. Select the desired window using the drop-down menu, or simply type a window title in the box *(3)*.
 +
 TIP: You can use an asterisk (`\*`) to match any value (e.g., when a window title contains a dynamic filename or website name). Set the window title to `*` to match all windows. Leave the window title blank to offer additional default Auto-Type sequences, such as custom attributes.
 +
@@ -60,7 +60,7 @@ image::autotype_entry_sequences.png[]
 |Press the corresponding keyboard key
 
 |{UP}, {DOWN}, {LEFT}, {RIGHT}  |Press the corresponding arrow key
-|{LEFTBRACE}, {RIGHTBRACE}      |Press `{` or `}`, respectively
+|{LEFTBRACE}, {RIGHTBRACE}      |Press kbd:[{] or kbd:[}], respectively
 |{&lt;KEY&gt; X}     |Repeat &lt;KEY&gt; X times (e.g., {SPACE 5} inserts five spaces)
 |{DELAY=X}     |Set delay between key presses to X milliseconds
 |{DELAY X}     |Pause typing for X milliseconds
@@ -89,7 +89,7 @@ When you press the global Auto-Type hotkey, KeePassXC searches all unlocked data
 .Auto-Type sequence selection
 image::autotype_selection_dialog.png[,70%]
 
-Perform the selected Auto-Type sequence by double clicking the desired row or pressing _Enter_. Press the up and down arrows to navigate the list. Sequences can be filtered through the text edit field.
+Perform the selected Auto-Type sequence by double clicking the desired row or pressing kbd:[Enter]. Press the up and down arrows to navigate the list. Sequences can be filtered through the text edit field.
 
 .Auto-Type search database
 image::autotype_selection_dialog_search.png[,70%]
@@ -104,7 +104,7 @@ The option to type just the username, password, or current TOTP value is availab
 TIP: On Windows, you will see an option to use a virtual keyboard in this sub-menu. This is an experimental feature that allows you to type into virtual machines by simulating actual keyboard presses. Some international keyboards may be unsupported due to limitations in the Windows API.
 
 === Performing Entry-Level Auto-Type
-You can quickly activate the default Auto-Type sequence for a particular entry using Entry-Level Auto-Type. For this operation, the KeePassXC window will be minimized and the Auto-Type sequence occurs in the previously selected window. You can perform Entry-Level Auto-Type from the toolbar icon *(A)*, entry context menu *(B)*, or by pressing `Ctrl+Shift+V`.
+You can quickly activate the default Auto-Type sequence for a particular entry using Entry-Level Auto-Type. For this operation, the KeePassXC window will be minimized and the Auto-Type sequence occurs in the previously selected window. You can perform Entry-Level Auto-Type from the toolbar icon *(A)*, entry context menu *(B)*, or by pressing kbd:[Ctrl+Shift+V].
 
 WARNING: Be careful when using Entry-Level Auto-Type as you can inadvertently type into the wrong window. For example, a chat window or email.
 

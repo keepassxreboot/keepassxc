@@ -77,8 +77,8 @@ Examples: +
 |Press the corresponding keyboard key
 
 |{UP}, {DOWN}, {LEFT}, {RIGHT}  |Press the corresponding arrow key
-|{F1}, {F2}, ..., {F16}         |Press F1, F2, etc.
-|{LEFTBRACE}, {RIGHTBRACE}      |Press `{` or `}`, respectively
+|{F1}, {F2}, ..., {F16}         |Press kbd:[F1], kbd:[F2], etc.
+|{LEFTBRACE}, {RIGHTBRACE}      |Press kbd:[{] or kbd:[}], respectively
 |{&lt;KEY&gt; X}  |Repeat &lt;KEY&gt; X times (e.g., {SPACE 5} inserts five spaces)
 |{DELAY=X}     |Set delay between key presses to X milliseconds
 |{DELAY X}     |Pause typing for X milliseconds
@@ -90,10 +90,10 @@ Examples: +
 |===
 |Modifier |Description
 
-|+        |SHIFT
-|^        |CTRL
-|%        |ALT
-|#        |WIN/CMD
+|+        |kbd:[Shift]
+|^        |kbd:[Ctrl]
+|%        |kbd:[Alt]
+|#        |kbd:[Win]/kbd:[Cmd]
 |===
 *Text Conversions:*
 

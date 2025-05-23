@@ -75,7 +75,7 @@ NOTE: On Windows, you will be prompted to authenticate to Windows Hello after un
 .Windows Hello example
 image::quick_unlock_windows_hello.png[]
 
-When your database is locked, you will see the following unlock dialog. Simply press _Enter_ or click on _Unlock Database_ to initiate the biometric authentication process. If you are using a hardware key (e.g. Yubikey), it must be connected to your computer to complete the unlock.
+When your database is locked, you will see the following unlock dialog. Simply press kbd:[Enter] or click on _Unlock Database_ to initiate the biometric authentication process. If you are using a hardware key (e.g. Yubikey), it must be connected to your computer to complete the unlock.
 
 .Quick Unlock
 image::quick_unlock.png[]
@@ -92,7 +92,7 @@ All the details such as usernames, passwords, URLs, attachments, notes, and so o
 
 To add an entry, perform the following step:
 
-1. Navigate to Entries > New Entry (Or, press Ctrl+N). The following screen appears:
+1. Navigate to Entries > New Entry (or press kbd:[Ctrl+N]). The following screen appears:
 +
 .Adding a new entry
 image::edit_entry.png[]
@@ -115,7 +115,7 @@ To edit the details in an entry, perform the following steps:
 
 1. Select the entry you want to edit.
 
-2. Press `Enter`, click the edit toolbar icon, or right-click and select Edit Entry from the menu.
+2. Press kbd:[Enter], click the edit toolbar icon, or right-click and select Edit Entry from the menu.
 
 3. Make the desired changes.
 
@@ -156,13 +156,13 @@ TIP: Each KeePass application has different default icons. If you use a mobile a
 ==== Deleting an Entry
 To delete an entry, perform the following steps:
 
-1. Select the entry you want to delete and press the `Delete` button on your keyboard.
+1. Select the entry you want to delete and press the kbd:[Del] button on your keyboard.
 
 2. You will be prompted to move the entry to the Recycle Bin (if enabled).
 +
 NOTE: You can disable the recycle bin within the Database Settings. If the recycle bin is disabled then deleted entries will be permanently removed from the database.
 
-3. To permanently delete the entry, navigate to the Recycle Bin, select the entry you want to delete and press the `Delete` button on your keyboard.
+3. To permanently delete the entry, navigate to the Recycle Bin, select the entry you want to delete and press the kbd:[Del] button on your keyboard.
 
 // tag::advanced[]
 ==== Clone an Entry
@@ -170,7 +170,7 @@ Creating a clone of an entry provides you a ready-to-use template for creating n
 
 To create a clone of an existing entry, perform the following steps:
 
-1.	Right-click on the entry for which you want to create a clone and select _Clone Entry_. Alternatively, select the desired entry and press `Ctrl+K`.
+1.	Right-click on the entry for which you want to create a clone and select _Clone Entry_. Alternatively, select the desired entry and press kbd:[Ctrl+K].
 +
 .Clone entry from context menu
 image::clone_entry.png[]

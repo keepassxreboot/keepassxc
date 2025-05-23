@@ -4,3 +4,4 @@ KeePassXC Team <team@keepassxc.org>
 :stylesheet: ../styles/dark.css
 :icons: font
 :toc: left
+:experimental:
