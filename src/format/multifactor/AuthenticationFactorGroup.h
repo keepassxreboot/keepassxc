@@ -18,11 +18,8 @@
 #ifndef KEEPASSXC_AUTHENTICATIONFACTORGROUP_H
 #define KEEPASSXC_AUTHENTICATIONFACTORGROUP_H
 
-#include <QCoreApplication>
-#include <QSharedPointer>
 #include <botan/secmem.h>
 
-#include "AuthenticationFactorInfo.h"
 #include "core/AuthenticationFactorUserData.h"
 #include "format/multifactor/AuthenticationFactor.h"
 
@@ -43,23 +40,23 @@ public:
     AuthenticationFactorGroup() = default;
     ~AuthenticationFactorGroup() override = default;
 
-    QSharedPointer<QByteArray> getRawKey(const QSharedPointer<AuthenticationFactorUserData>& userData);
+    QSharedPointer<QByteArray> getRawKey(QSharedPointer<AuthenticationFactorUserData> userData);
 
     void setValidationIn(const QByteArray& validationIn);
-    const QByteArray& getValidationIn() const;
+    QByteArray getValidationIn() const;
     void setValidationOut(const QByteArray& validationOut);
-    const QByteArray& getValidationOut() const;
+    QByteArray getValidationOut() const;
     void setChallenge(const QByteArray& challenge);
-    const QByteArray& getChallenge() const;
+    QByteArray getChallenge() const;
     void setValidationType(AuthenticationFactorGroupValidationType validationType);
     AuthenticationFactorGroupValidationType getValidationType() const;
-    void addFactor(const QSharedPointer<AuthenticationFactor>& factor);
+    void addFactor(QSharedPointer<AuthenticationFactor> factor);
     const QList<QSharedPointer<AuthenticationFactor>>& getFactors() const;
 
 protected:
-    QByteArray m_validationIn = QByteArray();
-    QByteArray m_validationOut = QByteArray();
-    QByteArray m_challenge = QByteArray();
+    QByteArray m_validationIn;
+    QByteArray m_validationOut;
+    QByteArray m_challenge;
     AuthenticationFactorGroupValidationType m_validationType = AuthenticationFactorGroupValidationType::NONE;
 
     QList<QSharedPointer<AuthenticationFactor>> m_factors = QList<QSharedPointer<AuthenticationFactor>>();

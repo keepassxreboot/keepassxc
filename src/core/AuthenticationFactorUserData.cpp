@@ -17,7 +17,7 @@
 
 #include "AuthenticationFactorUserData.h"
 
-void AuthenticationFactorUserData::addDataItem(const QString& key, const QSharedPointer<QByteArray>& value)
+void AuthenticationFactorUserData::addDataItem(const QString& key, QSharedPointer<QByteArray> value)
 {
     m_data.insert(key, value);
 }

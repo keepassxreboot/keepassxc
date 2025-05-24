@@ -27,11 +27,11 @@ class FidoAuthenticationFactor : public AuthenticationFactor
     Q_OBJECT
 
 public:
-    explicit FidoAuthenticationFactor(const QSharedPointer<AuthenticationFactor>& factor);
+    explicit FidoAuthenticationFactor(QSharedPointer<AuthenticationFactor> factor);
     ~FidoAuthenticationFactor() override = default;
 
     void setCredentialID(const QByteArray& credentialID);
-    const QByteArray& getCredentialID() const;
+    QByteArray getCredentialID() const;
 
 protected:
     QByteArray m_credentialID;

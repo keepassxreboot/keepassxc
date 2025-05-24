@@ -691,6 +691,14 @@
         <source>Validation failed when unwrapping factor &apos;%1&apos;: %2</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Unknown/unsupported key derivation method for factor &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attempted to unwrap factor &apos;%1&apos; with null key derivation method</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AutoType</name>
@@ -5281,6 +5289,10 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
         <source>Factor %1 is missing required fields</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Unable to set key type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>KdbxXmlReader</name>
@@ -7028,6 +7040,10 @@ The following data is missing:
     <name>PasswordAuthenticationFactor</name>
     <message>
         <source>Falling back to default user password for factor &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password not set when using default for factor &apos;%1&apos; - falling back to empty</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

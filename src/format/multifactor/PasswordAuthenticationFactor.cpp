@@ -21,7 +21,7 @@
 #include <QCryptographicHash>
 #include <QDebug>
 
-PasswordAuthenticationFactor::PasswordAuthenticationFactor(const QSharedPointer<AuthenticationFactor>& factor)
+PasswordAuthenticationFactor::PasswordAuthenticationFactor(QSharedPointer<AuthenticationFactor> factor)
 {
     m_name = factor->getName();
     m_keyType = factor->getKeyType();
@@ -30,8 +30,7 @@ PasswordAuthenticationFactor::PasswordAuthenticationFactor(const QSharedPointer<
     m_factorType = FACTOR_TYPE_PASSWORD_SHA256;
 }
 
-QByteArray
-PasswordAuthenticationFactor::getUnwrappingKey(const QSharedPointer<AuthenticationFactorUserData>& userData) const
+QByteArray PasswordAuthenticationFactor::getUnwrappingKey(QSharedPointer<AuthenticationFactorUserData> userData) const
 {
     auto ret = userData->getDataItem(getName());
 
@@ -40,7 +39,13 @@ PasswordAuthenticationFactor::getUnwrappingKey(const QSharedPointer<Authenticati
     if (ret.isNull()) {
         // Default user password - already hashed...
         qDebug() << tr("Falling back to default user password for factor '%1'").arg(getName());
-        dataToUse = *userData->getDataItem(PasswordKey::UUID.toString());
+        auto passwordItem = userData->getDataItem(PasswordKey::UUID.toString());
+        if (passwordItem == nullptr) {
+            qDebug()
+                << tr("Password not set when using default for factor '%1' - falling back to empty").arg(getName());
+            return {};
+        }
+        dataToUse = *passwordItem;
     } else {
         // Non-hashed password
         dataToUse = QCryptographicHash::hash(*ret, QCryptographicHash::Sha256);

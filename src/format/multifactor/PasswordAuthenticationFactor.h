@@ -27,11 +27,11 @@ class PasswordAuthenticationFactor : public AuthenticationFactor
     Q_OBJECT
 
 public:
-    explicit PasswordAuthenticationFactor(const QSharedPointer<AuthenticationFactor>& factor);
+    explicit PasswordAuthenticationFactor(QSharedPointer<AuthenticationFactor> factor);
     ~PasswordAuthenticationFactor() override = default;
 
 protected:
-    QByteArray getUnwrappingKey(const QSharedPointer<AuthenticationFactorUserData>& userData) const override;
+    QByteArray getUnwrappingKey(QSharedPointer<AuthenticationFactorUserData> userData) const override;
 };
 
 #endif // KEEPASSXC_PASSWORDAUTHENTICATIONFACTOR_H

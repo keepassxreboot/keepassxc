@@ -47,8 +47,8 @@ public:
 protected:
     void raiseError(const QString& errorMessage);
 
-    bool parseFactorInfo(const QSharedPointer<AuthenticationFactorInfo>& info);
-    bool parseFactorGroup(const QSharedPointer<AuthenticationFactorInfo>& info);
+    bool parseFactorInfo(QSharedPointer<AuthenticationFactorInfo> info);
+    bool parseFactorGroup(QSharedPointer<AuthenticationFactorInfo> info);
     bool parseFactor(AuthenticationFactorGroup* group);
 
     bool m_error = false;

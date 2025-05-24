@@ -27,7 +27,7 @@ bool AuthenticationFactorInfo::isComprehensive() const
     return m_comprehensive;
 }
 
-void AuthenticationFactorInfo::addGroup(const QSharedPointer<AuthenticationFactorGroup>& group)
+void AuthenticationFactorInfo::addGroup(QSharedPointer<AuthenticationFactorGroup> group)
 {
     m_groups.append(group);
     group->setParent(this);

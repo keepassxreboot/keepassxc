@@ -1208,12 +1208,12 @@ QSharedPointer<AuthenticationFactorInfo> Database::authenticationFactorInfo()
     return m_data.authenticationFactorInfo;
 }
 
-const QSharedPointer<AuthenticationFactorInfo>& Database::authenticationFactorInfo() const
+QSharedPointer<AuthenticationFactorInfo> Database::authenticationFactorInfo() const
 {
     return m_data.authenticationFactorInfo;
 }
 
-void Database::setAuthenticationFactorInfo(const QSharedPointer<AuthenticationFactorInfo>& authenticationFactorInfo)
+void Database::setAuthenticationFactorInfo(QSharedPointer<AuthenticationFactorInfo> authenticationFactorInfo)
 {
     m_data.authenticationFactorInfo = authenticationFactorInfo;
     authenticationFactorInfo->setParent(this);

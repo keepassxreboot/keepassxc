@@ -81,7 +81,7 @@ void KdbxXmlAuthenticationFactorReader::raiseError(const QString& errorMessage)
     m_errorStr = errorMessage;
 }
 
-bool KdbxXmlAuthenticationFactorReader::parseFactorInfo(const QSharedPointer<AuthenticationFactorInfo>& info)
+bool KdbxXmlAuthenticationFactorReader::parseFactorInfo(QSharedPointer<AuthenticationFactorInfo> info)
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "FactorInfo");
 
@@ -129,7 +129,7 @@ bool KdbxXmlAuthenticationFactorReader::parseFactorInfo(const QSharedPointer<Aut
     return compatVersionFound;
 }
 
-bool KdbxXmlAuthenticationFactorReader::parseFactorGroup(const QSharedPointer<AuthenticationFactorInfo>& info)
+bool KdbxXmlAuthenticationFactorReader::parseFactorGroup(QSharedPointer<AuthenticationFactorInfo> info)
 {
     Q_ASSERT(m_xml.isStartElement() && m_xml.name() == "Group");
 
@@ -191,7 +191,8 @@ bool KdbxXmlAuthenticationFactorReader::parseFactorGroup(const QSharedPointer<Au
 
         raiseError(
             tr("Unknown element type while processing authentication factor group: %1").arg(m_xml.name().toString()));
-        return group;
+
+        return true;
     }
 
     if (group->getFactors().isEmpty()) {
@@ -271,7 +272,10 @@ bool KdbxXmlAuthenticationFactorReader::parseFactor(AuthenticationFactorGroup* g
             }
 
             // Note: unknown types get AuthenticationFactorKeyType::NONE - in other words, unusable
-            factor->setKeyType(type);
+            if (!factor->setKeyType(type)) {
+                raiseError(tr("Unable to set key type '%1'").arg(text));
+                return false;
+            }
 
             foundKeyType = true;
             continue;

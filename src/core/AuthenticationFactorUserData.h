@@ -30,7 +30,7 @@ public:
     explicit AuthenticationFactorUserData() = default;
     ~AuthenticationFactorUserData() override = default;
 
-    void addDataItem(const QString& key, const QSharedPointer<QByteArray>& value);
+    void addDataItem(const QString& key, QSharedPointer<QByteArray> value);
     QSharedPointer<QByteArray> getDataItem(const QString& key) const;
 
 protected:

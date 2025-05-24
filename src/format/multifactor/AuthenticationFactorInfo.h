@@ -35,7 +35,7 @@ public:
     bool isComprehensive() const;
     void setComprehensive(bool comprehensive);
 
-    void addGroup(const QSharedPointer<AuthenticationFactorGroup>& group);
+    void addGroup(QSharedPointer<AuthenticationFactorGroup> group);
     const QList<QSharedPointer<AuthenticationFactorGroup>>& getGroups() const;
 
 protected:

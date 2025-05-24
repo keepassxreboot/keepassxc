@@ -46,21 +46,21 @@ public:
     explicit AuthenticationFactor() = default;
     ~AuthenticationFactor() override = default;
 
-    virtual QSharedPointer<QByteArray> unwrapKey(const QSharedPointer<AuthenticationFactorUserData>& userData) const;
+    virtual QByteArray unwrapKey(QSharedPointer<AuthenticationFactorUserData> userData) const;
 
     const QString& getFactorType() const;
 
     const QString& getName() const;
     void setName(const QString& name);
     AuthenticationFactorKeyType getKeyType() const;
-    void setKeyType(AuthenticationFactorKeyType type);
-    const QByteArray& getKeySalt() const;
+    bool setKeyType(AuthenticationFactorKeyType type);
+    QByteArray getKeySalt() const;
     void setKeySalt(const QByteArray& salt);
-    const QByteArray& getWrappedKey() const;
+    QByteArray getWrappedKey() const;
     void setWrappedKey(const QByteArray& key);
 
 protected:
-    virtual QByteArray getUnwrappingKey(const QSharedPointer<AuthenticationFactorUserData>& userData) const;
+    virtual QByteArray getUnwrappingKey(QSharedPointer<AuthenticationFactorUserData> userData) const;
 
     QString m_name = "<Unnamed factor>";
     AuthenticationFactorKeyType m_keyType = AuthenticationFactorKeyType::NONE;
@@ -68,7 +68,7 @@ protected:
     QByteArray m_wrappedKey = QByteArray();
 
     QString m_factorType = FACTOR_TYPE_NULL;
-    QSharedPointer<FactorKeyDerivation> m_derivation;
+    QScopedPointer<FactorKeyDerivation> m_derivation;
 };
 
 #endif // KEEPASSXC_AUTHENTICATIONFACTOR_H

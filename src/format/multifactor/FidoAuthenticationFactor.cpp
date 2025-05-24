@@ -17,7 +17,7 @@
 
 #include "FidoAuthenticationFactor.h"
 
-FidoAuthenticationFactor::FidoAuthenticationFactor(const QSharedPointer<AuthenticationFactor>& factor)
+FidoAuthenticationFactor::FidoAuthenticationFactor(QSharedPointer<AuthenticationFactor> factor)
 {
     m_name = factor->getName();
     m_keyType = factor->getKeyType();
@@ -31,7 +31,7 @@ void FidoAuthenticationFactor::setCredentialID(const QByteArray& credentialID)
     m_credentialID = credentialID;
 }
 
-const QByteArray& FidoAuthenticationFactor::getCredentialID() const
+QByteArray FidoAuthenticationFactor::getCredentialID() const
 {
     return m_credentialID;
 }

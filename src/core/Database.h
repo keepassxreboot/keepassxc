@@ -169,9 +169,9 @@ public:
     void markAsTemporaryDatabase();
     bool isTemporaryDatabase();
 
-    void setAuthenticationFactorInfo(const QSharedPointer<AuthenticationFactorInfo>& authenticationFactorInfo);
+    void setAuthenticationFactorInfo(QSharedPointer<AuthenticationFactorInfo> authenticationFactorInfo);
     QSharedPointer<AuthenticationFactorInfo> authenticationFactorInfo();
-    const QSharedPointer<AuthenticationFactorInfo>& authenticationFactorInfo() const;
+    QSharedPointer<AuthenticationFactorInfo> authenticationFactorInfo() const;
 
     static Database* databaseByUuid(const QUuid& uuid);
 

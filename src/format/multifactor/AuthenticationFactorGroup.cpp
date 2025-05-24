@@ -39,7 +39,7 @@ void AuthenticationFactorGroup::setValidationType(const AuthenticationFactorGrou
     m_validationType = validationType;
 }
 
-void AuthenticationFactorGroup::addFactor(const QSharedPointer<AuthenticationFactor>& factor)
+void AuthenticationFactorGroup::addFactor(QSharedPointer<AuthenticationFactor> factor)
 {
     m_factors.append(factor);
     factor->setParent(this);
@@ -50,17 +50,17 @@ const QList<QSharedPointer<AuthenticationFactor>>& AuthenticationFactorGroup::ge
     return m_factors;
 }
 
-const QByteArray& AuthenticationFactorGroup::getValidationIn() const
+QByteArray AuthenticationFactorGroup::getValidationIn() const
 {
     return m_validationIn;
 }
 
-const QByteArray& AuthenticationFactorGroup::getValidationOut() const
+QByteArray AuthenticationFactorGroup::getValidationOut() const
 {
     return m_validationOut;
 }
 
-const QByteArray& AuthenticationFactorGroup::getChallenge() const
+QByteArray AuthenticationFactorGroup::getChallenge() const
 {
     return m_challenge;
 }
@@ -70,22 +70,21 @@ AuthenticationFactorGroupValidationType AuthenticationFactorGroup::getValidation
     return m_validationType;
 }
 
-QSharedPointer<QByteArray>
-AuthenticationFactorGroup::getRawKey(const QSharedPointer<AuthenticationFactorUserData>& userData)
+QSharedPointer<QByteArray> AuthenticationFactorGroup::getRawKey(QSharedPointer<AuthenticationFactorUserData> userData)
 {
     bool groupContributed = false;
 
     for (const auto& factor : getFactors()) {
         auto unwrappedKey = factor->unwrapKey(userData);
 
-        if (unwrappedKey == nullptr) {
+        if (unwrappedKey.isEmpty()) {
             qDebug() << QObject::tr("Factor '%1' did not contribute key material").arg(factor->getName());
             continue;
         }
 
         qDebug() << QObject::tr("Got a key part from factor '%1'").arg(factor->getName());
 
-        m_key.insert(m_key.end(), unwrappedKey->begin(), unwrappedKey->end());
+        m_key.insert(m_key.end(), unwrappedKey.begin(), unwrappedKey.end());
         groupContributed = true;
         break;
     }

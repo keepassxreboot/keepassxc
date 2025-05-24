@@ -31,15 +31,18 @@ const QString& AuthenticationFactor::getName() const
     return m_name;
 }
 
-void AuthenticationFactor::setKeyType(AuthenticationFactorKeyType type)
+bool AuthenticationFactor::setKeyType(AuthenticationFactorKeyType type)
 {
     m_keyType = type;
 
     if (m_keyType == AuthenticationFactorKeyType::AES_CBC) {
-        m_derivation = QSharedPointer<AESCBCFactorKeyDerivation>::create();
-    } else {
-        m_derivation = QSharedPointer<AESCBCFactorKeyDerivation>(nullptr);
+        m_derivation.reset(new AESCBCFactorKeyDerivation());
+        return true;
     }
+
+    qWarning() << tr("Unknown/unsupported key derivation method for factor '%1'").arg(getName());
+    m_derivation.reset();
+    return false;
 }
 
 void AuthenticationFactor::setKeySalt(const QByteArray& salt)
@@ -52,12 +55,12 @@ void AuthenticationFactor::setWrappedKey(const QByteArray& key)
     m_wrappedKey = key;
 }
 
-const QByteArray& AuthenticationFactor::getWrappedKey() const
+QByteArray AuthenticationFactor::getWrappedKey() const
 {
     return m_wrappedKey;
 }
 
-const QByteArray& AuthenticationFactor::getKeySalt() const
+QByteArray AuthenticationFactor::getKeySalt() const
 {
     return m_keySalt;
 }
@@ -72,27 +75,30 @@ const QString& AuthenticationFactor::getFactorType() const
     return m_factorType;
 }
 
-QSharedPointer<QByteArray>
-AuthenticationFactor::unwrapKey(const QSharedPointer<AuthenticationFactorUserData>& userData) const
+QByteArray AuthenticationFactor::unwrapKey(QSharedPointer<AuthenticationFactorUserData> userData) const
 {
     auto unwrappingKey = getUnwrappingKey(userData);
 
     auto wrappedKey = getWrappedKey();
 
-    if (m_derivation->derive(wrappedKey, unwrappingKey, getKeySalt())) {
-        // "wrappedKey" is now unwrapped!
-        return QSharedPointer<QByteArray>::create(wrappedKey);
-    } else {
-        qWarning() << tr("Validation failed when unwrapping factor '%1': %2").arg(getName(), m_derivation->getError());
+    if (m_derivation == nullptr) {
+        qCritical() << tr("Attempted to unwrap factor '%1' with null key derivation method").arg(getName());
+        return {};
     }
 
-    return {nullptr};
+    if (m_derivation->derive(wrappedKey, unwrappingKey, getKeySalt())) {
+        // "wrappedKey" is now unwrapped!
+        return {wrappedKey};
+    }
+
+    qWarning() << tr("Validation failed when unwrapping factor '%1': %2").arg(getName(), m_derivation->getError());
+    return {};
 }
 
-QByteArray AuthenticationFactor::getUnwrappingKey(const QSharedPointer<AuthenticationFactorUserData>& userData) const
+QByteArray AuthenticationFactor::getUnwrappingKey(QSharedPointer<AuthenticationFactorUserData> userData) const
 {
     Q_UNUSED(userData);
     // This shouldn't happen - it means we didn't understand the factor type?
     qWarning() << "Attempted to get unwrapping key from generic AuthenticationFactor";
-    return QByteArray();
+    return {};
 }
