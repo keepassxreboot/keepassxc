@@ -64,10 +64,12 @@ PreviewEntryAttachmentsDialog::~PreviewEntryAttachmentsDialog() = default;
 
 void PreviewEntryAttachmentsDialog::setAttachment(attachments::Attachment attachment)
 {
-    setWindowTitle(tr("Preview: %1").arg(attachment.name));
+    const QString AttachmentName = attachment.name;
+
+    setWindowTitle(tr("Preview: %1").arg(AttachmentName));
 
     if (auto attachWidget = m_widgetFactory->createAttachmentWidget(Tools::getMimeType(attachment.data), this)) {
-        attachWidget->openAttachment(attachment, attachments::OpenMode::ReadOnly);
+        attachWidget->openAttachment(std::move(attachment), attachments::OpenMode::ReadOnly);
         attachWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
         if (auto lastWidget = std::exchange(m_attachmentWidget, attachWidget)) {
@@ -77,6 +79,6 @@ void PreviewEntryAttachmentsDialog::setAttachment(attachments::Attachment attach
         // Set the new attachment widget
         m_ui->verticalLayout->insertWidget(0, m_attachmentWidget);
     } else {
-        qWarning() << tr("Unable to create attachment widget for file %1").arg(attachment.name);
+        qWarning() << QString("Unable to create attachment widget for file %1").arg(AttachmentName);
     }
 }

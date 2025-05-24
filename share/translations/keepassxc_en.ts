@@ -2844,14 +2844,6 @@ Disable safe saves and try again?</source>
         <source>Edit: %1</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Unable to create attachment widget for file %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Attachment not found</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>EditEntryWidget</name>
@@ -7266,10 +7258,6 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Preview: %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unable to create attachment widget for file %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

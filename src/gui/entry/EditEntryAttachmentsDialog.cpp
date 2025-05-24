@@ -49,10 +49,12 @@ EditEntryAttachmentsDialog::~EditEntryAttachmentsDialog() = default;
 
 void EditEntryAttachmentsDialog::setAttachment(attachments::Attachment attachment)
 {
-    setWindowTitle(tr("Edit: %1").arg(attachment.name));
+    const QString AttachmentName = attachment.name;
+
+    setWindowTitle(tr("Edit: %1").arg(AttachmentName));
 
     if (auto widget = m_widgetsFactory->createAttachmentWidget(Tools::getMimeType(attachment.data), this)) {
-        widget->openAttachment(attachment, attachments::OpenMode::ReadWrite);
+        widget->openAttachment(std::move(attachment), attachments::OpenMode::ReadWrite);
         widget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
         if (auto lastWidget = std::exchange(m_attachmentWidget, widget)) {
@@ -61,7 +63,7 @@ void EditEntryAttachmentsDialog::setAttachment(attachments::Attachment attachmen
 
         m_ui->verticalLayout->insertWidget(0, m_attachmentWidget);
     } else {
-        qWarning() << tr("Unable to create attachment widget for file %1").arg(attachment.name);
+        qWarning() << QString("Unable to create attachment widget for file %1").arg(AttachmentName);
     }
 }
 
@@ -70,7 +72,7 @@ attachments::Attachment EditEntryAttachmentsDialog::getAttachment() const
     if (m_attachmentWidget) {
         return m_attachmentWidget->getAttachment();
     } else {
-        qWarning() << tr("Attachment not found");
+        qWarning() << "Attachment not found";
     }
 
     return {};
