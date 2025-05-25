@@ -29,8 +29,8 @@ class MultiAuthenticationHeaderKey : public Key
 {
 public:
     explicit MultiAuthenticationHeaderKey(
-        const QSharedPointer<const AuthenticationFactorInfo>& authenticationFactorInfo,
-        const QSharedPointer<const CompositeKey>& existingKey);
+        QSharedPointer<const AuthenticationFactorInfo> authenticationFactorInfo,
+        QSharedPointer<const CompositeKey> existingKey);
     ~MultiAuthenticationHeaderKey() override = default;
 
     bool process();

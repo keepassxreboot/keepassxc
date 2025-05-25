@@ -30,11 +30,11 @@ public:
     explicit AuthenticationFactorUserData() = default;
     ~AuthenticationFactorUserData() override = default;
 
-    void addDataItem(const QString& key, QSharedPointer<QByteArray> value);
-    QSharedPointer<QByteArray> getDataItem(const QString& key) const;
+    void addDataItem(const QString& key, QByteArray value);
+    QByteArray getDataItem(const QString& key) const;
 
 protected:
-    QHash<QString, QSharedPointer<QByteArray>> m_data;
+    QHash<QString, QByteArray> m_data;
 };
 
 #endif // KEEPASSXC_AUTHENTICATION_FACTOR_USER_DATA_H

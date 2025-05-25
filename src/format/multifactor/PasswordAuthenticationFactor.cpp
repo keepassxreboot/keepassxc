@@ -44,15 +44,15 @@ QByteArray PasswordAuthenticationFactor::getUnwrappingKey(QSharedPointer<Authent
         // Default user password - already hashed...
         qDebug() << tr("Falling back to default user password for factor '%1'").arg(getName());
         auto passwordItem = userData->getDataItem(PasswordKey::UUID.toString());
-        if (passwordItem == nullptr) {
+        if (passwordItem.isNull()) {
             qDebug()
                 << tr("Password not set when using default for factor '%1' - falling back to empty").arg(getName());
             return {};
         }
-        dataToUse = *passwordItem;
+        dataToUse = passwordItem;
     } else {
         // Non-hashed password
-        dataToUse = QCryptographicHash::hash(*ret, QCryptographicHash::Sha256);
+        dataToUse = QCryptographicHash::hash(ret, QCryptographicHash::Sha256);
     }
 
     return dataToUse;
