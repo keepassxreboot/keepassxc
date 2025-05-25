@@ -192,7 +192,7 @@ bool KdbxXmlAuthenticationFactorReader::parseFactorGroup(QSharedPointer<Authenti
         raiseError(
             tr("Unknown element type while processing authentication factor group: %1").arg(m_xml.name().toString()));
 
-        return true;
+        return false;
     }
 
     if (group->getFactors().isEmpty()) {
