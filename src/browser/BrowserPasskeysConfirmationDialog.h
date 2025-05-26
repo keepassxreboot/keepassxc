@@ -34,7 +34,7 @@ class BrowserPasskeysConfirmationDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit BrowserPasskeysConfirmationDialog(QWidget* parent = nullptr);
+    explicit BrowserPasskeysConfirmationDialog();
     ~BrowserPasskeysConfirmationDialog() override;
 
     void registerCredential(const QString& username,

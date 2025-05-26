@@ -24,9 +24,8 @@
 
 #define STEP 1000
 
-BrowserPasskeysConfirmationDialog::BrowserPasskeysConfirmationDialog(QWidget* parent)
-    : QDialog(parent)
-    , m_ui(new Ui::BrowserPasskeysConfirmationDialog())
+BrowserPasskeysConfirmationDialog::BrowserPasskeysConfirmationDialog()
+    : m_ui(new Ui::BrowserPasskeysConfirmationDialog())
     , m_passkeyUpdated(false)
 {
     setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);

@@ -470,7 +470,7 @@ QList<Entry*> BrowserService::confirmEntries(QList<Entry*>& entriesToConfirm,
 
     m_dialogActive = true;
     updateWindowState();
-    BrowserAccessControlDialog accessControlDialog(m_currentDatabaseWidget);
+    BrowserAccessControlDialog accessControlDialog;
 
     connect(m_currentDatabaseWidget, SIGNAL(databaseLockRequested()), &accessControlDialog, SLOT(reject()));
 
@@ -583,7 +583,7 @@ QString BrowserService::storeKey(const QString& key)
     QString id;
 
     do {
-        QInputDialog keyDialog(m_currentDatabaseWidget);
+        QInputDialog keyDialog;
         connect(m_currentDatabaseWidget, SIGNAL(databaseLockRequested()), &keyDialog, SLOT(reject()));
         keyDialog.setWindowTitle(tr("KeePassXC - New key association request"));
         keyDialog.setLabelText(tr("You have received an association request for the following database:\n%1\n\n"
@@ -607,7 +607,7 @@ QString BrowserService::storeKey(const QString& key)
         contains =
             db->metadata()->customData()->contains(CustomData::getKeyWithPrefix(CustomData::BrowserKeyPrefix, id));
         if (contains) {
-            dialogResult = MessageBox::warning(m_currentDatabaseWidget,
+            dialogResult = MessageBox::warning(nullptr,
                                                tr("KeePassXC - Overwrite existing key?"),
                                                tr("A shared encryption key with the name \"%1\" "
                                                   "already exists.\nDo you want to overwrite it?")
@@ -668,7 +668,7 @@ QJsonObject BrowserService::showPasskeysRegisterPrompt(const QJsonObject& public
     const auto existingEntries = getPasskeyEntriesWithUserHandle(rpId, userId, keyList);
 
     raiseWindow();
-    BrowserPasskeysConfirmationDialog confirmDialog(m_currentDatabaseWidget);
+    BrowserPasskeysConfirmationDialog confirmDialog;
     confirmDialog.registerCredential(username, rpId, existingEntries, timeout);
 
     auto dialogResult = confirmDialog.exec();
@@ -761,7 +761,7 @@ QJsonObject BrowserService::showPasskeysAuthenticationPrompt(const QJsonObject& 
     const auto timeout = publicKeyOptions["timeout"].toInt();
 
     raiseWindow();
-    BrowserPasskeysConfirmationDialog confirmDialog(m_currentDatabaseWidget);
+    BrowserPasskeysConfirmationDialog confirmDialog;
     confirmDialog.authenticateCredential(entries, rpId, timeout);
     auto dialogResult = confirmDialog.exec();
     if (dialogResult == QDialog::Accepted) {
