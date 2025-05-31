@@ -25,6 +25,7 @@
 
 #include <QDebug>
 #include <QDropEvent>
+#include <QLineEdit>
 #include <QMimeData>
 #include <QStandardPaths>
 #include <QTemporaryFile>
@@ -91,6 +92,13 @@ EntryAttachmentsWidget::EntryAttachmentsWidget(QWidget* parent)
     if (m_readOnly) {
         connect(m_ui->attachmentsView, SIGNAL(doubleClicked(QModelIndex)), SLOT(previewSelectedAttachment()));
     }
+
+    connect(m_ui->attachmentsView->itemDelegate(), &QAbstractItemDelegate::commitData, [this](QWidget* editor) {
+        if (auto lineEdit = qobject_cast<QLineEdit*>(editor)) {
+            auto index = m_attachmentsModel->rowByKey(lineEdit->text());
+            m_ui->attachmentsView->setCurrentIndex(m_attachmentsModel->index(index, 0));
+        }
+    });
 
     connect(m_ui->saveAttachmentButton, SIGNAL(clicked()), SLOT(saveSelectedAttachments()));
     connect(m_ui->openAttachmentButton, SIGNAL(clicked()), SLOT(openSelectedAttachments()));
@@ -203,8 +211,10 @@ void EntryAttachmentsWidget::newAttachments()
     // Create a temporary file to allow the user to edit the attachment
     auto newFileName = generateUniqName(DefaultName, m_entryAttachments->keys());
     m_entryAttachments->set(newFileName, QByteArray());
-    m_ui->attachmentsView->setCurrentIndex(m_attachmentsModel->index(m_attachmentsModel->rowByKey(newFileName), 0));
-    m_ui->attachmentsView->edit(m_ui->attachmentsView->currentIndex());
+
+    auto currentIndex = m_attachmentsModel->index(m_attachmentsModel->rowByKey(newFileName), 0);
+    m_ui->attachmentsView->setCurrentIndex(currentIndex);
+    m_ui->attachmentsView->edit(currentIndex);
 }
 
 void EntryAttachmentsWidget::previewSelectedAttachment()
@@ -213,13 +223,13 @@ void EntryAttachmentsWidget::previewSelectedAttachment()
 
     const auto indexes = m_ui->attachmentsView->selectionModel()->selectedIndexes();
     if (indexes.empty()) {
-        qWarning() << tr("Failed to edit an attachment: No attachment selected");
+        qWarning() << "Failed to edit an attachment: No attachment selected";
         return;
     }
 
     const auto index = indexes.first();
     if (!index.isValid()) {
-        qWarning() << tr("Failed to preview an attachment: Attachment not found");
+        qWarning() << "Failed to preview an attachment: Attachment not found";
         return;
     }
 
