@@ -89,9 +89,9 @@ EntryAttachmentsWidget::EntryAttachmentsWidget(QWidget* parent)
     // clang-format on
     connect(this, SIGNAL(readOnlyChanged(bool)), m_attachmentsModel, SLOT(setReadOnly(bool)));
 
-    if (m_readOnly) {
-        connect(m_ui->attachmentsView, SIGNAL(doubleClicked(QModelIndex)), SLOT(previewSelectedAttachment()));
-    }
+    connect(m_ui->attachmentsView, &QAbstractItemView::doubleClicked, [this](const QModelIndex&) {
+        m_readOnly ? previewSelectedAttachment() : editSelectedAttachment();
+    });
 
     connect(m_ui->attachmentsView->itemDelegate(), &QAbstractItemDelegate::commitData, [this](QWidget* editor) {
         if (auto lineEdit = qobject_cast<QLineEdit*>(editor)) {
