@@ -6,6 +6,8 @@
 #include <QComboBox>
 #include <QDebug>
 #include <QMetaEnum>
+#include <QStandardItemModel>
+#include <QSortFilterProxyModel>
 
 namespace
 {
@@ -55,10 +57,19 @@ attachments::Attachment TextAttachmentsPreviewWidget::getAttachment() const
 
 void TextAttachmentsPreviewWidget::initTypeCombobox()
 {
+    QStandardItemModel* model = new QStandardItemModel(this);
+
     const auto metaEnum = QMetaEnum::fromType<TextAttachmentsPreviewWidget::PreviewTextType>();
     for (int i = 0; i < metaEnum.keyCount(); ++i) {
-        m_ui->typeComboBox->addItem(tr(metaEnum.key(i)), metaEnum.value(i));
+        QStandardItem* item = new QStandardItem(metaEnum.key(i));
+        item->setData(metaEnum.value(i), Qt::UserRole);
+        model->appendRow(item);
     }
+
+    QSortFilterProxyModel* filterProxyMode = new QSortFilterProxyModel(this);
+    filterProxyMode->setSourceModel(model);
+    filterProxyMode->sort(0, Qt::SortOrder::DescendingOrder);
+    m_ui->typeComboBox->setModel(filterProxyMode);
 
     connect(m_ui->typeComboBox,
             QOverload<int>::of(&QComboBox::currentIndexChanged),
