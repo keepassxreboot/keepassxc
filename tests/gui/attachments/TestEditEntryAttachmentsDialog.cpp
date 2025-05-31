@@ -1,10 +1,7 @@
 #include "TestEditEntryAttachmentsDialog.h"
+#include "attachments/AttachmentWidget.h"
 
 #include <PreviewEntryAttachmentsDialog.h>
-#include <attachments/AbstractAttachmentWidget.h>
-#include <attachments/AttachmentWidgetFactory.h>
-
-#include <memory>
 
 #include <QAbstractButton>
 #include <QDialogButtonBox>
@@ -16,10 +13,8 @@
 
 void TestEditEntryAttachmentsDialog::initTestCase()
 {
-    m_factory = std::make_shared<attachments::AttachmentsWidgetFactory>();
-    m_editDialog.reset(new EditEntryAttachmentsDialog(m_factory));
+    m_editDialog.reset(new EditEntryAttachmentsDialog());
 
-    QVERIFY(m_factory);
     QVERIFY(m_editDialog);
 }
 
@@ -34,8 +29,8 @@ void TestEditEntryAttachmentsDialog::testSetAttachment()
     QVERIFY2(layout, "QVBoxLayout not found");
     QCOMPARE(layout->count(), 2);
 
-    auto widget = qobject_cast<attachments::AbstractAttachmentWidget*>(layout->itemAt(0)->widget());
-    QVERIFY2(widget, "Expected AbstractAttachmentWidget");
+    auto widget = qobject_cast<AttachmentWidget*>(layout->itemAt(0)->widget());
+    QVERIFY2(widget, "Expected AttachmentWidget");
 
     auto sizePolicy = widget->sizePolicy();
     QCOMPARE(sizePolicy.horizontalPolicy(), QSizePolicy::Expanding);
@@ -62,8 +57,8 @@ void TestEditEntryAttachmentsDialog::testSetAttachmentTwice()
     QVERIFY2(layout, "QVBoxLayout not found");
     QCOMPARE(layout->count(), 2);
 
-    auto widget = qobject_cast<attachments::AbstractAttachmentWidget*>(layout->itemAt(0)->widget());
-    QVERIFY2(widget, "Expected AbstractAttachmentWidget");
+    auto widget = qobject_cast<AttachmentWidget*>(layout->itemAt(0)->widget());
+    QVERIFY2(widget, "Expected AttachmentWidget");
 
     auto attachments = widget->getAttachment();
 

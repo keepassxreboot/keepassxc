@@ -23,16 +23,10 @@
 #include <QMimeDatabase>
 #include <QPushButton>
 
-PreviewEntryAttachmentsDialog::PreviewEntryAttachmentsDialog(
-    std::shared_ptr<attachments::IAttachmentWidgetFactory> widgetsFactory,
-    QWidget* parent)
+PreviewEntryAttachmentsDialog::PreviewEntryAttachmentsDialog(QWidget* parent)
     : QDialog(parent)
     , m_ui(new Ui::PreviewEntryAttachmentsDialog)
-    , m_widgetFactory(std::move(widgetsFactory))
-    , m_attachmentWidget(nullptr)
 {
-    Q_ASSERT(m_widgetFactory);
-
     m_ui->setupUi(this);
 
     // Disable the help button in the title bar
@@ -46,12 +40,8 @@ PreviewEntryAttachmentsDialog::PreviewEntryAttachmentsDialog(
     connect(m_ui->dialogButtons, &QDialogButtonBox::rejected, this, &PreviewEntryAttachmentsDialog::reject);
     connect(m_ui->dialogButtons, &QDialogButtonBox::clicked, [this](QAbstractButton* button) {
         auto pressedButton = m_ui->dialogButtons->standardButton(button);
-        if (!m_attachmentWidget) {
-            qWarning() << tr("Attachment not found");
-            return;
-        }
 
-        const auto attachment = m_attachmentWidget->getAttachment();
+        const auto attachment = m_ui->attachmentWidget->getAttachment();
         if (pressedButton == QDialogButtonBox::Open) {
             emit openAttachment(attachment.name);
         } else if (pressedButton == QDialogButtonBox::Save) {
@@ -68,17 +58,5 @@ void PreviewEntryAttachmentsDialog::setAttachment(attachments::Attachment attach
 
     setWindowTitle(tr("Preview: %1").arg(AttachmentName));
 
-    if (auto attachWidget = m_widgetFactory->createAttachmentWidget(Tools::getMimeType(attachment.data), this)) {
-        attachWidget->openAttachment(std::move(attachment), attachments::OpenMode::ReadOnly);
-        attachWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-
-        if (auto lastWidget = std::exchange(m_attachmentWidget, attachWidget)) {
-            m_ui->verticalLayout->removeWidget(lastWidget);
-        }
-
-        // Set the new attachment widget
-        m_ui->verticalLayout->insertWidget(0, m_attachmentWidget);
-    } else {
-        qWarning() << QString("Unable to create attachment widget for file %1").arg(AttachmentName);
-    }
+    m_ui->attachmentWidget->openAttachment(std::move(attachment), attachments::OpenMode::ReadOnly);
 }

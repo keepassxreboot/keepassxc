@@ -1,5 +1,4 @@
 #include "TestTextAttachmentsEditWidget.h"
-#include "attachments/AbstractAttachmentWidget.h"
 
 #include <attachments/TextAttachmentsEditWidget.h>
 

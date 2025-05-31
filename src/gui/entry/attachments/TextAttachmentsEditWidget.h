@@ -17,24 +17,25 @@
 
 #pragma once
 
-#include "AbstractAttachmentWidget.h"
+#include "AttachmentTypes.h"
 
 #include <QScopedPointer>
+#include <QWidget>
 
 namespace Ui
 {
     class TextAttachmentsEditWidget;
 }
 
-class TextAttachmentsEditWidget : public attachments::AbstractAttachmentWidget
+class TextAttachmentsEditWidget : public QWidget
 {
     Q_OBJECT
 public:
     explicit TextAttachmentsEditWidget(QWidget* parent = nullptr);
     ~TextAttachmentsEditWidget() override;
 
-    void openAttachment(attachments::Attachment attachment, attachments::OpenMode mode) override;
-    attachments::Attachment getAttachment() const override;
+    void openAttachment(attachments::Attachment attachment, attachments::OpenMode mode);
+    attachments::Attachment getAttachment() const;
 
 Q_SIGNALS:
     void textChanged();

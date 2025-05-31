@@ -162,13 +162,11 @@ set(gui_SOURCES
         gui/entry/EditEntryAttachmentsDialog.cpp
         gui/entry/PreviewEntryAttachmentsDialog.cpp
         gui/entry/attachments/TextAttachmentsWidget.cpp
-        gui/entry/attachments/AttachmentWidgetFactory.cpp
-        gui/entry/attachments/UnknownAttachmentTypeWidget.cpp
         gui/entry/attachments/ImageAttachmentsWidget.cpp
         gui/entry/attachments/ImageAttachmentsView.cpp
         gui/entry/attachments/TextAttachmentsPreviewWidget.cpp
         gui/entry/attachments/TextAttachmentsEditWidget.cpp
-        gui/entry/attachments/AbstractAttachmentWidget.cpp
+        gui/entry/attachments/AttachmentWidget.cpp
         gui/entry/EntryHistoryModel.cpp
         gui/entry/EntryModel.cpp
         gui/entry/EntryView.cpp

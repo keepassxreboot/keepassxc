@@ -21,8 +21,6 @@
 #include <QPointer>
 #include <QWidget>
 
-#include <memory>
-
 namespace Ui
 {
     class EntryAttachmentsWidget;
@@ -31,11 +29,6 @@ namespace Ui
 class QByteArray;
 class EntryAttachments;
 class EntryAttachmentsModel;
-
-namespace attachments
-{
-    class IAttachmentWidgetFactory;
-}
 
 class EntryAttachmentsWidget : public QWidget
 {
@@ -90,8 +83,6 @@ private:
     QStringList m_pendingChanges;
     bool m_readOnly;
     bool m_buttonsVisible;
-
-    std::shared_ptr<attachments::IAttachmentWidgetFactory> m_attachmentsWidgetFactory{};
 };
 
 #endif // ENTRYATTACHMENTSWIDGET_H

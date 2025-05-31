@@ -8,7 +8,7 @@
 #include <QTextEdit>
 
 TextAttachmentsWidget::TextAttachmentsWidget(QWidget* parent)
-    : AbstractAttachmentWidget(parent)
+    : QWidget(parent)
     , m_ui(new Ui::TextAttachmentsWidget())
     , m_mode(attachments::OpenMode::ReadOnly)
 {

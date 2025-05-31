@@ -20,24 +20,21 @@
 #include "EditEntryAttachmentsDialog.h"
 #include "EntryAttachmentsModel.h"
 #include "PreviewEntryAttachmentsDialog.h"
-#include "gui/entry/attachments/AttachmentWidgetFactory.h"
 #include "ui_EntryAttachmentsWidget.h"
 
 #include <QDebug>
 #include <QDropEvent>
 #include <QLineEdit>
+#include <QMenu>
 #include <QMimeData>
 #include <QStandardPaths>
 #include <QTemporaryFile>
-#include <QMenu>
 
 #include "EntryAttachmentsModel.h"
 #include "core/EntryAttachments.h"
 #include "core/Tools.h"
 #include "gui/FileDialog.h"
 #include "gui/MessageBox.h"
-
-#include <memory>
 
 namespace
 {
@@ -63,7 +60,6 @@ EntryAttachmentsWidget::EntryAttachmentsWidget(QWidget* parent)
     , m_attachmentsModel(new EntryAttachmentsModel(this))
     , m_readOnly(false)
     , m_buttonsVisible(true)
-    , m_attachmentsWidgetFactory(std::make_shared<attachments::AttachmentsWidgetFactory>())
 {
     m_ui->setupUi(this);
 
@@ -110,7 +106,8 @@ EntryAttachmentsWidget::EntryAttachmentsWidget(QWidget* parent)
 
     auto addButtonMenu = new QMenu(this);
     addButtonMenu->addAction(tr("New Text Document"), this, &EntryAttachmentsWidget::newAttachments);
-    addButtonMenu->addAction(tr("Load from Disk..."), this, QOverload<>::of(&EntryAttachmentsWidget::insertAttachments));
+    addButtonMenu->addAction(
+        tr("Load from Disk..."), this, QOverload<>::of(&EntryAttachmentsWidget::insertAttachments));
 
     m_ui->addAttachmentButton->setMenu(addButtonMenu);
 
@@ -245,7 +242,7 @@ void EntryAttachmentsWidget::previewSelectedAttachment()
     auto name = m_attachmentsModel->keyByIndex(index);
     auto data = m_entryAttachments->value(name);
 
-    PreviewEntryAttachmentsDialog previewDialog(m_attachmentsWidgetFactory, this);
+    PreviewEntryAttachmentsDialog previewDialog(this);
     previewDialog.setAttachment({name, data});
 
     connect(&previewDialog, SIGNAL(openAttachment(QString)), SLOT(openSelectedAttachments()));
@@ -289,7 +286,7 @@ void EntryAttachmentsWidget::editSelectedAttachment()
     auto name = m_attachmentsModel->keyByIndex(index);
     auto data = m_entryAttachments->value(name);
 
-    EditEntryAttachmentsDialog editDialog(m_attachmentsWidgetFactory, this);
+    EditEntryAttachmentsDialog editDialog(this);
     editDialog.setAttachment({name, data});
 
     if (editDialog.exec() == QDialog::Accepted) {
@@ -442,10 +439,7 @@ void EntryAttachmentsWidget::updateButtonsEnabled()
     m_ui->editAttachmentButton->setEnabled(hasSelection && !m_readOnly);
     if (const auto indexes = selectionModel ? selectionModel->selectedIndexes() : QModelIndexList{}; !indexes.empty()) {
         auto mimeType = Tools::getMimeType(m_entryAttachments->value(m_attachmentsModel->keyByIndex(indexes.first())));
-        m_ui->editAttachmentButton->setEnabled(hasSelection && !m_readOnly
-                                               && (mimeType == Tools::MimeType::PlainText
-                                                   || mimeType == Tools::MimeType::Html
-                                                   || mimeType == Tools::MimeType::Markdown));
+        m_ui->editAttachmentButton->setEnabled(hasSelection && !m_readOnly && Tools::isTextMimeType(mimeType));
     }
 
     m_ui->saveAttachmentButton->setEnabled(hasSelection);

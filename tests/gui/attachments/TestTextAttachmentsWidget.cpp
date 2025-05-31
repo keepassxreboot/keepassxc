@@ -1,15 +1,16 @@
 #include "TestTextAttachmentsWidget.h"
-#include "attachments/AbstractAttachmentWidget.h"
 
 #include <attachments/TextAttachmentsEditWidget.h>
 #include <attachments/TextAttachmentsPreviewWidget.h>
 #include <attachments/TextAttachmentsWidget.h>
 
+#include <QPushButton>
 #include <QSplitter>
 #include <QTest>
 #include <QTestMouseEvent>
 #include <QTextEdit>
-#include <QPushButton>
+#include <qtestcase.h>
+#include <qwidget.h>
 
 void TestTextAttachmentsWidget::initTestCase()
 {
@@ -40,13 +41,19 @@ void TestTextAttachmentsWidget::testTextReadWriteWidget()
 
     QCOMPARE(sizes[1], 0);
 
-    for (int i = 0; i < splitter->count(); ++i) {
-        auto widget = qobject_cast<attachments::AbstractAttachmentWidget*>(splitter->widget(i));
-        auto attachments = widget->getAttachment();
+    auto widget = qobject_cast<TextAttachmentsEditWidget*>(splitter->widget(0));
+    QVERIFY(widget);
+    auto attachments = widget->getAttachment();
 
-        QCOMPARE(attachments.name, Test.name);
-        QCOMPARE(attachments.data, Test.data);
-    }
+    QCOMPARE(attachments.name, Test.name);
+    QCOMPARE(attachments.data, Test.data);
+
+    auto previewWidget = qobject_cast<TextAttachmentsPreviewWidget*>(splitter->widget(1));
+    QVERIFY(previewWidget);
+    attachments = previewWidget->getAttachment();
+
+    QCOMPARE(attachments.name, Test.name);
+    QCOMPARE(attachments.data, Test.data);
 }
 
 void TestTextAttachmentsWidget::testTextReadWidget()
@@ -63,15 +70,19 @@ void TestTextAttachmentsWidget::testTextReadWidget()
 
     QVERIFY(splitter->widget(0)->isHidden());
 
-    for (int i = 0; i < splitter->count(); ++i) {
-        auto widget = qobject_cast<attachments::AbstractAttachmentWidget*>(splitter->widget(i));
-        QVERIFY(widget);
+    auto widget = qobject_cast<TextAttachmentsEditWidget*>(splitter->widget(0));
+    QVERIFY(widget);
+    auto attachments = widget->getAttachment();
 
-        auto attachments = widget->getAttachment();
+    QCOMPARE(attachments.name, Test.name);
+    QCOMPARE(attachments.data, Test.data);
 
-        QCOMPARE(attachments.name, Test.name);
-        QCOMPARE(attachments.data, Test.data);
-    }
+    auto previewWidget = qobject_cast<TextAttachmentsPreviewWidget*>(splitter->widget(1));
+    QVERIFY(previewWidget);
+    attachments = previewWidget->getAttachment();
+
+    QCOMPARE(attachments.name, Test.name);
+    QCOMPARE(attachments.data, Test.data);
 }
 
 void TestTextAttachmentsWidget::testTextChanged()
@@ -92,7 +103,7 @@ void TestTextAttachmentsWidget::testTextChanged()
     const QByteArray NewText = "New test text";
     textEdit->setText(NewText);
 
-    auto previewWidget = qobject_cast<attachments::AbstractAttachmentWidget*>(splitter->widget(1));
+    auto previewWidget = qobject_cast<TextAttachmentsPreviewWidget*>(splitter->widget(1));
     auto attachments = previewWidget->getAttachment();
 
     QCOMPARE(attachments.data, NewText);

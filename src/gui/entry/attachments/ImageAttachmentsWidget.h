@@ -17,10 +17,11 @@
 
 #pragma once
 
-#include "AbstractAttachmentWidget.h"
+#include "AttachmentTypes.h"
 
 #include <QPointer>
 #include <QScopedPointer>
+#include <QWidget>
 
 class QGraphicsView;
 
@@ -58,15 +59,15 @@ private:
     double m_maxZoomIn{};
 };
 
-class ImageAttachmentsWidget : public attachments::AbstractAttachmentWidget
+class ImageAttachmentsWidget : public QWidget
 {
     Q_OBJECT
 public:
     explicit ImageAttachmentsWidget(QWidget* parent = nullptr);
     ~ImageAttachmentsWidget() override;
 
-    void openAttachment(attachments::Attachment attachment, attachments::OpenMode mode) override;
-    attachments::Attachment getAttachment() const override;
+    void openAttachment(attachments::Attachment attachment, attachments::OpenMode mode);
+    attachments::Attachment getAttachment() const;
 
 private Q_SLOTS:
     void onZoomChanged(const QString& zoomText);

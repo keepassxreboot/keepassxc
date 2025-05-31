@@ -17,22 +17,23 @@
 
 #pragma once
 
+#include <attachments/AttachmentWidget.h>
+
 #include <QObject>
+#include <QScopedPointer>
 
-#include <attachments/AttachmentWidgetFactory.h>
-#include <memory>
-
-class TestAttachmentWidgetFactory : public QObject
+class TestAttachmentsWidget : public QObject
 {
     Q_OBJECT
 
 private slots:
     void initTestCase();
 
-    void testCreateImageWidget();
-    void testCreateTextWidget();
-    void testCreateUnknownWidget();
+    void testLayoutAlighment();
+    void testTextAttachment();
+    void testImageAttachment();
+    void testUnknownAttachment();
 
 private:
-    std::unique_ptr<attachments::AttachmentsWidgetFactory> m_factory{};
+    QScopedPointer<AttachmentWidget> m_attachmentWidget;
 };

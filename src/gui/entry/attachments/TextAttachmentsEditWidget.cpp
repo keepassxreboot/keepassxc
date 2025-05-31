@@ -3,9 +3,10 @@
 
 #include <QPushButton>
 #include <QTextEdit>
+#include <qwidget.h>
 
 TextAttachmentsEditWidget::TextAttachmentsEditWidget(QWidget* parent)
-    : attachments::AbstractAttachmentWidget(parent)
+    : QWidget(parent)
     , m_ui(new Ui::TextAttachmentsEditWidget())
 {
     m_ui->setupUi(this);

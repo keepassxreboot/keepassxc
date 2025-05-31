@@ -6,8 +6,8 @@
 #include <QComboBox>
 #include <QDebug>
 #include <QMetaEnum>
-#include <QStandardItemModel>
 #include <QSortFilterProxyModel>
+#include <QStandardItemModel>
 
 namespace
 {
@@ -29,7 +29,7 @@ namespace
 } // namespace
 
 TextAttachmentsPreviewWidget::TextAttachmentsPreviewWidget(QWidget* parent)
-    : attachments::AbstractAttachmentWidget(parent)
+    : QWidget(parent)
     , m_ui(new Ui::TextAttachmentsPreviewWidget())
 {
     m_ui->setupUi(this);

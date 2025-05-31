@@ -18,12 +18,9 @@
 #pragma once
 
 #include "EditEntryAttachmentsDialog.h"
-#include <attachments/IAttachmentWidgetFactory.h>
 
 #include <QObject>
 #include <QScopedPointer>
-
-#include <memory>
 
 class TestEditEntryAttachmentsDialog : public QObject
 {
@@ -38,6 +35,5 @@ private slots:
     void testBottonsBox();
 
 private:
-    std::shared_ptr<attachments::IAttachmentWidgetFactory> m_factory{};
     QScopedPointer<EditEntryAttachmentsDialog> m_editDialog{};
 };

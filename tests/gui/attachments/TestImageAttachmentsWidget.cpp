@@ -1,5 +1,4 @@
 #include "TestImageAttachmentsWidget.h"
-#include "attachments/AbstractAttachmentWidget.h"
 #include "attachments/ImageAttachmentsView.h"
 
 #include <attachments/ImageAttachmentsWidget.h>

@@ -413,3 +413,18 @@ void TestTools::testGetMimeTypeByFileInfo()
         QCOMPARE(Tools::getMimeType(unknown), Tools::MimeType::Unknown);
     }
 }
+
+void TestTools::testIsTextMimeType()
+{
+    const auto Text = {Tools::MimeType::PlainText, Tools::MimeType::Html, Tools::MimeType::Markdown};
+
+    for (const auto& text : Text) {
+        QVERIFY(Tools::isTextMimeType(text));
+    }
+
+    const auto NoText = {Tools::MimeType::Image, Tools::MimeType::Unknown};
+
+    for (const auto& noText : NoText) {
+        QVERIFY(!Tools::isTextMimeType(noText));
+    }
+}

@@ -526,4 +526,10 @@ namespace Tools
         return toMimeType(mime.name());
     }
 
+    bool isTextMimeType(MimeType mimeType)
+    {
+        return mimeType == Tools::MimeType::PlainText || mimeType == Tools::MimeType::Html
+               || mimeType == Tools::MimeType::Markdown;
+    }
+
 } // namespace Tools

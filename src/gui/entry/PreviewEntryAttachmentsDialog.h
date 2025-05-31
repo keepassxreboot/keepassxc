@@ -17,14 +17,12 @@
 
 #pragma once
 
-#include "attachments/IAttachmentWidgetFactory.h"
+#include "attachments/AttachmentTypes.h"
 
 #include <core/Tools.h>
 
 #include <QDialog>
 #include <QPointer>
-
-#include <memory>
 
 namespace Ui
 {
@@ -36,8 +34,7 @@ class PreviewEntryAttachmentsDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit PreviewEntryAttachmentsDialog(std::shared_ptr<attachments::IAttachmentWidgetFactory> widgetsFactory,
-                                           QWidget* parent = nullptr);
+    explicit PreviewEntryAttachmentsDialog(QWidget* parent = nullptr);
     ~PreviewEntryAttachmentsDialog() override;
 
     void setAttachment(attachments::Attachment attachment);
@@ -48,7 +45,4 @@ signals:
 
 private:
     QScopedPointer<Ui::PreviewEntryAttachmentsDialog> m_ui;
-
-    std::shared_ptr<attachments::IAttachmentWidgetFactory> m_widgetFactory{};
-    QPointer<attachments::AbstractAttachmentWidget> m_attachmentWidget;
 };

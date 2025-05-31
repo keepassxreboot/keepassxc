@@ -18,7 +18,7 @@
 #ifndef KEEPASSX_TESTTOOLS_H
 #define KEEPASSX_TESTTOOLS_H
 
-#include "core/Tools.h"
+#include <QObject>
 
 class TestTools : public QObject
 {
@@ -40,6 +40,7 @@ private slots:
     void testMimeTypes();
     void testGetMimeType();
     void testGetMimeTypeByFileInfo();
+    void testIsTextMimeType();
 };
 
 #endif // KEEPASSX_TESTTOOLS_H

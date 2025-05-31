@@ -1,6 +1,5 @@
 #include "ImageAttachmentsWidget.h"
 
-#include "gui/entry/attachments/AbstractAttachmentWidget.h"
 #include "ui_ImageAttachmentsWidget.h"
 
 #include <array>
@@ -49,7 +48,7 @@ namespace
 } // namespace
 
 ImageAttachmentsWidget::ImageAttachmentsWidget(QWidget* parent)
-    : AbstractAttachmentWidget(parent)
+    : QWidget(parent)
     , m_ui(new Ui::ImageAttachmentsWidget)
 {
     m_ui->setupUi(this);

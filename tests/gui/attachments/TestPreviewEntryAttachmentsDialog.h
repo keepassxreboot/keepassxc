@@ -18,11 +18,9 @@
 #pragma once
 
 #include "PreviewEntryAttachmentsDialog.h"
-#include <attachments/IAttachmentWidgetFactory.h>
 
 #include <QObject>
 
-#include <memory>
 #include <qscopedpointer.h>
 
 class TestPreviewEntryAttachmentsDialog : public QObject
@@ -38,6 +36,5 @@ private slots:
     void testBottonsBox();
 
 private:
-    std::shared_ptr<attachments::IAttachmentWidgetFactory> m_factory{};
     QScopedPointer<PreviewEntryAttachmentsDialog> m_previewDialog{};
 };

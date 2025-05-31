@@ -19,44 +19,52 @@
 
 #include "AttachmentTypes.h"
 
+#include <core/Tools.h>
+
+#include <QPointer>
 #include <QScopedPointer>
 #include <QWidget>
 
 namespace Ui
 {
-    class TextAttachmentsPreviewWidget;
+    class AttachmentWidget;
 }
 
-class TextAttachmentsPreviewWidget : public QWidget
+/**
+ * @brief The AttachmentWidget class provides a way to manage attachments in a GUI application.
+ *
+ * This abstract class allows for opening, reading, and writing attachments.
+ */
+class AttachmentWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit TextAttachmentsPreviewWidget(QWidget* parent = nullptr);
-    ~TextAttachmentsPreviewWidget() override;
+    explicit AttachmentWidget(QWidget* parent = nullptr);
+    ~AttachmentWidget() override;
 
+    /**
+     * @brief Opens an attachment in the specified mode.
+     *
+     * @param attachment - The attachment to be opened.
+     * @param mode - The mode in which to open the attachment (read-only or read-write).
+     */
     void openAttachment(attachments::Attachment attachment, attachments::OpenMode mode);
+
+    /**
+     * @brief Get the current attachment.
+     *
+     * @return Attachment - The current attachment.
+     */
     attachments::Attachment getAttachment() const;
 
-    enum PreviewTextType : int
-    {
-        Html,
-        PlainText,
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
-        Markdown
-#endif
-    };
-
-    Q_ENUM(PreviewTextType)
-
-private Q_SLOTS:
-    void onTypeChanged(int index);
-
 private:
-    void initTypeCombobox();
     void updateUi();
 
 private:
-    QScopedPointer<Ui::TextAttachmentsPreviewWidget> m_ui{};
+    QScopedPointer<Ui::AttachmentWidget> m_ui{};
+
+    QPointer<QWidget> m_attachmentWidget{};
 
     attachments::Attachment m_attachment{};
+    attachments::OpenMode m_mode{};
 };

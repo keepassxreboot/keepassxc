@@ -17,10 +17,11 @@
 
 #pragma once
 
-#include "AbstractAttachmentWidget.h"
+#include "AttachmentTypes.h"
 
 #include <QPointer>
 #include <QScopedPointer>
+#include <QWidget>
 
 namespace Ui
 {
@@ -30,16 +31,17 @@ namespace Ui
 class QSplitter;
 class QTextEdit;
 class TextAttachmentsPreviewWidget;
+class TextAttachmentsEditWidget;
 
-class TextAttachmentsWidget : public attachments::AbstractAttachmentWidget
+class TextAttachmentsWidget : public QWidget
 {
     Q_OBJECT
 public:
     explicit TextAttachmentsWidget(QWidget* parent = nullptr);
     ~TextAttachmentsWidget() override;
 
-    void openAttachment(attachments::Attachment attachment, attachments::OpenMode mode) override;
-    attachments::Attachment getAttachment() const override;
+    void openAttachment(attachments::Attachment attachment, attachments::OpenMode mode);
+    attachments::Attachment getAttachment() const;
 
 private:
     void updateWidget();
@@ -48,8 +50,8 @@ private:
 private:
     QScopedPointer<Ui::TextAttachmentsWidget> m_ui{};
     QPointer<QSplitter> m_splitter{};
-    QPointer<attachments::AbstractAttachmentWidget> m_editWidget{};
-    QPointer<attachments::AbstractAttachmentWidget> m_previewWidget{};
+    QPointer<TextAttachmentsEditWidget> m_editWidget{};
+    QPointer<TextAttachmentsPreviewWidget> m_previewWidget{};
 
     attachments::Attachment m_attachment{};
     attachments::OpenMode m_mode{};

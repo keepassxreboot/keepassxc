@@ -128,6 +128,7 @@ namespace Tools
     MimeType toMimeType(const QString& mimeName);
     MimeType getMimeType(const QByteArray& data);
     MimeType getMimeType(const QFileInfo& fileInfo);
+    bool isTextMimeType(MimeType mimeType);
 
 } // namespace Tools
 

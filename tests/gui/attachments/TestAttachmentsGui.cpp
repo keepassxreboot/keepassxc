@@ -7,8 +7,7 @@
 #include "TestTextAttachmentsEditWidget.h"
 #include "TestTextAttachmentsPreviewWidget.h"
 #include "TestTextAttachmentsWidget.h"
-#include "TestUnknownAttachmentTypeWidget.h"
-#include "TestWidgetFactory.h"
+#include "TestAttachmentWidget.h"
 
 #include <config-keepassx.h>
 #include <gui/Application.h>
@@ -25,25 +24,23 @@ int main(int argc, char* argv[])
     app.applyTheme();
 
     TestPreviewEntryAttachmentsDialog previewDialogTest{};
-    TestAttachmentWidgetFactory factoryTest{};
     TestEditEntryAttachmentsDialog editDialogTest{};
-    TestUnknownAttachmentTypeWidget unknownTypeWidget{};
     TestTextAttachmentsWidget textAttachmentsWidget{};
     TestTextAttachmentsPreviewWidget textPreviewWidget{};
     TestTextAttachmentsEditWidget textEditWidget{};
     TestImageAttachmentsWidget imageWidget{};
     TestImageAttachmentsView imageView{};
+    TestAttachmentsWidget attachmentWidget{};
 
     int result = 0;
     result |= QTest::qExec(&previewDialogTest, argc, argv);
-    result |= QTest::qExec(&factoryTest, argc, argv);
     result |= QTest::qExec(&editDialogTest, argc, argv);
-    result |= QTest::qExec(&unknownTypeWidget, argc, argv);
     result |= QTest::qExec(&textAttachmentsWidget, argc, argv);
     result |= QTest::qExec(&textPreviewWidget, argc, argv);
     result |= QTest::qExec(&textEditWidget, argc, argv);
     result |= QTest::qExec(&imageWidget, argc, argv);
     result |= QTest::qExec(&imageView, argc, argv);
+    result |= QTest::qExec(&attachmentWidget, argc, argv);
 
     return result;
 }
