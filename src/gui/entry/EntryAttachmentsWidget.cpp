@@ -29,6 +29,7 @@
 #include <QMimeData>
 #include <QStandardPaths>
 #include <QTemporaryFile>
+#include <QMenu>
 
 #include "EntryAttachmentsModel.h"
 #include "core/EntryAttachments.h"
@@ -103,10 +104,15 @@ EntryAttachmentsWidget::EntryAttachmentsWidget(QWidget* parent)
     connect(m_ui->saveAttachmentButton, SIGNAL(clicked()), SLOT(saveSelectedAttachments()));
     connect(m_ui->openAttachmentButton, SIGNAL(clicked()), SLOT(openSelectedAttachments()));
     connect(m_ui->addAttachmentButton, SIGNAL(clicked()), SLOT(insertAttachments()));
-    connect(m_ui->newAttachmentButton, SIGNAL(clicked()), SLOT(newAttachments()));
     connect(m_ui->editAttachmentButton, SIGNAL(clicked()), SLOT(editSelectedAttachment()));
     connect(m_ui->previewAttachmentButton, SIGNAL(clicked()), SLOT(previewSelectedAttachment()));
     connect(m_ui->removeAttachmentButton, SIGNAL(clicked()), SLOT(removeSelectedAttachments()));
+
+    auto addButtonMenu = new QMenu(this);
+    addButtonMenu->addAction(tr("New Text Document"), this, &EntryAttachmentsWidget::newAttachments);
+    addButtonMenu->addAction(tr("Load from Disk..."), this, QOverload<>::of(&EntryAttachmentsWidget::insertAttachments));
+
+    m_ui->addAttachmentButton->setMenu(addButtonMenu);
 
     updateButtonsVisible();
     updateButtonsEnabled();
@@ -431,7 +437,6 @@ void EntryAttachmentsWidget::updateButtonsEnabled()
     const bool hasSelection = selectionModel && selectionModel->hasSelection();
 
     m_ui->addAttachmentButton->setEnabled(!m_readOnly);
-    m_ui->newAttachmentButton->setEnabled(!m_readOnly);
     m_ui->removeAttachmentButton->setEnabled(hasSelection && !m_readOnly);
 
     m_ui->editAttachmentButton->setEnabled(hasSelection && !m_readOnly);
@@ -460,7 +465,6 @@ void EntryAttachmentsWidget::updateButtonsVisible()
 {
     m_ui->addAttachmentButton->setVisible(m_buttonsVisible && !m_readOnly);
     m_ui->editAttachmentButton->setVisible(m_buttonsVisible && !m_readOnly);
-    m_ui->newAttachmentButton->setVisible(m_buttonsVisible && !m_readOnly);
     m_ui->removeAttachmentButton->setVisible(m_buttonsVisible && !m_readOnly);
 
     updateLinesVisibility();

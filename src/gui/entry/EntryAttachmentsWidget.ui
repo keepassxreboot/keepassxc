@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>332</width>
-    <height>306</height>
+    <height>312</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -47,7 +47,7 @@
    </item>
    <item>
     <widget class="QWidget" name="actionsWidget" native="true">
-     <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0,0,0,0,0,0,0">
+     <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0,0,0,0,0,0">
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -61,12 +61,15 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QPushButton" name="newAttachmentButton">
+       <widget class="QPushButton" name="addAttachmentButton">
         <property name="enabled">
          <bool>false</bool>
         </property>
+        <property name="accessibleName">
+         <string>Add new attachment</string>
+        </property>
         <property name="text">
-         <string>New</string>
+         <string>Add file...</string>
         </property>
        </widget>
       </item>
@@ -77,19 +80,6 @@
         </property>
         <property name="text">
          <string>Edit</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="addAttachmentButton">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="accessibleName">
-         <string>Add new attachment</string>
-        </property>
-        <property name="text">
-         <string>Add</string>
         </property>
        </widget>
       </item>
