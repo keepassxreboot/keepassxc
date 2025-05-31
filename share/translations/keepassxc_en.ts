@@ -2837,10 +2837,6 @@ Disable safe saves and try again?</source>
 <context>
     <name>EditEntryAttachmentsDialog</name>
     <message>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Edit: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3941,10 +3937,6 @@ This may cause the affected plugins to malfunction.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Add</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Remove selected attachment</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4062,15 +4054,7 @@ Would you like to overwrite the existing attachment?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Preview</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to preview an attachment: Attachment not found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4083,6 +4067,18 @@ Would you like to overwrite the existing attachment?</source>
     </message>
     <message>
         <source>Failed to edit an attachment: No attachment selected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add file...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New Text Document</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load from Disk...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7253,10 +7249,6 @@ Do you want to overwrite it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Attachment not found</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Preview: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10315,13 +10307,6 @@ Example: JBSWY3DPEHPK3PXP</source>
     <name>URLEdit</name>
     <message>
         <source>Invalid URL</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>UnknownAttachmentTypeWidget</name>
-    <message>
-        <source>Unknown attachment type</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

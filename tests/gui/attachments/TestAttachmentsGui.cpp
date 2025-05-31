@@ -1,5 +1,6 @@
 #include <QtTest>
 
+#include "TestAttachmentWidget.h"
 #include "TestEditEntryAttachmentsDialog.h"
 #include "TestImageAttachmentsView.h"
 #include "TestImageAttachmentsWidget.h"
@@ -7,7 +8,6 @@
 #include "TestTextAttachmentsEditWidget.h"
 #include "TestTextAttachmentsPreviewWidget.h"
 #include "TestTextAttachmentsWidget.h"
-#include "TestAttachmentWidget.h"
 
 #include <config-keepassx.h>
 #include <gui/Application.h>
