@@ -30,6 +30,7 @@ namespace Ui
 
 class QSplitter;
 class QTextEdit;
+class QTimer;
 class TextAttachmentsPreviewWidget;
 class TextAttachmentsEditWidget;
 
@@ -51,6 +52,7 @@ private:
     QPointer<QSplitter> m_splitter;
     QPointer<TextAttachmentsEditWidget> m_editWidget;
     QPointer<TextAttachmentsPreviewWidget> m_previewWidget;
+    QPointer<QTimer> m_previewUpdateTimer;
 
     attachments::Attachment m_attachment;
     attachments::OpenMode m_mode;

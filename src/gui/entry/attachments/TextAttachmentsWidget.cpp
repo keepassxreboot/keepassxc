@@ -23,10 +23,12 @@
 
 #include <QSplitter>
 #include <QTextEdit>
+#include <QTimer>
 
 TextAttachmentsWidget::TextAttachmentsWidget(QWidget* parent)
     : QWidget(parent)
     , m_ui(new Ui::TextAttachmentsWidget())
+    , m_previewUpdateTimer(new QTimer(this))
     , m_mode(attachments::OpenMode::ReadOnly)
 {
     m_ui->setupUi(this);
@@ -45,6 +47,9 @@ void TextAttachmentsWidget::openAttachment(attachments::Attachment attachment, a
 
 attachments::Attachment TextAttachmentsWidget::getAttachment() const
 {
+    if (m_mode == attachments::OpenMode::ReadWrite) {
+        return m_editWidget->getAttachment();
+    }
     return m_attachment;
 }
 
@@ -68,12 +73,23 @@ void TextAttachmentsWidget::initWidget()
     m_editWidget = new TextAttachmentsEditWidget(this);
     m_previewWidget = new TextAttachmentsPreviewWidget(this);
 
-    connect(editWidget, &TextAttachmentsEditWidget::textChanged, [this]() {
-        m_attachment = m_editWidget->getAttachment();
-        m_previewWidget->openAttachment(m_attachment, attachments::OpenMode::ReadOnly);
+    m_previewUpdateTimer->setSingleShot(true);
+    m_previewUpdateTimer->setInterval(500);
+
+    // Only update the preview after a set timeout and if it is visible
+    connect(m_previewUpdateTimer, &QTimer::timeout, this, [this] {
+        if (m_previewWidget->width() > 0) {
+            m_attachment = m_editWidget->getAttachment();
+            m_previewWidget->openAttachment(m_attachment, attachments::OpenMode::ReadOnly);
+        }
     });
 
-    connect(editWidget, &TextAttachmentsEditWidget::previewButtonClicked, [this]() {
+    connect(m_editWidget,
+            &TextAttachmentsEditWidget::textChanged,
+            m_previewUpdateTimer,
+            QOverload<>::of(&QTimer::start));
+
+    connect(m_editWidget, &TextAttachmentsEditWidget::previewButtonClicked, [this] {
         const auto sizes = m_splitter->sizes();
         const auto previewSize = sizes.value(1, 0) > 0 ? 0 : 1;
         m_splitter->setSizes({1, previewSize});
