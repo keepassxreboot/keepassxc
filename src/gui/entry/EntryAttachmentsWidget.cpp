@@ -30,7 +30,6 @@
 #include <QStandardPaths>
 #include <QTemporaryFile>
 
-#include "EntryAttachmentsModel.h"
 #include "core/EntryAttachments.h"
 #include "core/Tools.h"
 #include "gui/FileDialog.h"

@@ -41,9 +41,7 @@ EditEntryAttachmentsDialog::~EditEntryAttachmentsDialog() = default;
 
 void EditEntryAttachmentsDialog::setAttachment(attachments::Attachment attachment)
 {
-    const QString AttachmentName = attachment.name;
-
-    setWindowTitle(tr("Edit: %1").arg(AttachmentName));
+    setWindowTitle(tr("Edit: %1").arg(attachment.name));
 
     m_ui->attachmentWidget->openAttachment(std::move(attachment), attachments::OpenMode::ReadWrite);
 }

@@ -23,8 +23,6 @@
 #include <QScopedPointer>
 #include <QWidget>
 
-class QGraphicsView;
-
 namespace Ui
 {
     class ImageAttachmentsWidget;
@@ -48,15 +46,15 @@ public:
     void setMinZoomOutFactor(double zoomFactor);
     void setMaxZoomInFactor(double zoomFactor);
 
-Q_SIGNALS:
+signals:
     void zoomChanged(double zoomFactor);
 
 private:
-    double m_zoomFactor{};
-    double m_step{};
+    double m_zoomFactor;
+    double m_step;
 
-    double m_minZoomOut{};
-    double m_maxZoomIn{};
+    double m_minZoomOut;
+    double m_maxZoomIn;
 };
 
 class ImageAttachmentsWidget : public QWidget
@@ -69,7 +67,7 @@ public:
     void openAttachment(attachments::Attachment attachment, attachments::OpenMode mode);
     attachments::Attachment getAttachment() const;
 
-private Q_SLOTS:
+private slots:
     void onZoomChanged(const QString& zoomText);
     void onWheelZoomEvent(QWheelEvent* event);
     void onZoomFactorChanged(double zoomFactor);
@@ -79,10 +77,9 @@ private:
 
     void initZoomComboBox();
 
-private:
-    QScopedPointer<Ui::ImageAttachmentsWidget> m_ui{};
-    attachments::Attachment m_attachment{};
+    QScopedPointer<Ui::ImageAttachmentsWidget> m_ui;
+    attachments::Attachment m_attachment;
 
-    QPointer<QGraphicsScene> m_scene{};
-    QPointer<ZoomHelper> m_zoomHelper{};
+    QPointer<QGraphicsScene> m_scene;
+    QPointer<ZoomHelper> m_zoomHelper;
 };

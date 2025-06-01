@@ -31,7 +31,7 @@ public:
 
     double calculateFitInViewFactor() const;
 
-Q_SIGNALS:
+signals:
     void ctrlWheelEvent(QWheelEvent* event);
 
 protected:
@@ -42,6 +42,5 @@ protected:
 private:
     void fitSceneInView();
 
-private:
-    bool m_autoFitInView{false};
+    bool m_autoFitInView = false;
 };

@@ -48,15 +48,14 @@ public:
 
     Q_ENUM(PreviewTextType)
 
-private Q_SLOTS:
+private slots:
     void onTypeChanged(int index);
 
 private:
     void initTypeCombobox();
     void updateUi();
 
-private:
-    QScopedPointer<Ui::TextAttachmentsPreviewWidget> m_ui{};
+    QScopedPointer<Ui::TextAttachmentsPreviewWidget> m_ui;
 
-    attachments::Attachment m_attachment{};
+    attachments::Attachment m_attachment;
 };

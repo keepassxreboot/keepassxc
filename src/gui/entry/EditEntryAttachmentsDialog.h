@@ -41,5 +41,5 @@ public:
     attachments::Attachment getAttachment() const;
 
 private:
-    QScopedPointer<Ui::EditEntryAttachmentsDialog> m_ui{};
+    QScopedPointer<Ui::EditEntryAttachmentsDialog> m_ui;
 };

@@ -37,16 +37,15 @@ public:
     void openAttachment(attachments::Attachment attachment, attachments::OpenMode mode);
     attachments::Attachment getAttachment() const;
 
-Q_SIGNALS:
+signals:
     void textChanged();
     void previewButtonClicked(bool isChecked);
 
 private:
     void updateUi();
 
-private:
-    QScopedPointer<Ui::TextAttachmentsEditWidget> m_ui{};
+    QScopedPointer<Ui::TextAttachmentsEditWidget> m_ui;
 
-    attachments::Attachment m_attachment{};
-    attachments::OpenMode m_mode{};
+    attachments::Attachment m_attachment;
+    attachments::OpenMode m_mode;
 };

@@ -47,12 +47,11 @@ private:
     void updateWidget();
     void initWidget();
 
-private:
-    QScopedPointer<Ui::TextAttachmentsWidget> m_ui{};
-    QPointer<QSplitter> m_splitter{};
-    QPointer<TextAttachmentsEditWidget> m_editWidget{};
-    QPointer<TextAttachmentsPreviewWidget> m_previewWidget{};
+    QScopedPointer<Ui::TextAttachmentsWidget> m_ui;
+    QPointer<QSplitter> m_splitter;
+    QPointer<TextAttachmentsEditWidget> m_editWidget;
+    QPointer<TextAttachmentsPreviewWidget> m_previewWidget;
 
-    attachments::Attachment m_attachment{};
-    attachments::OpenMode m_mode{};
+    attachments::Attachment m_attachment;
+    attachments::OpenMode m_mode;
 };

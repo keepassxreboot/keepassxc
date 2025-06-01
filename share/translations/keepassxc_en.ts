@@ -664,6 +664,17 @@
     </message>
 </context>
 <context>
+    <name>AttachmentWidget</name>
+    <message>
+        <source>Attachment Viewer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown attachment type</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AutoType</name>
     <message>
         <source>The requested Auto-Type sequence cannot be used due to an error:</source>

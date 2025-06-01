@@ -38,6 +38,7 @@ namespace Ui
 class AttachmentWidget : public QWidget
 {
     Q_OBJECT
+
 public:
     explicit AttachmentWidget(QWidget* parent = nullptr);
     ~AttachmentWidget() override;
@@ -60,11 +61,8 @@ public:
 private:
     void updateUi();
 
-private:
-    QScopedPointer<Ui::AttachmentWidget> m_ui{};
+    QPointer<QWidget> m_attachmentWidget;
 
-    QPointer<QWidget> m_attachmentWidget{};
-
-    attachments::Attachment m_attachment{};
-    attachments::OpenMode m_mode{};
+    attachments::Attachment m_attachment;
+    attachments::OpenMode m_mode;
 };
