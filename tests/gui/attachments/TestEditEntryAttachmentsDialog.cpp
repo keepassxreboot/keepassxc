@@ -51,6 +51,8 @@ void TestEditEntryAttachmentsDialog::testSetAttachmentTwice()
         .name = "test.jpg", .data = QByteArray::fromHex("FFD8FFE000104A46494600010101006000600000FFD9")};
     m_editDialog->setAttachment(TestImage);
 
+    QCoreApplication::processEvents();
+
     QVERIFY2(m_editDialog->windowTitle().contains(TestImage.name), "Expected file name in the title");
 
     auto layout = m_editDialog->findChild<QVBoxLayout*>("verticalLayout");
@@ -70,6 +72,8 @@ void TestEditEntryAttachmentsDialog::testBottonsBox()
 {
     const attachments::Attachment TestText{.name = "text.txt", .data = "Test"};
     m_editDialog->setAttachment(TestText);
+
+    QCoreApplication::processEvents();
 
     QSignalSpy acceptButton(m_editDialog.data(), &PreviewEntryAttachmentsDialog::accepted);
     QSignalSpy closeButton(m_editDialog.data(), &PreviewEntryAttachmentsDialog::rejected);

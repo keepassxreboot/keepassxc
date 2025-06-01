@@ -21,6 +21,8 @@ void TestImageAttachmentsView::initTestCase()
 
     m_view->setScene(scene);
     m_view->show();
+
+    QCoreApplication::processEvents();
 }
 
 void TestImageAttachmentsView::testEmitWheelEvent()
@@ -54,6 +56,8 @@ void TestImageAttachmentsView::testEnableFit()
 
     m_view->resize(m_view->size() + QSize(100, 100));
 
+    QCoreApplication::processEvents();
+
     QVERIFY(m_view->transform() != oldTransform);
 }
 
@@ -65,6 +69,8 @@ void TestImageAttachmentsView::testDisableFit()
     const auto expectedTransform = m_view->transform();
 
     m_view->resize(m_view->size() + QSize(100, 100));
+
+    QCoreApplication::processEvents();
 
     QCOMPARE(m_view->transform(), expectedTransform);
 }

@@ -61,6 +61,8 @@ void TestAttachmentsWidget::testImageAttachment()
 
     m_attachmentWidget->openAttachment(Attachment, attachments::OpenMode::ReadWrite);
 
+    QCoreApplication::processEvents();
+
     auto layout = m_attachmentWidget->findChild<QVBoxLayout*>("verticalLayout");
     QVERIFY(layout);
 
@@ -81,6 +83,8 @@ void TestAttachmentsWidget::testUnknownAttachment()
     const auto Attachment = attachments::Attachment{.name = "Test", .data = QByteArray{"ID3"}};
 
     m_attachmentWidget->openAttachment(Attachment, attachments::OpenMode::ReadWrite);
+
+    QCoreApplication::processEvents();
 
     auto layout = m_attachmentWidget->findChild<QVBoxLayout*>("verticalLayout");
     QVERIFY(layout);

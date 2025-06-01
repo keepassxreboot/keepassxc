@@ -5,12 +5,12 @@
 #include <attachments/TextAttachmentsWidget.h>
 
 #include <QPushButton>
+#include <QSignalSpy>
 #include <QSplitter>
 #include <QTest>
 #include <QTestMouseEvent>
 #include <QTextEdit>
-#include <qtestcase.h>
-#include <qwidget.h>
+#include <QTimer>
 
 void TestTextAttachmentsWidget::initTestCase()
 {
@@ -32,6 +32,8 @@ void TestTextAttachmentsWidget::testTextReadWriteWidget()
     const attachments::Attachment Test{.name = "text.txt", .data = "Test"};
     m_textWidget->openAttachment(Test, attachments::OpenMode::ReadWrite);
     m_textWidget->show();
+
+    QCoreApplication::processEvents();
 
     auto splitter = m_textWidget->findChild<QSplitter*>();
     QVERIFY2(splitter, "Splitter not found");
@@ -62,6 +64,8 @@ void TestTextAttachmentsWidget::testTextReadWidget()
     m_textWidget->openAttachment(Test, attachments::OpenMode::ReadOnly);
     m_textWidget->show();
 
+    QCoreApplication::processEvents();
+
     auto splitter = m_textWidget->findChild<QSplitter*>();
     QVERIFY2(splitter, "Splitter not found");
     auto sizes = splitter->sizes();
@@ -90,6 +94,8 @@ void TestTextAttachmentsWidget::testTextChanged()
     const attachments::Attachment Test{.name = "text.txt", .data = "Test"};
     m_textWidget->openAttachment(Test, attachments::OpenMode::ReadWrite);
 
+    QCoreApplication::processEvents();
+
     auto splitter = m_textWidget->findChild<QSplitter*>();
     QVERIFY2(splitter, "Splitter not found");
     QCOMPARE(splitter->sizes().size(), 2);
@@ -103,6 +109,78 @@ void TestTextAttachmentsWidget::testTextChanged()
     const QByteArray NewText = "New test text";
     textEdit->setText(NewText);
 
+    QCoreApplication::processEvents();
+
+    auto attachments = m_textWidget->getAttachment();
+
+    QCOMPARE(attachments.data, NewText);
+}
+
+void TestTextAttachmentsWidget::testTextChangedInReadOnlyMode()
+{
+    const attachments::Attachment Test{.name = "text.txt", .data = "Test"};
+    m_textWidget->openAttachment(Test, attachments::OpenMode::ReadOnly);
+
+    QCoreApplication::processEvents();
+
+    auto splitter = m_textWidget->findChild<QSplitter*>();
+    QVERIFY2(splitter, "Splitter not found");
+    QCOMPARE(splitter->sizes().size(), 2);
+
+    auto editWidget = qobject_cast<TextAttachmentsEditWidget*>(splitter->widget(0));
+    QVERIFY2(editWidget, "Edit widget not found");
+
+    auto textEdit = editWidget->findChild<QTextEdit*>();
+    QVERIFY(textEdit);
+
+    const QByteArray NewText = "New test text";
+    textEdit->setText(NewText);
+
+    QCoreApplication::processEvents();
+
+    auto attachments = m_textWidget->getAttachment();
+
+    QCOMPARE(attachments.data, Test.data);
+}
+
+void TestTextAttachmentsWidget::testPreviewTextChanged()
+{
+    const attachments::Attachment Test{.name = "text.txt", .data = "Test"};
+
+    auto previewTimer = m_textWidget->findChild<QTimer*>();
+    QVERIFY2(previewTimer, "PreviewTimer not found!");
+
+    QSignalSpy timeout(previewTimer, &QTimer::timeout);
+
+    m_textWidget->openAttachment(Test, attachments::OpenMode::ReadWrite);
+
+    // Waiting for the first timeout
+    while (timeout.count() < 1) {
+        QCoreApplication::processEvents(QEventLoop::AllEvents, 50);
+    }
+
+    auto splitter = m_textWidget->findChild<QSplitter*>();
+    QVERIFY2(splitter, "Splitter not found");
+    QCOMPARE(splitter->sizes().size(), 2);
+
+    splitter->setSizes({1, 1});
+
+    QCoreApplication::processEvents();
+
+    auto editWidget = qobject_cast<TextAttachmentsEditWidget*>(splitter->widget(0));
+    QVERIFY2(editWidget, "Edit widget not found");
+
+    auto textEdit = editWidget->findChild<QTextEdit*>();
+    QVERIFY(textEdit);
+
+    const QByteArray NewText = "New test text";
+    textEdit->setText(NewText);
+
+    // Waiting for the second timeout
+    while (timeout.count() < 2) {
+        QCoreApplication::processEvents(QEventLoop::AllEvents, 50);
+    }
+
     auto previewWidget = qobject_cast<TextAttachmentsPreviewWidget*>(splitter->widget(1));
     auto attachments = previewWidget->getAttachment();
 
@@ -115,21 +193,24 @@ void TestTextAttachmentsWidget::testOpenPreviewButton()
     m_textWidget->openAttachment(Test, attachments::OpenMode::ReadWrite);
     m_textWidget->show();
 
+    QCoreApplication::processEvents();
+
     auto splitter = m_textWidget->findChild<QSplitter*>();
     QVERIFY2(splitter, "Splitter not found");
     QCOMPARE(splitter->sizes().size(), 2);
 
     auto editWidget = qobject_cast<TextAttachmentsEditWidget*>(splitter->widget(0));
     QVERIFY2(editWidget, "Edit widget not found");
+    QVERIFY(editWidget->isVisible());
 
     auto previewButton = editWidget->findChild<QPushButton*>("previewPushButton");
 
     auto sizes = splitter->sizes();
-    QCOMPARE(sizes.size(), 2);
     QVERIFY(sizes[0] > 0);
     QCOMPARE(sizes[1], 0);
 
     QTest::mouseClick(previewButton, Qt::LeftButton);
+
     sizes = splitter->sizes();
     QCOMPARE(sizes.size(), 2);
     QVERIFY(sizes[0] > 0);

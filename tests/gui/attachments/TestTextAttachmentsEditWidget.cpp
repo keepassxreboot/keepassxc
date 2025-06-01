@@ -22,6 +22,8 @@ void TestTextAttachmentsEditWidget::testEmitTextChanged()
 
     m_widget->openAttachment({.name = "test.txt", .data = {}}, attachments::OpenMode::ReadWrite);
 
+    QCoreApplication::processEvents();
+
     auto textEdit = m_widget->findChild<QTextEdit*>("attachmentsTextEdit");
     QVERIFY(textEdit);
 
@@ -36,6 +38,8 @@ void TestTextAttachmentsEditWidget::testEmitPreviewButtonClicked()
     QSignalSpy previwButtonClickedSignal(m_widget.data(), &TextAttachmentsEditWidget::previewButtonClicked);
 
     m_widget->openAttachment({.name = "test.txt", .data = {}}, attachments::OpenMode::ReadWrite);
+
+    QCoreApplication::processEvents();
 
     auto previewButton = m_widget->findChild<QPushButton*>("previewPushButton");
     QVERIFY(previewButton);

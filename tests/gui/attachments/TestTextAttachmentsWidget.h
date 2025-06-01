@@ -32,8 +32,10 @@ private slots:
     void testInitTextWidget();
     void testTextReadWriteWidget();
     void testTextReadWidget();
-    void testTextChanged();
     void testOpenPreviewButton();
+    void testPreviewTextChanged();
+    void testTextChanged();
+    void testTextChangedInReadOnlyMode();
 
 private:
     QScopedPointer<TextAttachmentsWidget> m_textWidget;

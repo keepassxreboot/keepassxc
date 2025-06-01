@@ -50,6 +50,7 @@ attachments::Attachment TextAttachmentsWidget::getAttachment() const
     if (m_mode == attachments::OpenMode::ReadWrite) {
         return m_editWidget->getAttachment();
     }
+
     return m_attachment;
 }
 
@@ -84,10 +85,8 @@ void TextAttachmentsWidget::initWidget()
         }
     });
 
-    connect(m_editWidget,
-            &TextAttachmentsEditWidget::textChanged,
-            m_previewUpdateTimer,
-            QOverload<>::of(&QTimer::start));
+    connect(
+        m_editWidget, &TextAttachmentsEditWidget::textChanged, m_previewUpdateTimer, QOverload<>::of(&QTimer::start));
 
     connect(m_editWidget, &TextAttachmentsEditWidget::previewButtonClicked, [this] {
         const auto sizes = m_splitter->sizes();

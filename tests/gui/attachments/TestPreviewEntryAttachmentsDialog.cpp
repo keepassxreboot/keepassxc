@@ -23,6 +23,8 @@ void TestPreviewEntryAttachmentsDialog::testSetAttachment()
     const attachments::Attachment Test{.name = "text.txt", .data = "Test"};
     m_previewDialog->setAttachment(Test);
 
+    QCoreApplication::processEvents();
+
     QVERIFY2(m_previewDialog->windowTitle().contains(Test.name), "Expected file name in the title");
 
     auto layout = m_previewDialog->findChild<QVBoxLayout*>("verticalLayout");
@@ -47,6 +49,8 @@ void TestPreviewEntryAttachmentsDialog::testSetAttachmentTwice()
     const attachments::Attachment TestText{.name = "text.txt", .data = "Test"};
     m_previewDialog->setAttachment(TestText);
 
+    QCoreApplication::processEvents();
+
     const attachments::Attachment TestImage{
         .name = "test.jpg", .data = QByteArray::fromHex("FFD8FFE000104A46494600010101006000600000FFD9")};
     m_previewDialog->setAttachment(TestImage);
@@ -70,6 +74,8 @@ void TestPreviewEntryAttachmentsDialog::testBottonsBox()
 {
     const attachments::Attachment TestText{.name = "text.txt", .data = "Test"};
     m_previewDialog->setAttachment(TestText);
+
+    QCoreApplication::processEvents();
 
     QSignalSpy saveButton(m_previewDialog.data(), &PreviewEntryAttachmentsDialog::saveAttachment);
     QSignalSpy openButton(m_previewDialog.data(), &PreviewEntryAttachmentsDialog::openAttachment);
