@@ -17,7 +17,7 @@
 
 #pragma once
 
-#include "attachments/TextAttachmentsEditWidget.h"
+#include <attachments/TextAttachmentsEditWidget.h>
 
 #include <QObject>
 #include <QScopedPointer>

@@ -9,7 +9,6 @@
 #include <QTest>
 #include <QTestMouseEvent>
 #include <QTextEdit>
-#include <qtestmouse.h>
 
 void TestTextAttachmentsEditWidget::initTestCase()
 {

@@ -17,7 +17,7 @@
 
 #pragma once
 
-#include "attachments/TextAttachmentsPreviewWidget.h"
+#include <attachments/TextAttachmentsPreviewWidget.h>
 
 #include <QObject>
 #include <QScopedPointer>

@@ -17,7 +17,7 @@
 
 #pragma once
 
-#include "attachments/ImageAttachmentsWidget.h"
+#include <attachments/ImageAttachmentsWidget.h>
 
 #include <QComboBox>
 #include <QObject>

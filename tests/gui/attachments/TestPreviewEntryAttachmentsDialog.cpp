@@ -1,5 +1,6 @@
 #include "TestPreviewEntryAttachmentsDialog.h"
-#include "attachments/AttachmentWidget.h"
+
+#include <attachments/AttachmentWidget.h>
 
 #include <PreviewEntryAttachmentsDialog.h>
 
@@ -54,6 +55,8 @@ void TestPreviewEntryAttachmentsDialog::testSetAttachmentTwice()
     const attachments::Attachment TestImage{
         .name = "test.jpg", .data = QByteArray::fromHex("FFD8FFE000104A46494600010101006000600000FFD9")};
     m_previewDialog->setAttachment(TestImage);
+
+    QCoreApplication::processEvents();
 
     QVERIFY2(m_previewDialog->windowTitle().contains(TestImage.name), "Expected file name in the title");
 

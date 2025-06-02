@@ -84,5 +84,6 @@ attachments::Attachment AttachmentWidget::getAttachment() const
     if (auto textWidget = qobject_cast<TextAttachmentsWidget*>(m_attachmentWidget)) {
         return textWidget->getAttachment();
     }
+
     return m_attachment;
 }

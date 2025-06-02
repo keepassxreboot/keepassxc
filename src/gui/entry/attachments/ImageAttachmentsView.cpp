@@ -19,6 +19,7 @@
 
 #include <QDebug>
 #include <QWheelEvent>
+
 #include <limits>
 
 ImageAttachmentsView::ImageAttachmentsView(QWidget* parent)

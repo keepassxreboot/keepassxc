@@ -2,9 +2,9 @@
 
 #include <attachments/AttachmentWidget.h>
 
-#include "attachments/AttachmentTypes.h"
-#include "attachments/ImageAttachmentsWidget.h"
-#include "attachments/TextAttachmentsWidget.h"
+#include <attachments/AttachmentTypes.h>
+#include <attachments/ImageAttachmentsWidget.h>
+#include <attachments/TextAttachmentsWidget.h>
 
 #include <QLabel>
 #include <QTest>
@@ -24,6 +24,8 @@ void TestAttachmentsWidget::testTextAttachment()
                                    attachments::Attachment{.name = "Test.md", .data = "**bold**"}}) {
         for (auto mode : {attachments::OpenMode::ReadWrite, attachments::OpenMode::ReadOnly}) {
             m_attachmentWidget->openAttachment(attachment, mode);
+
+            QCoreApplication::processEvents();
 
             auto layout = m_attachmentWidget->findChild<QVBoxLayout*>("verticalLayout");
             QVERIFY(layout);

@@ -1,6 +1,6 @@
 #include "TestImageAttachmentsWidget.h"
-#include "attachments/ImageAttachmentsView.h"
 
+#include <attachments/ImageAttachmentsView.h>
 #include <attachments/ImageAttachmentsWidget.h>
 
 #include <QBuffer>

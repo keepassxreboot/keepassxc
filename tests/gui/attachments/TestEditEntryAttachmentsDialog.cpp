@@ -1,5 +1,6 @@
 #include "TestEditEntryAttachmentsDialog.h"
-#include "attachments/AttachmentWidget.h"
+
+#include <attachments/AttachmentWidget.h>
 
 #include <PreviewEntryAttachmentsDialog.h>
 
@@ -22,6 +23,8 @@ void TestEditEntryAttachmentsDialog::testSetAttachment()
 {
     const attachments::Attachment Test{.name = "text.txt", .data = "Test"};
     m_editDialog->setAttachment(Test);
+
+    QCoreApplication::processEvents();
 
     QVERIFY2(m_editDialog->windowTitle().contains(Test.name), "Expected file name in the title");
 
@@ -46,6 +49,8 @@ void TestEditEntryAttachmentsDialog::testSetAttachmentTwice()
 {
     const attachments::Attachment TestText{.name = "text.txt", .data = "Test"};
     m_editDialog->setAttachment(TestText);
+
+    QCoreApplication::processEvents();
 
     const attachments::Attachment TestImage{
         .name = "test.jpg", .data = QByteArray::fromHex("FFD8FFE000104A46494600010101006000600000FFD9")};

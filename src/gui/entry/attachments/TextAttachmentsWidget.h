@@ -29,7 +29,6 @@ namespace Ui
 }
 
 class QSplitter;
-class QTextEdit;
 class QTimer;
 class TextAttachmentsPreviewWidget;
 class TextAttachmentsEditWidget;

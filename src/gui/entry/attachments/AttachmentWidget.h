@@ -33,7 +33,6 @@ namespace Ui
 /**
  * @brief The AttachmentWidget class provides a way to manage attachments in a GUI application.
  *
- * This abstract class allows for opening, reading, and writing attachments.
  */
 class AttachmentWidget : public QWidget
 {

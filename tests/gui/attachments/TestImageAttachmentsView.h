@@ -17,7 +17,7 @@
 
 #pragma once
 
-#include "attachments/ImageAttachmentsView.h"
+#include <attachments/ImageAttachmentsView.h>
 
 #include <QObject>
 #include <QScopedPointer>
