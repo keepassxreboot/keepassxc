@@ -2673,10 +2673,6 @@ This is definitely a bug, please report it to the developers.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Save</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Enter a unique name or overwrite an existing search from the list:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2842,6 +2838,10 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Failed to save backup database: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3968,10 +3968,6 @@ This may cause the affected plugins to malfunction.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Save</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Select files</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4073,23 +4069,19 @@ Would you like to overwrite the existing attachment?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Failed to edit an attachment: Attachment not found</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to edit an attachment: No attachment selected</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add file...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>New Text Document</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Load from Disk...</source>
+        <source>Add file…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load from Disk…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save…</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7261,6 +7253,10 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Preview: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save…</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

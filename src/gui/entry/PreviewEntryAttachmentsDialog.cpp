@@ -37,6 +37,9 @@ PreviewEntryAttachmentsDialog::PreviewEntryAttachmentsDialog(QWidget* parent)
     auto closeButton = m_ui->dialogButtons->button(QDialogButtonBox::Close);
     closeButton->setDefault(true);
 
+    auto saveButton = m_ui->dialogButtons->button(QDialogButtonBox::Save);
+    saveButton->setText(tr("Save…"));
+
     connect(m_ui->dialogButtons, &QDialogButtonBox::rejected, this, &PreviewEntryAttachmentsDialog::reject);
     connect(m_ui->dialogButtons, &QDialogButtonBox::clicked, [this](QAbstractButton* button) {
         auto pressedButton = m_ui->dialogButtons->standardButton(button);

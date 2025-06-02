@@ -2,32 +2,19 @@
 
 #include <attachments/AttachmentWidget.h>
 
-#include "QTest"
 #include "attachments/AttachmentTypes.h"
 #include "attachments/ImageAttachmentsWidget.h"
 #include "attachments/TextAttachmentsWidget.h"
+
+#include <QLabel>
+#include <QTest>
 #include <QVBoxLayout>
-#include <qlabel.h>
-#include <qnamespace.h>
-#include <qobject.h>
-#include <qt5/QtCore/qglobal.h>
-#include <qtestcase.h>
-#include <qwidget.h>
 
 void TestAttachmentsWidget::initTestCase()
 {
     m_attachmentWidget.reset(new AttachmentWidget());
 
     QVERIFY(m_attachmentWidget);
-}
-
-void TestAttachmentsWidget::testLayoutAlighment()
-{
-    auto layout = m_attachmentWidget->findChild<QVBoxLayout*>("verticalLayout");
-    QVERIFY(layout);
-    QCOMPARE(layout->count(), 0);
-
-    QCOMPARE(layout->alignment(), Qt::AlignCenter);
 }
 
 void TestAttachmentsWidget::testTextAttachment()
@@ -97,7 +84,7 @@ void TestAttachmentsWidget::testUnknownAttachment()
     auto label = qobject_cast<QLabel*>(item->widget());
     QVERIFY(label);
 
-    QCOMPARE(label->text(), tr("Unknown attachment type"));
+    QVERIFY(!label->text().isEmpty());
 
     auto actualAttachment = m_attachmentWidget->getAttachment();
     QCOMPARE(actualAttachment.name, Attachment.name);

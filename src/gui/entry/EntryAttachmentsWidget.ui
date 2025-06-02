@@ -69,7 +69,7 @@
          <string>Add new attachment</string>
         </property>
         <property name="text">
-         <string>Add file...</string>
+         <string>Add file…</string>
         </property>
        </widget>
       </item>
@@ -122,7 +122,7 @@
          <string>Save selected attachment to disk</string>
         </property>
         <property name="text">
-         <string>Save</string>
+         <string>Save…</string>
         </property>
        </widget>
       </item>

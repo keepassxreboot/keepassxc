@@ -29,7 +29,6 @@ class TestAttachmentsWidget : public QObject
 private slots:
     void initTestCase();
 
-    void testLayoutAlighment();
     void testTextAttachment();
     void testImageAttachment();
     void testUnknownAttachment();

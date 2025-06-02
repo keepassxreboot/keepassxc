@@ -40,7 +40,7 @@ namespace
     constexpr const char* DefaultName = "New Attachment";
     constexpr const char* Suffix = ".txt";
 
-    QString generateUniqName(const QString& name, const QStringList& existingNames)
+    QString generateUniqueName(const QString& name, const QStringList& existingNames)
     {
         uint64_t i = 0;
         QString newName = QStringLiteral("%1%2").arg(name).arg(Suffix);
@@ -105,8 +105,7 @@ EntryAttachmentsWidget::EntryAttachmentsWidget(QWidget* parent)
 
     auto addButtonMenu = new QMenu(this);
     addButtonMenu->addAction(tr("New Text Document"), this, &EntryAttachmentsWidget::newAttachments);
-    addButtonMenu->addAction(
-        tr("Load from Disk..."), this, QOverload<>::of(&EntryAttachmentsWidget::insertAttachments));
+    addButtonMenu->addAction(tr("Load from Disk…"), this, QOverload<>::of(&EntryAttachmentsWidget::insertAttachments));
 
     m_ui->addAttachmentButton->setMenu(addButtonMenu);
 
@@ -211,7 +210,7 @@ void EntryAttachmentsWidget::newAttachments()
     }
 
     // Create a temporary file to allow the user to edit the attachment
-    auto newFileName = generateUniqName(DefaultName, m_entryAttachments->keys());
+    auto newFileName = generateUniqueName(DefaultName, m_entryAttachments->keys());
     m_entryAttachments->set(newFileName, QByteArray());
 
     auto currentIndex = m_attachmentsModel->index(m_attachmentsModel->rowByKey(newFileName), 0);
@@ -268,14 +267,14 @@ void EntryAttachmentsWidget::editSelectedAttachment()
 
     const auto selectedIndexes = m_ui->attachmentsView->selectionModel()->selectedIndexes();
     if (selectedIndexes.isEmpty()) {
-        qWarning() << tr("Failed to edit an attachment: No attachment selected");
+        qWarning() << "Failed to edit an attachment: No attachment selected";
         return;
     }
 
     const auto index = selectedIndexes.first();
 
     if (!index.isValid()) {
-        qWarning() << tr("Failed to edit an attachment: Attachment not found");
+        qWarning() << "Failed to edit an attachment: Attachment not found";
         return;
     }
 
