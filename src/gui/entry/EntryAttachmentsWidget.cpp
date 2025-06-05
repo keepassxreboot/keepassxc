@@ -222,7 +222,13 @@ void EntryAttachmentsWidget::previewSelectedAttachment()
 {
     Q_ASSERT(m_entryAttachments);
 
-    const auto indexes = m_ui->attachmentsView->selectionModel()->selectedIndexes();
+    const auto selectionModel = m_ui->attachmentsView->selectionModel();
+    if (!selectionModel) {
+        qWarning() << "Failed to preview an attachment: No selection model";
+        return;
+    }
+
+    auto indexes = selectionModel->selectedIndexes();
     if (indexes.empty()) {
         qWarning() << "Failed to edit an attachment: No attachment selected";
         return;
@@ -265,7 +271,13 @@ void EntryAttachmentsWidget::editSelectedAttachment()
 {
     Q_ASSERT(m_entryAttachments);
 
-    const auto selectedIndexes = m_ui->attachmentsView->selectionModel()->selectedIndexes();
+    const auto selectionModel = m_ui->attachmentsView->selectionModel();
+    if (!selectionModel) {
+        qWarning() << "Failed to edit an attachment: No selection model";
+        return;
+    }
+
+    const auto selectedIndexes = selectionModel->selectedIndexes();
     if (selectedIndexes.isEmpty()) {
         qWarning() << "Failed to edit an attachment: No attachment selected";
         return;
