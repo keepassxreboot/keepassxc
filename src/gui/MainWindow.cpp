@@ -661,8 +661,8 @@ MainWindow::MainWindow()
 
     connect(qApp, SIGNAL(anotherInstanceStarted()), this, SLOT(bringToFront()));
     connect(qApp, SIGNAL(applicationActivated()), this, SLOT(bringToFront()));
-    connect(qApp, SIGNAL(openFile(QString)), this, SLOT(openDatabase(QString)));
     connect(qApp, SIGNAL(quitSignalReceived()), this, SLOT(appExit()), Qt::DirectConnection);
+    connect(static_cast<Application*>(qApp), &Application::openFile, this, &MainWindow::openDatabase);
 
     // Setup the status bar
     statusBar()->setFixedHeight(24);

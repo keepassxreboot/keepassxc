@@ -49,6 +49,18 @@ Q_IMPORT_PLUGIN(QXcbIntegrationPlugin)
 #include <windows.h>
 #endif
 
+namespace
+{
+    QString promptPassword()
+    {
+        // we always need consume a line of STDIN if --pw-stdin is set to clear out the
+        // buffer for native messaging, even if the specified file does not exist
+        QTextStream out(stdout, QIODevice::WriteOnly);
+        out << QObject::tr("Database password: ") << Qt::flush;
+        return Utils::getPassword();
+    }
+} // namespace
+
 int main(int argc, char** argv)
 {
     QT_REQUIRE_VERSION(argc, argv, QT_VERSION_STR)
@@ -140,9 +152,14 @@ int main(int argc, char** argv)
         }
     }
 #endif
+    Utils::setDefaultTextStreams();
+
+    const bool pwstdin = parser.isSet(pwstdinOption);
+    const QString keyfile = parser.value(keyfileOption);
 
     // Process single instance and early exit if already running
     if (app.isAlreadyRunning()) {
+        qWarning() << QObject::tr("Another instance of KeePassXC is already running.").toUtf8().constData();
         if (parser.isSet(lockOption)) {
             if (app.sendLockToInstance()) {
                 qInfo() << QObject::tr("Databases have been locked.").toUtf8().constData();
@@ -151,11 +168,13 @@ int main(int argc, char** argv)
                 return EXIT_FAILURE;
             }
         } else {
-            if (!fileNames.isEmpty()) {
-                app.sendFileNamesToRunningInstance(fileNames);
+            for (const QString& filename : fileNames) {
+                QString password;
+                if (pwstdin) {
+                    password = promptPassword();
+                }
+                app.sendUnlockToInstance(filename, password, keyfile);
             }
-
-            qWarning() << QObject::tr("Another instance of KeePassXC is already running.").toUtf8().constData();
         }
         return EXIT_SUCCESS;
     }
@@ -176,8 +195,6 @@ int main(int argc, char** argv)
         return EXIT_FAILURE;
     }
 
-    Utils::setDefaultTextStreams();
-
     // Apply the configured theme before creating any GUI elements
     app.applyTheme();
 
@@ -195,17 +212,12 @@ int main(int argc, char** argv)
     // This ensures any top-level windows (Main Window, Modal Dialogs, etc.) are excluded from screenshots
     mainWindow.setAllowScreenCapture(parser.isSet(allowScreenCaptureOption));
 
-    const bool pwstdin = parser.isSet(pwstdinOption);
     for (const QString& filename : fileNames) {
         QString password;
         if (pwstdin) {
-            // we always need consume a line of STDIN if --pw-stdin is set to clear out the
-            // buffer for native messaging, even if the specified file does not exist
-            QTextStream out(stdout, QIODevice::WriteOnly);
-            out << QObject::tr("Database password: ") << Qt::flush;
-            password = Utils::getPassword();
+            password = promptPassword();
         }
-        mainWindow.openDatabase(filename, password, parser.value(keyfileOption));
+        mainWindow.openDatabase(filename, password, keyfile);
     }
 
     // start minimized if configured

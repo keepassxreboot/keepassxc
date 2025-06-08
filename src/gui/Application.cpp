@@ -51,6 +51,7 @@ enum Application::SocketCmd : quint32
 {
     OpenFiles = 1,
     LockAll,
+    Unlock,
 };
 
 Application::Application(int& argc, char** argv)
@@ -327,8 +328,7 @@ void Application::socketReadyRead()
     }
 
     SocketCmd id;
-    // manual reinterpret_cast not needed for Qt 5.14+
-    in >> reinterpret_cast<typename std::underlying_type<SocketCmd>::type&>(id);
+    in >> id;
 
     switch (id) {
     case SocketCmd::OpenFiles: {
@@ -345,6 +345,11 @@ void Application::socketReadyRead()
     case SocketCmd::LockAll:
         getMainWindow()->lockAllDatabases();
         break;
+    case SocketCmd::Unlock:
+        QString filename, password, keyfile;
+        in >> filename >> password >> keyfile;
+        emit openFile(filename, password, keyfile);
+        break;
     }
 
     socket->deleteLater();
@@ -352,10 +357,6 @@ void Application::socketReadyRead()
 
 bool Application::isAlreadyRunning() const
 {
-#ifdef QT_DEBUG
-    // In DEBUG mode we can run unlimited instances
-    return false;
-#endif
     return config()->get(Config::SingleInstance).toBool() && m_alreadyRunning;
 }
 
@@ -392,7 +393,7 @@ bool Application::sendSocketCommand(SocketCmd id, const std::function<void(QData
  */
 bool Application::sendFileNamesToRunningInstance(const QStringList& fileNames)
 {
-    return this->sendSocketCommand(SocketCmd::OpenFiles, [fileNames](QDataStream& out) { out << fileNames; });
+    return this->sendSocketCommand(SocketCmd::OpenFiles, [&](QDataStream& out) { out << fileNames; });
 }
 
 /**
@@ -403,6 +404,17 @@ bool Application::sendFileNamesToRunningInstance(const QStringList& fileNames)
 bool Application::sendLockToInstance()
 {
     return this->sendSocketCommand(SocketCmd::LockAll, [](QDataStream&) { /* No Data */ });
+}
+
+/**
+ * Open and unlock a database file in the running instance
+ *
+ * @return true if the instance receives the request
+ */
+bool Application::sendUnlockToInstance(const QString& filename, const QString& password, const QString& keyfile)
+{
+    return this->sendSocketCommand(SocketCmd::Unlock,
+                                   [&](QDataStream& out) { out << filename << password << keyfile; });
 }
 
 bool Application::isDarkTheme() const
