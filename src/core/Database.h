@@ -164,6 +164,14 @@ public:
     bool changeKdf(const QSharedPointer<Kdf>& kdf);
     QByteArray transformedDatabaseKey() const;
 
+    /**
+     * Create a deep copy of this database which is completely independent
+     * of the existing instance.
+     *
+     * @note this instance does not have a file path or the secret keys set
+     */
+    QSharedPointer<Database> clone();
+
     void markAsTemporaryDatabase();
     bool isTemporaryDatabase();
 
