@@ -179,6 +179,13 @@ public:
 
     bool equals(const Entry* other, CompareItemOptions options = CompareItemDefault) const;
 
+    /**
+     * Determine differences between attributes of this and another entry.
+     *
+     * @return The list of attribute names that are different between the two entries
+     */
+    QStringList calculateDifference(const Entry* other);
+
     enum CloneFlag
     {
         CloneNoFlags = 0,

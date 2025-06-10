@@ -193,64 +193,7 @@ void EntryHistoryModel::calculateHistoryModifications()
             continue;
         }
 
-        QStringList modifiedFields;
-
-        if (*curr->attributes() != *compare->attributes()) {
-            bool foundAttribute = false;
-
-            if (curr->title() != compare->title()) {
-                modifiedFields << tr("Title");
-                foundAttribute = true;
-            }
-            if (curr->username() != compare->username()) {
-                modifiedFields << tr("Username");
-                foundAttribute = true;
-            }
-            if (curr->password() != compare->password()) {
-                modifiedFields << tr("Password");
-                foundAttribute = true;
-            }
-            if (curr->url() != compare->url()) {
-                modifiedFields << tr("URL");
-                foundAttribute = true;
-            }
-            if (curr->notes() != compare->notes()) {
-                modifiedFields << tr("Notes");
-                foundAttribute = true;
-            }
-
-            if (!foundAttribute) {
-                modifiedFields << tr("Custom Attributes");
-            }
-        }
-        if (curr->iconNumber() != compare->iconNumber() || curr->iconUuid() != compare->iconUuid()) {
-            modifiedFields << tr("Icon");
-        }
-        if (curr->foregroundColor() != compare->foregroundColor()
-            || curr->backgroundColor() != compare->backgroundColor()) {
-            modifiedFields << tr("Color");
-        }
-        if (curr->timeInfo().expires() != compare->timeInfo().expires()
-            || curr->timeInfo().expiryTime() != compare->timeInfo().expiryTime()) {
-            modifiedFields << tr("Expiration");
-        }
-        if (curr->totp() != compare->totp()) {
-            modifiedFields << tr("TOTP");
-        }
-        if (*curr->customData() != *compare->customData()) {
-            modifiedFields << tr("Custom Data");
-        }
-        if (*curr->attachments() != *compare->attachments()) {
-            modifiedFields << tr("Attachments");
-        }
-        if (*curr->autoTypeAssociations() != *compare->autoTypeAssociations()
-            || curr->autoTypeEnabled() != compare->autoTypeEnabled()
-            || curr->defaultAutoTypeSequence() != compare->defaultAutoTypeSequence()) {
-            modifiedFields << tr("Auto-Type");
-        }
-        if (curr->tags() != compare->tags()) {
-            modifiedFields << tr("Tags");
-        }
+        auto modifiedFields = curr->calculateDifference(compare);
 
         m_historyModifications << modifiedFields.join(", ");
 

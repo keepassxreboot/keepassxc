@@ -959,6 +959,68 @@ bool Entry::equals(const Entry* other, CompareItemOptions options) const
     return true;
 }
 
+QStringList Entry::calculateDifference(const Entry* other)
+{
+    QStringList modifiedFields;
+
+    if (*attributes() != *other->attributes()) {
+        bool foundAttribute = false;
+
+        if (title() != other->title()) {
+            modifiedFields << tr("Title");
+            foundAttribute = true;
+        }
+        if (username() != other->username()) {
+            modifiedFields << tr("Username");
+            foundAttribute = true;
+        }
+        if (password() != other->password()) {
+            modifiedFields << tr("Password");
+            foundAttribute = true;
+        }
+        if (url() != other->url()) {
+            modifiedFields << tr("URL");
+            foundAttribute = true;
+        }
+        if (notes() != other->notes()) {
+            modifiedFields << tr("Notes");
+            foundAttribute = true;
+        }
+
+        if (!foundAttribute) {
+            modifiedFields << tr("Custom Attributes");
+        }
+    }
+    if (iconNumber() != other->iconNumber() || iconUuid() != other->iconUuid()) {
+        modifiedFields << tr("Icon");
+    }
+    if (foregroundColor() != other->foregroundColor() || backgroundColor() != other->backgroundColor()) {
+        modifiedFields << tr("Color");
+    }
+    if (timeInfo().expires() != other->timeInfo().expires()
+        || timeInfo().expiryTime() != other->timeInfo().expiryTime()) {
+        modifiedFields << tr("Expiration");
+    }
+    if (totp() != other->totp()) {
+        modifiedFields << tr("TOTP");
+    }
+    if (*customData() != *other->customData()) {
+        modifiedFields << tr("Custom Data");
+    }
+    if (*attachments() != *other->attachments()) {
+        modifiedFields << tr("Attachments");
+    }
+    if (*autoTypeAssociations() != *other->autoTypeAssociations() || autoTypeEnabled() != other->autoTypeEnabled()
+        || defaultAutoTypeSequence() != other->defaultAutoTypeSequence()) {
+        modifiedFields << tr("Auto-Type");
+    }
+    if (tags() != other->tags()) {
+        modifiedFields << tr("Tags");
+    }
+
+    return modifiedFields;
+}
+
 Entry* Entry::clone(CloneFlags flags) const
 {
     auto entry = new Entry();
