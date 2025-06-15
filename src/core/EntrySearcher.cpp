@@ -218,6 +218,9 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
                         break;
                     }
                 }
+            } else if (term.word.compare("totp", Qt::CaseInsensitive) == 0) {
+                found = entry->hasTotp();
+                break;
             }
             found = false;
             break;
