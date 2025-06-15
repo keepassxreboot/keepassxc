@@ -171,8 +171,8 @@ bool UrlTools::isUrlValid(const QString& urlField, bool looseComparison) const
             url.remove(0, 1);
             url.remove(url.length() - 1, 1);
         } else {
-            // Do not allow URL with just wildcards, or double wildcards, or no separator (.)
-            if (url.length() == url.count("*") || url.contains("**") || url.contains("*.*") || !url.contains(".")) {
+            // Do not allow URL with just wildcards, or double wildcards
+            if (url.length() == url.count("*") || url.contains("**") || url.contains("*.*")) {
                 return false;
             }
 

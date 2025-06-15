@@ -160,6 +160,7 @@ void TestUrlTools::testIsUrlValidWithLooseComparison()
     urls["https://example.*"] = false;
     urls["https://*.example.*"] = false;
     urls["https://example.c*"] = false;
+    urls["https://myowndomain:8000"] = true;
 
     QHashIterator<QString, bool> i(urls);
     while (i.hasNext()) {
