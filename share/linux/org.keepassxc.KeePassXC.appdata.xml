@@ -1,1255 +1,1251 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--Copyright 2017 KeePassXC Team <team@keepassxc.org> -->
+<?xml version='1.0' encoding='utf-8'?>
 <component type="desktop-application">
-    <id>org.keepassxc.KeePassXC.desktop</id>
-    <name>KeePassXC</name>
-    <metadata_license>CC-BY-3.0</metadata_license>
-    <project_license>GPL-3.0+</project_license>
-    <summary>Community-driven port of the Windows application “KeePass Password Safe”</summary>
-    <summary xml:lang="de">Von der Community entwickelter Port der Windows Anwendung “KeePass Password Safe”</summary>
-    <developer_name>KeePassXC Team</developer_name>
-    <description>
-        <p>
-            KeePassXC is an application for people with extremely high demands on secure
+  <!--Created with jdAppStreamEdit 9.2-->
+  <id>org.keepassxc.KeePassXC.desktop</id>
+  <name>KeePassXC</name>
+  <summary>Community-driven port of the Windows application “KeePass Password Safe”</summary>
+  <summary xml:lang="de">Von der Community entwickelter Port der Windows Anwendung “KeePass Password Safe”</summary>
+  <developer>
+    <name>KeePassXC Team</name>
+  </developer>
+  <metadata_license>CC-BY-3.0</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  <description>
+    <p>KeePassXC is an application for people with extremely high demands on secure
             personal data management. It has a light interface, is cross-platform and
-            published under the terms of the GNU General Public License.
-        </p>
-        <p xml:lang="de">
+            published under the terms of the GNU General Public License.</p>
+    <p xml:lang="de">
             KeePassXC ist eine Anwendung für Menschen, die extrem hohe Anforderungen
             an die sichere Verwaltung von persönlichen Daten stellen. Sie hat eine leichtgewichtige
             Benutzeroberfläche, ist auf vielen verschiedenen Plattformen verfügbar und
             wird unter den Bedingungen der GNU General Public License veröffentlicht.
         </p>
-    </description>
-
-    <launchable type="desktop-id">org.keepassxc.KeePassXC.desktop</launchable>
-
-    <url type="homepage">https://keepassxc.org</url>
-    <url type="bugtracker">https://github.com/keepassxreboot/keepassxc/issues</url>
-    <url type="faq">https://keepassxc.org/docs#faq</url>
-    <url type="help">https://keepassxc.org/docs</url>
-    <url type="translate">https://www.transifex.com/keepassxc/keepassxc</url>
-    <url type="vcs-browser">https://github.com/keepassxreboot/keepassxc</url>
-    <url type="contribute">https://keepassxc.org/docs#contribute</url>
-
-    <screenshots>
-        <screenshot type="default">
-            <image>https://keepassxc.org/assets/img/screenshots/database_view.png</image>
-            <caption>Organize with Groups and Entries</caption>
-        </screenshot>
-        <screenshot>
-            <image>https://keepassxc.org/assets/img/screenshots/unlock_database.png</image>
-            <caption>Unlock database</caption>
-        </screenshot>
-        <screenshot>
-            <image>https://keepassxc.org/assets/img/screenshots/edit_entry_icons.png</image>
-            <caption>Icon Selection for Entry</caption>
-        </screenshot>
-        <screenshot>
-            <image>https://keepassxc.org/assets/img/screenshots/password_generator_advanced.png</image>
-            <caption>Password Generator</caption>
-        </screenshot>
-    </screenshots>
-
-    <releases>
-        <release version="2.8.0" date="2025-01-01">
-            <description>
-                <ul>
-                    <li>Placeholder for future release notes</li>
-                </ul>
-            </description>
-        </release>
-        <release version="2.7.10" date="2025-03-02">
-            <description>
-                <ul>
-                    <li>Allow adjusting application font size [#11567]</li>
-                    <li>Add Proton Pass importer [#11197]</li>
-                    <li>Support KeePass2 TOTP settings [#11229]</li>
-                    <li>Add New/Preview Entry Attachments dialog and functionality [#11637, #11699, #11650]</li>
-                    <li>Add database name, color, and icon options for unlock view [#10819, #11725]</li>
-                    <li>Show entry background color as column [#6798]</li>
-                    <li>Use icons for password strength [#9844]</li>
-                    <li>Add "Group Full Path" column in entry view [#10278]</li>
-                    <li>Passphrase "MIXED case" Type [#11255]</li>
-                    <li>Allow deleting extension plugin data from Browser Statistics [#11218]</li>
-                    <li>Add --minimized option to keepassxc [#11693]</li>
-                    <li>Implement T-CONV and T-REPLACE-RX entry placeholders [#11453]</li>
-                    <li>Option to disable opening browser when URL field double-clicked [#11332]</li>
-                    <li>Overhaul action states and add icons to toolbar [#11047]</li>
-                    <li>Show character count in password generator dialog [#10940]</li>
-                    <li>Add ability to expire entries from context menu [#8731]</li>
-                    <li>Add copy field shortcuts to Auto-Type select dialog [#11518]</li>
-                    <li>Passkeys: Add support for selecting group on creation [#11260]</li>
-                    <li>Browser: Refactor Access Control Dialog [#9607]</li>
-                    <li>Browser: Add support for URL wildcards and exact URL [#9835, #11752]</li>
-                    <li>Browser: Allow groups to restrict by browser integration key [#9852]</li>
-                    <li>CLI: Add `-d` dry-run shortcut to merge command [#11192]</li>
-                    <li>CLI: HTML export [#11590]</li>
-                    <li>macOS: Add option to disable database lock when switching user [#9707]</li>
-                    <li>SSH Agent: Implement feature to clear all identities [#10649]</li>
-                    <li>Major enhancements to documentation [#11745, #10875]</li>
-                    <li>Various UI and style fixes [#11535, #11672, #11511, #11445, #11426, #11273, #11455, #11321, #11594, #11539, #11351, #11354, #10748, #11602, #11303, #11291, #10091, #9417]</li>
-                    <li>Various improvements to tags [#11676, #11652, #11625]</li>
-                    <li>Reset splitter sizes on database unlock [#11014]</li>
-                    <li>Remember sort order in Auto-type popup dialog [#9508]</li>
-                    <li>Fix database password clearing when modifying key file / hardware key [#11001]</li>
-                    <li>Fix issues with reloading and handling of externally modified db file [#10612]</li>
-                    <li>Support passkeys with Bitwarden import [#11401]</li>
-                    <li>Fix various quirks with CSV import [#11787]</li>
-                    <li>Show Auto-Type select dialog even if window title is empty [#11603]</li>
-                    <li>Refactor hardware key code to avoid deadlock [#11703, #10872]</li>
-                    <li>Show a clear error if hardware key is found slots are not configured [#11609]</li>
-                    <li>Fix signal/slot disconnect when opening import wizard [#11039]</li>
-                    <li>Fix setting window title as modified [#11542]</li>
-                    <li>Fix assert hit when viewing entry history [#11413]</li>
-                    <li>Fix multiple crashes on Linux [#11513]</li>
-                    <li>Fix backup file path time substitution [#10834]</li>
-                    <li>Prevent long-running threads from deadlocking the program with only 1 CPU [#11155]</li>
-                    <li>Hide the menubar when menus lose focus (if toggled off) [#11355, #11605]</li>
-                    <li>CLI: Restore the original codepage on windows [#11470]</li>
-                    <li>Passkeys: Various fixes [#10934, #10951]</li>
-                    <li>Browser: Fix cancel with database unlock dialog [#11435]</li>
-                    <li>Browser: Resolve references in Access Confirm dialog [#11055]</li>
-                    <li>SSH Agent: Add timeout to streams to prevent deadlock [#11290]</li>
-                    <li>macOS: Replace legacy code for screen recording permissions [#11428]</li>
-                    <li>macOS: Implement Secure Input Mode [#11623]</li>
-                    <li>macOS: Fix showing ambigious name in settings [#11373]</li>
-                    <li>macOS: Fix copy-to-clipboard shortcut in entry preview widget [#10966]</li>
-                    <li>Linux: Prevent multiple lock requests [#11306]</li>
-                    <li>Snap: Prevent need for snap helper script to configure browser extension [#10924]</li>
-                    <li>Windows: Detect outdated VC Redist with MSI installer [#11469]</li>
-                    <li>Windows: Additional exclusion fields for clipboard [#11521]</li>
-                </ul>
-            </description>
-        </release>
-        <release version="2.7.9" date="2024-06-19">
-            <description>
-                <ul>
-                    <li>Passkeys: Ability to easily remove a passkey from an entry [#10777]</li>
-                    <li>Snap: Use new desktop portal for native messaging integration [#10906]</li>
-                    <li>Improve entry placeholder/reference feature [#10846]</li>
-                    <li>Improve CSV importing when title field isn't specified [#10843]</li>
-                    <li>Improve encrypted Bitwarden importing [#10800]</li>
-                    <li>Improve database settings UX [#10821]</li>
-                    <li>Improve handling of clipboard actions from entry preview [#10810]</li>
-                    <li>Improve group/entry view resize behavior and set sensible defaults [#10641]</li>
-                    <li>Passkeys: Fix incorrect username fill [#10874]</li>
-                    <li>Passkeys: Return additional data to the extension [#10857]</li>
-                    <li>Fix password clear timer inconsistency on unlock view [#10708]</li>
-                    <li>Fix portability check [#10760]</li>
-                    <li>Fix page overflow on HTML exports [#10735]</li>
-                    <li>Fix broken builds when using system provided zxcvbn [#10717]</li>
-                    <li>Fix copy password button when text is selected [#10853]</li>
-                    <li>Fix tab ordering on application settings pages [#10907]</li>
-                    <li>SSH Agent: Fix broken decrypt button [#10638]</li>
-                    <li>Windows: Fix ALT Auto-Type modifier [#10795]</li>
-                    <li>Windows: Fix wrong DACL memory size allocation [#10712]</li>
-                    <li>macOS: Fix monospace font sizing [#10739]</li>
-                    <li>Flatpak: Fix configuration settings off-by-one error [#10688]</li>
-                    <li>BSD: Fix compiling with libusb implementation [#10736]</li>
-                </ul>
-            </description>
-        </release>
-        <release version="2.7.8" date="2024-05-05">
-            <description>
-                <ul>
-                    <li>Add hotkey for showing search help [#10591]</li>
-                    <li>Add hotkey for group switching (Ctrl+Shift+PgUp/PgDown) [#10625]</li>
-                    <li>Add per-database auto-save delay setting [#9100]</li>
-                    <li>Add setting to hide menubar [#10341]</li>
-                    <li>Improve Bitwarden 1PUX import and support organization collections [#10499]</li>
-                    <li>Show advanced settings checkbox only for settings that have them [#6513]</li>
-                    <li>Remove obsolete setting for requiring repeated password entry [#9722]</li>
-                    <li>Passkeys: Allow registering Passkeys to existing entries [#10408]</li>
-                    <li>Passkeys: Show warning about data being unencrypted before Passkey export [#10411]</li>
-                    <li>Passkeys: Support NFC and USB transports [#10402]</li>
-                    <li>Passkeys: Pass extension JSON data to browser [#10615]</li>
-                    <li>SSH Agent: Do not use entries from recycle bin [#10518]</li>
-                    <li>Linux: Change hotkey sequence used for {CLEARFIELD} Auto-Type [#10008]</li>
-                    <li>Windows: Improve DACL memory access protection [#10618]</li>
-                    <li>Fix crash when deleting history items [#10451]</li>
-                    <li>Fix crash on screen lock or computer sleep [#10458]</li>
-                    <li>Fix search field not being focused after unlock [#10459]</li>
-                    <li>Fix loss of window focus when Auto-Type needs to unlock a database [#10555]</li>
-                    <li>Fix inconsistent TOTP visibility on unlock [#10009]</li>
-                    <li>Fix CSV import skipping over single-name groups [#10575]</li>
-                    <li>Fix key file folder being remembered even if disabled in settings [#10636]</li>
-                    <li>Fix issues with entry editing and database locking [#10667]</li>
-                    <li>Fix key file text when provided on command line [#10642]</li>
-                    <li>Fix issues with hardware key auto detection [#10663]</li>
-                    <li>Do not override monospace font size [#10282]</li>
-                    <li>Perform group sort only when group view is in focus [#10202]</li>
-                    <li>Do not show decimals for attachment sizes in Bytes [#10595]</li>
-                    <li>Prevent merging of global custom data when merging databases [#10452]</li>
-                    <li>Fix minor translation issues [#10635]</li>
-                    <li>Passkeys: Fix StrongBox incompatibility [#10420]</li>
-                    <li>Passkeys: Set RP ID to effective domain if unset instead of returning an error [#10384]</li>
-                    <li>Passkeys: Various UI fixes and improvements [#10427, #10608, #10609]</li>
-                    <li>AppImage: Fix URL opening [#10624]</li>
-                    <li>Flatpak: Fix application autostart [#10563]</li>
-                    <li>Linux/macOS: Fix button sizes on modal alert popups [#10500]</li>
-                    <li>Linux: Fix clipboard clear on Wayland [#10500]</li>
-                    <li>Windows: Preserve file-hidden attribute [#10343]</li>
-                </ul>
-            </description>
-        </release>
-        <release version="2.7.7" date="2024-03-09">
-            <description>
-                <ul>                    
-                    <li>Support USB Hotplug for Hardware Key interface [#10092]</li>
-                    <li>Support 1PUX and Bitwarden import [#9815]</li>
-                    <li>Browser: Add support for PassKeys [#8825, #9987, #10318]</li>
-                    <li>Build System: Move to vcpkg manifest mode [#10088]</li>
-                    <li>Fix multiple TOTP issues [#9874]</li>
-                    <li>Fix focus loss on save when the editor is not visible anymore [#10075]</li>
-                    <li>Fix visual when removing entry from history [#9947]</li>
-                    <li>Fix first entry is not selected when a search is performed [#9868]</li>
-                    <li>Prevent scrollbars on entry drag/drop [#9747]</li>
-                    <li>Prevent duplicate characters in "Also choose from" field of password generator  [#9803]</li>
-                    <li>Security: Prevent byte-by-byte and attachment inference side channel attacks [#10266]</li>
-                    <li>Browser: Fix raising Update Entry messagebox [#9853]</li>
-                    <li>Browser: Fix bugs when returning credentials [#9136]</li>
-                    <li>Browser: Fix crash on database open from browser [#9939]</li>
-                    <li>Browser: Fix support for referenced URL fields [#8788]</li>
-                    <li>MacOS: Fix crash when changing highlight/accent color [#10348]</li>
-                    <li>MacOS: Fix TouchID appearing even though lid is closed [#10092]</li>
-                    <li>Windows: Fix terminating KeePassXC processes with MSI installer [#9822]</li>
-                    <li>FdoSecrets: Fix database merge crash when enabled [#10136]</li>
-                </ul>
-            </description>
-        </release>
-        <release version="2.7.6" date="2023-08-15">
-            <description>
-                <ul>
-                    <li>Significant improvement to visual when drag/drop entries [#9698]</li>
-                    <li>Automatically prompt for Quick Unlock when showing unlock dialog [#9697]</li>
-                    <li>Improve colorful lock icon [#9632]</li>
-                    <li>Ability to search by entry UUID [#9571]</li>
-                    <li>Add challenge-response support for NitroKey 3 [#9631]</li>
-                    <li>Auto-Type: Disable entry level Auto-Type when disabled at group/entry [#9672]</li>
-                    <li>Browser: Show warning when adding duplicate URL's to entry [#9588][#9635]</li>
-                    <li>Browser: Improve error message when proxy cannot be found [#9385]</li>
-                    <li>Fix crash on exit on macOS [#9620]</li>
-                    <li>Fix crash on search if entry doesn't have a group [#9633]</li>
-                    <li>Fix several issues with Quick Unlock [#9697]</li>
-                    <li>Enable save button when not auto-saving non-data changes [#9634]</li>
-                    <li>Several UI/UX fixes [#9647]</li>
-                    <li>Move toolbar back to top of window when disabling movement [#9699]</li>
-                    <li>Browser: Fix closing password generator dialog with X button [#9636]</li>
-                    <li>Browser: Fix handling of expired credentials [#9595]</li>
-                    <li>Windows: Prevent white flicker when launching application [#9637]</li>
-                    <li>Linux: Fix warning message about allow screencapture [#9638]</li>
-                    <li>FdoSecrets: Fix access confirmation dialog showing even when disabled [#9690]</li>
-                </ul>
-            </description>
-        </release>
-        <release version="2.7.5" date="2023-05-14">
-            <description>
-                <ul>
-                    <li>Add menu option to allow screenshots [#8841]</li>
-                    <li>Add support for Botan 3 [#9388]</li>
-                    <li>Increase max TOTP step to 24 hours [#9149]</li>
-                    <li>Improve HTML export layout [#8987]</li>
-                    <li>Turn search reset off by default [#9153]</li>
-                    <li>Use QClipboard::clear() instead of setting blank text [#9148]</li>
-                    <li>Hide group column header choice when not in search [#9171]</li>
-                    <li>Improve look of KeePassXC logo and icons [#9355]</li>
-                    <li>Add keyboard shortcuts for app and database settings [#9007]</li>
-                    <li>Hide rename button from attachments preview panel [#8842]</li>
-                    <li>Linux: Set SingleMainWindow in .desktop file [#7430]</li>
-                    <li>Fix crash when search clears while creating new entry [#9230]</li>
-                    <li>Fix crash when using Windows Hello in a Remote Desktop session [#9006]</li>
-                    <li>Fix crash in Group Edit after enabling Browser Integration [#8778]</li>
-                    <li>Fix canceling quick unlock when it is unavailable [#9034]</li>
-                    <li>Set password input field font correctly [#8732]</li>
-                    <li>Greatly improve performance when rendering entry view [#9398]</li>
-                    <li>Fix various accessibility issues [#9138]</li>
-                    <li>Fix arrows size when expand/collapse a group [#9096]</li>
-                    <li>Select the clone instead of the original after cloning an entry [#9070]</li>
-                    <li>Fix bugs with preview widget [#9170]</li>
-                    <li>Fix status bar update when switching to other DB [#9073]</li>
-                    <li>Fix database settings spin box bug [#9101]</li>
-                    <li>Fix Ctrl+Tab shortcut to cycle databases in unlock dialog [#8839]</li>
-                    <li>Fix TOTP QR code maintaining square ratio [#9027]</li>
-                    <li>Fix Auto-Type configuration page on custom sequence selection [#8752]</li>
-                    <li>Fix unexpected behavior of `--lock` when KeePassXC is not running [#8889]</li>
-                    <li>Make open folder icon exempt from "Apply group icon to entry" [#9205]</li>
-                    <li>Allow setting default file open directory with env var [#9192]</li>
-                    <li>SSH Agent: Fix support for AES-256/GCM openssh keys [#8968]</li>
-                    <li>Browser: Fix Native Messaging script path with BSD OS's [#8835]</li>
-                </ul>
-            </description>
-        </release>
-        <release version="2.7.4" date="2022-10-29">
-            <description>
-                <ul>
-                    <li>Add 2 months expiration preset [#8687]</li>
-                    <li>CLI: Add Unicode support on Windows [#8618]</li>
-                    <li>Fix crash on macOS when unlocking database [#8676]</li>
-                    <li>Fix display of passwords in preview panel [#8633]</li>
-                    <li>Fix clicking links in entry preview panel [#8644]</li>
-                    <li>Prevent expired entries search if no results returned [#8643]</li>
-                    <li>Browser: Revert code causing connection problems [#8665]</li>
-                    <li>Browser: Fix socket file symbolic link on Linux [#8656]</li>
-                    <li>Flatpak: Fix launching browser proxy service [#8680]</li>
-                    <li>SSH Agent: Fix pageant support on Windows [#8619]</li>
-                </ul>
-            </description>
-        </release>
-        <release version="2.7.3" date="2022-10-23">
-            <description>
-                <ul>
-                    <li>Enhance Tags Support and Add Saved Searches [#8435, #8607]</li>
-                    <li>Significant improvements to entry preview panel [#7993]</li>
-                    <li>Add password strength indicator to all password fields [#7885]</li>
-                    <li>Limit zxcvbn entropy estimation length to 128 characters [#7748]</li>
-                    <li>Try full URL path when fetching favicon [#8565]</li>
-                    <li>Hide usernames in preview panel when hidden in entry view [#8608]</li>
-                    <li>Enable dark title bar on windows when accent color is not used [#8498]</li>
-                    <li>Add option to display passwords in color in preview panel [#7097]</li>
-                    <li>Add XML Export option to GUI [#8524]</li>
-                    <li>Increase entropy required for a "good" password rating to 75 [#8523]</li>
-                    <li>Add shortcut to copy password with TOTP appended [#8443]</li>
-                    <li>Show entry count in status bar [#8435]</li>
-                    <li>Allow KeePassXC to be built without X11 [#8147]</li>
-                    <li>Enable use of VivoKey Apex and Dangerous Things FlexSecure tokens [#8332]</li>
-                    <li>Add setting for number of recent files [#8239]</li>
-                    <li>Add Ctrl+Tab shortcut to cycle databases in unlock dialog [#8168]</li>
-                    <li>Replace offensive words in eff_large.wordlist [#7968]</li>
-                    <li>Auto-Type: PICKCHARS can specify attribute and ignore BEEP [#8118]</li>
-                    <li>Linux: Add isHardwareKeySupported and refreshHardwareKeys to DBus methods [#8055]</li>
-                    <li>Add config variable to specify default database file name [#8042]</li>
-                    <li>CLI: Add `db-edit` command [#8400]</li>
-                    <li>CLI: Add option to display all attributes with `show` command [#8256]</li>
-                    <li>CLI: Show UUID and tags with `show` and `clip` commands [#8241]</li>
-                    <li>Browser: Move socket into separate directory on Linux [#8030]</li>
-                    <li>Browser: Add group setting to omit WWW subdomain when matching URLs [#7988]</li>
-                    <li>FdoSecrets: Ask to unlock the database when creating items [#8022, #8028]</li>
-                    <li>FdoSecrets: Skip entries in recycle bin when searching [#8021]</li>
-                    <li>Fix potential deadlock in UI when saving [#8606]</li>
-                    <li>Fix newlines when copying notes from preview panel [#8542]</li>
-                    <li>Fix dark mode detection on Linux [#8477]</li>
-                    <li>Fix crash when deleting items in recycle bin while searching [#8117]</li>
-                    <li>Fix crash when trying to close database during unlock [#8144]</li>
-                    <li>Fix tabbing around the interface [#8435, #8520]</li>
-                    <li>Fix OPVault import when there are multiple OTP fields [#8436]</li>
-                    <li>Fix various Windows Hello bugs [#8354]</li>
-                    <li>Fix use of Apple Watch for Quick Unlock [#8311]</li>
-                    <li>Better handling of "Lock on Minimize" setting [#8202]</li>
-                    <li>Support numeric aware sorting on Windows and macOS [#8363]</li>
-                    <li>Check for write permission before entering portable mode [#8447]</li>
-                    <li>Correct regex escape logic to prevent parse errors [#7778]</li>
-                    <li>Normalize slashes and file case for last used databases [#7864, #7214]</li>
-                    <li>Link ykcore against pthread [#7807]</li>
-                    <li>Auto-Type: Fix menu entries in selection dialog on Windows [#7987]</li>
-                    <li>Auto-Type: Fix use of modifiers under macOS [#8111]</li>
-                    <li>CLI: Fix output when using clip with the -t flag [#8271]</li>
-                    <li>Browser: Use asynchronous access confirm dialog [#8273]</li>
-                    <li>Browser: Always send database locked/unlocked status [#8114]</li>
-                </ul>
-            </description>
-        </release>
-        <release version="2.7.1" date="2022-04-05">
-            <description>
-                <ul>
-                    <li>Show when tags are changed in entry history [#7638]</li>
-                    <li>Improve tags editing and allow spaces in tags [#7708]</li>
-                    <li>Improve layout of entry preview panel [#7767]</li>
-                    <li>Incorporate patches to support Flatpak distribution [#7728]</li>
-                    <li>Add expiration presets for 12 and 24 hours [#7738]</li>
-                    <li>Fix crash when building history change list [#7638]</li>
-                    <li>Fix hiding password on database unlock [#7725]</li>
-                    <li>Fix AES KDF slow transform speed [#7755]</li>
-                    <li>Auto-Type: Correct timing issue on macOS and Linux that prevented typing [#7588]</li>
-                    <li>Auto-Type: Fix use of Ctrl/Alt/Shift/Win modifiers on Windows [#7629]</li>
-                    <li>Auto-Type: Reduce/eliminate delay when searching for entries [#7598]</li>
-                    <li>Auto-Type: Map ASCII dead keys on Linux for international keyboards [#7614]</li>
-                    <li>CLI: Fix detection of hardware keys (YubiKey) [#7593]</li>
-                    <li>CLI: Add missing parameter `-c` to add/edit entries command [#7594]</li>
-                    <li>Secret Service: Fix crash when multiple prompts are shown [#7786]</li>
-                    <li>SSH Agent: Fix default agent selection on Windows [#7764]</li>
-                    <li>Fix database unlock dialog not being the top window on Linux [#7771]</li>
-                    <li>Fix drag/drop entries between tabs on Wayland [#7628]</li>
-                    <li>Fix compiling with minizip-ng [#7638]</li>
-                </ul>
-            </description>
-        </release>
-        <release version="2.7.0" date="2022-03-21">
-            <description>
-                <ul>
-                    <li>Implement KDBX 4.1 [#7114]</li>
-                    <li>Add direct write save option for cloud storage and GVFS [#6594]</li>
-                    <li>Prevent screen capture on Windows and macOS [#6030]</li>
-                    <li>Support quick unlock using Windows Hello [#7384]</li>
-                    <li>Support quick unlock using Apple Watch [#5526]</li>
-                    <li>Allow specifying database backup paths [#7035]</li>
-                    <li>Add tag functionality [#6487][#7436][#7446]</li>
-                    <li>Add password rating column to entry view [#4797]</li>
-                    <li>Add group clone action [#6124]</li>
-                    <li>Show modifications between entry history items [#6789]</li>
-                    <li>Ability to bulk-delete and purge unused custom icons [#5970]</li>
-                    <li>Support adding custom passphrase wordlists [#6799]</li>
-                    <li>Support passphrase wordlists in numbered and PGP-signed formats [#6791]</li>
-                    <li>Implement support for hardware keys via wireless NFC [#6895]</li>
-                    <li>SSH Agent: Add support for OpenSSH 8.2 FIDO/U2F keys [#6371]</li>
-                    <li>CLI: Implement attachment handling [#5538]</li>
-                    <li>CLI: Add support for okon in offline HIBP checks [#5478]</li>
-                    <li>CLI: Implement `search` command and remove `locate` [#6805]</li>
-                    <li>CLI: Add db statistic output to `db-info` command [#7032]</li>
-                    <li>CLI: Add -i/--include option to `generate` command. [#7112]</li>
-                    <li>CLI: Add a -n (--notes) option to `add` and `edit` commands [#4646]</li>
-                    <li>CLI: Add keyfile option to `import` command [#5402]</li>
-                    <li>CLI: Adding a best option to clip to copy a password of the best match [#4489]</li>
-                    <li>Browser: Add Microsoft Edge support on Linux [#7100]</li>
-                    <li>Browser: Support native password generator from the extension [#6529]</li>
-                    <li>Browser: Add group settings [#4180]</li>
-                    <li>Browser: Add feature to ignore entries for HTTP-Auth Logins [#5394]</li>
-                    <li>Browser: Support triggering Auto-Type from browser extension [#6272]</li>
-                    <li>Browser: Add delete-entry command to API [#6899]</li>
-                    <li>Browser: Add search 'by-path' url to API [#5535]</li>
-                    <li>Browser: search for entries by UUID to API [#4763]</li>
-                    <li>Browser: Support auto-download of favicon on entry addition [#7179]</li>
-                    <li>Auto-Type: Major improvements to Auto-Type [#5864][#7463][#7435][#7391][#7129][#6400][#6364][#6361][#5283][#7507]</li>
-                    <li>Auto-Type: Fix typing to virtual machines on Windows [#7366]</li>
-                    <li>Auto-Type: Re-implement X11 keysym emulation [#7098]</li>
-                    <li>Auto-Type: Support multiple Xkb layouts [#6247]</li>
-                    <li>Auto-Type: Abort keystroke if modifiers held on X11 [#6351][#6357]</li>
-                    <li>Auto-Type: Add TOTP option to entry level Auto-Type menu [#6675]</li>
-                    <li>FdoSecrets: Major Refactor and Code Consolidation [#5747][#5660][#7043][#6915]</li>
-                    <li>FdoSecrets: Implement unlock before search [#6943]</li>
-                    <li>Reports: Add browser statistics report [#7197]</li>
-                    <li>Port crypto backend to Botan [#6209]</li>
-                    <li>Improve attachment handling and security [#6606][#5034][#7083]</li>
-                    <li>Allow selecting any open database in unlock dialog [#5427]</li>
-                    <li>KeeShare: Remove checking signed container and QuaZip dependency [#7223]</li>
-                    <li>Introduce security option to enable copy on double click (default off) [#6433]</li>
-                    <li>Add 'delete entry without confirm' functionality [#5812]</li>
-                    <li>Improve macOS and Windows platform integration [#5851]</li>
-                    <li>Lock only the current database by default [#6652]</li>
-                    <li>Show expired entries on DB unlock [#7290]</li>
-                    <li>Update D-Bus adaptor interface class name to match definition file [#7523]</li>
-                    <li>Add countdown progress bar to TOTP preview [#6930]</li>
-                    <li>Enter favicon url directly on icons page [#6614]</li>
-                    <li>Set C++17 as standard in the build system [#7180]</li>
-                    <li>Internalize ykcore into code base [#6654]</li>
-                    <li>Transition to Visual Studio builds on Windows [#5874]</li>
-                    <li>Ability to delete entries from health check reports [#6537]</li>
-                    <li>Enhance remembering last-used directories [#6711]</li>
-                    <li>Implement org.freedesktop.appearance.color-scheme support on Linux [#7422]</li>
-                    <li>Support sorting HTML export [#7011]</li>
-                    <li>Add display number of characters in passphrases [#5449]</li>
-                    <li>Use Alt+Tab on macOS to switch between databases [#5407]</li>
-                    <li>Add feature to sort groups using shortcut keys [#6999]</li>
-                    <li>Add CTRL+Enter to apply password generator changes [#6414]</li>
-                    <li>Display `Database created` timestamp on statistics report [#6876]</li>
-                    <li>Browser: Improve best matching credentials setting [#6893]</li>
-                    <li>SSH Agent: Use both Pageant and OpenSSH agent simultaneously on Windows [#6288]</li>
-                    <li>SSH Agent: Allow using database path to resolve keys [#6365]</li>
-                    <li>SSH Agent: Show correct error messages in main window [#7166]</li>
-                    <li>Multiple fixes for MSI installer [#6630]</li>
-                    <li>Fix tab order for CSV import dialog to match screen order [#7315]</li>
-                    <li>Don't mark kdbx:// urls as invalid [#7221]</li>
-                    <li>Make selected text copyable instead of copying password [#7209]</li>
-                    <li>Detect timestamp resolution for CSV files [#7196]</li>
-                    <li>Fix crash while downloading favicon [#7104]</li>
-                    <li>Correct naming of newly generated keyx files [#7010]</li>
-                    <li>Place the 'Recycle Bin' at the bottom of the list when groups are sorted [#7004]</li>
-                    <li>Handle tilde with custom browser paths [#6659]</li>
-                    <li>Don't scroll up when deleting an entry [#6833]</li>
-                    <li>Set the MIME-Type to text/plain when using wl-copy on wayland [#6832]</li>
-                    <li>Fix adaptive icon painting [#5989][#6033]</li>
-                    <li>Fix favicon download from URL with non-standard port [#5509]</li>
-                    <li>Ignore recycle bin on KeePassHTTP migration [#5481]</li>
-                    <li>Fix keepassxc-cr-recovery utility [#7521]</li>
-                    <li>Fix Auto-Type not working when audio recording indicator is active on macOS 12.2+ [#7526]</li>
-                </ul>
-            </description>
-        </release>
-        <release version="2.6.6" date="2021-06-11">
-            <description>
-                <ul>
-                    <li>Fix focusing search when pressing hotkey [#6603]</li>
-                    <li>Trim whitespace from TOTP key input prior to processing [#6604]</li>
-                    <li>Fix building on macOS [#6598]</li>
-                    <li>Resolve compiler warnings for unused return values [#6607]</li>
-                </ul>
-            </description>
-        </release>
-        <release version="2.6.5" date="2021-06-07">
-            <description>
-                <ul>
-                    <li>Show search bar when toolbar is hidden or in overflow [#6279]</li>
-                    <li>Show countdown for clipboard clearing in status bar [#6333]</li>
-                    <li>Command line option to lock all open databases [#6511]</li>
-                    <li>Allow CSV import of bare TOTP secrets [#6211]</li>
-                    <li>Retain file creation time when saving database [#6576]</li>
-                    <li>Set permissions of saved attachments to be private to the current user [#6363]</li>
-                    <li>OPVault: Use Text instead of Name for attribute names [#6334]</li>
-                    <li>Reports: Allow resizing of reports columns [#6435]</li>
-                    <li>Reports: Toggle showing expired entries [#6534]</li>
-                    <li>Save Always on Top setting [#6236]</li>
-                    <li>Password generator can exclude additional lookalike characters (6/G, 8/B) [#6196]</li>
-                    <li>Allow setting MSI properties in unattended install [#6196]</li>
-                    <li>Update MainWindow minimum size to enable smaller verticle space [#6196]</li>
-                    <li>Use application font size when setting default or monospace fonts [#6332]</li>
-                    <li>Fix notes not clearing in entry preview panel in some cases [#6481]</li>
-                    <li>macOS: Correct window activation when restoring from tray [#6575]</li>
-                    <li>macOS: Better handling of minimize after unlock when using browser integration [#6338]</li>
-                    <li>Linux: Start after the system tray is available on LXQt [#6216]</li>
-                    <li>Linux: Allow selection of modal dialogs on X11 in Auto-Type [#6204]</li>
-                    <li>KeeShare: prevent crash when file extension is missing [#6174]</li>
-                </ul>
-            </description>
-        </release>
-        <release version="2.6.4" date="2021-01-31">
-            <description>
-                <ul>
-                    <li>Automatically adapt to light/dark system theme changes (Windows/macOS only) [#6034]</li>
-                    <li>Show window title as tooltip on system tray [#5948]</li>
-                    <li>Compress Snap release as LZO for faster initial startup [#5877]</li>
-                    <li>Password generator: Set maximum selectable password length to 999 [#5937]</li>
-                    <li>Fix crash on app close when using SSH agent [#5935]</li>
-                    <li>Fix KDF selection showing wrong item when using Argon2id [#5923]</li>
-                    <li>Automatically close About dialog on database lock if it is still open [#5947]</li>
-                    <li>Linux: Fix automatic launch at system startup with AppImages [#5901]</li>
-                    <li>Linux: Fix click-to-move on empty area activating when using menus [#5971]</li>
-                    <li>Linux: Try multiple times to show tray icon if tray is not ready yet [#5948]</li>
-                    <li>macOS: Fix KeePassXC blocking clean shutdown [#6002]</li>
-                </ul>
-            </description>
-        </release>
-        <release version="2.6.3" date="2021-01-12">
-            <description>
-                <ul>
-                    <li>Support Argon2id KDF [#5778]</li>
-                    <li>Support XMLv2 key files [#5798]</li>
-                    <li>Improve CSV Import/Export, include time fields and TOTP [#5346]</li>
-                    <li>Support empty area dragging of the application window [#5860]</li>
-                    <li>Display default Auto-Type sequence in preview pane [#5654]</li>
-                    <li>Remove strict length limit on generated passwords [#5748]</li>
-                    <li>Hide key file path by default when unlocking database [#5779]</li>
-                    <li>Document browser extension use with Edge in managed mode [#5692]</li>
-                    <li>Windows: Prevent clipboard history and cloud sync [#5853]</li>
-                    <li>macOS: Update the application icon to Big Sur styling [#5851]</li>
-                    <li>Re-select previously selected entry on database unlock [#5559]</li>
-                    <li>Properly save special character choice in password generator [#5610]</li>
-                    <li>Fix crash in browser integration with multiple similar entries [#5653]</li>
-                    <li>Remove offset on username field in classic theme [#5788]</li>
-                    <li>Ensure entry history is copied when drag/dropping entries and groups [#5817]</li>
-                    <li>Close modal dialogs when database is locked [#5820]</li>
-                    <li>Prevent crash when KeeShare modifies an entry that is currently being edited [#5827]</li>
-                    <li>Improve preview of entry attributes [#5834]</li>
-                    <li>Always activate/focus database open dialog preventing mistype [#5878]</li>
-                    <li>Reports: fix calculation of average password length [#5862]</li>
-                    <li>Linux: Delay startup on login to correct tray icon issues [#5724]</li>
-                </ul>
-            </description>
-        </release>
-        <release version="2.6.2" date="2020-10-21">
-            <description>
-                <ul>
-                    <li>Add option to keep window always on top to view menu [#5542]</li>
-                    <li>Move show/hide usernames and passwords to view menu [#5542]</li>
-                    <li>Add command line options and environment variables for changing the config locations [#5452]</li>
-                    <li>Include TOTP settings in CSV import/export and add support for ISO datetimes [#5346]</li>
-                    <li>Mask sensitive information in command execution confirmation prompt [#5542]</li>
-                    <li>SSH Agent: Avoid shortcut conflict on macOS by changing "Add key" to Ctrl+H on all platforms [#5484]</li>
-                    <li>Prevent data loss with drag and drop between databases [#5536]</li>
-                    <li>Fix crash when toggling Capslock rapidly [#5545]</li>
-                    <li>Don't mark URL references as invalid URL [#5380]</li>
-                    <li>Reset entry preview after search [#5483]</li>
-                    <li>Set Qt::Dialog flag on database open dialog [#5356]</li>
-                    <li>Fix sorting of database report columns [#5426]</li>
-                    <li>Fix IfDevice matching logic [#5344]</li>
-                    <li>Fix layout issues and a stray scrollbar appearing on top of the entry edit screen [#5424]</li>
-                    <li>Fix tabbing into the notes field [#5424]</li>
-                    <li>Fix password generator ignoring settings on load [#5340]</li>
-                    <li>Restore natural entry sort order on application load [#5438]</li>
-                    <li>Fix paperclip and TOTP columns not saving state [#5327]</li>
-                    <li>Enforce fixed password font in entry preview [#5454]</li>
-                    <li>Add scrollbar when new database wizard exceeds screen size [#5560]</li>
-                    <li>Do not mark database as modified when viewing Auto-Type associations [#5542]</li>
-                    <li>CLI: Fix two heap-use-after-free crashes [#5368,#5470]</li>
-                    <li>Browser: Fix key exchange not working with multiple simultaneous users on Windows [#5485]</li>
-                    <li>Browser: Fix entry retrieval when "only best matching" is enabled [#5316]</li>
-                    <li>Browser: Ignore recycle bin on KeePassHTTP migration [#5481]</li>
-                    <li>KeeShare: Fix import crash [#5542]</li>
-                    <li>macOS: Fix toolbar theming and breadcrumb display issues [#5482]</li>
-                    <li>macOS: Fix file dialog randomly closing [#5479]</li>
-                    <li>macOS: Fix being unable to select OPVault files for import [#5341]</li>
-                </ul>
-            </description>
-        </release>
-        <release version="2.6.1" date="2020-08-19">
-            <description>
-                <ul>
-                    <li>Add menu entries for auto-typing only username or only password [#4891]</li>
-                    <li>Browser: Add command for retrieving current TOTP [#5278]</li>
-                    <li>Improve man pages [#5010]</li>
-                    <li>Linux: Support Xfce screen lock signals [#4971]</li>
-                    <li>Linux: Add OARS metadata to AppStream markup [#5031]</li>
-                    <li>SSH Agent: Substitute tilde with %USERPROFILE% on Windows [#5116]</li>
-                    <li>Improve password generator UI and UX [#5129]</li>
-                    <li>Do not prompt to restart if switching the theme back and forth [#5084]</li>
-                    <li>Change actions for F1, F2, and F3 keys [#5082]</li>
-                    <li>Skip referenced passwords in health check report [#5056]</li>
-                    <li>Check system-wide Qt translations directory for downstream translations packaging [#5064]</li>
-                    <li>macOS: Change password visibility toggle shortcut to Ctrl+H to avoid conflict with system shortcut [#5114]</li>
-                    <li>Browser: Only display domain name in browser access confirm dialog to avoid overly wide window sizes [#5214]</li>
-                    <li>Fix clipboard not being cleared when database is locked while timeout is still active [#5184]</li>
-                    <li>Fix list of previous databases not being cleared in some cases [#5123]</li>
-                    <li>Fix saving of non-data changes on database lock [#5210]</li>
-                    <li>Fix search results banner theming [#5197]</li>
-                    <li>Don't enforce theme palette in Classic theme mode and add hover effect for buttons [#5122,#5267]</li>
-                    <li>Fix label clipping in settings on high-DPI screens [#5227]</li>
-                    <li>Fix excessive memory usage by icons on systems with high-DPI screens [#5266]</li>
-                    <li>Fix crash if number of TOTP digits exceeds ten [#5106]</li>
-                    <li>Fix slot detection when first YubiKey is configured on the second slot [#5004]</li>
-                    <li>Prevent crash if focus widget gets deleted during saving [#5005]</li>
-                    <li>Always show buttons for opening or saving attachments [#4956]</li>
-                    <li>Update link to Auto-Type help [#5228]</li>
-                    <li>Fix build errors with Ninja [#5121]</li>
-                    <li>CLI: Fix db-info command wrongly labelled as db-show in usage listing [#5140]</li>
-                    <li>Windows: Use Classic theme by default if high-contrast mode is on [#5191]</li>
-                    <li>Linux: Add workaround for qt5ct bug, causing icons not to show up [#5011]</li>
-                    <li>Linux: Correct high-DPI display by not allowing fractional scaling [#5185]</li>
-                    <li>Browser: Consider subdomain and path when requesting only "best-matching credentials" [#4832]</li>
-                    <li>SSH Agent: Always forget all keys on lock [#5115]</li>
-                </ul>
-            </description>
-        </release>
-        <release version="2.6.0" date="2020-07-06">
-            <description>
-                <ul>
-                    <li>Custom Light and Dark themes [#4110, #4769, #4791, #4892, #4915]</li>
-                    <li>Compact mode to use classic Group and Entry line height [#4910]</li>
-                    <li>New monochrome tray icons [#4796, #4803]</li>
-                    <li>View menu to quickly switch themes, compact mode, and toggle UI elements [#4910]</li>
-                    <li>Search for groups and scope search to matched groups [#4705]</li>
-                    <li>Save Database Backup feature [#4550]</li>
-                    <li>Sort entries by "natural order" and move lines up/down [#4357]</li>
-                    <li>Option to launch KeePassXC on system startup/login [#4675]</li>
-                    <li>Caps Lock warning on password input fields [#3646]</li>
-                    <li>Add "Size" column to entry view [#4588]</li>
-                    <li>Browser-like tab experience using Ctrl+[Num] (Alt+[Num] on Linux) [#4063, #4305]</li>
-                    <li>Password Generator: Define additional characters to choose from [#3876]</li>
-                    <li>Reports: Database password health check (offline) [#3993]</li>
-                    <li>Reports: HIBP online service to check for breached passwords [#4438]</li>
-                    <li>Auto-Type: DateTime placeholders [#4409]</li>
-                    <li>Browser: Show group name in results sent to browser extension [#4111]</li>
-                    <li>Browser: Ability to define a custom browser location (macOS and Linux only) [#4148]</li>
-                    <li>Browser: Ability to change root group UUID and inline edit connection ID [#4315, #4591]</li>
-                    <li>CLI: `db-info` command [#4231]</li>
-                    <li>CLI: Use wl-clipboard if xclip is not available (Linux) [#4323]</li>
-                    <li>CLI: Incorporate xclip into snap builds [#4697]</li>
-                    <li>SSH Agent: Key file path env substitution, SSH_AUTH_SOCK override, and connection test [#3769, #3801, #4545]</li>
-                    <li>SSH Agent: Context menu actions to add/remove keys [#4290]</li>
-                    <li>Complete replacement of default database icons [#4699]</li>
-                    <li>Complete replacement of application icons [#4066, #4161, #4203, #4411]</li>
-                    <li>Complete rewrite of documentation and manpages using Asciidoctor [#4937]</li>
-                    <li>Complete refactor of config files; separate between local and roaming [#4665]</li>
-                    <li>Complete refactor of browser integration and proxy code [#4680]</li>
-                    <li>Complete refactor of hardware key integration (YubiKey and OnlyKey) [#4584, #4843]</li>
-                    <li>Significantly improve performance when saving and opening databases [#4309, #4833]</li>
-                    <li>Remove read-only detection for database files [#4508]</li>
-                    <li>Overhaul of password fields and password generator [#4367]</li>
-                    <li>Replace instances of "Master Key" with "Database Credentials" [#4929]</li>
-                    <li>Change settings checkboxes to positive phrasing for consistency [#4715]</li>
-                    <li>Improve UX of using entry actions (focus fix) [#3893]</li>
-                    <li>Set expiration time to Now when enabling entry expiration [#4406]</li>
-                    <li>Always show "New Entry" in context menu [#4617]</li>
-                    <li>Issue warning before adding large attachments [#4651]</li>
-                    <li>Improve importing OPVault [#4630]</li>
-                    <li>Improve AutoOpen capability [#3901, #4752]</li>
-                    <li>Check for updates every 7 days even while still running [#4752]</li>
-                    <li>Improve Windows installer UI/UX [#4675]</li>
-                    <li>Improve config file handling of portable distribution [#4131, #4752]</li>
-                    <li>macOS: Hide dock icon when application is hidden to tray [#4782]</li>
-                    <li>Browser: Use unlock dialog to improve UX of opening a locked database [#3698]</li>
-                    <li>Browser: Improve database and entry settings experience [#4392, #4591]</li>
-                    <li>Browser: Improve confirm access dialog [#2143, #4660]</li>
-                    <li>KeeShare: Improve monitoring file changes of shares [#4720]</li>
-                    <li>CLI: Rename `create` command to `db-create` [#4231]</li>
-                    <li>CLI: Cleanup `db-create` options (`--set-key-file` and `--set-password`) [#4313]</li>
-                    <li>CLI: Use stderr for help text and password prompts [#4086, #4623]</li>
-                    <li>FdoSecrets: Display existing secret service process [#4128]</li>
-                    <li>Fix changing focus around the main window using tab key [#4641]</li>
-                    <li>Fix search field clearing while still using the application [#4368]</li>
-                    <li>Improve search help widget displaying on macOS and Linux [#4236]</li>
-                    <li>Return keyboard focus after editing an entry [#4287]</li>
-                    <li>Reset database path after failed "Save As" [#4526]</li>
-                    <li>Make builds reproducible [#4411]</li>
-                    <li>Improve handling of ccache when building [#4104, #4335]</li>
-                    <li>Windows: Use correct UI font and size [#4769]</li>
-                    <li>macOS: Properly re-hide application window after browser integration and Auto-Type usage [#4909]</li>
-                    <li>Linux: Fix version number not embedded in AppImage [#4842]</li>
-                    <li>Auto-Type: Fix crash when performing on new entry [#4132]</li>
-                    <li>Browser: Send legacy HTTP settings to recycle bin [#4589]</li>
-                    <li>Browser: Fix merging browser keys [#4685]</li>
-                    <li>CLI: Fix encoding when exporting database [#3921]</li>
-                    <li>SSH Agent: Improve reliability and underlying code [#3833, #4256, #4549, #4595]</li>
-                    <li>FdoSecrets: Fix crash when editing settings before service is enabled [#4332]</li>
-                </ul>
-            </description>
-        </release>
-        <release version="2.5.4" date="2020-04-09">
-            <description>
-                <ul>
-                    <li>Return keyboard focus after saving database edits [#4287]</li>
-                    <li>Windows: Use bare minimum settings in portable version [#4131]</li>
-                    <li>Windows: Use SHA256 code signing [#4129]</li>
-                    <li>macOS: Fix code signing incompatibility in latest macOS release [#4564]</li>
-                </ul>
-            </description>
-        </release>
-        <release version="2.5.3" date="2020-01-19">
-            <description>
-                <ul>
-                    <li>Fix a possible database lockout when removing a YubiKey from a KDBX 3.1 database [#4147]</li>
-                    <li>Fix crash if Auto-Type is performed on a new entry [#4150]</li>
-                    <li>Fix crash when all entries are deleted from a group [#4156]</li>
-                    <li>Improve the reliability of clipboard clearing on Gnome [#4165]</li>
-                    <li>Do not check cmd:// URLs for valid URL syntax anymore [#4172]</li>
-                    <li>Prevent unnecessary merges for databases on network shares [#4153]</li>
-                    <li>Browser: Prevent native messaging proxy from blocking application shutdown [#4155]</li>
-                    <li>Browser: Improve website URL matching [#4134, #4177]</li>
-                </ul>
-            </description>
-        </release>
-        <release version="2.5.2" date="2020-01-04">
-            <description>
-                <ul>
-                    <li>Browser: Show UI warning when entering invalid URLs [#3912]</li>
-                    <li>Browser: Option to use an entry only for HTTP auth [#3927]</li>
-                    <li>Disable the user interface when merging or saving the database [#3991]</li>
-                    <li>Ability to hide protected attribute after reveal [#3877]</li>
-                    <li>Remove mention of "snaps" in Windows and macOS [#3879]</li>
-                    <li>CLI: Merge parameter for source database key file (--key-file-from) [#3961]</li>
-                    <li>Improve GUI tests reliability on Hi-DPI displays [#4075]</li>
-                    <li>Disable deprecation warnings to allow building with Qt 5.14+ [#4075]</li>
-                    <li>OPVault: Use 'otp' attribute for TOTP field imports [#4075]</li>
-                    <li>Fix crashes when saving a database to cloud storage [#3991]</li>
-                    <li>Fix crash when pressing enter twice while opening database [#3885]</li>
-                    <li>Fix handling of HTML when displayed in the entry preview panel [#3910]</li>
-                    <li>Fix start minimized to tray on Linux [#3899]</li>
-                    <li>Fix Auto Open with key file only databases [#4075]</li>
-                    <li>Fix escape key closing the standalone password generator [#3892]</li>
-                    <li>macOS: Fix monospace font usage in password field and notes [#4075]</li>
-                    <li>macOS: Fix building on macOS 10.9 to 10.11 [#3946]</li>
-                    <li>Fix TOTP setup dialog not closing on database lock [#4075]</li>
-                    <li>Browser: Fix condition where additional URLs are ignored [#4033]</li>
-                    <li>Browser: Fix subdomain matching to return only relevant site entries [#3854]</li>
-                    <li>Secret Service: Fix multiple crashes and incompatibilities [#3871, #4009, #4074]</li>
-                    <li>Secret Service: Fix searching of entries [#4008, #4036]</li>
-                    <li>Secret Service: Fix behavior when exposed group is recycled [#3914]</li>
-                    <li>CLI: Release the database instance before exiting interactive mode [#3889]</li>
-                    <li>Fix (most) memory leaks in tests [#3922]</li>
-                </ul>
-            </description>
-        </release>
-        <release version="2.5.1" date="2019-11-11">
-            <description>
-                <ul>
-                    <li>Add programmatic use of the EntrySearcher [#3760]</li>
-                    <li>Explicitly clear database memory upon locking even if the object is not deleted immediately [#3824]</li>
-                    <li>macOS: Add ability to perform notarization of built package [#3827]</li>
-                    <li>Reduce file hash checking to every 30 seconds to correct performance issues [#3724]</li>
-                    <li>Correct formatting of notes in entry preview widget [#3727]</li>
-                    <li>Improve performance and UX of database statistics page [#3780]</li>
-                    <li>Improve interface for key file selection to discourage use of the database file [#3807]</li>
-                    <li>Hide Auto-Type sequences column when not needed [#3794]</li>
-                    <li>macOS: Revert back to using Carbon API for hotkey detection [#3794]</li>
-                    <li>CLI: Do not show protected fields by default [#3710]</li>
-                    <li>Secret Service: Correct issues interfacing with various applications [#3761]</li>
-                    <li>Fix building without additional features [#3693]</li>
-                    <li>Fix handling TOTP secret keys that require padding [#3764]</li>
-                    <li>Fix database unlock dialog password field focus [#3764]</li>
-                    <li>Correctly label open databases as locked on launch [#3764]</li>
-                    <li>Prevent infinite recursion when two databases AutoOpen each other [#3764]</li>
-                    <li>Browser: Fix incorrect matching of invalid URLs [#3759]</li>
-                    <li>Properly stylize the application name on Linux [#3775]</li>
-                    <li>Show application icon on Plasma Wayland sessions [#3777]</li>
-                    <li>macOS: Check for Auto-Type permissions on use instead of at launch [#3794]</li>
-                </ul>
-            </description>
-        </release>
-        <release version="2.5.0" date="2019-10-26">
-            <description>
-                <ul>
-                    <li>Add 'Paper Backup' aka 'Export to HTML file' to the 'Database' menu [#3277]</li>
-                    <li>Add statistics panel with information about the database (number of entries, number of unique passwords, etc.) to the Database Settings dialog [#2034]</li>
-                    <li>Add offline user manual accessible via the 'Help' menu [#3274]</li>
-                    <li>Add support for importing 1Password OpVault files [#2292]</li>
-                    <li>Implement Freedesktop.org secret storage DBus protocol so that KeePassXC can be used as a vault service by libsecret [#2726]</li>
-                    <li>Add support for OnlyKey as an alternative to YubiKeys (requires yubikey-personalization >= 1.20.0) [#3352]</li>
-                    <li>Add group sorting feature [#3282]</li>
-                    <li>Add feature to download favicons for all entries at once [#3169]</li>
-                    <li>Add word case option to passphrase generator [#3172]</li>
-                    <li>Add support for RFC6238-compliant TOTP hashes [#2972]</li>
-                    <li>Add UNIX man page for main program [#3665]</li>
-                    <li>Add 'Monospaced font' option to the notes field [#3321]</li>
-                    <li>Add support for key files in auto open [#3504]</li>
-                    <li>Add search field for filtering entries in Auto-Type dialog [#2955]</li>
-                    <li>Complete usernames based on known usernames from other entries [#3300]</li>
-                    <li>Parse hyperlinks in the notes field of the entry preview pane [#3596]</li>
-                    <li>Allow abbreviation of field names in entry search [#3440]</li>
-                    <li>Allow setting group icons recursively [#3273]</li>
-                    <li>Add copy context menu for username and password in Auto-Type dialog [#3038]</li>
-                    <li>Drop to background after copying a password to the clipboard [#3253]</li>
-                    <li>Add 'Lock databases' entry to tray icon menu [#2896]</li>
-                    <li>Add option to minimize window after unlocking [#3439]</li>
-                    <li>Add option to minimize window after opening a URL [#3302]</li>
-                    <li>Request accessibility permissions for Auto-Type on macOS [#3624]</li>
-                    <li>Browser: Add initial support for multiple URLs [#3558]</li>
-                    <li>Browser: Add entry-specific browser integration settings [#3444]</li>
-                    <li>Add offline HIBP checker (requires a downloaded HIBP dump) [#2707]</li>
-                    <li>CLI: Add 'flatten' option to the 'ls' command [#3276]</li>
-                    <li>CLI: Add password generation options to `Add` and `Edit` commands [#3275]</li>
-                    <li>CLI: Add XML import [#3572]</li>
-                    <li>CLI: Add CSV export to the 'export' command [#3278]</li>
-                    <li>CLI: Add `-y --yubikey` option for YubiKey [#3416]</li>
-                    <li>CLI: Add `--dry-run` option for merging databases [#3254]</li>
-                    <li>CLI: Add group commands (mv, mkdir and rmdir) [#3313].</li>
-                    <li>CLI: Add interactive shell mode command `open` [#3224]</li>
-                    <li>Redesign database unlock dialog [ [#3287]</li>
-                    <li>Rework the entry preview panel [ [#3306]</li>
-                    <li>Move notes to General tab on Group Preview Panel [#3336]</li>
-                    <li>Enable entry actions when editing an entry and cleanup entry context menu  [#3641]</li>
-                    <li>Improve detection of external database changes  [#2389]</li>
-                    <li>Warn if user is trying to use a KDBX file as a key file [#3625]</li>
-                    <li>Add option to disable KeePassHTTP settings migrations prompt [#3349, #3344]</li>
-                    <li>Re-enabled Wayland support (no Auto-Type yet) [#3520, #3341]</li>
-                    <li>Add icon to 'Toggle Window' action in tray icon menu [[3244]</li>
-                    <li>Merge custom data between databases only when necessary [#3475]</li>
-                    <li>Improve various file-handling related issues when picking files using the system's file dialog [#3473]</li>
-                    <li>Add 'New Entry' context menu when no entries are selected [#3671]</li>
-                    <li>Reduce default Argon2 settings from 128 MiB and one thread per CPU core to 64 MiB and two threads to account for lower-spec mobile hardware [#3672]</li>
-                    <li>Browser: Remove unused 'Remember' checkbox for HTTP Basic Auth [#3371]</li>
-                    <li>Browser: Show database name when pairing with a new browser [#3638]</li>
-                    <li>Browser: Show URL in allow access dialog [#3639]</li>
-                    <li>CLI: The password length option `-l` for the CLI commands `Add` and `Edit` is now `-L` [#3275]</li>
-                    <li>CLI: The `-u` shorthand for the `--upper` password generation option has been renamed to `-U` [#3275]</li>
-                    <li>CLI: Rename command `extract` to `export`. [#3277]</li>
-                    <li>Improve accessibility for assistive technologies [#3409]</li>
-                    <li>Correctly unlock all databases if `--pw-stdin` is provided [#2916]</li>
-                    <li>Fix password generator issues with special characters [#3303]</li>
-                    <li>Fix KeePassXC interrupting shutdown procedure [#3666]</li>
-                    <li>Fix password visibility toggle button state on unlock dialog [#3312]</li>
-                    <li>Fix potential data loss if database is reloaded while user is editing an entry [#3656]</li>
-                    <li>Fix hard-coded background color in search help popup [#3001]</li>
-                    <li>Fix font choice for password preview [#3425]</li>
-                    <li>Fix handling of read-only files when autosave is enabled [#3408]</li>
-                    <li>Handle symlinks correctly when atomic saves are disabled [#3463]</li>
-                    <li>Enable HighDPI icon scaling on Linux [#3332]</li>
-                    <li>Make Auto-Type on macOS more robust and remove old Carbon API calls [#3634, #3347]</li>
-                    <li>Hide Share tab if KeePassXC is compiled without KeeShare support and other minor KeeShare improvements [#3654, #3291, #3029, #3031, #3236]</li>
-                    <li>Correctly bring window to the front when clicking tray icon on macOS [#3576]</li>
-                    <li>Correct application shortcut created by MSI Installer on Windows [#3296]</li>
-                    <li>Fix crash when removing custom data [#3508]</li>
-                    <li>Fix placeholder resolution in URLs [#3281]</li>
-                    <li>Fix various inconsistencies and platform-dependent compilation bugs [#3664, #3662, #3660, #3655, #3649, #3417, #3357, #3319, #3318, #3304]</li>
-                    <li>Browser: Fix potential leaking of entries through the browser integration API if multiple databases are opened [#3480]</li>
-                    <li>Browser: Fix password entropy calculation [#3107]</li>
-                    <li>Browser: Fix Windows registry settings for portable installation [#3603]</li>
-                </ul>
-            </description>
-        </release>
-        <release version="2.4.3" date="2019-06-12">
-            <description>
-                <ul>
-                    <li>Fix library loading issues in the Snap and macOS releases [#3247]</li>
-                    <li>Fix various keyboard navigation issues [#3248]</li>
-                    <li>Fix main window toggling regression when clicking the tray icon on KDE [#3258]</li>
-                    <li>Add documentation for keyboard shortcuts to source code distribution [#3215]</li>
-                </ul>
-            </description>
-        </release>
-        <release version="2.4.2" date="2019-05-31">
-            <description>
-                <ul>
-                    <li>Improve resilience against memory attacks - overwrite memory before free [#3020]</li>
-                    <li>Prevent infinite save loop when location is unavailable [#3026]</li>
-                    <li>Attempt to fix quitting application when shutdown or logout issued [#3199]</li>
-                    <li>Support merging database custom data [#3002]</li>
-                    <li>Fix opening URL's with non-http schemes [#3153]</li>
-                    <li>Fix data loss due to not reading all database attachments if duplicates exist [#3180]</li>
-                    <li>Fix entry context menu disabling when using keyboard navigation [#3199]</li>
-                    <li>Fix behaviors when canceling an entry edit [#3199]</li>
-                    <li>Fix processing of tray icon click and doubleclick [#3112]</li>
-                    <li>Update group in preview widget when focused [#3199]</li>
-                    <li>Prefer DuckDuckGo service over direct icon download (increases resolution) [#2996]</li>
-                    <li>Remove apply button in application settings [#3019]</li>
-                    <li>Use winqtdeploy on Windows to correct deployment issues [#3025]</li>
-                    <li>Don't mark entry edit as modified when attribute selection changes [#3041]</li>
-                    <li>Use console code page CP_UTF8 on Windows if supported [#3050]</li>
-                    <li>Snap: Fix locking database with session lock [#3046]</li>
-                    <li>Snap: Fix theming across Linux distributions [#3057]</li>
-                    <li>Snap: Use SNAP_USER_COMMON and SNAP_USER_DATA directories [#3131]</li>
-                    <li>KeeShare: Automatically enable WITH_XC_KEESHARE_SECURE if quazip is found [#3088]</li>
-                    <li>macOS: Fix toolbar text when in dark mode [#2998]</li>
-                    <li>macOS: Lock database on switching user [#3097]</li>
-                    <li>macOS: Fix global Auto-Type when the database is locked [#3138]</li>
-                    <li>Browser: Close popups when database is locked [#3093]</li>
-                    <li>Browser: Add tests [#3016]</li>
-                    <li>Browser: Don't create default group if custom group is enabled [#3127]</li>
-                </ul>
-            </description>
-        </release>
-        <release version="2.4.1" date="2019-04-12">
-            <description>
-                <ul>
-                    <li>Fix database deletion when using unsafe saves to a different file system [#2889]</li>
-                    <li>Fix opening databases with legacy key files that contain '/' [#2872]</li>
-                    <li>Fix opening database files from the command line [#2919]</li>
-                    <li>Fix crash when editing master key [#2836]</li>
-                    <li>Fix multiple issues with apply button behavior [#2947]</li>
-                    <li>Fix issues on application startup (tab order, --pw-stdin, etc.) [#2830]</li>
-                    <li>Fix building without WITH_XC_KEESHARE</li>
-                    <li>Fix reference entry coloring on macOS dark mode [#2984]</li>
-                    <li>Hide window when performing entry auto-type on macOS [#2969]</li>
-                    <li>Improve UX of update checker; reduce checks to every 7 days [#2968]</li>
-                    <li>KeeShare improvements [#2946, #2978, #2824]</li>
-                    <li>Re-enable Ctrl+C to copy password from search box [#2947]</li>
-                    <li>Add KeePassXC-Browser integration for Brave browser [#2933]</li>
-                    <li>SSH Agent: Re-Add keys on database unlock [#2982]</li>
-                    <li>SSH Agent: Only remove keys on app exit if they are removed on lock [#2985]</li>
-                    <li>CLI: Add --no-password option [#2708]</li>
-                    <li>CLI: Improve database extraction to XML [#2698]</li>
-                    <li>CLI: Don't call mandb on build [#2774]</li>
-                    <li>CLI: Add debug info [#2714]</li>
-                    <li>Improve support for Snap theming [#2832]</li>
-                    <li>Add support for building on Haiku OS [#2859]</li>
-                    <li>Ctrl+PgDn now goes to the next tab and Ctrl+PgUp to the previous</li>
-                    <li>Fix compiling on GCC 5 / Xenial [#2990]</li>
-                    <li>Add .gitrev output to tarball for third-party builds [#2970]</li>
-                    <li>Add WITH_XC_UPDATECHECK compile flag to enable/disable the update checker [#2968]</li>
-                </ul>
-            </description>
-        </release>
-        <release version="2.4.0" date="2019-03-19">
-            <description>
-                <ul>
-                    <li>New Database Wizard [#1952]</li>
-                    <li>Advanced Search [#1797]</li>
-                    <li>Automatic update checker [#2648]</li>
-                    <li>KeeShare database synchronization [#2109, #1992, #2738, #2742, #2746, #2739]</li>
-                    <li>Improve favicon fetching; transition to Duck-Duck-Go [#2795, #2011, #2439]</li>
-                    <li>Remove KeePassHttp support [#1752]</li>
-                    <li>CLI: output info to stderr for easier scripting [#2558]</li>
-                    <li>CLI: Add --quiet option [#2507]</li>
-                    <li>CLI: Add create command [#2540]</li>
-                    <li>CLI: Add recursive listing of entries [#2345]</li>
-                    <li>CLI: Fix stdin/stdout encoding on Windows [#2425]</li>
-                    <li>SSH Agent: Support OpenSSH for Windows [#1994]</li>
-                    <li>macOS: TouchID Quick Unlock [#1851]</li>
-                    <li>macOS: Multiple improvements; include CLI in DMG [#2165, #2331, #2583]</li>
-                    <li>Linux: Prevent Klipper from storing secrets in clipboard [#1969]</li>
-                    <li>Linux: Use polling based file watching for NFS [#2171]</li>
-                    <li>Linux: Enable use of browser plugin in Snap build [#2802]</li>
-                    <li>TOTP QR Code Generator [#1167]</li>
-                    <li>High-DPI Scaling for 4k screens [#2404]</li>
-                    <li>Make keyboard shortcuts more consistent [#2431]</li>
-                    <li>Warn user if deleting referenced entries [#1744]</li>
-                    <li>Allow toolbar to be hidden and repositioned [#1819, #2357]</li>
-                    <li>Increase max allowed database timeout to 12 hours [#2173]</li>
-                    <li>Password generator uses existing password length by default [#2318]</li>
-                    <li>Improve alert message box button labels [#2376]</li>
-                    <li>Show message when a database merge makes no changes [#2551]</li>
-                    <li>Browser Integration Enhancements [#1497, #2253, #1904, #2232, #1850, #2218, #2391, #2396, #2542, #2622, #2637, #2790]</li>
-                    <li>Overall Code Improvements [#2316, #2284, #2351, #2402, #2410, #2419, #2422, #2443, #2491, #2506, #2610, #2667, #2709, #2731]</li>
-                </ul>
-            </description>
-        </release>
-        <release version="2.3.4" date="2018-08-21">
-            <description>
-                <ul>
-                    <li>Show all URL schemes in entry view [#1768]</li>
-                    <li>Disable merge when database is locked [#1975]</li>
-                    <li>Fix intermittent crashes with favorite icon downloads [#1980]</li>
-                    <li>Provide potential crash warning to Qt 5.5.x users [#2211]</li>
-                    <li>Disable apply button when creating new entry/group to prevent data loss [#2204]</li>
-                    <li>Allow for 12 hour timeout to lock idle database [#2173]</li>
-                    <li>Multiple SSH Agent fixes [#1981, #2117]</li>
-                    <li>Multiple Browser Integration enhancements [#1993, #2003, #2055, #2116, #2159, #2174, #2185]</li>
-                    <li>Fix browser proxy application not closing properly [#2142]</li>
-                    <li>Add real names and Patreon supporters to about dialog [#2214]</li>
-                    <li>Add settings button to toolbar, Donate button, and Report a Bug button to help menu [#2214]</li>
-                    <li>Enhancements to release-tool to appsign intermediate build products [#2101]</li>
-                </ul>
-            </description>
-        </release>
-        <release version="2.3.3" date="2018-05-09">
-            <description>
-                <ul>
-                    <li>Fix crash when browser integration is enabled [#1923]</li>
-                </ul>
-            </description>
-        </release>
-        <release version="2.3.2" date="2018-05-07">
-            <description>
-                <ul>
-                    <li>Enable high entropy ASLR on Windows [#1747]</li>
-                    <li>Enhance favicon fetching [#1786]</li>
-                    <li>Fix crash on Windows due to autotype [#1691]</li>
-                    <li>Fix dark tray icon changing all icons [#1680]</li>
-                    <li>Fix --pw-stdin not using getPassword function [#1686]</li>
-                    <li>Fix placeholders being resolved in notes [#1907]</li>
-                    <li>Enable auto-type start delay to be configurable [#1908]</li>
-                    <li>Browser: Fix native messaging reply size [#1719]</li>
-                    <li>Browser: Increase maximum buffer size [#1720]</li>
-                    <li>Browser: Enhance usability and functionality [#1810, #1822, #1830, #1884, #1906]</li>
-                    <li>SSH Agent: Parse aes-256-cbc/ctr keys [#1682]</li>
-                    <li>SSH Agent: Enhance usability and functionality [#1677, #1679, #1681, #1787]</li>
-                </ul>
-            </description>
-        </release>
-        <release version="2.3.1" date="2018-03-06">
-            <description>
-                <ul>
-                    <li>Fix unnecessary automatic upgrade to KDBX 4.0 and prevent challenge-response key being stripped [#1568]</li>
-                    <li>Abort saving and show an error message when challenge-response fails [#1659]</li>
-                    <li>Support inner stream protection on all string attributes [#1646]</li>
-                    <li>Fix favicon downloads not finishing on some websites [#1657]</li>
-                    <li>Fix freeze due to invalid STDIN data [#1628]</li>
-                    <li>Correct issue with encrypted RSA SSH keys [#1587]</li>
-                    <li>Fix crash on macOS due to QTBUG-54832 [#1607]</li>
-                    <li>Show error message if ssh-agent communication fails [#1614]</li>
-                    <li>Fix --pw-stdin and filename parameters being ignored [#1608]</li>
-                    <li>Fix Auto-Type syntax check not allowing spaces and special characters [#1626]</li>
-                    <li>Fix reference placeholders in combination with Auto-Type [#1649]</li>
-                    <li>Fix qtbase translations not being loaded [#1611]</li>
-                    <li>Fix startup crash on Windows due to missing SVG libraries [#1662]</li>
-                    <li>Correct database tab order regression [#1610]</li>
-                    <li>Fix GCC 8 compilation error [#1612]</li>
-                    <li>Fix copying of advanced attributes on KDE [#1640]</li>
-                    <li>Fix member initialization of CategoryListWidgetDelegate [#1613]</li>
-                    <li>Fix inconsistent toolbar icon sizes and provide higher-quality icons [#1616]</li>
-                    <li>Improve preview panel geometry [#1609]</li>
-                </ul>
-            </description>
-        </release>
-        <release version="2.3.0" date="2018-02-27">
-            <description>
-                <ul>
-                    <li>Add support for KDBX 4.0, Argon2 and ChaCha20 [#148, #1179, #1230, #1494]</li>
-                    <li>Add SSH Agent feature [#1098, #1450, #1463]</li>
-                    <li>Add preview panel with details of the selected entry [#879, #1338]</li>
-                    <li>Add more and configurable columns to entry table and allow copying of values by double click [#1305]</li>
-                    <li>Add KeePassXC-Browser API as a replacement for KeePassHTTP [#608]</li>
-                    <li>Deprecate KeePassHTTP [#1392]</li>
-                    <li>Add support for Steam one-time passwords [#1206]</li>
-                    <li>Add support for multiple Auto-Type sequences for a single entry [#1390]</li>
-                    <li>Adjust YubiKey HMAC-SHA1 challenge-response key generation for KDBX 4.0 [#1060]</li>
-                    <li>Replace qHttp with cURL for website icon downloads [#1460]</li>
-                    <li>Remove lock file [#1231]</li>
-                    <li>Add option to create backup file before saving [#1385]</li>
-                    <li>Ask to save a generated password before closing the entry password generator [#1499]</li>
-                    <li>Resolve placeholders recursively [#1078]</li>
-                    <li>Add Auto-Type button to the toolbar [#1056]</li>
-                    <li>Improve window focus handling for Auto-Type dialogs [#1204, #1490]</li>
-                    <li>Auto-Type dialog and password generator can now be exited with ESC [#1252, #1412]</li>
-                    <li>Add optional dark tray icon [#1154]</li>
-                    <li>Add new "Unsafe saving" option to work around saving problems with file sync services [#1385]</li>
-                    <li>Add IBus support to AppImage and additional image formats to Windows builds [#1534, #1537]</li>
-                    <li>Add diceware password generator to CLI [#1406]</li>
-                    <li>Add --key-file option to CLI [#816, #824]</li>
-                    <li>Add DBus interface for opening and closing KeePassXC databases [#283]</li>
-                    <li>Add KDBX compression options to database settings [#1419]</li>
-                    <li>Discourage use of old fixed-length key files in favor of arbitrary files [#1326, #1327]</li>
-                    <li>Correct reference resolution in entry fields [#1486]</li>
-                    <li>Fix window state and recent databases not being remembered on exit [#1453]</li>
-                    <li>Correct history item generation when configuring TOTP for an entry [#1446]</li>
-                    <li>Correct multiple TOTP bugs [#1414]</li>
-                    <li>Automatic saving after every change is now a default [#279]</li>
-                    <li>Allow creation of new entries during search [#1398]</li>
-                    <li>Correct menu issues on macOS [#1335]</li>
-                    <li>Allow compilation on OpenBSD [#1328]</li>
-                    <li>Improve entry attachments view [#1139, #1298]</li>
-                    <li>Fix auto lock for Gnome and Xfce [#910, #1249]</li>
-                    <li>Don't remember key files in file dialogs when the setting is disabled [#1188]</li>
-                    <li>Improve database merging and conflict resolution [#807, #1165]</li>
-                    <li>Fix macOS pasteboard issues [#1202]</li>
-                    <li>Improve startup times on some platforms [#1205]</li>
-                    <li>Hide the notes field by default [#1124]</li>
-                    <li>Toggle main window by clicking tray icon with the middle mouse button [#992]</li>
-                    <li>Fix custom icons not copied over when databases are merged [#1008]</li>
-                    <li>Allow use of DEL key to delete entries [#914]</li>
-                    <li>Correct intermittent crash due to stale history items [#1527]</li>
-                    <li>Sanitize newline characters in title, username and URL fields [#1502]</li>
-                    <li>Reopen previously opened databases in correct order [#774]</li>
-                    <li>Use system's zxcvbn library if available [#701]</li>
-                    <li>Implement various i18n improvements [#690, #875, #1436]</li>
-                </ul>
-            </description>
-        </release>
-        <release version="2.2.4" date="2017-12-13">
-            <description>
-                <ul>
-                    <li>Prevent database corruption when locked [#1219]</li>
-                    <li>Fixes apply button not saving new entries [#1141]</li>
-                    <li>Switch to Consolas font on Windows for password edit [#1229]</li>
-                    <li>Multiple fixes to AppImage deployment [#1115, #1228]</li>
-                    <li>Fixes multiple memory leaks [#1213]</li>
-                    <li>Resize message close to 16x16 pixels [#1253]</li>
-                </ul>
-            </description>
-        </release>
-        <release version="2.2.2" date="2017-10-22">
-            <description>
-                <p>Changes included in this release:</p>
-                <ul>
-                    <li>Fixed entries with empty URLs being reported to KeePassHTTP clients [#1031]</li>
-                    <li>Fixed YubiKey detection and enabled CLI tool for AppImage binary [#1100]</li>
-                    <li>Added AppStream description [#1082]</li>
-                    <li>Improved TOTP compatibility and added new Base32 implementation [#1069]</li>
-                    <li>Fixed error handling when processing invalid cipher stream [#1099]</li>
-                    <li>Fixed double warning display when opening a database [#1037]</li>
-                    <li>Fixed unlocking databases with --pw-stdin [#1087]</li>
-                    <li>Added ability to override QT_PLUGIN_PATH environment variable for AppImages [#1079]</li>
-                    <li>Fixed transform seed not being regenerated when saving the database [#1068]</li>
-                    <li>Fixed only one YubiKey slot being polled [#1048]</li>
-                    <li>Corrected an issue with entry icons while merging [#1008]</li>
-                    <li>Corrected desktop and tray icons in Snap package [#1030]</li>
-                    <li>Fixed screen lock and Google fallback settings [#1029]</li>
-                </ul>
-            </description>
-        </release>
-        <release version="2.2.1" date="2017-10-01">
-            <description>
-                <p>Changes included in this release:</p>
-                <ul>
-                    <li>Corrected multiple snap issues [#934, #1011]</li>
-                    <li>Corrected multiple custom icon issues [#708, #719, #994]</li>
-                    <li>Corrected multiple Yubikey issues [#880]</li>
-                    <li>Fixed single instance preventing load on occasion [#997]</li>
-                    <li>Keep entry history when merging databases [#970]</li>
-                    <li>Prevent data loss if passwords were mismatched [#1007]</li>
-                    <li>Fixed crash after merge [#941]</li>
-                    <li>Added configurable auto-type default delay [#703]</li>
-                    <li>Unlock database dialog window comes to front [#663]</li>
-                    <li>Translation and compiling fixes</li>
-                </ul>
-            </description>
-        </release>
-        <release version="2.2.0" date="2017-06-23">
-            <description>
-                <p>Changes included in this release:</p>
-                <ul>
-                    <li>Added YubiKey 2FA integration for unlocking databases [#127]</li>
-                    <li>Added TOTP support [#519]</li>
-                    <li>Added CSV import tool [#146, #490]</li>
-                    <li>Added KeePassXC CLI tool [#254]</li>
-                    <li>Added diceware password generator [#373]</li>
-                    <li>Added support for entry references [#370, #378]</li>
-                    <li>Added support for Twofish encryption [#167]</li>
-                    <li>Enabled DEP and ASLR for in-memory protection [#371]</li>
-                    <li>Enabled single instance mode [#510]</li>
-                    <li>Enabled portable mode [#645]</li>
-                    <li>Enabled database lock on screensaver and session lock [#545]</li>
-                    <li>Redesigned welcome screen with common features and recent databases [#292]</li>
-                    <li>Multiple updates to search behavior [#168, #213, #374, #471, #603, #654]</li>
-                    <li>Added auto-type fields {CLEARFIELD}, {SPACE}, {{}, {}} [#267, #427, #480]</li>
-                    <li>Fixed auto-type errors on Linux [#550]</li>
-                    <li>Prompt user prior to executing a cmd:// URL [#235]</li>
-                    <li>Entry attributes can be protected (hidden) [#220]</li>
-                    <li>Added extended ascii to password generator [#538]</li>
-                    <li>Added new database icon to toolbar [#289]</li>
-                    <li>Added context menu entry to empty recycle bin in databases [#520]</li>
-                    <li>Added "apply" button to entry and group edit windows [#624]</li>
-                    <li>Added macOS tray icon and enabled minimize on close [#583]</li>
-                    <li>Fixed issues with unclean shutdowns [#170, #580]</li>
-                    <li>Changed keyboard shortcut to create new database to CTRL+SHIFT+N [#515]</li>
-                    <li>Compare window title to entry URLs [#556]</li>
-                    <li>Implemented inline error messages [#162]</li>
-                    <li>Ignore group expansion and other minor changes when making database "dirty" [#464]</li>
-                    <li>Updated license and copyright information on source files [#632]</li>
-                    <li>Added contributors list to about dialog [#629]</li>
-                </ul>
-            </description>
-        </release>
-        <release version="2.1.4" date="2017-04-09">
-            <description>
-                <p>Changes included in this release:</p>
-                <ul>
-                    <li>Bumped KeePassHTTP version to 1.8.4.2</li>
-                    <li>KeePassHTTP confirmation window comes to foreground [#466]</li>
-                </ul>
-            </description>
-        </release>
-        <release version="2.1.3" date="2017-03-03">
-            <description>
-                <p>Changes included in this release:</p>
-                <ul>
-                    <li>Fix possible overflow in zxcvbn library [#363]</li>
-                    <li>Revert HiDPI setting to avoid problems on laptop screens [#332]</li>
-                    <li>Set file meta properties in Windows executable [#330]</li>
-                    <li>Suppress error message when auto-reloading a locked database [#345]</li>
-                    <li>Improve usability of question dialog when database is already locked by a different instance [#346]</li>
-                    <li>Fix compiler warnings in QHttp library [#351]</li>
-                    <li>Use unified toolbar on Mac OS X [#361]</li>
-                    <li>Fix an issue on X11 where the main window would be raised instead of closed on Alt+F4 [#362]</li>
-                </ul>
-            </description>
-        </release>
-        <release version="2.1.2" date="2017-02-17">
-            <description>
-                <p>Changes included in this release:</p>
-                <ul>
-                    <li>Ask for save location when creating a new database [#302]</li>
-                    <li>Remove Libmicrohttpd dependency to clean up the code and ensure better OS X compatibility [#317, #265]</li>
-                    <li>Prevent Qt from degrading Wifi network performance on certain platforms [#318]</li>
-                    <li>Visually refine user interface on OS X and other platforms [#299]</li>
-                    <li>Remove unusable tray icon setting on OS X [#293]</li>
-                    <li>Fix compositing glitches on Ubuntu and prevent flashing when minimizing to the tray at startup [#307]</li>
-                    <li>Fix AppImage tray icon on Ubuntu [#277, #273]</li>
-                    <li>Fix global menu disappearing after restoring KeePassXC from the tray on Ubuntu [#276]</li>
-                    <li>Fix result order in entry search [#320]</li>
-                    <li>Enable HiDPI scaling on supported platforms [#315]</li>
-                    <li>Remove empty directories from installation target [#282]</li>
-                </ul>
-            </description>
-        </release>
-        <release version="2.1.1" date="2017-02-06">
-            <description>
-                <p>Changes included in this release:</p>
-                <ul>
-                    <li>Enabled HTTP plugin build; plugin is disabled by default and limited to localhost [#147]</li>
-                    <li>Escape HTML in dialog boxes [#247]</li>
-                    <li>Corrected crashes in favicon download and password generator [#233, #226]</li>
-                    <li>Increase font size of password meter [#228]</li>
-                    <li>Fixed compatibility with Qt 5.8 [#211]</li>
-                    <li>Use consistent button heights in password generator [#229]</li>
-                </ul>
-            </description>
-        </release>
-        <release version="2.1.0" date="2017-01-22">
-            <description>
-                <p>Changes included in this release:</p>
-                <ul>
-                    <li>Show unlock dialog when using autotype on a closed database [#10, #89]</li>
-                    <li>Show different tray icon when database is locked [#37, #46]</li>
-                    <li>Support autotype on Windows and OS X [#42, #60, #63]</li>
-                    <li>Add delay feature to autotype [#76, #77]</li>
-                    <li>Add password strength meter [#84, #92]</li>
-                    <li>Add option for automatically locking the database when minimizing the window [#57]</li>
-                    <li>Add feature to download favicons and use them as entry icons [#30]</li>
-                    <li>Automatically reload and merge database when the file changed on disk [#22, #33, #93]</li>
-                    <li>Add tool for merging two databases [#22, #47, #143]</li>
-                    <li>Add --pw-stdin commandline option to unlock the database by providing a password on STDIN [#54]</li>
-                    <li>Add utility script for reading the database password from KWallet [#55]</li>
-                    <li>Fix some KeePassHTTP settings not being remembered [#34, #65]</li>
-                    <li>Make search box persistent [#15, #67, #157]</li>
-                    <li>Enhance search feature by scoping the search to selected group [#16, #118]</li>
-                    <li>Improve interaction between search field and entry list [#131, #141]</li>
-                    <li>Add stand-alone password-generator [#18, #92]</li>
-                    <li>Don't require password repetition when password is visible [#27, #92]</li>
-                    <li>Add support for entry attributes in autotype sequences [#107]</li>
-                    <li>Always focus password field when opening the database unlock widget [#116, #117]</li>
-                    <li>Fix compilation errors on various platforms [#53, #126, #130]</li>
-                    <li>Restructure and improve kdbx-extract utility [#160]</li>
-                </ul>
-            </description>
-        </release>
-    </releases>
-    <content_rating type="oars-1.0" />
+  </description>
+  <screenshots>
+    <screenshot type="default">
+      <caption>Organize with Groups and Entries</caption>
+      <image type="source">https://keepassxc.org/assets/img/screenshots/database_view.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Unlock database</caption>
+      <image type="source">https://keepassxc.org/assets/img/screenshots/unlock_database.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Icon Selection for Entry</caption>
+      <image type="source">https://keepassxc.org/assets/img/screenshots/edit_entry_icons.png</image>
+    </screenshot>
+    <screenshot>
+      <caption>Password Generator</caption>
+      <image type="source">https://keepassxc.org/assets/img/screenshots/password_generator_advanced.png</image>
+    </screenshot>
+  </screenshots>
+  <releases>
+    <release version="2.8.0" date="2025-01-01" type="stable">
+      <description>
+        <ul>
+          <li>Placeholder for future release notes</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.7.10" date="2025-03-02" type="stable">
+      <description>
+        <ul>
+          <li>Allow adjusting application font size [#11567]</li>
+          <li>Add Proton Pass importer [#11197]</li>
+          <li>Support KeePass2 TOTP settings [#11229]</li>
+          <li>Add New/Preview Entry Attachments dialog and functionality [#11637, #11699, #11650]</li>
+          <li>Add database name, color, and icon options for unlock view [#10819, #11725]</li>
+          <li>Show entry background color as column [#6798]</li>
+          <li>Use icons for password strength [#9844]</li>
+          <li>Add "Group Full Path" column in entry view [#10278]</li>
+          <li>Passphrase "MIXED case" Type [#11255]</li>
+          <li>Allow deleting extension plugin data from Browser Statistics [#11218]</li>
+          <li>Add --minimized option to keepassxc [#11693]</li>
+          <li>Implement T-CONV and T-REPLACE-RX entry placeholders [#11453]</li>
+          <li>Option to disable opening browser when URL field double-clicked [#11332]</li>
+          <li>Overhaul action states and add icons to toolbar [#11047]</li>
+          <li>Show character count in password generator dialog [#10940]</li>
+          <li>Add ability to expire entries from context menu [#8731]</li>
+          <li>Add copy field shortcuts to Auto-Type select dialog [#11518]</li>
+          <li>Passkeys: Add support for selecting group on creation [#11260]</li>
+          <li>Browser: Refactor Access Control Dialog [#9607]</li>
+          <li>Browser: Add support for URL wildcards and exact URL [#9835, #11752]</li>
+          <li>Browser: Allow groups to restrict by browser integration key [#9852]</li>
+          <li>CLI: Add `-d` dry-run shortcut to merge command [#11192]</li>
+          <li>CLI: HTML export [#11590]</li>
+          <li>macOS: Add option to disable database lock when switching user [#9707]</li>
+          <li>SSH Agent: Implement feature to clear all identities [#10649]</li>
+          <li>Major enhancements to documentation [#11745, #10875]</li>
+          <li>Various UI and style fixes [#11535, #11672, #11511, #11445, #11426, #11273, #11455, #11321, #11594, #11539, #11351, #11354, #10748, #11602, #11303, #11291, #10091, #9417]</li>
+          <li>Various improvements to tags [#11676, #11652, #11625]</li>
+          <li>Reset splitter sizes on database unlock [#11014]</li>
+          <li>Remember sort order in Auto-type popup dialog [#9508]</li>
+          <li>Fix database password clearing when modifying key file / hardware key [#11001]</li>
+          <li>Fix issues with reloading and handling of externally modified db file [#10612]</li>
+          <li>Support passkeys with Bitwarden import [#11401]</li>
+          <li>Fix various quirks with CSV import [#11787]</li>
+          <li>Show Auto-Type select dialog even if window title is empty [#11603]</li>
+          <li>Refactor hardware key code to avoid deadlock [#11703, #10872]</li>
+          <li>Show a clear error if hardware key is found slots are not configured [#11609]</li>
+          <li>Fix signal/slot disconnect when opening import wizard [#11039]</li>
+          <li>Fix setting window title as modified [#11542]</li>
+          <li>Fix assert hit when viewing entry history [#11413]</li>
+          <li>Fix multiple crashes on Linux [#11513]</li>
+          <li>Fix backup file path time substitution [#10834]</li>
+          <li>Prevent long-running threads from deadlocking the program with only 1 CPU [#11155]</li>
+          <li>Hide the menubar when menus lose focus (if toggled off) [#11355, #11605]</li>
+          <li>CLI: Restore the original codepage on windows [#11470]</li>
+          <li>Passkeys: Various fixes [#10934, #10951]</li>
+          <li>Browser: Fix cancel with database unlock dialog [#11435]</li>
+          <li>Browser: Resolve references in Access Confirm dialog [#11055]</li>
+          <li>SSH Agent: Add timeout to streams to prevent deadlock [#11290]</li>
+          <li>macOS: Replace legacy code for screen recording permissions [#11428]</li>
+          <li>macOS: Implement Secure Input Mode [#11623]</li>
+          <li>macOS: Fix showing ambigious name in settings [#11373]</li>
+          <li>macOS: Fix copy-to-clipboard shortcut in entry preview widget [#10966]</li>
+          <li>Linux: Prevent multiple lock requests [#11306]</li>
+          <li>Snap: Prevent need for snap helper script to configure browser extension [#10924]</li>
+          <li>Windows: Detect outdated VC Redist with MSI installer [#11469]</li>
+          <li>Windows: Additional exclusion fields for clipboard [#11521]</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.7.9" date="2024-06-19" type="stable">
+      <description>
+        <ul>
+          <li>Passkeys: Ability to easily remove a passkey from an entry [#10777]</li>
+          <li>Snap: Use new desktop portal for native messaging integration [#10906]</li>
+          <li>Improve entry placeholder/reference feature [#10846]</li>
+          <li>Improve CSV importing when title field isn't specified [#10843]</li>
+          <li>Improve encrypted Bitwarden importing [#10800]</li>
+          <li>Improve database settings UX [#10821]</li>
+          <li>Improve handling of clipboard actions from entry preview [#10810]</li>
+          <li>Improve group/entry view resize behavior and set sensible defaults [#10641]</li>
+          <li>Passkeys: Fix incorrect username fill [#10874]</li>
+          <li>Passkeys: Return additional data to the extension [#10857]</li>
+          <li>Fix password clear timer inconsistency on unlock view [#10708]</li>
+          <li>Fix portability check [#10760]</li>
+          <li>Fix page overflow on HTML exports [#10735]</li>
+          <li>Fix broken builds when using system provided zxcvbn [#10717]</li>
+          <li>Fix copy password button when text is selected [#10853]</li>
+          <li>Fix tab ordering on application settings pages [#10907]</li>
+          <li>SSH Agent: Fix broken decrypt button [#10638]</li>
+          <li>Windows: Fix ALT Auto-Type modifier [#10795]</li>
+          <li>Windows: Fix wrong DACL memory size allocation [#10712]</li>
+          <li>macOS: Fix monospace font sizing [#10739]</li>
+          <li>Flatpak: Fix configuration settings off-by-one error [#10688]</li>
+          <li>BSD: Fix compiling with libusb implementation [#10736]</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.7.8" date="2024-05-05" type="stable">
+      <description>
+        <ul>
+          <li>Add hotkey for showing search help [#10591]</li>
+          <li>Add hotkey for group switching (Ctrl+Shift+PgUp/PgDown) [#10625]</li>
+          <li>Add per-database auto-save delay setting [#9100]</li>
+          <li>Add setting to hide menubar [#10341]</li>
+          <li>Improve Bitwarden 1PUX import and support organization collections [#10499]</li>
+          <li>Show advanced settings checkbox only for settings that have them [#6513]</li>
+          <li>Remove obsolete setting for requiring repeated password entry [#9722]</li>
+          <li>Passkeys: Allow registering Passkeys to existing entries [#10408]</li>
+          <li>Passkeys: Show warning about data being unencrypted before Passkey export [#10411]</li>
+          <li>Passkeys: Support NFC and USB transports [#10402]</li>
+          <li>Passkeys: Pass extension JSON data to browser [#10615]</li>
+          <li>SSH Agent: Do not use entries from recycle bin [#10518]</li>
+          <li>Linux: Change hotkey sequence used for {CLEARFIELD} Auto-Type [#10008]</li>
+          <li>Windows: Improve DACL memory access protection [#10618]</li>
+          <li>Fix crash when deleting history items [#10451]</li>
+          <li>Fix crash on screen lock or computer sleep [#10458]</li>
+          <li>Fix search field not being focused after unlock [#10459]</li>
+          <li>Fix loss of window focus when Auto-Type needs to unlock a database [#10555]</li>
+          <li>Fix inconsistent TOTP visibility on unlock [#10009]</li>
+          <li>Fix CSV import skipping over single-name groups [#10575]</li>
+          <li>Fix key file folder being remembered even if disabled in settings [#10636]</li>
+          <li>Fix issues with entry editing and database locking [#10667]</li>
+          <li>Fix key file text when provided on command line [#10642]</li>
+          <li>Fix issues with hardware key auto detection [#10663]</li>
+          <li>Do not override monospace font size [#10282]</li>
+          <li>Perform group sort only when group view is in focus [#10202]</li>
+          <li>Do not show decimals for attachment sizes in Bytes [#10595]</li>
+          <li>Prevent merging of global custom data when merging databases [#10452]</li>
+          <li>Fix minor translation issues [#10635]</li>
+          <li>Passkeys: Fix StrongBox incompatibility [#10420]</li>
+          <li>Passkeys: Set RP ID to effective domain if unset instead of returning an error [#10384]</li>
+          <li>Passkeys: Various UI fixes and improvements [#10427, #10608, #10609]</li>
+          <li>AppImage: Fix URL opening [#10624]</li>
+          <li>Flatpak: Fix application autostart [#10563]</li>
+          <li>Linux/macOS: Fix button sizes on modal alert popups [#10500]</li>
+          <li>Linux: Fix clipboard clear on Wayland [#10500]</li>
+          <li>Windows: Preserve file-hidden attribute [#10343]</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.7.7" date="2024-03-09" type="stable">
+      <description>
+        <ul>
+          <li>Support USB Hotplug for Hardware Key interface [#10092]</li>
+          <li>Support 1PUX and Bitwarden import [#9815]</li>
+          <li>Browser: Add support for PassKeys [#8825, #9987, #10318]</li>
+          <li>Build System: Move to vcpkg manifest mode [#10088]</li>
+          <li>Fix multiple TOTP issues [#9874]</li>
+          <li>Fix focus loss on save when the editor is not visible anymore [#10075]</li>
+          <li>Fix visual when removing entry from history [#9947]</li>
+          <li>Fix first entry is not selected when a search is performed [#9868]</li>
+          <li>Prevent scrollbars on entry drag/drop [#9747]</li>
+          <li>Prevent duplicate characters in "Also choose from" field of password generator  [#9803]</li>
+          <li>Security: Prevent byte-by-byte and attachment inference side channel attacks [#10266]</li>
+          <li>Browser: Fix raising Update Entry messagebox [#9853]</li>
+          <li>Browser: Fix bugs when returning credentials [#9136]</li>
+          <li>Browser: Fix crash on database open from browser [#9939]</li>
+          <li>Browser: Fix support for referenced URL fields [#8788]</li>
+          <li>MacOS: Fix crash when changing highlight/accent color [#10348]</li>
+          <li>MacOS: Fix TouchID appearing even though lid is closed [#10092]</li>
+          <li>Windows: Fix terminating KeePassXC processes with MSI installer [#9822]</li>
+          <li>FdoSecrets: Fix database merge crash when enabled [#10136]</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.7.6" date="2023-08-15" type="stable">
+      <description>
+        <ul>
+          <li>Significant improvement to visual when drag/drop entries [#9698]</li>
+          <li>Automatically prompt for Quick Unlock when showing unlock dialog [#9697]</li>
+          <li>Improve colorful lock icon [#9632]</li>
+          <li>Ability to search by entry UUID [#9571]</li>
+          <li>Add challenge-response support for NitroKey 3 [#9631]</li>
+          <li>Auto-Type: Disable entry level Auto-Type when disabled at group/entry [#9672]</li>
+          <li>Browser: Show warning when adding duplicate URL's to entry [#9588][#9635]</li>
+          <li>Browser: Improve error message when proxy cannot be found [#9385]</li>
+          <li>Fix crash on exit on macOS [#9620]</li>
+          <li>Fix crash on search if entry doesn't have a group [#9633]</li>
+          <li>Fix several issues with Quick Unlock [#9697]</li>
+          <li>Enable save button when not auto-saving non-data changes [#9634]</li>
+          <li>Several UI/UX fixes [#9647]</li>
+          <li>Move toolbar back to top of window when disabling movement [#9699]</li>
+          <li>Browser: Fix closing password generator dialog with X button [#9636]</li>
+          <li>Browser: Fix handling of expired credentials [#9595]</li>
+          <li>Windows: Prevent white flicker when launching application [#9637]</li>
+          <li>Linux: Fix warning message about allow screencapture [#9638]</li>
+          <li>FdoSecrets: Fix access confirmation dialog showing even when disabled [#9690]</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.7.5" date="2023-05-14" type="stable">
+      <description>
+        <ul>
+          <li>Add menu option to allow screenshots [#8841]</li>
+          <li>Add support for Botan 3 [#9388]</li>
+          <li>Increase max TOTP step to 24 hours [#9149]</li>
+          <li>Improve HTML export layout [#8987]</li>
+          <li>Turn search reset off by default [#9153]</li>
+          <li>Use QClipboard::clear() instead of setting blank text [#9148]</li>
+          <li>Hide group column header choice when not in search [#9171]</li>
+          <li>Improve look of KeePassXC logo and icons [#9355]</li>
+          <li>Add keyboard shortcuts for app and database settings [#9007]</li>
+          <li>Hide rename button from attachments preview panel [#8842]</li>
+          <li>Linux: Set SingleMainWindow in .desktop file [#7430]</li>
+          <li>Fix crash when search clears while creating new entry [#9230]</li>
+          <li>Fix crash when using Windows Hello in a Remote Desktop session [#9006]</li>
+          <li>Fix crash in Group Edit after enabling Browser Integration [#8778]</li>
+          <li>Fix canceling quick unlock when it is unavailable [#9034]</li>
+          <li>Set password input field font correctly [#8732]</li>
+          <li>Greatly improve performance when rendering entry view [#9398]</li>
+          <li>Fix various accessibility issues [#9138]</li>
+          <li>Fix arrows size when expand/collapse a group [#9096]</li>
+          <li>Select the clone instead of the original after cloning an entry [#9070]</li>
+          <li>Fix bugs with preview widget [#9170]</li>
+          <li>Fix status bar update when switching to other DB [#9073]</li>
+          <li>Fix database settings spin box bug [#9101]</li>
+          <li>Fix Ctrl+Tab shortcut to cycle databases in unlock dialog [#8839]</li>
+          <li>Fix TOTP QR code maintaining square ratio [#9027]</li>
+          <li>Fix Auto-Type configuration page on custom sequence selection [#8752]</li>
+          <li>Fix unexpected behavior of `--lock` when KeePassXC is not running [#8889]</li>
+          <li>Make open folder icon exempt from "Apply group icon to entry" [#9205]</li>
+          <li>Allow setting default file open directory with env var [#9192]</li>
+          <li>SSH Agent: Fix support for AES-256/GCM openssh keys [#8968]</li>
+          <li>Browser: Fix Native Messaging script path with BSD OS's [#8835]</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.7.4" date="2022-10-29" type="stable">
+      <description>
+        <ul>
+          <li>Add 2 months expiration preset [#8687]</li>
+          <li>CLI: Add Unicode support on Windows [#8618]</li>
+          <li>Fix crash on macOS when unlocking database [#8676]</li>
+          <li>Fix display of passwords in preview panel [#8633]</li>
+          <li>Fix clicking links in entry preview panel [#8644]</li>
+          <li>Prevent expired entries search if no results returned [#8643]</li>
+          <li>Browser: Revert code causing connection problems [#8665]</li>
+          <li>Browser: Fix socket file symbolic link on Linux [#8656]</li>
+          <li>Flatpak: Fix launching browser proxy service [#8680]</li>
+          <li>SSH Agent: Fix pageant support on Windows [#8619]</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.7.3" date="2022-10-23" type="stable">
+      <description>
+        <ul>
+          <li>Enhance Tags Support and Add Saved Searches [#8435, #8607]</li>
+          <li>Significant improvements to entry preview panel [#7993]</li>
+          <li>Add password strength indicator to all password fields [#7885]</li>
+          <li>Limit zxcvbn entropy estimation length to 128 characters [#7748]</li>
+          <li>Try full URL path when fetching favicon [#8565]</li>
+          <li>Hide usernames in preview panel when hidden in entry view [#8608]</li>
+          <li>Enable dark title bar on windows when accent color is not used [#8498]</li>
+          <li>Add option to display passwords in color in preview panel [#7097]</li>
+          <li>Add XML Export option to GUI [#8524]</li>
+          <li>Increase entropy required for a "good" password rating to 75 [#8523]</li>
+          <li>Add shortcut to copy password with TOTP appended [#8443]</li>
+          <li>Show entry count in status bar [#8435]</li>
+          <li>Allow KeePassXC to be built without X11 [#8147]</li>
+          <li>Enable use of VivoKey Apex and Dangerous Things FlexSecure tokens [#8332]</li>
+          <li>Add setting for number of recent files [#8239]</li>
+          <li>Add Ctrl+Tab shortcut to cycle databases in unlock dialog [#8168]</li>
+          <li>Replace offensive words in eff_large.wordlist [#7968]</li>
+          <li>Auto-Type: PICKCHARS can specify attribute and ignore BEEP [#8118]</li>
+          <li>Linux: Add isHardwareKeySupported and refreshHardwareKeys to DBus methods [#8055]</li>
+          <li>Add config variable to specify default database file name [#8042]</li>
+          <li>CLI: Add `db-edit` command [#8400]</li>
+          <li>CLI: Add option to display all attributes with `show` command [#8256]</li>
+          <li>CLI: Show UUID and tags with `show` and `clip` commands [#8241]</li>
+          <li>Browser: Move socket into separate directory on Linux [#8030]</li>
+          <li>Browser: Add group setting to omit WWW subdomain when matching URLs [#7988]</li>
+          <li>FdoSecrets: Ask to unlock the database when creating items [#8022, #8028]</li>
+          <li>FdoSecrets: Skip entries in recycle bin when searching [#8021]</li>
+          <li>Fix potential deadlock in UI when saving [#8606]</li>
+          <li>Fix newlines when copying notes from preview panel [#8542]</li>
+          <li>Fix dark mode detection on Linux [#8477]</li>
+          <li>Fix crash when deleting items in recycle bin while searching [#8117]</li>
+          <li>Fix crash when trying to close database during unlock [#8144]</li>
+          <li>Fix tabbing around the interface [#8435, #8520]</li>
+          <li>Fix OPVault import when there are multiple OTP fields [#8436]</li>
+          <li>Fix various Windows Hello bugs [#8354]</li>
+          <li>Fix use of Apple Watch for Quick Unlock [#8311]</li>
+          <li>Better handling of "Lock on Minimize" setting [#8202]</li>
+          <li>Support numeric aware sorting on Windows and macOS [#8363]</li>
+          <li>Check for write permission before entering portable mode [#8447]</li>
+          <li>Correct regex escape logic to prevent parse errors [#7778]</li>
+          <li>Normalize slashes and file case for last used databases [#7864, #7214]</li>
+          <li>Link ykcore against pthread [#7807]</li>
+          <li>Auto-Type: Fix menu entries in selection dialog on Windows [#7987]</li>
+          <li>Auto-Type: Fix use of modifiers under macOS [#8111]</li>
+          <li>CLI: Fix output when using clip with the -t flag [#8271]</li>
+          <li>Browser: Use asynchronous access confirm dialog [#8273]</li>
+          <li>Browser: Always send database locked/unlocked status [#8114]</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.7.1" date="2022-04-05" type="stable">
+      <description>
+        <ul>
+          <li>Show when tags are changed in entry history [#7638]</li>
+          <li>Improve tags editing and allow spaces in tags [#7708]</li>
+          <li>Improve layout of entry preview panel [#7767]</li>
+          <li>Incorporate patches to support Flatpak distribution [#7728]</li>
+          <li>Add expiration presets for 12 and 24 hours [#7738]</li>
+          <li>Fix crash when building history change list [#7638]</li>
+          <li>Fix hiding password on database unlock [#7725]</li>
+          <li>Fix AES KDF slow transform speed [#7755]</li>
+          <li>Auto-Type: Correct timing issue on macOS and Linux that prevented typing [#7588]</li>
+          <li>Auto-Type: Fix use of Ctrl/Alt/Shift/Win modifiers on Windows [#7629]</li>
+          <li>Auto-Type: Reduce/eliminate delay when searching for entries [#7598]</li>
+          <li>Auto-Type: Map ASCII dead keys on Linux for international keyboards [#7614]</li>
+          <li>CLI: Fix detection of hardware keys (YubiKey) [#7593]</li>
+          <li>CLI: Add missing parameter `-c` to add/edit entries command [#7594]</li>
+          <li>Secret Service: Fix crash when multiple prompts are shown [#7786]</li>
+          <li>SSH Agent: Fix default agent selection on Windows [#7764]</li>
+          <li>Fix database unlock dialog not being the top window on Linux [#7771]</li>
+          <li>Fix drag/drop entries between tabs on Wayland [#7628]</li>
+          <li>Fix compiling with minizip-ng [#7638]</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.7.0" date="2022-03-21" type="stable">
+      <description>
+        <ul>
+          <li>Implement KDBX 4.1 [#7114]</li>
+          <li>Add direct write save option for cloud storage and GVFS [#6594]</li>
+          <li>Prevent screen capture on Windows and macOS [#6030]</li>
+          <li>Support quick unlock using Windows Hello [#7384]</li>
+          <li>Support quick unlock using Apple Watch [#5526]</li>
+          <li>Allow specifying database backup paths [#7035]</li>
+          <li>Add tag functionality [#6487][#7436][#7446]</li>
+          <li>Add password rating column to entry view [#4797]</li>
+          <li>Add group clone action [#6124]</li>
+          <li>Show modifications between entry history items [#6789]</li>
+          <li>Ability to bulk-delete and purge unused custom icons [#5970]</li>
+          <li>Support adding custom passphrase wordlists [#6799]</li>
+          <li>Support passphrase wordlists in numbered and PGP-signed formats [#6791]</li>
+          <li>Implement support for hardware keys via wireless NFC [#6895]</li>
+          <li>SSH Agent: Add support for OpenSSH 8.2 FIDO/U2F keys [#6371]</li>
+          <li>CLI: Implement attachment handling [#5538]</li>
+          <li>CLI: Add support for okon in offline HIBP checks [#5478]</li>
+          <li>CLI: Implement `search` command and remove `locate` [#6805]</li>
+          <li>CLI: Add db statistic output to `db-info` command [#7032]</li>
+          <li>CLI: Add -i/--include option to `generate` command. [#7112]</li>
+          <li>CLI: Add a -n (--notes) option to `add` and `edit` commands [#4646]</li>
+          <li>CLI: Add keyfile option to `import` command [#5402]</li>
+          <li>CLI: Adding a best option to clip to copy a password of the best match [#4489]</li>
+          <li>Browser: Add Microsoft Edge support on Linux [#7100]</li>
+          <li>Browser: Support native password generator from the extension [#6529]</li>
+          <li>Browser: Add group settings [#4180]</li>
+          <li>Browser: Add feature to ignore entries for HTTP-Auth Logins [#5394]</li>
+          <li>Browser: Support triggering Auto-Type from browser extension [#6272]</li>
+          <li>Browser: Add delete-entry command to API [#6899]</li>
+          <li>Browser: Add search 'by-path' url to API [#5535]</li>
+          <li>Browser: search for entries by UUID to API [#4763]</li>
+          <li>Browser: Support auto-download of favicon on entry addition [#7179]</li>
+          <li>Auto-Type: Major improvements to Auto-Type [#5864][#7463][#7435][#7391][#7129][#6400][#6364][#6361][#5283][#7507]</li>
+          <li>Auto-Type: Fix typing to virtual machines on Windows [#7366]</li>
+          <li>Auto-Type: Re-implement X11 keysym emulation [#7098]</li>
+          <li>Auto-Type: Support multiple Xkb layouts [#6247]</li>
+          <li>Auto-Type: Abort keystroke if modifiers held on X11 [#6351][#6357]</li>
+          <li>Auto-Type: Add TOTP option to entry level Auto-Type menu [#6675]</li>
+          <li>FdoSecrets: Major Refactor and Code Consolidation [#5747][#5660][#7043][#6915]</li>
+          <li>FdoSecrets: Implement unlock before search [#6943]</li>
+          <li>Reports: Add browser statistics report [#7197]</li>
+          <li>Port crypto backend to Botan [#6209]</li>
+          <li>Improve attachment handling and security [#6606][#5034][#7083]</li>
+          <li>Allow selecting any open database in unlock dialog [#5427]</li>
+          <li>KeeShare: Remove checking signed container and QuaZip dependency [#7223]</li>
+          <li>Introduce security option to enable copy on double click (default off) [#6433]</li>
+          <li>Add 'delete entry without confirm' functionality [#5812]</li>
+          <li>Improve macOS and Windows platform integration [#5851]</li>
+          <li>Lock only the current database by default [#6652]</li>
+          <li>Show expired entries on DB unlock [#7290]</li>
+          <li>Update D-Bus adaptor interface class name to match definition file [#7523]</li>
+          <li>Add countdown progress bar to TOTP preview [#6930]</li>
+          <li>Enter favicon url directly on icons page [#6614]</li>
+          <li>Set C++17 as standard in the build system [#7180]</li>
+          <li>Internalize ykcore into code base [#6654]</li>
+          <li>Transition to Visual Studio builds on Windows [#5874]</li>
+          <li>Ability to delete entries from health check reports [#6537]</li>
+          <li>Enhance remembering last-used directories [#6711]</li>
+          <li>Implement org.freedesktop.appearance.color-scheme support on Linux [#7422]</li>
+          <li>Support sorting HTML export [#7011]</li>
+          <li>Add display number of characters in passphrases [#5449]</li>
+          <li>Use Alt+Tab on macOS to switch between databases [#5407]</li>
+          <li>Add feature to sort groups using shortcut keys [#6999]</li>
+          <li>Add CTRL+Enter to apply password generator changes [#6414]</li>
+          <li>Display `Database created` timestamp on statistics report [#6876]</li>
+          <li>Browser: Improve best matching credentials setting [#6893]</li>
+          <li>SSH Agent: Use both Pageant and OpenSSH agent simultaneously on Windows [#6288]</li>
+          <li>SSH Agent: Allow using database path to resolve keys [#6365]</li>
+          <li>SSH Agent: Show correct error messages in main window [#7166]</li>
+          <li>Multiple fixes for MSI installer [#6630]</li>
+          <li>Fix tab order for CSV import dialog to match screen order [#7315]</li>
+          <li>Don't mark kdbx:// urls as invalid [#7221]</li>
+          <li>Make selected text copyable instead of copying password [#7209]</li>
+          <li>Detect timestamp resolution for CSV files [#7196]</li>
+          <li>Fix crash while downloading favicon [#7104]</li>
+          <li>Correct naming of newly generated keyx files [#7010]</li>
+          <li>Place the 'Recycle Bin' at the bottom of the list when groups are sorted [#7004]</li>
+          <li>Handle tilde with custom browser paths [#6659]</li>
+          <li>Don't scroll up when deleting an entry [#6833]</li>
+          <li>Set the MIME-Type to text/plain when using wl-copy on wayland [#6832]</li>
+          <li>Fix adaptive icon painting [#5989][#6033]</li>
+          <li>Fix favicon download from URL with non-standard port [#5509]</li>
+          <li>Ignore recycle bin on KeePassHTTP migration [#5481]</li>
+          <li>Fix keepassxc-cr-recovery utility [#7521]</li>
+          <li>Fix Auto-Type not working when audio recording indicator is active on macOS 12.2+ [#7526]</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.6.6" date="2021-06-11" type="stable">
+      <description>
+        <ul>
+          <li>Fix focusing search when pressing hotkey [#6603]</li>
+          <li>Trim whitespace from TOTP key input prior to processing [#6604]</li>
+          <li>Fix building on macOS [#6598]</li>
+          <li>Resolve compiler warnings for unused return values [#6607]</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.6.5" date="2021-06-07" type="stable">
+      <description>
+        <ul>
+          <li>Show search bar when toolbar is hidden or in overflow [#6279]</li>
+          <li>Show countdown for clipboard clearing in status bar [#6333]</li>
+          <li>Command line option to lock all open databases [#6511]</li>
+          <li>Allow CSV import of bare TOTP secrets [#6211]</li>
+          <li>Retain file creation time when saving database [#6576]</li>
+          <li>Set permissions of saved attachments to be private to the current user [#6363]</li>
+          <li>OPVault: Use Text instead of Name for attribute names [#6334]</li>
+          <li>Reports: Allow resizing of reports columns [#6435]</li>
+          <li>Reports: Toggle showing expired entries [#6534]</li>
+          <li>Save Always on Top setting [#6236]</li>
+          <li>Password generator can exclude additional lookalike characters (6/G, 8/B) [#6196]</li>
+          <li>Allow setting MSI properties in unattended install [#6196]</li>
+          <li>Update MainWindow minimum size to enable smaller verticle space [#6196]</li>
+          <li>Use application font size when setting default or monospace fonts [#6332]</li>
+          <li>Fix notes not clearing in entry preview panel in some cases [#6481]</li>
+          <li>macOS: Correct window activation when restoring from tray [#6575]</li>
+          <li>macOS: Better handling of minimize after unlock when using browser integration [#6338]</li>
+          <li>Linux: Start after the system tray is available on LXQt [#6216]</li>
+          <li>Linux: Allow selection of modal dialogs on X11 in Auto-Type [#6204]</li>
+          <li>KeeShare: prevent crash when file extension is missing [#6174]</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.6.4" date="2021-01-31" type="stable">
+      <description>
+        <ul>
+          <li>Automatically adapt to light/dark system theme changes (Windows/macOS only) [#6034]</li>
+          <li>Show window title as tooltip on system tray [#5948]</li>
+          <li>Compress Snap release as LZO for faster initial startup [#5877]</li>
+          <li>Password generator: Set maximum selectable password length to 999 [#5937]</li>
+          <li>Fix crash on app close when using SSH agent [#5935]</li>
+          <li>Fix KDF selection showing wrong item when using Argon2id [#5923]</li>
+          <li>Automatically close About dialog on database lock if it is still open [#5947]</li>
+          <li>Linux: Fix automatic launch at system startup with AppImages [#5901]</li>
+          <li>Linux: Fix click-to-move on empty area activating when using menus [#5971]</li>
+          <li>Linux: Try multiple times to show tray icon if tray is not ready yet [#5948]</li>
+          <li>macOS: Fix KeePassXC blocking clean shutdown [#6002]</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.6.3" date="2021-01-12" type="stable">
+      <description>
+        <ul>
+          <li>Support Argon2id KDF [#5778]</li>
+          <li>Support XMLv2 key files [#5798]</li>
+          <li>Improve CSV Import/Export, include time fields and TOTP [#5346]</li>
+          <li>Support empty area dragging of the application window [#5860]</li>
+          <li>Display default Auto-Type sequence in preview pane [#5654]</li>
+          <li>Remove strict length limit on generated passwords [#5748]</li>
+          <li>Hide key file path by default when unlocking database [#5779]</li>
+          <li>Document browser extension use with Edge in managed mode [#5692]</li>
+          <li>Windows: Prevent clipboard history and cloud sync [#5853]</li>
+          <li>macOS: Update the application icon to Big Sur styling [#5851]</li>
+          <li>Re-select previously selected entry on database unlock [#5559]</li>
+          <li>Properly save special character choice in password generator [#5610]</li>
+          <li>Fix crash in browser integration with multiple similar entries [#5653]</li>
+          <li>Remove offset on username field in classic theme [#5788]</li>
+          <li>Ensure entry history is copied when drag/dropping entries and groups [#5817]</li>
+          <li>Close modal dialogs when database is locked [#5820]</li>
+          <li>Prevent crash when KeeShare modifies an entry that is currently being edited [#5827]</li>
+          <li>Improve preview of entry attributes [#5834]</li>
+          <li>Always activate/focus database open dialog preventing mistype [#5878]</li>
+          <li>Reports: fix calculation of average password length [#5862]</li>
+          <li>Linux: Delay startup on login to correct tray icon issues [#5724]</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.6.2" date="2020-10-21" type="stable">
+      <description>
+        <ul>
+          <li>Add option to keep window always on top to view menu [#5542]</li>
+          <li>Move show/hide usernames and passwords to view menu [#5542]</li>
+          <li>Add command line options and environment variables for changing the config locations [#5452]</li>
+          <li>Include TOTP settings in CSV import/export and add support for ISO datetimes [#5346]</li>
+          <li>Mask sensitive information in command execution confirmation prompt [#5542]</li>
+          <li>SSH Agent: Avoid shortcut conflict on macOS by changing "Add key" to Ctrl+H on all platforms [#5484]</li>
+          <li>Prevent data loss with drag and drop between databases [#5536]</li>
+          <li>Fix crash when toggling Capslock rapidly [#5545]</li>
+          <li>Don't mark URL references as invalid URL [#5380]</li>
+          <li>Reset entry preview after search [#5483]</li>
+          <li>Set Qt::Dialog flag on database open dialog [#5356]</li>
+          <li>Fix sorting of database report columns [#5426]</li>
+          <li>Fix IfDevice matching logic [#5344]</li>
+          <li>Fix layout issues and a stray scrollbar appearing on top of the entry edit screen [#5424]</li>
+          <li>Fix tabbing into the notes field [#5424]</li>
+          <li>Fix password generator ignoring settings on load [#5340]</li>
+          <li>Restore natural entry sort order on application load [#5438]</li>
+          <li>Fix paperclip and TOTP columns not saving state [#5327]</li>
+          <li>Enforce fixed password font in entry preview [#5454]</li>
+          <li>Add scrollbar when new database wizard exceeds screen size [#5560]</li>
+          <li>Do not mark database as modified when viewing Auto-Type associations [#5542]</li>
+          <li>CLI: Fix two heap-use-after-free crashes [#5368,#5470]</li>
+          <li>Browser: Fix key exchange not working with multiple simultaneous users on Windows [#5485]</li>
+          <li>Browser: Fix entry retrieval when "only best matching" is enabled [#5316]</li>
+          <li>Browser: Ignore recycle bin on KeePassHTTP migration [#5481]</li>
+          <li>KeeShare: Fix import crash [#5542]</li>
+          <li>macOS: Fix toolbar theming and breadcrumb display issues [#5482]</li>
+          <li>macOS: Fix file dialog randomly closing [#5479]</li>
+          <li>macOS: Fix being unable to select OPVault files for import [#5341]</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.6.1" date="2020-08-19" type="stable">
+      <description>
+        <ul>
+          <li>Add menu entries for auto-typing only username or only password [#4891]</li>
+          <li>Browser: Add command for retrieving current TOTP [#5278]</li>
+          <li>Improve man pages [#5010]</li>
+          <li>Linux: Support Xfce screen lock signals [#4971]</li>
+          <li>Linux: Add OARS metadata to AppStream markup [#5031]</li>
+          <li>SSH Agent: Substitute tilde with %USERPROFILE% on Windows [#5116]</li>
+          <li>Improve password generator UI and UX [#5129]</li>
+          <li>Do not prompt to restart if switching the theme back and forth [#5084]</li>
+          <li>Change actions for F1, F2, and F3 keys [#5082]</li>
+          <li>Skip referenced passwords in health check report [#5056]</li>
+          <li>Check system-wide Qt translations directory for downstream translations packaging [#5064]</li>
+          <li>macOS: Change password visibility toggle shortcut to Ctrl+H to avoid conflict with system shortcut [#5114]</li>
+          <li>Browser: Only display domain name in browser access confirm dialog to avoid overly wide window sizes [#5214]</li>
+          <li>Fix clipboard not being cleared when database is locked while timeout is still active [#5184]</li>
+          <li>Fix list of previous databases not being cleared in some cases [#5123]</li>
+          <li>Fix saving of non-data changes on database lock [#5210]</li>
+          <li>Fix search results banner theming [#5197]</li>
+          <li>Don't enforce theme palette in Classic theme mode and add hover effect for buttons [#5122,#5267]</li>
+          <li>Fix label clipping in settings on high-DPI screens [#5227]</li>
+          <li>Fix excessive memory usage by icons on systems with high-DPI screens [#5266]</li>
+          <li>Fix crash if number of TOTP digits exceeds ten [#5106]</li>
+          <li>Fix slot detection when first YubiKey is configured on the second slot [#5004]</li>
+          <li>Prevent crash if focus widget gets deleted during saving [#5005]</li>
+          <li>Always show buttons for opening or saving attachments [#4956]</li>
+          <li>Update link to Auto-Type help [#5228]</li>
+          <li>Fix build errors with Ninja [#5121]</li>
+          <li>CLI: Fix db-info command wrongly labelled as db-show in usage listing [#5140]</li>
+          <li>Windows: Use Classic theme by default if high-contrast mode is on [#5191]</li>
+          <li>Linux: Add workaround for qt5ct bug, causing icons not to show up [#5011]</li>
+          <li>Linux: Correct high-DPI display by not allowing fractional scaling [#5185]</li>
+          <li>Browser: Consider subdomain and path when requesting only "best-matching credentials" [#4832]</li>
+          <li>SSH Agent: Always forget all keys on lock [#5115]</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.6.0" date="2020-07-06" type="stable">
+      <description>
+        <ul>
+          <li>Custom Light and Dark themes [#4110, #4769, #4791, #4892, #4915]</li>
+          <li>Compact mode to use classic Group and Entry line height [#4910]</li>
+          <li>New monochrome tray icons [#4796, #4803]</li>
+          <li>View menu to quickly switch themes, compact mode, and toggle UI elements [#4910]</li>
+          <li>Search for groups and scope search to matched groups [#4705]</li>
+          <li>Save Database Backup feature [#4550]</li>
+          <li>Sort entries by "natural order" and move lines up/down [#4357]</li>
+          <li>Option to launch KeePassXC on system startup/login [#4675]</li>
+          <li>Caps Lock warning on password input fields [#3646]</li>
+          <li>Add "Size" column to entry view [#4588]</li>
+          <li>Browser-like tab experience using Ctrl+[Num] (Alt+[Num] on Linux) [#4063, #4305]</li>
+          <li>Password Generator: Define additional characters to choose from [#3876]</li>
+          <li>Reports: Database password health check (offline) [#3993]</li>
+          <li>Reports: HIBP online service to check for breached passwords [#4438]</li>
+          <li>Auto-Type: DateTime placeholders [#4409]</li>
+          <li>Browser: Show group name in results sent to browser extension [#4111]</li>
+          <li>Browser: Ability to define a custom browser location (macOS and Linux only) [#4148]</li>
+          <li>Browser: Ability to change root group UUID and inline edit connection ID [#4315, #4591]</li>
+          <li>CLI: `db-info` command [#4231]</li>
+          <li>CLI: Use wl-clipboard if xclip is not available (Linux) [#4323]</li>
+          <li>CLI: Incorporate xclip into snap builds [#4697]</li>
+          <li>SSH Agent: Key file path env substitution, SSH_AUTH_SOCK override, and connection test [#3769, #3801, #4545]</li>
+          <li>SSH Agent: Context menu actions to add/remove keys [#4290]</li>
+          <li>Complete replacement of default database icons [#4699]</li>
+          <li>Complete replacement of application icons [#4066, #4161, #4203, #4411]</li>
+          <li>Complete rewrite of documentation and manpages using Asciidoctor [#4937]</li>
+          <li>Complete refactor of config files; separate between local and roaming [#4665]</li>
+          <li>Complete refactor of browser integration and proxy code [#4680]</li>
+          <li>Complete refactor of hardware key integration (YubiKey and OnlyKey) [#4584, #4843]</li>
+          <li>Significantly improve performance when saving and opening databases [#4309, #4833]</li>
+          <li>Remove read-only detection for database files [#4508]</li>
+          <li>Overhaul of password fields and password generator [#4367]</li>
+          <li>Replace instances of "Master Key" with "Database Credentials" [#4929]</li>
+          <li>Change settings checkboxes to positive phrasing for consistency [#4715]</li>
+          <li>Improve UX of using entry actions (focus fix) [#3893]</li>
+          <li>Set expiration time to Now when enabling entry expiration [#4406]</li>
+          <li>Always show "New Entry" in context menu [#4617]</li>
+          <li>Issue warning before adding large attachments [#4651]</li>
+          <li>Improve importing OPVault [#4630]</li>
+          <li>Improve AutoOpen capability [#3901, #4752]</li>
+          <li>Check for updates every 7 days even while still running [#4752]</li>
+          <li>Improve Windows installer UI/UX [#4675]</li>
+          <li>Improve config file handling of portable distribution [#4131, #4752]</li>
+          <li>macOS: Hide dock icon when application is hidden to tray [#4782]</li>
+          <li>Browser: Use unlock dialog to improve UX of opening a locked database [#3698]</li>
+          <li>Browser: Improve database and entry settings experience [#4392, #4591]</li>
+          <li>Browser: Improve confirm access dialog [#2143, #4660]</li>
+          <li>KeeShare: Improve monitoring file changes of shares [#4720]</li>
+          <li>CLI: Rename `create` command to `db-create` [#4231]</li>
+          <li>CLI: Cleanup `db-create` options (`--set-key-file` and `--set-password`) [#4313]</li>
+          <li>CLI: Use stderr for help text and password prompts [#4086, #4623]</li>
+          <li>FdoSecrets: Display existing secret service process [#4128]</li>
+          <li>Fix changing focus around the main window using tab key [#4641]</li>
+          <li>Fix search field clearing while still using the application [#4368]</li>
+          <li>Improve search help widget displaying on macOS and Linux [#4236]</li>
+          <li>Return keyboard focus after editing an entry [#4287]</li>
+          <li>Reset database path after failed "Save As" [#4526]</li>
+          <li>Make builds reproducible [#4411]</li>
+          <li>Improve handling of ccache when building [#4104, #4335]</li>
+          <li>Windows: Use correct UI font and size [#4769]</li>
+          <li>macOS: Properly re-hide application window after browser integration and Auto-Type usage [#4909]</li>
+          <li>Linux: Fix version number not embedded in AppImage [#4842]</li>
+          <li>Auto-Type: Fix crash when performing on new entry [#4132]</li>
+          <li>Browser: Send legacy HTTP settings to recycle bin [#4589]</li>
+          <li>Browser: Fix merging browser keys [#4685]</li>
+          <li>CLI: Fix encoding when exporting database [#3921]</li>
+          <li>SSH Agent: Improve reliability and underlying code [#3833, #4256, #4549, #4595]</li>
+          <li>FdoSecrets: Fix crash when editing settings before service is enabled [#4332]</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.5.4" date="2020-04-09" type="stable">
+      <description>
+        <ul>
+          <li>Return keyboard focus after saving database edits [#4287]</li>
+          <li>Windows: Use bare minimum settings in portable version [#4131]</li>
+          <li>Windows: Use SHA256 code signing [#4129]</li>
+          <li>macOS: Fix code signing incompatibility in latest macOS release [#4564]</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.5.3" date="2020-01-19" type="stable">
+      <description>
+        <ul>
+          <li>Fix a possible database lockout when removing a YubiKey from a KDBX 3.1 database [#4147]</li>
+          <li>Fix crash if Auto-Type is performed on a new entry [#4150]</li>
+          <li>Fix crash when all entries are deleted from a group [#4156]</li>
+          <li>Improve the reliability of clipboard clearing on Gnome [#4165]</li>
+          <li>Do not check cmd:// URLs for valid URL syntax anymore [#4172]</li>
+          <li>Prevent unnecessary merges for databases on network shares [#4153]</li>
+          <li>Browser: Prevent native messaging proxy from blocking application shutdown [#4155]</li>
+          <li>Browser: Improve website URL matching [#4134, #4177]</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.5.2" date="2020-01-04" type="stable">
+      <description>
+        <ul>
+          <li>Browser: Show UI warning when entering invalid URLs [#3912]</li>
+          <li>Browser: Option to use an entry only for HTTP auth [#3927]</li>
+          <li>Disable the user interface when merging or saving the database [#3991]</li>
+          <li>Ability to hide protected attribute after reveal [#3877]</li>
+          <li>Remove mention of "snaps" in Windows and macOS [#3879]</li>
+          <li>CLI: Merge parameter for source database key file (--key-file-from) [#3961]</li>
+          <li>Improve GUI tests reliability on Hi-DPI displays [#4075]</li>
+          <li>Disable deprecation warnings to allow building with Qt 5.14+ [#4075]</li>
+          <li>OPVault: Use 'otp' attribute for TOTP field imports [#4075]</li>
+          <li>Fix crashes when saving a database to cloud storage [#3991]</li>
+          <li>Fix crash when pressing enter twice while opening database [#3885]</li>
+          <li>Fix handling of HTML when displayed in the entry preview panel [#3910]</li>
+          <li>Fix start minimized to tray on Linux [#3899]</li>
+          <li>Fix Auto Open with key file only databases [#4075]</li>
+          <li>Fix escape key closing the standalone password generator [#3892]</li>
+          <li>macOS: Fix monospace font usage in password field and notes [#4075]</li>
+          <li>macOS: Fix building on macOS 10.9 to 10.11 [#3946]</li>
+          <li>Fix TOTP setup dialog not closing on database lock [#4075]</li>
+          <li>Browser: Fix condition where additional URLs are ignored [#4033]</li>
+          <li>Browser: Fix subdomain matching to return only relevant site entries [#3854]</li>
+          <li>Secret Service: Fix multiple crashes and incompatibilities [#3871, #4009, #4074]</li>
+          <li>Secret Service: Fix searching of entries [#4008, #4036]</li>
+          <li>Secret Service: Fix behavior when exposed group is recycled [#3914]</li>
+          <li>CLI: Release the database instance before exiting interactive mode [#3889]</li>
+          <li>Fix (most) memory leaks in tests [#3922]</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.5.1" date="2019-11-11" type="stable">
+      <description>
+        <ul>
+          <li>Add programmatic use of the EntrySearcher [#3760]</li>
+          <li>Explicitly clear database memory upon locking even if the object is not deleted immediately [#3824]</li>
+          <li>macOS: Add ability to perform notarization of built package [#3827]</li>
+          <li>Reduce file hash checking to every 30 seconds to correct performance issues [#3724]</li>
+          <li>Correct formatting of notes in entry preview widget [#3727]</li>
+          <li>Improve performance and UX of database statistics page [#3780]</li>
+          <li>Improve interface for key file selection to discourage use of the database file [#3807]</li>
+          <li>Hide Auto-Type sequences column when not needed [#3794]</li>
+          <li>macOS: Revert back to using Carbon API for hotkey detection [#3794]</li>
+          <li>CLI: Do not show protected fields by default [#3710]</li>
+          <li>Secret Service: Correct issues interfacing with various applications [#3761]</li>
+          <li>Fix building without additional features [#3693]</li>
+          <li>Fix handling TOTP secret keys that require padding [#3764]</li>
+          <li>Fix database unlock dialog password field focus [#3764]</li>
+          <li>Correctly label open databases as locked on launch [#3764]</li>
+          <li>Prevent infinite recursion when two databases AutoOpen each other [#3764]</li>
+          <li>Browser: Fix incorrect matching of invalid URLs [#3759]</li>
+          <li>Properly stylize the application name on Linux [#3775]</li>
+          <li>Show application icon on Plasma Wayland sessions [#3777]</li>
+          <li>macOS: Check for Auto-Type permissions on use instead of at launch [#3794]</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.5.0" date="2019-10-26" type="stable">
+      <description>
+        <ul>
+          <li>Add 'Paper Backup' aka 'Export to HTML file' to the 'Database' menu [#3277]</li>
+          <li>Add statistics panel with information about the database (number of entries, number of unique passwords, etc.) to the Database Settings dialog [#2034]</li>
+          <li>Add offline user manual accessible via the 'Help' menu [#3274]</li>
+          <li>Add support for importing 1Password OpVault files [#2292]</li>
+          <li>Implement Freedesktop.org secret storage DBus protocol so that KeePassXC can be used as a vault service by libsecret [#2726]</li>
+          <li>Add support for OnlyKey as an alternative to YubiKeys (requires yubikey-personalization &gt;= 1.20.0) [#3352]</li>
+          <li>Add group sorting feature [#3282]</li>
+          <li>Add feature to download favicons for all entries at once [#3169]</li>
+          <li>Add word case option to passphrase generator [#3172]</li>
+          <li>Add support for RFC6238-compliant TOTP hashes [#2972]</li>
+          <li>Add UNIX man page for main program [#3665]</li>
+          <li>Add 'Monospaced font' option to the notes field [#3321]</li>
+          <li>Add support for key files in auto open [#3504]</li>
+          <li>Add search field for filtering entries in Auto-Type dialog [#2955]</li>
+          <li>Complete usernames based on known usernames from other entries [#3300]</li>
+          <li>Parse hyperlinks in the notes field of the entry preview pane [#3596]</li>
+          <li>Allow abbreviation of field names in entry search [#3440]</li>
+          <li>Allow setting group icons recursively [#3273]</li>
+          <li>Add copy context menu for username and password in Auto-Type dialog [#3038]</li>
+          <li>Drop to background after copying a password to the clipboard [#3253]</li>
+          <li>Add 'Lock databases' entry to tray icon menu [#2896]</li>
+          <li>Add option to minimize window after unlocking [#3439]</li>
+          <li>Add option to minimize window after opening a URL [#3302]</li>
+          <li>Request accessibility permissions for Auto-Type on macOS [#3624]</li>
+          <li>Browser: Add initial support for multiple URLs [#3558]</li>
+          <li>Browser: Add entry-specific browser integration settings [#3444]</li>
+          <li>Add offline HIBP checker (requires a downloaded HIBP dump) [#2707]</li>
+          <li>CLI: Add 'flatten' option to the 'ls' command [#3276]</li>
+          <li>CLI: Add password generation options to `Add` and `Edit` commands [#3275]</li>
+          <li>CLI: Add XML import [#3572]</li>
+          <li>CLI: Add CSV export to the 'export' command [#3278]</li>
+          <li>CLI: Add `-y --yubikey` option for YubiKey [#3416]</li>
+          <li>CLI: Add `--dry-run` option for merging databases [#3254]</li>
+          <li>CLI: Add group commands (mv, mkdir and rmdir) [#3313].</li>
+          <li>CLI: Add interactive shell mode command `open` [#3224]</li>
+          <li>Redesign database unlock dialog [ [#3287]</li>
+          <li>Rework the entry preview panel [ [#3306]</li>
+          <li>Move notes to General tab on Group Preview Panel [#3336]</li>
+          <li>Enable entry actions when editing an entry and cleanup entry context menu  [#3641]</li>
+          <li>Improve detection of external database changes  [#2389]</li>
+          <li>Warn if user is trying to use a KDBX file as a key file [#3625]</li>
+          <li>Add option to disable KeePassHTTP settings migrations prompt [#3349, #3344]</li>
+          <li>Re-enabled Wayland support (no Auto-Type yet) [#3520, #3341]</li>
+          <li>Add icon to 'Toggle Window' action in tray icon menu [[3244]</li>
+          <li>Merge custom data between databases only when necessary [#3475]</li>
+          <li>Improve various file-handling related issues when picking files using the system's file dialog [#3473]</li>
+          <li>Add 'New Entry' context menu when no entries are selected [#3671]</li>
+          <li>Reduce default Argon2 settings from 128 MiB and one thread per CPU core to 64 MiB and two threads to account for lower-spec mobile hardware [#3672]</li>
+          <li>Browser: Remove unused 'Remember' checkbox for HTTP Basic Auth [#3371]</li>
+          <li>Browser: Show database name when pairing with a new browser [#3638]</li>
+          <li>Browser: Show URL in allow access dialog [#3639]</li>
+          <li>CLI: The password length option `-l` for the CLI commands `Add` and `Edit` is now `-L` [#3275]</li>
+          <li>CLI: The `-u` shorthand for the `--upper` password generation option has been renamed to `-U` [#3275]</li>
+          <li>CLI: Rename command `extract` to `export`. [#3277]</li>
+          <li>Improve accessibility for assistive technologies [#3409]</li>
+          <li>Correctly unlock all databases if `--pw-stdin` is provided [#2916]</li>
+          <li>Fix password generator issues with special characters [#3303]</li>
+          <li>Fix KeePassXC interrupting shutdown procedure [#3666]</li>
+          <li>Fix password visibility toggle button state on unlock dialog [#3312]</li>
+          <li>Fix potential data loss if database is reloaded while user is editing an entry [#3656]</li>
+          <li>Fix hard-coded background color in search help popup [#3001]</li>
+          <li>Fix font choice for password preview [#3425]</li>
+          <li>Fix handling of read-only files when autosave is enabled [#3408]</li>
+          <li>Handle symlinks correctly when atomic saves are disabled [#3463]</li>
+          <li>Enable HighDPI icon scaling on Linux [#3332]</li>
+          <li>Make Auto-Type on macOS more robust and remove old Carbon API calls [#3634, #3347]</li>
+          <li>Hide Share tab if KeePassXC is compiled without KeeShare support and other minor KeeShare improvements [#3654, #3291, #3029, #3031, #3236]</li>
+          <li>Correctly bring window to the front when clicking tray icon on macOS [#3576]</li>
+          <li>Correct application shortcut created by MSI Installer on Windows [#3296]</li>
+          <li>Fix crash when removing custom data [#3508]</li>
+          <li>Fix placeholder resolution in URLs [#3281]</li>
+          <li>Fix various inconsistencies and platform-dependent compilation bugs [#3664, #3662, #3660, #3655, #3649, #3417, #3357, #3319, #3318, #3304]</li>
+          <li>Browser: Fix potential leaking of entries through the browser integration API if multiple databases are opened [#3480]</li>
+          <li>Browser: Fix password entropy calculation [#3107]</li>
+          <li>Browser: Fix Windows registry settings for portable installation [#3603]</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.4.3" date="2019-06-12" type="stable">
+      <description>
+        <ul>
+          <li>Fix library loading issues in the Snap and macOS releases [#3247]</li>
+          <li>Fix various keyboard navigation issues [#3248]</li>
+          <li>Fix main window toggling regression when clicking the tray icon on KDE [#3258]</li>
+          <li>Add documentation for keyboard shortcuts to source code distribution [#3215]</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.4.2" date="2019-05-31" type="stable">
+      <description>
+        <ul>
+          <li>Improve resilience against memory attacks - overwrite memory before free [#3020]</li>
+          <li>Prevent infinite save loop when location is unavailable [#3026]</li>
+          <li>Attempt to fix quitting application when shutdown or logout issued [#3199]</li>
+          <li>Support merging database custom data [#3002]</li>
+          <li>Fix opening URL's with non-http schemes [#3153]</li>
+          <li>Fix data loss due to not reading all database attachments if duplicates exist [#3180]</li>
+          <li>Fix entry context menu disabling when using keyboard navigation [#3199]</li>
+          <li>Fix behaviors when canceling an entry edit [#3199]</li>
+          <li>Fix processing of tray icon click and doubleclick [#3112]</li>
+          <li>Update group in preview widget when focused [#3199]</li>
+          <li>Prefer DuckDuckGo service over direct icon download (increases resolution) [#2996]</li>
+          <li>Remove apply button in application settings [#3019]</li>
+          <li>Use winqtdeploy on Windows to correct deployment issues [#3025]</li>
+          <li>Don't mark entry edit as modified when attribute selection changes [#3041]</li>
+          <li>Use console code page CP_UTF8 on Windows if supported [#3050]</li>
+          <li>Snap: Fix locking database with session lock [#3046]</li>
+          <li>Snap: Fix theming across Linux distributions [#3057]</li>
+          <li>Snap: Use SNAP_USER_COMMON and SNAP_USER_DATA directories [#3131]</li>
+          <li>KeeShare: Automatically enable WITH_XC_KEESHARE_SECURE if quazip is found [#3088]</li>
+          <li>macOS: Fix toolbar text when in dark mode [#2998]</li>
+          <li>macOS: Lock database on switching user [#3097]</li>
+          <li>macOS: Fix global Auto-Type when the database is locked [#3138]</li>
+          <li>Browser: Close popups when database is locked [#3093]</li>
+          <li>Browser: Add tests [#3016]</li>
+          <li>Browser: Don't create default group if custom group is enabled [#3127]</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.4.1" date="2019-04-12" type="stable">
+      <description>
+        <ul>
+          <li>Fix database deletion when using unsafe saves to a different file system [#2889]</li>
+          <li>Fix opening databases with legacy key files that contain '/' [#2872]</li>
+          <li>Fix opening database files from the command line [#2919]</li>
+          <li>Fix crash when editing master key [#2836]</li>
+          <li>Fix multiple issues with apply button behavior [#2947]</li>
+          <li>Fix issues on application startup (tab order, --pw-stdin, etc.) [#2830]</li>
+          <li>Fix building without WITH_XC_KEESHARE</li>
+          <li>Fix reference entry coloring on macOS dark mode [#2984]</li>
+          <li>Hide window when performing entry auto-type on macOS [#2969]</li>
+          <li>Improve UX of update checker; reduce checks to every 7 days [#2968]</li>
+          <li>KeeShare improvements [#2946, #2978, #2824]</li>
+          <li>Re-enable Ctrl+C to copy password from search box [#2947]</li>
+          <li>Add KeePassXC-Browser integration for Brave browser [#2933]</li>
+          <li>SSH Agent: Re-Add keys on database unlock [#2982]</li>
+          <li>SSH Agent: Only remove keys on app exit if they are removed on lock [#2985]</li>
+          <li>CLI: Add --no-password option [#2708]</li>
+          <li>CLI: Improve database extraction to XML [#2698]</li>
+          <li>CLI: Don't call mandb on build [#2774]</li>
+          <li>CLI: Add debug info [#2714]</li>
+          <li>Improve support for Snap theming [#2832]</li>
+          <li>Add support for building on Haiku OS [#2859]</li>
+          <li>Ctrl+PgDn now goes to the next tab and Ctrl+PgUp to the previous</li>
+          <li>Fix compiling on GCC 5 / Xenial [#2990]</li>
+          <li>Add .gitrev output to tarball for third-party builds [#2970]</li>
+          <li>Add WITH_XC_UPDATECHECK compile flag to enable/disable the update checker [#2968]</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.4.0" date="2019-03-19" type="stable">
+      <description>
+        <ul>
+          <li>New Database Wizard [#1952]</li>
+          <li>Advanced Search [#1797]</li>
+          <li>Automatic update checker [#2648]</li>
+          <li>KeeShare database synchronization [#2109, #1992, #2738, #2742, #2746, #2739]</li>
+          <li>Improve favicon fetching; transition to Duck-Duck-Go [#2795, #2011, #2439]</li>
+          <li>Remove KeePassHttp support [#1752]</li>
+          <li>CLI: output info to stderr for easier scripting [#2558]</li>
+          <li>CLI: Add --quiet option [#2507]</li>
+          <li>CLI: Add create command [#2540]</li>
+          <li>CLI: Add recursive listing of entries [#2345]</li>
+          <li>CLI: Fix stdin/stdout encoding on Windows [#2425]</li>
+          <li>SSH Agent: Support OpenSSH for Windows [#1994]</li>
+          <li>macOS: TouchID Quick Unlock [#1851]</li>
+          <li>macOS: Multiple improvements; include CLI in DMG [#2165, #2331, #2583]</li>
+          <li>Linux: Prevent Klipper from storing secrets in clipboard [#1969]</li>
+          <li>Linux: Use polling based file watching for NFS [#2171]</li>
+          <li>Linux: Enable use of browser plugin in Snap build [#2802]</li>
+          <li>TOTP QR Code Generator [#1167]</li>
+          <li>High-DPI Scaling for 4k screens [#2404]</li>
+          <li>Make keyboard shortcuts more consistent [#2431]</li>
+          <li>Warn user if deleting referenced entries [#1744]</li>
+          <li>Allow toolbar to be hidden and repositioned [#1819, #2357]</li>
+          <li>Increase max allowed database timeout to 12 hours [#2173]</li>
+          <li>Password generator uses existing password length by default [#2318]</li>
+          <li>Improve alert message box button labels [#2376]</li>
+          <li>Show message when a database merge makes no changes [#2551]</li>
+          <li>Browser Integration Enhancements [#1497, #2253, #1904, #2232, #1850, #2218, #2391, #2396, #2542, #2622, #2637, #2790]</li>
+          <li>Overall Code Improvements [#2316, #2284, #2351, #2402, #2410, #2419, #2422, #2443, #2491, #2506, #2610, #2667, #2709, #2731]</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.3.4" date="2018-08-21" type="stable">
+      <description>
+        <ul>
+          <li>Show all URL schemes in entry view [#1768]</li>
+          <li>Disable merge when database is locked [#1975]</li>
+          <li>Fix intermittent crashes with favorite icon downloads [#1980]</li>
+          <li>Provide potential crash warning to Qt 5.5.x users [#2211]</li>
+          <li>Disable apply button when creating new entry/group to prevent data loss [#2204]</li>
+          <li>Allow for 12 hour timeout to lock idle database [#2173]</li>
+          <li>Multiple SSH Agent fixes [#1981, #2117]</li>
+          <li>Multiple Browser Integration enhancements [#1993, #2003, #2055, #2116, #2159, #2174, #2185]</li>
+          <li>Fix browser proxy application not closing properly [#2142]</li>
+          <li>Add real names and Patreon supporters to about dialog [#2214]</li>
+          <li>Add settings button to toolbar, Donate button, and Report a Bug button to help menu [#2214]</li>
+          <li>Enhancements to release-tool to appsign intermediate build products [#2101]</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.3.3" date="2018-05-09" type="stable">
+      <description>
+        <ul>
+          <li>Fix crash when browser integration is enabled [#1923]</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.3.2" date="2018-05-07" type="stable">
+      <description>
+        <ul>
+          <li>Enable high entropy ASLR on Windows [#1747]</li>
+          <li>Enhance favicon fetching [#1786]</li>
+          <li>Fix crash on Windows due to autotype [#1691]</li>
+          <li>Fix dark tray icon changing all icons [#1680]</li>
+          <li>Fix --pw-stdin not using getPassword function [#1686]</li>
+          <li>Fix placeholders being resolved in notes [#1907]</li>
+          <li>Enable auto-type start delay to be configurable [#1908]</li>
+          <li>Browser: Fix native messaging reply size [#1719]</li>
+          <li>Browser: Increase maximum buffer size [#1720]</li>
+          <li>Browser: Enhance usability and functionality [#1810, #1822, #1830, #1884, #1906]</li>
+          <li>SSH Agent: Parse aes-256-cbc/ctr keys [#1682]</li>
+          <li>SSH Agent: Enhance usability and functionality [#1677, #1679, #1681, #1787]</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.3.1" date="2018-03-06" type="stable">
+      <description>
+        <ul>
+          <li>Fix unnecessary automatic upgrade to KDBX 4.0 and prevent challenge-response key being stripped [#1568]</li>
+          <li>Abort saving and show an error message when challenge-response fails [#1659]</li>
+          <li>Support inner stream protection on all string attributes [#1646]</li>
+          <li>Fix favicon downloads not finishing on some websites [#1657]</li>
+          <li>Fix freeze due to invalid STDIN data [#1628]</li>
+          <li>Correct issue with encrypted RSA SSH keys [#1587]</li>
+          <li>Fix crash on macOS due to QTBUG-54832 [#1607]</li>
+          <li>Show error message if ssh-agent communication fails [#1614]</li>
+          <li>Fix --pw-stdin and filename parameters being ignored [#1608]</li>
+          <li>Fix Auto-Type syntax check not allowing spaces and special characters [#1626]</li>
+          <li>Fix reference placeholders in combination with Auto-Type [#1649]</li>
+          <li>Fix qtbase translations not being loaded [#1611]</li>
+          <li>Fix startup crash on Windows due to missing SVG libraries [#1662]</li>
+          <li>Correct database tab order regression [#1610]</li>
+          <li>Fix GCC 8 compilation error [#1612]</li>
+          <li>Fix copying of advanced attributes on KDE [#1640]</li>
+          <li>Fix member initialization of CategoryListWidgetDelegate [#1613]</li>
+          <li>Fix inconsistent toolbar icon sizes and provide higher-quality icons [#1616]</li>
+          <li>Improve preview panel geometry [#1609]</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.3.0" date="2018-02-27" type="stable">
+      <description>
+        <ul>
+          <li>Add support for KDBX 4.0, Argon2 and ChaCha20 [#148, #1179, #1230, #1494]</li>
+          <li>Add SSH Agent feature [#1098, #1450, #1463]</li>
+          <li>Add preview panel with details of the selected entry [#879, #1338]</li>
+          <li>Add more and configurable columns to entry table and allow copying of values by double click [#1305]</li>
+          <li>Add KeePassXC-Browser API as a replacement for KeePassHTTP [#608]</li>
+          <li>Deprecate KeePassHTTP [#1392]</li>
+          <li>Add support for Steam one-time passwords [#1206]</li>
+          <li>Add support for multiple Auto-Type sequences for a single entry [#1390]</li>
+          <li>Adjust YubiKey HMAC-SHA1 challenge-response key generation for KDBX 4.0 [#1060]</li>
+          <li>Replace qHttp with cURL for website icon downloads [#1460]</li>
+          <li>Remove lock file [#1231]</li>
+          <li>Add option to create backup file before saving [#1385]</li>
+          <li>Ask to save a generated password before closing the entry password generator [#1499]</li>
+          <li>Resolve placeholders recursively [#1078]</li>
+          <li>Add Auto-Type button to the toolbar [#1056]</li>
+          <li>Improve window focus handling for Auto-Type dialogs [#1204, #1490]</li>
+          <li>Auto-Type dialog and password generator can now be exited with ESC [#1252, #1412]</li>
+          <li>Add optional dark tray icon [#1154]</li>
+          <li>Add new "Unsafe saving" option to work around saving problems with file sync services [#1385]</li>
+          <li>Add IBus support to AppImage and additional image formats to Windows builds [#1534, #1537]</li>
+          <li>Add diceware password generator to CLI [#1406]</li>
+          <li>Add --key-file option to CLI [#816, #824]</li>
+          <li>Add DBus interface for opening and closing KeePassXC databases [#283]</li>
+          <li>Add KDBX compression options to database settings [#1419]</li>
+          <li>Discourage use of old fixed-length key files in favor of arbitrary files [#1326, #1327]</li>
+          <li>Correct reference resolution in entry fields [#1486]</li>
+          <li>Fix window state and recent databases not being remembered on exit [#1453]</li>
+          <li>Correct history item generation when configuring TOTP for an entry [#1446]</li>
+          <li>Correct multiple TOTP bugs [#1414]</li>
+          <li>Automatic saving after every change is now a default [#279]</li>
+          <li>Allow creation of new entries during search [#1398]</li>
+          <li>Correct menu issues on macOS [#1335]</li>
+          <li>Allow compilation on OpenBSD [#1328]</li>
+          <li>Improve entry attachments view [#1139, #1298]</li>
+          <li>Fix auto lock for Gnome and Xfce [#910, #1249]</li>
+          <li>Don't remember key files in file dialogs when the setting is disabled [#1188]</li>
+          <li>Improve database merging and conflict resolution [#807, #1165]</li>
+          <li>Fix macOS pasteboard issues [#1202]</li>
+          <li>Improve startup times on some platforms [#1205]</li>
+          <li>Hide the notes field by default [#1124]</li>
+          <li>Toggle main window by clicking tray icon with the middle mouse button [#992]</li>
+          <li>Fix custom icons not copied over when databases are merged [#1008]</li>
+          <li>Allow use of DEL key to delete entries [#914]</li>
+          <li>Correct intermittent crash due to stale history items [#1527]</li>
+          <li>Sanitize newline characters in title, username and URL fields [#1502]</li>
+          <li>Reopen previously opened databases in correct order [#774]</li>
+          <li>Use system's zxcvbn library if available [#701]</li>
+          <li>Implement various i18n improvements [#690, #875, #1436]</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.2.4" date="2017-12-13" type="stable">
+      <description>
+        <ul>
+          <li>Prevent database corruption when locked [#1219]</li>
+          <li>Fixes apply button not saving new entries [#1141]</li>
+          <li>Switch to Consolas font on Windows for password edit [#1229]</li>
+          <li>Multiple fixes to AppImage deployment [#1115, #1228]</li>
+          <li>Fixes multiple memory leaks [#1213]</li>
+          <li>Resize message close to 16x16 pixels [#1253]</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.2.2" date="2017-10-22" type="stable">
+      <description>
+        <p>Changes included in this release:</p>
+        <ul>
+          <li>Fixed entries with empty URLs being reported to KeePassHTTP clients [#1031]</li>
+          <li>Fixed YubiKey detection and enabled CLI tool for AppImage binary [#1100]</li>
+          <li>Added AppStream description [#1082]</li>
+          <li>Improved TOTP compatibility and added new Base32 implementation [#1069]</li>
+          <li>Fixed error handling when processing invalid cipher stream [#1099]</li>
+          <li>Fixed double warning display when opening a database [#1037]</li>
+          <li>Fixed unlocking databases with --pw-stdin [#1087]</li>
+          <li>Added ability to override QT_PLUGIN_PATH environment variable for AppImages [#1079]</li>
+          <li>Fixed transform seed not being regenerated when saving the database [#1068]</li>
+          <li>Fixed only one YubiKey slot being polled [#1048]</li>
+          <li>Corrected an issue with entry icons while merging [#1008]</li>
+          <li>Corrected desktop and tray icons in Snap package [#1030]</li>
+          <li>Fixed screen lock and Google fallback settings [#1029]</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.2.1" date="2017-10-01" type="stable">
+      <description>
+        <p>Changes included in this release:</p>
+        <ul>
+          <li>Corrected multiple snap issues [#934, #1011]</li>
+          <li>Corrected multiple custom icon issues [#708, #719, #994]</li>
+          <li>Corrected multiple Yubikey issues [#880]</li>
+          <li>Fixed single instance preventing load on occasion [#997]</li>
+          <li>Keep entry history when merging databases [#970]</li>
+          <li>Prevent data loss if passwords were mismatched [#1007]</li>
+          <li>Fixed crash after merge [#941]</li>
+          <li>Added configurable auto-type default delay [#703]</li>
+          <li>Unlock database dialog window comes to front [#663]</li>
+          <li>Translation and compiling fixes</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.2.0" date="2017-06-23" type="stable">
+      <description>
+        <p>Changes included in this release:</p>
+        <ul>
+          <li>Added YubiKey 2FA integration for unlocking databases [#127]</li>
+          <li>Added TOTP support [#519]</li>
+          <li>Added CSV import tool [#146, #490]</li>
+          <li>Added KeePassXC CLI tool [#254]</li>
+          <li>Added diceware password generator [#373]</li>
+          <li>Added support for entry references [#370, #378]</li>
+          <li>Added support for Twofish encryption [#167]</li>
+          <li>Enabled DEP and ASLR for in-memory protection [#371]</li>
+          <li>Enabled single instance mode [#510]</li>
+          <li>Enabled portable mode [#645]</li>
+          <li>Enabled database lock on screensaver and session lock [#545]</li>
+          <li>Redesigned welcome screen with common features and recent databases [#292]</li>
+          <li>Multiple updates to search behavior [#168, #213, #374, #471, #603, #654]</li>
+          <li>Added auto-type fields {CLEARFIELD}, {SPACE}, {{}, {}} [#267, #427, #480]</li>
+          <li>Fixed auto-type errors on Linux [#550]</li>
+          <li>Prompt user prior to executing a cmd:// URL [#235]</li>
+          <li>Entry attributes can be protected (hidden) [#220]</li>
+          <li>Added extended ascii to password generator [#538]</li>
+          <li>Added new database icon to toolbar [#289]</li>
+          <li>Added context menu entry to empty recycle bin in databases [#520]</li>
+          <li>Added "apply" button to entry and group edit windows [#624]</li>
+          <li>Added macOS tray icon and enabled minimize on close [#583]</li>
+          <li>Fixed issues with unclean shutdowns [#170, #580]</li>
+          <li>Changed keyboard shortcut to create new database to CTRL+SHIFT+N [#515]</li>
+          <li>Compare window title to entry URLs [#556]</li>
+          <li>Implemented inline error messages [#162]</li>
+          <li>Ignore group expansion and other minor changes when making database "dirty" [#464]</li>
+          <li>Updated license and copyright information on source files [#632]</li>
+          <li>Added contributors list to about dialog [#629]</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.1.4" date="2017-04-09" type="stable">
+      <description>
+        <p>Changes included in this release:</p>
+        <ul>
+          <li>Bumped KeePassHTTP version to 1.8.4.2</li>
+          <li>KeePassHTTP confirmation window comes to foreground [#466]</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.1.3" date="2017-03-03" type="stable">
+      <description>
+        <p>Changes included in this release:</p>
+        <ul>
+          <li>Fix possible overflow in zxcvbn library [#363]</li>
+          <li>Revert HiDPI setting to avoid problems on laptop screens [#332]</li>
+          <li>Set file meta properties in Windows executable [#330]</li>
+          <li>Suppress error message when auto-reloading a locked database [#345]</li>
+          <li>Improve usability of question dialog when database is already locked by a different instance [#346]</li>
+          <li>Fix compiler warnings in QHttp library [#351]</li>
+          <li>Use unified toolbar on Mac OS X [#361]</li>
+          <li>Fix an issue on X11 where the main window would be raised instead of closed on Alt+F4 [#362]</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.1.2" date="2017-02-17" type="stable">
+      <description>
+        <p>Changes included in this release:</p>
+        <ul>
+          <li>Ask for save location when creating a new database [#302]</li>
+          <li>Remove Libmicrohttpd dependency to clean up the code and ensure better OS X compatibility [#317, #265]</li>
+          <li>Prevent Qt from degrading Wifi network performance on certain platforms [#318]</li>
+          <li>Visually refine user interface on OS X and other platforms [#299]</li>
+          <li>Remove unusable tray icon setting on OS X [#293]</li>
+          <li>Fix compositing glitches on Ubuntu and prevent flashing when minimizing to the tray at startup [#307]</li>
+          <li>Fix AppImage tray icon on Ubuntu [#277, #273]</li>
+          <li>Fix global menu disappearing after restoring KeePassXC from the tray on Ubuntu [#276]</li>
+          <li>Fix result order in entry search [#320]</li>
+          <li>Enable HiDPI scaling on supported platforms [#315]</li>
+          <li>Remove empty directories from installation target [#282]</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.1.1" date="2017-02-06" type="stable">
+      <description>
+        <p>Changes included in this release:</p>
+        <ul>
+          <li>Enabled HTTP plugin build; plugin is disabled by default and limited to localhost [#147]</li>
+          <li>Escape HTML in dialog boxes [#247]</li>
+          <li>Corrected crashes in favicon download and password generator [#233, #226]</li>
+          <li>Increase font size of password meter [#228]</li>
+          <li>Fixed compatibility with Qt 5.8 [#211]</li>
+          <li>Use consistent button heights in password generator [#229]</li>
+        </ul>
+      </description>
+    </release>
+    <release version="2.1.0" date="2017-01-22" type="stable">
+      <description>
+        <p>Changes included in this release:</p>
+        <ul>
+          <li>Show unlock dialog when using autotype on a closed database [#10, #89]</li>
+          <li>Show different tray icon when database is locked [#37, #46]</li>
+          <li>Support autotype on Windows and OS X [#42, #60, #63]</li>
+          <li>Add delay feature to autotype [#76, #77]</li>
+          <li>Add password strength meter [#84, #92]</li>
+          <li>Add option for automatically locking the database when minimizing the window [#57]</li>
+          <li>Add feature to download favicons and use them as entry icons [#30]</li>
+          <li>Automatically reload and merge database when the file changed on disk [#22, #33, #93]</li>
+          <li>Add tool for merging two databases [#22, #47, #143]</li>
+          <li>Add --pw-stdin commandline option to unlock the database by providing a password on STDIN [#54]</li>
+          <li>Add utility script for reading the database password from KWallet [#55]</li>
+          <li>Fix some KeePassHTTP settings not being remembered [#34, #65]</li>
+          <li>Make search box persistent [#15, #67, #157]</li>
+          <li>Enhance search feature by scoping the search to selected group [#16, #118]</li>
+          <li>Improve interaction between search field and entry list [#131, #141]</li>
+          <li>Add stand-alone password-generator [#18, #92]</li>
+          <li>Don't require password repetition when password is visible [#27, #92]</li>
+          <li>Add support for entry attributes in autotype sequences [#107]</li>
+          <li>Always focus password field when opening the database unlock widget [#116, #117]</li>
+          <li>Fix compilation errors on various platforms [#53, #126, #130]</li>
+          <li>Restructure and improve kdbx-extract utility [#160]</li>
+        </ul>
+      </description>
+    </release>
+  </releases>
+  <url type="homepage">https://keepassxc.org</url>
+  <url type="bugtracker">https://github.com/keepassxreboot/keepassxc/issues</url>
+  <url type="faq">https://keepassxc.org/docs#faq</url>
+  <url type="help">https://keepassxc.org/docs</url>
+  <url type="translate">https://www.transifex.com/keepassxc/keepassxc</url>
+  <url type="vcs-browser">https://github.com/keepassxreboot/keepassxc</url>
+  <url type="contribute">https://keepassxc.org/docs#contribute</url>
+  <content_rating type="oars-1.1"/>
+  <launchable type="desktop-id">org.keepassxc.KeePassXC.desktop</launchable>
 </component>
