@@ -2700,6 +2700,22 @@ bool DatabaseWidget::isRecycleBinSelected() const
     return (group && group->isRecycled()) || (entry && entry->isRecycled());
 }
 
+bool DatabaseWidget::hasRecycledSelectedEntries() const
+{
+    if (!m_entryView) {
+        return false;
+    }
+    
+    // Check if any of the selected entries are actually recycled
+    for (auto* entry : m_entryView->selectedEntries()) {
+        if (entry && entry->isRecycled()) {
+            return true;
+        }
+    }
+    
+    return false;
+}
+
 void DatabaseWidget::emptyRecycleBin()
 {
     if (!isRecycleBinSelected()) {

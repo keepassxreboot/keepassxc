@@ -955,8 +955,9 @@ void MainWindow::updateMenuActionState()
     } else {
         m_ui->actionEntryDelete->setToolTip(tr("Delete Entry"));
     }
-    m_ui->actionEntryRestore->setVisible(multiEntrySelected && inRecycleBin);
-    m_ui->actionEntryRestore->setEnabled(multiEntrySelected && inRecycleBin);
+    bool hasRecycledEntries = (inDatabase && dbWidget->hasRecycledSelectedEntries());
+    m_ui->actionEntryRestore->setVisible(multiEntrySelected && hasRecycledEntries);
+    m_ui->actionEntryRestore->setEnabled(multiEntrySelected && hasRecycledEntries);
     if (dbWidget) {
         m_ui->actionEntryRestore->setText(tr("Restore Entry(s)", "", dbWidget->numberOfSelectedEntries()));
         m_ui->actionEntryRestore->setToolTip(tr("Restore Entry(s)", "", dbWidget->numberOfSelectedEntries()));

@@ -99,6 +99,7 @@ public:
     bool canDeleteCurrentGroup() const;
     bool isGroupSelected() const;
     bool isRecycleBinSelected() const;
+    bool hasRecycledSelectedEntries() const;
     int numberOfSelectedEntries() const;
     int currentEntryIndex() const;
 
