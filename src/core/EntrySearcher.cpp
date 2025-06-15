@@ -218,7 +218,11 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
                         break;
                     }
                 }
-            } else if (term.word.compare("totp", Qt::CaseInsensitive) == 0) {
+            }
+            found = false;
+            break;
+        case Field::Has:
+            if (term.word.compare("totp", Qt::CaseInsensitive) == 0) {
                 found = entry->hasTotp();
                 break;
             }
@@ -263,6 +267,7 @@ void EntrySearcher::parseSearchTerms(const QString& searchString)
         {QStringLiteral("group"), Field::Group},
         {QStringLiteral("tag"), Field::Tag},
         {QStringLiteral("is"), Field::Is},
+        {QStringLiteral("has"), Field::Has},
         {QStringLiteral("uuid"), Field::Uuid}};
 
     // Group 1 = modifiers, Group 2 = field, Group 3 = quoted string, Group 4 = unquoted string

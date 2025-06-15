@@ -417,18 +417,18 @@ void TestEntrySearcher::testTotpSearch()
     entry3->setTotp(totpSettings2);
 
     // Test searching for TOTP entries
-    m_searchResult = m_entrySearcher.search("is:totp", m_rootGroup);
+    m_searchResult = m_entrySearcher.search("has:totp", m_rootGroup);
     QCOMPARE(m_searchResult.count(), 2);
     QVERIFY(m_searchResult.contains(entry2));
     QVERIFY(m_searchResult.contains(entry3));
     QVERIFY(!m_searchResult.contains(entry1));
 
     // Test case insensitive search
-    m_searchResult = m_entrySearcher.search("is:TOTP", m_rootGroup);
+    m_searchResult = m_entrySearcher.search("has:TOTP", m_rootGroup);
     QCOMPARE(m_searchResult.count(), 2);
 
     // Test excluding TOTP entries
-    m_searchResult = m_entrySearcher.search("!is:totp", m_rootGroup);
+    m_searchResult = m_entrySearcher.search("!has:totp", m_rootGroup);
     QCOMPARE(m_searchResult.count(), 1);
     QVERIFY(m_searchResult.contains(entry1));
     QVERIFY(!m_searchResult.contains(entry2));
