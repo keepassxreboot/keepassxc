@@ -394,3 +394,84 @@ void TestEntrySearcher::testUUIDSearch()
     m_searchResult = m_entrySearcher.search("uuid:" + Tools::uuidToHex(uuid1), m_rootGroup);
     QCOMPARE(m_searchResult.count(), 1);
 }
+
+void TestEntrySearcher::testTagSearch()
+{
+    // Create test entries with different tags
+    auto entry1 = new Entry();
+    entry1->setGroup(m_rootGroup);
+    entry1->setTitle("Entry 1");
+    entry1->setTags("tag1,tag2");
+
+    auto entry2 = new Entry();
+    entry2->setGroup(m_rootGroup);
+    entry2->setTitle("Entry 2");
+    entry2->setTags("tag2,tag3");
+
+    auto entry3 = new Entry();
+    entry3->setGroup(m_rootGroup);
+    entry3->setTitle("Entry 3");
+    entry3->setTags("tag3,tag4");
+
+    auto entry4 = new Entry();
+    entry4->setGroup(m_rootGroup);
+    entry4->setTitle("Entry 4");
+    entry4->setTags("tag4,tag5");
+
+    // Test positive tag search
+    m_searchResult = m_entrySearcher.search("tag:tag1", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 1);
+    QCOMPARE(m_searchResult.first()->title(), QString("Entry 1"));
+
+    m_searchResult = m_entrySearcher.search("tag:tag2", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 2);
+
+    // Test negative tag search with !
+    m_searchResult = m_entrySearcher.search("!tag:tag1", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 3);
+    // Should find all entries except entry1
+    QStringList titles;
+    for (const auto& entry : m_searchResult) {
+        titles << entry->title();
+    }
+    QVERIFY(titles.contains("Entry 2"));
+    QVERIFY(titles.contains("Entry 3"));
+    QVERIFY(titles.contains("Entry 4"));
+    QVERIFY(!titles.contains("Entry 1"));
+
+    // Test negative tag search with -
+    m_searchResult = m_entrySearcher.search("-tag:tag1", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 3);
+    titles.clear();
+    for (const auto& entry : m_searchResult) {
+        titles << entry->title();
+    }
+    QVERIFY(titles.contains("Entry 2"));
+    QVERIFY(titles.contains("Entry 3"));
+    QVERIFY(titles.contains("Entry 4"));
+    QVERIFY(!titles.contains("Entry 1"));
+
+    // Test negative tag search for a tag that appears in multiple entries
+    m_searchResult = m_entrySearcher.search("!tag:tag2", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 2);
+    titles.clear();
+    for (const auto& entry : m_searchResult) {
+        titles << entry->title();
+    }
+    QVERIFY(titles.contains("Entry 3"));
+    QVERIFY(titles.contains("Entry 4"));
+    QVERIFY(!titles.contains("Entry 1"));
+    QVERIFY(!titles.contains("Entry 2"));
+
+    // Test quoted tag search for negative
+    m_searchResult = m_entrySearcher.search("!tag:\"tag3\"", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 2);
+    titles.clear();
+    for (const auto& entry : m_searchResult) {
+        titles << entry->title();
+    }
+    QVERIFY(titles.contains("Entry 1"));
+    QVERIFY(titles.contains("Entry 4"));
+    QVERIFY(!titles.contains("Entry 2"));
+    QVERIFY(!titles.contains("Entry 3"));
+}
