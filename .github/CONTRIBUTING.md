@@ -15,6 +15,7 @@ These are just guidelines, not rules. Use your best judgment, and feel free to p
   * [Bug reports](#bug-reports)
   * [Discuss with the team](#discuss-with-the-team)
   * [Your first code contribution](#your-first-code-contribution)
+  * [Using AI](#using-ai)
   * [Pull requests](#pull-requests)
   * [Translations](#translations)
 
@@ -73,6 +74,12 @@ Unsure where to begin contributing to KeePassXC? You can start by looking throug
 * ['Help wanted' issues][help-wanted] – issues which should be a bit more involved than `beginner` issues.
 
 Both issue lists are sorted by total number of comments. While not perfect, looking at the number of comments on an issue can give a general idea of how much an impact a given change will have.
+
+### Using AI
+
+Generative AI is fast becoming a first-party feature in most development environments, including GitHub itself. We love to embrace new technology and use it to make our lives easier and more effective. You are free to use Generative AI to assist you in the development of your code submission and to do research on how best to approach certain problems. 
+
+However, if you use Generative AI to write the vast majority of your submission (e.g., agent-based or vibe coding) then you **must document your use of AI** in your pull request. Please include the service you used and/or model that generated the code. All code submissions go through a rigourous review process regardless of the development workflow used.
 
 ### Pull requests
 

@@ -56,6 +56,10 @@ You may directly contribute your own code by submitting a pull request. Please r
 
 Contributors are required to adhere to the project's [Code of Conduct](CODE-OF-CONDUCT.md).
 
+## Generative AI
+
+Generative AI is fast becoming a first-party feature in most development environments, including GitHub itself. We love to embrace new technology and use it to make our lives easier and more effective. This project uses Generative AI to assist in the development and initial review of code submissions. If the majority of a code submission is made using Generative AI (e.g., agent-based or vibe coding) then **we will document that in the pull request.** All code submissions go through a rigourous review process regardless of the development workflow or submitter.
+
 ## License
 
 KeePassXC code is licensed under GPL-2 or GPL-3. Additional licensing for third-party files is detailed in [COPYING](./COPYING).
