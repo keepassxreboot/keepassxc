@@ -19,6 +19,11 @@ if(WITH_XC_BROWSER)
         keepassxc-proxy.cpp
         NativeMessagingProxy.cpp)
 
+    if(APPLE)
+        list(APPEND proxy_SOURCES
+            ../browser/BrowserSharedMac.mm)
+    endif()
+
     # Alloc must be defined in a static library to prevent clashing with clang ASAN definitions
     add_library(proxy_alloc STATIC ../core/Alloc.cpp)
     target_link_libraries(proxy_alloc PRIVATE Qt5::Core ${BOTAN_LIBRARIES})
@@ -28,6 +33,11 @@ if(WITH_XC_BROWSER)
     install(TARGETS keepassxc-proxy
             BUNDLE DESTINATION . COMPONENT Runtime
             RUNTIME DESTINATION ${PROXY_INSTALL_DIR} COMPONENT Runtime)
+
+    if(APPLE)
+        target_compile_definitions(keepassxc-proxy PRIVATE
+            APP_GROUP_IDENTIFIER="${APPLE_TEAM_ID}.${APPLE_APP_IDENTIFIER}")
+    endif()
 
     if(APPLE AND WITH_APP_BUNDLE)
         set(PROXY_APP_DIR "${CMAKE_BINARY_DIR}/src/${PROXY_INSTALL_DIR}")
@@ -39,6 +49,8 @@ if(WITH_XC_BROWSER)
 
         set_property(GLOBAL APPEND PROPERTY
             _MACDEPLOYQT_EXTRA_BINARIES "${PROXY_INSTALL_DIR}/keepassxc-proxy")
+
+        target_link_libraries(keepassxc-proxy "-framework Foundation")
     endif()
 
     if(WIN32)

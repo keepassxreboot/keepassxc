@@ -1211,9 +1211,22 @@ appsign() {
                 cd "${orig_dir}"
                 exitError "Signing failed!"
             fi
+
+            # Sign safariwebextension extension
+            local safari_web_extension_dir="${app_dir_tmp}/Contents/PlugIns/KeePassXCSafariWebExtension.appex/Contents/MacOS/KeePassXCSafariWebExtension"
+            if [ -f "${safari_web_extension_dir}" ]; then
+                if ! xcrun codesign --sign "${key}" --verbose --force --options runtime --entitlements \
+                    "${real_src_dir}/build/share/macosx/safariwebextension.entitlements" "${safari_web_extension_dir}"; then
+                    cd "${orig_dir}"
+                    exitError "Signing failed!"
+                fi
+            else
+                echo "Skipping signing Safari Web Extension as it does not exists."
+            fi
+
             # Sign main executable with additional entitlements
             if ! xcrun codesign --sign "${key}" --verbose --force --options runtime --entitlements \
-                "${real_src_dir}/share/macosx/keepassxc.entitlements" "${app_dir_tmp}/Contents/MacOS/KeePassXC"; then
+                "${real_src_dir}/build/share/macosx/keepassxc.entitlements" "${app_dir_tmp}/Contents/MacOS/KeePassXC"; then
                 cd "${orig_dir}"
                 exitError "Signing failed!"
             fi

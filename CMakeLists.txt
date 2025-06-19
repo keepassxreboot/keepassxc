@@ -61,6 +61,9 @@ option(WITH_XC_UPDATECHECK "Include automatic update checks; disable for control
 if(UNIX AND NOT APPLE)
     option(WITH_XC_FDOSECRETS "Implement freedesktop.org Secret Storage Spec server side API." OFF)
 endif()
+if (APPLE)
+    option(WITH_XC_SAFARI_WEB_EXTENSION "Include Safari Web Extension for browser intergration with keepassxc-browser")
+endif()
 option(WITH_XC_DOCS "Enable building of documentation" ON)
 
 set(WITH_XC_X11 ON CACHE BOOL "Enable building with X11 deps")
@@ -106,6 +109,9 @@ if(WITH_XC_ALL)
     if(UNIX AND NOT APPLE)
         set(WITH_XC_FDOSECRETS ON)
     endif()
+    if(APPLE)
+        set(WITH_XC_SAFARI_WEB_EXTENSION ON)
+    endif()
 endif()
 
 # Prefer WITH_XC_NETWORKING setting over WITH_XC_UPDATECHECK
@@ -117,6 +123,10 @@ endif()
 if(UNIX AND NOT APPLE AND NOT WITH_XC_X11)
     message(STATUS "Disabling WITH_XC_AUTOTYPE because WITH_XC_X11 is disabled")
     set(WITH_XC_AUTOTYPE OFF)
+endif()
+
+if(APPLE AND WITH_XC_SAFARI_WEB_EXTENSION AND NOT WITH_XC_BROWSER)
+    message(FATAL_ERROR "Safari Web Extension requires keepassxc-browser browser integration (set it with WITH_XC_BROWSER)")
 endif()
 
 set(KEEPASSXC_VERSION_MAJOR "2")
@@ -211,7 +221,7 @@ if(BOTAN_VERSION VERSION_GREATER_EQUAL "3.0.0")
     set(WITH_XC_BOTAN3 TRUE)
 elseif(BOTAN_VERSION VERSION_LESS "2.11.0")
     # Check for minimum Botan version
-    message(FATAL_ERROR "Botan 2.11.0 or higher is required")   
+    message(FATAL_ERROR "Botan 2.11.0 or higher is required")
 endif()
 include_directories(SYSTEM ${BOTAN_INCLUDE_DIR})
 

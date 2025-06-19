@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+    "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDisplayName</key>
+	<string>KeePassXC Safari Web Extension</string>
+	<key>CFBundleExecutable</key>
+	<string>KeePassXCSafariWebExtension</string>
+	<key>CFBundleIdentifier</key>
+	<string>${APPLE_APP_IDENTIFIER}.SafariWebExtension</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>KeePassXCSafariWebExtension</string>
+	<key>CFBundleVersion</key>
+	<string>1.0</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	<key>APP_GROUP_IDENTIFIER</key>
+	<string>${APPLE_TEAM_ID}.${APPLE_APP_IDENTIFIER}</string>
+	<key>NSExtension</key>
+	<dict>
+		<key>NSExtensionPointIdentifier</key>
+		<string>com.apple.Safari.web-extension</string>
+		<key>NSExtensionPrincipalClass</key>
+		<string>KeePassXCSafariWebExtension.SafariWebExtensionHandler</string>
+	</dict>
+</dict>
+</plist>

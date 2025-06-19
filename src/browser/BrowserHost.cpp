@@ -22,6 +22,10 @@
 #include <QLocalServer>
 #include <QLocalSocket>
 
+#ifdef WITH_XC_SAFARI_WEB_EXTENSION
+#include "safariwebextension/SafariWebExtensionHelper.h"
+#endif
+
 #ifdef Q_OS_WIN
 #include <fcntl.h>
 #undef NOMINMAX
@@ -94,9 +98,28 @@ void BrowserHost::readProxyMessage()
 void BrowserHost::broadcastClientMessage(const QJsonObject& json)
 {
     QString reply(QJsonDocument(json).toJson(QJsonDocument::Compact));
+
+#ifdef WITH_XC_SAFARI_WEB_EXTENSION
+    bool containsSafariWebExtensionSocket = false;
+#endif
+
+    // Send message to all non-Safari sockets
     for (const auto socket : m_socketList) {
+#ifdef WITH_XC_SAFARI_WEB_EXTENSION
+        if (safariWebExtensionHelper()->isSafariWebExtension(socket)) {
+            containsSafariWebExtensionSocket = true;
+            continue; // Skip Safari web extension sockets because we are using SFSafariApplication instead
+        }
+#endif
+
         sendClientData(socket, reply);
     }
+
+#ifdef WITH_XC_SAFARI_WEB_EXTENSION
+    if (containsSafariWebExtensionSocket) {
+        safariWebExtensionHelper()->broadcastClientMessage(reply);
+    }
+#endif
 }
 
 void BrowserHost::sendClientMessage(QLocalSocket* socket, const QJsonObject& json)

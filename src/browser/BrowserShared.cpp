@@ -25,6 +25,10 @@
 #include <QProcessEnvironment>
 #endif
 
+#if defined(Q_OS_MACOS)
+#include "BrowserSharedMac.h"
+#endif
+
 namespace BrowserShared
 {
     QString localServerPath()
@@ -53,7 +57,9 @@ namespace BrowserShared
 #elif defined(Q_OS_WIN)
         // Windows uses named pipes
         return serverName + "_" + qgetenv("USERNAME");
-#else // Q_OS_MACOS and others
+#elif defined(Q_OS_MACOS)
+        return macOSLocalServerPath();
+#else // others
         return QStandardPaths::writableLocation(QStandardPaths::TempLocation) + serverName;
 #endif
     }
