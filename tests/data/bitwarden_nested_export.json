@@ -1,0 +1,72 @@
+{
+  "folders": [
+    {
+      "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+      "name": "Socials/Forums"
+    },
+    {
+      "id": "yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy",
+      "name": "Work/Projects/Client A"
+    },
+    {
+      "id": "zzzzzzzz-zzzz-zzzz-zzzz-zzzzzzzzzzzz",
+      "name": "Personal"
+    }
+  ],
+  "items": [
+    {
+      "id": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa",
+      "organizationId": null,
+      "folderId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+      "type": 1,
+      "name": "Reddit Account",
+      "notes": "My reddit login",
+      "favorite": false,
+      "login": {
+        "username": "myuser",
+        "password": "mypass",
+        "uris": [
+          {
+            "uri": "https://reddit.com"
+          }
+        ]
+      }
+    },
+    {
+      "id": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb",
+      "organizationId": null,
+      "folderId": "yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy",
+      "type": 1,
+      "name": "Client Portal",
+      "notes": "Client A portal login",
+      "favorite": false,
+      "login": {
+        "username": "clientuser",
+        "password": "clientpass",
+        "uris": [
+          {
+            "uri": "https://clienta.com"
+          }
+        ]
+      }
+    },
+    {
+      "id": "cccccccc-cccc-cccc-cccc-cccccccccccc",
+      "organizationId": null,
+      "folderId": "zzzzzzzz-zzzz-zzzz-zzzz-zzzzzzzzzzzz",
+      "type": 1,
+      "name": "Personal Email",
+      "notes": "My personal email",
+      "favorite": false,
+      "login": {
+        "username": "personal@email.com",
+        "password": "personalpass",
+        "uris": [
+          {
+            "uri": "https://mail.provider.com"
+          }
+        ]
+      }
+    }
+  ]
+}

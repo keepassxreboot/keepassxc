@@ -317,6 +317,55 @@ void TestImports::testBitwardenPasskey()
              QStringLiteral("aTFtdmFnOHYtS2dxVEJ0by1rSFpLWGg0enlTVC1iUVJReDZ5czJXa3c2aw"));
 }
 
+void TestImports::testBitwardenNestedFolders()
+{
+    auto bitwardenPath = QStringLiteral("%1/%2").arg(KEEPASSX_TEST_DATA_DIR, QStringLiteral("/bitwarden_nested_export.json"));
+
+    BitwardenReader reader;
+    auto db = reader.convert(bitwardenPath);
+    QVERIFY2(!reader.hasError(), qPrintable(reader.errorString()));
+    QVERIFY(db);
+
+    // Test nested folder structure: "Socials/Forums" should create Socials -> Forums hierarchy
+    auto entry = db->rootGroup()->findEntryByPath("/Socials/Forums/Reddit Account");
+    QVERIFY(entry);
+    QCOMPARE(entry->title(), QStringLiteral("Reddit Account"));
+    QCOMPARE(entry->username(), QStringLiteral("myuser"));
+    
+    // Test deeper nesting: "Work/Projects/Client A"
+    entry = db->rootGroup()->findEntryByPath("/Work/Projects/Client A/Client Portal");
+    QVERIFY(entry);
+    QCOMPARE(entry->title(), QStringLiteral("Client Portal"));
+    QCOMPARE(entry->username(), QStringLiteral("clientuser"));
+    
+    // Test simple folder (no nesting): "Personal"
+    entry = db->rootGroup()->findEntryByPath("/Personal/Personal Email");
+    QVERIFY(entry);
+    QCOMPARE(entry->title(), QStringLiteral("Personal Email"));
+    QCOMPARE(entry->username(), QStringLiteral("personal@email.com"));
+    
+    // Verify the folder hierarchy exists
+    auto socialsGroup = db->rootGroup()->findGroupByPath("/Socials");
+    QVERIFY(socialsGroup);
+    QCOMPARE(socialsGroup->name(), QStringLiteral("Socials"));
+    
+    auto forumsGroup = socialsGroup->findGroupByPath("Forums");
+    QVERIFY(forumsGroup);
+    QCOMPARE(forumsGroup->name(), QStringLiteral("Forums"));
+    
+    auto workGroup = db->rootGroup()->findGroupByPath("/Work");
+    QVERIFY(workGroup);
+    QCOMPARE(workGroup->name(), QStringLiteral("Work"));
+    
+    auto projectsGroup = workGroup->findGroupByPath("Projects");
+    QVERIFY(projectsGroup);
+    QCOMPARE(projectsGroup->name(), QStringLiteral("Projects"));
+    
+    auto clientAGroup = projectsGroup->findGroupByPath("Client A");
+    QVERIFY(clientAGroup);
+    QCOMPARE(clientAGroup->name(), QStringLiteral("Client A"));
+}
+
 void TestImports::testProtonPass()
 {
     auto protonPassPath =

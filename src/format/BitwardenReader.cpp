@@ -211,6 +211,77 @@ namespace
         return entry.take();
     }
 
+    /*!
+     * Create nested folder hierarchy from a path string.
+     * For example, "Socials/Forums" creates a "Socials" group with a "Forums" child group.
+     * Returns the deepest (leaf) group in the hierarchy.
+     */
+    Group* createNestedFolderHierarchy(const QString& folderPath, Group* rootGroup, QMap<QString, Group*>& createdGroups)
+    {
+        if (folderPath.isEmpty()) {
+            return rootGroup;
+        }
+
+        // Check if we've already created this exact path
+        if (createdGroups.contains(folderPath)) {
+            return createdGroups.value(folderPath);
+        }
+
+        // Split the path by forward slashes
+        QStringList pathParts = folderPath.split('/', Qt::SkipEmptyParts);
+        if (pathParts.isEmpty()) {
+            return rootGroup;
+        }
+
+        Group* currentParent = rootGroup;
+        QString currentPath;
+
+        // Create each level of the hierarchy
+        for (int i = 0; i < pathParts.size(); ++i) {
+            const QString& partName = pathParts[i];
+            
+            // Build the current path (e.g., "Socials", then "Socials/Forums")
+            if (currentPath.isEmpty()) {
+                currentPath = partName;
+            } else {
+                currentPath += "/" + partName;
+            }
+
+            // Check if this level already exists
+            Group* existingGroup = createdGroups.value(currentPath);
+            if (existingGroup) {
+                currentParent = existingGroup;
+                continue;
+            }
+
+            // Find existing child group with this name
+            existingGroup = nullptr;
+            for (Group* child : currentParent->children()) {
+                if (child->name() == partName) {
+                    existingGroup = child;
+                    break;
+                }
+            }
+
+            if (existingGroup) {
+                // Use existing group
+                createdGroups.insert(currentPath, existingGroup);
+                currentParent = existingGroup;
+            } else {
+                // Create new group
+                auto newGroup = new Group();
+                newGroup->setUuid(QUuid::createUuid());
+                newGroup->setName(partName);
+                newGroup->setParent(currentParent);
+                
+                createdGroups.insert(currentPath, newGroup);
+                currentParent = newGroup;
+            }
+        }
+
+        return currentParent;
+    }
+
     void writeVaultToDatabase(const QJsonObject& vault, QSharedPointer<Database> db)
     {
         auto folderField = QString("folders");
@@ -224,15 +295,19 @@ namespace
             return;
         }
 
-        // Create groups from folders and store a temporary map of id -> uuid
+        // Create groups from folders and store a temporary map of id -> group
         QMap<QString, Group*> folderMap;
-        for (const auto& folder : vault.value(folderField).toArray()) {
-            auto group = new Group();
-            group->setUuid(QUuid::createUuid());
-            group->setName(folder.toObject().value("name").toString());
-            group->setParent(db->rootGroup());
+        QMap<QString, Group*> createdGroups; // Track created groups by path to avoid duplicates
 
-            folderMap.insert(folder.toObject().value("id").toString(), group);
+        for (const auto& folder : vault.value(folderField).toArray()) {
+            const QString folderName = folder.toObject().value("name").toString();
+            const QString folderId = folder.toObject().value("id").toString();
+            
+            // Create the nested folder hierarchy
+            Group* targetGroup = createNestedFolderHierarchy(folderName, db->rootGroup(), createdGroups);
+            
+            // Map the folder ID to the target group
+            folderMap.insert(folderId, targetGroup);
         }
 
         QString folderId;
