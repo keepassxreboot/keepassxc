@@ -216,7 +216,8 @@ namespace
      * For example, "Socials/Forums" creates a "Socials" group with a "Forums" child group.
      * Returns the deepest (leaf) group in the hierarchy.
      */
-    Group* createNestedFolderHierarchy(const QString& folderPath, Group* rootGroup, QMap<QString, Group*>& createdGroups)
+    Group*
+    createNestedFolderHierarchy(const QString& folderPath, Group* rootGroup, QMap<QString, Group*>& createdGroups)
     {
         if (folderPath.isEmpty()) {
             return rootGroup;
@@ -239,7 +240,7 @@ namespace
         // Create each level of the hierarchy
         for (int i = 0; i < pathParts.size(); ++i) {
             const QString& partName = pathParts[i];
-            
+
             // Build the current path (e.g., "Socials", then "Socials/Forums")
             if (currentPath.isEmpty()) {
                 currentPath = partName;
@@ -273,7 +274,7 @@ namespace
                 newGroup->setUuid(QUuid::createUuid());
                 newGroup->setName(partName);
                 newGroup->setParent(currentParent);
-                
+
                 createdGroups.insert(currentPath, newGroup);
                 currentParent = newGroup;
             }
@@ -302,10 +303,10 @@ namespace
         for (const auto& folder : vault.value(folderField).toArray()) {
             const QString folderName = folder.toObject().value("name").toString();
             const QString folderId = folder.toObject().value("id").toString();
-            
+
             // Create the nested folder hierarchy
             Group* targetGroup = createNestedFolderHierarchy(folderName, db->rootGroup(), createdGroups);
-            
+
             // Map the folder ID to the target group
             folderMap.insert(folderId, targetGroup);
         }
