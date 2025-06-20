@@ -1,19 +1,14 @@
 cmake_minimum_required(VERSION 3.10)
 
+set(SOURCES
+    SafariWebExtensionHandler.mm
+)
+
 # Specify the Swift source
-set(SWIFT_SOURCE "${CMAKE_SOURCE_DIR}/src/safariwebextension/SafariWebExtensionHandler.swift")
+add_executable(KeePassXCSafariWebExtension ${SOURCES})
 
-# Create an object file from the Swift source
-add_custom_command(
-    OUTPUT ${CMAKE_BINARY_DIR}/SafariWebExtensionHandler.o
-    COMMAND swiftc -module-name KeePassXCSafariWebExtension -c ${SWIFT_SOURCE} -o ${CMAKE_BINARY_DIR}/SafariWebExtensionHandler.o
-    DEPENDS ${SWIFT_SOURCE}
-    COMMENT "Using Swift compiler for SafariWebExtensionHandler.swift"
-)
-
-add_executable(KeePassXCSafariWebExtension
-    ${CMAKE_BINARY_DIR}/SafariWebExtensionHandler.o
-)
+target_compile_definitions(KeePassXCSafariWebExtension PRIVATE APP_GROUP_IDENTIFIER="${APPLE_TEAM_ID}.${APPLE_APP_IDENTIFIER}")
+target_link_libraries(KeePassXCSafariWebExtension "-framework Foundation -framework SafariServices")
 
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -e _NSExtensionMain")
 
