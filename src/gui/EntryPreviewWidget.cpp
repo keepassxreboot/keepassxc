@@ -94,6 +94,8 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
     connect(config(), &Config::changed, this, [this](Config::ConfigKey key) {
         if (key == Config::GUI_HidePreviewPanel) {
             setVisible(!config()->get(Config::GUI_HidePreviewPanel).toBool());
+        } else if (key == Config::Security_HideTotpPreviewPanel) {
+            m_ui->entryTotpButton->setChecked(!config()->get(Config::Security_HideTotpPreviewPanel).toBool());
         }
         refresh();
     });
@@ -258,6 +260,7 @@ void EntryPreviewWidget::updateEntryTotp()
         m_totpTimer.start(1000);
         m_ui->entryTotpProgress->setMaximum(m_currentEntry->totpSettings()->step);
         updateTotpLabel();
+        m_ui->entryTotp->setVisible(m_ui->entryTotpButton->isChecked());
     } else {
         m_ui->entryTotp->hide();
         m_ui->entryTotpButton->setChecked(false);
