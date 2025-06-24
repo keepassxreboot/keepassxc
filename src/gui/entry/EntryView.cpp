@@ -95,6 +95,7 @@ EntryView::EntryView(QWidget* parent)
     });
 
     new QShortcut(Qt::CTRL + Qt::Key_F10, this, SLOT(contextMenuShortcutPressed()), nullptr, Qt::WidgetShortcut);
+    new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_J, this, SLOT(jumpToGroupShortcut()), nullptr, Qt::WidgetShortcut);
 
     resetViewToDefaults();
 
@@ -594,4 +595,25 @@ void EntryView::startDrag(Qt::DropActions supportedActions)
 bool EntryView::isColumnHidden(int logicalIndex)
 {
     return header()->isSectionHidden(logicalIndex) || header()->sectionSize(logicalIndex) == 0;
+}
+
+void EntryView::jumpToGroupShortcut()
+{
+    // Only allow jump to group in search mode
+    if (!inSearchMode()) {
+        return;
+    }
+
+    auto currentIdx = currentIndex();
+    if (!currentIdx.isValid()) {
+        return;
+    }
+
+    Entry* entry = entryFromIndex(currentIdx);
+    if (!entry) {
+        return;
+    }
+
+    // Emit the entryActivated signal with ParentGroup column to trigger jump to group
+    emit entryActivated(entry, EntryModel::ParentGroup);
 }

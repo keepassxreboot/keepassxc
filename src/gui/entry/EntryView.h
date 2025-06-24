@@ -72,6 +72,7 @@ private slots:
     void resetViewToDefaults();
     void contextMenuShortcutPressed();
     void sortIndicatorChanged(int logicalIndex, Qt::SortOrder order);
+    void jumpToGroupShortcut();
 
 private:
     void resetFixedColumns();
