@@ -372,16 +372,30 @@ bool NativeMessageInstaller::createNativeMessageFile(SupportedBrowsers browser)
 
     QFile scriptFile(path);
     if (!scriptFile.open(QIODevice::WriteOnly)) {
-        qWarning() << "Browser Plugin: Failed to open native message file for writing at " << scriptFile.fileName();
-        qWarning() << scriptFile.errorString();
-        return false;
+        if (!scriptFile.open(QIODevice::ReadOnly)) {
+            qWarning() << "Browser Plugin: Failed to open native message file at " << scriptFile.fileName();
+            qWarning() << scriptFile.errorString();
+            return false;
+        }
+
+        // We failed to write to `scriptFile`, but we can read it, so we assume that it's a read-only file.
+        // The write is considered to have succeeded if that read-only file already contains the content we would have written.
+        QJsonDocument expectedDoc(constructFile(browser));
+        QJsonDocument actualDoc = QJsonDocument::fromJson(scriptFile.readAll());
+
+        if (expectedDoc != actualDoc) {
+            qWarning() << "Browser Plugin: Unexpected (read-only) native message file at " << scriptFile.fileName();
+            qWarning() << "Expected contents: " << expectedDoc;
+            return false;
+        }
+    } else {
+        QJsonDocument doc(constructFile(browser));
+        if (scriptFile.write(doc.toJson()) < 0) {
+            qWarning() << "Browser Plugin: Failed to write native message file at " << scriptFile.fileName();
+            qWarning() << scriptFile.errorString();
+            return false;
+        }
     }
 
-    QJsonDocument doc(constructFile(browser));
-    if (scriptFile.write(doc.toJson()) < 0) {
-        qWarning() << "Browser Plugin: Failed to write native message file at " << scriptFile.fileName();
-        qWarning() << scriptFile.errorString();
-        return false;
-    }
     return true;
 }
