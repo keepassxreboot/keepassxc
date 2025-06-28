@@ -34,7 +34,7 @@
 namespace
 {
     // Extract group names from nested path and return the last group created
-    Group* createGroupStructure(Database* db, const QString& groupPath)
+    Group* createGroupStructure(Database* db, const QString& groupPath, const QString& rootGroupToSkip)
     {
         auto group = db->rootGroup();
         if (!group || groupPath.isEmpty()) {
@@ -42,8 +42,10 @@ namespace
         }
 
         auto nameList = groupPath.split("/", Qt::SkipEmptyParts);
-        // Skip over first group name if root
-        if (nameList.first().compare("root", Qt::CaseInsensitive) == 0) {
+
+        // Skip the identified root group name if present
+        if (!rootGroupToSkip.isEmpty() && !nameList.isEmpty()
+            && nameList.first().compare(rootGroupToSkip, Qt::CaseInsensitive) == 0) {
             nameList.removeFirst();
         }
 
@@ -241,8 +243,26 @@ QSharedPointer<Database> CsvImportWidget::buildDatabase()
     db->rootGroup()->setNotes(tr("Imported from CSV file: %1").arg(m_filename));
 
     auto rows = m_parserModel->rowCount() - m_parserModel->skippedRows();
+
+    // Check for common root group
+    QString rootGroupName;
     for (int r = 0; r < rows; ++r) {
-        auto group = createGroupStructure(db.data(), m_parserModel->data(m_parserModel->index(r, 0)).toString());
+        auto groupPath = m_parserModel->data(m_parserModel->index(r, 0)).toString();
+        auto groupName = groupPath.mid(0, groupPath.indexOf('/'));
+        if (!rootGroupName.isNull() && rootGroupName != groupName) {
+            rootGroupName.clear();
+            break;
+        }
+        rootGroupName = groupName;
+    }
+
+    if (!rootGroupName.isEmpty()) {
+        db->rootGroup()->setName(rootGroupName);
+    }
+
+    for (int r = 0; r < rows; ++r) {
+        auto group =
+            createGroupStructure(db.data(), m_parserModel->data(m_parserModel->index(r, 0)).toString(), rootGroupName);
         if (!group) {
             continue;
         }
