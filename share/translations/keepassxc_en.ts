@@ -4110,6 +4110,10 @@ Would you like to overwrite the existing attachment?</source>
         <source>Save…</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>New Attachment</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EntryAttributesModel</name>
@@ -4677,6 +4681,10 @@ You can enable the DuckDuckGo website icon service in the security section of th
     <name>ImageAttachmentsWidget</name>
     <message>
         <source>Zoom:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fit</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9259,10 +9267,6 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Invalid Digits</source>
         <comment>TOTP</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Fit</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
