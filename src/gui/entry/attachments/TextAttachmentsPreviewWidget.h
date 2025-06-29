@@ -58,4 +58,5 @@ private:
     QScopedPointer<Ui::TextAttachmentsPreviewWidget> m_ui;
 
     attachments::Attachment m_attachment;
+    bool m_userManuallySelectedType;
 };
