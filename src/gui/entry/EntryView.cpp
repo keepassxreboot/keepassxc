@@ -95,7 +95,7 @@ EntryView::EntryView(QWidget* parent)
     });
 
     new QShortcut(Qt::CTRL + Qt::Key_F10, this, SLOT(contextMenuShortcutPressed()), nullptr, Qt::WidgetShortcut);
-    new QShortcut(Qt::CTRL + Qt::SHIFT + Qt::Key_J, this, SLOT(jumpToGroupShortcut()), nullptr, Qt::WidgetShortcut);
+    new QShortcut(Qt::CTRL + Qt::Key_J, this, SLOT(jumpToGroupShortcut()), nullptr, Qt::WidgetShortcut);
 
     resetViewToDefaults();
 
@@ -604,16 +604,9 @@ void EntryView::jumpToGroupShortcut()
         return;
     }
 
-    auto currentIdx = currentIndex();
-    if (!currentIdx.isValid()) {
-        return;
+    auto entry = currentEntry();
+    if (entry) {
+        // Emit the entryActivated signal with ParentGroup column to trigger jump to group
+        emit entryActivated(entry, EntryModel::ParentGroup);
     }
-
-    Entry* entry = entryFromIndex(currentIdx);
-    if (!entry) {
-        return;
-    }
-
-    // Emit the entryActivated signal with ParentGroup column to trigger jump to group
-    emit entryActivated(entry, EntryModel::ParentGroup);
 }
