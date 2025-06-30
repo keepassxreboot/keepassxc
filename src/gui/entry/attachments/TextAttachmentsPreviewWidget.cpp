@@ -64,8 +64,6 @@ void TextAttachmentsPreviewWidget::openAttachment(attachments::Attachment attach
     }
 
     m_attachment = std::move(attachments);
-    // Reset manual selection flag when opening a new attachment
-    m_userManuallySelectedType = false;
 
     updateUi();
 }
