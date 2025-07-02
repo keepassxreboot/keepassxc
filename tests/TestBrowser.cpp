@@ -411,6 +411,7 @@ void TestBrowser::testSearchEntriesWithWildcardURLs()
         "https://subdomain.*.github.com/*/second",
         "https://*.sub.github.com/*",
         "https://********", // Invalid wildcard URL
+        "https://*.thub.com/", // Partial suffix URL
         "https://subdomain.yes.github.com/*",
         "https://example.com:8448/*",
         "https://example.com/*/*",
@@ -433,13 +434,12 @@ void TestBrowser::testSearchEntriesWithWildcardURLs()
 
     auto result = m_browserService->searchEntries(
         db, "https://github.com/login_page/second", "https://github.com/login_page/second");
-    QCOMPARE(result.length(), 6);
+    QCOMPARE(result.length(), 5);
     QCOMPARE(firstUrl(result[0]), QString("https://github.com/login_page/*"));
     QCOMPARE(firstUrl(result[1]), QString("https://github.com/*/second"));
     QCOMPARE(firstUrl(result[2]), QString("https://github.com/*"));
     QCOMPARE(firstUrl(result[3]), QString("http://github.com/*"));
     QCOMPARE(firstUrl(result[4]), QString("github.com/*"));
-    QCOMPARE(firstUrl(result[5]), QString("https://*.github.com/*"));
 
     result = m_browserService->searchEntries(
         db, "https://subdomain.sub.github.com/login_page/second", "https://subdomain.sub.github.com/login_page/second");
@@ -503,12 +503,11 @@ void TestBrowser::testSearchEntriesWithWildcardURLs()
     result = m_browserService->searchEntries(
         db, "https://github.com/login_page/second", "https://github.com/login_page/second");
 
-    QCOMPARE(result.length(), 5);
+    QCOMPARE(result.length(), 4);
     QCOMPARE(firstUrl(result[0]), QString("https://github.com/login_page/*"));
     QCOMPARE(firstUrl(result[1]), QString("https://github.com/*/second"));
     QCOMPARE(firstUrl(result[2]), QString("https://github.com/*"));
     QCOMPARE(firstUrl(result[3]), QString("github.com/*")); // Defaults to https
-    QCOMPARE(firstUrl(result[4]), QString("https://*.github.com/*"));
 }
 
 void TestBrowser::testInvalidEntries()

@@ -1572,11 +1572,11 @@ bool BrowserService::handleURLWithWildcards(const QUrl& entryQUrl, const QString
         }
 
         // Escape illegal characters
-        auto re = firstPart.replace(QRegularExpression(R"(([!\^\$\+\-\(\)@<>]))"), "\\\\1");
+        auto re = Tools::escapeRegex(firstPart);
 
         if (hostnameUsed) {
             // Replace all host parts with wildcards
-            re = re.replace(QString("%1.").arg(UrlTools::URL_WILDCARD), "(.*?)");
+            re = re.replace(QString("%1.").arg(UrlTools::URL_WILDCARD), "(.*?)\\.");
         }
 
         // Append a + to the end of regex to match all paths after the last asterisk
