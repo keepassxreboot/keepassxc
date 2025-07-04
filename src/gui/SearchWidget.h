@@ -46,6 +46,7 @@ public:
     void connectSignals(SignalMultiplexer& mx);
     void setCaseSensitive(bool state);
     void setLimitGroup(bool state);
+    void setWaitForEnter(bool state);
 
 protected:
     // Filter key presses in the search field
@@ -56,6 +57,7 @@ signals:
     void searchCanceled();
     void caseSensitiveChanged(bool state);
     void limitGroupChanged(bool state);
+    void waitForEnterChanged(bool state);
     void escapePressed();
     void downPressed();
     void enterPressed();
@@ -72,6 +74,7 @@ private slots:
     void startSearch();
     void updateCaseSensitive();
     void updateLimitGroup();
+    void updateWaitForEnter();
     void toggleHelp();
     void showSearchMenu();
     void resetSearchClearTimer();
@@ -83,7 +86,9 @@ private:
     QTimer* m_clearSearchTimer;
     QAction* m_actionCaseSensitive;
     QAction* m_actionLimitGroup;
+    QAction* m_actionWaitForEnter;
     QMenu* m_searchMenu;
+    bool m_waitForEnter;
 };
 
 #endif // SEARCHWIDGET_H

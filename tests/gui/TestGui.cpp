@@ -1126,6 +1126,7 @@ void TestGui::testSearch()
     auto* searchWidget = toolBar->findChild<SearchWidget*>("SearchWidget");
     QVERIFY(searchWidget->isEnabled());
     auto* searchTextEdit = searchWidget->findChild<QLineEdit*>("searchEdit");
+    auto* waitForEnterAction = searchWidget->findChild<QAction*>("actionSearchWaitForEnter");
 
     auto* entryView = m_dbWidget->findChild<EntryView*>("entryView");
     QVERIFY(entryView->isVisible());
@@ -1136,6 +1137,42 @@ void TestGui::testSearch()
     auto* helpPanel = searchWidget->findChild<QWidget*>("SearchHelpWidget");
     QVERIFY(helpButton->isVisible());
     QVERIFY(!helpPanel->isVisible());
+
+    // Test "wait for enter" toggle
+    QVERIFY(waitForEnterAction->isVisible());
+    QVERIFY(waitForEnterAction->isCheckable());
+    
+    // Test search with "wait for enter" disabled (default)
+    searchTextEdit->clear();
+    QTest::keyClicks(searchTextEdit, "ZZZ");
+    QTRY_COMPARE(searchTextEdit->text(), QString("ZZZ"));
+    QTRY_VERIFY(m_dbWidget->isSearchActive());
+    QTRY_COMPARE(entryView->model()->rowCount(), 0);
+
+    // Enable "wait for enter" mode
+    waitForEnterAction->trigger();
+    QVERIFY(waitForEnterAction->isChecked());
+
+    // Test search with "wait for enter" enabled
+    searchTextEdit->clear();
+    QTest::keyClicks(searchTextEdit, "ZZZ");
+    QTRY_VERIFY(!m_dbWidget->isSearchActive());
+    QTRY_COMPARE(entryView->model()->rowCount(), 0);
+
+    // Press Enter to execute search
+    QTest::keyClick(searchTextEdit, Qt::Key_Return);
+    QTRY_VERIFY(m_dbWidget->isSearchActive());
+    QTRY_COMPARE(entryView->model()->rowCount(), 0);
+
+    // Disable "wait for enter" mode
+    waitForEnterAction->trigger();
+    QVERIFY(!waitForEnterAction->isChecked());
+
+    // Test search with "wait for enter" disabled again
+    searchTextEdit->clear();
+    QTest::keyClicks(searchTextEdit, "ZZZ");
+    QTRY_VERIFY(m_dbWidget->isSearchActive());
+    QTRY_COMPARE(entryView->model()->rowCount(), 0);
 
     // Enter search
     QTest::mouseClick(searchTextEdit, Qt::LeftButton);

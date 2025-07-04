@@ -34,6 +34,7 @@ SearchWidget::SearchWidget(QWidget* parent)
     , m_ui(new Ui::SearchWidget())
     , m_searchTimer(new QTimer(this))
     , m_clearSearchTimer(new QTimer(this))
+    , m_waitForEnter(config()->get(Config::SearchWaitForEnter).toBool())
 {
     m_ui->setupUi(this);
     setFocusProxy(m_ui->searchEdit);
@@ -69,6 +70,11 @@ SearchWidget::SearchWidget(QWidget* parent)
     m_actionLimitGroup->setCheckable(true);
     m_actionLimitGroup->setChecked(config()->get(Config::SearchLimitGroup).toBool());
 
+    m_actionWaitForEnter = m_searchMenu->addAction(tr("Wait for Enter to search"), this, SLOT(updateWaitForEnter()));
+    m_actionWaitForEnter->setObjectName("actionSearchWaitForEnter");
+    m_actionWaitForEnter->setCheckable(true);
+    m_actionWaitForEnter->setChecked(m_waitForEnter);
+
     m_ui->searchIcon->setIcon(icons()->icon("system-search"));
     m_ui->searchEdit->addAction(m_ui->searchIcon, QLineEdit::LeadingPosition);
 
@@ -91,6 +97,10 @@ bool SearchWidget::eventFilter(QObject* obj, QEvent* event)
 {
     if (event->type() == QEvent::KeyPress) {
         auto keyEvent = static_cast<QKeyEvent*>(event);
+        if (m_waitForEnter && keyEvent->key() == Qt::Key_Return) {
+            emit search(m_ui->searchEdit->text());
+            return true;
+        }
         if (keyEvent->key() == Qt::Key_Escape) {
             emit escapePressed();
             return true;
@@ -171,10 +181,9 @@ void SearchWidget::databaseChanged(DatabaseWidget* dbWidget)
 
 void SearchWidget::startSearchTimer()
 {
-    if (!m_searchTimer->isActive()) {
-        m_searchTimer->stop();
+    if (!m_waitForEnter) {
+        m_searchTimer->start(250);
     }
-    m_searchTimer->start(100);
 }
 
 void SearchWidget::startSearch()
@@ -200,16 +209,29 @@ void SearchWidget::updateCaseSensitive()
     emit caseSensitiveChanged(m_actionCaseSensitive->isChecked());
 }
 
-void SearchWidget::setCaseSensitive(bool state)
+void SearchWidget::updateWaitForEnter()
 {
-    m_actionCaseSensitive->setChecked(state);
-    updateCaseSensitive();
+    m_waitForEnter = m_actionWaitForEnter->isChecked();
+    config()->set(Config::SearchWaitForEnter, m_waitForEnter);
+    emit waitForEnterChanged(m_waitForEnter);
 }
 
 void SearchWidget::updateLimitGroup()
 {
     config()->set(Config::SearchLimitGroup, m_actionLimitGroup->isChecked());
     emit limitGroupChanged(m_actionLimitGroup->isChecked());
+}
+
+void SearchWidget::setCaseSensitive(bool state)
+{
+    m_actionCaseSensitive->setChecked(state);
+    updateCaseSensitive();
+}
+
+void SearchWidget::setWaitForEnter(bool state)
+{
+    m_actionWaitForEnter->setChecked(state);
+    updateWaitForEnter();
 }
 
 void SearchWidget::setLimitGroup(bool state)
