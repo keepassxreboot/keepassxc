@@ -50,10 +50,18 @@ void TestTextAttachmentsWidget::testTextReadWriteWidget()
     QCOMPARE(attachments.name, Test.name);
     QCOMPARE(attachments.data, Test.data);
 
+    // Find preview widget and verify that it is in collapsed state
     auto previewWidget = qobject_cast<TextAttachmentsPreviewWidget*>(splitter->widget(1));
     QVERIFY(previewWidget);
-    attachments = previewWidget->getAttachment();
+    QCOMPARE(previewWidget->width(), 0);
 
+    // Show the preview widget
+    QTest::mouseClick(m_textWidget->findChild<QPushButton*>("previewPushButton"), Qt::LeftButton);
+    QCoreApplication::processEvents();
+    QVERIFY(previewWidget->width() > 0);
+
+    // Verify attachment data has been loaded in the preview
+    attachments = previewWidget->getAttachment();
     QCOMPARE(attachments.name, Test.name);
     QCOMPARE(attachments.data, Test.data);
 }

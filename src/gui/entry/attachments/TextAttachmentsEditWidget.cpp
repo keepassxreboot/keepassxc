@@ -20,7 +20,6 @@
 
 #include <QPushButton>
 #include <QTextEdit>
-#include <qwidget.h>
 
 TextAttachmentsEditWidget::TextAttachmentsEditWidget(QWidget* parent)
     : QWidget(parent)
