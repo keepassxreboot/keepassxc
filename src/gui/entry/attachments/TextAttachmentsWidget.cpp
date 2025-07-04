@@ -87,14 +87,19 @@ void TextAttachmentsWidget::initWidget()
 
     // Only update the preview after a set timeout and if it is visible
     connect(m_previewUpdateTimer, &QTimer::timeout, this, &TextAttachmentsWidget::updatePreviewWidget);
+    connect(m_editWidget,
+            &TextAttachmentsEditWidget::scrollChanged,
+            m_previewWidget,
+            &TextAttachmentsPreviewWidget::matchScroll);
 
     connect(
         m_editWidget, &TextAttachmentsEditWidget::textChanged, m_previewUpdateTimer, QOverload<>::of(&QTimer::start));
 
     connect(m_editWidget, &TextAttachmentsEditWidget::previewButtonClicked, [this] {
-        const auto sizes = m_splitter->sizes();
-        const auto previewSize = sizes.value(1, 0) > 0 ? 0 : 1;
-        m_splitter->setSizes({1, previewSize});
+        // Split the display in half if showing the preview widget
+        const auto previewSize = m_previewWidget->width() > 0 ? 0 : m_splitter->width() / 2;
+        const auto editSize = m_splitter->width() - previewSize;
+        m_splitter->setSizes({editSize, previewSize});
         updatePreviewWidget();
     });
 

@@ -23,8 +23,10 @@
 #include <QComboBox>
 #include <QDebug>
 #include <QMetaEnum>
+#include <QScrollBar>
 #include <QSortFilterProxyModel>
 #include <QStandardItemModel>
+#include <QTimer>
 
 namespace
 {
@@ -126,6 +128,7 @@ void TextAttachmentsPreviewWidget::onTypeChanged(int index)
         qWarning() << "TextAttachmentsPreviewWidget: Unknown text format";
     }
 
+    const auto scrollPos = m_ui->previewTextBrowser->verticalScrollBar()->value();
     const auto fileType = m_ui->typeComboBox->itemData(index).toInt();
     if (fileType == TextAttachmentsPreviewWidget::PreviewTextType::PlainText) {
         m_ui->previewTextBrowser->setPlainText(m_attachment.data);
@@ -140,4 +143,16 @@ void TextAttachmentsPreviewWidget::onTypeChanged(int index)
         m_ui->previewTextBrowser->setMarkdown(m_attachment.data);
     }
 #endif
+
+    // Delay setting the scrollbar position to ensure the text is rendered first
+    QTimer::singleShot(
+        100, this, [this, scrollPos] { m_ui->previewTextBrowser->verticalScrollBar()->setValue(scrollPos); });
+}
+
+void TextAttachmentsPreviewWidget::matchScroll(double percent)
+{
+    // Match the scroll position of the text browser to the given percentage
+    int maxScroll = m_ui->previewTextBrowser->verticalScrollBar()->maximum();
+    int newScrollPos = static_cast<int>(maxScroll * percent);
+    m_ui->previewTextBrowser->verticalScrollBar()->setValue(newScrollPos);
 }

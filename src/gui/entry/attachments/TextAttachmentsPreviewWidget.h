@@ -48,6 +48,9 @@ public:
 
     Q_ENUM(PreviewTextType)
 
+public slots:
+    void matchScroll(double percent);
+
 private slots:
     void onTypeChanged(int index);
 

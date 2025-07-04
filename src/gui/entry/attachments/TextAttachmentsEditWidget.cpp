@@ -19,6 +19,7 @@
 #include "ui_TextAttachmentsEditWidget.h"
 
 #include <QPushButton>
+#include <QScrollBar>
 #include <QTextEdit>
 
 TextAttachmentsEditWidget::TextAttachmentsEditWidget(QWidget* parent)
@@ -29,6 +30,11 @@ TextAttachmentsEditWidget::TextAttachmentsEditWidget(QWidget* parent)
 
     connect(m_ui->attachmentsTextEdit, &QTextEdit::textChanged, this, &TextAttachmentsEditWidget::textChanged);
     connect(m_ui->previewPushButton, &QPushButton::clicked, this, &TextAttachmentsEditWidget::previewButtonClicked);
+    connect(m_ui->attachmentsTextEdit->verticalScrollBar(), &QScrollBar::valueChanged, this, [this](int value) {
+        // Return a percentage of document scroll
+        auto percent = static_cast<double>(value) / m_ui->attachmentsTextEdit->verticalScrollBar()->maximum();
+        emit scrollChanged(percent);
+    });
 }
 
 TextAttachmentsEditWidget::~TextAttachmentsEditWidget() = default;
