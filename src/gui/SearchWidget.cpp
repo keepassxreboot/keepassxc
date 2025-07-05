@@ -34,7 +34,7 @@ SearchWidget::SearchWidget(QWidget* parent)
     , m_ui(new Ui::SearchWidget())
     , m_searchTimer(new QTimer(this))
     , m_clearSearchTimer(new QTimer(this))
-    , m_waitForEnter(config()->get(Config::SearchWaitForEnter).toBool())
+
 {
     m_ui->setupUi(this);
     setFocusProxy(m_ui->searchEdit);
@@ -55,6 +55,7 @@ SearchWidget::SearchWidget(QWidget* parent)
     connect(m_searchTimer, SIGNAL(timeout()), SLOT(startSearch()));
     connect(m_clearSearchTimer, SIGNAL(timeout()), SLOT(clearSearch()));
     connect(this, SIGNAL(escapePressed()), SLOT(clearSearch()));
+    connect(m_ui->searchEdit, &QLineEdit::returnPressed, this, &SearchWidget::onReturnPressed);
 
     m_ui->searchEdit->setPlaceholderText(tr("Search (%1)…", "Search placeholder text, %1 is the keyboard shortcut")
                                              .arg(QKeySequence(QKeySequence::Find).toString(QKeySequence::NativeText)));
@@ -73,7 +74,7 @@ SearchWidget::SearchWidget(QWidget* parent)
     m_actionWaitForEnter = m_searchMenu->addAction(tr("Wait for Enter to search"), this, SLOT(updateWaitForEnter()));
     m_actionWaitForEnter->setObjectName("actionSearchWaitForEnter");
     m_actionWaitForEnter->setCheckable(true);
-    m_actionWaitForEnter->setChecked(m_waitForEnter);
+    m_actionWaitForEnter->setChecked(config()->get(Config::SearchWaitForEnter).toBool());
 
     m_ui->searchIcon->setIcon(icons()->icon("system-search"));
     m_ui->searchEdit->addAction(m_ui->searchIcon, QLineEdit::LeadingPosition);
@@ -97,10 +98,6 @@ bool SearchWidget::eventFilter(QObject* obj, QEvent* event)
 {
     if (event->type() == QEvent::KeyPress) {
         auto keyEvent = static_cast<QKeyEvent*>(event);
-        if (m_waitForEnter && keyEvent->key() == Qt::Key_Return) {
-            emit search(m_ui->searchEdit->text());
-            return true;
-        }
         if (keyEvent->key() == Qt::Key_Escape) {
             emit escapePressed();
             return true;
@@ -163,7 +160,7 @@ void SearchWidget::connectSignals(SignalMultiplexer& mx)
     mx.connect(SIGNAL(entrySelectionChanged()), this, SLOT(resetSearchClearTimer()));
     mx.connect(SIGNAL(currentModeChanged(DatabaseWidget::Mode)), this, SLOT(resetSearchClearTimer()));
     mx.connect(SIGNAL(databaseUnlocked()), this, SLOT(focusSearch()));
-    mx.connect(m_ui->searchEdit, SIGNAL(returnPressed()), SLOT(switchToEntryEdit()));
+    mx.connect(this, SIGNAL(enterPressed()), SLOT(switchToEntryEdit()));
 }
 
 void SearchWidget::databaseChanged(DatabaseWidget* dbWidget)
@@ -181,7 +178,12 @@ void SearchWidget::databaseChanged(DatabaseWidget* dbWidget)
 
 void SearchWidget::startSearchTimer()
 {
-    if (!m_waitForEnter) {
+    if (m_actionWaitForEnter->isChecked()) {
+        // L'option "Wait for Enter" est activée : on s'assure que le timer est arrêté
+        if (m_searchTimer->isActive()) {
+            m_searchTimer->stop();
+        }
+    } else {
         m_searchTimer->start(250);
     }
 }
@@ -211,9 +213,8 @@ void SearchWidget::updateCaseSensitive()
 
 void SearchWidget::updateWaitForEnter()
 {
-    m_waitForEnter = m_actionWaitForEnter->isChecked();
-    config()->set(Config::SearchWaitForEnter, m_waitForEnter);
-    emit waitForEnterChanged(m_waitForEnter);
+    config()->set(Config::SearchWaitForEnter, m_actionWaitForEnter->isChecked());
+    emit waitForEnterChanged(m_actionWaitForEnter->isChecked());
 }
 
 void SearchWidget::updateLimitGroup()
@@ -228,11 +229,6 @@ void SearchWidget::setCaseSensitive(bool state)
     updateCaseSensitive();
 }
 
-void SearchWidget::setWaitForEnter(bool state)
-{
-    m_actionWaitForEnter->setChecked(state);
-    updateWaitForEnter();
-}
 
 void SearchWidget::setLimitGroup(bool state)
 {
@@ -265,4 +261,13 @@ void SearchWidget::toggleHelp()
 void SearchWidget::showSearchMenu()
 {
     m_searchMenu->exec(m_ui->searchEdit->mapToGlobal(m_ui->searchEdit->rect().bottomLeft()));
+}
+
+void SearchWidget::onReturnPressed()
+{
+    if (m_actionWaitForEnter->isChecked()) {
+        emit search(m_ui->searchEdit->text());
+    } else {
+        emit enterPressed();
+    }
 }
