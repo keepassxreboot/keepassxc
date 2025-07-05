@@ -56,7 +56,6 @@ signals:
     void searchCanceled();
     void caseSensitiveChanged(bool state);
     void limitGroupChanged(bool state);
-    void waitForEnterChanged(bool state);
     void escapePressed();
     void downPressed();
     void enterPressed();
@@ -74,7 +73,6 @@ private slots:
     void startSearch();
     void updateCaseSensitive();
     void updateLimitGroup();
-    void updateWaitForEnter();
     void toggleHelp();
     void showSearchMenu();
     void resetSearchClearTimer();
@@ -88,7 +86,6 @@ private:
     QAction* m_actionLimitGroup;
     QAction* m_actionWaitForEnter;
     QMenu* m_searchMenu;
-
 };
 
 #endif // SEARCHWIDGET_H

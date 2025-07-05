@@ -1141,7 +1141,7 @@ void TestGui::testSearch()
     // Test "wait for enter" toggle
     QVERIFY(waitForEnterAction->isVisible());
     QVERIFY(waitForEnterAction->isCheckable());
-    
+
     // Test search with "wait for enter" disabled (default)
     searchTextEdit->clear();
     QTest::keyClicks(searchTextEdit, "ZZZ");
