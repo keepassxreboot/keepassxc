@@ -54,6 +54,7 @@ IncludeCategories:
 IndentCaseLabels: false
 IndentWidth:     4
 IndentWrappedFunctionNames: false
+InsertNewlineAtEOF: true
 KeepEmptyLinesAtTheStartOfBlocks: true
 MacroBlockBegin: ''
 MacroBlockEnd:   ''
