@@ -1149,30 +1149,38 @@ void TestGui::testSearch()
     QTRY_VERIFY(m_dbWidget->isSearchActive());
     QTRY_COMPARE(entryView->model()->rowCount(), 0);
 
+    // Clear search
+    searchTextEdit->clear();
+    QTRY_VERIFY(!m_dbWidget->isSearchActive());
+
     // Enable "wait for enter" mode
     waitForEnterAction->trigger();
     QVERIFY(waitForEnterAction->isChecked());
 
     // Test search with "wait for enter" enabled
-    searchTextEdit->clear();
     QTest::keyClicks(searchTextEdit, "ZZZ");
     QTRY_VERIFY(!m_dbWidget->isSearchActive());
-    QTRY_COMPARE(entryView->model()->rowCount(), 0);
 
     // Press Enter to execute search
     QTest::keyClick(searchTextEdit, Qt::Key_Return);
     QTRY_VERIFY(m_dbWidget->isSearchActive());
     QTRY_COMPARE(entryView->model()->rowCount(), 0);
+    // Check that search remains active even after clearing
+    searchTextEdit->clear();
+    QTRY_VERIFY(m_dbWidget->isSearchActive());
 
     // Disable "wait for enter" mode
     waitForEnterAction->trigger();
     QVERIFY(!waitForEnterAction->isChecked());
 
     // Test search with "wait for enter" disabled again
-    searchTextEdit->clear();
     QTest::keyClicks(searchTextEdit, "ZZZ");
     QTRY_VERIFY(m_dbWidget->isSearchActive());
     QTRY_COMPARE(entryView->model()->rowCount(), 0);
+
+    // Clear search
+    searchTextEdit->clear();
+    QTRY_VERIFY(!m_dbWidget->isSearchActive());
 
     // Enter search
     QTest::mouseClick(searchTextEdit, Qt::LeftButton);
