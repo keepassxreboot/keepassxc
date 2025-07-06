@@ -179,7 +179,7 @@ void SearchWidget::databaseChanged(DatabaseWidget* dbWidget)
 void SearchWidget::startSearchTimer()
 {
     if (m_actionWaitForEnter->isChecked()) {
-        // L'option "Wait for Enter" est activée : on s'assure que le timer est arrêté
+        // "Wait for Enter" option is enabled: ensure the timer is stopped
         if (m_searchTimer->isActive()) {
             m_searchTimer->stop();
         }
