@@ -1,7 +1,7 @@
 {
   "name": "keepassxc",
   "version-string": "2.8.0",
-  "builtin-baseline": "2a6371b01420d8820d158b4707e79931feba27aa",
+  "builtin-baseline": "f9c128a6f7a96f5fa2f6f089f37ed6788a90e4b0",
   "dependencies": [
     {
       "name": "argon2",
