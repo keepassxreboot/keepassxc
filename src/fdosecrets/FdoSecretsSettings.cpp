@@ -104,4 +104,37 @@ namespace FdoSecrets
         db->metadata()->customData()->set(CustomData::FdoSecretsExposedGroup, group.toString());
     }
 
+    QVariantMap FdoSecretsSettings::collectionAliases() const
+    {
+        return config()->get(Config::FdoSecrets_CollectionAliasDatabaseUUIDs).toMap();
+    }
+
+    void FdoSecretsSettings::setCollectionAliases(const QVariantMap& aliases)
+    {
+        config()->set(Config::FdoSecrets_CollectionAliasDatabaseUUIDs, aliases);
+        emit collectionAliasesChanged();
+    }
+
+    void FdoSecretsSettings::setCollectionAlias(QString alias, QUuid publicUuid)
+    {
+        auto aliases = collectionAliases();
+        auto it = std::as_const(aliases).lowerBound(alias);
+        if (it != aliases.cend() && *it == publicUuid)
+            return;
+        aliases.insert(std::move(it), std::move(alias), std::move(publicUuid));
+        // always signals collectionAliasesChanged(), so return above if nothing changed
+        setCollectionAliases(std::move(aliases));
+    }
+
+    void FdoSecretsSettings::removeCollectionAlias(const QString& alias, const QUuid& publicUuid)
+    {
+        auto aliases = collectionAliases();
+        auto it = aliases.find(alias);
+        if (it == aliases.end() || it->toUuid() != publicUuid)
+            return;
+        aliases.erase(std::move(it));
+        // always signals collectionAliasesChanged(), so return above if nothing changed
+        setCollectionAliases(std::move(aliases));
+    }
+
 } // namespace FdoSecrets

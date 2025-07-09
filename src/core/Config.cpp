@@ -193,6 +193,7 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::FdoSecrets_ConfirmDeleteItem, {QS("FdoSecrets/ConfirmDeleteItem"), Roaming, true}},
     {Config::FdoSecrets_ConfirmAccessItem, {QS("FdoSecrets/ConfirmAccessItem"), Roaming, true}},
     {Config::FdoSecrets_UnlockBeforeSearch, {QS("FdoSecrets/UnlockBeforeSearch"), Roaming, true}},
+    {Config::FdoSecrets_CollectionAliasDatabaseUUIDs, {QS("FdoSecrets/CollectionAliasDatabaseUUIDs"), Roaming, QVariantMap()}},
 
     // KeeShare
     {Config::KeeShare_QuietSuccess, {QS("KeeShare/QuietSuccess"), Roaming, false}},

@@ -20,14 +20,17 @@
 
 #include <QSharedPointer>
 #include <QUuid>
+#include <QVariantMap>
 
 class Database;
 
 namespace FdoSecrets
 {
 
-    class FdoSecretsSettings
+    class FdoSecretsSettings : public QObject
     {
+        Q_OBJECT
+
     public:
         FdoSecretsSettings() = default;
         static FdoSecretsSettings* instance();
@@ -47,12 +50,20 @@ namespace FdoSecrets
         bool unlockBeforeSearch() const;
         void setUnlockBeforeSearch(bool unlockBeforeSearch);
 
+        QVariantMap collectionAliases() const;
+        void setCollectionAliases(const QVariantMap& aliases);
+        void setCollectionAlias(QString alias, QUuid publicUuuid);
+        void removeCollectionAlias(const QString& alias, const QUuid& publicUuid);
+
         // Per db settings
 
         QUuid exposedGroup(const QSharedPointer<Database>& db) const;
         void setExposedGroup(const QSharedPointer<Database>& db, const QUuid& group);
         QUuid exposedGroup(Database* db) const;
         void setExposedGroup(Database* db, const QUuid& group);
+
+    signals:
+        void collectionAliasesChanged() const;
 
     private:
         static FdoSecretsSettings* m_instance;
