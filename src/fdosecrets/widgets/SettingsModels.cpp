@@ -25,6 +25,7 @@
 #include "gui/Icons.h"
 
 #include <QFileInfo>
+#include <iterator>
 
 namespace FdoSecrets
 {
@@ -305,12 +306,12 @@ namespace FdoSecrets
 
     QVariantMap::const_iterator SettingsAliasesModel::rowAlias(const QModelIndex& index) const
     {
-        return m_aliases.cbegin() + index.row();
+        return std::next(m_aliases.cbegin(), index.row());
     }
 
     QVariantMap::iterator SettingsAliasesModel::rowAlias(const QModelIndex& index)
     {
-        return m_aliases.begin() + index.row();
+        return std::next(m_aliases.begin(), index.row());
     }
 
     QVariant SettingsAliasesModel::data(const QModelIndex& index, int role) const
@@ -505,7 +506,7 @@ namespace FdoSecrets
     void SettingsAliasesModel::removeRow(int row)
     {
         beginRemoveRows({}, row, row);
-        m_aliases.erase(m_aliases.begin() + row);
+        m_aliases.erase(std::next(m_aliases.begin(), row));
         endRemoveRows();
     }
 
