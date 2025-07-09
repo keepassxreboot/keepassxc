@@ -18,6 +18,7 @@
 #ifndef KEEPASSXC_FDOSECRETS_SERVICE_H
 #define KEEPASSXC_FDOSECRETS_SERVICE_H
 
+#include "core/Config.h"
 #include "fdosecrets/dbus/DBusClient.h"
 #include "fdosecrets/dbus/DBusObject.h"
 
@@ -143,6 +144,7 @@ namespace FdoSecrets
 
         void onCollectionAliasRemoved(const QString& alias);
 
+        void handleSettingsChanged(Config::ConfigKey key);
         void applyCollectionAliasSettings();
 
     private:

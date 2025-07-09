@@ -112,7 +112,6 @@ namespace FdoSecrets
     void FdoSecretsSettings::setCollectionAliases(const QVariantMap& aliases)
     {
         config()->set(Config::FdoSecrets_CollectionAliasDatabaseUUIDs, aliases);
-        emit collectionAliasesChanged();
     }
 
     void FdoSecretsSettings::setCollectionAlias(QString alias, QUuid publicUuid)

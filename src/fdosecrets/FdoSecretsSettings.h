@@ -27,10 +27,8 @@ class Database;
 namespace FdoSecrets
 {
 
-    class FdoSecretsSettings : public QObject
+    class FdoSecretsSettings
     {
-        Q_OBJECT
-
     public:
         FdoSecretsSettings() = default;
         static FdoSecretsSettings* instance();
@@ -61,9 +59,6 @@ namespace FdoSecrets
         void setExposedGroup(const QSharedPointer<Database>& db, const QUuid& group);
         QUuid exposedGroup(Database* db) const;
         void setExposedGroup(Database* db, const QUuid& group);
-
-    signals:
-        void collectionAliasesChanged() const;
 
     private:
         static FdoSecretsSettings* m_instance;

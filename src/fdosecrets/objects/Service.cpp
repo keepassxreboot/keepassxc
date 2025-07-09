@@ -81,8 +81,7 @@ namespace FdoSecrets
         // when a new database is opened, apply it's aliases
         connect(m_databases.data(), &DatabaseTabWidget::databaseOpened, this, &Service::applyCollectionAliasSettings);
         // apply aliases from settings, when they change
-        connect(
-            settings(), &FdoSecretsSettings::collectionAliasesChanged, this, &Service::applyCollectionAliasSettings);
+        connect(config(), &Config::changed, this, &Service::handleSettingsChanged);
 
         // make default alias track current activated database
         connect(m_databases.data(), &DatabaseTabWidget::activeDatabaseChanged, this, &Service::ensureDefaultAlias);
@@ -467,6 +466,13 @@ namespace FdoSecrets
             return collection->removeAlias(name);
         }
         return collection->addAlias(name);
+    }
+
+    void Service::handleSettingsChanged(Config::ConfigKey key)
+    {
+        if (key == Config::FdoSecrets_CollectionAliasDatabaseUUIDs) {
+            applyCollectionAliasSettings();
+        }
     }
 
     void Service::applyCollectionAliasSettings()
