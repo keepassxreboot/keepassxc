@@ -143,6 +143,8 @@ namespace FdoSecrets
 
         void onCollectionAliasRemoved(const QString& alias);
 
+        void applyCollectionAliasSettings();
+
     private:
         bool initialize();
 
@@ -173,6 +175,7 @@ namespace FdoSecrets
         QList<Session*> m_sessions{};
 
         bool m_insideEnsureDefaultAlias{false};
+        bool m_explicitlyDefinedDefaultAlias{false};
         bool m_unlockingAnyDatabase{false};
         // list of db currently has unlock dialog shown
         QHash<const DatabaseWidget*, QMetaObject::Connection> m_unlockingDb{};

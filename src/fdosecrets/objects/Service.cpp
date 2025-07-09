@@ -78,6 +78,12 @@ namespace FdoSecrets
             onDatabaseTabOpened(dbWidget, true);
         });
 
+        // when a new database is opened, apply it's aliases
+        connect(m_databases.data(), &DatabaseTabWidget::databaseOpened, this, &Service::applyCollectionAliasSettings);
+        // apply aliases from settings, when they change
+        connect(
+            settings(), &FdoSecretsSettings::collectionAliasesChanged, this, &Service::applyCollectionAliasSettings);
+
         // make default alias track current activated database
         connect(m_databases.data(), &DatabaseTabWidget::activeDatabaseChanged, this, &Service::ensureDefaultAlias);
 
@@ -163,7 +169,7 @@ namespace FdoSecrets
 
     void Service::ensureDefaultAlias()
     {
-        if (m_insideEnsureDefaultAlias) {
+        if (m_insideEnsureDefaultAlias || m_explicitlyDefinedDefaultAlias) {
             return;
         }
 
@@ -463,6 +469,44 @@ namespace FdoSecrets
         return collection->addAlias(name);
     }
 
+    void Service::applyCollectionAliasSettings()
+    {
+        auto aliases = settings()->collectionAliases();
+        // add missing aliases
+        m_explicitlyDefinedDefaultAlias = false; // is there still an explicit default alias?
+        for (auto it = aliases.cbegin(); it != aliases.cend(); ++it) {
+            auto& alias = it.key();
+            if (alias == DEFAULT_ALIAS) {
+                m_explicitlyDefinedDefaultAlias = true; // will disable this->ensureDefaultAlias()
+            }
+
+            auto database = m_databases->databaseWidgetFromPublicUuid(it->toUuid());
+            if (!database)
+                continue; // cannot add alias to database not currently opened
+            auto collection = m_dbToCollection.value(database, nullptr);
+            if (!collection)
+                continue;
+
+            collection->addAlias(alias).okOrDie(); // is idempotent
+        }
+        // remove unexpected aliases
+        QList<std::pair<QString, Collection*>> aliasesToRemove = {};
+        for (auto it = m_aliases.cbegin(); it != m_aliases.cend(); ++it) {
+            auto& alias = it.key();
+            Collection* const isCollection = *it; // the collection this alias currently points to
+            auto shouldUuid = aliases.value(alias, {}).toUuid(); // the UUID this alias should point to
+            if (shouldUuid.isNull() || isCollection->backend()->database()->publicUuid() != shouldUuid) {
+                // don't call isCollection->removeAlias, to avoid invalidating the iterator it
+                aliasesToRemove.append(std::make_pair(alias, isCollection));
+            }
+        }
+        for (auto toRemove : aliasesToRemove) {
+            toRemove.second->removeAlias(toRemove.first).okOrDie();
+        }
+        // select default alias, if not explicitly defined
+        ensureDefaultAlias();
+    }
+
     Collection* Service::findCollection(const QString& alias) const
     {
         if (alias.isEmpty()) {
@@ -495,11 +539,23 @@ namespace FdoSecrets
     {
         auto coll = qobject_cast<Collection*>(sender());
         m_aliases[alias] = coll;
+        if (!(m_insideEnsureDefaultAlias && alias == DEFAULT_ALIAS)) {
+            // store dynamically created aliases to settings
+            settings()->setCollectionAlias(alias, coll->backend()->database()->publicUuid());
+        }
     }
 
     void Service::onCollectionAliasRemoved(const QString& alias)
     {
-        m_aliases.remove(alias);
+        auto coll = m_aliases.take(alias);
+        if (coll
+            && !(m_insideEnsureDefaultAlias && alias == DEFAULT_ALIAS)
+            // don't persistently remove alias after collectionAboutToDelete() was emitted
+            && m_dbToCollection.contains(coll->backend())) {
+            // pass publicUuid, to avoid removing alias x to database A, when
+            //   applyCollectionAliasSettings() removes x->B while applying this very x->A
+            settings()->removeCollectionAlias(alias, coll->backend()->database()->publicUuid());
+        }
         ensureDefaultAlias();
     }
 
