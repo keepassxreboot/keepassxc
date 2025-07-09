@@ -29,6 +29,7 @@
 #include "core/Global.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
+#include "fdosecrets/widgets/SettingsModels.h"
 #include "gui/Application.h"
 #include "gui/DatabaseTabWidget.h"
 #include "gui/FileDialog.h"
@@ -43,6 +44,7 @@
 #include <QLineEdit>
 #include <QSignalSpy>
 #include <QTest>
+#include <qabstractitemmodeltester.h>
 #include <utility>
 
 int main(int argc, char* argv[])
@@ -202,6 +204,7 @@ void TestGuiFdoSecrets::init()
     VERIFY(m_dbWidget->save());
 
     // enforce consistent default settings at the beginning
+    FdoSecrets::settings()->setCollectionAliases({});
     FdoSecrets::settings()->setUnlockBeforeSearch(false);
     FdoSecrets::settings()->setShowNotification(false);
     FdoSecrets::settings()->setConfirmAccessItem(false);
@@ -212,6 +215,7 @@ void TestGuiFdoSecrets::init()
 void TestGuiFdoSecrets::cleanup()
 {
     // restore to default settings
+    FdoSecrets::settings()->setCollectionAliases({});
     FdoSecrets::settings()->setUnlockBeforeSearch(false);
     FdoSecrets::settings()->setShowNotification(false);
     FdoSecrets::settings()->setConfirmAccessItem(false);
@@ -1600,6 +1604,196 @@ void TestGuiFdoSecrets::testDefaultAliasAlwaysPresent()
     coll = getDefaultCollection(service);
     VERIFY(coll);
     DBUS_COMPARE(coll->locked(), false);
+}
+
+void TestGuiFdoSecrets::testConfiguredAlias()
+{
+
+    const QString newalias = "newalias";
+
+    auto service = enableService();
+    VERIFY(service);
+
+    DBUS_GET(prePath, service->ReadAlias(newalias));
+    COMPARE(prePath, QDBusObjectPath("/"));
+
+    FdoSecrets::settings()->setCollectionAlias(newalias, m_db->publicUuid());
+
+    DBUS_GET(collPath, service->ReadAlias(newalias));
+    auto coll = getProxy<CollectionProxy>(collPath);
+    VERIFY(coll);
+
+    FdoSecrets::settings()->removeCollectionAlias(newalias, m_db->publicUuid());
+
+    DBUS_GET(postPath, service->ReadAlias(newalias));
+    COMPARE(postPath, QDBusObjectPath("/"));
+}
+
+void TestGuiFdoSecrets::testConfiguredDefaultAlias()
+{
+    const QString defaultAlias = "default";
+
+    auto service = enableService();
+    VERIFY(service);
+
+    // read original default alias
+    DBUS_GET(oldCollPath, service->ReadAlias(defaultAlias));
+    // create a second collection (selects the new db)
+    QDBusObjectPath newCollPath;
+    {
+        QSignalSpy spyCollectionCreated(service.data(), SIGNAL(CollectionCreated(QDBusObjectPath)));
+        VERIFY(spyCollectionCreated.isValid());
+
+        DBUS_GET2(collPath,
+                  promptPath,
+                  service->CreateCollection({{DBUS_INTERFACE_SECRET_COLLECTION + ".Label", "Test NewDB"}}, "mydatadb"));
+        auto prompt = getProxy<PromptProxy>(promptPath);
+        DBUS_VERIFY(prompt->Prompt(""));
+        VERIFY(driveNewDatabaseWizard());
+
+        VERIFY(waitForSignal(spyCollectionCreated, 1));
+        auto args = spyCollectionCreated.takeFirst();
+        COMPARE(args.size(), 1);
+        newCollPath = args.at(0).value<QDBusObjectPath>();
+    }
+    VERIFY2(oldCollPath.path() != newCollPath.path(), oldCollPath.path().toStdString().data());
+    COMPARE(m_tabWidget->count(), 2);
+    COMPARE(m_tabWidget->currentIndex(), 1);
+
+    // read original default alias
+    DBUS_GET(origDefaultPath, service->ReadAlias(defaultAlias));
+    COMPARE(origDefaultPath, newCollPath);
+
+    // change default alias (back to the old db)
+    FdoSecrets::settings()->setCollectionAlias(defaultAlias, m_db->publicUuid());
+
+    // verify configuration had effect
+    DBUS_GET(configuredDefaultPath, service->ReadAlias(defaultAlias));
+    COMPARE(configuredDefaultPath, oldCollPath);
+    auto configuredDefaultColl = getProxy<CollectionProxy>(configuredDefaultPath);
+    VERIFY(configuredDefaultColl);
+    // verify, that the default alias no longer follows the active tab
+    m_tabWidget->setCurrentIndex(0);
+    DBUS_GET(configuredDefaultPath0, service->ReadAlias(defaultAlias));
+    COMPARE(configuredDefaultPath0, oldCollPath);
+    m_tabWidget->setCurrentIndex(1);
+    DBUS_GET(configuredDefaultPath1, service->ReadAlias(defaultAlias));
+    COMPARE(configuredDefaultPath1, oldCollPath);
+
+    // remove default alias configuration
+    FdoSecrets::settings()->removeCollectionAlias(defaultAlias, m_db->publicUuid());
+
+    // verify that original default alias got restored
+    DBUS_GET(restoredDefaultPath, service->ReadAlias(defaultAlias));
+    COMPARE(restoredDefaultPath, origDefaultPath);
+    // ... and changes with the active tab
+    m_tabWidget->setCurrentIndex(0);
+    DBUS_GET(restoredDefaultPath0, service->ReadAlias(defaultAlias));
+    COMPARE(restoredDefaultPath0, oldCollPath);
+    m_tabWidget->setCurrentIndex(1);
+    DBUS_GET(restoredDefaultPath1, service->ReadAlias(defaultAlias));
+    COMPARE(restoredDefaultPath1, newCollPath);
+}
+
+void TestGuiFdoSecrets::testConfiguredUnavailableAlias()
+{
+    const QString alias = "unavailableAlias";
+    auto service = enableService();
+    VERIFY(service);
+    // configure an alias, for which the database is not currently opened
+    FdoSecrets::settings()->setCollectionAlias(alias, QUuid::createUuid());
+    // check that this alias is not exposed
+    DBUS_GET(path, service->ReadAlias(alias));
+    COMPARE(path, QDBusObjectPath("/"));
+}
+
+void TestGuiFdoSecrets::testSettingsAliasesModelDisplay()
+{
+    FdoSecrets::SettingsAliasesModel model{m_tabWidget};
+    QAbstractItemModelTester tester{&model};
+
+    model.setAliases({{"alias", m_db->publicUuid()}});
+    QCOMPARE(model.data(model.index(0, 1), Qt::DisplayRole), m_dbWidget->displayName());
+    QCOMPARE(model.data(model.index(0, 1), Qt::ToolTipRole), m_db->filePath());
+    QCOMPARE(model.data(model.index(0, 1), Qt::EditRole), m_db->publicUuid());
+}
+
+void TestGuiFdoSecrets::testSettingsAliasesModel()
+{
+    FdoSecrets::SettingsAliasesModel model{m_tabWidget};
+    QAbstractItemModelTester tester{&model};
+
+    const QVariant defaultUuid = QUuid::createUuid();
+    const QVariant otherUuid = QUuid::createUuid();
+    const QVariant newUuid = QUuid::createUuid();
+    const QVariantMap origAliases{
+        {"default", defaultUuid},
+        {"otherAlias", otherUuid},
+    };
+    model.setAliases(origAliases);
+    QCOMPARE(model.aliases(), origAliases);
+    // last row should be empty (to be filled with new entries)
+    QCOMPARE(model.rowCount({}), origAliases.size() + 1);
+    const QModelIndex nextAliasIdx = model.index(origAliases.size(), 0);
+    const QModelIndex nextUuidIdx = model.index(origAliases.size(), 1);
+    QCOMPARE(model.data(nextAliasIdx, Qt::DisplayRole), QVariant());
+    QCOMPARE(model.data(nextUuidIdx, Qt::DisplayRole), QVariant());
+    // last row should be editable (to insert new entries)
+    QVERIFY(model.flags(nextAliasIdx) & Qt::ItemIsEditable);
+    QVERIFY(model.setData(nextAliasIdx, "newAlias"));
+    QVERIFY(model.aliases().contains("newAlias"));
+    // aliases sorted, so this should be newAlias
+    const QModelIndex newAliasIdx = model.index(1, 0);
+    const QModelIndex newUuidIdx = model.index(1, 1);
+    QCOMPARE(model.data(newAliasIdx, Qt::DisplayRole), "newAlias");
+    QVERIFY(model.flags(newUuidIdx) & Qt::ItemIsEditable);
+    QVERIFY(model.setData(newUuidIdx, newUuid));
+    QCOMPARE(model.aliases()["newAlias"], newUuid);
+    // entries can be renamed
+    QVERIFY(model.flags(newAliasIdx) & Qt::ItemIsEditable);
+    QCOMPARE(model.data(newAliasIdx, Qt::EditRole), "newAlias");
+    QVERIFY(model.setData(newAliasIdx, "renamedAlias"));
+    QVERIFY(!model.aliases().contains("newAlias"));
+    // updates data model.aliases()
+    QCOMPARE(model.aliases()["default"], defaultUuid);
+    QCOMPARE(model.aliases()["otherAlias"], otherUuid);
+    QCOMPARE(model.aliases()["renamedAlias"], newUuid);
+    // updates sorted display
+    QCOMPARE(model.data(model.index(0, 0), Qt::DisplayRole), "default");
+    QCOMPARE(model.data(model.index(1, 0), Qt::DisplayRole), "otherAlias");
+    QCOMPARE(model.data(model.index(2, 0), Qt::DisplayRole), "renamedAlias");
+    QCOMPARE(model.data(model.index(0, 1), Qt::DisplayRole), defaultUuid);
+    QCOMPARE(model.data(model.index(1, 1), Qt::DisplayRole), otherUuid);
+    QCOMPARE(model.data(model.index(2, 1), Qt::DisplayRole), newUuid);
+
+    // automatically generate names for newly inserted databases
+    const QVariant unnamedUuid = QUuid::createUuid();
+    QVERIFY(model.setData(model.index(3, 1), unnamedUuid));
+    QCOMPARE(model.aliases()["alias1"], unnamedUuid); // "default" already exists
+    // updates sorted display
+    QCOMPARE(model.data(model.index(0, 0), Qt::DisplayRole), "alias1");
+    QCOMPARE(model.data(model.index(1, 0), Qt::DisplayRole), "default");
+    QCOMPARE(model.data(model.index(2, 0), Qt::DisplayRole), "otherAlias");
+    QCOMPARE(model.data(model.index(3, 0), Qt::DisplayRole), "renamedAlias");
+    QCOMPARE(model.data(model.index(0, 1), Qt::DisplayRole), unnamedUuid);
+    QCOMPARE(model.data(model.index(1, 1), Qt::DisplayRole), defaultUuid);
+    QCOMPARE(model.data(model.index(2, 1), Qt::DisplayRole), otherUuid);
+    QCOMPARE(model.data(model.index(3, 1), Qt::DisplayRole), newUuid);
+
+    // remove rows
+    model.removeRow(1);
+    QCOMPARE(model.rowCount({}), 4);
+    QVERIFY(!model.aliases().contains("default"));
+    // other way of removing rows
+    QVERIFY(model.setData(model.index(1, 0), ""));
+    QCOMPARE(model.rowCount({}), 3);
+    QVERIFY(!model.aliases().contains("otherAlias"));
+    QCOMPARE(model.data(model.index(0, 0), Qt::DisplayRole), "alias1");
+    QCOMPARE(model.data(model.index(1, 0), Qt::DisplayRole), "renamedAlias");
+    QCOMPARE(model.data(model.index(2, 0), Qt::DisplayRole), {});
+    QCOMPARE(model.data(model.index(0, 1), Qt::DisplayRole), unnamedUuid);
+    QCOMPARE(model.data(model.index(1, 1), Qt::DisplayRole), newUuid);
+    QCOMPARE(model.data(model.index(2, 1), Qt::DisplayRole), {});
 }
 
 void TestGuiFdoSecrets::testExposeSubgroup()

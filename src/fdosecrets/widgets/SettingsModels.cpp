@@ -497,6 +497,10 @@ namespace FdoSecrets
 
     Qt::ItemFlags SettingsAliasesModel::flags(const QModelIndex& index) const
     {
+        if (!index.isValid() || index.model() != this || index.row() >= rowCount({})
+            || index.column() >= columnCount({})) {
+            return {};
+        }
         // all table cells are editable (see SettingsAliasesModel::setData())
         return QAbstractTableModel::flags(index) | Qt::ItemIsEditable;
     }
