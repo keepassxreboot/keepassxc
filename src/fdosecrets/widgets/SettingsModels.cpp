@@ -353,10 +353,8 @@ namespace FdoSecrets
 
     QVariant SettingsAliasesModel::dataForDatabase(const QUuid& publicUuid, int role) const
     {
-        switch (role) {
-        case Qt::EditRole: {
+        if (role == Qt::EditRole) {
             return publicUuid; // initial value for editor for this cell
-        }
         }
 
         auto dbWidget = m_databases->databaseWidgetFromPublicUuid(publicUuid);

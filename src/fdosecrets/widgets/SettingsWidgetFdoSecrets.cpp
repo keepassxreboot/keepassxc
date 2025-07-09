@@ -237,8 +237,9 @@ public:
             auto dbWidget = m_dbTabs->databaseWidgetFromIndex(i);
             auto db = dbWidget->database();
             if (!FdoSecrets::settings()->exposedGroup(db).isNull()) {
-                e->insertItem(i, dbWidget->displayName(), db->publicUuid());
-                e->setItemData(i, db->filePath(), Qt::ToolTipRole);
+                auto idx = e->count();
+                e->insertItem(idx, dbWidget->displayName(), db->publicUuid());
+                e->setItemData(idx, db->filePath(), Qt::ToolTipRole);
             }
         }
         return e;
