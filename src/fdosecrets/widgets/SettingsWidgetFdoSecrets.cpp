@@ -16,6 +16,7 @@
  */
 
 #include "SettingsWidgetFdoSecrets.h"
+#include "gui/DatabaseTabWidget.h"
 #include "ui_SettingsWidgetFdoSecrets.h"
 
 #include "fdosecrets/FdoSecretsPlugin.h"
@@ -27,9 +28,11 @@
 #include "gui/DatabaseWidget.h"
 
 #include <QAction>
+#include <QComboBox>
 #include <QToolButton>
 
 using FdoSecrets::DBusClientPtr;
+using FdoSecrets::SettingsAliasesModel;
 using FdoSecrets::SettingsClientModel;
 using FdoSecrets::SettingsDatabaseModel;
 
@@ -215,6 +218,61 @@ namespace
     };
 } // namespace
 
+class DatabaseUuidDelegate : public QStyledItemDelegate
+{
+    Q_OBJECT
+
+public:
+    DatabaseUuidDelegate(DatabaseTabWidget* dbTabs, QObject* parent = nullptr)
+        : QStyledItemDelegate(parent)
+        , m_dbTabs(dbTabs)
+    {
+    }
+
+    QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem&, const QModelIndex&) const override
+    {
+        QComboBox* e = new QComboBox(parent);
+        // Add existing database tabs
+        for (auto i = 0; i < m_dbTabs->count(); ++i) {
+            auto dbWidget = m_dbTabs->databaseWidgetFromIndex(i);
+            auto db = dbWidget->database();
+            if (!FdoSecrets::settings()->exposedGroup(db).isNull()) {
+                e->insertItem(i, dbWidget->displayName(), db->publicUuid());
+                e->setItemData(i, db->filePath(), Qt::ToolTipRole);
+            }
+        }
+        return e;
+    }
+
+    void setEditorData(QWidget* editor, const QModelIndex& index) const override
+    {
+        const QVariant current = index.model()->data(index, Qt::EditRole);
+        if (current.toUuid().isNull())
+            return; // no previously selected db
+
+        auto e = widget(editor);
+        auto idx = e->findData(current);
+        if (idx < 0) { // UUID of not currently opened db in model, add to editor
+            idx = e->count();
+            e->insertItem(idx, current.toUuid().toString(), current);
+        }
+        e->setCurrentIndex(idx);
+    }
+
+    void setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const override
+    {
+        model->setData(index, widget(editor)->currentData());
+    }
+
+private:
+    static QComboBox* widget(QWidget* editor)
+    {
+        return static_cast<QComboBox*>(editor);
+    }
+
+    const DatabaseTabWidget* const m_dbTabs;
+};
+
 SettingsWidgetFdoSecrets::SettingsWidgetFdoSecrets(FdoSecretsPlugin* plugin, QWidget* parent)
     : QWidget(parent)
     , m_ui(new Ui::SettingsWidgetFdoSecrets())
@@ -223,6 +281,33 @@ SettingsWidgetFdoSecrets::SettingsWidgetFdoSecrets(FdoSecretsPlugin* plugin, QWi
     m_ui->setupUi(this);
     m_ui->warningMsg->setHidden(true);
     m_ui->warningMsg->setCloseButtonVisible(false);
+
+    m_aliasesModel = new SettingsAliasesModel(plugin->dbTabs(), this);
+    m_ui->tableAliases->setModel(m_aliasesModel);
+
+    auto databaseDelegate = new DatabaseUuidDelegate(plugin->dbTabs(), this);
+    m_ui->tableAliases->setItemDelegateForColumn(SettingsAliasesModel::ColumnDatabase, databaseDelegate);
+
+    connect(m_ui->addAliasButton, &QPushButton::clicked, [&]() {
+        auto index =
+            m_aliasesModel->index(m_aliasesModel->newRowIndex(), FdoSecrets::SettingsAliasesModel::ColumnAlias);
+        m_ui->tableAliases->setCurrentIndex(index);
+        m_ui->tableAliases->edit(index);
+    });
+    connect(m_ui->removeAliasButton, &QPushButton::clicked, [&]() {
+        m_aliasesModel->removeRow(m_ui->tableAliases->currentIndex().row());
+    });
+    connect(m_ui->tableAliases->selectionModel(),
+            &QItemSelectionModel::currentChanged,
+            [&](const QModelIndex& current, const QModelIndex&) {
+                m_ui->removeAliasButton->setEnabled(current.isValid());
+            });
+
+    auto aliasesViewHeader = m_ui->tableAliases->horizontalHeader();
+    aliasesViewHeader->setSelectionMode(QAbstractItemView::NoSelection);
+    aliasesViewHeader->setSectionsClickable(false);
+    aliasesViewHeader->setSectionResizeMode(QHeaderView::ResizeToContents);
+    aliasesViewHeader->setSectionResizeMode(SettingsAliasesModel::ColumnDatabase, QHeaderView::Stretch);
 
     auto clientModel = new SettingsClientModel(*plugin->dbus(), this);
     m_ui->tableClients->setModel(clientModel);
@@ -273,6 +358,7 @@ void SettingsWidgetFdoSecrets::loadSettings()
     m_ui->confirmDeleteItem->setChecked(FdoSecrets::settings()->confirmDeleteItem());
     m_ui->confirmAccessItem->setChecked(FdoSecrets::settings()->confirmAccessItem());
     m_ui->unlockBeforeSearch->setChecked(FdoSecrets::settings()->unlockBeforeSearch());
+    m_aliasesModel->setAliases(FdoSecrets::settings()->collectionAliases());
 }
 
 void SettingsWidgetFdoSecrets::saveSettings()
@@ -282,6 +368,7 @@ void SettingsWidgetFdoSecrets::saveSettings()
     FdoSecrets::settings()->setConfirmDeleteItem(m_ui->confirmDeleteItem->isChecked());
     FdoSecrets::settings()->setConfirmAccessItem(m_ui->confirmAccessItem->isChecked());
     FdoSecrets::settings()->setUnlockBeforeSearch(m_ui->unlockBeforeSearch->isChecked());
+    FdoSecrets::settings()->setCollectionAliases(m_aliasesModel->aliases());
 }
 
 void SettingsWidgetFdoSecrets::showEvent(QShowEvent* event)

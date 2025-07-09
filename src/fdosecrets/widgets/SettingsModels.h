@@ -21,6 +21,7 @@
 #include "fdosecrets/dbus/DBusClient.h"
 
 #include <QAbstractTableModel>
+#include <QVariantMap>
 
 class DatabaseTabWidget;
 class DatabaseWidget;
@@ -71,6 +72,48 @@ namespace FdoSecrets
     };
 
     class DBusMgr;
+
+    class SettingsAliasesModel : public QAbstractTableModel
+    {
+        Q_OBJECT
+    public:
+        explicit SettingsAliasesModel(const DatabaseTabWidget* dbTabs, QObject* parent = nullptr);
+
+        void setAliases(QVariantMap aliases);
+        const QVariantMap& aliases() const;
+        void removeRow(int row);
+
+        int newRowIndex() const;
+        int rowCount(const QModelIndex& parent) const override;
+        int columnCount(const QModelIndex& parent) const override;
+        QVariant data(const QModelIndex& index, int role) const override;
+        bool setData(const QModelIndex& index, const QVariant& value, int role = Qt::EditRole) override;
+        Qt::ItemFlags flags(const QModelIndex& index) const override;
+        QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
+
+        enum Column
+        {
+            ColumnAlias,
+            ColumnDatabase,
+        };
+        static constexpr const char* ColumnNames[] = {
+            QT_TRANSLATE_NOOP("FdoSecrets::SettingsAliasesModel", "Collection Alias"),
+            QT_TRANSLATE_NOOP("FdoSecrets::SettingsAliasesModel", "Database"),
+        };
+
+    private:
+        QVariantMap::const_iterator rowAlias(const QModelIndex&) const;
+        QVariantMap::iterator rowAlias(const QModelIndex&);
+        void moveAlias(const QModelIndex& index, const QString& prevAlias, QString nextAlias, QVariant database);
+        QVariant dataForCollectionAlias(const QString& alias, int role) const;
+        QVariant dataForDatabase(const QUuid& publicUuid, int role) const;
+
+    private:
+        const DatabaseTabWidget* m_databases;
+        QVariantMap m_aliases;
+        // whether to include an empty row at the bottom, for new alias entry
+        bool extraNewRow = true;
+    };
 
     class SettingsClientModel : public QAbstractTableModel
     {

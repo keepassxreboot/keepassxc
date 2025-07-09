@@ -4558,6 +4558,25 @@ This will leave your passwords and sensitive information vulnerable!
     </message>
 </context>
 <context>
+    <name>FdoSecrets::SettingsAliasesModel</name>
+    <message>
+        <source>No database selected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The database with this UUID is not currently opened.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Collection Alias</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Database</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>FdoSecrets::SettingsClientModel</name>
     <message>
         <source>Unknown</source>
@@ -10067,6 +10086,23 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a different value set in applications.) &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Collection Aliases</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Expose a database&apos;s exposed group under a specific alias.  If the “default”-alias has not been configured here, it will point to the currently active database tab.
+A database needs to be unlocked and have an exposed group configured to be selectable here.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

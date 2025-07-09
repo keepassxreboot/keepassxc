@@ -20,11 +20,16 @@
 
 #include "gui/MessageWidget.h"
 
+#include <QPointer>
 #include <QTimer>
 
 class QAbstractItemView;
 
 class FdoSecretsPlugin;
+namespace FdoSecrets
+{
+    class SettingsAliasesModel;
+}
 
 namespace Ui
 {
@@ -52,6 +57,7 @@ protected:
 private:
     QScopedPointer<Ui::SettingsWidgetFdoSecrets> m_ui;
     FdoSecretsPlugin* m_plugin;
+    QPointer<FdoSecrets::SettingsAliasesModel> m_aliasesModel;
     QTimer m_checkTimer;
 };
 

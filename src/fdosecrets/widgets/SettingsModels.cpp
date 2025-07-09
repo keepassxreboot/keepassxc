@@ -245,6 +245,271 @@ namespace FdoSecrets
     }
 
     // static constexpr still requires definition before c++17
+    constexpr const char* SettingsAliasesModel::ColumnNames[];
+
+    SettingsAliasesModel::SettingsAliasesModel(const DatabaseTabWidget* dbTabs, QObject* parent)
+        : QAbstractTableModel(parent)
+        , m_databases(dbTabs)
+    {
+    }
+
+    void SettingsAliasesModel::setAliases(QVariantMap aliases)
+    {
+        beginResetModel();
+        m_aliases = aliases;
+        endResetModel();
+    }
+
+    const QVariantMap& SettingsAliasesModel::aliases() const
+    {
+        return m_aliases;
+    }
+
+    int SettingsAliasesModel::rowCount(const QModelIndex& parent) const
+    {
+        if (parent.isValid()) {
+            return 0;
+        }
+        return newRowIndex() + extraNewRow;
+    }
+
+    int SettingsAliasesModel::newRowIndex() const
+    {
+        return m_aliases.size();
+    }
+
+    int SettingsAliasesModel::columnCount(const QModelIndex& parent) const
+    {
+        if (parent.isValid()) {
+            return 0;
+        }
+        return sizeof(ColumnNames) / sizeof(ColumnNames[0]);
+    }
+
+    QVariant SettingsAliasesModel::headerData(int section, Qt::Orientation orientation, int role) const
+    {
+        if (orientation != Qt::Horizontal) {
+            return {};
+        }
+
+        if (role != Qt::DisplayRole) {
+            return {};
+        }
+
+        if (section < 0 || section >= columnCount({})) {
+            return {};
+        }
+
+        return qApp->translate(metaObject()->className(), ColumnNames[section]);
+    }
+
+    QVariantMap::const_iterator SettingsAliasesModel::rowAlias(const QModelIndex& index) const
+    {
+        return m_aliases.cbegin() + index.row();
+    }
+
+    QVariantMap::iterator SettingsAliasesModel::rowAlias(const QModelIndex& index)
+    {
+        return m_aliases.begin() + index.row();
+    }
+
+    QVariant SettingsAliasesModel::data(const QModelIndex& index, int role) const
+    {
+        if (!index.isValid()) {
+            return {};
+        }
+        if (index.model() != this) {
+            return {};
+        }
+        if (index.row() >= rowCount({}) || index.column() >= columnCount({})) {
+            return {};
+        }
+        if (index.row() == newRowIndex()) { // final empty row, to allow adding more aliases
+            return {};
+        }
+
+        switch (index.column()) {
+        case ColumnAlias:
+            return dataForCollectionAlias(rowAlias(index).key(), role);
+        case ColumnDatabase:
+            return dataForDatabase(rowAlias(index)->toUuid(), role);
+        default:
+            return {};
+        }
+    }
+
+    QVariant SettingsAliasesModel::dataForCollectionAlias(const QString& alias, int role) const
+    {
+        switch (role) {
+        case Qt::DisplayRole:
+        case Qt::EditRole: {
+            return alias;
+        }
+        default:
+            return {};
+        }
+    }
+
+    QVariant SettingsAliasesModel::dataForDatabase(const QUuid& publicUuid, int role) const
+    {
+        switch (role) {
+        case Qt::EditRole: {
+            return publicUuid; // initial value for editor for this cell
+        }
+        }
+
+        auto dbWidget = m_databases->databaseWidgetFromPublicUuid(publicUuid);
+        if (dbWidget) {
+            auto db = dbWidget->database();
+            switch (role) {
+            case Qt::DisplayRole: {
+                return dbWidget->displayName();
+            }
+            case Qt::ToolTipRole:
+                return db->filePath();
+            default:
+                return {};
+            }
+        } else if (publicUuid.isNull()) {
+            switch (role) {
+            case Qt::DisplayRole: {
+                return tr("No database selected.");
+            }
+            case Qt::FontRole: {
+                QFont font;
+                font.setItalic(true);
+                return font;
+            }
+            default:
+                return {};
+            }
+        } else {
+            switch (role) {
+            case Qt::DisplayRole: {
+                return publicUuid;
+            }
+            case Qt::ToolTipRole:
+                return tr("The database with this UUID is not currently opened.");
+            case Qt::FontRole: {
+                QFont font;
+                font.setItalic(true);
+                return font;
+            }
+            default:
+                return {};
+            }
+        }
+    }
+
+    void SettingsAliasesModel::moveAlias(const QModelIndex& index,
+                                         const QString& prevAlias,
+                                         QString nextAlias,
+                                         QVariant database)
+    {
+        const auto destIt = std::as_const(m_aliases).lowerBound(nextAlias);
+        // beginMoveRows takes that element's current index, in front of which we insert
+        auto destRowIdx = std::distance(m_aliases.cbegin(), destIt);
+        // inserting directly above or below the element to be removed doesn't move
+        const bool willMove = destRowIdx != index.row() && destRowIdx - 1 != index.row();
+        if (willMove) {
+            // move index.row() to destRowIdx
+            beginMoveRows({}, index.row(), index.row(), {}, destRowIdx);
+        }
+        const bool newRow = index.row() == newRowIndex();
+        m_aliases.insert(std::move(destIt), std::move(nextAlias), std::move(database));
+        if (newRow) {
+            // remove the special "newRow", which does not correspond to m_aliases
+            extraNewRow = false; // cannot nest beginMoveRows and beginInsertRows
+        } else {
+            // remove a normal row, which does correspond to an m_aliases entry
+            m_aliases.remove(prevAlias);
+        }
+        if (willMove) {
+            // one insert and one remove -> we moved a row
+            endMoveRows();
+        }
+        // during this move, we might have also changed the cell values
+        if (index.row() < destRowIdx) {
+            --destRowIdx; // shifted up, when we removed index.row()
+        }
+        emit dataChanged(this->index(destRowIdx, ColumnAlias), this->index(destRowIdx, ColumnDatabase));
+        if (newRow) {
+            // create a new "newRow", if we (re)moved the old one
+            beginInsertRows({}, newRowIndex(), newRowIndex());
+            extraNewRow = true; // increases this->rowCount() by one
+            endInsertRows();
+        }
+    }
+
+    bool SettingsAliasesModel::setData(const QModelIndex& index, const QVariant& value, int role)
+    {
+        switch (index.column()) {
+        case ColumnAlias: {
+            QString prevAlias = "";
+            QString nextAlias = value.toString();
+            QVariant database = QUuid();
+            if (index.row() == newRowIndex()) {
+                if (nextAlias.isEmpty())
+                    return false; // don't add empty alias
+                if (m_aliases.contains(nextAlias))
+                    return false; // don't override existing alias
+            } else {
+                auto prevRow = rowAlias(index);
+                prevAlias = prevRow.key();
+                database = prevRow.value();
+                if (nextAlias.isEmpty()) {
+                    beginRemoveRows({}, index.row(), index.row());
+                    m_aliases.erase(prevRow);
+                    endRemoveRows();
+                    return true; // edit to empty -> remove row
+                }
+                if (nextAlias == prevAlias) {
+                    return true; // editor didn't change this value
+                }
+                if (m_aliases.contains(nextAlias)) {
+                    return false; // refuse duplicate alias
+                }
+            }
+            moveAlias(index, prevAlias, std::move(nextAlias), std::move(database));
+            return true;
+        }
+        case ColumnDatabase: {
+            auto nextDatabase = value.toUuid();
+            QString alias = "default";
+            if (index.row() == newRowIndex()) {
+                // find a new unique alias name
+                int i = 1;
+                while (m_aliases.contains(alias)) {
+                    alias = QString("alias%1").arg(i++);
+                }
+                // insert new alias for selected database
+                moveAlias(index, "", std::move(alias), std::move(nextDatabase));
+            } else {
+                // just update this value (won't move/insert/remove any rows)
+                *rowAlias(index) = nextDatabase;
+                emit dataChanged(index, index);
+            }
+            return true;
+        }
+        default:
+            return QAbstractTableModel::setData(index, value, role);
+        }
+    }
+
+    Qt::ItemFlags SettingsAliasesModel::flags(const QModelIndex& index) const
+    {
+        // all table cells are editable (see SettingsAliasesModel::setData())
+        return QAbstractTableModel::flags(index) | Qt::ItemIsEditable;
+    }
+
+    void SettingsAliasesModel::removeRow(int row)
+    {
+        beginRemoveRows({}, row, row);
+        m_aliases.erase(m_aliases.begin() + row);
+        endRemoveRows();
+    }
+
+    // static constexpr still requires definition before c++17
     constexpr const char* SettingsClientModel::ColumnNames[];
 
     SettingsClientModel::SettingsClientModel(DBusMgr& dbus, QObject* parent)
