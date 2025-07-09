@@ -43,6 +43,7 @@ public:
     QString tabName(int index);
     DatabaseWidget* currentDatabaseWidget();
     DatabaseWidget* databaseWidgetFromIndex(int index) const;
+    DatabaseWidget* databaseWidgetFromPublicUuid(const QUuid& publicUuid) const;
 
     bool canSave(int index = -1) const;
     bool isModified(int index = -1) const;
@@ -114,6 +115,7 @@ private slots:
     void handleDatabaseUnlockDialogFinished(bool accepted, DatabaseWidget* dbWidget);
     void handleExportError(const QString& reason);
     void updateLastDatabases();
+    void updatePublicUuid(const QSharedPointer<Database>& oldDb, const QSharedPointer<Database>& newDb);
 
 private:
     QSharedPointer<Database> execNewDatabaseWizard();
@@ -127,6 +129,7 @@ private:
     QPointer<ImportWizard> m_importWizard;
     QTimer m_lockDelayTimer;
     bool m_databaseOpenInProgress;
+    QHash<QUuid, DatabaseWidget*> m_publicUuidMap;
 };
 
 #endif // KEEPASSX_DATABASETABWIDGET_H

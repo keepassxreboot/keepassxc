@@ -225,6 +225,13 @@ void DatabaseTabWidget::addDatabaseTab(DatabaseWidget* dbWidget, bool inBackgrou
 {
     Q_ASSERT(dbWidget->database());
 
+    // register public UUID before emiting databaseOpened() signal
+    auto publicUuid = dbWidget->database()->publicUuid();
+    if (!m_publicUuidMap.contains(publicUuid)) {
+        // if two DBs have identical publicUuid, ignore the second one
+        m_publicUuidMap.insert(dbWidget->database()->publicUuid(), dbWidget);
+    }
+
     // emit before index change
     emit databaseOpened(dbWidget);
 
@@ -235,6 +242,7 @@ void DatabaseTabWidget::addDatabaseTab(DatabaseWidget* dbWidget, bool inBackgrou
         setCurrentIndex(index);
     }
 
+    connect(dbWidget, &DatabaseWidget::databaseReplaced, this, &DatabaseTabWidget::updatePublicUuid);
     connect(dbWidget,
             SIGNAL(requestOpenDatabase(QString, bool, QString, QString)),
             SLOT(addDatabaseTab(QString, bool, QString, QString)));
@@ -383,6 +391,11 @@ bool DatabaseTabWidget::closeDatabaseTab(DatabaseWidget* dbWidget)
     int tabIndex = indexOf(dbWidget);
     if (!dbWidget || tabIndex < 0) {
         return false;
+    }
+
+    auto publicUuid = dbWidget->database()->publicUuid();
+    if (m_publicUuidMap.value(publicUuid) == dbWidget) {
+        m_publicUuidMap.remove(publicUuid);
     }
 
     QString filePath = dbWidget->database()->filePath();
@@ -685,6 +698,11 @@ void DatabaseTabWidget::updateTabName(int index)
     emit tabNameChanged();
 }
 
+DatabaseWidget* DatabaseTabWidget::databaseWidgetFromPublicUuid(const QUuid& publicUuid) const
+{
+    return m_publicUuidMap.value(publicUuid, nullptr);
+}
+
 DatabaseWidget* DatabaseTabWidget::databaseWidgetFromIndex(int index) const
 {
     return qobject_cast<DatabaseWidget*>(widget(index));
@@ -883,6 +901,16 @@ void DatabaseTabWidget::updateLastDatabases()
 
     if (dbWidget) {
         updateLastDatabases(dbWidget->database());
+    }
+}
+
+void DatabaseTabWidget::updatePublicUuid(const QSharedPointer<Database>& oldDb, const QSharedPointer<Database>& newDb)
+{
+    if (!oldDb.isNull()) {
+        auto widget = m_publicUuidMap.take(oldDb->publicUuid());
+        if (widget == sender()) {
+            m_publicUuidMap.insert(newDb->publicUuid(), widget);
+        }
     }
 }
 
