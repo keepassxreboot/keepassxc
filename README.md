@@ -58,7 +58,7 @@ Contributors are required to adhere to the project's [Code of Conduct](CODE-OF-C
 
 ## Generative AI
 
-Generative AI is fast becoming a first-party feature in most development environments, including GitHub itself. If the majority of a code submission is made using Generative AI (e.g., agent-based or vibe coding) then **we will document that in the pull request.** All code submissions go through a rigourous review process regardless of the development workflow or submitter.
+Generative AI is fast becoming a first-party feature in most development environments, including GitHub itself. If the majority of a code submission is made using Generative AI (e.g., agent-based or vibe coding) then **we will document that in the pull request.** All code submissions go through a rigorous review process regardless of the development workflow or submitter.
 
 ## License
 
