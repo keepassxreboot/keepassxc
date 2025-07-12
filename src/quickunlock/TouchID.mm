@@ -42,6 +42,8 @@ inline void debug(const char *message, ...)
 }
 #endif
 
+static const auto s_touchIdKeyPrefix = QStringLiteral("KeepassXC_TouchID_Keys_");
+
 inline std::string StatusToErrorMessage(OSStatus status)
 {
    CFStringRef text = SecCopyErrorMessageString(status, NULL);
@@ -90,8 +92,7 @@ void TouchID::deleteKeyEntry(const QString& accountName)
 
 QString TouchID::databaseKeyName(const QUuid& dbUuid)
 {
-   static const QString keyPrefix = "KeepassXC_TouchID_Keys_";
-   return keyPrefix + dbUuid.toString();
+   return s_touchIdKeyPrefix + dbUuid.toString();
 }
 
 QString TouchID::errorString() const
@@ -102,8 +103,35 @@ QString TouchID::errorString() const
 
 void TouchID::reset()
 {
-    // TODO: Clear all credentials associated with KeePassXC
-    m_encryptedMasterKeys.clear();
+    // Query for all generic password items
+    CFMutableDictionaryRef query = makeDictionary();
+    CFDictionarySetValue(query, kSecClass, kSecClassGenericPassword);
+    CFDictionarySetValue(query, kSecReturnAttributes, kCFBooleanTrue);
+    CFDictionarySetValue(query, kSecMatchLimit, kSecMatchLimitAll);
+
+    CFTypeRef result = nullptr;
+    OSStatus status = SecItemCopyMatching(query, &result);
+    if (status != errSecSuccess || !result) {
+        LogStatusError("TouchID::deleteAllKeyEntriesWithPrefix - Error querying keychain", status);
+        CFRelease(query);
+        return;
+    }
+
+    NSArray* items = (__bridge NSArray*)result;
+    for (NSDictionary* item in items) {
+        NSString* account = item[(id)kSecAttrAccount];
+        if (account && [account hasPrefix:s_touchIdKeyPrefix.toNSString()]) {
+            // Build a query to delete this item
+            CFMutableDictionaryRef delQuery = makeDictionary();
+            CFDictionarySetValue(delQuery, kSecClass, kSecClassGenericPassword);
+            CFDictionarySetValue(delQuery, kSecAttrAccount, (__bridge CFStringRef)account);
+            OSStatus delStatus = SecItemDelete(delQuery);
+            LogStatusError("TouchID::deleteAllKeyEntriesWithPrefix - Error deleting item", delStatus);
+            CFRelease(delQuery);
+        }
+    }
+    CFRelease(result);
+    CFRelease(query);
 }
 
 /**
@@ -201,9 +229,6 @@ bool TouchID::setKey(const QUuid& dbUuid, const QByteArray& key, const bool igno
         return false;
     }
 
-    // memorize which database the stored key is for
-    // TODO: Do we need to store the db uuid's to do a full reset later?
-    //m_encryptedMasterKeys.insert(dbUuid, encryptedMasterKey);
     debug("TouchID::setKey - Success!");
     return true;
 }
@@ -378,11 +403,6 @@ bool TouchID::isAvailable() const
    // is dynamic in its nature. User can close the laptop lid or take off
    // the watch, thus making one (or both) of the authentication types unavailable.
    return  isWatchAvailable() || isTouchIdAvailable() || isPasswordFallbackPossible();
-}
-
-bool TouchID::canRemember() const
-{
-    return true;
 }
 
 /**

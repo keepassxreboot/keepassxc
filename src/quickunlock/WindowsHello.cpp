@@ -112,7 +112,7 @@ namespace
     {
         try {
             auto vault = PasswordVault();
-            vault.Remove({s_winHelloKeyName, winrt::to_hstring(uuid.toString().toStdString()), L"blah"});
+            vault.Remove({s_winHelloKeyName, winrt::to_hstring(uuid.toString().toStdString()), L"nodata"});
         } catch (winrt::hresult_error const& ex) {
         }
     }
@@ -232,11 +232,6 @@ void WindowsHello::reset(const QUuid& dbUuid)
 bool WindowsHello::hasKey(const QUuid& dbUuid) const
 {
     return !loadCredential(dbUuid).isEmpty();
-}
-
-bool WindowsHello::canRemember() const
-{
-    return true;
 }
 
 void WindowsHello::reset()

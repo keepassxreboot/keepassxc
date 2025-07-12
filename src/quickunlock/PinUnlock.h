@@ -1,5 +1,5 @@
-/*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+﻿/*
+ *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -33,8 +33,6 @@ public:
     bool setKey(const QUuid& dbUuid, const QByteArray& key) override;
     bool getKey(const QUuid& dbUuid, QByteArray& key) override;
     bool hasKey(const QUuid& dbUuid) const override;
-
-    bool canRemember() const override;
 
     void reset(const QUuid& dbUuid) override;
     void reset() override;

@@ -237,11 +237,6 @@ bool Polkit::getKey(const QUuid& dbUuid, QByteArray& key)
     return false;
 }
 
-bool Polkit::canRemember() const
-{
-    return false;
-}
-
 bool Polkit::hasKey(const QUuid& dbUuid) const
 {
     if (!m_encryptedMasterKeys.contains(dbUuid)) {

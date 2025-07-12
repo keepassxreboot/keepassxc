@@ -174,11 +174,8 @@
       </item>
       <item>
        <widget class="QCheckBox" name="quickUnlockRememberCheckBox">
-        <property name="toolTip">
-         <string>Quick unlock can only be remembered when using Touch ID or Windows Hello</string>
-        </property>
         <property name="text">
-         <string>Remember quick unlock after database is closed (Touch ID / Windows Hello only)</string>
+         <string>Remember quick unlock after database is closed</string>
         </property>
        </widget>
       </item>

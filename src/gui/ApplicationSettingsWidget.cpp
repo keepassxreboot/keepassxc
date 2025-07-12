@@ -419,6 +419,9 @@ void ApplicationSettingsWidget::loadSettings()
 #ifdef Q_OS_LINUX
     // Remembering quick unlock is not supported on Linux
     m_secUi->quickUnlockRememberCheckBox->setVisible(false);
+#else
+    // Only show this option if Touch ID or Windows Hello are available for use
+    m_secUi->quickUnlockRememberCheckBox->setVisible(getQuickUnlock()->isNativeAvailable());
 #endif
 
     for (const ExtraPage& page : asConst(m_extraPages)) {

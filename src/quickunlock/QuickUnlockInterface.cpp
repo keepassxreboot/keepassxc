@@ -68,11 +68,3 @@ bool QuickUnlockManager::isNativeAvailable() const
 {
     return m_nativeInterface && m_nativeInterface->isAvailable();
 }
-
-bool QuickUnlockManager::isRememberAvailable() const
-{
-    if (isNativeAvailable()) {
-        return m_nativeInterface->canRemember();
-    }
-    return m_fallbackInterface->canRemember();
-}

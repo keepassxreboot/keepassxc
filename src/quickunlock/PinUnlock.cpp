@@ -1,5 +1,5 @@
-/*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+﻿/*
+ *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,13 +20,17 @@
 #include "crypto/CryptoHash.h"
 #include "crypto/Random.h"
 #include "crypto/SymmetricCipher.h"
+#include "crypto/kdf/Argon2Kdf.h"
 
 #include <QInputDialog>
 #include <QRegularExpression>
 
-#define MIN_PIN_LENGTH 4
-#define MAX_PIN_LENGTH 8
-#define MAX_PIN_ATTEMPTS 3
+namespace
+{
+    constexpr int MIN_PIN_LENGTH = 6;
+    constexpr int MAX_PIN_LENGTH = 10;
+    constexpr int MAX_PIN_ATTEMPTS = 3;
+} // namespace
 
 bool PinUnlock::isAvailable() const
 {
@@ -47,7 +51,7 @@ bool PinUnlock::setKey(const QUuid& dbUuid, const QByteArray& data)
         pin = QInputDialog::getText(
             nullptr,
             QObject::tr("Quick Unlock Pin Entry"),
-            QObject::tr("Enter a %1 to %2 digit pin to use for quick unlock:").arg(MIN_PIN_LENGTH).arg(MAX_PIN_LENGTH),
+            QObject::tr("Enter a %1–%2 digit pin to use for quick unlock:").arg(MIN_PIN_LENGTH).arg(MAX_PIN_LENGTH),
             QLineEdit::Password,
             {},
             &ok);
@@ -63,15 +67,20 @@ bool PinUnlock::setKey(const QUuid& dbUuid, const QByteArray& data)
         }
     }
 
-    // Hash the pin and use it as the key for the encryption
+    // Hash the pin then run it through Argon2 to derive the encryption key
+    QByteArray key(32, '\0');
+    Argon2Kdf kdf(Argon2Kdf::Type::Argon2id);
     CryptoHash hash(CryptoHash::Sha256);
     hash.addData(pin.toLatin1());
-    auto key = hash.result();
+    if (!kdf.transform(hash.result(), key)) {
+        m_error = QObject::tr("Failed to derive key using Argon2");
+        return false;
+    }
 
     // Generate a random IV
-    auto iv = Random::instance()->randomArray(SymmetricCipher::defaultIvSize(SymmetricCipher::Aes256_GCM));
+    const auto iv = Random::instance()->randomArray(SymmetricCipher::defaultIvSize(SymmetricCipher::Aes256_GCM));
 
-    // Encrypt the data using AES-256-CBC
+    // Encrypt the data using AES-256-GCM
     SymmetricCipher cipher;
     if (!cipher.init(SymmetricCipher::Aes256_GCM, SymmetricCipher::Encrypt, key, iv)) {
         m_error = QObject::tr("Failed to init KeePassXC crypto.");
@@ -117,13 +126,18 @@ bool PinUnlock::getKey(const QUuid& dbUuid, QByteArray& data)
             return false;
         }
 
-        // Hash the pin and use it as the key for the encryption
+        // Hash the pin then run it through Argon2 to derive the encryption key
+        QByteArray key(32, '\0');
+        Argon2Kdf kdf(Argon2Kdf::Type::Argon2id);
         CryptoHash hash(CryptoHash::Sha256);
         hash.addData(pin.toLatin1());
-        auto key = hash.result();
+        if (!kdf.transform(hash.result(), key)) {
+            m_error = QObject::tr("Failed to derive key using Argon2");
+            return false;
+        }
 
         // Read the previously used challenge and encrypted data
-        auto ivSize = SymmetricCipher::defaultIvSize(SymmetricCipher::Aes256_GCM);
+        const auto ivSize = SymmetricCipher::defaultIvSize(SymmetricCipher::Aes256_GCM);
         const auto& keydata = pairData.second;
         auto challenge = keydata.left(ivSize);
         auto encrypted = keydata.mid(ivSize);
@@ -145,7 +159,7 @@ bool PinUnlock::getKey(const QUuid& dbUuid, QByteArray& data)
     }
 
     data.clear();
-    m_error = QObject::tr("Maximum pin attempts have been reached.");
+    m_error = QObject::tr("Too many pin attempts.");
     reset(dbUuid);
     return false;
 }
@@ -153,11 +167,6 @@ bool PinUnlock::getKey(const QUuid& dbUuid, QByteArray& data)
 bool PinUnlock::hasKey(const QUuid& dbUuid) const
 {
     return m_encryptedKeys.contains(dbUuid);
-}
-
-bool PinUnlock::canRemember() const
-{
-    return false;
 }
 
 void PinUnlock::reset(const QUuid& dbUuid)

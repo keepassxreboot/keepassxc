@@ -36,8 +36,6 @@ public:
     virtual bool getKey(const QUuid& dbUuid, QByteArray& key) = 0;
     virtual bool hasKey(const QUuid& dbUuid) const = 0;
 
-    virtual bool canRemember() const = 0;
-
     virtual void reset(const QUuid& dbUuid) = 0;
     virtual void reset() = 0;
 };
@@ -52,7 +50,6 @@ public:
 
     QSharedPointer<QuickUnlockInterface> interface() const;
     bool isNativeAvailable() const;
-    bool isRememberAvailable() const;
 
 private:
     QSharedPointer<QuickUnlockInterface> m_nativeInterface;
