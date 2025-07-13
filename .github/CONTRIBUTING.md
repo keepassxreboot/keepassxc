@@ -87,7 +87,7 @@ All pull requests must comply with the above requirements and with the [stylegui
 
 ### Translations
 
-Translations are managed on [Transifex](https://www.transifex.com/keepassxc/keepassxc/) which offers a web interface.
+Translations are managed on [Transifex](https://explore.transifex.com/keepassxc/keepassxc/) which offers a web interface.
 Please join an existing language team or request a new one if there is none.
 
 If you open a Pull Request with new strings that require translations, you will need to run the following:
