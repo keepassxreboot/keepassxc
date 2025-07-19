@@ -15,33 +15,19 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_TOUCHID_H
-#define KEEPASSXC_TOUCHID_H
+#pragma once
 
 #include "QuickUnlockInterface.h"
-#include <QHash>
 
 class TouchID : public QuickUnlockInterface
 {
 public:
     bool isAvailable() const override;
-    QString errorString() const override;
 
     bool setKey(const QUuid& dbUuid, const QByteArray& passwordKey) override;
     bool getKey(const QUuid& dbUuid, QByteArray& passwordKey) override;
     bool hasKey(const QUuid& dbUuid) const override;
 
-    void reset(const QUuid& dbUuid = "") override;
+    void reset(const QUuid& dbUuid) override;
     void reset() override;
-
-private:
-    static bool isWatchAvailable();
-    static bool isTouchIdAvailable();
-    static bool isPasswordFallbackPossible();
-    bool setKey(const QUuid& dbUuid, const QByteArray& passwordKey, const bool ignoreTouchID);
-
-    static void deleteKeyEntry(const QString& accountName);
-    static QString databaseKeyName(const QUuid& dbUuid);
 };
-
-#endif // KEEPASSXC_TOUCHID_H

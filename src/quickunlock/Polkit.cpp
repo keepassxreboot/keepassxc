@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,8 +23,8 @@
 #include "gui/osutils/nixutils/NixUtils.h"
 
 #include <QDebug>
-#include <QFile>
 #include <QtDBus>
+
 #include <botan/mem_ops.h>
 #include <cerrno>
 
@@ -35,19 +35,11 @@ extern "C" {
 const QString polkit_service = "org.freedesktop.PolicyKit1";
 const QString polkit_object = "/org/freedesktop/PolicyKit1/Authority";
 
-namespace
-{
-    QString getKeyName(const QUuid& dbUuid)
-    {
-        static const QString keyPrefix = "keepassxc_polkit_keys_";
-        return keyPrefix + dbUuid.toString();
-    }
-} // namespace
-
 Polkit::Polkit()
 {
     PolkitSubject::registerMetaType();
     PolkitAuthorizationResults::registerMetaType();
+    PolkitActionDescription::registerMetaType();
 
     /* Note we explicitly use our own dbus path here, as the ::systemBus() method could be overridden
        through an environment variable to return an alternative bus path. This bus could have an application
@@ -61,18 +53,34 @@ Polkit::Polkit()
 
     m_available = bus.isConnected();
     if (!m_available) {
-        qDebug() << "polkit: Failed to connect to system dbus (this may be due to a non-standard dbus path)";
+        qWarning() << "polkit: Failed to connect to system dbus (this may be due to a non-standard dbus path)";
         return;
     }
 
     m_available = bus.interface()->isServiceRegistered(polkit_service);
 
     if (!m_available) {
-        qDebug() << "polkit: Polkit is not registered on dbus";
+        qWarning() << "polkit: Polkit is not registered on dbus";
         return;
     }
 
+    // Initiate the Polkit dbus interface
     m_polkit.reset(new org::freedesktop::PolicyKit1::Authority(polkit_service, polkit_object, bus));
+
+    // Reset available state and check Polkit registered actions for KeePassXC
+    m_available = false;
+    auto kpxcAction = QStringLiteral("org.keepassxc.KeePassXC.unlockDatabase");
+    auto actions = m_polkit->EnumerateActions("");
+    for (const auto& action : actions.value()) {
+        if (action.actionId == kpxcAction) {
+            m_available = true;
+            break;
+        }
+    }
+
+    if (!m_available) {
+        qWarning() << "polkit: KeePassXC Polkit action is not installed";
+    }
 }
 
 Polkit::~Polkit()
@@ -81,7 +89,8 @@ Polkit::~Polkit()
 
 void Polkit::reset(const QUuid& dbUuid)
 {
-    m_encryptedMasterKeys.remove(dbUuid);
+    m_sessionKeys.remove(dbUuid);
+    nixUtils()->removeSecret(dbUuid.toString());
 }
 
 bool Polkit::isAvailable() const
@@ -89,67 +98,100 @@ bool Polkit::isAvailable() const
     return m_available;
 }
 
-QString Polkit::errorString() const
-{
-    return m_error;
-}
-
 void Polkit::reset()
 {
-    m_encryptedMasterKeys.clear();
+    m_sessionKeys.clear();
+    nixUtils()->removeAllSecrets();
 }
 
-bool Polkit::setKey(const QUuid& dbUuid, const QByteArray& key)
+bool Polkit::setKey(const QUuid& dbUuid, const QByteArray& data)
 {
     reset(dbUuid);
 
-    // Generate a random iv/key pair to encrypt the master password with
-    QByteArray randomKey = randomGen()->randomArray(SymmetricCipher::keySize(SymmetricCipher::Aes256_GCM));
-    QByteArray randomIV = randomGen()->randomArray(SymmetricCipher::defaultIvSize(SymmetricCipher::Aes256_GCM));
-    QByteArray keychainKeyValue = randomKey + randomIV;
+    // Prompt for a pin to use as session key
+    QByteArray key;
+    if (!promptPin(0, key)) {
+        return false;
+    }
+
+    auto iv = randomGen()->randomArray(SymmetricCipher::defaultIvSize(SymmetricCipher::Aes256_GCM));
 
     SymmetricCipher aes256Encrypt;
-    if (!aes256Encrypt.init(SymmetricCipher::Aes256_GCM, SymmetricCipher::Encrypt, randomKey, randomIV)) {
+    if (!aes256Encrypt.init(SymmetricCipher::Aes256_GCM, SymmetricCipher::Encrypt, key, iv)) {
         m_error = QObject::tr("Failed to init KeePassXC crypto.");
         return false;
     }
 
-    // Encrypt the master password
-    QByteArray encryptedMasterKey = key;
-    if (!aes256Encrypt.finish(encryptedMasterKey)) {
+    // Encrypt the database key
+    QByteArray encrypted = data;
+    if (!aes256Encrypt.finish(encrypted)) {
         m_error = QObject::tr("Failed to encrypt key data.");
-        qDebug() << "polkit aes encrypt failed: " << aes256Encrypt.errorString();
         return false;
     }
 
-    // Add the iv/key pair into the linux keyring
-    key_serial_t key_serial = add_key("user",
-                                      getKeyName(dbUuid).toStdString().c_str(),
-                                      keychainKeyValue.constData(),
-                                      keychainKeyValue.size(),
-                                      KEY_SPEC_PROCESS_KEYRING);
-    if (key_serial < 0) {
-        m_error = QObject::tr("Failed to store key in Linux Keyring. Quick unlock has not been enabled.");
-        qDebug() << "polkit keyring failed to store: " << errno;
-        return false;
-    }
+    // Store the session key and save the encrypted master key to the keyring
+    m_sessionKeys.insert(dbUuid, key);
+    nixUtils()->saveSecret(dbUuid.toString(), encrypted.prepend(iv));
 
-    // Scrub the keys from ram
-    Botan::secure_scrub_memory(randomKey.data(), randomKey.size());
-    Botan::secure_scrub_memory(randomIV.data(), randomIV.size());
-    Botan::secure_scrub_memory(keychainKeyValue.data(), keychainKeyValue.size());
-
-    // Store encrypted master password and return
-    m_encryptedMasterKeys.insert(dbUuid, encryptedMasterKey);
     return true;
 }
 
-bool Polkit::getKey(const QUuid& dbUuid, QByteArray& key)
+bool Polkit::getKey(const QUuid& dbUuid, QByteArray& data)
 {
-    if (!m_polkit || !hasKey(dbUuid)) {
+    if (!m_available || !hasKey(dbUuid)) {
+        m_error = QObject::tr("No key is stored for this database.");
         return false;
     }
 
+    QByteArray key;
+    for (int pinAttempts = 1; pinAttempts <= MAX_PIN_ATTEMPTS; ++pinAttempts) {
+        if (!m_sessionKeys.contains(dbUuid)) {
+            // Request pin to obtain a session key
+            if (!promptPin(pinAttempts, key)) {
+                m_error = QObject::tr("Failed to obtain session key.");
+                return false;
+            }
+        } else {
+            // We already have the session key, prompt using polkit to authorize use
+            if (!promptPolkit()) {
+                // Error set in promptPolkit call
+                return false;
+            }
+            key = m_sessionKeys.value(dbUuid);
+        }
+
+        // Retrieve the encrypted master key from the OS secret store
+        QByteArray encData;
+        if (!nixUtils()->getSecret(dbUuid.toString(), encData)) {
+            m_error = QObject::tr("Failed to get credentials for quick unlock.");
+            return false;
+        }
+
+        const auto& ivSize = SymmetricCipher::defaultIvSize(SymmetricCipher::Aes256_GCM);
+        const auto& iv = encData.left(ivSize);
+
+        // Decrypt the data using the generated key and IV from above
+        SymmetricCipher cipher;
+        if (!cipher.init(SymmetricCipher::Aes256_GCM, SymmetricCipher::Decrypt, key, iv)) {
+            m_error = QObject::tr("Failed to init KeePassXC crypto.");
+            return false;
+        }
+
+        // Attempt to decrypt the key data
+        data = encData.mid(ivSize);
+        if (cipher.finish(data)) {
+            // Decryption succeeded, store the session key used
+            m_sessionKeys.insert(dbUuid, key);
+            return true;
+        }
+    }
+
+    m_error = QObject::tr("Too many pin attempts.");
+    return false;
+}
+
+bool Polkit::promptPolkit()
+{
     PolkitSubject subject;
     subject.kind = "unix-process";
     subject.details.insert("pid", static_cast<uint>(QCoreApplication::applicationPid()));
@@ -170,60 +212,11 @@ bool Polkit::getKey(const QUuid& dbUuid, QByteArray& key)
     if (result.isError()) {
         auto msg = result.error().message();
         m_error = QObject::tr("Polkit returned an error: %1").arg(msg);
-        qDebug() << "polkit returned an error: " << msg;
         return false;
     }
 
     PolkitAuthorizationResults authResult = result.value();
     if (authResult.is_authorized) {
-        QByteArray encryptedMasterKey = m_encryptedMasterKeys.value(dbUuid);
-        key_serial_t keySerial =
-            find_key_by_type_and_desc("user", getKeyName(dbUuid).toStdString().c_str(), KEY_SPEC_PROCESS_KEYRING);
-
-        if (keySerial == -1) {
-            m_error = QObject::tr("Could not locate key in Linux Keyring.");
-            qDebug() << "polkit keyring failed to find: " << errno;
-            return false;
-        }
-
-        void* keychainBuffer;
-        long keychainDataSize = keyctl_read_alloc(keySerial, &keychainBuffer);
-
-        if (keychainDataSize == -1) {
-            m_error = QObject::tr("Could not read key in Linux Keyring.");
-            qDebug() << "polkit keyring failed to read: " << errno;
-            return false;
-        }
-
-        QByteArray keychainBytes(static_cast<const char*>(keychainBuffer), keychainDataSize);
-
-        Botan::secure_scrub_memory(keychainBuffer, keychainDataSize);
-        free(keychainBuffer);
-
-        QByteArray keychainKey = keychainBytes.left(SymmetricCipher::keySize(SymmetricCipher::Aes256_GCM));
-        QByteArray keychainIv = keychainBytes.right(SymmetricCipher::defaultIvSize(SymmetricCipher::Aes256_GCM));
-
-        SymmetricCipher aes256Decrypt;
-        if (!aes256Decrypt.init(SymmetricCipher::Aes256_GCM, SymmetricCipher::Decrypt, keychainKey, keychainIv)) {
-            m_error = QObject::tr("Failed to init KeePassXC crypto.");
-            qDebug() << "polkit aes init failed";
-            return false;
-        }
-
-        key = encryptedMasterKey;
-        if (!aes256Decrypt.finish(key)) {
-            key.clear();
-            m_error = QObject::tr("Failed to decrypt key data.");
-            qDebug() << "polkit aes decrypt failed: " << aes256Decrypt.errorString();
-            return false;
-        }
-
-        // Scrub the keys from ram
-        Botan::secure_scrub_memory(keychainKey.data(), keychainKey.size());
-        Botan::secure_scrub_memory(keychainIv.data(), keychainIv.size());
-        Botan::secure_scrub_memory(keychainBytes.data(), keychainBytes.size());
-        Botan::secure_scrub_memory(encryptedMasterKey.data(), encryptedMasterKey.size());
-
         return true;
     }
 
@@ -233,15 +226,12 @@ bool Polkit::getKey(const QUuid& dbUuid, QByteArray& key)
     } else {
         m_error = QObject::tr("Polkit authorization failed.");
     }
-
     return false;
 }
 
 bool Polkit::hasKey(const QUuid& dbUuid) const
 {
-    if (!m_encryptedMasterKeys.contains(dbUuid)) {
-        return false;
-    }
-
-    return find_key_by_type_and_desc("user", getKeyName(dbUuid).toStdString().c_str(), KEY_SPEC_PROCESS_KEYRING) != -1;
+    // Check if the OS has a secret stored for this database UUID
+    QByteArray tmp;
+    return nixUtils()->getSecret(dbUuid.toString(), tmp);
 }

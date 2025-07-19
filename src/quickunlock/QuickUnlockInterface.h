@@ -30,7 +30,6 @@ public:
     virtual ~QuickUnlockInterface() = default;
 
     virtual bool isAvailable() const = 0;
-    virtual QString errorString() const = 0;
 
     virtual bool setKey(const QUuid& dbUuid, const QByteArray& key) = 0;
     virtual bool getKey(const QUuid& dbUuid, QByteArray& key) = 0;
@@ -38,6 +37,14 @@ public:
 
     virtual void reset(const QUuid& dbUuid) = 0;
     virtual void reset() = 0;
+
+    virtual QString errorString() const
+    {
+        return m_error;
+    }
+
+protected:
+    QString m_error;
 };
 
 class QuickUnlockManager final

@@ -17,13 +17,21 @@
  */
 
 #import "AppKitImpl.h"
+#import "MacUtils.h"
+
 #import <QWindow>
 #import <QMenu>
 #import <QMenuBar>
 #import <Cocoa/Cocoa.h>
+#import <CoreFoundation/CoreFoundation.h>
+#import <Foundation/Foundation.h>
+#import <LocalAuthentication/LocalAuthentication.h>
+#import <Security/Security.h>
 #if __clang_major__ >= 13 && MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_VERSION_12_3
 #import <ScreenCaptureKit/ScreenCaptureKit.h>
 #endif
+
+#include "config-keepassx.h"
 
 @implementation AppKitImpl
 
@@ -339,4 +347,223 @@ void AppKit::setWindowSecurity(QWindow* window, bool state)
 void AppKit::configureWindowAndHelpMenus(QMainWindow* window, QMenu* helpMenu)
 {
     [static_cast<id>(self) configureWindowAndHelpMenus:window helpMenu:helpMenu];
+}
+
+// Common prefix for saved secrets
+static const auto s_touchIdKeyPrefix = QStringLiteral("KeepassXC_Keys_");
+
+// Convert macOS error codes to strings
+inline std::string StatusToErrorMessage(OSStatus status)
+{
+   CFStringRef text = SecCopyErrorMessageString(status, NULL);
+   if (!text) {
+      return std::to_string(status);
+   }
+
+   auto msg = CFStringGetCStringPtr(text, kCFStringEncodingUTF8);
+   std::string result;
+   if (msg) {
+       result = msg;
+   }
+   CFRelease(text);
+   return result;
+}
+
+// Report status errors if not successful
+inline void LogStatusError(const char *message, OSStatus status)
+{
+   if (status) {
+      std::string msg = StatusToErrorMessage(status);
+      qWarning("%s: %s", message, msg.c_str());
+   }
+}
+
+// Create an access control object to govern use of the saved secret
+SecAccessControlRef createAccessControl(bool useTouchId)
+{
+    // We need both runtime and compile time checks here to solve the following problems:
+    // - Not all flags are available in all OS versions, so we have to check it at compile time
+    // - Requesting Biometry/TouchID/DevicePassword when no fingerprint sensor is available will result in runtime error
+    SecAccessControlCreateFlags accessControlFlags = 0;
+
+    // When TouchID is not enrolled and the flag is set, the method call fails with an error. 
+    // We still want to set this flag if TouchID is enrolled but temporarily unavailable due to closed lid
+    //
+    // Sometimes, the enrolled-check does not work, LAErrorBiometryNotAvailable is returned instead of LAErrorBiometryNotEnrolled.
+    // To fallback gracefully, we have to try to save the key a second time without this flag.
+
+    if (useTouchId) {
+#if XC_COMPILER_SUPPORT(APPLE_BIOMETRY)
+        // This is the non-deprecated and preferred flag
+        accessControlFlags = kSecAccessControlBiometryCurrentSet;
+#elif XC_COMPILER_SUPPORT(TOUCH_ID)
+        accessControlFlags = kSecAccessControlTouchIDCurrentSet;
+#endif
+    }
+
+    // Add support for watch authentication if available
+#if XC_COMPILER_SUPPORT(WATCH_UNLOCK)
+    accessControlFlags = accessControlFlags | kSecAccessControlOr | kSecAccessControlWatch;
+#endif
+
+    // Check if password fallback is possible and add that as an option
+#if XC_COMPILER_SUPPORT(TOUCH_ID)
+   if (macUtils()->isAuthPolicyAvailable(MacUtils::AuthPolicy::PasswordFallback)) {
+       accessControlFlags = accessControlFlags | kSecAccessControlOr | kSecAccessControlDevicePasscode;
+   }
+#endif
+
+   CFErrorRef error = nullptr;
+   auto sacObject = SecAccessControlCreateWithFlags(
+       kCFAllocatorDefault, kSecAttrAccessibleWhenUnlockedThisDeviceOnly, accessControlFlags, &error);
+
+    if (!sacObject || error) {
+        auto e = static_cast<NSError*>(error);
+        qWarning("MacUtils::saveSecret - Error creating security flags: %s", e.localizedDescription.UTF8String);
+        return nullptr;
+    }
+    return sacObject;
+}
+
+bool MacUtils::saveSecret(const QString& key, const QByteArray& secretData) const
+{
+    const auto keyName = s_touchIdKeyPrefix + key;
+
+    // Delete any existing entry since macOS does not allow overwrite
+    if (!removeSecret(key)) {
+        qWarning("MacUtils::saveSecret - Failed to remove existing secret for key '%s'", qPrintable(key));
+    }
+
+    // Add new entry
+    auto keyBase64 = secretData.toBase64();
+    auto keyValueData = CFDataCreateWithBytesNoCopy(
+        kCFAllocatorDefault, reinterpret_cast<const UInt8*>(keyBase64.data()),
+        keyBase64.length(), kCFAllocatorDefault);
+    
+    auto attributes = CFDictionaryCreateMutable(nullptr, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
+    CFDictionarySetValue(attributes, kSecClass, kSecClassGenericPassword);
+    CFDictionarySetValue(attributes, kSecAttrAccount, static_cast<CFStringRef>(keyName.toNSString()));
+    CFDictionarySetValue(attributes, kSecValueData, keyValueData);
+    CFDictionarySetValue(attributes, kSecAttrSynchronizable, kCFBooleanFalse);
+    CFDictionarySetValue(attributes, kSecUseAuthenticationUI, kSecUseAuthenticationUIAllow);
+    // First, attempt with TouchID enabled
+    CFDictionarySetValue(attributes, kSecAttrAccessControl, createAccessControl(true));
+
+    auto status = SecItemAdd(attributes, nullptr);
+    if (status != errSecSuccess) {
+        qDebug("MacUtils::saveSecret - Failed to save secret with TouchID enabled");
+        // Try again without TouchID enabled
+        CFDictionarySetValue(attributes, kSecAttrAccessControl, createAccessControl(false));
+        status = SecItemAdd(attributes, nullptr);
+        if (status != errSecSuccess) {
+            qWarning("MacUtils::saveSecret - Failed to save secret to keystore");
+        }
+    }
+    
+    CFRelease(keyValueData);
+    CFRelease(attributes);
+
+    return status == errSecSuccess;
+}
+
+bool MacUtils::getSecret(const QString& key, QByteArray& secretData) const
+{
+    const auto keyName = s_touchIdKeyPrefix + key;
+    secretData.clear();
+
+    auto query = CFDictionaryCreateMutable(nullptr, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
+    CFDictionarySetValue(query, kSecClass, kSecClassGenericPassword);
+    CFDictionarySetValue(query, kSecAttrAccount, static_cast<CFStringRef>(keyName.toNSString()));
+    CFDictionarySetValue(query, kSecReturnData, kCFBooleanTrue);
+
+    CFTypeRef dataTypeRef = nullptr;
+    auto status = SecItemCopyMatching(query, &dataTypeRef);
+    CFRelease(query);
+
+    if (status == errSecUserCanceled) {
+        // user canceled the authentication, return true with empty key
+        return true;
+    } else if (status != errSecSuccess || !dataTypeRef) {
+        // TODO: Log failure
+        return false;
+    }
+
+    auto valueData = static_cast<CFDataRef>(dataTypeRef);
+    secretData = QByteArray::fromBase64(QByteArray(reinterpret_cast<const char*>(CFDataGetBytePtr(valueData)), 
+                                        CFDataGetLength(valueData)));
+    CFRelease(dataTypeRef);
+    
+    return !secretData.isEmpty();
+}
+
+bool MacUtils::removeSecret(const QString& key) const
+{
+    const auto keyName = s_touchIdKeyPrefix + key;
+    auto query = CFDictionaryCreateMutable(nullptr, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
+    CFDictionarySetValue(query, kSecClass, kSecClassGenericPassword);
+    CFDictionarySetValue(query, kSecAttrAccount, static_cast<CFStringRef>(keyName.toNSString()));
+    CFDictionarySetValue(query, kSecReturnData, kCFBooleanFalse);
+    // TODO: Log failure to delete?
+    SecItemDelete(query);
+    CFRelease(query);
+    return true;
+}
+
+bool MacUtils::removeAllSecrets() const
+{
+    auto query = CFDictionaryCreateMutable(nullptr, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
+    CFDictionarySetValue(query, kSecClass, kSecClassGenericPassword);
+    CFDictionarySetValue(query, kSecReturnAttributes, kCFBooleanTrue);
+    CFDictionarySetValue(query, kSecMatchLimit, kSecMatchLimitAll);
+
+    CFTypeRef result = nullptr;
+    auto status = SecItemCopyMatching(query, &result);
+    if (status == errSecSuccess && result) {
+        for (NSDictionary* item in static_cast<NSArray*>(result)) {
+            NSString* account = item[static_cast<id>(kSecAttrAccount)];
+            if (account && [account hasPrefix:s_touchIdKeyPrefix.toNSString()]) {
+                auto delQuery = CFDictionaryCreateMutable(nullptr, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
+                CFDictionarySetValue(delQuery, kSecClass, kSecClassGenericPassword);
+                CFDictionarySetValue(delQuery, kSecAttrAccount, static_cast<CFStringRef>(account));
+                // TODO: Log failure to delete?
+                SecItemDelete(delQuery);
+                CFRelease(delQuery);
+            }
+        }
+        CFRelease(result);
+    }
+    CFRelease(query);
+    return true;
+}
+
+bool MacUtils::isAuthPolicyAvailable(AuthPolicy policy) const
+{
+    LAPolicy policyCode;
+    switch (policy) {
+        case AuthPolicy::TouchId:
+            policyCode = LAPolicyDeviceOwnerAuthenticationWithBiometrics;
+            break;
+        case AuthPolicy::Watch:
+            policyCode = LAPolicyDeviceOwnerAuthenticationWithWatch;
+            break;
+        case AuthPolicy::PasswordFallback:
+            policyCode = LAPolicyDeviceOwnerAuthentication;
+            break;
+        default:
+            return false;
+    }
+
+    @try {
+        LAContext *context = [[LAContext alloc] init];
+        NSError *error = nil;
+        bool available = [context canEvaluatePolicy:policyCode error:&error];
+        [context release];
+        if (error) {
+            qDebug("MacUtils::isPolicyAvailable - Policy not available: %s", error.localizedDescription.UTF8String);
+        }
+        return available;
+    } @catch (NSException *exception) {
+        qWarning("MacUtils::isPolicyAvailable - Exception occurred: %s", exception.reason.UTF8String);
+        return false;
+    }
 }

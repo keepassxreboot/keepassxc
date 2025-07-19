@@ -28,7 +28,6 @@ public:
     PinUnlock() = default;
 
     bool isAvailable() const override;
-    QString errorString() const override;
 
     bool setKey(const QUuid& dbUuid, const QByteArray& key) override;
     bool getKey(const QUuid& dbUuid, QByteArray& key) override;
@@ -37,8 +36,16 @@ public:
     void reset(const QUuid& dbUuid) override;
     void reset() override;
 
+    static const int MIN_PIN_LENGTH;
+    static const int MAX_PIN_LENGTH;
+    static const int MAX_PIN_ATTEMPTS;
+
+protected:
+    bool promptPin(int attempt, QByteArray& sessionKey);
+
 private:
-    QString m_error;
+    void saveKey(const QUuid& dbUuid, const QByteArray& key);
+
     QHash<QUuid, QPair<int, QByteArray>> m_encryptedKeys;
 
     Q_DISABLE_COPY(PinUnlock)

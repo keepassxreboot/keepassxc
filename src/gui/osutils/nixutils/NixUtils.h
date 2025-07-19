@@ -64,6 +64,11 @@ public:
     GlobalShortcutsPortal* globalShortcutsPortal();
     RemoteDesktopPortal* remoteDesktopPortal();
 
+    bool saveSecret(const QString& key, const QByteArray& secretData) const override;
+    bool getSecret(const QString& key, QByteArray& secretData) const override;
+    bool removeSecret(const QString& key) const override;
+    bool removeAllSecrets() const override;
+
 public slots:
     void configureGlobalShortcut(const QString& name) override;
 

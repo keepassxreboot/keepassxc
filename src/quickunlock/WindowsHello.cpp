@@ -17,7 +17,7 @@
 
 #include "WindowsHello.h"
 
-#include <Userconsentverifierinterop.h>
+#include <Windows.h>
 #include <winrt/base.h>
 #include <winrt/windows.foundation.collections.h>
 #include <winrt/windows.foundation.h>
@@ -29,6 +29,7 @@
 #include "crypto/CryptoHash.h"
 #include "crypto/Random.h"
 #include "crypto/SymmetricCipher.h"
+#include "gui/osutils/OSUtils.h"
 
 #include <QTimer>
 #include <QWindow>
@@ -45,17 +46,20 @@ namespace
     const std::wstring s_winHelloKeyName{L"keepassxc_winhello"};
     int g_promptFocusCount = 0;
 
-    void queueSecurityPromptFocus(int delay = 500)
+    void queueSecurityPromptFocus(bool initial, int delay = 500)
     {
+        if (initial) {
+            g_promptFocusCount = 0;
+        }
+
         QTimer::singleShot(delay, [] {
             auto hWnd = ::FindWindowA("Credential Dialog Xaml Host", nullptr);
             if (hWnd) {
                 ::SetForegroundWindow(hWnd);
             } else if (++g_promptFocusCount <= 3) {
-                queueSecurityPromptFocus();
-                return;
+                qDebug("WindowsHello - Could not find security prompt window");
+                queueSecurityPromptFocus(false);
             }
-            g_promptFocusCount = 0;
         });
     }
 
@@ -99,47 +103,6 @@ namespace
             }
         });
     }
-
-    void storeCredential(const QUuid& uuid, const QByteArray& data)
-    {
-        auto vault = PasswordVault();
-        vault.Add({s_winHelloKeyName,
-                   winrt::to_hstring(uuid.toString().toStdString()),
-                   winrt::to_hstring(data.toBase64().toStdString())});
-    }
-
-    void removeCredential(const QUuid& uuid)
-    {
-        try {
-            auto vault = PasswordVault();
-            vault.Remove({s_winHelloKeyName, winrt::to_hstring(uuid.toString().toStdString()), L"nodata"});
-        } catch (winrt::hresult_error const& ex) {
-        }
-    }
-
-    void resetCredentials()
-    {
-        auto vault = PasswordVault();
-        auto credentials = vault.FindAllByResource(s_winHelloKeyName);
-        for (const auto& credential : credentials) {
-            try {
-                vault.Remove(credential);
-            } catch (winrt::hresult_error const& ex) {
-            }
-        }
-    }
-
-    QByteArray loadCredential(const QUuid& uuid)
-    {
-        QByteArray data;
-        try {
-            auto vault = PasswordVault();
-            auto credential = vault.Retrieve(s_winHelloKeyName, winrt::to_hstring(uuid.toString().toStdString()));
-            data = QByteArray::fromBase64(QByteArray::fromStdString(winrt::to_string(credential.Password())));
-        } catch (winrt::hresult_error const& ex) {
-        }
-        return data;
-    }
 } // namespace
 
 bool WindowsHello::isAvailable() const
@@ -148,14 +111,9 @@ bool WindowsHello::isAvailable() const
     return task.get();
 }
 
-QString WindowsHello::errorString() const
-{
-    return m_error;
-}
-
 bool WindowsHello::setKey(const QUuid& dbUuid, const QByteArray& data)
 {
-    queueSecurityPromptFocus();
+    queueSecurityPromptFocus(true);
 
     // Generate a random challenge that will be signed by Windows Hello
     // to create the key. The challenge is also used as the IV.
@@ -181,28 +139,28 @@ bool WindowsHello::setKey(const QUuid& dbUuid, const QByteArray& data)
 
     // Prepend the challenge/IV to the encrypted data
     encrypted.prepend(challenge);
-    storeCredential(dbUuid, encrypted);
-    return true;
+    return osUtils->saveSecret(dbUuid.toString(), encrypted);
 }
 
 bool WindowsHello::getKey(const QUuid& dbUuid, QByteArray& data)
 {
     data.clear();
-    if (!hasKey(dbUuid)) {
-        m_error = QObject::tr("Failed to get Windows Hello credential.");
+    QByteArray keydata;
+    if (!osUtils->getSecret(dbUuid.toString(), keydata)) {
+        m_error = QObject::tr("Failed to retrieve Windows Hello credential.");
         return false;
     }
 
-    queueSecurityPromptFocus();
+    queueSecurityPromptFocus(true);
 
     // Read the previously used challenge and encrypted data
     auto ivSize = SymmetricCipher::defaultIvSize(SymmetricCipher::Aes256_GCM);
-    const auto& keydata = loadCredential(dbUuid);
     auto challenge = keydata.left(ivSize);
     auto encrypted = keydata.mid(ivSize);
-    QByteArray key;
 
+    QByteArray key;
     if (!deriveEncryptionKey(challenge, key, m_error)) {
+        // Error is set in deriveEncryptionKey
         return false;
     }
 
@@ -226,15 +184,16 @@ bool WindowsHello::getKey(const QUuid& dbUuid, QByteArray& data)
 
 void WindowsHello::reset(const QUuid& dbUuid)
 {
-    removeCredential(dbUuid);
+    osUtils->removeSecret(dbUuid.toString());
 }
 
 bool WindowsHello::hasKey(const QUuid& dbUuid) const
 {
-    return !loadCredential(dbUuid).isEmpty();
+    QByteArray tmp;
+    return osUtils->getSecret(dbUuid.toString(), tmp);
 }
 
 void WindowsHello::reset()
 {
-    resetCredentials();
+    osUtils->removeAllSecrets();
 }

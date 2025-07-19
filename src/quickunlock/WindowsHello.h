@@ -26,7 +26,6 @@ public:
     WindowsHello() = default;
 
     bool isAvailable() const override;
-    QString errorString() const override;
 
     bool setKey(const QUuid& dbUuid, const QByteArray& key) override;
     bool getKey(const QUuid& dbUuid, QByteArray& key) override;
@@ -36,8 +35,6 @@ public:
     void reset() override;
 
 private:
-    QString m_error;
-
     Q_DISABLE_COPY(WindowsHello)
 };
 

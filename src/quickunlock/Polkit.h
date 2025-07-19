@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,36 +15,34 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_POLKIT_H
-#define KEEPASSXC_POLKIT_H
+#pragma once
 
-#include "QuickUnlockInterface.h"
+#include "PinUnlock.h"
 #include "polkit_dbus.h"
+
 #include <QHash>
 #include <QScopedPointer>
 
-class Polkit : public QuickUnlockInterface
+class Polkit : public PinUnlock
 {
 public:
     Polkit();
     ~Polkit() override;
 
     bool isAvailable() const override;
-    QString errorString() const override;
 
-    bool setKey(const QUuid& dbUuid, const QByteArray& key) override;
-    bool getKey(const QUuid& dbUuid, QByteArray& key) override;
+    bool setKey(const QUuid& dbUuid, const QByteArray& data) override;
+    bool getKey(const QUuid& dbUuid, QByteArray& data) override;
     bool hasKey(const QUuid& dbUuid) const override;
 
     void reset(const QUuid& dbUuid) override;
     void reset() override;
 
 private:
+    bool promptPolkit();
+
     bool m_available;
-    QString m_error;
-    QHash<QUuid, QByteArray> m_encryptedMasterKeys;
+    QHash<QUuid, QByteArray> m_sessionKeys;
 
     QScopedPointer<org::freedesktop::PolicyKit1::Authority> m_polkit;
 };
-
-#endif // KEEPASSXC_POLKIT_H

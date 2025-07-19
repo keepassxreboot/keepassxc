@@ -38,6 +38,11 @@
 #include <QStandardPaths>
 #include <QStyle>
 #include <QTextStream>
+
+extern "C" {
+#include <keyutils.h>
+}
+
 #ifdef WITH_X11
 #include <QGuiApplication>
 
@@ -541,4 +546,75 @@ void NixUtils::configureGlobalShortcut(const QString& name)
     Q_UNUSED(name)
 
     globalShortcutsPortal()->configureShortcuts();
+}
+
+namespace
+{
+    key_serial_t getKeyring()
+    {
+        auto keyring = keyctl_get_persistent(-1, KEY_SPEC_PROCESS_KEYRING);
+        if (keyring == -1) {
+            // Return the non-persistent keyring as a fallback
+            qWarning("nixutils: failed to get persistent keyring: %s", strerror(errno));
+            keyring = KEY_SPEC_PROCESS_KEYRING;
+        }
+        return keyring;
+    }
+} // namespace
+
+bool NixUtils::saveSecret(const QString& key, const QByteArray& secretData) const
+{
+    auto keyserial =
+        add_key("user", key.toStdString().c_str(), secretData.constData(), secretData.size(), getKeyring());
+    if (keyserial < 0) {
+        qWarning("nixutils: failed to save secret: %s", strerror(errno));
+        return false;
+    }
+    // Only allow this process to read/write this key
+    keyctl_setperm(keyserial, KEY_POS_ALL);
+
+    return true;
+}
+
+bool NixUtils::getSecret(const QString& key, QByteArray& secretData) const
+{
+    secretData.clear();
+
+    auto keyserial = request_key("user", key.toStdString().c_str(), nullptr, getKeyring());
+    if (keyserial < 0) {
+        qWarning("nixutils: failed to find secret: %s", strerror(errno));
+        return false;
+    }
+
+    secretData.resize(512);
+    auto size = keyctl_read(keyserial, secretData.data(), secretData.size());
+    if (size == -1) {
+        qWarning("nixutils: failed to read secret: %s", strerror(errno));
+        return false;
+    }
+
+    secretData.resize(size);
+    return true;
+}
+
+bool NixUtils::removeSecret(const QString& key) const
+{
+    auto keyserial = request_key("user", key.toStdString().c_str(), nullptr, getKeyring());
+    if (keyserial < 0) {
+        qWarning("nixutils: failed to find secret: %s", strerror(errno));
+        return false;
+    }
+
+    if (keyctl_unlink(keyserial, getKeyring()) < 0) {
+        qWarning("nixutils: failed to remove secret: %s", strerror(errno));
+        return false;
+    }
+
+    return true;
+}
+
+bool NixUtils::removeAllSecrets() const
+{
+    // NixUtils does not support clearing all keys
+    return false;
 }

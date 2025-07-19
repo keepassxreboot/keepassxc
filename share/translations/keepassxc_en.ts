@@ -746,15 +746,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Quick unlock can only be remembered when using Touch ID or Windows Hello</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Enable database quick unlock by default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Remember quick unlock after database is closed (Touch ID / Windows Hello only)</source>
+        <source>Remember quick unlock after database is closed</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1795,10 +1791,6 @@ To prevent this error from appearing, you must go to &quot;Database Settings / S
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>authenticate to access the database</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Failed to authenticate with Quick Unlock: %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1851,10 +1843,6 @@ Are you sure you want to continue with this file?.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Enable Quick Unlock</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Reset</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1868,6 +1856,10 @@ Are you sure you want to continue with this file?.</source>
     </message>
     <message>
         <source>Press ESC again to close this database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quick Unlock</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9224,10 +9216,6 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Failed to get Windows Hello credential.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Failed to decrypt key data.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9402,10 +9390,6 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Enter a %1 to %2 digit pin to use for quick unlock:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Pin setup was canceled. Quick unlock has not been enabled.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9419,22 +9403,6 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Pin entry was canceled.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Maximum pin attempts have been reached.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Failed to store key in Linux Keyring. Quick unlock has not been enabled.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Could not locate key in Linux Keyring.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Could not read key in Linux Keyring.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9528,6 +9496,30 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Encrypted files are not supported.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter a %1–%2 digit pin to use for quick unlock:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to derive key using Argon2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Too many pin attempts.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No key is stored for this database.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to obtain session key.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to retrieve Windows Hello credential.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

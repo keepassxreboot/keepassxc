@@ -20,10 +20,23 @@
 #include <QApplication>
 #include <QDir>
 #include <QSettings>
+#include <QUuid>
 #include <QWindow>
 
 #include <Windows.h>
+#include <winrt/base.h>
+#include <winrt/windows.foundation.collections.h>
+#include <winrt/windows.security.credentials.h>
 #undef MessageBox
+
+using namespace winrt;
+using namespace Windows::Foundation::Collections;
+using namespace Windows::Security::Credentials;
+
+namespace
+{
+    const std::wstring s_winKeyStoreName{L"keepassxc"};
+}
 
 QPointer<WinUtils> WinUtils::m_instance = nullptr;
 
@@ -361,4 +374,60 @@ DWORD WinUtils::qtToNativeModifiers(Qt::KeyboardModifiers modifiers)
     }
 
     return nativeModifiers;
+}
+
+bool WinUtils::saveSecret(const QString& key, const QByteArray& secretData) const
+{
+    try {
+        auto vault = PasswordVault();
+        vault.Add({s_winKeyStoreName,
+                   winrt::hstring(key.toStdWString()),
+                   winrt::to_hstring(secretData.toBase64().toStdString())});
+        return true;
+    } catch (winrt::hresult_error const&) {
+        qWarning("WinUtils - Failed to add key to password vault");
+        return false;
+    }
+}
+
+bool WinUtils::getSecret(const QString& key, QByteArray& secretData) const
+{
+    secretData.clear();
+    try {
+        auto vault = PasswordVault();
+        auto credential = vault.Retrieve(s_winKeyStoreName, winrt::hstring(key.toStdWString()));
+        secretData = QByteArray::fromBase64(QByteArray::fromStdString(winrt::to_string(credential.Password())));
+    } catch (winrt::hresult_error const&) {
+        qWarning("WinUtils - Failed to retrieve key from password vault");
+        return false;
+    }
+    return !secretData.isEmpty();
+}
+
+bool WinUtils::removeSecret(const QString& key) const
+{
+    try {
+        auto vault = PasswordVault();
+        vault.Remove({s_winKeyStoreName, winrt::hstring(key.toStdWString()), L"nodata"});
+        return true;
+    } catch (winrt::hresult_error const&) {
+        qWarning("WinUtils - Failed to clear key from password vault");
+        return false;
+    }
+}
+
+bool WinUtils::removeAllSecrets() const
+{
+    auto vault = PasswordVault();
+    auto credentials = vault.FindAllByResource(s_winKeyStoreName);
+    bool allSuccess = true;
+    for (const auto& credential : credentials) {
+        try {
+            vault.Remove(credential);
+        } catch (winrt::hresult_error const&) {
+            qWarning("WinUtils - Failed to clear key from password vault");
+            allSuccess = false;
+        }
+    }
+    return allSuccess;
 }
