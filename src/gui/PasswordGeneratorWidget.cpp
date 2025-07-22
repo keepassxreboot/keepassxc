@@ -21,6 +21,7 @@
 
 #include <QCloseEvent>
 #include <QDir>
+#include <QRandomGenerator>
 #include <QShortcut>
 #include <QTimer>
 
@@ -71,6 +72,8 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
 
     connect(m_ui->sliderLength, SIGNAL(valueChanged(int)), SLOT(passwordLengthChanged(int)));
     connect(m_ui->spinBoxLength, SIGNAL(valueChanged(int)), SLOT(passwordLengthChanged(int)));
+    connect(m_ui->spinBoxMax, SIGNAL(valueChanged(int)), SLOT(updateGenerator()));
+    connect(m_ui->spinBoxMin, SIGNAL(valueChanged(int)), SLOT(updateGenerator()));
 
     connect(m_ui->sliderWordCount, SIGNAL(valueChanged(int)), SLOT(passphraseLengthChanged(int)));
     connect(m_ui->spinBoxWordCount, SIGNAL(valueChanged(int)), SLOT(passphraseLengthChanged(int)));
@@ -90,6 +93,8 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
         m_ui->entropyLabel->setFont(defaultFont);
         m_ui->strengthLabel->setFont(defaultFont);
         m_ui->passwordLengthLabel->setFont(defaultFont);
+        m_ui->labelMax->setFont(defaultFont);
+        m_ui->labelMin->setFont(defaultFont);
     }
 
     // set default separator to Space
@@ -140,7 +145,7 @@ PasswordGeneratorWidget* PasswordGeneratorWidget::popupGenerator(QWidget* parent
     pwGenerator->setStandaloneMode(false);
 
     connect(pwGenerator, SIGNAL(closed()), pwGenerator, SLOT(deleteLater()));
-
+ 
     pwGenerator->show();
     pwGenerator->raise();
     pwGenerator->activateWindow();
@@ -174,6 +179,7 @@ void PasswordGeneratorWidget::loadSettings()
     m_ui->checkBoxExtASCII->setChecked(config()->get(Config::PasswordGenerator_EASCII).toBool());
     m_ui->checkBoxExcludeAlike->setChecked(config()->get(Config::PasswordGenerator_ExcludeAlike).toBool());
     m_ui->checkBoxEnsureEvery->setChecked(config()->get(Config::PasswordGenerator_EnsureEvery).toBool());
+    m_ui->checkBoxRandomLength->setChecked(config()->get(Config::PasswordGenerator_RandomLength).toBool());
     m_ui->spinBoxLength->setValue(config()->get(Config::PasswordGenerator_Length).toInt());
 
     // Diceware config
@@ -218,6 +224,7 @@ void PasswordGeneratorWidget::saveSettings()
     config()->set(Config::PasswordGenerator_ExcludedChars, m_ui->editExcludedChars->text());
     config()->set(Config::PasswordGenerator_ExcludeAlike, m_ui->checkBoxExcludeAlike->isChecked());
     config()->set(Config::PasswordGenerator_EnsureEvery, m_ui->checkBoxEnsureEvery->isChecked());
+    config()->set(Config::PasswordGenerator_RandomLength, m_ui->checkBoxRandomLength->isChecked());
     config()->set(Config::PasswordGenerator_Length, m_ui->spinBoxLength->value());
 
     // Diceware config
@@ -257,6 +264,11 @@ QString PasswordGeneratorWidget::getGeneratedPassword()
 
 void PasswordGeneratorWidget::regeneratePassword()
 {
+    //If random length is enabled, generate a random length
+    if (m_ui->checkBoxRandomLength->isChecked()) {
+        int randomLength = QRandomGenerator::global()->bounded(m_ui->spinBoxMin->value(), m_ui->spinBoxMax->value() + 1);
+        m_passwordGenerator->setLength(randomLength);
+    }
     if (m_ui->tabWidget->currentIndex() == Password) {
         if (m_passwordGenerator->isValid()) {
             m_ui->editNewPassword->setText(m_passwordGenerator->generatePassword());
@@ -566,6 +578,23 @@ PasswordGenerator::GeneratorFlags PasswordGeneratorWidget::generatorFlags()
         if (m_ui->checkBoxEnsureEvery->isChecked()) {
             flags |= PasswordGenerator::CharFromEveryGroup;
         }
+
+        if (m_ui->checkBoxRandomLength->isChecked()) {
+            m_ui->spinBoxLength->setEnabled(false);
+            m_ui->sliderLength->setEnabled(false);
+            m_ui->spinBoxMax->setVisible(true);
+            m_ui->spinBoxMin->setVisible(true);
+            m_ui->labelMax->setVisible(true);
+            m_ui->labelMin->setVisible(true);
+        } else {
+            m_ui->spinBoxLength->setEnabled(true);
+            m_ui->sliderLength->setEnabled(true);
+            m_ui->spinBoxMax->setVisible(false);
+            m_ui->spinBoxMin->setVisible(false);
+            m_ui->labelMax->setVisible(false);
+            m_ui->labelMin->setVisible(false);
+        }
+        
     }
 
     return flags;
@@ -577,7 +606,16 @@ void PasswordGeneratorWidget::updateGenerator()
         auto classes = charClasses();
         auto flags = generatorFlags();
 
-        m_passwordGenerator->setLength(m_ui->spinBoxLength->value());
+        
+
+        if (m_ui->checkBoxRandomLength->isChecked()) {
+            if (m_ui->spinBoxMax->value() < m_ui->spinBoxMin->value()) {
+                m_ui->spinBoxMax->setValue(m_ui->spinBoxMin->value());
+            }
+        } else {
+             m_passwordGenerator->setLength(m_ui->spinBoxLength->value());
+        }
+        
         if (m_ui->buttonAdvancedMode->isChecked()) {
             m_passwordGenerator->setCharClasses(classes);
             m_passwordGenerator->setCustomCharacterSet(m_ui->editAdditionalChars->text());

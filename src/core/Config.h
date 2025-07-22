@@ -193,6 +193,7 @@ public:
         PasswordGenerator_ExcludedChars,
         PasswordGenerator_ExcludeAlike,
         PasswordGenerator_EnsureEvery,
+        PasswordGenerator_RandomLength,
         PasswordGenerator_Length,
         PasswordGenerator_WordCount,
         PasswordGenerator_WordSeparator,
