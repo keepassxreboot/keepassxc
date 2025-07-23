@@ -156,7 +156,7 @@ void NixUtils::setLaunchAtStartup(bool enable)
                << QStringLiteral("TryExec=") << executeablePathOrName << '\n'
                << QStringLiteral("Icon=") << QApplication::applicationName().toLower() << '\n'
                << QStringLiteral("StartupWMClass=keepassxc") << '\n'
-               << QStringLiteral("StartupNotify=true") << '\n'
+               << QStringLiteral("StartupNotify=false") << '\n'
                << QStringLiteral("Terminal=false") << '\n'
                << QStringLiteral("Type=Application") << '\n'
                << QStringLiteral("Version=1.0") << '\n'
