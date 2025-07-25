@@ -48,6 +48,7 @@ SearchWidget::SearchWidget(QWidget* parent)
     new QShortcut(Qt::CTRL + Qt::Key_J, this, SLOT(toggleHelp()), nullptr, Qt::WidgetWithChildrenShortcut);
 
     connect(m_ui->searchEdit, SIGNAL(textChanged(QString)), SLOT(startSearchTimer()));
+    connect(m_ui->searchEdit, SIGNAL(textChanged(QString)), SLOT(updateSaveButtonVisibility()));
     connect(m_ui->helpIcon, SIGNAL(triggered()), SLOT(toggleHelp()));
     connect(m_ui->searchIcon, SIGNAL(triggered()), SLOT(showSearchMenu()));
     connect(m_ui->saveIcon, &QAction::triggered, this, [this] { emit saveSearch(m_ui->searchEdit->text()); });
@@ -155,7 +156,7 @@ void SearchWidget::connectSignals(SignalMultiplexer& mx)
     mx.connect(this, SIGNAL(caseSensitiveChanged(bool)), SLOT(setSearchCaseSensitive(bool)));
     mx.connect(this, SIGNAL(limitGroupChanged(bool)), SLOT(setSearchLimitGroup(bool)));
     mx.connect(this, SIGNAL(downPressed()), SLOT(focusOnEntries()));
-    mx.connect(SIGNAL(requestSearch(QString)), m_ui->searchEdit, SLOT(setText(QString)));
+    mx.connect(SIGNAL(requestSearch(QString)), this, SLOT(performRequestedSearch(QString)));
     mx.connect(SIGNAL(clearSearch()), this, SLOT(clearSearch()));
     mx.connect(SIGNAL(entrySelectionChanged()), this, SLOT(resetSearchClearTimer()));
     mx.connect(SIGNAL(currentModeChanged(DatabaseWidget::Mode)), this, SLOT(resetSearchClearTimer()));
@@ -252,8 +253,24 @@ void SearchWidget::showSearchMenu()
 void SearchWidget::onReturnPressed()
 {
     if (m_actionWaitForEnter->isChecked()) {
+        m_ui->saveIcon->setVisible(true);
         emit search(m_ui->searchEdit->text());
     } else {
         emit enterPressed();
     }
+}
+
+void SearchWidget::performRequestedSearch(const QString& text)
+{
+    // This method handles saved searches - it should set the text and immediately trigger search
+    // without any delay, regardless of the "Press Enter to search" setting
+    m_ui->searchEdit->setText(text);
+    m_ui->saveIcon->setVisible(!text.isEmpty());
+    emit search(text);
+}
+
+void SearchWidget::updateSaveButtonVisibility()
+{
+    // Show save button whenever there's non-empty text in the search field
+    m_ui->saveIcon->setVisible(!m_ui->searchEdit->text().isEmpty());
 }

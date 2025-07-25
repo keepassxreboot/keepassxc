@@ -76,6 +76,8 @@ private slots:
     void toggleHelp();
     void showSearchMenu();
     void resetSearchClearTimer();
+    void performRequestedSearch(const QString& text);
+    void updateSaveButtonVisibility();
 
 private:
     const QScopedPointer<Ui::SearchWidget> m_ui;
