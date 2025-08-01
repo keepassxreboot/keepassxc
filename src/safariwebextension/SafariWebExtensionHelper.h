@@ -2,7 +2,8 @@ class QJsonObject;
 class QLocalSocket;
 class QString;
 
-class SafariWebExtensionHelper {
+class SafariWebExtensionHelper
+{
 
 public:
     static SafariWebExtensionHelper* instance();

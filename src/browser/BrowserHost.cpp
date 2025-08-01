@@ -66,10 +66,10 @@ void BrowserHost::proxyConnected()
     auto socket = m_localServer->nextPendingConnection();
     if (socket) {
         m_socketList.append(socket);
-        #ifdef WITH_XC_SAFARI_WEB_EXTENSION
+#ifdef WITH_XC_SAFARI_WEB_EXTENSION
         bool isSafariSocket = safariWebExtensionHelper()->isSafariWebExtension(socket);
         m_safariWebExtensionCache.insert(socket, isSafariSocket);
-        #endif
+#endif
         connect(socket, SIGNAL(readyRead()), this, SLOT(readProxyMessage()));
         connect(socket, SIGNAL(disconnected()), this, SLOT(proxyDisconnected()));
     }
@@ -145,7 +145,7 @@ void BrowserHost::proxyDisconnected()
 {
     auto socket = qobject_cast<QLocalSocket*>(QObject::sender());
     m_socketList.removeOne(socket);
-    #ifdef WITH_XC_SAFARI_WEB_EXTENSION
+#ifdef WITH_XC_SAFARI_WEB_EXTENSION
     m_safariWebExtensionCache.remove(socket);
-    #endif
+#endif
 }

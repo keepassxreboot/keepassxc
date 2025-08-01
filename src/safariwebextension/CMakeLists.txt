@@ -38,7 +38,7 @@ execute_process(
 )
 
 if (NOT result EQUAL 0)
-    message(FATAL_ERROR "npm ci failed with error code ${result}")
+    message(FATAL_ERROR "npm ci failed with error code ${result}. Is the SafariWebExtension submodule cloned?")
 endif()
 
 file(MAKE_DIRECTORY ${BINARY_RESOURCES_DIR})

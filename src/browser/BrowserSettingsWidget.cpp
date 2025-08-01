@@ -49,7 +49,7 @@ BrowserSettingsWidget::BrowserSettingsWidget(QWidget* parent)
     connect(m_ui->enableBrowserSupport, SIGNAL(toggled(bool)), SLOT(validateProxyLocation()));
 
 #ifdef WITH_XC_SAFARI_WEB_EXTENSION
-    SafariWebExtensionCheckbox *safariCheckbox = new SafariWebExtensionCheckbox();
+    SafariWebExtensionCheckbox* safariCheckbox = new SafariWebExtensionCheckbox();
     safariCheckbox->setText("Safari");
     safariCheckbox->setChecked(false);
 
