@@ -21,6 +21,9 @@
 #include <QJsonObject>
 #include <QObject>
 #include <QPointer>
+#ifdef WITH_XC_SAFARI_WEB_EXTENSION
+#include <QHash>
+#endif
 
 class QLocalServer;
 class QLocalSocket;
@@ -54,6 +57,9 @@ private:
 private:
     QPointer<QLocalServer> m_localServer;
     QList<QLocalSocket*> m_socketList;
+#ifdef WITH_XC_SAFARI_WEB_EXTENSION
+    QHash<QLocalSocket*, bool> m_safariWebExtensionCache;
+#endif
 };
 
 #endif // KEEPASSXC_NATIVEMESSAGINGHOST_H

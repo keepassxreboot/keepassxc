@@ -66,6 +66,10 @@ void BrowserHost::proxyConnected()
     auto socket = m_localServer->nextPendingConnection();
     if (socket) {
         m_socketList.append(socket);
+        #ifdef WITH_XC_SAFARI_WEB_EXTENSION
+        bool isSafariSocket = safariWebExtensionHelper()->isSafariWebExtension(socket);
+        m_safariWebExtensionCache.insert(socket, isSafariSocket);
+        #endif
         connect(socket, SIGNAL(readyRead()), this, SLOT(readProxyMessage()));
         connect(socket, SIGNAL(disconnected()), this, SLOT(proxyDisconnected()));
     }
@@ -106,7 +110,7 @@ void BrowserHost::broadcastClientMessage(const QJsonObject& json)
     // Send message to all non-Safari sockets
     for (const auto socket : m_socketList) {
 #ifdef WITH_XC_SAFARI_WEB_EXTENSION
-        if (safariWebExtensionHelper()->isSafariWebExtension(socket)) {
+        if (m_safariWebExtensionCache.contains(socket)) {
             containsSafariWebExtensionSocket = true;
             continue; // Skip Safari web extension sockets because we are using SFSafariApplication instead
         }
@@ -141,4 +145,7 @@ void BrowserHost::proxyDisconnected()
 {
     auto socket = qobject_cast<QLocalSocket*>(QObject::sender());
     m_socketList.removeOne(socket);
+    #ifdef WITH_XC_SAFARI_WEB_EXTENSION
+    m_safariWebExtensionCache.remove(socket);
+    #endif
 }
