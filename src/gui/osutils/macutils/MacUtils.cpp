@@ -24,6 +24,7 @@
 #include <QStandardPaths>
 #include <QTimer>
 #include <QWindow>
+#include <QMenu>
 
 #include <ApplicationServices/ApplicationServices.h>
 
@@ -200,6 +201,11 @@ void MacUtils::registerNativeEventFilter()
     eventSpec.eventClass = kEventClassKeyboard;
     eventSpec.eventKind = kEventHotKeyPressed;
     ::InstallApplicationEventHandler(MacUtils::hotkeyHandler, 1, &eventSpec, this, nullptr);
+}
+
+void MacUtils::configureWindowAndHelpMenus(QMainWindow* mainWindow, QMenu* helpMenu)
+{
+    return m_appkit->configureWindowAndHelpMenus(mainWindow, helpMenu);
 }
 
 bool MacUtils::registerGlobalShortcut(const QString& name, Qt::Key key, Qt::KeyboardModifiers modifiers, QString* error)

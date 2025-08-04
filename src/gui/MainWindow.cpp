@@ -93,6 +93,10 @@ MainWindow::MainWindow()
 
     m_ui->setupUi(this);
 
+#ifdef Q_OS_MACOS
+    macUtils()->configureWindowAndHelpMenus(this, m_ui->menuHelp);
+#endif
+
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS) && !defined(QT_NO_DBUS)
     new MainWindowAdaptor(this);
     QDBusConnection dbus = QDBusConnection::sessionBus();

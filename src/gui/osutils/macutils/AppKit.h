@@ -21,6 +21,8 @@
 
 #include <QColor>
 #include <QObject>
+#include <QMenu>
+#include <QMainWindow>
 #include <unistd.h>
 
 class QWindow;
@@ -45,6 +47,7 @@ public:
     bool enableScreenRecording();
     void toggleForegroundApp(bool foreground);
     void setWindowSecurity(QWindow* window, bool state);
+    void configureWindowAndHelpMenus(QMainWindow* mainWindow, QMenu* helpMenu);
 
 signals:
     void userSwitched();
