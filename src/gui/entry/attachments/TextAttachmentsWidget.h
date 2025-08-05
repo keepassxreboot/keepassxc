@@ -50,7 +50,6 @@ private:
     void initWidget();
     void updateWidget();
 
-    QScopedPointer<Ui::TextAttachmentsWidget> m_ui;
     QPointer<QSplitter> m_splitter;
     QPointer<TextAttachmentsEditWidget> m_editWidget;
     QPointer<TextAttachmentsPreviewWidget> m_previewWidget;

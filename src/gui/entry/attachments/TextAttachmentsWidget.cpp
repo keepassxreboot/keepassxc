@@ -19,19 +19,16 @@
 #include "TextAttachmentsEditWidget.h"
 #include "TextAttachmentsPreviewWidget.h"
 
-#include "ui_TextAttachmentsWidget.h"
-
 #include <QSplitter>
 #include <QTextEdit>
 #include <QTimer>
+#include <QVBoxLayout>
 
 TextAttachmentsWidget::TextAttachmentsWidget(QWidget* parent)
     : QWidget(parent)
-    , m_ui(new Ui::TextAttachmentsWidget())
     , m_previewUpdateTimer(new QTimer(this))
     , m_mode(attachments::OpenMode::ReadOnly)
 {
-    m_ui->setupUi(this);
     initWidget();
 }
 
@@ -118,7 +115,12 @@ void TextAttachmentsWidget::initWidget()
     // Prevent collapsing of the edit widget
     m_splitter->setCollapsible(0, false);
 
-    m_ui->verticalLayout->addWidget(m_splitter);
+    // Setup this widget with the splitter
+    auto layout = new QVBoxLayout(this);
+    layout->setContentsMargins(0, 0, 0, 0);
+    layout->addWidget(m_splitter);
+    setLayout(layout);
+    setObjectName("TextAttachmentsWidget");
 
     updateWidget();
 }
