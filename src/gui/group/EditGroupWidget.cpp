@@ -1,6 +1,6 @@
 /*
+ *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2011 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2022 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -200,11 +200,11 @@ void EditGroupWidget::loadGroup(Group* group, bool create, const QSharedPointer<
 
         auto parent = group->parentGroup();
         if (parent) {
-            inheritHideEntries = parent->resolveCustomDataTriState(BrowserService::OPTION_HIDE_ENTRY);
-            inheritSkipSubmit = parent->resolveCustomDataTriState(BrowserService::OPTION_SKIP_AUTO_SUBMIT);
-            inheritOnlyHttp = parent->resolveCustomDataTriState(BrowserService::OPTION_ONLY_HTTP_AUTH);
-            inheritNoHttp = parent->resolveCustomDataTriState(BrowserService::OPTION_NOT_HTTP_AUTH);
-            inheritOmitWww = parent->resolveCustomDataTriState(BrowserService::OPTION_OMIT_WWW);
+            inheritHideEntries = parent->resolveBrowserOptionEnabled(BrowserService::OPTION_HIDE_ENTRY);
+            inheritSkipSubmit = parent->resolveBrowserOptionEnabled(BrowserService::OPTION_SKIP_AUTO_SUBMIT);
+            inheritOnlyHttp = parent->resolveBrowserOptionEnabled(BrowserService::OPTION_ONLY_HTTP_AUTH);
+            inheritNoHttp = parent->resolveBrowserOptionEnabled(BrowserService::OPTION_NOT_HTTP_AUTH);
+            inheritOmitWww = parent->resolveBrowserOptionEnabled(BrowserService::OPTION_OMIT_WWW);
             inheritRestrictKey = parent->resolveCustomDataString(BrowserService::OPTION_RESTRICT_KEY);
         }
 

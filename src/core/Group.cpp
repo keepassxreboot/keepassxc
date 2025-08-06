@@ -1,6 +1,6 @@
 /*
+ *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -1132,6 +1132,24 @@ bool Group::resolveAutoTypeEnabled() const
         } else {
             return m_parent->resolveAutoTypeEnabled();
         }
+    case Enable:
+        return true;
+    case Disable:
+        return false;
+    default:
+        Q_ASSERT(false);
+        return false;
+    }
+}
+
+bool Group::resolveBrowserOptionEnabled(const QString& option) const
+{
+    switch (resolveCustomDataTriState(option, true)) {
+    case Inherit:
+        if (!m_parent) {
+            return false;
+        }
+        return m_parent->resolveBrowserOptionEnabled(option);
     case Enable:
         return true;
     case Disable:
