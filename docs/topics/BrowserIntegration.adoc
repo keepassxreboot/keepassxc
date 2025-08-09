@@ -95,7 +95,7 @@ image::browser_fill_credentials.png[,80%]
 
 === Clearing Remembered Sites
 
-KeePassXC-Browser stores a list of websites you have previously allowed to connect to specific database entries. If you need to remove these remembered sites, follow these steps:
+KeePassXC-Browser stores a list of websites you have previously allowed to connect to specific database entries. To remove these remembered sites, you can enable the "Forget all site-specific settings on entries" feature in KeePassXC's browser integration, which clears remembered site permissions for database entries. Follow these steps:
 
 1. Go to *Databases* → *DatabaseSettings* *(A)*
 2. Go to *Browser Integration* *(B)*, click on the *Forgot all sites-specific settings on entries* *\(C)* 
@@ -103,6 +103,18 @@ KeePassXC-Browser stores a list of websites you have previously allowed to conne
 +
 .Clear Sites
 image::browser_integration_clear_sites.png[,100%]
+
+=== Browser Report
+The KeePassXC-Browser extension allows you to enable browser integration to access the browser report feature in KeePassXC. You can view the browser report via: *Database* → *Database Reports* → *Browser Statistics*
+
+=== Additional Attributes
+The KeePassXC-Browser extension allows you to add additional attributes to your entries. This can be useful for storing extra information that is not part of the standard entry fields. Follow below steps:
+
+1. Open an entry and navigate to the *Advanced tab* *(A)*
+2. In the Advanced tab, under the *Additional Attribute section (B)*, you can click on *Add \(C)* to add additional *key-value pair (D)* to the entry. 
++
+.Additional Attributes
+image::browser_integration_additional_attribute.png[,100%]
 
 === Generate Passwords
 The KeePassXC-Browser Extension also lets you generate passwords directly in your browser. 
