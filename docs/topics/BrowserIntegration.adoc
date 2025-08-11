@@ -111,7 +111,7 @@ The KeePassXC-Browser extension allows you to enable browser integration to acce
 The KeePassXC-Browser extension allows you to add additional attributes to your entries. This can be useful for storing extra information that is not part of the standard entry fields. Follow below steps:
 
 1. Open an entry and navigate to the *Advanced tab* *(A)*
-2. In the Advanced tab, under the *Additional Attribute section (B)*, you can click on *Add \(C)* to add additional *key-value pair (D)* to the entry. 
+2. In the Advanced tab, under the *Additional Attribute section (B)*, you can click on *Add \(C)* to add additional *key-value pairs (D)* to the entry. 
 +
 .Additional Attributes
 image::browser_integration_additional_attribute.png[,100%]
