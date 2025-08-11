@@ -95,7 +95,7 @@ image::browser_fill_credentials.png[,80%]
 
 === Clearing Remembered Sites
 
-KeePassXC-Browser stores a list of websites you have previously allowed to connect to specific database entries. To remove these remembered sites, you can enable the "Forget all site-specific settings on entries" feature in KeePassXC's browser integration, which clears remembered site permissions for database entries. Follow these steps:
+KeePassXC-Browser stores a list of websites you have previously allowed to connect to specific database entries. To remove these remembered sites, you can enable the "Forget all site-specific settings on entries" feature in KeePassXC's browser integration. Follow these steps:
 
 1. Go to *Databases* → *DatabaseSettings* *(A)*
 2. Go to *Browser Integration* *(B)*, click on the *Forgot all sites-specific settings on entries* *\(C)* 
