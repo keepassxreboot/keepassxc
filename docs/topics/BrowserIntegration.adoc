@@ -99,7 +99,7 @@ KeePassXC-Browser stores a list of websites you have previously allowed to conne
 
 1. Go to *Databases* → *DatabaseSettings* *(A)*
 2. Go to *Browser Integration* *(B)*, click on the *Forgot all sites-specific settings on entries* *\(C)* 
-3. Click on *Yes* botton *(D)* on popup dialog to confirm the action, and click on _OK_ to close the settings dialog. 
+3. Click on *Yes* button *(D)* on popup dialog to confirm the action, and click on _OK_ to close the settings dialog. 
 +
 .Clear Sites
 image::browser_integration_clear_sites.png[,100%]
