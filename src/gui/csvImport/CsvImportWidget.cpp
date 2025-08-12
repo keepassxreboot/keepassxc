@@ -279,7 +279,7 @@ QSharedPointer<Database> CsvImportWidget::buildDatabase()
         // Modified Time
         TimeInfo timeInfo;
         if (m_parserModel->data(m_parserModel->index(r, 9)).isValid()) {
-            auto datetime = m_parserModel->data(m_parserModel->index(r, 8)).toString();
+            auto datetime = m_parserModel->data(m_parserModel->index(r, 9)).toString();
             if (datetime.contains(QRegularExpression("^\\d+$"))) {
                 auto t = datetime.toLongLong();
                 if (t <= INT32_MAX) {
@@ -298,7 +298,7 @@ QSharedPointer<Database> CsvImportWidget::buildDatabase()
         }
         // Creation Time
         if (m_parserModel->data(m_parserModel->index(r, 10)).isValid()) {
-            auto datetime = m_parserModel->data(m_parserModel->index(r, 9)).toString();
+            auto datetime = m_parserModel->data(m_parserModel->index(r, 10)).toString();
             if (datetime.contains(QRegularExpression("^\\d+$"))) {
                 auto t = datetime.toLongLong();
                 if (t <= INT32_MAX) {
