@@ -93,29 +93,6 @@ image::browser_confirm_access_dialog.png[,80%]
 .Fill Credentials
 image::browser_fill_credentials.png[,80%]
 
-=== Clearing Remembered Sites
-
-KeePassXC-Browser stores a list of websites you have previously allowed to connect to specific database entries. To remove these remembered sites, you can enable the "Forget all site-specific settings on entries" feature in KeePassXC's browser integration. Follow these steps:
-
-1. Go to *Databases* → *DatabaseSettings* *(A)*
-2. Go to *Browser Integration* *(B)*, click on the *Forgot all sites-specific settings on entries* *\(C)* 
-3. Click on *Yes* button *(D)* on popup dialog to confirm the action, and click on _OK_ to close the settings dialog. 
-+
-.Clear Sites
-image::browser_integration_clear_sites.png[,100%]
-
-=== Browser Report
-The KeePassXC-Browser extension allows you to enable browser integration to access the browser report feature in KeePassXC. You can view the browser report via: *Database* → *Database Reports* → *Browser Statistics*
-
-=== Additional Attributes
-The KeePassXC-Browser extension allows you to add additional attributes to your entries. This can be useful for storing extra information that is not part of the standard entry fields. Follow below steps:
-
-1. Open an entry and navigate to the *Advanced tab* *(A)*
-2. In the Advanced tab, under the *Additional Attribute section (B)*, you can click on *Add \(C)* to add additional *key-value pairs (D)* to the entry. 
-+
-.Additional Attributes
-image::browser_integration_additional_attribute.png[,100%]
-
 === Generate Passwords
 The KeePassXC-Browser Extension also lets you generate passwords directly in your browser. 
 This feature can be used for websites with existing credentials as well as for new websites. 
@@ -130,11 +107,33 @@ You can then choose to update/add the credentials to your KeePassXC database dir
 4. When you have successfully submitted the password on the website, a popup will appear asking you to either update an existing entry or add a new one.
 
 // tag::advanced[]
-=== Browser statistics
-You can see a cross-section of all browser-related settings applied to entries within a database through the Browser Statistics report. To access these, use the _Database_ -> _Database reports..._ menu option then click on _Browser Statistics_ on the left-hand menu. From here you can see all entries with URLs applied to them, explicitly allowed and denied URLs, and any entries with custom browser settings.
+=== Browser Integration Report
+You can see a cross-section of all browser-related settings applied to entries within a database through the Browser Statistics report. To access, use the _Database_ -> _Database reports..._ menu option then click on _Browser Statistics_ on the left-hand menu. From here you can see all entries with URLs applied to them, explicitly allowed and denied URLs, and any entries with custom browser settings.
 
-.Browser statistics
+TIP: You can delete remembered site settings from the report by right clicking the entry you want to reset and selecting "Delete plugin data from entry".
+
+.Browser Integration Report
 image::browser_statistics.png[]
+
+=== Additional Fill-In Fields
+Sometimes login pages have additional fields you would like to fill (e.g., account number). Use the following instructions to add them:
+
+1. Edit the entry you want to add fields to. Go to the advanced tab and add the attributes you need. Each attribute *must start with* `KPH:`, but otherwise the name does not matter. If multiple KPH attributes are defined, they are used in alphabetical order (i.e., the order shown in KeePassXC).
+2. Within the browser, navigate to the page you want to use the additional fields on. Select the "Choose Custom Login Fields" button from the extension popup window. Choose Username, Password and String Field(s). Confirm the selections.
+3. Refresh the web page. The new KPH attribute(s) should be filled to the extra fields.
+
+.String Fields Selection in Browser
+image:browser_integration_additional_attribute.png[]
+
+=== Clearing Remembered Sites
+Entries that you have chosen to remember allow/deny rules are stored in their respect custom data fields. You can clear all of these remembered settings at once through the database settings. Follow these steps:
+
+1. Go to *Database* → *Database Settings* or click the database settings icon in the toolbar.
+2. Go to the *Browser Integration* tab, then click on the *Forget all site-specific settings on entries* button. 
+3. Confirm this action in the popup dialog. This cannot be undone once the database is saved. 
++
+.Clear Remembered Sites
+image::browser_integration_clear_sites.png[,100%]
 
 === Advanced Usage
 You can configure unique browser integration behavior for each entry. This allows you to add multiple URLs to an entry, hide an entry from the browser integration, and more. To access these settings, open an entry for editing then click on _Browser Integration_ option in the left-hand menu *(1)*.
