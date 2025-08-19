@@ -53,6 +53,7 @@
 #include "gui/EditWidgetProperties.h"
 #include "gui/FileDialog.h"
 #include "gui/Font.h"
+#include "gui/GuiTools.h"
 #include "gui/Icons.h"
 #include "gui/MessageBox.h"
 #include "gui/entry/AutoTypeAssociationsModel.h"
@@ -185,6 +186,8 @@ void EditEntryWidget::setupMain()
     m_mainUi->setupUi(m_mainWidget);
     addPage(tr("Entry"), icons()->icon("document-edit"), m_mainWidget);
 
+    // Disable mouse wheel grab when scrolling
+    m_mainUi->usernameComboBox->installEventFilter(new MouseWheelEventFilter(this));
     m_mainUi->usernameComboBox->setEditable(true);
     m_usernameCompleter->setCompletionMode(QCompleter::InlineCompletion);
     m_usernameCompleter->setCaseSensitivity(Qt::CaseSensitive);

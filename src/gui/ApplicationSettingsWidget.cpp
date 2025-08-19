@@ -27,6 +27,7 @@
 
 #include "autotype/AutoType.h"
 #include "core/Translator.h"
+#include "gui/GuiTools.h"
 #include "gui/Icons.h"
 #include "gui/MainWindow.h"
 #include "gui/osutils/OSUtils.h"
@@ -60,28 +61,6 @@ public:
 private:
     QSharedPointer<ISettingsPage> settingsPage;
     QWidget* widget;
-};
-
-/**
- * Helper class to ignore mouse wheel events on non-focused widgets
- * NOTE: The widget must NOT have a focus policy of "WHEEL"
- */
-class MouseWheelEventFilter : public QObject
-{
-public:
-    explicit MouseWheelEventFilter(QObject* parent)
-        : QObject(parent){};
-
-protected:
-    bool eventFilter(QObject* obj, QEvent* event) override
-    {
-        const auto* widget = qobject_cast<QWidget*>(obj);
-        if (event->type() == QEvent::Wheel && widget && !widget->hasFocus()) {
-            event->ignore();
-            return true;
-        }
-        return QObject::eventFilter(obj, event);
-    }
 };
 
 ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
