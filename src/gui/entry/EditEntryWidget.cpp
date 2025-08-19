@@ -189,6 +189,7 @@ void EditEntryWidget::setupMain()
     // Disable mouse wheel grab when scrolling
     m_mainUi->usernameComboBox->installEventFilter(new MouseWheelEventFilter(this));
     m_mainUi->usernameComboBox->setEditable(true);
+    m_mainUi->usernameComboBox->lineEdit()->setFocusPolicy(Qt::StrongFocus);
     m_usernameCompleter->setCompletionMode(QCompleter::InlineCompletion);
     m_usernameCompleter->setCaseSensitivity(Qt::CaseSensitive);
     m_usernameCompleter->setModel(m_usernameCompleterModel);
