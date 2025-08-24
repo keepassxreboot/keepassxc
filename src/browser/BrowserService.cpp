@@ -898,16 +898,6 @@ void BrowserService::addEntry(const EntryParameters& entryParameters,
 
     const QString host = QUrl(entryParameters.siteUrl).host();
     const QString submitHost = QUrl(entryParameters.formUrl).host();
-    BrowserEntryConfig config;
-    config.allow(host);
-
-    if (!submitHost.isEmpty()) {
-        config.allow(submitHost);
-    }
-    if (!entryParameters.realm.isEmpty()) {
-        config.setRealm(entryParameters.realm);
-    }
-    config.save(entry);
 
     if (downloadFavicon && m_currentDatabaseWidget) {
         m_currentDatabaseWidget->downloadFaviconInBackground(entry);
