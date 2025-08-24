@@ -23,6 +23,8 @@
 
 #include "gui/entry/EntryModel.h"
 
+#include <QtCore/QUuid>
+
 class Entry;
 class EntryModel;
 class Group;
@@ -51,6 +53,9 @@ public:
 
     void displayGroup(Group* group);
     void displaySearch(const QList<Entry*>& entries);
+
+    void saveViewState();
+    void restoreViewState(const QList<Entry*>& entries);
 
 signals:
     void entryActivated(Entry* entry, EntryModel::ModelColumn column);
@@ -87,6 +92,10 @@ private:
 
     QMenu* m_headerMenu;
     QActionGroup* m_columnActions;
+
+    int m_lastSortColumn = -1;
+    Qt::SortOrder m_lastSortOrder = Qt::AscendingOrder;
+    QUuid m_lastSelectedEntryUuid;
 };
 
 #endif // KEEPASSX_ENTRYVIEW_H
