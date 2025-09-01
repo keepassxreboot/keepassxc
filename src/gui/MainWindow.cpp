@@ -2017,7 +2017,7 @@ void MainWindow::initViewMenu()
     });
 
 #ifdef Q_OS_MACOS
-    m_ui->actionShowMenubar->setMaximumHeight(0);
+    m_ui->actionShowMenubar->setVisible(false);
 #else
     m_ui->actionShowMenubar->setChecked(!config()->get(Config::GUI_HideMenubar).toBool());
     connect(m_ui->actionShowMenubar, &QAction::toggled, this, [this](bool checked) {
