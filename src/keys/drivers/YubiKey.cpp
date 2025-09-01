@@ -43,7 +43,7 @@ YubiKey::YubiKey()
         connect(YubiKeyInterfacePCSC::instance(), SIGNAL(challengeStarted()), this, SIGNAL(challengeStarted()));
         connect(YubiKeyInterfacePCSC::instance(), SIGNAL(challengeCompleted()), this, SIGNAL(challengeCompleted()));
     } else {
-        qDebug("YubiKey: PCSC interface is disabled or not initialized.");
+        qDebug("YubiKey: PC/SC interface is disabled or not initialized.");
     }
 
     m_initialized = num_interfaces > 0;

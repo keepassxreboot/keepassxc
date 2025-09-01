@@ -2640,7 +2640,7 @@ bool DatabaseWidget::saveBackup()
     }
 
     const QString newFilePath = fileDialog()->getSaveFileName(this,
-                                                              tr("Save database backup"),
+                                                              tr("Save Database Backup"),
                                                               FileDialog::getLastDir("backup", oldFilePath),
                                                               tr("KeePass 2 Database").append(" (*.kdbx)"));
 

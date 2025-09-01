@@ -532,7 +532,7 @@
     <string>&amp;New Entry…</string>
    </property>
    <property name="toolTip">
-    <string>Create Entry</string>
+    <string>New Entry</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+N</string>
@@ -541,6 +541,9 @@
   <action name="actionEntryEdit">
    <property name="text">
     <string>&amp;Edit Entry…</string>
+   </property>
+   <property name="iconText">
+    <string>Edit Entry…</string>
    </property>
    <property name="toolTip">
     <string>Edit Entry</string>
@@ -554,12 +557,21 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>E&amp;xpire Entry…</string>
+    <string>E&amp;xpire Entry</string>
+   </property>
+   <property name="iconText">
+    <string>Expire Entry</string>
+   </property>
+   <property name="toolTip">
+    <string>Expire Entry</string>
    </property>
   </action>
   <action name="actionEntryDelete">
    <property name="text">
-    <string>&amp;Delete Entry…</string>
+    <string>&amp;Delete Entry</string>
+   </property>
+   <property name="iconText">
+    <string>Delete Entry</string>
    </property>
    <property name="toolTip">
     <string>Delete Entry</string>

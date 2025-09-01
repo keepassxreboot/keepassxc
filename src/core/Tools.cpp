@@ -151,23 +151,23 @@ namespace Tools
 
         if (seconds >= secondsInYear) {
             auto years = std::floor(seconds / secondsInYear);
-            return QObject::tr("over %1 year(s)", nullptr, years).arg(years);
+            return QObject::tr("over %1 year(s)", "", years).arg(years);
         } else if (seconds >= secondsInMonth) {
             auto months = std::round(seconds / secondsInMonth);
-            return QObject::tr("about %1 month(s)", nullptr, months).arg(months);
+            return QObject::tr("about %1 month(s)", "", months).arg(months);
         } else if (seconds >= secondsInWeek) {
             auto weeks = std::round(seconds / secondsInWeek);
-            return QObject::tr("%1 week(s)", nullptr, weeks).arg(weeks);
+            return QObject::tr("%1 week(s)", "", weeks).arg(weeks);
         } else if (seconds >= secondsInDay) {
             auto days = std::floor(seconds / secondsInDay);
-            return QObject::tr("%1 day(s)", nullptr, days).arg(days);
+            return QObject::tr("%1 day(s)", "", days).arg(days);
         } else if (seconds >= secondsInHour) {
             auto hours = std::floor(seconds / secondsInHour);
-            return QObject::tr("%1 hour(s)", nullptr, hours).arg(hours);
+            return QObject::tr("%1 hour(s)", "", hours).arg(hours);
         }
 
         auto minutes = std::floor(seconds / 60);
-        return QObject::tr("%1 minute(s)", nullptr, minutes).arg(minutes);
+        return QObject::tr("%1 minute(s)", "", minutes).arg(minutes);
     }
 
     bool readFromDevice(QIODevice* device, QByteArray& data, int size)

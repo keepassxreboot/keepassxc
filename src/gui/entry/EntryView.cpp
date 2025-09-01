@@ -547,7 +547,7 @@ void EntryView::startDrag(Qt::DropActions supportedActions)
     for (auto& index : selectedIndexes) {
         if (++i > 4) {
             int remaining = selectedIndexes.size() - i + 1;
-            listWidget.addItem(tr("+ %1 entry(s)...", nullptr, remaining).arg(remaining));
+            listWidget.addItem(tr("+ %1 entry(s)...", "", remaining).arg(remaining));
             break;
         }
 

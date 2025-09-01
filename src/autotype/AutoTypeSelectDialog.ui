@@ -51,13 +51,18 @@
         <enum>Qt::NoFocus</enum>
        </property>
        <property name="toolTip">
-        <string>&lt;p&gt;You can use advanced search queries to find any entry in your open databases. The following shortcuts are useful:&lt;br/&gt;
-Ctrl+F - Toggle database search&lt;br/&gt;
+        <string>&lt;p&gt;The following shortcuts are available:&lt;br/&gt;
+Ctrl+F - Focus search&lt;br/&gt;
 Ctrl+1 - Type username&lt;br/&gt;
 Ctrl+2 - Type password&lt;br/&gt;
 Ctrl+3 - Type TOTP&lt;br/&gt;
 Ctrl+4 - Type URL&lt;br/&gt;
-Ctrl+5 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</string>
+Ctrl+5 - Use Virtual Keyboard (Windows Only)&lt;br/&gt;
+Ctrl+Shift+1 - Copy username&lt;br/&gt;
+Ctrl+Shift+2 - Copy password&lt;br/&gt;
+Ctrl+Shift+3 - Copy TOTP&lt;br/&gt;
+Ctrl+Shift+4 - Copy URL&lt;br/&gt;
+&lt;/p&gt;</string>
        </property>
        <property name="styleSheet">
         <string notr="true">QToolButton {
@@ -172,6 +177,9 @@ Ctrl+5 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</string>
        <width>400</width>
        <height>0</height>
       </size>
+     </property>
+     <property name="toolTip">
+      <string>You can use advanced search queries to find any entry in your open databases.</string>
      </property>
      <property name="placeholderText">
       <string>Search…</string>

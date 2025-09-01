@@ -76,7 +76,7 @@ void PasskeyExporter::exportSelectedEntry(const Entry* entry, const QString& fol
     const auto fullPath = QString("%1/%2.passkey").arg(folder, Tools::cleanFilename(entry->title()));
     if (QFile::exists(fullPath)) {
         auto dialogResult = MessageBox::warning(m_parent,
-                                                tr("KeePassXC: Passkey Export"),
+                                                tr("Overwrite Existing File?"),
                                                 tr("File \"%1.passkey\" already exists.\n"
                                                    "Do you want to overwrite it?\n")
                                                     .arg(entry->title()),

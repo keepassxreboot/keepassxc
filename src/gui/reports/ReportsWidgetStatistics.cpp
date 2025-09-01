@@ -122,7 +122,7 @@ void ReportsWidgetStatistics::calculateStats()
                 tr("Excluding entries from reports, e. g. because they are known to have a poor password, isn't "
                    "necessarily a problem but you should keep an eye on them."));
     addStatsRow(tr("Average password length"),
-                tr("%1 characters").arg(stats->averagePwdLength()),
+                tr("%1 character(s)", "", stats->averagePwdLength()).arg(stats->averagePwdLength()),
                 stats->isAvgPwdTooShort(),
                 tr("Average password length is less than ten characters. Longer passwords provide more security."));
 }

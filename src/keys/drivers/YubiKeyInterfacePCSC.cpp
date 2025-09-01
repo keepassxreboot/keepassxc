@@ -519,7 +519,7 @@ YubiKeyInterfacePCSC::YubiKeyInterfacePCSC()
     : YubiKeyInterface()
 {
     if (ensureValidContext(m_sc_context) != SCARD_S_SUCCESS) {
-        qDebug("YubiKey: Failed to establish PCSC context.");
+        qDebug("YubiKey: Failed to establish PC/SC context.");
     } else {
         m_initialized = true;
     }
@@ -528,7 +528,7 @@ YubiKeyInterfacePCSC::YubiKeyInterfacePCSC()
 YubiKeyInterfacePCSC::~YubiKeyInterfacePCSC()
 {
     if (m_initialized && SCardReleaseContext(m_sc_context) != SCARD_S_SUCCESS) {
-        qDebug("YubiKey: Failed to release PCSC context.");
+        qDebug("YubiKey: Failed to release PC/SC context.");
     }
 }
 
@@ -678,7 +678,7 @@ YubiKeyInterfacePCSC::challenge(YubiKeySlot slot, const QByteArray& challenge, B
 {
     m_error.clear();
     if (!m_initialized) {
-        m_error = tr("The YubiKey PCSC interface has not been initialized.");
+        m_error = tr("The YubiKey PC/SC interface has not been initialized.");
         return YubiKey::ChallengeResult::YCR_ERROR;
     }
 
@@ -762,7 +762,7 @@ YubiKey::ChallengeResult YubiKeyInterfacePCSC::performChallenge(void* key,
             m_error = tr("Hardware key was not found or is not configured.");
         } else {
             m_error =
-                tr("Failed to complete a challenge-response, the PCSC error code was: %1").arg(QString::number(rv));
+                tr("Failed to complete a challenge-response, the PC/SC error code was: %1").arg(QString::number(rv));
         }
 
         return YubiKey::ChallengeResult::YCR_ERROR;

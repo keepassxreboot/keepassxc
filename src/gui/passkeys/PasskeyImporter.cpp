@@ -39,7 +39,7 @@ void PasskeyImporter::importPasskey(QSharedPointer<Database>& database, Entry* e
 {
     auto filter = QString("%1 (*.passkey);;%2 (*)").arg(tr("Passkey file"), tr("All files"));
     auto fileName =
-        fileDialog()->getOpenFileName(m_parent, tr("Open passkey file"), FileDialog::getLastDir("passkey"), filter);
+        fileDialog()->getOpenFileName(m_parent, tr("Open Passkey File"), FileDialog::getLastDir("passkey"), filter);
     if (fileName.isEmpty()) {
         return;
     }
@@ -62,7 +62,7 @@ void PasskeyImporter::importSelectedFile(QFile& file, QSharedPointer<Database>& 
     const auto passkeyObject = browserMessageBuilder()->getJsonObject(fileData);
     if (passkeyObject.isEmpty()) {
         MessageBox::information(m_parent,
-                                tr("Cannot import passkey"),
+                                tr("Passkey Import Failed"),
                                 tr("Cannot import passkey file \"%1\". Data is missing.").arg(file.fileName()));
         return;
     }
@@ -73,14 +73,14 @@ void PasskeyImporter::importSelectedFile(QFile& file, QSharedPointer<Database>& 
         QStringList() << "relyingParty" << "url" << "username" << "credentialId" << "userHandle" << "privateKey");
     if (!missingKeys.isEmpty()) {
         MessageBox::information(m_parent,
-                                tr("Cannot import passkey"),
+                                tr("Passkey Import Failed"),
                                 tr("Cannot import passkey file \"%1\".\nThe following data is missing:\n%2")
                                     .arg(file.fileName(), missingKeys.join(", ")));
     } else if (!privateKey.startsWith(EntryAttributes::KPEX_PASSKEY_PRIVATE_KEY_START)
                || !privateKey.trimmed().endsWith(EntryAttributes::KPEX_PASSKEY_PRIVATE_KEY_END)) {
         MessageBox::information(
             m_parent,
-            tr("Cannot import passkey"),
+            tr("Passkey Import Failed"),
             tr("Cannot import passkey file \"%1\". Private key is missing or malformed.").arg(file.fileName()));
     } else {
         const auto relyingParty = passkeyObject["relyingParty"].toString();

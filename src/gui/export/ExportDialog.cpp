@@ -55,8 +55,10 @@ QString ExportDialog::getStrategyName(ExportSortingStrategy strategy)
         return tr("name (ascending)");
     case ExportSortingStrategy::BY_NAME_DESC:
         return tr("name (descending)");
+    default:
+        Q_ASSERT(false);
+        return tr("invalid sort order");
     }
-    return tr("unknown");
 }
 
 void ExportDialog::exportDatabase()

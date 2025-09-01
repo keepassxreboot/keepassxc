@@ -144,7 +144,7 @@ YubiKey::KeyMap YubiKeyInterfaceUSB::findValidKeys(int& connectedKeys)
             int vid, pid;
             yk_get_key_vid_pid(yk_key.get(), &vid, &pid);
 
-            QString name = m_pid_names.value(pid, tr("Unknown"));
+            QString name = m_pid_names.value(pid, tr("Unknown", "Unknown hardware key name"));
             if (vid == ONLYKEY_VID) {
                 name = QStringLiteral("OnlyKey %ver");
             }
