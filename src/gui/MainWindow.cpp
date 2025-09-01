@@ -944,6 +944,17 @@ void MainWindow::updateMenuActionState()
     m_ui->actionEntryEdit->setEnabled(singleEntrySelected);
     m_ui->actionEntryExpire->setEnabled(multiEntrySelected);
     m_ui->actionEntryDelete->setEnabled(multiEntrySelected);
+    if (dbWidget) {
+        if (dbWidget->database()->metadata()->recycleBinEnabled() && !inRecycleBin) {
+            m_ui->actionEntryDelete->setToolTip(
+                tr("Move selected entry(s) to the recycle bin", "", dbWidget->numberOfSelectedEntries()));
+        } else {
+            m_ui->actionEntryDelete->setToolTip(
+                tr("Permanently delete the selected entry(s)", "", dbWidget->numberOfSelectedEntries()));
+        }
+    } else {
+        m_ui->actionEntryDelete->setToolTip(tr("Delete Entry"));
+    }
     m_ui->actionEntryRestore->setVisible(multiEntrySelected && inRecycleBin);
     m_ui->actionEntryRestore->setEnabled(multiEntrySelected && inRecycleBin);
     if (dbWidget) {

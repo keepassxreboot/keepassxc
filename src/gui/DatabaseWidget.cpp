@@ -1120,8 +1120,8 @@ void DatabaseWidget::deleteGroup()
     if (inRecycleBin || isRecycleBin || isRecycleBinSubgroup || !m_db->metadata()->recycleBinEnabled()) {
         auto result = MessageBox::question(
             this,
-            tr("Delete group"),
-            tr("Do you really want to delete the group \"%1\" for good?").arg(currentGroup->name().toHtmlEscaped()),
+            tr("Confirm Delete Group"),
+            tr("Do you really want to permanently delete the group \"%1\"?").arg(currentGroup->name().toHtmlEscaped()),
             MessageBox::Delete | MessageBox::Cancel,
             MessageBox::Cancel);
 
@@ -1130,7 +1130,7 @@ void DatabaseWidget::deleteGroup()
         }
     } else {
         auto result = MessageBox::question(this,
-                                           tr("Move group to recycle bin?"),
+                                           tr("Confirm Recycle Group"),
                                            tr("Do you really want to move the group "
                                               "\"%1\" to the recycle bin?")
                                                .arg(currentGroup->name().toHtmlEscaped()),

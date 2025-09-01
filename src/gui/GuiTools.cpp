@@ -32,14 +32,15 @@ namespace GuiTools
         if (permanent) {
             QString prompt;
             if (entries.size() == 1) {
-                prompt = QObject::tr("Do you really want to delete the entry \"%1\" for good?")
-                             .arg(entries.first()->title().toHtmlEscaped());
+                auto entry = entries.first();
+                prompt = QObject::tr("Do you really want to permanently delete the entry \"%1\"?")
+                             .arg(entry->resolvePlaceholder(entry->title()).toHtmlEscaped());
             } else {
-                prompt = QObject::tr("Do you really want to delete %n entry(s) for good?", "", entries.size());
+                prompt = QObject::tr("Do you really want to permanently delete %n entry(s)?", "", entries.size());
             }
 
             auto answer = MessageBox::question(parent,
-                                               QObject::tr("Delete entry(s)?", "", entries.size()),
+                                               QObject::tr("Confirm Delete Entry(s)", "", entries.size()),
                                                prompt,
                                                MessageBox::Delete | MessageBox::Cancel,
                                                MessageBox::Cancel);
@@ -50,14 +51,15 @@ namespace GuiTools
         } else {
             QString prompt;
             if (entries.size() == 1) {
+                auto entry = entries.first();
                 prompt = QObject::tr("Do you really want to move entry \"%1\" to the recycle bin?")
-                             .arg(entries.first()->title().toHtmlEscaped());
+                             .arg(entry->resolvePlaceholder(entry->title()).toHtmlEscaped());
             } else {
                 prompt = QObject::tr("Do you really want to move %n entry(s) to the recycle bin?", "", entries.size());
             }
 
             auto answer = MessageBox::question(parent,
-                                               QObject::tr("Move entry(s) to recycle bin?", "", entries.size()),
+                                               QObject::tr("Confirm Recycle Entry(s)", "", entries.size()),
                                                prompt,
                                                MessageBox::Move | MessageBox::Cancel,
                                                MessageBox::Cancel);
@@ -72,11 +74,12 @@ namespace GuiTools
             return false;
         }
 
-        auto answer = MessageBox::question(parent,
-                                           QObject::tr("Delete plugin data?"),
-                                           QObject::tr("Delete plugin data from Entry(s)?", "", entries.size()),
-                                           MessageBox::Delete | MessageBox::Cancel,
-                                           MessageBox::Cancel);
+        auto answer =
+            MessageBox::question(parent,
+                                 QObject::tr("Confirm Delete Plugin Data"),
+                                 QObject::tr("Delete plugin data from the selected entry(s)?", "", entries.size()),
+                                 MessageBox::Delete | MessageBox::Cancel,
+                                 MessageBox::Cancel);
 
         return answer == MessageBox::Delete;
     }
@@ -100,7 +103,7 @@ namespace GuiTools
                     // Prompt the user on what to do with the reference (Overwrite, Delete, Skip)
                     auto result = MessageBox::question(
                         parent,
-                        QObject::tr("Replace references to entry?"),
+                        QObject::tr("Confirm Replace Entry References"),
                         QObject::tr(
                             "Entry \"%1\" has %2 reference(s). "
                             "Do you want to overwrite references with values, skip this entry, or delete anyway?",
