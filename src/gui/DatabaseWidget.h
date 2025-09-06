@@ -261,6 +261,7 @@ public slots:
     void showErrorMessage(const QString& errorMessage);
     void hideMessage();
     void triggerAutosaveTimer();
+    void gotoGroup();
 
 protected:
     void closeEvent(QCloseEvent* event) override;

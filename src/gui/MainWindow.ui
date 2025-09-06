@@ -439,6 +439,7 @@
    <addaction name="actionEntryCopyUsername"/>
    <addaction name="actionEntryCopyPassword"/>
    <addaction name="actionEntryCopyURL"/>
+   <addaction name="actionGotoGroup"/>
    <addaction name="actionEntryAutoType"/>
    <addaction name="separator"/>
    <addaction name="actionDatabaseSettings"/>
@@ -1353,6 +1354,17 @@
    </property>
    <property name="menuRole">
     <enum>QAction::TextHeuristicRole</enum>
+   </property>
+  </action>
+  <action name="actionGotoGroup">
+   <property name="text">
+    <string>Select corresponding &amp;group</string>
+   </property>
+   <property name="toolTip">
+    <string>Select corresponding group</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+G</string>
    </property>
   </action>
  </widget>

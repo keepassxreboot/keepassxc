@@ -6344,6 +6344,14 @@ Aspettatevi alcuni bug e problemi minori, questa versione è pensata per scopi d
         <source>Clear all identities in ssh-agent</source>
         <translation>Cancella tutte le identità in ssh-agent</translation>
     </message>
+    <message>
+        <source>Select corresponding &amp;group</source>
+        <translation>Seleziona &amp;gruppo corrispondente</translation>
+    </message>
+    <message>
+        <source>Select corresponding group</source>
+        <translation>Seleziona gruppo corrispondente</translation>
+    </message>
 </context>
 <context>
     <name>ManageDatabase</name>

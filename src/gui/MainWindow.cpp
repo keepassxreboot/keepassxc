@@ -144,6 +144,7 @@ MainWindow::MainWindow()
     m_entryContextMenu->addSeparator();
 #endif
     m_entryContextMenu->addAction(m_ui->actionEntryEdit);
+    m_entryContextMenu->addAction(m_ui->actionGotoGroup);
     m_entryContextMenu->addAction(m_ui->actionEntryExpire);
     m_entryContextMenu->addAction(m_ui->actionEntryClone);
     m_entryContextMenu->addAction(m_ui->actionEntryDelete);
@@ -431,6 +432,7 @@ MainWindow::MainWindow()
     m_ui->actionOnlineHelp->setIcon(icons()->icon("system-help"));
     m_ui->actionKeyboardShortcuts->setIcon(icons()->icon("keyboard-shortcuts"));
     m_ui->actionCheckForUpdates->setIcon(icons()->icon("system-software-update"));
+    m_ui->actionGotoGroup->setIcon(icons()->icon("document-import"));
 
 #ifdef WITH_XC_BROWSER_PASSKEYS
     m_ui->actionPasskeys->setIcon(icons()->icon("passkey"));
@@ -548,6 +550,7 @@ MainWindow::MainWindow()
     m_actionMultiplexer.connect(m_ui->actionGroupSortAsc, SIGNAL(triggered()), SLOT(sortGroupsAsc()));
     m_actionMultiplexer.connect(m_ui->actionGroupSortDesc, SIGNAL(triggered()), SLOT(sortGroupsDesc()));
     m_actionMultiplexer.connect(m_ui->actionGroupDownloadFavicons, SIGNAL(triggered()), SLOT(downloadAllFavicons()));
+    m_actionMultiplexer.connect(m_ui->actionGotoGroup, SIGNAL(triggered()), SLOT(gotoGroup()));
 
     connect(m_ui->actionSettings, SIGNAL(toggled(bool)), SLOT(switchToSettings(bool)));
     connect(m_ui->actionPasswordGenerator, SIGNAL(toggled(bool)), SLOT(togglePasswordGenerator(bool)));
@@ -942,6 +945,7 @@ void MainWindow::updateMenuActionState()
     m_ui->actionEntryNew->setEnabled(inDatabase && !inRecycleBin);
     m_ui->actionEntryClone->setEnabled(singleEntrySelected && !inRecycleBin);
     m_ui->actionEntryEdit->setEnabled(singleEntrySelected);
+    m_ui->actionGotoGroup->setEnabled(singleEntrySelected);
     m_ui->actionEntryExpire->setEnabled(multiEntrySelected);
     m_ui->actionEntryDelete->setEnabled(multiEntrySelected);
     m_ui->actionEntryRestore->setVisible(multiEntrySelected && inRecycleBin);
@@ -2148,7 +2152,8 @@ void MainWindow::initActionCollection()
                     m_ui->actionCheckForUpdates,
                     m_ui->actionDonate,
                     m_ui->actionBugReport,
-                    m_ui->actionAbout});
+                    m_ui->actionAbout,
+                    m_ui->actionGotoGroup});
 
     // Register as default any shortcuts that were set in the .ui file
     for (const auto action : ac->actions()) {

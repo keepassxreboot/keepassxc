@@ -2807,3 +2807,9 @@ void DatabaseWidget::openDatabaseFromEntry(const Entry* entry, bool inBackground
     // Request to open the database file in the background with a password and keyfile
     emit requestOpenDatabase(dbFileInfo.canonicalFilePath(), inBackground, password, keyFileInfo.canonicalFilePath());
 }
+
+void DatabaseWidget::gotoGroup()
+{
+    Group *group = m_entryView->currentEntry()->group();
+    m_groupView->setCurrentGroup(group);
+}
