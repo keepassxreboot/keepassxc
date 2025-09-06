@@ -2194,7 +2194,8 @@ MainWindowEventFilter::MainWindowEventFilter(QObject* parent)
     m_menubarTimer.setSingleShot(false);
     connect(&m_menubarTimer, &QTimer::timeout, this, [this] {
         auto mainwindow = getMainWindow();
-        if (mainwindow && mainwindow->m_ui->menubar->maximumHeight() > 0 && config()->get(Config::GUI_HideMenubar).toBool()) {
+        if (mainwindow && mainwindow->m_ui->menubar->maximumHeight() > 0
+            && config()->get(Config::GUI_HideMenubar).toBool()) {
             // If the menu bar is visible with no active menu, hide it
             if (!mainwindow->m_ui->menubar->activeAction()) {
                 mainwindow->m_ui->menubar->setMaximumHeight(0);
