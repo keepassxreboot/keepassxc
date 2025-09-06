@@ -5978,7 +5978,7 @@ Sei sicuro di voler continuare con questo file?</translation>
         <source>WARNING: You are using an unstable build of KeePassXC.
 There is a high risk of corruption, maintain a backup of your databases.
 This version is not meant for production use.</source>
-        <translation>ATTENZIONE: stau usando una build instabile di KeePassXC.
+        <translation>ATTENZIONE: stai usando una build instabile di KeePassXC.
 C&apos;è un alto rischio di corruzione, mantenere un backup dei database.
 Questa versione non è destinata all&apos;uso in produzione.</translation>
     </message>
