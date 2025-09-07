@@ -54,19 +54,21 @@ attachments::Attachment TextAttachmentsWidget::getAttachment() const
 void TextAttachmentsWidget::updateWidget()
 {
     if (m_mode == attachments::OpenMode::ReadOnly) {
+        // Only show the preview widget in read-only mode
         m_splitter->setSizes({0, 1});
         m_editWidget->hide();
+        m_previewWidget->openAttachment(m_attachment, m_mode);
     } else {
+        // Show the edit widget and hide the preview by default in read-write mode
         m_splitter->setSizes({1, 0});
         m_editWidget->show();
+        m_editWidget->openAttachment(m_attachment, m_mode);
     }
-
-    m_editWidget->openAttachment(m_attachment, m_mode);
 }
 
 void TextAttachmentsWidget::updatePreviewWidget()
 {
-    m_previewVisible = m_previewWidget->width() > 0;
+    m_previewVisible = isPreviewVisible();
     if (m_previewVisible) {
         m_attachment = m_editWidget->getAttachment();
         m_previewWidget->openAttachment(m_attachment, attachments::OpenMode::ReadOnly);
@@ -94,7 +96,7 @@ void TextAttachmentsWidget::initWidget()
 
     connect(m_editWidget, &TextAttachmentsEditWidget::previewButtonClicked, [this] {
         // Split the display in half if showing the preview widget
-        const auto previewSize = m_previewWidget->width() > 0 ? 0 : m_splitter->width() / 2;
+        const auto previewSize = isPreviewVisible() ? 0 : m_splitter->width() / 2;
         const auto editSize = m_splitter->width() - previewSize;
         m_splitter->setSizes({editSize, previewSize});
         updatePreviewWidget();
@@ -103,7 +105,7 @@ void TextAttachmentsWidget::initWidget()
     // Check if the preview panel is manually collapsed or shown
     connect(m_splitter, &QSplitter::splitterMoved, this, [this](int, int) {
         // Trigger a preview update if it has become visible
-        auto visible = m_previewWidget->width() > 0;
+        auto visible = isPreviewVisible();
         if (visible && !m_previewVisible) {
             updatePreviewWidget();
         }
@@ -123,4 +125,9 @@ void TextAttachmentsWidget::initWidget()
     setObjectName("TextAttachmentsWidget");
 
     updateWidget();
+}
+
+bool TextAttachmentsWidget::isPreviewVisible() const
+{
+    return m_previewWidget->width() > 0;
 }

@@ -49,6 +49,7 @@ private slots:
 private:
     void initWidget();
     void updateWidget();
+    bool isPreviewVisible() const;
 
     QPointer<QSplitter> m_splitter;
     QPointer<TextAttachmentsEditWidget> m_editWidget;
