@@ -1026,7 +1026,7 @@ void TestCli::testInfo()
     QCOMPARE(m_stdout->readLine(), QByteArray("Number of short passwords: 0\n"));
     QCOMPARE(m_stdout->readLine(), QByteArray("Number of weak passwords: 2\n"));
     QCOMPARE(m_stdout->readLine(), QByteArray("Entries excluded from reports: 0\n"));
-    QCOMPARE(m_stdout->readLine(), QByteArray("Average password length: 11 characters\n"));
+    QCOMPARE(m_stdout->readLine(), QByteArray("Average password length: 11 character(s)\n"));
 
     // Test with quiet option.
     setInput("a");
