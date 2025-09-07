@@ -2208,7 +2208,7 @@ void BaseStyle::drawControl(ControlElement element,
         if (r.width() < 5 || r.height() < 5)
             break;
         int length = Ph::dpiScaled(Ph::SplitterMaxLength);
-        int thickness = Ph::dpiScaled(1);
+        int thickness = Ph::dpiScaled(2);
         QSize size;
         if (option->state & State_Horizontal) {
             if (r.height() < length)
@@ -2221,7 +2221,6 @@ void BaseStyle::drawControl(ControlElement element,
         }
         QRect filledRect = QStyle::alignedRect(option->direction, Qt::AlignCenter, size, r);
         painter->fillRect(filledRect, swatch.color(S_splitterHandle));
-        Ph::fillRectOutline(painter, filledRect.adjusted(-1, -1, 1, 1), 1, swatch.color(S_splitterHandle));
         break;
     }
     // TODO update this for phantom
