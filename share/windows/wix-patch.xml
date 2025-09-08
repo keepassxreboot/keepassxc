@@ -6,8 +6,5 @@
         <Verb Id="open" Command="Open" TargetFile="CM_FP_KeePassXC.exe" Argument="&quot;%1&quot;"/>
       </Extension>
     </ProgId>
-     <Environment Id="KeePassXCSystemPathEntryENV" Action="set" Part="last"
-        Name="PATH" Value="[INSTALL_ROOT]"
-        System="yes"/>
   </CPackWiXFragment>
 </CPackWiXPatch>

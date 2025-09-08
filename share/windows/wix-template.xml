@@ -56,12 +56,14 @@
             <Condition>AUTOSTARTPROGRAM</Condition>
         </Component>
 
+        <!-- Add KeePassXC to PATH -->
+        <Component Id="AddKeePassXCToPath" Guid="*" Directory="INSTALL_ROOT">
+            <Condition>ADDTOPATH</Condition>
+            <Environment Id="KeePassXCSystemPathEntryENV" Action="set" Part="last" Name="PATH" Value="[INSTALL_ROOT]" System="yes"/>
+            <RegistryValue Root="HKCU" Key="Software\KeePassXC" Name="AddedToPATH" Type="integer" Value="1" KeyPath="yes" />
+        </Component>
+
         <DirectoryRef Id="TARGETDIR">
-            <!-- Save the "KEEPASSXC_IN_PATH" checkbox value persistently in the registry.  -->
-            <Component Id="KeePassXCRegistry_InstallInPATH">
-                <!-- Use a leading "0" so the value parses as an integer even when the property is unset.  -->
-                <RegistryValue Root="HKLM" Key="Software\KeePassXC" Name="InstallInPATH" Type="integer" Value="0[KEEPASSXC_IN_PATH]" />
-            </Component>
             <!-- Startmenu shortcuts -->
             <Directory Id="ProgramMenuFolder">
                 <Directory Id="ApplicationProgramsFolder" Name="KeePassXC">
@@ -110,41 +112,21 @@
             <RegistrySearch Id="AutoStartSearch" Root="HKCU" Key="Software\Microsoft\Windows\CurrentVersion\Run" Name="$(var.CPACK_PACKAGE_NAME)" Type="raw" />
         </Property>
         <Property Id="INSTALLDESKTOPSHORTCUT" Secure="yes" />
-
-        <!-- Hold the "KEEPASSXC_IN_PATH" checkbox value in a public property to propagate to the InstallExecuteSequence. -->
-        <Property Id="KEEPASSXC_IN_PATH" Value="Init" />
-
-        <!-- Always initialize the checkbox value so it cannot be directly overridden from the command line.  -->
-        <SetProperty Action="Set_KEEPASSXC_IN_PATH_Init"       Id="KEEPASSXC_IN_PATH" After="AppSearch"                    Sequence="first" Value="1" />
-
-        <!-- Read the "KEEPASSXC_IN_PATH" checkbox value from the registry, if it was stored previously.
-             Properties using RegistrySearch cannot be private, so use a private-looking public name. -->
-        <Property Id="_KEEPASSXC_IN_PATH_REG">
-            <RegistrySearch Id="KEEPASSXC_IN_PATH_RegistrySearch_HKLM" Root="HKLM" Key="Software\KeePassXC" Name="InstallInPATH" Type="raw" />
+        <Property Id="ADDTOPATH" Value="1" Secure="yes" />
+        <Property Id="ADDTOPATH_REGISTRY">
+            <RegistrySearch Id="AddToPathSearch" Root="HKCU" Key="Software\KeePassXC" Name="AddedToPATH" Type="raw" />
         </Property>
 
-        <!-- Override the default "KEEPASSXC_IN_PATH" checkbox with a value read from the registry, if any.  -->
-        <SetProperty Action="Set_KEEPASSXC_IN_PATH_REG_0"      Id="KEEPASSXC_IN_PATH" After="Set_KEEPASSXC_IN_PATH_Init"       Sequence="first" Value="{}"> _KEEPASSXC_IN_PATH_REG = "#0"                    </SetProperty>
-        <SetProperty Action="Set_KEEPASSXC_IN_PATH_REG_1"      Id="KEEPASSXC_IN_PATH" After="Set_KEEPASSXC_IN_PATH_REG_0"      Sequence="first" Value="1">  _KEEPASSXC_IN_PATH_REG = "#1"                    </SetProperty>
-
-        <!-- Override the default "KEEPASSXC_IN_PATH" checkbox with a value specified on the command line, if any.  -->
-        <SetProperty Action="Set_KEEPASSXC_IN_PATH_CMD_0"      Id="KEEPASSXC_IN_PATH" After="Set_KEEPASSXC_IN_PATH_REG_1"      Sequence="first" Value="{}">  ADD_KEEPASSXC_TO_PATH = "0"                     </SetProperty>
-        <SetProperty Action="Set_KEEPASSXC_IN_PATH_CMD_1"      Id="KEEPASSXC_IN_PATH" After="Set_KEEPASSXC_IN_PATH_CMD_0"      Sequence="first" Value="1">   ADD_KEEPASSXC_TO_PATH = "1"                     </SetProperty>
-        <!-- Support legacy values too.  -->
-        <SetProperty Action="Set_KEEPASSXC_IN_PATH_CMD_None"   Id="KEEPASSXC_IN_PATH" After="Set_KEEPASSXC_IN_PATH_CMD_1"      Sequence="first" Value="{}">  ADD_KEEPASSXC_TO_PATH = "None"                  </SetProperty>
-        <SetProperty Action="Set_KEEPASSXC_IN_PATH_CMD_System" Id="KEEPASSXC_IN_PATH" After="Set_KEEPASSXC_IN_PATH_CMD_None"   Sequence="first" Value="1">   ADD_KEEPASSXC_TO_PATH = "System" AND ALLUSERS   </SetProperty>
-        <!-- Per-user installation is not implemented, but reserve the old value for future use.  -->
-        <SetProperty Action="Set_KEEPASSXC_IN_PATH_CMD_User"   Id="KEEPASSXC_IN_PATH" After="Set_KEEPASSXC_IN_PATH_CMD_System" Sequence="first" Value="1">   ADD_KEEPASSXC_TO_PATH = "User" AND NOT ALLUSERS </SetProperty>
-
         <!-- Set properties based on existing conditions, prevents changing state on upgrade -->
-        <SetProperty Id="AUTOSTARTPROGRAM" After="AppSearch" Value="">AUTOSTARTPROGRAM="0" OR (WIX_UPGRADE_DETECTED AND NOT AUTOSTARTPROGRAM_REGISTRY)</SetProperty>
+        <SetProperty Id="AUTOSTARTPROGRAM" After="AppSearch" Value="" Sequence="first">AUTOSTARTPROGRAM="0" OR (WIX_UPGRADE_DETECTED AND NOT AUTOSTARTPROGRAM_REGISTRY)</SetProperty>
+        <SetProperty Id="ADDTOPATH" After="AppSearch" Value="" Sequence="first">ADDTOPATH="0" OR (WIX_UPGRADE_DETECTED AND NOT ADDTOPATH_REGISTRY)</SetProperty>
         <SetProperty Id="LicenseAccepted" After="AppSearch" Value="1">WIX_UPGRADE_DETECTED</SetProperty>
 
         <FeatureRef Id="ProductFeature">
             <ComponentRef Id="ApplicationShortcuts" />
             <ComponentRef Id="Autostart" />
             <ComponentRef Id="DesktopShortcut" />
-            <ComponentRef Id="KeePassXCRegistry_InstallInPATH"/>
+            <ComponentRef Id="AddKeePassXCToPath"/>
         </FeatureRef>
 
         <!-- Action to launch application after installer exits -->
