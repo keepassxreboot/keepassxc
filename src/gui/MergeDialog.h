@@ -47,29 +47,14 @@ public:
     ~MergeDialog() override;
 
 signals:
-    /**
-     * Signal will be emitted when a normal merge operation has been performed.
-     *
-     * @param databaseChanged True if the target database was changed due to the merge
-     */
+    // Signal will be emitted when a normal merge operation has been performed.
     void databaseMerged(bool databaseChanged);
-    /**
-     * Signal will be emitted when a merge has been performed, but the previously displayed changes differ from
-     * the ones that were actually performed.
-     *
-     * @param actualChanges Actual changes that have been merged
-     * @param expectedChanges Changes which were displayed to the user
-     */
-    void databaseModifiedMerge(const Merger::ChangeList& actualChanges, const Merger::ChangeList& expectedChanges);
 
 private slots:
     void performMerge();
-    void abortMerge();
-    void refreshMergeChanges();
+    void cancelMerge();
 
 private:
-    QSharedPointer<Database> createTemporaryTargetDatabase();
-
     enum class MergeDialogColumns
     {
         Group,
@@ -84,9 +69,7 @@ private:
     static QString cellValue(const Merger::Change& change, MergeDialogColumns column);
     static bool isColumnHiddenByDefault(MergeDialogColumns column);
 
-    void calculateChanges();
     void setupChangeTable();
-    void setupHeaderContextMenu();
     void updateChangeTable();
 
     QScopedPointer<Ui::MergeDialog> m_ui;

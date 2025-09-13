@@ -2671,14 +2671,6 @@ This is definitely a bug, please report it to the developers.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Successfully merged the database files.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Database was not modified by merge operation.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Search Results (%1)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2775,10 +2767,6 @@ Disable safe saves and try again?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Merge aborted - database was not modified.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Downloading...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2855,18 +2843,6 @@ Disable safe saves and try again?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Merged changes do not match displayed changes!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Actual Merge Result</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Database was not modified by merge operation, no changes were not applied!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Confirm Delete Group</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2884,6 +2860,18 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Save Database Backup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Successfully merged the selected database.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No changes were made by the merge operation.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Merge canceled, no changes were made.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

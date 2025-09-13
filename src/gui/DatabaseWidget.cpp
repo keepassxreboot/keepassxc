@@ -1388,35 +1388,30 @@ void DatabaseWidget::mergeDatabase(bool accepted)
             return;
         }
 
+#ifdef WITH_XC_KEESHARE
+        // Disable KeeShare while merging to avoid conflicts with incoming changes
+        KeeShare::instance()->setSharingEnabled(m_db, false);
+#endif
+
         auto* mergeDialog = new MergeDialog(srcDb, m_db, this);
         connect(mergeDialog, &MergeDialog::databaseMerged, [this](bool changed) {
             if (changed) {
-                showMessage(tr("Successfully merged the database files."), MessageWidget::Information);
+                showMessage(tr("Successfully merged the selected database."), MessageWidget::Positive);
+                emit databaseMerged(m_db);
             } else {
-                showMessage(tr("Database was not modified by merge operation."), MessageWidget::Information);
+                showMessage(tr("No changes were made by the merge operation."), MessageWidget::Information);
             }
         });
-        connect(mergeDialog,
-                &MergeDialog::databaseModifiedMerge,
-                [this](const Merger::ChangeList& actualChanges, const Merger::ChangeList&) {
-                    if (!actualChanges.isEmpty()) {
-                        showMessage(tr("Merged changes do not match displayed changes!"), MessageWidget::Warning);
-                        auto* actualChangesDialog = new MergeDialog(actualChanges, this);
-                        actualChangesDialog->setWindowTitle(tr("Actual Merge Result"));
-                        actualChangesDialog->open();
-                    } else {
-                        showMessage(tr("Database was not modified by merge operation, no changes were not applied!"),
-                                    MessageWidget::Warning);
-                    }
-                });
-        connect(mergeDialog, &MergeDialog::rejected, [this]() {
-            showMessage(tr("Merge aborted - database was not modified."), MessageWidget::Information);
+        connect(mergeDialog, &MergeDialog::finished, [this](int result) {
+            if (result == QDialog::Rejected) {
+                showMessage(tr("Merge canceled, no changes were made."), MessageWidget::Information);
+            }
+#ifdef WITH_XC_KEESHARE
+            KeeShare::instance()->setSharingEnabled(m_db, true);
+#endif
         });
         mergeDialog->open();
     }
-
-    switchToMainView();
-    emit databaseMerged(m_db);
 }
 
 void DatabaseWidget::syncUnlockedDatabase(bool accepted)

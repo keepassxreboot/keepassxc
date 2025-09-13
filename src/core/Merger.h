@@ -27,15 +27,11 @@ class Merger : public QObject
 {
     Q_OBJECT
 public:
-    class Change;
-    using ChangeList = QList<Change>;
-
     Merger(const Database* sourceDb, Database* targetDb);
     Merger(const Group* sourceGroup, Group* targetGroup);
     void setForcedMergeMode(Group::MergeMode mode);
     void resetForcedMergeMode();
     void setSkipDatabaseCustomData(bool state);
-    ChangeList merge();
 
     class Change
     {
@@ -65,6 +61,9 @@ public:
         [[nodiscard]] QString toString() const;
         void merge();
 
+        bool operator==(const Change& other) const;
+        bool operator!=(const Change& other) const;
+
     private:
         Type m_type{Type::Unspecified};
         QString m_title;
@@ -72,6 +71,10 @@ public:
         QUuid m_uuid;
         QString m_details;
     };
+
+    using ChangeList = QList<Change>;
+
+    ChangeList merge(bool dryRun = false);
 
 private:
     struct MergeContext
@@ -83,6 +86,7 @@ private:
         QPointer<const Group> m_sourceGroup;
         QPointer<Group> m_targetGroup;
     };
+
     ChangeList mergeGroup(const MergeContext& context);
     ChangeList mergeDeletions(const MergeContext& context);
     ChangeList mergeMetadata(const MergeContext& context);
@@ -104,8 +108,7 @@ private:
     MergeContext m_context;
     Group::MergeMode m_mode;
     bool m_skipCustomData = false;
+    bool m_dryRun = false;
 };
-
-bool operator==(const Merger::Change& lhs, const Merger::Change& rhs);
 
 #endif // KEEPASSXC_MERGER_H

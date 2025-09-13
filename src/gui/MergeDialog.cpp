@@ -31,22 +31,19 @@ MergeDialog::MergeDialog(QSharedPointer<Database> source, QSharedPointer<Databas
     , m_targetDatabase(std::move(target))
 {
     setAttribute(Qt::WA_DeleteOnClose);
+    // block input to other windows since other interactions can lead to unexpected merge results
+    setWindowModality(Qt::WindowModality::ApplicationModal);
 
     m_ui->setupUi(this);
 
     m_ui->buttonBox->button(QDialogButtonBox::Ok)->setText(tr("Merge"));
     m_ui->buttonBox->button(QDialogButtonBox::Ok)->setFocus();
 
-    connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &MergeDialog::abortMerge);
+    connect(m_ui->buttonBox, &QDialogButtonBox::rejected, this, &MergeDialog::cancelMerge);
     connect(m_ui->buttonBox, &QDialogButtonBox::accepted, this, &MergeDialog::performMerge);
 
     setupChangeTable();
-    setupHeaderContextMenu();
-
-    refreshMergeChanges();
-
-    // block input to other windows since other interactions can lead to unexpected merge results
-    setWindowModality(Qt::WindowModality::ApplicationModal);
+    updateChangeTable();
 }
 
 MergeDialog::MergeDialog(const Merger::ChangeList& changes, QWidget* parent)
@@ -65,19 +62,9 @@ MergeDialog::MergeDialog(const Merger::ChangeList& changes, QWidget* parent)
     connect(m_ui->buttonBox, &QDialogButtonBox::accepted, this, &MergeDialog::close);
 
     setupChangeTable();
-    setupHeaderContextMenu();
 }
 
 MergeDialog::~MergeDialog() = default;
-
-QSharedPointer<Database> MergeDialog::createTemporaryTargetDatabase()
-{
-    auto tmpDatabase = m_targetDatabase->clone();
-    // make sure temporary merge will not overwrite actual database
-    tmpDatabase->setFilePath("");
-    tmpDatabase->markAsTemporaryDatabase();
-    return tmpDatabase;
-}
 
 QVector<MergeDialog::MergeDialogColumns> MergeDialog::columns()
 {
@@ -132,41 +119,31 @@ QString MergeDialog::cellValue(const Merger::Change& change, MergeDialogColumns 
 
 bool MergeDialog::isColumnHiddenByDefault(MergeDialogColumns column)
 {
-    return column == MergeDialogColumns::Uuid || column == MergeDialogColumns::Details;
-}
-
-void MergeDialog::calculateChanges()
-{
-    auto tmpDatabase = createTemporaryTargetDatabase();
-    m_changes = Merger(m_sourceDatabase.data(), tmpDatabase.get()).merge();
+    return column == MergeDialogColumns::Uuid;
 }
 
 void MergeDialog::setupChangeTable()
 {
-    assert(m_ui);
-    auto* table = m_ui->changeTable;
-    assert(table);
+    Q_ASSERT(m_ui);
+    Q_ASSERT(m_ui->changeTable);
 
-    table->verticalHeader()->setVisible(false);
-    table->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeMode::Interactive);
-    table->horizontalHeader()->setContextMenuPolicy(Qt::ActionsContextMenu);
+    m_ui->changeTable->verticalHeader()->setVisible(false);
+    m_ui->changeTable->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeMode::Interactive);
+    m_ui->changeTable->horizontalHeader()->setContextMenuPolicy(Qt::ActionsContextMenu);
 
-    table->setShowGrid(false);
-    table->setEditTriggers(QAbstractItemView::NoEditTriggers);
-    table->setSelectionBehavior(QAbstractItemView::SelectRows);
-    table->setSelectionMode(QAbstractItemView::SingleSelection);
-}
+    m_ui->changeTable->setShowGrid(false);
+    m_ui->changeTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    m_ui->changeTable->setSelectionBehavior(QAbstractItemView::SelectRows);
+    m_ui->changeTable->setSelectionMode(QAbstractItemView::SingleSelection);
 
-void MergeDialog::setupHeaderContextMenu()
-{
+    // Create the header context menu
     for (auto column : columns()) {
         auto* action = new QAction(columnName(column), this);
         action->setCheckable(true);
         action->setChecked(!isColumnHiddenByDefault(column));
         connect(action, &QAction::toggled, [this, column](bool checked) {
-            auto* table = m_ui->changeTable;
-            table->setColumnHidden(columnIndex(column), !checked);
-            table->horizontalHeader()->resizeSections(QHeaderView::ResizeMode::ResizeToContents);
+            m_ui->changeTable->setColumnHidden(columnIndex(column), !checked);
+            m_ui->changeTable->horizontalHeader()->resizeSections(QHeaderView::ResizeMode::ResizeToContents);
         });
         m_ui->changeTable->horizontalHeader()->addAction(action);
     }
@@ -174,51 +151,49 @@ void MergeDialog::setupHeaderContextMenu()
 
 void MergeDialog::updateChangeTable()
 {
-    assert(m_ui);
-    auto* table = m_ui->changeTable;
-    assert(table);
+    Q_ASSERT(m_ui);
+    Q_ASSERT(m_ui->changeTable);
+    Q_ASSERT(m_sourceDatabase.get());
+    Q_ASSERT(m_targetDatabase.get());
 
-    table->clear();
+    m_changes = Merger(m_sourceDatabase.data(), m_targetDatabase.get()).merge(true);
+
+    m_ui->changeTable->clear();
 
     auto allColumns = columns();
-    table->setColumnCount(allColumns.size());
-    table->setRowCount(m_changes.size());
+    m_ui->changeTable->setColumnCount(allColumns.size());
+    m_ui->changeTable->setRowCount(m_changes.size());
     for (auto column : allColumns) {
         auto name = columnName(column);
         auto index = columnIndex(column);
 
-        table->setHorizontalHeaderItem(index, new QTableWidgetItem(name));
-        table->setColumnHidden(index, isColumnHiddenByDefault(column));
+        m_ui->changeTable->setHorizontalHeaderItem(index, new QTableWidgetItem(name));
+        m_ui->changeTable->setColumnHidden(index, isColumnHiddenByDefault(column));
     }
     for (int row = 0; row < m_changes.size(); ++row) {
         const auto& change = m_changes[row];
         for (auto column : allColumns) {
-            auto value = cellValue(change, column);
-            table->setItem(row, columnIndex(column), new QTableWidgetItem(value));
+            m_ui->changeTable->setItem(row, columnIndex(column), new QTableWidgetItem(cellValue(change, column)));
         }
     }
 
-    table->horizontalHeader()->resizeSections(QHeaderView::ResizeMode::ResizeToContents);
+    m_ui->changeTable->horizontalHeader()->resizeSections(QHeaderView::ResizeMode::ResizeToContents);
 }
 
 void MergeDialog::performMerge()
 {
     auto changes = Merger(m_sourceDatabase.data(), m_targetDatabase.data()).merge();
     if (changes != m_changes) {
-        emit databaseModifiedMerge(changes, m_changes);
-    } else {
-        emit databaseMerged(!changes.isEmpty());
+        qWarning("Merge results differed from the expected changes. Expected: %d, Actual: %d",
+                 m_changes.size(),
+                 changes.size());
     }
+
+    emit databaseMerged(!changes.isEmpty());
     done(QDialog::Accepted);
 }
 
-void MergeDialog::abortMerge()
+void MergeDialog::cancelMerge()
 {
     done(QDialog::Rejected);
-}
-
-void MergeDialog::refreshMergeChanges()
-{
-    calculateChanges();
-    updateChangeTable();
 }
