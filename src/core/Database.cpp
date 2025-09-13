@@ -1193,67 +1193,6 @@ void Database::setPublicIcon(int iconIndex)
     markAsModified();
 }
 
-QSharedPointer<Database> Database::clone()
-{
-    auto newDatabase = QSharedPointer<Database>::create();
-
-    // deep copy of root group with same uuid
-    auto* newRootGroup =
-        m_rootGroup->clone(Entry::CloneFlag::CloneIncludeHistory, Group::CloneFlag::CloneIncludeEntries);
-    auto oldRoot = QScopedPointer(newDatabase->setRootGroup(newRootGroup));
-
-    // copy DatabaseData (except filePath and secrets)
-    newDatabase->m_data.formatVersion = m_data.formatVersion;
-    newDatabase->m_data.cipher = m_data.cipher;
-    newDatabase->m_data.compressionAlgorithm = m_data.compressionAlgorithm;
-    newDatabase->m_data.publicCustomData = m_data.publicCustomData;
-    if (m_data.kdf) {
-        newDatabase->m_data.kdf = m_data.kdf->clone();
-    }
-
-    // copy other members
-    newDatabase->m_deletedObjects = m_deletedObjects;
-    newDatabase->m_isTemporaryDatabase = m_isTemporaryDatabase;
-    newDatabase->m_commonUsernames = m_commonUsernames;
-    newDatabase->m_tagList = m_tagList;
-
-    auto getCorrespondingNewGroup = [&](const Group* oldGroup) -> Group* {
-        if (oldGroup) {
-            // get pointer to new group via UUID which was not changed by clone
-            auto uuid = oldGroup->uuid();
-            return newRootGroup->findGroupByUuid(uuid);
-        }
-        return nullptr;
-    };
-
-    auto newMetadata = newDatabase->m_metadata;
-    // copy metadata: recycle bin
-    auto* newRecycleBin = getCorrespondingNewGroup(m_metadata->recycleBin());
-    newMetadata->setRecycleBin(newRecycleBin);
-    newMetadata->setRecycleBinChanged(m_metadata->recycleBinChanged());
-    // copy metadata: templates
-    auto* newEntryTemplates = getCorrespondingNewGroup(m_metadata->entryTemplatesGroup());
-    newMetadata->setEntryTemplatesGroup(newEntryTemplates);
-    newMetadata->setEntryTemplatesGroupChanged(m_metadata->entryTemplatesGroupChanged());
-    // copy metadata: last selected group
-    auto* newLastSelectedGroup = getCorrespondingNewGroup(m_metadata->lastSelectedGroup());
-    newMetadata->setLastSelectedGroup(newLastSelectedGroup);
-    // copy metadata: last top-visible group
-    auto* newLastTopVisibleGroup = getCorrespondingNewGroup(m_metadata->lastTopVisibleGroup());
-    newMetadata->setLastTopVisibleGroup(newLastTopVisibleGroup);
-    // copy metadata: master key/settings change datetime
-    newMetadata->setDatabaseKeyChanged(m_metadata->databaseKeyChanged());
-    newMetadata->setSettingsChanged(m_metadata->settingsChanged());
-    // copy metadata: custom data
-    newMetadata->customData()->copyDataFrom(m_metadata->customData());
-    // copy metadata: custom icons (does not retain order)
-    newMetadata->copyCustomIcons(m_metadata->customIconsOrder().toSet(), m_metadata);
-    // copy metadata: other attributes
-    newMetadata->copyAttributesFrom(m_metadata);
-
-    return newDatabase;
-}
-
 void Database::markAsTemporaryDatabase()
 {
     m_isTemporaryDatabase = true;
