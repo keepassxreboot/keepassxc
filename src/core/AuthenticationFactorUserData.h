@@ -15,20 +15,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_AUTHENTICATION_FACTOR_USER_DATA_H
-#define KEEPASSXC_AUTHENTICATION_FACTOR_USER_DATA_H
+#pragma once
 
-#include <QCoreApplication>
 #include <QHash>
 #include <QSharedPointer>
 
-class AuthenticationFactorUserData : public QObject
+class AuthenticationFactorUserData
 {
-    Q_OBJECT
-
 public:
     explicit AuthenticationFactorUserData() = default;
-    ~AuthenticationFactorUserData() override = default;
+    virtual ~AuthenticationFactorUserData() = default;
 
     void addDataItem(const QString& key, QByteArray value);
     QByteArray getDataItem(const QString& key) const;
@@ -36,5 +32,3 @@ public:
 protected:
     QHash<QString, QByteArray> m_data;
 };
-
-#endif // KEEPASSXC_AUTHENTICATION_FACTOR_USER_DATA_H

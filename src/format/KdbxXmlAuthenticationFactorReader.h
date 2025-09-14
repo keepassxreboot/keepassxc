@@ -15,8 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_KDBXXMLAUTHENTICATIONFACTORREADER_H
-#define KEEPASSXC_KDBXXMLAUTHENTICATIONFACTORREADER_H
+#pragma once
 
 #include <QCoreApplication>
 #include <QPointer>
@@ -55,5 +54,3 @@ protected:
     QString m_errorStr = "";
     QXmlStreamReader m_xml;
 };
-
-#endif // KEEPASSXC_KDBXXMLAUTHENTICATIONFACTORREADER_H

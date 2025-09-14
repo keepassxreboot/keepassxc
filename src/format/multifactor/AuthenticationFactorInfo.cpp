@@ -30,7 +30,6 @@ bool AuthenticationFactorInfo::isComprehensive() const
 void AuthenticationFactorInfo::addGroup(QSharedPointer<AuthenticationFactorGroup> group)
 {
     m_groups.append(group);
-    group->setParent(this);
 }
 
 const QList<QSharedPointer<AuthenticationFactorGroup>>& AuthenticationFactorInfo::getGroups() const

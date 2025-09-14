@@ -15,17 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_PASSWORDAUTHENTICATIONFACTOR_H
-#define KEEPASSXC_PASSWORDAUTHENTICATIONFACTOR_H
+#pragma once
 
 #include "format/multifactor/AuthenticationFactor.h"
 
-#include <QCoreApplication>
-
 class PasswordAuthenticationFactor : public AuthenticationFactor
 {
-    Q_OBJECT
-
 public:
     explicit PasswordAuthenticationFactor(QSharedPointer<AuthenticationFactor> factor);
     ~PasswordAuthenticationFactor() override = default;
@@ -33,5 +28,3 @@ public:
 protected:
     QByteArray getUnwrappingKey(QSharedPointer<AuthenticationFactorUserData> userData) const override;
 };
-
-#endif // KEEPASSXC_PASSWORDAUTHENTICATIONFACTOR_H

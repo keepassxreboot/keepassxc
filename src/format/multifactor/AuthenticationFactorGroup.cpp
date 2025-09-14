@@ -34,7 +34,7 @@ void AuthenticationFactorGroup::setChallenge(const QByteArray& challenge)
     m_challenge = challenge;
 }
 
-void AuthenticationFactorGroup::setValidationType(const AuthenticationFactorGroupValidationType validationType)
+void AuthenticationFactorGroup::setValidationType(const ValidationType validationType)
 {
     m_validationType = validationType;
 }
@@ -42,7 +42,6 @@ void AuthenticationFactorGroup::setValidationType(const AuthenticationFactorGrou
 void AuthenticationFactorGroup::addFactor(QSharedPointer<AuthenticationFactor> factor)
 {
     m_factors.append(factor);
-    factor->setParent(this);
 }
 
 const QList<QSharedPointer<AuthenticationFactor>>& AuthenticationFactorGroup::getFactors() const
@@ -65,7 +64,7 @@ QByteArray AuthenticationFactorGroup::getChallenge() const
     return m_challenge;
 }
 
-AuthenticationFactorGroupValidationType AuthenticationFactorGroup::getValidationType() const
+AuthenticationFactorGroup::ValidationType AuthenticationFactorGroup::getValidationType() const
 {
     return m_validationType;
 }
@@ -78,11 +77,11 @@ QSharedPointer<QByteArray> AuthenticationFactorGroup::getRawKey(QSharedPointer<A
         auto unwrappedKey = factor->unwrapKey(userData);
 
         if (unwrappedKey.isEmpty()) {
-            qDebug() << QObject::tr("Factor '%1' did not contribute key material").arg(factor->getName());
+            qDebug() << QString("FIDO2: Factor '%1' did not contribute key material").arg(factor->getName());
             continue;
         }
 
-        qDebug() << QObject::tr("Got a key part from factor '%1'").arg(factor->getName());
+        qDebug() << QString("FIDO2: Got a key part from factor '%1'").arg(factor->getName());
 
         m_key.insert(m_key.end(), unwrappedKey.begin(), unwrappedKey.end());
         groupContributed = true;

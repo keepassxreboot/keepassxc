@@ -15,25 +15,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_FACTOR_KEY_DERIVATION_H
-#define KEEPASSXC_FACTOR_KEY_DERIVATION_H
+#pragma once
 
-#include <QCoreApplication>
+#include <QString>
 
-class FactorKeyDerivation : public QObject
+class FactorKeyDerivation
 {
-    Q_OBJECT
-
 public:
     explicit FactorKeyDerivation() = default;
-    ~FactorKeyDerivation() override = default;
+    virtual ~FactorKeyDerivation() = default;
 
     virtual bool derive(QByteArray& data, const QByteArray& key, const QByteArray& salt) = 0;
 
-    const QString& getError() const;
+    QString getError() const
+    {
+        return m_error;
+    };
 
 protected:
     QString m_error;
 };
-
-#endif // KEEPASSXC_FACTOR_KEY_DERIVATION_H

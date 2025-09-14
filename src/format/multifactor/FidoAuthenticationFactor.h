@@ -15,17 +15,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_FIDOAUTHENTICATIONFACTOR_H
-#define KEEPASSXC_FIDOAUTHENTICATIONFACTOR_H
+#pragma once
 
 #include "format/multifactor/AuthenticationFactor.h"
 
-#include <QCoreApplication>
-
 class FidoAuthenticationFactor : public AuthenticationFactor
 {
-    Q_OBJECT
-
 public:
     explicit FidoAuthenticationFactor(QSharedPointer<AuthenticationFactor> factor);
     ~FidoAuthenticationFactor() override = default;
@@ -34,7 +29,7 @@ public:
     QByteArray getCredentialID() const;
 
 protected:
+    QByteArray getUnwrappingKey(QSharedPointer<AuthenticationFactorUserData> userData) const override;
+
     QByteArray m_credentialID;
 };
-
-#endif // KEEPASSXC_FIDOAUTHENTICATIONFACTOR_H

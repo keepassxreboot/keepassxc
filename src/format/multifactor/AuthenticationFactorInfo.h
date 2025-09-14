@@ -15,22 +15,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_AUTHENTICATIONFACTORINFO_H
-#define KEEPASSXC_AUTHENTICATIONFACTORINFO_H
+#pragma once
 
 #include "format/multifactor/AuthenticationFactorGroup.h"
-#include <QCoreApplication>
+
+#include <QList>
 #include <QSharedPointer>
 
 class AuthenticationFactorGroup;
 
-class AuthenticationFactorInfo : public QObject
+class AuthenticationFactorInfo
 {
-    Q_OBJECT
-
 public:
     explicit AuthenticationFactorInfo() = default;
-    ~AuthenticationFactorInfo() override = default;
+    virtual ~AuthenticationFactorInfo() = default;
 
     bool isComprehensive() const;
     void setComprehensive(bool comprehensive);
@@ -40,7 +38,5 @@ public:
 
 protected:
     bool m_comprehensive = false;
-    QList<QSharedPointer<AuthenticationFactorGroup>> m_groups = QList<QSharedPointer<AuthenticationFactorGroup>>();
+    QList<QSharedPointer<AuthenticationFactorGroup>> m_groups;
 };
-
-#endif // KEEPASSXC_AUTHENTICATIONFACTORINFO_H

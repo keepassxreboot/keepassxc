@@ -24,11 +24,8 @@ void AuthenticationFactorUserData::addDataItem(const QString& key, QByteArray va
 
 QByteArray AuthenticationFactorUserData::getDataItem(const QString& key) const
 {
-    const auto& v = m_data.find(key);
-
-    if (v == m_data.end()) {
-        return {nullptr};
+    if (m_data.contains(key)) {
+        return m_data.value(key);
     }
-
-    return *v;
+    return {};
 }

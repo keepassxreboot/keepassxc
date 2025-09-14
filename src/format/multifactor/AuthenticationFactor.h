@@ -15,14 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_AUTHENTICATIONFACTOR_H
-#define KEEPASSXC_AUTHENTICATIONFACTOR_H
+#pragma once
 
 #include "AuthenticationFactorGroup.h"
 #include "FactorKeyDerivation.h"
 #include "core/AuthenticationFactorUserData.h"
-
-#include <QCoreApplication>
 
 class AuthenticationFactorGroup;
 
@@ -32,19 +29,17 @@ class AuthenticationFactorGroup;
 #define FACTOR_TYPE_YK_CHALRESP "0e6803a0-915e-4ebf-95ee-f9ddd8c97eea"
 #define FACTOR_TYPE_NULL "618636bf-e202-4e0b-bb7c-e2514be00f5a"
 
-enum class AuthenticationFactorKeyType
+class AuthenticationFactor
 {
-    NONE,
-    AES_CBC,
-};
-
-class AuthenticationFactor : public QObject
-{
-    Q_OBJECT
-
 public:
     explicit AuthenticationFactor() = default;
-    ~AuthenticationFactor() override = default;
+    virtual ~AuthenticationFactor() = default;
+
+    enum class KeyType
+    {
+        NONE,
+        AES_CBC,
+    };
 
     virtual QByteArray unwrapKey(QSharedPointer<AuthenticationFactorUserData> userData) const;
 
@@ -52,8 +47,8 @@ public:
 
     const QString& getName() const;
     void setName(const QString& name);
-    AuthenticationFactorKeyType getKeyType() const;
-    bool setKeyType(AuthenticationFactorKeyType type);
+    KeyType getKeyType() const;
+    bool setKeyType(KeyType type);
     QByteArray getKeySalt() const;
     void setKeySalt(const QByteArray& salt);
     QByteArray getWrappedKey() const;
@@ -63,12 +58,10 @@ protected:
     virtual QByteArray getUnwrappingKey(QSharedPointer<AuthenticationFactorUserData> userData) const;
 
     QString m_name = "<Unnamed factor>";
-    AuthenticationFactorKeyType m_keyType = AuthenticationFactorKeyType::NONE;
+    KeyType m_keyType = KeyType::NONE;
     QByteArray m_keySalt = QByteArray();
     QByteArray m_wrappedKey = QByteArray();
 
     QString m_factorType = FACTOR_TYPE_NULL;
     QScopedPointer<FactorKeyDerivation> m_derivation;
 };
-
-#endif // KEEPASSXC_AUTHENTICATIONFACTOR_H

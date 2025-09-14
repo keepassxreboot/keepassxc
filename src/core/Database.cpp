@@ -1216,5 +1216,4 @@ QSharedPointer<AuthenticationFactorInfo> Database::authenticationFactorInfo() co
 void Database::setAuthenticationFactorInfo(QSharedPointer<AuthenticationFactorInfo> authenticationFactorInfo)
 {
     m_data.authenticationFactorInfo = authenticationFactorInfo;
-    authenticationFactorInfo->setParent(this);
 }

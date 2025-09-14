@@ -73,7 +73,6 @@ set(core_SOURCES
         format/multifactor/AuthenticationFactor.cpp
         format/multifactor/AuthenticationFactorGroup.cpp
         format/multifactor/AuthenticationFactorInfo.cpp
-        format/multifactor/FactorKeyDerivation.cpp
         format/multifactor/FidoAuthenticationFactor.cpp
         format/multifactor/PasswordAuthenticationFactor.cpp
         format/BitwardenReader.cpp

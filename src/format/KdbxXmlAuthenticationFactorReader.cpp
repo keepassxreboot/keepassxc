@@ -18,6 +18,7 @@
 #include "KdbxXmlAuthenticationFactorReader.h"
 #include "format/multifactor/FidoAuthenticationFactor.h"
 #include "format/multifactor/PasswordAuthenticationFactor.h"
+
 #include <QDebug>
 
 /**
@@ -34,7 +35,7 @@ KdbxXmlAuthenticationFactorReader::readAuthenticationFactors(Database* db, const
 
     m_xml.clear();
 
-    qDebug() << tr("Read authentication factor XML: %1").arg(authenticationFactorXml);
+    qDebug() << QString("FIDO2: Read authentication factor XML: %1").arg(authenticationFactorXml);
 
     auto result = QSharedPointer<AuthenticationFactorInfo>::create();
 
@@ -90,7 +91,7 @@ bool KdbxXmlAuthenticationFactorReader::parseFactorInfo(QSharedPointer<Authentic
     while (!m_xml.hasError() && m_xml.readNextStartElement()) {
         if (m_xml.name() == "CompatVersion") {
             const auto compatVersion = m_xml.readElementText();
-            qDebug() << tr("Read authentication factor compat version: %1").arg(compatVersion);
+            qDebug() << QString("FIDO2: Read authentication factor compat version: %1").arg(compatVersion);
             if (compatVersion != "1") {
                 raiseError(tr("Incompatible authentication factor version"));
                 return false;
@@ -102,7 +103,7 @@ bool KdbxXmlAuthenticationFactorReader::parseFactorInfo(QSharedPointer<Authentic
         if (m_xml.name() == "Comprehensive") {
             const auto comprehensive = m_xml.readElementText();
             if (comprehensive == "true") {
-                qDebug() << tr("Secondary authentication factors are comprehensive");
+                qDebug() << QString("FIDO2: Secondary authentication factors are comprehensive");
                 info.data()->setComprehensive(true);
             } else {
                 raiseError(tr("Comprehensive set to unknown value %1").arg(comprehensive));
@@ -157,14 +158,14 @@ bool KdbxXmlAuthenticationFactorReader::parseFactorGroup(QSharedPointer<Authenti
         if (m_xml.name() == "ValidationType") {
             const auto& text = m_xml.readElementText();
 
-            AuthenticationFactorGroupValidationType validationType = AuthenticationFactorGroupValidationType::NONE;
+            auto validationType = AuthenticationFactorGroup::ValidationType::NONE;
 
             if (text == "HMAC-SHA512") {
-                validationType = AuthenticationFactorGroupValidationType::HMAC_SHA512;
+                validationType = AuthenticationFactorGroup::ValidationType::HMAC_SHA512;
             }
 
-            if (validationType == AuthenticationFactorGroupValidationType::NONE) {
-                qWarning() << tr("Unknown authentication validation type %1").arg(text);
+            if (validationType == AuthenticationFactorGroup::ValidationType::NONE) {
+                qWarning() << QString("FIDO2: Unknown authentication validation type %1").arg(text);
             }
 
             group->setValidationType(validationType);
@@ -202,7 +203,8 @@ bool KdbxXmlAuthenticationFactorReader::parseFactorGroup(QSharedPointer<Authenti
 
     bool foundCompatibleFactor = false;
     for (auto& factor : group->getFactors()) {
-        if (factor->getFactorType() != FACTOR_TYPE_NULL && factor->getKeyType() != AuthenticationFactorKeyType::NONE) {
+        if (factor->getFactorType() != FACTOR_TYPE_NULL
+            && factor->getKeyType() != AuthenticationFactor::KeyType::NONE) {
             foundCompatibleFactor = true;
             break;
         }
@@ -245,15 +247,15 @@ bool KdbxXmlAuthenticationFactorReader::parseFactor(AuthenticationFactorGroup* g
             const auto& text = m_xml.readElementText().toLower();
 
             if (text == FACTOR_TYPE_PASSWORD_SHA256) {
-                qDebug() << tr("Factor is a SHA256-hashed password");
+                qDebug() << "FIDO2: Factor is a SHA256-hashed password";
 
                 factor = QSharedPointer<PasswordAuthenticationFactor>::create(factor);
             } else if (text == FACTOR_TYPE_FIDO_ES256) {
-                qDebug() << tr("Factor is a FIDO credential with type ES256");
+                qDebug() << "FIDO2: Factor is a FIDO credential with type ES256";
 
                 factor = QSharedPointer<FidoAuthenticationFactor>::create(factor);
             } else {
-                qWarning() << tr("Unrecognized factor UUID %1").arg(text);
+                qWarning() << "FIDO2: Unrecognized factor UUID: " << text;
             }
 
             foundFactorType = true;
@@ -261,14 +263,14 @@ bool KdbxXmlAuthenticationFactorReader::parseFactor(AuthenticationFactorGroup* g
         }
         if (m_xml.name() == "KeyType") {
             const auto& text = m_xml.readElementText();
-            AuthenticationFactorKeyType type = AuthenticationFactorKeyType::NONE;
+            auto type = AuthenticationFactor::KeyType::NONE;
 
             if (text == "AES-CBC") {
-                type = AuthenticationFactorKeyType::AES_CBC;
+                type = AuthenticationFactor::KeyType::AES_CBC;
             }
 
-            if (type == AuthenticationFactorKeyType::NONE) {
-                qWarning() << tr("Unrecognized factor key type %1").arg(text);
+            if (type == AuthenticationFactor::KeyType::NONE) {
+                qWarning() << "FIDO2: Unrecognized factor key type: " << text;
             }
 
             // Note: unknown types get AuthenticationFactorKeyType::NONE - in other words, unusable

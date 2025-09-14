@@ -15,30 +15,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_AUTHENTICATIONFACTORGROUP_H
-#define KEEPASSXC_AUTHENTICATIONFACTORGROUP_H
+#pragma once
 
 #include <botan/secmem.h>
 
 #include "core/AuthenticationFactorUserData.h"
 #include "format/multifactor/AuthenticationFactor.h"
 
-enum class AuthenticationFactorGroupValidationType
-{
-    NONE,
-    HMAC_SHA512,
-};
-
 class AuthenticationFactor;
 class AuthenticationFactorInfo;
 
-class AuthenticationFactorGroup : public QObject
+class AuthenticationFactorGroup
 {
-    Q_OBJECT
-
 public:
     AuthenticationFactorGroup() = default;
-    ~AuthenticationFactorGroup() override = default;
+    virtual ~AuthenticationFactorGroup() = default;
+
+    enum class ValidationType
+    {
+        NONE,
+        HMAC_SHA512,
+    };
 
     QSharedPointer<QByteArray> getRawKey(QSharedPointer<AuthenticationFactorUserData> userData);
 
@@ -48,8 +45,8 @@ public:
     QByteArray getValidationOut() const;
     void setChallenge(const QByteArray& challenge);
     QByteArray getChallenge() const;
-    void setValidationType(AuthenticationFactorGroupValidationType validationType);
-    AuthenticationFactorGroupValidationType getValidationType() const;
+    void setValidationType(ValidationType validationType);
+    ValidationType getValidationType() const;
     void addFactor(QSharedPointer<AuthenticationFactor> factor);
     const QList<QSharedPointer<AuthenticationFactor>>& getFactors() const;
 
@@ -57,11 +54,9 @@ protected:
     QByteArray m_validationIn;
     QByteArray m_validationOut;
     QByteArray m_challenge;
-    AuthenticationFactorGroupValidationType m_validationType = AuthenticationFactorGroupValidationType::NONE;
+    ValidationType m_validationType = ValidationType::NONE;
 
-    QList<QSharedPointer<AuthenticationFactor>> m_factors = QList<QSharedPointer<AuthenticationFactor>>();
+    QList<QSharedPointer<AuthenticationFactor>> m_factors;
 
     Botan::secure_vector<char> m_key;
 };
-
-#endif // KEEPASSXC_AUTHENTICATIONFACTORGROUP_H

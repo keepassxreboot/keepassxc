@@ -32,21 +32,19 @@ PasswordAuthenticationFactor::PasswordAuthenticationFactor(QSharedPointer<Authen
 
 QByteArray PasswordAuthenticationFactor::getUnwrappingKey(QSharedPointer<AuthenticationFactorUserData> userData) const
 {
-    if (userData.isNull()) {
+    if (!userData) {
         return {};
     }
 
-    auto ret = userData->getDataItem(getName());
-
     QByteArray dataToUse;
-
+    auto ret = userData->getDataItem(getName());
     if (ret.isNull()) {
         // Default user password - already hashed...
-        qDebug() << tr("Falling back to default user password for factor '%1'").arg(getName());
+        qDebug() << QString("FIDO2: Falling back to default user password for factor '%1'").arg(getName());
         auto passwordItem = userData->getDataItem(PasswordKey::UUID.toString());
         if (passwordItem.isNull()) {
-            qDebug()
-                << tr("Password not set when using default for factor '%1' - falling back to empty").arg(getName());
+            qDebug() << QString("FIDO2: Password not set when using default for factor '%1' - falling back to empty")
+                            .arg(getName());
             return {};
         }
         dataToUse = passwordItem;

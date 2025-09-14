@@ -15,24 +15,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_AESCBC_DERIVATION_H
-#define KEEPASSXC_AESCBC_DERIVATION_H
+#pragma once
 
 #include "FactorKeyDerivation.h"
 
-#include <QCoreApplication>
-
 class AESCBCFactorKeyDerivation : public FactorKeyDerivation
 {
-    Q_OBJECT
-
 public:
     explicit AESCBCFactorKeyDerivation() = default;
     virtual ~AESCBCFactorKeyDerivation() override = default;
 
     virtual bool derive(QByteArray& data, const QByteArray& key, const QByteArray& salt) override;
-
-protected:
 };
-
-#endif // KEEPASSXC_AESCBC_DERIVATION_H

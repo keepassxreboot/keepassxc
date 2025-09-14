@@ -22,8 +22,6 @@
 
 bool AESCBCFactorKeyDerivation::derive(QByteArray& data, const QByteArray& key, const QByteArray& salt)
 {
-    qDebug() << tr("Performing AES-CBC decryption on wrapped key");
-
     SymmetricCipher aes256;
     if (!aes256.init(SymmetricCipher::Aes256_CBC_UNPADDED, SymmetricCipher::Decrypt, key, salt)) {
         m_error = aes256.errorString();

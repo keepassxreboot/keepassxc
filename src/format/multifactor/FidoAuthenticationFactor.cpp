@@ -35,3 +35,9 @@ QByteArray FidoAuthenticationFactor::getCredentialID() const
 {
     return m_credentialID;
 }
+
+QByteArray FidoAuthenticationFactor::getUnwrappingKey(QSharedPointer<AuthenticationFactorUserData> userData) const
+{
+    Q_UNUSED(userData)
+    return {};
+}

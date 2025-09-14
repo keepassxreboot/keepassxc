@@ -106,7 +106,7 @@ void TestAuthenticationFactorParsing::testUnsupportedVerificationMethod()
         "<WrappedKey>B4pHAoQomD8728UKeST2HOxglrjzwyq2M/IPEOV4xo8=</WrappedKey></Factor>"
         "</Group></FactorInfo>");
     QVERIFY(!m_reader.hasError());
-    QCOMPARE(res->getGroups().first()->getValidationType(), AuthenticationFactorGroupValidationType::NONE);
+    QCOMPARE(res->getGroups().first()->getValidationType(), AuthenticationFactorGroup::ValidationType::NONE);
 }
 
 void TestAuthenticationFactorParsing::testOmittedVerification()

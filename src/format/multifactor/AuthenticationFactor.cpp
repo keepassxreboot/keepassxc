@@ -31,16 +31,16 @@ const QString& AuthenticationFactor::getName() const
     return m_name;
 }
 
-bool AuthenticationFactor::setKeyType(AuthenticationFactorKeyType type)
+bool AuthenticationFactor::setKeyType(KeyType type)
 {
     m_keyType = type;
 
-    if (m_keyType == AuthenticationFactorKeyType::AES_CBC) {
+    if (m_keyType == KeyType::AES_CBC) {
         m_derivation.reset(new AESCBCFactorKeyDerivation());
         return true;
     }
 
-    qWarning() << tr("Unknown/unsupported key derivation method for factor '%1'").arg(getName());
+    qWarning() << QString("FIDO2: Unknown/unsupported key derivation method for factor '%1'").arg(getName());
     m_derivation.reset();
     return false;
 }
@@ -65,7 +65,7 @@ QByteArray AuthenticationFactor::getKeySalt() const
     return m_keySalt;
 }
 
-AuthenticationFactorKeyType AuthenticationFactor::getKeyType() const
+AuthenticationFactor::KeyType AuthenticationFactor::getKeyType() const
 {
     return m_keyType;
 }
@@ -81,8 +81,8 @@ QByteArray AuthenticationFactor::unwrapKey(QSharedPointer<AuthenticationFactorUs
 
     auto wrappedKey = getWrappedKey();
 
-    if (m_derivation == nullptr) {
-        qCritical() << tr("Attempted to unwrap factor '%1' with null key derivation method").arg(getName());
+    if (!m_derivation) {
+        qCritical() << QString("FIDO2: Attempted to unwrap factor '%1' with null key derivation method").arg(getName());
         return {};
     }
 
@@ -91,7 +91,8 @@ QByteArray AuthenticationFactor::unwrapKey(QSharedPointer<AuthenticationFactorUs
         return {wrappedKey};
     }
 
-    qWarning() << tr("Validation failed when unwrapping factor '%1': %2").arg(getName(), m_derivation->getError());
+    qWarning()
+        << QString("FIDO2: Validation failed when unwrapping factor '%1': %2").arg(getName(), m_derivation->getError());
     return {};
 }
 
@@ -99,6 +100,6 @@ QByteArray AuthenticationFactor::getUnwrappingKey(QSharedPointer<AuthenticationF
 {
     Q_UNUSED(userData);
     // This shouldn't happen - it means we didn't understand the factor type?
-    qWarning() << "Attempted to get unwrapping key from generic AuthenticationFactor";
+    qWarning() << "FIDO2: Attempted to get unwrapping key from generic AuthenticationFactor";
     return {};
 }
