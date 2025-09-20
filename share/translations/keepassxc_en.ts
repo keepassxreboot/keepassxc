@@ -5073,6 +5073,14 @@ If this reoccurs, then your database file may be corrupt.</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Parsing authentication factors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Parsed authentication factors, got %1 group</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Kdbx4Writer</name>
@@ -5158,6 +5166,81 @@ This is a one-way migration. You won&apos;t be able to open the imported databas
     </message>
     <message>
         <source>Unsupported KeePass 2 database version.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>KdbxXmlAuthenticationFactorReader</name>
+    <message>
+        <source>XML parsing failure on authentication factors: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to parse authentication factor info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Incompatible authentication factor version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Comprehensive set to unknown value %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown element type while processing authentication factor info: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to decode validation input for authentication factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to decode validation output for authentication factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to decode challenge for authentication factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown element type while processing authentication factor group: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Authentication factor group is empty!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>An authentication factor group contains only unsupported factors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to decode key salt for authentication factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to decode wrapped key for authentication factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Encountered a CredentialID element on factor of non-FIDO type %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to decode FIDO credential ID for authentication factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown element type while processing generic authentication factor: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Factor %1 is missing required fields</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to set key type &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9145,6 +9228,14 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Attempting to add key material from extra authentication factors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to get keying material from an authentication factor group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Origin is empty or not allowed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9162,6 +9253,10 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Wait for timer to expire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unknown passkeys error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9191,6 +9286,18 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Failed to decrypt json file: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unsupported format, ensure your Bitwarden export is password-protected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid KDF iterations, cannot decrypt json file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Only PBKDF and Argon2 are supported, cannot decrypt json file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9255,19 +9362,7 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Unknown passkeys error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Invalid KDF iterations, cannot decrypt json file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unsupported format, ensure your Bitwarden export is password-protected</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Only PBKDF and Argon2 are supported, cannot decrypt json file</source>
+        <source>Passkey</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9290,16 +9385,15 @@ This option is deprecated, use --set-key-file instead.</source>
         <source>Shortcut %1 conflicts with &apos;%2&apos;. Overwrite shortcut?</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Encrypted files are not supported.</source>
-        <translation type="unfinished"></translation>
+    <message numerus="yes">
+        <source>%1 character(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
     <message>
-        <source>Proton Pass Import</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Passkey</source>
+        <source>Warning: the chosen wordlist is smaller than the minimum recommended size!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9307,7 +9401,13 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>start minimized to the system tray</source>
+        <source>Invalid Step</source>
+        <comment>TOTP</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid Digits</source>
+        <comment>TOTP</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9323,29 +9423,16 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Encrypted files are not supported.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Proton Pass Import</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Tags</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Warning: the chosen wordlist is smaller than the minimum recommended size!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Invalid Step</source>
-        <comment>TOTP</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Invalid Digits</source>
-        <comment>TOTP</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message numerus="yes">
-        <source>%1 character(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
     </message>
     <message>
         <source>Do you really want to permanently delete the entry &quot;%1&quot;?</source>
@@ -9385,6 +9472,10 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Confirm Replace Entry References</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>start minimized to the system tray</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

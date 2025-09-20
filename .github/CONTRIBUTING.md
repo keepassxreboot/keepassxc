@@ -122,7 +122,7 @@ Note: The **latest** tag is used to point to the most recent stable release.
 The coding style of the project is enforced using llvm's `clang-format` formatting tool. A thorough description
 of the coding style can be found in the `.clang-format` file, but the main conventions are presented here.
 
-Formatting can be performed automatically by calling `make format` from the `build/` directory.
+Formatting can be performed automatically by calling `ninja format` from the `build/` directory.
 
 Note that [formatting can be disabled on a piece of code](https://clang.llvm.org/docs/ClangFormatStyleOptions.html#disabling-formatting-on-a-piece-of-code) if manual formatting is deemed more readable.
 

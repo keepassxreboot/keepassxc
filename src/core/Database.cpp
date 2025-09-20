@@ -1202,3 +1202,18 @@ bool Database::isTemporaryDatabase()
 {
     return m_isTemporaryDatabase;
 }
+
+QSharedPointer<AuthenticationFactorInfo> Database::authenticationFactorInfo()
+{
+    return m_data.authenticationFactorInfo;
+}
+
+QSharedPointer<AuthenticationFactorInfo> Database::authenticationFactorInfo() const
+{
+    return m_data.authenticationFactorInfo;
+}
+
+void Database::setAuthenticationFactorInfo(QSharedPointer<AuthenticationFactorInfo> authenticationFactorInfo)
+{
+    m_data.authenticationFactorInfo = authenticationFactorInfo;
+}
