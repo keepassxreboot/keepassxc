@@ -1167,6 +1167,8 @@ QString Entry::resolvePlaceholderRecursive(const QString& placeholder, int maxDe
         return resolveMultiplePlaceholdersRecursive(notes(), maxDepth);
     case PlaceholderType::Url:
         return resolveMultiplePlaceholdersRecursive(url(), maxDepth);
+    case PlaceholderType::Uuid:
+        return uuidToHex();
     case PlaceholderType::DbDir: {
         QFileInfo fileInfo(database()->filePath());
         return fileInfo.absoluteDir().absolutePath();
@@ -1573,6 +1575,7 @@ Entry::PlaceholderType Entry::placeholderType(const QString& placeholder) const
         {QStringLiteral("{NOTES}"), PlaceholderType::Notes},
         {QStringLiteral("{TOTP}"), PlaceholderType::Totp},
         {QStringLiteral("{URL}"), PlaceholderType::Url},
+        {QStringLiteral("{UUID}"), PlaceholderType::Uuid},
         {QStringLiteral("{URL:RMVSCM}"), PlaceholderType::UrlWithoutScheme},
         {QStringLiteral("{URL:WITHOUTSCHEME}"), PlaceholderType::UrlWithoutScheme},
         {QStringLiteral("{URL:SCM}"), PlaceholderType::UrlScheme},

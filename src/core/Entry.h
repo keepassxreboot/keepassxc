@@ -210,6 +210,7 @@ public:
         Notes,
         Totp,
         Url,
+        Uuid,
         UrlWithoutScheme,
         UrlScheme,
         UrlHost,
