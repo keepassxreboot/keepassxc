@@ -1364,7 +1364,10 @@ QString Entry::resolveReferencePlaceholderRecursive(const QString& placeholder, 
 
     QString result;
     const QString searchIn = match.captured(EntryAttributes::SearchInGroupName);
-    const QString searchText = match.captured(EntryAttributes::SearchTextGroupName);
+    QString searchText = match.captured(EntryAttributes::SearchTextGroupName);
+
+    // Resolve placeholders in the search text (e.g., {UUID} -> actual UUID)
+    searchText = resolvePlaceholder(searchText);
 
     const EntryReferenceType searchInType = Entry::referenceType(searchIn);
 

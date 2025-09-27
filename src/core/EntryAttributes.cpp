@@ -323,8 +323,9 @@ bool EntryAttributes::operator!=(const EntryAttributes& other) const
 
 QRegularExpressionMatch EntryAttributes::matchReference(const QString& text)
 {
+    // Updated regex to handle nested braces in SearchText (e.g., {UUID})
     static const QRegularExpression referenceRegExp(
-        R"(\{REF:(?<WantedField>[TUPANI])@(?<SearchIn>[TUPANIO]):(?<SearchText>[^}]+)\})",
+        R"(\{REF:(?<WantedField>[TUPANI])@(?<SearchIn>[TUPANIO]):(?<SearchText>(?:[^{}]|\{[^}]*\})+)\})",
         QRegularExpression::CaseInsensitiveOption);
 
     return referenceRegExp.match(text);

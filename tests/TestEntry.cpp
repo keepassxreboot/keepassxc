@@ -17,6 +17,7 @@
  */
 
 #include <QTest>
+#include <QDebug>
 
 #include "TestEntry.h"
 #include "core/Clock.h"
@@ -472,6 +473,20 @@ void TestEntry::testResolveUuidPlaceholder()
 
     // Test mixed case in text
     QCOMPARE(entry->resolveMultiplePlaceholders("UUID is {UUID} here"), QString("UUID is %1 here").arg(expectedUuid));
+
+    // Test advanced attribute with {REF:U@I:{UUID}} - should resolve to the entry's own username
+    entry->attributes()->set("SelfReference", "{REF:U@I:{UUID}}");
+    QString attributeValue = entry->attributes()->value("SelfReference");
+    QString resolvedSelfRef = entry->resolveMultiplePlaceholders(attributeValue);
+    
+    // Test the manual reference to confirm it works as before
+    QString manualReference = QString("{REF:U@I:%1}").arg(entry->uuidToHex());
+    entry->attributes()->set("ManualReference", manualReference);
+    QString resolvedManualRef = entry->resolveMultiplePlaceholders(entry->attributes()->value("ManualReference"));
+    
+    // Test that both approaches work
+    QCOMPARE(resolvedManualRef, entry->username());
+    QCOMPARE(resolvedSelfRef, entry->username());
 }
 
 void TestEntry::testResolveNonIdPlaceholdersToUuid()
