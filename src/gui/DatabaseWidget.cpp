@@ -1704,7 +1704,7 @@ void DatabaseWidget::removePasskeyFromEntry()
 }
 #endif
 
-void DatabaseWidget::performUnlockDatabase(const QString& password, const QString& keyfile)
+void DatabaseWidget::performUnlockDatabase(const QString& password, const QString& keyfile, const QString& yubikey)
 {
     if (password.isEmpty() && keyfile.isEmpty()) {
         return;
@@ -1712,7 +1712,7 @@ void DatabaseWidget::performUnlockDatabase(const QString& password, const QStrin
 
     if (!m_db->isInitialized() || isLocked()) {
         switchToOpenDatabase();
-        m_databaseOpenWidget->enterKey(password, keyfile);
+        m_databaseOpenWidget->enterKey(password, keyfile, yubikey);
     }
 }
 

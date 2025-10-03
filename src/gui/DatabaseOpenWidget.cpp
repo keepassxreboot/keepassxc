@@ -326,7 +326,7 @@ QString DatabaseOpenWidget::filename()
     return m_filename;
 }
 
-void DatabaseOpenWidget::enterKey(const QString& pw, const QString& keyFile)
+void DatabaseOpenWidget::enterKey(const QString& pw, const QString& keyFile, const QString& yubikey)
 {
     if (unlockingDatabase()) {
         qWarning("Ignoring unlock request for %s because of running unlock action.", qPrintable(m_filename));
@@ -335,11 +335,12 @@ void DatabaseOpenWidget::enterKey(const QString& pw, const QString& keyFile)
 
     m_ui->editPassword->setText(pw);
     m_ui->keyFileLineEdit->setText(keyFile);
+
     m_blockQuickUnlock = true;
-    openDatabase();
+    openDatabase(yubikey);
 }
 
-void DatabaseOpenWidget::openDatabase()
+void DatabaseOpenWidget::openDatabase(const QString& yubikey)
 {
     // Cache this variable for future use then reset
     bool blockQuickUnlock = m_blockQuickUnlock || isOnQuickUnlockScreen();
@@ -350,7 +351,7 @@ void DatabaseOpenWidget::openDatabase()
     m_ui->messageWidget->hide();
     QCoreApplication::processEvents();
 
-    const auto databaseKey = buildDatabaseKey();
+    const auto databaseKey = buildDatabaseKey(yubikey);
     if (!databaseKey) {
         setUserInteractionLock(false);
         return;
@@ -430,7 +431,7 @@ void DatabaseOpenWidget::openDatabase()
     }
 }
 
-QSharedPointer<CompositeKey> DatabaseOpenWidget::buildDatabaseKey()
+QSharedPointer<CompositeKey> DatabaseOpenWidget::buildDatabaseKey(const QString& yubikey)
 {
     auto databaseKey = QSharedPointer<CompositeKey>::create();
 
@@ -490,6 +491,29 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::buildDatabaseKey()
     }
 
 #ifdef WITH_XC_YUBIKEY
+    if (!yubikey.isEmpty()) {
+        unsigned int serial = 0;
+        int slot;
+
+        bool ok = false;
+        auto parts = yubikey.split(":");
+        slot = parts[0].toInt(&ok);
+
+        if (!ok || (slot != 1 && slot != 2)) {
+            return {};
+        }
+
+        if (parts.size() > 1) {
+            serial = parts[1].toUInt(&ok, 10);
+            if (!ok) {
+                return {};
+            }
+        }
+
+        auto crKey = QSharedPointer<ChallengeResponseKey>(new ChallengeResponseKey({serial, slot}));
+        databaseKey->addChallengeResponseKey(crKey);
+    }
+
     auto lastChallengeResponse = config()->get(Config::LastChallengeResponse).toHash();
     lastChallengeResponse.remove(m_filename);
 

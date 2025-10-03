@@ -49,7 +49,7 @@ public:
     void load(const QString& filename);
     QString filename();
     void clearForms();
-    void enterKey(const QString& pw, const QString& keyFile);
+    void enterKey(const QString& pw, const QString& keyFile, const QString& yubikey = {});
     QSharedPointer<Database> database();
     bool unlockingDatabase();
     void showMessage(const QString& text, MessageWidget::MessageType type, int autoHideTimeout);
@@ -67,7 +67,7 @@ signals:
 protected:
     bool event(QEvent* event) override;
     void keyPressEvent(QKeyEvent* event) override;
-    QSharedPointer<CompositeKey> buildDatabaseKey();
+    QSharedPointer<CompositeKey> buildDatabaseKey(const QString& yubikey = {});
     void setUserInteractionLock(bool state);
 
     const QScopedPointer<Ui::DatabaseOpenWidget> m_ui;
@@ -76,7 +76,7 @@ protected:
     bool m_retryUnlockWithEmptyPassword = false;
 
 protected slots:
-    virtual void openDatabase();
+    virtual void openDatabase(const QString& yubikey = {});
     void reject();
 
 private slots:

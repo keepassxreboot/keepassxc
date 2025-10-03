@@ -81,6 +81,7 @@ int main(int argc, char** argv)
         "localconfig", QObject::tr("path to a custom local config file"), "localconfig");
     QCommandLineOption lockOption("lock", QObject::tr("lock all open databases"));
     QCommandLineOption keyfileOption("keyfile", QObject::tr("key file of the database"), "keyfile");
+    QCommandLineOption yubikeyOption("yubikey", QObject::tr("Yubikey slot and optional serial used to access the database (e.g., 1:7370001)."), "slot[:serial");
     QCommandLineOption pwstdinOption("pw-stdin", QObject::tr("read password of the database from stdin"));
     QCommandLineOption allowScreenCaptureOption("allow-screencapture",
                                                 QObject::tr("allow screenshots and app recording (Windows/macOS)"));
@@ -93,6 +94,7 @@ int main(int argc, char** argv)
     parser.addOption(localConfigOption);
     parser.addOption(lockOption);
     parser.addOption(keyfileOption);
+    parser.addOption(yubikeyOption);
     parser.addOption(pwstdinOption);
     parser.addOption(debugInfoOption);
     parser.addOption(allowScreenCaptureOption);
@@ -205,7 +207,7 @@ int main(int argc, char** argv)
             out << QObject::tr("Database password: ") << Qt::flush;
             password = Utils::getPassword();
         }
-        mainWindow.openDatabase(filename, password, parser.value(keyfileOption));
+        mainWindow.openDatabase(filename, password, parser.value(keyfileOption), parser.value(yubikeyOption));
     }
 
     // start minimized if configured
