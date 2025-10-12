@@ -63,10 +63,20 @@ Application::Application(int& argc, char** argv)
     registerUnixSignals();
 #endif
 
+#if defined(Q_OS_WIN)
+    QString userName = qgetenv("USERNAME");
+    if (userName.isEmpty()) {
+        userName = qgetenv("USER");
+    }
+#else
     QString userName = qgetenv("USER");
     if (userName.isEmpty()) {
         userName = qgetenv("USERNAME");
     }
+#endif
+
+userName.replace('/', '_');
+userName.replace('\\', '_');
     QString identifier = "keepassxc";
     if (!userName.isEmpty()) {
         identifier += "-" + userName;
