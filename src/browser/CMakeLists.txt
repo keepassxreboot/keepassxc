@@ -14,7 +14,7 @@
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 if(WITH_XC_BROWSER)
-    include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
+    include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_SOURCE_DIR}/src/safariwebextension)
 
     set(browser_SOURCES
             BrowserAccessControlDialog.cpp
@@ -31,6 +31,17 @@ if(WITH_XC_BROWSER)
             CustomTableWidget.cpp
             NativeMessageInstaller.cpp)
 
+    if(APPLE)
+        list(APPEND browser_SOURCES
+            BrowserSharedMac.mm)
+
+        if(WITH_XC_SAFARI_WEB_EXTENSION)
+            list(APPEND browser_SOURCES
+                ../safariwebextension/SafariWebExtensionHelper.mm
+                ../safariwebextension/SafariWebExtensionCheckbox.mm)
+        endif()
+    endif()
+
     if(WITH_XC_BROWSER_PASSKEYS)
         list(APPEND browser_SOURCES
                 BrowserCbor.cpp
@@ -41,5 +52,15 @@ if(WITH_XC_BROWSER)
     endif()
 
     add_library(browser STATIC ${browser_SOURCES})
+
+    if(APPLE)
+        target_compile_definitions(browser PRIVATE
+            APP_GROUP_IDENTIFIER="${APPLE_TEAM_ID}.${APPLE_APP_IDENTIFIER}" APPLE_APP_IDENTIFIER="${APPLE_APP_IDENTIFIER}")
+    endif()
+
+    if(WITH_XC_SAFARI_WEB_EXTENSION)
+        target_compile_definitions(browser PRIVATE WITH_XC_SAFARI_WEB_EXTENSION)
+    endif()
+
     target_link_libraries(browser Qt5::Core Qt5::Concurrent Qt5::Widgets Qt5::Network ${BOTAN_LIBRARIES})
 endif()

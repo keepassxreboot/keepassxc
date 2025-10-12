@@ -20,6 +20,7 @@ add_feature_info(Auto-Type WITH_XC_AUTOTYPE "Automatic password typing")
 add_feature_info(Networking WITH_XC_NETWORKING "Compile KeePassXC with network access code (e.g. for downloading website icons)")
 add_feature_info(KeePassXC-Browser WITH_XC_BROWSER "Browser integration with KeePassXC-Browser")
 add_feature_info(Passkeys WITH_XC_BROWSER_PASSKEYS "Passkeys support for browser integration")
+add_feature_info(SafariWebExtension WITH_XC_SAFARI_WEB_EXTENSION "Safari Web Extension for browser integration")
 add_feature_info(SSHAgent WITH_XC_SSHAGENT "SSH agent integration compatible with KeeAgent")
 add_feature_info(KeeShare WITH_XC_KEESHARE "Sharing integration with KeeShare")
 add_feature_info(YubiKey WITH_XC_YUBIKEY "YubiKey HMAC-SHA1 challenge-response")
@@ -263,7 +264,7 @@ if(UNIX AND NOT APPLE)
 
     find_library(KEYUTILS_LIBRARIES NAMES keyutils)
     if(NOT KEYUTILS_LIBRARIES)
-		message(FATAL_ERROR "Could not find libkeyutils")
+        message(FATAL_ERROR "Could not find libkeyutils")
     endif()
 endif()
 
@@ -306,6 +307,10 @@ if(WITH_XC_BROWSER_PASSKEYS)
             gui/passkeys/PasskeyExportDialog.cpp
             gui/passkeys/PasskeyImporter.cpp
             gui/passkeys/PasskeyImportDialog.cpp)
+endif()
+
+if(WITH_XC_SAFARI_WEB_EXTENSION)
+    add_subdirectory(safariwebextension)
 endif()
 
 add_subdirectory(autotype)
@@ -371,7 +376,7 @@ configure_file(git-info.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/git-info.h)
 # Core Library Definition
 add_library(keepassxc_core STATIC ${core_SOURCES})
 set_target_properties(keepassxc_core PROPERTIES COMPILE_DEFINITIONS KEEPASSX_BUILDING_CORE)
-target_link_libraries(keepassxc_core 
+target_link_libraries(keepassxc_core
         ${qrcode_LIB}
         Qt5::Core
         Qt5::Concurrent
@@ -398,7 +403,10 @@ target_link_libraries(keepassxc_gui
         ${sshagent_LIB})
 
 if(APPLE)
-    target_link_libraries(keepassxc_gui "-framework Foundation -framework AppKit -framework Carbon -framework Security -framework LocalAuthentication -framework ScreenCaptureKit")
+    target_compile_definitions(keepassxc_core PRIVATE
+        APP_GROUP_IDENTIFIER="${APPLE_TEAM_ID}.${APPLE_APP_IDENTIFIER}")
+
+    target_link_libraries(keepassxc_gui "-framework Foundation -framework AppKit -framework Carbon -framework Security -framework LocalAuthentication -framework ScreenCaptureKit -framework SafariServices")
     if(Qt5MacExtras_FOUND)
         target_link_libraries(keepassxc_gui Qt5::MacExtras)
     endif()
@@ -440,12 +448,23 @@ set_target_properties(${PROGNAME} PROPERTIES ENABLE_EXPORTS ON)
 
 # macOS App Bundle
 if(APPLE AND WITH_APP_BUNDLE)
+    set(APPLE_TEAM_ID "G2S7P7J672" CACHE STRING "Apple Developer Team ID")
+    set(APPLE_APP_IDENTIFIER "org.keepassxc.keepassxc" CACHE STRING "App bundle identifier")
+
     install(FILES ${CMAKE_SOURCE_DIR}/share/macosx/embedded.provisionprofile DESTINATION ${BUNDLE_INSTALL_DIR})
     configure_file(${CMAKE_SOURCE_DIR}/share/macosx/Info.plist.cmake ${CMAKE_CURRENT_BINARY_DIR}/Info.plist)
+
+    if(CMAKE_BUILD_TYPE_LOWER STREQUAL "debug")
+        set(EXTRA_ENTITLEMENTS "<key>com.apple.security.cs.disable-library-validation</key>\n\t<true/>\n\t<key>com.apple.security.get-task-allow</key>\n\t<true/>")
+    else()
+        set(EXTRA_ENTITLEMENTS "")
+    endif()
+
+    configure_file(${CMAKE_SOURCE_DIR}/share/macosx/keepassxc.entitlements ${CMAKE_BINARY_DIR}/share/macosx/keepassxc.entitlements)
     set_target_properties(${PROGNAME} PROPERTIES
             MACOSX_BUNDLE ON
             MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_BINARY_DIR}/Info.plist
-            CPACK_BUNDLE_APPLE_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/share/macosx/keepassxc.entitlements")
+            CPACK_BUNDLE_APPLE_ENTITLEMENTS "${CMAKE_BINARY_DIR}/share/macosx/keepassxc.entitlements")
 
     if(QT_MAC_USE_COCOA AND EXISTS "${QT_LIBRARY_DIR}/Resources/qt_menu.nib")
         install(DIRECTORY "${QT_LIBRARY_DIR}/Resources/qt_menu.nib"

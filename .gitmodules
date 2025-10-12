@@ -1,0 +1,4 @@
+[submodule "src/safariwebextension/keepassxc-browser"]
+	path = src/safariwebextension/keepassxc-browser
+	url = https://github.com/sebastianlivoni/keepassxc-browser.git
+	branch = feature/safari

@@ -29,7 +29,8 @@ set(EXCLUDED_FILES
         src/gui/tag/TagsEdit.\\*
         tests/modeltest.\\*
         # objective-c files
-        src/core/ScreenLockListenerMac.\\*)
+        src/core/ScreenLockListenerMac.\\*
+        src/safariwebextension/SafariWebExtensionHandler.\\*)
 
 set(FIND_EXCLUDE_DIR_EXPR "")
 foreach(EXCLUDE ${EXCLUDED_DIRS})

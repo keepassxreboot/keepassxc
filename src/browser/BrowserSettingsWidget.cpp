@@ -22,6 +22,10 @@
 #include "config-keepassx.h"
 #include "gui/styles/StateColorPalette.h"
 
+#ifdef WITH_XC_SAFARI_WEB_EXTENSION
+#include "safariwebextension/SafariWebExtensionCheckbox.h"
+#endif
+
 #include <QFileDialog>
 
 BrowserSettingsWidget::BrowserSettingsWidget(QWidget* parent)
@@ -43,6 +47,14 @@ BrowserSettingsWidget::BrowserSettingsWidget(QWidget* parent)
     m_ui->tabWidget->setEnabled(m_ui->enableBrowserSupport->isChecked());
     connect(m_ui->enableBrowserSupport, SIGNAL(toggled(bool)), m_ui->tabWidget, SLOT(setEnabled(bool)));
     connect(m_ui->enableBrowserSupport, SIGNAL(toggled(bool)), SLOT(validateProxyLocation()));
+
+#ifdef WITH_XC_SAFARI_WEB_EXTENSION
+    SafariWebExtensionCheckbox* safariCheckbox = new SafariWebExtensionCheckbox();
+    safariCheckbox->setText("Safari");
+    safariCheckbox->setChecked(false);
+
+    m_ui->gridLayout->addWidget(safariCheckbox, 1, 3);
+#endif
 
     // Custom Browser option
 #ifdef Q_OS_WIN
