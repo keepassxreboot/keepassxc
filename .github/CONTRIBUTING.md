@@ -95,6 +95,7 @@ If you open a Pull Request with new strings that require translations, you will 
 ./release-tool i18n lupdate
 ```
 This will make the new strings available for translation in Transifex.
+This command requires the [Transifex command-line client](https://github.com/transifex/cli/releases) installed.
 
 ## Styleguides
 
