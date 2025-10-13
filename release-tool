@@ -335,7 +335,7 @@ checkAppStreamInfo() {
 
 checkTransifexCommandExists() {
     if ! cmdExists tx; then
-        exitError "Transifex tool 'tx' not installed! Please install it using 'pip install transifex-client'."
+        exitError "Transifex tool 'tx' not installed! Please install it from <https://github.com/transifex/cli/releases>."
     fi
 }
 
