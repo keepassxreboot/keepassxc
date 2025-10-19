@@ -1,3 +1,14 @@
+# Github-linguist language hints
+*.h linguist-language=C++
+*.cpp linguist-language=C++
+
+# Line endings harmony
+* text=auto eol=lf
+
+# binary files
+*.ai binary
+
+# Export
 src/version.h.cmake export-subst
 .gitattributes export-ignore
 .gitignore export-ignore
@@ -7,13 +18,3 @@ src/version.h.cmake export-subst
 snapcraft.yaml export-ignore
 make_release.sh export-ignore
 AppImage-Recipe.sh export-ignore
-
-# github-linguist language hints
-*.h linguist-language=C++
-*.cpp linguist-language=C++
-
-# binary files
-*.ai binary
-
-# Line endings harmony
-* text=auto
