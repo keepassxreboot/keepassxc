@@ -27,6 +27,7 @@
 
 #include "config-keepassx.h"
 #include "gui/EditWidget.h"
+#include "core/PasswordGenerator.h"
 
 class AutoTypeAssociations;
 class AutoTypeAssociationsModel;
@@ -51,6 +52,7 @@ class OpenSSHKey;
 #ifdef WITH_XC_BROWSER
 class EntryURLModel;
 #endif
+class PasswordGenerator;
 
 namespace Ui
 {
@@ -195,6 +197,7 @@ private:
     const QScopedPointer<Ui::EditEntryWidgetBrowser> m_browserUi;
     const QScopedPointer<EntryAttachments> m_attachments;
     const QScopedPointer<CustomData> m_customData;
+    const QScopedPointer<PasswordGenerator> m_passwordGenerator;
 
     QScrollArea* const m_mainWidget;
     QWidget* const m_advancedWidget;

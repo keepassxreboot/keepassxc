@@ -51,6 +51,7 @@ signals:
 
 public slots:
     void setText(const QString& text);
+    void setPlaceholderText(const QString& text);
     void setShowPassword(bool show);
 
     void clear();

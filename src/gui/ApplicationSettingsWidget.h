@@ -59,6 +59,7 @@ private slots:
     void reject();
     void autoSaveToggled(bool checked);
     void hideWindowOnCopyCheckBoxToggled(bool checked);
+    void autoGeneratePasswordForNewEntriesCheckBoxToggled(bool checked);
     void systrayToggled(bool checked);
     void rememberDatabasesToggled(bool checked);
     void checkUpdatesToggled(bool checked);

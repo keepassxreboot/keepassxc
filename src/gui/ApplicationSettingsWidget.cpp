@@ -226,6 +226,8 @@ void ApplicationSettingsWidget::loadSettings()
         !config()->get(Config::Security_NoConfirmMoveEntryToRecycleBin).toBool());
     m_generalUi->EnableCopyOnDoubleClickCheckBox->setChecked(
         config()->get(Config::Security_EnableCopyOnDoubleClick).toBool());
+    m_generalUi->autoGeneratePasswordForNewEntriesCheckBox->setChecked(
+        config()->get(Config::AutoGeneratePasswordForNewEntries).toBool());
 
     m_generalUi->languageComboBox->clear();
     QList<QPair<QString, QString>> languages = Translator::availableLanguages();
@@ -399,6 +401,8 @@ void ApplicationSettingsWidget::saveSettings()
     config()->set(Config::Security_NoConfirmMoveEntryToRecycleBin,
                   !m_generalUi->ConfirmMoveEntryToRecycleBinCheckBox->isChecked());
     config()->set(Config::Security_EnableCopyOnDoubleClick, m_generalUi->EnableCopyOnDoubleClickCheckBox->isChecked());
+    config()->set(Config::AutoGeneratePasswordForNewEntries,
+		  m_generalUi->autoGeneratePasswordForNewEntriesCheckBox->isChecked());
 
     auto language = m_generalUi->languageComboBox->currentData().toString();
     if (config()->get(Config::GUI_Language) != language) {
@@ -577,6 +581,11 @@ void ApplicationSettingsWidget::hideWindowOnCopyCheckBoxToggled(bool checked)
 {
     m_generalUi->minimizeOnCopyRadioButton->setEnabled(checked);
     m_generalUi->dropToBackgroundOnCopyRadioButton->setEnabled(checked);
+}
+
+void ApplicationSettingsWidget::autoGeneratePasswordForNewEntriesCheckBoxToggled(bool checked)
+{
+    m_generalUi->autoGeneratePasswordForNewEntriesCheckBox->setEnabled(checked);
 }
 
 void ApplicationSettingsWidget::systrayToggled(bool checked)
