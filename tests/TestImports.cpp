@@ -317,6 +317,43 @@ void TestImports::testBitwardenPasskey()
              QStringLiteral("aTFtdmFnOHYtS2dxVEJ0by1rSFpLWGg0enlTVC1iUVJReDZ5czJXa3c2aw"));
 }
 
+void TestImports::testBitwardenTimestamps()
+{
+    auto bitwardenPath =
+        QStringLiteral("%1/%2").arg(KEEPASSX_TEST_DATA_DIR, QStringLiteral("/bitwarden_timestamps_export.json"));
+
+    BitwardenReader reader;
+    auto db = reader.convert(bitwardenPath);
+    QVERIFY2(!reader.hasError(), qPrintable(reader.errorString()));
+    QVERIFY(db);
+
+    // Confirm entry was imported
+    auto entry = db->rootGroup()->findEntryByPath("/Test Folder/Timestamp Entry");
+    QVERIFY(entry);
+    QCOMPARE(entry->title(), QStringLiteral("Timestamp Entry"));
+    QCOMPARE(entry->username(), QStringLiteral("testuser"));
+    QCOMPARE(entry->password(), QStringLiteral("currentpassword"));
+
+    // Verify timestamps were imported correctly
+    auto timeInfo = entry->timeInfo();
+    QCOMPARE(timeInfo.creationTime(), QDateTime::fromString("2023-01-01T08:00:00.000Z", Qt::ISODate));
+    QCOMPARE(timeInfo.lastModificationTime(), QDateTime::fromString("2023-12-01T12:00:00.000Z", Qt::ISODate));
+
+    // Verify password history was imported
+    const auto historyItems = entry->historyItems();
+    QCOMPARE(historyItems.size(), 2);
+
+    // Check first history item (oldest)
+    QCOMPARE(historyItems[0]->password(), QStringLiteral("oldpassword1"));
+    QCOMPARE(historyItems[0]->timeInfo().lastModificationTime(),
+             QDateTime::fromString("2023-01-15T10:30:00.000Z", Qt::ISODate));
+
+    // Check second history item
+    QCOMPARE(historyItems[1]->password(), QStringLiteral("oldpassword2"));
+    QCOMPARE(historyItems[1]->timeInfo().lastModificationTime(),
+             QDateTime::fromString("2023-06-20T14:45:00.000Z", Qt::ISODate));
+}
+
 void TestImports::testProtonPass()
 {
     auto protonPassPath =
