@@ -208,36 +208,6 @@ namespace
         // Collapse any accumulated history
         entry->removeHistoryItems(entry->historyItems());
 
-        // Parse password history if present
-        if (itemMap.contains("passwordHistory")) {
-            const auto passwordHistory = itemMap.value("passwordHistory").toList();
-            for (const auto& historyItem : passwordHistory) {
-                const auto historyMap = historyItem.toMap();
-                const auto password = historyMap.value("password").toString();
-                const auto lastUsedDate =
-                    QDateTime::fromString(historyMap.value("lastUsedDate").toString(), Qt::ISODate);
-
-                if (!password.isEmpty() && lastUsedDate.isValid()) {
-                    // Create a history entry with the old password
-                    auto historyEntry = new Entry();
-                    historyEntry->setUuid(entry->uuid());
-                    historyEntry->setTitle(entry->title());
-                    historyEntry->setUsername(entry->username());
-                    historyEntry->setPassword(password);
-                    historyEntry->setUrl(entry->url());
-                    historyEntry->setNotes(entry->notes());
-
-                    // Set the timestamp for this history item
-                    auto historyTimeInfo = historyEntry->timeInfo();
-                    historyTimeInfo.setLastModificationTime(lastUsedDate);
-                    historyTimeInfo.setLastAccessTime(lastUsedDate);
-                    historyEntry->setTimeInfo(historyTimeInfo);
-
-                    entry->addHistoryItem(historyEntry);
-                }
-            }
-        }
-
         return entry.take();
     }
 

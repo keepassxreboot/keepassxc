@@ -7,16 +7,6 @@
   ],
   "items": [
     {
-      "passwordHistory": [
-        {
-          "lastUsedDate": "2023-01-15T10:30:00.000Z",
-          "password": "oldpassword1"
-        },
-        {
-          "lastUsedDate": "2023-06-20T14:45:00.000Z",
-          "password": "oldpassword2"
-        }
-      ],
       "revisionDate": "2023-12-01T12:00:00.000Z",
       "creationDate": "2023-01-01T08:00:00.000Z",
       "deletedDate": null,
@@ -26,7 +16,7 @@
       "type": 1,
       "reprompt": 0,
       "name": "Timestamp Entry",
-      "notes": "Entry with timestamps and history",
+      "notes": "Entry with timestamps",
       "favorite": false,
       "login": {
         "uris": [
