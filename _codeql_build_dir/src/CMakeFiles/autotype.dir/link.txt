@@ -1,2 +1,0 @@
-/usr/bin/ar qc libautotype.a CMakeFiles/autotype.dir/autotype_autogen/mocs_compilation.cpp.o CMakeFiles/autotype.dir/autotype/AutoType.cpp.o CMakeFiles/autotype.dir/autotype/AutoTypeAction.cpp.o CMakeFiles/autotype.dir/autotype/AutoTypeMatchModel.cpp.o CMakeFiles/autotype.dir/autotype/AutoTypeMatchView.cpp.o CMakeFiles/autotype.dir/autotype/AutoTypeSelectDialog.cpp.o CMakeFiles/autotype.dir/autotype/PickcharsDialog.cpp.o CMakeFiles/autotype.dir/autotype/WindowSelectComboBox.cpp.o
-/usr/bin/ranlib libautotype.a

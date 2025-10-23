@@ -1,5 +1,0 @@
-zxcvbn_autogen/timestamp: \
-	/home/runner/work/keepassxc/keepassxc/src/thirdparty/zxcvbn/CMakeLists.txt \
-	/home/runner/work/keepassxc/keepassxc/src/thirdparty/zxcvbn/zxcvbn.c \
-	/home/runner/work/keepassxc/keepassxc/src/thirdparty/zxcvbn/zxcvbn.h \
-	/usr/local/bin/cmake

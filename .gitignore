@@ -31,3 +31,4 @@ out/
 # vcpkg
 vcpkg_installed*/
 
+_codeql_build_dir/
