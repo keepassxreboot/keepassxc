@@ -1,0 +1,113 @@
+{
+	"BUILD_DIR" : "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/src/qrcode/qrcode_autogen",
+	"CMAKE_BINARY_DIR" : "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/src/qrcode",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/runner/work/keepassxc/keepassxc/src/qrcode",
+	"CMAKE_EXECUTABLE" : "/usr/local/bin/cmake",
+	"CMAKE_LIST_FILES" : 
+	[
+		"/home/runner/work/keepassxc/keepassxc/src/qrcode/CMakeLists.txt",
+		"/home/runner/work/keepassxc/keepassxc/cmake/FindQREncode.cmake",
+		"/usr/local/share/cmake-3.31/Modules/FindPackageHandleStandardArgs.cmake",
+		"/usr/local/share/cmake-3.31/Modules/FindPackageMessage.cmake"
+	],
+	"CMAKE_SOURCE_DIR" : "/home/runner/work/keepassxc/keepassxc",
+	"CROSS_CONFIG" : false,
+	"DEP_FILE" : "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/src/qrcode/qrcode_autogen/deps",
+	"DEP_FILE_RULE_NAME" : "qrcode_autogen/timestamp",
+	"HEADERS" : 
+	[
+		[
+			"/home/runner/work/keepassxc/keepassxc/src/qrcode/QrCode.h",
+			"MU",
+			"EWIEGA46WW/moc_QrCode.cpp",
+			null
+		],
+		[
+			"/home/runner/work/keepassxc/keepassxc/src/qrcode/QrCode_p.h",
+			"MU",
+			"EWIEGA46WW/moc_QrCode_p.cpp",
+			null
+		]
+	],
+	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
+	"INCLUDE_DIR" : "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/src/qrcode/qrcode_autogen/include",
+	"MOC_COMPILATION_FILE" : "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/src/qrcode/qrcode_autogen/mocs_compilation.cpp",
+	"MOC_DEFINITIONS" : 
+	[
+		"QT_CORE_LIB",
+		"QT_GUI_LIB",
+		"QT_NO_CAST_TO_ASCII",
+		"QT_NO_DEBUG",
+		"QT_NO_DEBUG_OUTPUT",
+		"QT_NO_DEPRECATED_WARNINGS",
+		"QT_NO_EXCEPTIONS",
+		"QT_STRICT_ITERATORS",
+		"QT_SVG_LIB",
+		"QT_WIDGETS_LIB",
+		"WITH_APP_BUNDLE"
+	],
+	"MOC_DEPEND_FILTERS" : 
+	[
+		[
+			"Q_PLUGIN_METADATA",
+			"[\n][ \t]*Q_PLUGIN_METADATA[ \t]*\\([^\\)]*FILE[ \t]*\"([^\"]+)\""
+		]
+	],
+	"MOC_INCLUDES" : 
+	[
+		"/home/runner/work/keepassxc/keepassxc/src",
+		"/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/src",
+		"/usr/include/botan-2",
+		"/usr/include/x86_64-linux-gnu/qt5",
+		"/usr/include/x86_64-linux-gnu/qt5/QtCore",
+		"/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++",
+		"/usr/include/x86_64-linux-gnu/qt5/QtSvg",
+		"/usr/include/x86_64-linux-gnu/qt5/QtWidgets",
+		"/usr/include/x86_64-linux-gnu/qt5/QtGui",
+		"/usr/include",
+		"/usr/include/c++/13",
+		"/usr/include/x86_64-linux-gnu/c++/13",
+		"/usr/include/c++/13/backward",
+		"/usr/lib/gcc/x86_64-linux-gnu/13/include",
+		"/usr/local/include",
+		"/usr/include/x86_64-linux-gnu"
+	],
+	"MOC_MACRO_NAMES" : [ "Q_OBJECT", "Q_GADGET", "Q_NAMESPACE", "Q_NAMESPACE_EXPORT" ],
+	"MOC_OPTIONS" : [],
+	"MOC_PATH_PREFIX" : false,
+	"MOC_PREDEFS_CMD" : 
+	[
+		"/home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/c++",
+		"-std=gnu++17",
+		"-dM",
+		"-E",
+		"-c",
+		"/usr/local/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp"
+	],
+	"MOC_PREDEFS_FILE" : "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/src/qrcode/qrcode_autogen/moc_predefs.h",
+	"MOC_RELAXED_MODE" : false,
+	"MOC_SKIP" : [],
+	"MULTI_CONFIG" : false,
+	"PARALLEL" : 2,
+	"PARSE_CACHE_FILE" : "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/src/qrcode/CMakeFiles/qrcode_autogen.dir/ParseCache.txt",
+	"QT_MOC_EXECUTABLE" : "/usr/lib/qt5/bin/moc",
+	"QT_UIC_EXECUTABLE" : "/usr/lib/qt5/bin/uic",
+	"QT_VERSION_MAJOR" : 5,
+	"QT_VERSION_MINOR" : 15,
+	"SETTINGS_FILE" : "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/src/qrcode/CMakeFiles/qrcode_autogen.dir/AutogenUsed.txt",
+	"SOURCES" : 
+	[
+		[
+			"/home/runner/work/keepassxc/keepassxc/src/qrcode/QrCode.cpp",
+			"MU",
+			null
+		]
+	],
+	"UIC_OPTIONS" : [],
+	"UIC_SEARCH_PATHS" : [],
+	"UIC_SKIP" : [],
+	"UIC_UI_FILES" : [],
+	"USE_BETTER_GRAPH" : false,
+	"VERBOSITY" : 0
+}

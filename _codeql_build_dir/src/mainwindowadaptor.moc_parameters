@@ -1,0 +1,15 @@
+-I/usr/include/botan-2
+-I/usr/include
+-I/usr/include
+-I/usr/include
+-I/home/runner/work/keepassxc/keepassxc/src
+-I/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/src
+-DQT_NO_EXCEPTIONS
+-DQT_STRICT_ITERATORS
+-DQT_NO_CAST_TO_ASCII
+-DQT_NO_DEBUG_OUTPUT
+-DWITH_APP_BUNDLE
+-DQT_NO_DEPRECATED_WARNINGS
+-o
+/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/src/mainwindowadaptor.moc
+/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/src/mainwindowadaptor.h

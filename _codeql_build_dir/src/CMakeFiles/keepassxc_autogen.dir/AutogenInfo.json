@@ -1,0 +1,135 @@
+{
+	"BUILD_DIR" : "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/src/keepassxc_autogen",
+	"CMAKE_BINARY_DIR" : "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/src",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/runner/work/keepassxc/keepassxc/src",
+	"CMAKE_EXECUTABLE" : "/usr/local/bin/cmake",
+	"CMAKE_LIST_FILES" : 
+	[
+		"/home/runner/work/keepassxc/keepassxc/src/CMakeLists.txt",
+		"/home/runner/work/keepassxc/keepassxc/src/config-keepassx.h.cmake",
+		"/home/runner/work/keepassxc/keepassxc/src/git-info.h.cmake",
+		"/home/runner/work/keepassxc/keepassxc/src/gui/styles/styles.qrc",
+		"/home/runner/work/keepassxc/keepassxc/share/icons/icons.qrc",
+		"/home/runner/work/keepassxc/keepassxc/share/wizard/wizard.qrc"
+	],
+	"CMAKE_SOURCE_DIR" : "/home/runner/work/keepassxc/keepassxc",
+	"CROSS_CONFIG" : false,
+	"DEP_FILE" : "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/src/keepassxc_autogen/deps",
+	"DEP_FILE_RULE_NAME" : "keepassxc_autogen/timestamp",
+	"HEADERS" : [],
+	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
+	"INCLUDE_DIR" : "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/src/keepassxc_autogen/include",
+	"MOC_COMPILATION_FILE" : "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/src/keepassxc_autogen/mocs_compilation.cpp",
+	"MOC_DEFINITIONS" : 
+	[
+		"QT_CONCURRENT_LIB",
+		"QT_CORE_LIB",
+		"QT_DBUS_LIB",
+		"QT_GUI_LIB",
+		"QT_NETWORK_LIB",
+		"QT_NO_CAST_TO_ASCII",
+		"QT_NO_DEBUG",
+		"QT_NO_DEBUG_OUTPUT",
+		"QT_NO_DEPRECATED_WARNINGS",
+		"QT_NO_EXCEPTIONS",
+		"QT_STRICT_ITERATORS",
+		"QT_SVG_LIB",
+		"QT_WIDGETS_LIB",
+		"QT_X11EXTRAS_LIB",
+		"WITH_APP_BUNDLE",
+		"keepassxc_EXPORTS"
+	],
+	"MOC_DEPEND_FILTERS" : 
+	[
+		[
+			"Q_PLUGIN_METADATA",
+			"[\n][ \t]*Q_PLUGIN_METADATA[ \t]*\\([^\\)]*FILE[ \t]*\"([^\"]+)\""
+		]
+	],
+	"MOC_INCLUDES" : 
+	[
+		"/home/runner/work/keepassxc/keepassxc/src",
+		"/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/src",
+		"/usr/include/x86_64-linux-gnu/qt5/QtGui/5.15.13",
+		"/usr/include/x86_64-linux-gnu/qt5/QtGui/5.15.13/QtGui",
+		"/usr/include/x86_64-linux-gnu/qt5/QtCore/5.15.13",
+		"/usr/include/x86_64-linux-gnu/qt5/QtCore/5.15.13/QtCore",
+		"/home/runner/work/keepassxc/keepassxc/src/thirdparty/zxcvbn",
+		"/usr/include/botan-2",
+		"/usr/include/x86_64-linux-gnu/qt5",
+		"/usr/include/x86_64-linux-gnu/qt5/QtCore",
+		"/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++",
+		"/usr/include/x86_64-linux-gnu/qt5/QtSvg",
+		"/usr/include/x86_64-linux-gnu/qt5/QtWidgets",
+		"/usr/include/x86_64-linux-gnu/qt5/QtGui",
+		"/usr/include/x86_64-linux-gnu/qt5/QtConcurrent",
+		"/usr/include/x86_64-linux-gnu/qt5/QtDBus",
+		"/usr/include/x86_64-linux-gnu/qt5/QtNetwork",
+		"/usr/include/x86_64-linux-gnu/qt5/QtX11Extras",
+		"/usr/include",
+		"/usr/include/c++/13",
+		"/usr/include/x86_64-linux-gnu/c++/13",
+		"/usr/include/c++/13/backward",
+		"/usr/lib/gcc/x86_64-linux-gnu/13/include",
+		"/usr/local/include",
+		"/usr/include/x86_64-linux-gnu"
+	],
+	"MOC_MACRO_NAMES" : [ "Q_OBJECT", "Q_GADGET", "Q_NAMESPACE", "Q_NAMESPACE_EXPORT" ],
+	"MOC_OPTIONS" : [],
+	"MOC_PATH_PREFIX" : false,
+	"MOC_PREDEFS_CMD" : 
+	[
+		"/home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/c++",
+		"-std=gnu++17",
+		"-dM",
+		"-E",
+		"-c",
+		"/usr/local/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp"
+	],
+	"MOC_PREDEFS_FILE" : "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/src/keepassxc_autogen/moc_predefs.h",
+	"MOC_RELAXED_MODE" : false,
+	"MOC_SKIP" : 
+	[
+		"/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/src/autotype_autogen/mocs_compilation.cpp",
+		"/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/src/keepassxc_core_autogen/mocs_compilation.cpp",
+		"/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/src/keepassxc_gui_autogen/6X6KP64GSU/qrc_icons.cpp",
+		"/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/src/keepassxc_gui_autogen/M5QXLK5BAV/qrc_styles.cpp",
+		"/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/src/keepassxc_gui_autogen/XJKH4KRZSW/qrc_wizard.cpp",
+		"/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/src/keepassxc_gui_autogen/mocs_compilation.cpp",
+		"/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/src/mainwindowadaptor.cpp",
+		"/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/src/mainwindowadaptor.h",
+		"/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/src/polkit_dbus.cpp",
+		"/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/src/polkit_dbus.h"
+	],
+	"MULTI_CONFIG" : false,
+	"PARALLEL" : 2,
+	"PARSE_CACHE_FILE" : "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/src/CMakeFiles/keepassxc_autogen.dir/ParseCache.txt",
+	"QT_MOC_EXECUTABLE" : "/usr/lib/qt5/bin/moc",
+	"QT_UIC_EXECUTABLE" : "/usr/lib/qt5/bin/uic",
+	"QT_VERSION_MAJOR" : 5,
+	"QT_VERSION_MINOR" : 15,
+	"SETTINGS_FILE" : "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/src/CMakeFiles/keepassxc_autogen.dir/AutogenUsed.txt",
+	"SOURCES" : 
+	[
+		[ "/home/runner/work/keepassxc/keepassxc/src/main.cpp", "MU", null ]
+	],
+	"UIC_OPTIONS" : [],
+	"UIC_SEARCH_PATHS" : [],
+	"UIC_SKIP" : 
+	[
+		"/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/src/autotype_autogen/mocs_compilation.cpp",
+		"/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/src/keepassxc_core_autogen/mocs_compilation.cpp",
+		"/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/src/keepassxc_gui_autogen/6X6KP64GSU/qrc_icons.cpp",
+		"/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/src/keepassxc_gui_autogen/M5QXLK5BAV/qrc_styles.cpp",
+		"/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/src/keepassxc_gui_autogen/XJKH4KRZSW/qrc_wizard.cpp",
+		"/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/src/keepassxc_gui_autogen/mocs_compilation.cpp",
+		"/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/src/mainwindowadaptor.cpp",
+		"/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/src/mainwindowadaptor.h",
+		"/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/src/polkit_dbus.cpp",
+		"/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/src/polkit_dbus.h"
+	],
+	"UIC_UI_FILES" : [],
+	"USE_BETTER_GRAPH" : false,
+	"VERBOSITY" : 0
+}

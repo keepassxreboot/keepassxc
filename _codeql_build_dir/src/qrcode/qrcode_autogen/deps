@@ -1,0 +1,9 @@
+qrcode_autogen/timestamp: \
+	/home/runner/work/keepassxc/keepassxc/cmake/FindQREncode.cmake \
+	/home/runner/work/keepassxc/keepassxc/src/qrcode/CMakeLists.txt \
+	/home/runner/work/keepassxc/keepassxc/src/qrcode/QrCode.cpp \
+	/home/runner/work/keepassxc/keepassxc/src/qrcode/QrCode.h \
+	/home/runner/work/keepassxc/keepassxc/src/qrcode/QrCode_p.h \
+	/usr/local/share/cmake-3.31/Modules/FindPackageHandleStandardArgs.cmake \
+	/usr/local/share/cmake-3.31/Modules/FindPackageMessage.cmake \
+	/usr/local/bin/cmake

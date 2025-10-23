@@ -1,0 +1,177 @@
+/****************************************************************************
+** Meta object code from reading C++ file 'mainwindowadaptor.h'
+**
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.15.13)
+**
+** WARNING! All changes made in this file will be lost!
+*****************************************************************************/
+
+#include <memory>
+#include "mainwindowadaptor.h"
+#include <QtCore/qbytearray.h>
+#include <QtCore/qmetatype.h>
+#if !defined(Q_MOC_OUTPUT_REVISION)
+#error "The header file 'mainwindowadaptor.h' doesn't include <QObject>."
+#elif Q_MOC_OUTPUT_REVISION != 67
+#error "This file was generated using the moc from 5.15.13. It"
+#error "cannot be used with the include files from this version of Qt."
+#error "(The moc has changed too much.)"
+#endif
+
+QT_BEGIN_MOC_NAMESPACE
+QT_WARNING_PUSH
+QT_WARNING_DISABLE_DEPRECATED
+struct qt_meta_stringdata_MainWindowAdaptor_t {
+    QByteArrayData data[15];
+    char stringdata0[1150];
+};
+#define QT_MOC_LITERAL(idx, ofs, len) \
+    Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
+    qptrdiff(offsetof(qt_meta_stringdata_MainWindowAdaptor_t, stringdata0) + ofs \
+        - idx * sizeof(QByteArrayData)) \
+    )
+static const qt_meta_stringdata_MainWindowAdaptor_t qt_meta_stringdata_MainWindowAdaptor = {
+    {
+QT_MOC_LITERAL(0, 0, 17), // "MainWindowAdaptor"
+QT_MOC_LITERAL(1, 18, 15), // "D-Bus Interface"
+QT_MOC_LITERAL(2, 34, 34), // "org.keepassxc.KeePassXC.MainW..."
+QT_MOC_LITERAL(3, 69, 19), // "D-Bus Introspection"
+QT_MOC_LITERAL(4, 89, 940), // "  <interface name=\"org.keepa..."
+QT_MOC_LITERAL(5, 941, 7), // "appExit"
+QT_MOC_LITERAL(6, 949, 0), // ""
+QT_MOC_LITERAL(7, 950, 17), // "closeAllDatabases"
+QT_MOC_LITERAL(8, 968, 22), // "isHardwareKeySupported"
+QT_MOC_LITERAL(9, 991, 16), // "lockAllDatabases"
+QT_MOC_LITERAL(10, 1008, 12), // "openDatabase"
+QT_MOC_LITERAL(11, 1021, 8), // "fileName"
+QT_MOC_LITERAL(12, 1030, 2), // "pw"
+QT_MOC_LITERAL(13, 1033, 7), // "keyFile"
+QT_MOC_LITERAL(14, 1041, 19) // "refreshHardwareKeys"
+
+    },
+    "MainWindowAdaptor\0D-Bus Interface\0"
+    "org.keepassxc.KeePassXC.MainWindow\0"
+    "D-Bus Introspection\0"
+    "  <interface name=\"org.keepassxc.KeePassXC.MainWindow\">\n    <method"
+    " name=\"openDatabase\">\n      <arg direction=\"in\" type=\"s\" name=\""
+    "fileName\"/>\n      <arg direction=\"in\" type=\"s\" name=\"pw\"/>\n  "
+    "    <arg direction=\"in\" type=\"s\" name=\"keyFile\"/>\n    </method>"
+    "\n    <method name=\"openDatabase\">\n      <arg direction=\"in\" type"
+    "=\"s\" name=\"fileName\"/>\n      <arg direction=\"in\" type=\"s\" nam"
+    "e=\"pw\"/>\n    </method>\n    <method name=\"openDatabase\">\n      <"
+    "arg direction=\"in\" type=\"s\" name=\"fileName\"/>\n    </method>\n  "
+    "  <method name=\"appExit\"/>\n    <method name=\"isHardwareKeySupporte"
+    "d\">\n      <arg direction=\"out\" type=\"b\" name=\"hardwareKeySuppor"
+    "ted\"/>\n    </method>\n    <method name=\"refreshHardwareKeys\">\n   "
+    "   <arg direction=\"out\" type=\"b\" name=\"found\"/>\n    </method>\n"
+    "    <method name=\"lockAllDatabases\"/>\n    <method name=\"closeAllDa"
+    "tabases\"/>\n  </interface>\n\0"
+    "appExit\0\0closeAllDatabases\0"
+    "isHardwareKeySupported\0lockAllDatabases\0"
+    "openDatabase\0fileName\0pw\0keyFile\0"
+    "refreshHardwareKeys"
+};
+#undef QT_MOC_LITERAL
+
+static const uint qt_meta_data_MainWindowAdaptor[] = {
+
+ // content:
+       8,       // revision
+       0,       // classname
+       2,   14, // classinfo
+       8,   18, // methods
+       0,    0, // properties
+       0,    0, // enums/sets
+       0,    0, // constructors
+       0,       // flags
+       0,       // signalCount
+
+ // classinfo: key, value
+       1,    2,
+       3,    4,
+
+ // slots: name, argc, parameters, tag, flags
+       5,    0,   58,    6, 0x0a /* Public */,
+       7,    0,   59,    6, 0x0a /* Public */,
+       8,    0,   60,    6, 0x0a /* Public */,
+       9,    0,   61,    6, 0x0a /* Public */,
+      10,    1,   62,    6, 0x0a /* Public */,
+      10,    2,   65,    6, 0x0a /* Public */,
+      10,    3,   70,    6, 0x0a /* Public */,
+      14,    0,   77,    6, 0x0a /* Public */,
+
+ // slots: parameters
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Bool,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::QString,   11,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString,   11,   12,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString,   11,   12,   13,
+    QMetaType::Bool,
+
+       0        // eod
+};
+
+void MainWindowAdaptor::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+{
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        auto *_t = static_cast<MainWindowAdaptor *>(_o);
+        (void)_t;
+        switch (_id) {
+        case 0: _t->appExit(); break;
+        case 1: _t->closeAllDatabases(); break;
+        case 2: { bool _r = _t->isHardwareKeySupported();
+            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
+        case 3: _t->lockAllDatabases(); break;
+        case 4: _t->openDatabase((*reinterpret_cast< const QString(*)>(_a[1]))); break;
+        case 5: _t->openDatabase((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2]))); break;
+        case 6: _t->openDatabase((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< const QString(*)>(_a[2])),(*reinterpret_cast< const QString(*)>(_a[3]))); break;
+        case 7: { bool _r = _t->refreshHardwareKeys();
+            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
+        default: ;
+        }
+    }
+}
+
+QT_INIT_METAOBJECT const QMetaObject MainWindowAdaptor::staticMetaObject = { {
+    QMetaObject::SuperData::link<QDBusAbstractAdaptor::staticMetaObject>(),
+    qt_meta_stringdata_MainWindowAdaptor.data,
+    qt_meta_data_MainWindowAdaptor,
+    qt_static_metacall,
+    nullptr,
+    nullptr
+} };
+
+
+const QMetaObject *MainWindowAdaptor::metaObject() const
+{
+    return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
+}
+
+void *MainWindowAdaptor::qt_metacast(const char *_clname)
+{
+    if (!_clname) return nullptr;
+    if (!strcmp(_clname, qt_meta_stringdata_MainWindowAdaptor.stringdata0))
+        return static_cast<void*>(this);
+    return QDBusAbstractAdaptor::qt_metacast(_clname);
+}
+
+int MainWindowAdaptor::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+{
+    _id = QDBusAbstractAdaptor::qt_metacall(_c, _id, _a);
+    if (_id < 0)
+        return _id;
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        if (_id < 8)
+            qt_static_metacall(this, _c, _id, _a);
+        _id -= 8;
+    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        if (_id < 8)
+            *reinterpret_cast<int*>(_a[0]) = -1;
+        _id -= 8;
+    }
+    return _id;
+}
+QT_WARNING_POP
+QT_END_MOC_NAMESPACE

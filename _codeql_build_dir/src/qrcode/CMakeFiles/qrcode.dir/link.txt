@@ -1,0 +1,2 @@
+/usr/bin/ar qc libqrcode.a CMakeFiles/qrcode.dir/qrcode_autogen/mocs_compilation.cpp.o CMakeFiles/qrcode.dir/QrCode.cpp.o
+/usr/bin/ranlib libqrcode.a

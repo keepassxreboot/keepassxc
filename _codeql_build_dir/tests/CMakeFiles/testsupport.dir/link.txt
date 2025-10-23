@@ -1,0 +1,2 @@
+/usr/bin/ar qc libtestsupport.a CMakeFiles/testsupport.dir/testsupport_autogen/mocs_compilation.cpp.o CMakeFiles/testsupport.dir/modeltest.cpp.o CMakeFiles/testsupport.dir/FailDevice.cpp.o CMakeFiles/testsupport.dir/mock/MockClock.cpp.o CMakeFiles/testsupport.dir/util/TemporaryFile.cpp.o
+/usr/bin/ranlib libtestsupport.a

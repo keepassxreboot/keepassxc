@@ -1,0 +1,2 @@
+/usr/bin/ar qc libzxcvbn.a CMakeFiles/zxcvbn.dir/zxcvbn_autogen/mocs_compilation.cpp.o CMakeFiles/zxcvbn.dir/zxcvbn.c.o
+/usr/bin/ranlib libzxcvbn.a

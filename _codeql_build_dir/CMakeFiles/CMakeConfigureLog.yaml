@@ -1,0 +1,1720 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/CMakeDetermineSystem.cmake:205 (message)"
+      - "CMakeLists.txt:19 (project)"
+    message: |
+      The system is: Linux - 6.11.0-1018-azure - x86_64
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/usr/local/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/local/share/cmake-3.31/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:19 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler: /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/cc 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
+      
+      The C compiler identification is GNU, found in:
+        /home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/3.31.6/CompilerIdC/a.out
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "/usr/local/share/cmake-3.31/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "/usr/local/share/cmake-3.31/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:19 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler: /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/c++ 
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
+      
+      The CXX compiler identification is GNU, found in:
+        /home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/3.31.6/CompilerIdCXX/a.out
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:74 (try_compile)"
+      - "/usr/local/share/cmake-3.31/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:19 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-SAJxRl"
+      binary: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-SAJxRl"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-SAJxRl'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_66754/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_66754.dir/build.make CMakeFiles/cmTC_66754.dir/build
+        gmake[1]: Entering directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-SAJxRl'
+        Building C object CMakeFiles/cmTC_66754.dir/CMakeCCompilerABI.c.o
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/cc   -v -o CMakeFiles/cmTC_66754.dir/CMakeCCompilerABI.c.o -c /usr/local/share/cmake-3.31/Modules/CMakeCCompilerABI.c
+        Using built-in specs.
+        COLLECT_GCC=/usr/bin/cc
+        OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa
+        OFFLOAD_TARGET_DEFAULT=1
+        Target: x86_64-linux-gnu
+        Configured with: ../src/configure -v --with-pkgversion='Ubuntu 13.3.0-6ubuntu2~24.04' --with-bugurl=file:///usr/share/doc/gcc-13/README.Bugs --enable-languages=c,ada,c++,go,d,fortran,objc,obj-c++,m2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-13 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/libexec --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-libstdcxx-backtrace --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --enable-libphobos-checking=release --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --enable-cet --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-13-fG75Ri/gcc-13-13.3.0/debian/tmp-nvptx/usr,amdgcn-amdhsa=/build/gcc-13-fG75Ri/gcc-13-13.3.0/debian/tmp-gcn/usr --enable-offload-defaulted --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --with-build-config=bootstrap-lto-lean --enable-link-serialization=2
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04) 
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_66754.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_66754.dir/'
+         /usr/libexec/gcc/x86_64-linux-gnu/13/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/local/share/cmake-3.31/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_66754.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccEGKy0h.s
+        GNU C17 (Ubuntu 13.3.0-6ubuntu2~24.04) version 13.3.0 (x86_64-linux-gnu)
+        	compiled by GNU C version 13.3.0, GMP version 6.3.0, MPFR version 4.2.1, MPC version 1.3.1, isl version isl-0.26-GMP
+        
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        ignoring nonexistent directory "/usr/local/include/x86_64-linux-gnu"
+        ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/13/include-fixed/x86_64-linux-gnu"
+        ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/13/include-fixed"
+        ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/13/../../../../x86_64-linux-gnu/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /usr/lib/gcc/x86_64-linux-gnu/13/include
+         /usr/local/include
+         /usr/include/x86_64-linux-gnu
+         /usr/include
+        End of search list.
+        Compiler executable checksum: 38987c28e967c64056a6454abdef726e
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_66754.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_66754.dir/'
+         as -v --64 -o CMakeFiles/cmTC_66754.dir/CMakeCCompilerABI.c.o /tmp/ccEGKy0h.s
+        GNU assembler version 2.42 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.42
+        COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/
+        LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_66754.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_66754.dir/CMakeCCompilerABI.c.'
+        Linking C executable cmTC_66754
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_66754.dir/link.txt --verbose=1
+        Using built-in specs.
+        COLLECT_GCC=/usr/bin/cc
+        COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper
+        OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa
+        OFFLOAD_TARGET_DEFAULT=1
+        Target: x86_64-linux-gnu
+        Configured with: ../src/configure -v --with-pkgversion='Ubuntu 13.3.0-6ubuntu2~24.04' --with-bugurl=file:///usr/share/doc/gcc-13/README.Bugs --enable-languages=c,ada,c++,go,d,fortran,objc,obj-c++,m2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-13 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/libexec --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-libstdcxx-backtrace --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --enable-libphobos-checking=release --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --enable-cet --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-13-fG75Ri/gcc-13-13.3.0/debian/tmp-nvptx/usr,amdgcn-amdhsa=/build/gcc-13-fG75Ri/gcc-13-13.3.0/debian/tmp-gcn/usr --enable-offload-defaulted --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --with-build-config=bootstrap-lto-lean --enable-link-serialization=2
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04) 
+        COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/
+        LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_66754' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_66754.'
+         /usr/libexec/gcc/x86_64-linux-gnu/13/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/ccum14Nd.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_66754 /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. -v CMakeFiles/cmTC_66754.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o
+        collect2 version 13.3.0
+        /usr/bin/ld -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/ccum14Nd.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_66754 /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. -v CMakeFiles/cmTC_66754.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o
+        GNU ld (GNU Binutils for Ubuntu) 2.42
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_66754' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_66754.'
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/cc  -v -Wl,-v CMakeFiles/cmTC_66754.dir/CMakeCCompilerABI.c.o -o cmTC_66754
+        gmake[1]: Leaving directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-SAJxRl'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:182 (message)"
+      - "/usr/local/share/cmake-3.31/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:19 (project)"
+    message: |
+      Parsed C implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/usr/lib/gcc/x86_64-linux-gnu/13/include]
+          add: [/usr/local/include]
+          add: [/usr/include/x86_64-linux-gnu]
+          add: [/usr/include]
+        end of search list found
+        collapse include dir [/usr/lib/gcc/x86_64-linux-gnu/13/include] ==> [/usr/lib/gcc/x86_64-linux-gnu/13/include]
+        collapse include dir [/usr/local/include] ==> [/usr/local/include]
+        collapse include dir [/usr/include/x86_64-linux-gnu] ==> [/usr/include/x86_64-linux-gnu]
+        collapse include dir [/usr/include] ==> [/usr/include]
+        implicit include dirs: [/usr/lib/gcc/x86_64-linux-gnu/13/include;/usr/local/include;/usr/include/x86_64-linux-gnu;/usr/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:218 (message)"
+      - "/usr/local/share/cmake-3.31/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:19 (project)"
+    message: |
+      Parsed C implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(\\.[a-z]+)?))("|,| |$)]
+        ignore line: [Change Dir: '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-SAJxRl']
+        ignore line: []
+        ignore line: [Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_66754/fast]
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_66754.dir/build.make CMakeFiles/cmTC_66754.dir/build]
+        ignore line: [gmake[1]: Entering directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-SAJxRl']
+        ignore line: [Building C object CMakeFiles/cmTC_66754.dir/CMakeCCompilerABI.c.o]
+        ignore line: [/home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/cc   -v -o CMakeFiles/cmTC_66754.dir/CMakeCCompilerABI.c.o -c /usr/local/share/cmake-3.31/Modules/CMakeCCompilerABI.c]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/usr/bin/cc]
+        ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa]
+        ignore line: [OFFLOAD_TARGET_DEFAULT=1]
+        ignore line: [Target: x86_64-linux-gnu]
+        ignore line: [Configured with: ../src/configure -v --with-pkgversion='Ubuntu 13.3.0-6ubuntu2~24.04' --with-bugurl=file:///usr/share/doc/gcc-13/README.Bugs --enable-languages=c ada c++ go d fortran objc obj-c++ m2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-13 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/libexec --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-libstdcxx-backtrace --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --enable-libphobos-checking=release --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --enable-cet --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32 m64 mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-13-fG75Ri/gcc-13-13.3.0/debian/tmp-nvptx/usr amdgcn-amdhsa=/build/gcc-13-fG75Ri/gcc-13-13.3.0/debian/tmp-gcn/usr --enable-offload-defaulted --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --with-build-config=bootstrap-lto-lean --enable-link-serialization=2]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_66754.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_66754.dir/']
+        ignore line: [ /usr/libexec/gcc/x86_64-linux-gnu/13/cc1 -quiet -v -imultiarch x86_64-linux-gnu /usr/local/share/cmake-3.31/Modules/CMakeCCompilerABI.c -quiet -dumpdir CMakeFiles/cmTC_66754.dir/ -dumpbase CMakeCCompilerABI.c.c -dumpbase-ext .c -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccEGKy0h.s]
+        ignore line: [GNU C17 (Ubuntu 13.3.0-6ubuntu2~24.04) version 13.3.0 (x86_64-linux-gnu)]
+        ignore line: [	compiled by GNU C version 13.3.0  GMP version 6.3.0  MPFR version 4.2.1  MPC version 1.3.1  isl version isl-0.26-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [ignoring nonexistent directory "/usr/local/include/x86_64-linux-gnu"]
+        ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/13/include-fixed/x86_64-linux-gnu"]
+        ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/13/include-fixed"]
+        ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/13/../../../../x86_64-linux-gnu/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /usr/lib/gcc/x86_64-linux-gnu/13/include]
+        ignore line: [ /usr/local/include]
+        ignore line: [ /usr/include/x86_64-linux-gnu]
+        ignore line: [ /usr/include]
+        ignore line: [End of search list.]
+        ignore line: [Compiler executable checksum: 38987c28e967c64056a6454abdef726e]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_66754.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_66754.dir/']
+        ignore line: [ as -v --64 -o CMakeFiles/cmTC_66754.dir/CMakeCCompilerABI.c.o /tmp/ccEGKy0h.s]
+        ignore line: [GNU assembler version 2.42 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.42]
+        ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/]
+        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_66754.dir/CMakeCCompilerABI.c.o' '-c' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_66754.dir/CMakeCCompilerABI.c.']
+        ignore line: [Linking C executable cmTC_66754]
+        ignore line: [/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_66754.dir/link.txt --verbose=1]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/usr/bin/cc]
+        ignore line: [COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper]
+        ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa]
+        ignore line: [OFFLOAD_TARGET_DEFAULT=1]
+        ignore line: [Target: x86_64-linux-gnu]
+        ignore line: [Configured with: ../src/configure -v --with-pkgversion='Ubuntu 13.3.0-6ubuntu2~24.04' --with-bugurl=file:///usr/share/doc/gcc-13/README.Bugs --enable-languages=c ada c++ go d fortran objc obj-c++ m2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-13 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/libexec --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-libstdcxx-backtrace --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --enable-libphobos-checking=release --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --enable-cet --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32 m64 mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-13-fG75Ri/gcc-13-13.3.0/debian/tmp-nvptx/usr amdgcn-amdhsa=/build/gcc-13-fG75Ri/gcc-13-13.3.0/debian/tmp-gcn/usr --enable-offload-defaulted --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --with-build-config=bootstrap-lto-lean --enable-link-serialization=2]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04) ]
+        ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/]
+        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_66754' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_66754.']
+        link line: [ /usr/libexec/gcc/x86_64-linux-gnu/13/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/ccum14Nd.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_66754 /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. -v CMakeFiles/cmTC_66754.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o]
+          arg [/usr/libexec/gcc/x86_64-linux-gnu/13/collect2] ==> ignore
+          arg [-plugin] ==> ignore
+          arg [/usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so] ==> ignore
+          arg [-plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccum14Nd.res] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [--build-id] ==> ignore
+          arg [--eh-frame-hdr] ==> ignore
+          arg [-m] ==> ignore
+          arg [elf_x86_64] ==> ignore
+          arg [--hash-style=gnu] ==> ignore
+          arg [--as-needed] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+          arg [-pie] ==> ignore
+          arg [-znow] ==> ignore
+          arg [-zrelro] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_66754] ==> ignore
+          arg [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o]
+          arg [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o]
+          arg [/usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o]
+          arg [-L/usr/lib/gcc/x86_64-linux-gnu/13] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/13]
+          arg [-L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu]
+          arg [-L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib]
+          arg [-L/lib/x86_64-linux-gnu] ==> dir [/lib/x86_64-linux-gnu]
+          arg [-L/lib/../lib] ==> dir [/lib/../lib]
+          arg [-L/usr/lib/x86_64-linux-gnu] ==> dir [/usr/lib/x86_64-linux-gnu]
+          arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
+          arg [-L/usr/lib/gcc/x86_64-linux-gnu/13/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../..]
+          arg [-v] ==> ignore
+          arg [CMakeFiles/cmTC_66754.dir/CMakeCCompilerABI.c.o] ==> ignore
+          arg [-lgcc] ==> lib [gcc]
+          arg [--push-state] ==> ignore
+          arg [--as-needed] ==> ignore
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [--pop-state] ==> ignore
+          arg [-lc] ==> lib [c]
+          arg [-lgcc] ==> lib [gcc]
+          arg [--push-state] ==> ignore
+          arg [--as-needed] ==> ignore
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [--pop-state] ==> ignore
+          arg [/usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o]
+          arg [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o]
+        ignore line: [collect2 version 13.3.0]
+        ignore line: [/usr/bin/ld -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/ccum14Nd.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_66754 /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. -v CMakeFiles/cmTC_66754.dir/CMakeCCompilerABI.c.o -lgcc --push-state --as-needed -lgcc_s --pop-state -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o]
+        linker tool for 'C': /usr/bin/ld
+        collapse obj [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o] ==> [/usr/lib/x86_64-linux-gnu/Scrt1.o]
+        collapse obj [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o] ==> [/usr/lib/x86_64-linux-gnu/crti.o]
+        collapse obj [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o] ==> [/usr/lib/x86_64-linux-gnu/crtn.o]
+        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/13] ==> [/usr/lib/gcc/x86_64-linux-gnu/13]
+        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu] ==> [/usr/lib/x86_64-linux-gnu]
+        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib] ==> [/usr/lib]
+        collapse library dir [/lib/x86_64-linux-gnu] ==> [/lib/x86_64-linux-gnu]
+        collapse library dir [/lib/../lib] ==> [/lib]
+        collapse library dir [/usr/lib/x86_64-linux-gnu] ==> [/usr/lib/x86_64-linux-gnu]
+        collapse library dir [/usr/lib/../lib] ==> [/usr/lib]
+        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../..] ==> [/usr/lib]
+        implicit libs: [gcc;gcc_s;c;gcc;gcc_s]
+        implicit objs: [/usr/lib/x86_64-linux-gnu/Scrt1.o;/usr/lib/x86_64-linux-gnu/crti.o;/usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o;/usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o;/usr/lib/x86_64-linux-gnu/crtn.o]
+        implicit dirs: [/usr/lib/gcc/x86_64-linux-gnu/13;/usr/lib/x86_64-linux-gnu;/usr/lib;/lib/x86_64-linux-gnu;/lib]
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/Internal/CMakeDetermineLinkerId.cmake:40 (message)"
+      - "/usr/local/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:255 (cmake_determine_linker_id)"
+      - "/usr/local/share/cmake-3.31/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:19 (project)"
+    message: |
+      Running the C compiler's linker: "/usr/bin/ld" "-v"
+      GNU ld (GNU Binutils for Ubuntu) 2.42
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:74 (try_compile)"
+      - "/usr/local/share/cmake-3.31/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:19 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-FHOyJf"
+      binary: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-FHOyJf"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_CXX_SCAN_FOR_MODULES: "OFF"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-FHOyJf'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_9daf7/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_9daf7.dir/build.make CMakeFiles/cmTC_9daf7.dir/build
+        gmake[1]: Entering directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-FHOyJf'
+        Building CXX object CMakeFiles/cmTC_9daf7.dir/CMakeCXXCompilerABI.cpp.o
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/c++   -v -o CMakeFiles/cmTC_9daf7.dir/CMakeCXXCompilerABI.cpp.o -c /usr/local/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp
+        Using built-in specs.
+        COLLECT_GCC=/usr/bin/c++
+        OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa
+        OFFLOAD_TARGET_DEFAULT=1
+        Target: x86_64-linux-gnu
+        Configured with: ../src/configure -v --with-pkgversion='Ubuntu 13.3.0-6ubuntu2~24.04' --with-bugurl=file:///usr/share/doc/gcc-13/README.Bugs --enable-languages=c,ada,c++,go,d,fortran,objc,obj-c++,m2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-13 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/libexec --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-libstdcxx-backtrace --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --enable-libphobos-checking=release --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --enable-cet --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-13-fG75Ri/gcc-13-13.3.0/debian/tmp-nvptx/usr,amdgcn-amdhsa=/build/gcc-13-fG75Ri/gcc-13-13.3.0/debian/tmp-gcn/usr --enable-offload-defaulted --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --with-build-config=bootstrap-lto-lean --enable-link-serialization=2
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04) 
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_9daf7.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_9daf7.dir/'
+         /usr/libexec/gcc/x86_64-linux-gnu/13/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE /usr/local/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_9daf7.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccFMQjXk.s
+        GNU C++17 (Ubuntu 13.3.0-6ubuntu2~24.04) version 13.3.0 (x86_64-linux-gnu)
+        	compiled by GNU C version 13.3.0, GMP version 6.3.0, MPFR version 4.2.1, MPC version 1.3.1, isl version isl-0.26-GMP
+        
+        GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+        ignoring duplicate directory "/usr/include/x86_64-linux-gnu/c++/13"
+        ignoring nonexistent directory "/usr/local/include/x86_64-linux-gnu"
+        ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/13/include-fixed/x86_64-linux-gnu"
+        ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/13/include-fixed"
+        ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/13/../../../../x86_64-linux-gnu/include"
+        #include "..." search starts here:
+        #include <...> search starts here:
+         /usr/include/c++/13
+         /usr/include/x86_64-linux-gnu/c++/13
+         /usr/include/c++/13/backward
+         /usr/lib/gcc/x86_64-linux-gnu/13/include
+         /usr/local/include
+         /usr/include/x86_64-linux-gnu
+         /usr/include
+        End of search list.
+        Compiler executable checksum: c81c05345ce537099dafd5580045814a
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_9daf7.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_9daf7.dir/'
+         as -v --64 -o CMakeFiles/cmTC_9daf7.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccFMQjXk.s
+        GNU assembler version 2.42 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.42
+        COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/
+        LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_9daf7.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_9daf7.dir/CMakeCXXCompilerABI.cpp.'
+        Linking CXX executable cmTC_9daf7
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9daf7.dir/link.txt --verbose=1
+        Using built-in specs.
+        COLLECT_GCC=/usr/bin/c++
+        COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper
+        OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa
+        OFFLOAD_TARGET_DEFAULT=1
+        Target: x86_64-linux-gnu
+        Configured with: ../src/configure -v --with-pkgversion='Ubuntu 13.3.0-6ubuntu2~24.04' --with-bugurl=file:///usr/share/doc/gcc-13/README.Bugs --enable-languages=c,ada,c++,go,d,fortran,objc,obj-c++,m2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-13 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/libexec --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-libstdcxx-backtrace --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --enable-libphobos-checking=release --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --enable-cet --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-13-fG75Ri/gcc-13-13.3.0/debian/tmp-nvptx/usr,amdgcn-amdhsa=/build/gcc-13-fG75Ri/gcc-13-13.3.0/debian/tmp-gcn/usr --enable-offload-defaulted --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --with-build-config=bootstrap-lto-lean --enable-link-serialization=2
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04) 
+        COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/
+        LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_9daf7' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_9daf7.'
+         /usr/libexec/gcc/x86_64-linux-gnu/13/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/ccErahro.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_9daf7 /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. -v CMakeFiles/cmTC_9daf7.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o
+        collect2 version 13.3.0
+        /usr/bin/ld -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/ccErahro.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_9daf7 /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. -v CMakeFiles/cmTC_9daf7.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o
+        GNU ld (GNU Binutils for Ubuntu) 2.42
+        COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_9daf7' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_9daf7.'
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/c++  -v -Wl,-v CMakeFiles/cmTC_9daf7.dir/CMakeCXXCompilerABI.cpp.o -o cmTC_9daf7
+        gmake[1]: Leaving directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-FHOyJf'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:182 (message)"
+      - "/usr/local/share/cmake-3.31/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:19 (project)"
+    message: |
+      Parsed CXX implicit include dir info: rv=done
+        found start of include info
+        found start of implicit include info
+          add: [/usr/include/c++/13]
+          add: [/usr/include/x86_64-linux-gnu/c++/13]
+          add: [/usr/include/c++/13/backward]
+          add: [/usr/lib/gcc/x86_64-linux-gnu/13/include]
+          add: [/usr/local/include]
+          add: [/usr/include/x86_64-linux-gnu]
+          add: [/usr/include]
+        end of search list found
+        collapse include dir [/usr/include/c++/13] ==> [/usr/include/c++/13]
+        collapse include dir [/usr/include/x86_64-linux-gnu/c++/13] ==> [/usr/include/x86_64-linux-gnu/c++/13]
+        collapse include dir [/usr/include/c++/13/backward] ==> [/usr/include/c++/13/backward]
+        collapse include dir [/usr/lib/gcc/x86_64-linux-gnu/13/include] ==> [/usr/lib/gcc/x86_64-linux-gnu/13/include]
+        collapse include dir [/usr/local/include] ==> [/usr/local/include]
+        collapse include dir [/usr/include/x86_64-linux-gnu] ==> [/usr/include/x86_64-linux-gnu]
+        collapse include dir [/usr/include] ==> [/usr/include]
+        implicit include dirs: [/usr/include/c++/13;/usr/include/x86_64-linux-gnu/c++/13;/usr/include/c++/13/backward;/usr/lib/gcc/x86_64-linux-gnu/13/include;/usr/local/include;/usr/include/x86_64-linux-gnu;/usr/include]
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:218 (message)"
+      - "/usr/local/share/cmake-3.31/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:19 (project)"
+    message: |
+      Parsed CXX implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(\\.[a-z]+)?))("|,| |$)]
+        ignore line: [Change Dir: '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-FHOyJf']
+        ignore line: []
+        ignore line: [Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_9daf7/fast]
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_9daf7.dir/build.make CMakeFiles/cmTC_9daf7.dir/build]
+        ignore line: [gmake[1]: Entering directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-FHOyJf']
+        ignore line: [Building CXX object CMakeFiles/cmTC_9daf7.dir/CMakeCXXCompilerABI.cpp.o]
+        ignore line: [/home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/c++   -v -o CMakeFiles/cmTC_9daf7.dir/CMakeCXXCompilerABI.cpp.o -c /usr/local/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/usr/bin/c++]
+        ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa]
+        ignore line: [OFFLOAD_TARGET_DEFAULT=1]
+        ignore line: [Target: x86_64-linux-gnu]
+        ignore line: [Configured with: ../src/configure -v --with-pkgversion='Ubuntu 13.3.0-6ubuntu2~24.04' --with-bugurl=file:///usr/share/doc/gcc-13/README.Bugs --enable-languages=c ada c++ go d fortran objc obj-c++ m2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-13 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/libexec --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-libstdcxx-backtrace --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --enable-libphobos-checking=release --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --enable-cet --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32 m64 mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-13-fG75Ri/gcc-13-13.3.0/debian/tmp-nvptx/usr amdgcn-amdhsa=/build/gcc-13-fG75Ri/gcc-13-13.3.0/debian/tmp-gcn/usr --enable-offload-defaulted --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --with-build-config=bootstrap-lto-lean --enable-link-serialization=2]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04) ]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_9daf7.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_9daf7.dir/']
+        ignore line: [ /usr/libexec/gcc/x86_64-linux-gnu/13/cc1plus -quiet -v -imultiarch x86_64-linux-gnu -D_GNU_SOURCE /usr/local/share/cmake-3.31/Modules/CMakeCXXCompilerABI.cpp -quiet -dumpdir CMakeFiles/cmTC_9daf7.dir/ -dumpbase CMakeCXXCompilerABI.cpp.cpp -dumpbase-ext .cpp -mtune=generic -march=x86-64 -version -fasynchronous-unwind-tables -fstack-protector-strong -Wformat -Wformat-security -fstack-clash-protection -fcf-protection -o /tmp/ccFMQjXk.s]
+        ignore line: [GNU C++17 (Ubuntu 13.3.0-6ubuntu2~24.04) version 13.3.0 (x86_64-linux-gnu)]
+        ignore line: [	compiled by GNU C version 13.3.0  GMP version 6.3.0  MPFR version 4.2.1  MPC version 1.3.1  isl version isl-0.26-GMP]
+        ignore line: []
+        ignore line: [GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072]
+        ignore line: [ignoring duplicate directory "/usr/include/x86_64-linux-gnu/c++/13"]
+        ignore line: [ignoring nonexistent directory "/usr/local/include/x86_64-linux-gnu"]
+        ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/13/include-fixed/x86_64-linux-gnu"]
+        ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/13/include-fixed"]
+        ignore line: [ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/13/../../../../x86_64-linux-gnu/include"]
+        ignore line: [#include "..." search starts here:]
+        ignore line: [#include <...> search starts here:]
+        ignore line: [ /usr/include/c++/13]
+        ignore line: [ /usr/include/x86_64-linux-gnu/c++/13]
+        ignore line: [ /usr/include/c++/13/backward]
+        ignore line: [ /usr/lib/gcc/x86_64-linux-gnu/13/include]
+        ignore line: [ /usr/local/include]
+        ignore line: [ /usr/include/x86_64-linux-gnu]
+        ignore line: [ /usr/include]
+        ignore line: [End of search list.]
+        ignore line: [Compiler executable checksum: c81c05345ce537099dafd5580045814a]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_9daf7.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_9daf7.dir/']
+        ignore line: [ as -v --64 -o CMakeFiles/cmTC_9daf7.dir/CMakeCXXCompilerABI.cpp.o /tmp/ccFMQjXk.s]
+        ignore line: [GNU assembler version 2.42 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.42]
+        ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/]
+        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'CMakeFiles/cmTC_9daf7.dir/CMakeCXXCompilerABI.cpp.o' '-c' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'CMakeFiles/cmTC_9daf7.dir/CMakeCXXCompilerABI.cpp.']
+        ignore line: [Linking CXX executable cmTC_9daf7]
+        ignore line: [/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9daf7.dir/link.txt --verbose=1]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/usr/bin/c++]
+        ignore line: [COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper]
+        ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa]
+        ignore line: [OFFLOAD_TARGET_DEFAULT=1]
+        ignore line: [Target: x86_64-linux-gnu]
+        ignore line: [Configured with: ../src/configure -v --with-pkgversion='Ubuntu 13.3.0-6ubuntu2~24.04' --with-bugurl=file:///usr/share/doc/gcc-13/README.Bugs --enable-languages=c ada c++ go d fortran objc obj-c++ m2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-13 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/libexec --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-libstdcxx-backtrace --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --enable-libphobos-checking=release --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --enable-cet --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32 m64 mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-13-fG75Ri/gcc-13-13.3.0/debian/tmp-nvptx/usr amdgcn-amdhsa=/build/gcc-13-fG75Ri/gcc-13-13.3.0/debian/tmp-gcn/usr --enable-offload-defaulted --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --with-build-config=bootstrap-lto-lean --enable-link-serialization=2]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04) ]
+        ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/]
+        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/]
+        ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_9daf7' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-dumpdir' 'cmTC_9daf7.']
+        link line: [ /usr/libexec/gcc/x86_64-linux-gnu/13/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/ccErahro.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_9daf7 /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. -v CMakeFiles/cmTC_9daf7.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o]
+          arg [/usr/libexec/gcc/x86_64-linux-gnu/13/collect2] ==> ignore
+          arg [-plugin] ==> ignore
+          arg [/usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so] ==> ignore
+          arg [-plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/ccErahro.res] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [--build-id] ==> ignore
+          arg [--eh-frame-hdr] ==> ignore
+          arg [-m] ==> ignore
+          arg [elf_x86_64] ==> ignore
+          arg [--hash-style=gnu] ==> ignore
+          arg [--as-needed] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+          arg [-pie] ==> ignore
+          arg [-znow] ==> ignore
+          arg [-zrelro] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_9daf7] ==> ignore
+          arg [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o]
+          arg [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o]
+          arg [/usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o]
+          arg [-L/usr/lib/gcc/x86_64-linux-gnu/13] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/13]
+          arg [-L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu]
+          arg [-L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib]
+          arg [-L/lib/x86_64-linux-gnu] ==> dir [/lib/x86_64-linux-gnu]
+          arg [-L/lib/../lib] ==> dir [/lib/../lib]
+          arg [-L/usr/lib/x86_64-linux-gnu] ==> dir [/usr/lib/x86_64-linux-gnu]
+          arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
+          arg [-L/usr/lib/gcc/x86_64-linux-gnu/13/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../..]
+          arg [-v] ==> ignore
+          arg [CMakeFiles/cmTC_9daf7.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+          arg [-lstdc++] ==> lib [stdc++]
+          arg [-lm] ==> lib [m]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lgcc] ==> lib [gcc]
+          arg [-lc] ==> lib [c]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lgcc] ==> lib [gcc]
+          arg [/usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o]
+          arg [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o] ==> obj [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o]
+        ignore line: [collect2 version 13.3.0]
+        ignore line: [/usr/bin/ld -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/ccErahro.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_9daf7 /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. -v CMakeFiles/cmTC_9daf7.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o]
+        linker tool for 'CXX': /usr/bin/ld
+        collapse obj [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o] ==> [/usr/lib/x86_64-linux-gnu/Scrt1.o]
+        collapse obj [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o] ==> [/usr/lib/x86_64-linux-gnu/crti.o]
+        collapse obj [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o] ==> [/usr/lib/x86_64-linux-gnu/crtn.o]
+        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/13] ==> [/usr/lib/gcc/x86_64-linux-gnu/13]
+        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu] ==> [/usr/lib/x86_64-linux-gnu]
+        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib] ==> [/usr/lib]
+        collapse library dir [/lib/x86_64-linux-gnu] ==> [/lib/x86_64-linux-gnu]
+        collapse library dir [/lib/../lib] ==> [/lib]
+        collapse library dir [/usr/lib/x86_64-linux-gnu] ==> [/usr/lib/x86_64-linux-gnu]
+        collapse library dir [/usr/lib/../lib] ==> [/usr/lib]
+        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../..] ==> [/usr/lib]
+        implicit libs: [stdc++;m;gcc_s;gcc;c;gcc_s;gcc]
+        implicit objs: [/usr/lib/x86_64-linux-gnu/Scrt1.o;/usr/lib/x86_64-linux-gnu/crti.o;/usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o;/usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o;/usr/lib/x86_64-linux-gnu/crtn.o]
+        implicit dirs: [/usr/lib/gcc/x86_64-linux-gnu/13;/usr/lib/x86_64-linux-gnu;/usr/lib;/lib/x86_64-linux-gnu;/lib]
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/Internal/CMakeDetermineLinkerId.cmake:40 (message)"
+      - "/usr/local/share/cmake-3.31/Modules/CMakeDetermineCompilerABI.cmake:255 (cmake_determine_linker_id)"
+      - "/usr/local/share/cmake-3.31/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:19 (project)"
+    message: |
+      Running the CXX compiler's linker: "/usr/bin/ld" "-v"
+      GNU ld (GNU Binutils for Ubuntu) 2.42
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/Internal/CheckSourceCompiles.cmake:108 (try_compile)"
+      - "/usr/local/share/cmake-3.31/Modules/Internal/CheckLinkerFlag.cmake:37 (cmake_check_source_compiles)"
+      - "/usr/local/share/cmake-3.31/Modules/CheckPIESupported.cmake:123 (cmake_check_linker_flag)"
+      - "CMakeLists.txt:205 (check_pie_supported)"
+    directories:
+      source: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-AjwvDf"
+      binary: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-AjwvDf"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/runner/work/keepassxc/keepassxc/cmake"
+    buildResult:
+      variable: "CMAKE_C_LINK_PIE_SUPPORTED"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-AjwvDf'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_ec86d/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_ec86d.dir/build.make CMakeFiles/cmTC_ec86d.dir/build
+        gmake[1]: Entering directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-AjwvDf'
+        Building C object CMakeFiles/cmTC_ec86d.dir/src.c.o
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/cc -DCMAKE_C_LINK_PIE_SUPPORTED   -o CMakeFiles/cmTC_ec86d.dir/src.c.o -c /home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-AjwvDf/src.c
+        Linking C executable cmTC_ec86d
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ec86d.dir/link.txt --verbose=1
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/cc -fPIE -pie CMakeFiles/cmTC_ec86d.dir/src.c.o -o cmTC_ec86d
+        gmake[1]: Leaving directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-AjwvDf'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/Internal/CheckSourceCompiles.cmake:108 (try_compile)"
+      - "/usr/local/share/cmake-3.31/Modules/Internal/CheckLinkerFlag.cmake:37 (cmake_check_source_compiles)"
+      - "/usr/local/share/cmake-3.31/Modules/CheckPIESupported.cmake:133 (cmake_check_linker_flag)"
+      - "CMakeLists.txt:205 (check_pie_supported)"
+    directories:
+      source: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-cWefAU"
+      binary: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-cWefAU"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/runner/work/keepassxc/keepassxc/cmake"
+    buildResult:
+      variable: "CMAKE_C_LINK_NO_PIE_SUPPORTED"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-cWefAU'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_a582a/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_a582a.dir/build.make CMakeFiles/cmTC_a582a.dir/build
+        gmake[1]: Entering directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-cWefAU'
+        Building C object CMakeFiles/cmTC_a582a.dir/src.c.o
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/cc -DCMAKE_C_LINK_NO_PIE_SUPPORTED   -o CMakeFiles/cmTC_a582a.dir/src.c.o -c /home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-cWefAU/src.c
+        Linking C executable cmTC_a582a
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a582a.dir/link.txt --verbose=1
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/cc -no-pie CMakeFiles/cmTC_a582a.dir/src.c.o -o cmTC_a582a
+        gmake[1]: Leaving directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-cWefAU'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/Internal/CheckSourceCompiles.cmake:108 (try_compile)"
+      - "/usr/local/share/cmake-3.31/Modules/Internal/CheckLinkerFlag.cmake:37 (cmake_check_source_compiles)"
+      - "/usr/local/share/cmake-3.31/Modules/CheckPIESupported.cmake:123 (cmake_check_linker_flag)"
+      - "CMakeLists.txt:205 (check_pie_supported)"
+    directories:
+      source: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-Q9kviU"
+      binary: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-Q9kviU"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_C_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/runner/work/keepassxc/keepassxc/cmake"
+    buildResult:
+      variable: "CMAKE_CXX_LINK_PIE_SUPPORTED"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-Q9kviU'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_111df/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_111df.dir/build.make CMakeFiles/cmTC_111df.dir/build
+        gmake[1]: Entering directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-Q9kviU'
+        Building CXX object CMakeFiles/cmTC_111df.dir/src.cxx.o
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/c++ -DCMAKE_CXX_LINK_PIE_SUPPORTED   -o CMakeFiles/cmTC_111df.dir/src.cxx.o -c /home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-Q9kviU/src.cxx
+        Linking CXX executable cmTC_111df
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_111df.dir/link.txt --verbose=1
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/c++ -fPIE -pie CMakeFiles/cmTC_111df.dir/src.cxx.o -o cmTC_111df
+        gmake[1]: Leaving directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-Q9kviU'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/Internal/CheckSourceCompiles.cmake:108 (try_compile)"
+      - "/usr/local/share/cmake-3.31/Modules/Internal/CheckLinkerFlag.cmake:37 (cmake_check_source_compiles)"
+      - "/usr/local/share/cmake-3.31/Modules/CheckPIESupported.cmake:133 (cmake_check_linker_flag)"
+      - "CMakeLists.txt:205 (check_pie_supported)"
+    directories:
+      source: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-qBVx0E"
+      binary: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-qBVx0E"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_C_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/runner/work/keepassxc/keepassxc/cmake"
+    buildResult:
+      variable: "CMAKE_CXX_LINK_NO_PIE_SUPPORTED"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-qBVx0E'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_ef906/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_ef906.dir/build.make CMakeFiles/cmTC_ef906.dir/build
+        gmake[1]: Entering directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-qBVx0E'
+        Building CXX object CMakeFiles/cmTC_ef906.dir/src.cxx.o
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/c++ -DCMAKE_CXX_LINK_NO_PIE_SUPPORTED   -o CMakeFiles/cmTC_ef906.dir/src.cxx.o -c /home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-qBVx0E/src.cxx
+        Linking CXX executable cmTC_ef906
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ef906.dir/link.txt --verbose=1
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/c++ -no-pie CMakeFiles/cmTC_ef906.dir/src.cxx.o -o cmTC_ef906
+        gmake[1]: Leaving directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-qBVx0E'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/FindOpenMP.cmake:252 (try_compile)"
+      - "/usr/local/share/cmake-3.31/Modules/FindOpenMP.cmake:522 (_OPENMP_GET_FLAGS)"
+      - "CMakeLists.txt:299 (find_package)"
+    description: "Detecting C OpenMP compiler info"
+    directories:
+      source: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-fgxhcL"
+      binary: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-fgxhcL"
+    cmakeVariables:
+      CMAKE_CXX_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_C_FLAGS: " -fno-common"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_C_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/runner/work/keepassxc/keepassxc/cmake"
+      CMAKE_POSITION_INDEPENDENT_CODE: "ON"
+    buildResult:
+      variable: "OpenMP_COMPILE_RESULT_C_fopenmp"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-fgxhcL'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_17f19/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_17f19.dir/build.make CMakeFiles/cmTC_17f19.dir/build
+        gmake[1]: Entering directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-fgxhcL'
+        Building C object CMakeFiles/cmTC_17f19.dir/OpenMPTryFlag.c.o
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/cc   -fno-common -fopenmp -fPIE -o CMakeFiles/cmTC_17f19.dir/OpenMPTryFlag.c.o -c /home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-fgxhcL/OpenMPTryFlag.c
+        Linking C executable cmTC_17f19
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_17f19.dir/link.txt --verbose=1
+        Using built-in specs.
+        COLLECT_GCC=/usr/bin/cc
+        COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper
+        OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa
+        OFFLOAD_TARGET_DEFAULT=1
+        Target: x86_64-linux-gnu
+        Configured with: ../src/configure -v --with-pkgversion='Ubuntu 13.3.0-6ubuntu2~24.04' --with-bugurl=file:///usr/share/doc/gcc-13/README.Bugs --enable-languages=c,ada,c++,go,d,fortran,objc,obj-c++,m2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-13 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/libexec --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-libstdcxx-backtrace --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --enable-libphobos-checking=release --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --enable-cet --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-13-fG75Ri/gcc-13-13.3.0/debian/tmp-nvptx/usr,amdgcn-amdhsa=/build/gcc-13-fG75Ri/gcc-13-13.3.0/debian/tmp-gcn/usr --enable-offload-defaulted --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --with-build-config=bootstrap-lto-lean --enable-link-serialization=2
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04) 
+        COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/
+        LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/
+        Reading specs from /usr/lib/gcc/x86_64-linux-gnu/13/libgomp.spec
+        COLLECT_GCC_OPTIONS='-fno-common' '-fopenmp' '-v' '-o' 'cmTC_17f19' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'cmTC_17f19.'
+         /usr/libexec/gcc/x86_64-linux-gnu/13/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/cccr2Xpm.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_17f19 /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o /usr/lib/gcc/x86_64-linux-gnu/13/crtoffloadbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. CMakeFiles/cmTC_17f19.dir/OpenMPTryFlag.c.o -lgomp -lgcc --push-state --as-needed -lgcc_s --pop-state -lpthread -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o /usr/lib/gcc/x86_64-linux-gnu/13/crtoffloadend.o
+        COLLECT_GCC_OPTIONS='-fno-common' '-fopenmp' '-v' '-o' 'cmTC_17f19' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'cmTC_17f19.'
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/cc  -fno-common -fopenmp -v CMakeFiles/cmTC_17f19.dir/OpenMPTryFlag.c.o -o cmTC_17f19
+        gmake[1]: Leaving directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-fgxhcL'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/FindOpenMP.cmake:296 (message)"
+      - "/usr/local/share/cmake-3.31/Modules/FindOpenMP.cmake:522 (_OPENMP_GET_FLAGS)"
+      - "CMakeLists.txt:299 (find_package)"
+    message: |
+      Parsed C OpenMP implicit link information from above output:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        ignore line: [Change Dir: '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-fgxhcL']
+        ignore line: []
+        ignore line: [Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_17f19/fast]
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_17f19.dir/build.make CMakeFiles/cmTC_17f19.dir/build]
+        ignore line: [gmake[1]: Entering directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-fgxhcL']
+        ignore line: [Building C object CMakeFiles/cmTC_17f19.dir/OpenMPTryFlag.c.o]
+        ignore line: [/home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/cc   -fno-common -fopenmp -fPIE -o CMakeFiles/cmTC_17f19.dir/OpenMPTryFlag.c.o -c /home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-fgxhcL/OpenMPTryFlag.c]
+        ignore line: [Linking C executable cmTC_17f19]
+        ignore line: [/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_17f19.dir/link.txt --verbose=1]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/usr/bin/cc]
+        ignore line: [COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper]
+        ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa]
+        ignore line: [OFFLOAD_TARGET_DEFAULT=1]
+        ignore line: [Target: x86_64-linux-gnu]
+        ignore line: [Configured with: ../src/configure -v --with-pkgversion='Ubuntu 13.3.0-6ubuntu2~24.04' --with-bugurl=file:///usr/share/doc/gcc-13/README.Bugs --enable-languages=c ada c++ go d fortran objc obj-c++ m2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-13 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/libexec --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-libstdcxx-backtrace --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --enable-libphobos-checking=release --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --enable-cet --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32 m64 mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-13-fG75Ri/gcc-13-13.3.0/debian/tmp-nvptx/usr amdgcn-amdhsa=/build/gcc-13-fG75Ri/gcc-13-13.3.0/debian/tmp-gcn/usr --enable-offload-defaulted --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --with-build-config=bootstrap-lto-lean --enable-link-serialization=2]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04) ]
+        ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/]
+        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/]
+        ignore line: [Reading specs from /usr/lib/gcc/x86_64-linux-gnu/13/libgomp.spec]
+        ignore line: [COLLECT_GCC_OPTIONS='-fno-common' '-fopenmp' '-v' '-o' 'cmTC_17f19' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'cmTC_17f19.']
+        link line: [ /usr/libexec/gcc/x86_64-linux-gnu/13/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/cccr2Xpm.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_17f19 /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o /usr/lib/gcc/x86_64-linux-gnu/13/crtoffloadbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. CMakeFiles/cmTC_17f19.dir/OpenMPTryFlag.c.o -lgomp -lgcc --push-state --as-needed -lgcc_s --pop-state -lpthread -lc -lgcc --push-state --as-needed -lgcc_s --pop-state /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o /usr/lib/gcc/x86_64-linux-gnu/13/crtoffloadend.o]
+          arg [/usr/libexec/gcc/x86_64-linux-gnu/13/collect2] ==> ignore
+          arg [-plugin] ==> ignore
+          arg [/usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so] ==> ignore
+          arg [-plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/cccr2Xpm.res] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lpthread] ==> ignore
+          arg [-plugin-opt=-pass-through=-lc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [--build-id] ==> ignore
+          arg [--eh-frame-hdr] ==> ignore
+          arg [-m] ==> ignore
+          arg [elf_x86_64] ==> ignore
+          arg [--hash-style=gnu] ==> ignore
+          arg [--as-needed] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+          arg [-pie] ==> ignore
+          arg [-znow] ==> ignore
+          arg [-zrelro] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_17f19] ==> ignore
+          arg [-L/usr/lib/gcc/x86_64-linux-gnu/13] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/13]
+          arg [-L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu]
+          arg [-L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib]
+          arg [-L/lib/x86_64-linux-gnu] ==> dir [/lib/x86_64-linux-gnu]
+          arg [-L/lib/../lib] ==> dir [/lib/../lib]
+          arg [-L/usr/lib/x86_64-linux-gnu] ==> dir [/usr/lib/x86_64-linux-gnu]
+          arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
+          arg [-L/usr/lib/gcc/x86_64-linux-gnu/13/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../..]
+          arg [CMakeFiles/cmTC_17f19.dir/OpenMPTryFlag.c.o] ==> ignore
+          arg [-lgomp] ==> lib [gomp]
+          arg [-lgcc] ==> lib [gcc]
+          arg [--push-state] ==> ignore
+          arg [--as-needed] ==> ignore
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [--pop-state] ==> ignore
+          arg [-lpthread] ==> lib [pthread]
+          arg [-lc] ==> lib [c]
+          arg [-lgcc] ==> lib [gcc]
+          arg [--push-state] ==> ignore
+          arg [--as-needed] ==> ignore
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [--pop-state] ==> ignore
+        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/13] ==> [/usr/lib/gcc/x86_64-linux-gnu/13]
+        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu] ==> [/usr/lib/x86_64-linux-gnu]
+        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib] ==> [/usr/lib]
+        collapse library dir [/lib/x86_64-linux-gnu] ==> [/lib/x86_64-linux-gnu]
+        collapse library dir [/lib/../lib] ==> [/lib]
+        collapse library dir [/usr/lib/x86_64-linux-gnu] ==> [/usr/lib/x86_64-linux-gnu]
+        collapse library dir [/usr/lib/../lib] ==> [/usr/lib]
+        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../..] ==> [/usr/lib]
+        implicit libs: [gomp;gcc;gcc_s;pthread;c;gcc;gcc_s]
+        implicit objs: []
+        implicit dirs: [/usr/lib/gcc/x86_64-linux-gnu/13;/usr/lib/x86_64-linux-gnu;/usr/lib;/lib/x86_64-linux-gnu;/lib]
+        implicit fwks: []
+      
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/FindOpenMP.cmake:252 (try_compile)"
+      - "/usr/local/share/cmake-3.31/Modules/FindOpenMP.cmake:522 (_OPENMP_GET_FLAGS)"
+      - "CMakeLists.txt:299 (find_package)"
+    description: "Detecting CXX OpenMP compiler info"
+    directories:
+      source: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-Mxf375"
+      binary: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-Mxf375"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: " -fno-common"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_CXX_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_C_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/runner/work/keepassxc/keepassxc/cmake"
+      CMAKE_POSITION_INDEPENDENT_CODE: "ON"
+    buildResult:
+      variable: "OpenMP_COMPILE_RESULT_CXX_fopenmp"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-Mxf375'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_207fe/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_207fe.dir/build.make CMakeFiles/cmTC_207fe.dir/build
+        gmake[1]: Entering directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-Mxf375'
+        Building CXX object CMakeFiles/cmTC_207fe.dir/OpenMPTryFlag.cpp.o
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/c++   -fno-common -fopenmp -fPIE -o CMakeFiles/cmTC_207fe.dir/OpenMPTryFlag.cpp.o -c /home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-Mxf375/OpenMPTryFlag.cpp
+        Linking CXX executable cmTC_207fe
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_207fe.dir/link.txt --verbose=1
+        Using built-in specs.
+        COLLECT_GCC=/usr/bin/c++
+        COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper
+        OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa
+        OFFLOAD_TARGET_DEFAULT=1
+        Target: x86_64-linux-gnu
+        Configured with: ../src/configure -v --with-pkgversion='Ubuntu 13.3.0-6ubuntu2~24.04' --with-bugurl=file:///usr/share/doc/gcc-13/README.Bugs --enable-languages=c,ada,c++,go,d,fortran,objc,obj-c++,m2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-13 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/libexec --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-libstdcxx-backtrace --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --enable-libphobos-checking=release --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --enable-cet --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-13-fG75Ri/gcc-13-13.3.0/debian/tmp-nvptx/usr,amdgcn-amdhsa=/build/gcc-13-fG75Ri/gcc-13-13.3.0/debian/tmp-gcn/usr --enable-offload-defaulted --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --with-build-config=bootstrap-lto-lean --enable-link-serialization=2
+        Thread model: posix
+        Supported LTO compression algorithms: zlib zstd
+        gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04) 
+        COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/
+        LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/
+        Reading specs from /usr/lib/gcc/x86_64-linux-gnu/13/libgomp.spec
+        COLLECT_GCC_OPTIONS='-fno-common' '-fopenmp' '-v' '-o' 'cmTC_207fe' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'cmTC_207fe.'
+         /usr/libexec/gcc/x86_64-linux-gnu/13/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/cct9cu3N.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_207fe /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o /usr/lib/gcc/x86_64-linux-gnu/13/crtoffloadbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. CMakeFiles/cmTC_207fe.dir/OpenMPTryFlag.cpp.o -lstdc++ -lm -lgomp -lgcc_s -lgcc -lpthread -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o /usr/lib/gcc/x86_64-linux-gnu/13/crtoffloadend.o
+        COLLECT_GCC_OPTIONS='-fno-common' '-fopenmp' '-v' '-o' 'cmTC_207fe' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'cmTC_207fe.'
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/c++  -fno-common -fopenmp -v CMakeFiles/cmTC_207fe.dir/OpenMPTryFlag.cpp.o -o cmTC_207fe
+        gmake[1]: Leaving directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-Mxf375'
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/FindOpenMP.cmake:296 (message)"
+      - "/usr/local/share/cmake-3.31/Modules/FindOpenMP.cmake:522 (_OPENMP_GET_FLAGS)"
+      - "CMakeLists.txt:299 (find_package)"
+    message: |
+      Parsed CXX OpenMP implicit link information from above output:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(\\.[a-z]+)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        ignore line: [Change Dir: '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-Mxf375']
+        ignore line: []
+        ignore line: [Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_207fe/fast]
+        ignore line: [/usr/bin/gmake  -f CMakeFiles/cmTC_207fe.dir/build.make CMakeFiles/cmTC_207fe.dir/build]
+        ignore line: [gmake[1]: Entering directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-Mxf375']
+        ignore line: [Building CXX object CMakeFiles/cmTC_207fe.dir/OpenMPTryFlag.cpp.o]
+        ignore line: [/home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/c++   -fno-common -fopenmp -fPIE -o CMakeFiles/cmTC_207fe.dir/OpenMPTryFlag.cpp.o -c /home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-Mxf375/OpenMPTryFlag.cpp]
+        ignore line: [Linking CXX executable cmTC_207fe]
+        ignore line: [/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_207fe.dir/link.txt --verbose=1]
+        ignore line: [Using built-in specs.]
+        ignore line: [COLLECT_GCC=/usr/bin/c++]
+        ignore line: [COLLECT_LTO_WRAPPER=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper]
+        ignore line: [OFFLOAD_TARGET_NAMES=nvptx-none:amdgcn-amdhsa]
+        ignore line: [OFFLOAD_TARGET_DEFAULT=1]
+        ignore line: [Target: x86_64-linux-gnu]
+        ignore line: [Configured with: ../src/configure -v --with-pkgversion='Ubuntu 13.3.0-6ubuntu2~24.04' --with-bugurl=file:///usr/share/doc/gcc-13/README.Bugs --enable-languages=c ada c++ go d fortran objc obj-c++ m2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-13 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/libexec --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-bootstrap --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-libstdcxx-backtrace --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --enable-libphobos-checking=release --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --enable-cet --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32 m64 mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-13-fG75Ri/gcc-13-13.3.0/debian/tmp-nvptx/usr amdgcn-amdhsa=/build/gcc-13-fG75Ri/gcc-13-13.3.0/debian/tmp-gcn/usr --enable-offload-defaulted --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu --with-build-config=bootstrap-lto-lean --enable-link-serialization=2]
+        ignore line: [Thread model: posix]
+        ignore line: [Supported LTO compression algorithms: zlib zstd]
+        ignore line: [gcc version 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04) ]
+        ignore line: [COMPILER_PATH=/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/13/:/usr/libexec/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/]
+        ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/13/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/13/../../../:/lib/:/usr/lib/]
+        ignore line: [Reading specs from /usr/lib/gcc/x86_64-linux-gnu/13/libgomp.spec]
+        ignore line: [COLLECT_GCC_OPTIONS='-fno-common' '-fopenmp' '-v' '-o' 'cmTC_207fe' '-shared-libgcc' '-mtune=generic' '-march=x86-64' '-pthread' '-dumpdir' 'cmTC_207fe.']
+        link line: [ /usr/libexec/gcc/x86_64-linux-gnu/13/collect2 -plugin /usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so -plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper -plugin-opt=-fresolution=/tmp/cct9cu3N.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lpthread -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -pie -z now -z relro -o cmTC_207fe /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/Scrt1.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/13/crtbeginS.o /usr/lib/gcc/x86_64-linux-gnu/13/crtoffloadbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/13 -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/13/../../.. CMakeFiles/cmTC_207fe.dir/OpenMPTryFlag.cpp.o -lstdc++ -lm -lgomp -lgcc_s -lgcc -lpthread -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/13/crtendS.o /usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu/crtn.o /usr/lib/gcc/x86_64-linux-gnu/13/crtoffloadend.o]
+          arg [/usr/libexec/gcc/x86_64-linux-gnu/13/collect2] ==> ignore
+          arg [-plugin] ==> ignore
+          arg [/usr/libexec/gcc/x86_64-linux-gnu/13/liblto_plugin.so] ==> ignore
+          arg [-plugin-opt=/usr/libexec/gcc/x86_64-linux-gnu/13/lto-wrapper] ==> ignore
+          arg [-plugin-opt=-fresolution=/tmp/cct9cu3N.res] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lpthread] ==> ignore
+          arg [-plugin-opt=-pass-through=-lc] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
+          arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
+          arg [--build-id] ==> ignore
+          arg [--eh-frame-hdr] ==> ignore
+          arg [-m] ==> ignore
+          arg [elf_x86_64] ==> ignore
+          arg [--hash-style=gnu] ==> ignore
+          arg [--as-needed] ==> ignore
+          arg [-dynamic-linker] ==> ignore
+          arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
+          arg [-pie] ==> ignore
+          arg [-znow] ==> ignore
+          arg [-zrelro] ==> ignore
+          arg [-o] ==> ignore
+          arg [cmTC_207fe] ==> ignore
+          arg [-L/usr/lib/gcc/x86_64-linux-gnu/13] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/13]
+          arg [-L/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu]
+          arg [-L/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib]
+          arg [-L/lib/x86_64-linux-gnu] ==> dir [/lib/x86_64-linux-gnu]
+          arg [-L/lib/../lib] ==> dir [/lib/../lib]
+          arg [-L/usr/lib/x86_64-linux-gnu] ==> dir [/usr/lib/x86_64-linux-gnu]
+          arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
+          arg [-L/usr/lib/gcc/x86_64-linux-gnu/13/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../..]
+          arg [CMakeFiles/cmTC_207fe.dir/OpenMPTryFlag.cpp.o] ==> ignore
+          arg [-lstdc++] ==> lib [stdc++]
+          arg [-lm] ==> lib [m]
+          arg [-lgomp] ==> lib [gomp]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lgcc] ==> lib [gcc]
+          arg [-lpthread] ==> lib [pthread]
+          arg [-lc] ==> lib [c]
+          arg [-lgcc_s] ==> lib [gcc_s]
+          arg [-lgcc] ==> lib [gcc]
+        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/13] ==> [/usr/lib/gcc/x86_64-linux-gnu/13]
+        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../../x86_64-linux-gnu] ==> [/usr/lib/x86_64-linux-gnu]
+        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../../../lib] ==> [/usr/lib]
+        collapse library dir [/lib/x86_64-linux-gnu] ==> [/lib/x86_64-linux-gnu]
+        collapse library dir [/lib/../lib] ==> [/lib]
+        collapse library dir [/usr/lib/x86_64-linux-gnu] ==> [/usr/lib/x86_64-linux-gnu]
+        collapse library dir [/usr/lib/../lib] ==> [/usr/lib]
+        collapse library dir [/usr/lib/gcc/x86_64-linux-gnu/13/../../..] ==> [/usr/lib]
+        implicit libs: [stdc++;m;gomp;gcc_s;gcc;pthread;c;gcc_s;gcc]
+        implicit objs: []
+        implicit dirs: [/usr/lib/gcc/x86_64-linux-gnu/13;/usr/lib/x86_64-linux-gnu;/usr/lib;/lib/x86_64-linux-gnu;/lib]
+        implicit fwks: []
+      
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/FindOpenMP.cmake:456 (try_compile)"
+      - "/usr/local/share/cmake-3.31/Modules/FindOpenMP.cmake:596 (_OPENMP_GET_SPEC_DATE)"
+      - "CMakeLists.txt:299 (find_package)"
+    description: "Detecting C OpenMP version"
+    directories:
+      source: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-bR5BI2"
+      binary: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-bR5BI2"
+    cmakeVariables:
+      CMAKE_CXX_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_C_FLAGS: " -fno-common"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_C_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/runner/work/keepassxc/keepassxc/cmake"
+      CMAKE_POSITION_INDEPENDENT_CODE: "ON"
+    buildResult:
+      variable: "OpenMP_SPECTEST_C_"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-bR5BI2'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_cbe71/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_cbe71.dir/build.make CMakeFiles/cmTC_cbe71.dir/build
+        gmake[1]: Entering directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-bR5BI2'
+        Building C object CMakeFiles/cmTC_cbe71.dir/OpenMPCheckVersion.c.o
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/cc   -fno-common -fopenmp -fPIE -o CMakeFiles/cmTC_cbe71.dir/OpenMPCheckVersion.c.o -c /home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-bR5BI2/OpenMPCheckVersion.c
+        Linking C executable cmTC_cbe71
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_cbe71.dir/link.txt --verbose=1
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/cc  -fno-common -fopenmp CMakeFiles/cmTC_cbe71.dir/OpenMPCheckVersion.c.o -o cmTC_cbe71
+        gmake[1]: Leaving directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-bR5BI2'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/FindOpenMP.cmake:456 (try_compile)"
+      - "/usr/local/share/cmake-3.31/Modules/FindOpenMP.cmake:596 (_OPENMP_GET_SPEC_DATE)"
+      - "CMakeLists.txt:299 (find_package)"
+    description: "Detecting CXX OpenMP version"
+    directories:
+      source: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-J9TfJ3"
+      binary: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-J9TfJ3"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: " -fno-common"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_CXX_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_C_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/runner/work/keepassxc/keepassxc/cmake"
+      CMAKE_POSITION_INDEPENDENT_CODE: "ON"
+    buildResult:
+      variable: "OpenMP_SPECTEST_CXX_"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-J9TfJ3'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_4b814/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_4b814.dir/build.make CMakeFiles/cmTC_4b814.dir/build
+        gmake[1]: Entering directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-J9TfJ3'
+        Building CXX object CMakeFiles/cmTC_4b814.dir/OpenMPCheckVersion.cpp.o
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/c++   -fno-common -fopenmp -fPIE -o CMakeFiles/cmTC_4b814.dir/OpenMPCheckVersion.cpp.o -c /home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-J9TfJ3/OpenMPCheckVersion.cpp
+        Linking CXX executable cmTC_4b814
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4b814.dir/link.txt --verbose=1
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/c++  -fno-common -fopenmp CMakeFiles/cmTC_4b814.dir/OpenMPCheckVersion.cpp.o -o cmTC_4b814
+        gmake[1]: Leaving directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-J9TfJ3'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/Internal/CheckSourceCompiles.cmake:108 (try_compile)"
+      - "/usr/local/share/cmake-3.31/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/local/share/cmake-3.31/Modules/CheckCCompilerFlag.cmake:56 (cmake_check_compiler_flag)"
+      - "CMakeLists.txt:265 (check_c_compiler_flag)"
+      - "CMakeLists.txt:282 (check_add_gcc_compiler_cflag)"
+      - "CMakeLists.txt:349 (check_add_gcc_compiler_flag)"
+    checks:
+      - "Performing Test CC_HAS_Werror_format_security"
+    directories:
+      source: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-6K8hhA"
+      binary: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-6K8hhA"
+    cmakeVariables:
+      CMAKE_CXX_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_C_FLAGS: " -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fstack-protector-strong -Wchar-subscripts -Wwrite-strings -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_C_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/runner/work/keepassxc/keepassxc/cmake"
+      CMAKE_POSITION_INDEPENDENT_CODE: "ON"
+    buildResult:
+      variable: "CC_HAS_Werror_format_security"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-6K8hhA'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_249ec/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_249ec.dir/build.make CMakeFiles/cmTC_249ec.dir/build
+        gmake[1]: Entering directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-6K8hhA'
+        Building C object CMakeFiles/cmTC_249ec.dir/src.c.o
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/cc -DCC_HAS_Werror_format_security  -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fstack-protector-strong -Wchar-subscripts -Wwrite-strings -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2  -fPIE   -Werror=format-security -o CMakeFiles/cmTC_249ec.dir/src.c.o -c /home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-6K8hhA/src.c
+        Linking C executable cmTC_249ec
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_249ec.dir/link.txt --verbose=1
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/cc  -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fstack-protector-strong -Wchar-subscripts -Wwrite-strings -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2  CMakeFiles/cmTC_249ec.dir/src.c.o -o cmTC_249ec
+        gmake[1]: Leaving directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-6K8hhA'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/Internal/CheckSourceCompiles.cmake:108 (try_compile)"
+      - "/usr/local/share/cmake-3.31/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/local/share/cmake-3.31/Modules/CheckCXXCompilerFlag.cmake:55 (cmake_check_compiler_flag)"
+      - "CMakeLists.txt:258 (check_cxx_compiler_flag)"
+      - "CMakeLists.txt:285 (check_add_gcc_compiler_cxxflag)"
+      - "CMakeLists.txt:349 (check_add_gcc_compiler_flag)"
+    checks:
+      - "Performing Test CXX_HAS_Werror_format_security"
+    directories:
+      source: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-GUtDT6"
+      binary: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-GUtDT6"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: " -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fvisibility-inlines-hidden -fstack-protector-strong -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_CXX_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_C_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/runner/work/keepassxc/keepassxc/cmake"
+      CMAKE_POSITION_INDEPENDENT_CODE: "ON"
+    buildResult:
+      variable: "CXX_HAS_Werror_format_security"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-GUtDT6'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_3de24/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_3de24.dir/build.make CMakeFiles/cmTC_3de24.dir/build
+        gmake[1]: Entering directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-GUtDT6'
+        Building CXX object CMakeFiles/cmTC_3de24.dir/src.cxx.o
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/c++ -DCXX_HAS_Werror_format_security  -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fvisibility-inlines-hidden -fstack-protector-strong -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2  -fPIE   -Werror=format-security -o CMakeFiles/cmTC_3de24.dir/src.cxx.o -c /home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-GUtDT6/src.cxx
+        Linking CXX executable cmTC_3de24
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3de24.dir/link.txt --verbose=1
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/c++  -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fvisibility-inlines-hidden -fstack-protector-strong -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2  CMakeFiles/cmTC_3de24.dir/src.cxx.o -o cmTC_3de24
+        gmake[1]: Leaving directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-GUtDT6'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/Internal/CheckSourceCompiles.cmake:108 (try_compile)"
+      - "/usr/local/share/cmake-3.31/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/local/share/cmake-3.31/Modules/CheckCCompilerFlag.cmake:56 (cmake_check_compiler_flag)"
+      - "CMakeLists.txt:265 (check_c_compiler_flag)"
+      - "CMakeLists.txt:282 (check_add_gcc_compiler_cflag)"
+      - "CMakeLists.txt:350 (check_add_gcc_compiler_flag)"
+    checks:
+      - "Performing Test CC_HAS_Werror_implicit_function_declaration"
+    directories:
+      source: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-XSNPXZ"
+      binary: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-XSNPXZ"
+    cmakeVariables:
+      CMAKE_CXX_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_C_FLAGS: " -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fstack-protector-strong -Wchar-subscripts -Wwrite-strings -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_C_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/runner/work/keepassxc/keepassxc/cmake"
+      CMAKE_POSITION_INDEPENDENT_CODE: "ON"
+    buildResult:
+      variable: "CC_HAS_Werror_implicit_function_declaration"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-XSNPXZ'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_32dd1/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_32dd1.dir/build.make CMakeFiles/cmTC_32dd1.dir/build
+        gmake[1]: Entering directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-XSNPXZ'
+        Building C object CMakeFiles/cmTC_32dd1.dir/src.c.o
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/cc -DCC_HAS_Werror_implicit_function_declaration  -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fstack-protector-strong -Wchar-subscripts -Wwrite-strings -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security  -fPIE   -Werror=implicit-function-declaration -o CMakeFiles/cmTC_32dd1.dir/src.c.o -c /home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-XSNPXZ/src.c
+        Linking C executable cmTC_32dd1
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_32dd1.dir/link.txt --verbose=1
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/cc  -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fstack-protector-strong -Wchar-subscripts -Wwrite-strings -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security  CMakeFiles/cmTC_32dd1.dir/src.c.o -o cmTC_32dd1
+        gmake[1]: Leaving directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-XSNPXZ'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/Internal/CheckSourceCompiles.cmake:108 (try_compile)"
+      - "/usr/local/share/cmake-3.31/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/local/share/cmake-3.31/Modules/CheckCCompilerFlag.cmake:56 (cmake_check_compiler_flag)"
+      - "CMakeLists.txt:265 (check_c_compiler_flag)"
+      - "CMakeLists.txt:282 (check_add_gcc_compiler_cflag)"
+      - "CMakeLists.txt:351 (check_add_gcc_compiler_flag)"
+    checks:
+      - "Performing Test CC_HAS_Wcast_align"
+    directories:
+      source: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-8K9WPO"
+      binary: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-8K9WPO"
+    cmakeVariables:
+      CMAKE_CXX_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_C_FLAGS: " -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fstack-protector-strong -Wchar-subscripts -Wwrite-strings -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security -Werror=implicit-function-declaration"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_C_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/runner/work/keepassxc/keepassxc/cmake"
+      CMAKE_POSITION_INDEPENDENT_CODE: "ON"
+    buildResult:
+      variable: "CC_HAS_Wcast_align"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-8K9WPO'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_690dd/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_690dd.dir/build.make CMakeFiles/cmTC_690dd.dir/build
+        gmake[1]: Entering directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-8K9WPO'
+        Building C object CMakeFiles/cmTC_690dd.dir/src.c.o
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/cc -DCC_HAS_Wcast_align  -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fstack-protector-strong -Wchar-subscripts -Wwrite-strings -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security -Werror=implicit-function-declaration  -fPIE   -Wcast-align -o CMakeFiles/cmTC_690dd.dir/src.c.o -c /home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-8K9WPO/src.c
+        Linking C executable cmTC_690dd
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_690dd.dir/link.txt --verbose=1
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/cc  -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fstack-protector-strong -Wchar-subscripts -Wwrite-strings -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security -Werror=implicit-function-declaration  CMakeFiles/cmTC_690dd.dir/src.c.o -o cmTC_690dd
+        gmake[1]: Leaving directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-8K9WPO'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/Internal/CheckSourceCompiles.cmake:108 (try_compile)"
+      - "/usr/local/share/cmake-3.31/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/local/share/cmake-3.31/Modules/CheckCXXCompilerFlag.cmake:55 (cmake_check_compiler_flag)"
+      - "CMakeLists.txt:258 (check_cxx_compiler_flag)"
+      - "CMakeLists.txt:285 (check_add_gcc_compiler_cxxflag)"
+      - "CMakeLists.txt:351 (check_add_gcc_compiler_flag)"
+    checks:
+      - "Performing Test CXX_HAS_Wcast_align"
+    directories:
+      source: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-EtZO2P"
+      binary: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-EtZO2P"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: " -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fvisibility-inlines-hidden -fstack-protector-strong -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_CXX_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_C_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/runner/work/keepassxc/keepassxc/cmake"
+      CMAKE_POSITION_INDEPENDENT_CODE: "ON"
+    buildResult:
+      variable: "CXX_HAS_Wcast_align"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-EtZO2P'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_ecd94/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_ecd94.dir/build.make CMakeFiles/cmTC_ecd94.dir/build
+        gmake[1]: Entering directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-EtZO2P'
+        Building CXX object CMakeFiles/cmTC_ecd94.dir/src.cxx.o
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/c++ -DCXX_HAS_Wcast_align  -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fvisibility-inlines-hidden -fstack-protector-strong -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security  -fPIE   -Wcast-align -o CMakeFiles/cmTC_ecd94.dir/src.cxx.o -c /home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-EtZO2P/src.cxx
+        Linking CXX executable cmTC_ecd94
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ecd94.dir/link.txt --verbose=1
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/c++  -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fvisibility-inlines-hidden -fstack-protector-strong -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security  CMakeFiles/cmTC_ecd94.dir/src.cxx.o -o cmTC_ecd94
+        gmake[1]: Leaving directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-EtZO2P'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/Internal/CheckSourceCompiles.cmake:108 (try_compile)"
+      - "/usr/local/share/cmake-3.31/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/local/share/cmake-3.31/Modules/CheckCCompilerFlag.cmake:56 (cmake_check_compiler_flag)"
+      - "CMakeLists.txt:265 (check_c_compiler_flag)"
+      - "CMakeLists.txt:282 (check_add_gcc_compiler_cflag)"
+      - "CMakeLists.txt:354 (check_add_gcc_compiler_flag)"
+    checks:
+      - "Performing Test CC_HAS_Qunused_arguments"
+    directories:
+      source: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-dXzZKF"
+      binary: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-dXzZKF"
+    cmakeVariables:
+      CMAKE_CXX_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_C_FLAGS: " -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fstack-protector-strong -Wchar-subscripts -Wwrite-strings -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security -Werror=implicit-function-declaration -Wcast-align"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_C_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/runner/work/keepassxc/keepassxc/cmake"
+      CMAKE_POSITION_INDEPENDENT_CODE: "ON"
+    buildResult:
+      variable: "CC_HAS_Qunused_arguments"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-dXzZKF'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_8b51a/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_8b51a.dir/build.make CMakeFiles/cmTC_8b51a.dir/build
+        gmake[1]: Entering directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-dXzZKF'
+        Building C object CMakeFiles/cmTC_8b51a.dir/src.c.o
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/cc -DCC_HAS_Qunused_arguments  -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fstack-protector-strong -Wchar-subscripts -Wwrite-strings -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security -Werror=implicit-function-declaration -Wcast-align  -fPIE   -Qunused-arguments -o CMakeFiles/cmTC_8b51a.dir/src.c.o -c /home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-dXzZKF/src.c
+        cc: error: unrecognized command-line option '-Qunused-arguments'
+        gmake[1]: *** [CMakeFiles/cmTC_8b51a.dir/build.make:81: CMakeFiles/cmTC_8b51a.dir/src.c.o] Error 1
+        gmake[1]: Leaving directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-dXzZKF'
+        gmake: *** [Makefile:134: cmTC_8b51a/fast] Error 2
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/Internal/CheckSourceCompiles.cmake:108 (try_compile)"
+      - "/usr/local/share/cmake-3.31/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/local/share/cmake-3.31/Modules/CheckCXXCompilerFlag.cmake:55 (cmake_check_compiler_flag)"
+      - "CMakeLists.txt:258 (check_cxx_compiler_flag)"
+      - "CMakeLists.txt:285 (check_add_gcc_compiler_cxxflag)"
+      - "CMakeLists.txt:354 (check_add_gcc_compiler_flag)"
+    checks:
+      - "Performing Test CXX_HAS_Qunused_arguments"
+    directories:
+      source: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-skfbGb"
+      binary: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-skfbGb"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: " -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fvisibility-inlines-hidden -fstack-protector-strong -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security -Wcast-align"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_CXX_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_C_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_EXE_LINKER_FLAGS: ""
+      CMAKE_MODULE_PATH: "/home/runner/work/keepassxc/keepassxc/cmake"
+      CMAKE_POSITION_INDEPENDENT_CODE: "ON"
+    buildResult:
+      variable: "CXX_HAS_Qunused_arguments"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-skfbGb'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_471b2/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_471b2.dir/build.make CMakeFiles/cmTC_471b2.dir/build
+        gmake[1]: Entering directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-skfbGb'
+        Building CXX object CMakeFiles/cmTC_471b2.dir/src.cxx.o
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/c++ -DCXX_HAS_Qunused_arguments  -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fvisibility-inlines-hidden -fstack-protector-strong -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security -Wcast-align  -fPIE   -Qunused-arguments -o CMakeFiles/cmTC_471b2.dir/src.cxx.o -c /home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-skfbGb/src.cxx
+        c++: error: unrecognized command-line option '-Qunused-arguments'
+        gmake[1]: *** [CMakeFiles/cmTC_471b2.dir/build.make:81: CMakeFiles/cmTC_471b2.dir/src.cxx.o] Error 1
+        gmake[1]: Leaving directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-skfbGb'
+        gmake: *** [Makefile:134: cmTC_471b2/fast] Error 2
+        
+      exitCode: 2
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/Internal/CheckSourceCompiles.cmake:108 (try_compile)"
+      - "/usr/local/share/cmake-3.31/Modules/Internal/CheckCompilerFlag.cmake:18 (cmake_check_source_compiles)"
+      - "/usr/local/share/cmake-3.31/Modules/CheckCXXCompilerFlag.cmake:55 (cmake_check_compiler_flag)"
+      - "CMakeLists.txt:369 (check_cxx_compiler_flag)"
+    checks:
+      - "Performing Test CXX_HAS_fsized_deallocation"
+    directories:
+      source: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-PHq1fY"
+      binary: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-PHq1fY"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: " -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fvisibility-inlines-hidden -fstack-protector-strong -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security -Wcast-align"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_CXX_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_C_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_EXE_LINKER_FLAGS: " -Wl,--as-needed -Wl,--no-undefined -Wl,-z,relro,-z,now -pie"
+      CMAKE_MODULE_PATH: "/home/runner/work/keepassxc/keepassxc/cmake"
+      CMAKE_POSITION_INDEPENDENT_CODE: "ON"
+    buildResult:
+      variable: "CXX_HAS_fsized_deallocation"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-PHq1fY'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_57090/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_57090.dir/build.make CMakeFiles/cmTC_57090.dir/build
+        gmake[1]: Entering directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-PHq1fY'
+        Building CXX object CMakeFiles/cmTC_57090.dir/src.cxx.o
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/c++ -DCXX_HAS_fsized_deallocation  -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fvisibility-inlines-hidden -fstack-protector-strong -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security -Wcast-align  -std=gnu++17 -fPIE   -fsized-deallocation -o CMakeFiles/cmTC_57090.dir/src.cxx.o -c /home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-PHq1fY/src.cxx
+        Linking CXX executable cmTC_57090
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_57090.dir/link.txt --verbose=1
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/c++  -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fvisibility-inlines-hidden -fstack-protector-strong -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security -Wcast-align   -Wl,--as-needed -Wl,--no-undefined -Wl,-z,relro,-z,now -pie  CMakeFiles/cmTC_57090.dir/src.cxx.o -o cmTC_57090
+        gmake[1]: Leaving directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-PHq1fY'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/Internal/CheckSourceCompiles.cmake:108 (try_compile)"
+      - "/usr/local/share/cmake-3.31/Modules/CheckCXXSourceCompiles.cmake:58 (cmake_check_source_compiles)"
+      - "CMakeLists.txt:373 (check_cxx_source_compiles)"
+    checks:
+      - "Performing Test HAVE_DEALLOCATION_FUNCTIONS"
+    directories:
+      source: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-5XCYOy"
+      binary: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-5XCYOy"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: " -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fvisibility-inlines-hidden -fstack-protector-strong -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security -Wcast-align"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_CXX_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_C_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_EXE_LINKER_FLAGS: " -Wl,--as-needed -Wl,--no-undefined -Wl,-z,relro,-z,now -pie"
+      CMAKE_MODULE_PATH: "/home/runner/work/keepassxc/keepassxc/cmake"
+      CMAKE_POSITION_INDEPENDENT_CODE: "ON"
+    buildResult:
+      variable: "HAVE_DEALLOCATION_FUNCTIONS"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-5XCYOy'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_9ed66/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_9ed66.dir/build.make CMakeFiles/cmTC_9ed66.dir/build
+        gmake[1]: Entering directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-5XCYOy'
+        Building CXX object CMakeFiles/cmTC_9ed66.dir/src.cxx.o
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/c++ -DHAVE_DEALLOCATION_FUNCTIONS  -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fvisibility-inlines-hidden -fstack-protector-strong -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security -Wcast-align -fsized-deallocation -std=gnu++17 -fPIE -o CMakeFiles/cmTC_9ed66.dir/src.cxx.o -c /home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-5XCYOy/src.cxx
+        Linking CXX executable cmTC_9ed66
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9ed66.dir/link.txt --verbose=1
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/c++  -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fvisibility-inlines-hidden -fstack-protector-strong -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security -Wcast-align -fsized-deallocation  -Wl,--as-needed -Wl,--no-undefined -Wl,-z,relro,-z,now -pie  CMakeFiles/cmTC_9ed66.dir/src.cxx.o -o cmTC_9ed66
+        gmake[1]: Leaving directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-5XCYOy'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/Internal/CheckSourceCompiles.cmake:108 (try_compile)"
+      - "/usr/local/share/cmake-3.31/Modules/CheckCXXSourceCompiles.cmake:58 (cmake_check_source_compiles)"
+      - "CMakeLists.txt:579 (check_cxx_source_compiles)"
+    checks:
+      - "Performing Test HAVE_PR_SET_DUMPABLE"
+    directories:
+      source: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-BYtEbi"
+      binary: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-BYtEbi"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: " -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fvisibility-inlines-hidden -fstack-protector-strong -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security -Wcast-align -fsized-deallocation -Wno-deprecated-declarations"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_CXX_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_C_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_EXE_LINKER_FLAGS: " -Wl,--as-needed -Wl,--no-undefined -Wl,-z,relro,-z,now -pie"
+      CMAKE_MODULE_PATH: "/home/runner/work/keepassxc/keepassxc/cmake"
+      CMAKE_POSITION_INDEPENDENT_CODE: "ON"
+    buildResult:
+      variable: "HAVE_PR_SET_DUMPABLE"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-BYtEbi'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_f17f7/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_f17f7.dir/build.make CMakeFiles/cmTC_f17f7.dir/build
+        gmake[1]: Entering directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-BYtEbi'
+        Building CXX object CMakeFiles/cmTC_f17f7.dir/src.cxx.o
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/c++ -DHAVE_PR_SET_DUMPABLE  -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fvisibility-inlines-hidden -fstack-protector-strong -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security -Wcast-align -fsized-deallocation -Wno-deprecated-declarations  -std=gnu++17 -fPIE -o CMakeFiles/cmTC_f17f7.dir/src.cxx.o -c /home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-BYtEbi/src.cxx
+        Linking CXX executable cmTC_f17f7
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f17f7.dir/link.txt --verbose=1
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/c++  -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fvisibility-inlines-hidden -fstack-protector-strong -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security -Wcast-align -fsized-deallocation -Wno-deprecated-declarations   -Wl,--as-needed -Wl,--no-undefined -Wl,-z,relro,-z,now -pie  CMakeFiles/cmTC_f17f7.dir/src.cxx.o -o cmTC_f17f7
+        gmake[1]: Leaving directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-BYtEbi'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/Internal/CheckSourceCompiles.cmake:108 (try_compile)"
+      - "/usr/local/share/cmake-3.31/Modules/CheckCXXSourceCompiles.cmake:58 (cmake_check_source_compiles)"
+      - "CMakeLists.txt:583 (check_cxx_source_compiles)"
+    checks:
+      - "Performing Test HAVE_MALLOC_H"
+    directories:
+      source: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-XbTDC1"
+      binary: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-XbTDC1"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: " -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fvisibility-inlines-hidden -fstack-protector-strong -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security -Wcast-align -fsized-deallocation -Wno-deprecated-declarations"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_CXX_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_C_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_EXE_LINKER_FLAGS: " -Wl,--as-needed -Wl,--no-undefined -Wl,-z,relro,-z,now -pie"
+      CMAKE_MODULE_PATH: "/home/runner/work/keepassxc/keepassxc/cmake"
+      CMAKE_POSITION_INDEPENDENT_CODE: "ON"
+    buildResult:
+      variable: "HAVE_MALLOC_H"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-XbTDC1'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_3a8a2/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_3a8a2.dir/build.make CMakeFiles/cmTC_3a8a2.dir/build
+        gmake[1]: Entering directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-XbTDC1'
+        Building CXX object CMakeFiles/cmTC_3a8a2.dir/src.cxx.o
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/c++ -DHAVE_MALLOC_H  -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fvisibility-inlines-hidden -fstack-protector-strong -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security -Wcast-align -fsized-deallocation -Wno-deprecated-declarations  -std=gnu++17 -fPIE -o CMakeFiles/cmTC_3a8a2.dir/src.cxx.o -c /home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-XbTDC1/src.cxx
+        Linking CXX executable cmTC_3a8a2
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_3a8a2.dir/link.txt --verbose=1
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/c++  -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fvisibility-inlines-hidden -fstack-protector-strong -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security -Wcast-align -fsized-deallocation -Wno-deprecated-declarations   -Wl,--as-needed -Wl,--no-undefined -Wl,-z,relro,-z,now -pie  CMakeFiles/cmTC_3a8a2.dir/src.cxx.o -o cmTC_3a8a2
+        gmake[1]: Leaving directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-XbTDC1'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/Internal/CheckSourceCompiles.cmake:108 (try_compile)"
+      - "/usr/local/share/cmake-3.31/Modules/CheckCXXSourceCompiles.cmake:58 (cmake_check_source_compiles)"
+      - "CMakeLists.txt:587 (check_cxx_source_compiles)"
+    checks:
+      - "Performing Test HAVE_MALLOC_USABLE_SIZE"
+    directories:
+      source: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-VL4lND"
+      binary: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-VL4lND"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: " -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fvisibility-inlines-hidden -fstack-protector-strong -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security -Wcast-align -fsized-deallocation -Wno-deprecated-declarations"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_CXX_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_C_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_EXE_LINKER_FLAGS: " -Wl,--as-needed -Wl,--no-undefined -Wl,-z,relro,-z,now -pie"
+      CMAKE_MODULE_PATH: "/home/runner/work/keepassxc/keepassxc/cmake"
+      CMAKE_POSITION_INDEPENDENT_CODE: "ON"
+    buildResult:
+      variable: "HAVE_MALLOC_USABLE_SIZE"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-VL4lND'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_d8c3a/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_d8c3a.dir/build.make CMakeFiles/cmTC_d8c3a.dir/build
+        gmake[1]: Entering directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-VL4lND'
+        Building CXX object CMakeFiles/cmTC_d8c3a.dir/src.cxx.o
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/c++ -DHAVE_MALLOC_USABLE_SIZE  -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fvisibility-inlines-hidden -fstack-protector-strong -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security -Wcast-align -fsized-deallocation -Wno-deprecated-declarations  -std=gnu++17 -fPIE -o CMakeFiles/cmTC_d8c3a.dir/src.cxx.o -c /home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-VL4lND/src.cxx
+        Linking CXX executable cmTC_d8c3a
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d8c3a.dir/link.txt --verbose=1
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/c++  -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fvisibility-inlines-hidden -fstack-protector-strong -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security -Wcast-align -fsized-deallocation -Wno-deprecated-declarations   -Wl,--as-needed -Wl,--no-undefined -Wl,-z,relro,-z,now -pie  CMakeFiles/cmTC_d8c3a.dir/src.cxx.o -o cmTC_d8c3a
+        gmake[1]: Leaving directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-VL4lND'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/Internal/CheckSourceCompiles.cmake:108 (try_compile)"
+      - "/usr/local/share/cmake-3.31/Modules/CheckCXXSourceCompiles.cmake:58 (cmake_check_source_compiles)"
+      - "CMakeLists.txt:591 (check_cxx_source_compiles)"
+    checks:
+      - "Performing Test HAVE_RLIMIT_CORE"
+    directories:
+      source: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-lyHRiK"
+      binary: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-lyHRiK"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: " -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fvisibility-inlines-hidden -fstack-protector-strong -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security -Wcast-align -fsized-deallocation -Wno-deprecated-declarations"
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_CXX_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_C_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_EXE_LINKER_FLAGS: " -Wl,--as-needed -Wl,--no-undefined -Wl,-z,relro,-z,now -pie"
+      CMAKE_MODULE_PATH: "/home/runner/work/keepassxc/keepassxc/cmake"
+      CMAKE_POSITION_INDEPENDENT_CODE: "ON"
+    buildResult:
+      variable: "HAVE_RLIMIT_CORE"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-lyHRiK'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_da04d/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_da04d.dir/build.make CMakeFiles/cmTC_da04d.dir/build
+        gmake[1]: Entering directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-lyHRiK'
+        Building CXX object CMakeFiles/cmTC_da04d.dir/src.cxx.o
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/c++ -DHAVE_RLIMIT_CORE  -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fvisibility-inlines-hidden -fstack-protector-strong -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security -Wcast-align -fsized-deallocation -Wno-deprecated-declarations  -std=gnu++17 -fPIE -o CMakeFiles/cmTC_da04d.dir/src.cxx.o -c /home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-lyHRiK/src.cxx
+        Linking CXX executable cmTC_da04d
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_da04d.dir/link.txt --verbose=1
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/c++  -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fvisibility-inlines-hidden -fstack-protector-strong -Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security -Wcast-align -fsized-deallocation -Wno-deprecated-declarations   -Wl,--as-needed -Wl,--no-undefined -Wl,-z,relro,-z,now -pie  CMakeFiles/cmTC_da04d.dir/src.cxx.o -o cmTC_da04d
+        gmake[1]: Leaving directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-lyHRiK'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/CheckLibraryExists.cmake:78 (try_compile)"
+      - "/usr/local/share/cmake-3.31/Modules/FindX11.cmake:693 (check_library_exists)"
+      - "src/autotype/CMakeLists.txt:3 (find_package)"
+    checks:
+      - "Looking for XOpenDisplay in /usr/lib/x86_64-linux-gnu/libX11.so;/usr/lib/x86_64-linux-gnu/libXext.so"
+    directories:
+      source: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-YykqJi"
+      binary: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-YykqJi"
+    cmakeVariables:
+      CMAKE_CXX_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_C_FLAGS: " -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fstack-protector-strong -Wchar-subscripts -Wwrite-strings -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security -Werror=implicit-function-declaration -Wcast-align"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_C_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_EXE_LINKER_FLAGS: " -Wl,--as-needed -Wl,--no-undefined -Wl,-z,relro,-z,now -pie"
+      CMAKE_MODULE_PATH: "/home/runner/work/keepassxc/keepassxc/cmake"
+      CMAKE_POSITION_INDEPENDENT_CODE: "ON"
+    buildResult:
+      variable: "X11_LIB_X11_SOLO"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-YykqJi'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_7aa6e/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_7aa6e.dir/build.make CMakeFiles/cmTC_7aa6e.dir/build
+        gmake[1]: Entering directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-YykqJi'
+        Building C object CMakeFiles/cmTC_7aa6e.dir/CheckFunctionExists.c.o
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/cc   -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fstack-protector-strong -Wchar-subscripts -Wwrite-strings -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security -Werror=implicit-function-declaration -Wcast-align -DCHECK_FUNCTION_EXISTS=XOpenDisplay -std=gnu99 -fPIE -o CMakeFiles/cmTC_7aa6e.dir/CheckFunctionExists.c.o -c /home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-YykqJi/CheckFunctionExists.c
+        Linking C executable cmTC_7aa6e
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7aa6e.dir/link.txt --verbose=1
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/cc  -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fstack-protector-strong -Wchar-subscripts -Wwrite-strings -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security -Werror=implicit-function-declaration -Wcast-align -DCHECK_FUNCTION_EXISTS=XOpenDisplay  -Wl,--as-needed -Wl,--no-undefined -Wl,-z,relro,-z,now -pie  CMakeFiles/cmTC_7aa6e.dir/CheckFunctionExists.c.o -o cmTC_7aa6e  /usr/lib/x86_64-linux-gnu/libX11.so /usr/lib/x86_64-linux-gnu/libXext.so
+        gmake[1]: Leaving directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-YykqJi'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/CheckFunctionExists.cmake:93 (try_compile)"
+      - "/usr/local/share/cmake-3.31/Modules/FindX11.cmake:708 (check_function_exists)"
+      - "src/autotype/CMakeLists.txt:3 (find_package)"
+    checks:
+      - "Looking for gethostbyname"
+    directories:
+      source: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-wSA2wv"
+      binary: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-wSA2wv"
+    cmakeVariables:
+      CMAKE_CXX_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_C_FLAGS: " -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fstack-protector-strong -Wchar-subscripts -Wwrite-strings -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security -Werror=implicit-function-declaration -Wcast-align"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_C_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_EXE_LINKER_FLAGS: " -Wl,--as-needed -Wl,--no-undefined -Wl,-z,relro,-z,now -pie"
+      CMAKE_MODULE_PATH: "/home/runner/work/keepassxc/keepassxc/cmake"
+      CMAKE_POSITION_INDEPENDENT_CODE: "ON"
+    buildResult:
+      variable: "CMAKE_HAVE_GETHOSTBYNAME"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-wSA2wv'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_aa770/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_aa770.dir/build.make CMakeFiles/cmTC_aa770.dir/build
+        gmake[1]: Entering directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-wSA2wv'
+        Building C object CMakeFiles/cmTC_aa770.dir/CheckFunctionExists.c.o
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/cc   -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fstack-protector-strong -Wchar-subscripts -Wwrite-strings -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security -Werror=implicit-function-declaration -Wcast-align -DCHECK_FUNCTION_EXISTS=gethostbyname -std=gnu99 -fPIE -o CMakeFiles/cmTC_aa770.dir/CheckFunctionExists.c.o -c /home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-wSA2wv/CheckFunctionExists.c
+        Linking C executable cmTC_aa770
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_aa770.dir/link.txt --verbose=1
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/cc  -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fstack-protector-strong -Wchar-subscripts -Wwrite-strings -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security -Werror=implicit-function-declaration -Wcast-align -DCHECK_FUNCTION_EXISTS=gethostbyname  -Wl,--as-needed -Wl,--no-undefined -Wl,-z,relro,-z,now -pie  CMakeFiles/cmTC_aa770.dir/CheckFunctionExists.c.o -o cmTC_aa770
+        gmake[1]: Leaving directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-wSA2wv'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/CheckFunctionExists.cmake:93 (try_compile)"
+      - "/usr/local/share/cmake-3.31/Modules/FindX11.cmake:722 (check_function_exists)"
+      - "src/autotype/CMakeLists.txt:3 (find_package)"
+    checks:
+      - "Looking for connect"
+    directories:
+      source: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-52ysjg"
+      binary: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-52ysjg"
+    cmakeVariables:
+      CMAKE_CXX_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_C_FLAGS: " -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fstack-protector-strong -Wchar-subscripts -Wwrite-strings -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security -Werror=implicit-function-declaration -Wcast-align"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_C_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_EXE_LINKER_FLAGS: " -Wl,--as-needed -Wl,--no-undefined -Wl,-z,relro,-z,now -pie"
+      CMAKE_MODULE_PATH: "/home/runner/work/keepassxc/keepassxc/cmake"
+      CMAKE_POSITION_INDEPENDENT_CODE: "ON"
+    buildResult:
+      variable: "CMAKE_HAVE_CONNECT"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-52ysjg'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_cd2b8/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_cd2b8.dir/build.make CMakeFiles/cmTC_cd2b8.dir/build
+        gmake[1]: Entering directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-52ysjg'
+        Building C object CMakeFiles/cmTC_cd2b8.dir/CheckFunctionExists.c.o
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/cc   -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fstack-protector-strong -Wchar-subscripts -Wwrite-strings -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security -Werror=implicit-function-declaration -Wcast-align -DCHECK_FUNCTION_EXISTS=connect -std=gnu99 -fPIE -o CMakeFiles/cmTC_cd2b8.dir/CheckFunctionExists.c.o -c /home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-52ysjg/CheckFunctionExists.c
+        Linking C executable cmTC_cd2b8
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_cd2b8.dir/link.txt --verbose=1
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/cc  -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fstack-protector-strong -Wchar-subscripts -Wwrite-strings -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security -Werror=implicit-function-declaration -Wcast-align -DCHECK_FUNCTION_EXISTS=connect  -Wl,--as-needed -Wl,--no-undefined -Wl,-z,relro,-z,now -pie  CMakeFiles/cmTC_cd2b8.dir/CheckFunctionExists.c.o -o cmTC_cd2b8
+        gmake[1]: Leaving directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-52ysjg'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/CheckFunctionExists.cmake:93 (try_compile)"
+      - "/usr/local/share/cmake-3.31/Modules/FindX11.cmake:731 (check_function_exists)"
+      - "src/autotype/CMakeLists.txt:3 (find_package)"
+    checks:
+      - "Looking for remove"
+    directories:
+      source: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-LauOCr"
+      binary: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-LauOCr"
+    cmakeVariables:
+      CMAKE_CXX_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_C_FLAGS: " -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fstack-protector-strong -Wchar-subscripts -Wwrite-strings -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security -Werror=implicit-function-declaration -Wcast-align"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_C_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_EXE_LINKER_FLAGS: " -Wl,--as-needed -Wl,--no-undefined -Wl,-z,relro,-z,now -pie"
+      CMAKE_MODULE_PATH: "/home/runner/work/keepassxc/keepassxc/cmake"
+      CMAKE_POSITION_INDEPENDENT_CODE: "ON"
+    buildResult:
+      variable: "CMAKE_HAVE_REMOVE"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-LauOCr'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_730fb/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_730fb.dir/build.make CMakeFiles/cmTC_730fb.dir/build
+        gmake[1]: Entering directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-LauOCr'
+        Building C object CMakeFiles/cmTC_730fb.dir/CheckFunctionExists.c.o
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/cc   -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fstack-protector-strong -Wchar-subscripts -Wwrite-strings -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security -Werror=implicit-function-declaration -Wcast-align -DCHECK_FUNCTION_EXISTS=remove -std=gnu99 -fPIE -o CMakeFiles/cmTC_730fb.dir/CheckFunctionExists.c.o -c /home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-LauOCr/CheckFunctionExists.c
+        Linking C executable cmTC_730fb
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_730fb.dir/link.txt --verbose=1
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/cc  -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fstack-protector-strong -Wchar-subscripts -Wwrite-strings -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security -Werror=implicit-function-declaration -Wcast-align -DCHECK_FUNCTION_EXISTS=remove  -Wl,--as-needed -Wl,--no-undefined -Wl,-z,relro,-z,now -pie  CMakeFiles/cmTC_730fb.dir/CheckFunctionExists.c.o -o cmTC_730fb
+        gmake[1]: Leaving directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-LauOCr'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/local/share/cmake-3.31/Modules/CheckFunctionExists.cmake:93 (try_compile)"
+      - "/usr/local/share/cmake-3.31/Modules/FindX11.cmake:740 (check_function_exists)"
+      - "src/autotype/CMakeLists.txt:3 (find_package)"
+    checks:
+      - "Looking for shmat"
+    directories:
+      source: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-2yyFry"
+      binary: "/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-2yyFry"
+    cmakeVariables:
+      CMAKE_CXX_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_C_FLAGS: " -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fstack-protector-strong -Wchar-subscripts -Wwrite-strings -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security -Werror=implicit-function-declaration -Wcast-align"
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_C_LINK_NO_PIE_SUPPORTED: "1"
+      CMAKE_EXE_LINKER_FLAGS: " -Wl,--as-needed -Wl,--no-undefined -Wl,-z,relro,-z,now -pie"
+      CMAKE_MODULE_PATH: "/home/runner/work/keepassxc/keepassxc/cmake"
+      CMAKE_POSITION_INDEPENDENT_CODE: "ON"
+    buildResult:
+      variable: "CMAKE_HAVE_SHMAT"
+      cached: true
+      stdout: |
+        Change Dir: '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-2yyFry'
+        
+        Run Build Command(s): /usr/local/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_2d083/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_2d083.dir/build.make CMakeFiles/cmTC_2d083.dir/build
+        gmake[1]: Entering directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-2yyFry'
+        Building C object CMakeFiles/cmTC_2d083.dir/CheckFunctionExists.c.o
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/cc   -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fstack-protector-strong -Wchar-subscripts -Wwrite-strings -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security -Werror=implicit-function-declaration -Wcast-align -DCHECK_FUNCTION_EXISTS=shmat -std=gnu99 -fPIE -o CMakeFiles/cmTC_2d083.dir/CheckFunctionExists.c.o -c /home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-2yyFry/CheckFunctionExists.c
+        Linking C executable cmTC_2d083
+        /usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2d083.dir/link.txt --verbose=1
+        /home/runner/work/keepassxc/.codeql-scratch/dbs/cpp/working/autobuild/bin/cc  -fno-common -fopenmp -Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long -Wformat=2 -Wmissing-format-attribute -fvisibility=hidden -fstack-protector-strong -Wchar-subscripts -Wwrite-strings -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -Werror=format-security -Werror=implicit-function-declaration -Wcast-align -DCHECK_FUNCTION_EXISTS=shmat  -Wl,--as-needed -Wl,--no-undefined -Wl,-z,relro,-z,now -pie  CMakeFiles/cmTC_2d083.dir/CheckFunctionExists.c.o -o cmTC_2d083
+        gmake[1]: Leaving directory '/home/runner/work/keepassxc/keepassxc/_codeql_build_dir/CMakeFiles/CMakeScratch/TryCompile-2yyFry'
+        
+      exitCode: 0
+...
