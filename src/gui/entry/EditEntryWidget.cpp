@@ -930,9 +930,9 @@ void EditEntryWidget::loadEntry(Entry* entry,
     } else {
         if (create) {
             setHeadline(QString("%1 \u2022 %2").arg(parentName, tr("Add entry")));
-	    if (config()->get(Config::AutoGeneratePasswordForNewEntries).toBool()) {
-	      m_mainUi->passwordEdit->setPlaceholderText(m_passwordGenerator->generatePassword());
-	    }
+            if (config()->get(Config::AutoGeneratePasswordForNewEntries).toBool()) {
+              m_mainUi->passwordEdit->setPlaceholderText(m_passwordGenerator->generatePassword());
+            }
         } else {
             setHeadline(QString("%1 \u2022 %2 \u2022 %3").arg(parentName, entry->title(), tr("Edit entry")));
             // Reload entry details if changed outside of the edit dialog
