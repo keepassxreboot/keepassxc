@@ -53,7 +53,7 @@ public:
         HideWindowOnCopy,
         MinimizeOnCopy,
         MinimizeAfterUnlock,
-	AutoGeneratePasswordForNewEntries,
+        AutoGeneratePasswordForNewEntries,
         DropToBackgroundOnCopy,
         UseGroupIconOnEntryCreation,
         AutoTypeEntryTitleMatch,
