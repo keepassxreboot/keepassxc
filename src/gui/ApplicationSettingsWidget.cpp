@@ -402,7 +402,7 @@ void ApplicationSettingsWidget::saveSettings()
                   !m_generalUi->ConfirmMoveEntryToRecycleBinCheckBox->isChecked());
     config()->set(Config::Security_EnableCopyOnDoubleClick, m_generalUi->EnableCopyOnDoubleClickCheckBox->isChecked());
     config()->set(Config::AutoGeneratePasswordForNewEntries,
-		  m_generalUi->autoGeneratePasswordForNewEntriesCheckBox->isChecked());
+                  m_generalUi->autoGeneratePasswordForNewEntriesCheckBox->isChecked());
 
     auto language = m_generalUi->languageComboBox->currentData().toString();
     if (config()->get(Config::GUI_Language) != language) {
