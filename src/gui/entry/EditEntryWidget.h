@@ -26,8 +26,8 @@
 #include <QTimer>
 
 #include "config-keepassx.h"
-#include "gui/EditWidget.h"
 #include "core/PasswordGenerator.h"
+#include "gui/EditWidget.h"
 
 class AutoTypeAssociations;
 class AutoTypeAssociationsModel;
