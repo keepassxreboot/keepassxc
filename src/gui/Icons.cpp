@@ -69,11 +69,38 @@ QIcon Icons::applicationIcon()
 QString Icons::trayIconAppearance() const
 {
     auto iconAppearance = config()->get(Config::GUI_TrayIconAppearance).toString();
+
+    // If loaded an icon appearance that was set to 'monochrome-kde-plasma',
+    // but the current session is not KDE/Plasma, clear the icon appearance setting
+    // and let the auto detecting a few lines later determine a new appearance
+#ifndef Q_OS_LINUX
+    // Any operating system but Linux
+    if (iconAppearance == "monochrome-kde-plasma") {
+        iconAppearance.clear();
+    }
+#else
+    if (!qEnvironmentVariable("XDG_CURRENT_DESKTOP").split(';').contains("KDE") && qEnvironmentVariable("XDG_SESSION_DESKTOP") != "KDE"
+        && iconAppearance == "monochrome-kde-plasma"
+    ) {
+        // If running Linux but no KDE/Plasma session
+        iconAppearance.clear();
+    }
+#endif
+
     if (iconAppearance.isNull()) {
 #ifdef Q_OS_MACOS
         iconAppearance = osUtils->isDarkMode() ? "monochrome-light" : "monochrome-dark";
 #else
+#ifdef Q_OS_LINUX
+        if (qEnvironmentVariable("XDG_CURRENT_DESKTOP").split(';').contains("KDE") || qEnvironmentVariable("XDG_SESSION_DESKTOP") == "KDE") {
+            // Educated guess that KeePassXC runs in a KDE/Plasma session, use the theme-aware icon
+            iconAppearance = "monochrome-kde-plasma";
+        } else {
+            iconAppearance = "monochrome-light";
+        }
+#else
         iconAppearance = "monochrome-light";
+#endif
 #endif
     }
     return iconAppearance;

@@ -311,6 +311,12 @@ void ApplicationSettingsWidget::loadSettings()
 #else
     m_generalUi->trayIconAppearance->addItem(tr("Monochrome (light)"), "monochrome-light");
     m_generalUi->trayIconAppearance->addItem(tr("Monochrome (dark)"), "monochrome-dark");
+#ifdef Q_OS_LINUX
+    if (qEnvironmentVariable("XDG_CURRENT_DESKTOP").split(';').contains("KDE") || qEnvironmentVariable("XDG_SESSION_DESKTOP") == "KDE") {
+        // Most likely inside a KDE/Plasma session, so add option to use theme-aware icon
+        m_generalUi->trayIconAppearance->addItem(tr("Monochrome (theme-aware)"), "monochrome-kde-plasma");
+    }
+#endif
 #endif
     m_generalUi->trayIconAppearance->addItem(tr("Colorful"), "colorful");
     int trayIconIndex = m_generalUi->trayIconAppearance->findData(icons()->trayIconAppearance());
