@@ -56,6 +56,7 @@ namespace
 
         // Create entry and assign basic values
         QScopedPointer<Entry> entry(new Entry());
+        entry->setEmitModified(false);
         entry->setUuid(QUuid::createUuid());
         entry->setTitle(itemMap.value("name").toString());
         entry->setNotes(itemMap.value("notes").toString());
@@ -205,9 +206,58 @@ namespace
             entry->attributes()->set(name, value, type == 1);
         }
 
+        // Parse timestamps
+        auto timeInfo = entry->timeInfo();
+        if (itemMap.contains("creationDate")) {
+            const auto creationDate = QDateTime::fromString(itemMap.value("creationDate").toString(), Qt::ISODate);
+            if (creationDate.isValid()) {
+                timeInfo.setCreationTime(creationDate);
+            }
+        }
+        if (itemMap.contains("revisionDate")) {
+            const auto revisionDate = QDateTime::fromString(itemMap.value("revisionDate").toString(), Qt::ISODate);
+            if (revisionDate.isValid()) {
+                timeInfo.setLastModificationTime(revisionDate);
+                timeInfo.setLastAccessTime(revisionDate);
+            }
+        }
+        entry->setTimeInfo(timeInfo);
+
         // Collapse any accumulated history
         entry->removeHistoryItems(entry->historyItems());
 
+        // Parse password history, if present
+        if (itemMap.contains("passwordHistory")) {
+            const auto passwordHistory = itemMap.value("passwordHistory").toList();
+            for (const auto& historyItem : passwordHistory) {
+                const auto historyMap = historyItem.toMap();
+                const auto password = historyMap.value("password").toString();
+                const auto lastUsedDate =
+                    QDateTime::fromString(historyMap.value("lastUsedDate").toString(), Qt::ISODate);
+
+                if (!password.isEmpty() && lastUsedDate.isValid()) {
+                    // Create a history entry with the old password
+                    auto historyEntry = new Entry();
+                    historyEntry->setUuid(entry->uuid());
+                    historyEntry->setTitle(entry->title());
+                    historyEntry->setUsername(entry->username());
+                    historyEntry->setPassword(password);
+                    historyEntry->setUrl(entry->url());
+                    historyEntry->setNotes(entry->notes());
+
+                    // Set the timestamp for this history item
+                    auto historyTimeInfo = historyEntry->timeInfo();
+                    historyTimeInfo.setCreationTime(entry->timeInfo().creationTime());
+                    historyTimeInfo.setLastModificationTime(lastUsedDate);
+                    historyTimeInfo.setLastAccessTime(lastUsedDate);
+                    historyEntry->setTimeInfo(historyTimeInfo);
+
+                    entry->addHistoryItem(historyEntry);
+                }
+            }
+        }
+
+        entry->setEmitModified(true);
         return entry.take();
     }
 
@@ -238,41 +288,10 @@ namespace
         QString folderId;
         const auto items = vault.value("items").toArray();
         for (const auto& item : items) {
-            const auto itemObj = item.toObject();
-            auto entry = readItem(itemObj, folderId);
+            auto entry = readItem(item.toObject(), folderId);
             if (entry) {
-                // Disable automatic timeinfo updates before setting the group
                 entry->setUpdateTimeinfo(false);
                 entry->setGroup(folderMap.value(folderId, db->rootGroup()), false);
-
-                // Parse timestamps if present and apply them after setting the group
-                const auto itemMap = itemObj.toVariantMap();
-                auto timeInfo = entry->timeInfo();
-                bool timeInfoUpdated = false;
-
-                if (itemMap.contains("creationDate")) {
-                    const auto creationDate =
-                        QDateTime::fromString(itemMap.value("creationDate").toString(), Qt::ISODate);
-                    if (creationDate.isValid()) {
-                        timeInfo.setCreationTime(creationDate);
-                        timeInfoUpdated = true;
-                    }
-                }
-                if (itemMap.contains("revisionDate")) {
-                    const auto revisionDate =
-                        QDateTime::fromString(itemMap.value("revisionDate").toString(), Qt::ISODate);
-                    if (revisionDate.isValid()) {
-                        timeInfo.setLastModificationTime(revisionDate);
-                        timeInfo.setLastAccessTime(revisionDate);
-                        timeInfoUpdated = true;
-                    }
-                }
-
-                if (timeInfoUpdated) {
-                    entry->setTimeInfo(timeInfo);
-                }
-
-                // Re-enable automatic timeinfo updates
                 entry->setUpdateTimeinfo(true);
             }
         }

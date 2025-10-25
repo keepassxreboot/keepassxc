@@ -228,6 +228,16 @@ void TestImports::testBitwarden()
     QCOMPARE(entry->attribute("KP2A_URL_2"), QStringLiteral("https://gmail.com"));
     // Check TOTP
     QVERIFY(entry->hasTotp());
+    // Check Modified and Created timestamps
+    QCOMPARE(entry->timeInfo().lastModificationTime(),
+             QDateTime::fromString(QStringLiteral("2024-12-25T12:00:00Z"), Qt::ISODate));
+    QCOMPARE(entry->timeInfo().creationTime(),
+             QDateTime::fromString(QStringLiteral("2024-12-01T12:00:00Z"), Qt::ISODate));
+    // Check Password History
+    QCOMPARE(entry->historyItems().size(), 1);
+    QCOMPARE(entry->historyItems().first()->password(), QStringLiteral("oldpassword"));
+    QCOMPARE(entry->historyItems().first()->timeInfo().lastModificationTime(),
+             QDateTime::fromString(QStringLiteral("2024-12-01T12:00:00Z"), Qt::ISODate));
     // NOTE: Bitwarden does not export attachments
     // NOTE: Bitwarden does not export expiration dates
 
@@ -315,29 +325,6 @@ void TestImports::testBitwardenPasskey()
     QCOMPARE(attr->value(EntryAttributes::KPEX_PASSKEY_RELYING_PARTY), QStringLiteral("webauthn.io"));
     QCOMPARE(attr->value(EntryAttributes::KPEX_PASSKEY_USER_HANDLE),
              QStringLiteral("aTFtdmFnOHYtS2dxVEJ0by1rSFpLWGg0enlTVC1iUVJReDZ5czJXa3c2aw"));
-}
-
-void TestImports::testBitwardenTimestamps()
-{
-    auto bitwardenPath =
-        QStringLiteral("%1/%2").arg(KEEPASSX_TEST_DATA_DIR, QStringLiteral("/bitwarden_timestamps_export.json"));
-
-    BitwardenReader reader;
-    auto db = reader.convert(bitwardenPath);
-    QVERIFY2(!reader.hasError(), qPrintable(reader.errorString()));
-    QVERIFY(db);
-
-    // Confirm entry was imported
-    auto entry = db->rootGroup()->findEntryByPath("/Test Folder/Timestamp Entry");
-    QVERIFY(entry);
-    QCOMPARE(entry->title(), QStringLiteral("Timestamp Entry"));
-    QCOMPARE(entry->username(), QStringLiteral("testuser"));
-    QCOMPARE(entry->password(), QStringLiteral("currentpassword"));
-
-    // Verify timestamps were imported correctly
-    auto timeInfo = entry->timeInfo();
-    QCOMPARE(timeInfo.creationTime(), QDateTime::fromString("2023-01-01T08:00:00.000Z", Qt::ISODate));
-    QCOMPARE(timeInfo.lastModificationTime(), QDateTime::fromString("2023-12-01T12:00:00.000Z", Qt::ISODate));
 }
 
 void TestImports::testProtonPass()

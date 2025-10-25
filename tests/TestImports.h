@@ -31,7 +31,6 @@ private slots:
     void testBitwarden();
     void testBitwardenEncrypted();
     void testBitwardenPasskey();
-    void testBitwardenTimestamps();
     void testProtonPass();
 };
 
