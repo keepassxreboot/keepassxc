@@ -57,9 +57,9 @@
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-174</y>
-            <width>590</width>
-            <height>1413</height>
+            <y>0</y>
+            <width>568</width>
+            <height>1226</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -540,6 +540,13 @@
                </widget>
               </item>
               <item>
+               <widget class="QCheckBox" name="autoGeneratePasswordForNewEntriesCheckBox">
+                <property name="text">
+                 <string>Auto-generate password for new entries</string>
+                </property>
+               </widget>
+              </item>
+              <item>
                <widget class="QCheckBox" name="EnableCopyOnDoubleClickCheckBox">
                 <property name="text">
                  <string>Copy data on double clicking field in entry view</string>
@@ -697,13 +704,6 @@
                  </spacer>
                 </item>
                </layout>
-              </item>
-              <item>
-               <widget class="QCheckBox" name="autoGeneratePasswordForNewEntriesCheckBox">
-                <property name="text">
-                 <string>Auto-generate password for new entries</string>
-                </property>
-               </widget>
               </item>
              </layout>
             </widget>

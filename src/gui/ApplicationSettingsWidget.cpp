@@ -583,11 +583,6 @@ void ApplicationSettingsWidget::hideWindowOnCopyCheckBoxToggled(bool checked)
     m_generalUi->dropToBackgroundOnCopyRadioButton->setEnabled(checked);
 }
 
-void ApplicationSettingsWidget::autoGeneratePasswordForNewEntriesCheckBoxToggled(bool checked)
-{
-    m_generalUi->autoGeneratePasswordForNewEntriesCheckBox->setEnabled(checked);
-}
-
 void ApplicationSettingsWidget::systrayToggled(bool checked)
 {
     m_generalUi->trayIconAppearance->setEnabled(checked);

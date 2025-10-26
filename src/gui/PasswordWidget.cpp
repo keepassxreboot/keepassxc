@@ -119,11 +119,6 @@ void PasswordWidget::setText(const QString& text)
     m_ui->passwordEdit->setText(text);
 }
 
-void PasswordWidget::setPlaceholderText(const QString& text)
-{
-    m_ui->passwordEdit->setPlaceholderText(text);
-}
-
 void PasswordWidget::setEchoMode(QLineEdit::EchoMode mode)
 {
     m_ui->passwordEdit->setEchoMode(mode);

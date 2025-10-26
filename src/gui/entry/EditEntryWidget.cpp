@@ -38,6 +38,7 @@
 #include "core/EntryAttributes.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
+#include "core/PasswordGenerator.h"
 #include "core/TimeDelta.h"
 #ifdef WITH_XC_SSHAGENT
 #include "sshagent/OpenSSHKey.h"
@@ -71,7 +72,6 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     , m_browserUi(new Ui::EditEntryWidgetBrowser())
     , m_attachments(new EntryAttachments())
     , m_customData(new CustomData())
-    , m_passwordGenerator(new PasswordGenerator())
     , m_mainWidget(new QScrollArea(this))
     , m_advancedWidget(new QWidget(this))
     , m_iconsWidget(new EditWidgetIcons(this))
@@ -930,9 +930,6 @@ void EditEntryWidget::loadEntry(Entry* entry,
     } else {
         if (create) {
             setHeadline(QString("%1 \u2022 %2").arg(parentName, tr("Add entry")));
-            if (config()->get(Config::AutoGeneratePasswordForNewEntries).toBool()) {
-                m_mainUi->passwordEdit->setPlaceholderText(m_passwordGenerator->generatePassword());
-            }
         } else {
             setHeadline(QString("%1 \u2022 %2 \u2022 %3").arg(parentName, entry->title(), tr("Edit entry")));
             // Reload entry details if changed outside of the edit dialog
@@ -951,6 +948,12 @@ void EditEntryWidget::loadEntry(Entry* entry,
 
     // Force the user to Save/Discard new entries
     showApplyButton(!m_create);
+
+    // Set an initial password for new entries if the option is enabled
+    if (create && config()->get(Config::AutoGeneratePasswordForNewEntries).toBool()) {
+        PasswordGenerator generator;
+        m_mainUi->passwordEdit->setText(generator.generatePassword());
+    }
 
     setModified(false);
 }
