@@ -557,7 +557,7 @@ void DatabaseWidget::copyTotp()
     }
 
     // If the entry has no TOTP set, open the setup dialog first
-    if (!currentEntry->hasTotp()) {
+    if (!currentEntry->hasValidTotp()) {
         setupTotp();
         return;
     }
