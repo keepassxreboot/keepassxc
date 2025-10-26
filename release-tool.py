@@ -835,7 +835,7 @@ class Build(Command):
         # Move appimage zsync file to output dir
         zsync_file = next(Path(build_dir).glob('*.AppImage.zsync'), None)
         if zsync_file and zsync_file.is_file():
-            zsync_file.rename(output_dir.absolute() / zsync_file.name)
+            shutil.move(zsync_file.absolute(), output_dir.absolute() / zsync_file.name)
 
 
 class BuildSrc(Command):
