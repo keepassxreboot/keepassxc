@@ -48,7 +48,6 @@ void EditWidgetProperties::setFields(const TimeInfo& timeInfo, const QUuid& uuid
     static const QString timeFormat("d MMM yyyy HH:mm:ss");
     m_ui->modifiedEdit->setText(timeInfo.lastModificationTime().toLocalTime().toString(timeFormat));
     m_ui->createdEdit->setText(timeInfo.creationTime().toLocalTime().toString(timeFormat));
-    m_ui->accessedEdit->setText(timeInfo.lastAccessTime().toLocalTime().toString(timeFormat));
     m_ui->uuidEdit->setText(uuid.toRfc4122().toHex());
 }
 

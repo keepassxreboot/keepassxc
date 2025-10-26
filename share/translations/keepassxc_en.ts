@@ -3876,14 +3876,6 @@ Supported extensions are: %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Accessed:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Datetime accessed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Uuid:</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4257,10 +4249,6 @@ Would you like to overwrite the existing attachment?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Accessed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Attachments</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4294,10 +4282,6 @@ Would you like to overwrite the existing attachment?</source>
     </message>
     <message>
         <source>Last modification date</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Last access date</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

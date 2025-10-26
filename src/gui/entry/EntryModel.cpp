@@ -203,9 +203,6 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
         case Modified:
             result = Clock::toString(entry->timeInfo().lastModificationTime().toLocalTime());
             return result;
-        case Accessed:
-            result = Clock::toString(entry->timeInfo().lastAccessTime().toLocalTime());
-            return result;
         case Attachments: {
             // Display comma-separated list of attachments
             QList<QString> attachments = entry->attachments()->keys();
@@ -266,8 +263,6 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
             return entry->timeInfo().creationTime();
         case Modified:
             return entry->timeInfo().lastModificationTime();
-        case Accessed:
-            return entry->timeInfo().lastAccessTime();
         case Paperclip:
             // Display entries with attachments above those without when
             // sorting ascendingly (and vice versa when sorting descendingly)
@@ -400,8 +395,6 @@ QVariant EntryModel::headerData(int section, Qt::Orientation orientation, int ro
             return tr("Created");
         case Modified:
             return tr("Modified");
-        case Accessed:
-            return tr("Accessed");
         case Attachments:
             return tr("Attachments");
         case Size:
@@ -441,8 +434,6 @@ QVariant EntryModel::headerData(int section, Qt::Orientation orientation, int ro
             return tr("Creation date");
         case Modified:
             return tr("Last modification date");
-        case Accessed:
-            return tr("Last access date");
         case Attachments:
             return tr("Attached files");
         case Size:
