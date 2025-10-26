@@ -832,6 +832,10 @@ class Build(Command):
               f'KeePassXC-*-{platform_target}.AppImage.zsync',
               app_dir.as_posix(), (output_dir.absolute() / appimage_name).as_posix()],
              cwd=build_dir, capture_output=False, path=env_path, **docker_args, docker_privileged=True)
+        # Move appimage zsync file to output dir
+        zsync_file = next(Path(build_dir).glob('*.AppImage.zsync'), None)
+        if zsync_file and zsync_file.is_file():
+            zsync_file.rename(output_dir.absolute() / zsync_file.name)
 
 
 class BuildSrc(Command):
