@@ -100,8 +100,9 @@ void Clipboard::clearCopiedText()
         return;
     }
 
-    if (m_lastCopied == clipboard->text(QClipboard::Clipboard)
-        || m_lastCopied == clipboard->text(QClipboard::Selection)) {
+    if (!m_lastCopied.isEmpty()
+        && (m_lastCopied == clipboard->text(QClipboard::Clipboard)
+            || m_lastCopied == clipboard->text(QClipboard::Selection))) {
         clipboard->clear(QClipboard::Clipboard);
         clipboard->clear(QClipboard::Selection);
 #ifdef Q_OS_UNIX
