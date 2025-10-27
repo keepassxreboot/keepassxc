@@ -75,8 +75,27 @@ Application::Application(int& argc, char** argv)
     }
 #endif
 
-userName.replace('/', '_');
-userName.replace('\\', '_');
+
+    static const QRegularExpression invalidFileChars(R"([<>:\"/\\|?*])");
+    userName.replace(invalidFileChars, "_");
+
+    // Remove leading/trailing whitespace and trailing dots/spaces
+    userName = userName.trimmed();
+     while (!userName.isEmpty() && (userName.endsWith('.') || userName.endsWith(' '))) {
+     userName.chop(1);
+    }
+
+    // Build identifier for lock/socket file naming
+    QString identifier = QStringLiteral("keepassxc");
+    if (!userName.isEmpty()) {
+       identifier += QChar('-') + userName;
+    }
+#ifdef QT_DEBUG
+    identifier += QStringLiteral("-DEBUG");
+#endif
+    QString lockName   = identifier + QStringLiteral(".lock");
+    m_socketName       = identifier + QStringLiteral(".socket");
+
     QString identifier = "keepassxc";
     if (!userName.isEmpty()) {
         identifier += "-" + userName;
