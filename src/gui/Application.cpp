@@ -33,6 +33,7 @@
 #include <QPixmapCache>
 #include <QSocketNotifier>
 #include <QStandardPaths>
+#include <QRegularExpression>
 
 #if defined(Q_OS_UNIX)
 #include <csignal>
