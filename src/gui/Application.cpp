@@ -76,26 +76,26 @@ Application::Application(int& argc, char** argv)
     }
 #endif
 
-
+    // Sanitize the username to create a valid filename component
     static const QRegularExpression invalidFileChars(R"([<>:\"/\\|?*])");
     userName.replace(invalidFileChars, "_");
 
-    // Remove leading/trailing whitespace and trailing dots/spaces
+    // Remove leading/trailing whitespace and trailing dots/spaces which are invalid on Windows
     userName = userName.trimmed();
-     while (!userName.isEmpty() && (userName.endsWith('.') || userName.endsWith(' '))) {
-     userName.chop(1);
+    while (!userName.isEmpty() && (userName.endsWith('.') || userName.endsWith(' '))) {
+        userName.chop(1);
     }
 
-    // Build identifier for lock/socket file naming
+    // Build identifier for lock/socket file naming using the sanitized username
     QString identifier = QStringLiteral("keepassxc");
     if (!userName.isEmpty()) {
-       identifier += QChar('-') + userName;
+        identifier += QChar('-') + userName;
     }
 #ifdef QT_DEBUG
     identifier += QStringLiteral("-DEBUG");
 #endif
     QString lockName   = identifier + QStringLiteral(".lock");
-    m_socketName       = identifier + QStringLiteral(".socket");
+    m_socketName       = identifier + QStringLiteral(".socket")
 
     QString identifier = "keepassxc";
     if (!userName.isEmpty()) {
