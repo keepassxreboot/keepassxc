@@ -76,37 +76,30 @@ Application::Application(int& argc, char** argv)
     }
 #endif
 
-    // Sanitize the username to create a valid filename component
-    static const QRegularExpression invalidFileChars(R"([<>:\"/\\|?*])");
-    userName.replace(invalidFileChars, "_");
+    // Sanitize username for file safety
+     static const QRegularExpression invalidFileChars(R"([<>:\"/\\|?*])");
+     userName.replace(invalidFileChars, "_");
 
-    // Remove leading/trailing whitespace and trailing dots/spaces which are invalid on Windows
+     // Trim whitespace and invalid trailing characters
     userName = userName.trimmed();
-    while (!userName.isEmpty() && (userName.endsWith('.') || userName.endsWith(' '))) {
+      while (!userName.isEmpty() && (userName.endsWith('.') || userName.endsWith(' '))) {
         userName.chop(1);
     }
 
-    // Build identifier for lock/socket file naming using the sanitized username
+     // Build identifier
+        // Build identifier
     QString identifier = QStringLiteral("keepassxc");
     if (!userName.isEmpty()) {
         identifier += QChar('-') + userName;
     }
 #ifdef QT_DEBUG
+    // In DEBUG mode don’t interfere with Release instances
     identifier += QStringLiteral("-DEBUG");
 #endif
-    QString lockName   = identifier + QStringLiteral(".lock");
-    m_socketName       = identifier + QStringLiteral(".socket")
 
-    QString identifier = "keepassxc";
-    if (!userName.isEmpty()) {
-        identifier += "-" + userName;
-    }
-#ifdef QT_DEBUG
-    // In DEBUG mode don't interfere with Release instances
-    identifier += "-DEBUG";
-#endif
-    QString lockName = identifier + ".lock";
-    m_socketName = identifier + ".socket";
+    QString lockName   = identifier + QStringLiteral(".lock");
+    m_socketName       = identifier + QStringLiteral(".socket");
+
 
     // According to documentation we should use RuntimeLocation on *nixes, but even Qt doesn't respect
     // this and creates sockets in TempLocation, so let's be consistent.
