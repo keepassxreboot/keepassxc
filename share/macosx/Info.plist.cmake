@@ -14,6 +14,8 @@
   <string>${PROGNAME}</string>
   <key>CFBundleIconFile</key>
   <string>keepassxc.icns</string>
+  <key>CFBundleIconName</key>
+  <string>keepassxc</string>
   <key>CFBundleIdentifier</key>
   <string>org.keepassxc.keepassxc</string>
   <key>CFBundleInfoDictionaryVersion</key>

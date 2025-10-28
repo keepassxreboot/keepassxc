@@ -68,6 +68,7 @@ if(UNIX AND NOT APPLE AND NOT HAIKU)
 endif(UNIX AND NOT APPLE AND NOT HAIKU)
 
 if(APPLE)
+  install(FILES macosx/Assets.car DESTINATION ${DATA_INSTALL_DIR})
   install(FILES macosx/keepassxc.icns DESTINATION ${DATA_INSTALL_DIR})
 endif()
 
@@ -85,7 +86,16 @@ add_custom_command(TARGET icons
 if(APPLE)
     add_custom_command(TARGET icons
             POST_BUILD
-            COMMAND png2icns macosx/keepassxc.icns icons/application/256x256/apps/keepassxc.png
+            COMMAND xcrun actool share/macosx/keepassxc.icon
+                --compile share/macosx
+                --output-partial-info-plist /dev/null
+                --app-icon keepassxc
+                --include-all-app-icons
+                --enable-on-demand-resources NO
+                --target-device mac
+                --minimum-deployment-target 11.0
+                --platform macosx
+                --output-format human-readable-text
             WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 endif()
 
