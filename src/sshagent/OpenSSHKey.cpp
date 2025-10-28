@@ -312,9 +312,10 @@ bool OpenSSHKey::parsePKCS1PEM(const QByteArray& in)
             return false;
         }
 
-        stream.readString(m_cipherName);
-        stream.readString(m_kdfName);
-        stream.readString(m_kdfOptions);
+        if (!stream.readString(m_cipherName) || !stream.readString(m_kdfName) || !stream.readString(m_kdfOptions)) {
+            m_error = tr("Failed to read key file: %1").arg(stream.errorString());
+            return false;
+        }
 
         quint32 numberOfKeys;
         stream.read(numberOfKeys);
@@ -327,7 +328,7 @@ bool OpenSSHKey::parsePKCS1PEM(const QByteArray& in)
         for (quint32 i = 0; i < numberOfKeys; ++i) {
             QByteArray publicKey;
             if (!stream.readString(publicKey)) {
-                m_error = tr("Failed to read public key.");
+                m_error = tr("Failed to read public key: %1").arg(stream.errorString());
                 return false;
             }
 

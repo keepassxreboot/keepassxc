@@ -877,6 +877,17 @@ Ctrl+Shift+4 - Copy URL&lt;br/&gt;
     </message>
 </context>
 <context>
+    <name>BinaryStream</name>
+    <message>
+        <source>Failed to read string data: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>String length exceeds 10 MiB limit (requested %1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>BrowserAccessControlDialog</name>
     <message>
         <source>KeePassXC - Browser Access Request</source>
@@ -6695,10 +6706,6 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Failed to read public key.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Corrupted key file, reading private key failed</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6784,6 +6791,14 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
     </message>
     <message>
         <source>(encrypted)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to read key file: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to read public key: %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
