@@ -571,6 +571,14 @@
         <source>Font size selection</source>
         <translation>字型大小選擇</translation>
     </message>
+    <message>
+        <source>Skip confirmation for main window Auto-Type actions</source>
+        <translation>跳過主視窗自動輸入操作的確認</translation>
+    </message>
+    <message>
+        <source>Auto-generate password for new entries</source>
+        <translation>为新条目自动生成密码</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetSecurity</name>
@@ -662,6 +670,17 @@
     </message>
 </context>
 <context>
+    <name>AttachmentWidget</name>
+    <message>
+        <source>Attachment Viewer</source>
+        <translation>附件檢視</translation>
+    </message>
+    <message>
+        <source>Unknown attachment type</source>
+        <translation>未知的附件類型</translation>
+    </message>
+</context>
+<context>
     <name>AutoType</name>
     <message>
         <source>The requested Auto-Type sequence cannot be used due to an error:</source>
@@ -710,6 +729,10 @@
     <message>
         <source>Invalid placeholder: %1</source>
         <translation>無效的佔位符: %1</translation>
+    </message>
+    <message>
+        <source>Entry has invalid TOTP settings</source>
+        <translation>項目有無效的 TOTP 設定</translation>
     </message>
 </context>
 <context>
@@ -780,20 +803,6 @@
         <translation>雙擊橫列來執行自動輸入，或者用搜尋功能找到項目：</translation>
     </message>
     <message>
-        <source>&lt;p&gt;You can use advanced search queries to find any entry in your open databases. The following shortcuts are useful:&lt;br/&gt;
-Ctrl+F - Toggle database search&lt;br/&gt;
-Ctrl+1 - Type username&lt;br/&gt;
-Ctrl+2 - Type password&lt;br/&gt;
-Ctrl+3 - Type TOTP&lt;br/&gt;
-Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
-        <translation>&lt;p&gt;您可以使用進階搜索，在開啟的資料庫中尋找項目。以下是一些實用快捷鍵：&lt;br/&gt;
-Ctrl+F - 資料庫搜索開關&lt;br/&gt;
-Ctrl+1 - 輸入使用者名稱&lt;br/&gt;
-Ctrl+2 - 輸入密碼&lt;br/&gt;
-Ctrl+3 - 輸入 TOTP&lt;br/&gt;
-Ctrl+4 - 使用虛擬鍵盤（僅限 Windows）&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Search all open databases</source>
         <translation>搜尋所有開啟的資料庫</translation>
     </message>
@@ -836,6 +845,55 @@ Ctrl+4 - 使用虛擬鍵盤（僅限 Windows）&lt;/p&gt;</translation>
     <message>
         <source>Use Virtual Keyboard</source>
         <translation>使用虛擬鍵盤</translation>
+    </message>
+    <message>
+        <source>Type {URL}</source>
+        <translation>輸入 {URL}</translation>
+    </message>
+    <message>
+        <source>Copy URL</source>
+        <translation>複製 URL</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;The following shortcuts are available:&lt;br/&gt;
+Ctrl+F - Focus search&lt;br/&gt;
+Ctrl+1 - Type username&lt;br/&gt;
+Ctrl+2 - Type password&lt;br/&gt;
+Ctrl+3 - Type TOTP&lt;br/&gt;
+Ctrl+4 - Type URL&lt;br/&gt;
+Ctrl+5 - Use Virtual Keyboard (Windows Only)&lt;br/&gt;
+Ctrl+Shift+1 - Copy username&lt;br/&gt;
+Ctrl+Shift+2 - Copy password&lt;br/&gt;
+Ctrl+Shift+3 - Copy TOTP&lt;br/&gt;
+Ctrl+Shift+4 - Copy URL&lt;br/&gt;
+&lt;/p&gt;</source>
+        <translation>&lt;p&gt;以下快捷键可用：&lt;br/&gt;
+Ctrl+F - 聚焦搜索框&lt;br/&gt;
+Ctrl+1 - 输入用户名&lt;br/&gt;
+Ctrl+2 - 输入密码&lt;br/&gt;
+Ctrl+3 - 输入 TOTP&lt;br/&gt;
+Ctrl+4 - 输入 URL&lt;br/&gt;
+Ctrl+5 - 使用虚拟键盘（仅限 Windows）&lt;br/&gt;
+Ctrl+Shift+1 - 复制用户名&lt;br/&gt;
+Ctrl+Shift+2 - 复制密码&lt;br/&gt;
+Ctrl+Shift+3 - 复制 TOTP&lt;br/&gt;
+Ctrl+Shift+4 - 复制 URL&lt;br/&gt;
+&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>You can use advanced search queries to find any entry in your open databases.</source>
+        <translation>您可以使用高级搜索查询在打开的数据库中查找任何条目。</translation>
+    </message>
+</context>
+<context>
+    <name>BinaryStream</name>
+    <message>
+        <source>Failed to read string data: %1</source>
+        <translation>读取字符串数据失败：%1</translation>
+    </message>
+    <message>
+        <source>String length exceeds 10 MiB limit (requested %1)</source>
+        <translation>字符串程度超过 10 MiB 限制（请求值 %1）</translation>
     </message>
 </context>
 <context>
@@ -1726,6 +1784,10 @@ Are you sure you want to continue with this file?.</source>
         <source>Hardware keys found, but no slots are configured.</source>
         <translation>硬體金鑰已找到，但未配置任何槽位。</translation>
     </message>
+    <message>
+        <source>Press ESC again to close this database</source>
+        <translation>再次按下 ESC 以關閉此資料庫</translation>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingWidgetMetaData</name>
@@ -2268,20 +2330,12 @@ removed from the database.</source>
         <translation>顯示名稱：</translation>
     </message>
     <message>
-        <source>Publically visible display name used on the unlock dialog</source>
-        <translation>公開可見的顯示名稱，於解鎖對話框</translation>
-    </message>
-    <message>
         <source>Database public display name</source>
         <translation>資料庫的公開顯示名稱</translation>
     </message>
     <message>
         <source>Display color:</source>
         <translation>顯示顏色：</translation>
-    </message>
-    <message>
-        <source>Publically visible color used on the unlock dialog</source>
-        <translation>公開可見的顏色，於解鎖對話框</translation>
     </message>
     <message>
         <source>Database public display color chooser</source>
@@ -2298,6 +2352,14 @@ removed from the database.</source>
     <message>
         <source>Select Database Icon</source>
         <translation>選擇資料庫圖示</translation>
+    </message>
+    <message>
+        <source>Publicly visible display name used on the unlock dialog</source>
+        <translation>公開可見的顯示名稱，於解鎖對話框</translation>
+    </message>
+    <message>
+        <source>Publicly visible color used on the unlock dialog</source>
+        <translation>公開可見的顏色，於解鎖對話框</translation>
     </message>
 </context>
 <context>
@@ -2643,18 +2705,6 @@ This is definitely a bug, please report it to the developers.</source>
         <translation>記住我的選擇</translation>
     </message>
     <message>
-        <source>Delete group</source>
-        <translation>刪除群組</translation>
-    </message>
-    <message>
-        <source>Do you really want to delete the group &quot;%1&quot; for good?</source>
-        <translation>真的要永遠刪除群組「%1」？</translation>
-    </message>
-    <message>
-        <source>Move group to recycle bin?</source>
-        <translation>移動群組到回收桶？</translation>
-    </message>
-    <message>
         <source>Do you really want to move the group &quot;%1&quot; to the recycle bin?</source>
         <translation>真的要將群組「%1」移到回收桶？</translation>
     </message>
@@ -2675,24 +2725,12 @@ This is definitely a bug, please report it to the developers.</source>
         <translation>無來源資料庫，什麼都不做。</translation>
     </message>
     <message>
-        <source>Successfully merged the database files.</source>
-        <translation>成功合併資料庫檔案。</translation>
-    </message>
-    <message>
-        <source>Database was not modified by merge operation.</source>
-        <translation>資料庫未被合併操作修改。</translation>
-    </message>
-    <message>
         <source>Search Results (%1)</source>
         <translation>搜尋結果 (%1)</translation>
     </message>
     <message>
         <source>No Results</source>
         <translation>無結果</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>儲存</translation>
     </message>
     <message>
         <source>Enter a unique name or overwrite an existing search from the list:</source>
@@ -2757,10 +2795,6 @@ Disable safe saves and try again?</source>
         <translation>KeePass 2 資料庫</translation>
     </message>
     <message>
-        <source>Save database backup</source>
-        <translation>儲存資料庫備份</translation>
-    </message>
-    <message>
         <source>Empty recycle bin?</source>
         <translation>清空回收桶？</translation>
     </message>
@@ -2790,14 +2824,6 @@ Disable safe saves and try again?</source>
         <translation>遠端同步「%1」成功完成！</translation>
     </message>
     <message>
-        <source>Remote sync &apos;%1&apos; failed: %2</source>
-        <translation>遠端同步「%1」失敗：%2</translation>
-    </message>
-    <message>
-        <source>Error while saving database %1: %2</source>
-        <translation>儲存資料庫 %1 時發生錯誤：%2</translation>
-    </message>
-    <message>
         <source>Downloading...</source>
         <translation>正在下載...</translation>
     </message>
@@ -2806,8 +2832,16 @@ Disable safe saves and try again?</source>
         <translation>正在上傳...</translation>
     </message>
     <message>
+        <source>Remote sync &apos;%1&apos; failed: %2</source>
+        <translation>遠端同步「%1」失敗：%2</translation>
+    </message>
+    <message>
         <source>Syncing...</source>
         <translation>正在同步...</translation>
+    </message>
+    <message>
+        <source>Error while saving database %1: %2</source>
+        <translation>儲存資料庫 %1 時發生錯誤：%2</translation>
     </message>
     <message>
         <source>Remove passkey from entry</source>
@@ -2824,10 +2858,6 @@ Disable safe saves and try again?</source>
     <message>
         <source>Do you want to load the changes?</source>
         <translation>是否要載入變更？</translation>
-    </message>
-    <message>
-        <source>Reload database</source>
-        <translation>重載資料庫</translation>
     </message>
     <message>
         <source>Reloading database…</source>
@@ -2854,12 +2884,59 @@ Disable safe saves and try again?</source>
         <translation>資料庫檔案「%1」曾被外部修改過 。&lt;br&gt;您希望如何進行？&lt;br&gt;&lt;br&gt;合併所有變更並儲存&lt;br&gt;覆寫磁碟上的變更&lt;br&gt;丟棄未儲存的變更</translation>
     </message>
     <message>
+        <source>Reload database</source>
+        <translation>重載資料庫</translation>
+    </message>
+    <message>
         <source>Database file overwritten.</source>
         <translation>資料庫檔案被覆寫。</translation>
     </message>
     <message>
         <source>Database file on disk cannot be unlocked with current credentials.&lt;br&gt;Enter new credentials and/or present hardware key to continue.</source>
         <translation>磁碟上的資料庫檔案無法被現有憑證解鎖。&lt;br&gt;輸入新的憑證並/或出示硬體金鑰以繼續。</translation>
+    </message>
+    <message>
+        <source>Failed to save backup database: %1</source>
+        <translation>儲存備份資料庫失敗：%1</translation>
+    </message>
+    <message>
+        <source>Confirm Delete Group</source>
+        <translation>确认删除组</translation>
+    </message>
+    <message>
+        <source>Do you really want to permanently delete the group &quot;%1&quot;?</source>
+        <translation>您确定要永久删除组“%1”吗？</translation>
+    </message>
+    <message>
+        <source>Confirm Recycle Group</source>
+        <translation>确认回收组</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>儲存</translation>
+    </message>
+    <message>
+        <source>Save Database Backup</source>
+        <translation>保存数据库备份</translation>
+    </message>
+    <message>
+        <source>Successfully merged the selected database.</source>
+        <translation>已成功合并所选数据库。</translation>
+    </message>
+    <message>
+        <source>No changes were made by the merge operation.</source>
+        <translation>合并操作未进行任何更改。</translation>
+    </message>
+    <message>
+        <source>Merge canceled, no changes were made.</source>
+        <translation>合并已取消，未进行任何更改。</translation>
+    </message>
+</context>
+<context>
+    <name>EditEntryAttachmentsDialog</name>
+    <message>
+        <source>Edit: %1</source>
+        <translation>編輯：%1</translation>
     </message>
 </context>
 <context>
@@ -3837,14 +3914,6 @@ Supported extensions are: %1.</source>
         <translation>修改日期與時間</translation>
     </message>
     <message>
-        <source>Accessed:</source>
-        <translation>存取於：</translation>
-    </message>
-    <message>
-        <source>Datetime accessed</source>
-        <translation>存取日期與時間</translation>
-    </message>
-    <message>
         <source>Uuid:</source>
         <translation>Uuid:</translation>
     </message>
@@ -3911,27 +3980,68 @@ This may cause the affected plugins to malfunction.</source>
         <translation>無效的正規表示式語法 %1
 %2</translation>
     </message>
+    <message>
+        <source>Title</source>
+        <translation>标题</translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>用户名</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>密码</translation>
+    </message>
+    <message>
+        <source>URL</source>
+        <translation>URL</translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation>备注</translation>
+    </message>
+    <message>
+        <source>Custom Attributes</source>
+        <translation>自定义属性</translation>
+    </message>
+    <message>
+        <source>Icon</source>
+        <translation>图标</translation>
+    </message>
+    <message>
+        <source>Color</source>
+        <translation>颜色</translation>
+    </message>
+    <message>
+        <source>Expiration</source>
+        <translation>过期时间</translation>
+    </message>
+    <message>
+        <source>TOTP</source>
+        <translation>TOTP</translation>
+    </message>
+    <message>
+        <source>Custom Data</source>
+        <translation>自定义数据</translation>
+    </message>
+    <message>
+        <source>Attachments</source>
+        <translation>附件</translation>
+    </message>
+    <message>
+        <source>Auto-Type</source>
+        <translation>自动输入</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation>标签</translation>
+    </message>
 </context>
 <context>
     <name>EntryAttachments</name>
     <message>
         <source>Cannot open file &quot;%1&quot;</source>
         <translation>無法開啟檔案「%1」</translation>
-    </message>
-</context>
-<context>
-    <name>EntryAttachmentsDialog</name>
-    <message>
-        <source>Form</source>
-        <translation>表單</translation>
-    </message>
-    <message>
-        <source>File name</source>
-        <translation>檔案名稱</translation>
-    </message>
-    <message>
-        <source>File contents...</source>
-        <translation>檔案內容...</translation>
     </message>
 </context>
 <context>
@@ -3960,10 +4070,6 @@ This may cause the affected plugins to malfunction.</source>
         <translation>加入新附件</translation>
     </message>
     <message>
-        <source>Add</source>
-        <translation>加入</translation>
-    </message>
-    <message>
         <source>Remove selected attachment</source>
         <translation>移除所選附件</translation>
     </message>
@@ -3982,10 +4088,6 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source>Save selected attachment to disk</source>
         <translation>儲存所選附件至磁碟</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>儲存</translation>
     </message>
     <message>
         <source>Select files</source>
@@ -4085,16 +4187,32 @@ Would you like to overwrite the existing attachment?</source>
 是否要覆改既存的附件？</translation>
     </message>
     <message>
-        <source>New</source>
-        <translation>新</translation>
-    </message>
-    <message>
         <source>Preview</source>
         <translation>預覽</translation>
     </message>
     <message>
-        <source>Failed to preview an attachment: Attachment not found</source>
-        <translation>預覽附件失敗：找不到附件</translation>
+        <source>Edit</source>
+        <translation>編輯</translation>
+    </message>
+    <message>
+        <source>New Text Document</source>
+        <translation>新文字文件</translation>
+    </message>
+    <message>
+        <source>Add file…</source>
+        <translation>加入檔案…</translation>
+    </message>
+    <message>
+        <source>Load from Disk…</source>
+        <translation>從磁碟載入…</translation>
+    </message>
+    <message>
+        <source>Save…</source>
+        <translation>儲存…</translation>
+    </message>
+    <message>
+        <source>New Attachment</source>
+        <translation>新附件</translation>
     </message>
 </context>
 <context>
@@ -4125,62 +4243,6 @@ Would you like to overwrite the existing attachment?</source>
     <message>
         <source>Size</source>
         <translation>大小</translation>
-    </message>
-    <message>
-        <source>Title</source>
-        <translation>標題</translation>
-    </message>
-    <message>
-        <source>Username</source>
-        <translation>使用者名稱</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>密碼</translation>
-    </message>
-    <message>
-        <source>URL</source>
-        <translation>URL</translation>
-    </message>
-    <message>
-        <source>Notes</source>
-        <translation>備註</translation>
-    </message>
-    <message>
-        <source>Custom Attributes</source>
-        <translation>自定義屬性</translation>
-    </message>
-    <message>
-        <source>Icon</source>
-        <translation>圖示</translation>
-    </message>
-    <message>
-        <source>Color</source>
-        <translation>顏色</translation>
-    </message>
-    <message>
-        <source>Expiration</source>
-        <translation>過期</translation>
-    </message>
-    <message>
-        <source>TOTP</source>
-        <translation>TOTP</translation>
-    </message>
-    <message>
-        <source>Custom Data</source>
-        <translation>自定義資料</translation>
-    </message>
-    <message>
-        <source>Attachments</source>
-        <translation>附件</translation>
-    </message>
-    <message>
-        <source>Auto-Type</source>
-        <translation>自動輸入</translation>
-    </message>
-    <message>
-        <source>Tags</source>
-        <translation>標籤</translation>
     </message>
 </context>
 <context>
@@ -4231,10 +4293,6 @@ Would you like to overwrite the existing attachment?</source>
         <translation>修改於</translation>
     </message>
     <message>
-        <source>Accessed</source>
-        <translation>存取於</translation>
-    </message>
-    <message>
         <source>Attachments</source>
         <translation>附件</translation>
     </message>
@@ -4269,10 +4327,6 @@ Would you like to overwrite the existing attachment?</source>
     <message>
         <source>Last modification date</source>
         <translation>最近修改日期</translation>
-    </message>
-    <message>
-        <source>Last access date</source>
-        <translation>最近存取日期</translation>
     </message>
     <message>
         <source>Attached files</source>
@@ -4467,16 +4521,16 @@ This will leave your passwords and sensitive information vulnerable!
         <translation>名稱 (降序)</translation>
     </message>
     <message>
-        <source>unknown</source>
-        <translation>未知</translation>
-    </message>
-    <message>
         <source>Export database to HTML file</source>
         <translation>匯出資料庫至 HTML 檔</translation>
     </message>
     <message>
         <source>HTML file</source>
         <translation>HTML 檔</translation>
+    </message>
+    <message>
+        <source>invalid sort order</source>
+        <translation>排序顺序无效</translation>
     </message>
 </context>
 <context>
@@ -4654,6 +4708,17 @@ You can enable the DuckDuckGo website icon service in the security section of th
     <message>
         <source>Downloading favicons (%1/%2)…</source>
         <translation>正在下載網站圖標 (%1/%2)…</translation>
+    </message>
+</context>
+<context>
+    <name>ImageAttachmentsWidget</name>
+    <message>
+        <source>Zoom:</source>
+        <translation>縮放：</translation>
+    </message>
+    <message>
+        <source>Fit</source>
+        <translation>适应</translation>
     </message>
 </context>
 <context>
@@ -5720,10 +5785,6 @@ Are you sure you want to continue with this file?</source>
         <translation>編輯項目 (&amp;E)…</translation>
     </message>
     <message>
-        <source>&amp;Delete Entry…</source>
-        <translation>刪除項目 (&amp;D)…</translation>
-    </message>
-    <message>
         <source>&amp;New Group…</source>
         <translation>新建群組 (&amp;N)…</translation>
     </message>
@@ -6086,10 +6147,6 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
         <translation>從資料庫合併</translation>
     </message>
     <message>
-        <source>Create Entry</source>
-        <translation>建立項目</translation>
-    </message>
-    <message>
         <source>Edit Entry</source>
         <translation>編輯項目</translation>
     </message>
@@ -6334,16 +6391,40 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
         <translation>密碼產生器</translation>
     </message>
     <message>
-        <source>E&amp;xpire Entry…</source>
-        <translation>過期項目(&amp;X)…</translation>
-    </message>
-    <message>
         <source>Clear SSH Agent</source>
-        <translation>清楚 SSH 代理</translation>
+        <translation>清除 SSH 代理</translation>
     </message>
     <message>
         <source>Clear all identities in ssh-agent</source>
-        <translation>清楚 ssh-agent 內所有身份</translation>
+        <translation>清除 ssh-agent 內所有身份</translation>
+    </message>
+    <message>
+        <source>New Entry</source>
+        <translation>新建条目</translation>
+    </message>
+    <message>
+        <source>Edit Entry…</source>
+        <translation>编辑条目…</translation>
+    </message>
+    <message>
+        <source>E&amp;xpire Entry</source>
+        <translation>过期条目(&amp;X)</translation>
+    </message>
+    <message>
+        <source>Expire Entry</source>
+        <translation>过期条目</translation>
+    </message>
+    <message>
+        <source>&amp;Delete Entry</source>
+        <translation>删除条目(&amp;D)</translation>
+    </message>
+    <message numerus="yes">
+        <source>Move selected entry(s) to the recycle bin</source>
+        <translation><numerusform>将所选条目移动到回收站</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Permanently delete the selected entry(s)</source>
+        <translation><numerusform>永久删除所选条目</numerusform></translation>
     </message>
 </context>
 <context>
@@ -6389,42 +6470,41 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
     </message>
 </context>
 <context>
+    <name>MergeDialog</name>
+    <message>
+        <source>Database Merge Confirmation</source>
+        <translation>数据库合并确认</translation>
+    </message>
+    <message>
+        <source>Merge</source>
+        <translation>合并</translation>
+    </message>
+    <message>
+        <source>Group</source>
+        <translation>群组</translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation>标题</translation>
+    </message>
+    <message>
+        <source>UUID</source>
+        <translation>UUID</translation>
+    </message>
+    <message>
+        <source>Details</source>
+        <translation>详情</translation>
+    </message>
+    <message>
+        <source>Change</source>
+        <translation>更改</translation>
+    </message>
+</context>
+<context>
     <name>Merger</name>
-    <message>
-        <source>Creating missing %1 [%2]</source>
-        <translation>建立缺少的 %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Relocating %1 [%2]</source>
-        <translation>重新定位 %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Overwriting %1 [%2]</source>
-        <translation>覆寫 %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Synchronizing from newer source %1 [%2]</source>
-        <translation>從較新的來源 %1 [%2] 同步</translation>
-    </message>
-    <message>
-        <source>Synchronizing from older source %1 [%2]</source>
-        <translation>從較舊的來源 %1 [%2] 同步</translation>
-    </message>
-    <message>
-        <source>Deleting child %1 [%2]</source>
-        <translation>刪除子項 %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Deleting orphan %1 [%2]</source>
-        <translation>刪除孤立項 %1 [%2]</translation>
-    </message>
     <message>
         <source>Changed deleted objects</source>
         <translation>更改已刪除的對象</translation>
-    </message>
-    <message>
-        <source>Adding missing icon %1</source>
-        <translation>加入缺失的圖示 %1</translation>
     </message>
     <message>
         <source>Removed custom data %1 [%2]</source>
@@ -6433,6 +6513,74 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
     <message>
         <source>Adding custom data %1 [%2]</source>
         <translation>加入自定義資料 %1 [%2]</translation>
+    </message>
+    <message>
+        <source>Added</source>
+        <translation>已添加</translation>
+    </message>
+    <message>
+        <source>Modified</source>
+        <translation>修改时间</translation>
+    </message>
+    <message>
+        <source>Moved</source>
+        <translation>移动时间</translation>
+    </message>
+    <message>
+        <source>Deleted</source>
+        <translation>删除时间</translation>
+    </message>
+    <message>
+        <source>Previous location: %1</source>
+        <translation>先前位置：%1</translation>
+    </message>
+    <message>
+        <source>Number of entries in group: %1</source>
+        <translation>组中的条目数：%1</translation>
+    </message>
+    <message>
+        <source>Group name</source>
+        <translation>群组名称</translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation>备注</translation>
+    </message>
+    <message>
+        <source>Icon (UUID)</source>
+        <translation>图标（UUID）</translation>
+    </message>
+    <message>
+        <source>Icon (Number)</source>
+        <translation>图标（数字）</translation>
+    </message>
+    <message>
+        <source>Expiry time</source>
+        <translation>过期时间</translation>
+    </message>
+    <message>
+        <source>Modification time</source>
+        <translation>修改时间</translation>
+    </message>
+    <message>
+        <source>%1 (Add local modifications to new entry)</source>
+        <translation>%1（对新条目添加本地修改）</translation>
+    </message>
+    <message>
+        <source>%1 (Add new modifications to existing entry)</source>
+        <translation>%1（对现有条目添加新修改）</translation>
+    </message>
+    <message>
+        <source>Explicit deletion</source>
+        <translation>显式删除</translation>
+    </message>
+    <message>
+        <source>Implicit deletion (e.g. removal of parent group)</source>
+        <translation>隐式删除（例如移除父组时）</translation>
+    </message>
+    <message>
+        <source>Adding new icon %1</source>
+        <translation>添加新图标 %1</translation>
     </message>
 </context>
 <context>
@@ -6493,25 +6641,6 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
     <message>
         <source>Please fill in the display name and an optional description for your new database:</source>
         <translation>請為您的新資料庫填寫一個顯示名稱，及一個選擇性的說明：</translation>
-    </message>
-</context>
-<context>
-    <name>NewEntryAttachmentsDialog</name>
-    <message>
-        <source>Attachment name cannot be empty</source>
-        <translation>附件名稱不能為空</translation>
-    </message>
-    <message>
-        <source>Attachment with the same name already exists</source>
-        <translation>已存在相同名稱的附件</translation>
-    </message>
-    <message>
-        <source>Save attachment</source>
-        <translation>儲存附件</translation>
-    </message>
-    <message>
-        <source>New entry attachment</source>
-        <translation>新項目附件</translation>
     </message>
 </context>
 <context>
@@ -6614,10 +6743,6 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
         <translation>找到零個金鑰</translation>
     </message>
     <message>
-        <source>Failed to read public key.</source>
-        <translation>無法讀取公開金鑰。</translation>
-    </message>
-    <message>
         <source>Corrupted key file, reading private key failed</source>
         <translation>金鑰檔損壞，讀取私密金鑰失敗</translation>
     </message>
@@ -6705,6 +6830,14 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
         <source>(encrypted)</source>
         <translation>（已加密）</translation>
     </message>
+    <message>
+        <source>Failed to read key file: %1</source>
+        <translation>读取密钥文件失败：%1</translation>
+    </message>
+    <message>
+        <source>Failed to read public key: %1</source>
+        <translation>读取公钥失败：%1</translation>
+    </message>
 </context>
 <context>
     <name>OpenSSHKeyGenDialog</name>
@@ -6759,10 +6892,6 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
 <context>
     <name>PasskeyExporter</name>
     <message>
-        <source>KeePassXC: Passkey Export</source>
-        <translation>KeePassXC: 通行密鑰匯出</translation>
-    </message>
-    <message>
         <source>File &quot;%1.passkey&quot; already exists.
 Do you want to overwrite it?
 </source>
@@ -6781,6 +6910,10 @@ Do you want to overwrite it?
     <message>
         <source>Cannot write to file</source>
         <translation>無法寫入檔案</translation>
+    </message>
+    <message>
+        <source>Overwrite Existing File?</source>
+        <translation>是否覆盖现有文件？</translation>
     </message>
 </context>
 <context>
@@ -6857,14 +6990,6 @@ Do you want to overwrite it?
         <translation>無法開啟檔案「%1」以讀取。</translation>
     </message>
     <message>
-        <source>Open passkey file</source>
-        <translation>開啟通行密鑰檔案</translation>
-    </message>
-    <message>
-        <source>Cannot import passkey</source>
-        <translation>無法匯入通行密鑰</translation>
-    </message>
-    <message>
         <source>Cannot import passkey file &quot;%1&quot;. Data is missing.</source>
         <translation>無法匯入通行密鑰檔案「%1」。資料遺失。</translation>
     </message>
@@ -6879,6 +7004,14 @@ The following data is missing:
     <message>
         <source>Cannot import passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
         <translation>無法匯入通行密鑰檔案「%1」。私鑰遺失或格式有誤。</translation>
+    </message>
+    <message>
+        <source>Open Passkey File</source>
+        <translation>打开通行密钥文件</translation>
+    </message>
+    <message>
+        <source>Passkey Import Failed</source>
+        <translation>通行密钥导入失败</translation>
     </message>
 </context>
 <context>
@@ -7156,14 +7289,6 @@ The following data is missing:
         <translation>極好</translation>
     </message>
     <message>
-        <source>Confirm Delete Wordlist</source>
-        <translation>確認刪除詞彙表</translation>
-    </message>
-    <message>
-        <source>Do you really want to delete the wordlist &quot;%1&quot;?</source>
-        <translation>真的要刪除詞彙表「%1」？</translation>
-    </message>
-    <message>
         <source>Failed to delete wordlist</source>
         <translation>刪除詞彙表失敗</translation>
     </message>
@@ -7216,6 +7341,18 @@ Do you want to overwrite it?</source>
     <message>
         <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;, &quot;B&quot;, &quot;8&quot;, &quot;G&quot;, &quot;6&quot;</source>
         <translation>排除字元：&quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;, &quot;B&quot;, &quot;8&quot;, &quot;G&quot;, &quot;6&quot;</translation>
+    </message>
+    <message>
+        <source>Warning: the chosen wordlist is smaller than the minimum recommended size!</source>
+        <translation>警告：選擇的詞彙表小於最低建議大小！</translation>
+    </message>
+    <message>
+        <source>Confirm Remove Wordlist</source>
+        <translation>確認移除詞彙表</translation>
+    </message>
+    <message>
+        <source>Do you really want to remove the wordlist &quot;%1&quot;?</source>
+        <translation>真的要移除詞彙表「%1」？</translation>
     </message>
 </context>
 <context>
@@ -7287,16 +7424,16 @@ Do you want to overwrite it?</source>
 <context>
     <name>PreviewEntryAttachmentsDialog</name>
     <message>
-        <source>Preview entry attachment</source>
-        <translation>預覽項目附件</translation>
+        <source>Form</source>
+        <translation>表單</translation>
     </message>
     <message>
-        <source>No preview available</source>
-        <translation>無適用的預覽</translation>
+        <source>Preview: %1</source>
+        <translation>預覽：%1</translation>
     </message>
     <message>
-        <source>Image format not supported</source>
-        <translation>圖像格式不受支援</translation>
+        <source>Save…</source>
+        <translation>儲存…</translation>
     </message>
 </context>
 <context>
@@ -7949,10 +8086,6 @@ Do you want to overwrite it?</source>
     <message>
         <source>Average password length</source>
         <translation>平均密碼長度</translation>
-    </message>
-    <message>
-        <source>%1 characters</source>
-        <translation>%1 字元</translation>
     </message>
     <message>
         <source>Word count for the diceware passphrase.</source>
@@ -8796,32 +8929,12 @@ Kernel: %3 %4</source>
         <translation><numerusform>%1 秒</numerusform></translation>
     </message>
     <message>
-        <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
-        <translation>真的要永遠刪除項目「%1」？</translation>
-    </message>
-    <message numerus="yes">
-        <source>Do you really want to delete %n entry(s) for good?</source>
-        <translation><numerusform>真的要永遠刪除 %n 個項目？</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Delete entry(s)?</source>
-        <translation><numerusform>刪除項目？</numerusform></translation>
-    </message>
-    <message>
         <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
         <translation>真的要將項目「%1」移到回收桶？</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
         <translation><numerusform>真的要將 %n 個項目移到回收桶？</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Move entry(s) to recycle bin?</source>
-        <translation><numerusform>移動項目到回收桶？</numerusform></translation>
-    </message>
-    <message>
-        <source>Replace references to entry?</source>
-        <translation>替換對項目的引用？</translation>
     </message>
     <message numerus="yes">
         <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
@@ -9190,24 +9303,12 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation>快捷鍵 %1 與 &apos;%2&apos; 衝突。是否覆蓋快捷鍵？</translation>
     </message>
     <message>
-        <source>Cannot generate valid passphrases because the wordlist is too short</source>
-        <translation>因為詞彙表過短，無法生成有效的密碼短語</translation>
-    </message>
-    <message>
         <source>Encrypted files are not supported.</source>
         <translation>尚未支援加密檔案。</translation>
     </message>
     <message>
         <source>Proton Pass Import</source>
         <translation>Proton Pass 匯入</translation>
-    </message>
-    <message>
-        <source>Delete plugin data?</source>
-        <translation>刪除插件資料？</translation>
-    </message>
-    <message numerus="yes">
-        <source>Delete plugin data from Entry(s)?</source>
-        <translation><numerusform>是否從項目刪除插件資料？</numerusform></translation>
     </message>
     <message>
         <source>Passkey</source>
@@ -9236,6 +9337,52 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Tags</source>
         <translation>標籤</translation>
+    </message>
+    <message>
+        <source>Warning: the chosen wordlist is smaller than the minimum recommended size!</source>
+        <translation>警告：選擇的詞彙表小於最低建議大小！</translation>
+    </message>
+    <message>
+        <source>Invalid Step</source>
+        <comment>TOTP</comment>
+        <translation>無效的步長</translation>
+    </message>
+    <message>
+        <source>Invalid Digits</source>
+        <comment>TOTP</comment>
+        <translation>無效的位數</translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 character(s)</source>
+        <translation><numerusform>%1 个字符</numerusform></translation>
+    </message>
+    <message>
+        <source>Do you really want to permanently delete the entry &quot;%1&quot;?</source>
+        <translation>您确定要永久删除条目“%1”吗？</translation>
+    </message>
+    <message numerus="yes">
+        <source>Do you really want to permanently delete %n entry(s)?</source>
+        <translation><numerusform>您确定要永久删除 %n 个条目吗？</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Confirm Delete Entry(s)</source>
+        <translation><numerusform>确认删除条目</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Confirm Recycle Entry(s)</source>
+        <translation><numerusform>确认回收条目</numerusform></translation>
+    </message>
+    <message>
+        <source>Confirm Delete Plugin Data</source>
+        <translation>确认删除插件数据</translation>
+    </message>
+    <message numerus="yes">
+        <source>Delete plugin data from the selected entry(s)?</source>
+        <translation><numerusform>是否从所选条目中删除插件数据？</numerusform></translation>
+    </message>
+    <message>
+        <source>Confirm Replace Entry References</source>
+        <translation>确认替换条目引用</translation>
     </message>
 </context>
 <context>
@@ -9758,12 +9905,12 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation>平均密碼長度</translation>
     </message>
     <message>
-        <source>%1 characters</source>
-        <translation>%1 字元</translation>
-    </message>
-    <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
         <translation>平均密碼長度小於 10 個字元。密碼越長，能提供的保護越多。</translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 character(s)</source>
+        <translation><numerusform>%1 个字符</numerusform></translation>
     </message>
 </context>
 <context>
@@ -9902,6 +10049,10 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Limit search to selected group</source>
         <translation>限制只搜尋選定的群組</translation>
+    </message>
+    <message>
+        <source>Press Enter to search</source>
+        <translation>按下 Enter 搜索</translation>
     </message>
 </context>
 <context>
@@ -10123,6 +10274,10 @@ This option is deprecated, use --set-key-file instead.</source>
         <source>Weak Passwords</source>
         <translation>弱密碼</translation>
     </message>
+    <message>
+        <source>TOTP Entries</source>
+        <translation>TOTP 項目</translation>
+    </message>
 </context>
 <context>
     <name>TagView</name>
@@ -10141,6 +10296,24 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Remove tag &quot;%1&quot; from all entries in this database?</source>
         <translation>要移除資料庫中所有項目包含的「%1」標籤嗎？</translation>
+    </message>
+</context>
+<context>
+    <name>TextAttachmentsEditWidget</name>
+    <message>
+        <source>Preview</source>
+        <translation>預覽</translation>
+    </message>
+</context>
+<context>
+    <name>TextAttachmentsPreviewWidget</name>
+    <message>
+        <source>Form</source>
+        <translation>表單</translation>
+    </message>
+    <message>
+        <source>Type:</source>
+        <translation>類型：</translation>
     </message>
 </context>
 <context>
@@ -10254,6 +10427,10 @@ Example: JBSWY3DPEHPK3PXP</source>
     <message>
         <source>Are you sure you want to delete TOTP settings for this entry?</source>
         <translation>您確定要刪除此項目的 TOTP 設定？</translation>
+    </message>
+    <message>
+        <source>Error: secret key is invalid</source>
+        <translation>錯誤：私鑰無效</translation>
     </message>
 </context>
 <context>
@@ -10409,10 +10586,6 @@ Example: JBSWY3DPEHPK3PXP</source>
 <context>
     <name>YubiKeyInterfacePCSC</name>
     <message>
-        <source>The YubiKey PCSC interface has not been initialized.</source>
-        <translation>YubiKey PCSC 介面尚未初始化。</translation>
-    </message>
-    <message>
         <source>Could not find or access hardware key with serial number %1. Please present it to continue. </source>
         <translation>找不到或無法存取序列號為 %1 的硬體金鑰。請將它呈現後繼續。 </translation>
     </message>
@@ -10423,10 +10596,6 @@ Example: JBSWY3DPEHPK3PXP</source>
     <message>
         <source>Hardware key was not found or is not configured.</source>
         <translation>硬體金鑰找不到或尚未設置。</translation>
-    </message>
-    <message>
-        <source>Failed to complete a challenge-response, the PCSC error code was: %1</source>
-        <translation>無法完成挑戰應答，PCSC 錯誤代碼為：%1</translation>
     </message>
     <message>
         <source>(NFC) %1 [%2] - Slot %3, %4</source>
@@ -10443,13 +10612,17 @@ Example: JBSWY3DPEHPK3PXP</source>
         <comment>USB Challenge-Response Key no interaction required</comment>
         <translation>被動</translation>
     </message>
+    <message>
+        <source>The YubiKey PC/SC interface has not been initialized.</source>
+        <translation>YubiKey PC/SC 接口尚未初始化。</translation>
+    </message>
+    <message>
+        <source>Failed to complete a challenge-response, the PC/SC error code was: %1</source>
+        <translation>无法完成质询响应，PC/SC 错误代码为：%1</translation>
+    </message>
 </context>
 <context>
     <name>YubiKeyInterfaceUSB</name>
-    <message>
-        <source>Unknown</source>
-        <translation>未知</translation>
-    </message>
     <message>
         <source>Press</source>
         <comment>USB Challenge-Response Key interaction request</comment>
@@ -10489,6 +10662,11 @@ Example: JBSWY3DPEHPK3PXP</source>
         <source>%1 [%2] - Slot %3, %4</source>
         <comment>YubiKey display fields</comment>
         <translation>%1 [%2] - 槽位 %3, %4</translation>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <comment>Unknown hardware key name</comment>
+        <translation>未知</translation>
     </message>
 </context>
 </TS>

@@ -571,6 +571,14 @@
         <source>Font size selection</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Skip confirmation for main window Auto-Type actions</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Auto-generate password for new entries</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetSecurity</name>
@@ -662,6 +670,17 @@
     </message>
 </context>
 <context>
+    <name>AttachmentWidget</name>
+    <message>
+        <source>Attachment Viewer</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unknown attachment type</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>AutoType</name>
     <message>
         <source>The requested Auto-Type sequence cannot be used due to an error:</source>
@@ -710,6 +729,10 @@
     <message>
         <source>Invalid placeholder: %1</source>
         <translation>Invalid placeholder: %1</translation>
+    </message>
+    <message>
+        <source>Entry has invalid TOTP settings</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -780,20 +803,6 @@
         <translation>Klik ganda suatu baris untuk melakukan Ketik-Otomatis atau mencari suatu entri memakai pencarian:</translation>
     </message>
     <message>
-        <source>&lt;p&gt;You can use advanced search queries to find any entry in your open databases. The following shortcuts are useful:&lt;br/&gt;
-Ctrl+F - Toggle database search&lt;br/&gt;
-Ctrl+1 - Type username&lt;br/&gt;
-Ctrl+2 - Type password&lt;br/&gt;
-Ctrl+3 - Type TOTP&lt;br/&gt;
-Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
-        <translation>&lt;p&gt;You can use advanced search queries to find any entry in your open databases. The following shortcuts are useful:&lt;br/&gt;
-Ctrl+F - Toggle database search&lt;br/&gt;
-Ctrl+1 - Type username&lt;br/&gt;
-Ctrl+2 - Type password&lt;br/&gt;
-Ctrl+3 - Type TOTP&lt;br/&gt;
-Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Search all open databases</source>
         <translation>Cari semua basis data terbuka</translation>
     </message>
@@ -836,6 +845,44 @@ Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</translation>
     <message>
         <source>Use Virtual Keyboard</source>
         <translation>Gunakan Papan Ketik Virtual</translation>
+    </message>
+    <message>
+        <source>Type {URL}</source>
+        <translation>Ketikkan {KATA SANDI}</translation>
+    </message>
+    <message>
+        <source>Copy URL</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;p&gt;The following shortcuts are available:&lt;br/&gt;
+Ctrl+F - Focus search&lt;br/&gt;
+Ctrl+1 - Type username&lt;br/&gt;
+Ctrl+2 - Type password&lt;br/&gt;
+Ctrl+3 - Type TOTP&lt;br/&gt;
+Ctrl+4 - Type URL&lt;br/&gt;
+Ctrl+5 - Use Virtual Keyboard (Windows Only)&lt;br/&gt;
+Ctrl+Shift+1 - Copy username&lt;br/&gt;
+Ctrl+Shift+2 - Copy password&lt;br/&gt;
+Ctrl+Shift+3 - Copy TOTP&lt;br/&gt;
+Ctrl+Shift+4 - Copy URL&lt;br/&gt;
+&lt;/p&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You can use advanced search queries to find any entry in your open databases.</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>BinaryStream</name>
+    <message>
+        <source>Failed to read string data: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>String length exceeds 10 MiB limit (requested %1)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1725,6 +1772,10 @@ Apakah Anda yakin ingin melanjutkan dengan berkas ini?</translation>
         <source>Hardware keys found, but no slots are configured.</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Press ESC again to close this database</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingWidgetMetaData</name>
@@ -2267,20 +2318,12 @@ dipindahkan dari basis data.</translation>
         <translation>Nama tampilan:</translation>
     </message>
     <message>
-        <source>Publically visible display name used on the unlock dialog</source>
-        <translation>Nama tampilan yang dapat dilihat oleh publik yang digunakan pada obrolan terbuka</translation>
-    </message>
-    <message>
         <source>Database public display name</source>
         <translation>Nama tampilan publik basis data</translation>
     </message>
     <message>
         <source>Display color:</source>
         <translation>Warna tampilan:</translation>
-    </message>
-    <message>
-        <source>Publically visible color used on the unlock dialog</source>
-        <translation>Warna yang terlihat publik yang digunakan pada obrolan terbuka</translation>
     </message>
     <message>
         <source>Database public display color chooser</source>
@@ -2297,6 +2340,14 @@ dipindahkan dari basis data.</translation>
     <message>
         <source>Select Database Icon</source>
         <translation>Pilih ikon Basis data</translation>
+    </message>
+    <message>
+        <source>Publicly visible display name used on the unlock dialog</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Publicly visible color used on the unlock dialog</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -2642,18 +2693,6 @@ Masalah ini jelas sebuah bug, silakan laporkan ke pengembang.</translation>
         <translation>Ingat pilihan saya</translation>
     </message>
     <message>
-        <source>Delete group</source>
-        <translation>Hapus grup</translation>
-    </message>
-    <message>
-        <source>Do you really want to delete the group &quot;%1&quot; for good?</source>
-        <translation>Apakah Anda yakin ingin menghapus grup &quot;%1&quot; untuk selamanya?</translation>
-    </message>
-    <message>
-        <source>Move group to recycle bin?</source>
-        <translation>Pindahkan grup ke keranjang sampah?</translation>
-    </message>
-    <message>
         <source>Do you really want to move the group &quot;%1&quot; to the recycle bin?</source>
         <translation>Apakah Anda yakin ingin memindahkan grup &quot;%1&quot; ke keranjang sampah?</translation>
     </message>
@@ -2674,24 +2713,12 @@ Masalah ini jelas sebuah bug, silakan laporkan ke pengembang.</translation>
         <translation>Tidak ada sumber basis data, tidak perlu melakukan apa-apa.</translation>
     </message>
     <message>
-        <source>Successfully merged the database files.</source>
-        <translation>Berhasil menggabungkan berkas basis data.</translation>
-    </message>
-    <message>
-        <source>Database was not modified by merge operation.</source>
-        <translation>Basis Data tidak ada perubahan yang diakibatkan oleh proses penggabungan.</translation>
-    </message>
-    <message>
         <source>Search Results (%1)</source>
         <translation>Hasil Pencarian (%1)</translation>
     </message>
     <message>
         <source>No Results</source>
         <translation>Tidak Ada Hasil</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Simpan</translation>
     </message>
     <message>
         <source>Enter a unique name or overwrite an existing search from the list:</source>
@@ -2756,10 +2783,6 @@ Nonaktifkan penyimpanan aman dan coba lagi?</translation>
         <translation>Basis Data KeePass 2</translation>
     </message>
     <message>
-        <source>Save database backup</source>
-        <translation>Simpan cadangan basis data</translation>
-    </message>
-    <message>
         <source>Empty recycle bin?</source>
         <translation>Kosongkan keranjang sampah?</translation>
     </message>
@@ -2789,14 +2812,6 @@ Nonaktifkan penyimpanan aman dan coba lagi?</translation>
         <translation>Sinkronisasi jarak jauh &apos;%1&apos; berhasil diselesaikan!</translation>
     </message>
     <message>
-        <source>Remote sync &apos;%1&apos; failed: %2</source>
-        <translation>Sinkronisasi jarak jauh &apos;%1&apos; gagal: %2</translation>
-    </message>
-    <message>
-        <source>Error while saving database %1: %2</source>
-        <translation>Kesalahan saat menyimpan basis data %1: %2</translation>
-    </message>
-    <message>
         <source>Downloading...</source>
         <translation>Mengunduh...</translation>
     </message>
@@ -2805,8 +2820,16 @@ Nonaktifkan penyimpanan aman dan coba lagi?</translation>
         <translation>Mengunggah...</translation>
     </message>
     <message>
+        <source>Remote sync &apos;%1&apos; failed: %2</source>
+        <translation>Sinkronisasi jarak jauh &apos;%1&apos; gagal: %2</translation>
+    </message>
+    <message>
         <source>Syncing...</source>
         <translation>Menyinkronkan...</translation>
+    </message>
+    <message>
+        <source>Error while saving database %1: %2</source>
+        <translation>Kesalahan saat menyimpan basis data %1: %2</translation>
     </message>
     <message>
         <source>Remove passkey from entry</source>
@@ -2822,10 +2845,6 @@ Nonaktifkan penyimpanan aman dan coba lagi?</translation>
     </message>
     <message>
         <source>Do you want to load the changes?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Reload database</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -2853,11 +2872,58 @@ Nonaktifkan penyimpanan aman dan coba lagi?</translation>
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Reload database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Database file overwritten.</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>Database file on disk cannot be unlocked with current credentials.&lt;br&gt;Enter new credentials and/or present hardware key to continue.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to save backup database: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Confirm Delete Group</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you really want to permanently delete the group &quot;%1&quot;?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Confirm Recycle Group</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Simpan</translation>
+    </message>
+    <message>
+        <source>Save Database Backup</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Successfully merged the selected database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No changes were made by the merge operation.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Merge canceled, no changes were made.</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>EditEntryAttachmentsDialog</name>
+    <message>
+        <source>Edit: %1</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -3836,14 +3902,6 @@ Ekstensi yang didukung adalah: %1.</translation>
         <translation>Tanggal waktu dimodifikasi</translation>
     </message>
     <message>
-        <source>Accessed:</source>
-        <translation>Diakses:</translation>
-    </message>
-    <message>
-        <source>Datetime accessed</source>
-        <translation>Tanggal waktu diakses</translation>
-    </message>
-    <message>
         <source>Uuid:</source>
         <translation>Uuid:</translation>
     </message>
@@ -3910,27 +3968,68 @@ Ini mungkin akan menyebabkan pengaya menjadi tidak berfungsi.</translation>
         <translation>Sintaks ekspresi reguler %1 tidak valid
 %2</translation>
     </message>
+    <message>
+        <source>Title</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>URL</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Custom Attributes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Icon</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Color</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Expiration</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>TOTP</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Custom Data</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Attachments</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Auto-Type</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EntryAttachments</name>
     <message>
         <source>Cannot open file &quot;%1&quot;</source>
         <translation>Tidak bisa membuka berkas &quot;%1&quot;</translation>
-    </message>
-</context>
-<context>
-    <name>EntryAttachmentsDialog</name>
-    <message>
-        <source>Form</source>
-        <translation>Formulir</translation>
-    </message>
-    <message>
-        <source>File name</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>File contents...</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3959,10 +4058,6 @@ Ini mungkin akan menyebabkan pengaya menjadi tidak berfungsi.</translation>
         <translation>Tambah lampiran baru</translation>
     </message>
     <message>
-        <source>Add</source>
-        <translation>Tambah</translation>
-    </message>
-    <message>
         <source>Remove selected attachment</source>
         <translation>Buang lampiran yang dipilih</translation>
     </message>
@@ -3981,10 +4076,6 @@ Ini mungkin akan menyebabkan pengaya menjadi tidak berfungsi.</translation>
     <message>
         <source>Save selected attachment to disk</source>
         <translation>Simpan lampiran yang dipilih ke diska</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Simpan</translation>
     </message>
     <message>
         <source>Select files</source>
@@ -4085,15 +4176,31 @@ Would you like to overwrite the existing attachment?</source>
 Would you like to overwrite the existing attachment?</translation>
     </message>
     <message>
-        <source>New</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Preview</source>
         <translation>Pratinjau</translation>
     </message>
     <message>
-        <source>Failed to preview an attachment: Attachment not found</source>
+        <source>Edit</source>
+        <translation>Sunting</translation>
+    </message>
+    <message>
+        <source>New Text Document</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Add file…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Load from Disk…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Save…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>New Attachment</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -4125,62 +4232,6 @@ Would you like to overwrite the existing attachment?</translation>
     <message>
         <source>Size</source>
         <translation>Ukuran</translation>
-    </message>
-    <message>
-        <source>Title</source>
-        <translation>Judul</translation>
-    </message>
-    <message>
-        <source>Username</source>
-        <translation>Nama pengguna</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>Sandi</translation>
-    </message>
-    <message>
-        <source>URL</source>
-        <translation>URL</translation>
-    </message>
-    <message>
-        <source>Notes</source>
-        <translation>Catatan</translation>
-    </message>
-    <message>
-        <source>Custom Attributes</source>
-        <translation>Atribut Ubahan</translation>
-    </message>
-    <message>
-        <source>Icon</source>
-        <translation>Ikon</translation>
-    </message>
-    <message>
-        <source>Color</source>
-        <translation>Warna</translation>
-    </message>
-    <message>
-        <source>Expiration</source>
-        <translation>Kedaluwarsa</translation>
-    </message>
-    <message>
-        <source>TOTP</source>
-        <translation>TOTP</translation>
-    </message>
-    <message>
-        <source>Custom Data</source>
-        <translation>Data Ubahan</translation>
-    </message>
-    <message>
-        <source>Attachments</source>
-        <translation>Lampiran</translation>
-    </message>
-    <message>
-        <source>Auto-Type</source>
-        <translation>Ketik-Otomatis</translation>
-    </message>
-    <message>
-        <source>Tags</source>
-        <translation>Tag</translation>
     </message>
 </context>
 <context>
@@ -4231,10 +4282,6 @@ Would you like to overwrite the existing attachment?</translation>
         <translation>Diubah</translation>
     </message>
     <message>
-        <source>Accessed</source>
-        <translation>Diakses</translation>
-    </message>
-    <message>
         <source>Attachments</source>
         <translation>Lampiran</translation>
     </message>
@@ -4269,10 +4316,6 @@ Would you like to overwrite the existing attachment?</translation>
     <message>
         <source>Last modification date</source>
         <translation>Tanggal diubah terakhir</translation>
-    </message>
-    <message>
-        <source>Last access date</source>
-        <translation>Tanggal terakhir diakses</translation>
     </message>
     <message>
         <source>Attached files</source>
@@ -4467,16 +4510,16 @@ This will leave your passwords and sensitive information vulnerable!
         <translation>nama (urut turun)</translation>
     </message>
     <message>
-        <source>unknown</source>
-        <translation>unknown</translation>
-    </message>
-    <message>
         <source>Export database to HTML file</source>
         <translation>Ekspor basis data ke berkas HTML</translation>
     </message>
     <message>
         <source>HTML file</source>
         <translation>Berkas HTML</translation>
+    </message>
+    <message>
+        <source>invalid sort order</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4654,6 +4697,17 @@ Anda dapat mengaktifkan layanan ikon situs web DuckDuckGo di bagian keamanan dal
     <message>
         <source>Downloading favicons (%1/%2)…</source>
         <translation>Mengunduh favicon (%1/%2)...</translation>
+    </message>
+</context>
+<context>
+    <name>ImageAttachmentsWidget</name>
+    <message>
+        <source>Zoom:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Fit</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5714,10 +5768,6 @@ Apakah Anda yakin ingin melanjutkan dengan berkas ini?</translation>
         <translation>&amp;Sunting Entri…</translation>
     </message>
     <message>
-        <source>&amp;Delete Entry…</source>
-        <translation>&amp;Hapus Entri…</translation>
-    </message>
-    <message>
         <source>&amp;New Group…</source>
         <translation>Grup &amp;Baru…</translation>
     </message>
@@ -5989,7 +6039,7 @@ Ada beberapa kutu dan masalah-masalah kecil, versi ini ditujukan untuk penggunaa
     </message>
     <message numerus="yes">
         <source>Restore Entry(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>Pulihkan Entri</numerusform></translation>
     </message>
     <message>
         <source>Settings</source>
@@ -6017,7 +6067,7 @@ Ada beberapa kutu dan masalah-masalah kecil, versi ini ditujukan untuk penggunaa
     </message>
     <message numerus="yes">
         <source>%1 Entry(s)</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
+        <translation><numerusform>$1 Entri</numerusform></translation>
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue…</source>
@@ -6077,10 +6127,6 @@ Ada beberapa kutu dan masalah-masalah kecil, versi ini ditujukan untuk penggunaa
     </message>
     <message>
         <source>Merge From Database</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Create Entry</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -6328,16 +6374,40 @@ Ada beberapa kutu dan masalah-masalah kecil, versi ini ditujukan untuk penggunaa
         <translation>Pembuat Sandi</translation>
     </message>
     <message>
-        <source>E&amp;xpire Entry…</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Clear SSH Agent</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>Clear all identities in ssh-agent</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>New Entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Edit Entry…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>E&amp;xpire Entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Expire Entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Delete Entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>Move selected entry(s) to the recycle bin</source>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Permanently delete the selected entry(s)</source>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -6383,42 +6453,41 @@ Ada beberapa kutu dan masalah-masalah kecil, versi ini ditujukan untuk penggunaa
     </message>
 </context>
 <context>
+    <name>MergeDialog</name>
+    <message>
+        <source>Database Merge Confirmation</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Merge</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Group</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>UUID</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Details</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Change</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>Merger</name>
-    <message>
-        <source>Creating missing %1 [%2]</source>
-        <translation>Creating missing %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Relocating %1 [%2]</source>
-        <translation>Memindahkan %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Overwriting %1 [%2]</source>
-        <translation>Menyimpan ulang %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Synchronizing from newer source %1 [%2]</source>
-        <translation>Menyinkronkan dengan sumber yang lebih baru %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Synchronizing from older source %1 [%2]</source>
-        <translation>Menyinkronkan dengan sumber yang lebih lama %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Deleting child %1 [%2]</source>
-        <translation>Deleting child %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Deleting orphan %1 [%2]</source>
-        <translation>Deleting orphan %1 [%2]</translation>
-    </message>
     <message>
         <source>Changed deleted objects</source>
         <translation>Mengubah objek yang telah dihapus</translation>
-    </message>
-    <message>
-        <source>Adding missing icon %1</source>
-        <translation>Menambahkan ikon %1 yang hilang</translation>
     </message>
     <message>
         <source>Removed custom data %1 [%2]</source>
@@ -6427,6 +6496,74 @@ Ada beberapa kutu dan masalah-masalah kecil, versi ini ditujukan untuk penggunaa
     <message>
         <source>Adding custom data %1 [%2]</source>
         <translation>Menambahkan data khusus %1[%2]</translation>
+    </message>
+    <message>
+        <source>Added</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Modified</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Moved</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Deleted</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Previous location: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Number of entries in group: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Group name</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Icon (UUID)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Icon (Number)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Expiry time</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Modification time</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 (Add local modifications to new entry)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 (Add new modifications to existing entry)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Explicit deletion</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Implicit deletion (e.g. removal of parent group)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Adding new icon %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6487,25 +6624,6 @@ Ada beberapa kutu dan masalah-masalah kecil, versi ini ditujukan untuk penggunaa
     <message>
         <source>Please fill in the display name and an optional description for your new database:</source>
         <translation>Silakan masukkan nama dan deskripsi opsional untuk basis data Anda yang baru:</translation>
-    </message>
-</context>
-<context>
-    <name>NewEntryAttachmentsDialog</name>
-    <message>
-        <source>Attachment name cannot be empty</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Attachment with the same name already exists</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Save attachment</source>
-        <translation>Simpan lampiran</translation>
-    </message>
-    <message>
-        <source>New entry attachment</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6608,10 +6726,6 @@ Ada beberapa kutu dan masalah-masalah kecil, versi ini ditujukan untuk penggunaa
         <translation>Tidak ada key yang ditemukan</translation>
     </message>
     <message>
-        <source>Failed to read public key.</source>
-        <translation>Gagal membaca kunci publik.</translation>
-    </message>
-    <message>
         <source>Corrupted key file, reading private key failed</source>
         <translation>Berkas kunci rusak, gagal membaca kunci privat</translation>
     </message>
@@ -6699,6 +6813,14 @@ Ada beberapa kutu dan masalah-masalah kecil, versi ini ditujukan untuk penggunaa
         <source>(encrypted)</source>
         <translation>(terenkripsi)</translation>
     </message>
+    <message>
+        <source>Failed to read key file: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to read public key: %1</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>OpenSSHKeyGenDialog</name>
@@ -6753,10 +6875,6 @@ Ada beberapa kutu dan masalah-masalah kecil, versi ini ditujukan untuk penggunaa
 <context>
     <name>PasskeyExporter</name>
     <message>
-        <source>KeePassXC: Passkey Export</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>File &quot;%1.passkey&quot; already exists.
 Do you want to overwrite it?
 </source>
@@ -6772,6 +6890,10 @@ Do you want to overwrite it?
     </message>
     <message>
         <source>Cannot write to file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Overwrite Existing File?</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -6849,14 +6971,6 @@ Do you want to overwrite it?
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Open passkey file</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Cannot import passkey</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Cannot import passkey file &quot;%1&quot;. Data is missing.</source>
         <translation type="unfinished"/>
     </message>
@@ -6868,6 +6982,14 @@ The following data is missing:
     </message>
     <message>
         <source>Cannot import passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open Passkey File</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Passkey Import Failed</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -7146,14 +7268,6 @@ The following data is missing:
         <translation>Sempurna</translation>
     </message>
     <message>
-        <source>Confirm Delete Wordlist</source>
-        <translation>Confirm Delete Wordlist</translation>
-    </message>
-    <message>
-        <source>Do you really want to delete the wordlist &quot;%1&quot;?</source>
-        <translation>Do you really want to delete the wordlist &quot;%1&quot;?</translation>
-    </message>
-    <message>
         <source>Failed to delete wordlist</source>
         <translation>Failed to delete wordlist</translation>
     </message>
@@ -7205,6 +7319,18 @@ Do you want to overwrite it?</translation>
     </message>
     <message>
         <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;, &quot;B&quot;, &quot;8&quot;, &quot;G&quot;, &quot;6&quot;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Warning: the chosen wordlist is smaller than the minimum recommended size!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Confirm Remove Wordlist</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you really want to remove the wordlist &quot;%1&quot;?</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -7277,15 +7403,15 @@ Do you want to overwrite it?</translation>
 <context>
     <name>PreviewEntryAttachmentsDialog</name>
     <message>
-        <source>Preview entry attachment</source>
+        <source>Form</source>
+        <translation>Formulir</translation>
+    </message>
+    <message>
+        <source>Preview: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>No preview available</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Image format not supported</source>
+        <source>Save…</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -7939,10 +8065,6 @@ Do you want to overwrite it?</translation>
     <message>
         <source>Average password length</source>
         <translation>Panjang rata-rata kata sandi</translation>
-    </message>
-    <message>
-        <source>%1 characters</source>
-        <translation>%1 karakter</translation>
     </message>
     <message>
         <source>Word count for the diceware passphrase.</source>
@@ -8786,32 +8908,12 @@ Kernel: %3 %4</translation>
         <translation><numerusform>%1 detik</numerusform></translation>
     </message>
     <message>
-        <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
-        <translation>Apakah Anda yakin ingin menghapus entri &quot;%1&quot; untuk selamanya?</translation>
-    </message>
-    <message numerus="yes">
-        <source>Do you really want to delete %n entry(s) for good?</source>
-        <translation><numerusform>Apakah Anda yakin ingin menghapus %n entri untuk selamanya?</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Delete entry(s)?</source>
-        <translation><numerusform>Hapus masukan?</numerusform></translation>
-    </message>
-    <message>
         <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
         <translation>Apakah Anda yakin ingin memindahkan &quot;%1&quot; ke keranjang sampah?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Move entry(s) to recycle bin?</source>
-        <translation><numerusform>Pindahkan entri ke tempat sampah?</numerusform></translation>
-    </message>
-    <message>
-        <source>Replace references to entry?</source>
-        <translation>Ganti referensi ke entri?</translation>
+        <translation><numerusform>Apakah Anda benar-benar ingin memindahkan %n entri ke keranjang sampah?</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
@@ -9179,24 +9281,12 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot generate valid passphrases because the wordlist is too short</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Encrypted files are not supported.</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>Proton Pass Import</source>
         <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Delete plugin data?</source>
-        <translation>Hapus data pengaya?</translation>
-    </message>
-    <message numerus="yes">
-        <source>Delete plugin data from Entry(s)?</source>
-        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Passkey</source>
@@ -9225,6 +9315,52 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Tags</source>
         <translation>Tag</translation>
+    </message>
+    <message>
+        <source>Warning: the chosen wordlist is smaller than the minimum recommended size!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid Step</source>
+        <comment>TOTP</comment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid Digits</source>
+        <comment>TOTP</comment>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>%1 character(s)</source>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Do you really want to permanently delete the entry &quot;%1&quot;?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>Do you really want to permanently delete %n entry(s)?</source>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Confirm Delete Entry(s)</source>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Confirm Recycle Entry(s)</source>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Confirm Delete Plugin Data</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>Delete plugin data from the selected entry(s)?</source>
+        <translation type="unfinished"><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Confirm Replace Entry References</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -9747,12 +9883,12 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation>Panjang rata-rata kata sandi</translation>
     </message>
     <message>
-        <source>%1 characters</source>
-        <translation>%1 karakter</translation>
-    </message>
-    <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
         <translation>Panjang rata-rata kata sandi kurang dari sepuluh karakter. Kata sandi yang lebih panjang memberikan keamanan yang lebih.</translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 character(s)</source>
+        <translation type="unfinished"><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -9891,6 +10027,10 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Limit search to selected group</source>
         <translation>Batasi pencarian ke grup yang dipilih</translation>
+    </message>
+    <message>
+        <source>Press Enter to search</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -10112,6 +10252,10 @@ This option is deprecated, use --set-key-file instead.</source>
         <source>Weak Passwords</source>
         <translation>Kata Sandi Lemah</translation>
     </message>
+    <message>
+        <source>TOTP Entries</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>TagView</name>
@@ -10130,6 +10274,24 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Remove tag &quot;%1&quot; from all entries in this database?</source>
         <translation>Hapus tag &quot;%1&quot; dari semua entri di database ini?</translation>
+    </message>
+</context>
+<context>
+    <name>TextAttachmentsEditWidget</name>
+    <message>
+        <source>Preview</source>
+        <translation>Pratinjau</translation>
+    </message>
+</context>
+<context>
+    <name>TextAttachmentsPreviewWidget</name>
+    <message>
+        <source>Form</source>
+        <translation>Formulir</translation>
+    </message>
+    <message>
+        <source>Type:</source>
+        <translation>Tipe:</translation>
     </message>
 </context>
 <context>
@@ -10243,6 +10405,10 @@ Contoh: JBSWY3DPEHPK3PXP</translation>
     <message>
         <source>Are you sure you want to delete TOTP settings for this entry?</source>
         <translation>Apakah Anda yakin ingin menghapus pengaturan TOTP untuk entri ini?</translation>
+    </message>
+    <message>
+        <source>Error: secret key is invalid</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -10398,10 +10564,6 @@ Contoh: JBSWY3DPEHPK3PXP</translation>
 <context>
     <name>YubiKeyInterfacePCSC</name>
     <message>
-        <source>The YubiKey PCSC interface has not been initialized.</source>
-        <translation>The YubiKey PCSC interface has not been initialized.</translation>
-    </message>
-    <message>
         <source>Could not find or access hardware key with serial number %1. Please present it to continue. </source>
         <translation>Could not find or access hardware key with serial number %1. Please present it to continue. </translation>
     </message>
@@ -10412,10 +10574,6 @@ Contoh: JBSWY3DPEHPK3PXP</translation>
     <message>
         <source>Hardware key was not found or is not configured.</source>
         <translation>Hardware key was not found or is not configured.</translation>
-    </message>
-    <message>
-        <source>Failed to complete a challenge-response, the PCSC error code was: %1</source>
-        <translation>Failed to complete a challenge-response, the PCSC error code was: %1</translation>
     </message>
     <message>
         <source>(NFC) %1 [%2] - Slot %3, %4</source>
@@ -10432,13 +10590,17 @@ Contoh: JBSWY3DPEHPK3PXP</translation>
         <comment>USB Challenge-Response Key no interaction required</comment>
         <translation>Pasif</translation>
     </message>
+    <message>
+        <source>The YubiKey PC/SC interface has not been initialized.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to complete a challenge-response, the PC/SC error code was: %1</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>YubiKeyInterfaceUSB</name>
-    <message>
-        <source>Unknown</source>
-        <translation>Tidak diketahui</translation>
-    </message>
     <message>
         <source>Press</source>
         <comment>USB Challenge-Response Key interaction request</comment>
@@ -10477,6 +10639,11 @@ Contoh: JBSWY3DPEHPK3PXP</translation>
     <message>
         <source>%1 [%2] - Slot %3, %4</source>
         <comment>YubiKey display fields</comment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <comment>Unknown hardware key name</comment>
         <translation type="unfinished"/>
     </message>
 </context>

@@ -571,6 +571,14 @@
         <source>Font size selection</source>
         <translation>Списък с размери на шрифта</translation>
     </message>
+    <message>
+        <source>Skip confirmation for main window Auto-Type actions</source>
+        <translation>Без потвърждаване на автоматичното въвеждане на главния прозорец</translation>
+    </message>
+    <message>
+        <source>Auto-generate password for new entries</source>
+        <translation>Създаване на парола към новите записи</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetSecurity</name>
@@ -622,7 +630,7 @@
     </message>
     <message>
         <source>Lock databases after minimizing the window</source>
-        <translation>Заключи на хранилищата след минимизиране на прозореца</translation>
+        <translation>Заключване на хранилищата след скриване на прозореца</translation>
     </message>
     <message>
         <source>Hide passwords when editing them</source>
@@ -642,7 +650,7 @@
     </message>
     <message>
         <source>Use DuckDuckGo service to download website icons</source>
-        <translation>Пиктограмите да се изтеглят през услугата на DuckDuckGo</translation>
+        <translation>Пиктограмите да бъдат изтегляни през услугата на DuckDuckGo</translation>
     </message>
     <message>
         <source>Hide TOTP in the entry preview panel</source>
@@ -659,6 +667,17 @@
     <message>
         <source>Hide notes in the entry preview panel</source>
         <translation>Скриване на бележката в панела за преглед на запис</translation>
+    </message>
+</context>
+<context>
+    <name>AttachmentWidget</name>
+    <message>
+        <source>Attachment Viewer</source>
+        <translation>Преглед прикачени файлове</translation>
+    </message>
+    <message>
+        <source>Unknown attachment type</source>
+        <translation>Неизвестен вид прикачен файл</translation>
     </message>
 </context>
 <context>
@@ -710,6 +729,10 @@
     <message>
         <source>Invalid placeholder: %1</source>
         <translation>Неправилен заместител: %1</translation>
+    </message>
+    <message>
+        <source>Entry has invalid TOTP settings</source>
+        <translation>Записът има неприемливи настройки на TOTP</translation>
     </message>
 </context>
 <context>
@@ -780,20 +803,6 @@
         <translation>Щракнете двукратно върху ред, за автоматично въвеждане или намерете запис, като използвате търсачката:</translation>
     </message>
     <message>
-        <source>&lt;p&gt;You can use advanced search queries to find any entry in your open databases. The following shortcuts are useful:&lt;br/&gt;
-Ctrl+F - Toggle database search&lt;br/&gt;
-Ctrl+1 - Type username&lt;br/&gt;
-Ctrl+2 - Type password&lt;br/&gt;
-Ctrl+3 - Type TOTP&lt;br/&gt;
-Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
-        <translation>&lt;p&gt;За да намерите определен запис в отворените хранилища, може да използвате разширени заявки за търсене. Следните клавишни комбинации ще ви бъдат полезни:&lt;br/&gt;
-Ctrl+F - Превключва търсенето&lt;br/&gt;
-Ctrl+1 - Въвеждане на потребителско име&lt;br/&gt;
-Ctrl+2 - Въвеждане на парола&lt;br/&gt;
-Ctrl+3 - Въвеждане на TOTP&lt;br/&gt;
-Ctrl+4 - Използване на виртуална клавиатура (само за Windows)&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Search all open databases</source>
         <translation>Търсене във всички отворени хранилища</translation>
     </message>
@@ -836,6 +845,55 @@ Ctrl+4 - Използване на виртуална клавиатура (са
     <message>
         <source>Use Virtual Keyboard</source>
         <translation>Използване на виртуална клавиатура</translation>
+    </message>
+    <message>
+        <source>Type {URL}</source>
+        <translation>Въвежда {URL}</translation>
+    </message>
+    <message>
+        <source>Copy URL</source>
+        <translation>Копира адреса</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;The following shortcuts are available:&lt;br/&gt;
+Ctrl+F - Focus search&lt;br/&gt;
+Ctrl+1 - Type username&lt;br/&gt;
+Ctrl+2 - Type password&lt;br/&gt;
+Ctrl+3 - Type TOTP&lt;br/&gt;
+Ctrl+4 - Type URL&lt;br/&gt;
+Ctrl+5 - Use Virtual Keyboard (Windows Only)&lt;br/&gt;
+Ctrl+Shift+1 - Copy username&lt;br/&gt;
+Ctrl+Shift+2 - Copy password&lt;br/&gt;
+Ctrl+Shift+3 - Copy TOTP&lt;br/&gt;
+Ctrl+Shift+4 - Copy URL&lt;br/&gt;
+&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Налични са следните клавишни комбинации:&lt;br/&gt;
+Ctrl+F – фокус върху полето за търсене&lt;br/&gt;
+Ctrl+1 – въвеждане на потребителското име&lt;br/&gt;
+Ctrl+2 – въвеждане на паролата&lt;br/&gt;
+Ctrl+3 – въвеждане на TOTP&lt;br/&gt;
+Ctrl+4 – въвеждане на адреса&lt;br/&gt;
+Ctrl+5 – виртуална клавиатура (само за Windows)&lt;br/&gt;
+Ctrl+Shift+1 – копиране на потребителското име&lt;br/&gt;
+Ctrl+Shift+2 – копиране на паролата&lt;br/&gt;
+Ctrl+Shift+3 – копиране на TOTP&lt;br/&gt;
+Ctrl+Shift+4 – копиране на адреса&lt;br/&gt;
+&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>You can use advanced search queries to find any entry in your open databases.</source>
+        <translation>Използвайте разширените заявки за търсене, за да намерите даден запис в отворените хранилища.</translation>
+    </message>
+</context>
+<context>
+    <name>BinaryStream</name>
+    <message>
+        <source>Failed to read string data: %1</source>
+        <translation>Грешка при четене на данни от низ: %1</translation>
+    </message>
+    <message>
+        <source>String length exceeds 10 MiB limit (requested %1)</source>
+        <translation>Дължината на низа превишава ограничението от 10 МиБ (заявени %1)</translation>
     </message>
 </context>
 <context>
@@ -1722,6 +1780,10 @@ Are you sure you want to continue with this file?.</source>
         <source>Hardware keys found, but no slots are configured.</source>
         <translation>Открити са хардуерни ключове, но без настроени слотове.</translation>
     </message>
+    <message>
+        <source>Press ESC again to close this database</source>
+        <translation>За да заключите хранилището натиснете още веднъж клавиш Esc</translation>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingWidgetMetaData</name>
@@ -2181,7 +2243,7 @@ If you keep this number, your database will not be protected from brute force at
     </message>
     <message>
         <source>Delete Recycle Bin</source>
-        <translation>Изтриване на кошчето</translation>
+        <translation>Премахване на кошчето</translation>
     </message>
     <message>
         <source>Do you want to delete the current recycle bin and all its contents?
@@ -2262,20 +2324,12 @@ removed from the database.</source>
         <translation>Име:</translation>
     </message>
     <message>
-        <source>Publically visible display name used on the unlock dialog</source>
-        <translation>Общодостъпно име, използвано в диалога за отключване</translation>
-    </message>
-    <message>
         <source>Database public display name</source>
         <translation>Публично име на хранилището</translation>
     </message>
     <message>
         <source>Display color:</source>
         <translation>Цвят:</translation>
-    </message>
-    <message>
-        <source>Publically visible color used on the unlock dialog</source>
-        <translation>Общодостъпен цвят, използван в диалога за отключване</translation>
     </message>
     <message>
         <source>Database public display color chooser</source>
@@ -2292,6 +2346,14 @@ removed from the database.</source>
     <message>
         <source>Select Database Icon</source>
         <translation>Избор на пиктограма на хранилището</translation>
+    </message>
+    <message>
+        <source>Publicly visible display name used on the unlock dialog</source>
+        <translation>Общодостъпно име, използвано в диалога за отключване</translation>
+    </message>
+    <message>
+        <source>Publicly visible color used on the unlock dialog</source>
+        <translation>Общодостъпен цвят, използван в диалога за отключване</translation>
     </message>
 </context>
 <context>
@@ -2636,18 +2698,6 @@ This is definitely a bug, please report it to the developers.</source>
         <translation>Запомняне на избора</translation>
     </message>
     <message>
-        <source>Delete group</source>
-        <translation>Изтриване на група</translation>
-    </message>
-    <message>
-        <source>Do you really want to delete the group &quot;%1&quot; for good?</source>
-        <translation>Желаете ли групата „%1“ да бъде безвъзвратно премахната?</translation>
-    </message>
-    <message>
-        <source>Move group to recycle bin?</source>
-        <translation>Преместване на група в кошчето?</translation>
-    </message>
-    <message>
         <source>Do you really want to move the group &quot;%1&quot; to the recycle bin?</source>
         <translation>Желаете ли групата „%1“ да бъде преместена в кошчето?</translation>
     </message>
@@ -2668,24 +2718,12 @@ This is definitely a bug, please report it to the developers.</source>
         <translation>Няма изходно хранилище.</translation>
     </message>
     <message>
-        <source>Successfully merged the database files.</source>
-        <translation>Файловете на хранилището са успешно сляти.</translation>
-    </message>
-    <message>
-        <source>Database was not modified by merge operation.</source>
-        <translation>Хранилището не е променяно от сливане.</translation>
-    </message>
-    <message>
         <source>Search Results (%1)</source>
         <translation>Резултати от търсенето (%1)</translation>
     </message>
     <message>
         <source>No Results</source>
         <translation>Няма резултати</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Запазване</translation>
     </message>
     <message>
         <source>Enter a unique name or overwrite an existing search from the list:</source>
@@ -2731,7 +2769,7 @@ Save changes?</source>
         <source>KeePassXC has failed to save the database multiple times. This is likely caused by file sync services holding a lock on the save file.
 Disable safe saves and try again?</source>
         <translation>KeePassXC няколко пъти не успя да запази хранилището. Вероятна причина е услугата за синхронизиране на файлове, която е заключила файла за писане.
-Забраняване на безопасното запазване и повторен опит?</translation>
+Да бъде ли изключено безопасното запазване и да бъде направен повторен опит?</translation>
     </message>
     <message>
         <source>Writing the database failed: %1</source>
@@ -2748,10 +2786,6 @@ Disable safe saves and try again?</source>
     <message>
         <source>KeePass 2 Database</source>
         <translation>Хранилище на KeePass 2</translation>
-    </message>
-    <message>
-        <source>Save database backup</source>
-        <translation>Запазване на резервно копие на данните</translation>
     </message>
     <message>
         <source>Empty recycle bin?</source>
@@ -2783,14 +2817,6 @@ Disable safe saves and try again?</source>
         <translation>Отдалеченото синхронизиране „%1“ завърши!</translation>
     </message>
     <message>
-        <source>Remote sync &apos;%1&apos; failed: %2</source>
-        <translation>Отдалеченото синхронизиране „%1“ завърши с грешка: %2</translation>
-    </message>
-    <message>
-        <source>Error while saving database %1: %2</source>
-        <translation>Грешка при запазване на хранилището %1: %2</translation>
-    </message>
-    <message>
         <source>Downloading...</source>
         <translation>Изтегляне...</translation>
     </message>
@@ -2799,8 +2825,16 @@ Disable safe saves and try again?</source>
         <translation>Качване…</translation>
     </message>
     <message>
+        <source>Remote sync &apos;%1&apos; failed: %2</source>
+        <translation>Отдалеченото синхронизиране „%1“ завърши с грешка: %2</translation>
+    </message>
+    <message>
         <source>Syncing...</source>
         <translation>Синхронизиране…</translation>
+    </message>
+    <message>
+        <source>Error while saving database %1: %2</source>
+        <translation>Грешка при запазване на хранилището %1: %2</translation>
     </message>
     <message>
         <source>Remove passkey from entry</source>
@@ -2817,10 +2851,6 @@ Disable safe saves and try again?</source>
     <message>
         <source>Do you want to load the changes?</source>
         <translation>Желаете ли промените да бъдат заредени?</translation>
-    </message>
-    <message>
-        <source>Reload database</source>
-        <translation>Презареждане на хранилището</translation>
     </message>
     <message>
         <source>Reloading database…</source>
@@ -2847,12 +2877,59 @@ Disable safe saves and try again?</source>
         <translation>Файлът на хранилището „%1“ е променен от друго приложение&lt;br&gt;Как желаете да продължите?&lt;br&gt;&lt;br&gt;Сливане на промените&lt;br&gt;Презаписване на промените на диска&lt;br&gt;Отказ от незапазените промени</translation>
     </message>
     <message>
+        <source>Reload database</source>
+        <translation>Презареждане на хранилището</translation>
+    </message>
+    <message>
         <source>Database file overwritten.</source>
         <translation>Файлът на хранилището е презаписан.</translation>
     </message>
     <message>
         <source>Database file on disk cannot be unlocked with current credentials.&lt;br&gt;Enter new credentials and/or present hardware key to continue.</source>
         <translation>Файлът на хранилището не може да бъде отключено с текущите данни за отключване.&lt;br&gt;За да продължите въведете данните за отключване и/или включете хардуерен ключ.</translation>
+    </message>
+    <message>
+        <source>Failed to save backup database: %1</source>
+        <translation>Грешка при запазване на резервно копие на хранилището: %1</translation>
+    </message>
+    <message>
+        <source>Confirm Delete Group</source>
+        <translation>Потвърждаване премахване на група</translation>
+    </message>
+    <message>
+        <source>Do you really want to permanently delete the group &quot;%1&quot;?</source>
+        <translation>Желаете ли групата „%1“ да бъде безвъзвратно премахната?</translation>
+    </message>
+    <message>
+        <source>Confirm Recycle Group</source>
+        <translation>Потвърждаване преместване на група в кошчето</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Запазване</translation>
+    </message>
+    <message>
+        <source>Save Database Backup</source>
+        <translation>Запазва резервно копие на хранилището</translation>
+    </message>
+    <message>
+        <source>Successfully merged the selected database.</source>
+        <translation>Избраните хранилища са слети.</translation>
+    </message>
+    <message>
+        <source>No changes were made by the merge operation.</source>
+        <translation>При сливането не са направени промени.</translation>
+    </message>
+    <message>
+        <source>Merge canceled, no changes were made.</source>
+        <translation>Сливането е отказано. Не са направени промени.</translation>
+    </message>
+</context>
+<context>
+    <name>EditEntryAttachmentsDialog</name>
+    <message>
+        <source>Edit: %1</source>
+        <translation>Променяне: %1</translation>
     </message>
 </context>
 <context>
@@ -2875,7 +2952,7 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Browser Integration</source>
-        <translation>Съчетаване с мрежови четци</translation>
+        <translation>Съчетаване с мрежов четец</translation>
     </message>
     <message>
         <source>&lt;empty URL&gt;</source>
@@ -3830,14 +3907,6 @@ Supported extensions are: %1.</source>
         <translation>Дата и час на последна промяна</translation>
     </message>
     <message>
-        <source>Accessed:</source>
-        <translation>Достъп:</translation>
-    </message>
-    <message>
-        <source>Datetime accessed</source>
-        <translation>Дата и час на последен достъп</translation>
-    </message>
-    <message>
         <source>Uuid:</source>
         <translation>Идентификатор:</translation>
     </message>
@@ -3904,27 +3973,68 @@ This may cause the affected plugins to malfunction.</source>
         <translation>Неправилен синтаксис на регулярен израз %1
 %2</translation>
     </message>
+    <message>
+        <source>Title</source>
+        <translation>Заглавие</translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>Потребител</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Парола</translation>
+    </message>
+    <message>
+        <source>URL</source>
+        <translation>Адрес</translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation>Бележка</translation>
+    </message>
+    <message>
+        <source>Custom Attributes</source>
+        <translation>Потребителски атрибути</translation>
+    </message>
+    <message>
+        <source>Icon</source>
+        <translation>Пиктограма</translation>
+    </message>
+    <message>
+        <source>Color</source>
+        <translation>Цвят</translation>
+    </message>
+    <message>
+        <source>Expiration</source>
+        <translation>Изтичаща давност</translation>
+    </message>
+    <message>
+        <source>TOTP</source>
+        <translation>TOTP</translation>
+    </message>
+    <message>
+        <source>Custom Data</source>
+        <translation>Потребителски данни</translation>
+    </message>
+    <message>
+        <source>Attachments</source>
+        <translation>Прикачени файлове</translation>
+    </message>
+    <message>
+        <source>Auto-Type</source>
+        <translation>Автоматично въвеждане</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation>Етикети</translation>
+    </message>
 </context>
 <context>
     <name>EntryAttachments</name>
     <message>
         <source>Cannot open file &quot;%1&quot;</source>
         <translation>Файлът „%1“ не може да бъде отворен</translation>
-    </message>
-</context>
-<context>
-    <name>EntryAttachmentsDialog</name>
-    <message>
-        <source>Form</source>
-        <translation>Формуляр</translation>
-    </message>
-    <message>
-        <source>File name</source>
-        <translation>Име на файл</translation>
-    </message>
-    <message>
-        <source>File contents...</source>
-        <translation>Съдържание…</translation>
     </message>
 </context>
 <context>
@@ -3953,10 +4063,6 @@ This may cause the affected plugins to malfunction.</source>
         <translation>Добавяне на прикачен файл</translation>
     </message>
     <message>
-        <source>Add</source>
-        <translation>Добавяне</translation>
-    </message>
-    <message>
         <source>Remove selected attachment</source>
         <translation>Премахване на избрания прикачен файл</translation>
     </message>
@@ -3975,10 +4081,6 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source>Save selected attachment to disk</source>
         <translation>Запазване на избрания прикачен файл</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Запазване</translation>
     </message>
     <message>
         <source>Select files</source>
@@ -4081,16 +4183,32 @@ Would you like to overwrite the existing attachment?</source>
 Желаете ли съществуващият прикачен файл да бъде презаписан?</translation>
     </message>
     <message>
-        <source>New</source>
-        <translation>Добавяне</translation>
-    </message>
-    <message>
         <source>Preview</source>
         <translation>Преглед</translation>
     </message>
     <message>
-        <source>Failed to preview an attachment: Attachment not found</source>
-        <translation>Грешка: прикачен файл не е намерен</translation>
+        <source>Edit</source>
+        <translation>Променяне</translation>
+    </message>
+    <message>
+        <source>New Text Document</source>
+        <translation>Нов текстов документ</translation>
+    </message>
+    <message>
+        <source>Add file…</source>
+        <translation>Добавяне на файл…</translation>
+    </message>
+    <message>
+        <source>Load from Disk…</source>
+        <translation>Зареждане от диск…</translation>
+    </message>
+    <message>
+        <source>Save…</source>
+        <translation>Запазване…</translation>
+    </message>
+    <message>
+        <source>New Attachment</source>
+        <translation>Нов прикачен файл</translation>
     </message>
 </context>
 <context>
@@ -4121,62 +4239,6 @@ Would you like to overwrite the existing attachment?</source>
     <message>
         <source>Size</source>
         <translation>Размер</translation>
-    </message>
-    <message>
-        <source>Title</source>
-        <translation>Заглавие</translation>
-    </message>
-    <message>
-        <source>Username</source>
-        <translation>Потребител</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>Парола</translation>
-    </message>
-    <message>
-        <source>URL</source>
-        <translation>Адрес</translation>
-    </message>
-    <message>
-        <source>Notes</source>
-        <translation>Бележка</translation>
-    </message>
-    <message>
-        <source>Custom Attributes</source>
-        <translation>Потребителски атрибути</translation>
-    </message>
-    <message>
-        <source>Icon</source>
-        <translation>Пиктограма</translation>
-    </message>
-    <message>
-        <source>Color</source>
-        <translation>Цвят</translation>
-    </message>
-    <message>
-        <source>Expiration</source>
-        <translation>Изтичаща давност</translation>
-    </message>
-    <message>
-        <source>TOTP</source>
-        <translation>TOTP</translation>
-    </message>
-    <message>
-        <source>Custom Data</source>
-        <translation>Потребителски данни</translation>
-    </message>
-    <message>
-        <source>Attachments</source>
-        <translation>Прикачени файлове</translation>
-    </message>
-    <message>
-        <source>Auto-Type</source>
-        <translation>Автоматично въвеждане</translation>
-    </message>
-    <message>
-        <source>Tags</source>
-        <translation>Етикети</translation>
     </message>
 </context>
 <context>
@@ -4227,10 +4289,6 @@ Would you like to overwrite the existing attachment?</source>
         <translation>Промяна</translation>
     </message>
     <message>
-        <source>Accessed</source>
-        <translation>Достъп</translation>
-    </message>
-    <message>
         <source>Attachments</source>
         <translation>Прикачени файлове</translation>
     </message>
@@ -4265,10 +4323,6 @@ Would you like to overwrite the existing attachment?</source>
     <message>
         <source>Last modification date</source>
         <translation>Последна дата на промяна</translation>
-    </message>
-    <message>
-        <source>Last access date</source>
-        <translation>Последна дата на достъп</translation>
     </message>
     <message>
         <source>Attached files</source>
@@ -4436,7 +4490,7 @@ Would you like to overwrite the existing attachment?</source>
     <name>ExportDialog</name>
     <message>
         <source>Export options</source>
-        <translation>Настройки за изнасяне</translation>
+        <translation>Настройки на изнасяне</translation>
     </message>
     <message>
         <source>Sort entries by...</source>
@@ -4462,16 +4516,16 @@ This will leave your passwords and sensitive information vulnerable!
         <translation>име (низходящ ред)</translation>
     </message>
     <message>
-        <source>unknown</source>
-        <translation>неизвестно</translation>
-    </message>
-    <message>
         <source>Export database to HTML file</source>
         <translation>Изнасяне на данни в HTML</translation>
     </message>
     <message>
         <source>HTML file</source>
         <translation>Файл на HTML</translation>
+    </message>
+    <message>
+        <source>invalid sort order</source>
+        <translation>Недопустим ред за сортиране</translation>
     </message>
 </context>
 <context>
@@ -4649,6 +4703,17 @@ You can enable the DuckDuckGo website icon service in the security section of th
     <message>
         <source>Downloading favicons (%1/%2)…</source>
         <translation>Изтегляне на пиктограми (%1/%2)…</translation>
+    </message>
+</context>
+<context>
+    <name>ImageAttachmentsWidget</name>
+    <message>
+        <source>Zoom:</source>
+        <translation>Мащаб:</translation>
+    </message>
+    <message>
+        <source>Fit</source>
+        <translation>Побиране</translation>
     </message>
 </context>
 <context>
@@ -5715,10 +5780,6 @@ Are you sure you want to continue with this file?</source>
         <translation>П&amp;роменяне на запис…</translation>
     </message>
     <message>
-        <source>&amp;Delete Entry…</source>
-        <translation>&amp;Премахване на запис…</translation>
-    </message>
-    <message>
         <source>&amp;New Group…</source>
         <translation>&amp;Нова група…</translation>
     </message>
@@ -6081,10 +6142,6 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
         <translation>Слива от хранилище</translation>
     </message>
     <message>
-        <source>Create Entry</source>
-        <translation>Създава запис</translation>
-    </message>
-    <message>
         <source>Edit Entry</source>
         <translation>Променя запис</translation>
     </message>
@@ -6329,16 +6386,40 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
         <translation>Създаване на парола</translation>
     </message>
     <message>
-        <source>E&amp;xpire Entry…</source>
-        <translation>Прекратяване на &amp;давността…</translation>
-    </message>
-    <message>
         <source>Clear SSH Agent</source>
         <translation>Изчистване на агента на SSH</translation>
     </message>
     <message>
         <source>Clear all identities in ssh-agent</source>
         <translation>Изчистване на самоличностите в ssh-agent</translation>
+    </message>
+    <message>
+        <source>New Entry</source>
+        <translation>Нов запис</translation>
+    </message>
+    <message>
+        <source>Edit Entry…</source>
+        <translation>Променяне на запис…</translation>
+    </message>
+    <message>
+        <source>E&amp;xpire Entry</source>
+        <translation>Прекратяване на &amp;давността</translation>
+    </message>
+    <message>
+        <source>Expire Entry</source>
+        <translation>Прекратяване на давността</translation>
+    </message>
+    <message>
+        <source>&amp;Delete Entry</source>
+        <translation>&amp;Премахване на запис</translation>
+    </message>
+    <message numerus="yes">
+        <source>Move selected entry(s) to the recycle bin</source>
+        <translation><numerusform>Преместване на избрания запис в кошчето?</numerusform><numerusform>Преместване на избраните записи в кошчето?</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Permanently delete the selected entry(s)</source>
+        <translation><numerusform>Безвъзвратно премахване на избрания запис?</numerusform><numerusform>Безвъзвратно премахване на избраните записи?</numerusform></translation>
     </message>
 </context>
 <context>
@@ -6384,42 +6465,41 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
     </message>
 </context>
 <context>
+    <name>MergeDialog</name>
+    <message>
+        <source>Database Merge Confirmation</source>
+        <translation>Потвърждаване при сливане на хранилища</translation>
+    </message>
+    <message>
+        <source>Merge</source>
+        <translation>Сливане</translation>
+    </message>
+    <message>
+        <source>Group</source>
+        <translation>Група</translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation>Заглавие</translation>
+    </message>
+    <message>
+        <source>UUID</source>
+        <translation>Идентификатор</translation>
+    </message>
+    <message>
+        <source>Details</source>
+        <translation>Подробности</translation>
+    </message>
+    <message>
+        <source>Change</source>
+        <translation>Промяна</translation>
+    </message>
+</context>
+<context>
     <name>Merger</name>
-    <message>
-        <source>Creating missing %1 [%2]</source>
-        <translation>Създаване на липсващите %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Relocating %1 [%2]</source>
-        <translation>Преместване на %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Overwriting %1 [%2]</source>
-        <translation>Презаписване %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Synchronizing from newer source %1 [%2]</source>
-        <translation>Синхронизиране от по-новия източник %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Synchronizing from older source %1 [%2]</source>
-        <translation>Синхронизиране от по-стария източник %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Deleting child %1 [%2]</source>
-        <translation>Премахване на наследник %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Deleting orphan %1 [%2]</source>
-        <translation>Премахване на сирак %1 [%2]</translation>
-    </message>
     <message>
         <source>Changed deleted objects</source>
         <translation>Промяна на премахнати обекти</translation>
-    </message>
-    <message>
-        <source>Adding missing icon %1</source>
-        <translation>Добавяне на липсваща пиктограма %1</translation>
     </message>
     <message>
         <source>Removed custom data %1 [%2]</source>
@@ -6428,6 +6508,74 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
     <message>
         <source>Adding custom data %1 [%2]</source>
         <translation>Добавяне на потребителски данни %1 [%2]</translation>
+    </message>
+    <message>
+        <source>Added</source>
+        <translation>Добавено</translation>
+    </message>
+    <message>
+        <source>Modified</source>
+        <translation>Променено</translation>
+    </message>
+    <message>
+        <source>Moved</source>
+        <translation>Преместено</translation>
+    </message>
+    <message>
+        <source>Deleted</source>
+        <translation>Премахнато</translation>
+    </message>
+    <message>
+        <source>Previous location: %1</source>
+        <translation>Предишно местоположение: %1</translation>
+    </message>
+    <message>
+        <source>Number of entries in group: %1</source>
+        <translation>Брой записи в групата: %1</translation>
+    </message>
+    <message>
+        <source>Group name</source>
+        <translation>Име на групата</translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation>Бележка</translation>
+    </message>
+    <message>
+        <source>Icon (UUID)</source>
+        <translation>Пиктограма (идентификатор)</translation>
+    </message>
+    <message>
+        <source>Icon (Number)</source>
+        <translation>Пиктограма (номер)</translation>
+    </message>
+    <message>
+        <source>Expiry time</source>
+        <translation>Изтичаща давност</translation>
+    </message>
+    <message>
+        <source>Modification time</source>
+        <translation>Дата на промяна</translation>
+    </message>
+    <message>
+        <source>%1 (Add local modifications to new entry)</source>
+        <translation>%1 (добавяне на местните промени в нов запис)</translation>
+    </message>
+    <message>
+        <source>%1 (Add new modifications to existing entry)</source>
+        <translation>%1 (добавяне на новите промени в съществуващ запис)</translation>
+    </message>
+    <message>
+        <source>Explicit deletion</source>
+        <translation>Изрично премахнато</translation>
+    </message>
+    <message>
+        <source>Implicit deletion (e.g. removal of parent group)</source>
+        <translation>Косвено премахнато (напр. премахване на майчина група)</translation>
+    </message>
+    <message>
+        <source>Adding new icon %1</source>
+        <translation>Добавяне на нова пиктограма %1</translation>
     </message>
 </context>
 <context>
@@ -6488,25 +6636,6 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
     <message>
         <source>Please fill in the display name and an optional description for your new database:</source>
         <translation>Въведете име и незадължително описание на новото хранилище:</translation>
-    </message>
-</context>
-<context>
-    <name>NewEntryAttachmentsDialog</name>
-    <message>
-        <source>Attachment name cannot be empty</source>
-        <translation>Името на прикачения файл не може да е празно</translation>
-    </message>
-    <message>
-        <source>Attachment with the same name already exists</source>
-        <translation>Прикачен файл със същото име вече съществува</translation>
-    </message>
-    <message>
-        <source>Save attachment</source>
-        <translation>Запазване</translation>
-    </message>
-    <message>
-        <source>New entry attachment</source>
-        <translation>Прикачен файл към нов запис</translation>
     </message>
 </context>
 <context>
@@ -6609,10 +6738,6 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
         <translation>Намерени са нула ключа</translation>
     </message>
     <message>
-        <source>Failed to read public key.</source>
-        <translation>Публичен ключ не може да бъде прочетен.</translation>
-    </message>
-    <message>
         <source>Corrupted key file, reading private key failed</source>
         <translation>Файл с ключ е повреден, грешка при прочитане на частен ключ</translation>
     </message>
@@ -6700,6 +6825,14 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
         <source>(encrypted)</source>
         <translation>(шифровано)</translation>
     </message>
+    <message>
+        <source>Failed to read key file: %1</source>
+        <translation>Грешка при четене на файл с ключ: %1</translation>
+    </message>
+    <message>
+        <source>Failed to read public key: %1</source>
+        <translation>Грешка при четене на публичен ключ: %1</translation>
+    </message>
 </context>
 <context>
     <name>OpenSSHKeyGenDialog</name>
@@ -6754,10 +6887,6 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
 <context>
     <name>PasskeyExporter</name>
     <message>
-        <source>KeePassXC: Passkey Export</source>
-        <translation>KeePassXC: Изнасяне на Passkey</translation>
-    </message>
-    <message>
         <source>File &quot;%1.passkey&quot; already exists.
 Do you want to overwrite it?
 </source>
@@ -6776,6 +6905,10 @@ Do you want to overwrite it?
     <message>
         <source>Cannot write to file</source>
         <translation>Грешка при запис във файл</translation>
+    </message>
+    <message>
+        <source>Overwrite Existing File?</source>
+        <translation>Презаписване на съществуващия файл?</translation>
     </message>
 </context>
 <context>
@@ -6852,14 +6985,6 @@ Do you want to overwrite it?
         <translation>Файлът „%1“ не може да бъде отворен за четене.</translation>
     </message>
     <message>
-        <source>Open passkey file</source>
-        <translation>Отваряне на файл с passkey</translation>
-    </message>
-    <message>
-        <source>Cannot import passkey</source>
-        <translation>Грешка при внасяне на passkey</translation>
-    </message>
-    <message>
         <source>Cannot import passkey file &quot;%1&quot;. Data is missing.</source>
         <translation>Грешка при внасяне на файл с passkey „%1“. Липсват данни.</translation>
     </message>
@@ -6874,6 +6999,14 @@ The following data is missing:
     <message>
         <source>Cannot import passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
         <translation>Грешка при внасяне на файл с passkey „%1“. Липсва / повреден частен ключ</translation>
+    </message>
+    <message>
+        <source>Open Passkey File</source>
+        <translation>Отваряне на файл с Passkey</translation>
+    </message>
+    <message>
+        <source>Passkey Import Failed</source>
+        <translation>Грешка при внасяне на Passkey</translation>
     </message>
 </context>
 <context>
@@ -7151,14 +7284,6 @@ The following data is missing:
         <translation>Отлично</translation>
     </message>
     <message>
-        <source>Confirm Delete Wordlist</source>
-        <translation>Потвърждаване на премахване на списък с думи</translation>
-    </message>
-    <message>
-        <source>Do you really want to delete the wordlist &quot;%1&quot;?</source>
-        <translation>Желаете ли списъкът с думи „%1“ да бъде премахнат?</translation>
-    </message>
-    <message>
         <source>Failed to delete wordlist</source>
         <translation>Грешка при премахване на списък с думи</translation>
     </message>
@@ -7211,6 +7336,18 @@ Do you want to overwrite it?</source>
     <message>
         <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;, &quot;B&quot;, &quot;8&quot;, &quot;G&quot;, &quot;6&quot;</source>
         <translation>Изключени знаци: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;, &quot;B&quot;, &quot;8&quot;, &quot;G&quot;, &quot;6&quot;</translation>
+    </message>
+    <message>
+        <source>Warning: the chosen wordlist is smaller than the minimum recommended size!</source>
+        <translation>Внимание: избраният списък с думи е по-къс от минималната препоръчителна дължина!</translation>
+    </message>
+    <message>
+        <source>Confirm Remove Wordlist</source>
+        <translation>Потвърждаване премахването на списък с думи</translation>
+    </message>
+    <message>
+        <source>Do you really want to remove the wordlist &quot;%1&quot;?</source>
+        <translation>Желаете ли спискът с думи „%1“ да бъде премахнат?</translation>
     </message>
 </context>
 <context>
@@ -7282,16 +7419,16 @@ Do you want to overwrite it?</source>
 <context>
     <name>PreviewEntryAttachmentsDialog</name>
     <message>
-        <source>Preview entry attachment</source>
-        <translation>Преглед на прикачен файл към запис</translation>
+        <source>Form</source>
+        <translation>Формуляр</translation>
     </message>
     <message>
-        <source>No preview available</source>
-        <translation>Не е възможен преглед</translation>
+        <source>Preview: %1</source>
+        <translation>Преглед: %1</translation>
     </message>
     <message>
-        <source>Image format not supported</source>
-        <translation>Този вид изображения не се поддържат</translation>
+        <source>Save…</source>
+        <translation>Запазване…</translation>
     </message>
 </context>
 <context>
@@ -7944,10 +8081,6 @@ Do you want to overwrite it?</source>
     <message>
         <source>Average password length</source>
         <translation>Средна дължина на паролата</translation>
-    </message>
-    <message>
-        <source>%1 characters</source>
-        <translation>%1 знака</translation>
     </message>
     <message>
         <source>Word count for the diceware passphrase.</source>
@@ -8790,18 +8923,6 @@ Kernel: %3 %4</source>
         <translation><numerusform>%1 с</numerusform><numerusform>%1 с</numerusform></translation>
     </message>
     <message>
-        <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
-        <translation>Желаете ли записът „%1“ да бъде премахнат завинаги?</translation>
-    </message>
-    <message numerus="yes">
-        <source>Do you really want to delete %n entry(s) for good?</source>
-        <translation><numerusform>Желаете ли %n запис да бъде премахнат завинаги?</numerusform><numerusform>Желаете ли %n записа да бъдат премахнати завинаги?</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Delete entry(s)?</source>
-        <translation><numerusform>Премахване на запис?</numerusform><numerusform>Премахване на записи?</numerusform></translation>
-    </message>
-    <message>
         <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
         <translation>Желаете ли записът „%1“ да бъде преместен в кошчето?</translation>
     </message>
@@ -8810,16 +8931,8 @@ Kernel: %3 %4</source>
         <translation><numerusform>Желаете ли %n запис да бъде преместен в кошчето?</numerusform><numerusform>Желаете ли %n записа да бъдат преместени в кошчето?</numerusform></translation>
     </message>
     <message numerus="yes">
-        <source>Move entry(s) to recycle bin?</source>
-        <translation><numerusform>Преместване на запис в кошчето?</numerusform><numerusform>Преместване на записи в кошчето?</numerusform></translation>
-    </message>
-    <message>
-        <source>Replace references to entry?</source>
-        <translation>Да бъде ли заменена референция към запис?</translation>
-    </message>
-    <message numerus="yes">
         <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
-        <translation><numerusform>Записът „%1“ има %2 референция. Желаете ли тази референция да бъде заменена със стойност, записът да бъде пропуснат или въпреки това да бъде премахнат?</numerusform><numerusform>Записът „%1“ има %2 референции. Желаете ли тези референции да бъдат заменени със стойности, записът да бъде пропуснат или въпреки това да бъде премахнат?</numerusform></translation>
+        <translation><numerusform>Записът „%1“ има %2 референция. Желаете ли референцията да бъде заменена със стойност, записът да бъде пропуснат или въпреки това да бъде премахнат?</numerusform><numerusform>Записът „%1“ има %2 референции. Желаете ли тези референции да бъдат заменени със стойности, записът да бъде пропуснат или въпреки това да бъде премахнат?</numerusform></translation>
     </message>
     <message>
         <source>User name</source>
@@ -9184,24 +9297,12 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation>Комбинацията %1 е в конфликт с „%2“. Презаписване на клавишната комбинация?</translation>
     </message>
     <message>
-        <source>Cannot generate valid passphrases because the wordlist is too short</source>
-        <translation>Не може да бъде създадена приемлива парола, защото списъкът с думи е твърде кратък.</translation>
-    </message>
-    <message>
         <source>Encrypted files are not supported.</source>
         <translation>Не се поддържат шифровани файлове.</translation>
     </message>
     <message>
         <source>Proton Pass Import</source>
         <translation>Внасяне от Proton Pass</translation>
-    </message>
-    <message>
-        <source>Delete plugin data?</source>
-        <translation>Изтриване на данни от разширението?</translation>
-    </message>
-    <message numerus="yes">
-        <source>Delete plugin data from Entry(s)?</source>
-        <translation><numerusform>Премахване на информация от добавката от запис?</numerusform><numerusform>Премахване на информация от добавката от записи?</numerusform></translation>
     </message>
     <message>
         <source>Passkey</source>
@@ -9230,6 +9331,52 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Tags</source>
         <translation>Етикети</translation>
+    </message>
+    <message>
+        <source>Warning: the chosen wordlist is smaller than the minimum recommended size!</source>
+        <translation>Внимание: избраният списък с думи е по-къс от минималната препоръчителна дължина!</translation>
+    </message>
+    <message>
+        <source>Invalid Step</source>
+        <comment>TOTP</comment>
+        <translation>Недействителна стъпка</translation>
+    </message>
+    <message>
+        <source>Invalid Digits</source>
+        <comment>TOTP</comment>
+        <translation>Недействителни цифри</translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 character(s)</source>
+        <translation><numerusform>%1 знак</numerusform><numerusform>%1 знака</numerusform></translation>
+    </message>
+    <message>
+        <source>Do you really want to permanently delete the entry &quot;%1&quot;?</source>
+        <translation>Желаете ли записът „%1“ да бъде безвъзвратно премахнат?</translation>
+    </message>
+    <message numerus="yes">
+        <source>Do you really want to permanently delete %n entry(s)?</source>
+        <translation><numerusform>Желаете ли %n запис да бъде безвъзвратно премахнат?</numerusform><numerusform>Желаете ли %n записа да бъде безвъзвратно премахнати?</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Confirm Delete Entry(s)</source>
+        <translation><numerusform>Потвърждаване премахване на запис</numerusform><numerusform>Потвърждаване премахване на записи</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Confirm Recycle Entry(s)</source>
+        <translation><numerusform>Потвърждаване преместване на елемент в кошчето</numerusform><numerusform>Потвърждаване преместване на елементи в кошчето</numerusform></translation>
+    </message>
+    <message>
+        <source>Confirm Delete Plugin Data</source>
+        <translation>Потвърждаване премахване информация на добавка</translation>
+    </message>
+    <message numerus="yes">
+        <source>Delete plugin data from the selected entry(s)?</source>
+        <translation><numerusform>Премахване на информация на добавката от запис?</numerusform><numerusform>Премахване на информация на добавката от записи?</numerusform></translation>
+    </message>
+    <message>
+        <source>Confirm Replace Entry References</source>
+        <translation>Потвърждаване заменяне на референция към запис</translation>
     </message>
 </context>
 <context>
@@ -9752,12 +9899,12 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation>Средна дължина на паролата</translation>
     </message>
     <message>
-        <source>%1 characters</source>
-        <translation>%1 знака</translation>
-    </message>
-    <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
         <translation>Средната дължина на паролата е по-малка от десет знака. По-дългите пароли осигуряват по-голяма сигурност.</translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 character(s)</source>
+        <translation><numerusform>%1 знак</numerusform><numerusform>%1 знака</numerusform></translation>
     </message>
 </context>
 <context>
@@ -9896,6 +10043,10 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Limit search to selected group</source>
         <translation>Търсене само в избраната група</translation>
+    </message>
+    <message>
+        <source>Press Enter to search</source>
+        <translation>За да търсите натиснете Enter</translation>
     </message>
 </context>
 <context>
@@ -10117,6 +10268,10 @@ This option is deprecated, use --set-key-file instead.</source>
         <source>Weak Passwords</source>
         <translation>Слаби пароли</translation>
     </message>
+    <message>
+        <source>TOTP Entries</source>
+        <translation>Записи за TOTP</translation>
+    </message>
 </context>
 <context>
     <name>TagView</name>
@@ -10135,6 +10290,24 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Remove tag &quot;%1&quot; from all entries in this database?</source>
         <translation>Премахване на етикета „%1“ от всички записи в хранилището?</translation>
+    </message>
+</context>
+<context>
+    <name>TextAttachmentsEditWidget</name>
+    <message>
+        <source>Preview</source>
+        <translation>Преглед</translation>
+    </message>
+</context>
+<context>
+    <name>TextAttachmentsPreviewWidget</name>
+    <message>
+        <source>Form</source>
+        <translation>Формуляр</translation>
+    </message>
+    <message>
+        <source>Type:</source>
+        <translation>Вид:</translation>
     </message>
 </context>
 <context>
@@ -10248,6 +10421,10 @@ Example: JBSWY3DPEHPK3PXP</source>
     <message>
         <source>Are you sure you want to delete TOTP settings for this entry?</source>
         <translation>Желаете ли настройките за TOTP за този запис да бъдат премахнати?</translation>
+    </message>
+    <message>
+        <source>Error: secret key is invalid</source>
+        <translation>Грешка: тайният ключ е неприемлив</translation>
     </message>
 </context>
 <context>
@@ -10403,10 +10580,6 @@ Example: JBSWY3DPEHPK3PXP</source>
 <context>
     <name>YubiKeyInterfacePCSC</name>
     <message>
-        <source>The YubiKey PCSC interface has not been initialized.</source>
-        <translation>Интерфейсът за PCSC на YubiKey не е подготвен.</translation>
-    </message>
-    <message>
         <source>Could not find or access hardware key with serial number %1. Please present it to continue. </source>
         <translation>Не е намерен хардуерен или няма достъп до ключ със сериен № %1. За да продължите добавете ключа.</translation>
     </message>
@@ -10417,10 +10590,6 @@ Example: JBSWY3DPEHPK3PXP</source>
     <message>
         <source>Hardware key was not found or is not configured.</source>
         <translation>Хардуерният ключ не е намерен или не е настроен.</translation>
-    </message>
-    <message>
-        <source>Failed to complete a challenge-response, the PCSC error code was: %1</source>
-        <translation>Грешка при завършване на предизвикване-отговор, кодът за грешка на PCSC е: %1</translation>
     </message>
     <message>
         <source>(NFC) %1 [%2] - Slot %3, %4</source>
@@ -10437,13 +10606,17 @@ Example: JBSWY3DPEHPK3PXP</source>
         <comment>USB Challenge-Response Key no interaction required</comment>
         <translation>Пасивно</translation>
     </message>
+    <message>
+        <source>The YubiKey PC/SC interface has not been initialized.</source>
+        <translation>Интерфейсът PC/SC на YubiKey не е подготвен.</translation>
+    </message>
+    <message>
+        <source>Failed to complete a challenge-response, the PC/SC error code was: %1</source>
+        <translation>Грешка при завършване на предизвикване-отговор, кодът за грешка на PC/SC е: %1</translation>
+    </message>
 </context>
 <context>
     <name>YubiKeyInterfaceUSB</name>
-    <message>
-        <source>Unknown</source>
-        <translation>Неизвестен</translation>
-    </message>
     <message>
         <source>Press</source>
         <comment>USB Challenge-Response Key interaction request</comment>
@@ -10483,6 +10656,11 @@ Example: JBSWY3DPEHPK3PXP</source>
         <source>%1 [%2] - Slot %3, %4</source>
         <comment>YubiKey display fields</comment>
         <translation>%1 [%2] - Позиция %3, %4</translation>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <comment>Unknown hardware key name</comment>
+        <translation>Неизвестно</translation>
     </message>
 </context>
 </TS>

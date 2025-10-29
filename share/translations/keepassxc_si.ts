@@ -571,6 +571,14 @@
         <source>Font size selection</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Skip confirmation for main window Auto-Type actions</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Auto-generate password for new entries</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetSecurity</name>
@@ -662,6 +670,17 @@
     </message>
 </context>
 <context>
+    <name>AttachmentWidget</name>
+    <message>
+        <source>Attachment Viewer</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unknown attachment type</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>AutoType</name>
     <message>
         <source>The requested Auto-Type sequence cannot be used due to an error:</source>
@@ -710,6 +729,10 @@
     <message>
         <source>Invalid placeholder: %1</source>
         <translation>වලංගු නොවන ස්ථාන දරණ: %1</translation>
+    </message>
+    <message>
+        <source>Entry has invalid TOTP settings</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -780,20 +803,6 @@
         <translation>ස්වයංක්‍රීය ටයිප් කිරීමට හෝ සෙවුම භාවිතයෙන් ප්‍රවේශයක් සොයා ගැනීමට පේළියක් දෙවරක් ක්ලික් කරන්න:</translation>
     </message>
     <message>
-        <source>&lt;p&gt;You can use advanced search queries to find any entry in your open databases. The following shortcuts are useful:&lt;br/&gt;
-Ctrl+F - Toggle database search&lt;br/&gt;
-Ctrl+1 - Type username&lt;br/&gt;
-Ctrl+2 - Type password&lt;br/&gt;
-Ctrl+3 - Type TOTP&lt;br/&gt;
-Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
-        <translation>&lt;p&gt;ඔබට ඔබගේ විවෘත දත්ත සමුදායේ ඇති ඕනෑම ප්‍රවේශයක් සොයා ගැනීමට උසස් සෙවුම් විමසුම් භාවිතා කළ හැක. පහත කෙටිමං ප්‍රයෝජනවත් වේ:&lt;br/&gt;
-Ctrl+F - දත්ත සමුදා සෙවීම ටොගල් කරන්න&lt;br/&gt;
-Ctrl+1 - පරිශීලක නාමය ටයිප් කරන්න&lt;br/&gt;
-Ctrl+2 - මුරපදය ටයිප් කරන්න&lt;br/&gt;
-Ctrl+3 - ටයිප් කරන්න TOTP&lt;br/&gt;
-Ctrl+4 - Virtual Keyboard භාවිතා කරන්න (Wind පමණි)&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Search all open databases</source>
         <translation>විවෘත සියළු දත්තසමුදා සොයන්න</translation>
     </message>
@@ -836,6 +845,44 @@ Ctrl+4 - Virtual Keyboard භාවිතා කරන්න (Wind පමණි)
     <message>
         <source>Use Virtual Keyboard</source>
         <translation>අතථ්‍ය යතුරුපුවරුව භාවිතය</translation>
+    </message>
+    <message>
+        <source>Type {URL}</source>
+        <translation>{URL}වර්ගය</translation>
+    </message>
+    <message>
+        <source>Copy URL</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;p&gt;The following shortcuts are available:&lt;br/&gt;
+Ctrl+F - Focus search&lt;br/&gt;
+Ctrl+1 - Type username&lt;br/&gt;
+Ctrl+2 - Type password&lt;br/&gt;
+Ctrl+3 - Type TOTP&lt;br/&gt;
+Ctrl+4 - Type URL&lt;br/&gt;
+Ctrl+5 - Use Virtual Keyboard (Windows Only)&lt;br/&gt;
+Ctrl+Shift+1 - Copy username&lt;br/&gt;
+Ctrl+Shift+2 - Copy password&lt;br/&gt;
+Ctrl+Shift+3 - Copy TOTP&lt;br/&gt;
+Ctrl+Shift+4 - Copy URL&lt;br/&gt;
+&lt;/p&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You can use advanced search queries to find any entry in your open databases.</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>BinaryStream</name>
+    <message>
+        <source>Failed to read string data: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>String length exceeds 10 MiB limit (requested %1)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1719,6 +1766,10 @@ Are you sure you want to continue with this file?.</source>
         <source>Hardware keys found, but no slots are configured.</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Press ESC again to close this database</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingWidgetMetaData</name>
@@ -2252,19 +2303,11 @@ removed from the database.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Publically visible display name used on the unlock dialog</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Database public display name</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>Display color:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Publically visible color used on the unlock dialog</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -2281,6 +2324,14 @@ removed from the database.</source>
     </message>
     <message>
         <source>Select Database Icon</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Publicly visible display name used on the unlock dialog</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Publicly visible color used on the unlock dialog</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -2615,18 +2666,6 @@ This is definitely a bug, please report it to the developers.</source>
         <translation>තේරීම මතක තබාගන්න</translation>
     </message>
     <message>
-        <source>Delete group</source>
-        <translation>සමූහය මකන්න</translation>
-    </message>
-    <message>
-        <source>Do you really want to delete the group &quot;%1&quot; for good?</source>
-        <translation>ඔබට සැබවින්ම &quot;%1&quot; කණ්ඩායම යහපත සඳහා මකා දැමීමට අවශ්‍යද?</translation>
-    </message>
-    <message>
-        <source>Move group to recycle bin?</source>
-        <translation>කණ්ඩායම ප්‍රතිචක්‍රීකරණ බඳුනට ගෙන යන්නද?</translation>
-    </message>
-    <message>
         <source>Do you really want to move the group &quot;%1&quot; to the recycle bin?</source>
         <translation>ඔබට ඇත්තටම &quot;%1&quot; කණ්ඩායම ප්‍රතිචක්‍රීකරණ බඳුනට ගෙන යාමට අවශ්‍යද?</translation>
     </message>
@@ -2647,24 +2686,12 @@ This is definitely a bug, please report it to the developers.</source>
         <translation>මූලාශ්‍ර දත්ත ගබඩාවක් නැත, කිරීමට කිසිවක් නැත.</translation>
     </message>
     <message>
-        <source>Successfully merged the database files.</source>
-        <translation>දත්ත සමුදා ගොනු සාර්ථකව ඒකාබද්ධ කරන ලදී.</translation>
-    </message>
-    <message>
-        <source>Database was not modified by merge operation.</source>
-        <translation>දත්ත සමුදාය ඒකාබද්ධ කිරීමේ මෙහෙයුම මගින් වෙනස් කර නැත.</translation>
-    </message>
-    <message>
         <source>Search Results (%1)</source>
         <translation>සෙවුම් ප්‍රතිඵල (%1)</translation>
     </message>
     <message>
         <source>No Results</source>
         <translation>ප්‍රතිපල නැත</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>සුරකින්න</translation>
     </message>
     <message>
         <source>Enter a unique name or overwrite an existing search from the list:</source>
@@ -2729,10 +2756,6 @@ Disable safe saves and try again?</source>
         <translation>KeePass 2 දත්තසමුදාය</translation>
     </message>
     <message>
-        <source>Save database backup</source>
-        <translation>දත්තසමුදායේ උපස්ථයක් සුරකින්න</translation>
-    </message>
-    <message>
         <source>Empty recycle bin?</source>
         <translation>ප්‍රතිචක්‍රීකරණ බඳුන හිස්ද?</translation>
     </message>
@@ -2762,14 +2785,6 @@ Disable safe saves and try again?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Remote sync &apos;%1&apos; failed: %2</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Error while saving database %1: %2</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Downloading...</source>
         <translation type="unfinished"/>
     </message>
@@ -2778,7 +2793,15 @@ Disable safe saves and try again?</source>
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Remote sync &apos;%1&apos; failed: %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Syncing...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Error while saving database %1: %2</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -2795,10 +2818,6 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>Do you want to load the changes?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Reload database</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -2826,11 +2845,58 @@ Disable safe saves and try again?</source>
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Reload database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Database file overwritten.</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>Database file on disk cannot be unlocked with current credentials.&lt;br&gt;Enter new credentials and/or present hardware key to continue.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to save backup database: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Confirm Delete Group</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you really want to permanently delete the group &quot;%1&quot;?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Confirm Recycle Group</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>සුරකින්න</translation>
+    </message>
+    <message>
+        <source>Save Database Backup</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Successfully merged the selected database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No changes were made by the merge operation.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Merge canceled, no changes were made.</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>EditEntryAttachmentsDialog</name>
+    <message>
+        <source>Edit: %1</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -3809,14 +3875,6 @@ Supported extensions are: %1.</source>
         <translation>දිනය වෙනස් කරන ලදී</translation>
     </message>
     <message>
-        <source>Accessed:</source>
-        <translation>ප්රවේශ විය:</translation>
-    </message>
-    <message>
-        <source>Datetime accessed</source>
-        <translation>දින වේලාව ප්‍රවේශ විය</translation>
-    </message>
-    <message>
         <source>Uuid:</source>
         <translation>Uuid:</translation>
     </message>
@@ -3883,27 +3941,68 @@ This may cause the affected plugins to malfunction.</source>
         <translation>වලංගු නොවන නිත්‍ය ප්‍රකාශන වාක්‍ය ඛණ්ඩ %1
 %2</translation>
     </message>
+    <message>
+        <source>Title</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>URL</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Custom Attributes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Icon</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Color</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Expiration</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>TOTP</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Custom Data</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Attachments</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Auto-Type</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EntryAttachments</name>
     <message>
         <source>Cannot open file &quot;%1&quot;</source>
         <translation>&quot;%1&quot;ගොනුව විවෘත කළ නොහැක</translation>
-    </message>
-</context>
-<context>
-    <name>EntryAttachmentsDialog</name>
-    <message>
-        <source>Form</source>
-        <translation>පෝරමය</translation>
-    </message>
-    <message>
-        <source>File name</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>File contents...</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3932,10 +4031,6 @@ This may cause the affected plugins to malfunction.</source>
         <translation>නව ඇමුණුමක් එක් කරන්න</translation>
     </message>
     <message>
-        <source>Add</source>
-        <translation>එකතු</translation>
-    </message>
-    <message>
         <source>Remove selected attachment</source>
         <translation>තෝරාගත් ඇමුණුම ඉවත් කරන්න</translation>
     </message>
@@ -3954,10 +4049,6 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source>Save selected attachment to disk</source>
         <translation>තෝරාගත් ඇමුණුම තැටියට සුරකින්න</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>සුරකින්න</translation>
     </message>
     <message>
         <source>Select files</source>
@@ -4059,15 +4150,31 @@ Would you like to overwrite the existing attachment?</source>
 පවතින ඇමුණුම උඩින් ලිවීමට ඔබ කැමතිද?</translation>
     </message>
     <message>
-        <source>New</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Preview</source>
         <translation>පෙරදසුන</translation>
     </message>
     <message>
-        <source>Failed to preview an attachment: Attachment not found</source>
+        <source>Edit</source>
+        <translation>සංස්කරණය</translation>
+    </message>
+    <message>
+        <source>New Text Document</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Add file…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Load from Disk…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Save…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>New Attachment</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -4099,62 +4206,6 @@ Would you like to overwrite the existing attachment?</source>
     <message>
         <source>Size</source>
         <translation>ප්රමාණය</translation>
-    </message>
-    <message>
-        <source>Title</source>
-        <translation>ශීර්ෂය</translation>
-    </message>
-    <message>
-        <source>Username</source>
-        <translation>පරිශීලක නාමය</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>මුරපදය</translation>
-    </message>
-    <message>
-        <source>URL</source>
-        <translation>ඒ.ස.නි.</translation>
-    </message>
-    <message>
-        <source>Notes</source>
-        <translation>සටහන්</translation>
-    </message>
-    <message>
-        <source>Custom Attributes</source>
-        <translation>අභිරුචි ගුණාංග</translation>
-    </message>
-    <message>
-        <source>Icon</source>
-        <translation>නිරූපකය</translation>
-    </message>
-    <message>
-        <source>Color</source>
-        <translation>වර්ණ</translation>
-    </message>
-    <message>
-        <source>Expiration</source>
-        <translation>කල් ඉකුත්වීම</translation>
-    </message>
-    <message>
-        <source>TOTP</source>
-        <translation>TOTP</translation>
-    </message>
-    <message>
-        <source>Custom Data</source>
-        <translation>අභිරුචි දත්ත</translation>
-    </message>
-    <message>
-        <source>Attachments</source>
-        <translation>ඇමුණුම්</translation>
-    </message>
-    <message>
-        <source>Auto-Type</source>
-        <translation>ස්වයං ලිවීම</translation>
-    </message>
-    <message>
-        <source>Tags</source>
-        <translation>අනන්‍යන</translation>
     </message>
 </context>
 <context>
@@ -4205,10 +4256,6 @@ Would you like to overwrite the existing attachment?</source>
         <translation>සංශෝධිතයි</translation>
     </message>
     <message>
-        <source>Accessed</source>
-        <translation>ප්‍රවේශ විය</translation>
-    </message>
-    <message>
         <source>Attachments</source>
         <translation>ඇමුණුම්</translation>
     </message>
@@ -4243,10 +4290,6 @@ Would you like to overwrite the existing attachment?</source>
     <message>
         <source>Last modification date</source>
         <translation>අවසාන සංශෝධිත දිනය</translation>
-    </message>
-    <message>
-        <source>Last access date</source>
-        <translation>අවසාන ප්‍රවේශ දිනය</translation>
     </message>
     <message>
         <source>Attached files</source>
@@ -4441,16 +4484,16 @@ This will leave your passwords and sensitive information vulnerable!
         <translation>නම (බැසීම)</translation>
     </message>
     <message>
-        <source>unknown</source>
-        <translation>නොදන්නා</translation>
-    </message>
-    <message>
         <source>Export database to HTML file</source>
         <translation>දත්ත සමුදාය HTML ගොනුවට අපනයනය කරන්න</translation>
     </message>
     <message>
         <source>HTML file</source>
         <translation>HTML ගොනුව</translation>
+    </message>
+    <message>
+        <source>invalid sort order</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4628,6 +4671,17 @@ You can enable the DuckDuckGo website icon service in the security section of th
     <message>
         <source>Downloading favicons (%1/%2)…</source>
         <translation>…බාගත කිරීම (%2)%1</translation>
+    </message>
+</context>
+<context>
+    <name>ImageAttachmentsWidget</name>
+    <message>
+        <source>Zoom:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Fit</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5688,10 +5742,6 @@ Are you sure you want to continue with this file?</source>
         <translation>ප්‍රවේශය &amp;සංස්කරණය කරන්න…</translation>
     </message>
     <message>
-        <source>&amp;Delete Entry…</source>
-        <translation>&amp;මකන්න ඇතුල්වීම…</translation>
-    </message>
-    <message>
         <source>&amp;New Group…</source>
         <translation>&amp;නව කණ්ඩායම…</translation>
     </message>
@@ -6054,10 +6104,6 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Create Entry</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Edit Entry</source>
         <translation>ඇතුළත් කිරීම සංස්කරණය කරන්න</translation>
     </message>
@@ -6302,16 +6348,40 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>E&amp;xpire Entry…</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Clear SSH Agent</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>Clear all identities in ssh-agent</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>New Entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Edit Entry…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>E&amp;xpire Entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Expire Entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Delete Entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>Move selected entry(s) to the recycle bin</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Permanently delete the selected entry(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -6357,42 +6427,41 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
     </message>
 </context>
 <context>
+    <name>MergeDialog</name>
+    <message>
+        <source>Database Merge Confirmation</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Merge</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Group</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>UUID</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Details</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Change</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>Merger</name>
-    <message>
-        <source>Creating missing %1 [%2]</source>
-        <translation>අතුරුදහන් %1 [%2]නිර්මාණය කිරීම</translation>
-    </message>
-    <message>
-        <source>Relocating %1 [%2]</source>
-        <translation>%1 [%2]නැවත ස්ථානගත කිරීම</translation>
-    </message>
-    <message>
-        <source>Overwriting %1 [%2]</source>
-        <translation>උඩින් ලිවීම %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Synchronizing from newer source %1 [%2]</source>
-        <translation>නව මූලාශ්‍ර %1 [%2]වෙතින් සමමුහුර්ත කිරීම</translation>
-    </message>
-    <message>
-        <source>Synchronizing from older source %1 [%2]</source>
-        <translation>පැරණි මූලාශ්‍ර %1 [%2]වෙතින් සමමුහුර්ත කිරීම</translation>
-    </message>
-    <message>
-        <source>Deleting child %1 [%2]</source>
-        <translation>දරුවා %1 [%2]මකා දැමීම</translation>
-    </message>
-    <message>
-        <source>Deleting orphan %1 [%2]</source>
-        <translation>අනාථ %1 [%2]මකා දැමීම</translation>
-    </message>
     <message>
         <source>Changed deleted objects</source>
         <translation>මකා දැමූ වස්තූන් වෙනස් කරන ලදී</translation>
-    </message>
-    <message>
-        <source>Adding missing icon %1</source>
-        <translation>නැතිවූ නිරූපකය %1එකතු කිරීම</translation>
     </message>
     <message>
         <source>Removed custom data %1 [%2]</source>
@@ -6401,6 +6470,74 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
     <message>
         <source>Adding custom data %1 [%2]</source>
         <translation>අභිරුචි දත්ත එකතු කිරීම %1 [%2]</translation>
+    </message>
+    <message>
+        <source>Added</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Modified</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Moved</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Deleted</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Previous location: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Number of entries in group: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Group name</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Icon (UUID)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Icon (Number)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Expiry time</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Modification time</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 (Add local modifications to new entry)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 (Add new modifications to existing entry)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Explicit deletion</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Implicit deletion (e.g. removal of parent group)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Adding new icon %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6461,25 +6598,6 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
     <message>
         <source>Please fill in the display name and an optional description for your new database:</source>
         <translation>කරුණාකර ඔබගේ නව දත්ත සමුදාය සඳහා සංදර්ශක නාමය සහ විකල්ප විස්තරයක් පුරවන්න:</translation>
-    </message>
-</context>
-<context>
-    <name>NewEntryAttachmentsDialog</name>
-    <message>
-        <source>Attachment name cannot be empty</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Attachment with the same name already exists</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Save attachment</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>New entry attachment</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6582,10 +6700,6 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
         <translation>බිංදු යතුරු හමු විය</translation>
     </message>
     <message>
-        <source>Failed to read public key.</source>
-        <translation>පොදු යතුර කියවීමට අසමත් විය.</translation>
-    </message>
-    <message>
         <source>Corrupted key file, reading private key failed</source>
         <translation>දූෂිත යතුරු ගොනුව, පුද්ගලික යතුර කියවීම අසාර්ථක විය</translation>
     </message>
@@ -6673,6 +6787,14 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
         <source>(encrypted)</source>
         <translation>(සංකේතිතයි)</translation>
     </message>
+    <message>
+        <source>Failed to read key file: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to read public key: %1</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>OpenSSHKeyGenDialog</name>
@@ -6727,10 +6849,6 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
 <context>
     <name>PasskeyExporter</name>
     <message>
-        <source>KeePassXC: Passkey Export</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>File &quot;%1.passkey&quot; already exists.
 Do you want to overwrite it?
 </source>
@@ -6746,6 +6864,10 @@ Do you want to overwrite it?
     </message>
     <message>
         <source>Cannot write to file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Overwrite Existing File?</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -6823,14 +6945,6 @@ Do you want to overwrite it?
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Open passkey file</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Cannot import passkey</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Cannot import passkey file &quot;%1&quot;. Data is missing.</source>
         <translation type="unfinished"/>
     </message>
@@ -6842,6 +6956,14 @@ The following data is missing:
     </message>
     <message>
         <source>Cannot import passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open Passkey File</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Passkey Import Failed</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -7120,14 +7242,6 @@ The following data is missing:
         <translation>විශිෂ්ටයි</translation>
     </message>
     <message>
-        <source>Confirm Delete Wordlist</source>
-        <translation>Wordlist මකන්න තහවුරු කරන්න</translation>
-    </message>
-    <message>
-        <source>Do you really want to delete the wordlist &quot;%1&quot;?</source>
-        <translation>ඔබට ඇත්තටම වචන ලැයිස්තුව &quot;%1&quot;මකා දැමීමට අවශ්‍යද?</translation>
-    </message>
-    <message>
         <source>Failed to delete wordlist</source>
         <translation>වචන ලැයිස්තුව මැකීමට අසමත් විය</translation>
     </message>
@@ -7179,6 +7293,18 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;, &quot;B&quot;, &quot;8&quot;, &quot;G&quot;, &quot;6&quot;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Warning: the chosen wordlist is smaller than the minimum recommended size!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Confirm Remove Wordlist</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you really want to remove the wordlist &quot;%1&quot;?</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -7251,15 +7377,15 @@ Do you want to overwrite it?</source>
 <context>
     <name>PreviewEntryAttachmentsDialog</name>
     <message>
-        <source>Preview entry attachment</source>
+        <source>Form</source>
+        <translation>පෝරමය</translation>
+    </message>
+    <message>
+        <source>Preview: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>No preview available</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Image format not supported</source>
+        <source>Save…</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -7913,10 +8039,6 @@ Do you want to overwrite it?</source>
     <message>
         <source>Average password length</source>
         <translation>සාමාන්ය මුරපද දිග</translation>
-    </message>
-    <message>
-        <source>%1 characters</source>
-        <translation>අක්ෂර %1 යි</translation>
     </message>
     <message>
         <source>Word count for the diceware passphrase.</source>
@@ -8760,32 +8882,12 @@ CPU ගෘහ නිර්මාණ ශිල්පය: %2
         <translation><numerusform>%1 තත්</numerusform><numerusform>%1 තත්</numerusform></translation>
     </message>
     <message>
-        <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
-        <translation>ඔබට ඇත්ත වශයෙන්ම &quot;%1&quot; ප්‍රවේශය යහපත සඳහා මකා දැමීමට අවශ්‍යද?</translation>
-    </message>
-    <message numerus="yes">
-        <source>Do you really want to delete %n entry(s) for good?</source>
-        <translation><numerusform>ඔබට ඇත්තටම හොඳ සඳහා %n ඇතුළත් කිරීම්(ය) මැකීමට අවශ්‍යද?</numerusform><numerusform>ඔබට ඇත්තටම හොඳ සඳහා %n ඇතුළත් කිරීම්(ය) මැකීමට අවශ්‍යද?</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Delete entry(s)?</source>
-        <translation><numerusform>ඇතුළත් කිරීම්(න්) මකන්නද?</numerusform><numerusform>ඇතුළත් කිරීම්(න්) මකන්නද?</numerusform></translation>
-    </message>
-    <message>
         <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
         <translation>ඔබට ඇත්තටම ප්‍රවේශ &quot;%1&quot; ප්‍රතිචක්‍රීකරණ බඳුනට ගෙන යාමට අවශ්‍යද?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
         <translation><numerusform>ඔබට ඇත්තටම ප්‍රතිචක්‍රීකරණ බඳුනට ඇතුල්වීම්(ය) %n ක් ගෙන යාමට අවශ්‍යද?</numerusform><numerusform>ඔබට ඇත්තටම ප්‍රතිචක්‍රීකරණ බඳුනට ඇතුල්වීම්(ය) %n ක් ගෙන යාමට අවශ්‍යද?</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Move entry(s) to recycle bin?</source>
-        <translation><numerusform>ප්‍රවේශය(ය) ප්‍රතිචක්‍රීකරණ බඳුනට ගෙන යන්නද?</numerusform><numerusform>ඇතුළත් කිරීම්(ය) ප්‍රතිචක්‍රීකරණ බඳුනට ගෙන යන්නද?</numerusform></translation>
-    </message>
-    <message>
-        <source>Replace references to entry?</source>
-        <translation>ප්‍රවේශයට යොමු ප්‍රතිස්ථාපනය කරන්නද?</translation>
     </message>
     <message numerus="yes">
         <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
@@ -9153,24 +9255,12 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot generate valid passphrases because the wordlist is too short</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Encrypted files are not supported.</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>Proton Pass Import</source>
         <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Delete plugin data?</source>
-        <translation>ප්ලගින දත්ත මකන්නද?</translation>
-    </message>
-    <message numerus="yes">
-        <source>Delete plugin data from Entry(s)?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Passkey</source>
@@ -9199,6 +9289,52 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Tags</source>
         <translation>අනන්‍යන</translation>
+    </message>
+    <message>
+        <source>Warning: the chosen wordlist is smaller than the minimum recommended size!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid Step</source>
+        <comment>TOTP</comment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid Digits</source>
+        <comment>TOTP</comment>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>%1 character(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Do you really want to permanently delete the entry &quot;%1&quot;?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>Do you really want to permanently delete %n entry(s)?</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Confirm Delete Entry(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Confirm Recycle Entry(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Confirm Delete Plugin Data</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>Delete plugin data from the selected entry(s)?</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Confirm Replace Entry References</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -9721,12 +9857,12 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation>සාමාන්ය මුරපද දිග</translation>
     </message>
     <message>
-        <source>%1 characters</source>
-        <translation>අක්ෂර %1 යි</translation>
-    </message>
-    <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
         <translation>සාමාන්‍ය මුරපද දිග අක්ෂර දහයකට වඩා අඩුය. දිගු මුරපද වැඩි ආරක්ෂාවක් සපයයි.</translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 character(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -9865,6 +10001,10 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Limit search to selected group</source>
         <translation>තෝරාගත් කණ්ඩායමකට සෙවීම සීමා කරන්න</translation>
+    </message>
+    <message>
+        <source>Press Enter to search</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -10086,6 +10226,10 @@ This option is deprecated, use --set-key-file instead.</source>
         <source>Weak Passwords</source>
         <translation>දුර්වල මුරපද</translation>
     </message>
+    <message>
+        <source>TOTP Entries</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>TagView</name>
@@ -10104,6 +10248,24 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Remove tag &quot;%1&quot; from all entries in this database?</source>
         <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>TextAttachmentsEditWidget</name>
+    <message>
+        <source>Preview</source>
+        <translation>පෙරදසුන</translation>
+    </message>
+</context>
+<context>
+    <name>TextAttachmentsPreviewWidget</name>
+    <message>
+        <source>Form</source>
+        <translation>පෝරමය</translation>
+    </message>
+    <message>
+        <source>Type:</source>
+        <translation>වර්ගය:</translation>
     </message>
 </context>
 <context>
@@ -10217,6 +10379,10 @@ Example: JBSWY3DPEHPK3PXP</source>
     <message>
         <source>Are you sure you want to delete TOTP settings for this entry?</source>
         <translation>ඔබට මෙම ප්‍රවේශය සඳහා TOTP සැකසීම් මැකීමට අවශ්‍ය බව විශ්වාසද?</translation>
+    </message>
+    <message>
+        <source>Error: secret key is invalid</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -10372,10 +10538,6 @@ Example: JBSWY3DPEHPK3PXP</source>
 <context>
     <name>YubiKeyInterfacePCSC</name>
     <message>
-        <source>The YubiKey PCSC interface has not been initialized.</source>
-        <translation>YubiKey PCSC අතුරුමුහුණත ආරම්භ කර නොමැත.</translation>
-    </message>
-    <message>
         <source>Could not find or access hardware key with serial number %1. Please present it to continue. </source>
         <translation>අනුක්‍රමික අංක %1සහිත දෘඪාංග යතුර සොයා ගැනීමට හෝ ප්‍රවේශ වීමට නොහැකි විය. ඉදිරියට යාමට කරුණාකර එය ඉදිරිපත් කරන්න. </translation>
     </message>
@@ -10386,10 +10548,6 @@ Example: JBSWY3DPEHPK3PXP</source>
     <message>
         <source>Hardware key was not found or is not configured.</source>
         <translation>දෘඪාංග යතුර හමු නොවීය හෝ වින්‍යාස කර නොමැත.</translation>
-    </message>
-    <message>
-        <source>Failed to complete a challenge-response, the PCSC error code was: %1</source>
-        <translation>අභියෝග-ප්‍රතිචාරයක් සම්පූර්ණ කිරීමට අපොහොසත් විය, PCSC දෝෂ කේතය: %1</translation>
     </message>
     <message>
         <source>(NFC) %1 [%2] - Slot %3, %4</source>
@@ -10406,13 +10564,17 @@ Example: JBSWY3DPEHPK3PXP</source>
         <comment>USB Challenge-Response Key no interaction required</comment>
         <translation>නිෂ්ක්රීය</translation>
     </message>
+    <message>
+        <source>The YubiKey PC/SC interface has not been initialized.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to complete a challenge-response, the PC/SC error code was: %1</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>YubiKeyInterfaceUSB</name>
-    <message>
-        <source>Unknown</source>
-        <translation>නොදන්නා</translation>
-    </message>
     <message>
         <source>Press</source>
         <comment>USB Challenge-Response Key interaction request</comment>
@@ -10451,6 +10613,11 @@ Example: JBSWY3DPEHPK3PXP</source>
     <message>
         <source>%1 [%2] - Slot %3, %4</source>
         <comment>YubiKey display fields</comment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <comment>Unknown hardware key name</comment>
         <translation type="unfinished"/>
     </message>
 </context>

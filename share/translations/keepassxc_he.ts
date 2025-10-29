@@ -58,7 +58,7 @@
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;%1 &lt;/span&gt;is requesting access to the following entries:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>בקשת גישה מ־&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;%1 &lt;/span&gt; לערכים הבאים:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>בקשת גישה מ־&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;%1 &lt;/span&gt; לרשומות הבאות:&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Name</source>
@@ -243,23 +243,23 @@
     </message>
     <message>
         <source>Small</source>
-        <translation type="unfinished"/>
+        <translation>קטן</translation>
     </message>
     <message>
         <source>Normal</source>
-        <translation type="unfinished"/>
+        <translation>רגיל</translation>
     </message>
     <message>
         <source>Medium</source>
-        <translation type="unfinished"/>
+        <translation>בינוני</translation>
     </message>
     <message>
         <source>Large</source>
-        <translation type="unfinished"/>
+        <translation>גדול</translation>
     </message>
     <message>
         <source>Custom</source>
-        <translation type="unfinished"/>
+        <translation>מותאם אישית</translation>
     </message>
 </context>
 <context>
@@ -508,11 +508,11 @@
     </message>
     <message>
         <source>On database unlock, show entries that will expire within</source>
-        <translation>עם שחרור נעילת מסד־נתונים, להציג ערכים שתוקפם יפוג בתוך</translation>
+        <translation>עם שחרור נעילת מסד־נתונים, להציג רשומות שתוקפם יפוג בתוך</translation>
     </message>
     <message>
         <source>On database unlock, show entries that will expire within </source>
-        <translation>עם שחרור נעילת מסד־נתונים, להציג ערכים שתוקפם יפוג בתוך</translation>
+        <translation>עם שחרור נעילת מסד־נתונים, להציג רשומות שתוקפם יפוג בתוך</translation>
     </message>
     <message>
         <source> days</source>
@@ -525,7 +525,7 @@
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;{DB_FILENAME}&lt;/span&gt; is replaced with the filename of the saved database without extension&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;{TIME:&amp;lt;format&amp;gt;}&lt;/span&gt; is replaced with the specified time format (default: dd_MM_yyyy_hh-mm-ss)&lt;/p&gt;&lt;p&gt;See the User Guide for more details&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;{שם_קובץ_מסד_נתונים}&lt;/span&gt;מוחלף עם שם הקובץ של מסד הנתונים שנשמר ללא סיומת &lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;{זמן:&amp;gt;תסדיר&amp;lt;}&lt;/span&gt; מוחלף עם תסדיר הזמן המצוין (ברירת מחדל: dd_MM_yyyy_hh-mm-ss)&lt;/p&gt;&lt;p&gt;יש לראות את מדריך המשתמש עבור עוד פרטים&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Choose folder...</source>
@@ -533,11 +533,11 @@
     </message>
     <message>
         <source>Show confirmation before moving entries to recycle bin</source>
-        <translation>בקש אישור לפני העברת ערכים לסל המחזור</translation>
+        <translation>בקש אישור לפני העברת רשומות לסל המחזור</translation>
     </message>
     <message>
         <source>Copy data on double clicking field in entry view</source>
-        <translation type="unfinished"/>
+        <translation>העתקת נתונים בלחיצה כפולה על שדה בתצוגת רשומה</translation>
     </message>
     <message>
         <source>Show toolbar</source>
@@ -545,7 +545,7 @@
     </message>
     <message>
         <source>Show the menu bar by pressing the Alt key</source>
-        <translation type="unfinished"/>
+        <translation>הצגת סרגל תפריט באמצעות לחיצה על המקש Alt</translation>
     </message>
     <message>
         <source>Show menubar</source>
@@ -561,14 +561,22 @@
     </message>
     <message>
         <source>Open browser on double clicking URL field in entry view</source>
-        <translation type="unfinished"/>
+        <translation>פתיחת דפדפן בלחיצה כפולה על שדה URL בתצוגת רשומה</translation>
     </message>
     <message>
         <source>Font size:</source>
-        <translation type="unfinished"/>
+        <translation>גודל גופן:</translation>
     </message>
     <message>
         <source>Font size selection</source>
+        <translation>בחירת גודל גופן</translation>
+    </message>
+    <message>
+        <source>Skip confirmation for main window Auto-Type actions</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Auto-generate password for new entries</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -658,7 +666,18 @@
     </message>
     <message>
         <source>Hide notes in the entry preview panel</source>
-        <translation type="unfinished"/>
+        <translation>הסתרת הערות בלוח תצוגת רשומות מקדימה</translation>
+    </message>
+</context>
+<context>
+    <name>AttachmentWidget</name>
+    <message>
+        <source>Attachment Viewer</source>
+        <translation>משקף צרופות</translation>
+    </message>
+    <message>
+        <source>Unknown attachment type</source>
+        <translation>סוג צרופה לא ידוע</translation>
     </message>
 </context>
 <context>
@@ -710,6 +729,10 @@
     <message>
         <source>Invalid placeholder: %1</source>
         <translation>מציין מיקום לא תקין: %1</translation>
+    </message>
+    <message>
+        <source>Entry has invalid TOTP settings</source>
+        <translation>raunv עם הגדרות TOTP לא תקינות</translation>
     </message>
 </context>
 <context>
@@ -780,20 +803,6 @@
         <translation>הקשה כפולה על שורה כדי לבצע הקלדה־אוטומטית או כדי למצוא רשומה באמצעות החיפוש:</translation>
     </message>
     <message>
-        <source>&lt;p&gt;You can use advanced search queries to find any entry in your open databases. The following shortcuts are useful:&lt;br/&gt;
-Ctrl+F - Toggle database search&lt;br/&gt;
-Ctrl+1 - Type username&lt;br/&gt;
-Ctrl+2 - Type password&lt;br/&gt;
-Ctrl+3 - Type TOTP&lt;br/&gt;
-Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
-        <translation>&lt;p&gt;ניתן להשתמש בשאילתות חיפוש מתקדם למציאת כל ערך במסדי־נתונים הפתוחים. קיצורי הדרך הבאים שימושיים:&lt;br/&gt;
-Ctrl+F - החלפת חיפוש מסד־נתונים&lt;br/&gt;
-Ctrl+1 - הקלדת שם משתמש&lt;br/&gt;
-Ctrl+2 - הקלדת סיסמה&lt;br/&gt;
-Ctrl+3 - הקלדת TOTP&lt;br/&gt;
-Ctrl+4 - שימוש במקלדת מדומה (וינדוס בלבד)&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Search all open databases</source>
         <translation>חיפוש בכל מסדי־נתונים הפתוחים</translation>
     </message>
@@ -836,6 +845,44 @@ Ctrl+4 - שימוש במקלדת מדומה (וינדוס בלבד)&lt;/p&gt;</t
     <message>
         <source>Use Virtual Keyboard</source>
         <translation>שימוש במקלדת מדומה</translation>
+    </message>
+    <message>
+        <source>Type {URL}</source>
+        <translation>סוג {סיסמה}</translation>
+    </message>
+    <message>
+        <source>Copy URL</source>
+        <translation>להעתיק מען URL</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;The following shortcuts are available:&lt;br/&gt;
+Ctrl+F - Focus search&lt;br/&gt;
+Ctrl+1 - Type username&lt;br/&gt;
+Ctrl+2 - Type password&lt;br/&gt;
+Ctrl+3 - Type TOTP&lt;br/&gt;
+Ctrl+4 - Type URL&lt;br/&gt;
+Ctrl+5 - Use Virtual Keyboard (Windows Only)&lt;br/&gt;
+Ctrl+Shift+1 - Copy username&lt;br/&gt;
+Ctrl+Shift+2 - Copy password&lt;br/&gt;
+Ctrl+Shift+3 - Copy TOTP&lt;br/&gt;
+Ctrl+Shift+4 - Copy URL&lt;br/&gt;
+&lt;/p&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You can use advanced search queries to find any entry in your open databases.</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>BinaryStream</name>
+    <message>
+        <source>Failed to read string data: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>String length exceeds 10 MiB limit (requested %1)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1300,7 +1347,7 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Browsers installed using Snap or Flatpak are not supported with exception to Firefox installed using Snap.</source>
-        <translation type="unfinished"/>
+        <translation>דפדפנים שהותקנו באמצעות Snap או Flatpak אינם נתמכים למעט Firefox שהותקן באמצעות Snap.</translation>
     </message>
 </context>
 <context>
@@ -1438,7 +1485,7 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message>
         <source>Failed to parse CSV file: %1</source>
-        <translation>ניתוך קובץ CSV כשל: %1</translation>
+        <translation>ניתוח קובץ CSV כשל: %1</translation>
     </message>
     <message>
         <source>Imported from CSV file: %1</source>
@@ -1523,11 +1570,11 @@ Backup database located at %2</source>
     </message>
     <message>
         <source>Database file read error.</source>
-        <translation type="unfinished"/>
+        <translation>שגיאת קריאת קובץ מסד־נתונים</translation>
     </message>
     <message>
         <source>No file path was provided.</source>
-        <translation type="unfinished"/>
+        <translation>לא סופק נתיב קובץ.</translation>
     </message>
 </context>
 <context>
@@ -1723,7 +1770,11 @@ Are you sure you want to continue with this file?.</source>
     </message>
     <message>
         <source>Hardware keys found, but no slots are configured.</source>
-        <translation type="unfinished"/>
+        <translation>נמצאו מפתחות חומרה, אבל לא הוגדרו חריצים.</translation>
+    </message>
+    <message>
+        <source>Press ESC again to close this database</source>
+        <translation>לחיצה חוזרת על מקש ESC לסגירת מסד־נתונים זה</translation>
     </message>
 </context>
 <context>
@@ -2226,9 +2277,9 @@ add up to the specified amount at most.</source>
 instead of deleting them from the database.
 Entries deleted from the recycle bin are
 removed from the database.</source>
-        <translation>העברת ערכים לקבוצת סל מיחזור
+        <translation>העברת רשומות לקבוצת סל מיחזור
 במקום מחיקתם ממסד הנתונים.
-ערכים שימחקו מסל המיחזור 
+רשומות שימחקו מסל המיחזור 
 יוסרו ממסד הנתונים.</translation>
     </message>
     <message>
@@ -2253,35 +2304,27 @@ removed from the database.</source>
     </message>
     <message>
         <source>Public Database Metadata</source>
-        <translation type="unfinished"/>
+        <translation>מטא־נתונים של מסד־נתונים ציבורי</translation>
     </message>
     <message>
         <source>Warning: the following settings are not encrypted.</source>
-        <translation type="unfinished"/>
+        <translation>אזהרה: ההגדרות הבאות אינן מוצפנות.</translation>
     </message>
     <message>
         <source>Display name:</source>
         <translation>שם מצג:</translation>
     </message>
     <message>
-        <source>Publically visible display name used on the unlock dialog</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Database public display name</source>
-        <translation type="unfinished"/>
+        <translation>שם תצוגה ציבורי של מסד־נתונים</translation>
     </message>
     <message>
         <source>Display color:</source>
         <translation>צבע תצוגה:</translation>
     </message>
     <message>
-        <source>Publically visible color used on the unlock dialog</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Database public display color chooser</source>
-        <translation type="unfinished"/>
+        <translation>בוחר צבע תצוגה ציבורי של מסד־נתונים</translation>
     </message>
     <message>
         <source>Clear</source>
@@ -2293,6 +2336,14 @@ removed from the database.</source>
     </message>
     <message>
         <source>Select Database Icon</source>
+        <translation>בחירת סמל מסד־נתונים</translation>
+    </message>
+    <message>
+        <source>Publicly visible display name used on the unlock dialog</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Publicly visible color used on the unlock dialog</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -2518,7 +2569,7 @@ exit
     </message>
     <message>
         <source>Timeout:</source>
-        <translation type="unfinished"/>
+        <translation>פסק זמן:</translation>
     </message>
     <message>
         <source> seconds</source>
@@ -2639,18 +2690,6 @@ This is definitely a bug, please report it to the developers.</source>
         <translation>זכירת הבחירה שלי</translation>
     </message>
     <message>
-        <source>Delete group</source>
-        <translation>מחיקת קבוצה</translation>
-    </message>
-    <message>
-        <source>Do you really want to delete the group &quot;%1&quot; for good?</source>
-        <translation>האם למחוק את הקבוצה &quot;%1&quot; לעד?</translation>
-    </message>
-    <message>
-        <source>Move group to recycle bin?</source>
-        <translation>האם להעביר קבוצה לסל־מיחזור?</translation>
-    </message>
-    <message>
         <source>Do you really want to move the group &quot;%1&quot; to the recycle bin?</source>
         <translation>האם להעביר את הקבוצה &quot;%1&quot; לסל־המיחזור?</translation>
     </message>
@@ -2671,24 +2710,12 @@ This is definitely a bug, please report it to the developers.</source>
         <translation>אין מסד נתוני מקור, אין מה לעשות.</translation>
     </message>
     <message>
-        <source>Successfully merged the database files.</source>
-        <translation>קובצי מסד־נתונים מוזגו בהצלחה.</translation>
-    </message>
-    <message>
-        <source>Database was not modified by merge operation.</source>
-        <translation>מסד־נתונים לא הוסגל כתוצאה מפעולת המיזוג.</translation>
-    </message>
-    <message>
         <source>Search Results (%1)</source>
         <translation>תוצאות חיפוש (%1)</translation>
     </message>
     <message>
         <source>No Results</source>
         <translation>אין תוצאות</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>שמירה</translation>
     </message>
     <message>
         <source>Enter a unique name or overwrite an existing search from the list:</source>
@@ -2753,10 +2780,6 @@ Disable safe saves and try again?</source>
         <translation>מסד נתוני KeePass 2</translation>
     </message>
     <message>
-        <source>Save database backup</source>
-        <translation>שמירת גיבוי מסד־נתונים</translation>
-    </message>
-    <message>
         <source>Empty recycle bin?</source>
         <translation>לרוקן סל־מחזור?</translation>
     </message>
@@ -2786,14 +2809,6 @@ Disable safe saves and try again?</source>
         <translation>סנכרון מרוחק &apos;%1&apos; הושלם בהצלחה!</translation>
     </message>
     <message>
-        <source>Remote sync &apos;%1&apos; failed: %2</source>
-        <translation>סנכרון מרוחק &apos;%1&apos; כשל: %2</translation>
-    </message>
-    <message>
-        <source>Error while saving database %1: %2</source>
-        <translation>שגיאה בעת שמירת מסד נתונים %1: %2</translation>
-    </message>
-    <message>
         <source>Downloading...</source>
         <translation>הורדה...</translation>
     </message>
@@ -2802,8 +2817,16 @@ Disable safe saves and try again?</source>
         <translation>מתבצעת העלאה...</translation>
     </message>
     <message>
+        <source>Remote sync &apos;%1&apos; failed: %2</source>
+        <translation>סנכרון מרוחק &apos;%1&apos; כשל: %2</translation>
+    </message>
+    <message>
         <source>Syncing...</source>
         <translation>מתבצע סנכרון...</translation>
+    </message>
+    <message>
+        <source>Error while saving database %1: %2</source>
+        <translation>שגיאה בעת שמירת מסד נתונים %1: %2</translation>
     </message>
     <message>
         <source>Remove passkey from entry</source>
@@ -2815,47 +2838,90 @@ Disable safe saves and try again?</source>
     </message>
     <message>
         <source>The database file &quot;%1&quot; was modified externally</source>
-        <translation type="unfinished"/>
+        <translation>קובץ מסד הנתונים &quot;%1&quot; השתנה באופן חיצוני</translation>
     </message>
     <message>
         <source>Do you want to load the changes?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Reload database</source>
-        <translation type="unfinished"/>
+        <translation>האם ברצונך לטעון את השינויים?</translation>
     </message>
     <message>
         <source>Reloading database…</source>
-        <translation type="unfinished"/>
+        <translation>טוען מסד־נתונים מחדש…</translation>
     </message>
     <message>
         <source>Reload canceled</source>
-        <translation type="unfinished"/>
+        <translation>טעינה מחדש בוטלה</translation>
     </message>
     <message>
         <source>Reload successful</source>
-        <translation type="unfinished"/>
+        <translation>טעינה מחדש מוצלחת</translation>
     </message>
     <message>
         <source>Reload pending user action…</source>
-        <translation type="unfinished"/>
+        <translation>לטעון מחדש פעולת משתמש ממתינה…</translation>
     </message>
     <message>
         <source>The database file &quot;%1&quot; was modified externally.&lt;br&gt;How would you like to proceed?&lt;br&gt;&lt;br&gt;Merge all changes&lt;br&gt;Ignore the changes on disk until save&lt;br&gt;Discard unsaved changes</source>
-        <translation type="unfinished"/>
+        <translation>קובץ מסד הנתונים &quot;%1&quot; השתנה באופן חיצוני. איך היית רוצה להתקדם?&lt;br&gt;&lt;br&gt;מיזוג כל השינויים&lt;br&gt;התעלמות מהשינויים בדיסק עד השמירה&lt;br&gt;השלכת כל השינויים שלא נשמרו</translation>
     </message>
     <message>
         <source>The database file &quot;%1&quot; was modified externally.&lt;br&gt;How would you like to proceed?&lt;br&gt;&lt;br&gt;Merge all changes then save&lt;br&gt;Overwrite the changes on disk&lt;br&gt;Discard unsaved changes</source>
-        <translation type="unfinished"/>
+        <translation>קובץ מסד הנתונים &quot;%1&quot; השתנה באופן חיצוני.&lt;br&gt;איך היית רוצה להתקדם?&lt;br&gt;&lt;br&gt;מיזוג כל השינויים ואז שמירה&lt;br&gt;כתיבה על השינויים בדיסק&lt;br&gt;השלכת כל השינויים שלא נשמרו</translation>
+    </message>
+    <message>
+        <source>Reload database</source>
+        <translation>טעינת מסד־נתונים מחדש</translation>
     </message>
     <message>
         <source>Database file overwritten.</source>
-        <translation type="unfinished"/>
+        <translation>נכתב על קובץ מסד־נתונים.</translation>
     </message>
     <message>
         <source>Database file on disk cannot be unlocked with current credentials.&lt;br&gt;Enter new credentials and/or present hardware key to continue.</source>
+        <translation>לא ניתן לשחרר נעילת קובץ מסד־נתונים בדיסק עם נתוני האמנה הנוכחיים.&lt;br&gt;יש להזין נתוני האמנה חדשים ו/או להציג מפתח חומרה כדי להמשיך.</translation>
+    </message>
+    <message>
+        <source>Failed to save backup database: %1</source>
+        <translation>כשל בשמירת גיבוי מסד־נתונים : %1</translation>
+    </message>
+    <message>
+        <source>Confirm Delete Group</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you really want to permanently delete the group &quot;%1&quot;?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Confirm Recycle Group</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>שמירה</translation>
+    </message>
+    <message>
+        <source>Save Database Backup</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Successfully merged the selected database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No changes were made by the merge operation.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Merge canceled, no changes were made.</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>EditEntryAttachmentsDialog</name>
+    <message>
+        <source>Edit: %1</source>
+        <translation>עריכה: %1</translation>
     </message>
 </context>
 <context>
@@ -3445,7 +3511,7 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Clear agent</source>
-        <translation type="unfinished"/>
+        <translation>ניקוי סוכן</translation>
     </message>
 </context>
 <context>
@@ -3833,14 +3899,6 @@ Supported extensions are: %1.</source>
         <translation>תאריך ושעה הוסגלו</translation>
     </message>
     <message>
-        <source>Accessed:</source>
-        <translation>גישה:</translation>
-    </message>
-    <message>
-        <source>Datetime accessed</source>
-        <translation>תאריך ושעת גישה</translation>
-    </message>
-    <message>
         <source>Uuid:</source>
         <translation>Uuid:</translation>
     </message>
@@ -3907,27 +3965,68 @@ This may cause the affected plugins to malfunction.</source>
         <translation>תחביר ביטוי רגיל לא תקין %1
 %2</translation>
     </message>
+    <message>
+        <source>Title</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>URL</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Custom Attributes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Icon</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Color</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Expiration</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>TOTP</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Custom Data</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Attachments</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Auto-Type</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EntryAttachments</name>
     <message>
         <source>Cannot open file &quot;%1&quot;</source>
         <translation>לא ניתן לפתוח קובץ &quot;%1&quot;</translation>
-    </message>
-</context>
-<context>
-    <name>EntryAttachmentsDialog</name>
-    <message>
-        <source>Form</source>
-        <translation>טופס</translation>
-    </message>
-    <message>
-        <source>File name</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>File contents...</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -3956,10 +4055,6 @@ This may cause the affected plugins to malfunction.</source>
         <translation>הוספת צרופה חדשה</translation>
     </message>
     <message>
-        <source>Add</source>
-        <translation>הוספה</translation>
-    </message>
-    <message>
         <source>Remove selected attachment</source>
         <translation>הסרת צרופה שנבחרה</translation>
     </message>
@@ -3978,10 +4073,6 @@ This may cause the affected plugins to malfunction.</source>
     <message>
         <source>Save selected attachment to disk</source>
         <translation>שמירת צרופה שנבחרה לכונן הקשיח</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>שמירה</translation>
     </message>
     <message>
         <source>Select files</source>
@@ -4084,15 +4175,31 @@ Would you like to overwrite the existing attachment?</source>
 האם לכתוב־על הצרופה הקיימת?</translation>
     </message>
     <message>
-        <source>New</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Preview</source>
         <translation>תצוגה מקדימה</translation>
     </message>
     <message>
-        <source>Failed to preview an attachment: Attachment not found</source>
+        <source>Edit</source>
+        <translation>עריכה</translation>
+    </message>
+    <message>
+        <source>New Text Document</source>
+        <translation>מסמך מלל חדש</translation>
+    </message>
+    <message>
+        <source>Add file…</source>
+        <translation>הוספת קובץ...</translation>
+    </message>
+    <message>
+        <source>Load from Disk…</source>
+        <translation>טעינ מכונן...</translation>
+    </message>
+    <message>
+        <source>Save…</source>
+        <translation>שמירה...</translation>
+    </message>
+    <message>
+        <source>New Attachment</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -4124,62 +4231,6 @@ Would you like to overwrite the existing attachment?</source>
     <message>
         <source>Size</source>
         <translation>גודל</translation>
-    </message>
-    <message>
-        <source>Title</source>
-        <translation>כותרת</translation>
-    </message>
-    <message>
-        <source>Username</source>
-        <translation>שם משתמש</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>ססמה</translation>
-    </message>
-    <message>
-        <source>URL</source>
-        <translation>מען url</translation>
-    </message>
-    <message>
-        <source>Notes</source>
-        <translation>הערות</translation>
-    </message>
-    <message>
-        <source>Custom Attributes</source>
-        <translation>מאפיינים מותאמים אישית</translation>
-    </message>
-    <message>
-        <source>Icon</source>
-        <translation>סמל</translation>
-    </message>
-    <message>
-        <source>Color</source>
-        <translation>צבע</translation>
-    </message>
-    <message>
-        <source>Expiration</source>
-        <translation>תפוגה</translation>
-    </message>
-    <message>
-        <source>TOTP</source>
-        <translation>TOTP</translation>
-    </message>
-    <message>
-        <source>Custom Data</source>
-        <translation>תאריך מותאם אישית</translation>
-    </message>
-    <message>
-        <source>Attachments</source>
-        <translation>צרופות</translation>
-    </message>
-    <message>
-        <source>Auto-Type</source>
-        <translation>הקלדה־אוטומטית</translation>
-    </message>
-    <message>
-        <source>Tags</source>
-        <translation>תגים</translation>
     </message>
 </context>
 <context>
@@ -4230,10 +4281,6 @@ Would you like to overwrite the existing attachment?</source>
         <translation>הוסגל</translation>
     </message>
     <message>
-        <source>Accessed</source>
-        <translation>גישה</translation>
-    </message>
-    <message>
         <source>Attachments</source>
         <translation>צרופות</translation>
     </message>
@@ -4270,10 +4317,6 @@ Would you like to overwrite the existing attachment?</source>
         <translation>תאריך הסגלה אחרון</translation>
     </message>
     <message>
-        <source>Last access date</source>
-        <translation>תאריך גישה אחרון</translation>
-    </message>
-    <message>
         <source>Attached files</source>
         <translation>קבצים מצורפים</translation>
     </message>
@@ -4295,7 +4338,7 @@ Would you like to overwrite the existing attachment?</source>
     </message>
     <message>
         <source>Group Path</source>
-        <translation type="unfinished"/>
+        <translation>נתיב קבוצה</translation>
     </message>
 </context>
 <context>
@@ -4467,16 +4510,16 @@ This will leave your passwords and sensitive information vulnerable!
         <translation>שם (סדר יורד)</translation>
     </message>
     <message>
-        <source>unknown</source>
-        <translation>לא ידוע</translation>
-    </message>
-    <message>
         <source>Export database to HTML file</source>
         <translation>ייצוא מסד־נתונים לקובץ HTML</translation>
     </message>
     <message>
         <source>HTML file</source>
         <translation>קובץ HTML</translation>
+    </message>
+    <message>
+        <source>invalid sort order</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4657,6 +4700,17 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
 </context>
 <context>
+    <name>ImageAttachmentsWidget</name>
+    <message>
+        <source>Zoom:</source>
+        <translation>מיקוד:</translation>
+    </message>
+    <message>
+        <source>Fit</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>ImportWizard</name>
     <message>
         <source>Import Wizard</source>
@@ -4695,11 +4749,11 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Could not load key file.</source>
-        <translation type="unfinished"/>
+        <translation>לא ניתן לטעון קובץ מפתח.</translation>
     </message>
     <message>
         <source>Could not open remote database. Password or key file may be incorrect.</source>
-        <translation type="unfinished"/>
+        <translation>לא ניתן לפתוח מסד־נתונים מרוחק. קובץ מפתח או סיסמה עשויים להיות שגויים.</translation>
     </message>
 </context>
 <context>
@@ -4806,15 +4860,15 @@ You can enable the DuckDuckGo website icon service in the security section of th
     </message>
     <message>
         <source>Proton Pass (.json)</source>
-        <translation type="unfinished"/>
+        <translation>Proton Pass (.json)</translation>
     </message>
     <message>
         <source>Proton Pass JSON Export</source>
-        <translation type="unfinished"/>
+        <translation>ייצוא JSON של Proton Pass</translation>
     </message>
     <message>
         <source>Temporary Database</source>
-        <translation type="unfinished"/>
+        <translation>מסד־נתונים זמני</translation>
     </message>
     <message>
         <source>Command:</source>
@@ -4836,11 +4890,17 @@ exit
 {TEMP_DATABASE} is used as placeholder to store the database in a temporary location
 The command has to exit. In case of `sftp` as last commend `exit` has to be sent
          </source>
-        <translation type="unfinished"/>
+        <translation>לדוגמה:
+get DatabaseOnRemote.kdbx {TEMP_DATABASE}
+exit
+---
+{TEMP_DATABASE} משמש כשומר מקום לאחסון מסד הנתונים במיקום זמני.
+הפקודה אמורה להסתיים ב&apos;יציאה&apos;. במקרה של `sftp` כפקודה אחרונה, יש לשלוח פקודת `exit`
+            </translation>
     </message>
     <message>
         <source>Remote Database (.kdbx)</source>
-        <translation type="unfinished"/>
+        <translation>מסד נתונים מרוחק (.kdb)</translation>
     </message>
 </context>
 <context>
@@ -4997,37 +5057,37 @@ If this reoccurs, then your database file may be corrupt.</source>
     <message>
         <source>Invalid variant map entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>אורך רשומה מפת משתנה רשומה לא תקין</translation>
+        <translation>אורך ערך מפת משתנה רשומה לא תקין</translation>
     </message>
     <message>
         <source>Invalid variant map entry value data</source>
         <extracomment>Translation comment: variant map = data structure for storing meta data</extracomment>
-        <translation>נתוני רשומה מפת משתנה רשומה לא תקין</translation>
+        <translation>נתוני ערך מפת משתנה רשומה לא תקין</translation>
     </message>
     <message>
         <source>Invalid variant map Bool entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>אורך רשומה מפת משתנה רשומה בוליאנית לא תקין</translation>
+        <translation>אורך ערך מפת משתנה רשומה בוליאנית לא תקין</translation>
     </message>
     <message>
         <source>Invalid variant map Int32 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>אורך רשומה מפת משתנה רשומה Int32 לא תקין</translation>
+        <translation>אורך ערך מפת משתנה רשומה Int32 לא תקין</translation>
     </message>
     <message>
         <source>Invalid variant map UInt32 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>אורך רשומה מפת משתנה רשומה UInt32 לא תקין</translation>
+        <translation>אורך ערך מפת משתנה רשומה UInt32 לא תקין</translation>
     </message>
     <message>
         <source>Invalid variant map Int64 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>אורך רשומה מפת משתנה רשומה Int64 לא תקין</translation>
+        <translation>אורך ערך מפת משתנה רשומה Int64 לא תקין</translation>
     </message>
     <message>
         <source>Invalid variant map UInt64 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation>אורך רשומה מפת משתנה משתני UInt64 לא תקין</translation>
+        <translation>אורך ערך מפת משתנה משתני UInt64 לא תקין</translation>
     </message>
     <message>
         <source>Invalid variant map entry type</source>
@@ -5214,11 +5274,11 @@ Line %2, column %3</source>
     </message>
     <message>
         <source>Entry string key or value missing</source>
-        <translation>מפתח או רשומה מחרוזת רשומה חסרים</translation>
+        <translation>מפתח או ערך מחרוזת רשומה חסרים</translation>
     </message>
     <message>
         <source>Entry binary key or value missing</source>
-        <translation>מפתח בינארי או רשומה רשומה חסרים</translation>
+        <translation>מפתח בינארי או ערך רשומה חסרים</translation>
     </message>
     <message>
         <source>Auto-type association window or sequence missing</source>
@@ -5344,7 +5404,7 @@ If this reoccurs, then your database file may be corrupt.</source>
     </message>
     <message>
         <source>Key transformation failed</source>
-        <translation>המרת מפתח כשלה</translation>
+        <translation>התמרת מפתח כשלה</translation>
     </message>
     <message>
         <source>Invalid group field type number</source>
@@ -5714,10 +5774,6 @@ Are you sure you want to continue with this file?</source>
         <translation>&amp;עריכת רשומה...</translation>
     </message>
     <message>
-        <source>&amp;Delete Entry…</source>
-        <translation>&amp;מחיקת רשומה...</translation>
-    </message>
-    <message>
         <source>&amp;New Group…</source>
         <translation>&amp;קבוצה חדשה...</translation>
     </message>
@@ -6080,10 +6136,6 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
         <translation>למזג ממסד נתונים</translation>
     </message>
     <message>
-        <source>Create Entry</source>
-        <translation>יצירת רשומה</translation>
-    </message>
-    <message>
         <source>Edit Entry</source>
         <translation>עריכת רשומה</translation>
     </message>
@@ -6313,11 +6365,11 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
     </message>
     <message>
         <source>Show Group Panel</source>
-        <translation type="unfinished"/>
+        <translation>הצגת לוח קבוצה</translation>
     </message>
     <message>
         <source>Toggle Show Group Panel</source>
-        <translation type="unfinished"/>
+        <translation>מיתוג הצגת לוח קבוצה</translation>
     </message>
     <message>
         <source>Setup Remote Sync…</source>
@@ -6325,19 +6377,43 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
     </message>
     <message>
         <source>Password Generator</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>E&amp;xpire Entry…</source>
-        <translation type="unfinished"/>
+        <translation>מחולל סיסמאות</translation>
     </message>
     <message>
         <source>Clear SSH Agent</source>
-        <translation type="unfinished"/>
+        <translation>ניקוי סוכן SSH</translation>
     </message>
     <message>
         <source>Clear all identities in ssh-agent</source>
+        <translation>ניקוי כל הזהויות בסוכן SSH</translation>
+    </message>
+    <message>
+        <source>New Entry</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Edit Entry…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>E&amp;xpire Entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Expire Entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Delete Entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>Move selected entry(s) to the recycle bin</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Permanently delete the selected entry(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -6383,42 +6459,41 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
     </message>
 </context>
 <context>
+    <name>MergeDialog</name>
+    <message>
+        <source>Database Merge Confirmation</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Merge</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Group</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>UUID</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Details</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Change</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>Merger</name>
-    <message>
-        <source>Creating missing %1 [%2]</source>
-        <translation>יצירת %1 חסר [%2]</translation>
-    </message>
-    <message>
-        <source>Relocating %1 [%2]</source>
-        <translation>העברת %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Overwriting %1 [%2]</source>
-        <translation>כתיבה על %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Synchronizing from newer source %1 [%2]</source>
-        <translation>סנכרן ממקור חדש יותר %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Synchronizing from older source %1 [%2]</source>
-        <translation>סנכרן ממקור ישן יותר %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Deleting child %1 [%2]</source>
-        <translation>מחיקת צאצא %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Deleting orphan %1 [%2]</source>
-        <translation>מחיקת %1 [%2] מיותם</translation>
-    </message>
     <message>
         <source>Changed deleted objects</source>
         <translation>אובייקטים שנמחקו ששונו</translation>
-    </message>
-    <message>
-        <source>Adding missing icon %1</source>
-        <translation>הוספת סמל חסר %1</translation>
     </message>
     <message>
         <source>Removed custom data %1 [%2]</source>
@@ -6427,6 +6502,74 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
     <message>
         <source>Adding custom data %1 [%2]</source>
         <translation>הוספת נתונים מותאמים אישית %1 [%2]</translation>
+    </message>
+    <message>
+        <source>Added</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Modified</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Moved</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Deleted</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Previous location: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Number of entries in group: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Group name</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Icon (UUID)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Icon (Number)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Expiry time</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Modification time</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 (Add local modifications to new entry)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 (Add new modifications to existing entry)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Explicit deletion</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Implicit deletion (e.g. removal of parent group)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Adding new icon %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6482,30 +6625,11 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
     <name>NewDatabaseWizardPageMetaData</name>
     <message>
         <source>General Database Information</source>
-        <translation>מידע כללי אודות מסד־נתונים</translation>
+        <translation>מידע כללי על מסד־נתונים</translation>
     </message>
     <message>
         <source>Please fill in the display name and an optional description for your new database:</source>
         <translation>נא להזין את שם המצג ותיאור חלופי למסד־נתונים החדש:</translation>
-    </message>
-</context>
-<context>
-    <name>NewEntryAttachmentsDialog</name>
-    <message>
-        <source>Attachment name cannot be empty</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Attachment with the same name already exists</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Save attachment</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>New entry attachment</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6608,10 +6732,6 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
         <translation>נמצאו מפתחות אפס</translation>
     </message>
     <message>
-        <source>Failed to read public key.</source>
-        <translation>קריאת מפתח ציבורי כשלה.</translation>
-    </message>
-    <message>
         <source>Corrupted key file, reading private key failed</source>
         <translation>קובץ מפתח פגום, קריאת מפתח פרטי כשלה</translation>
     </message>
@@ -6699,6 +6819,14 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
         <source>(encrypted)</source>
         <translation>(מוצפן)</translation>
     </message>
+    <message>
+        <source>Failed to read key file: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to read public key: %1</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>OpenSSHKeyGenDialog</name>
@@ -6753,10 +6881,6 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
 <context>
     <name>PasskeyExporter</name>
     <message>
-        <source>KeePassXC: Passkey Export</source>
-        <translation>KeePassXC: ייצוא Passkey</translation>
-    </message>
-    <message>
         <source>File &quot;%1.passkey&quot; already exists.
 Do you want to overwrite it?
 </source>
@@ -6774,6 +6898,10 @@ Do you want to overwrite it?
     <message>
         <source>Cannot write to file</source>
         <translation>לא ניתן לכתוב לקובץ</translation>
+    </message>
+    <message>
+        <source>Overwrite Existing File?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6850,14 +6978,6 @@ Do you want to overwrite it?
         <translation>לא ניתן לפתוח קובץ &quot;%1&quot; לקריאה.</translation>
     </message>
     <message>
-        <source>Open passkey file</source>
-        <translation>פתיחת קובץ Passkey</translation>
-    </message>
-    <message>
-        <source>Cannot import passkey</source>
-        <translation>לא ניתן לייבוא Passkey</translation>
-    </message>
-    <message>
         <source>Cannot import passkey file &quot;%1&quot;. Data is missing.</source>
         <translation>לא ניתן לייבוא קובץ Passkey &quot;%1&quot;. חסרים נתונים.</translation>
     </message>
@@ -6872,6 +6992,14 @@ The following data is missing:
     <message>
         <source>Cannot import passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
         <translation>לא ניתן לייבא קובץ Passkey &quot;%1&quot;. מפתח פרטי חסר או לוקה בתצורה.</translation>
+    </message>
+    <message>
+        <source>Open Passkey File</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Passkey Import Failed</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7149,14 +7277,6 @@ The following data is missing:
         <translation>מצוין</translation>
     </message>
     <message>
-        <source>Confirm Delete Wordlist</source>
-        <translation>אישור מחיקת רשימת מילים</translation>
-    </message>
-    <message>
-        <source>Do you really want to delete the wordlist &quot;%1&quot;?</source>
-        <translation>האם למחוק רשימת מילים &quot;%1&quot;?</translation>
-    </message>
-    <message>
         <source>Failed to delete wordlist</source>
         <translation>מחיקת רשימת־מילים כשלה</translation>
     </message>
@@ -7204,11 +7324,23 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>MIXED case</source>
-        <translation type="unfinished"/>
+        <translation>אותיות רישיות וקטנות מעורבות</translation>
     </message>
     <message>
         <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;, &quot;B&quot;, &quot;8&quot;, &quot;G&quot;, &quot;6&quot;</source>
-        <translation type="unfinished"/>
+        <translation>תווים שהוחרגו: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;, &quot;B&quot;, &quot;8&quot;, &quot;G&quot;, &quot;6&quot;</translation>
+    </message>
+    <message>
+        <source>Warning: the chosen wordlist is smaller than the minimum recommended size!</source>
+        <translation>אזהרה: רשימת המילים שנבחרה קטנה מהגודל המומלץ המזערי!</translation>
+    </message>
+    <message>
+        <source>Confirm Remove Wordlist</source>
+        <translation>אישור הסרת רשימת מילים</translation>
+    </message>
+    <message>
+        <source>Do you really want to remove the wordlist &quot;%1&quot;?</source>
+        <translation>האם להסיר רשימת מילים &quot;%1&quot;?</translation>
     </message>
 </context>
 <context>
@@ -7280,16 +7412,16 @@ Do you want to overwrite it?</source>
 <context>
     <name>PreviewEntryAttachmentsDialog</name>
     <message>
-        <source>Preview entry attachment</source>
-        <translation type="unfinished"/>
+        <source>Form</source>
+        <translation>טופס</translation>
     </message>
     <message>
-        <source>No preview available</source>
-        <translation type="unfinished"/>
+        <source>Preview: %1</source>
+        <translation>תצוגה מקדימה: %1</translation>
     </message>
     <message>
-        <source>Image format not supported</source>
-        <translation type="unfinished"/>
+        <source>Save…</source>
+        <translation>שמירה...</translation>
     </message>
 </context>
 <context>
@@ -7503,7 +7635,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Path to okon-cli to search a formatted HIBP file</source>
-        <translation>נתיב ל־okon-cli לחיפוש בקובץ HIBP מתובנת</translation>
+        <translation>נתיב ל־okon-cli לחיפוש בקובץ HIBP מתוסדר</translation>
     </message>
     <message>
         <source>okon-cli</source>
@@ -7937,15 +8069,11 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Entries excluded from reports</source>
-        <translation>רשומות מוחרגות מדוחות</translation>
+        <translation>רשומות שהוחרגו מדוחות</translation>
     </message>
     <message>
         <source>Average password length</source>
         <translation>אורך ססמה ממוצע</translation>
-    </message>
-    <message>
-        <source>%1 characters</source>
-        <translation>%1 תווים</translation>
     </message>
     <message>
         <source>Word count for the diceware passphrase.</source>
@@ -8788,32 +8916,12 @@ Kernel: %3 %4</source>
         <translation><numerusform>שניה %1</numerusform><numerusform>%1 שניות</numerusform><numerusform>%1 שניות</numerusform></translation>
     </message>
     <message>
-        <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
-        <translation>האם למחוק רשומה &quot;%1&quot; לעד?</translation>
-    </message>
-    <message numerus="yes">
-        <source>Do you really want to delete %n entry(s) for good?</source>
-        <translation><numerusform>האם למחוק רשומה %n לעד?</numerusform><numerusform>האם למחוק %n רשומות לעד?</numerusform><numerusform>האם למחוק %n רשומות לעד?</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Delete entry(s)?</source>
-        <translation><numerusform>מחיקת רשומה?</numerusform><numerusform>מחיקת רשומות?</numerusform><numerusform>מחיקת רשומות?</numerusform></translation>
-    </message>
-    <message>
         <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
         <translation>האם להעביר רשומה &quot;%1&quot; לסל־המחזור?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
         <translation><numerusform>האם להעביר רשומה %n לסל־המחזור?</numerusform><numerusform>האם להעביר %n רשומות לסל־המחזור?</numerusform><numerusform>האם להעביר %n רשומות לסל־המחזור?</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Move entry(s) to recycle bin?</source>
-        <translation><numerusform>העברת רשומה לסל המחזור?</numerusform><numerusform>העברת רשומות לסל המחזור?</numerusform><numerusform>העברת רשומות לסל המחזור?</numerusform></translation>
-    </message>
-    <message>
-        <source>Replace references to entry?</source>
-        <translation>החלפת הפניות לרשומה?</translation>
     </message>
     <message numerus="yes">
         <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
@@ -9182,24 +9290,12 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation>קיצור־דרך %1 מתנגש עם %2&apos;. לכתוב על קיצור־הדרך?</translation>
     </message>
     <message>
-        <source>Cannot generate valid passphrases because the wordlist is too short</source>
-        <translation>לא ניתן לחולל ביטוי סיסמה תקין מכיוון שרשימת המילים קצרה מדי</translation>
-    </message>
-    <message>
         <source>Encrypted files are not supported.</source>
-        <translation type="unfinished"/>
+        <translation>קבצים מוצפנים אינם נתמכים.</translation>
     </message>
     <message>
         <source>Proton Pass Import</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Delete plugin data?</source>
-        <translation>האם למחוק נתוני מתקע?</translation>
-    </message>
-    <message numerus="yes">
-        <source>Delete plugin data from Entry(s)?</source>
-        <translation><numerusform>מחיקת נתוני מתקע מרשומות?</numerusform><numerusform>מחיקת נתוני מתקע מרשומות?</numerusform><numerusform>מחיקת נתוני מתקע מרשומה?</numerusform></translation>
+        <translation>ייבוא Proton Pass</translation>
     </message>
     <message>
         <source>Passkey</source>
@@ -9207,27 +9303,73 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Format to use when exporting. Available choices are &apos;xml&apos;, &apos;csv&apos; or &apos;html&apos;. Defaults to &apos;xml&apos;.</source>
-        <translation type="unfinished"/>
+        <translation>תסדיר לשימוש בעת ייצוא. אפשרויות זמינות הן &apos;xml&apos;, &apos;csv&apos; או &apos;html&apos;. ברירת המחדל היא &apos;xml&apos;.</translation>
     </message>
     <message>
         <source>start minimized to the system tray</source>
-        <translation type="unfinished"/>
+        <translation>התחלה במצב ממוזער למגש המערכת</translation>
     </message>
     <message>
         <source>malformed string, possible unescaped delimiter</source>
-        <translation type="unfinished"/>
+        <translation>מחרוזת פגומה, תוחם שלא נמלט אפשרי</translation>
     </message>
     <message>
         <source>missing closing delimiter</source>
-        <translation type="unfinished"/>
+        <translation>חסר תוחם סוגר</translation>
     </message>
     <message>
         <source>%1, row: %2, column: %3</source>
-        <translation type="unfinished"/>
+        <translation>%1, שורה: %2, עמודה: %3</translation>
     </message>
     <message>
         <source>Tags</source>
         <translation>תגים</translation>
+    </message>
+    <message>
+        <source>Warning: the chosen wordlist is smaller than the minimum recommended size!</source>
+        <translation>אזהרה: רשימת המילים שנבחרה קטנה מהגודל המומלץ המזערי!</translation>
+    </message>
+    <message>
+        <source>Invalid Step</source>
+        <comment>TOTP</comment>
+        <translation>שלב לא תקין</translation>
+    </message>
+    <message>
+        <source>Invalid Digits</source>
+        <comment>TOTP</comment>
+        <translation>ספרות לא תקינות</translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 character(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Do you really want to permanently delete the entry &quot;%1&quot;?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>Do you really want to permanently delete %n entry(s)?</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Confirm Delete Entry(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Confirm Recycle Entry(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Confirm Delete Plugin Data</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>Delete plugin data from the selected entry(s)?</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Confirm Replace Entry References</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -9323,11 +9465,11 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source> (Excluded)</source>
-        <translation> (לא נכלל)</translation>
+        <translation> (מוחרג)</translation>
     </message>
     <message>
         <source>This entry is being excluded from reports</source>
-        <translation>הרשומה הופעלה מתוך דוחות</translation>
+        <translation>רשומה זו הוחרגה מדוחות</translation>
     </message>
     <message>
         <source>Please wait, browser statistics is being calculated…</source>
@@ -9363,7 +9505,7 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message numerus="yes">
         <source>Expire Entry(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>תפוגת רשומה…</numerusform><numerusform>תפוגת רשומות…</numerusform><numerusform>תפוגת רשומות…</numerusform></translation>
     </message>
     <message>
         <source>Only show entries that have a URL</source>
@@ -9414,7 +9556,7 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source> (Excluded)</source>
-        <translation> (לא נכלל)</translation>
+        <translation> (מוחרג)</translation>
     </message>
     <message>
         <source>This entry is being excluded from reports</source>
@@ -9458,7 +9600,7 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message numerus="yes">
         <source>Expire Entry(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>תפוגת רשומה…</numerusform><numerusform>תפוגת רשומות…</numerusform><numerusform>תפוגת רשומות…</numerusform></translation>
     </message>
     <message>
         <source>Show entries that have been excluded from reports</source>
@@ -9477,7 +9619,7 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Also show entries that have been excluded from reports</source>
-        <translation>הצגת רשומות שלא נכללו בדוחות גם כן</translation>
+        <translation>הצגת רשומות שהוחרגו מדוחות</translation>
     </message>
     <message>
         <source>This build of KeePassXC does not have network functions. Networking is required to check your passwords against Have I Been Pwned databases.</source>
@@ -9501,7 +9643,7 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source> (Excluded)</source>
-        <translation> (לא נכלל)</translation>
+        <translation> (מוחרג)</translation>
     </message>
     <message>
         <source>This entry is being excluded from reports</source>
@@ -9561,7 +9703,7 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message numerus="yes">
         <source>Expire Entry(s)…</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>תפוגת רשומה…</numerusform><numerusform>תפוגת רשומות…</numerusform><numerusform>תפוגת רשומות…</numerusform></translation>
     </message>
 </context>
 <context>
@@ -9624,7 +9766,7 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Please wait, list of entries with passkeys is being updated…</source>
-        <translation>נא להמתין, מתבצעת העלאת רשימת רשומות עם passkeys 
+        <translation>נא להמתין, מתבצעת העלאת רשימת רשומות עם passkeys
 ...</translation>
     </message>
     <message>
@@ -9751,12 +9893,12 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation>אורך ססמה ממוצע</translation>
     </message>
     <message>
-        <source>%1 characters</source>
-        <translation>%1 תווים</translation>
-    </message>
-    <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
         <translation>אורך הססמה הממוצע הוא פחות מעשרה תווים. ססמאות ארוכות יותר מספקות אבטחה טובה יותר.</translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 character(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -9807,11 +9949,11 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Failed to remove all SSH identities from agent.</source>
-        <translation type="unfinished"/>
+        <translation>הסרת כל זהויות ה ־SSH מסוכן כשלה.</translation>
     </message>
     <message>
         <source>All SSH identities removed from agent.</source>
-        <translation type="unfinished"/>
+        <translation>כל זהויות ה ־SSH הוסרו מהסוכן.</translation>
     </message>
 </context>
 <context>
@@ -9895,6 +10037,10 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Limit search to selected group</source>
         <translation>הגבלת חיפוש לקבוצה שנבחרה</translation>
+    </message>
+    <message>
+        <source>Press Enter to search</source>
+        <translation>לחיצה על &apos;אנטר&apos; כדי להמשיך</translation>
     </message>
 </context>
 <context>
@@ -10116,6 +10262,10 @@ This option is deprecated, use --set-key-file instead.</source>
         <source>Weak Passwords</source>
         <translation>ססמאות חלשות</translation>
     </message>
+    <message>
+        <source>TOTP Entries</source>
+        <translation>רשומות TOTP</translation>
+    </message>
 </context>
 <context>
     <name>TagView</name>
@@ -10134,6 +10284,24 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Remove tag &quot;%1&quot; from all entries in this database?</source>
         <translation>הסרת תג &apos;%1&apos; מכול הרשומות במסד־נתונים זה? </translation>
+    </message>
+</context>
+<context>
+    <name>TextAttachmentsEditWidget</name>
+    <message>
+        <source>Preview</source>
+        <translation>תצוגה מקדימה</translation>
+    </message>
+</context>
+<context>
+    <name>TextAttachmentsPreviewWidget</name>
+    <message>
+        <source>Form</source>
+        <translation>טופס</translation>
+    </message>
+    <message>
+        <source>Type:</source>
+        <translation>סוג:</translation>
     </message>
 </context>
 <context>
@@ -10247,6 +10415,10 @@ Example: JBSWY3DPEHPK3PXP</source>
     <message>
         <source>Are you sure you want to delete TOTP settings for this entry?</source>
         <translation>האם למחוק הגדרות TOTP לרשומות זו?</translation>
+    </message>
+    <message>
+        <source>Error: secret key is invalid</source>
+        <translation>שגיאה: מפתח סודי לא תקין</translation>
     </message>
 </context>
 <context>
@@ -10392,19 +10564,15 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>&lt;p&gt;If you own a &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; or &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt;, you can use it for additional security.&lt;/p&gt;&lt;p&gt;The key requires one of its slots to be programmed with &lt;a href=&quot;https://keepassxc.org/docs/#faq-yubikey-howto&quot;&gt;Challenge-Response&lt;/a&gt;.&lt;/p&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;p&gt;אם קיים 2YubiKey&lt;a href=&quot;https://www.yubico.com/&quot;&gt; או 3OnlyKey&lt;a href=&quot;https://onlykey.io&quot;&gt;, ניתן להשתמש בו לאבטחה נוספת.&lt;/p&gt;&lt;p&gt;המפתח דורש שאחד החריצים שלו יהיה מתוכנת עם &lt;a href=&quot;https://keepassxc.org/docs/#faq-yubikey-howto&quot;&gt;אתגר־מענה&lt;/a&gt;.&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Hardware keys found, but no slots are configured</source>
-        <translation type="unfinished"/>
+        <translation>נמצאו מפתחות חומרה, אבל לא הוגדרו חריצים</translation>
     </message>
 </context>
 <context>
     <name>YubiKeyInterfacePCSC</name>
-    <message>
-        <source>The YubiKey PCSC interface has not been initialized.</source>
-        <translation>מנשק PCSC YubiKey לא אותחל.</translation>
-    </message>
     <message>
         <source>Could not find or access hardware key with serial number %1. Please present it to continue. </source>
         <translation>לא ניתן למצוא או לגשת למפתח חומרה עם המספר הסידורי %1. נא להציגו על מנת להמשיך.</translation>
@@ -10416,10 +10584,6 @@ Example: JBSWY3DPEHPK3PXP</source>
     <message>
         <source>Hardware key was not found or is not configured.</source>
         <translation>מפתח חומרה לא נמצא או שאינו מתוצר.</translation>
-    </message>
-    <message>
-        <source>Failed to complete a challenge-response, the PCSC error code was: %1</source>
-        <translation>השלמת אתגר־מענה כשלה, קוד שגיאת PCSC היתה: %1</translation>
     </message>
     <message>
         <source>(NFC) %1 [%2] - Slot %3, %4</source>
@@ -10436,13 +10600,17 @@ Example: JBSWY3DPEHPK3PXP</source>
         <comment>USB Challenge-Response Key no interaction required</comment>
         <translation>סביל</translation>
     </message>
+    <message>
+        <source>The YubiKey PC/SC interface has not been initialized.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to complete a challenge-response, the PC/SC error code was: %1</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>YubiKeyInterfaceUSB</name>
-    <message>
-        <source>Unknown</source>
-        <translation>לא ידוע</translation>
-    </message>
     <message>
         <source>Press</source>
         <comment>USB Challenge-Response Key interaction request</comment>
@@ -10482,6 +10650,11 @@ Example: JBSWY3DPEHPK3PXP</source>
         <source>%1 [%2] - Slot %3, %4</source>
         <comment>YubiKey display fields</comment>
         <translation>%1 [%2] - חריץ %3, %4</translation>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <comment>Unknown hardware key name</comment>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

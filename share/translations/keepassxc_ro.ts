@@ -137,7 +137,7 @@
     </message>
     <message>
         <source>(empty)</source>
-        <translation type="unfinished"/>
+        <translation>(gol)</translation>
     </message>
     <message>
         <source>SSH_SK_PROVIDER value</source>
@@ -224,43 +224,43 @@
     </message>
     <message>
         <source>Confirm Reset</source>
-        <translation type="unfinished"/>
+        <translation>Confirmați resetarea</translation>
     </message>
     <message>
         <source>Are you sure you want to reset all settings to default?</source>
-        <translation type="unfinished"/>
+        <translation>Sunteți sigur că doriți să resetați toate setările la valorile implicite?</translation>
     </message>
     <message>
         <source>Import KeePassXC Settings</source>
-        <translation type="unfinished"/>
+        <translation>Importați setările KeePassXC</translation>
     </message>
     <message>
         <source>Failed to import settings from %1, not a valid settings file.</source>
-        <translation type="unfinished"/>
+        <translation>Importarea setărilor din %1 a eșuat, nu este un fișier valid de setări.</translation>
     </message>
     <message>
         <source>Export KeePassXC Settings</source>
-        <translation type="unfinished"/>
+        <translation>Exportați setările KeePassXC</translation>
     </message>
     <message>
         <source>Small</source>
-        <translation type="unfinished"/>
+        <translation>Mic</translation>
     </message>
     <message>
         <source>Normal</source>
-        <translation type="unfinished"/>
+        <translation>Normal</translation>
     </message>
     <message>
         <source>Medium</source>
-        <translation type="unfinished"/>
+        <translation>Mediu</translation>
     </message>
     <message>
         <source>Large</source>
-        <translation type="unfinished"/>
+        <translation>Mare</translation>
     </message>
     <message>
         <source>Custom</source>
-        <translation type="unfinished"/>
+        <translation>Personalizat</translation>
     </message>
 </context>
 <context>
@@ -339,11 +339,11 @@
     </message>
     <message>
         <source>{DB_FILENAME}.old.kdbx</source>
-        <translation type="unfinished"/>
+        <translation>{NUME_FISIER_BD}.old.kdbx</translation>
     </message>
     <message>
         <source>Use alternative saving method (may solve problems with Dropbox, Google Drive, GVFS, etc.)</source>
-        <translation type="unfinished"/>
+        <translation>Utilizați o metodă alternativă de salvare (poate rezolva probleme cu Dropbox, Google Drive, GVFS, etc.)</translation>
     </message>
     <message>
         <source>Temporary file moved into place</source>
@@ -509,11 +509,11 @@
     </message>
     <message>
         <source>On database unlock, show entries that will expire within</source>
-        <translation type="unfinished"/>
+        <translation>La deblocarea bazei de date, afișați intrările care vor expira în</translation>
     </message>
     <message>
         <source>On database unlock, show entries that will expire within </source>
-        <translation type="unfinished"/>
+        <translation>La deblocarea bazei de date, afișați intrările care vor expira în</translation>
     </message>
     <message>
         <source> days</source>
@@ -522,54 +522,62 @@
     </message>
     <message>
         <source>Destination format:</source>
-        <translation type="unfinished"/>
+        <translation>Formatul destinației</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;{DB_FILENAME}&lt;/span&gt; is replaced with the filename of the saved database without extension&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;{TIME:&amp;lt;format&amp;gt;}&lt;/span&gt; is replaced with the specified time format (default: dd_MM_yyyy_hh-mm-ss)&lt;/p&gt;&lt;p&gt;See the User Guide for more details&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"/>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;{NUME_FISIER_DB}&lt;/span&gt; este înlocuit cu numele de fișier al bazei de date salvat fără extensie&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;{TIMP:&amp;lt;format&amp;gt;}&lt;/span&gt; este înlocuit cu formatul de oră specificat (implicit: dd_MM_yyyy_hh-mm-ss)&lt;/p&gt;&lt;p&gt;Consultați Ghidul utilizatorului pentru mai multe detalii&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Choose folder...</source>
-        <translation type="unfinished"/>
+        <translation>Alegeți dosar...</translation>
     </message>
     <message>
         <source>Show confirmation before moving entries to recycle bin</source>
-        <translation type="unfinished"/>
+        <translation>Afișați dialogul de confirmare înainte de a muta intrările în coșul de gunoi</translation>
     </message>
     <message>
         <source>Copy data on double clicking field in entry view</source>
-        <translation type="unfinished"/>
+        <translation>Copiați datele din câmp prin dublu clic în vizualizarea de intrări</translation>
     </message>
     <message>
         <source>Show toolbar</source>
-        <translation type="unfinished"/>
+        <translation>Afișați bara de instrumente</translation>
     </message>
     <message>
         <source>Show the menu bar by pressing the Alt key</source>
-        <translation type="unfinished"/>
+        <translation>Afișați bara de meniu apăsând tasta Alt</translation>
     </message>
     <message>
         <source>Show menubar</source>
-        <translation type="unfinished"/>
+        <translation>Afișați bara de meniu</translation>
     </message>
     <message>
         <source>Import settings…</source>
-        <translation type="unfinished"/>
+        <translation>Importați setările...</translation>
     </message>
     <message>
         <source>Export settings…</source>
-        <translation type="unfinished"/>
+        <translation>Exportați setările...</translation>
     </message>
     <message>
         <source>Open browser on double clicking URL field in entry view</source>
-        <translation type="unfinished"/>
+        <translation>Deschideți navigatorul web prin dublu clic pe câmpul URL în vizualizarea de intrări</translation>
     </message>
     <message>
         <source>Font size:</source>
-        <translation type="unfinished"/>
+        <translation>Dimensiunea fontului:</translation>
     </message>
     <message>
         <source>Font size selection</source>
+        <translation>Selectarea dimensiunii fontului</translation>
+    </message>
+    <message>
+        <source>Skip confirmation for main window Auto-Type actions</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Auto-generate password for new entries</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -651,15 +659,26 @@
     </message>
     <message>
         <source>Lock databases when switching user</source>
-        <translation type="unfinished"/>
+        <translation>Blocați baza de date la schimbarea utilizatorului</translation>
     </message>
     <message>
         <source>Lock Options</source>
-        <translation type="unfinished"/>
+        <translation>Opțiuni de blocare</translation>
     </message>
     <message>
         <source>Hide notes in the entry preview panel</source>
-        <translation type="unfinished"/>
+        <translation>Ascundeți notițele în panoul de previzualizare înregistrării</translation>
+    </message>
+</context>
+<context>
+    <name>AttachmentWidget</name>
+    <message>
+        <source>Attachment Viewer</source>
+        <translation>Vizualizator de atașamente</translation>
+    </message>
+    <message>
+        <source>Unknown attachment type</source>
+        <translation>Tip necunoscut de atașament</translation>
     </message>
 </context>
 <context>
@@ -690,27 +709,31 @@
     </message>
     <message>
         <source>Bracket imbalance detected, found extra { or }</source>
-        <translation type="unfinished"/>
+        <translation>Dezechilibru de paranteze acolade detectat, s-a găsit o paranteză acoladă suplimentară { sau }</translation>
     </message>
     <message>
         <source>Too many repetitions detected, max is %1: %2</source>
-        <translation type="unfinished"/>
+        <translation>Prea multe repetiții detectate, maximul este %1: %2</translation>
     </message>
     <message>
         <source>Very slow key press detected, max is %1: %2</source>
-        <translation type="unfinished"/>
+        <translation>Apăsare de tastă foarte lentă detectată, maximul este %1: %2</translation>
     </message>
     <message>
         <source>Very long delay detected, max is %1: %2</source>
-        <translation type="unfinished"/>
+        <translation>Întârziere foarte lungă detectată, maximul este %1: %2</translation>
     </message>
     <message>
         <source>Entry does not have attribute for PICKCHARS: %1</source>
-        <translation type="unfinished"/>
+        <translation>Înregistrarea nu are atribut pentru PICKCHARS: %1</translation>
     </message>
     <message>
         <source>Invalid placeholder: %1</source>
-        <translation type="unfinished"/>
+        <translation>Marcaj invalid: %1</translation>
+    </message>
+    <message>
+        <source>Entry has invalid TOTP settings</source>
+        <translation>Înregistrarea are setări TOTP invalide</translation>
     </message>
 </context>
 <context>
@@ -725,7 +748,7 @@
     </message>
     <message>
         <source>(empty)</source>
-        <translation type="unfinished"/>
+        <translation>(gol)</translation>
     </message>
     <message>
         <source>Default sequence</source>
@@ -759,15 +782,15 @@
     </message>
     <message>
         <source>Sequence aborted: Modifier keys held by user</source>
-        <translation type="unfinished"/>
+        <translation>Secvență întreruptă: tastă modificatoare ținută apăsată de utilizator</translation>
     </message>
     <message>
         <source>Unable to get valid keycode for key: </source>
-        <translation type="unfinished"/>
+        <translation>Nu se poate prelua codul cheie valid pentru cheia:</translation>
     </message>
     <message>
         <source>Trying to send invalid keyboard symbol.</source>
-        <translation type="unfinished"/>
+        <translation>Încercare de trimitere unui simbol de cheie invalid</translation>
     </message>
 </context>
 <context>
@@ -781,20 +804,6 @@
         <translation>Dați dublu clic pe un rând pentru a efectua auto-tastare sau pentru a găsi o înregistrare folosind căutarea:</translation>
     </message>
     <message>
-        <source>&lt;p&gt;You can use advanced search queries to find any entry in your open databases. The following shortcuts are useful:&lt;br/&gt;
-Ctrl+F - Toggle database search&lt;br/&gt;
-Ctrl+1 - Type username&lt;br/&gt;
-Ctrl+2 - Type password&lt;br/&gt;
-Ctrl+3 - Type TOTP&lt;br/&gt;
-Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
-        <translation>Puteți utiliza interogări de căutare avansate pentru a găsi orice intrare în bazele de date deschise. Următoarele scurtături sunt utile:
-Ctrl+F - Comutarea căutării în baza de date
-Ctrl+1 - Introduceți numele de utilizator
-Ctrl+2 - Introduceți parola
-Ctrl+3 - Introduceți TOTP
-Ctrl+4 - Folosiți tastatura virtuală (numai pentru Windows)</translation>
-    </message>
-    <message>
         <source>Search all open databases</source>
         <translation>Căutați în toate bazele de date deschise</translation>
     </message>
@@ -804,7 +813,7 @@ Ctrl+4 - Folosiți tastatura virtuală (numai pentru Windows)</translation>
     </message>
     <message>
         <source>Type Sequence</source>
-        <translation type="unfinished"/>
+        <translation>Tastați secventa</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -812,15 +821,15 @@ Ctrl+4 - Folosiți tastatura virtuală (numai pentru Windows)</translation>
     </message>
     <message>
         <source>Type {USERNAME}</source>
-        <translation type="unfinished"/>
+        <translation>Tastați {USERNAME}</translation>
     </message>
     <message>
         <source>Type {PASSWORD}</source>
-        <translation type="unfinished"/>
+        <translation>Tastați {PASSWORD}</translation>
     </message>
     <message>
         <source>Type {TOTP}</source>
-        <translation type="unfinished"/>
+        <translation>Tastați {TOTP}</translation>
     </message>
     <message>
         <source>Copy Username</source>
@@ -836,6 +845,44 @@ Ctrl+4 - Folosiți tastatura virtuală (numai pentru Windows)</translation>
     </message>
     <message>
         <source>Use Virtual Keyboard</source>
+        <translation>Utilizați tastatură virtuală</translation>
+    </message>
+    <message>
+        <source>Type {URL}</source>
+        <translation>Tastați {URL}</translation>
+    </message>
+    <message>
+        <source>Copy URL</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&lt;p&gt;The following shortcuts are available:&lt;br/&gt;
+Ctrl+F - Focus search&lt;br/&gt;
+Ctrl+1 - Type username&lt;br/&gt;
+Ctrl+2 - Type password&lt;br/&gt;
+Ctrl+3 - Type TOTP&lt;br/&gt;
+Ctrl+4 - Type URL&lt;br/&gt;
+Ctrl+5 - Use Virtual Keyboard (Windows Only)&lt;br/&gt;
+Ctrl+Shift+1 - Copy username&lt;br/&gt;
+Ctrl+Shift+2 - Copy password&lt;br/&gt;
+Ctrl+Shift+3 - Copy TOTP&lt;br/&gt;
+Ctrl+Shift+4 - Copy URL&lt;br/&gt;
+&lt;/p&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You can use advanced search queries to find any entry in your open databases.</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>BinaryStream</name>
+    <message>
+        <source>Failed to read string data: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>String length exceeds 10 MiB limit (requested %1)</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -875,7 +922,7 @@ Ctrl+4 - Folosiți tastatura virtuală (numai pentru Windows)</translation>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished"/>
+        <translation>Anulează</translation>
     </message>
 </context>
 <context>
@@ -1434,7 +1481,7 @@ Do you want to overwrite the passkey in %1 - %2?</source>
     </message>
     <message numerus="yes">
         <source>[%n more message(s) skipped]</source>
-        <translation><numerusform>[% n mai mult mesaj (e) ignorate]</numerusform><numerusform>[% n mai mult mesaj (e) ignorate]</numerusform><numerusform>[%n mai mult mesaj (e) ignorate]</numerusform></translation>
+        <translation><numerusform>[%n mai mult mesaj (e) ignorate]</numerusform><numerusform>[%n mai mult mesaj (e) ignorate]</numerusform><numerusform>[%n mai mult mesaj (e) ignorate]</numerusform></translation>
     </message>
     <message>
         <source>Failed to parse CSV file: %1</source>
@@ -1463,12 +1510,12 @@ Are you sure you want to import?</source>
     <message numerus="yes">
         <source>%n row(s)</source>
         <comment>CSV row count</comment>
-        <translation><numerusform>% n rând (e)</numerusform><numerusform>% n rând (e)</numerusform><numerusform>%n rând (uri)</numerusform></translation>
+        <translation><numerusform>%n rând (e)</numerusform><numerusform>%n rând (e)</numerusform><numerusform>%n rând (uri)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n column(s)</source>
         <comment>CSV column count</comment>
-        <translation><numerusform>% n coloană (e)</numerusform><numerusform>% n coloană (e)</numerusform><numerusform>%n coloană (e)</numerusform></translation>
+        <translation><numerusform>%n coloană (e)</numerusform><numerusform>%n coloană (e)</numerusform><numerusform>%n coloană (e)</numerusform></translation>
     </message>
 </context>
 <context>
@@ -1724,6 +1771,10 @@ Sunteți sigur că doriți să continuați cu acest fișier?.</translation>
         <source>Hardware keys found, but no slots are configured.</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Press ESC again to close this database</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingWidgetMetaData</name>
@@ -1847,7 +1898,7 @@ Acest lucru poate împiedica conectarea la plugin-ul browser-ului.</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
-        <translation><numerusform>S-a eliminat cu succes% n cheie de criptare din setările KeePassXC.</numerusform><numerusform>S-a eliminat cu succes% n cheie de criptare din setările KeePassXC.</numerusform><numerusform>S-a eliminat cu succes %n chei de criptare din setările KeePassXC.</numerusform></translation>
+        <translation><numerusform>S-a eliminat cu succes %n cheie de criptare din setările KeePassXC.</numerusform><numerusform>S-a eliminat cu succes %n cheie de criptare din setările KeePassXC.</numerusform><numerusform>S-a eliminat cu succes %n chei de criptare din setările KeePassXC.</numerusform></translation>
     </message>
     <message>
         <source>Do you really want forget all site-specific settings on every entry?
@@ -1865,7 +1916,7 @@ Permisiunile de accesare a intrărilor vor fi revocate.</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
-        <translation><numerusform>Permisiuni eliminate cu succes de la% n intrare (e).</numerusform><numerusform>Permisiuni eliminate cu succes de la% n intrare (e).</numerusform><numerusform>Permisiuni eliminate cu succes pentru %n intrare(i).</numerusform></translation>
+        <translation><numerusform>Permisiuni eliminate cu succes de la %n intrare (e).</numerusform><numerusform>Permisiuni eliminate cu succes de la %n intrare (e).</numerusform><numerusform>Permisiuni eliminate cu succes pentru %n intrare(i).</numerusform></translation>
     </message>
     <message>
         <source>The active database does not contain an entry with permissions.</source>
@@ -1942,7 +1993,7 @@ Sigur continuați fără parolă?</translation>
     </message>
     <message>
         <source>Weak password</source>
-        <translation type="unfinished"/>
+        <translation>Parolă slabă</translation>
     </message>
     <message>
         <source>This is a weak password! For better protection of your secrets, you should choose a stronger password.</source>
@@ -2258,19 +2309,11 @@ eliminate din baza de date.</translation>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Publically visible display name used on the unlock dialog</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Database public display name</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>Display color:</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Publically visible color used on the unlock dialog</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -2287,6 +2330,14 @@ eliminate din baza de date.</translation>
     </message>
     <message>
         <source>Select Database Icon</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Publicly visible display name used on the unlock dialog</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Publicly visible color used on the unlock dialog</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -2621,18 +2672,6 @@ Acest lucru este cu siguranta un bug, vă rugăm să raporteze la dezvoltatori.<
         <translation>Ține minte alegerea mea</translation>
     </message>
     <message>
-        <source>Delete group</source>
-        <translation>Ștergere grup</translation>
-    </message>
-    <message>
-        <source>Do you really want to delete the group &quot;%1&quot; for good?</source>
-        <translation>Chiar doriți să ștergeți grupul &quot;%1&quot;?</translation>
-    </message>
-    <message>
-        <source>Move group to recycle bin?</source>
-        <translation>Mutați grupul în Coșul de reciclare?</translation>
-    </message>
-    <message>
         <source>Do you really want to move the group &quot;%1&quot; to the recycle bin?</source>
         <translation>Chiar doriți să mutați grupul &quot;%1&quot; în Coșul de reciclare?</translation>
     </message>
@@ -2653,24 +2692,12 @@ Acest lucru este cu siguranta un bug, vă rugăm să raporteze la dezvoltatori.<
         <translation>Nicio bază de date sursă, nimic de făcut.</translation>
     </message>
     <message>
-        <source>Successfully merged the database files.</source>
-        <translation>A fuzionat cu succes fișierele bazei de date.</translation>
-    </message>
-    <message>
-        <source>Database was not modified by merge operation.</source>
-        <translation>Baza de date nu a fost modificată de operațiunea de îmbinare.</translation>
-    </message>
-    <message>
         <source>Search Results (%1)</source>
         <translation>Rezultatele căutării (%1)</translation>
     </message>
     <message>
         <source>No Results</source>
         <translation>Nu sunt rezultate</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Salvează</translation>
     </message>
     <message>
         <source>Enter a unique name or overwrite an existing search from the list:</source>
@@ -2735,10 +2762,6 @@ Dezactivați salvarea sigură și încercați din nou?</translation>
         <translation>Bază de date KeePass 2</translation>
     </message>
     <message>
-        <source>Save database backup</source>
-        <translation>Salvare copie de siguranță a bazei de date</translation>
-    </message>
-    <message>
         <source>Empty recycle bin?</source>
         <translation>Goliți coșul de gunoi?</translation>
     </message>
@@ -2768,14 +2791,6 @@ Dezactivați salvarea sigură și încercați din nou?</translation>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Remote sync &apos;%1&apos; failed: %2</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Error while saving database %1: %2</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Downloading...</source>
         <translation>Descărcarea...</translation>
     </message>
@@ -2784,7 +2799,15 @@ Dezactivați salvarea sigură și încercați din nou?</translation>
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Remote sync &apos;%1&apos; failed: %2</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Syncing...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Error while saving database %1: %2</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -2801,10 +2824,6 @@ Dezactivați salvarea sigură și încercați din nou?</translation>
     </message>
     <message>
         <source>Do you want to load the changes?</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Reload database</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -2832,11 +2851,58 @@ Dezactivați salvarea sigură și încercați din nou?</translation>
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Reload database</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>Database file overwritten.</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>Database file on disk cannot be unlocked with current credentials.&lt;br&gt;Enter new credentials and/or present hardware key to continue.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to save backup database: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Confirm Delete Group</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you really want to permanently delete the group &quot;%1&quot;?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Confirm Recycle Group</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Salvează</translation>
+    </message>
+    <message>
+        <source>Save Database Backup</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Successfully merged the selected database.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>No changes were made by the merge operation.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Merge canceled, no changes were made.</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>EditEntryAttachmentsDialog</name>
+    <message>
+        <source>Edit: %1</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -2981,15 +3047,15 @@ Doriți să o corectați?</translation>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
-        <translation><numerusform>% n săptămână (i)</numerusform><numerusform>% n săptămână (i)</numerusform><numerusform>%n săptămână(i)</numerusform></translation>
+        <translation><numerusform>%n săptămână (i)</numerusform><numerusform>%n săptămână (i)</numerusform><numerusform>%n săptămână(i)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n month(s)</source>
-        <translation><numerusform>% n lună (i)</numerusform><numerusform>% n lună (i)</numerusform><numerusform>%n lună(i)</numerusform></translation>
+        <translation><numerusform>%n lună (i)</numerusform><numerusform>%n lună (i)</numerusform><numerusform>%n lună(i)</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n year(s)</source>
-        <translation><numerusform>% n an (i)</numerusform><numerusform>% n an (i)</numerusform><numerusform>%n an(i)</numerusform></translation>
+        <translation><numerusform>%n an (i)</numerusform><numerusform>%n an (i)</numerusform><numerusform>%n an(i)</numerusform></translation>
     </message>
     <message>
         <source>Failed to decrypt SSH key, ensure password is correct.</source>
@@ -3776,7 +3842,7 @@ Extensiile acceptate sunt: %1.</translation>
     </message>
     <message numerus="yes">
         <source>Successfully loaded %1 of %n icon(s)</source>
-        <translation><numerusform>Încărcat cu succes% 1 din% n pictogramă (e)</numerusform><numerusform>Încărcat cu succes% 1 din% n pictogramă (e)</numerusform><numerusform>Încărcat cu succes %1 din %n pictograme</numerusform></translation>
+        <translation><numerusform>Încărcat cu succes %1 din %n pictogramă (e)</numerusform><numerusform>Încărcat cu succes %1 din %n pictogramă (e)</numerusform><numerusform>Încărcat cu succes %1 din %n pictograme</numerusform></translation>
     </message>
     <message>
         <source>No icons were loaded</source>
@@ -3784,7 +3850,7 @@ Extensiile acceptate sunt: %1.</translation>
     </message>
     <message numerus="yes">
         <source>%n icon(s) already exist in the database</source>
-        <translation><numerusform>% n pictograma (ele) există deja în baza de date</numerusform><numerusform>% n pictograma (ele) există deja în baza de date</numerusform><numerusform>%n pictograma(e) există deja în baza de date</numerusform></translation>
+        <translation><numerusform>%n pictograma (ele) există deja în baza de date</numerusform><numerusform>%n pictograma (ele) există deja în baza de date</numerusform><numerusform>%n pictograma(e) există deja în baza de date</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>The following icon(s) failed:</source>
@@ -3812,14 +3878,6 @@ Extensiile acceptate sunt: %1.</translation>
     <message>
         <source>Datetime modified</source>
         <translation>Datetime modificat</translation>
-    </message>
-    <message>
-        <source>Accessed:</source>
-        <translation>Accesat:</translation>
-    </message>
-    <message>
-        <source>Datetime accessed</source>
-        <translation>Data datei accesată</translation>
     </message>
     <message>
         <source>Uuid:</source>
@@ -3887,26 +3945,67 @@ Acest lucru poate provoca moduluri afectate la defecțiune.</translation>
 %2</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Title</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>URL</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Custom Attributes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Icon</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Color</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Expiration</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>TOTP</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Custom Data</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Attachments</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Auto-Type</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>EntryAttachments</name>
     <message>
         <source>Cannot open file &quot;%1&quot;</source>
-        <translation type="unfinished"/>
-    </message>
-</context>
-<context>
-    <name>EntryAttachmentsDialog</name>
-    <message>
-        <source>Form</source>
-        <translation>Formular</translation>
-    </message>
-    <message>
-        <source>File name</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>File contents...</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -3936,10 +4035,6 @@ Acest lucru poate provoca moduluri afectate la defecțiune.</translation>
         <translation>Adăugați un nou atașament</translation>
     </message>
     <message>
-        <source>Add</source>
-        <translation>Adaugă</translation>
-    </message>
-    <message>
         <source>Remove selected attachment</source>
         <translation>Eliminați atașamentul selectat</translation>
     </message>
@@ -3960,10 +4055,6 @@ Acest lucru poate provoca moduluri afectate la defecțiune.</translation>
         <translation>Salvați atașamentul selectat pe disc</translation>
     </message>
     <message>
-        <source>Save</source>
-        <translation>Salvează</translation>
-    </message>
-    <message>
         <source>Select files</source>
         <translation>Selectați fișierele</translation>
     </message>
@@ -3973,7 +4064,7 @@ Acest lucru poate provoca moduluri afectate la defecțiune.</translation>
     </message>
     <message numerus="yes">
         <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation><numerusform>Sigur eliminați% n atașamente?</numerusform><numerusform>Sigur eliminați% n atașamente?</numerusform><numerusform>Sigur eliminați %n atașamente?</numerusform></translation>
+        <translation><numerusform>Sigur eliminați %n atașamente?</numerusform><numerusform>Sigur eliminați %n atașamente?</numerusform><numerusform>Sigur eliminați %n atașamente?</numerusform></translation>
     </message>
     <message>
         <source>Save attachments</source>
@@ -4015,8 +4106,8 @@ Acest lucru poate provoca moduluri afectate la defecțiune.</translation>
         <source>Unable to open file(s):
 %1</source>
         <translation><numerusform>Imposibil de deschis fișierul (e):
-% 1</numerusform><numerusform>Imposibil de deschis fișierul (e):
-% 1</numerusform><numerusform>Imposibil de deschis fișierul(e):
+%1</numerusform><numerusform>Imposibil de deschis fișierul (e):
+%1</numerusform><numerusform>Imposibil de deschis fișierul(e):
 %1</numerusform></translation>
     </message>
     <message>
@@ -4059,15 +4150,31 @@ Would you like to overwrite the existing attachment?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>New</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Preview</source>
         <translation>Previzualizare</translation>
     </message>
     <message>
-        <source>Failed to preview an attachment: Attachment not found</source>
+        <source>Edit</source>
+        <translation>Editați </translation>
+    </message>
+    <message>
+        <source>New Text Document</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Add file…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Load from Disk…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Save…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>New Attachment</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -4099,62 +4206,6 @@ Would you like to overwrite the existing attachment?</source>
     <message>
         <source>Size</source>
         <translation>Dimensiunea</translation>
-    </message>
-    <message>
-        <source>Title</source>
-        <translation>Titlu</translation>
-    </message>
-    <message>
-        <source>Username</source>
-        <translation>Nume utilizator</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>Parolă</translation>
-    </message>
-    <message>
-        <source>URL</source>
-        <translation>URL</translation>
-    </message>
-    <message>
-        <source>Notes</source>
-        <translation>Notițe</translation>
-    </message>
-    <message>
-        <source>Custom Attributes</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Icon</source>
-        <translation>Icon</translation>
-    </message>
-    <message>
-        <source>Color</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Expiration</source>
-        <translation>Expirare</translation>
-    </message>
-    <message>
-        <source>TOTP</source>
-        <translation>TOTP</translation>
-    </message>
-    <message>
-        <source>Custom Data</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Attachments</source>
-        <translation>Atașamente</translation>
-    </message>
-    <message>
-        <source>Auto-Type</source>
-        <translation>Auto-tastare</translation>
-    </message>
-    <message>
-        <source>Tags</source>
-        <translation>Etichete</translation>
     </message>
 </context>
 <context>
@@ -4205,10 +4256,6 @@ Would you like to overwrite the existing attachment?</source>
         <translation>Modificat</translation>
     </message>
     <message>
-        <source>Accessed</source>
-        <translation>Accesate</translation>
-    </message>
-    <message>
         <source>Attachments</source>
         <translation>Atașamente</translation>
     </message>
@@ -4245,10 +4292,6 @@ Would you like to overwrite the existing attachment?</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Last access date</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Attached files</source>
         <translation type="unfinished"/>
     </message>
@@ -4262,7 +4305,7 @@ Would you like to overwrite the existing attachment?</source>
     </message>
     <message>
         <source>Has TOTP</source>
-        <translation type="unfinished"/>
+        <translation>Are TOTP</translation>
     </message>
     <message>
         <source>Background Color</source>
@@ -4439,16 +4482,16 @@ This will leave your passwords and sensitive information vulnerable!
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>unknown</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Export database to HTML file</source>
         <translation>Exportați baza de date în fișier HTML</translation>
     </message>
     <message>
         <source>HTML file</source>
         <translation>Fișier HTML</translation>
+    </message>
+    <message>
+        <source>invalid sort order</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -4626,6 +4669,17 @@ Puteți activa serviciul pictogramelor site-ului web DuckDuckGo în secțiunea d
     <message>
         <source>Downloading favicons (%1/%2)…</source>
         <translation>Se descarcă pictogramele (%1/%2)...</translation>
+    </message>
+</context>
+<context>
+    <name>ImageAttachmentsWidget</name>
+    <message>
+        <source>Zoom:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Fit</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -5686,10 +5740,6 @@ Sigur doriți să continuați cu acest fișier?</translation>
         <translation>&amp;Editare intrare</translation>
     </message>
     <message>
-        <source>&amp;Delete Entry…</source>
-        <translation>&amp;Ștergeți intrarea...</translation>
-    </message>
-    <message>
         <source>&amp;New Group…</source>
         <translation>&amp;Grup nou...</translation>
     </message>
@@ -6051,10 +6101,6 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Create Entry</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Edit Entry</source>
         <translation>Editați intrarea</translation>
     </message>
@@ -6299,16 +6345,40 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
         <translation>Generator de parole</translation>
     </message>
     <message>
-        <source>E&amp;xpire Entry…</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Clear SSH Agent</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>Clear all identities in ssh-agent</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>New Entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Edit Entry…</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>E&amp;xpire Entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Expire Entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Delete Entry</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>Move selected entry(s) to the recycle bin</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Permanently delete the selected entry(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -6354,42 +6424,41 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
     </message>
 </context>
 <context>
+    <name>MergeDialog</name>
+    <message>
+        <source>Database Merge Confirmation</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Merge</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Group</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>UUID</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Details</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Change</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>Merger</name>
-    <message>
-        <source>Creating missing %1 [%2]</source>
-        <translation>Creare lipsă %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Relocating %1 [%2]</source>
-        <translation>Relocalizarea %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Overwriting %1 [%2]</source>
-        <translation>Suprascrierea %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Synchronizing from newer source %1 [%2]</source>
-        <translation>Sincronizarea din sursa mai nouă %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Synchronizing from older source %1 [%2]</source>
-        <translation>Sincronizarea din sursa mai veche %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Deleting child %1 [%2]</source>
-        <translation>Ștergerea copilului %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Deleting orphan %1 [%2]</source>
-        <translation>Ștergerea intrarii orfane %1 [%2]</translation>
-    </message>
     <message>
         <source>Changed deleted objects</source>
         <translation>Obiecte șterse modificate</translation>
-    </message>
-    <message>
-        <source>Adding missing icon %1</source>
-        <translation>Adăugarea pictogramei lipsă %1</translation>
     </message>
     <message>
         <source>Removed custom data %1 [%2]</source>
@@ -6398,6 +6467,74 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
     <message>
         <source>Adding custom data %1 [%2]</source>
         <translation>Adăugarea de date personalizate %1 [%2]</translation>
+    </message>
+    <message>
+        <source>Added</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Modified</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Moved</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Deleted</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Previous location: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Number of entries in group: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Group name</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Icon (UUID)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Icon (Number)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Expiry time</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Modification time</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 (Add local modifications to new entry)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 (Add new modifications to existing entry)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Explicit deletion</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Implicit deletion (e.g. removal of parent group)</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Adding new icon %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6458,25 +6595,6 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
     <message>
         <source>Please fill in the display name and an optional description for your new database:</source>
         <translation>Vă rugăm să completați numele afișat și o descriere opțională pentru noua bază de date:</translation>
-    </message>
-</context>
-<context>
-    <name>NewEntryAttachmentsDialog</name>
-    <message>
-        <source>Attachment name cannot be empty</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Attachment with the same name already exists</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Save attachment</source>
-        <translation>Salvează atașament</translation>
-    </message>
-    <message>
-        <source>New entry attachment</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -6579,10 +6697,6 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
         <translation>Găsit zero chei</translation>
     </message>
     <message>
-        <source>Failed to read public key.</source>
-        <translation>Citirea cheii publice a eșuat.</translation>
-    </message>
-    <message>
         <source>Corrupted key file, reading private key failed</source>
         <translation>Fișier cheie deteriorat, citirea cheii private nu a reușit</translation>
     </message>
@@ -6670,6 +6784,14 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
         <source>(encrypted)</source>
         <translation>(criptat)</translation>
     </message>
+    <message>
+        <source>Failed to read key file: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to read public key: %1</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>OpenSSHKeyGenDialog</name>
@@ -6724,10 +6846,6 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
 <context>
     <name>PasskeyExporter</name>
     <message>
-        <source>KeePassXC: Passkey Export</source>
-        <translation>KeePassXC - Export de chei de acces</translation>
-    </message>
-    <message>
         <source>File &quot;%1.passkey&quot; already exists.
 Do you want to overwrite it?
 </source>
@@ -6743,6 +6861,10 @@ Do you want to overwrite it?
     </message>
     <message>
         <source>Cannot write to file</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Overwrite Existing File?</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -6820,14 +6942,6 @@ Do you want to overwrite it?
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Open passkey file</source>
-        <translation>Deschidere fișier cheie de acces</translation>
-    </message>
-    <message>
-        <source>Cannot import passkey</source>
-        <translation>Nu se poate importa cheia de acces</translation>
-    </message>
-    <message>
         <source>Cannot import passkey file &quot;%1&quot;. Data is missing.</source>
         <translation>Nu se poate importa fișierul de chei de acces &quot;%1&quot;. Datele lipsesc.</translation>
     </message>
@@ -6842,6 +6956,14 @@ Următoarele date lipsesc:
     <message>
         <source>Cannot import passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
         <translation>Nu se poate importa fișierul de chei de acces &quot;%1&quot;. Cheia privată lipsește sau este deformată.</translation>
+    </message>
+    <message>
+        <source>Open Passkey File</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Passkey Import Failed</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -7068,7 +7190,7 @@ Următoarele date lipsesc:
     </message>
     <message>
         <source>Apply Password</source>
-        <translation type="unfinished"/>
+        <translation>Aplicați Parola</translation>
     </message>
     <message>
         <source>Regenerate password (%1)</source>
@@ -7117,14 +7239,6 @@ Următoarele date lipsesc:
         <source>Excellent</source>
         <comment>Password quality</comment>
         <translation>Excelent</translation>
-    </message>
-    <message>
-        <source>Confirm Delete Wordlist</source>
-        <translation>Confirmați ștergerea listei de cuvinte</translation>
-    </message>
-    <message>
-        <source>Do you really want to delete the wordlist &quot;%1&quot;?</source>
-        <translation>Chiar doriți să ștergeți lista de cuvinte &quot;%1&quot;?</translation>
     </message>
     <message>
         <source>Failed to delete wordlist</source>
@@ -7177,6 +7291,18 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;, &quot;B&quot;, &quot;8&quot;, &quot;G&quot;, &quot;6&quot;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Warning: the chosen wordlist is smaller than the minimum recommended size!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Confirm Remove Wordlist</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you really want to remove the wordlist &quot;%1&quot;?</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -7249,15 +7375,15 @@ Do you want to overwrite it?</source>
 <context>
     <name>PreviewEntryAttachmentsDialog</name>
     <message>
-        <source>Preview entry attachment</source>
+        <source>Form</source>
+        <translation>Formular</translation>
+    </message>
+    <message>
+        <source>Preview: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>No preview available</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Image format not supported</source>
+        <source>Save…</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -7436,7 +7562,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Writing the database failed %1.</source>
-        <translation>Scrierea bazei de date nu a reușit% 1.</translation>
+        <translation>Scrierea bazei de date nu a reușit %1.</translation>
     </message>
     <message>
         <source>Successfully added entry %1.</source>
@@ -7626,7 +7752,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Entry %1 not found.</source>
-        <translation>Intrarea% 1 nu a fost găsită.</translation>
+        <translation>Intrarea %1 nu a fost găsită.</translation>
     </message>
     <message>
         <source>ERROR: Please specify one of --attribute or --totp, not both.</source>
@@ -7650,7 +7776,7 @@ Do you want to overwrite it?</source>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)...</source>
-        <translation><numerusform>Golirea Clipboard-ului în% 1 second (s)...</numerusform><numerusform>Golirea Clipboard-ului în% 1 second (s)...</numerusform><numerusform>Golirea Clipboard-ului în %1 secund(e)...</numerusform></translation>
+        <translation><numerusform>Golirea Clipboard-ului în %1 second (s)...</numerusform><numerusform>Golirea Clipboard-ului în %1 second (s)...</numerusform><numerusform>Golirea Clipboard-ului în %1 secund(e)...</numerusform></translation>
     </message>
     <message>
         <source>Clipboard cleared!</source>
@@ -7774,7 +7900,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Edit a database.</source>
-        <translation type="unfinished"/>
+        <translation>Editați o bază de date.</translation>
     </message>
     <message>
         <source>Cannot use %1 and %2 at the same time.</source>
@@ -7911,10 +8037,6 @@ Do you want to overwrite it?</source>
     <message>
         <source>Average password length</source>
         <translation>Lungimea medie a parolei</translation>
-    </message>
-    <message>
-        <source>%1 characters</source>
-        <translation>%1 caractere</translation>
     </message>
     <message>
         <source>Word count for the diceware passphrase.</source>
@@ -8293,7 +8415,7 @@ Comenzi disponibile:
     </message>
     <message>
         <source>Could not find group with path %1.</source>
-        <translation>Nu s-a putut găsi grupul cu calea% 1.</translation>
+        <translation>Nu s-a putut găsi grupul cu calea %1.</translation>
     </message>
     <message>
         <source>Entry is already in group %1.</source>
@@ -8488,7 +8610,7 @@ Vă rugăm să luați în considerare generarea unui nou fișier cheie.</transla
     </message>
     <message>
         <source>Very weak password</source>
-        <translation type="unfinished"/>
+        <translation>Parolă foarte slabă</translation>
     </message>
     <message>
         <source>Password entropy is %1 bits</source>
@@ -8496,7 +8618,7 @@ Vă rugăm să luați în considerare generarea unui nou fișier cheie.</transla
     </message>
     <message>
         <source>Weak password</source>
-        <translation type="unfinished"/>
+        <translation>Parolă slabă</translation>
     </message>
     <message>
         <source>Used in %1/%2</source>
@@ -8504,11 +8626,11 @@ Vă rugăm să luați în considerare generarea unui nou fișier cheie.</transla
     </message>
     <message numerus="yes">
         <source>Password is used %1 time(s)</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+        <translation><numerusform>Parola este utilizată o dată</numerusform><numerusform>Parola este utilizată de %1 ori</numerusform><numerusform>Parola este utilizată de %1 de ori</numerusform></translation>
     </message>
     <message>
         <source>Password has expired</source>
-        <translation type="unfinished"/>
+        <translation>Parola a expirat</translation>
     </message>
     <message>
         <source>Password expiry was %1</source>
@@ -8757,32 +8879,12 @@ Nucleu (Kernel): %3 %4</translation>
         <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
-        <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
-        <translation>Chiar doriți să ștergeți definitiv intrarea &quot;%1&quot;?</translation>
-    </message>
-    <message numerus="yes">
-        <source>Do you really want to delete %n entry(s) for good?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Delete entry(s)?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
-    </message>
-    <message>
         <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
-        <translation type="unfinished"/>
+        <translation>Chiar doriți să mutați intrarea &quot;%1&quot; în Coșul de reciclare?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
         <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Move entry(s) to recycle bin?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
-    </message>
-    <message>
-        <source>Replace references to entry?</source>
-        <translation type="unfinished"/>
     </message>
     <message numerus="yes">
         <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
@@ -8802,11 +8904,11 @@ Nucleu (Kernel): %3 %4</translation>
     </message>
     <message>
         <source>HIBP</source>
-        <translation type="unfinished"/>
+        <translation>HIBP</translation>
     </message>
     <message>
         <source>Statistics</source>
-        <translation type="unfinished"/>
+        <translation>Statistici</translation>
     </message>
     <message>
         <source>Unsupported key file version: %1</source>
@@ -8945,7 +9047,7 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Passkeys</source>
-        <translation type="unfinished"/>
+        <translation>Chei de acces</translation>
     </message>
     <message>
         <source>AES initialization failed</source>
@@ -9038,7 +9140,7 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>File does not exist.</source>
-        <translation type="unfinished"/>
+        <translation>Fișierul nu există.</translation>
     </message>
     <message>
         <source>Cannot open file: %1</source>
@@ -9150,24 +9252,12 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>Cannot generate valid passphrases because the wordlist is too short</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Encrypted files are not supported.</source>
         <translation type="unfinished"/>
     </message>
     <message>
         <source>Proton Pass Import</source>
         <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Delete plugin data?</source>
-        <translation>Ștergeți datele modulului?</translation>
-    </message>
-    <message numerus="yes">
-        <source>Delete plugin data from Entry(s)?</source>
-        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
     <message>
         <source>Passkey</source>
@@ -9196,6 +9286,52 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Tags</source>
         <translation>Etichete</translation>
+    </message>
+    <message>
+        <source>Warning: the chosen wordlist is smaller than the minimum recommended size!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid Step</source>
+        <comment>TOTP</comment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Invalid Digits</source>
+        <comment>TOTP</comment>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>%1 character(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Do you really want to permanently delete the entry &quot;%1&quot;?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>Do you really want to permanently delete %n entry(s)?</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Confirm Delete Entry(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Confirm Recycle Entry(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Confirm Delete Plugin Data</source>
+        <translation type="unfinished"/>
+    </message>
+    <message numerus="yes">
+        <source>Delete plugin data from the selected entry(s)?</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
+    </message>
+    <message>
+        <source>Confirm Replace Entry References</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -9437,11 +9573,11 @@ This option is deprecated, use --set-key-file instead.</source>
     <name>ReportsWidgetHibp</name>
     <message>
         <source>CAUTION: This report requires sending information to the Have I Been Pwned online service (https://haveibeenpwned.com). If you proceed, your database passwords will be cryptographically hashed and the first five characters of those hashes will be sent securely to this service. Your database remains secure and cannot be reconstituted from this information. However, the number of passwords you send and your IP address will be exposed to this service.</source>
-        <translation type="unfinished"/>
+        <translation>ATENȚIE: Acest raport necesită trimiterea de informații către serviciul online Have I Been Pwned (https://haveibeenpwned.com). Dacă continuați, parolele dumneavoastră din baza de date vor fi hash-uite criptografic, iar primele cinci caractere ale acestor hash-uri vor fi trimise în siguranță către acest serviciu. Baza dumneavoastră de date rămâne în siguranță și nu poate fi reconstituită din aceste informații. Cu toate acestea, numărul de parole pe care le trimiteți și adresa dumneavoastră IP vor fi expuse acestui serviciu.</translation>
     </message>
     <message>
         <source>Perform Online Analysis</source>
-        <translation type="unfinished"/>
+        <translation>Efectuează Analiza Online</translation>
     </message>
     <message>
         <source>Also show entries that have been excluded from reports</source>
@@ -9453,7 +9589,7 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Congratulations, no exposed passwords!</source>
-        <translation type="unfinished"/>
+        <translation>Felicitări, nu aveți parole expuse!</translation>
     </message>
     <message>
         <source>Title</source>
@@ -9465,7 +9601,7 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Password exposed…</source>
-        <translation type="unfinished"/>
+        <translation>Parolă expusă...</translation>
     </message>
     <message>
         <source> (Excluded)</source>
@@ -9478,7 +9614,7 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>once</source>
         <comment>Password exposure amount</comment>
-        <translation type="unfinished"/>
+        <translation>o dată</translation>
     </message>
     <message>
         <source>up to 10 times</source>
@@ -9718,12 +9854,12 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation>Lungimea medie a parolei</translation>
     </message>
     <message>
-        <source>%1 characters</source>
-        <translation>%1 caractere</translation>
-    </message>
-    <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
         <translation>Lungimea medie a parolei este mai mică de zece caractere. Parolele mai lungi oferă mai multă securitate.</translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 character(s)</source>
+        <translation type="unfinished"><numerusform></numerusform><numerusform></numerusform><numerusform></numerusform></translation>
     </message>
 </context>
 <context>
@@ -9862,6 +9998,10 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>Limit search to selected group</source>
         <translation>Limitați căutarea la grupul selectat</translation>
+    </message>
+    <message>
+        <source>Press Enter to search</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -10081,6 +10221,10 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Weak Passwords</source>
+        <translation>Parole Slabe</translation>
+    </message>
+    <message>
+        <source>TOTP Entries</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -10104,6 +10248,24 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
 </context>
 <context>
+    <name>TextAttachmentsEditWidget</name>
+    <message>
+        <source>Preview</source>
+        <translation>Previzualizare</translation>
+    </message>
+</context>
+<context>
+    <name>TextAttachmentsPreviewWidget</name>
+    <message>
+        <source>Form</source>
+        <translation>Formular</translation>
+    </message>
+    <message>
+        <source>Type:</source>
+        <translation>Tip:</translation>
+    </message>
+</context>
+<context>
     <name>TotpDialog</name>
     <message>
         <source>Timed Password</source>
@@ -10115,7 +10277,7 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message numerus="yes">
         <source>Expires in &lt;b&gt;%n&lt;/b&gt; second(s)</source>
-        <translation><numerusform>Expiră în &lt;b&gt;% n&lt;/b&gt; second (s)</numerusform><numerusform>Expiră în &lt;b&gt;% n&lt;/b&gt; second (s)</numerusform><numerusform>Expiră în &lt;b&gt;%n&lt;/b&gt; secunde</numerusform></translation>
+        <translation><numerusform>Expiră în &lt;b&gt;%n&lt;/b&gt; second (s)</numerusform><numerusform>Expiră în &lt;b&gt;%n&lt;/b&gt; second (s)</numerusform><numerusform>Expiră în &lt;b&gt;%n&lt;/b&gt; secunde</numerusform></translation>
     </message>
 </context>
 <context>
@@ -10214,6 +10376,10 @@ Exemplu: JBSWY3DPEHPK3PXP</translation>
     <message>
         <source>Are you sure you want to delete TOTP settings for this entry?</source>
         <translation>Sigur doriți să ștergeți setările TOTP pentru această intrare?</translation>
+    </message>
+    <message>
+        <source>Error: secret key is invalid</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -10369,10 +10535,6 @@ Exemplu: JBSWY3DPEHPK3PXP</translation>
 <context>
     <name>YubiKeyInterfacePCSC</name>
     <message>
-        <source>The YubiKey PCSC interface has not been initialized.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>Could not find or access hardware key with serial number %1. Please present it to continue. </source>
         <translation type="unfinished"/>
     </message>
@@ -10382,10 +10544,6 @@ Exemplu: JBSWY3DPEHPK3PXP</translation>
     </message>
     <message>
         <source>Hardware key was not found or is not configured.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Failed to complete a challenge-response, the PCSC error code was: %1</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -10403,13 +10561,17 @@ Exemplu: JBSWY3DPEHPK3PXP</translation>
         <comment>USB Challenge-Response Key no interaction required</comment>
         <translation>Pasiv</translation>
     </message>
+    <message>
+        <source>The YubiKey PC/SC interface has not been initialized.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to complete a challenge-response, the PC/SC error code was: %1</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>YubiKeyInterfaceUSB</name>
-    <message>
-        <source>Unknown</source>
-        <translation>Necunoscut</translation>
-    </message>
     <message>
         <source>Press</source>
         <comment>USB Challenge-Response Key interaction request</comment>
@@ -10448,6 +10610,11 @@ Exemplu: JBSWY3DPEHPK3PXP</translation>
     <message>
         <source>%1 [%2] - Slot %3, %4</source>
         <comment>YubiKey display fields</comment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <comment>Unknown hardware key name</comment>
         <translation type="unfinished"/>
     </message>
 </context>

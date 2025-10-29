@@ -223,7 +223,7 @@
     </message>
     <message>
         <source>Confirm Reset</source>
-        <translation>Sıfırlamayı onayla</translation>
+        <translation>Sıfırlamayı onaylayın</translation>
     </message>
     <message>
         <source>Are you sure you want to reset all settings to default?</source>
@@ -571,6 +571,14 @@
         <source>Font size selection</source>
         <translation>Yazı boyutu seçimi</translation>
     </message>
+    <message>
+        <source>Skip confirmation for main window Auto-Type actions</source>
+        <translation>Ana pencerede otomatik yazma işlemleri için onay istenmesin</translation>
+    </message>
+    <message>
+        <source>Auto-generate password for new entries</source>
+        <translation>Yeni kayıtlar için parola otomatik olarak oluşturulsun</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetSecurity</name>
@@ -662,6 +670,17 @@
     </message>
 </context>
 <context>
+    <name>AttachmentWidget</name>
+    <message>
+        <source>Attachment Viewer</source>
+        <translation>Ek dosya görüntüleyici</translation>
+    </message>
+    <message>
+        <source>Unknown attachment type</source>
+        <translation>Ek dosya türü bilinmiyor</translation>
+    </message>
+</context>
+<context>
     <name>AutoType</name>
     <message>
         <source>The requested Auto-Type sequence cannot be used due to an error:</source>
@@ -710,6 +729,10 @@
     <message>
         <source>Invalid placeholder: %1</source>
         <translation>Yer belirteci geçersiz: %1</translation>
+    </message>
+    <message>
+        <source>Entry has invalid TOTP settings</source>
+        <translation>Kaydın tek kullanımlık parola ayarları geçersiz</translation>
     </message>
 </context>
 <context>
@@ -780,20 +803,6 @@
         <translation>Otomatik yazmak ya da aramayı kullanarak bir kayıt bulmak için bir satıra çift tıklayın:</translation>
     </message>
     <message>
-        <source>&lt;p&gt;You can use advanced search queries to find any entry in your open databases. The following shortcuts are useful:&lt;br/&gt;
-Ctrl+F - Toggle database search&lt;br/&gt;
-Ctrl+1 - Type username&lt;br/&gt;
-Ctrl+2 - Type password&lt;br/&gt;
-Ctrl+3 - Type TOTP&lt;br/&gt;
-Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Açık veri tabanlarından bir kayıt bulmak için gelişmiş arama sorguları kullanabilirsiniz. Şu kısayol tuşları kullanışlıdır:&lt;br/&gt;
-Ctrl+F - Veri tabanı aramasını değşitir&lt;br/&gt;
-Ctrl+1 - Kullanıcı adını yaz&lt;br/&gt;
-Ctrl+2 - Parolayı yaz&lt;br/&gt;
-Ctrl+3 - Tek kullanımlık parolayı yaz&lt;br/&gt;
-Ctrl+4 - Sanal klavyeyi kullan (yalnızca Windows)&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Search all open databases</source>
         <translation>Tüm açık veri tabanlarında ara</translation>
     </message>
@@ -836,6 +845,55 @@ Ctrl+4 - Sanal klavyeyi kullan (yalnızca Windows)&lt;/p&gt;</translation>
     <message>
         <source>Use Virtual Keyboard</source>
         <translation>Sanal klavyeyi kullan</translation>
+    </message>
+    <message>
+        <source>Type {URL}</source>
+        <translation>{URL} yaz</translation>
+    </message>
+    <message>
+        <source>Copy URL</source>
+        <translation>Adresi kopyala</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;The following shortcuts are available:&lt;br/&gt;
+Ctrl+F - Focus search&lt;br/&gt;
+Ctrl+1 - Type username&lt;br/&gt;
+Ctrl+2 - Type password&lt;br/&gt;
+Ctrl+3 - Type TOTP&lt;br/&gt;
+Ctrl+4 - Type URL&lt;br/&gt;
+Ctrl+5 - Use Virtual Keyboard (Windows Only)&lt;br/&gt;
+Ctrl+Shift+1 - Copy username&lt;br/&gt;
+Ctrl+Shift+2 - Copy password&lt;br/&gt;
+Ctrl+Shift+3 - Copy TOTP&lt;br/&gt;
+Ctrl+Shift+4 - Copy URL&lt;br/&gt;
+&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Şu kısayollar kullanılabilir:&lt;br/&gt;
+Ctrl+F - Aramaya geç
+Ctrl+1 - Kullanıcı adını yaz&lt;br/&gt;
+Ctrl+2 - Parolayı yaz&lt;br/&gt;
+Ctrl+3 - Tek kullanımlık parolayı yaz&lt;br/&gt;
+Ctrl+4 - Adresi yaz&lt;br/&gt;
+Ctrl+5 - Sanal klavyeyi kullan (yalnızca Windows)&lt;br/&gt;
+Ctrl+Shift+1 - Kullanıcı adını kopyala&lt;br/&gt;
+Ctrl+Shift+2 - Parolayı kopyala&lt;br/&gt;
+Ctrl+Shift+3 - Tek kullanımlık parolayı kopyala&lt;br/&gt;
+Ctrl+Shift+4 - Adresi kopyala&lt;br/&gt;
+&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>You can use advanced search queries to find any entry in your open databases.</source>
+        <translation>Açık veri tabanlarınızdaki herhangi bir kaydı bulmak için gelişmiş arama sorgularını kullanabilirsiniz.</translation>
+    </message>
+</context>
+<context>
+    <name>BinaryStream</name>
+    <message>
+        <source>Failed to read string data: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>String length exceeds 10 MiB limit (requested %1)</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1726,6 +1784,10 @@ Bu dosya ile ilerlemek istediğinize emin misiniz?</translation>
         <source>Hardware keys found, but no slots are configured.</source>
         <translation>Donanımsal anahtar bulundu. Ancak herhangi bir yuva yapılandırılmamış.</translation>
     </message>
+    <message>
+        <source>Press ESC again to close this database</source>
+        <translation>ESC tuşuna yeniden basarak bu veri tabanını kapatın </translation>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingWidgetMetaData</name>
@@ -2268,20 +2330,12 @@ veri tabanından kaldırılır.</translation>
         <translation>Görüntülenecek ad:</translation>
     </message>
     <message>
-        <source>Publically visible display name used on the unlock dialog</source>
-        <translation>Kilit açma penceresinde herkese açık olarak görüntülenen ad</translation>
-    </message>
-    <message>
         <source>Database public display name</source>
         <translation>Veri tabanının herkese açık görüntülenecek adı</translation>
     </message>
     <message>
         <source>Display color:</source>
         <translation>Görüntülenme rengi:</translation>
-    </message>
-    <message>
-        <source>Publically visible color used on the unlock dialog</source>
-        <translation>Kilit açma penceresinde herkese açık olarak görüntülenecek renk</translation>
     </message>
     <message>
         <source>Database public display color chooser</source>
@@ -2298,6 +2352,14 @@ veri tabanından kaldırılır.</translation>
     <message>
         <source>Select Database Icon</source>
         <translation>Veri tabanı simgesini seçin</translation>
+    </message>
+    <message>
+        <source>Publicly visible display name used on the unlock dialog</source>
+        <translation>Kilit açma penceresinde herkese açık olarak görüntülenecek ad</translation>
+    </message>
+    <message>
+        <source>Publicly visible color used on the unlock dialog</source>
+        <translation>Kilit açma penceresinde herkese açık olarak görüntülenecek renk</translation>
     </message>
 </context>
 <context>
@@ -2643,18 +2705,6 @@ Bu kesinlikle bir uygulama hatasıdır. Lütfen geliştiricilere bildirin.</tran
         <translation>Seçimimi hatırla</translation>
     </message>
     <message>
-        <source>Delete group</source>
-        <translation>Grubu sil</translation>
-    </message>
-    <message>
-        <source>Do you really want to delete the group &quot;%1&quot; for good?</source>
-        <translation>&quot;%1&quot; grubunu tamamen silmek istediğinize emin misiniz?</translation>
-    </message>
-    <message>
-        <source>Move group to recycle bin?</source>
-        <translation>Grup çöpe atılsın mı?</translation>
-    </message>
-    <message>
         <source>Do you really want to move the group &quot;%1&quot; to the recycle bin?</source>
         <translation>&quot;%1&quot; grubunu çöpe atmak istediğinize emin misiniz?</translation>
     </message>
@@ -2675,24 +2725,12 @@ Bu kesinlikle bir uygulama hatasıdır. Lütfen geliştiricilere bildirin.</tran
         <translation>Kaynak veri tabanı olmadığından yapılacak bir şey yok.</translation>
     </message>
     <message>
-        <source>Successfully merged the database files.</source>
-        <translation>Veri tabanı dosyaları birleştirildi.</translation>
-    </message>
-    <message>
-        <source>Database was not modified by merge operation.</source>
-        <translation>Birleştirme işlemi veri tabanını değiştirmedi.</translation>
-    </message>
-    <message>
         <source>Search Results (%1)</source>
         <translation>Arama sonuçları (%1)</translation>
     </message>
     <message>
         <source>No Results</source>
         <translation>Uygun bir sonuç bulunamadı</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Kaydet</translation>
     </message>
     <message>
         <source>Enter a unique name or overwrite an existing search from the list:</source>
@@ -2757,10 +2795,6 @@ Güvenli kaydetme kapatılarak yeniden denensin mi?</translation>
         <translation>KeePass 2 veri tabanı</translation>
     </message>
     <message>
-        <source>Save database backup</source>
-        <translation>Veri tabanı yedeğini kaydet</translation>
-    </message>
-    <message>
         <source>Empty recycle bin?</source>
         <translation>Çöp kutusu boşaltılsın mı?</translation>
     </message>
@@ -2790,14 +2824,6 @@ Güvenli kaydetme kapatılarak yeniden denensin mi?</translation>
         <translation>&apos;%1&apos; uzak eşitlemesi tamamlandı!</translation>
     </message>
     <message>
-        <source>Remote sync &apos;%1&apos; failed: %2</source>
-        <translation>&apos;%1&apos; uzak eşitlemesi tamamlanamadı: %2</translation>
-    </message>
-    <message>
-        <source>Error while saving database %1: %2</source>
-        <translation>%1 veri tabanı kaydedilirken sorun çıktı: %2</translation>
-    </message>
-    <message>
         <source>Downloading...</source>
         <translation>İndiriliyor...</translation>
     </message>
@@ -2806,8 +2832,16 @@ Güvenli kaydetme kapatılarak yeniden denensin mi?</translation>
         <translation>Yükleniyor...</translation>
     </message>
     <message>
+        <source>Remote sync &apos;%1&apos; failed: %2</source>
+        <translation>&apos;%1&apos; uzak eşitlemesi tamamlanamadı: %2</translation>
+    </message>
+    <message>
         <source>Syncing...</source>
         <translation>Eşitleniyor...</translation>
+    </message>
+    <message>
+        <source>Error while saving database %1: %2</source>
+        <translation>%1 veri tabanı kaydedilirken sorun çıktı: %2</translation>
     </message>
     <message>
         <source>Remove passkey from entry</source>
@@ -2824,10 +2858,6 @@ Güvenli kaydetme kapatılarak yeniden denensin mi?</translation>
     <message>
         <source>Do you want to load the changes?</source>
         <translation>Değişiklikleri yüklemek ister misiniz?</translation>
-    </message>
-    <message>
-        <source>Reload database</source>
-        <translation>Veri tabanını yeniden yükle</translation>
     </message>
     <message>
         <source>Reloading database…</source>
@@ -2854,12 +2884,59 @@ Güvenli kaydetme kapatılarak yeniden denensin mi?</translation>
         <translation>&quot;%1&quot; veri tabanı dosyası dışarıdan değiştirilmiş.&lt;br&gt;Nasıl ilerlemek istersiniz?&lt;br&gt;&lt;br&gt;Tüm değişiklikler birleştirilsin ve kaydedilsin&lt;br&gt;Diskteki değişikliklerin üzerine yazılsın&lt;br&gt;Kaydedilmemiş değişiklikler silinsin</translation>
     </message>
     <message>
+        <source>Reload database</source>
+        <translation>Veri tabanını yeniden yükle</translation>
+    </message>
+    <message>
         <source>Database file overwritten.</source>
         <translation>Veri tabanı dosyasının üzerine yazıldı.</translation>
     </message>
     <message>
         <source>Database file on disk cannot be unlocked with current credentials.&lt;br&gt;Enter new credentials and/or present hardware key to continue.</source>
         <translation>Diskteki veri tabanı dosyası geçerli kimlik doğrulama bilgileriyle açılamadı.&lt;br&gt;İlerlemek için yeni kimlik doğrulama bilgilerini yazın ve/veya geçerli donanım anahtarını kullanın.</translation>
+    </message>
+    <message>
+        <source>Failed to save backup database: %1</source>
+        <translation>Yedek veri tabanı kaydedilemedi: %1</translation>
+    </message>
+    <message>
+        <source>Confirm Delete Group</source>
+        <translation>Grubu silmeyi onaylayın</translation>
+    </message>
+    <message>
+        <source>Do you really want to permanently delete the group &quot;%1&quot;?</source>
+        <translation>&quot;%1&quot; grubunu kalıcı olarak silmek istediğinize emin misiniz?</translation>
+    </message>
+    <message>
+        <source>Confirm Recycle Group</source>
+        <translation>Grubu çöpe atmayı onaylayın</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Kaydet</translation>
+    </message>
+    <message>
+        <source>Save Database Backup</source>
+        <translation>Veri tabanı yedeğini kaydet</translation>
+    </message>
+    <message>
+        <source>Successfully merged the selected database.</source>
+        <translation>Seçilmiş veri tabanı birleştirildi.</translation>
+    </message>
+    <message>
+        <source>No changes were made by the merge operation.</source>
+        <translation>Birleştirme işleminde herhangi bir değişiklik yapılmadı.</translation>
+    </message>
+    <message>
+        <source>Merge canceled, no changes were made.</source>
+        <translation>Birleştirme işlemi iptal edildi. Herhangi bir değişiklik yapılmadı.</translation>
+    </message>
+</context>
+<context>
+    <name>EditEntryAttachmentsDialog</name>
+    <message>
+        <source>Edit: %1</source>
+        <translation>Düzenle: %1</translation>
     </message>
 </context>
 <context>
@@ -2890,7 +2967,7 @@ Güvenli kaydetme kapatılarak yeniden denensin mi?</translation>
     </message>
     <message>
         <source>Confirm Removal</source>
-        <translation>Kaldırmayı onayla</translation>
+        <translation>Kaldırmayı onaylayın</translation>
     </message>
     <message>
         <source>Are you sure you want to remove this URL?</source>
@@ -3341,7 +3418,7 @@ Düzeltmek ister misiniz?</translation>
     </message>
     <message>
         <source>Toggle notes visibility</source>
-        <translation>Notların görünürlüğünü değiştir</translation>
+        <translation>Notların görünürlüğünü aç/kapat</translation>
     </message>
     <message>
         <source>T&amp;ags:</source>
@@ -3507,7 +3584,7 @@ Düzeltmek ister misiniz?</translation>
     </message>
     <message>
         <source>Hide entries from browser extension toggle for this and sub groups</source>
-        <translation>Kayıtlar bu grup ve alt gruplarında tarayıcı eklentisinden gizlenir</translation>
+        <translation>Bu grup ve alt grupları için tarayıcı eklentisi aç/kapat kayıtları gizlensin</translation>
     </message>
     <message>
         <source>Skip Auto-Submit for entries:</source>
@@ -3515,7 +3592,7 @@ Düzeltmek ister misiniz?</translation>
     </message>
     <message>
         <source>Skip Auto-Submit toggle for this and sub groups</source>
-        <translation>Bu grup ve alt gruplarında otomatik gönderim yapılmaz</translation>
+        <translation>Bu grup ve alt gruplarında otomatik gönderim yapılmasın</translation>
     </message>
     <message>
         <source>Use entries only with HTTP Basic Auth:</source>
@@ -3523,7 +3600,7 @@ Düzeltmek ister misiniz?</translation>
     </message>
     <message>
         <source>Only HTTP Auth toggle for this and sub groups</source>
-        <translation>Bu grup ve alt gruplarında yalnızca HTTP kimlik doğrulaması kullanılır</translation>
+        <translation>Bu grup ve alt gruplarında yalnızca HTTP kimlik doğrulaması kullanılsın</translation>
     </message>
     <message>
         <source>Do not use entries with HTTP Basic Auth:</source>
@@ -3531,7 +3608,7 @@ Düzeltmek ister misiniz?</translation>
     </message>
     <message>
         <source>Do not use HTTP Auth toggle for this and sub groups</source>
-        <translation>Bu grup ve alt gruplarında HTTP kimlik doğrulaması kullanılmaz</translation>
+        <translation>Bu grup ve alt gruplarında HTTP kimlik doğrulaması kullanılmasın</translation>
     </message>
     <message>
         <source>Omit WWW subdomain from matching:</source>
@@ -3539,7 +3616,7 @@ Düzeltmek ister misiniz?</translation>
     </message>
     <message>
         <source>Omit WWW subdomain from matching toggle for this and sub groups</source>
-        <translation>Bu alt grupları için WWW alt etki alanının eşleşmeye katılma durumunu değiştirir</translation>
+        <translation>Bu grup ve alt grupları için WWW alt etki alanının eşleşmeye katılma durumu yok sayılsın</translation>
     </message>
     <message>
         <source>Restrict matching to given browser key:</source>
@@ -3547,7 +3624,7 @@ Düzeltmek ister misiniz?</translation>
     </message>
     <message>
         <source>Restrict matching to given browser key toggle for this and sub groups</source>
-        <translation>Eşleşmeyi belirtilen tarayıcı anahtarı ile kısıtlama bu ve alt grupları için değiştirilsin</translation>
+        <translation>Eşleşmeyi belirtilen tarayıcı anahtarı ile kısıtlama bu grup ve alt grupları için değiştirilsin</translation>
     </message>
 </context>
 <context>
@@ -3837,14 +3914,6 @@ Desteklenen eklentiler: %1.</translation>
         <translation>Değiştirilme tarih ve saati</translation>
     </message>
     <message>
-        <source>Accessed:</source>
-        <translation>Erişilme:</translation>
-    </message>
-    <message>
-        <source>Datetime accessed</source>
-        <translation>Erişilme tarih ve saati</translation>
-    </message>
-    <message>
         <source>Uuid:</source>
         <translation>Eşsiz kod:</translation>
     </message>
@@ -3911,223 +3980,6 @@ Bu işlem etkilenecek eklentilerin bozulmasına neden olabilir.</translation>
         <translation>Kurallı ifade sözdizimi geçersiz %1
 %2</translation>
     </message>
-</context>
-<context>
-    <name>EntryAttachments</name>
-    <message>
-        <source>Cannot open file &quot;%1&quot;</source>
-        <translation>&quot;%1&quot; dosyası açılamadı</translation>
-    </message>
-</context>
-<context>
-    <name>EntryAttachmentsDialog</name>
-    <message>
-        <source>Form</source>
-        <translation>Form</translation>
-    </message>
-    <message>
-        <source>File name</source>
-        <translation>Dosya adı</translation>
-    </message>
-    <message>
-        <source>File contents...</source>
-        <translation>Dosya içerikleri...</translation>
-    </message>
-</context>
-<context>
-    <name>EntryAttachmentsModel</name>
-    <message>
-        <source>Name</source>
-        <translation>Ad</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation>Boyut</translation>
-    </message>
-</context>
-<context>
-    <name>EntryAttachmentsWidget</name>
-    <message>
-        <source>Form</source>
-        <translation>Form</translation>
-    </message>
-    <message>
-        <source>Attachments</source>
-        <translation>Ek dosyalar</translation>
-    </message>
-    <message>
-        <source>Add new attachment</source>
-        <translation>Yeni ek dosya ekle</translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translation>Ekle</translation>
-    </message>
-    <message>
-        <source>Remove selected attachment</source>
-        <translation>Seçilmiş ek dosyayı kaldır</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Kaldır</translation>
-    </message>
-    <message>
-        <source>Open selected attachment</source>
-        <translation>Seçilmiş ek dosyayı aç</translation>
-    </message>
-    <message>
-        <source>Open</source>
-        <translation>Aç</translation>
-    </message>
-    <message>
-        <source>Save selected attachment to disk</source>
-        <translation>Seçilmiş ek dosyayı diske kaydet</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Kaydet</translation>
-    </message>
-    <message>
-        <source>Select files</source>
-        <translation>Dosyaları seçin</translation>
-    </message>
-    <message>
-        <source>Confirm remove</source>
-        <translation>Kaldırmayı onayla</translation>
-    </message>
-    <message numerus="yes">
-        <source>Are you sure you want to remove %n attachment(s)?</source>
-        <translation><numerusform>%n ek dosyayı kaldırmak istediğinize emin misiniz?</numerusform><numerusform>%n ek dosyayı kaldırmak istediğinize emin misiniz?</numerusform></translation>
-    </message>
-    <message>
-        <source>Save attachments</source>
-        <translation>Ek dosyaları kaydet</translation>
-    </message>
-    <message>
-        <source>Unable to create directory:
-%1</source>
-        <translation>Klasör oluşturulamadı:
-%1</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to overwrite the existing file &quot;%1&quot; with the attachment?</source>
-        <translation>Ek dosyayı, var olan &quot;%1&quot; dosyasının üzerine yazmak istediğinize emin misiniz?</translation>
-    </message>
-    <message>
-        <source>Confirm overwrite</source>
-        <translation>Üzerine yazmayı onayla</translation>
-    </message>
-    <message>
-        <source>Unable to save attachments:
-%1</source>
-        <translation>Ek dosyalar kaydedilemedi:
-%1</translation>
-    </message>
-    <message>
-        <source>Unable to open attachment:
-%1</source>
-        <translation>Ek dosya açılamadı:
-%1</translation>
-    </message>
-    <message>
-        <source>Unable to open attachments:
-%1</source>
-        <translation>Ek dosyalar açılamadı:
-%1</translation>
-    </message>
-    <message numerus="yes">
-        <source>Unable to open file(s):
-%1</source>
-        <translation><numerusform>Dosya açılamadı:
-%1</numerusform><numerusform>Dosyalar açılamadı:
-%1</numerusform></translation>
-    </message>
-    <message>
-        <source>Confirm Overwrite Attachment</source>
-        <translation>Ek dosya üzerine yazmayı onayla</translation>
-    </message>
-    <message>
-        <source>Confirm Attachment</source>
-        <translation>Ek dosyayı onayla</translation>
-    </message>
-    <message>
-        <source>%1 is a big file (%2 MB).
-Your database may get very large and reduce performance.
-
-Are you sure to add this file?</source>
-        <translation>%1 büyük bir dosya (%2 MB).
-Veri tabanının çok büyümesine ve başarımın düşmesine neden olabilir.
-
-Bu dosyayı eklemek istediğinize emin misiniz?</translation>
-    </message>
-    <message>
-        <source>Attachment modified</source>
-        <translation>Ek dosya değiştirildi</translation>
-    </message>
-    <message>
-        <source>The attachment '%1' was modified.
-Do you want to save the changes to your database?</source>
-        <translation>&apos;%1&apos; ek dosyası değiştirildi.
-Değişiklikleri veri tabanına kaydetmek ister misiniz?</translation>
-    </message>
-    <message>
-        <source>Saving attachment failed</source>
-        <translation>Ek dosya kaydedilemedi</translation>
-    </message>
-    <message>
-        <source>Saving updated attachment failed.
-Error: %1</source>
-        <translation>Güncellenmiş ek dosya kaydedilemedi.
-Hata: %1</translation>
-    </message>
-    <message>
-        <source>Attachment &quot;%1&quot; already exists. 
-Would you like to overwrite the existing attachment?</source>
-        <translation>&quot;%1&quot; ek dosyası zaten var. 
-Var olan ek dosyanın üzerine yazılmasını ister misiniz?</translation>
-    </message>
-    <message>
-        <source>New</source>
-        <translation>Yeni</translation>
-    </message>
-    <message>
-        <source>Preview</source>
-        <translation>Ön izleme</translation>
-    </message>
-    <message>
-        <source>Failed to preview an attachment: Attachment not found</source>
-        <translation>Bir ek dosya ön izlemesi görüntülenemedi: Ek dosya bulunamadı</translation>
-    </message>
-</context>
-<context>
-    <name>EntryAttributesModel</name>
-    <message>
-        <source>Name</source>
-        <translation>Ad</translation>
-    </message>
-</context>
-<context>
-    <name>EntryHistoryModel</name>
-    <message>
-        <source>Current (%1)</source>
-        <translation>Geçerli (%1)</translation>
-    </message>
-    <message>
-        <source>Last modified</source>
-        <translation>Son değiştirilme</translation>
-    </message>
-    <message>
-        <source>Age</source>
-        <translation>Yaş</translation>
-    </message>
-    <message>
-        <source>Difference</source>
-        <translation>Fark</translation>
-    </message>
-    <message>
-        <source>Size</source>
-        <translation>Boyut</translation>
-    </message>
     <message>
         <source>Title</source>
         <translation>Başlık</translation>
@@ -4186,6 +4038,216 @@ Var olan ek dosyanın üzerine yazılmasını ister misiniz?</translation>
     </message>
 </context>
 <context>
+    <name>EntryAttachments</name>
+    <message>
+        <source>Cannot open file &quot;%1&quot;</source>
+        <translation>&quot;%1&quot; dosyası açılamadı</translation>
+    </message>
+</context>
+<context>
+    <name>EntryAttachmentsModel</name>
+    <message>
+        <source>Name</source>
+        <translation>Ad</translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation>Boyut</translation>
+    </message>
+</context>
+<context>
+    <name>EntryAttachmentsWidget</name>
+    <message>
+        <source>Form</source>
+        <translation>Form</translation>
+    </message>
+    <message>
+        <source>Attachments</source>
+        <translation>Ek dosyalar</translation>
+    </message>
+    <message>
+        <source>Add new attachment</source>
+        <translation>Yeni ek dosya ekle</translation>
+    </message>
+    <message>
+        <source>Remove selected attachment</source>
+        <translation>Seçilmiş ek dosyayı kaldır</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Kaldır</translation>
+    </message>
+    <message>
+        <source>Open selected attachment</source>
+        <translation>Seçilmiş ek dosyayı aç</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation>Aç</translation>
+    </message>
+    <message>
+        <source>Save selected attachment to disk</source>
+        <translation>Seçilmiş ek dosyayı diske kaydet</translation>
+    </message>
+    <message>
+        <source>Select files</source>
+        <translation>Dosyaları seçin</translation>
+    </message>
+    <message>
+        <source>Confirm remove</source>
+        <translation>Kaldırmayı onaylayın</translation>
+    </message>
+    <message numerus="yes">
+        <source>Are you sure you want to remove %n attachment(s)?</source>
+        <translation><numerusform>%n ek dosyayı kaldırmak istediğinize emin misiniz?</numerusform><numerusform>%n ek dosyayı kaldırmak istediğinize emin misiniz?</numerusform></translation>
+    </message>
+    <message>
+        <source>Save attachments</source>
+        <translation>Ek dosyaları kaydet</translation>
+    </message>
+    <message>
+        <source>Unable to create directory:
+%1</source>
+        <translation>Klasör oluşturulamadı:
+%1</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to overwrite the existing file &quot;%1&quot; with the attachment?</source>
+        <translation>Ek dosyayı, var olan &quot;%1&quot; dosyasının üzerine yazmak istediğinize emin misiniz?</translation>
+    </message>
+    <message>
+        <source>Confirm overwrite</source>
+        <translation>Üzerine yazmayı onaylayın</translation>
+    </message>
+    <message>
+        <source>Unable to save attachments:
+%1</source>
+        <translation>Ek dosyalar kaydedilemedi:
+%1</translation>
+    </message>
+    <message>
+        <source>Unable to open attachment:
+%1</source>
+        <translation>Ek dosya açılamadı:
+%1</translation>
+    </message>
+    <message>
+        <source>Unable to open attachments:
+%1</source>
+        <translation>Ek dosyalar açılamadı:
+%1</translation>
+    </message>
+    <message numerus="yes">
+        <source>Unable to open file(s):
+%1</source>
+        <translation><numerusform>Dosya açılamadı:
+%1</numerusform><numerusform>Dosyalar açılamadı:
+%1</numerusform></translation>
+    </message>
+    <message>
+        <source>Confirm Overwrite Attachment</source>
+        <translation>Ek dosya üzerine yazmayı onaylayın</translation>
+    </message>
+    <message>
+        <source>Confirm Attachment</source>
+        <translation>Ek dosyayı onaylayın</translation>
+    </message>
+    <message>
+        <source>%1 is a big file (%2 MB).
+Your database may get very large and reduce performance.
+
+Are you sure to add this file?</source>
+        <translation>%1 büyük bir dosya (%2 MB).
+Veri tabanının çok büyümesine ve başarımın düşmesine neden olabilir.
+
+Bu dosyayı eklemek istediğinize emin misiniz?</translation>
+    </message>
+    <message>
+        <source>Attachment modified</source>
+        <translation>Ek dosya değiştirildi</translation>
+    </message>
+    <message>
+        <source>The attachment '%1' was modified.
+Do you want to save the changes to your database?</source>
+        <translation>&apos;%1&apos; ek dosyası değiştirildi.
+Değişiklikleri veri tabanına kaydetmek ister misiniz?</translation>
+    </message>
+    <message>
+        <source>Saving attachment failed</source>
+        <translation>Ek dosya kaydedilemedi</translation>
+    </message>
+    <message>
+        <source>Saving updated attachment failed.
+Error: %1</source>
+        <translation>Güncellenmiş ek dosya kaydedilemedi.
+Hata: %1</translation>
+    </message>
+    <message>
+        <source>Attachment &quot;%1&quot; already exists. 
+Would you like to overwrite the existing attachment?</source>
+        <translation>&quot;%1&quot; ek dosyası zaten var. 
+Var olan ek dosyanın üzerine yazılmasını ister misiniz?</translation>
+    </message>
+    <message>
+        <source>Preview</source>
+        <translation>Ön izleme</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Düzenle</translation>
+    </message>
+    <message>
+        <source>New Text Document</source>
+        <translation>Yeni yazı belgesi</translation>
+    </message>
+    <message>
+        <source>Add file…</source>
+        <translation>Dosya ekle…</translation>
+    </message>
+    <message>
+        <source>Load from Disk…</source>
+        <translation>Diskten yükle…</translation>
+    </message>
+    <message>
+        <source>Save…</source>
+        <translation>Kaydet…</translation>
+    </message>
+    <message>
+        <source>New Attachment</source>
+        <translation>Yeni ek dosya</translation>
+    </message>
+</context>
+<context>
+    <name>EntryAttributesModel</name>
+    <message>
+        <source>Name</source>
+        <translation>Ad</translation>
+    </message>
+</context>
+<context>
+    <name>EntryHistoryModel</name>
+    <message>
+        <source>Current (%1)</source>
+        <translation>Geçerli (%1)</translation>
+    </message>
+    <message>
+        <source>Last modified</source>
+        <translation>Son değiştirilme</translation>
+    </message>
+    <message>
+        <source>Age</source>
+        <translation>Yaş</translation>
+    </message>
+    <message>
+        <source>Difference</source>
+        <translation>Fark</translation>
+    </message>
+    <message>
+        <source>Size</source>
+        <translation>Boyut</translation>
+    </message>
+</context>
+<context>
     <name>EntryModel</name>
     <message>
         <source>Ref: </source>
@@ -4233,10 +4295,6 @@ Var olan ek dosyanın üzerine yazılmasını ister misiniz?</translation>
         <translation>Değiştirilme</translation>
     </message>
     <message>
-        <source>Accessed</source>
-        <translation>Erişilme</translation>
-    </message>
-    <message>
         <source>Attachments</source>
         <translation>Ek dosyalar</translation>
     </message>
@@ -4271,10 +4329,6 @@ Var olan ek dosyanın üzerine yazılmasını ister misiniz?</translation>
     <message>
         <source>Last modification date</source>
         <translation>Son değiştirilme tarihi</translation>
-    </message>
-    <message>
-        <source>Last access date</source>
-        <translation>Son erişilme tarihi</translation>
     </message>
     <message>
         <source>Attached files</source>
@@ -4469,16 +4523,16 @@ Bu işlem, parolalarınızı ve önemli bilgilerinizi korumasız kılacak!
         <translation>ada göre (azalan)</translation>
     </message>
     <message>
-        <source>unknown</source>
-        <translation>bilinmiyor</translation>
-    </message>
-    <message>
         <source>Export database to HTML file</source>
         <translation>Veri tabanını HTML olarak dışa aktar</translation>
     </message>
     <message>
         <source>HTML file</source>
         <translation>HTML dosyası</translation>
+    </message>
+    <message>
+        <source>invalid sort order</source>
+        <translation>Sıralama geçersiz</translation>
     </message>
 </context>
 <context>
@@ -4656,6 +4710,17 @@ Uygulama ayarlarındaki güvenlik bölümünden DuckDuckGo site simge hizmetini 
     <message>
         <source>Downloading favicons (%1/%2)…</source>
         <translation>Site simgeleri indiriliyor (%1/%2)…</translation>
+    </message>
+</context>
+<context>
+    <name>ImageAttachmentsWidget</name>
+    <message>
+        <source>Zoom:</source>
+        <translation>Yakınlaştır:</translation>
+    </message>
+    <message>
+        <source>Fit</source>
+        <translation>Sığdır</translation>
     </message>
 </context>
 <context>
@@ -5721,10 +5786,6 @@ Bu dosyayı kullanarak ilerlemek istediğinize emin misiniz?</translation>
         <translation>Kaydı &amp;düzenle…</translation>
     </message>
     <message>
-        <source>&amp;Delete Entry…</source>
-        <translation>Kaydı &amp;sil…</translation>
-    </message>
-    <message>
         <source>&amp;New Group…</source>
         <translation>Grup &amp;ekle…</translation>
     </message>
@@ -6087,10 +6148,6 @@ Bazı hatalar ve küçük sorunlarla karşılaşabilirsiniz. Bu sürüm deneme a
         <translation>Veri tabanından aktar</translation>
     </message>
     <message>
-        <source>Create Entry</source>
-        <translation>Kayıt ekle</translation>
-    </message>
-    <message>
         <source>Edit Entry</source>
         <translation>Kaydı düzenle</translation>
     </message>
@@ -6335,16 +6392,40 @@ Bazı hatalar ve küçük sorunlarla karşılaşabilirsiniz. Bu sürüm deneme a
         <translation>Parola oluşturucu</translation>
     </message>
     <message>
-        <source>E&amp;xpire Entry…</source>
-        <translation>Kayıt &amp;geçerlilik süresi…</translation>
-    </message>
-    <message>
         <source>Clear SSH Agent</source>
         <translation>SSH uygulamasını temizle</translation>
     </message>
     <message>
         <source>Clear all identities in ssh-agent</source>
         <translation>SSH uygulamasındaki tüm kimlikleri temizle</translation>
+    </message>
+    <message>
+        <source>New Entry</source>
+        <translation>Kayıt ekle</translation>
+    </message>
+    <message>
+        <source>Edit Entry…</source>
+        <translation>Kaydı düzenle…</translation>
+    </message>
+    <message>
+        <source>E&amp;xpire Entry</source>
+        <translation>Kaydı &amp;geçersiz kıl</translation>
+    </message>
+    <message>
+        <source>Expire Entry</source>
+        <translation>Kaydı geçersiz kıl</translation>
+    </message>
+    <message>
+        <source>&amp;Delete Entry</source>
+        <translation>Kaydı &amp;sil</translation>
+    </message>
+    <message numerus="yes">
+        <source>Move selected entry(s) to the recycle bin</source>
+        <translation><numerusform>Seçilmiş kayıtları çöpe at</numerusform><numerusform>Seçilmiş kayıtları çöpe at</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Permanently delete the selected entry(s)</source>
+        <translation><numerusform>Seçilmiş kayıtları kalıcı olarak sil</numerusform><numerusform>Seçilmiş kayıtları kalıcı olarak sil</numerusform></translation>
     </message>
 </context>
 <context>
@@ -6390,42 +6471,41 @@ Bazı hatalar ve küçük sorunlarla karşılaşabilirsiniz. Bu sürüm deneme a
     </message>
 </context>
 <context>
+    <name>MergeDialog</name>
+    <message>
+        <source>Database Merge Confirmation</source>
+        <translation>Veri tabanı birleştirme onayı</translation>
+    </message>
+    <message>
+        <source>Merge</source>
+        <translation>Birleştir</translation>
+    </message>
+    <message>
+        <source>Group</source>
+        <translation>Grup</translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation>Başlık</translation>
+    </message>
+    <message>
+        <source>UUID</source>
+        <translation>Eşsiz kod</translation>
+    </message>
+    <message>
+        <source>Details</source>
+        <translation>Ayrıntılar</translation>
+    </message>
+    <message>
+        <source>Change</source>
+        <translation>Değiştir</translation>
+    </message>
+</context>
+<context>
     <name>Merger</name>
-    <message>
-        <source>Creating missing %1 [%2]</source>
-        <translation>Eksik %1 [%2] oluşturuluyor</translation>
-    </message>
-    <message>
-        <source>Relocating %1 [%2]</source>
-        <translation>%1 [%2] yeniden yerleştiriliyor</translation>
-    </message>
-    <message>
-        <source>Overwriting %1 [%2]</source>
-        <translation>%1 [%2] üzerine yazılıyor</translation>
-    </message>
-    <message>
-        <source>Synchronizing from newer source %1 [%2]</source>
-        <translation>%1 [%2] yeni kaynaktan eşitleniyor</translation>
-    </message>
-    <message>
-        <source>Synchronizing from older source %1 [%2]</source>
-        <translation>%1 [%2] eski kaynaktan eşitleniyor</translation>
-    </message>
-    <message>
-        <source>Deleting child %1 [%2]</source>
-        <translation>%1 [%2] alt ögesi siliniyor</translation>
-    </message>
-    <message>
-        <source>Deleting orphan %1 [%2]</source>
-        <translation>%1 [%2] sahipsiz ögesi siliniyor</translation>
-    </message>
     <message>
         <source>Changed deleted objects</source>
         <translation>Silinmiş nesneler değiştirildi</translation>
-    </message>
-    <message>
-        <source>Adding missing icon %1</source>
-        <translation>Eksik %1 simgesi ekleniyor </translation>
     </message>
     <message>
         <source>Removed custom data %1 [%2]</source>
@@ -6434,6 +6514,74 @@ Bazı hatalar ve küçük sorunlarla karşılaşabilirsiniz. Bu sürüm deneme a
     <message>
         <source>Adding custom data %1 [%2]</source>
         <translation>%1 [%2] özel verileri ekleniyor</translation>
+    </message>
+    <message>
+        <source>Added</source>
+        <translation>Eklendi</translation>
+    </message>
+    <message>
+        <source>Modified</source>
+        <translation>Değiştirildi</translation>
+    </message>
+    <message>
+        <source>Moved</source>
+        <translation>Taşındı</translation>
+    </message>
+    <message>
+        <source>Deleted</source>
+        <translation>Silindi</translation>
+    </message>
+    <message>
+        <source>Previous location: %1</source>
+        <translation>Önceki konum: %1</translation>
+    </message>
+    <message>
+        <source>Number of entries in group: %1</source>
+        <translation>Gruptaki kayıt sayısı: %1</translation>
+    </message>
+    <message>
+        <source>Group name</source>
+        <translation>Grup adı</translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation>Notlar</translation>
+    </message>
+    <message>
+        <source>Icon (UUID)</source>
+        <translation>Simge (eşsiz kod)</translation>
+    </message>
+    <message>
+        <source>Icon (Number)</source>
+        <translation>Simge (numara)</translation>
+    </message>
+    <message>
+        <source>Expiry time</source>
+        <translation>Geçerlilik süresi sonu</translation>
+    </message>
+    <message>
+        <source>Modification time</source>
+        <translation>Değiştirilme zamanı</translation>
+    </message>
+    <message>
+        <source>%1 (Add local modifications to new entry)</source>
+        <translation>%1 (yeni kayda yerel değişiklikler eklensin)</translation>
+    </message>
+    <message>
+        <source>%1 (Add new modifications to existing entry)</source>
+        <translation>%1 (var olan kayda yeni değişiklikleri eklensin)</translation>
+    </message>
+    <message>
+        <source>Explicit deletion</source>
+        <translation>Kasıtlı silme</translation>
+    </message>
+    <message>
+        <source>Implicit deletion (e.g. removal of parent group)</source>
+        <translation>Kasıtsız silme (üst grubun silinmesi gibi)</translation>
+    </message>
+    <message>
+        <source>Adding new icon %1</source>
+        <translation>Yeni %1 simgesi ekleniyor</translation>
     </message>
 </context>
 <context>
@@ -6497,25 +6645,6 @@ Bazı hatalar ve küçük sorunlarla karşılaşabilirsiniz. Bu sürüm deneme a
     </message>
 </context>
 <context>
-    <name>NewEntryAttachmentsDialog</name>
-    <message>
-        <source>Attachment name cannot be empty</source>
-        <translation>Ek dosya adı boş olamaz</translation>
-    </message>
-    <message>
-        <source>Attachment with the same name already exists</source>
-        <translation>Aynı adlı bir ek dosya zaten var</translation>
-    </message>
-    <message>
-        <source>Save attachment</source>
-        <translation>Ek dosyayı kaydet</translation>
-    </message>
-    <message>
-        <source>New entry attachment</source>
-        <translation>Yeni kayıt ek dosyası</translation>
-    </message>
-</context>
-<context>
     <name>NixUtils</name>
     <message>
         <source>Password Manager</source>
@@ -6554,11 +6683,11 @@ Bazı hatalar ve küçük sorunlarla karşılaşabilirsiniz. Bu sürüm deneme a
     </message>
     <message>
         <source>Unable to process clearText in place</source>
-        <translation>Düz metin yerinde işlenemedi</translation>
+        <translation>Düz yazı yerinde işlenemedi</translation>
     </message>
     <message>
         <source>Expected %1 bytes of clear-text, found %2</source>
-        <translation>%1 bayt düz metin bekleniyordu, %2 bulundu</translation>
+        <translation>%1 bayt düz yazı bekleniyordu, %2 bulundu</translation>
     </message>
 </context>
 <context>
@@ -6613,10 +6742,6 @@ Bazı hatalar ve küçük sorunlarla karşılaşabilirsiniz. Bu sürüm deneme a
     <message>
         <source>Found zero keys</source>
         <translation>Sıfır anahtar bulundu</translation>
-    </message>
-    <message>
-        <source>Failed to read public key.</source>
-        <translation>Herkese açık anahtar okunamadı.</translation>
     </message>
     <message>
         <source>Corrupted key file, reading private key failed</source>
@@ -6706,6 +6831,14 @@ Bazı hatalar ve küçük sorunlarla karşılaşabilirsiniz. Bu sürüm deneme a
         <source>(encrypted)</source>
         <translation>(şifrelenmiş)</translation>
     </message>
+    <message>
+        <source>Failed to read key file: %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Failed to read public key: %1</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>OpenSSHKeyGenDialog</name>
@@ -6760,10 +6893,6 @@ Bazı hatalar ve küçük sorunlarla karşılaşabilirsiniz. Bu sürüm deneme a
 <context>
     <name>PasskeyExporter</name>
     <message>
-        <source>KeePassXC: Passkey Export</source>
-        <translation>KeePassXC: Geçiş anahtarı dışa aktarma</translation>
-    </message>
-    <message>
         <source>File &quot;%1.passkey&quot; already exists.
 Do you want to overwrite it?
 </source>
@@ -6782,6 +6911,10 @@ Do you want to overwrite it?
     <message>
         <source>Cannot write to file</source>
         <translation>Dosyaya yazılamadı</translation>
+    </message>
+    <message>
+        <source>Overwrite Existing File?</source>
+        <translation>Var olan dosyanın üzerine yazılsın mı?</translation>
     </message>
 </context>
 <context>
@@ -6858,14 +6991,6 @@ Do you want to overwrite it?
         <translation>&quot;%1&quot; dosyası okunmak üzere açılamadı.</translation>
     </message>
     <message>
-        <source>Open passkey file</source>
-        <translation>Geçiş anahtarı dosyasını aç</translation>
-    </message>
-    <message>
-        <source>Cannot import passkey</source>
-        <translation>Geçiş anahtarı içe aktarılamadı</translation>
-    </message>
-    <message>
         <source>Cannot import passkey file &quot;%1&quot;. Data is missing.</source>
         <translation>&quot;%1&quot; geçiş anahtarı dosyası içe aktarılamadı. Veriler eksik.</translation>
     </message>
@@ -6880,6 +7005,14 @@ The following data is missing:
     <message>
         <source>Cannot import passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
         <translation>&quot;%1&quot; geçiş anahtarı dosyası içe aktarılamadı. Kişisel anahtar eksik ya da bozuk.</translation>
+    </message>
+    <message>
+        <source>Open Passkey File</source>
+        <translation>Geçiş anahtarı dosyasını aç</translation>
+    </message>
+    <message>
+        <source>Passkey Import Failed</source>
+        <translation>Geçiş anahtarları içe aktarılamadı</translation>
     </message>
 </context>
 <context>
@@ -7157,14 +7290,6 @@ The following data is missing:
         <translation>Çok zor</translation>
     </message>
     <message>
-        <source>Confirm Delete Wordlist</source>
-        <translation>Sözcük listesini silmeyi onayla</translation>
-    </message>
-    <message>
-        <source>Do you really want to delete the wordlist &quot;%1&quot;?</source>
-        <translation>&quot;%1&quot; sözcük listesini silmek istediğinize emin misiniz?</translation>
-    </message>
-    <message>
         <source>Failed to delete wordlist</source>
         <translation>Sözcük listesi silinemedi</translation>
     </message>
@@ -7218,6 +7343,18 @@ Do you want to overwrite it?</source>
         <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;, &quot;B&quot;, &quot;8&quot;, &quot;G&quot;, &quot;6&quot;</source>
         <translation>Katılmayacak karakterler: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;, &quot;B&quot;, &quot;8&quot;, &quot;G&quot;, &quot;6&quot;</translation>
     </message>
+    <message>
+        <source>Warning: the chosen wordlist is smaller than the minimum recommended size!</source>
+        <translation>Uyarı: Listeye seçilmiş sözcük sayısı önerilen en düşük sözcük sayısından az!</translation>
+    </message>
+    <message>
+        <source>Confirm Remove Wordlist</source>
+        <translation>Sözcük listesini silmeyi onaylayın</translation>
+    </message>
+    <message>
+        <source>Do you really want to remove the wordlist &quot;%1&quot;?</source>
+        <translation>&quot;%1&quot; sözcük listesini silmek istediğinize emin misiniz?</translation>
+    </message>
 </context>
 <context>
     <name>PasswordWidget</name>
@@ -7267,7 +7404,7 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Toggle password visibility using Control + H. Open the password generator using Control + G.</source>
-        <translation>Control + H ile parola görünürlüğünü değiştirebilir, Control + G ile parola üretecini açabilirsiniz.</translation>
+        <translation>Control + H ile parola görünürlüğünü değiştirebilir, Control + G ile parola oluşturucuyu açabilirsiniz.</translation>
     </message>
 </context>
 <context>
@@ -7288,16 +7425,16 @@ Do you want to overwrite it?</source>
 <context>
     <name>PreviewEntryAttachmentsDialog</name>
     <message>
-        <source>Preview entry attachment</source>
-        <translation>Kayıt ek dosyaları ön izlemesi</translation>
+        <source>Form</source>
+        <translation>Form</translation>
     </message>
     <message>
-        <source>No preview available</source>
-        <translation>Ön izleme yok</translation>
+        <source>Preview: %1</source>
+        <translation>Ön izleme: %1</translation>
     </message>
     <message>
-        <source>Image format not supported</source>
-        <translation>Görsel biçimi desteklenmiyor</translation>
+        <source>Save…</source>
+        <translation>Kaydet…</translation>
     </message>
 </context>
 <context>
@@ -7952,10 +8089,6 @@ Do you want to overwrite it?</source>
         <translation>Ortalama parola uzunluğu</translation>
     </message>
     <message>
-        <source>%1 characters</source>
-        <translation>%1 karakter</translation>
-    </message>
-    <message>
         <source>Word count for the diceware passphrase.</source>
         <translation>Zar atma parola ifadesindeki sözcük sayısı.</translation>
     </message>
@@ -7967,7 +8100,7 @@ Do you want to overwrite it?</source>
     <message>
         <source>Wordlist for the diceware generator.
 [Default: EFF English]</source>
-        <translation>Zar atma üreteci için sözcük listesi.
+        <translation>Zar atma oluşturucusu için sözcük listesi.
 [Varsayılan: EFF İngilizce]</translation>
     </message>
     <message>
@@ -8392,7 +8525,7 @@ Kullanılabilecek komutlar:
     </message>
     <message>
         <source>Show the protected attributes in clear text.</source>
-        <translation>Korumalı öznitelikleri düz metin olarak görüntüler.</translation>
+        <translation>Korumalı öznitelikleri düz yazı olarak görüntüler.</translation>
     </message>
     <message>
         <source>Show all the attributes of the entry.</source>
@@ -8436,7 +8569,7 @@ Kullanılabilecek komutlar:
     </message>
     <message>
         <source>Failed to open database file %1: not a plain file</source>
-        <translation>%1 veri tabanı dosyası açılamadı: Basit metin dosyası değil</translation>
+        <translation>%1 veri tabanı dosyası açılamadı: Basit yazı dosyası değil</translation>
     </message>
     <message>
         <source>Failed to open database file %1: not readable</source>
@@ -8797,32 +8930,12 @@ Kernel: %3 %4</source>
         <translation><numerusform>%1 s</numerusform><numerusform>%1 s</numerusform></translation>
     </message>
     <message>
-        <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
-        <translation>&quot;%1&quot; kaydını kalıcı olarak silmek istediğinize emin misiniz?</translation>
-    </message>
-    <message numerus="yes">
-        <source>Do you really want to delete %n entry(s) for good?</source>
-        <translation><numerusform>%n kaydı kalıcı olarak silmek istediğinize emin misiniz?</numerusform><numerusform>%n kaydı kalıcı olarak silmek istediğinize emin misiniz?</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Delete entry(s)?</source>
-        <translation><numerusform>Kayıt silinsin mi?</numerusform><numerusform>Kayıtlar silinsin mi?</numerusform></translation>
-    </message>
-    <message>
         <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
         <translation>&quot;%1&quot; kaydını çöpe atmak istediğinize emin misiniz?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
         <translation><numerusform>% kaydı çöpe atmak istediğinize emin misiniz?</numerusform><numerusform>% kaydı çöpe atmak istediğinize emin misiniz?</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Move entry(s) to recycle bin?</source>
-        <translation><numerusform>Kayıt çöpe atılsın mı?</numerusform><numerusform>Kayıtlar çöpe atılsın mı?</numerusform></translation>
-    </message>
-    <message>
-        <source>Replace references to entry?</source>
-        <translation>Referanslar kayıt olarak değiştirilsin mi?</translation>
     </message>
     <message numerus="yes">
         <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
@@ -9191,24 +9304,12 @@ Bu seçenekler kullanımdan kaldırıldı. yerine --set-key-file kullanın.</tra
         <translation>%1 kısayolu &apos;%2&apos; ile çakışıyor. Kısayol değiştirilsin mi?</translation>
     </message>
     <message>
-        <source>Cannot generate valid passphrases because the wordlist is too short</source>
-        <translation>Sözcük listesi çok kısa olduğundan geçerli parola ifadeleri oluşturulamıyor</translation>
-    </message>
-    <message>
         <source>Encrypted files are not supported.</source>
         <translation>Şifrelenmiş dosyalar desteklenmez.</translation>
     </message>
     <message>
         <source>Proton Pass Import</source>
         <translation>Proton Pass içe aktarma</translation>
-    </message>
-    <message>
-        <source>Delete plugin data?</source>
-        <translation>Eklenti verileri silinsin mi?</translation>
-    </message>
-    <message numerus="yes">
-        <source>Delete plugin data from Entry(s)?</source>
-        <translation><numerusform>Kayıtlardan eklenti verileri silinsin mi?</numerusform><numerusform>Kayıtlardan eklenti verileri silinsin mi?</numerusform></translation>
     </message>
     <message>
         <source>Passkey</source>
@@ -9237,6 +9338,52 @@ Bu seçenekler kullanımdan kaldırıldı. yerine --set-key-file kullanın.</tra
     <message>
         <source>Tags</source>
         <translation>Etiketler</translation>
+    </message>
+    <message>
+        <source>Warning: the chosen wordlist is smaller than the minimum recommended size!</source>
+        <translation>Uyarı: Listeye seçilmiş sözcük sayısı önerilen en düşük sözcük sayısından az!</translation>
+    </message>
+    <message>
+        <source>Invalid Step</source>
+        <comment>TOTP</comment>
+        <translation>Adım geçersiz</translation>
+    </message>
+    <message>
+        <source>Invalid Digits</source>
+        <comment>TOTP</comment>
+        <translation>Rakamlar geçersiz</translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 character(s)</source>
+        <translation><numerusform>%1 karakter</numerusform><numerusform>%1 karakter</numerusform></translation>
+    </message>
+    <message>
+        <source>Do you really want to permanently delete the entry &quot;%1&quot;?</source>
+        <translation>&quot;%1&quot; kaydını kalıcı olarak silmek istediğinize emin misiniz?</translation>
+    </message>
+    <message numerus="yes">
+        <source>Do you really want to permanently delete %n entry(s)?</source>
+        <translation><numerusform>%n kaydı kalıcı olarak silmek istediğinize emin misiniz?</numerusform><numerusform>%n kaydı kalıcı olarak silmek istediğinize emin misiniz?</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Confirm Delete Entry(s)</source>
+        <translation><numerusform>Kayıtları silmeyi onaylayın</numerusform><numerusform>Kayıtları silmeyi onaylayın</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Confirm Recycle Entry(s)</source>
+        <translation><numerusform>Kayıtları çöpe atmayı onaylayın</numerusform><numerusform>Kayıtları çöpe atmayı onaylayın</numerusform></translation>
+    </message>
+    <message>
+        <source>Confirm Delete Plugin Data</source>
+        <translation>Eklenti verilerini silmeyi onaylayın</translation>
+    </message>
+    <message numerus="yes">
+        <source>Delete plugin data from the selected entry(s)?</source>
+        <translation><numerusform>Seçilmiş kayıtlardan eklenti verileri kaldırılsın mı?</numerusform><numerusform>Seçilmiş kayıtlardan eklenti verileri kaldırılsın mı?</numerusform></translation>
+    </message>
+    <message>
+        <source>Confirm Replace Entry References</source>
+        <translation>Kayıt başvurularını değiştirmeyi onaylayın</translation>
     </message>
 </context>
 <context>
@@ -9380,7 +9527,7 @@ Bu seçenekler kullanımdan kaldırıldı. yerine --set-key-file kullanın.</tra
     </message>
     <message>
         <source>Only show entries that have been explicitly allowed or denied</source>
-        <translation>Yalnızca açıkça izin kabul ya da red edilen kayıtlar görüntülensin</translation>
+        <translation>Yalnızca izni kasıtlı olarak kabul ya da red edilen kayıtlar görüntülensin</translation>
     </message>
     <message>
         <source>Show expired entries</source>
@@ -9759,12 +9906,12 @@ Bu seçenekler kullanımdan kaldırıldı. yerine --set-key-file kullanın.</tra
         <translation>Ortalama parola uzunluğu</translation>
     </message>
     <message>
-        <source>%1 characters</source>
-        <translation>%1 karakter</translation>
-    </message>
-    <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
         <translation>Ortalama parola uzunluğu on karakterden az. Daha uzun parolalar daha fazla güvenlik sağlar.</translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 character(s)</source>
+        <translation><numerusform>%1 karakter</numerusform><numerusform>%1 karakter</numerusform></translation>
     </message>
 </context>
 <context>
@@ -9903,6 +10050,10 @@ Bu seçenekler kullanımdan kaldırıldı. yerine --set-key-file kullanın.</tra
     <message>
         <source>Limit search to selected group</source>
         <translation>Arama seçilmiş grupla sınırlansın</translation>
+    </message>
+    <message>
+        <source>Press Enter to search</source>
+        <translation>Aramak için yazın</translation>
     </message>
 </context>
 <context>
@@ -10124,6 +10275,10 @@ Bu seçenekler kullanımdan kaldırıldı. yerine --set-key-file kullanın.</tra
         <source>Weak Passwords</source>
         <translation>Kolay parolalar</translation>
     </message>
+    <message>
+        <source>TOTP Entries</source>
+        <translation>Tek kullanımlık parola kayıtları</translation>
+    </message>
 </context>
 <context>
     <name>TagView</name>
@@ -10137,11 +10292,29 @@ Bu seçenekler kullanımdan kaldırıldı. yerine --set-key-file kullanın.</tra
     </message>
     <message>
         <source>Confirm Remove Tag</source>
-        <translation>Etiketi silmeyi onayla</translation>
+        <translation>Etiketi silmeyi onaylayın</translation>
     </message>
     <message>
         <source>Remove tag &quot;%1&quot; from all entries in this database?</source>
         <translation>&quot;%1&quot; etiketini bu veri tabanındaki tüm kayıtlardan silmek istediğinize emin misiniz?</translation>
+    </message>
+</context>
+<context>
+    <name>TextAttachmentsEditWidget</name>
+    <message>
+        <source>Preview</source>
+        <translation>Ön izleme</translation>
+    </message>
+</context>
+<context>
+    <name>TextAttachmentsPreviewWidget</name>
+    <message>
+        <source>Form</source>
+        <translation>Form</translation>
+    </message>
+    <message>
+        <source>Type:</source>
+        <translation>Tür:</translation>
     </message>
 </context>
 <context>
@@ -10250,11 +10423,15 @@ Example: JBSWY3DPEHPK3PXP</source>
     </message>
     <message>
         <source>Confirm Remove TOTP Settings</source>
-        <translation>Tek kullanımlık parola ayarlarını kaldırmayı onayla</translation>
+        <translation>Tek kullanımlık parola ayarlarını kaldırmayı onaylayın</translation>
     </message>
     <message>
         <source>Are you sure you want to delete TOTP settings for this entry?</source>
         <translation>Bu kaydın tek kullanımlık parola ayarlarını silmek istediğinize emin misiniz ?</translation>
+    </message>
+    <message>
+        <source>Error: secret key is invalid</source>
+        <translation>Hata: Gizli anahtar geçersiz</translation>
     </message>
 </context>
 <context>
@@ -10410,10 +10587,6 @@ Example: JBSWY3DPEHPK3PXP</source>
 <context>
     <name>YubiKeyInterfacePCSC</name>
     <message>
-        <source>The YubiKey PCSC interface has not been initialized.</source>
-        <translation>YubiKey PCSC arayüzü başlatılamadı.</translation>
-    </message>
-    <message>
         <source>Could not find or access hardware key with serial number %1. Please present it to continue. </source>
         <translation>%1 seri numaralı donanım anahtarı bulunamadı ya da erişilemiyor. Lütfen ilerlemek için anahtarı takın. </translation>
     </message>
@@ -10424,10 +10597,6 @@ Example: JBSWY3DPEHPK3PXP</source>
     <message>
         <source>Hardware key was not found or is not configured.</source>
         <translation>Donanımsal anahtar bulunamadı ya da yapılandırılmamış.</translation>
-    </message>
-    <message>
-        <source>Failed to complete a challenge-response, the PCSC error code was: %1</source>
-        <translation>Bir soru/yanıt tamamlanamadı. PCSC hata kodu: %1</translation>
     </message>
     <message>
         <source>(NFC) %1 [%2] - Slot %3, %4</source>
@@ -10444,13 +10613,17 @@ Example: JBSWY3DPEHPK3PXP</source>
         <comment>USB Challenge-Response Key no interaction required</comment>
         <translation>Pasif</translation>
     </message>
+    <message>
+        <source>The YubiKey PC/SC interface has not been initialized.</source>
+        <translation>YubiKey PC/SC arayüzü başlatılamadı.</translation>
+    </message>
+    <message>
+        <source>Failed to complete a challenge-response, the PC/SC error code was: %1</source>
+        <translation>Bir soru/yanıt tamamlanamadı. PC/SC hata kodu: %1</translation>
+    </message>
 </context>
 <context>
     <name>YubiKeyInterfaceUSB</name>
-    <message>
-        <source>Unknown</source>
-        <translation>Bilinmiyor</translation>
-    </message>
     <message>
         <source>Press</source>
         <comment>USB Challenge-Response Key interaction request</comment>
@@ -10490,6 +10663,11 @@ Example: JBSWY3DPEHPK3PXP</source>
         <source>%1 [%2] - Slot %3, %4</source>
         <comment>YubiKey display fields</comment>
         <translation>%1 [%2] - Yuva %3, %4</translation>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <comment>Unknown hardware key name</comment>
+        <translation>Bilinmiyor</translation>
     </message>
 </context>
 </TS>
