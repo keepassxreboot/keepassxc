@@ -31,9 +31,9 @@
 #include <QLocalSocket>
 #include <QLockFile>
 #include <QPixmapCache>
+#include <QRegularExpression>
 #include <QSocketNotifier>
 #include <QStandardPaths>
-#include <QRegularExpression>
 
 #if defined(Q_OS_UNIX)
 #include <csignal>
@@ -77,17 +77,17 @@ Application::Application(int& argc, char** argv)
 #endif
 
     // Sanitize username for file safety
-     static const QRegularExpression invalidFileChars(R"([<>:\"/\\|?*])");
-     userName.replace(invalidFileChars, "_");
+    static const QRegularExpression invalidFileChars(R"([<>:\"/\\|?*])");
+    userName.replace(invalidFileChars, "_");
 
-     // Trim whitespace and invalid trailing characters
+    // Trim whitespace and invalid trailing characters
     userName = userName.trimmed();
-      while (!userName.isEmpty() && (userName.endsWith('.') || userName.endsWith(' '))) {
+    while (!userName.isEmpty() && (userName.endsWith('.') || userName.endsWith(' '))) {
         userName.chop(1);
     }
 
-     // Build identifier
-        // Build identifier
+    // Build identifier
+    // Build identifier
     QString identifier = QStringLiteral("keepassxc");
     if (!userName.isEmpty()) {
         identifier += QChar('-') + userName;
@@ -97,9 +97,8 @@ Application::Application(int& argc, char** argv)
     identifier += QStringLiteral("-DEBUG");
 #endif
 
-    QString lockName   = identifier + QStringLiteral(".lock");
-    m_socketName       = identifier + QStringLiteral(".socket");
-
+    QString lockName = identifier + QStringLiteral(".lock");
+    m_socketName = identifier + QStringLiteral(".socket");
 
     // According to documentation we should use RuntimeLocation on *nixes, but even Qt doesn't respect
     // this and creates sockets in TempLocation, so let's be consistent.
