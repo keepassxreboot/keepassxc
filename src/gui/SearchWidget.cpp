@@ -72,10 +72,10 @@ SearchWidget::SearchWidget(QWidget* parent)
     m_actionLimitGroup->setChecked(config()->get(Config::SearchLimitGroup).toBool());
 
     m_actionWaitForEnter = m_searchMenu->addAction(
-        tr("Press Enter to search"), this, [](bool state) { config()->set(Config::SearchWaitForEnter, state); });
+        tr("Press Enter to search"), this, [](bool state) { config()->set(Config::GUI_SearchWaitForEnter, state); });
     m_actionWaitForEnter->setObjectName("actionSearchWaitForEnter");
     m_actionWaitForEnter->setCheckable(true);
-    m_actionWaitForEnter->setChecked(config()->get(Config::SearchWaitForEnter).toBool());
+    m_actionWaitForEnter->setChecked(config()->get(Config::GUI_SearchWaitForEnter).toBool());
 
     m_ui->searchIcon->setIcon(icons()->icon("system-search"));
     m_ui->searchEdit->addAction(m_ui->searchIcon, QLineEdit::LeadingPosition);
