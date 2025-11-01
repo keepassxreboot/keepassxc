@@ -379,7 +379,7 @@ bool NativeMessageInstaller::createNativeMessageFile(SupportedBrowsers browser)
         }
 
         // We failed to write to `scriptFile`, but we can read it, so we assume that it's a read-only file.
-        // The write is considered to have succeeded if that read-only file already contains the content we would have written.
+        // Consider success if the read-only file already contains the content we would have written.
         QJsonDocument expectedDoc(constructFile(browser));
         QJsonDocument actualDoc = QJsonDocument::fromJson(scriptFile.readAll());
 
