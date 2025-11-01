@@ -20,6 +20,7 @@
 #include "Application.h"
 
 #include "core/Bootstrap.h"
+#include "core/Tools.h"
 #include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
 #include "gui/osutils/OSUtils.h"
@@ -64,33 +65,11 @@ Application::Application(int& argc, char** argv)
     registerUnixSignals();
 #endif
 
-#if defined(Q_OS_WIN)
-    QString userName = qgetenv("USERNAME");
-    if (userName.isEmpty()) {
-        userName = qgetenv("USER");
-    }
-#else
-    QString userName = qgetenv("USER");
-    if (userName.isEmpty()) {
-        userName = qgetenv("USERNAME");
-    }
-#endif
-
-    // Sanitize username for file safety
-    static const QRegularExpression invalidFileChars(R"([<>:\"/\\|?*])");
-    userName.replace(invalidFileChars, "_");
-
-    // Trim whitespace and invalid trailing characters
-    userName = userName.trimmed();
-    while (!userName.isEmpty() && (userName.endsWith('.') || userName.endsWith(' '))) {
-        userName.chop(1);
-    }
-
     // Build identifier
-    // Build identifier
-    QString identifier = QStringLiteral("keepassxc");
-    if (!userName.isEmpty()) {
-        identifier += QChar('-') + userName;
+    auto identifier = QStringLiteral("keepassxc");
+    auto username = Tools::cleanUsername();
+    if (!username.isEmpty()) {
+        identifier += QChar('-') + username;
     }
 #ifdef QT_DEBUG
     // In DEBUG mode don’t interfere with Release instances

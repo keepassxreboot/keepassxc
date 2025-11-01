@@ -41,6 +41,8 @@ private slots:
     void testGetMimeType();
     void testGetMimeTypeByFileInfo();
     void testIsTextMimeType();
+    void testCleanUsername();
+    void testCleanUsername_data();
 };
 
 #endif // KEEPASSX_TESTTOOLS_H

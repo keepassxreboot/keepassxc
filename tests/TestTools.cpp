@@ -428,3 +428,26 @@ void TestTools::testIsTextMimeType()
         QVERIFY(!Tools::isTextMimeType(noText));
     }
 }
+
+// Test sanitization logic for Tools::cleanUsername
+void TestTools::testCleanUsername()
+{
+    // Test vars
+    QFETCH(QString, input);
+    QFETCH(QString, expected);
+
+    qputenv("USER", input.toUtf8());
+    qputenv("USERNAME", input.toUtf8());
+    QCOMPARE(Tools::cleanUsername(), expected);
+}
+
+void TestTools::testCleanUsername_data()
+{
+    QTest::addColumn<QString>("input");
+    QTest::addColumn<QString>("expected");
+
+    QTest::newRow("Leading and trailing spaces") << "  user  " << "user";
+    QTest::newRow("Special characters") << R"(user<>:"/\|?*name)" << "user_________name";
+    QTest::newRow("Trailing dots and spaces") << "username...   " << "username";
+    QTest::newRow("Combination of issues") << R"(  user<>:"/\|?*name...   )" << "user_________name";
+}

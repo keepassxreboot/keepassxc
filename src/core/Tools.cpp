@@ -426,6 +426,29 @@ namespace Tools
         return filename.trimmed();
     }
 
+    QString cleanUsername()
+    {
+#if defined(Q_OS_WIN)
+        QString userName = qgetenv("USERNAME");
+        if (userName.isEmpty()) {
+            userName = qgetenv("USER");
+        }
+#else
+        QString userName = qgetenv("USER");
+        if (userName.isEmpty()) {
+            userName = qgetenv("USERNAME");
+        }
+#endif
+        // Sanitize username for file safety
+        userName = userName.trimmed();
+        // Replace <>:"/\|?* with _
+        userName.replace(QRegularExpression(R"([<>:\"\/\\|?*])"), "_");
+        // Remove trailing dots and spaces
+        userName.replace(QRegularExpression(R"([.\s]+$)"), "");
+
+        return userName;
+    }
+
     QVariantMap qo2qvm(const QObject* object, const QStringList& ignoredProperties)
     {
         QVariantMap result;

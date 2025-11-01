@@ -48,6 +48,7 @@ namespace Tools
     QString envSubstitute(const QString& filepath,
                           QProcessEnvironment environment = QProcessEnvironment::systemEnvironment());
     QString cleanFilename(QString filename);
+    QString cleanUsername();
 
     template <class T> QSet<T> asSet(const QList<T>& a)
     {
