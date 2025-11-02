@@ -185,9 +185,15 @@
       </spacer>
      </item>
      <item row="3" column="1">
-      <widget class="QCheckBox" name="recurseIntoGroupsCheckbox">
+      <widget class="QCheckBox" name="keepGroupsCheckbox">
+       <property name="toolTip">
+        <string>Maintain group structure with shared database</string>
+       </property>
        <property name="text">
-        <string>Share recursively</string>
+        <string>Keep Group Structure</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
        </property>
       </widget>
      </item>

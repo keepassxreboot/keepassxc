@@ -43,7 +43,7 @@ EditGroupWidgetKeeShare::EditGroupWidgetKeeShare(QWidget* parent)
     connect(m_ui->pathEdit, SIGNAL(editingFinished()), SLOT(selectPath()));
     connect(m_ui->pathSelectionButton, SIGNAL(pressed()), SLOT(launchPathSelectionDialog()));
     connect(m_ui->typeComboBox, SIGNAL(currentIndexChanged(int)), SLOT(selectType()));
-    connect(m_ui->recurseIntoGroupsCheckbox, SIGNAL(toggled(bool)), SLOT(recurseIntoGroupsToggled(bool)));
+    connect(m_ui->keepGroupsCheckbox, SIGNAL(toggled(bool)), SLOT(keepGroupsToggled(bool)));
     connect(m_ui->clearButton, SIGNAL(clicked(bool)), SLOT(clearInputs()));
 
     connect(KeeShare::instance(), SIGNAL(activeChanged()), SLOT(updateSharingState()));
@@ -98,7 +98,7 @@ void EditGroupWidgetKeeShare::updateSharingState()
     m_ui->pathEdit->setEnabled(isEnabled);
     m_ui->pathSelectionButton->setEnabled(isEnabled);
     m_ui->passwordEdit->setEnabled(isEnabled);
-    m_ui->recurseIntoGroupsCheckbox->setEnabled(isEnabled);
+    m_ui->keepGroupsCheckbox->setEnabled(isEnabled);
 
     if (!m_temporaryGroup || !isEnabled) {
         m_ui->messageWidget->hideMessage();
@@ -190,7 +190,7 @@ void EditGroupWidgetKeeShare::update()
         m_ui->typeComboBox->setCurrentIndex(reference.type);
         m_ui->passwordEdit->setText(reference.password);
         m_ui->pathEdit->setText(reference.path);
-        m_ui->recurseIntoGroupsCheckbox->setChecked(reference.recurse);
+        m_ui->keepGroupsCheckbox->setChecked(reference.keepGroups);
     }
 
     updateSharingState();
@@ -295,12 +295,12 @@ void EditGroupWidgetKeeShare::selectType()
     updateSharingState();
 }
 
-void EditGroupWidgetKeeShare::recurseIntoGroupsToggled(bool toggled)
+void EditGroupWidgetKeeShare::keepGroupsToggled(bool toggled)
 {
     if (!m_temporaryGroup) {
         return;
     }
     auto reference = KeeShare::referenceOf(m_temporaryGroup);
-    reference.recurse = toggled;
+    reference.keepGroups = toggled;
     KeeShare::setReferenceTo(m_temporaryGroup, reference);
 }

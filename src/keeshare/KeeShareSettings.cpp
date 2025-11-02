@@ -213,7 +213,7 @@ namespace KeeShareSettings
                         }
                     }
                 } else {
-                    qWarning("Unknown KeeShareSettings element %s", qPrintable(reader.name().toString()));
+                    qDebug("Unknown KeeShareSettings element %s", qPrintable(reader.name().toString()));
                     reader.skipCurrentElement();
                 }
             }
@@ -253,7 +253,7 @@ namespace KeeShareSettings
                 } else if (reader.name() == "PublicKey") {
                     own.certificate = Certificate::deserialize(reader);
                 } else {
-                    qWarning("Unknown KeeShareSettings element %s", qPrintable(reader.name().toString()));
+                    qDebug("Unknown KeeShareSettings element %s", qPrintable(reader.name().toString()));
                     reader.skipCurrentElement();
                 }
             }
@@ -262,8 +262,7 @@ namespace KeeShareSettings
     }
 
     Reference::Reference()
-        : type(Inactive)
-        , uuid(QUuid::createUuid())
+        : uuid(QUuid::createUuid())
     {
     }
 
@@ -320,15 +319,21 @@ namespace KeeShareSettings
             writer.writeStartElement("Password");
             writer.writeCharacters(reference.password.toUtf8().toBase64());
             writer.writeEndElement();
-            writer.writeStartElement("Recurse");
-            writer.writeCharacters(reference.recurse ? "True" : "False");
+            writer.writeStartElement("KeepGroups");
+            writer.writeCharacters(reference.keepGroups ? "True" : "False");
             writer.writeEndElement();
         });
     }
 
     Reference Reference::deserialize(const QString& raw)
     {
+        if (raw.isEmpty()) {
+            return {};
+        }
+
         Reference reference;
+        // If KeepGroups is not present, default to false for backward compatibility
+        reference.keepGroups = false;
         xmlDeserialize(raw, [&](QXmlStreamReader& reader) {
             while (!reader.error() && reader.readNextStartElement()) {
                 if (reader.name() == "Type") {
@@ -349,10 +354,10 @@ namespace KeeShareSettings
                     reference.path = QString::fromUtf8(QByteArray::fromBase64(reader.readElementText().toLatin1()));
                 } else if (reader.name() == "Password") {
                     reference.password = QString::fromUtf8(QByteArray::fromBase64(reader.readElementText().toLatin1()));
-                } else if (reader.name() == "Recurse") {
-                    reference.recurse = reader.readElementText().compare("True") == 0;
+                } else if (reader.name() == "KeepGroups") {
+                    reference.keepGroups = reader.readElementText().compare("True") == 0;
                 } else {
-                    qWarning("Unknown Reference element %s", qPrintable(reader.name().toString()));
+                    qDebug("Unknown Reference element %s", qPrintable(reader.name().toString()));
                     reader.skipCurrentElement();
                 }
             }

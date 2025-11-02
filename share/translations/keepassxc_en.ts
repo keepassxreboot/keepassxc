@@ -3720,7 +3720,11 @@ Supported extensions are: %1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Share recursively</source>
+        <source>Maintain group structure with shared database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep Group Structure</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

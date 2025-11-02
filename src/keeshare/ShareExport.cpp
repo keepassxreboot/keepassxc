@@ -110,7 +110,7 @@ namespace
         targetRoot->setUpdateTimeinfo(updateTimeinfo);
         cloneIcon(targetMetadata, sourceRoot->database(), targetRoot->iconUuid());
         cloneEntries(targetMetadata, sourceRoot, targetRoot);
-        if (reference.recurse) {
+        if (reference.keepGroups) {
             cloneChildren(targetMetadata, sourceRoot, targetRoot);
         }
 
