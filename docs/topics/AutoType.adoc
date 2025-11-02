@@ -32,7 +32,9 @@ To configure Auto-Type sequences for your entries, perform the following steps:
 
 1.	Navigate to the entries list and open the desired entry for editing. Click the _Auto-Type_ item from the left-hand menu bar *(1)*. Press the kbd:[+] button *(2)* to add a new sequence entry. Select the desired window using the drop-down menu, or simply type a window title in the box *(3)*.
 +
-TIP: You can use an asterisk (`\*`) to match any value (e.g., when a window title contains a dynamic filename or website name). Set the window title to `*` to match all windows. Leave the window title blank to offer additional default Auto-Type sequences, such as custom attributes.
+TIP: You can use an asterisk (`\*`) as a wildcard (e.g., when a window title contains a dynamic file or website name). Set the window title to `*` to match all windows. Leave the window title blank to offer additional sequences for every matching window. This is useful for typing individual custom attributes, for example.
++
+TIP: To use a standard regular expression for window title matching, the window title must start and end with two forward slashes (e.g., `//^Secure Login - .*$//`).
 +
 .Auto-Type entry sequences
 image::autotype_entry_sequences.png[]

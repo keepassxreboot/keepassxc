@@ -334,12 +334,15 @@ QList<QString> Entry::autoTypeSequences(const QString& windowTitle) const
     };
 
     QList<QString> sequenceList;
+    QList<QString> emptyWindowSequences;
 
     // Add window association matches
     const auto assocList = autoTypeAssociations()->getAll();
     for (const auto& assoc : assocList) {
         auto window = resolveMultiplePlaceholders(assoc.window);
-        if (!assoc.window.isEmpty() && windowMatches(window)) {
+        if (assoc.window.isEmpty()) {
+            emptyWindowSequences << assoc.sequence;
+        } else if (windowMatches(window)) {
             if (!assoc.sequence.isEmpty()) {
                 sequenceList << assoc.sequence;
             } else {
@@ -356,6 +359,11 @@ QList<QString> Entry::autoTypeSequences(const QString& windowTitle) const
     // Try to match url in window title
     if (config()->get(Config::AutoTypeEntryURLMatch).toBool() && windowMatchesUrl(resolvePlaceholder(url()))) {
         sequenceList << effectiveAutoTypeSequence();
+    }
+
+    // If any associations were made, include the empty window associations
+    if (!sequenceList.isEmpty()) {
+        sequenceList.append(emptyWindowSequences);
     }
 
     return sequenceList;

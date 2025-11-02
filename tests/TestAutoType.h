@@ -51,6 +51,7 @@ private slots:
     void testAutoTypeResults_data();
     void testAutoTypeSyntaxChecks();
     void testAutoTypeEffectiveSequences();
+    void testAutoTypeEmptyWindowAssociation();
 
 private:
     AutoTypePlatformInterface* m_platform;
@@ -64,6 +65,7 @@ private:
     Entry* m_entry3;
     Entry* m_entry4;
     Entry* m_entry5;
+    Entry* m_entry6;
 };
 
 #endif // KEEPASSX_TESTAUTOTYPE_H
