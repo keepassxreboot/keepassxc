@@ -56,7 +56,6 @@ void DeviceListenerWin::registerHotplugCallback(bool arrived,
             regex += QString("PID_%1&").arg(productId, 0, 16).toUpper();
         }
     }
-    regex += QString(".*$"); // Qt won't match otherwise
     m_deviceIdMatch = QRegularExpression(regex);
 
     DEV_BROADCAST_DEVICEINTERFACE_W notificationFilter{
@@ -95,7 +94,7 @@ bool DeviceListenerWin::nativeEventFilter(const QByteArray& eventType, void* mes
         || (m_handleRemoval && m->wParam == DBT_DEVICEREMOVECOMPLETE)) {
         const auto pBrHdr = reinterpret_cast<PDEV_BROADCAST_HDR>(m->lParam);
         const auto pDevIface = reinterpret_cast<PDEV_BROADCAST_DEVICEINTERFACE_W>(pBrHdr);
-        const auto name = QString::fromWCharArray(pDevIface->dbcc_name, pDevIface->dbcc_size);
+        const auto name = QString::fromWCharArray(pDevIface->dbcc_name);
         if (m_deviceIdMatch.match(name).hasMatch()) {
             emit devicePlugged(m->wParam == DBT_DEVICEARRIVAL, nullptr, pDevIface);
             return true;
