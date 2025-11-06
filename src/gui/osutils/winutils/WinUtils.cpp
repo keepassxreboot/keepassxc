@@ -403,6 +403,12 @@ bool WinUtils::getSecret(const QString& key, QByteArray& secretData) const
     return !secretData.isEmpty();
 }
 
+bool WinUtils::hasSecret(const QString& key) const
+{
+    QByteArray tmp;
+    return osUtils->getSecret(dbUuid.toString(), tmp);
+}
+
 bool WinUtils::removeSecret(const QString& key) const
 {
     try {

@@ -1010,7 +1010,7 @@ class AppSign(Command):
             # (Re-)Sign main executable with --entitlements
             logger.debug('Signing main executable...')
             _run(['xcrun', 'codesign', f'--sign={identity}', '--force', '--options=runtime',
-                  '--entitlements', (src_dir / 'share/macosx/keepassxc.entitlements').as_posix(),
+                  '--entitlements', (src_dir / 'build/src/keepassxc.entitlements').as_posix(),
                   (app_dir_app / 'Contents/MacOS/KeePassXC').as_posix()], cwd=None)
 
             tmp_out = out_file.with_suffix(f'.{"".join(random.choices(string.ascii_letters, k=8))}{file.suffix}')

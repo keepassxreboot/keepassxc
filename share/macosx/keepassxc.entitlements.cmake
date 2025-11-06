@@ -3,10 +3,10 @@
 <plist version="1.0">
 <dict>
 	<key>com.apple.application-identifier</key>
-	<string>G2S7P7J672.org.keepassxc.keepassxc</string>
+	<string>${APPLE_TEAM_ID}.${APPLE_APP_IDENTIFIER}</string>
 	<key>keychain-access-groups</key>
 	<array>
-		<string>G2S7P7J672.org.keepassxc.keepassxc</string>
+		<string>${APPLE_TEAM_ID}.${APPLE_APP_IDENTIFIER}</string>
 	</array>
 </dict>
 </plist>

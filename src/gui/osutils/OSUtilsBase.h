@@ -77,6 +77,7 @@ public:
      */
     virtual bool saveSecret(const QString& key, const QByteArray& secretData) const = 0;
     virtual bool getSecret(const QString& key, QByteArray& secretData) const = 0;
+    virtual bool hasSecret(const QString& key) const = 0;
     virtual bool removeSecret(const QString& key) const = 0;
     virtual bool removeAllSecrets() const = 0;
 

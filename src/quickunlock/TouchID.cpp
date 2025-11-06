@@ -50,8 +50,7 @@ bool TouchID::getKey(const QUuid& dbUuid, QByteArray& key)
 
 bool TouchID::hasKey(const QUuid& dbUuid) const
 {
-    QByteArray tmp;
-    return osUtils->getSecret(dbUuid.toString(), tmp);
+    return osUtils->hasSecret(dbUuid.toString());
 }
 
 bool TouchID::isAvailable() const

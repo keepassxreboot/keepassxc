@@ -445,6 +445,7 @@ bool MacUtils::saveSecret(const QString& key, const QByteArray& secretData) cons
     CFDictionarySetValue(attributes, kSecAttrAccount, static_cast<CFStringRef>(keyName.toNSString()));
     CFDictionarySetValue(attributes, kSecValueData, keyValueData);
     CFDictionarySetValue(attributes, kSecAttrSynchronizable, kCFBooleanFalse);
+    CFDictionarySetValue(attributes, kSecUseDataProtectionKeychain, kCFBooleanTrue);
     CFDictionarySetValue(attributes, kSecUseAuthenticationUI, kSecUseAuthenticationUIAllow);
     // First, attempt with TouchID enabled
     CFDictionarySetValue(attributes, kSecAttrAccessControl, createAccessControl(true));
@@ -464,6 +465,28 @@ bool MacUtils::saveSecret(const QString& key, const QByteArray& secretData) cons
     CFRelease(attributes);
 
     return status == errSecSuccess;
+}
+
+bool MacUtils::hasSecret(const QString& key) const
+{
+    const auto keyName = s_touchIdKeyPrefix + key;
+
+    auto query = CFDictionaryCreateMutable(nullptr, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
+    CFDictionarySetValue(query, kSecClass, kSecClassGenericPassword);
+    CFDictionarySetValue(query, kSecAttrAccount, static_cast<CFStringRef>(keyName.toNSString()));
+    CFDictionarySetValue(query, kSecReturnData, kCFBooleanTrue);
+    CFDictionarySetValue(query, kSecUseDataProtectionKeychain, kCFBooleanTrue);
+    CFDictionarySetValue(query, kSecUseAuthenticationUI, kSecUseAuthenticationUIFail);
+
+    CFTypeRef result = NULL;
+    OSStatus status = SecItemCopyMatching(query, &result);
+
+    if (result) {
+        CFRelease(result);
+    }
+    CFRelease(query);
+
+    return status == errSecInteractionNotAllowed;
 }
 
 bool MacUtils::getSecret(const QString& key, QByteArray& secretData) const
@@ -503,6 +526,7 @@ bool MacUtils::removeSecret(const QString& key) const
     CFDictionarySetValue(query, kSecClass, kSecClassGenericPassword);
     CFDictionarySetValue(query, kSecAttrAccount, static_cast<CFStringRef>(keyName.toNSString()));
     CFDictionarySetValue(query, kSecReturnData, kCFBooleanFalse);
+    CFDictionarySetValue(query, kSecUseDataProtectionKeychain, kCFBooleanTrue);
     // TODO: Log failure to delete?
     SecItemDelete(query);
     CFRelease(query);
