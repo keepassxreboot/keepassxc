@@ -388,11 +388,11 @@ QSharedPointer<Database> BitwardenReader::convert(const QString& path, const QSt
 
         // Derive the MAC Key
         auto stretched_mac = hkdf->derive_key(32, reinterpret_cast<const uint8_t*>(key.data()), key.size(), "", "mac");
-        auto mac = QByteArray(reinterpret_cast<const char*>(stretched_mac.data()), stretched_mac.size());
+        auto mac = QByteArray(reinterpret_cast<const char*>(stretched_mac.data()), static_cast<int>(stretched_mac.size()));
 
         // Stretch the Master Key
         auto stretched_key = hkdf->derive_key(32, reinterpret_cast<const uint8_t*>(key.data()), key.size(), "", "enc");
-        key = QByteArray(reinterpret_cast<const char*>(stretched_key.data()), stretched_key.size());
+        key = QByteArray(reinterpret_cast<const char*>(stretched_key.data()), static_cast<int>(stretched_key.size()));
 
         // Validate the encryption key
         auto keyList = json.value("encKeyValidation_DO_NOT_EDIT").toString().split(".");

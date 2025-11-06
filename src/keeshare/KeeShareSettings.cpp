@@ -66,7 +66,7 @@ namespace KeeShareSettings
             return;
         }
         auto berKey = Botan::PKCS8::BER_encode(*certificate.key);
-        auto baKey = QByteArray::fromRawData(reinterpret_cast<const char*>(berKey.data()), berKey.size());
+        auto baKey = QByteArray::fromRawData(reinterpret_cast<const char*>(berKey.data()), static_cast<int>(berKey.size()));
 
         writer.writeStartElement("Signer");
         writer.writeCharacters(certificate.signer);
@@ -148,7 +148,7 @@ namespace KeeShareSettings
             return;
         }
         auto berKey = Botan::PKCS8::BER_encode(*key.key);
-        auto baKey = QByteArray::fromRawData(reinterpret_cast<const char*>(berKey.data()), berKey.size());
+        auto baKey = QByteArray::fromRawData(reinterpret_cast<const char*>(berKey.data()), static_cast<int>(berKey.size()));
         writer.writeCharacters(baKey.toBase64());
     }
 
