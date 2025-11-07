@@ -363,7 +363,11 @@ namespace KeeShareSettings
 
         // Extract RSA key data to serialize an ssh-rsa public key.
         // ssh-rsa keys are currently not built into Botan
-        const auto rsaKey = static_cast<Botan::RSA_PrivateKey*>(sign.certificate.key.data());
+        // need a dynamic_cast here, because the base class is virtual
+        const auto rsaKey = dynamic_cast<Botan::RSA_PrivateKey*>(sign.certificate.key.data());
+        if (!rsaKey) {
+            return {};
+        }
 
         std::vector<uint8_t> rsaE(rsaKey->get_e().bytes());
         rsaKey->get_e().binary_encode(rsaE.data());
