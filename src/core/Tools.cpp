@@ -449,6 +449,11 @@ namespace Tools
         return userName;
     }
 
+    QString escapeAccelerators(QString string)
+    {
+        return string.replace("&", "&&");
+    }
+
     QVariantMap qo2qvm(const QObject* object, const QStringList& ignoredProperties)
     {
         QVariantMap result;

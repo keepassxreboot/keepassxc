@@ -674,7 +674,7 @@ void DatabaseTabWidget::updateTabName(int index)
         return;
     }
     index = indexOf(dbWidget);
-    setTabText(index, tabName(index));
+    setTabText(index, Tools::escapeAccelerators(tabName(index)));
     setTabToolTip(index, dbWidget->displayFilePath());
     auto iconIndex = dbWidget->database()->publicIcon();
     if (iconIndex >= 0 && iconIndex < databaseIcons()->count()) {

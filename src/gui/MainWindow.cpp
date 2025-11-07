@@ -38,6 +38,7 @@
 #include "autotype/AutoType.h"
 #include "core/InactivityTimer.h"
 #include "core/Resources.h"
+#include "core/Tools.h"
 #include "gui/AboutDialog.h"
 #include "gui/ActionCollection.h"
 #include "gui/Icons.h"
@@ -789,7 +790,7 @@ void MainWindow::updateLastDatabasesMenu()
 
     const QStringList lastDatabases = config()->get(Config::LastDatabases).toStringList();
     for (const QString& database : lastDatabases) {
-        QAction* action = m_ui->menuRecentDatabases->addAction(database);
+        QAction* action = m_ui->menuRecentDatabases->addAction(Tools::escapeAccelerators(database));
         action->setData(database);
         m_lastDatabasesActions->addAction(action);
     }
