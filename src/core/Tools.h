@@ -49,6 +49,7 @@ namespace Tools
                           QProcessEnvironment environment = QProcessEnvironment::systemEnvironment());
     QString cleanFilename(QString filename);
     QString cleanUsername();
+    QString escapeAccelerators(QString string);
 
     template <class T> QSet<T> asSet(const QList<T>& a)
     {

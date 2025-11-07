@@ -451,3 +451,14 @@ void TestTools::testCleanUsername_data()
     QTest::newRow("Trailing dots and spaces") << "username...   " << "username";
     QTest::newRow("Combination of issues") << R"(  user<>:"/\|?*name...   )" << "user_________name";
 }
+
+void TestTools::testEscapeAccelerators()
+{
+    QCOMPARE(Tools::escapeAccelerators(""), "");
+    QCOMPARE(Tools::escapeAccelerators("NoAccelerator"), "NoAccelerator");
+    QCOMPARE(Tools::escapeAccelerators("&Accelerator"), "&&Accelerator");
+    QCOMPARE(Tools::escapeAccelerators("Accelerator&"), "Accelerator&&");
+    QCOMPARE(Tools::escapeAccelerators("Accel&erator&"), "Accel&&erator&&");
+    QCOMPARE(Tools::escapeAccelerators("Accel&&erator"), "Accel&&&&erator");
+    QCOMPARE(Tools::escapeAccelerators("Some & text"), "Some && text");
+}

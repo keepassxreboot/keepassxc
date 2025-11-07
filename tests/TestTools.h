@@ -43,6 +43,7 @@ private slots:
     void testIsTextMimeType();
     void testCleanUsername();
     void testCleanUsername_data();
+    void testEscapeAccelerators();
 };
 
 #endif // KEEPASSX_TESTTOOLS_H
