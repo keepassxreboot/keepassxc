@@ -374,8 +374,8 @@ namespace KeeShareSettings
         QByteArray rsaKeySerialized;
         QDataStream stream(&rsaKeySerialized, QIODevice::WriteOnly);
         stream.writeBytes("ssh-rsa", 7);
-        stream.writeBytes(reinterpret_cast<const char*>(rsaE.data()), rsaE.size());
-        stream.writeBytes(reinterpret_cast<const char*>(rsaN.data()), rsaN.size());
+        stream.writeBytes(reinterpret_cast<const char*>(rsaE.data()), static_cast<uint>(rsaE.size()));
+        stream.writeBytes(reinterpret_cast<const char*>(rsaN.data()), static_cast<uint>(rsaN.size()));
 
         return xmlSerialize([&](QXmlStreamWriter& writer) {
             writer.writeStartElement("Signature");
