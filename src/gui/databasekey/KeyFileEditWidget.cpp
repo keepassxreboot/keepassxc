@@ -132,6 +132,9 @@ void KeyFileEditWidget::browseKeyFile()
     QString filters = QString("%1 (*.keyx *.key);;%2 (*)").arg(tr("Key files"), tr("All files"));
     QString fileName = fileDialog()->getOpenFileName(this, tr("Select a key file"), QString(), filters);
 
+    if (fileName.isEmpty()) { // user clicked on cancel
+        return;
+    }
     if (QFileInfo(fileName).canonicalFilePath() == m_parent->getDatabase()->canonicalFilePath()) {
         MessageBox::critical(getMainWindow(),
                              tr("Invalid Key File"),
