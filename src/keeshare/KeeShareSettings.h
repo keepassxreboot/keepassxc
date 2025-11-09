@@ -122,10 +122,11 @@ namespace KeeShareSettings
 
     struct Reference
     {
-        Type type;
+        Type type = Inactive;
         QUuid uuid;
         QString path;
         QString password;
+        bool keepGroups = true;
 
         Reference();
         bool isNull() const;
