@@ -1,77 +1,70 @@
 #!/usr/bin/env python3
+from collections import defaultdict
 import json
-import os
+import sys
+from pathlib import Path
+from urllib import request
 
-# Download Transifex languages dump at: https://www.transifex.com/api/2/project/keepassxc/languages
-# Language information from https://www.wikiwand.com/en/List_of_ISO_639-1_codes and http://www.lingoes.net/en/translator/langcode.htm
+txrc = Path.home() / '.transifexrc'
+if not txrc.exists():
+    print('No Transifex config found. Run tx init first.')
+    sys.exit(1)
 
-LANGS = {
-    "ar" : "العربية (Arabic)",
-    "bn" : "বাংলা (Bengali)",
-    "ca" : "català (Catalan)",
-    "cs" : "čeština (Czech)",
-    "da" : "dansk (Danish)",
-    "de" : "Deutsch (German)",
-    "el" : "ελληνικά (Greek)",
-    "eo" : "Esperanto (Esperanto)",
-    "es" : "Español (Spanish)",
-    "et" : "eesti (Estonian)",
-    "eu" : "euskara (Basque)",
-    "fa" : "فارسی (Farsi)",
-    "fa_IR" : "فارسی (Farsi (Iran))",
-    "fi" : "suomi (Finnish)",
-    "fr" : "français (French)",
-    "gl" : "Galego (Galician)",
-    "he" : "עברית (Hebrew)",
-    "hr_HR" : "hrvatski jezik (Croatian)",
-    "hu" : "magyar (Hungarian)",
-    "id" : "Bahasa Indonesia (Indonesian)",
-    "is_IS" : "Íslenska (Icelandic)",
-    "it" : "Italiano (Italian)",
-    "ja" : "日本語 (Japanese)",
-    "kk" : "қазақ тілі (Kazakh)",
-    "ko" : "한국어 (Korean)",
-    "la" : "latine (Latin)",
-    "lt" : "lietuvių kalba (Lithuanian)",
-    "lv" : "latviešu valoda (Latvian)",
-    "nb" : "Norsk Bokmål (Norwegian Bokmål)",
-    "nl_NL" : "Nederlands (Dutch)",
-    "my" : "ဗမာစာ (Burmese)",
-    "pa" : "ਪੰਜਾਬੀ (Punjabi)",
-    "pa_IN" : "ਪੰਜਾਬੀ (Punjabi (India))",
-    "pl" : "język polski (Polish)",
-    "pt" : "Português (Portuguese)",
-    "pt_BR" : "Português (Portuguese (Brazil))",
-    "pt_PT" : "Português (Portuguese (Portugal))",
-    "ro" : "Română (Romanian)",
-    "ru" : "русский (Russian)",
-    "sk" : "Slovenčina (Slovak)",
-    "sl_SI" : "Slovenščina (Slovenian)",
-    "sr" : "српски језик (Serbian)",
-    "sv" : "Svenska (Swedish)",
-    "th" : "ไทย (Thai)",
-    "tr" : "Türkçe (Turkish)",
-    "uk" : "Українська (Ukrainian)",
-    "zh_CN" : "中文 (Chinese (Simplified))",
-    "zh_TW" : "中文 (台灣) (Chinese (Traditional))",
-}
+org = 'o:keepassxc'
+proj = f'{org}:p:keepassxc'
+resource = f'{proj}:r:share-translations-keepassxc-en-ts--master'
+token = [l for l in open(txrc, 'r') if l.startswith('token')][0].split('=', 1)[1].strip()
+member_blacklist = ['u:droidmonkey', 'u:phoerious']
 
-TEMPLATE = "<li><strong>{0}</strong>: {1}</li>\n"
 
-if not os.path.exists("languages.json"):
-    print("Could not find 'languages.json' in current directory!")
-    print("Save the output from https://www.transifex.com/api/2/project/keepassxc/languages")
-    exit(0)
+def get_url(url):
+    req = request.Request(url)
+    req.add_header('Content-Type', 'application/vnd.api+json')
+    req.add_header('Authorization', f'Bearer {token}')
+    with request.urlopen(req) as resp:
+        return json.load(resp)
 
-with open("languages.json") as json_file:
-    output = open("translators.html", "w", encoding="utf-8")
-    languages = json.load(json_file)
-    for lang in languages:
-        code = lang["language_code"]
-        if code not in LANGS:
-            print("WARNING: Could not find language code:", code)
-            continue
-        translators = ", ".join(sorted(lang["reviewers"] + lang["translators"], key=str.casefold))
-        output.write(TEMPLATE.format(LANGS[code], translators))
-    output.close()
-    print("Language translators written to 'translators.html'!")
+
+print('Fetching languages...', file=sys.stderr)
+languages_json = get_url(f'https://rest.api.transifex.com/projects/{proj}/languages')
+languages = {}
+for lang in languages_json['data']:
+    languages[lang['id']] = lang['attributes']['name']
+
+print('Fetching language stats...', file=sys.stderr)
+language_stats_json = get_url('https://rest.api.transifex.com/resource_language_stats?'
+                              f'filter[project]={proj}&filter[resource]={resource}')
+completion = {}
+for stat in language_stats_json['data']:
+    completion = stat['attributes']['translated_strings'] / stat['attributes']['total_strings']
+    if completion < .6:
+        languages.pop(stat['relationships']['language']['data']['id'])
+
+print('Fetching language members...', end='', file=sys.stderr)
+members_json = get_url(f'https://rest.api.transifex.com/team_memberships?filter[organization]={org}')
+members = defaultdict(set)
+for member in members_json['data']:
+    print('.', end='', file=sys.stderr)
+    if member['relationships']['user']['data']['id'] in member_blacklist:
+        continue
+    lid = member['relationships']['language']['data']['id']
+    if lid not in languages:
+        continue
+    user = get_url(member['relationships']['user']['links']['related'])['data']['attributes']['username']
+    members[lid].add(user)
+print(file=sys.stderr)
+
+print('<ul>')
+for lang in sorted(languages, key=lambda x: languages[x]):
+    if not members[lang]:
+        continue
+    lines = [f'    <li><strong>{languages[lang]}:</strong> ']
+    for i, m in enumerate(sorted(members[lang], key=lambda x: x.lower())):
+        if len(lines[-1]) + len(m) >= 120:
+            lines.append('        ')
+        lines[-1] += m
+        if i < len(members[lang]) - 1:
+            lines[-1] += ', '
+    lines[-1] += '</li>'
+    print('\n'.join(lines))
+print('</ul>')
