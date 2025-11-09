@@ -28,6 +28,7 @@ class TestTotp : public QObject
 private slots:
     void initTestCase();
     void testParseSecret();
+    void testTotpWriteSettings();
     void testTotpCode();
     void testSteamTotp();
     void testEntryHistory();

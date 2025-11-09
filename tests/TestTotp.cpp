@@ -107,6 +107,34 @@ void TestTotp::testParseSecret()
     QVERIFY(settings.isNull());
 }
 
+void TestTotp::testTotpWriteSettings()
+{
+    auto settings1 = Totp::createSettings("GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ", Totp::DEFAULT_DIGITS, Totp::DEFAULT_STEP);
+    QCOMPARE(
+        Totp::writeSettings(settings1, "ACME Co", "john", true),
+        "otpauth://totp/ACME%20Co:john?secret=GEZDGNBVGY3TQOJQGEZDGNBVGY3TQOJQ&period=30&digits=6&issuer=ACME%20Co");
+
+    auto settings2 = Totp::createSettings("63BEDWCQZKTQWPESARIERL5DTTQFCJTK", 3, 25);
+    QCOMPARE(
+        Totp::writeSettings(settings2, "ACME Co", "", true),
+        "otpauth://totp/ACME%20Co:none?secret=63BEDWCQZKTQWPESARIERL5DTTQFCJTK&period=25&digits=3&issuer=ACME%20Co");
+
+    auto settings3 = Totp::createSettings("HXDMVJECJJWSRBY", Totp::DEFAULT_DIGITS, Totp::DEFAULT_STEP);
+    QCOMPARE(
+        Totp::writeSettings(settings3, "", "john", true),
+        "otpauth://totp/KeePassXC:john?secret=HXDMVJECJJWSRBY&period=30&digits=6&issuer=KeePassXC");
+
+    auto settings4 = Totp::createSettings("HXDMVJECJJWSRBY=", Totp::DEFAULT_DIGITS, Totp::DEFAULT_STEP);
+    QCOMPARE(
+        Totp::writeSettings(settings4, "NoPadding", "john", true),
+        "otpauth://totp/NoPadding:john?secret=HXDMVJECJJWSRBY&period=30&digits=6&issuer=NoPadding");
+
+    auto settings5 = Totp::createSettings("HXDMVJECJJWSRBY=", Totp::DEFAULT_DIGITS, Totp::DEFAULT_STEP);
+    QCOMPARE(
+        Totp::writeSettings(settings5, "WithPadding", "john"),
+        "otpauth://totp/WithPadding:john?secret=HXDMVJECJJWSRBY%3D&period=30&digits=6&issuer=WithPadding");
+}
+
 void TestTotp::testTotpCode()
 {
     // Test vectors from RFC 6238
