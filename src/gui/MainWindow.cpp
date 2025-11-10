@@ -642,12 +642,13 @@ MainWindow::MainWindow()
     auto* hidePreRelWarn = new QAction(tr("Don't show again for this version"), m_ui->globalMessageWidget);
     m_ui->globalMessageWidget->addAction(hidePreRelWarn);
     auto hidePreRelWarnConn = QSharedPointer<QMetaObject::Connection>::create();
-    *hidePreRelWarnConn = connect(m_ui->globalMessageWidget, &KMessageWidget::hideAnimationFinished, [=] {
-        m_ui->globalMessageWidget->removeAction(hidePreRelWarn);
-        disconnect(*hidePreRelWarnConn);
-        hidePreRelWarn->deleteLater();
-    });
-    connect(hidePreRelWarn, &QAction::triggered, [=] {
+    *hidePreRelWarnConn = connect(
+        m_ui->globalMessageWidget, &KMessageWidget::hideAnimationFinished, [this, hidePreRelWarn, hidePreRelWarnConn] {
+            m_ui->globalMessageWidget->removeAction(hidePreRelWarn);
+            disconnect(*hidePreRelWarnConn);
+            hidePreRelWarn->deleteLater();
+        });
+    connect(hidePreRelWarn, &QAction::triggered, [this] {
         m_ui->globalMessageWidget->animatedHide();
         config()->set(Config::Messages_HidePreReleaseWarning, KEEPASSXC_VERSION);
     });
