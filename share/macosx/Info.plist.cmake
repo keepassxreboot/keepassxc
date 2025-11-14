@@ -13,11 +13,11 @@
   <key>CFBundleExecutable</key>
   <string>${PROGNAME}</string>
   <key>CFBundleIconFile</key>
-  <string>keepassxc.icns</string>
+  <string>${MACOSX_BUNDLE_ICON_NAME}.icns</string>
   <key>CFBundleIconName</key>
-  <string>keepassxc</string>
+  <string>${MACOSX_BUNDLE_ICON_NAME}</string>
   <key>CFBundleIdentifier</key>
-  <string>org.keepassxc.keepassxc</string>
+  <string>${MACOSX_BUNDLE_IDENTIFIER}</string>
   <key>CFBundleInfoDictionaryVersion</key>
   <string>6.0</string>
   <key>CFBundleName</key>
