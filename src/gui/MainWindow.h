@@ -160,6 +160,7 @@ private:
     static const QString BaseWindowTitle;
 
     void saveWindowInformation();
+    void restoreWindowInformation();
     bool saveLastDatabases();
     bool isTrayIconEnabled() const;
     void customOpenUrl(QString url);
@@ -192,6 +193,7 @@ private:
 
     Q_DISABLE_COPY(MainWindow)
 
+    bool m_windowInformationRestored = false;
     bool m_appExitCalled = false;
     bool m_appExiting = false;
     bool m_restartRequested = false;
