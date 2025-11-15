@@ -401,34 +401,56 @@ if(WIN32)
     endif()
 endif()
 
+# Main Executable Definition
+add_executable(${PROGNAME} main.cpp)
+target_link_libraries(${PROGNAME} keepassx_core)
+set_target_properties(${PROGNAME} PROPERTIES ENABLE_EXPORTS ON)
+
 if(WIN32)
+    set_target_properties(${PROGNAME} PROPERTIES WIN32_EXECUTABLE ON)
     include(GenerateProductVersion)
     generate_product_version(
-            WIN32_ProductVersionFiles
+            WIN32_ResourceFiles
             NAME "KeePassXC"
             COMPANY_NAME "KeePassXC Team"
             VERSION_MAJOR ${KEEPASSXC_VERSION_MAJOR}
             VERSION_MINOR ${KEEPASSXC_VERSION_MINOR}
             VERSION_PATCH ${KEEPASSXC_VERSION_PATCH}
     )
+    list(APPEND WIN32_ResourceFiles "${CMAKE_SOURCE_DIR}/share/windows/icon.rc")
+    target_sources(${PROGNAME} PUBLIC ${WIN32_ResourceFiles})
 endif()
 
-add_executable(${PROGNAME} WIN32 ${keepassx_SOURCES_MAINEXE} ${WIN32_ProductVersionFiles})
-target_link_libraries(${PROGNAME} keepassx_core)
-
-set_target_properties(${PROGNAME} PROPERTIES ENABLE_EXPORTS ON)
-
 if(APPLE AND WITH_APP_BUNDLE)
-    install(FILES ${CMAKE_SOURCE_DIR}/share/macosx/embedded.provisionprofile DESTINATION ${BUNDLE_INSTALL_DIR})
-    configure_file(${CMAKE_SOURCE_DIR}/share/macosx/Info.plist.cmake ${CMAKE_CURRENT_BINARY_DIR}/Info.plist)
+    set(MACOSX_BUNDLE_IDENTIFIER org.keepassxc.keepassxc)
+    set(MACOSX_BUNDLE_ICON_NAME keepassxc)
+    set(MACOSX_BUNDLE_APPLE_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/share/macosx/keepassxc.entitlements")
+    configure_file("${CMAKE_SOURCE_DIR}/share/macosx/Info.plist.cmake" ${CMAKE_CURRENT_BINARY_DIR}/Info.plist)
+    install(FILES "${CMAKE_SOURCE_DIR}/share/macosx/embedded.provisionprofile" DESTINATION ${BUNDLE_INSTALL_DIR})
+    set(MACOSX_BUNDLE_RESOURCE_FILES
+            "${CMAKE_SOURCE_DIR}/share/macosx/Assets.car"
+            "${CMAKE_SOURCE_DIR}/share/macosx/keepassxc.icns"
+    )
     set_target_properties(${PROGNAME} PROPERTIES
             MACOSX_BUNDLE ON
             MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_BINARY_DIR}/Info.plist
-            CPACK_BUNDLE_APPLE_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/share/macosx/keepassxc.entitlements")
+            CPACK_BUNDLE_APPLE_ENTITLEMENTS "${MACOSX_BUNDLE_APPLE_ENTITLEMENTS}")
 
     if(QT_MAC_USE_COCOA AND EXISTS "${QT_LIBRARY_DIR}/Resources/qt_menu.nib")
         install(DIRECTORY "${QT_LIBRARY_DIR}/Resources/qt_menu.nib"
                 DESTINATION "${DATA_INSTALL_DIR}")
+    endif()
+
+    # Sign binaries
+    if(WITH_XC_CODESIGN_IDENTITY)
+        configure_file("${CMAKE_SOURCE_DIR}/cmake/MacOSCodesign.cmake.in" "${CMAKE_BINARY_DIR}/MacOSCodesign.cmake" @ONLY)
+        set(CPACK_PRE_BUILD_SCRIPTS "${CMAKE_BINARY_DIR}/MacOSCodesign.cmake")
+        if(WITH_XC_NOTARY_KEYCHAIN_PROFILE)
+            configure_file("${CMAKE_SOURCE_DIR}/cmake/MacOSCodesign.cmake.in" "${CMAKE_BINARY_DIR}/MacOSCodesign.cmake" @ONLY)
+            set(CPACK_POST_BUILD_SCRIPTS "${CMAKE_BINARY_DIR}/MacOSCodesign.cmake")
+        else()
+            message(INFO "Do not forget to notarize DMG package before distribution!")
+        endif()
     endif()
 
     set(CPACK_GENERATOR "DragNDrop")
@@ -461,8 +483,9 @@ if(WIN32)
             "${CMAKE_CURRENT_BINARY_DIR}/INSTALLER_LICENSE.txt")
 
     # Prepare post-install script and set to run prior to building cpack installers
-    configure_file("${CMAKE_SOURCE_DIR}/cmake/WindowsPostInstall.cmake.in" "${CMAKE_BINARY_DIR}/WindowsPostInstall.cmake" @ONLY)
-    set(CPACK_PRE_BUILD_SCRIPTS "${CMAKE_BINARY_DIR}/WindowsPostInstall.cmake")
+    configure_file("${CMAKE_SOURCE_DIR}/cmake/WindowsCodesign.cmake.in" "${CMAKE_BINARY_DIR}/WindowsCodesign.cmake" @ONLY)
+    set(CPACK_PRE_BUILD_SCRIPTS "${CMAKE_BINARY_DIR}/WindowsCodesign.cmake")
+    set(CPACK_POST_BUILD_SCRIPTS "${CMAKE_BINARY_DIR}/WindowsCodesign.cmake")
 
     string(REGEX REPLACE "-.*$" "" KEEPASSXC_VERSION_CLEAN ${KEEPASSXC_VERSION})
 

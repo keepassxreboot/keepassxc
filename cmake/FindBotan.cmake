@@ -36,7 +36,7 @@ find_library(
     NAMES ${BOTAN_NAMES}
     PATH_SUFFIXES release/lib lib
     DOC "The Botan (release) library")
-if(MSVC)
+if(WIN32 AND NOT MINGW)
     find_library(
         BOTAN_LIBRARY_DEBUG
         NAMES ${BOTAN_NAMES_DEBUG}
@@ -55,7 +55,7 @@ endif()
 
 if(BOTAN_FOUND)
     set(BOTAN_INCLUDE_DIRS ${BOTAN_INCLUDE_DIR})
-    if(MSVC)
+    if(WIN32 AND NOT MINGW)
         set(BOTAN_LIBRARIES optimized ${BOTAN_LIBRARY} debug ${BOTAN_LIBRARY_DEBUG})
     else()
         set(BOTAN_LIBRARIES ${BOTAN_LIBRARY})
