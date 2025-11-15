@@ -92,12 +92,14 @@ QIcon Icons::trayIcon(bool unlocked)
     }
 
     QIcon i;
-#if defined(Q_OS_MACOS) || defined(Q_OS_WIN)
+#if defined(Q_OS_WIN)
     if (osUtils->isStatusBarDark()) {
         i = icon(QString("keepassxc-monochrome-light%1").arg(suffix), false);
     } else {
         i = icon(QString("keepassxc-monochrome-dark%1").arg(suffix), false);
     }
+#elif defined(Q_OS_MACOS)
+    i = icon(QString("keepassxc-monochrome-light%1").arg(suffix), false);
 #else
     i = icon(QString("%1-%2%3").arg(applicationIconName(), iconAppearance, suffix), false);
 #endif
