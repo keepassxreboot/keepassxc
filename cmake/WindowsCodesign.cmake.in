@@ -1,0 +1,79 @@
+#  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
+#
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 2 or (at your option)
+#  version 3 of the License.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+set(INSTALL_DIR ${CPACK_TEMPORARY_INSTALL_DIRECTORY})
+set(CODESIGN_IDENTITY @WITH_XC_CODESIGN_IDENTITY@)
+set(TIMESTAMP_URL @WITH_XC_CODESIGN_TIMESTAMP_URL@)
+
+if(CPACK_PACKAGE_FILES) 
+    # This variable is set only during POST_BUILD, reset SIGN_FILES first
+    set(SIGN_FILES "")
+    foreach(PACKAGE_FILE ${CPACK_PACKAGE_FILES})
+        # Check each package file to see if it can be signed
+        if(PACKAGE_FILE MATCHES "\\.msix?$" OR PACKAGE_FILE MATCHES "\\.exe$")
+            message(STATUS "Adding ${PACKAGE_FILE} for signature")
+            list(APPEND SIGN_FILES "${PACKAGE_FILE}")
+        endif()
+    endforeach()
+else()
+    # Setup portable zip file if building one
+    if(INSTALL_DIR MATCHES "/ZIP/")
+        file(TOUCH "${INSTALL_DIR}/.portable")
+        message(STATUS "Injected portable marker into ZIP file.")
+    endif()
+
+    # Find all dll and exe files in the install directory
+    file(GLOB_RECURSE SIGN_FILES
+            RELATIVE "${INSTALL_DIR}"
+            "${INSTALL_DIR}/*.dll"
+            "${INSTALL_DIR}/*.exe"
+    )
+endif()
+
+# Sign relevant binaries if requested
+if(CODESIGN_IDENTITY AND SIGN_FILES)
+    # Find signtool in PATH or error out
+    find_program(SIGNTOOL signtool.exe QUIET)
+    if(NOT SIGNTOOL)
+        message(FATAL_ERROR "signtool.exe not found in PATH, correct or unset WITH_XC_CODESIGN_IDENTITY")
+    endif()
+
+    # Check that a certificate thumbprint was provided or error out
+    if(CODESIGN_IDENTITY STREQUAL "auto")
+        message(STATUS "Signing using best available certificate.")
+        set(CERT_OPTS /a)
+    else ()
+        message(STATUS "Signing using certificate with fingerprint ${CODESIGN_IDENTITY}.")
+        set(CERT_OPTS /sha1 ${CODESIGN_IDENTITY})
+    endif()
+
+    message(STATUS "Signing binary files, this may take a while...")
+    # Use cmd /c to enable pop-up for pin entry if needed
+    execute_process(
+            COMMAND cmd /c ${SIGNTOOL} sign /fd SHA256 ${CERT_OPTS} /tr ${TIMESTAMP_URL} /td SHA256 /d ${CPACK_PACKAGE_FILE_NAME} ${SIGN_FILES}
+            WORKING_DIRECTORY "${INSTALL_DIR}"
+            RESULT_VARIABLE SIGN_RESULT
+            OUTPUT_VARIABLE SIGN_OUTPUT
+            ERROR_VARIABLE SIGN_ERROR
+            OUTPUT_STRIP_TRAILING_WHITESPACE
+            ERROR_STRIP_TRAILING_WHITESPACE
+            ECHO_OUTPUT_VARIABLE
+    )
+    if(NOT SIGN_RESULT EQUAL 0)
+        message(FATAL_ERROR "Signing binary files failed: ${SIGN_ERROR}")
+    endif()
+
+    message(STATUS "Binary files signed successfully.")
+endif()
