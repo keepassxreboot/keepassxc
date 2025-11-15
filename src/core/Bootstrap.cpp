@@ -175,6 +175,7 @@ namespace Bootstrap
 
         if (!CreateWellKnownSid(WinCreatorOwnerRightsSid, nullptr, pOwnerRightsSid, &pOwnerRightsSidSize)) {
             auto error = GetLastError();
+            Q_UNUSED(error)
             goto Cleanup;
         }
 
