@@ -20,10 +20,12 @@
 #include "ui_PasswordWidget.h"
 
 #include "core/Config.h"
+#include "core/Entry.h"
 #include "core/PasswordHealth.h"
 #include "gui/Font.h"
 #include "gui/Icons.h"
 #include "gui/PasswordGeneratorWidget.h"
+#include "gui/entry/EditEntryWidget.h"
 #include "gui/osutils/OSUtils.h"
 #include "gui/styles/StateColorPalette.h"
 
@@ -107,6 +109,11 @@ PasswordWidget::~PasswordWidget()
 void PasswordWidget::setQualityVisible(bool state)
 {
     m_ui->qualityProgressBar->setVisible(state);
+}
+
+void PasswordWidget::setEntry(Entry* entry)
+{
+    m_entry = entry;
 }
 
 QString PasswordWidget::text()
@@ -270,7 +277,14 @@ void PasswordWidget::updatePasswordStrength(const QString& password)
         return;
     }
 
-    PasswordHealth health(password);
+    QString passwordToCheck = password;
+    if (m_entry) {
+        QString resolvedPwd = m_entry->resolvePlaceholder(passwordToCheck);
+        if (!resolvedPwd.isEmpty()) {
+            passwordToCheck = resolvedPwd;
+        }
+    }
+    PasswordHealth health(passwordToCheck);
 
     m_ui->qualityProgressBar->setValue(std::min(int(health.entropy()), m_ui->qualityProgressBar->maximum()));
 

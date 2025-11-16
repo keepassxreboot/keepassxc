@@ -1005,6 +1005,7 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
 
     m_mainUi->titleEdit->setText(entry->title());
     m_mainUi->usernameComboBox->lineEdit()->setText(entry->username());
+    m_mainUi->passwordEdit->setEntry(entry);
     m_mainUi->urlEdit->setText(entry->url());
     m_mainUi->passwordEdit->setText(entry->password());
     m_mainUi->passwordEdit->setShowPassword(!config()->get(Config::Security_PasswordsHidden).toBool());
@@ -1252,6 +1253,7 @@ bool EditEntryWidget::commitEntry()
     setPageHidden(m_historyWidget, m_history || m_entry->historyItems().count() < 1);
     m_advancedUi->attachmentsWidget->linkAttachments(m_entry->attachments());
 
+    m_mainUi->passwordEdit->setEntry(m_entry);
     showMessage(tr("Entry updated successfully."), MessageWidget::Positive);
     setModified(false);
     // Prevent a reload due to entry modified signals

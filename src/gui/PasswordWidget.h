@@ -24,6 +24,8 @@
 #include <QPointer>
 #include <QWidget>
 
+class Entry;
+
 namespace Ui
 {
     class PasswordWidget;
@@ -40,6 +42,7 @@ public:
     void enablePasswordGenerator();
     void setRepeatPartner(PasswordWidget* repeatPartner);
     void setQualityVisible(bool state);
+    void setEntry(Entry* entry);
 
     bool isPasswordVisible() const;
     QString text();
@@ -77,6 +80,7 @@ private:
     QPointer<QAction> m_capslockAction;
     QPointer<PasswordWidget> m_repeatPasswordWidget;
     QPointer<PasswordWidget> m_parentPasswordWidget;
+    QPointer<Entry> m_entry;
 
     bool m_capslockState = false;
 };
