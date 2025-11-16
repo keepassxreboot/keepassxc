@@ -27,6 +27,7 @@
 #include "core/Config.h"
 #include "core/Group.h"
 #include "core/Resources.h"
+#include "core/Totp.h"
 #include "crypto/Crypto.h"
 #include "gui/MessageBox.h"
 #include "gui/osutils/OSUtils.h"
@@ -75,6 +76,9 @@ void TestAutoType::init()
     association.window = "custom window";
     association.sequence = "{username}association{password}";
     m_entry1->autoTypeAssociations()->add(association);
+    // Create a totp with a short time step to test delayed typing
+    auto totpSettings = Totp::createSettings("NNSWK4DBONZXQYZB", Totp::DEFAULT_DIGITS, 2);
+    m_entry1->setTotp(totpSettings);
 
     m_entry2 = new Entry();
     m_entry2->setGroup(m_group);
@@ -469,4 +473,25 @@ void TestAutoType::testAutoTypeEmptyWindowAssociation()
 
     assoc = m_entry6->autoTypeSequences("Some Other Window");
     QVERIFY(assoc.isEmpty());
+}
+
+void TestAutoType::testAutoTypeTotpDelay()
+{
+    // Get the TOTP time step in milliseconds
+    auto totpStep = m_entry1->totpSettings()->step * 1000;
+    auto sequence = QString("{TOTP} {DELAY %1}{TOTP}").arg(QString::number(totpStep * 2));
+
+    // Test 1: Sequence with a 3 second delay before TOTP
+    m_autoType->performAutoTypeWithSequence(m_entry1, sequence);
+    auto typedChars = m_test->actionChars();
+
+    // The typed TOTP should be different between the first and second one
+    auto totpParts = m_test->actionChars().split(' ');
+    QCOMPARE(totpParts.size(), 2);
+    QCOMPARE(totpParts[0].size(), m_entry1->totpSettings()->digits);
+    QCOMPARE(totpParts[1].size(), m_entry1->totpSettings()->digits);
+    QVERIFY2(totpParts[0] != totpParts[1],
+             QString("Typed TOTP (%1) should differ from current TOTP (%2) due to delay")
+                 .arg(totpParts[0], totpParts[1])
+                 .toLatin1());
 }
