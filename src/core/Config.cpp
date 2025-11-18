@@ -140,7 +140,7 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::Security_ClearSearchTimeout, {QS("Security/ClearSearchTimeout"), Roaming, 5}},
     {Config::Security_HideNotes, {QS("Security/Security_HideNotes"), Roaming, false}},
     {Config::Security_LockDatabaseIdle, {QS("Security/LockDatabaseIdle"), Roaming, true}},
-    {Config::Security_LockDatabaseIdleSeconds, {QS("Security/LockDatabaseIdleSeconds"), Roaming, 240}},
+    {Config::Security_LockDatabaseIdleSeconds, {QS("Security/LockDatabaseIdleSeconds"), Roaming, 900}},
     {Config::Security_LockDatabaseMinimize, {QS("Security/LockDatabaseMinimize"), Roaming, false}},
     {Config::Security_LockDatabaseScreenLock, {QS("Security/LockDatabaseScreenLock"), Roaming, true}},
     {Config::Security_LockDatabaseOnUserSwitch, {QS("Security/LockDatabaseOnUserSwitch"), Roaming, true}},
