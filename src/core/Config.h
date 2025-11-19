@@ -137,6 +137,7 @@ public:
         Security_EnableCopyOnDoubleClick,
         Security_QuickUnlock,
         Security_DatabasePasswordMinimumQuality,
+        Security_macOSAutoFill,
 
         Browser_Enabled,
         Browser_ShowNotification,

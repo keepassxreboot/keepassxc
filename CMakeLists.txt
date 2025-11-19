@@ -446,6 +446,7 @@ elseif(APPLE AND WITH_APP_BUNDLE)
     set(PROXY_INSTALL_DIR "${BUNDLE_INSTALL_DIR}/MacOS")
     set(BIN_INSTALL_DIR "${BUNDLE_INSTALL_DIR}/MacOS")
     set(PLUGIN_INSTALL_DIR "${BUNDLE_INSTALL_DIR}/PlugIns")
+    set(XPC_INSTALL_DIR "${BUNDLE_INSTALL_DIR}/XPCServices")
     set(DATA_INSTALL_DIR "${BUNDLE_INSTALL_DIR}/Resources")
 else()
     include(GNUInstallDirs)
@@ -474,7 +475,7 @@ if(WITH_COVERAGE)
     if(WITH_COVERAGE AND CMAKE_COMPILER_IS_CLANGXX)
         set(MAIN_BINARIES
                 "$<TARGET_FILE:${PROGNAME}>"
-                "$<TARGET_FILE:keepassxc-cli>"
+                "$<TARGET_FILE:${PROGNAME}-cli>"
                 "$<TARGET_FILE:keepassxc-proxy>")
         setup_target_for_coverage_llvm(
                 NAME coverage
