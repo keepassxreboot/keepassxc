@@ -375,6 +375,7 @@ target_link_libraries(keepassxc_core
         ${qrcode_LIB}
         Qt5::Core
         Qt5::Concurrent
+        Qt5::Network
         ${BOTAN_LIBRARIES}
         ${PCSC_LIBRARIES}
         ${ZXCVBN_LIBRARIES}

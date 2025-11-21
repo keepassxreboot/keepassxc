@@ -32,6 +32,7 @@
 #include <QElapsedTimer>
 #include <QEventLoop>
 #include <QFileInfo>
+#include <QHostInfo>
 #include <QIODevice>
 #include <QLocale>
 #include <QMetaProperty>
@@ -497,6 +498,10 @@ namespace Tools
             pattern.replace(match.capturedStart(), match.capturedLength(), replacement);
             match = re.match(pattern);
         }
+
+        const QString hostName = QHostInfo::localHostName();
+
+        pattern.replace(QStringLiteral("{CLIENT_HOSTNAME}"), hostName);
 
         // Replace escaped braces
         pattern.replace(QStringLiteral("\\{"), QStringLiteral("{"));
