@@ -121,6 +121,8 @@
         <SetProperty Id="AUTOSTARTPROGRAM" After="AppSearch" Value="" Sequence="first">AUTOSTARTPROGRAM="0" OR (WIX_UPGRADE_DETECTED AND NOT AUTOSTARTPROGRAM_REGISTRY)</SetProperty>
         <SetProperty Id="ADDTOPATH" After="AppSearch" Value="" Sequence="first">ADDTOPATH="0" OR (WIX_UPGRADE_DETECTED AND NOT ADDTOPATH_REGISTRY)</SetProperty>
         <SetProperty Id="LicenseAccepted" After="AppSearch" Value="1">WIX_UPGRADE_DETECTED</SetProperty>
+        <!-- Prevent launch on installer exit if run as SYSTEM user -->
+        <SetProperty Id="LAUNCHAPPONEXIT" After="AppSearch" Value="">UserSID = "S-1-5-18"</SetProperty>
 
         <FeatureRef Id="ProductFeature">
             <ComponentRef Id="ApplicationShortcuts" />
