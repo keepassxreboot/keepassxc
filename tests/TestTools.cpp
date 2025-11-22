@@ -403,8 +403,8 @@ void TestTools::testGetMimeTypeByFileInfo()
 
     const QStringList Markdowns = {"test.md", "test.markdown"};
 
-    for (const auto& makdown : Markdowns) {
-        QCOMPARE(Tools::getMimeType(QFileInfo(makdown)), Tools::MimeType::Markdown);
+    for (const auto& markdown : Markdowns) {
+        QCOMPARE(Tools::getMimeType(QFileInfo(markdown)), Tools::MimeType::Markdown);
     }
 
     const QStringList UnknownHeaders = {"test.doc", "test.pdf", "test.docx"};
