@@ -515,7 +515,7 @@ namespace Tools
                                                 "application/protobuf",
                                                 "application/x-zerosize"};
         const static QStringList HtmlFormats = {"text/html"};
-        const static QStringList MarkdownFormats = {"text/markdown"};
+        const static QStringList MarkdownFormats = {"text/markdown", "text/x-web-markdown"};
         const static QStringList ImageFormats = {"image/"};
 
         static auto isCompatible = [](const QString& format, const QStringList& list) {
