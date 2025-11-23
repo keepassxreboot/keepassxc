@@ -25,12 +25,10 @@ import lzma
 import os
 from pathlib import Path
 import platform
-import random
 import re
 import signal
 import shutil
 import stat
-import string
 import subprocess
 import sys
 import tarfile
@@ -43,7 +41,7 @@ from urllib.request import urlretrieve
 ###########################################################################################
 
 # class Check(Command)
-# class Merge(Command)
+# class Tag(Command)
 # class Build(Command)
 # class BuildSrc(Command)
 # class AppSign(Command)
@@ -131,7 +129,8 @@ fmt = LogFormatter()
 console_handler = logging.StreamHandler()
 console_handler.setFormatter(fmt)
 logger = logging.getLogger(__file__)
-logger.setLevel(os.getenv('LOGLEVEL') if 'LOGLEVEL' in os.environ else logging.INFO)
+logger.setLevel(os.getenv('LOGLEVEL')
+                if type(logging.getLevelName(os.environ.get('LOGLEVEL'))) is int else logging.INFO)
 logger.addHandler(console_handler)
 
 ###########################################################################################
@@ -188,11 +187,12 @@ def _run(cmd, *args, cwd, path=None, env=None, input=None, capture_output=True, 
         env['FORCE_COLOR'] = '1'
 
     if docker_image:
-        docker_cmd = ['docker', 'run', '--rm', '--tty=true', f'--workdir={cwd}', f'--user={os.getuid()}:{os.getgid()}']
+        cwd2 = cwd or '.'
+        docker_cmd = ['docker', 'run', '--rm', '--tty=true', f'--workdir={cwd2}', f'--user={os.getuid()}:{os.getgid()}']
         docker_cmd.extend([f'--env={k}={v}' for k, v in env.items() if k in ['FORCE_COLOR', 'CC', 'CXX']])
         if path:
             docker_cmd.append(f'--env=PATH={path}')
-        docker_cmd.append(f'--volume={Path(cwd).absolute()}:{Path(cwd).absolute()}:rw')
+        docker_cmd.append(f'--volume={Path(cwd2).absolute()}:{Path(cwd2).absolute()}:rw')
         if docker_mounts:
             docker_cmd.extend([f'--volume={Path(d).absolute()}:{Path(d).absolute()}:rw' for d in docker_mounts])
         if docker_privileged:
@@ -203,7 +203,7 @@ def _run(cmd, *args, cwd, path=None, env=None, input=None, capture_output=True, 
         cmd = docker_cmd + cmd
 
     try:
-        logger.debug('Running command: %s', ' '.join(cmd))
+        logger.debug('Running command: %s', ' '.join(map(str, cmd)))
         return subprocess.run(
             cmd, *args,
             input=input,
@@ -450,6 +450,7 @@ class Check(Command):
             cls.check_version_in_cmake(version, src_dir)
             cls.check_changelog(version, src_dir)
             cls.check_app_stream_info(version, src_dir)
+        return git_ref
 
     @staticmethod
     def check_src_dir_exists(src_dir):
@@ -541,8 +542,8 @@ class Check(Command):
             raise Error('xcrun command not found! Please check that you have correctly installed Xcode.')
 
 
-class Merge(Command):
-    """Merge release branch into main branch and create release tags."""
+class Tag(Command):
+    """Update translations and tag release."""
 
     @classmethod
     def setup_arg_parser(cls, parser: argparse.ArgumentParser):
@@ -564,7 +565,7 @@ class Merge(Command):
             skip_translations, tx_resource, tx_min_perc):
         major, minor, patch = _split_version(version)
         Check.perform_basic_checks(src_dir)
-        Check.perform_version_checks(version, src_dir, release_branch)
+        release_branch = Check.perform_version_checks(version, src_dir, release_branch)
         Check.check_gnupg()
         sign_key = GPGSign.get_secret_key(sign_key)
 
@@ -844,7 +845,7 @@ class Build(Command):
             _run(['cmake', '--install', '.', '--strip',
                   '--prefix', (app_dir.absolute() / install_prefix.lstrip('/')).as_posix()],
                  cwd=build_dir, capture_output=False, **docker_args)
-            shutil.copytree(app_dir, output_dir / app_dir.name, symlinks=True)
+            shutil.copytree(app_dir, output_dir / app_dir.name, symlinks=True, dirs_exist_ok=True)
 
             if appimage:
                 self._build_linux_appimage(
@@ -885,7 +886,7 @@ class Build(Command):
         _run(['linuxdeploy', '--plugin=qt', f'--appdir={app_dir}', f'--custom-apprun={app_run}',
               f'--desktop-file={desktop_file}', f'--icon-file={icon_file}',
               *[f'--executable={ex}' for ex in executables]],
-             cwd=build_dir, capture_output=False, path=env_path, **docker_args)
+             cwd=build_dir, capture_output=False, path=env_path, **docker_args, docker_privileged=True)
 
         logger.debug('Running appimagetool...')
         appimage_name = f'KeePassXC-{version}-{platform_target}.AppImage'
@@ -1196,9 +1197,9 @@ def main():
     Check.setup_arg_parser(check_parser)
     check_parser.set_defaults(_cmd=Check)
 
-    merge_parser = subparsers.add_parser('merge', help=Merge.__doc__)
-    Merge.setup_arg_parser(merge_parser)
-    merge_parser.set_defaults(_cmd=Merge)
+    merge_parser = subparsers.add_parser('tag', help=Tag.__doc__)
+    Tag.setup_arg_parser(merge_parser)
+    merge_parser.set_defaults(_cmd=Tag)
 
     build_parser = subparsers.add_parser('build', help=Build.__doc__)
     Build.setup_arg_parser(build_parser)
