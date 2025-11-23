@@ -25,12 +25,10 @@ import lzma
 import os
 from pathlib import Path
 import platform
-import random
 import re
 import signal
 import shutil
 import stat
-import string
 import subprocess
 import sys
 import tarfile
@@ -131,7 +129,8 @@ fmt = LogFormatter()
 console_handler = logging.StreamHandler()
 console_handler.setFormatter(fmt)
 logger = logging.getLogger(__file__)
-logger.setLevel(os.getenv('LOGLEVEL') if 'LOGLEVEL' in os.environ else logging.INFO)
+logger.setLevel(os.getenv('LOGLEVEL')
+                if type(logging.getLevelName(os.environ.get('LOGLEVEL'))) is int else logging.INFO)
 logger.addHandler(console_handler)
 
 ###########################################################################################
@@ -188,11 +187,12 @@ def _run(cmd, *args, cwd, path=None, env=None, input=None, capture_output=True, 
         env['FORCE_COLOR'] = '1'
 
     if docker_image:
-        docker_cmd = ['docker', 'run', '--rm', '--tty=true', f'--workdir={cwd}', f'--user={os.getuid()}:{os.getgid()}']
+        cwd2 = Path(cwd or '.').absolute()
+        docker_cmd = ['docker', 'run', '--rm', '--tty=true', f'--workdir={cwd2}', f'--user={os.getuid()}:{os.getgid()}']
         docker_cmd.extend([f'--env={k}={v}' for k, v in env.items() if k in ['FORCE_COLOR', 'CC', 'CXX']])
         if path:
             docker_cmd.append(f'--env=PATH={path}')
-        docker_cmd.append(f'--volume={Path(cwd).absolute()}:{Path(cwd).absolute()}:rw')
+        docker_cmd.append(f'--volume={cwd2}:{cwd2}:rw')
         if docker_mounts:
             docker_cmd.extend([f'--volume={Path(d).absolute()}:{Path(d).absolute()}:rw' for d in docker_mounts])
         if docker_privileged:
@@ -203,7 +203,7 @@ def _run(cmd, *args, cwd, path=None, env=None, input=None, capture_output=True, 
         cmd = docker_cmd + cmd
 
     try:
-        logger.debug('Running command: %s', ' '.join(str(cmd)))
+        logger.debug('Running command: %s', ' '.join(map(str, cmd)))
         return subprocess.run(
             cmd, *args,
             input=input,
@@ -845,7 +845,7 @@ class Build(Command):
             _run(['cmake', '--install', '.', '--strip',
                   '--prefix', (app_dir.absolute() / install_prefix.lstrip('/')).as_posix()],
                  cwd=build_dir, capture_output=False, **docker_args)
-            shutil.copytree(app_dir, output_dir / app_dir.name, symlinks=True)
+            shutil.copytree(app_dir, output_dir / app_dir.name, symlinks=True, dirs_exist_ok=True)
 
             if appimage:
                 self._build_linux_appimage(
@@ -886,7 +886,7 @@ class Build(Command):
         _run(['linuxdeploy', '--plugin=qt', f'--appdir={app_dir}', f'--custom-apprun={app_run}',
               f'--desktop-file={desktop_file}', f'--icon-file={icon_file}',
               *[f'--executable={ex}' for ex in executables]],
-             cwd=build_dir, capture_output=False, path=env_path, **docker_args)
+             cwd=build_dir, capture_output=False, path=env_path, **docker_args, docker_privileged=True)
 
         logger.debug('Running appimagetool...')
         appimage_name = f'KeePassXC-{version}-{platform_target}.AppImage'
