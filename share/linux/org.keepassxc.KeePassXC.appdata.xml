@@ -46,10 +46,77 @@
   </screenshots>
   <releases>
     <release version="2.8.0" date="2025-01-01" type="development">
+        <description>
+            <ul>
+                <li>Placeholder for future release notes</li>
+            </ul>
+        </description>
+    </release>
+    <release version="2.7.11" date="2025-11-23" type="stable">
       <description>
-        <ul>
-          <li>Placeholder for future release notes</li>
-        </ul>
+        <li>Add image, HTML, Markdown preview, and text editing support to inline attachment viewer [#12085, #12244, #12654]</li>
+        <li>Add database merge confirmation dialog [#10173]</li>
+        <li>Add option to auto-generate a password for new entries [#12593]</li>
+        <li>Add support for group sync in KeeShare [#11593]</li>
+        <li>Add {UUID} placeholder for use in references [#12511]</li>
+        <li>Add “Wait for Enter” search option [#12263]</li>
+        <li>Add keyboard shortcut to “Jump to Group” from search results [#12225]</li>
+        <li>Add predefined search for TOTP entries [#12199]</li>
+        <li>Add confirmation when closing database via ESC key [#11963]</li>
+        <li>Add support for escaping placeholder expressions [#11904]</li>
+        <li>Reduce tab indentation width in notes fields [#11919]</li>
+        <li>Cap default Argon2 parallelism when creating a new database [#11853]</li>
+        <li>Database lock after inactivity now enabled by default and set to 900 seconds [#12689, #12609]</li>
+        <li>Copying TOTP now opens setup dialog if none is configured for entry [#12584]</li>
+        <li>Make double click action configurable [#12322]</li>
+        <li>Remove unused “Last Accessed” from GUI [#12602]</li>
+        <li>Auto-Type: Add more granular confirmation settings [#12370]</li>
+        <li>Auto-Type: Add URL typing preset and add copy options to menu [#12341]</li>
+        <li>Browser: Do not allow sites automatically if entry added from browser extension [#12413]</li>
+        <li>Browser: Add options to restrict exposed groups [#9852, #12119]</li>
+        <li>Bitwarden Import: Add support for timestamps and password history [#12588]</li>
+        <li>macOS: Add Liquid Glass icon [#12642]</li>
+        <li>macOS: Remove theme-based menubar icon toggle [#12685]</li>
+        <li>macOS: Add Window and Help menus [#12357]</li>
+        <li>Windows: Add option to add KeePassXC to PATH during installation [#12171]</li>
+        <li>Fix window geometry not being restored properly when KeePassXC starts in tray [#12683]</li>
+        <li>Fix potential database truncation when using direct write save method with YubiKeys [#11841]</li>
+        <li>Fix issue with database backup saving [#11874]</li>
+        <li>Fix UI lockups during startup with multiple tabs [#12053]</li>
+        <li>Fix keyboard shortcuts when menubar is hidden [#12431]</li>
+        <li>Fix clipboard being cleared on exit even if no password was copied [#12603]</li>
+        <li>Fix single-instance detection when username contains invalid filename characters [#12559]</li>
+        <li>Fix “Search Wait for Enter” setting not being save [#12614]</li>
+        <li>Fix hotkey accelerators not being escaped properly on database tabs [#12630]</li>
+        <li>Fix confusing error if user cancels out of key file edit dialog [#12639]</li>
+        <li>Fix issues with saved searches and “Press Enter to Search” option [#12314]</li>
+        <li>Fix URL wildcard matching [#12257]</li>
+        <li>Fix TOTP visibility on unlock and settings change [#12220]</li>
+        <li>Fix KeeShare entries with reference attributes not updating [#11809]</li>
+        <li>Fix sort order not being maintained when toggling filters in database reports [#11849]</li>
+        <li>Fix several UI font and layout issues [#11967,  #12102]</li>
+        <li>Prevent mouse wheel scroll on edit username field [#12398]</li>
+        <li>Improve base translation consistency [#12432]</li>
+        <li>Improve inactivity timer [#12246]</li>
+        <li>Documentation improvements [#12373, #12506]</li>
+        <li>Browser: Fix ordering of clientDataJSON in Passkey response object [#12120]</li>
+        <li>Browser: Fix URL matching for additional URLs [#12196]</li>
+        <li>Browser: Fix group settings inheritance [#12368]</li>
+        <li>Browser: Allow read-only native messaging config files [#12236]</li>
+        <li>Browser: Optimise entry iteration in browser access control dialog [#11817]</li>
+        <li>Browser: Fix “Do not ask permission for HTTP Basic Auth” option [#11871]</li>
+        <li>Browser: Fix native messaging path for Tor Browser launcher on Linux [#12005]</li>
+        <li>Auto-Type: Fix empty window behaviour [#12622]</li>
+        <li>Auto-Type: Take delays into account when typing TOTP [#12691]</li>
+        <li>SSH Agent: Fix out-of-memory crash with malformed SSH keys [#12606]</li>
+        <li>CSV Import: Fix modified and creation time import [#12379]</li>
+        <li>CSV Import: Fix duplication of root groups on import [#12240]</li>
+        <li>Proton Pass Import: Fix email addresses not being imported when no username set [#11888]</li>
+        <li>macOS: Fix secure input getting stuck [#11928]</li>
+        <li>Windows: Prevent launch as SYSTEM user from MSI installer [#12705]</li>
+        <li>Windows: Remove broken check for MSVC Redistributable from MSI installer [#11950]</li>
+        <li>Linux: Fix startup delay due to StartupNotify setting in desktop file [#12306]</li>
+        <li>Linux: Fix memory initialisation when --pw-stdin is used with a pipe [#12050]</li>
       </description>
     </release>
     <release version="2.7.10" date="2025-03-02" type="stable">
