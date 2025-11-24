@@ -828,6 +828,8 @@ class Build(Command):
 
         if appimage:
             cmake_opts.append('-DKEEPASSXC_DIST_TYPE=AppImage')
+            # Force install prefix to ensure proper AppDir structure for linuxdeploy
+            install_prefix = '/usr'
 
         with tempfile.TemporaryDirectory() as build_dir:
             logger.info('Configuring build...')
