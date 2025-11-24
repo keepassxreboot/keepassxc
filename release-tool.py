@@ -491,7 +491,7 @@ class Check(Command):
             cmakelists = Path(cwd) / cmakelists
         if not cmakelists.is_file():
             raise Error('File not found: %s', cmakelists)
-        cmakelists_text = cmakelists.read_text()
+        cmakelists_text = cmakelists.read_text("UTF-8")
         major = re.search(r'^set\(KEEPASSXC_VERSION_MAJOR "(\d+)"\)$', cmakelists_text, re.MULTILINE).group(1)
         minor = re.search(r'^set\(KEEPASSXC_VERSION_MINOR "(\d+)"\)$', cmakelists_text, re.MULTILINE).group(1)
         patch = re.search(r'^set\(KEEPASSXC_VERSION_PATCH "(\d+)"\)$', cmakelists_text, re.MULTILINE).group(1)
@@ -507,7 +507,7 @@ class Check(Command):
         if not changelog.is_file():
             raise Error('File not found: %s', changelog)
         major, minor, patch = _split_version(version)
-        if not re.search(rf'^## {major}\.{minor}\.{patch} \(.+?\)\n+', changelog.read_text(), re.MULTILINE):
+        if not re.search(rf'^## {major}\.{minor}\.{patch} \(.+?\)\n+', changelog.read_text("UTF-8"), re.MULTILINE):
             raise Error(f'{changelog} has not been updated to the "%s" release.', version)
 
     @staticmethod
@@ -576,7 +576,7 @@ class Tag(Command):
                              commit=True, yes=yes)
 
         changelog = re.search(rf'^## ({major}\.{minor}\.{patch} \(.*?\)\n\n+.+?)\n\n+## ',
-                              (Path(src_dir) / 'CHANGELOG.md').read_text(), re.MULTILINE | re.DOTALL)
+                              (Path(src_dir) / 'CHANGELOG.md').read_text("UTF-8"), re.MULTILINE | re.DOTALL)
         if not changelog:
             raise Error(f'No changelog entry found for version {version}.')
         changelog = 'Release ' + changelog.group(1)
