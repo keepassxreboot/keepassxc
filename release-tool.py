@@ -187,12 +187,12 @@ def _run(cmd, *args, cwd, path=None, env=None, input=None, capture_output=True, 
         env['FORCE_COLOR'] = '1'
 
     if docker_image:
-        cwd2 = cwd or '.'
+        cwd2 = Path(cwd or '.').absolute()
         docker_cmd = ['docker', 'run', '--rm', '--tty=true', f'--workdir={cwd2}', f'--user={os.getuid()}:{os.getgid()}']
         docker_cmd.extend([f'--env={k}={v}' for k, v in env.items() if k in ['FORCE_COLOR', 'CC', 'CXX']])
         if path:
             docker_cmd.append(f'--env=PATH={path}')
-        docker_cmd.append(f'--volume={Path(cwd2).absolute()}:{Path(cwd2).absolute()}:rw')
+        docker_cmd.append(f'--volume={cwd2}:{cwd2}:rw')
         if docker_mounts:
             docker_cmd.extend([f'--volume={Path(d).absolute()}:{Path(d).absolute()}:rw' for d in docker_mounts])
         if docker_privileged:
