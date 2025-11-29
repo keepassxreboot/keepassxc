@@ -248,7 +248,7 @@ AttestationKeyPair BrowserPasskeys::buildCredentialPrivateKey(int alg, const Tes
                 // Use predefined data if found (only for testing private key creation)
                 const auto keyData = !testingVariables.data.isEmpty()
                                          ? Botan::BigInt(testingVariables.data.toStdString())
-                                         : Botan::BigInt::zero();
+                                         : Botan::BigInt(0);
                 Botan::ECDSA_PrivateKey privateKey(*randomGen()->getRng(), Botan::EC_Group("secp256r1"), keyData);
                 const auto& publicPoint = privateKey.public_point();
                 auto x = publicPoint.get_affine_x();
