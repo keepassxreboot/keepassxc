@@ -103,6 +103,9 @@ PublicKeyCredential BrowserPasskeys::buildRegisterPublicKeyCredential(const QJso
 
     // Additions for extension side functions
     responseObject["authenticatorData"] = browserMessageBuilder()->getBase64FromArray(authenticatorData);
+
+    // PublicKey
+    responseObject["publicKey"] = browserMessageBuilder()->getBase64FromArray(privateKey.spkiPublicKey);
     responseObject["publicKeyAlgorithm"] = alg;
 
     // PublicKeyCredential
@@ -234,6 +237,7 @@ BrowserPasskeys::buildCredentialPrivateKey(int alg, const QString& predefinedFir
 
     QByteArray firstPart;
     QByteArray secondPart;
+    QByteArray spki;
     QByteArray pem;
 
     if (!predefinedFirst.isEmpty() && !predefinedSecond.isEmpty()) {
@@ -249,6 +253,10 @@ BrowserPasskeys::buildCredentialPrivateKey(int alg, const QString& predefinedFir
                 firstPart = bigIntToQByteArray(x);
                 secondPart = bigIntToQByteArray(y);
 
+                auto publicKey = privateKey.public_key();
+                auto publicKeySpki = publicKey->subject_public_key();
+                spki = browserMessageBuilder()->getQByteArray(publicKeySpki.data(), publicKeySpki.size());
+
                 auto privateKeyPem = Botan::PKCS8::PEM_encode(privateKey);
                 pem = QByteArray::fromStdString(privateKeyPem);
             } catch (std::exception& e) {
@@ -263,6 +271,10 @@ BrowserPasskeys::buildCredentialPrivateKey(int alg, const QString& predefinedFir
                 firstPart = bigIntToQByteArray(modulus);
                 secondPart = bigIntToQByteArray(exponent);
 
+                auto publicKey = privateKey.public_key();
+                auto publicKeySpki = publicKey->subject_public_key();
+                spki = browserMessageBuilder()->getQByteArray(publicKeySpki.data(), publicKeySpki.size());
+
                 auto privateKeyPem = Botan::PKCS8::PEM_encode(privateKey);
                 pem = QByteArray::fromStdString(privateKeyPem);
             } catch (std::exception& e) {
@@ -271,17 +283,21 @@ BrowserPasskeys::buildCredentialPrivateKey(int alg, const QString& predefinedFir
             }
         } else if (alg == WebAuthnAlgorithms::EDDSA) {
             try {
-                Botan::Ed25519_PrivateKey key(*randomGen()->getRng());
-                auto publicKey = key.get_public_key();
+                Botan::Ed25519_PrivateKey privateKey(*randomGen()->getRng());
+                auto publicKeyBits = privateKey.get_public_key();
 #ifdef WITH_XC_BOTAN3
-                auto privateKey = key.raw_private_key_bits();
+                auto privateKeyBits = privateKey.raw_private_key_bits();
 #else
-                auto privateKey = key.get_private_key();
+                auto privateKeyBits = privateKey.get_private_key();
 #endif
-                firstPart = browserMessageBuilder()->getQByteArray(publicKey.data(), publicKey.size());
-                secondPart = browserMessageBuilder()->getQByteArray(privateKey.data(), privateKey.size());
+                firstPart = browserMessageBuilder()->getQByteArray(publicKeyBits.data(), publicKeyBits.size());
+                secondPart = browserMessageBuilder()->getQByteArray(privateKeyBits.data(), privateKeyBits.size());
 
-                auto privateKeyPem = Botan::PKCS8::PEM_encode(key);
+                auto publicKey = privateKey.public_key();
+                auto publicKeySpki = publicKey->subject_public_key();
+                spki = browserMessageBuilder()->getQByteArray(publicKeySpki.data(), publicKeySpki.size());
+
+                auto privateKeyPem = Botan::PKCS8::PEM_encode(privateKey);
                 pem = QByteArray::fromStdString(privateKeyPem);
             } catch (std::exception& e) {
                 qWarning("BrowserWebAuthn::buildCredentialPrivateKey: Could not create EdDSA private key: %s",
@@ -299,6 +315,7 @@ BrowserPasskeys::buildCredentialPrivateKey(int alg, const QString& predefinedFir
     AttestationKeyPair attestationKeyPair;
     attestationKeyPair.cborEncodedPublicKey = result;
     attestationKeyPair.privateKeyPem = pem;
+    attestationKeyPair.spkiPublicKey = spki;
     return attestationKeyPair;
 }
 

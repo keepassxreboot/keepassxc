@@ -61,6 +61,7 @@ struct AttestationKeyPair
 {
     QByteArray cborEncodedPublicKey;
     QByteArray privateKeyPem;
+    QByteArray spkiPublicKey;
 };
 
 // Predefined variables used for testing the class
