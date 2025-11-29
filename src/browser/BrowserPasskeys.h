@@ -70,6 +70,7 @@ struct TestingVariables
     QString credentialId;
     QString first;
     QString second;
+    QString data;
 };
 
 class BrowserPasskeys : public QObject
@@ -82,7 +83,7 @@ public:
     static BrowserPasskeys* instance();
 
     PublicKeyCredential buildRegisterPublicKeyCredential(const QJsonObject& credentialCreationOptions,
-                                                         const TestingVariables& predefinedVariables = {});
+                                                         const TestingVariables& testingVariables = {});
     QJsonObject buildGetPublicKeyCredential(const QJsonObject& assertionOptions,
                                             const QString& credentialId,
                                             const QString& userHandle,
@@ -111,11 +112,9 @@ private:
                                       const QString& extensions,
                                       const QString& credentialId,
                                       const QByteArray& cborEncodedPublicKey,
-                                      const TestingVariables& predefinedVariables = {});
+                                      const TestingVariables& testingVariables = {});
     QByteArray buildAuthenticatorData(const QString& rpId, const QString& extensions);
-    AttestationKeyPair buildCredentialPrivateKey(int alg,
-                                                 const QString& predefinedFirst = QString(),
-                                                 const QString& predefinedSecond = QString());
+    AttestationKeyPair buildCredentialPrivateKey(int alg, const TestingVariables& testingVariables = {});
     QByteArray
     buildSignature(const QByteArray& authenticatorData, const QByteArray& clientData, const QString& privateKeyPem);
     QJsonObject parseAuthData(const QByteArray& authData) const;

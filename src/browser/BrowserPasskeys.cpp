@@ -79,7 +79,7 @@ PublicKeyCredential BrowserPasskeys::buildRegisterPublicKeyCredential(const QJso
 
     // Credential private key
     const auto alg = getAlgorithmFromPublicKey(credentialCreationOptions);
-    const auto privateKey = buildCredentialPrivateKey(alg, testingVariables.first, testingVariables.second);
+    const auto privateKey = buildCredentialPrivateKey(alg, testingVariables);
     if (privateKey.cborEncodedPublicKey.isEmpty() && privateKey.privateKeyPem.isEmpty()) {
         // Key creation failed
         return {};
@@ -227,8 +227,7 @@ QByteArray BrowserPasskeys::buildAuthenticatorData(const QString& rpId, const QS
 }
 
 // See: https://w3c.github.io/webauthn/#sctn-encoded-credPubKey-examples
-AttestationKeyPair
-BrowserPasskeys::buildCredentialPrivateKey(int alg, const QString& predefinedFirst, const QString& predefinedSecond)
+AttestationKeyPair BrowserPasskeys::buildCredentialPrivateKey(int alg, const TestingVariables& testingVariables)
 {
     // Only support -7, P256 (EC), -8 (EdDSA) and -257 (RSA) for now
     if (alg != WebAuthnAlgorithms::ES256 && alg != WebAuthnAlgorithms::RS256 && alg != WebAuthnAlgorithms::EDDSA) {
@@ -240,13 +239,17 @@ BrowserPasskeys::buildCredentialPrivateKey(int alg, const QString& predefinedFir
     QByteArray spki;
     QByteArray pem;
 
-    if (!predefinedFirst.isEmpty() && !predefinedSecond.isEmpty()) {
-        firstPart = browserMessageBuilder()->getArrayFromBase64(predefinedFirst);
-        secondPart = browserMessageBuilder()->getArrayFromBase64(predefinedSecond);
+    if (!testingVariables.first.isEmpty() && !testingVariables.second.isEmpty()) {
+        firstPart = browserMessageBuilder()->getArrayFromBase64(testingVariables.first);
+        secondPart = browserMessageBuilder()->getArrayFromBase64(testingVariables.second);
     } else {
         if (alg == WebAuthnAlgorithms::ES256) {
             try {
-                Botan::ECDSA_PrivateKey privateKey(*randomGen()->getRng(), Botan::EC_Group("secp256r1"));
+                // Use predefined data if found (only for testing private key creation)
+                const auto keyData = !testingVariables.data.isEmpty()
+                                         ? Botan::BigInt(testingVariables.data.toStdString())
+                                         : Botan::BigInt::zero();
+                Botan::ECDSA_PrivateKey privateKey(*randomGen()->getRng(), Botan::EC_Group("secp256r1"), keyData);
                 const auto& publicPoint = privateKey.public_point();
                 auto x = publicPoint.get_affine_x();
                 auto y = publicPoint.get_affine_y();
