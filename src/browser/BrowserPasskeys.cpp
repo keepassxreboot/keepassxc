@@ -253,8 +253,9 @@ BrowserPasskeys::buildCredentialPrivateKey(int alg, const QString& predefinedFir
                 firstPart = bigIntToQByteArray(x);
                 secondPart = bigIntToQByteArray(y);
 
-                auto publicKey = privateKey.public_key();
-                auto publicKeySpki = publicKey->subject_public_key();
+                auto publicKey =
+                    Botan::ECDSA_PublicKey(privateKey.algorithm_identifier(), privateKey.public_key_bits());
+                auto publicKeySpki = publicKey.subject_public_key();
                 spki = browserMessageBuilder()->getQByteArray(publicKeySpki.data(), publicKeySpki.size());
 
                 auto privateKeyPem = Botan::PKCS8::PEM_encode(privateKey);
@@ -271,8 +272,8 @@ BrowserPasskeys::buildCredentialPrivateKey(int alg, const QString& predefinedFir
                 firstPart = bigIntToQByteArray(modulus);
                 secondPart = bigIntToQByteArray(exponent);
 
-                auto publicKey = privateKey.public_key();
-                auto publicKeySpki = publicKey->subject_public_key();
+                auto publicKey = Botan::RSA_PublicKey(privateKey.algorithm_identifier(), privateKey.public_key_bits());
+                auto publicKeySpki = publicKey.subject_public_key();
                 spki = browserMessageBuilder()->getQByteArray(publicKeySpki.data(), publicKeySpki.size());
 
                 auto privateKeyPem = Botan::PKCS8::PEM_encode(privateKey);
@@ -293,8 +294,9 @@ BrowserPasskeys::buildCredentialPrivateKey(int alg, const QString& predefinedFir
                 firstPart = browserMessageBuilder()->getQByteArray(publicKeyBits.data(), publicKeyBits.size());
                 secondPart = browserMessageBuilder()->getQByteArray(privateKeyBits.data(), privateKeyBits.size());
 
-                auto publicKey = privateKey.public_key();
-                auto publicKeySpki = publicKey->subject_public_key();
+                auto publicKey =
+                    Botan::Ed25519_PublicKey(privateKey.algorithm_identifier(), privateKey.public_key_bits());
+                auto publicKeySpki = publicKey.subject_public_key();
                 spki = browserMessageBuilder()->getQByteArray(publicKeySpki.data(), publicKeySpki.size());
 
                 auto privateKeyPem = Botan::PKCS8::PEM_encode(privateKey);
