@@ -37,7 +37,7 @@
 #include <algorithm>
 
 #ifdef Q_OS_WIN
-#include <Windows.h>
+#include <windows.h>
 #endif
 
 QHash<QUuid, QPointer<Database>> Database::s_uuidMap;
@@ -338,7 +338,7 @@ bool Database::saveAs(const QString& filePath, SaveAction action, const QString&
 
 #ifdef Q_OS_WIN
         if (isHidden) {
-            SetFileAttributes(realFilePath.toStdWString().c_str(), FILE_ATTRIBUTE_HIDDEN);
+            SetFileAttributes(static_cast<LPCWSTR>(realFilePath.toStdWString().c_str()), FILE_ATTRIBUTE_HIDDEN);
         }
 #endif
         m_ignoreFileChangesUntilSaved = false;
