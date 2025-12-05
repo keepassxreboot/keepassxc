@@ -75,7 +75,7 @@ NOTE: On Windows, you will be prompted to authenticate to Windows Hello after un
 .Windows Hello example
 image::quick_unlock_windows_hello.png[]
 
-When your database is locked, you will see the following unlock dialog. Simply press kbd:[Enter] or click on _Unlock Database_ to initiate the biometric authentication process. If you are using a hardware key (e.g. Yubikey), it must be connected to your computer to complete the unlock.
+When your database is locked, you will see the following unlock dialog. Simply press kbd:[Enter] or click on _Unlock Database_ to initiate the biometric authentication process. If you are using a hardware key (e.g. YubiKey), it must be connected to your computer to complete the unlock.
 
 .Quick Unlock
 image::quick_unlock.png[]
