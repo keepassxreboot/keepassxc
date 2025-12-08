@@ -21,6 +21,7 @@
 #include <QToolTip>
 
 #include "autotype/AutoType.h"
+#include "gui/styles/StateColorPalette.h"
 
 ShortcutWidget::ShortcutWidget(QWidget* parent)
     : QLineEdit(parent)
@@ -54,7 +55,9 @@ void ShortcutWidget::setShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers)
         setStyleSheet("");
     } else {
         QToolTip::showText(mapToGlobal(rect().bottomLeft()), error);
-        setStyleSheet("background-color: #FF9696;");
+        StateColorPalette statePalette;
+        auto color = statePalette.color(StateColorPalette::ColorRole::Error);
+        setStyleSheet(QString("QLineEdit { background: %1; }").arg(color.name()));
     }
 }
 
