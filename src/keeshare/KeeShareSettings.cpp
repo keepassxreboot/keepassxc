@@ -376,6 +376,7 @@ namespace KeeShareSettings
         // need a dynamic_cast here, because the base class is virtual
         const auto rsaKey = dynamic_cast<Botan::RSA_PrivateKey*>(sign.certificate.key.data());
         if (!rsaKey) {
+            qWarning("KeeShare: certificate key is not an RSA private key");
             return {};
         }
 

@@ -20,10 +20,12 @@
 #include "gui/Application.h"
 
 #include <QCheckBox>
-#include <QClipboard>
+#include <QComboBox>
+#include <QHash>
 #include <QListWidget>
 #include <QMenu>
 #include <QMenuBar>
+#include <QMetaObject>
 #include <QMimeData>
 #include <QPlainTextEdit>
 #include <QPushButton>
@@ -33,6 +35,7 @@
 #include <QTableWidget>
 #include <QTest>
 #include <QToolBar>
+#include <array>
 
 #include "config-keepassx-tests.h"
 #include "core/PasswordHealth.h"
@@ -206,6 +209,66 @@ void TestGui::testSettingsDefaultTabOrder()
         }
     }
     QTest::keyClick(dbSettingsWidget, Qt::Key::Key_Escape);
+}
+
+void TestGui::testSettingsNavigation()
+{
+    triggerAction("actionSettings");
+    auto* settingsWidget = m_mainWindow->findChild<ApplicationSettingsWidget*>();
+    QVERIFY(settingsWidget);
+
+    struct ToolbarSetting
+    {
+        Config::ConfigKey key;
+        const char* objectName;
+    };
+    constexpr std::array<ToolbarSetting, 5> toolbarSettings{
+        ToolbarSetting{Config::GUI_ShowSearchToolButton, "showSearchToolButton"},
+        ToolbarSetting{Config::GUI_ShowNewEntryToolButton, "showNewEntryToolButton"},
+        ToolbarSetting{Config::GUI_ShowSaveToolButton, "showSaveToolButton"},
+        ToolbarSetting{Config::GUI_ShowDeleteToolButton, "showDeleteToolButton"},
+        ToolbarSetting{Config::GUI_ShowPasswordGeneratorToolButton, "showPasswordGeneratorToolButton"},
+    };
+
+    QHash<Config::ConfigKey, bool> originalValues;
+    for (const auto& setting : toolbarSettings) {
+        originalValues.insert(setting.key, config()->get(setting.key).toBool());
+        config()->set(setting.key, false);
+    }
+
+    settingsWidget->loadSettings();
+
+    for (const auto& setting : toolbarSettings) {
+        auto* checkbox = settingsWidget->findChild<QCheckBox*>(setting.objectName);
+        QVERIFY(checkbox);
+        QVERIFY(!checkbox->isChecked());
+        checkbox->setChecked(true);
+    }
+
+    QMetaObject::invokeMethod(settingsWidget, "saveSettings");
+    for (const auto& setting : toolbarSettings) {
+        QCOMPARE(config()->get(setting.key).toBool(), true);
+    }
+
+    for (const auto& setting : toolbarSettings) {
+        config()->set(setting.key, originalValues.value(setting.key));
+    }
+    settingsWidget->loadSettings();
+    QTest::keyClick(settingsWidget, Qt::Key::Key_Escape);
+}
+
+void TestGui::testNewDatabaseWizardMinimumWidth()
+{
+    triggerAction("actionDatabaseNew");
+
+    auto* wizard = m_mainWindow->findChild<NewDatabaseWizard*>();
+    QVERIFY(wizard);
+
+    // Required to prevent button overlap in German.
+    QVERIFY(wizard->width() >= 900);
+    QVERIFY(wizard->minimumSize().width() >= 900);
+
+    QTest::keyClick(wizard, Qt::Key::Key_Escape);
 }
 
 void TestGui::testCreateDatabase()

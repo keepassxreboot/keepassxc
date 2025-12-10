@@ -106,6 +106,13 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::GUI_HidePreviewPanel, {QS("GUI/HidePreviewPanel"), Roaming, false}},
     {Config::GUI_AlwaysOnTop, {QS("GUI/GUI_AlwaysOnTop"), Local, false}},
     {Config::GUI_ToolButtonStyle, {QS("GUI/ToolButtonStyle"), Roaming, Qt::ToolButtonIconOnly}},
+    //GUI
+    {Config::GUI_ShowSearchToolButton, {QS("GUI/Toolbar_ShowSearchButton"), Roaming, true}},
+    {Config::GUI_ShowNewEntryToolButton, {QS("GUI/Toolbar_ShowNewEntryButton"), Roaming, true}},
+    {Config::GUI_ShowSaveToolButton, {QS("GUI/Toolbar_ShowSaveButton"), Roaming, true}},
+    {Config::GUI_ShowDeleteToolButton, {QS("GUI/Toolbar_ShowDeleteButton"), Roaming, true}},
+    {Config::GUI_ShowPasswordGeneratorToolButton, {QS("GUI/Toolbar_ShowPasswordGeneratorButton"), Roaming, true}},
+    
     {Config::GUI_LaunchAtStartup, {QS("GUI/LaunchAtStartup"), Roaming, false}},
     {Config::GUI_ShowTrayIcon, {QS("GUI/ShowTrayIcon"), Roaming, false}},
     {Config::GUI_TrayIconAppearance, {QS("GUI/TrayIconAppearance"), Roaming, {}}},

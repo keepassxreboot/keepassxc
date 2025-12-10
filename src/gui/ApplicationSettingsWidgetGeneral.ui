@@ -908,10 +908,54 @@
                </layout>
               </item>
               <item>
-               <widget class="QCheckBox" name="toolbarShowCheckBox">
+              <widget class="QCheckBox" name="toolbarShowCheckBox">
                 <property name="text">
                  <string>Show toolbar</string>
                 </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QGroupBox" name="toolbarCustomizeGroupBox">
+                <property name="title">
+                 <string>Customize Toolbar</string>
+                </property>
+                <layout class="QVBoxLayout" name="verticalLayoutCustomizeToolbar">
+                 <item>
+                 <widget class="QCheckBox" name="showSearchToolButton">
+                   <property name="text">
+                    <string>Show Search</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="showNewEntryToolButton">
+                   <property name="text">
+                    <string>Show New Entry</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="showSaveToolButton">
+                   <property name="text">
+                    <string>Show Save</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="showDeleteToolButton">
+                   <property name="text">
+                    <string>Show Delete</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QCheckBox" name="showPasswordGeneratorToolButton">
+                   <property name="text">
+                    <string>Show Password Generator</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </widget>
               </item>
               <item>

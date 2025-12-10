@@ -25,6 +25,7 @@
 
 #include <QFrame>
 #include <QPalette>
+#include <QSize>
 
 NewDatabaseWizard::NewDatabaseWizard(QWidget* parent)
     : QWizard(parent)
@@ -61,6 +62,9 @@ NewDatabaseWizard::NewDatabaseWizard(QWidget* parent)
     framePalette.setBrush(QPalette::Window, windowColor.lighter(120));
     framePalette.setBrush(QPalette::Base, baseColor.lighter(120));
     pageFrame->setPalette(framePalette);
+
+    constexpr int minimumWizardWidth = 900;
+    resize(sizeHint().expandedTo(QSize(minimumWizardWidth, sizeHint().height())));
 }
 
 NewDatabaseWizard::~NewDatabaseWizard() = default;
