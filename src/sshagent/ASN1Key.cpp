@@ -86,7 +86,7 @@ namespace
 
         VALIDATE_RETURN(nextTag(stream, tag, len));
 
-        if (tag != TAG_INT) {
+        if (tag != TAG_INT || len > 1024 * 1024 * 10) {
             return false;
         }
 
