@@ -121,6 +121,11 @@ void ReportsWidgetStatistics::calculateStats()
                 stats->excludedEntries > 0,
                 tr("Excluding entries from reports, e. g. because they are known to have a poor password, isn't "
                    "necessarily a problem but you should keep an eye on them."));
+    addStatsRow(tr("Groups excluded from reports"),
+                QString::number(stats->excludedGroups),
+                stats->excludedGroups > 0,
+                tr("Excluding entire groups from reports isn't necessarily a problem but please exercise caution "
+                   "when excluding entire groups."));
     addStatsRow(tr("Average password length"),
                 tr("%1 character(s)", "", stats->averagePwdLength()).arg(stats->averagePwdLength()),
                 stats->isAvgPwdTooShort(),

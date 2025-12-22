@@ -29,6 +29,7 @@
 #include "gui/MessageBox.h"
 #include "gui/passkeys/PasskeyExporter.h"
 #include "gui/passkeys/PasskeyImporter.h"
+#include "gui/reports/ProxyModels.h"
 #include "gui/styles/StateColorPalette.h"
 
 #include <QMenu>
@@ -87,10 +88,8 @@ PasskeyList::PasskeyList(const QSharedPointer<Database>& db)
 }
 
 ReportsWidgetPasskeys::ReportsWidgetPasskeys(QWidget* parent)
-    : QWidget(parent)
+    : ReportsWidgetBase(parent, SortProxyModelKind::Default)
     , m_ui(new Ui::ReportsWidgetPasskeys())
-    , m_referencesModel(new QStandardItemModel(this))
-    , m_modelProxy(new QSortFilterProxyModel(this))
 {
     m_ui->setupUi(this);
 
@@ -146,25 +145,13 @@ void ReportsWidgetPasskeys::addPasskeyRow(Group* group, Entry* entry)
     m_rowToEntry.append({group, entry});
 }
 
-void ReportsWidgetPasskeys::loadSettings(QSharedPointer<Database> db)
-{
-    m_db = std::move(db);
-    m_entriesUpdated = false;
-    m_referencesModel->clear();
-    m_rowToEntry.clear();
-
-    auto row = QList<QStandardItem*>();
-    row << new QStandardItem(tr("Please wait, list of entries with passkeys is being updated…"));
-    m_referencesModel->appendRow(row);
-}
-
 void ReportsWidgetPasskeys::showEvent(QShowEvent* event)
 {
     QWidget::showEvent(event);
 
-    if (!m_entriesUpdated) {
+    if (!m_widgetDataCalculated) {
         // Perform stats calculation on next event loop to allow widget to appear
-        m_entriesUpdated = true;
+        m_widgetDataCalculated = true;
         QTimer::singleShot(0, this, SLOT(updateEntries()));
     }
 }
@@ -200,22 +187,6 @@ void ReportsWidgetPasskeys::updateEntries()
     m_ui->passkeysTableView->resizeColumnsToContents();
 }
 
-void ReportsWidgetPasskeys::emitEntryActivated(const QModelIndex& index)
-{
-    if (!index.isValid()) {
-        return;
-    }
-
-    auto mappedIndex = m_modelProxy->mapToSource(index);
-    const auto row = m_rowToEntry[mappedIndex.row()];
-    const auto group = row.first;
-    const auto entry = row.second;
-
-    if (group && entry) {
-        emit entryActivated(entry);
-    }
-}
-
 void ReportsWidgetPasskeys::customMenuRequested(QPoint pos)
 {
     auto selected = m_ui->passkeysTableView->selectionModel()->selectedRows();
@@ -246,37 +217,6 @@ void ReportsWidgetPasskeys::customMenuRequested(QPoint pos)
     menu->popup(m_ui->passkeysTableView->viewport()->mapToGlobal(pos));
 }
 
-void ReportsWidgetPasskeys::saveSettings()
-{
-    // Nothing to do - the tab is passive
-}
-
-void ReportsWidgetPasskeys::deleteSelectedEntries()
-{
-    auto selectedEntries = getSelectedEntries();
-    bool permanent = !m_db->metadata()->recycleBinEnabled();
-
-    if (GuiTools::confirmDeleteEntries(this, selectedEntries, permanent)) {
-        GuiTools::deleteEntriesResolveReferences(this, selectedEntries, permanent);
-    }
-
-    updateEntries();
-}
-
-QList<Entry*> ReportsWidgetPasskeys::getSelectedEntries()
-{
-    QList<Entry*> selectedEntries;
-    for (auto index : m_ui->passkeysTableView->selectionModel()->selectedRows()) {
-        auto row = m_modelProxy->mapToSource(index).row();
-        auto entry = m_rowToEntry[row].second;
-        if (entry) {
-            selectedEntries << entry;
-        }
-    }
-
-    return selectedEntries;
-}
-
 void ReportsWidgetPasskeys::selectionChanged()
 {
     m_ui->exportButton->setEnabled(!m_ui->passkeysTableView->selectionModel()->selectedIndexes().isEmpty());
@@ -304,4 +244,14 @@ void ReportsWidgetPasskeys::exportPasskey()
 
     PasskeyExporter passkeyExporter(this);
     passkeyExporter.showExportDialog(getSelectedEntries());
+}
+
+QTableView* ReportsWidgetPasskeys::getTableView() const
+{
+    return m_ui->passkeysTableView;
+}
+
+void ReportsWidgetPasskeys::updateWidget()
+{
+    updateEntries();
 }

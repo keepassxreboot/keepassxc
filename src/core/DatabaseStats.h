@@ -30,6 +30,7 @@ public:
     int entryCount = 0; // Number of entries (across all groups)
     int expiredEntries = 0; // Number of expired entries
     int excludedEntries = 0; // Number of known bad entries
+    int excludedGroups = 0; // Number of excluded groups from reports
     int weakPasswords = 0; // Number of weak or poor passwords
     int shortPasswords = 0; // Number of passwords 8 characters or less in size
     int uniquePasswords = 0; // Number of unique passwords

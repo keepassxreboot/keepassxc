@@ -20,6 +20,7 @@
 
 #include "config-keepassx.h"
 #include "gui/entry/EntryModel.h"
+#include "gui/reports/ReportsWidgetBase.h"
 
 #include <QWidget>
 
@@ -32,25 +33,26 @@ class Entry;
 class Group;
 class QSortFilterProxyModel;
 class QStandardItemModel;
+class QTableView;
 
 namespace Ui
 {
     class ReportsWidgetHibp;
 }
 
-class ReportsWidgetHibp : public QWidget
+class ReportsWidgetHibp : public ReportsWidgetBase
 {
     Q_OBJECT
 public:
     explicit ReportsWidgetHibp(QWidget* parent = nullptr);
     ~ReportsWidgetHibp() override;
 
-    void loadSettings(QSharedPointer<Database> db);
-    void saveSettings();
+    void loadSettings(QSharedPointer<Database> db) override;
     void refreshAfterEdit();
 
-signals:
-    void entryActivated(Entry*);
+protected:
+    void updateWidget() override;
+    QTableView* getTableView() const override;
 
 public slots:
     void emitEntryActivated(const QModelIndex&);
@@ -58,22 +60,15 @@ public slots:
     void fetchFailed(const QString& error);
     void makeHibpTable();
     void customMenuRequested(QPoint);
-    QList<Entry*> getSelectedEntries();
-    void expireSelectedEntries();
-    void deleteSelectedEntries();
 
 private:
     void startValidation();
     static QString countToText(int count);
 
     QScopedPointer<Ui::ReportsWidgetHibp> m_ui;
-    QScopedPointer<QStandardItemModel> m_referencesModel;
-    QScopedPointer<QSortFilterProxyModel> m_modelProxy;
-    QSharedPointer<Database> m_db;
 
     QMap<QString, int> m_pwndPasswords; // Passwords we found to have been pwned (value is pwn count)
     QString m_error; // Error message if download failed, else empty
-    QList<Entry*> m_rowToEntry; // List index is table row
     QPointer<Entry> m_editedEntry; // The entry we're currently editing
     QString m_editedPassword; // The old password of the entry we're editing
     bool m_editedExcluded; // The old "known bad" flag of the entry we're editing

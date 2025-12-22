@@ -19,6 +19,7 @@
 #define KEEPASSXC_REPORTSWIDGETBROWSERSTATISTICS_H
 
 #include "gui/entry/EntryModel.h"
+#include "gui/reports/ReportsWidgetBase.h"
 #include <QWidget>
 
 class Database;
@@ -33,43 +34,28 @@ namespace Ui
     class ReportsWidgetBrowserStatistics;
 }
 
-class ReportsWidgetBrowserStatistics : public QWidget
+class ReportsWidgetBrowserStatistics : public ReportsWidgetBase
 {
     Q_OBJECT
 public:
     explicit ReportsWidgetBrowserStatistics(QWidget* parent = nullptr);
     ~ReportsWidgetBrowserStatistics() override;
 
-    void loadSettings(QSharedPointer<Database> db);
-    void saveSettings();
-
 protected:
     void showEvent(QShowEvent* event) override;
-
-signals:
-    void entryActivated(Entry*);
+    void updateWidget() override;
+    QTableView* getTableView() const override;
 
 public slots:
     void calculateBrowserStatistics();
-    void emitEntryActivated(const QModelIndex& index);
     void customMenuRequested(QPoint);
-    QList<Entry*> getSelectedEntries();
-    void expireSelectedEntries();
-    void deleteSelectedEntries();
     void deletePluginDataFromSelectedEntries();
 
 private:
     void addStatisticsRow(bool hasUrls, bool hasSettings, Group*, Entry*, bool);
-    QList<Entry*> getSelectedEntries() const;
     QMap<QString, QStringList> getBrowserConfigFromEntry(Entry* entry) const;
 
     QScopedPointer<Ui::ReportsWidgetBrowserStatistics> m_ui;
-
-    bool m_statisticsCalculated = false;
-    QScopedPointer<QStandardItemModel> m_referencesModel;
-    QScopedPointer<QSortFilterProxyModel> m_modelProxy;
-    QSharedPointer<Database> m_db;
-    QList<QPair<Group*, Entry*>> m_rowToEntry;
 };
 
 #endif // KEEPASSXC_REPORTSWIDGETBROWSERSTATISTICS_H

@@ -107,6 +107,7 @@ public:
     QString resolveCustomDataString(const QString& key, bool checkParent = true) const;
     const Group* previousParentGroup() const;
     QUuid previousParentGroupUuid() const;
+    bool excludeFromReports() const;
 
     bool equals(const Group* other, CompareItemOptions options) const;
 
@@ -140,6 +141,8 @@ public:
     void setMergeMode(MergeMode newMode);
     void setPreviousParentGroup(const Group* group);
     void setPreviousParentGroupUuid(const QUuid& uuid);
+    void setExcludeFromReports(bool exclude);
+    void markAllEntriesExcludedFromReports();
 
     bool canUpdateTimeinfo() const;
     void setUpdateTimeinfo(bool value);

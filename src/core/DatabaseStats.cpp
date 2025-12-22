@@ -76,6 +76,10 @@ void DatabaseStats::gatherStats(const QList<Group*>& groups)
 
         ++groupCount;
 
+        if (group->excludeFromReports()) {
+            ++excludedGroups;
+        }
+
         for (const auto* entry : group->entries()) {
             // Don't count anything in the recycle bin
             if (entry->isRecycled()) {
@@ -107,7 +111,7 @@ void DatabaseStats::gatherStats(const QList<Group*>& groups)
                     ++weakPasswords;
                 }
 
-                if (entry->excludeFromReports()) {
+                if (entry->excludeFromReports() || group->excludeFromReports()) {
                     ++excludedEntries;
                 }
 
