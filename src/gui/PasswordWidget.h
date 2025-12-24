@@ -63,6 +63,7 @@ private slots:
     void popupPasswordGenerator();
     void updateRepeatStatus();
     void updatePasswordStrength(const QString& password);
+    void copyPasswordToClipboard();
 
 private:
     void checkCapslockState();
@@ -74,6 +75,7 @@ private:
     QPointer<QAction> m_correctAction;
     QPointer<QAction> m_toggleVisibleAction;
     QPointer<QAction> m_passwordGeneratorAction;
+    QPointer<QAction> m_copyToClipboardAction;
     QPointer<QAction> m_capslockAction;
     QPointer<PasswordWidget> m_repeatPasswordWidget;
     QPointer<PasswordWidget> m_parentPasswordWidget;
