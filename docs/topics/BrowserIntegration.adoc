@@ -4,8 +4,7 @@ include::.sharedheader[]
 
 // tag::content[]
 == Browser Integration
-The KeePassXC-Browser extension is installed within your web browser so that you can automatically pull usernames and passwords from KeePassXC and populate them directly into website fields. It is a very useful and secure extension that enhances your productivity while using KeePassXC. With this extension, you do not need to manually copy the data from your KeePassXC database and paste it into the website fields.
-
+The KeePassXC-Browser extension is installed within your web browser so that you can automatically pull usernames and passwords from KeePassXC and fill them directly into website fields. It is a very useful and secure extension that enhances your productivity while using KeePassXC. With this extension, you do not need to manually copy the data from your KeePassXC database and paste it into the website fields.
 The KeePassXC-Browser extension is available on the following web browsers:
 
 * Google Chrome, Vivaldi, and Brave
@@ -62,7 +61,7 @@ image::browser_extension_association.png[,80%]
 WARNING: If you reuse a connection name in a database, the previous browser connection will be overwritten and prevent access.
 
 === Using the Browser Extension
-The KeePassXC-Browser extension lets you automatically populate the entries from your KeePassXC database into the fields on websites you visit. To do so, perform the following steps:
+The KeePassXC-Browser extension lets you automatically fill the entries from your KeePassXC database into the fields on websites you visit. To do so, perform the following steps:
 
 1. Open your KeePassXC desktop application and unlock your database.
 
