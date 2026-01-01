@@ -1,4 +1,13 @@
 name: keepassxc
+contact:
+  - team@keepassxc.org
+  - https://keepassxc.org/team
+donation: https://keepassxc.org/donate
+summary: "KeePassXC: Secure, Community-Driven Password Management"
+description: |
+  KeePassXC is an advanced password manager that offers secure storage 
+  in an encrypted database, with a modern, user-friendly experience that 
+  adapts to your desktop environment.
 adopt-info: keepassxc
 grade: stable
 base: core22
@@ -7,19 +16,30 @@ compression: lzo
 
 apps:
   keepassxc:
+    # Use desktop-launch to improve integration
     command: usr/bin/keepassxc
-    common-id: org.keepassxc.KeePassXC.desktop
+    desktop: usr/share/applications/org.keepassxc.KeePassXC.desktop
     extensions: [kde-neon]
-    plugs: [home, unity7, network, network-bind, removable-media, raw-usb, password-manager-service, browser-native-messaging]
-    autostart: org.keepassxc.KeePassXC.desktop
+    plugs:
+      - home
+      - unity7
+      - network
+      - network-bind
+      - removable-media
+      - raw-usb
+      - password-manager-service
+      - browser-native-messaging
+
   cli:
     command: usr/bin/keepassxc-cli
     extensions: [kde-neon]
     plugs: [home, removable-media, raw-usb]
+
   proxy:
     command: usr/bin/keepassxc-proxy
     extensions: [kde-neon]
 
+# Enable direct access to the native messaging host configuration files
 plugs:
   browser-native-messaging:
     interface: personal-files
@@ -65,6 +85,7 @@ parts:
       - libxtst-dev
       - asciidoctor
       - libfreetype-dev
+      - libkeyutils-dev
     stage-packages:
       - dbus
       - libbotan-2-19
@@ -73,11 +94,10 @@ parts:
       - libreadline8
       - libpcsclite1
       - libminizip1
-      - libxtst6
-      - libfreetype6
-      - xclip
+      - libkeyutils1
+      - libxkbcommon0
+
 lint:
   ignore:
     - library:
       - lib/**/libhistory.so*
-
