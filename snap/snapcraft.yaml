@@ -32,12 +32,12 @@ apps:
 
   cli:
     command: usr/bin/keepassxc-cli
-    extensions: [kde-neon]
+    # extensions: [kde-neon] # cli does not need gui extensions
     plugs: [home, removable-media, raw-usb]
 
   proxy:
     command: usr/bin/keepassxc-proxy
-    extensions: [kde-neon]
+    # extensions: [kde-neon] # cli does not need gui extensions
 
 # Enable direct access to the native messaging host configuration files
 plugs:
@@ -87,7 +87,7 @@ parts:
       - libfreetype-dev
       - libkeyutils-dev
     stage-packages:
-      - dbus
+      # - dbus
       - libbotan-2-19
       - libqrencode4
       - libusb-1.0-0
@@ -96,6 +96,19 @@ parts:
       - libminizip1
       - libkeyutils1
       - libxkbcommon0
+      - libxkbcommon-x11-0
+      - libxkbfile1
+      - libxcb-cursor0
+      - libxcb-icccm4
+      - libxcb-image0
+      - libxcb-keysyms1
+      - libxcb-render-util0
+      - libxcb-render0
+      - libxcb-shape0
+      - libxcb-xkb1
+    prime:
+      # reduce the size of final package
+      - -usr/share/keepassxc/docs
 
 lint:
   ignore:
