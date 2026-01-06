@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2013 Francois Ferrand
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -53,55 +53,72 @@ void BrowserAccessControlDialog::setEntries(const QList<Entry*>& entriesToConfir
     QUrl url(urlString);
     m_ui->siteLabel->setText(m_ui->siteLabel->text().arg(
         url.toDisplayString(QUrl::RemoveUserInfo | QUrl::RemovePath | QUrl::RemoveQuery | QUrl::RemoveFragment)));
+    m_ui->siteLabel->setToolTip(urlString);
 
     m_ui->rememberDecisionCheckBox->setVisible(!httpAuth);
     m_ui->rememberDecisionCheckBox->setChecked(false);
 
     m_ui->itemsTable->setRowCount(entriesToConfirm.count());
-    m_ui->itemsTable->setColumnCount(2);
+    m_ui->itemsTable->setColumnCount(3);
 
     int row = 0;
     for (const auto& entry : entriesToConfirm) {
         addEntryToList(entry, row);
         ++row;
     }
-    m_ui->itemsTable->resizeColumnsToContents();
+
     m_ui->itemsTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+    m_ui->itemsTable->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
+    m_ui->itemsTable->horizontalHeader()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
     m_ui->itemsTable->selectAll();
     m_ui->allowButton->setFocus();
 }
 
-void BrowserAccessControlDialog::addEntryToList(Entry* entry, int row)
+void BrowserAccessControlDialog::addEntryToList(const Entry* entry, int row)
 {
-    auto item = new QTableWidgetItem();
-    item->setText(entry->resolveMultiplePlaceholders(entry->title()) + " - "
-                  + entry->resolveMultiplePlaceholders(entry->username()));
-    item->setData(Qt::UserRole, row);
-    item->setFlags(item->flags() | Qt::ItemIsSelectable);
-    m_ui->itemsTable->setItem(row, 0, item);
+    const auto titleItem = new QTableWidgetItem();
+    const auto entryTitle = entry->resolveMultiplePlaceholders(entry->title());
+    const auto entryUrl = entry->resolveMultiplePlaceholders(entry->url());
+    titleItem->setText(entryTitle);
+    titleItem->setToolTip(entryUrl);
+    titleItem->setData(Qt::UserRole, row);
+    titleItem->setFlags(titleItem->flags() | Qt::ItemIsSelectable);
+    m_ui->itemsTable->setItem(row, 0, titleItem);
+
+    const auto usernameItem = new QTableWidgetItem();
+    const auto entryUsername = entry->resolveMultiplePlaceholders(entry->username());
+    usernameItem->setText(entryUsername);
+    usernameItem->setData(Qt::UserRole, row);
+    m_ui->itemsTable->setItem(row, 1, usernameItem);
 
     auto disableButton = new QPushButton();
     disableButton->setIcon(icons()->icon("entry-delete"));
     disableButton->setToolTip(tr("Disable for this site"));
 
-    connect(disableButton, &QAbstractButton::pressed, [&, item, disableButton] {
-        auto font = item->font();
-        if (item->flags() == Qt::NoItemFlags) {
-            item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
-            item->setSelected(true);
+    connect(disableButton, &QAbstractButton::pressed, [&, titleItem, usernameItem, disableButton] {
+        auto font = titleItem->font();
+        if (titleItem->flags() == Qt::NoItemFlags) {
+            titleItem->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+            usernameItem->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+            titleItem->setSelected(true);
+            usernameItem->setSelected(true);
 
             font.setStrikeOut(false);
-            item->setFont(font);
+            titleItem->setFont(font);
+            usernameItem->setFont(font);
 
             disableButton->setIcon(icons()->icon("entry-delete"));
             disableButton->setToolTip(tr("Disable for this site"));
             m_ui->rememberDecisionCheckBox->setEnabled(true);
         } else {
-            item->setFlags(Qt::NoItemFlags);
-            item->setSelected(false);
+            titleItem->setFlags(Qt::NoItemFlags);
+            usernameItem->setFlags(Qt::NoItemFlags);
+            titleItem->setSelected(false);
+            usernameItem->setSelected(false);
 
             font.setStrikeOut(true);
-            item->setFont(font);
+            titleItem->setFont(font);
+            usernameItem->setFont(font);
 
             disableButton->setIcon(icons()->icon("entry-restore"));
             disableButton->setToolTip(tr("Undo"));
@@ -112,7 +129,7 @@ void BrowserAccessControlDialog::addEntryToList(Entry* entry, int row)
         }
     });
 
-    m_ui->itemsTable->setCellWidget(row, 1, disableButton);
+    m_ui->itemsTable->setCellWidget(row, 2, disableButton);
 }
 
 bool BrowserAccessControlDialog::remember() const
