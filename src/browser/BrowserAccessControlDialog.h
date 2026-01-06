@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2013 Francois Ferrand
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -55,7 +55,7 @@ private slots:
     void selectionChanged();
 
 private:
-    void addEntryToList(Entry* entry, int row);
+    void addEntryToList(const Entry* entry, int row);
     bool areAllDisabled() const;
     QList<QTableWidgetItem*> getAllItems() const;
 

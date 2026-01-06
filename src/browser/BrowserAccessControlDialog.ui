@@ -26,7 +26,7 @@
       <string>%1 is requesting access to the following entries:</string>
      </property>
      <property name="alignment">
-      <set>Qt::AlignCenter</set>
+      <set>Qt::AlignLeft</set>
      </property>
     </widget>
    </item>
