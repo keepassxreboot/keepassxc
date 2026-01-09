@@ -116,7 +116,6 @@ void EditWidgetProperties::update()
             m_customDataModel->appendRow(QList<QStandardItem*>()
                                          << new QStandardItem(key) << new QStandardItem(m_customData->value(key)));
         }
-        //m_ui->removeCustomDataButton->setEnabled(!m_customData->isEmpty());
-        m_ui->removeCustomDataButton->setEnabled(!m_ui->customDataTable->selectionModel()->selectedIndexes().isEmpty());
+        m_ui->removeCustomDataButton->setEnabled(m_ui->customDataTable->selectionModel()->hasSelection());
     }
 }
