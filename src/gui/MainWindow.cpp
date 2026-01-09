@@ -679,6 +679,7 @@ MainWindow::MainWindow()
     m_progressBarLabel = new QLabel(statusBar());
     m_progressBarLabel->setVisible(false);
     statusBar()->addPermanentWidget(m_progressBarLabel);
+
     m_progressBar = new QProgressBar(statusBar());
     m_progressBar->setVisible(false);
     m_progressBar->setTextVisible(false);
@@ -686,7 +687,14 @@ MainWindow::MainWindow()
     m_progressBar->setFixedHeight(15);
     m_progressBar->setMaximum(100);
     statusBar()->addPermanentWidget(m_progressBar);
+
+    m_clearClipboardButton = new QPushButton(statusBar());
+    m_clearClipboardButton->setText(tr("Clear Clipboard"));
+    m_clearClipboardButton->setVisible(false);
+    statusBar()->addPermanentWidget(m_clearClipboardButton);
+
     connect(clipboard(), &Clipboard::updateCountdown, this, &MainWindow::updateProgressBar);
+    connect(m_clearClipboardButton.data(), &QPushButton::clicked, this, &MainWindow::clearClipboard);
     m_actionMultiplexer.connect(SIGNAL(updateSyncProgress(int, QString)), this, SLOT(updateProgressBar(int, QString)));
     m_actionMultiplexer.connect(SIGNAL(databaseSyncInProgress()), this, SLOT(disableMenuAndToolbar()));
     m_actionMultiplexer.connect(SIGNAL(databaseSyncCompleted(QString)), this, SLOT(enableMenuAndToolbar()));
@@ -1535,6 +1543,11 @@ void MainWindow::clearSSHAgent()
 #endif
 }
 
+void MainWindow::clearClipboard()
+{
+    clipboard()->clearCopiedText();
+}
+
 void MainWindow::saveWindowInformation()
 {
     if (isVisible()) {
@@ -1633,11 +1646,17 @@ void MainWindow::updateProgressBar(int percentage, QString message)
     if (percentage < 0) {
         m_progressBar->setVisible(false);
         m_progressBarLabel->setVisible(false);
+        m_clearClipboardButton->setVisible(false);
     } else {
         m_progressBar->setValue(percentage);
         m_progressBar->setVisible(true);
         m_progressBarLabel->setText(message);
         m_progressBarLabel->setVisible(true);
+
+        Clipboard *cb = qobject_cast<Clipboard *>(sender());
+        if(cb) {
+            m_clearClipboardButton->setVisible(true);
+        }
     }
 }
 

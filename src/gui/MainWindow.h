@@ -25,6 +25,7 @@
 #include <QProgressBar>
 #include <QSystemTrayIcon>
 #include <QTimer>
+#include <QPushButton>
 
 #include "core/SignalMultiplexer.h"
 #include "gui/DatabaseWidget.h"
@@ -155,6 +156,7 @@ private slots:
     void enableMenuAndToolbar();
     void disableMenuAndToolbar();
     void clearSSHAgent();
+    void clearClipboard();
 
 private:
     static const QString BaseWindowTitle;
@@ -190,6 +192,7 @@ private:
     QPointer<QProgressBar> m_progressBar;
     QPointer<QLabel> m_progressBarLabel;
     QPointer<QLabel> m_statusBarLabel;
+    QPointer<QPushButton> m_clearClipboardButton;
 
     Q_DISABLE_COPY(MainWindow)
 
