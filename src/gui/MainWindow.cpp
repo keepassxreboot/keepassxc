@@ -690,6 +690,7 @@ MainWindow::MainWindow()
 
     m_clearClipboardButton = new QPushButton(statusBar());
     m_clearClipboardButton->setText(tr("Clear Clipboard"));
+    m_clearClipboardButton->setObjectName("clearClipboardButton");
     m_clearClipboardButton->setVisible(false);
     statusBar()->addPermanentWidget(m_clearClipboardButton);
 

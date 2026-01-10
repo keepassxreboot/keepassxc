@@ -6432,6 +6432,10 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
             <numerusform></numerusform>
         </translation>
     </message>
+    <message>
+        <source>Clear Clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ManageDatabase</name>

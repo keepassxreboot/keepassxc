@@ -71,6 +71,7 @@ private slots:
     void testTrayRestoreHide();
     void testShortcutConfig();
     void testMenuActionStates();
+    void testClearClipboard();
 
 private:
     void addCannedEntries();
