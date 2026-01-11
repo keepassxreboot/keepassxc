@@ -1573,7 +1573,7 @@ void EditEntryWidget::updateAutoTypeEnabled()
     m_autoTypeUi->inheritSequenceButton->setEnabled(!m_history && autoTypeEnabled);
     m_autoTypeUi->customSequenceButton->setEnabled(!m_history && autoTypeEnabled);
     m_autoTypeUi->sequenceEdit->setEnabled(autoTypeEnabled && m_autoTypeUi->customSequenceButton->isChecked());
-    m_autoTypeUi->openHelpButton->setEnabled(autoTypeEnabled && m_autoTypeUi->customSequenceButton->isChecked());
+    m_autoTypeUi->openHelpButton->setEnabled(autoTypeEnabled);
 
     m_autoTypeUi->assocView->setEnabled(autoTypeEnabled);
     m_autoTypeUi->assocAddButton->setEnabled(!m_history);
