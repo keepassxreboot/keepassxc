@@ -90,9 +90,6 @@
      </item>
      <item>
       <widget class="QToolButton" name="openHelpButton">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
        <property name="toolTip">
         <string>Open Auto-Type help webpage</string>
        </property>
