@@ -216,6 +216,7 @@ Files: share/icons/application/scalable/actions/application-exit.svg
        share/icons/application/scalable/actions/system-help.svg
        share/icons/application/scalable/actions/system-search.svg
        share/icons/application/scalable/actions/system-software-update.svg
+       share/icons/application/scalable/actions/sweep.svg
        share/icons/application/scalable/actions/tag.svg
        share/icons/application/scalable/actions/tag-multiple.svg
        share/icons/application/scalable/actions/tag-search.svg
