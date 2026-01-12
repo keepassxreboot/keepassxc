@@ -689,7 +689,8 @@ MainWindow::MainWindow()
     statusBar()->addPermanentWidget(m_progressBar);
 
     m_clearClipboardButton = new QPushButton(statusBar());
-    m_clearClipboardButton->setText(tr("Clear Clipboard"));
+    m_clearClipboardButton->setIcon(icons()->icon("sweep"));
+    m_clearClipboardButton->setToolTip(tr("Clear the clipboard immediately"));
     m_clearClipboardButton->setObjectName("clearClipboardButton");
     m_clearClipboardButton->setVisible(false);
     statusBar()->addPermanentWidget(m_clearClipboardButton);

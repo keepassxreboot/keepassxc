@@ -6433,7 +6433,7 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
         </translation>
     </message>
     <message>
-        <source>Clear Clipboard</source>
+        <source>Clear the clipboard immediately</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
