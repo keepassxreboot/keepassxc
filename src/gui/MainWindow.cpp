@@ -1655,8 +1655,8 @@ void MainWindow::updateProgressBar(int percentage, QString message)
         m_progressBarLabel->setText(message);
         m_progressBarLabel->setVisible(true);
 
-        Clipboard *cb = qobject_cast<Clipboard *>(sender());
-        if(cb) {
+        Clipboard* cb = qobject_cast<Clipboard*>(sender());
+        if (cb) {
             m_clearClipboardButton->setVisible(true);
         }
     }

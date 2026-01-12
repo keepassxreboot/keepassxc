@@ -23,9 +23,9 @@
 #include <QLabel>
 #include <QMainWindow>
 #include <QProgressBar>
+#include <QPushButton>
 #include <QSystemTrayIcon>
 #include <QTimer>
-#include <QPushButton>
 
 #include "core/SignalMultiplexer.h"
 #include "gui/DatabaseWidget.h"
