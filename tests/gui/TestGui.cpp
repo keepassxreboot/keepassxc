@@ -2508,7 +2508,7 @@ void TestGui::testClearClipboard()
     QTest::keyClick(entryView, Qt::Key_C, Qt::ControlModifier);
     QTRY_COMPARE(clipboard->text(), entryView->currentEntry()->password());
 
-    QPushButton* clearClipboardButton = m_mainWindow->findChild<QPushButton*>("clearClipboardButton");
+    QToolButton* clearClipboardButton = m_mainWindow->findChild<QToolButton*>("clearClipboardButton");
     QTRY_VERIFY(clearClipboardButton->isVisible());
     clearClipboardButton->click();
     QCOMPARE(clipboard->text(), QString());

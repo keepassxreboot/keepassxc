@@ -688,15 +688,16 @@ MainWindow::MainWindow()
     m_progressBar->setMaximum(100);
     statusBar()->addPermanentWidget(m_progressBar);
 
-    m_clearClipboardButton = new QPushButton(statusBar());
+    m_clearClipboardButton = new QToolButton(statusBar());
     m_clearClipboardButton->setIcon(icons()->icon("sweep"));
     m_clearClipboardButton->setToolTip(tr("Clear the clipboard immediately"));
     m_clearClipboardButton->setObjectName("clearClipboardButton");
     m_clearClipboardButton->setVisible(false);
+    m_clearClipboardButton->setStyleSheet("QToolButton { border: none; background-color: transparent; }");
     statusBar()->addPermanentWidget(m_clearClipboardButton);
 
     connect(clipboard(), &Clipboard::updateCountdown, this, &MainWindow::updateProgressBar);
-    connect(m_clearClipboardButton.data(), &QPushButton::clicked, this, &MainWindow::clearClipboard);
+    connect(m_clearClipboardButton.data(), &QToolButton::clicked, this, &MainWindow::clearClipboard);
     m_actionMultiplexer.connect(SIGNAL(updateSyncProgress(int, QString)), this, SLOT(updateProgressBar(int, QString)));
     m_actionMultiplexer.connect(SIGNAL(databaseSyncInProgress()), this, SLOT(disableMenuAndToolbar()));
     m_actionMultiplexer.connect(SIGNAL(databaseSyncCompleted(QString)), this, SLOT(enableMenuAndToolbar()));

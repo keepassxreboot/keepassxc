@@ -23,9 +23,9 @@
 #include <QLabel>
 #include <QMainWindow>
 #include <QProgressBar>
-#include <QPushButton>
 #include <QSystemTrayIcon>
 #include <QTimer>
+#include <QToolButton>
 
 #include "core/SignalMultiplexer.h"
 #include "gui/DatabaseWidget.h"
@@ -192,7 +192,7 @@ private:
     QPointer<QProgressBar> m_progressBar;
     QPointer<QLabel> m_progressBarLabel;
     QPointer<QLabel> m_statusBarLabel;
-    QPointer<QPushButton> m_clearClipboardButton;
+    QPointer<QToolButton> m_clearClipboardButton;
 
     Q_DISABLE_COPY(MainWindow)
 
