@@ -56,4 +56,7 @@ void TextAttachmentsEditWidget::updateUi()
 {
     m_ui->attachmentsTextEdit->setPlainText(m_attachment.data);
     m_ui->attachmentsTextEdit->setReadOnly(m_mode == attachments::OpenMode::ReadOnly);
+
+    m_ui->attachmentsTextEdit->setTabStopDistance(
+        QFontMetrics(m_ui->attachmentsTextEdit->font()).horizontalAdvance(QString(4, ' ')));
 }

@@ -57,11 +57,7 @@
     </layout>
    </item>
    <item>
-    <widget class="QTextEdit" name="attachmentsTextEdit">
-     <property name="tabStopDistance">
-      <double>10.000000000000000</double>
-     </property>
-    </widget>
+    <widget class="QTextEdit" name="attachmentsTextEdit"/>
    </item>
   </layout>
  </widget>

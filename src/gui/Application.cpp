@@ -153,8 +153,6 @@ void Application::bootstrap(const QString& uiLanguage)
 {
     Bootstrap::bootstrap(uiLanguage);
 
-    applyFontSize();
-
     osUtils->registerNativeEventFilter();
     MessageBox::initializeButtonDefs();
 
@@ -200,6 +198,7 @@ void Application::applyTheme()
             stylesheetFile.close();
         }
     }
+    applyFontSize();
 }
 
 void Application::applyFontSize()
