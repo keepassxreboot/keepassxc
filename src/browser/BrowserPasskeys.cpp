@@ -79,7 +79,7 @@ PublicKeyCredential BrowserPasskeys::buildRegisterPublicKeyCredential(const QJso
 
     // Credential private key
     const auto alg = getAlgorithmFromPublicKey(credentialCreationOptions);
-    const auto privateKey = buildCredentialPrivateKey(alg, testingVariables.first, testingVariables.second);
+    const auto privateKey = buildCredentialPrivateKey(alg, testingVariables);
     if (privateKey.cborEncodedPublicKey.isEmpty() && privateKey.privateKeyPem.isEmpty()) {
         // Key creation failed
         return {};
@@ -103,6 +103,9 @@ PublicKeyCredential BrowserPasskeys::buildRegisterPublicKeyCredential(const QJso
 
     // Additions for extension side functions
     responseObject["authenticatorData"] = browserMessageBuilder()->getBase64FromArray(authenticatorData);
+
+    // PublicKey
+    responseObject["publicKey"] = browserMessageBuilder()->getBase64FromArray(privateKey.spkiPublicKey);
     responseObject["publicKeyAlgorithm"] = alg;
 
     // PublicKeyCredential
@@ -224,8 +227,7 @@ QByteArray BrowserPasskeys::buildAuthenticatorData(const QString& rpId, const QS
 }
 
 // See: https://w3c.github.io/webauthn/#sctn-encoded-credPubKey-examples
-AttestationKeyPair
-BrowserPasskeys::buildCredentialPrivateKey(int alg, const QString& predefinedFirst, const QString& predefinedSecond)
+AttestationKeyPair BrowserPasskeys::buildCredentialPrivateKey(int alg, const TestingVariables& testingVariables)
 {
     // Only support -7, P256 (EC), -8 (EdDSA) and -257 (RSA) for now
     if (alg != WebAuthnAlgorithms::ES256 && alg != WebAuthnAlgorithms::RS256 && alg != WebAuthnAlgorithms::EDDSA) {
@@ -234,20 +236,30 @@ BrowserPasskeys::buildCredentialPrivateKey(int alg, const QString& predefinedFir
 
     QByteArray firstPart;
     QByteArray secondPart;
+    QByteArray spki;
     QByteArray pem;
 
-    if (!predefinedFirst.isEmpty() && !predefinedSecond.isEmpty()) {
-        firstPart = browserMessageBuilder()->getArrayFromBase64(predefinedFirst);
-        secondPart = browserMessageBuilder()->getArrayFromBase64(predefinedSecond);
+    if (!testingVariables.first.isEmpty() && !testingVariables.second.isEmpty()) {
+        firstPart = browserMessageBuilder()->getArrayFromBase64(testingVariables.first);
+        secondPart = browserMessageBuilder()->getArrayFromBase64(testingVariables.second);
     } else {
         if (alg == WebAuthnAlgorithms::ES256) {
             try {
-                Botan::ECDSA_PrivateKey privateKey(*randomGen()->getRng(), Botan::EC_Group("secp256r1"));
+                // Use predefined data if found (only for testing private key creation)
+                const auto keyData = !testingVariables.data.isEmpty()
+                                         ? Botan::BigInt(testingVariables.data.toStdString())
+                                         : Botan::BigInt(0);
+                Botan::ECDSA_PrivateKey privateKey(*randomGen()->getRng(), Botan::EC_Group("secp256r1"), keyData);
                 const auto& publicPoint = privateKey.public_point();
                 auto x = publicPoint.get_affine_x();
                 auto y = publicPoint.get_affine_y();
                 firstPart = bigIntToQByteArray(x);
                 secondPart = bigIntToQByteArray(y);
+
+                auto publicKey =
+                    Botan::ECDSA_PublicKey(privateKey.algorithm_identifier(), privateKey.public_key_bits());
+                auto publicKeySpki = publicKey.subject_public_key();
+                spki = browserMessageBuilder()->getQByteArray(publicKeySpki.data(), publicKeySpki.size());
 
                 auto privateKeyPem = Botan::PKCS8::PEM_encode(privateKey);
                 pem = QByteArray::fromStdString(privateKeyPem);
@@ -263,6 +275,10 @@ BrowserPasskeys::buildCredentialPrivateKey(int alg, const QString& predefinedFir
                 firstPart = bigIntToQByteArray(modulus);
                 secondPart = bigIntToQByteArray(exponent);
 
+                auto publicKey = Botan::RSA_PublicKey(privateKey.algorithm_identifier(), privateKey.public_key_bits());
+                auto publicKeySpki = publicKey.subject_public_key();
+                spki = browserMessageBuilder()->getQByteArray(publicKeySpki.data(), publicKeySpki.size());
+
                 auto privateKeyPem = Botan::PKCS8::PEM_encode(privateKey);
                 pem = QByteArray::fromStdString(privateKeyPem);
             } catch (std::exception& e) {
@@ -271,17 +287,22 @@ BrowserPasskeys::buildCredentialPrivateKey(int alg, const QString& predefinedFir
             }
         } else if (alg == WebAuthnAlgorithms::EDDSA) {
             try {
-                Botan::Ed25519_PrivateKey key(*randomGen()->getRng());
-                auto publicKey = key.get_public_key();
+                Botan::Ed25519_PrivateKey privateKey(*randomGen()->getRng());
+                auto publicKeyBits = privateKey.get_public_key();
 #ifdef WITH_XC_BOTAN3
-                auto privateKey = key.raw_private_key_bits();
+                auto privateKeyBits = privateKey.raw_private_key_bits();
 #else
-                auto privateKey = key.get_private_key();
+                auto privateKeyBits = privateKey.get_private_key();
 #endif
-                firstPart = browserMessageBuilder()->getQByteArray(publicKey.data(), publicKey.size());
-                secondPart = browserMessageBuilder()->getQByteArray(privateKey.data(), privateKey.size());
+                firstPart = browserMessageBuilder()->getQByteArray(publicKeyBits.data(), publicKeyBits.size());
+                secondPart = browserMessageBuilder()->getQByteArray(privateKeyBits.data(), privateKeyBits.size());
 
-                auto privateKeyPem = Botan::PKCS8::PEM_encode(key);
+                auto publicKey =
+                    Botan::Ed25519_PublicKey(privateKey.algorithm_identifier(), privateKey.public_key_bits());
+                auto publicKeySpki = publicKey.subject_public_key();
+                spki = browserMessageBuilder()->getQByteArray(publicKeySpki.data(), publicKeySpki.size());
+
+                auto privateKeyPem = Botan::PKCS8::PEM_encode(privateKey);
                 pem = QByteArray::fromStdString(privateKeyPem);
             } catch (std::exception& e) {
                 qWarning("BrowserWebAuthn::buildCredentialPrivateKey: Could not create EdDSA private key: %s",
@@ -299,6 +320,7 @@ BrowserPasskeys::buildCredentialPrivateKey(int alg, const QString& predefinedFir
     AttestationKeyPair attestationKeyPair;
     attestationKeyPair.cborEncodedPublicKey = result;
     attestationKeyPair.privateKeyPem = pem;
+    attestationKeyPair.spkiPublicKey = spki;
     return attestationKeyPair;
 }
 

@@ -77,7 +77,7 @@ const QString PublicKeyCredential = R"(
         "id": "yrzFJ5lwcpTwYMOdXSmxF5b5cYQlqBMzbbU_d-oFLO8",
         "rawId": "cabcc52799707294f060c39d5d29b11796f9718425a813336db53f77ea052cef",
         "response": {
-            "attestationObject": "o2NmbXRkbm9uZWdhdHRTdG10oGhhdXRoRGF0YVikdKbqkhPJnC90siSSsyDPQCYqlMGpUKA5fyklC2CEHvBFAAAAAP2xQbJdhEQ-ijVGmMIFpQIAIMq8xSeZcHKU8GDDnV0psReW-XGEJagTM221P3fqBSzvpQECAyYgASFYIAbsrzRbYpFhbRlZA6ZQKsoxxJWoaeXwh-XUuDLNCIXdIlgg4u5_6Q8O6R0Hg0oDCdtCJLEL0yX_GDLhU5m3HUIE54M",
+            "attestationObject": "o2NmbXRkbm9uZWdhdHRTdG10oGhhdXRoRGF0YVikdKbqkhPJnC90siSSsyDPQCYqlMGpUKA5fyklC2CEHvBFAAAAAP2xQbJdhEQ-ijVGmMIFpQIAIMq8xSeZcHKU8GDDnV0psReW-XGEJagTM221P3fqBSzvpQECAyYgASFYIHK1iVimeR02UYipyiEKrKhhfhJRMew8EbDWGKtMZ2wUIlggbtZ70X11SLx17QFDWVAR3_qqk5OqrRS--Whc7hyw9YU",
             "clientDataJSON": "eyJ0eXBlIjoid2ViYXV0aG4uY3JlYXRlIiwiY2hhbGxlbmdlIjoibFZlSHpWeFdzcjhNUXhNa1pGMHRpNkZYaGRnTWxqcUt6Z0EtcV96azJNbmlpM2VKNDdWRjk3c3FVb1lrdFZDODVXQVoxdUlBU20tYV9sREZad3NMZnciLCJvcmlnaW4iOiJodHRwczovL3dlYmF1dGhuLmlvIiwiY3Jvc3NPcmlnaW4iOmZhbHNlfQ"
         },
         "type": "public-key"
@@ -188,8 +188,8 @@ void TestPasskeys::testDecodeResponseData()
     QCOMPARE(publicKey["1"], 2);
     QCOMPARE(publicKey["3"], -7);
     QCOMPARE(publicKey["-1"], 1);
-    QCOMPARE(publicKey["-2"], QString("BuyvNFtikWFtGVkDplAqyjHElahp5fCH5dS4Ms0Ihd0"));
-    QCOMPARE(publicKey["-3"], QString("4u5_6Q8O6R0Hg0oDCdtCJLEL0yX_GDLhU5m3HUIE54M"));
+    QCOMPARE(publicKey["-2"], QString("crWJWKZ5HTZRiKnKIQqsqGF-ElEx7DwRsNYYq0xnbBQ"));
+    QCOMPARE(publicKey["-3"], QString("btZ70X11SLx17QFDWVAR3_qqk5OqrRS--Whc7hyw9YU"));
 }
 
 void TestPasskeys::testLoadingECPrivateKeyFromPem()
@@ -276,10 +276,9 @@ void TestPasskeys::testCreatingAttestationObjectWithEC()
     auto rpIdHash = browserMessageBuilder()->getSha256HashAsBase64(QString("webauthn.io"));
     QCOMPARE(rpIdHash, QString("dKbqkhPJnC90siSSsyDPQCYqlMGpUKA5fyklC2CEHvA"));
 
-    TestingVariables testingVariables = {id, predefinedFirst, predefinedSecond};
+    TestingVariables testingVariables = {id, predefinedFirst, predefinedSecond, QString()};
     const auto alg = browserPasskeys()->getAlgorithmFromPublicKey(credentialCreationOptions);
-    const auto credentialPrivateKey =
-        browserPasskeys()->buildCredentialPrivateKey(alg, predefinedFirst, predefinedSecond);
+    const auto credentialPrivateKey = browserPasskeys()->buildCredentialPrivateKey(alg, testingVariables);
     auto result = browserPasskeys()->buildAttestationObject(
         credentialCreationOptions, "", id, credentialPrivateKey.cborEncodedPublicKey, testingVariables);
     QCOMPARE(
@@ -344,10 +343,9 @@ void TestPasskeys::testCreatingAttestationObjectWithRSA()
     auto rpIdHash = browserMessageBuilder()->getSha256HashAsBase64(QString("webauthn.io"));
     QCOMPARE(rpIdHash, QString("dKbqkhPJnC90siSSsyDPQCYqlMGpUKA5fyklC2CEHvA"));
 
-    TestingVariables testingVariables = {id, predefinedModulus, predefinedExponent};
+    TestingVariables testingVariables = {id, predefinedModulus, predefinedExponent, QString()};
     const auto alg = browserPasskeys()->getAlgorithmFromPublicKey(credentialCreationOptions);
-    auto credentialPrivateKey =
-        browserPasskeys()->buildCredentialPrivateKey(alg, predefinedModulus, predefinedExponent);
+    auto credentialPrivateKey = browserPasskeys()->buildCredentialPrivateKey(alg, testingVariables);
     auto result = browserPasskeys()->buildAttestationObject(
         credentialCreationOptions, "", id, credentialPrivateKey.cborEncodedPublicKey, testingVariables);
 
@@ -380,8 +378,7 @@ void TestPasskeys::testRegister()
 {
     // Predefined values for a desired outcome
     const auto predefinedId = QString("yrzFJ5lwcpTwYMOdXSmxF5b5cYQlqBMzbbU_d-oFLO8");
-    const auto predefinedX = QString("BuyvNFtikWFtGVkDplAqyjHElahp5fCH5dS4Ms0Ihd0");
-    const auto predefinedY = QString("4u5_6Q8O6R0Hg0oDCdtCJLEL0yX_GDLhU5m3HUIE54M");
+    const auto predefinedData = QString("0x4B0E8AB07B1E62CCD4CB7B9D5BC9DE7B6EED7A3C8A3D466DB12897755E3D7E6D");
     const auto origin = QString("https://webauthn.io");
     const auto testDataPublicKey = browserMessageBuilder()->getJsonObject(PublicKeyCredential.toUtf8());
     const auto testDataResponse = testDataPublicKey["response"];
@@ -392,7 +389,7 @@ void TestPasskeys::testRegister()
         publicKeyCredentialOptions, origin, &credentialCreationOptions);
     QVERIFY(creationResult == 0);
 
-    TestingVariables testingVariables = {predefinedId, predefinedX, predefinedY};
+    TestingVariables testingVariables = {predefinedId, QString(), QString(), predefinedData};
     auto result = browserPasskeys()->buildRegisterPublicKeyCredential(credentialCreationOptions, testingVariables);
     auto publicKeyCredential = result.response;
     QCOMPARE(publicKeyCredential["type"], QString("public-key"));
@@ -402,6 +399,9 @@ void TestPasskeys::testRegister()
     auto response = publicKeyCredential["response"].toObject();
     auto attestationObject = response["attestationObject"].toString();
     auto clientDataJson = response["clientDataJSON"].toString();
+    QCOMPARE(response["publicKey"],
+             QString("MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEcrWJWKZ5HTZRiKnKIQqsqGF-"
+                     "ElEx7DwRsNYYq0xnbBRu1nvRfXVIvHXtAUNZUBHf-qqTk6qtFL75aFzuHLD1hQ"));
     QCOMPARE(attestationObject, testDataResponse["attestationObject"].toString());
 
     // Parse clientDataJSON
