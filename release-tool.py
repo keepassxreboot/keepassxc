@@ -17,6 +17,7 @@
 
 
 import argparse
+from collections import defaultdict
 import ctypes
 from datetime import datetime
 import hashlib
@@ -34,7 +35,7 @@ import subprocess
 import sys
 import tarfile
 import tempfile
-from urllib.request import urlretrieve
+from urllib import request
 from xml import sax
 
 
@@ -594,8 +595,7 @@ class Tag(Command):
         # Update translations
         if not skip_translations:
             i18n = I18N(self._arg_parser)
-            i18n.run_tx_pull(src_dir, i18n.derive_resource_name(tx_resource, cwd=src_dir), tx_min_perc,
-                             commit=True, yes=yes)
+            i18n.run_tx_pull(src_dir, tx_resource, tx_min_perc, commit=True, yes=yes)
 
         changelog = re.search(rf'^## ({major}\.{minor}\.{patch} \(.*?\)\n\n+.+?)\n\n+## ',
                               (Path(src_dir) / 'CHANGELOG.md').read_text("UTF-8"), re.MULTILINE | re.DOTALL)
@@ -830,7 +830,7 @@ class Build(Command):
         if _run(['which', toolname], cwd=None, check=False, **(docker_args or {})).returncode != 0:
             logger.info(f'Downloading {toolname}...')
             outfile = bin_dir / toolname
-            urlretrieve(url, outfile)
+            request.urlretrieve(url, outfile)
             outfile.chmod(outfile.stat().st_mode | stat.S_IEXEC)
 
     def build_linux(self, version, src_dir, output_dir, *, install_prefix, parallelism, cmake_opts, use_system_deps,
@@ -1070,7 +1070,7 @@ class GPGSign(Command):
 class I18N(Command):
     """Update translation files and pull from or push to Transifex."""
 
-    TRANSIFEX_RESOURCE = 'keepassxc.share-translations-keepassxc-en-ts--{}'
+    TRANSIFEX_RESOURCE = 'share-translations-keepassxc-en-ts--{}'
     TRANSIFEX_PULL_PERC = 60
 
     @classmethod
@@ -1091,6 +1091,15 @@ class I18N(Command):
         pull.add_argument('-c', '--commit', help='Commit changes.', action='store_true')
         pull.add_argument('-y', '--yes', help='Don\'t ask before pulling translations.', action='store_true')
         pull.add_argument('tx_args', help='Additional arguments to pass to tx subcommand.', nargs=argparse.REMAINDER)
+
+        list_translators = subparsers.add_parser('tx-list-translators',
+                                                 help='Print a HTML-formatted list of translation contributors.')
+        list_translators.add_argument('-o', '--org', help='Transifex org name.', default='keepassxc')
+        list_translators.add_argument('-p', '--project', help='Transifex project name.', default='keepassxc')
+        list_translators.add_argument('-r', '--resource', help='Transifex resource name.',
+                                      choices=['master', 'develop'])
+        list_translators.add_argument('-b', '--member-blacklist', nargs='+', help='Transifex users to ignore',
+                                      default=['phoerious', 'droidmonkey'])
 
         lupdate = subparsers.add_parser('lupdate', help='Update source translation file from C++ sources.')
         lupdate.add_argument('-d', '--build-dir', help='Build directory for looking up lupdate binary.')
@@ -1134,12 +1143,15 @@ class I18N(Command):
             self.check_transifex_cmd_exists()
             self.check_transifex_config_exists(src_dir)
 
-            kwargs['resource'] = self.derive_resource_name(kwargs['resource'], cwd=src_dir)
-            kwargs['tx_args'] = kwargs['tx_args'][1:]
+            if 'tx_args' in kwargs:
+                kwargs['tx_args'] = kwargs['tx_args'][1:]
             if subcmd == 'tx-push':
                 self.run_tx_push(src_dir, **kwargs)
             elif subcmd == 'tx-pull':
                 self.run_tx_pull(src_dir, **kwargs)
+            elif subcmd == 'tx-list-translators':
+                self.run_tx_list_translators(src_dir, kwargs['org'], kwargs['project'], kwargs['resource'],
+                                             kwargs['member_blacklist'])
 
         elif subcmd == 'lupdate':
             kwargs['lupdate_args'] = kwargs['lupdate_args'][1:]
@@ -1159,6 +1171,7 @@ class I18N(Command):
 
     # noinspection PyMethodMayBeStatic
     def run_tx_push(self, src_dir, resource, yes, tx_args):
+        resource = 'keepassxc.' + self.derive_resource_name(resource, cwd=src_dir)
         sys.stderr.write('\nAbout to push the ' + fmt.bold('"en"') +
                          ' source file from the current branch to Transifex:\n')
         sys.stderr.write(f'    {fmt.bold(_git_get_branch(cwd=src_dir))}'
@@ -1173,6 +1186,7 @@ class I18N(Command):
 
     # noinspection PyMethodMayBeStatic
     def run_tx_pull(self, src_dir, resource, min_perc, commit=False, yes=False, tx_args=None):
+        resource = 'keepassxc.' + self.derive_resource_name(resource, cwd=src_dir)
         sys.stderr.write('\nAbout to pull translations for ' + fmt.bold(f'"{resource}"') + '.\n')
         if not yes and not _yes_no_prompt('Continue?'):
             logger.error('Pull aborted.')
@@ -1185,6 +1199,71 @@ class I18N(Command):
         files = [f.relative_to(src_dir) for f in Path(src_dir).glob('share/translations/*.ts')]
         if commit:
             _git_commit_files(files, 'Update translations.', cwd=src_dir)
+
+    # noinspection PyMethodMayBeStatic
+    def run_tx_list_translators(self, src_dir, org, project, resource, member_blacklist):
+        txrc = Path.home() / '.transifexrc'
+        if not txrc.exists():
+            raise Error('No Transifex config found. Run tx init first.')
+
+        org = f'o:{org}'
+        project = f'{org}:p:{project}'
+        resource = f'{project}:r:{self.derive_resource_name(resource, cwd=src_dir)}'
+
+        token = [l for l in open(txrc, 'r') if l.startswith('token')][0].split('=', 1)[1].strip()
+        member_blacklist = [f'u:{m}' for m in member_blacklist]
+
+        def get_url(url):
+            req = request.Request(url)
+            req.add_header('Content-Type', 'application/vnd.api+json')
+            req.add_header('Authorization', f'Bearer {token}')
+            with request.urlopen(req) as resp:
+                return json.load(resp)
+
+        logger.info('Fetching languages...',)
+        languages_json = get_url(f'https://rest.api.transifex.com/projects/{project}/languages')
+        languages = {}
+        for lang in languages_json['data']:
+            languages[lang['id']] = lang['attributes']['name']
+
+        logger.info('Fetching language stats...')
+        language_stats_json = get_url('https://rest.api.transifex.com/resource_language_stats?'
+                                      f'filter[project]={project}&filter[resource]={resource}')
+        for s in language_stats_json['data']:
+            completion = s['attributes']['translated_strings'] / s['attributes']['total_strings']
+            if completion < .6:
+                languages.pop(s['relationships']['language']['data']['id'])
+
+        logger.info('Fetching language members...')
+        members_json = get_url(f'https://rest.api.transifex.com/team_memberships?filter[organization]={org}')
+        members = defaultdict(set)
+        for member in members_json['data']:
+            print('.', end='', file=sys.stderr)
+            sys.stderr.flush()
+            if member['relationships']['user']['data']['id'] in member_blacklist:
+                continue
+            lid = member['relationships']['language']['data']['id']
+            if lid not in languages:
+                continue
+            user = get_url(member['relationships']['user']['links']['related'])['data']['attributes']['username']
+            members[lid].add(user)
+        print(file=sys.stderr, flush=True)
+
+        print('<ul>')
+        for lang in sorted(languages, key=lambda x: languages[x]):
+            if not members[lang]:
+                continue
+            lines = [f'    <li><strong>{languages[lang]}:</strong> ']
+            for i, m in enumerate(sorted(members[lang], key=lambda x: x.lower())):
+                if len(lines[-1]) + len(m) >= 120:
+                    lines.append('        ')
+                lines[-1] += m
+                if i < len(members[lang]) - 1:
+                    lines[-1] += ', '
+            lines[-1] += '</li>'
+            print('\n'.join(lines))
+        print('</ul>')
+        logger.info('Done. Please add the list to the About dialog and commit the changes.')
 
     def run_lupdate(self, src_dir, build_dir=None, commit=False, lupdate_args=None):
         path = _get_bin_path(build_dir)
