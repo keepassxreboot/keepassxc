@@ -61,11 +61,7 @@
     </layout>
    </item>
    <item>
-    <widget class="QTextBrowser" name="previewTextBrowser">
-     <property name="tabStopDistance">
-      <double>10.000000000000000</double>
-     </property>
-    </widget>
+    <widget class="QTextBrowser" name="previewTextBrowser"/>
    </item>
   </layout>
  </widget>

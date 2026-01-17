@@ -982,6 +982,9 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
         m_mainUi->notesEdit->setFont(Font::defaultFont());
     }
 
+    m_mainUi->notesEdit->setTabStopDistance(
+        QFontMetrics(m_mainUi->notesEdit->font()).horizontalAdvance(QString(4, ' ')));
+
     m_advancedUi->attachmentsWidget->setReadOnly(m_history);
     m_advancedUi->addAttributeButton->setEnabled(!m_history);
     m_advancedUi->editAttributeButton->setEnabled(false);
