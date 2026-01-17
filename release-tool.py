@@ -20,6 +20,7 @@ import argparse
 import ctypes
 from datetime import datetime
 import hashlib
+import json
 import logging
 import lzma
 import os
@@ -34,6 +35,7 @@ import sys
 import tarfile
 import tempfile
 from urllib.request import urlretrieve
+from xml import sax
 
 
 ###########################################################################################
@@ -447,6 +449,7 @@ class Check(Command):
         if checkout:
             _git_checkout(git_ref, cwd=src_dir)
             logger.debug('Attempting to find "%s" version string in source files...', version)
+            cls.check_version_in_vcpkg_manifest(version, src_dir)
             cls.check_version_in_cmake(version, src_dir)
             cls.check_changelog(version, src_dir)
             cls.check_app_stream_info(version, src_dir)
@@ -460,32 +463,32 @@ class Check(Command):
             raise Error(f'Source directory "{src_dir}" does not exist!')
 
     @staticmethod
-    def check_git_repository(cwd):
+    def check_git_repository(cwd=None):
         if _run(['git', 'rev-parse', '--is-inside-work-tree'], check=False, cwd=cwd).returncode != 0:
             raise Error('Not a valid Git repository: %s', cwd)
 
     @staticmethod
-    def check_release_exists(tag_name, cwd):
+    def check_release_exists(tag_name, cwd=None):
         if not _run(['git', 'tag', '--list', tag_name], check=False, cwd=cwd).stdout:
             raise Error('Release tag does not exists: %s', tag_name)
 
     @staticmethod
-    def check_release_does_not_exist(tag_name, cwd):
+    def check_release_does_not_exist(tag_name, cwd=None):
         if _run(['git', 'tag', '--list', tag_name], check=False, cwd=cwd).stdout:
             raise Error('Release tag already exists: %s', tag_name)
 
     @staticmethod
-    def check_working_tree_clean(cwd):
+    def check_working_tree_clean(cwd=None):
         if not _git_working_dir_clean(cwd=cwd):
             raise Error('Current working tree is not clean! Please commit or unstage any changes.')
 
     @staticmethod
-    def check_branch_exists(branch, cwd):
+    def check_branch_exists(branch, cwd=None):
         if _run(['git', 'rev-parse', branch], check=False, cwd=cwd).returncode != 0:
             raise Error(f'Branch or tag "{branch}" does not exist!')
 
     @staticmethod
-    def check_version_in_cmake(version, cwd):
+    def check_version_in_cmake(version, cwd=None):
         cmakelists = Path('CMakeLists.txt')
         if cwd:
             cmakelists = Path(cwd) / cmakelists
@@ -500,7 +503,17 @@ class Check(Command):
             raise Error(f'Version number in {cmakelists} not updated! Expected: %s, found: %s.', version, cmake_version)
 
     @staticmethod
-    def check_changelog(version, cwd):
+    def check_version_in_vcpkg_manifest(version, cwd=None):
+        manifest = Path('vcpkg.json')
+        if cwd:
+            manifest = Path(cwd) / manifest
+        manifest_json = json.load(manifest.open('r'))
+        if version != manifest_json['version-string']:
+            raise Error(f'Version number in {manifest} not updated! Expected: %s, found: %s.',
+                        version, manifest_json['version-string'])
+
+    @staticmethod
+    def check_changelog(version, cwd=None):
         changelog = Path('CHANGELOG.md')
         if cwd:
             changelog = Path(cwd) / changelog
@@ -511,12 +524,21 @@ class Check(Command):
             raise Error(f'{changelog} has not been updated to the "%s" release.', version)
 
     @staticmethod
-    def check_app_stream_info(version, cwd):
+    def check_app_stream_info(version, cwd=None):
         appstream = Path('share/linux/org.keepassxc.KeePassXC.appdata.xml')
         if cwd:
             appstream = Path(cwd) / appstream
         if not appstream.is_file():
             raise Error('File not found: %s', appstream)
+
+        try:
+            parser = sax.make_parser()
+            parser.setContentHandler(sax.handler.ContentHandler())
+            parser.parse(appstream)
+        except sax.SAXParseException as e:
+            raise Error(f'{appstream} is not well-formed. Error: %s at line %s, column %s',
+                        e.getMessage(), e.getLineNumber(), e.getColumnNumber())
+
         regex = re.compile(rf'^\s*<release version="{version}" date=".+?">')
         with appstream.open('r', encoding='utf-8') as f:
             for line in f:
