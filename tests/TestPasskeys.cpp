@@ -274,7 +274,7 @@ void TestPasskeys::testCreatingAttestationObjectWithEC()
     const auto publicKeyCredentialOptions = browserMessageBuilder()->getJsonObject(PublicKeyCredentialOptions.toUtf8());
     QJsonObject credentialCreationOptions;
     browserPasskeysClient()->getCredentialCreationOptions(
-        publicKeyCredentialOptions, QString("https://webauthn.io"), &credentialCreationOptions);
+        publicKeyCredentialOptions, QString("https://webauthn.io"), {}, &credentialCreationOptions);
 
     auto rpIdHash = browserMessageBuilder()->getSha256HashAsBase64(QString("webauthn.io"));
     QCOMPARE(rpIdHash, QString("dKbqkhPJnC90siSSsyDPQCYqlMGpUKA5fyklC2CEHvA"));
@@ -337,7 +337,7 @@ void TestPasskeys::testCreatingAttestationObjectWithRSA()
     const auto publicKeyCredentialOptions = browserMessageBuilder()->getJsonObject(PublicKeyCredentialOptions.toUtf8());
     QJsonObject credentialCreationOptions;
     browserPasskeysClient()->getCredentialCreationOptions(
-        publicKeyCredentialOptions, QString("https://webauthn.io"), &credentialCreationOptions);
+        publicKeyCredentialOptions, QString("https://webauthn.io"), {}, &credentialCreationOptions);
     credentialCreationOptions["credTypesAndPubKeyAlgs"] = pubKeyCredParams;
 
     auto rpIdHash = browserMessageBuilder()->getSha256HashAsBase64(QString("webauthn.io"));
@@ -388,7 +388,7 @@ void TestPasskeys::testRegister()
 
     QJsonObject credentialCreationOptions;
     const auto creationResult = browserPasskeysClient()->getCredentialCreationOptions(
-        publicKeyCredentialOptions, origin, &credentialCreationOptions);
+        publicKeyCredentialOptions, origin, {}, &credentialCreationOptions);
     QVERIFY(creationResult == 0);
 
     TestingVariables testingVariables = {predefinedId, QString(), QString(), predefinedData};
@@ -415,6 +415,22 @@ void TestPasskeys::testRegister()
     QCOMPARE(clientDataJsonObject["type"], QString("webauthn.create"));
 }
 
+void TestPasskeys::testRegisterWithRelatedOrigins()
+{
+    const auto origin = QString("https://webauthn.io");
+
+    // Modify the RP ID not to match with the origin. Actual accepted origin is inside Related Origins list.
+    const auto credentialOptions = QString(PublicKeyCredentialOptions).replace("webauthn.io", "example.io");
+    const auto publicKeyCredentialOptions = browserMessageBuilder()->getJsonObject(credentialOptions.toUtf8());
+
+    // Only check that the creation succeeds with the Related Origins list
+    const auto relatedOrigins = QStringList({"https://webauthn.io"});
+    QJsonObject credentialCreationOptions;
+    const auto creationResult = browserPasskeysClient()->getCredentialCreationOptions(
+        publicKeyCredentialOptions, origin, relatedOrigins, &credentialCreationOptions);
+    QVERIFY(creationResult == 0);
+}
+
 void TestPasskeys::testGet()
 {
 #if BOTAN_VERSION_CODE < BOTAN_VERSION_CODE_FOR(2, 14, 0)
@@ -432,7 +448,7 @@ void TestPasskeys::testGet()
 
     QJsonObject assertionOptions;
     const auto assertionResult =
-        browserPasskeysClient()->getAssertionOptions(publicKeyCredentialRequestOptions, origin, &assertionOptions);
+        browserPasskeysClient()->getAssertionOptions(publicKeyCredentialRequestOptions, origin, {}, &assertionOptions);
     QVERIFY(assertionResult == 0);
 
     auto publicKeyCredential = browserPasskeys()->buildGetPublicKeyCredential(assertionOptions, id, {}, privateKeyPem);
@@ -453,6 +469,22 @@ void TestPasskeys::testGet()
     auto clientDataByteArray = browserMessageBuilder()->getArrayFromBase64(clientDataJson);
     auto clientDataJsonObject = browserMessageBuilder()->getJsonObject(clientDataByteArray);
     QCOMPARE(clientDataJsonObject["challenge"].toString(), publicKeyCredentialRequestOptions["challenge"].toString());
+}
+
+void TestPasskeys::testGetWithRelatedOrigins()
+{
+    const auto origin = QString("https://webauthn.io");
+
+    // Modify the RP ID not to match with the origin. Actual accepted origin is inside Related Origins list.
+    const auto credentialOptions = QString(PublicKeyCredentialRequestOptions).replace("webauthn.io", "example.io");
+    const auto publicKeyCredentialRequestOptions = browserMessageBuilder()->getJsonObject(credentialOptions.toUtf8());
+
+    // Only check that the assertion succeeds with the Related Origins list
+    const auto relatedOrigins = QStringList({"https://webauthn.io"});
+    QJsonObject assertionOptions;
+    const auto assertionResult = browserPasskeysClient()->getAssertionOptions(
+        publicKeyCredentialRequestOptions, origin, relatedOrigins, &assertionOptions);
+    QVERIFY(assertionResult == 0);
 }
 
 void TestPasskeys::testExtensions()
@@ -622,6 +654,39 @@ void TestPasskeys::testRpIdValidation()
     auto differentDomain = passkeyUtils()->validateRpId(QString("another.com"), QString("example.com"), &result);
     QVERIFY(result.isEmpty());
     QCOMPARE(differentDomain, ERROR_PASSKEYS_DOMAIN_RPID_MISMATCH);
+}
+
+void TestPasskeys::testRelatedOriginsValidation()
+{
+    // A valid case. Matches with https://accountscenter.facebook.com when RP ID is e.g. accounts.meta.com.
+    QString origin = "https://accountscenter.facebook.com";
+    const QStringList relatedOrigins = {"https://messenger.com",
+                                        "https://www.messenger.com",
+                                        "https://facebook.com",
+                                        "https://web.facebook.com",
+                                        "https://www.facebook.com",
+                                        "https://m.facebook.com",
+                                        "https://business.facebook.com",
+                                        "https://accountscenter.facebook.com",
+                                        "https://accounts.meta.com",
+                                        "https://accountscenter.meta.com"};
+    QVERIFY(passkeyUtils()->validateRelatedOrigins(relatedOrigins, origin));
+
+    // Failed case. The origin differs from all related origins.
+    origin = "https://accountscenter.example.com";
+    QVERIFY(!passkeyUtils()->validateRelatedOrigins(relatedOrigins, origin));
+
+    // Failed case where MAX_SEEN_LABELS has been met (too many different labels)
+    const QStringList failedRelatedOrigins = {
+        "https://messenge1r.com",         "https://www.messenger2.com",          "https://facebook3.com",
+        "https://web.facebook4.com",      "https://www.facebook5.com",           "https://m.facebook6.com",
+        "https://business.facebook7.com", "https://accountscenter.meta.com",     "https://accounts.meta1.com",
+        "https://accounts.meta2.com",     "https://accounts.met3a.com",          "https://accounts.meta4.com",
+        "https://accounts.meta5.com",     "https://accounts.meta6.com",          "https://accounts.meta7.com",
+        "https://accounts.meta8.com",     "https://accounts.meta9.com",          "https://accounts.meta10.com",
+        "https://accounts.meta11.com",    "https://accountscenter.facebook.com",
+    };
+    QVERIFY(!passkeyUtils()->validateRelatedOrigins(failedRelatedOrigins, origin));
 }
 
 void TestPasskeys::testParseAttestation()

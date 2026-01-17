@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
  *  Copyright (C) 2013 Francois Ferrand
  *
@@ -90,10 +90,12 @@ public:
 
     QJsonObject showPasskeysRegisterPrompt(const QJsonObject& publicKeyOptions,
                                            const QString& origin,
+                                           const QStringList& relatedOrigins,
                                            const QString& groupName,
                                            const StringPairList& keyList);
     QJsonObject showPasskeysAuthenticationPrompt(const QJsonObject& publicKeyOptions,
                                                  const QString& origin,
+                                                 const QStringList& relatedOrigins,
                                                  const StringPairList& keyList);
     void addPasskeyToGroup(const QSharedPointer<Database>& db,
                            Group* group,

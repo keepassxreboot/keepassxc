@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -541,8 +541,11 @@ QJsonObject BrowserAction::handlePasskeysGet(const QJsonObject& json, const QStr
         return getErrorReply(action, ERROR_PASSKEYS_INVALID_URL_PROVIDED);
     }
 
+    const auto relatedOrigins =
+        browserMessageBuilder()->getStringListFromJsonArray(browserRequest.getArray("relatedOrigins"));
     const auto keyList = getConnectionKeys(browserRequest);
-    const auto response = browserService()->showPasskeysAuthenticationPrompt(publicKey, origin, keyList);
+    const auto response =
+        browserService()->showPasskeysAuthenticationPrompt(publicKey, origin, relatedOrigins, keyList);
 
     const Parameters params{{"response", response}};
     return buildResponse(action, browserRequest.incrementedNonce, params);
@@ -575,8 +578,11 @@ QJsonObject BrowserAction::handlePasskeysRegister(const QJsonObject& json, const
     }
 
     const auto groupName = browserRequest.getString("groupName");
+    const auto relatedOrigins =
+        browserMessageBuilder()->getStringListFromJsonArray(browserRequest.getArray("relatedOrigins"));
     const auto keyList = getConnectionKeys(browserRequest);
-    const auto response = browserService()->showPasskeysRegisterPrompt(publicKey, origin, groupName, keyList);
+    const auto response =
+        browserService()->showPasskeysRegisterPrompt(publicKey, origin, relatedOrigins, groupName, keyList);
 
     const Parameters params{{"response", response}};
     return buildResponse(action, browserRequest.incrementedNonce, params);

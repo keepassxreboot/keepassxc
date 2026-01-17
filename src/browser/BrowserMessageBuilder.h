@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -106,6 +106,7 @@ public:
     QByteArray getArrayFromBase64(const QString& base64str) const;
     QByteArray getSha256Hash(const QString& str) const;
     QString getSha256HashAsBase64(const QString& str) const;
+    QStringList getStringListFromJsonArray(const QJsonArray& jsonArray) const;
 
 private:
     Q_DISABLE_COPY(BrowserMessageBuilder);
