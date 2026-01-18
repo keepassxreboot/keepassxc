@@ -139,6 +139,8 @@ void TextAttachmentsWidget::initWidget()
     setLayout(layout);
     setObjectName("TextAttachmentsWidget");
 
+    setMinimumSize(720, 490);
+
     updateWidget();
 }
 
