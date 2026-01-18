@@ -19,8 +19,9 @@
 #include "TextAttachmentsEditWidget.h"
 #include "TextAttachmentsPreviewWidget.h"
 
+#include <core/Tools.h>
+
 #include <QSplitter>
-#include <QTextEdit>
 #include <QTimer>
 #include <QVBoxLayout>
 
@@ -38,6 +39,14 @@ void TextAttachmentsWidget::openAttachment(attachments::Attachment attachment, a
 {
     m_attachment = std::move(attachment);
     m_mode = mode;
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+    const auto mimeType = Tools::getMimeType(QFileInfo(m_attachment.name));
+    const bool isMd = (mimeType == Tools::MimeType::Markdown);
+    if (auto* tb = m_editWidget->markdownToolbar()) {
+        tb->setVisible(isMd && m_mode != attachments::OpenMode::ReadOnly);
+    }
+#endif
 
     updateWidget();
 }
@@ -120,6 +129,12 @@ void TextAttachmentsWidget::initWidget()
     // Setup this widget with the splitter
     auto layout = new QVBoxLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);
+
+    if (auto* tb = m_editWidget->markdownToolbar()) {
+        tb->setParent(this);
+        layout->addWidget(tb);
+    }
+
     layout->addWidget(m_splitter);
     setLayout(layout);
     setObjectName("TextAttachmentsWidget");

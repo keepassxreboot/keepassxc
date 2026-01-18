@@ -206,6 +206,7 @@ set(gui_SOURCES
         gui/osutils/ScreenLockListenerPrivate.cpp
         gui/widgets/ElidedLabel.cpp
         gui/widgets/KPToolBar.cpp
+        gui/widgets/MarkdownToolbar.cpp
         gui/widgets/PopupHelpWidget.cpp
         gui/widgets/ShortcutWidget.cpp
         gui/wizard/ImportWizard.cpp
