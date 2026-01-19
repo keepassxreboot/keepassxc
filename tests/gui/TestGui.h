@@ -71,6 +71,7 @@ private slots:
     void testTrayRestoreHide();
     void testShortcutConfig();
     void testMenuActionStates();
+    void testDeleteEntryDuringModalDialog();
 
 private:
     void addCannedEntries();
