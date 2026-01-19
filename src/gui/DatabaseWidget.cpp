@@ -585,6 +585,11 @@ void DatabaseWidget::expireSelectedEntries()
 
 void DatabaseWidget::deleteSelectedEntries()
 {
+    // Prevent deletion when a modal dialog (e.g., file save dialog) is active
+    if (QApplication::activeModalWidget()) {
+        return;
+    }
+
     const QModelIndexList selected = m_entryView->selectionModel()->selectedRows();
     if (selected.isEmpty()) {
         return;
@@ -1100,6 +1105,11 @@ void DatabaseWidget::cloneGroup()
 
 void DatabaseWidget::deleteGroup()
 {
+    // Prevent deletion when a modal dialog is active
+    if (QApplication::activeModalWidget()) {
+        return;
+    }
+
     Group* currentGroup = m_groupView->currentGroup();
     Q_ASSERT(currentGroup && canDeleteCurrentGroup());
     if (!currentGroup || !canDeleteCurrentGroup()) {

@@ -21,6 +21,7 @@
 
 #include <QCheckBox>
 #include <QClipboard>
+#include <QDialog>
 #include <QListWidget>
 #include <QMenu>
 #include <QMenuBar>
@@ -2502,6 +2503,68 @@ void TestGui::testMenuActionStates()
     QVERIFY(isActionEnabled("actionImport"));
     QVERIFY(isActionEnabled("actionSettings"));
     QVERIFY(isActionEnabled("actionPasswordGenerator"));
+}
+
+void TestGui::testDeleteEntryDuringModalDialog()
+{
+    // Delete key in native file dialogs on macOS
+    // should not delete password entries
+
+    // Add canned entries for consistent testing
+    addCannedEntries();
+
+    auto* entryView = m_dbWidget->findChild<EntryView*>("entryView");
+    auto* entryDeleteAction = m_mainWindow->findChild<QAction*>("actionEntryDelete");
+
+    // Count initial entries
+    int initialEntryCount = entryView->model()->rowCount();
+    QVERIFY(initialEntryCount > 0);
+
+    // Select the first entry
+    clickIndex(entryView->model()->index(0, 1), entryView, Qt::LeftButton);
+    entryView->setFocus();
+    QApplication::processEvents();
+
+    // Create and show a modal dialog to simulate the file save dialog
+    QDialog modalDialog(m_mainWindow.data());
+    modalDialog.setModal(true);
+
+    // Use a timer to trigger the delete action while modal dialog is shown
+    bool deleteTriggered = false;
+    QTimer::singleShot(50, [&]() {
+        // Verify modal dialog is active
+        QVERIFY(QApplication::activeModalWidget() == &modalDialog);
+
+        // Trigger delete action while modal is open
+        entryDeleteAction->trigger();
+        deleteTriggered = true;
+
+        // Close the modal dialog
+        modalDialog.accept();
+    });
+
+    // Show modal dialog (blocks until closed)
+    modalDialog.exec();
+
+    QVERIFY(deleteTriggered);
+    QApplication::processEvents();
+
+    // Verify entry count unchanged - delete should have been blocked
+    QCOMPARE(entryView->model()->rowCount(), initialEntryCount);
+
+    // Now verify normal deletion still works after modal closes
+    clickIndex(entryView->model()->index(0, 1), entryView, Qt::LeftButton);
+    entryView->setFocus();
+    QApplication::processEvents();
+
+    if (!config()->get(Config::Security_NoConfirmMoveEntryToRecycleBin).toBool()) {
+        MessageBox::setNextAnswer(MessageBox::Move);
+    }
+    entryDeleteAction->trigger();
+    QApplication::processEvents();
+
+    // Verify entry was deleted normally
+    QCOMPARE(entryView->model()->rowCount(), initialEntryCount - 1);
 }
 
 void TestGui::addCannedEntries()
