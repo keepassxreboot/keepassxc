@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -51,6 +51,7 @@ private slots:
     void testBestMatchingCredentials();
     void testBestMatchingWithAdditionalURLs();
     void testRestrictBrowserKey();
+    void testHideEntry();
 
 private:
     QList<Entry*> createEntries(QStringList& urls, Group* root, bool additionalUrl = false) const;

@@ -1023,8 +1023,8 @@ QList<Entry*> BrowserService::searchEntries(const QSharedPointer<Database>& db,
     }
 
     for (const auto& group : rootGroup->groupsRecursive(true)) {
-        if (group->isRecycled()
-            || group->resolveCustomDataTriState(BrowserService::OPTION_HIDE_ENTRY) == Group::Enable) {
+        const auto groupOptionHideEntry = group->resolveCustomDataTriState(BrowserService::OPTION_HIDE_ENTRY);
+        if (group->isRecycled() || groupOptionHideEntry == Group::Enable) {
             continue;
         }
 
@@ -1039,7 +1039,8 @@ QList<Entry*> BrowserService::searchEntries(const QSharedPointer<Database>& db,
 
         for (auto* entry : group->entries()) {
             if (entry->isRecycled()
-                || (entry->customData()->contains(BrowserService::OPTION_HIDE_ENTRY)
+                || (groupOptionHideEntry == Group::Inherit
+                    && entry->customData()->contains(BrowserService::OPTION_HIDE_ENTRY)
                     && entry->customData()->value(BrowserService::OPTION_HIDE_ENTRY) == TRUE_STR)) {
                 continue;
             }
