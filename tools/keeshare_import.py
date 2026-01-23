@@ -1,15 +1,7 @@
 #!/usr/bin/env python3
-"""
-KeeShare Import MVP - Import KeePass KeeShare share-files into a database.
-
-This script verifies signed KeeShare container files and imports their contents
-into an existing KeePass database.
-
-Usage:
-    python keeshare_import.py <share_file> <database_path> <certificate_path> --password <password>
-"""
 
 import argparse
+import base64
 import struct
 import sys
 import tempfile
@@ -22,18 +14,11 @@ from cryptography.hazmat.primitives.asymmetric import padding, rsa
 from pykeepass import PyKeePass
 
 
-# KeeShare file names inside the ZIP container
 CONTAINER_FILENAME = "container.share.kdbx"
 SIGNATURE_FILENAME = "container.share.signature"
 
 
 def parse_signature_xml(xml_content: str) -> tuple[str, str, bytes]:
-    """
-    Parse the KeeShare signature XML file.
-
-    Returns:
-        Tuple of (signature_hex, signer_name, public_key_bytes)
-    """
     root = ET.fromstring(xml_content)
 
     signature_elem = root.find(".//Signature")
@@ -44,7 +29,7 @@ def parse_signature_xml(xml_content: str) -> tuple[str, str, bytes]:
     if not signature_text.startswith("rsa|"):
         raise ValueError(f"Unsupported signature format: {signature_text[:20]}")
 
-    signature_hex = signature_text[4:]  # Remove "rsa|" prefix
+    signature_hex = signature_text[4:]
 
     signer_elem = root.find(".//Certificate/Signer")
     signer_name = signer_elem.text if signer_elem is not None and signer_elem.text else "Unknown"
@@ -53,24 +38,12 @@ def parse_signature_xml(xml_content: str) -> tuple[str, str, bytes]:
     if key_elem is None or not key_elem.text:
         raise ValueError("Certificate key not found in signature file")
 
-    import base64
     public_key_bytes = base64.b64decode(key_elem.text)
 
     return signature_hex, signer_name, public_key_bytes
 
 
 def parse_ssh_rsa_key(key_bytes: bytes) -> tuple[int, int]:
-    """
-    Parse ssh-rsa format public key.
-
-    The format is:
-    - uint32 length + "ssh-rsa"
-    - uint32 length + e (public exponent)
-    - uint32 length + n (modulus)
-
-    Returns:
-        Tuple of (e, n) as integers
-    """
     offset = 0
 
     def read_bytes():
@@ -95,17 +68,14 @@ def parse_ssh_rsa_key(key_bytes: bytes) -> tuple[int, int]:
 
 
 def load_trusted_certificate(cert_path: Path) -> rsa.RSAPublicKey:
-    """Load a trusted RSA public key from PEM file."""
     with open(cert_path, "rb") as f:
         pem_data = f.read()
 
-    # Try loading as public key first
     try:
         return serialization.load_pem_public_key(pem_data)
     except ValueError:
         pass
 
-    # Try loading as certificate
     try:
         from cryptography import x509
         cert = x509.load_pem_x509_certificate(pem_data)
@@ -118,21 +88,13 @@ def load_trusted_certificate(cert_path: Path) -> rsa.RSAPublicKey:
 
 def verify_signature(data: bytes, signature_hex: str, embedded_key_bytes: bytes,
                      trusted_key: rsa.RSAPublicKey) -> bool:
-    """
-    Verify the signature against the trusted certificate.
-
-    KeeShare uses EMSA3(SHA-256) which is PKCS#1 v1.5 with SHA-256.
-    """
-    # Parse the embedded key from signature file
     e, n = parse_ssh_rsa_key(embedded_key_bytes)
 
-    # Verify embedded key matches trusted key
     trusted_numbers = trusted_key.public_numbers()
     if trusted_numbers.e != e or trusted_numbers.n != n:
         print("Warning: Embedded certificate does not match trusted certificate")
         return False
 
-    # Verify signature
     signature = bytes.fromhex(signature_hex)
 
     try:
@@ -149,12 +111,6 @@ def verify_signature(data: bytes, signature_hex: str, embedded_key_bytes: bytes,
 
 
 def extract_share_file(share_path: Path) -> tuple[bytes, str]:
-    """
-    Extract the KDBX database and signature from a share file.
-
-    Returns:
-        Tuple of (kdbx_data, signature_xml)
-    """
     with zipfile.ZipFile(share_path, "r") as zf:
         names = zf.namelist()
 
@@ -170,18 +126,11 @@ def extract_share_file(share_path: Path) -> tuple[bytes, str]:
 
 
 def import_groups(source_kp: PyKeePass, target_kp: PyKeePass) -> int:
-    """
-    Import all groups and entries from source database into target database.
-
-    Returns:
-        Number of entries imported
-    """
     imported_count = 0
 
     def import_group_recursive(source_group, target_parent):
         nonlocal imported_count
 
-        # Find or create the group in target
         target_group = target_kp.find_groups(name=source_group.name, group=target_parent, first=True)
         if target_group is None:
             target_group = target_kp.add_group(target_parent, source_group.name,
@@ -189,9 +138,7 @@ def import_groups(source_kp: PyKeePass, target_kp: PyKeePass) -> int:
                                                 notes=source_group.notes)
             print(f"  Created group: {source_group.name}")
 
-        # Import entries
         for entry in source_group.entries:
-            # Check if entry already exists (by title and username)
             existing = target_kp.find_entries(title=entry.title, username=entry.username,
                                                group=target_group, first=True)
             if existing is None:
@@ -209,15 +156,12 @@ def import_groups(source_kp: PyKeePass, target_kp: PyKeePass) -> int:
             else:
                 print(f"  Skipped existing entry: {entry.title}")
 
-        # Recurse into subgroups
         for subgroup in source_group.subgroups:
             import_group_recursive(subgroup, target_group)
 
-    # Import from source root
     source_root = source_kp.root_group
     target_root = target_kp.root_group
 
-    # Import entries from root
     for entry in source_root.entries:
         existing = target_kp.find_entries(title=entry.title, username=entry.username,
                                            group=target_root, first=True)
@@ -234,7 +178,6 @@ def import_groups(source_kp: PyKeePass, target_kp: PyKeePass) -> int:
             print(f"  Imported entry: {entry.title}")
             imported_count += 1
 
-    # Import subgroups
     for subgroup in source_root.subgroups:
         import_group_recursive(subgroup, target_root)
 
@@ -242,9 +185,7 @@ def import_groups(source_kp: PyKeePass, target_kp: PyKeePass) -> int:
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Import KeePass KeeShare share-files into a database"
-    )
+    parser = argparse.ArgumentParser(description="Import KeePass KeeShare share-files into a database")
     parser.add_argument("share_file", type=Path, help="Path to the .kdbx.share file")
     parser.add_argument("database", type=Path, help="Path to the target KeePass database")
     parser.add_argument("certificate", type=Path, help="Path to trusted certificate (PEM format)")
@@ -253,7 +194,6 @@ def main():
 
     args = parser.parse_args()
 
-    # Validate paths
     if not args.share_file.exists():
         print(f"Error: Share file not found: {args.share_file}")
         return 1
