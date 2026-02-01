@@ -48,7 +48,11 @@
 #endif
 #ifdef KPXC_FEATURE_BROWSER
 #include "EntryURLModel.h"
+#include "browser/BrowserMessageBuilder.h"
 #include "browser/BrowserService.h"
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
 #endif
 #include "gui/Clipboard.h"
 #include "gui/EditWidgetIcons.h"
@@ -336,6 +340,18 @@ void EditEntryWidget::setupBrowser()
         connect(m_additionalURLsDataModel,
             SIGNAL(dataChanged(const QModelIndex&, const QModelIndex&, const QVector<int>&)),
             SLOT(updateCurrentAttribute()));
+        connect(m_browserUi->sitePermissionsTable->selectionModel(),
+            SIGNAL(selectionChanged(QItemSelection, QItemSelection)),
+            this,
+            SLOT(sitePermissionSelectionChanged()));
+        connect(m_browserUi->sitePermissionsTable, SIGNAL(cellDoubleClicked(int, int)), this, SLOT(editSite()));
+        connect(m_browserUi->sitePermissionsTable,
+            SIGNAL(itemChanged(QTableWidgetItem*)),
+            this,
+            SLOT(editSiteFinished(QTableWidgetItem*)));
+        connect(m_browserUi->allowDenyButton, SIGNAL(clicked()), SLOT(allowDenyChangedForSite()));
+        connect(m_browserUi->removeSiteButton, SIGNAL(clicked()), SLOT(removeCurrentSite()));
+        connect(m_browserUi->editSiteButton, SIGNAL(clicked()), SLOT(editSite()));
         // clang-format on
     }
 }
@@ -343,6 +359,7 @@ void EditEntryWidget::setupBrowser()
 void EditEntryWidget::updateBrowserModified()
 {
     m_browserSettingsChanged = true;
+    setModified(true);
 }
 
 void EditEntryWidget::updateBrowser()
@@ -376,6 +393,27 @@ void EditEntryWidget::updateBrowser()
 
     if (m_browserUi->notHttpAuthCheckbox->isEnabled()) {
         changeValue(BrowserService::OPTION_NOT_HTTP_AUTH, m_browserUi->notHttpAuthCheckbox->isChecked());
+    }
+
+    // Update site permissions
+    if (!m_sitePermissions.isEmpty()) {
+        QJsonArray allowedSites;
+        QJsonArray deniedSites;
+
+        for (const auto& site : m_sitePermissions) {
+            if (site.second) {
+                allowedSites.append(site.first);
+            } else {
+                deniedSites.append(site.first);
+            }
+        }
+
+        QJsonObject sitePermissions;
+        sitePermissions["Allow"] = allowedSites;
+        sitePermissions["Deny"] = deniedSites;
+        sitePermissions["Realm"] = QString();
+        const auto sitePermissionsStr = QString(QJsonDocument(sitePermissions).toJson(QJsonDocument::Compact));
+        m_customData->set(BrowserService::KEEPASSXCBROWSER_NAME, sitePermissionsStr);
     }
 }
 
@@ -459,6 +497,153 @@ void EditEntryWidget::updateCurrentURL()
 void EditEntryWidget::entryURLEdited(const QString& url)
 {
     m_additionalURLsDataModel->setEntryUrl(url);
+}
+
+void EditEntryWidget::initializeSitePermissionsTable()
+{
+    if (!m_customData->hasKey(BrowserService::KEEPASSXCBROWSER_NAME)) {
+        return;
+    }
+
+    // Get JSON from custom data
+    const auto sitePermissions = m_customData->value(BrowserService::KEEPASSXCBROWSER_NAME);
+    const auto sitePermissionsJson = browserMessageBuilder()->getJsonObject(sitePermissions.toUtf8());
+    if (!sitePermissionsJson["Allow"].isArray() || !sitePermissionsJson["Deny"].isArray()) {
+        return;
+    }
+
+    m_sitePermissions.clear();
+
+    // Parse allowed URLs
+    const auto allowedUrls = sitePermissionsJson["Allow"].toArray();
+    for (const auto& allowedUrl : allowedUrls) {
+        if (!allowedUrl.isString()) {
+            continue;
+        }
+        m_sitePermissions.append(qMakePair(allowedUrl.toString(), true));
+    }
+
+    // Parse denied URLs
+    const auto deniedUrls = sitePermissionsJson["Deny"].toArray();
+    for (const auto& deniedUrl : deniedUrls) {
+        if (!deniedUrl.isString()) {
+            continue;
+        }
+        m_sitePermissions.append(qMakePair(deniedUrl.toString(), false));
+    }
+
+    m_browserUi->sitePermissionsTable->setColumnCount(2);
+    m_browserUi->sitePermissionsTable->setSelectionMode(QAbstractItemView::SingleSelection);
+    m_browserUi->sitePermissionsTable->setHorizontalHeaderLabels({tr("Site"), tr("Allowed")});
+    m_browserUi->sitePermissionsTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+    m_browserUi->sitePermissionsTable->setColumnWidth(1, 100);
+    m_browserUi->sitePermissionsTable->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Fixed);
+
+    updateSitePermissionsTable();
+}
+
+void EditEntryWidget::updateSitePermissionsTable()
+{
+    m_browserUi->sitePermissionsTable->setRowCount(m_sitePermissions.size());
+
+    int row = 0;
+    for (const auto& sitePermission : m_sitePermissions) {
+        const auto urlItem = new QTableWidgetItem(sitePermission.first);
+        const auto allowDenyItem = new QTableWidgetItem(sitePermission.second ? tr("Yes") : tr("No"));
+
+        // Allow edit on site only
+        urlItem->setData(Qt::UserRole, row);
+        urlItem->setFlags(urlItem->flags() | Qt::ItemIsEditable);
+        allowDenyItem->setData(Qt::UserRole, row);
+        allowDenyItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+
+        m_browserUi->sitePermissionsTable->setItem(row, 0, urlItem);
+        m_browserUi->sitePermissionsTable->setItem(row, 1, allowDenyItem);
+        m_browserUi->sitePermissionsTable->item(row, 1)->setTextAlignment(Qt::AlignCenter | Qt::AlignHCenter);
+        ++row;
+    }
+}
+
+void EditEntryWidget::sitePermissionSelectionChanged()
+{
+    const auto currentItem = m_browserUi->sitePermissionsTable->currentIndex();
+    if (!currentItem.isValid()) {
+        m_browserUi->allowDenyButton->setEnabled(false);
+        m_browserUi->removeSiteButton->setEnabled(false);
+        m_browserUi->editSiteButton->setEnabled(false);
+        return;
+    }
+
+    const auto currentSite = m_sitePermissions.at(currentItem.row());
+    m_browserUi->allowDenyButton->setText(currentSite.second ? tr("Deny") : tr("Allow"));
+    m_browserUi->allowDenyButton->setEnabled(true);
+    m_browserUi->removeSiteButton->setEnabled(true);
+    m_browserUi->editSiteButton->setEnabled(true);
+}
+
+void EditEntryWidget::allowDenyChangedForSite()
+{
+    const auto currentItem = m_browserUi->sitePermissionsTable->currentIndex();
+    if (!currentItem.isValid()) {
+        return;
+    }
+
+    const auto currentSite = m_sitePermissions.at(currentItem.row());
+    const auto newValue = !currentSite.second;
+
+    m_sitePermissions.replace(currentItem.row(), qMakePair(currentSite.first, newValue));
+    m_browserUi->allowDenyButton->setText(newValue ? tr("Deny") : tr("Allow"));
+
+    updateSitePermissionsTable();
+    updateBrowserModified();
+}
+
+void EditEntryWidget::removeCurrentSite()
+{
+    const auto index = m_browserUi->sitePermissionsTable->currentIndex();
+    if (index.isValid()) {
+        const auto result = MessageBox::question(this,
+                                                 tr("Confirm Removal"),
+                                                 tr("Are you sure you want to remove this site?"),
+                                                 MessageBox::Remove | MessageBox::Cancel,
+                                                 MessageBox::Cancel);
+        if (result != MessageBox::Remove) {
+            return;
+        }
+
+        m_sitePermissions.removeAt(index.row());
+        if (m_sitePermissions.isEmpty()) {
+            m_browserUi->allowDenyButton->setEnabled(false);
+            m_browserUi->removeSiteButton->setEnabled(false);
+            m_browserUi->editSiteButton->setEnabled(false);
+        }
+
+        updateSitePermissionsTable();
+        updateBrowserModified();
+    }
+}
+
+void EditEntryWidget::editSite()
+{
+    const auto currentItem = m_browserUi->sitePermissionsTable->currentItem();
+    if (!currentItem) {
+        return;
+    }
+
+    m_browserUi->sitePermissionsTable->editItem(currentItem);
+}
+
+void EditEntryWidget::editSiteFinished(QTableWidgetItem* item)
+{
+    if (item->column() == 0 && item->row() <= m_sitePermissions.size()) {
+        const auto currentSite = m_sitePermissions.at(item->row());
+        if (currentSite.first != item->text()) {
+            m_sitePermissions.replace(item->row(), qMakePair(item->text(), currentSite.second));
+
+            updateSitePermissionsTable();
+            updateBrowserModified();
+        }
+    }
 }
 #endif
 
@@ -557,6 +742,8 @@ void EditEntryWidget::setupEntryUpdate()
         connect(m_browserUi->addURLButton, SIGNAL(toggled(bool)), SLOT(setModified()));
         connect(m_browserUi->removeURLButton, SIGNAL(toggled(bool)), SLOT(setModified()));
         connect(m_browserUi->editURLButton, SIGNAL(toggled(bool)), SLOT(setModified()));
+        connect(m_browserUi->allowDenyButton, SIGNAL(toggled(bool)), SLOT(setModified()));
+        connect(m_browserUi->removeSiteButton, SIGNAL(toggled(bool)), SLOT(setModified()));
     }
 #endif
 }
@@ -1124,6 +1311,7 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
         }
     }
 
+    initializeSitePermissionsTable();
     setPageHidden(m_browserWidget, !config()->get(Config::Browser_Enabled).toBool());
 #endif
 
