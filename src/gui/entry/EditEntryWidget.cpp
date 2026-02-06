@@ -246,6 +246,7 @@ void EditEntryWidget::setupAdvanced()
     connect(m_advancedUi->removeAttributeButton, SIGNAL(clicked()), SLOT(removeCurrentAttribute()));
     connect(m_advancedUi->protectAttributeButton, SIGNAL(toggled(bool)), SLOT(protectCurrentAttribute(bool)));
     connect(m_advancedUi->revealAttributeButton, SIGNAL(clicked(bool)), SLOT(toggleCurrentAttributeVisibility()));
+    connect(m_advancedUi->copyTextButton, SIGNAL(clicked(bool)), SLOT(copyAttributeText()));
     connect(m_advancedUi->attributesView->selectionModel(),
             SIGNAL(currentChanged(QModelIndex,QModelIndex)),
             SLOT(updateCurrentAttribute()));
@@ -995,6 +996,7 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
     m_advancedUi->addAttributeButton->setEnabled(!m_history);
     m_advancedUi->editAttributeButton->setEnabled(false);
     m_advancedUi->removeAttributeButton->setEnabled(false);
+    m_advancedUi->copyTextButton->setEnabled(false);
     m_advancedUi->attributesEdit->setReadOnly(m_history);
     QAbstractItemView::EditTriggers editTriggers;
     if (m_history) {
@@ -1495,12 +1497,15 @@ void EditEntryWidget::displayAttribute(QModelIndex index, bool showProtected)
         m_advancedUi->protectAttributeButton->setEnabled(!m_history);
         m_advancedUi->editAttributeButton->setEnabled(!m_history);
         m_advancedUi->removeAttributeButton->setEnabled(!m_history);
+
+        m_advancedUi->copyTextButton->setEnabled(true);
     } else {
         m_advancedUi->attributesEdit->setPlainText("");
         m_advancedUi->attributesEdit->setEnabled(false);
         m_advancedUi->revealAttributeButton->setEnabled(false);
         m_advancedUi->protectAttributeButton->setChecked(false);
         m_advancedUi->protectAttributeButton->setEnabled(false);
+        m_advancedUi->copyTextButton->setEnabled(false);
         m_advancedUi->editAttributeButton->setEnabled(false);
         m_advancedUi->removeAttributeButton->setEnabled(false);
     }
@@ -1543,6 +1548,22 @@ void EditEntryWidget::toggleCurrentAttributeVisibility()
         protectCurrentAttribute(true);
         m_advancedUi->revealAttributeButton->setText(tr("Reveal"));
     }
+}
+
+void EditEntryWidget::copyAttributeText()
+{
+    QString value;
+    if (m_advancedUi->attributesEdit->isEnabled()) {
+        value = m_advancedUi->attributesEdit->toPlainText();
+    } else {
+        QModelIndex index = m_advancedUi->attributesView->currentIndex();
+        if (index.isValid()) {
+            QString key = m_attributesModel->keyByIndex(index);
+            value = m_entryAttributes->value(key);
+        }
+    }
+
+    clipboard()->setText(value);
 }
 
 void EditEntryWidget::updateAutoTypeEnabled()

@@ -3151,6 +3151,14 @@ Would you like to correct it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy text into clipboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Attachments</source>
         <translation type="unfinished"></translation>
     </message>
