@@ -294,7 +294,9 @@ void TestPasskeys::testCreatingAttestationObjectWithEC()
                 "am\x19Y\x03\xA6P*\xCA"
                 "1\xC4\x95\xA8i\xE5\xF0\x87\xE5\xD4\xB8"
                 "2\xCD\b\x85\xDD\"X \xE2\xEE\x7F\xE9\x0F\x0E\xE9\x1D\x07\x83J\x03\t\xDB"
-                "B$\xB1\x0B\xD3%\xFF\x18""2\xE1S\x99\xB7\x1D""B\x04\xE7\x83"));
+                "B$\xB1\x0B\xD3%\xFF\x18"
+                "2\xE1S\x99\xB7\x1D"
+                "B\x04\xE7\x83"));
 
     // Double check that the result can be decoded
     BrowserCbor browserCbor;
