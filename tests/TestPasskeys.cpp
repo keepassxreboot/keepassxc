@@ -77,7 +77,7 @@ const QString PublicKeyCredential = R"(
         "id": "yrzFJ5lwcpTwYMOdXSmxF5b5cYQlqBMzbbU_d-oFLO8",
         "rawId": "cabcc52799707294f060c39d5d29b11796f9718425a813336db53f77ea052cef",
         "response": {
-            "attestationObject": "o2NmbXRkbm9uZWdhdHRTdG10oGhhdXRoRGF0YVikdKbqkhPJnC90siSSsyDPQCYqlMGpUKA5fyklC2CEHvBFAAAAAP2xQbJdhEQ-ijVGmMIFpQIAIMq8xSeZcHKU8GDDnV0psReW-XGEJagTM221P3fqBSzvpQECAyYgASFYIHK1iVimeR02UYipyiEKrKhhfhJRMew8EbDWGKtMZ2wUIlggbtZ70X11SLx17QFDWVAR3_qqk5OqrRS--Whc7hyw9YU",
+            "attestationObject": "o2NmbXRkbm9uZWdhdHRTdG10oGhhdXRoRGF0YVikdKbqkhPJnC90siSSsyDPQCYqlMGpUKA5fyklC2CEHvBNAAAAAP2xQbJdhEQ-ijVGmMIFpQIAIMq8xSeZcHKU8GDDnV0psReW-XGEJagTM221P3fqBSzvpQECAyYgASFYIHK1iVimeR02UYipyiEKrKhhfhJRMew8EbDWGKtMZ2wUIlggbtZ70X11SLx17QFDWVAR3_qqk5OqrRS--Whc7hyw9YU",
             "clientDataJSON": "eyJ0eXBlIjoid2ViYXV0aG4uY3JlYXRlIiwiY2hhbGxlbmdlIjoibFZlSHpWeFdzcjhNUXhNa1pGMHRpNkZYaGRnTWxqcUt6Z0EtcV96azJNbmlpM2VKNDdWRjk3c3FVb1lrdFZDODVXQVoxdUlBU20tYV9sREZad3NMZnciLCJvcmlnaW4iOiJodHRwczovL3dlYmF1dGhuLmlvIiwiY3Jvc3NPcmlnaW4iOmZhbHNlfQ"
         },
         "type": "public-key"
@@ -285,13 +285,16 @@ void TestPasskeys::testCreatingAttestationObjectWithEC()
         result,
         QString("\xA3"
                 "cfmtdnonegattStmt\xA0hauthDataX\xA4t\xA6\xEA\x92\x13\xC9\x9C/t\xB2$\x92\xB3 \xCF@&*\x94\xC1\xA9P\xA0"
-                "9\x7F)%\x0B`\x84\x1E\xF0"
-                "E\x00\x00\x00\x01\x01\x02\x03\x04\x05\x06\x07\b\x01\x02\x03\x04\x05\x06\x07\b\x00 \x8B\xB0\xCA"
-                "6\x17\xD6\xDE\x01\x11|\xEA\x94\r\xA0R\xC0\x80_\xF3r\xFBr\xB5\x02\x03:"
-                "\xBAr\x0Fi\x81\xFE\xA5\x01\x02\x03& \x01!X "
-                "e\xE2\xF2\x1F:cq\xD3G\xEA\xE0\xF7\x1F\xCF\xFA\\\xABO\xF6\x86\x88\x80\t\xAE\x81\x8BT\xB2\x9B\x15\x85~"
-                "\"X \\\x8E\x1E@\xDB\x97T-\xF8\x9B\xB0\xAD"
-                "5\xDC\x12^\xC3\x95\x05\xC6\xDF^\x03\xCB\xB4Q\x91\xFF|\xDB\x94\xB7"));
+                "9\x7F)%\x0B`\x84\x1E\xF0M\x00\x00\x00\x00\xFD\xB1"
+                "A\xB2]\x84"
+                "D>\x8A"
+                "5F\x98\xC2\x05\xA5\x02\x00 \xCA\xBC\xC5'\x99pr\x94\xF0`\xC3\x9D])\xB1\x17\x96\xF9q\x84%\xA8\x13"
+                "3m\xB5?w\xEA\x05,\xEF\xA5\x01\x02\x03& \x01!X \x06\xEC\xAF"
+                "4[b\x91"
+                "am\x19Y\x03\xA6P*\xCA"
+                "1\xC4\x95\xA8i\xE5\xF0\x87\xE5\xD4\xB8"
+                "2\xCD\b\x85\xDD\"X \xE2\xEE\x7F\xE9\x0F\x0E\xE9\x1D\x07\x83J\x03\t\xDB"
+                "B$\xB1\x0B\xD3%\xFF\x18""2\xE1S\x99\xB7\x1D""B\x04\xE7\x83"));
 
     // Double check that the result can be decoded
     BrowserCbor browserCbor;

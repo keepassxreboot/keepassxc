@@ -172,7 +172,7 @@ QByteArray BrowserPasskeys::buildAttestationObject(const QJsonObject& credential
 
     // Use default flags
     const auto flags = setFlagsFromJson(QJsonObject(
-        {{"ED", !extensions.isEmpty()}, {"AT", true}, {"BS", false}, {"BE", false}, {"UV", true}, {"UP", true}}));
+        {{"ED", !extensions.isEmpty()}, {"AT", true}, {"BS", false}, {"BE", true}, {"UV", true}, {"UP", true}}));
     result.append(flags);
 
     // Signature counter (not supported, always 0
