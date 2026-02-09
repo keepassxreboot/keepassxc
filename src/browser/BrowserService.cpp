@@ -654,6 +654,7 @@ QJsonObject BrowserService::showPasskeysRegisterPrompt(const QJsonObject& public
     const auto username = credentialCreationOptions["user"].toObject()["name"].toString();
     const auto user = credentialCreationOptions["user"].toObject();
     const auto userId = user["id"].toString();
+    const auto prfSecret = credentialCreationOptions["prfSecret"].toString();
 
     // Parse excludeCredentialDescriptorList
     if (!excludeCredentials.isEmpty() && isPasskeyCredentialExcluded(excludeCredentials, rpId, keyList)) {
@@ -702,7 +703,8 @@ QJsonObject BrowserService::showPasskeysRegisterPrompt(const QJsonObject& public
                                   username,
                                   publicKeyCredentials.credentialId,
                                   userId,
-                                  publicKeyCredentials.key);
+                                  publicKeyCredentials.key,
+                                  prfSecret);
             }
         } else {
             // Handle new/existing group
@@ -718,7 +720,8 @@ QJsonObject BrowserService::showPasskeysRegisterPrompt(const QJsonObject& public
                               username,
                               publicKeyCredentials.credentialId,
                               userId,
-                              publicKeyCredentials.key);
+                              publicKeyCredentials.key,
+                              prfSecret);
         }
 
         hideWindow();
@@ -781,11 +784,19 @@ QJsonObject BrowserService::showPasskeysAuthenticationPrompt(const QJsonObject& 
                 ? selectedEntry->attributes()->value(EntryAttributes::KPEX_PASSKEY_FLAG_BS) == "1"
                       || selectedEntry->attributes()->value(EntryAttributes::KPEX_PASSKEY_FLAG_BS) == TRUE_STR
                 : DEFAULT_BS_FLAG;
+        const auto prfSecret = selectedEntry->attributes()->value(EntryAttributes::KPEX_PASSKEY_PRF);
 
+        // Handle PRF extension
+        QString newPrfSecret;
         auto publicKeyCredential = browserPasskeys()->buildGetPublicKeyCredential(
-            assertionOptions, credentialId, userHandle, privateKeyPem, beFlag, bsFlag);
+            assertionOptions, credentialId, userHandle, privateKeyPem, prfSecret, &newPrfSecret, beFlag, bsFlag);
         if (publicKeyCredential.isEmpty()) {
             return getPasskeyError(ERROR_PASSKEYS_UNKNOWN_ERROR);
+        }
+
+        // If a new secret was generated, store it to the entry
+        if (!newPrfSecret.isEmpty()) {
+            selectedEntry->attributes()->set(EntryAttributes::KPEX_PASSKEY_PRF, newPrfSecret, true);
         }
 
         return publicKeyCredential;
@@ -803,7 +814,8 @@ void BrowserService::addPasskeyToGroup(const QSharedPointer<Database>& db,
                                        const QString& username,
                                        const QString& credentialId,
                                        const QString& userHandle,
-                                       const QString& privateKey)
+                                       const QString& privateKey,
+                                       const QString& prfSecret)
 {
     // If no group provided, use the default browser group of the selected database
     if (!group) {
@@ -821,7 +833,7 @@ void BrowserService::addPasskeyToGroup(const QSharedPointer<Database>& db,
     entry->setUrl(url);
     entry->setIcon(KEEPASSXCBROWSER_PASSKEY_ICON);
 
-    addPasskeyToEntry(entry, rpId, rpName, username, credentialId, userHandle, privateKey);
+    addPasskeyToEntry(entry, rpId, rpName, username, credentialId, userHandle, privateKey, prfSecret);
 
     // Remove blank entry history
     entry->removeHistoryItems(entry->historyItems());
@@ -833,7 +845,8 @@ void BrowserService::addPasskeyToEntry(Entry* entry,
                                        const QString& username,
                                        const QString& credentialId,
                                        const QString& userHandle,
-                                       const QString& privateKey)
+                                       const QString& privateKey,
+                                       const QString& prfSecret)
 {
     // Reserved for future use
     Q_UNUSED(rpName)
@@ -865,6 +878,9 @@ void BrowserService::addPasskeyToEntry(Entry* entry,
     entry->attributes()->set(EntryAttributes::KPEX_PASSKEY_USER_HANDLE, userHandle, true);
     entry->attributes()->set(EntryAttributes::KPEX_PASSKEY_FLAG_BE, "1");
     entry->attributes()->set(EntryAttributes::KPEX_PASSKEY_FLAG_BS, "1");
+    if (!prfSecret.isEmpty()) {
+        entry->attributes()->set(EntryAttributes::KPEX_PASSKEY_PRF, prfSecret, true);
+    }
     entry->addTag(tr("Passkey"));
 
     entry->endUpdate();

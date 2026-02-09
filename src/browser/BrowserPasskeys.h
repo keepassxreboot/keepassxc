@@ -90,6 +90,8 @@ public:
                                             const QString& credentialId,
                                             const QString& userHandle,
                                             const QString& privateKeyPem,
+                                            const QString& prfSecret,
+                                            QString* newPrfSecret,
                                             const bool beFlag = DEFAULT_BE_FLAG,
                                             const bool bsFlag = DEFAULT_BE_FLAG);
 

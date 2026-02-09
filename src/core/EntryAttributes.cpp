@@ -48,6 +48,7 @@ const QString EntryAttributes::KPEX_PASSKEY_PRIVATE_KEY_START = QStringLiteral("
 const QString EntryAttributes::KPEX_PASSKEY_PRIVATE_KEY_END = QStringLiteral("-----END PRIVATE KEY-----");
 const QString EntryAttributes::KPEX_PASSKEY_FLAG_BE = QStringLiteral("KPEX_PASSKEY_FLAG_BE");
 const QString EntryAttributes::KPEX_PASSKEY_FLAG_BS = QStringLiteral("KPEX_PASSKEY_FLAG_BS");
+const QString EntryAttributes::KPEX_PASSKEY_PRF = QStringLiteral("KPEX_PASSKEY_PRF");
 
 // For compatibility with StrongBox
 const QString EntryAttributes::KPEX_PASSKEY_GENERATED_USER_ID = QStringLiteral("KPEX_PASSKEY_GENERATED_USER_ID");

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -169,6 +169,27 @@ QByteArray BrowserCbor::cborEncodeExtensionData(const QJsonObject& extensions) c
 
         writer.endArray();
         writer.endArray();
+    }
+
+    if (extensions.contains("prf")) {
+        const auto prfObject = extensions["prf"].toObject();
+        const auto salt = prfObject["eval"]["first"].toString();
+
+        if (salt.isEmpty()) {
+            writer.append("prf");
+            writer.startMap(1);
+            writer.append("enabled");
+            writer.append(true);
+            writer.endMap();
+        } else {
+            writer.append("prf");
+            writer.startMap(1);
+            writer.append("results");
+            writer.startMap(1);
+            writer.append("first");
+            writer.append(browserMessageBuilder()->getArrayFromBase64(salt));
+            writer.endMap();
+        }
     }
 
     writer.endMap();
