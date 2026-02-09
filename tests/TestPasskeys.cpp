@@ -92,6 +92,11 @@ const QString PublicKeyCredentialRequestOptions = R"(
                 "id": "yrzFJ5lwcpTwYMOdXSmxF5b5cYQlqBMzbbU_d-oFLO8",
                 "transports": ["internal"],
                 "type": "public-key"
+            },
+            {
+                "id": "e02eZ9lPp0UdkF4vGRO4-NxlhWBkL1FCmsmb1tTfRyE",
+                "transports": ["internal"],
+                "type": "public-key"
             }
         ],
         "challenge": "9z36vTfQTL95Lf7WnZgyte7ohGeF-XRiLxkL-LuGU1zopRmMIUA1LVwzGpyIm1fOBn1QnRa0QH27ADAaJGHysQ",
@@ -435,7 +440,9 @@ void TestPasskeys::testGet()
         browserPasskeysClient()->getAssertionOptions(publicKeyCredentialRequestOptions, origin, &assertionOptions);
     QVERIFY(assertionResult == 0);
 
-    auto publicKeyCredential = browserPasskeys()->buildGetPublicKeyCredential(assertionOptions, id, {}, privateKeyPem);
+    QString prfSecret;
+    auto publicKeyCredential =
+        browserPasskeys()->buildGetPublicKeyCredential(assertionOptions, id, {}, privateKeyPem, {}, &prfSecret);
     QVERIFY(!publicKeyCredential.isEmpty());
     QCOMPARE(publicKeyCredential["id"].toString(), id);
 
@@ -536,7 +543,8 @@ void TestPasskeys::testEntry()
                                         QString("username"),
                                         QString("userId"),
                                         QString("userHandle"),
-                                        QString("privateKey"));
+                                        QString("privateKey"),
+                                        QString());
 
     QVERIFY(entry->hasPasskey());
 }
@@ -704,4 +712,97 @@ void TestPasskeys::testAllowLocalhostWithPasskeys()
     QVERIFY(passkeyUtils()->isOriginAllowedWithLocalhost(true, "http://test.localhost"));
     QVERIFY(!passkeyUtils()->isOriginAllowedWithLocalhost(false, "http://test.localhost"));
     QVERIFY(!passkeyUtils()->isOriginAllowedWithLocalhost(true, "http://localhost.example.com"));
+}
+
+void TestPasskeys::testPrf()
+{
+    // https://w3c.github.io/webauthn/#test-vectors-extensions-prf
+    const auto prfEvalFirst =
+        browserMessageBuilder()->getArrayFromHexString("576562417574686e20505246207465737420766563746f727302");
+    const auto prfEvalSecond =
+        browserMessageBuilder()->getArrayFromHexString("576562417574686e20505246207465737420766563746f727303");
+    const auto derivedSaltFirst = passkeyUtils()->derivePrfSalt(prfEvalFirst);
+    QCOMPARE(derivedSaltFirst.toHex(), QString("527413ebb48293772df30f031c5ac4650c7de14bf9498671ae163447b6a772b3"));
+    const auto derivedSaltSecond = passkeyUtils()->derivePrfSalt(prfEvalSecond);
+    QCOMPARE(derivedSaltSecond.toHex(), QString("d68ac03329a10ee5e0ec834492bb9a96a0e547baf563bf78ccbe8789b22e776b"));
+
+    // Compute PRF values directly
+    const auto secret = browserMessageBuilder()->getArrayFromHexString(
+        "437e065e723a98b2f08f39d8baf7c53ecb3c363c5e5104bdaaf5d5ca2e028154");
+    auto prfResult = passkeyUtils()->computePrfValue(secret, prfEvalFirst);
+    QCOMPARE(prfResult.toHex(), QString("3c33e07d202c3b029cc21f1722767021bf27d595933b3d2b6a1b9d5dddc77fae"));
+    prfResult = passkeyUtils()->computePrfValue(secret, prfEvalSecond);
+    QCOMPARE(prfResult.toHex(), QString("a62a8773b19cda90d7ed4ef72a80a804320dbd3997e2f663805ad1fd3293d50b"));
+
+    const auto evalByCredentialFirst = browserMessageBuilder()->getBase64FromArray(QByteArray::fromHex("090a0b0c"));
+    const auto evalFirst = browserMessageBuilder()->getBase64FromArray(prfEvalFirst);
+    const auto evalSecond = browserMessageBuilder()->getBase64FromArray(prfEvalSecond);
+    const auto publicKeyCredentialRequestOptions =
+        browserMessageBuilder()->getJsonObject(PublicKeyCredentialRequestOptions.toUtf8());
+    QJsonObject prfObject{
+        {"prf",
+         QJsonObject{{"eval", QJsonObject{{"first", evalFirst}, {"second", evalSecond}}},
+                     {"evalByCredential",
+                      QJsonObject{{"e02eZ9lPp0UdkF4vGRO4-NxlhWBkL1FCmsmb1tTfRyE",
+                                   QJsonObject{{"first", evalByCredentialFirst}}}}}}},
+    };
+    publicKeyCredentialRequestOptions["extensions"] = prfObject;
+
+    // Should use values from "eval"
+    auto allowCredentials =
+        passkeyUtils()->getAllowedCredentialsFromAssertionOptions(publicKeyCredentialRequestOptions);
+    const auto secretBase64 = browserMessageBuilder()->getBase64FromArray(secret);
+    auto result = passkeyUtils()->getPrfResponse(prfObject, secretBase64, allowCredentials);
+    QCOMPARE(
+        browserMessageBuilder()->getArrayFromBase64(result.response["results"].toObject()["first"].toString()).toHex(),
+        QString("3c33e07d202c3b029cc21f1722767021bf27d595933b3d2b6a1b9d5dddc77fae"));
+    QCOMPARE(
+        browserMessageBuilder()->getArrayFromBase64(result.response["results"].toObject()["second"].toString()).toHex(),
+        QString("a62a8773b19cda90d7ed4ef72a80a804320dbd3997e2f663805ad1fd3293d50b"));
+
+    // Initialize object for evalByCredential
+    QJsonObject extensionObject{
+        {"prf",
+         QJsonObject{
+             {"evalByCredential",
+              QJsonObject{{"e02eZ9lPp0UdkF4vGRO4-NxlhWBkL1FCmsmb1tTfRyE",
+                           QJsonObject{{"first", evalByCredentialFirst}, {"second", evalByCredentialFirst}}}}}}},
+    };
+    publicKeyCredentialRequestOptions["extensions"] = extensionObject;
+    auto checkResult = passkeyUtils()->checkPrfEvalByCredential(publicKeyCredentialRequestOptions, extensionObject);
+    QVERIFY(checkResult == PASSKEYS_SUCCESS);
+
+    // Test PRF retrieval with evalByCredential
+    allowCredentials = passkeyUtils()->getAllowedCredentialsFromAssertionOptions(publicKeyCredentialRequestOptions);
+    result = passkeyUtils()->getPrfResponse(extensionObject, secret, allowCredentials);
+    QCOMPARE(
+        browserMessageBuilder()->getArrayFromBase64(result.response["results"].toObject()["first"].toString()).toHex(),
+        QString("36d93a84e873612b0f6c6048601777c5d77ff7f98e187fab7f0dda3197fc9c01"));
+    QCOMPARE(
+        browserMessageBuilder()->getArrayFromBase64(result.response["results"].toObject()["second"].toString()).toHex(),
+        QString("36d93a84e873612b0f6c6048601777c5d77ff7f98e187fab7f0dda3197fc9c01"));
+
+    // evalByCredential does not match credential ID
+    const auto extensionObjectNoMatch = QJsonObject{
+        {"prf",
+         QJsonObject{{"evalByCredential",
+                      QJsonObject{{"yrzFJ5lwcpTwYMOdXSmxF5b5cYQlqBMzbbU_d-oFLO7",
+                                   QJsonObject{{"first", evalByCredentialFirst}}}}}}},
+    };
+    checkResult = passkeyUtils()->checkPrfEvalByCredential(publicKeyCredentialRequestOptions, extensionObjectNoMatch);
+    QVERIFY(checkResult == ERROR_PASSKEYS_EVAL_BY_CREDENTIAL_NOT_FOUND);
+
+    // allowCredentials is empty, evalByCredentials is not
+    const QString emptyAllowCredentials = R"(
+        {
+            "allowCredentials": [],
+            "challenge": "9z36vTfQTL95Lf7WnZgyte7ohGeF-XRiLxkL-LuGU1zopRmMIUA1LVwzGpyIm1fOBn1QnRa0QH27ADAaJGHysQ",
+            "rpId": "webauthn.io",
+            "timeout": 60000,
+            "userVerification": "required"
+        }
+    )";
+    const auto emptyAllowCredentialsObject = browserMessageBuilder()->getJsonObject(emptyAllowCredentials.toUtf8());
+    checkResult = passkeyUtils()->checkPrfEvalByCredential(emptyAllowCredentialsObject, extensionObject);
+    QVERIFY(checkResult == ERROR_PASSKEYS_EVAL_BY_CREDENTIAL_NOT_EMPTY);
 }
