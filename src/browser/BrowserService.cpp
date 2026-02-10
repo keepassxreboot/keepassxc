@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
  *  Copyright (C) 2013 Francois Ferrand
  *
@@ -775,8 +775,16 @@ QJsonObject BrowserService::showPasskeysAuthenticationPrompt(const QJsonObject& 
         const auto credentialId = passkeyUtils()->getCredentialIdFromEntry(selectedEntry);
         const auto userHandle = selectedEntry->attributes()->value(EntryAttributes::KPEX_PASSKEY_USER_HANDLE);
 
-        auto publicKeyCredential =
-            browserPasskeys()->buildGetPublicKeyCredential(assertionOptions, credentialId, userHandle, privateKeyPem);
+        // Get BE and BS flags if present
+        const auto beFlag = selectedEntry->attributes()->hasKey(EntryAttributes::KPEX_PASSKEY_FLAG_BE)
+                                ? selectedEntry->attributes()->value(EntryAttributes::KPEX_PASSKEY_FLAG_BE) == TRUE_STR
+                                : DEFAULT_BE_FLAG;
+        const auto bsFlag = selectedEntry->attributes()->hasKey(EntryAttributes::KPEX_PASSKEY_FLAG_BS)
+                                ? selectedEntry->attributes()->value(EntryAttributes::KPEX_PASSKEY_FLAG_BS) == TRUE_STR
+                                : DEFAULT_BS_FLAG;
+
+        auto publicKeyCredential = browserPasskeys()->buildGetPublicKeyCredential(
+            assertionOptions, credentialId, userHandle, privateKeyPem, beFlag, bsFlag);
         if (publicKeyCredential.isEmpty()) {
             return getPasskeyError(ERROR_PASSKEYS_UNKNOWN_ERROR);
         }
@@ -856,6 +864,8 @@ void BrowserService::addPasskeyToEntry(Entry* entry,
     entry->attributes()->set(EntryAttributes::KPEX_PASSKEY_PRIVATE_KEY_PEM, privateKey, true);
     entry->attributes()->set(EntryAttributes::KPEX_PASSKEY_RELYING_PARTY, rpId);
     entry->attributes()->set(EntryAttributes::KPEX_PASSKEY_USER_HANDLE, userHandle, true);
+    entry->attributes()->set(EntryAttributes::KPEX_PASSKEY_FLAG_BE, TRUE_STR);
+    entry->attributes()->set(EntryAttributes::KPEX_PASSKEY_FLAG_BS, TRUE_STR);
     entry->addTag(tr("Passkey"));
 
     entry->endUpdate();

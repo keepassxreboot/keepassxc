@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -77,7 +77,7 @@ const QString PublicKeyCredential = R"(
         "id": "yrzFJ5lwcpTwYMOdXSmxF5b5cYQlqBMzbbU_d-oFLO8",
         "rawId": "cabcc52799707294f060c39d5d29b11796f9718425a813336db53f77ea052cef",
         "response": {
-            "attestationObject": "o2NmbXRkbm9uZWdhdHRTdG10oGhhdXRoRGF0YVikdKbqkhPJnC90siSSsyDPQCYqlMGpUKA5fyklC2CEHvBNAAAAAP2xQbJdhEQ-ijVGmMIFpQIAIMq8xSeZcHKU8GDDnV0psReW-XGEJagTM221P3fqBSzvpQECAyYgASFYIHK1iVimeR02UYipyiEKrKhhfhJRMew8EbDWGKtMZ2wUIlggbtZ70X11SLx17QFDWVAR3_qqk5OqrRS--Whc7hyw9YU",
+            "attestationObject": "o2NmbXRkbm9uZWdhdHRTdG10oGhhdXRoRGF0YVikdKbqkhPJnC90siSSsyDPQCYqlMGpUKA5fyklC2CEHvBdAAAAAP2xQbJdhEQ-ijVGmMIFpQIAIMq8xSeZcHKU8GDDnV0psReW-XGEJagTM221P3fqBSzvpQECAyYgASFYIHK1iVimeR02UYipyiEKrKhhfhJRMew8EbDWGKtMZ2wUIlggbtZ70X11SLx17QFDWVAR3_qqk5OqrRS--Whc7hyw9YU",
             "clientDataJSON": "eyJ0eXBlIjoid2ViYXV0aG4uY3JlYXRlIiwiY2hhbGxlbmdlIjoibFZlSHpWeFdzcjhNUXhNa1pGMHRpNkZYaGRnTWxqcUt6Z0EtcV96azJNbmlpM2VKNDdWRjk3c3FVb1lrdFZDODVXQVoxdUlBU20tYV9sREZad3NMZnciLCJvcmlnaW4iOiJodHRwczovL3dlYmF1dGhuLmlvIiwiY3Jvc3NPcmlnaW4iOmZhbHNlfQ"
         },
         "type": "public-key"
@@ -185,6 +185,8 @@ void TestPasskeys::testDecodeResponseData()
     QCOMPARE(authData["rpIdHash"].toString(), QString("dKbqkhPJnC90siSSsyDPQCYqlMGpUKA5fyklC2CEHvA"));
     QCOMPARE(flags["AT"], true);
     QCOMPARE(flags["UP"], true);
+    QCOMPARE(flags["BE"], true);
+    QCOMPARE(flags["BS"], true);
     QCOMPARE(publicKey["1"], 2);
     QCOMPARE(publicKey["3"], -7);
     QCOMPARE(publicKey["-1"], 1);
@@ -285,7 +287,7 @@ void TestPasskeys::testCreatingAttestationObjectWithEC()
         result,
         QString("\xA3"
                 "cfmtdnonegattStmt\xA0hauthDataX\xA4t\xA6\xEA\x92\x13\xC9\x9C/t\xB2$\x92\xB3 \xCF@&*\x94\xC1\xA9P\xA0"
-                "9\x7F)%\x0B`\x84\x1E\xF0M\x00\x00\x00\x00\xFD\xB1"
+                "9\x7F)%\x0B`\x84\x1E\xF0]\x00\x00\x00\x00\xFD\xB1"
                 "A\xB2]\x84"
                 "D>\x8A"
                 "5F\x98\xC2\x05\xA5\x02\x00 \xCA\xBC\xC5'\x99pr\x94\xF0`\xC3\x9D])\xB1\x17\x96\xF9q\x84%\xA8\x13"
@@ -317,6 +319,8 @@ void TestPasskeys::testCreatingAttestationObjectWithEC()
     QCOMPARE(authData["rpIdHash"].toString(), QString("dKbqkhPJnC90siSSsyDPQCYqlMGpUKA5fyklC2CEHvA"));
     QCOMPARE(flags["AT"], true);
     QCOMPARE(flags["UP"], true);
+    QCOMPARE(flags["BE"], true);
+    QCOMPARE(flags["BS"], true);
     QCOMPARE(publicKey["1"], WebAuthnCoseKeyType::EC2);
     QCOMPARE(publicKey["3"], WebAuthnAlgorithms::ES256);
     QCOMPARE(publicKey["-1"], 1);
@@ -373,6 +377,8 @@ void TestPasskeys::testCreatingAttestationObjectWithRSA()
     QCOMPARE(authData["rpIdHash"].toString(), QString("dKbqkhPJnC90siSSsyDPQCYqlMGpUKA5fyklC2CEHvA"));
     QCOMPARE(flags["AT"], true);
     QCOMPARE(flags["UP"], true);
+    QCOMPARE(flags["BE"], true);
+    QCOMPARE(flags["BS"], true);
     QCOMPARE(publicKey["1"], WebAuthnCoseKeyType::RSA);
     QCOMPARE(publicKey["3"], WebAuthnAlgorithms::RS256);
     QCOMPARE(publicKey["-1"], predefinedModulus);
@@ -443,14 +449,14 @@ void TestPasskeys::testGet()
     QCOMPARE(publicKeyCredential["id"].toString(), id);
 
     auto response = publicKeyCredential["response"].toObject();
-    QCOMPARE(response["authenticatorData"].toString(), QString("dKbqkhPJnC90siSSsyDPQCYqlMGpUKA5fyklC2CEHvAFAAAAAA"));
+    QCOMPARE(response["authenticatorData"].toString(), QString("dKbqkhPJnC90siSSsyDPQCYqlMGpUKA5fyklC2CEHvAdAAAAAA"));
     QCOMPARE(response["clientDataJSON"].toString(),
              QString("eyJ0eXBlIjoid2ViYXV0aG4uZ2V0IiwiY2hhbGxlbmdlIjoiOXozNnZUZlFUTDk1TGY3V25aZ3l0ZTdvaEdlRi1YUmlMeGtML"
                      "Ux1R1Uxem9wUm1NSVVBMUxWd3pHcHlJbTFmT0JuMVFuUmEwUUgyN0FEQWFKR0h5c1EiLCJvcmlnaW4iOiJodHRwczovL3dlYm"
                      "F1dGhuLmlvIiwiY3Jvc3NPcmlnaW4iOmZhbHNlfQ"));
     QCOMPARE(
         response["signature"].toString(),
-        QString("MEYCIQCpbDaYJ4b2ofqWBxfRNbH3XCpsyao7Iui5lVuJRU9HIQIhAPl5moNZgJu5zmurkKK_P900Ct6wd3ahVIqCEqTeeRdE"));
+        QString("MEUCIQCvg3nXO2fiNK9ockxscgPtoM9_u6ERaW2-F1L99YasOAIgNhYOjPJyKJ-W8roV531kC59ss1USas7jy8TfRnbJLtg"));
 
     auto clientDataJson = response["clientDataJSON"].toString();
     auto clientDataByteArray = browserMessageBuilder()->getArrayFromBase64(clientDataJson);
