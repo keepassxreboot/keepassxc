@@ -18,8 +18,10 @@
 #ifndef KEEPASSX_AUTOFILL_UTILS_H
 #define KEEPASSX_AUTOFILL_UTILS_H
 
-#include <QString>
+#include "gui/UrlTools.h"
+
 #include <QRegularExpression>
+#include <QString>
 #include <QUrl>
 
 namespace AutoFillUtils
@@ -74,13 +76,19 @@ inline bool hostsMatch(const QString& requested, const QString& candidate)
         return true;
     }
 
-    // Only allow subdomain matching when the shorter side has at least one dot
-    // (i.e. is a real domain, not a bare TLD like "com")
-    if (requested.endsWith('.' + candidate)) {
-        return candidate.contains('.');
+    // IP addresses require exact match only (already handled above)
+    if (urlTools()->isIpAddress(requested) || urlTools()->isIpAddress(candidate)) {
+        return false;
     }
-    if (candidate.endsWith('.' + requested)) {
-        return requested.contains('.');
+
+    // Base domains must match (follows BrowserService::handleURL pattern)
+    if (urlTools()->getBaseDomainFromUrl(requested) != urlTools()->getBaseDomainFromUrl(candidate)) {
+        return false;
+    }
+
+    // Allow subdomain matching when one host ends with the other
+    if (requested.endsWith('.' + candidate) || candidate.endsWith('.' + requested)) {
+        return true;
     }
 
     return false;
