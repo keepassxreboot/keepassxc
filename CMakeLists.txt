@@ -475,7 +475,7 @@ if(WITH_COVERAGE)
     if(WITH_COVERAGE AND CMAKE_COMPILER_IS_CLANGXX)
         set(MAIN_BINARIES
                 "$<TARGET_FILE:${PROGNAME}>"
-                "$<TARGET_FILE:${PROGNAME}-cli>"
+                "$<TARGET_FILE:keepassxc-cli>"
                 "$<TARGET_FILE:keepassxc-proxy>")
         setup_target_for_coverage_llvm(
                 NAME coverage

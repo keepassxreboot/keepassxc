@@ -647,4 +647,3 @@ void ApplicationSettingsWidget::selectBackupDirectory()
             QDir(backupDirectory).filePath(config()->getDefault(Config::BackupFilePathPattern).toString()));
     }
 }
-

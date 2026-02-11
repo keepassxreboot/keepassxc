@@ -54,18 +54,18 @@ if (READLINE_FOUND)
     target_link_libraries(cli ${Readline_LIBRARY})
 endif()
 
-add_executable(${PROGNAME}-cli keepassxc-cli.cpp)
-target_link_libraries(${PROGNAME}-cli
+add_executable(keepassxc-cli keepassxc-cli.cpp)
+target_link_libraries(keepassxc-cli
         ${GPGERROR_LIBRARIES}
         cli
         keepassxc_core)
 
-install(TARGETS ${PROGNAME}-cli
+install(TARGETS keepassxc-cli
         BUNDLE DESTINATION . COMPONENT Runtime
         RUNTIME DESTINATION ${CLI_INSTALL_DIR} COMPONENT Runtime)
 
 if(WIN32)
-    target_sources(${PROGNAME}-cli
+    target_sources(keepassxc-cli
         PRIVATE keepassxc-cli.exe.manifest)
 
 #    install(CODE "include(BundleUtilities)
@@ -74,12 +74,13 @@ if(WIN32)
 endif()
 
 if(APPLE AND WITH_APP_BUNDLE)
-    add_custom_command(TARGET ${PROGNAME}-cli
+    set(CLI_APP_DIR "${CMAKE_BINARY_DIR}/src/${CLI_INSTALL_DIR}")
+
+    add_custom_command(TARGET keepassxc-cli
             POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy
-                $<TARGET_FILE:${PROGNAME}-cli>
-                ${CMAKE_BINARY_DIR}/src/$<CONFIG>/${PROGNAME}.app/Contents/MacOS/${PROGNAME}-cli
-            COMMENT "Copying ${PROGNAME}-cli into app bundle")
+            COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/keepassxc-cli ${CLI_APP_DIR}/keepassxc-cli
+            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/src
+            COMMENT "Copying keepassxc-cli into app bundle")
     set_property(GLOBAL APPEND PROPERTY
-        _MACDEPLOYQT_EXTRA_BINARIES "${CLI_INSTALL_DIR}/${PROGNAME}-cli")
+        _MACDEPLOYQT_EXTRA_BINARIES "${CLI_INSTALL_DIR}/keepassxc-cli")
 endif()

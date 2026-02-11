@@ -10,9 +10,8 @@ install(TARGETS keepassxc-autotype-cocoa
 if(WITH_APP_BUNDLE)
     add_custom_command(TARGET keepassxc-autotype-cocoa
             POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E copy
-                $<TARGET_FILE:keepassxc-autotype-cocoa>
-                ${CMAKE_BINARY_DIR}/src/$<CONFIG>/${PROGNAME}.app/Contents/PlugIns/libkeepassxc-autotype-cocoa.so
+            COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/libkeepassxc-autotype-cocoa.so ${PLUGIN_INSTALL_DIR}/libkeepassxc-autotype-cocoa.so
+            WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/src
             COMMENT "Copying autotype plugin into app bundle")
 
     set_property(GLOBAL APPEND PROPERTY
