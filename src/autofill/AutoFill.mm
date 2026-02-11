@@ -50,31 +50,6 @@
 
 Q_LOGGING_CATEGORY(lcAutoFill, "keepassxc.autofill")
 
-namespace
-{
-NSString* toNSString(const QString& value)
-{
-    if (value.isEmpty()) {
-        return @"";
-    }
-    return [NSString stringWithCharacters:reinterpret_cast<const unichar*>(value.constData()) length:value.size()];
-}
-
-QString fromNSString(NSString* value)
-{
-    if (!value) {
-        return {};
-    }
-
-    const char* buffer = [value UTF8String];
-    if (!buffer) {
-        return {};
-    }
-
-    return QString::fromUtf8(buffer);
-}
-}
-
 @class AutoFillHostAdapter;
 
 class AutoFillPrivate : public QObject
@@ -167,7 +142,7 @@ private:
         return;
     }
     void (^replyCopy)(NSArray<NSDictionary<NSString*, id>*>*) = [reply copy];
-    QString host = fromNSString(domain);
+    QString host = QString::fromNSString(domain);
     AutoFillPrivate* owner = self.owner;
     if (!owner) {
         replyCopy(@[]);
@@ -183,7 +158,7 @@ private:
         return;
     }
     void (^replyCopy)(NSDictionary<NSString*, id>*) = [reply copy];
-    QString identifier = fromNSString(recordIdentifier);
+    QString identifier = QString::fromNSString(recordIdentifier);
     AutoFillPrivate* owner = self.owner;
     if (!owner) {
         replyCopy(@{});
@@ -393,12 +368,12 @@ void AutoFillPrivate::refreshIdentityStore()
         auto identities = [NSMutableArray arrayWithCapacity:records.size()];
         for (const auto& record : records) {
             auto* serviceIdentifier = [[ASCredentialServiceIdentifier alloc]
-                initWithIdentifier:toNSString(record.domain)
+                initWithIdentifier:record.domain.toNSString()
                                type:ASCredentialServiceIdentifierTypeDomain];
             auto* identity = [[ASPasswordCredentialIdentity alloc]
                 initWithServiceIdentifier:serviceIdentifier
-                                     user:toNSString(record.username)
-                        recordIdentifier:toNSString(record.recordIdentifier)];
+                                     user:record.username.toNSString()
+                        recordIdentifier:record.recordIdentifier.toNSString()];
             [identities addObject:identity];
         }
 
@@ -418,7 +393,7 @@ void AutoFillPrivate::refreshIdentityStore()
                                                       } else if (error) {
                                                           qCWarning(lcAutoFill)
                                                               << "Unable to refresh AutoFill identities:"
-                                                              << fromNSString(error.localizedDescription);
+                                                              << QString::fromNSString(error.localizedDescription);
                                                       }
                                                   }];
         });
@@ -476,14 +451,14 @@ void AutoFillPrivate::connectToServiceIfNeeded()
 
     id<AutoFillXPCProtocol> remote =
         [m_serviceConnection remoteObjectProxyWithErrorHandler:^(NSError* error) {
-            qCWarning(lcAutoFill) << "AutoFill XPC service unavailable:" << fromNSString(error.localizedDescription);
+            qCWarning(lcAutoFill) << "AutoFill XPC service unavailable:" << QString::fromNSString(error.localizedDescription);
         }];
 
     [remote registerProvider:m_listener.endpoint
                    withReply:^(NSError* error) {
                        if (error) {
                            qCWarning(lcAutoFill) << "Failed to register AutoFill provider:"
-                                                 << fromNSString(error.localizedDescription);
+                                                 << QString::fromNSString(error.localizedDescription);
                            return;
                        }
                        qCDebug(lcAutoFill) << "Successfully registered AutoFill provider.";
@@ -729,14 +704,14 @@ NSDictionary<NSString*, id>* AutoFillPrivate::serializeCredential(const Credenti
     }
 
     NSMutableDictionary* dict = [NSMutableDictionary dictionary];
-    dict[AutoFillCredentialRecordIdentifierKey] = toNSString(record.recordIdentifier);
-    dict[AutoFillCredentialDomainKey] = toNSString(record.domain);
-    dict[AutoFillCredentialUsernameKey] = toNSString(record.username);
-    dict[AutoFillCredentialPasswordKey] = toNSString(record.password);
-    dict[AutoFillCredentialTitleKey] = toNSString(record.title);
-    dict[AutoFillCredentialUrlKey] = toNSString(record.url);
+    dict[AutoFillCredentialRecordIdentifierKey] = record.recordIdentifier.toNSString();
+    dict[AutoFillCredentialDomainKey] = record.domain.toNSString();
+    dict[AutoFillCredentialUsernameKey] = record.username.toNSString();
+    dict[AutoFillCredentialPasswordKey] = record.password.toNSString();
+    dict[AutoFillCredentialTitleKey] = record.title.toNSString();
+    dict[AutoFillCredentialUrlKey] = record.url.toNSString();
     if (!record.otp.isEmpty()) {
-        dict[AutoFillCredentialOtpKey] = toNSString(record.otp);
+        dict[AutoFillCredentialOtpKey] = record.otp.toNSString();
     }
     return dict;
 }
