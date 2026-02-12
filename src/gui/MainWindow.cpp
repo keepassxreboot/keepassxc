@@ -1038,7 +1038,11 @@ void MainWindow::updateMenuActionState()
     m_ui->actionGroupDownloadFavicons->setEnabled(groupSelected && groupHasEntries && !inRecycleBin);
 
     // Database Menu
-    m_ui->actionDatabaseSave->setEnabled(databaseUnlocked && m_ui->tabWidget->canSave());
+    bool enableSave = databaseUnlocked
+                      && (m_ui->tabWidget->canSave()
+                          || (dbWidget && dbWidget->database() && dbWidget->database()->hasNonDataChanges()
+                              && !config()->get(Config::AutoSaveNonDataChanges).toBool()));
+    m_ui->actionDatabaseSave->setEnabled(enableSave);
     m_ui->actionDatabaseSaveAs->setEnabled(databaseUnlocked);
     m_ui->actionDatabaseSaveBackup->setEnabled(databaseUnlocked);
     m_ui->actionDatabaseClose->setEnabled(dbWidget);
@@ -1091,7 +1095,12 @@ void MainWindow::updateWindowTitle()
         if (isModified && customWindowTitlePart.endsWith("*")) {
             customWindowTitlePart.remove(customWindowTitlePart.size() - 1, 1);
         }
-        m_ui->actionDatabaseSave->setEnabled(m_ui->tabWidget->canSave(tabWidgetIndex));
+        auto dbWidget = m_ui->tabWidget->databaseWidgetFromIndex(tabWidgetIndex);
+        bool enableSave = (dbWidget && !dbWidget->isLocked())
+                          && (m_ui->tabWidget->canSave(tabWidgetIndex)
+                              || (dbWidget->database() && dbWidget->database()->hasNonDataChanges()
+                                  && !config()->get(Config::AutoSaveNonDataChanges).toBool()));
+        m_ui->actionDatabaseSave->setEnabled(enableSave);
     } else if (stackedWidgetIndex == StackedWidgetIndex::SettingsScreen) {
         customWindowTitlePart = tr("Settings");
     } else if (stackedWidgetIndex == StackedWidgetIndex::PasswordGeneratorScreen) {

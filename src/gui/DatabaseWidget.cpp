@@ -1902,7 +1902,7 @@ void DatabaseWidget::onDatabaseNonDataChanged()
 {
     // Force mark the database modified if we are not auto-saving non-data changes
     if (!config()->get(Config::AutoSaveNonDataChanges).toBool()) {
-        m_db->markAsModified();
+        emit databaseNonDataChanged();
     }
 }
 
