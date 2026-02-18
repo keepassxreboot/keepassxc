@@ -46,7 +46,12 @@ bool KeeAgentSettings::operator==(const KeeAgentSettings& other) const
             && m_selectedType == other.m_selectedType
             && m_attachmentName == other.m_attachmentName
             && m_saveAttachmentToTempFile == other.m_saveAttachmentToTempFile
-            && m_fileName == other.m_fileName);
+            && m_fileName == other.m_fileName
+            && m_selectedCertificateType == other.m_selectedCertificateType
+            && m_attachmentNameCertificate == other.m_attachmentNameCertificate
+            && m_saveAttachmentCertificateToTempFile == other.m_saveAttachmentCertificateToTempFile
+            && m_fileNameCertificate == other.m_fileNameCertificate
+            && m_useCertificate == other.m_useCertificate);
     // clang-format on
 }
 
@@ -83,6 +88,11 @@ void KeeAgentSettings::reset()
     m_saveAttachmentToTempFile = false;
     m_fileName.clear();
     m_error.clear();
+    m_selectedCertificateType = QStringLiteral("file");
+    m_attachmentNameCertificate.clear();
+    m_saveAttachmentCertificateToTempFile = false;
+    m_fileNameCertificate.clear();
+    m_useCertificate = false;
 }
 
 /**
@@ -200,6 +210,61 @@ void KeeAgentSettings::setFileName(const QString& fileName)
     m_fileName = fileName;
 }
 
+const QString KeeAgentSettings::fileNameCertificateEnvSubst(QProcessEnvironment environment) const
+{
+    return Tools::envSubstitute(m_fileNameCertificate, environment);
+}
+
+bool KeeAgentSettings::useCertificate() const
+{
+    return m_useCertificate;
+}
+
+void KeeAgentSettings::setUseCertificate(bool useCertificate)
+{
+    m_useCertificate = useCertificate;
+}
+
+const QString KeeAgentSettings::selectedCertificateType() const
+{
+    return m_selectedCertificateType;
+}
+
+const QString KeeAgentSettings::attachmentNameCertificate() const
+{
+    return m_attachmentNameCertificate;
+}
+
+bool KeeAgentSettings::saveAttachmentCertificateToTempFile() const
+{
+    return m_saveAttachmentCertificateToTempFile;
+}
+
+const QString KeeAgentSettings::fileNameCertificate() const
+{
+    return m_fileNameCertificate;
+}
+
+void KeeAgentSettings::setSelectedCertificateType(const QString& selectedCertificateType)
+{
+    m_selectedCertificateType = selectedCertificateType;
+}
+
+void KeeAgentSettings::setAttachmentCertificateName(const QString& attachmentCertificateName)
+{
+    m_attachmentNameCertificate = attachmentCertificateName;
+}
+
+void KeeAgentSettings::setSaveAttachmentCertificateToTempFile(bool saveAttachmentCertificateToTempFile)
+{
+    m_saveAttachmentCertificateToTempFile = saveAttachmentCertificateToTempFile;
+}
+
+void KeeAgentSettings::setFileNameCertificate(const QString& fileNameCertificate)
+{
+    m_fileNameCertificate = fileNameCertificate;
+}
+
 bool KeeAgentSettings::readBool(QXmlStreamReader& reader)
 {
     reader.readNext();
@@ -273,6 +338,29 @@ bool KeeAgentSettings::fromXml(const QByteArray& ba)
                     reader.skipCurrentElement();
                 }
             }
+        } else if (reader.name() == "UseCertificate") {
+            m_useCertificate = readBool(reader);
+        } else if (reader.name() == "LocationCertificate") {
+            while (!reader.error() && reader.readNextStartElement()) {
+                if (reader.name() == "SelectedCertificateType") {
+                    reader.readNext();
+                    m_selectedCertificateType = reader.text().toString();
+                    reader.readNext();
+                } else if (reader.name() == "AttachmentCertificateName") {
+                    reader.readNext();
+                    m_attachmentNameCertificate = reader.text().toString();
+                    reader.readNext();
+                } else if (reader.name() == "SaveAttachmentCertificateToTempFile") {
+                    m_saveAttachmentCertificateToTempFile = readBool(reader);
+                } else if (reader.name() == "FileNameCertificate") {
+                    reader.readNext();
+                    m_fileNameCertificate = reader.text().toString();
+                    reader.readNext();
+                } else {
+                    qWarning() << "Skipping location certificate element" << reader.name();
+                    reader.skipCurrentElement();
+                }
+            }
         } else {
             qWarning() << "Skipping element" << reader.name();
             reader.skipCurrentElement();
@@ -328,6 +416,27 @@ QByteArray KeeAgentSettings::toXml() const
     }
 
     writer.writeEndElement(); // Location
+
+    writer.writeTextElement("UseCertificate", m_useCertificate ? "true" : "false");
+    writer.writeStartElement("LocationCertificate");
+
+    writer.writeTextElement("SelectedCertificateType", m_selectedCertificateType);
+
+    if (!m_attachmentNameCertificate.isEmpty()) {
+        writer.writeTextElement("AttachmentCertificateName", m_attachmentNameCertificate);
+    } else {
+        writer.writeEmptyElement("AttachmentCertificateName");
+    }
+
+    writer.writeTextElement("SaveAttachmentCertificateToTempFile", m_saveAttachmentCertificateToTempFile ? "true" : "false");
+
+    if (!m_fileNameCertificate.isEmpty()) {
+        writer.writeTextElement("FileNameCertificate", m_fileNameCertificate);
+    } else {
+        writer.writeEmptyElement("FileNameCertificate");
+    }
+
+    writer.writeEndElement(); // LocationCertificate
     writer.writeEndElement(); // EntrySettings
     writer.writeEndDocument();
 
@@ -491,6 +600,62 @@ bool KeeAgentSettings::toOpenSSHKey(const QString& username,
 
     if (key.comment().isEmpty()) {
         key.setComment(QString("%1@%2").arg(username, fileName));
+    }
+
+    if (m_useCertificate) {
+        QString fileCertificateName;
+        QByteArray certificateData;
+        
+        if (m_selectedCertificateType == "attachment") {
+            if (!attachments) {
+                m_error = QCoreApplication::translate("KeeAgentSettings",
+                                                    "Certificate is an attachment but no attachments provided.");
+                return false;
+            }
+
+            fileCertificateName = m_attachmentNameCertificate;
+            certificateData = attachments->value(fileCertificateName);
+        } else {
+            QString fileNameCertificateSubst = fileNameCertificateEnvSubst();
+            QFileInfo localFileCertificateInfo(fileNameCertificateSubst);
+
+            // resolve relative certificate path from database location
+            if (localFileCertificateInfo.isRelative()) {
+                QFileInfo databaseFileCertificateInfo(databasePath);
+                localFileCertificateInfo = QFileInfo(databaseFileCertificateInfo.absolutePath() + QDir::separator() + fileNameCertificateSubst);
+            }
+
+            fileCertificateName = localFileCertificateInfo.fileName();
+
+            QFile localCertificateFile(localFileCertificateInfo.absoluteFilePath());
+
+            if (localCertificateFile.fileName().isEmpty()) {
+                m_error = QCoreApplication::translate("KeeAgentSettings", "Certificate is empty");
+                return false;
+            }
+
+            if (localCertificateFile.size() > 1024 * 1024) {
+                m_error = QCoreApplication::translate("KeeAgentSettings", "File too large to be a certificate");
+                return false;
+            }
+
+            if (!localCertificateFile.open(QIODevice::ReadOnly)) {
+                m_error = QCoreApplication::translate("KeeAgentSettings", "Failed to open certificate");
+                return false;
+            }
+
+            certificateData = localCertificateFile.readAll();
+        }
+
+        if (certificateData.isEmpty()) {
+            m_error = QCoreApplication::translate("KeeAgentSettings", "Certificate is empty");
+            return false;
+        }
+
+        if (!key.parseCertificate(certificateData)) {
+            m_error = key.errorString();
+            return false;
+        }
     }
 
     return true;

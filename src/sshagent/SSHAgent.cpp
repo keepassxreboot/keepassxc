@@ -330,6 +330,60 @@ bool SSHAgent::addIdentity(OpenSSHKey& key, const KeeAgentSettings& settings, co
         return false;
     }
 
+    if (settings.useCertificate()) {
+        QByteArray requestCertificateData;
+        BinaryStream requestCertificate(&requestCertificateData);
+        bool isSecurityCertificate = key.certificateType().startsWith("sk-"); 
+
+        requestCertificate.write(
+            (settings.useLifetimeConstraintWhenAdding() || settings.useConfirmConstraintWhenAdding() || isSecurityCertificate)
+                ? SSH_AGENTC_ADD_ID_CONSTRAINED
+                : SSH_AGENTC_ADD_IDENTITY);
+
+        key.writeCertificate(requestCertificate);
+
+        if (settings.useLifetimeConstraintWhenAdding()) {
+            requestCertificate.write(SSH_AGENT_CONSTRAIN_LIFETIME);
+            requestCertificate.write(static_cast<quint32>(settings.lifetimeConstraintDuration()));
+        }
+
+        if (settings.useConfirmConstraintWhenAdding()) {
+            requestCertificate.write(SSH_AGENT_CONSTRAIN_CONFIRM);
+        }
+
+        // To be verified if useful with certificates
+        if (isSecurityCertificate) {
+            requestCertificate.write(SSH_AGENT_CONSTRAIN_EXTENSION);
+            requestCertificate.writeString(QString("sk-provider@openssh.com"));
+            requestCertificate.writeString(securityKeyProvider());
+        }
+
+        QByteArray responseCertificateData;
+        if (!sendMessage(requestCertificateData, responseCertificateData)) {
+            return false;
+        }
+
+        if (responseCertificateData.length() < 1 || static_cast<quint8>(responseCertificateData[0]) != SSH_AGENT_SUCCESS) {
+            m_error =
+                tr("Agent refused this identity certificate. Possible reasons include:") + "\n" + tr("Invalid or empty certificate."); "\n" + tr("The key has already been added.");
+
+            if (settings.useLifetimeConstraintWhenAdding()) {
+                m_error += "\n" + tr("Restricted lifetime is not supported by the agent (check options).");
+            }
+
+            if (settings.useConfirmConstraintWhenAdding()) {
+                m_error += "\n" + tr("A confirmation request is not supported by the agent (check options).");
+            }
+
+            if (isSecurityKey) {
+                m_error +=
+                    "\n" + tr("Security keys are not supported by the agent or the security key provider is unavailable.");
+            }
+
+            return false;
+        }
+    }
+
     OpenSSHKey keyCopy = key;
     keyCopy.clearPrivate();
     m_addedKeys[keyCopy] = qMakePair(databaseUuid, settings.removeAtDatabaseClose());
@@ -360,7 +414,22 @@ bool SSHAgent::removeIdentity(OpenSSHKey& key)
     request.writeString(keyData);
 
     QByteArray responseData;
-    return sendMessage(requestData, responseData);
+
+    // Try to remove certificate
+    QByteArray requestCertificateData;
+    BinaryStream requestCertificate(&requestCertificateData);
+
+    QByteArray certificateData;
+    BinaryStream certificateStream(&certificateData);
+    key.writeCertificate(certificateStream, false);
+
+    requestCertificate.write(SSH_AGENTC_REMOVE_IDENTITY);
+    requestCertificate.write(certificateData);
+
+    QByteArray responseCertificateData;
+
+    return (sendMessage(requestData, responseData) &&
+        sendMessage(requestCertificateData, responseCertificateData));
 }
 
 /**
