@@ -41,6 +41,7 @@
 #include "core/PasswordGenerator.h"
 #include "core/TimeDelta.h"
 #ifdef WITH_XC_SSHAGENT
+#include <QSignalBlocker>
 #include "sshagent/OpenSSHKey.h"
 #include "sshagent/OpenSSHKeyGenDialog.h"
 #include "sshagent/SSHAgent.h"
@@ -630,6 +631,7 @@ void EditEntryWidget::setSSHAgentSettings()
     m_sshAgentUi->requireUserConfirmationCheckBox->setChecked(m_sshAgentSettings.useConfirmConstraintWhenAdding());
     m_sshAgentUi->lifetimeCheckBox->setChecked(m_sshAgentSettings.useLifetimeConstraintWhenAdding());
     m_sshAgentUi->lifetimeSpinBox->setValue(m_sshAgentSettings.lifetimeConstraintDuration());
+    QSignalBlocker sshAgent_attachmentComboBox_Blocker(m_sshAgentUi->attachmentComboBox);
     m_sshAgentUi->attachmentComboBox->clear();
     m_sshAgentUi->addToAgentButton->setEnabled(false);
     m_sshAgentUi->removeFromAgentButton->setEnabled(false);
@@ -666,6 +668,7 @@ void EditEntryWidget::updateSSHAgentAttachments()
         setSSHAgentSettings();
     }
 
+    QSignalBlocker sshAgent_attachmentComboBox_Blocker(m_sshAgentUi->attachmentComboBox);
     m_sshAgentUi->attachmentComboBox->clear();
     m_sshAgentUi->attachmentComboBox->addItem("");
 
@@ -678,6 +681,7 @@ void EditEntryWidget::updateSSHAgentAttachments()
     }
 
     m_sshAgentUi->attachmentComboBox->setCurrentText(m_sshAgentSettings.attachmentName());
+    QSignalBlocker sshAgent_externalFileEdit_Blocker(m_sshAgentUi->externalFileEdit);
     m_sshAgentUi->externalFileEdit->setText(m_sshAgentSettings.fileName());
 
     if (m_sshAgentSettings.selectedType() == "attachment") {
@@ -960,6 +964,9 @@ void EditEntryWidget::loadEntry(Entry* entry,
 
 void EditEntryWidget::setForms(Entry* entry, bool restore)
 {
+#ifdef WITH_XC_SSHAGENT
+    QSignalBlocker attachmentsBlocker(m_attachments.data());
+#endif
     m_attachments->copyDataFrom(entry->attachments());
     m_customData->copyDataFrom(entry->customData());
 
@@ -1405,6 +1412,9 @@ void EditEntryWidget::clear()
     m_mainUi->notesEdit->clear();
 
     m_entryAttributes->clear();
+#ifdef WITH_XC_SSHAGENT
+    QSignalBlocker attachmentsBlocker(m_attachments.data());
+#endif
     m_attachments->clear();
     m_customData->clear();
     m_autoTypeAssoc->clear();
