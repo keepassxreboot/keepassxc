@@ -177,4 +177,10 @@ If you chose to not autoload the key on database unlock, you can manually make t
 
 .SSH Agent Load Key from Context Menu
 image::sshagent_context_menu.png[]
+
+==== Associate certificate to SSH key
+If you have an externally generated OpenSSH certificate file associated with your SSH key, you can configure it in the "Certificate" tab.
+
+When the key is loaded, if "Use certificate" is checked, both the key and certificate are added to the agent.
+
 // end::content[]
