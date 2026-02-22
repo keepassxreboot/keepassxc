@@ -151,12 +151,11 @@ QSharedPointer<PasswordHealth> HealthChecker::evaluate(const Entry* entry) const
         health->adjustScore(-penalty * (count - 1));
         health->addScoreReason(QObject::tr("Password is used %1 time(s)", "", count).arg(QString::number(count)));
         // Add the first 20 uses of the password to prevent the details display from growing too large
-        for (int i = 0; i < used.size(); ++i) {
+        for (int i = 0; i < (count < 20 ? count : 20); ++i) {
             health->addScoreDetails(used[i]);
-            if (i == 19) {
-                health->addScoreDetails("…");
-                break;
-            }
+        }
+        if (count > 20) {
+            health->addScoreDetails("...");
         }
 
         // Don't allow re-used passwords to be considered "good"
