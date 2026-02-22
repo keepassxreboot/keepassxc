@@ -47,6 +47,8 @@ void SettingsWidgetKeeShare::loadSettings()
     m_ui->enableExportCheckBox->setChecked(active.out);
     m_ui->enableImportCheckBox->setChecked(active.in);
 
+    m_ui->deviceIdEdit->setText(KeeShare::deviceId());
+
     m_own = KeeShare::own();
     updateOwnCertificate();
 }
@@ -67,6 +69,11 @@ void SettingsWidgetKeeShare::saveSettings()
     //           of this object (similar scheme to Entry) - this way we could validate the settings before save
     KeeShare::setOwn(m_own);
     KeeShare::setActive(active);
+
+    auto deviceId = m_ui->deviceIdEdit->text().trimmed();
+    if (!deviceId.isEmpty()) {
+        KeeShare::setDeviceId(deviceId);
+    }
 
     config()->set(Config::KeeShare_QuietSuccess, m_ui->quietSuccessCheckBox->isChecked());
 }

@@ -133,6 +133,7 @@ namespace KeeShareSettings
         bool isValid() const;
         bool isExporting() const;
         bool isImporting() const;
+        bool isPerDeviceMode() const;
         bool operator<(const Reference& other) const;
         bool operator==(const Reference& other) const;
 

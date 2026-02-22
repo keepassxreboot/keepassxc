@@ -23,9 +23,13 @@
 #include "gui/DatabaseIcons.h"
 #include "keeshare/ShareObserver.h"
 
+#include <QRegularExpression>
+#include <QSysInfo>
+
 namespace
 {
     static const QString KeeShare_Reference("KeeShare/Reference");
+    static const QString KeeShare_PerDeviceSync("KeeShare/PerDeviceSync");
 }
 
 KeeShare* KeeShare::m_instance = nullptr;
@@ -49,6 +53,37 @@ void KeeShare::init(QObject* parent)
 {
     Q_ASSERT(!m_instance);
     m_instance = new KeeShare(parent);
+}
+
+QString KeeShare::deviceId()
+{
+    auto id = config()->get(Config::KeeShare_DeviceId).toString();
+    if (id.isEmpty()) {
+        // Generate fallback from machine unique ID, truncated to 7 chars
+        auto machineId = QSysInfo::machineUniqueId();
+        if (!machineId.isEmpty()) {
+            // machineUniqueId() on Linux returns a hex string directly from /etc/machine-id
+            id = QString::fromLatin1(machineId).left(7).toUpper();
+        } else {
+            // Last resort: use hostname
+            id = QSysInfo::machineHostName();
+        }
+        // Sanitize to [A-Za-z0-9] only
+        id.remove(QRegularExpression("[^A-Za-z0-9]"));
+        if (id.isEmpty()) {
+            id = "DEFAULT";
+        }
+        setDeviceId(id);
+    }
+    return id;
+}
+
+void KeeShare::setDeviceId(const QString& id)
+{
+    // Sanitize to [A-Za-z0-9] only
+    QString sanitized = id;
+    sanitized.remove(QRegularExpression("[^A-Za-z0-9]"));
+    config()->set(Config::KeeShare_DeviceId, sanitized);
 }
 
 KeeShareSettings::Own KeeShare::own()
@@ -108,6 +143,19 @@ void KeeShare::setReferenceTo(Group* group, const KeeShareSettings::Reference& r
     }
     const auto serialized = KeeShareSettings::Reference::serialize(reference);
     customData->set(KeeShare_Reference, serialized.toUtf8().toBase64());
+}
+
+bool KeeShare::hasPerDeviceConfig(const Group* group)
+{
+    return group && group->customData()->contains(KeeShare_PerDeviceSync);
+}
+
+QString KeeShare::perDeviceSyncPath(const Group* group)
+{
+    if (!group || !group->customData()->contains(KeeShare_PerDeviceSync)) {
+        return {};
+    }
+    return group->customData()->value(KeeShare_PerDeviceSync);
 }
 
 bool KeeShare::isEnabled(const Group* group)

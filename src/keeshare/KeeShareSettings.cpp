@@ -286,6 +286,13 @@ namespace KeeShareSettings
         return (type & ImportFrom) != 0 && !path.isEmpty();
     }
 
+    bool Reference::isPerDeviceMode() const
+    {
+        return !path.isEmpty()
+            && !path.endsWith(".kdbx", Qt::CaseInsensitive)
+            && !path.endsWith(".kdbx.share", Qt::CaseInsensitive);
+    }
+
     bool Reference::operator<(const Reference& other) const
     {
         if (type != other.type) {

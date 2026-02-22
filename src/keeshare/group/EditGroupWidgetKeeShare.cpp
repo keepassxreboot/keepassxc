@@ -111,19 +111,28 @@ void EditGroupWidgetKeeShare::updateSharingState()
     // Custom message for active KeeShare reference
     const auto reference = KeeShare::referenceOf(m_temporaryGroup);
     if (!reference.path.isEmpty()) {
-        bool supported = false;
-        for (const auto& extension : supportedExtensions) {
-            if (reference.path.endsWith(extension, Qt::CaseInsensitive)) {
-                supported = true;
-                break;
+        if (reference.isPerDeviceMode()) {
+            // Per-device mode: path is a directory, show info message
+            m_ui->messageWidget->showMessage(
+                tr("Per-device sync mode: each device writes its own container in this directory.\n"
+                   "Device ID: %1").arg(KeeShare::deviceId()),
+                MessageWidget::Information);
+        } else {
+            // Classic mode: validate file extension
+            bool supported = false;
+            for (const auto& extension : supportedExtensions) {
+                if (reference.path.endsWith(extension, Qt::CaseInsensitive)) {
+                    supported = true;
+                    break;
+                }
             }
-        }
-        if (!supported) {
-            m_ui->messageWidget->showMessage(tr("Your KeePassXC version does not support sharing this container type.\n"
-                                                "Supported extensions are: %1.")
-                                                 .arg(supportedExtensions.join(", ")),
-                                             MessageWidget::Warning);
-            return;
+            if (!supported) {
+                m_ui->messageWidget->showMessage(tr("Your KeePassXC version does not support sharing this container type.\n"
+                                                    "Supported extensions are: %1.")
+                                                     .arg(supportedExtensions.join(", ")),
+                                                 MessageWidget::Warning);
+                return;
+            }
         }
 
         const auto groups = m_database->rootGroup()->groupsRecursive(true);
@@ -239,6 +248,23 @@ void EditGroupWidgetKeeShare::launchPathSelectionDialog()
     if (filename.isEmpty()) {
         filename = m_temporaryGroup->name();
     }
+
+    // For SynchronizeWith, offer both file and directory selection
+    if (reference.type == KeeShareSettings::SynchronizeWith) {
+        // Try directory selection first for per-device sync
+        auto dirPath = fileDialog()->getExistingDirectory(
+            this, tr("Select per-device sync directory"), defaultDirPath);
+        if (!dirPath.isEmpty()) {
+            // Directory selected: per-device mode
+            m_ui->pathEdit->setText(dirPath);
+            selectPath();
+            FileDialog::saveLastDir("keeshare", dirPath);
+            updateSharingState();
+            return;
+        }
+        // User cancelled directory dialog; fall through to file dialog
+    }
+
     switch (reference.type) {
     case KeeShareSettings::ImportFrom:
         filename = fileDialog()->getOpenFileName(this, tr("Select import source"), defaultDirPath, filters);

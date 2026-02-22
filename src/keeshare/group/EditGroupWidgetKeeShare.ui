@@ -100,6 +100,9 @@
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>
+       <property name="toolTip">
+        <string>File path for classic mode, or directory path for per-device sync</string>
+       </property>
       </widget>
      </item>
      <item row="1" column="1">

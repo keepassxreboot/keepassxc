@@ -175,6 +175,37 @@ void TestSharing::testSettingsSerialization_data()
     QTest::newRow("5") << false << false << certificate0 << key0;
 }
 
+void TestSharing::testPerDeviceMode()
+{
+    QFETCH(QString, path);
+    QFETCH(bool, expectedPerDevice);
+
+    KeeShareSettings::Reference reference;
+    reference.path = path;
+    reference.type = KeeShareSettings::SynchronizeWith;
+
+    QCOMPARE(reference.isPerDeviceMode(), expectedPerDevice);
+}
+
+void TestSharing::testPerDeviceMode_data()
+{
+    QTest::addColumn<QString>("path");
+    QTest::addColumn<bool>("expectedPerDevice");
+
+    // Classic mode paths (file-based)
+    QTest::newRow("kdbx file") << "/some/path/share.kdbx" << false;
+    QTest::newRow("kdbx.share file") << "/some/path/share.kdbx.share" << false;
+    QTest::newRow("KDBX uppercase") << "/some/path/share.KDBX" << false;
+    QTest::newRow("KDBX.SHARE uppercase") << "/some/path/share.KDBX.SHARE" << false;
+    QTest::newRow("empty path") << "" << false;
+
+    // Per-device mode paths (directory-based)
+    QTest::newRow("directory path") << "/some/sync/dir" << true;
+    QTest::newRow("directory trailing slash") << "/some/sync/dir/" << true;
+    QTest::newRow("relative directory") << "sync/shared" << true;
+    QTest::newRow("directory with dots") << "/some/path.d/sync" << true;
+}
+
 const QSharedPointer<Botan::RSA_PrivateKey> TestSharing::stubkey(int index)
 {
     static QMap<int, QSharedPointer<Botan::RSA_PrivateKey>> keys;

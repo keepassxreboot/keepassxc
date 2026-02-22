@@ -54,6 +54,9 @@ public:
     static const Group* resolveSharedGroup(const Group* group);
     static QString sharingLabel(const Group* group);
 
+    static QString deviceId();
+    static void setDeviceId(const QString& id);
+
     static KeeShareSettings::Own own();
     static void setOwn(const KeeShareSettings::Own& own);
 
@@ -63,6 +66,9 @@ public:
     static KeeShareSettings::Reference referenceOf(const Group* group);
     static void setReferenceTo(Group* group, const KeeShareSettings::Reference& reference);
     static QString referenceTypeLabel(const KeeShareSettings::Reference& reference);
+
+    static bool hasPerDeviceConfig(const Group* group);
+    static QString perDeviceSyncPath(const Group* group);
 
     void connectDatabase(QSharedPointer<Database> newDb, QSharedPointer<Database> oldDb);
     bool setSharingEnabled(QSharedPointer<Database> db, bool enabled);
