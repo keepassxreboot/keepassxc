@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -325,6 +325,106 @@ void TestImports::testBitwardenPasskey()
     QCOMPARE(attr->value(EntryAttributes::KPEX_PASSKEY_RELYING_PARTY), QStringLiteral("webauthn.io"));
     QCOMPARE(attr->value(EntryAttributes::KPEX_PASSKEY_USER_HANDLE),
              QStringLiteral("aTFtdmFnOHYtS2dxVEJ0by1rSFpLWGg0enlTVC1iUVJReDZ5czJXa3c2aw"));
+}
+
+void TestImports::testBitwardenNestedFolders()
+{
+    auto bitwardenPath =
+        QStringLiteral("%1/%2").arg(KEEPASSX_TEST_DATA_DIR, QStringLiteral("/bitwarden_nested_export.json"));
+
+    BitwardenReader reader;
+    auto db = reader.convert(bitwardenPath);
+    QVERIFY2(!reader.hasError(), qPrintable(reader.errorString()));
+    QVERIFY(db);
+
+    /* The group tree should be:
+     /
+       - Example
+       - Test Authentication
+       /SecondTest
+         - GMail entry
+       /Test
+         - Gmail test 2
+         /Subfolder
+           - Webauthn.io test 2
+         /Subfolder
+           - Test Account
+         /SubFolder
+           - WebAuthn.io test
+           /AnotherSubFolder
+             - Another test account
+             - Webauthn.io test 3
+    */
+
+    // Verify groups
+    auto secondTestGroup = db->rootGroup()->findGroupByPath("/SecondTest");
+    QVERIFY(secondTestGroup);
+    auto testGroup = db->rootGroup()->findGroupByPath("/Test");
+    QVERIFY(testGroup);
+    auto testSubfolderLowercaseGroup = db->rootGroup()->findGroupByPath("/Test/Subfolder");
+    QVERIFY(testSubfolderLowercaseGroup);
+    auto testSubFolderGroup = db->rootGroup()->findGroupByPath("/Test/SubFolder");
+    QVERIFY(testSubFolderGroup);
+    auto longGroup = db->rootGroup()->findGroupByPath("/Test/SubFolder/AnotherSubFolder");
+    QVERIFY(longGroup);
+
+    // Verify entries and the groups they belong to
+
+    // GMail entry
+    auto entry = db->rootGroup()->findEntryByPath("/SecondTest/GMail entry");
+    QVERIFY(entry);
+    QCOMPARE(entry->username(), QStringLiteral("example@gmail.com"));
+    QCOMPARE(entry->group(), secondTestGroup);
+
+    // Test Authentication
+    entry = db->rootGroup()->findEntryByPath("/Test Authentication");
+    QVERIFY(entry);
+    QCOMPARE(entry->username(), QStringLiteral("test@testauthentication.com"));
+    QCOMPARE(entry->group(), db->rootGroup());
+
+    // Gmail test 2
+    entry = db->rootGroup()->findEntryByPath("/Test/Gmail test 2");
+    QVERIFY(entry);
+    QCOMPARE(entry->username(), QStringLiteral("example2@gmail.com"));
+    QCOMPARE(entry->group(), testGroup);
+
+    // Example
+    entry = db->rootGroup()->findEntryByPath("/Example");
+    QVERIFY(entry);
+    QCOMPARE(entry->username(), QStringLiteral("user@example.com"));
+    QCOMPARE(entry->group(), db->rootGroup());
+
+    // WebAuthn.io test
+    entry = db->rootGroup()->findEntryByPath("/Test/SubFolder/WebAuthn.io test");
+    QVERIFY(entry);
+    QCOMPARE(entry->username(), QStringLiteral("testUser"));
+    QCOMPARE(entry->group(), testSubFolderGroup);
+
+    // Webauthn.io test 2
+    entry = db->rootGroup()->findEntryByPath("/Test/Subfolder/Webauthn.io test 2");
+    QVERIFY(entry);
+    QCOMPARE(entry->username(), QStringLiteral("testUser2"));
+    QCOMPARE(entry->group(), testSubfolderLowercaseGroup);
+
+    // Webauthn.io test 3
+    entry = db->rootGroup()->findEntryByPath("/Test/SubFolder/AnotherSubFolder/Webauthn.io test 3");
+    QVERIFY(entry);
+    QCOMPARE(entry->username(), QStringLiteral("testUser3"));
+    QCOMPARE(entry->group(), longGroup);
+
+    // Test Account
+    // There are two groups with an identical name. The group for this entry should not be the same group with the
+    // Webauthn.io test 2, but we cannot distinguish these.
+    entry = db->rootGroup()->findEntryByPath("/Test/Subfolder/Test Account");
+    QVERIFY(entry);
+    QCOMPARE(entry->username(), QStringLiteral("test-account"));
+    QCOMPARE(entry->group(), testSubfolderLowercaseGroup);
+
+    // Another test account
+    entry = db->rootGroup()->findEntryByPath("/Test/SubFolder/AnotherSubFolder/Another test account");
+    QVERIFY(entry);
+    QCOMPARE(entry->username(), QStringLiteral("anotherUser"));
+    QCOMPARE(entry->group(), longGroup);
 }
 
 void TestImports::testProtonPass()

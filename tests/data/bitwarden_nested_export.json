@@ -1,0 +1,249 @@
+{
+  "encrypted": false,
+  "folders": [
+    {
+      "id": "53f3c6e7-a167-47e2-91bb-b3f900a377a3",
+      "name": "SecondTest"
+    },
+    {
+      "id": "14f22922-b8ed-4e9c-814b-b3f900a36a92",
+      "name": "Test"
+    },
+    {
+      "id": "da442766-39b4-4fb1-a2f3-b3f900a3a36d",
+      "name": "Test/Subfolder"
+    },
+    {
+      "id": "0504d89b-00aa-41a5-9355-b3f900a3b43f",
+      "name": "Test/Subfolder"
+    },
+    {
+      "id": "c96cf0e9-fd44-4a7e-9619-b3f900a58e59",
+      "name": "Test/SubFolder"
+    },
+    {
+      "id": "5d262faf-329d-4197-9e8d-b3f900a3934c",
+      "name": "Test/SubFolder/AnotherSubFolder"
+    }
+  ],
+  "items": [
+    {
+      "passwordHistory": [],
+      "revisionDate": "2026-02-22T09:57:23.033Z",
+      "creationDate": "2026-02-17T16:55:23.210Z",
+      "id": "6b154a7d-4b62-44aa-ae0d-b3f40116e266",
+      "folderId": "53f3c6e7-a167-47e2-91bb-b3f900a377a3",
+      "type": 1,
+      "reprompt": 0,
+      "name": "GMail entry",
+      "notes": null,
+      "favorite": false,
+      "fields": [],
+      "login": {
+        "uris": [
+          {
+            "uri": "https://accounts.google.com"
+          }
+        ],
+        "fido2Credentials": [],
+        "username": "example@gmail.com",
+        "password": "examplePassword",
+        "totp": null
+      },
+      "collectionIds": null
+    },
+    {
+      "passwordHistory": [],
+      "revisionDate": "2026-02-20T17:45:32.670Z",
+      "creationDate": "2026-02-20T17:45:32.670Z",
+      "id": "6ccafb74-ecab-482f-88b2-b3f70124a91b",
+      "type": 1,
+      "reprompt": 0,
+      "name": "Test Authentication",
+      "notes": null,
+      "favorite": false,
+      "fields": [],
+      "login": {
+        "uris": [
+          {
+            "uri": "https://testauthentication.com/login"
+          }
+        ],
+        "fido2Credentials": [],
+        "username": "test@testauthentication.com",
+        "password": "testPassword",
+        "totp": null
+      },
+      "collectionIds": null
+    },
+    {
+      "passwordHistory": [],
+      "revisionDate": "2026-02-22T09:57:15.540Z",
+      "creationDate": "2026-02-06T19:22:48.860Z",
+      "id": "a9f00893-346e-4be6-ac4e-b3e9013f6065",
+      "folderId": "14f22922-b8ed-4e9c-814b-b3f900a36a92",
+      "type": 1,
+      "reprompt": 0,
+      "name": "Gmail test 2",
+      "notes": null,
+      "favorite": false,
+      "fields": [],
+      "login": {
+        "uris": [
+          {
+            "uri": "https://accounts.google.com"
+          }
+        ],
+        "fido2Credentials": [],
+        "username": "example2@gmail.com",
+        "password": "examplePassword2",
+        "totp": null
+      },
+      "collectionIds": null
+    },
+    {
+      "passwordHistory": [],
+      "revisionDate": "2026-02-09T13:15:16.370Z",
+      "creationDate": "2026-02-09T13:15:16.113Z",
+      "id": "b375fe89-756a-41be-bcec-b3ec00da6d55",
+      "type": 1,
+      "reprompt": 0,
+      "name": "Example",
+      "notes": null,
+      "favorite": false,
+      "fields": [],
+      "login": {
+        "uris": [
+          {
+            "uri": "https://www.example.com/"
+          }
+        ],
+        "username": "user@example.com",
+        "password": "examplePassword",
+        "totp": null
+      },
+      "collectionIds": null
+    },
+    {
+      "passwordHistory": [],
+      "revisionDate": "2026-02-22T10:03:05.596Z",
+      "creationDate": "2026-02-09T13:15:45.020Z",
+      "id": "b42284e2-a103-4dd0-982c-b3ec00da8f36",
+      "folderId": "c96cf0e9-fd44-4a7e-9619-b3f900a58e59",
+      "type": 1,
+      "reprompt": 0,
+      "name": "WebAuthn.io test",
+      "notes": null,
+      "favorite": false,
+      "fields": [],
+      "login": {
+        "uris": [
+          {
+            "uri": "https://webauthn.io/"
+          }
+        ],
+        "username": "testUser",
+        "password": "testPassword",
+        "totp": null
+      },
+      "collectionIds": null
+    },
+    {
+      "passwordHistory": [],
+      "revisionDate": "2026-02-22T09:56:58.923Z",
+      "creationDate": "2024-10-23T16:38:08.606Z",
+      "id": "a8e579f0-98c2-4ac9-a126-b212011225f8",
+      "folderId": "da442766-39b4-4fb1-a2f3-b3f900a3a36d",
+      "type": 1,
+      "reprompt": 0,
+      "name": "Webauthn.io test 2",
+      "notes": null,
+      "favorite": false,
+      "fields": [],
+      "login": {
+        "uris": [
+          {
+            "uri": "https://webauthn.io/"
+          }
+        ],
+        "username": "testUser2",
+        "password": "testPassword2",
+        "totp": null
+      },
+      "collectionIds": null
+    },
+    {
+      "passwordHistory": [],
+      "revisionDate": "2026-02-22T09:56:46.026Z",
+      "creationDate": "2025-10-29T06:13:55.333Z",
+      "id": "a88363cf-9fea-43d8-a3dd-b3850066b36a",
+      "folderId": "5d262faf-329d-4197-9e8d-b3f900a3934c",
+      "type": 1,
+      "reprompt": 0,
+      "name": "Webauthn.io test 3",
+      "notes": null,
+      "favorite": false,
+      "fields": [],
+      "login": {
+        "uris": [
+          {
+            "uri": "https://webauthn.io/"
+          }
+        ],
+        "username": "testUser3",
+        "password": "testPassword3",
+        "totp": null
+      },
+      "collectionIds": null
+    },
+    {
+      "passwordHistory": [],
+      "revisionDate": "2025-09-12T16:25:15.850Z",
+      "creationDate": "2025-09-12T16:25:15.850Z",
+      "id": "d2946603-1bfc-4eee-8805-b356010e9c65",
+      "folderId": "0504d89b-00aa-41a5-9355-b3f900a3b43f",
+      "type": 1,
+      "reprompt": 0,
+      "name": "Test Account",
+      "notes": null,
+      "favorite": false,
+      "fields": [],
+      "login": {
+        "uris": [
+          {
+            "uri": "https://testsite.com/"
+          }
+        ],
+        "fido2Credentials": [],
+        "username": "test-account",
+        "password": "test",
+        "totp": null
+      },
+      "collectionIds": null
+    },
+    {
+      "passwordHistory": [],
+      "revisionDate": "2026-02-22T09:56:52.673Z",
+      "creationDate": "2024-10-23T19:17:45.433Z",
+      "id": "4e3b570e-3ead-4557-b5be-b212013dfcd0",
+      "folderId": "5d262faf-329d-4197-9e8d-b3f900a3934c",
+      "type": 1,
+      "reprompt": 0,
+      "name": "Another test account",
+      "notes": null,
+      "favorite": false,
+      "fields": [],
+      "login": {
+        "uris": [
+          {
+            "uri": "https://anothertestsite.org/"
+          }
+        ],
+        "username": "anotherUser",
+        "password": "anotherPassword",
+        "totp": null
+      },
+      "collectionIds": null
+    }
+  ]
+}
