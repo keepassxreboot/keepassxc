@@ -48,6 +48,7 @@ Polkit::Polkit()
 {
     PolkitSubject::registerMetaType();
     PolkitAuthorizationResults::registerMetaType();
+    qDBusRegisterMetaType<QMap<QString, QString>>();
 
     /* Note we explicitly use our own dbus path here, as the ::systemBus() method could be overridden
        through an environment variable to return an alternative bus path. This bus could have an application
