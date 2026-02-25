@@ -149,8 +149,12 @@ void EditGroupWidgetKeeShare::updateSharingState()
             }
             multipleImport |= other.isImporting() && reference.isImporting();
             conflictExport |= other.isExporting() && reference.isExporting();
-            cycleImportExport |=
-                (other.isImporting() && reference.isExporting()) || (other.isExporting() && reference.isImporting());
+            // In per-device mode, import+export to the same directory is expected
+            // (export writes own device file, import reads other devices' files)
+            if (!reference.isPerDeviceMode()) {
+                cycleImportExport |=
+                    (other.isImporting() && reference.isExporting()) || (other.isExporting() && reference.isImporting());
+            }
         }
         if (conflictExport) {
             m_ui->messageWidget->showMessage(tr("%1 is already being exported by this database.").arg(reference.path),

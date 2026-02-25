@@ -23,6 +23,7 @@
 #include "gui/MessageBox.h"
 #include "keeshare/KeeShare.h"
 
+#include <QRegularExpressionValidator>
 #include <QStandardItemModel>
 #include <QStandardPaths>
 #include <QTextStream>
@@ -32,6 +33,9 @@ SettingsWidgetKeeShare::SettingsWidgetKeeShare(QWidget* parent)
     , m_ui(new Ui::SettingsWidgetKeeShare())
 {
     m_ui->setupUi(this);
+
+    m_ui->deviceIdEdit->setValidator(
+        new QRegularExpressionValidator(QRegularExpression("[A-Za-z0-9]{0,32}"), this));
 
     connect(m_ui->ownCertificateSignerEdit, SIGNAL(textChanged(QString)), SLOT(setVerificationExporter(QString)));
     connect(m_ui->generateOwnCerticateButton, SIGNAL(clicked(bool)), SLOT(generateCertificate()));
@@ -73,6 +77,9 @@ void SettingsWidgetKeeShare::saveSettings()
     auto deviceId = m_ui->deviceIdEdit->text().trimmed();
     if (!deviceId.isEmpty()) {
         KeeShare::setDeviceId(deviceId);
+    } else {
+        // Clear stored ID so it will be auto-detected next time
+        config()->set(Config::KeeShare_DeviceId, QString());
     }
 
     config()->set(Config::KeeShare_QuietSuccess, m_ui->quietSuccessCheckBox->isChecked());

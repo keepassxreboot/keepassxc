@@ -29,7 +29,6 @@
 namespace
 {
     static const QString KeeShare_Reference("KeeShare/Reference");
-    static const QString KeeShare_PerDeviceSync("KeeShare/PerDeviceSync");
 }
 
 KeeShare* KeeShare::m_instance = nullptr;
@@ -80,9 +79,10 @@ QString KeeShare::deviceId()
 
 void KeeShare::setDeviceId(const QString& id)
 {
-    // Sanitize to [A-Za-z0-9] only
+    // Sanitize to [A-Za-z0-9] only and enforce max length
     QString sanitized = id;
     sanitized.remove(QRegularExpression("[^A-Za-z0-9]"));
+    sanitized.truncate(32);
     config()->set(Config::KeeShare_DeviceId, sanitized);
 }
 
@@ -143,19 +143,6 @@ void KeeShare::setReferenceTo(Group* group, const KeeShareSettings::Reference& r
     }
     const auto serialized = KeeShareSettings::Reference::serialize(reference);
     customData->set(KeeShare_Reference, serialized.toUtf8().toBase64());
-}
-
-bool KeeShare::hasPerDeviceConfig(const Group* group)
-{
-    return group && group->customData()->contains(KeeShare_PerDeviceSync);
-}
-
-QString KeeShare::perDeviceSyncPath(const Group* group)
-{
-    if (!group || !group->customData()->contains(KeeShare_PerDeviceSync)) {
-        return {};
-    }
-    return group->customData()->value(KeeShare_PerDeviceSync);
 }
 
 bool KeeShare::isEnabled(const Group* group)

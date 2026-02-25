@@ -206,6 +206,40 @@ void TestSharing::testPerDeviceMode_data()
     QTest::newRow("directory with dots") << "/some/path.d/sync" << true;
 }
 
+void TestSharing::testPerDeviceModeImportExport()
+{
+    QFETCH(QString, path);
+    QFETCH(int, type);
+    QFETCH(bool, expectedImporting);
+    QFETCH(bool, expectedExporting);
+
+    KeeShareSettings::Reference reference;
+    reference.path = path;
+    reference.type = static_cast<KeeShareSettings::Type>(type);
+
+    QCOMPARE(reference.isImporting(), expectedImporting);
+    QCOMPARE(reference.isExporting(), expectedExporting);
+}
+
+void TestSharing::testPerDeviceModeImportExport_data()
+{
+    QTest::addColumn<QString>("path");
+    QTest::addColumn<int>("type");
+    QTest::addColumn<bool>("expectedImporting");
+    QTest::addColumn<bool>("expectedExporting");
+
+    QTest::newRow("per-device sync imports")
+        << "/some/dir" << int(KeeShareSettings::SynchronizeWith) << true << true;
+    QTest::newRow("per-device import only")
+        << "/some/dir" << int(KeeShareSettings::ImportFrom) << true << false;
+    QTest::newRow("per-device export only")
+        << "/some/dir" << int(KeeShareSettings::ExportTo) << false << true;
+    QTest::newRow("classic file sync")
+        << "/some/dir/share.kdbx" << int(KeeShareSettings::SynchronizeWith) << true << true;
+    QTest::newRow("inactive per-device")
+        << "/some/dir" << int(KeeShareSettings::Inactive) << false << false;
+}
+
 const QSharedPointer<Botan::RSA_PrivateKey> TestSharing::stubkey(int index)
 {
     static QMap<int, QSharedPointer<Botan::RSA_PrivateKey>> keys;

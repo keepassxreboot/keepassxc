@@ -89,6 +89,7 @@ private:
     QMap<QString, QSharedPointer<FileWatcher>> m_fileWatchers;
     QMap<QString, QSharedPointer<QFileSystemWatcher>> m_dirWatchers;
     bool m_inFileUpdate = false;
+    bool m_inDirUpdate = false;
     bool m_enabled = true;
 };
 

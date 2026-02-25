@@ -38,6 +38,8 @@ private slots:
     void testSettingsSerialization_data();
     void testPerDeviceMode();
     void testPerDeviceMode_data();
+    void testPerDeviceModeImportExport();
+    void testPerDeviceModeImportExport_data();
 
 private:
     const QSharedPointer<Botan::RSA_PrivateKey> stubkey(int index = 0);

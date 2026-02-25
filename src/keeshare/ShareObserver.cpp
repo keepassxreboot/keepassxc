@@ -270,16 +270,16 @@ void ShareObserver::handleDirectoryUpdated(const QString& dirPath)
         dirWatcher->addPath(dirPath);
     }
 
-    if (!m_inFileUpdate) {
+    if (!m_inDirUpdate) {
         QTimer::singleShot(100, this, [this, dirPath] {
             auto shareGroup = m_shareToGroup.value(dirPath);
             if (!shareGroup) {
-                m_inFileUpdate = false;
+                m_inDirUpdate = false;
                 return;
             }
             auto shareRef = KeeShare::referenceOf(shareGroup);
             auto results = importPerDeviceShares(dirPath, shareRef, shareGroup);
-            m_inFileUpdate = false;
+            m_inDirUpdate = false;
 
             QStringList success;
             QStringList warning;
@@ -300,7 +300,7 @@ void ShareObserver::handleDirectoryUpdated(const QString& dirPath)
             }
             notifyAbout(success, warning, error);
         });
-        m_inFileUpdate = true;
+        m_inDirUpdate = true;
     }
 }
 
@@ -406,7 +406,12 @@ QList<ShareObserver::Result> ShareObserver::exportShares()
             // Per-device mode: export to {directory}/{DEVICE_ID}.kdbx
             QDir dir(resolvedPath);
             if (!dir.exists()) {
-                dir.mkpath(".");
+                if (!dir.mkpath(".")) {
+                    results << Result{resolvedPath,
+                                      Result::Error,
+                                      tr("Could not create directory %1").arg(resolvedPath)};
+                    continue;
+                }
             }
             const auto deviceFile = dir.absoluteFilePath(KeeShare::deviceId() + ".kdbx");
 
@@ -418,7 +423,7 @@ QList<ShareObserver::Result> ShareObserver::exportShares()
 
             results << ShareExport::intoContainer(deviceFile, reference.config, reference.group);
 
-            // Resume directory watcher
+            // Resume directory watcher (also add path if it was newly created)
             if (dirWatcher) {
                 dirWatcher->addPath(resolvedPath);
             }
