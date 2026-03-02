@@ -67,22 +67,23 @@ QString KeeShare::deviceId()
             // Last resort: use hostname
             id = QSysInfo::machineHostName();
         }
-        // Sanitize to [A-Za-z0-9] only
-        id.remove(QRegularExpression("[^A-Za-z0-9]"));
-        if (id.isEmpty()) {
-            id = "DEFAULT";
-        }
         setDeviceId(id);
+        // Re-read the sanitized value
+        id = config()->get(Config::KeeShare_DeviceId).toString();
     }
     return id;
 }
 
 void KeeShare::setDeviceId(const QString& id)
 {
-    // Sanitize to [A-Za-z0-9] only and enforce max length
+    // All sanitization consolidated here: strip non-alphanumeric, enforce max
+    // length, and fall back to DEFAULT if empty
     QString sanitized = id;
     sanitized.remove(QRegularExpression("[^A-Za-z0-9]"));
     sanitized.truncate(32);
+    if (sanitized.isEmpty()) {
+        sanitized = QStringLiteral("DEFAULT");
+    }
     config()->set(Config::KeeShare_DeviceId, sanitized);
 }
 

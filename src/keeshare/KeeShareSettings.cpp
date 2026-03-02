@@ -25,6 +25,7 @@
 #include "gui/DatabaseIcons.h"
 
 #include <QDataStream>
+#include <QFileInfo>
 #include <QTextCodec>
 #include <QXmlStreamWriter>
 
@@ -288,9 +289,7 @@ namespace KeeShareSettings
 
     bool Reference::isPerDeviceMode() const
     {
-        return !path.isEmpty()
-            && !path.endsWith(".kdbx", Qt::CaseInsensitive)
-            && !path.endsWith(".kdbx.share", Qt::CaseInsensitive);
+        return !path.isEmpty() && QFileInfo(path).isDir();
     }
 
     bool Reference::operator<(const Reference& other) const

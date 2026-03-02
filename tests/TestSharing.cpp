@@ -17,6 +17,7 @@
 
 #include "TestSharing.h"
 
+#include <QDir>
 #include <QTest>
 #include <QXmlStreamReader>
 
@@ -35,6 +36,14 @@ Q_DECLARE_METATYPE(KeeShareSettings::Certificate)
 void TestSharing::initTestCase()
 {
     QVERIFY(Crypto::init());
+    m_tempDir = new QTemporaryDir();
+    QVERIFY(m_tempDir->isValid());
+}
+
+void TestSharing::cleanupTestCase()
+{
+    delete m_tempDir;
+    m_tempDir = nullptr;
 }
 
 void TestSharing::testNullObjects()
@@ -192,18 +201,28 @@ void TestSharing::testPerDeviceMode_data()
     QTest::addColumn<QString>("path");
     QTest::addColumn<bool>("expectedPerDevice");
 
-    // Classic mode paths (file-based)
+    // Classic mode paths (file-based — don't need to exist on disk)
     QTest::newRow("kdbx file") << "/some/path/share.kdbx" << false;
     QTest::newRow("kdbx.share file") << "/some/path/share.kdbx.share" << false;
     QTest::newRow("KDBX uppercase") << "/some/path/share.KDBX" << false;
     QTest::newRow("KDBX.SHARE uppercase") << "/some/path/share.KDBX.SHARE" << false;
     QTest::newRow("empty path") << "" << false;
+    QTest::newRow("nonexistent path") << "/nonexistent/path/nowhere" << false;
 
-    // Per-device mode paths (directory-based)
-    QTest::newRow("directory path") << "/some/sync/dir" << true;
-    QTest::newRow("directory trailing slash") << "/some/sync/dir/" << true;
-    QTest::newRow("relative directory") << "sync/shared" << true;
-    QTest::newRow("directory with dots") << "/some/path.d/sync" << true;
+    // Per-device mode paths (real directories on disk)
+    auto base = m_tempDir->path();
+
+    QDir(base).mkpath("syncdir");
+    QTest::newRow("directory path") << base + "/syncdir" << true;
+
+    QDir(base).mkpath("syncdir_slash");
+    QTest::newRow("directory trailing slash") << base + "/syncdir_slash/" << true;
+
+    QDir(base).mkpath("sub/shared");
+    QTest::newRow("nested directory") << base + "/sub/shared" << true;
+
+    QDir(base).mkpath("path.d/sync");
+    QTest::newRow("directory with dots") << base + "/path.d/sync" << true;
 }
 
 void TestSharing::testPerDeviceModeImportExport()
@@ -228,16 +247,20 @@ void TestSharing::testPerDeviceModeImportExport_data()
     QTest::addColumn<bool>("expectedImporting");
     QTest::addColumn<bool>("expectedExporting");
 
+    auto base = m_tempDir->path();
+    QDir(base).mkpath("importexport");
+    auto dir = base + "/importexport";
+
     QTest::newRow("per-device sync imports")
-        << "/some/dir" << int(KeeShareSettings::SynchronizeWith) << true << true;
+        << dir << int(KeeShareSettings::SynchronizeWith) << true << true;
     QTest::newRow("per-device import only")
-        << "/some/dir" << int(KeeShareSettings::ImportFrom) << true << false;
+        << dir << int(KeeShareSettings::ImportFrom) << true << false;
     QTest::newRow("per-device export only")
-        << "/some/dir" << int(KeeShareSettings::ExportTo) << false << true;
+        << dir << int(KeeShareSettings::ExportTo) << false << true;
     QTest::newRow("classic file sync")
-        << "/some/dir/share.kdbx" << int(KeeShareSettings::SynchronizeWith) << true << true;
+        << dir + "/share.kdbx" << int(KeeShareSettings::SynchronizeWith) << true << true;
     QTest::newRow("inactive per-device")
-        << "/some/dir" << int(KeeShareSettings::Inactive) << false << false;
+        << dir << int(KeeShareSettings::Inactive) << false << false;
 }
 
 const QSharedPointer<Botan::RSA_PrivateKey> TestSharing::stubkey(int index)
