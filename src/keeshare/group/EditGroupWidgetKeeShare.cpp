@@ -24,6 +24,7 @@
 #include "keeshare/KeeShare.h"
 
 #include <QDir>
+#include <QFileInfo>
 #include <QStandardPaths>
 
 EditGroupWidgetKeeShare::EditGroupWidgetKeeShare(QWidget* parent)
@@ -110,8 +111,9 @@ void EditGroupWidgetKeeShare::updateSharingState()
 
     // Custom message for active KeeShare reference
     const auto reference = KeeShare::referenceOf(m_temporaryGroup);
+    const QDir uiBaseDir = QFileInfo(m_database->filePath()).absoluteDir();
     if (!reference.path.isEmpty()) {
-        if (reference.isPerDeviceMode()) {
+        if (reference.isPerDeviceMode(uiBaseDir)) {
             // Per-device mode: path is a directory, show info message
             m_ui->messageWidget->showMessage(
                 tr("Per-device sync mode: each device writes its own container in this directory.\n"
@@ -151,7 +153,7 @@ void EditGroupWidgetKeeShare::updateSharingState()
             conflictExport |= other.isExporting() && reference.isExporting();
             // In per-device mode, import+export to the same directory is expected
             // (export writes own device file, import reads other devices' files)
-            if (!reference.isPerDeviceMode()) {
+            if (!reference.isPerDeviceMode(uiBaseDir)) {
                 cycleImportExport |=
                     (other.isImporting() && reference.isExporting()) || (other.isExporting() && reference.isImporting());
             }

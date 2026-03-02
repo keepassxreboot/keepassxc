@@ -187,42 +187,49 @@ void TestSharing::testSettingsSerialization_data()
 void TestSharing::testPerDeviceMode()
 {
     QFETCH(QString, path);
+    QFETCH(QString, baseDir);
     QFETCH(bool, expectedPerDevice);
 
     KeeShareSettings::Reference reference;
     reference.path = path;
     reference.type = KeeShareSettings::SynchronizeWith;
 
-    QCOMPARE(reference.isPerDeviceMode(), expectedPerDevice);
+    QCOMPARE(reference.isPerDeviceMode(QDir(baseDir)), expectedPerDevice);
 }
 
 void TestSharing::testPerDeviceMode_data()
 {
     QTest::addColumn<QString>("path");
+    QTest::addColumn<QString>("baseDir");
     QTest::addColumn<bool>("expectedPerDevice");
 
-    // Classic mode paths (file-based — don't need to exist on disk)
-    QTest::newRow("kdbx file") << "/some/path/share.kdbx" << false;
-    QTest::newRow("kdbx.share file") << "/some/path/share.kdbx.share" << false;
-    QTest::newRow("KDBX uppercase") << "/some/path/share.KDBX" << false;
-    QTest::newRow("KDBX.SHARE uppercase") << "/some/path/share.KDBX.SHARE" << false;
-    QTest::newRow("empty path") << "" << false;
-    QTest::newRow("nonexistent path") << "/nonexistent/path/nowhere" << false;
-
-    // Per-device mode paths (real directories on disk)
     auto base = m_tempDir->path();
 
+    // Classic mode paths (file-based — don't need to exist on disk)
+    QTest::newRow("kdbx file") << "/some/path/share.kdbx" << base << false;
+    QTest::newRow("kdbx.share file") << "/some/path/share.kdbx.share" << base << false;
+    QTest::newRow("KDBX uppercase") << "/some/path/share.KDBX" << base << false;
+    QTest::newRow("KDBX.SHARE uppercase") << "/some/path/share.KDBX.SHARE" << base << false;
+    QTest::newRow("empty path") << "" << base << false;
+    QTest::newRow("nonexistent path") << "/nonexistent/path/nowhere" << base << false;
+
+    // Per-device mode paths (real directories on disk — absolute)
     QDir(base).mkpath("syncdir");
-    QTest::newRow("directory path") << base + "/syncdir" << true;
+    QTest::newRow("directory path") << base + "/syncdir" << base << true;
 
     QDir(base).mkpath("syncdir_slash");
-    QTest::newRow("directory trailing slash") << base + "/syncdir_slash/" << true;
+    QTest::newRow("directory trailing slash") << base + "/syncdir_slash/" << base << true;
 
     QDir(base).mkpath("sub/shared");
-    QTest::newRow("nested directory") << base + "/sub/shared" << true;
+    QTest::newRow("nested directory") << base + "/sub/shared" << base << true;
 
     QDir(base).mkpath("path.d/sync");
-    QTest::newRow("directory with dots") << base + "/path.d/sync" << true;
+    QTest::newRow("directory with dots") << base + "/path.d/sync" << base << true;
+
+    // Per-device mode with relative path (regression test: must resolve against baseDir)
+    QDir(base).mkpath("reldir");
+    QTest::newRow("relative directory") << "reldir" << base << true;
+    QTest::newRow("relative file") << "share.kdbx" << base << false;
 }
 
 void TestSharing::testPerDeviceModeImportExport()

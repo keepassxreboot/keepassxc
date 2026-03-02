@@ -25,6 +25,7 @@
 #include "gui/DatabaseIcons.h"
 
 #include <QDataStream>
+#include <QDir>
 #include <QFileInfo>
 #include <QTextCodec>
 #include <QXmlStreamWriter>
@@ -287,9 +288,13 @@ namespace KeeShareSettings
         return (type & ImportFrom) != 0 && !path.isEmpty();
     }
 
-    bool Reference::isPerDeviceMode() const
+    bool Reference::isPerDeviceMode(const QDir& baseDir) const
     {
-        return !path.isEmpty() && QFileInfo(path).isDir();
+        if (path.isEmpty()) {
+            return false;
+        }
+        const QString resolvedPath = baseDir.absoluteFilePath(path);
+        return QFileInfo(resolvedPath).isDir();
     }
 
     bool Reference::operator<(const Reference& other) const

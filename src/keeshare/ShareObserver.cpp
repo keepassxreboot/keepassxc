@@ -102,6 +102,8 @@ void ShareObserver::reinitialize()
     QMap<QString, QStringList> imported;
     QMap<QString, QStringList> exported;
 
+    const QDir baseDir = QFileInfo(m_db->filePath()).absoluteDir();
+
     for (const auto& share : shares) {
         auto group = share.first;
         auto& reference = share.second;
@@ -113,7 +115,7 @@ void ShareObserver::reinitialize()
         if (!reference.path.isEmpty() && reference.type != KeeShareSettings::Inactive) {
             const auto newResolvedPath = resolvePath(reference.path, m_db);
 
-            if (reference.isPerDeviceMode()) {
+            if (reference.isPerDeviceMode(baseDir)) {
                 // Per-device mode: watch the directory for changes
                 auto dirWatcher = QSharedPointer<QFileSystemWatcher>::create();
                 if (QDir(newResolvedPath).exists()) {
@@ -137,10 +139,10 @@ void ShareObserver::reinitialize()
 
         if (reference.isImporting()) {
             imported[reference.path] << group->name();
+            const auto resolvedDir = resolvePath(reference.path, m_db);
 
-            if (reference.isPerDeviceMode()) {
+            if (reference.isPerDeviceMode(baseDir)) {
                 // Per-device mode: import from all device files in the directory
-                const auto resolvedDir = resolvePath(reference.path, m_db);
                 const auto results = importPerDeviceShares(resolvedDir, reference, group);
                 for (const auto& result : results) {
                     if (!result.isValid()) {
@@ -260,7 +262,8 @@ void ShareObserver::handleDirectoryUpdated(const QString& dirPath)
         return;
     }
     auto reference = KeeShare::referenceOf(group);
-    if (!reference.isImporting() || !reference.isPerDeviceMode()) {
+    const QDir handleBaseDir = QFileInfo(m_db->filePath()).absoluteDir();
+    if (!reference.isImporting() || !reference.isPerDeviceMode(handleBaseDir)) {
         return;
     }
 
@@ -326,7 +329,9 @@ QList<ShareObserver::Result> ShareObserver::importPerDeviceShares(
             continue; // Skip own device's file
         }
         const auto filePath = dir.absoluteFilePath(fileName);
-        results << ShareImport::containerInto(filePath, reference, targetGroup);
+        auto result = ShareImport::containerInto(filePath, reference, targetGroup);
+        result.path = filePath;
+        results << result;
     }
     return results;
 }
@@ -398,11 +403,13 @@ QList<ShareObserver::Result> ShareObserver::exportShares()
         return results;
     }
 
+    const QDir exportBaseDir = QFileInfo(m_db->filePath()).absoluteDir();
+
     for (auto it = references.cbegin(); it != references.cend(); ++it) {
         auto reference = it.value().first();
         const QString resolvedPath = resolvePath(reference.config.path, m_db);
 
-        if (reference.config.isPerDeviceMode()) {
+        if (reference.config.isPerDeviceMode(exportBaseDir)) {
             // Per-device mode: export to {directory}/{DEVICE_ID}.kdbx
             QDir dir(resolvedPath);
             if (!dir.exists()) {
