@@ -257,6 +257,34 @@ namespace
             }
         }
 
+        // Parse SSH-Key entry, if present
+        if (itemMap.contains("sshKey")) {
+            const auto sshKey = itemMap.value("sshKey").toMap();
+
+            if (sshKey.contains("publicKey") && sshKey.contains("privateKey")) {
+                const auto publicKey = sshKey.value("publicKey").toString();
+
+                auto baseName = QString("id");
+
+                if (publicKey.startsWith("ssh-ed25519 ")) {
+                    baseName.append("_ed25519");
+                } else if (publicKey.startsWith("ssh-rsa ")
+                           || publicKey.startsWith("ssh-sha2-256")
+                           || publicKey.startsWith("ssh-sha2-512")) {
+                    baseName.append("_rsa");
+                } else if (publicKey.startsWith("ecdsa-sha2-nistp256 ")
+                           || publicKey.startsWith("ecdsa-sha2-nistp384")
+                           || publicKey.startsWith("ecdsa-sha2-nistp521")) {
+                    baseName.append("_ecdsa");
+                } else if (publicKey.startsWith("ssh-dss")) {
+                    baseName.append("_dss");
+                }
+
+                entry->attachments()->set(baseName + ".pub", sshKey.value("publicKey").toString().toUtf8());
+                entry->attachments()->set(baseName, sshKey.value("privateKey").toString().toUtf8());
+            }
+        }
+
         entry->setEmitModified(true);
         return entry.take();
     }
