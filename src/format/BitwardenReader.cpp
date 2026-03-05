@@ -269,14 +269,14 @@ namespace
                 if (publicKey.startsWith("ssh-ed25519 ")) {
                     baseName.append("_ed25519");
                 } else if (publicKey.startsWith("ssh-rsa ")
-                           || publicKey.startsWith("ssh-sha2-256")
-                           || publicKey.startsWith("ssh-sha2-512")) {
+                           || publicKey.startsWith("ssh-sha2-256 ")
+                           || publicKey.startsWith("ssh-sha2-512 ")) {
                     baseName.append("_rsa");
                 } else if (publicKey.startsWith("ecdsa-sha2-nistp256 ")
-                           || publicKey.startsWith("ecdsa-sha2-nistp384")
-                           || publicKey.startsWith("ecdsa-sha2-nistp521")) {
+                           || publicKey.startsWith("ecdsa-sha2-nistp384 ")
+                           || publicKey.startsWith("ecdsa-sha2-nistp521 ")) {
                     baseName.append("_ecdsa");
-                } else if (publicKey.startsWith("ssh-dss")) {
+                } else if (publicKey.startsWith("ssh-dss ")) {
                     baseName.append("_dss");
                 }
 
