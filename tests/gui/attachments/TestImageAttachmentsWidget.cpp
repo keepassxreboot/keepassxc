@@ -43,10 +43,7 @@ void TestImageAttachmentsWidget::testFitInView()
     auto zoomFactor = m_imageAttachmentsView->transform();
 
     m_widget->setMinimumSize(m_widget->size() + QSize{100, 100});
-
-    QCoreApplication::processEvents();
-
-    QVERIFY(zoomFactor != m_imageAttachmentsView->transform());
+    QTRY_VERIFY(zoomFactor != m_imageAttachmentsView->transform());
 }
 
 void TestImageAttachmentsWidget::testZoomCombobox()
@@ -56,10 +53,7 @@ void TestImageAttachmentsWidget::testZoomCombobox()
         QVERIFY(index != -1);
 
         m_zoomCombobox->setCurrentIndex(index);
-
-        QCoreApplication::processEvents();
-
-        QCOMPARE(m_imageAttachmentsView->transform(), QTransform::fromScale(zoom, zoom));
+        QTRY_COMPARE(m_imageAttachmentsView->transform(), QTransform::fromScale(zoom, zoom));
     }
 }
 
@@ -67,10 +61,7 @@ void TestImageAttachmentsWidget::testEditZoomCombobox()
 {
     for (double i = 0.25; i < 5; i += 0.25) {
         m_zoomCombobox->setCurrentText(QString::number(i * 100));
-
-        QCoreApplication::processEvents();
-
-        QCOMPARE(m_imageAttachmentsView->transform(), QTransform::fromScale(i, i));
+        QTRY_COMPARE(m_imageAttachmentsView->transform(), QTransform::fromScale(i, i));
     }
 }
 
@@ -79,19 +70,13 @@ void TestImageAttachmentsWidget::testEditWithPercentZoomCombobox()
     // Example 100 %
     for (double i = 0.25; i < 5; i += 0.25) {
         m_zoomCombobox->setCurrentText(QString("%1 %").arg(i * 100));
-
-        QCoreApplication::processEvents();
-
-        QCOMPARE(m_imageAttachmentsView->transform(), QTransform::fromScale(i, i));
+        QTRY_COMPARE(m_imageAttachmentsView->transform(), QTransform::fromScale(i, i));
     }
 
     // Example 100%
     for (double i = 0.25; i < 5; i += 0.25) {
         m_zoomCombobox->setCurrentText(QString("%1%").arg(i * 100));
-
-        QCoreApplication::processEvents();
-
-        QCOMPARE(m_imageAttachmentsView->transform(), QTransform::fromScale(i, i));
+        QTRY_COMPARE(m_imageAttachmentsView->transform(), QTransform::fromScale(i, i));
     }
 }
 
@@ -108,10 +93,7 @@ void TestImageAttachmentsWidget::testInvalidValueZoomCombobox()
 
     for (const auto& invalidValue : {"Help", "3,4", "", ".", "% 100"}) {
         m_zoomCombobox->setCurrentText(invalidValue);
-
-        QCoreApplication::processEvents();
-
-        QCOMPARE(m_imageAttachmentsView->transform(), expectedTransform);
+        QTRY_COMPARE(m_imageAttachmentsView->transform(), expectedTransform);
     }
 }
 
@@ -208,10 +190,7 @@ void TestImageAttachmentsWidget::testZoomLowerBound()
                       true);
 
     QCoreApplication::sendEvent(m_imageAttachmentsView->viewport(), &event);
-
-    QCoreApplication::processEvents();
-
-    QCOMPARE(m_imageAttachmentsView->transform(), expectTransform);
+    QTRY_COMPARE(m_imageAttachmentsView->transform(), expectTransform);
 }
 
 void TestImageAttachmentsWidget::testZoomUpperBound()
@@ -237,8 +216,5 @@ void TestImageAttachmentsWidget::testZoomUpperBound()
                       true);
 
     QCoreApplication::sendEvent(m_imageAttachmentsView->viewport(), &event);
-
-    QCoreApplication::processEvents();
-
-    QCOMPARE(m_imageAttachmentsView->transform(), expectTransform);
+    QTRY_COMPARE(m_imageAttachmentsView->transform(), expectTransform);
 }
