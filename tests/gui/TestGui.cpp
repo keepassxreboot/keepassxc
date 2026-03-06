@@ -2094,21 +2094,27 @@ void TestGui::testTrayRestoreHide()
     QTRY_VERIFY(m_mainWindow->isVisible());
 
     // Wait out window hide grace period before triggering tray icon again
-    Tools::wait(250);
+    int gracePeriod = 250;
+#ifdef Q_OS_WIN
+    // Windows requires a shorter grace period
+    gracePeriod = 50;
+#endif
+
+    Tools::wait(gracePeriod);
     trayIcon->activated(QSystemTrayIcon::Trigger);
     QTRY_VERIFY(!m_mainWindow->isVisible());
 
     trayIcon->activated(QSystemTrayIcon::MiddleClick);
     QTRY_VERIFY(m_mainWindow->isVisible());
 
-    Tools::wait(250);
+    Tools::wait(gracePeriod);
     trayIcon->activated(QSystemTrayIcon::MiddleClick);
     QTRY_VERIFY(!m_mainWindow->isVisible());
 
     trayIcon->activated(QSystemTrayIcon::DoubleClick);
     QTRY_VERIFY(m_mainWindow->isVisible());
 
-    Tools::wait(250);
+    Tools::wait(gracePeriod);
     trayIcon->activated(QSystemTrayIcon::DoubleClick);
     QTRY_VERIFY(!m_mainWindow->isVisible());
 
