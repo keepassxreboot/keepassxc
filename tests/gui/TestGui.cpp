@@ -346,8 +346,8 @@ void TestGui::testMergeDatabase()
     fileDialog()->setNextFileName(QString(KEEPASSX_TEST_DATA_DIR).append("/MergeDatabase.kdbx"));
     triggerAction("actionDatabaseMerge");
 
-    QTRY_COMPARE(QApplication::focusWidget()->objectName(), QString("passwordEdit"));
-    auto* editPasswordMerge = QApplication::focusWidget();
+    QWidget* editPasswordMerge;
+    QTRY_VERIFY((editPasswordMerge = QApplication::focusWidget()) && editPasswordMerge->objectName() == "passwordEdit");
     QVERIFY(editPasswordMerge->isVisible());
 
     QTest::keyClicks(editPasswordMerge, "a");
@@ -1931,18 +1931,28 @@ void TestGui::testTrayRestoreHide()
     trayIcon->activated(QSystemTrayIcon::Trigger);
     QTRY_VERIFY(m_mainWindow->isVisible());
 
+    // Wait out window hide grace period before triggering tray icon again
+    int gracePeriod = 250;
+#ifdef Q_OS_WIN
+    // Windows requires a shorter grace period
+    gracePeriod = 50;
+#endif
+
+    Tools::wait(gracePeriod);
     trayIcon->activated(QSystemTrayIcon::Trigger);
     QTRY_VERIFY(!m_mainWindow->isVisible());
 
     trayIcon->activated(QSystemTrayIcon::MiddleClick);
     QTRY_VERIFY(m_mainWindow->isVisible());
 
+    Tools::wait(gracePeriod);
     trayIcon->activated(QSystemTrayIcon::MiddleClick);
     QTRY_VERIFY(!m_mainWindow->isVisible());
 
     trayIcon->activated(QSystemTrayIcon::DoubleClick);
     QTRY_VERIFY(m_mainWindow->isVisible());
 
+    Tools::wait(gracePeriod);
     trayIcon->activated(QSystemTrayIcon::DoubleClick);
     QTRY_VERIFY(!m_mainWindow->isVisible());
 
