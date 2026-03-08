@@ -27,6 +27,7 @@
 #include <QLineEdit>
 #include <QMenu>
 #include <QMimeData>
+#include <QRegExp>
 #include <QStandardPaths>
 #include <QTemporaryFile>
 
@@ -366,8 +367,9 @@ void EntryAttachmentsWidget::saveSelectedAttachments()
 
     QStringList errors;
     for (const QModelIndex& index : indexes) {
-        const QString filename = m_attachmentsModel->keyByIndex(index);
-        const QString attachmentPath = saveDir.absoluteFilePath(filename);
+        QString attachmentKey = m_attachmentsModel->keyByIndex(index);
+        const QString fileNameSanitized = attachmentKey.replace(QRegExp("[/\\\\]"), "");
+        const QString attachmentPath = saveDir.absoluteFilePath(fileNameSanitized);
 
         if (QFileInfo::exists(attachmentPath)) {
 
@@ -380,7 +382,7 @@ void EntryAttachmentsWidget::saveSelectedAttachments()
                 tr("Are you sure you want to overwrite the existing file \"%1\" with the attachment?"));
 
             auto result = MessageBox::question(
-                this, tr("Confirm overwrite"), questionText.arg(filename), buttons, MessageBox::Cancel);
+                this, tr("Confirm overwrite"), questionText.arg(fileNameSanitized), buttons, MessageBox::Cancel);
 
             if (result == MessageBox::Skip) {
                 continue;
@@ -390,11 +392,11 @@ void EntryAttachmentsWidget::saveSelectedAttachments()
         }
 
         QFile file(attachmentPath);
-        const QByteArray attachmentData = m_entryAttachments->value(filename);
+        const QByteArray attachmentData = m_entryAttachments->value(attachmentKey);
         const bool saveOk = file.open(QIODevice::WriteOnly) && file.setPermissions(QFile::ReadUser | QFile::WriteUser)
                             && file.write(attachmentData) == attachmentData.size();
         if (!saveOk) {
-            errors.append(QString("%1 - %2").arg(filename, file.errorString()));
+            errors.append(QString("%1 - %2").arg(fileNameSanitized, file.errorString()));
         }
     }
 
