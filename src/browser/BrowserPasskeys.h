@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -25,6 +25,8 @@
 #include <botan/asn1_obj.h>
 #include <botan/bigint.h>
 
+#define DEFAULT_BE_FLAG true
+#define DEFAULT_BS_FLAG true
 #define ID_BYTES 32
 #define HASH_BYTES 32
 #define RSA_BITS 2048
@@ -87,7 +89,9 @@ public:
     QJsonObject buildGetPublicKeyCredential(const QJsonObject& assertionOptions,
                                             const QString& credentialId,
                                             const QString& userHandle,
-                                            const QString& privateKeyPem);
+                                            const QString& privateKeyPem,
+                                            const bool beFlag = DEFAULT_BE_FLAG,
+                                            const bool bsFlag = DEFAULT_BE_FLAG);
 
     static const QString AAGUID;
 
@@ -113,7 +117,10 @@ private:
                                       const QString& credentialId,
                                       const QByteArray& cborEncodedPublicKey,
                                       const TestingVariables& testingVariables = {});
-    QByteArray buildAuthenticatorData(const QString& rpId, const QString& extensions);
+    QByteArray buildAuthenticatorData(const QString& rpId,
+                                      const QString& extensions,
+                                      const bool beFlag = DEFAULT_BE_FLAG,
+                                      const bool bsFlag = DEFAULT_BE_FLAG);
     AttestationKeyPair buildCredentialPrivateKey(int alg, const TestingVariables& testingVariables = {});
     QByteArray
     buildSignature(const QByteArray& authenticatorData, const QByteArray& clientData, const QString& privateKeyPem);

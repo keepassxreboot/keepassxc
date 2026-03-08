@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -125,14 +125,16 @@ PublicKeyCredential BrowserPasskeys::buildRegisterPublicKeyCredential(const QJso
 QJsonObject BrowserPasskeys::buildGetPublicKeyCredential(const QJsonObject& assertionOptions,
                                                          const QString& credentialId,
                                                          const QString& userHandle,
-                                                         const QString& privateKeyPem)
+                                                         const QString& privateKeyPem,
+                                                         const bool beFlag,
+                                                         const bool bsFlag)
 {
     if (!passkeyUtils()->checkCredentialAssertionOptions(assertionOptions)) {
         return {};
     }
 
-    const auto authenticatorData =
-        buildAuthenticatorData(assertionOptions["rpId"].toString(), assertionOptions["extensions"].toString());
+    const auto authenticatorData = buildAuthenticatorData(
+        assertionOptions["rpId"].toString(), assertionOptions["extensions"].toString(), beFlag, bsFlag);
     const auto clientDataJson = assertionOptions["clientDataJson"].toString();
     const auto clientDataArray = clientDataJson.toUtf8();
 
@@ -171,8 +173,12 @@ QByteArray BrowserPasskeys::buildAttestationObject(const QJsonObject& credential
     result.append(rpIdHash);
 
     // Use default flags
-    const auto flags = setFlagsFromJson(QJsonObject(
-        {{"ED", !extensions.isEmpty()}, {"AT", true}, {"BS", false}, {"BE", false}, {"UV", true}, {"UP", true}}));
+    const auto flags = setFlagsFromJson(QJsonObject({{"ED", !extensions.isEmpty()},
+                                                     {"AT", true},
+                                                     {"BS", DEFAULT_BS_FLAG},
+                                                     {"BE", DEFAULT_BE_FLAG},
+                                                     {"UV", true},
+                                                     {"UP", true}}));
     result.append(flags);
 
     // Signature counter (not supported, always 0
@@ -204,7 +210,10 @@ QByteArray BrowserPasskeys::buildAttestationObject(const QJsonObject& credential
 }
 
 // Build a short version of the attestation object for webauthn.get
-QByteArray BrowserPasskeys::buildAuthenticatorData(const QString& rpId, const QString& extensions)
+QByteArray BrowserPasskeys::buildAuthenticatorData(const QString& rpId,
+                                                   const QString& extensions,
+                                                   const bool beFlag,
+                                                   const bool bsFlag)
 {
     QByteArray result;
 
@@ -212,7 +221,7 @@ QByteArray BrowserPasskeys::buildAuthenticatorData(const QString& rpId, const QS
     result.append(rpIdHash);
 
     const auto flags = setFlagsFromJson(QJsonObject(
-        {{"ED", !extensions.isEmpty()}, {"AT", false}, {"BS", false}, {"BE", false}, {"UV", true}, {"UP", true}}));
+        {{"ED", !extensions.isEmpty()}, {"AT", false}, {"BS", bsFlag}, {"BE", beFlag}, {"UV", true}, {"UP", true}}));
     result.append(flags);
 
     // Signature counter (not supported, always 0

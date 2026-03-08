@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -46,6 +46,8 @@ const QString EntryAttributes::KPEX_PASSKEY_RELYING_PARTY = QStringLiteral("KPEX
 const QString EntryAttributes::KPEX_PASSKEY_USER_HANDLE = QStringLiteral("KPEX_PASSKEY_USER_HANDLE");
 const QString EntryAttributes::KPEX_PASSKEY_PRIVATE_KEY_START = QStringLiteral("-----BEGIN PRIVATE KEY-----");
 const QString EntryAttributes::KPEX_PASSKEY_PRIVATE_KEY_END = QStringLiteral("-----END PRIVATE KEY-----");
+const QString EntryAttributes::KPEX_PASSKEY_FLAG_BE = QStringLiteral("KPEX_PASSKEY_FLAG_BE");
+const QString EntryAttributes::KPEX_PASSKEY_FLAG_BS = QStringLiteral("KPEX_PASSKEY_FLAG_BS");
 
 // For compatibility with StrongBox
 const QString EntryAttributes::KPEX_PASSKEY_GENERATED_USER_ID = QStringLiteral("KPEX_PASSKEY_GENERATED_USER_ID");

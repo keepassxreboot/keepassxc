@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -75,6 +75,8 @@ public:
     static const QString KPEX_PASSKEY_USER_HANDLE;
     static const QString KPEX_PASSKEY_PRIVATE_KEY_START;
     static const QString KPEX_PASSKEY_PRIVATE_KEY_END;
+    static const QString KPEX_PASSKEY_FLAG_BE;
+    static const QString KPEX_PASSKEY_FLAG_BS;
 
     static bool isDefaultAttribute(const QString& key);
     static bool isPasskeyAttribute(const QString& key);
