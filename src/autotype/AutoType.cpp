@@ -115,6 +115,8 @@ namespace
                                                         {"f14", Qt::Key_F14},
                                                         {"f15", Qt::Key_F15},
                                                         {"f16", Qt::Key_F16}};
+    constexpr int s_minWaitDelay = 100; // 100 ms
+    constexpr int s_maxWaitDelay = 10000; // 10 seconds
 } // namespace
 
 AutoType* AutoType::m_instance = nullptr;
@@ -311,6 +313,9 @@ void AutoType::executeAutoTypeActions(const Entry* entry,
 
     // Restore executor mode
     m_executor->mode = mode;
+
+    // Initial Auto-Type delay to allow window to come to foreground
+    Tools::wait(qBound(s_minWaitDelay, config()->get(Config::AutoTypeStartDelay).toInt(), s_maxWaitDelay));
 
     // Grab the current active window after everything settles
     if (window == 0) {
@@ -543,16 +548,16 @@ AutoType::parseSequence(const QString& entrySequence, const Entry* entry, QStrin
     }
 
     const int maxTypeDelay = 500;
-    const int maxWaitDelay = 10000;
     const int maxRepetition = 100;
+
     int currentTypingDelay = qBound(0, config()->get(Config::AutoTypeDelay).toInt(), maxTypeDelay);
-    int cumulativeDelay = qBound(0, config()->get(Config::AutoTypeStartDelay).toInt(), maxWaitDelay);
+    // Take into account the initial delay which is added before any actions are performed
+    int cumulativeDelay = qBound(s_minWaitDelay, config()->get(Config::AutoTypeStartDelay).toInt(), s_maxWaitDelay);
 
     // Initial actions include start delay and initial inter-key delay
     QList<QSharedPointer<AutoTypeAction>> actions;
     actions << QSharedPointer<AutoTypeBegin>::create();
     actions << QSharedPointer<AutoTypeDelay>::create(currentTypingDelay, true);
-    actions << QSharedPointer<AutoTypeDelay>::create(cumulativeDelay);
 
     // Replace escaped braces with a template for easier regex
     QString sequence = entrySequence;
@@ -631,12 +636,12 @@ AutoType::parseSequence(const QString& entrySequence, const Entry* entry, QStrin
             actions << QSharedPointer<AutoTypeDelay>::create(qBound(0, delay, maxTypeDelay), true);
         } else if (placeholder == "delay") {
             // Mid typing delay (wait), repeat represents the desired delay in milliseconds
-            if (repeat > maxWaitDelay) {
-                error = tr("Very long delay detected, max is %1: %2").arg(maxWaitDelay).arg(fullPlaceholder);
+            if (repeat > s_maxWaitDelay) {
+                error = tr("Very long delay detected, max is %1: %2").arg(s_maxWaitDelay).arg(fullPlaceholder);
                 return {};
             }
             cumulativeDelay += repeat;
-            actions << QSharedPointer<AutoTypeDelay>::create(qBound(0, repeat, maxWaitDelay));
+            actions << QSharedPointer<AutoTypeDelay>::create(qBound(0, repeat, s_maxWaitDelay));
         } else if (placeholder == "clearfield") {
             // Platform-specific field clearing
             actions << QSharedPointer<AutoTypeClearField>::create();
