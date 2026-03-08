@@ -351,25 +351,31 @@ void EditEntryWidget::updateBrowser()
         return;
     }
 
+    auto changeValue = [&](const QString& option, const bool newValue) {
+        // If value is false and no customData exists, make no edits
+        if (!m_customData->hasKey(option) && !newValue) {
+            return;
+        }
+
+        // If customData exists, set the value
+        m_customData->set(option, (newValue ? TRUE_STR : FALSE_STR));
+    };
+
     // Only update the custom data if no group level settings are used (checkbox is enabled)
     if (m_browserUi->hideEntryCheckbox->isEnabled()) {
-        auto hide = m_browserUi->hideEntryCheckbox->isChecked();
-        m_customData->set(BrowserService::OPTION_HIDE_ENTRY, (hide ? TRUE_STR : FALSE_STR));
+        changeValue(BrowserService::OPTION_HIDE_ENTRY, m_browserUi->hideEntryCheckbox->isChecked());
     }
 
     if (m_browserUi->skipAutoSubmitCheckbox->isEnabled()) {
-        auto skip = m_browserUi->skipAutoSubmitCheckbox->isChecked();
-        m_customData->set(BrowserService::OPTION_SKIP_AUTO_SUBMIT, (skip ? TRUE_STR : FALSE_STR));
+        changeValue(BrowserService::OPTION_SKIP_AUTO_SUBMIT, m_browserUi->skipAutoSubmitCheckbox->isChecked());
     }
 
     if (m_browserUi->onlyHttpAuthCheckbox->isEnabled()) {
-        auto onlyHttpAuth = m_browserUi->onlyHttpAuthCheckbox->isChecked();
-        m_customData->set(BrowserService::OPTION_ONLY_HTTP_AUTH, (onlyHttpAuth ? TRUE_STR : FALSE_STR));
+        changeValue(BrowserService::OPTION_ONLY_HTTP_AUTH, m_browserUi->onlyHttpAuthCheckbox->isChecked());
     }
 
     if (m_browserUi->notHttpAuthCheckbox->isEnabled()) {
-        auto notHttpAuth = m_browserUi->notHttpAuthCheckbox->isChecked();
-        m_customData->set(BrowserService::OPTION_NOT_HTTP_AUTH, (notHttpAuth ? TRUE_STR : FALSE_STR));
+        changeValue(BrowserService::OPTION_NOT_HTTP_AUTH, m_browserUi->notHttpAuthCheckbox->isChecked());
     }
 }
 
@@ -803,7 +809,6 @@ void EditEntryWidget::addKeyToAgent()
 
     if (!sshAgent()->addIdentity(key, settings, m_db->uuid())) {
         showMessage(sshAgent()->errorString(), MessageWidget::Error);
-        return;
     }
 }
 
@@ -817,7 +822,6 @@ void EditEntryWidget::removeKeyFromAgent()
 
     if (!sshAgent()->removeIdentity(key)) {
         showMessage(sshAgent()->errorString(), MessageWidget::Error);
-        return;
     }
 }
 
@@ -1040,6 +1044,7 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
             setupBrowser();
         }
 
+        m_browserSettingsChanged = false;
         auto hideEntriesCheckBoxEnabled = true;
         auto skipAutoSubmitCheckBoxEnabled = true;
         auto onlyHttpAuthCheckBoxEnabled = true;
