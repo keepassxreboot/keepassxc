@@ -427,7 +427,6 @@ set_target_properties(${PROGNAME} PROPERTIES ENABLE_EXPORTS ON)
 
 if(WIN32)
     set_target_properties(${PROGNAME} PROPERTIES WIN32_EXECUTABLE ON)
-    set_target_properties(${PROGNAME} PROPERTIES LINK_FLAGS "/MANIFESTUAC:\"level='asInvoker' uiAccess='true'\"")
     include(GenerateProductVersion)
     generate_product_version(
             WIN32_ResourceFiles
