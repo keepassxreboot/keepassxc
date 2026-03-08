@@ -24,6 +24,8 @@ class TestTools : public QObject
 {
     Q_OBJECT
 private slots:
+    void initTestCase();
+    void cleanupTestCase();
     void testHumanReadableFileSize();
     void testIsHex();
     void testIsBase64();
