@@ -645,7 +645,7 @@ AutoType::parseSequence(const QString& entrySequence, const Entry* entry, QStrin
         } else if (placeholder == "clearfield") {
             // Platform-specific field clearing
             actions << QSharedPointer<AutoTypeClearField>::create();
-        } else if (placeholder == "totp") {
+        } else if (placeholder == "totp" || placeholder == "timeotp") {
             if (entry->hasValidTotp()) {
                 // Calculate TOTP at the time of typing including delays
                 bool isValid = false;
