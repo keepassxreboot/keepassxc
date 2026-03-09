@@ -188,8 +188,6 @@ private:
 #ifdef WITH_XC_SSHAGENT
     KeeAgentSettings m_sshAgentSettings;
     QString m_pendingPrivateKey;
-    QPointer<Entry> m_entryCertificate;
-    const QScopedPointer<EntryAttachments> m_attachmentsCertificate;
 #endif
     const QScopedPointer<Ui::EditEntryWidgetMain> m_mainUi;
     const QScopedPointer<Ui::EditEntryWidgetAdvanced> m_advancedUi;
