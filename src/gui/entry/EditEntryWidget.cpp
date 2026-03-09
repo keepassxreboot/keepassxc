@@ -647,13 +647,11 @@ void EditEntryWidget::setSSHAgentSettings()
     m_sshAgentUi->lifetimeCheckBox->setChecked(m_sshAgentSettings.useLifetimeConstraintWhenAdding());
     m_sshAgentUi->lifetimeSpinBox->setValue(m_sshAgentSettings.lifetimeConstraintDuration());
     QSignalBlocker sshAgent_attachmentComboBox_Blocker(m_sshAgentUi->attachmentComboBox);
-    m_sshAgentUi->attachmentComboBox->clear();
     m_sshAgentUi->addToAgentButton->setEnabled(false);
     m_sshAgentUi->removeFromAgentButton->setEnabled(false);
     m_sshAgentUi->copyToClipboardButton->setEnabled(false);
     m_sshAgentUi->addCertificateToAgentCheckBox->setChecked(m_sshAgentSettings.useCertificate());
     QSignalBlocker sshAgent_attachmentCertificateComboBox_Blocker(m_sshAgentUi->attachmentCertificateComboBox);
-    m_sshAgentUi->attachmentCertificateComboBox->clear(); // AlexpFr: why? attachmentCertificateComboBox init in updateSSHAgentAttachments(
 }
 
 void EditEntryWidget::updateSSHAgent()
