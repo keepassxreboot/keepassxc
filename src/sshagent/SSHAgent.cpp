@@ -365,7 +365,7 @@ bool SSHAgent::addIdentity(OpenSSHKey& key, const KeeAgentSettings& settings, co
 
         if (responseCertificateData.length() < 1 || static_cast<quint8>(responseCertificateData[0]) != SSH_AGENT_SUCCESS) {
             m_error =
-                tr("Agent refused this identity certificate. Possible reasons include:") + "\n" + tr("Invalid or empty certificate.") "\n" + tr("The key has already been added.");
+                tr("Agent refused this identity certificate. Possible reasons include:") + "\n" + tr("Invalid or empty certificate.") + "\n" + tr("The key has already been added.");
 
             if (settings.useLifetimeConstraintWhenAdding()) {
                 m_error += "\n" + tr("Restricted lifetime is not supported by the agent (check options).");
