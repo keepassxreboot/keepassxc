@@ -54,9 +54,10 @@ int main(int argc, char** argv)
     QT_REQUIRE_VERSION(argc, argv, QT_VERSION_STR)
 
 #ifdef Q_OS_WIN
-    // Set OPENSSL_CONF to an invalid location to prevent DLL injection via openssl.cnf.
+    // Set OPENSSL_CONF and OPENSSL_MODULES to an invalid location to prevent DLL injection via openssl.cnf.
     // vcpkg by default hard-codes this to its packages location, which may be user-writable.
     qputenv("OPENSSL_CONF", "::");
+    qputenv("OPENSSL_MODULES", "::");
 #endif
 
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
