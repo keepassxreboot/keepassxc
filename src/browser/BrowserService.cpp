@@ -776,12 +776,16 @@ QJsonObject BrowserService::showPasskeysAuthenticationPrompt(const QJsonObject& 
         const auto userHandle = selectedEntry->attributes()->value(EntryAttributes::KPEX_PASSKEY_USER_HANDLE);
 
         // Get BE and BS flags if present
-        const auto beFlag = selectedEntry->attributes()->hasKey(EntryAttributes::KPEX_PASSKEY_FLAG_BE)
-                                ? selectedEntry->attributes()->value(EntryAttributes::KPEX_PASSKEY_FLAG_BE) == TRUE_STR
-                                : DEFAULT_BE_FLAG;
-        const auto bsFlag = selectedEntry->attributes()->hasKey(EntryAttributes::KPEX_PASSKEY_FLAG_BS)
-                                ? selectedEntry->attributes()->value(EntryAttributes::KPEX_PASSKEY_FLAG_BS) == TRUE_STR
-                                : DEFAULT_BS_FLAG;
+        const auto beFlag =
+            selectedEntry->attributes()->hasKey(EntryAttributes::KPEX_PASSKEY_FLAG_BE)
+                ? selectedEntry->attributes()->value(EntryAttributes::KPEX_PASSKEY_FLAG_BE) == "1"
+                      || selectedEntry->attributes()->value(EntryAttributes::KPEX_PASSKEY_FLAG_BE) == TRUE_STR
+                : DEFAULT_BE_FLAG;
+        const auto bsFlag =
+            selectedEntry->attributes()->hasKey(EntryAttributes::KPEX_PASSKEY_FLAG_BS)
+                ? selectedEntry->attributes()->value(EntryAttributes::KPEX_PASSKEY_FLAG_BS) == "1"
+                      || selectedEntry->attributes()->value(EntryAttributes::KPEX_PASSKEY_FLAG_BS) == TRUE_STR
+                : DEFAULT_BS_FLAG;
 
         auto publicKeyCredential = browserPasskeys()->buildGetPublicKeyCredential(
             assertionOptions, credentialId, userHandle, privateKeyPem, beFlag, bsFlag);
@@ -864,8 +868,8 @@ void BrowserService::addPasskeyToEntry(Entry* entry,
     entry->attributes()->set(EntryAttributes::KPEX_PASSKEY_PRIVATE_KEY_PEM, privateKey, true);
     entry->attributes()->set(EntryAttributes::KPEX_PASSKEY_RELYING_PARTY, rpId);
     entry->attributes()->set(EntryAttributes::KPEX_PASSKEY_USER_HANDLE, userHandle, true);
-    entry->attributes()->set(EntryAttributes::KPEX_PASSKEY_FLAG_BE, TRUE_STR);
-    entry->attributes()->set(EntryAttributes::KPEX_PASSKEY_FLAG_BS, TRUE_STR);
+    entry->attributes()->set(EntryAttributes::KPEX_PASSKEY_FLAG_BE, "1");
+    entry->attributes()->set(EntryAttributes::KPEX_PASSKEY_FLAG_BS, "1");
     entry->addTag(tr("Passkey"));
 
     entry->endUpdate();
