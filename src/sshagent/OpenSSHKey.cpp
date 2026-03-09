@@ -672,7 +672,7 @@ bool OpenSSHKey::writePrivate(BinaryStream& stream)
 bool OpenSSHKey::parseCertificate(QByteArray& data)
 {
     QString stringData = QString::fromLatin1(data);
-    QStringList elements = stringData.split(QRegularExpression("\\s+"), QString::SkipEmptyParts);
+    QStringList elements = stringData.split(QRegularExpression("\\s+"), Qt::SkipEmptyParts);
 
     QStringList certificateTypeList = {
         "ssh-ed25519-cert-v01@openssh.com",
