@@ -21,6 +21,8 @@
 
 #include <QProcessEnvironment>
 
+#define SSH_MAX_LOCAL_KEY_SIZE (1024 * 1024)
+
 class Entry;
 class EntryAttachments;
 class OpenSSHKey;

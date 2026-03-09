@@ -568,7 +568,7 @@ bool KeeAgentSettings::toOpenSSHKey(const QString& username,
             return false;
         }
 
-        if (localFile.size() > 1024 * 1024) {
+        if (localFile.size() > SSH_MAX_LOCAL_KEY_SIZE) {
             m_error = QCoreApplication::translate("KeeAgentSettings", "File too large to be a private key");
             return false;
         }
@@ -634,7 +634,7 @@ bool KeeAgentSettings::toOpenSSHKey(const QString& username,
                 return false;
             }
 
-            if (localCertificateFile.size() > 1024 * 1024) {
+            if (localCertificateFile.size() > SSH_MAX_LOCAL_KEY_SIZE) {
                 m_error = QCoreApplication::translate("KeeAgentSettings", "File too large to be a certificate");
                 return false;
             }
