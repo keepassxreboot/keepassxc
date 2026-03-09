@@ -422,15 +422,16 @@ bool SSHAgent::removeIdentity(OpenSSHKey& key)
 
     QByteArray certificateData;
     BinaryStream certificateStream(&certificateData);
-    key.writeCertificate(certificateStream, false);
+    if (key.writeCertificate(certificateStream, false)) {
+        requestCertificate.write(SSH_AGENTC_REMOVE_IDENTITY);
+        requestCertificate.write(certificateData);
+        QByteArray responseCertificateData;
 
-    requestCertificate.write(SSH_AGENTC_REMOVE_IDENTITY);
-    requestCertificate.write(certificateData);
+        return (sendMessage(requestData, responseData) &&
+            sendMessage(requestCertificateData, responseCertificateData));
+    }
 
-    QByteArray responseCertificateData;
-
-    return (sendMessage(requestData, responseData) &&
-        sendMessage(requestCertificateData, responseCertificateData));
+    return (sendMessage(requestData, responseData));
 }
 
 /**
