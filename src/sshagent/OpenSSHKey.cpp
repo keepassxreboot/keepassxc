@@ -724,7 +724,10 @@ bool OpenSSHKey::writeCertificate(BinaryStream& stream, const bool addCertificat
         return true;
     }
 
-    stream.writeString(m_certificateType);
+    if (!stream.writeString(m_certificateType)) {
+        m_error = tr("Unexpected EOF when writing certificate");
+        return false;
+    }  
 
     if (!stream.writeString(m_rawCertificateData)) {
         m_error = tr("Unexpected EOF when writing certificate");
