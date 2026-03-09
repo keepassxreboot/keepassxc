@@ -19,6 +19,7 @@
 #include "TestAutoType.h"
 
 #include <QPluginLoader>
+#include <QRegularExpression>
 #include <QTest>
 
 #include "autotype/AutoType.h"
