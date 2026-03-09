@@ -330,6 +330,10 @@ bool SSHAgent::addIdentity(OpenSSHKey& key, const KeeAgentSettings& settings, co
         return false;
     }
 
+    OpenSSHKey keyCopy = key;
+    keyCopy.clearPrivate();
+    m_addedKeys[keyCopy] = qMakePair(databaseUuid, settings.removeAtDatabaseClose());
+
     if (settings.useCertificate()) {
         QByteArray requestCertificateData;
         BinaryStream requestCertificate(&requestCertificateData);
@@ -384,9 +388,6 @@ bool SSHAgent::addIdentity(OpenSSHKey& key, const KeeAgentSettings& settings, co
         }
     }
 
-    OpenSSHKey keyCopy = key;
-    keyCopy.clearPrivate();
-    m_addedKeys[keyCopy] = qMakePair(databaseUuid, settings.removeAtDatabaseClose());
     return true;
 }
 
