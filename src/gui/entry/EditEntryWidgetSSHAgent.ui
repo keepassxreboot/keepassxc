@@ -42,13 +42,13 @@
        </property>
       </widget>
      </item>
-    <item>
-        <widget class="QPushButton" name="clearAgentButton">
-        <property name="text">
+     <item>
+      <widget class="QPushButton" name="clearAgentButton">
+       <property name="text">
         <string>Clear agent</string>
-        </property>
-        </widget>
-    </item>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item row="2" column="1" colspan="3">
@@ -228,7 +228,7 @@
      <property name="currentIndex">
       <number>0</number>
      </property>
-     <widget class="QWidget" name="privateKeyTabWidgetPage1" native="true">
+     <widget class="QWidget" name="privateKeyTabWidgetPage1">
       <attribute name="title">
        <string>Private key</string>
       </attribute>
@@ -353,7 +353,7 @@
        <item row="1" column="2">
         <widget class="QPushButton" name="browseCertificateButton">
          <property name="accessibleName">
-          <string>Browser for key file</string>
+          <string>Browse for certificate file</string>
          </property>
          <property name="text">
           <string extracomment="Button for opening file dialog">Browse…</string>
