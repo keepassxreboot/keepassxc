@@ -417,7 +417,7 @@ QByteArray KeeAgentSettings::toXml() const
 
     writer.writeEndElement(); // Location
 
-    writer.writeTextElement("UseCertificate", m_useCertificate ? "true" : "false");
+    writer.writeTextElement("UseCertificate", m_useCertificate ? TRUE_STR : FALSE_STR);
     writer.writeStartElement("LocationCertificate");
 
     writer.writeTextElement("SelectedCertificateType", m_selectedCertificateType);
@@ -428,7 +428,7 @@ QByteArray KeeAgentSettings::toXml() const
         writer.writeEmptyElement("AttachmentCertificateName");
     }
 
-    writer.writeTextElement("SaveAttachmentCertificateToTempFile", m_saveAttachmentCertificateToTempFile ? "true" : "false");
+    writer.writeTextElement("SaveAttachmentCertificateToTempFile", m_saveAttachmentCertificateToTempFile ? TRUE_STR : FALSE_STR);
 
     if (!m_fileNameCertificate.isEmpty()) {
         writer.writeTextElement("FileNameCertificate", m_fileNameCertificate);
