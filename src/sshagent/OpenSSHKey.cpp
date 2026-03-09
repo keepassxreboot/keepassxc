@@ -693,13 +693,18 @@ bool OpenSSHKey::parseCertificate(QByteArray& data)
         "sk-ecdsa-sha2-nistp521-cert-v01@openssh.com",
     };
 
-    if(!certificateTypeList.contains(elements.first())) {
+    if(elements.isEmpty() || elements.size() < 2 || !certificateTypeList.contains(elements.first())) {
         m_error = tr("Invalid or unsupported certificate file");
         return false;
     }
 
     m_certificateType = elements.first();
     m_rawCertificateData = QByteArray::fromBase64(elements[1].toLatin1());
+
+    if (m_rawCertificateData.isEmpty()) {
+        m_error = tr("Base64 decoding failed");
+        return false;
+    }
 
     return true;
 }
