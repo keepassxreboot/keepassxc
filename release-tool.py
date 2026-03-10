@@ -968,11 +968,11 @@ class BuildSrc(Command):
                 tf.add(fver, Path(prefix) / fver.name)
                 tf.add(frev, Path(prefix) / frev.name)
 
-            logger.info('Compressing source tarball...')
-            tmp_comp = tmp_export.with_suffix('.tar.xz')
-            with lzma.open(tmp_comp, 'wb', preset=6) as f:
-                f.write(tmp_export.read_bytes())
-            tmp_comp.rename(output_file)
+                logger.info('Compressing source tarball...')
+                tmp_comp = tmp_export.with_suffix('.tar.xz')
+                with lzma.open(tmp_comp, 'wb', preset=6) as f:
+                    f.write(tmp_export.read_bytes())
+                tmp_comp.rename(output_file)
 
 
 class Notarize(Command):
