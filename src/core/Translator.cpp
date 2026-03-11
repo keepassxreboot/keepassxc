@@ -121,8 +121,11 @@ QList<QPair<QString, QString>> Translator::availableLanguages()
             if (langcode == "la") {
                 // langcode "la" (Latin) is translated into "C" by QLocale::languageToString()
                 languageStr = "Latin";
-            }
-            if (langcode.contains("_")) {
+            } else if (langcode == "zh_CN") {
+                languageStr = "Chinese (Simplified)";
+            } else if (langcode == "zh_TW") {
+                languageStr = "Chinese (Traditional)";
+            } else if (langcode.contains("_")) {
                 languageStr += QString(" (%1)").arg(QLocale::countryToString(locale.country()));
             }
 
