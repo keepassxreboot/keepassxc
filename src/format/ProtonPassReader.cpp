@@ -111,6 +111,32 @@ namespace
                 }
             }
         }
+        // Wifi
+        else if (type.compare("wifi", Qt::CaseInsensitive) == 0) {
+            const auto wifiMap = dataMap.value("content").toMap();
+            entry->setUsername(wifiMap.value("ssid").toString());
+            entry->setPassword(wifiMap.value("password").toString());
+            entry->attributes()->set("wifi_security", wifiMap.value("security").toString());
+        }
+        // SSH Key
+        else if (type.compare("sshKey", Qt::CaseInsensitive) == 0) {
+            const auto sshMap = dataMap.value("content").toMap();
+            entry->attributes()->set("ssh_public_key", sshMap.value("publicKey").toString());
+            entry->attributes()->set("ssh_private_key", sshMap.value("privateKey").toString(), true);
+        }
+        // Unknown Type (not custom or note)
+        else if (type.compare("custom", Qt::CaseInsensitive) != 0 && type.compare("note", Qt::CaseInsensitive) != 0) {
+            entry->setNotes(QString("Unknown entry type '%1'. Content data fields have been added as attributes.\n\n%2")
+                                .arg(type, entry->notes()));
+            // Place all content fields as attributes
+            const auto contentMap = dataMap.value("content").toMap();
+            for (const auto& key : contentMap.keys()) {
+                auto value = contentMap.value(key).toString();
+                if (!value.isEmpty()) {
+                    entry->attributes()->set("content_" + key, value);
+                }
+            }
+        }
 
         // Parse extra fields
         for (const auto& field : dataMap.value("extraFields").toList()) {
