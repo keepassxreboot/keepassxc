@@ -1,6 +1,6 @@
 /*
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2014 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,6 +23,8 @@
 #include <QLineEdit>
 #include <QPointer>
 
+#include "core/Entry.h"
+
 class URLEdit : public QLineEdit
 {
     Q_OBJECT
@@ -30,12 +32,14 @@ class URLEdit : public QLineEdit
 public:
     explicit URLEdit(QWidget* parent = nullptr);
     void enableVerifyMode();
+    void setEntry(Entry* entry);
 
 private slots:
-    void updateStylesheet();
+    void updateStylesheet(const QString& url = {});
 
 private:
     QPointer<QAction> m_errorAction;
+    QPointer<Entry> m_entry;
 };
 
 #endif // KEEPASSX_URLEDIT_H

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2014 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -37,16 +37,22 @@ void URLEdit::enableVerifyMode()
 {
     updateStylesheet();
 
-    connect(this, SIGNAL(textChanged(QString)), SLOT(updateStylesheet()));
+    connect(this, SIGNAL(textChanged(QString)), SLOT(updateStylesheet(QString)));
 }
 
-void URLEdit::updateStylesheet()
+void URLEdit::setEntry(Entry* entry)
+{
+    m_entry = entry;
+}
+
+void URLEdit::updateStylesheet(const QString& url)
 {
     const QString stylesheetTemplate("QLineEdit { background: %1; }");
+    const auto resolvedUrl = m_entry ? m_entry->resolveMultiplePlaceholders(url) : url;
 
-    if (!urlTools()->isUrlValid(text())) {
-        StateColorPalette statePalette;
-        QColor color = statePalette.color(StateColorPalette::ColorRole::Error);
+    if (!urlTools()->isUrlValid(resolvedUrl)) {
+        const StateColorPalette statePalette;
+        const auto color = statePalette.color(StateColorPalette::ColorRole::Error);
         setStyleSheet(stylesheetTemplate.arg(color.name()));
         m_errorAction->setVisible(true);
     } else {

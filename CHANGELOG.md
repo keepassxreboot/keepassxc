@@ -3,6 +3,27 @@
 ## 2.8.0 (Pending)
 * Placeholder for future release notes
 
+## 2.7.12 (2026-03-10)
+
+### Changes
+
+- Passkeys: Set BE and BS flags to true (NOTE: MAY BREAK EXISTING PASSKEYS) [#13042]
+- Support TIMEOTP autotype and entry placeholder [#13117]
+- Browser: Show URLs in browser access dialog [#12906]
+- Bitwarden Import: Add support for nested folders [#13081]
+
+### Fixes
+- Prevent exploits through OpenSSL configurations [#13118, #13124]
+- Auto-Type: Revert change that caused race condition on Linux [#12738]
+- Auto-Type: Fix help button enablement [#12937]
+- Browser: Fix showing correct checkbox value in entry Browser Integration settings [#12980]
+- Browser: Fix setting browser related values to customData [#13026]
+- Passkeys: Add publicKey to register response [#12757]
+- Fix main entry URL validation when using placeholders [#12964]
+- Fix minor font and theme issues [#12814]
+- Fix 'Remove' button in Plugin Data being enabled when no row is selected [#12916]
+- Sanitize attachment file names before saving [#13114]
+
 ## 2.7.11 (2025-11-23)
 
 ### Changes

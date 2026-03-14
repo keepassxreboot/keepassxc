@@ -357,9 +357,8 @@ void TestGui::testMergeDatabase()
     fileDialog()->setNextFileName(QString(KEEPASSX_TEST_DATA_DIR).append("/MergeDatabase.kdbx"));
     triggerAction("actionDatabaseMerge");
 
-    auto* editPasswordMerge = QApplication::focusWidget();
-    QVERIFY(editPasswordMerge);
-    QTRY_COMPARE(editPasswordMerge->objectName(), QString("passwordEdit"));
+    QWidget* editPasswordMerge;
+    QTRY_VERIFY((editPasswordMerge = QApplication::focusWidget()) && editPasswordMerge->objectName() == "passwordEdit");
     QVERIFY(editPasswordMerge->isVisible());
 
     QTest::keyClicks(editPasswordMerge, "a");
@@ -462,9 +461,8 @@ void TestGui::testRemoteSyncDatabaseRequiresPassword()
     // need to process more events as opening with the same key did not work and more events have been fired
     QApplication::processEvents(QEventLoop::WaitForMoreEvents);
 
-    auto* editPasswordSync = QApplication::focusWidget();
-    QVERIFY(editPasswordSync);
-    QTRY_COMPARE(editPasswordSync->objectName(), QString("passwordEdit"));
+    QWidget* editPasswordSync;
+    QTRY_VERIFY((editPasswordSync = QApplication::focusWidget()) && editPasswordSync->objectName() == "passwordEdit");
     QVERIFY(editPasswordSync->isVisible());
 
     QTest::keyClicks(editPasswordSync, "b");
@@ -2095,18 +2093,28 @@ void TestGui::testTrayRestoreHide()
     trayIcon->activated(QSystemTrayIcon::Trigger);
     QTRY_VERIFY(m_mainWindow->isVisible());
 
+    // Wait out window hide grace period before triggering tray icon again
+    int gracePeriod = 250;
+#ifdef Q_OS_WIN
+    // Windows requires a shorter grace period
+    gracePeriod = 50;
+#endif
+
+    Tools::wait(gracePeriod);
     trayIcon->activated(QSystemTrayIcon::Trigger);
     QTRY_VERIFY(!m_mainWindow->isVisible());
 
     trayIcon->activated(QSystemTrayIcon::MiddleClick);
     QTRY_VERIFY(m_mainWindow->isVisible());
 
+    Tools::wait(gracePeriod);
     trayIcon->activated(QSystemTrayIcon::MiddleClick);
     QTRY_VERIFY(!m_mainWindow->isVisible());
 
     trayIcon->activated(QSystemTrayIcon::DoubleClick);
     QTRY_VERIFY(m_mainWindow->isVisible());
 
+    Tools::wait(gracePeriod);
     trayIcon->activated(QSystemTrayIcon::DoubleClick);
     QTRY_VERIFY(!m_mainWindow->isVisible());
 

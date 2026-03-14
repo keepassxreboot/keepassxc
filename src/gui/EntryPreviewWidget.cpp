@@ -390,6 +390,9 @@ void EntryPreviewWidget::updateEntryGeneralTab()
         m_ui->entryNotesTextEdit->setFont(Font::defaultFont());
     }
 
+    m_ui->entryNotesTextEdit->setTabStopDistance(
+        QFontMetrics(m_ui->entryNotesTextEdit->font()).horizontalAdvance(QString(4, ' ')));
+
     m_ui->entryUrlLabel->setRawText(m_currentEntry->displayUrl().toHtmlEscaped());
     const QString url = m_currentEntry->url();
     if (!url.isEmpty()) {

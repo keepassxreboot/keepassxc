@@ -19,6 +19,7 @@
 #include "TestAutoType.h"
 
 #include <QPluginLoader>
+#include <QRegularExpression>
 #include <QTest>
 
 #include "autotype/AutoType.h"
@@ -475,7 +476,7 @@ void TestAutoType::testAutoTypeEmptyWindowAssociation()
     QVERIFY(assoc.isEmpty());
 }
 
-void TestAutoType::testAutoTypeTotpDelay()
+void TestAutoType::testAutoTypeTotp()
 {
     // Get the TOTP time step in milliseconds
     auto totpStep = m_entry1->totpSettings()->step * 1000;
@@ -494,4 +495,24 @@ void TestAutoType::testAutoTypeTotpDelay()
              QString("Typed TOTP (%1) should differ from current TOTP (%2) due to delay")
                  .arg(totpParts[0], totpParts[1])
                  .toLatin1());
+
+    m_test->clearActions();
+
+    // Test TIMEOTP placeholder (KeePass2 Compatibility)
+    m_autoType->performAutoTypeWithSequence(m_entry1, "{TIMEOTP}");
+    typedChars = m_test->actionChars();
+    QCOMPARE(typedChars.size(), m_entry1->totpSettings()->digits);
+    // Verify that the typedchars are all numbers
+    QRegularExpression re("^\\d+$");
+    QVERIFY(re.match(typedChars).hasMatch());
+
+    m_test->clearActions();
+
+    // Test that TIMEOTP also works as an entry placeholder
+    m_entry1->setPassword("{TIMEOTP}");
+    m_autoType->performAutoTypeWithSequence(m_entry1, "{PASSWORD}");
+    typedChars = m_test->actionChars();
+    QCOMPARE(typedChars.size(), m_entry1->totpSettings()->digits);
+    // Verify that the typedchars are all numbers
+    QVERIFY(re.match(typedChars).hasMatch());
 }

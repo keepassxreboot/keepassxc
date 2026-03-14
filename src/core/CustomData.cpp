@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -158,7 +158,6 @@ void CustomData::copyDataFrom(const CustomData* other)
 
     m_data = other->m_data;
 
-    updateLastModified();
     emit reset();
     emitModified();
 }

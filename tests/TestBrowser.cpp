@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -853,4 +853,57 @@ void TestBrowser::testRestrictBrowserKey()
     QCOMPARE(sorted[1]->url(), QString("https://example.com/2b"));
     QCOMPARE(sorted[2]->url(), QString("https://example.com/2"));
     QCOMPARE(sorted[3]->url(), QString("https://example.com/0"));
+}
+
+void TestBrowser::testHideEntry()
+{
+    const auto db = QSharedPointer<Database>::create();
+    auto* root = db->rootGroup();
+
+    const auto entry = new Entry();
+    entry->setGroup(root);
+    entry->beginUpdate();
+    entry->setUrl(QString("https://github.com/"));
+    entry->setUsername(QString("User 1"));
+    entry->setUuid(QUuid::createUuid());
+    entry->setTitle(QString("Name_ 1"));
+    entry->endUpdate();
+
+    // Entry should be found normally
+    auto result = m_browserService->searchEntries(db, "https://github.com", "https://github.com/session");
+    QCOMPARE(result.length(), 1);
+    QCOMPARE(result[0]->url(), QString("https://github.com/"));
+
+    // Hide entry from entry settings, group setting is inherited
+    entry->customData()->set(BrowserService::OPTION_HIDE_ENTRY, TRUE_STR);
+    result = m_browserService->searchEntries(db, "https://github.com", "https://github.com/session");
+    QCOMPARE(result.length(), 0);
+
+    // Disable hide from group settings, entry should be found
+    root->setCustomDataTriState(BrowserService::OPTION_HIDE_ENTRY, Group::Disable);
+    result = m_browserService->searchEntries(db, "https://github.com", "https://github.com/session");
+    QCOMPARE(result.length(), 1);
+
+    // Enable hide from group setting, entry should not be found
+    root->setCustomDataTriState(BrowserService::OPTION_HIDE_ENTRY, Group::Enable);
+    result = m_browserService->searchEntries(db, "https://github.com", "https://github.com/session");
+    QCOMPARE(result.length(), 0);
+
+    // Remove the hide settings from entry, return group setting to inherit
+    entry->customData()->set(BrowserService::OPTION_HIDE_ENTRY, FALSE_STR);
+    root->setCustomDataTriState(BrowserService::OPTION_HIDE_ENTRY, Group::Inherit);
+
+    // Entry should be found again
+    result = m_browserService->searchEntries(db, "https://github.com", "https://github.com/session");
+    QCOMPARE(result.length(), 1);
+
+    // Enable hide from group setting, entry should not be found
+    root->setCustomDataTriState(BrowserService::OPTION_HIDE_ENTRY, Group::Enable);
+    result = m_browserService->searchEntries(db, "https://github.com", "https://github.com/session");
+    QCOMPARE(result.length(), 0);
+
+    // Disable hide from group settings, entry should be found
+    root->setCustomDataTriState(BrowserService::OPTION_HIDE_ENTRY, Group::Disable);
+    result = m_browserService->searchEntries(db, "https://github.com", "https://github.com/session");
+    QCOMPARE(result.length(), 1);
 }

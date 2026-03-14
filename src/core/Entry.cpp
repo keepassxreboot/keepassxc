@@ -1594,6 +1594,7 @@ Entry::PlaceholderType Entry::placeholderType(const QString& placeholder) const
         {QStringLiteral("{PASSWORD}"), PlaceholderType::Password},
         {QStringLiteral("{NOTES}"), PlaceholderType::Notes},
         {QStringLiteral("{TOTP}"), PlaceholderType::Totp},
+        {QStringLiteral("{TIMEOTP}"), PlaceholderType::Totp},
         {QStringLiteral("{URL}"), PlaceholderType::Url},
         {QStringLiteral("{UUID}"), PlaceholderType::Uuid},
         {QStringLiteral("{URL:RMVSCM}"), PlaceholderType::UrlWithoutScheme},

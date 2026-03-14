@@ -261,6 +261,48 @@ namespace
         return entry.take();
     }
 
+    Group* createGroup(Group* rootGroup, const QString& folderName)
+    {
+        Group* currentParentGroup = rootGroup;
+        Group* result = nullptr;
+        const auto groups = folderName.split("/", Qt::SkipEmptyParts);
+
+        // Returns the group name based on depth
+        const auto getGroupName = [&](const int depth) {
+            QString groupName;
+            for (int i = 0; i < depth + 1; ++i) {
+                groupName.append((i == 0 ? "" : "/") + groups[i]);
+            }
+            return groupName;
+        };
+
+        // Create new group(s) always when the path is not found
+        for (int i = 0; i < groups.length(); ++i) {
+            const auto groupName = getGroupName(i);
+            const auto tempGroup = rootGroup->findGroupByPath(groupName);
+
+            if (!tempGroup) {
+                const auto newGroup = new Group();
+                newGroup->setName(groups[i]);
+                newGroup->setUuid(QUuid::createUuid());
+                newGroup->setParent(currentParentGroup);
+                currentParentGroup = newGroup;
+
+                if (groupName == folderName) {
+                    result = newGroup;
+                }
+                continue;
+            }
+
+            if (groupName == folderName) {
+                result = tempGroup;
+            }
+            currentParentGroup = tempGroup;
+        }
+
+        return result;
+    }
+
     void writeVaultToDatabase(const QJsonObject& vault, QSharedPointer<Database> db)
     {
         auto folderField = QString("folders");
@@ -277,12 +319,12 @@ namespace
         // Create groups from folders and store a temporary map of id -> uuid
         QMap<QString, Group*> folderMap;
         for (const auto& folder : vault.value(folderField).toArray()) {
-            auto group = new Group();
-            group->setUuid(QUuid::createUuid());
-            group->setName(folder.toObject().value("name").toString());
-            group->setParent(db->rootGroup());
+            const auto folderId = folder.toObject().value("id").toString();
+            const auto folderName = folder.toObject().value("name").toString();
 
-            folderMap.insert(folder.toObject().value("id").toString(), group);
+            if (const auto group = createGroup(db->rootGroup(), folderName)) {
+                folderMap.insert(folderId, group);
+            }
         }
 
         QString folderId;

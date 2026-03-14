@@ -99,6 +99,9 @@ void TextAttachmentsPreviewWidget::initTypeCombobox()
     // Configure text browser to open external links
     m_ui->previewTextBrowser->setOpenExternalLinks(true);
 
+    m_ui->previewTextBrowser->setTabStopDistance(
+        QFontMetrics(m_ui->previewTextBrowser->font()).horizontalAdvance(QString(4, ' ')));
+
     m_ui->typeComboBox->setCurrentIndex(m_ui->typeComboBox->findData(PlainText));
 
     onTypeChanged(m_ui->typeComboBox->currentIndex());

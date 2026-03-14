@@ -121,8 +121,6 @@ void LightStyle::polish(QWidget* widget)
             palette.setColor(QPalette::Inactive, QPalette::Window, QRgb(0xF5F5F5));
             palette.setColor(QPalette::Disabled, QPalette::Window, QRgb(0xF5F5F5));
         }
-#elif defined(Q_OS_WIN)
-        palette.setColor(QPalette::All, QPalette::Window, QRgb(0xFFFFFF));
 #else
         palette.setColor(QPalette::Active, QPalette::Window, QRgb(0xEFF0F1));
         palette.setColor(QPalette::Inactive, QPalette::Window, QRgb(0xEFF0F1));

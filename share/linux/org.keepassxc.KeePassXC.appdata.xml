@@ -52,6 +52,26 @@
             </ul>
         </description>
     </release>
+    <release version="2.7.12" date="2026-03-10" type="stable">
+      <description>
+        <ul>
+          <li>Passkeys: Set BE and BS flags to true (NOTE: MAY BREAK EXISTING PASSKEYS) [#13042]</li>
+          <li>Support TIMEOTP autotype and entry placeholder [#13117]</li>
+          <li>Browser: Show URLs in browser access dialog [#12906]</li>
+          <li>Bitwarden Import: Add support for nested folders [#13081]</li>
+          <li>Prevent exploits through OpenSSL configurations [#13118, #13124]</li>
+          <li>Auto-Type: Revert change that caused race condition on Linux [#12738]</li>
+          <li>Auto-Type: Fix help button enablement [#12937]</li>
+          <li>Browser: Fix showing correct checkbox value in entry Browser Integration settings [#12980]</li>
+          <li>Browser: Fix setting browser related values to customData [#13026]</li>
+          <li>Passkeys: Add publicKey to register response [#12757]</li>
+          <li>Fix main entry URL validation when using placeholders [#12964]</li>
+          <li>Fix minor font and theme issues [#12814]</li>
+          <li>Fix 'Remove' button in Plugin Data being enabled when no row is selected [#12916]</li>
+          <li>Sanitize attachment file names before saving [#13114]</li>
+        </ul>
+      </description>
+    </release>
     <release version="2.7.11" date="2025-11-23" type="stable">
       <description>
         <ul>

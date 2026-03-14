@@ -137,7 +137,6 @@
              <widget class="QLabel" name="entryTotpLabel">
               <property name="font">
                <font>
-                <pointsize>10</pointsize>
                 <bold>true</bold>
                </font>
               </property>
@@ -433,9 +432,6 @@
                   </property>
                   <property name="readOnly">
                    <bool>true</bool>
-                  </property>
-                  <property name="tabStopDistance">
-                   <double>10.000000000000000</double>
                   </property>
                   <property name="blendIn" stdset="0">
                    <bool>true</bool>

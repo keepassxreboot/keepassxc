@@ -379,7 +379,7 @@ void KeeAgentSettings::toEntry(Entry* entry) const
 }
 
 /**
- * Test if a SSH key is currently set to be used
+ * Test if an SSH key is currently set to be used
  *
  * @return true if key is configured
  */
@@ -393,7 +393,7 @@ bool KeeAgentSettings::keyConfigured() const
 }
 
 /**
- * Read a SSH key based on settings from entry to key.
+ * Read an SSH key based on settings from entry to key.
  *
  * Sets error string on error.
  *
@@ -409,7 +409,7 @@ bool KeeAgentSettings::toOpenSSHKey(const Entry* entry, OpenSSHKey& key, bool de
 }
 
 /**
- * Read a SSH key based on settings to key.
+ * Read an SSH key based on settings to key.
  *
  * Sets error string on error.
  *
