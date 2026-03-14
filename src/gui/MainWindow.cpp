@@ -1705,9 +1705,11 @@ void MainWindow::applySettingsChanges()
     m_ui->actionShowToolbar->setChecked(!hideToolbar);
     m_ui->actionShowMenubar->setChecked(!hideMenubar);
 
+#ifndef Q_OS_MACOS
     // When menubar is hidden with setHidden() the menu keyboard shortcuts are disabled on Wayland,
     // so force height of 0 instead and use maximumHeight() > 0 instead of isVisible() elsewhere
     m_ui->menubar->setMaximumHeight(hideMenubar ? 0 : QWIDGETSIZE_MAX);
+#endif
 
     m_ui->toolBar->setHidden(config()->get(Config::GUI_HideToolbar).toBool());
     auto movable = config()->get(Config::GUI_MovableToolbar).toBool();
@@ -2271,6 +2273,10 @@ bool MainWindowEventFilter::eventFilter(QObject* watched, QEvent* event)
         }
 #endif
     } else if (eventType == QEvent::KeyRelease && watched == mainWindow) {
+#ifdef Q_OS_MACOS
+        // On macOS, the menubar is always visible, so no need to toggle it
+        return false;
+#endif
         auto keyEvent = dynamic_cast<QKeyEvent*>(event);
 #ifdef Q_OS_WIN
         // Windows translates AltGr into CTRL + ALT, this breaks using AltGr when the menubar is hidden

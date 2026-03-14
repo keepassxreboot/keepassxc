@@ -157,6 +157,11 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
     m_generalUi->trayIconAppearance->installEventFilter(mouseWheelFilter);
     m_generalUi->fontSizeComboBox->installEventFilter(mouseWheelFilter);
 
+#ifdef Q_OS_MACOS
+    // The menubar is always shown on macOS, so hide the option to avoid confusion
+    m_generalUi->menubarShowCheckBox->setVisible(false);
+#endif
+
 #ifdef WITH_XC_UPDATECHECK
     connect(m_generalUi->checkForUpdatesOnStartupCheckBox, SIGNAL(toggled(bool)), SLOT(checkUpdatesToggled(bool)));
 #else
