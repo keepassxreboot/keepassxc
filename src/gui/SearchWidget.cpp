@@ -223,6 +223,14 @@ void SearchWidget::setLimitGroup(bool state)
     updateLimitGroup();
 }
 
+void SearchWidget::setSearchGroupName(const QString& name)
+{
+    QString searchText = QString("g:") + name + QString(" ");
+    m_ui->searchEdit->clear();
+    m_ui->searchEdit->setText(searchText);
+    m_ui->searchEdit->setFocus();
+}
+
 void SearchWidget::focusSearch()
 {
     m_ui->searchEdit->setFocus();

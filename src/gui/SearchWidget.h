@@ -46,6 +46,7 @@ public:
     void connectSignals(SignalMultiplexer& mx);
     void setCaseSensitive(bool state);
     void setLimitGroup(bool state);
+    void setSearchGroupName(const QString& name);
 
 protected:
     // Filter key presses in the search field
