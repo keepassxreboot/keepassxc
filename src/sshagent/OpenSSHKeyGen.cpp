@@ -25,8 +25,8 @@
 #include <botan/ed25519.h>
 #include <botan/rsa.h>
 #include <botan/version.h>
-#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(3,11,0)
-  #include <botan/ec_group.h>
+#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(3, 11, 0)
+#include <botan/ec_group.h>
 #endif
 
 namespace OpenSSHKeyGen
