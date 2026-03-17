@@ -2659,5 +2659,5 @@ void TestGui::testSearchHere()
     QVERIFY(searchWidget->hasFocus());
 
     QLineEdit* searchEdit = searchWidget->findChild<QLineEdit*>("searchEdit");
-    QCOMPARE(searchEdit->text(), QString("g:Entertainment "));
+    QCOMPARE(searchEdit->text(), QString("g:\"/NewDatabase/Entertainment\" "));
 }

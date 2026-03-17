@@ -1042,6 +1042,7 @@ void MainWindow::updateMenuActionState()
     m_ui->actionGroupDownloadFavicons->setVisible(!inRecycleBin);
 #endif
     m_ui->actionGroupDownloadFavicons->setEnabled(groupSelected && groupHasEntries && !inRecycleBin);
+    m_ui->actionGroupSearchHere->setEnabled(groupSelected);
 
     // Database Menu
     m_ui->actionDatabaseSave->setEnabled(databaseUnlocked && m_ui->tabWidget->canSave());
@@ -1541,10 +1542,10 @@ void MainWindow::clearSSHAgent()
 void MainWindow::searchInGroup()
 {
     auto dbWidget = m_ui->tabWidget->currentDatabaseWidget();
-    if (dbWidget && dbWidget->isVisible() && dbWidget->isEntryViewActive()) {
+    if (dbWidget && dbWidget->isVisible() && dbWidget->isEntryViewActive() && dbWidget->groupView()->currentGroup()) {
         focusSearchWidget();
         Group* currentGroup = dbWidget->groupView()->currentGroup();
-        m_searchWidget->setSearchGroupName(currentGroup->name());
+        m_searchWidget->setSearchGroupName(currentGroup->fullPath());
     }
 }
 
@@ -2169,6 +2170,7 @@ void MainWindow::initActionCollection()
                     m_ui->actionGroupSortAsc,
                     m_ui->actionGroupSortDesc,
                     m_ui->actionGroupEmptyRecycleBin,
+                    m_ui->actionGroupSearchHere,
                     // Tools Menu
                     m_ui->actionPasswordGenerator,
                     m_ui->actionClearSSHAgent,
