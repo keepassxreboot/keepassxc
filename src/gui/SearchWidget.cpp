@@ -228,7 +228,6 @@ void SearchWidget::setSearchGroupName(const QString& name)
     // Quote and escape the group name so it is treated as a single group term,
     // even if it contains spaces or special characters.
     QString escapedName = name;
-    escapedName.replace("\\", "\\\\");
     escapedName.replace("\"", "\\\"");
     QString searchText = QStringLiteral("g:\"") + escapedName + QStringLiteral("\" ");
 
