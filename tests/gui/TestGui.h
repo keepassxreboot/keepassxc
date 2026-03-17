@@ -71,9 +71,13 @@ private slots:
     void testTrayRestoreHide();
     void testShortcutConfig();
     void testMenuActionStates();
+    void testSearchHere();
 
 private:
     void addCannedEntries();
+    void addGroup(const QString& name);
+    void addEntry(const QString& groupName, const QString& title, const QString& username, const QString& password);
+    void addCannedGroupsAndEntries();
     void checkDatabase(const QString& filePath, const QString& expectedDbName);
     void checkDatabase(const QString& filePath = {});
     void triggerAction(const QString& name);
