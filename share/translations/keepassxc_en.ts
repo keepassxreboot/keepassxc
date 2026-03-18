@@ -6433,11 +6433,11 @@ Expect some bugs and minor issues, this version is meant for testing purposes.</
         </translation>
     </message>
     <message>
-        <source>Search Here...</source>
+        <source>Search Entries in selected Group</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Search Entries in selected Group</source>
+        <source>Search Here…</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

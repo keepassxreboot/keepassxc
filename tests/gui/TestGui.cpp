@@ -2500,6 +2500,17 @@ void TestGui::addCannedEntries()
     QTest::mouseClick(entryNewWidget, Qt::LeftButton);
     QTest::keyClicks(titleEdit, "something 3");
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+
+    addGroup("Finance");
+    addGroup("Entertainment");
+
+    addEntry("Finance", "Chase", "user1", "password");
+    addEntry("Finance", "Amex", "user1", "password123");
+    addEntry("Finance", "Capital One", "user1", "password456");
+
+    addEntry("Entertainment", "Netflix", "user1", "password");
+    addEntry("Entertainment", "Hulu", "user1", "password321");
+    addEntry("Entertainment", "Apple TV", "user1", "password123");
 }
 
 void TestGui::addGroup(const QString& name)
@@ -2545,20 +2556,6 @@ void TestGui::addEntry(const QString& groupName, const QString& title, const QSt
 
     QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::ViewMode);
     m_dbWidget->groupView()->setCurrentGroup(m_db->rootGroup());
-}
-
-void TestGui::addCannedGroupsAndEntries()
-{
-    addGroup("Finance");
-    addGroup("Entertainment");
-
-    addEntry("Finance", "Chase", "user1", "password");
-    addEntry("Finance", "Amex", "user1", "password123");
-    addEntry("Finance", "Capital One", "user1", "password456");
-
-    addEntry("Entertainment", "Netflix", "user1", "password");
-    addEntry("Entertainment", "Hulu", "user1", "password321");
-    addEntry("Entertainment", "Apple TV", "user1", "password123");
 }
 
 void TestGui::checkDatabase(const QString& filePath, const QString& expectedDbName)
@@ -2646,7 +2643,7 @@ void TestGui::clickIndex(const QModelIndex& index,
 
 void TestGui::testSearchHere()
 {
-    addCannedGroupsAndEntries();
+    addCannedEntries();
 
     QToolBar* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
     SearchWidget* searchWidget = toolBar->findChild<SearchWidget*>("SearchWidget");
@@ -2659,5 +2656,6 @@ void TestGui::testSearchHere()
     QVERIFY(searchWidget->hasFocus());
 
     QLineEdit* searchEdit = searchWidget->findChild<QLineEdit*>("searchEdit");
-    QCOMPARE(searchEdit->text(), QString("g:\"/NewDatabase/Entertainment\" "));
+    QString expectedText = QString("g:\"") + entertainmentGroup->fullPath() + QString("\" ");
+    QCOMPARE(searchEdit->text(), expectedText);
 }

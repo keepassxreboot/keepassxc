@@ -1371,7 +1371,7 @@
   </action>
   <action name="actionGroupSearchHere">
    <property name="text">
-    <string>Search Here...</string>
+    <string>Search Here…</string>
    </property>
    <property name="toolTip">
     <string>Search Entries in selected Group</string>
