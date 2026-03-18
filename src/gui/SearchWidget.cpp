@@ -231,7 +231,6 @@ void SearchWidget::setSearchGroupName(const QString& name)
     escapedName.replace("\"", "\\\"");
     QString searchText = QStringLiteral("g:\"") + escapedName + QStringLiteral("\" ");
 
-    m_ui->searchEdit->clear();
     m_ui->searchEdit->setText(searchText);
     m_ui->searchEdit->setFocus();
 }
