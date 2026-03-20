@@ -49,10 +49,7 @@ public:
         Encrypt
     };
 
-    explicit SymmetricCipher()
-        : m_mode(InvalidMode)
-    {
-    }
+    explicit SymmetricCipher() = default;
     ~SymmetricCipher() = default;
 
     bool isInitialized() const;
@@ -79,7 +76,7 @@ private:
     static QString modeToString(const Mode mode);
 
     QString m_error;
-    Mode m_mode;
+    Mode m_mode{InvalidMode};
     QSharedPointer<Botan::Cipher_Mode> m_cipher;
 
     Q_DISABLE_COPY(SymmetricCipher)
