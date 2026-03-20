@@ -49,7 +49,10 @@ public:
         Encrypt
     };
 
-    explicit SymmetricCipher() = default;
+    explicit SymmetricCipher()
+        : m_mode(InvalidMode)
+    {
+    }
     ~SymmetricCipher() = default;
 
     bool isInitialized() const;
