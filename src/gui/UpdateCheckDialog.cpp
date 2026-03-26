@@ -29,7 +29,7 @@ UpdateCheckDialog::UpdateCheckDialog(QWidget* parent)
     , m_ui(new Ui::UpdateCheckDialog())
 {
     m_ui->setupUi(this);
-    setWindowFlags(Qt::Window);
+        setWindowFlags(Qt::Dialog | Qt::WindowTitleHint | Qt::WindowCloseButtonHint);
     setAttribute(Qt::WA_DeleteOnClose);
 
     m_ui->iconLabel->setPixmap(icons()->applicationIcon().pixmap(48));
