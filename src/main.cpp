@@ -207,7 +207,7 @@ int main(int argc, char** argv)
     for (const QString& filename : fileNames) {
         QString password;
         if (pwstdin) {
-            // we always need consume a line of STDIN if --pw-stdin is set to clear out the
+            // we always need to consume a line of STDIN if --pw-stdin is set to clear out the
             // buffer for native messaging, even if the specified file does not exist
             QTextStream out(stdout, QIODevice::WriteOnly);
             out << QObject::tr("Database password: ") << Qt::flush;
