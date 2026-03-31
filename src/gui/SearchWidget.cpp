@@ -66,6 +66,11 @@ SearchWidget::SearchWidget(QWidget* parent)
     m_actionCaseSensitive->setObjectName("actionSearchCaseSensitive");
     m_actionCaseSensitive->setCheckable(true);
 
+    m_actionAccentSensitive = m_searchMenu->addAction(tr("Accent sensitive"), this, SLOT(updateAccentSensitive()));
+    m_actionAccentSensitive->setObjectName("actionSearchAccentSensitive");
+    m_actionAccentSensitive->setCheckable(true);
+    m_actionAccentSensitive->setChecked(config()->get(Config::GUI_SearchAccentSensitive).toBool());
+
     m_actionLimitGroup = m_searchMenu->addAction(tr("Limit search to selected group"), this, SLOT(updateLimitGroup()));
     m_actionLimitGroup->setObjectName("actionSearchLimitGroup");
     m_actionLimitGroup->setCheckable(true);
@@ -154,6 +159,7 @@ void SearchWidget::connectSignals(SignalMultiplexer& mx)
     mx.connect(this, SIGNAL(search(QString)), SLOT(search(QString)));
     mx.connect(this, SIGNAL(saveSearch(QString)), SLOT(saveSearch(QString)));
     mx.connect(this, SIGNAL(caseSensitiveChanged(bool)), SLOT(setSearchCaseSensitive(bool)));
+    mx.connect(this, SIGNAL(accentSensitiveChanged(bool)), SLOT(setSearchAccentSensitive(bool)));
     mx.connect(this, SIGNAL(limitGroupChanged(bool)), SLOT(setSearchLimitGroup(bool)));
     mx.connect(this, SIGNAL(downPressed()), SLOT(focusOnEntries()));
     mx.connect(SIGNAL(requestSearch(QString)), this, SLOT(performRequestedSearch(QString)));
@@ -171,6 +177,7 @@ void SearchWidget::databaseChanged(DatabaseWidget* dbWidget)
         m_ui->searchEdit->setText(dbWidget->getCurrentSearch());
         // Enforce search policy
         emit caseSensitiveChanged(m_actionCaseSensitive->isChecked());
+        emit accentSensitiveChanged(m_actionAccentSensitive->isChecked());
         emit limitGroupChanged(m_actionLimitGroup->isChecked());
     } else {
         clearSearch();
@@ -203,6 +210,12 @@ void SearchWidget::resetSearchClearTimer()
 void SearchWidget::updateCaseSensitive()
 {
     emit caseSensitiveChanged(m_actionCaseSensitive->isChecked());
+}
+
+void SearchWidget::updateAccentSensitive()
+{
+    config()->set(Config::GUI_SearchAccentSensitive, m_actionAccentSensitive->isChecked());
+    emit accentSensitiveChanged(m_actionAccentSensitive->isChecked());
 }
 
 void SearchWidget::updateLimitGroup()

@@ -55,6 +55,7 @@ signals:
     void search(const QString& text);
     void searchCanceled();
     void caseSensitiveChanged(bool state);
+    void accentSensitiveChanged(bool state);
     void limitGroupChanged(bool state);
     void escapePressed();
     void downPressed();
@@ -72,6 +73,7 @@ private slots:
     void startSearchTimer();
     void startSearch();
     void updateCaseSensitive();
+    void updateAccentSensitive();
     void updateLimitGroup();
     void toggleHelp();
     void showSearchMenu();
@@ -85,6 +87,7 @@ private:
     QTimer* m_searchTimer;
     QTimer* m_clearSearchTimer;
     QAction* m_actionCaseSensitive;
+    QAction* m_actionAccentSensitive;
     QAction* m_actionLimitGroup;
     QAction* m_actionWaitForEnter;
     QMenu* m_searchMenu;

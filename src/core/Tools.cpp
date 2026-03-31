@@ -454,6 +454,33 @@ namespace Tools
         return string.replace("&", "&&");
     }
 
+    QString stripDiacritics(const QString& str)
+    {
+        // Fast path: pure ASCII has no diacritics to strip
+        bool ascii = true;
+        for (const auto& ch : str) {
+            if (ch.unicode() > 127) {
+                ascii = false;
+                break;
+            }
+        }
+        if (ascii) {
+            return str;
+        }
+
+        // Strip combining marks after NFD decomposition
+        auto decomposed = str.normalized(QString::NormalizationForm_D);
+        QString result;
+        result.reserve(decomposed.size());
+        for (const auto& ch : decomposed) {
+            if (ch.category() != QChar::Mark_NonSpacing && ch.category() != QChar::Mark_SpacingCombining
+                && ch.category() != QChar::Mark_Enclosing) {
+                result.append(ch);
+            }
+        }
+        return result;
+    }
+
     QVariantMap qo2qvm(const QObject* object, const QStringList& ignoredProperties)
     {
         QVariantMap result;
