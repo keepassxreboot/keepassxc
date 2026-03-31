@@ -1814,6 +1814,12 @@ void DatabaseWidget::setSearchCaseSensitive(bool state)
     refreshSearch();
 }
 
+void DatabaseWidget::setSearchAccentSensitive(bool state)
+{
+    m_entrySearcher->setAccentSensitive(state);
+    refreshSearch();
+}
+
 void DatabaseWidget::setSearchLimitGroup(bool state)
 {
     m_searchLimitGroup = state;

@@ -50,6 +50,7 @@ namespace Tools
     QString cleanFilename(QString filename);
     QString cleanUsername();
     QString escapeAccelerators(QString string);
+    QString stripDiacritics(const QString& str);
 
     template <class T> QSet<T> asSet(const QList<T>& a)
     {

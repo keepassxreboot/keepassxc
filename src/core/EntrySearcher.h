@@ -54,7 +54,7 @@ public:
         bool exclude;
     };
 
-    explicit EntrySearcher(bool caseSensitive = false, bool skipProtected = false);
+    explicit EntrySearcher(bool caseSensitive = false, bool skipProtected = false, bool accentSensitive = true);
 
     QList<Entry*> search(const QList<SearchTerm>& searchTerms, const Group* baseGroup, bool forceSearch = false);
     QList<Entry*> search(const QString& searchString, const Group* baseGroup, bool forceSearch = false);
@@ -66,12 +66,15 @@ public:
 
     void setCaseSensitive(bool state);
     bool isCaseSensitive() const;
+    void setAccentSensitive(bool state);
+    bool isAccentSensitive() const;
 
 private:
     bool searchEntryImpl(const Entry* entry);
     void parseSearchTerms(const QString& searchString);
 
     bool m_caseSensitive;
+    bool m_accentSensitive;
     bool m_skipProtected;
     QList<SearchTerm> m_searchTerms;
 
