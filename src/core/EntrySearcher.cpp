@@ -22,9 +22,8 @@
 #include "core/Group.h"
 #include "core/Tools.h"
 
-EntrySearcher::EntrySearcher(bool caseSensitive, bool skipProtected, bool accentSensitive)
+EntrySearcher::EntrySearcher(bool caseSensitive, bool skipProtected)
     : m_caseSensitive(caseSensitive)
-    , m_accentSensitive(accentSensitive)
     , m_skipProtected(skipProtected)
 {
 }
@@ -142,16 +141,6 @@ bool EntrySearcher::isCaseSensitive() const
     return m_caseSensitive;
 }
 
-void EntrySearcher::setAccentSensitive(bool state)
-{
-    m_accentSensitive = state;
-}
-
-bool EntrySearcher::isAccentSensitive() const
-{
-    return m_accentSensitive;
-}
-
 bool EntrySearcher::searchEntryImpl(const Entry* entry)
 {
     // Pre-load in case they are needed
@@ -164,14 +153,14 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
         hierarchy = entry->group()->hierarchy().join('/').prepend("/");
     }
 
-    auto normalize = [this](const QString& str) -> QString {
-        return m_accentSensitive ? str : Tools::stripDiacritics(str);
-    };
-
     // By default, empty term matches every entry.
     // However when skipping protected fields, we will reject everything instead
     bool found = !m_skipProtected;
     for (const auto& term : m_searchTerms) {
+        auto normalize = [&term](const QString& str) -> QString {
+            return term.accentSensitive ? str : Tools::stripDiacritics(str);
+        };
+
         auto anyMatch = [&](const QStringList& list) -> bool {
             for (const auto& item : list) {
                 if (term.regex.match(normalize(item)).hasMatch())
@@ -259,8 +248,7 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
             found = term.regex.match(normalize(entry->resolvePlaceholder(entry->title()))).hasMatch()
                     || term.regex.match(normalize(entry->resolvePlaceholder(entry->username()))).hasMatch()
                     || term.regex.match(normalize(entry->resolvePlaceholder(entry->url()))).hasMatch()
-                    || anyMatch(entry->tagList())
-                    || term.regex.match(normalize(entry->notes())).hasMatch();
+                    || anyMatch(entry->tagList()) || term.regex.match(normalize(entry->notes())).hasMatch();
         }
 
         // negate the result if exclude:
@@ -320,9 +308,12 @@ void EntrySearcher::parseSearchTerms(const QString& searchString)
 
         auto mods = result.captured(1);
 
-        // Normalize term for accent-insensitive search
+        // Exact match modifier implies accent-sensitive matching
+        term.accentSensitive = mods.contains("+");
+
+        // Normalize term for accent-insensitive search (unless exact match)
         auto wordForRegex = term.word;
-        if (!m_accentSensitive) {
+        if (!term.accentSensitive) {
             wordForRegex = Tools::stripDiacritics(wordForRegex);
         }
 
@@ -331,7 +322,7 @@ void EntrySearcher::parseSearchTerms(const QString& searchString)
         if (!mods.contains("*")) {
             opts |= Tools::RegexConvertOpts::WILDCARD_ALL;
         }
-        if (mods.contains("+")) {
+        if (term.accentSensitive) {
             opts |= Tools::RegexConvertOpts::EXACT_MATCH;
         }
         term.regex = Tools::convertToRegex(wordForRegex, opts);

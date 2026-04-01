@@ -93,7 +93,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     , m_tagView(new TagView(this))
     , m_saveAttempts(0)
     , m_remoteSettings(new RemoteSettings(m_db, this))
-    , m_entrySearcher(new EntrySearcher(false, false, config()->get(Config::GUI_SearchAccentSensitive).toBool()))
+    , m_entrySearcher(new EntrySearcher())
 {
     Q_ASSERT(m_db);
 
@@ -1821,12 +1821,6 @@ void DatabaseWidget::deleteSearch(const QString& name)
 void DatabaseWidget::setSearchCaseSensitive(bool state)
 {
     m_entrySearcher->setCaseSensitive(state);
-    refreshSearch();
-}
-
-void DatabaseWidget::setSearchAccentSensitive(bool state)
-{
-    m_entrySearcher->setAccentSensitive(state);
     refreshSearch();
 }
 
