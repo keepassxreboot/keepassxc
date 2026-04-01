@@ -473,15 +473,7 @@ void TestEntrySearcher::testAccentInsensitiveSearch()
     entry4->setTitle("unrelated");
     entry4->setUsername("user4");
 
-    // Default is accent-sensitive, so ASCII query should NOT match accented entry
-    m_searchResult = m_entrySearcher.search("pouzivatel", m_rootGroup);
-    QCOMPARE(m_searchResult.count(), 1);
-    QVERIFY(m_searchResult.contains(entry2));
-
-    // Enable accent-insensitive search
-    m_entrySearcher.setAccentSensitive(false);
-
-    // ASCII query matches accented entry
+    // Default search is accent-insensitive: ASCII query matches accented entry
     m_searchResult = m_entrySearcher.search("pouzivatel", m_rootGroup);
     QCOMPARE(m_searchResult.count(), 2);
     QVERIFY(m_searchResult.contains(entry1));
@@ -504,11 +496,23 @@ void TestEntrySearcher::testAccentInsensitiveSearch()
     QVERIFY(m_searchResult.contains(entry1));
     QVERIFY(m_searchResult.contains(entry2));
 
-    // Exact match modifier works with accent folding
+    // Exact match (+) forces accent-sensitive: ASCII doesn't match accented
     m_searchResult = m_entrySearcher.search("+pouzivatel", m_rootGroup);
-    QCOMPARE(m_searchResult.count(), 2);
-    QVERIFY(m_searchResult.contains(entry1));
+    QCOMPARE(m_searchResult.count(), 1);
     QVERIFY(m_searchResult.contains(entry2));
+
+    // Exact match (+) with accented query only matches accented entry
+    m_searchResult = m_entrySearcher.search(QString::fromUtf8("+používateľ"), m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 1);
+    QVERIFY(m_searchResult.contains(entry1));
+
+    // Exact match (+) with café only matches café, not cafe
+    m_searchResult = m_entrySearcher.search("+cafe", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 0);
+
+    m_searchResult = m_entrySearcher.search(QString::fromUtf8("+café"), m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 1);
+    QVERIFY(m_searchResult.contains(entry3));
 
     // Exclude modifier works with accent folding
     m_searchResult = m_entrySearcher.search("!pouzivatel", m_rootGroup);
@@ -539,7 +543,7 @@ void TestEntrySearcher::testAccentInsensitiveSearch()
     QCOMPARE(m_searchResult.count(), 1);
     QVERIFY(m_searchResult.contains(entry5));
 
-    // Case-sensitive combined with accent-insensitive
+    // Case-sensitive combined with accent-insensitive (default)
     m_entrySearcher.setCaseSensitive(true);
     m_searchResult = m_entrySearcher.search("Pouzivatel", m_rootGroup);
     QCOMPARE(m_searchResult.count(), 0);
@@ -548,10 +552,4 @@ void TestEntrySearcher::testAccentInsensitiveSearch()
     QVERIFY(m_searchResult.contains(entry1));
     QVERIFY(m_searchResult.contains(entry2));
     m_entrySearcher.setCaseSensitive(false);
-
-    // Re-enable accent-sensitive mode
-    m_entrySearcher.setAccentSensitive(true);
-    m_searchResult = m_entrySearcher.search("pouzivatel", m_rootGroup);
-    QCOMPARE(m_searchResult.count(), 1);
-    QVERIFY(m_searchResult.contains(entry2));
 }

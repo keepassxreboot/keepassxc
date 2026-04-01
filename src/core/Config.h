@@ -107,7 +107,6 @@ public:
         GUI_CheckForUpdates,
         GUI_CheckForUpdatesIncludeBetas,
         GUI_SearchWaitForEnter,
-        GUI_SearchAccentSensitive,
         GUI_ShowExpiredEntriesOnDatabaseUnlock,
         GUI_ShowExpiredEntriesOnDatabaseUnlockOffsetDays,
         GUI_FontSizeOffset,
