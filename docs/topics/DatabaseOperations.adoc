@@ -143,16 +143,6 @@ After an entry is configured with TOTP, you will see a clock icon in that entry'
 .TOTP Usage
 image::totp_usage_examples.png[]
 
-==== Entry Icons
-You can select an icon to be displayed with each entry for easy identification. KeePassXC comes with a set of default icons that you can use or you can use your own custom icons. If you defined a URL with an entry, you can also download the favorite icon for that particular website.
-
-NOTE: To delete a custom icon, go to <<Database Maintenance>> where you can purge unused icons and delete one or more icons at a time.
-
-.Entry icon selection
-image::edit_entry_icons.png[]
-
-TIP: Each KeePass application has different default icons. If you use a mobile app or KeePass2, be aware that the default icons may not be exactly correspond to the KeePassXC icons.
-
 ==== Deleting an Entry
 To delete an entry, perform the following steps:
 
@@ -207,9 +197,9 @@ KeePassXC can handle URLs in various ways. Standard URLs will be opened in your 
 |===
 
 === Advanced Entry Handling
-KeePassXC offers several advanced options for managing your database entries. Additional Attributes allow you to store extra information required by some applications and websites. Attachments enable you to attach files to entries, stored as encrypted binaries, which can be previewed directly in the application (text and images). Icons can be selected or downloaded for easy identification of entries. The Properties section lets you view basic properties such as creation, modification, and last accessed times, and retrieve an entry's UUID for references. KeePassXC also maintains a history of changes to entries, allowing you to view, restore, or delete previous versions of an entry.
+KeePassXC offers several advanced options for managing your database entries. Attributes allow you to store extra information required by some applications and websites. Attachments enable you to attach files to entries, stored as encrypted binaries, which can be previewed directly in the application (text and images). The Style page lets you select icons and customize foreground and background colors for entries. The Properties section lets you view basic properties such as creation, modification, and last accessed times, and retrieve an entry's UUID for references. KeePassXC also maintains a history of changes to entries, allowing you to view, restore, or delete previous versions of an entry.
 
-==== Additional Attributes
+==== Attributes
 A lot of applications and web sites now require providing additional information when you create accounts. The additional information is used to block hackers if any suspicious activity is detected. In addition, the additional information you provide can be used to reset passwords if you forget them. You can also store arbitrary information here that can be copied to the clipboard or Auto-Typed using the `{S:<ATTR_NAME>}` action code.
 
 To protect an attribute from being displayed by default, activate the _Protect_ checkbox *(A)*. To show the contents of the attribute while keeping it protected, press the _Reveal_ button *(B)*.
@@ -225,11 +215,20 @@ NOTE: When you try to open the attached file, KeePassXC extracts the attachment 
 .Attachments interface
 image::edit_entry_attachments.png[]
 
-==== Foreground and Background Color
-You can change the foreground *(A)* and/or background *(B)* color that this entry will use in the entry lists. Click the corresponding box to open the color picker dialog.
+==== Style
+The Style page lets you customize the visual appearance of an entry. You can change the foreground and/or background color that this entry will use in the entry lists by enabling the corresponding checkbox and clicking the color button to open the color picker dialog.
 
 .Color picker dialog
 image::edit_entry_colors.png[]
+
+You can also select an icon to be displayed with each entry for easy identification. KeePassXC comes with a set of default icons that you can use or you can use your own custom icons. If you defined a URL with an entry, you can also download the favorite icon for that particular website.
+
+NOTE: To delete a custom icon, go to <<Database Maintenance>> where you can purge unused icons and delete one or more icons at a time.
+
+.Entry icon selection
+image::edit_entry_icons.png[]
+
+TIP: Each KeePass application has different default icons. If you use a mobile app or KeePass2, be aware that the default icons may not be exactly correspond to the KeePassXC icons.
 
 ==== Properties
 KeePassXC lets you view the basic properties such as date and time of creation, modification, and when last accessed. This is also where you can retrieve an entry's UUID for use in references.
