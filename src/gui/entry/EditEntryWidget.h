@@ -54,7 +54,8 @@ class EntryURLModel;
 
 namespace Ui
 {
-    class EditEntryWidgetAdvanced;
+    class EditEntryWidgetAttributes;
+    class EditEntryWidgetAttachments;
     class EditEntryWidgetAutoType;
     class EditEntryWidgetBrowser;
     class EditEntryWidgetSSHAgent;
@@ -80,8 +81,9 @@ public:
     enum class Page
     {
         Main,
-        Advanced,
-        Icon,
+        Attributes,
+        Attachments,
+        Style,
         AutoType,
         Browser,
         SSHAgent,
@@ -152,8 +154,9 @@ private slots:
 
 private:
     void setupMain();
-    void setupAdvanced();
-    void setupIcon();
+    void setupAttributes();
+    void setupAttachments();
+    void setupStyle();
     void setupAutoType();
 #ifdef WITH_XC_BROWSER
     void setupBrowser();
@@ -188,7 +191,8 @@ private:
     QString m_pendingPrivateKey;
 #endif
     const QScopedPointer<Ui::EditEntryWidgetMain> m_mainUi;
-    const QScopedPointer<Ui::EditEntryWidgetAdvanced> m_advancedUi;
+    const QScopedPointer<Ui::EditEntryWidgetAttributes> m_attributesUi;
+    const QScopedPointer<Ui::EditEntryWidgetAttachments> m_attachmentsUi;
     const QScopedPointer<Ui::EditEntryWidgetAutoType> m_autoTypeUi;
     const QScopedPointer<Ui::EditEntryWidgetSSHAgent> m_sshAgentUi;
     const QScopedPointer<Ui::EditEntryWidgetHistory> m_historyUi;
@@ -197,8 +201,14 @@ private:
     const QScopedPointer<CustomData> m_customData;
 
     QScrollArea* const m_mainWidget;
-    QWidget* const m_advancedWidget;
+    QWidget* const m_attributesWidget;
+    QWidget* const m_attachmentsWidget;
     EditWidgetIcons* const m_iconsWidget;
+    QWidget* const m_styleWidget;
+    QCheckBox* m_fgColorCheckBox;
+    QPushButton* m_fgColorButton;
+    QCheckBox* m_bgColorCheckBox;
+    QPushButton* m_bgColorButton;
     QWidget* const m_autoTypeWidget;
 #ifdef WITH_XC_SSHAGENT
     QWidget* const m_sshAgentWidget;

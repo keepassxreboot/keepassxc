@@ -17,7 +17,8 @@
  */
 
 #include "EditEntryWidget.h"
-#include "ui_EditEntryWidgetAdvanced.h"
+#include "ui_EditEntryWidgetAttachments.h"
+#include "ui_EditEntryWidgetAttributes.h"
 #include "ui_EditEntryWidgetAutoType.h"
 #include "ui_EditEntryWidgetBrowser.h"
 #include "ui_EditEntryWidgetHistory.h"
@@ -26,6 +27,7 @@
 
 #include <QColorDialog>
 #include <QDesktopServices>
+#include <QLabel>
 #include <QSortFilterProxyModel>
 #include <QStringListModel>
 
@@ -65,7 +67,8 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     : EditWidget(parent)
     , m_entry(nullptr)
     , m_mainUi(new Ui::EditEntryWidgetMain())
-    , m_advancedUi(new Ui::EditEntryWidgetAdvanced())
+    , m_attributesUi(new Ui::EditEntryWidgetAttributes())
+    , m_attachmentsUi(new Ui::EditEntryWidgetAttachments())
     , m_autoTypeUi(new Ui::EditEntryWidgetAutoType())
     , m_sshAgentUi(new Ui::EditEntryWidgetSSHAgent())
     , m_historyUi(new Ui::EditEntryWidgetHistory())
@@ -73,8 +76,14 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     , m_attachments(new EntryAttachments())
     , m_customData(new CustomData())
     , m_mainWidget(new QScrollArea(this))
-    , m_advancedWidget(new QWidget(this))
+    , m_attributesWidget(new QWidget(this))
+    , m_attachmentsWidget(new QWidget(this))
     , m_iconsWidget(new EditWidgetIcons(this))
+    , m_styleWidget(new QWidget(this))
+    , m_fgColorCheckBox(nullptr)
+    , m_fgColorButton(nullptr)
+    , m_bgColorCheckBox(nullptr)
+    , m_bgColorButton(nullptr)
     , m_autoTypeWidget(new QWidget(this))
 #ifdef WITH_XC_SSHAGENT
     , m_sshAgentWidget(new QWidget(this))
@@ -87,7 +96,7 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     , m_editWidgetProperties(new EditWidgetProperties(this))
     , m_historyWidget(new QWidget(this))
     , m_entryAttributes(new EntryAttributes(this))
-    , m_attributesModel(new EntryAttributesModel(m_advancedWidget))
+    , m_attributesModel(new EntryAttributesModel(m_attributesWidget))
     , m_historyModel(new EntryHistoryModel(this))
     , m_sortModel(new QSortFilterProxyModel(this))
     , m_autoTypeAssoc(new AutoTypeAssociations(this))
@@ -98,8 +107,9 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     , m_usernameCompleterModel(new QStringListModel(this))
 {
     setupMain();
-    setupAdvanced();
-    setupIcon();
+    setupAttributes();
+    setupAttachments();
+    setupStyle();
     setupAutoType();
 
 #ifdef WITH_XC_SSHAGENT
@@ -156,10 +166,12 @@ QWidget* EditEntryWidget::widgetForPage(Page page) const
     switch (page) {
     case Page::Main:
         return m_mainWidget;
-    case Page::Advanced:
-        return m_advancedWidget;
-    case Page::Icon:
-        return m_iconsWidget;
+    case Page::Attributes:
+        return m_attributesWidget;
+    case Page::Attachments:
+        return m_attachmentsWidget;
+    case Page::Style:
+        return m_styleWidget;
     case Page::AutoType:
         return m_autoTypeWidget;
     case Page::Browser:
@@ -185,7 +197,7 @@ QWidget* EditEntryWidget::widgetForPage(Page page) const
 void EditEntryWidget::setupMain()
 {
     m_mainUi->setupUi(m_mainWidget);
-    addPage(tr("Entry"), icons()->icon("document-edit"), m_mainWidget);
+    addPage(tr("General"), icons()->icon("document-edit"), m_mainWidget);
 
     // Disable mouse wheel grab when scrolling
     m_mainUi->usernameComboBox->installEventFilter(new MouseWheelEventFilter(this));
@@ -224,42 +236,83 @@ void EditEntryWidget::setupMain()
     connect(m_mainUi->expirePresets->menu(), SIGNAL(triggered(QAction*)), this, SLOT(useExpiryPreset(QAction*)));
 }
 
-void EditEntryWidget::setupAdvanced()
+void EditEntryWidget::setupAttributes()
 {
-    m_advancedUi->setupUi(m_advancedWidget);
-    addPage(tr("Advanced"), icons()->icon("preferences-other"), m_advancedWidget);
-
-    m_advancedUi->attachmentsWidget->setReadOnly(false);
-    m_advancedUi->attachmentsWidget->setButtonsVisible(true);
-
-    connect(m_advancedUi->attachmentsWidget,
-            &EntryAttachmentsWidget::errorOccurred,
-            this,
-            [this](const QString& error) { showMessage(error, MessageWidget::Error); });
+    m_attributesUi->setupUi(m_attributesWidget);
+    addPage(tr("Attributes"), icons()->icon("format-list-bulleted-square"), m_attributesWidget);
 
     m_attributesModel->setEntryAttributes(m_entryAttributes);
-    m_advancedUi->attributesView->setModel(m_attributesModel);
+    m_attributesUi->attributesView->setModel(m_attributesModel);
 
     // clang-format off
-    connect(m_advancedUi->addAttributeButton, SIGNAL(clicked()), SLOT(insertAttribute()));
-    connect(m_advancedUi->editAttributeButton, SIGNAL(clicked()), SLOT(editCurrentAttribute()));
-    connect(m_advancedUi->removeAttributeButton, SIGNAL(clicked()), SLOT(removeCurrentAttribute()));
-    connect(m_advancedUi->protectAttributeButton, SIGNAL(toggled(bool)), SLOT(protectCurrentAttribute(bool)));
-    connect(m_advancedUi->revealAttributeButton, SIGNAL(clicked(bool)), SLOT(toggleCurrentAttributeVisibility()));
-    connect(m_advancedUi->attributesView->selectionModel(),
+    connect(m_attributesUi->addAttributeButton, SIGNAL(clicked()), SLOT(insertAttribute()));
+    connect(m_attributesUi->editAttributeButton, SIGNAL(clicked()), SLOT(editCurrentAttribute()));
+    connect(m_attributesUi->removeAttributeButton, SIGNAL(clicked()), SLOT(removeCurrentAttribute()));
+    connect(m_attributesUi->protectAttributeButton, SIGNAL(toggled(bool)), SLOT(protectCurrentAttribute(bool)));
+    connect(m_attributesUi->revealAttributeButton, SIGNAL(clicked(bool)), SLOT(toggleCurrentAttributeVisibility()));
+    connect(m_attributesUi->attributesView->selectionModel(),
             SIGNAL(currentChanged(QModelIndex,QModelIndex)),
             SLOT(updateCurrentAttribute()));
-    connect(m_advancedUi->fgColorButton, SIGNAL(clicked()), SLOT(pickColor()));
-    connect(m_advancedUi->bgColorButton, SIGNAL(clicked()), SLOT(pickColor()));
     // clang-format on
 }
 
-void EditEntryWidget::setupIcon()
+void EditEntryWidget::setupAttachments()
+{
+    m_attachmentsUi->setupUi(m_attachmentsWidget);
+    addPage(tr("Attachments"), icons()->icon("paperclip"), m_attachmentsWidget);
+
+    m_attachmentsUi->attachmentsWidget->setReadOnly(false);
+    m_attachmentsUi->attachmentsWidget->setButtonsVisible(true);
+
+    connect(m_attachmentsUi->attachmentsWidget,
+            &EntryAttachmentsWidget::errorOccurred,
+            this,
+            [this](const QString& error) { showMessage(error, MessageWidget::Error); });
+}
+
+void EditEntryWidget::setupStyle()
 {
     m_iconsWidget->setShowApplyIconToButton(false);
-    addPage(tr("Icon"), icons()->icon("preferences-desktop-icons"), m_iconsWidget);
+
+    auto* layout = new QVBoxLayout(m_styleWidget);
+    layout->setContentsMargins(0, 0, 0, 0);
+
+    // Color controls - aligned with radio button text in the icons widget
+    m_fgColorCheckBox = new QCheckBox(tr("Foreground Color:"), m_styleWidget);
+    m_fgColorCheckBox->setObjectName("fgColorCheckBox");
+    m_fgColorButton = new QPushButton(m_styleWidget);
+    m_fgColorButton->setObjectName("fgColorButton");
+    m_fgColorButton->setMaximumSize(25, 25);
+    m_fgColorButton->setAccessibleName(tr("Foreground color selection"));
+
+    m_bgColorCheckBox = new QCheckBox(tr("Background Color:"), m_styleWidget);
+    m_bgColorCheckBox->setObjectName("bgColorCheckBox");
+    m_bgColorButton = new QPushButton(m_styleWidget);
+    m_bgColorButton->setObjectName("bgColorButton");
+    m_bgColorButton->setMaximumSize(25, 25);
+    m_bgColorButton->setAccessibleName(tr("Background color selection"));
+
+    auto* colorLayout = new QHBoxLayout();
+    colorLayout->setSpacing(8);
+    colorLayout->addWidget(m_fgColorCheckBox);
+    colorLayout->addWidget(m_fgColorButton);
+    colorLayout->addSpacing(20);
+    colorLayout->addWidget(m_bgColorCheckBox);
+    colorLayout->addWidget(m_bgColorButton);
+    colorLayout->addStretch();
+
+    layout->addLayout(colorLayout);
+    layout->addSpacing(10);
+    layout->addWidget(m_iconsWidget);
+
+    addPage(tr("Style"), icons()->icon("palette"), m_styleWidget);
     connect(this, SIGNAL(accepted()), m_iconsWidget, SLOT(abortRequests()));
     connect(this, SIGNAL(rejected()), m_iconsWidget, SLOT(abortRequests()));
+
+    // clang-format off
+    connect(m_fgColorButton, SIGNAL(clicked()), SLOT(pickColor()));
+    connect(m_bgColorButton, SIGNAL(clicked()), SLOT(pickColor()));
+    // clang-format on
 }
 
 void EditEntryWidget::openAutotypeHelp()
@@ -509,12 +562,12 @@ void EditEntryWidget::setupEntryUpdate()
     connect(m_mainUi->notesEdit, SIGNAL(textChanged()), this, SLOT(setModified()));
 
     // Advanced tab
-    connect(m_advancedUi->attributesEdit, SIGNAL(textChanged()), this, SLOT(setModified()));
-    connect(m_advancedUi->protectAttributeButton, SIGNAL(stateChanged(int)), this, SLOT(setModified()));
-    connect(m_advancedUi->excludeReportsCheckBox, SIGNAL(stateChanged(int)), this, SLOT(setModified()));
-    connect(m_advancedUi->fgColorCheckBox, SIGNAL(stateChanged(int)), this, SLOT(setModified()));
-    connect(m_advancedUi->bgColorCheckBox, SIGNAL(stateChanged(int)), this, SLOT(setModified()));
-    connect(m_advancedUi->attachmentsWidget, SIGNAL(widgetUpdated()), this, SLOT(setModified()));
+    connect(m_attributesUi->attributesEdit, SIGNAL(textChanged()), this, SLOT(setModified()));
+    connect(m_attributesUi->protectAttributeButton, SIGNAL(stateChanged(int)), this, SLOT(setModified()));
+    connect(m_mainUi->excludeReportsCheckBox, SIGNAL(stateChanged(int)), this, SLOT(setModified()));
+    connect(m_fgColorCheckBox, SIGNAL(stateChanged(int)), this, SLOT(setModified()));
+    connect(m_bgColorCheckBox, SIGNAL(stateChanged(int)), this, SLOT(setModified()));
+    connect(m_attachmentsUi->attachmentsWidget, SIGNAL(widgetUpdated()), this, SLOT(setModified()));
 
     // Icon tab
     connect(m_iconsWidget, SIGNAL(widgetUpdated()), this, SLOT(setModified()));
@@ -991,19 +1044,19 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
     m_mainUi->notesEdit->setTabStopDistance(
         QFontMetrics(m_mainUi->notesEdit->font()).horizontalAdvance(QString(4, ' ')));
 
-    m_advancedUi->attachmentsWidget->setReadOnly(m_history);
-    m_advancedUi->addAttributeButton->setEnabled(!m_history);
-    m_advancedUi->editAttributeButton->setEnabled(false);
-    m_advancedUi->removeAttributeButton->setEnabled(false);
-    m_advancedUi->attributesEdit->setReadOnly(m_history);
+    m_attachmentsUi->attachmentsWidget->setReadOnly(m_history);
+    m_attributesUi->addAttributeButton->setEnabled(!m_history);
+    m_attributesUi->editAttributeButton->setEnabled(false);
+    m_attributesUi->removeAttributeButton->setEnabled(false);
+    m_attributesUi->attributesEdit->setReadOnly(m_history);
     QAbstractItemView::EditTriggers editTriggers;
     if (m_history) {
         editTriggers = QAbstractItemView::NoEditTriggers;
     } else {
         editTriggers = QAbstractItemView::DoubleClicked;
     }
-    m_advancedUi->attributesView->setEditTriggers(editTriggers);
-    m_advancedUi->excludeReportsCheckBox->setChecked(entry->excludeFromReports());
+    m_attributesUi->attributesView->setEditTriggers(editTriggers);
+    m_mainUi->excludeReportsCheckBox->setChecked(entry->excludeFromReports());
     setupColorButton(true, entry->foregroundColor());
     setupColorButton(false, entry->backgroundColor());
     m_iconsWidget->setEnabled(!m_history);
@@ -1034,20 +1087,20 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
 
     m_mainUi->notesEdit->setPlainText(entry->notes());
 
-    m_advancedUi->attachmentsWidget->linkAttachments(m_attachments.data());
+    m_attachmentsUi->attachmentsWidget->linkAttachments(m_attachments.data());
     m_entryAttributes->copyCustomKeysFrom(entry->attributes());
 
     if (m_attributesModel->rowCount() != 0) {
-        m_advancedUi->attributesView->setCurrentIndex(m_attributesModel->index(0, 0));
+        m_attributesUi->attributesView->setCurrentIndex(m_attributesModel->index(0, 0));
     } else {
-        m_advancedUi->attributesEdit->setPlainText("");
-        m_advancedUi->attributesEdit->setEnabled(false);
+        m_attributesUi->attributesEdit->setPlainText("");
+        m_attributesUi->attributesEdit->setEnabled(false);
     }
 
-    QList<int> sizes = m_advancedUi->attributesSplitter->sizes();
-    sizes.replace(0, m_advancedUi->attributesSplitter->width() * 0.3);
-    sizes.replace(1, m_advancedUi->attributesSplitter->width() * 0.7);
-    m_advancedUi->attributesSplitter->setSizes(sizes);
+    QList<int> sizes = m_attributesUi->attributesSplitter->sizes();
+    sizes.replace(0, m_attributesUi->attributesSplitter->width() * 0.3);
+    sizes.replace(1, m_attributesUi->attributesSplitter->width() * 0.7);
+    m_attributesUi->attributesSplitter->setSizes(sizes);
 
     IconStruct iconStruct;
     iconStruct.uuid = entry->iconUuid();
@@ -1193,9 +1246,9 @@ bool EditEntryWidget::commitEntry()
         }
     }
 
-    if (m_advancedUi->attributesView->currentIndex().isValid() && m_advancedUi->attributesEdit->isEnabled()) {
-        QString key = m_attributesModel->keyByIndex(m_advancedUi->attributesView->currentIndex());
-        m_entryAttributes->set(key, m_advancedUi->attributesEdit->toPlainText(), m_entryAttributes->isProtected(key));
+    if (m_attributesUi->attributesView->currentIndex().isValid() && m_attributesUi->attributesEdit->isEnabled()) {
+        QString key = m_attributesModel->keyByIndex(m_attributesUi->attributesView->currentIndex());
+        m_entryAttributes->set(key, m_attributesUi->attributesEdit->toPlainText(), m_entryAttributes->isProtected(key));
     }
 
     m_currentAttribute = QPersistentModelIndex();
@@ -1231,7 +1284,7 @@ bool EditEntryWidget::commitEntry()
 
     m_historyModel->setEntries(m_entry->historyItems(), m_entry);
     setPageHidden(m_historyWidget, m_history || m_entry->historyItems().count() < 1);
-    m_advancedUi->attachmentsWidget->linkAttachments(m_entry->attachments());
+    m_attachmentsUi->attachmentsWidget->linkAttachments(m_entry->attachments());
 
     showMessage(tr("Entry updated successfully."), MessageWidget::Positive);
     setModified(false);
@@ -1269,18 +1322,18 @@ void EditEntryWidget::updateEntryData(Entry* entry) const
 
     entry->setNotes(m_mainUi->notesEdit->toPlainText());
 
-    if (entry->excludeFromReports() != m_advancedUi->excludeReportsCheckBox->isChecked()) {
-        entry->setExcludeFromReports(m_advancedUi->excludeReportsCheckBox->isChecked());
+    if (entry->excludeFromReports() != m_mainUi->excludeReportsCheckBox->isChecked()) {
+        entry->setExcludeFromReports(m_mainUi->excludeReportsCheckBox->isChecked());
     }
 
-    if (m_advancedUi->fgColorCheckBox->isChecked() && m_advancedUi->fgColorButton->property("color").isValid()) {
-        entry->setForegroundColor(m_advancedUi->fgColorButton->property("color").toString());
+    if (m_fgColorCheckBox->isChecked() && m_fgColorButton->property("color").isValid()) {
+        entry->setForegroundColor(m_fgColorButton->property("color").toString());
     } else {
         entry->setForegroundColor(QString());
     }
 
-    if (m_advancedUi->bgColorCheckBox->isChecked() && m_advancedUi->bgColorButton->property("color").isValid()) {
-        entry->setBackgroundColor(m_advancedUi->bgColorButton->property("color").toString());
+    if (m_bgColorCheckBox->isChecked() && m_bgColorButton->property("color").isValid()) {
+        entry->setBackgroundColor(m_bgColorButton->property("color").toString());
     } else {
         entry->setBackgroundColor(QString());
     }
@@ -1412,8 +1465,8 @@ void EditEntryWidget::insertAttribute()
     m_entryAttributes->set(name, "");
     QModelIndex index = m_attributesModel->indexByKey(name);
 
-    m_advancedUi->attributesView->setCurrentIndex(index);
-    m_advancedUi->attributesView->edit(index);
+    m_attributesUi->attributesView->setCurrentIndex(index);
+    m_attributesUi->attributesView->edit(index);
 
     setModified(true);
 }
@@ -1422,10 +1475,10 @@ void EditEntryWidget::editCurrentAttribute()
 {
     Q_ASSERT(!m_history);
 
-    QModelIndex index = m_advancedUi->attributesView->currentIndex();
+    QModelIndex index = m_attributesUi->attributesView->currentIndex();
 
     if (index.isValid()) {
-        m_advancedUi->attributesView->edit(index);
+        m_attributesUi->attributesView->edit(index);
         setModified(true);
     }
 }
@@ -1434,7 +1487,7 @@ void EditEntryWidget::removeCurrentAttribute()
 {
     Q_ASSERT(!m_history);
 
-    QModelIndex index = m_advancedUi->attributesView->currentIndex();
+    QModelIndex index = m_attributesUi->attributesView->currentIndex();
 
     if (index.isValid()) {
 
@@ -1453,15 +1506,15 @@ void EditEntryWidget::removeCurrentAttribute()
 
 void EditEntryWidget::updateCurrentAttribute()
 {
-    QModelIndex newIndex = m_advancedUi->attributesView->currentIndex();
+    QModelIndex newIndex = m_attributesUi->attributesView->currentIndex();
     QString newKey = m_attributesModel->keyByIndex(newIndex);
 
     if (!m_history && m_currentAttribute != newIndex) {
         // Save changes to the currently selected attribute if editing is enabled
-        if (m_currentAttribute.isValid() && m_advancedUi->attributesEdit->isEnabled()) {
+        if (m_currentAttribute.isValid() && m_attributesUi->attributesEdit->isEnabled()) {
             QString currKey = m_attributesModel->keyByIndex(m_currentAttribute);
             m_entryAttributes->set(
-                currKey, m_advancedUi->attributesEdit->toPlainText(), m_entryAttributes->isProtected(currKey));
+                currKey, m_attributesUi->attributesEdit->toPlainText(), m_entryAttributes->isProtected(currKey));
         }
     }
 
@@ -1473,50 +1526,50 @@ void EditEntryWidget::updateCurrentAttribute()
 void EditEntryWidget::displayAttribute(QModelIndex index, bool showProtected)
 {
     // Block signals to prevent modified being set
-    m_advancedUi->protectAttributeButton->blockSignals(true);
-    m_advancedUi->attributesEdit->blockSignals(true);
-    m_advancedUi->revealAttributeButton->setText(tr("Reveal"));
+    m_attributesUi->protectAttributeButton->blockSignals(true);
+    m_attributesUi->attributesEdit->blockSignals(true);
+    m_attributesUi->revealAttributeButton->setText(tr("Reveal"));
 
     if (index.isValid()) {
         QString key = m_attributesModel->keyByIndex(index);
         if (showProtected) {
-            m_advancedUi->attributesEdit->setPlainText(tr("[PROTECTED] Press Reveal to view or edit"));
-            m_advancedUi->attributesEdit->setEnabled(false);
-            m_advancedUi->revealAttributeButton->setEnabled(true);
-            m_advancedUi->protectAttributeButton->setChecked(true);
+            m_attributesUi->attributesEdit->setPlainText(tr("[PROTECTED] Press Reveal to view or edit"));
+            m_attributesUi->attributesEdit->setEnabled(false);
+            m_attributesUi->revealAttributeButton->setEnabled(true);
+            m_attributesUi->protectAttributeButton->setChecked(true);
         } else {
-            m_advancedUi->attributesEdit->setPlainText(m_entryAttributes->value(key));
-            m_advancedUi->attributesEdit->setEnabled(true);
-            m_advancedUi->revealAttributeButton->setEnabled(false);
-            m_advancedUi->protectAttributeButton->setChecked(false);
+            m_attributesUi->attributesEdit->setPlainText(m_entryAttributes->value(key));
+            m_attributesUi->attributesEdit->setEnabled(true);
+            m_attributesUi->revealAttributeButton->setEnabled(false);
+            m_attributesUi->protectAttributeButton->setChecked(false);
         }
 
         // Don't allow editing in history view
-        m_advancedUi->protectAttributeButton->setEnabled(!m_history);
-        m_advancedUi->editAttributeButton->setEnabled(!m_history);
-        m_advancedUi->removeAttributeButton->setEnabled(!m_history);
+        m_attributesUi->protectAttributeButton->setEnabled(!m_history);
+        m_attributesUi->editAttributeButton->setEnabled(!m_history);
+        m_attributesUi->removeAttributeButton->setEnabled(!m_history);
     } else {
-        m_advancedUi->attributesEdit->setPlainText("");
-        m_advancedUi->attributesEdit->setEnabled(false);
-        m_advancedUi->revealAttributeButton->setEnabled(false);
-        m_advancedUi->protectAttributeButton->setChecked(false);
-        m_advancedUi->protectAttributeButton->setEnabled(false);
-        m_advancedUi->editAttributeButton->setEnabled(false);
-        m_advancedUi->removeAttributeButton->setEnabled(false);
+        m_attributesUi->attributesEdit->setPlainText("");
+        m_attributesUi->attributesEdit->setEnabled(false);
+        m_attributesUi->revealAttributeButton->setEnabled(false);
+        m_attributesUi->protectAttributeButton->setChecked(false);
+        m_attributesUi->protectAttributeButton->setEnabled(false);
+        m_attributesUi->editAttributeButton->setEnabled(false);
+        m_attributesUi->removeAttributeButton->setEnabled(false);
     }
 
-    m_advancedUi->protectAttributeButton->blockSignals(false);
-    m_advancedUi->attributesEdit->blockSignals(false);
+    m_attributesUi->protectAttributeButton->blockSignals(false);
+    m_attributesUi->attributesEdit->blockSignals(false);
 }
 
 void EditEntryWidget::protectCurrentAttribute(bool state)
 {
-    QModelIndex index = m_advancedUi->attributesView->currentIndex();
+    QModelIndex index = m_attributesUi->attributesView->currentIndex();
     if (!m_history && index.isValid()) {
         QString key = m_attributesModel->keyByIndex(index);
         if (state) {
             // Save the current text and protect the attribute
-            m_entryAttributes->set(key, m_advancedUi->attributesEdit->toPlainText(), true);
+            m_entryAttributes->set(key, m_attributesUi->attributesEdit->toPlainText(), true);
         } else {
             // Unprotect the current attribute value (don't save text as it is obscured)
             m_entryAttributes->set(key, m_entryAttributes->value(key), false);
@@ -1529,19 +1582,19 @@ void EditEntryWidget::protectCurrentAttribute(bool state)
 
 void EditEntryWidget::toggleCurrentAttributeVisibility()
 {
-    if (!m_advancedUi->attributesEdit->isEnabled()) {
-        QModelIndex index = m_advancedUi->attributesView->currentIndex();
+    if (!m_attributesUi->attributesEdit->isEnabled()) {
+        QModelIndex index = m_attributesUi->attributesView->currentIndex();
         if (index.isValid()) {
-            bool oldBlockSignals = m_advancedUi->attributesEdit->blockSignals(true);
+            bool oldBlockSignals = m_attributesUi->attributesEdit->blockSignals(true);
             QString key = m_attributesModel->keyByIndex(index);
-            m_advancedUi->attributesEdit->setPlainText(m_entryAttributes->value(key));
-            m_advancedUi->attributesEdit->setEnabled(true);
-            m_advancedUi->attributesEdit->blockSignals(oldBlockSignals);
+            m_attributesUi->attributesEdit->setPlainText(m_entryAttributes->value(key));
+            m_attributesUi->attributesEdit->setEnabled(true);
+            m_attributesUi->attributesEdit->blockSignals(oldBlockSignals);
         }
-        m_advancedUi->revealAttributeButton->setText(tr("Hide"));
+        m_attributesUi->revealAttributeButton->setText(tr("Hide"));
     } else {
         protectCurrentAttribute(true);
-        m_advancedUi->revealAttributeButton->setText(tr("Reveal"));
+        m_attributesUi->revealAttributeButton->setText(tr("Reveal"));
     }
 }
 
@@ -1698,11 +1751,11 @@ QMenu* EditEntryWidget::createPresetsMenu()
 
 void EditEntryWidget::setupColorButton(bool foreground, const QColor& color)
 {
-    QWidget* button = m_advancedUi->fgColorButton;
-    QCheckBox* checkBox = m_advancedUi->fgColorCheckBox;
+    QWidget* button = m_fgColorButton;
+    QCheckBox* checkBox = m_fgColorCheckBox;
     if (!foreground) {
-        button = m_advancedUi->bgColorButton;
-        checkBox = m_advancedUi->bgColorCheckBox;
+        button = m_bgColorButton;
+        checkBox = m_bgColorCheckBox;
     }
 
     if (color.isValid()) {
@@ -1718,10 +1771,10 @@ void EditEntryWidget::setupColorButton(bool foreground, const QColor& color)
 
 void EditEntryWidget::pickColor()
 {
-    bool isForeground = (sender() == m_advancedUi->fgColorButton);
-    QColor oldColor = QColor(m_advancedUi->fgColorButton->property("color").toString());
+    bool isForeground = (sender() == m_fgColorButton);
+    QColor oldColor = QColor(m_fgColorButton->property("color").toString());
     if (!isForeground) {
-        oldColor = QColor(m_advancedUi->bgColorButton->property("color").toString());
+        oldColor = QColor(m_bgColorButton->property("color").toString());
     }
 
     QColor newColor = QColorDialog::getColor(oldColor);

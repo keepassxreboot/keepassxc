@@ -342,6 +342,33 @@
       </property>
      </widget>
     </item>
+    <item row="9" column="0">
+     <widget class="QLabel" name="excludeReportsLabel">
+      <property name="text">
+       <string>E&amp;xclude
+from Reports:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+      <property name="buddy">
+       <cstring>excludeReportsCheckBox</cstring>
+      </property>
+     </widget>
+    </item>
+    <item row="9" column="1">
+     <widget class="QCheckBox" name="excludeReportsCheckBox">
+      <property name="toolTip">
+       <string>If checked, the entry will not appear in reports like Health Check and HIBP even if it doesn't match the quality requirements.</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
  </widget>
@@ -377,6 +404,7 @@
   <tabstop>expirePresets</tabstop>
   <tabstop>revealNotesButton</tabstop>
   <tabstop>notesEdit</tabstop>
+  <tabstop>excludeReportsCheckBox</tabstop>
  </tabstops>
  <resources/>
  <connections/>
