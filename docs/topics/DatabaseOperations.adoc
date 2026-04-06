@@ -216,7 +216,7 @@ NOTE: When you try to open the attached file, KeePassXC extracts the attachment 
 image::edit_entry_attachments.png[]
 
 ==== Style
-The Style page lets you customize the visual appearance of an entry. You can change the foreground and/or background color that this entry will use in the entry lists by enabling the corresponding checkbox and clicking the color button to open the color picker dialog.
+The Style page lets you customize the visual appearance of an entry. You can change the foreground *(A)* and/or background *(B)* color that this entry will use in the entry lists. Click the corresponding box to open the color picker dialog.
 
 .Color picker dialog
 image::edit_entry_colors.png[]
