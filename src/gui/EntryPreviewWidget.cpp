@@ -194,7 +194,8 @@ void EntryPreviewWidget::refresh()
         updateEntryHeaderLine();
         updateEntryTotp();
         updateEntryGeneralTab();
-        updateEntryAdvancedTab();
+        updateEntryAttributesTab();
+        updateEntryAttachmentsTab();
         updateEntryAutotypeTab();
 
         setVisible(!config()->get(Config::GUI_HidePreviewPanel).toBool());
@@ -412,7 +413,7 @@ void EntryPreviewWidget::updateEntryGeneralTab()
     m_ui->entryTagsList->setReadOnly(true);
 }
 
-void EntryPreviewWidget::updateEntryAdvancedTab()
+void EntryPreviewWidget::updateEntryAttributesTab()
 {
     Q_ASSERT(m_currentEntry);
     m_ui->entryAttributesTable->clear();
@@ -420,11 +421,10 @@ void EntryPreviewWidget::updateEntryAdvancedTab()
     const EntryAttributes* attributes = m_currentEntry->attributes();
     const QStringList customAttributes = attributes->customKeys();
     const bool hasAttributes = !customAttributes.isEmpty();
-    const bool hasAttachments = !m_currentEntry->attachments()->isEmpty();
     m_ui->entryAttributesTable->setRowCount(customAttributes.size());
     m_ui->entryAttributesTable->setColumnCount(3);
 
-    setTabEnabled(m_ui->entryTabWidget, m_ui->entryAdvancedTab, hasAttributes || hasAttachments);
+    setTabEnabled(m_ui->entryTabWidget, m_ui->entryAttributesTab, hasAttributes);
     if (hasAttributes) {
         auto i = 0;
         QFont font;
@@ -476,6 +476,14 @@ void EntryPreviewWidget::updateEntryAdvancedTab()
     m_ui->entryAttributesTable->horizontalHeader()->setStretchLastSection(true);
     m_ui->entryAttributesTable->resizeColumnsToContents();
     m_ui->entryAttributesTable->resizeRowsToContents();
+}
+
+void EntryPreviewWidget::updateEntryAttachmentsTab()
+{
+    Q_ASSERT(m_currentEntry);
+
+    const bool hasAttachments = !m_currentEntry->attachments()->isEmpty();
+    setTabEnabled(m_ui->entryTabWidget, m_ui->entryAttachmentsTab, hasAttachments);
     m_ui->entryAttachmentsWidget->linkAttachments(m_currentEntry->attachments());
 }
 
