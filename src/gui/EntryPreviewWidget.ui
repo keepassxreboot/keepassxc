@@ -663,11 +663,11 @@
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="entryAdvancedTab">
+         <widget class="QWidget" name="entryAttributesTab">
           <attribute name="title">
-           <string>Advanced</string>
+           <string>Attributes</string>
           </attribute>
-          <layout class="QGridLayout" name="gridLayout_1">
+          <layout class="QVBoxLayout" name="verticalLayout_9">
            <property name="leftMargin">
             <number>5</number>
            </property>
@@ -680,61 +680,7 @@
            <property name="bottomMargin">
             <number>5</number>
            </property>
-           <property name="horizontalSpacing">
-            <number>8</number>
-           </property>
-           <item row="0" column="1">
-            <widget class="QLabel" name="attachmentsTitleLabel">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="font">
-              <font>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="text">
-              <string>Attachments</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="EntryAttachmentsWidget" name="entryAttachmentsWidget" native="true">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="focusPolicy">
-              <enum>Qt::ClickFocus</enum>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="0">
-            <widget class="QLabel" name="attributesTitleLabel">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="font">
-              <font>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="text">
-              <string>Attributes</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
+           <item>
             <widget class="QTableWidget" name="entryAttributesTable">
              <property name="focusPolicy">
               <enum>Qt::NoFocus</enum>
@@ -769,6 +715,38 @@
              <attribute name="verticalHeaderVisible">
               <bool>false</bool>
              </attribute>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="entryAttachmentsTab">
+          <attribute name="title">
+           <string>Attachments</string>
+          </attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_6">
+           <property name="leftMargin">
+            <number>5</number>
+           </property>
+           <property name="topMargin">
+            <number>5</number>
+           </property>
+           <property name="rightMargin">
+            <number>5</number>
+           </property>
+           <property name="bottomMargin">
+            <number>5</number>
+           </property>
+           <item>
+            <widget class="EntryAttachmentsWidget" name="entryAttachmentsWidget" native="true">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::ClickFocus</enum>
+             </property>
             </widget>
            </item>
           </layout>

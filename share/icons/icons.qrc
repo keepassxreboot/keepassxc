@@ -45,6 +45,7 @@
         <file>application/scalable/actions/entry-edit.svg</file>
         <file>application/scalable/actions/entry-new.svg</file>
         <file>application/scalable/actions/favicon-download.svg</file>
+        <file>application/scalable/actions/format-list-bulleted-square.svg</file>
         <file>application/scalable/actions/fingerprint.svg</file>
         <file>application/scalable/actions/getting-started.svg</file>
         <file>application/scalable/actions/group-delete.svg</file>
@@ -67,6 +68,7 @@
         <file>application/scalable/actions/object-locked.svg</file>
         <file>application/scalable/actions/object-unlocked.svg</file>
         <file>application/scalable/actions/onepassword.svg</file>
+        <file>application/scalable/actions/palette.svg</file>
         <file>application/scalable/actions/paperclip.svg</file>
         <file>application/scalable/actions/passkey.svg</file>
         <file>application/scalable/actions/password-copy.svg</file>

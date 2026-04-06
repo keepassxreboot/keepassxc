@@ -57,6 +57,7 @@
 #include "gui/dbsettings/DatabaseSettingsDialog.h"
 #include "gui/dbsettings/DatabaseSettingsWidgetEncryption.h"
 #include "gui/entry/EditEntryWidget.h"
+#include "gui/entry/EntryAttachmentsWidget.h"
 #include "gui/entry/EntryView.h"
 #include "gui/group/EditGroupWidget.h"
 #include "gui/group/GroupModel.h"
@@ -657,7 +658,6 @@ void TestGui::testEditEntry()
     QVERIFY(historyView->isVisible());
 
     // Test the "known bad" checkbox
-    editEntryWidget->switchToPage(EditEntryWidget::Page::Advanced);
     auto excludeReportsCheckBox = editEntryWidget->findChild<QCheckBox*>("excludeReportsCheckBox");
     QVERIFY(excludeReportsCheckBox);
     QCOMPARE(excludeReportsCheckBox->isChecked(), false);
@@ -679,25 +679,35 @@ void TestGui::testEditEntry()
     QTest::keyClick(tags, Qt::Key_Return);
     QCOMPARE(tags->tags().last(), QString("tag 2_is!awesome"));
 
-    // Test entry colors (simulate choosing a color)
-    editEntryWidget->switchToPage(EditEntryWidget::Page::Advanced);
+    // Test entry colors on Style page (simulate choosing a color)
+    editEntryWidget->switchToPage(EditEntryWidget::Page::Style);
     auto fgColor = QString("#FF0000");
     auto bgColor = QString("#0000FF");
     // Set foreground color
     auto colorButton = editEntryWidget->findChild<QPushButton*>("fgColorButton");
     auto colorCheckBox = editEntryWidget->findChild<QCheckBox*>("fgColorCheckBox");
+    QVERIFY(colorButton);
+    QVERIFY(colorCheckBox);
     colorButton->setProperty("color", fgColor);
     colorCheckBox->setChecked(true);
     // Set background color
     colorButton = editEntryWidget->findChild<QPushButton*>("bgColorButton");
     colorCheckBox = editEntryWidget->findChild<QCheckBox*>("bgColorCheckBox");
+    QVERIFY(colorButton);
+    QVERIFY(colorCheckBox);
     colorButton->setProperty("color", bgColor);
     colorCheckBox->setChecked(true);
     QTest::mouseClick(applyButton, Qt::LeftButton);
     QCOMPARE(entry->historyItems().size(), ++editCount);
 
+    // Test Attachments page is accessible
+    editEntryWidget->switchToPage(EditEntryWidget::Page::Attachments);
+    auto* attachmentsWidget = editEntryWidget->findChild<EntryAttachmentsWidget*>("attachmentsWidget");
+    QVERIFY(attachmentsWidget);
+    QVERIFY(attachmentsWidget->isVisible());
+
     // Test protected attributes
-    editEntryWidget->switchToPage(EditEntryWidget::Page::Advanced);
+    editEntryWidget->switchToPage(EditEntryWidget::Page::Attributes);
     auto* attrTextEdit = editEntryWidget->findChild<QPlainTextEdit*>("attributesEdit");
     QTest::mouseClick(editEntryWidget->findChild<QAbstractButton*>("addAttributeButton"), Qt::LeftButton);
     QString attrText = "TEST TEXT";
@@ -1087,7 +1097,7 @@ void TestGui::testTotp()
     QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::EditEntryMode);
 
     auto* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
-    editEntryWidget->switchToPage(EditEntryWidget::Page::Advanced);
+    editEntryWidget->switchToPage(EditEntryWidget::Page::Attributes);
     auto* attrTextEdit = editEntryWidget->findChild<QPlainTextEdit*>("attributesEdit");
     QTest::mouseClick(editEntryWidget->findChild<QAbstractButton*>("revealAttributeButton"), Qt::LeftButton);
     QCOMPARE(attrTextEdit->toPlainText(), expectedFinalSeed);

@@ -55,7 +55,8 @@ private slots:
     void updateEntryHeaderLine();
     void updateEntryTotp();
     void updateEntryGeneralTab();
-    void updateEntryAdvancedTab();
+    void updateEntryAttributesTab();
+    void updateEntryAttachmentsTab();
     void updateEntryAutotypeTab();
     void setUsernameVisible(bool state);
     void setPasswordVisible(bool state);

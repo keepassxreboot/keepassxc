@@ -2935,15 +2935,35 @@ Disable safe saves and try again?</source>
 <context>
     <name>EditEntryWidget</name>
     <message>
-        <source>Entry</source>
+        <source>General</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Advanced</source>
+        <source>Attributes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Icon</source>
+        <source>Attachments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Style</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Foreground:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Foreground color selection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Background:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Background color selection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3097,11 +3117,7 @@ Would you like to correct it?</source>
     </message>
 </context>
 <context>
-    <name>EditEntryWidgetAdvanced</name>
-    <message>
-        <source>Additional attributes</source>
-        <translation type="unfinished"></translation>
-    </message>
+    <name>EditEntryWidgetAttributes</name>
     <message>
         <source>Attribute selection</source>
         <translation type="unfinished"></translation>
@@ -3148,34 +3164,6 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>Reveal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Attachments</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>If checked, the entry will not appear in reports like Health Check and HIBP even if it doesn&apos;t match the quality requirements.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Exclude from database reports</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Foreground Color:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Foreground color selection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Background Color:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Background color selection</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3426,6 +3414,19 @@ Would you like to correct it?</source>
     </message>
     <message>
         <source>&amp;Expires:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>E&amp;xclude
+from Reports:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If checked, the entry will not appear in reports like Health Check and HIBP even if it doesn&apos;t match the quality requirements.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exclude from database reports</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
