@@ -657,7 +657,6 @@ void TestGui::testEditEntry()
     QVERIFY(historyView->isVisible());
 
     // Test the "known bad" checkbox
-    editEntryWidget->switchToPage(EditEntryWidget::Page::Advanced);
     auto excludeReportsCheckBox = editEntryWidget->findChild<QCheckBox*>("excludeReportsCheckBox");
     QVERIFY(excludeReportsCheckBox);
     QCOMPARE(excludeReportsCheckBox->isChecked(), false);
@@ -680,7 +679,6 @@ void TestGui::testEditEntry()
     QCOMPARE(tags->tags().last(), QString("tag 2_is!awesome"));
 
     // Test entry colors (simulate choosing a color)
-    editEntryWidget->switchToPage(EditEntryWidget::Page::Advanced);
     auto fgColor = QString("#FF0000");
     auto bgColor = QString("#0000FF");
     // Set foreground color
@@ -697,7 +695,7 @@ void TestGui::testEditEntry()
     QCOMPARE(entry->historyItems().size(), ++editCount);
 
     // Test protected attributes
-    editEntryWidget->switchToPage(EditEntryWidget::Page::Advanced);
+    editEntryWidget->switchToPage(EditEntryWidget::Page::Attributes);
     auto* attrTextEdit = editEntryWidget->findChild<QPlainTextEdit*>("attributesEdit");
     QTest::mouseClick(editEntryWidget->findChild<QAbstractButton*>("addAttributeButton"), Qt::LeftButton);
     QString attrText = "TEST TEXT";
@@ -1087,7 +1085,7 @@ void TestGui::testTotp()
     QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::EditEntryMode);
 
     auto* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
-    editEntryWidget->switchToPage(EditEntryWidget::Page::Advanced);
+    editEntryWidget->switchToPage(EditEntryWidget::Page::Attributes);
     auto* attrTextEdit = editEntryWidget->findChild<QPlainTextEdit*>("attributesEdit");
     QTest::mouseClick(editEntryWidget->findChild<QAbstractButton*>("revealAttributeButton"), Qt::LeftButton);
     QCOMPARE(attrTextEdit->toPlainText(), expectedFinalSeed);
