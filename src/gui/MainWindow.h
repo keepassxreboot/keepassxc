@@ -182,7 +182,6 @@ private:
     QPointer<QActionGroup> m_copyAdditionalAttributeActions;
     QPointer<QActionGroup> m_setTagsMenuActions;
     QPointer<InactivityTimer> m_inactivityTimer;
-    QPointer<InactivityTimer> m_touchIDinactivityTimer;
     int m_countDefaultAttributes;
     QPointer<QSystemTrayIcon> m_trayIcon;
     QPointer<ScreenLockListener> m_screenLockListener;

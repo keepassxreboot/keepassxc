@@ -77,7 +77,7 @@ namespace OpenSSHKeyGen
             key.setPrivateData(privateData);
             key.setComment("id_rsa");
             return true;
-        } catch (std::exception& e) {
+        } catch (const std::exception&) {
             return false;
         }
     }
@@ -108,7 +108,7 @@ namespace OpenSSHKeyGen
             key.setPrivateData(privateData);
             key.setComment("id_ecdsa");
             return true;
-        } catch (std::exception& e) {
+        } catch (const std::exception&) {
             return false;
         }
     }
@@ -139,7 +139,7 @@ namespace OpenSSHKeyGen
             key.setPrivateData(privateData);
             key.setComment("id_ed25519");
             return true;
-        } catch (std::exception& e) {
+        } catch (const std::exception&) {
             return false;
         }
     }
