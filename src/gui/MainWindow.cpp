@@ -31,6 +31,8 @@
 #include <QToolButton>
 #include <QWindow>
 
+#include <algorithm>
+
 #include "config-keepassx.h"
 
 #include "Application.h"
@@ -822,15 +824,6 @@ void MainWindow::updateCopyAttributesMenu()
 
 void MainWindow::updateSetTagsMenu()
 {
-    auto actionForTag = [](const QMenu* menu, const QString& tag) -> QAction* {
-        for (const auto action : menu->actions()) {
-            if (action->text() == tag) {
-                return action;
-            }
-        }
-        return nullptr;
-    };
-
     m_ui->menuTags->setTearOffEnabled(true);
 
     auto dbWidget = m_ui->tabWidget->currentDatabaseWidget();
@@ -853,8 +846,13 @@ void MainWindow::updateSetTagsMenu()
 
         // Add known database tags as actions and set checked if
         // a selected entry has that tag
+        QList<QAction*> actionList = m_ui->menuTags->actions();
         for (const auto& tag : tagList) {
-            auto action = actionForTag(m_ui->menuTags, tag);
+            auto actionForTag = std::find_if(actionList.cbegin(), actionList.cend(),
+                                             [&tag](const QAction* action) -> bool {
+                                                 return action->text() == tag;
+            });
+            QAction* action = actionForTag == actionList.cend() ? nullptr : *actionForTag;
             if (!action) {
                 action = m_ui->menuTags->addAction(icons()->icon("tag"), tag);
                 action->setCheckable(true);
