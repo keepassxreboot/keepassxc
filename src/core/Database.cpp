@@ -34,6 +34,8 @@
 #include <QTemporaryFile>
 #include <QTimer>
 
+#include <algorithm>
+
 #ifdef Q_OS_WIN
 #include <Windows.h>
 #endif
@@ -749,22 +751,15 @@ const QList<DeletedObject>& Database::deletedObjects() const
 
 bool Database::containsDeletedObject(const QUuid& uuid) const
 {
-    for (const DeletedObject& currentObject : m_deletedObjects) {
-        if (currentObject.uuid == uuid) {
-            return true;
-        }
-    }
-    return false;
+    return std::any_of(m_deletedObjects.cbegin(), m_deletedObjects.cend(),
+                       [&uuid](const DeletedObject& object) -> bool {
+                           return object.uuid == uuid;
+    });
 }
 
 bool Database::containsDeletedObject(const DeletedObject& object) const
 {
-    for (const DeletedObject& currentObject : m_deletedObjects) {
-        if (currentObject.uuid == object.uuid) {
-            return true;
-        }
-    }
-    return false;
+    return containsDeletedObject(object.uuid);
 }
 
 void Database::setDeletedObjects(const QList<DeletedObject>& delObjs)
