@@ -1088,6 +1088,17 @@ void TestGui::testTotp()
 
     auto* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
     editEntryWidget->switchToPage(EditEntryWidget::Page::Advanced);
+    QApplication::processEvents();
+    // Find the "TOTP Seed" attribute in the list view
+    auto* attrListView = editEntryWidget->findChild<QListView*>("attributesView");
+    auto index = attrListView->model()->index(0, 0);
+    for (auto i = 0; i < attrListView->model()->rowCount(); ++i) {
+        index = attrListView->model()->index(i, 0);
+        if (attrListView->model()->data(index).toString().compare("TOTP Seed") == 0) {
+            break;
+        }
+    }
+    attrListView->setCurrentIndex(index);
     auto* attrTextEdit = editEntryWidget->findChild<QPlainTextEdit*>("attributesEdit");
     QTest::mouseClick(editEntryWidget->findChild<QAbstractButton*>("revealAttributeButton"), Qt::LeftButton);
     QCOMPARE(attrTextEdit->toPlainText(), expectedFinalSeed);
