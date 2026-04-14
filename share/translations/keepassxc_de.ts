@@ -578,7 +578,7 @@
     </message>
     <message>
         <source>Auto-generate password for new entries</source>
-        <translation type="unfinished"/>
+        <translation>Passwort für neue Einträge automatisch generieren</translation>
     </message>
 </context>
 <context>
@@ -890,11 +890,11 @@ Strg+Umschalt+4 - URL kopieren&lt;br/&gt;
     <name>BinaryStream</name>
     <message>
         <source>Failed to read string data: %1</source>
-        <translation type="unfinished"/>
+        <translation>String-Daten konnten nicht gelesen werden: %1</translation>
     </message>
     <message>
         <source>String length exceeds 10 MiB limit (requested %1)</source>
-        <translation type="unfinished"/>
+        <translation>Die Zeichenfolgenlänge überschreitet das 10-MiB-Limit (angefordert %1)</translation>
     </message>
 </context>
 <context>
@@ -6834,11 +6834,11 @@ Rechnen Sie mit Fehlern und kleineren Problemen. Diese Version ist für Testzwec
     </message>
     <message>
         <source>Failed to read key file: %1</source>
-        <translation type="unfinished"/>
+        <translation>Schlüsseldatei konnte nicht gelesen werden: %1</translation>
     </message>
     <message>
         <source>Failed to read public key: %1</source>
-        <translation type="unfinished"/>
+        <translation>Der öffentliche Schlüssel konnte nicht gelesen werden: %1</translation>
     </message>
 </context>
 <context>
