@@ -28,6 +28,8 @@
 #include <QStandardPaths>
 #include <QTemporaryFile>
 
+#include <algorithm>
+
 #define CONFIG_VERSION 2
 #define QS QStringLiteral
 
@@ -319,20 +321,13 @@ bool Config::importSettings(const QString& fileName)
         return false;
     }
 
-    // Only import valid roaming settings
-    auto isValidSetting = [](const QString& key) {
-        for (const auto& value : configStrings.values()) {
-            if (value.type == ConfigType::Roaming && value.name == key) {
-                return true;
-            }
-        }
-        return false;
-    };
-
     // Clear existing settings and set valid items
     m_settings->clear();
     for (const auto& key : settings.allKeys()) {
-        if (isValidSetting(key)) {
+        // Only import valid roaming settings
+        if (std::any_of(configStrings.cbegin(), configStrings.cend(), [&key](const ConfigDirective& directive) -> bool {
+                return directive.type == ConfigType::Roaming && directive.name == key;
+            })) {
             m_settings->setValue(key, settings.value(key));
         }
     }
