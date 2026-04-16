@@ -24,6 +24,8 @@
 #include <QPaintDevice>
 #include <QPainter>
 
+#include <algorithm>
+
 #include "config-keepassx.h"
 #include "core/Config.h"
 #include "core/Database.h"
@@ -281,14 +283,9 @@ QString Icons::imageFormatsFilter()
     QStringList formatsStringList;
 
     for (const QByteArray& format : formats) {
-        bool codePointClean = true;
-        for (char codePoint : format) {
-            if (!QChar(codePoint).isLetterOrNumber()) {
-                codePointClean = false;
-                break;
-            }
-        }
-        if (codePointClean) {
+        if (std::all_of(format.cbegin(), format.cend(), [](char codePoint) -> bool {
+                return QChar(codePoint).isLetterOrNumber();
+            })) {
             formatsStringList.append("*." + QString::fromLatin1(format).toLower());
         }
     }
