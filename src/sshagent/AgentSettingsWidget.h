@@ -39,6 +39,7 @@ public slots:
     void loadSettings();
     void saveSettings();
     void toggleSettingsEnabled();
+    void toggleDestinationConstraintsEnabled();
 
 private:
     QScopedPointer<Ui::AgentSettingsWidget> m_ui;

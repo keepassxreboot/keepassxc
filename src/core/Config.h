@@ -166,6 +166,7 @@ public:
         SSHAgent_Enabled,
         SSHAgent_UseOpenSSH,
         SSHAgent_UsePageant,
+        SSHAgent_EnableDestinationConstraints,
         SSHAgent_AuthSockOverride,
         SSHAgent_SecurityKeyProviderOverride,
 

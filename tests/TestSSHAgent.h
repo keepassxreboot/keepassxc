@@ -31,10 +31,12 @@ private slots:
     void initTestCase();
     void init();
     void testConfiguration();
+    void testKeeAgentSettings();
     void testIdentity();
     void testRemoveOnClose();
     void testLifetimeConstraint();
     void testConfirmConstraint();
+    void testDestinationConstraints();
     void testToOpenSSHKey();
     void testKeyGenRSA();
     void testKeyGenECDSA();
