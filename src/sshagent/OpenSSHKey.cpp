@@ -47,6 +47,8 @@ OpenSSHKey::OpenSSHKey(QObject* parent)
     , m_rawPrivateData(QByteArray())
     , m_comment(QString())
     , m_error(QString())
+    , m_certificateType(QString())
+    , m_rawCertificateData(QByteArray())
 {
 }
 
@@ -63,6 +65,8 @@ OpenSSHKey::OpenSSHKey(const OpenSSHKey& other)
     , m_rawPrivateData(other.m_rawPrivateData)
     , m_comment(other.m_comment)
     , m_error(other.m_error)
+    , m_certificateType(other.m_certificateType)
+    , m_rawCertificateData(other.m_rawCertificateData)
 {
 }
 
@@ -80,6 +84,11 @@ const QString OpenSSHKey::cipherName() const
 const QString OpenSSHKey::type() const
 {
     return m_type;
+}
+
+const QString OpenSSHKey::certificateType() const
+{
+    return m_certificateType;
 }
 
 const QString OpenSSHKey::fingerprint(QCryptographicHash::Algorithm algo) const
@@ -657,6 +666,84 @@ bool OpenSSHKey::writePrivate(BinaryStream& stream)
         return false;
     }
 
+    return true;
+}
+
+bool OpenSSHKey::parseCertificate(QByteArray& data)
+{
+    QString stringData = QString::fromLatin1(data);
+    QStringList elements = stringData.split(QRegularExpression("\\s+"), Qt::SkipEmptyParts);
+
+    QStringList certificateTypeList = {
+        "ssh-ed25519-cert-v01@openssh.com",
+        "ssh-rsa-cert-v01@openssh.com",
+        "ssh-dss-cert-v01@openssh.com",
+        "sk-ssh-ed25519-cert-v01@openssh.com",
+        "sk-ssh-rsa-cert-v01@openssh.com",
+        "sk-ssh-dss-cert-v01@openssh.com",
+        "rsa-sha2-256-cert-v01@openssh.com",
+        "sk-rsa-sha2-256-cert-v01@openssh.com",
+        "rsa-sha2-512-cert-v01@openssh.com",
+        "sk-rsa-sha2-512-cert-v01@openssh.com",
+        "ecdsa-sha2-nistp256-cert-v01@openssh.com",
+        "sk-ecdsa-sha2-nistp256-cert-v01@openssh.com",
+        "ecdsa-sha2-nistp384-cert-v01@openssh.com",
+        "sk-ecdsa-sha2-nistp384-cert-v01@openssh.com",
+        "ecdsa-sha2-nistp521-cert-v01@openssh.com",
+        "sk-ecdsa-sha2-nistp521-cert-v01@openssh.com",
+    };
+
+    if(elements.isEmpty() || elements.size() < 2 || !certificateTypeList.contains(elements.first())) {
+        m_error = tr("Invalid or unsupported certificate file");
+        return false;
+    }
+
+    m_certificateType = elements.first();
+    m_rawCertificateData = QByteArray::fromBase64(elements[1].toLatin1());
+
+    if (m_rawCertificateData.isEmpty()) {
+        m_error = tr("Base64 decoding failed");
+        return false;
+    }
+
+    return true;
+}
+
+bool OpenSSHKey::writeCertificate(BinaryStream& stream, const bool addCertificate)
+{
+    if (m_rawCertificateData.isEmpty()) {
+        m_error = tr("Can't write certificate as it is empty");
+        return false;
+    }
+
+    if (!addCertificate) {
+        if (!stream.writeString(m_rawCertificateData)) {
+            m_error = tr("Unexpected EOF when writing certificate");
+            return false;
+        }
+        return true;
+    }
+
+    if (!stream.writeString(m_certificateType)) {
+        m_error = tr("Unexpected EOF when writing certificate");
+        return false;
+    }  
+
+    if (!stream.writeString(m_rawCertificateData)) {
+        m_error = tr("Unexpected EOF when writing certificate");
+        return false;
+    }
+
+    if (!stream.write(m_rawPrivateData)) {
+        m_error = tr("Unexpected EOF when writing certificate");
+        return false;
+    }
+
+    if (!stream.writeString(m_comment)) {
+        m_error = tr("Unexpected EOF when writing certificate");
+        return false;
+    }
+    
     return true;
 }
 

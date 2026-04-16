@@ -21,6 +21,8 @@
 
 #include <QProcessEnvironment>
 
+#define SSH_MAX_LOCAL_KEY_SIZE (1024 * 1024)
+
 class Entry;
 class EntryAttachments;
 class OpenSSHKey;
@@ -77,6 +79,19 @@ public:
     void setSaveAttachmentToTempFile(bool);
     void setFileName(const QString& fileName);
 
+    // Certificate
+    const QString fileNameCertificateEnvSubst(QProcessEnvironment environment = QProcessEnvironment::systemEnvironment()) const;
+    bool useCertificate() const;
+    void setUseCertificate(bool UseCertificate);
+    const QString selectedCertificateType() const;
+    const QString attachmentNameCertificate() const;
+    bool saveAttachmentCertificateToTempFile() const;
+    const QString fileNameCertificate() const;
+    void setSelectedCertificateType(const QString& certificateType);
+    void setAttachmentCertificateName(const QString& attachmentCertificateName);
+    void setSaveAttachmentCertificateToTempFile(bool);
+    void setFileNameCertificate(const QString& fileNameCertificate);
+
 private:
     bool readBool(QXmlStreamReader& reader);
     int readInt(QXmlStreamReader& reader);
@@ -94,6 +109,13 @@ private:
     bool m_saveAttachmentToTempFile;
     QString m_fileName;
     QString m_error;
+
+    // Certificate
+    bool m_useCertificate;
+    QString m_selectedCertificateType;
+    QString m_attachmentNameCertificate;
+    bool m_saveAttachmentCertificateToTempFile;
+    QString m_fileNameCertificate;
 };
 
 #endif // KEEAGENTSETTINGS_H

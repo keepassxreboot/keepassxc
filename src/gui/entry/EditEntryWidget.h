@@ -139,6 +139,8 @@ private slots:
     void decryptPrivateKey();
     void copyPublicKey();
     void generatePrivateKey();
+    void updateSSHAgentAttachmentCertificate();
+    void browseCertificate();
 #endif
 #ifdef WITH_XC_BROWSER
     void updateBrowserModified();

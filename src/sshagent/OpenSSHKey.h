@@ -62,6 +62,10 @@ public:
     static const QString TYPE_OPENSSH_PRIVATE;
     static const QString OPENSSH_CIPHER_SUFFIX;
 
+    bool parseCertificate(QByteArray& data);
+    bool writeCertificate(BinaryStream& stream, const bool addCertificate = true);
+    const QString certificateType() const;
+
 private:
     enum KeyPart
     {
@@ -85,6 +89,8 @@ private:
     QByteArray m_rawPrivateData;
     QString m_comment;
     QString m_error;
+    QString m_certificateType;
+    QByteArray m_rawCertificateData;
 };
 
 uint qHash(const OpenSSHKey& key);
