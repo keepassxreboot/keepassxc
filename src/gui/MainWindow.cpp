@@ -848,10 +848,9 @@ void MainWindow::updateSetTagsMenu()
         // a selected entry has that tag
         QList<QAction*> actionList = m_ui->menuTags->actions();
         for (const auto& tag : tagList) {
-            auto actionForTag = std::find_if(actionList.cbegin(), actionList.cend(),
-                                             [&tag](const QAction* action) -> bool {
-                                                 return action->text() == tag;
-            });
+            auto actionForTag = std::find_if(actionList.cbegin(),
+                                             actionList.cend(),
+                                             [&tag](const QAction* action) -> bool { return action->text() == tag; });
             QAction* action = actionForTag == actionList.cend() ? nullptr : *actionForTag;
             if (!action) {
                 action = m_ui->menuTags->addAction(icons()->icon("tag"), tag);

@@ -751,10 +751,9 @@ const QList<DeletedObject>& Database::deletedObjects() const
 
 bool Database::containsDeletedObject(const QUuid& uuid) const
 {
-    return std::any_of(m_deletedObjects.cbegin(), m_deletedObjects.cend(),
-                       [&uuid](const DeletedObject& object) -> bool {
-                           return object.uuid == uuid;
-    });
+    return std::any_of(m_deletedObjects.cbegin(),
+                       m_deletedObjects.cend(),
+                       [&uuid](const DeletedObject& object) -> bool { return object.uuid == uuid; });
 }
 
 bool Database::containsDeletedObject(const DeletedObject& object) const
