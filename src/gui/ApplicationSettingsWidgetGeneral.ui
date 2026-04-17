@@ -754,6 +754,22 @@
             </widget>
            </item>
            <item>
+            <widget class="QGroupBox" name="macOSGroup">
+             <property name="title">
+              <string>macOS Integration</string>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_9">
+              <item>
+               <widget class="QCheckBox" name="macOSAutoFillCheckBox">
+                <property name="text">
+                 <string>Enable macOS AutoFill Integration</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
             <widget class="QGroupBox" name="generalGroup">
              <property name="title">
               <string>User Interface</string>

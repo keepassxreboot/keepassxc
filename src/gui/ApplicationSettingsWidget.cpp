@@ -33,6 +33,9 @@
 #include "gui/osutils/OSUtils.h"
 #include "gui/styles/StateColorPalette.h"
 #include "quickunlock/QuickUnlockInterface.h"
+#ifdef Q_OS_MACOS
+#include "autofill/AutoFill.h"
+#endif
 
 #include "FileDialog.h"
 #include "MessageBox.h"
@@ -356,6 +359,12 @@ void ApplicationSettingsWidget::loadSettings()
     m_secUi->quickUnlockCheckBox->setEnabled(getQuickUnlock()->isAvailable());
     m_secUi->quickUnlockCheckBox->setChecked(config()->get(Config::Security_QuickUnlock).toBool());
 
+#if defined(Q_OS_MACOS)
+    m_generalUi->macOSAutoFillCheckBox->setChecked(config()->get(Config::Security_macOSAutoFill).toBool());
+#else
+    m_generalUi->macOSGroup->setVisible(false);
+#endif
+
     for (const ExtraPage& page : asConst(m_extraPages)) {
         page.loadSettings();
     }
@@ -477,6 +486,18 @@ void ApplicationSettingsWidget::saveSettings()
     if (m_secUi->quickUnlockCheckBox->isEnabled()) {
         config()->set(Config::Security_QuickUnlock, m_secUi->quickUnlockCheckBox->isChecked());
     }
+
+#if defined(Q_OS_MACOS)
+    {
+        bool autoFillEnabled = m_generalUi->macOSAutoFillCheckBox->isChecked();
+        config()->set(Config::Security_macOSAutoFill, autoFillEnabled);
+        if (autoFillEnabled) {
+            getMainWindow()->autoFill()->start();
+        } else {
+            getMainWindow()->autoFill()->stop();
+        }
+    }
+#endif
 
     // Security: clear storage if related settings are disabled
     if (!config()->get(Config::RememberLastDatabases).toBool()) {

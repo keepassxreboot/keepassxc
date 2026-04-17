@@ -227,10 +227,15 @@ if(APPLE)
             gui/osutils/macutils/ScreenLockListenerMac.cpp
             gui/osutils/macutils/AppKitImpl.mm
             gui/osutils/macutils/AppKit.h
-            quickunlock/TouchID.mm)
+            quickunlock/TouchID.mm
+            autofill/AutoFill.h
+            autofill/AutoFill.mm
+            autofill/AutoFillProviderProtocol.h
+            autofill/AutoFillXPCProtocol.h)
 
     # TODO: Remove -Wno-error once deprecation warnings have been resolved.
     set_source_files_properties(quickunlock/TouchID.mm PROPERTY COMPILE_FLAGS "-Wno-old-style-cast")
+    set_source_files_properties(autofill/AutoFill.mm PROPERTY COMPILE_FLAGS "-fobjc-arc")
 endif()
 
 if(UNIX AND NOT APPLE)
@@ -398,7 +403,7 @@ target_link_libraries(keepassxc_gui
         ${sshagent_LIB})
 
 if(APPLE)
-    target_link_libraries(keepassxc_gui "-framework Foundation -framework AppKit -framework Carbon -framework Security -framework LocalAuthentication -framework ScreenCaptureKit")
+    target_link_libraries(keepassxc_gui "-framework Foundation -framework AppKit -framework Carbon -framework Security -framework LocalAuthentication -framework ScreenCaptureKit -framework AuthenticationServices")
     if(Qt5MacExtras_FOUND)
         target_link_libraries(keepassxc_gui Qt5::MacExtras)
     endif()
@@ -605,3 +610,132 @@ endif()
 # The install commands in this subdirectory will be executed after all the install commands in the
 # current scope are ran. It is required for correct functioning of macdeployqt.
 add_subdirectory(post_install)
+
+if(APPLE AND WITH_APP_BUNDLE)
+    set(AUTOFILL_TARGET "keepassxc-autofill")
+    set(AUTOFILL_XPC_TARGET "keepassxc-autofill-xpc")
+    set(MACOSX_EXTENSION_BUNDLE_ID "org.keepassxc.keepassxc.autofill")
+    set(MACOSX_XPC_BUNDLE_ID "org.keepassxc.KeePassXC.AutoFill-XPC-Service")
+
+    # Configure extension Info.plist
+    configure_file(
+        "${CMAKE_CURRENT_SOURCE_DIR}/autofill/mac/Info.plist.in"
+        "${CMAKE_CURRENT_BINARY_DIR}/autofill/mac/Info.plist"
+        @ONLY
+    )
+
+    # Configure extension entitlements
+    configure_file(
+        "${CMAKE_CURRENT_SOURCE_DIR}/autofill/mac/MacAutoFill.entitlements"
+        "${CMAKE_CURRENT_BINARY_DIR}/autofill/mac/MacAutoFill.entitlements"
+        @ONLY
+    )
+
+    # Configure XPC service Info.plist
+    configure_file(
+        "${CMAKE_CURRENT_SOURCE_DIR}/autofill/AutoFillXPCService-Info.plist"
+        "${CMAKE_CURRENT_BINARY_DIR}/autofill/AutoFillXPCService-Info.plist"
+        @ONLY
+    )
+
+    # ===================
+    # AutoFill Extension
+    # ===================
+    add_library(${AUTOFILL_TARGET} MODULE
+        autofill/AutoFillProviderProtocol.h
+        autofill/AutoFillXPCProtocol.h
+        autofill/CredentialProviderViewController.mm
+    )
+
+    # Disable Qt AUTOMOC for pure Objective-C++ extension
+    set_target_properties(${AUTOFILL_TARGET} PROPERTIES
+        AUTOMOC OFF
+        AUTOUIC OFF
+        AUTORCC OFF
+    )
+
+    set_target_properties(${AUTOFILL_TARGET} PROPERTIES
+        BUNDLE TRUE
+        BUNDLE_EXTENSION "appex"
+        MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_BINARY_DIR}/autofill/mac/Info.plist"
+        MACOSX_BUNDLE_GUI_IDENTIFIER "${MACOSX_EXTENSION_BUNDLE_ID}"
+        MACOSX_BUNDLE_BUNDLE_NAME "KeePassXC AutoFill"
+        XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_CURRENT_BINARY_DIR}/autofill/mac/MacAutoFill.entitlements"
+        XCODE_ATTRIBUTE_SKIP_INSTALL "YES"
+        XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "${MACOSX_EXTENSION_BUNDLE_ID}"
+        XCODE_ATTRIBUTE_CLANG_ENABLE_OBJC_ARC "YES"
+        XCODE_ATTRIBUTE_WRAPPER_EXTENSION "appex"
+    )
+
+    target_compile_options(${AUTOFILL_TARGET} PRIVATE "-fobjc-arc")
+
+    target_link_libraries(${AUTOFILL_TARGET}
+        "-framework AuthenticationServices"
+        "-framework AppKit"
+        "-framework Foundation"
+    )
+
+    # ===================
+    # XPC Service
+    # ===================
+    add_executable(${AUTOFILL_XPC_TARGET}
+        autofill/AutoFillXPCService.m
+        autofill/AutoFillProviderProtocol.h
+        autofill/AutoFillXPCProtocol.h
+    )
+
+    # Disable Qt AUTOMOC for pure Objective-C XPC service
+    set_target_properties(${AUTOFILL_XPC_TARGET} PROPERTIES
+        AUTOMOC OFF
+        AUTOUIC OFF
+        AUTORCC OFF
+    )
+
+    set_target_properties(${AUTOFILL_XPC_TARGET} PROPERTIES
+        MACOSX_BUNDLE TRUE
+        BUNDLE_EXTENSION "xpc"
+        MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_BINARY_DIR}/autofill/AutoFillXPCService-Info.plist"
+        MACOSX_BUNDLE_GUI_IDENTIFIER "${MACOSX_XPC_BUNDLE_ID}"
+        MACOSX_BUNDLE_BUNDLE_NAME "KeePassXC AutoFill XPC Service"
+        XCODE_ATTRIBUTE_SKIP_INSTALL "YES"
+        XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "${MACOSX_XPC_BUNDLE_ID}"
+        XCODE_ATTRIBUTE_CLANG_ENABLE_OBJC_ARC "YES"
+    )
+
+    target_compile_options(${AUTOFILL_XPC_TARGET} PRIVATE "-fobjc-arc")
+
+    target_link_libraries(${AUTOFILL_XPC_TARGET}
+        "-framework Foundation"
+    )
+
+    # ===================
+    # Embed into main app
+    # ===================
+    add_dependencies(${PROGNAME} ${AUTOFILL_TARGET} ${AUTOFILL_XPC_TARGET})
+
+    # Embed extension via Xcode's native embedding (CMake 3.21+)
+    if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.21.0")
+        set_target_properties(${PROGNAME} PROPERTIES
+            XCODE_EMBED_APP_EXTENSIONS ${AUTOFILL_TARGET}
+        )
+    else()
+        # Fallback: copy extension into PlugIns directory manually
+        add_custom_command(TARGET ${PROGNAME} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_BUNDLE_CONTENT_DIR:${PROGNAME}>/PlugIns"
+            COMMAND ${CMAKE_COMMAND} -E copy_directory
+                "$<TARGET_BUNDLE_DIR:${AUTOFILL_TARGET}>"
+                "$<TARGET_BUNDLE_CONTENT_DIR:${PROGNAME}>/PlugIns/${AUTOFILL_TARGET}.appex"
+            COMMENT "Embedding AutoFill extension into app bundle"
+        )
+    endif()
+
+    # Copy XPC service into XPCServices directory
+    add_custom_command(TARGET ${PROGNAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_BUNDLE_CONTENT_DIR:${PROGNAME}>/XPCServices"
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+            "$<TARGET_BUNDLE_DIR:${AUTOFILL_XPC_TARGET}>"
+            "$<TARGET_BUNDLE_CONTENT_DIR:${PROGNAME}>/XPCServices/${AUTOFILL_XPC_TARGET}.xpc"
+        COMMENT "Embedding AutoFill XPC service into app bundle"
+    )
+
+endif()

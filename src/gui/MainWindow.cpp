@@ -51,6 +51,10 @@
 #include "gui/osutils/OSUtils.h"
 #include "gui/remote/RemoteSettings.h"
 
+#ifdef Q_OS_MACOS
+#include "autofill/AutoFill.h"
+#endif
+
 #ifdef WITH_XC_UPDATECHECK
 #include "gui/UpdateCheckDialog.h"
 #include "networking/UpdateChecker.h"
@@ -98,6 +102,10 @@ MainWindow::MainWindow()
 
 #ifdef Q_OS_MACOS
     macUtils()->configureWindowAndHelpMenus(this, m_ui->menuHelp);
+    m_autoFill = new AutoFill(this);
+    if (m_autoFill->isAvailable() && config()->get(Config::Security_macOSAutoFill).toBool()) {
+        m_autoFill->start();
+    }
 #endif
 
 #if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS) && !defined(QT_NO_DBUS)
