@@ -24,11 +24,11 @@
 #include "core/PasswordHealth.h"
 #include "gui/GuiTools.h"
 #include "gui/Icons.h"
+#include "gui/reports/ProxyModels.h"
 #include "gui/styles/StateColorPalette.h"
 
 #include <QMenu>
 #include <QShortcut>
-#include <QSortFilterProxyModel>
 #include <QStandardItemModel>
 
 namespace
@@ -47,7 +47,7 @@ namespace
                 : group(g)
                 , entry(e)
                 , health(h)
-                , exclude(e->excludeFromReports())
+                , exclude(e->excludeFromReports() || g->excludeFromReports())
             {
             }
 
@@ -74,27 +74,6 @@ namespace
         HealthChecker m_checker;
         QList<QSharedPointer<Item>> m_items;
         bool m_anyExcludedEntries = false;
-    };
-
-    class ReportSortProxyModel : public QSortFilterProxyModel
-    {
-    public:
-        ReportSortProxyModel(QObject* parent)
-            : QSortFilterProxyModel(parent){};
-        ~ReportSortProxyModel() override = default;
-
-    protected:
-        bool lessThan(const QModelIndex& left, const QModelIndex& right) const override
-        {
-            // Check if the display data is a number, convert and compare if so
-            bool ok = false;
-            int leftInt = sourceModel()->data(left).toString().toInt(&ok);
-            if (ok) {
-                return leftInt < sourceModel()->data(right).toString().toInt();
-            }
-            // Otherwise use default sorting
-            return QSortFilterProxyModel::lessThan(left, right);
-        }
     };
 } // namespace
 
@@ -137,10 +116,8 @@ Health::Health(QSharedPointer<Database> db)
 }
 
 ReportsWidgetHealthcheck::ReportsWidgetHealthcheck(QWidget* parent)
-    : QWidget(parent)
+    : ReportsWidgetBase(parent, SortProxyModelKind::Healthcheck)
     , m_ui(new Ui::ReportsWidgetHealthcheck())
-    , m_referencesModel(new QStandardItemModel(this))
-    , m_modelProxy(new ReportSortProxyModel(this))
 {
     m_ui->setupUi(this);
 
@@ -197,7 +174,11 @@ void ReportsWidgetHealthcheck::addHealthRow(QSharedPointer<PasswordHealth> healt
 
     auto title = entry->title();
     if (excluded) {
-        title.append(tr(" (Excluded)"));
+        if (group->excludeFromReports()) {
+            title.append(tr(" (Group Excluded)"));
+        } else {
+            title.append(tr(" (Excluded)"));
+        }
     }
     if (entry->isExpired()) {
         title.append(tr(" (Expired)"));
@@ -219,7 +200,11 @@ void ReportsWidgetHealthcheck::addHealthRow(QSharedPointer<PasswordHealth> healt
     // Set tooltips
     row[0]->setToolTip(tip);
     if (excluded) {
-        row[1]->setToolTip(tr("This entry is being excluded from reports"));
+        if (group->excludeFromReports()) {
+            row[1]->setToolTip(tr("The group for this entry is being excluded from reports"));
+        } else {
+            row[1]->setToolTip(tr("This entry is being excluded from reports"));
+        }
     }
     row[4]->setToolTip(health->scoreDetails());
 
@@ -230,15 +215,7 @@ void ReportsWidgetHealthcheck::addHealthRow(QSharedPointer<PasswordHealth> healt
 
 void ReportsWidgetHealthcheck::loadSettings(QSharedPointer<Database> db)
 {
-    m_db = std::move(db);
-    m_healthCalculated = false;
-    m_referencesModel->clear();
-    m_rowToEntry.clear();
-
-    auto row = QList<QStandardItem*>();
-    row << new QStandardItem(tr("Please wait, health data is being calculated…"));
-    m_referencesModel->appendRow(row);
-    // Default sort by first column (health score)
+    ReportsWidgetBase::loadSettings(db);
     m_ui->healthcheckTableView->sortByColumn(0, Qt::AscendingOrder);
 }
 
@@ -246,9 +223,9 @@ void ReportsWidgetHealthcheck::showEvent(QShowEvent* event)
 {
     QWidget::showEvent(event);
 
-    if (!m_healthCalculated) {
+    if (!m_widgetDataCalculated) {
         // Perform stats calculation on next event loop to allow widget to appear
-        m_healthCalculated = true;
+        m_widgetDataCalculated = true;
         QTimer::singleShot(0, this, SLOT(calculateHealth()));
     }
 }
@@ -294,120 +271,28 @@ void ReportsWidgetHealthcheck::calculateHealth()
 
     // Only show the "show excluded" checkbox if there are any excluded entries in the database
     m_ui->showExcluded->setVisible(health->anyExcludedEntries());
-}
 
-void ReportsWidgetHealthcheck::emitEntryActivated(const QModelIndex& index)
-{
-    if (!index.isValid()) {
-        return;
-    }
-
-    auto mappedIndex = m_modelProxy->mapToSource(index);
-    const auto row = m_rowToEntry[mappedIndex.row()];
-    const auto group = row.first;
-    const auto entry = row.second;
-    if (group && entry) {
-        emit entryActivated(const_cast<Entry*>(entry));
-    }
+    emit tablePopulated();
 }
 
 void ReportsWidgetHealthcheck::customMenuRequested(QPoint pos)
 {
-    auto selected = m_ui->healthcheckTableView->selectionModel()->selectedRows();
-    if (selected.isEmpty()) {
+    auto menu = customMenuRequestedBase();
+
+    if (!menu) {
         return;
     }
-
-    // Create the context menu
-    const auto menu = new QMenu(this);
-
-    // Create the "edit entry" menu item (only if 1 row is selected)
-    if (selected.size() == 1) {
-        const auto edit = new QAction(icons()->icon("entry-edit"), tr("Edit Entry…"), this);
-        menu->addAction(edit);
-        connect(edit, &QAction::triggered, edit, [this, selected] {
-            auto row = m_modelProxy->mapToSource(selected[0]).row();
-            auto entry = m_rowToEntry[row].second;
-            emit entryActivated(entry);
-        });
-    }
-
-    // Create the "Expire entry" menu item
-    const auto expEntry = new QAction(icons()->icon("entry-expire"), tr("Expire Entry(s)…", "", selected.size()), this);
-    menu->addAction(expEntry);
-    connect(expEntry, &QAction::triggered, this, &ReportsWidgetHealthcheck::expireSelectedEntries);
-
-    // Create the "delete entry" menu item
-    const auto delEntry = new QAction(icons()->icon("entry-delete"), tr("Delete Entry(s)…", "", selected.size()), this);
-    menu->addAction(delEntry);
-    connect(delEntry, &QAction::triggered, this, &ReportsWidgetHealthcheck::deleteSelectedEntries);
-
-    // Create the "exclude from reports" menu item
-    const auto exclude = new QAction(icons()->icon("reports-exclude"), tr("Exclude from reports"), this);
-
-    bool isExcluded = false;
-    for (auto index : selected) {
-        auto row = m_modelProxy->mapToSource(index).row();
-        auto entry = m_rowToEntry[row].second;
-        if (entry && entry->excludeFromReports()) {
-            // If at least one entry is excluded switch to inclusion
-            isExcluded = true;
-            break;
-        }
-    }
-    exclude->setCheckable(true);
-    exclude->setChecked(isExcluded);
-
-    menu->addAction(exclude);
-    connect(exclude, &QAction::toggled, exclude, [this, selected](bool state) {
-        for (auto index : selected) {
-            auto row = m_modelProxy->mapToSource(index).row();
-            auto entry = m_rowToEntry[row].second;
-            if (entry) {
-                entry->setExcludeFromReports(state);
-            }
-        }
-        calculateHealth();
-    });
 
     // Show the context menu
     menu->popup(m_ui->healthcheckTableView->viewport()->mapToGlobal(pos));
 }
 
-void ReportsWidgetHealthcheck::saveSettings()
+void ReportsWidgetHealthcheck::updateWidget()
 {
-    // nothing to do - the tab is passive
-}
-
-QList<Entry*> ReportsWidgetHealthcheck::getSelectedEntries()
-{
-    QList<Entry*> selectedEntries;
-    for (auto index : m_ui->healthcheckTableView->selectionModel()->selectedRows()) {
-        auto row = m_modelProxy->mapToSource(index).row();
-        auto entry = m_rowToEntry[row].second;
-        if (entry) {
-            selectedEntries << entry;
-        }
-    }
-    return selectedEntries;
-}
-
-void ReportsWidgetHealthcheck::expireSelectedEntries()
-{
-    for (auto entry : getSelectedEntries()) {
-        entry->expireNow();
-    }
-
     calculateHealth();
 }
 
-void ReportsWidgetHealthcheck::deleteSelectedEntries()
+QTableView* ReportsWidgetHealthcheck::getTableView() const
 {
-    QList<Entry*> selectedEntries = getSelectedEntries();
-    bool permanent = !m_db->metadata()->recycleBinEnabled();
-    if (GuiTools::confirmDeleteEntries(this, selectedEntries, permanent)) {
-        GuiTools::deleteEntriesResolveReferences(this, selectedEntries, permanent);
-    }
-
-    calculateHealth();
+    return m_ui->healthcheckTableView;
 }

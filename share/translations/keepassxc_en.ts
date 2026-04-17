@@ -3806,6 +3806,10 @@ Supported extensions are: %1.</source>
         <source>Search toggle for this and sub groups</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Exclude from database reports</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EditWidgetIcons</name>
@@ -9500,6 +9504,47 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
 </context>
 <context>
+    <name>ReportsWidgetBase</name>
+    <message>
+        <source>Please wait, report is being calculated…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit Entry…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Expire Entry(s)…</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>Delete Entry(s)…</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Exclude Entry(s) from reports</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exclude Group(s) from reports</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The Group for &quot;%1&quot; is excluded. Would you like to include all Entries from there as well?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Include Group?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ReportsWidgetBrowserStatistics</name>
     <message>
         <source>Double-click entries to edit.</source>
@@ -9534,10 +9579,6 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Please wait, browser statistics is being calculated…</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>No entries with a URL, or none has browser extension settings saved.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9552,28 +9593,6 @@ This option is deprecated, use --set-key-file instead.</source>
     <message>
         <source>URLs</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Edit Entry…</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message numerus="yes">
-        <source>Delete Entry(s)…</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
-    <message>
-        <source>Exclude from reports</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message numerus="yes">
-        <source>Expire Entry(s)…</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
     </message>
     <message>
         <source>Only show entries that have a URL</source>
@@ -9597,6 +9616,14 @@ This option is deprecated, use --set-key-file instead.</source>
             <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
+    </message>
+    <message>
+        <source> (Group Excluded)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The group for this entry is being excluded from reports</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9634,10 +9661,6 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Please wait, health data is being calculated…</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Congratulations, everything is healthy!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9658,29 +9681,15 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Edit Entry…</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message numerus="yes">
-        <source>Delete Entry(s)…</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
-    <message>
-        <source>Exclude from reports</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message numerus="yes">
-        <source>Expire Entry(s)…</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
-    </message>
-    <message>
         <source>Show entries that have been excluded from reports</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> (Group Excluded)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The group for this entry is being excluded from reports</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9767,26 +9776,12 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Edit Entry…</source>
+        <source> (Group Excluded)</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message numerus="yes">
-        <source>Delete Entry(s)…</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
     </message>
     <message>
-        <source>Exclude from reports</source>
+        <source>The group for this entry is being excluded from reports</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message numerus="yes">
-        <source>Expire Entry(s)…</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-        </translation>
     </message>
 </context>
 <context>
@@ -9848,10 +9843,6 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>The passkey file will be vulnerable to theft and unauthorized use, if left unsecured. Are you sure you want to continue?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please wait, list of entries with passkeys is being updated…</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9987,6 +9978,14 @@ This option is deprecated, use --set-key-file instead.</source>
             <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
+    </message>
+    <message>
+        <source>Groups excluded from reports</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Excluding entire groups from reports isn&apos;t necessarily a problem but please exercise caution when excluding entire groups.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

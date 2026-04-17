@@ -23,42 +23,17 @@
 #include "core/Metadata.h"
 #include "gui/GuiTools.h"
 #include "gui/Icons.h"
+#include "gui/reports/ProxyModels.h"
 
 #include <QMenu>
 #include <QShortcut>
-#include <QSortFilterProxyModel>
 #include <QStandardItemModel>
 
 #include <algorithm>
 
-namespace
-{
-    class ReportSortProxyModel : public QSortFilterProxyModel
-    {
-    public:
-        ReportSortProxyModel(QObject* parent)
-            : QSortFilterProxyModel(parent){};
-        ~ReportSortProxyModel() override = default;
-
-    protected:
-        bool lessThan(const QModelIndex& left, const QModelIndex& right) const override
-        {
-            // Sort count column by user data
-            if (left.column() == 2) {
-                return sourceModel()->data(left, Qt::UserRole).toInt()
-                       < sourceModel()->data(right, Qt::UserRole).toInt();
-            }
-            // Otherwise use default sorting
-            return QSortFilterProxyModel::lessThan(left, right);
-        }
-    };
-} // namespace
-
 ReportsWidgetHibp::ReportsWidgetHibp(QWidget* parent)
-    : QWidget(parent)
+    : ReportsWidgetBase(parent, SortProxyModelKind::Hibp)
     , m_ui(new Ui::ReportsWidgetHibp())
-    , m_referencesModel(new QStandardItemModel(this))
-    , m_modelProxy(new ReportSortProxyModel(this))
 {
     m_ui->setupUi(this);
 
@@ -85,13 +60,6 @@ ReportsWidgetHibp::~ReportsWidgetHibp() = default;
 
 void ReportsWidgetHibp::loadSettings(QSharedPointer<Database> db)
 {
-    // Re-initialize
-    m_db = std::move(db);
-    m_referencesModel->clear();
-    m_pwndPasswords.clear();
-    m_error.clear();
-    m_rowToEntry.clear();
-    m_editedEntry = nullptr;
 #ifdef WITH_XC_NETWORKING
     m_ui->stackedWidget->setCurrentIndex(0);
     m_ui->validationButton->setEnabled(true);
@@ -100,6 +68,9 @@ void ReportsWidgetHibp::loadSettings(QSharedPointer<Database> db)
     // Compiled without networking, can't do anything
     m_ui->stackedWidget->setCurrentIndex(2);
 #endif
+
+    ReportsWidgetBase::loadSettings(db);
+    m_referencesModel->clear();
 }
 
 /*
@@ -153,13 +124,17 @@ void ReportsWidgetHibp::makeHibpTable()
         auto title = entry->title();
 
         // Hide entry if excluded unless explicitly requested
-        if (entry->excludeFromReports()) {
+        if (entry->excludeFromReports() || entry->group()->excludeFromReports()) {
             anyExcluded = true;
             if (!showExcluded) {
                 continue;
             }
 
-            title.append(tr(" (Excluded)"));
+            if (group->excludeFromReports()) {
+                title.append(tr(" (Group Excluded)"));
+            } else {
+                title.append(tr(" (Excluded)"));
+            }
         }
 
         auto row = QList<QStandardItem*>();
@@ -169,6 +144,8 @@ void ReportsWidgetHibp::makeHibpTable()
 
         if (entry->excludeFromReports()) {
             row[1]->setToolTip(tr("This entry is being excluded from reports"));
+        } else if (entry->group()->excludeFromReports()) {
+            row[1]->setToolTip(tr("The group for this entry is being excluded from reports"));
         }
 
         row[2]->setForeground(red);
@@ -176,7 +153,7 @@ void ReportsWidgetHibp::makeHibpTable()
         m_referencesModel->appendRow(row);
 
         // Store entry pointer per table row (used in double click handler)
-        m_rowToEntry.append(entry);
+        m_rowToEntry.append({group, entry});
     }
 
     // If there was an error, append the error message to the table
@@ -311,12 +288,12 @@ void ReportsWidgetHibp::emitEntryActivated(const QModelIndex& index)
     // Find which database entry was double-clicked
     auto mappedIndex = m_modelProxy->mapToSource(index);
     const auto entry = m_rowToEntry[mappedIndex.row()];
-    if (entry) {
+    if (entry.second) {
         // Found it, invoke entry editor
-        m_editedEntry = entry;
-        m_editedPassword = entry->password();
-        m_editedExcluded = entry->excludeFromReports();
-        emit entryActivated(const_cast<Entry*>(entry));
+        m_editedEntry = entry.second;
+        m_editedPassword = entry.second->password();
+        m_editedExcluded = entry.second->excludeFromReports();
+        emit entryActivated(const_cast<Entry*>(entry.second));
     }
 }
 
@@ -355,101 +332,23 @@ void ReportsWidgetHibp::refreshAfterEdit()
 
 void ReportsWidgetHibp::customMenuRequested(QPoint pos)
 {
-    auto selected = m_ui->hibpTableView->selectionModel()->selectedRows();
-    if (selected.isEmpty()) {
+    // Create the context menu
+    const auto menu = customMenuRequestedBase();
+
+    if (!menu) {
         return;
     }
-
-    // Create the context menu
-    const auto menu = new QMenu(this);
-
-    // Create the "edit entry" menu item if 1 row is selected
-    if (selected.size() == 1) {
-        const auto edit = new QAction(icons()->icon("entry-edit"), tr("Edit Entry…"), this);
-        menu->addAction(edit);
-        connect(edit, &QAction::triggered, edit, [this, selected] {
-            auto row = m_modelProxy->mapToSource(selected[0]).row();
-            auto entry = m_rowToEntry[row];
-            emit entryActivated(entry);
-        });
-    }
-
-    // Create the "Expire entry" menu item
-    const auto expEntry = new QAction(icons()->icon("entry-expire"), tr("Expire Entry(s)…", "", selected.size()), this);
-    menu->addAction(expEntry);
-    connect(expEntry, &QAction::triggered, this, &ReportsWidgetHibp::expireSelectedEntries);
-
-    // Create the "delete entry" menu item
-    const auto delEntry = new QAction(icons()->icon("entry-delete"), tr("Delete Entry(s)…", "", selected.size()), this);
-    menu->addAction(delEntry);
-    connect(delEntry, &QAction::triggered, this, &ReportsWidgetHibp::deleteSelectedEntries);
-
-    // Create the "exclude from reports" menu item
-    const auto exclude = new QAction(icons()->icon("reports-exclude"), tr("Exclude from reports"), this);
-
-    bool isExcluded = false;
-    for (auto index : selected) {
-        auto row = m_modelProxy->mapToSource(index).row();
-        auto entry = m_rowToEntry[row];
-        if (entry && entry->excludeFromReports()) {
-            // If at least one entry is excluded switch to inclusion
-            isExcluded = true;
-            break;
-        }
-    }
-    exclude->setCheckable(true);
-    exclude->setChecked(isExcluded);
-
-    menu->addAction(exclude);
-    connect(exclude, &QAction::toggled, exclude, [this, selected](bool state) {
-        for (auto index : selected) {
-            auto row = m_modelProxy->mapToSource(index).row();
-            auto entry = m_rowToEntry[row];
-            if (entry) {
-                entry->setExcludeFromReports(state);
-            }
-        }
-        makeHibpTable();
-    });
 
     // Show the context menu
     menu->popup(m_ui->hibpTableView->viewport()->mapToGlobal(pos));
 }
 
-QList<Entry*> ReportsWidgetHibp::getSelectedEntries()
+void ReportsWidgetHibp::updateWidget()
 {
-    QList<Entry*> selectedEntries;
-    for (auto index : m_ui->hibpTableView->selectionModel()->selectedRows()) {
-        auto row = m_modelProxy->mapToSource(index).row();
-        auto entry = m_rowToEntry[row];
-        if (entry) {
-            selectedEntries << entry;
-        }
-    }
-    return selectedEntries;
-}
-
-void ReportsWidgetHibp::expireSelectedEntries()
-{
-    for (auto entry : getSelectedEntries()) {
-        entry->expireNow();
-    }
-
     makeHibpTable();
 }
 
-void ReportsWidgetHibp::deleteSelectedEntries()
+QTableView* ReportsWidgetHibp::getTableView() const
 {
-    QList<Entry*> selectedEntries = getSelectedEntries();
-    bool permanent = !m_db->metadata()->recycleBinEnabled();
-    if (GuiTools::confirmDeleteEntries(this, selectedEntries, permanent)) {
-        GuiTools::deleteEntriesResolveReferences(this, selectedEntries, permanent);
-    }
-
-    makeHibpTable();
-}
-
-void ReportsWidgetHibp::saveSettings()
-{
-    // nothing to do - the tab is passive
+    return m_ui->hibpTableView;
 }

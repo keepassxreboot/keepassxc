@@ -126,6 +126,7 @@ void EditGroupWidget::setupModifiedTracking()
     connect(m_mainUi->autoTypeSequenceInherit, SIGNAL(toggled(bool)), SLOT(setModified()));
     connect(m_mainUi->autoTypeSequenceCustomRadio, SIGNAL(toggled(bool)), SLOT(setModified()));
     connect(m_mainUi->autoTypeSequenceCustomEdit, SIGNAL(textChanged(QString)), SLOT(setModified()));
+    connect(m_mainUi->excludeReportsCheckBox, SIGNAL(stateChanged(int)), SLOT(setModified()));
 
     // Icon tab
     connect(m_editGroupWidgetIcons, SIGNAL(widgetUpdated()), SLOT(setModified()));
@@ -171,6 +172,7 @@ void EditGroupWidget::loadGroup(Group* group, bool create, const QSharedPointer<
         m_mainUi->autoTypeSequenceCustomRadio->setChecked(true);
     }
     m_mainUi->autoTypeSequenceCustomEdit->setText(group->effectiveAutoTypeSequence());
+    m_mainUi->excludeReportsCheckBox->setChecked(m_group->excludeFromReports());
 
     if (config()->get(Config::GUI_MonospaceNotes).toBool()) {
         m_mainUi->editNotes->setFont(Font::fixedFont());
@@ -265,6 +267,7 @@ void EditGroupWidget::apply()
 
     m_temporaryGroup->setSearchingEnabled(triStateFromIndex(m_mainUi->searchComboBox->currentIndex()));
     m_temporaryGroup->setAutoTypeEnabled(triStateFromIndex(m_mainUi->autotypeComboBox->currentIndex()));
+    m_temporaryGroup->setExcludeFromReports(m_mainUi->excludeReportsCheckBox->isChecked());
 
     if (m_mainUi->autoTypeSequenceInherit->isChecked()) {
         m_temporaryGroup->setDefaultAutoTypeSequence(QString());

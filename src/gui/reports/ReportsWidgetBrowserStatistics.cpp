@@ -50,7 +50,7 @@ namespace
                 , entry(e)
                 , hasUrls(hU)
                 , hasSettings(hS)
-                , exclude(e->excludeFromReports())
+                , exclude(e->excludeFromReports() || g->excludeFromReports())
             {
             }
         };
@@ -92,10 +92,8 @@ BrowserStatistics::BrowserStatistics(QSharedPointer<Database> db)
 }
 
 ReportsWidgetBrowserStatistics::ReportsWidgetBrowserStatistics(QWidget* parent)
-    : QWidget(parent)
+    : ReportsWidgetBase(parent, SortProxyModelKind::Default)
     , m_ui(new Ui::ReportsWidgetBrowserStatistics())
-    , m_referencesModel(new QStandardItemModel(this))
-    , m_modelProxy(new QSortFilterProxyModel(this))
 {
     m_ui->setupUi(this);
 
@@ -141,7 +139,11 @@ void ReportsWidgetBrowserStatistics::addStatisticsRow(bool hasUrls,
 
     auto title = entry->title();
     if (excluded) {
-        title.append(tr(" (Excluded)"));
+        if (group->excludeFromReports()) {
+            title.append(tr(" (Group Excluded)"));
+        } else {
+            title.append(tr(" (Excluded)"));
+        }
     }
     if (entry->isExpired()) {
         title.append(tr(" (Expired)"));
@@ -159,7 +161,11 @@ void ReportsWidgetBrowserStatistics::addStatisticsRow(bool hasUrls,
     row[3]->setToolTip(allowedUrlsToolTip);
     row[4]->setToolTip(deniedUrlsToolTip);
     if (excluded) {
-        row[0]->setToolTip(tr("This entry is being excluded from reports"));
+        if (group->excludeFromReports()) {
+            row[0]->setToolTip(tr("The group for this entry is being excluded from reports"));
+        } else {
+            row[0]->setToolTip(tr("This entry is being excluded from reports"));
+        }
     }
 
     // Store entry pointer per table row (used in double click handler)
@@ -167,25 +173,13 @@ void ReportsWidgetBrowserStatistics::addStatisticsRow(bool hasUrls,
     m_rowToEntry.append({group, entry});
 }
 
-void ReportsWidgetBrowserStatistics::loadSettings(QSharedPointer<Database> db)
-{
-    m_db = std::move(db);
-    m_statisticsCalculated = false;
-    m_referencesModel->clear();
-    m_rowToEntry.clear();
-
-    auto row = QList<QStandardItem*>();
-    row << new QStandardItem(tr("Please wait, browser statistics is being calculated…"));
-    m_referencesModel->appendRow(row);
-}
-
 void ReportsWidgetBrowserStatistics::showEvent(QShowEvent* event)
 {
     QWidget::showEvent(event);
 
-    if (!m_statisticsCalculated) {
+    if (!m_widgetDataCalculated) {
         // Perform stats calculation on next event loop to allow widget to appear
-        m_statisticsCalculated = true;
+        m_widgetDataCalculated = true;
         QTimer::singleShot(0, this, SLOT(calculateBrowserStatistics()));
     }
 }
@@ -238,132 +232,28 @@ void ReportsWidgetBrowserStatistics::calculateBrowserStatistics()
     m_ui->browserStatisticsTableView->resizeColumnsToContents();
 }
 
-void ReportsWidgetBrowserStatistics::emitEntryActivated(const QModelIndex& index)
-{
-    if (!index.isValid()) {
-        return;
-    }
-
-    auto mappedIndex = m_modelProxy->mapToSource(index);
-    const auto row = m_rowToEntry[mappedIndex.row()];
-    const auto group = row.first;
-    const auto entry = row.second;
-
-    if (group && entry) {
-        emit entryActivated(const_cast<Entry*>(entry));
-    }
-}
-
 void ReportsWidgetBrowserStatistics::customMenuRequested(QPoint pos)
 {
-    auto selected = m_ui->browserStatisticsTableView->selectionModel()->selectedRows();
-    if (selected.isEmpty()) {
+    auto menu = customMenuRequestedBase();
+
+    if (!menu) {
         return;
     }
 
-    // Create the context menu
-    const auto menu = new QMenu(this);
-
-    // Create the "edit entry" menu item (only if 1 row is selected)
-    if (selected.size() == 1) {
-        const auto edit = new QAction(icons()->icon("entry-edit"), tr("Edit Entry…"), this);
-        menu->addAction(edit);
-        connect(edit, &QAction::triggered, edit, [this, selected] {
-            auto row = m_modelProxy->mapToSource(selected[0]).row();
-            auto entry = m_rowToEntry[row].second;
-            emit entryActivated(entry);
-        });
-    }
-
-    // Create the "expire entry" menu item
-    const auto expEntry = new QAction(icons()->icon("entry-expire"), tr("Expire Entry(s)…", "", selected.size()), this);
-    menu->addAction(expEntry);
-    connect(expEntry, &QAction::triggered, this, &ReportsWidgetBrowserStatistics::expireSelectedEntries);
-
-    // Create the "delete entry" menu item
-    const auto deleteEntry =
-        new QAction(icons()->icon("entry-delete"), tr("Delete Entry(s)…", "", selected.size()), this);
-    menu->addAction(deleteEntry);
-    connect(deleteEntry, &QAction::triggered, this, &ReportsWidgetBrowserStatistics::deleteSelectedEntries);
+    auto selected = getTableView()->selectionModel()->selectedRows();
 
     // Create the "delete plugin data" menu item
     const auto deletePluginData =
         new QAction(icons()->icon("entry-delete"), tr("Delete plugin data from Entry(s)…", "", selected.size()), this);
-    menu->addAction(deletePluginData);
+    menu->insertAction(menu->actions().at(3),
+                       deletePluginData); // Index 3 is the one after "Delete Entry" so place "Delete plugin" before it
     connect(deletePluginData,
             &QAction::triggered,
             this,
             &ReportsWidgetBrowserStatistics::deletePluginDataFromSelectedEntries);
 
-    // Create the "exclude from reports" menu item
-    const auto exclude = new QAction(icons()->icon("reports-exclude"), tr("Exclude from reports"), this);
-
-    bool isExcluded = false;
-    for (auto index : selected) {
-        auto row = m_modelProxy->mapToSource(index).row();
-        auto entry = m_rowToEntry[row].second;
-        if (entry && entry->excludeFromReports()) {
-            // If at least one entry is excluded switch to inclusion
-            isExcluded = true;
-            break;
-        }
-    }
-    exclude->setCheckable(true);
-    exclude->setChecked(isExcluded);
-
-    menu->addAction(exclude);
-    connect(exclude, &QAction::toggled, exclude, [this, selected](bool state) {
-        for (auto index : selected) {
-            auto row = m_modelProxy->mapToSource(index).row();
-            auto entry = m_rowToEntry[row].second;
-            if (entry) {
-                entry->setExcludeFromReports(state);
-            }
-        }
-        calculateBrowserStatistics();
-    });
-
     // Show the context menu
     menu->popup(m_ui->browserStatisticsTableView->viewport()->mapToGlobal(pos));
-}
-
-void ReportsWidgetBrowserStatistics::saveSettings()
-{
-    // Nothing to do - the tab is passive
-}
-
-QList<Entry*> ReportsWidgetBrowserStatistics::getSelectedEntries()
-{
-    QList<Entry*> selectedEntries;
-    for (auto index : m_ui->browserStatisticsTableView->selectionModel()->selectedRows()) {
-        auto row = m_modelProxy->mapToSource(index).row();
-        auto entry = m_rowToEntry[row].second;
-        if (entry) {
-            selectedEntries << entry;
-        }
-    }
-    return selectedEntries;
-}
-
-void ReportsWidgetBrowserStatistics::expireSelectedEntries()
-{
-    for (auto entry : getSelectedEntries()) {
-        entry->expireNow();
-    }
-
-    calculateBrowserStatistics();
-}
-
-void ReportsWidgetBrowserStatistics::deleteSelectedEntries()
-{
-    const auto& selectedEntries = getSelectedEntries();
-    bool permanent = !m_db->metadata()->recycleBinEnabled();
-
-    if (GuiTools::confirmDeleteEntries(this, selectedEntries, permanent)) {
-        GuiTools::deleteEntriesResolveReferences(this, selectedEntries, permanent);
-    }
-
-    calculateBrowserStatistics();
 }
 
 void ReportsWidgetBrowserStatistics::deletePluginDataFromSelectedEntries()
@@ -414,16 +304,12 @@ QMap<QString, QStringList> ReportsWidgetBrowserStatistics::getBrowserConfigFromE
     return configList;
 }
 
-QList<Entry*> ReportsWidgetBrowserStatistics::getSelectedEntries() const
+QTableView* ReportsWidgetBrowserStatistics::getTableView() const
 {
-    QList<Entry*> selectedEntries;
-    for (auto index : m_ui->browserStatisticsTableView->selectionModel()->selectedRows()) {
-        auto row = m_modelProxy->mapToSource(index).row();
-        auto entry = m_rowToEntry[row].second;
-        if (entry) {
-            selectedEntries << entry;
-        }
-    }
+    return m_ui->browserStatisticsTableView;
+}
 
-    return selectedEntries;
+void ReportsWidgetBrowserStatistics::updateWidget()
+{
+    calculateBrowserStatistics();
 }

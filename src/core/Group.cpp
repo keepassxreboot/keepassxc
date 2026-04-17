@@ -1281,6 +1281,33 @@ void Group::setPreviousParentGroup(const Group* group)
     setPreviousParentGroupUuid(group ? group->uuid() : QUuid());
 }
 
+void Group::setExcludeFromReports(bool excluded)
+{
+    customData()->set(CustomData::ExcludeFromReportsLegacy, excluded ? TRUE_STR : FALSE_STR);
+
+    // Clear out the exclusion flag on entries when we set it on the
+    // group because it'll make it easier to individually set it for an
+    // entry later on
+    if (excluded) {
+        for (auto& entry : m_entries) {
+            entry->setExcludeFromReports(false);
+        }
+    }
+}
+
+void Group::markAllEntriesExcludedFromReports()
+{
+    for (auto& entry : m_entries) {
+        entry->setExcludeFromReports(true);
+    }
+}
+
+bool Group::excludeFromReports() const
+{
+    return customData()->contains(CustomData::ExcludeFromReportsLegacy)
+           && customData()->value(CustomData::ExcludeFromReportsLegacy) == TRUE_STR;
+}
+
 bool Group::GroupData::operator==(const Group::GroupData& other) const
 {
     return equals(other, CompareItemDefault);

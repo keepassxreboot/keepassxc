@@ -19,6 +19,7 @@
 #define KEEPASSXC_REPORTSWIDGETPASSKEYS_H
 
 #include "gui/entry/EntryModel.h"
+#include "gui/reports/ReportsWidgetBase.h"
 #include <QWidget>
 
 class Database;
@@ -33,27 +34,21 @@ namespace Ui
     class ReportsWidgetPasskeys;
 }
 
-class ReportsWidgetPasskeys : public QWidget
+class ReportsWidgetPasskeys : public ReportsWidgetBase
 {
     Q_OBJECT
 public:
     explicit ReportsWidgetPasskeys(QWidget* parent = nullptr);
     ~ReportsWidgetPasskeys() override;
 
-    void loadSettings(QSharedPointer<Database> db);
-    void saveSettings();
-
 protected:
     void showEvent(QShowEvent* event) override;
-
-signals:
-    void entryActivated(Entry*);
+    void updateWidget() override;
+    QTableView* getTableView() const override;
 
 public slots:
     void updateEntries();
-    void emitEntryActivated(const QModelIndex& index);
     void customMenuRequested(QPoint);
-    void deleteSelectedEntries();
 
 private slots:
     void selectionChanged();
@@ -62,15 +57,8 @@ private slots:
 
 private:
     void addPasskeyRow(Group*, Entry*);
-    QList<Entry*> getSelectedEntries();
 
     QScopedPointer<Ui::ReportsWidgetPasskeys> m_ui;
-
-    bool m_entriesUpdated = false;
-    QScopedPointer<QStandardItemModel> m_referencesModel;
-    QScopedPointer<QSortFilterProxyModel> m_modelProxy;
-    QSharedPointer<Database> m_db;
-    QList<QPair<Group*, Entry*>> m_rowToEntry;
 };
 
 #endif // KEEPASSXC_REPORTSWIDGETPASSKEYS_H

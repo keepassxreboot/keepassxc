@@ -194,6 +194,7 @@ set(gui_SOURCES
         gui/remote/RemoteProcess.cpp
         gui/remote/RemoteSettings.cpp
         gui/reports/ReportsWidget.cpp
+        gui/reports/ReportsWidgetBase.cpp
         gui/reports/ReportsDialog.cpp
         gui/reports/ReportsWidgetHealthcheck.cpp
         gui/reports/ReportsPageHealthcheck.cpp
