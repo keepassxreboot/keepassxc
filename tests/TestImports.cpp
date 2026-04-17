@@ -429,7 +429,8 @@ void TestImports::testBitwardenNestedFolders()
 
 void TestImports::testBitwardenSSHKey()
 {
-    auto bitwardenPath = QStringLiteral("%1/%2").arg(KEEPASSX_TEST_DATA_DIR, QStringLiteral("/bitwarden_export_ssh.json"));
+    auto bitwardenPath =
+        QStringLiteral("%1/%2").arg(KEEPASSX_TEST_DATA_DIR, QStringLiteral("/bitwarden_export_ssh.json"));
 
     BitwardenReader reader;
     auto db = reader.convert(bitwardenPath);
@@ -476,10 +477,16 @@ void TestImports::testBitwardenSSHKey()
                         "oWvK3s/Bs0z4eM+aGalgVBvpnpSeYmV5STMdstgNP8A3V1W00AAACBAMKe+jaqwq6Xd4lD\n"
                         "wtk5zQP9TS+3o1PjKqVfncGrHx6tZKjPShHRXgu74D9D0w91y8toDA7hoXDDn7wWtdf02B\n"
                         "8Hcp76lGyWawkG9N9n0oAMYEtu7G/j6UNMviCkwNs2q02f//TQpyv+A9X+pdwq2rIjCUyc\n"
-                        """MU6WqS6pCoG7T/1BAAAADWNvbW1lbnQtZmllbGQBAgMEBQ==\n"
+                        ""
+                        "MU6WqS6pCoG7T/1BAAAADWNvbW1lbnQtZmllbGQBAgMEBQ==\n"
                         "-----END OPENSSH PRIVATE KEY-----\n"));
     QCOMPARE(entry->attachments()->value("id_rsa.pub"),
-             QByteArray("ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCoXzMuSukOLXb2l1CdHpasQZwBIV30nSHGeu+vHx6m4u9Hzc6wU3OBwjcr16qbdbTTC5KpGY5+q0dkyLHwrrKtUdaCK9olT6TvYMTe046U9J9o91nbiRtmFby1rbX47WE/fMImsSlU/eV4quOLyY5JRhdtImDuBCWsxcWvZ1iAcTXDTtoeTS9hLj07Rqb2b6WkueFSUWtmPnnr7IihE8o2fJGlE7/CMaDQ9tE8xx46Yr6mFDU9VuXBQEahTzZTXiTqZaICt+PzLNPFw5jEohc+oHfUHF3cPYtNzPUllPmdtwk0NDpxvkOo4CY1XtzYXmm7AGohkeZea2NJZKs5ykeN comment-field"));
+             QByteArray("ssh-rsa "
+                        "AAAAB3NzaC1yc2EAAAADAQABAAABAQCoXzMuSukOLXb2l1CdHpasQZwBIV30nSHGeu+"
+                        "vHx6m4u9Hzc6wU3OBwjcr16qbdbTTC5KpGY5+q0dkyLHwrrKtUdaCK9olT6TvYMTe046U9J9o91nbiRtmFby1rbX47WE/"
+                        "fMImsSlU/eV4quOLyY5JRhdtImDuBCWsxcWvZ1iAcTXDTtoeTS9hLj07Rqb2b6WkueFSUWtmPnnr7IihE8o2fJGlE7/"
+                        "CMaDQ9tE8xx46Yr6mFDU9VuXBQEahTzZTXiTqZaICt+PzLNPFw5jEohc+"
+                        "oHfUHF3cPYtNzPUllPmdtwk0NDpxvkOo4CY1XtzYXmm7AGohkeZea2NJZKs5ykeN comment-field"));
 
     entry = db->rootGroup()->findEntryByPath("/SSH Ed25519 Key");
 
@@ -501,8 +508,9 @@ void TestImports::testBitwardenSSHKey()
                         "AAAECIazL429hSbLe02vjjDKfd5sn6YXGVMegywgMhBx4asH1/XKNSki1VovVnqoGJh7Ru\n"
                         "unUYOcKJNCAG5mKvi/BAAAAADWNvbW1lbnQtZmllbGQ=\n"
                         "-----END OPENSSH PRIVATE KEY-----\n"));
-    QCOMPARE(entry->attachments()->value("id_ed25519.pub"),
-             QByteArray("ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH1/XKNSki1VovVnqoGJh7RuunUYOcKJNCAG5mKvi/BA comment-field"));
+    QCOMPARE(
+        entry->attachments()->value("id_ed25519.pub"),
+        QByteArray("ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIH1/XKNSki1VovVnqoGJh7RuunUYOcKJNCAG5mKvi/BA comment-field"));
 }
 
 void TestImports::testProtonPass()
