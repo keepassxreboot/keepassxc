@@ -283,7 +283,6 @@ private slots:
     void onDatabaseNonDataChanged();
     void onAutosaveDelayTimeout();
     void connectDatabaseSignals();
-    void loadDatabase(bool accepted);
     void unlockDatabase(bool accepted);
     void mergeDatabase(bool accepted);
     void syncUnlockedDatabase(bool accepted);

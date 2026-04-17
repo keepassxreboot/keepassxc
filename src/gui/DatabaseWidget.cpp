@@ -222,7 +222,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     connect(m_editGroupWidget, SIGNAL(editFinished(bool)), SLOT(switchToMainView(bool)));
     connect(m_reportsDialog, SIGNAL(editFinished(bool)), SLOT(switchToMainView(bool)));
     connect(m_databaseSettingDialog, SIGNAL(editFinished(bool)), SLOT(switchToMainView(bool)));
-    connect(m_databaseOpenWidget, SIGNAL(dialogFinished(bool)), SLOT(loadDatabase(bool)));
+    connect(m_databaseOpenWidget, SIGNAL(dialogFinished(bool)), SLOT(unlockDatabase(bool)));
     connect(this, SIGNAL(currentChanged(int)), SLOT(emitCurrentModeChanged()));
     connect(this, SIGNAL(requestGlobalAutoType(const QString&)), parent, SLOT(performGlobalAutoType(const QString&)));
     connect(config(), &Config::changed, this, &DatabaseWidget::onConfigChanged);
@@ -1328,52 +1328,6 @@ void DatabaseWidget::connectDatabaseSignals()
     connect(m_db.data(), &Database::databaseNonDataChanged, this, &DatabaseWidget::onDatabaseNonDataChanged);
 }
 
-void DatabaseWidget::loadDatabase(bool accepted)
-{
-    auto* openWidget = qobject_cast<DatabaseOpenWidget*>(sender());
-    Q_ASSERT(openWidget);
-    if (!openWidget) {
-        return;
-    }
-
-    if (accepted) {
-        emit databaseAboutToUnlock();
-        replaceDatabase(openWidget->database());
-        switchToMainView();
-        processAutoOpen();
-
-        restoreGroupEntryFocus(m_groupBeforeLock, m_entryBeforeLock);
-
-        // Only show expired entries if first unlock and option is enabled
-        if (m_groupBeforeLock.isNull() && config()->get(Config::GUI_ShowExpiredEntriesOnDatabaseUnlock).toBool()) {
-            int expirationOffset = config()->get(Config::GUI_ShowExpiredEntriesOnDatabaseUnlockOffsetDays).toInt();
-            if (expirationOffset <= 0) {
-                m_nextSearchLabelText = tr("Expired entries");
-            } else {
-                m_nextSearchLabelText =
-                    tr("Entries expiring within %1 day(s)", "", expirationOffset).arg(expirationOffset);
-            }
-            requestSearch(QString("is:expired-%1").arg(expirationOffset));
-        }
-
-        m_groupBeforeLock = QUuid();
-        m_entryBeforeLock = QUuid();
-        m_saveAttempts = 0;
-        emit databaseUnlocked();
-#ifdef WITH_XC_SSHAGENT
-        sshAgent()->databaseUnlocked(m_db);
-#endif
-        if (config()->get(Config::MinimizeAfterUnlock).toBool()) {
-            getMainWindow()->minimizeOrHide();
-        }
-    } else {
-        if (m_databaseOpenWidget->database()) {
-            m_databaseOpenWidget->database().reset();
-        }
-        emit closeRequest();
-    }
-}
-
 void DatabaseWidget::mergeDatabase(bool accepted)
 {
     if (accepted) {
@@ -1482,12 +1436,23 @@ bool DatabaseWidget::syncWithDatabase(const QSharedPointer<Database>& otherDb, Q
 void DatabaseWidget::unlockDatabase(bool accepted)
 {
     auto* senderDialog = qobject_cast<DatabaseOpenDialog*>(sender());
+    auto* senderOpenWidget = qobject_cast<DatabaseOpenWidget*>(sender());
+    const bool fromDialog = senderDialog != nullptr;
+    const bool fromOpenWidget = senderOpenWidget != nullptr;
 
     if (!accepted) {
-        if (!senderDialog && (!m_db || !m_db->isInitialized())) {
+        if (fromOpenWidget) {
+            if (m_databaseOpenWidget->database()) {
+                m_databaseOpenWidget->database().reset();
+            }
+            emit closeRequest();
+            return;
+        }
+
+        if (!fromDialog && (!m_db || !m_db->isInitialized())) {
             emit closeRequest();
         }
-        if (senderDialog && senderDialog->intent() == DatabaseOpenDialog::Intent::RemoteSync) {
+        if (fromDialog && senderDialog->intent() == DatabaseOpenDialog::Intent::RemoteSync) {
             RemoteHandler::RemoteResult result;
             result.success = false;
             result.errorMessage = "Remote database unlock cancelled.";
@@ -1496,7 +1461,7 @@ void DatabaseWidget::unlockDatabase(bool accepted)
         return;
     }
 
-    if (senderDialog) {
+    if (fromDialog) {
         if (senderDialog->intent() == DatabaseOpenDialog::Intent::Merge) {
             mergeDatabase(accepted);
             return;
@@ -1508,19 +1473,44 @@ void DatabaseWidget::unlockDatabase(bool accepted)
 
     emit databaseAboutToUnlock();
     QSharedPointer<Database> db;
-    if (senderDialog) {
+    if (fromDialog) {
         db = senderDialog->database();
+    } else if (fromOpenWidget) {
+        db = senderOpenWidget->database();
     } else {
         db = m_databaseOpenWidget->database();
     }
     replaceDatabase(db);
 
-    restoreGroupEntryFocus(m_groupBeforeLock, m_entryBeforeLock);
-    m_groupBeforeLock = QUuid();
-    m_entryBeforeLock = QUuid();
+    if (fromOpenWidget) {
+        switchToMainView();
+        processAutoOpen();
 
-    switchToMainView();
-    processAutoOpen();
+        restoreGroupEntryFocus(m_groupBeforeLock, m_entryBeforeLock);
+
+        // Only show expired entries if first unlock and option is enabled
+        if (m_groupBeforeLock.isNull() && config()->get(Config::GUI_ShowExpiredEntriesOnDatabaseUnlock).toBool()) {
+            int expirationOffset = config()->get(Config::GUI_ShowExpiredEntriesOnDatabaseUnlockOffsetDays).toInt();
+            if (expirationOffset <= 0) {
+                m_nextSearchLabelText = tr("Expired entries");
+            } else {
+                m_nextSearchLabelText =
+                    tr("Entries expiring within %1 day(s)", "", expirationOffset).arg(expirationOffset);
+            }
+            requestSearch(QString("is:expired-%1").arg(expirationOffset));
+        }
+
+        m_groupBeforeLock = QUuid();
+        m_entryBeforeLock = QUuid();
+        m_saveAttempts = 0;
+    } else {
+        restoreGroupEntryFocus(m_groupBeforeLock, m_entryBeforeLock);
+        m_groupBeforeLock = QUuid();
+        m_entryBeforeLock = QUuid();
+
+        switchToMainView();
+        processAutoOpen();
+    }
     emit databaseUnlocked();
 
 #ifdef WITH_XC_SSHAGENT
@@ -1531,7 +1521,7 @@ void DatabaseWidget::unlockDatabase(bool accepted)
         getMainWindow()->minimizeOrHide();
     }
 
-    if (senderDialog && senderDialog->intent() == DatabaseOpenDialog::Intent::AutoType) {
+    if (fromDialog && senderDialog->intent() == DatabaseOpenDialog::Intent::AutoType) {
         // Rather than starting AutoType directly for this database, signal the parent DatabaseTabWidget to
         // restart AutoType now that this database is unlocked, so that other open+unlocked databases
         // can be included in the search.
