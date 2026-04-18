@@ -325,7 +325,7 @@ configure_file(git-info.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/git-info.h)
 
 # Core Library Definition
 add_library(keepassxc_core STATIC ${core_SOURCES})
-set_target_properties(keepassxc_core PROPERTIES COMPILE_DEFINITIONS KPXC_BUILDING_CORE)
+target_compile_definitions(keepassxc_core PRIVATE KPXC_BUILDING_CORE)
 target_link_libraries(keepassxc_core 
         ${qrcode_LIB}
         Qt5::Core
@@ -341,7 +341,7 @@ target_link_libraries(keepassxc_core
 
 # GUI Library Definition
 add_library(keepassxc_gui STATIC ${gui_SOURCES})
-set_target_properties(keepassxc_gui PROPERTIES COMPILE_DEFINITIONS KPXC_BUILDING_CORE)
+target_compile_definitions(keepassxc_gui PRIVATE KPXC_BUILDING_CORE)
 target_link_libraries(keepassxc_gui
         keepassxc_core
         Qt5::Network
@@ -366,7 +366,7 @@ if(UNIX AND NOT APPLE)
     if(WITH_X11)
         target_link_libraries(keepassxc_gui Qt5::X11Extras X11)
     endif()
-    include_directories(${Qt5Gui_PRIVATE_INCLUDE_DIRS})
+    target_include_directories(keepassxc_gui PRIVATE ${Qt5Gui_PRIVATE_INCLUDE_DIRS})
 endif()
 if(WIN32)
     target_link_libraries(keepassxc_gui Wtsapi32.lib Ws2_32.lib)
