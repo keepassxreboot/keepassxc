@@ -332,9 +332,7 @@ if(WIN32)
         add_compile_options(/permissive- /utf-8)
         # Clang-cl does not support /MP, /Zf, or /fsanitize=address
         if (NOT CMAKE_COMPILER_IS_CLANG_MSVC)
-            add_compile_options(/MP /Zf)
-            # Enable built-in ASAN
-            add_compile_definitions(/fsanitize=address)
+            add_compile_options(/MP /Zf /fsanitize=address)
         endif()
 
         # Enable high entropy ASLR on release builds

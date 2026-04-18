@@ -573,13 +573,6 @@ void EntryPreviewWidget::openEntryUrl()
     }
 }
 
-void EntryPreviewWidget::removeTab(QTabWidget* tabWidget, QWidget* widget)
-{
-    const int tabIndex = tabWidget->indexOf(widget);
-    Q_ASSERT(tabIndex != -1);
-    tabWidget->removeTab(tabIndex);
-}
-
 void EntryPreviewWidget::setTabEnabled(QTabWidget* tabWidget, QWidget* widget, bool enabled)
 {
     const int tabIndex = tabWidget->indexOf(widget);

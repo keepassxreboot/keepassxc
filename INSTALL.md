@@ -14,6 +14,11 @@ The following build tools must exist within your PATH:
 * g++ (>= 9.3.0) or clang++ (>= 10.0)
 * asciidoctor (>= 2.0)
 
+The following minimum versions of libraries must exist:
+* qt (>= 5.12.0)
+* botan (>= 2.12.0 or >= 3.0.0)
+* zlib (>= 1.2.0)
+
 * Besides a working C++ toolchain, KeePassXC also has a number of direct build and runtime dependencies. For detailed information about how to install them, please refer to the GitHub wiki:
 
 * [Set up Build Environment on Linux](https://github.com/keepassxreboot/keepassxc/wiki/Set-up-Build-Environment-on-Linux)
@@ -46,15 +51,8 @@ To compile from source, open a **Terminal (Linux/MacOS)**, the **MSVC Tools Comm
 
    ```
    git checkout latest
-   ```
-
-2. Navigate to the directory where you have downloaded KeePassXC and run:
-
-   ```
-   mkdir build
-   cd build
-   cmake ..
-   make
+   cmake -B ./build
+   cmake --build ./build
    ```
 
 If you have `vcpkg` installed, add `-DCMAKE_TOOLCHAIN_FILE=${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake` to the `cmake` command to automatically download and install all required build and runtime dependencies locally to your build directory before compiling KeePassXC. Using `vcpkg` is the preferred way to install dependencies on macOS and required on Windows if using the MSVC toolchain.

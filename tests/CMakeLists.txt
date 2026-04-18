@@ -24,10 +24,10 @@ set(KEEPASSX_TEST_DATA_DIR ${CMAKE_CURRENT_SOURCE_DIR}/data)
 configure_file(config-keepassx-tests.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-keepassx-tests.h)
 
 function(add_unit_test)
-    cmake_parse_arguments(TEST "" "NAME;LAUNCHER" "SOURCES;LIBS" ${ARGN})
+    cmake_parse_arguments(TEST "" "NAME" "SOURCES;LIBS;LAUNCHER" ${ARGN})
     add_executable(${TEST_NAME} ${TEST_SOURCES})
     target_link_libraries(${TEST_NAME} ${TEST_LIBS})
-    add_test(${TEST_NAME} ${TEST_LAUNCHER} ${TEST_NAME})
+    add_test(NAME ${TEST_NAME} COMMAND ${TEST_LAUNCHER} ${TEST_NAME})
     set_tests_properties(${TEST_NAME} PROPERTIES ENVIRONMENT "LANG=en_US.UTF-8")
 endfunction()
 
