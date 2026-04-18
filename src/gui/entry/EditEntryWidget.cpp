@@ -164,13 +164,13 @@ QWidget* EditEntryWidget::widgetForPage(Page page) const
     case Page::AutoType:
         return m_autoTypeWidget;
     case Page::Browser:
-#ifdef WITH_XC_BROWSER
+#ifdef KPXC_FEATURE_BROWSER
         return m_browserWidget;
 #else
         return nullptr;
 #endif
     case Page::SSHAgent:
-#ifdef WITH_XC_SSHAGENT
+#ifdef KPXC_FEATURE_SSHAGENT
         return m_sshAgentWidget;
 #else
         return nullptr;
@@ -970,7 +970,7 @@ void EditEntryWidget::loadEntry(Entry* entry,
 
 void EditEntryWidget::setForms(Entry* entry, bool restore)
 {
-#ifdef WITH_XC_SSHAGENT
+#ifdef KPXC_FEATURE_SSHAGENT
     QSignalBlocker attachmentsBlocker(m_attachments.data());
 #endif
     m_attachments->copyDataFrom(entry->attachments());
@@ -1389,7 +1389,7 @@ void EditEntryWidget::clear()
     m_mainUi->notesEdit->clear();
 
     m_entryAttributes->clear();
-#ifdef WITH_XC_SSHAGENT
+#ifdef KPXC_FEATURE_SSHAGENT
     QSignalBlocker attachmentsBlocker(m_attachments.data());
 #endif
     m_attachments->clear();

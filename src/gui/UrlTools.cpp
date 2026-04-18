@@ -191,7 +191,7 @@ bool UrlTools::isUrlValid(const QString& urlField, bool looseComparison) const
         return false;
     }
 
-#if defined(WITH_XC_NETWORKING) || defined(WITH_XC_BROWSER)
+#if defined(KPXC_FEATURE_NETWORK) || defined(KPXC_FEATURE_BROWSER)
     // Prevent TLD wildcards
     if (looseComparison && url.contains(UrlTools::URL_WILDCARD)) {
         const auto tld = getTopLevelDomainFromUrl(url);

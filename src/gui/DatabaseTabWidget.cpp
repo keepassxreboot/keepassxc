@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -576,6 +576,7 @@ void DatabaseTabWidget::showDatabaseSecurity()
     currentDatabaseWidget()->switchToDatabaseSecurity();
 }
 
+#ifdef KPXC_FEATURE_BROWSER
 void DatabaseTabWidget::showPasskeys()
 {
     currentDatabaseWidget()->switchToPasskeys();
@@ -595,6 +596,7 @@ void DatabaseTabWidget::removePasskeyFromEntry()
 {
     currentDatabaseWidget()->removePasskeyFromEntry();
 }
+#endif
 
 bool DatabaseTabWidget::isModified(int index) const
 {

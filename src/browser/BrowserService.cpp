@@ -320,11 +320,11 @@ QJsonObject BrowserService::createNewGroup(const QString& groupName, bool isPass
             newGroup->setName(groups[i]);
             newGroup->setUuid(QUuid::createUuid());
             newGroup->setParent(previousGroup);
-#ifdef WITH_XC_BROWSER_PASSKEYS
+
             if (isPasskeysGroup && i == groups.length() - 1) {
                 newGroup->setIcon(KEEPASSXCBROWSER_PASSKEY_ICON);
             }
-#endif
+
             name = newGroup->name();
             newGroup->setCustomDataTriState(BrowserService::OPTION_HIDE_ENTRY, Group::Disable);
             uuid = Tools::uuidToHex(newGroup->uuid());

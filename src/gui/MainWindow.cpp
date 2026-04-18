@@ -365,7 +365,7 @@ MainWindow::MainWindow()
     m_ui->actionImport->setIcon(icons()->icon("document-import"));
     m_ui->menuExport->setIcon(icons()->icon("document-export"));
 
-#ifndef WITH_XC_BROWSER_PASSKEYS
+#ifndef KPXC_FEATURE_BROWSER
     m_ui->actionPasskeys->setVisible(false);
     m_ui->actionImportPasskey->setVisible(false);
     m_ui->actionEntryImportPasskey->setVisible(false);
@@ -1498,7 +1498,7 @@ void MainWindow::disableMenuAndToolbar()
 
 void MainWindow::clearSSHAgent()
 {
-#ifdef WITH_XC_SSHAGENT
+#ifdef KPXC_FEATURE_SSHAGENT
     auto agent = SSHAgent::instance();
     auto ret = agent->clearAllAgentIdentities();
     displayGlobalMessage(agent->errorString(), ret ? MessageWidget::Positive : KMessageWidget::Error, false);
