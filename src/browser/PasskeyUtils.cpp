@@ -233,11 +233,11 @@ bool PasskeyUtils::isRegistrableDomainSuffix(const QString& hostSuffixString, co
         return false;
     }
 
-    if (hostSuffix == urlTools()->getTopLevelDomainFromUrl(hostSuffix)) {
+    if (hostSuffix == UrlTools::getTopLevelDomainFromUrl(hostSuffix)) {
         return false;
     }
 
-    const auto originalPublicSuffix = urlTools()->getTopLevelDomainFromUrl(originalHost);
+    const auto originalPublicSuffix = UrlTools::getTopLevelDomainFromUrl(originalHost);
     if (originalPublicSuffix.isEmpty()) {
         return false;
     }
@@ -257,7 +257,7 @@ bool PasskeyUtils::isDomain(const QString& hostName) const
 {
     const auto domain = QUrl::fromUserInput(hostName).host();
     return !domain.isEmpty() && !domain.endsWith('.') && Tools::isAsciiString(domain)
-           && !urlTools()->domainHasIllegalCharacters(domain) && !urlTools()->isIpAddress(hostName);
+           && !UrlTools::domainHasIllegalCharacters(domain) && !UrlTools::isIpAddress(hostName);
 }
 
 bool PasskeyUtils::isUserVerificationValid(const QString& userVerification) const

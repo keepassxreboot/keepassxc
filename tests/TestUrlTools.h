@@ -28,16 +28,11 @@ class TestUrlTools : public QObject
 
 private slots:
     void initTestCase();
-    void init();
-
     void testTopLevelDomain();
     void testIsIpAddress();
     void testIsUrlIdentical();
     void testIsUrlValid();
     void testIsUrlValidWithLooseComparison();
     void testDomainHasIllegalCharacters();
-
-private:
-    QPointer<UrlTools> m_urlTools;
 };
 #endif // KEEPASSXC_TESTURLTOOLS_H

@@ -19,43 +19,25 @@
 #define KEEPASSXC_URLTOOLS_H
 
 #include "config-keepassx.h"
-#include <QObject>
+#include <QString>
+#if defined(KPXC_FEATURE_NETWORK) || defined(KPXC_FEATURE_BROWSER)
 #include <QUrl>
-#include <QVariant>
-#if defined(KPXC_FEATURE_NETWORK) || defined(KPXC_FEATURE_BROWSER)
-#include <QNetworkReply>
+class QNetworkReply;
 #endif
 
-class UrlTools : public QObject
+namespace UrlTools
 {
-    Q_OBJECT
-
-public:
-    explicit UrlTools() = default;
-    static UrlTools* instance();
-
 #if defined(KPXC_FEATURE_NETWORK) || defined(KPXC_FEATURE_BROWSER)
-    QUrl getRedirectTarget(QNetworkReply* reply) const;
-    QString getBaseDomainFromUrl(const QString& url) const;
-    QString getTopLevelDomainFromUrl(const QString& url) const;
-    bool isIpAddress(const QString& host) const;
+    QUrl getRedirectTarget(QNetworkReply* reply);
+    QString getBaseDomainFromUrl(const QString& url);
+    QString getTopLevelDomainFromUrl(const QString& url);
+    bool isIpAddress(const QString& host);
 #endif
-    bool isUrlIdentical(const QString& first, const QString& second) const;
-    bool isUrlValid(const QString& urlField, bool looseComparison = false) const;
-    bool domainHasIllegalCharacters(const QString& domain) const;
+    bool isUrlIdentical(QString first, QString second);
+    bool isUrlValid(const QString& urlField, bool looseComparison = false);
+    bool domainHasIllegalCharacters(const QString& domain);
 
-    static const QString URL_WILDCARD;
-
-private:
-    QUrl convertVariantToUrl(const QVariant& var) const;
-
-private:
-    Q_DISABLE_COPY(UrlTools);
-};
-
-static inline UrlTools* urlTools()
-{
-    return UrlTools::instance();
-}
+    extern const QString URL_WILDCARD;
+} // namespace UrlTools
 
 #endif // KEEPASSXC_URLTOOLS_H

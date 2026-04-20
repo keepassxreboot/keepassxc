@@ -1542,7 +1542,7 @@ bool BrowserService::handleURL(const QString& entryUrl,
     }
 
     // Match the base domain
-    if (urlTools()->getBaseDomainFromUrl(siteQUrl.host()) != urlTools()->getBaseDomainFromUrl(entryQUrl.host())) {
+    if (UrlTools::getBaseDomainFromUrl(siteQUrl.host()) != UrlTools::getBaseDomainFromUrl(entryQUrl.host())) {
         return false;
     }
 

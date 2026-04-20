@@ -67,14 +67,14 @@ QVariant EntryURLModel::data(const QModelIndex& index, int role) const
     }
 
     const auto value = m_entryAttributes->value(key);
-    const auto urlValid = urlTools()->isUrlValid(value, true);
+    const auto urlValid = UrlTools::isUrlValid(value, true);
 
     // Check for duplicate URLs in the attribute list. Excludes the current key/value from the comparison.
     auto customAttributeKeys = m_entryAttributes->customKeys().filter(EntryAttributes::AdditionalUrlAttribute);
     customAttributeKeys.removeOne(key);
 
     const auto duplicateUrl =
-        m_entryAttributes->values(customAttributeKeys).contains(value) || urlTools()->isUrlIdentical(value, m_entryUrl);
+        m_entryAttributes->values(customAttributeKeys).contains(value) || UrlTools::isUrlIdentical(value, m_entryUrl);
     if (role == Qt::BackgroundRole && (!urlValid || duplicateUrl)) {
         StateColorPalette statePalette;
         return statePalette.color(StateColorPalette::ColorRole::Error);

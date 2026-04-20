@@ -22,12 +22,7 @@ QTEST_GUILESS_MAIN(TestUrlTools)
 
 void TestUrlTools::initTestCase()
 {
-    m_urlTools = urlTools();
     QLocale::setDefault(QLocale::c());
-}
-
-void TestUrlTools::init()
-{
 }
 
 void TestUrlTools::testTopLevelDomain()
@@ -49,7 +44,7 @@ void TestUrlTools::testTopLevelDomain()
     };
 
     for (const auto& u : tldUrls) {
-        QCOMPARE(urlTools()->getTopLevelDomainFromUrl(u.first), u.second);
+        QCOMPARE(UrlTools::getTopLevelDomainFromUrl(u.first), u.second);
     }
 
     // Create list of URLs and expected base URL responses
@@ -67,7 +62,7 @@ void TestUrlTools::testTopLevelDomain()
     };
 
     for (const auto& u : baseUrls) {
-        QCOMPARE(urlTools()->getBaseDomainFromUrl(u.first), u.second);
+        QCOMPARE(UrlTools::getBaseDomainFromUrl(u.first), u.second);
     }
 }
 
@@ -85,32 +80,32 @@ void TestUrlTools::testIsIpAddress()
     auto host10 = "::";
     auto host11 = "[2001:20::1]";
 
-    QVERIFY(!urlTools()->isIpAddress(host1));
-    QVERIFY(urlTools()->isIpAddress(host2));
-    QVERIFY(!urlTools()->isIpAddress(host3));
-    QVERIFY(urlTools()->isIpAddress(host4));
-    QVERIFY(urlTools()->isIpAddress(host5));
-    QVERIFY(urlTools()->isIpAddress(host6));
-    QVERIFY(urlTools()->isIpAddress(host7));
-    QVERIFY(!urlTools()->isIpAddress(host8));
-    QVERIFY(urlTools()->isIpAddress(host9));
-    QVERIFY(urlTools()->isIpAddress(host10));
-    QVERIFY(urlTools()->isIpAddress(host11));
+    QVERIFY(!UrlTools::isIpAddress(host1));
+    QVERIFY(UrlTools::isIpAddress(host2));
+    QVERIFY(!UrlTools::isIpAddress(host3));
+    QVERIFY(UrlTools::isIpAddress(host4));
+    QVERIFY(UrlTools::isIpAddress(host5));
+    QVERIFY(UrlTools::isIpAddress(host6));
+    QVERIFY(UrlTools::isIpAddress(host7));
+    QVERIFY(!UrlTools::isIpAddress(host8));
+    QVERIFY(UrlTools::isIpAddress(host9));
+    QVERIFY(UrlTools::isIpAddress(host10));
+    QVERIFY(UrlTools::isIpAddress(host11));
 }
 
 void TestUrlTools::testIsUrlIdentical()
 {
-    QVERIFY(urlTools()->isUrlIdentical("https://example.com", "https://example.com"));
-    QVERIFY(urlTools()->isUrlIdentical("https://example.com", "  https://example.com  "));
-    QVERIFY(!urlTools()->isUrlIdentical("https://example.com", "https://example2.com"));
-    QVERIFY(!urlTools()->isUrlIdentical("https://example.com/", "https://example.com/#login"));
-    QVERIFY(urlTools()->isUrlIdentical("https://example.com", "https://example.com/"));
-    QVERIFY(urlTools()->isUrlIdentical("https://example.com/", "https://example.com"));
-    QVERIFY(urlTools()->isUrlIdentical("https://example.com/  ", "  https://example.com"));
-    QVERIFY(!urlTools()->isUrlIdentical("https://example.com/", "  example.com"));
-    QVERIFY(urlTools()->isUrlIdentical("https://example.com/path/to/nowhere", "https://example.com/path/to/nowhere/"));
-    QVERIFY(!urlTools()->isUrlIdentical("https://example.com/", "://example.com/"));
-    QVERIFY(urlTools()->isUrlIdentical("ftp://127.0.0.1/", "ftp://127.0.0.1"));
+    QVERIFY(UrlTools::isUrlIdentical("https://example.com", "https://example.com"));
+    QVERIFY(UrlTools::isUrlIdentical("https://example.com", "  https://example.com  "));
+    QVERIFY(!UrlTools::isUrlIdentical("https://example.com", "https://example2.com"));
+    QVERIFY(!UrlTools::isUrlIdentical("https://example.com/", "https://example.com/#login"));
+    QVERIFY(UrlTools::isUrlIdentical("https://example.com", "https://example.com/"));
+    QVERIFY(UrlTools::isUrlIdentical("https://example.com/", "https://example.com"));
+    QVERIFY(UrlTools::isUrlIdentical("https://example.com/  ", "  https://example.com"));
+    QVERIFY(!UrlTools::isUrlIdentical("https://example.com/", "  example.com"));
+    QVERIFY(UrlTools::isUrlIdentical("https://example.com/path/to/nowhere", "https://example.com/path/to/nowhere/"));
+    QVERIFY(!UrlTools::isUrlIdentical("https://example.com/", "://example.com/"));
+    QVERIFY(UrlTools::isUrlIdentical("ftp://127.0.0.1/", "ftp://127.0.0.1"));
 }
 
 void TestUrlTools::testIsUrlValid()
@@ -131,7 +126,7 @@ void TestUrlTools::testIsUrlValid()
     QHashIterator<QString, bool> i(urls);
     while (i.hasNext()) {
         i.next();
-        QCOMPARE(urlTools()->isUrlValid(i.key()), i.value());
+        QCOMPARE(UrlTools::isUrlValid(i.key()), i.value());
     }
 }
 
@@ -166,13 +161,13 @@ void TestUrlTools::testIsUrlValidWithLooseComparison()
     QHashIterator<QString, bool> i(urls);
     while (i.hasNext()) {
         i.next();
-        QCOMPARE(urlTools()->isUrlValid(i.key(), true), i.value());
+        QCOMPARE(UrlTools::isUrlValid(i.key(), true), i.value());
     }
 }
 
 void TestUrlTools::testDomainHasIllegalCharacters()
 {
-    QVERIFY(!urlTools()->domainHasIllegalCharacters("example.com"));
-    QVERIFY(urlTools()->domainHasIllegalCharacters("domain has spaces.com"));
-    QVERIFY(urlTools()->domainHasIllegalCharacters("example#|.com"));
+    QVERIFY(!UrlTools::domainHasIllegalCharacters("example.com"));
+    QVERIFY(UrlTools::domainHasIllegalCharacters("domain has spaces.com"));
+    QVERIFY(UrlTools::domainHasIllegalCharacters("example#|.com"));
 }

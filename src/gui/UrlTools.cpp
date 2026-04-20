@@ -20,33 +20,24 @@
 #include <QHostAddress>
 #include <QNetworkCookie>
 #include <QNetworkCookieJar>
+#include <QNetworkReply>
+#include <QVariant>
 #endif
 #include <QRegularExpression>
 #include <QUrl>
 
+#include <utility>
+
 const QString UrlTools::URL_WILDCARD = "1kpxcwc1";
 
-Q_GLOBAL_STATIC(UrlTools, s_urlTools)
-
-UrlTools* UrlTools::instance()
-{
-    return s_urlTools;
-}
-
-QUrl UrlTools::convertVariantToUrl(const QVariant& var) const
+#if defined(KPXC_FEATURE_NETWORK) || defined(KPXC_FEATURE_BROWSER)
+QUrl UrlTools::getRedirectTarget(QNetworkReply* reply)
 {
     QUrl url;
+    QVariant var = reply->attribute(QNetworkRequest::RedirectionTargetAttribute);
     if (var.canConvert<QUrl>()) {
         url = var.toUrl();
     }
-    return url;
-}
-
-#if defined(KPXC_FEATURE_NETWORK) || defined(KPXC_FEATURE_BROWSER)
-QUrl UrlTools::getRedirectTarget(QNetworkReply* reply) const
-{
-    QVariant var = reply->attribute(QNetworkRequest::RedirectionTargetAttribute);
-    QUrl url = convertVariantToUrl(var);
     return url;
 }
 
@@ -56,7 +47,7 @@ QUrl UrlTools::getRedirectTarget(QNetworkReply* reply) const
  * Returns the base domain, e.g. https://another.example.co.uk -> example.co.uk
  * Up-to-date list can be found: https://publicsuffix.org/list/public_suffix_list.dat
  */
-QString UrlTools::getBaseDomainFromUrl(const QString& url) const
+QString UrlTools::getBaseDomainFromUrl(const QString& url)
 {
     auto qUrl = QUrl::fromUserInput(url);
 
@@ -85,7 +76,7 @@ QString UrlTools::getBaseDomainFromUrl(const QString& url) const
  *
  * Returns the TLD e.g. https://another.example.co.uk -> co.uk
  */
-QString UrlTools::getTopLevelDomainFromUrl(const QString& url) const
+QString UrlTools::getTopLevelDomainFromUrl(const QString& url)
 {
     auto host = QUrl::fromUserInput(url).host();
     if (isIpAddress(host)) {
@@ -112,7 +103,7 @@ QString UrlTools::getTopLevelDomainFromUrl(const QString& url) const
     return host;
 }
 
-bool UrlTools::isIpAddress(const QString& host) const
+bool UrlTools::isIpAddress(const QString& host)
 {
     // Handle IPv6 host with brackets, e.g [::1]
     const auto hostAddress = host.startsWith('[') && host.endsWith(']') ? host.mid(1, host.length() - 2) : host;
@@ -121,27 +112,30 @@ bool UrlTools::isIpAddress(const QString& host) const
 }
 #endif
 
+namespace
+{
+    QString trimUrl(QString& url)
+    {
+        url = url.trimmed().replace("*", UrlTools::URL_WILDCARD);
+        if (url.endsWith('/')) {
+            url.chop(1); // Removes the last character
+        }
+        return url;
+    }
+} // namespace
+
 // Returns true if URLs are identical. Paths with "/" are removed during comparison.
 // URLs without scheme reverts to https.
 // Special handling is needed because QUrl::matches() with QUrl::StripTrailingSlash does not strip "/" paths.
-bool UrlTools::isUrlIdentical(const QString& first, const QString& second) const
+bool UrlTools::isUrlIdentical(QString first, QString second)
 {
-    auto trimUrl = [](QString url) {
-        url = url.trimmed();
-        if (url.endsWith("/")) {
-            url.remove(url.length() - 1, 1);
-        }
-
-        return url;
-    };
-
     if (first.isEmpty() || second.isEmpty()) {
         return false;
     }
 
     // Replace URL wildcards for comparison if found
-    const auto firstUrl = trimUrl(QString(first).replace("*", UrlTools::URL_WILDCARD));
-    const auto secondUrl = trimUrl(QString(second).replace("*", UrlTools::URL_WILDCARD));
+    const auto firstUrl = trimUrl(first);
+    const auto secondUrl = trimUrl(second);
     if (firstUrl == secondUrl) {
         return true;
     }
@@ -149,7 +143,7 @@ bool UrlTools::isUrlIdentical(const QString& first, const QString& second) const
     return QUrl(firstUrl).matches(QUrl(secondUrl), QUrl::StripTrailingSlash);
 }
 
-bool UrlTools::isUrlValid(const QString& urlField, bool looseComparison) const
+bool UrlTools::isUrlValid(const QString& urlField, bool looseComparison)
 {
     if (urlField.isEmpty() || urlField.startsWith("cmd://", Qt::CaseInsensitive)
         || urlField.startsWith("kdbx://", Qt::CaseInsensitive) || urlField.startsWith("{REF:A", Qt::CaseInsensitive)) {
@@ -169,14 +163,14 @@ bool UrlTools::isUrlValid(const QString& urlField, bool looseComparison) const
 
             // Get the URL inside ""
             url.remove(0, 1);
-            url.remove(url.length() - 1, 1);
+            url.chop(1);
         } else {
             // Do not allow URL with just wildcards, or double wildcards
             if (url.length() == url.count("*") || url.contains("**") || url.contains("*.*")) {
                 return false;
             }
 
-            url.replace("*", UrlTools::URL_WILDCARD);
+            url.replace("*", URL_WILDCARD);
         }
     }
 
@@ -193,16 +187,16 @@ bool UrlTools::isUrlValid(const QString& urlField, bool looseComparison) const
 
 #if defined(KPXC_FEATURE_BROWSER)
     // Prevent TLD wildcards
-    if (looseComparison && url.contains(UrlTools::URL_WILDCARD)) {
+    if (looseComparison && url.contains(URL_WILDCARD)) {
         const auto tld = getTopLevelDomainFromUrl(url);
-        if (tld.contains(UrlTools::URL_WILDCARD) || qUrl.host() == QString("%1.%2").arg(UrlTools::URL_WILDCARD, tld)) {
+        if (tld.contains(URL_WILDCARD) || qUrl.host() == QString("%1.%2").arg(URL_WILDCARD, tld)) {
             return false;
         }
     }
 #endif
 
     // Check for illegal characters. Adds also the wildcard * to the list
-    QRegularExpression re("[<>\\^`{|}\\*]");
+    static const QRegularExpression re("[<>\\^`{|}\\*]");
     auto match = re.match(url);
     if (match.hasMatch()) {
         return false;
@@ -211,8 +205,8 @@ bool UrlTools::isUrlValid(const QString& urlField, bool looseComparison) const
     return true;
 }
 
-bool UrlTools::domainHasIllegalCharacters(const QString& domain) const
+bool UrlTools::domainHasIllegalCharacters(const QString& domain)
 {
-    QRegularExpression re(R"([\s\^#|/:<>\?@\[\]\\])");
+    static const QRegularExpression re(R"([\s\^#|/:<>\?@\[\]\\])");
     return re.match(domain).hasMatch();
 }

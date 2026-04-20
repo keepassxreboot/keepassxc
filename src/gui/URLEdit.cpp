@@ -50,7 +50,7 @@ void URLEdit::updateStylesheet(const QString& url)
     const QString stylesheetTemplate("QLineEdit { background: %1; }");
     const auto resolvedUrl = m_entry ? m_entry->resolveMultiplePlaceholders(url) : url;
 
-    if (!urlTools()->isUrlValid(resolvedUrl)) {
+    if (!UrlTools::isUrlValid(resolvedUrl)) {
         const StateColorPalette statePalette;
         const auto color = statePalette.color(StateColorPalette::ColorRole::Error);
         setStyleSheet(stylesheetTemplate.arg(color.name()));
