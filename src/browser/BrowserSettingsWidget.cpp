@@ -32,11 +32,15 @@ BrowserSettingsWidget::BrowserSettingsWidget(QWidget* parent)
 
     // clang-format off
     m_ui->extensionLabel->setOpenExternalLinks(true);
+#ifdef Q_OS_MACOS
+    const QString chromiumFamilyLabel = QStringLiteral("Google Chrome / Chromium / Vivaldi / Brave / Phi Browser");
+#else
+    const QString chromiumFamilyLabel = QStringLiteral("Google Chrome / Chromium / Vivaldi / Brave");
+#endif
     m_ui->extensionLabel->setText(
         tr("KeePassXC-Browser is needed for the browser integration to work. <br />Download it for %1 and %2 and %3.")
             .arg("<a href=\"https://addons.mozilla.org/firefox/addon/keepassxc-browser/\">Firefox</a>",
-                 "<a href=\"https://chromewebstore.google.com/detail/keepassxc-browser/oboonakemofpalcgghocfoadofidjkkk\">"
-                 "Google Chrome / Chromium / Vivaldi / Brave</a>",
+                 QStringLiteral("<a href=\"https://chromewebstore.google.com/detail/keepassxc-browser/oboonakemofpalcgghocfoadofidjkkk\">%1</a>").arg(chromiumFamilyLabel),
                  "<a href=\"https://microsoftedge.microsoft.com/addons/detail/pdffhmdngciaglkoonimfcmckehcpafo\">Microsoft Edge</a>"));
     // clang-format on
 
@@ -84,6 +88,10 @@ BrowserSettingsWidget::BrowserSettingsWidget(QWidget* parent)
     m_ui->firefoxSupport->setText("Firefox and Tor Browser");
 #endif
 
+#ifndef Q_OS_MACOS
+    m_ui->phiBrowserSupport->setHidden(true);
+#endif
+
 #ifndef QT_DEBUG
     m_ui->customExtensionId->setVisible(false);
     m_ui->customExtensionLabel->setVisible(false);
@@ -124,6 +132,9 @@ void BrowserSettingsWidget::loadSettings()
     m_ui->chromiumSupport->setChecked(settings->browserSupport(BrowserShared::CHROMIUM));
     m_ui->firefoxSupport->setChecked(settings->browserSupport(BrowserShared::FIREFOX));
     m_ui->edgeSupport->setChecked(settings->browserSupport(BrowserShared::EDGE));
+#ifdef Q_OS_MACOS
+    m_ui->phiBrowserSupport->setChecked(settings->browserSupport(BrowserShared::PHI_BROWSER));
+#endif
 #ifndef Q_OS_WIN
     m_ui->braveSupport->setChecked(settings->browserSupport(BrowserShared::BRAVE));
     m_ui->vivaldiSupport->setChecked(settings->browserSupport(BrowserShared::VIVALDI));
@@ -250,6 +261,9 @@ void BrowserSettingsWidget::saveSettings()
     settings->setBrowserSupport(BrowserShared::CHROMIUM, m_ui->chromiumSupport->isChecked());
     settings->setBrowserSupport(BrowserShared::FIREFOX, m_ui->firefoxSupport->isChecked());
     settings->setBrowserSupport(BrowserShared::EDGE, m_ui->edgeSupport->isChecked());
+#ifdef Q_OS_MACOS
+    settings->setBrowserSupport(BrowserShared::PHI_BROWSER, m_ui->phiBrowserSupport->isChecked());
+#endif
 #ifndef Q_OS_WIN
     settings->setBrowserSupport(BrowserShared::BRAVE, m_ui->braveSupport->isChecked());
     settings->setBrowserSupport(BrowserShared::VIVALDI, m_ui->vivaldiSupport->isChecked());

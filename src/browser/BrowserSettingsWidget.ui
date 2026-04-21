@@ -154,6 +154,16 @@
             </property>
            </widget>
           </item>
+          <item row="1" column="3">
+           <widget class="QCheckBox" name="phiBrowserSupport">
+            <property name="text">
+             <string>Phi Browser</string>
+            </property>
+            <property name="checked">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="4">
            <spacer name="horizontalSpacer">
             <property name="orientation">

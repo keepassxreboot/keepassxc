@@ -2,6 +2,7 @@
 
 ## 2.8.0 (Pending)
 * Placeholder for future release notes
+- Browser: Add macOS support for Phi Browser
 
 ## 2.7.12 (2026-03-10)
 

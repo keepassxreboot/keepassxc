@@ -51,6 +51,8 @@ namespace
     const QString TARGET_DIR_BRAVE =
         QStringLiteral("/Library/Application Support/BraveSoftware/Brave-Browser/NativeMessagingHosts");
     const QString TARGET_DIR_EDGE = QStringLiteral("/Library/Application Support/Microsoft Edge/NativeMessagingHosts");
+    const QString TARGET_DIR_PHI_BROWSER =
+        QStringLiteral("/Library/Application Support/com.phibrowser.Mac/NativeMessagingHosts");
 #elif defined(Q_OS_WIN)
     const QString TARGET_DIR_CHROME = QStringLiteral(
         "HKEY_CURRENT_USER\\Software\\Google\\Chrome\\NativeMessagingHosts\\org.keepassxc.keepassxc_browser");
@@ -160,6 +162,10 @@ QString NativeMessageInstaller::getTargetPath(SupportedBrowsers browser) const
         return TARGET_DIR_BRAVE;
     case SupportedBrowsers::EDGE:
         return TARGET_DIR_EDGE;
+#if defined(Q_OS_MACOS)
+    case SupportedBrowsers::PHI_BROWSER:
+        return TARGET_DIR_PHI_BROWSER;
+#endif
     case SupportedBrowsers::CUSTOM:
         return browserSettings()->customBrowserLocation();
     default:
@@ -191,6 +197,10 @@ QString NativeMessageInstaller::getBrowserName(SupportedBrowsers browser) const
         return QStringLiteral("brave");
     case SupportedBrowsers::EDGE:
         return QStringLiteral("edge");
+#if defined(Q_OS_MACOS)
+    case SupportedBrowsers::PHI_BROWSER:
+        return QStringLiteral("phi-browser");
+#endif
     case SupportedBrowsers::CUSTOM:
         return QStringLiteral("custom");
     default:

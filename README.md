@@ -28,7 +28,7 @@ KeePassXC has numerous features for novice and power users alike. Our goal is to
 * TOTP storage and generation
 * YubiKey/OnlyKey challenge-response support
 * Auto-Type passwords into applications
-* Browser integration with Google Chrome, Mozilla Firefox, Microsoft Edge, Chromium, Vivaldi, Brave, and Tor-Browser
+* Browser integration with Google Chrome, Mozilla Firefox, Microsoft Edge, Chromium, Vivaldi, Brave, Tor-Browser, and Phi Browser (macOS only)
 * Support for passkeys using the browser integration
 * Entry icon download
 * Import databases from CSV, 1Password, Bitwarden, Proton Pass, and KeePass1 formats
