@@ -18,6 +18,7 @@
 
 #include "PasswordGenerator.h"
 
+#include "core/Config.h"
 #include "crypto/Random.h"
 
 const int PasswordGenerator::DefaultLength = 32;
@@ -31,6 +32,72 @@ PasswordGenerator::PasswordGenerator()
     , m_custom(PasswordGenerator::DefaultCustomCharacterSet)
     , m_excluded(PasswordGenerator::DefaultExcludedChars)
 {
+}
+
+PasswordGenerator PasswordGenerator::createFromConfig()
+{
+    PasswordGenerator generator;
+
+    generator.setLength(config()->get(Config::PasswordGenerator_Length).toInt());
+
+    PasswordGenerator::CharClasses classes;
+    if (config()->get(Config::PasswordGenerator_LowerCase).toBool()) {
+        classes |= PasswordGenerator::LowerLetters;
+    }
+    if (config()->get(Config::PasswordGenerator_UpperCase).toBool()) {
+        classes |= PasswordGenerator::UpperLetters;
+    }
+    if (config()->get(Config::PasswordGenerator_Numbers).toBool()) {
+        classes |= PasswordGenerator::Numbers;
+    }
+    if (config()->get(Config::PasswordGenerator_EASCII).toBool()) {
+        classes |= PasswordGenerator::EASCII;
+    }
+
+    bool advanced = config()->get(Config::PasswordGenerator_AdvancedMode).toBool();
+    if (!advanced) {
+        if (config()->get(Config::PasswordGenerator_SpecialChars).toBool()) {
+            classes |= PasswordGenerator::SpecialCharacters;
+        }
+    } else {
+        if (config()->get(Config::PasswordGenerator_Braces).toBool()) {
+            classes |= PasswordGenerator::Braces;
+        }
+        if (config()->get(Config::PasswordGenerator_Punctuation).toBool()) {
+            classes |= PasswordGenerator::Punctuation;
+        }
+        if (config()->get(Config::PasswordGenerator_Quotes).toBool()) {
+            classes |= PasswordGenerator::Quotes;
+        }
+        if (config()->get(Config::PasswordGenerator_Dashes).toBool()) {
+            classes |= PasswordGenerator::Dashes;
+        }
+        if (config()->get(Config::PasswordGenerator_Math).toBool()) {
+            classes |= PasswordGenerator::Math;
+        }
+        if (config()->get(Config::PasswordGenerator_Logograms).toBool()) {
+            classes |= PasswordGenerator::Logograms;
+        }
+    }
+    generator.setCharClasses(classes);
+
+    if (advanced) {
+        generator.setCustomCharacterSet(config()->get(Config::PasswordGenerator_AdditionalChars).toString());
+        generator.setExcludedCharacterSet(config()->get(Config::PasswordGenerator_ExcludedChars).toString());
+    }
+
+    PasswordGenerator::GeneratorFlags flags;
+    if (advanced) {
+        if (config()->get(Config::PasswordGenerator_ExcludeAlike).toBool()) {
+            flags |= PasswordGenerator::ExcludeLookAlike;
+        }
+        if (config()->get(Config::PasswordGenerator_EnsureEvery).toBool()) {
+            flags |= PasswordGenerator::CharFromEveryGroup;
+        }
+    }
+    generator.setFlags(flags);
+
+    return generator;
 }
 
 void PasswordGenerator::setLength(int length)

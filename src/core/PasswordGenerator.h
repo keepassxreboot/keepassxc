@@ -65,6 +65,8 @@ public:
     void setExcludedCharacterSet(const QString& excludedCharacterSet);
     void reset();
 
+    static PasswordGenerator createFromConfig();
+
     bool isValid() const;
     int getMinLength() const;
 

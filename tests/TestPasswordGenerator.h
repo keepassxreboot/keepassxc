@@ -43,6 +43,7 @@ private slots:
     void testValidity_data();
     void testValidity();
     void testReset();
+    void testCreateFromConfig();
 };
 
 #endif // KEEPASSXC_TESTPASSWORDGENERATOR_H
