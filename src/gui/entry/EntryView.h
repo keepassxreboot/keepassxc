@@ -21,6 +21,7 @@
 
 #include <QTreeView>
 
+#include "core/Config.h"
 #include "gui/entry/EntryModel.h"
 
 class Entry;
@@ -72,6 +73,7 @@ private slots:
     void resetViewToDefaults();
     void contextMenuShortcutPressed();
     void sortIndicatorChanged(int logicalIndex, Qt::SortOrder order);
+    void onConfigChanged(Config::ConfigKey key);
     void jumpToGroupShortcut();
 
 private:
@@ -85,6 +87,7 @@ private:
     Qt::SortOrder m_lastOrder;
     bool m_inSearchMode = false;
     bool m_columnsNeedRelayout = true;
+    bool m_userHidGroupColumnInSubgroupMode = false;
 
     QMenu* m_headerMenu;
     QActionGroup* m_columnActions;

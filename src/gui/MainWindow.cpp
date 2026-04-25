@@ -2031,6 +2031,11 @@ void MainWindow::initViewMenu()
         applySettingsChanges();
     });
 
+    m_ui->actionShowEntriesOfSubgroups->setChecked(config()->get(Config::GUI_ShowSubgroupEntries).toBool());
+    connect(m_ui->actionShowEntriesOfSubgroups, &QAction::toggled, this, [](bool checked) {
+        config()->set(Config::GUI_ShowSubgroupEntries, checked);
+    });
+
     m_ui->actionShowGroupPanel->setChecked(!config()->get(Config::GUI_HideGroupPanel).toBool());
     connect(m_ui->actionShowGroupPanel, &QAction::toggled, this, [](bool checked) {
         config()->set(Config::GUI_HideGroupPanel, !checked);

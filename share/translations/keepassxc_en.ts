@@ -5998,6 +5998,10 @@ Are you sure you want to continue with this file?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Show Entries of Subgroups</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Show Preview Panel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6337,6 +6341,10 @@ Are you sure you want to continue with this file?</source>
     </message>
     <message>
         <source>Toggle Show Toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle Show Entries of Subgroups</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

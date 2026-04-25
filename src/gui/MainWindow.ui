@@ -399,6 +399,8 @@
     <addaction name="actionShowMenubar"/>
     <addaction name="actionShowToolbar"/>
     <addaction name="separator"/>
+    <addaction name="actionShowEntriesOfSubgroups"/>
+    <addaction name="separator"/>
     <addaction name="actionHideUsernames"/>
     <addaction name="actionHidePasswords"/>
    </widget>
@@ -1242,6 +1244,17 @@
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Shift+A</string>
+   </property>
+  </action>
+  <action name="actionShowEntriesOfSubgroups">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show Entries of Subgroups</string>
+   </property>
+   <property name="toolTip">
+    <string>Toggle Show Entries of Subgroups</string>
    </property>
   </action>
   <action name="actionHideUsernames">

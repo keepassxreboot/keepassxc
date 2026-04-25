@@ -103,6 +103,7 @@ public:
         GUI_SearchWaitForEnter,
         GUI_ShowExpiredEntriesOnDatabaseUnlock,
         GUI_ShowExpiredEntriesOnDatabaseUnlockOffsetDays,
+        GUI_ShowSubgroupEntries,
         GUI_FontSizeOffset,
 
         GUI_MainWindowGeometry,
