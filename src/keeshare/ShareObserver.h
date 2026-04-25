@@ -18,6 +18,7 @@
 #ifndef KEEPASSXC_SHAREOBSERVER_H
 #define KEEPASSXC_SHAREOBSERVER_H
 
+#include <QFileSystemWatcher>
 #include <QMap>
 #include <QObject>
 
@@ -68,10 +69,14 @@ private slots:
     void handleDatabaseChanged();
     void handleDatabaseSaved();
     void handleFileUpdated(const QString& path);
+    void handleDirectoryUpdated(const QString& dirPath);
 
 private:
     Result importShare(const QString& path);
     QList<Result> exportShares();
+    QList<Result> importPerDeviceShares(const QString& resolvedDir,
+                                        const KeeShareSettings::Reference& reference,
+                                        Group* targetGroup);
 
     void deinitialize();
     void reinitialize();
@@ -82,7 +87,9 @@ private:
     QMap<QPointer<Group>, KeeShareSettings::Reference> m_groupToReference;
     QMap<QString, QPointer<Group>> m_shareToGroup;
     QMap<QString, QSharedPointer<FileWatcher>> m_fileWatchers;
+    QMap<QString, QSharedPointer<QFileSystemWatcher>> m_dirWatchers;
     bool m_inFileUpdate = false;
+    bool m_inDirUpdate = false;
     bool m_enabled = true;
 };
 

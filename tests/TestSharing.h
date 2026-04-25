@@ -19,6 +19,7 @@
 #define KEEPASSXC_TESTSHARING_H
 
 #include <QObject>
+#include <QTemporaryDir>
 
 namespace Botan
 {
@@ -30,15 +31,21 @@ class TestSharing : public QObject
 
 private slots:
     void initTestCase();
+    void cleanupTestCase();
     void testNullObjects();
     void testKeySerialization();
     void testReferenceSerialization();
     void testReferenceSerialization_data();
     void testSettingsSerialization();
     void testSettingsSerialization_data();
+    void testPerDeviceMode();
+    void testPerDeviceMode_data();
+    void testPerDeviceModeImportExport();
+    void testPerDeviceModeImportExport_data();
 
 private:
     const QSharedPointer<Botan::RSA_PrivateKey> stubkey(int index = 0);
+    QTemporaryDir* m_tempDir = nullptr;
 };
 
 #endif // KEEPASSXC_TESTSHARING_H

@@ -204,6 +204,7 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::KeeShare_Own, {QS("KeeShare/Own"), Roaming, {}}},
     {Config::KeeShare_Foreign, {QS("KeeShare/Foreign"), Roaming, {}}},
     {Config::KeeShare_Active, {QS("KeeShare/Active"), Roaming, {}}},
+    {Config::KeeShare_DeviceId, {QS("KeeShare/DeviceId"), Local, {}}},
 
     // PasswordGenerator
     {Config::PasswordGenerator_LowerCase, {QS("PasswordGenerator/LowerCase"), Roaming, true}},

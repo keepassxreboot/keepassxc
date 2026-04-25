@@ -23,6 +23,9 @@
 #include "gui/DatabaseIcons.h"
 #include "keeshare/ShareObserver.h"
 
+#include <QRegularExpression>
+#include <QSysInfo>
+
 namespace
 {
     static const QString KeeShare_Reference("KeeShare/Reference");
@@ -49,6 +52,39 @@ void KeeShare::init(QObject* parent)
 {
     Q_ASSERT(!m_instance);
     m_instance = new KeeShare(parent);
+}
+
+QString KeeShare::deviceId()
+{
+    auto id = config()->get(Config::KeeShare_DeviceId).toString();
+    if (id.isEmpty()) {
+        // Generate fallback from machine unique ID, truncated to 7 chars
+        auto machineId = QSysInfo::machineUniqueId();
+        if (!machineId.isEmpty()) {
+            // machineUniqueId() on Linux returns a hex string directly from /etc/machine-id
+            id = QString::fromLatin1(machineId).left(7).toUpper();
+        } else {
+            // Last resort: use hostname
+            id = QSysInfo::machineHostName();
+        }
+        setDeviceId(id);
+        // Re-read the sanitized value
+        id = config()->get(Config::KeeShare_DeviceId).toString();
+    }
+    return id;
+}
+
+void KeeShare::setDeviceId(const QString& id)
+{
+    // All sanitization consolidated here: strip non-alphanumeric, enforce max
+    // length, and fall back to DEFAULT if empty
+    QString sanitized = id;
+    sanitized.remove(QRegularExpression("[^A-Za-z0-9]"));
+    sanitized.truncate(32);
+    if (sanitized.isEmpty()) {
+        sanitized = QStringLiteral("DEFAULT");
+    }
+    config()->set(Config::KeeShare_DeviceId, sanitized);
 }
 
 KeeShareSettings::Own KeeShare::own()

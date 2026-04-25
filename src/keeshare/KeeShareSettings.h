@@ -21,6 +21,8 @@
 #include <QSharedPointer>
 #include <QUuid>
 
+class QDir;
+
 namespace Botan
 {
     class Private_Key;
@@ -133,6 +135,7 @@ namespace KeeShareSettings
         bool isValid() const;
         bool isExporting() const;
         bool isImporting() const;
+        bool isPerDeviceMode(const QDir& baseDir) const;
         bool operator<(const Reference& other) const;
         bool operator==(const Reference& other) const;
 

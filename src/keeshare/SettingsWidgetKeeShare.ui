@@ -69,6 +69,48 @@
     </widget>
    </item>
    <item>
+    <widget class="QGroupBox" name="deviceIdentityGroupBox">
+     <property name="title">
+      <string>Device Identity</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_3">
+      <item row="0" column="0">
+       <widget class="QLabel" name="deviceIdLabel">
+        <property name="text">
+         <string>Device ID:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="deviceIdEdit">
+        <property name="accessibleName">
+         <string>Device ID field</string>
+        </property>
+        <property name="toolTip">
+         <string>Unique identifier for this device in per-device sync mode (alphanumeric only)</string>
+        </property>
+        <property name="placeholderText">
+         <string>Auto-detected from system</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <spacer name="deviceIdSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
     <widget class="QGroupBox" name="ownCertificateGroupBox">
      <property name="title">
       <string>Own certificate</string>

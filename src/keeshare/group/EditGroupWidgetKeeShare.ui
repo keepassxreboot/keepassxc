@@ -124,6 +124,9 @@
          <property name="accessibleName">
           <string>Path to share file field</string>
          </property>
+         <property name="toolTip">
+          <string>File path for classic mode, or directory path for per-device sync</string>
+         </property>
         </widget>
        </item>
        <item>

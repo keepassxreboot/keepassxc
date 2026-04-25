@@ -54,6 +54,9 @@ public:
     static const Group* resolveSharedGroup(const Group* group);
     static QString sharingLabel(const Group* group);
 
+    static QString deviceId();
+    static void setDeviceId(const QString& id);
+
     static KeeShareSettings::Own own();
     static void setOwn(const KeeShareSettings::Own& own);
 

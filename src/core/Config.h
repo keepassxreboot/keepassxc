@@ -179,6 +179,7 @@ public:
         KeeShare_Own,
         KeeShare_Foreign,
         KeeShare_Active,
+        KeeShare_DeviceId,
 
         PasswordGenerator_LowerCase,
         PasswordGenerator_UpperCase,

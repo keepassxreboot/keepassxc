@@ -23,6 +23,7 @@
 #include "keeshare/ShareImport.h"
 
 #include <QDir>
+#include <QTimer>
 
 namespace
 {
@@ -67,6 +68,7 @@ void ShareObserver::deinitialize()
     m_groupToReference.clear();
     m_shareToGroup.clear();
     m_fileWatchers.clear();
+    m_dirWatchers.clear();
 }
 
 void ShareObserver::reinitialize()
@@ -83,6 +85,7 @@ void ShareObserver::reinitialize()
         m_groupToReference.remove(group);
         m_shareToGroup.remove(oldResolvedPath);
         m_fileWatchers.remove(oldResolvedPath);
+        m_dirWatchers.remove(oldResolvedPath);
 
         if (newReference.isValid()) {
             m_groupToReference[group] = newReference;
@@ -99,6 +102,8 @@ void ShareObserver::reinitialize()
     QMap<QString, QStringList> imported;
     QMap<QString, QStringList> exported;
 
+    const QDir baseDir = QFileInfo(m_db->filePath()).absoluteDir();
+
     for (const auto& share : shares) {
         auto group = share.first;
         auto& reference = share.second;
@@ -109,10 +114,23 @@ void ShareObserver::reinitialize()
 
         if (!reference.path.isEmpty() && reference.type != KeeShareSettings::Inactive) {
             const auto newResolvedPath = resolvePath(reference.path, m_db);
-            auto fileWatcher = QSharedPointer<FileWatcher>::create(this);
-            connect(fileWatcher.data(), &FileWatcher::fileChanged, this, &ShareObserver::handleFileUpdated);
-            fileWatcher->start(newResolvedPath, FileWatchPeriod, FileWatchSize);
-            m_fileWatchers.insert(newResolvedPath, fileWatcher);
+
+            if (reference.isPerDeviceMode(baseDir)) {
+                // Per-device mode: watch the directory for changes
+                auto dirWatcher = QSharedPointer<QFileSystemWatcher>::create();
+                if (QDir(newResolvedPath).exists()) {
+                    dirWatcher->addPath(newResolvedPath);
+                }
+                connect(dirWatcher.data(), &QFileSystemWatcher::directoryChanged,
+                        this, &ShareObserver::handleDirectoryUpdated);
+                m_dirWatchers.insert(newResolvedPath, dirWatcher);
+            } else {
+                // Classic mode: watch the individual file
+                auto fileWatcher = QSharedPointer<FileWatcher>::create(this);
+                connect(fileWatcher.data(), &FileWatcher::fileChanged, this, &ShareObserver::handleFileUpdated);
+                fileWatcher->start(newResolvedPath, FileWatchPeriod, FileWatchSize);
+                m_fileWatchers.insert(newResolvedPath, fileWatcher);
+            }
         }
         if (reference.isExporting()) {
             exported[reference.path] << group->name();
@@ -121,21 +139,42 @@ void ShareObserver::reinitialize()
 
         if (reference.isImporting()) {
             imported[reference.path] << group->name();
-            // import has to occur immediately
-            const auto result = this->importShare(reference.path);
-            if (!result.isValid()) {
-                // tolerable result - blocked import or missing source
-                continue;
-            }
+            const auto resolvedDir = resolvePath(reference.path, m_db);
 
-            if (result.isError()) {
-                error << tr("Import from %1 failed (%2)").arg(result.path).arg(result.message);
-            } else if (result.isWarning()) {
-                warning << tr("Import from %1 failed (%2)").arg(result.path).arg(result.message);
-            } else if (result.isInfo()) {
-                success << tr("Import from %1 successful (%2)").arg(result.path).arg(result.message);
+            if (reference.isPerDeviceMode(baseDir)) {
+                // Per-device mode: import from all device files in the directory
+                const auto results = importPerDeviceShares(resolvedDir, reference, group);
+                for (const auto& result : results) {
+                    if (!result.isValid()) {
+                        continue;
+                    }
+                    if (result.isError()) {
+                        error << tr("Import from %1 failed (%2)").arg(result.path, result.message);
+                    } else if (result.isWarning()) {
+                        warning << tr("Import from %1 failed (%2)").arg(result.path, result.message);
+                    } else if (result.isInfo()) {
+                        success << tr("Import from %1 successful (%2)").arg(result.path, result.message);
+                    } else {
+                        success << tr("Imported from %1").arg(result.path);
+                    }
+                }
             } else {
-                success << tr("Imported from %1").arg(result.path);
+                // Classic mode: import single file
+                const auto result = this->importShare(reference.path);
+                if (!result.isValid()) {
+                    // tolerable result - blocked import or missing source
+                    continue;
+                }
+
+                if (result.isError()) {
+                    error << tr("Import from %1 failed (%2)").arg(result.path).arg(result.message);
+                } else if (result.isWarning()) {
+                    warning << tr("Import from %1 failed (%2)").arg(result.path).arg(result.message);
+                } else if (result.isInfo()) {
+                    success << tr("Import from %1 successful (%2)").arg(result.path).arg(result.message);
+                } else {
+                    success << tr("Imported from %1").arg(result.path);
+                }
             }
         }
     }
@@ -216,6 +255,87 @@ void ShareObserver::handleFileUpdated(const QString& path)
     }
 }
 
+void ShareObserver::handleDirectoryUpdated(const QString& dirPath)
+{
+    auto group = m_shareToGroup.value(dirPath);
+    if (!group) {
+        return;
+    }
+    auto reference = KeeShare::referenceOf(group);
+    const QDir handleBaseDir = QFileInfo(m_db->filePath()).absoluteDir();
+    if (!reference.isImporting() || !reference.isPerDeviceMode(handleBaseDir)) {
+        return;
+    }
+
+    // Re-add the directory to the watcher (Qt removes it after notification)
+    auto dirWatcher = m_dirWatchers.value(dirPath);
+    if (dirWatcher && dirWatcher->directories().isEmpty()) {
+        dirWatcher->addPath(dirPath);
+    }
+
+    if (!m_inDirUpdate) {
+        QTimer::singleShot(100, this, [this, dirPath] {
+            auto shareGroup = m_shareToGroup.value(dirPath);
+            if (!shareGroup) {
+                m_inDirUpdate = false;
+                return;
+            }
+            auto shareRef = KeeShare::referenceOf(shareGroup);
+            auto results = importPerDeviceShares(dirPath, shareRef, shareGroup);
+            m_inDirUpdate = false;
+
+            QStringList success;
+            QStringList warning;
+            QStringList error;
+            for (const auto& result : results) {
+                if (!result.isValid()) {
+                    continue;
+                }
+                if (result.isError()) {
+                    error << tr("Import from %1 failed (%2)").arg(result.path, result.message);
+                } else if (result.isWarning()) {
+                    warning << tr("Import from %1 failed (%2)").arg(result.path, result.message);
+                } else if (result.isInfo()) {
+                    success << tr("Import from %1 successful (%2)").arg(result.path, result.message);
+                } else {
+                    success << tr("Imported from %1").arg(result.path);
+                }
+            }
+            notifyAbout(success, warning, error);
+        });
+        m_inDirUpdate = true;
+    }
+}
+
+QList<ShareObserver::Result> ShareObserver::importPerDeviceShares(
+    const QString& resolvedDir,
+    const KeeShareSettings::Reference& reference,
+    Group* targetGroup)
+{
+    QList<Result> results;
+    if (!KeeShare::active().in) {
+        return results;
+    }
+
+    const QString ownFile = KeeShare::deviceId() + ".kdbx";
+    QDir dir(resolvedDir);
+    if (!dir.exists()) {
+        return results;
+    }
+
+    const auto files = dir.entryList({"*.kdbx"}, QDir::Files, QDir::Name);
+    for (const auto& fileName : files) {
+        if (fileName.compare(ownFile, Qt::CaseInsensitive) == 0) {
+            continue; // Skip own device's file
+        }
+        const auto filePath = dir.absoluteFilePath(fileName);
+        auto result = ShareImport::containerInto(filePath, reference, targetGroup);
+        result.path = filePath;
+        results << result;
+    }
+    return results;
+}
+
 ShareObserver::Result ShareObserver::importShare(const QString& path)
 {
     if (!KeeShare::active().in) {
@@ -283,19 +403,50 @@ QList<ShareObserver::Result> ShareObserver::exportShares()
         return results;
     }
 
+    const QDir exportBaseDir = QFileInfo(m_db->filePath()).absoluteDir();
+
     for (auto it = references.cbegin(); it != references.cend(); ++it) {
         auto reference = it.value().first();
         const QString resolvedPath = resolvePath(reference.config.path, m_db);
-        auto watcher = m_fileWatchers.value(resolvedPath);
-        if (watcher) {
-            watcher->stop();
-        }
 
-        // TODO: save new path into group settings if not saving to signed container anymore
-        results << ShareExport::intoContainer(resolvedPath, reference.config, reference.group);
+        if (reference.config.isPerDeviceMode(exportBaseDir)) {
+            // Per-device mode: export to {directory}/{DEVICE_ID}.kdbx
+            QDir dir(resolvedPath);
+            if (!dir.exists()) {
+                if (!dir.mkpath(".")) {
+                    results << Result{resolvedPath,
+                                      Result::Error,
+                                      tr("Could not create directory %1").arg(resolvedPath)};
+                    continue;
+                }
+            }
+            const auto deviceFile = dir.absoluteFilePath(KeeShare::deviceId() + ".kdbx");
 
-        if (watcher) {
-            watcher->start(resolvedPath, FileWatchPeriod, FileWatchSize);
+            // Pause directory watcher during export
+            auto dirWatcher = m_dirWatchers.value(resolvedPath);
+            if (dirWatcher) {
+                dirWatcher->removePath(resolvedPath);
+            }
+
+            results << ShareExport::intoContainer(deviceFile, reference.config, reference.group);
+
+            // Resume directory watcher (also add path if it was newly created)
+            if (dirWatcher) {
+                dirWatcher->addPath(resolvedPath);
+            }
+        } else {
+            // Classic mode: export to the file directly
+            auto watcher = m_fileWatchers.value(resolvedPath);
+            if (watcher) {
+                watcher->stop();
+            }
+
+            // TODO: save new path into group settings if not saving to signed container anymore
+            results << ShareExport::intoContainer(resolvedPath, reference.config, reference.group);
+
+            if (watcher) {
+                watcher->start(resolvedPath, FileWatchPeriod, FileWatchSize);
+            }
         }
     }
     return results;

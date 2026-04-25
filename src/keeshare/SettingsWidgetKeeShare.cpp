@@ -23,6 +23,7 @@
 #include "gui/MessageBox.h"
 #include "keeshare/KeeShare.h"
 
+#include <QRegularExpressionValidator>
 #include <QStandardItemModel>
 #include <QStandardPaths>
 #include <QTextStream>
@@ -32,6 +33,9 @@ SettingsWidgetKeeShare::SettingsWidgetKeeShare(QWidget* parent)
     , m_ui(new Ui::SettingsWidgetKeeShare())
 {
     m_ui->setupUi(this);
+
+    m_ui->deviceIdEdit->setValidator(
+        new QRegularExpressionValidator(QRegularExpression("[A-Za-z0-9]{0,32}"), this));
 
     connect(m_ui->ownCertificateSignerEdit, SIGNAL(textChanged(QString)), SLOT(setVerificationExporter(QString)));
     connect(m_ui->generateOwnCerticateButton, SIGNAL(clicked(bool)), SLOT(generateCertificate()));
@@ -46,6 +50,8 @@ void SettingsWidgetKeeShare::loadSettings()
     const auto active = KeeShare::active();
     m_ui->enableExportCheckBox->setChecked(active.out);
     m_ui->enableImportCheckBox->setChecked(active.in);
+
+    m_ui->deviceIdEdit->setText(KeeShare::deviceId());
 
     m_own = KeeShare::own();
     updateOwnCertificate();
@@ -67,6 +73,14 @@ void SettingsWidgetKeeShare::saveSettings()
     //           of this object (similar scheme to Entry) - this way we could validate the settings before save
     KeeShare::setOwn(m_own);
     KeeShare::setActive(active);
+
+    auto deviceId = m_ui->deviceIdEdit->text().trimmed();
+    if (!deviceId.isEmpty()) {
+        KeeShare::setDeviceId(deviceId);
+    } else {
+        // Clear stored ID so it will be auto-detected next time
+        config()->set(Config::KeeShare_DeviceId, QString());
+    }
 
     config()->set(Config::KeeShare_QuietSuccess, m_ui->quietSuccessCheckBox->isChecked());
 }
