@@ -219,6 +219,7 @@ public:
 private:
     QTimer m_menubarTimer;
     QTimer m_altCoolDown;
+    bool m_altKeyAlone = false;
 };
 
 /**

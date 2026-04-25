@@ -1011,7 +1011,11 @@ void MainWindow::updateMenuActionState()
     m_ui->actionGroupDownloadFavicons->setEnabled(groupSelected && groupHasEntries && !inRecycleBin);
 
     // Database Menu
-    m_ui->actionDatabaseSave->setEnabled(databaseUnlocked && m_ui->tabWidget->canSave());
+    bool enableSave = databaseUnlocked
+                      && (m_ui->tabWidget->canSave()
+                          || (dbWidget && dbWidget->database() && dbWidget->database()->hasNonDataChanges()
+                              && !config()->get(Config::AutoSaveNonDataChanges).toBool()));
+    m_ui->actionDatabaseSave->setEnabled(enableSave);
     m_ui->actionDatabaseSaveAs->setEnabled(databaseUnlocked);
     m_ui->actionDatabaseSaveBackup->setEnabled(databaseUnlocked);
     m_ui->actionDatabaseClose->setEnabled(dbWidget);
@@ -1064,7 +1068,12 @@ void MainWindow::updateWindowTitle()
         if (isModified && customWindowTitlePart.endsWith("*")) {
             customWindowTitlePart.remove(customWindowTitlePart.size() - 1, 1);
         }
-        m_ui->actionDatabaseSave->setEnabled(m_ui->tabWidget->canSave(tabWidgetIndex));
+        auto dbWidget = m_ui->tabWidget->databaseWidgetFromIndex(tabWidgetIndex);
+        bool enableSave = (dbWidget && !dbWidget->isLocked())
+                          && (m_ui->tabWidget->canSave(tabWidgetIndex)
+                              || (dbWidget->database() && dbWidget->database()->hasNonDataChanges()
+                                  && !config()->get(Config::AutoSaveNonDataChanges).toBool()));
+        m_ui->actionDatabaseSave->setEnabled(enableSave);
     } else if (stackedWidgetIndex == StackedWidgetIndex::SettingsScreen) {
         customWindowTitlePart = tr("Settings");
     } else if (stackedWidgetIndex == StackedWidgetIndex::PasswordGeneratorScreen) {
@@ -2242,12 +2251,25 @@ bool MainWindowEventFilter::eventFilter(QObject* watched, QEvent* event)
             }
         }
 #endif
+    } else if (eventType == QEvent::KeyPress) {
+        auto keyEvent = static_cast<QKeyEvent*>(event);
+        if (keyEvent->key() == Qt::Key_Alt) {
+            m_altKeyAlone = (keyEvent->modifiers() == Qt::AltModifier);
+        } else {
+            m_altKeyAlone = false;
+        }
+        return QObject::eventFilter(watched, event);
     } else if (eventType == QEvent::KeyRelease && watched == mainWindow) {
 #ifdef Q_OS_MACOS
         // On macOS, the menubar is always visible, so no need to toggle it
         return false;
 #endif
         auto keyEvent = dynamic_cast<QKeyEvent*>(event);
+
+        if (keyEvent->key() != Qt::Key_Alt) {
+            m_altKeyAlone = false;
+            return QObject::eventFilter(watched, event);
+        }
 #ifdef Q_OS_WIN
         // Windows translates AltGr into CTRL + ALT, this breaks using AltGr when the menubar is hidden
         // Prevent this by activating the ALT cooldown to ignore the next key event which will be an ALT key
@@ -2257,7 +2279,7 @@ bool MainWindowEventFilter::eventFilter(QObject* watched, QEvent* event)
             return false;
         }
 #endif
-        if (keyEvent->key() == Qt::Key_Alt && !keyEvent->modifiers() && config()->get(Config::GUI_HideMenubar).toBool()
+        if (keyEvent->key() == Qt::Key_Alt && m_altKeyAlone && config()->get(Config::GUI_HideMenubar).toBool()
             && !m_altCoolDown.isActive()) {
             auto menubar = mainWindow->m_ui->menubar;
             menubar->setMaximumHeight(menubar->maximumHeight() > 0 ? 0 : QWIDGETSIZE_MAX);
