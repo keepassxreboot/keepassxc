@@ -499,12 +499,14 @@ find_package(PCSC REQUIRED)
 include_directories(SYSTEM ${PCSC_INCLUDE_DIRS})
 
 if(UNIX AND NOT APPLE)
-    find_library(LIBUSB_LIBRARIES NAMES usb-1.0 REQUIRED)
+    find_library(LIBUSB_LIBRARIES NAMES usb-1.0 usb REQUIRED)
     find_path(LIBUSB_INCLUDE_DIR NAMES libusb.h PATH_SUFFIXES "libusb-1.0" "libusb" REQUIRED)
     include_directories(SYSTEM ${LIBUSB_INCLUDE_DIR})
 
     # For PolKit QuickUnlock
-    find_library(KEYUTILS_LIBRARIES NAMES keyutils REQUIRED)
+    if("${CMAKE_SYSTEM}" MATCHES "Linux")
+        find_library(KEYUTILS_LIBRARIES NAMES keyutils REQUIRED)
+    endif()
 endif()
 
 # Find zxcvbn or use the bundled version

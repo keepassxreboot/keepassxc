@@ -1,4 +1,4 @@
-#  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
+#  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ elseif(UNIX AND NOT APPLE)
 
     find_package(Threads REQUIRED)
 
-    find_library(LIBUSB_LIBRARY NAMES usb-1.0)
+    find_library(LIBUSB_LIBRARY NAMES usb-1.0 usb)
     find_path(LIBUSB_INCLUDE_DIR NAMES libusb.h PATH_SUFFIXES "libusb-1.0" "libusb")
     if(NOT LIBUSB_LIBRARY OR NOT LIBUSB_INCLUDE_DIR)
         message(FATAL_ERROR "libusb-1.0 dev package required, but not found")

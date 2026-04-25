@@ -336,7 +336,6 @@ target_link_libraries(keepassxc_core
         ${ZLIB_LIBRARIES}
         ${MINIZIP_LIBRARIES}
         ${ARGON2_LIBRARIES}
-        ${KEYUTILS_LIBRARIES}
         ${thirdparty_LIBRARIES})
 
 # GUI Library Definition
@@ -363,6 +362,9 @@ if(HAIKU)
 endif()
 if(UNIX AND NOT APPLE)
     target_link_libraries(keepassxc_core Qt5::DBus ${LIBUSB_LIBRARIES})
+    if("${CMAKE_SYSTEM}" MATCHES "Linux")
+        target_link_libraries(keepassxc_core ${KEYUTILS_LIBRARIES})
+    endif()
     if(WITH_X11)
         target_link_libraries(keepassxc_gui Qt5::X11Extras X11)
     endif()
