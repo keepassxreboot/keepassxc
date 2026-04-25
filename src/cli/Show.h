@@ -28,6 +28,8 @@ public:
     int executeWithDatabase(QSharedPointer<Database> db, QSharedPointer<QCommandLineParser> parser) override;
 
     static const QCommandLineOption TotpOption;
+    static const QCommandLineOption UuidOption;
+    static const QCommandLineOption TagsOption;
     static const QCommandLineOption AllAttributesOption;
     static const QCommandLineOption AttributesOption;
     static const QCommandLineOption ProtectedAttributesOption;

@@ -390,17 +390,6 @@ namespace Utils
         return result;
     }
 
-    QString getTopLevelField(const Entry* entry, const QString& fieldName)
-    {
-        if (fieldName == UuidFieldName) {
-            return entry->uuid().toString();
-        }
-        if (fieldName == TagsFieldName) {
-            return entry->tags();
-        }
-        return "";
-    }
-
     QStringList findAttributes(const EntryAttributes& attributes, const QString& name)
     {
         QStringList result;

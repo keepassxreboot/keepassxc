@@ -52,11 +52,12 @@ It provides the ability to query and modify the entries of a KeePass database, d
   Removes the named attachment from an entry.
 
 *clip* [_options_] <__database__> <__entry__> [_timeout_]::
-  Copies an attribute or the current TOTP (if the *-t* option is specified) of a database entry to the clipboard.
+  Copies an attribute, current TOTP value, UUID, or tags list of a database entry to the clipboard.
   If no attribute name is specified using the *-a* option, the password is copied.
   If multiple entries with the same name exist in different groups, only the attribute for the first one is copied.
   For copying the attribute of an entry in a specific group, the group path to the entry should be specified as well, instead of just the name.
   Optionally, a timeout in seconds can be specified to automatically clear the clipboard, the default timeout is 10 seconds, set to 0 to disable.
+  Note: an error will be thrown if you specify multiple options at once (eg, *--uuid* and *-a*).
 
 *close*::
   In interactive mode, closes the currently opened database (see *open*).
@@ -143,8 +144,8 @@ It provides the ability to query and modify the entries of a KeePass database, d
   Searches all entries that match a specific search term in a database.
 
 *show* [_options_] <__database__> <__entry__>::
-  Shows the title, username, password, URL and notes of a database entry.
-  Can also show the current TOTP.
+  Shows the title, username, password, URL and notes of a database entry by default.
+  Can also show the current TOTP, entry UUID, and tags list.
   Regarding the occurrence of multiple entries with the same name in different groups, everything stated in the *clip* command section also applies here.
 
 == OPTIONS
@@ -235,6 +236,12 @@ The same password generation options as documented for the generate command can 
   Copies the current TOTP instead of the specified attribute to the clipboard.
   Will report an error if no TOTP is configured for the entry.
 
+*--uuid*::
+  Copies the UUID of the entry to the clipboard.
+
+*--tags*::
+  Copies the tags of the entry to the clipboard.
+
 *-b*, *--best*::
   Try to find and copy to clipboard a unique entry matching the input
   If a unique matching entry is found it will be copied to the clipboard.
@@ -262,7 +269,6 @@ The same password generation options as documented for the generate command can 
 *-a*, *--attributes* <__attribute__>...::
   Shows the named attributes.
   This option can be specified more than once, with each attribute shown one-per-line in the given order.
-  If no attributes are specified and *-t* is not specified, a summary of the default attributes is given.
   Protected attributes will be displayed in clear text if specified explicitly by this option.
 
 *--all*::
@@ -275,7 +281,13 @@ The same password generation options as documented for the generate command can 
   Shows the attachment names along with the size of the attachments.
 
 *-t*, *--totp*::
-  Also shows the current TOTP, reporting an error if no TOTP is configured for the entry.
+  Shows the current TOTP and then exits. An error is thrown if no TOTP is configured for the entry.
+
+*--uuid*::
+  Shows the UUID of the entry.
+
+*--tags*::
+  Shows the tag list of the entry.
 
 === Diceware options
 *-W*, *--words* <__count__>::

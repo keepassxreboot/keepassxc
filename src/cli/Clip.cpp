@@ -37,6 +37,12 @@ const QCommandLineOption Clip::TotpOption =
     QCommandLineOption(QStringList() << "t" << "totp",
                        QObject::tr("Copy the current TOTP to the clipboard (equivalent to \"-a totp\")."));
 
+const QCommandLineOption Clip::UuidOption =
+    QCommandLineOption(QStringList() << "uuid", QObject::tr("Copy the entry's UUID to the clipboard."));
+
+const QCommandLineOption Clip::TagsOption =
+    QCommandLineOption(QStringList() << "tags", QObject::tr("Copy the entry's tag list to the clipboard."));
+
 const QCommandLineOption Clip::BestMatchOption =
     QCommandLineOption(QStringList() << "b" << "best-match",
                        QObject::tr("Must match only one entry, otherwise a list of possible matches is shown."));
@@ -47,6 +53,8 @@ Clip::Clip()
     description = QObject::tr("Copy an entry's attribute to the clipboard.");
     options.append(Clip::AttributeOption);
     options.append(Clip::TotpOption);
+    options.append(Clip::UuidOption);
+    options.append(Clip::TagsOption);
     options.append(Clip::BestMatchOption);
     positionalArguments.append(
         {QString("entry"), QObject::tr("Path of the entry to clip.", "clip = copy to clipboard"), QString("")});
@@ -99,8 +107,13 @@ int Clip::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
         return EXIT_FAILURE;
     }
 
-    if (parser->isSet(AttributeOption) && parser->isSet(TotpOption)) {
-        err << QObject::tr("ERROR: Please specify one of --attribute or --totp, not both.") << Qt::endl;
+    auto optionCount = parser->isSet(AttributeOption) ? 1 : 0;
+    optionCount += parser->isSet(TotpOption) ? 1 : 0;
+    optionCount += parser->isSet(UuidOption) ? 1 : 0;
+    optionCount += parser->isSet(TagsOption) ? 1 : 0;
+    if (optionCount > 1) {
+        err << QObject::tr("ERROR: Cannot specify multiple options at once (--attribute, --totp, --uuid, --tags).")
+            << Qt::endl;
         return EXIT_FAILURE;
     }
 
@@ -113,11 +126,16 @@ int Clip::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
             return EXIT_FAILURE;
         }
 
-        selectedAttribute = "totp";
-        found = true;
         value = entry->totp();
-    } else if (Utils::EntryFieldNames.contains(selectedAttribute)) {
-        value = Utils::getTopLevelField(entry, selectedAttribute);
+        selectedAttribute = "TOTP";
+        found = true;
+    } else if (parser->isSet(UuidOption)) {
+        value = entry->uuid().toString();
+        selectedAttribute = "UUID";
+        found = true;
+    } else if (parser->isSet(TagsOption)) {
+        value = entry->tags();
+        selectedAttribute = "Tags";
         found = true;
     } else {
         QStringList attrs = Utils::findAttributes(*entry->attributes(), selectedAttribute);

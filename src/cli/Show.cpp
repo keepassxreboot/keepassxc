@@ -24,14 +24,21 @@
 #include <QCommandLineParser>
 
 const QCommandLineOption Show::TotpOption =
-    QCommandLineOption(QStringList() << "t" << "totp", QObject::tr("Show the entry's current TOTP."));
+    QCommandLineOption(QStringList() << "t" << "totp", QObject::tr("Only show the entry's current TOTP."));
+
+const QCommandLineOption Show::UuidOption =
+    QCommandLineOption(QStringList() << "uuid", QObject::tr("Show the entry's UUID."));
+
+const QCommandLineOption Show::TagsOption =
+    QCommandLineOption(QStringList() << "tags", QObject::tr("Show the entry's tags."));
 
 const QCommandLineOption Show::ProtectedAttributesOption =
     QCommandLineOption(QStringList() << "s" << "show-protected",
                        QObject::tr("Show the protected attributes in clear text."));
 
 const QCommandLineOption Show::AllAttributesOption =
-    QCommandLineOption(QStringList() << "all", QObject::tr("Show all the attributes of the entry."));
+    QCommandLineOption(QStringList() << "all",
+                       QObject::tr("Show all the attributes of the entry, including UUID and Tags."));
 
 const QCommandLineOption Show::AttachmentsOption =
     QCommandLineOption(QStringList() << "show-attachments", QObject::tr("Show the attachments of the entry."));
@@ -49,6 +56,8 @@ Show::Show()
     name = QString("show");
     description = QObject::tr("Show an entry's information.");
     options.append(Show::TotpOption);
+    options.append(Show::UuidOption);
+    options.append(Show::TagsOption);
     options.append(Show::AttributesOption);
     options.append(Show::ProtectedAttributesOption);
     options.append(Show::AllAttributesOption);
@@ -63,9 +72,10 @@ int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
 
     const QStringList args = parser->positionalArguments();
     const QString& entryPath = args.at(1);
-    bool showTotp = parser->isSet(Show::TotpOption);
     bool showProtectedAttributes = parser->isSet(Show::ProtectedAttributesOption);
     bool showAllAttributes = parser->isSet(Show::AllAttributesOption);
+    bool showUuid = parser->isSet(Show::UuidOption);
+    bool showTags = parser->isSet(Show::TagsOption);
     QStringList attributes = parser->values(Show::AttributesOption);
 
     Entry* entry = database->rootGroup()->findEntryByPath(entryPath);
@@ -74,18 +84,23 @@ int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
         return EXIT_FAILURE;
     }
 
-    if (showTotp && !entry->hasTotp()) {
-        err << QObject::tr("Entry with path %1 has no TOTP set up.").arg(entryPath) << Qt::endl;
-        return EXIT_FAILURE;
+    // Early exit if the user only wants to show the TOTP
+    if (parser->isSet(Show::TotpOption)) {
+        if (!entry->hasTotp()) {
+            err << QObject::tr("Entry with path %1 has no TOTP set up.").arg(entryPath) << Qt::endl;
+            return EXIT_FAILURE;
+        }
+
+        out << entry->totp() << Qt::endl;
+        return EXIT_SUCCESS;
     }
 
-    bool attributesWereSpecified = true;
+    bool attributesWereSpecified = !showUuid && !showTags;
     if (showAllAttributes) {
         attributesWereSpecified = false;
+        showUuid = true;
+        showTags = true;
         attributes = EntryAttributes::DefaultAttributes;
-        for (QString fieldName : Utils::EntryFieldNames) {
-            attributes.append(fieldName);
-        }
         // Adding the custom attributes after the default attributes so that
         // the default attributes are always shown first.
         for (QString attributeName : entry->attributes()->keys()) {
@@ -94,26 +109,16 @@ int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
             }
             attributes.append(attributeName);
         }
-    } else if (attributes.isEmpty() && !showTotp) {
+    } else if (attributes.isEmpty() && !showUuid && !showTags) {
         // If no attributes are specified, output the default attribute set.
         attributesWereSpecified = false;
         attributes = EntryAttributes::DefaultAttributes;
-        for (QString fieldName : Utils::EntryFieldNames) {
-            attributes.append(fieldName);
-        }
+        showTags = true;
     }
 
     // Iterate over the attributes and output them line-by-line.
     bool encounteredError = false;
     for (const QString& attributeName : asConst(attributes)) {
-        if (Utils::EntryFieldNames.contains(attributeName)) {
-            if (!attributesWereSpecified) {
-                out << attributeName << ": ";
-            }
-            out << Utils::getTopLevelField(entry, attributeName) << Qt::endl;
-            continue;
-        }
-
         QStringList attrs = Utils::findAttributes(*entry->attributes(), attributeName);
         if (attrs.isEmpty()) {
             encounteredError = true;
@@ -137,6 +142,14 @@ int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
         }
     }
 
+    // Output UUID and Tags if a certain field wasn't specified
+    if (showTags) {
+        out << "Tags: " << entry->tags() << Qt::endl;
+    }
+    if (showUuid) {
+        out << "UUID: " << entry->uuid().toString() << Qt::endl;
+    }
+
     if (parser->isSet(Show::AttachmentsOption)) {
         // Separate attachment output from attributes output via a newline.
         out << Qt::endl;
@@ -154,10 +167,6 @@ int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
                 out << "  " << attachmentName << " (" << attachmentSize << ")" << Qt::endl;
             }
         }
-    }
-
-    if (showTotp) {
-        out << entry->totp() << Qt::endl;
     }
 
     return encounteredError ? EXIT_FAILURE : EXIT_SUCCESS;

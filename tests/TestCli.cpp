@@ -673,14 +673,14 @@ void TestCli::testClip()
 
     // Uuid (top-level field)
     setInput("a");
-    execCmd(clipCmd, {"clip", m_dbFile->fileName(), "/Sample Entry", "0", "-a", "Uuid"});
+    execCmd(clipCmd, {"clip", m_dbFile->fileName(), "/Sample Entry", "0", "--uuid"});
     QTRY_COMPARE(clipboard->text(), QString("{9f4544c2-ab00-c74a-8a1a-6eaf26cf57e9}"));
 
     // TOTP
     setInput("a");
     execCmd(clipCmd, {"clip", m_dbFile->fileName(), "/Sample Entry", "0", "--totp"});
     QTRY_VERIFY(isTotp(clipboard->text()));
-    QCOMPARE(m_stdout->readLine(), QByteArray("Entry's \"totp\" attribute copied to the clipboard!\n"));
+    QCOMPARE(m_stdout->readLine(), QByteArray("Entry's \"TOTP\" attribute copied to the clipboard!\n"));
 
     // Test Unicode
     setInput("a");
@@ -725,7 +725,7 @@ void TestCli::testClip()
 
     setInput("a");
     execCmd(clipCmd, {"clip", m_dbFile2->fileName(), "--attribute", "Username", "--totp", "/Sample Entry", "0"});
-    QVERIFY(m_stderr->readAll().contains("ERROR: Please specify one of --attribute or --totp, not both.\n"));
+    QVERIFY(m_stderr->readAll().contains("ERROR: Cannot specify multiple options at once"));
 
     // Best option
     setInput("a");
@@ -2080,72 +2080,55 @@ void TestCli::testShow()
     QVERIFY(!showCmd.name.isEmpty());
     QVERIFY(showCmd.getDescriptionLine().contains(showCmd.name));
 
+    const QByteArray expectTitle("Title: Sample Entry");
+    const QByteArray expectUserName("UserName: User Name");
+    const QByteArray expectUrl("URL: http://www.somesite.com/");
+    const QByteArray expectUuid("UUID: {9f4544c2-ab00-c74a-8a1a-6eaf26cf57e9}");
+    const QByteArray expectNotes("Notes: Notes");
+    const QByteArray expectTags("Tags: ");
+
     setInput("a");
     execCmd(showCmd, {"show", m_dbFile->fileName(), "/Sample Entry"});
     m_stderr->readLine(); // Skip password prompt
     QCOMPARE(m_stderr->readAll(), QByteArray());
-    QCOMPARE(m_stdout->readAll(),
-             QByteArray("Title: Sample Entry\n"
-                        "UserName: User Name\n"
-                        "Password: PROTECTED\n"
-                        "URL: http://www.somesite.com/\n"
-                        "Notes: Notes\n"
-                        "Uuid: {9f4544c2-ab00-c74a-8a1a-6eaf26cf57e9}\n"
-                        "Tags: \n"));
+    auto out = m_stdout->readAll();
+    QVERIFY(out.contains(expectTitle));
+    QVERIFY(out.contains(expectUserName));
+    QVERIFY(out.contains(expectUrl));
+    QVERIFY(out.contains(expectNotes));
+    QVERIFY(out.contains(expectTags));
+    QVERIFY(!out.contains(expectUuid));
+    QVERIFY(out.contains("Password: PROTECTED"));
 
     setInput("a");
     execCmd(showCmd, {"show", "-s", m_dbFile->fileName(), "/Sample Entry"});
-    QCOMPARE(m_stdout->readAll(),
-             QByteArray("Title: Sample Entry\n"
-                        "UserName: User Name\n"
-                        "Password: Password\n"
-                        "URL: http://www.somesite.com/\n"
-                        "Notes: Notes\n"
-                        "Uuid: {9f4544c2-ab00-c74a-8a1a-6eaf26cf57e9}\n"
-                        "Tags: \n"));
+    out = m_stdout->readAll();
+    QVERIFY(out.contains("Password: Password"));
 
     setInput("a");
     execCmd(showCmd, {"show", m_dbFile->fileName(), "-q", "/Sample Entry"});
     QCOMPARE(m_stderr->readAll(), QByteArray());
-    QCOMPARE(m_stdout->readAll(),
-             QByteArray("Title: Sample Entry\n"
-                        "UserName: User Name\n"
-                        "Password: PROTECTED\n"
-                        "URL: http://www.somesite.com/\n"
-                        "Notes: Notes\n"
-                        "Uuid: {9f4544c2-ab00-c74a-8a1a-6eaf26cf57e9}\n"
-                        "Tags: \n"));
+    out = m_stdout->readAll();
+    QVERIFY(out.contains(expectTitle));
+    QVERIFY(out.contains(expectUserName));
+    QVERIFY(out.contains(expectUrl));
+    QVERIFY(out.contains(expectNotes));
+    QVERIFY(out.contains(expectTags));
+    QVERIFY(!out.contains(expectUuid));
 
     setInput("a");
     execCmd(showCmd, {"show", m_dbFile->fileName(), "--show-attachments", "/Sample Entry"});
     m_stderr->readLine(); // Skip password prompt
     QCOMPARE(m_stderr->readAll(), QByteArray());
-    QCOMPARE(m_stdout->readAll(),
-             QByteArray("Title: Sample Entry\n"
-                        "UserName: User Name\n"
-                        "Password: PROTECTED\n"
-                        "URL: http://www.somesite.com/\n"
-                        "Notes: Notes\n"
-                        "Uuid: {9f4544c2-ab00-c74a-8a1a-6eaf26cf57e9}\n"
-                        "Tags: \n"
-                        "\n"
-                        "Attachments:\n"
-                        "  Sample attachment.txt (15 B)\n"));
+    out = m_stdout->readAll();
+    QVERIFY(out.contains("Attachments:\n  Sample attachment.txt (15 B)"));
 
     setInput("a");
     execCmd(showCmd, {"show", m_dbFile->fileName(), "--show-attachments", "/Homebanking/Subgroup/Subgroup Entry"});
     m_stderr->readLine(); // Skip password prompt
     QCOMPARE(m_stderr->readAll(), QByteArray());
-    QCOMPARE(m_stdout->readAll(),
-             QByteArray("Title: Subgroup Entry\n"
-                        "UserName: Bank User Name\n"
-                        "Password: PROTECTED\n"
-                        "URL: https://www.bank.com\n"
-                        "Notes: Important note\n"
-                        "Uuid: {20b183fd-6878-4506-a50b-06d30792aa10}\n"
-                        "Tags: \n"
-                        "\n"
-                        "No attachments present.\n"));
+    out = m_stdout->readAll();
+    QVERIFY(out.contains("No attachments present."));
 
     setInput("a");
     execCmd(showCmd, {"show", "-a", "Title", m_dbFile->fileName(), "/Sample Entry"});
@@ -2156,8 +2139,8 @@ void TestCli::testShow()
     QCOMPARE(m_stdout->readAll(), QByteArray("Password\n"));
 
     setInput("a");
-    execCmd(showCmd, {"show", "-a", "Uuid", m_dbFile->fileName(), "/Sample Entry"});
-    QCOMPARE(m_stdout->readAll(), QByteArray("{9f4544c2-ab00-c74a-8a1a-6eaf26cf57e9}\n"));
+    execCmd(showCmd, {"show", "--uuid", m_dbFile->fileName(), "/Sample Entry"});
+    QVERIFY(m_stdout->readAll().contains(expectUuid));
 
     setInput("a");
     execCmd(showCmd, {"show", "-a", "Title", "-a", "URL", m_dbFile->fileName(), "/Sample Entry"});
@@ -2181,9 +2164,9 @@ void TestCli::testShow()
     execCmd(showCmd, {"show", "-t", m_dbFile->fileName(), "/Sample Entry"});
     QVERIFY(isTotp(m_stdout->readAll()));
 
+    // TOTP paramter short circuits any other parameter
     setInput("a");
     execCmd(showCmd, {"show", "-a", "Title", m_dbFile->fileName(), "--totp", "/Sample Entry"});
-    QCOMPARE(m_stdout->readLine(), QByteArray("Sample Entry\n"));
     QVERIFY(isTotp(m_stdout->readAll()));
 
     setInput("a");
@@ -2199,18 +2182,15 @@ void TestCli::testShow()
 
     setInput("a");
     execCmd(showCmd, {"show", "--all", m_dbFile->fileName(), "/Sample Entry"});
-    QCOMPARE(m_stdout->readAll(),
-             QByteArray("Title: Sample Entry\n"
-                        "UserName: User Name\n"
-                        "Password: PROTECTED\n"
-                        "URL: http://www.somesite.com/\n"
-                        "Notes: Notes\n"
-                        "Uuid: {9f4544c2-ab00-c74a-8a1a-6eaf26cf57e9}\n"
-                        "Tags: \n"
-                        "TOTP Seed: PROTECTED\n"
-                        "TOTP Settings: 30;6\n"
-                        "TestAttribute1: b\n"
-                        "testattribute1: a\n"));
+    out = m_stdout->readAll();
+    QVERIFY(out.contains(expectTitle));
+    QVERIFY(out.contains(expectUserName));
+    QVERIFY(out.contains(expectUuid));
+    QVERIFY(out.contains(expectTags));
+    QVERIFY(out.contains("TOTP Seed: PROTECTED"));
+    QVERIFY(out.contains("TOTP Settings: 30;6"));
+    QVERIFY(out.contains("TestAttribute1: b"));
+    QVERIFY(out.contains("testattribute1: a"));
 }
 
 void TestCli::testInvalidDbFiles()

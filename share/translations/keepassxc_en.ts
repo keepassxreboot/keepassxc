@@ -7803,10 +7803,6 @@ Do you want to overwrite it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>ERROR: Please specify one of --attribute or --totp, not both.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Entry with path %1 has no TOTP set up.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8516,15 +8512,7 @@ Available commands:
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Show the entry&apos;s current TOTP.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Show the protected attributes in clear text.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show all the attributes of the entry.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9422,6 +9410,34 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Confirm Replace Entry References</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy the entry&apos;s UUID to the clipboard.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy the entry&apos;s tag list to the clipboard.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ERROR: Cannot specify multiple options at once (--attribute, --totp, --uuid, --tags).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Only show the entry&apos;s current TOTP.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show the entry&apos;s UUID.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show the entry&apos;s tags.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show all the attributes of the entry, including UUID and Tags.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -29,6 +29,8 @@ public:
 
     static const QCommandLineOption AttributeOption;
     static const QCommandLineOption TotpOption;
+    static const QCommandLineOption UuidOption;
+    static const QCommandLineOption TagsOption;
     static const QCommandLineOption BestMatchOption;
 };
 

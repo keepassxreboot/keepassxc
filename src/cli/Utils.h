@@ -34,10 +34,6 @@ namespace Utils
     extern QTextStream STDIN;
     extern QTextStream DEVNULL;
 
-    static const QString UuidFieldName = "Uuid";
-    static const QString TagsFieldName = "Tags";
-    static const QStringList EntryFieldNames(QStringList() << UuidFieldName << TagsFieldName);
-
     void setDefaultTextStreams();
     void resetTextStreams();
 
@@ -61,10 +57,6 @@ namespace Utils
      * (case-insensitive).
      */
     QStringList findAttributes(const EntryAttributes& attributes, const QString& name);
-    /**
-     * Get the value of a top-level Entry field using its name.
-     */
-    QString getTopLevelField(const Entry* entry, const QString& fieldName);
 }; // namespace Utils
 
 #endif // KEEPASSXC_UTILS_H
