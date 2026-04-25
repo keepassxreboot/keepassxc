@@ -342,8 +342,8 @@ if(KPXC_FEATURE_FDOSECRETS)
     set(fdosecrets_LIB fdosecrets)
 endif()
 
-configure_file(config-keepassx.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-keepassx.h)
-configure_file(git-info.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/git-info.h)
+configure_file(config-keepassx.h.in ${CMAKE_CURRENT_BINARY_DIR}/config-keepassx.h)
+configure_file(git-info.h.in ${CMAKE_CURRENT_BINARY_DIR}/git-info.h)
 
 # SVG Widgets
 find_package(Qt6 REQUIRED COMPONENTS SvgWidgets)
@@ -424,7 +424,7 @@ elseif(APPLE AND WITH_APP_BUNDLE)
     set(MACOSX_BUNDLE_IDENTIFIER org.keepassxc.keepassxc)
     set(MACOSX_BUNDLE_ICON_NAME keepassxc)
     set(MACOSX_BUNDLE_APPLE_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/share/macosx/keepassxc.entitlements")
-    configure_file("${CMAKE_SOURCE_DIR}/share/macosx/Info.plist.cmake" ${CMAKE_CURRENT_BINARY_DIR}/Info.plist)
+    configure_file("${CMAKE_SOURCE_DIR}/share/macosx/Info.plist.in" ${CMAKE_CURRENT_BINARY_DIR}/Info.plist)
     install(FILES "${CMAKE_SOURCE_DIR}/share/macosx/embedded.provisionprofile" DESTINATION ${BUNDLE_INSTALL_DIR})
     set(MACOSX_BUNDLE_RESOURCE_FILES
             "${CMAKE_SOURCE_DIR}/share/macosx/Assets.car"

@@ -23,7 +23,7 @@ include_directories(
 add_definitions(-DQT_TEST_LIB -DQT_NO_USE_NODISCARD_FILE_OPEN)
 
 set(KEEPASSX_TEST_DATA_DIR ${CMAKE_CURRENT_SOURCE_DIR}/data)
-configure_file(config-keepassx-tests.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-keepassx-tests.h)
+configure_file(config-keepassx-tests.h.in ${CMAKE_CURRENT_BINARY_DIR}/config-keepassx-tests.h)
 
 function(add_unit_test)
     cmake_parse_arguments(TEST "" "NAME" "SOURCES;LIBS;LAUNCHER" ${ARGN})
