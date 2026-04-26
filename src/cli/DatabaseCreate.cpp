@@ -80,17 +80,11 @@ DatabaseCreate::DatabaseCreate()
     options.append(DatabaseCreate::SetKeyFileShortOption);
     options.append(DatabaseCreate::SetPasswordOption);
     options.append(DatabaseCreate::DecryptionTimeOption);
-
     options.append(DatabaseCreate::KdfOption);
     options.append(DatabaseCreate::CipherOption);
     options.append(DatabaseCreate::RoundsOption);
     options.append(DatabaseCreate::MemoryOption);
     options.append(DatabaseCreate::ParallelismOption);
-}
-
-void warnIgnored(const QString& arg, const QString& blockedBy)
-{
-    Utils::STDERR << QObject::tr("%1 ignored (blocked by %2)").arg(arg, blockedBy) << Qt::endl;
 }
 
 QSharedPointer<Database> DatabaseCreate::initializeDatabaseFromOptions(const QSharedPointer<QCommandLineParser>& parser)
@@ -109,19 +103,17 @@ QSharedPointer<Database> DatabaseCreate::initializeDatabaseFromOptions(const QSh
     const bool hasMemory         = parser->isSet(DatabaseCreate::MemoryOption);
     const bool hasParallelism    = parser->isSet(DatabaseCreate::ParallelismOption);
 
-    int decryptionTimeValue = 0;
+    int decryptionTime = 0;
     if (hasDecryptionTime) {
-        QString val = parser->value(DatabaseCreate::DecryptionTimeOption);
-        decryptionTimeValue = val.toInt();
-        if (decryptionTimeValue <= 0) {
-            err << QObject::tr("Invalid decryption time %1.").arg(val) << Qt::endl;
+        QString decryptionTimeValue = parser->value(DatabaseCreate::DecryptionTimeOption);
+        decryptionTime = decryptionTimeValue.toInt();
+        if (decryptionTime <= 0) {
+            err << QObject::tr("Invalid decryption time %1.").arg(decryptionTimeValue) << Qt::endl;
             return {};
         }
-        if (decryptionTimeValue < Kdf::MIN_ENCRYPTION_TIME
-            || decryptionTimeValue > Kdf::MAX_ENCRYPTION_TIME) {
+        if (decryptionTime < Kdf::MIN_ENCRYPTION_TIME || decryptionTime > Kdf::MAX_ENCRYPTION_TIME) {
             err << QObject::tr("Target decryption time must be between %1 and %2.")
-                       .arg(Kdf::MIN_ENCRYPTION_TIME)
-                       .arg(Kdf::MAX_ENCRYPTION_TIME)
+                       .arg(QString::number(Kdf::MIN_ENCRYPTION_TIME), QString::number(Kdf::MAX_ENCRYPTION_TIME))
                 << Qt::endl;
             return {};
         }
@@ -140,6 +132,7 @@ QSharedPointer<Database> DatabaseCreate::initializeDatabaseFromOptions(const QSh
 
     if (parser->isSet(DatabaseCreate::SetKeyFileOption) || parser->isSet(DatabaseCreate::SetKeyFileShortOption)) {
         QSharedPointer<FileKey> fileKey;
+
         QString keyFilePath;
         if (parser->isSet(DatabaseCreate::SetKeyFileShortOption)) {
             qWarning("The -k option will be deprecated. Please use the --set-key-file option instead.");
@@ -147,10 +140,12 @@ QSharedPointer<Database> DatabaseCreate::initializeDatabaseFromOptions(const QSh
         } else {
             keyFilePath = parser->value(DatabaseCreate::SetKeyFileOption);
         }
+
         if (!Utils::loadFileKey(keyFilePath, fileKey)) {
             err << QObject::tr("Loading the key file failed") << Qt::endl;
             return {};
         }
+
         if (!fileKey.isNull()) {
             key->addKey(fileKey);
         }
@@ -172,9 +167,9 @@ QSharedPointer<Database> DatabaseCreate::initializeDatabaseFromOptions(const QSh
         if (hasParallelism) err << QObject::tr("--parallelism ignored (--decryption-time)") << Qt::endl;
 
         auto kdf = db->kdf();
-        out << QObject::tr("Benchmarking key derivation function for %1ms delay.").arg(decryptionTime) << Qt::endl;
+        out << QObject::tr("Benchmarking key derivation function for %1ms delay.").arg(QString::number(decryptionTime)) << Qt::endl;
         int rounds = kdf->benchmark(decryptionTime);
-        out << QObject::tr("Setting %1 rounds for key derivation function.").arg(rounds) << Qt::endl;
+        out << QObject::tr("Setting %1 rounds for key derivation function.").arg(QString::number(rounds)) << Qt::endl;
         kdf->setRounds(rounds);
         if (!db->changeKdf(kdf)) {
             err << QObject::tr("Failed to set key derivation settings.") << Qt::endl;
