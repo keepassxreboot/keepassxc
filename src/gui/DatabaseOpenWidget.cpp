@@ -311,7 +311,7 @@ QString DatabaseOpenWidget::filename()
     return m_filename;
 }
 
-void DatabaseOpenWidget::enterKey(const QString& pw, const QString& keyFile)
+void DatabaseOpenWidget::enterKey(const QString& pw, const QString& keyFile, bool explicitQuickUnlock)
 {
     if (unlockingDatabase()) {
         qWarning("Ignoring unlock request for %s because of running unlock action.", qPrintable(m_filename));
@@ -320,7 +320,7 @@ void DatabaseOpenWidget::enterKey(const QString& pw, const QString& keyFile)
 
     m_ui->editPassword->setText(pw);
     m_ui->keyFileLineEdit->setText(keyFile);
-    m_blockQuickUnlock = true;
+    m_blockQuickUnlock = !explicitQuickUnlock;
     openDatabase();
 }
 

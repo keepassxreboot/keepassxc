@@ -1621,10 +1621,13 @@ void DatabaseWidget::switchToOpenDatabase(const QString& filePath)
     setCurrentWidget(m_databaseOpenWidget);
 }
 
-void DatabaseWidget::switchToOpenDatabase(const QString& filePath, const QString& password, const QString& keyFile)
+void DatabaseWidget::switchToOpenDatabase(const QString& filePath,
+                                          const QString& password,
+                                          const QString& keyFile,
+                                          bool explicitQuickUnlock)
 {
     switchToOpenDatabase(filePath);
-    m_databaseOpenWidget->enterKey(password, keyFile);
+    m_databaseOpenWidget->enterKey(password, keyFile, explicitQuickUnlock);
 }
 
 void DatabaseWidget::switchToEntryEdit()
@@ -1709,7 +1712,7 @@ void DatabaseWidget::removePasskeyFromEntry()
 }
 #endif
 
-void DatabaseWidget::performUnlockDatabase(const QString& password, const QString& keyfile)
+void DatabaseWidget::performUnlockDatabase(const QString& password, const QString& keyfile, bool explicitQuickUnlock)
 {
     if (password.isEmpty() && keyfile.isEmpty()) {
         return;
@@ -1717,7 +1720,7 @@ void DatabaseWidget::performUnlockDatabase(const QString& password, const QStrin
 
     if (!m_db->isInitialized() || isLocked()) {
         switchToOpenDatabase();
-        m_databaseOpenWidget->enterKey(password, keyfile);
+        m_databaseOpenWidget->enterKey(password, keyfile, explicitQuickUnlock);
     }
 }
 

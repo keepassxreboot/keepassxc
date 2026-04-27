@@ -90,6 +90,8 @@ int main(int argc, char** argv)
     QCommandLineOption lockOption("lock", QObject::tr("lock all open databases"));
     QCommandLineOption keyfileOption("keyfile", QObject::tr("key file of the database"), "keyfile");
     QCommandLineOption pwstdinOption("pw-stdin", QObject::tr("read password of the database from stdin"));
+    QCommandLineOption explicitQuickUnlockOption("quick-unlock",
+                                                 QObject::tr("enable quick unlock also when --pw-stdin is set"));
     QCommandLineOption allowScreenCaptureOption("allow-screencapture",
                                                 QObject::tr("allow screenshots and app recording (Windows/macOS)"));
     QCommandLineOption startMinimized("minimized", QObject::tr("start minimized to the system tray"));
@@ -105,6 +107,7 @@ int main(int argc, char** argv)
     parser.addOption(debugInfoOption);
     parser.addOption(allowScreenCaptureOption);
     parser.addOption(startMinimized);
+    parser.addOption(explicitQuickUnlockOption);
 
     parser.process(app);
 
@@ -204,6 +207,7 @@ int main(int argc, char** argv)
     mainWindow.setAllowScreenCapture(parser.isSet(allowScreenCaptureOption));
 
     const bool pwstdin = parser.isSet(pwstdinOption);
+    const bool explicitQuickUnlock = parser.isSet(explicitQuickUnlockOption);
     for (const QString& filename : fileNames) {
         QString password;
         if (pwstdin) {
@@ -213,7 +217,7 @@ int main(int argc, char** argv)
             out << QObject::tr("Database password: ") << Qt::flush;
             password = Utils::getPassword();
         }
-        mainWindow.openDatabase(filename, password, parser.value(keyfileOption));
+        mainWindow.openDatabase(filename, password, parser.value(keyfileOption), explicitQuickUnlock);
     }
 
     // start minimized if configured

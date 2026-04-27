@@ -9424,6 +9424,10 @@ This option is deprecated, use --set-key-file instead.</source>
         <source>Confirm Replace Entry References</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>enable quick unlock also when --pw-stdin is set</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>

@@ -70,7 +70,10 @@ signals:
     void databaseUnlockDialogFinished(bool accepted, DatabaseWidget* dbWidget);
 
 public slots:
-    void openDatabase(const QString& filePath, const QString& password = {}, const QString& keyfile = {});
+    void openDatabase(const QString& filePath,
+                      const QString& password = {},
+                      const QString& keyfile = {},
+                      bool explicitQuickUnlock = false);
     void appExit();
     bool isHardwareKeySupported();
     bool refreshHardwareKeys();

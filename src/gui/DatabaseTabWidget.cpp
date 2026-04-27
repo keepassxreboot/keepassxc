@@ -156,7 +156,8 @@ void DatabaseTabWidget::openDatabase()
 void DatabaseTabWidget::addDatabaseTab(const QString& filePath,
                                        bool inBackground,
                                        const QString& password,
-                                       const QString& keyfile)
+                                       const QString& keyfile,
+                                       bool explicitQuickUnlock)
 {
     QString cleanFilePath = QDir::toNativeSeparators(filePath);
     QFileInfo fileInfo(cleanFilePath);
@@ -173,7 +174,7 @@ void DatabaseTabWidget::addDatabaseTab(const QString& filePath,
         Q_ASSERT(dbWidget);
         if (dbWidget
             && dbWidget->database()->canonicalFilePath().compare(canonicalFilePath, FILE_CASE_SENSITIVE) == 0) {
-            dbWidget->performUnlockDatabase(password, keyfile);
+            dbWidget->performUnlockDatabase(password, keyfile, explicitQuickUnlock);
             if (!inBackground) {
                 // switch to existing tab if file is already open
                 setCurrentIndex(indexOf(dbWidget));
