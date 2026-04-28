@@ -66,7 +66,7 @@ private:
 
     static int MyErrorHandler(Display* my_dpy, XErrorEvent* event);
 
-    Display* m_dpy;
+    Display* m_dpy = nullptr;
     Window m_rootWindow;
     Atom m_atomWmState;
     Atom m_atomWmName;
@@ -91,7 +91,7 @@ private:
     QList<KeyDesc> m_keymap;
     KeyCode m_modifier_keycode[N_MOD_INDICES];
     KeyCode m_remapKeycode;
-    bool m_loaded;
+    bool m_loaded = false;
 };
 
 class AutoTypeExecutorX11 : public AutoTypeExecutor

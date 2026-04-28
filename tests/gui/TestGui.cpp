@@ -552,12 +552,15 @@ void TestGui::testAutoreloadDatabase()
     MessageBox::setNextAnswer(MessageBox::Yes);
     // Overwrite the current database with the temp data
     QVERIFY(m_dbFile.copyFromFile(QString(KEEPASSX_TEST_DATA_DIR).append("/MergeDatabase.kdbx")));
+    QApplication::processEvents();
 
     QTRY_VERIFY(m_db != m_dbWidget->database());
     m_db = m_dbWidget->database();
 
     // the General group contains one entry from the new db data
-    QCOMPARE(m_db->rootGroup()->findChildByName("General")->entries().size(), 1);
+    auto generalGroup = m_db->rootGroup()->findChildByName("General");
+    QVERIFY(generalGroup);
+    QCOMPARE(generalGroup->entries().size(), 1);
     QVERIFY(!m_tabWidget->tabText(m_tabWidget->currentIndex()).endsWith("*"));
 
     // Reset the state
@@ -570,9 +573,12 @@ void TestGui::testAutoreloadDatabase()
     MessageBox::setNextAnswer(MessageBox::No);
     // Overwrite the current database with the temp data
     QVERIFY(m_dbFile.copyFromFile(QString(KEEPASSX_TEST_DATA_DIR).append("/MergeDatabase.kdbx")));
+    QApplication::processEvents();
 
     // Ensure the merge did not take place
-    QCOMPARE(m_db->rootGroup()->findChildByName("General")->entries().size(), 0);
+    generalGroup = m_db->rootGroup()->findChildByName("General");
+    QVERIFY(generalGroup);
+    QCOMPARE(generalGroup->entries().size(), 0);
     QTRY_VERIFY(m_tabWidget->tabText(m_tabWidget->currentIndex()).endsWith("*"));
 
     // Reset the state
@@ -589,11 +595,14 @@ void TestGui::testAutoreloadDatabase()
     MessageBox::setNextAnswer(MessageBox::Merge);
     // Overwrite the current database with the temp data
     QVERIFY(m_dbFile.copyFromFile(QString(KEEPASSX_TEST_DATA_DIR).append("/MergeDatabase.kdbx")));
+    QApplication::processEvents();
 
     QTRY_VERIFY(m_db != m_dbWidget->database());
     m_db = m_dbWidget->database();
 
-    QCOMPARE(m_db->rootGroup()->findChildByName("General")->entries().size(), 1);
+    generalGroup = m_db->rootGroup()->findChildByName("General");
+    QVERIFY(generalGroup);
+    QCOMPARE(generalGroup->entries().size(), 1);
     QTRY_VERIFY(m_tabWidget->tabText(m_tabWidget->currentIndex()).endsWith("*"));
 }
 

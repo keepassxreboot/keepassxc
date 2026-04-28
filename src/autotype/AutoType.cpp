@@ -238,7 +238,9 @@ QStringList AutoType::windowTitles()
 void AutoType::raiseWindow()
 {
 #if defined(Q_OS_MACOS)
-    m_plugin->raiseOwnWindow();
+    if (m_plugin) {
+        m_plugin->raiseOwnWindow();
+    }
 #endif
 }
 
@@ -264,6 +266,11 @@ void AutoType::executeAutoTypeActions(const Entry* entry,
                                       WId window,
                                       AutoTypeExecutor::Mode mode)
 {
+    if (!m_plugin || !m_executor) {
+        qWarning() << "Auto-Type plugin not available, cannot perform Auto-Type.";
+        return;
+    }
+
     QString error;
     auto actions = parseSequence(sequence, entry, error);
 

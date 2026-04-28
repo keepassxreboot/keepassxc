@@ -33,7 +33,6 @@ public:
 private slots:
     void init();
     void cleanup();
-    void initTestCase();
 
     void testUnicode();
     void testLF();
@@ -55,9 +54,12 @@ private slots:
     void testQuoted();
     void testMultiline();
     void testColumns();
+    void testCodec();
+    void testCodec_data();
+    void testUtf16();
 
 private:
-    void writeToFile(const QString& contents);
+    void writeToFile(const QString& contents, QStringConverter::Encoding encoding = QStringConverter::Utf8);
 
     QScopedPointer<QTemporaryFile> file;
     QScopedPointer<CsvParser> parser;

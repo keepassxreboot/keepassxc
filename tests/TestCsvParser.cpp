@@ -18,30 +18,30 @@
 
 #include "TestCsvParser.h"
 
+#include <QBuffer>
 #include <QTest>
 
 QTEST_GUILESS_MAIN(TestCsvParser)
 
-void TestCsvParser::writeToFile(const QString& contents)
+void TestCsvParser::writeToFile(const QString& contents, QStringConverter::Encoding encoding)
 {
     if (!file->open()) {
         QFAIL("Cannot open temporary file!");
     }
     QTextStream out(file.data());
-    out.setEncoding(QStringConverter::Utf8);
+    out.setEncoding(encoding);
     out << contents;
     out.flush();
     file->close();
 }
 
-void TestCsvParser::initTestCase()
-{
-    parser.reset(new CsvParser());
-}
-
 void TestCsvParser::init()
 {
     file.reset(new QTemporaryFile());
+
+    parser.reset(new CsvParser());
+    // Verify default codec is UTF-8
+    QCOMPARE(parser->getCodec(), QStringConverter::Utf8);
 
     parser->setBackslashSyntax(false);
     parser->setComment('#');
@@ -51,7 +51,9 @@ void TestCsvParser::init()
 
 void TestCsvParser::cleanup()
 {
-    file->remove();
+    if (!file->fileName().isEmpty()) {
+        file->remove();
+    }
 }
 
 /****************** TEST CASES ******************/
@@ -341,4 +343,46 @@ void TestCsvParser::testUnicode()
     QVERIFY(t.at(0).at(1) == "2ś");
     QVERIFY(t.at(0).at(2) == "3śAż");
     QVERIFY(t.at(0).at(3) == "żac");
+}
+
+void TestCsvParser::testCodec()
+{
+    // Verify setting codec works and is returned correctly
+    QFETCH(QString, codecName);
+    QFETCH(QStringConverter::Encoding, expectedEncoding);
+
+    parser->setCodec(codecName);
+    QCOMPARE(parser->getCodec(), expectedEncoding);
+}
+
+void TestCsvParser::testCodec_data()
+{
+    QTest::addColumn<QString>("codecName");
+    QTest::addColumn<QStringConverter::Encoding>("expectedEncoding");
+
+    QTest::newRow("UTF-8") << "UTF-8" << QStringConverter::Utf8;
+    QTest::newRow("UTF-16") << "UTF-16" << QStringConverter::Utf16;
+    QTest::newRow("UTF-16LE") << "UTF-16LE" << QStringConverter::Utf16LE;
+    QTest::newRow("Utf16LE") << "Utf16LE" << QStringConverter::Utf16LE;
+    QTest::newRow("UTF-32") << "UTF-32" << QStringConverter::Utf32;
+    QTest::newRow("Utf32") << "Utf32" << QStringConverter::Utf32;
+    QTest::newRow("UTF-32BE") << "UTF-32BE" << QStringConverter::Utf32BE;
+    QTest::newRow("Utf32BE") << "Utf32BE" << QStringConverter::Utf32BE;
+    QTest::newRow("UTF-32LE") << "UTF-32LE" << QStringConverter::Utf32LE;
+    QTest::newRow("Utf32LE") << "Utf32LE" << QStringConverter::Utf32LE;
+    QTest::newRow("ISO-8859-1") << "ISO-8859-1" << QStringConverter::Latin1;
+    QTest::newRow("Latin1") << "Latin1" << QStringConverter::Latin1;
+}
+
+void TestCsvParser::testUtf16()
+{
+    writeToFile("café,naïve,résumé", QStringConverter::Utf16);
+
+    parser->setCodec("UTF-16");
+    QVERIFY(parser->parse(file.data()));
+    t = parser->getCsvTable();
+    QVERIFY(t.size() == 1);
+    QCOMPARE(t.at(0).at(0), QString("café"));
+    QCOMPARE(t.at(0).at(1), QString("naïve"));
+    QCOMPARE(t.at(0).at(2), QString("résumé"));
 }

@@ -42,7 +42,12 @@ AutoTypePlatformX11::AutoTypePlatformX11()
     if (auto* native = qGuiApp->nativeInterface<QNativeInterface::QX11Application>()) {
         m_dpy = XOpenDisplay(XDisplayString(native->display()));
         m_rootWindow = DefaultRootWindow(native->display());
+    } else {
+        qWarning("Auto-Type: Unable to connect to X server, Auto-Type is disabled.");
+        return;
     }
+
+    Q_ASSERT(m_dpy);
 
     m_atomWmState = XInternAtom(m_dpy, "WM_STATE", True);
     m_atomWmName = XInternAtom(m_dpy, "WM_NAME", True);
@@ -67,6 +72,10 @@ AutoTypePlatformX11::AutoTypePlatformX11()
 
 bool AutoTypePlatformX11::isAvailable()
 {
+    if (!m_loaded) {
+        return false;
+    }
+
     int ignore;
 
     if (!XQueryExtension(m_dpy, "XInputExtension", &ignore, &ignore, &ignore)) {
@@ -89,8 +98,10 @@ void AutoTypePlatformX11::unload()
         m_xkb = nullptr;
     }
 
-    XCloseDisplay(m_dpy);
-    m_dpy = nullptr;
+    if (m_dpy) {
+        XCloseDisplay(m_dpy);
+        m_dpy = nullptr;
+    }
 
     m_loaded = false;
 }

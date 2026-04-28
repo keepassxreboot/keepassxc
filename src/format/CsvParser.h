@@ -48,6 +48,7 @@ public:
     int getCsvCols() const;
     QString getStatus() const;
     CsvTable getCsvTable() const;
+    QStringConverter::Encoding getCodec() const;
 
 protected:
     CsvTable m_table;

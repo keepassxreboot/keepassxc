@@ -52,12 +52,14 @@
 #include "cli/RemoveGroup.h"
 #include "cli/Search.h"
 #include "cli/Show.h"
+#include "cli/TextStream.h"
 #include "cli/Utils.h"
 
 #include <QClipboard>
 #include <QSignalSpy>
 #include <QTest>
 #include <QtConcurrent>
+#include <qglobal.h>
 #include <zxcvbn.h>
 
 QTEST_MAIN(TestCli)
@@ -130,10 +132,6 @@ void TestCli::cleanup()
     m_keyFileProtectedDbFile.reset();
     m_keyFileProtectedNoPasswordDbFile.reset();
     m_yubiKeyProtectedDbFile.reset();
-
-    Utils::STDOUT.setDevice(nullptr);
-    Utils::STDERR.setDevice(nullptr);
-    Utils::STDIN.setDevice(nullptr);
 }
 
 void TestCli::cleanupTestCase()
@@ -2341,6 +2339,42 @@ void TestCli::testNonAscii()
     QByteArray password = process.readLine();
     QCOMPARE(QString::fromUtf8(password).trimmed(),
              QString::fromUtf8("\xf0\x9f\x9a\x97\xf0\x9f\x90\x8e\xf0\x9f\x94\x8b\xf0\x9f\x93\x8e"));
+}
+
+void TestCli::testTextStream()
+{
+    QFETCH(QString, codecName);
+    QFETCH(QStringConverter::Encoding, expectedEncoding);
+
+    // Set codec override via env var
+    qputenv("ENCODING_OVERRIDE", codecName.toLatin1());
+
+    TextStream stream;
+    QCOMPARE(stream.encoding(), expectedEncoding);
+
+    qunsetenv("ENCODING_OVERRIDE");
+}
+
+void TestCli::testTextStream_data()
+{
+    QTest::addColumn<QString>("codecName");
+    QTest::addColumn<QStringConverter::Encoding>("expectedEncoding");
+
+    QTest::newRow("UTF-8") << "UTF-8" << QStringConverter::Utf8;
+    QTest::newRow("UTF-16") << "UTF-16" << QStringConverter::Utf16;
+    QTest::newRow("UTF-16LE") << "UTF-16LE" << QStringConverter::Utf16LE;
+    QTest::newRow("Utf16LE") << "Utf16LE" << QStringConverter::Utf16LE;
+    QTest::newRow("UTF-32") << "UTF-32" << QStringConverter::Utf32;
+    QTest::newRow("Utf32") << "Utf32" << QStringConverter::Utf32;
+    QTest::newRow("UTF-32BE") << "UTF-32BE" << QStringConverter::Utf32BE;
+    QTest::newRow("Utf32BE") << "Utf32BE" << QStringConverter::Utf32BE;
+    QTest::newRow("UTF-32LE") << "UTF-32LE" << QStringConverter::Utf32LE;
+    QTest::newRow("Utf32LE") << "Utf32LE" << QStringConverter::Utf32LE;
+    QTest::newRow("ISO-8859-1") << "ISO-8859-1" << QStringConverter::Latin1;
+    QTest::newRow("Latin1") << "Latin1" << QStringConverter::Latin1;
+    QTest::newRow("Windows-850") << "Windows-850" << QStringConverter::System;
+    QTest::newRow("Windows-1252") << "Windows-1252" << QStringConverter::System;
+    QTest::newRow("System") << "System" << QStringConverter::System;
 }
 
 void TestCli::testCommandParsing_data()

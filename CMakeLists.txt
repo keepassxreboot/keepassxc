@@ -492,9 +492,14 @@ endif()
 
 # Find zxcvbn or use the bundled version
 find_library(ZXCVBN_LIBRARIES zxcvbn)
-if(NOT ZXCVBN_LIBRARIES)
+find_path(ZXCVBN_INCLUDE_DIR zxcvbn.h PATH_SUFFIXES zxcvbn)
+if(NOT ZXCVBN_LIBRARIES OR NOT ZXCVBN_INCLUDE_DIR)
+    message(STATUS "Using internal built zxcvbn library")
     add_subdirectory(src/thirdparty/zxcvbn)
     set(ZXCVBN_LIBRARIES zxcvbn)
+else()
+    message(STATUS "Using system zxcvbn: ${ZXCVBN_LIBRARIES}")
+    include_directories(SYSTEM ${ZXCVBN_INCLUDE_DIR})
 endif()
 
 # Add KeePassXC sources and tests

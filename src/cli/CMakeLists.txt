@@ -67,10 +67,6 @@ install(TARGETS keepassxc-cli
 if(WIN32)
     target_sources(keepassxc-cli
         PRIVATE keepassxc-cli.exe.manifest)
-
-#    install(CODE "include(BundleUtilities)
-#                  fixup_bundle(\"\${CMAKE_INSTALL_PREFIX}/keepassxc-cli.exe\" \"\" \"\")"
-#            COMPONENT Runtime)
 endif()
 
 if(APPLE AND WITH_APP_BUNDLE)

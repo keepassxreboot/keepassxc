@@ -93,37 +93,16 @@ void TextStream::detectCodec()
 
     codecName = env.value("ENCODING_OVERRIDE", codecName);
 
+    // Default to UTF-8, allow override via environment variable if set to valid codec name
+    // Qt doesn't recognize Windows code pages, so explicitly set codec to System for them
     QStringConverter::Encoding codec = QStringConverter::Utf8;
-    if (codecName.toLatin1().compare(QByteArray("UTF-8"), Qt::CaseInsensitive) == 0
-        || codecName.toLatin1().compare(QByteArray("Utf8"), Qt::CaseInsensitive) == 0) {
-        codec = QStringConverter::Utf8;
-    } else if (codecName.toLatin1().compare(QByteArray("UTF-16"), Qt::CaseInsensitive) == 0
-               || codecName.toLatin1().compare(QByteArray("Utf16"), Qt::CaseInsensitive) == 0) {
-        codec = QStringConverter::Utf16;
-    } else if (codecName.toLatin1().compare(QByteArray("UTF-16BE"), Qt::CaseInsensitive) == 0
-               || codecName.toLatin1().compare(QByteArray("Utf16BE"), Qt::CaseInsensitive) == 0) {
-        codec = QStringConverter::Utf16BE;
-    } else if (codecName.toLatin1().compare(QByteArray("UTF-16LE"), Qt::CaseInsensitive) == 0
-               || codecName.toLatin1().compare(QByteArray("Utf16LE"), Qt::CaseInsensitive) == 0) {
-        codec = QStringConverter::Utf16LE;
-    } else if (codecName.toLatin1().compare(QByteArray("UTF-32"), Qt::CaseInsensitive) == 0
-               || codecName.toLatin1().compare(QByteArray("Utf32"), Qt::CaseInsensitive) == 0) {
-        codec = QStringConverter::Utf32;
-    } else if (codecName.toLatin1().compare(QByteArray("UTF-32BE"), Qt::CaseInsensitive) == 0
-               || codecName.toLatin1().compare(QByteArray("Utf32BE"), Qt::CaseInsensitive) == 0) {
-        codec = QStringConverter::Utf32BE;
-    } else if (codecName.toLatin1().compare(QByteArray("UTF-32LE"), Qt::CaseInsensitive) == 0
-               || codecName.toLatin1().compare(QByteArray("Utf32LE"), Qt::CaseInsensitive) == 0) {
-        codec = QStringConverter::Utf32LE;
-    } else if (codecName.toLatin1().compare(QByteArray("ISO 8859-1"), Qt::CaseInsensitive) == 0
-               || codecName.toLatin1().compare(QByteArray("Latin1"), Qt::CaseInsensitive) == 0) {
-        codec = QStringConverter::Latin1;
+    auto encoding = QStringConverter::encodingForName(codecName.toLocal8Bit());
+    if (encoding) {
+        codec = *encoding;
     } else if (codecName.toLatin1().compare(QByteArray("Windows-850"), Qt::CaseInsensitive) == 0
                || codecName.toLatin1().compare(QByteArray("Windows-1252"), Qt::CaseInsensitive) == 0
                || codecName.toLatin1().compare(QByteArray("System"), Qt::CaseInsensitive) == 0) {
         codec = QStringConverter::System;
-    } else {
-        return;
     }
 
     setEncoding(codec);
