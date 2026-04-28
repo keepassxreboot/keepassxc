@@ -48,7 +48,6 @@ set(core_SOURCES
         core/Totp.cpp
         core/Translator.cpp
         cli/Utils.cpp
-        cli/TextStream.cpp
         crypto/Crypto.cpp
         crypto/CryptoHash.cpp
         crypto/Random.cpp

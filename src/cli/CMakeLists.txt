@@ -13,7 +13,23 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-set(cli_SOURCES
+# text_stream library
+add_library(text_stream STATIC TextStream.cpp)
+target_link_libraries(text_stream PUBLIC Qt6::Core)
+
+# line_reader library
+add_library(line_reader STATIC LineReader.cpp)
+target_link_libraries(line_reader PUBLIC Qt6::Core)
+find_package(Readline MODULE)
+if(READLINE_FOUND)
+    target_compile_definitions(line_reader PRIVATE "USE_READLINE")
+    target_link_libraries(line_reader PRIVATE ${Readline_LIBRARY})
+else()
+    target_link_libraries(line_reader PRIVATE text_stream)
+endif()
+
+# cli library
+add_library(cli STATIC
         Add.cpp
         AddGroup.cpp
         Analyze.cpp
@@ -44,21 +60,13 @@ set(cli_SOURCES
         Search.cpp
         Show.cpp)
 
-add_library(cli STATIC ${cli_SOURCES})
-target_link_libraries(cli ${ZXCVBN_LIBRARIES} Qt6::Core)
-
-find_package(Readline)
-
-if (READLINE_FOUND)
-    target_compile_definitions(cli PUBLIC USE_READLINE)
-    target_link_libraries(cli ${Readline_LIBRARY})
-endif()
+target_link_libraries(cli
+        PRIVATE ${ZXCVBN_LIBRARIES} text_stream
+        PUBLIC Qt6::Core)
 
 add_executable(keepassxc-cli keepassxc-cli.cpp)
 target_link_libraries(keepassxc-cli
-        ${GPGERROR_LIBRARIES}
-        cli
-        keepassxc_core)
+        PRIVATE ${GPGERROR_LIBRARIES} cli keepassxc_core line_reader)
 
 install(TARGETS keepassxc-cli
         BUNDLE DESTINATION . COMPONENT Runtime

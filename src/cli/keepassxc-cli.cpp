@@ -19,8 +19,8 @@
 #include <QFileInfo>
 
 #include "Command.h"
+#include "LineReader.h"
 #include "Open.h"
-#include "TextStream.h"
 #include "Utils.h"
 #include "config-keepassx.h"
 #include "core/Bootstrap.h"
@@ -31,83 +31,6 @@
 
 #if defined(WITH_ASAN) && defined(WITH_LSAN)
 #include <sanitizer/lsan_interface.h>
-#endif
-
-#if defined(USE_READLINE)
-#include <readline/history.h>
-#include <readline/readline.h>
-#endif
-
-class LineReader
-{
-public:
-    virtual ~LineReader() = default;
-    virtual QString readLine(QString prompt) = 0;
-    virtual bool isFinished() = 0;
-};
-
-class SimpleLineReader : public LineReader
-{
-public:
-    SimpleLineReader()
-        : inStream(stdin, QIODevice::ReadOnly)
-        , outStream(stdout, QIODevice::WriteOnly)
-        , finished(false)
-    {
-    }
-
-    QString readLine(QString prompt) override
-    {
-        outStream << prompt;
-        outStream.flush();
-        QString result = inStream.readLine();
-        if (result.isNull()) {
-            finished = true;
-        }
-        return result;
-    }
-
-    bool isFinished() override
-    {
-        return finished;
-    }
-
-private:
-    TextStream inStream;
-    TextStream outStream;
-    bool finished;
-};
-
-#if defined(USE_READLINE)
-class ReadlineLineReader : public LineReader
-{
-public:
-    ReadlineLineReader()
-        : finished(false)
-    {
-    }
-
-    QString readLine(QString prompt) override
-    {
-        char* result = readline(prompt.toStdString().c_str());
-        if (!result) {
-            finished = true;
-            return {};
-        }
-        add_history(result);
-        QString qstr(result);
-        free(result);
-        return qstr;
-    }
-
-    bool isFinished() override
-    {
-        return finished;
-    }
-
-private:
-    bool finished;
-};
 #endif
 
 int enterInteractiveMode(const QStringList& arguments)
@@ -123,16 +46,9 @@ int enterInteractiveMode(const QStringList& arguments)
         return EXIT_FAILURE;
     };
 
-    QScopedPointer<LineReader> reader;
-#if defined(USE_READLINE)
-    reader.reset(new ReadlineLineReader());
-#else
-    reader.reset(new SimpleLineReader());
-#endif
-
+    LineReader reader;
     QSharedPointer<Database> currentDatabase(openCmd.currentDatabase);
 
-    QString command;
     while (true) {
         QString prompt;
         if (currentDatabase) {
@@ -142,8 +58,8 @@ int enterInteractiveMode(const QStringList& arguments)
             }
         }
         prompt += "> ";
-        command = reader->readLine(prompt);
-        if (reader->isFinished()) {
+        QString command = reader.readLine(prompt);
+        if (reader.isFinished()) {
             break;
         }
 
