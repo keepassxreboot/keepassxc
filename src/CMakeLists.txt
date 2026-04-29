@@ -338,7 +338,6 @@ target_link_libraries(keepassxc_core
         ${ZXCVBN_LIBRARIES}
         ${ZLIB_LIBRARIES}
         ${MINIZIP_LIBRARIES}
-        ${KEYUTILS_LIBRARIES}
         ${thirdparty_LIBRARIES})
 
 # GUI Library Definition
@@ -366,7 +365,9 @@ if(HAIKU)
 endif()
 if(UNIX AND NOT APPLE)
     target_link_libraries(keepassxc_core Qt6::DBus ${LIBUSB_LIBRARIES})
-    target_include_directories(keepassxc_gui PRIVATE ${Qt5Gui_PRIVATE_INCLUDE_DIRS})
+    if("${CMAKE_SYSTEM}" MATCHES "Linux")
+        target_link_libraries(keepassxc_core ${KEYUTILS_LIBRARIES})
+    endif()
     if(WITH_X11)
         target_link_libraries(keepassxc_gui X11)
     endif()
