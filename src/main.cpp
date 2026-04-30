@@ -75,8 +75,10 @@ int main(int argc, char** argv)
 
     // HACK: Prevent long-running threads from deadlocking the program with only 1 CPU
     // See https://github.com/keepassxreboot/keepassxc/issues/10391
-    if (QThreadPool::globalInstance()->maxThreadCount() < 2) {
-        QThreadPool::globalInstance()->setMaxThreadCount(2);
+    // HACK: increased to a minimum of 3 threads
+    // See https://github.com/keepassxreboot/keepassxc/issues/12909
+    if (QThreadPool::globalInstance()->maxThreadCount() < 3) {
+        QThreadPool::globalInstance()->setMaxThreadCount(3);
     }
 
     QCommandLineParser parser;
