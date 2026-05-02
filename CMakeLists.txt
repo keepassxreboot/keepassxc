@@ -251,6 +251,8 @@ add_gcc_compiler_flags("-Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long")
 add_gcc_compiler_flags("-Wformat=2 -Wmissing-format-attribute")
 add_gcc_compiler_flags("-fvisibility=hidden")
 add_gcc_compiler_cxxflags("-fvisibility-inlines-hidden")
+# Qt6 marks these as errors with newer compilers. Treat them as warnings for now.
+check_add_gcc_compiler_cxxflag("-Wno-error=sfinae-incomplete" SFINAE_INCOMPLETE_FLAG)
 
 if(CMAKE_BUILD_TYPE_LOWER STREQUAL "debug")
     check_add_gcc_compiler_flag("-Wshadow-compatible-local")
