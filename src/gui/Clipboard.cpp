@@ -103,7 +103,20 @@ void Clipboard::clearCopiedText()
     if (!m_lastCopied.isEmpty()
         && (m_lastCopied == clipboard->text(QClipboard::Clipboard)
             || m_lastCopied == clipboard->text(QClipboard::Selection))) {
-        setText("", false);
+#ifdef Q_OS_UNIX
+        auto* mime = new QMimeData;
+        mime->setData("x-kde-passwordManagerHint", QByteArrayLiteral("secret"));
+        clipboard->setMimeData(mime, QClipboard::Clipboard);
+
+        if (clipboard->supportsSelection()) {
+            auto* selectionMime = new QMimeData;
+            selectionMime->setData("x-kde-passwordManagerHint", QByteArrayLiteral("secret"));
+            clipboard->setMimeData(selectionMime, QClipboard::Selection);
+        }
+#else
+        clipboard->clear(QClipboard::Clipboard);
+        clipboard->clear(QClipboard::Selection);
+#endif
 #ifdef Q_OS_UNIX
         // Gnome Wayland doesn't let apps modify the clipboard when not in focus, so force clear
         if (QProcessEnvironment::systemEnvironment().contains("WAYLAND_DISPLAY")
