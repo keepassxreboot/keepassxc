@@ -103,11 +103,12 @@ void Clipboard::clearCopiedText()
     if (!m_lastCopied.isEmpty()
         && (m_lastCopied == clipboard->text(QClipboard::Clipboard)
             || m_lastCopied == clipboard->text(QClipboard::Selection))) {
-        clipboard->clear(QClipboard::Clipboard);
-        clipboard->clear(QClipboard::Selection);
+        setText("", false);
 #ifdef Q_OS_UNIX
         // Gnome Wayland doesn't let apps modify the clipboard when not in focus, so force clear
-        if (QProcessEnvironment::systemEnvironment().contains("WAYLAND_DISPLAY")) {
+        if (QProcessEnvironment::systemEnvironment().contains("WAYLAND_DISPLAY")
+            && (m_lastCopied == clipboard->text(QClipboard::Clipboard)
+                || m_lastCopied == clipboard->text(QClipboard::Selection))) {
             QProcess::startDetached("wl-copy", {"-c"});
         }
 #endif
