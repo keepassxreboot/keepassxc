@@ -39,6 +39,8 @@ QTEST_GUILESS_MAIN(TestAutoType)
 void TestAutoType::initTestCase()
 {
     QVERIFY(Crypto::init());
+    QLocale::setDefault(QLocale::c());
+
     // Create temporary config file
     Config::createConfigFromFile(TemporaryFile::createTempConfigFile(), {});
     config()->set(Config::AutoTypeDelay, 1);

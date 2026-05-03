@@ -45,6 +45,7 @@ void TestBrowser::initTestCase()
     QVERIFY(Crypto::init());
     m_browserService = browserService();
     browserSettings()->setBestMatchOnly(false);
+    QLocale::setDefault(QLocale::c());
 }
 
 void TestBrowser::init()

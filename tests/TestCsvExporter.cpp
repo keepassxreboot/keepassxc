@@ -42,6 +42,7 @@ void TestCsvExporter::init()
 void TestCsvExporter::initTestCase()
 {
     Crypto::init();
+    QLocale::setDefault(QLocale::c());
 }
 
 void TestCsvExporter::cleanup()

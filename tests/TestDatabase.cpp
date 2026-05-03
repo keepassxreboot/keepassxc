@@ -42,6 +42,7 @@ static QString dbFileName = QStringLiteral(KEEPASSX_TEST_DATA_DIR).append("/NewD
 void TestDatabase::initTestCase()
 {
     QVERIFY(Crypto::init());
+    QLocale::setDefault(QLocale::c());
 }
 
 void TestDatabase::testOpen()

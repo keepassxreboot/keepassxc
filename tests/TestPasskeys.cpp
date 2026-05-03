@@ -117,6 +117,7 @@ const QJsonArray validPubKeyCredParams = {
 void TestPasskeys::initTestCase()
 {
     QVERIFY(Crypto::init());
+    QLocale::setDefault(QLocale::c());
 }
 
 void TestPasskeys::init()

@@ -1,4 +1,5 @@
 /*
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2019 Aetf <aetf@unlimitedcodeworks.xyz>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -178,6 +179,8 @@ void TestGuiFdoSecrets::initTestCase()
     // set a fake dbus client all the time so we can freely access DBusMgr anywhere
     m_client.reset(new FakeClient(m_plugin->dbus().data()));
     m_plugin->dbus()->overrideClient(m_client);
+
+    QLocale::setDefault(QLocale::c());
 }
 
 // Every test starts with opening the temp database

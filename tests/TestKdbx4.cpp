@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -114,6 +114,11 @@ void TestKdbx4AesKdf::initTestCaseImpl()
 }
 
 Q_DECLARE_METATYPE(QUuid)
+
+void TestKdbx4Format::initTestCase()
+{
+    QLocale::setDefault(QLocale::c());
+}
 
 void TestKdbx4Format::init()
 {

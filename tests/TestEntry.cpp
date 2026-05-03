@@ -30,6 +30,7 @@ QTEST_GUILESS_MAIN(TestEntry)
 void TestEntry::initTestCase()
 {
     QVERIFY(Crypto::init());
+    QLocale::setDefault(QLocale::c());
 }
 
 void TestEntry::testHistoryItemDeletion()

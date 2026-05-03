@@ -1,4 +1,5 @@
 /*
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2017 Toni Spets <toni.spets@iki.fi>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -27,6 +28,7 @@ QTEST_GUILESS_MAIN(TestOpenSSHKey)
 void TestOpenSSHKey::initTestCase()
 {
     QVERIFY(Crypto::init());
+    QLocale::setDefault(QLocale::c());
 }
 
 void TestOpenSSHKey::testParse()

@@ -1,4 +1,5 @@
 /*
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2014 Florian Geyer <blueice@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -23,6 +24,11 @@
 #include <QTest>
 
 QTEST_GUILESS_MAIN(TestEntrySearcher)
+
+void TestEntrySearcher::initTestCase()
+{
+    QLocale::setDefault(QLocale::c());
+}
 
 void TestEntrySearcher::init()
 {

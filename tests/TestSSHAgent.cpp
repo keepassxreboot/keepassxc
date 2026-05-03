@@ -31,6 +31,7 @@ QTEST_GUILESS_MAIN(TestSSHAgent)
 void TestSSHAgent::initTestCase()
 {
     QVERIFY(Crypto::init());
+    QLocale::setDefault(QLocale::c());
 
     // Create temporary config file
     Config::createConfigFromFile(TemporaryFile::createTempConfigFile(), {});

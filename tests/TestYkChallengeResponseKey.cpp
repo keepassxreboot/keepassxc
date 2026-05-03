@@ -1,6 +1,6 @@
 /*
+**  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2014 Kyle Manna <kyle@kylemanna.com>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -34,6 +34,7 @@ void TestYubiKeyChallengeResponse::initTestCase()
 {
     // crypto subsystem needs to be initialized for YubiKey testing
     QVERIFY(Crypto::init());
+    QLocale::setDefault(QLocale::c());
 
     if (!YubiKey::instance()->isInitialized()) {
         QSKIP("Unable to initialize YubiKey interface.");

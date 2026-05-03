@@ -22,6 +22,11 @@
 
 QTEST_GUILESS_MAIN(TestBase32)
 
+void TestBase32::initTestCase()
+{
+    QLocale::setDefault(QLocale::c());
+}
+
 void TestBase32::testDecode()
 {
     // 3 quanta, all upper case + padding

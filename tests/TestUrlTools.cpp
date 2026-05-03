@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@ QTEST_GUILESS_MAIN(TestUrlTools)
 void TestUrlTools::initTestCase()
 {
     m_urlTools = urlTools();
+    QLocale::setDefault(QLocale::c());
 }
 
 void TestUrlTools::init()

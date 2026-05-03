@@ -27,6 +27,11 @@ QTEST_GUILESS_MAIN(TestConfig)
 
 const QString oldTrueConfigPath = QString(KEEPASSX_TEST_DATA_DIR).append("/OutdatedConfig.ini");
 
+void TestConfig::initTestCase()
+{
+    QLocale::setDefault(QLocale::c());
+}
+
 // upgrade config file with deprecated settings (all of which are set to non-default values)
 void TestConfig::testUpgrade()
 {

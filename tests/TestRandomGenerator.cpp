@@ -1,4 +1,6 @@
+
 /*
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2013 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -23,6 +25,11 @@
 #include <QTest>
 
 QTEST_GUILESS_MAIN(TestRandomGenerator)
+
+void TestRandomGenerator::initTestCase()
+{
+    QLocale::setDefault(QLocale::c());
+}
 
 void TestRandomGenerator::testArray()
 {

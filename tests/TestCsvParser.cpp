@@ -35,6 +35,11 @@ void TestCsvParser::writeToFile(const QString& contents, QStringConverter::Encod
     file->close();
 }
 
+void TestCsvParser::initTestCase()
+{
+    QLocale::setDefault(QLocale::c());
+}
+
 void TestCsvParser::init()
 {
     file.reset(new QTemporaryFile());

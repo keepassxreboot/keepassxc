@@ -1,4 +1,5 @@
 /*
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2026 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -42,6 +43,7 @@ void TestKeePass1Reader::initTestCase()
     m_db = reader.readDatabase(filename, "masterpw", nullptr);
     QVERIFY(m_db);
     QVERIFY(!reader.hasError());
+    QLocale::setDefault(QLocale::c());
 }
 
 void TestKeePass1Reader::testBasic()

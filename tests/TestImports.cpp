@@ -36,6 +36,7 @@ QTEST_GUILESS_MAIN(TestImports)
 void TestImports::initTestCase()
 {
     QVERIFY(Crypto::init());
+    QLocale::setDefault(QLocale::c());
 }
 
 void TestImports::testOPUX()
