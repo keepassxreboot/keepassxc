@@ -33,9 +33,7 @@
 #include "gui/entry/EntryModel.h"
 #include "modeltest.h"
 
-const auto restoreDefaultLocale = qScopeGuard([prior = QLocale::c()] {
-    QLocale::setDefault(prior);
-});
+const auto restoreDefaultLocale = qScopeGuard([prior = QLocale::c()] { QLocale::setDefault(prior); });
 
 QTEST_GUILESS_MAIN(TestEntryModel)
 
