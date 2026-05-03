@@ -103,7 +103,7 @@ void Clipboard::clearCopiedText()
     if (!m_lastCopied.isEmpty()
         && (m_lastCopied == clipboard->text(QClipboard::Clipboard)
             || m_lastCopied == clipboard->text(QClipboard::Selection))) {
-#ifdef Q_OS_UNIX
+#ifdef Q_OS_LINUX
         auto* mime = new QMimeData;
         mime->setData("x-kde-passwordManagerHint", QByteArrayLiteral("secret"));
         clipboard->setMimeData(mime, QClipboard::Clipboard);
