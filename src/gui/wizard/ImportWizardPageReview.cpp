@@ -254,6 +254,7 @@ QSharedPointer<Database> ImportWizardPageReview::importRemote(const QString& dow
 
     if (!result.success) {
         m_ui->messageWidget->showMessage(result.errorMessage, KMessageWidget::Error, -1);
+        return {};
     }
 
     auto key = QSharedPointer<CompositeKey>::create();
@@ -267,6 +268,7 @@ QSharedPointer<Database> ImportWizardPageReview::importRemote(const QString& dow
             key->addKey(fileKey);
         } else {
             m_ui->messageWidget->showMessage(tr("Could not load key file."), KMessageWidget::Error, -1);
+            return {};
         }
     }
 
@@ -276,6 +278,7 @@ QSharedPointer<Database> ImportWizardPageReview::importRemote(const QString& dow
     if (!remoteDb->open(result.filePath, key, &error)) {
         m_ui->messageWidget->showMessage(
             tr("Could not open remote database. Password or key file may be incorrect."), KMessageWidget::Error, -1);
+        return {};
     }
 
     return remoteDb;
