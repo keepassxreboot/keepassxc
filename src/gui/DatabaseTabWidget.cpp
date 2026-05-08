@@ -760,6 +760,12 @@ void DatabaseTabWidget::unlockDatabaseInDialog(DatabaseWidget* dbWidget,
                                                const QString& filePath)
 {
     m_databaseOpenDialog->clearForms();
+
+    // Keep the requested targets outside the dialog because the dialog can be
+    // cleared while an external unlock is still in progress.
+    m_databaseOpenDialogTargets.clear();
+    m_databaseOpenDialogTargets.append(dbWidget);
+
     m_databaseOpenDialog->setIntent(intent);
     m_databaseOpenDialog->setTarget(dbWidget, filePath);
     displayUnlockDialog();
@@ -774,13 +780,15 @@ void DatabaseTabWidget::unlockDatabaseInDialog(DatabaseWidget* dbWidget,
 void DatabaseTabWidget::unlockAnyDatabaseInDialog(DatabaseOpenDialog::Intent intent)
 {
     m_databaseOpenDialog->clearForms();
+    m_databaseOpenDialogTargets.clear();
     m_databaseOpenDialog->setIntent(intent);
 
-    // add a tab to the dialog for each open unlocked database
+    // add a tab to the dialog for each open locked database
     for (int i = 0, c = count(); i < c; ++i) {
         auto* dbWidget = databaseWidgetFromIndex(i);
         if (dbWidget && dbWidget->isLocked()) {
             m_databaseOpenDialog->addDatabaseTab(dbWidget);
+            m_databaseOpenDialogTargets.append(dbWidget);
         }
     }
     // default to the current tab
@@ -836,6 +844,7 @@ void DatabaseTabWidget::handleDatabaseUnlockDialogFinished(bool accepted, Databa
 
     // signal other objects that the dialog finished
     emit databaseUnlockDialogFinished(accepted, dbWidget);
+    m_databaseOpenDialogTargets.clear();
 }
 
 /**
@@ -904,7 +913,16 @@ void DatabaseTabWidget::emitDatabaseLockChanged()
     } else {
         emit databaseUnlocked(dbWidget);
         m_databaseOpenInProgress = false;
+
+        if (m_databaseOpenDialog->isVisible() && isDatabaseOpenDialogTarget(dbWidget)) {
+            m_databaseOpenDialog->completeExternalUnlock(dbWidget);
+        }
     }
+}
+
+bool DatabaseTabWidget::isDatabaseOpenDialogTarget(DatabaseWidget* dbWidget) const
+{
+    return dbWidget && m_databaseOpenDialogTargets.contains(dbWidget);
 }
 
 void DatabaseTabWidget::performGlobalAutoType(const QString& search)

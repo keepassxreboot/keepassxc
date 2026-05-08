@@ -200,6 +200,26 @@ QSharedPointer<Database> DatabaseOpenDialog::database() const
     return m_db;
 }
 
+void DatabaseOpenDialog::completeExternalUnlock(DatabaseWidget* dbWidget)
+{
+    if (!dbWidget) {
+        return;
+    }
+
+    hide();
+
+    // The database is already unlocked, so do not route this completion back through
+    // DatabaseWidget::unlockDatabase() and replace the database a second time.
+    if (m_currentDbWidget) {
+        disconnect(this, &DatabaseOpenDialog::dialogFinished, m_currentDbWidget, nullptr);
+    }
+
+    emit dialogFinished(true, dbWidget);
+    clearForms();
+
+    QDialog::done(QDialog::Accepted);
+}
+
 void DatabaseOpenDialog::done(int result)
 {
     hide();

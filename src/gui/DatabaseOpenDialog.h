@@ -52,6 +52,7 @@ public:
     Intent intent() const;
     QSharedPointer<Database> database() const;
     void clearForms();
+    void completeExternalUnlock(DatabaseWidget* dbWidget);
     void showMessage(const QString& text, MessageWidget::MessageType type, int autoHideTimeout);
 
 signals:

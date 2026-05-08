@@ -610,6 +610,15 @@ namespace FdoSecrets
             m_unlockingAnyDatabase = false;
             m_unlockingDb.remove(dbWidget);
         } else {
+            // The database may have been unlocked externally while the unlock dialog
+            // was open, in which case no future databaseUnlocked signal will arrive.
+            if (dbWidget && !dbWidget->isLocked()) {
+                emit doneUnlockDatabaseInDialog(true, dbWidget);
+                m_unlockingAnyDatabase = false;
+                m_unlockingDb.remove(dbWidget);
+                return;
+            }
+
             // delay the done signal to when the database is actually done with unlocking
             // this is a oneshot connection to prevent superfluous signals
             auto conn = connect(dbWidget, &DatabaseWidget::databaseUnlocked, this, [dbWidget, this]() {

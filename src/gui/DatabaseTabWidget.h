@@ -120,10 +120,12 @@ private:
     void updateLastDatabases(const QSharedPointer<Database>& database);
     bool warnOnExport();
     void displayUnlockDialog();
+    bool isDatabaseOpenDialogTarget(DatabaseWidget* dbWidget) const;
 
     QPointer<DatabaseWidgetStateSync> m_dbWidgetStateSync;
     QPointer<DatabaseWidget> m_dbWidgetPendingLock;
     QPointer<DatabaseOpenDialog> m_databaseOpenDialog;
+    QList<QPointer<DatabaseWidget>> m_databaseOpenDialogTargets;
     QPointer<ImportWizard> m_importWizard;
     QTimer m_lockDelayTimer;
     bool m_databaseOpenInProgress;
