@@ -141,7 +141,7 @@ bool HashedBlockStream::readHashedBlock()
     }
 
     m_blockSize = Endian::readSizedInt<qint32>(m_baseDevice, ByteOrder, &ok);
-    if (!ok || m_blockSize < 0) {
+    if (!ok || m_blockSize < 0 || m_blockSize > 64 * 1024 * 1024) {
         m_error = true;
         setErrorString("Invalid block size.");
         return false;

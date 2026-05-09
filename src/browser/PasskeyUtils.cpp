@@ -356,8 +356,36 @@ ExtensionResult PasskeyUtils::buildExtensionData(QJsonObject& extensionObject) c
 // Serialization order: https://w3c.github.io/webauthn/#clientdatajson-serialization
 QString PasskeyUtils::buildClientDataJson(const QJsonObject& publicKey, const QString& origin, bool get) const
 {
+    // JSON-escape user-supplied strings; spec mandates field order so QJsonDocument is unsuitable
+    auto jsonEscape = [](const QString& in) {
+        QString out;
+        out.reserve(in.size());
+        for (QChar ch : in) {
+            ushort u = ch.unicode();
+            switch (u) {
+            case '\\': out.append(QStringLiteral("\\\\")); break;
+            case '"':  out.append(QStringLiteral("\\\"")); break;
+            case '\b': out.append(QStringLiteral("\\b")); break;
+            case '\f': out.append(QStringLiteral("\\f")); break;
+            case '\n': out.append(QStringLiteral("\\n")); break;
+            case '\r': out.append(QStringLiteral("\\r")); break;
+            case '\t': out.append(QStringLiteral("\\t")); break;
+            default:
+                if (u < 0x20) {
+                    out.append(QString::asprintf("\\u%04x", u));
+                } else {
+                    out.append(ch);
+                }
+                break;
+            }
+        }
+        return out;
+    };
+
     return QString("{\"type\":\"%1\",\"challenge\":\"%2\",\"origin\":\"%3\",\"crossOrigin\":false}")
-        .arg((get ? QString("webauthn.get") : QString("webauthn.create")), publicKey["challenge"].toString(), origin);
+        .arg((get ? QString("webauthn.get") : QString("webauthn.create")),
+             jsonEscape(publicKey["challenge"].toString()),
+             jsonEscape(origin));
 }
 
 QStringList PasskeyUtils::getAllowedCredentialsFromAssertionOptions(const QJsonObject& assertionOptions) const

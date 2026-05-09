@@ -140,7 +140,7 @@ bool HmacBlockStream::readHashedBlock()
         return false;
     }
     auto blockSize = Endian::bytesToSizedInt<qint32>(blockSizeBytes, ByteOrder);
-    if (blockSize < 0) {
+    if (blockSize < 0 || blockSize > 64 * 1024 * 1024) {
         m_error = true;
         setErrorString("Invalid block size.");
         return false;

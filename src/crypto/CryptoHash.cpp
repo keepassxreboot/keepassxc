@@ -66,10 +66,6 @@ void CryptoHash::addData(const QByteArray& data)
 {
     Q_D(CryptoHash);
 
-    if (data.isEmpty()) {
-        return;
-    }
-
     try {
         if (d->hmacFunction) {
             d->hmacFunction->update(reinterpret_cast<const uint8_t*>(data.data()), data.size());
