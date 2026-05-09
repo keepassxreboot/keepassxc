@@ -81,14 +81,34 @@ void BrowserHost::readProxyMessage()
         setsockopt(socketDesc, SOL_SOCKET, SO_SNDBUF, reinterpret_cast<char*>(&max), sizeof(max));
     }
 
-    QJsonParseError error;
-    auto json = QJsonDocument::fromJson(socket->readAll(), &error);
-    if (json.isNull()) {
-        qWarning() << "Failed to read proxy message: " << error.errorString();
+    // Accumulate per socket; readyRead may deliver partial or coalesced JSON
+    QByteArray& buf = m_socketBuffers[socket];
+    buf.append(socket->readAll());
+
+    if (buf.size() > BrowserShared::NATIVEMSG_MAX_LENGTH) {
+        buf.clear();
         return;
     }
 
-    emit clientMessageReceived(socket, json.object());
+    while (!buf.isEmpty()) {
+        QJsonParseError error;
+        auto json = QJsonDocument::fromJson(buf, &error);
+        if (json.isNull()) {
+            if (error.error == QJsonParseError::GarbageAtEnd && error.offset > 0) {
+                QByteArray first = buf.left(error.offset);
+                buf.remove(0, error.offset);
+                auto firstDoc = QJsonDocument::fromJson(first, &error);
+                if (!firstDoc.isNull()) {
+                    emit clientMessageReceived(socket, firstDoc.object());
+                    continue;
+                }
+            }
+            break;
+        }
+        emit clientMessageReceived(socket, json.object());
+        buf.clear();
+        break;
+    }
 }
 
 void BrowserHost::broadcastClientMessage(const QJsonObject& json)
@@ -118,4 +138,5 @@ void BrowserHost::proxyDisconnected()
 {
     auto socket = qobject_cast<QLocalSocket*>(QObject::sender());
     m_socketList.removeOne(socket);
+    m_socketBuffers.remove(socket);
 }

@@ -18,6 +18,7 @@
 #ifndef KEEPASSXC_NATIVEMESSAGINGHOST_H
 #define KEEPASSXC_NATIVEMESSAGINGHOST_H
 
+#include <QHash>
 #include <QJsonObject>
 #include <QObject>
 #include <QPointer>
@@ -54,6 +55,7 @@ private:
 private:
     QPointer<QLocalServer> m_localServer;
     QList<QLocalSocket*> m_socketList;
+    QHash<QLocalSocket*, QByteArray> m_socketBuffers;
 };
 
 #endif // KEEPASSXC_NATIVEMESSAGINGHOST_H
