@@ -33,8 +33,6 @@ EntryURLModel::EntryURLModel(QObject* parent)
 
 void EntryURLModel::setEntryAttributes(EntryAttributes* entryAttributes)
 {
-    beginResetModel();
-
     if (m_entryAttributes) {
         m_entryAttributes->disconnect(this);
     }
@@ -50,9 +48,9 @@ void EntryURLModel::setEntryAttributes(EntryAttributes* entryAttributes)
         connect(m_entryAttributes, SIGNAL(renamed(QString,QString)), SLOT(updateAttributes()));
         connect(m_entryAttributes, SIGNAL(reset()), SLOT(updateAttributes()));
         // clang-format on
+    } else {
+        clear();
     }
-
-    endResetModel();
 }
 
 QVariant EntryURLModel::data(const QModelIndex& index, int role) const
