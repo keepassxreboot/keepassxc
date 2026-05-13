@@ -24,6 +24,7 @@
 #include <QJsonObject>
 #include <QLabel>
 #include <QLineEdit>
+#include <QMenu>
 #include <QPushButton>
 #include <QTest>
 
@@ -473,4 +474,153 @@ void TestCloudSyncWidget::CloudSettingSwitchProviderRemoveOldOne()
     QVERIFY(dropboxRemotePathEdit->text().isEmpty());
     QCOMPARE(dropboxPage->isModified(), false);
     QVERIFY(!m_applyButton->isEnabled());
+}
+
+// Check that the Database > Remote Sync menu's "Trigger <Provider> Sync"
+// entry tracks the currently-configured cloud provider:
+//   * No provider configured -> no Trigger entry at all.
+//   * Nextcloud configured + Apply -> "Trigger Nextcloud Sync" appears,
+//     "Trigger Dropbox Sync" must NOT appear.
+//   * Switch to Dropbox + Apply -> "Trigger Dropbox Sync" appears,
+//     "Trigger Nextcloud Sync" must NOT appear (the previous entry was
+//     wiped along with the old provider config under the single-provider
+//     model).
+//
+// The exact string comes from MainWindow.cpp:1290 --
+//     tr("Trigger %1 Sync").arg(providerName)
+// where providerName is RemoteSyncProvider::displayName() ("Dropbox" or
+// "Nextcloud", untranslated brand identifiers).
+void TestCloudSyncWidget::CloudSettingMenuEntry()
+{
+    // The cloud-sync widget's Apply path writes to m_db's CustomData; that
+    // fires Database::modified, which DatabaseWidget connects to its own
+    // onDatabaseModified slot (DatabaseWidget.cpp:1565), and that slot calls
+    // m_remoteSettings->loadSettings() to reread. So the menu reads the
+    // post-Apply state on the next updateRemoteSyncMenuEntries call.
+    auto* menuRemoteSync = m_mainWindow->findChild<QMenu*>(QStringLiteral("menuRemoteSync"));
+    QVERIFY(menuRemoteSync);
+
+    // CRITICAL: this lambda reads the real QMenu the user sees. It does NOT
+    // call isCloudSyncAuthorized() or getCloudSyncProviderDisplayName()
+    // directly -- if a regression broke the link between those contracts
+    // and the visible menu (e.g. updateRemoteSyncMenuEntries stops being
+    // wired to aboutToShow, or it stops calling addAction), this test
+    // would fail where a contract-level test would still pass. The
+    // isVisible() filter matches what a user can actually click -- an
+    // action that's in the QMenu's action list but hidden does not appear
+    // in the popup.
+    auto hasTriggerEntryFor = [menuRemoteSync](const QString& providerDisplayName) {
+        const QString expected = QStringLiteral("Trigger %1 Sync").arg(providerDisplayName);
+        for (auto* action : menuRemoteSync->actions()) {
+            if (action->isVisible() && action->text() == expected) {
+                return true;
+            }
+        }
+        return false;
+    };
+
+    // ---- Step 1: fresh DB, no cloud sync configured ----------------------
+    // Trigger the production rebuild path by actually popping the menu --
+    // the QMenu::aboutToShow signal that MainWindow.cpp:175 wires to the
+    // (private) updateRemoteSyncMenuEntries slot fires inside popup().
+    // Same pattern as TestGui::prepareAndTriggerRemoteSync.
+    menuRemoteSync->popup({0, 0});
+    QApplication::processEvents();
+    menuRemoteSync->close();
+    // CRITICAL: neither Trigger entry must be present before any provider
+    // is configured. If isCloudSyncAuthorized returns true for an empty
+    // RemoteSettings, this fails.
+    QVERIFY(!hasTriggerEntryFor(QStringLiteral("Dropbox")));
+    QVERIFY(!hasTriggerEntryFor(QStringLiteral("Nextcloud")));
+
+    // ---- Step 2: configure Nextcloud via the cloud-sync widget + Apply --
+    auto* comboBox = m_widget->findChild<QComboBox*>(QStringLiteral("providerComboBox"));
+    auto* serverBaseUrlEdit = findInNextcloudPage<QLineEdit>(m_widget, "serverBaseUrlEdit");
+    auto* nextcloudRemotePathEdit = findInNextcloudPage<QLineEdit>(m_widget, "remotePathEdit");
+    auto* loginNameEdit = findInNextcloudPage<QLineEdit>(m_widget, "loginNameEdit");
+    auto* appPasswordEdit = findInNextcloudPage<QLineEdit>(m_widget, "appPasswordEdit");
+    auto* appPasswordGroupBox = findInNextcloudPage<QGroupBox>(m_widget, "appPasswordGroupBox");
+    QVERIFY(comboBox);
+    QVERIFY(serverBaseUrlEdit);
+    QVERIFY(nextcloudRemotePathEdit);
+    QVERIFY(loginNameEdit);
+    QVERIFY(appPasswordEdit);
+    QVERIFY(appPasswordGroupBox);
+
+    comboBox->setCurrentIndex(1);
+    QTest::keyClicks(serverBaseUrlEdit, QStringLiteral("https://cloud.example.com"));
+    QTest::keyClicks(nextcloudRemotePathEdit, QStringLiteral("/Passwords/Database.kdbx"));
+    appPasswordGroupBox->setChecked(true);
+    QTest::keyClicks(loginNameEdit, QStringLiteral("alice"));
+    QTest::keyClicks(appPasswordEdit, QStringLiteral("app-pw-123"));
+    QTRY_VERIFY(m_applyButton->isEnabled());
+    QVERIFY(m_applyButton->isVisible());
+    QTest::mouseClick(m_applyButton, Qt::LeftButton);
+
+    // Database::markAsModified starts a 150ms QTimer (Database.cpp:1074)
+    // before emitting modified(); DatabaseWidget::onDatabaseModified, the
+    // slot that reloads m_remoteSettings, runs after that signal fires.
+    // QTRY_VERIFY polls until the dbWidget actually reports the cloud-sync
+    // provider as authorized -- no fixed delay (TestGui pattern: zero
+    // qWait/qSleep usages in the entire file).
+    QTRY_VERIFY(m_dbWidget->isCloudSyncAuthorized());
+    QCOMPARE(m_dbWidget->getCloudSyncProviderDisplayName(), QStringLiteral("Nextcloud"));
+    // Pop the menu for real: aboutToShow fires from inside QMenu::popup,
+    // which is what MainWindow.cpp:175 wires to updateRemoteSyncMenuEntries.
+    menuRemoteSync->popup({0, 0});
+    QApplication::processEvents();
+    menuRemoteSync->close();
+    // CRITICAL: this is the visible menu state on the user's screen after
+    // they click Apply. Regressions caught: the Apply path not persisting
+    // an "authorized" config, dbWidget->m_remoteSettings not reloading on
+    // Database::modified, or updateRemoteSyncMenuEntries not honoring the
+    // provider's displayName.
+    QVERIFY(hasTriggerEntryFor(QStringLiteral("Nextcloud")));
+    QVERIFY(!hasTriggerEntryFor(QStringLiteral("Dropbox")));
+
+    // ---- Step 3: switch to Dropbox + Apply -------------------------------
+    comboBox->setCurrentIndex(0);
+    auto* dropboxPage = m_widget->findChild<DropboxCloudSyncPage*>(QStringLiteral("dropboxPage"));
+    auto* appKeyEdit = findInDropboxPage<QLineEdit>(m_widget, "appKeyEdit");
+    auto* dropboxRemotePathEdit = findInDropboxPage<QLineEdit>(m_widget, "remotePathEdit");
+    auto* authorizeButton = findInDropboxPage<QPushButton>(m_widget, "authorizeButton");
+    QVERIFY(dropboxPage);
+    QVERIFY(appKeyEdit);
+    QVERIFY(dropboxRemotePathEdit);
+    QVERIFY(authorizeButton);
+
+    QTest::keyClicks(appKeyEdit, QStringLiteral("test-app-key"));
+    QTest::keyClicks(dropboxRemotePathEdit, QStringLiteral("/test/path.kdbx"));
+
+    auto* loginFlow = new MockDropboxLoginFlow();
+    loginFlow->setCannedTokens(QStringLiteral("tok-123"), QStringLiteral("rtok-456"), 99999999999LL);
+    loginFlow->setNextStartOutcome(MockDropboxLoginFlow::StartOutcome::Completed);
+    dropboxPage->setLoginFlowForTest(loginFlow);
+    // Dropbox page was re-shown by the combobox switch above; assert that
+    // before clicking into it so a regression that keeps Nextcloud visible
+    // (or hides both) fails here rather than on a confusing downstream check.
+    QTRY_VERIFY(dropboxPage->isVisible());
+    QVERIFY(authorizeButton->isVisible());
+    QVERIFY(authorizeButton->isEnabled());
+    QTest::mouseClick(authorizeButton, Qt::LeftButton);
+    QTRY_VERIFY(m_applyButton->isEnabled());
+    QVERIFY(m_applyButton->isVisible());
+    QTest::mouseClick(m_applyButton, Qt::LeftButton);
+
+    // Same 150ms-timer dance as step 2 -- poll instead of waiting a fixed
+    // duration. The displayName flip from "Nextcloud" to "Dropbox" is the
+    // observable that proves dbWidget reloaded its RemoteSettings.
+    QTRY_COMPARE(m_dbWidget->getCloudSyncProviderDisplayName(), QStringLiteral("Dropbox"));
+    QVERIFY(m_dbWidget->isCloudSyncAuthorized());
+    // Pop the menu for real (aboutToShow fires inside popup) -- same as
+    // the step 2 invocation.
+    menuRemoteSync->popup({0, 0});
+    QApplication::processEvents();
+    menuRemoteSync->close();
+    QVERIFY(hasTriggerEntryFor(QStringLiteral("Dropbox")));
+    // CRITICAL: switching providers must replace the menu entry, not stack
+    // them. updateRemoteSyncMenuEntries' menuRemoteSync->clear() at the top
+    // of the slot is what enforces this; if it gets dropped or guarded out,
+    // the "Trigger Nextcloud Sync" entry from step 2 would still be there.
+    QVERIFY(!hasTriggerEntryFor(QStringLiteral("Nextcloud")));
 }

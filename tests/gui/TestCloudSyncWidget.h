@@ -44,6 +44,7 @@ private slots:
 
     void CloudSettingNotImpactedWhileExploringOtherProviders();
     void CloudSettingSwitchProviderRemoveOldOne();
+    void CloudSettingMenuEntry();
 
 private:
     void triggerAction(const QString& name);
