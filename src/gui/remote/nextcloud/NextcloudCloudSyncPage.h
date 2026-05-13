@@ -67,6 +67,12 @@ public:
     using BrowserOpener = std::function<void(const QUrl&)>;
     void setBrowserOpener(BrowserOpener opener);
 
+    // Test seam: inject a NextcloudLoginFlow (typically a MockNextcloudLoginFlow)
+    // BEFORE the first Authorize click. Production lazy-constructs the default
+    // on first click via onAuthorizeClicked. Page takes ownership.
+    // Mirrors DropboxCloudSyncPage::setLoginFlowForTest.
+    void setLoginFlowForTest(NextcloudLoginFlow* flow);
+
 private slots:
     void onAuthorizeClicked();
     void onAppPasswordAuthorizeClicked();

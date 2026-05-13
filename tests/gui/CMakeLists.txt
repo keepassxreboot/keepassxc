@@ -23,6 +23,8 @@ if(KPXC_FEATURE_NETWORK)
         SOURCES TestCloudSyncWidget.cpp
                 ../mock/MockDropboxLoginFlow.cpp
                 ../mock/MockDropboxSyncProvider.cpp
+                ../mock/MockNextcloudLoginFlow.cpp
+                ../mock/MockNextcloudSyncProvider.cpp
         LIBS remotesync testsupport Qt6::Network Qt6::Widgets ${TEST_LIBRARIES})
 endif()
 

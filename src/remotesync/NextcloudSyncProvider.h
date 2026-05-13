@@ -52,7 +52,11 @@ public:
 
     // PROPFIND Depth:0 against the configured remote path. Returns success on
     // 200/207, mapWebdavStatusToMessage banner on any other status.
-    RemoteHandler::RemoteResult testConnection(const NextcloudSyncParams* params);
+    //
+    // virtual so MockNextcloudSyncProvider can return canned outcomes without
+    // running the QEventLoop / WebDAV machinery. Mirrors MockDropboxSyncProvider
+    // overrides of the four network-fronted operations.
+    virtual RemoteHandler::RemoteResult testConnection(const NextcloudSyncParams* params);
 
     QString displayName() const override;
     RemoteSyncParams* createParams() const override;

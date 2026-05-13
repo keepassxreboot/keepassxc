@@ -54,6 +54,8 @@
 #include "gui/remote/nextcloud/NextcloudCloudSyncPage.h"
 #include "mock/MockDropboxLoginFlow.h"
 #include "mock/MockDropboxSyncProvider.h"
+#include "mock/MockNextcloudLoginFlow.h"
+#include "mock/MockNextcloudSyncProvider.h"
 #include "remotesync/RemoteSyncProvider.h"
 
 int main(int argc, char* argv[])
@@ -81,17 +83,27 @@ void TestCloudSyncWidget::initTestCase()
 
     // Install the test factory override BEFORE constructing MainWindow.
     // DatabaseSettingsWidgetCloudSync::registerPage calls
-    // RemoteSyncProvider::create("dropbox", ...) once during page construction
-    // (the result is stored on DropboxCloudSyncPage::m_dropboxProvider and
-    // never refreshed) -- so installing the override after `new MainWindow()`
-    // would leave the page bound to a real DropboxSyncProvider and make every
-    // subsequent Test Connection / Remove click hit live HTTPS.
-    // Override returns nullptr for non-dropbox types so the default factory
-    // dispatch still produces real CommandSyncProvider / NextcloudSyncProvider
-    // instances for the other existing tests in this file.
+    // RemoteSyncProvider::create("dropbox", ...) / ("nextcloud", ...) once
+    // during page construction (the result is stored on
+    // DropboxCloudSyncPage::m_dropboxProvider / NextcloudCloudSyncPage::
+    // m_nextcloudProvider and never refreshed) -- so installing the override
+    // after `new MainWindow()` would leave the pages bound to real providers
+    // and make every subsequent Test Connection / Remove / sync click hit
+    // live HTTPS.
+    //
+    // The mocks delegate isAuthorized() to the real base class (gated on a
+    // kill-switch static), so the older paste-creds tests
+    // (CloudSettingSwitchProviderRemoveOldOne / CloudSettingMenuEntry) see
+    // identical "is this config authorized?" semantics to before -- only the
+    // network-fronted methods change. Override returns nullptr for unknown
+    // types so the default factory dispatch still produces real
+    // CommandSyncProvider for the script-sync path.
     RemoteSyncProvider::setFactoryOverrideForTest([](const QString& type, QObject* parent) -> RemoteSyncProvider* {
         if (type == QStringLiteral("dropbox")) {
             return new MockDropboxSyncProvider(parent);
+        }
+        if (type == QStringLiteral("nextcloud")) {
+            return new MockNextcloudSyncProvider(parent);
         }
         return nullptr;
     });
@@ -222,6 +234,9 @@ void TestCloudSyncWidget::cleanupTestCase()
     RemoteSyncProvider::clearFactoryOverrideForTest();
     MockDropboxSyncProvider::setDownloadSourcePath(QString());
     MockDropboxSyncProvider::resetCallCounts();
+    MockNextcloudSyncProvider::setDownloadSourcePath(QString());
+    MockNextcloudSyncProvider::setIsAuthorizedOverride(true);
+    MockNextcloudSyncProvider::resetCallCounts();
     m_dbFile.remove();
 }
 
@@ -1267,4 +1282,568 @@ void TestCloudSyncWidget::CloudSettingAddAndRemoveDropboxFullWorkflow()
 
     // Reset the mock so it doesn't bleed into other tests in this binary.
     MockDropboxSyncProvider::setDownloadSourcePath(QString());
+}
+
+// End-to-end Nextcloud happy-path lifecycle, structurally parallel to
+// CloudSettingAddAndRemoveDropboxFullWorkflow: validation banners on empty
+// state, Authorize through MockNextcloudLoginFlow, Test Connection through
+// MockNextcloudSyncProvider::testConnection, Apply -> autosave -> sync-on-save
+// trigger -> "Remote sync 'Nextcloud' completed!" + status bar timestamp,
+// close/reopen DB to verify CustomData persistence, Remove + final OK to
+// verify the post-Remove save runs WITHOUT a remote sync.
+//
+// One block intentionally fails: after closing and reopening the dialog,
+// loadFromConfig auto-checks the appPasswordGroupBox when both loginName and
+// appPassword are persisted. The test asserts the box is STILL unchecked at
+// that point per the user's intended UX (the box should only auto-open when
+// the user explicitly chose the paste-creds path). Locking that contract via a
+// failing test now means the eventual fix flips this test green without
+// needing to add new assertions.
+//
+// Pre-arrangement:
+//   * MockNextcloudSyncProvider is installed via initTestCase's factory
+//     override (lines ~70-95).
+//   * MockNextcloudLoginFlow is injected per-Authorize-click via the test
+//     seam NextcloudCloudSyncPage::setLoginFlowForTest (mirrors Dropbox).
+void TestCloudSyncWidget::CloudSettingAddAndRemoveNextCloudFullWorkflow()
+{
+    // Same AutoSaveAfterEveryChange dance as the Dropbox workflow: the test
+    // exercises the "Apply -> CustomData modified -> autosave -> databaseSaved
+    // -> onDatabaseSavedTriggerSync -> syncWithCloud" chain, so we restore
+    // the production default for the duration of this test and put it back
+    // at end so subsequent tests inherit the fixture's deterministic False.
+    config()->set(Config::AutoSaveAfterEveryChange, true);
+    auto restoreAutoSave = qScopeGuard([] { config()->set(Config::AutoSaveAfterEveryChange, false); });
+
+    // Reset mock state -- earlier tests in this binary may have already hit
+    // the static counters / download source / kill switch.
+    MockNextcloudSyncProvider::resetCallCounts();
+    MockNextcloudSyncProvider::setDownloadSourcePath(QString());
+    MockNextcloudSyncProvider::setNextDownloadFailure(QString());
+    MockNextcloudSyncProvider::setIsAuthorizedOverride(true);
+    auto restoreKillSwitch =
+        qScopeGuard([] { MockNextcloudSyncProvider::setIsAuthorizedOverride(true); });
+
+    // Canonical (read-only, never-opened) kdbx serves as the source for Test
+    // Connection clicks that should report "Nextcloud connection successful."
+    // (= file found). We cannot use m_dbFilePath as source while the database
+    // is unlocked: on Windows it's held with a sharing lock and QFile::copy
+    // would fail. For SyncEngine-driven syncs we set source="" so the
+    // first-sync branch (SyncEngine.cpp:154) runs and avoids re-merging the
+    // canonical kdbx every iteration (same chain-breaker rationale as the
+    // Dropbox workflow).
+    const QString canonicalKdbxPath = QDir(KEEPASSX_TEST_DATA_DIR).absoluteFilePath(QStringLiteral("NewDatabase.kdbx"));
+    QVERIFY(QFileInfo::exists(canonicalKdbxPath));
+
+    auto* banner = m_widget->findChild<MessageWidget*>(QStringLiteral("messageWidget"));
+    auto* comboBox = m_widget->findChild<QComboBox*>(QStringLiteral("providerComboBox"));
+    auto* nextcloudPage = m_widget->findChild<NextcloudCloudSyncPage*>(QStringLiteral("nextcloudPage"));
+    auto* serverBaseUrlEdit = findInNextcloudPage<QLineEdit>(m_widget, "serverBaseUrlEdit");
+    auto* remotePathEdit = findInNextcloudPage<QLineEdit>(m_widget, "remotePathEdit");
+    auto* authorizeButton = findInNextcloudPage<QPushButton>(m_widget, "authorizeButton");
+    auto* testConnectionButton = findInNextcloudPage<QPushButton>(m_widget, "testConnectionButton");
+    auto* removeButton = findInNextcloudPage<QPushButton>(m_widget, "removeButton");
+    auto* authStatusLabel = findInNextcloudPage<QLabel>(m_widget, "authStatusLabel");
+    auto* appPasswordGroupBox = findInNextcloudPage<QGroupBox>(m_widget, "appPasswordGroupBox");
+    auto* loginNameEdit = findInNextcloudPage<QLineEdit>(m_widget, "loginNameEdit");
+    auto* appPasswordEdit = findInNextcloudPage<QLineEdit>(m_widget, "appPasswordEdit");
+    auto* syncOnSaveCheckBox = findInNextcloudPage<QCheckBox>(m_widget, "syncOnSaveCheckBox");
+    auto* syncOnOpenCheckBox = findInNextcloudPage<QCheckBox>(m_widget, "syncOnOpenCheckBox");
+    QVERIFY(banner);
+    QVERIFY(comboBox);
+    QVERIFY(nextcloudPage);
+    QVERIFY(serverBaseUrlEdit);
+    QVERIFY(remotePathEdit);
+    QVERIFY(authorizeButton);
+    QVERIFY(testConnectionButton);
+    QVERIFY(removeButton);
+    QVERIFY(authStatusLabel);
+    QVERIFY(appPasswordGroupBox);
+    QVERIFY(loginNameEdit);
+    QVERIFY(appPasswordEdit);
+    QVERIFY(syncOnSaveCheckBox);
+    QVERIFY(syncOnOpenCheckBox);
+
+    auto* statusBarLabel = m_mainWindow->findChild<QLabel*>(QStringLiteral("statusBarLabel"));
+    QVERIFY(statusBarLabel);
+
+    // ---- Step 0: cloud-sync settings opened on Dropbox (fresh DB) --------
+    // openCloudSyncSettings() in init() lands on the Dropbox page since the
+    // database has no cloud-sync provider configured yet. Confirm before
+    // switching to Nextcloud so a regression that changes the default landing
+    // page would fail here, not on a confusing downstream assertion.
+    QCOMPARE(comboBox->currentIndex(), 0);
+    QCOMPARE(comboBox->currentText(), QStringLiteral("Dropbox"));
+
+    // ---- Step 1: switch combobox to Nextcloud ----------------------------
+    comboBox->setCurrentIndex(1);
+    QCOMPARE(comboBox->currentText(), QStringLiteral("Nextcloud"));
+    // CRITICAL: the providerStackedWidget must follow the combobox -- a
+    // desync (one shows Nextcloud, the other still Dropbox) would let every
+    // downstream assertion run against the wrong page widgets and silently
+    // miss real regressions.
+    QTRY_VERIFY(nextcloudPage->isVisible());
+    QCOMPARE(authStatusLabel->text(), QStringLiteral("Not authorized"));
+    // Switching providers is not a user edit -- Apply stays grayed.
+    QVERIFY(!m_applyButton->isEnabled());
+
+    // ---- Step 2: Authorize with empty fields -> warning banner -----------
+    QTest::mouseClick(authorizeButton, Qt::LeftButton);
+    // CRITICAL: validateAndCanonicalizeServerUrl's Empty branch is the
+    // production guard at NextcloudCloudSyncPage::onAuthorizeClicked. The
+    // banner is the user-visible regression surface; assert on it, not on
+    // m_authState.
+    QTRY_VERIFY(banner->isVisible());
+    QCOMPARE(banner->text(), QStringLiteral("Enter the Nextcloud server URL first."));
+    QCOMPARE(banner->messageType(), KMessageWidget::Warning);
+    QCOMPARE(authStatusLabel->text(), QStringLiteral("Not authorized"));
+
+    // ---- Step 3: Test Connection with no auth -> warning banner ----------
+    QTest::mouseClick(testConnectionButton, Qt::LeftButton);
+    // CRITICAL: onTestConnectionClicked's pre-flight rejects an unauthorized
+    // config BEFORE calling provider->testConnection. If a regression dropped
+    // that early-return, the mock provider's testConnection counter below
+    // would increment.
+    QTRY_COMPARE(banner->text(), QStringLiteral("Authorize Nextcloud first to test the connection."));
+    QCOMPARE(banner->messageType(), KMessageWidget::Warning);
+    QCOMPARE(MockNextcloudSyncProvider::testConnectionCallCount(), 0);
+
+    // ---- Step 4: syncOnSave / syncOnOpen both default-checked ------------
+    // CRITICAL: these are the defaults the Apply step (and the post-reopen
+    // sync-on-unlock step) rely on. If a regression flips either default,
+    // the autosave-driven sync below would not fire and this test would
+    // start failing at the QSignalSpy.wait().
+    QVERIFY(syncOnSaveCheckBox->isChecked());
+    QVERIFY(syncOnOpenCheckBox->isChecked());
+
+    // ---- Step 5: fill fields + Authorize -> success banner + Authorized --
+    QTest::keyClicks(serverBaseUrlEdit, QStringLiteral("https://cloud.example.com"));
+    QTRY_VERIFY(m_applyButton->isEnabled());
+    QTest::keyClicks(remotePathEdit, QStringLiteral("/Passwords/Database.kdbx"));
+
+    // Inject the login-flow mock BEFORE clicking Authorize so the page's
+    // lazy-construct in onAuthorizeClicked is a no-op (setLoginFlowForTest
+    // wins). setLoginFlowForTest reparents the flow to nextcloudPage.
+    auto* loginFlow = new MockNextcloudLoginFlow();
+    loginFlow->setCannedCreds(QStringLiteral("test-login-alice"), QStringLiteral("canned-app-pw-456"));
+    loginFlow->setNextStartOutcome(MockNextcloudLoginFlow::StartOutcome::Completed);
+    nextcloudPage->setLoginFlowForTest(loginFlow);
+
+    QVERIFY(authorizeButton->isEnabled());
+    QTest::mouseClick(authorizeButton, Qt::LeftButton);
+    // CRITICAL: visible status + banner are what the user reads post-Authorize.
+    // authStatusLabel is rendered by updateAuthStatus(Authorized) as
+    // "Authorized as <loginName>"; banner is emitted by onLoginCompleted.
+    QTRY_VERIFY(authStatusLabel->text().startsWith(QStringLiteral("Authorized")));
+    QCOMPARE(authStatusLabel->text(), QStringLiteral("Authorized as test-login-alice"));
+    QCOMPARE(banner->text(), QStringLiteral("Authorization successful, click Apply to save."));
+    QCOMPARE(banner->messageType(), KMessageWidget::Positive);
+    // Authorize -> onLoginCompleted -> emit modified() -> Apply enabled.
+    QTRY_VERIFY(m_applyButton->isEnabled());
+
+    // ---- Step 6: Test Connection -> "File not found ..." first-sync ------
+    // Source path NOT set on the mock -> testConnection returns success with
+    // empty filePath -> page distinguishes that as the file-not-found branch
+    // and emits the "will be created on first sync" banner. Snapshot the
+    // counter BEFORE the click so the delta-of-1 assertion is robust to
+    // earlier tests in the binary having driven the counter.
+    const int testConnBeforeFirst = MockNextcloudSyncProvider::testConnectionCallCount();
+    QTest::mouseClick(testConnectionButton, Qt::LeftButton);
+    // CRITICAL: the green banner is the user-visible proof the page took the
+    // empty-filePath branch. If the page ever stops distinguishing "found"
+    // from "will-be-created", this assertion catches it.
+    QTRY_COMPARE(banner->text(),
+                 QStringLiteral("Connected. File not found -- it will be created on first sync."));
+    QCOMPARE(banner->messageType(), KMessageWidget::Positive);
+    QCOMPARE(MockNextcloudSyncProvider::testConnectionCallCount() - testConnBeforeFirst, 1);
+    QCOMPARE(authStatusLabel->text(), QStringLiteral("Authorized as test-login-alice"));
+
+    // ---- Step 7: appPasswordGroupBox unchecked + fields filled & grayed --
+    // CRITICAL: onLoginCompleted persists loginName/appPassword into the line
+    // edits but does NOT call appPasswordGroupBox->setChecked(true). User
+    // mental model for the Login Flow v2 path: the box stays "closed" -- the
+    // user authorized via the browser handshake, not via paste. The fields
+    // are populated but visually grayed (QGroupBox checkable + unchecked ->
+    // children disabled). A regression that auto-checks the box here would
+    // confuse the Login-Flow-v2 user into thinking they took the paste path.
+    QVERIFY(!appPasswordGroupBox->isChecked());
+    QCOMPARE(loginNameEdit->text(), QStringLiteral("test-login-alice"));
+    QCOMPARE(appPasswordEdit->text(), QStringLiteral("canned-app-pw-456"));
+    // QGroupBox in checkable+unchecked mode disables its children via
+    // _q_setChildrenEnabled -- isEnabled() returns false. This is the
+    // user-visible "grayed" property.
+    QVERIFY(!loginNameEdit->isEnabled());
+    QVERIFY(!appPasswordEdit->isEnabled());
+
+    // ---- Step 8: Apply -> autosave -> sync-on-save -> "completed!" -------
+    // Source stays empty so SyncEngine takes the first-sync branch
+    // (SyncEngine.cpp:154) and skips merge against m_dbFilePath -- same
+    // chain-breaker rationale as the Dropbox workflow.
+    MockNextcloudSyncProvider::setDownloadSourcePath(QString());
+
+    QSignalSpy syncCompletedSpy(m_dbWidget.data(), &DatabaseWidget::databaseSyncCompleted);
+    QSignalSpy databaseSavedSpy(m_db.data(), &Database::databaseSaved);
+    const int refreshBeforeApply = MockNextcloudSyncProvider::refreshAuthCallCount();
+    const int downloadBeforeApply = MockNextcloudSyncProvider::downloadCallCount();
+    const int uploadBeforeApply = MockNextcloudSyncProvider::uploadCallCount();
+
+    QVERIFY(m_applyButton->isEnabled());
+    QVERIFY(m_applyButton->isVisible());
+    QTest::mouseClick(m_applyButton, Qt::LeftButton);
+    // CRITICAL: Apply re-grays the button synchronously (TestGui:637 pattern).
+    QVERIFY(!m_applyButton->isEnabled());
+
+    // ---- Step 9: state assertions BETWEEN Apply and OK -------------------
+    // CRITICAL: Apply does not call loadFromConfig and must NOT touch the
+    // groupBox check state. The user's contract is "after Apply, the UI looks
+    // exactly like it did before Apply, just with the Apply button disabled."
+    // A regression that re-runs loadFromConfig in saveSettings (or one that
+    // calls setChecked(true) on the groupBox after a successful save) would
+    // flip these assertions before we ever close the dialog.
+    QVERIFY(!appPasswordGroupBox->isChecked());
+    QCOMPARE(loginNameEdit->text(), QStringLiteral("test-login-alice"));
+    QCOMPARE(appPasswordEdit->text(), QStringLiteral("canned-app-pw-456"));
+    QVERIFY(!loginNameEdit->isEnabled());
+    QVERIFY(!appPasswordEdit->isEnabled());
+
+    // Click OK back-to-back with Apply -- same 150ms-timer-collapse rationale
+    // as the Dropbox workflow: both markAsModified calls fold into one already-
+    // running timer, autosave + sync fire exactly once.
+    closeDatabaseSettingsViaOk();
+
+    QVERIFY(syncCompletedSpy.wait(5000));
+    // Engage the kill switch IMMEDIATELY (no event-loop spin in between) so
+    // any queued onDatabaseSavedTriggerSync from sync 1's own doSave sees
+    // isAuthorized()=false and does not start sync 2. Pins the count
+    // assertions below to "exactly one sync."
+    MockNextcloudSyncProvider::setIsAuthorizedOverride(false);
+    // CRITICAL: exactly one sync fired with displayName "Nextcloud". Catches
+    // both "Apply doesn't trigger sync-on-save" (count 0) and "Apply emits
+    // cloudSyncTriggered AND triggers the autosave chain, double-firing"
+    // (count >= 2).
+    QCOMPARE(syncCompletedSpy.count(), 1);
+    QCOMPARE(syncCompletedSpy.at(0).at(0).toString(), QStringLiteral("Nextcloud"));
+    // databaseSaved fires twice in this step (same as Dropbox workflow):
+    // autosave-after-Apply, then sync 1's own doSave.
+    QCOMPARE(databaseSavedSpy.count(), 2);
+    QCOMPARE(MockNextcloudSyncProvider::refreshAuthCallCount() - refreshBeforeApply, 1);
+    QCOMPARE(MockNextcloudSyncProvider::downloadCallCount() - downloadBeforeApply, 1);
+    QCOMPARE(MockNextcloudSyncProvider::uploadCallCount() - uploadBeforeApply, 1);
+
+    // ---- Step 10: post-OK -> banner + status bar on main view ------------
+    // CRITICAL: the "Remote sync 'X' completed!" banner is set by
+    // DatabaseWidget::showMessage from inside SyncEngine::syncFinished's
+    // lambda -- the user sees it on the main database view, not in the now-
+    // closed settings dialog. The "databaseWidgetMessageWidget" objectName
+    // disambiguates from the various unnamed Edit-page messageWidgets.
+    auto* mainMessage = m_dbWidget->findChild<MessageWidget*>(QStringLiteral("databaseWidgetMessageWidget"));
+    QVERIFY(mainMessage);
+    QTRY_VERIFY(mainMessage->text().contains(QStringLiteral("Remote sync 'Nextcloud' completed!")));
+    QCOMPARE(mainMessage->messageType(), KMessageWidget::Positive);
+    // Status-bar caption: MainWindow::updateSyncStatusBar formats
+    // "<provider>: Synced h:mm AP". Assert brand prefix + structural shape
+    // rather than a literal clock time -- the latter would race the wall clock.
+    QTRY_VERIFY(statusBarLabel->text().startsWith(QStringLiteral("Nextcloud: Synced ")));
+    QRegularExpression clockRegex(QStringLiteral("^Nextcloud: Synced \\d{1,2}:\\d{2} (AM|PM)$"));
+    QVERIFY2(clockRegex.match(statusBarLabel->text()).hasMatch(),
+             qPrintable(QString("statusBarLabel text doesn't match 'Nextcloud: Synced h:mm AM/PM' shape: %1")
+                            .arg(statusBarLabel->text())));
+
+    // ---- Step 11: reopen Cloud Sync -> Nextcloud + Test Connection green -
+    // Re-arm the source so the next Test Connection click reports "file found"
+    // (= "Nextcloud connection successful.") instead of the first-sync banner.
+    MockNextcloudSyncProvider::setDownloadSourcePath(canonicalKdbxPath);
+
+    openCloudSyncSettings();
+    banner = m_widget->findChild<MessageWidget*>(QStringLiteral("messageWidget"));
+    comboBox = m_widget->findChild<QComboBox*>(QStringLiteral("providerComboBox"));
+    nextcloudPage = m_widget->findChild<NextcloudCloudSyncPage*>(QStringLiteral("nextcloudPage"));
+    serverBaseUrlEdit = findInNextcloudPage<QLineEdit>(m_widget, "serverBaseUrlEdit");
+    remotePathEdit = findInNextcloudPage<QLineEdit>(m_widget, "remotePathEdit");
+    authorizeButton = findInNextcloudPage<QPushButton>(m_widget, "authorizeButton");
+    testConnectionButton = findInNextcloudPage<QPushButton>(m_widget, "testConnectionButton");
+    removeButton = findInNextcloudPage<QPushButton>(m_widget, "removeButton");
+    authStatusLabel = findInNextcloudPage<QLabel>(m_widget, "authStatusLabel");
+    appPasswordGroupBox = findInNextcloudPage<QGroupBox>(m_widget, "appPasswordGroupBox");
+    loginNameEdit = findInNextcloudPage<QLineEdit>(m_widget, "loginNameEdit");
+    appPasswordEdit = findInNextcloudPage<QLineEdit>(m_widget, "appPasswordEdit");
+    QVERIFY(banner);
+    QVERIFY(comboBox);
+    QVERIFY(nextcloudPage);
+    QVERIFY(serverBaseUrlEdit);
+    QVERIFY(remotePathEdit);
+    QVERIFY(authorizeButton);
+    QVERIFY(testConnectionButton);
+    QVERIFY(removeButton);
+    QVERIFY(authStatusLabel);
+    QVERIFY(appPasswordGroupBox);
+    QVERIFY(loginNameEdit);
+    QVERIFY(appPasswordEdit);
+
+    // CRITICAL: combobox text + index together. initialize()'s
+    // active-provider lookup must land on Nextcloud after the previous
+    // session persisted nextcloud-default; a desync would either show Dropbox
+    // (Apply didn't persist activeProvider) or show Nextcloud combobox while
+    // the stacked widget still points at Dropbox.
+    QCOMPARE(comboBox->currentText(), QStringLiteral("Nextcloud"));
+    QCOMPARE(comboBox->currentIndex(), 1);
+    QVERIFY(nextcloudPage->isVisible());
+    QCOMPARE(authStatusLabel->text(), QStringLiteral("Authorized as test-login-alice"));
+
+    QTest::mouseClick(testConnectionButton, Qt::LeftButton);
+    QTRY_COMPARE(banner->text(), QStringLiteral("Nextcloud connection successful."));
+    QCOMPARE(banner->messageType(), KMessageWidget::Positive);
+    QCOMPARE(authStatusLabel->text(), QStringLiteral("Authorized as test-login-alice"));
+
+    // ---- Step 12: EXPECTED FAILURE -- groupBox auto-checked on reopen ----
+    // The user-intended contract is "the groupBox reflects whether the user
+    // explicitly chose the paste path -- not whether creds happen to be
+    // persisted." NextcloudCloudSyncPage::loadFromConfig currently violates
+    // this by auto-checking the box whenever both loginName and appPassword
+    // are present (see NextcloudCloudSyncPage.cpp around line 156).
+    //
+    // Locking the intended behavior with these asserts now ensures the
+    // forthcoming fix flips this test green WITHOUT needing to add new
+    // assertions -- and a regression that re-introduces the auto-check after
+    // the fix would fail the same lines. The test is expected to FAIL here
+    // until the page-side fix lands; everything below in the same function
+    // will be unreached until then.
+    QVERIFY(!appPasswordGroupBox->isChecked());
+    QVERIFY(!loginNameEdit->isEnabled());
+    QVERIFY(!appPasswordEdit->isEnabled());
+
+    // ---- Step 13: persisted JSON contains the Nextcloud config -----------
+    QJsonObject nextcloudConfigBeforeClose;
+    {
+        RemoteSettings rs(m_db, nullptr);
+        nextcloudConfigBeforeClose =
+            rs.getProviderConfig(QStringLiteral("nextcloud"), QStringLiteral("nextcloud-default"));
+        QCOMPARE(nextcloudConfigBeforeClose[QStringLiteral("type")].toString(), QStringLiteral("nextcloud"));
+        QCOMPARE(nextcloudConfigBeforeClose[QStringLiteral("loginName")].toString(),
+                 QStringLiteral("test-login-alice"));
+        QCOMPARE(nextcloudConfigBeforeClose[QStringLiteral("appPassword")].toString(),
+                 QStringLiteral("canned-app-pw-456"));
+        QCOMPARE(nextcloudConfigBeforeClose[QStringLiteral("serverBaseUrl")].toString(),
+                 QStringLiteral("https://cloud.example.com"));
+        QCOMPARE(nextcloudConfigBeforeClose[QStringLiteral("remotePath")].toString(),
+                 QStringLiteral("/Passwords/Database.kdbx"));
+        QCOMPARE(rs.activeProvider(), QStringLiteral("nextcloud"));
+    }
+
+    // ---- Step 14: close + reopen db, JSON survives unchanged -------------
+    // Close the settings dialog via Cancel (no extra save + sync round) then
+    // close the database. Same dance as the Dropbox workflow.
+    {
+        auto* dialog = m_dbWidget->findChild<DatabaseSettingsDialog*>("databaseSettingsDialog");
+        QVERIFY(dialog);
+        auto* buttonBox = dialog->findChild<QDialogButtonBox*>();
+        QVERIFY(buttonBox);
+        auto* cancelButton = buttonBox->button(QDialogButtonBox::Cancel);
+        QVERIFY(cancelButton);
+        QTest::mouseClick(cancelButton, Qt::LeftButton);
+        QTRY_COMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::ViewMode);
+        m_widget = nullptr;
+        m_applyButton = nullptr;
+    }
+
+    {
+        // DO NOT autosave during close -- step 8's CustomData write already
+        // persisted, an extra save would trigger another sync we don't want
+        // to wait on. Same tradeoff acknowledgement as the Dropbox workflow:
+        // markAsClean here masks a "step-8 write wasn't autosaved" regression,
+        // but the downstream JSON-equality assertion below catches that case
+        // indirectly.
+        m_db->markAsClean();
+        MessageBox::setNextAnswer(MessageBox::No);
+        triggerAction("actionDatabaseClose");
+        QApplication::processEvents();
+        MessageBox::setNextAnswer(MessageBox::NoButton);
+        delete m_dbWidget;
+        m_db.reset();
+    }
+
+    // Flip the mock back to first-sync mode BEFORE reopen -- the post-unlock
+    // sync-on-open path will call download(), and we want it to take
+    // SyncEngine's "remote not found" branch (no fs source touch).
+    MockNextcloudSyncProvider::setDownloadSourcePath(QString());
+    // Re-arm the kill switch: the legitimate sync-on-open should fire when
+    // the reopened db unlocks. We engage the kill switch again right after.
+    MockNextcloudSyncProvider::setIsAuthorizedOverride(true);
+
+    {
+        m_mainWindow->activateWindow();
+        QApplication::processEvents();
+        fileDialog()->setNextFileName(m_dbFilePath);
+        triggerAction("actionDatabaseOpen");
+        QApplication::processEvents();
+
+        m_dbWidget = m_tabWidget->currentDatabaseWidget();
+        QVERIFY(m_dbWidget);
+        // Spy MUST be created BEFORE the password Enter -- the mock-provider
+        // sync is fast enough that databaseSyncCompleted can fire between
+        // Enter-keypress and a spy created later, making a wait() on the
+        // late-bound spy hang forever.
+        QSignalSpy reopenSyncSpy(m_dbWidget.data(), &DatabaseWidget::databaseSyncCompleted);
+
+        auto* databaseOpenWidget = m_dbWidget->findChild<QWidget*>("databaseOpenWidget");
+        QVERIFY(databaseOpenWidget);
+        auto* editPassword =
+            databaseOpenWidget->findChild<PasswordWidget*>("editPassword")->findChild<QLineEdit*>("passwordEdit");
+        QVERIFY(editPassword);
+        editPassword->setFocus();
+        QTRY_VERIFY(editPassword->hasFocus());
+        QTest::keyClicks(editPassword, "a");
+        QTest::keyClick(editPassword, Qt::Key_Enter);
+
+        QTRY_VERIFY(!m_dbWidget->isLocked());
+        m_db = m_dbWidget->database();
+        // CRITICAL: poll for sync-on-unlock. If syncOnOpen flips off by
+        // default or onDatabaseUnlockedTriggerSync drops its dispatch, this
+        // times out -- pinning the contract that opening an authorized
+        // database triggers a sync.
+        if (reopenSyncSpy.count() == 0) {
+            QVERIFY(reopenSyncSpy.wait(5000));
+        }
+        MockNextcloudSyncProvider::setIsAuthorizedOverride(false);
+        QCOMPARE(reopenSyncSpy.count(), 1);
+        QCOMPARE(reopenSyncSpy.at(0).at(0).toString(), QStringLiteral("Nextcloud"));
+    }
+
+    // CRITICAL: persisted JSON read from the freshly-opened db must match
+    // what was on disk before close. A save/load round-trip that drops fields
+    // (e.g. appPassword not written, serverBaseUrl missing) would fail here.
+    {
+        RemoteSettings rs(m_db, nullptr);
+        QJsonObject after =
+            rs.getProviderConfig(QStringLiteral("nextcloud"), QStringLiteral("nextcloud-default"));
+        QCOMPARE(after[QStringLiteral("type")].toString(),
+                 nextcloudConfigBeforeClose[QStringLiteral("type")].toString());
+        QCOMPARE(after[QStringLiteral("loginName")].toString(),
+                 nextcloudConfigBeforeClose[QStringLiteral("loginName")].toString());
+        QCOMPARE(after[QStringLiteral("appPassword")].toString(),
+                 nextcloudConfigBeforeClose[QStringLiteral("appPassword")].toString());
+        QCOMPARE(after[QStringLiteral("serverBaseUrl")].toString(),
+                 nextcloudConfigBeforeClose[QStringLiteral("serverBaseUrl")].toString());
+        QCOMPARE(after[QStringLiteral("remotePath")].toString(),
+                 nextcloudConfigBeforeClose[QStringLiteral("remotePath")].toString());
+        QCOMPARE(rs.activeProvider(), QStringLiteral("nextcloud"));
+    }
+
+    // ---- Step 15: reopen Cloud Sync after db reopen ----------------------
+    MockNextcloudSyncProvider::setDownloadSourcePath(canonicalKdbxPath);
+    openCloudSyncSettings();
+    banner = m_widget->findChild<MessageWidget*>(QStringLiteral("messageWidget"));
+    comboBox = m_widget->findChild<QComboBox*>(QStringLiteral("providerComboBox"));
+    nextcloudPage = m_widget->findChild<NextcloudCloudSyncPage*>(QStringLiteral("nextcloudPage"));
+    serverBaseUrlEdit = findInNextcloudPage<QLineEdit>(m_widget, "serverBaseUrlEdit");
+    remotePathEdit = findInNextcloudPage<QLineEdit>(m_widget, "remotePathEdit");
+    authorizeButton = findInNextcloudPage<QPushButton>(m_widget, "authorizeButton");
+    testConnectionButton = findInNextcloudPage<QPushButton>(m_widget, "testConnectionButton");
+    removeButton = findInNextcloudPage<QPushButton>(m_widget, "removeButton");
+    authStatusLabel = findInNextcloudPage<QLabel>(m_widget, "authStatusLabel");
+    appPasswordGroupBox = findInNextcloudPage<QGroupBox>(m_widget, "appPasswordGroupBox");
+    loginNameEdit = findInNextcloudPage<QLineEdit>(m_widget, "loginNameEdit");
+    appPasswordEdit = findInNextcloudPage<QLineEdit>(m_widget, "appPasswordEdit");
+    QVERIFY(banner);
+    QVERIFY(comboBox);
+    QVERIFY(nextcloudPage);
+    QVERIFY(serverBaseUrlEdit);
+    QVERIFY(remotePathEdit);
+    QVERIFY(authorizeButton);
+    QVERIFY(testConnectionButton);
+    QVERIFY(removeButton);
+    QVERIFY(authStatusLabel);
+    QVERIFY(appPasswordGroupBox);
+    QVERIFY(loginNameEdit);
+    QVERIFY(appPasswordEdit);
+
+    QCOMPARE(comboBox->currentText(), QStringLiteral("Nextcloud"));
+    QCOMPARE(comboBox->currentIndex(), 1);
+    QVERIFY(nextcloudPage->isVisible());
+    QCOMPARE(authStatusLabel->text(), QStringLiteral("Authorized as test-login-alice"));
+
+    QTest::mouseClick(testConnectionButton, Qt::LeftButton);
+    QTRY_COMPARE(banner->text(), QStringLiteral("Nextcloud connection successful."));
+    QCOMPARE(banner->messageType(), KMessageWidget::Positive);
+    QCOMPARE(authStatusLabel->text(), QStringLiteral("Authorized as test-login-alice"));
+
+    // ---- Step 16: Remove -> banner + UI cleared + JSON gone --------------
+    QTest::mouseClick(removeButton, Qt::LeftButton);
+    // CRITICAL: the post-Remove banner is the user-facing proof. Exact text
+    // comes from NextcloudCloudSyncPage::onRemoveClicked -- a regression that
+    // drops the emit (or shortens the two-sentence form to one) would leave
+    // the user wondering whether Remove worked at all, and whether they need
+    // to do anything server-side.
+    QTRY_COMPARE(banner->text(),
+                 QStringLiteral("Nextcloud configuration removed. "
+                                "To revoke the app-password server-side, visit your Nextcloud Security page."));
+    QCOMPARE(banner->messageType(), KMessageWidget::Positive);
+    // The auth status label must flip back to "Not authorized" -- the reverse
+    // of step 5's transition.
+    QCOMPARE(authStatusLabel->text(), QStringLiteral("Not authorized"));
+    // Fields cleared under QSignalBlockers in onRemoveClicked; the placeholder
+    // text re-surfaces in the now-empty line edits. Assert on placeholderText,
+    // not text(), because text() is empty after the clear.
+    QVERIFY(serverBaseUrlEdit->text().isEmpty());
+    QVERIFY(remotePathEdit->text().isEmpty());
+    QVERIFY(loginNameEdit->text().isEmpty());
+    QVERIFY(appPasswordEdit->text().isEmpty());
+    QCOMPARE(loginNameEdit->placeholderText(), QStringLiteral("alice"));
+    QCOMPARE(appPasswordEdit->placeholderText(), QStringLiteral("xxxx-xxxx-xxxx-xxxx"));
+    // "Use App Password Instead" unchecked after Remove (onRemoveClicked
+    // calls setChecked(false) under a QSignalBlocker), children grayed.
+    QVERIFY(!appPasswordGroupBox->isChecked());
+    QVERIFY(!loginNameEdit->isEnabled());
+    QVERIFY(!appPasswordEdit->isEnabled());
+    // CRITICAL: Apply must be grayed after Remove. m_modified is reset to
+    // false in onRemoveClicked. Apply re-enable here would be especially bad:
+    // a subsequent Apply would have nothing to save (saveToConfig returns
+    // empty for fresh-no-edit) but would still re-stamp other widgets' state.
+    QVERIFY(!m_applyButton->isEnabled());
+    // JSON must be gone from CustomData -- onRemoveClicked persisted the
+    // removal via m_remoteSettings->removeProviderConfig + saveSettings.
+    {
+        RemoteSettings rs(m_db, nullptr);
+        QVERIFY(rs.getProviderConfig(QStringLiteral("nextcloud"), QStringLiteral("nextcloud-default")).isEmpty());
+    }
+
+    // ---- Step 17: OK -> save fires, NO remote sync triggered -------------
+    // After Remove, persisted CustomData no longer has a Nextcloud entry; the
+    // kill switch is engaged so SyncEngine's isAuthorized check returns false.
+    // OK triggers saveAllSettings -> General page re-stamps SettingsChanged
+    // -> Database modified -> autosave -> databaseSaved. The queued
+    // onDatabaseSavedTriggerSync runs but isCloudSyncAuthorized returns false,
+    // so no sync starts.
+    QSignalSpy postRemoveSavedSpy(m_db.data(), &Database::databaseSaved);
+    QSignalSpy postRemoveSyncSpy(m_dbWidget.data(), &DatabaseWidget::databaseSyncCompleted);
+    closeDatabaseSettingsViaOk();
+    // CRITICAL: the save itself must run -- confirms the cleared CustomData
+    // entry actually lands on disk, not just in memory. A regression that
+    // drops the autosave (e.g. an over-eager m_blockAutoSave) would silently
+    // leave the nextcloud CustomData entry on disk and the next open would
+    // re-resurrect the provider.
+    QVERIFY(postRemoveSavedSpy.wait(5000));
+    QVERIFY(postRemoveSavedSpy.count() >= 1);
+    // CRITICAL: zero syncs after Remove + OK. Drain pending events so any
+    // queued slot has a chance to run before we check.
+    QTest::qWait(200);
+    QCOMPARE(postRemoveSyncSpy.count(), 0);
+    // CRITICAL: on-disk JSON has no nextcloud entry. A regression that re-
+    // adds the provider during OK's saveAllSettings (e.g. saveToConfig
+    // returning a non-empty config for an empty form) would re-resurrect it.
+    {
+        RemoteSettings rs(m_db, nullptr);
+        QVERIFY(rs.getProviderConfig(QStringLiteral("nextcloud"), QStringLiteral("nextcloud-default")).isEmpty());
+        QVERIFY(rs.activeProvider().isEmpty());
+    }
+
+    // Step-17's JSON-empty + activeProvider-empty checks already prove the
+    // Remove + OK round-trip wiped CustomData. We deliberately do NOT reopen
+    // the settings dialog to assert "which provider page does it default
+    // to?" -- the dialog persists its combobox selection across reopens, and
+    // pinning either "stays on Nextcloud" or "resets to Dropbox" would lock
+    // in a UX detail the product doesn't currently care to specify.
+
+    // Reset the mock so it doesn't bleed into other tests in this binary.
+    MockNextcloudSyncProvider::setDownloadSourcePath(QString());
 }

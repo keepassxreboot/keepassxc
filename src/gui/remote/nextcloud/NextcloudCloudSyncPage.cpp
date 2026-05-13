@@ -247,6 +247,21 @@ void NextcloudCloudSyncPage::setBrowserOpener(BrowserOpener opener)
     }
 }
 
+void NextcloudCloudSyncPage::setLoginFlowForTest(NextcloudLoginFlow* flow)
+{
+    // Test seam: caller hands off ownership; we reparent and wire signals so
+    // the page treats it like the lazily-constructed default. Mirror of
+    // DropboxCloudSyncPage::setLoginFlowForTest.
+    m_loginFlow.reset(flow);
+    if (flow) {
+        flow->setParent(this);
+        connect(flow, &NextcloudLoginFlow::loginInitiated, this, &NextcloudCloudSyncPage::onLoginInitiated);
+        connect(flow, &NextcloudLoginFlow::loginCompleted, this, &NextcloudCloudSyncPage::onLoginCompleted);
+        connect(flow, &NextcloudLoginFlow::loginFailed, this, &NextcloudCloudSyncPage::onLoginFailed);
+        connect(flow, &NextcloudLoginFlow::loginCancelled, this, &NextcloudCloudSyncPage::onLoginCancelled);
+    }
+}
+
 void NextcloudCloudSyncPage::setMutualExclusivityWarning(bool active)
 {
     // Disable fields under the warning so the user cannot edit Nextcloud

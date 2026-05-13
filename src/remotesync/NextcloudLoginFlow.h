@@ -52,12 +52,22 @@ public:
     // <base>/index.php/login/v2, validate the returned loginUrl host (phishing
     // mitigation), open it in the user's browser, and start polling for
     // credentials. Cancels any previously in-flight flow first.
-    void startLoginFlow(const QString& serverBaseUrl);
+    //
+    // virtual so MockNextcloudLoginFlow can override and emit canned terminal
+    // signals synchronously, mirroring DropboxLoginFlow::startAuthorization
+    // (which is the virtual that MockDropboxLoginFlow overrides for the same
+    // reason).
+    virtual void startLoginFlow(const QString& serverBaseUrl);
 
     // Cancel any in-flight initiate or polling request and emit
     // loginCancelled. Safe to call from any thread; abort is marshalled to
     // the network thread via QueuedConnection. Idempotent on Idle state.
-    void cancel();
+    //
+    // virtual to symmetrically allow MockNextcloudLoginFlow to short-circuit
+    // the cancel teardown -- the mock has no timers / NAM / active reply to
+    // tear down, so a base-class cancel() would be a no-op anyway, but
+    // virtualizing keeps the override site contract identical to startLoginFlow.
+    virtual void cancel();
 
     // Test seam -- production uses the lazily-constructed default. Caller
     // retains ownership: the injected NAM must outlive this object, is never
