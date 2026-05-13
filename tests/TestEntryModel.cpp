@@ -18,9 +18,15 @@
 
 #include "TestEntryModel.h"
 
+#include <QDateTime>
+#include <QFileDevice>
+#include <QFont>
 #include <QSignalSpy>
+#include <QTemporaryFile>
 #include <QTest>
 
+#include "core/Config.h"
+#include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Group.h"
 #include "crypto/Crypto.h"
@@ -130,6 +136,43 @@ void TestEntryModel::test()
 
     delete modelTest;
     delete model;
+}
+
+void TestEntryModel::testUnsavedEntryFont()
+{
+    const auto originalAutoSave = config()->get(Config::AutoSaveAfterEveryChange);
+    config()->set(Config::AutoSaveAfterEveryChange, false);
+
+    QTemporaryFile dbFile;
+    QVERIFY(dbFile.open());
+    QVERIFY(dbFile.setFileTime(QDateTime::currentDateTimeUtc().addSecs(-60), QFileDevice::FileModificationTime));
+
+    auto db = new Database();
+    db->setFilePath(dbFile.fileName());
+
+    auto entry = new Entry();
+    entry->setTitle("Unsaved");
+    entry->setGroup(db->rootGroup());
+    db->markAsModified();
+
+    auto model = new EntryModel(this);
+    model->setGroup(db->rootGroup());
+
+    auto font = model->data(model->index(0, EntryModel::Title), Qt::FontRole).value<QFont>();
+    QVERIFY(font.italic());
+
+    config()->set(Config::AutoSaveAfterEveryChange, true);
+    font = model->data(model->index(0, EntryModel::Title), Qt::FontRole).value<QFont>();
+    QVERIFY(!font.italic());
+
+    config()->set(Config::AutoSaveAfterEveryChange, false);
+    db->markAsClean();
+    font = model->data(model->index(0, EntryModel::Title), Qt::FontRole).value<QFont>();
+    QVERIFY(!font.italic());
+
+    config()->set(Config::AutoSaveAfterEveryChange, originalAutoSave);
+    delete model;
+    delete db;
 }
 
 void TestEntryModel::testAttachmentsModel()

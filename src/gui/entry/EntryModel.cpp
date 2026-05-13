@@ -18,12 +18,14 @@
 
 #include "EntryModel.h"
 
+#include <QFileInfo>
 #include <QFont>
 #include <QIODevice>
 #include <QMimeData>
 #include <QPalette>
 
 #include "core/Clock.h"
+#include "core/Database.h"
 #include "core/Entry.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
@@ -33,6 +35,29 @@
 #ifdef Q_OS_MACOS
 #include "gui/osutils/macutils/MacUtils.h"
 #endif
+
+namespace
+{
+    bool entryHasUnsavedChanges(const Entry* entry)
+    {
+        if (config()->get(Config::AutoSaveAfterEveryChange).toBool()) {
+            return false;
+        }
+
+        auto database = entry->database();
+        if (!database || !database->isModified() || database->filePath().isEmpty()) {
+            return false;
+        }
+
+        const QFileInfo databaseFile(database->filePath());
+        if (!databaseFile.exists()) {
+            return false;
+        }
+
+        const auto saved = databaseFile.lastModified().toUTC();
+        return saved.isValid() && entry->timeInfo().lastModificationTime() > saved;
+    }
+}
 
 EntryModel::EntryModel(QObject* parent)
     : QAbstractTableModel(parent)
@@ -326,6 +351,9 @@ QVariant EntryModel::data(const QModelIndex& index, int role) const
         if (entry->isExpired()) {
             font.setStrikeOut(true);
         }
+        if (entryHasUnsavedChanges(entry)) {
+            font.setItalic(true);
+        }
         return font;
     } else if (role == Qt::ForegroundRole) {
 
@@ -589,6 +617,11 @@ void EntryModel::entryDataChanged(Entry* entry)
 void EntryModel::onConfigChanged(Config::ConfigKey key)
 {
     switch (key) {
+    case Config::AutoSaveAfterEveryChange:
+        if (rowCount() > 0) {
+            emit dataChanged(index(0, 0), index(rowCount() - 1, columnCount() - 1), {Qt::FontRole});
+        }
+        break;
     case Config::GUI_HideUsernames:
         emit dataChanged(index(0, Username), index(rowCount() - 1, Username), {Qt::DisplayRole});
         break;
@@ -613,6 +646,14 @@ void EntryModel::severConnections()
 
 void EntryModel::makeConnections(const Group* group)
 {
+    if (group->database()) {
+        connect(group->database(), &Database::databaseSaved, this, [this]() {
+            if (rowCount() > 0) {
+                emit dataChanged(index(0, 0), index(rowCount() - 1, columnCount() - 1), {Qt::FontRole});
+            }
+        });
+    }
+
     connect(group, SIGNAL(entryAboutToAdd(Entry*)), SLOT(entryAboutToAdd(Entry*)));
     connect(group, SIGNAL(entryAdded(Entry*)), SLOT(entryAdded(Entry*)));
     connect(group, SIGNAL(entryAboutToRemove(Entry*)), SLOT(entryAboutToRemove(Entry*)));
