@@ -45,10 +45,12 @@ private slots:
     void CloudSettingNotImpactedWhileExploringOtherProviders();
     void CloudSettingSwitchProviderRemoveOldOne();
     void CloudSettingMenuEntry();
+    void CloudSettingAddAndRemoveDropboxFullWorkflow();
 
 private:
     void triggerAction(const QString& name);
     void openCloudSyncSettings();
+    void closeDatabaseSettingsViaOk();
 
     QScopedPointer<MainWindow> m_mainWindow;
     QPointer<DatabaseTabWidget> m_tabWidget;

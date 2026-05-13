@@ -20,7 +20,9 @@ add_unit_test(NAME testguipixmaps SOURCES TestGuiPixmaps.cpp LIBS ${TEST_LIBRARI
 
 if(KPXC_FEATURE_NETWORK)
     add_unit_test(NAME testcloudsyncwidget
-        SOURCES TestCloudSyncWidget.cpp ../mock/MockDropboxLoginFlow.cpp
+        SOURCES TestCloudSyncWidget.cpp
+                ../mock/MockDropboxLoginFlow.cpp
+                ../mock/MockDropboxSyncProvider.cpp
         LIBS remotesync testsupport Qt6::Network Qt6::Widgets ${TEST_LIBRARIES})
 endif()
 
