@@ -18,6 +18,12 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/..)
 add_unit_test(NAME testgui SOURCES TestGui.cpp ../util/TemporaryFile.cpp ../mock/MockRemoteProcess.cpp LIBS ${TEST_LIBRARIES})
 add_unit_test(NAME testguipixmaps SOURCES TestGuiPixmaps.cpp LIBS ${TEST_LIBRARIES})
 
+if(KPXC_FEATURE_NETWORK)
+    add_unit_test(NAME testcloudsyncwidget
+        SOURCES TestCloudSyncWidget.cpp ../mock/MockDropboxLoginFlow.cpp
+        LIBS remotesync testsupport Qt6::Network Qt6::Widgets ${TEST_LIBRARIES})
+endif()
+
 file(GLOB_RECURSE ATTACHMENTS_TEST_SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/attachments/*.cpp)
 add_unit_test(NAME testguiattachments SOURCES ${ATTACHMENTS_TEST_SOURCES} LIBS ${TEST_LIBRARIES})
 include_directories(testguiattachments PRIVATE ${PROJECT_SOURCE_DIR}/src/gui/entry)
