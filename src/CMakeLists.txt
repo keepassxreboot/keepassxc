@@ -316,7 +316,13 @@ if(KPXC_FEATURE_NETWORK)
             networking/UpdateChecker.cpp
             gui/UpdateCheckDialog.cpp
             gui/IconDownloader.cpp
-            gui/IconDownloaderDialog.cpp)
+            gui/IconDownloaderDialog.cpp
+            gui/remote/CloudSyncPage.cpp
+            gui/remote/dropbox/DropboxCloudSyncPage.cpp
+            gui/remote/nextcloud/NextcloudCloudSyncPage.cpp
+            gui/remote/nextcloud/NextcloudCloudSyncPage.h
+            gui/remote/nextcloud/NextcloudCloudSyncPage.ui
+            gui/remote/DatabaseSettingsWidgetCloudSync.cpp)
 endif()
 
 add_subdirectory(cli)

@@ -24,6 +24,9 @@
 #include "DatabaseSettingsWidgetBrowser.h"
 #endif
 #include "../remote/DatabaseSettingsWidgetRemote.h"
+#ifdef KPXC_FEATURE_NETWORK
+#include "../remote/DatabaseSettingsWidgetCloudSync.h"
+#endif
 #include "DatabaseSettingsWidgetMaintenance.h"
 #include "keeshare/DatabaseSettingsWidgetKeeShare.h"
 #ifdef KPXC_FEATURE_FDOSECRETS
@@ -51,8 +54,12 @@ DatabaseSettingsDialog::DatabaseSettingsDialog(QWidget* parent)
 #endif
     , m_maintenanceWidget(new DatabaseSettingsWidgetMaintenance(this))
     , m_remoteWidget(new DatabaseSettingsWidgetRemote(this))
+#ifdef KPXC_FEATURE_NETWORK
+    , m_cloudSyncWidget(new DatabaseSettingsWidgetCloudSync(this))
+#endif
 {
     connect(this, SIGNAL(accepted()), SLOT(save()));
+    connect(this, SIGNAL(apply()), SLOT(saveAllSettings()));
     connect(this, SIGNAL(rejected()), SLOT(reject()));
 
     addPage(tr("General"), icons()->icon("preferences-other"), m_generalWidget);
@@ -72,7 +79,15 @@ DatabaseSettingsDialog::DatabaseSettingsDialog(QWidget* parent)
 
     m_securityTabWidget->setCurrentIndex(0);
 
-    addPage(tr("Remote Sync"), icons()->icon("remote-sync"), m_remoteWidget);
+    addPage(tr("Script Sync"), icons()->icon("remote-sync"), m_remoteWidget);
+#ifdef KPXC_FEATURE_NETWORK
+    addPage(tr("Cloud Sync"), icons()->icon("remote-sync"), m_cloudSyncWidget);
+    // Relay cloud sync trigger from settings widget to parent
+    connect(m_cloudSyncWidget, &DatabaseSettingsWidgetCloudSync::cloudSyncTriggered,
+            this, &DatabaseSettingsDialog::cloudSyncTriggered);
+    connect(m_cloudSyncWidget, &DatabaseSettingsWidgetCloudSync::settingsModified,
+            this, [this] { setModified(true); });
+#endif
 
 #ifdef KPXC_FEATURE_BROWSER
     addPage(tr("Browser Integration"), icons()->icon("internet-web-browser"), m_browserWidget);
@@ -101,6 +116,9 @@ void DatabaseSettingsDialog::load(const QSharedPointer<Database>& db)
     m_databaseKeyWidget->loadSettings(db);
     m_encryptionWidget->loadSettings(db);
     m_remoteWidget->loadSettings(db);
+#ifdef KPXC_FEATURE_NETWORK
+    m_cloudSyncWidget->loadSettings(db);
+#endif
 #ifdef KPXC_FEATURE_BROWSER
     m_browserWidget->loadSettings(db);
 #endif
@@ -124,32 +142,46 @@ void DatabaseSettingsDialog::showDatabaseKeySettings(int index)
 
 void DatabaseSettingsDialog::showRemoteSettings()
 {
-    setCurrentPage(2);
+    setCurrentPage(pageIndex(m_remoteWidget));
 }
 
-void DatabaseSettingsDialog::save()
+#ifdef KPXC_FEATURE_NETWORK
+void DatabaseSettingsDialog::showCloudSyncSettings()
+{
+    setCurrentPage(pageIndex(m_cloudSyncWidget));
+}
+#endif
+
+bool DatabaseSettingsDialog::saveAllSettings()
 {
     if (!m_generalWidget->saveSettings()) {
         setCurrentPage(0);
-        return;
+        return false;
     }
 
     if (!m_databaseKeyWidget->saveSettings()) {
         setCurrentPage(1);
         m_securityTabWidget->setCurrentIndex(0);
-        return;
+        return false;
     }
 
     if (!m_encryptionWidget->saveSettings()) {
         setCurrentPage(1);
         m_securityTabWidget->setCurrentIndex(1);
-        return;
+        return false;
     }
 
     if (!m_remoteWidget->saveSettings()) {
-        setCurrentPage(2);
-        return;
+        setCurrentPage(pageIndex(m_remoteWidget));
+        return false;
     }
+
+#ifdef KPXC_FEATURE_NETWORK
+    if (!m_cloudSyncWidget->saveSettings()) {
+        setCurrentPage(pageIndex(m_cloudSyncWidget));
+        return false;
+    }
+#endif
 
     // Browser settings don't have anything to save
 
@@ -158,7 +190,15 @@ void DatabaseSettingsDialog::save()
     m_fdoSecretsWidget->saveSettings();
 #endif
 
-    emit editFinished(true);
+    setModified(false);
+    return true;
+}
+
+void DatabaseSettingsDialog::save()
+{
+    if (saveAllSettings()) {
+        emit editFinished(true);
+    }
 }
 
 void DatabaseSettingsDialog::reject()
@@ -167,6 +207,9 @@ void DatabaseSettingsDialog::reject()
     m_databaseKeyWidget->discard();
     m_encryptionWidget->discard();
     m_remoteWidget->discard();
+#ifdef KPXC_FEATURE_NETWORK
+    m_cloudSyncWidget->discard();
+#endif
 #ifdef KPXC_FEATURE_BROWSER
     m_browserWidget->discard();
 #endif

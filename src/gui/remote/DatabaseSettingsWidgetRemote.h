@@ -55,10 +55,12 @@ private:
     void updateSettingsList();
     QListWidgetItem* findItemByName(const QString& name);
     void clearFields();
+    bool hasCloudSyncConfig() const;
 
     QScopedPointer<RemoteSettings> m_remoteSettings;
     const QScopedPointer<Ui::DatabaseSettingsWidgetRemote> m_ui;
     bool m_modified = false;
+    bool m_lockedByCloudSync = false; // Set by initialize() when Cloud Sync is configured -- gates save.
 };
 
 #endif // KEEPASSX_DATABASESETTINGSWIDGETREMOTE_H
