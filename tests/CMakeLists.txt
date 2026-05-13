@@ -194,6 +194,12 @@ if(KPXC_FEATURE_NETWORK)
 
     add_unit_test(NAME testoauthhttpserver SOURCES TestOAuthHttpServer.cpp
             LIBS ${TEST_LIBRARIES} Qt6::Network)
+
+    add_unit_test(NAME testdropboxsyncprovider SOURCES TestDropboxSyncProvider.cpp
+            LIBS testsupport ${TEST_LIBRARIES} Qt6::Network)
+
+    add_unit_test(NAME testdropboxloginflow SOURCES TestDropboxLoginFlow.cpp
+            LIBS ${TEST_LIBRARIES} Qt6::Network)
 endif()
 
 if(WITH_GUI_TESTS)

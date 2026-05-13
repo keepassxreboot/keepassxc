@@ -20,6 +20,9 @@
 #include "config-keepassx.h"
 
 #include "CommandSyncProvider.h"
+#ifdef KPXC_FEATURE_NETWORK
+#include "DropboxSyncProvider.h"
+#endif
 
 #ifdef QT_TEST_LIB
 #include "tests/mock/MockSyncProvider.h"
@@ -109,6 +112,11 @@ RemoteSyncProvider* RemoteSyncProvider::create(const QString& type, QObject* par
     if (type == QStringLiteral("command")) {
         return new CommandSyncProvider(parent);
     }
+#ifdef KPXC_FEATURE_NETWORK
+    if (type == QStringLiteral("dropbox")) {
+        return new DropboxSyncProvider(parent);
+    }
+#endif
 #ifdef QT_TEST_LIB
     if (type == QStringLiteral("mock")) {
         return new MockSyncProvider(parent);

@@ -89,6 +89,15 @@ void TestRemoteSync::testFactoryDispatch_command()
     QVERIFY(qobject_cast<CommandSyncProvider*>(p.data()) != nullptr);
 }
 
+#ifdef KPXC_FEATURE_NETWORK
+void TestRemoteSync::testFactoryDispatch_dropbox()
+{
+    QScopedPointer<RemoteSyncProvider> p(RemoteSyncProvider::create(QStringLiteral("dropbox"), nullptr));
+    QVERIFY(p);
+    QCOMPARE(p->displayName(), QStringLiteral("Dropbox"));
+}
+#endif
+
 void TestRemoteSync::testFactoryDispatch_unknown()
 {
     // Source emits a qWarning for unknown types; suppress it so the test log

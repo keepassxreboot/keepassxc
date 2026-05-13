@@ -31,6 +31,9 @@ private slots:
 
     // Factory + override seam
     void testFactoryDispatch_command();
+#ifdef KPXC_FEATURE_NETWORK
+    void testFactoryDispatch_dropbox();
+#endif
     void testFactoryDispatch_unknown();
     void testFactoryOverride_routesThroughOverride();
     void testFactoryOverride_nullptrFallsThrough();

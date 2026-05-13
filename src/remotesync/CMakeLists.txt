@@ -18,6 +18,8 @@ set(remotesync_LIBS Qt6::Core Qt6::Widgets)
 if(KPXC_FEATURE_NETWORK)
     list(APPEND remotesync_SOURCES
         HttpRetryHelper.cpp
+        DropboxSyncProvider.cpp
+        DropboxLoginFlow.cpp
         OAuthHttpServer.cpp
     )
     list(APPEND remotesync_LIBS Qt6::Network)
