@@ -222,7 +222,23 @@ QString SymmetricCipher::modeToString(const Mode mode)
 
 int SymmetricCipher::defaultIvSize(Mode mode)
 {
-    return ivSize(mode);
+    // Standard nonce sizes for new random IVs. Decryption uses the IV stored on disk.
+    switch (mode) {
+    case Aes128_CBC:
+    case Aes256_CBC:
+    case Aes128_CTR:
+    case Aes256_CTR:
+    case Twofish_CBC:
+        return 16; // block size
+    case Aes256_GCM:
+        return 12; // NIST SP 800-38D recommends 96-bit nonces
+    case ChaCha20:
+        return 12; // RFC 8439
+    case Salsa20:
+        return 12; // spec is 8 bytes, kept at 12 for compatibility
+    default:
+        return -1;
+    }
 }
 
 int SymmetricCipher::keySize(Mode mode)
