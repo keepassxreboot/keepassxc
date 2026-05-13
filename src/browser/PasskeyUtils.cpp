@@ -356,7 +356,7 @@ ExtensionResult PasskeyUtils::buildExtensionData(QJsonObject& extensionObject) c
 // Serialization order: https://w3c.github.io/webauthn/#clientdatajson-serialization
 QString PasskeyUtils::buildClientDataJson(const QJsonObject& publicKey, const QString& origin, bool get) const
 {
-    // JSON-escape user-supplied strings; spec mandates field order so QJsonDocument is unsuitable
+    // Hand-rolled JSON (spec mandates field order); escape inputs as defense-in-depth since result is signed
     auto jsonEscape = [](const QString& in) {
         QString out;
         out.reserve(in.size());
