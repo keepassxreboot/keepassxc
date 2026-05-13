@@ -90,6 +90,7 @@ void BrowserHost::readProxyMessage()
         return;
     }
 
+    // Handles coalesced messages e.g. {"a":1}{"b":2} via GarbageAtEnd
     while (!buf.isEmpty()) {
         QJsonParseError error;
         auto json = QJsonDocument::fromJson(buf, &error);
