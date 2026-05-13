@@ -60,6 +60,14 @@
 #include "remote/RemoteHandler.h"
 #include "remote/RemoteSettings.h"
 
+#include "remotesync/RemoteSyncParams.h"
+#include "remotesync/RemoteSyncProvider.h"
+#include "remotesync/SyncEngine.h"
+#include <QFile>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QTimer>
+
 #ifdef KPXC_FEATURE_NETWORK
 #include "gui/IconDownloaderDialog.h"
 #endif
@@ -218,6 +226,12 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     connect(m_editGroupWidget, SIGNAL(editFinished(bool)), SLOT(switchToMainView(bool)));
     connect(m_reportsDialog, SIGNAL(editFinished(bool)), SLOT(switchToMainView(bool)));
     connect(m_databaseSettingDialog, SIGNAL(editFinished(bool)), SLOT(switchToMainView(bool)));
+#ifdef KPXC_FEATURE_NETWORK
+    connect(m_databaseSettingDialog, &DatabaseSettingsDialog::cloudSyncTriggered,
+            this, &DatabaseWidget::syncWithCloud);
+    // Sync-on-open: trigger cloud sync after database unlock (self→self, wired once in constructor)
+    connect(this, &DatabaseWidget::databaseUnlocked, this, &DatabaseWidget::onDatabaseUnlockedTriggerSync);
+#endif
     connect(m_databaseOpenWidget, SIGNAL(dialogFinished(bool)), SLOT(loadDatabase(bool)));
     connect(this, SIGNAL(currentChanged(int)), SLOT(emitCurrentModeChanged()));
     connect(this, SIGNAL(requestGlobalAutoType(const QString&)), parent, SLOT(performGlobalAutoType(const QString&)));
@@ -1156,78 +1170,305 @@ int DatabaseWidget::addChildWidget(QWidget* w)
 
 void DatabaseWidget::syncWithRemote(const RemoteParams* params)
 {
+    initSyncEngine();
+
+    // Command-type syncs have no token storage — clear cloud sync config name
+    // to prevent stale value from triggering token persistence in refreshedTokenData.
+    m_currentSyncConfigName.clear();
+
+    // Convert RemoteParams to typed CommandSyncParams.
+    // Stored as members so they outlive the synchronous-but-reentrant sync call.
+    // Refuse re-entry while another sync is in progress. Without this guard,
+    // a lambda fired off databaseSyncInProgress (or any nested-event-loop
+    // continuation) that calls syncWithRemote/syncWithCloud can call
+    // m_syncParams.reset(...), freeing the cmdParams pointer this function
+    // still holds and uses below -- a UAF on cmdParams->type at line ~1208.
+    // Auto-sync trigger slots (onDatabaseSavedTriggerSync /
+    // onDatabaseUnlockedTriggerSync) already check m_syncInProgress; this
+    // covers the manual menu paths and any other direct entry point.
+    if (m_syncInProgress) {
+        return;
+    }
+
+    auto* cmdParams = new CommandSyncParams();
+    cmdParams->type = "command";
+    cmdParams->name = params->name;
+    cmdParams->downloadCommand = params->downloadCommand;
+    cmdParams->downloadInput = params->downloadInput;
+    cmdParams->downloadTimeoutMsec = params->downloadTimeoutMsec;
+    cmdParams->uploadCommand = params->uploadCommand;
+    cmdParams->uploadInput = params->uploadInput;
+    cmdParams->uploadTimeoutMsec = params->uploadTimeoutMsec;
+    m_syncParams.reset(cmdParams);
+
+    m_currentSyncName = params->name;
+    m_pendingSyncKind = PendingSyncKind::Command;
+    m_lastSyncErrorKind = RemoteSyncProvider::ErrorKind::Other;
+    m_syncInProgress = true;
     setDisabled(true);
     emit databaseSyncInProgress();
 
-    QScopedPointer<RemoteHandler> remoteHandler(new RemoteHandler(this));
-    RemoteHandler::RemoteResult result;
-    result.success = false;
-    result.errorMessage = tr("Remote Sync did not contain any download or upload commands.");
+    // Parent the provider to `this` (DatabaseWidget) rather than the engine: the
+    // QScopedPointer m_syncProvider already owns lifetime, and parenting to the
+    // engine creates a use-after-free hazard if the engine is reset before the QSP
+    // (any future engine.reset() would Qt-delete the provider out from under the
+    // QSP, which still holds the dangling pointer until its next reset/dtor).
+    m_syncProvider.reset(RemoteSyncProvider::create(cmdParams->type, this));
+    if (!m_syncProvider) {
+        m_syncInProgress = false;
+        m_pendingSyncKind = PendingSyncKind::None;
+        setDisabled(false);
+        showErrorMessage(tr("Unknown sync provider type: %1").arg(cmdParams->type));
+        return;
+    }
 
-    // Download the database
-    if (!params->downloadCommand.isEmpty()) {
-        emit updateSyncProgress(25, tr("Downloading..."));
-        // Start a download first then merge and upload in the callback
-        result = remoteHandler->download(params);
-        if (result.success) {
-            QString error;
-            QSharedPointer<Database> remoteDb = QSharedPointer<Database>::create();
-            if (!remoteDb->open(result.filePath, m_db->key(), &error)) {
-                // Failed to open downloaded remote database with same key
-                // Unlock downloaded remote database via dialog
-                syncDatabaseWithLockedDatabase(result.filePath, params);
-                return;
-            }
-            remoteDb->markAsTemporaryDatabase();
-            if (!syncWithDatabase(remoteDb, error)) {
-                // Something failed during the sync process
-                result.success = false;
-                result.errorMessage = error;
-            }
+    if (!m_syncEngine->startSync(m_syncProvider.data(), m_syncParams.data())) {
+        // Sync already in progress -- syncError signal handles messaging
+        m_syncInProgress = false;
+        m_pendingSyncKind = PendingSyncKind::None;
+        setDisabled(false);
+    }
+}
+
+void DatabaseWidget::syncWithCloud()
+{
+#ifdef KPXC_FEATURE_NETWORK
+    // Symmetric with syncWithRemote: refuse re-entry. Prevents the inner sync
+    // from clobbering m_syncProvider / m_syncParams while the outer call is
+    // still using them, and avoids two concurrent SyncEngine flows.
+    if (m_syncInProgress) {
+        return;
+    }
+
+    const QString type = m_remoteSettings->activeProvider();
+    if (type.isEmpty()) {
+        return; // No active cloud provider configured
+    }
+    const QString configName = type + QStringLiteral("-default");
+    QJsonObject config = m_remoteSettings->getProviderConfig(type, configName);
+
+    initSyncEngine();
+
+    // Construct the provider first so we can dispatch isAuthorized + buildParamsFromConfig + displayName.
+    // Parented to `this`, not m_syncEngine — see use-after-free note at the command-sync site above.
+    m_syncProvider.reset(RemoteSyncProvider::create(type, this));
+    if (!m_syncProvider) {
+        showErrorMessage(tr("Unknown sync provider type: %1").arg(type));
+        return;
+    }
+    if (!m_syncProvider->isAuthorized(config)) {
+        return; // Provider says config doesn't represent an authorized state
+    }
+
+    // Build provider-specific params via virtual dispatch (no inline construction here).
+    m_syncParams.reset(m_syncProvider->buildParamsFromConfig(config));
+
+    m_currentSyncName = m_syncProvider->displayName(); // User-visible provider name
+    m_currentSyncConfigName = configName; // Config key for token refresh
+    m_pendingSyncKind = PendingSyncKind::Cloud;
+    m_lastSyncErrorKind = RemoteSyncProvider::ErrorKind::Other;
+    m_syncInProgress = true;
+    setDisabled(true);
+    emit databaseSyncInProgress();
+
+    if (!m_syncEngine->startSync(m_syncProvider.data(), m_syncParams.data())) {
+        m_syncInProgress = false;
+        m_pendingSyncKind = PendingSyncKind::None;
+        setDisabled(false);
+    }
+#endif
+}
+
+#ifdef KPXC_FEATURE_NETWORK
+QJsonObject DatabaseWidget::getCloudSyncConfig() const
+{
+    const QString type = m_remoteSettings->activeProvider();
+    if (type.isEmpty()) {
+        return QJsonObject{};
+    }
+    return m_remoteSettings->getProviderConfig(type, type + QStringLiteral("-default"));
+}
+
+QString DatabaseWidget::getCloudSyncProviderDisplayName() const
+{
+    // Use the active provider type rather than m_syncProvider, which is only
+    // populated after a sync has been kicked off — the menu / status surface
+    // needs the display name as soon as a provider is configured.
+    const QString type = m_remoteSettings->activeProvider();
+    if (type.isEmpty()) {
+        return QString{};
+    }
+    QScopedPointer<RemoteSyncProvider> provider(RemoteSyncProvider::create(type));
+    return provider ? provider->displayName() : QString{};
+}
+
+bool DatabaseWidget::isCloudSyncAuthorized() const
+{
+    const QString type = m_remoteSettings->activeProvider();
+    if (type.isEmpty()) {
+        return false;
+    }
+    const QJsonObject config = m_remoteSettings->getProviderConfig(type, type + QStringLiteral("-default"));
+    if (config.isEmpty()) {
+        return false;
+    }
+    QScopedPointer<RemoteSyncProvider> provider(RemoteSyncProvider::create(type));
+    return provider && provider->isAuthorized(config);
+}
+
+RemoteSyncProvider::ErrorKind DatabaseWidget::classifyCloudSyncError(const QString& errorMessage) const
+{
+    // Prefer the kind cached from the last sync's failure result -- the
+    // provider set it from a machine-readable signal (HTTP status / OAuth
+    // error code) when the error was produced. Falling back to substring-
+    // matching the (localized) error message is the path used by
+    // command/script sync, which carries no kind on its shell stdout.
+    if (m_lastSyncErrorKind != RemoteSyncProvider::ErrorKind::Other) {
+        return m_lastSyncErrorKind;
+    }
+    return m_syncProvider->classifyError(errorMessage);
+}
+
+void DatabaseWidget::onDatabaseSavedTriggerSync()
+{
+    // Don't trigger if sync is already running (prevents infinite sync-save loop)
+    if (m_syncInProgress) {
+        return;
+    }
+    if (m_syncEngine && m_syncEngine->state() != SyncEngine::State::Idle) {
+        return;
+    }
+    if (!isCloudSyncAuthorized()) {
+        return;
+    }
+    const QString type = m_remoteSettings->activeProvider();
+    const QJsonObject config = m_remoteSettings->getProviderConfig(type, type + QStringLiteral("-default"));
+    if (!config.value(QStringLiteral("syncOnSave")).toBool(true)) {
+        return;
+    }
+    syncWithCloud();
+}
+
+void DatabaseWidget::onDatabaseUnlockedTriggerSync()
+{
+    if (m_syncInProgress) {
+        return;
+    }
+    if (!isCloudSyncAuthorized()) {
+        return;
+    }
+    const QString type = m_remoteSettings->activeProvider();
+    const QJsonObject config = m_remoteSettings->getProviderConfig(type, type + QStringLiteral("-default"));
+    if (!config.value(QStringLiteral("syncOnOpen")).toBool(true)) {
+        return;
+    }
+    // Defer sync after unlock flow completes (avoids interference with processAutoOpen)
+    QTimer::singleShot(0, this, &DatabaseWidget::syncWithCloud);
+}
+#endif
+
+void DatabaseWidget::initSyncEngine()
+{
+    if (m_syncEngine) {
+        // If the engine is stuck in a non-Idle state (e.g., after remoteDbNeedsKey
+        // where sync was abandoned), destroy and recreate it.
+        if (m_syncEngine->state() != SyncEngine::State::Idle) {
+            // Restore widget state before destroying — no syncFinished/syncError will fire
+            m_syncInProgress = false;
+            setDisabled(false);
+            emit updateSyncProgress(-1, "");
+            m_syncEngine.reset();
+        } else {
+            return;
         }
     }
 
-    uploadAndFinishSync(params, result);
-}
+    // Route the engine's local save through performSave so cloud sync inherits
+    // the user's normal save policy (UseAtomicSaves / UseDirectWriteSaves /
+    // BackupBeforeSave / MainWindow lockout). Capturing `this` is safe: the
+    // engine is parented to `this` and never outlives the widget.
+    auto saveFn = [this](QString& errorMessage) -> bool {
+        return performSave(errorMessage, /*fileName=*/QString());
+    };
+    m_syncEngine.reset(new SyncEngine(m_db, saveFn, this));
 
-void DatabaseWidget::syncDatabaseWithLockedDatabase(const QString& filePath, const RemoteParams* params)
-{
-    // disconnect any previously added slots to these signal
-    disconnect(this, &DatabaseWidget::databaseSyncUnlocked, nullptr, nullptr);
-    disconnect(this, &DatabaseWidget::databaseSyncUnlockFailed, nullptr, nullptr);
-
-    connect(this, &DatabaseWidget::databaseSyncUnlocked, [this, params](const RemoteHandler::RemoteResult& result) {
-        uploadAndFinishSync(params, result);
-    });
-    connect(this, &DatabaseWidget::databaseSyncUnlockFailed, [this, params](const RemoteHandler::RemoteResult& result) {
-        finishSync(params, result);
+    connect(m_syncEngine.data(), &SyncEngine::syncProgress, this, [this](int pct, const QString& msg) {
+        emit updateSyncProgress(pct, msg);
     });
 
-    emit unlockDatabaseInDialogForSync(filePath);
-}
+    connect(m_syncEngine.data(), &SyncEngine::syncFinished, this, [this](bool success, const QString& msg) {
+        m_syncInProgress = false;
+        m_pendingSyncKind = PendingSyncKind::None;
+        // Cache the provider-reported error kind so classifyCloudSyncError
+        // (invoked from MainWindow's syncFailed banner code) dispatches on a
+        // machine-readable signal instead of substring-matching the localized
+        // error message.
+        m_lastSyncErrorKind =
+            m_syncEngine ? m_syncEngine->lastErrorKind() : RemoteSyncProvider::ErrorKind::Other;
+        setDisabled(false);
+        emit updateSyncProgress(-1, "");
+        const bool adopted = m_remoteKeyAdoptedDuringSync;
+        m_remoteKeyAdoptedDuringSync = false;
+        if (success) {
+            emit databaseSyncCompleted(m_currentSyncName);
+            if (adopted) {
+                showMessage(tr("Master key from remote was more recent and was applied to "
+                               "current database. Remote sync '%1' completed.")
+                                .arg(m_currentSyncName),
+                            MessageWidget::Positive,
+                            false);
+            } else {
+                showMessage(tr("Remote sync '%1' completed!").arg(m_currentSyncName),
+                            MessageWidget::Positive,
+                            false);
+            }
+        } else {
+            emit databaseSyncFailed(m_currentSyncName, msg);
+            if (adopted) {
+                showErrorMessage(tr("Master key from remote was applied to current database, "
+                                    "but remote sync '%1' failed: %2")
+                                     .arg(m_currentSyncName, msg));
+            } else {
+                showErrorMessage(tr("Remote sync '%1' failed: %2").arg(m_currentSyncName, msg));
+            }
+        }
+    });
 
-void DatabaseWidget::uploadAndFinishSync(const RemoteParams* params, RemoteHandler::RemoteResult result)
-{
-    QScopedPointer<RemoteHandler> remoteHandler(new RemoteHandler(this));
-    if (result.success && !params->uploadCommand.isEmpty()) {
-        emit updateSyncProgress(75, tr("Uploading..."));
-        result = remoteHandler->upload(result.filePath, params);
-    }
+    connect(m_syncEngine.data(), &SyncEngine::syncError, this, [this](const QString& error) {
+        // Overlap rejection -- re-enable and show error
+        m_pendingSyncKind = PendingSyncKind::None;
+        m_syncInProgress = false;
+        setDisabled(false);
+        showErrorMessage(error);
+    });
 
-    finishSync(params, result);
-}
+    connect(m_syncEngine.data(), &SyncEngine::remoteDbNeedsKey, this, [this](const QString& filePath) {
+        // Remote DB couldn't be opened with the current key (and the
+        // syncPreviousKey fallback didn't match either). Open the unlock
+        // dialog; on success, syncUnlockedDatabase() captures the user-
+        // provided key as syncPreviousKey and re-triggers the sync via the
+        // path matching m_pendingSyncKind (Command vs Cloud). On cancel,
+        // unlockDatabase() removes the orphaned temp file.
+        //
+        // m_syncParams / m_syncProvider / m_syncEngine are kept alive across
+        // the unlock dialog so a Command-kind resume still has its original
+        // RemoteParams. They are reset/rebuilt at the resume site.
+        m_syncInProgress = false;
+        setDisabled(false);
+        emit updateSyncProgress(-1, "");
+        m_pendingRemoteSyncFilePath = filePath;
+        emit unlockDatabaseInDialogForSync(filePath);
+    });
 
-void DatabaseWidget::finishSync(const RemoteParams* params, RemoteHandler::RemoteResult result)
-{
-    setDisabled(false);
-    emit updateSyncProgress(-1, "");
-    if (result.success) {
-        emit databaseSyncCompleted(params->name);
-        showMessage(tr("Remote sync '%1' completed successfully!").arg(params->name), MessageWidget::Positive, false);
-    } else {
-        emit databaseSyncFailed(params->name, result.errorMessage);
-        showErrorMessage(tr("Remote sync '%1' failed: %2").arg(params->name, result.errorMessage));
-    }
+    connect(m_syncEngine.data(), &SyncEngine::refreshedTokenData, this, [this](const QString& tokenDataJson) {
+        // Thin dispatch -- provider's persistRefreshedTokens owns the parse + persist.
+        // Command-type syncs (no m_currentSyncConfigName) and sessions without an
+        // active provider are skipped here.
+        if (m_currentSyncConfigName.isEmpty() || !m_syncProvider) {
+            return;
+        }
+        m_syncProvider->persistRefreshedTokens(tokenDataJson, m_currentSyncConfigName, m_remoteSettings.data());
+    });
 }
 
 QList<RemoteParams*> DatabaseWidget::getRemoteParams() const
@@ -1322,6 +1563,18 @@ void DatabaseWidget::connectDatabaseSignals()
     connect(m_db.data(), &Database::databaseFileChanged, this, &DatabaseWidget::reloadDatabaseFile);
     connect(m_db.data(), &Database::databaseNonDataChanged, this, &DatabaseWidget::databaseNonDataChanged);
     connect(m_db.data(), &Database::databaseNonDataChanged, this, &DatabaseWidget::onDatabaseNonDataChanged);
+
+#ifdef KPXC_FEATURE_NETWORK
+    // Sync-on-save: trigger cloud sync after successful save
+    // Sync-on-save: run cloud sync after the save fully completes.
+    // QueuedConnection ensures the sync starts in the next event loop iteration,
+    // after the save operation has released its lock on the database file.
+    connect(
+        m_db.data(), &Database::databaseSaved, this, &DatabaseWidget::onDatabaseSavedTriggerSync, Qt::QueuedConnection);
+    // Note: sync-on-open (databaseUnlocked→onDatabaseUnlockedTriggerSync) is connected
+    // once in the constructor — NOT here, since both endpoints are `this` and the
+    // connection would accumulate on every replaceDatabase/connectDatabaseSignals call.
+#endif
 }
 
 void DatabaseWidget::loadDatabase(bool accepted)
@@ -1419,55 +1672,109 @@ void DatabaseWidget::mergeDatabase(bool accepted)
 
 void DatabaseWidget::syncUnlockedDatabase(bool accepted)
 {
-    if (accepted) {
-        if (!m_db) {
-            showMessage(tr("No current database."), MessageWidget::Error);
-            return;
-        }
-
-        auto* senderDialog = qobject_cast<DatabaseOpenDialog*>(sender());
-
-        Q_ASSERT(senderDialog);
-        if (!senderDialog) {
-            return;
-        }
-        auto destinationDb = senderDialog->database();
-
-        if (!destinationDb) {
-            showMessage(tr("No source database, nothing to do."), MessageWidget::Error);
-            return;
-        }
-
-        RemoteHandler::RemoteResult result;
-        QString error;
-        result.success = syncWithDatabase(destinationDb, error);
-        result.errorMessage = error;
-        result.filePath = destinationDb->filePath();
-
-        emit databaseSyncUnlocked(result);
-    }
     switchToMainView();
-}
 
-bool DatabaseWidget::syncWithDatabase(const QSharedPointer<Database>& otherDb, QString& error)
-{
-    emit updateSyncProgress(50, tr("Syncing..."));
-    Merger firstMerge(m_db.data(), otherDb.data());
-    Merger secondMerge(otherDb.data(), m_db.data());
-    auto changeList = firstMerge.merge() + secondMerge.merge();
+#ifdef KPXC_FEATURE_NETWORK
+    // The temp file from the failed-merge attempt is no longer needed --
+    // the upcoming fresh sync will download into its own new temp file.
+    QFile::remove(m_pendingRemoteSyncFilePath);
+    m_pendingRemoteSyncFilePath.clear();
 
-    if (!changeList.isEmpty()) {
-        // Save synced databases
-        if (!save()) {
-            error = tr("Error while saving database %1: %2").arg(m_db->filePath(), error);
-            return false;
-        }
-        if (!otherDb->save(Database::Atomic, {}, &error)) {
-            error = tr("Error while saving database %1: %2").arg(otherDb->filePath(), error);
-            return false;
-        }
+    // Capture the resume kind and clear it before any branch so a re-entrant
+    // call into one of the resume paths sees a clean slate.
+    const PendingSyncKind kind = m_pendingSyncKind;
+    m_pendingSyncKind = PendingSyncKind::None;
+
+    if (!accepted) {
+        // Drop the preserved sync context -- the user cancelled the unlock.
+        m_syncParams.reset();
+        m_syncProvider.reset();
+        m_syncEngine.reset();
+        return;
     }
-    return true;
+
+    // sender() is the DatabaseOpenDialog that just emitted dialogFinished
+    // -- unlockDatabase already cast and intent-checked it before routing
+    // here, so the cast cannot fail.
+    auto* senderDialog = qobject_cast<DatabaseOpenDialog*>(sender());
+    auto remoteDb = senderDialog->database();
+    const auto remoteKey = remoteDb->key();
+    const auto remoteKeyChangedAt = remoteDb->metadata()->databaseKeyChanged();
+    const auto localKeyChangedAt = m_db->metadata()->databaseKeyChanged();
+
+    if (kind == PendingSyncKind::Cloud) {
+        // "Newer wins" reconciliation -- the master-key change with the more
+        // recent timestamp is treated as the user's most recent intent. See
+        // TestDatabase::testSyncResolveByTimestamp for the building-block
+        // invariants this dispatch relies on (notably: setKey(updateChangedTime
+        // =false) preserves the timestamp, so the adopt arm doesn't bump it).
+        //
+        // Newer-wins adoption is Cloud-only: command/script sync keeps the
+        // simpler behavior (just feed the entered key as syncPreviousKey and
+        // re-run the sync), so a user who never opted into cloud sync can't
+        // have their local master key silently replaced by whatever the
+        // script-sync remote happens to hold.
+        if (remoteKeyChangedAt > localKeyChangedAt) {
+            // Remote key is newer -- adopt it locally and inherit the remote's
+            // change timestamp so the next sync sees a stable value (otherwise
+            // the local would always look "newer than remote" and we'd flip
+            // back, clobbering whatever migrated us in the first place).
+            m_db->setKey(remoteKey, false, false, false);
+            m_db->metadata()->setDatabaseKeyChanged(remoteKeyChangedAt);
+            m_db->clearSyncPreviousKey();
+            m_remoteKeyAdoptedDuringSync = true;
+        } else {
+            // Local key is newer (or equal -- tiebreak to local since we're
+            // initiating the sync). Push local; the dialog-typed remote key
+            // becomes the previousKey so doMerge unlocks the remote, then
+            // doUpload writes the local-current key.
+            m_db->clearSyncPreviousKey();
+            m_db->setSyncPreviousKey(remoteKey);
+        }
+        // Re-read config from RemoteSettings; the active provider may have
+        // changed between sync start and unlock-dialog completion.
+        m_syncParams.reset();
+        m_syncProvider.reset();
+        m_syncEngine.reset();
+        syncWithCloud();
+    } else if (kind == PendingSyncKind::Command) {
+        // Command/script sync: feed the unlock key as previousKey so the
+        // SyncEngine's doMerge retry opens the remote on the next attempt,
+        // then re-trigger the same sync via its preserved CommandSyncParams.
+        m_db->clearSyncPreviousKey();
+        m_db->setSyncPreviousKey(remoteKey);
+
+        // Rebuild a transient RemoteParams view over the preserved
+        // CommandSyncParams so syncWithRemote's existing entry-point handles
+        // engine + provider + state setup uniformly. The kind/params pair
+        // is set atomically at every sync entry, so kind == Command
+        // (gated above) implies m_syncParams holds CommandSyncParams.
+        auto* cmd = static_cast<CommandSyncParams*>(m_syncParams.data());
+        RemoteParams resume;
+        resume.name = cmd->name;
+        resume.downloadCommand = cmd->downloadCommand;
+        resume.downloadInput = cmd->downloadInput;
+        resume.downloadTimeoutMsec = cmd->downloadTimeoutMsec;
+        resume.uploadCommand = cmd->uploadCommand;
+        resume.uploadInput = cmd->uploadInput;
+        resume.uploadTimeoutMsec = cmd->uploadTimeoutMsec;
+        // syncWithRemote builds a fresh CommandSyncParams + provider + engine,
+        // so dropping the preserved ones first avoids a stray double-owner
+        // when the QScopedPointer's reset assigns the new instances.
+        m_syncParams.reset();
+        m_syncProvider.reset();
+        m_syncEngine.reset();
+        syncWithRemote(&resume);
+    } else {
+        // No pending kind -- shouldn't happen if the lambda set it, but fall
+        // through cleanly rather than triggering an unrelated sync.
+        m_syncParams.reset();
+        m_syncProvider.reset();
+        m_syncEngine.reset();
+    }
+#else
+    Q_UNUSED(accepted)
+#endif
 }
 
 /**
@@ -1484,6 +1791,19 @@ void DatabaseWidget::unlockDatabase(bool accepted)
             emit closeRequest();
         }
         if (senderDialog && senderDialog->intent() == DatabaseOpenDialog::Intent::RemoteSync) {
+#ifdef KPXC_FEATURE_NETWORK
+            // SyncEngine handed off ownership of the downloaded temp file
+            // when it emitted remoteDbNeedsKey; cancel means we won't
+            // resume sync, so clean it up now. Also drop the preserved
+            // sync context (params / provider / engine were kept alive for
+            // a potential resume).
+            QFile::remove(m_pendingRemoteSyncFilePath);
+            m_pendingRemoteSyncFilePath.clear();
+            m_pendingSyncKind = PendingSyncKind::None;
+            m_syncParams.reset();
+            m_syncProvider.reset();
+            m_syncEngine.reset();
+#endif
             RemoteHandler::RemoteResult result;
             result.success = false;
             result.errorMessage = "Remote database unlock cancelled.";
@@ -1675,6 +1995,14 @@ void DatabaseWidget::switchToRemoteSettings()
     switchToDatabaseSettings();
     m_databaseSettingDialog->showRemoteSettings();
 }
+
+#ifdef KPXC_FEATURE_NETWORK
+void DatabaseWidget::switchToCloudSyncSettings()
+{
+    switchToDatabaseSettings();
+    m_databaseSettingDialog->showCloudSyncSettings();
+}
+#endif
 
 #ifdef KPXC_FEATURE_BROWSER
 void DatabaseWidget::switchToPasskeys()
@@ -2025,6 +2353,14 @@ bool DatabaseWidget::lock()
 {
     if (isLocked() || m_attemptingLock) {
         return isLocked();
+    }
+
+    // Prevents UAF when nested event loop in HttpRetryHelper pumps a lock action during sync.
+    if (m_syncInProgress) {
+        showMessage(tr("Cannot lock database while cloud sync is in progress. "
+                       "Please wait for sync to finish or fail."),
+                    MessageWidget::Warning);
+        return false;
     }
 
     // ignore when reloading

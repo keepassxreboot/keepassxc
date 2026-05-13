@@ -23,10 +23,12 @@
 #include <QDesktopServices>
 #include <QDir>
 #include <QFileInfo>
+#include <QJsonObject>
 #include <QList>
 #include <QMimeData>
 #include <QShortcut>
 #include <QStatusBar>
+#include <QTime>
 #include <QTimer>
 #include <QToolButton>
 #include <QWindow>
@@ -53,6 +55,11 @@
 #include "keeshare/KeeShare.h"
 #include "keeshare/SettingsPageKeeShare.h"
 #include "keys/drivers/YubiKey.h"
+
+#ifdef KPXC_FEATURE_NETWORK
+#include "remotesync/RemoteSyncProvider.h"
+#include "remotesync/SyncEngine.h"
+#endif
 
 #ifdef KPXC_FEATURE_UPDATES
 #include "gui/UpdateCheckDialog.h"
@@ -650,7 +657,11 @@ MainWindow::MainWindow()
     m_actionMultiplexer.connect(SIGNAL(updateSyncProgress(int, QString)), this, SLOT(updateProgressBar(int, QString)));
     m_actionMultiplexer.connect(SIGNAL(databaseSyncInProgress()), this, SLOT(disableMenuAndToolbar()));
     m_actionMultiplexer.connect(SIGNAL(databaseSyncCompleted(QString)), this, SLOT(enableMenuAndToolbar()));
-    m_actionMultiplexer.connect(SIGNAL(databaseSyncFailed(QString, const QString)), this, SLOT(enableMenuAndToolbar()));
+    m_actionMultiplexer.connect(SIGNAL(databaseSyncFailed(QString, QString)), this, SLOT(enableMenuAndToolbar()));
+#ifdef KPXC_FEATURE_NETWORK
+    m_actionMultiplexer.connect(SIGNAL(databaseSyncCompleted(QString)), this, SLOT(updateSyncStatusBar(QString)));
+    m_actionMultiplexer.connect(SIGNAL(databaseSyncFailed(QString, QString)), this, SLOT(updateSyncFailedStatusBar(QString, QString)));
+#endif
     m_statusBarLabel = new QLabel(statusBar());
     m_statusBarLabel->setObjectName("statusBarLabel");
     statusBar()->addPermanentWidget(m_statusBarLabel);
@@ -1219,9 +1230,28 @@ void MainWindow::updateRemoteSyncMenuEntries()
 
     auto dbWidget = m_ui->tabWidget->currentDatabaseWidget();
     if (dbWidget) {
-        // Setup sync shortcut
-        auto action = m_ui->menuRemoteSync->addAction(tr("Setup Remote Sync…"));
-        connect(action, &QAction::triggered, dbWidget, &DatabaseWidget::switchToRemoteSettings);
+#ifdef KPXC_FEATURE_NETWORK
+        // Cloud sync trigger -- only shown when configured and authorized
+        if (dbWidget->isCloudSyncAuthorized()) {
+            QString providerName = dbWidget->getCloudSyncProviderDisplayName();
+            if (!providerName.isEmpty()) {
+                auto* triggerAction = new QAction(tr("Trigger %1 Sync").arg(providerName), m_ui->menuRemoteSync);
+                m_ui->menuRemoteSync->addAction(triggerAction);
+                connect(triggerAction, &QAction::triggered, dbWidget, &DatabaseWidget::syncWithCloud);
+                m_ui->menuRemoteSync->addSeparator();
+            }
+        }
+#endif
+
+        // Script Sync opens command-based sync config
+        auto scriptAction = m_ui->menuRemoteSync->addAction(tr("Script Sync..."));
+        connect(scriptAction, &QAction::triggered, dbWidget, &DatabaseWidget::switchToRemoteSettings);
+
+#ifdef KPXC_FEATURE_NETWORK
+        // Cloud Sync opens provider-based cloud sync config
+        auto cloudAction = m_ui->menuRemoteSync->addAction(tr("Cloud Sync..."));
+        connect(cloudAction, &QAction::triggered, dbWidget, &DatabaseWidget::switchToCloudSyncSettings);
+#endif
 
         m_ui->menuRemoteSync->addSeparator();
 
@@ -1590,6 +1620,16 @@ void MainWindow::updateProgressBar(int percentage, QString message)
 
 void MainWindow::updateEntryCountLabel()
 {
+    // Clear sync status on user action (naturally triggered by groupChanged,
+    // databaseModified, searchModeActivated, listModeActivated signals)
+    if (m_syncStatusShown) {
+        m_syncStatusShown = false;
+        statusBar()->setAutoFillBackground(false);
+        QPalette pal = statusBar()->palette();
+        pal.setColor(QPalette::Window, palette().color(QPalette::Window));
+        statusBar()->setPalette(pal);
+    }
+
     auto dbWidget = m_ui->tabWidget->currentDatabaseWidget();
     if (dbWidget && dbWidget->currentMode() == DatabaseWidget::Mode::ViewMode) {
         int numEntries = dbWidget->entryView()->model()->rowCount();
@@ -1598,6 +1638,48 @@ void MainWindow::updateEntryCountLabel()
         m_statusBarLabel->setText("");
     }
 }
+
+#ifdef KPXC_FEATURE_NETWORK
+void MainWindow::updateSyncStatusBar(const QString& syncName)
+{
+    QString time = QTime::currentTime().toString(QStringLiteral("h:mm AP"));
+    m_statusBarLabel->setText(tr("%1: Synced %2").arg(syncName, time));
+
+    // Clear any red background from previous failure
+    statusBar()->setAutoFillBackground(false);
+    QPalette pal = statusBar()->palette();
+    pal.setColor(QPalette::Window, palette().color(QPalette::Window));
+    statusBar()->setPalette(pal);
+
+    m_syncStatusShown = true;
+}
+
+void MainWindow::updateSyncFailedStatusBar(const QString& syncName, const QString& error)
+{
+    QString time = QTime::currentTime().toString(QStringLiteral("h:mm AP"));
+    m_statusBarLabel->setText(tr("%1: Failed Sync %2").arg(syncName, time));
+
+    // Red background for failure
+    statusBar()->setAutoFillBackground(true);
+    QPalette pal = statusBar()->palette();
+    pal.setColor(QPalette::Window, QColor(Qt::red).lighter(160));
+    statusBar()->setPalette(pal);
+
+    m_syncStatusShown = true;
+
+    // Auth failure detection: route through the active provider's classifyError
+    // virtual via DatabaseWidget accessor; banner uses runtime provider displayName.
+    auto dbWidget = m_ui->tabWidget->currentDatabaseWidget();
+    if (dbWidget) {
+        auto kind = dbWidget->classifyCloudSyncError(error);
+        if (kind == RemoteSyncProvider::ErrorKind::AuthExpired || kind == RemoteSyncProvider::ErrorKind::AuthRevoked) {
+            const QString providerName = dbWidget->getCloudSyncProviderDisplayName();
+            dbWidget->showErrorMessage(
+                tr("%1 authorization expired. Re-authorize in Database > Settings > Cloud Sync.").arg(providerName));
+        }
+    }
+}
+#endif
 
 void MainWindow::obtainContextFocusLock()
 {

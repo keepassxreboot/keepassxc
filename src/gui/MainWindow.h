@@ -155,6 +155,10 @@ private slots:
     void enableMenuAndToolbar();
     void disableMenuAndToolbar();
     void clearSSHAgent();
+#ifdef KPXC_FEATURE_NETWORK
+    void updateSyncStatusBar(const QString& syncName);
+    void updateSyncFailedStatusBar(const QString& syncName, const QString& error);
+#endif
 
 private:
     static const QString BaseWindowTitle;
@@ -192,6 +196,7 @@ private:
 
     Q_DISABLE_COPY(MainWindow)
 
+    bool m_syncStatusShown = false;
     bool m_windowInformationRestored = false;
     bool m_appExitCalled = false;
     bool m_appExiting = false;
