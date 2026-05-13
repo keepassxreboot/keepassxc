@@ -43,6 +43,7 @@ private slots:
     void cleanupTestCase();
 
     void CloudSettingNotImpactedWhileExploringOtherProviders();
+    void CloudSettingSwitchProviderRemoveOldOne();
 
 private:
     void triggerAction(const QString& name);

@@ -20,6 +20,7 @@
 #include <QAction>
 #include <QComboBox>
 #include <QDialogButtonBox>
+#include <QGroupBox>
 #include <QJsonObject>
 #include <QLabel>
 #include <QLineEdit>
@@ -339,4 +340,137 @@ void TestCloudSyncWidget::CloudSettingNotImpactedWhileExploringOtherProviders()
     // No Nextcloud record persisted -- we only ever filled Dropbox.
     QVERIFY(verifySettings.getProviderConfig(QStringLiteral("nextcloud"), QStringLiteral("nextcloud-default"))
                 .isEmpty());
+}
+
+// Check that switching to a different provider, filling it, and clicking Apply
+// removes the previously-configured provider from the database JSON. Encodes
+// the single-provider model enforced by
+// DatabaseSettingsWidgetCloudSync::saveSettings: when the active page is
+// authorized, every other page's config is wiped from RemoteSettings and the
+// active page becomes the database's only cloud-sync provider.
+void TestCloudSyncWidget::CloudSettingSwitchProviderRemoveOldOne()
+{
+    auto* comboBox = m_widget->findChild<QComboBox*>(QStringLiteral("providerComboBox"));
+    auto* dropboxPage = m_widget->findChild<DropboxCloudSyncPage*>(QStringLiteral("dropboxPage"));
+    auto* nextcloudPage = m_widget->findChild<NextcloudCloudSyncPage*>(QStringLiteral("nextcloudPage"));
+    auto* appKeyEdit = findInDropboxPage<QLineEdit>(m_widget, "appKeyEdit");
+    auto* dropboxRemotePathEdit = findInDropboxPage<QLineEdit>(m_widget, "remotePathEdit");
+    auto* authorizeButton = findInDropboxPage<QPushButton>(m_widget, "authorizeButton");
+    auto* serverBaseUrlEdit = findInNextcloudPage<QLineEdit>(m_widget, "serverBaseUrlEdit");
+    auto* nextcloudRemotePathEdit = findInNextcloudPage<QLineEdit>(m_widget, "remotePathEdit");
+    auto* loginNameEdit = findInNextcloudPage<QLineEdit>(m_widget, "loginNameEdit");
+    auto* appPasswordEdit = findInNextcloudPage<QLineEdit>(m_widget, "appPasswordEdit");
+    auto* appPasswordGroupBox = findInNextcloudPage<QGroupBox>(m_widget, "appPasswordGroupBox");
+    QVERIFY(comboBox);
+    QVERIFY(dropboxPage);
+    QVERIFY(nextcloudPage);
+    QVERIFY(appKeyEdit);
+    QVERIFY(dropboxRemotePathEdit);
+    QVERIFY(authorizeButton);
+    QVERIFY(serverBaseUrlEdit);
+    QVERIFY(nextcloudRemotePathEdit);
+    QVERIFY(loginNameEdit);
+    QVERIFY(appPasswordEdit);
+    QVERIFY(appPasswordGroupBox);
+
+    // ---- Step 1: configure + Apply Dropbox -------------------------------
+    QTest::keyClicks(appKeyEdit, QStringLiteral("test-app-key"));
+    QTest::keyClicks(dropboxRemotePathEdit, QStringLiteral("/old.kdbx"));
+
+    auto* loginFlow = new MockDropboxLoginFlow();
+    loginFlow->setCannedTokens(QStringLiteral("dropbox-tok"), QStringLiteral("dropbox-rtok"), 99999999999LL);
+    loginFlow->setNextStartOutcome(MockDropboxLoginFlow::StartOutcome::Completed);
+    dropboxPage->setLoginFlowForTest(loginFlow);
+    QVERIFY(authorizeButton->isVisible());
+    QVERIFY(authorizeButton->isEnabled());
+    QTest::mouseClick(authorizeButton, Qt::LeftButton);
+    QTRY_VERIFY(m_applyButton->isEnabled());
+
+    QVERIFY(m_applyButton->isVisible());
+    QTest::mouseClick(m_applyButton, Qt::LeftButton);
+    QVERIFY(!m_applyButton->isEnabled());
+
+    // Intermediate state: Dropbox persisted, no Nextcloud record yet.
+    // Asserting this in-line proves that step 2's wipe assertion later is
+    // actually testing "Dropbox WAS there before Apply" -- not just "Dropbox
+    // was never there to begin with."
+    {
+        RemoteSettings rs(m_db, nullptr);
+        QJsonObject dropboxConfig =
+            rs.getProviderConfig(QStringLiteral("dropbox"), QStringLiteral("dropbox-default"));
+        QCOMPARE(dropboxConfig[QStringLiteral("type")].toString(), QStringLiteral("dropbox"));
+        QCOMPARE(dropboxConfig[QStringLiteral("appKey")].toString(), QStringLiteral("test-app-key"));
+        QCOMPARE(dropboxConfig[QStringLiteral("remotePath")].toString(), QStringLiteral("/old.kdbx"));
+        QCOMPARE(dropboxConfig[QStringLiteral("accessToken")].toString(), QStringLiteral("dropbox-tok"));
+        QCOMPARE(dropboxConfig[QStringLiteral("refreshToken")].toString(), QStringLiteral("dropbox-rtok"));
+        QCOMPARE(rs.activeProvider(), QStringLiteral("dropbox"));
+        QVERIFY(rs.getProviderConfig(QStringLiteral("nextcloud"), QStringLiteral("nextcloud-default")).isEmpty());
+    }
+
+    // ---- Step 2: switch to Nextcloud and fill it -------------------------
+    comboBox->setCurrentIndex(1);
+    QCOMPARE(comboBox->currentText(), QStringLiteral("Nextcloud"));
+    // Switching providers is not a user edit -- Apply stays grayed.
+    QVERIFY(!m_applyButton->isEnabled());
+
+    QTest::keyClicks(serverBaseUrlEdit, QStringLiteral("https://cloud.example.com"));
+    // CRITICAL: first user edit after the page-switch must enable Apply.
+    QTRY_VERIFY(m_applyButton->isEnabled());
+    QTest::keyClicks(nextcloudRemotePathEdit, QStringLiteral("/Passwords/Database.kdbx"));
+
+    // Expand the App Password sub-panel and type the credentials. This is
+    // the "paste-without-Authorize" path the page explicitly supports:
+    // saveToConfig reads loginNameEdit / appPasswordEdit when non-empty,
+    // bypassing onAppPasswordAuthorizeClicked (which would call
+    // NextcloudSyncProvider::testConnection -- real network, no mock
+    // available on this branch). Filling the line edits matches what a
+    // user would type; what we skip is the optional pre-flight test, not
+    // the persistence path being verified.
+    appPasswordGroupBox->setChecked(true);
+    QTest::keyClicks(loginNameEdit, QStringLiteral("alice"));
+    QTest::keyClicks(appPasswordEdit, QStringLiteral("app-pw-123"));
+
+    // ---- Step 3: Apply -- the single-provider wipe must fire here --------
+    QTRY_VERIFY(m_applyButton->isEnabled());
+    QVERIFY(m_applyButton->isVisible());
+    QTest::mouseClick(m_applyButton, Qt::LeftButton);
+    QVERIFY(!m_applyButton->isEnabled());
+
+    // ---- Step 4: final on-disk state -------------------------------------
+    // The point of the test. The wipe is gated on
+    // probe->isAuthorized(config) being true for the new active page; that
+    // is why we fill all 4 Nextcloud-isAuthorized fields above (loginName +
+    // appPassword + serverBaseUrl + remotePath).
+    RemoteSettings verifySettings(m_db, nullptr);
+
+    // CRITICAL: Dropbox config must be gone. Regressions this catches:
+    //   * dropping the if(authorized) wipe loop in saveSettings,
+    //   * wiping only m_remoteSettings in-memory but not calling saveSettings,
+    //   * setProviderConfig running before removeProviderConfig on the
+    //     wrong provider key (would leave both entries on disk).
+    QVERIFY(verifySettings.getProviderConfig(QStringLiteral("dropbox"), QStringLiteral("dropbox-default")).isEmpty());
+
+    QJsonObject nextcloudConfig =
+        verifySettings.getProviderConfig(QStringLiteral("nextcloud"), QStringLiteral("nextcloud-default"));
+    QCOMPARE(nextcloudConfig[QStringLiteral("type")].toString(), QStringLiteral("nextcloud"));
+    QCOMPARE(nextcloudConfig[QStringLiteral("name")].toString(), QStringLiteral("nextcloud-default"));
+    QCOMPARE(nextcloudConfig[QStringLiteral("serverBaseUrl")].toString(), QStringLiteral("https://cloud.example.com"));
+    QCOMPARE(nextcloudConfig[QStringLiteral("remotePath")].toString(), QStringLiteral("/Passwords/Database.kdbx"));
+    QCOMPARE(nextcloudConfig[QStringLiteral("loginName")].toString(), QStringLiteral("alice"));
+    QCOMPARE(nextcloudConfig[QStringLiteral("appPassword")].toString(), QStringLiteral("app-pw-123"));
+    QCOMPARE(verifySettings.activeProvider(), QStringLiteral("nextcloud"));
+
+    // ---- Step 5: the displaced Dropbox page's UI was also reset ----------
+    // saveSettings calls loadFromConfig({}) on every non-active page when
+    // the new active page is authorized. Switching back to Dropbox here
+    // must show empty fields, NOT the values typed before the wipe --
+    // otherwise the UI would visually contradict the on-disk single-provider
+    // state (the comment at DatabaseSettingsWidgetCloudSync.cpp:215-223
+    // calls out exactly this case).
+    comboBox->setCurrentIndex(0);
+    QCOMPARE(comboBox->currentText(), QStringLiteral("Dropbox"));
+    QVERIFY(appKeyEdit->text().isEmpty());
+    QVERIFY(dropboxRemotePathEdit->text().isEmpty());
+    QCOMPARE(dropboxPage->isModified(), false);
+    QVERIFY(!m_applyButton->isEnabled());
 }
