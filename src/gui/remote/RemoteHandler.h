@@ -32,6 +32,25 @@ public:
     explicit RemoteHandler(QObject* parent = nullptr);
     ~RemoteHandler() override = default;
 
+    // Provider-emitted error classification. Carrying the kind on the result
+    // object lets retry/dispatch logic decide based on a machine-readable
+    // signal instead of substring-matching tr()'d user-facing strings, which
+    // silently breaks under translation.
+    enum class ErrorKind
+    {
+        Other,
+        AuthExpired,
+        AuthRevoked,
+        Network,
+        RateLimit, // 429 Too Many Requests; transient 423 Locked.
+        Conflict, // Concurrent modification (412 Precondition Failed / rev mismatch).
+        NotFound,
+        Quota, // 507 Insufficient Storage.
+        ServerError, // Generic 5xx (provider does not distinguish further).
+        Permission, // 403 when not auth-revoked (e.g. read-only share).
+        Aborted // User-initiated cancel (not a server error).
+    };
+
     struct RemoteResult
     {
         bool success;
@@ -39,6 +58,9 @@ public:
         QString filePath;
         QString stdOutput;
         QString stdError;
+        // Provider-set classification. errorMessage is for the user
+        // (localized); this field is for control flow.
+        ErrorKind kind = ErrorKind::Other;
     };
 
     RemoteResult download(const RemoteParams* params);
