@@ -565,6 +565,7 @@ void Database::releaseData()
 
     m_data.clear();
     m_metadata->clear();
+    m_syncPreviousKey.reset();
 
     // Reset and delete the root group
     auto oldGroup = setRootGroup(new Group());
@@ -957,6 +958,27 @@ bool Database::setKey(const QSharedPointer<const CompositeKey>& key,
     }
 
     return true;
+}
+
+void Database::setSyncPreviousKey(const QSharedPointer<const CompositeKey>& key)
+{
+    // Don't overwrite an existing snapshot: if the user does A->B->C without
+    // an intervening successful sync, the remote still holds A and that's
+    // the key we need to keep.
+    if (m_syncPreviousKey) {
+        return;
+    }
+    m_syncPreviousKey = key;
+}
+
+QSharedPointer<const CompositeKey> Database::syncPreviousKey() const
+{
+    return m_syncPreviousKey;
+}
+
+void Database::clearSyncPreviousKey()
+{
+    m_syncPreviousKey.reset();
 }
 
 QString Database::keyError()
