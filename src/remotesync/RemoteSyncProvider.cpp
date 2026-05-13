@@ -22,6 +22,7 @@
 #include "CommandSyncProvider.h"
 #ifdef KPXC_FEATURE_NETWORK
 #include "DropboxSyncProvider.h"
+#include "NextcloudSyncProvider.h"
 #endif
 
 #ifdef QT_TEST_LIB
@@ -115,6 +116,9 @@ RemoteSyncProvider* RemoteSyncProvider::create(const QString& type, QObject* par
 #ifdef KPXC_FEATURE_NETWORK
     if (type == QStringLiteral("dropbox")) {
         return new DropboxSyncProvider(parent);
+    }
+    if (type == QStringLiteral("nextcloud")) {
+        return new NextcloudSyncProvider(parent);
     }
 #endif
 #ifdef QT_TEST_LIB

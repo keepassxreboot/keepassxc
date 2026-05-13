@@ -20,6 +20,8 @@ if(KPXC_FEATURE_NETWORK)
         HttpRetryHelper.cpp
         DropboxSyncProvider.cpp
         DropboxLoginFlow.cpp
+        NextcloudSyncProvider.cpp
+        NextcloudLoginFlow.cpp
         OAuthHttpServer.cpp
     )
     list(APPEND remotesync_LIBS Qt6::Network)

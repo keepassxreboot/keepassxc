@@ -96,6 +96,13 @@ void TestRemoteSync::testFactoryDispatch_dropbox()
     QVERIFY(p);
     QCOMPARE(p->displayName(), QStringLiteral("Dropbox"));
 }
+
+void TestRemoteSync::testFactoryDispatch_nextcloud()
+{
+    QScopedPointer<RemoteSyncProvider> p(RemoteSyncProvider::create(QStringLiteral("nextcloud"), nullptr));
+    QVERIFY(p);
+    QCOMPARE(p->displayName(), QStringLiteral("Nextcloud"));
+}
 #endif
 
 void TestRemoteSync::testFactoryDispatch_unknown()

@@ -200,6 +200,12 @@ if(KPXC_FEATURE_NETWORK)
 
     add_unit_test(NAME testdropboxloginflow SOURCES TestDropboxLoginFlow.cpp
             LIBS ${TEST_LIBRARIES} Qt6::Network)
+
+    add_unit_test(NAME testnextcloudsyncprovider SOURCES TestNextcloudSyncProvider.cpp
+            LIBS ${TEST_LIBRARIES} Qt6::Network)
+
+    add_unit_test(NAME testnextcloudloginflow SOURCES TestNextcloudLoginFlow.cpp
+            LIBS ${TEST_LIBRARIES} Qt6::Network)
 endif()
 
 if(WITH_GUI_TESTS)

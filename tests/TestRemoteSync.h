@@ -33,6 +33,7 @@ private slots:
     void testFactoryDispatch_command();
 #ifdef KPXC_FEATURE_NETWORK
     void testFactoryDispatch_dropbox();
+    void testFactoryDispatch_nextcloud();
 #endif
     void testFactoryDispatch_unknown();
     void testFactoryOverride_routesThroughOverride();
