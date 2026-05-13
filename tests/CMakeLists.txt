@@ -95,6 +95,12 @@ add_unit_test(NAME testautotype SOURCES TestAutoType.cpp
         LIBS testsupport ${TEST_LIBRARIES})
 set_target_properties(testautotype PROPERTIES ENABLE_EXPORTS ON)
 
+add_unit_test(NAME testremotesync SOURCES TestRemoteSync.cpp mock/MockRemoteProcess.cpp
+        LIBS ${TEST_LIBRARIES})
+
+add_unit_test(NAME testsyncengine SOURCES TestSyncEngine.cpp
+        LIBS testsupport ${TEST_LIBRARIES})
+
 add_unit_test(NAME testentry SOURCES TestEntry.cpp
         LIBS ${TEST_LIBRARIES})
 
