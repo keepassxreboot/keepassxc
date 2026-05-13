@@ -12,5 +12,16 @@ set(remotesync_SOURCES
 
 set(remotesync_LIBS Qt6::Core Qt6::Widgets)
 
+# Cloud providers require Qt6::Network. They drop out when the project is
+# built with -DKPXC_FEATURE_NETWORK=OFF, the same flag that already governs
+# update check and other network-using subsystems.
+if(KPXC_FEATURE_NETWORK)
+    list(APPEND remotesync_SOURCES
+        HttpRetryHelper.cpp
+        OAuthHttpServer.cpp
+    )
+    list(APPEND remotesync_LIBS Qt6::Network)
+endif()
+
 add_library(remotesync STATIC ${remotesync_SOURCES})
 target_link_libraries(remotesync ${remotesync_LIBS})
