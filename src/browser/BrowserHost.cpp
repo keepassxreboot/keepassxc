@@ -81,7 +81,8 @@ void BrowserHost::readProxyMessage()
         setsockopt(socketDesc, SOL_SOCKET, SO_SNDBUF, reinterpret_cast<char*>(&max), sizeof(max));
     }
 
-    // Accumulate per socket; readyRead may deliver partial or coalesced JSON
+    // Accumulate per socket; readyRead may deliver partial or coalesced JSON.
+    // operator[] default-inserts an empty buffer the first time we see a socket.
     QByteArray& buf = m_socketBuffers[socket];
     buf.append(socket->readAll());
 

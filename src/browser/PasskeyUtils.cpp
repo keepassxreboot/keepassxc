@@ -356,38 +356,13 @@ ExtensionResult PasskeyUtils::buildExtensionData(QJsonObject& extensionObject) c
 // Serialization order: https://w3c.github.io/webauthn/#clientdatajson-serialization
 QString PasskeyUtils::buildClientDataJson(const QJsonObject& publicKey, const QString& origin, bool get) const
 {
-    // Hand-rolled JSON since the spec mandates field order. origin is escaped as
-    // defense-in-depth because the result is signed; the cleaner fix would be to
-    // pass the already-validated effectiveDomain in here instead of the raw origin.
-    auto jsonEscape = [](const QString& in) {
-        QString out;
-        out.reserve(in.size());
-        for (QChar ch : in) {
-            ushort u = ch.unicode();
-            switch (u) {
-            case '\\': out.append(QStringLiteral("\\\\")); break;
-            case '"':  out.append(QStringLiteral("\\\"")); break;
-            case '\b': out.append(QStringLiteral("\\b")); break;
-            case '\f': out.append(QStringLiteral("\\f")); break;
-            case '\n': out.append(QStringLiteral("\\n")); break;
-            case '\r': out.append(QStringLiteral("\\r")); break;
-            case '\t': out.append(QStringLiteral("\\t")); break;
-            default:
-                if (u < 0x20) {
-                    out.append(QString::asprintf("\\u%04x", u));
-                } else {
-                    out.append(ch);
-                }
-                break;
-            }
-        }
-        return out;
-    };
-
+    // Hand-rolled JSON since the spec mandates field order. origin is validated
+    // upstream via getEffectiveDomain() and challenge is base64url, so the
+    // interpolated values cannot contain JSON-breaking characters.
     return QString("{\"type\":\"%1\",\"challenge\":\"%2\",\"origin\":\"%3\",\"crossOrigin\":false}")
         .arg((get ? QString("webauthn.get") : QString("webauthn.create")),
-             publicKey["challenge"].toString(), // base64url, nothing to escape
-             jsonEscape(origin));
+             publicKey["challenge"].toString(),
+             origin);
 }
 
 QStringList PasskeyUtils::getAllowedCredentialsFromAssertionOptions(const QJsonObject& assertionOptions) const
