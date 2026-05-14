@@ -50,6 +50,7 @@ private slots:
     void testSubdomainsAndPaths();
     void testSubdomainAnchor_data();
     void testSubdomainAnchor();
+    void testExtractMessages();
     void testBestMatchingCredentials();
     void testBestMatchingWithAdditionalURLs();
     void testRestrictBrowserKey();

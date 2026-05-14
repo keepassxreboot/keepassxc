@@ -41,6 +41,9 @@ public:
     void broadcastClientMessage(const QJsonObject& json);
     void sendClientMessage(QLocalSocket* socket, const QJsonObject& json);
 
+    // Drains complete JSON messages from buffer, leaving any partial trailing bytes
+    static QList<QJsonObject> extractMessages(QByteArray& buffer);
+
 signals:
     void clientMessageReceived(QLocalSocket* socket, const QJsonObject& json);
 

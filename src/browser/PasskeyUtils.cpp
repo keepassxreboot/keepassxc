@@ -356,7 +356,9 @@ ExtensionResult PasskeyUtils::buildExtensionData(QJsonObject& extensionObject) c
 // Serialization order: https://w3c.github.io/webauthn/#clientdatajson-serialization
 QString PasskeyUtils::buildClientDataJson(const QJsonObject& publicKey, const QString& origin, bool get) const
 {
-    // Hand-rolled JSON (spec mandates field order); escape inputs as defense-in-depth since result is signed
+    // Hand-rolled JSON since the spec mandates field order. origin is escaped as
+    // defense-in-depth because the result is signed; the cleaner fix would be to
+    // pass the already-validated effectiveDomain in here instead of the raw origin.
     auto jsonEscape = [](const QString& in) {
         QString out;
         out.reserve(in.size());
@@ -384,7 +386,7 @@ QString PasskeyUtils::buildClientDataJson(const QJsonObject& publicKey, const QS
 
     return QString("{\"type\":\"%1\",\"challenge\":\"%2\",\"origin\":\"%3\",\"crossOrigin\":false}")
         .arg((get ? QString("webauthn.get") : QString("webauthn.create")),
-             jsonEscape(publicKey["challenge"].toString()),
+             publicKey["challenge"].toString(), // base64url, nothing to escape
              jsonEscape(origin));
 }
 

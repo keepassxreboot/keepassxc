@@ -90,26 +90,37 @@ void BrowserHost::readProxyMessage()
         return;
     }
 
-    // Handles coalesced messages e.g. {"a":1}{"b":2} via GarbageAtEnd
-    while (!buf.isEmpty()) {
+    for (const auto& json : extractMessages(buf)) {
+        emit clientMessageReceived(socket, json);
+    }
+}
+
+QList<QJsonObject> BrowserHost::extractMessages(QByteArray& buffer)
+{
+    QList<QJsonObject> messages;
+    while (!buffer.isEmpty()) {
         QJsonParseError error;
-        auto json = QJsonDocument::fromJson(buf, &error);
+        auto json = QJsonDocument::fromJson(buffer, &error);
         if (json.isNull()) {
+            // GarbageAtEnd means a full message parsed with extra bytes after
+            // it, e.g. coalesced {"a":1}{"b":2}. Emit the prefix, keep the rest.
             if (error.error == QJsonParseError::GarbageAtEnd && error.offset > 0) {
-                QByteArray first = buf.left(error.offset);
-                buf.remove(0, error.offset);
+                QByteArray first = buffer.left(error.offset);
+                buffer.remove(0, error.offset);
                 auto firstDoc = QJsonDocument::fromJson(first, &error);
                 if (!firstDoc.isNull()) {
-                    emit clientMessageReceived(socket, firstDoc.object());
+                    messages.append(firstDoc.object());
                     continue;
                 }
             }
+            // Partial or invalid: leave it buffered for the next read
             break;
         }
-        emit clientMessageReceived(socket, json.object());
-        buf.clear();
+        messages.append(json.object());
+        buffer.clear();
         break;
     }
+    return messages;
 }
 
 void BrowserHost::broadcastClientMessage(const QJsonObject& json)
