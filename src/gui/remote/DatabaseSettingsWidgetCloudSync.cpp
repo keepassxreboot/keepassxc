@@ -100,11 +100,14 @@ void DatabaseSettingsWidgetCloudSync::initialize()
     for (auto* page : m_pages) {
         page->setRemoteSettings(m_remoteSettings.data());
     }
+    // Single-provider model: the active config (if any) lives in the one
+    // KPXC_CLOUD_SYNC_SETTINGS slot. Hand it to the matching page; the
+    // others get an empty config so they show a blank form.
+    const QJsonObject activeConfig = m_remoteSettings->cloudSyncConfig();
+    const QString activeType = activeConfig.value(QStringLiteral("type")).toString();
     for (auto* page : m_pages) {
-        QJsonObject config = m_remoteSettings->getProviderConfig(page->providerType(),
-                                                                 page->providerType() + QStringLiteral("-default"));
         page->setMutualExclusivityWarning(false);
-        page->loadFromConfig(config);
+        page->loadFromConfig(page->providerType() == activeType ? activeConfig : QJsonObject{});
     }
 
     // Mutual-exclusivity gate: if Script Sync is configured, lock cloud-sync
@@ -194,37 +197,29 @@ bool DatabaseSettingsWidgetCloudSync::saveSettings()
         return true;
     }
 
-    const QString configKey = active->providerType() + QStringLiteral("-default");
-
     // Single-provider model: a database has at most one cloud-sync provider
-    // configured at a time. Two cloud backends synchronizing the same .kdbx
-    // would diverge irreversibly (no merge protocol between Dropbox revisions
-    // and Nextcloud ETags), so Apply replaces the previous provider when the
-    // new page reaches an authorized state. Before that, we still want to
-    // preserve the user's draft (URLs typed, paths, etc.) without destroying
-    // a previously-working provider config -- otherwise trying out Nextcloud
-    // would wipe a working Dropbox before Nextcloud is ever authorized.
+    // active. Two cloud backends syncing the same .kdbx would diverge
+    // irreversibly (no merge between Dropbox revs and Nextcloud ETags), so
+    // Apply replaces the previous provider once the new page reaches an
+    // authorized state. Pre-authorization edits are not persisted -- the
+    // single CustomData::CloudSyncSettings slot only ever holds an authorized
+    // (or recently-revoked) config for the current provider.
     QScopedPointer<RemoteSyncProvider> probe(RemoteSyncProvider::create(active->providerType()));
     const bool authorized = probe && probe->isAuthorized(config);
-
-    if (authorized) {
-        for (auto* page : m_pages) {
-            if (page != active) {
-                m_remoteSettings->removeProviderConfig(page->providerType(),
-                                                       page->providerType() + QStringLiteral("-default"));
-                // Reload the displaced page from the now-empty config so its
-                // UI reflects the wipe in the current dialog session. Without
-                // this the page still shows its old line-edit text, token
-                // status, and cached m_config -- visually contradicting the
-                // single-provider model the wipe just enforced, and leading
-                // users to believe the database wasn't actually wiped either.
-                page->loadFromConfig(QJsonObject{});
-            }
-        }
-        m_remoteSettings->setActiveProvider(active->providerType());
+    if (!authorized) {
+        return true;
     }
 
-    m_remoteSettings->setProviderConfig(active->providerType(), configKey, config);
+    // Clear displaced pages' UI so it matches the new single-config reality;
+    // otherwise the previously-active page still shows its old line-edits,
+    // token status, and cached m_config in the current dialog session.
+    for (auto* page : m_pages) {
+        if (page != active) {
+            page->loadFromConfig(QJsonObject{});
+        }
+    }
+
+    m_remoteSettings->setCloudSyncConfig(config);
     m_remoteSettings->saveSettings();
     return true;
 }

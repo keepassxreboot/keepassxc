@@ -52,9 +52,8 @@ public:
     virtual void setProvider(RemoteSyncProvider* provider) = 0;
 
     // Provider type tag (e.g. "dropbox", "nextcloud"). Used by the parent
-    // to match the page to RemoteSettings::activeProvider() and to drive
-    // RemoteSettings::getProviderConfig(type, ...) /
-    // setProviderConfig(type, ...).
+    // to match the page to RemoteSettings::activeProvider() and to dispatch
+    // the cloud-sync config (RemoteSettings::cloudSyncConfig() / setCloudSyncConfig).
     virtual QString providerType() const = 0;
 
     // Provider display name forwarded from RemoteSyncProvider::displayName().

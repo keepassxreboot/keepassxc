@@ -280,7 +280,7 @@ void DropboxCloudSyncPage::onRevokeClicked()
         return;
     }
     // Persist cleared config
-    m_remoteSettings->setProviderConfig(providerType(), ConfigName, m_config);
+    m_remoteSettings->setCloudSyncConfig(m_config);
     m_remoteSettings->saveSettings();
 
     // Restore idle state
@@ -339,7 +339,7 @@ void DropboxCloudSyncPage::onTestConnectionClicked()
             if (!m_remoteSettings) {
                 return;
             }
-            m_remoteSettings->setProviderConfig(providerType(), ConfigName, m_config);
+            m_remoteSettings->setCloudSyncConfig(m_config);
         }
     }
 
@@ -410,7 +410,7 @@ void DropboxCloudSyncPage::onRemoveClicked()
         return;
     }
     // Remove from RemoteSettings persistence
-    m_remoteSettings->removeProviderConfig(providerType(), ConfigName);
+    m_remoteSettings->clearCloudSyncConfig();
     m_remoteSettings->saveSettings();
 
     // Clear UI fields under QSignalBlockers -- otherwise each clear() fires
@@ -552,7 +552,7 @@ void DropboxCloudSyncPage::mergeAndPersistTokens(const QString& accessToken,
     m_config[QStringLiteral("expiresAt")] = static_cast<double>(expiresAtMs);
 
     if (m_remoteSettings) {
-        m_remoteSettings->setProviderConfig(providerType(), ConfigName, m_config);
+        m_remoteSettings->setCloudSyncConfig(m_config);
     }
 
     // Mark the page dirty so the dialog's Apply button enables -- otherwise a

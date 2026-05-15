@@ -48,6 +48,7 @@ public:
 
     void setDatabase(const QSharedPointer<Database>& db);
 
+    // Script Sync (CustomData::RemoteProgramSettings, byte-identical to 1.0).
     void addRemoteParams(RemoteParams params);
     void removeRemoteParams(const QString& name);
     // Returns a non-owning pointer into m_remoteParams. The pointer is stable while
@@ -57,46 +58,37 @@ public:
     RemoteParams* getRemoteParams(const QString& name) const;
     QList<RemoteParams*> getAllRemoteParams() const;
 
-    // Generic provider-config API. Lookup is linear over m_providerConfigs;
-    // (type, name) is the unique key.
+    // Cloud Sync (CustomData::CloudSyncSettings, separate key invisible to
+    // older builds). Single-provider model: at most one cloud config exists.
 
-    // Get the persisted JSON config for (type, name). Returns an empty
-    // object if no entry exists.
-    QJsonObject getProviderConfig(const QString& type, const QString& name) const;
-    // Persist the JSON config under (type, name); replaces any existing entry.
-    void setProviderConfig(const QString& type, const QString& name, const QJsonObject& config);
-    // Remove the persisted entry under (type, name); no-op if not present.
-    void removeProviderConfig(const QString& type, const QString& name);
-
-    // Active-provider accessors. Mutating setter trips the touched flag so
-    // toConfig switches from raw-array to wrapped-object shape.
-
-    // Returns the type-tag of the currently active provider (e.g. "dropbox").
-    // When not explicitly set, defaults lazily to the first persisted entry
-    // for which the provider reports isAuthorized().
+    // Returns the persisted cloud-sync config, or an empty object if none.
+    QJsonObject cloudSyncConfig() const;
+    // Replaces the cloud-sync config in memory; pass an empty object to clear.
+    // Persistence happens on saveSettings().
+    void setCloudSyncConfig(const QJsonObject& config);
+    // Clear the cloud-sync config. Equivalent to setCloudSyncConfig({}).
+    void clearCloudSyncConfig();
+    // Type tag of the active cloud provider (e.g. "dropbox"), derived from
+    // the cloud config's "type" field. Empty when no cloud config is set.
     QString activeProvider() const;
-    // Set the active provider type-tag. Trips the touched flag so subsequent
-    // saves use the wrapped-object on-disk shape.
-    void setActiveProvider(const QString& type);
 
     void loadSettings();
     void saveSettings() const;
 
     // True iff this database has any sync configured: a Script Sync entry
-    // in m_remoteParams, OR an active Cloud Sync provider, OR any provider
-    // config that represents an authorized state. Used to gate the
-    // change-key syncPreviousKey snapshot -- there is no reason to retain
+    // in m_remoteParams, or an authorized cloud-sync provider. Used to gate
+    // the change-key syncPreviousKey snapshot -- there is no reason to retain
     // the old composite key in memory for users who don't sync.
     bool hasAnySync() const;
 
 private:
     void fromConfig(const QString& data);
     QString toConfig() const;
+    void fromCloudConfig(const QString& data);
+    QString toCloudConfig() const;
 
     QHash<QString, RemoteParams> m_remoteParams;
-    QList<QJsonObject> m_providerConfigs; // Insertion-ordered; preserves disk order.
-    QString m_activeProvider; // Empty until setActiveProvider or lazy-default.
-    bool m_activeProviderTouched = false; // When false, toConfig emits raw-array shape; when true, wrapped-object.
+    QJsonObject m_cloudConfig; // Empty = no cloud sync configured.
     QSharedPointer<Database> m_db;
 };
 

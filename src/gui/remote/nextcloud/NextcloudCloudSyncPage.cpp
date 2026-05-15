@@ -553,7 +553,7 @@ void NextcloudCloudSyncPage::onRemoveClicked()
     if (!m_remoteSettings) {
         return;
     }
-    m_remoteSettings->removeProviderConfig(QStringLiteral("nextcloud"), ConfigName);
+    m_remoteSettings->clearCloudSyncConfig();
     m_remoteSettings->saveSettings();
     m_config = QJsonObject();
 

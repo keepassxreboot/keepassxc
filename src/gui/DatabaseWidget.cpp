@@ -1241,12 +1241,12 @@ void DatabaseWidget::syncWithCloud()
         return;
     }
 
-    const QString type = m_remoteSettings->activeProvider();
+    QJsonObject config = m_remoteSettings->cloudSyncConfig();
+    const QString type = config.value(QStringLiteral("type")).toString();
     if (type.isEmpty()) {
         return; // No active cloud provider configured
     }
     const QString configName = type + QStringLiteral("-default");
-    QJsonObject config = m_remoteSettings->getProviderConfig(type, configName);
 
     initSyncEngine();
 
@@ -1283,11 +1283,7 @@ void DatabaseWidget::syncWithCloud()
 #ifdef KPXC_FEATURE_NETWORK
 QJsonObject DatabaseWidget::getCloudSyncConfig() const
 {
-    const QString type = m_remoteSettings->activeProvider();
-    if (type.isEmpty()) {
-        return QJsonObject{};
-    }
-    return m_remoteSettings->getProviderConfig(type, type + QStringLiteral("-default"));
+    return m_remoteSettings->cloudSyncConfig();
 }
 
 QString DatabaseWidget::getCloudSyncProviderDisplayName() const
@@ -1305,14 +1301,11 @@ QString DatabaseWidget::getCloudSyncProviderDisplayName() const
 
 bool DatabaseWidget::isCloudSyncAuthorized() const
 {
-    const QString type = m_remoteSettings->activeProvider();
-    if (type.isEmpty()) {
-        return false;
-    }
-    const QJsonObject config = m_remoteSettings->getProviderConfig(type, type + QStringLiteral("-default"));
+    const QJsonObject config = m_remoteSettings->cloudSyncConfig();
     if (config.isEmpty()) {
         return false;
     }
+    const QString type = config.value(QStringLiteral("type")).toString();
     QScopedPointer<RemoteSyncProvider> provider(RemoteSyncProvider::create(type));
     return provider && provider->isAuthorized(config);
 }
@@ -1342,8 +1335,7 @@ void DatabaseWidget::onDatabaseSavedTriggerSync()
     if (!isCloudSyncAuthorized()) {
         return;
     }
-    const QString type = m_remoteSettings->activeProvider();
-    const QJsonObject config = m_remoteSettings->getProviderConfig(type, type + QStringLiteral("-default"));
+    const QJsonObject config = m_remoteSettings->cloudSyncConfig();
     if (!config.value(QStringLiteral("syncOnSave")).toBool(true)) {
         return;
     }
@@ -1358,8 +1350,7 @@ void DatabaseWidget::onDatabaseUnlockedTriggerSync()
     if (!isCloudSyncAuthorized()) {
         return;
     }
-    const QString type = m_remoteSettings->activeProvider();
-    const QJsonObject config = m_remoteSettings->getProviderConfig(type, type + QStringLiteral("-default"));
+    const QJsonObject config = m_remoteSettings->cloudSyncConfig();
     if (!config.value(QStringLiteral("syncOnOpen")).toBool(true)) {
         return;
     }
@@ -1468,7 +1459,7 @@ void DatabaseWidget::initSyncEngine()
         if (m_currentSyncConfigName.isEmpty() || !m_syncProvider) {
             return;
         }
-        m_syncProvider->persistRefreshedTokens(tokenDataJson, m_currentSyncConfigName, m_remoteSettings.data());
+        m_syncProvider->persistRefreshedTokens(tokenDataJson, m_remoteSettings.data());
     });
 }
 

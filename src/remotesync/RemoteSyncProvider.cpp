@@ -89,13 +89,10 @@ bool RemoteSyncProvider::isAuthorized(const QJsonObject& config) const
     return false;
 }
 
-void RemoteSyncProvider::persistRefreshedTokens(const QString& stdOutput,
-                                                const QString& configKey,
-                                                RemoteSettings* settings) const
+void RemoteSyncProvider::persistRefreshedTokens(const QString& stdOutput, RemoteSettings* settings) const
 {
     // Default: no-op. Only providers that issue refreshable tokens override.
     Q_UNUSED(stdOutput)
-    Q_UNUSED(configKey)
     Q_UNUSED(settings)
 }
 

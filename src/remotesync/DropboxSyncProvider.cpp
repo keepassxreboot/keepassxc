@@ -645,13 +645,9 @@ bool DropboxSyncProvider::isAuthorized(const QJsonObject& config) const
            && !config.value(QStringLiteral("remotePath")).toString().isEmpty();
 }
 
-void DropboxSyncProvider::persistRefreshedTokens(const QString& stdOutput,
-                                                 const QString& configKey,
-                                                 RemoteSettings* settings) const
+void DropboxSyncProvider::persistRefreshedTokens(const QString& stdOutput, RemoteSettings* settings) const
 {
-    // Persists refreshed tokens via the generic
-    // getProviderConfig/setProviderConfig API.
-    if (!settings || configKey.isEmpty()) {
+    if (!settings) {
         return;
     }
 
@@ -661,15 +657,15 @@ void DropboxSyncProvider::persistRefreshedTokens(const QString& stdOutput,
         return;
     }
 
-    QJsonObject tokenData = doc.object();
-    QJsonObject config = settings->getProviderConfig(QStringLiteral("dropbox"), configKey);
-    if (config.isEmpty()) {
-        qWarning("DropboxSyncProvider: no Dropbox config found for '%s' to update tokens", qPrintable(configKey));
+    QJsonObject config = settings->cloudSyncConfig();
+    if (config.value(QStringLiteral("type")).toString() != QStringLiteral("dropbox")) {
+        qWarning("DropboxSyncProvider: stored cloud config is not Dropbox; skipping token persist");
         return;
     }
 
     // Update only the fields that refreshAuth returns (accessToken, expiresAt).
     // Do NOT overwrite refreshToken -- Dropbox refresh response has no refresh_token field.
+    QJsonObject tokenData = doc.object();
     if (tokenData.contains(QStringLiteral("accessToken"))) {
         config[QStringLiteral("accessToken")] = tokenData[QStringLiteral("accessToken")].toString();
     }
@@ -677,6 +673,6 @@ void DropboxSyncProvider::persistRefreshedTokens(const QString& stdOutput,
         config[QStringLiteral("expiresAt")] = tokenData[QStringLiteral("expiresAt")];
     }
 
-    settings->setProviderConfig(QStringLiteral("dropbox"), configKey, config);
+    settings->setCloudSyncConfig(config);
     settings->saveSettings();
 }

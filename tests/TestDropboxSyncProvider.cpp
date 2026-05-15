@@ -309,28 +309,27 @@ void TestDropboxSyncProvider::testPersistRefreshedTokens_updatesAccessTokenOnly(
     DropboxSyncProvider provider;
     RemoteSettings settings(QSharedPointer<Database>(), nullptr);
 
-    const QString configKey = QStringLiteral("myKey");
     const qint64 oldExpires = QDateTime(QDate(2020, 1, 1), QTime(0, 0, 0), Qt::UTC).toMSecsSinceEpoch();
     const qint64 newExpires = QDateTime(QDate(2030, 6, 6), QTime(6, 6, 6), Qt::UTC).toMSecsSinceEpoch();
 
     QJsonObject existing;
     existing[QStringLiteral("type")] = QStringLiteral("dropbox");
-    existing[QStringLiteral("name")] = configKey;
+    existing[QStringLiteral("name")] = QStringLiteral("dropbox-default");
     existing[QStringLiteral("appKey")] = QStringLiteral("ak-original");
     existing[QStringLiteral("remotePath")] = QStringLiteral("/db.kdbx");
     existing[QStringLiteral("accessToken")] = QStringLiteral("old-at");
     existing[QStringLiteral("refreshToken")] = QStringLiteral("rt-must-survive");
     existing[QStringLiteral("expiresAt")] = oldExpires;
-    settings.setProviderConfig(QStringLiteral("dropbox"), configKey, existing);
+    settings.setCloudSyncConfig(existing);
 
     QJsonObject tokenData;
     tokenData[QStringLiteral("accessToken")] = QStringLiteral("new-at");
     tokenData[QStringLiteral("expiresAt")] = newExpires;
     const QString stdOutput = QString::fromUtf8(QJsonDocument(tokenData).toJson(QJsonDocument::Compact));
 
-    provider.persistRefreshedTokens(stdOutput, configKey, &settings);
+    provider.persistRefreshedTokens(stdOutput, &settings);
 
-    const QJsonObject updated = settings.getProviderConfig(QStringLiteral("dropbox"), configKey);
+    const QJsonObject updated = settings.cloudSyncConfig();
     QCOMPARE(updated.value(QStringLiteral("accessToken")).toString(), QStringLiteral("new-at"));
     QCOMPARE(updated.value(QStringLiteral("expiresAt")).toVariant().toLongLong(), newExpires);
     // CRITICAL: Dropbox refresh response carries no refresh_token. The
@@ -339,10 +338,10 @@ void TestDropboxSyncProvider::testPersistRefreshedTokens_updatesAccessTokenOnly(
     QCOMPARE(updated.value(QStringLiteral("refreshToken")).toString(), QStringLiteral("rt-must-survive"));
     QCOMPARE(updated.value(QStringLiteral("appKey")).toString(), QStringLiteral("ak-original"));
     QCOMPARE(updated.value(QStringLiteral("remotePath")).toString(), QStringLiteral("/db.kdbx"));
-    QCOMPARE(updated.value(QStringLiteral("name")).toString(), configKey);
+    QCOMPARE(updated.value(QStringLiteral("name")).toString(), QStringLiteral("dropbox-default"));
 }
 
-void TestDropboxSyncProvider::testPersistRefreshedTokens_unknownConfigKey_noopWithWarning()
+void TestDropboxSyncProvider::testPersistRefreshedTokens_noCloudConfig_noopWithWarning()
 {
     DropboxSyncProvider provider;
     RemoteSettings settings(QSharedPointer<Database>(), nullptr);
@@ -351,13 +350,38 @@ void TestDropboxSyncProvider::testPersistRefreshedTokens_unknownConfigKey_noopWi
     tokenData[QStringLiteral("accessToken")] = QStringLiteral("new-at");
     const QString stdOutput = QString::fromUtf8(QJsonDocument(tokenData).toJson(QJsonDocument::Compact));
 
-    QTest::ignoreMessage(
-        QtWarningMsg,
-        "DropboxSyncProvider: no Dropbox config found for 'does-not-exist' to update tokens");
-    provider.persistRefreshedTokens(stdOutput, QStringLiteral("does-not-exist"), &settings);
+    QTest::ignoreMessage(QtWarningMsg, "DropboxSyncProvider: stored cloud config is not Dropbox; skipping token persist");
+    provider.persistRefreshedTokens(stdOutput, &settings);
 
-    // Settings unchanged: getProviderConfig for the unknown key still empty.
-    QVERIFY(settings.getProviderConfig(QStringLiteral("dropbox"), QStringLiteral("does-not-exist")).isEmpty());
+    // Settings unchanged: cloud config is still empty.
+    QVERIFY(settings.cloudSyncConfig().isEmpty());
+}
+
+void TestDropboxSyncProvider::testPersistRefreshedTokens_wrongProviderType_noopWithWarning()
+{
+    // Persisting a Dropbox refresh response into a slot that holds a
+    // different provider's config must not corrupt the stored config.
+    DropboxSyncProvider provider;
+    RemoteSettings settings(QSharedPointer<Database>(), nullptr);
+
+    QJsonObject foreign;
+    foreign[QStringLiteral("type")] = QStringLiteral("nextcloud");
+    foreign[QStringLiteral("name")] = QStringLiteral("nextcloud-default");
+    foreign[QStringLiteral("appPassword")] = QStringLiteral("nc-pw");
+    settings.setCloudSyncConfig(foreign);
+
+    QJsonObject tokenData;
+    tokenData[QStringLiteral("accessToken")] = QStringLiteral("new-at");
+    const QString stdOutput = QString::fromUtf8(QJsonDocument(tokenData).toJson(QJsonDocument::Compact));
+
+    QTest::ignoreMessage(QtWarningMsg, "DropboxSyncProvider: stored cloud config is not Dropbox; skipping token persist");
+    provider.persistRefreshedTokens(stdOutput, &settings);
+
+    // The Nextcloud config must be untouched.
+    const QJsonObject after = settings.cloudSyncConfig();
+    QCOMPARE(after.value(QStringLiteral("type")).toString(), QStringLiteral("nextcloud"));
+    QCOMPARE(after.value(QStringLiteral("appPassword")).toString(), QStringLiteral("nc-pw"));
+    QVERIFY(!after.contains(QStringLiteral("accessToken")));
 }
 
 void TestDropboxSyncProvider::testPersistRefreshedTokens_malformedJson_noopWithWarning()
@@ -365,18 +389,17 @@ void TestDropboxSyncProvider::testPersistRefreshedTokens_malformedJson_noopWithW
     DropboxSyncProvider provider;
     RemoteSettings settings(QSharedPointer<Database>(), nullptr);
 
-    const QString configKey = QStringLiteral("k");
     QJsonObject existing;
     existing[QStringLiteral("type")] = QStringLiteral("dropbox");
-    existing[QStringLiteral("name")] = configKey;
+    existing[QStringLiteral("name")] = QStringLiteral("dropbox-default");
     existing[QStringLiteral("accessToken")] = QStringLiteral("stay");
     existing[QStringLiteral("refreshToken")] = QStringLiteral("rt");
-    settings.setProviderConfig(QStringLiteral("dropbox"), configKey, existing);
+    settings.setCloudSyncConfig(existing);
 
     QTest::ignoreMessage(QtWarningMsg, "DropboxSyncProvider: failed to parse refreshed token JSON for persist");
-    provider.persistRefreshedTokens(QStringLiteral("{ broken"), configKey, &settings);
+    provider.persistRefreshedTokens(QStringLiteral("{ broken"), &settings);
 
-    const QJsonObject updated = settings.getProviderConfig(QStringLiteral("dropbox"), configKey);
+    const QJsonObject updated = settings.cloudSyncConfig();
     QCOMPARE(updated.value(QStringLiteral("accessToken")).toString(), QStringLiteral("stay"));
     QCOMPARE(updated.value(QStringLiteral("refreshToken")).toString(), QStringLiteral("rt"));
 }

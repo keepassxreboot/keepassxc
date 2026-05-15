@@ -48,8 +48,7 @@ public:
     bool applyRefreshedTokens(const QString& stdOutput, RemoteSyncParams* params) override;
     ErrorKind classifyError(const QString& errorMessage) const override;
     bool isAuthorized(const QJsonObject& config) const override;
-    void
-    persistRefreshedTokens(const QString& stdOutput, const QString& configKey, RemoteSettings* settings) const override;
+    void persistRefreshedTokens(const QString& stdOutput, RemoteSettings* settings) const override;
 
     // Revoke tokens with Dropbox. Best-effort: always returns success
     // (local cleanup is caller's responsibility regardless of revocation outcome).

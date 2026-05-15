@@ -169,7 +169,7 @@ void TestRemoteSync::testDefaultVirtuals()
     QVERIFY(built);
 
     // persistRefreshedTokens is a no-op; passing nullptr settings must not crash.
-    provider.persistRefreshedTokens(QStringLiteral("anything"), QStringLiteral("key"), nullptr);
+    provider.persistRefreshedTokens(QStringLiteral("anything"), nullptr);
 }
 
 void TestRemoteSync::testCommand_createParams_returnsCommandSyncParams()

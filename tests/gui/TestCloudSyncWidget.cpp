@@ -377,8 +377,7 @@ void TestCloudSyncWidget::CloudSettingNotImpactedWhileExploringOtherProviders()
     // Fresh RemoteSettings reads from the database's CustomData -- closes
     // the loop from "I clicked Apply" all the way to bytes on disk.
     RemoteSettings verifySettings(m_db, nullptr);
-    QJsonObject config =
-        verifySettings.getProviderConfig(QStringLiteral("dropbox"), QStringLiteral("dropbox-default"));
+    QJsonObject config = verifySettings.cloudSyncConfig();
     QCOMPARE(config[QStringLiteral("type")].toString(), QStringLiteral("dropbox"));
     QCOMPARE(config[QStringLiteral("name")].toString(), QStringLiteral("dropbox-default"));
     QCOMPARE(config[QStringLiteral("appKey")].toString(), QStringLiteral("test-app-key"));
@@ -386,9 +385,7 @@ void TestCloudSyncWidget::CloudSettingNotImpactedWhileExploringOtherProviders()
     QCOMPARE(config[QStringLiteral("accessToken")].toString(), QStringLiteral("tok-123"));
     QCOMPARE(config[QStringLiteral("refreshToken")].toString(), QStringLiteral("rtok-456"));
     QCOMPARE(verifySettings.activeProvider(), QStringLiteral("dropbox"));
-    // No Nextcloud record persisted -- we only ever filled Dropbox.
-    QVERIFY(verifySettings.getProviderConfig(QStringLiteral("nextcloud"), QStringLiteral("nextcloud-default"))
-                .isEmpty());
+    // Single-config storage: type == "dropbox" implies no Nextcloud record exists.
 }
 
 // Check that switching to a different provider, filling it, and clicking Apply
@@ -445,15 +442,13 @@ void TestCloudSyncWidget::CloudSettingSwitchProviderRemoveOldOne()
     // was never there to begin with."
     {
         RemoteSettings rs(m_db, nullptr);
-        QJsonObject dropboxConfig =
-            rs.getProviderConfig(QStringLiteral("dropbox"), QStringLiteral("dropbox-default"));
+        QJsonObject dropboxConfig = rs.cloudSyncConfig();
         QCOMPARE(dropboxConfig[QStringLiteral("type")].toString(), QStringLiteral("dropbox"));
         QCOMPARE(dropboxConfig[QStringLiteral("appKey")].toString(), QStringLiteral("test-app-key"));
         QCOMPARE(dropboxConfig[QStringLiteral("remotePath")].toString(), QStringLiteral("/old.kdbx"));
         QCOMPARE(dropboxConfig[QStringLiteral("accessToken")].toString(), QStringLiteral("dropbox-tok"));
         QCOMPARE(dropboxConfig[QStringLiteral("refreshToken")].toString(), QStringLiteral("dropbox-rtok"));
         QCOMPARE(rs.activeProvider(), QStringLiteral("dropbox"));
-        QVERIFY(rs.getProviderConfig(QStringLiteral("nextcloud"), QStringLiteral("nextcloud-default")).isEmpty());
     }
 
     // ---- Step 2: switch to Nextcloud and fill it -------------------------
@@ -492,15 +487,13 @@ void TestCloudSyncWidget::CloudSettingSwitchProviderRemoveOldOne()
     // appPassword + serverBaseUrl + remotePath).
     RemoteSettings verifySettings(m_db, nullptr);
 
-    // CRITICAL: Dropbox config must be gone. Regressions this catches:
-    //   * dropping the if(authorized) wipe loop in saveSettings,
-    //   * wiping only m_remoteSettings in-memory but not calling saveSettings,
-    //   * setProviderConfig running before removeProviderConfig on the
-    //     wrong provider key (would leave both entries on disk).
-    QVERIFY(verifySettings.getProviderConfig(QStringLiteral("dropbox"), QStringLiteral("dropbox-default")).isEmpty());
-
-    QJsonObject nextcloudConfig =
-        verifySettings.getProviderConfig(QStringLiteral("nextcloud"), QStringLiteral("nextcloud-default"));
+    // CRITICAL: Dropbox config must be gone. The single CloudSyncSettings
+    // slot now holds Nextcloud's config; type == "nextcloud" is the
+    // structural proof that the previous Dropbox entry was overwritten.
+    // Regressions this catches: dropping the if(authorized) gate in
+    // saveSettings, or wiping only m_remoteSettings in-memory without
+    // calling saveSettings.
+    QJsonObject nextcloudConfig = verifySettings.cloudSyncConfig();
     QCOMPARE(nextcloudConfig[QStringLiteral("type")].toString(), QStringLiteral("nextcloud"));
     QCOMPARE(nextcloudConfig[QStringLiteral("name")].toString(), QStringLiteral("nextcloud-default"));
     QCOMPARE(nextcloudConfig[QStringLiteral("serverBaseUrl")].toString(), QStringLiteral("https://cloud.example.com"));
@@ -508,6 +501,9 @@ void TestCloudSyncWidget::CloudSettingSwitchProviderRemoveOldOne()
     QCOMPARE(nextcloudConfig[QStringLiteral("loginName")].toString(), QStringLiteral("alice"));
     QCOMPARE(nextcloudConfig[QStringLiteral("appPassword")].toString(), QStringLiteral("app-pw-123"));
     QCOMPARE(verifySettings.activeProvider(), QStringLiteral("nextcloud"));
+    // No Dropbox fields can be present in the type=="nextcloud" object.
+    QVERIFY(!nextcloudConfig.contains(QStringLiteral("appKey")));
+    QVERIFY(!nextcloudConfig.contains(QStringLiteral("accessToken")));
 
     // ---- Step 5: the displaced Dropbox page's UI was also reset ----------
     // saveSettings calls loadFromConfig({}) on every non-active page when
@@ -1003,8 +999,7 @@ void TestCloudSyncWidget::CloudSettingAddAndRemoveDropboxFullWorkflow()
     QJsonObject dropboxConfigBeforeClose;
     {
         RemoteSettings rs(m_db, nullptr);
-        dropboxConfigBeforeClose =
-            rs.getProviderConfig(QStringLiteral("dropbox"), QStringLiteral("dropbox-default"));
+        dropboxConfigBeforeClose = rs.cloudSyncConfig();
         QCOMPARE(dropboxConfigBeforeClose[QStringLiteral("type")].toString(), QStringLiteral("dropbox"));
         QCOMPARE(dropboxConfigBeforeClose[QStringLiteral("appKey")].toString(), QStringLiteral("test-app-key"));
         QCOMPARE(dropboxConfigBeforeClose[QStringLiteral("remotePath")].toString(), QStringLiteral("/test/path.kdbx"));
@@ -1125,8 +1120,7 @@ void TestCloudSyncWidget::CloudSettingAddAndRemoveDropboxFullWorkflow()
     // missing) would fail here.
     {
         RemoteSettings rs(m_db, nullptr);
-        QJsonObject after =
-            rs.getProviderConfig(QStringLiteral("dropbox"), QStringLiteral("dropbox-default"));
+        QJsonObject after = rs.cloudSyncConfig();
         QCOMPARE(after[QStringLiteral("type")].toString(), dropboxConfigBeforeClose[QStringLiteral("type")].toString());
         QCOMPARE(after[QStringLiteral("appKey")].toString(),
                  dropboxConfigBeforeClose[QStringLiteral("appKey")].toString());
@@ -1207,10 +1201,10 @@ void TestCloudSyncWidget::CloudSettingAddAndRemoveDropboxFullWorkflow()
     // path (cpp:393-403).
     QCOMPARE(MockDropboxSyncProvider::revokeTokenCallCount(), 1);
     // JSON must be gone from CustomData -- onRemoveClicked persisted the
-    // removal via m_remoteSettings->removeProviderConfig + saveSettings.
+    // removal via m_remoteSettings->clearCloudSyncConfig + saveSettings.
     {
         RemoteSettings rs(m_db, nullptr);
-        QVERIFY(rs.getProviderConfig(QStringLiteral("dropbox"), QStringLiteral("dropbox-default")).isEmpty());
+        QVERIFY(rs.cloudSyncConfig().isEmpty());
     }
 
     // ---- Step 12: OK -> save fires, NO remote sync triggered ------------
@@ -1244,11 +1238,11 @@ void TestCloudSyncWidget::CloudSettingAddAndRemoveDropboxFullWorkflow()
     QCOMPARE(postRemoveSyncSpy.count(), 0);
     // CRITICAL: the on-disk JSON has no dropbox entry. A regression that
     // somehow re-adds the provider during OK's saveAllSettings (e.g. the
-    // cloud-sync widget's saveSettings calling setProviderConfig on an
+    // cloud-sync widget's saveSettings calling setCloudSyncConfig on an
     // empty config instead of skipping) would re-resurrect dropbox here.
     {
         RemoteSettings rs(m_db, nullptr);
-        QVERIFY(rs.getProviderConfig(QStringLiteral("dropbox"), QStringLiteral("dropbox-default")).isEmpty());
+        QVERIFY(rs.cloudSyncConfig().isEmpty());
         QVERIFY(rs.activeProvider().isEmpty());
     }
 
@@ -1277,7 +1271,7 @@ void TestCloudSyncWidget::CloudSettingAddAndRemoveDropboxFullWorkflow()
     QVERIFY(remotePathEdit->text().isEmpty());
     {
         RemoteSettings rs(m_db, nullptr);
-        QVERIFY(rs.getProviderConfig(QStringLiteral("dropbox"), QStringLiteral("dropbox-default")).isEmpty());
+        QVERIFY(rs.cloudSyncConfig().isEmpty());
     }
 
     // Reset the mock so it doesn't bleed into other tests in this binary.
@@ -1616,8 +1610,7 @@ void TestCloudSyncWidget::CloudSettingAddAndRemoveNextCloudFullWorkflow()
     QJsonObject nextcloudConfigBeforeClose;
     {
         RemoteSettings rs(m_db, nullptr);
-        nextcloudConfigBeforeClose =
-            rs.getProviderConfig(QStringLiteral("nextcloud"), QStringLiteral("nextcloud-default"));
+        nextcloudConfigBeforeClose = rs.cloudSyncConfig();
         QCOMPARE(nextcloudConfigBeforeClose[QStringLiteral("type")].toString(), QStringLiteral("nextcloud"));
         QCOMPARE(nextcloudConfigBeforeClose[QStringLiteral("loginName")].toString(),
                  QStringLiteral("test-login-alice"));
@@ -1714,8 +1707,7 @@ void TestCloudSyncWidget::CloudSettingAddAndRemoveNextCloudFullWorkflow()
     // (e.g. appPassword not written, serverBaseUrl missing) would fail here.
     {
         RemoteSettings rs(m_db, nullptr);
-        QJsonObject after =
-            rs.getProviderConfig(QStringLiteral("nextcloud"), QStringLiteral("nextcloud-default"));
+        QJsonObject after = rs.cloudSyncConfig();
         QCOMPARE(after[QStringLiteral("type")].toString(),
                  nextcloudConfigBeforeClose[QStringLiteral("type")].toString());
         QCOMPARE(after[QStringLiteral("loginName")].toString(),
@@ -1801,10 +1793,10 @@ void TestCloudSyncWidget::CloudSettingAddAndRemoveNextCloudFullWorkflow()
     // empty for fresh-no-edit) but would still re-stamp other widgets' state.
     QVERIFY(!m_applyButton->isEnabled());
     // JSON must be gone from CustomData -- onRemoveClicked persisted the
-    // removal via m_remoteSettings->removeProviderConfig + saveSettings.
+    // removal via m_remoteSettings->clearCloudSyncConfig + saveSettings.
     {
         RemoteSettings rs(m_db, nullptr);
-        QVERIFY(rs.getProviderConfig(QStringLiteral("nextcloud"), QStringLiteral("nextcloud-default")).isEmpty());
+        QVERIFY(rs.cloudSyncConfig().isEmpty());
     }
 
     // ---- Step 17: OK -> save fires, NO remote sync triggered -------------
@@ -1833,7 +1825,7 @@ void TestCloudSyncWidget::CloudSettingAddAndRemoveNextCloudFullWorkflow()
     // returning a non-empty config for an empty form) would re-resurrect it.
     {
         RemoteSettings rs(m_db, nullptr);
-        QVERIFY(rs.getProviderConfig(QStringLiteral("nextcloud"), QStringLiteral("nextcloud-default")).isEmpty());
+        QVERIFY(rs.cloudSyncConfig().isEmpty());
         QVERIFY(rs.activeProvider().isEmpty());
     }
 

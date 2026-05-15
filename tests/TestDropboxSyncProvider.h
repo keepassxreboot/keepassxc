@@ -55,7 +55,8 @@ private slots:
 
     // persistRefreshedTokens
     void testPersistRefreshedTokens_updatesAccessTokenOnly();
-    void testPersistRefreshedTokens_unknownConfigKey_noopWithWarning();
+    void testPersistRefreshedTokens_noCloudConfig_noopWithWarning();
+    void testPersistRefreshedTokens_wrongProviderType_noopWithWarning();
     void testPersistRefreshedTokens_malformedJson_noopWithWarning();
 };
 

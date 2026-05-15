@@ -362,8 +362,8 @@ private:
     QScopedPointer<RemoteSyncProvider> m_syncProvider;
     QScopedPointer<RemoteSyncParams> m_syncParams;
     QString m_currentSyncName;
-    QString m_currentSyncConfigName; // Config key for token-refresh persist; runtime-set per active
-                                     // provider (composed from RemoteSettings::activeProvider() + "-default").
+    QString m_currentSyncConfigName; // Set for cloud-sync sessions, empty for command syncs;
+                                     // used as a "is this a cloud sync?" guard.
     // Temp file handed off by SyncEngine when the remote DB key didn't match.
     // Kept alive across the unlock dialog so DatabaseOpenDialog can read it;
     // removed when the dialog completes (success or cancel).

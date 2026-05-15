@@ -81,10 +81,11 @@ public:
     // Default: false (fail-closed; providers must opt in).
     virtual bool isAuthorized(const QJsonObject& config) const;
 
-    // Persist refreshed tokens back to RemoteSettings under (type, configKey).
-    // Called by orchestration code after refreshAuth succeeds. Default: no-op.
-    virtual void
-    persistRefreshedTokens(const QString& stdOutput, const QString& configKey, RemoteSettings* settings) const;
+    // Persist refreshed tokens back to RemoteSettings (single-provider model:
+    // updates whatever cloud config is currently stored if it matches this
+    // provider's type). Called by orchestration code after refreshAuth
+    // succeeds. Default: no-op.
+    virtual void persistRefreshedTokens(const QString& stdOutput, RemoteSettings* settings) const;
 
     // Factory method -- returns correct subclass from config type string
     // Returns nullptr for unknown types
