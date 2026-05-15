@@ -356,9 +356,6 @@ ExtensionResult PasskeyUtils::buildExtensionData(QJsonObject& extensionObject) c
 // Serialization order: https://w3c.github.io/webauthn/#clientdatajson-serialization
 QString PasskeyUtils::buildClientDataJson(const QJsonObject& publicKey, const QString& origin, bool get) const
 {
-    // Hand-rolled JSON since the spec mandates field order. origin is validated
-    // upstream via getEffectiveDomain() and challenge is base64url, so the
-    // interpolated values cannot contain JSON-breaking characters.
     return QString("{\"type\":\"%1\",\"challenge\":\"%2\",\"origin\":\"%3\",\"crossOrigin\":false}")
         .arg((get ? QString("webauthn.get") : QString("webauthn.create")),
              publicKey["challenge"].toString(),

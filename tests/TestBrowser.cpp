@@ -632,29 +632,9 @@ void TestBrowser::testSubdomainsAndPaths()
     QCOMPARE(result.length(), 1);
 }
 
-void TestBrowser::testSubdomainAnchor_data()
-{
-    QTest::addColumn<QString>("entryUrl");
-    QTest::addColumn<QString>("siteUrl");
-    QTest::addColumn<bool>("shouldMatch");
-
-    QTest::newRow("exact")
-        << "https://bad.example.com" << "https://bad.example.com" << true;
-    QTest::newRow("true subdomain")
-        << "https://bad.example.com" << "https://login.bad.example.com" << true;
-    QTest::newRow("sibling host (regression for endsWith bug)")
-        << "https://bad.example.com" << "https://notbad.example.com" << false;
-    QTest::newRow("sibling on same eTLD+1")
-        << "https://bad.example.com" << "https://good.example.com" << false;
-    QTest::newRow("unrelated")
-        << "https://bad.example.com" << "https://attacker.test" << false;
-}
-
 void TestBrowser::testSubdomainAnchor()
 {
-    QFETCH(QString, entryUrl);
-    QFETCH(QString, siteUrl);
-    QFETCH(bool, shouldMatch);
+    const QString entryUrl = "https://bad.example.com";
 
     auto db = QSharedPointer<Database>::create();
     auto* root = db->rootGroup();
@@ -664,12 +644,16 @@ void TestBrowser::testSubdomainAnchor()
     entry->setUsername("u");
     entry->setPassword("p");
 
-    auto entries = m_browserService->searchEntries(db, siteUrl, "");
-    if (shouldMatch) {
-        QCOMPARE(entries.length(), 1);
-    } else {
-        QCOMPARE(entries.length(), 0);
-    }
+    // exact
+    QCOMPARE(m_browserService->searchEntries(db, "https://bad.example.com", "").length(), 1);
+    // true subdomain
+    QCOMPARE(m_browserService->searchEntries(db, "https://login.bad.example.com", "").length(), 1);
+    // sibling host (regression for endsWith bug)
+    QCOMPARE(m_browserService->searchEntries(db, "https://notbad.example.com", "").length(), 0);
+    // sibling on same eTLD+1
+    QCOMPARE(m_browserService->searchEntries(db, "https://good.example.com", "").length(), 0);
+    // unrelated
+    QCOMPARE(m_browserService->searchEntries(db, "https://attacker.test", "").length(), 0);
 }
 
 void TestBrowser::testExtractMessages()
