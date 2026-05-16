@@ -21,10 +21,10 @@
 #include <QApplication>
 #include <QClipboard>
 #include <QMimeData>
-#include <QProcess>
 #include <QTimer>
 
 #include "core/Config.h"
+#include "gui/osutils/OSUtils.h"
 
 Clipboard* Clipboard::m_instance(nullptr);
 #ifdef Q_OS_MACOS
@@ -46,28 +46,30 @@ Clipboard::Clipboard(QObject* parent)
 
 void Clipboard::setText(const QString& text, bool clear)
 {
-    auto* clipboard = QApplication::clipboard();
-    if (!clipboard) {
-        qWarning("Unable to access the clipboard.");
-        return;
-    }
+    if (!osUtils->setClipboardText(text)) {
+        auto* clipboard = QApplication::clipboard();
+        if (!clipboard) {
+            qWarning("Unable to access the clipboard.");
+            return;
+        }
 
-    auto* mime = new QMimeData;
-    mime->setText(text);
+        auto* mime = new QMimeData;
+        mime->setText(text);
 #if defined(Q_OS_MACOS)
-    mime->setData("application/x-nspasteboard-concealed-type", text.toUtf8());
+        mime->setData("application/x-nspasteboard-concealed-type", text.toUtf8());
 #elif defined(Q_OS_UNIX)
-    mime->setData("x-kde-passwordManagerHint", QByteArrayLiteral("secret"));
+        mime->setData("x-kde-passwordManagerHint", QByteArrayLiteral("secret"));
 #elif defined(Q_OS_WIN)
-    mime->setData("ExcludeClipboardContentFromMonitorProcessing", QByteArrayLiteral("1"));
-    mime->setData("CanIncludeInClipboardHistory", {4, '\0'});
-    mime->setData("CanUploadToCloudClipboard", {4, '\0'});
+        mime->setData("ExcludeClipboardContentFromMonitorProcessing", QByteArrayLiteral("1"));
+        mime->setData("CanIncludeInClipboardHistory", {4, '\0'});
+        mime->setData("CanUploadToCloudClipboard", {4, '\0'});
 #endif
 
-    if (clipboard->supportsSelection()) {
-        clipboard->setMimeData(mime, QClipboard::Selection);
+        if (clipboard->supportsSelection()) {
+            clipboard->setMimeData(mime, QClipboard::Selection);
+        }
+        clipboard->setMimeData(mime, QClipboard::Clipboard);
     }
-    clipboard->setMimeData(mime, QClipboard::Clipboard);
 
     if (clear) {
         m_lastCopied = text;
@@ -96,6 +98,10 @@ void Clipboard::clearCopiedText()
 
     auto* clipboard = QApplication::clipboard();
     if (!clipboard) {
+        if (!m_lastCopied.isEmpty()) {
+            osUtils->clearClipboardText(m_lastCopied);
+            m_lastCopied.clear();
+        }
         qWarning("Unable to access the clipboard.");
         return;
     }
@@ -105,14 +111,11 @@ void Clipboard::clearCopiedText()
             || m_lastCopied == clipboard->text(QClipboard::Selection))) {
         clipboard->clear(QClipboard::Clipboard);
         clipboard->clear(QClipboard::Selection);
-#ifdef Q_OS_UNIX
-        // Gnome Wayland doesn't let apps modify the clipboard when not in focus, so force clear
-        if (QProcessEnvironment::systemEnvironment().contains("WAYLAND_DISPLAY")) {
-            QProcess::startDetached("wl-copy", {"-c"});
-        }
-#endif
     }
 
+    if (!m_lastCopied.isEmpty()) {
+        osUtils->clearClipboardText(m_lastCopied);
+    }
     m_lastCopied.clear();
 }
 

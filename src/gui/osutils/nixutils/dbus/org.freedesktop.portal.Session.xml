@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!--
+ Copyright (C) 2017 Red Hat, Inc.
+
+ SPDX-License-Identifier: LGPL-2.1-or-later
+
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public
+ License as published by the Free Software Foundation; either
+ version 2.1 of the License, or (at your option) any later version.
+
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Lesser General Public License for more details.
+
+ You should have received a copy of the GNU Lesser General Public
+ License along with this library. If not, see <http://www.gnu.org/licenses/>.
+
+ Author: Jonas Ådahl <jadahl@redhat.com>
+-->
+
+<node name="/" xmlns:doc="http://www.freedesktop.org/dbus/1.0/doc.dtd">
+  <!--
+      org.freedesktop.portal.Session:
+      @short_description: Shared session interface
+
+      The Session interface is shared by all portal interfaces that involve
+      long lived sessions.  When a method that creates a session is called, if
+      successful, the reply will include a session handle (i.e. object path) for
+      a Session object, which will stay alive for the duration of the session.
+
+      The duration of the session is defined by the interface that creates it.
+      For convenience, the interface contains a method
+      org.freedesktop.portal.Session.Close(), and a signal
+      #org.freedesktop.portal.Session::Closed. Whether it is allowed to directly
+      call org.freedesktop.portal.Session.Close() depends on the interface.
+
+      The handle of a session will be of the form
+      ``/org/freedesktop/portal/desktop/session/SENDER/TOKEN``, where ``SENDER``
+      is the caller's unique name, with the initial ``:`` removed and all ``.``
+      replaced by ``_``, and ``TOKEN`` is a unique token that the caller
+      provided with the ``session_handle_token`` key in the options vardict of
+      the method creating the session.
+
+      The token that the caller provides should be unique and not guessable. To
+      avoid clashes with calls made from unrelated libraries, it is a good idea
+      to use a per-library prefix combined with a random number.
+
+      A client who started a session vanishing from the D-Bus is equivalent to
+      closing all active sessions made by said client.
+  -->
+  <interface name="org.freedesktop.portal.Session">
+
+    <!--
+        Close:
+
+        Closes the portal session to which this object refers and ends all
+        related user interaction (dialogs, etc).
+    -->
+    <method name="Close">
+    </method>
+
+    <!--
+        Closed:
+        @details: A key value Vardict with details about the closed session.
+
+        Emitted when a session is closed.
+
+        The content of @details is specified by the interface creating the session.
+    -->
+    <signal name="Closed">
+      <annotation name="org.qtproject.QtDBus.QtTypeName.Out0" value="QVariantMap"/>
+      <arg type="a{sv}" name="details"/>
+    </signal>
+    <property name="version" type="u" access="read"/>
+  </interface>
+</node>

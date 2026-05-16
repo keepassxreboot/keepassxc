@@ -17,10 +17,13 @@
  */
 
 #include "ApplicationSettingsWidget.h"
+#include "gui/osutils/OSUtilsBase.h"
 #include "ui_ApplicationSettingsWidgetGeneral.h"
 #include "ui_ApplicationSettingsWidgetSecurity.h"
 #include <QDesktopServices>
 #include <QDir>
+#include <QLabel>
+#include <QPushButton>
 #include <QToolTip>
 
 #include "config-keepassx.h"
@@ -84,8 +87,57 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
     addSettingsPage(new BrowserSettingsPage());
 #endif
 
+    const bool showDesktopPortalsPreference =
+#if defined(WITH_X11) && defined(Q_OS_UNIX) && !defined(Q_OS_MACOS)
+        !nixUtils()->isWayland();
+#else
+        false;
+#endif
+    m_generalUi->autoTypePreferDesktopPortalsCheckBox->setVisible(showDesktopPortalsPreference);
+
     if (!autoType()->isAvailable()) {
         m_generalUi->generalSettingsTabWidget->removeTab(1);
+    } else {
+        const auto hasWindowAccess = autoType()->hasWindowAccess();
+        const auto usesDesktopPortal = autoType()->usesDesktopPortal();
+        if (hasWindowAccess) {
+            m_generalUi->autoTypeEntryTitleMatchCheckBox->setVisible(true);
+            m_generalUi->autoTypeEntryURLMatchCheckBox->setVisible(true);
+            m_generalUi->autoTypeAskCheckBox->setDisabled(false);
+        } else {
+            m_generalUi->autoTypeEntryTitleMatchCheckBox->setVisible(false);
+            m_generalUi->autoTypeEntryURLMatchCheckBox->setVisible(false);
+            m_generalUi->autoTypeAskCheckBox->setChecked(true);
+            m_generalUi->autoTypeAskCheckBox->setDisabled(true);
+        }
+
+        m_generalUi->autoTypeDesktopPortalPersistConnectionCheckBox->setVisible(usesDesktopPortal);
+        m_generalUi->autoTypeDesktopPortalUseClipboardCheckBox->setVisible(usesDesktopPortal
+                                                                           && osUtils->isClipboardAvailable());
+        m_generalUi->autoTypeDesktopPortalPersistModeLabel->setVisible(usesDesktopPortal);
+        m_generalUi->autoTypeDesktopPortalPersistModeComboBox->setVisible(usesDesktopPortal);
+
+        if (osUtils->externalGlobalShortcutsConfigurator()) {
+            m_generalUi->autoTypeShortcutWidget->setVisible(false);
+            m_generalUi->autoTypeShortcutConfigureWidget->setVisible(true);
+
+            connect(osUtils,
+                    &OSUtilsBase::globalShortcutChanged,
+                    this,
+                    [this](const QString& name, const QString& description) {
+                        if (name != QLatin1String("autotype")) {
+                            return;
+                        }
+                        m_generalUi->autoTypeShortcutConfigureLabel->setText(description.isEmpty() ? tr("None")
+                                                                                                   : description);
+                    });
+            connect(m_generalUi->autoTypeShortcutConfigureButton, &QPushButton::clicked, osUtils, [] {
+                osUtils->configureGlobalShortcut(QStringLiteral("autotype"));
+            });
+        } else {
+            m_generalUi->autoTypeShortcutWidget->setVisible(true);
+            m_generalUi->autoTypeShortcutConfigureWidget->setVisible(false);
+        }
     }
 
     connect(this, SIGNAL(accepted()), SLOT(saveSettings()));
@@ -226,6 +278,14 @@ void ApplicationSettingsWidget::loadSettings()
     m_generalUi->autoTypeEntryTitleMatchCheckBox->setChecked(config()->get(Config::AutoTypeEntryTitleMatch).toBool());
     m_generalUi->autoTypeEntryURLMatchCheckBox->setChecked(config()->get(Config::AutoTypeEntryURLMatch).toBool());
     m_generalUi->autoTypeHideExpiredEntryCheckBox->setChecked(config()->get(Config::AutoTypeHideExpiredEntry).toBool());
+    m_generalUi->autoTypePreferDesktopPortalsCheckBox->setChecked(
+        config()->get(Config::AutoTypePreferDesktopPortals).toBool());
+    m_generalUi->autoTypeDesktopPortalPersistConnectionCheckBox->setChecked(
+        config()->get(Config::AutoTypeDesktopPortalPersistConnection).toBool());
+    m_generalUi->autoTypeDesktopPortalUseClipboardCheckBox->setChecked(
+        config()->get(Config::AutoTypeDesktopPortalUseClipboard).toBool());
+    m_generalUi->autoTypeDesktopPortalPersistModeComboBox->setCurrentIndex(
+        config()->get(Config::AutoTypeDesktopPortalPersistMode).toUInt());
     m_generalUi->faviconTimeoutSpinBox->setValue(config()->get(Config::FaviconDownloadTimeout).toInt());
     m_generalUi->ConfirmMoveEntryToRecycleBinCheckBox->setChecked(
         !config()->get(Config::Security_NoConfirmMoveEntryToRecycleBin).toBool());
@@ -303,7 +363,8 @@ void ApplicationSettingsWidget::loadSettings()
         m_globalAutoTypeKey = static_cast<Qt::Key>(config()->get(Config::GlobalAutoTypeKey).toInt());
         m_globalAutoTypeModifiers =
             static_cast<Qt::KeyboardModifiers>(config()->get(Config::GlobalAutoTypeModifiers).toInt());
-        if (m_globalAutoTypeKey > 0 && m_globalAutoTypeModifiers > 0) {
+        if (!osUtils->externalGlobalShortcutsConfigurator() && m_globalAutoTypeKey > 0
+            && m_globalAutoTypeModifiers > 0) {
             m_generalUi->autoTypeShortcutWidget->setShortcut(m_globalAutoTypeKey, m_globalAutoTypeModifiers);
         }
         m_generalUi->autoTypeRetypeTimeSpinBox->setValue(config()->get(Config::GlobalAutoTypeRetypeTime).toInt());
@@ -402,6 +463,20 @@ void ApplicationSettingsWidget::saveSettings()
     config()->set(Config::AutoTypeEntryTitleMatch, m_generalUi->autoTypeEntryTitleMatchCheckBox->isChecked());
     config()->set(Config::AutoTypeEntryURLMatch, m_generalUi->autoTypeEntryURLMatchCheckBox->isChecked());
     config()->set(Config::AutoTypeHideExpiredEntry, m_generalUi->autoTypeHideExpiredEntryCheckBox->isChecked());
+    const auto preferDesktopPortals = m_generalUi->autoTypePreferDesktopPortalsCheckBox->isChecked();
+    const auto preferDesktopPortalsChanged =
+        config()->get(Config::AutoTypePreferDesktopPortals).toBool() != preferDesktopPortals;
+    if (preferDesktopPortalsChanged) {
+        getMainWindow()->displayGlobalMessage(
+            tr("Restart KeePassXC to apply the Auto-Type desktop portals preference."), MessageWidget::Information);
+    }
+    config()->set(Config::AutoTypePreferDesktopPortals, preferDesktopPortals);
+    config()->set(Config::AutoTypeDesktopPortalPersistConnection,
+                  m_generalUi->autoTypeDesktopPortalPersistConnectionCheckBox->isChecked());
+    config()->set(Config::AutoTypeDesktopPortalUseClipboard,
+                  m_generalUi->autoTypeDesktopPortalUseClipboardCheckBox->isChecked());
+    config()->set(Config::AutoTypeDesktopPortalPersistMode,
+                  m_generalUi->autoTypeDesktopPortalPersistModeComboBox->currentIndex());
     config()->set(Config::FaviconDownloadTimeout, m_generalUi->faviconTimeoutSpinBox->value());
     config()->set(Config::Security_NoConfirmMoveEntryToRecycleBin,
                   !m_generalUi->ConfirmMoveEntryToRecycleBinCheckBox->isChecked());
@@ -447,9 +522,11 @@ void ApplicationSettingsWidget::saveSettings()
     config()->set(Config::Security_RelockAutoType, m_generalUi->autoTypeRelockDatabaseCheckBox->isChecked());
 
     if (autoType()->isAvailable()) {
-        config()->set(Config::GlobalAutoTypeKey, m_generalUi->autoTypeShortcutWidget->key());
-        config()->set(Config::GlobalAutoTypeModifiers,
-                      static_cast<int>(m_generalUi->autoTypeShortcutWidget->modifiers()));
+        if (m_generalUi->autoTypeShortcutWidget->isVisible()) {
+            config()->set(Config::GlobalAutoTypeKey, m_generalUi->autoTypeShortcutWidget->key());
+            config()->set(Config::GlobalAutoTypeModifiers,
+                          static_cast<int>(m_generalUi->autoTypeShortcutWidget->modifiers()));
+        }
         config()->set(Config::GlobalAutoTypeRetypeTime, m_generalUi->autoTypeRetypeTimeSpinBox->value());
         config()->set(Config::AutoTypeDelay, m_generalUi->autoTypeDelaySpinBox->value());
         config()->set(Config::AutoTypeStartDelay, m_generalUi->autoTypeStartDelaySpinBox->value());

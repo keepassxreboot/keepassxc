@@ -72,8 +72,24 @@ public:
     virtual bool canPreventScreenCapture() const = 0;
     virtual bool setPreventScreenCapture(QWindow* window, bool allow) const;
 
+    virtual bool setClipboardText(const QString& text);
+    virtual bool clearClipboardText(const QString& text);
+    virtual bool isClipboardAvailable();
+
+    virtual bool externalGlobalShortcutsConfigurator()
+    {
+        return false;
+    }
+
+public slots:
+    virtual void configureGlobalShortcut(const QString& name)
+    {
+        Q_UNUSED(name)
+    }
+
 signals:
     void globalShortcutTriggered(const QString& name, const QString& search = {});
+    void globalShortcutChanged(const QString& name, const QString& description);
 
     /**
      * Indicates platform UI theme change (light mode to dark mode).

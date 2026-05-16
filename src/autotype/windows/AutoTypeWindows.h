@@ -29,13 +29,16 @@
 #include "autotype/AutoTypeAction.h"
 #include "autotype/AutoTypePlatformPlugin.h"
 
+class WinUtils;
+
 class AutoTypePlatformWin : public QObject, public AutoTypePlatformInterface
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "org.keepassx.AutoTypePlatformWindows")
+    Q_PLUGIN_METADATA(IID "org.keepassxc.AutoTypePlatformWindows")
     Q_INTERFACES(AutoTypePlatformInterface)
 
 public:
+    void setOSUtils(OSUtilsBase* osUtils) override;
     bool isAvailable() override;
     QStringList windowTitles() override;
     WId activeWindow() override;
@@ -52,6 +55,8 @@ private:
     static bool isAltTabWindow(HWND hwnd);
     static BOOL CALLBACK windowTitleEnumProc(_In_ HWND hwnd, _In_ LPARAM lParam);
     static QString windowTitle(HWND hwnd);
+
+    WinUtils* m_winUtils = nullptr;
 };
 
 class AutoTypeExecutorWin : public AutoTypeExecutor

@@ -42,13 +42,13 @@
           </sizepolicy>
          </property>
          <property name="frameShape">
-          <enum>QFrame::NoFrame</enum>
+          <enum>QFrame::Shape::NoFrame</enum>
          </property>
          <property name="frameShadow">
-          <enum>QFrame::Plain</enum>
+          <enum>QFrame::Shadow::Plain</enum>
          </property>
          <property name="horizontalScrollBarPolicy">
-          <enum>Qt::ScrollBarAlwaysOff</enum>
+          <enum>Qt::ScrollBarPolicy::ScrollBarAlwaysOff</enum>
          </property>
          <property name="widgetResizable">
           <bool>true</bool>
@@ -58,8 +58,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>568</width>
-            <height>1226</height>
+            <width>604</width>
+            <height>1502</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -143,7 +143,7 @@
                 <item>
                  <spacer name="horizontalSpacer_9">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -161,15 +161,15 @@
                  <number>0</number>
                 </property>
                 <property name="sizeConstraint">
-                 <enum>QLayout::SetMaximumSize</enum>
+                 <enum>QLayout::SizeConstraint::SetMaximumSize</enum>
                 </property>
                 <item>
                  <spacer name="toolbarMovableSpacer_3">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeType">
-                   <enum>QSizePolicy::Fixed</enum>
+                   <enum>QSizePolicy::Policy::Fixed</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -197,15 +197,15 @@
                  <number>0</number>
                 </property>
                 <property name="sizeConstraint">
-                 <enum>QLayout::SetMaximumSize</enum>
+                 <enum>QLayout::SizeConstraint::SetMaximumSize</enum>
                 </property>
                 <item>
                  <spacer name="toolbarMovableSpacer_2">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeType">
-                   <enum>QSizePolicy::Fixed</enum>
+                   <enum>QSizePolicy::Policy::Fixed</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -242,10 +242,10 @@
                 <item>
                  <spacer name="checkUpdatesSpacer">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeType">
-                   <enum>QSizePolicy::Fixed</enum>
+                   <enum>QSizePolicy::Policy::Fixed</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -273,7 +273,7 @@
                  <number>6</number>
                 </property>
                 <property name="sizeConstraint">
-                 <enum>QLayout::SetMaximumSize</enum>
+                 <enum>QLayout::SizeConstraint::SetMaximumSize</enum>
                 </property>
                 <item>
                  <widget class="QCheckBox" name="showExpiredEntriesOnDatabaseUnlockCheckBox">
@@ -288,7 +288,7 @@
                    <bool>true</bool>
                   </property>
                   <property name="focusPolicy">
-                   <enum>Qt::StrongFocus</enum>
+                   <enum>Qt::FocusPolicy::StrongFocus</enum>
                   </property>
                   <property name="accessibleName">
                    <string>On database unlock, show entries that will expire within </string>
@@ -310,7 +310,7 @@
                 <item>
                  <spacer name="showExpiredEntriesSpacer">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -374,10 +374,10 @@
                 <item>
                  <spacer name="horizontalSpacer_11">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeType">
-                   <enum>QSizePolicy::Fixed</enum>
+                   <enum>QSizePolicy::Policy::Fixed</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -406,10 +406,10 @@
                 <item>
                  <spacer name="horizontalSpacer_13">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeType">
-                   <enum>QSizePolicy::Fixed</enum>
+                   <enum>QSizePolicy::Policy::Fixed</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -435,10 +435,10 @@
                 <item>
                  <spacer name="horizontalSpacer_12">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeType">
-                   <enum>QSizePolicy::Fixed</enum>
+                   <enum>QSizePolicy::Policy::Fixed</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -475,10 +475,10 @@
                 <item>
                  <spacer name="horizontalSpacer_8">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeType">
-                   <enum>QSizePolicy::Fixed</enum>
+                   <enum>QSizePolicy::Policy::Fixed</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -494,7 +494,7 @@
                    <bool>false</bool>
                   </property>
                   <property name="sizeAdjustPolicy">
-                   <enum>QComboBox::AdjustToContents</enum>
+                   <enum>QComboBox::SizeAdjustPolicy::AdjustToContents</enum>
                   </property>
                   <item>
                    <property name="text">
@@ -511,7 +511,7 @@
                 <item>
                  <spacer name="horizontalSpacer_7">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -568,13 +568,13 @@
                 <item>
                  <widget class="QComboBox" name="urlDoubleClickComboBox">
                   <property name="focusPolicy">
-                   <enum>Qt::StrongFocus</enum>
+                   <enum>Qt::FocusPolicy::StrongFocus</enum>
                   </property>
                   <property name="accessibleName">
                    <string>Double-click action for URL field</string>
                   </property>
                   <property name="sizeAdjustPolicy">
-                   <enum>QComboBox::AdjustToContents</enum>
+                   <enum>QComboBox::SizeAdjustPolicy::AdjustToContents</enum>
                   </property>
                   <item>
                    <property name="text">
@@ -596,7 +596,7 @@
                 <item>
                  <spacer name="urlDoubleClickSpacer">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -640,10 +640,10 @@
                 <item>
                  <spacer name="hideWindowSpacer_1">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeType">
-                   <enum>QSizePolicy::Fixed</enum>
+                   <enum>QSizePolicy::Policy::Fixed</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -673,10 +673,10 @@
                 <item>
                  <spacer name="hideWindowSpacer_2">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeType">
-                   <enum>QSizePolicy::Fixed</enum>
+                   <enum>QSizePolicy::Policy::Fixed</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -716,7 +716,7 @@
                    <bool>true</bool>
                   </property>
                   <property name="focusPolicy">
-                   <enum>Qt::StrongFocus</enum>
+                   <enum>Qt::FocusPolicy::StrongFocus</enum>
                   </property>
                   <property name="accessibleName">
                    <string>Website icon download timeout in seconds</string>
@@ -738,7 +738,7 @@
                 <item>
                  <spacer name="horizontalSpacer_2">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -767,7 +767,7 @@
                 <item row="0" column="3">
                  <spacer name="horizontalSpacer_5">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -789,7 +789,7 @@
                    <string>Language:</string>
                   </property>
                   <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                   </property>
                   <property name="buddy">
                    <cstring>languageComboBox</cstring>
@@ -821,13 +821,13 @@
                    </sizepolicy>
                   </property>
                   <property name="focusPolicy">
-                   <enum>Qt::StrongFocus</enum>
+                   <enum>Qt::FocusPolicy::StrongFocus</enum>
                   </property>
                   <property name="accessibleName">
                    <string>Toolbar button style</string>
                   </property>
                   <property name="sizeAdjustPolicy">
-                   <enum>QComboBox::AdjustToContents</enum>
+                   <enum>QComboBox::SizeAdjustPolicy::AdjustToContents</enum>
                   </property>
                  </widget>
                 </item>
@@ -840,13 +840,13 @@
                    </sizepolicy>
                   </property>
                   <property name="focusPolicy">
-                   <enum>Qt::StrongFocus</enum>
+                   <enum>Qt::FocusPolicy::StrongFocus</enum>
                   </property>
                   <property name="accessibleName">
                    <string>Language selection</string>
                   </property>
                   <property name="sizeAdjustPolicy">
-                   <enum>QComboBox::AdjustToContents</enum>
+                   <enum>QComboBox::SizeAdjustPolicy::AdjustToContents</enum>
                   </property>
                  </widget>
                 </item>
@@ -865,7 +865,7 @@
                    <string>Toolbar button style:</string>
                   </property>
                   <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                   </property>
                   <property name="buddy">
                    <cstring>toolButtonStyleComboBox</cstring>
@@ -885,7 +885,7 @@
                    <string>Font size:</string>
                   </property>
                   <property name="alignment">
-                   <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
                   </property>
                   <property name="buddy">
                    <cstring>fontSizeComboBox</cstring>
@@ -895,13 +895,13 @@
                 <item row="2" column="1">
                  <widget class="QComboBox" name="fontSizeComboBox">
                   <property name="focusPolicy">
-                   <enum>Qt::StrongFocus</enum>
+                   <enum>Qt::FocusPolicy::StrongFocus</enum>
                   </property>
                   <property name="accessibleName">
                    <string>Font size selection</string>
                   </property>
                   <property name="sizeAdjustPolicy">
-                   <enum>QComboBox::AdjustToContents</enum>
+                   <enum>QComboBox::SizeAdjustPolicy::AdjustToContents</enum>
                   </property>
                  </widget>
                 </item>
@@ -955,7 +955,7 @@
               <item>
                <layout class="QGridLayout" name="gridLayout_2">
                 <property name="sizeConstraint">
-                 <enum>QLayout::SetMaximumSize</enum>
+                 <enum>QLayout::SizeConstraint::SetMaximumSize</enum>
                 </property>
                 <property name="spacing">
                  <number>0</number>
@@ -963,10 +963,10 @@
                 <item row="0" column="0">
                  <spacer name="horizontalSpacer_3">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeType">
-                   <enum>QSizePolicy::Fixed</enum>
+                   <enum>QSizePolicy::Policy::Fixed</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -988,13 +988,13 @@
                    </sizepolicy>
                   </property>
                   <property name="focusPolicy">
-                   <enum>Qt::StrongFocus</enum>
+                   <enum>Qt::FocusPolicy::StrongFocus</enum>
                   </property>
                   <property name="accessibleName">
                    <string>Tray icon type</string>
                   </property>
                   <property name="sizeAdjustPolicy">
-                   <enum>QComboBox::AdjustToContents</enum>
+                   <enum>QComboBox::SizeAdjustPolicy::AdjustToContents</enum>
                   </property>
                  </widget>
                 </item>
@@ -1014,7 +1014,7 @@
                 <item row="0" column="4">
                  <spacer name="horizontalSpacer_4">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -1027,10 +1027,10 @@
                 <item row="0" column="2">
                  <spacer name="verticalSpacer_6">
                   <property name="orientation">
-                   <enum>Qt::Horizontal</enum>
+                   <enum>Qt::Orientation::Horizontal</enum>
                   </property>
                   <property name="sizeType">
-                   <enum>QSizePolicy::Fixed</enum>
+                   <enum>QSizePolicy::Policy::Fixed</enum>
                   </property>
                   <property name="sizeHint" stdset="0">
                    <size>
@@ -1063,15 +1063,15 @@
                     <number>0</number>
                    </property>
                    <property name="sizeConstraint">
-                    <enum>QLayout::SetMaximumSize</enum>
+                    <enum>QLayout::SizeConstraint::SetMaximumSize</enum>
                    </property>
                    <item>
                     <spacer name="horizontalSpacer">
                      <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
+                      <enum>Qt::Orientation::Horizontal</enum>
                      </property>
                      <property name="sizeType">
-                      <enum>QSizePolicy::Fixed</enum>
+                      <enum>QSizePolicy::Policy::Fixed</enum>
                      </property>
                      <property name="sizeHint" stdset="0">
                       <size>
@@ -1111,7 +1111,7 @@
               <number>6</number>
              </property>
              <property name="sizeConstraint">
-              <enum>QLayout::SetMaximumSize</enum>
+              <enum>QLayout::SizeConstraint::SetMaximumSize</enum>
              </property>
              <item>
               <widget class="QPushButton" name="resetSettingsButton">
@@ -1123,7 +1123,7 @@
              <item>
               <spacer name="horizontalSpacer_10">
                <property name="orientation">
-                <enum>Qt::Horizontal</enum>
+                <enum>Qt::Orientation::Horizontal</enum>
                </property>
                <property name="sizeHint" stdset="0">
                 <size>
@@ -1152,7 +1152,7 @@
            <item>
             <spacer name="verticalSpacer">
              <property name="orientation">
-              <enum>Qt::Vertical</enum>
+              <enum>Qt::Orientation::Vertical</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
@@ -1217,10 +1217,10 @@
          <item>
           <spacer name="autoTypeSkipMainWindowSpacer">
            <property name="orientation">
-            <enum>Qt::Horizontal</enum>
+            <enum>Qt::Orientation::Horizontal</enum>
            </property>
            <property name="sizeType">
-            <enum>QSizePolicy::Fixed</enum>
+            <enum>QSizePolicy::Policy::Fixed</enum>
            </property>
            <property name="sizeHint" stdset="0">
             <size>
@@ -1250,9 +1250,9 @@
          <property name="text">
           <string>Hide expired entries from Auto-Type</string>
          </property>
-        </widget>
-       </item>
-       <item>
+       </widget>
+      </item>
+      <item>
         <widget class="QCheckBox" name="autoTypeRelockDatabaseCheckBox">
          <property name="text">
           <string>Re-lock previously locked database after performing Auto-Type</string>
@@ -1260,12 +1260,33 @@
         </widget>
        </item>
        <item>
+        <widget class="QCheckBox" name="autoTypePreferDesktopPortalsCheckBox">
+         <property name="text">
+          <string>Experimental: Prefer desktop portals (Wayland implementation)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="autoTypeDesktopPortalPersistConnectionCheckBox">
+         <property name="text">
+          <string>Keep remote desktop connection open after performing Auto-Type</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="autoTypeDesktopPortalUseClipboardCheckBox">
+         <property name="text">
+          <string>Use remote desktop for clipboard access</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="verticalSpacer_4">
          <property name="orientation">
-          <enum>Qt::Vertical</enum>
+          <enum>Qt::Orientation::Vertical</enum>
          </property>
          <property name="sizeType">
-          <enum>QSizePolicy::Fixed</enum>
+          <enum>QSizePolicy::Policy::Fixed</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
@@ -1283,33 +1304,7 @@
          <property name="verticalSpacing">
           <number>8</number>
          </property>
-         <item row="2" column="0">
-          <widget class="QLabel" name="autoTypeStartDelayLabel">
-           <property name="text">
-            <string>Auto-Type start delay:</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-           <property name="buddy">
-            <cstring>autoTypeStartDelaySpinBox</cstring>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="autoTypeShortcutLabel">
-           <property name="text">
-            <string>Global Auto-Type shortcut:</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-           </property>
-           <property name="buddy">
-            <cstring>autoTypeShortcutWidget</cstring>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
+         <item row="3" column="1">
           <widget class="QSpinBox" name="autoTypeStartDelaySpinBox">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -1341,45 +1336,42 @@
           </widget>
          </item>
          <item row="3" column="0">
+          <widget class="QLabel" name="autoTypeStartDelayLabel">
+           <property name="text">
+            <string>Auto-Type start delay:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+           </property>
+           <property name="buddy">
+            <cstring>autoTypeStartDelaySpinBox</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="autoTypeDesktopPortalPersistModeLabel">
+           <property name="text">
+            <string>Remote desktop mode:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
           <widget class="QLabel" name="autoTypeDelayLabel">
            <property name="text">
             <string>Auto-Type typing delay:</string>
            </property>
            <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
            </property>
            <property name="buddy">
             <cstring>autoTypeDelaySpinBox</cstring>
            </property>
           </widget>
          </item>
-         <item row="0" column="2">
-          <spacer name="horizontalSpacer_6">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>0</width>
-             <height>20</height>
-            </size>
-           </property>
-          </spacer>
-         </item>
-         <item row="0" column="1">
-          <widget class="ShortcutWidget" name="autoTypeShortcutWidget">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="accessibleName">
-            <string>Global auto-type shortcut</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="1">
+         <item row="4" column="1">
           <widget class="QSpinBox" name="autoTypeDelaySpinBox">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -1404,17 +1396,122 @@
            </property>
           </widget>
          </item>
-         <item row="1" column="0">
+         <item row="0" column="0">
+          <widget class="QLabel" name="autoTypeShortcutLabel">
+           <property name="text">
+            <string>Global Auto-Type shortcut:</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+           </property>
+           <property name="buddy">
+            <cstring>autoTypeShortcutWidget</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1" colspan="2">
+          <widget class="QComboBox" name="autoTypeDesktopPortalPersistModeComboBox">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <item>
+            <property name="text">
+             <string>Never remember session</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Remember session until exit</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Remember session until revoked by desktop</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="2" column="0">
           <widget class="QLabel" name="autoTypeRetypeLabel">
            <property name="text">
             <string>Remember last typed entry for:</string>
            </property>
            <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
            </property>
           </widget>
          </item>
-         <item row="1" column="1">
+         <item row="0" column="1" colspan="2">
+          <layout class="QVBoxLayout" name="verticalLayout_9">
+           <item>
+            <widget class="ShortcutWidget" name="autoTypeShortcutWidget">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="accessibleName">
+              <string>Global auto-type shortcut</string>
+             </property>
+             <property name="placeholderText">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QWidget" name="autoTypeShortcutConfigureWidget" native="true">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <layout class="QHBoxLayout" name="horizontalLayout_8">
+              <property name="spacing">
+               <number>20</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="autoTypeShortcutConfigureLabel">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>None</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="autoTypeShortcutConfigureButton">
+                <property name="text">
+                 <string>Configure...</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item row="2" column="1">
           <widget class="QSpinBox" name="autoTypeRetypeTimeSpinBox">
            <property name="suffix">
             <string comment="Seconds"> sec</string>
@@ -1430,12 +1527,38 @@
            </property>
           </widget>
          </item>
+         <item row="0" column="3">
+          <spacer name="horizontalSpacer_14">
+           <property name="orientation">
+            <enum>Qt::Orientation::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item row="2" column="3">
+          <spacer name="horizontalSpacer_6">
+           <property name="orientation">
+            <enum>Qt::Orientation::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
         </layout>
        </item>
        <item>
         <spacer name="verticalSpacer_3">
          <property name="orientation">
-          <enum>Qt::Vertical</enum>
+          <enum>Qt::Orientation::Vertical</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
@@ -1510,7 +1633,12 @@
   <tabstop>autoTypeAskCheckBox</tabstop>
   <tabstop>autoTypeHideExpiredEntryCheckBox</tabstop>
   <tabstop>autoTypeRelockDatabaseCheckBox</tabstop>
+  <tabstop>autoTypePreferDesktopPortalsCheckBox</tabstop>
+  <tabstop>autoTypeDesktopPortalPersistConnectionCheckBox</tabstop>
+  <tabstop>autoTypeDesktopPortalUseClipboardCheckBox</tabstop>
   <tabstop>autoTypeShortcutWidget</tabstop>
+  <tabstop>autoTypeShortcutConfigureButton</tabstop>
+  <tabstop>autoTypeDesktopPortalPersistModeComboBox</tabstop>
   <tabstop>autoTypeRetypeTimeSpinBox</tabstop>
   <tabstop>autoTypeStartDelaySpinBox</tabstop>
   <tabstop>autoTypeDelaySpinBox</tabstop>

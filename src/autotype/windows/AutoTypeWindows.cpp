@@ -18,7 +18,7 @@
 
 #include "AutoTypeWindows.h"
 #include "core/Tools.h"
-#include "gui/osutils/OSUtils.h"
+#include "gui/osutils/winutils/WinUtils.h"
 
 #include <VersionHelpers.h>
 
@@ -26,6 +26,11 @@
 #define MAX_WINDOW_TITLE_LENGTH 1024
 
 #define MOD_NOREPEAT 0x4000 // Missing in MinGW
+
+void AutoTypePlatformWin::setOSUtils(OSUtilsBase* osUtils)
+{
+    m_winUtils = static_cast<WinUtils*>(osUtils);
+}
 
 //
 // Test if os version is Windows 7 or later
@@ -153,7 +158,7 @@ void AutoTypePlatformWin::sendCharVirtual(const QChar& ch)
 //
 void AutoTypePlatformWin::setKeyState(Qt::Key key, bool down)
 {
-    WORD nativeKeyCode = winUtils()->qtToNativeKeyCode(key);
+    WORD nativeKeyCode = m_winUtils->qtToNativeKeyCode(key);
     DWORD nativeFlags = KEYEVENTF_SCANCODE;
     if (isExtendedKey(nativeKeyCode)) {
         nativeFlags |= KEYEVENTF_EXTENDEDKEY;

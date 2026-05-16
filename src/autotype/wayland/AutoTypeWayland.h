@@ -1,6 +1,5 @@
 /*
- *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
- *  Copyright (C) 2016 Lennart Glauer <mail@lennart-glauer.de>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,58 +15,58 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_AUTOTYPEMAC_H
-#define KEEPASSXC_AUTOTYPEMAC_H
+#ifndef KEEPASSXC_AUTOTYPEWAYLAND_H
+#define KEEPASSXC_AUTOTYPEWAYLAND_H
 
-#include <Carbon/Carbon.h>
 #include <QtPlugin>
-#include <memory>
 
 #include "autotype/AutoTypePlatformPlugin.h"
-#include "autotype/AutoTypeAction.h"
 
-class MacUtils;
+class AutoTypeExecutorWayland;
+class NixUtils;
 
-class AutoTypePlatformMac : public QObject, public AutoTypePlatformInterface
+class AutoTypePlatformWayland : public QObject, public AutoTypePlatformInterface
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "org.keepassxc.AutoTypePlatformMac")
+    Q_PLUGIN_METADATA(IID "org.keepassxc.AutoTypePlatformWayland")
     Q_INTERFACES(AutoTypePlatformInterface)
 
 public:
-    AutoTypePlatformMac();
+    AutoTypePlatformWayland() = default;
     void setOSUtils(OSUtilsBase* osUtils) override;
     bool isAvailable() override;
     QStringList windowTitles() override;
     WId activeWindow() override;
     QString activeWindowTitle() override;
-    bool raiseWindow(WId pid) override;
+    bool raiseWindow(WId window) override;
+    bool hasWindowAccess() override
+    {
+        return false;
+    };
+    void unload() override;
+    void prepareAutoType() override;
+    void finishAutoType() override;
+
     AutoTypeExecutor* createExecutor() override;
-
-    bool hideOwnWindow() override;
-    bool raiseOwnWindow() override;
-
-    void sendChar(const QChar& ch, bool isKeyDown);
-    void sendKey(Qt::Key key, bool isKeyDown, Qt::KeyboardModifiers modifiers = Qt::NoModifier);
+    AutoTypeAction::Result sendKey(const AutoTypeKey*);
 
 private:
-    static int windowLayer(CFDictionaryRef window);
-    static QString windowStringProperty(CFDictionaryRef window, CFStringRef propertyRef);
+    friend class AutoTypeExecutorWayland;
 
-    MacUtils* m_macUtils = nullptr;
+    NixUtils* m_nixUtils = nullptr;
 };
 
-class AutoTypeExecutorMac : public AutoTypeExecutor
+class AutoTypeExecutorWayland : public AutoTypeExecutor
 {
 public:
-    explicit AutoTypeExecutorMac(AutoTypePlatformMac* platform);
+    explicit AutoTypeExecutorWayland(AutoTypePlatformWayland* platform);
 
     AutoTypeAction::Result execBegin(const AutoTypeBegin* action) override;
     AutoTypeAction::Result execType(const AutoTypeKey* action) override;
     AutoTypeAction::Result execClearField(const AutoTypeClearField* action) override;
 
 private:
-    AutoTypePlatformMac* const m_platform;
+    AutoTypePlatformWayland* const m_platform;
 };
 
-#endif  // KEEPASSXC_AUTOTYPEMAC_H
+#endif // KEEPASSXC_AUTOTYPEWAYLAND_H

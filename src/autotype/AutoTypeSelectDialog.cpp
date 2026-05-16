@@ -28,6 +28,7 @@
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/EntrySearcher.h"
+#include "core/Group.h"
 #include "gui/Clipboard.h"
 #include "gui/Icons.h"
 
@@ -151,9 +152,19 @@ void AutoTypeSelectDialog::performSearch()
 
         EntrySearcher searcher;
         QList<AutoTypeMatch> matches;
+        bool hideExpired = config()->get(Config::AutoTypeHideExpiredEntry).toBool();
         for (const auto& db : m_dbs) {
             auto found = searcher.search(searchText, db->rootGroup());
             for (auto* entry : found) {
+                auto group = entry->group();
+                if (!group || !group->resolveAutoTypeEnabled() || !entry->autoTypeEnabled()) {
+                    continue;
+                }
+
+                if (hideExpired && entry->isExpired()) {
+                    continue;
+                }
+
                 QSet<QString> sequences;
                 auto defSequence = entry->effectiveAutoTypeSequence();
                 if (!defSequence.isEmpty()) {

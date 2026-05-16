@@ -17,16 +17,23 @@
 
 #include "NixUtils.h"
 
+#include "autotype/AutoType.h"
+#include "gui/osutils/nixutils/GlobalShortcutsPortal.h"
+#include "gui/osutils/nixutils/RemoteDesktopPortal.h"
+
 #include "config-keepassx.h"
 #include "core/Config.h"
 #include "core/Global.h"
 
 #include <QApplication>
+#include <QClipboard>
 #include <QDBusInterface>
 #include <QDBusReply>
 #include <QDebug>
 #include <QDir>
+#include <QMimeData>
 #include <QPointer>
+#include <QProcess>
 #include <QRandomGenerator>
 #include <QStandardPaths>
 #include <QStyle>
@@ -223,12 +230,9 @@ bool NixUtils::isCapslockEnabled()
             return false;
         }
 
-        auto platform = QGuiApplication::platformName();
-        if (platform == "xcb") {
-            unsigned state = 0;
-            if (XkbGetIndicatorState(reinterpret_cast<Display*>(display), XkbUseCoreKbd, &state) == Success) {
-                return ((state & 1u) != 0);
-            }
+        unsigned state = 0;
+        if (XkbGetIndicatorState(reinterpret_cast<Display*>(display), XkbUseCoreKbd, &state) == Success) {
+            return ((state & 1u) != 0);
         }
     }
 #endif
@@ -247,6 +251,11 @@ void NixUtils::setUserInputProtection(bool enable)
 void NixUtils::registerNativeEventFilter()
 {
     qApp->installNativeEventFilter(this);
+
+    if (externalGlobalShortcutsConfigurator()) {
+        // The portal is lazy-loaded and loading it here will initialize it early
+        globalShortcutsPortal();
+    }
 }
 
 bool NixUtils::nativeEventFilter(const QByteArray& eventType, void* message, qintptr* result)
@@ -292,7 +301,15 @@ bool NixUtils::triggerGlobalShortcut(uint keycode, uint modifiers)
 
 bool NixUtils::registerGlobalShortcut(const QString& name, Qt::Key key, Qt::KeyboardModifiers modifiers, QString* error)
 {
+    if (externalGlobalShortcutsConfigurator()) {
+        return true;
+    }
+
 #ifdef WITH_X11
+    if (!dpy) {
+        return true;
+    }
+
     auto keycode = XKeysymToKeycode(dpy, qtToNativeKeyCode(key));
     auto modifierscode = qtToNativeModifiers(modifiers);
 
@@ -344,6 +361,10 @@ bool NixUtils::registerGlobalShortcut(const QString& name, Qt::Key key, Qt::Keyb
 
 bool NixUtils::unregisterGlobalShortcut(const QString& name)
 {
+    if (externalGlobalShortcutsConfigurator()) {
+        return true;
+    }
+
 #ifdef WITH_X11
     if (!m_globalShortcuts.contains(name)) {
         return false;
@@ -360,6 +381,64 @@ bool NixUtils::unregisterGlobalShortcut(const QString& name)
     Q_UNUSED(name)
 #endif
     return true;
+}
+
+bool NixUtils::setClipboardText(const QString& text)
+{
+    if (!autoType()->isAvailable() || !autoType()->usesDesktopPortal()
+        || !config()->get(Config::AutoTypeDesktopPortalUseClipboard).toBool()) {
+        return false;
+    }
+
+    auto* portal = remoteDesktopPortal();
+    if (!portal->isClipboardAvailable()) {
+        return false;
+    } else if (portal->setClipboardText(text)) {
+        return true;
+    }
+
+    qWarning("Failed to set clipboard text via remote desktop portal, falling back to standard clipboard");
+    return false;
+}
+
+bool NixUtils::clearClipboardText(const QString& text)
+{
+    // The remote desktop portal tracks whether KeePassXC owns the selection, so
+    // NixUtils does not need the copied text to decide whether clearing is safe.
+    Q_UNUSED(text)
+
+    if (!autoType()->isAvailable() || !autoType()->usesDesktopPortal()) {
+        return false;
+    }
+
+    auto* portal = m_remoteDesktopPortal;
+    if (portal && autoType()->isAvailable() && config()->get(Config::AutoTypeDesktopPortalUseClipboard).toBool()
+        && portal->isClipboardAvailable() && portal->hasSession()) {
+        if (portal->clearClipboardText()) {
+            return true;
+        }
+
+        qWarning("Failed to clear clipboard text via remote desktop portal, falling back to standard clipboard");
+        return false;
+    }
+
+    auto* clipboard = QApplication::clipboard();
+    auto hasClipboardData = clipboard && clipboard->mimeData(QClipboard::Clipboard)
+                            && !clipboard->mimeData(QClipboard::Clipboard)->formats().isEmpty();
+    auto hasSelectionData = clipboard && clipboard->supportsSelection() && clipboard->mimeData(QClipboard::Selection)
+                            && !clipboard->mimeData(QClipboard::Selection)->formats().isEmpty();
+    if (hasClipboardData || hasSelectionData) {
+        return false;
+    }
+
+    // Gnome Wayland doesn't let apps modify the clipboard when not in focus, so force clear.
+    return QProcess::startDetached(QStringLiteral("wl-copy"), {QStringLiteral("-c")});
+}
+
+bool NixUtils::isClipboardAvailable()
+{
+    return autoType()->isAvailable() && autoType()->usesDesktopPortal()
+           && remoteDesktopPortal()->isClipboardAvailable();
 }
 
 void NixUtils::handleColorSchemeChanged(QString ns, QString key, QDBusVariant value)
@@ -408,4 +487,58 @@ quint64 NixUtils::getProcessStartTime() const
 
     qDebug() << "nixutils: failed to find ')' in " << processStatPath;
     return 0;
+}
+
+bool NixUtils::externalGlobalShortcutsConfigurator()
+{
+#ifndef WITH_X11
+    return true;
+#else
+    if (isWayland()) {
+        return true;
+    } else if (config()->get(Config::AutoTypePreferDesktopPortals).toBool()) {
+        return globalShortcutsPortal()->isAvailable();
+    }
+
+    return false;
+#endif
+}
+
+bool NixUtils::isWayland() const
+{
+    return QApplication::platformName() == QLatin1String("wayland");
+}
+
+GlobalShortcutsPortal* NixUtils::globalShortcutsPortal()
+{
+    if (!m_globalShortcutsPortal) {
+        m_globalShortcutsPortal = new GlobalShortcutsPortal(this);
+        connect(m_globalShortcutsPortal,
+                &GlobalShortcutsPortal::globalShortcutTriggered,
+                this,
+                [this](const QString& name, const QString& search) { emit globalShortcutTriggered(name, search); });
+        connect(
+            m_globalShortcutsPortal,
+            &GlobalShortcutsPortal::globalShortcutChanged,
+            this,
+            [this](const QString& name, const QString& description) { emit globalShortcutChanged(name, description); });
+    }
+
+    return m_globalShortcutsPortal;
+}
+
+RemoteDesktopPortal* NixUtils::remoteDesktopPortal()
+{
+    if (!m_remoteDesktopPortal) {
+        m_remoteDesktopPortal = new RemoteDesktopPortal(this);
+    }
+
+    return m_remoteDesktopPortal;
+}
+
+void NixUtils::configureGlobalShortcut(const QString& name)
+{
+    Q_UNUSED(name)
+
+    globalShortcutsPortal()->configureShortcuts();
 }

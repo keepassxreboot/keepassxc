@@ -34,7 +34,7 @@
 class AutoTypePlatformX11 : public QObject, public AutoTypePlatformInterface
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "org.keepassx.AutoTypePlatformX11")
+    Q_PLUGIN_METADATA(IID "org.keepassxc.AutoTypePlatformX11")
     Q_INTERFACES(AutoTypePlatformInterface)
 
 public:

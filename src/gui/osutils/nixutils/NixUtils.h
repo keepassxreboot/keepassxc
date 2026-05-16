@@ -23,6 +23,9 @@
 #include <QSharedPointer>
 #include <QtDBus/QDBusVariant>
 
+class GlobalShortcutsPortal;
+class RemoteDesktopPortal;
+
 class NixUtils : public OSUtilsBase, QAbstractNativeEventFilter
 {
     Q_OBJECT
@@ -49,8 +52,20 @@ public:
     {
         return false;
     }
+    bool setClipboardText(const QString& text) override;
+    bool clearClipboardText(const QString& text) override;
+    bool isClipboardAvailable() override;
 
     quint64 getProcessStartTime() const;
+
+    bool externalGlobalShortcutsConfigurator() override;
+    bool isWayland() const;
+
+    GlobalShortcutsPortal* globalShortcutsPortal();
+    RemoteDesktopPortal* remoteDesktopPortal();
+
+public slots:
+    void configureGlobalShortcut(const QString& name) override;
 
 private slots:
     void handleColorSchemeChanged(QString ns, QString key, QDBusVariant value);
@@ -86,6 +101,9 @@ private:
     bool m_systemColorschemePrefExists = false;
 
     void setColorScheme(QDBusVariant value);
+
+    GlobalShortcutsPortal* m_globalShortcutsPortal = nullptr;
+    RemoteDesktopPortal* m_remoteDesktopPortal = nullptr;
 
     Q_DISABLE_COPY(NixUtils)
 };

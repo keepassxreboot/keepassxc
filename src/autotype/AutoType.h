@@ -28,6 +28,7 @@
 #include "AutoTypeAction.h"
 #include "AutoTypeMatch.h"
 
+#include "autotype/AutoTypePlatformPlugin.h"
 #include "core/Database.h"
 #include "core/Entry.h"
 
@@ -51,6 +52,12 @@ public:
     {
         return m_plugin;
     }
+
+    inline bool hasWindowAccess()
+    {
+        return m_plugin && m_plugin->hasWindowAccess();
+    }
+    bool usesDesktopPortal() const;
 
     static AutoType* instance();
     static void createTestInstance();
@@ -79,7 +86,7 @@ private:
 
     explicit AutoType(QObject* parent = nullptr, bool test = false);
     ~AutoType() override;
-    void loadPlugin(const QString& pluginPath);
+    bool loadPlugin(const QString& pluginPath);
     void executeAutoTypeActions(const Entry* entry,
                                 const QString& sequence = QString(),
                                 WId window = 0,

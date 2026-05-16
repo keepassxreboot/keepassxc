@@ -29,3 +29,22 @@ bool OSUtilsBase::setPreventScreenCapture(QWindow*, bool) const
     // Do nothing by default
     return true;
 }
+
+bool OSUtilsBase::setClipboardText(const QString& text)
+{
+    Q_UNUSED(text)
+
+    return false;
+}
+
+bool OSUtilsBase::clearClipboardText(const QString& text)
+{
+    Q_UNUSED(text)
+
+    return false;
+}
+
+bool OSUtilsBase::isClipboardAvailable()
+{
+    return false;
+}

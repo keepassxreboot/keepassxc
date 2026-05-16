@@ -19,6 +19,10 @@
     {
       "name": "libxtst",
       "platform": "linux | freebsd"
+    },
+    {
+      "name": "libxkbcommon",
+      "platform": "linux | freebsd"
     }
   ]
 }

@@ -230,8 +230,11 @@ endif()
 
 if(UNIX AND NOT APPLE)
     list(APPEND gui_SOURCES
+            gui/osutils/nixutils/DesktopPortal.cpp
             gui/osutils/nixutils/DeviceListenerLibUsb.cpp
+            gui/osutils/nixutils/GlobalShortcutsPortal.cpp
             gui/osutils/nixutils/NixUtils.cpp
+            gui/osutils/nixutils/RemoteDesktopPortal.cpp
             gui/osutils/nixutils/ScreenLockListenerDBus.cpp
     )
     if("${CMAKE_SYSTEM}" MATCHES "Linux")
@@ -256,6 +259,26 @@ if(UNIX AND NOT APPLE)
     qt6_add_dbus_interface(core_SOURCES
         quickunlock/dbus/org.freedesktop.PolicyKit1.Authority.xml
         polkit_dbus
+    )
+    qt6_add_dbus_interface(core_SOURCES
+        gui/osutils/nixutils/dbus/org.freedesktop.portal.Request.xml
+        xdp_request
+    )
+    qt6_add_dbus_interface(core_SOURCES
+        gui/osutils/nixutils/dbus/org.freedesktop.portal.Session.xml
+        xdp_session
+    )
+    qt6_add_dbus_interface(core_SOURCES
+        gui/osutils/nixutils/dbus/org.freedesktop.portal.GlobalShortcuts.xml
+        xdp_globalshortcuts
+    )
+    qt6_add_dbus_interface(core_SOURCES
+        gui/osutils/nixutils/dbus/org.freedesktop.portal.RemoteDesktop.xml
+        xdp_remotedesktop
+    )
+    qt6_add_dbus_interface(core_SOURCES
+        gui/osutils/nixutils/dbus/org.freedesktop.portal.Clipboard.xml
+        xdp_clipboard
     )
 endif()
 

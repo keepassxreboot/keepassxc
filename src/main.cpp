@@ -63,6 +63,7 @@ int main(int argc, char** argv)
 
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+    QGuiApplication::setDesktopFileName("org.keepassxc.KeePassXC");
 #if defined(Q_OS_WIN)
     QGuiApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
 #endif
@@ -190,8 +191,6 @@ int main(int argc, char** argv)
 
     // Apply the configured theme before creating any GUI elements
     app.applyTheme();
-
-    QGuiApplication::setDesktopFileName(app.property("KPXC_QUALIFIED_APPNAME").toString() + QStringLiteral(".desktop"));
 
     Application::bootstrap(config()->get(Config::GUI_Language).toString());
 

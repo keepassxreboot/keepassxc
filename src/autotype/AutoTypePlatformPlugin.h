@@ -22,16 +22,36 @@
 
 #include "autotype/AutoTypeAction.h"
 
+class OSUtilsBase;
+
 class AutoTypePlatformInterface
 {
 public:
     virtual ~AutoTypePlatformInterface() = default;
+
+    virtual void setOSUtils(OSUtilsBase*)
+    {
+    }
+
     virtual bool isAvailable() = 0;
     virtual QStringList windowTitles() = 0;
     virtual WId activeWindow() = 0;
     virtual QString activeWindowTitle() = 0;
     virtual bool raiseWindow(WId window) = 0;
+    virtual bool hasWindowAccess()
+    {
+        return true;
+    }
+
     virtual void unload()
+    {
+    }
+
+    virtual void prepareAutoType()
+    {
+    }
+
+    virtual void finishAutoType()
     {
     }
 
@@ -45,6 +65,6 @@ public:
     // implementations should also provide a globalShortcutTriggered() signal
 };
 
-Q_DECLARE_INTERFACE(AutoTypePlatformInterface, "org.keepassx.AutoTypePlatformInterface/1")
+Q_DECLARE_INTERFACE(AutoTypePlatformInterface, "org.keepassxc.AutoTypePlatformInterface/1")
 
 #endif // KEEPASSX_AUTOTYPEPLATFORMPLUGIN_H

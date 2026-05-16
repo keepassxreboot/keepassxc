@@ -1,0 +1,279 @@
+<?xml version="1.0"?>
+<!--
+ Copyright (C) 2022 Aleix Pol Gonzalez <aleixpol@kde.org>
+
+ SPDX-License-Identifier: LGPL-2.1-or-later
+
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public
+ License as published by the Free Software Foundation; either
+ version 2.1 of the License, or (at your option) any later version.
+
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Lesser General Public License for more details.
+
+ You should have received a copy of the GNU Lesser General Public
+ License along with this library. If not, see <http://www.gnu.org/licenses/>.
+
+ Author: Aleix Pol Gonzalez <aleixpol@kde.org>
+-->
+
+<node name="/" xmlns:doc="http://www.freedesktop.org/dbus/1.0/doc.dtd">
+  <!--
+      org.freedesktop.portal.GlobalShortcuts:
+      @short_description: Portal for managing global shortcuts
+
+      This portal lets applications create global shortcuts sessions, and
+      register shortcuts to them. These shortcuts are activated regardless of
+      the focused state of the application window.
+
+      To use this portal, applications have to create a session under which its
+      actions will be collected. Then shortcuts can be bound (see
+      org.freedesktop.portal.GlobalShortcuts.Bind), and listed (see
+      org.freedesktop.portal.GlobalShortcuts.ListShortcuts).
+
+      All global shortcuts are bound to a session, and all sessions are bound to
+      the application that created them.
+
+      The #org.freedesktop.portal.GlobalShortcuts::Activated and
+      #org.freedesktop.portal.GlobalShortcuts::Deactivated signals are emitted,
+      respectively, whenever a shortcut is activated and deactivated.
+
+      This documentation describes version 2 of this interface.
+  -->
+  <interface name="org.freedesktop.portal.GlobalShortcuts">
+    <!--
+        CreateSession:
+        @options: Vardict with optional further information
+        @handle: Object path for the :ref:`org.freedesktop.portal.Request` object representing this call
+
+        Creates a global shortcuts session.
+
+        Supported keys in the @options vardict include:
+
+        * ``handle_token`` (``s``)
+
+          A string that will be used as the last element of the @handle. Must be a valid
+          object path element. See the org.freedesktop.portal.Request documentation for
+          more information about the @handle.
+
+        * ``session_handle_token`` (``s``)
+
+          A string that will be used as the last element of the session handle. Must be a valid
+          object path element. See the org.freedesktop.portal.Session documentation for
+          more information about the session handle.
+
+        The following results get returned via the :ref:`org.freedesktop.portal.Request::Response` signal:
+
+        * ``session_handle`` (``s``)
+
+          The session handle. An object path for the
+          org.freedesktop.portal.Session object representing the created
+          session.
+
+          .. note::
+            The ``session_handle`` is an object path that was erroneously implemented
+            as ``s``. For backwards compatibility it will remain this type.
+    -->
+    <method name="CreateSession">
+      <annotation name="org.qtproject.QtDBus.QtTypeName.In0" value="QVariantMap"/>
+      <arg type="a{sv}" name="options" direction="in"/>
+      <arg type="o" name="handle" direction="out"/>
+    </method>
+
+    <!--
+        BindShortcuts:
+        @session_handle: Object path for the :ref:`org.freedesktop.portal.Session` object representing the session
+        @shortcuts: The list of shortcuts to bind
+        @parent_window: Identifier for the application window, see :doc:`window-identifiers`
+        @options: Vardict with optional further information
+        @request_handle: Object path for the :ref:`org.freedesktop.portal.Request` object representing this call
+
+        Bind the shortcuts. This will typically result the portal presenting a
+        dialog showing the shortcuts and allowing users to configure the shortcuts.
+        An application can only attempt bind shortcuts of a session once.
+
+        Each element of the @shortcuts array is a tuple composed of a shortcut id,
+        and a vardict with the following keys:
+
+        * ``description`` (``s``)
+
+          User-readable text describing what the shortcut does.
+
+        * ``preferred_trigger`` (``s``)
+
+          The preferred shortcut trigger, defined as described by the
+          `shortcuts XDG specification <https://specifications.freedesktop.org/shortcuts-spec/latest/>`__.
+          Optional.
+
+        Supported keys in the @options vardict include:
+
+        * ``handle_token`` (``s``)
+
+          A string that will be used as the last element of the
+          @handle. Must be a valid object path element. See the
+          :ref:`org.freedesktop.portal.Request` documentation for more
+          information about the @handle.
+
+        The following results get returned via the ref::`org.freedesktop.portal.Request::Response` signal:
+
+        * ``shortcuts`` (``a(sa{sv})``)
+
+          The list of shortcuts which were bound. This is a subset of the
+          shortcuts which were passed in from the @shortcuts variable of this
+          method (this includes the set of all shortcuts and the empty set).
+          The keys they may contain are described below, and are different from
+          the keys in the @shortcuts variable of this method.
+
+        Each element of the @shortcuts array returned by the
+        :ref:`org.freedesktop.portal.Request::Response` signal is a tuple composed of
+        a shortcut id, and a vardict with the following keys:
+
+        * ``description`` (``s``)
+
+          User-readable text describing what the shortcut does.
+
+        * ``trigger_description`` (``s``)
+
+          User-readable text describing how to trigger the shortcut for the
+          client to render.
+    -->
+    <method name="BindShortcuts">
+      <arg type="o" name="session_handle" direction="in"/>
+      <annotation name="org.qtproject.QtDBus.QtTypeName.In1" value="QList&lt;QPair&lt;QString,QVariantMap&gt;&gt;"/>
+      <arg type="a(sa{sv})" name="shortcuts" direction="in"/>
+      <arg type="s" name="parent_window" direction="in"/>
+      <annotation name="org.qtproject.QtDBus.QtTypeName.In3" value="QVariantMap"/>
+      <arg type="a{sv}" name="options" direction="in"/>
+      <arg type="o" name="request_handle" direction="out"/>
+    </method>
+
+    <!--
+        ListShortcuts:
+        @session_handle: Object path for the :ref:`org.freedesktop.portal.Session` object representing the session
+        @options: Vardict with optional further information
+
+        Lists shortcuts of a session.
+
+        If `BindShortcuts` was called for `session` all active shortcuts for `session` are returned.
+        Otherwise returns the shortcuts that were sucessfully bound in a previous session by this application.
+
+        Supported keys in the @options vardict include:
+
+        * ``handle_token`` (``s``)
+
+          A string that will be used as the last element of the
+          @handle. Must be a valid object path element. See the
+          :ref:`org.freedesktop.portal.Request` documentation for more
+          information about the @handle.
+
+        The following results get returned via the :ref:`org.freedesktop.portal.Request::Response` signal:
+
+        * ``shortcuts`` (``a(sa{sv})``)
+
+          A list of shortcuts.
+
+          See the :ref:`org.freedesktop.portal.Request::Response` signal of the
+          org.freedesktop.portal.GlobalShortcuts.BindShortcuts() method for
+          the list of supported properties of shortcuts.
+    -->
+    <method name="ListShortcuts">
+      <arg type="o" name="session_handle" direction="in"/>
+      <annotation name="org.qtproject.QtDBus.QtTypeName.In1" value="QVariantMap"/>
+      <arg type="a{sv}" name="options" direction="in"/>
+      <arg type="o" name="request_handle" direction="out"/>
+    </method>
+
+    <!--
+        ConfigureShortcuts:
+        @session_handle: Object path for the :ref:`org.freedesktop.portal.Session` object representing the session
+        @parent_window: Identifier for the application window, see :doc:`window-identifiers`
+        @options: Vardict with optional further information
+
+        Request showing a configuration UI so the user is able to configure all shortcuts of this session.
+
+        Supported keys in the @options vardict include:
+
+        * ``activation_token`` (``s``)
+
+          A token that can be used to activate the configuration window.
+
+        This method was added in version 2 of this interface.
+    -->
+    <method name="ConfigureShortcuts">
+      <arg type="o" name="session_handle" direction="in"/>
+      <arg type="s" name="parent_window" direction="in" />
+      <annotation name="org.qtproject.QtDBus.QtTypeName.In2" value="QVariantMap"/>
+      <arg type="a{sv}" name="options" direction="in"/>
+    </method>
+
+    <!--
+        Activated:
+        @session_handle: Session that requested the shortcut
+        @shortcut_id: the application-provided ID for the notification
+        @timestamp: the time of activation with millisecond granularity, with an undefined base.
+        @options: Vardict with optional further information
+
+        Notifies about a shortcut becoming active.
+
+        Supported keys in the @options vardict include:
+
+        * ``activation_token`` (``s``)
+
+          A token that can be used to activate a window in response to the
+          shortcut getting activated.
+    -->
+    <signal name="Activated">
+      <arg type="o" name="session_handle" direction="out"/>
+      <arg type="s" name="shortcut_id" direction="out"/>
+      <arg type="t" name="timestamp" direction="out"/>
+      <annotation name="org.qtproject.QtDBus.QtTypeName.Out3" value="QVariantMap"/>
+      <arg type="a{sv}" name="options" direction="out"/>
+    </signal>
+
+    <!--
+        Deactivated:
+        @session_handle: Session that requested the shortcut
+        @shortcut_id: the application-provided ID for the notification
+        @timestamp: the time of deactivation with millisecond granularity, with an undefined base.
+        @options: Vardict with optional further information
+
+        Notifies that a shortcut is not active anymore.
+
+        Supported keys in the @options vardict include:
+
+        * ``activation_token`` (``s``)
+
+          A token that can be used to activate a window in response to the
+          shortcut getting deactivated.
+    -->
+    <signal name="Deactivated">
+      <arg type="o" name="session_handle" direction="out"/>
+      <arg type="s" name="shortcut_id" direction="out"/>
+      <arg type="t" name="timestamp" direction="out"/>
+      <annotation name="org.qtproject.QtDBus.QtTypeName.Out3" value="QVariantMap"/>
+      <arg type="a{sv}" name="options" direction="out"/>
+    </signal>
+
+    <!--
+        ShortcutsChanged:
+        @session_handle: Session that requested the shortcut
+        @shortcuts: The different shortcuts that have been registered. See org.freedesktop.portal.GlobalShortcuts.
+
+        Indicates that the information associated with some of the shortcuts has changed.
+
+        See the :ref:`org.freedesktop.portal.Request::Response` signal of the
+        org.freedesktop.portal.GlobalShortcuts.BindShortcuts() method for the
+        list of supported properties of shortcuts.
+    -->
+    <signal name="ShortcutsChanged">
+      <arg type="o" name="session_handle" direction="out"/>
+      <annotation name="org.qtproject.QtDBus.QtTypeName.Out1" value="QList&lt;QPair&lt;QString,QVariantMap&gt;&gt;"/>
+      <arg type="a(sa{sv})" name="shortcuts" direction="out"/>
+    </signal>
+
+    <property name="version" type="u" access="read"/>
+  </interface>
+</node>

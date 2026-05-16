@@ -1,0 +1,184 @@
+<?xml version="1.0"?>
+<!--
+ Copyright 2022 Google LLC
+
+ SPDX-License-Identifier: LGPL-2.1-or-later
+
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public
+ License as published by the Free Software Foundation; either
+ version 2.1 of the License, or (at your option) any later version.
+
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Lesser General Public License for more details.
+
+ You should have received a copy of the GNU Lesser General Public
+ License along with this library. If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<node name="/"
+  xmlns:doc="http://www.freedesktop.org/dbus/1.0/doc.dtd">
+  <!--
+      org.freedesktop.portal.Clipboard
+      @short_description: Clipboard portal
+
+      The Clipboard portal allows sessions to access the clipboard.
+
+      This documentation describes version 1 of this interface.
+  -->
+  <interface name="org.freedesktop.portal.Clipboard">
+    <!-- 
+        RequestClipboard:
+        @session_handle: Object path for the :ref:`org.freedesktop.portal.Session` object
+        @options: Vardict with optional further information
+
+        Requests clipboard access for the given portal session. This request
+        must be made before the session starts. The session must be started,
+        before using any other method in this interface which take a session.
+        Note that other interfaces might place restriction on when it's possible
+        to interact with the clipboard.
+
+        This portal does NOT create it's own session. Instead, it offers existing sessions
+        created from other portals the option to integrate with the clipboard.
+
+        For whether this interface is supported for a given session, refer to that portal's
+        documentation.
+        See :ref:`org.freedesktop.portal.RemoteDesktop` to integrate clipboard with the
+        remote desktop session.
+        See :ref:`org.freedesktop.portal.InputCapture` to integrate clipboard with the
+        input capture session.
+    -->
+    <method name="RequestClipboard">
+      <arg type="o" name="session_handle" direction="in"/>
+      <annotation name="org.qtproject.QtDBus.QtTypeName.In1" value="QVariantMap"/>
+      <arg type="a{sv}" name="options" direction="in"/>
+    </method>
+    <!-- 
+        SetSelection:
+        @session_handle: Object path for the :ref:`org.freedesktop.portal.Session` object
+        @options: Vardict with optional further information
+
+        Sets the owner of the clipboard formats in ``mime_types`` in @options to
+        the session, i.e. this session has data for the advertised clipboard formats.
+
+        See :ref:`org.freedesktop.portal.FileTransfer` to transfer files using the
+        ``application/vnd.portal.filetransfer`` mimetype.
+
+        May only be called if clipboard access was given after starting the session.
+
+        Supported keys in the @options vardict include:
+
+        * ``mime_types`` (``as``)
+
+          A list of mime types that the session has clipboard content for.
+     -->
+    <method name="SetSelection">
+      <arg type="o" name="session_handle" direction="in"/>
+      <annotation name="org.qtproject.QtDBus.QtTypeName.In1" value="QVariantMap"/>
+      <arg type="a{sv}" name="options" direction="in"/>
+    </method>
+    <!--
+        SelectionWrite:
+        @session_handle: Object path for the :ref:`org.freedesktop.portal.Session` object
+        @serial: The serial of the request where this answer is directed towards
+        @fd: A UnixFD handle to the contents of the selection being written to
+
+        Answer to 'SelectionTransfer' signal. Transfers the clipboard content for
+        the given serial to the method callee via a file descriptor.
+        It is the Callee that creates the file descriptor.
+
+        May only be called if clipboard access was given after starting the session.
+    -->
+    <method name="SelectionWrite">
+      <annotation name="org.gtk.GDBus.C.UnixFD" value="true"/>
+      <arg type="o" name="session_handle" direction="in"/>
+      <arg type="u" name="serial" direction="in"/>
+      <arg type="h" name="fd" direction="out"/>
+    </method>
+    <!-- 
+        SelectionWriteDone:
+        @session_handle: Object path for the :ref:`org.freedesktop.portal.Session` object
+        @serial: The serial of the request where this answer is directed to
+        @success: A boolean which indicates whether the transfer of the clipboard data was successful (``true``) or not (``false``)
+
+        Notifies that the transfer of the clipboard data has either completed
+        successfully, or failed.
+
+        May only be called if clipboard access was given after starting the session.
+     -->
+    <method name="SelectionWriteDone">
+      <arg type="o" name="session_handle" direction="in"/>
+      <arg type="u" name="serial" direction="in"/>
+      <arg type="b" name="success" direction="in"/>
+    </method>
+    <!-- 
+        SelectionRead:
+        @session_handle: Object path for the :ref:`org.freedesktop.portal.Session` object
+        @mime_type: The MIME type string of the requested format
+        @fd: A UnixFD handle to the contents of the selection being read
+
+        Transfer the clipboard content given the specified mime type to the
+        method caller via a file descriptor.
+
+        The creation of the file descriptor is the responsibility of the callee.
+
+        May only be called if clipboard access was given after starting the session.
+    -->
+    <method name="SelectionRead">
+      <annotation name="org.gtk.GDBus.C.UnixFD" value="true"/>
+      <arg type="o" name="session_handle" direction="in"/>
+      <arg type="s" name="mime_type" direction="in"/>
+      <arg type="h" name="fd" direction="out"/>
+    </method>
+    <!-- 
+        SelectionOwnerChanged:
+        @session_handle: Object path for the :ref:`org.freedesktop.portal.Session` object
+        @options: Vardict with optional further information
+
+        Notifies the session that the clipboard selection has changed.
+
+        Caller will only be notified if clipboard access was given after starting the session.
+
+        Supported keys in the @options vardict include:
+
+        * ``mime_types`` (``as``)
+
+          A list of MIME types for which the new clipboard selection has content
+
+        * ``session_is_owner`` (``b``)
+
+          A boolean for whether the session is the owner of the clipboard selection ('true') or not ('false')
+     -->
+    <signal name="SelectionOwnerChanged">
+      <arg type="o" name="session_handle" direction="out"/>
+      <annotation name="org.qtproject.QtDBus.QtTypeName.Out1" value="QVariantMap"/>
+      <arg type="a{sv}" name="options" direction="out"/>
+    </signal>
+    <!-- 
+        SelectionTransfer:
+        @session_handle: Object path for the :ref:`org.freedesktop.portal.Session` object
+        @mime_type: The mime-type string of the requested format
+        @serial: The serial used to track this transfer, to which the answer of this request must use
+
+        Notifies the session of a request for clipboard content of the given mime type.  The 
+        callee provides a serial to track the request, which any 
+        org.freedesktop.portal.Clipboard.SelectionWrite() responses must use.
+
+        Once the caller is done handling the 'SelectionTransfer' request, they must call
+        org.freedesktop.portal.Clipboard.SelectionWriteDone() with the corresponding request's serial
+        and whether the request completed successfully. If the request is not handled, the caller should
+        respond by setting 'success' to 'false'.
+
+        Caller will only be notified if clipboard access was given after starting the session.
+     -->
+    <signal name="SelectionTransfer">
+      <arg type="o" name="session_handle" direction="out"/>
+      <arg type="s" name="mime_type" direction="out"/>
+      <arg type="u" name="serial" direction="out"/>
+    </signal>
+
+    <property name="version" type="u" access="read"/>
+  </interface>
+</node>

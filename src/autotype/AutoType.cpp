@@ -20,6 +20,7 @@
 
 #include <QApplication>
 #include <QDebug>
+#include <QJsonObject>
 #include <QPluginLoader>
 #include <QRegularExpression>
 #include <QUrl>
@@ -29,6 +30,7 @@
 #include "autotype/AutoTypePlatformPlugin.h"
 #include "autotype/AutoTypeSelectDialog.h"
 #include "autotype/PickcharsDialog.h"
+#include "core/Config.h"
 #include "core/Global.h"
 #include "core/Resources.h"
 #include "core/Tools.h"
@@ -39,6 +41,29 @@
 
 namespace
 {
+    QStringList autoTypePluginCandidates(bool test)
+    {
+        if (test) {
+            return {QStringLiteral("test")};
+        }
+
+        const auto platformName = QApplication::platformName();
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS) && !defined(Q_OS_HAIKU)
+        if (platformName == QLatin1String("xcb")) {
+#ifdef WITH_X11
+            if (config()->get(Config::AutoTypePreferDesktopPortals).toBool()) {
+                return {QStringLiteral("wayland"), QStringLiteral("xcb")};
+            }
+            return {QStringLiteral("xcb")};
+#else
+            return {QStringLiteral("wayland")};
+#endif
+        }
+#endif
+
+        return {platformName};
+    }
+
     // Basic Auto-Type placeholder associations
     const QHash<QString, Qt::Key> g_placeholderToKey = {{"tab", Qt::Key_Tab},
                                                         {"enter", Qt::Key_Enter},
@@ -141,20 +166,24 @@ AutoType::AutoType(QObject* parent, bool test)
     // prevent crash when the plugin has unresolved symbols
     m_pluginLoader->setLoadHints(QLibrary::ResolveAllSymbolsHint);
 
-    QString pluginName = "keepassxc-autotype-";
-    if (!test) {
-        pluginName += QApplication::platformName();
-    } else {
-        pluginName += "test";
+    const auto pluginCandidates = autoTypePluginCandidates(test);
+    for (const auto& pluginCandidate : pluginCandidates) {
+        const auto pluginPath = resources()->pluginPath(QStringLiteral("keepassxc-autotype-%1").arg(pluginCandidate));
+        if (!pluginPath.isEmpty() && loadPlugin(pluginPath)) {
+            break;
+        }
     }
 
-    QString pluginPath = resources()->pluginPath(pluginName);
-
-    if (!pluginPath.isEmpty()) {
-        loadPlugin(pluginPath);
+    if (!m_plugin) {
+        qWarning("Unable to load an available auto-type plugin.");
     }
 
     connect(this, SIGNAL(autotypeFinished()), SLOT(resetAutoTypeState()));
+    connect(this, &AutoType::autotypeFinished, this, [this] {
+        if (m_plugin) {
+            m_plugin->finishAutoType();
+        }
+    });
     connect(qApp, SIGNAL(aboutToQuit()), SLOT(unloadPlugin()));
 }
 
@@ -166,35 +195,48 @@ AutoType::~AutoType()
     }
 }
 
-void AutoType::loadPlugin(const QString& pluginPath)
+bool AutoType::usesDesktopPortal() const
+{
+    return m_plugin
+           && m_pluginLoader->metaData().value(QLatin1String("IID")).toString()
+                  == QLatin1String("org.keepassxc.AutoTypePlatformWayland");
+}
+
+bool AutoType::loadPlugin(const QString& pluginPath)
 {
     m_pluginLoader->setFileName(pluginPath);
 
     QObject* pluginInstance = m_pluginLoader->instance();
-    if (pluginInstance) {
-        m_plugin = qobject_cast<AutoTypePlatformInterface*>(pluginInstance);
-        m_executor = nullptr;
-
-        if (m_plugin) {
-            if (m_plugin->isAvailable()) {
-                m_executor = m_plugin->createExecutor();
-                connect(osUtils,
-                        &OSUtilsBase::globalShortcutTriggered,
-                        this,
-                        [this](const QString& name, const QString& initialSearch) {
-                            if (name == "autotype") {
-                                startGlobalAutoType(initialSearch);
-                            }
-                        });
-            } else {
-                unloadPlugin();
-            }
-        }
+    if (!pluginInstance) {
+        return false;
     }
 
     if (!m_plugin) {
-        qWarning("Unable to load auto-type plugin:\n%s", qPrintable(m_pluginLoader->errorString()));
+        m_plugin = qobject_cast<AutoTypePlatformInterface*>(pluginInstance);
+        m_executor = nullptr;
     }
+
+    if (!m_plugin) {
+        unloadPlugin();
+        return false;
+    }
+
+    m_plugin->setOSUtils(osUtils);
+    if (!m_plugin->isAvailable()) {
+        unloadPlugin();
+        return false;
+    }
+
+    m_executor = m_plugin->createExecutor();
+    connect(osUtils,
+            &OSUtilsBase::globalShortcutTriggered,
+            this,
+            [this](const QString& name, const QString& initialSearch) {
+                if (name == "autotype") {
+                    startGlobalAutoType(initialSearch);
+                }
+            });
+    return true;
 }
 
 void AutoType::unloadPlugin()
@@ -208,6 +250,8 @@ void AutoType::unloadPlugin()
         m_plugin->unload();
         m_plugin = nullptr;
     }
+
+    m_pluginLoader->unload();
 }
 
 AutoType* AutoType::instance()
@@ -398,6 +442,10 @@ void AutoType::performAutoTypeWithSequence(const Entry* entry, const QString& se
 
 void AutoType::startGlobalAutoType(const QString& search)
 {
+    if (!m_plugin) {
+        return;
+    }
+
     // Never Auto-Type into KeePassXC itself
     if (getMainWindow() && (qApp->activeWindow() || qApp->activeModalWidget())) {
         return;
@@ -472,9 +520,10 @@ void AutoType::performGlobalAutoType(const QList<QSharedPointer<Database>>& dbLi
         qWarning() << "Auto-Type: Window title was empty from the operating system";
     }
 
-    // Show the selection dialog if we always ask, have multiple matches, or no matches
+    // Show the selection dialog if we always ask, have multiple matches, no matches, or the window title was empty
     if (getMainWindow()
-        && (config()->get(Config::Security_AutoTypeAsk).toBool() || matchList.size() > 1 || matchList.isEmpty())) {
+        && (config()->get(Config::Security_AutoTypeAsk).toBool() || matchList.size() > 1 || matchList.isEmpty()
+            || m_windowTitleForGlobal.isEmpty())) {
         // Close any open modal windows that would interfere with the process
         getMainWindow()->closeModalWindow();
 
@@ -486,18 +535,19 @@ void AutoType::performGlobalAutoType(const QList<QSharedPointer<Database>>& dbLi
         }
 
         connect(getMainWindow(), &MainWindow::databaseLocked, selectDialog, &AutoTypeSelectDialog::reject);
-        connect(selectDialog,
-                &AutoTypeSelectDialog::matchActivated,
-                this,
-                [this](const AutoTypeMatch& match, bool virtualMode) {
-                    m_lastMatch = match;
-                    m_lastMatchRetypeTimer.start(config()->get(Config::GlobalAutoTypeRetypeTime).toInt() * 1000);
-                    executeAutoTypeActions(match.first,
-                                           match.second,
-                                           m_windowForGlobal,
-                                           virtualMode ? AutoTypeExecutor::Mode::VIRTUAL
-                                                       : AutoTypeExecutor::Mode::NORMAL);
-                });
+        connect(
+            selectDialog,
+            &AutoTypeSelectDialog::matchActivated,
+            this,
+            [this](const AutoTypeMatch& match, bool virtualMode) {
+                m_lastMatch = match;
+                m_lastMatchRetypeTimer.start(config()->get(Config::GlobalAutoTypeRetypeTime).toInt() * 1000);
+                executeAutoTypeActions(match.first,
+                                       match.second,
+                                       m_windowForGlobal,
+                                       virtualMode ? AutoTypeExecutor::Mode::VIRTUAL : AutoTypeExecutor::Mode::NORMAL);
+            },
+            Qt::QueuedConnection);
         connect(selectDialog, &QDialog::rejected, this, [this] {
             restoreWindowState();
             emit autotypeFinished();
@@ -510,6 +560,7 @@ void AutoType::performGlobalAutoType(const QList<QSharedPointer<Database>>& dbLi
         selectDialog->show();
         selectDialog->raise();
         selectDialog->activateWindow();
+        m_plugin->prepareAutoType();
     } else if (!matchList.isEmpty()) {
         // Only one match and not asking, do it!
         executeAutoTypeActions(matchList.first().first, matchList.first().second, m_windowForGlobal);

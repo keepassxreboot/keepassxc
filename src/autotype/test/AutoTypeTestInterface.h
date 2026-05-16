@@ -33,6 +33,6 @@ public:
     virtual QString keyToString(Qt::Key key) = 0;
 };
 
-Q_DECLARE_INTERFACE(AutoTypeTestInterface, "org.keepassx.AutoTypeTestInterface/1")
+Q_DECLARE_INTERFACE(AutoTypeTestInterface, "org.keepassxc.AutoTypeTestInterface/1")
 
 #endif // KEEPASSX_AUTOTYPETESTINTERFACE_H
