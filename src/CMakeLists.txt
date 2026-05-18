@@ -517,7 +517,15 @@ if(WIN32)
         else()
             set(_wdqt_mode --release)
         endif()
-        execute_process(COMMAND ${WINDEPLOYQT_EXE} ${PROGNAME}.exe \${_wdqt_mode} WORKING_DIRECTORY \${CMAKE_INSTALL_PREFIX} OUTPUT_QUIET)"
+        execute_process(
+            COMMAND ${WINDEPLOYQT_EXE} ${PROGNAME}.exe \${_wdqt_mode}
+            WORKING_DIRECTORY \${CMAKE_INSTALL_PREFIX}
+            OUTPUT_QUIET
+            RESULT_VARIABLE _wdqt_result
+        )
+        if(NOT \${_wdqt_result} EQUAL 0)
+            message(FATAL_ERROR \"windeployqt failed with exit code \${_wdqt_result}\")
+        endif()"
         COMPONENT Runtime)
 
     if(NOT VCPKG_INSTALLED_DIR)
