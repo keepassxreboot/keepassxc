@@ -452,7 +452,9 @@ install(TARGETS ${PROGNAME}
 if(WIN32)
     # Deploy used libraries into build directory for debugging
     add_custom_command(TARGET ${PROGNAME} POST_BUILD
-        COMMAND ${WINDEPLOYQT_EXE} --dir $<TARGET_FILE_DIR:${PROGNAME}> $<TARGET_FILE:${PROGNAME}>)
+        COMMAND ${WINDEPLOYQT_EXE}
+            $<IF:$<CONFIG:Debug>,--debug,--release>
+            $<TARGET_FILE:${PROGNAME}>)
 
     # We have to copy the license file in the configuration phase.
     # CMake checks that CPACK_RESOURCE_FILE_LICENSE actually exists and
@@ -471,7 +473,7 @@ if(WIN32)
     set(CPACK_GENERATOR "ZIP;WIX")
     set(CPACK_COMPONENTS_ALL "")
     set(CPACK_STRIP_FILES OFF)
-    set(CPACK_PACKAGE_FILE_NAME "${PROGNAME}-${KEEPASSXC_VERSION}-${OUTPUT_FILE_POSTFIX}")
+    set(CPACK_PACKAGE_FILE_NAME "${PROGNAME}-${KEEPASSXC_VERSION}-${CMAKE_CXX_COMPILER_ARCHITECTURE_ID}")
     set(CPACK_PACKAGE_INSTALL_DIRECTORY ${PROGNAME})
     set(CPACK_PACKAGE_VERSION ${KEEPASSXC_VERSION_CLEAN})
     set(CPACK_PACKAGE_VENDOR "${PROGNAME} Team")
@@ -507,16 +509,23 @@ if(WIN32)
     set(CPACK_WIX_EXTENSIONS "WixUtilExtension.dll")
     include(CPack)
 
+    
+    # Use windeployqt.exe to setup Qt dependencies
+    install(CODE "
+        if(\"\${CMAKE_INSTALL_CONFIG_NAME}\" STREQUAL \"Debug\")
+            set(_wdqt_mode --debug)
+        else()
+            set(_wdqt_mode --release)
+        endif()
+        execute_process(COMMAND ${WINDEPLOYQT_EXE} ${PROGNAME}.exe \${_wdqt_mode} WORKING_DIRECTORY \${CMAKE_INSTALL_PREFIX} OUTPUT_QUIET)"
+        COMPONENT Runtime)
+
     if(NOT VCPKG_INSTALLED_DIR)
         install(CODE "set(gp_tool \"objdump\")" COMPONENT Runtime)
 
         # Deploy all 3rd party library dependencies first
         install(CODE "include(BundleUtilities)
                       fixup_bundle(\"\${CMAKE_INSTALL_PREFIX}/${PROGNAME}.exe\" \"\" \"\")"
-                COMPONENT Runtime)
-
-        # Use windeployqt.exe to setup Qt dependencies
-        install(CODE "execute_process(COMMAND ${WINDEPLOYQT_EXE} ${PROGNAME}.exe ${WINDEPLOYQT_MODE} WORKING_DIRECTORY \${CMAKE_INSTALL_PREFIX} OUTPUT_QUIET)"
                 COMPONENT Runtime)
 
         # install OpenSSL library
