@@ -329,12 +329,7 @@ QByteArray KeeAgentSettings::toXml() const
     writer.writeEndElement(); // EntrySettings
     writer.writeEndDocument();
 
-    // Real KeeAgent can only read UTF-16
-    auto toDecUtf16 = QStringDecoder(QStringConverter::Utf8);
-    auto sUtf16 = toDecUtf16(ba);
-    auto toEncUtf16 = QStringEncoder(QStringEncoder::Utf16);
-    auto baUtf16 = toEncUtf16(sUtf16);
-    return baUtf16;
+    return ba;
 }
 
 /**
