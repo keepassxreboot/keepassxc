@@ -587,20 +587,17 @@ bool Entry::hasValidTotp() const
 
 bool Entry::hasUnsavedChanges() const
 {
+    if (config()->get(Config::AutoSaveAfterEveryChange).toBool()) {
+        return false;
+    }
+
     auto db = database();
     // Basic checks to avoid more expensive file checks later
     if (!db || !db->isModified() || db->filePath().isEmpty()) {
         return false;
     }
 
-    // If the database file doesn't exist, then we haven't done an initial save yet
-    const QFileInfo databaseFile(db->filePath());
-    if (!databaseFile.exists()) {
-        return false;
-    }
-
-    // Check to see if the last modified time of this entry is after the file modification time
-    const auto saved = databaseFile.lastModified().toUTC();
+    const auto saved = db->savedFileModifiedTime();
     return saved.isValid() && timeInfo().lastModificationTime() > saved;
 }
 
