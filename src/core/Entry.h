@@ -121,6 +121,7 @@ public:
     const QSharedPointer<PasswordHealth> passwordHealth() const;
     bool excludeFromReports() const;
     void setExcludeFromReports(bool state);
+    bool hasUnsavedChanges() const;
 
     bool hasPasskey() const;
     void removePasskey();

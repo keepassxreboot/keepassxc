@@ -585,6 +585,25 @@ bool Entry::hasValidTotp() const
     return error.isEmpty();
 }
 
+bool Entry::hasUnsavedChanges() const
+{
+    auto db = database();
+    // Basic checks to avoid more expensive file checks later
+    if (!db || !db->isModified() || db->filePath().isEmpty()) {
+        return false;
+    }
+
+    // If the database file doesn't exist, then we haven't done an initial save yet
+    const QFileInfo databaseFile(db->filePath());
+    if (!databaseFile.exists()) {
+        return false;
+    }
+
+    // Check to see if the last modified time of this entry is after the file modification time
+    const auto saved = databaseFile.lastModified().toUTC();
+    return saved.isValid() && timeInfo().lastModificationTime() > saved;
+}
+
 bool Entry::hasPasskey() const
 {
     return m_attributes->hasPasskey();
