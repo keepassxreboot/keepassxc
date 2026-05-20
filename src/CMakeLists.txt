@@ -453,6 +453,7 @@ if(WIN32)
     # Deploy used libraries into build directory for debugging
     add_custom_command(TARGET ${PROGNAME} POST_BUILD
         COMMAND ${WINDEPLOYQT_EXE}
+            --dir $<TARGET_FILE_DIR:${PROGNAME}>
             $<IF:$<CONFIG:Debug>,--debug,--release>
             $<TARGET_FILE:${PROGNAME}>)
 
