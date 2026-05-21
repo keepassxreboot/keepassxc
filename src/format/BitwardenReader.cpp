@@ -26,6 +26,11 @@
 #include "crypto/CryptoHash.h"
 #include "crypto/SymmetricCipher.h"
 #include "crypto/kdf/Argon2Kdf.h"
+#ifdef WITH_XC_SSHAGENT
+#include "sshagent/KeeAgentSettings.h"
+#include "sshagent/SSHAgent.h"
+#include "sshagent/OpenSSHKey.h"
+#endif
 
 #include <botan/kdf.h>
 #include <botan/pwdhash.h>
@@ -41,7 +46,7 @@
 
 namespace
 {
-    Entry* readItem(const QJsonObject& item, QString& folderId)
+    Entry* readItem(const QJsonObject& item, QString& folderId, Database& db)
     {
         // Create the item map and extract the folder id
         const auto itemMap = item.toVariantMap();
@@ -283,6 +288,28 @@ namespace
 
                     entry->attachments()->set(baseName + ".pub", publicKey.toUtf8());
                     entry->attachments()->set(baseName, privateKey.toUtf8());
+
+#ifdef WITH_XC_SSHAGENT
+                    KeeAgentSettings sshAgentSettings{};
+
+                    sshAgentSettings.fromEntry(entry.data());
+                    sshAgentSettings.setAttachmentName(baseName);
+                    sshAgentSettings.setSelectedType("attachment");
+                    sshAgentSettings.toEntry(entry.data());
+
+                    OpenSSHKey key;
+
+                    // setGroup is called after creating the entry, so the simpler overload does not work here.
+                    if (sshAgentSettings.toOpenSSHKey(
+                            entry->username(),
+                            entry->password(),
+                            "",
+                            entry->attachments(),
+                            key,
+                            false)) {
+                        sshAgent()->addIdentity(key, sshAgentSettings, db.uuid());
+                    }
+#endif
                 }
             }
         }
@@ -360,7 +387,7 @@ namespace
         QString folderId;
         const auto items = vault.value("items").toArray();
         for (const auto& item : items) {
-            auto entry = readItem(item.toObject(), folderId);
+            auto entry = readItem(item.toObject(), folderId, *db);
             if (entry) {
                 entry->setUpdateTimeinfo(false);
                 entry->setGroup(folderMap.value(folderId, db->rootGroup()), false);
