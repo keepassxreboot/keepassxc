@@ -23,6 +23,7 @@
 
 #include <QApplication>
 #include <QDBusInterface>
+#include <QDBusReply>
 #include <QDebug>
 #include <QDir>
 #include <QPointer>
@@ -81,10 +82,12 @@ NixUtils::NixUtils(QObject* parent)
                        this,
                        SLOT(handleColorSchemeChanged(QString, QString, QDBusVariant)));
 
-    QDBusMessage msg = QDBusMessage::createMethodCall(
-        "org.freedesktop.portal.Desktop", "/org/freedesktop/portal/desktop", "org.freedesktop.portal.Settings", "Read");
-    msg << QVariant("org.freedesktop.appearance") << QVariant("color-scheme");
-    sessionBus.callWithCallback(msg, this, SLOT(handleColorSchemeRead(QDBusVariant)));
+    QDBusInterface desktopPortal(
+        "org.freedesktop.portal.Desktop", "/org/freedesktop/portal/desktop", "org.freedesktop.portal.Settings");
+    QDBusReply<QDBusVariant> reply = desktopPortal.call("Read", "org.freedesktop.appearance", "color-scheme");
+    if (reply.isValid()) {
+        handleColorSchemeRead(reply.value());
+    }
 }
 
 NixUtils::~NixUtils() = default;
