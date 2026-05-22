@@ -84,9 +84,9 @@ NixUtils::NixUtils(QObject* parent)
 
     QDBusInterface desktopPortal(
         "org.freedesktop.portal.Desktop", "/org/freedesktop/portal/desktop", "org.freedesktop.portal.Settings");
-    QDBusReply<QDBusVariant> reply = desktopPortal.call("Read", "org.freedesktop.appearance", "color-scheme");
+    QDBusReply<QDBusVariant> reply = desktopPortal.call("ReadOne", "org.freedesktop.appearance", "color-scheme");
     if (reply.isValid()) {
-        handleColorSchemeRead(reply.value());
+        setColorScheme(reply.value());
     }
 }
 
@@ -360,12 +360,6 @@ bool NixUtils::unregisterGlobalShortcut(const QString& name)
     Q_UNUSED(name)
 #endif
     return true;
-}
-
-void NixUtils::handleColorSchemeRead(QDBusVariant value)
-{
-    value = qvariant_cast<QDBusVariant>(value.variant());
-    setColorScheme(value);
 }
 
 void NixUtils::handleColorSchemeChanged(QString ns, QString key, QDBusVariant value)

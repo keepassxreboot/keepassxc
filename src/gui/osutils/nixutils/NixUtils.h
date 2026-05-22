@@ -53,7 +53,6 @@ public:
     quint64 getProcessStartTime() const;
 
 private slots:
-    void handleColorSchemeRead(QDBusVariant value);
     void handleColorSchemeChanged(QString ns, QString key, QDBusVariant value);
     void launchAtStartupRequested(uint response, const QVariantMap& results);
 
