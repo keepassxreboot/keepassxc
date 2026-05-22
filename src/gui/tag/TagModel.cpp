@@ -30,7 +30,7 @@ TagModel::TagModel(QObject* parent)
     // clang-format off
     m_defaultSearches << qMakePair(tr("Clear Search"), QString(""))
                       << qMakePair(tr("All Entries"), QString("*"))
-                      << qMakePair(tr("Modified Entries"), QString("is:modified"))
+                      << qMakePair(tr("Unsaved Changes"), QString("is:modified"))
                       << qMakePair(tr("Expired Entries"), QString("is:expired"))
                       << qMakePair(tr("Weak Passwords"), QString("is:weak"))
                       << qMakePair(tr("TOTP Entries"), QString("has:totp"));

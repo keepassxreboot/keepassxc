@@ -4362,6 +4362,10 @@ Would you like to overwrite the existing attachment?</source>
         <source>Group Path</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>This entry has unsaved changes</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EntryPreviewWidget</name>
@@ -10334,15 +10338,19 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Expired</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Weak Passwords</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>TOTP Entries</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unsaved Changes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Expired Entries</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
