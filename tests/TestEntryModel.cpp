@@ -141,7 +141,6 @@ void TestEntryModel::test()
 void TestEntryModel::testUnsavedEntryFont()
 {
     const auto originalAutoSave = config()->get(Config::AutoSaveAfterEveryChange);
-    config()->set(Config::AutoSaveAfterEveryChange, false);
 
     QTemporaryFile dbFile;
     QVERIFY(dbFile.open());
@@ -163,7 +162,7 @@ void TestEntryModel::testUnsavedEntryFont()
 
     config()->set(Config::AutoSaveAfterEveryChange, true);
     font = model->data(model->index(0, EntryModel::Title), Qt::FontRole).value<QFont>();
-    QVERIFY(!font.italic());
+    QVERIFY(font.italic());
 
     config()->set(Config::AutoSaveAfterEveryChange, false);
     db->markAsClean();

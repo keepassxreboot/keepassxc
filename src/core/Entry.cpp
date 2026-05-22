@@ -587,10 +587,6 @@ bool Entry::hasValidTotp() const
 
 bool Entry::hasUnsavedChanges() const
 {
-    if (config()->get(Config::AutoSaveAfterEveryChange).toBool()) {
-        return false;
-    }
-
     auto db = database();
     // Basic checks to avoid more expensive file checks later
     if (!db || !db->isModified() || db->filePath().isEmpty()) {
