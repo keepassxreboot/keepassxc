@@ -2534,6 +2534,26 @@ void TestGui::addCannedEntries()
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
 }
 
+void TestGui::testClearClipboard()
+{
+    addCannedEntries();
+
+    EntryView* entryView = m_dbWidget->findChild<EntryView*>("entryView");
+    QVERIFY(entryView->isVisible());
+
+    QClipboard* clipboard = QApplication::clipboard();
+
+    clickIndex(entryView->model()->index(1, 1), entryView, Qt::LeftButton);
+    QTRY_VERIFY(entryView->hasFocus());
+    QTest::keyClick(entryView, Qt::Key_C, Qt::ControlModifier);
+    QTRY_COMPARE(clipboard->text(), entryView->currentEntry()->password());
+
+    QToolButton* clearClipboardButton = m_mainWindow->findChild<QToolButton*>("clearClipboardButton");
+    QTRY_VERIFY(clearClipboardButton->isVisible());
+    clearClipboardButton->click();
+    QCOMPARE(clipboard->text(), QString());
+}
+
 void TestGui::checkDatabase(const QString& filePath, const QString& expectedDbName)
 {
     auto key = QSharedPointer<CompositeKey>::create();
