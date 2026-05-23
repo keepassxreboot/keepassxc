@@ -78,6 +78,14 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
 
     m_secUi->setupUi(m_secWidget);
     m_generalUi->setupUi(m_generalWidget);
+    connect(m_generalUi->showSearchToolButton, &QCheckBox::toggled, this, &ApplicationSettingsWidget::setModified);
+    connect(m_generalUi->showNewEntryToolButton, &QCheckBox::toggled, this, &ApplicationSettingsWidget::setModified);
+    connect(m_generalUi->showSaveToolButton, &QCheckBox::toggled, this, &ApplicationSettingsWidget::setModified);
+    connect(m_generalUi->showDeleteToolButton, &QCheckBox::toggled, this, &ApplicationSettingsWidget::setModified);
+    connect(m_generalUi->showPasswordGeneratorToolButton,
+            &QCheckBox::toggled,
+            this,
+            &ApplicationSettingsWidget::setModified);
     addPage(tr("General"), icons()->icon("preferences-other"), m_generalWidget);
     addPage(tr("Security"), icons()->icon("security-high"), m_secWidget);
 #ifdef KPXC_FEATURE_BROWSER
@@ -249,6 +257,12 @@ void ApplicationSettingsWidget::loadSettings()
     m_generalUi->toolbarMovableCheckBox->setChecked(config()->get(Config::GUI_MovableToolbar).toBool());
     m_generalUi->monospaceNotesCheckBox->setChecked(config()->get(Config::GUI_MonospaceNotes).toBool());
     m_generalUi->colorPasswordsCheckBox->setChecked(config()->get(Config::GUI_ColorPasswords).toBool());
+    m_generalUi->showSearchToolButton->setChecked(config()->get(Config::GUI_ShowSearchToolButton).toBool());
+    m_generalUi->showNewEntryToolButton->setChecked(config()->get(Config::GUI_ShowNewEntryToolButton).toBool());
+    m_generalUi->showSaveToolButton->setChecked(config()->get(Config::GUI_ShowSaveToolButton).toBool());
+    m_generalUi->showDeleteToolButton->setChecked(config()->get(Config::GUI_ShowDeleteToolButton).toBool());
+    m_generalUi->showPasswordGeneratorToolButton->setChecked(
+        config()->get(Config::GUI_ShowPasswordGeneratorToolButton).toBool());
 
     m_generalUi->toolButtonStyleComboBox->clear();
     m_generalUi->toolButtonStyleComboBox->addItem(tr("Icon only"), Qt::ToolButtonIconOnly);
@@ -423,6 +437,12 @@ void ApplicationSettingsWidget::saveSettings()
     config()->set(Config::GUI_MovableToolbar, m_generalUi->toolbarMovableCheckBox->isChecked());
     config()->set(Config::GUI_MonospaceNotes, m_generalUi->monospaceNotesCheckBox->isChecked());
     config()->set(Config::GUI_ColorPasswords, m_generalUi->colorPasswordsCheckBox->isChecked());
+    config()->set(Config::GUI_ShowSearchToolButton, m_generalUi->showSearchToolButton->isChecked());
+    config()->set(Config::GUI_ShowNewEntryToolButton, m_generalUi->showNewEntryToolButton->isChecked());
+    config()->set(Config::GUI_ShowSaveToolButton, m_generalUi->showSaveToolButton->isChecked());
+    config()->set(Config::GUI_ShowDeleteToolButton, m_generalUi->showDeleteToolButton->isChecked());
+    config()->set(Config::GUI_ShowPasswordGeneratorToolButton,
+                  m_generalUi->showPasswordGeneratorToolButton->isChecked());
 
     config()->set(Config::GUI_ToolButtonStyle, m_generalUi->toolButtonStyleComboBox->currentData().toString());
     config()->set(Config::GUI_FontSizeOffset, m_generalUi->fontSizeComboBox->currentData().toInt());

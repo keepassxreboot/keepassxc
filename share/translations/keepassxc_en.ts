@@ -616,6 +616,30 @@
         <source>Auto-generate password for new entries</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Customize Toolbar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show New Entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show Password Generator</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetSecurity</name>

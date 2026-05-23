@@ -125,6 +125,34 @@ MainWindow::MainWindow()
         m_ui->toolBar->setVisible(!config()->get(Config::GUI_HideToolbar).toBool());
     });
 
+    // Apply toolbar visibility settings
+    auto cfg = config();
+
+    // Search widget (special case)
+    if (m_searchWidget) {
+        m_searchWidget->setVisible(cfg->get(Config::GUI_ShowSearchToolButton).toBool());
+    }
+
+    // New Entry button
+    if (m_ui->actionEntryNew) {
+        m_ui->actionEntryNew->setVisible(cfg->get(Config::GUI_ShowNewEntryToolButton).toBool());
+    }
+
+    // Save button
+    if (m_ui->actionDatabaseSave) {
+        m_ui->actionDatabaseSave->setVisible(cfg->get(Config::GUI_ShowSaveToolButton).toBool());
+    }
+
+    // Delete Entry button
+    if (m_ui->actionEntryDelete) {
+        m_ui->actionEntryDelete->setVisible(cfg->get(Config::GUI_ShowDeleteToolButton).toBool());
+    }
+
+    // Password Generator button
+    if (m_ui->actionPasswordGenerator) {
+        m_ui->actionPasswordGenerator->setVisible(cfg->get(Config::GUI_ShowPasswordGeneratorToolButton).toBool());
+    }
+
     m_countDefaultAttributes = m_ui->menuEntryCopyAttribute->actions().size();
 
     m_entryContextMenu = new QMenu(this);

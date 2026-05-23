@@ -115,6 +115,12 @@ public:
         GUI_AutoTypeSelectDialogSize,
         GUI_CheckForUpdatesNextCheck,
 
+        GUI_ShowSearchToolButton,
+        GUI_ShowNewEntryToolButton,
+        GUI_ShowSaveToolButton,
+        GUI_ShowDeleteToolButton,
+        GUI_ShowPasswordGeneratorToolButton,
+
         Security_ClearClipboard,
         Security_ClearClipboardTimeout,
         Security_ClearSearch,
