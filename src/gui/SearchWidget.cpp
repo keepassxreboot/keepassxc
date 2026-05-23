@@ -223,6 +223,18 @@ void SearchWidget::setLimitGroup(bool state)
     updateLimitGroup();
 }
 
+void SearchWidget::setSearchGroupName(const QString& name)
+{
+    // Quote and escape the group name so it is treated as a single group term,
+    // even if it contains spaces or special characters.
+    QString escapedName = name;
+    escapedName.replace("\"", "\\\"");
+    QString searchText = QStringLiteral("g:\"") + escapedName + QStringLiteral("\" ");
+
+    m_ui->searchEdit->setText(searchText);
+    m_ui->searchEdit->setFocus();
+}
+
 void SearchWidget::focusSearch()
 {
     m_ui->searchEdit->setFocus();

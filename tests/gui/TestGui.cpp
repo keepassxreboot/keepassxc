@@ -2532,6 +2532,62 @@ void TestGui::addCannedEntries()
     QTest::mouseClick(entryNewWidget, Qt::LeftButton);
     QTest::keyClicks(titleEdit, "something 3");
     QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+
+    addGroup("Finance");
+    addGroup("Entertainment");
+
+    addEntry("Finance", "Chase", "user1", "password");
+    addEntry("Finance", "Amex", "user1", "password123");
+    addEntry("Finance", "Capital One", "user1", "password456");
+
+    addEntry("Entertainment", "Netflix", "user1", "password");
+    addEntry("Entertainment", "Hulu", "user1", "password321");
+    addEntry("Entertainment", "Apple TV", "user1", "password123");
+}
+
+void TestGui::addGroup(const QString& name)
+{
+    // Find buttons for group creation
+    auto* editGroupWidget = m_dbWidget->findChild<EditGroupWidget*>("editGroupWidget");
+    auto* nameEdit = editGroupWidget->findChild<QLineEdit*>("editName");
+    auto* editGroupWidgetButtonBox = editGroupWidget->findChild<QDialogButtonBox*>("buttonBox");
+
+    // Add group with specified name
+    Group* rootGroup = m_db->rootGroup();
+    m_dbWidget->groupView()->setCurrentGroup(rootGroup); // Add group on root level
+    m_dbWidget->createGroup();
+    QTest::keyClicks(nameEdit, name);
+    QTest::mouseClick(editGroupWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+    m_dbWidget->groupView()->setCurrentGroup(rootGroup); // Reset to root level
+}
+
+void TestGui::addEntry(const QString& groupName, const QString& title, const QString& username, const QString& password)
+{
+    // Find buttons
+    auto* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
+    QWidget* entryNewWidget = toolBar->widgetForAction(m_mainWindow->findChild<QAction*>("actionEntryNew"));
+    auto* editEntryWidget = m_dbWidget->findChild<EditEntryWidget*>("editEntryWidget");
+    auto* titleEdit = editEntryWidget->findChild<QLineEdit*>("titleEdit");
+    auto* usernameComboBox = editEntryWidget->findChild<QComboBox*>("usernameComboBox");
+    auto* passwordEdit =
+        editEntryWidget->findChild<PasswordWidget*>("passwordEdit")->findChild<QLineEdit*>("passwordEdit");
+    auto* editEntryWidgetButtonBox = editEntryWidget->findChild<QDialogButtonBox*>("buttonBox");
+
+    // Add entry to specified group
+    QVERIFY(m_dbWidget->currentGroup());
+    Group* group = m_dbWidget->currentGroup()->findChildByName(groupName);
+    m_dbWidget->groupView()->setCurrentGroup(group);
+
+    QTest::mouseClick(entryNewWidget, Qt::LeftButton);
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::EditEntryMode);
+
+    QTest::keyClicks(titleEdit, title);
+    QTest::keyClicks(usernameComboBox, username);
+    QTest::keyClicks(passwordEdit, password);
+    QTest::mouseClick(editEntryWidgetButtonBox->button(QDialogButtonBox::Ok), Qt::LeftButton);
+
+    QCOMPARE(m_dbWidget->currentMode(), DatabaseWidget::Mode::ViewMode);
+    m_dbWidget->groupView()->setCurrentGroup(m_db->rootGroup());
 }
 
 void TestGui::checkDatabase(const QString& filePath, const QString& expectedDbName)
@@ -2615,4 +2671,23 @@ void TestGui::clickIndex(const QModelIndex& index,
 {
     view->scrollTo(index);
     QTest::mouseClick(view->viewport(), button, stateKey, view->visualRect(index).center());
+}
+
+void TestGui::testSearchHere()
+{
+    addCannedEntries();
+
+    QToolBar* toolBar = m_mainWindow->findChild<QToolBar*>("toolBar");
+    SearchWidget* searchWidget = toolBar->findChild<SearchWidget*>("SearchWidget");
+    QVERIFY(searchWidget->isEnabled());
+
+    Group* entertainmentGroup = m_dbWidget->currentGroup()->findChildByName("Entertainment");
+    m_dbWidget->groupView()->setCurrentGroup(entertainmentGroup);
+
+    triggerAction("actionGroupSearchHere");
+    QVERIFY(searchWidget->hasFocus());
+
+    QLineEdit* searchEdit = searchWidget->findChild<QLineEdit*>("searchEdit");
+    QString expectedText = QString("g:\"") + entertainmentGroup->fullPath() + QString("\" ");
+    QCOMPARE(searchEdit->text(), expectedText);
 }

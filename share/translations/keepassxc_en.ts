@@ -6427,6 +6427,14 @@ This version is not meant for production use.</source>
             <numerusform></numerusform>
         </translation>
     </message>
+    <message>
+        <source>Search Entries in selected Group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search Here…</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ManageDatabase</name>

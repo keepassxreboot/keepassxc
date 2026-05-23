@@ -48,6 +48,7 @@
 #include "gui/SearchWidget.h"
 #include "gui/ShortcutSettingsPage.h"
 #include "gui/entry/EntryView.h"
+#include "gui/group/GroupView.h"
 #include "gui/osutils/OSUtils.h"
 #include "gui/remote/RemoteSettings.h"
 #include "keeshare/KeeShare.h"
@@ -382,6 +383,7 @@ MainWindow::MainWindow()
     m_ui->actionEntryDownloadIcon->setIcon(icons()->icon("favicon-download"));
     m_ui->actionGroupSortAsc->setIcon(icons()->icon("sort-alphabetical-ascending"));
     m_ui->actionGroupSortDesc->setIcon(icons()->icon("sort-alphabetical-descending"));
+    m_ui->actionGroupSearchHere->setIcon(icons()->icon("system-search"));
 
     m_ui->actionGroupNew->setIcon(icons()->icon("group-new"));
     m_ui->actionGroupEdit->setIcon(icons()->icon("group-edit"));
@@ -520,6 +522,7 @@ MainWindow::MainWindow()
     m_actionMultiplexer.connect(m_ui->actionGroupSortAsc, SIGNAL(triggered()), SLOT(sortGroupsAsc()));
     m_actionMultiplexer.connect(m_ui->actionGroupSortDesc, SIGNAL(triggered()), SLOT(sortGroupsDesc()));
     m_actionMultiplexer.connect(m_ui->actionGroupDownloadFavicons, SIGNAL(triggered()), SLOT(downloadAllFavicons()));
+    connect(m_ui->actionGroupSearchHere, SIGNAL(triggered()), this, SLOT(searchInGroup()));
 
     connect(m_ui->actionSettings, SIGNAL(toggled(bool)), SLOT(switchToSettings(bool)));
     connect(m_ui->actionPasswordGenerator, SIGNAL(toggled(bool)), SLOT(togglePasswordGenerator(bool)));
@@ -986,6 +989,7 @@ void MainWindow::updateMenuActionState()
     m_ui->actionGroupDownloadFavicons->setVisible(!inRecycleBin);
 #endif
     m_ui->actionGroupDownloadFavicons->setEnabled(groupSelected && groupHasEntries && !inRecycleBin);
+    m_ui->actionGroupSearchHere->setEnabled(groupSelected);
 
     // Database Menu
     m_ui->actionDatabaseSave->setEnabled(databaseUnlocked && m_ui->tabWidget->canSave());
@@ -1480,6 +1484,16 @@ void MainWindow::clearSSHAgent()
     auto ret = agent->clearAllAgentIdentities();
     displayGlobalMessage(agent->errorString(), ret ? MessageWidget::Positive : KMessageWidget::Error, false);
 #endif
+}
+
+void MainWindow::searchInGroup()
+{
+    auto dbWidget = m_ui->tabWidget->currentDatabaseWidget();
+    if (dbWidget && dbWidget->isVisible() && dbWidget->isEntryViewActive() && dbWidget->groupView()->currentGroup()) {
+        focusSearchWidget();
+        Group* currentGroup = dbWidget->groupView()->currentGroup();
+        m_searchWidget->setSearchGroupName(currentGroup->fullPath());
+    }
 }
 
 void MainWindow::saveWindowInformation()
@@ -2103,6 +2117,7 @@ void MainWindow::initActionCollection()
                     m_ui->actionGroupSortAsc,
                     m_ui->actionGroupSortDesc,
                     m_ui->actionGroupEmptyRecycleBin,
+                    m_ui->actionGroupSearchHere,
                     // Tools Menu
                     m_ui->actionPasswordGenerator,
                     m_ui->actionClearSSHAgent,

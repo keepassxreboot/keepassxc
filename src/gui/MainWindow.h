@@ -155,6 +155,7 @@ private slots:
     void enableMenuAndToolbar();
     void disableMenuAndToolbar();
     void clearSSHAgent();
+    void searchInGroup();
 
 private:
     static const QString BaseWindowTitle;
