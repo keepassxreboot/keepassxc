@@ -18,7 +18,6 @@
 #ifndef KEEPASSXC_NATIVEMESSAGINGHOST_H
 #define KEEPASSXC_NATIVEMESSAGINGHOST_H
 
-#include <QHash>
 #include <QJsonObject>
 #include <QObject>
 #include <QPointer>
@@ -41,9 +40,6 @@ public:
     void broadcastClientMessage(const QJsonObject& json);
     void sendClientMessage(QLocalSocket* socket, const QJsonObject& json);
 
-    // Drains complete JSON messages from buffer, leaving any partial trailing bytes
-    static QList<QJsonObject> extractMessages(QByteArray& buffer);
-
 signals:
     void clientMessageReceived(QLocalSocket* socket, const QJsonObject& json);
 
@@ -58,7 +54,6 @@ private:
 private:
     QPointer<QLocalServer> m_localServer;
     QList<QLocalSocket*> m_socketList;
-    QHash<QLocalSocket*, QByteArray> m_socketBuffers;
 };
 
 #endif // KEEPASSXC_NATIVEMESSAGINGHOST_H

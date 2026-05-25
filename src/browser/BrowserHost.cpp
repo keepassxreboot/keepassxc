@@ -81,47 +81,14 @@ void BrowserHost::readProxyMessage()
         setsockopt(socketDesc, SOL_SOCKET, SO_SNDBUF, reinterpret_cast<char*>(&max), sizeof(max));
     }
 
-    // Accumulate per socket; readyRead may deliver partial or coalesced JSON.
-    // operator[] default-inserts an empty buffer the first time we see a socket.
-    QByteArray& buf = m_socketBuffers[socket];
-    buf.append(socket->readAll());
-
-    if (buf.size() > BrowserShared::NATIVEMSG_MAX_LENGTH) {
-        buf.clear();
+    QJsonParseError error;
+    auto json = QJsonDocument::fromJson(socket->readAll(), &error);
+    if (json.isNull()) {
+        qWarning() << "Failed to read proxy message: " << error.errorString();
         return;
     }
 
-    for (const auto& json : extractMessages(buf)) {
-        emit clientMessageReceived(socket, json);
-    }
-}
-
-QList<QJsonObject> BrowserHost::extractMessages(QByteArray& buffer)
-{
-    QList<QJsonObject> messages;
-    while (!buffer.isEmpty()) {
-        QJsonParseError error;
-        auto json = QJsonDocument::fromJson(buffer, &error);
-        if (json.isNull()) {
-            // GarbageAtEnd means a full message parsed with extra bytes after
-            // it, e.g. coalesced {"a":1}{"b":2}. Emit the prefix, keep the rest.
-            if (error.error == QJsonParseError::GarbageAtEnd && error.offset > 0) {
-                QByteArray first = buffer.left(error.offset);
-                buffer.remove(0, error.offset);
-                auto firstDoc = QJsonDocument::fromJson(first, &error);
-                if (!firstDoc.isNull()) {
-                    messages.append(firstDoc.object());
-                    continue;
-                }
-            }
-            // Partial or invalid: leave it buffered for the next read
-            break;
-        }
-        messages.append(json.object());
-        buffer.clear();
-        break;
-    }
-    return messages;
+    emit clientMessageReceived(socket, json.object());
 }
 
 void BrowserHost::broadcastClientMessage(const QJsonObject& json)
@@ -151,5 +118,4 @@ void BrowserHost::proxyDisconnected()
 {
     auto socket = qobject_cast<QLocalSocket*>(QObject::sender());
     m_socketList.removeOne(socket);
-    m_socketBuffers.remove(socket);
 }

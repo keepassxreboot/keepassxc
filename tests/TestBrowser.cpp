@@ -18,7 +18,6 @@
 #include "TestBrowser.h"
 
 #include "browser/BrowserMessageBuilder.h"
-#include "browser/BrowserHost.h"
 #include "browser/BrowserSettings.h"
 #include "core/Group.h"
 #include "core/Tools.h"
@@ -654,44 +653,6 @@ void TestBrowser::testSubdomainAnchor()
     QCOMPARE(m_browserService->searchEntries(db, "https://good.example.com", "").length(), 0);
     // unrelated
     QCOMPARE(m_browserService->searchEntries(db, "https://attacker.test", "").length(), 0);
-}
-
-void TestBrowser::testExtractMessages()
-{
-    // Single complete message: consumed, buffer emptied
-    QByteArray buf = R"({"a":1})";
-    auto messages = BrowserHost::extractMessages(buf);
-    QCOMPARE(messages.length(), 1);
-    QCOMPARE(messages[0]["a"].toInt(), 1);
-    QVERIFY(buf.isEmpty());
-
-    // Coalesced messages: both extracted, buffer emptied
-    buf = R"({"a":1}{"b":2})";
-    messages = BrowserHost::extractMessages(buf);
-    QCOMPARE(messages.length(), 2);
-    QCOMPARE(messages[0]["a"].toInt(), 1);
-    QCOMPARE(messages[1]["b"].toInt(), 2);
-    QVERIFY(buf.isEmpty());
-
-    // Complete message followed by a partial one: first extracted,
-    // the partial remainder stays buffered for the next read
-    buf = R"({"a":1}{"b")";
-    messages = BrowserHost::extractMessages(buf);
-    QCOMPARE(messages.length(), 1);
-    QCOMPARE(messages[0]["a"].toInt(), 1);
-    QCOMPARE(buf, QByteArray(R"({"b")"));
-
-    // Partial message only: nothing extracted, buffer untouched
-    buf = R"({"a":)";
-    messages = BrowserHost::extractMessages(buf);
-    QVERIFY(messages.isEmpty());
-    QCOMPARE(buf, QByteArray(R"({"a":)"));
-
-    // Empty buffer: nothing extracted
-    buf = QByteArray();
-    messages = BrowserHost::extractMessages(buf);
-    QVERIFY(messages.isEmpty());
-    QVERIFY(buf.isEmpty());
 }
 
 QList<Entry*> TestBrowser::createEntries(QStringList& urls, Group* root, bool additionalUrl) const
