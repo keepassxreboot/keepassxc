@@ -19,6 +19,7 @@
 
 #include "config-keepassx-tests.h"
 #include "core/Bootstrap.h"
+#include "core/ClipboardMime.h"
 #include "core/Config.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
@@ -694,6 +695,12 @@ void TestCli::testClip()
     // clang-format on
 
     QTRY_COMPARE(clipboard->text(), QString("Password"));
+    const auto secretFormats = ClipboardMime::secretFormats();
+    const auto* mimeData = clipboard->mimeData(QClipboard::Clipboard);
+    QVERIFY(mimeData);
+    for (const auto& format : secretFormats) {
+        QVERIFY2(mimeData->hasFormat(format), qPrintable(format));
+    }
     QTRY_COMPARE_WITH_TIMEOUT(clipboard->text(), QString(""), 3000);
 
     future.waitForFinished();

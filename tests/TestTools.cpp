@@ -17,12 +17,15 @@
 
 #include "TestTools.h"
 
+#include "core/ClipboardMime.h"
 #include "core/Clock.h"
 #include "core/Tools.h"
 #include "mock/MockClock.h"
 
 #include <QFileInfo>
+#include <QMimeData>
 #include <QRegularExpression>
+#include <QScopedPointer>
 #include <QTest>
 #include <QUuid>
 
@@ -138,6 +141,29 @@ void TestTools::testValidUuid()
     QVERIFY(!Tools::isValidUuid(shortUuid));
     QVERIFY(!Tools::isValidUuid(longUuid));
     QVERIFY(!Tools::isValidUuid(nonHexUuid));
+}
+
+void TestTools::testClipboardMimeData()
+{
+    QScopedPointer<QMimeData> mime(ClipboardMime::createSecretMimeData("Password"));
+    QCOMPARE(mime->text(), QString("Password"));
+
+    const auto secretFormats = ClipboardMime::secretFormats();
+    for (const auto& format : secretFormats) {
+        QVERIFY2(mime->hasFormat(format), qPrintable(format));
+    }
+
+#if defined(Q_OS_MACOS)
+    QCOMPARE(mime->data("application/x-nspasteboard-concealed-type"), QByteArray("Password"));
+#elif defined(Q_OS_UNIX)
+    QCOMPARE(mime->data("x-kde-passwordManagerHint"), QByteArray("secret"));
+#elif defined(Q_OS_WIN)
+    QCOMPARE(mime->data("ExcludeClipboardContentFromMonitorProcessing"), QByteArray("1"));
+    QCOMPARE(mime->data("CanIncludeInClipboardHistory"), QByteArray(4, '\0'));
+    QCOMPARE(mime->data("CanUploadToCloudClipboard"), QByteArray(4, '\0'));
+#else
+    QVERIFY(secretFormats.isEmpty());
+#endif
 }
 
 void TestTools::testBackupFilePatternSubstitution_data()

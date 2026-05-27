@@ -16,7 +16,11 @@
  */
 
 #include <QCommandLineParser>
+#include <QCoreApplication>
 #include <QFileInfo>
+#include <QGuiApplication>
+#include <QProcessEnvironment>
+#include <QScopedPointer>
 
 #include "Command.h"
 #include "Open.h"
@@ -37,6 +41,31 @@
 #include <readline/history.h>
 #include <readline/readline.h>
 #endif
+
+namespace
+{
+    bool shouldUseGuiApplication(int argc, char** argv)
+    {
+        for (int i = 1; i < argc; ++i) {
+            const auto arg = QString::fromLocal8Bit(argv[i]);
+            if (arg == QStringLiteral("clip")) {
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS)
+                const auto env = QProcessEnvironment::systemEnvironment();
+                return env.contains(QStringLiteral("DISPLAY")) || env.contains(QStringLiteral("WAYLAND_DISPLAY"))
+                       || env.contains(QStringLiteral("QT_QPA_PLATFORM"));
+#else
+                return true;
+#endif
+            }
+
+            if (!arg.startsWith(QLatin1Char('-'))) {
+                return false;
+            }
+        }
+
+        return false;
+    }
+} // namespace
 
 class LineReader
 {
@@ -179,10 +208,15 @@ int main(int argc, char** argv)
         return EXIT_FAILURE;
     }
 
-    QCoreApplication app(argc, argv);
+    QScopedPointer<QCoreApplication> app;
+    if (shouldUseGuiApplication(argc, argv)) {
+        app.reset(new QGuiApplication(argc, argv));
+    } else {
+        app.reset(new QCoreApplication(argc, argv));
+    }
     QCoreApplication::setApplicationVersion(KEEPASSXC_VERSION);
     // Cleanup code pages after cli exits
-    QObject::connect(&app, &QCoreApplication::destroyed, &app, [] { Utils::resetTextStreams(); });
+    QObject::connect(app.data(), &QCoreApplication::destroyed, app.data(), [] { Utils::resetTextStreams(); });
 
     Bootstrap::bootstrap(config()->get(Config::GUI_Language).toString());
     Utils::setDefaultTextStreams();

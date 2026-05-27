@@ -20,26 +20,18 @@
 
 #include <QApplication>
 #include <QClipboard>
-#include <QMimeData>
 #include <QProcess>
 #include <QTimer>
 
+#include "core/ClipboardMime.h"
 #include "core/Config.h"
 
 Clipboard* Clipboard::m_instance(nullptr);
-#ifdef Q_OS_MACOS
-QPointer<MacPasteboard> Clipboard::m_pasteboard(nullptr);
-#endif
 
 Clipboard::Clipboard(QObject* parent)
     : QObject(parent)
     , m_timer(new QTimer(this))
 {
-#ifdef Q_OS_MACOS
-    if (!m_pasteboard) {
-        m_pasteboard = new MacPasteboard();
-    }
-#endif
     connect(m_timer, SIGNAL(timeout()), SLOT(countdownTick()));
     connect(qApp, SIGNAL(aboutToQuit()), SLOT(clearCopiedText()));
 }
@@ -52,17 +44,7 @@ void Clipboard::setText(const QString& text, bool clear)
         return;
     }
 
-    auto* mime = new QMimeData;
-    mime->setText(text);
-#if defined(Q_OS_MACOS)
-    mime->setData("application/x-nspasteboard-concealed-type", text.toUtf8());
-#elif defined(Q_OS_UNIX)
-    mime->setData("x-kde-passwordManagerHint", QByteArrayLiteral("secret"));
-#elif defined(Q_OS_WIN)
-    mime->setData("ExcludeClipboardContentFromMonitorProcessing", QByteArrayLiteral("1"));
-    mime->setData("CanIncludeInClipboardHistory", {4, '\0'});
-    mime->setData("CanUploadToCloudClipboard", {4, '\0'});
-#endif
+    auto* mime = ClipboardMime::createSecretMimeData(text);
 
     if (clipboard->supportsSelection()) {
         clipboard->setMimeData(mime, QClipboard::Selection);

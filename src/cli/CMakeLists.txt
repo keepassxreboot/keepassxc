@@ -45,7 +45,7 @@ set(cli_SOURCES
         Show.cpp)
 
 add_library(cli STATIC ${cli_SOURCES})
-target_link_libraries(cli ${ZXCVBN_LIBRARIES} Qt6::Core)
+target_link_libraries(cli ${ZXCVBN_LIBRARIES} Qt6::Core Qt6::Gui)
 
 find_package(Readline)
 

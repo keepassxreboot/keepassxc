@@ -18,13 +18,67 @@
 #include "Clip.h"
 
 #include "Utils.h"
+#include "core/ClipboardMime.h"
 #include "core/EntrySearcher.h"
 #include "core/Group.h"
 #include "core/Tools.h"
 
+#include <QClipboard>
 #include <QCommandLineParser>
+#include <QCoreApplication>
+#include <QGuiApplication>
+#include <QMetaObject>
+#include <QThread>
 
 #define CLI_DEFAULT_CLIP_TIMEOUT 10
+
+namespace
+{
+    bool shouldUseGuiClipboard(int timeout)
+    {
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS)
+        // On X11/Wayland, Qt-owned clipboard data may disappear when the CLI exits.
+        // Keep the existing external helper for unlimited copies so they remain persistent.
+        return timeout > 0;
+#else
+        Q_UNUSED(timeout);
+        return true;
+#endif
+    }
+
+    int setGuiClipboardText(const QString& text, bool secret)
+    {
+        auto* clipboard = QGuiApplication::clipboard();
+        if (!clipboard) {
+            return EXIT_FAILURE;
+        }
+
+        if (secret) {
+            clipboard->setMimeData(ClipboardMime::createSecretMimeData(text), QClipboard::Clipboard);
+        } else {
+            clipboard->setText(text, QClipboard::Clipboard);
+        }
+        QCoreApplication::processEvents();
+        return EXIT_SUCCESS;
+    }
+
+    int clipText(const QString& text, bool secret = true, bool useGuiClipboard = true)
+    {
+        auto* app = qobject_cast<QGuiApplication*>(QCoreApplication::instance());
+        if (useGuiClipboard && app) {
+            if (QThread::currentThread() == app->thread()) {
+                return setGuiClipboardText(text, secret);
+            }
+
+            int exitCode = EXIT_FAILURE;
+            QMetaObject::invokeMethod(
+                app, [&] { exitCode = setGuiClipboardText(text, secret); }, Qt::BlockingQueuedConnection);
+            return exitCode;
+        }
+
+        return Utils::clipText(text);
+    }
+} // namespace
 
 const QCommandLineOption Clip::AttributeOption = QCommandLineOption(
     QStringList() << "a" << "attribute",
@@ -138,7 +192,7 @@ int Clip::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
         return EXIT_FAILURE;
     }
 
-    int exitCode = Utils::clipText(value);
+    int exitCode = clipText(value, true, shouldUseGuiClipboard(timeout));
     if (exitCode != EXIT_SUCCESS) {
         return exitCode;
     }
@@ -154,10 +208,10 @@ int Clip::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
         out << '\r' << QString(lastLine.size(), ' ') << '\r';
         lastLine = QObject::tr("Clearing the clipboard in %1 second(s)...", "", timeout).arg(timeout);
         out << lastLine << Qt::flush;
-        Tools::sleep(1000);
+        Tools::wait(1000);
         --timeout;
     }
-    Utils::clipText("");
+    clipText("", false);
     out << '\r' << QString(lastLine.size(), ' ') << '\r';
     out << QObject::tr("Clipboard cleared!") << Qt::endl;
 

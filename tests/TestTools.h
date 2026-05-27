@@ -32,6 +32,7 @@ private slots:
     void testIsAsciiString();
     void testEnvSubstitute();
     void testValidUuid();
+    void testClipboardMimeData();
     void testBackupFilePatternSubstitution_data();
     void testBackupFilePatternSubstitution();
     void testEscapeRegex();

@@ -22,6 +22,7 @@ set(core_SOURCES
         core/Base32.cpp
         core/Bootstrap.cpp
         core/Clock.cpp
+        core/ClipboardMime.cpp
         core/Config.cpp
         core/CustomData.cpp
         core/Database.cpp
@@ -215,9 +216,11 @@ set(gui_SOURCES
         ../share/wizard/wizard.qrc)
 
 if(APPLE)
+    list(APPEND core_SOURCES
+            gui/osutils/macutils/MacPasteboard.cpp)
+
     list(APPEND gui_SOURCES
             gui/osutils/macutils/DeviceListenerMac.cpp
-            gui/osutils/macutils/MacPasteboard.cpp
             gui/osutils/macutils/MacUtils.cpp
             gui/osutils/macutils/ScreenLockListenerMac.cpp
             gui/osutils/macutils/AppKitImpl.mm
@@ -355,6 +358,7 @@ target_link_libraries(keepassxc_gui
         ${sshagent_LIB})
 
 if(APPLE)
+    target_link_libraries(keepassxc_core Qt6::Gui)
     target_link_libraries(keepassxc_gui "-framework Foundation -framework AppKit -framework Carbon -framework Security -framework LocalAuthentication -framework ScreenCaptureKit")
     if(Qt6MacExtras_FOUND)
         target_link_libraries(keepassxc_gui Qt6::MacExtras)
