@@ -27,9 +27,7 @@
 #include <QProcessEnvironment>
 #include <QScopeGuard>
 #include <QSet>
-#ifdef KEEPASSXC_DIST_FLATPAK
 #include <QStandardPaths>
-#endif
 #include <QTemporaryFile>
 #include <QUrl>
 
