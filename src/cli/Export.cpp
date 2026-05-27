@@ -22,13 +22,14 @@
 #include "core/Global.h"
 #include "format/CsvExporter.h"
 #include "format/HtmlExporter.h"
+#include "format/NetrcExporter.h"
 
 #include <QCommandLineParser>
 
 const QCommandLineOption Export::FormatOption = QCommandLineOption(
     QStringList() << "f" << "format",
-    QObject::tr("Format to use when exporting. Available choices are 'xml', 'csv' or 'html'. Defaults to 'xml'."),
-    QStringLiteral("xml|csv|html"));
+    QObject::tr("Format to use when exporting. Available choices are 'xml', 'csv', 'netrc' or 'html'. Defaults to 'xml'."),
+    QStringLiteral("xml|csv|netrc|html"));
 
 Export::Export()
 {
@@ -54,6 +55,9 @@ int Export::executeWithDatabase(QSharedPointer<Database> database, QSharedPointe
     } else if (format.startsWith(QStringLiteral("csv"), Qt::CaseInsensitive)) {
         CsvExporter csvExporter;
         out << csvExporter.exportDatabase(database);
+    } else if (format.startsWith(QStringLiteral("netrc"), Qt::CaseInsensitive)) {
+        NetrcExporter netrcExporter;
+        out << netrcExporter.exportDatabase(database);
     } else if (format.startsWith(QStringLiteral("html"), Qt::CaseInsensitive)) {
         HtmlExporter htmlExporter;
         out << htmlExporter.exportDatabase(database);

@@ -73,6 +73,7 @@ set(core_SOURCES
         format/Kdbx4Reader.cpp
         format/Kdbx4Writer.cpp
         format/KdbxXmlWriter.cpp
+        format/NetrcExporter.cpp
         format/OpData01.cpp
         format/OPUXReader.cpp
         format/OpVaultReader.cpp

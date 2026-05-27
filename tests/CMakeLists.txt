@@ -128,6 +128,9 @@ add_unit_test(NAME testentrysearcher SOURCES TestEntrySearcher.cpp
 add_unit_test(NAME testcsvexporter SOURCES TestCsvExporter.cpp
         LIBS ${TEST_LIBRARIES})
 
+add_unit_test(NAME testnetrcexporter SOURCES TestNetrcExporter.cpp
+        LIBS ${TEST_LIBRARIES})
+
 add_unit_test(NAME testykchallengeresponsekey SOURCES TestYkChallengeResponseKey.cpp
         LIBS ${TEST_LIBRARIES})
 
