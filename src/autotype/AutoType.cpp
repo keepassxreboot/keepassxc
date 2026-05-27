@@ -337,18 +337,21 @@ void AutoType::executeAutoTypeActions(const Entry* entry,
     // Explicitly hide the main window if no target window is specified
     if (window == 0) {
 #if defined(Q_OS_MACOS)
-        // Check for accessibility permission
-        if (!macUtils()->enableAccessibility()) {
-            MessageBox::information(nullptr,
-                                    tr("Permission Required"),
-                                    tr("KeePassXC requires the Accessibility permission in order to perform entry "
-                                       "level Auto-Type. If you already granted permission, you may have to restart "
-                                       "KeePassXC."));
-            return;
-        }
+        if (getMainWindow()) {
+            // Check for accessibility permission
+            if (!macUtils()->enableAccessibility()) {
+                MessageBox::information(
+                    nullptr,
+                    tr("Permission Required"),
+                    tr("KeePassXC requires the Accessibility permission in order to perform entry "
+                       "level Auto-Type. If you already granted permission, you may have to restart "
+                       "KeePassXC."));
+                return;
+            }
 
-        macUtils()->raiseLastActiveWindow();
-        m_plugin->hideOwnWindow();
+            macUtils()->raiseLastActiveWindow();
+            m_plugin->hideOwnWindow();
+        }
 #else
         if (getMainWindow()) {
             getMainWindow()->minimizeOrHide();

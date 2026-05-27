@@ -91,6 +91,7 @@ add_unit_test(NAME testimports SOURCES TestImports.cpp
 add_unit_test(NAME testautotype SOURCES TestAutoType.cpp
         LIBS testsupport ${TEST_LIBRARIES})
 set_target_properties(testautotype PROPERTIES ENABLE_EXPORTS ON)
+add_dependencies(testautotype keepassxc-autotype-test)
 
 add_unit_test(NAME testentry SOURCES TestEntry.cpp
         LIBS ${TEST_LIBRARIES})
