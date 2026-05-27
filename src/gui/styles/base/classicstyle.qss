@@ -1,4 +1,4 @@
-DatabaseOpenWidget #centralStack {
+DatabaseOpenWidget #centralStack, DatabaseOpenWidget #publicSummaryLabel {
     border: 2px groove palette(mid);
     background: palette(light);
 }

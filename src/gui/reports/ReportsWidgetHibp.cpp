@@ -29,6 +29,8 @@
 #include <QSortFilterProxyModel>
 #include <QStandardItemModel>
 
+#include <algorithm>
+
 namespace
 {
     class ReportSortProxyModel : public QSortFilterProxyModel
@@ -69,7 +71,7 @@ ReportsWidgetHibp::ReportsWidgetHibp(QWidget* parent)
     connect(m_ui->hibpTableView, SIGNAL(doubleClicked(QModelIndex)), SLOT(emitEntryActivated(QModelIndex)));
     connect(m_ui->hibpTableView, SIGNAL(customContextMenuRequested(QPoint)), SLOT(customMenuRequested(QPoint)));
     connect(m_ui->showKnownBadCheckBox, SIGNAL(stateChanged(int)), this, SLOT(makeHibpTable()));
-#ifdef WITH_XC_NETWORKING
+#ifdef KPXC_FEATURE_NETWORK
     connect(&m_downloader, SIGNAL(hibpResult(QString, int)), SLOT(addHibpResult(QString, int)));
     connect(&m_downloader, SIGNAL(fetchFailed(QString)), SLOT(fetchFailed(QString)));
 
@@ -90,7 +92,7 @@ void ReportsWidgetHibp::loadSettings(QSharedPointer<Database> db)
     m_error.clear();
     m_rowToEntry.clear();
     m_editedEntry = nullptr;
-#ifdef WITH_XC_NETWORKING
+#ifdef KPXC_FEATURE_NETWORK
     m_ui->stackedWidget->setCurrentIndex(0);
     m_ui->validationButton->setEnabled(true);
     m_ui->progressBar->hide();
@@ -132,7 +134,7 @@ void ReportsWidgetHibp::makeHibpTable()
     }
 
     // Sort descending by the number the password has been exposed
-    qSort(items.begin(), items.end(), [](QPair<Entry*, int>& lhs, QPair<Entry*, int>& rhs) {
+    std::sort(items.begin(), items.end(), [](QPair<Entry*, int>& lhs, QPair<Entry*, int>& rhs) {
         return lhs.second > rhs.second;
     });
 
@@ -186,7 +188,7 @@ void ReportsWidgetHibp::makeHibpTable()
     }
 
     // If we're done and everything is good, display a motivational message
-#ifdef WITH_XC_NETWORKING
+#ifdef KPXC_FEATURE_NETWORK
     if (m_downloader.passwordsRemaining() == 0 && m_pwndPasswords.isEmpty() && m_error.isEmpty()) {
         m_referencesModel->clear();
         m_referencesModel->setHorizontalHeaderLabels(QStringList() << tr("Congratulations, no exposed passwords!"));
@@ -217,7 +219,7 @@ void ReportsWidgetHibp::addHibpResult(const QString& password, int count)
         m_pwndPasswords[password] = count;
     }
 
-#ifdef WITH_XC_NETWORKING
+#ifdef KPXC_FEATURE_NETWORK
     // Update the progress bar
     int remaining = m_downloader.passwordsRemaining();
     if (remaining > 0) {
@@ -247,7 +249,7 @@ void ReportsWidgetHibp::fetchFailed(const QString& error)
  */
 void ReportsWidgetHibp::startValidation()
 {
-#ifdef WITH_XC_NETWORKING
+#ifdef KPXC_FEATURE_NETWORK
     // Collect all passwords in the database (unless recycled, and
     // unless empty, and unless marked as "known bad") and submit them
     // to the downloader.
@@ -343,7 +345,7 @@ void ReportsWidgetHibp::refreshAfterEdit()
     m_pwndPasswords.remove(m_editedPassword);
 
     // Validate the new password against HIBP
-#ifdef WITH_XC_NETWORKING
+#ifdef KPXC_FEATURE_NETWORK
     m_downloader.add(m_editedEntry->password());
     m_downloader.validate();
 #endif
@@ -371,6 +373,11 @@ void ReportsWidgetHibp::customMenuRequested(QPoint pos)
             emit entryActivated(entry);
         });
     }
+
+    // Create the "Expire entry" menu item
+    const auto expEntry = new QAction(icons()->icon("entry-expire"), tr("Expire Entry(s)…", "", selected.size()), this);
+    menu->addAction(expEntry);
+    connect(expEntry, &QAction::triggered, this, &ReportsWidgetHibp::expireSelectedEntries);
 
     // Create the "delete entry" menu item
     const auto delEntry = new QAction(icons()->icon("entry-delete"), tr("Delete Entry(s)…", "", selected.size()), this);
@@ -409,7 +416,7 @@ void ReportsWidgetHibp::customMenuRequested(QPoint pos)
     menu->popup(m_ui->hibpTableView->viewport()->mapToGlobal(pos));
 }
 
-void ReportsWidgetHibp::deleteSelectedEntries()
+QList<Entry*> ReportsWidgetHibp::getSelectedEntries()
 {
     QList<Entry*> selectedEntries;
     for (auto index : m_ui->hibpTableView->selectionModel()->selectedRows()) {
@@ -419,7 +426,21 @@ void ReportsWidgetHibp::deleteSelectedEntries()
             selectedEntries << entry;
         }
     }
+    return selectedEntries;
+}
 
+void ReportsWidgetHibp::expireSelectedEntries()
+{
+    for (auto entry : getSelectedEntries()) {
+        entry->expireNow();
+    }
+
+    makeHibpTable();
+}
+
+void ReportsWidgetHibp::deleteSelectedEntries()
+{
+    QList<Entry*> selectedEntries = getSelectedEntries();
     bool permanent = !m_db->metadata()->recycleBinEnabled();
     if (GuiTools::confirmDeleteEntries(this, selectedEntries, permanent)) {
         GuiTools::deleteEntriesResolveReferences(this, selectedEntries, permanent);

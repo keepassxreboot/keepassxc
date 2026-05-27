@@ -31,6 +31,7 @@ EditWidget::EditWidget(QWidget* parent)
     setModified(false);
 
     m_ui->messageWidget->setHidden(true);
+    m_ui->headerLabel->setHidden(true);
 
     QFont headerLabelFont = m_ui->headerLabel->font();
     headerLabelFont.setBold(true);
@@ -70,16 +71,25 @@ void EditWidget::addPage(const QString& labelText, const QIcon& icon, QWidget* w
     m_ui->categoryList->addCategory(labelText, icon);
 }
 
-bool EditWidget::hasPage(QWidget* widget)
+bool EditWidget::hasPage(const QWidget* widget) const
 {
+    return pageIndex(widget) >= 0;
+}
+
+int EditWidget::pageIndex(const QWidget* widget) const
+{
+    if (!widget) {
+        return -1;
+    }
+
     for (int i = 0; i < m_ui->stackedWidget->count(); i++) {
         auto* scrollArea = qobject_cast<QScrollArea*>(m_ui->stackedWidget->widget(i));
-        if (scrollArea && scrollArea->widget() == widget) {
-            return true;
+        if (scrollArea && (scrollArea == widget || scrollArea->widget() == widget)) {
+            return i;
         }
     }
 
-    return false;
+    return -1;
 }
 
 void EditWidget::setPageHidden(QWidget* widget, bool hidden)
@@ -94,16 +104,19 @@ void EditWidget::setPageHidden(QWidget* widget, bool hidden)
         }
     }
 
-    if (index != -1) {
-        m_ui->categoryList->setCategoryHidden(index, hidden);
+    if (index == -1) {
+        return;
     }
 
-    if (index == m_ui->stackedWidget->currentIndex()) {
+    bool changed = m_ui->categoryList->isCategoryHidden(index) != hidden;
+    m_ui->categoryList->setCategoryHidden(index, hidden);
+
+    if (changed && index == m_ui->stackedWidget->currentIndex()) {
         int newIndex = m_ui->stackedWidget->currentIndex() - 1;
         if (newIndex < 0) {
             newIndex = m_ui->stackedWidget->count() - 1;
         }
-        m_ui->stackedWidget->setCurrentIndex(newIndex);
+        m_ui->categoryList->setCurrentCategory(newIndex);
     }
 }
 
@@ -115,6 +128,7 @@ void EditWidget::setCurrentPage(int index)
 
 void EditWidget::setHeadline(const QString& text)
 {
+    m_ui->headerLabel->setHidden(text.isEmpty());
     m_ui->headerLabel->setText(text);
 }
 

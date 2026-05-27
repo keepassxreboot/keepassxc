@@ -1,15 +1,16 @@
-[NOTE]: # ( Describe your changes in detail, why is this change required? )
-[NOTE]: # ( Explain large or complex code modifications. )
-[NOTE]: # ( If it fixes an open issue, please add "Fixes #XXX" )
+[NOTE]: # ( Describe your changes in detail. Explain large or complex code modifications. )
+[NOTE]: # ( If it fixes an open issue, please add "Fixes #XXX". )
+[NOTE]: # ( If you used Generative AI to write the majority of your code, you must state this. )
 
 
 ## Screenshots
-[TIP]:  # ( Do not include screenshots of your actual database! )
+[NOTE]: # ( Do not include screenshots of your actual database! )
+[TIP]:  # ( Use View -> Allow Screen Capture )
 
 
 ## Testing strategy
 [NOTE]: # ( Please describe in detail how you tested your changes. )
-[TIP]:  # ( We expect new code to be covered by unit tests and documented with doc blocks! )
+[TIP]:  # ( We expect new code to be covered by unit tests and include helpful comments. )
 
 
 ## Type of change

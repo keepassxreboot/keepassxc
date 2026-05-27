@@ -1,0 +1,29 @@
+name: "Copilot Setup Steps"
+
+# Setup the environment for Copilot agents to run in
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/copilot-setup-steps.yml
+  pull_request:
+    paths:
+      - .github/workflows/copilot-setup-steps.yml
+
+jobs:
+  copilot-setup-steps:
+    runs-on: ubuntu-latest
+
+    # Needed to clone the repository
+    permissions:
+      contents: read
+
+    # Install dependencies
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install --no-install-recommends build-essential cmake g++ ninja-build qtbase5-dev qtbase5-private-dev qttools5-dev qttools5-dev-tools libqt5svg5-dev libargon2-dev libkeyutils-dev libminizip-dev libbotan-2-dev libqrencode-dev zlib1g-dev asciidoctor libreadline-dev libpcsclite-dev libusb-1.0-0-dev libxi-dev libxtst-dev libqt5x11extras5-dev

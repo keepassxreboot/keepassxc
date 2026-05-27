@@ -1,6 +1,6 @@
 /*
+ *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2017 Toni Spets <toni.spets@iki.fi>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -145,10 +145,11 @@ bool SSHAgent::isAgentRunning() const
     QFileInfo socketFileInfo(socketPath());
     return !socketFileInfo.path().isEmpty() && socketFileInfo.exists();
 #else
+    const auto pathString = QString::fromLatin1(socketPath().toLatin1());
     if (usePageant() && useOpenSSH()) {
-        return (FindWindowA("Pageant", "Pageant") != nullptr) && WaitNamedPipe(socketPath().toLatin1().data(), 100);
+        return (FindWindowA("Pageant", "Pageant") != nullptr) && WaitNamedPipe(pathString.toStdWString().c_str(), 100);
     } else if (useOpenSSH()) {
-        return WaitNamedPipe(socketPath().toLatin1().data(), 100);
+        return WaitNamedPipe(pathString.toStdWString().c_str(), 100);
     } else if (usePageant()) {
         return (FindWindowA("Pageant", "Pageant") != nullptr);
     } else {
@@ -364,6 +365,48 @@ bool SSHAgent::removeIdentity(OpenSSHKey& key)
 }
 
 /**
+ * Remove all identities from the SSH agent.
+ *
+ * Since the agent might be forwarded, old or non-OpenSSH, when asked
+ * to remove all keys, attempt to remove both protocol v.1 and v.2
+ * keys.
+ *
+ * @return true on success
+ */
+bool SSHAgent::clearAllAgentIdentities()
+{
+    if (!isAgentRunning()) {
+        m_error = tr("No agent running, cannot remove identity.");
+        return false;
+    }
+
+    bool ret = true;
+    QByteArray requestData;
+    QByteArray responseData;
+    BinaryStream request(&requestData);
+
+    // SSH2 Identity Removal
+    request.write(SSH2_AGENTC_REMOVE_ALL_IDENTITIES);
+
+    if (!sendMessage(requestData, responseData)) {
+        m_error = tr("Failed to remove all SSH identities from agent.");
+        ret = false;
+    }
+
+    request.flush();
+    responseData.clear();
+
+    // SSH1 Identity Removal
+    request.write(SSH_AGENTC_REMOVE_ALL_RSA_IDENTITIES);
+
+    // ignore error-code for ssh1
+    sendMessage(requestData, responseData);
+
+    m_error = tr("All SSH identities removed from agent.");
+    return ret;
+}
+
+/**
  * Get a list of identities from the SSH agent.
  *
  * @param list list of keys to append
@@ -486,7 +529,7 @@ void SSHAgent::setAutoRemoveOnLock(const OpenSSHKey& key, bool autoRemove)
     }
 }
 
-void SSHAgent::databaseLocked(QSharedPointer<Database> db)
+void SSHAgent::databaseLocked(const QSharedPointer<Database>& db)
 {
     if (!db) {
         return;
@@ -508,20 +551,20 @@ void SSHAgent::databaseLocked(QSharedPointer<Database> db)
     }
 }
 
-void SSHAgent::databaseUnlocked(QSharedPointer<Database> db)
+void SSHAgent::databaseUnlocked(const QSharedPointer<Database>& db)
 {
     if (!db || !isEnabled()) {
         return;
     }
 
-    for (Entry* e : db->rootGroup()->entriesRecursive()) {
-        if (db->metadata()->recycleBinEnabled() && e->group() == db->metadata()->recycleBin()) {
+    for (auto entry : db->rootGroup()->entriesRecursive()) {
+        if (entry->isRecycled()) {
             continue;
         }
 
         KeeAgentSettings settings;
 
-        if (!settings.fromEntry(e)) {
+        if (!settings.fromEntry(entry)) {
             continue;
         }
 
@@ -531,7 +574,7 @@ void SSHAgent::databaseUnlocked(QSharedPointer<Database> db)
 
         OpenSSHKey key;
 
-        if (!settings.toOpenSSHKey(e, key, true)) {
+        if (!settings.toOpenSSHKey(entry, key, true)) {
             continue;
         }
 

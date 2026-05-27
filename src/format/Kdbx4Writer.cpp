@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,10 +23,6 @@
 #include "crypto/CryptoHash.h"
 #include "crypto/Random.h"
 #include "format/KeePass2RandomStream.h"
-#ifdef WITH_XC_KEESHARE
-#include "keeshare/KeeShare.h"
-#include "keeshare/KeeShareSettings.h"
-#endif
 #include "streams/HmacBlockStream.h"
 #include "streams/SymmetricCipherStream.h"
 #include "streams/qtiocompressor.h"
@@ -229,15 +225,17 @@ KdbxXmlWriter::BinaryIdxMap Kdbx4Writer::writeAttachments(QIODevice* device, Dat
             data.append(entry->attachments()->value(key));
 
             CryptoHash hash(CryptoHash::Sha256);
-#ifdef WITH_XC_KEESHARE
             // Namespace KeeShare attachments so they don't get deduplicated together with attachments
             // from other databases. Prevents potential filesize side channels.
-            if (auto shared = KeeShare::resolveSharedGroup(entry->group())) {
-                hash.addData(KeeShare::referenceOf(shared).uuid.toByteArray());
+            auto group = entry->group();
+            if (!group && entry->historyOwner()) {
+                group = entry->historyOwner()->group();
+            }
+            if (group && group->isShared()) {
+                hash.addData(group->uuid().toByteArray());
             } else {
                 hash.addData(db->uuid().toByteArray());
             }
-#endif
             hash.addData(data);
 
             // Deduplicate attachments with the same hash
@@ -312,8 +310,8 @@ bool Kdbx4Writer::serializeVariantMap(const QVariantMap& map, QByteArray& output
         QByteArray typeBytes;
         typeBytes.append(static_cast<char>(fieldType));
         QByteArray nameBytes = k.toUtf8();
-        QByteArray nameLenBytes = Endian::sizedIntToBytes(nameBytes.size(), KeePass2::BYTEORDER);
-        QByteArray dataLenBytes = Endian::sizedIntToBytes(data.size(), KeePass2::BYTEORDER);
+        QByteArray nameLenBytes = Endian::sizedIntToBytes<quint32>(nameBytes.size(), KeePass2::BYTEORDER);
+        QByteArray dataLenBytes = Endian::sizedIntToBytes<quint32>(data.size(), KeePass2::BYTEORDER);
 
         CHECK_RETURN_FALSE(buf.write(typeBytes) == 1);
         CHECK_RETURN_FALSE(buf.write(nameLenBytes) == 4);

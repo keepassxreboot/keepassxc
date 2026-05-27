@@ -24,6 +24,8 @@
 #include "fdosecrets/widgets/RowButtonHelper.h"
 
 #include "core/Entry.h"
+#include "core/Global.h"
+#include "core/Tools.h"
 #include "gui/Icons.h"
 
 #include <QWindow>
@@ -101,7 +103,7 @@ AccessControlDialog::AccessControlDialog(QWindow* parent,
     connect(cancelButton, &QPushButton::clicked, this, [this]() { done(DenyAll); });
     connect(allowButton, &QPushButton::clicked, this, [this]() { done(AllowSelected); });
     connect(allowAllButton, &QPushButton::clicked, this, [this]() { done(AllowAll); });
-    connect(detailsButton, &QPushButton::clicked, this, [=](bool checked) {
+    connect(detailsButton, &QPushButton::clicked, this, [this, detailsButton, detailsButtonText](bool checked) {
         m_ui->detailsContainer->setVisible(checked);
         if (checked) {
             detailsButton->setText(detailsButtonText + QStringLiteral(" <<"));
@@ -206,7 +208,7 @@ QHash<Entry*, AuthDecision> AccessControlDialog::decisions() const
 AccessControlDialog::EntryModel::EntryModel(QList<Entry*> entries, QObject* parent)
     : QAbstractTableModel(parent)
     , m_entries(std::move(entries))
-    , m_selected(QSet<Entry*>::fromList(m_entries))
+    , m_selected(Tools::asSet(m_entries))
 {
 }
 

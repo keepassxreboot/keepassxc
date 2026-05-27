@@ -28,6 +28,7 @@ class TestEntrySearcher : public QObject
     Q_OBJECT
 
 private slots:
+    void initTestCase();
     void init();
     void cleanup();
 
@@ -39,6 +40,7 @@ private slots:
     void testGroup();
     void testSkipProtected();
     void testUUIDSearch();
+    void testTotpSearch();
 
 private:
     Group* m_rootGroup;

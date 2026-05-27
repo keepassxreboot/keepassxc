@@ -43,13 +43,14 @@ public:
         Expires = 6,
         Created = 7,
         Modified = 8,
-        Accessed = 9,
+        Accessed = 9, // Kept for compatibility
         Paperclip = 10,
         Attachments = 11,
         Totp = 12,
         Size = 13,
         PasswordStrength = 14,
-        Color = 15
+        Color = 15,
+        ParentGroupPath = 16
     };
 
     explicit EntryModel(QObject* parent = nullptr);
@@ -94,7 +95,6 @@ private:
     QSet<const Group*> m_allGroups;
 
     const QString HiddenContentDisplay;
-    const Qt::DateFormat DateFormat;
 };
 
 #endif // KEEPASSX_ENTRYMODEL_H

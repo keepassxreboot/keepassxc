@@ -1,4 +1,5 @@
 /*
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -15,11 +16,11 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_DATABASESETTINGSWIDGET_H
-#define KEEPASSX_DATABASESETTINGSWIDGET_H
+#ifndef KEEPASSXC_DATABASESETTINGSDIALOG_H
+#define KEEPASSXC_DATABASESETTINGSDIALOG_H
 
 #include "config-keepassx.h"
-#include "gui/DialogyWidget.h"
+#include "gui/EditWidget.h"
 
 #include <QPointer>
 
@@ -27,29 +28,18 @@ class Database;
 class DatabaseSettingsWidgetGeneral;
 class DatabaseSettingsWidgetEncryption;
 class DatabaseSettingsWidgetDatabaseKey;
-#ifdef WITH_XC_BROWSER
+#ifdef KPXC_FEATURE_BROWSER
 class DatabaseSettingsWidgetBrowser;
 #endif
+class DatabaseSettingsWidgetKeeShare;
+#ifdef KPXC_FEATURE_FDOSECRETS
+class DatabaseSettingsWidgetFdoSecrets;
+#endif
 class DatabaseSettingsWidgetMaintenance;
+class DatabaseSettingsWidgetRemote;
 class QTabWidget;
 
-namespace Ui
-{
-    class DatabaseSettingsDialog;
-}
-
-class IDatabaseSettingsPage
-{
-public:
-    virtual ~IDatabaseSettingsPage() = default;
-    virtual QString name() = 0;
-    virtual QIcon icon() = 0;
-    virtual QWidget* createWidget() = 0;
-    virtual void loadSettings(QWidget* widget, QSharedPointer<Database> db) = 0;
-    virtual void saveSettings(QWidget* widget) = 0;
-};
-
-class DatabaseSettingsDialog : public DialogyWidget
+class DatabaseSettingsDialog : public EditWidget
 {
     Q_OBJECT
 
@@ -59,8 +49,8 @@ public:
     Q_DISABLE_COPY(DatabaseSettingsDialog);
 
     void load(const QSharedPointer<Database>& db);
-    void addSettingsPage(IDatabaseSettingsPage* page);
-    void showDatabaseKeySettings();
+    void showDatabaseKeySettings(int index = 0);
+    void showRemoteSettings();
 
 signals:
     void editFinished(bool accepted);
@@ -68,28 +58,22 @@ signals:
 private slots:
     void save();
     void reject();
-    void pageChanged();
 
 private:
-    enum Page
-    {
-        General = 0,
-        Security = 1
-    };
-
     QSharedPointer<Database> m_db;
-    const QScopedPointer<Ui::DatabaseSettingsDialog> m_ui;
     QPointer<DatabaseSettingsWidgetGeneral> m_generalWidget;
     QPointer<QTabWidget> m_securityTabWidget;
     QPointer<DatabaseSettingsWidgetDatabaseKey> m_databaseKeyWidget;
     QPointer<DatabaseSettingsWidgetEncryption> m_encryptionWidget;
-#ifdef WITH_XC_BROWSER
+#ifdef KPXC_FEATURE_BROWSER
     QPointer<DatabaseSettingsWidgetBrowser> m_browserWidget;
 #endif
+    QPointer<DatabaseSettingsWidgetKeeShare> m_keeShareWidget;
+#ifdef KPXC_FEATURE_FDOSECRETS
+    QPointer<DatabaseSettingsWidgetFdoSecrets> m_fdoSecretsWidget;
+#endif
     QPointer<DatabaseSettingsWidgetMaintenance> m_maintenanceWidget;
-
-    class ExtraPage;
-    QList<ExtraPage> m_extraPages;
+    QPointer<DatabaseSettingsWidgetRemote> m_remoteWidget;
 };
 
-#endif // KEEPASSX_DATABASESETTINGSWIDGET_H
+#endif // KEEPASSXC_DATABASESETTINGSDIALOG_H

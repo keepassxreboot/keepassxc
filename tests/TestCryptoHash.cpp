@@ -27,6 +27,7 @@ QTEST_GUILESS_MAIN(TestCryptoHash)
 void TestCryptoHash::initTestCase()
 {
     QVERIFY(Crypto::init());
+    QLocale::setDefault(QLocale::c());
 }
 
 void TestCryptoHash::test()

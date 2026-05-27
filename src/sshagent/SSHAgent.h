@@ -56,6 +56,7 @@ public:
     bool checkIdentity(const OpenSSHKey& key, bool& loaded);
     bool removeIdentity(OpenSSHKey& key);
     void removeAllIdentities();
+    bool clearAllAgentIdentities();
     void setAutoRemoveOnLock(const OpenSSHKey& key, bool autoRemove);
 
 signals:
@@ -63,8 +64,8 @@ signals:
     void enabledChanged(bool enabled);
 
 public slots:
-    void databaseLocked(QSharedPointer<Database> db);
-    void databaseUnlocked(QSharedPointer<Database> db);
+    void databaseLocked(const QSharedPointer<Database>& db);
+    void databaseUnlocked(const QSharedPointer<Database>& db);
 
 private:
     const quint8 SSH_AGENT_FAILURE = 5;
@@ -74,6 +75,8 @@ private:
     const quint8 SSH_AGENTC_ADD_IDENTITY = 17;
     const quint8 SSH_AGENTC_REMOVE_IDENTITY = 18;
     const quint8 SSH_AGENTC_ADD_ID_CONSTRAINED = 25;
+    const quint8 SSH_AGENTC_REMOVE_ALL_RSA_IDENTITIES = 9;
+    const quint8 SSH2_AGENTC_REMOVE_ALL_IDENTITIES = 19;
 
     const quint8 SSH_AGENT_CONSTRAIN_LIFETIME = 1;
     const quint8 SSH_AGENT_CONSTRAIN_CONFIRM = 2;

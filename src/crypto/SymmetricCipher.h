@@ -52,7 +52,7 @@ public:
     explicit SymmetricCipher() = default;
     ~SymmetricCipher() = default;
 
-    bool isInitalized() const;
+    bool isInitialized() const;
     Q_REQUIRED_RESULT bool init(Mode mode, Direction direction, const QByteArray& key, const QByteArray& iv);
     Q_REQUIRED_RESULT bool process(char* data, int len);
     Q_REQUIRED_RESULT bool process(QByteArray& data);
@@ -76,7 +76,7 @@ private:
     static QString modeToString(const Mode mode);
 
     QString m_error;
-    Mode m_mode;
+    Mode m_mode{InvalidMode};
     QSharedPointer<Botan::Cipher_Mode> m_cipher;
 
     Q_DISABLE_COPY(SymmetricCipher)

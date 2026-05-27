@@ -27,6 +27,8 @@ class TestBase32 : public QObject
     Q_OBJECT
 
 private slots:
+    void initTestCase();
+
     void testEncode();
     void testDecode();
     void testAddPadding();

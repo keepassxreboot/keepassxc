@@ -38,7 +38,6 @@ IconDownloaderDialog::IconDownloaderDialog(QWidget* parent)
     , m_ui(new Ui::IconDownloaderDialog())
     , m_dataModel(new QStandardItemModel(this))
 {
-    setWindowFlags(Qt::Window);
     setAttribute(Qt::WA_DeleteOnClose);
 
     m_ui->setupUi(this);

@@ -24,17 +24,27 @@
 #include "format/KeePass1Reader.h"
 #include "format/OPUXReader.h"
 #include "format/OpVaultReader.h"
+#include "format/ProtonPassReader.h"
 #include "gui/csvImport/CsvImportWidget.h"
 #include "gui/wizard/ImportWizard.h"
+
+#include "cli/Utils.h"
+#include "keys/FileKey.h"
+#include "keys/PasswordKey.h"
 
 #include <QBoxLayout>
 #include <QDir>
 #include <QHeaderView>
 #include <QTableWidget>
 
+#include "gui/remote/RemoteSettings.h"
+
+struct RemoteParams;
+
 ImportWizardPageReview::ImportWizardPageReview(QWidget* parent)
     : QWizardPage(parent)
     , m_ui(new Ui::ImportWizardPageReview)
+    , m_remoteHandler(new RemoteHandler(this))
 {
 }
 
@@ -66,28 +76,35 @@ void ImportWizardPageReview::initializePage()
         break;
     case ImportWizard::IMPORT_OPVAULT:
         m_db = importOPVault(filename, field("ImportPassword").toString());
-        setupDatabasePreview();
         break;
     case ImportWizard::IMPORT_OPUX:
         m_db = importOPUX(filename);
-        setupDatabasePreview();
         break;
     case ImportWizard::IMPORT_KEEPASS1:
         m_db = importKeePass1(filename, field("ImportPassword").toString(), field("ImportKeyFile").toString());
-        setupDatabasePreview();
         break;
     case ImportWizard::IMPORT_BITWARDEN:
         m_db = importBitwarden(filename, field("ImportPassword").toString());
-        setupDatabasePreview();
+        break;
+    case ImportWizard::IMPORT_PROTONPASS:
+        m_db = importProtonPass(filename);
+        break;
+    case ImportWizard::IMPORT_REMOTE:
+        m_db = importRemote(field("DownloadCommand").toString(),
+                            field("DownloadInput").toString(),
+                            field("ImportPassword").toString(),
+                            field("ImportKeyFile").toString());
         break;
     default:
         break;
     }
+
+    setupDatabasePreview();
 }
 
 bool ImportWizardPageReview::validatePage()
 {
-    if (m_csvWidget && field("ImportType").toInt() == ImportWizard::IMPORT_CSV) {
+    if (isCsvImport()) {
         m_db = m_csvWidget->buildDatabase();
     }
     return !m_db.isNull();
@@ -105,18 +122,26 @@ void ImportWizardPageReview::setupCsvImport(const QString& filename)
 
     m_csvWidget = new CsvImportWidget();
     connect(m_csvWidget, &CsvImportWidget::message, m_ui->messageWidget, [this](QString message) {
-        m_ui->messageWidget->showMessage(message, KMessageWidget::Error, -1);
+        if (message.isEmpty()) {
+            m_ui->messageWidget->hideMessage();
+        } else {
+            m_ui->messageWidget->showMessage(message, MessageWidget::Error, -1);
+        }
     });
 
     m_csvWidget->load(filename);
-
-    // Qt does not automatically resize a QScrollWidget in a QWizard...
-    m_ui->scrollAreaContents->layout()->addWidget(m_csvWidget);
-    m_ui->scrollArea->setMinimumSize(m_csvWidget->width() + 50, m_csvWidget->height() + 100);
 }
 
 void ImportWizardPageReview::setupDatabasePreview()
 {
+    // CSV preview is handled by the import widget
+    if (isCsvImport()) {
+        // Qt does not automatically resize a QScrollWidget in a QWizard...
+        m_ui->scrollAreaContents->layout()->addWidget(m_csvWidget);
+        m_ui->scrollArea->setMinimumSize(m_csvWidget->width() + 50, m_csvWidget->height() + 100);
+        return;
+    }
+
     if (!m_db) {
         m_ui->scrollArea->setVisible(false);
         return;
@@ -199,4 +224,59 @@ ImportWizardPageReview::importKeePass1(const QString& filename, const QString& p
     }
 
     return db;
+}
+
+QSharedPointer<Database> ImportWizardPageReview::importProtonPass(const QString& filename)
+{
+    ProtonPassReader reader;
+    auto db = reader.convert(filename);
+    if (reader.hasError()) {
+        m_ui->messageWidget->showMessage(reader.errorString(), KMessageWidget::Error, -1);
+    }
+    return db;
+}
+
+bool ImportWizardPageReview::isCsvImport() const
+{
+    return m_csvWidget && field("ImportType").toInt() == ImportWizard::IMPORT_CSV;
+}
+
+QSharedPointer<Database> ImportWizardPageReview::importRemote(const QString& downloadCommand,
+                                                              const QString& downloadInput,
+                                                              const QString& password,
+                                                              const QString& keyfile)
+{
+    auto* params = new RemoteParams();
+    params->downloadCommand = downloadCommand;
+    params->downloadInput = downloadInput;
+
+    auto result = m_remoteHandler->download(params);
+
+    if (!result.success) {
+        m_ui->messageWidget->showMessage(result.errorMessage, KMessageWidget::Error, -1);
+    }
+
+    auto key = QSharedPointer<CompositeKey>::create();
+
+    if (!password.isEmpty()) {
+        key->addKey(QSharedPointer<PasswordKey>::create(password));
+    }
+    if (!keyfile.isEmpty()) {
+        QSharedPointer<FileKey> fileKey = QSharedPointer<FileKey>::create();
+        if (Utils::loadFileKey(keyfile, fileKey)) {
+            key->addKey(fileKey);
+        } else {
+            m_ui->messageWidget->showMessage(tr("Could not load key file."), KMessageWidget::Error, -1);
+        }
+    }
+
+    QString error;
+    QSharedPointer<Database> remoteDb = QSharedPointer<Database>::create();
+    remoteDb->markAsTemporaryDatabase();
+    if (!remoteDb->open(result.filePath, key, &error)) {
+        m_ui->messageWidget->showMessage(
+            tr("Could not open remote database. Password or key file may be incorrect."), KMessageWidget::Error, -1);
+    }
+
+    return remoteDb;
 }

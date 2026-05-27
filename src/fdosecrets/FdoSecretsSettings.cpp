@@ -1,4 +1,5 @@
 /*
+ *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2018 Aetf <aetf@unlimitedcodeworks.xyz>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -20,15 +21,6 @@
 #include "core/Config.h"
 #include "core/Database.h"
 #include "core/Metadata.h"
-
-namespace Keys
-{
-    namespace Db
-    {
-        constexpr auto FdoSecretsExposedGroup = "FDO_SECRETS_EXPOSED_GROUP";
-    } // namespace Db
-
-} // namespace Keys
 
 namespace FdoSecrets
 {
@@ -98,20 +90,19 @@ namespace FdoSecrets
         return exposedGroup(db.data());
     }
 
-    void FdoSecretsSettings::setExposedGroup(const QSharedPointer<Database>& db,
-                                             const QUuid& group) // clazy:exclude=function-args-by-value
+    void FdoSecretsSettings::setExposedGroup(const QSharedPointer<Database>& db, const QUuid& group)
     {
         setExposedGroup(db.data(), group);
     }
 
     QUuid FdoSecretsSettings::exposedGroup(Database* db) const
     {
-        return {db->metadata()->customData()->value(Keys::Db::FdoSecretsExposedGroup)};
+        return QUuid(db->metadata()->customData()->value(CustomData::FdoSecretsExposedGroup));
     }
 
-    void FdoSecretsSettings::setExposedGroup(Database* db, const QUuid& group) // clazy:exclude=function-args-by-value
+    void FdoSecretsSettings::setExposedGroup(Database* db, const QUuid& group)
     {
-        db->metadata()->customData()->set(Keys::Db::FdoSecretsExposedGroup, group.toString());
+        db->metadata()->customData()->set(CustomData::FdoSecretsExposedGroup, group.toString());
     }
 
 } // namespace FdoSecrets

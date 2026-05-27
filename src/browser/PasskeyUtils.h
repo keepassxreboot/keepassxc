@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -24,10 +24,17 @@
 #include <QStringList>
 
 #include "BrowserCbor.h"
+#include "core/Entry.h"
 
 #define DEFAULT_TIMEOUT 300000
 #define DEFAULT_DISCOURAGED_TIMEOUT 120000
 #define PASSKEYS_SUCCESS 0
+
+struct ExtensionResult
+{
+    QByteArray extensionData;
+    QJsonObject extensionObject;
+};
 
 class PasskeyUtils : public QObject
 {
@@ -50,9 +57,11 @@ public:
     bool isResidentKeyRequired(const QJsonObject& authenticatorSelection) const;
     bool isUserVerificationRequired(const QJsonObject& authenticatorSelection) const;
     bool isOriginAllowedWithLocalhost(bool allowLocalhostWithPasskeys, const QString& origin) const;
-    QByteArray buildExtensionData(QJsonObject& extensionObject) const;
-    QJsonObject buildClientDataJson(const QJsonObject& publicKey, const QString& origin, bool get) const;
+    ExtensionResult buildExtensionData(QJsonObject& extensionObject) const;
+    QString buildClientDataJson(const QJsonObject& publicKey, const QString& origin, bool get) const;
     QStringList getAllowedCredentialsFromAssertionOptions(const QJsonObject& assertionOptions) const;
+    QString getCredentialIdFromEntry(const Entry* entry) const;
+    QString getUsernameFromEntry(const Entry* entry) const;
 
 private:
     Q_DISABLE_COPY(PasskeyUtils);

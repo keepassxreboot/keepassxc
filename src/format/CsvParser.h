@@ -22,7 +22,7 @@
 #include <QBuffer>
 #include <QTextStream>
 
-class QFile;
+class QIODevice;
 
 typedef QStringList CsvRow;
 typedef QList<CsvRow> CsvTable;
@@ -34,7 +34,7 @@ public:
     CsvParser();
     ~CsvParser();
     // read data from device and parse it
-    bool parse(QFile* device);
+    bool parse(QIODevice* device);
     bool isFileLoaded();
     // reparse the same buffer (device is not opened again)
     bool reparse();
@@ -48,6 +48,7 @@ public:
     int getCsvCols() const;
     QString getStatus() const;
     CsvTable getCsvTable() const;
+    QStringConverter::Encoding getCodec() const;
 
 protected:
     CsvTable m_table;
@@ -85,7 +86,7 @@ private:
     void parseQuoted(QString& s);
     void parseEscaped(QString& s);
     void parseEscapedText(QString& s);
-    bool readFile(QFile* device);
+    bool readFile(QIODevice* device);
     void reset();
     void clear();
     bool skipEndline();

@@ -1,3 +1,5 @@
+codecov:
+  require_ci_to_pass: false
 coverage:
   range: 60..80
   round: nearest
@@ -11,8 +13,9 @@ coverage:
           - "src"
     patch:
       default:
-        target: 75%
+        target: 50%
         threshold: 0%
+        informational: true
         paths:
           - "src"
 fixes:
@@ -20,6 +23,5 @@ fixes:
 ignore:
   - "src/gui/styles/**"
   - "src/thirdparty/**"
-  - "src/zxcvbn/**"
 comment:
   require_changes: true

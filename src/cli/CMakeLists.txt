@@ -1,4 +1,4 @@
-#  Copyright (C) 2019 KeePassXC Team
+#  Copyright (C) 2025 KeePassXC Team
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -45,7 +45,7 @@ set(cli_SOURCES
         Show.cpp)
 
 add_library(cli STATIC ${cli_SOURCES})
-target_link_libraries(cli Qt5::Core)
+target_link_libraries(cli ${ZXCVBN_LIBRARIES} Qt6::Core)
 
 find_package(Readline)
 
@@ -58,7 +58,7 @@ add_executable(keepassxc-cli keepassxc-cli.cpp)
 target_link_libraries(keepassxc-cli
         ${GPGERROR_LIBRARIES}
         cli
-        keepassx_core)
+        keepassxc_core)
 
 install(TARGETS keepassxc-cli
         BUNDLE DESTINATION . COMPONENT Runtime
@@ -67,10 +67,6 @@ install(TARGETS keepassxc-cli
 if(WIN32)
     target_sources(keepassxc-cli
         PRIVATE keepassxc-cli.exe.manifest)
-
-#    install(CODE "include(BundleUtilities)
-#                  fixup_bundle(\"\${CMAKE_INSTALL_PREFIX}/keepassxc-cli.exe\" \"\" \"\")"
-#            COMPONENT Runtime)
 endif()
 
 if(APPLE AND WITH_APP_BUNDLE)

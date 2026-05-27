@@ -23,11 +23,9 @@
 #include <QScopedPointer>
 #include <QTimer>
 
-#include "config-keepassx.h"
 #include "gui/DialogyWidget.h"
-#ifdef WITH_XC_YUBIKEY
+#include "gui/MessageWidget.h"
 #include "osutils/DeviceListener.h"
-#endif
 
 class CompositeKey;
 class Database;
@@ -51,6 +49,7 @@ public:
     void enterKey(const QString& pw, const QString& keyFile);
     QSharedPointer<Database> database();
     bool unlockingDatabase();
+    void showMessage(const QString& text, MessageWidget::MessageType type, int autoHideTimeout);
 
     // Quick Unlock helper functions
     bool canPerformQuickUnlock() const;
@@ -64,6 +63,7 @@ signals:
 
 protected:
     bool event(QEvent* event) override;
+    void keyPressEvent(QKeyEvent* event) override;
     QSharedPointer<CompositeKey> buildDatabaseKey();
     void setUserInteractionLock(bool state);
 
@@ -78,19 +78,18 @@ protected slots:
 
 private slots:
     bool browseKeyFile();
-    void toggleKeyFileComponent(bool state);
     void toggleHardwareKeyComponent(bool state);
-    void pollHardwareKey(bool manualTrigger = false);
+    void closeDatabase();
+    void pollHardwareKey(bool manualTrigger = false, int delay = 0);
     void hardwareKeyResponse(bool found);
 
 private:
-#ifdef WITH_XC_YUBIKEY
     QPointer<DeviceListener> m_deviceListener;
-#endif
     bool m_pollingHardwareKey = false;
     bool m_manualHardwareKeyRefresh = false;
     bool m_blockQuickUnlock = false;
     bool m_unlockingDatabase = false;
+    bool m_triedToQuit = false;
     QTimer m_hideTimer;
     QTimer m_hideNoHardwareKeysFoundTimer;
 

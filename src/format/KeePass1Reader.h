@@ -19,6 +19,7 @@
 #define KEEPASSX_KEEPASS1READER_H
 
 #include <QCoreApplication>
+#include <QHash>
 #include <QSharedPointer>
 
 class Database;

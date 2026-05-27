@@ -1,4 +1,4 @@
-if(WITH_XC_FDOSECRETS)
+if(KPXC_FEATURE_FDOSECRETS)
     include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
 
     add_library(fdosecrets STATIC
@@ -9,7 +9,6 @@ if(WITH_XC_FDOSECRETS)
         widgets/RowButtonHelper.cpp
 
         # per database settings page
-        DatabaseSettingsPageFdoSecrets.cpp
         widgets/DatabaseSettingsWidgetFdoSecrets.cpp
 
         # prompt dialog
@@ -31,5 +30,5 @@ if(WITH_XC_FDOSECRETS)
         objects/Prompt.cpp
         dbus/DBusTypes.cpp
     )
-    target_link_libraries(fdosecrets Qt5::Core Qt5::Widgets Qt5::DBus ${BOTAN_LIBRARIES})
+    target_link_libraries(fdosecrets Qt6::Core Qt6::Widgets Qt6::DBus ${BOTAN_LIBRARIES})
 endif()

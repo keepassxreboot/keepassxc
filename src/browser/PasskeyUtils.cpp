@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,8 +18,9 @@
 #include "PasskeyUtils.h"
 #include "BrowserMessageBuilder.h"
 #include "BrowserPasskeys.h"
+#include "core/EntryAttributes.h"
 #include "core/Tools.h"
-#include "core/UrlTools.h"
+#include "gui/UrlTools.h"
 
 #include <QList>
 #include <QUrl>
@@ -52,8 +53,8 @@ bool PasskeyUtils::checkCredentialCreationOptions(const QJsonObject& credentialC
 {
     if (!credentialCreationOptions["attestation"].isString()
         || credentialCreationOptions["attestation"].toString().isEmpty()
-        || !credentialCreationOptions["clientDataJSON"].isObject()
-        || credentialCreationOptions["clientDataJSON"].toObject().isEmpty()
+        || !credentialCreationOptions["clientDataJSON"].isString()
+        || credentialCreationOptions["clientDataJSON"].toString().isEmpty()
         || !credentialCreationOptions["rp"].isObject() || credentialCreationOptions["rp"].toObject().isEmpty()
         || !credentialCreationOptions["user"].isObject() || credentialCreationOptions["user"].toObject().isEmpty()
         || !credentialCreationOptions["residentKey"].isBool() || credentialCreationOptions["residentKey"].isUndefined()
@@ -74,7 +75,7 @@ bool PasskeyUtils::checkCredentialCreationOptions(const QJsonObject& credentialC
 // Basic check for the object that it contains necessary variables in a correct form
 bool PasskeyUtils::checkCredentialAssertionOptions(const QJsonObject& assertionOptions) const
 {
-    if (!assertionOptions["clientDataJson"].isObject() || assertionOptions["clientDataJson"].toObject().isEmpty()
+    if (!assertionOptions["clientDataJson"].isString() || assertionOptions["clientDataJson"].toString().isEmpty()
         || !assertionOptions["rpId"].isString() || assertionOptions["rpId"].toString().isEmpty()
         || !assertionOptions["userPresence"].isBool() || assertionOptions["userPresence"].isUndefined()
         || !assertionOptions["userVerification"].isBool() || assertionOptions["userVerification"].isUndefined()) {
@@ -109,12 +110,15 @@ int PasskeyUtils::validateRpId(const QJsonValue& rpIdValue, const QString& effec
         return ERROR_PASSKEYS_DOMAIN_RPID_MISMATCH;
     }
 
-    if (rpIdValue.isUndefined()) {
-        return ERROR_PASSKEYS_DOMAIN_RPID_MISMATCH;
-    }
-
     if (effectiveDomain.isEmpty()) {
         return ERROR_PASSKEYS_ORIGIN_NOT_ALLOWED;
+    }
+
+    //  The RP ID defaults to being the caller's origin's effective domain unless the caller has explicitly set
+    //  options.rp.id
+    if (rpIdValue.isUndefined() || rpIdValue.isNull()) {
+        *result = effectiveDomain;
+        return PASSKEYS_SUCCESS;
     }
 
     const auto rpId = rpIdValue.toString();
@@ -154,18 +158,19 @@ QJsonArray PasskeyUtils::parseCredentialTypes(const QJsonArray& credentialTypes)
         }));
     } else {
         for (const auto current : credentialTypes) {
-            if (current["type"] != BrowserPasskeys::PUBLIC_KEY || current["alg"].isUndefined()) {
+            const auto currentObject = current.toObject();
+            if (currentObject["type"] != BrowserPasskeys::PUBLIC_KEY || currentObject["alg"].isUndefined()) {
                 continue;
             }
 
-            const auto currentAlg = current["alg"].toInt();
+            const auto currentAlg = currentObject["alg"].toInt();
             if (currentAlg != WebAuthnAlgorithms::ES256 && currentAlg != WebAuthnAlgorithms::RS256
                 && currentAlg != WebAuthnAlgorithms::EDDSA) {
                 continue;
             }
 
             credTypesAndPubKeyAlgs.push_back(QJsonObject({
-                {"type", current["type"]},
+                {"type", currentObject["type"]},
                 {"alg", currentAlg},
             }));
         }
@@ -302,9 +307,8 @@ bool PasskeyUtils::isUserVerificationRequired(const QJsonObject& authenticatorSe
                && BrowserPasskeys::SUPPORT_USER_VERIFICATION);
 }
 
-QByteArray PasskeyUtils::buildExtensionData(QJsonObject& extensionObject) const
+ExtensionResult PasskeyUtils::buildExtensionData(QJsonObject& extensionObject) const
 {
-    // Only supports "credProps" and "uvm" for now
     const QStringList allowedKeys = {"credProps", "uvm"};
 
     // Remove unsupported keys
@@ -314,23 +318,46 @@ QByteArray PasskeyUtils::buildExtensionData(QJsonObject& extensionObject) const
         }
     }
 
+    // Create response object
+    QJsonObject extensionJSON;
+
+    // https://w3c.github.io/webauthn/#sctn-authenticator-credential-properties-extension
+    if (extensionObject.contains("credProps") && extensionObject["credProps"].toBool()) {
+        extensionJSON["credProps"] = QJsonObject({{"rk", true}});
+    }
+
+    // https://w3c.github.io/webauthn/#sctn-uvm-extension
+    if (extensionObject.contains("uvm") && extensionObject["uvm"].toBool()) {
+        QJsonArray uvmResponse;
+        QJsonArray uvmArray = {
+            1, // userVerificationMethod (USER_VERIFY_PRESENCE_INTERNAL "presence_internal", 0x00000001)
+            1, // keyProtectionType (KEY_PROTECTION_SOFTWARE "software", 0x0001)
+            1, // matcherProtectionType (MATCHER_PROTECTION_SOFTWARE "software", 0x0001)
+        };
+        uvmResponse.append(uvmArray);
+        extensionJSON["uvm"] = uvmResponse;
+    }
+
+    if (extensionJSON.isEmpty()) {
+        return {};
+    }
+
     auto extensionData = m_browserCbor.cborEncodeExtensionData(extensionObject);
     if (!extensionData.isEmpty()) {
-        return extensionData;
+        ExtensionResult result;
+        result.extensionData = extensionData;
+        result.extensionObject = extensionJSON;
+        return result;
     }
 
     return {};
 }
 
-QJsonObject PasskeyUtils::buildClientDataJson(const QJsonObject& publicKey, const QString& origin, bool get) const
+// Serialization order: https://w3c.github.io/webauthn/#clientdatajson-serialization
+QString PasskeyUtils::buildClientDataJson(const QJsonObject& publicKey, const QString& origin, bool get) const
 {
-    QJsonObject clientData;
-    clientData["challenge"] = publicKey["challenge"];
-    clientData["crossOrigin"] = false;
-    clientData["origin"] = origin;
-    clientData["type"] = get ? QString("webauthn.get") : QString("webauthn.create");
-
-    return clientData;
+    return QString("{\"type\":\"%1\",\"challenge\":\"%2\",\"origin\":\"%3\",\"crossOrigin\":false}")
+        .arg((get ? QString("webauthn.get") : QString("webauthn.create")), publicKey["challenge"].toString(), origin);
 }
 
 QStringList PasskeyUtils::getAllowedCredentialsFromAssertionOptions(const QJsonObject& assertionOptions) const
@@ -340,8 +367,10 @@ QStringList PasskeyUtils::getAllowedCredentialsFromAssertionOptions(const QJsonO
         const auto cred = credential.toObject();
         const auto id = cred["id"].toString();
         const auto transports = cred["transports"].toArray();
-        const auto hasSupportedTransport =
-            transports.isEmpty() || transports.contains(BrowserPasskeys::AUTHENTICATOR_TRANSPORT);
+        const auto hasSupportedTransport = transports.isEmpty()
+                                           || (transports.contains(BrowserPasskeys::AUTHENTICATOR_TRANSPORT_INTERNAL)
+                                               || transports.contains(BrowserPasskeys::AUTHENTICATOR_TRANSPORT_NFC)
+                                               || transports.contains(BrowserPasskeys::AUTHENTICATOR_TRANSPORT_USB));
 
         if (cred["type"].toString() == BrowserPasskeys::PUBLIC_KEY && hasSupportedTransport && !id.isEmpty()) {
             allowedCredentials << id;
@@ -349,4 +378,28 @@ QStringList PasskeyUtils::getAllowedCredentialsFromAssertionOptions(const QJsonO
     }
 
     return allowedCredentials;
+}
+
+// For compatibility with StrongBox (and other possible clients in the future)
+QString PasskeyUtils::getCredentialIdFromEntry(const Entry* entry) const
+{
+    if (!entry) {
+        return {};
+    }
+
+    return entry->attributes()->hasKey(EntryAttributes::KPEX_PASSKEY_GENERATED_USER_ID)
+               ? entry->attributes()->value(EntryAttributes::KPEX_PASSKEY_GENERATED_USER_ID)
+               : entry->attributes()->value(EntryAttributes::KPEX_PASSKEY_CREDENTIAL_ID);
+}
+
+// For compatibility with StrongBox (and other possible clients in the future)
+QString PasskeyUtils::getUsernameFromEntry(const Entry* entry) const
+{
+    if (!entry) {
+        return {};
+    }
+
+    return entry->attributes()->hasKey(EntryAttributes::KPXC_PASSKEY_USERNAME)
+               ? entry->attributes()->value(EntryAttributes::KPXC_PASSKEY_USERNAME)
+               : entry->attributes()->value(EntryAttributes::KPEX_PASSKEY_USERNAME);
 }

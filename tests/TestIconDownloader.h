@@ -1,6 +1,6 @@
 /*
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2011 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@ class TestIconDownloader : public QObject
     Q_OBJECT
 
 private slots:
+    void initTestCase();
     void testIconDownloader();
     void testIconDownloader_data();
 };

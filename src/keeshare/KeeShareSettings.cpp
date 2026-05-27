@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -25,7 +25,6 @@
 #include "gui/DatabaseIcons.h"
 
 #include <QDataStream>
-#include <QTextCodec>
 #include <QXmlStreamWriter>
 
 #include <botan/data_src.h>
@@ -41,7 +40,6 @@ namespace KeeShareSettings
             QString buffer;
             QXmlStreamWriter writer(&buffer);
 
-            writer.setCodec(QTextCodec::codecForName("UTF-8"));
             writer.writeStartDocument();
             writer.writeStartElement("KeeShare");
             specific(writer);
@@ -53,7 +51,7 @@ namespace KeeShareSettings
         void xmlDeserialize(const QString& raw, std::function<void(QXmlStreamReader& reader)> specific)
         {
             QXmlStreamReader reader(raw);
-            if (!reader.readNextStartElement() || reader.qualifiedName() != "KeeShare") {
+            if (!reader.readNextStartElement() || reader.qualifiedName().toString() != "KeeShare") {
                 return;
             }
             specific(reader);
@@ -106,9 +104,9 @@ namespace KeeShareSettings
     {
         Certificate certificate;
         while (!reader.error() && reader.readNextStartElement()) {
-            if (reader.name() == "Signer") {
+            if (reader.name().toString() == "Signer") {
                 certificate.signer = reader.readElementText();
-            } else if (reader.name() == "Key") {
+            } else if (reader.name().toString() == "Key") {
                 auto rawKey = QByteArray::fromBase64(reader.readElementText().toLatin1());
                 if (!rawKey.isEmpty()) {
                     try {
@@ -200,12 +198,12 @@ namespace KeeShareSettings
         Active active;
         xmlDeserialize(raw, [&](QXmlStreamReader& reader) {
             while (!reader.error() && reader.readNextStartElement()) {
-                if (reader.name() == "Active") {
+                if (reader.name().toString() == "Active") {
                     while (reader.readNextStartElement()) {
-                        if (reader.name() == "Import") {
+                        if (reader.name().toString() == "Import") {
                             active.in = true;
                             reader.skipCurrentElement();
-                        } else if (reader.name() == "Export") {
+                        } else if (reader.name().toString() == "Export") {
                             active.out = true;
                             reader.skipCurrentElement();
                         } else {
@@ -213,7 +211,7 @@ namespace KeeShareSettings
                         }
                     }
                 } else {
-                    qWarning("Unknown KeeShareSettings element %s", qPrintable(reader.name().toString()));
+                    qDebug("Unknown KeeShareSettings element %s", qPrintable(reader.name().toString()));
                     reader.skipCurrentElement();
                 }
             }
@@ -248,12 +246,12 @@ namespace KeeShareSettings
         Own own;
         xmlDeserialize(raw, [&](QXmlStreamReader& reader) {
             while (!reader.error() && reader.readNextStartElement()) {
-                if (reader.name() == "PrivateKey") {
+                if (reader.name().toString() == "PrivateKey") {
                     own.key = Key::deserialize(reader);
-                } else if (reader.name() == "PublicKey") {
+                } else if (reader.name().toString() == "PublicKey") {
                     own.certificate = Certificate::deserialize(reader);
                 } else {
-                    qWarning("Unknown KeeShareSettings element %s", qPrintable(reader.name().toString()));
+                    qDebug("Unknown KeeShareSettings element %s", qPrintable(reader.name().toString()));
                     reader.skipCurrentElement();
                 }
             }
@@ -262,8 +260,7 @@ namespace KeeShareSettings
     }
 
     Reference::Reference()
-        : type(Inactive)
-        , uuid(QUuid::createUuid())
+        : uuid(QUuid::createUuid())
     {
     }
 
@@ -320,34 +317,45 @@ namespace KeeShareSettings
             writer.writeStartElement("Password");
             writer.writeCharacters(reference.password.toUtf8().toBase64());
             writer.writeEndElement();
+            writer.writeStartElement("KeepGroups");
+            writer.writeCharacters(reference.keepGroups ? "True" : "False");
+            writer.writeEndElement();
         });
     }
 
     Reference Reference::deserialize(const QString& raw)
     {
+        if (raw.isEmpty()) {
+            return {};
+        }
+
         Reference reference;
+        // If KeepGroups is not present, default to false for backward compatibility
+        reference.keepGroups = false;
         xmlDeserialize(raw, [&](QXmlStreamReader& reader) {
             while (!reader.error() && reader.readNextStartElement()) {
-                if (reader.name() == "Type") {
+                if (reader.name().toString() == "Type") {
                     while (reader.readNextStartElement()) {
-                        if (reader.name() == "Import") {
+                        if (reader.name().toString() == "Import") {
                             reference.type |= ImportFrom;
                             reader.skipCurrentElement();
-                        } else if (reader.name() == "Export") {
+                        } else if (reader.name().toString() == "Export") {
                             reference.type |= ExportTo;
                             reader.skipCurrentElement();
                         } else {
                             break;
                         }
                     }
-                } else if (reader.name() == "Group") {
+                } else if (reader.name().toString() == "Group") {
                     reference.uuid = QUuid::fromRfc4122(QByteArray::fromBase64(reader.readElementText().toLatin1()));
-                } else if (reader.name() == "Path") {
+                } else if (reader.name().toString() == "Path") {
                     reference.path = QString::fromUtf8(QByteArray::fromBase64(reader.readElementText().toLatin1()));
-                } else if (reader.name() == "Password") {
+                } else if (reader.name().toString() == "Password") {
                     reference.password = QString::fromUtf8(QByteArray::fromBase64(reader.readElementText().toLatin1()));
+                } else if (reader.name().toString() == "KeepGroups") {
+                    reference.keepGroups = reader.readElementText().compare("True") == 0;
                 } else {
-                    qWarning("Unknown Reference element %s", qPrintable(reader.name().toString()));
+                    qDebug("Unknown Reference element %s", qPrintable(reader.name().toString()));
                     reader.skipCurrentElement();
                 }
             }
@@ -363,7 +371,11 @@ namespace KeeShareSettings
 
         // Extract RSA key data to serialize an ssh-rsa public key.
         // ssh-rsa keys are currently not built into Botan
-        const auto rsaKey = static_cast<Botan::RSA_PrivateKey*>(sign.certificate.key.data());
+        // need a dynamic_cast here, because the base class is virtual
+        const auto rsaKey = dynamic_cast<Botan::RSA_PrivateKey*>(sign.certificate.key.data());
+        if (!rsaKey) {
+            return {};
+        }
 
         std::vector<uint8_t> rsaE(rsaKey->get_e().bytes());
         rsaKey->get_e().binary_encode(rsaE.data());

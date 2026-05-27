@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -53,10 +53,14 @@ public slots:
     void calculateBrowserStatistics();
     void emitEntryActivated(const QModelIndex& index);
     void customMenuRequested(QPoint);
+    QList<Entry*> getSelectedEntries();
+    void expireSelectedEntries();
     void deleteSelectedEntries();
+    void deletePluginDataFromSelectedEntries();
 
 private:
     void addStatisticsRow(bool hasUrls, bool hasSettings, Group*, Entry*, bool);
+    QList<Entry*> getSelectedEntries() const;
     QMap<QString, QStringList> getBrowserConfigFromEntry(Entry* entry) const;
 
     QScopedPointer<Ui::ReportsWidgetBrowserStatistics> m_ui;

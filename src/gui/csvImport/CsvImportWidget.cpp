@@ -17,6 +17,7 @@
  */
 
 #include "CsvImportWidget.h"
+
 #include "ui_CsvImportWidget.h"
 
 #include "core/Clock.h"
@@ -25,6 +26,7 @@
 #include "core/Totp.h"
 #include "format/CsvParser.h"
 #include "format/KeePass2Writer.h"
+#include "gui/MessageBox.h"
 #include "gui/csvImport/CsvParserModel.h"
 
 #include <QStringListModel>
@@ -32,16 +34,18 @@
 namespace
 {
     // Extract group names from nested path and return the last group created
-    Group* createGroupStructure(Database* db, const QString& groupPath)
+    Group* createGroupStructure(Database* db, const QString& groupPath, const QString& rootGroupToSkip)
     {
         auto group = db->rootGroup();
         if (!group || groupPath.isEmpty()) {
             return group;
         }
 
-        auto nameList = groupPath.split("/", QString::SkipEmptyParts);
-        // Skip over first group name if root
-        if (nameList.first().compare("root", Qt::CaseInsensitive)) {
+        auto nameList = groupPath.split("/", Qt::SkipEmptyParts);
+
+        // Skip the identified root group name if present
+        if (!rootGroupToSkip.isEmpty() && !nameList.isEmpty()
+            && nameList.first().compare(rootGroupToSkip, Qt::CaseInsensitive) == 0) {
             nameList.removeFirst();
         }
 
@@ -73,18 +77,14 @@ CsvImportWidget::CsvImportWidget(QWidget* parent)
     m_ui->tableViewFields->setFocusPolicy(Qt::NoFocus);
 
     m_columnHeader << QObject::tr("Group") << QObject::tr("Title") << QObject::tr("Username") << QObject::tr("Password")
-                   << QObject::tr("URL") << QObject::tr("Notes") << QObject::tr("TOTP") << QObject::tr("Icon")
-                   << QObject::tr("Last Modified") << QObject::tr("Created");
+                   << QObject::tr("URL") << QObject::tr("Tags") << QObject::tr("Notes") << QObject::tr("TOTP")
+                   << QObject::tr("Icon") << QObject::tr("Last Modified") << QObject::tr("Created");
 
-    m_fieldSeparatorList << ","
-                         << ";"
-                         << "-"
-                         << ":"
-                         << "."
-                         << "\t";
+    m_fieldSeparatorList << "," << ";" << "-" << ":" << "." << "\t";
 
     m_combos << m_ui->groupCombo << m_ui->titleCombo << m_ui->usernameCombo << m_ui->passwordCombo << m_ui->urlCombo
-             << m_ui->notesCombo << m_ui->totpCombo << m_ui->iconCombo << m_ui->lastModifiedCombo << m_ui->createdCombo;
+             << m_ui->tagsCombo << m_ui->notesCombo << m_ui->totpCombo << m_ui->iconCombo << m_ui->lastModifiedCombo
+             << m_ui->createdCombo;
 
     for (auto combo : m_combos) {
         combo->setModel(m_comboModel);
@@ -149,6 +149,13 @@ void CsvImportWidget::updatePreview()
     m_ui->spinBoxSkip->setRange(minSkip, qMax(minSkip, m_parserModel->rowCount() - 1));
     m_ui->spinBoxSkip->setValue(minSkip);
 
+    // Store the previous column information for comparison later
+    auto prevColumns = m_comboModel->stringList();
+    QList<int> prevComboIndexes;
+    for (auto combo : m_combos) {
+        prevComboIndexes << combo->currentIndex();
+    }
+
     QStringList csvColumns(tr("Not Present"));
     auto parser = m_parserModel->parser();
     for (int i = 0; i < parser->getCsvCols(); ++i) {
@@ -163,6 +170,8 @@ void CsvImportWidget::updatePreview()
             csvColumns << QString(tr("Column %1").arg(i));
         }
     }
+    // Before setting new columns, see if they changed
+    bool newColumns = prevColumns != csvColumns;
     m_comboModel->setStringList(csvColumns);
 
     // Try to match named columns to the combo boxes
@@ -181,9 +190,10 @@ void CsvImportWidget::updatePreview()
                 break;
             }
         }
-        // Named column not found, default to "Not Present"
+        // Named column not found, default to "Not Present" or previous index
         if (!found) {
-            m_combos.at(i)->setCurrentIndex(0);
+            auto idx = newColumns ? 0 : prevComboIndexes.at(i);
+            m_combos.at(i)->setCurrentIndex(idx);
         }
     }
 
@@ -200,32 +210,64 @@ void CsvImportWidget::load(const QString& filename)
 
 void CsvImportWidget::parse()
 {
-    configParser();
+    // Hide any previous messages
+    emit message("");
+
     QApplication::setOverrideCursor(Qt::WaitCursor);
     QApplication::processEvents();
-    bool good = m_parserModel->parse();
-    updatePreview();
-    QApplication::restoreOverrideCursor();
-    if (!good) {
+
+    configParser();
+    if (!m_parserModel->parse()) {
         emit message(tr("Failed to parse CSV file: %1").arg(formatStatusText()));
     }
+    updatePreview();
+
+    QApplication::restoreOverrideCursor();
 }
 
 QSharedPointer<Database> CsvImportWidget::buildDatabase()
 {
+    // Warn if the title column wasn't specified
+    if (m_combos[1]->currentIndex() == 0) {
+        auto ans = MessageBox::question(
+            this,
+            tr("No Title Selected"),
+            tr("No title column was selected, entries will be hard to tell apart.\nAre you sure you want to import?"),
+            MessageBox::Continue | MessageBox::Cancel);
+        if (ans == MessageBox::Cancel) {
+            return {};
+        }
+    }
+
     auto db = QSharedPointer<Database>::create();
     db->rootGroup()->setNotes(tr("Imported from CSV file: %1").arg(m_filename));
 
-    for (int r = 0; r < m_parserModel->rowCount(); ++r) {
-        // use validity of second column as a GO/NOGO for all others fields
-        if (!m_parserModel->data(m_parserModel->index(r, 1)).isValid()) {
-            continue;
+    auto rows = m_parserModel->rowCount() - m_parserModel->skippedRows();
+
+    // Check for common root group
+    QString rootGroupName;
+    for (int r = 0; r < rows; ++r) {
+        auto groupPath = m_parserModel->data(m_parserModel->index(r, 0)).toString();
+        auto groupName = groupPath.mid(0, groupPath.indexOf('/'));
+        if (!rootGroupName.isNull() && rootGroupName != groupName) {
+            rootGroupName.clear();
+            break;
         }
-        auto group = createGroupStructure(db.data(), m_parserModel->data(m_parserModel->index(r, 0)).toString());
+        rootGroupName = groupName;
+    }
+
+    if (!rootGroupName.isEmpty()) {
+        db->rootGroup()->setName(rootGroupName);
+    }
+
+    for (int r = 0; r < rows; ++r) {
+        auto group =
+            createGroupStructure(db.data(), m_parserModel->data(m_parserModel->index(r, 0)).toString(), rootGroupName);
         if (!group) {
             continue;
         }
 
+        // Standard entry fields
         auto entry = new Entry();
         entry->setUuid(QUuid::createUuid());
         entry->setGroup(group);
@@ -233,9 +275,11 @@ QSharedPointer<Database> CsvImportWidget::buildDatabase()
         entry->setUsername(m_parserModel->data(m_parserModel->index(r, 2)).toString());
         entry->setPassword(m_parserModel->data(m_parserModel->index(r, 3)).toString());
         entry->setUrl(m_parserModel->data(m_parserModel->index(r, 4)).toString());
-        entry->setNotes(m_parserModel->data(m_parserModel->index(r, 5)).toString());
+        entry->setTags(m_parserModel->data(m_parserModel->index(r, 5)).toString());
+        entry->setNotes(m_parserModel->data(m_parserModel->index(r, 6)).toString());
 
-        auto otpString = m_parserModel->data(m_parserModel->index(r, 6));
+        // TOTP
+        auto otpString = m_parserModel->data(m_parserModel->index(r, 7));
         if (otpString.isValid() && !otpString.toString().isEmpty()) {
             auto totp = Totp::parseSettings(otpString.toString());
             if (!totp || totp->key.isEmpty()) {
@@ -245,15 +289,17 @@ QSharedPointer<Database> CsvImportWidget::buildDatabase()
             entry->setTotp(totp);
         }
 
+        // Icon
         bool ok;
-        int icon = m_parserModel->data(m_parserModel->index(r, 7)).toInt(&ok);
+        int icon = m_parserModel->data(m_parserModel->index(r, 8)).toInt(&ok);
         if (ok) {
             entry->setIcon(icon);
         }
 
+        // Modified Time
         TimeInfo timeInfo;
-        if (m_parserModel->data(m_parserModel->index(r, 8)).isValid()) {
-            auto datetime = m_parserModel->data(m_parserModel->index(r, 8)).toString();
+        if (m_parserModel->data(m_parserModel->index(r, 9)).isValid()) {
+            auto datetime = m_parserModel->data(m_parserModel->index(r, 9)).toString();
             if (datetime.contains(QRegularExpression("^\\d+$"))) {
                 auto t = datetime.toLongLong();
                 if (t <= INT32_MAX) {
@@ -270,8 +316,9 @@ QSharedPointer<Database> CsvImportWidget::buildDatabase()
                 }
             }
         }
-        if (m_parserModel->data(m_parserModel->index(r, 9)).isValid()) {
-            auto datetime = m_parserModel->data(m_parserModel->index(r, 9)).toString();
+        // Creation Time
+        if (m_parserModel->data(m_parserModel->index(r, 10)).isValid()) {
+            auto datetime = m_parserModel->data(m_parserModel->index(r, 10)).toString();
             if (datetime.contains(QRegularExpression("^\\d+$"))) {
                 auto t = datetime.toLongLong();
                 if (t <= INT32_MAX) {

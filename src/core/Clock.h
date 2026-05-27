@@ -41,6 +41,8 @@ public:
     static QDateTime parse(const QString& text, Qt::DateFormat format = Qt::TextDate);
     static QDateTime parse(const QString& text, const QString& format);
 
+    static QString toString(const QDateTime& dateTime);
+
     virtual ~Clock();
 
 protected:

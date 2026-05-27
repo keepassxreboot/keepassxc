@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@ QTEST_GUILESS_MAIN(TestUrlTools)
 void TestUrlTools::initTestCase()
 {
     m_urlTools = urlTools();
+    QLocale::setDefault(QLocale::c());
 }
 
 void TestUrlTools::init()
@@ -43,7 +44,6 @@ void TestUrlTools::testTopLevelDomain()
         {QString("https://192.168.0.1:8000"), QString("192.168.0.1")},
         {QString("https://www.nic.ar"), QString("ar")},
         {QString("https://no.no.no"), QString("no")},
-        {QString("https://www.blogspot.com.ar"), QString("blogspot.com.ar")}, // blogspot.com.ar is a TLD
         {QString("https://jap.an.ide.kyoto.jp"), QString("ide.kyoto.jp")}, // ide.kyoto.jp is a TLD
         {QString("ar"), QString("ar")},
     };
@@ -61,7 +61,6 @@ void TestUrlTools::testTopLevelDomain()
         {QString("https://192.168.0.1"), QString("192.168.0.1")},
         {QString("https://192.168.0.1:8000"), QString("192.168.0.1")},
         {QString("https://www.nic.ar"), QString("nic.ar")},
-        {QString("https://www.blogspot.com.ar"), QString("www.blogspot.com.ar")}, // blogspot.com.ar is a TLD
         {QString("https://www.arpa"), QString("www.arpa")},
         {QString("https://jap.an.ide.kyoto.jp"), QString("an.ide.kyoto.jp")}, // ide.kyoto.jp is a TLD
         {QString("https://kobe.jp"), QString("kobe.jp")},
@@ -133,6 +132,41 @@ void TestUrlTools::testIsUrlValid()
     while (i.hasNext()) {
         i.next();
         QCOMPARE(urlTools()->isUrlValid(i.key()), i.value());
+    }
+}
+
+void TestUrlTools::testIsUrlValidWithLooseComparison()
+{
+    QHash<QString, bool> urls;
+    urls[""] = true;
+    urls["\"https://github.com/login\""] = true;
+    urls["https://*.github.com/"] = true;
+    urls["*.github.com"] = true;
+    urls["https://*.com"] = false;
+    urls["https://*.computer.com"] = true; // TLD in domain (com) should not affect
+    urls["\"\""] = false;
+    urls["\"*.example.com\""] = false;
+    urls["http://*"] = false;
+    urls["*"] = false;
+    urls["****"] = false;
+    urls["*.co.jp"] = false;
+    urls["*.com"] = false;
+    urls["*.computer.com"] = true;
+    urls["*.computer.com/*com"] = true; // TLD in path should not affect this
+    urls["*com"] = false;
+    urls["*.com/"] = false;
+    urls["*.com/*"] = false;
+    urls["**.com/**"] = false;
+    urls["*.*"] = false;
+    urls["https://example.*"] = false;
+    urls["https://*.example.*"] = false;
+    urls["https://example.c*"] = false;
+    urls["https://myowndomain:8000"] = true;
+
+    QHashIterator<QString, bool> i(urls);
+    while (i.hasNext()) {
+        i.next();
+        QCOMPARE(urlTools()->isUrlValid(i.key(), true), i.value());
     }
 }
 

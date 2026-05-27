@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>374</width>
     <height>348</height>
    </rect>
   </property>
@@ -26,7 +26,7 @@
    <item>
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>These settings affect to the entry's behaviour with the browser extension.</string>
+      <string>These settings affect the entry's behaviour with the browser extension.</string>
      </property>
     </widget>
    </item>
@@ -63,7 +63,7 @@
       <item>
        <widget class="QCheckBox" name="onlyHttpAuthCheckbox">
         <property name="toolTip">
-         <string>Only send this setting to the browser for HTTP Auth dialogs. If enabled, normal login forms will not show this entry for selection.</string>
+         <string>Only send this entry to the browser for HTTP Auth dialogs. If enabled, normal login forms will not show this entry for selection.</string>
         </property>
         <property name="text">
          <string>Use this entry only with HTTP Basic Auth</string>
@@ -73,7 +73,7 @@
       <item>
        <widget class="QCheckBox" name="notHttpAuthCheckbox">
         <property name="toolTip">
-         <string>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</string>
+         <string>Do not send this entry to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</string>
         </property>
         <property name="text">
          <string>Do not use this entry with HTTP Basic Auth</string>
@@ -86,7 +86,7 @@
    <item>
     <widget class="QGroupBox" name="groupBox_3">
      <property name="title">
-      <string>Additional URL's</string>
+      <string>Additional URLs</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_1">
       <item>

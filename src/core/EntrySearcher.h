@@ -41,6 +41,7 @@ public:
         Group,
         Tag,
         Is,
+        Has,
         Uuid
     };
 

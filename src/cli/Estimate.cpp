@@ -18,15 +18,14 @@
 #include "Estimate.h"
 
 #include "Utils.h"
+#include "core/Global.h"
 #include "core/PasswordHealth.h"
 
 #include <QCommandLineParser>
 #include <zxcvbn.h>
 
 const QCommandLineOption Estimate::AdvancedOption =
-    QCommandLineOption(QStringList() << "a"
-                                     << "advanced",
-                       QObject::tr("Perform advanced analysis on the password."));
+    QCommandLineOption(QStringList() << "a" << "advanced", QObject::tr("Perform advanced analysis on the password."));
 
 Estimate::Estimate()
 {
@@ -47,7 +46,7 @@ static void estimate(const char* pwd, bool advanced)
         // clang-format off
         out << QObject::tr("Length %1").arg(len, 0) << '\t'
             << QObject::tr("Entropy %1").arg(e, 0, 'f', 3) << '\t'
-            << QObject::tr("Log10 %1").arg(e * 0.301029996, 0, 'f', 3) << endl;
+            << QObject::tr("Log10 %1").arg(e * 0.301029996, 0, 'f', 3) << Qt::endl;
         // clang-format on
     } else {
         int pwdLen = 0;
@@ -62,7 +61,7 @@ static void estimate(const char* pwd, bool advanced)
         out << QObject::tr("Length %1").arg(len) << '\t'
             << QObject::tr("Entropy %1").arg(e, 0, 'f', 3) << '\t'
             << QObject::tr("Log10 %1").arg(e * 0.301029996, 0, 'f', 3) << "\n  "
-            << QObject::tr("Multi-word extra bits %1").arg(m, 0, 'f', 1) << endl;
+            << QObject::tr("Multi-word extra bits %1").arg(m, 0, 'f', 1) << Qt::endl;
         // clang-format on
         p = info;
         pwdLen = 0;
@@ -135,13 +134,13 @@ static void estimate(const char* pwd, bool advanced)
             for (n = 0; n < p->Length; ++n, ++pwd) {
                 out << *pwd;
             }
-            out << endl;
+            out << Qt::endl;
             p = p->Next;
         }
         ZxcvbnFreeInfo(info);
         if (pwdLen != len) {
             out << QObject::tr("*** Password length (%1) != sum of length of parts (%2) ***").arg(len).arg(pwdLen)
-                << endl;
+                << Qt::endl;
         }
     }
 }

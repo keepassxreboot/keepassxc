@@ -128,11 +128,11 @@
     </message>
     <message>
         <source>SSH_AUTH_SOCK override</source>
-        <translation>SSH_AUTH_SOCK åsidosättning</translation>
+        <translation>SSH_AUTH_SOCK-åsidosättning</translation>
     </message>
     <message>
         <source>SSH_AUTH_SOCK value</source>
-        <translation>SSH_AUTH_SOCK värde</translation>
+        <translation>SSH_AUTH_SOCK-värde</translation>
     </message>
     <message>
         <source>(empty)</source>
@@ -140,11 +140,11 @@
     </message>
     <message>
         <source>SSH_SK_PROVIDER value</source>
-        <translation>SSH_SK_PROVIDER värde</translation>
+        <translation>SSH_SK_PROVIDER-värde</translation>
     </message>
     <message>
         <source>SSH_SK_PROVIDER override</source>
-        <translation>SSH_SK_PROVIDER åsidosättning</translation>
+        <translation>SSH_SK_PROVIDER-åsidosättning</translation>
     </message>
     <message>
         <source>No SSH Agent socket available. Either make sure SSH_AUTH_SOCK environment variable exists or set an override.</source>
@@ -218,16 +218,48 @@
         <translation>Du måste starta om programmet för att tillämpa det nya språket. Vill du starta om nu?</translation>
     </message>
     <message>
-        <source>Reset Settings?</source>
-        <translation>Vill du återställa inställningarna?</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to reset all general and security settings to default?</source>
-        <translation>Vill du verkligen återställa alla allmäna och säkerhetsinställningar till standardinställning?</translation>
-    </message>
-    <message>
         <source>Select backup storage directory</source>
         <translation>Välj lagringsplats för säkerhetskopior</translation>
+    </message>
+    <message>
+        <source>Confirm Reset</source>
+        <translation>Bekräfta återställning</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to reset all settings to default?</source>
+        <translation>Vill du verkligen återställa alla inställningar till standardinställning?</translation>
+    </message>
+    <message>
+        <source>Import KeePassXC Settings</source>
+        <translation>Importera KeePassXC-inställningar</translation>
+    </message>
+    <message>
+        <source>Failed to import settings from %1, not a valid settings file.</source>
+        <translation>Kunde inte importera inställningar från %1, ingen giltig inställningsfil.</translation>
+    </message>
+    <message>
+        <source>Export KeePassXC Settings</source>
+        <translation>Exportera KeePassXC-inställningar</translation>
+    </message>
+    <message>
+        <source>Small</source>
+        <translation>Liten</translation>
+    </message>
+    <message>
+        <source>Normal</source>
+        <translation>Normal</translation>
+    </message>
+    <message>
+        <source>Medium</source>
+        <translation>Medium</translation>
+    </message>
+    <message>
+        <source>Large</source>
+        <translation>Stor</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation>Anpassad</translation>
     </message>
 </context>
 <context>
@@ -262,7 +294,7 @@
     </message>
     <message>
         <source> recent files</source>
-        <translation>tidigare filer</translation>
+        <translation> tidigare filer</translation>
     </message>
     <message>
         <source>Load previously open databases on startup</source>
@@ -279,25 +311,6 @@
     <message>
         <source>Include beta releases when checking for updates</source>
         <translation>Inkludera betaversioner vid sökning efter uppdateringar</translation>
-    </message>
-    <message>
-        <source>On database unlock, show entries that </source>
-        <translation>Vid databasupplåsning, visa poster som</translation>
-    </message>
-    <message>
-        <source>have expired</source>
-        <comment>On database unlock, show entries that...</comment>
-        <translation>har upphört att gälla</translation>
-    </message>
-    <message>
-        <source> days</source>
-        <comment>On database unlock, show entries that will expire within %1 days</comment>
-        <translation>dagar</translation>
-    </message>
-    <message>
-        <source>will expire within </source>
-        <comment>On database unlock, show entries that...</comment>
-        <translation>löper ut inom</translation>
     </message>
     <message>
         <source>File Management</source>
@@ -324,20 +337,8 @@
         <translation>Säkerhetskopiera databasfilen innan den sparas</translation>
     </message>
     <message>
-        <source>Backup destination</source>
-        <translation>Säkerhetskopieringsmål</translation>
-    </message>
-    <message>
-        <source>Specifies the database backup file location. Occurrences of &quot;{DB_FILENAME}&quot; are replaced with the filename of the saved database without extension. {TIME:&lt;format&gt;} is replaced with the backup time, see https://doc.qt.io/qt-5/qdatetime.html#toString. &lt;format&gt; defaults to format string &quot;dd_MM_yyyy_hh-mm-ss&quot;.</source>
-        <translation>Anger platsen för databasens säkerhetskopia. Förekomster av {DB_FILENAME}&quot; ersätts med filnamnet för den sparade databasen utan filtillägg. {TIME:&lt;format&gt;} ersätts med säkerhetskopieringstiden, se https://doc.qt.io/qt-5/qdatetime.html#toString. &lt;format&gt; standard för att formatera strängen &quot;dd_MM_yyyy_hh-mm-ss&quot;.</translation>
-    </message>
-    <message>
         <source>{DB_FILENAME}.old.kdbx</source>
         <translation>{DB_FILENAME}.old.kdbx</translation>
-    </message>
-    <message>
-        <source>Choose...</source>
-        <translation>Välj...</translation>
     </message>
     <message>
         <source>Use alternative saving method (may solve problems with Dropbox, Google Drive, GVFS, etc.)</source>
@@ -345,7 +346,7 @@
     </message>
     <message>
         <source>Temporary file moved into place</source>
-        <translation>Temporär fil flyttat på plats</translation>
+        <translation>Temporär fil flyttad på plats</translation>
     </message>
     <message>
         <source>Directly write to database file (dangerous)</source>
@@ -446,7 +447,7 @@
     </message>
     <message>
         <source>Reset settings to default…</source>
-        <translation>Återställ inställningarna till standard...</translation>
+        <translation>Återställ inställningarna till standard…</translation>
     </message>
     <message>
         <source>Auto-Type</source>
@@ -505,6 +506,79 @@
         <source>Remember last typed entry for:</source>
         <translation>Kom ihåg senast inmatade post för:</translation>
     </message>
+    <message>
+        <source>On database unlock, show entries that will expire within</source>
+        <translation>Vid databasupplåsning, visa poster som förfaller inom</translation>
+    </message>
+    <message>
+        <source>On database unlock, show entries that will expire within </source>
+        <translation>Vid databasupplåsning, visa poster som förfaller inom</translation>
+    </message>
+    <message>
+        <source> days</source>
+        <comment>number of days warning for password expiration</comment>
+        <translation> dagar</translation>
+    </message>
+    <message>
+        <source>Destination format:</source>
+        <translation>Målformat:</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;{DB_FILENAME}&lt;/span&gt; is replaced with the filename of the saved database without extension&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;{TIME:&amp;lt;format&amp;gt;}&lt;/span&gt; is replaced with the specified time format (default: dd_MM_yyyy_hh-mm-ss)&lt;/p&gt;&lt;p&gt;See the User Guide for more details&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;{DB_FILENAME}&lt;/span&gt; är ersatt av filnamnet för den sparade database utan filnamnstillägg.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;{TIME:&amp;lt;format&amp;gt;}&lt;/span&gt; år ersatt av specificerat tidsformat (standard: dd_MM_yyyy_hh-mm-ss).&lt;/p&gt;&lt;p&gt;Se användarmanualen för fler detaljer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>Choose folder...</source>
+        <translation>Välj mapp...</translation>
+    </message>
+    <message>
+        <source>Show confirmation before moving entries to recycle bin</source>
+        <translation>Visa bekräftelse innan poster flyttas till papperskorgen</translation>
+    </message>
+    <message>
+        <source>Copy data on double clicking field in entry view</source>
+        <translation>Kopiera data vid dubbelklick på fält i postvyn</translation>
+    </message>
+    <message>
+        <source>Show toolbar</source>
+        <translation>Visa verktygsfält</translation>
+    </message>
+    <message>
+        <source>Show the menu bar by pressing the Alt key</source>
+        <translation>Visa menyfältet genom att trycka på Alt-tangenten</translation>
+    </message>
+    <message>
+        <source>Show menubar</source>
+        <translation>Visa menyfält</translation>
+    </message>
+    <message>
+        <source>Import settings…</source>
+        <translation>Importera inställningar…</translation>
+    </message>
+    <message>
+        <source>Export settings…</source>
+        <translation>Exportera inställningar…</translation>
+    </message>
+    <message>
+        <source>Open browser on double clicking URL field in entry view</source>
+        <translation>Öppna webbläsare vid dubbelklick på URL i postvyn</translation>
+    </message>
+    <message>
+        <source>Font size:</source>
+        <translation>Teckenstorlek:</translation>
+    </message>
+    <message>
+        <source>Font size selection</source>
+        <translation>Teckenstorleksval</translation>
+    </message>
+    <message>
+        <source>Skip confirmation for main window Auto-Type actions</source>
+        <translation>Hoppa över bekräftelse för automatiska skrivåtgärder i huvudfönstret</translation>
+    </message>
+    <message>
+        <source>Auto-generate password for new entries</source>
+        <translation>Generera lösenord automatiskt för nya poster</translation>
+    </message>
 </context>
 <context>
     <name>ApplicationSettingsWidgetSecurity</name>
@@ -559,10 +633,6 @@
         <translation>Lås databaserna när fönstret minimeras</translation>
     </message>
     <message>
-        <source>Require password repeat when it is visible</source>
-        <translation>Kräv lösenordsupprepning när det är synligt</translation>
-    </message>
-    <message>
         <source>Hide passwords when editing them</source>
         <translation>Dölj lösenord när de redigeras</translation>
     </message>
@@ -575,18 +645,6 @@
         <translation>Dölj lösenord i förhandsgranskningsrutan</translation>
     </message>
     <message>
-        <source>Hide entry notes by default</source>
-        <translation>Dölj posters anteckningar som standard</translation>
-    </message>
-    <message>
-        <source>Move entries to recycle bin without confirmation</source>
-        <translation>Flytta poster till papperskorgen utan bekräftelse</translation>
-    </message>
-    <message>
-        <source>Enable double click to copy the username/password entry columns</source>
-        <translation>Aktivera dubbelklick för att kopiera kolumnerna för användarnamn/lösenord</translation>
-    </message>
-    <message>
         <source>Privacy</source>
         <translation>Integritet</translation>
     </message>
@@ -597,6 +655,29 @@
     <message>
         <source>Hide TOTP in the entry preview panel</source>
         <translation>Dölj TOTP i förhandsgranskningspanelen</translation>
+    </message>
+    <message>
+        <source>Lock databases when switching user</source>
+        <translation>Lås databaserna vid byte av användare</translation>
+    </message>
+    <message>
+        <source>Lock Options</source>
+        <translation>Låsningsalternativ</translation>
+    </message>
+    <message>
+        <source>Hide notes in the entry preview panel</source>
+        <translation>Dölj anteckningar posters förhandgranskningspanel</translation>
+    </message>
+</context>
+<context>
+    <name>AttachmentWidget</name>
+    <message>
+        <source>Attachment Viewer</source>
+        <translation>Bilagevisare</translation>
+    </message>
+    <message>
+        <source>Unknown attachment type</source>
+        <translation>Okänd bilagetyp</translation>
     </message>
 </context>
 <context>
@@ -646,22 +727,12 @@
         <translation>Posten har inget attribut för PICKCHARS: %1</translation>
     </message>
     <message>
-        <source>Invalid conversion type: %1</source>
-        <translation>Ogiltig konverteringstyp: %1</translation>
-    </message>
-    <message>
-        <source>Invalid conversion syntax: %1</source>
-        <translation>Ogiltig konverteringssyntax: %1</translation>
-    </message>
-    <message>
-        <source>Invalid regular expression syntax %1
-%2</source>
-        <translation>Ogiltig regular expression-syntax: %1
-%2</translation>
-    </message>
-    <message>
         <source>Invalid placeholder: %1</source>
         <translation>Ogiltig platshållare: %1</translation>
+    </message>
+    <message>
+        <source>Entry has invalid TOTP settings</source>
+        <translation>Posten har ogiltiga TOTP-inställningar</translation>
     </message>
 </context>
 <context>
@@ -705,10 +776,6 @@
 <context>
     <name>AutoTypePlatformX11</name>
     <message>
-        <source>Trying to send invalid keysym.</source>
-        <translation>Försöker skicka en ogiltig tangentbordssymbol</translation>
-    </message>
-    <message>
         <source>Sequence aborted: Caps Lock is on</source>
         <translation>Sekvensen avbröts: Caps Lock är på</translation>
     </message>
@@ -720,6 +787,10 @@
         <source>Unable to get valid keycode for key: </source>
         <translation>Kunde inte hämta giltig nyckelkod för nyckeln: </translation>
     </message>
+    <message>
+        <source>Trying to send invalid keyboard symbol.</source>
+        <translation>Försöker skicka ogiltig tangentbordssymbol.</translation>
+    </message>
 </context>
 <context>
     <name>AutoTypeSelectDialog</name>
@@ -730,20 +801,6 @@
     <message>
         <source>Double click a row to perform Auto-Type or find an entry using the search:</source>
         <translation>Dubbelklicka på en rad för att utföra autoskriv, eller hitta en post med hjälp av sökfunktionen:</translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;You can use advanced search queries to find any entry in your open databases. The following shortcuts are useful:&lt;br/&gt;
-Ctrl+F - Toggle database search&lt;br/&gt;
-Ctrl+1 - Type username&lt;br/&gt;
-Ctrl+2 - Type password&lt;br/&gt;
-Ctrl+3 - Type TOTP&lt;br/&gt;
-Ctrl+4 - Use Virtual Keyboard (Windows Only)&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Du kan använda avancerad sökning för att hitta en post i dina öppna databaser. Följande genvägar är användbara:&lt;br/&gt;
-Ctrl+F - Databassökning på/av&lt;br/&gt;
-Ctrl+1 - Skriv användarnamn&lt;br/&gt;
-Ctrl+2 - Skriv lösenord&lt;br/&gt;
-Ctrl+3 - Skriv TOTP&lt;br/&gt;
-Ctrl+4 - Använd virtuellt tangentbord (Endast Windows)&lt;/p&gt;</translation>
     </message>
     <message>
         <source>Search all open databases</source>
@@ -788,6 +845,55 @@ Ctrl+4 - Använd virtuellt tangentbord (Endast Windows)&lt;/p&gt;</translation>
     <message>
         <source>Use Virtual Keyboard</source>
         <translation>Använd virtuellt tangentbord</translation>
+    </message>
+    <message>
+        <source>Type {URL}</source>
+        <translation>Skriv {URL}</translation>
+    </message>
+    <message>
+        <source>Copy URL</source>
+        <translation>Kopiera URL</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;The following shortcuts are available:&lt;br/&gt;
+Ctrl+F - Focus search&lt;br/&gt;
+Ctrl+1 - Type username&lt;br/&gt;
+Ctrl+2 - Type password&lt;br/&gt;
+Ctrl+3 - Type TOTP&lt;br/&gt;
+Ctrl+4 - Type URL&lt;br/&gt;
+Ctrl+5 - Use Virtual Keyboard (Windows Only)&lt;br/&gt;
+Ctrl+Shift+1 - Copy username&lt;br/&gt;
+Ctrl+Shift+2 - Copy password&lt;br/&gt;
+Ctrl+Shift+3 - Copy TOTP&lt;br/&gt;
+Ctrl+Shift+4 - Copy URL&lt;br/&gt;
+&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Följande genvägar finns tillgängliga:&lt;br/&gt;
+Ctrl+F - Fokusera sökfältet&lt;br/&gt;
+Ctrl+1 - Skriv användarnamn&lt;br/&gt;
+Ctrl+2 - Skriv lösenord&lt;br/&gt;
+Ctrl+3 - Skriv TOTP&lt;br/&gt;
+Ctrl+4 - Skriv URL&lt;br/&gt;
+Ctrl+5 - Använd virtuellt tangentbord (Endast Windows)&lt;br/&gt;
+Ctrl+Shift+1 - Kopiera användarnamn&lt;br/&gt;
+Ctrl+Shift+2 - Kopiera lösenord&lt;br/&gt;
+Ctrl+Shift+3 - Kopiera TOTP&lt;br/&gt;
+Ctrl+Shift+4 - Kopiera URL&lt;br/&gt;
+&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>You can use advanced search queries to find any entry in your open databases.</source>
+        <translation>Du kan använda avancerat sök, för att hitta valfri post i din öppna databas.</translation>
+    </message>
+</context>
+<context>
+    <name>BinaryStream</name>
+    <message>
+        <source>Failed to read string data: %1</source>
+        <translation>Kunde inte läsa strängdata: %1</translation>
+    </message>
+    <message>
+        <source>String length exceeds 10 MiB limit (requested %1)</source>
+        <translation>Stränglängden överstiger 10 MiB-gränsen (%1 begärt)</translation>
     </message>
 </context>
 <context>
@@ -853,10 +959,6 @@ Välj rätt databas för att spara inloggningsuppgifterna.</translation>
 <context>
     <name>BrowserPasskeysConfirmationDialog</name>
     <message>
-        <source>KeePassXC: Passkey credentials</source>
-        <translation>KeePassXC: Passnyckeluppgifter</translation>
-    </message>
-    <message>
         <source>Cancel</source>
         <translation>Avbryt</translation>
     </message>
@@ -878,37 +980,45 @@ Välj rätt databas för att spara inloggningsuppgifterna.</translation>
     </message>
     <message numerus="yes">
         <source>Timeout in &lt;b&gt;%n&lt;/b&gt; seconds...</source>
-        <translation><numerusform>Tidsgränsen löper ut om 1%n1 sekund...</numerusform><numerusform>Tidsgränsen löper ut om &lt;b&gt;%n&lt;/b&gt; sekunder...</numerusform></translation>
+        <translation><numerusform>Tidsgränsen löper ut om &lt;b&gt;%n&lt;/b&gt; sekund...</numerusform><numerusform>Tidsgränsen löper ut om &lt;b&gt;%n&lt;/b&gt; sekunder...</numerusform></translation>
     </message>
     <message>
-        <source>Do you want to register Passkey for:</source>
-        <translation>Vill du registrera passnyckel för:</translation>
+        <source>Relying Party: %1</source>
+        <translation>Förlitande part: %1</translation>
     </message>
     <message>
-        <source>%1 (%2)</source>
-        <translation>%1 (%2)</translation>
+        <source>Username: %1</source>
+        <translation>Användarnamn: %1</translation>
     </message>
     <message>
-        <source>Existing Passkey found.
-Do you want to register a new Passkey for:</source>
+        <source>KeePassXC - Passkey credentials</source>
+        <translation>KeePassXC - Passnyckeluppgifter</translation>
+    </message>
+    <message>
+        <source>Add to existing entry</source>
+        <translation>Lägg till i befintlig post</translation>
+    </message>
+    <message>
+        <source>Existing passkey found.
+Do you want to register a new passkey for:</source>
         <translation>Befintlig passnyckel hittad.
 Vill du registrera en ny passnyckel för:</translation>
     </message>
     <message>
-        <source>Select the existing Passkey and press Update to replace it.</source>
+        <source>Select the existing passkey and press Update to replace it.</source>
         <translation>Markera den befintliga passnyckeln och tryck &quot;Uppdatera&quot; för att ersätta den.</translation>
     </message>
     <message>
-        <source>Authenticate Passkey credentials for:</source>
+        <source>Authenticate passkey credentials for:</source>
         <translation>Autentisera passnyckeluppgifter för: </translation>
+    </message>
+    <message>
+        <source>Do you want to register a passkey for:</source>
+        <translation>Vill du registrera passnyckel för:</translation>
     </message>
 </context>
 <context>
     <name>BrowserService</name>
-    <message>
-        <source>KeePassXC: Create a new group</source>
-        <translation>KeePassXC: Skapa en ny grupp</translation>
-    </message>
     <message>
         <source>A request for creating a new group &quot;%1&quot; has been received.
 Do you want to create this group?
@@ -916,10 +1026,6 @@ Do you want to create this group?
         <translation>En begäran om att skapa en ny grupp &quot;%1&quot; har tagits emot.
 Vill du skapa denna grupp?
 </translation>
-    </message>
-    <message>
-        <source>KeePassXC: New key association request</source>
-        <translation>KeePassXC: Ny nyckelassocieringsbegäran</translation>
     </message>
     <message>
         <source>You have received an association request for the following database:
@@ -938,26 +1044,14 @@ chrome-laptop.</translation>
         <translation>Spara och tillåt åtkomst</translation>
     </message>
     <message>
-        <source>KeePassXC: Overwrite existing key?</source>
-        <translation>KeePassXC: Vill du skriva över befintlig nyckel?</translation>
-    </message>
-    <message>
         <source>A shared encryption key with the name &quot;%1&quot; already exists.
 Do you want to overwrite it?</source>
         <translation>En delad krypteringsnyckel med namnet &quot;%1&quot; finns redan.
 Vill du skriva över den?</translation>
     </message>
     <message>
-        <source>KeePassXC: Update Entry</source>
-        <translation>KeePassXC: Uppdatera post</translation>
-    </message>
-    <message>
         <source>Do you want to update the information in %1 - %2?</source>
         <translation>Vill du uppdatera informationen i %1 - %2?</translation>
-    </message>
-    <message>
-        <source>KeePassXC: Delete entry</source>
-        <translation>KeePassXC: Ta bort post</translation>
     </message>
     <message>
         <source>A request for deleting entry &quot;%1&quot; has been received.
@@ -970,6 +1064,56 @@ Vill du ta bort posten?
     <message>
         <source>%1 (Passkey)</source>
         <translation>%1 (Passnyckel)</translation>
+    </message>
+    <message>
+        <source>KeePassXC - Create a new group</source>
+        <translation>KeePassXC - Skapa en ny grupp</translation>
+    </message>
+    <message>
+        <source>Disable</source>
+        <translation>Inaktivera</translation>
+    </message>
+    <message>
+        <source>KeePassXC - Overwrite existing key?</source>
+        <translation>KeePassXC - Vill du skriva över befintlig nyckel?</translation>
+    </message>
+    <message>
+        <source>KeePassXC - Update Entry</source>
+        <translation>KeePassXC - Uppdatera post</translation>
+    </message>
+    <message>
+        <source>KeePassXC - Delete entry</source>
+        <translation>KeePassXC - Ta bort post</translation>
+    </message>
+    <message>
+        <source>KeePassXC - New key association request</source>
+        <translation>KeePassXC - Ny nyckelassocieringsbegäran</translation>
+    </message>
+    <message>
+        <source>Passkey</source>
+        <translation>Passnyckel</translation>
+    </message>
+    <message>
+        <source>KeePassXC - Passkey credentials</source>
+        <translation>KeePassXC - Passnyckeluppgifter</translation>
+    </message>
+    <message>
+        <source>Register a new passkey to this entry:</source>
+        <translation>Registrera en ny passnyckel för denna post:</translation>
+    </message>
+    <message>
+        <source>KeePassXC - Update passkey</source>
+        <translation>KeePassXC - Uppdatera passnyckel</translation>
+    </message>
+    <message>
+        <source>Entry already has a passkey.
+Do you want to overwrite the passkey in %1 - %2?</source>
+        <translation>Posten har redan en passnyckel.
+Vill du skriva över passnyckeln i %1 - %2?</translation>
+    </message>
+    <message>
+        <source>Register</source>
+        <translation>Registrera</translation>
     </message>
 </context>
 <context>
@@ -989,10 +1133,6 @@ Vill du ta bort posten?
     <message>
         <source>General</source>
         <translation>Allmänt</translation>
-    </message>
-    <message>
-        <source>Browsers installed as snaps are currently not supported.</source>
-        <translation>Webbläsare installerade via Snap, stöds för närvarande inte.</translation>
     </message>
     <message>
         <source>Enable integration for these browsers:</source>
@@ -1166,18 +1306,6 @@ Vill du ta bort posten?
         <translation>Anpassat tilläggs-ID</translation>
     </message>
     <message>
-        <source>Due to Snap sandboxing, you must run a script to enable browser integration.&lt;br /&gt;You can obtain this script from %1</source>
-        <translation>På grund av Snaps sandlådeteknik, måste du köra ett skript för att aktivera webbläsarintegration.&lt;br /&gt;Du kan hämta skriptet från %1</translation>
-    </message>
-    <message>
-        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3. %4</source>
-        <translation>KeePassXC-Browser behövs för att webbläsarintegrationen ska fungera. &lt;br /&gt;Ladda ner dent för %1 och %2 och %3. %4</translation>
-    </message>
-    <message>
-        <source>Please see special instructions for browser extension use below</source>
-        <translation>Se specialinstruktioner för webbläsarintegreringens användning nedan</translation>
-    </message>
-    <message>
         <source>Executable Files</source>
         <translation>Körbara filer</translation>
     </message>
@@ -1217,6 +1345,22 @@ Vill du ta bort posten?
         <source>&lt;b&gt;Error:&lt;/b&gt; The installed proxy executable is missing from the expected location: %1&lt;br/&gt;Please set a custom proxy location in the advanced settings or reinstall the application.</source>
         <translation>&lt;b&gt;Fel:&lt;/b&gt; Den installerade körbara proxyfilen saknas på den förväntade platsen: %1&lt;br/&gt;Ange en anpassad proxyplats i de avancerade inställningarna eller installera om programmet.</translation>
     </message>
+    <message>
+        <source>Allows using insecure http://localhost with passkeys for testing purposes.</source>
+        <translation>Tillåter användning av osäker http://localhost med passnycklar för teständamål.</translation>
+    </message>
+    <message>
+        <source>Allow using localhost with passkeys</source>
+        <translation>Tillåt användning av localhost med passnycklar</translation>
+    </message>
+    <message>
+        <source>KeePassXC-Browser is needed for the browser integration to work. &lt;br /&gt;Download it for %1 and %2 and %3.</source>
+        <translation>KeePassXC-Browser behövs för att webbläsarintegrationen ska fungera. &lt;br /&gt;Ladda ner det för %1 och %2 och %3.</translation>
+    </message>
+    <message>
+        <source>Browsers installed using Snap or Flatpak are not supported with exception to Firefox installed using Snap.</source>
+        <translation>Webbläsare som är installerade via Snap eller Flatpak stöds inte, med Firefox via Snap som enda undantag.</translation>
+    </message>
 </context>
 <context>
     <name>CloneDialog</name>
@@ -1239,14 +1383,6 @@ Vill du ta bort posten?
 </context>
 <context>
     <name>CsvImportWidget</name>
-    <message>
-        <source>Import CSV fields</source>
-        <translation>Importera CSV-fält</translation>
-    </message>
-    <message>
-        <source>filename</source>
-        <translation>filnamn</translation>
-    </message>
     <message>
         <source>size, rows, columns</source>
         <translation>storlek, rader, kolumner</translation>
@@ -1355,50 +1491,43 @@ Vill du ta bort posten?
         <source>Column %1</source>
         <translation>Kolumn %1</translation>
     </message>
-    <message>
-        <source>Imported from CSV file</source>
-        <translation>Importerat från CSV-fil</translation>
-    </message>
-    <message>
-        <source>Original data: </source>
-        <translation>Ursprunglig data: </translation>
-    </message>
-    <message>
-        <source>Error(s) detected in CSV file!</source>
-        <translation>Fel upptäckta i CSV-fil!</translation>
-    </message>
     <message numerus="yes">
         <source>[%n more message(s) skipped]</source>
         <translation><numerusform>[%n meddelande hoppades över]</numerusform><numerusform>[%n meddelanden hoppades över]</numerusform></translation>
     </message>
     <message>
-        <source>Error</source>
-        <translation>Fel</translation>
+        <source>Failed to parse CSV file: %1</source>
+        <translation>CSV-filen kunde inte tolkas: %1</translation>
     </message>
     <message>
-        <source>CSV import: writer has errors:
-%1</source>
-        <translation>CSV-import: Skrivare har fel:
-%1</translation>
+        <source>Imported from CSV file: %1</source>
+        <translation>Importerat från CSV-fil: %1</translation>
+    </message>
+    <message>
+        <source>No Title Selected</source>
+        <translation>Ingen titel vald</translation>
+    </message>
+    <message>
+        <source>No title column was selected, entries will be hard to tell apart.
+Are you sure you want to import?</source>
+        <translation>Ingen titelkolumn valdes, Posterna kommer att bli svåra att särskilja.
+Vill du verkligen importera?</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation>Taggar</translation>
     </message>
 </context>
 <context>
     <name>CsvParserModel</name>
-    <message>
-        <source>%1, %2, %3</source>
-        <comment>file info: bytes, rows, columns</comment>
-        <translation>%1, %2, %3</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n byte(s)</source>
-        <translation><numerusform>%n byte</numerusform><numerusform>%n byte</numerusform></translation>
-    </message>
     <message numerus="yes">
         <source>%n row(s)</source>
+        <comment>CSV row count</comment>
         <translation><numerusform>%n rad</numerusform><numerusform>%n rader</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n column(s)</source>
+        <comment>CSV column count</comment>
         <translation><numerusform>%n kolumn</numerusform><numerusform>%n kolumner</numerusform></translation>
     </message>
 </context>
@@ -1451,6 +1580,14 @@ Säkerhetskopierad databas hittad i %2</translation>
         <source>Recycle Bin</source>
         <translation>Papperskorg</translation>
     </message>
+    <message>
+        <source>Database file read error.</source>
+        <translation>Kunde inte läsa databasfilen.</translation>
+    </message>
+    <message>
+        <source>No file path was provided.</source>
+        <translation>Ingen filsökväg angavs.</translation>
+    </message>
 </context>
 <context>
     <name>DatabaseOpenDialog</name>
@@ -1474,38 +1611,8 @@ Säkerhetskopierad databas hittad i %2</translation>
         <translation>Lösenord</translation>
     </message>
     <message>
-        <source>Enter Additional Credentials (if any):</source>
-        <translation>Ange fler autentiseringsuppgifter (om det finns några):</translation>
-    </message>
-    <message>
-        <source>Key File:</source>
-        <translation>Nyckelfil:</translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;br&gt;If you do not have a key file, leave this field empty.&lt;/p&gt;&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Som tillägg till ett lösenord, kan du använda en hemlig fil för att förbättra säkerheten i din databas. En sådan fil kan genereras i databasens säkerhetsinställningar.&lt;/p&gt;&lt;p&gt;Detta är &lt;strong&gt;inte&lt;/strong&gt; din *.kdbx-databasfil!&lt;br&gt;Om du inte har någon nyckelfil, lämnar du fältet tomt.&lt;/p&gt;&lt;p&gt;Klicka för mer information...&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <source>Key file help</source>
-        <translation>Nyckelfilshjälp</translation>
-    </message>
-    <message>
         <source>Hardware key slot selection</source>
         <translation>Val av plats för hårdvarunyckel</translation>
-    </message>
-    <message>
-        <source>Hardware Key:</source>
-        <translation>Hårdvarunyckel:</translation>
-    </message>
-    <message>
-        <source>&lt;p&gt;You can use a hardware security key such as a &lt;strong&gt;YubiKey&lt;/strong&gt; or &lt;strong&gt;OnlyKey&lt;/strong&gt; with slots configured for HMAC-SHA1.&lt;/p&gt;
-&lt;p&gt;Click for more information…&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Du kan använda en hårdvarunyckel såsom &lt;strong&gt;YubiKey&lt;/strong&gt; eller &lt;strong&gt;OnlyKey&lt;/strong&gt; med anslutningsplatser konfigurerade för HMAC-SHA1.&lt;/p&gt;
-&lt;p&gt;Klicka för mer information...&lt;/p&gt;</translation>
-    </message>
-    <message>
-        <source>Hardware key help</source>
-        <translation>Hjälp med hårdvarunyckel</translation>
     </message>
     <message>
         <source>Key file to unlock the database</source>
@@ -1518,14 +1625,6 @@ Säkerhetskopierad databas hittad i %2</translation>
     <message>
         <source>Browse…</source>
         <translation>Bläddra…</translation>
-    </message>
-    <message>
-        <source>Refresh hardware tokens</source>
-        <translation>Uppdatera hårdvaru-tokens</translation>
-    </message>
-    <message>
-        <source>Refresh</source>
-        <translation>Uppdatera</translation>
     </message>
     <message>
         <source>Unlock Database</source>
@@ -1541,7 +1640,7 @@ Säkerhetskopierad databas hittad i %2</translation>
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue…</source>
-        <translation>Presentera eller rör vid din YubiKey för att fortsätta...</translation>
+        <translation>Presentera eller rör vid din YubiKey för att fortsätta…</translation>
     </message>
     <message>
         <source>Database Version Mismatch</source>
@@ -1623,30 +1722,72 @@ För att förhindra att detta fel uppstår igen, måste du gå till &quot;Databa
         <translation>Kan inte använda en databasfil som nyckelfil</translation>
     </message>
     <message>
-        <source>You cannot use your database file as a key file.
-If you do not have a key file, please leave the field empty.</source>
-        <translation>Du kan inte använda din databasfil som nyckelfil.
-Om du inte har någon nyckelfil, lämnar du fältet tomt.</translation>
-    </message>
-    <message>
-        <source>Detecting hardware keys…</source>
-        <translation>Identifierar hårdvarunycklar...</translation>
-    </message>
-    <message>
-        <source>No hardware keys detected</source>
-        <translation>Inga hårdvarunycklar identifierade</translation>
-    </message>
-    <message>
-        <source>Select hardware key…</source>
-        <translation>Välj hårdvarunyckel...</translation>
-    </message>
-    <message>
         <source>authenticate to access the database</source>
         <translation>autentisera för åtkomst till databasen</translation>
     </message>
     <message>
         <source>Failed to authenticate with Quick Unlock: %1</source>
         <translation>Kunde inte autentisera med Quick Unlock: %1</translation>
+    </message>
+    <message>
+        <source>Select Key File:</source>
+        <translation>Välj nyckelfil:</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;In addition to a password, you can use a secret file to enhance the security of your database. This file can be generated in your database&apos;s security settings.&lt;/p&gt;&lt;p&gt;This is &lt;strong&gt;not&lt;/strong&gt; your *.kdbx database file!&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Som tillägg till ett lösenord, kan du använda en hemlig fil för att förbättra säkerheten i din databas. En sådan fil kan genereras i databasens säkerhetsinställningar.&lt;/p&gt;&lt;p&gt;Detta är &lt;strong&gt;inte&lt;/strong&gt; din *.kdbx-databasfil!&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>Use hardware key [Serial: %1]</source>
+        <translation>Använd hårdvarunyckel [Serienummer: %1]</translation>
+    </message>
+    <message>
+        <source>Use hardware key</source>
+        <translation>Använd hårdvarunyckel</translation>
+    </message>
+    <message>
+        <source>Your database file is NOT a key file!
+If you don&apos;t have a key file or don&apos;t know what that is, you don&apos;t have to select one.</source>
+        <translation>Din databasfil är INTE en nyckelfil!
+Om du inte har någon nyckelfil eller inte vet vad det är, behöver du inte välja något.</translation>
+    </message>
+    <message>
+        <source>KeePassXC database file selected</source>
+        <translation>KeePassXC databasfil vald</translation>
+    </message>
+    <message>
+        <source>The file you selected looks like a database file.
+A database file is NOT a key file!
+
+Are you sure you want to continue with this file?.</source>
+        <translation>Filen du valde ser ut som en databasfil.
+En databasfil är INTE en nyckelfil!
+
+Vill du verkligen fortsätta med den här filen?</translation>
+    </message>
+    <message>
+        <source>No hardware keys found.</source>
+        <translation>Inga hårdvarunycklar hittades.</translation>
+    </message>
+    <message>
+        <source>Refresh Hardware Keys</source>
+        <translation>Uppdatera hårdvarunycklar</translation>
+    </message>
+    <message>
+        <source>Click to add a key file.</source>
+        <translation>Klicka för att lägga till en nyckelfil.</translation>
+    </message>
+    <message>
+        <source>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;I have a key file&lt;/a&gt;</source>
+        <translation>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;Jag har en nyckelfil&lt;/a&gt;</translation>
+    </message>
+    <message>
+        <source>Hardware keys found, but no slots are configured.</source>
+        <translation>Hårdvarunycklar hittades, men inga anslutningsplatser är konfigurerade.</translation>
+    </message>
+    <message>
+        <source>Press ESC again to close this database</source>
+        <translation>Tryck ESC igen, för att stänga databasen.</translation>
     </message>
 </context>
 <context>
@@ -1681,6 +1822,22 @@ Om du inte har någon nyckelfil, lämnar du fältet tomt.</translation>
     <message>
         <source>Maintenance</source>
         <translation>Underhåll</translation>
+    </message>
+    <message>
+        <source>KeeShare</source>
+        <translation>KeeShare</translation>
+    </message>
+    <message>
+        <source>Secret Service Integration</source>
+        <translation>Secret Service-integration</translation>
+    </message>
+    <message>
+        <source>Remote Sync</source>
+        <translation>Fjärrsynkronisering</translation>
+    </message>
+    <message>
+        <source>Database Settings: %1</source>
+        <translation>Databasinställningar: %1</translation>
     </message>
 </context>
 <context>
@@ -1750,16 +1907,8 @@ This may prevent connection to the browser plugin.</source>
 Detta kan förhindra anslutning till webbläsartillägget.</translation>
     </message>
     <message>
-        <source>KeePassXC: No keys found</source>
-        <translation>KeePassXC: Inga nycklar hittades</translation>
-    </message>
-    <message>
         <source>No shared encryption keys found in KeePassXC settings.</source>
         <translation>Inga delade krypteringsnycklar hittades i KeePassXC:s inställningar.</translation>
-    </message>
-    <message>
-        <source>KeePassXC: Removed keys from database</source>
-        <translation>KeePassXC: Tog bort nycklar från databasen</translation>
     </message>
     <message numerus="yes">
         <source>Successfully removed %n encryption key(s) from KeePassXC settings.</source>
@@ -1773,23 +1922,15 @@ Behörighet att komma åt posterna kommer att återkallas.</translation>
     </message>
     <message>
         <source>Removing stored permissions…</source>
-        <translation>Tar bort lagrade rättigheter...</translation>
+        <translation>Tar bort lagrade rättigheter…</translation>
     </message>
     <message>
         <source>Abort</source>
         <translation>Avbryt</translation>
     </message>
-    <message>
-        <source>KeePassXC: Removed permissions</source>
-        <translation>KeePassXC: Tog bort behörigheter</translation>
-    </message>
     <message numerus="yes">
         <source>Successfully removed permissions from %n entry(s).</source>
         <translation><numerusform>Tog bort behörighet från %n post.</numerusform><numerusform>Tog bort behörigheter från %n poster.</numerusform></translation>
-    </message>
-    <message>
-        <source>KeePassXC: No entry with permissions found!</source>
-        <translation>KeePassXC: Ingen post med behörigheter hittades!</translation>
     </message>
     <message>
         <source>The active database does not contain an entry with permissions.</source>
@@ -1805,12 +1946,32 @@ This is only necessary if your database is a copy of another and the browser ext
         <translation>Vill du verkligen uppdatera databas-ID?
 Detta är bara nödvändigt om databasen är en kopia av en annan och webbläsartillägget inte kan ansluta.</translation>
     </message>
+    <message>
+        <source>Convert legacy KeePassHTTP attributes to KeePassXC-Browser compatible custom data</source>
+        <translation>Konvertera äldre KeePassHTTP-attribut till KeePassXC-Browser-kompatibel anpassad data</translation>
+    </message>
+    <message>
+        <source>No keys found</source>
+        <translation>Inga nycklar hittades</translation>
+    </message>
+    <message>
+        <source>Removed keys from database</source>
+        <translation>Tog bort nycklar från databasen</translation>
+    </message>
+    <message>
+        <source>Removed permissions</source>
+        <translation>Tog bort behörigheter</translation>
+    </message>
+    <message>
+        <source>No entry with permissions found!</source>
+        <translation>Ingen post med behörigheter hittades!</translation>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetDatabaseKey</name>
     <message>
         <source>Add additional protection…</source>
-        <translation>Lägg till ytterligare skydd...</translation>
+        <translation>Lägg till ytterligare skydd…</translation>
     </message>
     <message>
         <source>No password set</source>
@@ -1843,6 +2004,18 @@ Vill du verkligen fortsätta utan lösenord?</translation>
     <message>
         <source>Failed to change database credentials</source>
         <translation>Kunde inte ändra databasens inloggningsuppgifter</translation>
+    </message>
+    <message>
+        <source>Weak password</source>
+        <translation>Svagt lösenord</translation>
+    </message>
+    <message>
+        <source>This is a weak password! For better protection of your secrets, you should choose a stronger password.</source>
+        <translation>Detta är ett svagt lösenord! För att bättre skydda dina hemligheter, bör du välja ett starkare lösenord.</translation>
+    </message>
+    <message>
+        <source>The provided password does not meet the minimum quality requirement.</source>
+        <translation>Det angivna lösenordet möter inte lägsta kvalitetskrav.</translation>
     </message>
 </context>
 <context>
@@ -2145,6 +2318,50 @@ tas också bort från databasen.</translation>
         <source>Autosave delay since last change checkbox</source>
         <translation>Kryssruta för fördröjning av automatiskt sparande sedan senaste ändring</translation>
     </message>
+    <message>
+        <source>Public Database Metadata</source>
+        <translation>Offentlig databas metadata</translation>
+    </message>
+    <message>
+        <source>Warning: the following settings are not encrypted.</source>
+        <translation>Varning! Följande inställningar är inte krypterade.</translation>
+    </message>
+    <message>
+        <source>Display name:</source>
+        <translation>Visningsnamn:</translation>
+    </message>
+    <message>
+        <source>Database public display name</source>
+        <translation>Databasens offentliga visningsnamn</translation>
+    </message>
+    <message>
+        <source>Display color:</source>
+        <translation>Visningsfärg:</translation>
+    </message>
+    <message>
+        <source>Database public display color chooser</source>
+        <translation>Databasens offentliga visningsfärgsväljare</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation>Rensa</translation>
+    </message>
+    <message>
+        <source>Display icon:</source>
+        <translation>Visningsikon:</translation>
+    </message>
+    <message>
+        <source>Select Database Icon</source>
+        <translation>Välj databasikon</translation>
+    </message>
+    <message>
+        <source>Publicly visible display name used on the unlock dialog</source>
+        <translation>Publikt synligt visningsnamn som används i upplåsningsdialogen</translation>
+    </message>
+    <message>
+        <source>Publicly visible color used on the unlock dialog</source>
+        <translation>Publikt synlig färg som används i upplåsningsdialogen</translation>
+    </message>
 </context>
 <context>
     <name>DatabaseSettingsWidgetKeeShare</name>
@@ -2241,6 +2458,141 @@ tas också bort från databasen.</translation>
     </message>
 </context>
 <context>
+    <name>DatabaseSettingsWidgetRemote</name>
+    <message>
+        <source>Sync Commands</source>
+        <translation>Synkroniseringskommandon</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>Ta bort</translation>
+    </message>
+    <message>
+        <source>Command Settings</source>
+        <translation>Kommandoinställningar</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Namn</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Spara</translation>
+    </message>
+    <message>
+        <source>Download</source>
+        <translation>Ladda ner</translation>
+    </message>
+    <message>
+        <source>Command:</source>
+        <translation>Kommando:</translation>
+    </message>
+    <message>
+        <source>Download command field</source>
+        <translation>Nerladdningskommando</translation>
+    </message>
+    <message>
+        <source>e.g.: &quot;sftp user@hostname&quot; or &quot;scp user@hostname:DatabaseOnRemote.kdbx {TEMP_DATABASE}&quot;</source>
+        <translation>t.ex.: &quot;sftp user@hostname&quot; eller &quot;scp user@hostname:DatabaseOnRemote.kdbx {TEMP_DATABASE}&quot;</translation>
+    </message>
+    <message>
+        <source>Input:</source>
+        <translation>Indata:</translation>
+    </message>
+    <message>
+        <source>Download input field</source>
+        <translation>Nerladdningens indata</translation>
+    </message>
+    <message>
+        <source>Upload</source>
+        <translation>Ladda upp</translation>
+    </message>
+    <message>
+        <source>Upload command field</source>
+        <translation>Uppladdningskommando</translation>
+    </message>
+    <message>
+        <source>e.g.: &quot;sftp user@hostname&quot; or &quot;scp {TEMP_DATABASE} user@hostname:DatabaseOnRemote.kdbx&quot;</source>
+        <translation>t.ex.: &quot;sftp user@hostname&quot; eller &quot;scp {TEMP_DATABASE} user@hostname:DatabaseOnRemote.kdbx&quot;</translation>
+    </message>
+    <message>
+        <source>Upload input field</source>
+        <translation>Uppladdningens indata</translation>
+    </message>
+    <message>
+        <source>Name cannot be empty.</source>
+        <translation>Namnet kan inte vara tomt</translation>
+    </message>
+    <message>
+        <source>Test</source>
+        <translation>Testa</translation>
+    </message>
+    <message>
+        <source>Download command cannot be empty.</source>
+        <translation>Nerladdningskommandot kan inte vara tomt.</translation>
+    </message>
+    <message>
+        <source>Download failed with error: %1</source>
+        <translation>Nerladdningen misslyckades med felet: %1</translation>
+    </message>
+    <message>
+        <source>Download finished, but file %1 could not be found.</source>
+        <translation>Nerladdning slutförd, men filen %1 kunde inte hittas.</translation>
+    </message>
+    <message>
+        <source>Download successful.</source>
+        <translation>Nerladdning slutförd.</translation>
+    </message>
+    <message>
+        <source>Save Remote Settings</source>
+        <translation>Spara fjärrinställningar</translation>
+    </message>
+    <message>
+        <source>You have unsaved changes. Do you want to save them?</source>
+        <translation>Du har osparade ändringar. Vill du spara dem?</translation>
+    </message>
+    <message>
+        <source>e.g.:
+get DatabaseOnRemote.kdbx {TEMP_DATABASE}
+exit
+---
+{TEMP_DATABASE} is used as placeholder to store the database in a temporary location
+The command has to exit. In case of `sftp` as last command `exit` has to be sent
+            </source>
+        <translation>t.ex.:
+get DatabaseOnRemote.kdbx {TEMP_DATABASE}
+exit
+---
+{TEMP_DATABASE} används som platshållare för att lagra databasen på en tillfällig plats
+Kommandot måste avslutas. Om &quot;sftp&quot; är det sista kommandot måste &quot;exit&quot; sändas
+            </translation>
+    </message>
+    <message>
+        <source>e.g.:
+put {TEMP_DATABASE} DatabaseOnRemote.kdbx
+exit
+---
+{TEMP_DATABASE} is used as placeholder to store the database in a temporary location
+The command has to exit. In case of `sftp` as last command `exit` has to be sent
+            </source>
+        <translation>t.ex.:
+put {TEMP_DATABASE} DatabaseOnRemote.kdbx
+exit
+---
+{TEMP_DATABASE} används som platshållare för att lagra databasen på en tillfällig plats
+Kommandot måste avslutas. Om &quot;sftp&quot; är det sista kommandot måste &quot;exit&quot; sändas
+            </translation>
+    </message>
+    <message>
+        <source>Timeout:</source>
+        <translation>Tidsgräns:</translation>
+    </message>
+    <message>
+        <source> seconds</source>
+        <translation> sekunder</translation>
+    </message>
+</context>
+<context>
     <name>DatabaseTabWidget</name>
     <message>
         <source>Database creation error</source>
@@ -2273,24 +2625,8 @@ Detta är definitivt ett programfel, rapportera det till utvecklarna.</translati
         <translation>CSV-fil</translation>
     </message>
     <message>
-        <source>Select CSV file</source>
-        <translation>Välj CSV-fil</translation>
-    </message>
-    <message>
         <source>Merge database</source>
         <translation>Slå samman databas</translation>
-    </message>
-    <message>
-        <source>KeePass 1 database</source>
-        <translation>KeePass 1-databas</translation>
-    </message>
-    <message>
-        <source>Open KeePass 1 database</source>
-        <translation>Öppna KeePass 1-databas</translation>
-    </message>
-    <message>
-        <source>Open OPVault</source>
-        <translation>Öppna OPVault</translation>
     </message>
     <message>
         <source>Export database to CSV file</source>
@@ -2325,18 +2661,14 @@ Detta är definitivt ett programfel, rapportera det till utvecklarna.</translati
         <translation>Du är på väg att exportera din databas till en okrypterad fil. Detta kommer att lämna dina lösenord annan känslig information i ett sårbart skick (klartext). Vill du verkligen fortsätta?</translation>
     </message>
     <message>
-        <source>New Database</source>
-        <translation>Ny databas</translation>
-    </message>
-    <message>
-        <source>%1 [New Database]</source>
-        <comment>Database tab name modifier</comment>
-        <translation>%1 [Ny databas]</translation>
-    </message>
-    <message>
         <source>%1 [Locked]</source>
         <comment>Database tab name modifier</comment>
         <translation>%1 [Låst]</translation>
+    </message>
+    <message>
+        <source>%1 [Temporary]</source>
+        <comment>Database tab name modifier</comment>
+        <translation>%1 [Temporary]</translation>
     </message>
 </context>
 <context>
@@ -2374,18 +2706,6 @@ Detta är definitivt ett programfel, rapportera det till utvecklarna.</translati
         <translation>Komihåg mitt val</translation>
     </message>
     <message>
-        <source>Delete group</source>
-        <translation>Ta bort gruppen</translation>
-    </message>
-    <message>
-        <source>Do you really want to delete the group &quot;%1&quot; for good?</source>
-        <translation>Vill du verkligen ta bort gruppen &quot;%1&quot; för gott?</translation>
-    </message>
-    <message>
-        <source>Move group to recycle bin?</source>
-        <translation>Vill du flytta gruppen till papperskorgen?</translation>
-    </message>
-    <message>
         <source>Do you really want to move the group &quot;%1&quot; to the recycle bin?</source>
         <translation>Vill du verkligen flytta &quot;%1&quot; till papperskorgen?</translation>
     </message>
@@ -2406,24 +2726,12 @@ Detta är definitivt ett programfel, rapportera det till utvecklarna.</translati
         <translation>Ingen källdatabas, inget att göra.</translation>
     </message>
     <message>
-        <source>Successfully merged the database files.</source>
-        <translation>Slog samman databasfilerna.</translation>
-    </message>
-    <message>
-        <source>Database was not modified by merge operation.</source>
-        <translation>Databasen ändrades inte av sammanslagningen.</translation>
-    </message>
-    <message>
         <source>Search Results (%1)</source>
         <translation>Sökresultat (%1)</translation>
     </message>
     <message>
         <source>No Results</source>
         <translation>Inget resultat</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Spara</translation>
     </message>
     <message>
         <source>Enter a unique name or overwrite an existing search from the list:</source>
@@ -2462,26 +2770,6 @@ Vill du spara ändringarna?</translation>
         <translation>Filen har ändrats</translation>
     </message>
     <message>
-        <source>The database file has changed. Do you want to load the changes?</source>
-        <translation>Databasfilen har ändrats. Vill du läsa in ändringarna?</translation>
-    </message>
-    <message>
-        <source>Merge Request</source>
-        <translation>Slå samman begäran</translation>
-    </message>
-    <message>
-        <source>The database file has changed and you have unsaved changes.
-Do you want to merge your changes?</source>
-        <translation>Databasfilen har ändrats och du har osparade ändringar.
-Vill du slå  samman dina ändringar?</translation>
-    </message>
-    <message>
-        <source>Could not open the new database file while attempting to autoreload.
-Error: %1</source>
-        <translation>Kunde inte öppna den nya databasen vid försök att läsa in automatisk.
-Fel: %1</translation>
-    </message>
-    <message>
         <source>Disable safe saves?</source>
         <translation>Vill du inaktivera &quot;Spara säkert&quot;?</translation>
     </message>
@@ -2508,10 +2796,6 @@ Vill du inaktivera &quot;Spara säkert&quot; och försöka igen?</translation>
         <translation>KeePass 2-databas</translation>
     </message>
     <message>
-        <source>Save database backup</source>
-        <translation>Spara säkerhetskopia av databasen</translation>
-    </message>
-    <message>
         <source>Empty recycle bin?</source>
         <translation>Vill du tömma papperskorgen?</translation>
     </message>
@@ -2522,6 +2806,138 @@ Vill du inaktivera &quot;Spara säkert&quot; och försöka igen?</translation>
     <message>
         <source>Could not find database file: %1</source>
         <translation>Kunde inte hitta databasfilen: %1</translation>
+    </message>
+    <message>
+        <source>New Database</source>
+        <translation>Ny databas</translation>
+    </message>
+    <message>
+        <source>%1 [New Database]</source>
+        <comment>Database tab name modifier</comment>
+        <translation>%1 [Ny databas]</translation>
+    </message>
+    <message>
+        <source>Remote Sync did not contain any download or upload commands.</source>
+        <translation>Fjärrsynkroniseringen innehöll inga ner- eller uppladdningskommandon.</translation>
+    </message>
+    <message>
+        <source>Remote sync &apos;%1&apos; completed successfully!</source>
+        <translation>Fjärrsynkronisering &quot;%1&quot; slutförd!</translation>
+    </message>
+    <message>
+        <source>Downloading...</source>
+        <translation>Laddar ner...</translation>
+    </message>
+    <message>
+        <source>Uploading...</source>
+        <translation>Laddar upp...</translation>
+    </message>
+    <message>
+        <source>Remote sync &apos;%1&apos; failed: %2</source>
+        <translation>Fjärrsynkronisering &quot;%1&quot; misslyckades: %2</translation>
+    </message>
+    <message>
+        <source>Syncing...</source>
+        <translation>Synkroniserar...</translation>
+    </message>
+    <message>
+        <source>Error while saving database %1: %2</source>
+        <translation>Fel när databas %1 skulle sparas: %2</translation>
+    </message>
+    <message>
+        <source>Remove passkey from entry</source>
+        <translation>Ta bort passnyckeln från posten</translation>
+    </message>
+    <message>
+        <source>Do you want to remove the passkey from this entry?</source>
+        <translation>Vill du ta bort passnyckeln från den här posten?</translation>
+    </message>
+    <message>
+        <source>The database file &quot;%1&quot; was modified externally</source>
+        <translation>Databasfilen &quot;%1&quot; har ändrats externt</translation>
+    </message>
+    <message>
+        <source>Do you want to load the changes?</source>
+        <translation>Vill du läsa in ändringarna?</translation>
+    </message>
+    <message>
+        <source>Reloading database…</source>
+        <translation>Uppdaterar databasen…</translation>
+    </message>
+    <message>
+        <source>Reload canceled</source>
+        <translation>Uppdateringen avbröts</translation>
+    </message>
+    <message>
+        <source>Reload successful</source>
+        <translation>Uppdatering slutförd</translation>
+    </message>
+    <message>
+        <source>Reload pending user action…</source>
+        <translation>Uppdatera väntande användaråtgärd…</translation>
+    </message>
+    <message>
+        <source>The database file &quot;%1&quot; was modified externally.&lt;br&gt;How would you like to proceed?&lt;br&gt;&lt;br&gt;Merge all changes&lt;br&gt;Ignore the changes on disk until save&lt;br&gt;Discard unsaved changes</source>
+        <translation>Databasfilen &quot;%1&quot; har ändrats externt.&lt;br&gt;Hur vill du fortsätta?&lt;br&gt;&lt;br&gt;Vill du slå samman alla ändringar?&lt;br&gt;Ignorera ändringar på disk tills du sparar?&lt;br&gt;Ignorera ändringar som inte har sparats?</translation>
+    </message>
+    <message>
+        <source>The database file &quot;%1&quot; was modified externally.&lt;br&gt;How would you like to proceed?&lt;br&gt;&lt;br&gt;Merge all changes then save&lt;br&gt;Overwrite the changes on disk&lt;br&gt;Discard unsaved changes</source>
+        <translation>Databasfilen &quot;%1&quot; har ändrats externt.&lt;br&gt;Hur vill du fortsätta?&lt;br&gt;&lt;br&gt;Vill du slå samman alla ändringar och spara?&lt;br&gt;Skriva över ändringar på disk?&lt;br&gt;Skippa osparade ändringar?</translation>
+    </message>
+    <message>
+        <source>Reload database</source>
+        <translation>Uppdatera databasen</translation>
+    </message>
+    <message>
+        <source>Database file overwritten.</source>
+        <translation>Databasfilen har skrivits över.</translation>
+    </message>
+    <message>
+        <source>Database file on disk cannot be unlocked with current credentials.&lt;br&gt;Enter new credentials and/or present hardware key to continue.</source>
+        <translation>Databasfilen på disk kan inte låsas upp med aktuella inloggningsuppgifter. &lt;br&gt;Ange nya uppgifter och/eller hårdvarunyckel för att fortsätta.</translation>
+    </message>
+    <message>
+        <source>Failed to save backup database: %1</source>
+        <translation>Kunde inte spara säkerhetskopian: %1.</translation>
+    </message>
+    <message>
+        <source>Confirm Delete Group</source>
+        <translation>Bekräfta borttagning av grupp</translation>
+    </message>
+    <message>
+        <source>Do you really want to permanently delete the group &quot;%1&quot;?</source>
+        <translation>Vill du verkligen ta bort gruppen &quot;%1&quot; permanent?</translation>
+    </message>
+    <message>
+        <source>Confirm Recycle Group</source>
+        <translation>Bekräfta grupp till papperskorgen</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Spara</translation>
+    </message>
+    <message>
+        <source>Save Database Backup</source>
+        <translation>Spara säkerhetskopia av databas</translation>
+    </message>
+    <message>
+        <source>Successfully merged the selected database.</source>
+        <translation>De valda databaserna slogs samman korrekt.</translation>
+    </message>
+    <message>
+        <source>No changes were made by the merge operation.</source>
+        <translation>Inga ändringar gjordes av sammanslagningsprocessen.</translation>
+    </message>
+    <message>
+        <source>Merge canceled, no changes were made.</source>
+        <translation>Sammanslagning avbruten, inga ändringar gjordes.</translation>
+    </message>
+</context>
+<context>
+    <name>EditEntryAttachmentsDialog</name>
+    <message>
+        <source>Edit: %1</source>
+        <translation>Redigera: %1</translation>
     </message>
 </context>
 <context>
@@ -2573,10 +2989,6 @@ Vill du inaktivera &quot;Spara säkert&quot; och försöka igen?</translation>
     <message>
         <source>n/a</source>
         <translation>n/a</translation>
-    </message>
-    <message>
-        <source>(encrypted)</source>
-        <translation>(krypterad)</translation>
     </message>
     <message>
         <source>Select private key</source>
@@ -2666,7 +3078,7 @@ Vill du korrigera det?</translation>
     </message>
     <message numerus="yes">
         <source>%n hour(s)</source>
-        <translation><numerusform>%1 timma</numerusform><numerusform>%1 timmar</numerusform></translation>
+        <translation><numerusform>%1 timma</numerusform><numerusform>%n timmar</numerusform></translation>
     </message>
     <message numerus="yes">
         <source>%n week(s)</source>
@@ -2679,6 +3091,10 @@ Vill du korrigera det?</translation>
     <message numerus="yes">
         <source>%n year(s)</source>
         <translation><numerusform>%n år</numerusform><numerusform>%n år</numerusform></translation>
+    </message>
+    <message>
+        <source>Failed to decrypt SSH key, ensure password is correct.</source>
+        <translation>Kunde inte avkryptera SSH-nyckel, se till att lösenordet är korrekt.</translation>
     </message>
 </context>
 <context>
@@ -2840,10 +3256,6 @@ Vill du korrigera det?</translation>
 <context>
     <name>EditEntryWidgetBrowser</name>
     <message>
-        <source>These settings affect to the entry&apos;s behaviour with the browser extension.</source>
-        <translation>Dessa inställningar påverkar posternas beteende i webbläsartillägget.</translation>
-    </message>
-    <message>
         <source>General</source>
         <translation>Allmänt</translation>
     </message>
@@ -2856,24 +3268,12 @@ Vill du korrigera det?</translation>
         <translation>Undanta autoskriv för den här posten</translation>
     </message>
     <message>
-        <source>Only send this setting to the browser for HTTP Auth dialogs. If enabled, normal login forms will not show this entry for selection.</source>
-        <translation>Skicka bara den här inställningen till webbläsaren för HTTP-autentisering. Vid aktivering visas inte den här posten i normala inloggningsformulär.</translation>
-    </message>
-    <message>
         <source>Use this entry only with HTTP Basic Auth</source>
         <translation>Använd den här posten endast med HTTP Basic Auth</translation>
     </message>
     <message>
-        <source>Do not send this setting to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
-        <translation>Skicka inte den här inställningen till webbläsaren för HTTP-autentisering. Vid aktivering visas inte den här posten för markering.</translation>
-    </message>
-    <message>
         <source>Do not use this entry with HTTP Basic Auth</source>
         <translation>Använd inte här posten med HTTP Basic Auth</translation>
-    </message>
-    <message>
-        <source>Additional URL&apos;s</source>
-        <translation>Ytterligare URL:er</translation>
     </message>
     <message>
         <source>Add</source>
@@ -2886,6 +3286,22 @@ Vill du korrigera det?</translation>
     <message>
         <source>Edit</source>
         <translation>Redigera</translation>
+    </message>
+    <message>
+        <source>These settings affect the entry&apos;s behaviour with the browser extension.</source>
+        <translation>Dessa inställningar påverkar postens beteende med webbläsartillägget.</translation>
+    </message>
+    <message>
+        <source>Additional URLs</source>
+        <translation>Ytterligare URL:er</translation>
+    </message>
+    <message>
+        <source>Only send this entry to the browser for HTTP Auth dialogs. If enabled, normal login forms will not show this entry for selection.</source>
+        <translation>Skicka bara den här inställningen till webbläsaren för HTTP-autentisering. Vid aktivering visas inte den här posten i normala inloggningsformulär.</translation>
+    </message>
+    <message>
+        <source>Do not send this entry to the browser for HTTP Auth dialogs. If enabled, HTTP Auth dialogs will not show this entry for selection.</source>
+        <translation>Skicka inte denna post till webbläsaren för HTTP-autentisering. Vid aktivering visas inte den här posten för markering.</translation>
     </message>
 </context>
 <context>
@@ -3109,6 +3525,10 @@ Vill du korrigera det?</translation>
         <source> seconds</source>
         <translation> sekunder</translation>
     </message>
+    <message>
+        <source>Clear agent</source>
+        <translation>Rensa agent</translation>
+    </message>
 </context>
 <context>
     <name>EditGroupWidget</name>
@@ -3198,6 +3618,14 @@ Vill du korrigera det?</translation>
     <message>
         <source>Omit WWW subdomain from matching toggle for this and sub groups</source>
         <translation>Utelämna WWW-underdomän från matchningväxling för denna och undergrupper</translation>
+    </message>
+    <message>
+        <source>Restrict matching to given browser key:</source>
+        <translation>Begränsa matchning till angiven webbläsarnyckel:</translation>
+    </message>
+    <message>
+        <source>Restrict matching to given browser key toggle for this and sub groups</source>
+        <translation>Begränsa matchning till en viss webbläsarnyckel för denna och undergrupper</translation>
     </message>
 </context>
 <context>
@@ -3385,7 +3813,7 @@ Filtyper som stöds är: %1.</translation>
     </message>
     <message>
         <source>Choose icon…</source>
-        <translation>Välj ikon...</translation>
+        <translation>Välj ikon…</translation>
     </message>
     <message>
         <source>Set the URL to use to search for a favicon</source>
@@ -3432,10 +3860,6 @@ Filtyper som stöds är: %1.</translation>
         <translation>Kunde inte hämta favicon.</translation>
     </message>
     <message>
-        <source>You can enable the DuckDuckGo website icon service under Tools -&gt; Settings -&gt; Security</source>
-        <translation>Du kan aktivera ikontjänsten från DuckDuckGo under Verktyg -&gt; Inställningar -&gt; Säkerhet</translation>
-    </message>
-    <message>
         <source>Existing icon selected.</source>
         <translation>Befintlig ikon vald.</translation>
     </message>
@@ -3467,6 +3891,10 @@ Filtyper som stöds är: %1.</translation>
         <source>The following icon(s) failed:</source>
         <translation><numerusform>Följande ikon misslyckades:</numerusform><numerusform>Följande ikoner misslyckades:</numerusform></translation>
     </message>
+    <message>
+        <source>You can enable the DuckDuckGo website icon service under Application Settings -&gt; Security</source>
+        <translation>Du kan aktivera ikontjänsten från DuckDuckGo under Programinställningar -&gt; Säkerhet</translation>
+    </message>
 </context>
 <context>
     <name>EditWidgetProperties</name>
@@ -3485,14 +3913,6 @@ Filtyper som stöds är: %1.</translation>
     <message>
         <source>Datetime modified</source>
         <translation>Ändrad datum/tid</translation>
-    </message>
-    <message>
-        <source>Accessed:</source>
-        <translation>Använd:</translation>
-    </message>
-    <message>
-        <source>Datetime accessed</source>
-        <translation>Använd datum/tid</translation>
     </message>
     <message>
         <source>Uuid:</source>
@@ -3543,6 +3963,80 @@ Det kan medföra att de berörda tilläggen inte fungerar.</translation>
         <source>%1 - Clone</source>
         <translation>%1 - Klona</translation>
     </message>
+    <message>
+        <source>Passkey</source>
+        <translation>Passnyckel</translation>
+    </message>
+    <message>
+        <source>Invalid conversion type: %1</source>
+        <translation>Ogiltig konverteringstyp: %1</translation>
+    </message>
+    <message>
+        <source>Invalid conversion syntax: %1</source>
+        <translation>Ogiltig konverteringssyntax: %1</translation>
+    </message>
+    <message>
+        <source>Invalid regular expression syntax %1
+%2</source>
+        <translation>Ogiltig regular expression-syntax: %1
+%2</translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation>Titel</translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>Användarnamn</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Lösenord</translation>
+    </message>
+    <message>
+        <source>URL</source>
+        <translation>URL</translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation>Anteckningar</translation>
+    </message>
+    <message>
+        <source>Custom Attributes</source>
+        <translation>Anpassade attribut</translation>
+    </message>
+    <message>
+        <source>Icon</source>
+        <translation>Ikon</translation>
+    </message>
+    <message>
+        <source>Color</source>
+        <translation>Färg</translation>
+    </message>
+    <message>
+        <source>Expiration</source>
+        <translation>Förfaller</translation>
+    </message>
+    <message>
+        <source>TOTP</source>
+        <translation>TOTP</translation>
+    </message>
+    <message>
+        <source>Custom Data</source>
+        <translation>Anpassad data</translation>
+    </message>
+    <message>
+        <source>Attachments</source>
+        <translation>Bilagor</translation>
+    </message>
+    <message>
+        <source>Auto-Type</source>
+        <translation>Autoskriv</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation>Taggar</translation>
+    </message>
 </context>
 <context>
     <name>EntryAttachments</name>
@@ -3577,24 +4071,12 @@ Det kan medföra att de berörda tilläggen inte fungerar.</translation>
         <translation>Lägg tillny bilaga</translation>
     </message>
     <message>
-        <source>Add</source>
-        <translation>Lägg till</translation>
-    </message>
-    <message>
         <source>Remove selected attachment</source>
         <translation>Ta bort markerad bilaga</translation>
     </message>
     <message>
         <source>Remove</source>
         <translation>Ta bort</translation>
-    </message>
-    <message>
-        <source>Rename selected attachment</source>
-        <translation>Byt namn på markerad bilaga</translation>
-    </message>
-    <message>
-        <source>Rename</source>
-        <translation>Byt namn</translation>
     </message>
     <message>
         <source>Open selected attachment</source>
@@ -3607,10 +4089,6 @@ Det kan medföra att de berörda tilläggen inte fungerar.</translation>
     <message>
         <source>Save selected attachment to disk</source>
         <translation>Spara markerad bilaga på disk</translation>
-    </message>
-    <message>
-        <source>Save</source>
-        <translation>Spara</translation>
     </message>
     <message>
         <source>Select files</source>
@@ -3671,12 +4149,6 @@ Det kan medföra att de berörda tilläggen inte fungerar.</translation>
         <translation>Bekräfta överskrivning av bilaga</translation>
     </message>
     <message>
-        <source>Attachment &quot;%1&quot; already exists. 
-Would you like to overwrite the existing attachment?</source>
-        <translation>Bilagan &quot;%1&quot; finns redan.
-Vill du skriva över den befintliga bilagan?</translation>
-    </message>
-    <message>
         <source>Confirm Attachment</source>
         <translation>Bekräfta bilaga</translation>
     </message>
@@ -3710,6 +4182,40 @@ Error: %1</source>
         <translation>Kunde inte spara uppdaterad bilaga.
 Fel: %1</translation>
     </message>
+    <message>
+        <source>Attachment &quot;%1&quot; already exists. 
+Would you like to overwrite the existing attachment?</source>
+        <translation>Bilagan &quot;%1&quot; finns redan.
+Vill du skriva över den befintliga bilagan?</translation>
+    </message>
+    <message>
+        <source>Preview</source>
+        <translation>Förhandsgranska</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>Redigera</translation>
+    </message>
+    <message>
+        <source>New Text Document</source>
+        <translation>Nytt textdokument</translation>
+    </message>
+    <message>
+        <source>Add file…</source>
+        <translation>Lägg till fil...</translation>
+    </message>
+    <message>
+        <source>Load from Disk…</source>
+        <translation>Läs in från disk...</translation>
+    </message>
+    <message>
+        <source>Save…</source>
+        <translation>Spara...</translation>
+    </message>
+    <message>
+        <source>New Attachment</source>
+        <translation>Ny bilaga</translation>
+    </message>
 </context>
 <context>
     <name>EntryAttributesModel</name>
@@ -3739,62 +4245,6 @@ Fel: %1</translation>
     <message>
         <source>Size</source>
         <translation>Storlek</translation>
-    </message>
-    <message>
-        <source>Title</source>
-        <translation>Titel</translation>
-    </message>
-    <message>
-        <source>Username</source>
-        <translation>Användarnamn</translation>
-    </message>
-    <message>
-        <source>Password</source>
-        <translation>Lösenord</translation>
-    </message>
-    <message>
-        <source>URL</source>
-        <translation>URL</translation>
-    </message>
-    <message>
-        <source>Notes</source>
-        <translation>Anteckningar</translation>
-    </message>
-    <message>
-        <source>Custom Attributes</source>
-        <translation>Anpassade attribut</translation>
-    </message>
-    <message>
-        <source>Icon</source>
-        <translation>Ikon</translation>
-    </message>
-    <message>
-        <source>Color</source>
-        <translation>Färg</translation>
-    </message>
-    <message>
-        <source>Expiration</source>
-        <translation>Förfaller</translation>
-    </message>
-    <message>
-        <source>TOTP</source>
-        <translation>TOTP</translation>
-    </message>
-    <message>
-        <source>Custom Data</source>
-        <translation>Anpassad data</translation>
-    </message>
-    <message>
-        <source>Attachments</source>
-        <translation>Bilagor</translation>
-    </message>
-    <message>
-        <source>Auto-Type</source>
-        <translation>Autoskriv</translation>
-    </message>
-    <message>
-        <source>Tags</source>
-        <translation>Taggar</translation>
     </message>
 </context>
 <context>
@@ -3845,10 +4295,6 @@ Fel: %1</translation>
         <translation>Ändrad</translation>
     </message>
     <message>
-        <source>Accessed</source>
-        <translation>Använd</translation>
-    </message>
-    <message>
         <source>Attachments</source>
         <translation>Bilagor</translation>
     </message>
@@ -3885,10 +4331,6 @@ Fel: %1</translation>
         <translation>Ändrad</translation>
     </message>
     <message>
-        <source>Last access date</source>
-        <translation>Senast använd</translation>
-    </message>
-    <message>
         <source>Attached files</source>
         <translation>Bifogade filer</translation>
     </message>
@@ -3907,6 +4349,10 @@ Fel: %1</translation>
     <message>
         <source>Background Color</source>
         <translation>Bakgrundsfärg</translation>
+    </message>
+    <message>
+        <source>Group Path</source>
+        <translation>Gruppsökväg</translation>
     </message>
 </context>
 <context>
@@ -4076,16 +4522,16 @@ This will leave your passwords and sensitive information vulnerable!
         <translation>Namn (sjunkande)</translation>
     </message>
     <message>
-        <source>unknown</source>
-        <translation>Okänd</translation>
-    </message>
-    <message>
         <source>Export database to HTML file</source>
         <translation>Exportera databas till HTML-fil</translation>
     </message>
     <message>
         <source>HTML file</source>
         <translation>HTML-fil</translation>
+    </message>
+    <message>
+        <source>invalid sort order</source>
+        <translation>Ogiltig sorteringsordning</translation>
     </message>
 </context>
 <context>
@@ -4266,6 +4712,210 @@ Du kan aktivera ikontjänsten från DuckDuckGo, i säkerhetssektionen av program
     </message>
 </context>
 <context>
+    <name>ImageAttachmentsWidget</name>
+    <message>
+        <source>Zoom:</source>
+        <translation>Zoom:</translation>
+    </message>
+    <message>
+        <source>Fit</source>
+        <translation>Anpassa</translation>
+    </message>
+</context>
+<context>
+    <name>ImportWizard</name>
+    <message>
+        <source>Import Wizard</source>
+        <translation>Importguide</translation>
+    </message>
+</context>
+<context>
+    <name>ImportWizardPageReview</name>
+    <message>
+        <source>WizardPage</source>
+        <translation>Guidesida</translation>
+    </message>
+    <message>
+        <source>Entry count: %1</source>
+        <translation>Antal poster: %1</translation>
+    </message>
+    <message>
+        <source>Group</source>
+        <translation>Grupp</translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation>Titel</translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>Användarnamn</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Lösenord</translation>
+    </message>
+    <message>
+        <source>Url</source>
+        <translation>URL</translation>
+    </message>
+    <message>
+        <source>Could not load key file.</source>
+        <translation>Kunde inte läsa in nyckelfil.</translation>
+    </message>
+    <message>
+        <source>Could not open remote database. Password or key file may be incorrect.</source>
+        <translation>Kunde inte öppna fjärrdatabas. Lösenord eller nyckelfil kan vara felaktig.</translation>
+    </message>
+</context>
+<context>
+    <name>ImportWizardPageSelect</name>
+    <message>
+        <source>Form</source>
+        <translation>Formulär</translation>
+    </message>
+    <message>
+        <source>Import File Selection</source>
+        <translation>Val av importfil</translation>
+    </message>
+    <message>
+        <source>Password:</source>
+        <translation>Lösenord:</translation>
+    </message>
+    <message>
+        <source>Key File:</source>
+        <translation>Nyckelfil:</translation>
+    </message>
+    <message>
+        <source>Browse…</source>
+        <translation>Bläddra…</translation>
+    </message>
+    <message>
+        <source>Import Into:</source>
+        <translation>Importera till:</translation>
+    </message>
+    <message>
+        <source>New Database</source>
+        <translation>Ny databas</translation>
+    </message>
+    <message>
+        <source>No unlocked databases available</source>
+        <translation>Inga upplåsta databaser tillgängliga</translation>
+    </message>
+    <message>
+        <source>Existing Database:</source>
+        <translation>Befintlig databas:</translation>
+    </message>
+    <message>
+        <source>Import File:</source>
+        <translation>Importera fil:</translation>
+    </message>
+    <message>
+        <source>Comma Separated Values (.csv)</source>
+        <translation>Kommaseparerade värden (.csv)</translation>
+    </message>
+    <message>
+        <source>1Password Export (.1pux)</source>
+        <translation>1Password-export (.1pux)</translation>
+    </message>
+    <message>
+        <source>1Password Vault (.opvault)</source>
+        <translation>1Password-valv (.opvault)</translation>
+    </message>
+    <message>
+        <source>Bitwarden (.json)</source>
+        <translation>Bitwarden (.json)</translation>
+    </message>
+    <message>
+        <source>KeePass 1 Database (.kdb)</source>
+        <translation>KeePass 1-databas (.kdb)</translation>
+    </message>
+    <message>
+        <source>Open OPVault</source>
+        <translation>Öppna OPVault</translation>
+    </message>
+    <message>
+        <source>Select import file</source>
+        <translation>Välj importfil</translation>
+    </message>
+    <message>
+        <source>All files</source>
+        <translation>Alla filer</translation>
+    </message>
+    <message>
+        <source>Key files</source>
+        <translation>Nyckelfiler</translation>
+    </message>
+    <message>
+        <source>Select key file</source>
+        <translation>Välj nyckelfil</translation>
+    </message>
+    <message>
+        <source>Comma Separated Values</source>
+        <translation>Kommaseparerade värden</translation>
+    </message>
+    <message>
+        <source>1Password Export</source>
+        <translation>1Password-export</translation>
+    </message>
+    <message>
+        <source>Bitwarden JSON Export</source>
+        <translation>Bitwarden JSON-export</translation>
+    </message>
+    <message>
+        <source>1Password Vault</source>
+        <translation>1Password-valv</translation>
+    </message>
+    <message>
+        <source>KeePass1 Database</source>
+        <translation>KeePass 1-databas</translation>
+    </message>
+    <message>
+        <source>Proton Pass (.json)</source>
+        <translation>Proton Pass (.json)</translation>
+    </message>
+    <message>
+        <source>Proton Pass JSON Export</source>
+        <translation>Proton Pass JSON-export</translation>
+    </message>
+    <message>
+        <source>Temporary Database</source>
+        <translation>Temporär databas</translation>
+    </message>
+    <message>
+        <source>Command:</source>
+        <translation>Kommando:</translation>
+    </message>
+    <message>
+        <source>e.g.: &quot;sftp user@hostname&quot; or &quot;scp user@hostname:DatabaseOnRemote.kdbx {TEMP_DATABASE}&quot;</source>
+        <translation>t.ex.: &quot;sftp user@hostname&quot; eller &quot;scp user@hostname:DatabaseOnRemote.kdbx {TEMP_DATABASE}&quot;</translation>
+    </message>
+    <message>
+        <source>Input:</source>
+        <translation>Indata:</translation>
+    </message>
+    <message>
+        <source>e.g.:
+get DatabaseOnRemote.kdbx {TEMP_DATABASE}
+exit
+---
+{TEMP_DATABASE} is used as placeholder to store the database in a temporary location
+The command has to exit. In case of `sftp` as last commend `exit` has to be sent
+         </source>
+        <translation>t.ex.:
+get DatabaseOnRemote.kdbx {TEMP_DATABASE}
+exit
+---
+{TEMP_DATABASE} används som platshållare för att lagra databasen på en tillfällig plats
+Kommandot måste avslutas. Om &quot;sftp&quot; är sista kommentar måste &quot;exit&quot; sändas
+    </translation>
+    </message>
+    <message>
+        <source>Remote Database (.kdbx)</source>
+        <translation>Fjärrdatabas (.kdbx)</translation>
+    </message>
+</context>
+<context>
     <name>KMessageWidget</name>
     <message>
         <source>&amp;Close</source>
@@ -4355,7 +5005,7 @@ Om detta upprepas, kan din databasfil vara skadad.</translation>
     </message>
     <message>
         <source>(HMAC mismatch)</source>
-        <translation>(HMAC matchningsfel)</translation>
+        <translation>(HMAC-matchningsfel)</translation>
     </message>
     <message>
         <source>Unknown cipher</source>
@@ -4409,57 +5059,57 @@ Om detta upprepas, kan din databasfil vara skadad.</translation>
     <message>
         <source>Invalid variant map entry name length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>Ogiltig inmatningsnamnslängd för variantkarta</translation>
     </message>
     <message>
         <source>Invalid variant map entry name data</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>Ogiltig inmatningsnamnsdata för variantkarta</translation>
     </message>
     <message>
         <source>Invalid variant map entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>Ogiltig inmatningsvärdeslängd för variantkarta</translation>
     </message>
     <message>
         <source>Invalid variant map entry value data</source>
         <extracomment>Translation comment: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>Ogiltig inmatningsvärdesdata för variantkarta</translation>
     </message>
     <message>
         <source>Invalid variant map Bool entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>Ogiltig Bool-inmatningsvärdeslängd för variantkarta</translation>
     </message>
     <message>
         <source>Invalid variant map Int32 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>Ogiltig Int32-inmatningsvärdeslängd för variantkarta</translation>
     </message>
     <message>
         <source>Invalid variant map UInt32 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>Ogiltig UInt32-inmatningsvärdeslängd för variantkarta</translation>
     </message>
     <message>
         <source>Invalid variant map Int64 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>Ogiltig Int64-inmatningsvärdeslängd för variantkarta</translation>
     </message>
     <message>
         <source>Invalid variant map UInt64 entry value length</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>Ogiltig UInt64-inmatningsvärdeslängd för variantkarta</translation>
     </message>
     <message>
         <source>Invalid variant map entry type</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>Ogiltig inmatningstyp för variantkarta</translation>
     </message>
     <message>
         <source>Invalid variant map field type size</source>
         <extracomment>Translation: variant map = data structure for storing meta data</extracomment>
-        <translation type="unfinished"/>
+        <translation>Ogiltig fälttypstorlek för variantkarta</translation>
     </message>
 </context>
 <context>
@@ -4499,7 +5149,7 @@ Om detta upprepas, kan din databasfil vara skadad.</translation>
     </message>
     <message>
         <source>Invalid compression flags length</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltig längd på komprimeringsflaggor</translation>
     </message>
     <message>
         <source>Unsupported compression algorithm</source>
@@ -4519,15 +5169,15 @@ Om detta upprepas, kan din databasfil vara skadad.</translation>
     </message>
     <message>
         <source>Invalid start bytes size</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltig startbytestorlek</translation>
     </message>
     <message>
         <source>Invalid random stream id size</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltig storlek på slumpmässig ström-id</translation>
     </message>
     <message>
         <source>Invalid inner random stream cipher</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltigt inre slumpmässigt strömchiffer</translation>
     </message>
     <message>
         <source>Failed to read database file.</source>
@@ -4540,7 +5190,7 @@ You can import it by clicking on Database &gt; 'Import KeePass 1 database…'.
 This is a one-way migration. You won&apos;t be able to open the imported database with the old KeePassX 0.4 version.</source>
         <translation>Den valda filen är en gammal KeePass 1-databas (.kdb).
 
-Du kan importera den genom att klicka på Databas &gt; &quot;Importera KeePass 1-databas ...&quot;.
+Du kan importera den genom att klicka på Databas &gt; &quot;Importera KeePass 1-databas…&quot;.
 Det här är en envägsmigrering. Du kommer inte att kunna öppna den importerade databasen med den gamla KeePassX 0.4-versionen.</translation>
     </message>
     <message>
@@ -4700,17 +5350,6 @@ Rad %2, kolumn: %3</translation>
     </message>
 </context>
 <context>
-    <name>KeePass1OpenWidget</name>
-    <message>
-        <source>Import KeePass1 Database</source>
-        <translation>Importera KeePass1-databas</translation>
-    </message>
-    <message>
-        <source>Unable to open the database.</source>
-        <translation>Kan inte öppna databasen.</translation>
-    </message>
-</context>
-<context>
     <name>KeePass1Reader</name>
     <message>
         <source>Unable to read keyfile.</source>
@@ -4781,7 +5420,7 @@ Om detta upprepas, kan din databasfil vara skadad.</translation>
     </message>
     <message>
         <source>Invalid group field type number</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltigt fältstypnummer för grupp</translation>
     </message>
     <message>
         <source>Invalid group field size</source>
@@ -4789,27 +5428,27 @@ Om detta upprepas, kan din databasfil vara skadad.</translation>
     </message>
     <message>
         <source>Read group field data doesn&apos;t match size</source>
-        <translation type="unfinished"/>
+        <translation>Inläst fältdata för grupp stämmer inte med storleken</translation>
     </message>
     <message>
         <source>Incorrect group id field size</source>
-        <translation type="unfinished"/>
+        <translation>Felaktig fältstorlek för grupp-id</translation>
     </message>
     <message>
         <source>Incorrect group creation time field size</source>
-        <translation type="unfinished"/>
+        <translation>Felaktig fältstorlek för gruppskapandetid</translation>
     </message>
     <message>
         <source>Incorrect group modification time field size</source>
-        <translation type="unfinished"/>
+        <translation>Felaktig fältstorlek för gruppändringstid</translation>
     </message>
     <message>
         <source>Incorrect group access time field size</source>
-        <translation type="unfinished"/>
+        <translation>Felaktig fältstorlek för gruppåtkomsttid</translation>
     </message>
     <message>
         <source>Incorrect group expiry time field size</source>
-        <translation type="unfinished"/>
+        <translation>Felaktig fältstorlek för grupputgångstid</translation>
     </message>
     <message>
         <source>Incorrect group icon field size</source>
@@ -4829,7 +5468,7 @@ Om detta upprepas, kan din databasfil vara skadad.</translation>
     </message>
     <message>
         <source>Missing entry field type number</source>
-        <translation type="unfinished"/>
+        <translation>Typnummer för inmatningsfält saknas</translation>
     </message>
     <message>
         <source>Invalid entry field size</source>
@@ -4841,7 +5480,7 @@ Om detta upprepas, kan din databasfil vara skadad.</translation>
     </message>
     <message>
         <source>Invalid entry UUID field size</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltig fältstorlek för inmatnings-UUID</translation>
     </message>
     <message>
         <source>Invalid entry group id field size</source>
@@ -5067,10 +5706,6 @@ Vill du verkligen fortsätta med den här filen?</translation>
         <translation>&amp;Tidigare databaser</translation>
     </message>
     <message>
-        <source>&amp;Import</source>
-        <translation>&amp;Importera</translation>
-    </message>
-    <message>
         <source>&amp;Export</source>
         <translation>&amp;Exportera</translation>
     </message>
@@ -5124,7 +5759,7 @@ Vill du verkligen fortsätta med den här filen?</translation>
     </message>
     <message>
         <source>&amp;Open Database…</source>
-        <translation>&amp;Öppna databas...</translation>
+        <translation>&amp;Öppna databas…</translation>
     </message>
     <message>
         <source>&amp;Save Database</source>
@@ -5136,59 +5771,35 @@ Vill du verkligen fortsätta med den här filen?</translation>
     </message>
     <message>
         <source>&amp;New Database…</source>
-        <translation>&amp;Ny databas...</translation>
-    </message>
-    <message>
-        <source>Create a new database</source>
-        <translation>Skapa en ny databas</translation>
+        <translation>&amp;Ny databas…</translation>
     </message>
     <message>
         <source>&amp;Merge From Database…</source>
-        <translation>S&amp;lå samman från databas...</translation>
-    </message>
-    <message>
-        <source>Merge from another KDBX database</source>
-        <translation>Infoga från annan KDBX-databas</translation>
+        <translation>S&amp;lå samman från databas…</translation>
     </message>
     <message>
         <source>&amp;New Entry…</source>
-        <translation>&amp;Ny post...</translation>
-    </message>
-    <message>
-        <source>Add a new entry</source>
-        <translation>Lägg till en ny post</translation>
+        <translation>&amp;Ny post…</translation>
     </message>
     <message>
         <source>&amp;Edit Entry…</source>
-        <translation>&amp;Redigera post...</translation>
-    </message>
-    <message>
-        <source>View or edit entry</source>
-        <translation>Visa eller redigera posten</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Entry…</source>
-        <translation>&amp;Ta bort post...</translation>
+        <translation>&amp;Redigera post…</translation>
     </message>
     <message>
         <source>&amp;New Group…</source>
-        <translation>&amp;Ny grupp...</translation>
-    </message>
-    <message>
-        <source>Add a new group</source>
-        <translation>Lägg till en ny grupp</translation>
+        <translation>&amp;Ny grupp…</translation>
     </message>
     <message>
         <source>&amp;Edit Group…</source>
-        <translation>&amp;Redigera grupp...</translation>
+        <translation>&amp;Redigera grupp…</translation>
     </message>
     <message>
         <source>&amp;Delete Group…</source>
-        <translation>&amp;Ta bort grupp...</translation>
+        <translation>&amp;Ta bort grupp…</translation>
     </message>
     <message>
         <source>Download All &amp;Favicons…</source>
-        <translation>Ladda ner alla favikoner...</translation>
+        <translation>Ladda ner alla favikoner…</translation>
     </message>
     <message>
         <source>Sort &amp;A-Z</source>
@@ -5200,63 +5811,39 @@ Vill du verkligen fortsätta med den här filen?</translation>
     </message>
     <message>
         <source>Sa&amp;ve Database As…</source>
-        <translation>S&amp;para databas som...</translation>
+        <translation>S&amp;para databas som…</translation>
     </message>
     <message>
         <source>Database &amp;Security…</source>
-        <translation>Databas&amp;säkerhet...</translation>
+        <translation>Databas&amp;säkerhet…</translation>
     </message>
     <message>
         <source>Database &amp;Reports…</source>
         <translation>Databas&amp;rapporter…</translation>
     </message>
     <message>
-        <source>Statistics, health check, etc.</source>
-        <translation>Statistik, hälsokontroll, etc.</translation>
-    </message>
-    <message>
         <source>&amp;Database Settings…</source>
-        <translation>&amp;Databasinställningar...</translation>
-    </message>
-    <message>
-        <source>Database settings</source>
-        <translation>Databasinställningar</translation>
+        <translation>&amp;Databasinställningar…</translation>
     </message>
     <message>
         <source>&amp;Clone Entry…</source>
-        <translation>&amp;Klona post...</translation>
+        <translation>&amp;Klona post…</translation>
     </message>
     <message>
         <source>Move u&amp;p</source>
         <translation>Flytta u&amp;pp</translation>
     </message>
     <message>
-        <source>Move entry one step up</source>
-        <translation>Flytta upp posten ett steg</translation>
-    </message>
-    <message>
         <source>Move do&amp;wn</source>
         <translation>Flytta &amp;ner</translation>
-    </message>
-    <message>
-        <source>Move entry one step down</source>
-        <translation>Flytta ner posten ett steg</translation>
     </message>
     <message>
         <source>Copy &amp;Username</source>
         <translation>Kopiera an&amp;vändarnamn</translation>
     </message>
     <message>
-        <source>Copy username to clipboard</source>
-        <translation>Kopiera användarnamn till urklipp</translation>
-    </message>
-    <message>
         <source>Copy &amp;Password</source>
         <translation>Kopiera &amp;lösenord</translation>
-    </message>
-    <message>
-        <source>Copy password to clipboard</source>
-        <translation>Kopiera lösenord till urklipp</translation>
     </message>
     <message>
         <source>&amp;Settings</source>
@@ -5291,56 +5878,32 @@ Vill du verkligen fortsätta med den här filen?</translation>
         <translation>&amp;Titel</translation>
     </message>
     <message>
-        <source>Copy title to clipboard</source>
-        <translation>Kopiera titel till urklipp</translation>
-    </message>
-    <message>
         <source>Copy &amp;URL</source>
         <translation>Kopiera &amp;URL</translation>
-    </message>
-    <message>
-        <source>Copy URL to clipboard</source>
-        <translation>Kopiera URL till urklipp</translation>
     </message>
     <message>
         <source>&amp;Notes</source>
         <translation>&amp;Anteckningar</translation>
     </message>
     <message>
-        <source>Copy notes to clipboard</source>
-        <translation>Kopiera anteckningar till urklipp</translation>
-    </message>
-    <message>
         <source>&amp;CSV File…</source>
-        <translation>&amp;CSV-fil...</translation>
+        <translation>&amp;CSV-fil…</translation>
     </message>
     <message>
         <source>&amp;HTML File…</source>
-        <translation>&amp;HTML-fil...</translation>
+        <translation>&amp;HTML-fil…</translation>
     </message>
     <message>
         <source>KeePass 1 Database…</source>
         <translation>KeePass 1-databas…</translation>
     </message>
     <message>
-        <source>Import a KeePass 1 database</source>
-        <translation>Importera en KeePass1-databas</translation>
-    </message>
-    <message>
         <source>1Password Vault…</source>
         <translation>1Password Vault…</translation>
     </message>
     <message>
-        <source>Import a 1Password Vault</source>
-        <translation>Importera ett 1Password-valv</translation>
-    </message>
-    <message>
         <source>CSV File…</source>
         <translation>CSV-file…</translation>
-    </message>
-    <message>
-        <source>Import a CSV file</source>
-        <translation>Importera en CSV-fil</translation>
     </message>
     <message>
         <source>Show TOTP</source>
@@ -5352,7 +5915,7 @@ Vill du verkligen fortsätta med den här filen?</translation>
     </message>
     <message>
         <source>Set up TOTP…</source>
-        <translation>Konfigurera TOTP...</translation>
+        <translation>Konfigurera TOTP…</translation>
     </message>
     <message>
         <source>Copy &amp;TOTP</source>
@@ -5385,10 +5948,6 @@ Vill du verkligen fortsätta med den här filen?</translation>
     <message>
         <source>&amp;Online Help</source>
         <translation>&amp;Online-hjälp</translation>
-    </message>
-    <message>
-        <source>Go to online documentation</source>
-        <translation>Gå till online-dokumentationen</translation>
     </message>
     <message>
         <source>&amp;User Guide</source>
@@ -5432,7 +5991,11 @@ Vill du verkligen fortsätta med den här filen?</translation>
     </message>
     <message>
         <source>Classic (Platform-native)</source>
-        <translation>Klassisk (Platfformsintegration)</translation>
+        <translation>Klassisk (plattformsintegration)</translation>
+    </message>
+    <message>
+        <source>Show Menubar</source>
+        <translation>Visa menyfält</translation>
     </message>
     <message>
         <source>Show Toolbar</source>
@@ -5460,11 +6023,7 @@ Vill du verkligen fortsätta med den här filen?</translation>
     </message>
     <message>
         <source>&amp;XML File…</source>
-        <translation>&amp;XML-fil...</translation>
-    </message>
-    <message>
-        <source>XML File…</source>
-        <translation>XML-fil</translation>
+        <translation>&amp;XML-fil…</translation>
     </message>
     <message>
         <source>Clear history</source>
@@ -5491,12 +6050,6 @@ Den här versionen är inte avsedd för produktionsanvändning.</translation>
 Expect some bugs and minor issues, this version is meant for testing purposes.</source>
         <translation>Du använder en förhandsversion av KeePassXC.
 Förvänta dig några fel och mindre problem, den här versionen är avsedd för teständamål.</translation>
-    </message>
-    <message>
-        <source>WARNING: Your Qt version may cause KeePassXC to crash with an On-Screen Keyboard.
-We recommend you use the AppImage available on our downloads page.</source>
-        <translation>VARNING! Din Qt-version kan orsaka att KeePassXC kraschar med ett skärmtangentbord.
-Vi rekommenderar att du använder den AppImage som finns på vår nerladdningssida.</translation>
     </message>
     <message>
         <source>No Tags</source>
@@ -5536,7 +6089,7 @@ Vi rekommenderar att du använder den AppImage som finns på vår nerladdningssi
     </message>
     <message>
         <source>Please present or touch your YubiKey to continue…</source>
-        <translation>Presentera eller rör vid din YubiKey för att fortsätta...</translation>
+        <translation>Presentera eller rör vid din YubiKey för att fortsätta…</translation>
     </message>
     <message>
         <source>Restart Application?</source>
@@ -5551,16 +6104,328 @@ Vi rekommenderar att du använder den AppImage som finns på vår nerladdningssi
         <translation>Tillåt skärmklipp</translation>
     </message>
     <message>
-        <source>Passkeys…</source>
-        <translation>Passnycklar...</translation>
+        <source>1Password 1PUX...</source>
+        <translation>1Password 1PUX...</translation>
     </message>
     <message>
-        <source>Passkeys</source>
-        <translation>Passnycklar</translation>
+        <source>Import a 1Password 1PUX file</source>
+        <translation>Importera en 1Password 1PUX-fil</translation>
+    </message>
+    <message>
+        <source>Import…</source>
+        <translation>Importera…</translation>
+    </message>
+    <message>
+        <source>Passkeys…</source>
+        <translation>Passnycklar…</translation>
     </message>
     <message>
         <source>Import Passkey</source>
         <translation>Importera passnyckel</translation>
+    </message>
+    <message>
+        <source>Remote S&amp;ync…</source>
+        <translation>Fjärrs&amp;ynkronisering…</translation>
+    </message>
+    <message>
+        <source>Quit Application</source>
+        <translation>Avsluta programmet</translation>
+    </message>
+    <message>
+        <source>Open About Dialog</source>
+        <translation>Öppna Om-sidan</translation>
+    </message>
+    <message>
+        <source>Open Database</source>
+        <translation>Öppna databas</translation>
+    </message>
+    <message>
+        <source>Create Database</source>
+        <translation>Skapa databas</translation>
+    </message>
+    <message>
+        <source>Merge From Database</source>
+        <translation>Infoga från databas</translation>
+    </message>
+    <message>
+        <source>Edit Entry</source>
+        <translation>Redigera post</translation>
+    </message>
+    <message>
+        <source>Delete Entry</source>
+        <translation>Ta bort post</translation>
+    </message>
+    <message>
+        <source>Create Group</source>
+        <translation>Skapa grupp</translation>
+    </message>
+    <message>
+        <source>Edit Group</source>
+        <translation>Redigera grupp</translation>
+    </message>
+    <message>
+        <source>Delete Group</source>
+        <translation>Ta bort grupp</translation>
+    </message>
+    <message>
+        <source>Download All Favicons</source>
+        <translation>Ladda ner alla favikoner</translation>
+    </message>
+    <message>
+        <source>Sort Groups A-Z</source>
+        <translation>Sortera grupper A-Z</translation>
+    </message>
+    <message>
+        <source>Sort Groups Z-A</source>
+        <translation>Sortera grupper Z-A</translation>
+    </message>
+    <message>
+        <source>Save Database As</source>
+        <translation>Spara databas som</translation>
+    </message>
+    <message>
+        <source>Show Database Security</source>
+        <translation>Visa databassäkerhet</translation>
+    </message>
+    <message>
+        <source>Show Database Reports</source>
+        <translation>Visa databasrapporter</translation>
+    </message>
+    <message>
+        <source>Show Database Settings</source>
+        <translation>Visa databasinställningar</translation>
+    </message>
+    <message>
+        <source>Show Passkeys</source>
+        <translation>Visa passnycklar</translation>
+    </message>
+    <message>
+        <source>Clone Entry</source>
+        <translation>Klona post</translation>
+    </message>
+    <message>
+        <source>Move Entry Up</source>
+        <translation>Flytta upp post</translation>
+    </message>
+    <message>
+        <source>Move Entry Down</source>
+        <translation>Flytta ner post</translation>
+    </message>
+    <message>
+        <source>Copy Username</source>
+        <translation>Kopiera användarnamn</translation>
+    </message>
+    <message>
+        <source>Copy Password</source>
+        <translation>Kopiera lösenord</translation>
+    </message>
+    <message>
+        <source>Show Application Settings</source>
+        <translation>Visa programinställningar</translation>
+    </message>
+    <message>
+        <source>Show Password Generator</source>
+        <translation>Visa lösenordsgenerator</translation>
+    </message>
+    <message>
+        <source>Remove Passkey From Entry</source>
+        <translation>Ta bort passnyckeln från posten</translation>
+    </message>
+    <message>
+        <source>Perform Auto-Type: {USERNAME}</source>
+        <translation>Utför autoskriv: {ANVÄNDARNAMN}</translation>
+    </message>
+    <message>
+        <source>Perform Auto-Type: {USERNAME}{ENTER}</source>
+        <translation>Utför autoskriv: {ANVÄNDARNAMN}{RETUR}</translation>
+    </message>
+    <message>
+        <source>Perform Auto-Type: {PASSWORD}</source>
+        <translation>Utför autoskriv: {LÖSENORD}</translation>
+    </message>
+    <message>
+        <source>Perform Auto-Type: {PASSWORD}{ENTER}</source>
+        <translation>Utför autoskriv: {LÖSENORD}{RETUR}</translation>
+    </message>
+    <message>
+        <source>Perform Auto-Type: {TOTP}</source>
+        <translation>Utför autoskriv: {TOTP}</translation>
+    </message>
+    <message>
+        <source>Copy Title</source>
+        <translation>Kopiera titel</translation>
+    </message>
+    <message>
+        <source>Copy URL</source>
+        <translation>Kopiera URL</translation>
+    </message>
+    <message>
+        <source>Copy Notes</source>
+        <translation>Kopiera anteckningar</translation>
+    </message>
+    <message>
+        <source>Export to CSV</source>
+        <translation>Exportera till CSV</translation>
+    </message>
+    <message>
+        <source>Export to HTML</source>
+        <translation>Exportera till HTML</translation>
+    </message>
+    <message>
+        <source>Import KeePass1 Database</source>
+        <translation>Importera KeePass1-databas</translation>
+    </message>
+    <message>
+        <source>Import 1Password Vault</source>
+        <translation>Importera ett 1Password-valv</translation>
+    </message>
+    <message>
+        <source>Import CSV File</source>
+        <translation>Importera en CSV-fil</translation>
+    </message>
+    <message>
+        <source>Show TOTP QR Code</source>
+        <translation>Visa TOTP QR-kod</translation>
+    </message>
+    <message>
+        <source>Set up TOTP</source>
+        <translation>Konfigurera TOTP</translation>
+    </message>
+    <message>
+        <source>Empty Recycle Bin</source>
+        <translation>Töm papperskorgen</translation>
+    </message>
+    <message>
+        <source>Open Donation Website</source>
+        <translation>Öppna donationssidan</translation>
+    </message>
+    <message>
+        <source>Open Bug Report</source>
+        <translation>Öppna felrapport</translation>
+    </message>
+    <message>
+        <source>Open Online Documentation</source>
+        <translation>Öppna online-dokumentation</translation>
+    </message>
+    <message>
+        <source>Open Keyboard Shortcuts Guide</source>
+        <translation>Öppna guiden för tangentbordgenvägar</translation>
+    </message>
+    <message>
+        <source>Save Database Backup</source>
+        <translation>Spara säkerhetskopia av databasen</translation>
+    </message>
+    <message>
+        <source>SSH Agent: Add Key</source>
+        <translation>SSH Agent: Lägg till nyckel</translation>
+    </message>
+    <message>
+        <source>SSH Agent: Remove Key</source>
+        <translation>SSH Agent: Ta bort nyckel</translation>
+    </message>
+    <message>
+        <source>Toggle Compact Mode</source>
+        <translation>Kompaktläge PÅ/AV</translation>
+    </message>
+    <message>
+        <source>Set Theme: Automatic</source>
+        <translation>Ange tema: Automatiskt</translation>
+    </message>
+    <message>
+        <source>Set Theme: Light</source>
+        <translation>Ange tema: Ljust</translation>
+    </message>
+    <message>
+        <source>Set Theme: Dark</source>
+        <translation>Ange tema: Mörkt</translation>
+    </message>
+    <message>
+        <source>Set Theme: Classic</source>
+        <translation>Ange tema: Klassiskt</translation>
+    </message>
+    <message>
+        <source>Toggle Show Menubar</source>
+        <translation>Menyfält på/av</translation>
+    </message>
+    <message>
+        <source>Toggle Show Toolbar</source>
+        <translation>Visa/Dölj verktygsfält</translation>
+    </message>
+    <message>
+        <source>Toggle Show Preview Panel</source>
+        <translation>Visa/Dölj förhandsgranskningspanel</translation>
+    </message>
+    <message>
+        <source>Toggle Always on Top</source>
+        <translation>Alltid överst PÅ/AV</translation>
+    </message>
+    <message>
+        <source>Toggle Hide Usernames</source>
+        <translation>Visa/Dölj användarnamn</translation>
+    </message>
+    <message>
+        <source>Toggle Hide Passwords</source>
+        <translation>Visa/Dölj lösenord</translation>
+    </message>
+    <message>
+        <source>Export to XML</source>
+        <translation>Exportera till XML</translation>
+    </message>
+    <message>
+        <source>Toggle Allow Screen Capture</source>
+        <translation>Tillåt/Neka skärmklipp</translation>
+    </message>
+    <message>
+        <source>Show Group Panel</source>
+        <translation>Visa gruppanel</translation>
+    </message>
+    <message>
+        <source>Toggle Show Group Panel</source>
+        <translation>Visa/Dölj gruppanel</translation>
+    </message>
+    <message>
+        <source>Setup Remote Sync…</source>
+        <translation>Ställ in fjärrsynkronisering…</translation>
+    </message>
+    <message>
+        <source>Password Generator</source>
+        <translation>Lösenordsgenerator</translation>
+    </message>
+    <message>
+        <source>Clear SSH Agent</source>
+        <translation>Rensa SSH-agent</translation>
+    </message>
+    <message>
+        <source>Clear all identities in ssh-agent</source>
+        <translation>Ta bort alla identiteter i SSH-agenten</translation>
+    </message>
+    <message>
+        <source>New Entry</source>
+        <translation>Ny post</translation>
+    </message>
+    <message>
+        <source>Edit Entry…</source>
+        <translation>Redigera post…</translation>
+    </message>
+    <message>
+        <source>E&amp;xpire Entry</source>
+        <translation>Post &amp;upphör</translation>
+    </message>
+    <message>
+        <source>Expire Entry</source>
+        <translation>Post upphör</translation>
+    </message>
+    <message>
+        <source>&amp;Delete Entry</source>
+        <translation>&amp;Ta bort post</translation>
+    </message>
+    <message numerus="yes">
+        <source>Move selected entry(s) to the recycle bin</source>
+        <translation><numerusform>Flytta markerad post till papperskorgen</numerusform><numerusform>Flytta markerade poster till papperskorgen</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Permanently delete the selected entry(s)</source>
+        <translation><numerusform>Ta bort markerad post permanent</numerusform><numerusform>Ta bort markerade poster permanent</numerusform></translation>
     </message>
 </context>
 <context>
@@ -5606,62 +6471,41 @@ Vi rekommenderar att du använder den AppImage som finns på vår nerladdningssi
     </message>
 </context>
 <context>
+    <name>MergeDialog</name>
+    <message>
+        <source>Database Merge Confirmation</source>
+        <translation>Bekräfta databassammanslagning</translation>
+    </message>
+    <message>
+        <source>Merge</source>
+        <translation>Sammanfoga</translation>
+    </message>
+    <message>
+        <source>Group</source>
+        <translation>Grupp</translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation>Titel</translation>
+    </message>
+    <message>
+        <source>UUID</source>
+        <translation>UUID: </translation>
+    </message>
+    <message>
+        <source>Details</source>
+        <translation>Detaljerat</translation>
+    </message>
+    <message>
+        <source>Change</source>
+        <translation>Ändra</translation>
+    </message>
+</context>
+<context>
     <name>Merger</name>
-    <message>
-        <source>Creating missing %1 [%2]</source>
-        <translation>Skapar saknad %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Relocating %1 [%2]</source>
-        <translation>Omplacerar %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Overwriting %1 [%2]</source>
-        <translation>Skriver över %1[%2]</translation>
-    </message>
-    <message>
-        <source>older entry merged from database &quot;%1&quot;</source>
-        <translation>äldre post infogad från databas &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>Adding backup for older target %1 [%2]</source>
-        <translation>Lägger till säkerhetskopia från äldre mål %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Adding backup for older source %1 [%2]</source>
-        <translation>Lägger till säkerhetskopia från äldre källa %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Reapplying older target entry on top of newer source %1 [%2]</source>
-        <translation>Återanvänder äldre målpost ovanpå nyare källa %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Reapplying older source entry on top of newer target %1 [%2]</source>
-        <translation>Återanvänder äldre källpost ovanpå nyare mål %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Synchronizing from newer source %1 [%2]</source>
-        <translation>Synkroniserar från nyare källa %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Synchronizing from older source %1 [%2]</source>
-        <translation>Synkroniserar från äldre källa %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Deleting child %1 [%2]</source>
-        <translation>Tar bort underpost %1 [%2]</translation>
-    </message>
-    <message>
-        <source>Deleting orphan %1 [%2]</source>
-        <translation>Tar bort post %1 [%2]</translation>
-    </message>
     <message>
         <source>Changed deleted objects</source>
         <translation>Ändrade borttagna objekt</translation>
-    </message>
-    <message>
-        <source>Adding missing icon %1</source>
-        <translation>Lägger till saknad ikon %1</translation>
     </message>
     <message>
         <source>Removed custom data %1 [%2]</source>
@@ -5670,6 +6514,74 @@ Vi rekommenderar att du använder den AppImage som finns på vår nerladdningssi
     <message>
         <source>Adding custom data %1 [%2]</source>
         <translation>Lägger till anpassad data %1 [%2]</translation>
+    </message>
+    <message>
+        <source>Added</source>
+        <translation>Tillagd</translation>
+    </message>
+    <message>
+        <source>Modified</source>
+        <translation>Ändrad</translation>
+    </message>
+    <message>
+        <source>Moved</source>
+        <translation>Flyttad</translation>
+    </message>
+    <message>
+        <source>Deleted</source>
+        <translation>Borttagen</translation>
+    </message>
+    <message>
+        <source>Previous location: %1</source>
+        <translation>Föregående plats: %1</translation>
+    </message>
+    <message>
+        <source>Number of entries in group: %1</source>
+        <translation>Antal poster i gruppen: %1</translation>
+    </message>
+    <message>
+        <source>Group name</source>
+        <translation>Gruppnamn</translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation>Anteckningar</translation>
+    </message>
+    <message>
+        <source>Icon (UUID)</source>
+        <translation>Ikon (UUID)</translation>
+    </message>
+    <message>
+        <source>Icon (Number)</source>
+        <translation>Ikon (Nummer)</translation>
+    </message>
+    <message>
+        <source>Expiry time</source>
+        <translation>Förfallotid</translation>
+    </message>
+    <message>
+        <source>Modification time</source>
+        <translation>Ändrad</translation>
+    </message>
+    <message>
+        <source>%1 (Add local modifications to new entry)</source>
+        <translation>%1 (Lägg till lokala ändringar i ny post)</translation>
+    </message>
+    <message>
+        <source>%1 (Add new modifications to existing entry)</source>
+        <translation>%1 (Lägg till nya ändringar i befintlig post)</translation>
+    </message>
+    <message>
+        <source>Explicit deletion</source>
+        <translation>Explicit borttagning</translation>
+    </message>
+    <message>
+        <source>Implicit deletion (e.g. removal of parent group)</source>
+        <translation>Implicit borttagning (t.ex. borttagning av överordnad grupp)</translation>
+    </message>
+    <message>
+        <source>Adding new icon %1</source>
+        <translation>Lägger till ny ikon %1</translation>
     </message>
 </context>
 <context>
@@ -5779,15 +6691,6 @@ Vi rekommenderar att du använder den AppImage som finns på vår nerladdningssi
     </message>
 </context>
 <context>
-    <name>OpVaultOpenWidget</name>
-    <message>
-        <source>Read Database did not produce an instance
-%1</source>
-        <translation>Läsning av databas producerade inte någon instans
-%1</translation>
-    </message>
-</context>
-<context>
     <name>OpVaultReader</name>
     <message>
         <source>Directory .opvault must exist</source>
@@ -5839,10 +6742,6 @@ Vi rekommenderar att du använder den AppImage som finns på vår nerladdningssi
     <message>
         <source>Found zero keys</source>
         <translation>Hittade inga nycklar</translation>
-    </message>
-    <message>
-        <source>Failed to read public key.</source>
-        <translation>Kunde inte läsa offentlig nyckel.</translation>
     </message>
     <message>
         <source>Corrupted key file, reading private key failed</source>
@@ -5928,6 +6827,18 @@ Vi rekommenderar att du använder den AppImage som finns på vår nerladdningssi
         <source>Unexpected EOF when writing private key</source>
         <translation>Oväntad EOF, vid skrivning av privat nyckel</translation>
     </message>
+    <message>
+        <source>(encrypted)</source>
+        <translation>(krypterad)</translation>
+    </message>
+    <message>
+        <source>Failed to read key file: %1</source>
+        <translation>Kunde inte läsa nyckelfil: %1</translation>
+    </message>
+    <message>
+        <source>Failed to read public key: %1</source>
+        <translation>Kunde inte läsa offentlig nyckel: %1</translation>
+    </message>
 </context>
 <context>
     <name>OpenSSHKeyGenDialog</name>
@@ -5955,10 +6866,6 @@ Vi rekommenderar att du använder den AppImage som finns på vår nerladdningssi
         <translation>KeePassXC - Passnyckelexport</translation>
     </message>
     <message>
-        <source>Export the following Passkey entries.</source>
-        <translation>Exportera följande passnyckelposter.</translation>
-    </message>
-    <message>
         <source>Filenames will be generated with title and .passkey file extension.</source>
         <translation>Filnamn genereras med namn och .passkey som filnamnstillägg.</translation>
     </message>
@@ -5978,13 +6885,13 @@ Vi rekommenderar att du använder den AppImage som finns på vår nerladdningssi
         <source>Export to folder</source>
         <translation>Exportera till mapp</translation>
     </message>
+    <message>
+        <source>Export the following passkey entries.</source>
+        <translation>Exportera följande passnyckelposter.</translation>
+    </message>
 </context>
 <context>
     <name>PasskeyExporter</name>
-    <message>
-        <source>KeePassXC: Passkey Export</source>
-        <translation>KeePassXC: Passnyckelexport</translation>
-    </message>
     <message>
         <source>File &quot;%1.passkey&quot; already exists.
 Do you want to overwrite it?
@@ -6005,6 +6912,10 @@ Vill du skriva över den?
         <source>Cannot write to file</source>
         <translation>Kan inte skriva till fil</translation>
     </message>
+    <message>
+        <source>Overwrite Existing File?</source>
+        <translation>Vill du skriva över befintlig fil?</translation>
+    </message>
 </context>
 <context>
     <name>PasskeyImportDialog</name>
@@ -6013,20 +6924,8 @@ Vill du skriva över den?
         <translation>KeePassXC - Passnyckelimport</translation>
     </message>
     <message>
-        <source>Do you want to import the Passkey?</source>
-        <translation>Vill du importera passnyckeln?</translation>
-    </message>
-    <message>
-        <source>URL: %1</source>
-        <translation>URL: %1</translation>
-    </message>
-    <message>
         <source>Username: %1</source>
         <translation>Användarnamn: %1</translation>
-    </message>
-    <message>
-        <source>Use default group (Imported Passkeys)</source>
-        <translation>Använd standardgrupp (Importerade passnycklar)</translation>
     </message>
     <message>
         <source>Group</source>
@@ -6035,10 +6934,6 @@ Vill du skriva över den?
     <message>
         <source>Database</source>
         <translation>Databas</translation>
-    </message>
-    <message>
-        <source>Select Database</source>
-        <translation>Välj databas</translation>
     </message>
     <message>
         <source>Import Passkey</source>
@@ -6053,12 +6948,28 @@ Vill du skriva över den?
         <translation>Avbryt</translation>
     </message>
     <message>
-        <source>Database: %1</source>
-        <translation>Databas: %1</translation>
+        <source>Entry</source>
+        <translation>Post</translation>
     </message>
     <message>
-        <source>Group:</source>
-        <translation>Grupp:</translation>
+        <source>Create new entry</source>
+        <translation>Skapa ny post</translation>
+    </message>
+    <message>
+        <source>Relying Party: %1</source>
+        <translation>Förlitande part: %1</translation>
+    </message>
+    <message>
+        <source>Import the following passkey:</source>
+        <translation>Importera följande passnyckel:</translation>
+    </message>
+    <message>
+        <source>Import the following passkey to this entry:</source>
+        <translation>Importera följande passnyckel till denna post:</translation>
+    </message>
+    <message>
+        <source>Default passkeys group (Imported Passkeys)</source>
+        <translation>Ordinarie passnyckelgrupp (Importerade passnycklar)</translation>
     </message>
 </context>
 <context>
@@ -6072,10 +6983,6 @@ Vill du skriva över den?
         <translation>Alla filer</translation>
     </message>
     <message>
-        <source>Open Passkey file</source>
-        <translation>Öppna passnyckelfil</translation>
-    </message>
-    <message>
         <source>Cannot open file</source>
         <translation>Kan inte öppna fil</translation>
     </message>
@@ -6084,16 +6991,28 @@ Vill du skriva över den?
         <translation>Kan inte öppna filen &quot;%1&quot; för läsning.</translation>
     </message>
     <message>
-        <source>Cannot import Passkey</source>
-        <translation>Kan inte importera passnyckel</translation>
-    </message>
-    <message>
-        <source>Cannot import Passkey file &quot;%1&quot;. Data is missing.</source>
+        <source>Cannot import passkey file &quot;%1&quot;. Data is missing.</source>
         <translation>Kan inte importera passnyckelfil &quot;%1&quot;. Data saknas.</translation>
     </message>
     <message>
-        <source>Cannot import Passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
+        <source>Cannot import passkey file &quot;%1&quot;.
+The following data is missing:
+%2</source>
+        <translation>Kan inte importera passnyckelfil &quot;%1&quot;.
+Följande data saknas:
+%2</translation>
+    </message>
+    <message>
+        <source>Cannot import passkey file &quot;%1&quot;. Private key is missing or malformed.</source>
         <translation>Kan inte importera passnyckelfil &quot;%1&quot;. Privat nyckel saknas eller är felaktig.</translation>
+    </message>
+    <message>
+        <source>Open Passkey File</source>
+        <translation>Öppna passnyckelfil</translation>
+    </message>
+    <message>
+        <source>Passkey Import Failed</source>
+        <translation>Kunde inte importera passnyckel</translation>
     </message>
 </context>
 <context>
@@ -6275,10 +7194,6 @@ Vill du skriva över den?
         <translation>Välj också från:</translation>
     </message>
     <message>
-        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</source>
-        <translation>Undanta tecknen: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;</translation>
-    </message>
-    <message>
         <source>Exclude look-alike characters</source>
         <translation>Undanta tecken som liknar varandra</translation>
     </message>
@@ -6303,10 +7218,6 @@ Vill du skriva över den?
         <translation>Antal ord:</translation>
     </message>
     <message>
-        <source>Character Count:</source>
-        <translation>Antal tecken:</translation>
-    </message>
-    <message>
         <source>Word Case:</source>
         <translation>Skiftläge:</translation>
     </message>
@@ -6317,10 +7228,6 @@ Vill du skriva över den?
     <message>
         <source>Add custom wordlist</source>
         <translation>Lägg till anpassad ordlista</translation>
-    </message>
-    <message>
-        <source>character</source>
-        <translation>tecken</translation>
     </message>
     <message>
         <source>Close</source>
@@ -6383,14 +7290,6 @@ Vill du skriva över den?
         <translation>Utmärkt</translation>
     </message>
     <message>
-        <source>Confirm Delete Wordlist</source>
-        <translation>Bekräfta borttagning av ordlista</translation>
-    </message>
-    <message>
-        <source>Do you really want to delete the wordlist &quot;%1&quot;?</source>
-        <translation>Vill du verkligen ta bort ordlistan &quot;%1&quot;?</translation>
-    </message>
-    <message>
         <source>Failed to delete wordlist</source>
         <translation>Kunde inte ta bort ordlistan</translation>
     </message>
@@ -6427,6 +7326,34 @@ Vill du skriva över den?</translation>
     <message>
         <source>Special Characters</source>
         <translation>Specialtecken</translation>
+    </message>
+    <message>
+        <source>passwordLength</source>
+        <translation>Lösenordslängd</translation>
+    </message>
+    <message>
+        <source>Characters: %1</source>
+        <translation>Tecken: %1</translation>
+    </message>
+    <message>
+        <source>MIXED case</source>
+        <translation>BLANDAT fall</translation>
+    </message>
+    <message>
+        <source>Excluded characters: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;, &quot;B&quot;, &quot;8&quot;, &quot;G&quot;, &quot;6&quot;</source>
+        <translation>Undantagna tecken: &quot;0&quot;, &quot;1&quot;, &quot;l&quot;, &quot;I&quot;, &quot;O&quot;, &quot;|&quot;, &quot;﹒&quot;, &quot;B&quot;, &quot;8&quot;, &quot;G&quot;, &quot;6&quot;</translation>
+    </message>
+    <message>
+        <source>Warning: the chosen wordlist is smaller than the minimum recommended size!</source>
+        <translation>Varning! Den valda ordlistan är mindre än minsta rekommenderade storlek!</translation>
+    </message>
+    <message>
+        <source>Confirm Remove Wordlist</source>
+        <translation>Bekräfta borttagning av ordlista</translation>
+    </message>
+    <message>
+        <source>Do you really want to remove the wordlist &quot;%1&quot;?</source>
+        <translation>Vill du verkligen ta bort ordlistan &quot;%1&quot;?</translation>
     </message>
 </context>
 <context>
@@ -6476,7 +7403,7 @@ Vill du skriva över den?</translation>
         <translation>Utmärkt</translation>
     </message>
     <message>
-        <source>Toggle password visibilty using Control + H. Open the password generator using Control + G.</source>
+        <source>Toggle password visibility using Control + H. Open the password generator using Control + G.</source>
         <translation>Visa/Dölj lösenord med Ctrl+H. Öppna lösenordsgeneratorn med Ctrl+G.</translation>
     </message>
 </context>
@@ -6493,6 +7420,21 @@ Vill du skriva över den?</translation>
     <message>
         <source>Press &amp;Tab between characters</source>
         <translation>Tryck &amp;TAB mellen tecken</translation>
+    </message>
+</context>
+<context>
+    <name>PreviewEntryAttachmentsDialog</name>
+    <message>
+        <source>Form</source>
+        <translation>Formulär</translation>
+    </message>
+    <message>
+        <source>Preview: %1</source>
+        <translation>Förhandsgranska: %1</translation>
+    </message>
+    <message>
+        <source>Save…</source>
+        <translation>Spara...</translation>
     </message>
 </context>
 <context>
@@ -6532,6 +7474,10 @@ Vill du skriva över den?</translation>
     <message>
         <source>Continue</source>
         <translation>Fortsätt</translation>
+    </message>
+    <message>
+        <source>Continue with weak password</source>
+        <translation>Fortsätt med svagt lösenord</translation>
     </message>
 </context>
 <context>
@@ -6939,12 +7885,6 @@ Vill du skriva över den?</translation>
         <translation>tid</translation>
     </message>
     <message>
-        <source>Set the key file for the database.
-This options is deprecated, use --set-key-file instead.</source>
-        <translation>Ange nyckelfil för databasen.
-Det här alternativet är inaktuellt, använd --set-key-file istället.</translation>
-    </message>
-    <message>
         <source>Set the key file for the database.</source>
         <translation>Ange nyckelfil för databasen.</translation>
     </message>
@@ -7149,10 +8089,6 @@ Det här alternativet är inaktuellt, använd --set-key-file istället.</transla
         <translation>Genomsnittlig lösenordslängd</translation>
     </message>
     <message>
-        <source>%1 characters</source>
-        <translation>%1 tecken</translation>
-    </message>
-    <message>
         <source>Word count for the diceware passphrase.</source>
         <translation>Antal ord för lösenordsfrasen.</translation>
     </message>
@@ -7174,10 +8110,6 @@ Det här alternativet är inaktuellt, använd --set-key-file istället.</transla
     <message>
         <source>Invalid word count %1</source>
         <translation>Ogiltigt antal ord %1</translation>
-    </message>
-    <message>
-        <source>The word list is too small (&lt; 1000 items)</source>
-        <translation>Ordlistan är för liten (&lt;1000 objekt)</translation>
     </message>
     <message>
         <source>Title for the entry.</source>
@@ -7322,10 +8254,6 @@ Det här alternativet är inaktuellt, använd --set-key-file istället.</transla
     <message>
         <source>Exit interactive mode.</source>
         <translation>Avsluta interaktivt läge.</translation>
-    </message>
-    <message>
-        <source>Format to use when exporting. Available choices are &apos;xml&apos; or &apos;csv&apos;. Defaults to &apos;xml&apos;.</source>
-        <translation>Format att använda vid export. Tillgängliga alternativ är &quot;xml&quot; eller &quot;csv&quot;. Standardvärdet är &quot;xml&quot;.</translation>
     </message>
     <message>
         <source>Exports the content of a database to standard output in the specified format.</source>
@@ -7916,18 +8844,6 @@ Kärna: %3 %4</translation>
         <translation>filen är tom</translation>
     </message>
     <message>
-        <source>malformed string</source>
-        <translation>felaktigt uppbyggd sträng</translation>
-    </message>
-    <message>
-        <source>missing closing quote</source>
-        <translation>saknar avslutande citationstecken</translation>
-    </message>
-    <message>
-        <source>%1: (row, col) %2,%3</source>
-        <translation>%1: (rad, kolumn) %2,%3</translation>
-    </message>
-    <message>
         <source>AES 256-bit</source>
         <translation>AES 256-bit</translation>
     </message>
@@ -7965,7 +8881,7 @@ Kärna: %3 %4</translation>
     </message>
     <message numerus="yes">
         <source>Clearing the clipboard in %1 second(s)…</source>
-        <translation><numerusform>Rensar urklipp om %1 sekund...</numerusform><numerusform>Rensar urklipp om %1 sekunder...</numerusform></translation>
+        <translation><numerusform>Rensar urklipp om %1 sekund…</numerusform><numerusform>Rensar urklipp om %1 sekunder…</numerusform></translation>
     </message>
     <message>
         <source>Group</source>
@@ -8014,32 +8930,12 @@ Kärna: %3 %4</translation>
         <translation><numerusform>%1 s</numerusform><numerusform>%1 s</numerusform></translation>
     </message>
     <message>
-        <source>Do you really want to delete the entry &quot;%1&quot; for good?</source>
-        <translation>Vill du verkligen ta bort &quot;%1&quot; för gott?</translation>
-    </message>
-    <message numerus="yes">
-        <source>Do you really want to delete %n entry(s) for good?</source>
-        <translation><numerusform>Vill du verkligen ta bort %1 post för gott?</numerusform><numerusform>Vill du verkligen ta bort %1 poster för gott?</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Delete entry(s)?</source>
-        <translation><numerusform>Vill du ta bort posten?</numerusform><numerusform>Vill du ta bort posterna?</numerusform></translation>
-    </message>
-    <message>
         <source>Do you really want to move entry &quot;%1&quot; to the recycle bin?</source>
         <translation>Vill du verkligen flytta &quot;%1&quot; till papperskorgen?</translation>
     </message>
     <message numerus="yes">
         <source>Do you really want to move %n entry(s) to the recycle bin?</source>
         <translation><numerusform>Vill du verkligen flytta %n post till papperskorgen?</numerusform><numerusform>Vill du verkligen flytta %n poster till papperskorgen?</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>Move entry(s) to recycle bin?</source>
-        <translation><numerusform>Vill du flytta posten till papperskorgen?</numerusform><numerusform>Vill du flytta posterna till papperskorgen?</numerusform></translation>
-    </message>
-    <message>
-        <source>Replace references to entry?</source>
-        <translation>Vill du ersätta referenserna till posten?</translation>
     </message>
     <message numerus="yes">
         <source>Entry &quot;%1&quot; has %2 reference(s). Do you want to overwrite references with values, skip this entry, or delete anyway?</source>
@@ -8106,10 +9002,6 @@ Kärna: %3 %4</translation>
         <translation>hämta databaslösenordet från stdin</translation>
     </message>
     <message>
-        <source>Locked databases.</source>
-        <translation>Låste databaser.</translation>
-    </message>
-    <message>
         <source>Database failed to lock.</source>
         <translation>Databas kunde inte låsas.</translation>
     </message>
@@ -8172,6 +9064,44 @@ Kärna: %3 %4</translation>
         <translation>tillåt skärmklipp och programinspelning (Windows/macOS)</translation>
     </message>
     <message>
+        <source>Set the key file for the database.
+This option is deprecated, use --set-key-file instead.</source>
+        <translation>Ange nyckelfil för databasen.
+Det här alternativet är föråldrat, använd --set-key-file istället.</translation>
+    </message>
+    <message>
+        <source>Databases have been locked.</source>
+        <translation>Databaserna har låsts.</translation>
+    </message>
+    <message>
+        <source>Attestation not supported</source>
+        <translation>Attestering stöds inte</translation>
+    </message>
+    <message>
+        <source>Credential is excluded</source>
+        <translation>Autentiseringsuppgift undantas</translation>
+    </message>
+    <message>
+        <source>Passkeys request canceled</source>
+        <translation>Begäran om passnycklar avbruten</translation>
+    </message>
+    <message>
+        <source>Invalid user verification</source>
+        <translation>Ogiltig användarverifiering</translation>
+    </message>
+    <message>
+        <source>Empty public key</source>
+        <translation>Tom offentlig nyckel</translation>
+    </message>
+    <message>
+        <source>Invalid URL provided</source>
+        <translation>Ogiltig URL angiven</translation>
+    </message>
+    <message>
+        <source>Passkeys</source>
+        <translation>Passnycklar</translation>
+    </message>
+    <message>
         <source>AES initialization failed</source>
         <translation>AES-start misslyckades</translation>
     </message>
@@ -8182,6 +9112,10 @@ Kärna: %3 %4</translation>
     <message>
         <source>Failed to store in Linux Keyring</source>
         <translation>Kunde inte lagra i Linux nyckelring</translation>
+    </message>
+    <message>
+        <source>Polkit returned an error: %1</source>
+        <translation>Polkit returnerade ett fel: %1</translation>
     </message>
     <message>
         <source>Could not locate key in keyring</source>
@@ -8208,10 +9142,6 @@ Kärna: %3 %4</translation>
         <translation>Ingen Quick Unlock-leverantör är tillgänglig</translation>
     </message>
     <message>
-        <source>Polkit returned an error: %1</source>
-        <translation>Polkit returnerade ett fel: %1</translation>
-    </message>
-    <message>
         <source>Failed to init KeePassXC crypto.</source>
         <translation>Kunde inte starta KeePassXC-krypto.</translation>
     </message>
@@ -8228,8 +9158,232 @@ Kärna: %3 %4</translation>
         <translation>Kunde inte avkryptera nyckeldata.</translation>
     </message>
     <message>
-        <source>Passkeys</source>
-        <translation>Passnycklar</translation>
+        <source>Origin is empty or not allowed</source>
+        <translation>Ursprung är tomt eller inte tillåtet</translation>
+    </message>
+    <message>
+        <source>Effective domain is not a valid domain</source>
+        <translation>Effektiv domän är ingen giltig domän</translation>
+    </message>
+    <message>
+        <source>Origin and RP ID do not match</source>
+        <translation>Ursprung och RP-ID matchar inte</translation>
+    </message>
+    <message>
+        <source>No supported algorithms were provided</source>
+        <translation>Inga algoritmer som stöds tillhandahölls</translation>
+    </message>
+    <message>
+        <source>Wait for timer to expire</source>
+        <translation>Vänta tills tiduret löper ut</translation>
+    </message>
+    <message>
+        <source>Challenge is shorter than required minimum length</source>
+        <translation>Utmaningen är kortare än den minimilängd söm krävs</translation>
+    </message>
+    <message>
+        <source>user.id does not match the required length</source>
+        <translation>user.id matchar inte den längd som krävs</translation>
+    </message>
+    <message>
+        <source>Favorite</source>
+        <comment>Tag for favorite entries</comment>
+        <translation>Favorit</translation>
+    </message>
+    <message>
+        <source>File does not exist.</source>
+        <translation>Filen finns inte.</translation>
+    </message>
+    <message>
+        <source>Cannot open file: %1</source>
+        <translation>Kan inte öppna filen: %1</translation>
+    </message>
+    <message>
+        <source>Cannot parse file: %1 at position %2</source>
+        <translation>Kan inte tolka filen: %1 på position %2</translation>
+    </message>
+    <message>
+        <source>Failed to decrypt json file: %1</source>
+        <translation>Kunde inte avkryptera json-fil: %1</translation>
+    </message>
+    <message>
+        <source>Invalid encKeyValidation field</source>
+        <translation>Ogiltigt encKeyValidation-fält</translation>
+    </message>
+    <message>
+        <source>Invalid cipher list within encKeyValidation field</source>
+        <translation>Ogiltig chifferlista i encKeyValidation-fältet</translation>
+    </message>
+    <message>
+        <source>Wrong password</source>
+        <translation>Fel lösenord</translation>
+    </message>
+    <message>
+        <source>Invalid encrypted data field</source>
+        <translation>Ogiltigt krypterat datafält</translation>
+    </message>
+    <message>
+        <source>Invalid cipher list within encrypted data field</source>
+        <translation>Ogiltig chifferlista i krypterat datafält</translation>
+    </message>
+    <message>
+        <source>Cannot initialize cipher</source>
+        <translation>Kan inte initiera chiffer</translation>
+    </message>
+    <message>
+        <source>Cannot decrypt data</source>
+        <translation>Kan inte avkryptera data</translation>
+    </message>
+    <message>
+        <source>Bitwarden Import</source>
+        <translation>Bitwarden-import</translation>
+    </message>
+    <message>
+        <source>Archived</source>
+        <comment>Tag for archived entries</comment>
+        <translation>Arkiverat</translation>
+    </message>
+    <message>
+        <source>Invalid 1PUX file format: Not a valid ZIP file.</source>
+        <translation>Ogiltigt 1PUX-filformat: Inte en giltig ZIP-fil.</translation>
+    </message>
+    <message>
+        <source>Invalid 1PUX file format: Missing export.data</source>
+        <translation>Ogiltigt 1PUX-filformat:  Exportdata saknas</translation>
+    </message>
+    <message>
+        <source>1Password Import</source>
+        <translation>1Password-import</translation>
+    </message>
+    <message>
+        <source>Enter Shortcut</source>
+        <translation>Ange genväg</translation>
+    </message>
+    <message>
+        <source>Action</source>
+        <translation>Åtgärd</translation>
+    </message>
+    <message>
+        <source>Shortcuts</source>
+        <translation>Genvägar</translation>
+    </message>
+    <message>
+        <source>Unknown passkeys error</source>
+        <translation>Okänt passnyckelfel</translation>
+    </message>
+    <message>
+        <source>Invalid KDF iterations, cannot decrypt json file</source>
+        <translation>Ogiltiga KDF-upprepningar, kan inte avkryptera json-filen.</translation>
+    </message>
+    <message>
+        <source>Unsupported format, ensure your Bitwarden export is password-protected</source>
+        <translation>Formatet stöds inte, tillse att din Bitwarden-export är lösenordsskyddad.</translation>
+    </message>
+    <message>
+        <source>Only PBKDF and Argon2 are supported, cannot decrypt json file</source>
+        <translation>Endast PBKDF och Argon2 stöds, kan inte avkryptera json-filen.</translation>
+    </message>
+    <message>
+        <source>Reset Shortcuts</source>
+        <translation>Återställ genvägar</translation>
+    </message>
+    <message>
+        <source>Double click an action to change its shortcut</source>
+        <translation>Dubbelklicka på åtgärden för att ändra genväg</translation>
+    </message>
+    <message>
+        <source>Filter...</source>
+        <translation>Filter...</translation>
+    </message>
+    <message>
+        <source>Shortcut Conflict</source>
+        <translation>Genvägskonflikt</translation>
+    </message>
+    <message>
+        <source>Shortcut %1 conflicts with &apos;%2&apos;. Overwrite shortcut?</source>
+        <translation>Genväg %1 står i konflikt med &quot;%2&quot;. Vill du skriva över genvägen??</translation>
+    </message>
+    <message>
+        <source>Encrypted files are not supported.</source>
+        <translation>Krypterade filer stöds inte.</translation>
+    </message>
+    <message>
+        <source>Proton Pass Import</source>
+        <translation>Proton Pass-import</translation>
+    </message>
+    <message>
+        <source>Passkey</source>
+        <translation>Passnyckel</translation>
+    </message>
+    <message>
+        <source>Format to use when exporting. Available choices are &apos;xml&apos;, &apos;csv&apos; or &apos;html&apos;. Defaults to &apos;xml&apos;.</source>
+        <translation>Format att använda vid export. Tillgängliga alternativ är &quot;xml&quot;, &quot;csv&quot; eller &quot;html&quot;. Standardvärdet är &quot;xml&quot;.</translation>
+    </message>
+    <message>
+        <source>start minimized to the system tray</source>
+        <translation>starta minimerad i systemfältet</translation>
+    </message>
+    <message>
+        <source>malformed string, possible unescaped delimiter</source>
+        <translation>felaktig sträng, möjligen ej utkommenterad avgränsare</translation>
+    </message>
+    <message>
+        <source>missing closing delimiter</source>
+        <translation>saknar avslutande avgränsare</translation>
+    </message>
+    <message>
+        <source>%1, row: %2, column: %3</source>
+        <translation>%1, rad: %2, kolumn: %3</translation>
+    </message>
+    <message>
+        <source>Tags</source>
+        <translation>Taggar</translation>
+    </message>
+    <message>
+        <source>Warning: the chosen wordlist is smaller than the minimum recommended size!</source>
+        <translation>Varning! Den valda ordlistan är mindre än minsta rekommenderade storlek!</translation>
+    </message>
+    <message>
+        <source>Invalid Step</source>
+        <comment>TOTP</comment>
+        <translation>Ogiltigt steg</translation>
+    </message>
+    <message>
+        <source>Invalid Digits</source>
+        <comment>TOTP</comment>
+        <translation>Ogiltiga siffror</translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 character(s)</source>
+        <translation><numerusform>%1 tecken</numerusform><numerusform>%1 tecken</numerusform></translation>
+    </message>
+    <message>
+        <source>Do you really want to permanently delete the entry &quot;%1&quot;?</source>
+        <translation>Vill du verkligen ta bort posten &quot;%1&quot; permanent?</translation>
+    </message>
+    <message numerus="yes">
+        <source>Do you really want to permanently delete %n entry(s)?</source>
+        <translation><numerusform>Vill du verkligen ta bort %n post permanent?</numerusform><numerusform>Vill du verkligen ta bort %n poster permanent?</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Confirm Delete Entry(s)</source>
+        <translation><numerusform>Bekräfta borttagning av post</numerusform><numerusform>Bekräfta borttagning av poster</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>Confirm Recycle Entry(s)</source>
+        <translation><numerusform>Bekräfta post till papperskorgen</numerusform><numerusform>Bekräfta poster till papperskorgen</numerusform></translation>
+    </message>
+    <message>
+        <source>Confirm Delete Plugin Data</source>
+        <translation>Bekräfta borttagning av insticksdata</translation>
+    </message>
+    <message numerus="yes">
+        <source>Delete plugin data from the selected entry(s)?</source>
+        <translation><numerusform>Vill du ta bort insticksdata från markerad post?</numerusform><numerusform>Vill du ta bort insticksdata från markerade poster?</numerusform></translation>
+    </message>
+    <message>
+        <source>Confirm Replace Entry References</source>
+        <translation>Bekräfta ersättning av postreferenser</translation>
     </message>
 </context>
 <context>
@@ -8264,6 +9418,37 @@ Kärna: %3 %4</translation>
     <message>
         <source>Internal zlib error: </source>
         <translation>Internt zlib-fel: </translation>
+    </message>
+</context>
+<context>
+    <name>RemoteHandler</name>
+    <message>
+        <source>Command `%1` did not finish in time. Process was killed.</source>
+        <translation>Kommandot &quot;%1&quot; slutfördes inte i tid. Processen dödades.</translation>
+    </message>
+    <message>
+        <source>Failed to upload merged database. Command `%1` did not finish in time. Process was killed.</source>
+        <translation>Det gick inte att ladda upp den sammanslagna databasen. Kommandot %1 slutfördes inte i tid. Processen dödades.</translation>
+    </message>
+    <message>
+        <source>Invalid download parameters provided.</source>
+        <translation>Ogiltiga nerladdningsparametrar har angetts.</translation>
+    </message>
+    <message>
+        <source>Command `%1` failed to download database.</source>
+        <translation>Kunde inte ladda ner databasen med kommandot &quot;%1&quot;.</translation>
+    </message>
+    <message>
+        <source>Invalid database pointer or upload parameters provided.</source>
+        <translation>Ogiltiga databaspekare eller uppladdningsparametrar har angetts.</translation>
+    </message>
+    <message>
+        <source>Command `%1` exited with status code: %2</source>
+        <translation>Kommandot &quot;%1&quot; avslutades med statuskod: %2</translation>
+    </message>
+    <message>
+        <source>Failed to upload merged database. Command `%1` exited with status code: %2</source>
+        <translation>Det gick inte att ladda upp den sammanslagna databasen. Kommandot &quot;%1&quot; avslutades med statuskod: %2</translation>
     </message>
 </context>
 <context>
@@ -8332,6 +9517,10 @@ Kärna: %3 %4</translation>
         <source>Exclude from reports</source>
         <translation>Undanta från rapporter</translation>
     </message>
+    <message numerus="yes">
+        <source>Expire Entry(s)…</source>
+        <translation><numerusform>Post utgår…</numerusform><numerusform>Poster utgår…</numerusform></translation>
+    </message>
     <message>
         <source>Only show entries that have a URL</source>
         <translation>Visa endast poster som har en URL</translation>
@@ -8348,35 +9537,32 @@ Kärna: %3 %4</translation>
         <source> (Expired)</source>
         <translation>(Förfallen)</translation>
     </message>
+    <message numerus="yes">
+        <source>Delete plugin data from Entry(s)…</source>
+        <translation><numerusform>Tar bort insticksdata från post…</numerusform><numerusform>Tar bort insticksdata från poster…</numerusform></translation>
+    </message>
 </context>
 <context>
     <name>ReportsWidgetHealthcheck</name>
     <message>
-        <source>Hover over reason to show additional details. Double-click entries to edit.</source>
-        <translation>Håll muspekaren över anledning, för att visa fler detaljer. Dubbelklicka på posten för att redigera.</translation>
+        <source>Show expired entries</source>
+        <translation>Visa förfallna poster</translation>
     </message>
     <message>
-        <source>Bad</source>
-        <comment>Password quality</comment>
-        <translation>Usel</translation>
+        <source> (Expired)</source>
+        <translation>(Förfallen)</translation>
+    </message>
+    <message>
+        <source>Hover over reason to show additional details. Double-click entries to edit.</source>
+        <translation>Håll muspekaren över anledning, för att visa fler detaljer. Dubbelklicka på posten för att redigera.</translation>
     </message>
     <message>
         <source>Bad — password must be changed</source>
         <translation>Usel — Lösenordet måste ändras</translation>
     </message>
     <message>
-        <source>Poor</source>
-        <comment>Password quality</comment>
-        <translation>Dålig</translation>
-    </message>
-    <message>
         <source>Poor — password should be changed</source>
         <translation>Dålig — Lösenordet måste ändras</translation>
-    </message>
-    <message>
-        <source>Weak</source>
-        <comment>Password quality</comment>
-        <translation>Svag</translation>
     </message>
     <message>
         <source>Weak — consider changing the password</source>
@@ -8392,7 +9578,7 @@ Kärna: %3 %4</translation>
     </message>
     <message>
         <source>Please wait, health data is being calculated…</source>
-        <translation>Väta, hälsodata beräknas…</translation>
+        <translation>Vänta, hälsodata beräknas…</translation>
     </message>
     <message>
         <source>Congratulations, everything is healthy!</source>
@@ -8426,17 +9612,13 @@ Kärna: %3 %4</translation>
         <source>Exclude from reports</source>
         <translation>Undanta från rapporter</translation>
     </message>
-    <message>
-        <source>Show expired entries</source>
-        <translation>Visa förfallna poster</translation>
+    <message numerus="yes">
+        <source>Expire Entry(s)…</source>
+        <translation><numerusform>Post utgår…</numerusform><numerusform>Poster utgår…</numerusform></translation>
     </message>
     <message>
         <source>Show entries that have been excluded from reports</source>
         <translation>Visa poster som har undantagits från rapporter</translation>
-    </message>
-    <message>
-        <source> (Expired)</source>
-        <translation>(Förfallen)</translation>
     </message>
 </context>
 <context>
@@ -8471,7 +9653,7 @@ Kärna: %3 %4</translation>
     </message>
     <message>
         <source>Password exposed…</source>
-        <translation>Lösenord exponerat...</translation>
+        <translation>Lösenord exponerat…</translation>
     </message>
     <message>
         <source> (Excluded)</source>
@@ -8533,6 +9715,10 @@ Kärna: %3 %4</translation>
         <source>Exclude from reports</source>
         <translation>Undanta från rapporter</translation>
     </message>
+    <message numerus="yes">
+        <source>Expire Entry(s)…</source>
+        <translation><numerusform>Post utgår…</numerusform><numerusform>Poster utgår…</numerusform></translation>
+    </message>
 </context>
 <context>
     <name>ReportsWidgetPasskeys</name>
@@ -8547,14 +9733,6 @@ Kärna: %3 %4</translation>
     <message>
         <source>List of entry URLs</source>
         <translation>Lista över posters URL:er</translation>
-    </message>
-    <message>
-        <source>Please wait, list of entries with Passkeys is being updated…</source>
-        <translation>Vänta! Listan över poster med passnycklar uppdateras...</translation>
-    </message>
-    <message>
-        <source>No entries with Passkeys.</source>
-        <translation>Det finns inga poster med passnycklar.</translation>
     </message>
     <message>
         <source>Title</source>
@@ -8591,6 +9769,22 @@ Kärna: %3 %4</translation>
     <message>
         <source> (Expired)</source>
         <translation>(Förfallen)</translation>
+    </message>
+    <message>
+        <source>Export Confirmation</source>
+        <translation>Exportbekräftelse</translation>
+    </message>
+    <message>
+        <source>The passkey file will be vulnerable to theft and unauthorized use, if left unsecured. Are you sure you want to continue?</source>
+        <translation>Passnyckelfilen kommer att vara sårbar för stöld och obehörig användning om den lämnas oskyddad. Vill du verkligen fortsätta?</translation>
+    </message>
+    <message>
+        <source>Please wait, list of entries with passkeys is being updated…</source>
+        <translation>Vänta, listan över poster med passnycklar uppdateras…</translation>
+    </message>
+    <message>
+        <source>No entries with passkeys.</source>
+        <translation>Det finns inga poster med passnycklar.</translation>
     </message>
 </context>
 <context>
@@ -8712,12 +9906,12 @@ Kärna: %3 %4</translation>
         <translation>Genomsnittlig lösenordslängd</translation>
     </message>
     <message>
-        <source>%1 characters</source>
-        <translation>%1 tecken</translation>
-    </message>
-    <message>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
         <translation>Genomsnittlig lösenordslängd är mindre än 10 tecken. Längre lösenord är säkrare.</translation>
+    </message>
+    <message numerus="yes">
+        <source>%1 character(s)</source>
+        <translation><numerusform>%1 tecken</numerusform><numerusform>%1 tecken</numerusform></translation>
     </message>
 </context>
 <context>
@@ -8765,6 +9959,14 @@ Kärna: %3 %4</translation>
     <message>
         <source>No agent running, cannot list identities.</source>
         <translation>Tjänsten körs inte, kan inte lista identiteter.</translation>
+    </message>
+    <message>
+        <source>Failed to remove all SSH identities from agent.</source>
+        <translation>Kunde inte ta bort alla SSH-identiteter från agenten.</translation>
+    </message>
+    <message>
+        <source>All SSH identities removed from agent.</source>
+        <translation>Alla SSH-identiteter borttagna från agenten.</translation>
     </message>
 </context>
 <context>
@@ -8849,6 +10051,10 @@ Kärna: %3 %4</translation>
         <source>Limit search to selected group</source>
         <translation>Begränsa sökningen till vald grupp</translation>
     </message>
+    <message>
+        <source>Press Enter to search</source>
+        <translation>Tryck Retur för att söka</translation>
+    </message>
 </context>
 <context>
     <name>SettingsClientModel</name>
@@ -8911,31 +10117,8 @@ Kärna: %3 %4</translation>
         <translation>Bekräfta när lösenord tas emot av klienter</translation>
     </message>
     <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;
-           font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Helvetica','Arial','sans-serif','Apple Color
-           Emoji','Segoe UI Emoji'; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;This setting does
-           not override disabling recycle bin prompts&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;
-           font-family:&apos;-apple-system&apos;,&apos;BlinkMacSystemFont&apos;,&apos;Segoe UI&apos;,&apos;Helvetica&apos;,&apos;Arial&apos;,&apos;sans-serif&apos;,&apos;Apple Color
-           Emoji&apos;,&apos;Segoe UI Emoji&apos;; font-size:14px; color:#24292e; background-color:#ffffff;&quot;&gt;Denna inställning åsidosätter inte 
-inaktivering av papperskorgsmeddelanden&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-</translation>
-    </message>
-    <message>
         <source>Confirm when clients request entry deletion</source>
         <translation>Bekräfta när klienter begär borttagning av poster</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications
-           which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also
-           crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a
-           different value set in applications.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;
-          </source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Detta förbättrar kompatibiliteten med vissa program
-som söker efter lösenord utan att först låsa upp databasen.&lt;/p&gt;&lt;p&gt;
-Men aktivering av detta kan också få klienten att krascha om databasen
-inte kan låsas upp inom en viss tidsgräns (Vanligen 25s, men kan vara ett annar värde, angivet i programmet.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Prompt to unlock database before searching</source>
@@ -8960,6 +10143,14 @@ inte kan låsas upp inom en viss tidsgräns (Vanligen 25s, men kan vara ett anna
     <message>
         <source>Save current changes to activate the plugin and enable editing of this section.</source>
         <translation>Spara aktuella ändringar för att aktivera insticksmodulen och aktivera redigering av det här avsnittet.</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This setting does not override disabling recycle bin prompts &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Den här inställningen åsidosätter inte inaktivering av avisering från papperskorgen&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This improves compatibility with certain applications which search for password without unlocking the database first.&lt;/p&gt;&lt;p&gt;But enabling this may also crash the client if the database can not be unlocked within a certain timeout. (Usually 25s, but may be a different value set in applications.) &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Detta förbättrar kompatibiliteten med vissa program som söker efter lösenord utan att först låsa upp databasen.&lt;/p&gt;&lt;p&gt;Men aktivering av detta kan också få klienten att krascha om databasen inte kan låsas upp inom en viss tidsgräns (Vanligen 25s, men kan vara ett annat värde, angivet i programmet.) &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -9084,6 +10275,10 @@ inte kan låsas upp inom en viss tidsgräns (Vanligen 25s, men kan vara ett anna
         <source>Weak Passwords</source>
         <translation>Svaga lösenord</translation>
     </message>
+    <message>
+        <source>TOTP Entries</source>
+        <translation>TOTP-poster</translation>
+    </message>
 </context>
 <context>
     <name>TagView</name>
@@ -9102,6 +10297,24 @@ inte kan låsas upp inom en viss tidsgräns (Vanligen 25s, men kan vara ett anna
     <message>
         <source>Remove tag &quot;%1&quot; from all entries in this database?</source>
         <translation>Vill di ta bort taggen &quot;%1&quot; från alla poster i databasen?</translation>
+    </message>
+</context>
+<context>
+    <name>TextAttachmentsEditWidget</name>
+    <message>
+        <source>Preview</source>
+        <translation>Förhandsgranska</translation>
+    </message>
+</context>
+<context>
+    <name>TextAttachmentsPreviewWidget</name>
+    <message>
+        <source>Form</source>
+        <translation>Formulär</translation>
+    </message>
+    <message>
+        <source>Type:</source>
+        <translation>Typ:</translation>
     </message>
 </context>
 <context>
@@ -9216,6 +10429,10 @@ Exempel: JBSWY3DPEHPK3PXP</translation>
         <source>Are you sure you want to delete TOTP settings for this entry?</source>
         <translation>Vill du verkligen ta bort TOTP-inställningarna för den här posten?</translation>
     </message>
+    <message>
+        <source>Error: secret key is invalid</source>
+        <translation>Fel: Säkerhetsnyckel ogiltig</translation>
+    </message>
 </context>
 <context>
     <name>URLEdit</name>
@@ -9262,26 +10479,6 @@ Exempel: JBSWY3DPEHPK3PXP</translation>
         <translation>Börja spara dina lösenord säkert, i en KeePassXC-databas.</translation>
     </message>
     <message>
-        <source>Create new database</source>
-        <translation>Skapa ny databas</translation>
-    </message>
-    <message>
-        <source>Open existing database</source>
-        <translation>Öppna befintlig databas</translation>
-    </message>
-    <message>
-        <source>Import from KeePass 1</source>
-        <translation>Importera från KeePass 1</translation>
-    </message>
-    <message>
-        <source>Import from 1Password</source>
-        <translation>Importera från 1Password</translation>
-    </message>
-    <message>
-        <source>Import from CSV</source>
-        <translation>Importera från CSV</translation>
-    </message>
-    <message>
         <source>Recent databases</source>
         <translation>Tidigare databaser</translation>
     </message>
@@ -9292,6 +10489,18 @@ Exempel: JBSWY3DPEHPK3PXP</translation>
     <message>
         <source>Welcome to KeePassXC %1</source>
         <translation>Välkommen till KeePassXC %1</translation>
+    </message>
+    <message>
+        <source>Create Database</source>
+        <translation>Skapa databas</translation>
+    </message>
+    <message>
+        <source>Open Database</source>
+        <translation>Öppna databas</translation>
+    </message>
+    <message>
+        <source>Import File</source>
+        <translation>Importera fil</translation>
     </message>
 </context>
 <context>
@@ -9312,10 +10521,6 @@ Exempel: JBSWY3DPEHPK3PXP</translation>
 <context>
     <name>YubiKey</name>
     <message>
-        <source>%1 No interface, slot %2</source>
-        <translation>%1 Inget gränssnitt, plats %2</translation>
-    </message>
-    <message>
         <source>General: </source>
         <translation>Allmänt: </translation>
     </message>
@@ -9326,14 +10531,6 @@ Exempel: JBSWY3DPEHPK3PXP</translation>
 </context>
 <context>
     <name>YubiKeyEditWidget</name>
-    <message>
-        <source>Refresh hardware tokens</source>
-        <translation>Uppdatera hårdvaru-tokens</translation>
-    </message>
-    <message>
-        <source>Refresh</source>
-        <translation>Uppdatera</translation>
-    </message>
     <message>
         <source>Hardware key slot selection</source>
         <translation>Val av plats för hårdvarunyckel</translation>
@@ -9367,39 +10564,28 @@ Exempel: JBSWY3DPEHPK3PXP</translation>
         <translation>Challenge-Response angiven, klicka för att ändra eller ta bort</translation>
     </message>
     <message>
-        <source>&lt;p&gt;If you own a &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; or &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt;, you can use it for additional security.&lt;/p&gt;&lt;p&gt;The key requires one of its slots to be programmed as &lt;a href=&quot;https://www.yubico.com/products/services-software/challenge-response/&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;Om du äger en &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; eller en &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt;, kan du använda den för ytterligare säkerhet.&lt;/p&gt;&lt;p&gt;Nyckeln kräver att en av dess ianslutningsplatser programmeras som &lt;a href=&quot;https://www.yubico.com/products/services-software/challenge-response/&quot;&gt;HMAC-SHA1 Challenge-Response&lt;/a&gt;.&lt;/p&gt;</translation>
-    </message>
-    <message>
         <source>Detecting hardware keys…</source>
-        <translation>Identifierar hårdvarunycklar...</translation>
+        <translation>Identifierar hårdvarunycklar…</translation>
     </message>
     <message>
         <source>No hardware keys detected</source>
         <translation>Inga hårdvarunycklar identifierade</translation>
     </message>
-</context>
-<context>
-    <name>YubiKeyInterface</name>
     <message>
-        <source>%1 Invalid slot specified - %2</source>
-        <translation>%1 Ogiltig plats specificerad - %2</translation>
+        <source>Refresh hardware keys</source>
+        <translation>Uppdatera hårdvarunycklar</translation>
+    </message>
+    <message>
+        <source>&lt;p&gt;If you own a &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; or &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt;, you can use it for additional security.&lt;/p&gt;&lt;p&gt;The key requires one of its slots to be programmed with &lt;a href=&quot;https://keepassxc.org/docs/#faq-yubikey-howto&quot;&gt;Challenge-Response&lt;/a&gt;.&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Om du äger en &lt;a href=&quot;https://www.yubico.com/&quot;&gt;YubiKey&lt;/a&gt; eller en &lt;a href=&quot;https://onlykey.io&quot;&gt;OnlyKey&lt;/a&gt;, kan du använda den för ytterligare säkerhet.&lt;/p&gt;&lt;p&gt;Nyckeln kräver att en av dess anslutningsplatser programmeras som &lt;a href=&quot;https://keepassxc.org/docs/#faq-yubikey-howto&quot;&gt;Challenge-Response&lt;/a&gt;.&lt;/p&gt;</translation>
+    </message>
+    <message>
+        <source>Hardware keys found, but no slots are configured</source>
+        <translation>Hårdvarunycklar hittades, men inga anslutningsplatser är konfigurerade.</translation>
     </message>
 </context>
 <context>
     <name>YubiKeyInterfacePCSC</name>
-    <message>
-        <source>(PCSC) %1 [%2] Challenge-Response - Slot %3</source>
-        <translation>(PCSC) %1 [%2] Challenge-Response - Plats %3</translation>
-    </message>
-    <message>
-        <source>The YubiKey PCSC interface has not been initialized.</source>
-        <translation>YubiKey PCSC-gränssnittet har inte startats.</translation>
-    </message>
-    <message>
-        <source>Hardware key is currently in use.</source>
-        <translation>Hårdvarunyckel används för närvarande.</translation>
-    </message>
     <message>
         <source>Could not find or access hardware key with serial number %1. Please present it to continue. </source>
         <translation>Kunde inte hitta eller komma åt hårdvarunyckeln med serienummer %1. Var snäll och anslut den för att fortsätta. </translation>
@@ -9413,24 +10599,31 @@ Exempel: JBSWY3DPEHPK3PXP</translation>
         <translation>Hårdvarunyckeln hittades inte eller är inte konfigurerad.</translation>
     </message>
     <message>
-        <source>Failed to complete a challenge-response, the PCSC error code was: %1</source>
-        <translation>Det gick inte att slutföra en challenge-response, PCSC-felkoden var: %1</translation>
+        <source>(NFC) %1 [%2] - Slot %3, %4</source>
+        <comment>YubiKey display fields</comment>
+        <translation>(NFC) %1 [%2] - Kortplats %3, %4</translation>
+    </message>
+    <message>
+        <source>Press</source>
+        <comment>USB Challenge-Response Key interaction request</comment>
+        <translation>Tryck</translation>
+    </message>
+    <message>
+        <source>Passive</source>
+        <comment>USB Challenge-Response Key no interaction required</comment>
+        <translation>Passiv</translation>
+    </message>
+    <message>
+        <source>The YubiKey PC/SC interface has not been initialized.</source>
+        <translation>YubiKey PC/SC-gränssnittet har inte startats.</translation>
+    </message>
+    <message>
+        <source>Failed to complete a challenge-response, the PC/SC error code was: %1</source>
+        <translation>Det gick inte att slutföra en challenge-response, PC/SC-felkoden var: %1</translation>
     </message>
 </context>
 <context>
     <name>YubiKeyInterfaceUSB</name>
-    <message>
-        <source>Unknown</source>
-        <translation>Okänd</translation>
-    </message>
-    <message>
-        <source>(USB) %1 [%2] Configured Slot - %3</source>
-        <translation>(USB) %1 [%2] Konfigurerad plats - %3</translation>
-    </message>
-    <message>
-        <source>(USB) %1 [%2] Challenge-Response - Slot %3 - %4</source>
-        <translation>(USB) %1 [%2] Challenge-Response - Plats %3 - %4</translation>
-    </message>
     <message>
         <source>Press</source>
         <comment>USB Challenge-Response Key interaction request</comment>
@@ -9444,10 +10637,6 @@ Exempel: JBSWY3DPEHPK3PXP</translation>
     <message>
         <source>The YubiKey USB interface has not been initialized.</source>
         <translation>YubiKey USB-gränssnittet har inte startats.</translation>
-    </message>
-    <message>
-        <source>Hardware key is currently in use.</source>
-        <translation>Hårdvarunyckel används för närvarande.</translation>
     </message>
     <message>
         <source>Could not find hardware key with serial number %1. Please plug it in to continue.</source>
@@ -9464,6 +10653,21 @@ Exempel: JBSWY3DPEHPK3PXP</translation>
     <message>
         <source>Failed to complete a challenge-response, the specific error was: %1</source>
         <translation>Kunde inte slutföra en challenge-response, det specifika felet var: %1</translation>
+    </message>
+    <message>
+        <source>%1 [%2] - Slot %3</source>
+        <comment>YubiKey NEO display fields</comment>
+        <translation>%1 [%2] - Kortplats %3</translation>
+    </message>
+    <message>
+        <source>%1 [%2] - Slot %3, %4</source>
+        <comment>YubiKey display fields</comment>
+        <translation>%1 [%2] - Kortplats %3, %4</translation>
+    </message>
+    <message>
+        <source>Unknown</source>
+        <comment>Unknown hardware key name</comment>
+        <translation>Okänd</translation>
     </message>
 </context>
 </TS>

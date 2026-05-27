@@ -1,6 +1,6 @@
 /*
+ *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,14 +17,8 @@
  */
 
 #include "Group.h"
-#include "config-keepassx.h"
 
 #include "core/Config.h"
-
-#ifdef WITH_XC_KEESHARE
-#include "keeshare/KeeShare.h"
-#endif
-
 #include "core/Global.h"
 #include "core/Metadata.h"
 #include "core/Tools.h"
@@ -223,16 +217,16 @@ Entry* Group::lastTopVisibleEntry() const
 bool Group::isRecycled() const
 {
     auto group = this;
-    if (!group->database() || !group->m_db->metadata()) {
-        return false;
+    auto db = group->database();
+    if (db) {
+        auto recycleBin = db->metadata()->recycleBin();
+        do {
+            if (group == recycleBin) {
+                return true;
+            }
+            group = group->m_parent;
+        } while (group);
     }
-
-    do {
-        if (group == group->m_db->metadata()->recycleBin()) {
-            return true;
-        }
-        group = group->m_parent;
-    } while (group);
 
     return false;
 }
@@ -245,6 +239,20 @@ bool Group::isExpired() const
 bool Group::isEmpty() const
 {
     return !hasChildren() && m_entries.isEmpty();
+}
+
+// TODO: Refactor this when KeeShare is refactored
+bool Group::isShared() const
+{
+    auto group = this;
+    do {
+        if (group->customData()->contains("KeeShare/Reference")) {
+            return true;
+        }
+        group = group->m_parent;
+    } while (group);
+
+    return false;
 }
 
 CustomData* Group::customData()
@@ -443,6 +451,7 @@ const Group* Group::parentGroup() const
 void Group::setParent(Group* parent, int index, bool trackPrevious)
 {
     Q_ASSERT(parent);
+    Q_ASSERT(this != parent);
     Q_ASSERT(index >= -1 && index <= parent->children().size());
     // setting a new parent for root groups is not allowed
     Q_ASSERT(!m_db || (m_db->rootGroup() != this));
@@ -861,7 +870,7 @@ QList<QString> Group::usernamesRecursive(int topN) const
 
     // Take first topN usernames if set
     QList<QString> usernames;
-    int actualUsernames = topN < 0 ? sortedUsernames.size() : std::min(topN, sortedUsernames.size());
+    int actualUsernames = topN < 0 ? sortedUsernames.size() : qMin(topN, sortedUsernames.size());
     for (int i = 0; i < actualUsernames; i++) {
         usernames.append(sortedUsernames[i].first);
     }
@@ -1118,6 +1127,24 @@ bool Group::resolveAutoTypeEnabled() const
         } else {
             return m_parent->resolveAutoTypeEnabled();
         }
+    case Enable:
+        return true;
+    case Disable:
+        return false;
+    default:
+        Q_ASSERT(false);
+        return false;
+    }
+}
+
+bool Group::resolveBrowserOptionEnabled(const QString& option) const
+{
+    switch (resolveCustomDataTriState(option, true)) {
+    case Inherit:
+        if (!m_parent) {
+            return false;
+        }
+        return m_parent->resolveBrowserOptionEnabled(option);
     case Enable:
         return true;
     case Disable:

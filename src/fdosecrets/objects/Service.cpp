@@ -543,7 +543,7 @@ namespace FdoSecrets
         }
         // switch selected to current
         m_databases->setCurrentWidget(dbWidget);
-        m_databases->showDatabaseSettings();
+        m_databases->showDatabaseSettings(true);
 
         // open settings (switch from app settings to m_dbTabs)
         m_plugin->emitRequestSwitchToDatabases();

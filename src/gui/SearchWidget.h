@@ -57,7 +57,6 @@ signals:
     void caseSensitiveChanged(bool state);
     void limitGroupChanged(bool state);
     void escapePressed();
-    void copyPressed();
     void downPressed();
     void enterPressed();
     void lostFocus();
@@ -69,6 +68,7 @@ public slots:
     void clearSearch();
 
 private slots:
+    void onReturnPressed();
     void startSearchTimer();
     void startSearch();
     void updateCaseSensitive();
@@ -76,6 +76,8 @@ private slots:
     void toggleHelp();
     void showSearchMenu();
     void resetSearchClearTimer();
+    void performRequestedSearch(const QString& text);
+    void updateSaveButtonVisibility();
 
 private:
     const QScopedPointer<Ui::SearchWidget> m_ui;
@@ -84,6 +86,7 @@ private:
     QTimer* m_clearSearchTimer;
     QAction* m_actionCaseSensitive;
     QAction* m_actionLimitGroup;
+    QAction* m_actionWaitForEnter;
     QMenu* m_searchMenu;
 };
 

@@ -17,18 +17,17 @@
  */
 
 #include "BinaryStream.h"
+#include "core/Tools.h"
 #include <QtEndian>
 
 BinaryStream::BinaryStream(QIODevice* device)
     : QObject(device)
-    , m_timeout(-1)
     , m_device(device)
 {
 }
 
 BinaryStream::BinaryStream(QByteArray* ba, QObject* parent)
     : QObject(parent)
-    , m_timeout(-1)
 {
     m_buffer.reset(new QBuffer(ba));
     m_buffer->open(QIODevice::ReadWrite);
@@ -118,9 +117,16 @@ bool BinaryStream::readString(QByteArray& ba)
         return false;
     }
 
+    // Don't attempt to read strings over 10 MiB
+    if (length > 1024 * 1024 * 10) {
+        m_error = tr("String length exceeds 10 MiB limit (requested %1)").arg(Tools::humanReadableFileSize(length, 0));
+        return false;
+    }
+
     ba.resize(length);
 
     if (!read(ba.data(), ba.length())) {
+        m_error = tr("Failed to read string data: %1").arg(m_device->errorString());
         return false;
     }
 

@@ -69,6 +69,11 @@ bool ImportWizard::validateCurrentPage()
     return ret;
 }
 
+ImportWizard::ImportIntoType ImportWizard::importIntoType()
+{
+    return static_cast<ImportIntoType>(field("ImportIntoType").toInt());
+}
+
 QPair<QUuid, QUuid> ImportWizard::importInto()
 {
     auto list = field("ImportInto").toList();

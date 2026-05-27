@@ -1,6 +1,5 @@
 /*
- *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
- *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,6 +18,7 @@
 #include "NativeMessageInstaller.h"
 #include "BrowserSettings.h"
 #include "config-keepassx.h"
+#include "core/Config.h"
 
 #include <QCoreApplication>
 #include <QDebug>
@@ -69,7 +69,7 @@ namespace
     const QString TARGET_DIR_FIREFOX = QStringLiteral("/.mozilla/native-messaging-hosts");
     const QString TARGET_DIR_VIVALDI = QStringLiteral("/vivaldi/NativeMessagingHosts");
     const QString TARGET_DIR_TOR_BROWSER = QStringLiteral(
-        "/torbrowser/tbb/x86_64/tor-browser_en-US/Browser/TorBrowser/Data/Browser/.mozilla/native-messaging-hosts");
+        "/torbrowser/tbb/x86_64/tor-browser/Browser/TorBrowser/Data/Browser/.mozilla/native-messaging-hosts");
     const QString TARGET_DIR_BRAVE = QStringLiteral("/BraveSoftware/Brave-Browser/NativeMessagingHosts");
     const QString TARGET_DIR_EDGE = QStringLiteral("/microsoft-edge/NativeMessagingHosts");
 #endif
@@ -209,10 +209,10 @@ QString NativeMessageInstaller::getNativeMessagePath(SupportedBrowsers browser) 
     QString basePath;
 #if defined(Q_OS_WIN)
     // If portable settings file exists save the JSON scripts to the application folder
-    if (QFile::exists(QCoreApplication::applicationDirPath() + QStringLiteral("/keepassxc.ini"))) {
-        basePath = QCoreApplication::applicationDirPath();
+    if (Config::isPortable()) {
+        basePath = Config::portableConfigDir();
     } else {
-        basePath = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+        basePath = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
     }
     return QStringLiteral("%1/%2_%3.json").arg(basePath, HOST_NAME, getBrowserName(browser));
 #elif defined(KEEPASSXC_DIST_FLATPAK)
@@ -224,6 +224,16 @@ QString NativeMessageInstaller::getNativeMessagePath(SupportedBrowsers browser) 
         basePath = QDir::homePath();
     } else {
         basePath = QDir::homePath() + "/.config";
+    }
+#elif defined(KEEPASSXC_DIST_SNAP)
+    // Same as Flatpak above, with the exception that Snap also redefines $HOME
+    // Therefore we must explicitly reference $SNAP_REAL_HOME
+    if (browser == SupportedBrowsers::TOR_BROWSER) {
+        basePath = qEnvironmentVariable("SNAP_REAL_HOME") + "/.local/share";
+    } else if (browser == SupportedBrowsers::FIREFOX) {
+        basePath = qEnvironmentVariable("SNAP_REAL_HOME");
+    } else {
+        basePath = qEnvironmentVariable("SNAP_REAL_HOME") + "/.config";
     }
 #elif defined(Q_OS_LINUX) || (defined(Q_OS_UNIX) && !defined(Q_OS_MACOS))
     if (browser == SupportedBrowsers::TOR_BROWSER) {
@@ -295,6 +305,8 @@ QString NativeMessageInstaller::getInstalledProxyPath() const
     path = QProcessEnvironment::systemEnvironment().value("APPIMAGE");
 #elif defined(KEEPASSXC_DIST_FLATPAK)
     path = constructFlatpakPath();
+#elif defined(KEEPASSXC_DIST_SNAP)
+    path = "/snap/bin/keepassxc.proxy";
 #else
     path = QCoreApplication::applicationDirPath() + QStringLiteral("/keepassxc-proxy");
 #ifdef Q_OS_WIN
@@ -360,16 +372,30 @@ bool NativeMessageInstaller::createNativeMessageFile(SupportedBrowsers browser)
 
     QFile scriptFile(path);
     if (!scriptFile.open(QIODevice::WriteOnly)) {
-        qWarning() << "Browser Plugin: Failed to open native message file for writing at " << scriptFile.fileName();
-        qWarning() << scriptFile.errorString();
-        return false;
+        if (!scriptFile.open(QIODevice::ReadOnly)) {
+            qWarning() << "Browser Plugin: Failed to open native message file at " << scriptFile.fileName();
+            qWarning() << scriptFile.errorString();
+            return false;
+        }
+
+        // We failed to write to `scriptFile`, but we can read it, so we assume that it's a read-only file.
+        // Consider success if the read-only file already contains the content we would have written.
+        QJsonDocument expectedDoc(constructFile(browser));
+        QJsonDocument actualDoc = QJsonDocument::fromJson(scriptFile.readAll());
+
+        if (expectedDoc != actualDoc) {
+            qWarning() << "Browser Plugin: Unexpected (read-only) native message file at " << scriptFile.fileName();
+            qWarning() << "Expected contents: " << expectedDoc;
+            return false;
+        }
+    } else {
+        QJsonDocument doc(constructFile(browser));
+        if (scriptFile.write(doc.toJson()) < 0) {
+            qWarning() << "Browser Plugin: Failed to write native message file at " << scriptFile.fileName();
+            qWarning() << scriptFile.errorString();
+            return false;
+        }
     }
 
-    QJsonDocument doc(constructFile(browser));
-    if (scriptFile.write(doc.toJson()) < 0) {
-        qWarning() << "Browser Plugin: Failed to write native message file at " << scriptFile.fileName();
-        qWarning() << scriptFile.errorString();
-        return false;
-    }
     return true;
 }

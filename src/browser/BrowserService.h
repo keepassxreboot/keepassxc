@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
  *  Copyright (C) 2013 Francois Ferrand
  *
@@ -80,21 +80,23 @@ public:
 
     QJsonObject getDatabaseGroups();
     QJsonArray getDatabaseEntries();
-    QJsonObject createNewGroup(const QString& groupName);
+    QJsonObject createNewGroup(const QString& groupName, bool isPasskeysGroup = false);
     QString getCurrentTotp(const QString& uuid);
     void showPasswordGenerator(const KeyPairMessage& keyPairMessage);
     bool isPasswordGeneratorRequested() const;
     QSharedPointer<Database> getDatabase(const QUuid& rootGroupUuid = {});
     QSharedPointer<Database> selectedDatabase();
     QList<QSharedPointer<Database>> getOpenDatabases();
-#ifdef WITH_XC_BROWSER_PASSKEYS
+
     QJsonObject showPasskeysRegisterPrompt(const QJsonObject& publicKeyOptions,
                                            const QString& origin,
+                                           const QString& groupName,
                                            const StringPairList& keyList);
     QJsonObject showPasskeysAuthenticationPrompt(const QJsonObject& publicKeyOptions,
                                                  const QString& origin,
                                                  const StringPairList& keyList);
-    void addPasskeyToGroup(Group* group,
+    void addPasskeyToGroup(const QSharedPointer<Database>& db,
+                           Group* group,
                            const QString& url,
                            const QString& rpId,
                            const QString& rpName,
@@ -109,7 +111,7 @@ public:
                            const QString& credentialId,
                            const QString& userHandle,
                            const QString& privateKey);
-#endif
+
     void addEntry(const EntryParameters& entryParameters,
                   const QString& group,
                   const QString& groupUuid,
@@ -117,6 +119,7 @@ public:
                   const QSharedPointer<Database>& selectedDb = {});
     bool updateEntry(const EntryParameters& entryParameters, const QString& uuid);
     bool deleteEntry(const QString& uuid);
+    void removePluginData(Entry* entry) const;
     QJsonArray findEntries(const EntryParameters& entryParameters, const StringPairList& keyList, bool* entriesFound);
     void requestGlobalAutoType(const QString& search);
 
@@ -129,6 +132,7 @@ public:
     static const QString OPTION_ONLY_HTTP_AUTH;
     static const QString OPTION_NOT_HTTP_AUTH;
     static const QString OPTION_OMIT_WWW;
+    static const QString ADDITIONAL_URL;
     static const QString OPTION_RESTRICT_KEY;
 
 signals:
@@ -142,6 +146,7 @@ public slots:
 
 private slots:
     void processClientMessage(QLocalSocket* socket, const QJsonObject& message);
+    void handleDatabaseUnlockDialogFinished(bool accepted, DatabaseWidget* dbWidget);
 
 private:
     enum Access
@@ -181,22 +186,25 @@ private:
     bool removeFirstDomain(QString& hostname);
     bool
     shouldIncludeEntry(Entry* entry, const QString& url, const QString& submitUrl, const bool omitWwwSubdomain = false);
-#ifdef WITH_XC_BROWSER_PASSKEYS
+
     QList<Entry*> getPasskeyEntries(const QString& rpId, const StringPairList& keyList);
+    QList<Entry*>
+    getPasskeyEntriesWithUserHandle(const QString& rpId, const QString& userId, const StringPairList& keyList);
     QList<Entry*>
     getPasskeyAllowedEntries(const QJsonObject& assertionOptions, const QString& rpId, const StringPairList& keyList);
     bool isPasskeyCredentialExcluded(const QJsonArray& excludeCredentials,
                                      const QString& rpId,
                                      const StringPairList& keyList);
     QJsonObject getPasskeyError(int errorCode) const;
-#endif
+
     bool handleURL(const QString& entryUrl,
                    const QString& siteUrl,
                    const QString& formUrl,
-                   const bool omitWwwSubdomain = false);
+                   const bool omitWwwSubdomain = false,
+                   const bool allowWildcards = false);
+    bool handleURLWithWildcards(const QUrl& entryQUrl, const QString& siteUrl);
     QString getDatabaseRootUuid();
     QString getDatabaseRecycleBinUuid();
-    bool checkLegacySettings(QSharedPointer<Database> db);
     void hideWindow() const;
     void raiseWindow(const bool force = false);
     void updateWindowState();
@@ -215,9 +223,7 @@ private:
     Q_DISABLE_COPY(BrowserService);
 
     friend class TestBrowser;
-#ifdef WITH_XC_BROWSER_PASSKEYS
     friend class TestPasskeys;
-#endif
 };
 
 static inline BrowserService* browserService()

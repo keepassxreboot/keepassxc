@@ -36,7 +36,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Import the following Passkey:</string>
+        <string>Import the following passkey:</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>

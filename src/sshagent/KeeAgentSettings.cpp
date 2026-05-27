@@ -27,7 +27,7 @@
 #include <QDebug>
 #include <QDir>
 #include <QProcessEnvironment>
-#include <QTextCodec>
+#include <QStringConverter>
 #include <QXmlStreamReader>
 
 KeeAgentSettings::KeeAgentSettings()
@@ -203,7 +203,7 @@ void KeeAgentSettings::setFileName(const QString& fileName)
 bool KeeAgentSettings::readBool(QXmlStreamReader& reader)
 {
     reader.readNext();
-    bool ret = (reader.text().startsWith("t", Qt::CaseInsensitive));
+    bool ret = (reader.text().toString().startsWith("t", Qt::CaseInsensitive));
     reader.readNext(); // tag end
     return ret;
 }
@@ -234,37 +234,37 @@ bool KeeAgentSettings::fromXml(const QByteArray& ba)
         return false;
     }
 
-    if (reader.qualifiedName() != "EntrySettings") {
+    if (reader.qualifiedName().toString() != "EntrySettings") {
         m_error = QCoreApplication::translate("KeeAgentSettings", "Invalid KeeAgent settings file structure.");
         return false;
     }
 
     while (!reader.error() && reader.readNextStartElement()) {
-        if (reader.name() == "AllowUseOfSshKey") {
+        if (reader.name().toString() == "AllowUseOfSshKey") {
             m_allowUseOfSshKey = readBool(reader);
-        } else if (reader.name() == "AddAtDatabaseOpen") {
+        } else if (reader.name().toString() == "AddAtDatabaseOpen") {
             m_addAtDatabaseOpen = readBool(reader);
-        } else if (reader.name() == "RemoveAtDatabaseClose") {
+        } else if (reader.name().toString() == "RemoveAtDatabaseClose") {
             m_removeAtDatabaseClose = readBool(reader);
-        } else if (reader.name() == "UseConfirmConstraintWhenAdding") {
+        } else if (reader.name().toString() == "UseConfirmConstraintWhenAdding") {
             m_useConfirmConstraintWhenAdding = readBool(reader);
-        } else if (reader.name() == "UseLifetimeConstraintWhenAdding") {
+        } else if (reader.name().toString() == "UseLifetimeConstraintWhenAdding") {
             m_useLifetimeConstraintWhenAdding = readBool(reader);
-        } else if (reader.name() == "LifetimeConstraintDuration") {
+        } else if (reader.name().toString() == "LifetimeConstraintDuration") {
             m_lifetimeConstraintDuration = readInt(reader);
-        } else if (reader.name() == "Location") {
+        } else if (reader.name().toString() == "Location") {
             while (!reader.error() && reader.readNextStartElement()) {
-                if (reader.name() == "SelectedType") {
+                if (reader.name().toString() == "SelectedType") {
                     reader.readNext();
                     m_selectedType = reader.text().toString();
                     reader.readNext();
-                } else if (reader.name() == "AttachmentName") {
+                } else if (reader.name().toString() == "AttachmentName") {
                     reader.readNext();
                     m_attachmentName = reader.text().toString();
                     reader.readNext();
-                } else if (reader.name() == "SaveAttachmentToTempFile") {
+                } else if (reader.name().toString() == "SaveAttachmentToTempFile") {
                     m_saveAttachmentToTempFile = readBool(reader);
-                } else if (reader.name() == "FileName") {
+                } else if (reader.name().toString() == "FileName") {
                     reader.readNext();
                     m_fileName = reader.text().toString();
                     reader.readNext();
@@ -292,8 +292,6 @@ QByteArray KeeAgentSettings::toXml() const
     QByteArray ba;
     QXmlStreamWriter writer(&ba);
 
-    // real KeeAgent can only read UTF-16
-    writer.setCodec(QTextCodec::codecForName("UTF-16"));
     writer.setAutoFormatting(true);
     writer.setAutoFormattingIndent(2);
 
@@ -379,7 +377,7 @@ void KeeAgentSettings::toEntry(Entry* entry) const
 }
 
 /**
- * Test if a SSH key is currently set to be used
+ * Test if an SSH key is currently set to be used
  *
  * @return true if key is configured
  */
@@ -393,7 +391,7 @@ bool KeeAgentSettings::keyConfigured() const
 }
 
 /**
- * Read a SSH key based on settings from entry to key.
+ * Read an SSH key based on settings from entry to key.
  *
  * Sets error string on error.
  *
@@ -409,7 +407,7 @@ bool KeeAgentSettings::toOpenSSHKey(const Entry* entry, OpenSSHKey& key, bool de
 }
 
 /**
- * Read a SSH key based on settings to key.
+ * Read an SSH key based on settings to key.
  *
  * Sets error string on error.
  *
@@ -490,11 +488,7 @@ bool KeeAgentSettings::toOpenSSHKey(const QString& username,
     }
 
     if (key.comment().isEmpty()) {
-        key.setComment(username);
-    }
-
-    if (key.comment().isEmpty()) {
-        key.setComment(fileName);
+        key.setComment(QString("%1@%2").arg(username, fileName));
     }
 
     return true;

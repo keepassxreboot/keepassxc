@@ -1,12 +1,12 @@
-DatabaseWidget:!active, GroupView:!active,
-EntryPreviewWidget QLineEdit:!active, EntryPreviewWidget QTextEdit:!active,
-EntryPreviewWidget TagsEdit:!active {
+DatabaseWidget:!active,
+DatabaseWidget #groupView:!active, DatabaseWidget #tagView:!active,
+EntryPreviewWidget *:!active[blendIn="true"] {
     background-color: #FCFCFC;
 }
 
-DatabaseWidget:disabled, GroupView:disabled,
-EntryPreviewWidget QLineEdit:disabled, EntryPreviewWidget QTextEdit:disabled,
-EntryPreviewWidget TagsEdit:disabled {
+DatabaseWidget:disabled,
+DatabaseWidget #groupView:disabled, DatabaseWidget #tagView:disabled,
+EntryPreviewWidget *:disabled[blendIn="true"] {
     background-color: #EDEDED;
 }
 

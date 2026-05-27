@@ -19,7 +19,7 @@
 #include "ui_ExportDialog.h"
 
 #include "gui/FileDialog.h"
-#include "gui/HtmlExporter.h"
+#include "gui/HtmlGuiExporter.h"
 
 ExportDialog::ExportDialog(QSharedPointer<const Database> db, DatabaseTabWidget* parent)
     : QDialog(parent)
@@ -55,8 +55,10 @@ QString ExportDialog::getStrategyName(ExportSortingStrategy strategy)
         return tr("name (ascending)");
     case ExportSortingStrategy::BY_NAME_DESC:
         return tr("name (descending)");
+    default:
+        Q_ASSERT(false);
+        return tr("invalid sort order");
     }
-    return tr("unknown");
 }
 
 void ExportDialog::exportDatabase()
@@ -72,7 +74,7 @@ void ExportDialog::exportDatabase()
 
     FileDialog::saveLastDir("html", fileName, true);
 
-    HtmlExporter htmlExporter;
+    HtmlGuiExporter htmlExporter;
     if (!htmlExporter.exportDatabase(
             fileName, m_db, sortBy != ExportSortingStrategy::BY_DATABASE_ORDER, ascendingOrder)) {
         emit exportFailed(htmlExporter.errorString());

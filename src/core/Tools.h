@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -22,8 +22,10 @@
 #include "core/Global.h"
 
 #include <QDateTime>
+#include <QFileInfo>
 #include <QList>
 #include <QProcessEnvironment>
+#include <QSet>
 
 class QIODevice;
 class QRegularExpression;
@@ -46,6 +48,13 @@ namespace Tools
     QString envSubstitute(const QString& filepath,
                           QProcessEnvironment environment = QProcessEnvironment::systemEnvironment());
     QString cleanFilename(QString filename);
+    QString cleanUsername();
+    QString escapeAccelerators(QString string);
+
+    template <class T> QSet<T> asSet(const QList<T>& a)
+    {
+        return QSet<T>(a.begin(), a.end());
+    }
 
     /**
      * Escapes all characters in regex such that they do not receive any special treatment when used
@@ -88,20 +97,6 @@ namespace Tools
         }
     }
 
-    inline int qtRuntimeVersion()
-    {
-        // Cache the result since the Qt version can't change during
-        // the execution, computing it once will be enough
-        const static int version = []() {
-            const auto sq = QString::fromLatin1(qVersion());
-            return (sq.section(QChar::fromLatin1('.'), 0, 0).toInt() << 16)
-                   + (sq.section(QChar::fromLatin1('.'), 1, 1).toInt() << 8)
-                   + (sq.section(QChar::fromLatin1('.'), 2, 2).toInt());
-        }();
-
-        return version;
-    }
-
     // Checks if all values are found inside the list. Returns a list of values not found.
     template <typename T> QList<T> getMissingValuesFromList(const QList<T>& list, const QList<T>& required)
     {
@@ -118,6 +113,21 @@ namespace Tools
     QVariantMap qo2qvm(const QObject* object, const QStringList& ignoredProperties = {"objectName"});
 
     QString substituteBackupFilePath(QString pattern, const QString& databasePath);
+
+    enum class MimeType : uint8_t
+    {
+        Image,
+        PlainText,
+        Html,
+        Markdown,
+        Unknown
+    };
+
+    MimeType toMimeType(const QString& mimeName);
+    MimeType getMimeType(const QByteArray& data);
+    MimeType getMimeType(const QFileInfo& fileInfo);
+    bool isTextMimeType(MimeType mimeType);
+
 } // namespace Tools
 
 #endif // KEEPASSX_TOOLS_H

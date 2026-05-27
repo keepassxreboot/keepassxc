@@ -1,21 +1,21 @@
 /*
- *  Copyright (C) 2014 Kyle Manna <kyle@kylemanna.com>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
- *
- *
- *  This program is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 2 or (at your option)
- *  version 3 of the License.
- *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
+**  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
+*  Copyright (C) 2014 Kyle Manna <kyle@kylemanna.com>
+*
+*
+*  This program is free software: you can redistribute it and/or modify
+*  it under the terms of the GNU General Public License as published by
+*  the Free Software Foundation, either version 2 or (at your option)
+*  version 3 of the License.
+*
+*  This program is distributed in the hope that it will be useful,
+*  but WITHOUT ANY WARRANTY; without even the implied warranty of
+*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*  GNU General Public License for more details.
+*
+*  You should have received a copy of the GNU General Public License
+*  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 #include "TestYkChallengeResponseKey.h"
 
@@ -24,6 +24,7 @@
 #include "keys/ChallengeResponseKey.h"
 
 #include <QCryptographicHash>
+#include <QRegularExpression>
 #include <QSignalSpy>
 #include <QTest>
 
@@ -33,6 +34,7 @@ void TestYubiKeyChallengeResponse::initTestCase()
 {
     // crypto subsystem needs to be initialized for YubiKey testing
     QVERIFY(Crypto::init());
+    QLocale::setDefault(QLocale::c());
 
     if (!YubiKey::instance()->isInitialized()) {
         QSKIP("Unable to initialize YubiKey interface.");
@@ -45,9 +47,12 @@ void TestYubiKeyChallengeResponse::testDetectDevices()
 
     // Look at the information retrieved from the key(s)
     const auto foundKeys = YubiKey::instance()->foundKeys();
+    QRegularExpression exp{"\\w+\\s+\\[\\d+\\]\\s+-\\s+Slot\\s+\\d"};
+
     for (auto i = foundKeys.cbegin(); i != foundKeys.cend(); ++i) {
         const auto& displayName = i.value();
-        QVERIFY(displayName.contains("Challenge-Response - Slot") || displayName.contains("Configured Slot -"));
+        auto match = exp.match(displayName);
+        QVERIFY(match.hasMatch());
         QVERIFY(displayName.contains(QString::number(i.key().first)));
         QVERIFY(displayName.contains(QString::number(i.key().second)));
     }

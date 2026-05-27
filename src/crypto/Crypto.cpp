@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -23,6 +23,7 @@
 #include "crypto/CryptoHash.h"
 #include "crypto/SymmetricCipher.h"
 
+#include <QObject>
 #include <botan/version.h>
 
 namespace
@@ -239,7 +240,7 @@ namespace Crypto
 {
     bool init()
     {
-#ifdef WITH_XC_BOTAN3
+#ifdef WITH_BOTAN3
         unsigned int version_major = 3, min_version_minor = 0;
         QString versionString = "3.x";
 #else

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -37,6 +37,7 @@ void TestMerge::initTestCase()
     qRegisterMetaType<Entry*>("Entry*");
     qRegisterMetaType<Group*>("Group*");
     QVERIFY(Crypto::init());
+    QLocale::setDefault(QLocale::c());
 }
 
 void TestMerge::init()
@@ -87,18 +88,54 @@ void TestMerge::testMergeNoChanges()
     m_clock->advanceSecond(1);
 
     Merger merger1(dbSource.data(), dbDestination.data());
-    merger1.merge();
+    auto changes = merger1.merge();
 
+    QVERIFY(changes.isEmpty());
     QCOMPARE(dbDestination->rootGroup()->entriesRecursive().size(), 2);
     QCOMPARE(dbSource->rootGroup()->entriesRecursive().size(), 2);
 
     m_clock->advanceSecond(1);
 
     Merger merger2(dbSource.data(), dbDestination.data());
-    merger2.merge();
+    changes = merger2.merge();
+
+    QVERIFY(changes.isEmpty());
+    QCOMPARE(dbDestination->rootGroup()->entriesRecursive().size(), 2);
+    QCOMPARE(dbSource->rootGroup()->entriesRecursive().size(), 2);
+}
+
+/**
+ * Merging without database custom data (used by imports and KeeShare)
+ */
+void TestMerge::testMergeCustomData()
+{
+    QScopedPointer<Database> dbDestination(createTestDatabase());
+    QScopedPointer<Database> dbSource(
+        createTestDatabaseStructureClone(dbDestination.data(), Entry::CloneNoFlags, Group::CloneIncludeEntries));
 
     QCOMPARE(dbDestination->rootGroup()->entriesRecursive().size(), 2);
     QCOMPARE(dbSource->rootGroup()->entriesRecursive().size(), 2);
+
+    dbDestination->metadata()->customData()->set("TEST_CUSTOM_DATA", "OLD TESTING");
+
+    m_clock->advanceSecond(1);
+
+    dbSource->metadata()->customData()->set("TEST_CUSTOM_DATA", "TESTING");
+
+    // First check that the custom data is not merged when skipped
+    Merger merger1(dbSource.data(), dbDestination.data());
+    merger1.setSkipDatabaseCustomData(true);
+    auto changes = merger1.merge();
+
+    QVERIFY(changes.isEmpty());
+    QCOMPARE(dbDestination->metadata()->customData()->value("TEST_CUSTOM_DATA"), QString("OLD TESTING"));
+
+    // Second check that the custom data is merged otherwise
+    Merger merger2(dbSource.data(), dbDestination.data());
+    changes = merger2.merge();
+
+    QCOMPARE(changes.size(), 1);
+    QCOMPARE(dbDestination->metadata()->customData()->value("TEST_CUSTOM_DATA"), QString("TESTING"));
 }
 
 /**
@@ -1110,7 +1147,7 @@ void TestMerge::testCustomData()
     m_clock->advanceSecond(1);
 
     Merger merger(dbSource.data(), dbDestination.data());
-    QStringList changes = merger.merge();
+    auto changes = merger.merge();
 
     QVERIFY(!changes.isEmpty());
 
@@ -1131,7 +1168,7 @@ void TestMerge::testCustomData()
     dbSource->metadata()->customData()->set("key3", "oldValue");
     dbSource->metadata()->customData()->set("key3", "newValue");
     Merger merger2(dbSource.data(), dbDestination.data());
-    QStringList changes2 = merger2.merge();
+    auto changes2 = merger2.merge();
     QVERIFY(changes2.isEmpty());
 
     Merger merger3(dbSource2.data(), dbDestination2.data());

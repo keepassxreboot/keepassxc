@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,6 +20,8 @@
 #include "core/Tools.h"
 #include "crypto/Random.h"
 
+#include <QScopeGuard>
+
 // MSYS2 does not define these macros
 // So set them to the value used by pcsc-lite
 #ifndef MAX_ATR_SIZE
@@ -37,6 +39,13 @@ typedef uint32_t RETVAL;
 #else
 typedef unsigned long SCUINT;
 typedef long RETVAL;
+#endif
+
+// Use the ANSI functions on Windows to align with Linux/macOS
+#ifdef Q_OS_WIN
+#define SCardListReaders SCardListReadersA
+#define SCardStatus SCardStatusA
+#define SCardConnect SCardConnectA
 #endif
 
 // This namescape contains static wrappers for the smart card API
@@ -70,7 +79,8 @@ namespace
         rv = SCardListReaders(context, nullptr, nullptr, &dwReaders);
         // On windows, USB hot-plugging causes the underlying API server to die
         // So on every USB unplug event, the API context has to be recreated
-        if (rv == SCARD_E_SERVICE_STOPPED) {
+        // On Linux, restarting the pcsc daemon causes the API server to die as well
+        if (rv == SCARD_E_SERVICE_STOPPED || rv == SCARD_E_NO_SERVICE) {
             // Dont care if the release works since the handle might be broken
             SCardReleaseContext(context);
             rv = SCardEstablishContext(SCARD_SCOPE_SYSTEM, nullptr, nullptr, &context);
@@ -510,14 +520,13 @@ namespace
             return rv;
         });
     }
-
 } // namespace
 
 YubiKeyInterfacePCSC::YubiKeyInterfacePCSC()
     : YubiKeyInterface()
 {
     if (ensureValidContext(m_sc_context) != SCARD_S_SUCCESS) {
-        qDebug("YubiKey: Failed to establish PCSC context.");
+        qDebug("YubiKey: Failed to establish PC/SC context.");
     } else {
         m_initialized = true;
     }
@@ -526,7 +535,7 @@ YubiKeyInterfacePCSC::YubiKeyInterfacePCSC()
 YubiKeyInterfacePCSC::~YubiKeyInterfacePCSC()
 {
     if (m_initialized && SCardReleaseContext(m_sc_context) != SCARD_S_SUCCESS) {
-        qDebug("YubiKey: Failed to release PCSC context.");
+        qDebug("YubiKey: Failed to release PC/SC context.");
     }
 }
 
@@ -541,7 +550,7 @@ YubiKeyInterfacePCSC* YubiKeyInterfacePCSC::instance()
     return m_instance;
 }
 
-YubiKey::KeyMap YubiKeyInterfacePCSC::findValidKeys()
+YubiKey::KeyMap YubiKeyInterfacePCSC::findValidKeys(int& connectedKeys)
 {
     m_error.clear();
     if (!isInitialized()) {
@@ -577,6 +586,8 @@ YubiKey::KeyMap YubiKeyInterfacePCSC::findValidKeys()
             continue;
         }
 
+        auto finally = qScopeGuard([hCard]() { SCardDisconnect(hCard, SCARD_LEAVE_CARD); });
+
         // Read the protocol and the ATR record
         char pbReader[MAX_READERNAME] = {0};
         SCUINT dwReaderLen = sizeof(pbReader);
@@ -603,6 +614,8 @@ YubiKey::KeyMap YubiKeyInterfacePCSC::findValidKeys()
 
             unsigned int serial = 0;
             getSerial(satr, serial);
+
+            ++connectedKeys;
 
             /* This variable indicates that the key is locked / timed out.
                 When using the key via NFC, the user has to re-present the key to clear the timeout.
@@ -672,8 +685,8 @@ YubiKeyInterfacePCSC::challenge(YubiKeySlot slot, const QByteArray& challenge, B
 {
     m_error.clear();
     if (!m_initialized) {
-        m_error = tr("The YubiKey PCSC interface has not been initialized.");
-        return YubiKey::ChallengeResult::YCR_ERROR;
+        m_error = tr("The YubiKey PC/SC interface has not been initialized.");
+        return YubiKey::ChallengeResult::YCR_KEYNOTFOUND;
     }
 
     // Try for a few seconds to find the key
@@ -704,11 +717,8 @@ YubiKeyInterfacePCSC::challenge(YubiKeySlot slot, const QByteArray& challenge, B
         }
     }
 
-    m_error = tr("Could not find or access hardware key with serial number %1. Please present it to continue. ")
-                  .arg(slot.first)
-              + m_error;
     emit challengeCompleted();
-    return YubiKey::ChallengeResult::YCR_ERROR;
+    return YubiKey::ChallengeResult::YCR_KEYNOTFOUND;
 }
 
 YubiKey::ChallengeResult YubiKeyInterfacePCSC::performChallenge(void* key,
@@ -756,7 +766,7 @@ YubiKey::ChallengeResult YubiKeyInterfacePCSC::performChallenge(void* key,
             m_error = tr("Hardware key was not found or is not configured.");
         } else {
             m_error =
-                tr("Failed to complete a challenge-response, the PCSC error code was: %1").arg(QString::number(rv));
+                tr("Failed to complete a challenge-response, the PC/SC error code was: %1").arg(QString::number(rv));
         }
 
         return YubiKey::ChallengeResult::YCR_ERROR;

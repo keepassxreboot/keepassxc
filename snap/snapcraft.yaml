@@ -10,7 +10,7 @@ apps:
     command: usr/bin/keepassxc
     common-id: org.keepassxc.KeePassXC.desktop
     extensions: [kde-neon]
-    plugs: [home, unity7, network, network-bind, removable-media, raw-usb, password-manager-service]
+    plugs: [home, unity7, network, network-bind, removable-media, raw-usb, password-manager-service, browser-native-messaging]
     autostart: org.keepassxc.KeePassXC.desktop
   cli:
     command: usr/bin/keepassxc-cli
@@ -19,7 +19,18 @@ apps:
   proxy:
     command: usr/bin/keepassxc-proxy
     extensions: [kde-neon]
-    plugs: [home]
+
+plugs:
+  browser-native-messaging:
+    interface: personal-files
+    write:
+      - $HOME/.mozilla/native-messaging-hosts/org.keepassxc.keepassxc_browser.json
+      - $HOME/.config/chromium/NativeMessagingHosts/org.keepassxc.keepassxc_browser.json
+      - $HOME/.config/google-chrome/NativeMessagingHosts/org.keepassxc.keepassxc_browser.json
+      - $HOME/.config/microsoft-edge/NativeMessagingHosts/org.keepassxc.keepassxc_browser.json
+      - $HOME/.config/vivaldi/NativeMessagingHosts/org.keepassxc.keepassxc_browser.json
+      - $HOME/.config/BraveSoftware/Brave-Browser/NativeMessagingHosts/org.keepassxc.keepassxc_browser.json
+      - $HOME/.local/share/torbrowser/tbb/x86_64/tor-browser_en-US/Browser/TorBrowser/Data/Browser/.mozilla/native-messaging-hosts/org.keepassxc.keepassxc_browser.json
 
 slots:
   session-dbus-interface:
@@ -54,6 +65,7 @@ parts:
       - libxtst-dev
       - asciidoctor
       - libfreetype-dev
+      - libkeyutils-dev
     stage-packages:
       - dbus
       - libbotan-2-19
@@ -65,6 +77,7 @@ parts:
       - libxtst6
       - libfreetype6
       - xclip
+      - libkeyutils1
 lint:
   ignore:
     - library:

@@ -48,7 +48,7 @@
  **
  ** = = = = = = = = =   B I G   F A T   W A R N I N G   = = = = = = = = =
  **
- ** DO NOT USE THE FOLLOWING FUCTIONS DIRECTLY UNLESS YOU WRITE CORE ROUTINES!
+ ** DO NOT USE THE FOLLOWING FUNCTIONS DIRECTLY UNLESS YOU WRITE CORE ROUTINES!
  **
  ** These functions are declared here only to make sure they get defined
  ** correctly internally.

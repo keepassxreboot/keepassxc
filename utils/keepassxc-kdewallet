@@ -9,14 +9,14 @@ KEEPASSXC=$(which -a keepassxc | sed -e "\\,$0,d" -e 'q')
 
 daemon_main() {
   # open kdewallet
-  handle=$(qdbus org.kde.kwalletd5 /modules/kwalletd5 org.kde.KWallet.open kdewallet 0 "$PROG")
-  while [[ true != $(qdbus org.kde.kwalletd5 /modules/kwalletd5 org.kde.KWallet.isOpen kdewallet) ]]; do
+  handle=$(qdbus6 org.kde.kwalletd6 /modules/kwalletd6 open kdewallet 0 "$PROG")
+  while [[ true != $(qdbus6 org.kde.kwalletd6 /modules/kwalletd6 isOpen kdewallet) ]]; do
     sleep 1
   done
 
   declare -A DBs
   for DBPATH in $(ls -r $KDBX_SEARCH); do
-    DBs[$(realpath $DBPATH)]=$(qdbus org.kde.kwalletd5 /modules/kwalletd5 org.kde.KWallet.readPassword "$handle" "Passwords" "${DBPATH##*/}" "$PROG")
+    DBs[$(realpath $DBPATH)]=$(qdbus6 org.kde.kwalletd6 /modules/kwalletd6 readPassword "$handle" "Passwords" "${DBPATH##*/}" "$PROG")
   done
 
   # launch real keepassxc
@@ -24,7 +24,7 @@ daemon_main() {
   "$KEEPASSXC" --pw-stdin "${!DBs[@]}" <<<"${DBs[*]}" &
 
   # done with kdewallet
-  qdbus org.kde.kwalletd5 /modules/kwalletd5 org.kde.KWallet.close "$handle" "false" "$PROG"
+  qdbus6 org.kde.kwalletd6 /modules/kwalletd6 close "$handle" "false" "$PROG"
 }
 
 if [[ $1 == '-d' ]]; then

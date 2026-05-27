@@ -154,7 +154,7 @@ int enterInteractiveMode(const QStringList& arguments)
 
         auto cmd = Commands::getCommand(args[0]);
         if (!cmd) {
-            err << QObject::tr("Unknown command %1").arg(args[0]) << endl;
+            err << QObject::tr("Unknown command %1").arg(args[0]) << Qt::endl;
             continue;
         } else if (cmd->name == "quit" || cmd->name == "exit") {
             break;
@@ -181,6 +181,8 @@ int main(int argc, char** argv)
 
     QCoreApplication app(argc, argv);
     QCoreApplication::setApplicationVersion(KEEPASSXC_VERSION);
+    // Cleanup code pages after cli exits
+    QObject::connect(&app, &QCoreApplication::destroyed, &app, [] { Utils::resetTextStreams(); });
 
     Bootstrap::bootstrap(config()->get(Config::GUI_Language).toString());
     Utils::setDefaultTextStreams();
@@ -208,19 +210,19 @@ int main(int argc, char** argv)
     parser.addOption(debugInfoOption);
     parser.addHelpOption();
     parser.addVersionOption();
-    // TODO : use the setOptionsAfterPositionalArgumentsMode (Qt 5.6) function
-    // when available. Until then, options passed to sub-commands won't be
-    // recognized by this parser.
+    // TODO : use the setOptionsAfterPositionalArgumentsMode function.
+    // Until then, options passed to sub-commands won't be recognized by this parser.
     parser.parse(arguments);
 
     if (parser.positionalArguments().empty()) {
         if (parser.isSet("version")) {
-            // Switch to parser.showVersion() when available (QT 5.4).
-            out << KEEPASSXC_VERSION << endl;
+            parser.showVersion();
             return EXIT_SUCCESS;
-        } else if (parser.isSet(debugInfoOption)) {
+        }
+
+        if (parser.isSet(debugInfoOption)) {
             QString debugInfo = Tools::debugInfo().append("\n").append(Crypto::debugInfo());
-            out << debugInfo << endl;
+            out << debugInfo << Qt::endl;
             return EXIT_SUCCESS;
         }
         // showHelp exits the application immediately.
@@ -234,7 +236,7 @@ int main(int argc, char** argv)
 
     auto command = Commands::getCommand(commandName);
     if (!command) {
-        err << QObject::tr("Invalid command %1.").arg(commandName) << endl;
+        err << QObject::tr("Invalid command %1.").arg(commandName) << Qt::endl;
         err << parser.helpText();
         return EXIT_FAILURE;
     }

@@ -34,6 +34,8 @@ public:
     using QFile::open;
     bool open();
     bool copyFromFile(const QString& otherFileName);
+
+    static QString createTempConfigFile();
 };
 
 #endif // KEEPASSXC_TEMPORARYFILE_H

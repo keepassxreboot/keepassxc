@@ -1,6 +1,6 @@
 /*
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -67,6 +67,7 @@ signals:
     void databaseUnlocked(DatabaseWidget* dbWidget);
     void databaseLocked(DatabaseWidget* dbWidget);
     void activeDatabaseChanged(DatabaseWidget* dbWidget);
+    void databaseUnlockDialogFinished(bool accepted, DatabaseWidget* dbWidget);
 
 public slots:
     void openDatabase(const QString& filePath, const QString& password = {}, const QString& keyfile = {});
@@ -97,6 +98,7 @@ public slots:
     void restartApp(const QString& message);
 
 protected:
+    bool event(QEvent* event) override;
     void showEvent(QShowEvent* event) override;
     void hideEvent(QHideEvent* event) override;
     void closeEvent(QCloseEvent* event) override;
@@ -105,7 +107,7 @@ protected:
     bool focusNextPrevChild(bool next) override;
 
 private slots:
-    void setMenuActionState(DatabaseWidget::Mode mode = DatabaseWidget::Mode::None);
+    void updateMenuActionState();
     void updateToolbarSeparatorVisibility();
     void updateWindowTitle();
     void showAboutDialog();
@@ -125,6 +127,7 @@ private slots:
     void switchToNewDatabase();
     void switchToOpenDatabase();
     void switchToDatabaseFile(const QString& file);
+    void updateRemoteSyncMenuEntries();
     void databaseStatusChanged(DatabaseWidget* dbWidget);
     void databaseTabChanged(int tabIndex);
     void openRecentDatabase(QAction* action);
@@ -137,7 +140,6 @@ private slots:
     void applySettingsChanges();
     void trayIconTriggered(QSystemTrayIcon::ActivationReason reason);
     void processTrayIconTrigger();
-    void lockDatabasesAfterInactivity();
     void handleScreenLock();
     void showErrorMessage(const QString& message);
     void selectNextDatabaseTab();
@@ -150,11 +152,15 @@ private slots:
     void updateProgressBar(int percentage, QString message);
     void updateEntryCountLabel();
     void focusSearchWidget();
+    void enableMenuAndToolbar();
+    void disableMenuAndToolbar();
+    void clearSSHAgent();
 
 private:
     static const QString BaseWindowTitle;
 
     void saveWindowInformation();
+    void restoreWindowInformation();
     bool saveLastDatabases();
     bool isTrayIconEnabled() const;
     void customOpenUrl(QString url);
@@ -176,7 +182,6 @@ private:
     QPointer<QActionGroup> m_copyAdditionalAttributeActions;
     QPointer<QActionGroup> m_setTagsMenuActions;
     QPointer<InactivityTimer> m_inactivityTimer;
-    QPointer<InactivityTimer> m_touchIDinactivityTimer;
     int m_countDefaultAttributes;
     QPointer<QSystemTrayIcon> m_trayIcon;
     QPointer<ScreenLockListener> m_screenLockListener;
@@ -187,6 +192,7 @@ private:
 
     Q_DISABLE_COPY(MainWindow)
 
+    bool m_windowInformationRestored = false;
     bool m_appExitCalled = false;
     bool m_appExiting = false;
     bool m_restartRequested = false;
@@ -202,7 +208,6 @@ private:
     friend class MainWindowEventFilter;
 };
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
 class MainWindowEventFilter : public QObject
 {
     Q_OBJECT
@@ -210,8 +215,11 @@ class MainWindowEventFilter : public QObject
 public:
     explicit MainWindowEventFilter(QObject* parent);
     bool eventFilter(QObject* watched, QEvent* event) override;
+
+private:
+    QTimer m_menubarTimer;
+    QTimer m_altCoolDown;
 };
-#endif
 
 /**
  * Return instance of MainWindow created on app load

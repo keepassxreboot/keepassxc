@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -40,20 +40,17 @@ public:
 public slots:
     void initialize() override;
     void uninitialize() override;
-    bool save() override;
+    bool saveSettings() override;
 
 protected:
     void showEvent(QShowEvent* event) override;
 
 private slots:
     void benchmarkTransformRounds(int millisecs = Kdf::DEFAULT_ENCRYPTION_TIME);
-    void changeKdf(int index);
     void memoryChanged(int value);
     void parallelismChanged(int value);
     void updateDecryptionTime(int value);
-    void updateFormatCompatibility(int index, bool retransform = true);
-    void setupAlgorithmComboBox();
-    void setupKdfComboBox(bool enableKdbx3);
+    void loadKdfAlgorithms();
     void loadKdfParameters();
     void updateKdfFields();
     void markDirty();
@@ -71,7 +68,6 @@ private:
 
     bool m_isDirty = false;
     bool m_initWithAdvanced = false;
-    bool m_formatCompatibilityDirty = false;
     const QScopedPointer<Ui::DatabaseSettingsWidgetEncryption> m_ui;
 };
 

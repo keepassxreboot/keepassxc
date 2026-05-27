@@ -55,6 +55,7 @@ class TestGuiFdoSecrets : public QObject
     Q_OBJECT
 
 public:
+    explicit TestGuiFdoSecrets();
     ~TestGuiFdoSecrets() override;
 
 private slots:
@@ -145,6 +146,8 @@ private:
     }
 
 private:
+    Q_DISABLE_COPY(TestGuiFdoSecrets)
+
     QScopedPointer<MainWindow> m_mainWindow;
     QPointer<DatabaseTabWidget> m_tabWidget;
     QPointer<DatabaseWidget> m_dbWidget;

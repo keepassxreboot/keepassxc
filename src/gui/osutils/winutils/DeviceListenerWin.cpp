@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ * Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -80,8 +80,9 @@ void DeviceListenerWin::deregisterHotplugCallback()
     }
 }
 
-bool DeviceListenerWin::nativeEventFilter(const QByteArray& eventType, void* message, long*)
+bool DeviceListenerWin::nativeEventFilter(const QByteArray& eventType, void* message, qintptr* result)
 {
+    Q_UNUSED(result);
     if (eventType != "windows_generic_MSG") {
         return false;
     }
@@ -94,7 +95,7 @@ bool DeviceListenerWin::nativeEventFilter(const QByteArray& eventType, void* mes
         || (m_handleRemoval && m->wParam == DBT_DEVICEREMOVECOMPLETE)) {
         const auto pBrHdr = reinterpret_cast<PDEV_BROADCAST_HDR>(m->lParam);
         const auto pDevIface = reinterpret_cast<PDEV_BROADCAST_DEVICEINTERFACE_W>(pBrHdr);
-        const auto name = QString::fromWCharArray(pDevIface->dbcc_name, pDevIface->dbcc_size);
+        const auto name = QString::fromWCharArray(pDevIface->dbcc_name);
         if (m_deviceIdMatch.match(name).hasMatch()) {
             emit devicePlugged(m->wParam == DBT_DEVICEARRIVAL, nullptr, pDevIface);
             return true;

@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2025 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -19,11 +19,13 @@
 
 #include "config-keepassx.h"
 #include "core/Global.h"
+#include "core/Tools.h"
 #include "crypto/Random.h"
 
 #include <QDesktopServices>
 #include <QDir>
 #include <QProcessEnvironment>
+#include <QScopeGuard>
 #include <QSet>
 #include <QTemporaryFile>
 #include <QUrl>
@@ -38,7 +40,7 @@ EntryAttachments::~EntryAttachments()
     clear();
 }
 
-QList<QString> EntryAttachments::keys() const
+QStringList EntryAttachments::keys() const
 {
     return m_attachments.keys();
 }
@@ -50,7 +52,7 @@ bool EntryAttachments::hasKey(const QString& key) const
 
 QSet<QByteArray> EntryAttachments::values() const
 {
-    return asConst(m_attachments).values().toSet();
+    return Tools::asSet(m_attachments.values());
 }
 
 QByteArray EntryAttachments::value(const QString& key) const
@@ -235,8 +237,10 @@ bool EntryAttachments::openAttachment(const QString& key, QString* errorMessage)
         const bool saveOk = tmpFile.open() && tmpFile.setPermissions(QFile::ReadOwner | QFile::WriteOwner)
                             && tmpFile.write(attachmentData) == attachmentData.size() && tmpFile.flush();
 
-        if (!saveOk && errorMessage) {
-            *errorMessage = QString("%1 - %2").arg(key, tmpFile.errorString());
+        if (!saveOk) {
+            if (errorMessage) {
+                *errorMessage = QString("%1 - %2").arg(key, tmpFile.errorString());
+            }
             return false;
         }
 
@@ -249,15 +253,35 @@ bool EntryAttachments::openAttachment(const QString& key, QString* errorMessage)
         watcher->start(tmpFile.fileName(), 5);
         connect(watcher.data(), &FileWatcher::fileChanged, this, &EntryAttachments::attachmentFileModified);
         m_attachmentFileWatchers.insert(tmpFile.fileName(), watcher);
+    } else if (auto path = m_openedAttachments.value(key); m_attachmentFileWatchers.contains(path)) {
+        // If we are already watching an open attachment file, overwrite it with the information from the entry
+        auto watcher = m_attachmentFileWatchers.value(path);
+        watcher->stop();
+
+        QFile file(path);
+        auto finally = qScopeGuard([&file, &watcher, &path] {
+            file.close();
+            watcher->start(path, 5);
+        });
+
+        const auto attachmentData = value(key);
+        const bool saveOk = file.open(QIODevice::WriteOnly) && file.setPermissions(QFile::ReadOwner | QFile::WriteOwner)
+                            && file.write(attachmentData) == attachmentData.size() && file.flush();
+
+        if (!saveOk) {
+            if (errorMessage) {
+                *errorMessage = QString("%1 - %2").arg(key, file.errorString());
+            }
+            return false;
+        }
     }
 
     const bool openOk = QDesktopServices::openUrl(QUrl::fromLocalFile(m_openedAttachments.value(key)));
     if (!openOk && errorMessage) {
         *errorMessage = tr("Cannot open file \"%1\"").arg(key);
-        return false;
     }
 
-    return true;
+    return openOk;
 }
 
 void EntryAttachments::attachmentFileModified(const QString& path)

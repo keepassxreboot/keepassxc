@@ -18,19 +18,18 @@
 #include "Diceware.h"
 
 #include "Utils.h"
+#include "core/Global.h"
 #include "core/PassphraseGenerator.h"
 
 #include <QCommandLineParser>
 
 const QCommandLineOption Diceware::WordCountOption =
-    QCommandLineOption(QStringList() << "W"
-                                     << "words",
+    QCommandLineOption(QStringList() << "W" << "words",
                        QObject::tr("Word count for the diceware passphrase."),
                        QObject::tr("count", "CLI parameter"));
 
 const QCommandLineOption Diceware::WordListOption =
-    QCommandLineOption(QStringList() << "w"
-                                     << "word-list",
+    QCommandLineOption(QStringList() << "w" << "word-list",
                        QObject::tr("Wordlist for the diceware generator.\n[Default: EFF English]"),
                        QObject::tr("path"));
 
@@ -58,7 +57,7 @@ int Diceware::execute(const QStringList& arguments)
     if (wordCount.isEmpty()) {
         dicewareGenerator.setWordCount(PassphraseGenerator::DefaultWordCount);
     } else if (wordCount.toInt() <= 0) {
-        err << QObject::tr("Invalid word count %1").arg(wordCount) << endl;
+        err << QObject::tr("Invalid word count %1").arg(wordCount) << Qt::endl;
         return EXIT_FAILURE;
     } else {
         dicewareGenerator.setWordCount(wordCount.toInt());
@@ -69,15 +68,13 @@ int Diceware::execute(const QStringList& arguments)
         dicewareGenerator.setWordList(wordListFile);
     }
 
-    if (!dicewareGenerator.isValid()) {
-        // We already validated the word count input so if the generator is invalid, it
-        // must be because the word list is too small.
-        err << QObject::tr("The word list is too small (< 1000 items)") << endl;
-        return EXIT_FAILURE;
+    // Show a warning if the wordlist is smaller than the recommended size
+    if (!dicewareGenerator.isWordListValid()) {
+        err << QObject::tr("Warning: the chosen wordlist is smaller than the minimum recommended size!") << Qt::endl;
     }
 
     QString password = dicewareGenerator.generatePassphrase();
-    out << password << endl;
+    out << password << Qt::endl;
 
     return EXIT_SUCCESS;
 }

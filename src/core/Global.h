@@ -1,4 +1,5 @@
 /*
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
  *  Copyright (C) 2012 Nokia Corporation and/or its subsidiary(-ies)
  *  Copyright (C) 2012 Intel Corporation
@@ -21,9 +22,10 @@
 #define KEEPASSX_GLOBAL_H
 
 #include <QString>
+#include <QTextStream>
 
 #if defined(Q_OS_WIN)
-#if defined(KEEPASSX_BUILDING_CORE)
+#if defined(KPXC_BUILDING_CORE)
 #define KEEPASSXC_EXPORT Q_DECL_IMPORT
 #else
 #define KEEPASSXC_EXPORT Q_DECL_EXPORT

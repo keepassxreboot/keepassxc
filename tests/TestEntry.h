@@ -35,7 +35,10 @@ private slots:
     void testResolveUrlPlaceholders();
     void testResolveRecursivePlaceholders();
     void testResolveReferencePlaceholders();
+    void testResolveUuidPlaceholder();
     void testResolveNonIdPlaceholdersToUuid();
+    void testResolveConversionPlaceholders();
+    void testResolveReplacePlaceholders();
     void testResolveClonedEntry();
     void testIsRecycled();
     void testMoveUpDown();

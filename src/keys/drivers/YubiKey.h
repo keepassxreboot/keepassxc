@@ -1,6 +1,6 @@
 /*
+ *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2014 Kyle Manna <kyle@kylemanna.com>
- *  Copyright (C) 2017-2021 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,14 +16,16 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_YUBIKEY_H
-#define KEEPASSX_YUBIKEY_H
+#ifndef KEEPASSXC_YUBIKEY_H
+#define KEEPASSXC_YUBIKEY_H
 
 #include <QHash>
 #include <QMultiMap>
 #include <QMutex>
 #include <QObject>
+#include <QRecursiveMutex>
 #include <QTimer>
+
 #include <botan/secmem.h>
 
 typedef QPair<unsigned int, int> YubiKeySlot;
@@ -37,12 +39,14 @@ class YubiKey : public QObject
     Q_OBJECT
 
 public:
-    typedef QMap<YubiKeySlot, QString> KeyMap;
+    using KeyMap = QMultiMap<YubiKeySlot, QString>;
+
     enum class ChallengeResult : int
     {
         YCR_ERROR = 0,
         YCR_SUCCESS = 1,
-        YCR_WOULDBLOCK = 2
+        YCR_WOULDBLOCK = 2,
+        YCR_KEYNOTFOUND = 3,
     };
 
     static YubiKey* instance();
@@ -52,6 +56,7 @@ public:
     void findValidKeysAsync();
 
     KeyMap foundKeys();
+    int connectedKeys();
 
     ChallengeResult challenge(YubiKeySlot slot, const QByteArray& challenge, Botan::secure_vector<char>& response);
     bool testChallenge(YubiKeySlot slot, bool* wouldBlock = nullptr);
@@ -85,14 +90,18 @@ private:
 
     QTimer m_interactionTimer;
     bool m_initialized = false;
+    bool m_findingKeys = false;
     QString m_error;
 
+    // Prevents multiple simultaneous operations on hardware keys
     static QMutex s_interfaceMutex;
 
     KeyMap m_usbKeys;
     KeyMap m_pcscKeys;
 
+    int m_connectedKeys = 0;
+
     Q_DISABLE_COPY(YubiKey)
 };
 
-#endif // KEEPASSX_YUBIKEY_H
+#endif // KEEPASSXC_YUBIKEY_H

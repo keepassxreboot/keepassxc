@@ -67,7 +67,7 @@ public slots:
     void applyPassword();
     void copyPassword();
     void setPasswordVisible(bool visible);
-    void deleteWordList();
+    void removeCustomWordList();
     void addWordList();
 
 protected:
@@ -76,6 +76,7 @@ protected:
 private slots:
     void updateButtonsEnabled(const QString& password);
     void updatePasswordStrength();
+    void updatePasswordLengthLabel(const QString& password);
     void setAdvancedMode(bool advanced);
     void excludeHexChars();
 

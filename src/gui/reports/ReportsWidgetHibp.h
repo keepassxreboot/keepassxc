@@ -23,8 +23,8 @@
 
 #include <QWidget>
 
-#ifdef WITH_XC_NETWORKING
-#include "core/HibpDownloader.h"
+#ifdef KPXC_FEATURE_NETWORK
+#include "networking/HibpDownloader.h"
 #endif
 
 class Database;
@@ -58,6 +58,8 @@ public slots:
     void fetchFailed(const QString& error);
     void makeHibpTable();
     void customMenuRequested(QPoint);
+    QList<Entry*> getSelectedEntries();
+    void expireSelectedEntries();
     void deleteSelectedEntries();
 
 private:
@@ -76,7 +78,7 @@ private:
     QString m_editedPassword; // The old password of the entry we're editing
     bool m_editedExcluded; // The old "known bad" flag of the entry we're editing
 
-#ifdef WITH_XC_NETWORKING
+#ifdef KPXC_FEATURE_NETWORK
     HibpDownloader m_downloader; // This performs the actual HIBP online query
 #endif
 };

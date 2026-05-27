@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -21,12 +21,8 @@
 
 #include <QCloseEvent>
 #include <QMenu>
-#include <QShortcut>
-#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
 #include <QScreen>
-#else
-#include <QDesktopWidget>
-#endif
+#include <QShortcut>
 
 #include "core/Config.h"
 #include "core/Database.h"
@@ -41,6 +37,7 @@ enum MENU_FIELD
     USERNAME = 1,
     PASSWORD,
     TOTP,
+    URL,
 };
 
 AutoTypeSelectDialog::AutoTypeSelectDialog(QWidget* parent)
@@ -89,6 +86,10 @@ AutoTypeSelectDialog::AutoTypeSelectDialog(QWidget* parent)
     connect(m_ui->action, &QToolButton::clicked, this, &AutoTypeSelectDialog::activateCurrentMatch);
 
     connect(m_ui->cancelButton, SIGNAL(clicked()), SLOT(reject()));
+
+    auto sortColumn = config()->get(Config::AutoTypeDialogSortColumn).toInt();
+    auto sortOrder = config()->get(Config::AutoTypeDialogSortOrder).toInt();
+    m_ui->view->sortByColumn(sortColumn, sortOrder == 0 ? Qt::AscendingOrder : Qt::DescendingOrder);
 }
 
 // Required for QScopedPointer
@@ -264,7 +265,8 @@ void AutoTypeSelectDialog::updateActionMenu(const AutoTypeMatch& match)
 
     bool hasUsername = !match.first->username().isEmpty();
     bool hasPassword = !match.first->password().isEmpty();
-    bool hasTotp = match.first->hasTotp();
+    bool hasTotp = match.first->hasValidTotp();
+    bool hasUrl = !match.first->url().isEmpty();
 
     for (auto action : m_actionMenu->actions()) {
         auto prop = action->property(MENU_FIELD_PROP_NAME);
@@ -279,6 +281,9 @@ void AutoTypeSelectDialog::updateActionMenu(const AutoTypeMatch& match)
             case MENU_FIELD::TOTP:
                 action->setEnabled(hasTotp);
                 break;
+            case MENU_FIELD::URL:
+                action->setEnabled(hasUrl);
+                break;
             }
         }
     }
@@ -290,17 +295,21 @@ void AutoTypeSelectDialog::buildActionMenu()
     auto typeUsernameAction = new QAction(icons()->icon("auto-type"), tr("Type {USERNAME}"), this);
     auto typePasswordAction = new QAction(icons()->icon("auto-type"), tr("Type {PASSWORD}"), this);
     auto typeTotpAction = new QAction(icons()->icon("auto-type"), tr("Type {TOTP}"), this);
+    auto typeUrlAction = new QAction(icons()->icon("auto-type"), tr("Type {URL}"), this);
     auto copyUsernameAction = new QAction(icons()->icon("username-copy"), tr("Copy Username"), this);
     auto copyPasswordAction = new QAction(icons()->icon("password-copy"), tr("Copy Password"), this);
     auto copyTotpAction = new QAction(icons()->icon("totp"), tr("Copy TOTP"), this);
+    auto copyUrlAction = new QAction(icons()->icon("url-copy"), tr("Copy URL"), this);
     m_actionMenu->addAction(typeUsernameAction);
     m_actionMenu->addAction(typePasswordAction);
     m_actionMenu->addAction(typeTotpAction);
+    m_actionMenu->addAction(typeUrlAction);
     m_actionMenu->addAction(copyUsernameAction);
     m_actionMenu->addAction(copyPasswordAction);
     m_actionMenu->addAction(copyTotpAction);
+    m_actionMenu->addAction(copyUrlAction);
 
-    typeUsernameAction->setShortcut(Qt::CTRL + Qt::Key_1);
+    typeUsernameAction->setShortcut(Qt::CTRL | Qt::Key_1);
     typeUsernameAction->setProperty(MENU_FIELD_PROP_NAME, MENU_FIELD::USERNAME);
     connect(typeUsernameAction, &QAction::triggered, this, [&] {
         auto match = m_ui->view->currentMatch();
@@ -308,7 +317,7 @@ void AutoTypeSelectDialog::buildActionMenu()
         submitAutoTypeMatch(match);
     });
 
-    typePasswordAction->setShortcut(Qt::CTRL + Qt::Key_2);
+    typePasswordAction->setShortcut(Qt::CTRL | Qt::Key_2);
     typePasswordAction->setProperty(MENU_FIELD_PROP_NAME, MENU_FIELD::PASSWORD);
     connect(typePasswordAction, &QAction::triggered, this, [&] {
         auto match = m_ui->view->currentMatch();
@@ -316,7 +325,7 @@ void AutoTypeSelectDialog::buildActionMenu()
         submitAutoTypeMatch(match);
     });
 
-    typeTotpAction->setShortcut(Qt::CTRL + Qt::Key_3);
+    typeTotpAction->setShortcut(Qt::CTRL | Qt::Key_3);
     typeTotpAction->setProperty(MENU_FIELD_PROP_NAME, MENU_FIELD::TOTP);
     connect(typeTotpAction, &QAction::triggered, this, [&] {
         auto match = m_ui->view->currentMatch();
@@ -324,27 +333,25 @@ void AutoTypeSelectDialog::buildActionMenu()
         submitAutoTypeMatch(match);
     });
 
+    typeUrlAction->setShortcut(Qt::CTRL | Qt::Key_4);
+    typeUrlAction->setProperty(MENU_FIELD_PROP_NAME, MENU_FIELD::URL);
+    connect(typeUrlAction, &QAction::triggered, this, [&] {
+        auto match = m_ui->view->currentMatch();
+        match.second = "{URL}";
+        submitAutoTypeMatch(match);
+    });
+
 #if defined(Q_OS_WIN) || defined(Q_OS_MAC)
     auto typeVirtualAction = new QAction(icons()->icon("auto-type"), tr("Use Virtual Keyboard"), nullptr);
     m_actionMenu->insertAction(copyUsernameAction, typeVirtualAction);
-    typeVirtualAction->setShortcut(Qt::CTRL + Qt::Key_4);
+    typeVirtualAction->setShortcut(Qt::CTRL | Qt::Key_5);
     connect(typeVirtualAction, &QAction::triggered, this, [&] {
         m_virtualMode = true;
         activateCurrentMatch();
     });
 #endif
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
-    // Qt 5.10 introduced a new "feature" to hide shortcuts in context menus
-    // Unfortunately, Qt::AA_DontShowShortcutsInContextMenus is broken, have to manually enable them
-    typeUsernameAction->setShortcutVisibleInContextMenu(true);
-    typePasswordAction->setShortcutVisibleInContextMenu(true);
-    typeTotpAction->setShortcutVisibleInContextMenu(true);
-#if defined(Q_OS_WIN) || defined(Q_OS_MAC)
-    typeVirtualAction->setShortcutVisibleInContextMenu(true);
-#endif
-#endif
-
+    copyUsernameAction->setShortcut(Qt::CTRL | Qt::SHIFT | Qt::Key_1);
     copyUsernameAction->setProperty(MENU_FIELD_PROP_NAME, MENU_FIELD::USERNAME);
     connect(copyUsernameAction, &QAction::triggered, this, [&] {
         auto entry = m_ui->view->currentMatch().first;
@@ -354,6 +361,7 @@ void AutoTypeSelectDialog::buildActionMenu()
         }
     });
 
+    copyPasswordAction->setShortcut(Qt::CTRL | Qt::SHIFT | Qt::Key_2);
     copyPasswordAction->setProperty(MENU_FIELD_PROP_NAME, MENU_FIELD::PASSWORD);
     connect(copyPasswordAction, &QAction::triggered, this, [&] {
         auto entry = m_ui->view->currentMatch().first;
@@ -363,11 +371,22 @@ void AutoTypeSelectDialog::buildActionMenu()
         }
     });
 
+    copyTotpAction->setShortcut(Qt::CTRL | Qt::SHIFT | Qt::Key_3);
     copyTotpAction->setProperty(MENU_FIELD_PROP_NAME, MENU_FIELD::TOTP);
     connect(copyTotpAction, &QAction::triggered, this, [&] {
         auto entry = m_ui->view->currentMatch().first;
         if (entry) {
             clipboard()->setText(entry->totp());
+            reject();
+        }
+    });
+
+    copyUrlAction->setShortcut(Qt::CTRL | Qt::SHIFT | Qt::Key_4);
+    copyUrlAction->setProperty(MENU_FIELD_PROP_NAME, MENU_FIELD::URL);
+    connect(copyUrlAction, &QAction::triggered, this, [&] {
+        auto entry = m_ui->view->currentMatch().first;
+        if (entry) {
+            clipboard()->setText(entry->resolvePlaceholder(entry->url()));
             reject();
         }
     });
@@ -377,16 +396,12 @@ void AutoTypeSelectDialog::showEvent(QShowEvent* event)
 {
     QDialog::showEvent(event);
 
-#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
     auto screen = QApplication::screenAt(QCursor::pos());
     if (!screen) {
         // screenAt can return a nullptr, default to the primary screen
         screen = QApplication::primaryScreen();
     }
     QRect screenGeometry = screen->availableGeometry();
-#else
-    QRect screenGeometry = QApplication::desktop()->availableGeometry(QCursor::pos());
-#endif
 
     // Resize to last used size
     QSize size = config()->get(Config::GUI_AutoTypeSelectDialogSize).toSize();
@@ -401,6 +416,8 @@ void AutoTypeSelectDialog::showEvent(QShowEvent* event)
 void AutoTypeSelectDialog::hideEvent(QHideEvent* event)
 {
     config()->set(Config::GUI_AutoTypeSelectDialogSize, size());
+    config()->set(Config::AutoTypeDialogSortColumn, m_ui->view->horizontalHeader()->sortIndicatorSection());
+    config()->set(Config::AutoTypeDialogSortOrder, m_ui->view->horizontalHeader()->sortIndicatorOrder());
     if (!m_accepted) {
         emit rejected();
     }

@@ -24,6 +24,7 @@ EntryAttributesModel::EntryAttributesModel(QObject* parent)
     , m_entryAttributes(nullptr)
     , m_nextRenameDataChange(false)
 {
+    m_collator.setNumericMode(true);
 }
 
 void EntryAttributesModel::setEntryAttributes(EntryAttributes* entryAttributes)
@@ -150,7 +151,7 @@ void EntryAttributesModel::attributeAboutToAdd(const QString& key)
 {
     QList<QString> rows = m_attributes;
     rows.append(key);
-    std::sort(rows.begin(), rows.end());
+    std::sort(rows.begin(), rows.end(), m_collator);
     int row = rows.indexOf(key);
     beginInsertRows(QModelIndex(), row, row);
 }
@@ -180,7 +181,7 @@ void EntryAttributesModel::attributeAboutToRename(const QString& oldKey, const Q
     QList<QString> rows = m_attributes;
     rows.removeOne(oldKey);
     rows.append(newKey);
-    std::sort(rows.begin(), rows.end());
+    std::sort(rows.begin(), rows.end(), m_collator);
     int newRow = rows.indexOf(newKey);
     if (newRow > oldRow) {
         newRow++;
@@ -232,4 +233,5 @@ void EntryAttributesModel::updateAttributes()
             m_attributes.append(key);
         }
     }
+    std::sort(m_attributes.begin(), m_attributes.end(), m_collator);
 }

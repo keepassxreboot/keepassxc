@@ -29,8 +29,10 @@
 #include "autotype/AutoTypePlatformPlugin.h"
 #include "autotype/AutoTypeSelectDialog.h"
 #include "autotype/PickcharsDialog.h"
+#include "core/Global.h"
 #include "core/Resources.h"
 #include "core/Tools.h"
+#include "core/Totp.h"
 #include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
 #include "gui/osutils/OSUtils.h"
@@ -113,6 +115,8 @@ namespace
                                                         {"f14", Qt::Key_F14},
                                                         {"f15", Qt::Key_F15},
                                                         {"f16", Qt::Key_F16}};
+    constexpr int s_minWaitDelay = 100; // 100 ms
+    constexpr int s_maxWaitDelay = 10000; // 10 seconds
 } // namespace
 
 AutoType* AutoType::m_instance = nullptr;
@@ -147,11 +151,10 @@ AutoType::AutoType(QObject* parent, bool test)
     QString pluginPath = resources()->pluginPath(pluginName);
 
     if (!pluginPath.isEmpty()) {
-#ifdef WITH_XC_AUTOTYPE
         loadPlugin(pluginPath);
-#endif
     }
 
+    connect(this, SIGNAL(autotypeFinished()), SLOT(resetAutoTypeState()));
     connect(qApp, SIGNAL(aboutToQuit()), SLOT(unloadPlugin()));
 }
 
@@ -235,7 +238,9 @@ QStringList AutoType::windowTitles()
 void AutoType::raiseWindow()
 {
 #if defined(Q_OS_MACOS)
-    m_plugin->raiseOwnWindow();
+    if (m_plugin) {
+        m_plugin->raiseOwnWindow();
+    }
 #endif
 }
 
@@ -261,6 +266,11 @@ void AutoType::executeAutoTypeActions(const Entry* entry,
                                       WId window,
                                       AutoTypeExecutor::Mode mode)
 {
+    if (!m_plugin || !m_executor) {
+        qWarning() << "Auto-Type plugin not available, cannot perform Auto-Type.";
+        return;
+    }
+
     QString error;
     auto actions = parseSequence(sequence, entry, error);
 
@@ -271,7 +281,7 @@ void AutoType::executeAutoTypeActions(const Entry* entry,
             MessageBox::critical(getMainWindow(), tr("Auto-Type Error"), errorMsg);
         }
         qWarning() << errorMsg;
-        emit autotypeRejected();
+        emit autotypeFinished();
         return;
     }
 
@@ -309,8 +319,8 @@ void AutoType::executeAutoTypeActions(const Entry* entry,
     // Restore executor mode
     m_executor->mode = mode;
 
-    int delay = qMax(100, config()->get(Config::AutoTypeStartDelay).toInt());
-    Tools::wait(delay);
+    // Initial Auto-Type delay to allow window to come to foreground
+    Tools::wait(qBound(s_minWaitDelay, config()->get(Config::AutoTypeStartDelay).toInt(), s_maxWaitDelay));
 
     // Grab the current active window after everything settles
     if (window == 0) {
@@ -318,13 +328,13 @@ void AutoType::executeAutoTypeActions(const Entry* entry,
     }
 
     for (const auto& action : asConst(actions)) {
+        // Cancel Auto-Type if the active window changed
         if (m_plugin->activeWindow() != window) {
             qWarning("Active window changed, interrupting auto-type.");
-            emit autotypeRejected();
-            m_inAutoType.unlock();
-            return;
+            break;
         }
 
+        bool failed = false;
         constexpr int max_retries = 5;
         for (int i = 1; i <= max_retries; i++) {
             auto result = action->exec(m_executor);
@@ -339,20 +349,22 @@ void AutoType::executeAutoTypeActions(const Entry* entry,
                 if (getMainWindow()) {
                     MessageBox::critical(getMainWindow(), tr("Auto-Type Error"), result.errorString());
                 }
-                emit autotypeRejected();
-                m_inAutoType.unlock();
-                return;
+                failed = true;
+                break;
             }
 
-            Tools::wait(delay);
+            // Retry wait delay
+            Tools::wait(100);
+        }
+
+        // Last action failed to complete, cancel the rest of the sequence
+        if (failed) {
+            break;
         }
     }
 
-    m_windowForGlobal = 0;
-    m_windowTitleForGlobal.clear();
-
-    emit autotypePerformed();
     m_inAutoType.unlock();
+    emit autotypeFinished();
 }
 
 /**
@@ -387,7 +399,7 @@ void AutoType::performAutoTypeWithSequence(const Entry* entry, const QString& se
 void AutoType::startGlobalAutoType(const QString& search)
 {
     // Never Auto-Type into KeePassXC itself
-    if (qApp->focusWindow()) {
+    if (getMainWindow() && (qApp->activeWindow() || qApp->activeModalWidget())) {
         return;
     }
 
@@ -431,38 +443,33 @@ void AutoType::startGlobalAutoType(const QString& search)
  */
 void AutoType::performGlobalAutoType(const QList<QSharedPointer<Database>>& dbList, const QString& search)
 {
-    if (!m_plugin) {
-        return;
-    }
-
-    if (!m_inGlobalAutoTypeDialog.tryLock()) {
-        return;
-    }
-
-    if (m_windowTitleForGlobal.isEmpty()) {
-        m_inGlobalAutoTypeDialog.unlock();
+    if (!m_plugin || !m_inGlobalAutoTypeDialog.tryLock()) {
         return;
     }
 
     QList<AutoTypeMatch> matchList;
-    bool hideExpired = config()->get(Config::AutoTypeHideExpiredEntry).toBool();
+    // Generate entry/sequence match list if there is a valid window title
+    if (!m_windowTitleForGlobal.isEmpty()) {
+        bool hideExpired = config()->get(Config::AutoTypeHideExpiredEntry).toBool();
+        for (const auto& db : dbList) {
+            const QList<Entry*> dbEntries = db->rootGroup()->entriesRecursive();
+            for (auto entry : dbEntries) {
+                auto group = entry->group();
+                if (!group || !group->resolveAutoTypeEnabled() || !entry->autoTypeEnabled()) {
+                    continue;
+                }
 
-    for (const auto& db : dbList) {
-        const QList<Entry*> dbEntries = db->rootGroup()->entriesRecursive();
-        for (auto entry : dbEntries) {
-            auto group = entry->group();
-            if (!group || !group->resolveAutoTypeEnabled() || !entry->autoTypeEnabled()) {
-                continue;
-            }
-
-            if (hideExpired && entry->isExpired()) {
-                continue;
-            }
-            auto sequences = entry->autoTypeSequences(m_windowTitleForGlobal).toSet();
-            for (const auto& sequence : sequences) {
-                matchList << AutoTypeMatch(entry, sequence);
+                if (hideExpired && entry->isExpired()) {
+                    continue;
+                }
+                const QSet<QString> sequences = Tools::asSet(entry->autoTypeSequences(m_windowTitleForGlobal));
+                for (const auto& sequence : sequences) {
+                    matchList << AutoTypeMatch(entry, sequence);
+                }
             }
         }
+    } else {
+        qWarning() << "Auto-Type: Window title was empty from the operating system";
     }
 
     // Show the selection dialog if we always ask, have multiple matches, or no matches
@@ -490,12 +497,10 @@ void AutoType::performGlobalAutoType(const QList<QSharedPointer<Database>>& dbLi
                                            m_windowForGlobal,
                                            virtualMode ? AutoTypeExecutor::Mode::VIRTUAL
                                                        : AutoTypeExecutor::Mode::NORMAL);
-                    resetAutoTypeState();
                 });
         connect(selectDialog, &QDialog::rejected, this, [this] {
             restoreWindowState();
-            resetAutoTypeState();
-            emit autotypeRejected();
+            emit autotypeFinished();
         });
 
 #ifdef Q_OS_MACOS
@@ -508,11 +513,9 @@ void AutoType::performGlobalAutoType(const QList<QSharedPointer<Database>>& dbLi
     } else if (!matchList.isEmpty()) {
         // Only one match and not asking, do it!
         executeAutoTypeActions(matchList.first().first, matchList.first().second, m_windowForGlobal);
-        resetAutoTypeState();
     } else {
         // We should never get here
-        resetAutoTypeState();
-        emit autotypeRejected();
+        emit autotypeFinished();
     }
 }
 
@@ -550,12 +553,16 @@ AutoType::parseSequence(const QString& entrySequence, const Entry* entry, QStrin
     }
 
     const int maxTypeDelay = 500;
-    const int maxWaitDelay = 10000;
     const int maxRepetition = 100;
 
+    int currentTypingDelay = qBound(0, config()->get(Config::AutoTypeDelay).toInt(), maxTypeDelay);
+    // Take into account the initial delay which is added before any actions are performed
+    int cumulativeDelay = qBound(s_minWaitDelay, config()->get(Config::AutoTypeStartDelay).toInt(), s_maxWaitDelay);
+
+    // Initial actions include start delay and initial inter-key delay
     QList<QSharedPointer<AutoTypeAction>> actions;
     actions << QSharedPointer<AutoTypeBegin>::create();
-    actions << QSharedPointer<AutoTypeDelay>::create(qMax(0, config()->get(Config::AutoTypeDelay).toInt()), true);
+    actions << QSharedPointer<AutoTypeDelay>::create(currentTypingDelay, true);
 
     // Replace escaped braces with a template for easier regex
     QString sequence = entrySequence;
@@ -571,7 +578,7 @@ AutoType::parseSequence(const QString& entrySequence, const Entry* entry, QStrin
     // Group 1 = modifier key (opt)
     // Group 2 = full placeholder
     // Group 3 = inner placeholder (allows nested placeholders)
-    // Group 4 = repeat (opt)
+    // Group 4 = repeat / delay time (opt)
     // Group 5 = character
     QRegularExpression regex("([+%^#]*)(?:({((?>[^{}]+?|(?2))+?)(?:\\s+(\\d+))?})|(.))");
     auto results = regex.globalMatch(sequence);
@@ -633,20 +640,30 @@ AutoType::parseSequence(const QString& entrySequence, const Entry* entry, QStrin
             }
             actions << QSharedPointer<AutoTypeDelay>::create(qBound(0, delay, maxTypeDelay), true);
         } else if (placeholder == "delay") {
-            // Mid typing delay (wait)
-            if (repeat > maxWaitDelay) {
-                error = tr("Very long delay detected, max is %1: %2").arg(maxWaitDelay).arg(fullPlaceholder);
+            // Mid typing delay (wait), repeat represents the desired delay in milliseconds
+            if (repeat > s_maxWaitDelay) {
+                error = tr("Very long delay detected, max is %1: %2").arg(s_maxWaitDelay).arg(fullPlaceholder);
                 return {};
             }
-            actions << QSharedPointer<AutoTypeDelay>::create(qBound(0, repeat, maxWaitDelay));
+            cumulativeDelay += repeat;
+            actions << QSharedPointer<AutoTypeDelay>::create(qBound(0, repeat, s_maxWaitDelay));
         } else if (placeholder == "clearfield") {
             // Platform-specific field clearing
             actions << QSharedPointer<AutoTypeClearField>::create();
-        } else if (placeholder == "totp") {
-            // Entry totp (requires special handling)
-            QString totp = entry->totp();
-            for (const auto& ch : totp) {
-                actions << QSharedPointer<AutoTypeKey>::create(ch);
+        } else if (placeholder == "totp" || placeholder == "timeotp") {
+            if (entry->hasValidTotp()) {
+                // Calculate TOTP at the time of typing including delays
+                bool isValid = false;
+                auto time =
+                    Clock::currentSecondsSinceEpoch() + (cumulativeDelay + currentTypingDelay * actions.count()) / 1000;
+                auto totp = Totp::generateTotp(entry->totpSettings(), &isValid, time);
+                for (const auto& ch : totp) {
+                    actions << QSharedPointer<AutoTypeKey>::create(ch);
+                }
+            } else if (entry->hasTotp()) {
+                // Entry has TOTP configured but invalid settings
+                error = tr("Entry has invalid TOTP settings");
+                return {};
             }
         } else if (placeholder.startsWith("pickchars")) {
             // Reset to the original capture to preserve case
@@ -686,73 +703,22 @@ AutoType::parseSequence(const QString& entrySequence, const Entry* entry, QStrin
         } else if (placeholder.startsWith("t-conv:")) {
             // Reset to the original capture to preserve case
             placeholder = match.captured(3);
-            placeholder.replace("t-conv:", "", Qt::CaseInsensitive);
-            if (!placeholder.isEmpty()) {
-                auto sep = placeholder[0];
-                auto parts = placeholder.split(sep);
-                if (parts.size() >= 4) {
-                    auto resolved = entry->resolveMultiplePlaceholders(parts[1]);
-                    auto type = parts[2].toLower();
-
-                    if (type == "base64") {
-                        resolved = resolved.toUtf8().toBase64();
-                    } else if (type == "hex") {
-                        resolved = resolved.toUtf8().toHex();
-                    } else if (type == "uri") {
-                        resolved = QUrl::toPercentEncoding(resolved.toUtf8());
-                    } else if (type == "uri-dec") {
-                        resolved = QUrl::fromPercentEncoding(resolved.toUtf8());
-                    } else if (type.startsWith("u")) {
-                        resolved = resolved.toUpper();
-                    } else if (type.startsWith("l")) {
-                        resolved = resolved.toLower();
-                    } else {
-                        error = tr("Invalid conversion type: %1").arg(type);
-                        return {};
-                    }
-                    for (const QChar& ch : resolved) {
-                        actions << QSharedPointer<AutoTypeKey>::create(ch);
-                    }
-                } else {
-                    error = tr("Invalid conversion syntax: %1").arg(fullPlaceholder);
-                    return {};
-                }
-            } else {
-                error = tr("Invalid conversion syntax: %1").arg(fullPlaceholder);
+            auto resolved = entry->resolveConversionPlaceholder(placeholder, &error);
+            if (!error.isEmpty()) {
                 return {};
+            }
+            for (const QChar& ch : resolved) {
+                actions << QSharedPointer<AutoTypeKey>::create(ch);
             }
         } else if (placeholder.startsWith("t-replace-rx:")) {
             // Reset to the original capture to preserve case
             placeholder = match.captured(3);
-            placeholder.replace("t-replace-rx:", "", Qt::CaseInsensitive);
-            if (!placeholder.isEmpty()) {
-                auto sep = placeholder[0];
-                auto parts = placeholder.split(sep);
-                if (parts.size() >= 5) {
-                    auto resolvedText = entry->resolveMultiplePlaceholders(parts[1]);
-                    auto resolvedSearch = entry->resolveMultiplePlaceholders(parts[2]);
-                    auto resolvedReplace = entry->resolveMultiplePlaceholders(parts[3]);
-                    // Replace $<num> with \\<num> to support Qt substitutions
-                    resolvedReplace.replace(QRegularExpression(R"(\$(\d+))"), R"(\\1)");
-
-                    auto searchRegex = QRegularExpression(resolvedSearch);
-                    if (!searchRegex.isValid()) {
-                        error = tr("Invalid regular expression syntax %1\n%2")
-                                    .arg(resolvedSearch, searchRegex.errorString());
-                        return {};
-                    }
-
-                    auto resolved = resolvedText.replace(searchRegex, resolvedReplace);
-                    for (const QChar& ch : resolved) {
-                        actions << QSharedPointer<AutoTypeKey>::create(ch);
-                    }
-                } else {
-                    error = tr("Invalid conversion syntax: %1").arg(fullPlaceholder);
-                    return {};
-                }
-            } else {
-                error = tr("Invalid conversion syntax: %1").arg(fullPlaceholder);
+            auto resolved = entry->resolveRegexPlaceholder(placeholder, &error);
+            if (!error.isEmpty()) {
                 return {};
+            }
+            for (const QChar& ch : resolved) {
+                actions << QSharedPointer<AutoTypeKey>::create(ch);
             }
         } else if (placeholder.startsWith("mode=")) {
             auto mode = AutoTypeExecutor::Mode::NORMAL;

@@ -57,8 +57,10 @@ signals:
 
 private slots:
     void insertAttachments();
+    void newAttachments();
+    void editSelectedAttachment();
+    void previewSelectedAttachment();
     void removeSelectedAttachments();
-    void renameSelectedAttachments();
     void saveSelectedAttachments();
     void openAttachment(const QModelIndex& index);
     void openSelectedAttachments();
@@ -67,6 +69,8 @@ private slots:
     void attachmentModifiedExternally(const QString& key, const QString& filePath);
 
 private:
+    void updateLinesVisibility();
+
     bool insertAttachments(const QStringList& fileNames, QString& errorMessage);
 
     QStringList confirmAttachmentSelection(const QStringList& filenames);

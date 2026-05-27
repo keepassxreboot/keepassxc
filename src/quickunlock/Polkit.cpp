@@ -49,7 +49,7 @@ Polkit::Polkit()
     PolkitSubject::registerMetaType();
     PolkitAuthorizationResults::registerMetaType();
 
-    /* Note we explicitly use our own dbus path here, as the ::systemBus() method could be overriden
+    /* Note we explicitly use our own dbus path here, as the ::systemBus() method could be overridden
        through an environment variable to return an alternative bus path. This bus could have an application
        pretending to be polkit running on it, which could approve every authentication request
 

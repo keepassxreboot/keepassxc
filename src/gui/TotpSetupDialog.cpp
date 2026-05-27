@@ -108,6 +108,7 @@ void TotpSetupDialog::init()
         m_ui->algorithmComboBox->addItem(item.first, item.second);
     }
     m_ui->algorithmComboBox->setCurrentIndex(0);
+    m_ui->invalidKeyLabel->setVisible(false);
 
     // Read entry totp settings
     auto settings = m_entry->totpSettings();
@@ -119,7 +120,7 @@ void TotpSetupDialog::init()
 
         if (settings->encoder.shortName == Totp::STEAM_SHORTNAME) {
             m_ui->radioSteam->setChecked(true);
-        } else if (settings->custom) {
+        } else if (Totp::hasCustomSettings(settings)) {
             m_ui->radioCustom->setChecked(true);
             m_ui->digitsSpinBox->setValue(settings->digits);
             int index = m_ui->algorithmComboBox->findData(settings->algorithm);
@@ -127,5 +128,8 @@ void TotpSetupDialog::init()
                 m_ui->algorithmComboBox->setCurrentIndex(index);
             }
         }
+
+        auto error = Totp::checkValidSettings(settings);
+        m_ui->invalidKeyLabel->setVisible(!error.isEmpty());
     }
 }

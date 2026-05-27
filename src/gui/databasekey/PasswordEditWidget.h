@@ -47,7 +47,6 @@ protected:
     QWidget* componentEditWidget() override;
     void initComponentEditWidget(QWidget* widget) override;
     void initComponent() override;
-    void hideEvent(QHideEvent* event) override;
 
 private slots:
     void setPassword(const QString& password);

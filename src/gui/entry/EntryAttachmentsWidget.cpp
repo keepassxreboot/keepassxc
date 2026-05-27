@@ -16,20 +16,41 @@
  */
 
 #include "EntryAttachmentsWidget.h"
+
+#include "EditEntryAttachmentsDialog.h"
+#include "EntryAttachmentsModel.h"
+#include "PreviewEntryAttachmentsDialog.h"
 #include "ui_EntryAttachmentsWidget.h"
 
-#include <QDir>
+#include <QDebug>
 #include <QDropEvent>
+#include <QLineEdit>
+#include <QMenu>
 #include <QMimeData>
+#include <QRegularExpression>
 #include <QStandardPaths>
 #include <QTemporaryFile>
 
-#include "EntryAttachmentsModel.h"
-#include "core/Config.h"
 #include "core/EntryAttachments.h"
 #include "core/Tools.h"
 #include "gui/FileDialog.h"
 #include "gui/MessageBox.h"
+
+namespace
+{
+    constexpr const char* Suffix = ".txt";
+
+    QString generateUniqueName(const QString& name, const QStringList& existingNames)
+    {
+        uint64_t i = 0;
+        QString newName = QStringLiteral("%1%2").arg(name).arg(Suffix);
+        while (existingNames.contains(newName)) {
+            newName = QStringLiteral("%1_%2%3").arg(name).arg(++i).arg(Suffix);
+        }
+        return newName;
+    }
+
+} // namespace
 
 EntryAttachmentsWidget::EntryAttachmentsWidget(QWidget* parent)
     : QWidget(parent)
@@ -46,12 +67,12 @@ EntryAttachmentsWidget::EntryAttachmentsWidget(QWidget* parent)
     m_ui->attachmentsView->viewport()->installEventFilter(this);
 
     m_ui->attachmentsView->setModel(m_attachmentsModel);
-    m_ui->attachmentsView->verticalHeader()->hide();
-    m_ui->attachmentsView->horizontalHeader()->setStretchLastSection(true);
-    m_ui->attachmentsView->horizontalHeader()->resizeSection(EntryAttachmentsModel::NameColumn, 400);
-    m_ui->attachmentsView->setSelectionBehavior(QAbstractItemView::SelectRows);
-    m_ui->attachmentsView->setSelectionMode(QAbstractItemView::ExtendedSelection);
-    m_ui->attachmentsView->setEditTriggers(QAbstractItemView::SelectedClicked);
+    m_ui->attachmentsView->horizontalHeader()->setMinimumSectionSize(70);
+    m_ui->attachmentsView->horizontalHeader()->setSectionResizeMode(EntryAttachmentsModel::NameColumn,
+                                                                    QHeaderView::Stretch);
+    m_ui->attachmentsView->horizontalHeader()->setSectionResizeMode(EntryAttachmentsModel::SizeColumn,
+                                                                    QHeaderView::ResizeToContents);
+    m_ui->attachmentsView->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
     connect(this, SIGNAL(buttonsVisibleChanged(bool)), this, SLOT(updateButtonsVisible()));
     connect(this, SIGNAL(readOnlyChanged(bool)), SLOT(updateButtonsEnabled()));
@@ -64,12 +85,29 @@ EntryAttachmentsWidget::EntryAttachmentsWidget(QWidget* parent)
     // clang-format on
     connect(this, SIGNAL(readOnlyChanged(bool)), m_attachmentsModel, SLOT(setReadOnly(bool)));
 
-    connect(m_ui->attachmentsView, SIGNAL(doubleClicked(QModelIndex)), SLOT(openAttachment(QModelIndex)));
+    connect(m_ui->attachmentsView, &QAbstractItemView::doubleClicked, [this](const QModelIndex&) {
+        m_readOnly ? previewSelectedAttachment() : editSelectedAttachment();
+    });
+
+    connect(m_ui->attachmentsView->itemDelegate(), &QAbstractItemDelegate::commitData, [this](QWidget* editor) {
+        if (auto lineEdit = qobject_cast<QLineEdit*>(editor)) {
+            auto index = m_attachmentsModel->rowByKey(lineEdit->text());
+            m_ui->attachmentsView->setCurrentIndex(m_attachmentsModel->index(index, 0));
+        }
+    });
+
     connect(m_ui->saveAttachmentButton, SIGNAL(clicked()), SLOT(saveSelectedAttachments()));
     connect(m_ui->openAttachmentButton, SIGNAL(clicked()), SLOT(openSelectedAttachments()));
     connect(m_ui->addAttachmentButton, SIGNAL(clicked()), SLOT(insertAttachments()));
+    connect(m_ui->editAttachmentButton, SIGNAL(clicked()), SLOT(editSelectedAttachment()));
+    connect(m_ui->previewAttachmentButton, SIGNAL(clicked()), SLOT(previewSelectedAttachment()));
     connect(m_ui->removeAttachmentButton, SIGNAL(clicked()), SLOT(removeSelectedAttachments()));
-    connect(m_ui->renameAttachmentButton, SIGNAL(clicked()), SLOT(renameSelectedAttachments()));
+
+    auto addButtonMenu = new QMenu(this);
+    addButtonMenu->addAction(tr("New Text Document"), this, &EntryAttachmentsWidget::newAttachments);
+    addButtonMenu->addAction(tr("Load from Disk…"), this, QOverload<>::of(&EntryAttachmentsWidget::insertAttachments));
+
+    m_ui->addAttachmentButton->setMenu(addButtonMenu);
 
     updateButtonsVisible();
     updateButtonsEnabled();
@@ -163,6 +201,117 @@ void EntryAttachmentsWidget::insertAttachments()
     emit widgetUpdated();
 }
 
+void EntryAttachmentsWidget::newAttachments()
+{
+    Q_ASSERT(m_entryAttachments);
+    Q_ASSERT(!isReadOnly());
+    if (isReadOnly()) {
+        return;
+    }
+
+    // Create a temporary file to allow the user to edit the attachment
+    auto newFileName = generateUniqueName(tr("New Attachment"), m_entryAttachments->keys());
+    m_entryAttachments->set(newFileName, QByteArray());
+
+    auto currentIndex = m_attachmentsModel->index(m_attachmentsModel->rowByKey(newFileName), 0);
+    m_ui->attachmentsView->setCurrentIndex(currentIndex);
+    m_ui->attachmentsView->edit(currentIndex);
+}
+
+void EntryAttachmentsWidget::previewSelectedAttachment()
+{
+    Q_ASSERT(m_entryAttachments);
+
+    const auto selectionModel = m_ui->attachmentsView->selectionModel();
+    if (!selectionModel) {
+        qWarning() << "Failed to preview an attachment: No selection model";
+        return;
+    }
+
+    auto indexes = selectionModel->selectedIndexes();
+    if (indexes.empty()) {
+        qWarning() << "Failed to edit an attachment: No attachment selected";
+        return;
+    }
+
+    const auto index = indexes.first();
+    if (!index.isValid()) {
+        qWarning() << "Failed to preview an attachment: Attachment not found";
+        return;
+    }
+
+    // Set selection to the first
+    m_ui->attachmentsView->setCurrentIndex(index);
+
+    auto name = m_attachmentsModel->keyByIndex(index);
+    auto data = m_entryAttachments->value(name);
+
+    PreviewEntryAttachmentsDialog previewDialog(this);
+    previewDialog.setAttachment({name, data});
+
+    connect(&previewDialog, SIGNAL(openAttachment(QString)), SLOT(openSelectedAttachments()));
+    connect(&previewDialog, SIGNAL(saveAttachment(QString)), SLOT(saveSelectedAttachments()));
+    // Refresh the preview if the attachment changes
+    connect(m_entryAttachments,
+            &EntryAttachments::keyModified,
+            &previewDialog,
+            [&previewDialog, &name, this](const QString& key) {
+                if (key == name) {
+                    previewDialog.setAttachment({name, m_entryAttachments->value(name)});
+                }
+            });
+
+    previewDialog.exec();
+
+    // Set focus back to the widget to allow keyboard navigation
+    setFocus();
+}
+
+void EntryAttachmentsWidget::editSelectedAttachment()
+{
+    Q_ASSERT(m_entryAttachments);
+
+    const auto selectionModel = m_ui->attachmentsView->selectionModel();
+    if (!selectionModel) {
+        qWarning() << "Failed to edit an attachment: No selection model";
+        return;
+    }
+
+    const auto selectedIndexes = selectionModel->selectedIndexes();
+    if (selectedIndexes.isEmpty()) {
+        qWarning() << "Failed to edit an attachment: No attachment selected";
+        return;
+    }
+
+    const auto index = selectedIndexes.first();
+
+    if (!index.isValid()) {
+        qWarning() << "Failed to edit an attachment: Attachment not found";
+        return;
+    }
+
+    // Set selection to the first
+    m_ui->attachmentsView->setCurrentIndex(index);
+
+    auto name = m_attachmentsModel->keyByIndex(index);
+    auto data = m_entryAttachments->value(name);
+
+    EditEntryAttachmentsDialog editDialog(this);
+    editDialog.setAttachment({name, data});
+
+    if (editDialog.exec() == QDialog::Accepted) {
+        auto attachment = editDialog.getAttachment();
+
+        // Edit dialog cannot change the name of the attachment
+        if (attachment.name == name) {
+            m_entryAttachments->set(attachment.name, attachment.data);
+        }
+    }
+
+    // Set focus back to the widget to allow keyboard navigation
+    setFocus();
+}
+
 void EntryAttachmentsWidget::removeSelectedAttachments()
 {
     Q_ASSERT(m_entryAttachments);
@@ -192,12 +341,6 @@ void EntryAttachmentsWidget::removeSelectedAttachments()
     }
 }
 
-void EntryAttachmentsWidget::renameSelectedAttachments()
-{
-    Q_ASSERT(m_entryAttachments);
-    m_ui->attachmentsView->edit(m_ui->attachmentsView->selectionModel()->selectedIndexes().first());
-}
-
 void EntryAttachmentsWidget::saveSelectedAttachments()
 {
     Q_ASSERT(m_entryAttachments);
@@ -224,8 +367,9 @@ void EntryAttachmentsWidget::saveSelectedAttachments()
 
     QStringList errors;
     for (const QModelIndex& index : indexes) {
-        const QString filename = m_attachmentsModel->keyByIndex(index);
-        const QString attachmentPath = saveDir.absoluteFilePath(filename);
+        QString attachmentKey = m_attachmentsModel->keyByIndex(index);
+        const QString fileNameSanitized = attachmentKey.replace(QRegularExpression("[/\\\\]"), "");
+        const QString attachmentPath = saveDir.absoluteFilePath(fileNameSanitized);
 
         if (QFileInfo::exists(attachmentPath)) {
 
@@ -238,7 +382,7 @@ void EntryAttachmentsWidget::saveSelectedAttachments()
                 tr("Are you sure you want to overwrite the existing file \"%1\" with the attachment?"));
 
             auto result = MessageBox::question(
-                this, tr("Confirm overwrite"), questionText.arg(filename), buttons, MessageBox::Cancel);
+                this, tr("Confirm overwrite"), questionText.arg(fileNameSanitized), buttons, MessageBox::Cancel);
 
             if (result == MessageBox::Skip) {
                 continue;
@@ -248,11 +392,11 @@ void EntryAttachmentsWidget::saveSelectedAttachments()
         }
 
         QFile file(attachmentPath);
-        const QByteArray attachmentData = m_entryAttachments->value(filename);
+        const QByteArray attachmentData = m_entryAttachments->value(attachmentKey);
         const bool saveOk = file.open(QIODevice::WriteOnly) && file.setPermissions(QFile::ReadUser | QFile::WriteUser)
                             && file.write(attachmentData) == attachmentData.size();
         if (!saveOk) {
-            errors.append(QString("%1 - %2").arg(filename, file.errorString()));
+            errors.append(QString("%1 - %2").arg(fileNameSanitized, file.errorString()));
         }
     }
 
@@ -287,7 +431,7 @@ void EntryAttachmentsWidget::openSelectedAttachments()
         if (!m_entryAttachments->openAttachment(m_attachmentsModel->keyByIndex(index), &errorMessage)) {
             const QString filename = m_attachmentsModel->keyByIndex(index);
             errors.append(QString("%1 - %2").arg(filename, errorMessage));
-        };
+        }
     }
 
     if (!errors.isEmpty()) {
@@ -297,21 +441,38 @@ void EntryAttachmentsWidget::openSelectedAttachments()
 
 void EntryAttachmentsWidget::updateButtonsEnabled()
 {
-    const bool hasSelection = m_ui->attachmentsView->selectionModel()->hasSelection();
+    const auto selectionModel = m_ui->attachmentsView->selectionModel();
+    const bool hasSelection = selectionModel && selectionModel->hasSelection();
 
     m_ui->addAttachmentButton->setEnabled(!m_readOnly);
     m_ui->removeAttachmentButton->setEnabled(hasSelection && !m_readOnly);
-    m_ui->renameAttachmentButton->setEnabled(hasSelection && !m_readOnly);
+
+    m_ui->editAttachmentButton->setEnabled(hasSelection && !m_readOnly);
+    if (const auto indexes = selectionModel ? selectionModel->selectedIndexes() : QModelIndexList{}; !indexes.empty()) {
+        auto mimeType = Tools::getMimeType(m_entryAttachments->value(m_attachmentsModel->keyByIndex(indexes.first())));
+        m_ui->editAttachmentButton->setEnabled(hasSelection && !m_readOnly && Tools::isTextMimeType(mimeType));
+    }
 
     m_ui->saveAttachmentButton->setEnabled(hasSelection);
+    m_ui->previewAttachmentButton->setEnabled(hasSelection);
     m_ui->openAttachmentButton->setEnabled(hasSelection);
+
+    updateLinesVisibility();
+}
+
+void EntryAttachmentsWidget::updateLinesVisibility()
+{
+    m_ui->editPreviewLine->setVisible(m_buttonsVisible && !m_readOnly);
+    m_ui->previewRemoveLine->setVisible(m_buttonsVisible && !m_readOnly);
 }
 
 void EntryAttachmentsWidget::updateButtonsVisible()
 {
     m_ui->addAttachmentButton->setVisible(m_buttonsVisible && !m_readOnly);
+    m_ui->editAttachmentButton->setVisible(m_buttonsVisible && !m_readOnly);
     m_ui->removeAttachmentButton->setVisible(m_buttonsVisible && !m_readOnly);
-    m_ui->renameAttachmentButton->setVisible(m_buttonsVisible && !m_readOnly);
+
+    updateLinesVisibility();
 }
 
 bool EntryAttachmentsWidget::insertAttachments(const QStringList& filenames, QString& errorMessage)

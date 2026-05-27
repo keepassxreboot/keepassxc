@@ -19,15 +19,16 @@
 
 #include "TextStream.h"
 #include "Utils.h"
+#include "core/Global.h"
 #include "format/CsvExporter.h"
+#include "format/HtmlExporter.h"
 
 #include <QCommandLineParser>
 
 const QCommandLineOption Export::FormatOption = QCommandLineOption(
-    QStringList() << "f"
-                  << "format",
-    QObject::tr("Format to use when exporting. Available choices are 'xml' or 'csv'. Defaults to 'xml'."),
-    QStringLiteral("xml|csv"));
+    QStringList() << "f" << "format",
+    QObject::tr("Format to use when exporting. Available choices are 'xml', 'csv' or 'html'. Defaults to 'xml'."),
+    QStringLiteral("xml|csv|html"));
 
 Export::Export()
 {
@@ -46,15 +47,18 @@ int Export::executeWithDatabase(QSharedPointer<Database> database, QSharedPointe
         QByteArray xmlData;
         QString errorMessage;
         if (!database->extract(xmlData, &errorMessage)) {
-            err << QObject::tr("Unable to export database to XML: %1").arg(errorMessage) << endl;
+            err << QObject::tr("Unable to export database to XML: %1").arg(errorMessage) << Qt::endl;
             return EXIT_FAILURE;
         }
         out.write(xmlData.constData());
     } else if (format.startsWith(QStringLiteral("csv"), Qt::CaseInsensitive)) {
         CsvExporter csvExporter;
         out << csvExporter.exportDatabase(database);
+    } else if (format.startsWith(QStringLiteral("html"), Qt::CaseInsensitive)) {
+        HtmlExporter htmlExporter;
+        out << htmlExporter.exportDatabase(database);
     } else {
-        err << QObject::tr("Unsupported format %1").arg(format) << endl;
+        err << QObject::tr("Unsupported format %1").arg(format) << Qt::endl;
         return EXIT_FAILURE;
     }
 

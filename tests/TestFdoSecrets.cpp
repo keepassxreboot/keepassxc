@@ -27,6 +27,11 @@
 
 QTEST_GUILESS_MAIN(TestFdoSecrets)
 
+void TestFdoSecrets::initTestCase()
+{
+    QLocale::setDefault(QLocale::c());
+}
+
 void TestFdoSecrets::testDhIetf1024Sha256Aes128CbcPkcs7()
 {
     FdoSecrets::DhIetf1024Sha256Aes128CbcPkcs7 cipher(randomGen()->randomArray(128));

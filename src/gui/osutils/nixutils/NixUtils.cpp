@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
+ * Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,19 +18,21 @@
 #include "NixUtils.h"
 
 #include "config-keepassx.h"
+#include "core/Config.h"
+#include "core/Global.h"
 
 #include <QApplication>
 #include <QDBusInterface>
+#include <QDBusReply>
 #include <QDebug>
 #include <QDir>
 #include <QPointer>
+#include <QRandomGenerator>
 #include <QStandardPaths>
 #include <QStyle>
 #include <QTextStream>
-#ifdef WITH_XC_X11
-#include <QX11Info>
-
-#include <qpa/qplatformnativeinterface.h>
+#ifdef WITH_X11
+#include <QGuiApplication>
 
 #include "X11Funcs.h"
 #include <X11/XKBlib.h>
@@ -64,9 +66,11 @@ NixUtils* NixUtils::instance()
 NixUtils::NixUtils(QObject* parent)
     : OSUtilsBase(parent)
 {
-#ifdef WITH_XC_X11
-    dpy = QX11Info::display();
-    rootWindow = QX11Info::appRootWindow();
+#ifdef WITH_X11
+    if (auto* native = qGuiApp->nativeInterface<QNativeInterface::QX11Application>()) {
+        dpy = native->display();
+        rootWindow = DefaultRootWindow(dpy);
+    }
 #endif
 
     // notify about system color scheme changes
@@ -78,10 +82,12 @@ NixUtils::NixUtils(QObject* parent)
                        this,
                        SLOT(handleColorSchemeChanged(QString, QString, QDBusVariant)));
 
-    QDBusMessage msg = QDBusMessage::createMethodCall(
-        "org.freedesktop.portal.Desktop", "/org/freedesktop/portal/desktop", "org.freedesktop.portal.Settings", "Read");
-    msg << QVariant("org.freedesktop.appearance") << QVariant("color-scheme");
-    sessionBus.callWithCallback(msg, this, SLOT(handleColorSchemeRead(QDBusVariant)));
+    QDBusInterface desktopPortal(
+        "org.freedesktop.portal.Desktop", "/org/freedesktop/portal/desktop", "org.freedesktop.portal.Settings");
+    QDBusReply<QDBusVariant> reply = desktopPortal.call("ReadOne", "org.freedesktop.appearance", "color-scheme");
+    if (reply.isValid()) {
+        setColorScheme(reply.value());
+    }
 }
 
 NixUtils::~NixUtils() = default;
@@ -123,12 +129,16 @@ QString NixUtils::getAutostartDesktopFilename(bool createDirs) const
 
 bool NixUtils::isLaunchAtStartupEnabled() const
 {
+#ifndef KEEPASSXC_DIST_FLATPAK
     return QFile::exists(getAutostartDesktopFilename());
-    ;
+#else
+    return config()->get(Config::GUI_LaunchAtStartup).toBool();
+#endif
 }
 
 void NixUtils::setLaunchAtStartup(bool enable)
 {
+#ifndef KEEPASSXC_DIST_FLATPAK
     if (enable) {
         QFile desktopFile(getAutostartDesktopFilename(true));
         if (!desktopFile.open(QIODevice::WriteOnly)) {
@@ -141,7 +151,6 @@ void NixUtils::setLaunchAtStartup(bool enable)
         const QString executeablePathOrName = isAppImage ? appImagePath : QApplication::applicationName().toLower();
 
         QTextStream stream(&desktopFile);
-        stream.setCodec("UTF-8");
         stream << QStringLiteral("[Desktop Entry]") << '\n'
                << QStringLiteral("Name=") << QApplication::applicationDisplayName() << '\n'
                << QStringLiteral("GenericName=") << tr("Password Manager") << '\n'
@@ -149,7 +158,7 @@ void NixUtils::setLaunchAtStartup(bool enable)
                << QStringLiteral("TryExec=") << executeablePathOrName << '\n'
                << QStringLiteral("Icon=") << QApplication::applicationName().toLower() << '\n'
                << QStringLiteral("StartupWMClass=keepassxc") << '\n'
-               << QStringLiteral("StartupNotify=true") << '\n'
+               << QStringLiteral("StartupNotify=false") << '\n'
                << QStringLiteral("Terminal=false") << '\n'
                << QStringLiteral("Type=Application") << '\n'
                << QStringLiteral("Version=1.0") << '\n'
@@ -158,27 +167,68 @@ void NixUtils::setLaunchAtStartup(bool enable)
                << QStringLiteral("X-GNOME-Autostart-enabled=true") << '\n'
                << QStringLiteral("X-GNOME-Autostart-Delay=2") << '\n'
                << QStringLiteral("X-KDE-autostart-after=panel") << '\n'
-               << QStringLiteral("X-LXQt-Need-Tray=true") << endl;
+               << QStringLiteral("X-LXQt-Need-Tray=true") << Qt::endl;
         desktopFile.close();
     } else if (isLaunchAtStartupEnabled()) {
         QFile::remove(getAutostartDesktopFilename());
     }
+#else
+    QDBusConnection sessionBus = QDBusConnection::sessionBus();
+    QDBusMessage msg = QDBusMessage::createMethodCall("org.freedesktop.portal.Desktop",
+                                                      "/org/freedesktop/portal/desktop",
+                                                      "org.freedesktop.portal.Background",
+                                                      "RequestBackground");
+
+    QMap<QString, QVariant> options;
+    options["autostart"] = QVariant(enable);
+    options["reason"] = QVariant("Launch KeePassXC at startup");
+    int token = QRandomGenerator::global()->bounded(1000, 9999);
+    options["handle_token"] = QVariant(QString("org/keepassxc/KeePassXC/%1").arg(token));
+
+    msg << "" << options;
+
+    QDBusMessage response = sessionBus.call(msg);
+
+    QDBusObjectPath handle = response.arguments().at(0).value<QDBusObjectPath>();
+
+    bool res = sessionBus.connect("org.freedesktop.portal.Desktop",
+                                  handle.path(),
+                                  "org.freedesktop.portal.Request",
+                                  "Response",
+                                  this,
+                                  SLOT(launchAtStartupRequested(uint, QVariantMap)));
+
+    if (!res) {
+        qDebug() << "DBus Error: could not connect to org.freedesktop.portal.Request";
+    }
+#endif
+}
+
+void NixUtils::launchAtStartupRequested(uint response, const QVariantMap& results)
+{
+    if (response > 0) {
+        qDebug() << "DBus Error: the request to autostart was cancelled.";
+        return;
+    }
+
+    config()->set(Config::GUI_LaunchAtStartup, results["autostart"].value<bool>());
 }
 
 bool NixUtils::isCapslockEnabled()
 {
-#ifdef WITH_XC_X11
-    QPlatformNativeInterface* native = QGuiApplication::platformNativeInterface();
-    auto* display = native->nativeResourceForWindow("display", nullptr);
-    if (!display) {
-        return false;
-    }
+#ifdef WITH_X11
+    if (auto* native = qGuiApp->nativeInterface<QNativeInterface::QX11Application>()) {
+        auto* display = native->display();
+        if (!display) {
+            return false;
+        }
 
-    QString platform = QGuiApplication::platformName();
-    if (platform == "xcb") {
-        unsigned state = 0;
-        if (XkbGetIndicatorState(reinterpret_cast<Display*>(display), XkbUseCoreKbd, &state) == Success) {
-            return ((state & 1u) != 0);
+        auto platform = QGuiApplication::platformName();
+        if (platform == "xcb") {
+            unsigned state = 0;
+            if (XkbGetIndicatorState(reinterpret_cast<Display*>(display), XkbUseCoreKbd, &state) == Success) {
+                return ((state & 1u) != 0);
+            }
         }
     }
 #endif
@@ -188,14 +238,21 @@ bool NixUtils::isCapslockEnabled()
     return false;
 }
 
+void NixUtils::setUserInputProtection(bool enable)
+{
+    // Linux does not support this feature
+    Q_UNUSED(enable)
+}
+
 void NixUtils::registerNativeEventFilter()
 {
     qApp->installNativeEventFilter(this);
 }
 
-bool NixUtils::nativeEventFilter(const QByteArray& eventType, void* message, long*)
+bool NixUtils::nativeEventFilter(const QByteArray& eventType, void* message, qintptr* result)
 {
-#ifdef WITH_XC_X11
+    Q_UNUSED(result)
+#ifdef WITH_X11
     if (eventType != QByteArrayLiteral("xcb_generic_event_t")) {
         return false;
     }
@@ -217,7 +274,7 @@ bool NixUtils::nativeEventFilter(const QByteArray& eventType, void* message, lon
 
 bool NixUtils::triggerGlobalShortcut(uint keycode, uint modifiers)
 {
-#ifdef WITH_XC_X11
+#ifdef WITH_X11
     QHashIterator<QString, QSharedPointer<globalShortcut>> i(m_globalShortcuts);
     while (i.hasNext()) {
         i.next();
@@ -235,8 +292,8 @@ bool NixUtils::triggerGlobalShortcut(uint keycode, uint modifiers)
 
 bool NixUtils::registerGlobalShortcut(const QString& name, Qt::Key key, Qt::KeyboardModifiers modifiers, QString* error)
 {
-#ifdef WITH_XC_X11
-    auto keycode = XKeysymToKeycode(dpy, qcharToNativeKeyCode(key));
+#ifdef WITH_X11
+    auto keycode = XKeysymToKeycode(dpy, qtToNativeKeyCode(key));
     auto modifierscode = qtToNativeModifiers(modifiers);
 
     // Check if this key combo is registered to another shortcut
@@ -287,7 +344,7 @@ bool NixUtils::registerGlobalShortcut(const QString& name, Qt::Key key, Qt::Keyb
 
 bool NixUtils::unregisterGlobalShortcut(const QString& name)
 {
-#ifdef WITH_XC_X11
+#ifdef WITH_X11
     if (!m_globalShortcuts.contains(name)) {
         return false;
     }
@@ -303,12 +360,6 @@ bool NixUtils::unregisterGlobalShortcut(const QString& name)
     Q_UNUSED(name)
 #endif
     return true;
-}
-
-void NixUtils::handleColorSchemeRead(QDBusVariant value)
-{
-    value = qvariant_cast<QDBusVariant>(value.variant());
-    setColorScheme(value);
 }
 
 void NixUtils::handleColorSchemeChanged(QString ns, QString key, QDBusVariant value)
@@ -339,14 +390,22 @@ quint64 NixUtils::getProcessStartTime() const
     QString processStatInfo = processStatStream.readLine();
     processStatFile.close();
 
-    auto startIndex = processStatInfo.indexOf(')', -1);
+    auto startIndex = processStatInfo.lastIndexOf(')');
     if (startIndex != -1) {
-        auto tokens = processStatInfo.midRef(startIndex + 2).split(' ');
+        auto tokens = QStringView{processStatInfo}.mid(startIndex + 2).split(' ');
         if (tokens.size() >= 20) {
-            return tokens[19].toULongLong();
+            bool ok;
+            auto time = tokens[19].toULongLong(&ok);
+            if (!ok) {
+                qDebug() << "nixutils: failed to convert " << tokens[19] << " to an integer in " << processStatPath;
+                return 0;
+            }
+            return time;
         }
+        qDebug() << "nixutils: failed to find at least 20 values in " << processStatPath;
+        return 0;
     }
 
-    qDebug() << "nixutils: failed to parse " << processStatPath;
+    qDebug() << "nixutils: failed to find ')' in " << processStatPath;
     return 0;
 }

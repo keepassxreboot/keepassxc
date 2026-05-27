@@ -1,7 +1,7 @@
 /*
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
  *  Copyright (C) 2000-2008 Tom Sato <VEF00200@nifty.ne.jp>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -17,8 +17,8 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_AUTOTYPEXCB_H
-#define KEEPASSX_AUTOTYPEXCB_H
+#ifndef KEEPASSXC_AUTOTYPEXCB_H
+#define KEEPASSXC_AUTOTYPEXCB_H
 
 #include <QApplication>
 #include <QSet>
@@ -48,7 +48,7 @@ public:
     AutoTypeExecutor* createExecutor() override;
     void updateKeymap();
 
-    AutoTypeAction::Result sendKey(KeySym keysym, unsigned int modifiers = 0);
+    AutoTypeAction::Result sendKey(KeySym keysym, unsigned int modifiers = Qt::NoModifier);
 
 private:
     QString windowTitle(Window window, bool useBlacklist);
@@ -56,6 +56,7 @@ private:
     QString windowClassName(Window window);
     QList<Window> widgetsToX11Windows(const QWidgetList& widgetList);
     bool isTopLevelWindow(Window window);
+    unsigned long appUserTime(Window window);
 
     XkbDescPtr getKeyboard();
     bool RemapKeycode(KeySym keysym);
@@ -65,7 +66,7 @@ private:
 
     static int MyErrorHandler(Display* my_dpy, XErrorEvent* event);
 
-    Display* m_dpy;
+    Display* m_dpy = nullptr;
     Window m_rootWindow;
     Atom m_atomWmState;
     Atom m_atomWmName;
@@ -75,6 +76,7 @@ private:
     Atom m_atomNetActiveWindow;
     Atom m_atomTransientFor;
     Atom m_atomWindow;
+    Atom m_appUserTime;
     QSet<QString> m_classBlacklist;
 
     typedef struct
@@ -89,7 +91,7 @@ private:
     QList<KeyDesc> m_keymap;
     KeyCode m_modifier_keycode[N_MOD_INDICES];
     KeyCode m_remapKeycode;
-    bool m_loaded;
+    bool m_loaded = false;
 };
 
 class AutoTypeExecutorX11 : public AutoTypeExecutor
@@ -105,4 +107,4 @@ private:
     AutoTypePlatformX11* const m_platform;
 };
 
-#endif // KEEPASSX_AUTOTYPEXCB_H
+#endif // KEEPASSXC_AUTOTYPEXCB_H

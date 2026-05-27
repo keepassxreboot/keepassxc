@@ -44,11 +44,11 @@ class QMenu;
 class QScrollArea;
 class QSortFilterProxyModel;
 class QStringListModel;
-#ifdef WITH_XC_SSHAGENT
+#ifdef KPXC_FEATURE_SSHAGENT
 #include "sshagent/KeeAgentSettings.h"
 class OpenSSHKey;
 #endif
-#ifdef WITH_XC_BROWSER
+#ifdef KPXC_FEATURE_BROWSER
 class EntryURLModel;
 #endif
 
@@ -77,6 +77,19 @@ public:
     Entry* currentEntry() const;
     void clear();
 
+    enum class Page
+    {
+        Main,
+        Advanced,
+        Icon,
+        AutoType,
+        Browser,
+        SSHAgent,
+        Properties,
+        History
+    };
+    bool switchToPage(Page page);
+
 signals:
     void editFinished(bool accepted);
     void historyEntryActivated(Entry* entry);
@@ -85,7 +98,7 @@ private slots:
     void acceptEntry();
     bool commitEntry();
     void cancel();
-#ifdef WITH_XC_NETWORKING
+#ifdef KPXC_FEATURE_NETWORK
     void updateFaviconButtonEnable(const QString& url);
 #endif
     void insertAttribute();
@@ -111,7 +124,7 @@ private slots:
     void useExpiryPreset(QAction* action);
     void toggleHideNotes(bool visible);
     void pickColor();
-#ifdef WITH_XC_SSHAGENT
+#ifdef KPXC_FEATURE_SSHAGENT
     void toKeeAgentSettings(KeeAgentSettings& settings) const;
     void setSSHAgentSettings();
     void updateSSHAgent();
@@ -122,11 +135,12 @@ private slots:
     void browsePrivateKey();
     void addKeyToAgent();
     void removeKeyFromAgent();
+    void clearAgent();
     void decryptPrivateKey();
     void copyPublicKey();
     void generatePrivateKey();
 #endif
-#ifdef WITH_XC_BROWSER
+#ifdef KPXC_FEATURE_BROWSER
     void updateBrowserModified();
     void updateBrowser();
     void insertURL();
@@ -141,10 +155,10 @@ private:
     void setupAdvanced();
     void setupIcon();
     void setupAutoType();
-#ifdef WITH_XC_BROWSER
+#ifdef KPXC_FEATURE_BROWSER
     void setupBrowser();
 #endif
-#ifdef WITH_XC_SSHAGENT
+#ifdef KPXC_FEATURE_SSHAGENT
     void setupSSHAgent();
 #endif
     void setupProperties();
@@ -152,23 +166,24 @@ private:
     void setupEntryUpdate();
     void setupColorButton(bool foreground, const QColor& color);
 
-    bool passwordsEqual();
     void setForms(Entry* entry, bool restore = false);
     QMenu* createPresetsMenu();
     void updateEntryData(Entry* entry) const;
     void updateBrowserIntegrationCheckbox(QCheckBox* checkBox, bool enabled, bool value, const QString& option);
-#ifdef WITH_XC_SSHAGENT
+#ifdef KPXC_FEATURE_SSHAGENT
     bool getOpenSSHKey(OpenSSHKey& key, bool decrypt = false);
 #endif
 
     void displayAttribute(QModelIndex index, bool showProtected);
+
+    QWidget* widgetForPage(Page page) const;
 
     QPointer<Entry> m_entry;
     QSharedPointer<Database> m_db;
 
     bool m_create;
     bool m_history;
-#ifdef WITH_XC_SSHAGENT
+#ifdef KPXC_FEATURE_SSHAGENT
     KeeAgentSettings m_sshAgentSettings;
     QString m_pendingPrivateKey;
 #endif
@@ -185,10 +200,10 @@ private:
     QWidget* const m_advancedWidget;
     EditWidgetIcons* const m_iconsWidget;
     QWidget* const m_autoTypeWidget;
-#ifdef WITH_XC_SSHAGENT
+#ifdef KPXC_FEATURE_SSHAGENT
     QWidget* const m_sshAgentWidget;
 #endif
-#ifdef WITH_XC_BROWSER
+#ifdef KPXC_FEATURE_BROWSER
     bool m_browserSettingsChanged;
     QWidget* const m_browserWidget;
     EntryURLModel* const m_additionalURLsDataModel;

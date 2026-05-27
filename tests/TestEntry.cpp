@@ -30,6 +30,7 @@ QTEST_GUILESS_MAIN(TestEntry)
 void TestEntry::initTestCase()
 {
     QVERIFY(Crypto::init());
+    QLocale::setDefault(QLocale::c());
 }
 
 void TestEntry::testHistoryItemDeletion()
@@ -86,6 +87,7 @@ void TestEntry::testClone()
 {
     QScopedPointer<Entry> entryOrg(new Entry());
     entryOrg->setUuid(QUuid::createUuid());
+    entryOrg->setPassword("pass");
     entryOrg->setTitle("Original Title");
     entryOrg->beginUpdate();
     entryOrg->setTitle("New Title");
@@ -320,10 +322,12 @@ void TestEntry::testResolveRecursivePlaceholders()
     entry7->setTitle(QString("{REF:T@I:%1} and something else").arg(entry3->uuidToHex()));
     entry7->setUsername(QString("{TITLE}"));
     entry7->setPassword(QString("PASSWORD"));
+    entry7->setNotes(QString("{lots} {of} {braces}"));
 
     QCOMPARE(entry7->resolvePlaceholder(entry7->title()), QString("Entry2Title and something else"));
     QCOMPARE(entry7->resolvePlaceholder(entry7->username()), QString("Entry2Title and something else"));
     QCOMPARE(entry7->resolvePlaceholder(entry7->password()), QString("PASSWORD"));
+    QCOMPARE(entry7->resolvePlaceholder(entry7->notes()), QString("{lots} {of} {braces}"));
 }
 
 void TestEntry::testResolveReferencePlaceholders()
@@ -442,6 +446,49 @@ void TestEntry::testResolveReferencePlaceholders()
              entry3->attributes()->value("AttributeNotes"));
 }
 
+void TestEntry::testResolveUuidPlaceholder()
+{
+    Database db;
+    auto* root = db.rootGroup();
+
+    auto* entry = new Entry();
+    entry->setGroup(root);
+    entry->setUuid(QUuid::createUuid());
+    entry->setTitle("Test Entry");
+    entry->setUsername("TestUser");
+    entry->setPassword("TestPass");
+    entry->setNotes("Test with UUID: {UUID}");
+
+    // Test that {UUID} placeholder resolves to the entry's UUID
+    QString expectedUuid = entry->uuidToHex();
+    QString resolvedNotes = entry->resolveMultiplePlaceholders(entry->notes());
+    QCOMPARE(resolvedNotes, QString("Test with UUID: %1").arg(expectedUuid));
+
+    // Test {UUID} placeholder directly
+    QCOMPARE(entry->resolveMultiplePlaceholders("{UUID}"), expectedUuid);
+
+    // Test case insensitivity
+    QCOMPARE(entry->resolveMultiplePlaceholders("{uuid}"), expectedUuid);
+    QCOMPARE(entry->resolveMultiplePlaceholders("{Uuid}"), expectedUuid);
+
+    // Test mixed case in text
+    QCOMPARE(entry->resolveMultiplePlaceholders("UUID is {UUID} here"), QString("UUID is %1 here").arg(expectedUuid));
+
+    // Test advanced attribute with {REF:U@I:{UUID}} - should resolve to the entry's own username
+    entry->attributes()->set("SelfReference", "{REF:U@I:{UUID}}");
+    QString attributeValue = entry->attributes()->value("SelfReference");
+    QString resolvedSelfRef = entry->resolveMultiplePlaceholders(attributeValue);
+
+    // Test the manual reference to confirm it works as before
+    QString manualReference = QString("{REF:U@I:%1}").arg(entry->uuidToHex());
+    entry->attributes()->set("ManualReference", manualReference);
+    QString resolvedManualRef = entry->resolveMultiplePlaceholders(entry->attributes()->value("ManualReference"));
+
+    // Test that both approaches work
+    QCOMPARE(resolvedManualRef, entry->username());
+    QCOMPARE(resolvedSelfRef, entry->username());
+}
+
 void TestEntry::testResolveNonIdPlaceholdersToUuid()
 {
     Database db;
@@ -509,6 +556,97 @@ void TestEntry::testResolveNonIdPlaceholdersToUuid()
         const QString newEntryNotesResolved = newEntry->resolveMultiplePlaceholders(newEntry->notes());
         QCOMPARE(newEntryNotesResolved, referencedEntry->uuidToHex());
     }
+}
+
+void TestEntry::testResolveConversionPlaceholders()
+{
+    Database db;
+    auto* root = db.rootGroup();
+
+    auto* entry1 = new Entry();
+    entry1->setGroup(root);
+    entry1->setUuid(QUuid::createUuid());
+    entry1->setTitle("Title1 {T-CONV:/{USERNAME}/lower/} {T-CONV:/{PASSWORD}/upper/}");
+    entry1->setUsername("Username1");
+    entry1->setPassword("Password1");
+    entry1->setUrl("https://example.com/?test=3423&h=sdsds");
+
+    auto* entry2 = new Entry();
+    entry2->setGroup(root);
+    entry2->setUuid(QUuid::createUuid());
+    entry2->setTitle("Title2");
+    entry2->setUsername(QString("{T-CONV:/{REF:U@I:%1}/UPPER/}").arg(entry1->uuidToHex()));
+    entry2->setPassword(QString("{REF:P@I:%1}").arg(entry1->uuidToHex()));
+    entry2->setUrl("cmd://ssh {USERNAME}@server.com -p {PASSWORD}");
+
+    // Test complicated and nested conversions
+    QCOMPARE(entry1->resolveMultiplePlaceholders(entry1->title()), QString("Title1 username1 PASSWORD1"));
+    QCOMPARE(entry2->resolveMultiplePlaceholders(entry2->url()),
+             QString("cmd://ssh USERNAME1@server.com -p Password1"));
+    // Test base64 and hex conversions
+    QCOMPARE(entry1->resolveMultiplePlaceholders("{T-CONV:/{PASSWORD}/base64/}"), QString("UGFzc3dvcmQx"));
+    QCOMPARE(entry1->resolveMultiplePlaceholders("{T-CONV:/{PASSWORD}/hex/}"), QString("50617373776f726431"));
+    // Test URL encode and decode
+    auto encodedURL = entry1->resolveMultiplePlaceholders("{T-CONV:/{URL}/uri/}");
+    QCOMPARE(encodedURL, QString("https%3A%2F%2Fexample.com%2F%3Ftest%3D3423%26h%3Dsdsds"));
+    QCOMPARE(entry1->resolveMultiplePlaceholders(
+                 "{T-CONV:/https%3A%2F%2Fexample.com%2F%3Ftest%3D3423%26h%3Dsdsds/uri-dec/}"),
+             entry1->url());
+    // Test invalid syntax
+    QString error;
+    entry1->resolveConversionPlaceholder("{T-CONV:/{USERNAME}/junk/}", &error);
+    QVERIFY(!error.isEmpty());
+    entry1->resolveConversionPlaceholder("{T-CONV:}", &error);
+    QVERIFY(!error.isEmpty());
+    // Check that error gets cleared
+    entry1->resolveConversionPlaceholder("{T-CONV:/a/upper/}", &error);
+    QVERIFY(error.isEmpty());
+}
+
+void TestEntry::testResolveReplacePlaceholders()
+{
+    Database db;
+    auto* root = db.rootGroup();
+
+    auto* entry1 = new Entry();
+    entry1->setGroup(root);
+    entry1->setUuid(QUuid::createUuid());
+    entry1->setTitle("Title1");
+    entry1->setUsername("Username1");
+    entry1->setPassword("Password1");
+
+    auto* entry2 = new Entry();
+    entry2->setGroup(root);
+    entry2->setUuid(QUuid::createUuid());
+    entry2->setTitle("SAP server1 12345");
+    entry2->setUsername(QString("{T-REPLACE-RX:/{REF:U@I:%1}/\\d$/2/}").arg(entry1->uuidToHex()));
+    entry2->setPassword(QString("{REF:P@I:%1}").arg(entry1->uuidToHex()));
+    entry2->setUrl(
+        R"(cmd://sap.exe -system={T-REPLACE-RX:/{Title}/(?i)^(.* )?(\w+(?=(\s* \d+$)))\3/$2/} -client={T-REPLACE-RX:/{Title}/(?i)^.* (?=\d+$)//} -user={USERNAME} -pw={PASSWORD})");
+
+    // Test complicated and nested replacements
+    QCOMPARE(entry2->resolveMultiplePlaceholders(entry2->url()),
+             QString("cmd://sap.exe -system=server1 -client=12345 -user=Username2 -pw=Password1"));
+
+    auto* entry3 = new Entry();
+    entry3->setGroup(root);
+    entry3->setUuid(QUuid::createUuid());
+    entry3->setTitle("Entry 3");
+    entry3->setUsername("HMAC-SHA-256");
+    entry3->setUrl("{T-REPLACE-RX:!{USERNAME}!\\{USERNAME\\}!!}");
+
+    // Test escaped enclosures
+    QCOMPARE(entry3->resolveMultiplePlaceholders(entry3->url()), entry3->username());
+
+    // Test invalid syntax
+    QString error;
+    entry1->resolveRegexPlaceholder("{T-REPLACE-RX:/{USERNAME}/.*+?/test/}", &error); // invalid regex
+    QVERIFY(!error.isEmpty());
+    entry1->resolveRegexPlaceholder("{T-REPLACE-RX:/{USERNAME}/.*/}", &error); // no replacement
+    QVERIFY(!error.isEmpty());
+    // Check that error gets cleared
+    entry1->resolveRegexPlaceholder("{T-REPLACE-RX:/{USERNAME}/\\d/2/}", &error);
+    QVERIFY(error.isEmpty());
 }
 
 void TestEntry::testResolveClonedEntry()

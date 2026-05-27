@@ -22,7 +22,7 @@
 #include <QElapsedTimer>
 #include <QObject>
 #ifdef Q_OS_MACOS
-#include "core/MacPasteboard.h"
+#include "gui/osutils/macutils/MacPasteboard.h"
 #include <QPointer>
 #endif
 

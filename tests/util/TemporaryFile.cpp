@@ -17,6 +17,29 @@
 
 #include "TemporaryFile.h"
 
+#include <QCoreApplication>
+#include <QDir>
+#include <QPointer>
+
+namespace
+{
+    QPointer<TemporaryFile> g_tempConfigFile;
+}
+
+QString TemporaryFile::createTempConfigFile()
+{
+    if (!qApp) {
+        Q_ASSERT(false);
+        return {};
+    }
+    if (g_tempConfigFile) {
+        delete g_tempConfigFile;
+    }
+    auto tmpFileName = QString("%1/%2_settings.XXXXXX").arg(QDir::tempPath(), QCoreApplication::applicationName());
+    g_tempConfigFile = new TemporaryFile(tmpFileName, qApp);
+    return g_tempConfigFile->fileName();
+}
+
 TemporaryFile::TemporaryFile()
     : TemporaryFile(nullptr)
 {

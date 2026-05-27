@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+ * Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
  * Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,13 +19,13 @@
 #include "EntryView.h"
 
 #include <QAccessible>
+#include <QActionGroup>
 #include <QDrag>
 #include <QGuiApplication>
 #include <QHeaderView>
 #include <QListWidget>
 #include <QMenu>
 #include <QPainter>
-#include <QScreen>
 #include <QShortcut>
 #include <QStyledItemDelegate>
 #include <QWindow>
@@ -94,7 +94,8 @@ EntryView::EntryView(QWidget* parent)
         emit entrySelectionChanged(currentEntry());
     });
 
-    new QShortcut(Qt::CTRL + Qt::Key_F10, this, SLOT(contextMenuShortcutPressed()), nullptr, Qt::WidgetShortcut);
+    new QShortcut(Qt::CTRL | Qt::Key_F10, this, SLOT(contextMenuShortcutPressed()), nullptr, Qt::WidgetShortcut);
+    new QShortcut(Qt::CTRL | Qt::SHIFT | Qt::Key_J, this, SLOT(jumpToGroupShortcut()), nullptr, Qt::WidgetShortcut);
 
     resetViewToDefaults();
 
@@ -104,12 +105,16 @@ EntryView::EntryView(QWidget* parent)
     m_columnActions->setExclusive(false);
     for (int visualIndex = 0; visualIndex < header()->count(); ++visualIndex) {
         int logicalIndex = header()->logicalIndex(visualIndex);
-        QString caption = m_model->headerData(logicalIndex, Qt::Horizontal, Qt::DisplayRole).toString();
-        if (caption.isEmpty()) {
-            caption = m_model->headerData(logicalIndex, Qt::Horizontal, Qt::ToolTipRole).toString();
+        auto caption = m_model->headerData(logicalIndex, Qt::Horizontal, Qt::DisplayRole);
+        if (!caption.isValid()) {
+            caption = m_model->headerData(logicalIndex, Qt::Horizontal, Qt::ToolTipRole);
+            if (!caption.isValid()) {
+                // Ignored column, skip it
+                continue;
+            }
         }
 
-        auto action = m_headerMenu->addAction(caption);
+        auto action = m_headerMenu->addAction(caption.toString());
         action->setCheckable(true);
         action->setData(logicalIndex);
         m_columnActions->addAction(action);
@@ -477,11 +482,11 @@ void EntryView::resetViewToDefaults()
     header()->hideSection(EntryModel::Password);
     header()->hideSection(EntryModel::Expires);
     header()->hideSection(EntryModel::Created);
-    header()->hideSection(EntryModel::Accessed);
     header()->hideSection(EntryModel::Attachments);
     header()->hideSection(EntryModel::Size);
     header()->hideSection(EntryModel::PasswordStrength);
     header()->hideSection(EntryModel::Color);
+    header()->hideSection(EntryModel::ParentGroupPath);
     onHeaderChanged();
 
     // Reset column order to logical indices
@@ -513,6 +518,8 @@ void EntryView::resetViewToDefaults()
 void EntryView::onHeaderChanged()
 {
     m_model->setBackgroundColorVisible(isColumnHidden(EntryModel::Color));
+    // Force hide accessed column
+    header()->hideSection(EntryModel::Accessed);
 }
 
 void EntryView::showEvent(QShowEvent* event)
@@ -546,7 +553,7 @@ void EntryView::startDrag(Qt::DropActions supportedActions)
     for (auto& index : selectedIndexes) {
         if (++i > 4) {
             int remaining = selectedIndexes.size() - i + 1;
-            listWidget.addItem(tr("+ %1 entry(s)...", nullptr, remaining).arg(remaining));
+            listWidget.addItem(tr("+ %1 entry(s)...", "", remaining).arg(remaining));
             break;
         }
 
@@ -570,17 +577,10 @@ void EntryView::startDrag(Qt::DropActions supportedActions)
 
     // Grab the screen pixel ratio where the window resides
     // TODO: Use direct call to screen() when moving to Qt 6
-#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
     auto screen = QGuiApplication::screenAt(window()->geometry().center());
     if (!screen) {
         screen = QGuiApplication::primaryScreen();
     }
-#else
-    auto screen = QGuiApplication::primaryScreen();
-    if (windowHandle()) {
-        screen = windowHandle()->screen();
-    }
-#endif
 
     auto pixelRatio = screen->devicePixelRatio();
 
@@ -600,4 +600,18 @@ void EntryView::startDrag(Qt::DropActions supportedActions)
 bool EntryView::isColumnHidden(int logicalIndex)
 {
     return header()->isSectionHidden(logicalIndex) || header()->sectionSize(logicalIndex) == 0;
+}
+
+void EntryView::jumpToGroupShortcut()
+{
+    // Only allow jump to group in search mode
+    if (!inSearchMode()) {
+        return;
+    }
+
+    auto entry = currentEntry();
+    if (entry) {
+        // Emit the entryActivated signal with ParentGroup column to trigger jump to group
+        emit entryActivated(entry, EntryModel::ParentGroup);
+    }
 }

@@ -44,7 +44,7 @@ public:
     QList<QKeySequence> defaultShortcuts(const QAction* a) const;
 
     void setDefaultShortcut(QAction* a, const QKeySequence& shortcut);
-    void setDefaultShortcut(QAction* a, QKeySequence::StandardKey standard, const QKeySequence& fallback);
+    void setDefaultShortcut(QAction* a, QKeySequence::StandardKey standard);
     void setDefaultShortcuts(QAction* a, const QList<QKeySequence>& shortcut);
 
     // Check if any action conflicts with @p seq and return the conflicting action

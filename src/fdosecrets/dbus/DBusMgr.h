@@ -1,4 +1,5 @@
 /*
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2020 Aetf <aetf@unlimitedcode.works>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -25,6 +26,11 @@
 #include <QDBusVirtualObject>
 #include <QDebug>
 #include <QtDBus>
+
+#if QT_VERSION < QT_VERSION_CHECK(6, 4, 0)
+// Include the header only for moc file. Workaround for the class forward definiton error with older Qt 6 versions.
+Q_MOC_INCLUDE("fdosecrets/objects/Item.h")
+#endif
 
 class TestFdoSecrets;
 
@@ -78,6 +84,9 @@ namespace FdoSecrets
     class DBusMgr : public QDBusVirtualObject
     {
         Q_OBJECT
+#if QT_VERSION < QT_VERSION_CHECK(6, 4, 0)
+        Q_PROPERTY(Item* item)
+#endif
     public:
         explicit DBusMgr();
 

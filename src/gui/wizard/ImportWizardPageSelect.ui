@@ -94,14 +94,14 @@
       <property name="sizeConstraint">
        <enum>QLayout::SetMinimumSize</enum>
       </property>
-      <item row="0" column="0">
+      <item row="3" column="0">
        <widget class="QLabel" name="importFileLabel">
         <property name="text">
          <string>Import File:</string>
         </property>
        </widget>
       </item>
-      <item row="0" column="1">
+      <item row="3" column="1">
        <layout class="QHBoxLayout" name="importFileLayout">
         <item>
          <widget class="QLineEdit" name="importFileEdit"/>
@@ -115,24 +115,24 @@
         </item>
        </layout>
       </item>
-      <item row="1" column="0">
+      <item row="4" column="0">
        <widget class="QLabel" name="passwordLabel">
         <property name="text">
          <string>Password:</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="1">
+      <item row="4" column="1">
        <widget class="PasswordWidget" name="passwordEdit" native="true"/>
       </item>
-      <item row="2" column="0">
+      <item row="5" column="0">
        <widget class="QLabel" name="keyFileLabel">
         <property name="text">
          <string>Key File:</string>
         </property>
        </widget>
       </item>
-      <item row="2" column="1">
+      <item row="5" column="1">
        <layout class="QHBoxLayout" name="keyFileLayout">
         <item>
          <widget class="QLineEdit" name="keyFileEdit"/>
@@ -146,7 +146,7 @@
         </item>
        </layout>
       </item>
-      <item row="3" column="1">
+      <item row="6" column="1">
        <spacer name="verticalSpacer_3">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
@@ -162,7 +162,7 @@
         </property>
        </spacer>
       </item>
-      <item row="4" column="0">
+      <item row="7" column="0">
        <widget class="QLabel" name="importIntoLabel">
         <property name="text">
          <string>Import Into:</string>
@@ -172,7 +172,7 @@
         </property>
        </widget>
       </item>
-      <item row="4" column="1">
+      <item row="7" column="1">
        <widget class="QGroupBox" name="importIntoGroupBox">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
@@ -239,7 +239,62 @@
            </item>
           </layout>
          </item>
+         <item>
+          <widget class="QRadioButton" name="temporaryDatabaseRadio">
+           <property name="text">
+            <string>Temporary Database</string>
+           </property>
+          </widget>
+         </item>
         </layout>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="downloadCommandLabel">
+        <property name="text">
+         <string>Command:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <layout class="QHBoxLayout" name="downloadCommandLayout">
+        <item>
+         <widget class="QLineEdit" name="downloadCommand">
+          <property name="placeholderText">
+           <string>e.g.: &quot;sftp user@hostname&quot; or &quot;scp user@hostname:DatabaseOnRemote.kdbx {TEMP_DATABASE}&quot;</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="downloadCommandHelpButton">
+          <property name="text">
+           <string notr="true"/>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="downloadCommandInputLabel">
+        <property name="text">
+         <string>Input:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QPlainTextEdit" name="downloadCommandInput">
+        <property name="placeholderText">
+         <string>e.g.:
+get DatabaseOnRemote.kdbx {TEMP_DATABASE}
+exit
+---
+{TEMP_DATABASE} is used as placeholder to store the database in a temporary location
+The command has to exit. In case of `sftp` as last commend `exit` has to be sent
+         </string>
+        </property>
        </widget>
       </item>
      </layout>

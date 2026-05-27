@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -35,6 +35,7 @@ Q_DECLARE_METATYPE(KeeShareSettings::Certificate)
 void TestSharing::initTestCase()
 {
     QVERIFY(Crypto::init());
+    QLocale::setDefault(QLocale::c());
 }
 
 void TestSharing::testNullObjects()
@@ -83,7 +84,7 @@ void TestSharing::testKeySerialization()
     writer.writeEndDocument();
     QXmlStreamReader reader(buffer);
     reader.readNextStartElement();
-    QVERIFY(reader.name() == "Key");
+    QVERIFY(reader.name().toString() == "Key");
     KeeShareSettings::Key restored = KeeShareSettings::Key::deserialize(reader);
 
     QCOMPARE(restored.key->private_key_bits(), original.key->private_key_bits());
@@ -117,12 +118,9 @@ void TestSharing::testReferenceSerialization_data()
     QTest::addColumn<QString>("path");
     QTest::addColumn<QUuid>("uuid");
     QTest::addColumn<int>("type");
-    QTest::newRow("1") << "Password"
-                       << "/some/path" << QUuid::createUuid() << int(KeeShareSettings::Inactive);
-    QTest::newRow("2") << ""
-                       << "" << QUuid() << int(KeeShareSettings::SynchronizeWith);
-    QTest::newRow("3") << ""
-                       << "/some/path" << QUuid() << int(KeeShareSettings::ExportTo);
+    QTest::newRow("1") << "Password" << "/some/path" << QUuid::createUuid() << int(KeeShareSettings::Inactive);
+    QTest::newRow("2") << "" << "" << QUuid() << int(KeeShareSettings::SynchronizeWith);
+    QTest::newRow("3") << "" << "/some/path" << QUuid() << int(KeeShareSettings::ExportTo);
 }
 
 void TestSharing::testSettingsSerialization()

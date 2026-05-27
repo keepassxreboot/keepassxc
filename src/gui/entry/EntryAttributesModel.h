@@ -19,6 +19,7 @@
 #define KEEPASSX_ENTRYATTRIBUTESMODEL_H
 
 #include <QAbstractListModel>
+#include <QCollator>
 
 class EntryAttributes;
 
@@ -55,6 +56,7 @@ private:
     EntryAttributes* m_entryAttributes;
     QList<QString> m_attributes;
     bool m_nextRenameDataChange;
+    QCollator m_collator;
 };
 
 #endif // KEEPASSX_ENTRYATTRIBUTESMODEL_H

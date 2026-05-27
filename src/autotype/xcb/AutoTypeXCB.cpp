@@ -1,7 +1,7 @@
 /*
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
  *  Copyright (C) 2000-2008 Tom Sato <VEF00200@nifty.ne.jp>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -21,8 +21,9 @@
 #include "core/Tools.h"
 #include "gui/osutils/nixutils/X11Funcs.h"
 
-#include <QX11Info>
+#include <QGuiApplication>
 #include <X11/XKBlib.h>
+#include <X11/Xatom.h>
 #include <X11/Xutil.h>
 #include <X11/extensions/XTest.h>
 
@@ -38,8 +39,15 @@ static const QPair<KeySym, KeySym> deadMap[] = {
 AutoTypePlatformX11::AutoTypePlatformX11()
 {
     // Qt handles XCB slightly differently so we open our own connection
-    m_dpy = XOpenDisplay(XDisplayString(QX11Info::display()));
-    m_rootWindow = QX11Info::appRootWindow();
+    if (auto* native = qGuiApp->nativeInterface<QNativeInterface::QX11Application>()) {
+        m_dpy = XOpenDisplay(XDisplayString(native->display()));
+        m_rootWindow = DefaultRootWindow(native->display());
+    } else {
+        qWarning("Auto-Type: Unable to connect to X server, Auto-Type is disabled.");
+        return;
+    }
+
+    Q_ASSERT(m_dpy);
 
     m_atomWmState = XInternAtom(m_dpy, "WM_STATE", True);
     m_atomWmName = XInternAtom(m_dpy, "WM_NAME", True);
@@ -49,15 +57,13 @@ AutoTypePlatformX11::AutoTypePlatformX11()
     m_atomNetActiveWindow = XInternAtom(m_dpy, "_NET_ACTIVE_WINDOW", True);
     m_atomTransientFor = XInternAtom(m_dpy, "WM_TRANSIENT_FOR", True);
     m_atomWindow = XInternAtom(m_dpy, "WINDOW", True);
+    m_appUserTime = XInternAtom(m_dpy, "_NET_WM_USER_TIME", False);
 
-    m_classBlacklist << "desktop_window"
-                     << "gnome-panel"; // Gnome
-    m_classBlacklist << "kdesktop"
-                     << "kicker"; // KDE 3
+    m_classBlacklist << "desktop_window" << "gnome-panel"; // Gnome
+    m_classBlacklist << "kdesktop" << "kicker"; // KDE 3
     m_classBlacklist << "Plasma"; // KDE 4
     m_classBlacklist << "plasmashell"; // KDE 5
-    m_classBlacklist << "xfdesktop"
-                     << "xfce4-panel"; // Xfce 4
+    m_classBlacklist << "xfdesktop" << "xfce4-panel"; // Xfce 4
 
     m_xkb = nullptr;
 
@@ -66,6 +72,10 @@ AutoTypePlatformX11::AutoTypePlatformX11()
 
 bool AutoTypePlatformX11::isAvailable()
 {
+    if (!m_loaded) {
+        return false;
+    }
+
     int ignore;
 
     if (!XQueryExtension(m_dpy, "XInputExtension", &ignore, &ignore, &ignore)) {
@@ -88,8 +98,10 @@ void AutoTypePlatformX11::unload()
         m_xkb = nullptr;
     }
 
-    XCloseDisplay(m_dpy);
-    m_dpy = nullptr;
+    if (m_dpy) {
+        XCloseDisplay(m_dpy);
+        m_dpy = nullptr;
+    }
 
     m_loaded = false;
 }
@@ -292,6 +304,31 @@ bool AutoTypePlatformX11::isTopLevelWindow(Window window)
     return result;
 }
 
+unsigned long AutoTypePlatformX11::appUserTime(Window window)
+{
+    auto appUserTime = 0;
+
+    Atom type = None;
+    int format;
+    unsigned long nitems;
+    unsigned long after;
+    unsigned char* data = nullptr;
+
+    if (XGetWindowProperty(
+            m_dpy, window, m_appUserTime, 0, 1, False, XA_CARDINAL, &type, &format, &nitems, &after, &data)
+        == Success) {
+        if (data && nitems == 1) {
+            appUserTime = *reinterpret_cast<unsigned long*>(data);
+        }
+
+        if (data) {
+            XFree(data);
+        }
+    }
+
+    return appUserTime;
+}
+
 /*
  * Update the keyboard and modifier mapping.
  * We need the KeyboardMapping for AddKeysym.
@@ -485,7 +522,7 @@ bool AutoTypePlatformX11::RemapKeycode(KeySym keysym)
 AutoTypeAction::Result AutoTypePlatformX11::sendKey(KeySym keysym, unsigned int modifiers)
 {
     if (keysym == NoSymbol) {
-        return AutoTypeAction::Result::Failed(tr("Trying to send invalid keysym."));
+        return AutoTypeAction::Result::Failed(tr("Trying to send invalid keyboard symbol."));
     }
 
     int keycode;
@@ -606,8 +643,8 @@ AutoTypeAction::Result AutoTypeExecutorX11::execType(const AutoTypeKey* action)
 AutoTypeAction::Result AutoTypeExecutorX11::execClearField(const AutoTypeClearField* action)
 {
     Q_UNUSED(action);
-    execType(new AutoTypeKey(Qt::Key_Home, Qt::ControlModifier));
-    execType(new AutoTypeKey(Qt::Key_End, Qt::ControlModifier | Qt::ShiftModifier));
+    execType(new AutoTypeKey(Qt::Key_Home));
+    execType(new AutoTypeKey(Qt::Key_End, Qt::ShiftModifier));
     execType(new AutoTypeKey(Qt::Key_Backspace));
     return AutoTypeAction::Result::Ok();
 }
@@ -628,7 +665,7 @@ bool AutoTypePlatformX11::raiseWindow(WId window)
     event.xclient.message_type = m_atomNetActiveWindow;
     event.xclient.format = 32;
     event.xclient.data.l[0] = 1; // FromApplication
-    event.xclient.data.l[1] = QX11Info::appUserTime();
+    event.xclient.data.l[1] = appUserTime(window);
     QWidget* activeWindow = QApplication::activeWindow();
     if (activeWindow) {
         event.xclient.data.l[2] = activeWindow->internalWinId();

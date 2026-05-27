@@ -101,13 +101,14 @@ int BrowserPasskeysClient::getCredentialCreationOptions(const QJsonObject& publi
     // Extensions
     auto extensionObject = publicKeyOptions["extensions"].toObject();
     const auto extensionData = passkeyUtils()->buildExtensionData(extensionObject);
-    const auto extensions = browserMessageBuilder()->getBase64FromArray(extensionData);
+    const auto extensions = browserMessageBuilder()->getBase64FromArray(extensionData.extensionData);
 
     // Construct the final object
     QJsonObject credentialCreationOptions;
     credentialCreationOptions["attestation"] = attestation; // Set this, even if only "none" is supported
     credentialCreationOptions["authenticatorAttachment"] = authenticatorAttachment;
     credentialCreationOptions["clientDataJSON"] = passkeyUtils()->buildClientDataJson(publicKeyOptions, origin, false);
+    credentialCreationOptions["clientExtensionResults"] = extensionData.extensionObject;
     credentialCreationOptions["credTypesAndPubKeyAlgs"] = pubKeyCredParams;
     credentialCreationOptions["excludeCredentials"] = publicKeyOptions["excludeCredentials"];
     credentialCreationOptions["extensions"] = extensions;
@@ -148,7 +149,7 @@ int BrowserPasskeysClient::getAssertionOptions(const QJsonObject& publicKeyOptio
     // Extensions
     auto extensionObject = publicKeyOptions["extensions"].toObject();
     const auto extensionData = passkeyUtils()->buildExtensionData(extensionObject);
-    const auto extensions = browserMessageBuilder()->getBase64FromArray(extensionData);
+    const auto extensions = browserMessageBuilder()->getBase64FromArray(extensionData.extensionData);
 
     // clientDataJson
     const auto clientDataJson = passkeyUtils()->buildClientDataJson(publicKeyOptions, origin, true);
@@ -163,6 +164,7 @@ int BrowserPasskeysClient::getAssertionOptions(const QJsonObject& publicKeyOptio
     QJsonObject assertionOptions;
     assertionOptions["allowCredentials"] = publicKeyOptions["allowCredentials"];
     assertionOptions["clientDataJson"] = clientDataJson;
+    assertionOptions["clientExtensionResults"] = extensionData.extensionObject;
     assertionOptions["extensions"] = extensions;
     assertionOptions["rpId"] = rpId;
     assertionOptions["userPresence"] = true;

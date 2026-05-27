@@ -1,4 +1,5 @@
 /*
+ *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2020 Aetf <aetf@unlimitedcode.works>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -18,6 +19,7 @@
 #include "fdosecrets/dbus/DBusObject.h"
 
 #include <QDBusMetaType>
+#include <QMetaType>
 #include <QThread>
 #include <QtDBus>
 
@@ -36,6 +38,9 @@ namespace FdoSecrets
                             QVarLengthArray<void*, 10>& params,
                             QVariantList& auxParams)
     {
+        // Qt6 QList/QVariantList growth may relocate elements; reserve to keep data() pointers stable.
+        auxParams.reserve(auxParams.size() + inputTypes.size());
+
         // prepare params
         for (int count = 0; count != inputTypes.size(); ++count) {
             const auto& id = inputTypes.at(count);
@@ -48,17 +53,17 @@ namespace FdoSecrets
             }
 
             // we need at least one conversion, allocate a slot in auxParams
-            auxParams.append(QVariant(id, nullptr));
+            auxParams.append(QVariant(id));
             auto& out = auxParams.last();
             // first handle QDBusArgument to wire types
             if (arg.userType() == qMetaTypeId<QDBusArgument>()) {
-                auto wireId = typeToWireType(id).dbusTypeId;
+                QMetaType wireId(typeToWireType(id).dbusTypeId);
                 out = QVariant(wireId, nullptr);
 
                 const auto& in = arg.value<QDBusArgument>();
                 if (!QDBusMetaType::demarshall(in, wireId, out.data())) {
                     qDebug() << "Internal error: failed QDBusArgument conversion from" << arg << "to type"
-                             << QMetaType::typeName(wireId) << wireId;
+                             << wireId.name();
                     return false;
                 }
             } else {
@@ -339,13 +344,14 @@ namespace FdoSecrets
     {
         QVarLengthArray<void*, 10> params;
         QVariantList auxParams;
+        auxParams.reserve((method.needsCallingClient ? 1 : 0) + method.inputTypes.size());
 
         // the first one is for return type
         params.append(&ret);
 
         if (method.needsCallingClient) {
             auxParams.append(QVariant::fromValue(client));
-            params.append(const_cast<void*>(auxParams.last().constData()));
+            params.append(auxParams.last().data());
         }
 
         // prepare input
@@ -357,8 +363,9 @@ namespace FdoSecrets
         // prepare output args
         outputArgs.reserve(outputArgs.size() + method.outputTypes.size());
         for (const auto& outputType : asConst(method.outputTypes)) {
-            outputArgs.append(QVariant(outputType, nullptr));
-            params.append(const_cast<void*>(outputArgs.last().constData()));
+            QMetaType mtype(outputType);
+            outputArgs.append(QVariant(mtype, nullptr));
+            params.append(outputArgs.last().data());
         }
 
         // call it
@@ -377,7 +384,8 @@ namespace FdoSecrets
         // output args need to be converted before they can be directly sent out:
         for (int i = 0; i != outputArgs.size(); ++i) {
             auto& outputArg = outputArgs[i];
-            if (!outputArg.convert(method.outputTargetTypes.at(i))) {
+            QMetaType mtype(method.outputTargetTypes.at(i));
+            if (!outputArg.convert(mtype)) {
                 qWarning() << "Internal error: Failed to convert message output to type"
                            << method.outputTargetTypes.at(i);
                 return false;

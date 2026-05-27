@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@
 #include "format/BitwardenReader.h"
 #include "format/OPUXReader.h"
 #include "format/OpVaultReader.h"
+#include "format/ProtonPassReader.h"
 
 #include <QJsonObject>
 #include <QList>
@@ -35,6 +36,7 @@ QTEST_GUILESS_MAIN(TestImports)
 void TestImports::initTestCase()
 {
     QVERIFY(Crypto::init());
+    QLocale::setDefault(QLocale::c());
 }
 
 void TestImports::testOPUX()
@@ -96,6 +98,11 @@ void TestImports::testOPUX()
     QVERIFY(entry);
     // Check custom group icon
     QVERIFY(!entry->group()->iconUuid().isNull());
+
+    // Check Category UUID 05 Passwords
+    entry = db->rootGroup()->findEntryByPath("/Personal/UUID 005 Password");
+    QVERIFY(entry);
+    QCOMPARE(entry->password(), QStringLiteral("uuid005password"));
 }
 
 void TestImports::testOPVault()
@@ -222,6 +229,16 @@ void TestImports::testBitwarden()
     QCOMPARE(entry->attribute("KP2A_URL_2"), QStringLiteral("https://gmail.com"));
     // Check TOTP
     QVERIFY(entry->hasTotp());
+    // Check Modified and Created timestamps
+    QCOMPARE(entry->timeInfo().lastModificationTime(),
+             QDateTime::fromString(QStringLiteral("2024-12-25T12:00:00Z"), Qt::ISODate));
+    QCOMPARE(entry->timeInfo().creationTime(),
+             QDateTime::fromString(QStringLiteral("2024-12-01T12:00:00Z"), Qt::ISODate));
+    // Check Password History
+    QCOMPARE(entry->historyItems().size(), 1);
+    QCOMPARE(entry->historyItems().first()->password(), QStringLiteral("oldpassword"));
+    QCOMPARE(entry->historyItems().first()->timeInfo().lastModificationTime(),
+             QDateTime::fromString(QStringLiteral("2024-12-01T12:00:00Z"), Qt::ISODate));
     // NOTE: Bitwarden does not export attachments
     // NOTE: Bitwarden does not export expiration dates
 
@@ -255,6 +272,8 @@ void TestImports::testBitwarden()
 void TestImports::testBitwardenEncrypted()
 {
     // We already tested the parser so just test that decryption works properly
+
+    // First test PBKDF2 password stretching (KDF Type 0)
     auto bitwardenPath =
         QStringLiteral("%1/%2").arg(KEEPASSX_TEST_DATA_DIR, QStringLiteral("/bitwarden_encrypted_export.json"));
 
@@ -264,4 +283,209 @@ void TestImports::testBitwardenEncrypted()
         QFAIL(qPrintable(reader.errorString()));
     }
     QVERIFY(db);
+
+    // Now test Argon2id password stretching (KDF Type 1)
+    bitwardenPath = QStringLiteral("%1/%2").arg(KEEPASSX_TEST_DATA_DIR,
+                                                QStringLiteral("/bitwarden_encrypted_argon2id_export.json"));
+
+    db = reader.convert(bitwardenPath, "a");
+    if (reader.hasError()) {
+        QFAIL(qPrintable(reader.errorString()));
+    }
+    QVERIFY(db);
+}
+
+void TestImports::testBitwardenPasskey()
+{
+    auto bitwardenPath =
+        QStringLiteral("%1/%2").arg(KEEPASSX_TEST_DATA_DIR, QStringLiteral("/bitwarden_passkey_export.json"));
+
+    BitwardenReader reader;
+    auto db = reader.convert(bitwardenPath);
+    QVERIFY2(!reader.hasError(), qPrintable(reader.errorString()));
+    QVERIFY(db);
+
+    // Confirm Login fields
+    auto entry = db->rootGroup()->findEntryByPath("/webauthn.io");
+    QVERIFY(entry);
+    QCOMPARE(entry->title(), QStringLiteral("webauthn.io"));
+    QCOMPARE(entry->username(), QStringLiteral("KPXC_BITWARDEN"));
+    QCOMPARE(entry->url(), QStringLiteral("https://webauthn.io/"));
+
+    // Confirm passkey attributes
+    auto attr = entry->attributes();
+    QCOMPARE(attr->value(EntryAttributes::KPEX_PASSKEY_CREDENTIAL_ID), QStringLiteral("o-FfiyfBQq6Qz6YVrYeFTw"));
+    QCOMPARE(
+        attr->value(EntryAttributes::KPEX_PASSKEY_PRIVATE_KEY_PEM),
+        QStringLiteral(
+            "-----BEGIN PRIVATE "
+            "KEY-----"
+            "MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgmr4GQQjerojFuf0ZouOuUllMvAwxZSZAfB6gwDYcLiehRANCAAT0WR5zVS"
+            "p6ieusvjkLkzaGc7fjGBmwpiuLPxR/d+ZjqMI9L2DKh+takp6wGt2x0n4jzr1KA352NZg0vjZX9CHh-----END PRIVATE KEY-----"));
+    QCOMPARE(attr->value(EntryAttributes::KPEX_PASSKEY_USERNAME), QStringLiteral("KPXC_BITWARDEN"));
+    QCOMPARE(attr->value(EntryAttributes::KPEX_PASSKEY_RELYING_PARTY), QStringLiteral("webauthn.io"));
+    QCOMPARE(attr->value(EntryAttributes::KPEX_PASSKEY_USER_HANDLE),
+             QStringLiteral("aTFtdmFnOHYtS2dxVEJ0by1rSFpLWGg0enlTVC1iUVJReDZ5czJXa3c2aw"));
+}
+
+void TestImports::testBitwardenNestedFolders()
+{
+    auto bitwardenPath =
+        QStringLiteral("%1/%2").arg(KEEPASSX_TEST_DATA_DIR, QStringLiteral("/bitwarden_nested_export.json"));
+
+    BitwardenReader reader;
+    auto db = reader.convert(bitwardenPath);
+    QVERIFY2(!reader.hasError(), qPrintable(reader.errorString()));
+    QVERIFY(db);
+
+    /* The group tree should be:
+     /
+       - Example
+       - Test Authentication
+       /SecondTest
+         - GMail entry
+       /Test
+         - Gmail test 2
+         /Subfolder
+           - Webauthn.io test 2
+         /Subfolder
+           - Test Account
+         /SubFolder
+           - WebAuthn.io test
+           /AnotherSubFolder
+             - Another test account
+             - Webauthn.io test 3
+    */
+
+    // Verify groups
+    auto secondTestGroup = db->rootGroup()->findGroupByPath("/SecondTest");
+    QVERIFY(secondTestGroup);
+    auto testGroup = db->rootGroup()->findGroupByPath("/Test");
+    QVERIFY(testGroup);
+    auto testSubfolderLowercaseGroup = db->rootGroup()->findGroupByPath("/Test/Subfolder");
+    QVERIFY(testSubfolderLowercaseGroup);
+    auto testSubFolderGroup = db->rootGroup()->findGroupByPath("/Test/SubFolder");
+    QVERIFY(testSubFolderGroup);
+    auto longGroup = db->rootGroup()->findGroupByPath("/Test/SubFolder/AnotherSubFolder");
+    QVERIFY(longGroup);
+
+    // Verify entries and the groups they belong to
+
+    // GMail entry
+    auto entry = db->rootGroup()->findEntryByPath("/SecondTest/GMail entry");
+    QVERIFY(entry);
+    QCOMPARE(entry->username(), QStringLiteral("example@gmail.com"));
+    QCOMPARE(entry->group(), secondTestGroup);
+
+    // Test Authentication
+    entry = db->rootGroup()->findEntryByPath("/Test Authentication");
+    QVERIFY(entry);
+    QCOMPARE(entry->username(), QStringLiteral("test@testauthentication.com"));
+    QCOMPARE(entry->group(), db->rootGroup());
+
+    // Gmail test 2
+    entry = db->rootGroup()->findEntryByPath("/Test/Gmail test 2");
+    QVERIFY(entry);
+    QCOMPARE(entry->username(), QStringLiteral("example2@gmail.com"));
+    QCOMPARE(entry->group(), testGroup);
+
+    // Example
+    entry = db->rootGroup()->findEntryByPath("/Example");
+    QVERIFY(entry);
+    QCOMPARE(entry->username(), QStringLiteral("user@example.com"));
+    QCOMPARE(entry->group(), db->rootGroup());
+
+    // WebAuthn.io test
+    entry = db->rootGroup()->findEntryByPath("/Test/SubFolder/WebAuthn.io test");
+    QVERIFY(entry);
+    QCOMPARE(entry->username(), QStringLiteral("testUser"));
+    QCOMPARE(entry->group(), testSubFolderGroup);
+
+    // Webauthn.io test 2
+    entry = db->rootGroup()->findEntryByPath("/Test/Subfolder/Webauthn.io test 2");
+    QVERIFY(entry);
+    QCOMPARE(entry->username(), QStringLiteral("testUser2"));
+    QCOMPARE(entry->group(), testSubfolderLowercaseGroup);
+
+    // Webauthn.io test 3
+    entry = db->rootGroup()->findEntryByPath("/Test/SubFolder/AnotherSubFolder/Webauthn.io test 3");
+    QVERIFY(entry);
+    QCOMPARE(entry->username(), QStringLiteral("testUser3"));
+    QCOMPARE(entry->group(), longGroup);
+
+    // Test Account
+    // There are two groups with an identical name. The group for this entry should not be the same group with the
+    // Webauthn.io test 2, but we cannot distinguish these.
+    entry = db->rootGroup()->findEntryByPath("/Test/Subfolder/Test Account");
+    QVERIFY(entry);
+    QCOMPARE(entry->username(), QStringLiteral("test-account"));
+    QCOMPARE(entry->group(), testSubfolderLowercaseGroup);
+
+    // Another test account
+    entry = db->rootGroup()->findEntryByPath("/Test/SubFolder/AnotherSubFolder/Another test account");
+    QVERIFY(entry);
+    QCOMPARE(entry->username(), QStringLiteral("anotherUser"));
+    QCOMPARE(entry->group(), longGroup);
+}
+
+void TestImports::testProtonPass()
+{
+    auto protonPassPath =
+        QStringLiteral("%1/%2").arg(KEEPASSX_TEST_DATA_DIR, QStringLiteral("/protonpass_export.json"));
+
+    ProtonPassReader reader;
+    auto db = reader.convert(protonPassPath);
+    QVERIFY2(!reader.hasError(), qPrintable(reader.errorString()));
+    QVERIFY(db);
+
+    // Confirm Login fields
+    auto entry = db->rootGroup()->findEntryByPath("/Personal/Test Login");
+    QVERIFY(entry);
+    QCOMPARE(entry->title(), QStringLiteral("Test Login"));
+    QCOMPARE(entry->username(), QStringLiteral("Username"));
+    QCOMPARE(entry->password(), QStringLiteral("Password"));
+    QCOMPARE(entry->url(), QStringLiteral("https://example.com/"));
+    QCOMPARE(entry->notes(), QStringLiteral("My login secure note."));
+    // Check extra URL's
+    QCOMPARE(entry->attribute("KP2A_URL_1"), QStringLiteral("https://example2.com/"));
+    // Check TOTP
+    QVERIFY(entry->hasTotp());
+    // Check attributes
+    auto attr = entry->attributes();
+    QVERIFY(attr->isProtected("hidden field"));
+    QCOMPARE(attr->value("second 2fa secret"), QStringLiteral("TOTPCODE"));
+    // NOTE: Proton Pass does not export attachments
+    // NOTE: Proton Pass does not export expiration dates
+
+    // Confirm Secure Note
+    entry = db->rootGroup()->findEntryByPath("/Personal/My Secure Note");
+    QVERIFY(entry);
+    QCOMPARE(entry->notes(), QStringLiteral("Secure note contents."));
+
+    // Confirm Credit Card
+    entry = db->rootGroup()->findEntryByPath("/Personal/Test Card");
+    QVERIFY(entry);
+    QCOMPARE(entry->username(), QStringLiteral("1234222233334444"));
+    QCOMPARE(entry->password(), QStringLiteral("333"));
+    attr = entry->attributes();
+    QCOMPARE(attr->value("card_cardholderName"), QStringLiteral("Test name"));
+    QCOMPARE(attr->value("card_expirationDate"), QStringLiteral("2025-01"));
+    QCOMPARE(attr->value("card_pin"), QStringLiteral("1234"));
+    QVERIFY(attr->isProtected("card_pin"));
+
+    // Confirm Expired (deleted) entry
+    entry = db->rootGroup()->findEntryByPath("/Personal/My Deleted Note");
+    QVERIFY(entry);
+    QTRY_VERIFY(entry->isExpired());
+
+    // Confirm second group (vault)
+    entry = db->rootGroup()->findEntryByPath("/Test/Other vault login");
+    QVERIFY(entry);
+
+    // Confirm unknown type entry
+    entry = db->rootGroup()->findEntryByPath("/Personal/Unknown Type");
+    QVERIFY(entry);
+    attr = entry->attributes();
+    QCOMPARE(attr->value("content_attr1"), QStringLiteral("value1"));
+    QCOMPARE(attr->value("content_attr2"), QStringLiteral("value2"));
 }

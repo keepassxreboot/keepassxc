@@ -15,6 +15,7 @@ These are just guidelines, not rules. Use your best judgment, and feel free to p
   * [Bug reports](#bug-reports)
   * [Discuss with the team](#discuss-with-the-team)
   * [Your first code contribution](#your-first-code-contribution)
+  * [Using AI](#using-ai)
   * [Pull requests](#pull-requests)
   * [Translations](#translations)
 
@@ -74,6 +75,10 @@ Unsure where to begin contributing to KeePassXC? You can start by looking throug
 
 Both issue lists are sorted by total number of comments. While not perfect, looking at the number of comments on an issue can give a general idea of how much an impact a given change will have.
 
+### Using AI
+
+Generative AI is fast becoming a first-party feature in most development environments, including GitHub itself. If you use Generative AI to write the vast majority of your submission (e.g., agent-based or vibe coding) then you **must document your use of AI** in your pull request. Please include the service you used and/or model that generated the code. All code submissions go through a rigorous review process regardless of the development workflow used.
+
 ### Pull requests
 
 Along with our desire to hear your feedback and suggestions, we're also interested in accepting direct assistance in the form of code.
@@ -82,7 +87,7 @@ All pull requests must comply with the above requirements and with the [stylegui
 
 ### Translations
 
-Translations are managed on [Transifex](https://www.transifex.com/keepassxc/keepassxc/) which offers a web interface.
+Translations are managed on [Transifex](https://explore.transifex.com/keepassxc/keepassxc/) which offers a web interface.
 Please join an existing language team or request a new one if there is none.
 
 If you open a Pull Request with new strings that require translations, you will need to run the following:

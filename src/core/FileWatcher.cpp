@@ -79,17 +79,18 @@ void FileWatcher::stop()
     m_fileChecksum.clear();
     m_fileChecksumTimer.stop();
     m_fileChangeDelayTimer.stop();
+    m_paused = false;
 }
 
 void FileWatcher::pause()
 {
-    m_ignoreFileChange = true;
+    m_paused = true;
     m_fileChangeDelayTimer.stop();
 }
 
 void FileWatcher::resume()
 {
-    m_ignoreFileChange = false;
+    m_paused = false;
     // Add a short delay to start in the next event loop
     if (!m_fileIgnoreDelayTimer.isActive()) {
         m_fileIgnoreDelayTimer.start(0);
@@ -98,7 +99,7 @@ void FileWatcher::resume()
 
 bool FileWatcher::shouldIgnoreChanges()
 {
-    return m_filePath.isEmpty() || m_ignoreFileChange || m_fileIgnoreDelayTimer.isActive()
+    return m_filePath.isEmpty() || m_ignoreFileChange || m_paused || m_fileIgnoreDelayTimer.isActive()
            || m_fileChangeDelayTimer.isActive();
 }
 
@@ -116,9 +117,9 @@ void FileWatcher::checkFileChanged()
     // Prevent reentrance
     m_ignoreFileChange = true;
 
-    AsyncTask::runThenCallback([=] { return calculateChecksum(); },
+    AsyncTask::runThenCallback([this] { return calculateChecksum(); },
                                this,
-                               [=](QByteArray checksum) {
+                               [this](const QByteArray& checksum) {
                                    if (checksum != m_fileChecksum) {
                                        m_fileChecksum = checksum;
                                        m_fileChangeDelayTimer.start(0);
@@ -131,7 +132,7 @@ void FileWatcher::checkFileChanged()
 QByteArray FileWatcher::calculateChecksum()
 {
     QFile file(m_filePath);
-    if (file.open(QFile::ReadOnly)) {
+    if (!m_filePath.isEmpty() && file.open(QFile::ReadOnly)) {
         QCryptographicHash hash(QCryptographicHash::Sha256);
         if (m_fileChecksumSizeBytes > 0) {
             hash.addData(file.read(m_fileChecksumSizeBytes));

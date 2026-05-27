@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2022 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -30,6 +30,9 @@ private slots:
     void testOPVault();
     void testBitwarden();
     void testBitwardenEncrypted();
+    void testBitwardenPasskey();
+    void testBitwardenNestedFolders();
+    void testProtonPass();
 };
 
 #endif /* TEST_IMPORTS_H */

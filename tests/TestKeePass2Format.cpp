@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -32,6 +32,7 @@
 void TestKeePass2Format::initTestCase()
 {
     QVERIFY(Crypto::init());
+    QLocale::setDefault(QLocale::c());
 
     // read raw XML database
     bool hasError;
@@ -582,7 +583,9 @@ void TestKeePass2Format::testKdbxKeyChange()
 
     db->setKey(key1);
     writeKdbx(&buffer, db.data(), hasError, errorString);
-    QVERIFY(!hasError);
+    if (hasError) {
+        QFAIL(qPrintable(QStringLiteral("Error while reading database: ").append(errorString)));
+    }
 
     // read database
     db = QSharedPointer<Database>::create();
@@ -599,7 +602,9 @@ void TestKeePass2Format::testKdbxKeyChange()
     // write database
     buffer.seek(0);
     writeKdbx(&buffer, db.data(), hasError, errorString);
-    QVERIFY(!hasError);
+    if (hasError) {
+        QFAIL(qPrintable(QStringLiteral("Error while reading database: ").append(errorString)));
+    }
 
     // read database
     db = QSharedPointer<Database>::create();

@@ -37,6 +37,7 @@ public:
     ~ShareObserver();
 
     QSharedPointer<Database> database();
+    void setEnabled(bool enabled);
 
     struct Result
     {
@@ -82,6 +83,7 @@ private:
     QMap<QString, QPointer<Group>> m_shareToGroup;
     QMap<QString, QSharedPointer<FileWatcher>> m_fileWatchers;
     bool m_inFileUpdate = false;
+    bool m_enabled = true;
 };
 
 #endif // KEEPASSXC_SHAREOBSERVER_H

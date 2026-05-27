@@ -44,6 +44,7 @@ public:
     bool setData(const QModelIndex& index, const QVariant& value, int role = Qt::EditRole) override;
     Qt::ItemFlags flags(const QModelIndex& index) const override;
     QString keyByIndex(const QModelIndex& index) const;
+    int rowByKey(const QString& key) const;
 
 private slots:
     void attachmentChange(const QString& key);

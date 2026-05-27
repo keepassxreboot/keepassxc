@@ -141,6 +141,8 @@ QByteArray BrowserCbor::cborEncodeExtensionData(const QJsonObject& extensions) c
     QCborStreamWriter writer(&result);
 
     writer.startMap(extensions.keys().count());
+
+    // https://w3c.github.io/webauthn/#sctn-authenticator-credential-properties-extension
     if (extensions["credProps"].toBool()) {
         writer.append("credProps");
         writer.startMap(1);
@@ -149,6 +151,7 @@ QByteArray BrowserCbor::cborEncodeExtensionData(const QJsonObject& extensions) c
         writer.endMap();
     }
 
+    // https://w3c.github.io/webauthn/#sctn-uvm-extension
     if (extensions["uvm"].toBool()) {
         writer.append("uvm");
 
@@ -167,6 +170,7 @@ QByteArray BrowserCbor::cborEncodeExtensionData(const QJsonObject& extensions) c
         writer.endArray();
         writer.endArray();
     }
+
     writer.endMap();
 
     return result;

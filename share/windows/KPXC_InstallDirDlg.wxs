@@ -24,6 +24,7 @@
                 <!-- Custom Controls for KPXC Installer -->
                 <Control Id="DesktopShortcutCheckBox" Type="CheckBox" X="20" Y="150" Width="290" Height="17" Property="INSTALLDESKTOPSHORTCUT" CheckBoxValue="1" Text="Create a shortcut on the desktop" />
                 <Control Id="AutostartCheckBox" Type="CheckBox" X="20" Y="170" Width="290" Height="17" Property="AUTOSTARTPROGRAM" CheckBoxValue="1" Text="Autostart KeePassXC on login" />
+                <Control Id="AddToPathCheckBox" Type="CheckBox" X="20" Y="190" Width="290" Height="17" Property="ADDTOPATH" CheckBoxValue="1" Text="Add KeePassXC to the PATH environment variable" />
             </Dialog>
         </UI>
     </Fragment>

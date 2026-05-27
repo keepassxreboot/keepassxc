@@ -44,6 +44,8 @@ public:
     bool isPasswordVisible() const;
     QString text();
 
+    bool eventFilter(QObject* watched, QEvent* event) override;
+
 signals:
     void textChanged(QString text);
 
@@ -57,11 +59,7 @@ public slots:
     void setEchoMode(QLineEdit::EchoMode mode);
     void setClearButtonEnabled(bool enabled);
 
-protected:
-    bool event(QEvent* event) override;
-
 private slots:
-    void autocompletePassword(const QString& password);
     void popupPasswordGenerator();
     void updateRepeatStatus();
     void updatePasswordStrength(const QString& password);

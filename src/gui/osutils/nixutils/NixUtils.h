@@ -35,6 +35,7 @@ public:
     bool isLaunchAtStartupEnabled() const override;
     void setLaunchAtStartup(bool enable) override;
     bool isCapslockEnabled() override;
+    void setUserInputProtection(bool enable) override;
 
     void registerNativeEventFilter() override;
 
@@ -52,14 +53,14 @@ public:
     quint64 getProcessStartTime() const;
 
 private slots:
-    void handleColorSchemeRead(QDBusVariant value);
     void handleColorSchemeChanged(QString ns, QString key, QDBusVariant value);
+    void launchAtStartupRequested(uint response, const QVariantMap& results);
 
 private:
     explicit NixUtils(QObject* parent = nullptr);
     ~NixUtils() override;
 
-    bool nativeEventFilter(const QByteArray& eventType, void* message, long*) override;
+    bool nativeEventFilter(const QByteArray& eventType, void* message, qintptr* result) override;
     QString getAutostartDesktopFilename(bool createDirs = false) const;
 
     bool triggerGlobalShortcut(uint keycode, uint modifiers);

@@ -1,4 +1,5 @@
 /*
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -32,10 +33,13 @@
 #include "gui/entry/EntryModel.h"
 #include "modeltest.h"
 
+const auto restoreDefaultLocale = qScopeGuard([prior = QLocale::c()] { QLocale::setDefault(prior); });
+
 QTEST_GUILESS_MAIN(TestEntryModel)
 
 void TestEntryModel::initTestCase()
 {
+    QLocale::setDefault(QLocale::c());
     qRegisterMetaType<QModelIndex>("QModelIndex");
     QVERIFY(Crypto::init());
 }
@@ -201,6 +205,9 @@ void TestEntryModel::testAttributesModel()
 
     // make sure these don't generate messages
     entryAttributes->set("Title", "test");
+    entryAttributes->set("UserName", "test");
+    entryAttributes->set("Password", "test");
+    entryAttributes->set("URL", "test");
     entryAttributes->set("Notes", "test");
 
     QCOMPARE(spyDataChanged.count(), 1);
@@ -214,6 +221,16 @@ void TestEntryModel::testAttributesModel()
     entryAttributes->set("2nd", value, true);
     QVERIFY(entryAttributes->isProtected("2nd"));
     QCOMPARE(entryAttributes->value("2nd"), value);
+    entryAttributes->clear();
+
+    // test attribute sorting (ASCII)
+    entryAttributes->set("Test1", "1");
+    entryAttributes->set("Test2", "2");
+    entryAttributes->set("Test11", "11");
+    QCOMPARE(model->rowCount(), 3);
+    QCOMPARE(model->data(model->index(0, 0)).toString(), QString("Test1"));
+    QCOMPARE(model->data(model->index(1, 0)).toString(), QString("Test11"));
+    QCOMPARE(model->data(model->index(2, 0)).toString(), QString("Test2"));
 
     QSignalSpy spyReset(model, SIGNAL(modelReset()));
     entryAttributes->clear();

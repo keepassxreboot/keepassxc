@@ -11,6 +11,9 @@
   ],
   "items": [
     {
+      "revisionDate": "2024-12-25T12:00:00.000Z",
+      "creationDate": "2024-12-01T12:00:00.000Z",
+      "deletedDate": null,
       "id": "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaa",
       "organizationId": null,
       "folderId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
@@ -43,6 +46,9 @@
       ]
     },
     {
+      "revisionDate": "2024-12-25T12:00:00.000Z",
+      "creationDate": "2024-12-01T12:00:00.000Z",
+      "deletedDate": null,
       "id": "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb",
       "organizationId": null,
       "folderId": "yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy",
@@ -80,6 +86,9 @@
       ]
     },
     {
+      "revisionDate": "2024-12-25T12:00:00.000Z",
+      "creationDate": "2024-12-01T12:00:00.000Z",
+      "deletedDate": null,
       "id": "cccccccc-cccc-cccc-cccc-cccccccccccc",
       "organizationId": null,
       "folderId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
@@ -129,6 +138,15 @@
       ]
     },
     {
+      "passwordHistory": [
+        {
+          "lastUsedDate": "2024-12-01T12:00:00.000Z",
+          "password": "oldpassword"
+        }
+      ],
+      "revisionDate": "2024-12-25T12:00:00.000Z",
+      "creationDate": "2024-12-01T12:00:00.000Z",
+      "deletedDate": null,
       "id": "dddddddd-dddd-dddd-dddd-dddddddddddd",
       "organizationId": null,
       "folderId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",

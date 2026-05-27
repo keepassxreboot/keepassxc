@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 #ifndef KEEPASSXC_DATABASESETTINGSWIDGET_H
 #define KEEPASSXC_DATABASESETTINGSWIDGET_H
 
-#include "gui/settings/SettingsWidget.h"
+#include "gui/SettingsWidget.h"
 
 class Database;
 
@@ -34,7 +34,7 @@ public:
     Q_DISABLE_COPY(DatabaseSettingsWidget);
     ~DatabaseSettingsWidget() override;
 
-    virtual void load(QSharedPointer<Database> db);
+    virtual void loadSettings(QSharedPointer<Database> db);
 
     const QSharedPointer<Database> getDatabase() const;
 

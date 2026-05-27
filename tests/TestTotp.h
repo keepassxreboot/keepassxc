@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 Weslly Honorato <﻿weslly@protonmail.com>
+ *  Copyright (C) 2017 Weslly Honorato <weslly@protonmail.com>
  *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -31,6 +31,7 @@ private slots:
     void testTotpCode();
     void testSteamTotp();
     void testEntryHistory();
+    void testKeePass2();
 };
 
 #endif // KEEPASSX_TESTTOTP_H

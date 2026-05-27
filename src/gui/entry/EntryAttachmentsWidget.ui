@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>337</width>
-    <height>289</height>
+    <width>332</width>
+    <height>312</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -34,11 +34,20 @@
      <property name="editTriggers">
       <set>QAbstractItemView::EditKeyPressed|QAbstractItemView::SelectedClicked</set>
      </property>
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectRows</enum>
+     </property>
+     <property name="cornerButtonEnabled">
+      <bool>false</bool>
+     </property>
+     <attribute name="verticalHeaderVisible">
+      <bool>false</bool>
+     </attribute>
     </widget>
    </item>
    <item>
     <widget class="QWidget" name="actionsWidget" native="true">
-     <layout class="QVBoxLayout" name="verticalLayout">
+     <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0,0,0,0,0,0">
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -60,33 +69,34 @@
          <string>Add new attachment</string>
         </property>
         <property name="text">
-         <string>Add</string>
+         <string>Add file…</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="removeAttachmentButton">
+       <widget class="QPushButton" name="editAttachmentButton">
         <property name="enabled">
          <bool>false</bool>
         </property>
-        <property name="accessibleName">
-         <string>Remove selected attachment</string>
-        </property>
         <property name="text">
-         <string>Remove</string>
+         <string>Edit</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="renameAttachmentButton">
+       <widget class="Line" name="editPreviewLine">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="previewAttachmentButton">
         <property name="enabled">
          <bool>false</bool>
         </property>
-        <property name="accessibleName">
-         <string>Rename selected attachment</string>
-        </property>
         <property name="text">
-         <string>Rename</string>
+         <string>Preview</string>
         </property>
        </widget>
       </item>
@@ -112,19 +122,45 @@
          <string>Save selected attachment to disk</string>
         </property>
         <property name="text">
-         <string>Save</string>
+         <string>Save…</string>
         </property>
        </widget>
       </item>
       <item>
-       <spacer name="verticalSpacer_2">
+       <widget class="Line" name="previewRemoveLine">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="removeAttachmentButton">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="accessibleName">
+         <string>Remove selected attachment</string>
+        </property>
+        <property name="text">
+         <string>Remove</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Expanding</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
           <width>20</width>
-          <height>173</height>
+          <height>0</height>
          </size>
         </property>
        </spacer>

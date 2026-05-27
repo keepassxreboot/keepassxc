@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,10 +20,9 @@
 #include "core/Database.h"
 #include "core/Entry.h"
 #include "core/EntryAttributes.h"
-#include "keys/FileKey.h"
-#ifdef WITH_XC_YUBIKEY
+#include "core/Global.h"
 #include "keys/ChallengeResponseKey.h"
-#endif
+#include "keys/FileKey.h"
 
 #ifdef Q_OS_WIN
 #include <windows.h>
@@ -42,33 +41,53 @@ namespace Utils
     QTextStream STDIN;
     QTextStream DEVNULL;
 
+#ifdef Q_OS_WIN
+    UINT origCodePage;
+    UINT origOutputCodePage;
+#endif
+
     void setDefaultTextStreams()
     {
         auto fd = new QFile();
-        fd->open(stdout, QIODevice::WriteOnly);
-        STDOUT.setDevice(fd);
+        if (fd->open(stdout, QIODevice::WriteOnly)) {
+            STDOUT.setDevice(fd);
+        }
 
         fd = new QFile();
-        fd->open(stderr, QIODevice::WriteOnly);
-        STDERR.setDevice(fd);
+        if (fd->open(stderr, QIODevice::WriteOnly)) {
+            STDERR.setDevice(fd);
+        }
 
         fd = new QFile();
-        fd->open(stdin, QIODevice::ReadOnly);
-        STDIN.setDevice(fd);
+        if (fd->open(stdin, QIODevice::ReadOnly)) {
+            STDIN.setDevice(fd);
+        }
 
         fd = new QFile();
 #ifdef Q_OS_WIN
-        fd->open(fopen("nul", "w"), QIODevice::WriteOnly);
+        if (fd->open(fopen("nul", "w"), QIODevice::WriteOnly)) {
 #else
-        fd->open(fopen("/dev/null", "w"), QIODevice::WriteOnly);
+        if (fd->open(fopen("/dev/null", "w"), QIODevice::WriteOnly)) {
 #endif
-        DEVNULL.setDevice(fd);
+            DEVNULL.setDevice(fd);
+        }
 
 #ifdef Q_OS_WIN
+        origCodePage = GetConsoleCP();
+        origOutputCodePage = GetConsoleOutputCP();
+
         // On Windows, we ask via keepassxc-cli.exe.manifest to use UTF-8,
         // but the console code-page isn't automatically changed to match.
         SetConsoleCP(GetACP());
         SetConsoleOutputCP(GetACP());
+#endif
+    }
+
+    void resetTextStreams()
+    {
+#ifdef Q_OS_WIN
+        SetConsoleCP(origCodePage);
+        SetConsoleOutputCP(origOutputCodePage);
 #endif
     }
 
@@ -88,7 +107,9 @@ namespace Utils
         SetConsoleMode(hIn, mode);
 #else
         struct termios t;
-        tcgetattr(STDIN_FILENO, &t);
+        if (tcgetattr(STDIN_FILENO, &t) < 0) {
+            return;
+        }
 
         if (enable) {
             t.c_lflag |= ECHO;
@@ -111,22 +132,22 @@ namespace Utils
 
         QFileInfo dbFileInfo(databaseFilename);
         if (dbFileInfo.canonicalFilePath().isEmpty()) {
-            err << QObject::tr("Failed to open database file %1: not found").arg(databaseFilename) << endl;
+            err << QObject::tr("Failed to open database file %1: not found").arg(databaseFilename) << Qt::endl;
             return {};
         }
 
         if (!dbFileInfo.isFile()) {
-            err << QObject::tr("Failed to open database file %1: not a plain file").arg(databaseFilename) << endl;
+            err << QObject::tr("Failed to open database file %1: not a plain file").arg(databaseFilename) << Qt::endl;
             return {};
         }
 
         if (!dbFileInfo.isReadable()) {
-            err << QObject::tr("Failed to open database file %1: not readable").arg(databaseFilename) << endl;
+            err << QObject::tr("Failed to open database file %1: not readable").arg(databaseFilename) << Qt::endl;
             return {};
         }
 
         if (isPasswordProtected) {
-            err << QObject::tr("Enter password to unlock %1: ").arg(databaseFilename) << flush;
+            err << QObject::tr("Enter password to unlock %1: ").arg(databaseFilename) << Qt::flush;
             QString line = Utils::getPassword(quiet);
             auto passwordKey = QSharedPointer<PasswordKey>::create();
             passwordKey->setPassword(line);
@@ -138,7 +159,7 @@ namespace Utils
             QString errorMessage;
             // LCOV_EXCL_START
             if (!fileKey->load(keyFilename, &errorMessage)) {
-                err << QObject::tr("Failed to load key file %1: %2").arg(keyFilename, errorMessage) << endl;
+                err << QObject::tr("Failed to load key file %1: %2").arg(keyFilename, errorMessage) << Qt::endl;
                 return {};
             }
 
@@ -146,14 +167,13 @@ namespace Utils
                 err << QObject::tr("WARNING: You are using an old key file format which KeePassXC may\n"
                                    "stop supporting in the future.\n\n"
                                    "Please consider generating a new key file.")
-                    << endl;
+                    << Qt::endl;
             }
             // LCOV_EXCL_STOP
 
             compositeKey->addKey(fileKey);
         }
 
-#ifdef WITH_XC_YUBIKEY
         if (!yubiKeySlot.isEmpty()) {
             unsigned int serial = 0;
             int slot;
@@ -163,20 +183,20 @@ namespace Utils
             slot = parts[0].toInt(&ok);
 
             if (!ok || (slot != 1 && slot != 2)) {
-                err << QObject::tr("Invalid YubiKey slot %1").arg(parts[0]) << endl;
+                err << QObject::tr("Invalid YubiKey slot %1").arg(parts[0]) << Qt::endl;
                 return {};
             }
 
             if (parts.size() > 1) {
                 serial = parts[1].toUInt(&ok, 10);
                 if (!ok) {
-                    err << QObject::tr("Invalid YubiKey serial %1").arg(parts[1]) << endl;
+                    err << QObject::tr("Invalid YubiKey serial %1").arg(parts[1]) << Qt::endl;
                     return {};
                 }
             }
 
             QObject::connect(YubiKey::instance(), &YubiKey::userInteractionRequest, [&] {
-                err << QObject::tr("Please present or touch your YubiKey to continue.") << "\n\n" << flush;
+                err << QObject::tr("Please present or touch your YubiKey to continue.") << "\n\n" << Qt::flush;
             });
 
             auto key = QSharedPointer<ChallengeResponseKey>(new ChallengeResponseKey({serial, slot}));
@@ -184,18 +204,14 @@ namespace Utils
 
             YubiKey::instance()->findValidKeys();
         }
-#else
-        Q_UNUSED(yubiKeySlot);
-#endif // WITH_XC_YUBIKEY
 
         auto db = QSharedPointer<Database>::create();
         QString error;
-        if (db->open(databaseFilename, compositeKey, &error)) {
-            return db;
-        } else {
-            err << error << endl;
+        if (!db->open(databaseFilename, compositeKey, &error)) {
+            err << error << Qt::endl;
             return {};
         }
+        return db;
     }
 
     /**
@@ -209,7 +225,7 @@ namespace Utils
 #ifdef __AFL_COMPILER
         // Fuzz test build takes password from environment variable to
         // allow non-interactive operation
-        const auto env = getenv("KEYPASSXC_AFL_PASSWORD");
+        const auto env = getenv("KEEPASSXC_AFL_PASSWORD");
         return env ? env : "";
 #else
         auto& in = STDIN;
@@ -218,7 +234,7 @@ namespace Utils
         setStdinEcho(false);
         QString line = in.readLine();
         setStdinEcho(true);
-        out << endl;
+        out << Qt::endl;
 
         return line;
 #endif // __AFL_COMPILER
@@ -248,7 +264,7 @@ namespace Utils
             if (ans.toLower().startsWith("y")) {
                 passwordKey = QSharedPointer<PasswordKey>::create("");
             }
-            err << endl;
+            err << Qt::endl;
         } else {
             err << QObject::tr("Repeat password: ");
             err.flush();
@@ -257,7 +273,7 @@ namespace Utils
             if (password == repeat) {
                 passwordKey = QSharedPointer<PasswordKey>::create(password);
             } else {
-                err << QObject::tr("Error: Passwords do not match.") << endl;
+                err << QObject::tr("Error: Passwords do not match.") << Qt::endl;
             }
         }
 
@@ -303,7 +319,7 @@ namespace Utils
             QScopedPointer<QProcess> clipProcess(new QProcess(nullptr));
 
             // Skip empty parts, otherwise the program may clip the empty string
-            QStringList progArgs = prog.second.split(" ", QString::SkipEmptyParts);
+            QStringList progArgs = prog.second.split(" ", Qt::SkipEmptyParts);
 
             clipProcess->start(prog.first, progArgs);
             clipProcess->waitForStarted();
@@ -427,13 +443,13 @@ namespace Utils
             fileKey->create(path, &error);
 
             if (!error.isEmpty()) {
-                err << QObject::tr("Creating KeyFile %1 failed: %2").arg(path, error) << endl;
+                err << QObject::tr("Creating KeyFile %1 failed: %2").arg(path, error) << Qt::endl;
                 return false;
             }
         }
 
         if (!fileKey->load(path, &error)) {
-            err << QObject::tr("Loading KeyFile %1 failed: %2").arg(path, error) << endl;
+            err << QObject::tr("Loading KeyFile %1 failed: %2").arg(path, error) << Qt::endl;
             return false;
         }
 

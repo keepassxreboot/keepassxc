@@ -49,10 +49,8 @@ const QString KeePass2::KDFPARAM_ARGON2_ASSOCDATA("A");
 
 const QList<QUuid> KeePass2::CIPHERS{KeePass2::CIPHER_AES256, KeePass2::CIPHER_TWOFISH, KeePass2::CIPHER_CHACHA20};
 
-const QList<QUuid> KeePass2::KDFS{KeePass2::KDF_ARGON2D,
-                                  KeePass2::KDF_ARGON2ID,
-                                  KeePass2::KDF_AES_KDBX4,
-                                  KeePass2::KDF_AES_KDBX3};
+const QList<QUuid> KeePass2::KDBX4_KDFS{KeePass2::KDF_ARGON2D, KeePass2::KDF_ARGON2ID, KeePass2::KDF_AES_KDBX4};
+const QList<QUuid> KeePass2::KDBX3_KDFS{KeePass2::KDF_AES_KDBX3};
 
 QByteArray KeePass2::hmacKey(const QByteArray& masterSeed, const QByteArray& transformedMasterKey)
 {

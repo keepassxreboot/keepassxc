@@ -51,11 +51,9 @@ QPalette LightStyle::standardPalette() const
     palette.setColor(QPalette::Inactive, QPalette::Text, QRgb(0x252528));
     palette.setColor(QPalette::Disabled, QPalette::Text, QRgb(0x8C8C92));
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 12, 0))
     palette.setColor(QPalette::Active, QPalette::PlaceholderText, QRgb(0x71727D));
     palette.setColor(QPalette::Inactive, QPalette::PlaceholderText, QRgb(0x878893));
     palette.setColor(QPalette::Disabled, QPalette::PlaceholderText, QRgb(0xA3A4AC));
-#endif
 
     palette.setColor(QPalette::Active, QPalette::BrightText, QRgb(0xF3F3F4));
     palette.setColor(QPalette::Inactive, QPalette::BrightText, QRgb(0xEAEAEB));
@@ -115,7 +113,7 @@ QString LightStyle::getAppStyleSheet() const
 void LightStyle::polish(QWidget* widget)
 {
     if (qobject_cast<QMainWindow*>(widget) || qobject_cast<QDialog*>(widget) || qobject_cast<QMenuBar*>(widget)
-        || qobject_cast<QToolBar*>(widget) || qobject_cast<QStatusBar*>(widget)) {
+        || qobject_cast<QToolBar*>(widget)) {
         auto palette = widget->palette();
 #if defined(Q_OS_MACOS)
         if (osUtils->isDarkMode()) {
@@ -123,8 +121,6 @@ void LightStyle::polish(QWidget* widget)
             palette.setColor(QPalette::Inactive, QPalette::Window, QRgb(0xF5F5F5));
             palette.setColor(QPalette::Disabled, QPalette::Window, QRgb(0xF5F5F5));
         }
-#elif defined(Q_OS_WIN)
-        palette.setColor(QPalette::All, QPalette::Window, QRgb(0xFFFFFF));
 #else
         palette.setColor(QPalette::Active, QPalette::Window, QRgb(0xEFF0F1));
         palette.setColor(QPalette::Inactive, QPalette::Window, QRgb(0xEFF0F1));

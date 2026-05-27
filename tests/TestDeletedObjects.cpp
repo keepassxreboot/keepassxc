@@ -29,6 +29,7 @@ QTEST_GUILESS_MAIN(TestDeletedObjects)
 void TestDeletedObjects::initTestCase()
 {
     QVERIFY(Crypto::init());
+    QLocale::setDefault(QLocale::c());
 }
 
 void TestDeletedObjects::createAndDelete(QSharedPointer<Database> db, int delObjectsSize)

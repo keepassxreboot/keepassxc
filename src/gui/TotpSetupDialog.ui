@@ -15,6 +15,22 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
+    <widget class="QLabel" name="invalidKeyLabel">
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Error: secret key is invalid</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <property name="leftMargin">
       <number>5</number>
@@ -210,6 +226,7 @@
   <zorder>customSettingsGroup</zorder>
   <zorder>buttonBox</zorder>
   <zorder>groupBox</zorder>
+  <zorder>invalidKeyLabel</zorder>
  </widget>
  <tabstops>
   <tabstop>seedEdit</tabstop>

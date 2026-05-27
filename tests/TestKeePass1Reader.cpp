@@ -1,5 +1,6 @@
 /*
- *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -42,6 +43,7 @@ void TestKeePass1Reader::initTestCase()
     m_db = reader.readDatabase(filename, "masterpw", nullptr);
     QVERIFY(m_db);
     QVERIFY(!reader.hasError());
+    QLocale::setDefault(QLocale::c());
 }
 
 void TestKeePass1Reader::testBasic()
@@ -220,6 +222,7 @@ void TestKeePass1Reader::testTwofish()
     QCOMPARE(db->rootGroup()->children().at(0)->name(), name);
 }
 
+#ifdef Q_OS_WIN
 void TestKeePass1Reader::testCP1252Password()
 {
     QString name = "CP-1252";
@@ -235,6 +238,7 @@ void TestKeePass1Reader::testCP1252Password()
     QCOMPARE(db->rootGroup()->children().size(), 1);
     QCOMPARE(db->rootGroup()->children().at(0)->name(), name);
 }
+#endif
 
 void TestKeePass1Reader::cleanupTestCase()
 {

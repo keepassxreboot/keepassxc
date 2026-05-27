@@ -146,7 +146,7 @@ struct config_st {
 /* Yubikey 2 and above */
 #define CFGFLAG_SHORT_TICKET	0x02	/* Send truncated ticket (half length) */
 #define CFGFLAG_STRONG_PW1	0x10	/* Strong password policy flag #1 (mixed case) */
-#define CFGFLAG_STRONG_PW2	0x40	/* Strong password policy flag #2 (subtitute 0..7 to digits) */
+#define CFGFLAG_STRONG_PW2	0x40	/* Strong password policy flag #2 (substitute 0..7 to digits) */
 #define CFGFLAG_MAN_UPDATE	0x80	/* Allow manual (local) update of static OTP */
 
 /* Yubikey 2.1 and above */
@@ -299,7 +299,7 @@ struct status_st {
 #define YK4_CAPA_TAG		0x01	/* TAG for capabilities */
 #define YK4_SERIAL_TAG		0x02	/* TAG for serial number */
 
-#define YK4_CAPA1_OTP		0x01	/* Capability bit for OTP functonality */
+#define YK4_CAPA1_OTP		0x01	/* Capability bit for OTP functionality */
 #define YK4_CAPA1_U2F		0x02	/* Capability bit for U2F functionality */
 #define YK4_CAPA1_CCID		0x04	/* Capability bit for CCID functionality */
 #define YK4_CAPA1_OPGP		0x08	/* Capability bit for OpenPGP functionality */

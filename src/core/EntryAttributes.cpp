@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -18,6 +18,7 @@
 
 #include "EntryAttributes.h"
 #include "core/Global.h"
+#include "core/Tools.h"
 
 #include <QRegularExpression>
 #include <QUuid>
@@ -35,7 +36,22 @@ const QString EntryAttributes::SearchTextGroupName = "SearchText";
 
 const QString EntryAttributes::RememberCmdExecAttr = "_EXEC_CMD";
 const QString EntryAttributes::AdditionalUrlAttribute = "KP2A_URL";
+
+// Passkey related attributes
 const QString EntryAttributes::PasskeyAttribute = "KPEX_PASSKEY";
+const QString EntryAttributes::KPEX_PASSKEY_USERNAME = QStringLiteral("KPEX_PASSKEY_USERNAME");
+const QString EntryAttributes::KPEX_PASSKEY_CREDENTIAL_ID = QStringLiteral("KPEX_PASSKEY_CREDENTIAL_ID");
+const QString EntryAttributes::KPEX_PASSKEY_PRIVATE_KEY_PEM = QStringLiteral("KPEX_PASSKEY_PRIVATE_KEY_PEM");
+const QString EntryAttributes::KPEX_PASSKEY_RELYING_PARTY = QStringLiteral("KPEX_PASSKEY_RELYING_PARTY");
+const QString EntryAttributes::KPEX_PASSKEY_USER_HANDLE = QStringLiteral("KPEX_PASSKEY_USER_HANDLE");
+const QString EntryAttributes::KPEX_PASSKEY_PRIVATE_KEY_START = QStringLiteral("-----BEGIN PRIVATE KEY-----");
+const QString EntryAttributes::KPEX_PASSKEY_PRIVATE_KEY_END = QStringLiteral("-----END PRIVATE KEY-----");
+const QString EntryAttributes::KPEX_PASSKEY_FLAG_BE = QStringLiteral("KPEX_PASSKEY_FLAG_BE");
+const QString EntryAttributes::KPEX_PASSKEY_FLAG_BS = QStringLiteral("KPEX_PASSKEY_FLAG_BS");
+
+// For compatibility with StrongBox
+const QString EntryAttributes::KPEX_PASSKEY_GENERATED_USER_ID = QStringLiteral("KPEX_PASSKEY_GENERATED_USER_ID");
+const QString EntryAttributes::KPXC_PASSKEY_USERNAME = QStringLiteral("KPXC_PASSKEY_USERNAME");
 
 EntryAttributes::EntryAttributes(QObject* parent)
     : ModifiableObject(parent)
@@ -63,6 +79,16 @@ bool EntryAttributes::hasPasskey() const
     }
 
     return false;
+}
+
+void EntryAttributes::removePasskeyAttributes()
+{
+    const auto keyList = keys();
+    for (const auto& key : keyList) {
+        if (isPasskeyAttribute(key)) {
+            remove(key);
+        }
+    }
 }
 
 QList<QString> EntryAttributes::customKeys() const
@@ -238,7 +264,7 @@ void EntryAttributes::copyCustomKeysFrom(const EntryAttributes* other)
 bool EntryAttributes::areCustomKeysDifferent(const EntryAttributes* other)
 {
     // check if they are equal ignoring the order of the keys
-    if (keys().toSet() != other->keys().toSet()) {
+    if (Tools::asSet(keys()) != Tools::asSet(other->keys())) {
         return true;
     }
 
@@ -299,8 +325,9 @@ bool EntryAttributes::operator!=(const EntryAttributes& other) const
 
 QRegularExpressionMatch EntryAttributes::matchReference(const QString& text)
 {
-    static QRegularExpression referenceRegExp(
-        "\\{REF:(?<WantedField>[TUPANI])@(?<SearchIn>[TUPANIO]):(?<SearchText>[^}]+)\\}",
+    // Updated regex to handle nested braces in SearchText (e.g., {UUID})
+    static const QRegularExpression referenceRegExp(
+        R"(\{REF:(?<WantedField>[TUPANI])@(?<SearchIn>[TUPANIO]):(?<SearchText>(?:[^{}]|\{[^}]*\})+)\})",
         QRegularExpression::CaseInsensitiveOption);
 
     return referenceRegExp.match(text);

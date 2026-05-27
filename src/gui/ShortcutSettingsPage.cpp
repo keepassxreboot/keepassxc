@@ -23,7 +23,6 @@
 #include "gui/MessageBox.h"
 #include "gui/widgets/ShortcutWidget.h"
 
-#include <QAbstractButton>
 #include <QDebug>
 #include <QDialog>
 #include <QDialogButtonBox>
@@ -81,7 +80,6 @@ private:
         }
     }
 
-private:
     bool m_restoreDefault = false;
     ShortcutWidget* const m_keySeqEdit;
     QDialogButtonBox* const m_btnBox;
@@ -94,7 +92,7 @@ public:
         : QWidget(parent)
         , m_tableView(new QTableView(this))
         , m_filterLineEdit(new QLineEdit(this))
-        , m_resetShortcutsButton(new QPushButton(tr("Reset Shortcuts"), this))
+        , m_resetShortcutsButton(new QPushButton(QObject::tr("Reset Shortcuts"), this))
     {
         auto h = new QHBoxLayout();
         h->addWidget(m_filterLineEdit);
@@ -102,7 +100,7 @@ public:
         h->setStretch(0, 1);
 
         auto l = new QVBoxLayout(this);
-        l->addWidget(new QLabel(tr("Double click an action to change its shortcut")));
+        l->addWidget(new QLabel(QObject::tr("Double click an action to change its shortcut")));
         l->addLayout(h);
         l->addWidget(m_tableView);
 
@@ -113,7 +111,7 @@ public:
         m_proxy.setFilterCaseSensitivity(Qt::CaseInsensitive);
         m_proxy.setSourceModel(&m_model);
 
-        m_filterLineEdit->setPlaceholderText(tr("Filter..."));
+        m_filterLineEdit->setPlaceholderText(QObject::tr("Filter..."));
         connect(m_filterLineEdit, &QLineEdit::textChanged, &m_proxy, &QSortFilterProxyModel::setFilterFixedString);
 
         connect(m_resetShortcutsButton, &QPushButton::clicked, this, [this]() {
@@ -227,8 +225,8 @@ private:
 
             auto ans = MessageBox::question(
                 this,
-                tr("Shortcut Conflict"),
-                tr("Shortcut %1 conflicts with '%2'. Overwrite shortcut?").arg(conflictSeq, conflictName),
+                QObject::tr("Shortcut Conflict"),
+                QObject::tr("Shortcut %1 conflicts with '%2'. Overwrite shortcut?").arg(conflictSeq, conflictName),
                 MessageBox::Overwrite | MessageBox::Discard,
                 MessageBox::Discard);
             if (ans == MessageBox::Discard) {

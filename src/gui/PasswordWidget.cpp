@@ -38,6 +38,7 @@ PasswordWidget::PasswordWidget(QWidget* parent)
 {
     m_ui->setupUi(this);
     setFocusProxy(m_ui->passwordEdit);
+    m_ui->passwordEdit->installEventFilter(this);
 
     const QIcon errorIcon = icons()->icon("dialog-error");
     m_errorAction = m_ui->passwordEdit->addAction(errorIcon, QLineEdit::TrailingPosition);
@@ -148,8 +149,6 @@ void PasswordWidget::setRepeatPartner(PasswordWidget* repeatPartner)
     m_repeatPasswordWidget = repeatPartner;
     m_repeatPasswordWidget->setParentPasswordEdit(this);
 
-    connect(
-        m_ui->passwordEdit, SIGNAL(textChanged(QString)), m_repeatPasswordWidget, SLOT(autocompletePassword(QString)));
     connect(m_ui->passwordEdit, SIGNAL(textChanged(QString)), m_repeatPasswordWidget, SLOT(updateRepeatStatus()));
 }
 
@@ -178,12 +177,6 @@ void PasswordWidget::setShowPassword(bool show)
 
     if (m_repeatPasswordWidget) {
         m_repeatPasswordWidget->setEchoMode(show ? QLineEdit::Normal : QLineEdit::Password);
-        if (!config()->get(Config::Security_PasswordsRepeatVisible).toBool()) {
-            m_repeatPasswordWidget->setEnabled(!show);
-            m_repeatPasswordWidget->setText(text());
-        } else {
-            m_repeatPasswordWidget->setEnabled(true);
-        }
     }
 }
 
@@ -231,22 +224,19 @@ void PasswordWidget::updateRepeatStatus()
     }
 }
 
-void PasswordWidget::autocompletePassword(const QString& password)
+bool PasswordWidget::eventFilter(QObject* watched, QEvent* event)
 {
-    if (!config()->get(Config::Security_PasswordsRepeatVisible).toBool()
-        && m_ui->passwordEdit->echoMode() == QLineEdit::Normal) {
-        setText(password);
+    if (watched == m_ui->passwordEdit) {
+        auto type = event->type();
+        if (isVisible() && (type == QEvent::KeyPress || type == QEvent::KeyRelease || type == QEvent::FocusIn)) {
+            checkCapslockState();
+        }
+        if (type == QEvent::FocusIn || type == QEvent::FocusOut || type == QEvent::Hide) {
+            osUtils->setUserInputProtection(type == QEvent::FocusIn);
+        }
     }
-}
-
-bool PasswordWidget::event(QEvent* event)
-{
-    if (isVisible()
-        && (event->type() == QEvent::KeyPress || event->type() == QEvent::KeyRelease
-            || event->type() == QEvent::FocusIn)) {
-        checkCapslockState();
-    }
-    return QWidget::event(event);
+    // Continue with normal operations
+    return false;
 }
 
 void PasswordWidget::checkCapslockState()

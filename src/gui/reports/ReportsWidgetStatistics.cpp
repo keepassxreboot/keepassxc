@@ -19,6 +19,7 @@
 #include "ui_ReportsWidgetStatistics.h"
 
 #include "core/AsyncTask.h"
+#include "core/Clock.h"
 #include "core/DatabaseStats.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
@@ -86,9 +87,8 @@ void ReportsWidgetStatistics::calculateStats()
     addStatsRow(tr("Database name"), m_db->metadata()->name());
     addStatsRow(tr("Description"), m_db->metadata()->description());
     addStatsRow(tr("Location"), m_db->filePath());
-    addStatsRow(tr("Database created"),
-                m_db->rootGroup()->timeInfo().creationTime().toString(Qt::DefaultLocaleShortDate));
-    addStatsRow(tr("Last saved"), stats->modified.toString(Qt::DefaultLocaleShortDate));
+    addStatsRow(tr("Database created"), Clock::toString(m_db->rootGroup()->timeInfo().creationTime()));
+    addStatsRow(tr("Last saved"), Clock::toString(stats->modified));
     addStatsRow(tr("Unsaved changes"),
                 m_db->isModified() ? tr("yes") : tr("no"),
                 m_db->isModified(),
@@ -122,7 +122,7 @@ void ReportsWidgetStatistics::calculateStats()
                 tr("Excluding entries from reports, e. g. because they are known to have a poor password, isn't "
                    "necessarily a problem but you should keep an eye on them."));
     addStatsRow(tr("Average password length"),
-                tr("%1 characters").arg(stats->averagePwdLength()),
+                tr("%1 character(s)", "", stats->averagePwdLength()).arg(stats->averagePwdLength()),
                 stats->isAvgPwdTooShort(),
                 tr("Average password length is less than ten characters. Longer passwords provide more security."));
 }

@@ -1,6 +1,6 @@
 /*
+ *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -94,10 +94,12 @@ public:
     Group::MergeMode mergeMode() const;
     bool resolveSearchingEnabled() const;
     bool resolveAutoTypeEnabled() const;
+    bool resolveBrowserOptionEnabled(const QString& option) const;
     Entry* lastTopVisibleEntry() const;
     bool isExpired() const;
     bool isRecycled() const;
     bool isEmpty() const;
+    bool isShared() const;
     CustomData* customData();
     const CustomData* customData() const;
     Group::TriState resolveCustomDataTriState(const QString& key, bool checkParent = true) const;
@@ -154,7 +156,6 @@ public:
     const QList<Group*>& children() const;
     QList<Entry*> entries();
     const QList<Entry*>& entries() const;
-    Entry* findEntryRecursive(const QString& text, EntryReferenceType referenceType, Group* group = nullptr);
     QList<Entry*> referencesRecursive(const Entry* entry) const;
     QList<Entry*> entriesRecursive(bool includeHistoryItems = false) const;
     QList<const Group*> groupsRecursive(bool includeSelf) const;

@@ -54,7 +54,7 @@ void DeviceListenerMac::registerHotplugCallback(bool arrived, bool left, int ven
             CFRelease(vid);
         }
         if (productId > 0) {
-            auto pid = CFNumberCreate(kCFAllocatorDefault, kCFNumberSInt32Type, &vendorId);
+            auto pid = CFNumberCreate(kCFAllocatorDefault, kCFNumberSInt32Type, &productId);
             CFDictionaryAddValue(matchingDict, CFSTR(kIOHIDProductIDKey), pid);
             CFRelease(pid);
         }

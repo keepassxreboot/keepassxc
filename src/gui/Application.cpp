@@ -20,6 +20,7 @@
 #include "Application.h"
 
 #include "core/Bootstrap.h"
+#include "core/Tools.h"
 #include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
 #include "gui/osutils/OSUtils.h"
@@ -31,6 +32,7 @@
 #include <QLocalSocket>
 #include <QLockFile>
 #include <QPixmapCache>
+#include <QRegularExpression>
 #include <QSocketNotifier>
 #include <QStandardPaths>
 
@@ -44,6 +46,7 @@ namespace
 {
     constexpr int WaitTimeoutMSec = 150;
     const char BlockSizeProperty[] = "blockSize";
+    int g_OriginalFontSize = 0;
 } // namespace
 
 Application::Application(int& argc, char** argv)
@@ -62,20 +65,19 @@ Application::Application(int& argc, char** argv)
     registerUnixSignals();
 #endif
 
-    QString userName = qgetenv("USER");
-    if (userName.isEmpty()) {
-        userName = qgetenv("USERNAME");
-    }
-    QString identifier = "keepassxc";
-    if (!userName.isEmpty()) {
-        identifier += "-" + userName;
+    // Build identifier
+    auto identifier = QStringLiteral("keepassxc");
+    auto username = Tools::cleanUsername();
+    if (!username.isEmpty()) {
+        identifier += QChar('-') + username;
     }
 #ifdef QT_DEBUG
-    // In DEBUG mode don't interfere with Release instances
-    identifier += "-DEBUG";
+    // In DEBUG mode don’t interfere with Release instances
+    identifier += QStringLiteral("-DEBUG");
 #endif
-    QString lockName = identifier + ".lock";
-    m_socketName = identifier + ".socket";
+
+    QString lockName = identifier + QStringLiteral(".lock");
+    m_socketName = identifier + QStringLiteral(".socket");
 
     // According to documentation we should use RuntimeLocation on *nixes, but even Qt doesn't respect
     // this and creates sockets in TempLocation, so let's be consistent.
@@ -112,7 +114,7 @@ Application::Application(int& argc, char** argv)
                                   .toUtf8()
                                   .constData();
 
-                // forceably reset the lock file
+                // forcibly reset the lock file
                 m_lockFile->removeStaleLockFile();
                 m_lockFile->tryLock();
                 // start the listen server
@@ -150,13 +152,6 @@ Application::~Application()
 void Application::bootstrap(const QString& uiLanguage)
 {
     Bootstrap::bootstrap(uiLanguage);
-
-#ifdef Q_OS_WIN
-    // Qt on Windows uses "MS Shell Dlg 2" as the default font for many widgets, which resolves
-    // to Tahoma 8pt, whereas the correct font would be "Segoe UI" 9pt.
-    // Apparently, some widgets are already using the correct font. Thanks, MuseScore for this neat fix!
-    QApplication::setFont(QApplication::font("QMessageBox"));
-#endif
 
     osUtils->registerNativeEventFilter();
     MessageBox::initializeButtonDefs();
@@ -203,6 +198,29 @@ void Application::applyTheme()
             stylesheetFile.close();
         }
     }
+    applyFontSize();
+}
+
+void Application::applyFontSize()
+{
+    auto font = QApplication::font();
+
+    // Store the original font size on first call
+    if (g_OriginalFontSize <= 0) {
+#ifdef Q_OS_WIN
+        // Qt on Windows uses "MS Shell Dlg 2" as the default font for many widgets, which resolves
+        // to Tahoma 8pt, whereas the correct font would be "Segoe UI" 9pt.
+        // Apparently, some widgets are already using the correct font. Thanks, MuseScore for this neat fix!
+        font = QApplication::font("QMessageBox");
+#endif
+        g_OriginalFontSize = font.pointSize();
+    }
+
+    // Adjust application wide default font size
+    auto newSize = g_OriginalFontSize + qBound(-2, config()->get(Config::GUI_FontSizeOffset).toInt(), 4);
+    font.setPointSize(newSize);
+    QApplication::setFont(font);
+    QApplication::setFont(font, "QWidget");
 }
 
 bool Application::event(QEvent* event)

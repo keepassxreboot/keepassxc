@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -48,14 +48,17 @@ PasskeyImportDialog::~PasskeyImportDialog()
 void PasskeyImportDialog::setInfo(const QString& relyingParty,
                                   const QString& username,
                                   const QSharedPointer<Database>& database,
-                                  bool isEntry)
+                                  bool isEntry,
+                                  const QString& titleText,
+                                  const QString& infoText,
+                                  const QString& importButtonText)
 {
     m_ui->relyingPartyLabel->setText(tr("Relying Party: %1").arg(relyingParty));
     m_ui->usernameLabel->setText(tr("Username: %1").arg(username));
 
     if (isEntry) {
         m_ui->verticalLayout->setSizeConstraint(QLayout::SetFixedSize);
-        m_ui->infoLabel->setText(tr("Import the following Passkey to this entry:"));
+        m_ui->infoLabel->setText(tr("Import the following passkey to this entry:"));
         m_ui->groupBox->setVisible(false);
     }
 
@@ -70,6 +73,18 @@ void PasskeyImportDialog::setInfo(const QString& relyingParty,
         }
     }
     m_ui->selectDatabaseCombobBox->setEnabled(openDatabaseCount > 1);
+
+    if (!titleText.isEmpty()) {
+        setWindowTitle(titleText);
+    }
+
+    if (!infoText.isEmpty()) {
+        m_ui->infoLabel->setText(infoText);
+    }
+
+    if (!importButtonText.isEmpty()) {
+        m_ui->importButton->setText(importButtonText);
+    }
 }
 
 QSharedPointer<Database> PasskeyImportDialog::getSelectedDatabase() const
@@ -155,7 +170,7 @@ void PasskeyImportDialog::addGroups()
     }
 
     m_ui->selectGroupComboBox->clear();
-    m_ui->selectGroupComboBox->addItem(tr("Default Passkeys group (Imported Passkeys)"), {});
+    m_ui->selectGroupComboBox->addItem(tr("Default passkeys group (Imported Passkeys)"), {});
 
     for (const auto& group : m_selectedDatabase->rootGroup()->groupsRecursive(true)) {
         if (!group || group->isRecycled() || group == m_selectedDatabase->metadata()->recycleBin()) {

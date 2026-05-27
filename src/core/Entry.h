@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -100,14 +100,16 @@ public:
     const AutoTypeAssociations* autoTypeAssociations() const;
     QString title() const;
     QString url() const;
+    QString resolveUrl() const;
     QStringList getAllUrls() const;
+    QStringList getAdditionalUrls() const;
     QString webUrl() const;
     QString displayUrl() const;
     QString username() const;
     QString password() const;
     QString notes() const;
     QString attribute(const QString& key) const;
-    QString totp() const;
+    QString totp(bool* isValid = nullptr) const;
     QString totpSettingsString() const;
     QSharedPointer<Totp::Settings> totpSettings() const;
     Group* previousParentGroup();
@@ -120,10 +122,14 @@ public:
     bool excludeFromReports() const;
     void setExcludeFromReports(bool state);
 
-    bool hasTotp() const;
     bool hasPasskey() const;
+    void removePasskey();
+
+    bool hasTotp() const;
+    bool hasValidTotp() const;
     bool isExpired() const;
     bool willExpireInDays(int days) const;
+    void expireNow();
     bool isRecycled() const;
     bool isAttributeReference(const QString& key) const;
     bool isAttributeReferenceOf(const QString& key, const QUuid& uuid) const;
@@ -166,10 +172,19 @@ public:
     QList<Entry*> historyItems();
     const QList<Entry*>& historyItems() const;
     void addHistoryItem(Entry* entry);
+    void setHistoryOwner(Entry* entry);
+    Entry* historyOwner() const;
     void removeHistoryItems(const QList<Entry*>& historyEntries);
     void truncateHistory();
 
     bool equals(const Entry* other, CompareItemOptions options = CompareItemDefault) const;
+
+    /**
+     * Determine differences between attributes of this and another entry.
+     *
+     * @return The list of attribute names that are different between the two entries
+     */
+    QStringList calculateDifference(const Entry* other);
 
     enum CloneFlag
     {
@@ -195,6 +210,7 @@ public:
         Notes,
         Totp,
         Url,
+        Uuid,
         UrlWithoutScheme,
         UrlScheme,
         UrlHost,
@@ -221,13 +237,12 @@ public:
         DateTimeUtcHour,
         DateTimeUtcMinute,
         DateTimeUtcSecond,
-        DbDir
+        DbDir,
+        Conversion,
+        Regex
     };
 
     static const int DefaultIconNumber;
-    static const int ResolveMaximumDepth;
-    static const QString AutoTypeSequenceUsername;
-    static const QString AutoTypeSequencePassword;
 
     /**
      * Creates a duplicate of this entry except that the returned entry isn't
@@ -243,6 +258,8 @@ public:
     QString resolvePlaceholder(const QString& str) const;
     QString resolveUrlPlaceholder(const QString& str, PlaceholderType placeholderType) const;
     QString resolveDateTimePlaceholder(PlaceholderType placeholderType) const;
+    QString resolveConversionPlaceholder(const QString& str, QString* error = nullptr) const;
+    QString resolveRegexPlaceholder(const QString& str, QString* error = nullptr) const;
     PlaceholderType placeholderType(const QString& placeholder) const;
     QString resolveUrl(const QString& url) const;
 
@@ -295,6 +312,7 @@ private:
     QPointer<AutoTypeAssociations> m_autoTypeAssociations;
     QPointer<CustomData> m_customData;
     QList<Entry*> m_history; // Items sorted from oldest to newest
+    QPointer<Entry> m_historyOwner;
 
     QScopedPointer<Entry> m_tmpHistoryItem;
     bool m_modifiedSinceBegin;

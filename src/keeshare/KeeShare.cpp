@@ -217,6 +217,17 @@ void KeeShare::connectDatabase(QSharedPointer<Database> newDb, QSharedPointer<Da
     }
 }
 
+bool KeeShare::setSharingEnabled(QSharedPointer<Database> db, bool enabled)
+{
+    if (!db || !m_observersByDatabase.contains(db->uuid())) {
+        return false;
+    }
+
+    auto observer = m_observersByDatabase.value(db->uuid());
+    observer->setEnabled(enabled);
+    return true;
+}
+
 const QString KeeShare::signedContainerFileType()
 {
     static const QString filetype("kdbx.share");

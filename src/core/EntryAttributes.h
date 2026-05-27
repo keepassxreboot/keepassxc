@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -34,6 +34,7 @@ public:
     QList<QString> keys() const;
     bool hasKey(const QString& key) const;
     bool hasPasskey() const;
+    void removePasskeyAttributes();
     QList<QString> customKeys() const;
     QString value(const QString& key) const;
     QList<QString> values(const QList<QString>& keys) const;
@@ -63,7 +64,20 @@ public:
     static const QStringList DefaultAttributes;
     static const QString RememberCmdExecAttr;
     static const QString AdditionalUrlAttribute;
+
     static const QString PasskeyAttribute;
+    static const QString KPXC_PASSKEY_USERNAME;
+    static const QString KPEX_PASSKEY_USERNAME;
+    static const QString KPEX_PASSKEY_CREDENTIAL_ID;
+    static const QString KPEX_PASSKEY_GENERATED_USER_ID;
+    static const QString KPEX_PASSKEY_PRIVATE_KEY_PEM;
+    static const QString KPEX_PASSKEY_RELYING_PARTY;
+    static const QString KPEX_PASSKEY_USER_HANDLE;
+    static const QString KPEX_PASSKEY_PRIVATE_KEY_START;
+    static const QString KPEX_PASSKEY_PRIVATE_KEY_END;
+    static const QString KPEX_PASSKEY_FLAG_BE;
+    static const QString KPEX_PASSKEY_FLAG_BS;
+
     static bool isDefaultAttribute(const QString& key);
     static bool isPasskeyAttribute(const QString& key);
 

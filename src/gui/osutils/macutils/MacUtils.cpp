@@ -1,6 +1,6 @@
 /*
+ *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@
 #include <QStandardPaths>
 #include <QTimer>
 #include <QWindow>
+#include <QMenu>
 
 #include <ApplicationServices/ApplicationServices.h>
 
@@ -39,7 +40,7 @@ MacUtils::MacUtils(QObject* parent)
     : OSUtilsBase(parent)
     , m_appkit(new AppKit())
 {
-    connect(m_appkit.data(), SIGNAL(lockDatabases()), SIGNAL(lockDatabases()));
+    connect(m_appkit.data(), SIGNAL(userSwitched()), SIGNAL(userSwitched()));
     connect(m_appkit.data(), SIGNAL(interfaceThemeChanged()), SIGNAL(interfaceThemeChanged()));
     connect(m_appkit.data(), &AppKit::interfaceThemeChanged, this, [this]() {
         // Emit with delay, since isStatusBarDark() still returns the old value
@@ -130,6 +131,8 @@ void MacUtils::setLaunchAtStartup(bool enable)
     if (enable) {
         QSettings agent(getLaunchAgentFilename(), QSettings::NativeFormat);
         agent.setValue("Label", qApp->property("KPXC_QUALIFIED_APPNAME").toString());
+        agent.setValue("AssociatedBundleIdentifiers", qApp->property("KPXC_QUALIFIED_APPNAME").toString());
+        agent.setValue("Program", QApplication::applicationFilePath());
         agent.setValue("ProgramArguments", QStringList() << QApplication::applicationFilePath());
         agent.setValue("RunAtLoad", true);
         agent.setValue("StandardErrorPath", "/dev/null");
@@ -146,6 +149,26 @@ bool MacUtils::isCapslockEnabled()
 #else
     return false;
 #endif
+}
+
+void MacUtils::setUserInputProtection(bool enable)
+{
+    static bool secureInputEnabled = false;
+    if (enable) {
+        /*
+         * MacOS keeps a single counter over all apps that needs to be zero to disable secure input. By never going
+         * higher than 1 internally this makes sure secure input doesn't stay active after calling this function
+         * multiple times.
+         */
+        if (secureInputEnabled) {
+            DisableSecureEventInput();
+        }
+        EnableSecureEventInput();
+    } else {
+        DisableSecureEventInput();
+    }
+    // Store our last known state
+    secureInputEnabled = enable;
 }
 
 /**
@@ -178,6 +201,11 @@ void MacUtils::registerNativeEventFilter()
     eventSpec.eventClass = kEventClassKeyboard;
     eventSpec.eventKind = kEventHotKeyPressed;
     ::InstallApplicationEventHandler(MacUtils::hotkeyHandler, 1, &eventSpec, this, nullptr);
+}
+
+void MacUtils::configureWindowAndHelpMenus(QMainWindow* mainWindow, QMenu* helpMenu)
+{
+    return m_appkit->configureWindowAndHelpMenus(mainWindow, helpMenu);
 }
 
 bool MacUtils::registerGlobalShortcut(const QString& name, Qt::Key key, Qt::KeyboardModifiers modifiers, QString* error)

@@ -65,6 +65,7 @@ public:
     static QString referenceTypeLabel(const KeeShareSettings::Reference& reference);
 
     void connectDatabase(QSharedPointer<Database> newDb, QSharedPointer<Database> oldDb);
+    bool setSharingEnabled(QSharedPointer<Database> db, bool enabled);
 
     static const QString signedContainerFileType();
     static const QString unsignedContainerFileType();

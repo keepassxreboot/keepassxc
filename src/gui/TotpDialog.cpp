@@ -39,6 +39,7 @@ TotpDialog::TotpDialog(QWidget* parent, Entry* entry)
     m_step = m_entry->totpSettings()->step;
     resetCounter();
     updateProgressBar();
+    updateSeconds();
 
     connect(&m_totpUpdateTimer, SIGNAL(timeout()), this, SLOT(updateProgressBar()));
     connect(&m_totpUpdateTimer, SIGNAL(timeout()), this, SLOT(updateSeconds()));
@@ -88,10 +89,15 @@ void TotpDialog::updateSeconds()
 
 void TotpDialog::updateTotp()
 {
-    QString totpCode = m_entry->totp();
-    QString firstHalf = totpCode.left(totpCode.size() / 2);
-    QString secondHalf = totpCode.mid(totpCode.size() / 2);
-    m_ui->totpLabel->setText(firstHalf + " " + secondHalf);
+    bool isValid = false;
+    QString totpCode = m_entry->totp(&isValid);
+    if (isValid) {
+        totpCode.insert(totpCode.size() / 2, " ");
+    }
+    m_ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(isValid);
+    m_ui->progressBar->setVisible(isValid);
+    m_ui->timerLabel->setVisible(isValid);
+    m_ui->totpLabel->setText(totpCode);
 }
 
 void TotpDialog::resetCounter()

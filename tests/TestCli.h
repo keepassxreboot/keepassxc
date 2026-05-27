@@ -81,6 +81,8 @@ private slots:
     void testInvalidDbFiles();
     void testYubiKeyOption();
     void testNonAscii();
+    void testTextStream();
+    void testTextStream_data();
 
 private:
     QScopedPointer<QFile> m_devNull;

@@ -17,6 +17,7 @@
 
 #include <QString>
 
+#include "Clock.h"
 #include "Group.h"
 #include "PasswordHealth.h"
 #include "zxcvbn.h"
@@ -151,11 +152,11 @@ QSharedPointer<PasswordHealth> HealthChecker::evaluate(const Entry* entry) const
         health->addScoreReason(QObject::tr("Password is used %1 time(s)", "", count).arg(QString::number(count)));
         // Add the first 20 uses of the password to prevent the details display from growing too large
         for (int i = 0; i < used.size(); ++i) {
-            health->addScoreDetails(used[i]);
-            if (i == 19) {
+            if (i == 20) {
                 health->addScoreDetails("…");
                 break;
             }
+            health->addScoreDetails(used[i]);
         }
 
         // Don't allow re-used passwords to be considered "good"
@@ -171,8 +172,8 @@ QSharedPointer<PasswordHealth> HealthChecker::evaluate(const Entry* entry) const
     if (entry->isExpired()) {
         health->setScore(0);
         health->addScoreReason(QObject::tr("Password has expired"));
-        health->addScoreDetails(QObject::tr("Password expiry was %1")
-                                    .arg(entry->timeInfo().expiryTime().toString(Qt::DefaultLocaleShortDate)));
+        health->addScoreDetails(
+            QObject::tr("Password expiry was %1").arg(Clock::toString(entry->timeInfo().expiryTime())));
     } else if (entry->timeInfo().expires()) {
         const int days = QDateTime::currentDateTime().daysTo(entry->timeInfo().expiryTime());
         if (days <= 30) {
@@ -186,8 +187,8 @@ QSharedPointer<PasswordHealth> HealthChecker::evaluate(const Entry* entry) const
             }
 
             health->adjustScore((30 - days) * -2);
-            health->addScoreDetails(QObject::tr("Password expires on %1")
-                                        .arg(entry->timeInfo().expiryTime().toString(Qt::DefaultLocaleShortDate)));
+            health->addScoreDetails(
+                QObject::tr("Password expires on %1").arg(Clock::toString(entry->timeInfo().expiryTime())));
             if (days <= 2) {
                 health->addScoreReason(QObject::tr("Password is about to expire"));
             } else if (days <= 10) {

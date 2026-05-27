@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
+ *  Copyright (C) 2026 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -39,7 +39,9 @@ private slots:
     void testFileKey_data();
     void testCompositeKey();
     void testTwofish();
+#ifdef Q_OS_WIN
     void testCP1252Password();
+#endif
     void cleanupTestCase();
 
 private:

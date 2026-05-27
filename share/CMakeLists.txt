@@ -67,10 +67,6 @@ if(UNIX AND NOT APPLE AND NOT HAIKU)
     install(FILES linux/${APP_ID}.appdata.xml DESTINATION ${CMAKE_INSTALL_DATADIR}/metainfo)
 endif(UNIX AND NOT APPLE AND NOT HAIKU)
 
-if(APPLE)
-  install(FILES macosx/keepassxc.icns DESTINATION ${DATA_INSTALL_DIR})
-endif()
-
 if(WIN32)
   install(FILES windows/qt.conf DESTINATION ${BIN_INSTALL_DIR})
 endif()
@@ -79,16 +75,28 @@ install(FILES icons/application/256x256/apps/keepassxc.png DESTINATION ${DATA_IN
 
 add_custom_target(icons)
 add_custom_command(TARGET icons
+        POST_BUILD
         COMMAND bash ./icons/minify.sh
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 if(APPLE)
     add_custom_command(TARGET icons
-            COMMAND png2icns macosx/keepassxc.icns icons/application/256x256/apps/keepassxc.png
+            POST_BUILD
+            COMMAND xcrun actool share/macosx/keepassxc.icon
+                --compile share/macosx
+                --output-partial-info-plist /dev/null
+                --app-icon keepassxc
+                --include-all-app-icons
+                --enable-on-demand-resources NO
+                --target-device mac
+                --minimum-deployment-target 11.0
+                --platform macosx
+                --output-format human-readable-text
             WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 endif()
 
 # ICO for Windows
 add_custom_command(TARGET icons
+    POST_BUILD
     COMMAND bash ./windows/create-ico.sh icons/application/scalable/apps/keepassxc.svg windows/keepassxc.ico
     COMMAND bash ./windows/create-ico.sh icons/application/scalable/mimetypes/application-x-keepassxc.svg windows/keepassxc-kdbx.ico
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})

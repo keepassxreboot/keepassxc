@@ -78,7 +78,7 @@ extern int yk_release(void);
  * Functions to get and release the key itself.
  *
  ****/
-/* opens first key available. For backwards compatability */
+/* opens first key available. For backwards compatibility */
 extern YK_KEY *yk_open_first_key(void);
 extern YK_KEY *yk_open_key(int);	/* opens nth key available */
 extern YK_KEY *yk_open_key_vid_pid(const int*, size_t, const int*, size_t, int);
@@ -147,7 +147,7 @@ int yk_write_device_info(YK_KEY *yk, unsigned char *buf, unsigned int len);
 
 /*************************************************************************
  *
- * Error handling fuctions
+ * Error handling functions
  *
  ****/
 extern int * _yk_errno_location(void);

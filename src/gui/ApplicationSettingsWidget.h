@@ -54,6 +54,8 @@ signals:
 private slots:
     void saveSettings();
     void resetSettings();
+    void importSettings();
+    void exportSettings();
     void reject();
     void autoSaveToggled(bool checked);
     void hideWindowOnCopyCheckBoxToggled(bool checked);
@@ -61,6 +63,7 @@ private slots:
     void rememberDatabasesToggled(bool checked);
     void checkUpdatesToggled(bool checked);
     void showExpiredEntriesOnDatabaseUnlockToggled(bool checked);
+    void autoTypeAskToggled(bool checked);
     void selectBackupDirectory();
 
 private:

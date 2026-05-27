@@ -1,0 +1,101 @@
+#  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
+#
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 2 or (at your option)
+#  version 3 of the License.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+# CPACK_PACKAGE_FILES is set only during POST_BUILD
+if(NOT CPACK_PACKAGE_FILES)     # PRE_BUILD: Sign binaries
+
+    set(PROGNAME "@PROGNAME@")
+    set(CODESIGN_IDENTITY "@WITH_XC_CODESIGN_IDENTITY@")
+    set(ENTITLEMENTS @MACOSX_BUNDLE_APPLE_ENTITLEMENTS@)
+    set(APP_DIR "${CPACK_TEMPORARY_INSTALL_DIRECTORY}/ALL_IN_ONE/${PROGNAME}.app")
+
+    if(NOT CODESIGN_IDENTITY)
+        message(FATAL_ERROR "No codesign identity specified.")
+    endif()
+
+    message(STATUS "Codesign identity used: ${CODESIGN_IDENTITY}")
+    message(STATUS "Signing ${PROGNAME}.app, this may take while...")
+
+    # Sign all binaries
+    execute_process(
+        COMMAND xcrun codesign --sign=${CODESIGN_IDENTITY} --force --options=runtime --deep "${APP_DIR}"
+        RESULT_VARIABLE SIGN_RESULT
+        OUTPUT_VARIABLE SIGN_OUTPUT
+        ERROR_VARIABLE SIGN_ERROR
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+        ERROR_STRIP_TRAILING_WHITESPACE
+        ECHO_OUTPUT_VARIABLE
+    )
+    if (NOT SIGN_RESULT EQUAL 0)
+        message(FATAL_ERROR "Signing binaries failed: ${SIGN_ERROR}")
+    endif()
+
+    # (Re-)Sign main executable with --entitlements
+    execute_process(
+        COMMAND xcrun codesign --sign=${CODESIGN_IDENTITY} --force --options=runtime --entitlements=${ENTITLEMENTS} "${APP_DIR}/Contents/MacOS/${PROGNAME}"
+        RESULT_VARIABLE SIGN_RESULT
+        OUTPUT_VARIABLE SIGN_OUTPUT
+        ERROR_VARIABLE SIGN_ERROR
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+        ERROR_STRIP_TRAILING_WHITESPACE
+        ECHO_OUTPUT_VARIABLE
+    )
+    if (NOT SIGN_RESULT EQUAL 0)
+        message(FATAL_ERROR "Signing main binary failed: ${SIGN_ERROR}")
+    endif()
+
+    message(STATUS "${PROGNAME}.app signed successfully.")
+
+else()       # POST_BUILD: Notarize DMG
+    set(KEYCHAIN_PROFILE "@WITH_XC_NOTARY_KEYCHAIN_PROFILE@")
+    if(NOT KEYCHAIN_PROFILE)
+        message(FATAL_ERROR "No notarization credentials keychain profile specified.")
+    endif()
+
+    foreach(DMG_FILE ${CPACK_PACKAGE_FILES})
+        # Submit for notarization
+        message(STATUS "Submitting DMG bundle for notarization, this may take while...")
+        execute_process(
+                COMMAND xcrun notarytool submit --keychain-profile=${KEYCHAIN_PROFILE} --wait "${DMG_FILE}"
+                RESULT_VARIABLE NOTARIZE_RESULT
+                OUTPUT_VARIABLE NOTARIZE_OUTPUT
+                ERROR_VARIABLE NOTARIZE_ERROR
+                OUTPUT_STRIP_TRAILING_WHITESPACE
+                ERROR_STRIP_TRAILING_WHITESPACE
+                ECHO_OUTPUT_VARIABLE
+        )
+        if (NOT NOTARIZE_RESULT EQUAL 0)
+            message(FATAL_ERROR "Notarization failed: ${NOTARIZE_ERROR}")
+        endif()
+        message(STATUS "DMG bundle notarized successfully.")
+
+        # Staple tickets
+        message(STATUS "Stapling notarization ticket...")
+        execute_process(
+                COMMAND xcrun stapler staple "${DMG_FILE}" && xcrun stapler validate "${DMG_FILE}"
+                RESULT_VARIABLE STAPLE_RESULT
+                OUTPUT_VARIABLE STAPLE_OUTPUT
+                ERROR_VARIABLE STAPLE_ERROR
+                OUTPUT_STRIP_TRAILING_WHITESPACE
+                ERROR_STRIP_TRAILING_WHITESPACE
+                ECHO_OUTPUT_VARIABLE
+        )
+        if (NOT STAPLE_RESULT EQUAL 0)
+            message(FATAL_ERROR "Stapling failed: ${STAPLE_ERROR}")
+        endif()
+        message(STATUS "DMG bundle notarization ticket stapled successfully.")
+    endforeach()
+endif()

@@ -21,12 +21,8 @@
 #include "gui/Icons.h"
 
 #include <QPushButton>
-#include <QShortcut>
-#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
 #include <QScreen>
-#else
-#include <QDesktopWidget>
-#endif
+#include <QShortcut>
 
 PickcharsDialog::PickcharsDialog(const QString& string, QWidget* parent)
     : QDialog(parent)
@@ -157,15 +153,11 @@ void PickcharsDialog::showEvent(QShowEvent* event)
     QDialog::showEvent(event);
 
     // Center on active screen
-#if QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
     auto screen = QApplication::screenAt(QCursor::pos());
     if (!screen) {
         // screenAt can return a nullptr, default to the primary screen
         screen = QApplication::primaryScreen();
     }
     QRect screenGeometry = screen->availableGeometry();
-#else
-    QRect screenGeometry = QApplication::desktop()->availableGeometry(QCursor::pos());
-#endif
     move(screenGeometry.center().x() - (size().width() / 2), screenGeometry.center().y() - (size().height() / 2));
 }

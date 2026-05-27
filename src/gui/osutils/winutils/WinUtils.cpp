@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 KeePassXC Team <team@keepassxc.org>
+ * Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -74,8 +74,9 @@ void WinUtils::registerNativeEventFilter()
     qApp->installNativeEventFilter(this);
 }
 
-bool WinUtils::nativeEventFilter(const QByteArray& eventType, void* message, long*)
+bool WinUtils::nativeEventFilter(const QByteArray& eventType, void* message, qintptr* result)
 {
+    Q_UNUSED(result);
     if (eventType != "windows_generic_MSG") {
         return false;
     }
@@ -134,6 +135,12 @@ void WinUtils::setLaunchAtStartup(bool enable)
 bool WinUtils::isCapslockEnabled()
 {
     return GetKeyState(VK_CAPITAL) == 1;
+}
+
+void WinUtils::setUserInputProtection(bool enable)
+{
+    // Windows does not support this feature
+    Q_UNUSED(enable)
 }
 
 bool WinUtils::isHighContrastMode() const
@@ -234,6 +241,8 @@ WORD WinUtils::qtToNativeKeyCode(Qt::Key key)
         return VK_SHIFT;    // 0x10
     case Qt::Key_Control:
         return VK_CONTROL;  // 0x11
+    case Qt::Key_Alt:
+        return VK_MENU;     // 0x12
     case Qt::Key_Pause:
         return VK_PAUSE;    // 0x13
     case Qt::Key_CapsLock:

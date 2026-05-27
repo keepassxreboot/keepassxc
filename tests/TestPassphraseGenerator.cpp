@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2019 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,6 +16,7 @@
  */
 
 #include "TestPassphraseGenerator.h"
+#include "config-keepassx-tests.h"
 #include "core/PassphraseGenerator.h"
 #include "crypto/Crypto.h"
 
@@ -27,13 +28,14 @@ QTEST_GUILESS_MAIN(TestPassphraseGenerator)
 void TestPassphraseGenerator::initTestCase()
 {
     QVERIFY(Crypto::init());
+    QLocale::setDefault(QLocale::c());
 }
 
 void TestPassphraseGenerator::testWordCase()
 {
     PassphraseGenerator generator;
     generator.setWordSeparator(" ");
-    QVERIFY(generator.isValid());
+    QVERIFY(generator.isWordListValid());
 
     QString passphrase;
     passphrase = generator.generatePassphrase();
@@ -49,6 +51,21 @@ void TestPassphraseGenerator::testWordCase()
 
     generator.setWordCase(PassphraseGenerator::TITLECASE);
     passphrase = generator.generatePassphrase();
-    QRegularExpression regex("^([A-Z][a-z]* ?)+$");
-    QVERIFY(regex.match(passphrase).hasMatch());
+    QRegularExpression regex("^(?:[A-Z][a-z-]* )*[A-Z][a-z-]*$");
+    QVERIFY2(regex.match(passphrase).hasMatch(), qPrintable(passphrase));
+}
+
+void TestPassphraseGenerator::testUniqueEntriesInWordlist()
+{
+    PassphraseGenerator generator;
+    // set the limit down, so we don't have to do a very large file
+    generator.m_minWordListSize = 4;
+
+    // link to bad wordlist
+    QString path = QString(KEEPASSX_TEST_DATA_DIR).append("/wordlists/bad_wordlist_with_duplicate_entries.wordlist");
+
+    // setting will work, it creates the warning however, and isWordListValid will fail
+    generator.setWordList(path);
+    // so this fails
+    QVERIFY(!generator.isWordListValid());
 }

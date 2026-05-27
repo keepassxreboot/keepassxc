@@ -19,6 +19,7 @@
 #define KEEPASSX_UNLOCKDATABASEDIALOG_H
 
 #include "core/Global.h"
+#include "gui/MessageWidget.h"
 
 #include <QDialog>
 #include <QList>
@@ -39,6 +40,7 @@ public:
         None,
         AutoType,
         Merge,
+        RemoteSync,
         Browser
     };
 
@@ -50,11 +52,13 @@ public:
     Intent intent() const;
     QSharedPointer<Database> database() const;
     void clearForms();
+    void showMessage(const QString& text, MessageWidget::MessageType type, int autoHideTimeout);
 
 signals:
     void dialogFinished(bool accepted, DatabaseWidget* dbWidget);
 
 public slots:
+    void done(int result) override;
     void complete(bool accepted);
     void tabChanged(int index);
 
@@ -62,6 +66,7 @@ protected:
     void showEvent(QShowEvent* event) override;
 
 private:
+    void closeEvent(QCloseEvent* e) override;
     void selectTabOffset(int offset);
 
     QPointer<DatabaseOpenWidget> m_view;

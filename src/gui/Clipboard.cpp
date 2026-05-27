@@ -21,6 +21,7 @@
 #include <QApplication>
 #include <QClipboard>
 #include <QMimeData>
+#include <QProcess>
 #include <QTimer>
 
 #include "core/Config.h"
@@ -59,6 +60,8 @@ void Clipboard::setText(const QString& text, bool clear)
     mime->setData("x-kde-passwordManagerHint", QByteArrayLiteral("secret"));
 #elif defined(Q_OS_WIN)
     mime->setData("ExcludeClipboardContentFromMonitorProcessing", QByteArrayLiteral("1"));
+    mime->setData("CanIncludeInClipboardHistory", {4, '\0'});
+    mime->setData("CanUploadToCloudClipboard", {4, '\0'});
 #endif
 
     if (clipboard->supportsSelection()) {
@@ -97,10 +100,17 @@ void Clipboard::clearCopiedText()
         return;
     }
 
-    if (m_lastCopied == clipboard->text(QClipboard::Clipboard)
-        || m_lastCopied == clipboard->text(QClipboard::Selection)) {
+    if (!m_lastCopied.isEmpty()
+        && (m_lastCopied == clipboard->text(QClipboard::Clipboard)
+            || m_lastCopied == clipboard->text(QClipboard::Selection))) {
         clipboard->clear(QClipboard::Clipboard);
         clipboard->clear(QClipboard::Selection);
+#ifdef Q_OS_UNIX
+        // Gnome Wayland doesn't let apps modify the clipboard when not in focus, so force clear
+        if (QProcessEnvironment::systemEnvironment().contains("WAYLAND_DISPLAY")) {
+            QProcess::startDetached("wl-copy", {"-c"});
+        }
+#endif
     }
 
     m_lastCopied.clear();
