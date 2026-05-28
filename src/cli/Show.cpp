@@ -44,6 +44,10 @@ const QCommandLineOption Show::AttributesOption = QCommandLineOption(
         "If no attributes are specified, a summary of the default attributes is given."),
     QObject::tr("attribute"));
 
+const QCommandLineOption Show::NetrcOption =
+    QCommandLineOption(QStringList() << "format-netrc",
+    QObject::tr("Show a .netrc formatted output of the entry. Note that this option implies --show-protected."));
+
 Show::Show()
 {
     name = QString("show");
@@ -53,6 +57,7 @@ Show::Show()
     options.append(Show::ProtectedAttributesOption);
     options.append(Show::AllAttributesOption);
     options.append(Show::AttachmentsOption);
+    options.append(Show::NetrcOption);
     positionalArguments.append({QString("entry"), QObject::tr("Name of the entry to show."), QString("")});
 }
 
@@ -66,6 +71,7 @@ int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
     bool showTotp = parser->isSet(Show::TotpOption);
     bool showProtectedAttributes = parser->isSet(Show::ProtectedAttributesOption);
     bool showAllAttributes = parser->isSet(Show::AllAttributesOption);
+    bool showNetrcFormat = parser->isSet(Show::NetrcOption);
     QStringList attributes = parser->values(Show::AttributesOption);
 
     Entry* entry = database->rootGroup()->findEntryByPath(entryPath);
@@ -80,7 +86,11 @@ int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
     }
 
     bool attributesWereSpecified = true;
-    if (showAllAttributes) {
+    if (showNetrcFormat) {
+        attributes = QStringList() << EntryAttributes::URLKey
+                                   << EntryAttributes::UserNameKey
+                                   << EntryAttributes::PasswordKey;
+    } else if (showAllAttributes) {
         attributesWereSpecified = false;
         attributes = EntryAttributes::DefaultAttributes;
         for (QString fieldName : Utils::EntryFieldNames) {
@@ -129,15 +139,27 @@ int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
         QString canonicalName = attrs[0];
         if (!attributesWereSpecified) {
             out << canonicalName << ": ";
+        } else if (showNetrcFormat) {
+            QString netrcField = canonicalName;
+            if (canonicalName == "URL") {
+                netrcField = QString("machine");
+            } else if (canonicalName == "UserName") {
+                netrcField = QString("login");
+            } else if (canonicalName == "Password") {
+                netrcField = QString("password");
+            }
+            out << netrcField << " ";
         }
         if (entry->attributes()->isProtected(canonicalName) && !attributesWereSpecified && !showProtectedAttributes) {
             out << "PROTECTED" << Qt::endl;
+        } else if (showNetrcFormat) {
+            out << entry->resolveMultiplePlaceholders(entry->attributes()->value(canonicalName)) << QString(" ");
         } else {
             out << entry->resolveMultiplePlaceholders(entry->attributes()->value(canonicalName)) << Qt::endl;
         }
     }
 
-    if (parser->isSet(Show::AttachmentsOption)) {
+    if (parser->isSet(Show::AttachmentsOption) && !showNetrcFormat) {
         // Separate attachment output from attributes output via a newline.
         out << Qt::endl;
 
@@ -156,8 +178,11 @@ int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
         }
     }
 
-    if (showTotp) {
+    if (showTotp && !showNetrcFormat) {
         out << entry->totp() << Qt::endl;
+    }
+    if (showNetrcFormat) {
+        out << Qt::endl;
     }
 
     return encounteredError ? EXIT_FAILURE : EXIT_SUCCESS;

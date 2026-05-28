@@ -2206,6 +2206,42 @@ void TestCli::testShow()
                         "TOTP Settings: 30;6\n"
                         "TestAttribute1: b\n"
                         "testattribute1: a\n"));
+
+    // Netrc formatted output shouldn't change regardless of extra options.
+    QByteArray expectedNetrcOutput = QByteArray("machine http://www.somesite.com/ "
+                                                "login User Name "
+                                                "password Password \n");
+
+    setInput("a");
+    execCmd(showCmd, {"show", "--format-netrc", m_dbFile->fileName(), "/Sample Entry"});
+    m_stderr->readLine(); // Skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(), expectedNetrcOutput);
+
+    setInput("a");
+    execCmd(showCmd, {"show", "-a", "DoesNotExist", "--format-netrc", m_dbFile->fileName(), "/Sample Entry"});
+    m_stderr->readLine(); // Skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(), expectedNetrcOutput);
+
+    setInput("a");
+    execCmd(showCmd, {"show", "--all", "--format-netrc", m_dbFile->fileName(), "/Sample Entry"});
+    m_stderr->readLine(); // Skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(), expectedNetrcOutput);
+
+    setInput("a");
+    execCmd(showCmd, {"show", "--totp", "--format-netrc", m_dbFile->fileName(), "/Sample Entry"});
+    m_stderr->readLine(); // Skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(), expectedNetrcOutput);
+
+    setInput("a");
+    execCmd(showCmd, {"show", "--format-netrc", "--show-attachments", m_dbFile->fileName(), "/Sample Entry"});
+    m_stderr->readLine(); // Skip password prompt
+    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QCOMPARE(m_stdout->readAll(), expectedNetrcOutput);
+
 }
 
 void TestCli::testInvalidDbFiles()
