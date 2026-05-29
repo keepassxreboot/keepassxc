@@ -129,7 +129,7 @@ QJsonObject DropboxCloudSyncPage::saveToConfig() const
     // object so the parent skips persistence entirely.
     if (m_ui->appKeyEdit->text().trimmed().isEmpty() && m_ui->remotePathEdit->text().trimmed().isEmpty()
         && m_config.isEmpty()) {
-        return QJsonObject();
+        return {};
     }
 
     QJsonObject config;

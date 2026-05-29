@@ -1293,7 +1293,7 @@ QString DatabaseWidget::getCloudSyncProviderDisplayName() const
     // needs the display name as soon as a provider is configured.
     const QString type = m_remoteSettings->activeProvider();
     if (type.isEmpty()) {
-        return QString{};
+        return {};
     }
     QScopedPointer<RemoteSyncProvider> provider(RemoteSyncProvider::create(type));
     return provider ? provider->displayName() : QString{};

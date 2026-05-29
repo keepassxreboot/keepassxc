@@ -190,7 +190,7 @@ QJsonObject NextcloudCloudSyncPage::saveToConfig() const
         && m_ui->loginNameEdit->text().trimmed().isEmpty()
         && m_ui->appPasswordEdit->text().isEmpty()
         && m_config.isEmpty()) {
-        return QJsonObject();
+        return {};
     }
 
     // Merge over m_config (rather than replacing) to preserve any keys set by

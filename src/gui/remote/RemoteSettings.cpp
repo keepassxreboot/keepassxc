@@ -179,7 +179,7 @@ void RemoteSettings::fromConfig(const QString& data)
 QString RemoteSettings::toCloudConfig() const
 {
     if (m_cloudConfig.isEmpty()) {
-        return QString();
+        return {};
     }
     return QString::fromUtf8(QJsonDocument(m_cloudConfig).toJson(QJsonDocument::Compact));
 }
