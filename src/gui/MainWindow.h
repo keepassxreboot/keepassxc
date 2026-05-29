@@ -38,6 +38,7 @@ namespace Ui
 class InactivityTimer;
 class SearchWidget;
 class MainWindowEventFilter;
+class QColor;
 
 class MainWindow : public QMainWindow
 {
@@ -168,6 +169,7 @@ private:
     bool saveLastDatabases();
     bool isTrayIconEnabled() const;
     void customOpenUrl(QString url);
+    void setStatusBarBackground(const QColor& color);
 
     static QStringList kdbxFilesFromUrls(const QList<QUrl>& urls);
     void dragEnterEvent(QDragEnterEvent* event) override;

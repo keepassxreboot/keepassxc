@@ -1618,16 +1618,23 @@ void MainWindow::updateProgressBar(int percentage, QString message)
     }
 }
 
+void MainWindow::setStatusBarBackground(const QColor& color)
+{
+    // An invalid color resets the status bar to its default (no fill).
+    const bool fill = color.isValid();
+    statusBar()->setAutoFillBackground(fill);
+    QPalette pal = statusBar()->palette();
+    pal.setColor(QPalette::Window, fill ? color : palette().color(QPalette::Window));
+    statusBar()->setPalette(pal);
+}
+
 void MainWindow::updateEntryCountLabel()
 {
     // Clear sync status on user action (naturally triggered by groupChanged,
     // databaseModified, searchModeActivated, listModeActivated signals)
     if (m_syncStatusShown) {
         m_syncStatusShown = false;
-        statusBar()->setAutoFillBackground(false);
-        QPalette pal = statusBar()->palette();
-        pal.setColor(QPalette::Window, palette().color(QPalette::Window));
-        statusBar()->setPalette(pal);
+        setStatusBarBackground(QColor());
     }
 
     auto dbWidget = m_ui->tabWidget->currentDatabaseWidget();
@@ -1646,10 +1653,7 @@ void MainWindow::updateSyncStatusBar(const QString& syncName)
     m_statusBarLabel->setText(tr("%1: Synced %2").arg(syncName, time));
 
     // Clear any red background from previous failure
-    statusBar()->setAutoFillBackground(false);
-    QPalette pal = statusBar()->palette();
-    pal.setColor(QPalette::Window, palette().color(QPalette::Window));
-    statusBar()->setPalette(pal);
+    setStatusBarBackground(QColor());
 
     m_syncStatusShown = true;
 }
@@ -1660,10 +1664,7 @@ void MainWindow::updateSyncFailedStatusBar(const QString& syncName, const QStrin
     m_statusBarLabel->setText(tr("%1: Failed Sync %2").arg(syncName, time));
 
     // Red background for failure
-    statusBar()->setAutoFillBackground(true);
-    QPalette pal = statusBar()->palette();
-    pal.setColor(QPalette::Window, QColor(Qt::red).lighter(160));
-    statusBar()->setPalette(pal);
+    setStatusBarBackground(QColor(Qt::red).lighter(160));
 
     m_syncStatusShown = true;
 
