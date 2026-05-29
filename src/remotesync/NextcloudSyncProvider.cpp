@@ -18,6 +18,7 @@
 #include "NextcloudSyncProvider.h"
 
 #include "HttpRetryHelper.h"
+#include "HttpStatus.h"
 #include "RemoteSyncParams.h"
 #include "config-keepassx.h"
 
@@ -185,7 +186,7 @@ RemoteHandler::RemoteResult NextcloudSyncProvider::downloadImpl(const RemoteSync
     // first-sync (silent success) from an in-trash situation (actionable
     // banner). The PROPFIND helper returns false on any failure, which collapses
     // both "no trashbin" and "not in trash" to first-sync semantics.
-    if (httpStatus == HttpNotFound) {
+    if (httpStatus == HttpStatus::NotFound) {
         const QString filename = QFileInfo(ncParams->remotePath).fileName();
         reply->deleteLater();
         const bool inTrash = checkIfInTrash(ncParams, filename);
@@ -209,7 +210,7 @@ RemoteHandler::RemoteResult NextcloudSyncProvider::downloadImpl(const RemoteSync
         return {true, {}, {}, {}, {}};
     }
 
-    if (httpStatus != HttpOk) {
+    if (httpStatus != HttpStatus::Ok) {
         // Drain body for hygiene. Per-status locked banners go through the
         // centralized mapWebdavStatusToMessage helper. 401/403/423/507 get
         // their locked banners; 5xx gets a generic server-error banner;
@@ -388,7 +389,7 @@ RemoteHandler::RemoteResult NextcloudSyncProvider::testConnectionImpl(const Next
     reply->readAll(); // drain body for hygiene -- we only care about the status
     reply->deleteLater();
 
-    if (httpStatus == HttpMultiStatus || httpStatus == HttpOk) {
+    if (httpStatus == HttpStatus::MultiStatus || httpStatus == HttpStatus::Ok) {
         // 207/200 means the configured remote path exists on the server. Populate
         // filePath with the remote path so the page-side caller can dispatch to
         // "Nextcloud connection successful." (file exists) vs "Connected. File
@@ -405,7 +406,7 @@ RemoteHandler::RemoteResult NextcloudSyncProvider::testConnectionImpl(const Next
     // different user-facing string per call-site. classifyError dispatches
     // both banners to ErrorKind::AuthExpired so retryOnAuthOnce treats them
     // uniformly.
-    if (httpStatus == HttpUnauthorized) {
+    if (httpStatus == HttpStatus::Unauthorized) {
         // reply was already drained + deleteLater()-ed above.
         return {false,
                 tr("Nextcloud rejected those credentials. Verify the username and app password."),
@@ -421,7 +422,7 @@ RemoteHandler::RemoteResult NextcloudSyncProvider::testConnectionImpl(const Next
     // handling: return success=true with empty filePath so the page-side caller
     // and SyncEngine first-sync branch can both treat this as "auth OK, will be
     // created on first sync."
-    if (httpStatus == HttpNotFound) {
+    if (httpStatus == HttpStatus::NotFound) {
         return {true, {}, {}, {}, {}};
     }
 
@@ -482,7 +483,7 @@ bool NextcloudSyncProvider::checkIfInTrash(const NextcloudSyncParams* params, co
     }
 
     int httpStatus = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
-    if (httpStatus != HttpMultiStatus && httpStatus != HttpOk) {
+    if (httpStatus != HttpStatus::MultiStatus && httpStatus != HttpStatus::Ok) {
         // 404 (no trashbin endpoint), 401 (auth issue), 5xx (server error) all
         // collapse to false -- "not in trash" / first-sync semantics.
         reply->readAll();
@@ -648,7 +649,7 @@ RemoteHandler::RemoteResult NextcloudSyncProvider::uploadImpl(const QString& fil
     // change, not our ETag becoming stale. The next download will refresh
     // m_lastETag naturally; clearing it now would force an unnecessary
     // first-upload retry that 409s against the now-existing file.
-    if (httpStatus == HttpPreconditionFailed) {
+    if (httpStatus == HttpStatus::PreconditionFailed) {
         reply->readAll(); // drain body for hygiene
         reply->deleteLater();
         return {false,
@@ -662,7 +663,7 @@ RemoteHandler::RemoteResult NextcloudSyncProvider::uploadImpl(const QString& fil
     // Non-success non-412 -- per-status locked banners via the centralized
     // mapWebdavStatusToMessage helper. 401/403/423/507 get their locked
     // banners; 5xx gets a generic server-error banner.
-    if (httpStatus != HttpOk && httpStatus != HttpCreated && httpStatus != HttpNoContent) {
+    if (httpStatus != HttpStatus::Ok && httpStatus != HttpStatus::Created && httpStatus != HttpStatus::NoContent) {
         reply->readAll(); // drain
         QString errorMsg = mapWebdavStatusToMessage(httpStatus);
         ErrorKind kind = mapWebdavStatusToKind(httpStatus);
@@ -805,20 +806,20 @@ RemoteHandler::RemoteResult NextcloudSyncProvider::retryOnAuthOnce(std::function
 QString NextcloudSyncProvider::mapWebdavStatusToMessage(int httpStatus)
 {
     switch (httpStatus) {
-    case HttpUnauthorized: // 401
+    case HttpStatus::Unauthorized: // 401
         return tr("Nextcloud authorization expired. Re-authorize in Database > Settings > Cloud Sync.");
-    case HttpForbidden: // 403
+    case HttpStatus::Forbidden: // 403
         return tr("Nextcloud denied access to this path. Verify the file path and your account permissions.");
-    case HttpNotFound: // 404 (testConnection-side; download's 404-trash distinction routes through checkIfInTrash)
+    case HttpStatus::NotFound: // 404 (testConnection-side; download's 404-trash distinction routes through checkIfInTrash)
         return tr("Nextcloud could not find the configured remote path. Verify your settings.");
-    case HttpPreconditionFailed: // 412
+    case HttpStatus::PreconditionFailed: // 412
         return tr("Remote file changed since last download. Re-sync to merge changes.");
-    case HttpLocked: // 423
+    case HttpStatus::Locked: // 423
         return tr("Nextcloud file is locked. Try again in a moment.");
-    case HttpInsufficientStorage: // 507
+    case HttpStatus::InsufficientStorage: // 507
         return tr("Nextcloud server is out of storage. Free space and try again.");
     default:
-        if (httpStatus >= 500 && httpStatus < 600) {
+        if (HttpStatus::isServerError(httpStatus)) {
             return tr("Nextcloud server error (HTTP %1). Try again later.").arg(httpStatus);
         }
         return tr("Nextcloud returned HTTP %1.").arg(httpStatus);
@@ -828,20 +829,20 @@ QString NextcloudSyncProvider::mapWebdavStatusToMessage(int httpStatus)
 RemoteHandler::ErrorKind NextcloudSyncProvider::mapWebdavStatusToKind(int httpStatus)
 {
     switch (httpStatus) {
-    case HttpUnauthorized: // 401
+    case HttpStatus::Unauthorized: // 401
         return ErrorKind::AuthExpired;
-    case HttpForbidden: // 403
+    case HttpStatus::Forbidden: // 403
         return ErrorKind::Permission;
-    case HttpNotFound: // 404
+    case HttpStatus::NotFound: // 404
         return ErrorKind::NotFound;
-    case HttpPreconditionFailed: // 412
+    case HttpStatus::PreconditionFailed: // 412
         return ErrorKind::Conflict;
-    case HttpLocked: // 423
+    case HttpStatus::Locked: // 423
         return ErrorKind::RateLimit;
-    case HttpInsufficientStorage: // 507
+    case HttpStatus::InsufficientStorage: // 507
         return ErrorKind::Quota;
     default:
-        if (httpStatus >= 500 && httpStatus < 600) {
+        if (HttpStatus::isServerError(httpStatus)) {
             return ErrorKind::ServerError;
         }
         return ErrorKind::Other;

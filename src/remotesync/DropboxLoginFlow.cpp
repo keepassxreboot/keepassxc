@@ -17,6 +17,7 @@
 
 #include "DropboxLoginFlow.h"
 
+#include "HttpStatus.h"
 #include "OAuthHttpServer.h"
 
 #include "core/Clock.h"
@@ -335,7 +336,7 @@ void DropboxLoginFlow::onExchangeFinished()
     QJsonDocument respDoc = QJsonDocument::fromJson(responseData);
     QJsonObject respObj = respDoc.object();
 
-    if (httpStatus != 200) {
+    if (httpStatus != HttpStatus::Ok) {
         // Do not log the response body -- it can contain sensitive OAuth
         // fields. Status + length is enough for diagnostics.
         qWarning("[DPX] exchangeAuthCode: error (status %d, body length %d)", httpStatus, responseData.length());

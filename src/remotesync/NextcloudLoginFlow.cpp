@@ -17,6 +17,7 @@
 
 #include "NextcloudLoginFlow.h"
 
+#include "HttpStatus.h"
 #include "NextcloudSyncProvider.h"
 #include "config-keepassx.h"
 
@@ -396,11 +397,11 @@ void NextcloudLoginFlow::onPollFinished(QNetworkReply* reply)
     //   3xx (any: 301/302/303/307/308) -- nextcloud/server#32689 (2FA returns 303)
     //   404 -- nextcloud-desktop flow2auth.cpp silent-ignore alignment
     //   410 -- per Nextcloud Login Flow v2 spec
-    if ((httpStatus >= 300 && httpStatus < 400) || httpStatus == 404 || httpStatus == 410) {
+    if (HttpStatus::isRedirect(httpStatus) || httpStatus == HttpStatus::NotFound || httpStatus == HttpStatus::Gone) {
         return;
     }
 
-    if (httpStatus == 200) {
+    if (httpStatus == HttpStatus::Ok) {
         // Parse JSON; require all 3 non-empty keys. Server defects that
         // return 200 with missing-key OR empty-value are surfaced through
         // the same network-error banner path as a genuine network error -- the user sees

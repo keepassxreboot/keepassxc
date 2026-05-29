@@ -248,17 +248,6 @@ private:
 
     QNetworkAccessManager* m_nam = nullptr;
 
-    // HTTP status constants for WebDAV operations.
-    static constexpr int HttpOk = 200;
-    static constexpr int HttpCreated = 201;
-    static constexpr int HttpNoContent = 204;
-    static constexpr int HttpMultiStatus = 207;
-    static constexpr int HttpUnauthorized = 401;
-    static constexpr int HttpForbidden = 403;
-    static constexpr int HttpNotFound = 404;
-    static constexpr int HttpPreconditionFailed = 412;
-    static constexpr int HttpLocked = 423;
-    static constexpr int HttpInsufficientStorage = 507;
     static constexpr int MaxDatabaseSize = 256 * 1024 * 1024; // 256 MB sanity limit
 
     QString m_lastETag; // ETag from last download, used for upload If-Match

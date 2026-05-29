@@ -18,6 +18,7 @@
 #include "DropboxSyncProvider.h"
 
 #include "HttpRetryHelper.h"
+#include "HttpStatus.h"
 #include "RemoteSyncParams.h"
 
 #include "core/Clock.h"
@@ -135,7 +136,7 @@ RemoteHandler::RemoteResult DropboxSyncProvider::download(const RemoteSyncParams
         return {false, errorMsg, {}, {}, {}, ErrorKind::Network};
     }
 
-    if (httpStatus == HttpConflict) {
+    if (httpStatus == HttpStatus::Conflict) {
         // Endpoint-specific error -- parse error_summary
         QByteArray body = reply->readAll();
         QJsonDocument errDoc = QJsonDocument::fromJson(body);
@@ -150,18 +151,18 @@ RemoteHandler::RemoteResult DropboxSyncProvider::download(const RemoteSyncParams
         return {false, tr("Dropbox error: %1").arg(errorSummary), {}, {}, {}, ErrorKind::NotFound};
     }
 
-    if (httpStatus != HttpOk) {
+    if (httpStatus != HttpStatus::Ok) {
         reply->readAll(); // drain body to free network resources
         reply->deleteLater();
         // Map a few key statuses to ErrorKind; others stay Other.
         ErrorKind kind = ErrorKind::Other;
-        if (httpStatus == 401) {
+        if (httpStatus == HttpStatus::Unauthorized) {
             kind = ErrorKind::AuthExpired;
-        } else if (httpStatus == 403) {
+        } else if (httpStatus == HttpStatus::Forbidden) {
             kind = ErrorKind::Permission;
-        } else if (httpStatus == 429) {
+        } else if (httpStatus == HttpStatus::TooManyRequests) {
             kind = ErrorKind::RateLimit;
-        } else if (httpStatus >= 500 && httpStatus < 600) {
+        } else if (HttpStatus::isServerError(httpStatus)) {
             kind = ErrorKind::ServerError;
         }
         return {false, tr("Dropbox API error (HTTP %1)").arg(httpStatus), {}, {}, {}, kind};
@@ -300,7 +301,7 @@ RemoteHandler::RemoteResult DropboxSyncProvider::upload(const QString& filePath,
         return {false, errorMsg, {}, {}, {}, ErrorKind::Network};
     }
 
-    if (httpStatus == HttpConflict) {
+    if (httpStatus == HttpStatus::Conflict) {
         // Endpoint-specific error
         QByteArray body = reply->readAll();
         QJsonDocument errDoc = QJsonDocument::fromJson(body);
@@ -319,19 +320,19 @@ RemoteHandler::RemoteResult DropboxSyncProvider::upload(const QString& filePath,
         return {false, tr("Dropbox error: %1").arg(errorSummary), {}, {}, {}, ErrorKind::Other};
     }
 
-    if (httpStatus != HttpOk) {
+    if (httpStatus != HttpStatus::Ok) {
         reply->readAll(); // drain body to free network resources
         reply->deleteLater();
         ErrorKind kind = ErrorKind::Other;
-        if (httpStatus == 401) {
+        if (httpStatus == HttpStatus::Unauthorized) {
             kind = ErrorKind::AuthExpired;
-        } else if (httpStatus == 403) {
+        } else if (httpStatus == HttpStatus::Forbidden) {
             kind = ErrorKind::Permission;
-        } else if (httpStatus == 429) {
+        } else if (httpStatus == HttpStatus::TooManyRequests) {
             kind = ErrorKind::RateLimit;
-        } else if (httpStatus == 507) {
+        } else if (httpStatus == HttpStatus::InsufficientStorage) {
             kind = ErrorKind::Quota;
-        } else if (httpStatus >= 500 && httpStatus < 600) {
+        } else if (HttpStatus::isServerError(httpStatus)) {
             kind = ErrorKind::ServerError;
         }
         return {false, tr("Dropbox API error (HTTP %1)").arg(httpStatus), {}, {}, {}, kind};
@@ -429,7 +430,7 @@ RemoteHandler::RemoteResult DropboxSyncProvider::refreshAuth(const RemoteSyncPar
     QJsonDocument respDoc = QJsonDocument::fromJson(responseData);
     QJsonObject respObj = respDoc.object();
 
-    if (httpStatus != HttpOk) {
+    if (httpStatus != HttpStatus::Ok) {
         // Do not log the response body -- it can contain sensitive OAuth
         // fields. Status code + length is enough for diagnostics.
         qWarning("[DPX] refreshAuth: error (status %d, body length %d)", httpStatus, responseData.length());
@@ -526,7 +527,7 @@ RemoteHandler::RemoteResult DropboxSyncProvider::revokeToken(const DropboxSyncPa
 
     if (reply) {
         int httpStatus = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
-        if (httpStatus != HttpOk) {
+        if (httpStatus != HttpStatus::Ok) {
             qWarning("DropboxSyncProvider: token revocation returned HTTP %d (best-effort, ignoring)", httpStatus);
         }
         reply->deleteLater();

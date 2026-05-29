@@ -17,6 +17,8 @@
 
 #include "OAuthHttpServer.h"
 
+#include "HttpStatus.h"
+
 #include <QTcpSocket>
 #include <QTimer>
 #include <QUrl>
@@ -152,7 +154,7 @@ void OAuthHttpServer::processRequest(QTcpSocket* socket)
     // Parse the request line: "GET /path?query HTTP/1.1"
     auto parts = requestLine.split(' ');
     if (parts.size() < 2) {
-        socket->write(buildHttpResponse(400, "Bad Request", invalidRequestHtml));
+        socket->write(buildHttpResponse(HttpStatus::BadRequest, "Bad Request", invalidRequestHtml));
         socket->flush();
         socket->disconnectFromHost();
         return;
@@ -168,7 +170,7 @@ void OAuthHttpServer::processRequest(QTcpSocket* socket)
 
     if (code.isEmpty() && error.isEmpty()) {
         // Stray browser request (e.g. favicon.ico): respond 400 and close.
-        socket->write(buildHttpResponse(400, "Bad Request", invalidRequestHtml));
+        socket->write(buildHttpResponse(HttpStatus::BadRequest, "Bad Request", invalidRequestHtml));
         socket->flush();
         socket->disconnectFromHost();
         return;
@@ -179,7 +181,7 @@ void OAuthHttpServer::processRequest(QTcpSocket* socket)
         QString receivedState = query.queryItemValue("state");
         if (receivedState != m_expectedState) {
             socket->write(buildHttpResponse(
-                403,
+                HttpStatus::Forbidden,
                 "Forbidden",
                 QString(errorHtml).arg(QStringLiteral("State mismatch - possible CSRF attack").toHtmlEscaped())));
             socket->flush();
@@ -191,7 +193,7 @@ void OAuthHttpServer::processRequest(QTcpSocket* socket)
 
     // Prevent double-processing
     if (m_codeReceived) {
-        socket->write(buildHttpResponse(200, "OK", successHtml));
+        socket->write(buildHttpResponse(HttpStatus::Ok, "OK", successHtml));
         socket->flush();
         socket->disconnectFromHost();
         return;
@@ -200,14 +202,14 @@ void OAuthHttpServer::processRequest(QTcpSocket* socket)
     m_codeReceived = true;
 
     if (!code.isEmpty()) {
-        socket->write(buildHttpResponse(200, "OK", successHtml));
+        socket->write(buildHttpResponse(HttpStatus::Ok, "OK", successHtml));
         socket->flush();
         socket->disconnectFromHost();
         emit authCodeReceived(code);
     } else {
         auto errorDescription = query.queryItemValue("error_description").replace('+', ' ');
         auto errorMsg = errorDescription.isEmpty() ? error : errorDescription;
-        socket->write(buildHttpResponse(200, "OK", QString(errorHtml).arg(errorMsg.toHtmlEscaped())));
+        socket->write(buildHttpResponse(HttpStatus::Ok, "OK", QString(errorHtml).arg(errorMsg.toHtmlEscaped())));
         socket->flush();
         socket->disconnectFromHost();
         emit authError(error);

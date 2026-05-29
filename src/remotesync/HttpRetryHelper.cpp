@@ -17,6 +17,8 @@
 
 #include "HttpRetryHelper.h"
 
+#include "HttpStatus.h"
+
 #include <QEventLoop>
 #include <QTimer>
 
@@ -129,5 +131,5 @@ QNetworkReply* HttpRetryHelper::execute(const RequestFunc& makeRequest,
 
 bool HttpRetryHelper::isRetryable(int httpStatus)
 {
-    return httpStatus == 429 || (httpStatus >= 500 && httpStatus <= 599);
+    return httpStatus == HttpStatus::TooManyRequests || HttpStatus::isServerError(httpStatus);
 }

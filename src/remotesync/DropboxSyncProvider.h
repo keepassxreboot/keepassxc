@@ -71,8 +71,6 @@ private:
 
     QNetworkAccessManager* m_nam = nullptr;
 
-    static constexpr int HttpOk = 200;
-    static constexpr int HttpConflict = 409;
     static constexpr int MaxDatabaseSize = 256 * 1024 * 1024; // 256 MB sanity limit
     static constexpr int TokenRefreshBufferSecs = 600; // 10-minute proactive refresh
 
