@@ -36,6 +36,14 @@
 #include <QTemporaryFile>
 #include <QUrl>
 
+const QString DropboxSyncProvider::Type = QStringLiteral("dropbox");
+const QString DropboxSyncProvider::DisplayName = QStringLiteral("Dropbox");
+
+const QString DropboxSyncProvider::AccessToken = QStringLiteral("accessToken");
+const QString DropboxSyncProvider::RefreshToken = QStringLiteral("refreshToken");
+const QString DropboxSyncProvider::ExpiresAt = QStringLiteral("expiresAt");
+const QString DropboxSyncProvider::AppKey = QStringLiteral("appKey");
+
 DropboxSyncProvider::DropboxSyncProvider(QObject* parent)
     : RemoteSyncProvider(parent)
 {
@@ -469,8 +477,8 @@ RemoteHandler::RemoteResult DropboxSyncProvider::refreshAuth(const RemoteSyncPar
 
     // Build JSON output for caller to persist
     QJsonObject tokenData;
-    tokenData[QStringLiteral("accessToken")] = newAccessToken;
-    tokenData[QStringLiteral("expiresAt")] = newExpiresAt.toMSecsSinceEpoch();
+    tokenData[DropboxSyncProvider::AccessToken] = newAccessToken;
+    tokenData[DropboxSyncProvider::ExpiresAt] = newExpiresAt.toMSecsSinceEpoch();
     QString tokenJson = QString::fromUtf8(QJsonDocument(tokenData).toJson(QJsonDocument::Compact));
 
     // Zero sensitive data
@@ -558,15 +566,14 @@ void DropboxSyncProvider::abort()
 
 QString DropboxSyncProvider::displayName() const
 {
-    // Untranslated identifier; UI applies tr() at call site.
-    return QStringLiteral("Dropbox");
+    return DisplayName;
 }
 
 RemoteSyncParams* DropboxSyncProvider::createParams() const
 {
     // Caller takes ownership.
     auto* params = new DropboxSyncParams();
-    params->type = QStringLiteral("dropbox");
+    params->type = Type;
     return params;
 }
 
@@ -574,15 +581,15 @@ RemoteSyncParams* DropboxSyncProvider::buildParamsFromConfig(const QJsonObject& 
 {
     // Caller takes ownership.
     auto* params = new DropboxSyncParams();
-    params->type = QStringLiteral("dropbox");
-    params->name = config[QStringLiteral("name")].toString();
-    params->appKey = config[QStringLiteral("appKey")].toString();
-    params->remotePath = config[QStringLiteral("remotePath")].toString();
-    params->accessToken = config[QStringLiteral("accessToken")].toString();
-    params->refreshToken = config[QStringLiteral("refreshToken")].toString();
-    if (config.contains(QStringLiteral("expiresAt"))) {
+    params->type = Type;
+    params->name = config[RemoteSyncConfigKeys::Name].toString();
+    params->appKey = config[DropboxSyncProvider::AppKey].toString();
+    params->remotePath = config[RemoteSyncConfigKeys::RemotePath].toString();
+    params->accessToken = config[DropboxSyncProvider::AccessToken].toString();
+    params->refreshToken = config[DropboxSyncProvider::RefreshToken].toString();
+    if (config.contains(DropboxSyncProvider::ExpiresAt)) {
         params->expiresAt =
-            QDateTime::fromMSecsSinceEpoch(config[QStringLiteral("expiresAt")].toVariant().toLongLong());
+            QDateTime::fromMSecsSinceEpoch(config[DropboxSyncProvider::ExpiresAt].toVariant().toLongLong());
     }
     return params;
 }
@@ -606,12 +613,12 @@ bool DropboxSyncProvider::applyRefreshedTokens(const QString& stdOutput, RemoteS
     auto* dpxParams = static_cast<DropboxSyncParams*>(params);
 
     QJsonObject tokenData = doc.object();
-    if (tokenData.contains(QStringLiteral("accessToken"))) {
-        dpxParams->accessToken = tokenData[QStringLiteral("accessToken")].toString();
+    if (tokenData.contains(DropboxSyncProvider::AccessToken)) {
+        dpxParams->accessToken = tokenData[DropboxSyncProvider::AccessToken].toString();
     }
-    if (tokenData.contains(QStringLiteral("expiresAt"))) {
+    if (tokenData.contains(DropboxSyncProvider::ExpiresAt)) {
         dpxParams->expiresAt =
-            QDateTime::fromMSecsSinceEpoch(tokenData[QStringLiteral("expiresAt")].toVariant().toLongLong());
+            QDateTime::fromMSecsSinceEpoch(tokenData[DropboxSyncProvider::ExpiresAt].toVariant().toLongLong());
     }
     return true;
 }
@@ -640,10 +647,10 @@ bool DropboxSyncProvider::isAuthorized(const QJsonObject& config) const
     //     (without it an expired/restarted session can never recover)
     //   - appKey: client_id used by refreshAuth
     //   - remotePath: target path on Dropbox; sync has no usable default
-    return !config.value(QStringLiteral("accessToken")).toString().isEmpty()
-           && !config.value(QStringLiteral("refreshToken")).toString().isEmpty()
-           && !config.value(QStringLiteral("appKey")).toString().isEmpty()
-           && !config.value(QStringLiteral("remotePath")).toString().isEmpty();
+    return !config.value(DropboxSyncProvider::AccessToken).toString().isEmpty()
+           && !config.value(DropboxSyncProvider::RefreshToken).toString().isEmpty()
+           && !config.value(DropboxSyncProvider::AppKey).toString().isEmpty()
+           && !config.value(RemoteSyncConfigKeys::RemotePath).toString().isEmpty();
 }
 
 void DropboxSyncProvider::persistRefreshedTokens(const QString& stdOutput, RemoteSettings* settings) const
@@ -659,7 +666,7 @@ void DropboxSyncProvider::persistRefreshedTokens(const QString& stdOutput, Remot
     }
 
     QJsonObject config = settings->cloudSyncConfig();
-    if (config.value(QStringLiteral("type")).toString() != QStringLiteral("dropbox")) {
+    if (config.value(RemoteSyncConfigKeys::Type).toString() != Type) {
         qWarning("DropboxSyncProvider: stored cloud config is not Dropbox; skipping token persist");
         return;
     }
@@ -667,11 +674,11 @@ void DropboxSyncProvider::persistRefreshedTokens(const QString& stdOutput, Remot
     // Update only the fields that refreshAuth returns (accessToken, expiresAt).
     // Do NOT overwrite refreshToken -- Dropbox refresh response has no refresh_token field.
     QJsonObject tokenData = doc.object();
-    if (tokenData.contains(QStringLiteral("accessToken"))) {
-        config[QStringLiteral("accessToken")] = tokenData[QStringLiteral("accessToken")].toString();
+    if (tokenData.contains(DropboxSyncProvider::AccessToken)) {
+        config[DropboxSyncProvider::AccessToken] = tokenData[DropboxSyncProvider::AccessToken].toString();
     }
-    if (tokenData.contains(QStringLiteral("expiresAt"))) {
-        config[QStringLiteral("expiresAt")] = tokenData[QStringLiteral("expiresAt")];
+    if (tokenData.contains(DropboxSyncProvider::ExpiresAt)) {
+        config[DropboxSyncProvider::ExpiresAt] = tokenData[DropboxSyncProvider::ExpiresAt];
     }
 
     settings->setCloudSyncConfig(config);

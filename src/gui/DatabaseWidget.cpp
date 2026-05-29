@@ -1242,7 +1242,7 @@ void DatabaseWidget::syncWithCloud()
     }
 
     QJsonObject config = m_remoteSettings->cloudSyncConfig();
-    const QString type = config.value(QStringLiteral("type")).toString();
+    const QString type = config.value(RemoteSyncConfigKeys::Type).toString();
     if (type.isEmpty()) {
         return; // No active cloud provider configured
     }
@@ -1305,7 +1305,7 @@ bool DatabaseWidget::isCloudSyncAuthorized() const
     if (config.isEmpty()) {
         return false;
     }
-    const QString type = config.value(QStringLiteral("type")).toString();
+    const QString type = config.value(RemoteSyncConfigKeys::Type).toString();
     QScopedPointer<RemoteSyncProvider> provider(RemoteSyncProvider::create(type));
     return provider && provider->isAuthorized(config);
 }
@@ -1336,7 +1336,7 @@ void DatabaseWidget::onDatabaseSavedTriggerSync()
         return;
     }
     const QJsonObject config = m_remoteSettings->cloudSyncConfig();
-    if (!config.value(QStringLiteral("syncOnSave")).toBool(true)) {
+    if (!config.value(RemoteSyncConfigKeys::SyncOnSave).toBool(true)) {
         return;
     }
     syncWithCloud();
@@ -1351,7 +1351,7 @@ void DatabaseWidget::onDatabaseUnlockedTriggerSync()
         return;
     }
     const QJsonObject config = m_remoteSettings->cloudSyncConfig();
-    if (!config.value(QStringLiteral("syncOnOpen")).toBool(true)) {
+    if (!config.value(RemoteSyncConfigKeys::SyncOnOpen).toBool(true)) {
         return;
     }
     // Defer sync after unlock flow completes (avoids interference with processAutoOpen)

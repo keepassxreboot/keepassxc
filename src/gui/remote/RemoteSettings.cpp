@@ -19,6 +19,7 @@
 
 #include "core/Database.h"
 #include "core/Metadata.h"
+#include "remotesync/RemoteSyncParams.h"
 #include "remotesync/RemoteSyncProvider.h"
 
 #include <QDebug>
@@ -93,7 +94,7 @@ void RemoteSettings::clearCloudSyncConfig()
 
 QString RemoteSettings::activeProvider() const
 {
-    return m_cloudConfig.value(QStringLiteral("type")).toString();
+    return m_cloudConfig.value(RemoteSyncConfigKeys::Type).toString();
 }
 
 void RemoteSettings::loadSettings()
@@ -143,7 +144,7 @@ QString RemoteSettings::toConfig() const
     for (auto it = m_remoteParams.constBegin(); it != m_remoteParams.constEnd(); ++it) {
         const RemoteParams& params = it.value();
         QJsonObject object;
-        object[QStringLiteral("name")] = params.name;
+        object[RemoteSyncConfigKeys::Name] = params.name;
         object[QStringLiteral("downloadCommand")] = params.downloadCommand;
         object[QStringLiteral("downloadCommandInput")] = params.downloadInput;
         object[QStringLiteral("downloadTimeoutMsec")] = params.downloadTimeoutMsec;
@@ -163,7 +164,7 @@ void RemoteSettings::fromConfig(const QString& data)
     for (const auto& item : json.array().toVariantList()) {
         auto itemMap = item.toMap();
         RemoteParams params;
-        params.name = itemMap[QStringLiteral("name")].toString();
+        params.name = itemMap[RemoteSyncConfigKeys::Name].toString();
         params.downloadCommand = itemMap[QStringLiteral("downloadCommand")].toString();
         params.downloadInput = itemMap[QStringLiteral("downloadCommandInput")].toString();
         params.downloadTimeoutMsec = itemMap.value(QStringLiteral("downloadTimeoutMsec"), 10000).toInt();

@@ -111,10 +111,10 @@ RemoteSyncProvider* RemoteSyncProvider::create(const QString& type, QObject* par
         return new CommandSyncProvider(parent);
     }
 #ifdef KPXC_FEATURE_NETWORK
-    if (type == QStringLiteral("dropbox")) {
+    if (type == DropboxSyncProvider::Type) {
         return new DropboxSyncProvider(parent);
     }
-    if (type == QStringLiteral("nextcloud")) {
+    if (type == NextcloudSyncProvider::Type) {
         return new NextcloudSyncProvider(parent);
     }
 #endif

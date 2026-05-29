@@ -20,6 +20,7 @@
 
 #include "RemoteSettings.h"
 #include "gui/MessageWidget.h"
+#include "remotesync/RemoteSyncParams.h"
 
 #include <QTimer>
 
@@ -104,7 +105,7 @@ void DatabaseSettingsWidgetCloudSync::initialize()
     // KPXC_CLOUD_SYNC_SETTINGS slot. Hand it to the matching page; the
     // others get an empty config so they show a blank form.
     const QJsonObject activeConfig = m_remoteSettings->cloudSyncConfig();
-    const QString activeType = activeConfig.value(QStringLiteral("type")).toString();
+    const QString activeType = activeConfig.value(RemoteSyncConfigKeys::Type).toString();
     for (auto* page : m_pages) {
         page->setMutualExclusivityWarning(false);
         page->loadFromConfig(page->providerType() == activeType ? activeConfig : QJsonObject{});

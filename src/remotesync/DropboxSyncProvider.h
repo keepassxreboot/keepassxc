@@ -36,6 +36,19 @@ public:
     explicit DropboxSyncProvider(QObject* parent = nullptr);
     ~DropboxSyncProvider() override;
 
+    // Provider identity, single source of truth referenced by the factory,
+    // the settings page, and this provider's own methods.
+    static const QString Type; // config "type" tag
+    static const QString DisplayName; // untranslated brand name, tr()'d at the UI call site
+
+    // Persisted config keys, shared by the settings page (writer) and
+    // buildParamsFromConfig/persist (reader). See RemoteSyncConfigKeys for keys
+    // common to all providers.
+    static const QString AccessToken;
+    static const QString RefreshToken;
+    static const QString ExpiresAt;
+    static const QString AppKey;
+
     RemoteHandler::RemoteResult download(const RemoteSyncParams* params) override;
     RemoteHandler::RemoteResult upload(const QString& filePath, const RemoteSyncParams* params) override;
     RemoteHandler::RemoteResult refreshAuth(const RemoteSyncParams* params) override;

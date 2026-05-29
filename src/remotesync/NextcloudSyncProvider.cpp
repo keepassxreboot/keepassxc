@@ -34,6 +34,13 @@
 #include <QThread>
 #include <QUrl>
 
+const QString NextcloudSyncProvider::Type = QStringLiteral("nextcloud");
+const QString NextcloudSyncProvider::DisplayName = QStringLiteral("Nextcloud");
+
+const QString NextcloudSyncProvider::ServerBaseUrl = QStringLiteral("serverBaseUrl");
+const QString NextcloudSyncProvider::LoginName = QStringLiteral("loginName");
+const QString NextcloudSyncProvider::AppPassword = QStringLiteral("appPassword");
+
 NextcloudSyncProvider::NextcloudSyncProvider(QObject* parent)
     : RemoteSyncProvider(parent)
 {
@@ -58,13 +65,13 @@ void NextcloudSyncProvider::ensureNam()
 
 QString NextcloudSyncProvider::displayName() const
 {
-    return QStringLiteral("Nextcloud");
+    return DisplayName;
 }
 
 RemoteSyncParams* NextcloudSyncProvider::createParams() const
 {
     auto* p = new NextcloudSyncParams;
-    p->type = QStringLiteral("nextcloud");
+    p->type = Type;
     return p;
 }
 
@@ -72,10 +79,10 @@ RemoteSyncParams* NextcloudSyncProvider::buildParamsFromConfig(const QJsonObject
 {
     auto* base = createParams();
     auto* p = static_cast<NextcloudSyncParams*>(base);
-    p->serverBaseUrl = config.value(QStringLiteral("serverBaseUrl")).toString();
-    p->remotePath = config.value(QStringLiteral("remotePath")).toString();
-    p->loginName = config.value(QStringLiteral("loginName")).toString();
-    p->appPassword = config.value(QStringLiteral("appPassword")).toString();
+    p->serverBaseUrl = config.value(NextcloudSyncProvider::ServerBaseUrl).toString();
+    p->remotePath = config.value(RemoteSyncConfigKeys::RemotePath).toString();
+    p->loginName = config.value(NextcloudSyncProvider::LoginName).toString();
+    p->appPassword = config.value(NextcloudSyncProvider::AppPassword).toString();
     p->timeoutMsec = config.value(QStringLiteral("timeoutMsec")).toInt(30000);
     return p;
 }
@@ -915,10 +922,10 @@ bool NextcloudSyncProvider::isAuthorized(const QJsonObject& config) const
     //   - loginName + appPassword: Basic-auth credential pair
     //   - serverBaseUrl: WebDAV endpoint base; sync has no usable default
     //   - remotePath: target path under the user's files namespace
-    return !config.value(QStringLiteral("loginName")).toString().isEmpty()
-           && !config.value(QStringLiteral("appPassword")).toString().isEmpty()
-           && !config.value(QStringLiteral("serverBaseUrl")).toString().isEmpty()
-           && !config.value(QStringLiteral("remotePath")).toString().isEmpty();
+    return !config.value(NextcloudSyncProvider::LoginName).toString().isEmpty()
+           && !config.value(NextcloudSyncProvider::AppPassword).toString().isEmpty()
+           && !config.value(NextcloudSyncProvider::ServerBaseUrl).toString().isEmpty()
+           && !config.value(RemoteSyncConfigKeys::RemotePath).toString().isEmpty();
 }
 
 // ---------------------------------------------------------------------------

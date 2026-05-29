@@ -111,15 +111,12 @@ void NextcloudCloudSyncPage::setProvider(RemoteSyncProvider* provider)
 
 QString NextcloudCloudSyncPage::providerType() const
 {
-    return QStringLiteral("nextcloud");
+    return NextcloudSyncProvider::Type;
 }
 
 QString NextcloudCloudSyncPage::providerDisplayName() const
 {
-    // Untranslated brand identifier, matching DropboxCloudSyncPage and
-    // RemoteSyncProvider::displayName's "UI applies tr() at the call site"
-    // contract. The dropdown population code is the single tr() site.
-    return QStringLiteral("Nextcloud");
+    return NextcloudSyncProvider::DisplayName;
 }
 
 void NextcloudCloudSyncPage::loadFromConfig(const QJsonObject& config)
@@ -142,10 +139,10 @@ void NextcloudCloudSyncPage::loadFromConfig(const QJsonObject& config)
     const QSignalBlocker appPasswordBlocker(m_ui->appPasswordEdit);
     const QSignalBlocker appPasswordGroupBoxBlocker(m_ui->appPasswordGroupBox);
 
-    m_ui->serverBaseUrlEdit->setText(m_config[QStringLiteral("serverBaseUrl")].toString());
-    m_ui->remotePathEdit->setText(m_config[QStringLiteral("remotePath")].toString());
-    m_ui->syncOnSaveCheckBox->setChecked(m_config.value(QStringLiteral("syncOnSave")).toBool(true));
-    m_ui->syncOnOpenCheckBox->setChecked(m_config.value(QStringLiteral("syncOnOpen")).toBool(true));
+    m_ui->serverBaseUrlEdit->setText(m_config[NextcloudSyncProvider::ServerBaseUrl].toString());
+    m_ui->remotePathEdit->setText(m_config[RemoteSyncConfigKeys::RemotePath].toString());
+    m_ui->syncOnSaveCheckBox->setChecked(m_config.value(RemoteSyncConfigKeys::SyncOnSave).toBool(true));
+    m_ui->syncOnOpenCheckBox->setChecked(m_config.value(RemoteSyncConfigKeys::SyncOnOpen).toBool(true));
 
     // Populate sub-panel fields from m_config but always leave the QGroupBox
     // collapsed. The checkbox represents the user's explicit choice to use
@@ -157,8 +154,8 @@ void NextcloudCloudSyncPage::loadFromConfig(const QJsonObject& config)
     // -> children disabled), so the user sees the saved creds without being
     // able to edit them by accident. Clicking the box is the user's
     // affirmative "I want to edit/paste" action.
-    const QString loginName = m_config[QStringLiteral("loginName")].toString();
-    const QString appPassword = m_config[QStringLiteral("appPassword")].toString();
+    const QString loginName = m_config[NextcloudSyncProvider::LoginName].toString();
+    const QString appPassword = m_config[NextcloudSyncProvider::AppPassword].toString();
     m_ui->loginNameEdit->setText(loginName);
     m_ui->appPasswordEdit->setText(appPassword);
     m_ui->appPasswordGroupBox->setChecked(false);
@@ -201,12 +198,12 @@ QJsonObject NextcloudCloudSyncPage::saveToConfig() const
     // or onAppPasswordAuthorizeClicked) so successive loadFromConfig sees the
     // persisted creds.
     QJsonObject config = m_config;
-    config[QStringLiteral("type")] = providerType();
-    config[QStringLiteral("name")] = ConfigName;
-    config[QStringLiteral("serverBaseUrl")] = m_ui->serverBaseUrlEdit->text().trimmed();
-    config[QStringLiteral("remotePath")] = NextcloudSyncProvider::normalizeRemotePath(m_ui->remotePathEdit->text());
-    config[QStringLiteral("syncOnSave")] = m_ui->syncOnSaveCheckBox->isChecked();
-    config[QStringLiteral("syncOnOpen")] = m_ui->syncOnOpenCheckBox->isChecked();
+    config[RemoteSyncConfigKeys::Type] = providerType();
+    config[RemoteSyncConfigKeys::Name] = ConfigName;
+    config[NextcloudSyncProvider::ServerBaseUrl] = m_ui->serverBaseUrlEdit->text().trimmed();
+    config[RemoteSyncConfigKeys::RemotePath] = NextcloudSyncProvider::normalizeRemotePath(m_ui->remotePathEdit->text());
+    config[RemoteSyncConfigKeys::SyncOnSave] = m_ui->syncOnSaveCheckBox->isChecked();
+    config[RemoteSyncConfigKeys::SyncOnOpen] = m_ui->syncOnOpenCheckBox->isChecked();
 
     // App-password sub-panel fields are the "paste-without-clicking-Authorize-
     // with-AppPassword" path. Only let them override m_config when they
@@ -218,10 +215,10 @@ QJsonObject NextcloudCloudSyncPage::saveToConfig() const
     const QString uiLoginName = m_ui->loginNameEdit->text().trimmed();
     const QString uiAppPassword = m_ui->appPasswordEdit->text();
     if (!uiLoginName.isEmpty()) {
-        config[QStringLiteral("loginName")] = uiLoginName;
+        config[NextcloudSyncProvider::LoginName] = uiLoginName;
     }
     if (!uiAppPassword.isEmpty()) {
-        config[QStringLiteral("appPassword")] = uiAppPassword;
+        config[NextcloudSyncProvider::AppPassword] = uiAppPassword;
     }
 
     return config;
@@ -406,10 +403,10 @@ void NextcloudCloudSyncPage::onAppPasswordAuthorizeClicked()
         // (DatabaseSettingsWidgetCloudSync::saveSettings). m_modified + emit
         // modified() is what actually flips the parent's Apply button enabled
         // state.
-        m_config[QStringLiteral("loginName")] = loginName;
-        m_config[QStringLiteral("appPassword")] = appPassword;
-        m_config[QStringLiteral("serverBaseUrl")] = serverUrl;
-        m_config[QStringLiteral("remotePath")] = NextcloudSyncProvider::normalizeRemotePath(m_ui->remotePathEdit->text());
+        m_config[NextcloudSyncProvider::LoginName] = loginName;
+        m_config[NextcloudSyncProvider::AppPassword] = appPassword;
+        m_config[NextcloudSyncProvider::ServerBaseUrl] = serverUrl;
+        m_config[RemoteSyncConfigKeys::RemotePath] = NextcloudSyncProvider::normalizeRemotePath(m_ui->remotePathEdit->text());
         m_modified = true;
         emit modified();
 
@@ -463,9 +460,9 @@ void NextcloudCloudSyncPage::onTestConnectionClicked()
     // validation; this top-level Test Connection button uses the persisted
     // m_config creds so the user can verify the saved-creds path works
     // without re-typing.
-    const QString loginName = m_config[QStringLiteral("loginName")].toString();
-    const QString appPassword = m_config[QStringLiteral("appPassword")].toString();
-    const QString serverUrl = m_config[QStringLiteral("serverBaseUrl")].toString();
+    const QString loginName = m_config[NextcloudSyncProvider::LoginName].toString();
+    const QString appPassword = m_config[NextcloudSyncProvider::AppPassword].toString();
+    const QString serverUrl = m_config[NextcloudSyncProvider::ServerBaseUrl].toString();
 
     if (serverUrl.isEmpty() || loginName.isEmpty() || appPassword.isEmpty()) {
         emit showMessage(tr("Authorize Nextcloud first to test the connection."), MessageWidget::Warning, false);
@@ -476,7 +473,7 @@ void NextcloudCloudSyncPage::onTestConnectionClicked()
     params->type = providerType();
     params->name = ConfigName;
     params->serverBaseUrl = NextcloudSyncProvider::canonicalizeServerBaseUrl(serverUrl);
-    params->remotePath = m_config[QStringLiteral("remotePath")].toString();
+    params->remotePath = m_config[RemoteSyncConfigKeys::RemotePath].toString();
     params->loginName = loginName;
     params->appPassword = appPassword;
     params->timeoutMsec = 30000;
@@ -629,7 +626,7 @@ void NextcloudCloudSyncPage::updateAuthStatus(AuthState state)
         break;
 
     case AuthState::Authorized:
-        m_ui->authStatusLabel->setText(tr("Authorized as %1").arg(m_config[QStringLiteral("loginName")].toString()));
+        m_ui->authStatusLabel->setText(tr("Authorized as %1").arg(m_config[NextcloudSyncProvider::LoginName].toString()));
         m_ui->authStatusLabel->setStyleSheet(boldGreen);
         // Button text in Authorized state is "Remove" (NOT "Revoke") for
         // Nextcloud, since Login Flow v2 has no server-side revoke endpoint
@@ -678,10 +675,10 @@ void NextcloudCloudSyncPage::onLoginCompleted(const QString& loginName, const QS
     // trigger databaseSaved -> sync-on-save while the dialog is still open,
     // causing a duplicate sync. The user's Apply click is the persist gate
     // (DatabaseSettingsWidgetCloudSync::saveSettings).
-    m_config[QStringLiteral("loginName")] = loginName;
-    m_config[QStringLiteral("appPassword")] = appPassword;
-    m_config[QStringLiteral("serverBaseUrl")] = m_ui->serverBaseUrlEdit->text().trimmed();
-    m_config[QStringLiteral("remotePath")] = NextcloudSyncProvider::normalizeRemotePath(m_ui->remotePathEdit->text());
+    m_config[NextcloudSyncProvider::LoginName] = loginName;
+    m_config[NextcloudSyncProvider::AppPassword] = appPassword;
+    m_config[NextcloudSyncProvider::ServerBaseUrl] = m_ui->serverBaseUrlEdit->text().trimmed();
+    m_config[RemoteSyncConfigKeys::RemotePath] = NextcloudSyncProvider::normalizeRemotePath(m_ui->remotePathEdit->text());
     m_modified = true;
     emit modified();
 

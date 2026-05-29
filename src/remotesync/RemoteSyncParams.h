@@ -21,6 +21,17 @@
 #include <QDateTime>
 #include <QString>
 
+// Persisted config keys common to all cloud providers. Provider-specific keys
+// live as static const members on the respective provider class.
+namespace RemoteSyncConfigKeys
+{
+    inline const QString Type = QStringLiteral("type");
+    inline const QString Name = QStringLiteral("name");
+    inline const QString RemotePath = QStringLiteral("remotePath");
+    inline const QString SyncOnSave = QStringLiteral("syncOnSave");
+    inline const QString SyncOnOpen = QStringLiteral("syncOnOpen");
+} // namespace RemoteSyncConfigKeys
+
 struct RemoteSyncParams
 {
     QString type; // "command", "dropbox", etc.

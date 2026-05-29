@@ -81,12 +81,12 @@ void DropboxCloudSyncPage::setProvider(RemoteSyncProvider* provider)
 
 QString DropboxCloudSyncPage::providerType() const
 {
-    return QStringLiteral("dropbox");
+    return DropboxSyncProvider::Type;
 }
 
 QString DropboxCloudSyncPage::providerDisplayName() const
 {
-    return QStringLiteral("Dropbox");
+    return DropboxSyncProvider::DisplayName;
 }
 
 void DropboxCloudSyncPage::loadFromConfig(const QJsonObject& config)
@@ -105,12 +105,12 @@ void DropboxCloudSyncPage::loadFromConfig(const QJsonObject& config)
     const QSignalBlocker syncOnSaveBlocker(m_ui->syncOnSaveCheckBox);
     const QSignalBlocker syncOnOpenBlocker(m_ui->syncOnOpenCheckBox);
 
-    m_ui->appKeyEdit->setText(m_config[QStringLiteral("appKey")].toString());
-    m_ui->remotePathEdit->setText(m_config[QStringLiteral("remotePath")].toString());
-    m_ui->syncOnSaveCheckBox->setChecked(m_config.value(QStringLiteral("syncOnSave")).toBool(true));
-    m_ui->syncOnOpenCheckBox->setChecked(m_config.value(QStringLiteral("syncOnOpen")).toBool(true));
+    m_ui->appKeyEdit->setText(m_config[DropboxSyncProvider::AppKey].toString());
+    m_ui->remotePathEdit->setText(m_config[RemoteSyncConfigKeys::RemotePath].toString());
+    m_ui->syncOnSaveCheckBox->setChecked(m_config.value(RemoteSyncConfigKeys::SyncOnSave).toBool(true));
+    m_ui->syncOnOpenCheckBox->setChecked(m_config.value(RemoteSyncConfigKeys::SyncOnOpen).toBool(true));
 
-    QString accessToken = m_config[QStringLiteral("accessToken")].toString();
+    QString accessToken = m_config[DropboxSyncProvider::AccessToken].toString();
     if (!accessToken.isEmpty()) {
         m_authState = AuthState::Authorized;
     } else {
@@ -133,24 +133,24 @@ QJsonObject DropboxCloudSyncPage::saveToConfig() const
     }
 
     QJsonObject config;
-    config[QStringLiteral("type")] = providerType();
-    config[QStringLiteral("name")] = ConfigName;
-    config[QStringLiteral("appKey")] = m_ui->appKeyEdit->text().trimmed();
-    config[QStringLiteral("remotePath")] = m_ui->remotePathEdit->text().trimmed();
+    config[RemoteSyncConfigKeys::Type] = providerType();
+    config[RemoteSyncConfigKeys::Name] = ConfigName;
+    config[DropboxSyncProvider::AppKey] = m_ui->appKeyEdit->text().trimmed();
+    config[RemoteSyncConfigKeys::RemotePath] = m_ui->remotePathEdit->text().trimmed();
 
     // Preserve token fields from cached config (auth flow sets these, not the UI)
-    if (m_config.contains(QStringLiteral("accessToken"))) {
-        config[QStringLiteral("accessToken")] = m_config[QStringLiteral("accessToken")];
+    if (m_config.contains(DropboxSyncProvider::AccessToken)) {
+        config[DropboxSyncProvider::AccessToken] = m_config[DropboxSyncProvider::AccessToken];
     }
-    if (m_config.contains(QStringLiteral("refreshToken"))) {
-        config[QStringLiteral("refreshToken")] = m_config[QStringLiteral("refreshToken")];
+    if (m_config.contains(DropboxSyncProvider::RefreshToken)) {
+        config[DropboxSyncProvider::RefreshToken] = m_config[DropboxSyncProvider::RefreshToken];
     }
-    if (m_config.contains(QStringLiteral("expiresAt"))) {
-        config[QStringLiteral("expiresAt")] = m_config[QStringLiteral("expiresAt")];
+    if (m_config.contains(DropboxSyncProvider::ExpiresAt)) {
+        config[DropboxSyncProvider::ExpiresAt] = m_config[DropboxSyncProvider::ExpiresAt];
     }
 
-    config[QStringLiteral("syncOnSave")] = m_ui->syncOnSaveCheckBox->isChecked();
-    config[QStringLiteral("syncOnOpen")] = m_ui->syncOnOpenCheckBox->isChecked();
+    config[RemoteSyncConfigKeys::SyncOnSave] = m_ui->syncOnSaveCheckBox->isChecked();
+    config[RemoteSyncConfigKeys::SyncOnOpen] = m_ui->syncOnOpenCheckBox->isChecked();
     return config;
 }
 
@@ -172,9 +172,9 @@ std::unique_ptr<DropboxSyncParams> DropboxCloudSyncPage::buildDropboxParams() co
     params->appKey = m_ui->appKeyEdit->text().trimmed();
     params->remotePath = m_ui->remotePathEdit->text().trimmed();
     // Token data comes from stored config
-    params->accessToken = m_config[QStringLiteral("accessToken")].toString();
-    params->refreshToken = m_config[QStringLiteral("refreshToken")].toString();
-    params->expiresAt = QDateTime::fromMSecsSinceEpoch(m_config[QStringLiteral("expiresAt")].toVariant().toLongLong());
+    params->accessToken = m_config[DropboxSyncProvider::AccessToken].toString();
+    params->refreshToken = m_config[DropboxSyncProvider::RefreshToken].toString();
+    params->expiresAt = QDateTime::fromMSecsSinceEpoch(m_config[DropboxSyncProvider::ExpiresAt].toVariant().toLongLong());
     params->timeoutMsec = 30000;
     return params;
 }
@@ -271,9 +271,9 @@ void DropboxCloudSyncPage::onRevokeClicked()
     }
 
     // Clear token fields from cached config
-    m_config.remove(QStringLiteral("accessToken"));
-    m_config.remove(QStringLiteral("refreshToken"));
-    m_config.remove(QStringLiteral("expiresAt"));
+    m_config.remove(DropboxSyncProvider::AccessToken);
+    m_config.remove(DropboxSyncProvider::RefreshToken);
+    m_config.remove(DropboxSyncProvider::ExpiresAt);
 
     // Dialog may have been torn down during the nested event loop in revokeToken().
     if (!m_remoteSettings) {
@@ -293,7 +293,7 @@ void DropboxCloudSyncPage::onRevokeClicked()
 void DropboxCloudSyncPage::onTestConnectionClicked()
 {
     // Validate prerequisites
-    if (m_config[QStringLiteral("accessToken")].toString().isEmpty()) {
+    if (m_config[DropboxSyncProvider::AccessToken].toString().isEmpty()) {
         emit showMessage(tr("Authorize first before testing the connection."), MessageWidget::Warning, false);
         return;
     }
@@ -326,14 +326,14 @@ void DropboxCloudSyncPage::onTestConnectionClicked()
         QJsonDocument doc = QJsonDocument::fromJson(refreshResult.stdOutput.toUtf8());
         if (!doc.isNull() && doc.isObject()) {
             QJsonObject tokenData = doc.object();
-            if (tokenData.contains(QStringLiteral("accessToken"))) {
-                params->accessToken = tokenData[QStringLiteral("accessToken")].toString();
-                m_config[QStringLiteral("accessToken")] = params->accessToken;
+            if (tokenData.contains(DropboxSyncProvider::AccessToken)) {
+                params->accessToken = tokenData[DropboxSyncProvider::AccessToken].toString();
+                m_config[DropboxSyncProvider::AccessToken] = params->accessToken;
             }
-            if (tokenData.contains(QStringLiteral("expiresAt"))) {
+            if (tokenData.contains(DropboxSyncProvider::ExpiresAt)) {
                 params->expiresAt =
-                    QDateTime::fromMSecsSinceEpoch(tokenData[QStringLiteral("expiresAt")].toVariant().toLongLong());
-                m_config[QStringLiteral("expiresAt")] = tokenData[QStringLiteral("expiresAt")];
+                    QDateTime::fromMSecsSinceEpoch(tokenData[DropboxSyncProvider::ExpiresAt].toVariant().toLongLong());
+                m_config[DropboxSyncProvider::ExpiresAt] = tokenData[DropboxSyncProvider::ExpiresAt];
             }
             // Dialog may have been torn down during the nested event loop in refreshAuth().
             if (!m_remoteSettings) {
@@ -542,14 +542,14 @@ void DropboxCloudSyncPage::mergeAndPersistTokens(const QString& accessToken,
                                                  qint64 expiresAtMs)
 {
     // Ensure config always has required metadata (auth may fire before saveSettings).
-    m_config[QStringLiteral("type")] = providerType();
-    m_config[QStringLiteral("name")] = ConfigName;
-    m_config[QStringLiteral("appKey")] = m_ui->appKeyEdit->text().trimmed();
-    m_config[QStringLiteral("remotePath")] = m_ui->remotePathEdit->text().trimmed();
+    m_config[RemoteSyncConfigKeys::Type] = providerType();
+    m_config[RemoteSyncConfigKeys::Name] = ConfigName;
+    m_config[DropboxSyncProvider::AppKey] = m_ui->appKeyEdit->text().trimmed();
+    m_config[RemoteSyncConfigKeys::RemotePath] = m_ui->remotePathEdit->text().trimmed();
 
-    m_config[QStringLiteral("accessToken")] = accessToken;
-    m_config[QStringLiteral("refreshToken")] = refreshToken;
-    m_config[QStringLiteral("expiresAt")] = static_cast<double>(expiresAtMs);
+    m_config[DropboxSyncProvider::AccessToken] = accessToken;
+    m_config[DropboxSyncProvider::RefreshToken] = refreshToken;
+    m_config[DropboxSyncProvider::ExpiresAt] = static_cast<double>(expiresAtMs);
 
     if (m_remoteSettings) {
         m_remoteSettings->setCloudSyncConfig(m_config);

@@ -45,6 +45,18 @@ public:
     explicit NextcloudSyncProvider(QObject* parent = nullptr);
     ~NextcloudSyncProvider() override;
 
+    // Provider identity, single source of truth referenced by the factory,
+    // the settings page, and this provider's own methods.
+    static const QString Type; // config "type" tag
+    static const QString DisplayName; // untranslated brand name, tr()'d at the UI call site
+
+    // Persisted config keys, shared by the settings page (writer), the login
+    // flow, and buildParamsFromConfig (reader). See RemoteSyncConfigKeys for
+    // keys common to all providers.
+    static const QString ServerBaseUrl;
+    static const QString LoginName;
+    static const QString AppPassword;
+
     RemoteHandler::RemoteResult download(const RemoteSyncParams* params) override;
     RemoteHandler::RemoteResult upload(const QString& filePath, const RemoteSyncParams* params) override;
     RemoteHandler::RemoteResult refreshAuth(const RemoteSyncParams* params) override;
