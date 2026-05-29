@@ -29,6 +29,7 @@ private slots:
 
     // canonicalizeServerBaseUrl
     void testCanonicalize_addsHttpsWhenSchemeAbsent();
+    void testCanonicalize_schemelessHostPort();
     void testCanonicalize_acceptsHttps();
     void testCanonicalize_acceptsHttpForLoopback();
     void testCanonicalize_rejectsHttpForNonLoopback();

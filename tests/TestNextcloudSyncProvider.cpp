@@ -50,6 +50,14 @@ void TestNextcloudSyncProvider::testCanonicalize_addsHttpsWhenSchemeAbsent()
              QStringLiteral("https://cloud.example.com"));
 }
 
+void TestNextcloudSyncProvider::testCanonicalize_schemelessHostPort()
+{
+    // Ensures "host:port" without a scheme is parsed as host and port,
+    // not as scheme="host".
+    QCOMPARE(NextcloudSyncProvider::canonicalizeServerBaseUrl(QStringLiteral("localhost:8080")),
+             QStringLiteral("https://localhost:8080"));
+}
+
 void TestNextcloudSyncProvider::testCanonicalize_acceptsHttps()
 {
     QCOMPARE(NextcloudSyncProvider::canonicalizeServerBaseUrl(QStringLiteral("https://cloud.example.com")),

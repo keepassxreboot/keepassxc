@@ -921,18 +921,23 @@ bool NextcloudSyncProvider::isAuthorized(const QJsonObject& config) const
 // ---------------------------------------------------------------------------
 QString NextcloudSyncProvider::canonicalizeServerBaseUrl(QString input)
 {
-    input = input.trimmed();
-    if (input.isEmpty()) {
+    // fromUserInput() trims internally, handles messy user-typed input the
+    // plain QUrl ctor mishandles (e.g. "localhost:8080" -> host:port, not
+    // scheme="localhost"), and returns an invalid URL for empty/garbage --
+    // url.host().isEmpty() folds the empty/whitespace/malformed cases into
+    // one gate.
+    QUrl url = QUrl::fromUserInput(input);
+    if (url.host().isEmpty()) {
         return {};
     }
 
-    // 1. Default scheme to https:// when absent
-    QUrl url(input);
-    if (url.scheme().isEmpty()) {
-        url = QUrl(QStringLiteral("https://") + input);
+    // Default to https when the user didn't type a scheme; keeps the
+    // Basic-auth app-password off cleartext. Mirrors BrowserService.
+    if (!input.contains(QStringLiteral("://"))) {
+        url.setScheme(QStringLiteral("https"));
     }
 
-    // 2. Transport-security gate. We reject cleartext http:// for non-loopback
+    // Transport-security gate. We reject cleartext http:// for non-loopback
     // hosts: the app-password is sent via the Authorization: Basic header on
     // every download/upload/testConnection, so allowing http://example.com
     // would leak the credential to any on-path observer. Loopback http is
@@ -948,14 +953,14 @@ QString NextcloudSyncProvider::canonicalizeServerBaseUrl(QString input)
         return {};
     }
 
-    // 3. Strip trailing slash from path (preserve subpath segments)
+    // Strip trailing slash from path (preserve subpath segments)
     QString path = url.path();
     while (path.endsWith(QLatin1Char('/'))) {
         path.chop(1);
     }
     url.setPath(path, QUrl::DecodedMode);
 
-    // 4. Drop fragment / query -- not part of a server-base URL.
+    // Drop fragment / query -- not part of a server-base URL.
     url.setFragment(QString());
     url.setQuery(QString());
 
@@ -1007,10 +1012,11 @@ NextcloudSyncProvider::ServerUrlValidity NextcloudSyncProvider::validateServerUr
         return ServerUrlValidity::Empty;
     }
 
-    // Default scheme to https:// when absent (mirrors canonicalizeServerBaseUrl).
-    QUrl url(trimmed);
-    if (url.scheme().isEmpty()) {
-        url = QUrl(QStringLiteral("https://") + trimmed);
+    // Parse with fromUserInput() and upgrade an invented http scheme to https,
+    // mirroring canonicalizeServerBaseUrl (see the rationale there).
+    QUrl url = QUrl::fromUserInput(trimmed);
+    if (!trimmed.contains(QStringLiteral("://"))) {
+        url.setScheme(QStringLiteral("https"));
     }
 
     // Transport-security gate. NotSecure is reported BEFORE Malformed so the
