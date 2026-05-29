@@ -175,7 +175,7 @@ std::unique_ptr<DropboxSyncParams> DropboxCloudSyncPage::buildDropboxParams() co
     params->accessToken = m_config[DropboxSyncProvider::AccessToken].toString();
     params->refreshToken = m_config[DropboxSyncProvider::RefreshToken].toString();
     params->expiresAt = QDateTime::fromMSecsSinceEpoch(m_config[DropboxSyncProvider::ExpiresAt].toVariant().toLongLong());
-    params->timeoutMsec = 30000;
+    params->timeoutMsec = CloudSyncDefaults::NetworkTimeoutMsec;
     return params;
 }
 
@@ -245,7 +245,7 @@ void DropboxCloudSyncPage::onAuthorizeClicked()
     // Start the flow. Signal-driven from here -- no nested QEventLoop, no
     // QPointer<self> reentrancy guard needed. The 4 slot wirings in
     // ensureLoginFlow handle every terminal outcome.
-    m_loginFlow->startAuthorization(appKey, 30000);
+    m_loginFlow->startAuthorization(appKey, CloudSyncDefaults::NetworkTimeoutMsec);
 
     emit requestAuthorize();
 }
@@ -456,7 +456,7 @@ void DropboxCloudSyncPage::onSubmitManualCode()
     // Hand off to the flow; outcome arrives via onAuthorizationCompleted or
     // onAuthorizationFailed. UI cleanup happens in those slots so the manual
     // code widget stays visible while the exchange POST is in flight.
-    m_loginFlow->submitManualCode(authCode, 30000);
+    m_loginFlow->submitManualCode(authCode, CloudSyncDefaults::NetworkTimeoutMsec);
 }
 
 void DropboxCloudSyncPage::onCancelManualCode()

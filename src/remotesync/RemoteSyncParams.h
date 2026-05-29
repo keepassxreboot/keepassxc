@@ -32,6 +32,14 @@ namespace RemoteSyncConfigKeys
     inline const QString SyncOnOpen = QStringLiteral("syncOnOpen");
 } // namespace RemoteSyncConfigKeys
 
+// Default network timeouts for the cloud-sync providers (Dropbox/Nextcloud),
+// their login flows and the cloud settings UI. The command provider has its
+// own process timeouts and does not use these.
+namespace CloudSyncDefaults
+{
+    constexpr int NetworkTimeoutMsec = 30000; // Default network/auth timeout (30s).
+} // namespace CloudSyncDefaults
+
 struct RemoteSyncParams
 {
     QString type; // "command", "dropbox", etc.
@@ -57,7 +65,7 @@ struct DropboxSyncParams : public RemoteSyncParams
     QDateTime expiresAt; // UTC time when accessToken expires
     QString appKey; // User's Dropbox App Key (client_id for PKCE)
     QString remotePath; // e.g., "/Apps/KeePassXC/passwords.kdbx"
-    int timeoutMsec = 30000; // Network timeout in milliseconds.
+    int timeoutMsec = CloudSyncDefaults::NetworkTimeoutMsec;
 };
 
 struct NextcloudSyncParams : public RemoteSyncParams
@@ -66,7 +74,7 @@ struct NextcloudSyncParams : public RemoteSyncParams
     QString remotePath; // NFC-normalized at save; e.g. "/Passwords/db.kdbx" -- must start with '/'
     QString loginName; // Nextcloud account login; populated by Login Flow v2 or paste fallback
     QString appPassword; // Basic-auth password; populated by Login Flow v2 or paste fallback
-    int timeoutMsec = 30000; // Network timeout in milliseconds.
+    int timeoutMsec = CloudSyncDefaults::NetworkTimeoutMsec;
 };
 
 #endif // KEEPASSXC_REMOTESYNCPARAMS_H

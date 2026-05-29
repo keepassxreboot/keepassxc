@@ -364,7 +364,7 @@ void NextcloudCloudSyncPage::onAppPasswordAuthorizeClicked()
     params->remotePath = NextcloudSyncProvider::normalizeRemotePath(m_ui->remotePathEdit->text());
     params->loginName = loginName;
     params->appPassword = appPassword;
-    params->timeoutMsec = 30000;
+    params->timeoutMsec = CloudSyncDefaults::NetworkTimeoutMsec;
 
     // Reentrancy guard. NextcloudSyncProvider::testConnection is synchronous
     // via an internal QEventLoop. If the user closes the dialog while the
@@ -476,7 +476,7 @@ void NextcloudCloudSyncPage::onTestConnectionClicked()
     params->remotePath = m_config[RemoteSyncConfigKeys::RemotePath].toString();
     params->loginName = loginName;
     params->appPassword = appPassword;
-    params->timeoutMsec = 30000;
+    params->timeoutMsec = CloudSyncDefaults::NetworkTimeoutMsec;
 
     // Reentrancy guard (see onAppPasswordAuthorizeClicked above; same
     // QEventLoop synchronous-call pattern).

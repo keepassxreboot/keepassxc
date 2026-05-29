@@ -83,7 +83,7 @@ RemoteSyncParams* NextcloudSyncProvider::buildParamsFromConfig(const QJsonObject
     p->remotePath = config.value(RemoteSyncConfigKeys::RemotePath).toString();
     p->loginName = config.value(NextcloudSyncProvider::LoginName).toString();
     p->appPassword = config.value(NextcloudSyncProvider::AppPassword).toString();
-    p->timeoutMsec = config.value(QStringLiteral("timeoutMsec")).toInt(30000);
+    p->timeoutMsec = config.value(QStringLiteral("timeoutMsec")).toInt(CloudSyncDefaults::NetworkTimeoutMsec);
     return p;
 }
 
