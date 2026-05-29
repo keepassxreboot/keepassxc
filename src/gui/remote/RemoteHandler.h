@@ -51,9 +51,13 @@ public:
         Aborted // User-initiated cancel (not a server error).
     };
 
+    // Aggregate with all-defaulted members so call sites only spell out the
+    // fields they actually set (via designated initializers), e.g.
+    // `return {.success = true, .filePath = path};` or
+    // `return {.success = false, .errorMessage = msg, .kind = kind};`.
     struct RemoteResult
     {
-        bool success;
+        bool success = false;
         QString errorMessage;
         QString filePath;
         QString stdOutput;

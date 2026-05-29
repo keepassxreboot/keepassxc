@@ -116,13 +116,13 @@ RemoteHandler::RemoteResult NextcloudSyncProvider::downloadImpl(const RemoteSync
     // Validate required fields. remotePath must start with '/' (NFC-normalized at
     // save time; we do not re-normalize here).
     if (ncParams->serverBaseUrl.isEmpty()) {
-        return {false, tr("Nextcloud server URL is required"), {}, {}, {}};
+        return {.success = false, .errorMessage = tr("Nextcloud server URL is required")};
     }
     if (ncParams->loginName.isEmpty()) {
-        return {false, tr("Nextcloud login name is required"), {}, {}, {}};
+        return {.success = false, .errorMessage = tr("Nextcloud login name is required")};
     }
     if (ncParams->remotePath.isEmpty() || !ncParams->remotePath.startsWith(QLatin1Char('/'))) {
-        return {false, tr("Remote path must start with '/'"), {}, {}, {}};
+        return {.success = false, .errorMessage = tr("Remote path must start with '/'")};
     }
 
     ensureNam();
@@ -160,12 +160,12 @@ RemoteHandler::RemoteResult NextcloudSyncProvider::downloadImpl(const RemoteSync
     basicCreds.fill('\0');
 
     if (!reply) {
-        return {false, tr("Network request failed"), {}, {}, {}, ErrorKind::Network};
+        return {.success = false, .errorMessage = tr("Network request failed"), .kind = ErrorKind::Network};
     }
 
     if (m_abortFlag.loadAcquire() != 0) {
         reply->deleteLater();
-        return {false, tr("Operation cancelled"), {}, {}, {}, ErrorKind::Aborted};
+        return {.success = false, .errorMessage = tr("Operation cancelled"), .kind = ErrorKind::Aborted};
     }
 
     int httpStatus = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
@@ -176,17 +176,14 @@ RemoteHandler::RemoteResult NextcloudSyncProvider::downloadImpl(const RemoteSync
     if (httpStatus == 0 && reply->error() != QNetworkReply::NoError) {
         if (reply->error() == QNetworkReply::SslHandshakeFailedError) {
             reply->deleteLater();
-            return {false,
-                    tr("Nextcloud server's SSL certificate could not be verified. "
-                       "Check that your server's certificate is valid and the chain "
-                       "is correctly configured."),
-                    {},
-                    {},
-                    {}};
+            return {.success = false,
+                    .errorMessage = tr("Nextcloud server's SSL certificate could not be verified. "
+                                       "Check that your server's certificate is valid and the chain "
+                                       "is correctly configured.")};
         }
         QString errorMsg = tr("Network error: %1").arg(reply->errorString());
         reply->deleteLater();
-        return {false, errorMsg, {}, {}, {}};
+        return {.success = false, .errorMessage = errorMsg};
     }
 
     // 404 distinction: look up the file in trashbin to differentiate a
@@ -202,19 +199,16 @@ RemoteHandler::RemoteResult NextcloudSyncProvider::downloadImpl(const RemoteSync
         // failure (including abort) so without this check an aborted trash
         // lookup would route through the first-sync branch.
         if (m_abortFlag.loadAcquire() != 0) {
-            return {false, tr("Operation cancelled"), {}, {}, {}, ErrorKind::Aborted};
+            return {.success = false, .errorMessage = tr("Operation cancelled"), .kind = ErrorKind::Aborted};
         }
         if (inTrash) {
-            return {false,
-                    tr("Database is in your Nextcloud trash. Restore it from "
-                       "Nextcloud Files, then try syncing again."),
-                    {},
-                    {},
-                    {}};
+            return {.success = false,
+                    .errorMessage = tr("Database is in your Nextcloud trash. Restore it from "
+                                       "Nextcloud Files, then try syncing again.")};
         }
         // First-sync silent success -- same shape as Dropbox's
         // path/not_found 409 handling.
-        return {true, {}, {}, {}, {}};
+        return {.success = true};
     }
 
     if (httpStatus != HttpStatus::Ok) {
@@ -226,7 +220,7 @@ RemoteHandler::RemoteResult NextcloudSyncProvider::downloadImpl(const RemoteSync
         QString errorMsg = mapWebdavStatusToMessage(httpStatus);
         ErrorKind kind = mapWebdavStatusToKind(httpStatus);
         reply->deleteLater();
-        return {false, errorMsg, {}, {}, {}, kind};
+        return {.success = false, .errorMessage = errorMsg, .kind = kind};
     }
 
     // 200 success -- ETag Lifecycle State Machine.
@@ -267,7 +261,8 @@ RemoteHandler::RemoteResult NextcloudSyncProvider::downloadImpl(const RemoteSync
     qint64 contentLength = reply->header(QNetworkRequest::ContentLengthHeader).toLongLong();
     if (contentLength > MaxDatabaseSize) {
         reply->deleteLater();
-        return {false, tr("Downloaded file exceeds size limit (%1 bytes)").arg(contentLength), {}, {}, {}};
+        return {.success = false,
+                .errorMessage = tr("Downloaded file exceeds size limit (%1 bytes)").arg(contentLength)};
     }
 
     QByteArray fileData = reply->readAll();
@@ -275,7 +270,8 @@ RemoteHandler::RemoteResult NextcloudSyncProvider::downloadImpl(const RemoteSync
 
     // Trust boundary: actual size check (Content-Length may be absent).
     if (fileData.size() > MaxDatabaseSize) {
-        return {false, tr("Downloaded file exceeds size limit (%1 bytes)").arg(fileData.size()), {}, {}, {}};
+        return {.success = false,
+                .errorMessage = tr("Downloaded file exceeds size limit (%1 bytes)").arg(fileData.size())};
     }
 
     // Write to a QTemporaryFile (caller owns the path; setAutoRemove(false) so
@@ -283,15 +279,15 @@ RemoteHandler::RemoteResult NextcloudSyncProvider::downloadImpl(const RemoteSync
     QTemporaryFile tmpFile;
     tmpFile.setAutoRemove(false);
     if (!tmpFile.open()) {
-        return {false, tr("Failed to create temporary file"), {}, {}, {}};
+        return {.success = false, .errorMessage = tr("Failed to create temporary file")};
     }
     if (tmpFile.write(fileData) != fileData.size()) {
         tmpFile.remove();
-        return {false, tr("Failed to write temporary file"), {}, {}, {}};
+        return {.success = false, .errorMessage = tr("Failed to write temporary file")};
     }
     tmpFile.close();
 
-    return {true, {}, tmpFile.fileName(), {}, {}};
+    return {.success = true, .filePath = tmpFile.fileName()};
 }
 
 // ---------------------------------------------------------------------------
@@ -327,13 +323,13 @@ RemoteHandler::RemoteResult NextcloudSyncProvider::testConnectionImpl(const Next
     Q_ASSERT(params);
 
     if (params->serverBaseUrl.isEmpty()) {
-        return {false, tr("Nextcloud server URL is required"), {}, {}, {}};
+        return {.success = false, .errorMessage = tr("Nextcloud server URL is required")};
     }
     if (params->loginName.isEmpty()) {
-        return {false, tr("Nextcloud login name is required"), {}, {}, {}};
+        return {.success = false, .errorMessage = tr("Nextcloud login name is required")};
     }
     if (params->remotePath.isEmpty() || !params->remotePath.startsWith(QLatin1Char('/'))) {
-        return {false, tr("Remote path must start with '/'"), {}, {}, {}};
+        return {.success = false, .errorMessage = tr("Remote path must start with '/'")};
     }
 
     ensureNam();
@@ -367,12 +363,12 @@ RemoteHandler::RemoteResult NextcloudSyncProvider::testConnectionImpl(const Next
     basicCreds.fill('\0');
 
     if (!reply) {
-        return {false, tr("Network request failed"), {}, {}, {}, ErrorKind::Network};
+        return {.success = false, .errorMessage = tr("Network request failed"), .kind = ErrorKind::Network};
     }
 
     if (m_abortFlag.loadAcquire() != 0) {
         reply->deleteLater();
-        return {false, tr("Operation cancelled"), {}, {}, {}, ErrorKind::Aborted};
+        return {.success = false, .errorMessage = tr("Operation cancelled"), .kind = ErrorKind::Aborted};
     }
 
     int httpStatus = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
@@ -380,17 +376,14 @@ RemoteHandler::RemoteResult NextcloudSyncProvider::testConnectionImpl(const Next
     if (httpStatus == 0 && reply->error() != QNetworkReply::NoError) {
         if (reply->error() == QNetworkReply::SslHandshakeFailedError) {
             reply->deleteLater();
-            return {false,
-                    tr("Nextcloud server's SSL certificate could not be verified. "
-                       "Check that your server's certificate is valid and the chain "
-                       "is correctly configured."),
-                    {},
-                    {},
-                    {}};
+            return {.success = false,
+                    .errorMessage = tr("Nextcloud server's SSL certificate could not be verified. "
+                                       "Check that your server's certificate is valid and the chain "
+                                       "is correctly configured.")};
         }
         QString errorMsg = tr("Network error: %1").arg(reply->errorString());
         reply->deleteLater();
-        return {false, errorMsg, {}, {}, {}};
+        return {.success = false, .errorMessage = errorMsg};
     }
 
     reply->readAll(); // drain body for hygiene -- we only care about the status
@@ -403,7 +396,7 @@ RemoteHandler::RemoteResult NextcloudSyncProvider::testConnectionImpl(const Next
         // not found -- it will be created on first sync." (404 branch below,
         // empty filePath). Mirrors Dropbox's download-as-test-connection contract
         // where filePath emptiness signals first-sync state.
-        return {true, {}, params->remotePath, {}, {}};
+        return {.success = true, .filePath = params->remotePath};
     }
 
     // testConnection probes credentials the user just typed into the
@@ -415,12 +408,9 @@ RemoteHandler::RemoteResult NextcloudSyncProvider::testConnectionImpl(const Next
     // uniformly.
     if (httpStatus == HttpStatus::Unauthorized) {
         // reply was already drained + deleteLater()-ed above.
-        return {false,
-                tr("Nextcloud rejected those credentials. Verify the username and app password."),
-                {},
-                {},
-                {},
-                ErrorKind::AuthExpired};
+        return {.success = false,
+                .errorMessage = tr("Nextcloud rejected those credentials. Verify the username and app password."),
+                .kind = ErrorKind::AuthExpired};
     }
 
     // 404 from a PROPFIND on the configured remote path means "auth accepted +
@@ -430,12 +420,14 @@ RemoteHandler::RemoteResult NextcloudSyncProvider::testConnectionImpl(const Next
     // and SyncEngine first-sync branch can both treat this as "auth OK, will be
     // created on first sync."
     if (httpStatus == HttpStatus::NotFound) {
-        return {true, {}, {}, {}, {}};
+        return {.success = true};
     }
 
     // Per-status locked banners via mapWebdavStatusToMessage for any other
     // non-success status (403/412/423/507/5xx/etc).
-    return {false, mapWebdavStatusToMessage(httpStatus), {}, {}, {}, mapWebdavStatusToKind(httpStatus)};
+    return {.success = false,
+            .errorMessage = mapWebdavStatusToMessage(httpStatus),
+            .kind = mapWebdavStatusToKind(httpStatus)};
 }
 
 // ---------------------------------------------------------------------------
@@ -537,16 +529,16 @@ RemoteHandler::RemoteResult NextcloudSyncProvider::uploadImpl(const QString& fil
     auto* ncParams = static_cast<const NextcloudSyncParams*>(params);
 
     if (ncParams->serverBaseUrl.isEmpty()) {
-        return {false, tr("Nextcloud server URL is required"), {}, {}, {}};
+        return {.success = false, .errorMessage = tr("Nextcloud server URL is required")};
     }
     if (ncParams->loginName.isEmpty()) {
-        return {false, tr("Nextcloud login name is required"), {}, {}, {}};
+        return {.success = false, .errorMessage = tr("Nextcloud login name is required")};
     }
     if (ncParams->remotePath.isEmpty() || !ncParams->remotePath.startsWith(QLatin1Char('/'))) {
-        return {false, tr("Remote path must start with '/'"), {}, {}, {}};
+        return {.success = false, .errorMessage = tr("Remote path must start with '/'")};
     }
     if (filePath.isEmpty()) {
-        return {false, tr("Local file path is required"), {}, {}, {}};
+        return {.success = false, .errorMessage = tr("Local file path is required")};
     }
 
     // Read file contents into memory. Body is sent in a single PUT (no
@@ -554,10 +546,10 @@ RemoteHandler::RemoteResult NextcloudSyncProvider::uploadImpl(const QString& fil
     // default; we cap at MaxDatabaseSize=256 MiB which is well under).
     QFile file(filePath);
     if (!file.open(QIODevice::ReadOnly)) {
-        return {false, tr("Failed to open file for upload: %1").arg(filePath), {}, {}, {}};
+        return {.success = false, .errorMessage = tr("Failed to open file for upload: %1").arg(filePath)};
     }
     if (file.size() > MaxDatabaseSize) {
-        return {false, tr("File exceeds size limit (%1 bytes)").arg(file.size()), {}, {}, {}};
+        return {.success = false, .errorMessage = tr("File exceeds size limit (%1 bytes)").arg(file.size())};
     }
     QByteArray fileData = file.readAll();
     file.close();
@@ -617,12 +609,12 @@ RemoteHandler::RemoteResult NextcloudSyncProvider::uploadImpl(const QString& fil
     basicCreds.fill('\0');
 
     if (!reply) {
-        return {false, tr("Network request failed"), {}, {}, {}, ErrorKind::Network};
+        return {.success = false, .errorMessage = tr("Network request failed"), .kind = ErrorKind::Network};
     }
 
     if (m_abortFlag.loadAcquire() != 0) {
         reply->deleteLater();
-        return {false, tr("Operation cancelled"), {}, {}, {}, ErrorKind::Aborted};
+        return {.success = false, .errorMessage = tr("Operation cancelled"), .kind = ErrorKind::Aborted};
     }
 
     int httpStatus = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
@@ -633,17 +625,14 @@ RemoteHandler::RemoteResult NextcloudSyncProvider::uploadImpl(const QString& fil
     if (httpStatus == 0 && reply->error() != QNetworkReply::NoError) {
         if (reply->error() == QNetworkReply::SslHandshakeFailedError) {
             reply->deleteLater();
-            return {false,
-                    tr("Nextcloud server's SSL certificate could not be verified. "
-                       "Check that your server's certificate is valid and the chain "
-                       "is correctly configured."),
-                    {},
-                    {},
-                    {}};
+            return {.success = false,
+                    .errorMessage = tr("Nextcloud server's SSL certificate could not be verified. "
+                                       "Check that your server's certificate is valid and the chain "
+                                       "is correctly configured.")};
         }
         QString errorMsg = tr("Network error: %1").arg(reply->errorString());
         reply->deleteLater();
-        return {false, errorMsg, {}, {}, {}};
+        return {.success = false, .errorMessage = errorMsg};
     }
 
     // 412 Precondition Failed: the conditional header didn't match. This is
@@ -659,12 +648,9 @@ RemoteHandler::RemoteResult NextcloudSyncProvider::uploadImpl(const QString& fil
     if (httpStatus == HttpStatus::PreconditionFailed) {
         reply->readAll(); // drain body for hygiene
         reply->deleteLater();
-        return {false,
-                tr("Remote file changed since last download. Re-sync to merge changes."),
-                {},
-                {},
-                {},
-                ErrorKind::Conflict};
+        return {.success = false,
+                .errorMessage = tr("Remote file changed since last download. Re-sync to merge changes."),
+                .kind = ErrorKind::Conflict};
     }
 
     // Non-success non-412 -- per-status locked banners via the centralized
@@ -675,7 +661,7 @@ RemoteHandler::RemoteResult NextcloudSyncProvider::uploadImpl(const QString& fil
         QString errorMsg = mapWebdavStatusToMessage(httpStatus);
         ErrorKind kind = mapWebdavStatusToKind(httpStatus);
         reply->deleteLater();
-        return {false, errorMsg, {}, {}, {}, kind};
+        return {.success = false, .errorMessage = errorMsg, .kind = kind};
     }
 
     // Success (200/201/204) -- refresh m_lastETag from response headers so
@@ -695,7 +681,7 @@ RemoteHandler::RemoteResult NextcloudSyncProvider::uploadImpl(const QString& fil
     }
 
     reply->deleteLater();
-    return {true, {}, {}, {}, {}};
+    return {.success = true};
 }
 
 RemoteHandler::RemoteResult NextcloudSyncProvider::refreshAuth(const RemoteSyncParams* params)
@@ -703,7 +689,7 @@ RemoteHandler::RemoteResult NextcloudSyncProvider::refreshAuth(const RemoteSyncP
     // App-password authentication has no token refresh: the Basic-auth credential
     // is long-lived until the user revokes it via Nextcloud settings.
     Q_UNUSED(params)
-    return {true, {}, {}, {}, {}};
+    return {.success = true};
 }
 
 // ---------------------------------------------------------------------------
@@ -817,7 +803,8 @@ QString NextcloudSyncProvider::mapWebdavStatusToMessage(int httpStatus)
         return tr("Nextcloud authorization expired. Re-authorize in Database > Settings > Cloud Sync.");
     case HttpStatus::Forbidden: // 403
         return tr("Nextcloud denied access to this path. Verify the file path and your account permissions.");
-    case HttpStatus::NotFound: // 404 (testConnection-side; download's 404-trash distinction routes through checkIfInTrash)
+    case HttpStatus::NotFound: // 404 (testConnection-side; download's 404-trash distinction routes through
+                               // checkIfInTrash)
         return tr("Nextcloud could not find the configured remote path. Verify your settings.");
     case HttpStatus::PreconditionFailed: // 412
         return tr("Remote file changed since last download. Re-sync to merge changes.");
@@ -1012,8 +999,8 @@ bool NextcloudSyncProvider::isLoopbackHost(const QUrl& url)
 // policy message rather than the generic malformed-fallback (their URL is
 // syntactically fine -- it's the scheme that the policy rejects).
 // ---------------------------------------------------------------------------
-NextcloudSyncProvider::ServerUrlValidity
-NextcloudSyncProvider::validateServerUrl(const QString& input, QString* canonicalOut)
+NextcloudSyncProvider::ServerUrlValidity NextcloudSyncProvider::validateServerUrl(const QString& input,
+                                                                                  QString* canonicalOut)
 {
     const QString trimmed = input.trimmed();
     if (trimmed.isEmpty()) {

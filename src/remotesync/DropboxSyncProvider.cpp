@@ -79,7 +79,7 @@ RemoteHandler::RemoteResult DropboxSyncProvider::download(const RemoteSyncParams
 
     // Validate remote path
     if (!dpxParams->remotePath.startsWith(QLatin1Char('/'))) {
-        return {false, tr("Remote path must start with '/'"), {}, {}, {}};
+        return {.success = false, .errorMessage = tr("Remote path must start with '/'")};
     }
 
     // Lazy-init QNAM if not injected (own instance for clean thread affinity)
@@ -127,12 +127,12 @@ RemoteHandler::RemoteResult DropboxSyncProvider::download(const RemoteSyncParams
     authHeader.fill('\0');
 
     if (!reply) {
-        return {false, tr("Network request failed"), {}, {}, {}, ErrorKind::Network};
+        return {.success = false, .errorMessage = tr("Network request failed"), .kind = ErrorKind::Network};
     }
 
     if (m_abortFlag.loadAcquire() != 0) {
         reply->deleteLater();
-        return {false, tr("Operation cancelled"), {}, {}, {}, ErrorKind::Aborted};
+        return {.success = false, .errorMessage = tr("Operation cancelled"), .kind = ErrorKind::Aborted};
     }
 
     // Pure network errors (no HTTP status received at all).
@@ -141,7 +141,7 @@ RemoteHandler::RemoteResult DropboxSyncProvider::download(const RemoteSyncParams
         QString errorMsg = tr("Network error: %1").arg(reply->errorString());
         qWarning("[DPX] download: network error: %s", qPrintable(errorMsg));
         reply->deleteLater();
-        return {false, errorMsg, {}, {}, {}, ErrorKind::Network};
+        return {.success = false, .errorMessage = errorMsg, .kind = ErrorKind::Network};
     }
 
     if (httpStatus == HttpStatus::Conflict) {
@@ -153,10 +153,11 @@ RemoteHandler::RemoteResult DropboxSyncProvider::download(const RemoteSyncParams
 
         if (errorSummary.startsWith(QStringLiteral("path/not_found"))) {
             // File doesn't exist on remote -- not an error for first sync
-            return {true, {}, {}, {}, {}};
+            return {.success = true};
         }
 
-        return {false, tr("Dropbox error: %1").arg(errorSummary), {}, {}, {}, ErrorKind::NotFound};
+        return {
+            .success = false, .errorMessage = tr("Dropbox error: %1").arg(errorSummary), .kind = ErrorKind::NotFound};
     }
 
     if (httpStatus != HttpStatus::Ok) {
@@ -173,7 +174,7 @@ RemoteHandler::RemoteResult DropboxSyncProvider::download(const RemoteSyncParams
         } else if (HttpStatus::isServerError(httpStatus)) {
             kind = ErrorKind::ServerError;
         }
-        return {false, tr("Dropbox API error (HTTP %1)").arg(httpStatus), {}, {}, {}, kind};
+        return {.success = false, .errorMessage = tr("Dropbox API error (HTTP %1)").arg(httpStatus), .kind = kind};
     }
 
     // Success (HTTP 200) -- extract rev from Dropbox-API-Result header
@@ -187,7 +188,8 @@ RemoteHandler::RemoteResult DropboxSyncProvider::download(const RemoteSyncParams
     qint64 contentLength = reply->header(QNetworkRequest::ContentLengthHeader).toLongLong();
     if (contentLength > MaxDatabaseSize) {
         reply->deleteLater();
-        return {false, tr("Downloaded file exceeds size limit (%1 bytes)").arg(contentLength), {}, {}, {}};
+        return {.success = false,
+                .errorMessage = tr("Downloaded file exceeds size limit (%1 bytes)").arg(contentLength)};
     }
 
     QByteArray fileData = reply->readAll();
@@ -195,23 +197,24 @@ RemoteHandler::RemoteResult DropboxSyncProvider::download(const RemoteSyncParams
 
     // Trust boundary: also check actual size (Content-Length may be absent or wrong).
     if (fileData.size() > MaxDatabaseSize) {
-        return {false, tr("Downloaded file exceeds size limit (%1 bytes)").arg(fileData.size()), {}, {}, {}};
+        return {.success = false,
+                .errorMessage = tr("Downloaded file exceeds size limit (%1 bytes)").arg(fileData.size())};
     }
 
     // Write file content to a temporary file
     QTemporaryFile tmpFile;
     tmpFile.setAutoRemove(false);
     if (!tmpFile.open()) {
-        return {false, tr("Failed to create temporary file"), {}, {}, {}};
+        return {.success = false, .errorMessage = tr("Failed to create temporary file")};
     }
 
     if (tmpFile.write(fileData) != fileData.size()) {
         tmpFile.remove();
-        return {false, tr("Failed to write temporary file"), {}, {}, {}};
+        return {.success = false, .errorMessage = tr("Failed to write temporary file")};
     }
     tmpFile.close();
 
-    return {true, {}, tmpFile.fileName(), {}, {}};
+    return {.success = true, .filePath = tmpFile.fileName()};
 }
 
 RemoteHandler::RemoteResult DropboxSyncProvider::upload(const QString& filePath, const RemoteSyncParams* params)
@@ -220,19 +223,19 @@ RemoteHandler::RemoteResult DropboxSyncProvider::upload(const QString& filePath,
 
     // Validate remote path
     if (!dpxParams->remotePath.startsWith(QLatin1Char('/'))) {
-        return {false, tr("Remote path must start with '/'"), {}, {}, {}};
+        return {.success = false, .errorMessage = tr("Remote path must start with '/'")};
     }
 
     // Read file content
     QFile file(filePath);
     if (!file.open(QIODevice::ReadOnly)) {
-        return {false, tr("Failed to open file for upload: %1").arg(filePath), {}, {}, {}};
+        return {.success = false, .errorMessage = tr("Failed to open file for upload: %1").arg(filePath)};
     }
     QByteArray fileData = file.readAll();
     file.close();
 
     if (fileData.size() > MaxDatabaseSize) {
-        return {false, tr("File exceeds size limit (%1 bytes)").arg(fileData.size()), {}, {}, {}};
+        return {.success = false, .errorMessage = tr("File exceeds size limit (%1 bytes)").arg(fileData.size())};
     }
 
     // Lazy-init QNAM if not injected
@@ -292,12 +295,12 @@ RemoteHandler::RemoteResult DropboxSyncProvider::upload(const QString& filePath,
     authHeader.fill('\0');
 
     if (!reply) {
-        return {false, tr("Network request failed"), {}, {}, {}, ErrorKind::Network};
+        return {.success = false, .errorMessage = tr("Network request failed"), .kind = ErrorKind::Network};
     }
 
     if (m_abortFlag.loadAcquire() != 0) {
         reply->deleteLater();
-        return {false, tr("Operation cancelled"), {}, {}, {}, ErrorKind::Aborted};
+        return {.success = false, .errorMessage = tr("Operation cancelled"), .kind = ErrorKind::Aborted};
     }
 
     // Pure network errors (no HTTP status received at all).
@@ -306,7 +309,7 @@ RemoteHandler::RemoteResult DropboxSyncProvider::upload(const QString& filePath,
         QString errorMsg = tr("Network error: %1").arg(reply->errorString());
         qWarning("[DPX] upload: network error: %s", qPrintable(errorMsg));
         reply->deleteLater();
-        return {false, errorMsg, {}, {}, {}, ErrorKind::Network};
+        return {.success = false, .errorMessage = errorMsg, .kind = ErrorKind::Network};
     }
 
     if (httpStatus == HttpStatus::Conflict) {
@@ -317,15 +320,12 @@ RemoteHandler::RemoteResult DropboxSyncProvider::upload(const QString& filePath,
         reply->deleteLater();
 
         if (errorSummary.startsWith(QStringLiteral("path/conflict"))) {
-            return {false,
-                    tr("Remote file changed since last download. Re-sync to merge changes."),
-                    {},
-                    {},
-                    {},
-                    ErrorKind::Conflict};
+            return {.success = false,
+                    .errorMessage = tr("Remote file changed since last download. Re-sync to merge changes."),
+                    .kind = ErrorKind::Conflict};
         }
 
-        return {false, tr("Dropbox error: %1").arg(errorSummary), {}, {}, {}, ErrorKind::Other};
+        return {.success = false, .errorMessage = tr("Dropbox error: %1").arg(errorSummary), .kind = ErrorKind::Other};
     }
 
     if (httpStatus != HttpStatus::Ok) {
@@ -343,7 +343,7 @@ RemoteHandler::RemoteResult DropboxSyncProvider::upload(const QString& filePath,
         } else if (HttpStatus::isServerError(httpStatus)) {
             kind = ErrorKind::ServerError;
         }
-        return {false, tr("Dropbox API error (HTTP %1)").arg(httpStatus), {}, {}, {}, kind};
+        return {.success = false, .errorMessage = tr("Dropbox API error (HTTP %1)").arg(httpStatus), .kind = kind};
     }
 
     // Success -- update m_lastRev from response body so subsequent uploads
@@ -357,7 +357,7 @@ RemoteHandler::RemoteResult DropboxSyncProvider::upload(const QString& filePath,
     }
 
     reply->deleteLater();
-    return {true, {}, {}, {}, {}};
+    return {.success = true};
 }
 
 // ---------------------------------------------------------------------------
@@ -369,13 +369,15 @@ RemoteHandler::RemoteResult DropboxSyncProvider::refreshAuth(const RemoteSyncPar
     auto* dpxParams = static_cast<const DropboxSyncParams*>(params);
 
     if (dpxParams->refreshToken.isEmpty()) {
-        return {false, tr("No refresh token. Re-authorize in Settings."), {}, {}, {}, ErrorKind::AuthRevoked};
+        return {.success = false,
+                .errorMessage = tr("No refresh token. Re-authorize in Settings."),
+                .kind = ErrorKind::AuthRevoked};
     }
 
     // Proactive check: if token still valid with buffer, skip refresh
     if (dpxParams->expiresAt.isValid()
         && Clock::currentDateTimeUtc().addSecs(TokenRefreshBufferSecs) < dpxParams->expiresAt) {
-        return {true, {}, {}, {}, {}};
+        return {.success = true};
     }
 
     ensureNam();
@@ -416,12 +418,14 @@ RemoteHandler::RemoteResult DropboxSyncProvider::refreshAuth(const RemoteSyncPar
     postBody.fill('\0');
 
     if (!reply) {
-        return {false, tr("Token refresh failed: network request failed"), {}, {}, {}, ErrorKind::Network};
+        return {.success = false,
+                .errorMessage = tr("Token refresh failed: network request failed"),
+                .kind = ErrorKind::Network};
     }
 
     if (m_abortFlag.loadAcquire() != 0) {
         reply->deleteLater();
-        return {false, tr("Operation cancelled"), {}, {}, {}, ErrorKind::Aborted};
+        return {.success = false, .errorMessage = tr("Operation cancelled"), .kind = ErrorKind::Aborted};
     }
 
     int httpStatus = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt();
@@ -429,7 +433,7 @@ RemoteHandler::RemoteResult DropboxSyncProvider::refreshAuth(const RemoteSyncPar
     if (httpStatus == 0 && reply->error() != QNetworkReply::NoError) {
         QString errorMsg = tr("Token refresh failed: %1").arg(reply->errorString());
         reply->deleteLater();
-        return {false, errorMsg, {}, {}, {}, ErrorKind::Network};
+        return {.success = false, .errorMessage = errorMsg, .kind = ErrorKind::Network};
     }
 
     QByteArray responseData = reply->readAll();
@@ -445,20 +449,14 @@ RemoteHandler::RemoteResult DropboxSyncProvider::refreshAuth(const RemoteSyncPar
         // Check for invalid_grant (refresh token revoked/expired)
         QString errorTag = respObj[QStringLiteral("error")].toString();
         if (errorTag == QStringLiteral("invalid_grant")) {
-            return {false,
-                    tr("Refresh token expired or revoked. Re-authorize in Settings."),
-                    {},
-                    {},
-                    {},
-                    ErrorKind::AuthRevoked};
+            return {.success = false,
+                    .errorMessage = tr("Refresh token expired or revoked. Re-authorize in Settings."),
+                    .kind = ErrorKind::AuthRevoked};
         }
         QString errorDesc = respObj[QStringLiteral("error_description")].toString();
-        return {false,
-                tr("Token refresh failed: %1").arg(errorDesc.isEmpty() ? errorTag : errorDesc),
-                {},
-                {},
-                {},
-                ErrorKind::AuthExpired};
+        return {.success = false,
+                .errorMessage = tr("Token refresh failed: %1").arg(errorDesc.isEmpty() ? errorTag : errorDesc),
+                .kind = ErrorKind::AuthExpired};
     }
 
     // Parse successful response
@@ -466,7 +464,7 @@ RemoteHandler::RemoteResult DropboxSyncProvider::refreshAuth(const RemoteSyncPar
     int expiresIn = respObj[QStringLiteral("expires_in")].toInt();
 
     if (newAccessToken.isEmpty()) {
-        return {false, tr("Token refresh failed: missing access_token in response"), {}, {}, {}};
+        return {.success = false, .errorMessage = tr("Token refresh failed: missing access_token in response")};
     }
 
     // Compute new expiry time
@@ -484,7 +482,7 @@ RemoteHandler::RemoteResult DropboxSyncProvider::refreshAuth(const RemoteSyncPar
     // Zero sensitive data
     responseData.fill('\0');
 
-    return {true, {}, {}, tokenJson, {}};
+    return {.success = true, .stdOutput = tokenJson};
 }
 
 // ---------------------------------------------------------------------------
@@ -498,7 +496,7 @@ RemoteHandler::RemoteResult DropboxSyncProvider::revokeToken(const DropboxSyncPa
     Q_ASSERT(params);
 
     if (params->accessToken.isEmpty()) {
-        return {true, {}, {}, {}, {}};
+        return {.success = true};
     }
 
     ensureNam();
@@ -544,7 +542,7 @@ RemoteHandler::RemoteResult DropboxSyncProvider::revokeToken(const DropboxSyncPa
     }
 
     // Best-effort: always return success. Caller clears local tokens regardless.
-    return {true, {}, {}, {}, {}};
+    return {.success = true};
 }
 
 void DropboxSyncProvider::abort()

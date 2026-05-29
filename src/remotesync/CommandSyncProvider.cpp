@@ -50,7 +50,7 @@ RemoteHandler::RemoteResult CommandSyncProvider::refreshAuth(const RemoteSyncPar
 {
     Q_UNUSED(params)
     // Command-based providers do not have auth refresh -- return success as no-op
-    return {true, {}, {}, {}, {}};
+    return {.success = true};
 }
 
 void CommandSyncProvider::abort()

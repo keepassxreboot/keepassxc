@@ -50,15 +50,15 @@ namespace
 
         RemoteHandler::RemoteResult download(const RemoteSyncParams*) override
         {
-            return RemoteHandler::RemoteResult{true, {}, {}, {}, {}};
+            return RemoteHandler::RemoteResult{.success = true};
         }
         RemoteHandler::RemoteResult upload(const QString&, const RemoteSyncParams*) override
         {
-            return RemoteHandler::RemoteResult{true, {}, {}, {}, {}};
+            return RemoteHandler::RemoteResult{.success = true};
         }
         RemoteHandler::RemoteResult refreshAuth(const RemoteSyncParams*) override
         {
-            return RemoteHandler::RemoteResult{true, {}, {}, {}, {}};
+            return RemoteHandler::RemoteResult{.success = true};
         }
         void abort() override
         {
@@ -205,9 +205,8 @@ void TestRemoteSync::testCommand_downloadDelegatesToRemoteHandler()
     // a real kdbx file to the temp-file location, which is what RemoteHandler::download
     // checks for existence + non-zero size to declare success.
     const QString sourceDb = QStringLiteral(KEEPASSX_TEST_DATA_DIR).append("/SyncDatabase.kdbx");
-    RemoteHandler::setRemoteProcessFunc([sourceDb](QObject* parent) {
-        return QScopedPointer<RemoteProcess>(new MockRemoteProcess(parent, sourceDb));
-    });
+    RemoteHandler::setRemoteProcessFunc(
+        [sourceDb](QObject* parent) { return QScopedPointer<RemoteProcess>(new MockRemoteProcess(parent, sourceDb)); });
 
     CommandSyncProvider provider;
     CommandSyncParams params;
@@ -227,7 +226,6 @@ void TestRemoteSync::testCommand_downloadDelegatesToRemoteHandler()
     // Cleanup: remove the temp file the handler created and reset the
     // process-factory back to the default so subsequent tests aren't poisoned.
     QFile::remove(result.filePath);
-    RemoteHandler::setRemoteProcessFunc([](QObject* parent) {
-        return QScopedPointer<RemoteProcess>(new RemoteProcess(parent));
-    });
+    RemoteHandler::setRemoteProcessFunc(
+        [](QObject* parent) { return QScopedPointer<RemoteProcess>(new RemoteProcess(parent)); });
 }

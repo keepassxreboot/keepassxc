@@ -85,9 +85,9 @@ namespace
             return applyTokenResult;
         }
 
-        RemoteHandler::RemoteResult downloadResult{true, {}, {}, {}, {}};
-        RemoteHandler::RemoteResult uploadResult{true, {}, {}, {}, {}};
-        RemoteHandler::RemoteResult refreshAuthResult{true, {}, {}, {}, {}};
+        RemoteHandler::RemoteResult downloadResult{.success = true};
+        RemoteHandler::RemoteResult uploadResult{.success = true};
+        RemoteHandler::RemoteResult refreshAuthResult{.success = true};
         int downloadCalls = 0;
         int uploadCalls = 0;
         int refreshAuthCalls = 0;
@@ -122,9 +122,7 @@ namespace
     // A SaveFn that does a real Database::save and reports success/error.
     SyncEngine::SaveFn makeRealSaveFn(const QSharedPointer<Database>& db)
     {
-        return [db](QString& errorMessage) {
-            return db->save(Database::Atomic, {}, &errorMessage);
-        };
+        return [db](QString& errorMessage) { return db->save(Database::Atomic, {}, &errorMessage); };
     }
 
     // Copy `source` to a freshly-generated path under QDir::tempPath() and
@@ -201,7 +199,7 @@ void TestSyncEngine::testHappyPath_runsToCompletion()
 
     StubSyncProvider provider;
     // First-sync convention: empty filePath means "no remote file yet".
-    provider.downloadResult = {true, {}, {}, {}, {}};
+    provider.downloadResult = {.success = true};
     QScopedPointer<RemoteSyncParams> params(provider.createParams());
 
     QSignalSpy finishedSpy(&engine, &SyncEngine::syncFinished);
@@ -223,7 +221,7 @@ void TestSyncEngine::testFirstSync_skipsMerge()
     SyncEngine engine(db, makeRealSaveFn(db));
 
     StubSyncProvider provider;
-    provider.downloadResult = {true, {}, {}, {}, {}}; // first-sync (empty filePath)
+    provider.downloadResult = {.success = true}; // first-sync (empty filePath)
     QScopedPointer<RemoteSyncParams> params(provider.createParams());
 
     QSignalSpy stateSpy(&engine, &SyncEngine::stateChanged);
@@ -249,7 +247,8 @@ void TestSyncEngine::testRefreshAuthFails_emitsSyncFinishedFalseAndSetsLastError
     SyncEngine engine(db, makeRealSaveFn(db));
 
     StubSyncProvider provider;
-    provider.refreshAuthResult = {false, "boom", {}, {}, {}, RemoteHandler::ErrorKind::AuthExpired};
+    provider.refreshAuthResult = {
+        .success = false, .errorMessage = "boom", .kind = RemoteHandler::ErrorKind::AuthExpired};
     QScopedPointer<RemoteSyncParams> params(provider.createParams());
 
     QSignalSpy finishedSpy(&engine, &SyncEngine::syncFinished);
@@ -273,7 +272,7 @@ void TestSyncEngine::testDownloadFails_emitsSyncFinishedFalseAndSetsLastErrorKin
     SyncEngine engine(db, makeRealSaveFn(db));
 
     StubSyncProvider provider;
-    provider.downloadResult = {false, "net down", {}, {}, {}, RemoteHandler::ErrorKind::Network};
+    provider.downloadResult = {.success = false, .errorMessage = "net down", .kind = RemoteHandler::ErrorKind::Network};
     QScopedPointer<RemoteSyncParams> params(provider.createParams());
 
     QSignalSpy finishedSpy(&engine, &SyncEngine::syncFinished);
@@ -295,7 +294,8 @@ void TestSyncEngine::testUploadFails_emitsSyncFinishedFalseAndSetsLastErrorKind(
 
     StubSyncProvider provider;
     // first-sync (no merge) -> save -> upload-fail
-    provider.uploadResult = {false, "server boom", {}, {}, {}, RemoteHandler::ErrorKind::ServerError};
+    provider.uploadResult = {
+        .success = false, .errorMessage = "server boom", .kind = RemoteHandler::ErrorKind::ServerError};
     QScopedPointer<RemoteSyncParams> params(provider.createParams());
 
     QSignalSpy finishedSpy(&engine, &SyncEngine::syncFinished);
@@ -326,7 +326,7 @@ void TestSyncEngine::testSaveFails_emitsSyncFinishedFalse()
     SyncEngine engine(db, failingSave);
 
     StubSyncProvider provider;
-    provider.downloadResult = {true, {}, {}, {}, {}}; // first-sync -> straight to save
+    provider.downloadResult = {.success = true}; // first-sync -> straight to save
     QScopedPointer<RemoteSyncParams> params(provider.createParams());
 
     QSignalSpy finishedSpy(&engine, &SyncEngine::syncFinished);
@@ -400,7 +400,7 @@ void TestSyncEngine::testApplyRefreshedTokens_failureSurfacesAsAuthError()
 
     StubSyncProvider provider;
     // Non-empty stdOutput so SyncEngine attempts applyRefreshedTokens.
-    provider.refreshAuthResult = {true, {}, {}, QStringLiteral("malformed-json{"), {}};
+    provider.refreshAuthResult = {.success = true, .stdOutput = QStringLiteral("malformed-json{")};
     provider.applyTokenResult = false;
     QScopedPointer<RemoteSyncParams> params(provider.createParams());
 
@@ -423,7 +423,7 @@ void TestSyncEngine::testRefreshedTokenData_signalFiresOnRefreshSuccess()
 
     StubSyncProvider provider;
     const QString tokenJson = QStringLiteral("{\"accessToken\":\"new\"}");
-    provider.refreshAuthResult = {true, {}, {}, tokenJson, {}};
+    provider.refreshAuthResult = {.success = true, .stdOutput = tokenJson};
     provider.applyTokenResult = true;
     QScopedPointer<RemoteSyncParams> params(provider.createParams());
 
@@ -451,7 +451,7 @@ void TestSyncEngine::testRemoteDbNeedsKey_whenLocalAndRemoteKeysMismatch()
     const QString remotePath = copyToOwnedTempPath(g_dbFileDifferentPassword);
 
     StubSyncProvider provider;
-    provider.downloadResult = {true, {}, remotePath, {}, {}};
+    provider.downloadResult = {.success = true, .filePath = remotePath};
     QScopedPointer<RemoteSyncParams> params(provider.createParams());
 
     QSignalSpy needsKeySpy(&engine, &SyncEngine::remoteDbNeedsKey);
@@ -463,8 +463,7 @@ void TestSyncEngine::testRemoteDbNeedsKey_whenLocalAndRemoteKeysMismatch()
     QCOMPARE(handedOffPath, remotePath);
     // CRITICAL: file MUST still exist -- ownership was transferred to the
     // receiver and the engine destructor must not race to delete it.
-    QVERIFY2(QFile::exists(handedOffPath),
-             "remoteDbNeedsKey hand-off must leave the file in place for the receiver");
+    QVERIFY2(QFile::exists(handedOffPath), "remoteDbNeedsKey hand-off must leave the file in place for the receiver");
     QCOMPARE(engine.state(), SyncEngine::State::Idle);
     QCOMPARE(provider.uploadCalls, 0);
 
@@ -486,7 +485,7 @@ void TestSyncEngine::testClearSyncPreviousKey_onSuccessfulUpload()
 
     SyncEngine engine(db, makeRealSaveFn(db));
     StubSyncProvider provider;
-    provider.downloadResult = {true, {}, {}, {}, {}}; // first-sync, no merge
+    provider.downloadResult = {.success = true}; // first-sync, no merge
     QScopedPointer<RemoteSyncParams> params(provider.createParams());
 
     QSignalSpy finishedSpy(&engine, &SyncEngine::syncFinished);
@@ -513,7 +512,7 @@ void TestSyncEngine::testTempFileRemovedOnSuccess()
     const QString downloadedPath = copyToOwnedTempPath(g_dbFile);
 
     StubSyncProvider provider;
-    provider.downloadResult = {true, {}, downloadedPath, {}, {}};
+    provider.downloadResult = {.success = true, .filePath = downloadedPath};
     QScopedPointer<RemoteSyncParams> params(provider.createParams());
 
     QSignalSpy finishedSpy(&engine, &SyncEngine::syncFinished);
@@ -521,8 +520,7 @@ void TestSyncEngine::testTempFileRemovedOnSuccess()
 
     QCOMPARE(finishedSpy.count(), 1);
     QCOMPARE(finishedSpy.takeFirst().at(0).toBool(), true);
-    QVERIFY2(!QFile::exists(downloadedPath),
-             "cleanup() must remove the downloaded temp file on success");
+    QVERIFY2(!QFile::exists(downloadedPath), "cleanup() must remove the downloaded temp file on success");
     QFile::remove(downloadedPath); // safety net if assertion fails
 }
 
@@ -535,8 +533,8 @@ void TestSyncEngine::testTempFileRemovedOnFailure()
     const QString downloadedPath = copyToOwnedTempPath(g_dbFile);
 
     StubSyncProvider provider;
-    provider.downloadResult = {true, {}, downloadedPath, {}, {}};
-    provider.uploadResult = {false, "boom", {}, {}, {}, RemoteHandler::ErrorKind::ServerError};
+    provider.downloadResult = {.success = true, .filePath = downloadedPath};
+    provider.uploadResult = {.success = false, .errorMessage = "boom", .kind = RemoteHandler::ErrorKind::ServerError};
     QScopedPointer<RemoteSyncParams> params(provider.createParams());
 
     QSignalSpy finishedSpy(&engine, &SyncEngine::syncFinished);
@@ -544,8 +542,7 @@ void TestSyncEngine::testTempFileRemovedOnFailure()
 
     QCOMPARE(finishedSpy.count(), 1);
     QCOMPARE(finishedSpy.takeFirst().at(0).toBool(), false);
-    QVERIFY2(!QFile::exists(downloadedPath),
-             "cleanup() runs even on upload failure -- temp file must be removed");
+    QVERIFY2(!QFile::exists(downloadedPath), "cleanup() runs even on upload failure -- temp file must be removed");
     QFile::remove(downloadedPath); // safety net if assertion fails
 }
 
@@ -560,7 +557,7 @@ void TestSyncEngine::testStateChangeSequence_happyPath()
     SyncEngine engine(db, makeRealSaveFn(db));
 
     StubSyncProvider provider;
-    provider.downloadResult = {true, {}, {}, {}, {}}; // first-sync, no merge
+    provider.downloadResult = {.success = true}; // first-sync, no merge
     QScopedPointer<RemoteSyncParams> params(provider.createParams());
 
     QSignalSpy stateSpy(&engine, &SyncEngine::stateChanged);
@@ -591,7 +588,7 @@ void TestSyncEngine::testStateChangeSequence_withMerge()
     const QString downloadedPath = copyToOwnedTempPath(g_dbFile);
 
     StubSyncProvider provider;
-    provider.downloadResult = {true, {}, downloadedPath, {}, {}};
+    provider.downloadResult = {.success = true, .filePath = downloadedPath};
     QScopedPointer<RemoteSyncParams> params(provider.createParams());
 
     QSignalSpy stateSpy(&engine, &SyncEngine::stateChanged);

@@ -95,7 +95,7 @@ RemoteHandler::RemoteResult MockNextcloudSyncProvider::refreshAuth(const RemoteS
     ++s_refreshAuthCallCount;
     // Empty stdOutput: provider declares "auth still valid, no rotation".
     // SyncEngine::doAuthenticate skips applyRefreshedTokens in this case.
-    return {true, {}, {}, {}, {}, RemoteHandler::ErrorKind::Other};
+    return {.success = true};
 }
 
 RemoteHandler::RemoteResult MockNextcloudSyncProvider::testConnection(const NextcloudSyncParams* /*params*/)
@@ -109,9 +109,9 @@ RemoteHandler::RemoteResult MockNextcloudSyncProvider::testConnection(const Next
     // successful."); we mirror that contract here so the user-visible banner
     // depends only on whether the test set a source.
     if (!s_downloadSourcePath.isEmpty() && QFileInfo::exists(s_downloadSourcePath)) {
-        return {true, {}, s_downloadSourcePath, {}, {}, RemoteHandler::ErrorKind::Other};
+        return {.success = true, .filePath = s_downloadSourcePath};
     }
-    return {true, {}, {}, {}, {}, RemoteHandler::ErrorKind::Other};
+    return {.success = true};
 }
 
 RemoteHandler::RemoteResult MockNextcloudSyncProvider::download(const RemoteSyncParams* /*params*/)
@@ -124,7 +124,7 @@ RemoteHandler::RemoteResult MockNextcloudSyncProvider::download(const RemoteSync
         auto kind = s_nextDownloadFailureKind;
         s_nextDownloadFailureMessage.clear();
         s_nextDownloadFailureKind = RemoteHandler::ErrorKind::Other;
-        return {false, msg, {}, {}, {}, kind};
+        return {.success = false, .errorMessage = msg, .kind = kind};
     }
 
     // One-shot consumption of the source path -- same chain-breaker rationale
@@ -137,7 +137,7 @@ RemoteHandler::RemoteResult MockNextcloudSyncProvider::download(const RemoteSync
         // First-sync mode: SyncEngine treats {success=true, filePath=""} as
         // file-not-found and skips merge, going straight to local save +
         // upload.
-        return {true, {}, {}, {}, {}, RemoteHandler::ErrorKind::Other};
+        return {.success = true};
     }
 
     // Stream source -> brand-new temp path (same Windows-share-friendly pattern
@@ -147,46 +147,34 @@ RemoteHandler::RemoteResult MockNextcloudSyncProvider::download(const RemoteSync
 
     QFile src(sourcePath);
     if (!src.open(QIODevice::ReadOnly)) {
-        return {false,
-                QStringLiteral("MockNextcloudSyncProvider: failed to open source %1: %2")
-                    .arg(sourcePath, src.errorString()),
-                {},
-                {},
-                {},
-                RemoteHandler::ErrorKind::Other};
+        return {.success = false,
+                .errorMessage = QStringLiteral("MockNextcloudSyncProvider: failed to open source %1: %2")
+                                    .arg(sourcePath, src.errorString())};
     }
     const QByteArray data = src.readAll();
     src.close();
 
     QFile out(outPath);
     if (!out.open(QIODevice::WriteOnly)) {
-        return {false,
-                QStringLiteral("MockNextcloudSyncProvider: failed to open dest %1: %2")
-                    .arg(outPath, out.errorString()),
-                {},
-                {},
-                {},
-                RemoteHandler::ErrorKind::Other};
+        return {.success = false,
+                .errorMessage = QStringLiteral("MockNextcloudSyncProvider: failed to open dest %1: %2")
+                                    .arg(outPath, out.errorString())};
     }
     if (out.write(data) != data.size()) {
         out.close();
         QFile::remove(outPath);
-        return {false,
-                QStringLiteral("MockNextcloudSyncProvider: failed to write dest %1: %2")
-                    .arg(outPath, out.errorString()),
-                {},
-                {},
-                {},
-                RemoteHandler::ErrorKind::Other};
+        return {.success = false,
+                .errorMessage = QStringLiteral("MockNextcloudSyncProvider: failed to write dest %1: %2")
+                                    .arg(outPath, out.errorString())};
     }
     out.close();
 
-    return {true, {}, outPath, {}, {}, RemoteHandler::ErrorKind::Other};
+    return {.success = true, .filePath = outPath};
 }
 
 RemoteHandler::RemoteResult MockNextcloudSyncProvider::upload(const QString& /*filePath*/,
                                                               const RemoteSyncParams* /*params*/)
 {
     ++s_uploadCallCount;
-    return {true, {}, {}, {}, {}, RemoteHandler::ErrorKind::Other};
+    return {.success = true};
 }
