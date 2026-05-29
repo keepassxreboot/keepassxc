@@ -31,17 +31,7 @@ RemoteParams* CommandSyncProvider::toRemoteParams(const RemoteSyncParams* params
 {
     // Safe: the factory and buildParamsFromConfig pair providers and params
     // by type, so a CommandSyncProvider only ever receives CommandSyncParams.
-    auto* cmdParams = static_cast<const CommandSyncParams*>(params);
-
-    auto* remoteParams = new RemoteParams();
-    remoteParams->name = cmdParams->name;
-    remoteParams->downloadCommand = cmdParams->downloadCommand;
-    remoteParams->downloadInput = cmdParams->downloadInput;
-    remoteParams->downloadTimeoutMsec = cmdParams->downloadTimeoutMsec;
-    remoteParams->uploadCommand = cmdParams->uploadCommand;
-    remoteParams->uploadInput = cmdParams->uploadInput;
-    remoteParams->uploadTimeoutMsec = cmdParams->uploadTimeoutMsec;
-    return remoteParams;
+    return new RemoteParams(static_cast<const CommandSyncParams*>(params)->toRemoteParams());
 }
 
 RemoteHandler::RemoteResult CommandSyncProvider::download(const RemoteSyncParams* params)

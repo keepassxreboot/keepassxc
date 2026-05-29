@@ -5,6 +5,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
 # that DatabaseWidget routes through RemoteSyncProvider::create("command", ...)
 # remains compiled even when networking is disabled at build time.
 set(remotesync_SOURCES
+    RemoteSyncParams.cpp
     RemoteSyncProvider.cpp
     CommandSyncProvider.cpp
     SyncEngine.cpp

@@ -21,6 +21,8 @@
 #include <QDateTime>
 #include <QString>
 
+struct RemoteParams;
+
 // Persisted config keys common to all cloud providers. Provider-specific keys
 // live as static const members on the respective provider class.
 namespace RemoteSyncConfigKeys
@@ -50,6 +52,11 @@ struct RemoteSyncParams
 
 struct CommandSyncParams : public RemoteSyncParams
 {
+    CommandSyncParams() = default;
+    // Convert to/from the legacy Script-Sync RemoteParams (gui/remote).
+    explicit CommandSyncParams(const RemoteParams& params);
+    RemoteParams toRemoteParams() const;
+
     QString downloadCommand;
     QString downloadInput;
     int downloadTimeoutMsec = 10000;

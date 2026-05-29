@@ -1191,15 +1191,7 @@ void DatabaseWidget::syncWithRemote(const RemoteParams* params)
         return;
     }
 
-    auto* cmdParams = new CommandSyncParams();
-    cmdParams->type = "command";
-    cmdParams->name = params->name;
-    cmdParams->downloadCommand = params->downloadCommand;
-    cmdParams->downloadInput = params->downloadInput;
-    cmdParams->downloadTimeoutMsec = params->downloadTimeoutMsec;
-    cmdParams->uploadCommand = params->uploadCommand;
-    cmdParams->uploadInput = params->uploadInput;
-    cmdParams->uploadTimeoutMsec = params->uploadTimeoutMsec;
+    auto* cmdParams = new CommandSyncParams(*params);
     m_syncParams.reset(cmdParams);
 
     m_currentSyncName = params->name;
@@ -1742,14 +1734,7 @@ void DatabaseWidget::syncUnlockedDatabase(bool accepted)
         // is set atomically at every sync entry, so kind == Command
         // (gated above) implies m_syncParams holds CommandSyncParams.
         auto* cmd = static_cast<CommandSyncParams*>(m_syncParams.data());
-        RemoteParams resume;
-        resume.name = cmd->name;
-        resume.downloadCommand = cmd->downloadCommand;
-        resume.downloadInput = cmd->downloadInput;
-        resume.downloadTimeoutMsec = cmd->downloadTimeoutMsec;
-        resume.uploadCommand = cmd->uploadCommand;
-        resume.uploadInput = cmd->uploadInput;
-        resume.uploadTimeoutMsec = cmd->uploadTimeoutMsec;
+        RemoteParams resume = cmd->toRemoteParams();
         // syncWithRemote builds a fresh CommandSyncParams + provider + engine,
         // so dropping the preserved ones first avoids a stray double-owner
         // when the QScopedPointer's reset assigns the new instances.
