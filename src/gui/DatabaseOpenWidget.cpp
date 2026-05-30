@@ -82,6 +82,9 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
     connect(m_ui->buttonBox, SIGNAL(accepted()), SLOT(openDatabase()));
     connect(m_ui->buttonBox, SIGNAL(rejected()), SLOT(reject()));
 
+    m_ui->addKeyFileLinkLabel->setText(
+        QStringLiteral("<a href=\"#\" style=\"text-decoration: underline\">%1</a>")
+            .arg(tr("I have a key file").toHtmlEscaped()));
     connect(m_ui->addKeyFileLinkLabel, &QLabel::linkActivated, this, &DatabaseOpenWidget::browseKeyFile);
     connect(m_ui->keyFileLineEdit, &PasswordWidget::textChanged, this, [&](const QString& text) {
         bool state = !text.isEmpty();
