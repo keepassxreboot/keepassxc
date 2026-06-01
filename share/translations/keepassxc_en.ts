@@ -1843,15 +1843,15 @@ Are you sure you want to continue with this file?.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&lt;a href=&quot;#&quot; style=&quot;text-decoration: underline&quot;&gt;I have a key file&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Hardware keys found, but no slots are configured.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Press ESC again to close this database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>I have a key file</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
