@@ -499,6 +499,7 @@ Group* KeePass1Reader::readGroup(QIODevice* cipherStream)
         case 0x0005: {
             if (fieldSize != 5) {
                 raiseError(tr("Incorrect group access time field size"));
+                return nullptr;
             }
             QDateTime dateTime = dateFromPackedStruct(fieldData);
             if (dateTime.isValid()) {
@@ -509,6 +510,7 @@ Group* KeePass1Reader::readGroup(QIODevice* cipherStream)
         case 0x0006: {
             if (fieldSize != 5) {
                 raiseError(tr("Incorrect group expiry time field size"));
+                return nullptr;
             }
             QDateTime dateTime = dateFromPackedStruct(fieldData);
             if (dateTime.isValid()) {
