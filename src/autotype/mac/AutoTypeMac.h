@@ -48,6 +48,8 @@ public:
     bool raiseOwnWindow() override;
 
     void sendChar(const QChar& ch, bool isKeyDown);
+    bool sendCharVirtual(const QChar& ch, bool isKeyDown);
+    void sendRawKey(uint16_t keyCode, bool isKeyDown);
     void sendKey(Qt::Key key, bool isKeyDown, Qt::KeyboardModifiers modifiers = Qt::NoModifier);
 
 private:

@@ -855,6 +855,13 @@
     </message>
 </context>
 <context>
+    <name>AutoTypePlatformMac</name>
+    <message>
+        <source>Unable to get valid keycode for key: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AutoTypePlatformWayland</name>
     <message>
         <source>No symbol found for key: &apos;%1&apos;</source>
