@@ -117,7 +117,7 @@ image::browser_statistics.png[]
 === Additional Fill-In Fields
 Sometimes login pages have additional fields you would like to fill (e.g., account number). Use the following instructions to add them:
 
-1. Edit the entry you want to add fields to. Go to the advanced tab and add the attributes you need. Each attribute *must start with* `KPH:`, but otherwise the name does not matter. If multiple KPH attributes are defined, they are used in alphabetical order (i.e., the order shown in KeePassXC).
+1. Edit the entry you want to add fields to. Go to the advanced tab and add the attributes you need. Each attribute *must start with* `KPH:` followed by a space, but otherwise the name does not matter. If multiple KPH attributes are defined, they are used in alphabetical order (i.e., the order shown in KeePassXC).
 2. Within the browser, navigate to the page you want to use the additional fields on. Select the "Choose Custom Login Fields" button from the extension popup window. Choose Username, Password and String Field(s). Confirm the selections.
 3. Refresh the web page. The new KPH attribute(s) should be filled to the extra fields.
 
