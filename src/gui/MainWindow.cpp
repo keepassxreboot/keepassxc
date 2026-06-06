@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -155,6 +155,7 @@ MainWindow::MainWindow()
     m_entryContextMenu->addAction(m_ui->actionEntryMoveDown);
     m_entryContextMenu->addSeparator();
     m_entryContextMenu->addAction(m_ui->actionEntryOpenUrl);
+    m_entryContextMenu->addAction(m_ui->actionEntryOpenUrlInPrivateMode);
     m_entryContextMenu->addAction(m_ui->actionEntryDownloadIcon);
     m_entryContextMenu->addSeparator();
     m_entryContextMenu->addAction(m_ui->actionEntryAddToAgent);
@@ -389,6 +390,7 @@ MainWindow::MainWindow()
     m_ui->actionGroupDelete->setIcon(icons()->icon("group-delete"));
     m_ui->actionGroupEmptyRecycleBin->setIcon(icons()->icon("group-empty-trash"));
     m_ui->actionEntryOpenUrl->setIcon(icons()->icon("web"));
+    m_ui->actionEntryOpenUrlInPrivateMode->setIcon(icons()->icon("web"));
     m_ui->actionGroupDownloadFavicons->setIcon(icons()->icon("favicon-download"));
 
     m_ui->actionSettings->setIcon(icons()->icon("configure"));
@@ -506,6 +508,8 @@ MainWindow::MainWindow()
     m_actionMultiplexer.connect(
         m_ui->actionEntryAutoTypeURLEnter, SIGNAL(triggered()), SLOT(performAutoTypeURLEnter()));
     m_actionMultiplexer.connect(m_ui->actionEntryOpenUrl, SIGNAL(triggered()), SLOT(openUrl()));
+    m_actionMultiplexer.connect(
+        m_ui->actionEntryOpenUrlInPrivateMode, SIGNAL(triggered()), SLOT(openUrlInPrivateMode()));
     m_actionMultiplexer.connect(m_ui->actionEntryDownloadIcon, SIGNAL(triggered()), SLOT(downloadSelectedFavicons()));
 #ifdef KPXC_FEATURE_SSHAGENT
     m_actionMultiplexer.connect(m_ui->actionEntryAddToAgent, SIGNAL(triggered()), SLOT(addToAgent()));
@@ -949,6 +953,7 @@ void MainWindow::updateMenuActionState()
     m_ui->actionEntryAutoTypeURLEnter->setEnabled(singleEntrySelected && dbWidget->currentEntryHasUrl());
     m_ui->actionEntryAutoTypeTOTP->setVisible(singleEntrySelected && dbWidget->currentEntryHasTotp());
     m_ui->actionEntryOpenUrl->setEnabled(singleEntryOrEditing && dbWidget->currentEntryHasUrl());
+    m_ui->actionEntryOpenUrlInPrivateMode->setEnabled(singleEntryOrEditing && dbWidget->currentEntryHasUrl());
     m_ui->actionEntryTotp->setEnabled(singleEntrySelected && dbWidget->currentEntryHasTotp());
     m_ui->actionEntryCopyTotp->setEnabled(singleEntrySelected);
     m_ui->actionEntryCopyPasswordTotp->setEnabled(singleEntrySelected && dbWidget->currentEntryHasTotp());
@@ -2089,6 +2094,7 @@ void MainWindow::initActionCollection()
                     m_ui->actionEntryAutoTypeTOTP,
                     m_ui->actionEntryDownloadIcon,
                     m_ui->actionEntryOpenUrl,
+                    m_ui->actionEntryOpenUrlInPrivateMode,
                     m_ui->actionEntryMoveUp,
                     m_ui->actionEntryMoveDown,
                     m_ui->actionEntryAddToAgent,

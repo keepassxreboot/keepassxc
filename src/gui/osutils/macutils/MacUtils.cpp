@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2012 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -119,6 +119,11 @@ QString MacUtils::getLaunchAgentFilename() const
         QDir(QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + QStringLiteral("/../LaunchAgents"));
     return QFile(launchAgentDir.absoluteFilePath(qApp->property("KPXC_QUALIFIED_APPNAME").toString().append(".plist")))
         .fileName();
+}
+
+QString MacUtils::getDefaultApplicationForUrl(const QUrl& url)
+{
+    return m_appkit->getDefaultApplicationForUrl(url);
 }
 
 bool MacUtils::isLaunchAtStartupEnabled() const

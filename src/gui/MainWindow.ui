@@ -344,6 +344,7 @@
     <addaction name="actionEntryRemovePasskey"/>
     <addaction name="separator"/>
     <addaction name="actionEntryOpenUrl"/>
+    <addaction name="actionEntryOpenUrlInPrivateMode"/>
     <addaction name="actionEntryDownloadIcon"/>
     <addaction name="separator"/>
     <addaction name="actionEntryAddToAgent"/>
@@ -913,6 +914,17 @@
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Shift+U</string>
+   </property>
+  </action>
+  <action name="actionEntryOpenUrlInPrivateMode">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Open URL (&amp;Private)</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+Shift+P</string>
    </property>
   </action>
   <action name="actionLockDatabase">
