@@ -1378,6 +1378,14 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <source>Browsers installed using Snap or Flatpak are not supported with exception to Firefox installed using Snap.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Listens to connections using WebSocket in addition to native messaging.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable WebSocket listener</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CloneDialog</name>
@@ -9642,6 +9650,10 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Score</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source></source>
         <translation type="unfinished"></translation>
     </message>
     <message>
