@@ -296,7 +296,7 @@ QString BrowserSettings::replaceTildeHomePath(QString location)
     return location;
 }
 
-void BrowserSettings:: setWebSocketSupport(bool enabled)
+void BrowserSettings::setWebSocketSupport(bool enabled)
 {
     config()->set(Config::Browser_WebSocketSupport, enabled);
 }
