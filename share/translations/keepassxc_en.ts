@@ -9424,6 +9424,10 @@ This option is deprecated, use --set-key-file instead.</source>
         <source>Confirm Replace Entry References</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Show a .netrc formatted output of the entry. Note that this option implies --show-protected.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>

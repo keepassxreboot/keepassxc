@@ -2241,7 +2241,6 @@ void TestCli::testShow()
     m_stderr->readLine(); // Skip password prompt
     QCOMPARE(m_stderr->readAll(), QByteArray());
     QCOMPARE(m_stdout->readAll(), expectedNetrcOutput);
-
 }
 
 void TestCli::testInvalidDbFiles()

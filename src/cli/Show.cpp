@@ -44,8 +44,8 @@ const QCommandLineOption Show::AttributesOption = QCommandLineOption(
         "If no attributes are specified, a summary of the default attributes is given."),
     QObject::tr("attribute"));
 
-const QCommandLineOption Show::NetrcOption =
-    QCommandLineOption(QStringList() << "format-netrc",
+const QCommandLineOption Show::NetrcOption = QCommandLineOption(
+    QStringList() << "format-netrc",
     QObject::tr("Show a .netrc formatted output of the entry. Note that this option implies --show-protected."));
 
 Show::Show()
@@ -87,8 +87,7 @@ int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
 
     bool attributesWereSpecified = true;
     if (showNetrcFormat) {
-        attributes = QStringList() << EntryAttributes::URLKey
-                                   << EntryAttributes::UserNameKey
+        attributes = QStringList() << EntryAttributes::URLKey << EntryAttributes::UserNameKey
                                    << EntryAttributes::PasswordKey;
     } else if (showAllAttributes) {
         attributesWereSpecified = false;
