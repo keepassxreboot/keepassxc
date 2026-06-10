@@ -29,6 +29,7 @@ namespace GuiTools
     bool confirmDeleteEntries(QWidget* parent, const QList<Entry*>& entries, bool permanent);
     bool confirmDeletePluginData(QWidget* parent, const QList<Entry*>& entries);
     size_t deleteEntriesResolveReferences(QWidget* parent, const QList<Entry*>& entries, bool permanent);
+    void centerWidgetOnActiveScreen(QWidget* widget);
 } // namespace GuiTools
 
 /**

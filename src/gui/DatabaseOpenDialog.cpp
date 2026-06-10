@@ -20,12 +20,10 @@
 #include "DatabaseOpenWidget.h"
 #include "DatabaseTabWidget.h"
 #include "DatabaseWidget.h"
+#include "GuiTools.h"
 
-#include <QApplication>
-#include <QCursor>
 #include <QFileInfo>
 #include <QLayout>
-#include <QScreen>
 #include <QShortcut>
 
 DatabaseOpenDialog::DatabaseOpenDialog(QWidget* parent)
@@ -81,12 +79,7 @@ void DatabaseOpenDialog::showEvent(QShowEvent* event)
 {
     QDialog::showEvent(event);
 
-    auto screen = QApplication::screenAt(QCursor::pos());
-    if (!screen) {
-        screen = QApplication::primaryScreen();
-    }
-    QRect screenGeometry = screen->availableGeometry();
-    move(screenGeometry.center().x() - (width() / 2), screenGeometry.center().y() - (height() / 2));
+    GuiTools::centerWidgetOnActiveScreen(this);
 
     QTimer::singleShot(100, this, [this] {
         if (m_view->isOnQuickUnlockScreen() && !m_view->unlockingDatabase()) {

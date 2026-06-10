@@ -19,7 +19,9 @@
 #include "AutoTypeSelectDialog.h"
 #include "ui_AutoTypeSelectDialog.h"
 
+#include <QApplication>
 #include <QCloseEvent>
+#include <QCursor>
 #include <QMenu>
 #include <QScreen>
 #include <QShortcut>
@@ -30,6 +32,7 @@
 #include "core/EntrySearcher.h"
 #include "core/Group.h"
 #include "gui/Clipboard.h"
+#include "gui/GuiTools.h"
 #include "gui/Icons.h"
 
 const auto MENU_FIELD_PROP_NAME = "menu_field";
@@ -407,21 +410,18 @@ void AutoTypeSelectDialog::showEvent(QShowEvent* event)
 {
     QDialog::showEvent(event);
 
+    // Resize to last used size
+    QSize size = config()->get(Config::GUI_AutoTypeSelectDialogSize).toSize();
     auto screen = QApplication::screenAt(QCursor::pos());
     if (!screen) {
-        // screenAt can return a nullptr, default to the primary screen
         screen = QApplication::primaryScreen();
     }
     QRect screenGeometry = screen->availableGeometry();
-
-    // Resize to last used size
-    QSize size = config()->get(Config::GUI_AutoTypeSelectDialogSize).toSize();
     size.setWidth(qMin(size.width(), screenGeometry.width()));
     size.setHeight(qMin(size.height(), screenGeometry.height()));
     resize(size);
 
-    // move dialog to the center of the screen
-    move(screenGeometry.center().x() - (size.width() / 2), screenGeometry.center().y() - (size.height() / 2));
+    GuiTools::centerWidgetOnActiveScreen(this);
 }
 
 void AutoTypeSelectDialog::hideEvent(QHideEvent* event)

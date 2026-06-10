@@ -21,6 +21,10 @@
 #include "core/Group.h"
 #include "gui/MessageBox.h"
 
+#include <QApplication>
+#include <QCursor>
+#include <QScreen>
+
 namespace GuiTools
 {
     bool confirmDeleteEntries(QWidget* parent, const QList<Entry*>& entries, bool permanent)
@@ -135,5 +139,25 @@ namespace GuiTools
             }
         }
         return selectedEntries.size();
+    }
+
+    void centerWidgetOnActiveScreen(QWidget* widget)
+    {
+        if (!widget) {
+            return;
+        }
+
+        auto screen = QApplication::screenAt(QCursor::pos());
+        if (!screen) {
+            screen = QApplication::primaryScreen();
+        }
+        if (!screen) {
+            return;
+        }
+
+        const QRect screenGeometry = screen->availableGeometry();
+        auto frameGeometry = widget->frameGeometry();
+        frameGeometry.moveCenter(screenGeometry.center());
+        widget->move(frameGeometry.topLeft());
     }
 } // namespace GuiTools

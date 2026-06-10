@@ -18,10 +18,10 @@
 #include "PickcharsDialog.h"
 #include "ui_PickcharsDialog.h"
 
+#include "gui/GuiTools.h"
 #include "gui/Icons.h"
 
 #include <QPushButton>
-#include <QScreen>
 #include <QShortcut>
 
 PickcharsDialog::PickcharsDialog(const QString& string, QWidget* parent)
@@ -152,12 +152,5 @@ void PickcharsDialog::showEvent(QShowEvent* event)
 {
     QDialog::showEvent(event);
 
-    // Center on active screen
-    auto screen = QApplication::screenAt(QCursor::pos());
-    if (!screen) {
-        // screenAt can return a nullptr, default to the primary screen
-        screen = QApplication::primaryScreen();
-    }
-    QRect screenGeometry = screen->availableGeometry();
-    move(screenGeometry.center().x() - (size().width() / 2), screenGeometry.center().y() - (size().height() / 2));
+    GuiTools::centerWidgetOnActiveScreen(this);
 }
