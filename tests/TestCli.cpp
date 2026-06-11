@@ -2209,8 +2209,8 @@ void TestCli::testShow()
 
     // Netrc formatted output shouldn't change regardless of extra options.
     QByteArray expectedNetrcOutput = QByteArray("machine http://www.somesite.com/ "
-                                                "login User Name "
-                                                "password Password \n");
+                                                "login \"User Name\" "
+                                                "password \"Password\"\n");
 
     setInput("a");
     execCmd(showCmd, {"show", "--format-netrc", m_dbFile->fileName(), "/Sample Entry"});

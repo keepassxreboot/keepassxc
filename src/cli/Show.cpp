@@ -86,10 +86,7 @@ int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
     }
 
     bool attributesWereSpecified = true;
-    if (showNetrcFormat) {
-        attributes = QStringList() << EntryAttributes::URLKey << EntryAttributes::UserNameKey
-                                   << EntryAttributes::PasswordKey;
-    } else if (showAllAttributes) {
+    if (showAllAttributes) {
         attributesWereSpecified = false;
         attributes = EntryAttributes::DefaultAttributes;
         for (QString fieldName : Utils::EntryFieldNames) {
@@ -114,6 +111,19 @@ int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
 
     // Iterate over the attributes and output them line-by-line.
     bool encounteredError = false;
+
+    // First we do the special case for showNetrc.
+    if (showNetrcFormat) {
+        const QString entryUrl = entry->resolveMultiplePlaceholders(entry->attributes()->value(EntryAttributes::URLKey));
+        if (entryUrl.isEmpty()) {
+            out << QString("default ");
+        } else {
+            out << QString("machine ") << entryUrl << QString(" ");
+        }
+        out << QString("login \"") << entry->resolveMultiplePlaceholders(entry->attributes()->value(EntryAttributes::UserNameKey)) << QString("\" ");
+        out << QString("password \"") << entry->resolveMultiplePlaceholders(entry->attributes()->value(EntryAttributes::PasswordKey)) << QString("\"") << Qt::endl;
+        return encounteredError ? EXIT_FAILURE : EXIT_SUCCESS;
+    }
     for (const QString& attributeName : asConst(attributes)) {
         if (Utils::EntryFieldNames.contains(attributeName)) {
             if (!attributesWereSpecified) {
@@ -138,27 +148,15 @@ int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
         QString canonicalName = attrs[0];
         if (!attributesWereSpecified) {
             out << canonicalName << ": ";
-        } else if (showNetrcFormat) {
-            QString netrcField = canonicalName;
-            if (canonicalName == "URL") {
-                netrcField = QString("machine");
-            } else if (canonicalName == "UserName") {
-                netrcField = QString("login");
-            } else if (canonicalName == "Password") {
-                netrcField = QString("password");
-            }
-            out << netrcField << " ";
         }
         if (entry->attributes()->isProtected(canonicalName) && !attributesWereSpecified && !showProtectedAttributes) {
             out << "PROTECTED" << Qt::endl;
-        } else if (showNetrcFormat) {
-            out << entry->resolveMultiplePlaceholders(entry->attributes()->value(canonicalName)) << QString(" ");
         } else {
             out << entry->resolveMultiplePlaceholders(entry->attributes()->value(canonicalName)) << Qt::endl;
         }
     }
 
-    if (parser->isSet(Show::AttachmentsOption) && !showNetrcFormat) {
+    if (parser->isSet(Show::AttachmentsOption)) {
         // Separate attachment output from attributes output via a newline.
         out << Qt::endl;
 
@@ -177,11 +175,8 @@ int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
         }
     }
 
-    if (showTotp && !showNetrcFormat) {
+    if (showTotp) {
         out << entry->totp() << Qt::endl;
-    }
-    if (showNetrcFormat) {
-        out << Qt::endl;
     }
 
     return encounteredError ? EXIT_FAILURE : EXIT_SUCCESS;
