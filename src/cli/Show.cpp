@@ -114,14 +114,19 @@ int Show::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
 
     // First we do the special case for showNetrc.
     if (showNetrcFormat) {
-        const QString entryUrl = entry->resolveMultiplePlaceholders(entry->attributes()->value(EntryAttributes::URLKey));
+        const QString entryUrl =
+            entry->resolveMultiplePlaceholders(entry->attributes()->value(EntryAttributes::URLKey));
         if (entryUrl.isEmpty()) {
             out << QString("default ");
         } else {
             out << QString("machine ") << entryUrl << QString(" ");
         }
-        out << QString("login \"") << entry->resolveMultiplePlaceholders(entry->attributes()->value(EntryAttributes::UserNameKey)) << QString("\" ");
-        out << QString("password \"") << entry->resolveMultiplePlaceholders(entry->attributes()->value(EntryAttributes::PasswordKey)) << QString("\"") << Qt::endl;
+        out << QString("login \"")
+            << entry->resolveMultiplePlaceholders(entry->attributes()->value(EntryAttributes::UserNameKey))
+            << QString("\" ");
+        out << QString("password \"")
+            << entry->resolveMultiplePlaceholders(entry->attributes()->value(EntryAttributes::PasswordKey))
+            << QString("\"") << Qt::endl;
         return encounteredError ? EXIT_FAILURE : EXIT_SUCCESS;
     }
     for (const QString& attributeName : asConst(attributes)) {
