@@ -34,7 +34,7 @@ SettingsWidgetKeeShare::SettingsWidgetKeeShare(QWidget* parent)
     m_ui->setupUi(this);
 
     connect(m_ui->ownCertificateSignerEdit, SIGNAL(textChanged(QString)), SLOT(setVerificationExporter(QString)));
-    connect(m_ui->generateOwnCerticateButton, SIGNAL(clicked(bool)), SLOT(generateCertificate()));
+    connect(m_ui->generateOwnCertificateButton, SIGNAL(clicked(bool)), SLOT(generateCertificate()));
 }
 
 SettingsWidgetKeeShare::~SettingsWidgetKeeShare()

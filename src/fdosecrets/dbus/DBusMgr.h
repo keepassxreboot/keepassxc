@@ -28,7 +28,7 @@
 #include <QtDBus>
 
 #if QT_VERSION < QT_VERSION_CHECK(6, 4, 0)
-// Include the header only for moc file. Workaround for the class forward definiton error with older Qt 6 versions.
+// Include the header only for moc file. Workaround for the class forward definition error with older Qt 6 versions.
 Q_MOC_INCLUDE("fdosecrets/objects/Item.h")
 #endif
 

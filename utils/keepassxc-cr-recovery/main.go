@@ -170,11 +170,11 @@ func main() {
 	}
 
 	if len(challenge) < 64 {
-		padd := make([]byte, 64-len(challenge))
-		for i, _ := range padd {
-			padd[i] = byte(64-len(challenge))
+		pad := make([]byte, 64-len(challenge))
+		for i, _ := range pad {
+			pad[i] = byte(64-len(challenge))
 		}
-		challenge = append(challenge[:], padd[:]...)
+		challenge = append(challenge[:], pad[:]...)
 	}
 
 	mac := hmac.New(sha1.New, secret)

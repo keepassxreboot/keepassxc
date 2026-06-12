@@ -82,7 +82,7 @@
        </widget>
       </item>
       <item row="2" column="1">
-       <widget class="QPushButton" name="generateOwnCerticateButton">
+       <widget class="QPushButton" name="generateOwnCertificateButton">
         <property name="accessibleName">
          <string>Generate new certificate</string>
         </property>
