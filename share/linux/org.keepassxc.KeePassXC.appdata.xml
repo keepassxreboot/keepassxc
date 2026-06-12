@@ -195,7 +195,7 @@
           <li>SSH Agent: Add timeout to streams to prevent deadlock [#11290]</li>
           <li>macOS: Replace legacy code for screen recording permissions [#11428]</li>
           <li>macOS: Implement Secure Input Mode [#11623]</li>
-          <li>macOS: Fix showing ambigious name in settings [#11373]</li>
+          <li>macOS: Fix showing ambiguous name in settings [#11373]</li>
           <li>macOS: Fix copy-to-clipboard shortcut in entry preview widget [#10966]</li>
           <li>Linux: Prevent multiple lock requests [#11306]</li>
           <li>Snap: Prevent need for snap helper script to configure browser extension [#10924]</li>
@@ -572,7 +572,7 @@
           <li>Save Always on Top setting [#6236]</li>
           <li>Password generator can exclude additional lookalike characters (6/G, 8/B) [#6196]</li>
           <li>Allow setting MSI properties in unattended install [#6196]</li>
-          <li>Update MainWindow minimum size to enable smaller verticle space [#6196]</li>
+          <li>Update MainWindow minimum size to enable smaller vertical space [#6196]</li>
           <li>Use application font size when setting default or monospace fonts [#6332]</li>
           <li>Fix notes not clearing in entry preview panel in some cases [#6481]</li>
           <li>macOS: Correct window activation when restoring from tray [#6575]</li>

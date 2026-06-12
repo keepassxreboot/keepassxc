@@ -18,7 +18,7 @@ void TestImageAttachmentsWidget::initTestCase()
     m_imageAttachmentsView = m_widget->findChild<ImageAttachmentsView*>("imagesView");
     QVERIFY(m_imageAttachmentsView);
 
-    // Generate the black rectange.
+    // Generate the black rectangle.
     QImage image(1000, 1000, QImage::Format_RGB32);
     image.fill(Qt::black);
 

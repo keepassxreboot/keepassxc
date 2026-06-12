@@ -73,7 +73,7 @@ void TestEditEntryAttachmentsDialog::testSetAttachmentTwice()
     QCOMPARE(attachments.data, TestImage.data);
 }
 
-void TestEditEntryAttachmentsDialog::testBottonsBox()
+void TestEditEntryAttachmentsDialog::testButtonsBox()
 {
     const attachments::Attachment TestText{.name = "text.txt", .data = "Test"};
     m_editDialog->setAttachment(TestText);

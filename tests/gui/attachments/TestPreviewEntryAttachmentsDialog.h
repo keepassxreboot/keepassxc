@@ -33,7 +33,7 @@ private slots:
     void testSetAttachment();
     void testSetAttachmentTwice();
 
-    void testBottonsBox();
+    void testButtonsBox();
 
 private:
     QScopedPointer<PreviewEntryAttachmentsDialog> m_previewDialog{};

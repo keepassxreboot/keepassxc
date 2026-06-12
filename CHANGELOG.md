@@ -149,7 +149,7 @@
 * SSH Agent: Add timeout to streams to prevent deadlock [#11290]
 * macOS: Replace legacy code for screen recording permissions [#11428]
 * macOS: Implement Secure Input Mode [#11623]
-* macOS: Fix showing ambigious name in settings [#11373]
+* macOS: Fix showing ambiguous name in settings [#11373]
 * macOS: Fix copy-to-clipboard shortcut in entry preview widget [#10966]
 * Linux: Prevent multiple lock requests [#11306]
 * Snap: Prevent need for snap helper script to configure browser extension [#10924]
@@ -535,7 +535,7 @@
 ### Fixed
 
 - Allow setting MSI properties in unattended install [#6196]
-- Update MainWindow minimum size to enable smaller verticle space [#6196]
+- Update MainWindow minimum size to enable smaller vertical space [#6196]
 - Use application font size when setting default or monospace fonts [#6332]
 - Fix notes not clearing in entry preview panel in some cases [#6481]
 - macOS: Correct window activation when restoring from tray [#6575]

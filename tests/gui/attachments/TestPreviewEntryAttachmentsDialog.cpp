@@ -73,7 +73,7 @@ void TestPreviewEntryAttachmentsDialog::testSetAttachmentTwice()
     QCOMPARE(attachments.data, TestImage.data);
 }
 
-void TestPreviewEntryAttachmentsDialog::testBottonsBox()
+void TestPreviewEntryAttachmentsDialog::testButtonsBox()
 {
     const attachments::Attachment TestText{.name = "text.txt", .data = "Test"};
     m_previewDialog->setAttachment(TestText);
