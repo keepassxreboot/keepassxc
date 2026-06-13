@@ -48,8 +48,8 @@ namespace
     const QString TARGET_DIR_VIVALDI = QStringLiteral("/Library/Application Support/Vivaldi/NativeMessagingHosts");
     const QString TARGET_DIR_TOR_BROWSER =
         QStringLiteral("/Library/Application Support/TorBrowser-Data/Browser/Mozilla/NativeMessagingHosts");
-    const QString TARGET_DIR_BRAVE =
-        QStringLiteral("/Library/Application Support/BraveSoftware/Brave-Browser/NativeMessagingHosts");
+    // Brave on macOS uses Chrome's native messaging directory, same as on Windows (keepassxc-browser#2328)
+    const QString TARGET_DIR_BRAVE = TARGET_DIR_CHROME;
     const QString TARGET_DIR_EDGE = QStringLiteral("/Library/Application Support/Microsoft Edge/NativeMessagingHosts");
 #elif defined(Q_OS_WIN)
     const QString TARGET_DIR_CHROME = QStringLiteral(
