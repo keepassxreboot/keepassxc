@@ -87,6 +87,14 @@ DatabaseSettingsDialog::DatabaseSettingsDialog(QWidget* parent)
             this, &DatabaseSettingsDialog::cloudSyncTriggered);
     connect(m_cloudSyncWidget, &DatabaseSettingsWidgetCloudSync::settingsModified,
             this, [this] { setModified(true); });
+    // Reciprocal mutual-exclusivity unlocks. Both tabs evaluate their lock
+    // once at initialize(); without these relays the tab that "opens up"
+    // after a mid-session removal keeps the warning banner and disabled
+    // controls until the dialog is closed and reopened.
+    connect(m_cloudSyncWidget, &DatabaseSettingsWidgetCloudSync::cloudSyncRemoved,
+            m_remoteWidget, &DatabaseSettingsWidgetRemote::onCloudSyncRemoved);
+    connect(m_remoteWidget, &DatabaseSettingsWidgetRemote::scriptSyncRemoved,
+            m_cloudSyncWidget, &DatabaseSettingsWidgetCloudSync::onScriptSyncRemoved);
 #endif
 
 #ifdef KPXC_FEATURE_BROWSER

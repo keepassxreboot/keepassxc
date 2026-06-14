@@ -51,11 +51,21 @@ public:
 signals:
     void cloudSyncTriggered();
     void settingsModified();
+    // Emitted when the user clicks Remove on any provider page. Lets the
+    // Script Sync widget drop its init-time mutual-exclusivity lock without
+    // a dialog reopen.
+    void cloudSyncRemoved();
 
 public slots:
     void initialize() override;
     void uninitialize() override;
     bool saveSettings() override;
+
+    // Invoked by the parent dialog when the user removes the last Script
+    // Sync entry during this dialog session. Clears the init-time mutual
+    // exclusivity lock so the Cloud Sync tab re-enables in place without
+    // requiring a dialog close/reopen.
+    void onScriptSyncRemoved();
 
 private slots:
     void onProviderChanged(int index);

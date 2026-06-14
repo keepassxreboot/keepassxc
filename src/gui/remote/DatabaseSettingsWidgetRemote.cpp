@@ -93,6 +93,29 @@ bool DatabaseSettingsWidgetRemote::hasCloudSyncConfig() const
     return !m_remoteSettings->activeProvider().isEmpty();
 }
 
+void DatabaseSettingsWidgetRemote::onCloudSyncRemoved()
+{
+    // Nothing to do if we weren't locked -- avoid clobbering an unrelated
+    // banner the user may currently be reading.
+    if (!m_lockedByCloudSync) {
+        return;
+    }
+    m_lockedByCloudSync = false;
+    m_ui->messageWidget->hideMessage();
+    m_ui->saveSettingsButton->setEnabled(true);
+
+    // Drop the stale cloud-config snapshot on our own RemoteSettings. The
+    // cloud widget already cleared CustomData::CloudSyncSettings, but our
+    // RemoteSettings instance still holds the m_cloudConfig it loaded at
+    // initialize(). Without this, the now-unlocked saveSettings() path at
+    // dialog Apply would have RemoteSettings::saveSettings re-stamp the
+    // stale config back into CustomData and resurrect the just-removed
+    // provider. The mutual-exclusivity lock used to mask this by skipping
+    // saveSettings entirely; unlocking the UI requires neutralizing the
+    // snapshot it was guarding.
+    m_remoteSettings->clearCloudSyncConfig();
+}
+
 void DatabaseSettingsWidgetRemote::uninitialize()
 {
 }
@@ -166,6 +189,12 @@ void DatabaseSettingsWidgetRemote::removeCurrentSettings()
     } else {
         clearFields();
         m_ui->removeSettingsButton->setDisabled(true);
+        // Last entry just left -- notify the dialog so the Cloud Sync tab's
+        // mutual-exclusivity lock can drop in place. Script Sync removals
+        // are in-memory until Apply, but the Cloud Sync runtime gate in
+        // DatabaseSettingsWidgetCloudSync::saveSettings re-queries fresh
+        // CustomData, so unlocking the UI here without persistence is safe.
+        emit scriptSyncRemoved();
     }
 }
 

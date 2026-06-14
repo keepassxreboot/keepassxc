@@ -79,8 +79,10 @@ void DatabaseSettingsWidgetCloudSync::registerPage(CloudSyncPage* page)
     // Trigger Sync button on the page bubbles up through cloudSyncTriggered.
     connect(page, &CloudSyncPage::requestSync, this, &DatabaseSettingsWidgetCloudSync::onPageRequestSync);
 
-    // After a Remove the page reset its config; we don't need to react beyond
-    // what the page already did locally (it persists via RemoteSettings).
+    // After a Remove the page resets and persists its own config; the parent
+    // dialog mirrors that into the Script Sync widget's lock via
+    // cloudSyncRemoved so the reciprocal banner clears without a reopen.
+    connect(page, &CloudSyncPage::requestRemove, this, &DatabaseSettingsWidgetCloudSync::cloudSyncRemoved);
 }
 
 CloudSyncPage* DatabaseSettingsWidgetCloudSync::activePage() const
@@ -264,4 +266,37 @@ void DatabaseSettingsWidgetCloudSync::onPageRequestSync()
 bool DatabaseSettingsWidgetCloudSync::hasScriptSyncConfig() const
 {
     return !m_remoteSettings->getAllRemoteParams().isEmpty();
+}
+
+void DatabaseSettingsWidgetCloudSync::onScriptSyncRemoved()
+{
+    // Nothing to do if we weren't locked -- avoid stomping on an unrelated
+    // banner the user may currently be reading.
+    if (!m_lockedByScriptSync) {
+        return;
+    }
+    m_lockedByScriptSync = false;
+    m_ui->messageWidget->hideMessage();
+    m_ui->providerComboBox->setEnabled(true);
+    for (auto* page : m_pages) {
+        page->setMutualExclusivityWarning(false);
+    }
+
+    // Drop the stale script-params snapshot on our own RemoteSettings. The
+    // script widget mutated only its own RemoteSettings instance (and only
+    // in-memory -- script-sync persistence is deferred to dialog Apply), so
+    // ours still holds the m_remoteParams it loaded at initialize(). Without
+    // this, a subsequent saveSettings() (either dialog Apply with a now-
+    // authorized cloud config, or the cloud provider's own onRemoveClicked
+    // round-trip) would have RemoteSettings::saveSettings re-stamp the stale
+    // script entries back into CustomData and resurrect what the user just
+    // removed. Snapshot names first to avoid iterator invalidation by
+    // removeRemoteParams.
+    QStringList staleNames;
+    for (auto* p : m_remoteSettings->getAllRemoteParams()) {
+        staleNames << p->name;
+    }
+    for (const auto& name : staleNames) {
+        m_remoteSettings->removeRemoteParams(name);
+    }
 }

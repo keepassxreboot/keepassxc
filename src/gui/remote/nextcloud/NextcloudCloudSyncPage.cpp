@@ -588,6 +588,8 @@ void NextcloudCloudSyncPage::onRemoveClicked()
     // button should disable. (saveSettings() above already persisted the removal;
     // m_modified=false signals the parent widget that nothing further needs persisting.)
     m_modified = false;
+
+    emit requestRemove();
 }
 
 void NextcloudCloudSyncPage::onTriggerSyncClicked()

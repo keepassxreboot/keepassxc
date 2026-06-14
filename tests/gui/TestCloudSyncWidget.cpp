@@ -49,6 +49,7 @@
 #include "gui/PasswordWidget.h"
 #include "gui/dbsettings/DatabaseSettingsDialog.h"
 #include "gui/remote/DatabaseSettingsWidgetCloudSync.h"
+#include "gui/remote/DatabaseSettingsWidgetRemote.h"
 #include "gui/remote/RemoteSettings.h"
 #include "gui/remote/dropbox/DropboxCloudSyncPage.h"
 #include "gui/remote/nextcloud/NextcloudCloudSyncPage.h"
@@ -1838,4 +1839,129 @@ void TestCloudSyncWidget::CloudSettingAddAndRemoveNextCloudFullWorkflow()
 
     // Reset the mock so it doesn't bleed into other tests in this binary.
     MockNextcloudSyncProvider::setDownloadSourcePath(QString());
+}
+
+// Mutual-exclusivity unlock for Cloud Sync -> Script Sync, exercised end-to-end
+// through the real dialog. Configures Dropbox + Apply, reopens the dialog so
+// the Script Sync widget's initialize() sees a CustomData state where Cloud
+// Sync is configured (the lock is computed once at initialize() time, so a
+// widget constructed before Apply would not observe it), asserts the Script
+// Sync tab is locked, navigates back to Cloud Sync, clicks Remove on Dropbox,
+// then re-navigates to Script Sync IN THE SAME DIALOG SESSION and asserts the
+// banner is hidden + the Save button is re-enabled.
+//
+// We deliberately do not assert CustomData state here -- the
+// CloudSettingAddAndRemoveDropboxFullWorkflow test already covers persistence
+// of the Remove path. This test is scoped strictly to the cross-widget UI
+// relay (cloudSyncRemoved -> onCloudSyncRemoved) and would regress silently
+// if that relay were dropped: dialog persistence would still pass but the
+// user would be stuck with a stale banner until they closed and reopened the
+// dialog.
+void TestCloudSyncWidget::CloudSettingDropboxLocksScriptSyncAndRemoveUnlocksIt()
+{
+    // Earlier tests in this binary may have left counters / kill-switch state
+    // on the mock provider statics. The Authorize / Remove path below calls
+    // refreshAuth / revokeToken on the mock, so reset to a clean slate.
+    MockDropboxSyncProvider::resetCallCounts();
+    MockDropboxSyncProvider::setIsAuthorizedOverride(true);
+    auto restoreKillSwitch = qScopeGuard([] { MockDropboxSyncProvider::setIsAuthorizedOverride(true); });
+
+    auto* dropboxPage = m_widget->findChild<DropboxCloudSyncPage*>(QStringLiteral("dropboxPage"));
+    auto* appKeyEdit = findInDropboxPage<QLineEdit>(m_widget, "appKeyEdit");
+    auto* remotePathEdit = findInDropboxPage<QLineEdit>(m_widget, "remotePathEdit");
+    auto* authorizeButton = findInDropboxPage<QPushButton>(m_widget, "authorizeButton");
+    auto* authStatusLabel = findInDropboxPage<QLabel>(m_widget, "authStatusLabel");
+    QVERIFY(dropboxPage);
+    QVERIFY(appKeyEdit);
+    QVERIFY(remotePathEdit);
+    QVERIFY(authorizeButton);
+    QVERIFY(authStatusLabel);
+
+    // ---- Step 1: configure Dropbox and persist via Apply -----------------
+    QTest::keyClicks(appKeyEdit, QStringLiteral("test-app-key"));
+    QTest::keyClicks(remotePathEdit, QStringLiteral("/test/path.kdbx"));
+
+    auto* loginFlow = new MockDropboxLoginFlow();
+    loginFlow->setCannedTokens(QStringLiteral("tok-123"), QStringLiteral("rtok-456"), 99999999999LL);
+    loginFlow->setNextStartOutcome(MockDropboxLoginFlow::StartOutcome::Completed);
+    dropboxPage->setLoginFlowForTest(loginFlow);
+
+    QTest::mouseClick(authorizeButton, Qt::LeftButton);
+    QTRY_COMPARE(authStatusLabel->text(), QStringLiteral("Authorized"));
+    QTRY_VERIFY(m_applyButton->isEnabled());
+    QTest::mouseClick(m_applyButton, Qt::LeftButton);
+    QVERIFY(!m_applyButton->isEnabled());
+
+    // Close and reopen the settings dialog so the Script Sync widget runs
+    // initialize() against a database state where Cloud Sync IS configured.
+    // m_lockedByCloudSync is set exactly once in initialize(); a widget
+    // constructed by the previous open (when no provider was set) would have
+    // locked = false and the rest of the test would be vacuous.
+    closeDatabaseSettingsViaOk();
+    openCloudSyncSettings();
+
+    // ---- Step 2: Script Sync tab is locked -------------------------------
+    auto* dialog = m_dbWidget->findChild<DatabaseSettingsDialog*>("databaseSettingsDialog");
+    QVERIFY(dialog);
+    auto* remoteWidget = dialog->findChild<DatabaseSettingsWidgetRemote*>();
+    QVERIFY(remoteWidget);
+
+    auto* categoryList = dialog->findChild<CategoryListWidget*>("categoryList");
+    QVERIFY(categoryList);
+    const int scriptSyncIndex = dialog->pageIndex(remoteWidget);
+    const int cloudSyncIndex = dialog->pageIndex(m_widget);
+    QVERIFY(scriptSyncIndex >= 0);
+    QVERIFY(cloudSyncIndex >= 0);
+    categoryList->setCurrentCategory(scriptSyncIndex);
+    QTRY_VERIFY(remoteWidget->isVisible());
+
+    auto* remoteBanner = remoteWidget->findChild<MessageWidget*>(QStringLiteral("messageWidget"));
+    auto* remoteSaveButton = remoteWidget->findChild<QPushButton*>(QStringLiteral("saveSettingsButton"));
+    QVERIFY(remoteBanner);
+    QVERIFY(remoteSaveButton);
+
+    // CRITICAL: this is exactly the banner DatabaseSettingsWidgetRemote::initialize
+    // raises when hasCloudSyncConfig() returns true (cpp:79-84). The visible
+    // banner + grayed Save button are what the user perceives as "the tab is
+    // locked". A regression that drops either bit (e.g. omits the banner but
+    // keeps Save disabled) would leave a misleading UI; both halves are
+    // asserted independently.
+    QVERIFY(remoteBanner->isVisible());
+    QCOMPARE(remoteBanner->text(),
+             QStringLiteral("Cloud Sync is configured for this database. Remove it in the Cloud "
+                            "Sync tab before adding a Script Sync entry."));
+    QCOMPARE(remoteBanner->messageType(), KMessageWidget::Warning);
+    QVERIFY(!remoteSaveButton->isEnabled());
+
+    // ---- Step 3: navigate back to Cloud Sync, click Remove on Dropbox ----
+    categoryList->setCurrentCategory(cloudSyncIndex);
+    QTRY_VERIFY(m_widget->isVisible());
+
+    // Re-find the Remove button on the now-loaded Dropbox page; the page was
+    // re-initialised by the reopen above, so any pointer captured before
+    // closeDatabaseSettingsViaOk could be stale.
+    auto* removeButton = findInDropboxPage<QPushButton>(m_widget, "removeButton");
+    QVERIFY(removeButton);
+    QVERIFY(removeButton->isEnabled());
+    QTest::mouseClick(removeButton, Qt::LeftButton);
+
+    // ---- Step 4: Script Sync unlocks WITHOUT a dialog reopen -------------
+    // The whole point of the test: switch back to Script Sync in the SAME
+    // dialog session (no close/reopen) and verify the lock has been cleared.
+    // The unlock chain is: DropboxCloudSyncPage::onRemoveClicked emits
+    // requestRemove -> DatabaseSettingsWidgetCloudSync forwards as
+    // cloudSyncRemoved -> DatabaseSettingsDialog relays to
+    // DatabaseSettingsWidgetRemote::onCloudSyncRemoved -> banner hidden,
+    // Save button re-enabled. Any break in that chain leaves the lock
+    // sticky until the next dialog open.
+    categoryList->setCurrentCategory(scriptSyncIndex);
+    QTRY_VERIFY(remoteWidget->isVisible());
+
+    // CRITICAL: both halves of the lock must clear. A regression that wires
+    // the signal but forgets to re-enable the Save button (or vice versa)
+    // would only trip one of the two assertions below. QTRY because
+    // MessageWidget::hideMessage runs an animation; the visibility flip can
+    // span an event-loop turn.
+    QTRY_VERIFY(!remoteBanner->isVisible());
+    QVERIFY(remoteSaveButton->isEnabled());
 }

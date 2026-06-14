@@ -47,6 +47,7 @@ private slots:
     void CloudSettingMenuEntry();
     void CloudSettingAddAndRemoveDropboxFullWorkflow();
     void CloudSettingAddAndRemoveNextCloudFullWorkflow();
+    void CloudSettingDropboxLocksScriptSyncAndRemoveUnlocksIt();
 
 private:
     void triggerAction(const QString& name);
