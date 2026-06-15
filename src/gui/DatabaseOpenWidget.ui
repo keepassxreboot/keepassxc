@@ -41,6 +41,9 @@
      <item>
       <widget class="QWidget" name="formContainer" native="true">
        <layout class="QVBoxLayout" name="verticalLayout_4" stretch="1,0,0,0,0,2">
+        <property name="sizeConstraint">
+         <enum>QLayout::SetMinimumSize</enum>
+        </property>
         <item>
          <spacer name="verticalSpacer_2">
           <property name="orientation">
