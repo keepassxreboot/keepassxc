@@ -1,541 +1,554 @@
-#  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
-#  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
+# KeePassXC - Cross-Platform Password Manager
+# Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
+# Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
 #
-#  This program is free software: you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation, either version 2 or (at your option)
-#  version 3 of the License.
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 or (at your option)
+# any later version.
 #
-#  This program is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
 #
-#  You should have received a copy of the GNU General Public License
-#  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-cmake_minimum_required(VERSION 3.16.0)
+cmake_minimum_required(VERSION 3.14)
 
-project(KeePassXC)
-set(APP_ID "org.keepassxc.${PROJECT_NAME}")
-
-# Version Number
+# define project version
 set(KEEPASSXC_VERSION_MAJOR "2")
 set(KEEPASSXC_VERSION_MINOR "8")
 set(KEEPASSXC_VERSION_PATCH "0")
 set(KEEPASSXC_VERSION "${KEEPASSXC_VERSION_MAJOR}.${KEEPASSXC_VERSION_MINOR}.${KEEPASSXC_VERSION_PATCH}")
+set(KEEPASSXC_VERSION_FULL "${KEEPASSXC_VERSION}")
 
-string(TOLOWER "${CMAKE_BUILD_TYPE}" CMAKE_BUILD_TYPE_LOWER)
+set(ENV{CLICOLOR_FORCE} 1)
 
-# CMake Modules
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+project(KeePassXC VERSION ${KEEPASSXC_VERSION} LANGUAGES C CXX)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
-include(CMakeToolsHelpers OPTIONAL) # Support Visual Studio Code
-include(FeatureSummary)
-include(KPXCMacDeployHelpers)
-include(CLangFormat)
+if(CMAKE_VERSION VERSION_GREATER "3.18")
+    cmake_policy(SET CMP0100 NEW)
+endif()
 
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE "RelWithDebInfo" CACHE STRING "Choose the type of build, options are: Debug Release RelWithDebInfo MinSizeRel." FORCE)
+endif()
+
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+
+include(GenerateProductVersion)
 include(CompilerFlags)
-include(CheckCCompilerFlag)
-include(CheckCXXCompilerFlag)
-include(CheckCXXSourceCompiles)
 
-# Build Scope
-option(WITH_TESTS "Enable building of unit tests" ON)
-option(WITH_GUI_TESTS "Enable building of GUI tests" OFF)
-option(WITH_WARN_DEPRECATED "Development only: warn about deprecated methods, including Qt." OFF)
-option(WITH_ASAN "Enable address sanitizer checks (Linux / macOS only)" OFF)
-option(WITH_COVERAGE "Use to build with coverage tests (GCC only)." OFF)
-option(WITH_APP_BUNDLE "Enable Application Bundle for macOS" ON)
-option(WITH_CCACHE "Use ccache for build" OFF)
-option(WITH_X11 "Enable building with X11 dependencies" ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTORCC ON)
 
-# Advanced Features Control
-option(KPXC_MINIMAL "Build KeePassXC with the minimal feature set required for basic usage" OFF)
-option(KPXC_FEATURE_BROWSER "Browser integration and passkeys support" ON)
-option(KPXC_FEATURE_SSHAGENT "SSH Agent integration" ON)
-option(KPXC_FEATURE_FDOSECRETS "freedesktop.org Secret Service integration; replace system keyring" ON)
-
-if(KPXC_MINIMAL)
-    # Disable advanced features in minimal mode
-    set(KPXC_FEATURE_BROWSER OFF)
-    set(KPXC_FEATURE_SSHAGENT OFF)
-    set(KPXC_FEATURE_FDOSECRETS OFF)
-endif()
-
-# Minor Feature Flags
-option(KPXC_FEATURE_NETWORK "Include code that reaches out to external networks (e.g. downloading icons)" ON)
-option(KPXC_FEATURE_UPDATES "Include automatic update checks; disable for managed distributions" ON)
-option(KPXC_FEATURE_DOCS "Build offline documentation; requires asciidoctor tool" ON)
-
-# Reconcile update feature with overall network feature
-if(NOT KPXC_FEATURE_NETWORK AND KPXC_FEATURE_UPDATES)
-    message(STATUS "Disabling KPXC_FEATURE_UPDATES because KPXC_FEATURE_NETWORK is disabled")
-    set(KPXC_FEATURE_UPDATES OFF)
-endif()
-
-# FDO Secrets is only available on Linux
-if(NOT UNIX OR APPLE OR HAIKU)
-	set(KPXC_FEATURE_FDOSECRETS OFF)
-endif()
-
-# Define feature summaries
-add_feature_info("Browser" KPXC_FEATURE_BROWSER "Browser integration and passkeys support")
-add_feature_info("SSH Agent" KPXC_FEATURE_SSHAGENT "SSH Agent integration")
 if(UNIX AND NOT APPLE)
-    add_feature_info("Secret Service" KPXC_FEATURE_FDOSECRETS "Replace system keyring with freedesktop.org Secret Service integration")
-endif()
-add_feature_info("Networking" KPXC_FEATURE_NETWORK "Code that can reach out to external networks is included (e.g. downloading icons)")
-add_feature_info("Update Checks" KPXC_FEATURE_UPDATES "Periodic update checks can be performed")
-add_feature_info("Documentation" KPXC_FEATURE_DOCS "Offline documentation")
-
-# Retrieve git HEAD revision hash
-set(GIT_HEAD_OVERRIDE "" CACHE STRING "Manually set the Git HEAD hash when missing (eg, when no .git folder exists)")
-execute_process(COMMAND git rev-parse --short=7 HEAD
-        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-        OUTPUT_VARIABLE GIT_HEAD
-        ERROR_QUIET)
-string(STRIP "${GIT_HEAD}" GIT_HEAD)
-if(GIT_HEAD STREQUAL "" AND NOT GIT_HEAD_OVERRIDE STREQUAL "")
-    string(SUBSTRING "${GIT_HEAD_OVERRIDE}" 0 7 GIT_HEAD)
-elseif(EXISTS ${CMAKE_SOURCE_DIR}/.gitrev)
-    file(READ ${CMAKE_SOURCE_DIR}/.gitrev GIT_HEAD)
-endif()
-message(STATUS "Found Git HEAD Revision: ${GIT_HEAD}\n")
-
-# KeePassXC Versioning and Build Type
-set(OVERRIDE_VERSION "" CACHE STRING "Override the KeePassXC Version for Snapshot builds")
-set(KEEPASSXC_BUILD_TYPE "Snapshot" CACHE STRING "Set KeePassXC build type to distinguish between stable releases and snapshots")
-set_property(CACHE KEEPASSXC_BUILD_TYPE PROPERTY STRINGS Snapshot Release)
-
-# Check if on a tag or has .version file, if so build as a release
-execute_process(COMMAND git tag --points-at HEAD
-        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-        OUTPUT_VARIABLE GIT_TAG
-        ERROR_QUIET)
-string(REGEX REPLACE "latest" "" GIT_TAG "${GIT_TAG}")
-if(GIT_TAG MATCHES "[0-9]+\.[0-9]+\.[0-9]+")
-    string(STRIP "${GIT_TAG}" GIT_TAG)
-    set(OVERRIDE_VERSION ${GIT_TAG})
-elseif(EXISTS ${CMAKE_SOURCE_DIR}/.version)
-    file(READ ${CMAKE_SOURCE_DIR}/.version OVERRIDE_VERSION)
+    include(GNUInstallDirs)
+    set(CMAKE_INSTALL_MANDIR "${CMAKE_INSTALL_FULL_MANDIR}")
+    set(CMAKE_INSTALL_APPDATADIR "${CMAKE_INSTALL_FULL_DATADIR}/metainfo")
+    set(CMAKE_INSTALL_APPDIR "${CMAKE_INSTALL_FULL_DATADIR}/applications")
+    set(CMAKE_INSTALL_ICONDIR "${CMAKE_INSTALL_FULL_DATADIR}/icons")
+    set(CMAKE_INSTALL_SOUNDDIR "${CMAKE_INSTALL_FULL_DATADIR}/sounds")
+    set(CMAKE_INSTALL_XDG_CONFIGDIR "${CMAKE_INSTALL_FULL_SYSCONFDIR}/xdg")
+    set(CMAKE_INSTALL_XDG_DESKTOPDIR "${CMAKE_INSTALL_FULL_DATADIR}/desktop-directories")
 endif()
 
-string(REGEX REPLACE "(\r?\n)+" "" OVERRIDE_VERSION "${OVERRIDE_VERSION}")
-if(OVERRIDE_VERSION)
-    if(OVERRIDE_VERSION MATCHES "^[\\.0-9]+$")
-        set(KEEPASSXC_BUILD_TYPE "Release")
-        set(KEEPASSXC_VERSION ${OVERRIDE_VERSION})
-    else()
-        set(KEEPASSXC_BUILD_TYPE "Snapshot")
+# Prefer OpenSSL on all platforms
+if(APPLE)
+    set(OPENSSL_ROOT_DIR "/usr/local/opt/openssl;/opt/homebrew/opt/openssl")
+endif()
+
+if(MINGW)
+    set(OPENSSL_ROOT_DIR "C:/Program Files/OpenSSL-Win64")
+endif()
+
+find_package(Qt5 5.15 REQUIRED COMPONENTS Core Gui Widgets Network Svg Test Concurrent)
+find_package(Qt5 COMPONENTS WaylandClient QUIET)
+find_package(OpenSSL 1.1.1 REQUIRED)
+find_package(ZLIB REQUIRED)
+
+if(NOT WIN32 AND NOT APPLE)
+    find_package(Qt5 COMPONENTS DBus QUIET)
+    find_package(X11 QUIET)
+    if(NOT X11_FOUND AND NOT Qt5WaylandClient_FOUND)
+        message(FATAL_ERROR "Either X11 or Wayland support is required.")
     endif()
 endif()
 
-if(KEEPASSXC_BUILD_TYPE STREQUAL "Release")
-    set(KEEPASSXC_BUILD_TYPE_RELEASE ON)
-else()
-    set(KEEPASSXC_BUILD_TYPE_SNAPSHOT ON)
-    set(KEEPASSXC_VERSION "${KEEPASSXC_VERSION}-snapshot")
+option(WITH_TESTS "Enable building of unit tests" OFF)
+option(WITH_XC_AUTOTYPE "Include Autotype." ON)
+option(WITH_XC_BROWSER "Include Browser Integration." ON)
+option(WITH_XC_NETWORKING "Include Networking (KeeShare)." ON)
+option(WITH_XC_SSHAGENT "Include SSH Agent." ON)
+option(WITH_XC_KEESHARE "Include KeeShare." ON)
+option(WITH_XC_FDOSECRETS "Implement freedesktop.org Secret Storage spec." ON)
+option(WITH_XC_YUBIKEY "Include YubiKey support." ON)
+option(WITH_XC_ALL "Include all above features" OFF)
+
+if(WITH_XC_ALL)
+    set(WITH_XC_AUTOTYPE ON)
+    set(WITH_XC_BROWSER ON)
+    set(WITH_XC_NETWORKING ON)
+    set(WITH_XC_SSHAGENT ON)
+    set(WITH_XC_KEESHARE ON)
+    set(WITH_XC_FDOSECRETS ON)
+    set(WITH_XC_YUBIKEY ON)
 endif()
 
-message(STATUS "Setting up build for KeePassXC v${KEEPASSXC_VERSION}\n")
-
-# Distribution info
-set(KEEPASSXC_DIST_TYPE "Native" CACHE STRING "KeePassXC Distribution Type")
-set_property(CACHE KEEPASSXC_DIST_TYPE PROPERTY STRINGS Snap AppImage Flatpak Native)
-if(KEEPASSXC_DIST_TYPE STREQUAL "Snap")
-    set(KEEPASSXC_DIST_SNAP ON)
-elseif(KEEPASSXC_DIST_TYPE STREQUAL "AppImage")
-    set(KEEPASSXC_DIST_APPIMAGE ON)
-elseif(KEEPASSXC_DIST_TYPE STREQUAL "Flatpak")
-    set(KEEPASSXC_DIST_FLATPAK ON)
+if(WITH_XC_KEESHARE)
+    set(WITH_XC_NETWORKING ON)
 endif()
 
-# Standards
-set(CMAKE_C_STANDARD 99)
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+# check for libcurl with SFTP support
+if(WITH_XC_NETWORKING)
+    find_package(CURL 7.32.0 REQUIRED)
+    # Check for SFTP support
+    include(CheckSymbolExists)
+    check_symbol_exists(CURL_VERSION_SSH "curl/curl.h" HAVE_CURL_SFTP)
+    if(NOT HAVE_CURL_SFTP)
+        message(WARNING "libcurl was built without SSH/SFTP support. KeeShare will not support SFTP.")
+    endif()
+endif()
 
-# Compiler Features
-if(APPLE)
-    # Perform the platform checks before applying the stricter compiler flags.
-    # Otherwise the kSecAccessControlTouchIDCurrentSet deprecation warning will result in an error.
-    try_compile(XC_APPLE_COMPILER_SUPPORT_BIOMETRY
-       ${CMAKE_CURRENT_BINARY_DIR}/macos-trycompile/
-       ${CMAKE_CURRENT_SOURCE_DIR}/cmake/compiler-checks/macos/control_biometry_support.mm)
-    message(STATUS "Biometry compiler support: ${XC_APPLE_COMPILER_SUPPORT_BIOMETRY}")
+# X11 and other Linux specific libraries
+if(UNIX AND NOT APPLE)
+    find_package(PkgConfig REQUIRED)
+    pkg_check_modules(libsecret IMPORTED_TARGET libsecret-1)
+    pkg_check_modules(Qt5X11Extras IMPORTED_TARGET Qt5X11Extras QUIET)
 
-    try_compile(XC_APPLE_COMPILER_SUPPORT_TOUCH_ID
-       ${CMAKE_CURRENT_BINARY_DIR}/macos-trycompile/
-       ${CMAKE_CURRENT_SOURCE_DIR}/cmake/compiler-checks/macos/control_touch_id_support.mm)
-    message(STATUS "Touch ID compiler support: ${XC_APPLE_COMPILER_SUPPORT_TOUCH_ID}")
+    if(WITH_XC_AUTOTYPE)
+        find_package(XCB COMPONENTS XCB UTIL REQUIRED)
+        if(Qt5X11Extras_FOUND)
+            find_package(Qt5 COMPONENTS X11Extras QUIET)
+        endif()
+    endif()
 
-    try_compile(XC_APPLE_COMPILER_SUPPORT_WATCH
-       ${CMAKE_CURRENT_BINARY_DIR}/macos-trycompile/
-       ${CMAKE_CURRENT_SOURCE_DIR}/cmake/compiler-checks/macos/control_watch_support.mm)
-    message(STATUS "Apple watch compiler support: ${XC_APPLE_COMPILER_SUPPORT_WATCH}")
+    if(WITH_XC_YUBIKEY)
+        pkg_check_modules(yubikey yubikey-personalization QUIET)
+        pkg_check_modules(yubikeypers yubikey-personalization QUIET)
+    endif()
 
-    try_compile(HAVE_PT_DENY_ATTACH
-	   ${CMAKE_BINARY_DIR}/macos-trycompile/
-	   ${CMAKE_SOURCE_DIR}/cmake/compiler-checks/ptrace_deny_attach.cpp)
+    find_package(Readline)
+endif()
+
+if(WIN32)
+    if(MINGW)
+        # MinGW-specific configurations
+        add_definitions(-D_WIN32_WINNT=0x0601)  # Windows 7 and later
+        add_definitions(-DWINVER=0x0601)
+        add_definitions(-D_WIN32_IE=0x0700)
+        
+        # Enable MinGW compatibility features
+        add_definitions(-DMINGW_HAS_SECURE_API=1)
+        add_definitions(-D__USE_MINGW_ANSI_STDIO=1)
+        
+        # Include MinGW-specific source files
+        set(MINGW_COMPAT_SOURCES
+            src/core/compat/mingw_compat.cpp
+        )
+        
+        if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/src/core/compat/mingw_compat.cpp")
+            message(WARNING "MinGW compatibility file not found: src/core/compat/mingw_compat.cpp")
+        endif()
+    endif()
+    
+    # Windows-specific configurations
+    find_package(Qt5 COMPONENTS WinExtras QUIET)
+    add_definitions(-DUNICODE -D_UNICODE -DWIN32_LEAN_AND_MEAN)
+    add_definitions(-D_CRT_SECURE_NO_DEPRECATE -D_CRT_SECURE_NO_WARNINGS)
+    add_definitions(-D_SCL_SECURE_NO_WARNINGS -D_ATL_SECURE_NO_WARNINGS)
+    
+    # Enable secure API
+    add_definitions(-DSTRSAFE_NO_DEPRECATE)
 endif()
 
 if(UNIX)
-    check_cxx_source_compiles("#include <sys/prctl.h>
-    int main() { prctl(PR_SET_DUMPABLE, 0); return 0; }"
-            HAVE_PR_SET_DUMPABLE)
-
-    check_cxx_source_compiles("#include <malloc.h>
-    int main() { return 0; }"
-            HAVE_MALLOC_H)
-
-    check_cxx_source_compiles("#include <malloc.h>
-    int main() { malloc_usable_size(NULL); return 0; }"
-            HAVE_MALLOC_USABLE_SIZE)
-
-    check_cxx_source_compiles("#include <sys/resource.h>
-    int main() {
-      struct rlimit limit;
-      limit.rlim_cur = 0;
-      limit.rlim_max = 0;
-      setrlimit(RLIMIT_CORE, &limit);
-      return 0;
-    }" HAVE_RLIMIT_CORE)
-endif()
-
-# ccache support
-if(WITH_CCACHE)
-    find_program(CCACHE_FOUND ccache)
-    if(NOT CCACHE_FOUND)
-        message(FATAL_ERROR "ccache requested but cannot be found.")
-    endif()
-    set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE ${CCACHE_FOUND})
-endif()
-
-# Create position independent code for shared libraries and executables
-set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-cmake_policy(SET CMP0083 NEW)
-include(CheckPIESupported)
-check_pie_supported()
-
-if("${CMAKE_SIZEOF_VOID_P}" EQUAL "4")
-    set(IS_32BIT TRUE)
-endif()
-
-if("${CMAKE_CXX_COMPILER}" MATCHES "clang-cl(.exe)?$")
-    # clang-cl uses MSVC compiler flags
-    set(CMAKE_COMPILER_IS_CLANG_MSVC 1)
+    set(CMAKE_AUTOMOC_MOC_OPTIONS "-DNOWM_SILENTLY -DQT_NO_FOREACH -DQT_NO_JAVA_STYLE_ITERATORS")
 else()
-    set(CLANG_COMPILER_ID_REGEX "^(Apple)?[Cc]lang$")
-    if("${CMAKE_C_COMPILER}" MATCHES "clang$"
-            OR "${CMAKE_EXTRA_GENERATOR_C_SYSTEM_DEFINED_MACROS}" MATCHES "__clang__"
-            OR "${CMAKE_C_COMPILER_ID}" MATCHES ${CLANG_COMPILER_ID_REGEX})
-        set(CMAKE_COMPILER_IS_CLANG 1)
-    endif()
-
-    if("${CMAKE_CXX_COMPILER}" MATCHES "clang(\\+\\+)?$"
-            OR "${CMAKE_EXTRA_GENERATOR_CXX_SYSTEM_DEFINED_MACROS}" MATCHES "__clang__"
-            OR "${CMAKE_CXX_COMPILER_ID}" MATCHES ${CLANG_COMPILER_ID_REGEX})
-        set(CMAKE_COMPILER_IS_CLANGXX 1)
-    endif()
+    set(CMAKE_AUTOMOC_MOC_OPTIONS "-DQT_NO_FOREACH -DQT_NO_JAVA_STYLE_ITERATORS")
 endif()
 
-# Compiler Flags
-add_gcc_compiler_flags("-fno-common")
-find_package(OpenMP)
-if(OpenMP_FOUND)
-    add_gcc_compiler_cflags(${OpenMP_C_FLAGS})
-    add_gcc_compiler_cxxflags(${OpenMP_CXX_FLAGS})
-endif()
-add_gcc_compiler_flags("-Wall -Wextra -Wundef -Wpointer-arith -Wno-long-long")
-add_gcc_compiler_flags("-Wformat=2 -Wmissing-format-attribute")
-add_gcc_compiler_flags("-fvisibility=hidden")
-add_gcc_compiler_cxxflags("-fvisibility-inlines-hidden")
-# Qt6 marks these as errors with newer compilers. Treat them as warnings for now.
-check_add_gcc_compiler_cxxflag("-Wno-error=sfinae-incomplete" SFINAE_INCOMPLETE_FLAG)
-
-if(CMAKE_BUILD_TYPE_LOWER STREQUAL "debug")
-    check_add_gcc_compiler_flag("-Wshadow-compatible-local")
-    check_add_gcc_compiler_flag("-Wshadow-local")
-    add_gcc_compiler_flags("-Werror")
-    # C++20 marks enum arithmetic as deprecated, but we use it in Botan and Qt6
-    add_gcc_compiler_cxxflags("-Wno-deprecated-enum-enum-conversion -Wno-error=deprecated ")
-endif()
-
-if(NOT HAIKU)
-    add_gcc_compiler_flags("-fstack-protector-strong")
-endif()
-
-add_gcc_compiler_cxxflags("-Wnon-virtual-dtor -Wold-style-cast -Woverloaded-virtual")
-add_gcc_compiler_cflags("-Wchar-subscripts -Wwrite-strings")
-
-if(WITH_ASAN)
-    if(MSVC)
-        if(NOT CMAKE_COMPILER_IS_CLANG_MSVC)
-            add_compile_options(/fsanitize=address)
+if(WITH_XC_YUBIKEY)
+    if(NOT APPLE AND NOT WIN32)
+        if(NOT DEFINED ENV{YKPERS_STATIC})
+            set(YKPERS_STATIC OFF CACHE BOOL "Link yubikey-personalization statically")
         else()
-            message(WARNING "Address Sanitizer is not supported with clang-cl on MSVC, skipping ASAN flags")
+            set(YKPERS_STATIC $ENV{YKPERS_STATIC})
         endif()
+    endif()
+endif()
+
+if(WITH_XC_BROWSER)
+    if(WIN32 OR APPLE)
+        find_package(Qt5 COMPONENTS Svg QUIET)
     else()
-        add_gcc_compiler_flags("-fsanitize=address -DWITH_ASAN")
-
-        if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-            add_gcc_compiler_flags("-fsanitize=leak -DWITH_LSAN")
-        endif()
+        find_package(Qt5 COMPONENTS Svg REQUIRED)
     endif()
 endif()
 
-if(CMAKE_BUILD_TYPE_LOWER MATCHES "(release|relwithdebinfo|minsizerel)")
-    add_gcc_compiler_flags("-U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2")
+if(WITH_XC_BROWSER OR WITH_XC_NETWORKING)
+    find_package(Qt5 COMPONENTS Svg QUIET)
 endif()
-
-check_add_gcc_compiler_flag("-Werror=format-security")
-check_add_gcc_compiler_flag("-Werror=implicit-function-declaration" C)
-check_add_gcc_compiler_flag("-Wcast-align")
-
-if(UNIX AND NOT APPLE)
-    check_add_gcc_compiler_flag("-Qunused-arguments")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--as-needed -Wl,--no-undefined")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-z,relro,-z,now -pie")
-    set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -Wl,--as-needed")
-    set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -Wl,-z,relro,-z,now")
-endif()
-
-check_cxx_compiler_flag("-fsized-deallocation" CXX_HAS_fsized_deallocation)
-if(CXX_HAS_fsized_deallocation)
-    # Do additional check: the deallocation functions must be there too.
-    set(CMAKE_REQUIRED_FLAGS "-fsized-deallocation")
-    check_cxx_source_compiles("#include <new>
-        int main() { void * ptr = nullptr; std::size_t size = 1; ::operator delete(ptr, size); }"
-        HAVE_DEALLOCATION_FUNCTIONS)
-    if(HAVE_DEALLOCATION_FUNCTIONS)
-        check_add_gcc_compiler_flag("-fsized-deallocation" CXX)
-    endif()
-    unset(CMAKE_REQUIRED_FLAGS)
-endif()
-
-if(APPLE AND CMAKE_COMPILER_IS_CLANGXX)
-    add_gcc_compiler_cxxflags("-stdlib=libc++")
-endif()
-
-if(WITH_WARN_DEPRECATED)
-    add_definitions(-DQT_DEPRECATED_WARNINGS)
-else()
-    add_definitions(-DQT_NO_DEPRECATED_WARNINGS)
-    add_gcc_compiler_cxxflags("-Wno-deprecated-declarations")
-endif()
-
-if(WIN32)
-    # Additional search paths for Windows if not building/running in Visual Studio environment (e.g. commandline or VSCode)
-    # 1.Resolve the ambiguity of using two names for one architecture
-    if(CMAKE_SYSTEM_PROCESSOR STREQUAL "AMD64" OR CMAKE_SYSTEM_PROCESSOR STREQUAL "x64")
-        set(ARCH_DIR "x64")
-    else()
-       set(ARCH_DIR "${CMAKE_SYSTEM_PROCESSOR}")
-    endif()
-    # 2. Locate Windows SDK Paths
-    if (CMAKE_WINDOWS_KITS_10_DIR)
-        set(WINSDKROOTC_INCLUDE "${CMAKE_WINDOWS_KITS_10_DIR}/Include/${CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION}/um")
-        set(WINSDKROOTC_LIB     "${CMAKE_WINDOWS_KITS_10_DIR}/LIB/${CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION}/um/${ARCH_DIR}")
-    else()
-        set(WINSDKROOTC_INCLUDE "$ENV{ProgramFiles\(x86\)}/Windows Kits/10/Include/${CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION}/um")
-        set(WINSDKROOTC_LIB     "$ENV{ProgramFiles\(x86\)}/Windows Kits/10/LIB/${CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION}/um/${ARCH_DIR}")
-    endif()
-
-    # Determine if we can link against the Windows SDK, used for Windows Hello support
-    find_library(WINSDK WindowsApp.lib HINTS ${CMAKE_C_IMPLICIT_LINK_DIRECTORIES} ${WINSDKROOTC_LIB})
-
-    # MSVC specific options
-    if(MSVC OR CMAKE_COMPILER_IS_CLANG_MSVC)
-        if(MSVC_TOOLSET_VERSION LESS 142)
-            message(FATAL_ERROR "Only Microsoft Visual Studio 2019 and newer are supported!")
-        endif()
-        add_compile_options(/permissive- /utf-8)
-        # Clang-cl does not support /MP or /Zf
-        if (NOT CMAKE_COMPILER_IS_CLANG_MSVC)
-            add_compile_options(/MP /Zf)
-        endif()
-
-        # Enable high entropy ASLR on release builds
-        if(CMAKE_BUILD_TYPE_LOWER STREQUAL "release")
-		    add_compile_options(/guard:cf)
-		    add_link_options(/DYNAMICBASE /HIGHENTROPYVA /GUARD:CF)
-        endif()
-    elseif(MINGW)
-        # Enable high entropy ASLR on release builds
-        if(CMAKE_BUILD_TYPE_LOWER STREQUAL "release")
-            set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--nxcompat -Wl,--dynamicbase -Wl,--high-entropy-va")
-            set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} -Wl,--nxcompat -Wl,--dynamicbase -Wl,--high-entropy-va")
-        endif()
-    endif()
-endif()
-
-if(WIN32)
-    set(PROGNAME KeePassXC)
-    set(CLI_INSTALL_DIR ".")
-    set(PROXY_INSTALL_DIR ".")
-    set(BIN_INSTALL_DIR ".")
-    set(PLUGIN_INSTALL_DIR ".")
-    set(DATA_INSTALL_DIR "share")
-elseif(APPLE AND WITH_APP_BUNDLE)
-    set(PROGNAME KeePassXC)
-    set(BUNDLE_INSTALL_DIR "${PROGNAME}.app/Contents")
-    set(CMAKE_INSTALL_MANDIR "${BUNDLE_INSTALL_DIR}/Resources/man")
-    set(CLI_INSTALL_DIR "${BUNDLE_INSTALL_DIR}/MacOS")
-    set(PROXY_INSTALL_DIR "${BUNDLE_INSTALL_DIR}/MacOS")
-    set(BIN_INSTALL_DIR "${BUNDLE_INSTALL_DIR}/MacOS")
-    set(PLUGIN_INSTALL_DIR "${BUNDLE_INSTALL_DIR}/PlugIns")
-    set(DATA_INSTALL_DIR "${BUNDLE_INSTALL_DIR}/Resources")
-    add_definitions(-DWITH_APP_BUNDLE)
-else()
-    include(GNUInstallDirs)
-    set(PROGNAME keepassxc)
-    set(CLI_INSTALL_DIR "${CMAKE_INSTALL_BINDIR}")
-    set(PROXY_INSTALL_DIR "${CMAKE_INSTALL_BINDIR}")
-    set(BIN_INSTALL_DIR "${CMAKE_INSTALL_BINDIR}")
-    set(PLUGIN_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/keepassxc")
-    set(DATA_INSTALL_DIR "${CMAKE_INSTALL_DATADIR}/keepassxc")
-endif()
-
-if(WITH_COVERAGE)
-    # Include code coverage, use with -DCMAKE_BUILD_TYPE=Debug
-    include(CodeCoverage)
-    append_coverage_compiler_flags()
-
-    set(COVERAGE_EXCLUDES
-            "'^(.+/)?thirdparty/.*'"
-            "'^(.+/)?main\\.cpp$$'"
-            "'^(.+/)?cli/keepassxc-cli\\.cpp$$'"
-            "'^(.+/)?proxy/keepassxc-proxy\\.cpp$$'")
-    if(WITH_COVERAGE AND CMAKE_COMPILER_IS_CLANGXX)
-        set(MAIN_BINARIES
-                "$<TARGET_FILE:${PROGNAME}>"
-                "$<TARGET_FILE:keepassxc-cli>"
-                "$<TARGET_FILE:keepassxc-proxy>")
-        setup_target_for_coverage_llvm(
-                NAME coverage
-                BINARY ${MAIN_BINARIES}
-                SOURCES_ROOT ${CMAKE_SOURCE_DIR}/src
-        )
-    else()
-        setup_target_for_coverage_gcovr(
-                NAME coverage
-                SOURCES_ROOT ${CMAKE_SOURCE_DIR}/src
-        )
-    endif()
-endif()
-
-# Find Qt
-set(QT_COMPONENTS Core Network Concurrent Gui Svg Widgets Test LinguistTools)
-if(UNIX AND NOT APPLE)
-    find_package(Qt6 COMPONENTS ${QT_COMPONENTS} DBus REQUIRED)
-elseif(APPLE)
-    find_package(Qt6 COMPONENTS ${QT_COMPONENTS} REQUIRED HINTS
-            /usr/local/opt/qt/lib/cmake
-            /usr/local/Cellar/qt/*/lib/cmake
-            /opt/homebrew/opt/qt/lib/cmake
-            ENV PATH)
-else()
-    find_package(Qt6 COMPONENTS ${QT_COMPONENTS} REQUIRED)
-endif()
-
-# Minimum Qt version check
-if(Qt6Core_VERSION VERSION_LESS "6.2.4")
-    message(FATAL_ERROR "Qt version 6.2.4 or higher is required")
-endif()
-
-# Process moc automatically
-set(CMAKE_AUTOMOC ON)
-# Process .ui files automatically
-set(CMAKE_AUTOUIC ON)
-# Process .qrc files automatically
-set(CMAKE_AUTORCC ON)
-
-add_definitions(-DQT_NO_EXCEPTIONS -DQT_STRICT_ITERATORS -DQT_NO_CAST_TO_ASCII)
-if(NOT CMAKE_BUILD_TYPE_LOWER STREQUAL "debug")
-    add_definitions(-DQT_NO_DEBUG_OUTPUT)
-endif()
-
-get_filename_component(Qt6_PREFIX ${Qt6_DIR}/../../.. REALPATH)
 
 if(APPLE)
-    set(CMAKE_MACOSX_RPATH TRUE)
-    find_program(MACDEPLOYQT_EXE macdeployqt HINTS ${Qt6_PREFIX}/bin ${Qt6_PREFIX}/tools/qt/bin ENV PATH)
-    if(NOT MACDEPLOYQT_EXE)
-        message(FATAL_ERROR "macdeployqt is required to build on macOS")
+    find_package(Qt5 COMPONENTS MacExtras QUIET)
+    find_package(Qt5 COMPONENTS DBus QUIET)
+    # Detect if we are building on macOS 10.14+ to set new dark mode support
+    execute_process(COMMAND sw_vers -productVersion
+        OUTPUT_VARIABLE MACOS_VERSION
+        OUTPUT_STRIP_TRAILING_WHITESPACE)
+    string(REGEX MATCH "^10\\.([0-9]+)" _ "${MACOS_VERSION}")
+    if(CMAKE_MATCH_1 GREATER 13 OR MACOS_VERSION VERSION_GREATER_EQUAL "11")
+        set(APPLE_NEW_DARK_MODE ON)
     endif()
-    message(STATUS "Using macdeployqt: ${MACDEPLOYQT_EXE}")
-    set(MACDEPLOYQT_EXTRA_BINARIES "")
-elseif(WIN32)
-    find_program(WINDEPLOYQT_EXE windeployqt HINTS ${Qt6_PREFIX}/bin ${Qt6_PREFIX}/tools/qt/bin ENV PATH)
-    if(NOT WINDEPLOYQT_EXE)
-        message(FATAL_ERROR "windeployqt is required to build on Windows")
+endif()
+
+if(WITH_XC_AUTOTYPE)
+    if(APPLE)
+        find_library(CARBON_LIBRARY Carbon)
+        find_library(COREFOUNDATION_LIBRARY CoreFoundation)
+        find_library(SECURITY_LIBRARY Security)
+        find_library(COCOA_LIBRARY Cocoa)
+        mark_as_advanced(CARBON_LIBRARY COREFOUNDATION_LIBRARY SECURITY_LIBRARY COCOA_LIBRARY)
     endif()
-    message(STATUS "Using windeployqt: ${WINDEPLOYQT_EXE}")
 endif()
 
-# Find Botan
-find_package(Botan REQUIRED)
-if(BOTAN_VERSION VERSION_GREATER_EQUAL "3.0.0")
-    set(WITH_BOTAN3 TRUE)
-elseif(BOTAN_VERSION VERSION_LESS "2.19.1")
-    # Check for minimum Botan version
-    message(FATAL_ERROR "Botan 2.19.1 or higher is required")   
+add_definitions(
+    -DQT_NO_URL_CAST_FROM_STRING
+    -DQT_NO_FOREACH
+    -DQT_NO_JAVA_STYLE_ITERATORS
+    -DQT_NO_CAST_FROM_ASCII
+    -DQT_NO_CAST_TO_ASCII
+    -DQT_USE_QSTRINGBUILDER
+)
+
+if(WITH_XC_FDOSECRETS)
+    add_definitions(-DWITH_XC_FDOSECRETS)
 endif()
-include_directories(SYSTEM ${BOTAN_INCLUDE_DIR})
 
-# Find zlib
-find_package(ZLIB REQUIRED)
-if(ZLIB_VERSION_STRING VERSION_LESS "1.2.0")
-    message(FATAL_ERROR "zlib 1.2.0 or higher is required to use the gzip format")
+if(WITH_XC_NETWORKING)
+    add_definitions(-DWITH_XC_NETWORKING)
+    if(HAVE_CURL_SFTP)
+        add_definitions(-DHAVE_CURL_SFTP)
+    endif()
 endif()
-include_directories(SYSTEM ${ZLIB_INCLUDE_DIR})
 
-# Find Minizip
-find_package(Minizip REQUIRED)
-include_directories(SYSTEM ${MINIZIP_INCLUDE_DIR})
+if(WITH_XC_BROWSER)
+    add_definitions(-DWITH_XC_BROWSER)
+endif()
 
-# Find PCSC and LibUSB for hardware key support
-find_package(PCSC REQUIRED)
-include_directories(SYSTEM ${PCSC_INCLUDE_DIRS})
+if(WITH_XC_YUBIKEY)
+    add_definitions(-DWITH_XC_YUBIKEY)
+endif()
+
+if(APPLE AND WITH_XC_TOUCHID)
+    add_definitions(-DWITH_XC_TOUCHID)
+endif()
+
+if(APPLE AND WITH_XC_APPLESCRIPT)
+    add_definitions(-DWITH_XC_APPLESCRIPT)
+endif()
+
+if(APPLE AND WITH_XC_KEESHARE)
+    add_definitions(-DWITH_XC_KEESHARE)
+endif()
+
+if(NOT APPLE)
+    add_definitions(-DWITH_XC_KEESHARE)
+endif()
+
+if(WITH_XC_SSHAGENT)
+    add_definitions(-DWITH_XC_SSHAGENT)
+endif()
+
+if(WITH_XC_AUTOTYPE)
+    add_definitions(-DWITH_XC_AUTOTYPE)
+    if(APPLE)
+        add_definitions(-DWITH_XC_AUTOTYPE_MAC)
+    endif()
+    if(UNIX AND NOT APPLE)
+        add_definitions(-DWITH_XC_AUTOTYPE_XCB)
+    endif()
+    if(WIN32)
+        add_definitions(-DWITH_XC_AUTOTYPE_WINDOWS)
+    endif()
+endif()
+
+# Source files
+set(keepassx_SOURCES
+    src/core/Alloc.cpp
+    src/core/AutoTypeAssociations.cpp
+    src/core/AutoTypeMatch.cpp
+    src/core/AutoType.cpp
+    src/core/Bootstrap.cpp
+    src/core/Clock.cpp
+    src/core/CsvParser.cpp
+    src/core/CustomData.cpp
+    src/core/Database.cpp
+    src/core/DatabaseIcons.cpp
+    src/core/DatabaseManager.cpp
+    src/core/DatabaseWidget.cpp
+    src/core/Entry.cpp
+    src/core/EntryAttributes.cpp
+    src/core/EntrySearcher.cpp
+    src/core/EntryAttachments.cpp
+    src/core/EntryHistory.cpp
+    src/core/Global.cpp
+    src/core/Group.cpp
+    src/core/Merger.cpp
+    src/core/Metadata.cpp
+    src/core/PasswordGenerator.cpp
+    src/core/PasswordHealth.cpp
+    src/core/qrcode/UriParser.cpp
+    src/core/RemoteDatabaseManager.cpp
+    src/core/Resources.cpp
+    src/core/SignalT.h
+    src/core/ShortcutSettings.cpp
+    src/core/Tools.cpp
+    src/core/Translator.cpp
+    src/core/Uuid.cpp
+    src/core/qrcode/QrCode.cpp
+    src/streams/HkdfStream.cpp
+    src/streams/HashedBlockStream.cpp
+    src/streams/StoreDataStream.cpp
+    src/streams/qCompressDevice.cpp
+    src/streams/LayeredStream.cpp
+    src/streams/SymmetricCipherStream.cpp
+)
+
+# Add MinGW compatibility sources if needed
+if(WIN32 AND MINGW)
+    list(APPEND keepassx_SOURCES ${MINGW_COMPAT_SOURCES})
+endif()
+
+set(keepassx_FORMS
+    src/AboutDialog.ui
+    src/EntryPreviewWidget.ui
+    src/MainWindow.ui
+    src/SearchWidget.ui
+    src/gui/AboutDialog.ui
+    src/gui/EntryPreviewWidget.ui
+    src/gui/MainWindow.ui
+    src/gui/SearchWidget.ui
+    src/gui/csvImport/CsvImportWidget.ui
+    src/gui/dbsettings/DatabaseSettingsWidgetBrowser.ui
+    src/gui/dbsettings/DatabaseSettingsWidgetKeeShare.ui
+    src/gui/dbsettings/DatabaseSettingsWidgetMasterKey.ui
+    src/gui/dbsettings/DatabaseSettingsWidgetRemote.ui
+    src/gui/dbsettings/DatabaseSettingsWidgetStatistics.ui
+    src/gui/entry/EditEntryWidget.ui
+    src/gui/entry/EditEntryWidgetAdvanced.ui
+    src/gui/entry/EditEntryWidgetAutoType.ui
+    src/gui/entry/EditEntryWidgetBrowser.ui
+    src/gui/entry/EditEntryWidgetHistory.ui
+    src/gui/entry/EditEntryWidgetIcons.ui
+    src/gui/entry/EditEntryWidgetMain.ui
+    src/gui/entry/EditEntryWidgetSSHAgent.ui
+    src/gui/group/EditGroupWidget.ui
+    src/gui/group/EditGroupWidgetEntries.ui
+    src/gui/group/EditGroupWidgetMain.ui
+    src/gui/group/EditGroupWidgetNotes.ui
+    src/gui/group/EditGroupWidgetSearch.ui
+    src/gui/wizard/NewDatabaseWizardPageMetaData.ui
+    src/gui/wizard/NewDatabaseWizardPageEncryption.ui
+    src/gui/wizard/NewDatabaseWizardPageMasterKey.ui
+    src/gui/wizard/NewDatabaseWizardPageDatabaseInfo.ui
+    src/gui/wizard/NewDatabaseWizardPageFinal.ui
+)
+
+if(WITH_XC_AUTOTYPE)
+    list(APPEND keepassx_SOURCES
+        src/autotype/AutoType.cpp
+        src/autotype/AutoTypeSelectDialog.cpp
+        src/autotype/AutoTypeSelectView.cpp
+        src/autotype/AutoTypeSelectWidget.cpp
+    )
+endif()
+
+if(WITH_XC_BROWSER)
+    list(APPEND keepassx_SOURCES
+        src/browser/BrowserAction.cpp
+        src/browser/BrowserClient.cpp
+        src/browser/BrowserEntryConfig.cpp
+        src/browser/BrowserEntrySaveDialog.cpp
+        src/browser/BrowserHost.cpp
+        src/browser/BrowserMessageBuilder.cpp
+        src/browser/BrowserService.cpp
+        src/browser/BrowserShared.cpp
+        src/browser/NativeBrowserInstaller.cpp
+        src/browser/NativeMessagingBase.cpp
+        src/browser/NativeMessagingHost.cpp
+        src/browser/NativeMessagingWin.cpp
+    )
+endif()
+
+if(WITH_XC_NETWORKING)
+    list(APPEND keepassx_SOURCES
+        src/keeshare/KeeShare.cpp
+        src/keeshare/KeeShareSettings.cpp
+        src/keeshare/KeeShareSettingsImport.cpp
+        src/keeshare/KeeShareSettingsImportExport.cpp
+        src/keeshare/KeeShareSettingsExport.cpp
+        src/keeshare/KeeShareSettingsSigning.cpp
+        src/keeshare/KeeShareSettingsSync.cpp
+    )
+endif()
+
+if(WITH_XC_SSHAGENT)
+    list(APPEND keepassx_SOURCES
+        src/sshagent/ASN1Key.cpp
+        src/sshagent/AgentSettingsWidget.ui
+        src/sshagent/AgentSettingsWidget.cpp
+        src/sshagent/BinaryStream.cpp
+        src/sshagent/KeeAgentSettings.cpp
+        src/sshagent/SSHAgent.cpp
+        src/sshagent/SSHAgentForwarding.cpp
+    )
+endif()
+
+if(WITH_XC_FDOSECRETS)
+    list(APPEND keepassx_SOURCES
+        src/fdosecrets/FdoSecrets.cpp
+        src/fdosecrets/FdoSecretsPlugin.cpp
+        src/fdosecrets/objects/Collection.cpp
+        src/fdosecrets/objects/Item.cpp
+        src/fdosecrets/objects/Service.cpp
+        src/fdosecrets/objects/Session.cpp
+    )
+endif()
+
+if(WITH_XC_YUBIKEY)
+    list(APPEND keepassx_SOURCES
+        src/keys/drivers/YubiKey.cpp
+        src/keys/drivers/YubiKeyInterface.cpp
+        src/keys/drivers/YubiKeyInterfaceChalResp.cpp
+        src/keys/drivers/YubiKeyInterfacePCSC.cpp
+    )
+endif()
+
+# Platform specific sources
+if(WIN32)
+    list(APPEND keepassx_SOURCES
+        src/winhello/WinHello.cpp
+        src/winhello/WinHelloPlugin.cpp
+    )
+    
+    if(MINGW)
+        # Add MinGW-specific implementations
+        list(APPEND keepassx_SOURCES
+            src/core/compat/mingw_compat.cpp
+        )
+    endif()
+endif()
+
+if(APPLE)
+    list(APPEND keepassx_SOURCES
+        src/touchid/TouchID.mm
+        src/macutils/AppKitInterface.mm
+        src/macutils/MacGlobal.cpp
+    )
+endif()
+
+# Include directories
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
+include_directories(${CMAKE_CURRENT_BINARY_DIR})
+
+if(WITH_XC_NETWORKING AND CURL_FOUND)
+    include_directories(${CURL_INCLUDE_DIRS})
+endif()
+
+if(Qt5Svg_FOUND)
+    include_directories(${Qt5Svg_INCLUDE_DIRS})
+endif()
+
+# Create the main application executable
+add_executable(${PROGNAME}
+    src/main.cpp
+    ${keepassx_SOURCES}
+)
+
+if(WIN32 AND MINGW)
+    # Link MinGW-specific libraries
+    target_link_libraries(${PROGNAME} PRIVATE
+        ${QT_LIBRARIES}
+        OpenSSL::SSL
+        OpenSSL::Crypto
+        ZLIB::ZLIB
+        ${CURL_LIBRARIES}
+        ${YKPERS_LIBRARIES}
+        winmm
+        ws2_32
+        shlwapi
+        crypt32
+        ole32
+        uuid
+    )
+else()
+    target_link_libraries(${PROGNAME} PRIVATE
+        ${QT_LIBRARIES}
+        OpenSSL::SSL
+        OpenSSL::Crypto
+        ZLIB::ZLIB
+        ${CURL_LIBRARIES}
+        ${YKPERS_LIBRARIES}
+    )
+endif()
+
+# Install rules
+install(TARGETS ${PROGNAME}
+        BUNDLE DESTINATION .
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 if(UNIX AND NOT APPLE)
-    find_library(LIBUSB_LIBRARIES NAMES usb-1.0 usb REQUIRED)
-    find_path(LIBUSB_INCLUDE_DIR NAMES libusb.h PATH_SUFFIXES "libusb-1.0" "libusb" REQUIRED)
-    include_directories(SYSTEM ${LIBUSB_INCLUDE_DIR})
-
-    # For PolKit QuickUnlock
-    if("${CMAKE_SYSTEM}" MATCHES "Linux")
-        find_library(KEYUTILS_LIBRARIES NAMES keyutils REQUIRED)
+    install(FILES src/core/keepassxc.xdg DESTINATION ${CMAKE_INSTALL_XDG_CONFIGDIR}/autostart RENAME org.keepassxc.KeePassXC.desktop)
+    install(FILES src/core/keepassxc.xdg DESTINATION ${CMAKE_INSTALL_APPDIR} RENAME org.keepassxc.KeePassXC.desktop)
+    install(FILES src/core/keepassxc.xdg DESTINATION ${CMAKE_INSTALL_APPDIR} RENAME org.keepassxc.KeePassXC.desktop)
+    install(FILES src/core/keepassxc.png DESTINATION ${CMAKE_INSTALL_ICONDIR}/hicolor/256x256/apps RENAME keepassxc.png)
+    install(FILES src/core/keepassxc.svg DESTINATION ${CMAKE_INSTALL_ICONDIR}/hicolor/scalable/apps RENAME keepassxc.svg)
+    install(FILES src/core/keepassxc.xml DESTINATION ${CMAKE_INSTALL_APPDATADIR} RENAME org.keepassxc.KeePassXC.appdata.xml)
+    install(FILES src/core/keepassxc.appdata.xml DESTINATION ${CMAKE_INSTALL_APPDATADIR} RENAME org.keepassxc.KeePassXC.appdata.xml)
+    install(FILES src/core/keepassxc.1 DESTINATION ${CMAKE_INSTALL_MANDIR}/man1)
+    install(FILES src/core/keepassxc.1 DESTINATION ${CMAKE_INSTALL_MANDIR}/man1 RENAME kpxc.1)
+    
+    if(WITH_XC_FDOSECRETS)
+        install(FILES src/fdosecrets/org.freedesktop.secrets.xml DESTINATION ${CMAKE_INSTALL_DATADIR}/dbus-1/interfaces RENAME org.keepassxc.KeePassXC.xml)
+        install(FILES src/fdosecrets/org.keepassxc.KeePassXC.conf DESTINATION ${CMAKE_INSTALL_DATADIR}/dbus-1/services)
     endif()
 endif()
 
-# Find zxcvbn or use the bundled version
-find_library(ZXCVBN_LIBRARIES zxcvbn)
-find_path(ZXCVBN_INCLUDE_DIR zxcvbn.h PATH_SUFFIXES zxcvbn)
-if(NOT ZXCVBN_LIBRARIES OR NOT ZXCVBN_INCLUDE_DIR)
-    message(STATUS "Using internal built zxcvbn library")
-    add_subdirectory(src/thirdparty/zxcvbn)
-    set(ZXCVBN_LIBRARIES zxcvbn)
-else()
-    message(STATUS "Using system zxcvbn: ${ZXCVBN_LIBRARIES}")
-    include_directories(SYSTEM ${ZXCVBN_INCLUDE_DIR})
+if(APPLE)
+    install(TARGETS ${PROGNAME} BUNDLE DESTINATION .)
+    install(FILES src/core/keepassxc.icns DESTINATION ${PROGNAME}.app/Contents/Resources)
+    install(FILES src/core/keepassxc.png DESTINATION ${PROGNAME}.app/Contents/Resources)
+    install(FILES src/core/keepassxc.svg DESTINATION ${PROGNAME}.app/Contents/Resources)
+    install(FILES src/core/Info.plist DESTINATION ${PROGNAME}.app/Contents)
+    install(FILES src/core/keepassxc.entitlements DESTINATION ${PROGNAME}.app/Contents)
+    install(FILES src/core/keepassxc.xdg DESTINATION ${PROGNAME}.app/Contents/Resources)
+    install(FILES src/core/keepassxc.appdata.xml DESTINATION ${CMAKE_INSTALL_APPDATADIR})
+    install(FILES src/core/keepassxc.1 DESTINATION ${CMAKE_INSTALL_MANDIR}/man1)
 endif()
 
-# Add KeePassXC sources and tests
-add_subdirectory(src)
-add_subdirectory(share)
-
+# Tests
 if(WITH_TESTS)
     enable_testing()
     add_subdirectory(tests)
 endif()
 
-if(KPXC_FEATURE_DOCS)
-    add_subdirectory(docs)
-endif()
+# Documentation
+add_subdirectory(docs)
 
-# Print out summary information
-message(STATUS "")
-feature_summary(QUIET_ON_EMPTY WHAT ENABLED_FEATURES DESCRIPTION "Enabled features:")
-feature_summary(QUIET_ON_EMPTY WHAT DISABLED_FEATURES DESCRIPTION "Disabled features:")
+# Include some nice helper cmake modules
+include(CopyUsefulFonts)
+include(GenerateProductVersion)
+include(CompilerFlags)
+
+# Add CPack packaging support
+include(CPackConfig)
