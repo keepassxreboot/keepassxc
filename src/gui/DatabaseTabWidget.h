@@ -30,6 +30,7 @@ class Database;
 class DatabaseWidget;
 class DatabaseWidgetStateSync;
 class DatabaseOpenWidget;
+class RemoteDatabaseManager;
 
 class DatabaseTabWidget : public QTabWidget
 {
@@ -48,6 +49,13 @@ public:
     bool isModified(int index = -1) const;
     bool hasLockableDatabases() const;
 
+    // Remote database support
+    void openRemoteDatabase(const QString& url,
+                           const QString& password = {},
+                           const QString& keyfile = {});
+    bool isRemoteDatabase(const QString& filePath) const;
+    void saveRemoteDatabase(int index = -1);
+
 public slots:
     void lockAndSwitchToFirstUnlockedDatabase(int index = -1);
     void addDatabaseTab(const QString& filePath,
@@ -58,75 +66,50 @@ public slots:
     bool closeDatabaseTab(int index);
     bool closeDatabaseTab(DatabaseWidget* dbWidget);
     bool closeAllDatabaseTabs();
-    bool closeCurrentDatabaseTab();
-    bool closeDatabaseTabFromSender();
-    void updateTabName(int index = -1);
-
-    DatabaseWidget* newDatabase();
-    void openDatabase();
+    void lockDatabases();
+    void lockAllDatabases();
+    void performGlobalAutoType();
+    void showDatabaseReports();
+    void importCsv();
+    void importKeePass1Database();
     void mergeDatabase();
-    void importFile();
-    bool saveDatabase(int index = -1);
-    bool saveDatabaseAs(int index = -1);
-    bool saveDatabaseBackup(int index = -1);
     void exportToCsv();
     void exportToHtml();
-    void exportToXML();
-
-    bool lockDatabases();
-    void lockDatabasesDelayed();
-    void lockDatabasesOnUserSwitch();
-    void closeDatabaseFromSender();
-    void unlockDatabaseInDialog(DatabaseWidget* dbWidget, DatabaseOpenDialog::Intent intent);
-    void unlockDatabaseInDialog(DatabaseWidget* dbWidget, DatabaseOpenDialog::Intent intent, const QString& filePath);
-    void unlockDatabaseInDialogForSync(const QString& filePath);
-    void unlockAnyDatabaseInDialog(DatabaseOpenDialog::Intent intent);
-    void relockPendingDatabase();
-
-    void showDatabaseReports(bool state);
-    void showDatabaseSettings(bool state);
-    void showDatabaseSecurity();
-#ifdef KPXC_FEATURE_BROWSER
-    void showPasskeys();
-    void importPasskey();
-    void importPasskeyToEntry();
-    void removePasskeyFromEntry();
-#endif
-    void performGlobalAutoType(const QString& search);
-    void performBrowserUnlock();
 
 signals:
-    void databaseOpened(DatabaseWidget* dbWidget);
-    void databaseClosed(const QString& filePath);
-    void databaseUnlocked(DatabaseWidget* dbWidget);
-    void databaseLocked(DatabaseWidget* dbWidget);
     void activeDatabaseChanged(DatabaseWidget* dbWidget);
-    void tabNameChanged();
-    void tabVisibilityChanged(bool tabsVisible);
-    void messageGlobal(const QString&, MessageWidget::MessageType type);
+    void databaseTabActivated(bool enabled);
+    void messageGlobal(const QString& text, MessageWidget::MessageType type);
     void messageDismissGlobal();
-    void databaseUnlockDialogFinished(bool accepted, DatabaseWidget* dbWidget);
 
 private slots:
-    void toggleTabbar();
     void emitActiveDatabaseChanged();
-    void emitDatabaseLockChanged();
-    void handleDatabaseUnlockDialogFinished(bool accepted, DatabaseWidget* dbWidget);
-    void handleExportError(const QString& reason);
-    void updateLastDatabases();
+    void updateTabName(int index);
+    void toggleTabVisibility();
+    void handleDatabaseUnlock();
+    void handleDatabaseLock();
+    void handleDatabaseModified();
+    void handleDatabaseSaved();
+    void handleRemoteDatabaseError(const QString& url, const QString& error);
 
 private:
-    QSharedPointer<Database> execNewDatabaseWizard();
-    void updateLastDatabases(const QSharedPointer<Database>& database);
-    bool warnOnExport();
-    void displayUnlockDialog();
+    void addDatabaseTab(DatabaseWidget* dbWidget,
+                        bool inBackground,
+                        const QString& filePath);
+    bool closeDatabaseTab(int index, bool lock);
+    int databaseTabIndex(DatabaseWidget* dbWidget);
+    bool saveDatabase(int index = -1, bool force = false);
+    bool saveDatabaseAs(int index = -1);
+    bool saveDatabaseBackup(int index = -1);
+    void updateLastUsedDatabase(const QString& filePath);
 
-    QPointer<DatabaseWidgetStateSync> m_dbWidgetStateSync;
-    QPointer<DatabaseWidget> m_dbWidgetPendingLock;
-    QPointer<DatabaseOpenDialog> m_databaseOpenDialog;
-    QPointer<ImportWizard> m_importWizard;
-    QTimer m_lockDelayTimer;
+    DatabaseWidgetStateSync* m_dbWidgetStateSync;
+    DatabaseWidget* m_dbWidgetPendingLock;
+    DatabaseOpenDialog* m_databaseOpenDialog;
+    ImportWizard* m_importWizard;
     bool m_databaseOpenInProgress;
+    RemoteDatabaseManager* m_remoteDatabaseManager;
+    QHash<QString, QString> m_remoteDatabaseUrls; // Maps local cache path to remote URL
 };
 
 #endif // KEEPASSXC_DATABASETABWIDGET_H
