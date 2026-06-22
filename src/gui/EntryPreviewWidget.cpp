@@ -69,6 +69,7 @@ EntryPreviewWidget::EntryPreviewWidget(QWidget* parent)
     m_ui->entryTotpLabel->installEventFilter(this);
 
     connect(m_ui->entryTotpButton, SIGNAL(toggled(bool)), m_ui->entryTotp, SLOT(setVisible(bool)));
+    connect(m_ui->entryTagsList, SIGNAL(tagClicked(QString)), this, SIGNAL(tagSearchRequested(QString)));
     connect(m_ui->entryCloseButton, SIGNAL(clicked()), SLOT(hide()));
     connect(m_ui->toggleUsernameButton, SIGNAL(clicked(bool)), SLOT(setUsernameVisible(bool)));
     connect(m_ui->togglePasswordButton, SIGNAL(clicked(bool)), SLOT(setPasswordVisible(bool)));
