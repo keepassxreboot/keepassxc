@@ -7,8 +7,6 @@ The Auto-Type feature acts like a virtual keyboard to populate data from your en
 
 NOTE: Auto-Type is a completely separate feature from Browser Integration. You do not need to have the KeePassXC browser extension installed in your browser to use Auto-Type.
 
-WARNING: Auto-Type will be disabled when run with a Wayland compositor on Linux. To use Auto-Type in this environment, you must set `QT_QPA_PLATFORM=xcb` or start KeePassXC with the `-platform xcb` command-line flag.
-
 === Configure Global Auto-Type
 You can define a global Auto-Type hotkey that starts the Auto-Type process. To configure the hotkey, perform the following steps:
 
@@ -86,7 +84,7 @@ TIP: Use modifiers to hold down special keys before typing the next character. F
 === Performing Global Auto-Type
 The global Auto-Type keyboard shortcut is used when you have focus on the window you want to type into. To make use of this feature, you must have previously configured an Auto-Type hotkey.
 
-When you press the global Auto-Type hotkey, KeePassXC searches all unlocked databases for entries that match the focused window title. The Auto-Type selection dialog will appear in the following circumstances: there are no matches found, there are multiple matches found, or the setting "Always ask before performing Auto-Type" is enabled. The selection is remembered for a short while to help retype with the same entry in quick succession.
+When you press the global Auto-Type hotkey, KeePassXC searches all unlocked databases for entries that match the focused window title. The selection dialog will appear when there are no matches, multiple matches, the active window title is not available, or "Always ask before performing Auto-Type" is enabled. The selection is remembered for a short while to help retype with the same entry in quick succession.
 
 .Auto-Type sequence selection
 image::autotype_selection_dialog.png[,70%]
@@ -112,4 +110,25 @@ WARNING: Be careful when using Entry-Level Auto-Type as you can inadvertently ty
 
 .Entry-Level Auto-Type
 image::autotype_entrylevel.png[]
+
+=== Wayland Support
+
+On Linux, Auto-Type uses https://flatpak.github.io/xdg-desktop-portal/[XDG Desktop Portals] when running under a Wayland compositor. An implementation of the Remote Desktop Portal and Global Shortcuts Portal must be available on your system for Auto-Type to be available. The following desktop environments are known to provide full or partial support:
+
+* **KDE Plasma 6** — Full support since 6.6 with reconfiguration from within KeePassXC. Reconfiguration with older versions is available via _System Settings_ -> _Shortcuts_ -> _KeePassXC_.
+* **GNOME 48+** — Supports initial binding and Auto-Type. Reconfiguring the shortcut is available via _GNOME Settings_ -> _Apps_ -> _KeePassXC_. Note: the initial configuration dialog may appear blank on some GNOME versions due to a known bug unrelated to KeePassXC, but the shortcut works regardless after accepting the dialog.
+* **Other compositors** (Sway, labwc, Hyprland, etc.) — May require a custom XDG Desktop Portal implementation to provide Remote Desktop and Global Shortcuts services. A generic Python-based implementation, https://github.com/hifi/xdg-desktop-portal-pyrtal[xdg-desktop-portal-pyrtal], can be used as a workaround until official implementations are available.
+
+When running under Wayland, the following limitations apply:
+
+* **No window title matching.** Wayland does not expose the active window title to applications. When you press the global Auto-Type shortcut, the selection dialog will show all available entries from your unlocked databases. Use the keyboard to filter entries quickly. The "remember last used entry" feature is especially useful in this workflow.
+* **No active window tracking.** KeePassXC does not track the focused window on Wayland. If keyboard focus changes during an Auto-Type sequence, the typing will not be interrupted and will continue into the newly focused window.
+* **IME / Input Method compatibility.** Some input method frameworks (e.g., fcitx5, ibus) may interfere with key simulation, particularly for CJK or virtual keyboard setups. This can cause character corruption or modifier key state issues. These issues are caused by the compositor or the input method framework, not by KeePassXC. If you experience problems, try disabling your IME temporarily during Auto-Type, or check your desktop environment's virtual keyboard settings. Please report any issues directly to your compositor or input method project.
+
+Additional configuration options are available in the Auto-Type settings when using the desktop portal backend:
+
+* **Keep remote desktop connection open after performing Auto-Type** — When enabled, the remote desktop session remains open after typing, allowing subsequent Auto-Type operations without re-requesting permission.
+* **Remote desktop mode** — Controls how long the remote desktop authorization is persisted: never remember (authorization is forgotten immediately), remember until exit (authorization persists until KeePassXC closes), or remember until revoked by desktop (authorization persists until the desktop environment revokes it).
+* **Use remote desktop for clipboard access** — Experimental option to use the remote desktop session for clipboard operations (copy and clearing).
+* **Experimental: Prefer desktop portals (Wayland implementation)** — When enabled on X11, attempts to use the desktop portal backend instead of the native X11 implementation. This is unlikely to work on most setups and is provided for completeness to support legacy X11 desktops with portals if available.
 // end::content[]
