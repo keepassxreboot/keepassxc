@@ -431,6 +431,9 @@ elseif(APPLE AND WITH_APP_BUNDLE)
             "${CMAKE_SOURCE_DIR}/share/macosx/Assets.car"
             "${CMAKE_SOURCE_DIR}/share/macosx/keepassxc.icns"
     )
+    target_sources(${PROGNAME} PRIVATE ${MACOSX_BUNDLE_RESOURCE_FILES})
+    set_source_files_properties(${MACOSX_BUNDLE_RESOURCE_FILES}
+            PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
     set_target_properties(${PROGNAME} PROPERTIES
             MACOSX_BUNDLE ON
             MACOSX_BUNDLE_INFO_PLIST "${CMAKE_CURRENT_BINARY_DIR}/Info.plist"
