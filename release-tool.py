@@ -192,7 +192,7 @@ def _run(cmd, *args, cwd, path=None, env=None, input=None, capture_output=True, 
     if docker_image:
         cwd2 = Path(cwd or '.').absolute()
         docker_cmd = ['docker', 'run', '--rm', '--tty=true', f'--workdir={cwd2}', f'--user={os.getuid()}:{os.getgid()}']
-        docker_cmd.extend([f'--env={k}={v}' for k, v in env.items() if k in ['FORCE_COLOR', 'CC', 'CXX']])
+        docker_cmd.extend([f'--env={k}={v}' for k, v in env.items() if k in ['FORCE_COLOR', 'CC', 'CXX', 'QMAKE']])
         if path:
             docker_cmd.append(f'--env=PATH={path}')
         docker_cmd.append(f'--volume={cwd2}:{cwd2}:rw')
@@ -913,12 +913,15 @@ class Build(Command):
         executables = (install_prefix / 'bin').glob('keepassxc*')
         app_run = src_dir / 'share/linux/appimage-apprun.sh'
 
+        # Ensure QMAKE points to qmake6 for linuxdeploy-plugin-qt to find Qt6
+        env = {**os.environ, 'QMAKE': os.environ.get('QMAKE', 'qmake6')}
+
         logger.info('Building AppImage...')
         logger.debug('Running linuxdeploy...')
         _run(['linuxdeploy', '--plugin=qt', f'--appdir={app_dir}', f'--custom-apprun={app_run}',
               f'--desktop-file={desktop_file}', f'--icon-file={icon_file}',
               *[f'--executable={ex}' for ex in executables]],
-             cwd=build_dir, capture_output=False, path=env_path, **docker_args, docker_privileged=True)
+             cwd=build_dir, capture_output=False, path=env_path, env=env, **docker_args, docker_privileged=True)
 
         logger.debug('Running appimagetool...')
         appimage_name = f'KeePassXC-{version}-{platform_target}.AppImage'
@@ -926,7 +929,7 @@ class Build(Command):
         _run(['appimagetool', '--updateinformation=gh-releases-zsync|keepassxreboot|keepassxc|latest|' +
               f'KeePassXC-*-{platform_target}.AppImage.zsync',
               app_dir.as_posix(), (output_dir.absolute() / appimage_name).as_posix()],
-             cwd=build_dir, capture_output=False, path=env_path, **docker_args, docker_privileged=True)
+             cwd=build_dir, capture_output=False, path=env_path, env=env, **docker_args, docker_privileged=True)
         # Move appimage zsync file to output dir
         zsync_file = next(Path(build_dir).glob('*.AppImage.zsync'), None)
         if zsync_file and zsync_file.is_file():
