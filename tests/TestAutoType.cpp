@@ -350,6 +350,8 @@ void TestAutoType::testAutoTypeSyntaxChecks()
 
     QVERIFY2(AutoType::verifyAutoTypeSyntax("{NUMPAD1 3}", entry, error), error.toLatin1());
 
+    QVERIFY2(AutoType::verifyAutoTypeSyntax("{PGDN}", entry, error), error.toLatin1());
+
     QVERIFY2(AutoType::verifyAutoTypeSyntax("{S:SPECIALTOKEN}", entry, error), error.toLatin1());
     QVERIFY2(AutoType::verifyAutoTypeSyntax("{S:SPECIAL TOKEN}", entry, error), error.toLatin1());
     QVERIFY2(AutoType::verifyAutoTypeSyntax("{S:SPECIAL_TOKEN}", entry, error), error.toLatin1());

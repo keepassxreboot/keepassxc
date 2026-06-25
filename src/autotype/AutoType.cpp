@@ -80,6 +80,7 @@ namespace
                                                         {"end", Qt::Key_End},
                                                         {"pgup", Qt::Key_PageUp},
                                                         {"pgdown", Qt::Key_PageDown},
+                                                        {"pgdn", Qt::Key_PageDown},
                                                         {"backspace", Qt::Key_Backspace},
                                                         {"bs", Qt::Key_Backspace},
                                                         {"bksp", Qt::Key_Backspace},
