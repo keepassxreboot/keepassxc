@@ -20,50 +20,35 @@
 
 #include <QApplication>
 #include <QDebug>
-#include <QJsonObject>
-#include <QPluginLoader>
 #include <QRegularExpression>
-#include <QUrl>
 
 #include "config-keepassx.h"
 
-#include "autotype/AutoTypePlatformPlugin.h"
+#include "autotype/AutoTypePlatform.h"
 #include "autotype/AutoTypeSelectDialog.h"
 #include "autotype/PickcharsDialog.h"
+#include "autotype/test/AutoTypeTest.h"
 #include "core/Config.h"
 #include "core/Global.h"
-#include "core/Resources.h"
 #include "core/Tools.h"
 #include "core/Totp.h"
 #include "gui/MainWindow.h"
 #include "gui/MessageBox.h"
 #include "gui/osutils/OSUtils.h"
 
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS) && !defined(Q_OS_HAIKU)
+#ifdef WITH_X11
+#include "autotype/xcb/AutoTypeXCB.h"
+#endif
+#include "autotype/wayland/AutoTypeWayland.h"
+#elif defined(Q_OS_MACOS)
+#include "autotype/mac/AutoTypeMac.h"
+#elif defined(Q_OS_WIN32)
+#include "autotype/windows/AutoTypeWindows.h"
+#endif
+
 namespace
 {
-    QStringList autoTypePluginCandidates(bool test)
-    {
-        if (test) {
-            return {QStringLiteral("test")};
-        }
-
-        const auto platformName = QApplication::platformName();
-#if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS) && !defined(Q_OS_HAIKU)
-        if (platformName == QLatin1String("xcb")) {
-#ifdef WITH_X11
-            if (config()->get(Config::AutoTypePreferDesktopPortals).toBool()) {
-                return {QStringLiteral("wayland"), QStringLiteral("xcb")};
-            }
-            return {QStringLiteral("xcb")};
-#else
-            return {QStringLiteral("wayland")};
-#endif
-        }
-#endif
-
-        return {platformName};
-    }
-
     // Basic Auto-Type placeholder associations
     const QHash<QString, Qt::Key> g_placeholderToKey = {{"tab", Qt::Key_Tab},
                                                         {"enter", Qt::Key_Enter},
@@ -148,9 +133,7 @@ AutoType* AutoType::m_instance = nullptr;
 
 AutoType::AutoType(QObject* parent, bool test)
     : QObject(parent)
-    , m_pluginLoader(new QPluginLoader(this))
-    , m_plugin(nullptr)
-    , m_executor(nullptr)
+    , m_platform(nullptr)
     , m_windowState(WindowState::Normal)
     , m_windowForGlobal(0)
     , m_lastMatch(nullptr, QString())
@@ -163,71 +146,47 @@ AutoType::AutoType(QObject* parent, bool test)
         emit autotypeRetypeTimeout();
     });
 
-    // prevent crash when the plugin has unresolved symbols
-    m_pluginLoader->setLoadHints(QLibrary::ResolveAllSymbolsHint);
+    if (test) {
+        m_platform = new AutoTypePlatformTest();
+    } else {
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS) && !defined(Q_OS_HAIKU)
+        const auto platformName = QApplication::platformName();
+#ifdef WITH_X11
+        if (platformName == "xcb") {
+            if (config()->get(Config::AutoTypePreferDesktopPortals).toBool()) {
+                m_platform = new AutoTypePlatformWayland();
+                if (!m_platform->isAvailable()) {
+                    delete m_platform;
+                    m_platform = new AutoTypePlatformX11();
+                }
+            } else {
+                m_platform = new AutoTypePlatformX11();
+            }
+        } else {
+            m_platform = new AutoTypePlatformWayland();
+        }
+#else
+        Q_UNUSED(platformName);
+        m_platform = new AutoTypePlatformWayland();
+#endif
+#elif defined(Q_OS_MACOS)
+        m_platform = new AutoTypePlatformMac();
+#elif defined(Q_OS_WIN32)
+        m_platform = new AutoTypePlatformWin();
+#endif
+    }
 
-    const auto pluginCandidates = autoTypePluginCandidates(test);
-    for (const auto& pluginCandidate : pluginCandidates) {
-        const auto pluginPath = resources()->pluginPath(QStringLiteral("keepassxc-autotype-%1").arg(pluginCandidate));
-        if (!pluginPath.isEmpty() && loadPlugin(pluginPath)) {
-            break;
+    if (m_platform) {
+        if (!m_platform->isAvailable()) {
+            delete m_platform;
+            m_platform = nullptr;
         }
     }
 
-    if (!m_plugin) {
-        qWarning("Unable to load an available auto-type plugin.");
+    if (!m_platform) {
+        qWarning("Unable to initialize an available auto-type platform.");
     }
 
-    connect(this, SIGNAL(autotypeFinished()), SLOT(resetAutoTypeState()));
-    connect(this, &AutoType::autotypeFinished, this, [this] {
-        if (m_plugin) {
-            m_plugin->finishAutoType();
-        }
-    });
-    connect(qApp, SIGNAL(aboutToQuit()), SLOT(unloadPlugin()));
-}
-
-AutoType::~AutoType()
-{
-    if (m_executor) {
-        delete m_executor;
-        m_executor = nullptr;
-    }
-}
-
-bool AutoType::usesDesktopPortal() const
-{
-    return m_plugin
-           && m_pluginLoader->metaData().value(QLatin1String("IID")).toString()
-                  == QLatin1String("org.keepassxc.AutoTypePlatformWayland");
-}
-
-bool AutoType::loadPlugin(const QString& pluginPath)
-{
-    m_pluginLoader->setFileName(pluginPath);
-
-    QObject* pluginInstance = m_pluginLoader->instance();
-    if (!pluginInstance) {
-        return false;
-    }
-
-    if (!m_plugin) {
-        m_plugin = qobject_cast<AutoTypePlatformInterface*>(pluginInstance);
-        m_executor = nullptr;
-    }
-
-    if (!m_plugin) {
-        unloadPlugin();
-        return false;
-    }
-
-    m_plugin->setOSUtils(osUtils);
-    if (!m_plugin->isAvailable()) {
-        unloadPlugin();
-        return false;
-    }
-
-    m_executor = m_plugin->createExecutor();
     connect(osUtils,
             &OSUtilsBase::globalShortcutTriggered,
             this,
@@ -236,22 +195,35 @@ bool AutoType::loadPlugin(const QString& pluginPath)
                     startGlobalAutoType(initialSearch);
                 }
             });
-    return true;
+    connect(this, SIGNAL(autotypeFinished()), SLOT(resetAutoTypeState()));
+    connect(this, &AutoType::autotypeFinished, this, [this] {
+        if (m_platform) {
+            m_platform->finishAutoType();
+        }
+    });
+    connect(qApp, SIGNAL(aboutToQuit()), SLOT(unload()));
 }
 
-void AutoType::unloadPlugin()
+AutoType::~AutoType()
 {
-    if (m_executor) {
-        delete m_executor;
-        m_executor = nullptr;
-    }
+    unload();
+}
 
-    if (m_plugin) {
-        m_plugin->unload();
-        m_plugin = nullptr;
-    }
+bool AutoType::usesDesktopPortal() const
+{
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MACOS) && !defined(Q_OS_HAIKU)
+    return dynamic_cast<AutoTypePlatformWayland*>(m_platform) != nullptr;
+#else
+    return false;
+#endif
+}
 
-    m_pluginLoader->unload();
+void AutoType::unload()
+{
+    if (m_platform) {
+        delete m_platform;
+        m_platform = nullptr;
+    }
 }
 
 AutoType* AutoType::instance()
@@ -272,25 +244,25 @@ void AutoType::createTestInstance()
 
 QStringList AutoType::windowTitles()
 {
-    if (!m_plugin) {
+    if (!m_platform) {
         return {};
     }
 
-    return m_plugin->windowTitles();
+    return m_platform->windowTitles();
 }
 
 void AutoType::raiseWindow()
 {
 #if defined(Q_OS_MACOS)
-    if (m_plugin) {
-        m_plugin->raiseOwnWindow();
+    if (m_platform) {
+        m_platform->raiseOwnWindow();
     }
 #endif
 }
 
 bool AutoType::registerGlobalShortcut(Qt::Key key, Qt::KeyboardModifiers modifiers, QString* error)
 {
-    if (!m_plugin) {
+    if (!m_platform) {
         return false;
     }
 
@@ -310,8 +282,8 @@ void AutoType::executeAutoTypeActions(const Entry* entry,
                                       WId window,
                                       AutoTypeExecutor::Mode mode)
 {
-    if (!m_plugin || !m_executor) {
-        qWarning() << "Auto-Type plugin not available, cannot perform Auto-Type.";
+    if (!m_platform) {
+        qWarning() << "Auto-Type platform not available, cannot perform Auto-Type.";
         return;
     }
 
@@ -347,7 +319,7 @@ void AutoType::executeAutoTypeActions(const Entry* entry,
         }
 
         macUtils()->raiseLastActiveWindow();
-        m_plugin->hideOwnWindow();
+        m_platform->hideOwnWindow();
 #else
         if (getMainWindow()) {
             getMainWindow()->minimizeOrHide();
@@ -357,23 +329,23 @@ void AutoType::executeAutoTypeActions(const Entry* entry,
         // Restore window state (macOS only) then raise the target window
         restoreWindowState();
         QCoreApplication::processEvents();
-        m_plugin->raiseWindow(window);
+        m_platform->raiseWindow(window);
     }
 
     // Restore executor mode
-    m_executor->mode = mode;
+    m_platform->executor().mode = mode;
 
     // Initial Auto-Type delay to allow window to come to foreground
     Tools::wait(qBound(s_minWaitDelay, config()->get(Config::AutoTypeStartDelay).toInt(), s_maxWaitDelay));
 
     // Grab the current active window after everything settles
     if (window == 0) {
-        window = m_plugin->activeWindow();
+        window = m_platform->activeWindow();
     }
 
     for (const auto& action : asConst(actions)) {
         // Cancel Auto-Type if the active window changed
-        if (m_plugin->activeWindow() != window) {
+        if (m_platform->activeWindow() != window) {
             qWarning("Active window changed, interrupting auto-type.");
             break;
         }
@@ -381,7 +353,7 @@ void AutoType::executeAutoTypeActions(const Entry* entry,
         bool failed = false;
         constexpr int max_retries = 5;
         for (int i = 1; i <= max_retries; i++) {
-            auto result = action->exec(m_executor);
+            auto result = action->exec(m_platform->executor());
 
             QCoreApplication::processEvents(QEventLoop::AllEvents, 10);
 
@@ -417,7 +389,7 @@ void AutoType::executeAutoTypeActions(const Entry* entry,
  */
 void AutoType::performAutoType(const Entry* entry)
 {
-    if (!m_plugin) {
+    if (!m_platform) {
         return;
     }
 
@@ -433,7 +405,7 @@ void AutoType::performAutoType(const Entry* entry)
  */
 void AutoType::performAutoTypeWithSequence(const Entry* entry, const QString& sequence)
 {
-    if (!m_plugin) {
+    if (!m_platform) {
         return;
     }
 
@@ -442,7 +414,7 @@ void AutoType::performAutoTypeWithSequence(const Entry* entry, const QString& se
 
 void AutoType::startGlobalAutoType(const QString& search)
 {
-    if (!m_plugin) {
+    if (!m_platform) {
         return;
     }
 
@@ -451,8 +423,8 @@ void AutoType::startGlobalAutoType(const QString& search)
         return;
     }
 
-    m_windowForGlobal = m_plugin->activeWindow();
-    m_windowTitleForGlobal = m_plugin->activeWindowTitle();
+    m_windowForGlobal = m_platform->activeWindow();
+    m_windowTitleForGlobal = m_platform->activeWindowTitle();
 #ifdef Q_OS_MACOS
     // Determine if the user has given proper permissions to KeePassXC to perform Auto-Type
     static bool accessibilityChecked = false;
@@ -491,7 +463,7 @@ void AutoType::startGlobalAutoType(const QString& search)
  */
 void AutoType::performGlobalAutoType(const QList<QSharedPointer<Database>>& dbList, const QString& search)
 {
-    if (!m_plugin || !m_inGlobalAutoTypeDialog.tryLock()) {
+    if (!m_platform || !m_inGlobalAutoTypeDialog.tryLock()) {
         return;
     }
 
@@ -554,13 +526,13 @@ void AutoType::performGlobalAutoType(const QList<QSharedPointer<Database>>& dbLi
         });
 
 #ifdef Q_OS_MACOS
-        m_plugin->raiseOwnWindow();
+        m_platform->raiseOwnWindow();
         Tools::wait(50);
 #endif
         selectDialog->show();
         selectDialog->raise();
         selectDialog->activateWindow();
-        m_plugin->prepareAutoType();
+        m_platform->prepareAutoType();
     } else if (!matchList.isEmpty()) {
         // Only one match and not asking, do it!
         executeAutoTypeActions(matchList.first().first, matchList.first().second, m_windowForGlobal);

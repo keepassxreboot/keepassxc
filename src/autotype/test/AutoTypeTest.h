@@ -18,42 +18,39 @@
 #ifndef KEEPASSX_AUTOTYPETEST_H
 #define KEEPASSX_AUTOTYPETEST_H
 
-#include <QtPlugin>
+#include "autotype/AutoTypePlatform.h"
 
-#include "autotype/AutoTypePlatformPlugin.h"
-#include "autotype/test/AutoTypeTestInterface.h"
-
-class AutoTypePlatformTest : public QObject, public AutoTypePlatformInterface, public AutoTypeTestInterface
+class AutoTypePlatformTest : public QObject, public AutoTypePlatformInterface
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "org.keepassxc.AutoTypePlatformInterface")
-    Q_INTERFACES(AutoTypePlatformInterface AutoTypeTestInterface)
 
 public:
-    QString keyToString(Qt::Key key) override;
+    explicit AutoTypePlatformTest();
+    QString keyToString(Qt::Key key);
 
     bool isAvailable() override;
     QStringList windowTitles() override;
     WId activeWindow() override;
     QString activeWindowTitle() override;
     bool raiseWindow(WId window) override;
-    AutoTypeExecutor* createExecutor() override;
+    AutoTypeExecutor& executor() const override;
 
 #if defined(Q_OS_MACOS)
     bool hideOwnWindow() override;
     bool raiseOwnWindow() override;
 #endif
 
-    void setActiveWindowTitle(const QString& title) override;
+    void setActiveWindowTitle(const QString& title);
 
-    QString actionChars() override;
-    int actionCount() override;
-    void clearActions() override;
+    QString actionChars();
+    int actionCount();
+    void clearActions();
 
     void addAction(const AutoTypeKey* action);
 
 private:
     QString m_activeWindowTitle;
+    AutoTypeExecutor* m_executor = nullptr;
     int m_actionCount = 0;
     QString m_actionChars;
 };

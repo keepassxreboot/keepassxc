@@ -19,44 +19,40 @@
 #ifndef KEEPASSXC_AUTOTYPEWINDOWS_H
 #define KEEPASSXC_AUTOTYPEWINDOWS_H
 
-#include <QtPlugin>
-
 #undef NOMINMAX
 #define NOMINMAX
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
 #include "autotype/AutoTypeAction.h"
-#include "autotype/AutoTypePlatformPlugin.h"
+#include "autotype/AutoTypePlatform.h"
 
 class WinUtils;
 
 class AutoTypePlatformWin : public QObject, public AutoTypePlatformInterface
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "org.keepassxc.AutoTypePlatformWindows")
-    Q_INTERFACES(AutoTypePlatformInterface)
 
 public:
-    void setOSUtils(OSUtilsBase* osUtils) override;
+    explicit AutoTypePlatformWin();
     bool isAvailable() override;
     QStringList windowTitles() override;
     WId activeWindow() override;
     QString activeWindowTitle() override;
     bool raiseWindow(WId window) override;
-    AutoTypeExecutor* createExecutor() override;
+    AutoTypeExecutor& executor() const override;
 
     void sendCharVirtual(const QChar& ch);
     void sendChar(const QChar& ch);
     void setKeyState(Qt::Key key, bool down);
 
 private:
+    AutoTypeExecutor* m_executor = nullptr;
+
     static bool isExtendedKey(DWORD nativeKeyCode);
     static bool isAltTabWindow(HWND hwnd);
     static BOOL CALLBACK windowTitleEnumProc(_In_ HWND hwnd, _In_ LPARAM lParam);
     static QString windowTitle(HWND hwnd);
-
-    WinUtils* m_winUtils = nullptr;
 };
 
 class AutoTypeExecutorWin : public AutoTypeExecutor

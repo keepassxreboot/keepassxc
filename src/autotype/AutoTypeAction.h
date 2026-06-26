@@ -80,7 +80,7 @@ public:
     };
 
     AutoTypeAction() = default;
-    virtual Result exec(AutoTypeExecutor* executor) const = 0;
+    virtual Result exec(AutoTypeExecutor& executor) const = 0;
     virtual ~AutoTypeAction() = default;
 };
 
@@ -89,7 +89,7 @@ class KEEPASSXC_EXPORT AutoTypeKey : public AutoTypeAction
 public:
     explicit AutoTypeKey(const QChar& character, Qt::KeyboardModifiers modifiers = Qt::NoModifier);
     explicit AutoTypeKey(Qt::Key key, Qt::KeyboardModifiers modifiers = Qt::NoModifier);
-    Result exec(AutoTypeExecutor* executor) const override;
+    Result exec(AutoTypeExecutor& executor) const override;
 
     const QChar character;
     const Qt::Key key = Qt::Key_unknown;
@@ -100,7 +100,7 @@ class KEEPASSXC_EXPORT AutoTypeDelay : public AutoTypeAction
 {
 public:
     explicit AutoTypeDelay(int delayMs, bool setExecDelay = false);
-    Result exec(AutoTypeExecutor* executor) const override;
+    Result exec(AutoTypeExecutor& executor) const override;
 
     const int delayMs;
     const bool setExecDelay;
@@ -109,13 +109,13 @@ public:
 class KEEPASSXC_EXPORT AutoTypeClearField : public AutoTypeAction
 {
 public:
-    Result exec(AutoTypeExecutor* executor) const override;
+    Result exec(AutoTypeExecutor& executor) const override;
 };
 
 class KEEPASSXC_EXPORT AutoTypeBegin : public AutoTypeAction
 {
 public:
-    Result exec(AutoTypeExecutor* executor) const override;
+    Result exec(AutoTypeExecutor& executor) const override;
 };
 
 class KEEPASSXC_EXPORT AutoTypeExecutor
@@ -141,7 +141,7 @@ class KEEPASSXC_EXPORT AutoTypeMode : public AutoTypeAction
 {
 public:
     AutoTypeMode(AutoTypeExecutor::Mode mode = AutoTypeExecutor::Mode::NORMAL);
-    Result exec(AutoTypeExecutor* executor) const override;
+    Result exec(AutoTypeExecutor& executor) const override;
 
     const AutoTypeExecutor::Mode mode;
 };

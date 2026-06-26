@@ -18,6 +18,7 @@
 #include "AutoTypeWayland.h"
 #include "autotype/AutoTypeAction.h"
 #include "core/Tools.h"
+#include "gui/osutils/OSUtils.h"
 #include "gui/osutils/nixutils/NixUtils.h"
 #include "gui/osutils/nixutils/RemoteDesktopPortal.h"
 
@@ -90,29 +91,29 @@ namespace
     }
 } // namespace
 
-void AutoTypePlatformWayland::setOSUtils(OSUtilsBase* osUtils)
+AutoTypePlatformWayland::AutoTypePlatformWayland()
+    : m_executor(new AutoTypeExecutorWayland(this))
 {
-    m_nixUtils = static_cast<NixUtils*>(osUtils);
+}
+
+AutoTypePlatformWayland::~AutoTypePlatformWayland()
+{
+    nixUtils()->remoteDesktopPortal()->closeSession();
 }
 
 void AutoTypePlatformWayland::prepareAutoType()
 {
-    m_nixUtils->remoteDesktopPortal()->tryStartSession();
+    nixUtils()->remoteDesktopPortal()->tryStartSession();
 }
 
 void AutoTypePlatformWayland::finishAutoType()
 {
-    m_nixUtils->remoteDesktopPortal()->finishSession();
+    nixUtils()->remoteDesktopPortal()->finishSession();
 }
 
 bool AutoTypePlatformWayland::isAvailable()
 {
-    return m_nixUtils->remoteDesktopPortal()->isAvailable();
-}
-
-void AutoTypePlatformWayland::unload()
-{
-    m_nixUtils->remoteDesktopPortal()->closeSession();
+    return nixUtils()->remoteDesktopPortal()->isAvailable();
 }
 
 QStringList AutoTypePlatformWayland::windowTitles()
@@ -173,16 +174,16 @@ AutoTypeAction::Result AutoTypePlatformWayland::sendKey(const AutoTypeKey* actio
     }
 
     QString error;
-    if (!m_nixUtils->remoteDesktopPortal()->sendKeysym(keysym, modKeys, error)) {
+    if (!nixUtils()->remoteDesktopPortal()->sendKeysym(keysym, modKeys, error)) {
         return AutoTypeAction::Result::Failed(error);
     }
 
     return AutoTypeAction::Result::Ok();
 }
 
-AutoTypeExecutor* AutoTypePlatformWayland::createExecutor()
+AutoTypeExecutor& AutoTypePlatformWayland::executor() const
 {
-    return new AutoTypeExecutorWayland(this);
+    return *m_executor;
 }
 
 AutoTypeExecutorWayland::AutoTypeExecutorWayland(AutoTypePlatformWayland* platform)
@@ -194,7 +195,7 @@ AutoTypeAction::Result AutoTypeExecutorWayland::execBegin(const AutoTypeBegin* a
 {
     Q_UNUSED(action);
 
-    auto* portal = m_platform->m_nixUtils->remoteDesktopPortal();
+    auto* portal = nixUtils()->remoteDesktopPortal();
     portal->waitForSession();
 
     auto error = portal->errorString();

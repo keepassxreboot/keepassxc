@@ -15,24 +15,41 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSX_AUTOTYPETESTINTERFACE_H
-#define KEEPASSX_AUTOTYPETESTINTERFACE_H
+#ifndef KEEPASSXC_AUTOTYPEPLATFORM_H
+#define KEEPASSXC_AUTOTYPEPLATFORM_H
+
+#include <QWidget>
 
 #include "autotype/AutoTypeAction.h"
 
-class AutoTypeTestInterface
+class AutoTypePlatformInterface
 {
 public:
-    virtual ~AutoTypeTestInterface() = default;
-    virtual void setActiveWindowTitle(const QString& title) = 0;
+    virtual ~AutoTypePlatformInterface() = default;
 
-    virtual QString actionChars() = 0;
-    virtual int actionCount() = 0;
-    virtual void clearActions() = 0;
+    virtual bool isAvailable() = 0;
+    virtual QStringList windowTitles() = 0;
+    virtual WId activeWindow() = 0;
+    virtual QString activeWindowTitle() = 0;
+    virtual bool raiseWindow(WId window) = 0;
+    virtual bool hasWindowAccess()
+    {
+        return true;
+    }
 
-    virtual QString keyToString(Qt::Key key) = 0;
+    virtual void prepareAutoType()
+    {
+    }
+    virtual void finishAutoType()
+    {
+    }
+
+    virtual AutoTypeExecutor& executor() const = 0;
+
+#if defined(Q_OS_MACOS)
+    virtual bool hideOwnWindow() = 0;
+    virtual bool raiseOwnWindow() = 0;
+#endif
 };
 
-Q_DECLARE_INTERFACE(AutoTypeTestInterface, "org.keepassxc.AutoTypeTestInterface/1")
-
-#endif // KEEPASSX_AUTOTYPETESTINTERFACE_H
+#endif // KEEPASSXC_AUTOTYPEPLATFORM_H

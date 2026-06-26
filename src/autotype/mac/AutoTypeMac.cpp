@@ -18,7 +18,7 @@
 
 #include "AutoTypeMac.h"
 #include "core/Tools.h"
-#include "gui/osutils/macutils/MacUtils.h"
+#include "gui/osutils/OSUtils.h"
 #include "gui/MessageBox.h"
 
 #include <ApplicationServices/ApplicationServices.h>
@@ -28,11 +28,7 @@
 AutoTypePlatformMac::AutoTypePlatformMac()
 {
     MessageBox::initializeButtonDefs();
-}
-
-void AutoTypePlatformMac::setOSUtils(OSUtilsBase* osUtils)
-{
-    m_macUtils = static_cast<MacUtils*>(osUtils);
+    m_executor = new AutoTypeExecutorMac(this);
 }
 
 /**
@@ -89,7 +85,7 @@ QStringList AutoTypePlatformMac::windowTitles()
 //
 WId AutoTypePlatformMac::activeWindow()
 {
-    return m_macUtils->activeWindow();
+    return macUtils()->activeWindow();
 }
 
 //
@@ -129,9 +125,9 @@ QString AutoTypePlatformMac::activeWindowTitle()
     return title;
 }
 
-AutoTypeExecutor* AutoTypePlatformMac::createExecutor()
+AutoTypeExecutor& AutoTypePlatformMac::executor() const
 {
-    return new AutoTypeExecutorMac(this);
+    return *m_executor;
 }
 
 //
@@ -139,7 +135,7 @@ AutoTypeExecutor* AutoTypePlatformMac::createExecutor()
 //
 bool AutoTypePlatformMac::raiseWindow(WId pid)
 {
-    return m_macUtils->raiseWindow(pid);
+    return macUtils()->raiseWindow(pid);
 }
 
 //
@@ -147,7 +143,7 @@ bool AutoTypePlatformMac::raiseWindow(WId pid)
 //
 bool AutoTypePlatformMac::hideOwnWindow()
 {
-    return m_macUtils->hideOwnWindow();
+    return macUtils()->hideOwnWindow();
 }
 
 //
@@ -155,7 +151,7 @@ bool AutoTypePlatformMac::hideOwnWindow()
 //
 bool AutoTypePlatformMac::raiseOwnWindow()
 {
-    return m_macUtils->raiseOwnWindow();
+    return macUtils()->raiseOwnWindow();
 }
 
 //
@@ -179,13 +175,13 @@ void AutoTypePlatformMac::sendChar(const QChar& ch, bool isKeyDown)
 //
 void AutoTypePlatformMac::sendKey(Qt::Key key, bool isKeyDown, Qt::KeyboardModifiers modifiers)
 {
-    uint16 keyCode = m_macUtils->qtToNativeKeyCode(key);
+    uint16 keyCode = macUtils()->qtToNativeKeyCode(key);
     if (keyCode == INVALID_KEYCODE) {
         return;
     }
 
     CGEventRef keyEvent = ::CGEventCreateKeyboardEvent(nullptr, keyCode, isKeyDown);
-    CGEventFlags nativeModifiers = m_macUtils->qtToNativeModifiers(modifiers, true);
+    CGEventFlags nativeModifiers = macUtils()->qtToNativeModifiers(modifiers, true);
     if (keyEvent != nullptr) {
         ::CGEventSetFlags(keyEvent, nativeModifiers);
         ::CGEventPost(kCGSessionEventTap, keyEvent);

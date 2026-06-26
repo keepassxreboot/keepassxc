@@ -18,9 +18,7 @@
 #ifndef KEEPASSXC_AUTOTYPEWAYLAND_H
 #define KEEPASSXC_AUTOTYPEWAYLAND_H
 
-#include <QtPlugin>
-
-#include "autotype/AutoTypePlatformPlugin.h"
+#include "autotype/AutoTypePlatform.h"
 
 class AutoTypeExecutorWayland;
 class NixUtils;
@@ -28,12 +26,10 @@ class NixUtils;
 class AutoTypePlatformWayland : public QObject, public AutoTypePlatformInterface
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "org.keepassxc.AutoTypePlatformWayland")
-    Q_INTERFACES(AutoTypePlatformInterface)
 
 public:
-    AutoTypePlatformWayland() = default;
-    void setOSUtils(OSUtilsBase* osUtils) override;
+    explicit AutoTypePlatformWayland();
+    ~AutoTypePlatformWayland() override;
     bool isAvailable() override;
     QStringList windowTitles() override;
     WId activeWindow() override;
@@ -43,17 +39,17 @@ public:
     {
         return false;
     };
-    void unload() override;
+
     void prepareAutoType() override;
     void finishAutoType() override;
 
-    AutoTypeExecutor* createExecutor() override;
+    AutoTypeExecutor& executor() const override;
     AutoTypeAction::Result sendKey(const AutoTypeKey*);
 
 private:
     friend class AutoTypeExecutorWayland;
 
-    NixUtils* m_nixUtils = nullptr;
+    AutoTypeExecutor* m_executor = nullptr;
 };
 
 class AutoTypeExecutorWayland : public AutoTypeExecutor

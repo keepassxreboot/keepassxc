@@ -20,10 +20,9 @@
 #define KEEPASSXC_AUTOTYPEMAC_H
 
 #include <Carbon/Carbon.h>
-#include <QtPlugin>
 #include <memory>
 
-#include "autotype/AutoTypePlatformPlugin.h"
+#include "autotype/AutoTypePlatform.h"
 #include "autotype/AutoTypeAction.h"
 
 class MacUtils;
@@ -31,18 +30,15 @@ class MacUtils;
 class AutoTypePlatformMac : public QObject, public AutoTypePlatformInterface
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "org.keepassxc.AutoTypePlatformMac")
-    Q_INTERFACES(AutoTypePlatformInterface)
 
 public:
     AutoTypePlatformMac();
-    void setOSUtils(OSUtilsBase* osUtils) override;
     bool isAvailable() override;
     QStringList windowTitles() override;
     WId activeWindow() override;
     QString activeWindowTitle() override;
     bool raiseWindow(WId pid) override;
-    AutoTypeExecutor* createExecutor() override;
+    AutoTypeExecutor& executor() const override;
 
     bool hideOwnWindow() override;
     bool raiseOwnWindow() override;
@@ -54,7 +50,8 @@ private:
     static int windowLayer(CFDictionaryRef window);
     static QString windowStringProperty(CFDictionaryRef window, CFStringRef propertyRef);
 
-    MacUtils* m_macUtils = nullptr;
+    AutoTypeExecutor* m_executor = nullptr;
+
 };
 
 class AutoTypeExecutorMac : public AutoTypeExecutor
