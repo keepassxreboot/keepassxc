@@ -1172,7 +1172,7 @@
       <attribute name="title">
        <string>Auto-Type</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0,0,0,0,0,0,0,0,0,1">
        <property name="leftMargin">
         <number>10</number>
        </property>
