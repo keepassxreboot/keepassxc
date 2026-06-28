@@ -475,7 +475,7 @@ install(TARGETS ${PROGNAME}
 if(WIN32)
     # Deploy used libraries into build directory for debugging
     add_custom_command(TARGET ${PROGNAME} POST_BUILD
-        COMMAND ${WINDEPLOYQT_EXE}
+        COMMAND ${DEPLOYQT_EXE}
             --dir $<TARGET_FILE_DIR:${PROGNAME}>
             $<IF:$<CONFIG:Debug>,--debug,--release>
             $<TARGET_FILE:${PROGNAME}>)
@@ -542,7 +542,7 @@ if(WIN32)
             set(_wdqt_mode --release)
         endif()
         execute_process(
-            COMMAND ${WINDEPLOYQT_EXE} ${PROGNAME}.exe \${_wdqt_mode}
+            COMMAND ${DEPLOYQT_EXE} ${PROGNAME}.exe \${_wdqt_mode}
             WORKING_DIRECTORY \${CMAKE_INSTALL_PREFIX}
             OUTPUT_QUIET
             RESULT_VARIABLE _wdqt_result
