@@ -22,7 +22,6 @@
 #include "gui/MessageBox.h"
 
 #include <QApplication>
-#include <QCursor>
 #include <QScreen>
 
 namespace GuiTools
