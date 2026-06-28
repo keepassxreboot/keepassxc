@@ -645,6 +645,7 @@ class Build(Command):
         parser.add_argument('-y', '--yes', help='Bypass confirmation prompts.', action='store_true')
         parser.add_argument('--with-tests', help='Build and run tests.', action='store_true')
         parser.add_argument('--minimal', help='Build with minimal feature set.', action='store_true')
+        parser.add_argument('--build-qt', help='Build Qt6 dependency.', action='store_true')
 
         if sys.platform == 'darwin':
             parser.add_argument('--macos-target', default=12, metavar='MACOSX_DEPLOYMENT_TARGET',
@@ -702,6 +703,8 @@ class Build(Command):
 
         if not kwargs['use_system_deps'] and not kwargs.get('docker_image'):
             cmake_opts.append(f'-DCMAKE_TOOLCHAIN_FILE={self._get_vcpkg_toolchain_file()}')
+            if kwargs['build_qt']:
+                cmake_opts.append('-DWITH_BUILD_QT=ON')
 
         if snapshot:
             logger.info('Building a snapshot from HEAD.')

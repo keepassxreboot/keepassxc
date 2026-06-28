@@ -1,7 +1,7 @@
 {
   "name": "keepassxc",
   "version-string": "2.8.0",
-  "builtin-baseline": "66c0373dc7fca549e5803087b9487edfe3aca0a1",
+  "builtin-baseline": "1600ce2ba1b6b621bfc5a31a785c4963b817a1c7",
   "dependencies": [
     "botan",
     "minizip",
@@ -24,5 +24,26 @@
       "name": "libxkbcommon",
       "platform": "linux | freebsd"
     }
-  ]
+  ],
+  "features": {
+    "qt": {
+      "description": "Build Qt6 dependency.",
+      "dependencies": [
+        "qtbase",
+        {
+          "name": "qtbase",
+          "platform": "linux | freebsd",
+          "features": ["wayland"]
+        },
+        "qtdeclarative",
+        "qtimageformats",
+        "qtsvg",
+        {
+          "name": "qttools",
+          "features": ["linguist", "qml"]
+        },
+        "qttranslations"
+      ]
+    }
+  }
 }
