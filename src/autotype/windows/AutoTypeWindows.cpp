@@ -18,6 +18,7 @@
 
 #include "AutoTypeWindows.h"
 #include "core/Tools.h"
+#include "gui/osutils/OSUtils.h"
 #include "gui/osutils/winutils/WinUtils.h"
 
 #include <VersionHelpers.h>
@@ -27,9 +28,12 @@
 
 #define MOD_NOREPEAT 0x4000 // Missing in MinGW
 
-void AutoTypePlatformWin::setOSUtils(OSUtilsBase* osUtils)
+//
+// Constructor
+//
+AutoTypePlatformWin::AutoTypePlatformWin()
+    : m_executor(new AutoTypeExecutorWin(this))
 {
-    m_winUtils = static_cast<WinUtils*>(osUtils);
 }
 
 //
@@ -68,9 +72,9 @@ QString AutoTypePlatformWin::activeWindowTitle()
     return windowTitle(::GetForegroundWindow());
 }
 
-AutoTypeExecutor* AutoTypePlatformWin::createExecutor()
+AutoTypeExecutor& AutoTypePlatformWin::executor() const
 {
-    return new AutoTypeExecutorWin(this);
+    return *m_executor;
 }
 
 //
@@ -158,7 +162,7 @@ void AutoTypePlatformWin::sendCharVirtual(const QChar& ch)
 //
 void AutoTypePlatformWin::setKeyState(Qt::Key key, bool down)
 {
-    WORD nativeKeyCode = m_winUtils->qtToNativeKeyCode(key);
+    WORD nativeKeyCode = winUtils()->qtToNativeKeyCode(key);
     DWORD nativeFlags = KEYEVENTF_SCANCODE;
     if (isExtendedKey(nativeKeyCode)) {
         nativeFlags |= KEYEVENTF_EXTENDEDKEY;

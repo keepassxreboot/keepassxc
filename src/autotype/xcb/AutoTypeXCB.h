@@ -20,12 +20,9 @@
 #ifndef KEEPASSXC_AUTOTYPEXCB_H
 #define KEEPASSXC_AUTOTYPEXCB_H
 
-#include <QApplication>
 #include <QSet>
-#include <QWidget>
-#include <QtPlugin>
 
-#include "autotype/AutoTypePlatformPlugin.h"
+#include "autotype/AutoTypePlatform.h"
 
 #include <X11/XKBlib.h>
 
@@ -34,18 +31,16 @@
 class AutoTypePlatformX11 : public QObject, public AutoTypePlatformInterface
 {
     Q_OBJECT
-    Q_PLUGIN_METADATA(IID "org.keepassxc.AutoTypePlatformX11")
-    Q_INTERFACES(AutoTypePlatformInterface)
 
 public:
     AutoTypePlatformX11();
+    ~AutoTypePlatformX11() override;
     bool isAvailable() override;
-    void unload() override;
     QStringList windowTitles() override;
     WId activeWindow() override;
     QString activeWindowTitle() override;
     bool raiseWindow(WId window) override;
-    AutoTypeExecutor* createExecutor() override;
+    AutoTypeExecutor& executor() const override;
     void updateKeymap();
 
     AutoTypeAction::Result sendKey(KeySym keysym, unsigned int modifiers = Qt::NoModifier);
@@ -92,6 +87,8 @@ private:
     KeyCode m_modifier_keycode[N_MOD_INDICES];
     KeyCode m_remapKeycode;
     bool m_loaded = false;
+
+    AutoTypeExecutor* m_executor = nullptr;
 };
 
 class AutoTypeExecutorX11 : public AutoTypeExecutor

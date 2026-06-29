@@ -23,8 +23,7 @@
 #include <QSharedPointer>
 
 class AutoType;
-class AutoTypePlatformInterface;
-class AutoTypeTestInterface;
+class AutoTypePlatformTest;
 class Database;
 class Entry;
 class Group;
@@ -55,9 +54,8 @@ private slots:
     void testAutoTypeTotp();
 
 private:
-    AutoTypePlatformInterface* m_platform;
-    AutoTypeTestInterface* m_test;
     AutoType* m_autoType;
+    AutoTypePlatformTest* m_test;
     QSharedPointer<Database> m_db;
     QList<QSharedPointer<Database>> m_dbList;
     Group* m_group;

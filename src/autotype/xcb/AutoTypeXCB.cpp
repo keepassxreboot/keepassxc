@@ -17,11 +17,12 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QApplication>
+
 #include "AutoTypeXCB.h"
 #include "core/Tools.h"
 #include "gui/osutils/nixutils/X11Funcs.h"
 
-#include <QGuiApplication>
 #include <X11/XKBlib.h>
 #include <X11/Xatom.h>
 #include <X11/Xutil.h>
@@ -37,6 +38,7 @@ static const QPair<KeySym, KeySym> deadMap[] = {
 };
 
 AutoTypePlatformX11::AutoTypePlatformX11()
+    : m_executor(new AutoTypeExecutorX11(this))
 {
     // Qt handles XCB slightly differently so we open our own connection
     if (auto* native = qGuiApp->nativeInterface<QNativeInterface::QX11Application>()) {
@@ -68,6 +70,7 @@ AutoTypePlatformX11::AutoTypePlatformX11()
     m_xkb = nullptr;
 
     m_loaded = true;
+    m_executor = new AutoTypeExecutorX11(this);
 }
 
 bool AutoTypePlatformX11::isAvailable()
@@ -89,7 +92,7 @@ bool AutoTypePlatformX11::isAvailable()
     return true;
 }
 
-void AutoTypePlatformX11::unload()
+AutoTypePlatformX11::~AutoTypePlatformX11()
 {
     m_keymap.clear();
 
@@ -142,9 +145,9 @@ QString AutoTypePlatformX11::activeWindowTitle()
     return windowTitle(activeWindow(), true);
 }
 
-AutoTypeExecutor* AutoTypePlatformX11::createExecutor()
+AutoTypeExecutor& AutoTypePlatformX11::executor() const
 {
-    return new AutoTypeExecutorX11(this);
+    return *m_executor;
 }
 
 QString AutoTypePlatformX11::windowTitle(Window window, bool useBlacklist)

@@ -1,4 +1,5 @@
-# Main auto-type static library
+include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
+
 set(autotype_SOURCES
         AutoType.cpp
         AutoTypeAction.cpp
@@ -6,13 +7,17 @@ set(autotype_SOURCES
         AutoTypeMatchView.cpp
         AutoTypeSelectDialog.cpp
         PickcharsDialog.cpp
-        WindowSelectComboBox.cpp)
-
-add_library(autotype STATIC ${autotype_SOURCES})
-target_link_libraries(autotype Qt6::Core Qt6::Widgets)
+        WindowSelectComboBox.cpp
+        test/AutoTypeTest.cpp)
 
 # Platform specific auto-type implementations
 if(UNIX AND NOT APPLE AND NOT HAIKU)
+    find_package(PkgConfig REQUIRED)
+    pkg_check_modules(Xkbcommon REQUIRED IMPORTED_TARGET xkbcommon)
+
+    list(APPEND autotype_SOURCES
+            wayland/AutoTypeWayland.cpp)
+
     if(WITH_X11)
         find_package(X11 REQUIRED COMPONENTS Xi XTest)
         if(PRINT_SUMMARY)
@@ -21,17 +26,25 @@ if(UNIX AND NOT APPLE AND NOT HAIKU)
             add_feature_info(Qt6X11Extras Qt6X11Extras_FOUND "The Qt6X11Extras library is required for auto-type")
         endif()
 
-        add_subdirectory(xcb)
+        list(APPEND autotype_SOURCES
+                xcb/AutoTypeXCB.cpp)
     endif()
-
-    add_subdirectory(wayland)
 elseif(APPLE)
-    add_subdirectory(mac)
+    list(APPEND autotype_SOURCES
+            mac/AutoTypeMac.cpp)
 elseif(WIN32)
-    add_subdirectory(windows)
+    list(APPEND autotype_SOURCES
+            windows/AutoTypeWindows.cpp)
 endif()
 
-# Auto-type tests
-if(WITH_TESTS)
-    add_subdirectory(test)
+add_library(autotype STATIC ${autotype_SOURCES})
+target_link_libraries(autotype Qt6::Core Qt6::Widgets)
+
+if(UNIX AND NOT APPLE AND NOT HAIKU)
+    target_link_libraries(autotype Qt6::DBus PkgConfig::Xkbcommon)
+    if(WITH_X11)
+        target_link_libraries(autotype ${X11_X11_LIB} ${X11_Xi_LIB} ${X11_XTest_LIB})
+    endif()
+elseif(APPLE)
+    target_link_libraries(autotype "-framework Foundation" "-framework AppKit" "-framework Carbon" "-framework ScreenCaptureKit")
 endif()
