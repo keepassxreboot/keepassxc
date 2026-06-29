@@ -40,6 +40,7 @@
 #include "core/Metadata.h"
 #include "core/PasswordGenerator.h"
 #include "core/TimeDelta.h"
+#include "gui/PasswordWidget.h"
 #ifdef KPXC_FEATURE_SSHAGENT
 #include "sshagent/OpenSSHKey.h"
 #include "sshagent/OpenSSHKeyGenDialog.h"
@@ -934,6 +935,14 @@ void EditEntryWidget::loadEntry(Entry* entry,
     m_db = std::move(database);
     m_create = create;
     m_history = history;
+
+    connect(m_mainUi->passwordEdit, &PasswordWidget::requestPlaceholderResolution, 
+        this, [this](const QString& rawText, QString& resolvedText) {
+    if (m_entry) {
+        // Dereferencing the password of the entry
+        resolvedText = m_entry->resolvePlaceholder(rawText);
+    }
+    });
 
     if (history) {
         setHeadline(QString("%1 \u2022 %2").arg(parentName, tr("Entry history")));

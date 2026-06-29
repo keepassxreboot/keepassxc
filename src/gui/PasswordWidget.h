@@ -48,6 +48,7 @@ public:
 
 signals:
     void textChanged(QString text);
+    void requestPlaceholderResolution(const QString& rawText, QString& resolvedText);
 
 public slots:
     void setText(const QString& text);

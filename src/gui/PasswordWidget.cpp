@@ -95,7 +95,12 @@ PasswordWidget::PasswordWidget(QWidget* parent)
     m_ui->qualityProgressBar->setVisible(false);
 
     connect(m_ui->passwordEdit, &QLineEdit::textChanged, this, [this](const QString& pwd) {
-        updatePasswordStrength(pwd);
+        QString resolvedPwd = pwd;
+
+        // Making a request to dereference the password
+        emit requestPlaceholderResolution(pwd, resolvedPwd);
+
+        updatePasswordStrength(resolvedPwd);
         emit textChanged(pwd);
     });
 }
