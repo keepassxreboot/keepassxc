@@ -18,22 +18,27 @@ else
 
     # Copy icon if different or missing
     if [ ! -f "$icon_target" ] || ! cmp -s "$icon_source" "$icon_target"; then
+        echo "Installing KeePassXC icon to ${icon_target}"
         cp "$icon_source" "$icon_target"
     fi
 
     # --- Desktop file setup ---
     desktop_source="$APPDIR/usr/share/applications/org.keepassxc.KeePassXC.desktop"
     desktop_target="${XDG_DATA_HOME:-$HOME/.local/share}/applications/org.keepassxc.KeePassXC.desktop"
-    if [ ! -f "$desktop_target" ]; then
-        mkdir -p "$(dirname "$desktop_target")"
-    fi
+    mkdir -p "$(dirname "$desktop_target")"
 
     # Substitute Exec and TryExec in memory
     desktop_content=$(sed "s|Exec=keepassxc %f|Exec=$APPIMAGE %f|;s|TryExec=keepassxc|TryExec=$APPIMAGE|" "$desktop_source")
 
-    # Copy to target if different
-    if ! cmp -s - "$desktop_target" <<<"$desktop_content"; then
+    # Copy desktop file if different or missing
+    if [ ! -f "$desktop_target" ] || ! cmp -s - "$desktop_target" <<<"$desktop_content"; then
+        echo "Installing KeePassXC desktop file to ${desktop_target}"
         printf '%s\n' "$desktop_content" >"$desktop_target"
+
+        if command -v update-desktop-database &>/dev/null; then
+            echo "Updating desktop database"
+            update-desktop-database "${XDG_DATA_HOME:-$HOME/.local/share}/applications"
+        fi
     fi
 
     EXEC="exec"
