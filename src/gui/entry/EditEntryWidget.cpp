@@ -139,6 +139,14 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     m_editWidgetProperties->setCustomData(m_customData.data());
 
     m_mainUi->passwordEdit->setQualityVisible(true);
+
+    connect(m_mainUi->passwordEdit, &PasswordWidget::requestPlaceholderResolution, 
+        this, [this](const QString& rawText, QString& resolvedText) {
+    if (m_entry) {
+        // Dereferencing the password of the entry
+        resolvedText = m_entry->resolvePlaceholder(rawText);
+    }
+    });
 }
 
 EditEntryWidget::~EditEntryWidget() = default;
@@ -935,14 +943,6 @@ void EditEntryWidget::loadEntry(Entry* entry,
     m_db = std::move(database);
     m_create = create;
     m_history = history;
-
-    connect(m_mainUi->passwordEdit, &PasswordWidget::requestPlaceholderResolution, 
-        this, [this](const QString& rawText, QString& resolvedText) {
-    if (m_entry) {
-        // Dereferencing the password of the entry
-        resolvedText = m_entry->resolvePlaceholder(rawText);
-    }
-    });
 
     if (history) {
         setHeadline(QString("%1 \u2022 %2").arg(parentName, tr("Entry history")));
