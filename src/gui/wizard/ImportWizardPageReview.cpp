@@ -21,6 +21,7 @@
 #include "core/Database.h"
 #include "core/Group.h"
 #include "format/BitwardenReader.h"
+#include "format/FirefoxReader.h"
 #include "format/KeePass1Reader.h"
 #include "format/OPUXReader.h"
 #include "format/OpVaultReader.h"
@@ -88,6 +89,9 @@ void ImportWizardPageReview::initializePage()
         break;
     case ImportWizard::IMPORT_PROTONPASS:
         m_db = importProtonPass(filename);
+        break;
+    case ImportWizard::IMPORT_FIREFOX:
+        m_db = importFirefox(filename);
         break;
     case ImportWizard::IMPORT_REMOTE:
         m_db = importRemote(field("DownloadCommand").toString(),
@@ -229,6 +233,16 @@ ImportWizardPageReview::importKeePass1(const QString& filename, const QString& p
 QSharedPointer<Database> ImportWizardPageReview::importProtonPass(const QString& filename)
 {
     ProtonPassReader reader;
+    auto db = reader.convert(filename);
+    if (reader.hasError()) {
+        m_ui->messageWidget->showMessage(reader.errorString(), KMessageWidget::Error, -1);
+    }
+    return db;
+}
+
+QSharedPointer<Database> ImportWizardPageReview::importFirefox(const QString& filename)
+{
+    FirefoxReader reader;
     auto db = reader.convert(filename);
     if (reader.hasError()) {
         m_ui->messageWidget->showMessage(reader.errorString(), KMessageWidget::Error, -1);

@@ -21,11 +21,55 @@
 #include "core/Database.h"
 #include "core/Metadata.h"
 
+#include <QButtonGroup>
+#include <QStyle>
+
 DatabaseSettingWidgetMetaData::DatabaseSettingWidgetMetaData(QWidget* parent)
     : DatabaseSettingsWidget(parent)
     , m_ui(new Ui::DatabaseSettingsWidgetMetaDataSimple())
+    , m_storageGroup(new QButtonGroup(this))
 {
     m_ui->setupUi(this);
+    m_storageGroup->addButton(m_ui->btnLocal, 0);
+    m_storageGroup->addButton(m_ui->btnDrive, 1);
+    m_ui->btnLocal->setChecked(true);
+
+    m_ui->btnLocal->setIcon(style()->standardIcon(QStyle::SP_DriveHDIcon));
+    m_ui->btnLocal->setIconSize(QSize(32, 32));
+    m_ui->btnDrive->setIcon(QIcon(":/icons/application/scalable/actions/google-drive.svg"));
+    m_ui->btnDrive->setIconSize(QSize(32, 32));
+
+    auto cardStyle = QStringLiteral(
+        "QPushButton {"
+        "  border: 2px solid palette(mid);"
+        "  border-radius: 8px;"
+        "  padding: 12px 16px;"
+        "  font-size: 12px;"
+        "}"
+        "QPushButton:checked {"
+        "  border-color: palette(highlight);"
+        "  background-color: palette(highlight);"
+        "  color: palette(highlighted-text);"
+        "}"
+        "QPushButton:hover:!checked {"
+        "  background-color: palette(light);"
+        "}"
+    );
+    m_ui->btnLocal->setStyleSheet(cardStyle);
+    m_ui->btnDrive->setStyleSheet(cardStyle);
+
+    connect(m_storageGroup, &QButtonGroup::idClicked, this, [this](int) {
+        updateCardStyles();
+    });
+}
+
+void DatabaseSettingWidgetMetaData::updateCardStyles()
+{
+}
+
+bool DatabaseSettingWidgetMetaData::isDriveSelected() const
+{
+    return m_ui->btnDrive->isChecked();
 }
 
 DatabaseSettingWidgetMetaData::~DatabaseSettingWidgetMetaData() = default;

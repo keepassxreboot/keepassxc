@@ -58,6 +58,7 @@ set(core_SOURCES
         crypto/kdf/Argon2Kdf.cpp
         format/BitwardenReader.cpp
         format/CsvExporter.cpp
+        format/FirefoxReader.cpp
         format/CsvParser.cpp
         format/HtmlExporter.cpp
         format/KeePass1Reader.cpp
@@ -208,6 +209,7 @@ set(gui_SOURCES
         gui/wizard/NewDatabaseWizard.cpp
         gui/wizard/NewDatabaseWizardPage.cpp
         gui/wizard/NewDatabaseWizardPageMetaData.cpp
+        gui/wizard/NewDatabaseWizardPageDestination.cpp
         gui/wizard/NewDatabaseWizardPageEncryption.cpp
         gui/wizard/NewDatabaseWizardPageDatabaseKey.cpp
         quickunlock/QuickUnlockInterface.cpp
@@ -317,6 +319,15 @@ if(KPXC_FEATURE_NETWORK)
             gui/UpdateCheckDialog.cpp
             gui/IconDownloader.cpp
             gui/IconDownloaderDialog.cpp)
+endif()
+
+if(KPXC_FEATURE_GOOGLEDRIVE)
+    list(APPEND gui_SOURCES
+            googledrive/GoogleDriveService.cpp
+            googledrive/GoogleDriveSettingsPage.cpp
+            googledrive/GoogleDriveSettingsWidget.cpp
+            googledrive/GoogleDriveBrowserDialog.cpp
+            googledrive/GoogleDriveHelper.cpp)
 endif()
 
 add_subdirectory(cli)

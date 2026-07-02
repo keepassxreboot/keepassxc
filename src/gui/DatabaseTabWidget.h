@@ -64,6 +64,12 @@ public slots:
 
     DatabaseWidget* newDatabase();
     void openDatabase();
+#ifdef KPXC_FEATURE_GOOGLEDRIVE
+    void openDatabaseFromDrive();
+    void openDatabaseFromDrive(const QString& fileId, const QString& fileName);
+    void saveDatabaseToDrive();
+    QString driveFolder();
+#endif
     void mergeDatabase();
     void importFile();
     bool saveDatabase(int index = -1);
@@ -116,8 +122,10 @@ private slots:
     void updateLastDatabases();
 
 private:
-    QSharedPointer<Database> execNewDatabaseWizard();
-    void updateLastDatabases(const QSharedPointer<Database>& database);
+    QSharedPointer<Database> execNewDatabaseWizard(QString* localSavePath = nullptr,
+                                                    QString* driveFolderId = nullptr,
+                                                    QString* driveFileName = nullptr);
+    void updateLastDatabases(DatabaseWidget* dbWidget);
     bool warnOnExport();
     void displayUnlockDialog();
 

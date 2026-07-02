@@ -72,6 +72,10 @@
 #include "gui/passkeys/PasskeyImporter.h"
 #endif
 
+#ifdef KPXC_FEATURE_GOOGLEDRIVE
+#include "googledrive/GoogleDriveService.h"
+#endif
+
 DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     : QStackedWidget(parent)
     , m_db(std::move(db))
@@ -2515,6 +2519,13 @@ bool DatabaseWidget::save()
         m_blockAutoSave = false;
         m_autosaveTimer->stop(); // stop autosave delay to avoid triggering another save
         hideMessage();
+
+#ifdef KPXC_FEATURE_GOOGLEDRIVE
+        if (!m_driveFileId.isEmpty()) {
+            uploadToDrive();
+        }
+#endif
+
         return true;
     }
 
@@ -2691,6 +2702,67 @@ bool DatabaseWidget::saveBackup()
     FileDialog::saveLastDir("backup", newFilePath, true);
     return true;
 }
+
+#ifdef KPXC_FEATURE_GOOGLEDRIVE
+void DatabaseWidget::uploadToDrive()
+{
+    if (m_db->filePath().isEmpty()) {
+        return;
+    }
+
+    QString fileName = m_driveFileName.isEmpty()
+        ? QFileInfo(m_db->filePath()).fileName()
+        : m_driveFileName;
+
+    auto* service = new GoogleDriveService(this);
+
+    if (!m_driveFileId.isEmpty()) {
+        connect(service, &GoogleDriveService::fileUploaded, this, [this, service](const QString&, const QString& name) {
+            showMessage(tr("Uploaded to Google Drive: %1").arg(name), MessageWidget::Information, true, 3000);
+            service->deleteLater();
+        });
+        connect(service, &GoogleDriveService::fileUploadFailed, this, [this, service](const QString& error) {
+            showMessage(tr("Google Drive upload failed: %1").arg(error), MessageWidget::Error, true, 5000);
+            service->deleteLater();
+        });
+        service->updateFile(m_driveFileId, m_db->filePath(), fileName);
+    } else {
+        connect(service, &GoogleDriveService::fileUploaded, this, [this, service](const QString& id, const QString& name) {
+            m_driveFileId = id;
+            m_driveFileName = name;
+            showMessage(tr("Uploaded to Google Drive: %1").arg(name), MessageWidget::Information, true, 3000);
+            service->deleteLater();
+        });
+        connect(service, &GoogleDriveService::fileUploadFailed, this, [this, service](const QString& error) {
+            showMessage(tr("Google Drive upload failed: %1").arg(error), MessageWidget::Error, true, 5000);
+            service->deleteLater();
+        });
+        service->uploadFile(m_db->filePath(), {}, fileName);
+    }
+}
+#endif
+
+#ifdef KPXC_FEATURE_GOOGLEDRIVE
+QString DatabaseWidget::driveFileId() const
+{
+    return m_driveFileId;
+}
+
+void DatabaseWidget::setDriveFileId(const QString& fileId)
+{
+    m_driveFileId = fileId;
+}
+
+void DatabaseWidget::setDriveFileName(const QString& name)
+{
+    m_driveFileName = name;
+}
+
+QString DatabaseWidget::driveFileName() const
+{
+    return m_driveFileName;
+}
+#endif
 
 void DatabaseWidget::showMessage(const QString& text,
                                  MessageWidget::MessageType type,

@@ -68,6 +68,10 @@
 #include "fdosecrets/FdoSecretsPlugin.h"
 #endif
 
+#ifdef KPXC_FEATURE_GOOGLEDRIVE
+#include "googledrive/GoogleDriveSettingsPage.h"
+#endif
+
 #ifdef KPXC_FEATURE_BROWSER
 #include "browser/BrowserService.h"
 #endif
@@ -203,6 +207,10 @@ MainWindow::MainWindow()
     initActionCollection();
 
     m_ui->settingsWidget->addSettingsPage(new ShortcutSettingsPage());
+
+#ifdef KPXC_FEATURE_GOOGLEDRIVE
+    m_ui->settingsWidget->addSettingsPage(new GoogleDriveSettingsPage());
+#endif
 
 #ifdef KPXC_FEATURE_BROWSER
     connect(
@@ -449,8 +457,17 @@ MainWindow::MainWindow()
     connect(m_ui->actionDatabaseOpen, SIGNAL(triggered()), m_ui->tabWidget, SLOT(openDatabase()));
     connect(m_ui->actionDatabaseSave, SIGNAL(triggered()), m_ui->tabWidget, SLOT(saveDatabase()));
     connect(m_ui->actionDatabaseSaveAs, SIGNAL(triggered()), m_ui->tabWidget, SLOT(saveDatabaseAs()));
-    connect(m_ui->actionDatabaseSaveBackup, SIGNAL(triggered()), m_ui->tabWidget, SLOT(saveDatabaseBackup()));
-    connect(m_ui->actionDatabaseClose, SIGNAL(triggered()), m_ui->tabWidget, SLOT(closeCurrentDatabaseTab()));
+connect(m_ui->actionDatabaseSaveBackup, SIGNAL(triggered()), m_ui->tabWidget, SLOT(saveDatabaseBackup()));
+#ifdef KPXC_FEATURE_GOOGLEDRIVE
+    m_ui->actionOpenFromGoogleDrive->setIcon(icons()->icon("google-drive"));
+    m_ui->actionSaveToGoogleDrive->setIcon(icons()->icon("google-drive"));
+connect(m_ui->actionOpenFromGoogleDrive, SIGNAL(triggered()), m_ui->tabWidget, SLOT(openDatabaseFromDrive()));
+connect(m_ui->actionSaveToGoogleDrive, SIGNAL(triggered()), m_ui->tabWidget, SLOT(saveDatabaseToDrive()));
+#else
+m_ui->actionOpenFromGoogleDrive->setVisible(false);
+m_ui->actionSaveToGoogleDrive->setVisible(false);
+#endif
+connect(m_ui->actionDatabaseClose, SIGNAL(triggered()), m_ui->tabWidget, SLOT(closeCurrentDatabaseTab()));
     connect(m_ui->actionDatabaseMerge, SIGNAL(triggered()), m_ui->tabWidget, SLOT(mergeDatabase()));
     connect(m_ui->actionDatabaseSettings, SIGNAL(toggled(bool)), m_ui->tabWidget, SLOT(showDatabaseSettings(bool)));
     connect(m_ui->actionDatabaseSecurity, SIGNAL(triggered()), m_ui->tabWidget, SLOT(showDatabaseSecurity()));
@@ -739,9 +756,19 @@ void MainWindow::updateLastDatabasesMenu()
     m_ui->menuRecentDatabases->clear();
 
     const QStringList lastDatabases = config()->get(Config::LastDatabases).toStringList();
-    for (const QString& database : lastDatabases) {
-        QAction* action = m_ui->menuRecentDatabases->addAction(Tools::escapeAccelerators(database));
-        action->setData(database);
+    for (const QString& entry : lastDatabases) {
+        QString displayName = entry;
+        if (entry.startsWith(QLatin1String("drive:"))) {
+            QStringList parts = entry.mid(6).split(QLatin1Char('|'));
+            if (parts.size() >= 2) {
+                displayName = parts[1];
+            }
+        }
+        QAction* action = m_ui->menuRecentDatabases->addAction(Tools::escapeAccelerators(displayName));
+        action->setData(entry);
+        if (entry.startsWith(QLatin1String("drive:"))) {
+            action->setIcon(icons()->icon("google-drive"));
+        }
         m_lastDatabasesActions->addAction(action);
     }
     m_ui->menuRecentDatabases->addSeparator();
@@ -821,7 +848,18 @@ void MainWindow::updateSetTagsMenu()
 
 void MainWindow::openRecentDatabase(QAction* action)
 {
-    openDatabase(action->data().toString());
+    QString entry = action->data().toString();
+#ifdef KPXC_FEATURE_GOOGLEDRIVE
+    if (entry.startsWith(QLatin1String("drive:"))) {
+        QStringList parts = entry.mid(6).split(QLatin1Char('|'));
+        if (parts.size() >= 2) {
+            m_ui->tabWidget->openDatabaseFromDrive(parts[0], parts[1]);
+            switchToDatabases();
+        }
+        return;
+    }
+#endif
+    openDatabase(entry);
 }
 
 void MainWindow::clearLastDatabases()
@@ -1004,6 +1042,12 @@ void MainWindow::updateMenuActionState()
 #ifdef KPXC_FEATURE_BROWSER
     m_ui->actionPasskeys->setEnabled(inDatabase || inReports);
     m_ui->actionImportPasskey->setEnabled(inDatabase);
+#endif
+#ifdef KPXC_FEATURE_GOOGLEDRIVE
+    {
+        bool isDriveDb = inDatabase && dbWidget && !dbWidget->driveFileId().isEmpty();
+        m_ui->actionSaveToGoogleDrive->setVisible(isDriveDb);
+    }
 #endif
 
     m_searchWidgetAction->setEnabled(inDatabase);
@@ -1209,6 +1253,16 @@ void MainWindow::switchToOpenDatabase()
 
 void MainWindow::switchToDatabaseFile(const QString& file)
 {
+#ifdef KPXC_FEATURE_GOOGLEDRIVE
+    if (file.startsWith(QLatin1String("drive:"))) {
+        QStringList parts = file.mid(6).split(QLatin1Char('|'));
+        if (parts.size() >= 2) {
+            m_ui->tabWidget->openDatabaseFromDrive(parts[0], parts[1]);
+            switchToDatabases();
+        }
+        return;
+    }
+#endif
     m_ui->tabWidget->addDatabaseTab(file);
     switchToDatabases();
 }

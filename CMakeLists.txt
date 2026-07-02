@@ -61,12 +61,20 @@ if(KPXC_MINIMAL)
     set(KPXC_FEATURE_BROWSER OFF)
     set(KPXC_FEATURE_SSHAGENT OFF)
     set(KPXC_FEATURE_FDOSECRETS OFF)
+    set(KPXC_FEATURE_GOOGLEDRIVE OFF)
 endif()
 
 # Minor Feature Flags
 option(KPXC_FEATURE_NETWORK "Include code that reaches out to external networks (e.g. downloading icons)" ON)
 option(KPXC_FEATURE_UPDATES "Include automatic update checks; disable for managed distributions" ON)
 option(KPXC_FEATURE_DOCS "Build offline documentation; requires asciidoctor tool" ON)
+option(KPXC_FEATURE_GOOGLEDRIVE "Google Drive cloud sync integration" ON)
+set(GOOGLEDRIVE_CLIENT_ID "" CACHE STRING "Built-in Google Drive OAuth Client ID")
+set(GOOGLEDRIVE_CLIENT_SECRET "" CACHE STRING "Built-in Google Drive OAuth Client Secret")
+if(KPXC_FEATURE_GOOGLEDRIVE AND GOOGLEDRIVE_CLIENT_ID)
+    add_definitions(-DGOOGLEDRIVE_CLIENT_ID="${GOOGLEDRIVE_CLIENT_ID}")
+    add_definitions(-DGOOGLEDRIVE_CLIENT_SECRET="${GOOGLEDRIVE_CLIENT_SECRET}")
+endif()
 
 # Reconcile update feature with overall network feature
 if(NOT KPXC_FEATURE_NETWORK AND KPXC_FEATURE_UPDATES)
@@ -88,6 +96,7 @@ endif()
 add_feature_info("Networking" KPXC_FEATURE_NETWORK "Code that can reach out to external networks is included (e.g. downloading icons)")
 add_feature_info("Update Checks" KPXC_FEATURE_UPDATES "Periodic update checks can be performed")
 add_feature_info("Documentation" KPXC_FEATURE_DOCS "Offline documentation")
+add_feature_info("Google Drive" KPXC_FEATURE_GOOGLEDRIVE "Google Drive cloud sync integration")
 
 # Retrieve git HEAD revision hash
 set(GIT_HEAD_OVERRIDE "" CACHE STRING "Manually set the Git HEAD hash when missing (eg, when no .git folder exists)")

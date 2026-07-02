@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,28 +15,26 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_NEWDATABASEWIZARDPAGEMETADATA_H
-#define KEEPASSXC_NEWDATABASEWIZARDPAGEMETADATA_H
+#ifndef FIREFOX_READER_H
+#define FIREFOX_READER_H
 
-#include "NewDatabaseWizardPage.h"
-
-#include <QString>
+#include <QSharedPointer>
 
 class Database;
 
-class NewDatabaseWizardPageMetaData : public NewDatabaseWizardPage
+class FirefoxReader
 {
-    Q_OBJECT
-
 public:
-    explicit NewDatabaseWizardPageMetaData(QWidget* parent = nullptr);
-    Q_DISABLE_COPY(NewDatabaseWizardPageMetaData);
-    ~NewDatabaseWizardPageMetaData() override;
+    explicit FirefoxReader() = default;
+    ~FirefoxReader() = default;
 
-    bool validatePage() override;
-    int nextId() const override;
+    QSharedPointer<Database> convert(const QString& path);
 
-    bool isDriveSelected() const;
+    bool hasError();
+    QString errorString();
+
+private:
+    QString m_error;
 };
 
-#endif // KEEPASSXC_NEWDATABASEWIZARDPAGEMETADATA_H
+#endif // FIREFOX_READER_H

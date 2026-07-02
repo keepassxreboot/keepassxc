@@ -17,8 +17,18 @@
 
 #include "DatabaseTabWidget.h"
 
+#include <QButtonGroup>
+#include <QDialogButtonBox>
+#include <QDir>
+#include <QFile>
 #include <QFileInfo>
+#include <QHBoxLayout>
+#include <QIcon>
+#include <QLabel>
+#include <QPushButton>
+#include <QStyle>
 #include <QTabBar>
+#include <QVBoxLayout>
 
 #include "autotype/AutoType.h"
 #include "core/Merger.h"
@@ -30,7 +40,16 @@
 #include "gui/DatabaseWidget.h"
 #include "gui/DatabaseWidgetStateSync.h"
 #include "gui/FileDialog.h"
+
+#ifdef KPXC_FEATURE_GOOGLEDRIVE
+#include "googledrive/GoogleDriveBrowserDialog.h"
+#include "googledrive/GoogleDriveHelper.h"
+#include "googledrive/GoogleDriveService.h"
+#endif
 #include "gui/MessageBox.h"
+#include "gui/wizard/NewDatabaseWizard.h"
+#include "gui/wizard/NewDatabaseWizardPageDestination.h"
+#include "gui/wizard/NewDatabaseWizardPageMetaData.h"
 #include "gui/export/ExportDialog.h"
 #ifdef Q_OS_MACOS
 #include "gui/osutils/macutils/MacUtils.h"
@@ -92,7 +111,8 @@ void DatabaseTabWidget::toggleTabbar()
  *
  * @return pointer to the configured new database, nullptr on failure
  */
-QSharedPointer<Database> DatabaseTabWidget::execNewDatabaseWizard()
+QSharedPointer<Database> DatabaseTabWidget::execNewDatabaseWizard(
+    QString* localSavePath, QString* driveFolderId, QString* driveFileName)
 {
     // use QScopedPointer to ensure deletion after scope ends, but still parent
     // it to this to make it modal and allow easier access in unit tests
@@ -117,24 +137,178 @@ QSharedPointer<Database> DatabaseTabWidget::execNewDatabaseWizard()
         return {};
     }
 
+    // Extract destination info from the destination page
+    auto* destPage = qobject_cast<NewDatabaseWizardPageDestination*>(wizard->page(1));
+    if (destPage) {
+        if (destPage->isDriveSelected()) {
+            auto fid = destPage->driveFolderId();
+            auto fname = destPage->driveFileName();
+            if (!fid.isEmpty() && !fname.isEmpty()) {
+                if (driveFolderId) {
+                    *driveFolderId = fid;
+                }
+                if (driveFileName) {
+                    *driveFileName = fname;
+                }
+            }
+        } else if (localSavePath) {
+            *localSavePath = destPage->localFilePath();
+        }
+    }
+
     return db;
 }
 
 DatabaseWidget* DatabaseTabWidget::newDatabase()
 {
-    auto db = execNewDatabaseWizard();
+    QString localSavePath;
+    QString driveFolderId;
+    QString driveFileName;
+    auto db = execNewDatabaseWizard(&localSavePath, &driveFolderId, &driveFileName);
     if (!db) {
         return nullptr;
     }
 
+    if (!localSavePath.isEmpty()) {
+        QString error;
+        if (!db->saveAs(localSavePath, Database::DirectWrite, {}, &error)) {
+            emit messageGlobal(tr("Failed to save database: %1").arg(error), MessageWidget::Error);
+        }
+        auto dbWidget = new DatabaseWidget(db, this);
+        addDatabaseTab(dbWidget);
+        updateLastDatabases(dbWidget);
+        db->setFilePath(localSavePath);
+        return dbWidget;
+    }
+
+#ifdef KPXC_FEATURE_GOOGLEDRIVE
+    if (!driveFolderId.isEmpty() && !driveFileName.isEmpty()) {
+        QString tempPath = QDir(driveFolder()).absoluteFilePath(driveFileName);
+        QString error;
+        if (!db->saveAs(tempPath, Database::DirectWrite, {}, &error)) {
+            emit messageGlobal(tr("Failed to save database: %1").arg(error), MessageWidget::Error);
+            auto dbWidget = new DatabaseWidget(db, this);
+            addDatabaseTab(dbWidget);
+            updateLastDatabases(dbWidget);
+            db->markAsModified();
+            return dbWidget;
+        }
+
+        auto* service = GoogleDriveHelper::createService(this);
+        emit messageGlobal(tr("Uploading to Google Drive..."), MessageWidget::Information);
+
+        connect(service, &GoogleDriveService::fileUploaded, this,
+                [this, service, db, tempPath](const QString& fileId, const QString& name) {
+            service->deleteLater();
+            db->setFilePath(tempPath);
+            auto dbWidget = new DatabaseWidget(db, this);
+            dbWidget->setDriveFileId(fileId);
+            dbWidget->setDriveFileName(name);
+            addDatabaseTab(dbWidget);
+            updateLastDatabases(dbWidget);
+            emit messageGlobal(tr("Uploaded to Google Drive: %1").arg(name), MessageWidget::Information);
+        });
+
+        connect(service, &GoogleDriveService::fileUploadFailed, this,
+                [this, service, db](const QString& errMsg) {
+            service->deleteLater();
+            auto dbWidget = new DatabaseWidget(db, this);
+            addDatabaseTab(dbWidget);
+            db->markAsModified();
+            emit messageGlobal(tr("Google Drive upload failed: %1").arg(errMsg), MessageWidget::Error);
+        });
+
+        service->uploadFile(tempPath, driveFolderId, driveFileName);
+        return nullptr; // Tab added asynchronously via signal
+    }
+#endif
+
     auto dbWidget = new DatabaseWidget(db, this);
     addDatabaseTab(dbWidget);
+    updateLastDatabases(dbWidget);
     db->markAsModified();
     return dbWidget;
 }
 
 void DatabaseTabWidget::openDatabase()
 {
+#ifdef KPXC_FEATURE_GOOGLEDRIVE
+    QDialog choice(this);
+    choice.setWindowTitle(tr("Open Database"));
+    choice.setMinimumWidth(420);
+    choice.setMaximumHeight(200);
+
+    auto* layout = new QVBoxLayout(&choice);
+    auto* label = new QLabel(tr("Choose where to open the database from:"));
+    label->setAlignment(Qt::AlignCenter);
+    layout->addWidget(label);
+    layout->addSpacing(8);
+
+    auto* btnGroup = new QButtonGroup(this);
+
+    auto* btnLayout = new QHBoxLayout();
+    btnLayout->setSpacing(16);
+
+    auto* btnLocal = new QPushButton(tr("Local File"));
+    btnLocal->setToolTip(tr("Browse your computer for a database file"));
+    btnLocal->setIcon(style()->standardIcon(QStyle::SP_DriveHDIcon));
+    btnLocal->setIconSize(QSize(32, 32));
+    btnLocal->setMinimumSize(160, 80);
+    btnLocal->setCheckable(true);
+    btnLocal->setChecked(true);
+    btnGroup->addButton(btnLocal, 1);
+
+    auto* btnDrive = new QPushButton(tr("Google Drive"));
+    btnDrive->setToolTip(tr("Open a database from Google Drive"));
+    btnDrive->setIcon(QIcon(":/icons/application/scalable/actions/google-drive.svg"));
+    btnDrive->setIconSize(QSize(32, 32));
+    btnDrive->setMinimumSize(160, 80);
+    btnDrive->setCheckable(true);
+    btnGroup->addButton(btnDrive, 2);
+
+    auto cardStyle = QStringLiteral(
+        "QPushButton {"
+        "  border: 2px solid palette(mid);"
+        "  border-radius: 8px;"
+        "  padding: 12px 16px;"
+        "  font-size: 12px;"
+        "}"
+        "QPushButton:checked {"
+        "  border-color: palette(highlight);"
+        "  background-color: palette(highlight);"
+        "  color: palette(highlighted-text);"
+        "}"
+        "QPushButton:hover:!checked {"
+        "  background-color: palette(light);"
+        "}"
+    );
+    btnLocal->setStyleSheet(cardStyle);
+    btnDrive->setStyleSheet(cardStyle);
+
+    btnLayout->addStretch();
+    btnLayout->addWidget(btnLocal);
+    btnLayout->addWidget(btnDrive);
+    btnLayout->addStretch();
+    layout->addLayout(btnLayout);
+
+    auto* buttonBox = new QDialogButtonBox(QDialogButtonBox::Open | QDialogButtonBox::Cancel);
+    connect(buttonBox, &QDialogButtonBox::accepted, &choice, &QDialog::accept);
+    connect(buttonBox, &QDialogButtonBox::rejected, &choice, &QDialog::reject);
+    layout->addWidget(buttonBox);
+
+    if (choice.exec() != QDialog::Accepted) {
+        return;
+    }
+
+    int id = btnGroup->checkedId();
+
+    if (id == 2) {
+        openDatabaseFromDrive();
+        return;
+    }
+    // id == 1 or fallback → local file
+#endif
+
     auto filter = QString("%1 (*.kdbx);;%2 (*)").arg(tr("KeePass 2 Database"), tr("All files"));
     auto fileName = fileDialog()->getOpenFileName(this, tr("Open database"), FileDialog::getLastDir("db"), filter);
     if (!fileName.isEmpty()) {
@@ -142,6 +316,154 @@ void DatabaseTabWidget::openDatabase()
         addDatabaseTab(fileName);
     }
 }
+
+#ifdef KPXC_FEATURE_GOOGLEDRIVE
+QString DatabaseTabWidget::driveFolder()
+{
+    QString folder = QDir::temp().absolutePath();
+    QDir().mkpath(folder);
+    return folder;
+}
+
+void DatabaseTabWidget::openDatabaseFromDrive()
+{
+    // pickOpenFile shows the Drive browser dialog and handles its own auth
+    auto result = GoogleDriveHelper::pickOpenFile(this);
+    if (!result.isValid()) {
+        return;
+    }
+
+    openDatabaseFromDrive(result.fileId, result.fileName);
+}
+
+void DatabaseTabWidget::openDatabaseFromDrive(const QString& fileId, const QString& fileName)
+{
+    auto* service = GoogleDriveHelper::createService(this);
+    if (!service->isAuthenticated()) {
+        emit messageGlobal(tr("Please connect to Google Drive first in Application Settings."),
+                           MessageWidget::Information);
+        service->deleteLater();
+        return;
+    }
+
+    QString tempPath = QDir(driveFolder()).absoluteFilePath(fileName);
+    if (QFile::exists(tempPath)) {
+        QFile::remove(tempPath);
+    }
+
+    emit messageGlobal(tr("Downloading from Google Drive..."), MessageWidget::Information);
+
+    connect(service, &GoogleDriveService::fileDownloaded, this,
+            [this, service, fileId, fileName](const QString&, const QString& localPath) {
+        service->deleteLater();
+        if (!localPath.isEmpty()) {
+            DatabaseWidget* dbWidget = nullptr;
+            for (int i = 0, c = count(); i < c; ++i) {
+                auto* w = databaseWidgetFromIndex(i);
+                if (w && w->driveFileId() == fileId) {
+                    dbWidget = w;
+                    break;
+                }
+            }
+            if (dbWidget) {
+                setCurrentWidget(dbWidget);
+                dbWidget->performUnlockDatabase({}, {});
+            } else {
+                auto* widget = new DatabaseWidget(QSharedPointer<Database>::create(localPath), this);
+                widget->setDriveFileId(fileId);
+                widget->setDriveFileName(fileName);
+                addDatabaseTab(widget);
+                updateLastDatabases(widget);
+                widget->performUnlockDatabase({}, {});
+            }
+        }
+    });
+
+    connect(service, &GoogleDriveService::fileDownloadFailed, this,
+            [this, service](const QString&, const QString& error) {
+        service->deleteLater();
+        emit messageGlobal(tr("Google Drive download failed: %1").arg(error), MessageWidget::Error);
+    });
+
+    service->downloadFile(fileId, tempPath);
+}
+
+void DatabaseTabWidget::saveDatabaseToDrive()
+{
+    auto* dbWidget = currentDatabaseWidget();
+    if (!dbWidget || dbWidget->isLocked()) {
+        return;
+    }
+
+    auto* service = GoogleDriveHelper::createService(this);
+    if (!service->isAuthenticated()) {
+        emit messageGlobal(tr("Please connect to Google Drive first in Application Settings."),
+                           MessageWidget::Information);
+        service->deleteLater();
+        return;
+    }
+
+    QString localPath;
+    QString driveName;
+    QString parentId;
+
+    if (!dbWidget->driveFileId().isEmpty()) {
+        // Already opened from Drive — update in-place
+        driveName = dbWidget->driveFileName();
+        if (driveName.isEmpty()) {
+            driveName = config()->get(Config::DefaultDatabaseFileName).toString();
+            if (driveName.isEmpty()) {
+                driveName = tr("Passwords") + ".kdbx";
+            }
+        }
+        localPath = dbWidget->database()->filePath();
+    } else {
+        // New save to Drive — pick destination
+        auto result = GoogleDriveHelper::pickSaveDestination(this);
+        if (!result.isValid()) {
+            service->deleteLater();
+            return;
+        }
+        driveName = result.fileName;
+        parentId = result.folderId;
+
+        if (dbWidget->database()->filePath().isEmpty()) {
+            QString tempPath = QDir(driveFolder()).absoluteFilePath(driveName);
+            QString error;
+            if (!dbWidget->database()->saveAs(tempPath, Database::DirectWrite, {}, &error)) {
+                emit messageGlobal(tr("Failed to save database: %1").arg(error), MessageWidget::Error);
+                service->deleteLater();
+                return;
+            }
+            dbWidget->database()->setFilePath(tempPath);
+        }
+        localPath = dbWidget->database()->filePath();
+    }
+
+    emit messageGlobal(tr("Uploading to Google Drive..."), MessageWidget::Information);
+
+    connect(service, &GoogleDriveService::fileUploaded, this,
+            [this, service, dbWidget](const QString& fileId, const QString& name) {
+        service->deleteLater();
+        dbWidget->setDriveFileId(fileId);
+        dbWidget->setDriveFileName(name);
+        emit messageGlobal(tr("Uploaded to Google Drive: %1").arg(name), MessageWidget::Information);
+    });
+
+    connect(service, &GoogleDriveService::fileUploadFailed, this,
+            [this, service](const QString& error) {
+        service->deleteLater();
+        emit messageGlobal(tr("Google Drive upload failed: %1").arg(error), MessageWidget::Error);
+    });
+
+    if (parentId.isEmpty()) {
+        service->updateFile(dbWidget->driveFileId(), localPath, driveName);
+    } else {
+        service->uploadFile(localPath, parentId, driveName);
+    }
+}
+
+#endif
 
 /**
  * Add a new database tab or switch to an existing one if the
@@ -185,7 +507,7 @@ void DatabaseTabWidget::addDatabaseTab(const QString& filePath,
     auto* dbWidget = new DatabaseWidget(QSharedPointer<Database>::create(cleanFilePath), this);
     addDatabaseTab(dbWidget, inBackground);
     dbWidget->performUnlockDatabase(password, keyfile);
-    updateLastDatabases(dbWidget->database());
+    updateLastDatabases(dbWidget);
 }
 
 /**
@@ -285,33 +607,37 @@ void DatabaseTabWidget::importFile()
                         auto importGroup = db->setRootGroup(new Group());
                         importGroup->setParent(group);
                         setCurrentIndex(i);
+                        dbWidget->save();
                         return;
                     }
                 }
             }
             break;
-        case ImportWizard::TEMPORARY_DATABASE: {
+        case ImportWizard::TEMPORARY_DATABASE:
             // Use the already created database as temporary database
-            auto dbWidget = new DatabaseWidget(db, this);
-            addDatabaseTab(dbWidget);
+            {
+                auto dbWidget = new DatabaseWidget(db, this);
+                addDatabaseTab(dbWidget);
+            }
             return;
-        }
         default:
             // Start the new database wizard with the imported database
-            auto newDb = execNewDatabaseWizard();
-            if (newDb) {
-                // Merge the imported db into the new one
-                Merger merger(db.data(), newDb.data());
-                merger.setSkipDatabaseCustomData(true);
-                merger.merge();
-                // Transfer the root group data
-                newDb->rootGroup()->setName(db->rootGroup()->name());
-                newDb->rootGroup()->setNotes(db->rootGroup()->notes());
-                // Show the new database
-                auto dbWidget = new DatabaseWidget(newDb, this);
-                addDatabaseTab(dbWidget);
-                newDb->markAsModified();
-                return;
+            {
+                auto newDb = execNewDatabaseWizard();
+                if (newDb) {
+                    // Merge the imported db into the new one
+                    Merger merger(db.data(), newDb.data());
+                    merger.setSkipDatabaseCustomData(true);
+                    merger.merge();
+                    // Transfer the root group data
+                    newDb->rootGroup()->setName(db->rootGroup()->name());
+                    newDb->rootGroup()->setNotes(db->rootGroup()->notes());
+                    // Show the new database
+                    auto dbWidget = new DatabaseWidget(newDb, this);
+                    addDatabaseTab(dbWidget);
+                    newDb->markAsModified();
+                    return;
+                }
             }
         }
     });
@@ -436,7 +762,7 @@ bool DatabaseTabWidget::saveDatabaseAs(int index)
     auto* dbWidget = databaseWidgetFromIndex(index);
     bool ok = dbWidget->saveAs();
     if (ok) {
-        updateLastDatabases(dbWidget->database());
+        updateLastDatabases(dbWidget);
     }
     return ok;
 }
@@ -450,7 +776,7 @@ bool DatabaseTabWidget::saveDatabaseBackup(int index)
     auto* dbWidget = databaseWidgetFromIndex(index);
     bool ok = dbWidget->saveBackup();
     if (ok) {
-        updateLastDatabases(dbWidget->database());
+        updateLastDatabases(dbWidget);
     }
     return ok;
 }
@@ -857,24 +1183,43 @@ void DatabaseTabWidget::relockPendingDatabase()
     m_dbWidgetPendingLock = nullptr;
 }
 
-void DatabaseTabWidget::updateLastDatabases(const QSharedPointer<Database>& database)
+void DatabaseTabWidget::updateLastDatabases(DatabaseWidget* dbWidget)
 {
-    if (database->isTemporaryDatabase() || database->filePath().isEmpty()) {
+    if (!dbWidget || dbWidget->isLocked()) {
         return;
     }
-    auto filename = database->filePath();
+
+    auto* database = dbWidget->database().data();
+    if (!database || database->isTemporaryDatabase() || database->filePath().isEmpty()) {
+        return;
+    }
+
     if (!config()->get(Config::RememberLastDatabases).toBool()) {
         config()->remove(Config::LastDatabases);
-    } else {
-        QStringList lastDatabases = config()->get(Config::LastDatabases).toStringList();
-        lastDatabases.prepend(QDir::toNativeSeparators(filename));
-        lastDatabases.removeDuplicates();
-
-        while (lastDatabases.count() > config()->get(Config::NumberOfRememberedLastDatabases).toInt()) {
-            lastDatabases.removeLast();
-        }
-        config()->set(Config::LastDatabases, lastDatabases);
+        return;
     }
+
+    QString entry;
+#ifdef KPXC_FEATURE_GOOGLEDRIVE
+    QString driveId = dbWidget->driveFileId();
+    if (!driveId.isEmpty()) {
+        entry = QStringLiteral("drive:%1|%2").arg(driveId, dbWidget->driveFileName());
+    } else
+#endif
+    {
+        entry = QDir::toNativeSeparators(database->filePath());
+    }
+
+    QStringList lastDatabases = config()->get(Config::LastDatabases).toStringList();
+    // Remove any existing entry for this same Drive file or path
+    lastDatabases.removeAll(entry);
+    lastDatabases.prepend(entry);
+    lastDatabases.removeDuplicates();
+
+    while (lastDatabases.count() > config()->get(Config::NumberOfRememberedLastDatabases).toInt()) {
+        lastDatabases.removeLast();
+    }
+    config()->set(Config::LastDatabases, lastDatabases);
 }
 
 void DatabaseTabWidget::updateLastDatabases()
@@ -882,7 +1227,7 @@ void DatabaseTabWidget::updateLastDatabases()
     auto dbWidget = currentDatabaseWidget();
 
     if (dbWidget) {
-        updateLastDatabases(dbWidget->database());
+        updateLastDatabases(dbWidget);
     }
 }
 

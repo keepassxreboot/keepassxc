@@ -49,6 +49,7 @@ public:
         IMPORT_OPUX,
         IMPORT_BITWARDEN,
         IMPORT_PROTONPASS,
+        IMPORT_FIREFOX,
         IMPORT_KEEPASS1,
         IMPORT_REMOTE,
     };

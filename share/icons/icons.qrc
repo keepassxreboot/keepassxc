@@ -46,6 +46,7 @@
         <file>application/scalable/actions/entry-new.svg</file>
         <file>application/scalable/actions/favicon-download.svg</file>
         <file>application/scalable/actions/fingerprint.svg</file>
+        <file>application/scalable/actions/google-drive.svg</file>
         <file>application/scalable/actions/getting-started.svg</file>
         <file>application/scalable/actions/group-delete.svg</file>
         <file>application/scalable/actions/group-edit.svg</file>

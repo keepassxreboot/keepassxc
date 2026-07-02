@@ -251,6 +251,9 @@
     <addaction name="actionDatabaseSave"/>
     <addaction name="actionDatabaseSaveAs"/>
     <addaction name="actionDatabaseSaveBackup"/>
+    <addaction name="separator"/>
+    <addaction name="actionOpenFromGoogleDrive"/>
+    <addaction name="actionSaveToGoogleDrive"/>
     <addaction name="actionDatabaseClose"/>
     <addaction name="separator"/>
     <addaction name="actionLockDatabase"/>
@@ -430,6 +433,7 @@
    </attribute>
    <addaction name="actionDatabaseOpen"/>
    <addaction name="actionDatabaseSave"/>
+   <addaction name="actionSaveToGoogleDrive"/>
    <addaction name="actionLockDatabaseToolbar"/>
    <addaction name="separator"/>
    <addaction name="actionEntryNew"/>
@@ -1106,6 +1110,22 @@
    </property>
    <property name="toolTip">
     <string>Save Database Backup</string>
+   </property>
+  </action>
+  <action name="actionOpenFromGoogleDrive">
+   <property name="text">
+    <string>Open from Google &amp;Drive…</string>
+   </property>
+   <property name="toolTip">
+    <string>Open database from Google Drive</string>
+   </property>
+  </action>
+  <action name="actionSaveToGoogleDrive">
+   <property name="text">
+    <string>Save to Google &amp;Drive…</string>
+   </property>
+   <property name="toolTip">
+    <string>Save database to Google Drive</string>
    </property>
   </action>
   <action name="actionEntryAddToAgent">

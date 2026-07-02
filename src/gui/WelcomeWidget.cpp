@@ -18,11 +18,21 @@
 
 #include "WelcomeWidget.h"
 #include "ui_WelcomeWidget.h"
+#include <QHBoxLayout>
+#include <QIcon>
 #include <QKeyEvent>
+#include <QLabel>
+#include <QPushButton>
+#include <QStyle>
 
 #include "config-keepassx.h"
 #include "core/Config.h"
 #include "gui/Icons.h"
+#include "gui/MessageBox.h"
+
+namespace {
+const int RawEntryRole = Qt::UserRole + 1;
+}
 
 WelcomeWidget::WelcomeWidget(QWidget* parent)
     : QWidget(parent)
@@ -59,21 +69,54 @@ WelcomeWidget::~WelcomeWidget() = default;
 
 void WelcomeWidget::openDatabaseFromFile(QListWidgetItem* item)
 {
-    if (!item || item->text().isEmpty()) {
+    if (!item) {
         return;
     }
-    emit openDatabaseFile(item->text());
+    QString raw = item->data(RawEntryRole).toString();
+    if (raw.isEmpty()) {
+        raw = item->text();
+    }
+    if (raw.isEmpty()) {
+        return;
+    }
+    emit openDatabaseFile(raw);
 }
 
 void WelcomeWidget::removeFromLastDatabases(QListWidgetItem* item)
 {
-    if (!item || item->text().isEmpty()) {
+    if (!item) {
+        return;
+    }
+
+    QString raw = item->data(RawEntryRole).toString();
+    if (raw.isEmpty()) {
+        raw = item->text();
+    }
+    if (raw.isEmpty()) {
+        return;
+    }
+
+    QString displayName = raw;
+    if (raw.startsWith(QLatin1String("drive:"))) {
+        QStringList parts = raw.mid(6).split(QLatin1Char('|'));
+        if (parts.size() >= 2) {
+            displayName = parts[1];
+        }
+    }
+
+    auto result = MessageBox::question(this,
+        tr("Remove from recent files"),
+        tr("Remove \"%1\" from the recent files list?").arg(displayName),
+        MessageBox::Yes | MessageBox::No,
+        MessageBox::No);
+
+    if (result != MessageBox::Yes) {
         return;
     }
 
     if (config()->get(Config::RememberLastDatabases).toBool()) {
         QStringList lastDatabases = config()->get(Config::LastDatabases).toStringList();
-        lastDatabases.removeOne(item->text());
+        lastDatabases.removeOne(raw);
         config()->set(Config::LastDatabases, lastDatabases);
     }
     refreshLastDatabases();
@@ -83,10 +126,44 @@ void WelcomeWidget::refreshLastDatabases()
 {
     m_ui->recentListWidget->clear();
     const QStringList lastDatabases = config()->get(Config::LastDatabases).toStringList();
-    for (const QString& database : lastDatabases) {
+    for (const QString& entry : lastDatabases) {
         auto itm = new QListWidgetItem;
-        itm->setText(database);
+        itm->setData(RawEntryRole, entry);
+        itm->setSizeHint(QSize(0, 26));
+
+        auto* row = new QWidget();
+        auto* rowLayout = new QHBoxLayout(row);
+        rowLayout->setContentsMargins(4, 1, 4, 1);
+        rowLayout->setSpacing(6);
+
+        if (entry.startsWith(QLatin1String("drive:"))) {
+            QStringList parts = entry.mid(6).split(QLatin1Char('|'));
+            if (parts.size() >= 2) {
+                auto* iconLabel = new QLabel();
+                iconLabel->setPixmap(QIcon(":/icons/application/scalable/actions/google-drive.svg").pixmap(16, 16));
+                rowLayout->addWidget(iconLabel);
+                rowLayout->addWidget(new QLabel(parts[1]), 1);
+            } else {
+                rowLayout->addWidget(new QLabel(entry), 1);
+            }
+        } else {
+            QFontMetrics fm(font());
+            QString elided = fm.elidedText(entry, Qt::ElideMiddle, 300);
+            rowLayout->addWidget(new QLabel(elided), 1);
+        }
+
+        auto* removeBtn = new QPushButton();
+        removeBtn->setIcon(icons()->icon("dialog-close"));
+        removeBtn->setFixedSize(20, 20);
+        removeBtn->setFlat(true);
+        removeBtn->setToolTip(tr("Remove from recent files"));
+        connect(removeBtn, &QPushButton::clicked, this, [this, itm]() {
+            removeFromLastDatabases(itm);
+        });
+        rowLayout->addWidget(removeBtn);
+
         m_ui->recentListWidget->addItem(itm);
+        m_ui->recentListWidget->setItemWidget(itm, row);
     }
 
     bool recent_visibility = (m_ui->recentListWidget->count() > 0);

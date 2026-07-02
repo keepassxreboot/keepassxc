@@ -28,3 +28,24 @@ NewDatabaseWizardPageMetaData::NewDatabaseWizardPageMetaData(QWidget* parent)
 }
 
 NewDatabaseWizardPageMetaData::~NewDatabaseWizardPageMetaData() = default;
+
+bool NewDatabaseWizardPageMetaData::validatePage()
+{
+    auto* metaWidget = qobject_cast<DatabaseSettingWidgetMetaData*>(m_pageWidget);
+    if (!metaWidget) {
+        return NewDatabaseWizardPage::validatePage();
+    }
+
+    return metaWidget->saveSettings();
+}
+
+int NewDatabaseWizardPageMetaData::nextId() const
+{
+    return 1;
+}
+
+bool NewDatabaseWizardPageMetaData::isDriveSelected() const
+{
+    auto* metaWidget = qobject_cast<DatabaseSettingWidgetMetaData*>(m_pageWidget);
+    return metaWidget && metaWidget->isDriveSelected();
+}

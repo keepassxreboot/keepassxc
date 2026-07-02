@@ -17,6 +17,7 @@
 
 #include "NewDatabaseWizard.h"
 #include "NewDatabaseWizardPageDatabaseKey.h"
+#include "NewDatabaseWizardPageDestination.h"
 #include "NewDatabaseWizardPageEncryption.h"
 #include "NewDatabaseWizardPageMetaData.h"
 
@@ -36,6 +37,7 @@ NewDatabaseWizard::NewDatabaseWizard(QWidget* parent)
 
     // clang-format off
     m_pages << new NewDatabaseWizardPageMetaData()
+            << new NewDatabaseWizardPageDestination()
             << new NewDatabaseWizardPageEncryption()
             << new NewDatabaseWizardPageDatabaseKey();
     // clang-format on

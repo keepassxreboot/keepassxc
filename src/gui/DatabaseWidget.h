@@ -235,6 +235,13 @@ public slots:
     void switchToDatabaseReports();
     void switchToDatabaseSettings();
     void switchToRemoteSettings();
+
+#ifdef KPXC_FEATURE_GOOGLEDRIVE
+    QString driveFileId() const;
+    void setDriveFileId(const QString& fileId);
+    void setDriveFileName(const QString& name);
+    QString driveFileName() const;
+#endif
 #ifdef KPXC_FEATURE_BROWSER
     void switchToPasskeys();
     void showImportPasskeyDialog(bool isEntry = false);
@@ -350,6 +357,13 @@ private:
 
     // Auto-Type related
     QString m_searchStringForAutoType;
+
+#ifdef KPXC_FEATURE_GOOGLEDRIVE
+    // Google Drive tracking
+    QString m_driveFileId;
+    QString m_driveFileName;
+    void uploadToDrive();
+#endif
 };
 
 #endif // KEEPASSX_DATABASEWIDGET_H

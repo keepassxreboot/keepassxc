@@ -21,6 +21,7 @@
 #include "DatabaseSettingsWidget.h"
 
 class Database;
+class QButtonGroup;
 namespace Ui
 {
     class DatabaseSettingsWidgetMetaDataSimple;
@@ -35,6 +36,8 @@ public:
     Q_DISABLE_COPY(DatabaseSettingWidgetMetaData);
     ~DatabaseSettingWidgetMetaData() override;
 
+    bool isDriveSelected() const;
+
 public slots:
     void initialize() override;
     void uninitialize() override;
@@ -45,6 +48,8 @@ protected:
 
 private:
     const QScopedPointer<Ui::DatabaseSettingsWidgetMetaDataSimple> m_ui;
+    QButtonGroup* m_storageGroup;
+    void updateCardStyles();
 };
 
 #endif // KEEPASSXC_DATABASESETTINGSWIDGEMETADATA_H

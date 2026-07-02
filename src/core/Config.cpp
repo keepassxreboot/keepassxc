@@ -205,6 +205,13 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::FdoSecrets_ConfirmAccessItem, {QS("FdoSecrets/ConfirmAccessItem"), Roaming, true}},
     {Config::FdoSecrets_UnlockBeforeSearch, {QS("FdoSecrets/UnlockBeforeSearch"), Roaming, true}},
 
+    // Google Drive
+    {Config::GoogleDrive_ClientId, {QS("GoogleDrive/ClientId"), Local, {}}},
+    {Config::GoogleDrive_ClientSecret, {QS("GoogleDrive/ClientSecret"), Local, {}}},
+    {Config::GoogleDrive_RefreshToken, {QS("GoogleDrive/RefreshToken"), Local, {}}},
+    {Config::GoogleDrive_AccessToken, {QS("GoogleDrive/AccessToken"), Local, {}}},
+    {Config::GoogleDrive_AccessTokenExpiry, {QS("GoogleDrive/AccessTokenExpiry"), Local, {}}},
+
     // KeeShare
     {Config::KeeShare_QuietSuccess, {QS("KeeShare/QuietSuccess"), Roaming, false}},
     {Config::KeeShare_Own, {QS("KeeShare/Own"), Roaming, {}}},

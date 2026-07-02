@@ -181,6 +181,12 @@ public:
         FdoSecrets_ConfirmAccessItem,
         FdoSecrets_UnlockBeforeSearch,
 
+        GoogleDrive_ClientId,
+        GoogleDrive_ClientSecret,
+        GoogleDrive_RefreshToken,
+        GoogleDrive_AccessToken,
+        GoogleDrive_AccessTokenExpiry,
+
         KeeShare_QuietSuccess,
         KeeShare_Own,
         KeeShare_Foreign,
