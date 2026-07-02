@@ -214,9 +214,12 @@ namespace Tools
 
     bool isAsciiString(const QString& str)
     {
-        constexpr auto pattern = R"(^[\x00-\x7F]+$)";
-        QRegularExpression regexp(pattern, QRegularExpression::CaseInsensitiveOption);
-        return regexp.match(str).hasMatch();
+        for (const auto& ch : str) {
+            if (ch.unicode() > 127) {
+                return false;
+            }
+        }
+        return true;
     }
 
     void sleep(int ms)
@@ -441,14 +444,7 @@ namespace Tools
     QString stripDiacritics(const QString& str)
     {
         // Fast path: pure ASCII has no diacritics to strip
-        bool ascii = true;
-        for (const auto& ch : str) {
-            if (ch.unicode() > 127) {
-                ascii = false;
-                break;
-            }
-        }
-        if (ascii) {
+        if (isAsciiString(str)) {
             return str;
         }
 
