@@ -57,6 +57,7 @@ public slots:
     void selectAll();
     void setReadOnly(bool state);
     void setEchoMode(QLineEdit::EchoMode mode);
+    void setPasswordStrength(const QString& password);
     void setClearButtonEnabled(bool enabled);
 
 private slots:

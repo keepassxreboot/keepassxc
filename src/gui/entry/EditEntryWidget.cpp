@@ -961,7 +961,65 @@ void EditEntryWidget::loadEntry(Entry* entry,
 
     // Set an initial password for new entries if the option is enabled
     if (create && config()->get(Config::AutoGeneratePasswordForNewEntries).toBool()) {
+        bool advanced = config()->get(Config::PasswordGenerator_AdvancedMode).toBool();
+        PasswordGenerator::CharClasses classes;
+
+        if (config()->get(Config::PasswordGenerator_LowerCase).toBool()) {
+            classes |= PasswordGenerator::LowerLetters;
+        }
+        if (config()->get(Config::PasswordGenerator_UpperCase).toBool()) {
+            classes |= PasswordGenerator::UpperLetters;
+        }
+        if (config()->get(Config::PasswordGenerator_Numbers).toBool()) {
+            classes |= PasswordGenerator::Numbers;
+        }
+        if (config()->get(Config::PasswordGenerator_EASCII).toBool()) {
+            classes |= PasswordGenerator::EASCII;
+        }
+
+        if (!advanced) {
+            if (config()->get(Config::PasswordGenerator_SpecialChars).toBool()) {
+                classes |= PasswordGenerator::SpecialCharacters;
+            }
+        } else {
+            if (config()->get(Config::PasswordGenerator_Braces).toBool()) {
+                classes |= PasswordGenerator::Braces;
+            }
+            if (config()->get(Config::PasswordGenerator_Punctuation).toBool()) {
+                classes |= PasswordGenerator::Punctuation;
+            }
+            if (config()->get(Config::PasswordGenerator_Quotes).toBool()) {
+                classes |= PasswordGenerator::Quotes;
+            }
+            if (config()->get(Config::PasswordGenerator_Dashes).toBool()) {
+                classes |= PasswordGenerator::Dashes;
+            }
+            if (config()->get(Config::PasswordGenerator_Math).toBool()) {
+                classes |= PasswordGenerator::Math;
+            }
+            if (config()->get(Config::PasswordGenerator_Logograms).toBool()) {
+                classes |= PasswordGenerator::Logograms;
+            }
+        }
+
         PasswordGenerator generator;
+        generator.setLength(config()->get(Config::PasswordGenerator_Length).toInt());
+        generator.setCharClasses(classes);
+
+        if (advanced) {
+            generator.setCustomCharacterSet(config()->get(Config::PasswordGenerator_AdditionalChars).toString());
+            generator.setExcludedCharacterSet(config()->get(Config::PasswordGenerator_ExcludedChars).toString());
+        }
+
+        PasswordGenerator::GeneratorFlags flags;
+        if (advanced && config()->get(Config::PasswordGenerator_ExcludeAlike).toBool()) {
+            flags |= PasswordGenerator::ExcludeLookAlike;
+        }
+        if (advanced && config()->get(Config::PasswordGenerator_EnsureEvery).toBool()) {
+            flags |= PasswordGenerator::CharFromEveryGroup;
+        }
+        generator.setFlags(flags);
+
         m_mainUi->passwordEdit->setText(generator.generatePassword());
     }
 
@@ -1024,6 +1082,9 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
     m_mainUi->usernameComboBox->lineEdit()->setText(entry->username());
     m_mainUi->urlEdit->setText(entry->url());
     m_mainUi->passwordEdit->setText(entry->password());
+    if (entry->isAttributeReference("Password")) {
+        m_mainUi->passwordEdit->setPasswordStrength(entry->resolveMultiplePlaceholders(entry->password()));
+    }
     m_mainUi->passwordEdit->setShowPassword(!config()->get(Config::Security_PasswordsHidden).toBool());
     if (!m_history) {
         m_mainUi->passwordEdit->enablePasswordGenerator();

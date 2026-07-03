@@ -104,6 +104,9 @@ void TestPasswordGenerator::testCharClasses_data()
                                         | PasswordGenerator::CharClass::UpperLetters
                                         | PasswordGenerator::CharClass::Braces)
                                     << QRegularExpression(R"(^[a-zA-Z\(\)\[\]\{\}]{2000}$)");
+    QTest::addRow("Special Characters") << to_flags(PasswordGenerator::CharClass::SpecialCharacters)
+                                        << QRegularExpression(
+                                               R"(^[\(\)\[\]\{\}\.,:;"'\-/\\_|!\*\+\-<=>\?#`~%&^$@]{2000}$)");
     QTest::addRow("Combinations 2") << (PasswordGenerator::CharClass::Quotes | PasswordGenerator::CharClass::Numbers
                                         | PasswordGenerator::CharClass::Dashes)
                                     << QRegularExpression(R"(^["'\d\-/\\_|]{2000}$)");
