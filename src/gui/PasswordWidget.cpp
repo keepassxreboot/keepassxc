@@ -262,6 +262,11 @@ void PasswordWidget::checkCapslockState()
     }
 }
 
+void PasswordWidget::setPasswordStrength(const QString& password)
+{
+    updatePasswordStrength(password);
+}
+
 void PasswordWidget::updatePasswordStrength(const QString& password)
 {
     if (password.isEmpty()) {
