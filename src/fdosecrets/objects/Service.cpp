@@ -170,7 +170,19 @@ namespace FdoSecrets
         m_insideEnsureDefaultAlias = true;
 
         auto coll = findCollection(m_databases->currentDatabaseWidget());
-        if (coll) {
+
+        // Fallback: If the active database isn't valid for Secret Service or is unregistered,
+        // fallback to ANY valid collection to ensure 'default' alias isn't lost.
+        if (!coll || coll->objectPath().path() == "/") {
+            for (auto* c : qAsConst(m_collections)) {
+                if (c->objectPath().path() != "/") {
+                    coll = c;
+                    break;
+                }
+            }
+        }
+
+        if (coll && coll->objectPath().path() != "/") {
             // adding alias will automatically remove the association with previous collection.
             coll->addAlias(DEFAULT_ALIAS).okOrDie();
         }
