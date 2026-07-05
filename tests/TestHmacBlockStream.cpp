@@ -17,136 +17,101 @@
 
 #include "TestHmacBlockStream.h"
 
-#include "QBuffer"
 #include <QTest>
-
-#include "crypto/Crypto.h"
-#include "streams/HmacBlockStream.h"
 
 QTEST_GUILESS_MAIN(TestHmacBlockStream)
 
 void TestHmacBlockStream::initTestCase()
 {
-    QVERIFY(Crypto::init());
     QLocale::setDefault(QLocale::c());
+    m_key = QByteArray(64, '\x42');
+    m_data = QByteArray::fromHex("603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4");
+}
+
+void TestHmacBlockStream::init()
+{
+    m_buffer = new QBuffer();
+    QVERIFY(m_buffer->open(QIODevice::ReadWrite));
+    m_raw = &(m_buffer->buffer());
+
+    m_writer = new HmacBlockStream(m_buffer, m_key, 16);
+    QVERIFY(m_writer->open(QIODevice::WriteOnly));
+
+    m_reader = new HmacBlockStream(m_buffer, m_key);
+    QVERIFY(m_reader->open(QIODevice::ReadOnly));
+}
+
+void TestHmacBlockStream::cleanup()
+{
+    delete m_writer;
+    delete m_reader;
+    delete m_buffer;
+    m_buffer = nullptr;
+    m_writer = nullptr;
+    m_reader = nullptr;
 }
 
 void TestHmacBlockStream::testWriteRead()
 {
-    QByteArray key(64, '\x42');
-    QByteArray data = QByteArray::fromHex("603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4");
+    QCOMPARE(m_writer->write(m_data.left(16)), qint64(16));
+    QVERIFY(m_writer->reset());
+    m_buffer->reset();
 
-    QBuffer buffer;
-    QVERIFY(buffer.open(QIODevice::ReadWrite));
-
-    HmacBlockStream writer(&buffer, key, 16);
-    QVERIFY(writer.open(QIODevice::WriteOnly));
-
-    HmacBlockStream reader(&buffer, key);
-    QVERIFY(reader.open(QIODevice::ReadOnly));
-
-    QCOMPARE(writer.write(data.left(16)), qint64(16));
-    QVERIFY(writer.reset());
-    buffer.reset();
-
-    QCOMPARE(reader.read(17), data.left(16));
-    QVERIFY(reader.atEnd());
+    QCOMPARE(m_reader->read(17), m_data.left(16));
+    QVERIFY(m_reader->atEnd());
 }
 
 void TestHmacBlockStream::testTamperData()
 {
-    QByteArray key(64, '\x42');
-    QByteArray data = QByteArray::fromHex("603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4");
+    QCOMPARE(m_writer->write(m_data.left(16)), qint64(16));
+    QVERIFY(m_writer->reset());
+    m_buffer->reset();
 
-    QBuffer buffer;
-    QVERIFY(buffer.open(QIODevice::ReadWrite));
+    (*m_raw)[data_offset] ^= 0xff;
 
-    HmacBlockStream writer(&buffer, key, 16);
-    QVERIFY(writer.open(QIODevice::WriteOnly));
-
-    HmacBlockStream reader(&buffer, key);
-    QVERIFY(reader.open(QIODevice::ReadOnly));
-
-    QCOMPARE(writer.write(data.left(16)), qint64(16));
-    QVERIFY(writer.reset());
-    buffer.reset();
-
-    QByteArray& raw = buffer.buffer();
-    const int hmac_size = 32;
-    const int size_field = 4;
-    const int data_offset = hmac_size + size_field;
-    raw[data_offset] ^= 0xff;
-
-    QByteArray result = reader.read(16);
+    QByteArray result = m_reader->read(16);
     QVERIFY(result.isEmpty());
-    QCOMPARE(reader.errorString(), QString("Mismatch between hash and data."));
-    QVERIFY(reader.reset());
-    buffer.reset();
-    buffer.buffer().clear();
+    QCOMPARE(m_reader->errorString(), QString("Mismatch between hash and data."));
+    QVERIFY(m_reader->reset());
+    m_buffer->reset();
+    m_buffer->buffer().clear();
 }
 
 void TestHmacBlockStream::testTamperHmac()
 {
-    QByteArray key(64, '\x42');
-    QByteArray data = QByteArray::fromHex("603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4");
-
-    QBuffer buffer;
-    QByteArray& raw = buffer.buffer();
-    QVERIFY(buffer.open(QIODevice::ReadWrite));
-
-    HmacBlockStream writer(&buffer, key, 16);
-    QVERIFY(writer.open(QIODevice::WriteOnly));
-
-    HmacBlockStream reader(&buffer, key);
-    QVERIFY(reader.open(QIODevice::ReadOnly));
-
-    QCOMPARE(writer.write(data.left(16)), qint64(16));
-    QVERIFY(writer.reset());
-    buffer.reset();
-    raw[0] ^= 0xff;
-    QByteArray result = reader.read(16);
+    QCOMPARE(m_writer->write(m_data.left(16)), qint64(16));
+    QVERIFY(m_writer->reset());
+    m_buffer->reset();
+    (*m_raw)[0] ^= 0xff;
+    QByteArray result = m_reader->read(16);
     QVERIFY(result.isEmpty());
-    QCOMPARE(reader.errorString(), QString("Mismatch between hash and data."));
-    QVERIFY(reader.reset());
-    buffer.reset();
-    buffer.buffer().clear();
+    QCOMPARE(m_reader->errorString(), QString("Mismatch between hash and data."));
+    QVERIFY(m_reader->reset());
+    m_buffer->reset();
+    m_buffer->buffer().clear();
 }
 
 void TestHmacBlockStream::testTamperSize()
 {
-    QByteArray key(64, '\x42');
-    QByteArray data = QByteArray::fromHex("603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4");
-
-    QBuffer buffer;
-    QByteArray& raw = buffer.buffer();
-    QVERIFY(buffer.open(QIODevice::ReadWrite));
-
-    HmacBlockStream writer(&buffer, key, 16);
-    QVERIFY(writer.open(QIODevice::WriteOnly));
-
-    HmacBlockStream reader(&buffer, key);
-    QVERIFY(reader.open(QIODevice::ReadOnly));
-
-    QCOMPARE(writer.write(data.left(16)), qint64(16));
-    QVERIFY(writer.reset());
-    buffer.reset();
-    const int hmac_size = 32;
-    raw[hmac_size] += 1;
-    QByteArray result = reader.read(16);
+    QCOMPARE(m_writer->write(m_data.left(16)), qint64(16));
+    QVERIFY(m_writer->reset());
+    m_buffer->reset();
+    (*m_raw)[hmac_field_size] += 1;
+    QByteArray result = m_reader->read(16);
     QVERIFY(result.isEmpty());
-    QCOMPARE(reader.errorString(), QString("Mismatch between hash and data."));
-    QVERIFY(reader.reset());
-    buffer.reset();
-    buffer.buffer().clear();
+    QCOMPARE(m_reader->errorString(), QString("Mismatch between hash and data."));
+    QVERIFY(m_reader->reset());
+    m_buffer->reset();
+    m_buffer->buffer().clear();
 
-    QCOMPARE(writer.write(data.left(16)), qint64(16));
-    QVERIFY(writer.reset());
-    buffer.reset();
-    raw[hmac_size + 3] += 1;
-    result = reader.read(16);
+    QCOMPARE(m_writer->write(m_data.left(16)), qint64(16));
+    QVERIFY(m_writer->reset());
+    m_buffer->reset();
+    (*m_raw)[hmac_field_size + 3] += 1;
+    result = m_reader->read(16);
     QVERIFY(result.isEmpty());
-    QCOMPARE(reader.errorString(), QString("Block too short."));
-    QVERIFY(reader.reset());
-    buffer.reset();
-    buffer.buffer().clear();
+    QCOMPARE(m_reader->errorString(), QString("Block too short."));
+    QVERIFY(m_reader->reset());
+    m_buffer->reset();
+    m_buffer->buffer().clear();
 }

@@ -18,7 +18,10 @@
 #ifndef KEEPASSX_TESTHMACBLOCKSTREAM_H
 #define KEEPASSX_TESTHMACBLOCKSTREAM_H
 
+#include <QBuffer>
 #include <QObject>
+
+#include "streams/HmacBlockStream.h"
 
 class TestHmacBlockStream : public QObject
 {
@@ -26,10 +29,24 @@ class TestHmacBlockStream : public QObject
 
 private slots:
     void initTestCase();
+    void init();
+    void cleanup();
     void testWriteRead();
     void testTamperData();
     void testTamperHmac();
     void testTamperSize();
+
+private:
+    QByteArray m_key;
+    QByteArray m_data;
+    QBuffer* m_buffer;
+    QByteArray* m_raw;
+    HmacBlockStream* m_writer;
+    HmacBlockStream* m_reader;
+
+    const int hmac_field_size = 32; // bytes
+    const int size_field_size = 4; // bytes
+    const int data_offset = hmac_field_size + size_field_size;
 };
 
 #endif // KEEPASSX_TESTHMACBLOCKSTREAM_H
