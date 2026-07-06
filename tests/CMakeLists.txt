@@ -73,6 +73,9 @@ add_unit_test(NAME testsymmetriccipher SOURCES TestSymmetricCipher.cpp
 add_unit_test(NAME testhashedblockstream SOURCES TestHashedBlockStream.cpp
         LIBS testsupport ${TEST_LIBRARIES})
 
+add_unit_test(NAME testhmacblockstream SOURCES TestHmacBlockStream.cpp
+        LIBS testsupport ${TEST_LIBRARIES})
+
 add_unit_test(NAME testkeepass2randomstream SOURCES TestKeePass2RandomStream.cpp
         LIBS ${TEST_LIBRARIES})
 
