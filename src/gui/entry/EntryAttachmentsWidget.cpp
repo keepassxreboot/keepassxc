@@ -358,7 +358,7 @@ void EntryAttachmentsWidget::saveSelectedAttachments()
 
     QDir saveDir(saveDirPath);
     if (!saveDir.exists()) {
-        if (saveDir.mkpath(saveDir.absolutePath())) {
+        if (!saveDir.mkpath(saveDir.absolutePath())) {
             errorOccurred(tr("Unable to create directory:\n%1").arg(saveDir.absolutePath()));
             return;
         }
