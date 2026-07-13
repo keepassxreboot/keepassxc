@@ -566,3 +566,76 @@ void TestOpenSSHKey::testParseED25519SecurityKey()
     QCOMPARE(key.fingerprint(), QString("SHA256:PGtS5WvbnYmNqFIeRbzO6cVP9GLh8eEzENgkHp02XIA"));
     QCOMPARE(keyString, key.privateKey());
 }
+
+void TestOpenSSHKey::testParseMLDSA44Ed25519()
+{
+    const QString keyString = QString("-----BEGIN OPENSSH PRIVATE KEY-----\n"
+                                      "b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAFZwAAAB9zc2gtbW\n"
+                                      "xkc2E0NC1lZDI1NTE5QG9wZW5zc2guY29tAAAFQC3FuaSh0davMqgfw/lbJi8XUxGaB451\n"
+                                      "8bTUfuVn+u7oObwSK1CQCsLTYQB4VnHLGjqf0AKOUSjmpnqQQYISb+GwWFcpl7MWvUEA1m\n"
+                                      "hxeeBqoMq75cZfnKh3CfV/GGfKbeSJqiwxrPhLE/Tr9SCGft+kuIZLQR6XwaM8yPFfPQJv\n"
+                                      "ngpYLQmiIJqoG0QpWPtbK5m0K4sklR4AnNrrwuD4AEibkFfPdZNayDjESXv76QsyGl94oU\n"
+                                      "kOFzFWeZeUQSt4JE2QlO/20HJN3Bo8b3LkDHYA7H9KaEh8kwc9uRnNG35RADGi4qQg4alH\n"
+                                      "QO5Cz3qq2ubpnJgn4KT1ZtHxn3kEuxqGgDjnLQuWDzIjqNZ/bnwTC5HMsQHIEAM1ouBJHh\n"
+                                      "TRTxCEx9Ujoe51vMtO23D7nfg6fiZ8M8euV2vXrZ3krla87Bgyn1SkuDV8Thll2aU9BMQ3\n"
+                                      "mO9MOElbRRIRfU5xmlQ2yLZD4BJGPpTGqqDjmvoivaZdF7bNLoPGOIOVW9DJ1pskr95LD/\n"
+                                      "14LtqyKQFLKSdar9JQRwOGV64RK8tdsqMYbZzzAcV3w6tnS3ZmwCppG47XQSWtge9zyxuH\n"
+                                      "A9V6/jbOKAJpJJglP7fh0N2OBerxllN8i4blysLBs7hf7gBf+eictIzypj1HGeoMB0CmRj\n"
+                                      "DEe/+tvq+/q5NNBfrB9yY+qTi7Wl062ZxPlHZCeRCglQj5JQ0Ig3fsrd4gYrC5rVTefAm6\n"
+                                      "kBRxfVZhjwLDrveknXSYEAaw/zfiRdTeq+myRckFdj58PG2OzBQjqryvnMCZxCnZLf7KPv\n"
+                                      "tSULo39/74P2Lk+qui/JCklRJnQNM+Z6SAo6Em3FdimVPkukW3Q+/n71f89Zx/WjGEo0M6\n"
+                                      "SkMQQkwzsqUp6xhEe7yngiPBcb3gGeMxdxIaLXDyhC+u2QmhMzD/OCaw3yYn7zaFmCZXYS\n"
+                                      "RsRPNKT3YatxDzH/XIK3XW2BQ9Ur0QtIhlfA3mMdZjYSp2Eb2KNYi6M2w/M75A9Gb38OdM\n"
+                                      "91yxiX4/GvuxGuALPLgjcX50VB2VWsCRNduByOx6M+VzYb0hRurxfPgez90Svluqbb3X0+\n"
+                                      "ISqoxxZUqxZDSg2FT+NBnR3ASwc2fP4WP7BLrhzmojWeyvHhtBN4ZKG/TYCLzjNvi4W0Jg\n"
+                                      "wp2IAAT4NlgdLnv4AIdsZWY/mozdzgeQtsmTNyK5aXpECkWE7/TL3VPeX7yflbEJEOB3Ny\n"
+                                      "NDk+iEoqqOVcuE+uPXWT/hKWd7N2Wpjcth4095VzPqxO2knCTDeg3cDfEkC7i7dSG3vuLb\n"
+                                      "zvb8NjX22f9iJJrbjIUFaT0u0WN6zOoIJxTZMvVHAoOAGt008DWemg3JaCx1BtZjT9hc2a\n"
+                                      "GOHb7o+5XpbVPeHA7BLehxk9KLk92+X9yOEap3rZPtvxPleSsSWGdT+ISxLHlvrW8gBd2j\n"
+                                      "f4GcWI1+EVws5ukyd+QmV1FUMW/2SIY15sF4RgcsxuBSxUQ0vWYHZJKooGaN3Nf4GfzeKL\n"
+                                      "hPHnC5l5mEz75q/LyPJvqNAtWg5kmQPLqlI2K5ugD0ZqdTNYVWjt3W6U/GRqZVCdB0PioP\n"
+                                      "yiI2zblxfC/Nzvd6YqO8QDt3vz5j5GIIRMJb+Krtccury9ZKDR93DqTXLMwPaxtaZ3jyFX\n"
+                                      "vn03lyYywERTvh0qPKwNYcxWOd/cbSyJvMQSq2f0L0EYgKF2SbqtmtA/1kT/stiTXBpc2O\n"
+                                      "yNDWcFW/6Eap4eZPzljpw8r0OqpvMjePo4fInJxl+sM4MrDBgaRtx/b2GUzzWTut5g9nFm\n"
+                                      "I1zGUS8ckiZAAABdB34p30d+Kd9AAAAB9zc2gtbWxkc2E0NC1lZDI1NTE5QG9wZW5zc2gu\n"
+                                      "Y29tAAAFQC3FuaSh0davMqgfw/lbJi8XUxGaB4518bTUfuVn+u7oObwSK1CQCsLTYQB4Vn\n"
+                                      "HLGjqf0AKOUSjmpnqQQYISb+GwWFcpl7MWvUEA1mhxeeBqoMq75cZfnKh3CfV/GGfKbeSJ\n"
+                                      "qiwxrPhLE/Tr9SCGft+kuIZLQR6XwaM8yPFfPQJvngpYLQmiIJqoG0QpWPtbK5m0K4sklR\n"
+                                      "4AnNrrwuD4AEibkFfPdZNayDjESXv76QsyGl94oUkOFzFWeZeUQSt4JE2QlO/20HJN3Bo8\n"
+                                      "b3LkDHYA7H9KaEh8kwc9uRnNG35RADGi4qQg4alHQO5Cz3qq2ubpnJgn4KT1ZtHxn3kEux\n"
+                                      "qGgDjnLQuWDzIjqNZ/bnwTC5HMsQHIEAM1ouBJHhTRTxCEx9Ujoe51vMtO23D7nfg6fiZ8\n"
+                                      "M8euV2vXrZ3krla87Bgyn1SkuDV8Thll2aU9BMQ3mO9MOElbRRIRfU5xmlQ2yLZD4BJGPp\n"
+                                      "TGqqDjmvoivaZdF7bNLoPGOIOVW9DJ1pskr95LD/14LtqyKQFLKSdar9JQRwOGV64RK8td\n"
+                                      "sqMYbZzzAcV3w6tnS3ZmwCppG47XQSWtge9zyxuHA9V6/jbOKAJpJJglP7fh0N2OBerxll\n"
+                                      "N8i4blysLBs7hf7gBf+eictIzypj1HGeoMB0CmRjDEe/+tvq+/q5NNBfrB9yY+qTi7Wl06\n"
+                                      "2ZxPlHZCeRCglQj5JQ0Ig3fsrd4gYrC5rVTefAm6kBRxfVZhjwLDrveknXSYEAaw/zfiRd\n"
+                                      "Teq+myRckFdj58PG2OzBQjqryvnMCZxCnZLf7KPvtSULo39/74P2Lk+qui/JCklRJnQNM+\n"
+                                      "Z6SAo6Em3FdimVPkukW3Q+/n71f89Zx/WjGEo0M6SkMQQkwzsqUp6xhEe7yngiPBcb3gGe\n"
+                                      "MxdxIaLXDyhC+u2QmhMzD/OCaw3yYn7zaFmCZXYSRsRPNKT3YatxDzH/XIK3XW2BQ9Ur0Q\n"
+                                      "tIhlfA3mMdZjYSp2Eb2KNYi6M2w/M75A9Gb38OdM91yxiX4/GvuxGuALPLgjcX50VB2VWs\n"
+                                      "CRNduByOx6M+VzYb0hRurxfPgez90Svluqbb3X0+ISqoxxZUqxZDSg2FT+NBnR3ASwc2fP\n"
+                                      "4WP7BLrhzmojWeyvHhtBN4ZKG/TYCLzjNvi4W0Jgwp2IAAT4NlgdLnv4AIdsZWY/mozdzg\n"
+                                      "eQtsmTNyK5aXpECkWE7/TL3VPeX7yflbEJEOB3NyNDk+iEoqqOVcuE+uPXWT/hKWd7N2Wp\n"
+                                      "jcth4095VzPqxO2knCTDeg3cDfEkC7i7dSG3vuLbzvb8NjX22f9iJJrbjIUFaT0u0WN6zO\n"
+                                      "oIJxTZMvVHAoOAGt008DWemg3JaCx1BtZjT9hc2aGOHb7o+5XpbVPeHA7BLehxk9KLk92+\n"
+                                      "X9yOEap3rZPtvxPleSsSWGdT+ISxLHlvrW8gBd2jf4GcWI1+EVws5ukyd+QmV1FUMW/2SI\n"
+                                      "Y15sF4RgcsxuBSxUQ0vWYHZJKooGaN3Nf4GfzeKLhPHnC5l5mEz75q/LyPJvqNAtWg5kmQ\n"
+                                      "PLqlI2K5ugD0ZqdTNYVWjt3W6U/GRqZVCdB0PioPyiI2zblxfC/Nzvd6YqO8QDt3vz5j5G\n"
+                                      "IIRMJb+Krtccury9ZKDR93DqTXLMwPaxtaZ3jyFXvn03lyYywERTvh0qPKwNYcxWOd/cbS\n"
+                                      "yJvMQSq2f0L0EYgKF2SbqtmtA/1kT/stiTXBpc2OyNDWcFW/6Eap4eZPzljpw8r0OqpvMj\n"
+                                      "ePo4fInJxl+sM4MrDBgaRtx/b2GUzzWTut5g9nFmI1zGUS8ckiZAAAAEBv2UdlYL3UVTSG\n"
+                                      "5HMErtVNdWiFdp/ToMR3tay3f+iC4UukHTk1UCkpU/oS9gfIkk5/cA1WZP2CaUUomEGoXL\n"
+                                      "e7AAAAGW1sZHNhNDQtZWQyNTUxOUBrZWVwYXNzeGM=\n"
+                                      "-----END OPENSSH PRIVATE KEY-----\n");
+
+    const QByteArray keyData = keyString.toLatin1();
+
+    OpenSSHKey key;
+    QVERIFY(key.parsePKCS1PEM(keyData));
+    QVERIFY(!key.encrypted());
+    QCOMPARE(key.cipherName(), QString("none"));
+    QCOMPARE(key.type(), QString("ssh-mldsa44-ed25519@openssh.com"));
+    QCOMPARE(key.comment(), QString("mldsa44-ed25519@keepassxc"));
+    QCOMPARE(key.fingerprint(), QString("SHA256:F5imRdKQQaF6niGeOUvxl884hGxB9TUKSE62f8h+dSE"));
+    QCOMPARE(keyString, key.privateKey());
+}

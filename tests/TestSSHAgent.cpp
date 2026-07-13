@@ -293,6 +293,27 @@ void TestSSHAgent::testKeyGenEd25519()
     QVERIFY(agent.checkIdentity(key, keyInAgent) && !keyInAgent);
 }
 
+void TestSSHAgent::testKeyGenMLDSA44Ed25519()
+{
+    SSHAgent agent;
+    agent.setEnabled(true);
+    agent.setAuthSockOverride(m_agentSocketFileName);
+
+    QVERIFY(agent.isAgentRunning());
+
+    OpenSSHKey key;
+    KeeAgentSettings settings;
+    bool keyInAgent;
+
+    QVERIFY(OpenSSHKeyGen::generateMLDSA44Ed25519(key));
+    QCOMPARE(key.type(), QString("ssh-mldsa44-ed25519@openssh.com"));
+
+    QVERIFY(agent.addIdentity(key, settings, m_uuid));
+    QVERIFY(agent.checkIdentity(key, keyInAgent) && keyInAgent);
+    QVERIFY(agent.removeIdentity(key));
+    QVERIFY(agent.checkIdentity(key, keyInAgent) && !keyInAgent);
+}
+
 void TestSSHAgent::cleanupTestCase()
 {
     if (m_agentProcess.state() != QProcess::NotRunning) {

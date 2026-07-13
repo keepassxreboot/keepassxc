@@ -25,7 +25,9 @@
 #include <botan/ec_group.h>
 #include <botan/ecdsa.h>
 #include <botan/ed25519.h>
+#include <botan/ml_dsa.h>
 #include <botan/rsa.h>
+#include <botan/system_rng.h>
 #include <botan/version.h>
 #if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(3, 11, 0)
 #include <botan/ec_group.h>
@@ -148,5 +150,49 @@ namespace OpenSSHKeyGen
         } catch (const std::exception&) {
             return false;
         }
+    }
+
+    bool generateMLDSA44Ed25519(OpenSSHKey& key)
+    {
+        // Generate ML-DSA-44 key pair
+        Botan::ML_DSA_PrivateKey mldsaKey(Botan::system_rng(), Botan::ML_DSA_Mode(Botan::DilithiumMode::ML_DSA_4x4));
+
+        // Generate Ed25519 key pair
+        auto rng = randomGen()->getRng();
+        Botan::Ed25519_PrivateKey ed25519Key(*rng);
+
+        // Composite public key: ML-DSA public key (1312 bytes) || Ed25519 public key (32 bytes)
+        QByteArray compositePublicKey;
+        compositePublicKey.append(reinterpret_cast<const char*>(mldsaKey.raw_public_key_bits().data()),
+                                  mldsaKey.raw_public_key_bits().size());
+        compositePublicKey.append(reinterpret_cast<const char*>(ed25519Key.get_public_key().data()),
+                                  ed25519Key.get_public_key().size());
+
+        QByteArray publicData;
+        BinaryStream publicStream(&publicData);
+        std::vector<uint8_t> pubVec(compositePublicKey.begin(), compositePublicKey.end());
+        vectorToStream(pubVec, publicStream);
+
+        // Private key data: composite public key || ML-DSA seed (32 bytes) || Ed25519 seed (32 bytes)
+        QByteArray compositePrivateKey;
+        compositePrivateKey.append(reinterpret_cast<const char*>(mldsaKey.raw_private_key_bits().data()),
+                                   mldsaKey.raw_private_key_bits().size());
+        // Ed25519 private key is 64 bytes (public key || seed), but we only need the 32-byte seed
+        auto ed25519Priv = ed25519Key.raw_private_key_bits();
+        compositePrivateKey.append(reinterpret_cast<const char*>(ed25519Priv.data() + 32), 32);
+
+        QByteArray privateData;
+        BinaryStream privateStream(&privateData);
+        std::vector<uint8_t> pubVec2(compositePublicKey.begin(), compositePublicKey.end());
+        std::vector<uint8_t> privVec(compositePrivateKey.begin(), compositePrivateKey.end());
+        vectorToStream(pubVec2, privateStream);
+        vectorToStream(privVec, privateStream);
+
+        key.setType("ssh-mldsa44-ed25519@openssh.com");
+        key.setCheck(randomGen()->randomUInt(std::numeric_limits<quint32>::max() - 1) + 1);
+        key.setPublicData(publicData);
+        key.setPrivateData(privateData);
+        key.setComment("id_mldsa44_ed25519");
+        return true;
     }
 } // namespace OpenSSHKeyGen
