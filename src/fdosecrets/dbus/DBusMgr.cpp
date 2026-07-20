@@ -349,6 +349,27 @@ namespace FdoSecrets
         return ParsedPath{};
     }
 
+    DBusObject* DBusMgr::objectAtPath(const QString& path) const
+    {
+        auto obj = m_objects.value(path, nullptr);
+        if (obj) {
+            return obj;
+        }
+
+        // Resolve alias object paths (e.g. /org/freedesktop/secrets/aliases/default)
+        // through the service so they stay reachable even when the alias entry is
+        // missing from the object map. This is what applications like Evolution use
+        // when they access aliased collections directly instead of via ReadAlias.
+        auto parsed = parsePath(path);
+        if (parsed.type == PathType::Aliases) {
+            auto service = qobject_cast<Service*>(m_objects.value(DBUS_PATH_SECRETS, nullptr));
+            if (service) {
+                return service->findCollection(parsed.id);
+            }
+        }
+        return nullptr;
+    }
+
     QString DBusMgr::introspect(const QString& path) const
     {
         auto parsed = parsePath(path);

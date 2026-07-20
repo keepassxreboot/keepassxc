@@ -1606,6 +1606,50 @@ void TestGuiFdoSecrets::testDefaultAliasAlwaysPresent()
     DBUS_COMPARE(coll->locked(), false);
 }
 
+void TestGuiFdoSecrets::testAliasObjectPathAccessible()
+{
+    // Applications like Evolution access aliased collections directly through their
+    // alias object path (e.g. /org/freedesktop/secrets/aliases/default) instead of
+    // resolving them via ReadAlias. Verify such direct access works. See issue #13524.
+    auto service = enableService();
+    VERIFY(service);
+
+    // resolve the default collection via ReadAlias for comparison
+    auto collViaReadAlias = getDefaultCollection(service);
+    VERIFY(collViaReadAlias);
+    QString labelViaReadAlias;
+    {
+        DBUS_GET(lbl, collViaReadAlias->label());
+        labelViaReadAlias = lbl;
+    }
+
+    // access the alias object path directly
+    auto collViaAlias = getProxy<CollectionProxy>(QDBusObjectPath(DBUS_PATH_DEFAULT_ALIAS));
+    VERIFY(collViaAlias);
+    VERIFY(collViaAlias->isValid());
+
+    // the aliased collection behaves identically to the primary one
+    DBUS_COMPARE(collViaAlias->locked(), false);
+    DBUS_GET(labelViaAlias, collViaAlias->label());
+    COMPARE(labelViaAlias, labelViaReadAlias);
+
+    // listing items through the alias path works
+    DBUS_GET(itemsViaAlias, collViaAlias->items());
+
+    // creating an item (i.e. storing credentials) through the alias path works
+    auto sess = openSession(service, DhIetf1024Sha256Aes128CbcPkcs7::Algorithm);
+    VERIFY(sess);
+
+    QSignalSpy spyItemCreated(collViaReadAlias.data(), SIGNAL(ItemCreated(QDBusObjectPath)));
+    VERIFY(spyItemCreated.isValid());
+
+    StringStringMap attributes{{"application", "fdosecrets-test"}, {"alias-path", "default"}};
+    auto item = createItem(sess, collViaAlias, "alias-entry", "Password", attributes, false);
+    VERIFY(item);
+
+    VERIFY(waitForSignal(spyItemCreated, 1));
+}
+
 void TestGuiFdoSecrets::testExposeSubgroup()
 {
     auto subgroup = m_db->rootGroup()->findGroupByPath("/Homebanking/Subgroup");
