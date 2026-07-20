@@ -80,6 +80,12 @@ CsvImportWidget::CsvImportWidget(QWidget* parent)
                    << QObject::tr("URL") << QObject::tr("Tags") << QObject::tr("Notes") << QObject::tr("TOTP")
                    << QObject::tr("Icon") << QObject::tr("Last Modified") << QObject::tr("Created");
 
+    // Canonical English headers as written by CsvExporter — always match these regardless of UI locale
+    m_columnHeaderEnglish << QStringLiteral("Group") << QStringLiteral("Title") << QStringLiteral("Username")
+                          << QStringLiteral("Password") << QStringLiteral("URL") << QStringLiteral("Tags")
+                          << QStringLiteral("Notes") << QStringLiteral("TOTP") << QStringLiteral("Icon")
+                          << QStringLiteral("Last Modified") << QStringLiteral("Created");
+
     m_fieldSeparatorList << "," << ";" << "-" << ":" << "." << "\t";
 
     m_combos << m_ui->groupCombo << m_ui->titleCombo << m_ui->usernameCombo << m_ui->passwordCombo << m_ui->urlCombo
@@ -184,7 +190,9 @@ void CsvImportWidget::updatePreview()
 
         bool found = false;
         for (int j = 0; j < csvColumns.size(); ++j) {
-            if (m_columnHeader.at(i).compare(csvColumns.at(j), Qt::CaseInsensitive) == 0) {
+            // Match translated UI labels and English/canonical export headers
+            if (m_columnHeader.at(i).compare(csvColumns.at(j), Qt::CaseInsensitive) == 0
+                || m_columnHeaderEnglish.at(i).compare(csvColumns.at(j), Qt::CaseInsensitive) == 0) {
                 m_combos.at(i)->setCurrentIndex(j);
                 found = true;
                 break;
