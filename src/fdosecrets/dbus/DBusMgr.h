@@ -178,7 +178,7 @@ namespace FdoSecrets
             if (path.path() == QStringLiteral("/")) {
                 return nullptr;
             }
-            auto obj = qobject_cast<T*>(m_objects.value(path.path(), nullptr));
+            auto obj = qobject_cast<T*>(objectAtPath(path.path()));
             if (!obj) {
                 qDebug() << "object not found at path" << path.path();
                 qDebug() << m_objects;
@@ -262,6 +262,18 @@ namespace FdoSecrets
             }
         };
         static ParsedPath parsePath(const QString& path);
+
+        /**
+         * Resolve an object path to the underlying DBusObject.
+         *
+         * In addition to the direct lookup in m_objects, alias object paths of
+         * the form /org/freedesktop/secrets/aliases/{alias} are resolved through
+         * the service's alias map. This keeps aliased collections reachable even
+         * if the alias registration is temporarily absent from the object map.
+         * See issue #13524.
+         */
+        DBusObject* objectAtPath(const QString& path) const;
+
         bool registerObject(const QString& path, DBusObject* obj, bool primary = true);
 
         // method dispatching
