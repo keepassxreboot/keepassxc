@@ -1958,12 +1958,14 @@ void MainWindow::initViewMenu()
     m_ui->actionThemeAuto->setData("auto");
     m_ui->actionThemeLight->setData("light");
     m_ui->actionThemeDark->setData("dark");
+    m_ui->actionThemeOled->setData("oled");
     m_ui->actionThemeClassic->setData("classic");
 
     auto themeActions = new QActionGroup(this);
     themeActions->addAction(m_ui->actionThemeAuto);
     themeActions->addAction(m_ui->actionThemeLight);
     themeActions->addAction(m_ui->actionThemeDark);
+    themeActions->addAction(m_ui->actionThemeOled);
     themeActions->addAction(m_ui->actionThemeClassic);
 
     auto theme = config()->get(Config::GUI_ApplicationTheme).toString();
@@ -1974,9 +1976,13 @@ void MainWindow::initViewMenu()
         }
     }
 
-    connect(themeActions, &QActionGroup::triggered, this, [this, theme](QAction* action) {
-        config()->set(Config::GUI_ApplicationTheme, action->data());
-        if ((action->data() == "classic" || theme == "classic") && action->data() != theme) {
+    // Light / Dark / Dark (OLED) apply live via applyTheme().
+    // Classic uses a different style path and still requires a restart.
+    connect(themeActions, &QActionGroup::triggered, this, [this](QAction* action) {
+        const auto previous = config()->get(Config::GUI_ApplicationTheme).toString();
+        const auto next = action->data().toString();
+        config()->set(Config::GUI_ApplicationTheme, next);
+        if ((next == QLatin1String("classic") || previous == QLatin1String("classic")) && next != previous) {
             restartApp(tr("You must restart the application to apply this setting. Would you like to restart now?"));
         } else {
             kpxcApp->applyTheme();
@@ -2111,6 +2117,7 @@ void MainWindow::initActionCollection()
                     m_ui->actionThemeAuto,
                     m_ui->actionThemeLight,
                     m_ui->actionThemeDark,
+                    m_ui->actionThemeOled,
                     m_ui->actionThemeClassic,
                     m_ui->actionCompactMode,
 #ifndef Q_OS_MACOS

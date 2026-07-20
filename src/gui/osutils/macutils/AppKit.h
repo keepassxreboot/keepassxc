@@ -48,6 +48,9 @@ public:
     void toggleForegroundApp(bool foreground);
     void setWindowSecurity(QWindow* window, bool state);
     void configureWindowAndHelpMenus(QMainWindow* mainWindow, QMenu* helpMenu);
+    // Dark (OLED): pure-black title bars when theme is oled (macOS only)
+    void setOledChromeEnabled(bool enabled);
+    void applyOledWindowChrome(QWindow* window);
 
 signals:
     void userSwitched();
