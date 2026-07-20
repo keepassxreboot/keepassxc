@@ -244,7 +244,7 @@ namespace FdoSecrets
                                  const RequestedMethod& req,
                                  const QDBusMessage& msg)
     {
-        auto obj = m_objects.value(path, nullptr);
+        auto obj = objectAtPath(path);
         if (!obj) {
             qDebug() << "DBusMgr::handleMessage with unknown path" << msg;
             return false;
