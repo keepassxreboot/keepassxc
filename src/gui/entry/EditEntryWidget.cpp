@@ -140,13 +140,15 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
 
     m_mainUi->passwordEdit->setQualityVisible(true);
 
-    connect(m_mainUi->passwordEdit, &PasswordWidget::requestPlaceholderResolution, 
-        this, [this](const QString& rawText, QString& resolvedText) {
-    if (m_entry) {
-        // Dereferencing the password of the entry
-        resolvedText = m_entry->resolveMultiplePlaceholders(rawText);
-    }
-    });
+    connect(m_mainUi->passwordEdit,
+            &PasswordWidget::requestPlaceholderResolution,
+            this,
+            [this](const QString& rawText, QString& resolvedText) {
+                if (m_entry) {
+                    // Dereferencing the password of the entry
+                    resolvedText = m_entry->resolveMultiplePlaceholders(rawText);
+                }
+            });
 }
 
 EditEntryWidget::~EditEntryWidget() = default;
