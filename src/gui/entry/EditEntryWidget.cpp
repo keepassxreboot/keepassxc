@@ -144,7 +144,7 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
         this, [this](const QString& rawText, QString& resolvedText) {
     if (m_entry) {
         // Dereferencing the password of the entry
-        resolvedText = m_entry->resolvePlaceholder(rawText);
+        resolvedText = m_entry->resolveMultiplePlaceholders(rawText);
     }
     });
 }

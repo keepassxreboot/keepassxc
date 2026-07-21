@@ -231,7 +231,7 @@ QString Entry::defaultAutoTypeSequence() const
 const QSharedPointer<PasswordHealth> Entry::passwordHealth()
 {
     if (!m_data.passwordHealth) {
-        m_data.passwordHealth.reset(new PasswordHealth(resolvePlaceholder(password())));
+        m_data.passwordHealth.reset(new PasswordHealth(resolveMultiplePlaceholders(password())));
     }
     return m_data.passwordHealth;
 }
@@ -239,7 +239,7 @@ const QSharedPointer<PasswordHealth> Entry::passwordHealth()
 const QSharedPointer<PasswordHealth> Entry::passwordHealth() const
 {
     if (!m_data.passwordHealth) {
-        return QSharedPointer<PasswordHealth>::create(resolvePlaceholder(password()));
+        return QSharedPointer<PasswordHealth>::create(resolveMultiplePlaceholders(password()));
     }
     return m_data.passwordHealth;
 }
