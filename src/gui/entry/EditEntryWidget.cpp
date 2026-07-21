@@ -40,6 +40,7 @@
 #include "core/Metadata.h"
 #include "core/PasswordGenerator.h"
 #include "core/TimeDelta.h"
+#include "gui/PasswordWidget.h"
 #ifdef KPXC_FEATURE_SSHAGENT
 #include "sshagent/OpenSSHKey.h"
 #include "sshagent/OpenSSHKeyGenDialog.h"
@@ -138,6 +139,16 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     m_editWidgetProperties->setCustomData(m_customData.data());
 
     m_mainUi->passwordEdit->setQualityVisible(true);
+
+    connect(m_mainUi->passwordEdit,
+            &PasswordWidget::requestPlaceholderResolution,
+            this,
+            [this](const QString& rawText, QString& resolvedText) {
+                if (m_entry) {
+                    // Dereferencing the password of the entry
+                    resolvedText = m_entry->resolveMultiplePlaceholders(rawText);
+                }
+            });
 }
 
 EditEntryWidget::~EditEntryWidget() = default;
