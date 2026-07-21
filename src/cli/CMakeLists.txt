@@ -13,23 +13,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# text_stream library
-add_library(text_stream STATIC TextStream.cpp)
-target_link_libraries(text_stream PUBLIC Qt6::Core)
-
-# line_reader library
-add_library(line_reader STATIC LineReader.cpp)
-target_link_libraries(line_reader PUBLIC Qt6::Core)
-find_package(Readline MODULE)
-if(Readline_FOUND)
-    target_compile_definitions(line_reader PRIVATE "USE_READLINE")
-    target_link_libraries(line_reader PRIVATE Readline::readline)
-else()
-    target_link_libraries(line_reader PRIVATE text_stream)
-endif()
-
-# cli library
-add_library(cli STATIC
+set(cli_SOURCES
         Add.cpp
         AddGroup.cpp
         Analyze.cpp
@@ -60,6 +44,23 @@ add_library(cli STATIC
         Search.cpp
         Show.cpp)
 
+# text_stream library
+add_library(text_stream STATIC TextStream.cpp)
+target_link_libraries(text_stream PUBLIC Qt6::Core)
+
+# line_reader library
+add_library(line_reader STATIC LineReader.cpp)
+target_link_libraries(line_reader PUBLIC Qt6::Core)
+find_package(Readline MODULE)
+if(Readline_FOUND)
+    target_compile_definitions(line_reader PRIVATE "USE_READLINE")
+    target_link_libraries(line_reader PRIVATE Readline::readline)
+else()
+    target_link_libraries(line_reader PRIVATE text_stream)
+endif()
+
+# cli library
+add_library(cli STATIC ${cli_SOURCES})
 target_link_libraries(cli
         PRIVATE ${ZXCVBN_LIBRARIES} text_stream
         PUBLIC Qt6::Core)
