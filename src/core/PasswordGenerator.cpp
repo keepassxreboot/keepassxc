@@ -34,11 +34,11 @@ PasswordGenerator::PasswordGenerator()
 {
 }
 
-PasswordGenerator PasswordGenerator::createFromConfig()
+void PasswordGenerator::loadSettingsFromConfig()
 {
-    PasswordGenerator generator;
+    reset();
 
-    generator.setLength(config()->get(Config::PasswordGenerator_Length).toInt());
+    setLength(config()->get(Config::PasswordGenerator_Length).toInt());
 
     PasswordGenerator::CharClasses classes;
     if (config()->get(Config::PasswordGenerator_LowerCase).toBool()) {
@@ -79,11 +79,11 @@ PasswordGenerator PasswordGenerator::createFromConfig()
             classes |= PasswordGenerator::Logograms;
         }
     }
-    generator.setCharClasses(classes);
+    setCharClasses(classes);
 
     if (advanced) {
-        generator.setCustomCharacterSet(config()->get(Config::PasswordGenerator_AdditionalChars).toString());
-        generator.setExcludedCharacterSet(config()->get(Config::PasswordGenerator_ExcludedChars).toString());
+        setCustomCharacterSet(config()->get(Config::PasswordGenerator_AdditionalChars).toString());
+        setExcludedCharacterSet(config()->get(Config::PasswordGenerator_ExcludedChars).toString());
     }
 
     PasswordGenerator::GeneratorFlags flags;
@@ -95,9 +95,7 @@ PasswordGenerator PasswordGenerator::createFromConfig()
             flags |= PasswordGenerator::CharFromEveryGroup;
         }
     }
-    generator.setFlags(flags);
-
-    return generator;
+    setFlags(flags);
 }
 
 void PasswordGenerator::setLength(int length)

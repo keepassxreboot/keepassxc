@@ -972,9 +972,11 @@ void EditEntryWidget::loadEntry(Entry* entry,
 
     // Set an initial password for new entries if the option is enabled
     if (create && config()->get(Config::AutoGeneratePasswordForNewEntries).toBool()) {
-        PasswordGenerator generator = PasswordGenerator::createFromConfig();
+        PasswordGenerator generator;
+        generator.loadSettingsFromConfig();
         if (!generator.isValid()) {
-            generator = PasswordGenerator();
+            qWarning() << "Password generator config settings are invalid, using default settings.";
+            generator.reset();
         }
         m_mainUi->passwordEdit->setText(generator.generatePassword());
     }

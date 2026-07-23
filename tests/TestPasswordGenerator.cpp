@@ -354,7 +354,8 @@ void TestPasswordGenerator::testCreateFromConfig()
     config()->set(Config::PasswordGenerator_Length, 20);
 
     {
-        PasswordGenerator generator = PasswordGenerator::createFromConfig();
+        PasswordGenerator generator;
+        generator.loadSettingsFromConfig();
         QCOMPARE(generator.getLength(), 20);
         QVERIFY(!(generator.getActiveClasses() & PasswordGenerator::LowerLetters));
         QVERIFY(generator.getActiveClasses() & PasswordGenerator::UpperLetters);
@@ -380,7 +381,8 @@ void TestPasswordGenerator::testCreateFromConfig()
     config()->set(Config::PasswordGenerator_Length, 16);
 
     {
-        PasswordGenerator generator = PasswordGenerator::createFromConfig();
+        PasswordGenerator generator;
+        generator.loadSettingsFromConfig();
         QCOMPARE(generator.getLength(), 16);
         QVERIFY(!(generator.getActiveClasses() & PasswordGenerator::LowerLetters));
         QVERIFY(generator.getActiveClasses() & PasswordGenerator::UpperLetters);
@@ -408,7 +410,8 @@ void TestPasswordGenerator::testCreateFromConfig()
     config()->set(Config::PasswordGenerator_Length, 32);
 
     {
-        PasswordGenerator generator = PasswordGenerator::createFromConfig();
+        PasswordGenerator generator;
+        generator.loadSettingsFromConfig();
         QVERIFY(!generator.isValid());
     }
 }
