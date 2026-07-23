@@ -58,6 +58,7 @@ public:
 public:
     PasswordGenerator();
 
+    void loadSettingsFromConfig();
     void setLength(int length);
     void setFlags(const GeneratorFlags& flags);
     void setCharClasses(const CharClasses& classes);

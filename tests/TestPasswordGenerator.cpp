@@ -16,9 +16,11 @@
  */
 
 #include "TestPasswordGenerator.h"
+#include "core/Config.h"
 #include "crypto/Crypto.h"
 
 #include <QRegularExpression>
+#include <QScopeGuard>
 #include <QTest>
 
 QTEST_GUILESS_MAIN(TestPasswordGenerator)
@@ -281,4 +283,135 @@ void TestPasswordGenerator::testReset()
     QCOMPARE(m_generator.getCustomCharacterSet(), default_generator.getCustomCharacterSet());
     QCOMPARE(m_generator.getExcludedCharacterSet(), default_generator.getExcludedCharacterSet());
     QCOMPARE(m_generator.getLength(), default_generator.getLength());
+}
+
+void TestPasswordGenerator::testCreateFromConfig()
+{
+    // Save current config values and restore on scope exit
+    auto savedLower = config()->get(Config::PasswordGenerator_LowerCase);
+    auto savedUpper = config()->get(Config::PasswordGenerator_UpperCase);
+    auto savedNumbers = config()->get(Config::PasswordGenerator_Numbers);
+    auto savedEASCII = config()->get(Config::PasswordGenerator_EASCII);
+    auto savedAdvanced = config()->get(Config::PasswordGenerator_AdvancedMode);
+    auto savedSpecialChars = config()->get(Config::PasswordGenerator_SpecialChars);
+    auto savedBraces = config()->get(Config::PasswordGenerator_Braces);
+    auto savedPunctuation = config()->get(Config::PasswordGenerator_Punctuation);
+    auto savedQuotes = config()->get(Config::PasswordGenerator_Quotes);
+    auto savedDashes = config()->get(Config::PasswordGenerator_Dashes);
+    auto savedMath = config()->get(Config::PasswordGenerator_Math);
+    auto savedLogograms = config()->get(Config::PasswordGenerator_Logograms);
+    auto savedAdditionalChars = config()->get(Config::PasswordGenerator_AdditionalChars);
+    auto savedExcludedChars = config()->get(Config::PasswordGenerator_ExcludedChars);
+    auto savedExcludeAlike = config()->get(Config::PasswordGenerator_ExcludeAlike);
+    auto savedEnsureEvery = config()->get(Config::PasswordGenerator_EnsureEvery);
+    auto savedLength = config()->get(Config::PasswordGenerator_Length);
+
+    QScopeGuard guard([savedLower,
+                       savedUpper,
+                       savedNumbers,
+                       savedEASCII,
+                       savedAdvanced,
+                       savedSpecialChars,
+                       savedBraces,
+                       savedPunctuation,
+                       savedQuotes,
+                       savedDashes,
+                       savedMath,
+                       savedLogograms,
+                       savedAdditionalChars,
+                       savedExcludedChars,
+                       savedExcludeAlike,
+                       savedEnsureEvery,
+                       savedLength]() {
+        config()->set(Config::PasswordGenerator_LowerCase, savedLower);
+        config()->set(Config::PasswordGenerator_UpperCase, savedUpper);
+        config()->set(Config::PasswordGenerator_Numbers, savedNumbers);
+        config()->set(Config::PasswordGenerator_EASCII, savedEASCII);
+        config()->set(Config::PasswordGenerator_AdvancedMode, savedAdvanced);
+        config()->set(Config::PasswordGenerator_SpecialChars, savedSpecialChars);
+        config()->set(Config::PasswordGenerator_Braces, savedBraces);
+        config()->set(Config::PasswordGenerator_Punctuation, savedPunctuation);
+        config()->set(Config::PasswordGenerator_Quotes, savedQuotes);
+        config()->set(Config::PasswordGenerator_Dashes, savedDashes);
+        config()->set(Config::PasswordGenerator_Math, savedMath);
+        config()->set(Config::PasswordGenerator_Logograms, savedLogograms);
+        config()->set(Config::PasswordGenerator_AdditionalChars, savedAdditionalChars);
+        config()->set(Config::PasswordGenerator_ExcludedChars, savedExcludedChars);
+        config()->set(Config::PasswordGenerator_ExcludeAlike, savedExcludeAlike);
+        config()->set(Config::PasswordGenerator_EnsureEvery, savedEnsureEvery);
+        config()->set(Config::PasswordGenerator_Length, savedLength);
+    });
+
+    // Test non-advanced mode with special chars
+    config()->set(Config::PasswordGenerator_LowerCase, false);
+    config()->set(Config::PasswordGenerator_UpperCase, true);
+    config()->set(Config::PasswordGenerator_Numbers, true);
+    config()->set(Config::PasswordGenerator_EASCII, false);
+    config()->set(Config::PasswordGenerator_AdvancedMode, false);
+    config()->set(Config::PasswordGenerator_SpecialChars, true);
+    config()->set(Config::PasswordGenerator_ExcludeAlike, true);
+    config()->set(Config::PasswordGenerator_EnsureEvery, true);
+    config()->set(Config::PasswordGenerator_Length, 20);
+
+    {
+        PasswordGenerator generator;
+        generator.loadSettingsFromConfig();
+        QCOMPARE(generator.getLength(), 20);
+        QVERIFY(!(generator.getActiveClasses() & PasswordGenerator::LowerLetters));
+        QVERIFY(generator.getActiveClasses() & PasswordGenerator::UpperLetters);
+        QVERIFY(generator.getActiveClasses() & PasswordGenerator::Numbers);
+        QVERIFY(generator.getActiveClasses() & PasswordGenerator::SpecialCharacters);
+        QVERIFY(!(generator.getFlags() & PasswordGenerator::ExcludeLookAlike));
+        QVERIFY(!(generator.getFlags() & PasswordGenerator::CharFromEveryGroup));
+    }
+
+    // Test advanced mode with specific character classes
+    config()->set(Config::PasswordGenerator_AdvancedMode, true);
+    config()->set(Config::PasswordGenerator_SpecialChars, false);
+    config()->set(Config::PasswordGenerator_Braces, true);
+    config()->set(Config::PasswordGenerator_Punctuation, true);
+    config()->set(Config::PasswordGenerator_Quotes, false);
+    config()->set(Config::PasswordGenerator_Dashes, true);
+    config()->set(Config::PasswordGenerator_Math, false);
+    config()->set(Config::PasswordGenerator_Logograms, true);
+    config()->set(Config::PasswordGenerator_AdditionalChars, "abc");
+    config()->set(Config::PasswordGenerator_ExcludedChars, "xyz");
+    config()->set(Config::PasswordGenerator_ExcludeAlike, false);
+    config()->set(Config::PasswordGenerator_EnsureEvery, false);
+    config()->set(Config::PasswordGenerator_Length, 16);
+
+    {
+        PasswordGenerator generator;
+        generator.loadSettingsFromConfig();
+        QCOMPARE(generator.getLength(), 16);
+        QVERIFY(!(generator.getActiveClasses() & PasswordGenerator::LowerLetters));
+        QVERIFY(generator.getActiveClasses() & PasswordGenerator::UpperLetters);
+        QVERIFY(generator.getActiveClasses() & PasswordGenerator::Numbers);
+        QVERIFY(generator.getActiveClasses() & PasswordGenerator::Braces);
+        QVERIFY(generator.getActiveClasses() & PasswordGenerator::Punctuation);
+        QVERIFY(!(generator.getActiveClasses() & PasswordGenerator::Quotes));
+        QVERIFY(generator.getActiveClasses() & PasswordGenerator::Dashes);
+        QVERIFY(!(generator.getActiveClasses() & PasswordGenerator::Math));
+        QVERIFY(generator.getActiveClasses() & PasswordGenerator::Logograms);
+        QVERIFY(!(generator.getFlags() & PasswordGenerator::ExcludeLookAlike));
+        QVERIFY(!(generator.getFlags() & PasswordGenerator::CharFromEveryGroup));
+        QCOMPARE(generator.getCustomCharacterSet(), QString("abc"));
+        QCOMPARE(generator.getExcludedCharacterSet(), QString("xyz"));
+    }
+
+    // Test invalid config (no classes, no custom chars) — generator should be invalid
+    config()->set(Config::PasswordGenerator_LowerCase, false);
+    config()->set(Config::PasswordGenerator_UpperCase, false);
+    config()->set(Config::PasswordGenerator_Numbers, false);
+    config()->set(Config::PasswordGenerator_EASCII, false);
+    config()->set(Config::PasswordGenerator_AdvancedMode, false);
+    config()->set(Config::PasswordGenerator_SpecialChars, false);
+    config()->set(Config::PasswordGenerator_AdditionalChars, QString());
+    config()->set(Config::PasswordGenerator_Length, 32);
+
+    {
+        PasswordGenerator generator;
+        generator.loadSettingsFromConfig();
+        QVERIFY(!generator.isValid());
+    }
 }
