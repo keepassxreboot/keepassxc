@@ -146,6 +146,11 @@ add_unit_test(NAME testtools SOURCES TestTools.cpp
 add_unit_test(NAME testconfig SOURCES TestConfig.cpp
         LIBS testsupport ${TEST_LIBRARIES})
 
+if(KPXC_FEATURE_URLOVERRIDE)
+    add_unit_test(NAME testurloverride SOURCES TestUrlOverride.cpp
+            LIBS urloverride testsupport ${TEST_LIBRARIES})
+endif()
+
 add_unit_test(NAME testcli SOURCES TestCli.cpp
         LIBS testsupport cli ${ZXCVBN_LIBRARIES} ${TEST_LIBRARIES})
 target_compile_definitions(testcli PRIVATE KEEPASSX_CLI_PATH="$<TARGET_FILE:keepassxc-cli>")
