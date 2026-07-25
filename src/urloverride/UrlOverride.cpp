@@ -203,7 +203,7 @@ namespace UrlOverride
         const auto resolvedProgram = QStandardPaths::findExecutable(program);
         if (!resolvedProgram.isEmpty() && isConsoleSubsystemExecutable(resolvedProgram)) {
             QProcess process;
-            process.setProgram(program);
+            process.setProgram(resolvedProgram);
             process.setArguments(arguments);
             process.setCreateProcessArgumentsModifier(
                 [](QProcess::CreateProcessArguments* args) { args->flags |= CREATE_NEW_CONSOLE; });
