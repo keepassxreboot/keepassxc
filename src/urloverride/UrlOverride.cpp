@@ -43,9 +43,20 @@ namespace
             return false;
         }
 
-        IMAGE_DOS_HEADER dosHeader;
+        const qint64 fileSize = file.size();
+        if (fileSize < static_cast<qint64>(sizeof(IMAGE_DOS_HEADER))) {
+            return false;
+        }
+
+        IMAGE_DOS_HEADER dosHeader{};
         if (file.read(reinterpret_cast<char*>(&dosHeader), sizeof(dosHeader)) != sizeof(dosHeader)
             || dosHeader.e_magic != IMAGE_DOS_SIGNATURE) {
+            return false;
+        }
+
+        // e_lfanew is a file offset to the PE header
+        if (dosHeader.e_lfanew < static_cast<LONG>(sizeof(IMAGE_DOS_HEADER))
+            || dosHeader.e_lfanew > fileSize - static_cast<qint64>(sizeof(DWORD) + sizeof(IMAGE_FILE_HEADER))) {
             return false;
         }
 
@@ -53,36 +64,59 @@ namespace
             return false;
         }
 
-        DWORD peSignature;
+        DWORD peSignature{};
         if (file.read(reinterpret_cast<char*>(&peSignature), sizeof(peSignature)) != sizeof(peSignature)
             || peSignature != IMAGE_NT_SIGNATURE) {
             return false;
         }
 
-        IMAGE_FILE_HEADER fileHeader;
+        IMAGE_FILE_HEADER fileHeader{};
         if (file.read(reinterpret_cast<char*>(&fileHeader), sizeof(fileHeader)) != sizeof(fileHeader)) {
             return false;
         }
 
-        const qint64 optionalHeaderStart = file.pos();
-        WORD magic;
-        if (file.read(reinterpret_cast<char*>(&magic), sizeof(magic)) != sizeof(magic)
-            || !file.seek(optionalHeaderStart)) {
+        if (fileHeader.SizeOfOptionalHeader < sizeof(WORD)) {
             return false;
         }
 
-        WORD subsystem;
+        const qint64 optionalHeaderStart = file.pos();
+
+        WORD magic{};
+        if (file.read(reinterpret_cast<char*>(&magic), sizeof(magic)) != sizeof(magic)) {
+            return false;
+        }
+
+        if (!file.seek(optionalHeaderStart)) {
+            return false;
+        }
+
+        WORD subsystem = 0;
+
         if (magic == IMAGE_NT_OPTIONAL_HDR64_MAGIC) {
-            IMAGE_OPTIONAL_HEADER64 optionalHeader;
-            if (file.read(reinterpret_cast<char*>(&optionalHeader), sizeof(optionalHeader)) != sizeof(optionalHeader)) {
+            if (fileHeader.SizeOfOptionalHeader < sizeof(IMAGE_OPTIONAL_HEADER64)
+                || optionalHeaderStart + static_cast<qint64>(sizeof(IMAGE_OPTIONAL_HEADER64)) > fileSize) {
                 return false;
             }
+
+            IMAGE_OPTIONAL_HEADER64 optionalHeader{};
+            if (file.read(reinterpret_cast<char*>(&optionalHeader), sizeof(optionalHeader))
+                != sizeof(optionalHeader)) {
+                return false;
+            }
+
             subsystem = optionalHeader.Subsystem;
         } else if (magic == IMAGE_NT_OPTIONAL_HDR32_MAGIC) {
-            IMAGE_OPTIONAL_HEADER32 optionalHeader;
-            if (file.read(reinterpret_cast<char*>(&optionalHeader), sizeof(optionalHeader)) != sizeof(optionalHeader)) {
+            if (fileHeader.SizeOfOptionalHeader < sizeof(IMAGE_OPTIONAL_HEADER32)
+                || optionalHeaderStart + static_cast<qint64>(sizeof(IMAGE_OPTIONAL_HEADER32)) > fileSize) {
                 return false;
             }
+
+            IMAGE_OPTIONAL_HEADER32 optionalHeader{};
+            if (file.read(reinterpret_cast<char*>(&optionalHeader), sizeof(optionalHeader))
+                != sizeof(optionalHeader)) {
+                return false;
+            }
+
             subsystem = optionalHeader.Subsystem;
         } else {
             return false;
