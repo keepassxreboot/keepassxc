@@ -21,6 +21,7 @@
 
 #include <QFile>
 #include <QProcess>
+#include <QRegularExpression>
 #include <QStandardPaths>
 #include <QUrl>
 #include <QXmlStreamReader>
@@ -193,11 +194,14 @@ namespace UrlOverride
 
     QString normalizeScheme(const QString& scheme)
     {
-        QString normalized = scheme.trimmed();
-        while (normalized.endsWith(QLatin1Char(':')) || normalized.endsWith(QLatin1Char('/'))) {
-            normalized.chop(1);
-        }
-        return normalized;
+        // A URI scheme is ALPHA *( ALPHA / DIGIT / "+" / "-" / "." ) per RFC 3986. Rather than
+        // guessing which surrounding characters to strip (e.g. a trailing-":"/"/" loop, which
+        // breaks on stray leading characters or on trailing junk that isn't ":" or "/"), extract
+        // the first run of characters matching that grammar and use it as-is - anything before or
+        // after it is simply not part of a scheme.
+        static const QRegularExpression schemePattern("[A-Za-z][A-Za-z0-9+.-]*");
+        const auto match = schemePattern.match(scheme);
+        return match.hasMatch() ? match.captured(0) : QString();
     }
 
     void executeCommand(const QString& program, const QStringList& arguments)
