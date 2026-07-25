@@ -20,6 +20,7 @@
 #include "UrlOverride.h"
 #include "gui/Icons.h"
 #include "gui/MessageBox.h"
+#include "gui/UrlTools.h"
 
 #include <QHBoxLayout>
 #include <QHeaderView>
@@ -131,7 +132,7 @@ private:
         for (int row = 0; row < m_table->rowCount(); ++row) {
             UrlOverride::Rule rule;
             rule.enabled = m_table->item(row, EnabledColumn)->checkState() == Qt::Checked;
-            rule.scheme = UrlOverride::normalizeScheme(m_table->item(row, SchemeColumn)->text());
+            rule.scheme = UrlTools::normalizeScheme(m_table->item(row, SchemeColumn)->text());
             rule.command = m_table->item(row, CommandColumn)->text().trimmed();
             if (rule.scheme.isEmpty() && rule.command.isEmpty()) {
                 continue;

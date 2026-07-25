@@ -18,10 +18,10 @@
 #include "UrlOverride.h"
 
 #include "core/Config.h"
+#include "gui/UrlTools.h"
 
 #include <QFile>
 #include <QProcess>
-#include <QRegularExpression>
 #include <QStandardPaths>
 #include <QUrl>
 #include <QXmlStreamReader>
@@ -166,7 +166,7 @@ namespace UrlOverride
         QList<Rule> normalizedRules;
         normalizedRules.reserve(rules.size());
         for (const auto& rule : rules) {
-            normalizedRules.append({rule.enabled, normalizeScheme(rule.scheme), rule.command});
+            normalizedRules.append({rule.enabled, UrlTools::normalizeScheme(rule.scheme), rule.command});
         }
         config()->set(Config::UrlOverride_Rules, serializeRules(normalizedRules));
     }
@@ -190,18 +190,6 @@ namespace UrlOverride
             }
         }
         return {};
-    }
-
-    QString normalizeScheme(const QString& scheme)
-    {
-        // A URI scheme is ALPHA *( ALPHA / DIGIT / "+" / "-" / "." ) per RFC 3986. Rather than
-        // guessing which surrounding characters to strip (e.g. a trailing-":"/"/" loop, which
-        // breaks on stray leading characters or on trailing junk that isn't ":" or "/"), extract
-        // the first run of characters matching that grammar and use it as-is - anything before or
-        // after it is simply not part of a scheme.
-        static const QRegularExpression schemePattern("[A-Za-z][A-Za-z0-9+.-]*");
-        const auto match = schemePattern.match(scheme);
-        return match.hasMatch() ? match.captured(0) : QString();
     }
 
     void executeCommand(const QString& program, const QStringList& arguments)

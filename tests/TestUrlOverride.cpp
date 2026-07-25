@@ -92,30 +92,14 @@ void TestUrlOverride::testDefaultSeedRule()
 
 void TestUrlOverride::testUrlOverrideSchemeNormalization()
 {
-    QCOMPARE(UrlOverride::normalizeScheme("ff://"), QString("ff"));
-    QCOMPARE(UrlOverride::normalizeScheme("ff:"), QString("ff"));
-    QCOMPARE(UrlOverride::normalizeScheme("ff"), QString("ff"));
-    QCOMPARE(UrlOverride::normalizeScheme("  ff://  "), QString("ff"));
-
-    // Extracted via the URI scheme grammar, not by stripping specific characters off either end:
-    // stray leading junk, doubled-up separators, and trailing garbage that isn't ":"/"/" all still
-    // resolve to just the scheme
-    QCOMPARE(UrlOverride::normalizeScheme("/:ff://  "), QString("ff"));
-    QCOMPARE(UrlOverride::normalizeScheme("://ff://  "), QString("ff"));
-    QCOMPARE(UrlOverride::normalizeScheme("ff:&&  "), QString("ff"));
-
-    // No letters at all: there is no scheme to extract
-    QVERIFY(UrlOverride::normalizeScheme("://").isEmpty());
-    QVERIFY(UrlOverride::normalizeScheme("123").isEmpty());
-    QVERIFY(UrlOverride::normalizeScheme("").isEmpty());
-
+    // The actual scheme-extraction grammar is tested in TestUrlTools::testNormalizeScheme(); this
+    // only verifies that setRules() applies it before persisting: a scheme entered as "ff://"
+    // must be normalized and stored as the literal scheme "ff", not a regular expression.
     TemporaryFile tempFile;
     tempFile.open();
     tempFile.close();
     Config::createConfigFromFile(tempFile.fileName());
 
-    // The scheme is not a regular expression: a scheme entered as "ff://" must be
-    // normalized and stored as the literal scheme "ff"
     UrlOverride::setRules({{true, "ff://", "cmd://ff-handler {URL}"}});
     QCOMPARE(UrlOverride::getRules().first().scheme, QString("ff"));
 

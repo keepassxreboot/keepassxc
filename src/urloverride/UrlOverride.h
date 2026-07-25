@@ -42,7 +42,6 @@ namespace UrlOverride
     QList<Rule> getRules();
     void setRules(const QList<Rule>& rules);
     QString findCommand(const QString& url);
-    QString normalizeScheme(const QString& scheme);
 
     // Runs a "cmd://"-style external command detached from KeePassXC. On Windows, ensures a
     // visible console window is allocated for console-subsystem programs (e.g. ssh, plink) while
