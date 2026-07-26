@@ -44,6 +44,7 @@ public:
     bool isPasswordVisible() const;
     QString text();
 
+protected:
     bool eventFilter(QObject* watched, QEvent* event) override;
 
 signals:
