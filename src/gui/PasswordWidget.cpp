@@ -318,3 +318,13 @@ void PasswordWidget::updatePasswordStrength(const QString& password)
         break;
     }
 }
+
+void PasswordWidget::changeEvent(QEvent* event)
+{
+    if (event->type() == QEvent::FontChange) {
+        QFont passwordFont = Font::fixedFont();
+        passwordFont.setLetterSpacing(QFont::PercentageSpacing, 110);
+        m_ui->passwordEdit->setFont(passwordFont);
+    }
+    QWidget::changeEvent(event);
+}
