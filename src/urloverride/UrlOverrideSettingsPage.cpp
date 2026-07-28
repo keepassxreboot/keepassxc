@@ -53,12 +53,14 @@ public:
         auto* layout = new QVBoxLayout(this);
 
         auto* infoLabel = new QLabel(
-            QObject::tr("Define rules to launch an external command instead of the default action when opening a "
-                        "URL. The first enabled rule whose URL Scheme (e.g. \"http\", \"ftp\", or a custom scheme "
-                        "such as \"kdbx\") exactly matches an entry's URL scheme is used. The command may use the "
-                        "same placeholders as Auto-Type (e.g. {USERNAME}, {PASSWORD}, {URL:HOST}, {URL:PORT}) and "
-                        "must start with \"cmd://\" to be executed as a command."),
+            QObject::tr("Define rules to run a command instead of the default action for a matching URL scheme.<br>"
+                        "The first enabled rule whose scheme exactly matches is used.<br>"
+                        "Commands must start with <code>cmd://</code> and may use "
+                        "<a href=\"https://keepassxc.org/docs/KeePassXC_UserGuide#_entry_placeholders\">"
+                        "Entry Placeholders</a>."),
             this);
+        infoLabel->setTextFormat(Qt::RichText);
+        infoLabel->setOpenExternalLinks(true);
         infoLabel->setWordWrap(true);
         layout->addWidget(infoLabel);
 
