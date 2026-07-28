@@ -179,12 +179,7 @@ int Clip::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
 
     Utils::clipText("");
     out << '\r' << QString(lastLine.size(), ' ') << '\r';
-
-    if (g_interrupted.load()) {
-        out << QObject::tr("Clipboard cleared!") << Qt::endl;
-    } else {
-        out << QObject::tr("Clipboard cleared!") << Qt::endl;
-    }
+    out << QObject::tr("Clipboard cleared!") << Qt::endl;
 
     std::signal(SIGINT, oldSigInt);
     std::signal(SIGTERM, oldSigTerm);
