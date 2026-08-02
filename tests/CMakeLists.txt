@@ -96,7 +96,7 @@ add_unit_test(NAME testautotype SOURCES TestAutoType.cpp
 set_target_properties(testautotype PROPERTIES ENABLE_EXPORTS ON)
 
 add_unit_test(NAME testentry SOURCES TestEntry.cpp
-        LIBS ${TEST_LIBRARIES})
+        LIBS testsupport ${TEST_LIBRARIES})
 
 add_unit_test(NAME testmerge SOURCES TestMerge.cpp
         LIBS testsupport ${TEST_LIBRARIES})
