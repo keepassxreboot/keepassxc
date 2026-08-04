@@ -54,3 +54,14 @@ testing on real Windows 11 systems.
 The branch configures and builds `KeePassXC.exe` with Qt 6.11.1, MSVC 2022 19.44, the Windows 11 SDK, Ninja, and the
 vcpkg `x64-windows` triplet. `testconfig` verifies that remembered Quick Unlock defaults to disabled. Manual testing
 must use throwaway KDBX4 databases and synthetic password, key-file, challenge-response, and empty-key credentials.
+
+On 2026-08-04, a manual Windows 11 smoke test using an isolated KeePassXC configuration and a throwaway KDBX4
+database verified both primary lifecycle paths:
+
+* after a normal password unlock, Windows Hello enrollment, and a complete process exit, the database unlocked with
+  Windows Hello after KeePassXC was restarted, without requesting the database password; and
+* after remembered Quick Unlock was disabled and KeePassXC exited, reopening the same database displayed the normal
+  password page and did not offer the previously persisted Windows Hello unlock.
+
+This smoke test does not cover key files, challenge-response devices, empty keys, Hello cancellation, credential
+reset, record corruption, or different Windows account and hardware configurations.
