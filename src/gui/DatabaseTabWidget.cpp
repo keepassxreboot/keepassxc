@@ -21,6 +21,7 @@
 #include <QTabBar>
 
 #include "autotype/AutoType.h"
+#include "core/Config.h"
 #include "core/Merger.h"
 #include "core/Tools.h"
 #include "format/CsvExporter.h"
@@ -36,6 +37,7 @@
 #include "gui/osutils/macutils/MacUtils.h"
 #endif
 #include "gui/wizard/NewDatabaseWizard.h"
+#include "quickunlock/QuickUnlockInterface.h"
 
 DatabaseTabWidget::DatabaseTabWidget(QWidget* parent)
     : QTabWidget(parent)
@@ -224,6 +226,30 @@ void DatabaseTabWidget::lockAndSwitchToFirstUnlockedDatabase(int index)
 void DatabaseTabWidget::addDatabaseTab(DatabaseWidget* dbWidget, bool inBackground)
 {
     Q_ASSERT(dbWidget->database());
+
+    const auto isNewDatabase =
+        dbWidget->database()->filePath().isEmpty() && !dbWidget->database()->isTemporaryDatabase();
+    if (isNewDatabase) {
+        connect(
+            dbWidget,
+            &DatabaseWidget::databaseSaved,
+            dbWidget,
+            [dbWidget] {
+                const auto db = dbWidget->database();
+                auto quickUnlock = getQuickUnlock();
+                if (!db || !db->key() || !config()->get(Config::Security_QuickUnlock).toBool()
+                    || !config()->get(Config::Security_QuickUnlockRemember).toBool() || !quickUnlock->isAvailable()
+                    || !quickUnlock->canRemember()) {
+                    return;
+                }
+
+                if (!quickUnlock->setKey(db->publicUuid(), db->key()->serialize())
+                    && !quickUnlock->errorString().isEmpty()) {
+                    dbWidget->showMessage(quickUnlock->errorString(), MessageWidget::Warning);
+                }
+            },
+            Qt::SingleShotConnection);
+    }
 
     // emit before index change
     emit databaseOpened(dbWidget);

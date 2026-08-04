@@ -63,5 +63,14 @@ database verified both primary lifecycle paths:
 * after remembered Quick Unlock was disabled and KeePassXC exited, reopening the same database displayed the normal
   password page and did not offer the previously persisted Windows Hello unlock.
 
-This smoke test does not cover key files, challenge-response devices, empty keys, Hello cancellation, credential
-reset, record corruption, or different Windows account and hardware configurations.
+This smoke test does not cover key files, challenge-response devices, empty keys, credential reset, record corruption,
+or different Windows account and hardware configurations.
+
+Additional manual testing verified that canceling Windows Hello does not open the database, delete the persisted
+record, or force a password retry. The Quick Unlock screen remains available and a second Windows Hello attempt can
+unlock the database. This test exposed and fixed a transient `WindowActivate` race that previously interpreted a
+temporarily unavailable vault record as missing and deleted it.
+
+Creating and saving a new throwaway KDBX4 database now triggers Windows Hello enrollment after the first successful
+save. After a complete process restart, the new database was available through Quick Unlock without an intervening
+password unlock.

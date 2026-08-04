@@ -179,10 +179,7 @@ bool DatabaseOpenWidget::event(QEvent* event)
     bool ret = DialogyWidget::event(event);
     auto type = event->type();
 
-    if (type == QEvent::Show || type == QEvent::WindowActivate) {
-        if (isOnQuickUnlockScreen() && (m_db.isNull() || !canPerformQuickUnlock())) {
-            resetQuickUnlock();
-        }
+    if ((type == QEvent::Show || type == QEvent::WindowActivate) && !unlockingDatabase()) {
         toggleQuickUnlockScreen();
 
         if (type == QEvent::Show) {
@@ -423,9 +420,14 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::buildDatabaseKey()
         // try to retrieve the stored password using Windows Hello
         QByteArray keyData;
         if (!getQuickUnlock()->getKey(m_db->publicUuid(), keyData)) {
-            m_ui->messageWidget->showMessage(
-                tr("Failed to authenticate with Quick Unlock: %1").arg(getQuickUnlock()->errorString()),
-                MessageWidget::Error);
+            const auto error = getQuickUnlock()->errorString();
+            if (!error.isEmpty()) {
+                m_ui->messageWidget->showMessage(tr("Failed to authenticate with Quick Unlock: %1").arg(error),
+                                                 MessageWidget::Error);
+            }
+            if (!getQuickUnlock()->hasKey(m_db->publicUuid())) {
+                toggleQuickUnlockScreen();
+            }
             return {};
         }
         databaseKey->setRawKey(keyData);

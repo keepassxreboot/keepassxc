@@ -26,6 +26,11 @@ No real database passwords, production databases, private keys, key files, recov
 secrets were supplied to the model. Local source files, Git history, compiler and test output, and local toolchain
 paths were available to the agent.
 
+During diagnosis, the full isolated manual-test configuration was printed to AI-visible tool output. It contained
+an automatically generated KeeShare private key belonging only to that disposable test configuration. It was not a
+production key and was not associated with a real shared database, but it must be treated as disclosed test material.
+The isolated configuration is to be deleted after testing and must not be reused.
+
 Every submitted line must be reviewed by the human contributor. In particular, reviewers should independently
 verify the Windows Hello key lifecycle, Password Vault isolation and limits, record replacement and deletion,
 credential-change invalidation, memory handling, cancellation behavior, and compatibility with supported Windows
