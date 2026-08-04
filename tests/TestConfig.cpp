@@ -32,6 +32,16 @@ void TestConfig::initTestCase()
     QLocale::setDefault(QLocale::c());
 }
 
+void TestConfig::testQuickUnlockRememberDefault()
+{
+    TemporaryFile tempFile;
+    QVERIFY(tempFile.open());
+    tempFile.close();
+
+    Config::createConfigFromFile(tempFile.fileName());
+    QVERIFY(!config()->get(Config::Security_QuickUnlockRemember).toBool());
+}
+
 // upgrade config file with deprecated settings (all of which are set to non-default values)
 void TestConfig::testUpgrade()
 {

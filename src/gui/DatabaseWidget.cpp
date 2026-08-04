@@ -57,6 +57,7 @@
 #include "gui/tag/TagView.h"
 #include "gui/widgets/ElidedLabel.h"
 #include "keeshare/KeeShare.h"
+#include "quickunlock/QuickUnlockInterface.h"
 #include "remote/RemoteHandler.h"
 #include "remote/RemoteSettings.h"
 
@@ -1970,7 +1971,10 @@ void DatabaseWidget::closeEvent(QCloseEvent* event)
         return;
     }
 
-    m_databaseOpenWidget->resetQuickUnlock();
+    if (!config()->get(Config::Security_QuickUnlock).toBool()
+        || !config()->get(Config::Security_QuickUnlockRemember).toBool() || !getQuickUnlock()->canRemember()) {
+        m_databaseOpenWidget->resetQuickUnlock();
+    }
     event->accept();
 }
 

@@ -29,6 +29,7 @@ public:
     virtual ~QuickUnlockInterface() = default;
 
     virtual bool isAvailable() const = 0;
+    virtual bool canRemember() const;
     virtual QString errorString() const = 0;
 
     virtual bool setKey(const QUuid& dbUuid, const QByteArray& key) = 0;

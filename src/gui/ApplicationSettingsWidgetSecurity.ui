@@ -173,6 +173,13 @@
        </widget>
       </item>
       <item>
+       <widget class="QCheckBox" name="quickUnlockRememberCheckBox">
+        <property name="text">
+         <string>Remember quick unlock after database is closed</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QCheckBox" name="lockDatabaseOnScreenLockCheckBox">
         <property name="text">
          <string>Lock databases when session is locked or lid is closed</string>
@@ -282,6 +289,7 @@
   <tabstop>clearSearchCheckBox</tabstop>
   <tabstop>clearSearchSpinBox</tabstop>
   <tabstop>quickUnlockCheckBox</tabstop>
+  <tabstop>quickUnlockRememberCheckBox</tabstop>
   <tabstop>lockDatabaseOnScreenLockCheckBox</tabstop>
   <tabstop>lockDatabasesOnUserSwitchCheckBox</tabstop>
   <tabstop>lockDatabaseMinimizeCheckBox</tabstop>

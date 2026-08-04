@@ -33,6 +33,11 @@
 
 QUICKUNLOCK_IMPLEMENTATION* quickUnlockInstance = {nullptr};
 
+bool QuickUnlockInterface::canRemember() const
+{
+    return false;
+}
+
 QuickUnlockInterface* getQuickUnlock()
 {
     if (!quickUnlockInstance) {

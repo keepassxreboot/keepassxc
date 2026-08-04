@@ -26,6 +26,7 @@ class TestConfig : public QObject
 private slots:
     void initTestCase();
 
+    void testQuickUnlockRememberDefault();
     void testUpgrade();
     void testURLDoubleClickMigration();
 };

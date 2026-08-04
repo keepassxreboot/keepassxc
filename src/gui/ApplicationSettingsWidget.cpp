@@ -170,6 +170,9 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
             m_secUi->clearSearchSpinBox, SLOT(setEnabled(bool)));
     connect(m_secUi->lockDatabaseIdleCheckBox, SIGNAL(toggled(bool)),
             m_secUi->lockDatabaseIdleSpinBox, SLOT(setEnabled(bool)));
+    connect(m_secUi->quickUnlockCheckBox, &QCheckBox::toggled, this, [this](bool enabled) {
+        m_secUi->quickUnlockRememberCheckBox->setEnabled(enabled && getQuickUnlock()->canRemember());
+    });
     // clang-format on
 
     connect(m_generalUi->minimizeAfterUnlockCheckBox, &QCheckBox::toggled, this, [this](bool state) {
@@ -416,6 +419,10 @@ void ApplicationSettingsWidget::loadSettings()
 
     m_secUi->quickUnlockCheckBox->setEnabled(getQuickUnlock()->isAvailable());
     m_secUi->quickUnlockCheckBox->setChecked(config()->get(Config::Security_QuickUnlock).toBool());
+    m_secUi->quickUnlockRememberCheckBox->setVisible(getQuickUnlock()->canRemember());
+    m_secUi->quickUnlockRememberCheckBox->setEnabled(m_secUi->quickUnlockCheckBox->isEnabled()
+                                                     && m_secUi->quickUnlockCheckBox->isChecked());
+    m_secUi->quickUnlockRememberCheckBox->setChecked(config()->get(Config::Security_QuickUnlockRemember).toBool());
 
     for (const ExtraPage& page : asConst(m_extraPages)) {
         page.loadSettings();
@@ -553,6 +560,14 @@ void ApplicationSettingsWidget::saveSettings()
 
     if (m_secUi->quickUnlockCheckBox->isEnabled()) {
         config()->set(Config::Security_QuickUnlock, m_secUi->quickUnlockCheckBox->isChecked());
+    }
+    config()->set(Config::Security_QuickUnlockRemember,
+                  getQuickUnlock()->canRemember() && m_secUi->quickUnlockCheckBox->isChecked()
+                      && m_secUi->quickUnlockRememberCheckBox->isChecked());
+
+    if (!config()->get(Config::Security_QuickUnlock).toBool()
+        || !config()->get(Config::Security_QuickUnlockRemember).toBool()) {
+        getQuickUnlock()->reset();
     }
 
     // Security: clear storage if related settings are disabled
