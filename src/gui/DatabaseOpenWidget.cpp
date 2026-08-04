@@ -19,6 +19,7 @@
 #include "DatabaseOpenWidget.h"
 #include "ui_DatabaseOpenWidget.h"
 
+#include "format/KeePass2.h"
 #include "gui/FileDialog.h"
 #include "gui/Icons.h"
 #include "gui/MainWindow.h"
@@ -26,6 +27,7 @@
 #include "keys/ChallengeResponseKey.h"
 #include "keys/FileKey.h"
 #include "keys/drivers/YubiKeyInterfaceUSB.h"
+#include "quickunlock/PersistentQuickUnlock.h"
 #include "quickunlock/QuickUnlockInterface.h"
 
 #include <QCheckBox>
@@ -120,8 +122,14 @@ DatabaseOpenWidget::DatabaseOpenWidget(QWidget* parent)
 
     // QuickUnlock actions
     connect(m_ui->quickUnlockButton, &QPushButton::pressed, this, [this] { openDatabase(); });
-    connect(m_ui->resetQuickUnlockButton, &QPushButton::pressed, this, [this] { resetQuickUnlock(); });
+    connect(m_ui->resetQuickUnlockButton, &QPushButton::pressed, this, &DatabaseOpenWidget::cancelQuickUnlock);
+    connect(m_ui->forgetPersistentQuickUnlockButton,
+            &QPushButton::pressed,
+            this,
+            &DatabaseOpenWidget::forgetPersistentQuickUnlock);
     m_ui->resetQuickUnlockButton->setShortcut(Qt::Key_Escape);
+
+    m_ui->persistentQuickUnlockCheckBox->setVisible(getPersistentQuickUnlock()->isAvailable());
 }
 
 DatabaseOpenWidget::~DatabaseOpenWidget() = default;
@@ -239,6 +247,8 @@ void DatabaseOpenWidget::load(const QString& filename)
 {
     clearForms();
 
+    m_skipQuickUnlock = false;
+
     m_filename = filename;
 
     // Read public headers
@@ -281,6 +291,7 @@ void DatabaseOpenWidget::load(const QString& filename)
     }
 
     toggleQuickUnlockScreen();
+    m_ui->persistentQuickUnlockCheckBox->setChecked(false);
 
     // Do initial auto-poll
     pollHardwareKey();
@@ -295,10 +306,12 @@ void DatabaseOpenWidget::clearForms()
     m_ui->keyFileLineEdit->setShowPassword(false);
     m_ui->keyFileLineEdit->setClearButtonEnabled(true);
     m_ui->hardwareKeyCombo->clear();
+    m_ui->persistentQuickUnlockCheckBox->setChecked(false);
     toggleHardwareKeyComponent(false);
     toggleQuickUnlockScreen();
 
     m_db.reset(new Database(m_filename));
+    m_skipQuickUnlock = false;
 }
 
 QSharedPointer<Database> DatabaseOpenWidget::database()
@@ -371,10 +384,22 @@ void DatabaseOpenWidget::openDatabase()
             }
         }
 
-        // Save Quick Unlock credentials if available
+        // Save Quick Unlock credentials if available. Persistent unlock is a separate,
+        // explicit opt-in and is restricted to KDBX4 databases.
         if (!blockQuickUnlock && isQuickUnlockAvailable()) {
-            auto keyData = databaseKey->serialize();
-            getQuickUnlock()->setKey(m_db->publicUuid(), keyData);
+            if (m_ui->persistentQuickUnlockCheckBox->isChecked()) {
+                const auto isKdbx4 =
+                    (m_db->formatVersion() & KeePass2::FILE_VERSION_CRITICAL_MASK) == KeePass2::FILE_VERSION_4;
+                if (!isKdbx4 || !getPersistentQuickUnlock()->setKey(m_db->publicUuid(), databaseKey)) {
+                    const auto error = isKdbx4 ? getPersistentQuickUnlock()->errorString()
+                                               : tr("Persistent Quick Unlock requires a KDBX4 database.");
+                    getMainWindow()->displayTabMessage(error, MessageWidget::Warning);
+                }
+            } else {
+                auto keyData = databaseKey->serialize();
+                getQuickUnlock()->setKey(m_db->publicUuid(), keyData);
+                keyData.fill('\0');
+            }
             m_ui->messageWidget->hideMessage();
         }
 
@@ -420,16 +445,33 @@ QSharedPointer<CompositeKey> DatabaseOpenWidget::buildDatabaseKey()
     auto databaseKey = QSharedPointer<CompositeKey>::create();
 
     if (!m_db.isNull() && canPerformQuickUnlock()) {
-        // try to retrieve the stored password using Windows Hello
-        QByteArray keyData;
-        if (!getQuickUnlock()->getKey(m_db->publicUuid(), keyData)) {
-            m_ui->messageWidget->showMessage(
-                tr("Failed to authenticate with Quick Unlock: %1").arg(getQuickUnlock()->errorString()),
-                MessageWidget::Error);
-            return {};
+        const auto dbUuid = m_db->publicUuid();
+        if (getQuickUnlock()->hasKey(dbUuid)) {
+            QByteArray keyData;
+            if (getQuickUnlock()->getKey(dbUuid, keyData)) {
+                databaseKey->setRawKey(keyData);
+                keyData.fill('\0');
+                return databaseKey;
+            }
+        } else {
+            QSharedPointer<CompositeKey> persistentKey;
+            if (getPersistentQuickUnlock()->getKey(dbUuid, persistentKey)) {
+                return persistentKey;
+            }
         }
-        databaseKey->setRawKey(keyData);
-        return databaseKey;
+
+        // Windows Hello cancellation or failure falls back to regular credentials for this load.
+        m_blockQuickUnlock = true;
+        m_skipQuickUnlock = true;
+        toggleQuickUnlockScreen();
+        const auto error = getQuickUnlock()->hasKey(dbUuid) ? getQuickUnlock()->errorString()
+                                                            : getPersistentQuickUnlock()->errorString();
+        if (!error.isEmpty()) {
+            m_ui->messageWidget->showMessage(
+                tr("Quick Unlock was canceled or failed: %1. Enter the master password to continue.").arg(error),
+                MessageWidget::Warning);
+        }
+        return {};
     }
 
     if (!m_ui->editPassword->text().isEmpty() || m_retryUnlockWithEmptyPassword) {
@@ -612,7 +654,11 @@ void DatabaseOpenWidget::setUserInteractionLock(bool state)
 
 bool DatabaseOpenWidget::canPerformQuickUnlock() const
 {
-    return !m_db.isNull() && isQuickUnlockAvailable() && getQuickUnlock()->hasKey(m_db->publicUuid());
+    if (m_db.isNull() || m_skipQuickUnlock || !isQuickUnlockAvailable()) {
+        return false;
+    }
+    const auto dbUuid = m_db->publicUuid();
+    return getQuickUnlock()->hasKey(dbUuid) || getPersistentQuickUnlock()->hasKey(dbUuid);
 }
 
 bool DatabaseOpenWidget::isOnQuickUnlockScreen() const
@@ -622,6 +668,11 @@ bool DatabaseOpenWidget::isOnQuickUnlockScreen() const
 
 void DatabaseOpenWidget::toggleQuickUnlockScreen()
 {
+    if (!m_db.isNull()) {
+        m_ui->forgetPersistentQuickUnlockButton->setVisible(getPersistentQuickUnlock()->hasKey(m_db->publicUuid()));
+    } else {
+        m_ui->forgetPersistentQuickUnlockButton->setVisible(false);
+    }
     if (canPerformQuickUnlock()) {
         m_ui->centralStack->setCurrentIndex(1);
         // Work around qt issue where focus is stolen even if not visible
@@ -656,6 +707,28 @@ void DatabaseOpenWidget::resetQuickUnlock()
     }
     if (!m_db.isNull()) {
         getQuickUnlock()->reset(m_db->publicUuid());
+    }
+    load(m_filename);
+}
+
+void DatabaseOpenWidget::cancelQuickUnlock()
+{
+    if (!m_db.isNull()) {
+        getQuickUnlock()->reset(m_db->publicUuid());
+    }
+    m_skipQuickUnlock = true;
+    toggleQuickUnlockScreen();
+}
+
+void DatabaseOpenWidget::forgetPersistentQuickUnlock()
+{
+    if (!m_db.isNull()) {
+        const auto dbUuid = m_db->publicUuid();
+        getQuickUnlock()->reset(dbUuid);
+        if (!getPersistentQuickUnlock()->reset(dbUuid)) {
+            m_ui->messageWidget->showMessage(getPersistentQuickUnlock()->errorString(), MessageWidget::Error);
+            return;
+        }
     }
     load(m_filename);
 }

@@ -18,12 +18,13 @@
 #ifndef KEEPASSXC_WINDOWSHELLO_H
 #define KEEPASSXC_WINDOWSHELLO_H
 
+#include "PersistentQuickUnlock.h"
 #include "QuickUnlockInterface.h"
 
 #include <QHash>
 #include <QObject>
 
-class WindowsHello : public QuickUnlockInterface
+class WindowsHello : public QuickUnlockInterface, public PersistentQuickUnlockBackend
 {
 public:
     WindowsHello() = default;
@@ -35,6 +36,9 @@ public:
     bool getKey(const QUuid& dbUuid, QByteArray& key) override;
     bool hasKey(const QUuid& dbUuid) const override;
     void reset(const QUuid& dbUuid) override;
+
+    bool protect(const QByteArray& data, QByteArray& protectedData) override;
+    bool unprotect(const QByteArray& protectedData, QByteArray& data) override;
 
 private:
     QString m_error;

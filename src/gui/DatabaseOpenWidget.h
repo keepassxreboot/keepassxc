@@ -82,12 +82,15 @@ private slots:
     void closeDatabase();
     void pollHardwareKey(bool manualTrigger = false, int delay = 0);
     void hardwareKeyResponse(bool found);
+    void cancelQuickUnlock();
+    void forgetPersistentQuickUnlock();
 
 private:
     QPointer<DeviceListener> m_deviceListener;
     bool m_pollingHardwareKey = false;
     bool m_manualHardwareKeyRefresh = false;
     bool m_blockQuickUnlock = false;
+    bool m_skipQuickUnlock = false;
     bool m_unlockingDatabase = false;
     bool m_triedToQuit = false;
     QTimer m_hideTimer;

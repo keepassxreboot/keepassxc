@@ -27,6 +27,7 @@
 #include "keys/ChallengeResponseKey.h"
 #include "keys/FileKey.h"
 #include "keys/PasswordKey.h"
+#include "quickunlock/PersistentQuickUnlock.h"
 #include "quickunlock/QuickUnlockInterface.h"
 
 #include <QLayout>
@@ -213,9 +214,17 @@ bool DatabaseSettingsWidgetDatabaseKey::saveSettings()
         return false;
     }
 
-    m_db->setKey(newKey, true, false, false);
+    const auto dbUuid = m_db->publicUuid();
+    if (!getPersistentQuickUnlock()->reset(dbUuid)) {
+        MessageBox::critical(this,
+                             tr("Failed to change database credentials"),
+                             getPersistentQuickUnlock()->errorString(),
+                             MessageBox::Ok);
+        return false;
+    }
 
-    getQuickUnlock()->reset(m_db->publicUuid());
+    m_db->setKey(newKey, true, false, false);
+    getQuickUnlock()->reset(dbUuid);
 
     emit editFinished(true);
     if (m_isDirty) {

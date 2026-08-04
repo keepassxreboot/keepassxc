@@ -210,6 +210,7 @@ set(gui_SOURCES
         gui/wizard/NewDatabaseWizardPageEncryption.cpp
         gui/wizard/NewDatabaseWizardPageDatabaseKey.cpp
         quickunlock/QuickUnlockInterface.cpp
+        quickunlock/PersistentQuickUnlock.cpp
         ../share/icons/icons.qrc
         ../share/wizard/wizard.qrc)
 

@@ -458,6 +458,19 @@
              </widget>
             </item>
             <item>
+             <widget class="QCheckBox" name="persistentQuickUnlockCheckBox">
+              <property name="toolTip">
+               <string>Stores a device-local encrypted unlock key. Windows Hello PIN or biometrics will be required before every use.</string>
+              </property>
+              <property name="text">
+               <string>Allow Windows Hello unlock after restarting KeePassXC on this device</string>
+              </property>
+              <property name="checked">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
              <layout class="QHBoxLayout" name="dialogButtonsLayout">
               <property name="spacing">
                <number>0</number>
@@ -554,6 +567,13 @@
                <widget class="QPushButton" name="resetQuickUnlockButton">
                 <property name="text">
                  <string>Cancel</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="forgetPersistentQuickUnlockButton">
+                <property name="text">
+                 <string>Forget Windows Hello unlock on this device</string>
                 </property>
                </widget>
               </item>

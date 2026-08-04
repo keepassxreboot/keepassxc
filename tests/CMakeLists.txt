@@ -58,6 +58,9 @@ add_unit_test(NAME testkdbx4 SOURCES TestKeePass2Format.cpp FailDevice.cpp mock/
 add_unit_test(NAME testkeys SOURCES TestKeys.cpp mock/MockChallengeResponseKey.cpp
         LIBS ${TEST_LIBRARIES})
 
+add_unit_test(NAME testpersistentquickunlock SOURCES TestPersistentQuickUnlock.cpp
+        LIBS ${TEST_LIBRARIES})
+
 add_unit_test(NAME testgroupmodel SOURCES TestGroupModel.cpp
         LIBS testsupport ${TEST_LIBRARIES})
 
