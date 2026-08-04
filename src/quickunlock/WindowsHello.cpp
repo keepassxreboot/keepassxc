@@ -19,21 +19,25 @@
 
 #include <Userconsentverifierinterop.h>
 #include <winrt/base.h>
+#include <winrt/windows.foundation.collections.h>
 #include <winrt/windows.foundation.h>
 #include <winrt/windows.security.credentials.h>
 #include <winrt/windows.security.cryptography.h>
 #include <winrt/windows.storage.streams.h>
 
 #include "core/AsyncTask.h"
+#include "core/Config.h"
 #include "crypto/CryptoHash.h"
 #include "crypto/Random.h"
 #include "crypto/SymmetricCipher.h"
 
 #include <QTimer>
 #include <QWindow>
+#include <botan/mem_ops.h>
 
 using namespace winrt;
 using namespace Windows::Foundation;
+using namespace Windows::Foundation::Collections;
 using namespace Windows::Security::Credentials;
 using namespace Windows::Security::Cryptography;
 using namespace Windows::Storage::Streams;
@@ -97,12 +101,77 @@ namespace
             }
         });
     }
+
+    std::wstring credentialName(const QUuid& dbUuid)
+    {
+        return dbUuid.toString(QUuid::WithoutBraces).toStdWString();
+    }
+
+    bool loadCredential(const QUuid& dbUuid, QByteArray& data)
+    {
+        data.clear();
+        try {
+            auto vault = PasswordVault();
+            const auto credential = vault.Retrieve(s_winHelloKeyName, credentialName(dbUuid));
+            data = QByteArray::fromBase64(QByteArray::fromStdString(winrt::to_string(credential.Password())));
+            return !data.isEmpty();
+        } catch (winrt::hresult_error const&) {
+            return false;
+        }
+    }
+
+    bool removeCredential(const QUuid& dbUuid)
+    {
+        try {
+            auto vault = PasswordVault();
+            const auto credential = vault.Retrieve(s_winHelloKeyName, credentialName(dbUuid));
+            vault.Remove(credential);
+            return true;
+        } catch (winrt::hresult_error const&) {
+            return false;
+        }
+    }
+
+    bool storeCredential(const QUuid& dbUuid, const QByteArray& data)
+    {
+        // PasswordVault permits multiple records, so remove an old value before replacing it.
+        removeCredential(dbUuid);
+        try {
+            auto vault = PasswordVault();
+            vault.Add({s_winHelloKeyName, credentialName(dbUuid), winrt::to_hstring(data.toBase64().toStdString())});
+            return true;
+        } catch (winrt::hresult_error const&) {
+            return false;
+        }
+    }
+
+    void resetCredentials()
+    {
+        try {
+            auto vault = PasswordVault();
+            const auto credentials = vault.FindAllByResource(s_winHelloKeyName);
+            for (const auto& credential : credentials) {
+                try {
+                    vault.Remove(credential);
+                } catch (winrt::hresult_error const&) {
+                    // Continue removing the remaining KeePassXC Windows Hello records.
+                }
+            }
+        } catch (winrt::hresult_error const&) {
+            // FindAllByResource also throws when no matching records exist.
+        }
+    }
 } // namespace
 
 bool WindowsHello::isAvailable() const
 {
     auto task = concurrency::create_task([] { return KeyCredentialManager::IsSupportedAsync().get(); });
     return task.get();
+}
+
+bool WindowsHello::canRemember() const
+{
+    return true;
 }
 
 QString WindowsHello::errorString() const
@@ -123,28 +192,42 @@ bool WindowsHello::setKey(const QUuid& dbUuid, const QByteArray& data)
         return false;
     }
 
-    // Encrypt the data using AES-256-CBC
+    // Encrypt the data using AES-256-GCM
     SymmetricCipher cipher;
     if (!cipher.init(SymmetricCipher::Aes256_GCM, SymmetricCipher::Encrypt, key, challenge)) {
+        Botan::secure_scrub_memory(key.data(), key.size());
         m_error = QObject::tr("Failed to init KeePassXC crypto.");
         return false;
     }
     QByteArray encrypted = data;
     if (!cipher.finish(encrypted)) {
+        Botan::secure_scrub_memory(key.data(), key.size());
         m_error = QObject::tr("Failed to encrypt key data.");
         return false;
     }
+    Botan::secure_scrub_memory(key.data(), key.size());
 
     // Prepend the challenge/IV to the encrypted data
     encrypted.prepend(challenge);
-    m_encryptedKeys.insert(dbUuid, encrypted);
+    if (config()->get(Config::Security_QuickUnlockRemember).toBool()) {
+        m_encryptedKeys.remove(dbUuid);
+        if (!storeCredential(dbUuid, encrypted)) {
+            m_error = QObject::tr("Failed to store Windows Hello credential.");
+            return false;
+        }
+    } else {
+        m_encryptedKeys.insert(dbUuid, encrypted);
+    }
     return true;
 }
 
 bool WindowsHello::getKey(const QUuid& dbUuid, QByteArray& data)
 {
     data.clear();
-    if (!hasKey(dbUuid)) {
+    QByteArray keydata;
+    if (m_encryptedKeys.contains(dbUuid)) {
+        keydata = m_encryptedKeys.value(dbUuid);
+    } else if (!config()->get(Config::Security_QuickUnlockRemember).toBool() || !loadCredential(dbUuid, keydata)) {
         m_error = QObject::tr("Failed to get Windows Hello credential.");
         return false;
     }
@@ -153,7 +236,10 @@ bool WindowsHello::getKey(const QUuid& dbUuid, QByteArray& data)
 
     // Read the previously used challenge and encrypted data
     auto ivSize = SymmetricCipher::defaultIvSize(SymmetricCipher::Aes256_GCM);
-    const auto& keydata = m_encryptedKeys.value(dbUuid);
+    if (keydata.size() <= ivSize) {
+        m_error = QObject::tr("Invalid Windows Hello credential.");
+        return false;
+    }
     auto challenge = keydata.left(ivSize);
     auto encrypted = keydata.mid(ivSize);
     QByteArray key;
@@ -165,6 +251,7 @@ bool WindowsHello::getKey(const QUuid& dbUuid, QByteArray& data)
     // Decrypt the data using the generated key and IV from above
     SymmetricCipher cipher;
     if (!cipher.init(SymmetricCipher::Aes256_GCM, SymmetricCipher::Decrypt, key, challenge)) {
+        Botan::secure_scrub_memory(key.data(), key.size());
         m_error = QObject::tr("Failed to init KeePassXC crypto.");
         return false;
     }
@@ -172,10 +259,12 @@ bool WindowsHello::getKey(const QUuid& dbUuid, QByteArray& data)
     // Store the decrypted data into the passed parameter
     data = encrypted;
     if (!cipher.finish(data)) {
+        Botan::secure_scrub_memory(key.data(), key.size());
         data.clear();
         m_error = QObject::tr("Failed to decrypt key data.");
         return false;
     }
+    Botan::secure_scrub_memory(key.data(), key.size());
 
     return true;
 }
@@ -183,14 +272,23 @@ bool WindowsHello::getKey(const QUuid& dbUuid, QByteArray& data)
 void WindowsHello::reset(const QUuid& dbUuid)
 {
     m_encryptedKeys.remove(dbUuid);
+    removeCredential(dbUuid);
 }
 
 bool WindowsHello::hasKey(const QUuid& dbUuid) const
 {
-    return m_encryptedKeys.contains(dbUuid);
+    if (m_encryptedKeys.contains(dbUuid)) {
+        return true;
+    }
+    if (!config()->get(Config::Security_QuickUnlockRemember).toBool()) {
+        return false;
+    }
+    QByteArray data;
+    return loadCredential(dbUuid, data);
 }
 
 void WindowsHello::reset()
 {
     m_encryptedKeys.clear();
+    resetCredentials();
 }

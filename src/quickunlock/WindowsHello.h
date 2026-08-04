@@ -28,6 +28,7 @@ class WindowsHello : public QuickUnlockInterface
 public:
     WindowsHello() = default;
     bool isAvailable() const override;
+    bool canRemember() const override;
     QString errorString() const override;
     void reset() override;
 
