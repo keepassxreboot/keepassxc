@@ -99,8 +99,7 @@ namespace
             }
 
             IMAGE_OPTIONAL_HEADER64 optionalHeader{};
-            if (file.read(reinterpret_cast<char*>(&optionalHeader), sizeof(optionalHeader))
-                != sizeof(optionalHeader)) {
+            if (file.read(reinterpret_cast<char*>(&optionalHeader), sizeof(optionalHeader)) != sizeof(optionalHeader)) {
                 return false;
             }
 
@@ -112,8 +111,7 @@ namespace
             }
 
             IMAGE_OPTIONAL_HEADER32 optionalHeader{};
-            if (file.read(reinterpret_cast<char*>(&optionalHeader), sizeof(optionalHeader))
-                != sizeof(optionalHeader)) {
+            if (file.read(reinterpret_cast<char*>(&optionalHeader), sizeof(optionalHeader)) != sizeof(optionalHeader)) {
                 return false;
             }
 

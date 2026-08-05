@@ -64,8 +64,7 @@ public:
         infoLabel->setWordWrap(true);
         layout->addWidget(infoLabel);
 
-        m_table->setHorizontalHeaderLabels(
-            {QObject::tr("Enabled"), QObject::tr("URL Scheme"), QObject::tr("Command")});
+        m_table->setHorizontalHeaderLabels({QObject::tr("Enabled"), QObject::tr("URL Scheme"), QObject::tr("Command")});
         m_table->horizontalHeader()->setSectionResizeMode(EnabledColumn, QHeaderView::ResizeToContents);
         m_table->horizontalHeader()->setSectionResizeMode(SchemeColumn, QHeaderView::Interactive);
         m_table->horizontalHeader()->setSectionResizeMode(CommandColumn, QHeaderView::Stretch);
