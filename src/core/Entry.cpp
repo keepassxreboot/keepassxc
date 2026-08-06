@@ -1107,6 +1107,7 @@ void Entry::beginUpdate()
     m_tmpHistoryItem->m_attributes->copyDataFrom(m_attributes);
     m_tmpHistoryItem->m_attachments->copyDataFrom(m_attachments);
     m_tmpHistoryItem->m_autoTypeAssociations->copyDataFrom(m_autoTypeAssociations);
+    m_tmpHistoryItem->m_customData->copyDataFrom(m_customData);
 
     m_modifiedSinceBegin = false;
 }
