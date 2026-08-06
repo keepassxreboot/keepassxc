@@ -30,6 +30,7 @@ private slots:
     void initTestCase();
     void testHistoryItemDeletion();
     void testCopyDataFrom();
+    void testPinnedAttributes();
     void testClone();
     void testResolveUrl();
     void testResolveUrlPlaceholders();

@@ -28,6 +28,8 @@
 #include "core/Totp.h"
 
 #include <QDir>
+#include <QJsonArray>
+#include <QJsonDocument>
 #include <QRegularExpression>
 #include <QStringBuilder>
 #include <QStringView>
@@ -572,6 +574,55 @@ CustomData* Entry::customData()
 const CustomData* Entry::customData() const
 {
     return m_customData;
+}
+
+QStringList Entry::pinnedAttributes() const
+{
+    return pinnedAttributes(m_customData);
+}
+
+// The pinned attribute list is stored in the entry CustomData under
+// CustomData::PinnedAttributes as a compact JSON array of attribute names,
+// e.g. ["Attr1","Attr2"]. Names may contain any character; unknown or
+// malformed content is ignored so other KDBX clients cannot break parsing.
+QStringList Entry::pinnedAttributes(const CustomData* customData)
+{
+    if (!customData || !customData->contains(CustomData::PinnedAttributes)) {
+        return {};
+    }
+
+    const auto doc = QJsonDocument::fromJson(customData->value(CustomData::PinnedAttributes).toUtf8());
+    if (!doc.isArray()) {
+        return {};
+    }
+
+    QStringList names;
+    for (const auto& value : doc.array()) {
+        if (value.isString() && !value.toString().isEmpty()) {
+            names << value.toString();
+        }
+    }
+    return names;
+}
+
+void Entry::setPinnedAttributes(CustomData* customData, const QStringList& names)
+{
+    if (!customData) {
+        return;
+    }
+
+    QStringList filtered = names;
+    filtered.removeAll(QString());
+    filtered.removeDuplicates();
+    if (filtered.isEmpty()) {
+        if (customData->contains(CustomData::PinnedAttributes)) {
+            customData->remove(CustomData::PinnedAttributes);
+        }
+        return;
+    }
+
+    const auto json = QJsonDocument(QJsonArray::fromStringList(filtered)).toJson(QJsonDocument::Compact);
+    customData->set(CustomData::PinnedAttributes, QString::fromUtf8(json));
 }
 
 bool Entry::hasTotp() const
