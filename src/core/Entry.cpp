@@ -1039,10 +1039,8 @@ Entry* Entry::clone(CloneFlags flags) const
     } else {
         entry->m_uuid = m_uuid;
     }
-    entry->m_data = m_data;
-    entry->m_customData->copyDataFrom(m_customData);
-    entry->m_attributes->copyDataFrom(m_attributes);
-    entry->m_attachments->copyDataFrom(m_attachments);
+    entry->copyDataFrom(this);
+    entry->setUpdateTimeinfo(false);
 
     if (flags & CloneUserAsRef) {
         entry->m_attributes->set(EntryAttributes::UserNameKey,
@@ -1101,13 +1099,9 @@ void Entry::beginUpdate()
     Q_ASSERT(m_tmpHistoryItem.isNull());
 
     m_tmpHistoryItem.reset(new Entry());
-    m_tmpHistoryItem->setUpdateTimeinfo(false);
     m_tmpHistoryItem->m_uuid = m_uuid;
-    m_tmpHistoryItem->m_data = m_data;
-    m_tmpHistoryItem->m_attributes->copyDataFrom(m_attributes);
-    m_tmpHistoryItem->m_attachments->copyDataFrom(m_attachments);
-    m_tmpHistoryItem->m_autoTypeAssociations->copyDataFrom(m_autoTypeAssociations);
-    m_tmpHistoryItem->m_customData->copyDataFrom(m_customData);
+    m_tmpHistoryItem->copyDataFrom(this);
+    m_tmpHistoryItem->setUpdateTimeinfo(false);
 
     m_modifiedSinceBegin = false;
 }
