@@ -29,6 +29,7 @@ class TestEntry : public QObject
 private slots:
     void initTestCase();
     void testHistoryItemDeletion();
+    void testHistoryItemCustomData();
     void testCopyDataFrom();
     void testClone();
     void testResolveUrl();

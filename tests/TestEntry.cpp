@@ -48,6 +48,30 @@ void TestEntry::testHistoryItemDeletion()
     QVERIFY(historyEntry.isNull());
 }
 
+void TestEntry::testHistoryItemCustomData()
+{
+    QScopedPointer<Entry> entry(new Entry());
+    entry->setUuid(QUuid::createUuid());
+    entry->setTitle("Original Title");
+    entry->customData()->set("CustomKey", "CustomValue");
+
+    entry->beginUpdate();
+    entry->setTitle("New Title");
+    entry->endUpdate();
+
+    // The history item must carry the custom data present before the update
+    QCOMPARE(entry->historyItems().size(), 1);
+    const Entry* historyItem = entry->historyItems().constFirst();
+    QCOMPARE(historyItem->customData()->value("CustomKey"), QString("CustomValue"));
+
+    // Restoring from the history item restores the custom data
+    entry->customData()->remove("CustomKey");
+    QVERIFY(entry->customData()->isEmpty());
+
+    entry->copyDataFrom(historyItem);
+    QCOMPARE(entry->customData()->value("CustomKey"), QString("CustomValue"));
+}
+
 void TestEntry::testCopyDataFrom()
 {
     QScopedPointer<Entry> entry(new Entry());
