@@ -45,7 +45,12 @@ bool TouchID::getKey(const QUuid& dbUuid, QByteArray& key)
         return false;
     }
 
-    return osUtils->getSecret(dbUuid.toString(), key);
+    if (!osUtils->getSecret(dbUuid.toString(), key)) {
+        m_error = QObject::tr("TouchID authentication was canceled.");
+        return false;
+    }
+
+    return true;
 }
 
 bool TouchID::hasKey(const QUuid& dbUuid) const

@@ -418,8 +418,16 @@ SecAccessControlRef createAccessControl(bool useTouchId)
        kCFAllocatorDefault, kSecAttrAccessibleWhenUnlockedThisDeviceOnly, accessControlFlags, &error);
 
     if (!sacObject || error) {
-        auto e = static_cast<NSError*>(error);
-        qWarning("MacUtils::saveSecret - Error creating security flags: %s", e.localizedDescription.UTF8String);
+        if (error) {
+            auto e = (__bridge NSError*)error;
+            qWarning("MacUtils::createAccessControl - Error creating security flags: %s", e.localizedDescription.UTF8String);
+            CFRelease(error);
+        } else {
+            qWarning("MacUtils::createAccessControl - Error creating security flags: unknown error");
+        }
+        if (sacObject) {
+            CFRelease(sacObject);
+        }
         return nullptr;
     }
     return sacObject;
@@ -436,25 +444,33 @@ bool MacUtils::saveSecret(const QString& key, const QByteArray& secretData) cons
 
     // Add new entry
     auto keyBase64 = secretData.toBase64();
-    auto keyValueData = CFDataCreateWithBytesNoCopy(
-        kCFAllocatorDefault, reinterpret_cast<const UInt8*>(keyBase64.data()),
-        keyBase64.length(), kCFAllocatorDefault);
+    auto keyValueData = CFDataCreate(kCFAllocatorDefault, reinterpret_cast<const UInt8*>(keyBase64.constData()), keyBase64.size());
     
     auto attributes = CFDictionaryCreateMutable(nullptr, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
     CFDictionarySetValue(attributes, kSecClass, kSecClassGenericPassword);
-    CFDictionarySetValue(attributes, kSecAttrAccount, static_cast<CFStringRef>(keyName.toNSString()));
+    CFDictionarySetValue(attributes, kSecAttrAccount, (__bridge CFStringRef)keyName.toNSString());
     CFDictionarySetValue(attributes, kSecValueData, keyValueData);
     CFDictionarySetValue(attributes, kSecAttrSynchronizable, kCFBooleanFalse);
     CFDictionarySetValue(attributes, kSecUseAuthenticationUI, kSecUseAuthenticationUIAllow);
     // First, attempt with TouchID enabled
-    CFDictionarySetValue(attributes, kSecAttrAccessControl, createAccessControl(true));
+    auto sacObject = createAccessControl(true);
+    if (!sacObject) {
+        CFRelease(keyValueData);
+        CFRelease(attributes);
+        return false;
+    }
+    CFDictionarySetValue(attributes, kSecAttrAccessControl, sacObject);
 
     auto status = SecItemAdd(attributes, nullptr);
     if (status != errSecSuccess) {
         qDebug("MacUtils::saveSecret - Failed to save secret with TouchID enabled");
         // Try again without TouchID enabled
-        CFDictionarySetValue(attributes, kSecAttrAccessControl, createAccessControl(false));
-        status = SecItemAdd(attributes, nullptr);
+        CFRelease(sacObject);
+        sacObject = createAccessControl(false);
+        if (sacObject) {
+            CFDictionarySetValue(attributes, kSecAttrAccessControl, sacObject);
+            status = SecItemAdd(attributes, nullptr);
+        }
         if (status != errSecSuccess) {
             qWarning("MacUtils::saveSecret - Failed to save secret to keystore");
         }
@@ -462,6 +478,9 @@ bool MacUtils::saveSecret(const QString& key, const QByteArray& secretData) cons
     
     CFRelease(keyValueData);
     CFRelease(attributes);
+    if (sacObject) {
+        CFRelease(sacObject);
+    }
 
     return status == errSecSuccess;
 }
@@ -473,7 +492,7 @@ bool MacUtils::getSecret(const QString& key, QByteArray& secretData) const
 
     auto query = CFDictionaryCreateMutable(nullptr, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
     CFDictionarySetValue(query, kSecClass, kSecClassGenericPassword);
-    CFDictionarySetValue(query, kSecAttrAccount, static_cast<CFStringRef>(keyName.toNSString()));
+    CFDictionarySetValue(query, kSecAttrAccount, (__bridge CFStringRef)keyName.toNSString());
     CFDictionarySetValue(query, kSecReturnData, kCFBooleanTrue);
 
     CFTypeRef dataTypeRef = nullptr;
@@ -501,7 +520,7 @@ bool MacUtils::removeSecret(const QString& key) const
     const auto keyName = s_touchIdKeyPrefix + key;
     auto query = CFDictionaryCreateMutable(nullptr, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
     CFDictionarySetValue(query, kSecClass, kSecClassGenericPassword);
-    CFDictionarySetValue(query, kSecAttrAccount, static_cast<CFStringRef>(keyName.toNSString()));
+    CFDictionarySetValue(query, kSecAttrAccount, (__bridge CFStringRef)keyName.toNSString());
     CFDictionarySetValue(query, kSecReturnData, kCFBooleanFalse);
     // TODO: Log failure to delete?
     SecItemDelete(query);
@@ -524,7 +543,7 @@ bool MacUtils::removeAllSecrets() const
             if (account && [account hasPrefix:s_touchIdKeyPrefix.toNSString()]) {
                 auto delQuery = CFDictionaryCreateMutable(nullptr, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
                 CFDictionarySetValue(delQuery, kSecClass, kSecClassGenericPassword);
-                CFDictionarySetValue(delQuery, kSecAttrAccount, static_cast<CFStringRef>(account));
+                CFDictionarySetValue(delQuery, kSecAttrAccount, (__bridge CFStringRef)account);
                 // TODO: Log failure to delete?
                 SecItemDelete(delQuery);
                 CFRelease(delQuery);

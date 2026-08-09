@@ -396,9 +396,10 @@ bool WinUtils::getSecret(const QString& key, QByteArray& secretData) const
     try {
         auto vault = PasswordVault();
         auto credential = vault.Retrieve(s_winKeyStoreName, winrt::hstring(key.toStdWString()));
+        credential.RetrievePassword();
         secretData = QByteArray::fromBase64(QByteArray::fromStdString(winrt::to_string(credential.Password())));
-    } catch (winrt::hresult_error const&) {
-        qWarning("WinUtils - Failed to retrieve key from password vault");
+    } catch (winrt::hresult_error const& err) {
+        qWarning("WinUtils - Failed to retrieve key from password vault - %s", winrt::to_string(err.message()).c_str());
         return false;
     }
     return !secretData.isEmpty();
@@ -418,16 +419,22 @@ bool WinUtils::removeSecret(const QString& key) const
 
 bool WinUtils::removeAllSecrets() const
 {
-    auto vault = PasswordVault();
-    auto credentials = vault.FindAllByResource(s_winKeyStoreName);
-    bool allSuccess = true;
-    for (const auto& credential : credentials) {
-        try {
-            vault.Remove(credential);
-        } catch (winrt::hresult_error const&) {
-            qWarning("WinUtils - Failed to clear key from password vault");
-            allSuccess = false;
+    try {
+        auto vault = PasswordVault();
+        auto credentials = vault.FindAllByResource(s_winKeyStoreName);
+
+        bool allSuccess = true;
+        for (const auto& credential : credentials) {
+            try {
+                vault.Remove(credential);
+            } catch (winrt::hresult_error const&) {
+                qWarning("WinUtils - Failed to clear key from password vault");
+                allSuccess = false;
+            }
         }
+        return allSuccess;
+    } catch (winrt::hresult_error const&) {
+        qWarning("WinUtils - Failed to enumerate password vault entries");
+        return false;
     }
-    return allSuccess;
 }
