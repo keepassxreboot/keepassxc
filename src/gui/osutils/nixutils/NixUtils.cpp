@@ -597,6 +597,12 @@ bool NixUtils::getSecret(const QString& key, QByteArray& secretData) const
     return true;
 }
 
+bool NixUtils::hasSecret(const QString& key) const
+{
+    QByteArray tmp;
+    return getSecret(key, tmp);
+}
+
 bool NixUtils::removeSecret(const QString& key) const
 {
     auto keyserial = request_key("user", key.toStdString().c_str(), nullptr, getKeyring());

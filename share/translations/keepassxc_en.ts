@@ -9522,6 +9522,10 @@ This option is deprecated, use --set-key-file instead.</source>
         <source>Failed to retrieve Windows Hello credential.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>TouchID authentication was canceled.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>
