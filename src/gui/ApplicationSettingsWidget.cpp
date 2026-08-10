@@ -204,6 +204,7 @@ ApplicationSettingsWidget::ApplicationSettingsWidget(QWidget* parent)
     // This prevents combo box and spinner values from changing without explicit focus
     auto mouseWheelFilter = new MouseWheelEventFilter(this);
     m_generalUi->faviconTimeoutSpinBox->installEventFilter(mouseWheelFilter);
+    m_generalUi->alternativeSaveComboBox->installEventFilter(mouseWheelFilter);
     m_generalUi->toolButtonStyleComboBox->installEventFilter(mouseWheelFilter);
     m_generalUi->languageComboBox->installEventFilter(mouseWheelFilter);
     m_generalUi->trayIconAppearance->installEventFilter(mouseWheelFilter);
