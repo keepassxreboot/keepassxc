@@ -314,7 +314,7 @@ QJsonObject BrowserAction::handleSetLogin(const QJsonObject& json, const QString
     const auto downloadFavicon = browserRequest.getString("downloadFavicon");
     const QString realm;
 
-    if (login.contains(REF_MARKER) || password.contains(REF_MARKER)) {
+    if (EntryPlaceholders::containsPlaceholder(login) || EntryPlaceholders::containsPlaceholder(password)) {
         return getErrorReply(action, ERROR_KEEPASS_CANNOT_USE_REFERENCES);
     }
 

@@ -29,6 +29,7 @@ set(core_SOURCES
         core/Entry.cpp
         core/EntryAttachments.cpp
         core/EntryAttributes.cpp
+        core/EntryPlaceholders.cpp
         core/EntrySearcher.cpp
         core/FileWatcher.cpp
         core/Group.cpp
