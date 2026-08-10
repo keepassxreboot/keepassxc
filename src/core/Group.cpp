@@ -71,11 +71,11 @@ Group::~Group()
     cleanupParent();
 }
 
-template <class P, class V> inline bool Group::set(P& property, const V& value)
+template <class P, class V> inline bool Group::set(P& property, const V& value, bool preserveTimeinfo)
 {
     if (property != value) {
         property = value;
-        emitModified();
+        emitModifiedEx(preserveTimeinfo);
         return true;
     } else {
         return false;
@@ -448,6 +448,15 @@ const Group* Group::parentGroup() const
     return m_parent;
 }
 
+void Group::emitModifiedEx(bool preserveTimeinfo) {
+    bool prevUpdateTimeinfo = m_updateTimeinfo;
+    if (preserveTimeinfo) {
+        m_updateTimeinfo = false; // prevent update of LastModificationTime
+    }
+    emitModified();
+    m_updateTimeinfo = prevUpdateTimeinfo;
+}
+
 void Group::setParent(Group* parent, int index, bool trackPrevious)
 {
     Q_ASSERT(parent);
@@ -478,9 +487,8 @@ void Group::setParent(Group* parent, int index, bool trackPrevious)
             recCreateDelObjects();
 
             // copy custom icon to the new database
-            if (!iconUuid().isNull() && parent->m_db && m_db->metadata()->hasCustomIcon(iconUuid())
-                && !parent->m_db->metadata()->hasCustomIcon(iconUuid())) {
-                parent->m_db->metadata()->addCustomIcon(iconUuid(), m_db->metadata()->customIcon(iconUuid()));
+            if (parent->m_db) {
+                parent->m_db->metadata()->copyCustomIcon(iconUuid(), m_db->metadata());
             }
         }
         if (m_db != parent->m_db) {
@@ -506,7 +514,7 @@ void Group::setParent(Group* parent, int index, bool trackPrevious)
         m_data.timeInfo.setLocationChanged(Clock::currentDateTimeUtc());
     }
 
-    emitModified();
+    emitModifiedEx(true);
 
     if (!moveWithinDatabase) {
         emit groupAdded();
@@ -955,12 +963,16 @@ Group* Group::clone(Entry::CloneFlags entryFlags, Group::CloneFlags groupFlags) 
 
     clonedGroup->setUpdateTimeinfo(true);
     if (groupFlags & Group::CloneResetTimeInfo) {
-
         QDateTime now = Clock::currentDateTimeUtc();
-        clonedGroup->m_data.timeInfo.setCreationTime(now);
-        clonedGroup->m_data.timeInfo.setLastModificationTime(now);
-        clonedGroup->m_data.timeInfo.setLastAccessTime(now);
-        clonedGroup->m_data.timeInfo.setLocationChanged(now);
+        if (groupFlags & Group::CloneResetCreationTime) {
+            clonedGroup->m_data.timeInfo.setCreationTime(now);
+        }
+        if (groupFlags & Group::CloneResetLastAccessTime) {
+            clonedGroup->m_data.timeInfo.setLastAccessTime(now);
+        }
+        if (groupFlags & Group::CloneResetLocationChangedTime) {
+            clonedGroup->m_data.timeInfo.setLocationChanged(now);
+        }
     }
 
     if (groupFlags & Group::CloneRenameTitle) {
@@ -992,7 +1004,7 @@ void Group::addEntry(Entry* entry)
         connect(entry, &Entry::modified, m_db, &Database::markAsModified);
     }
 
-    emitModified();
+    emitModifiedEx(true);
     emit entryAdded(entry);
 }
 
@@ -1009,7 +1021,7 @@ void Group::removeEntry(Entry* entry)
         entry->disconnect(m_db);
     }
     m_entries.removeAll(entry);
-    emitModified();
+    emitModifiedEx(true);
     emit entryRemoved(entry);
 }
 
@@ -1080,7 +1092,7 @@ void Group::cleanupParent()
     if (m_parent) {
         emit groupAboutToRemove(this);
         m_parent->m_children.removeAll(this);
-        emitModified();
+        emitModifiedEx(true);
         emit groupRemoved();
     }
 }
@@ -1249,7 +1261,7 @@ void Group::sortChildrenRecursively(bool reverse)
         child->sortChildrenRecursively(reverse);
     }
 
-    emitModified();
+    emitModifiedEx(true);
 }
 
 const Group* Group::previousParentGroup() const
@@ -1267,7 +1279,7 @@ QUuid Group::previousParentGroupUuid() const
 
 void Group::setPreviousParentGroupUuid(const QUuid& uuid)
 {
-    set(m_data.previousParentGroupUuid, uuid);
+    set(m_data.previousParentGroupUuid, uuid, true);
 }
 
 void Group::setPreviousParentGroup(const Group* group)
