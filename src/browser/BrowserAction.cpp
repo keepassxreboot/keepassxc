@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -43,6 +43,7 @@ static const QString BROWSER_REQUEST_PASSKEYS_REGISTER = QStringLiteral("passkey
 static const QString BROWSER_REQUEST_REQUEST_AUTOTYPE = QStringLiteral("request-autotype");
 static const QString BROWSER_REQUEST_SET_LOGIN = QStringLiteral("set-login");
 static const QString BROWSER_REQUEST_TEST_ASSOCIATE = QStringLiteral("test-associate");
+static const QString REF_MARKER = QStringLiteral("{REF:");
 
 QJsonObject BrowserAction::processClientMessage(QLocalSocket* socket, const QJsonObject& json)
 {
@@ -312,6 +313,10 @@ QJsonObject BrowserAction::handleSetLogin(const QJsonObject& json, const QString
     const auto groupUuid = browserRequest.getString("groupUuid");
     const auto downloadFavicon = browserRequest.getString("downloadFavicon");
     const QString realm;
+
+    if (login.contains(REF_MARKER) || password.contains(REF_MARKER)) {
+        return getErrorReply(action, ERROR_KEEPASS_CANNOT_USE_REFERENCES);
+    }
 
     EntryParameters entryParameters;
     entryParameters.dbid = id;
