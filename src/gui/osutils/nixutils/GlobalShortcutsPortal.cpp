@@ -209,7 +209,6 @@ void GlobalShortcutsPortal::bindShortcutsToCurrentSession()
             for (const auto& [id, map] : existing) {
                 emit globalShortcutChanged(id, map.value(QStringLiteral("trigger_description")).toString());
             }
-            return; // already active, nothing to do
         }
 
         if (!hasSession()) {
@@ -236,7 +235,7 @@ void GlobalShortcutsPortal::callBindShortcuts()
     auto bindToken = portalRequest([this](uint bindResponse, const QVariantMap& bindResults) {
         if (bindResponse != 0) {
             qWarning() << "GlobalShortcutsPortal: BindShortcuts returned response" << bindResponse
-                       << "(shortcut may still be active; known GNOME desktop portal bug in older versions)";
+                       << "(shortcut may still be active; known GNOME/KDE desktop portal quirk in older versions)";
         } else {
             auto bound = qdbus_cast<XdpShortcuts>(bindResults.value("shortcuts"));
             if (!bound.isEmpty()) {

@@ -115,8 +115,8 @@ image::autotype_entrylevel.png[]
 
 On Linux, Auto-Type uses https://flatpak.github.io/xdg-desktop-portal/[XDG Desktop Portals] when running under a Wayland compositor. An implementation of the Remote Desktop Portal and Global Shortcuts Portal must be available on your system for Auto-Type to be available. The following desktop environments are known to provide full or partial support:
 
-* **KDE Plasma 6** — Full support since 6.6 with reconfiguration from within KeePassXC. Reconfiguration with older versions is available via _System Settings_ -> _Shortcuts_ -> _KeePassXC_.
-* **GNOME 48+** — Supports initial binding and Auto-Type. Reconfiguring the shortcut is available via _GNOME Settings_ -> _Apps_ -> _KeePassXC_. Note: the initial configuration dialog may appear blank on some GNOME versions due to a known bug unrelated to KeePassXC, but the shortcut works regardless after accepting the dialog.
+* **KDE Plasma 6.6+** — Supported since 5.27: reconfiguration before 6.6 is done via _System Settings_ -> _Shortcuts_ -> _KeePassXC_; before 6.4 have a bug that brings up the configuration dialog on every start.
+* **GNOME 51+** — Supported since 48: reconfiguration from 48 to 50 is done via _GNOME Settings_ -> _Apps_ -> _KeePassXC_.
 * **Other compositors** (Sway, labwc, Hyprland, etc.) — May require a custom XDG Desktop Portal implementation to provide Remote Desktop and Global Shortcuts services. A generic Python-based implementation, https://github.com/hifi/xdg-desktop-portal-pyrtal[xdg-desktop-portal-pyrtal], can be used as a workaround until official implementations are available.
 
 When running under Wayland, the following limitations apply:
