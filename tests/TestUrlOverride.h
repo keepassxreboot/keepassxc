@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -15,25 +15,25 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_TESTURLTOOLS_H
-#define KEEPASSXC_TESTURLTOOLS_H
+#ifndef KEEPASSX_TESTURLOVERRIDE_H
+#define KEEPASSX_TESTURLOVERRIDE_H
 
-#include "gui/UrlTools.h"
 #include <QObject>
-#include <QPointer>
 
-class TestUrlTools : public QObject
+#include "urloverride/UrlOverride.h"
+
+class TestUrlOverride : public QObject
 {
     Q_OBJECT
-
 private slots:
     void initTestCase();
-    void testTopLevelDomain();
-    void testIsIpAddress();
-    void testIsUrlIdentical();
-    void testIsUrlValid();
-    void testIsUrlValidWithLooseComparison();
-    void testDomainHasIllegalCharacters();
-    void testNormalizeScheme();
+
+    void testUrlOverrides();
+    void testDefaultSeedRule();
+    void testUrlOverrideSchemeNormalization();
+    void testXmlSpecialCharactersRoundTrip();
+    void testFindUrlOverrideCommand();
+    void testFindUrlOverrideCommandEdgeCases();
 };
-#endif // KEEPASSXC_TESTURLTOOLS_H
+
+#endif // KEEPASSX_TESTURLOVERRIDE_H

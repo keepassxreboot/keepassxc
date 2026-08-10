@@ -212,6 +212,8 @@ public:
         Messages_NoLegacyKeyFileWarning,
         Messages_HidePreReleaseWarning,
 
+        UrlOverride_Rules,
+
         // Special internal value
         Deleted
     };
