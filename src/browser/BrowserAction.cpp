@@ -43,7 +43,6 @@ static const QString BROWSER_REQUEST_PASSKEYS_REGISTER = QStringLiteral("passkey
 static const QString BROWSER_REQUEST_REQUEST_AUTOTYPE = QStringLiteral("request-autotype");
 static const QString BROWSER_REQUEST_SET_LOGIN = QStringLiteral("set-login");
 static const QString BROWSER_REQUEST_TEST_ASSOCIATE = QStringLiteral("test-associate");
-static const QString REF_MARKER = QStringLiteral("{REF:");
 
 QJsonObject BrowserAction::processClientMessage(QLocalSocket* socket, const QJsonObject& json)
 {
