@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2019 Aetf <aetf@unlimitedcodeworks.xyz>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -25,6 +25,7 @@
 #include "fdosecrets/objects/Session.h"
 
 #include "core/EntryAttributes.h"
+#include "core/EntryPlaceholders.h"
 #include "core/Group.h"
 
 #include <QMimeDatabase>
@@ -111,7 +112,7 @@ namespace FdoSecrets
 
             auto value = entryAttrs->value(attr);
             if (entryAttrs->isReference(attr)) {
-                value = m_backend->maskPasswordPlaceholders(value);
+                value = EntryPlaceholders::maskPasswordPlaceholders(value);
                 value = m_backend->resolveMultiplePlaceholders(value);
             }
             attrs[attr] = value;
