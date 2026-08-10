@@ -282,6 +282,8 @@ public:
     bool canUpdateTimeinfo() const;
     void setUpdateTimeinfo(bool value);
 
+    void resolveReferencesBeforeDatabaseMove();
+
 signals:
     /**
      * Emitted when a default attribute has been changed.
