@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -63,6 +63,7 @@ namespace
         ERROR_PASSKEYS_UNKNOWN_ERROR = 31,
         ERROR_PASSKEYS_INVALID_CHALLENGE = 32,
         ERROR_PASSKEYS_INVALID_USER_ID = 33,
+        ERROR_KEEPASS_CANNOT_USE_REFERENCES = 34,
     };
 }
 

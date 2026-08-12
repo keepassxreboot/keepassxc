@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -437,7 +437,7 @@ QString Entry::webUrl() const
 
 QString Entry::displayUrl() const
 {
-    QString url = maskPasswordPlaceholders(m_attributes->value(EntryAttributes::URLKey));
+    QString url = EntryPlaceholders::maskPasswordPlaceholders(m_attributes->value(EntryAttributes::URLKey));
     return resolveMultiplePlaceholders(url);
 }
 
@@ -1127,8 +1127,6 @@ void Entry::updateModifiedSinceBegin()
 
 QString Entry::resolveMultiplePlaceholdersRecursive(const QString& str, int maxDepth) const
 {
-    static const QRegularExpression placeholderRegEx("({(?>[^{}]+?|(?1))+?})");
-
     if (--maxDepth < 0) {
         qWarning("Maximum depth of replacement has been reached. Entry uuid: %s", uuid().toString().toLatin1().data());
         return str;
@@ -1144,7 +1142,7 @@ QString Entry::resolveMultiplePlaceholdersRecursive(const QString& str, int maxD
     }
 
     QString result;
-    auto matches = placeholderRegEx.globalMatch(str);
+    auto matches = EntryPlaceholders::placeholderMatches(str);
     int capEnd = 0;
     while (matches.hasNext()) {
         const auto match = matches.next();
@@ -1163,117 +1161,75 @@ QString Entry::resolvePlaceholderRecursive(const QString& placeholder, int maxDe
         return placeholder;
     }
 
-    const PlaceholderType typeOfPlaceholder = placeholderType(placeholder);
+    const EntryPlaceholders::PlaceholderType typeOfPlaceholder = EntryPlaceholders::placeholderType(placeholder);
     switch (typeOfPlaceholder) {
-    case PlaceholderType::NotPlaceholder:
+    case EntryPlaceholders::PlaceholderType::NotPlaceholder:
         return resolveMultiplePlaceholdersRecursive(placeholder, maxDepth);
-    case PlaceholderType::Unknown: {
+    case EntryPlaceholders::PlaceholderType::Unknown: {
         return "{" % resolveMultiplePlaceholdersRecursive(placeholder.mid(1, placeholder.length() - 2), maxDepth) % "}";
     }
-    case PlaceholderType::Title:
+    case EntryPlaceholders::PlaceholderType::Title:
         return resolveMultiplePlaceholdersRecursive(title(), maxDepth);
-    case PlaceholderType::UserName:
+    case EntryPlaceholders::PlaceholderType::UserName:
         return resolveMultiplePlaceholdersRecursive(username(), maxDepth);
-    case PlaceholderType::Password:
+    case EntryPlaceholders::PlaceholderType::Password:
         return resolveMultiplePlaceholdersRecursive(password(), maxDepth);
-    case PlaceholderType::Notes:
+    case EntryPlaceholders::PlaceholderType::Notes:
         return resolveMultiplePlaceholdersRecursive(notes(), maxDepth);
-    case PlaceholderType::Url:
+    case EntryPlaceholders::PlaceholderType::Url:
         return resolveMultiplePlaceholdersRecursive(url(), maxDepth);
-    case PlaceholderType::Uuid:
+    case EntryPlaceholders::PlaceholderType::Uuid:
         return uuidToHex();
-    case PlaceholderType::DbDir: {
+    case EntryPlaceholders::PlaceholderType::DbDir: {
         QFileInfo fileInfo(database()->filePath());
         return fileInfo.absoluteDir().absolutePath();
     }
-    case PlaceholderType::UrlWithoutScheme:
-    case PlaceholderType::UrlScheme:
-    case PlaceholderType::UrlHost:
-    case PlaceholderType::UrlPort:
-    case PlaceholderType::UrlPath:
-    case PlaceholderType::UrlQuery:
-    case PlaceholderType::UrlFragment:
-    case PlaceholderType::UrlUserInfo:
-    case PlaceholderType::UrlUserName:
-    case PlaceholderType::UrlPassword: {
+    case EntryPlaceholders::PlaceholderType::UrlWithoutScheme:
+    case EntryPlaceholders::PlaceholderType::UrlScheme:
+    case EntryPlaceholders::PlaceholderType::UrlHost:
+    case EntryPlaceholders::PlaceholderType::UrlPort:
+    case EntryPlaceholders::PlaceholderType::UrlPath:
+    case EntryPlaceholders::PlaceholderType::UrlQuery:
+    case EntryPlaceholders::PlaceholderType::UrlFragment:
+    case EntryPlaceholders::PlaceholderType::UrlUserInfo:
+    case EntryPlaceholders::PlaceholderType::UrlUserName:
+    case EntryPlaceholders::PlaceholderType::UrlPassword: {
         const QString strUrl = resolveMultiplePlaceholdersRecursive(url(), maxDepth);
-        return resolveUrlPlaceholder(strUrl, typeOfPlaceholder);
+        return EntryPlaceholders::resolveUrlPlaceholder(strUrl, typeOfPlaceholder);
     }
-    case PlaceholderType::Totp:
+    case EntryPlaceholders::PlaceholderType::Totp:
         // totp can't have placeholder inside
         return totp();
-    case PlaceholderType::CustomAttribute: {
+    case EntryPlaceholders::PlaceholderType::CustomAttribute: {
         const QString key = placeholder.mid(3, placeholder.length() - 4); // {S:attr} => mid(3, len - 4)
         return attributes()->hasKey(key) ? resolveMultiplePlaceholdersRecursive(attributes()->value(key), maxDepth)
                                          : QString();
     }
-    case PlaceholderType::Reference:
+    case EntryPlaceholders::PlaceholderType::Reference:
         return resolveReferencePlaceholderRecursive(placeholder, ++maxDepth);
-    case PlaceholderType::DateTimeSimple:
-    case PlaceholderType::DateTimeYear:
-    case PlaceholderType::DateTimeMonth:
-    case PlaceholderType::DateTimeDay:
-    case PlaceholderType::DateTimeHour:
-    case PlaceholderType::DateTimeMinute:
-    case PlaceholderType::DateTimeSecond:
-    case PlaceholderType::DateTimeUtcSimple:
-    case PlaceholderType::DateTimeUtcYear:
-    case PlaceholderType::DateTimeUtcMonth:
-    case PlaceholderType::DateTimeUtcDay:
-    case PlaceholderType::DateTimeUtcHour:
-    case PlaceholderType::DateTimeUtcMinute:
-    case PlaceholderType::DateTimeUtcSecond:
-        return resolveMultiplePlaceholdersRecursive(resolveDateTimePlaceholder(typeOfPlaceholder), maxDepth);
-    case PlaceholderType::Conversion:
+    case EntryPlaceholders::PlaceholderType::DateTimeSimple:
+    case EntryPlaceholders::PlaceholderType::DateTimeYear:
+    case EntryPlaceholders::PlaceholderType::DateTimeMonth:
+    case EntryPlaceholders::PlaceholderType::DateTimeDay:
+    case EntryPlaceholders::PlaceholderType::DateTimeHour:
+    case EntryPlaceholders::PlaceholderType::DateTimeMinute:
+    case EntryPlaceholders::PlaceholderType::DateTimeSecond:
+    case EntryPlaceholders::PlaceholderType::DateTimeUtcSimple:
+    case EntryPlaceholders::PlaceholderType::DateTimeUtcYear:
+    case EntryPlaceholders::PlaceholderType::DateTimeUtcMonth:
+    case EntryPlaceholders::PlaceholderType::DateTimeUtcDay:
+    case EntryPlaceholders::PlaceholderType::DateTimeUtcHour:
+    case EntryPlaceholders::PlaceholderType::DateTimeUtcMinute:
+    case EntryPlaceholders::PlaceholderType::DateTimeUtcSecond:
+        return resolveMultiplePlaceholdersRecursive(EntryPlaceholders::resolveDateTimePlaceholder(typeOfPlaceholder),
+                                                    maxDepth);
+    case EntryPlaceholders::PlaceholderType::Conversion:
         return resolveMultiplePlaceholdersRecursive(resolveConversionPlaceholder(placeholder), maxDepth);
-    case PlaceholderType::Regex:
+    case EntryPlaceholders::PlaceholderType::Regex:
         return resolveMultiplePlaceholdersRecursive(resolveRegexPlaceholder(placeholder), maxDepth);
     }
 
     return placeholder;
-}
-
-QString Entry::resolveDateTimePlaceholder(Entry::PlaceholderType placeholderType) const
-{
-    const QDateTime time = Clock::currentDateTime();
-    const QDateTime time_utc = Clock::currentDateTimeUtc();
-
-    switch (placeholderType) {
-    case PlaceholderType::DateTimeSimple:
-        return time.toString("yyyyMMddhhmmss");
-    case PlaceholderType::DateTimeYear:
-        return time.toString("yyyy");
-    case PlaceholderType::DateTimeMonth:
-        return time.toString("MM");
-    case PlaceholderType::DateTimeDay:
-        return time.toString("dd");
-    case PlaceholderType::DateTimeHour:
-        return time.toString("hh");
-    case PlaceholderType::DateTimeMinute:
-        return time.toString("mm");
-    case PlaceholderType::DateTimeSecond:
-        return time.toString("ss");
-    case PlaceholderType::DateTimeUtcSimple:
-        return time_utc.toString("yyyyMMddhhmmss");
-    case PlaceholderType::DateTimeUtcYear:
-        return time_utc.toString("yyyy");
-    case PlaceholderType::DateTimeUtcMonth:
-        return time_utc.toString("MM");
-    case PlaceholderType::DateTimeUtcDay:
-        return time_utc.toString("dd");
-    case PlaceholderType::DateTimeUtcHour:
-        return time_utc.toString("hh");
-    case PlaceholderType::DateTimeUtcMinute:
-        return time_utc.toString("mm");
-    case PlaceholderType::DateTimeUtcSecond:
-        return time_utc.toString("ss");
-    default: {
-        Q_ASSERT_X(false, "Entry::resolveDateTimePlaceholder", "Bad DateTime placeholder type");
-        break;
-    }
-    }
-
-    return {};
 }
 
 QString Entry::resolveConversionPlaceholder(const QString& str, QString* error) const
@@ -1500,11 +1456,6 @@ Database* Entry::database()
     return nullptr;
 }
 
-QString Entry::maskPasswordPlaceholders(const QString& str) const
-{
-    return QString{str}.replace(QStringLiteral("{PASSWORD}"), QStringLiteral("******"), Qt::CaseInsensitive);
-}
-
 Entry* Entry::resolveReference(const QString& str) const
 {
     QRegularExpressionMatch match = EntryAttributes::matchReference(str);
@@ -1527,101 +1478,6 @@ QString Entry::resolveMultiplePlaceholders(const QString& str) const
 QString Entry::resolvePlaceholder(const QString& placeholder) const
 {
     return resolvePlaceholderRecursive(placeholder, ResolveMaximumDepth);
-}
-
-QString Entry::resolveUrlPlaceholder(const QString& str, Entry::PlaceholderType placeholderType) const
-{
-    if (str.isEmpty()) {
-        return {};
-    }
-
-    const QUrl qurl(str);
-    switch (placeholderType) {
-    case PlaceholderType::UrlWithoutScheme:
-        return qurl.toString(QUrl::RemoveScheme | QUrl::FullyDecoded);
-    case PlaceholderType::UrlScheme:
-        return qurl.scheme();
-    case PlaceholderType::UrlHost:
-        return qurl.host();
-    case PlaceholderType::UrlPort:
-        return QString::number(qurl.port());
-    case PlaceholderType::UrlPath:
-        return qurl.path();
-    case PlaceholderType::UrlQuery:
-        return qurl.query();
-    case PlaceholderType::UrlFragment:
-        return qurl.fragment();
-    case PlaceholderType::UrlUserInfo:
-        return qurl.userInfo();
-    case PlaceholderType::UrlUserName:
-        return qurl.userName();
-    case PlaceholderType::UrlPassword:
-        return qurl.password();
-    default: {
-        Q_ASSERT_X(false, "Entry::resolveUrlPlaceholder", "Bad url placeholder type");
-        break;
-    }
-    }
-
-    return {};
-}
-
-Entry::PlaceholderType Entry::placeholderType(const QString& placeholder) const
-{
-    if (!placeholder.startsWith(QStringLiteral("{")) || !placeholder.endsWith(QStringLiteral("}"))) {
-        return PlaceholderType::NotPlaceholder;
-    }
-    if (placeholder.startsWith(QStringLiteral("{S:"))) {
-        return PlaceholderType::CustomAttribute;
-    }
-    if (placeholder.startsWith(QStringLiteral("{REF:"))) {
-        return PlaceholderType::Reference;
-    }
-    if (placeholder.startsWith(QStringLiteral("{T-CONV:"), Qt::CaseInsensitive)) {
-        return PlaceholderType::Conversion;
-    }
-    if (placeholder.startsWith(QStringLiteral("{T-REPLACE-RX:"), Qt::CaseInsensitive)) {
-        return PlaceholderType::Regex;
-    }
-
-    static const QMap<QString, PlaceholderType> placeholders{
-        {QStringLiteral("{TITLE}"), PlaceholderType::Title},
-        {QStringLiteral("{USERNAME}"), PlaceholderType::UserName},
-        {QStringLiteral("{PASSWORD}"), PlaceholderType::Password},
-        {QStringLiteral("{NOTES}"), PlaceholderType::Notes},
-        {QStringLiteral("{TOTP}"), PlaceholderType::Totp},
-        {QStringLiteral("{TIMEOTP}"), PlaceholderType::Totp},
-        {QStringLiteral("{URL}"), PlaceholderType::Url},
-        {QStringLiteral("{UUID}"), PlaceholderType::Uuid},
-        {QStringLiteral("{URL:RMVSCM}"), PlaceholderType::UrlWithoutScheme},
-        {QStringLiteral("{URL:WITHOUTSCHEME}"), PlaceholderType::UrlWithoutScheme},
-        {QStringLiteral("{URL:SCM}"), PlaceholderType::UrlScheme},
-        {QStringLiteral("{URL:SCHEME}"), PlaceholderType::UrlScheme},
-        {QStringLiteral("{URL:HOST}"), PlaceholderType::UrlHost},
-        {QStringLiteral("{URL:PORT}"), PlaceholderType::UrlPort},
-        {QStringLiteral("{URL:PATH}"), PlaceholderType::UrlPath},
-        {QStringLiteral("{URL:QUERY}"), PlaceholderType::UrlQuery},
-        {QStringLiteral("{URL:FRAGMENT}"), PlaceholderType::UrlFragment},
-        {QStringLiteral("{URL:USERINFO}"), PlaceholderType::UrlUserInfo},
-        {QStringLiteral("{URL:USERNAME}"), PlaceholderType::UrlUserName},
-        {QStringLiteral("{URL:PASSWORD}"), PlaceholderType::UrlPassword},
-        {QStringLiteral("{DT_SIMPLE}"), PlaceholderType::DateTimeSimple},
-        {QStringLiteral("{DT_YEAR}"), PlaceholderType::DateTimeYear},
-        {QStringLiteral("{DT_MONTH}"), PlaceholderType::DateTimeMonth},
-        {QStringLiteral("{DT_DAY}"), PlaceholderType::DateTimeDay},
-        {QStringLiteral("{DT_HOUR}"), PlaceholderType::DateTimeHour},
-        {QStringLiteral("{DT_MINUTE}"), PlaceholderType::DateTimeMinute},
-        {QStringLiteral("{DT_SECOND}"), PlaceholderType::DateTimeSecond},
-        {QStringLiteral("{DT_UTC_SIMPLE}"), PlaceholderType::DateTimeUtcSimple},
-        {QStringLiteral("{DT_UTC_YEAR}"), PlaceholderType::DateTimeUtcYear},
-        {QStringLiteral("{DT_UTC_MONTH}"), PlaceholderType::DateTimeUtcMonth},
-        {QStringLiteral("{DT_UTC_DAY}"), PlaceholderType::DateTimeUtcDay},
-        {QStringLiteral("{DT_UTC_HOUR}"), PlaceholderType::DateTimeUtcHour},
-        {QStringLiteral("{DT_UTC_MINUTE}"), PlaceholderType::DateTimeUtcMinute},
-        {QStringLiteral("{DT_UTC_SECOND}"), PlaceholderType::DateTimeUtcSecond},
-        {QStringLiteral("{DB_DIR}"), PlaceholderType::DbDir}};
-
-    return placeholders.value(placeholder.toUpper(), PlaceholderType::Unknown);
 }
 
 QString Entry::resolveUrl(const QString& url) const

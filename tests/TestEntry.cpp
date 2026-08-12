@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2018 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2013 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -929,4 +929,28 @@ void TestEntry::testPreviousParentGroup()
     entry->setGroup(group2);
     QVERIFY(entry->previousParentGroupUuid() == group1->uuid());
     QVERIFY(entry->previousParentGroup() == group1);
+}
+
+void TestEntry::testContainsPlaceholder()
+{
+    // Dynamic placeholders
+    QVERIFY(!EntryPlaceholders::containsPlaceholder(""));
+    QVERIFY(!EntryPlaceholders::containsPlaceholder("testString{REF:nothing")); // Placeholder is not finished
+    QVERIFY(EntryPlaceholders::containsPlaceholder("testString{REF:P@T:Other Entry}something"));
+    QVERIFY(EntryPlaceholders::containsPlaceholder("{URL:USERNAME}yes"));
+    QVERIFY(EntryPlaceholders::containsPlaceholder("{URL:USERNAME}yes{REF:A@O:Attribute 1}"));
+    QVERIFY(!EntryPlaceholders::containsPlaceholder("{NOTAREALPLACEHOLDER:USERNAME}yes")); // Unknown placeholder
+    QVERIFY(EntryPlaceholders::containsPlaceholder("yes{URL:PORT}"));
+    QVERIFY(EntryPlaceholders::containsPlaceholder("yes{S:KPEX_PASSKEYS_USER_ID}no"));
+
+    // Static placeholders
+    QVERIFY(EntryPlaceholders::containsPlaceholder("{TITLE}"));
+    QVERIFY(!EntryPlaceholders::containsPlaceholder("{TITLE2}"));
+    QVERIFY(EntryPlaceholders::containsPlaceholder("{USERNAME}"));
+    QVERIFY(EntryPlaceholders::containsPlaceholder("{PASSWORD}"));
+    QVERIFY(EntryPlaceholders::containsPlaceholder("{URL}"));
+    QVERIFY(EntryPlaceholders::containsPlaceholder("{NOTES}"));
+    QVERIFY(EntryPlaceholders::containsPlaceholder("inthe{NOTES}middle"));
+    QVERIFY(EntryPlaceholders::containsPlaceholder("{TOTP}"));
+    QVERIFY(EntryPlaceholders::containsPlaceholder("test\\{TOTP\\}"));
 }

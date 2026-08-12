@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2023 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -156,6 +156,8 @@ QString BrowserMessageBuilder::getErrorMessage(const int errorCode) const
         return QObject::tr("Challenge is shorter than required minimum length");
     case ERROR_PASSKEYS_INVALID_USER_ID:
         return QObject::tr("user.id does not match the required length");
+    case ERROR_KEEPASS_CANNOT_USE_REFERENCES:
+        return QObject::tr("Username or password cannot contain references");
     default:
         return QObject::tr("Unknown error");
     }
