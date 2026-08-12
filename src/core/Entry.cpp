@@ -1142,7 +1142,7 @@ QString Entry::resolveMultiplePlaceholdersRecursive(const QString& str, int maxD
     }
 
     QString result;
-    auto matches = EntryPlaceholders::PlaceholderRegEx.globalMatch(str);
+    auto matches = EntryPlaceholders::placeholderMatches(str);
     int capEnd = 0;
     while (matches.hasNext()) {
         const auto match = matches.next();

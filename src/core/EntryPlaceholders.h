@@ -65,12 +65,11 @@ namespace EntryPlaceholders
         Regex
     };
 
-    static const QRegularExpression PlaceholderRegEx("({(?>[^{}]+?|(?1))+?})");
-
     PlaceholderType placeholderType(const QString& placeholder);
     QString resolveUrlPlaceholder(const QString& str, PlaceholderType placeholderType);
     QString resolveDateTimePlaceholder(PlaceholderType placeholderType);
     QString maskPasswordPlaceholders(const QString& str);
+    QRegularExpressionMatchIterator placeholderMatches(const QString& str);
     bool containsPlaceholder(const QString& str);
 } // namespace EntryPlaceholders
 

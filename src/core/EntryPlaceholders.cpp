@@ -113,7 +113,7 @@ namespace EntryPlaceholders
         case PlaceholderType::UrlPassword:
             return qurl.password();
         default: {
-            Q_ASSERT_X(false, "Entry::resolveUrlPlaceholder", "Bad url placeholder type");
+            Q_ASSERT_X(false, "EntryPlaceholders::resolveUrlPlaceholder", "Bad url placeholder type");
             break;
         }
         }
@@ -156,7 +156,7 @@ namespace EntryPlaceholders
         case PlaceholderType::DateTimeUtcSecond:
             return time_utc.toString("ss");
         default: {
-            Q_ASSERT_X(false, "Entry::resolveDateTimePlaceholder", "Bad DateTime placeholder type");
+            Q_ASSERT_X(false, "EntryPlaceholders::resolveDateTimePlaceholder", "Bad DateTime placeholder type");
             break;
         }
         }
@@ -169,9 +169,15 @@ namespace EntryPlaceholders
         return QString{str}.replace(QStringLiteral("{PASSWORD}"), QStringLiteral("******"), Qt::CaseInsensitive);
     }
 
+    QRegularExpressionMatchIterator placeholderMatches(const QString& str)
+    {
+        static const QRegularExpression placeholderRegEx("({(?>[^{}]+?|(?1))+?})");
+        return placeholderRegEx.globalMatch(str);
+    }
+
     bool containsPlaceholder(const QString& str)
     {
-        auto matches = PlaceholderRegEx.globalMatch(str);
+        auto matches = placeholderMatches(str);
         while (matches.hasNext()) {
             const auto match = matches.next();
             auto captured = match.captured(0);
