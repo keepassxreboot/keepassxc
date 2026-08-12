@@ -97,6 +97,12 @@ private slots:
 
     void testAlias();
     void testDefaultAliasAlwaysPresent();
+    void testConfiguredAlias();
+    void testConfiguredDefaultAlias();
+    void testConfiguredUnavailableAlias();
+
+    void testSettingsAliasesModelDisplay();
+    void testSettingsAliasesModel();
 
     void testExposeSubgroup();
     void testModifyingExposedGroup();

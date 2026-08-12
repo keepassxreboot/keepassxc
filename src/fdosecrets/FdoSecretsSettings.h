@@ -20,6 +20,7 @@
 
 #include <QSharedPointer>
 #include <QUuid>
+#include <QVariantMap>
 
 class Database;
 
@@ -46,6 +47,11 @@ namespace FdoSecrets
 
         bool unlockBeforeSearch() const;
         void setUnlockBeforeSearch(bool unlockBeforeSearch);
+
+        QVariantMap collectionAliases() const;
+        void setCollectionAliases(const QVariantMap& aliases);
+        void setCollectionAlias(QString alias, QUuid publicUuuid);
+        void removeCollectionAlias(const QString& alias, const QUuid& publicUuid);
 
         // Per db settings
 
