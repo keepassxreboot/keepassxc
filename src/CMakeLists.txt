@@ -342,6 +342,11 @@ if(KPXC_FEATURE_FDOSECRETS)
     set(fdosecrets_LIB fdosecrets)
 endif()
 
+add_subdirectory(qrdecoder)
+if(KPXC_FEATURE_QRDECODER)
+    set(qrdecoder_LIB qrdecoder)
+endif()
+
 configure_file(config-keepassx.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/config-keepassx.h)
 configure_file(git-info.h.cmake ${CMAKE_CURRENT_BINARY_DIR}/git-info.h)
 
@@ -374,7 +379,9 @@ target_link_libraries(keepassxc_gui
         ${browser_LIB}
         ${fdosecrets_LIB}
         ${keeshare_LIB}
-        ${sshagent_LIB})
+        ${sshagent_LIB}
+        ${qrdecoder_LIB}
+        )
 
 if(APPLE)
     target_link_libraries(keepassxc_gui "-framework Foundation -framework AppKit -framework Carbon -framework Security -framework LocalAuthentication -framework ScreenCaptureKit")
