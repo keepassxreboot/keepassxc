@@ -17,8 +17,8 @@ if(KPXC_FEATURE_QRDECODER)
     include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
 
     set(qrdecoder_SOURCES
-        qrdecoderr.cpp
-        qrdecoderr.h
+        qrdecoder.cpp
+        qrdecoder.h
     )
 
     add_library(qrdecoder STATIC ${qrdecoder_SOURCES})
