@@ -8,6 +8,7 @@
     "libqrencode",
     "readline",
     "zlib",
+    "nu-book-zxing-cpp",
     {
       "name": "libusb",
       "platform": "linux | freebsd"

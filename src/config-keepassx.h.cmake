@@ -20,6 +20,7 @@
 #cmakedefine KPXC_FEATURE_BROWSER
 #cmakedefine KPXC_FEATURE_SSHAGENT
 #cmakedefine KPXC_FEATURE_FDOSECRETS
+#cmakedefine KPXC_FEATURE_QRDECODER
 
 /* Minor Features */
 #cmakedefine KPXC_FEATURE_NETWORK

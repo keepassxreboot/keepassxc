@@ -82,6 +82,7 @@ KeePassXC comes with a variety of build options that can turn on/off features. E
 -DKPXC_FEATURE_BROWSER=[ON|OFF] Browser integration and passkeys support (default: ON)
 -DKPXC_FEATURE_SSHAGENT=[ON|OFF] SSH Agent integration (default: ON)
 -DKPXC_FEATURE_FDOSECRETS=[ON|OFF] (Linux Only) freedesktop.org Secret Service integration; replace system keyring (default:ON)
+-DKPXC_FEATURE_QRDECODER=[ON|OFF] Read TOTP configuration from QR codes (default:ON)
 
 -DKPXC_FEATURE_NETWORK=[ON|OFF] Include code that reaches out to external networks (e.g. downloading icons) (default: ON)
 -DKPXC_FEATURE_UPDATES=[ON|OFF] Include automatic update checks; disable for managed distributions (requires networking) (default: ON)
