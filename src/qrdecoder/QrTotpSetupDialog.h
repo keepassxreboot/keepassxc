@@ -3,8 +3,8 @@
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
+ *  the Free Software Foundation, either version 2 or (at your option)
+ *  version 3 of the License.
  *
  *  This program is distributed in the hope that it will be useful,
  *  but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -15,19 +15,34 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_QRDECODER_H
-#define KEEPASSXC_QRDECODER_H
+#ifndef KEEPASSXC_QRDECODER_QRTOTPSETUPDIALOG_H
+#define KEEPASSXC_QRDECODER_QRTOTPSETUPDIALOG_H
 
-#include <QImage>
-#include <QString>
+#include <QDialog>
+
+class Entry;
+class QTabWidget;
+class TotpSetupDialog;
 
 namespace QrDecoder
 {
-    class QrDecoder
+    class QrTotpWidget;
+
+    class QrTotpSetupDialog : public QDialog
     {
+        Q_OBJECT
+
     public:
-        static QString decode(const QImage& image);
+        explicit QrTotpSetupDialog(QWidget* parent = nullptr, Entry* entry = nullptr);
+
+    signals:
+        void totpUpdated();
+
+    private:
+        QTabWidget* m_tabWidget;
+        TotpSetupDialog* m_totpSetupDialog;
+        QrTotpWidget* m_qrTotpWidget;
     };
 } // namespace QrDecoder
 
-#endif // KEEPASSXC_QRDECODER_H
+#endif // KEEPASSXC_QRDECODER_QRTOTPSETUPDIALOG_H

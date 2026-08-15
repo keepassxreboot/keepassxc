@@ -72,6 +72,10 @@
 #include "gui/passkeys/PasskeyImporter.h"
 #endif
 
+#ifdef KPXC_FEATURE_QRDECODER
+#include "qrdecoder/QrTotpSetupDialog.h"
+#endif
+
 DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     : QStackedWidget(parent)
     , m_db(std::move(db))
@@ -562,7 +566,11 @@ void DatabaseWidget::setupTotp()
         return;
     }
 
+#ifdef KPXC_FEATURE_QRDECODER
+    auto setupTotpDialog = new QrDecoder::QrTotpSetupDialog(this, currentEntry);
+#else
     auto setupTotpDialog = new TotpSetupDialog(this, currentEntry);
+#endif
     connect(setupTotpDialog, SIGNAL(totpUpdated()), SIGNAL(entrySelectionChanged()));
     if (currentWidget() == m_editEntryWidget) {
         // Entry is being edited, tell it when we are finished updating TOTP
