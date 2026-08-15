@@ -18,7 +18,7 @@
 #include "QrTotpWidget.h"
 
 #include "core/Totp.h"
-#include "qrdecoder.h"
+#include "QrDecoder.h"
 
 #include <ZXing/ReadBarcode.h>
 #include <ZXing/ReaderOptions.h>
