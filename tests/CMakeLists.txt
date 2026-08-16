@@ -184,6 +184,15 @@ if(KPXC_FEATURE_NETWORK)
         LIBS ${TEST_LIBRARIES})
 endif()
 
+if(KPXC_FEATURE_QRDECODER)
+    add_unit_test(NAME testqrdecoder SOURCES TestQrDecoder.cpp
+            LIBS qrdecoder testsupport ${TEST_LIBRARIES})
+    add_unit_test(NAME testqrtotpsetupdialog SOURCES TestQrTotpSetupDialog.cpp
+            LIBS qrdecoder testsupport ${TEST_LIBRARIES})
+    add_unit_test(NAME testqrtotpwidget SOURCES TestQrTotpWidget.cpp
+            LIBS qrdecoder testsupport ${TEST_LIBRARIES})
+endif()
+
 if(WITH_GUI_TESTS)
     add_subdirectory(gui)
 endif()
