@@ -16,16 +16,13 @@
 if(KPXC_FEATURE_QRDECODER)
     include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
 
-    # set(qrdecoder_SOURCES
-    #     QrDecoder.cpp
-    #     QrDecoder.h
-    #     QrTotpSetupDialog.cpp
-    #     QrTotpSetupDialog.h
-    # )
-
-    file(GLOB qrdecoder_SOURCES CONFIGURE_DEPENDS
-        "*.cpp"
-        "*.h"
+    set(qrdecoder_SOURCES
+        QrDecoder.cpp
+        QrDecoder.h
+        QrTotpSetupDialog.cpp
+        QrTotpSetupDialog.h
+        QrTotpWidget.cpp
+        QrTotpWidget.h
     )
 
     add_library(qrdecoder STATIC ${qrdecoder_SOURCES})
