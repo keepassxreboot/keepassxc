@@ -32,26 +32,26 @@ namespace Totp
 namespace QrDecoder
 {
 
-class QrTotpWidget : public QWidget
-{
-    Q_OBJECT
+    class QrTotpWidget : public QWidget
+    {
+        Q_OBJECT
 
-public:
-    explicit QrTotpWidget(QWidget* parent = nullptr);
+    public:
+        explicit QrTotpWidget(QWidget* parent = nullptr);
 
-signals:
-    void settingsReady(const QSharedPointer<Totp::Settings>& settings);
+    signals:
+        void settingsReady(const QSharedPointer<Totp::Settings>& settings);
 
-protected:
-    bool eventFilter(QObject* watched, QEvent* event) override;
+    protected:
+        bool eventFilter(QObject* watched, QEvent* event) override;
 
-private:
-    void pasteClipboard();
-    void pasteImage();
-    void decodeImage(const QImage& image);
+    private:
+        void pasteClipboard();
+        void pasteImage();
+        void decodeImage(const QImage& image);
 
-    QLineEdit* m_uriEdit = nullptr;
-};
+        QLineEdit* m_uriEdit = nullptr;
+    };
 
 } // namespace QrDecoder
 

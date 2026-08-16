@@ -17,8 +17,8 @@
 
 #include "QrTotpWidget.h"
 
-#include "core/Totp.h"
 #include "QrDecoder.h"
+#include "core/Totp.h"
 
 #include <QApplication>
 #include <QClipboard>
@@ -33,123 +33,123 @@
 namespace QrDecoder
 {
 
-QrTotpWidget::QrTotpWidget(QWidget* parent)
-    : QWidget(parent)
-    , m_uriEdit(new QLineEdit(this))
-{
-    m_uriEdit->installEventFilter(this);
+    QrTotpWidget::QrTotpWidget(QWidget* parent)
+        : QWidget(parent)
+        , m_uriEdit(new QLineEdit(this))
+    {
+        m_uriEdit->installEventFilter(this);
 
-    m_uriEdit->setPlaceholderText(QStringLiteral("otpauth://totp/..."));
+        m_uriEdit->setPlaceholderText(QStringLiteral("otpauth://totp/..."));
 
-    auto pasteButton = new QPushButton(tr("Paste QR code from Clipboard"), this);
-    auto applyButton = new QPushButton(tr("Apply"), this);
+        auto pasteButton = new QPushButton(tr("Paste QR code from Clipboard"), this);
+        auto applyButton = new QPushButton(tr("Apply"), this);
 
-    pasteButton->installEventFilter(this);
-    applyButton->installEventFilter(this);
+        pasteButton->installEventFilter(this);
+        applyButton->installEventFilter(this);
 
-    auto layout = new QVBoxLayout(this);
-    layout->addWidget(m_uriEdit);
-    layout->addWidget(pasteButton);
-    layout->addWidget(applyButton);
-    layout->addStretch();
+        auto layout = new QVBoxLayout(this);
+        layout->addWidget(m_uriEdit);
+        layout->addWidget(pasteButton);
+        layout->addWidget(applyButton);
+        layout->addStretch();
 
-    connect(pasteButton, &QPushButton::clicked, this, &QrTotpWidget::pasteImage);
+        connect(pasteButton, &QPushButton::clicked, this, &QrTotpWidget::pasteImage);
 
-    connect(applyButton, &QPushButton::clicked, this, [this] {
-        const auto uri = m_uriEdit->text().trimmed();
+        connect(applyButton, &QPushButton::clicked, this, [this] {
+            const auto uri = m_uriEdit->text().trimmed();
 
-        if (uri.isEmpty()) {
+            if (uri.isEmpty()) {
+                return;
+            }
+
+            const auto settings = Totp::parseSettings(uri, {});
+
+            if (!settings) {
+                return;
+            }
+
+            emit settingsReady(settings);
+        });
+    }
+
+    bool QrTotpWidget::eventFilter(QObject* watched, QEvent* event)
+    {
+        Q_UNUSED(watched);
+
+        if (event->type() == QEvent::KeyPress) {
+            auto* keyEvent = static_cast<QKeyEvent*>(event);
+
+            if (keyEvent->matches(QKeySequence::Paste)) {
+                pasteClipboard();
+                keyEvent->accept();
+                return true;
+            }
+        }
+
+        return QWidget::eventFilter(watched, event);
+    }
+
+    void QrTotpWidget::pasteClipboard()
+    {
+        const auto* clipboard = QApplication::clipboard();
+        if (!clipboard) {
             return;
         }
 
-        const auto settings = Totp::parseSettings(uri, {});
+        const auto* mimeData = clipboard->mimeData();
+        if (!mimeData) {
+            return;
+        }
+
+        // First try plain text. This allows directly pasting:
+        //
+        // otpauth://totp/keepassxc:test%40lab.com?secret=...&issuer=keepassxc&period=60
+        //
+        if (mimeData->hasText()) {
+            const auto text = mimeData->text().trimmed();
+
+            if (text.startsWith(QStringLiteral("otpauth://"), Qt::CaseInsensitive)) {
+                const auto settings = Totp::parseSettings(text, {});
+
+                if (settings) {
+                    m_uriEdit->setText(text);
+                    emit settingsReady(settings);
+                    return;
+                }
+            }
+        }
+
+        // Otherwise try an image containing a QR code.
+        if (mimeData->hasImage()) {
+            const auto image = qvariant_cast<QImage>(mimeData->imageData());
+
+            if (!image.isNull()) {
+                decodeImage(image);
+            }
+        }
+    }
+
+    void QrTotpWidget::pasteImage()
+    {
+        pasteClipboard();
+    }
+
+    void QrTotpWidget::decodeImage(const QImage& image)
+    {
+        const auto text = QrDecoder::decode(image);
+
+        if (text.isEmpty() || !text.startsWith(QStringLiteral("otpauth://"), Qt::CaseInsensitive)) {
+            return;
+        }
+
+        const auto settings = Totp::parseSettings(text, {});
 
         if (!settings) {
             return;
         }
 
+        m_uriEdit->setText(text);
         emit settingsReady(settings);
-    });
-}
-
-bool QrTotpWidget::eventFilter(QObject* watched, QEvent* event)
-{
-    Q_UNUSED(watched);
-
-    if (event->type() == QEvent::KeyPress) {
-        auto* keyEvent = static_cast<QKeyEvent*>(event);
-
-        if (keyEvent->matches(QKeySequence::Paste)) {
-            pasteClipboard();
-            keyEvent->accept();
-            return true;
-        }
     }
-
-    return QWidget::eventFilter(watched, event);
-}
-
-void QrTotpWidget::pasteClipboard()
-{
-    const auto* clipboard = QApplication::clipboard();
-    if (!clipboard) {
-        return;
-    }
-
-    const auto* mimeData = clipboard->mimeData();
-    if (!mimeData) {
-        return;
-    }
-
-    // First try plain text. This allows directly pasting:
-    //
-    // otpauth://totp/keepassxc:test%40lab.com?secret=...&issuer=keepassxc&period=60
-    //
-    if (mimeData->hasText()) {
-        const auto text = mimeData->text().trimmed();
-
-        if (text.startsWith(QStringLiteral("otpauth://"), Qt::CaseInsensitive)) {
-            const auto settings = Totp::parseSettings(text, {});
-
-            if (settings) {
-                m_uriEdit->setText(text);
-                emit settingsReady(settings);
-                return;
-            }
-        }
-    }
-
-    // Otherwise try an image containing a QR code.
-    if (mimeData->hasImage()) {
-        const auto image = qvariant_cast<QImage>(mimeData->imageData());
-
-        if (!image.isNull()) {
-            decodeImage(image);
-        }
-    }
-}
-
-void QrTotpWidget::pasteImage()
-{
-    pasteClipboard();
-}
-
-void QrTotpWidget::decodeImage(const QImage& image)
-{
-    const auto text = QrDecoder::decode(image);
-
-    if (text.isEmpty() || !text.startsWith(QStringLiteral("otpauth://"), Qt::CaseInsensitive)) {
-        return;
-    }
-
-    const auto settings = Totp::parseSettings(text, {});
-
-    if (!settings) {
-        return;
-    }
-
-    m_uriEdit->setText(text);
-    emit settingsReady(settings);
-}
 
 } // namespace QrDecoder
