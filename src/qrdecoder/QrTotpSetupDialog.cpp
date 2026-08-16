@@ -31,6 +31,7 @@ namespace QrDecoder
         , m_totpSetupDialog(new TotpSetupDialog(this, entry))
         , m_qrTotpWidget(new QrTotpWidget(this))
     {
+        Q_ASSERT(entry);
         auto layout = new QVBoxLayout(this);
         layout->addWidget(m_tabWidget);
 
