@@ -133,3 +133,21 @@ void TotpSetupDialog::init()
         m_ui->invalidKeyLabel->setVisible(!error.isEmpty());
     }
 }
+
+void TotpSetupDialog::setSettings(const Totp::Settings& settings)
+{
+    m_ui->seedEdit->setText(settings.key);
+
+    m_ui->radioCustom->setChecked(true);
+    m_ui->customSettingsGroup->setEnabled(true);
+
+    const auto algorithmIndex = m_ui->algorithmComboBox->findData(settings.algorithm);
+    if (algorithmIndex >= 0) {
+        m_ui->algorithmComboBox->setCurrentIndex(algorithmIndex);
+    }
+
+    m_ui->stepSpinBox->setValue(settings.step);
+    m_ui->digitsSpinBox->setValue(settings.digits);
+
+    m_ui->seedEdit->setFocus();
+}

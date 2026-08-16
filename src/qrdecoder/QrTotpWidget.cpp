@@ -20,9 +20,6 @@
 #include "core/Totp.h"
 #include "QrDecoder.h"
 
-#include <ZXing/ReadBarcode.h>
-#include <ZXing/ReaderOptions.h>
-
 #include <QApplication>
 #include <QClipboard>
 #include <QEvent>
@@ -44,7 +41,7 @@ QrTotpWidget::QrTotpWidget(QWidget* parent)
 
     m_uriEdit->setPlaceholderText(QStringLiteral("otpauth://totp/..."));
 
-    auto pasteButton = new QPushButton(tr("Paste QR code"), this);
+    auto pasteButton = new QPushButton(tr("Paste QR code from Clipboard"), this);
     auto applyButton = new QPushButton(tr("Apply"), this);
 
     pasteButton->installEventFilter(this);
@@ -139,40 +136,20 @@ void QrTotpWidget::pasteImage()
 
 void QrTotpWidget::decodeImage(const QImage& image)
 {
-    if (image.isNull()) {
+    const auto text = QrDecoder::decode(image);
+
+    if (text.isEmpty() || !text.startsWith(QStringLiteral("otpauth://"), Qt::CaseInsensitive)) {
         return;
     }
 
-    const auto converted = image.convertToFormat(QImage::Format_RGBA8888);
+    const auto settings = Totp::parseSettings(text, {});
 
-    ZXing::ImageView imageView(converted.constBits(),
-                               converted.width(),
-                               converted.height(),
-                               ZXing::ImageFormat::RGBA,
-                               converted.bytesPerLine());
-
-    ZXing::ReaderOptions options;
-    options.setFormats(ZXing::BarcodeFormat::QRCode);
-
-    const auto barcodes = ZXing::ReadBarcodes(imageView, options);
-
-    for (const auto& barcode : barcodes) {
-        const auto text = QString::fromStdString(barcode.text()).trimmed();
-
-        if (!text.startsWith(QStringLiteral("otpauth://"), Qt::CaseInsensitive)) {
-            continue;
-        }
-
-        const auto settings = Totp::parseSettings(text, {});
-
-        if (!settings) {
-            continue;
-        }
-
-        m_uriEdit->setText(text);
-        emit settingsReady(settings);
+    if (!settings) {
         return;
     }
+
+    m_uriEdit->setText(text);
+    emit settingsReady(settings);
 }
 
 } // namespace QrDecoder

@@ -22,6 +22,7 @@
 #include <QDialog>
 
 #include "core/Database.h"
+#include "core/Totp.h"
 #include "gui/DatabaseWidget.h"
 
 namespace Ui
@@ -37,6 +38,7 @@ public:
     explicit TotpSetupDialog(QWidget* parent = nullptr, Entry* entry = nullptr);
     ~TotpSetupDialog() override;
     void init();
+    void setSettings(const Totp::Settings& settings);
 
 signals:
     void totpUpdated();
