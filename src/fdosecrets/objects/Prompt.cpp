@@ -240,6 +240,11 @@ namespace FdoSecrets
         }
         for (const auto& item : asConst(items)) {
             m_items[item->collection()] << item;
+            // an item may retire (its database locking or closing) while the prompt
+            // is pending. Clear our references right away: a retired item lingers
+            // until its deleteLater is delivered, with its backend entry already
+            // gone, so a non-null item must always imply a usable backend.
+            connect(item, &Item::itemAboutToDelete, this, [this, item]() { itemRetired(item); });
         }
     }
 
@@ -342,6 +347,24 @@ namespace FdoSecrets
         }
     }
 
+    void UnlockPrompt::itemRetired(Item* item)
+    {
+        // the item is going away (already removed from DBus, backend about to reset);
+        // stop referencing it. A null item is treated as rejected, same as a destroyed one.
+        for (auto& items : m_items) {
+            for (auto& p : items) {
+                if (p == item) {
+                    p = nullptr;
+                }
+            }
+        }
+        for (auto& p : m_entryToItems) {
+            if (p == item) {
+                p = nullptr;
+            }
+        }
+    }
+
     void UnlockPrompt::unlockItems()
     {
         // may be reached from multiple paths (last collection resolving vs retiring)
@@ -358,8 +381,9 @@ namespace FdoSecrets
 
         // flatten to list of entries
         QList<Entry*> entries;
-        for (const auto& itemsPerColl : asConst(m_items)) {
-            for (const auto& item : itemsPerColl) {
+        QSet<Collection*> collections;
+        for (auto collIt = m_items.constBegin(); collIt != m_items.constEnd(); ++collIt) {
+            for (const auto& item : collIt.value()) {
                 if (!item) {
                     m_numRejected += 1;
                     continue;
@@ -373,8 +397,9 @@ namespace FdoSecrets
                     // Already saw this entry
                     continue;
                 }
-                m_entryToItems[uuid] = item.data();
+                m_entryToItems[uuid] = item;
                 entries << entry;
+                collections << collIt.key();
             }
         }
         if (!entries.isEmpty()) {
@@ -383,13 +408,24 @@ namespace FdoSecrets
                 findWindow(m_windowId), entries, app, client->processInfo(), AuthOption::Remember);
             connect(ac, &AccessControlDialog::finished, this, &UnlockPrompt::itemUnlockFinished);
             connect(ac, &AccessControlDialog::finished, ac, &AccessControlDialog::deleteLater);
+            // the dialog is asking about entries that do not survive the database
+            // locking or closing. Withdraw the question in that case, as if the
+            // user rejected it.
+            for (const auto& coll : collections) {
+                connect(coll, &Collection::collectionLockChanged, ac, [ac](bool locked) {
+                    if (locked) {
+                        ac->reject();
+                    }
+                });
+                connect(coll, &Collection::collectionAboutToDelete, ac, &AccessControlDialog::reject);
+            }
             ac->open();
         } else {
             itemUnlockFinished({}, AuthDecision::Undecided);
         }
     }
 
-    void UnlockPrompt::itemUnlockFinished(const QHash<Entry*, AuthDecision>& decisions, AuthDecision forFutureEntries)
+    void UnlockPrompt::itemUnlockFinished(const QHash<QUuid, AuthDecision>& decisions, AuthDecision forFutureEntries)
     {
         auto client = m_client.lock();
         if (!client) {
@@ -398,11 +434,12 @@ namespace FdoSecrets
             return;
         }
         for (auto it = decisions.constBegin(); it != decisions.constEnd(); ++it) {
-            auto entry = it.key();
-            auto uuid = entry->uuid();
+            const auto& uuid = it.key();
             // get back the corresponding item
             auto item = m_entryToItems.value(uuid);
             if (!item) {
+                // the item retired while the dialog was open, it can no longer be unlocked
+                m_numRejected += 1;
                 continue;
             }
 
