@@ -1003,7 +1003,7 @@ void TestGuiFdoSecrets::testCollectionDeleteConcurrent()
 
     // before interacting with the prompt, another request come in
     DBUS_GET(promptPath2, coll->Delete());
-    auto prompt2 = getProxy<PromptProxy>(promptPath);
+    auto prompt2 = getProxy<PromptProxy>(promptPath2);
     VERIFY(prompt2);
     QSignalSpy spyPromptCompleted2(prompt2.data(), SIGNAL(Completed(bool, QDBusVariant)));
     VERIFY(spyPromptCompleted2.isValid());
@@ -1015,6 +1015,7 @@ void TestGuiFdoSecrets::testCollectionDeleteConcurrent()
     // there should be no prompt
     DBUS_VERIFY(prompt2->Prompt(""));
 
+    // the first prompt completes the deletion
     VERIFY(waitForSignal(spyPromptCompleted, 1));
     {
         auto args = spyPromptCompleted.takeFirst();
@@ -1023,11 +1024,13 @@ void TestGuiFdoSecrets::testCollectionDeleteConcurrent()
         COMPARE(args.at(1).value<QDBusVariant>().variant().toString(), QStringLiteral(""));
     }
 
+    // the second prompt fails fast as the deletion is still in progress,
+    // and is reported as dismissed
     VERIFY(waitForSignal(spyPromptCompleted2, 1));
     {
         auto args = spyPromptCompleted2.takeFirst();
         COMPARE(args.count(), 2);
-        COMPARE(args.at(0).toBool(), false);
+        COMPARE(args.at(0).toBool(), true);
         COMPARE(args.at(1).value<QDBusVariant>().variant().toString(), QStringLiteral(""));
     }
 

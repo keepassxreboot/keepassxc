@@ -112,6 +112,7 @@ namespace FdoSecrets
 
     private:
         bool m_signalSent = false;
+        bool m_scheduled = false;
     };
 
     class Collection;

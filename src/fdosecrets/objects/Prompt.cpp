@@ -71,6 +71,13 @@ namespace FdoSecrets
             return ret;
         }
 
+        // the prompt is already being processed, do not schedule another run.
+        // the ongoing one will emit the completed signal.
+        if (m_signalSent || m_scheduled) {
+            return {};
+        }
+        m_scheduled = true;
+
         QWeakPointer<DBusClient> weak = client;
         // execute the actual prompt method in event loop to avoid block this method
         QTimer::singleShot(0, this, [this, weak, windowId]() {
@@ -113,6 +120,12 @@ namespace FdoSecrets
         : PromptBase(parent)
         , m_collection(coll)
     {
+        // The QPointer alone is not enough: after Collection::removeFromDBus the
+        // collection lingers until its deleteLater is delivered, with m_backend
+        // already reset. Clear our reference as soon as the collection retires so
+        // that a non-null m_collection always implies a usable backend, which
+        // Collection::doDelete asserts on.
+        connect(coll, &Collection::collectionAboutToDelete, this, [this]() { m_collection = nullptr; });
     }
 
     PromptResult DeleteCollectionPrompt::promptSync(const DBusClientPtr&, const QString& windowId)
