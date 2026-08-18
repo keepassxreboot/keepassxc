@@ -72,6 +72,7 @@ private slots:
     void testServiceSearchForce();
     void testServiceUnlock();
     void testServiceUnlockDatabaseConcurrent();
+    void testServiceUnlockConcurrentDelete();
     void testServiceUnlockItems();
     void testServiceUnlockItemsIncludeFutureEntries();
     void testServiceLock();

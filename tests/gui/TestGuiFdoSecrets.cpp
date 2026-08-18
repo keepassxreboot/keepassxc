@@ -586,6 +586,62 @@ void TestGuiFdoSecrets::testServiceUnlockDatabaseConcurrent()
     DBUS_COMPARE(coll->locked(), false);
 }
 
+void TestGuiFdoSecrets::testServiceUnlockConcurrentDelete()
+{
+    lockDatabaseInBackend();
+
+    auto service = enableService();
+    VERIFY(service);
+    auto coll = getDefaultCollection(service);
+    VERIFY(coll);
+
+    DBUS_GET2(unlocked, promptPath, service->Unlock({QDBusObjectPath(coll->path())}));
+    COMPARE(unlocked, {});
+
+    auto prompt = getProxy<PromptProxy>(promptPath);
+    VERIFY(prompt);
+    QSignalSpy spyPromptCompleted(prompt.data(), SIGNAL(Completed(bool, QDBusVariant)));
+    VERIFY(spyPromptCompleted.isValid());
+
+    // show the unlock dialog, but do not interact with it
+    DBUS_VERIFY(prompt->Prompt(""));
+    VERIFY(waitForSignal(spyPromptCompleted, 0));
+
+    // while the unlock prompt is waiting for the user, the collection gets deleted
+    DBUS_GET(deletePromptPath, coll->Delete());
+    auto deletePrompt = getProxy<PromptProxy>(deletePromptPath);
+    VERIFY(deletePrompt);
+    QSignalSpy spyDeletePromptCompleted(deletePrompt.data(), SIGNAL(Completed(bool, QDBusVariant)));
+    VERIFY(spyDeletePromptCompleted.isValid());
+    DBUS_VERIFY(deletePrompt->Prompt(""));
+
+    // the deletion completes
+    VERIFY(waitForSignal(spyDeletePromptCompleted, 1));
+    {
+        auto args = spyDeletePromptCompleted.takeFirst();
+        COMPARE(args.count(), 2);
+        COMPARE(args.at(0).toBool(), false);
+    }
+
+    // the unlock prompt completes as dismissed with nothing unlocked, instead of
+    // waiting forever for a collection that no longer exists
+    VERIFY(waitForSignal(spyPromptCompleted, 1));
+    {
+        auto args = spyPromptCompleted.takeFirst();
+        COMPARE(args.count(), 2);
+        COMPARE(args.at(0).toBool(), true);
+        auto unlockedResult = getSignalVariantArgument<QList<QDBusObjectPath>>(args.at(1));
+        VERIFY(unlockedResult.isEmpty());
+    }
+
+    // dismiss the leftover unlock dialog so it does not interfere with other tests
+    auto dbOpenDlg = m_tabWidget->findChild<DatabaseOpenDialog*>();
+    if (dbOpenDlg && dbOpenDlg->isVisible()) {
+        dbOpenDlg->reject();
+        processEvents();
+    }
+}
+
 void TestGuiFdoSecrets::testServiceUnlockItems()
 {
     FdoSecrets::settings()->setConfirmAccessItem(true);
