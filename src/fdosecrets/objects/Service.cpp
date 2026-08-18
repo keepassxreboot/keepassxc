@@ -580,9 +580,12 @@ namespace FdoSecrets
             return;
         }
 
-        // insert a dummy one here, just to prevent multiple dialogs
-        // the real one will be inserted in onDatabaseUnlockDialogFinished
-        m_unlockingDb[dbWidget] = {};
+        // insert the entry here already, just to prevent multiple dialogs.
+        // the connection on databaseUnlocked will be added in onDatabaseUnlockDialogFinished.
+        // if the widget is destroyed while its dialog is open, dialogFinished may never
+        // fire for it, so clean up on destruction as well.
+        m_unlockingDb[dbWidget].destroyedConn =
+            connect(dbWidget, &QObject::destroyed, this, [this, dbWidget]() { m_unlockingDb.remove(dbWidget); });
 
         // actually show the dialog
         m_databases->unlockDatabaseInDialog(dbWidget, DatabaseOpenDialog::Intent::None);
@@ -608,16 +611,25 @@ namespace FdoSecrets
         if (!accepted) {
             emit doneUnlockDatabaseInDialog(false, dbWidget);
             m_unlockingAnyDatabase = false;
-            m_unlockingDb.remove(dbWidget);
+            disconnect(m_unlockingDb.take(dbWidget).destroyedConn);
         } else {
             // delay the done signal to when the database is actually done with unlocking
             // this is a oneshot connection to prevent superfluous signals
             auto conn = connect(dbWidget, &DatabaseWidget::databaseUnlocked, this, [dbWidget, this]() {
                 emit doneUnlockDatabaseInDialog(true, dbWidget);
                 m_unlockingAnyDatabase = false;
-                disconnect(m_unlockingDb.take(dbWidget));
+                auto entry = m_unlockingDb.take(dbWidget);
+                disconnect(entry.unlockedConn);
+                disconnect(entry.destroyedConn);
             });
-            m_unlockingDb[dbWidget] = conn;
+            auto& entry = m_unlockingDb[dbWidget];
+            entry.unlockedConn = conn;
+            // the unlock-any-database flow arrives here without a prior entry,
+            // make sure widget destruction cleans it up in that case too
+            if (!entry.destroyedConn) {
+                entry.destroyedConn = connect(
+                    dbWidget, &QObject::destroyed, this, [this, dbWidget]() { m_unlockingDb.remove(dbWidget); });
+            }
         }
     }
 } // namespace FdoSecrets

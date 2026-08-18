@@ -640,6 +640,28 @@ void TestGuiFdoSecrets::testServiceUnlockConcurrentDelete()
         dbOpenDlg->reject();
         processEvents();
     }
+
+    // reopen the database; the service must still be able to show unlock dialogs.
+    // A stale Service::m_unlockingDb entry keyed by the destroyed widget used to
+    // block the unlock-any-database dialog forever.
+    m_tabWidget->addDatabaseTab(m_dbFile->fileName(), false, "a");
+    m_dbWidget = m_tabWidget->currentDatabaseWidget();
+    m_db = m_dbWidget->database();
+    processEvents();
+
+    auto entries = m_db->rootGroup()->entriesRecursive();
+    VERIFY(!entries.isEmpty());
+    auto title = entries.first()->title();
+
+    lockDatabaseInBackend();
+
+    FdoSecrets::settings()->setUnlockBeforeSearch(true);
+    bool unlockDialogWorks = false;
+    QTimer::singleShot(50, [&]() { unlockDialogWorks = driveUnlockDialog(); });
+    DBUS_GET2(unlockedItems, lockedItems, service->SearchItems({{"Title", title}}));
+    VERIFY(unlockDialogWorks);
+    COMPARE(lockedItems, {});
+    COMPARE(unlockedItems.size(), 1);
 }
 
 void TestGuiFdoSecrets::testServiceUnlockItems()
