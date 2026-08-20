@@ -21,6 +21,7 @@
 #include <QDateTime>
 #include <QHash>
 #include <QList>
+#include <QSet>
 #include <QString>
 #include <QUuid>
 
@@ -31,6 +32,14 @@ class Entry;
 
 namespace FdoSecrets
 {
+    class DBusClient;
+    struct PeerInfo;
+
+    inline bool decisionAllows(AuthDecision decision)
+    {
+        return decision == AuthDecision::Allowed || decision == AuthDecision::AllowedOnce;
+    }
+
     /// The hash algorithm newly created rules use. Stored rules carry their own
     /// algorithm name, so this can change without invalidating them.
     extern const QString DefaultExeHashAlgo;
@@ -60,6 +69,14 @@ namespace FdoSecrets
         QString value;
         /// Hash only. Currently always "sha256".
         QString algo;
+
+        /**
+         * Whether the process at depth in the client's hierarchy satisfies this
+         * condition. Anything unavailable or not understood (depth beyond the
+         * hierarchy, unreadable executable, unknown hash algorithm) fails the
+         * condition rather than skipping it.
+         */
+        bool matches(DBusClient& client) const;
 
         bool operator==(const RuleCondition& other) const;
         bool operator!=(const RuleCondition& other) const;
@@ -102,6 +119,21 @@ namespace FdoSecrets
         /// The metadata customData key this record is stored under.
         QString customDataKey() const;
 
+        /**
+         * Whether any rule fully matches the client. Hash conditions are evaluated
+         * last so the (possibly expensive) hashing only happens when everything
+         * else already matched.
+         */
+        bool matches(DBusClient& client) const;
+
+        /**
+         * Whether some rule identifies the client by all its non-hash conditions
+         * while at least one of its hash conditions fails: the previously
+         * authorized executable content has changed and the user must re-decide.
+         * The failing depths of all such rules are added to @a mismatchedDepths.
+         */
+        bool fingerprintChanged(DBusClient& client, QSet<int>* mismatchedDepths = nullptr) const;
+
         QString toJson() const;
         static ClientRecord fromJson(const DBusClientId& id, const QString& json);
 
@@ -132,6 +164,58 @@ namespace FdoSecrets
      */
     void setEntryClientDecision(Entry* entry, const DBusClientId& id, AuthDecision decision);
 
+    struct ClientResolution
+    {
+        /// The single record the client resolved to; invalid when none matches.
+        ClientRecord record;
+        /// No record matches, but at least one identifies the client with a
+        /// changed executable hash. Set alongside changed/mismatchedDepths.
+        bool fingerprintChanged = false;
+        /// The changed record (overlap resolved like regular matches).
+        ClientRecord changed;
+        QSet<int> mismatchedDepths;
+    };
+
+    /**
+     * Resolve @a client to at most one identity record persisted in @a db.
+     * Overlapping records (a configuration smell, flagged in the editor) are
+     * resolved deterministically: a denying catch-all wins, then the earliest
+     * created record.
+     */
+    ClientResolution resolveClient(const Database* db, DBusClient& client);
+
+    /**
+     * The persisted decision for the <entry, client> pair: the entry's own
+     * decision referencing the resolved record, falling back to the record's
+     * catch-all. Undecided when the client resolves to no record.
+     */
+    AuthDecision persistedDecision(const Entry* entry, DBusClient& client);
+
+    /**
+     * Whether the executable is a general purpose tool that acts for whoever
+     * invokes it — a script interpreter, a shell, or a command line client such
+     * as secret-tool. A stored decision for one covers every use of it by any
+     * program, which the access dialog warns about.
+     */
+    bool isGenericClient(const QString& exePath);
+
+    /**
+     * Build the rule anchoring @a client at the given hierarchy depths: for each
+     * depth its executable path and content hash, either of which may be
+     * unobtainable alone (a deleted binary loses its path but /proc/PID/exe still
+     * hashes its content). Depths with neither contribute nothing; the rule is
+     * empty (and never matches) when no depth is usable.
+     */
+    MatchRule buildMatchRule(DBusClient& client, QSet<int> depths);
+
+    /**
+     * Ensure @a db has an identity record for @a client and return its id:
+     * an already matching record is used as is; a record whose fingerprint
+     * changed gets its hash conditions updated in place; otherwise a new record
+     * with the default rule over @a matchDepths is created. Returns a null id
+     * when no record can anchor the client (no usable executable path).
+     */
+    DBusClientId upsertClientRecord(Database* db, DBusClient& client, const QSet<int>& matchDepths);
 } // namespace FdoSecrets
 
 #endif // KEEPASSXC_FDOSECRETS_CLIENTAUTH_H

@@ -37,6 +37,8 @@
 #include <QJsonObject>
 #include <QTest>
 
+#include <utility>
+
 QTEST_GUILESS_MAIN(TestFdoSecretsClientAuth)
 
 using namespace FdoSecrets;
@@ -68,6 +70,59 @@ namespace
         return QString::fromUtf8(QJsonDocument(obj).toJson(QJsonDocument::Compact));
     }
 
+    PeerInfo samplePeer()
+    {
+        return PeerInfo{QStringLiteral("local"),
+                        1234,
+                        true,
+                        {
+                            ProcInfo{1234,
+                                     1000,
+                                     QStringLiteral("/usr/bin/python3"),
+                                     QStringLiteral("python3"),
+                                     QStringLiteral("python3 myscript.py")},
+                            ProcInfo{1000, 1, QStringLiteral("/usr/bin/zsh"), QStringLiteral("zsh"), {}},
+                            ProcInfo{1, 0, QStringLiteral("/usr/lib/systemd/systemd"), {}, {}},
+                        }};
+    }
+
+    // a client with a synthetic hierarchy and scripted executable hashes
+    class FakeHashClient : public DBusClient
+    {
+    public:
+        explicit FakeHashClient(PeerInfo info = samplePeer())
+            : DBusClient(nullptr, std::move(info))
+        {
+        }
+
+        QString exeHash(int depth, const QString& algo) override
+        {
+            return algo == DefaultExeHashAlgo ? hashes.value(depth) : QString();
+        }
+
+        QHash<int, QString> hashes;
+    };
+
+    RuleCondition path0(const QString& value = QStringLiteral("/usr/bin/python3"))
+    {
+        return {0, RuleCondition::Kind::Path, value, {}};
+    }
+
+    RuleCondition hashAt(int depth, const QString& value)
+    {
+        return {depth, RuleCondition::Kind::Hash, value, QStringLiteral("sha256")};
+    }
+
+    ClientRecord recordWithRule(const MatchRule& rule, AuthDecision allEntries = AuthDecision::Undecided)
+    {
+        ClientRecord record;
+        record.id = QUuid::createUuid();
+        record.name = QStringLiteral("test");
+        record.created = Clock::currentDateTimeUtc();
+        record.rules << rule;
+        record.allEntries = allEntries;
+        return record;
+    }
 } // namespace
 
 void TestFdoSecretsClientAuth::initTestCase()
@@ -278,4 +333,178 @@ void TestFdoSecretsClientAuth::testExeHash()
     // outside the hierarchy
     QCOMPARE(client.exeHash(-1, DefaultExeHashAlgo), QString());
     QCOMPARE(client.exeHash(2, DefaultExeHashAlgo), QString());
+}
+
+void TestFdoSecretsClientAuth::testRuleMatching()
+{
+    FakeHashClient client;
+    client.hashes.insert(0, QStringLiteral("hash0"));
+    client.hashes.insert(1, QStringLiteral("hash1"));
+
+    // single conditions on the calling process
+    QVERIFY(recordWithRule({{path0()}}).matches(client));
+    QVERIFY(!recordWithRule({{path0(QStringLiteral("/usr/bin/python"))}}).matches(client));
+    QVERIFY(recordWithRule({{{0, RuleCondition::Kind::Name, QStringLiteral("python3"), {}}}}).matches(client));
+    QVERIFY(
+        !recordWithRule({{{0, RuleCondition::Kind::Name, QStringLiteral("/usr/bin/python3"), {}}}}).matches(client));
+    QVERIFY(recordWithRule({{hashAt(0, QStringLiteral("hash0"))}}).matches(client));
+    QVERIFY(!recordWithRule({{hashAt(0, QStringLiteral("other"))}}).matches(client));
+
+    // ancestors by depth
+    QVERIFY(recordWithRule({{{1, RuleCondition::Kind::Path, QStringLiteral("/usr/bin/zsh"), {}}}}).matches(client));
+    QVERIFY(!recordWithRule({{{5, RuleCondition::Kind::Path, QStringLiteral("/usr/bin/zsh"), {}}}}).matches(client));
+
+    // conditions are a conjunction
+    QVERIFY(recordWithRule({{path0(), hashAt(0, QStringLiteral("hash0")), hashAt(1, QStringLiteral("hash1"))}})
+                .matches(client));
+    QVERIFY(!recordWithRule({{path0(), {1, RuleCondition::Kind::Path, QStringLiteral("/usr/bin/bash"), {}}}})
+                 .matches(client));
+
+    // rules are a disjunction
+    auto record = recordWithRule({{path0(QStringLiteral("/usr/bin/kitty"))}});
+    record.rules << MatchRule{{path0()}};
+    QVERIFY(record.matches(client));
+
+    // fail closed on anything not understood or unavailable
+    auto unknownAlgo = hashAt(0, QStringLiteral("hash0"));
+    unknownAlgo.algo = QStringLiteral("md5");
+    QVERIFY(!recordWithRule({{unknownAlgo}}).matches(client));
+    QVERIFY(!recordWithRule({{hashAt(2, QStringLiteral("anything"))}}).matches(client)); // no hash available
+    QVERIFY(!recordWithRule(MatchRule{}).matches(client)); // empty rule must not match everything
+    QVERIFY(!ClientRecord{}.matches(client)); // nor a record without rules
+}
+
+void TestFdoSecretsClientAuth::testBuildMatchRule()
+{
+    FakeHashClient client;
+    client.hashes.insert(0, QStringLiteral("hash0"));
+
+    // path and content when both are available; path only when the content
+    // cannot be hashed
+    QCOMPARE(buildMatchRule(client, {0, 1}).conditions,
+             (QList<RuleCondition>{{0, RuleCondition::Kind::Path, QStringLiteral("/usr/bin/python3"), {}},
+                                   hashAt(0, QStringLiteral("hash0")),
+                                   {1, RuleCondition::Kind::Path, QStringLiteral("/usr/bin/zsh"), {}}}));
+
+    // content only when the path is unknown, e.g. a deleted binary that is
+    // still hashable through /proc/PID/exe
+    auto peer = samplePeer();
+    peer.hierarchy[0].exePath.clear();
+    FakeHashClient pathless(peer);
+    pathless.hashes.insert(0, QStringLiteral("hash0"));
+    QCOMPARE(buildMatchRule(pathless, {0}).conditions, (QList<RuleCondition>{hashAt(0, QStringLiteral("hash0"))}));
+
+    // neither: the depth contributes nothing and an all-unusable rule is empty
+    FakeHashClient bare(peer);
+    QVERIFY(buildMatchRule(bare, {0}).conditions.isEmpty());
+    QVERIFY(buildMatchRule(client, {7}).conditions.isEmpty());
+}
+
+void TestFdoSecretsClientAuth::testFingerprintChanged()
+{
+    FakeHashClient client;
+    client.hashes.insert(0, QStringLiteral("hash0"));
+    client.hashes.insert(1, QStringLiteral("hash1"));
+
+    // identified by path, hash no longer matches
+    QSet<int> depths;
+    auto record = recordWithRule({{path0(), hashAt(0, QStringLiteral("stale"))}});
+    QVERIFY(!record.matches(client));
+    QVERIFY(record.fingerprintChanged(client, &depths));
+    QCOMPARE(depths, QSet<int>{0});
+
+    // several hierarchy levels changed at once are all reported
+    depths.clear();
+    record = recordWithRule({{path0(), hashAt(0, QStringLiteral("stale")), hashAt(1, QStringLiteral("stale"))}});
+    QVERIFY(record.fingerprintChanged(client, &depths));
+    QCOMPARE(depths, (QSet<int>{0, 1}));
+
+    // a different client entirely is not a fingerprint change
+    record = recordWithRule({{path0(QStringLiteral("/usr/bin/kitty")), hashAt(0, QStringLiteral("stale"))}});
+    QVERIFY(!record.fingerprintChanged(client));
+
+    // nor is a record that still fully matches through another rule
+    record = recordWithRule({{path0(), hashAt(0, QStringLiteral("stale"))}});
+    record.rules << MatchRule{{path0()}};
+    QVERIFY(record.matches(client));
+    QVERIFY(!record.fingerprintChanged(client));
+}
+
+void TestFdoSecretsClientAuth::testResolveOverlap()
+{
+    QScopedPointer<Database> db(new Database());
+    FakeHashClient client;
+
+    // no records at all
+    QVERIFY(!resolveClient(db.data(), client).record.isValid());
+
+    auto allowing = recordWithRule({{path0()}}, AuthDecision::Allowed);
+    m_clock->advanceSecond(1);
+    auto denying = recordWithRule({{path0()}}, AuthDecision::Denied);
+    m_clock->advanceSecond(1);
+    saveClientRecord(db.data(), allowing);
+    saveClientRecord(db.data(), denying);
+
+    // overlapping records: the denying catch-all wins even though it is younger
+    QCOMPARE(resolveClient(db.data(), client).record, denying);
+
+    // among equals the earliest created wins
+    m_clock->advanceSecond(1);
+    removeClientRecord(db.data(), denying.id);
+    auto younger = recordWithRule({{path0()}}, AuthDecision::Allowed);
+    saveClientRecord(db.data(), younger);
+    QCOMPARE(resolveClient(db.data(), client).record, allowing);
+
+    // removed records no longer resolve
+    m_clock->advanceSecond(1);
+    removeClientRecord(db.data(), allowing.id);
+    removeClientRecord(db.data(), younger.id);
+    QVERIFY(!resolveClient(db.data(), client).record.isValid());
+
+    // a fingerprint change surfaces only when nothing matches outright
+    m_clock->advanceSecond(1);
+    auto changed = recordWithRule({{path0(), hashAt(0, QStringLiteral("stale"))}});
+    saveClientRecord(db.data(), changed);
+    auto res = resolveClient(db.data(), client);
+    QVERIFY(!res.record.isValid());
+    QVERIFY(res.fingerprintChanged);
+    QCOMPARE(res.changed, changed);
+    QCOMPARE(res.mismatchedDepths, QSet<int>{0});
+
+    m_clock->advanceSecond(1);
+    saveClientRecord(db.data(), recordWithRule({{path0()}}, AuthDecision::Allowed));
+    res = resolveClient(db.data(), client);
+    QVERIFY(res.record.isValid());
+    QVERIFY(!res.fingerprintChanged);
+}
+
+void TestFdoSecretsClientAuth::testResolverDecision()
+{
+    QScopedPointer<Database> db(new Database());
+    auto entry = new Entry();
+    entry->setGroup(db->rootGroup());
+    FakeHashClient client;
+
+    // unknown client
+    QCOMPARE(persistedDecision(entry, client), AuthDecision::Undecided);
+
+    // record without any decision for this entry
+    auto record = recordWithRule({{path0()}});
+    saveClientRecord(db.data(), record);
+    QCOMPARE(persistedDecision(entry, client), AuthDecision::Undecided);
+
+    // catch-all applies to entries without their own decision
+    m_clock->advanceSecond(1);
+    record.allEntries = AuthDecision::Allowed;
+    saveClientRecord(db.data(), record);
+    QCOMPARE(persistedDecision(entry, client), AuthDecision::Allowed);
+
+    // the entry's own decision overrides the catch-all
+    setEntryClientDecision(entry, record.id, AuthDecision::Denied);
+    QCOMPARE(persistedDecision(entry, client), AuthDecision::Denied);
+
+    // decisions referencing other records are not consulted
+    setEntryClientDecision(entry, record.id, AuthDecision::Undecided);
+    setEntryClientDecision(entry, QUuid::createUuid(), AuthDecision::Denied);
+    QCOMPARE(persistedDecision(entry, client), AuthDecision::Allowed);
 }

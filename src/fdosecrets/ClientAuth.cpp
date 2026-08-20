@@ -22,10 +22,17 @@
 #include "core/Entry.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
+#include "fdosecrets/dbus/DBusClient.h"
 
+#include "core/Clock.h"
+
+#include <QFileInfo>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QRegularExpression>
+
+#include <algorithm>
 
 namespace FdoSecrets
 {
@@ -107,6 +114,92 @@ namespace FdoSecrets
     bool MatchRule::operator!=(const MatchRule& other) const
     {
         return !(*this == other);
+    }
+
+    bool RuleCondition::matches(DBusClient& client) const
+    {
+        const auto& hierarchy = client.processInfo().hierarchy;
+        if (depth >= hierarchy.size() || value.isEmpty()) {
+            return false;
+        }
+        const auto& proc = hierarchy.at(depth);
+        switch (kind) {
+        case Kind::Path:
+            return proc.exePath == value;
+        case Kind::Name:
+            return !proc.exePath.isEmpty() && QFileInfo(proc.exePath).fileName() == value;
+        case Kind::Hash: {
+            // an unsupported algorithm yields an empty digest (and a log entry),
+            // failing the condition
+            const auto hash = client.exeHash(depth, algo);
+            return !hash.isEmpty() && hash == value;
+        }
+        }
+        return false;
+    }
+
+    namespace
+    {
+        // Evaluates one rule, hash conditions last so hashing only happens once
+        // everything cheap already matched. When @a mismatchedHashDepths is given,
+        // all hash conditions are evaluated and the failing depths collected, so a
+        // fingerprint change across several hierarchy levels is fully reported.
+        // A rule without conditions never matches.
+        bool ruleMatches(const MatchRule& rule, DBusClient& client, QSet<int>* mismatchedHashDepths = nullptr)
+        {
+            if (rule.conditions.isEmpty()) {
+                return false;
+            }
+            QList<const RuleCondition*> hashConditions;
+            for (const auto& cond : rule.conditions) {
+                if (cond.kind == RuleCondition::Kind::Hash) {
+                    hashConditions << &cond;
+                    continue;
+                }
+                if (!cond.matches(client)) {
+                    return false;
+                }
+            }
+            bool matched = true;
+            for (const auto* cond : hashConditions) {
+                if (!cond->matches(client)) {
+                    matched = false;
+                    if (!mismatchedHashDepths) {
+                        break;
+                    }
+                    mismatchedHashDepths->insert(cond->depth);
+                }
+            }
+            return matched;
+        }
+    } // namespace
+
+    bool ClientRecord::matches(DBusClient& client) const
+    {
+        for (const auto& rule : rules) {
+            if (ruleMatches(rule, client)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    bool ClientRecord::fingerprintChanged(DBusClient& client, QSet<int>* mismatchedDepths) const
+    {
+        bool changed = false;
+        for (const auto& rule : rules) {
+            QSet<int> mismatched;
+            if (ruleMatches(rule, client, &mismatched)) {
+                return false;
+            }
+            if (!mismatched.isEmpty()) {
+                changed = true;
+                if (mismatchedDepths) {
+                    *mismatchedDepths += mismatched;
+                }
+            }
+        }
+        return changed;
     }
 
     bool ClientRecord::operator==(const ClientRecord& other) const
@@ -294,4 +387,165 @@ namespace FdoSecrets
         entry->customData()->set(EntryAuthKey, QString::fromUtf8(QJsonDocument(obj).toJson(QJsonDocument::Compact)));
     }
 
+    namespace
+    {
+        // deterministic pick among overlapping records: a denying catch-all wins,
+        // then the earliest created record
+        bool preferredOver(const ClientRecord& record, const ClientRecord& other)
+        {
+            const auto recordDenies = record.allEntries == AuthDecision::Denied;
+            const auto otherDenies = other.allEntries == AuthDecision::Denied;
+            if (recordDenies != otherDenies) {
+                return recordDenies;
+            }
+            if (record.created != other.created) {
+                return record.created < other.created;
+            }
+            return record.id < other.id;
+        }
+    } // namespace
+
+    ClientResolution resolveClient(const Database* db, DBusClient& client)
+    {
+        ClientResolution res;
+        const ClientRecord* best = nullptr;
+        const ClientRecord* bestChanged = nullptr;
+        QSet<int> bestMismatched;
+        const auto records = loadClientRecords(db);
+        for (const auto& record : records) {
+            if (record.matches(client)) {
+                if (!best || preferredOver(record, *best)) {
+                    best = &record;
+                }
+                continue;
+            }
+            QSet<int> mismatched;
+            if (record.fingerprintChanged(client, &mismatched)) {
+                if (!bestChanged || preferredOver(record, *bestChanged)) {
+                    bestChanged = &record;
+                    bestMismatched = mismatched;
+                }
+            }
+        }
+        if (best) {
+            res.record = *best;
+        } else if (bestChanged) {
+            res.fingerprintChanged = true;
+            res.changed = *bestChanged;
+            res.mismatchedDepths = bestMismatched;
+        }
+        return res;
+    }
+
+    AuthDecision persistedDecision(const Entry* entry, DBusClient& client)
+    {
+        const auto db = entry->database();
+        if (!db) {
+            return AuthDecision::Undecided;
+        }
+        const auto res = resolveClient(db, client);
+        if (!res.record.isValid()) {
+            return AuthDecision::Undecided;
+        }
+        const auto perEntry = entryClientDecisions(entry);
+        const auto it = perEntry.constFind(res.record.id);
+        if (it != perEntry.constEnd()) {
+            return *it;
+        }
+        return res.record.allEntries;
+    }
+
+    bool isGenericClient(const QString& exePath)
+    {
+        // interpreters and shells run whatever they are handed, and command
+        // line clients ask on behalf of whoever called them. The list is not
+        // exhaustive and cannot be: it catches the common cases so the warning
+        // appears where it is most needed.
+        static const QSet<QString> generic{
+            QStringLiteral("sh"),        QStringLiteral("bash"),   QStringLiteral("dash"),
+            QStringLiteral("zsh"),       QStringLiteral("fish"),   QStringLiteral("ksh"),
+            QStringLiteral("csh"),       QStringLiteral("tcsh"),   QStringLiteral("python"),
+            QStringLiteral("perl"),      QStringLiteral("ruby"),   QStringLiteral("node"),
+            QStringLiteral("deno"),      QStringLiteral("bun"),    QStringLiteral("lua"),
+            QStringLiteral("luajit"),    QStringLiteral("php"),    QStringLiteral("tclsh"),
+            QStringLiteral("expect"),    QStringLiteral("java"),   QStringLiteral("secret-tool"),
+            QStringLiteral("dbus-send"), QStringLiteral("busctl"), QStringLiteral("gdbus"),
+            QStringLiteral("qdbus"),     QStringLiteral("xargs"),  QStringLiteral("env"),
+        };
+        auto base = QFileInfo(exePath).fileName();
+        // fold versioned names like python3.11, php8 or lua5.4 onto their stem
+        static const QRegularExpression versionSuffix(QStringLiteral("-?[0-9][0-9.]*$"));
+        base.remove(versionSuffix);
+        return generic.contains(base);
+    }
+
+    MatchRule buildMatchRule(DBusClient& client, QSet<int> depths)
+    {
+        const auto& hierarchy = client.processInfo().hierarchy;
+        auto sorted = depths.values();
+        std::sort(sorted.begin(), sorted.end());
+
+        MatchRule rule;
+        for (const auto depth : sorted) {
+            if (depth < 0 || depth >= hierarchy.size()) {
+                continue;
+            }
+            // the executable content is anchorable even when the path is not,
+            // e.g. for a binary that was deleted while the process is running
+            if (!hierarchy.at(depth).exePath.isEmpty()) {
+                rule.conditions.append({depth, RuleCondition::Kind::Path, hierarchy.at(depth).exePath, {}});
+            }
+            const auto hash = client.exeHash(depth, DefaultExeHashAlgo);
+            if (!hash.isEmpty()) {
+                rule.conditions.append({depth, RuleCondition::Kind::Hash, hash, DefaultExeHashAlgo});
+            }
+        }
+        return rule;
+    }
+
+    DBusClientId upsertClientRecord(Database* db, DBusClient& client, const QSet<int>& matchDepths)
+    {
+        const auto res = resolveClient(db, client);
+        if (res.record.isValid()) {
+            return res.record.id;
+        }
+
+        if (res.fingerprintChanged) {
+            // the user re-decided after seeing the change warning: re-anchor the
+            // stale hashes of every rule that still identifies the client
+            auto record = res.changed;
+            for (auto& rule : record.rules) {
+                const auto identified =
+                    std::all_of(rule.conditions.cbegin(), rule.conditions.cend(), [&client](const RuleCondition& cond) {
+                        return cond.kind == RuleCondition::Kind::Hash || cond.matches(client);
+                    });
+                if (!identified) {
+                    continue;
+                }
+                for (auto& cond : rule.conditions) {
+                    if (cond.kind != RuleCondition::Kind::Hash) {
+                        continue;
+                    }
+                    const auto hash = client.exeHash(cond.depth, cond.algo);
+                    if (!hash.isEmpty()) {
+                        cond.value = hash;
+                    }
+                }
+            }
+            saveClientRecord(db, record);
+            return record.id;
+        }
+
+        auto rule = buildMatchRule(client, matchDepths);
+        if (rule.conditions.isEmpty()) {
+            return {};
+        }
+        ClientRecord record;
+        record.id = QUuid::createUuid();
+        record.name = client.name();
+        record.created = Clock::currentDateTimeUtc();
+        record.rules << rule;
+        saveClientRecord(db, record);
+        return record.id;
+    }
 } // namespace FdoSecrets
