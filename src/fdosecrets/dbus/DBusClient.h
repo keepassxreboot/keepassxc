@@ -155,29 +155,23 @@ namespace FdoSecrets
         virtual QString exeHash(int depth, const QString& algo);
 
         /**
-         * Check if the item is known in this client's auth list
+         * This connection's decision for the item, with denials taking
+         * precedence. Undecided when the client was never asked. This is raw
+         * connection state: whether the client may actually access an item is
+         * answered only by Service::authDecision(), which layers this over the
+         * decisions persisted in the item's database.
          */
-        bool itemKnown(const QUuid& uuid) const;
+        AuthDecision connectionDecision(const QUuid& uuid) const;
 
         /**
-         * Check if client may access item identified by @a uuid.
+         * Consume any once decision for @a uuid.
          */
-        bool itemAuthorized(const QUuid& uuid) const;
+        void resetOnce(const QUuid& uuid);
 
         /**
-         * Check if client may access item identified by @a uuid, and also reset any once auth.
+         * Record this connection's decision for the item identified by @a uuid.
          */
-        bool itemAuthorizedResetOnce(const QUuid& uuid);
-
-        /**
-         * Authorize client to access item identified by @a uuid.
-         */
-        void setItemAuthorized(const QUuid& uuid, AuthDecision auth);
-
-        /**
-         * Authorize client to access all items.
-         */
-        void setAllAuthorized(AuthDecision authorized);
+        void setConnectionDecision(const QUuid& uuid, AuthDecision auth);
 
         /**
          * Forget all previous authorization.
@@ -193,8 +187,6 @@ namespace FdoSecrets
     private:
         QPointer<DBusMgr> m_dbus;
         PeerInfo m_process;
-
-        AuthDecision m_authorizedAll{AuthDecision::Undecided};
 
         QSet<QUuid> m_allowed{};
         QSet<QUuid> m_denied{};

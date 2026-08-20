@@ -174,7 +174,10 @@ namespace FdoSecrets
         void collectionUnlockFinished(bool accepted);
         void collectionRetired(Collection* coll);
         void itemRetired(Item* item);
-        void itemUnlockFinished(const QHash<QUuid, AuthDecision>& results, AuthDecision forFutureEntries);
+        void itemUnlockFinished(const QHash<QUuid, AuthDecision>& results,
+                                AuthDecision forFutureEntries,
+                                bool persist,
+                                const QSet<int>& matchDepths);
         void unlockItems();
 
         QList<QPointer<Collection>> m_collections;

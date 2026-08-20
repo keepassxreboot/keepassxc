@@ -25,8 +25,10 @@
 #include "fdosecrets/dbus/DBusTypes.h"
 #include "gui/MessageBox.h"
 
+class AccessControlDialog;
 class MainWindow;
 class Database;
+class Entry;
 class DatabaseTabWidget;
 class DatabaseWidget;
 class TemporaryFile;
@@ -76,6 +78,14 @@ private slots:
     void testServiceUnlockItems();
     void testServiceUnlockItemsIncludeFutureEntries();
     void testServiceUnlockItemsConcurrentLock();
+    void testServicePersistedAuthorization();
+    void testServicePersistedAllEntries();
+    void testAccessControlPersist();
+    void testAccessControlPersistAllEntries();
+    void testAccessControlInterpreter();
+    void testAccessControlFingerprintChanged();
+    void testAccessControlPerEntryDeny();
+    void testAccessControlDenyThenTrust();
     void testServiceLock();
     void testServiceLockConcurrent();
 
@@ -107,10 +117,12 @@ private slots:
     void testHiddenFilename();
     void testDuplicateName();
 
+
 private:
     bool driveUnlockDialog(DatabaseWidget* target = nullptr);
     bool driveNewDatabaseWizard();
     bool driveAccessControlDialog(bool remember = true, bool includeFutureEntries = false);
+    AccessControlDialog* findAccessControlDialog();
     bool waitForSignal(QSignalSpy& spy, int expectedCount);
 
     void processEvents();
@@ -121,6 +133,7 @@ private:
     QSharedPointer<SessionProxy> openSession(const QSharedPointer<ServiceProxy>& service, const QString& algo);
     QSharedPointer<CollectionProxy> getDefaultCollection(const QSharedPointer<ServiceProxy>& service);
     QSharedPointer<ItemProxy> getFirstItem(const QSharedPointer<CollectionProxy>& coll);
+    Entry* entryForItem(const QSharedPointer<ItemProxy>& item);
     QSharedPointer<ItemProxy> createItem(const QSharedPointer<SessionProxy>& sess,
                                          const QSharedPointer<CollectionProxy>& coll,
                                          const QString& label,

@@ -13,12 +13,9 @@
   <property name="windowTitle">
    <string>KeePassXC -  Access Request</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,1,1,0">
    <item>
-    <widget class="MessageWidget" name="exePathWarn" native="true">
-     <property name="text" stdset="0">
-      <string>Non-existing/inaccessible executable path. Please double-check the client is legit.</string>
-     </property>
+    <widget class="MessageWidget" name="warningWidget" native="true">
      <property name="closeButtonVisible" stdset="0">
       <bool>false</bool>
      </property>
@@ -46,7 +43,7 @@
       <item>
        <widget class="QTreeWidget" name="procTree">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
@@ -66,6 +63,11 @@
         <column>
          <property name="text">
           <string>Name</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Match</string>
          </property>
         </column>
         <column>
@@ -91,7 +93,7 @@
    <item>
     <widget class="QTableView" name="itemsTable">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>

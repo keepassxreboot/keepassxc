@@ -25,6 +25,7 @@
 
 #include "FdoSecretsSettings.h"
 #include "core/Entry.h"
+#include "fdosecrets/ClientAuth.h"
 #include "gui/MessageBox.h"
 
 #include <QThread>
@@ -390,22 +391,43 @@ namespace FdoSecrets
                 }
                 auto entry = item->backend();
                 auto uuid = entry->uuid();
-                if (client->itemKnown(uuid) || !FdoSecrets::settings()->confirmAccessItem()) {
-                    if (!client->itemAuthorized(uuid)) {
-                        m_numRejected += 1;
-                    }
-                    // Already saw this entry
-                    continue;
+                const auto decision = service()->authDecision(client, entry);
+                if (decision == AuthDecision::Undecided) {
+                    // the user has to be asked
+                    m_entryToItems[uuid] = item;
+                    entries << entry;
+                    collections << collIt.key();
+                } else if (!decisionAllows(decision)) {
+                    m_numRejected += 1;
                 }
-                m_entryToItems[uuid] = item;
-                entries << entry;
-                collections << collIt.key();
             }
         }
         if (!entries.isEmpty()) {
+            // a client identified by a record whose executable hash no longer
+            // matches must be re-decided; surface the change in the dialog
+            FingerprintChangeInfo fingerprintChange;
+            QSet<const Database*> databases;
+            for (const auto& entry : asConst(entries)) {
+                databases << entry->database();
+            }
+            for (const auto& db : databases) {
+                const auto res = resolveClient(db, *client);
+                if (res.fingerprintChanged) {
+                    fingerprintChange.mismatchedDepths += res.mismatchedDepths;
+                    if (!fingerprintChange.authorizedOn.isValid()
+                        || res.changed.created < fingerprintChange.authorizedOn) {
+                        fingerprintChange.authorizedOn = res.changed.created;
+                    }
+                }
+            }
+
             QString app = tr("%1 (PID: %2)").arg(client->name()).arg(client->pid());
-            auto ac = new AccessControlDialog(
-                findWindow(m_windowId), entries, app, client->processInfo(), AuthOption::Remember);
+            auto ac = new AccessControlDialog(findWindow(m_windowId),
+                                              entries,
+                                              app,
+                                              client->processInfo(),
+                                              AuthOption::Persist | AuthOption::PerEntryDeny,
+                                              fingerprintChange);
             connect(ac, &AccessControlDialog::finished, this, &UnlockPrompt::itemUnlockFinished);
             connect(ac, &AccessControlDialog::finished, ac, &AccessControlDialog::deleteLater);
             // the dialog is asking about entries that do not survive the database
@@ -421,11 +443,14 @@ namespace FdoSecrets
             }
             ac->open();
         } else {
-            itemUnlockFinished({}, AuthDecision::Undecided);
+            itemUnlockFinished({}, AuthDecision::Undecided, false, {});
         }
     }
 
-    void UnlockPrompt::itemUnlockFinished(const QHash<QUuid, AuthDecision>& decisions, AuthDecision forFutureEntries)
+    void UnlockPrompt::itemUnlockFinished(const QHash<QUuid, AuthDecision>& decisions,
+                                          AuthDecision forFutureEntries,
+                                          bool persist,
+                                          const QSet<int>& matchDepths)
     {
         auto client = m_client.lock();
         if (!client) {
@@ -433,6 +458,15 @@ namespace FdoSecrets
             qDebug() << "DBus client gone before item unlocking finish";
             return;
         }
+        // one identity record per involved database, created or updated on first use
+        QHash<Database*, DBusClientId> recordIds;
+        const auto ensureRecord = [&](Database* db) {
+            auto idIt = recordIds.find(db);
+            if (idIt == recordIds.end()) {
+                idIt = recordIds.insert(db, upsertClientRecord(db, *client, matchDepths));
+            }
+            return idIt.value();
+        };
         for (auto it = decisions.constBegin(); it != decisions.constEnd(); ++it) {
             const auto& uuid = it.key();
             // get back the corresponding item
@@ -443,17 +477,39 @@ namespace FdoSecrets
                 continue;
             }
 
-            // set auth
-            client->setItemAuthorized(uuid, it.value());
+            auto decision = it.value();
+            if (persist && (decision == AuthDecision::Allowed || decision == AuthDecision::Denied)) {
+                auto entry = item->backend();
+                const auto id = ensureRecord(entry->database());
+                if (!id.isNull()) {
+                    // stored in the database; the read path finds it there, no
+                    // connection local state needed
+                    setEntryClientDecision(entry, id, decision);
+                } else {
+                    // nothing to anchor an identity record on: degrade to a once
+                    // decision instead of inventing a connection lifetime tier
+                    decision = decision == AuthDecision::Allowed ? AuthDecision::AllowedOnce : AuthDecision::DeniedOnce;
+                    client->setConnectionDecision(uuid, decision);
+                }
+            } else {
+                client->setConnectionDecision(uuid, decision);
+            }
 
-            if (client->itemAuthorized(uuid)) {
+            if (decisionAllows(decision)) {
                 m_unlocked += item->objectPath();
             } else {
                 m_numRejected += 1;
             }
         }
-        if (forFutureEntries != AuthDecision::Undecided) {
-            client->setAllAuthorized(forFutureEntries);
+        if (forFutureEntries != AuthDecision::Undecided && persist) {
+            // the catch-all lives in the identity record of each involved database
+            for (auto dbIt = recordIds.constBegin(); dbIt != recordIds.constEnd(); ++dbIt) {
+                auto record = loadClientRecord(dbIt.key(), dbIt.value());
+                if (record.isValid()) {
+                    record.allEntries = forFutureEntries;
+                    saveClientRecord(dbIt.key(), record);
+                }
+            }
         }
         // if anything is not unlocked, treat the whole prompt as dismissed
         // so the client has a chance to handle the error

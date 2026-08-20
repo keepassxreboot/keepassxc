@@ -17,6 +17,7 @@
 
 #include "Service.h"
 
+#include "core/Entry.h"
 #include "fdosecrets/FdoSecretsPlugin.h"
 #include "fdosecrets/FdoSecretsSettings.h"
 #include "fdosecrets/objects/Collection.h"
@@ -511,6 +512,26 @@ namespace FdoSecrets
     QList<Session*> Service::sessions() const
     {
         return m_sessions;
+    }
+
+    AuthDecision Service::authDecision(const DBusClientPtr& client, const Entry* entry)
+    {
+        if (!FdoSecrets::settings()->confirmAccessItem()) {
+            // everyone is authorized if this is not enabled
+            return AuthDecision::Allowed;
+        }
+        auto decision = client->connectionDecision(entry->uuid());
+        if (decision == AuthDecision::Undecided) {
+            decision = persistedDecision(entry, *client);
+        }
+        return decision;
+    }
+
+    AuthDecision Service::consumeAuthDecision(const DBusClientPtr& client, const Entry* entry)
+    {
+        const auto decision = authDecision(client, entry);
+        client->resetOnce(entry->uuid());
+        return decision;
     }
 
     bool Service::doCloseDatabase(DatabaseWidget* dbWidget)

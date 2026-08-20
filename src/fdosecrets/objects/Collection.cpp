@@ -688,7 +688,7 @@ namespace FdoSecrets
         entry->setGroup(group);
 
         // the item was just created so there is no point in having it not authorized
-        client->setItemAuthorized(entry->uuid(), AuthDecision::Allowed);
+        client->setConnectionDecision(entry->uuid(), AuthDecision::Allowed);
 
         // when creation finishes in backend, we will already have item
         auto created = m_entryToItem.value(entry, nullptr);

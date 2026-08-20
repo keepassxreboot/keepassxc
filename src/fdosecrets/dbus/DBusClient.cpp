@@ -18,7 +18,6 @@
 
 #include "DBusClient.h"
 
-#include "fdosecrets/FdoSecretsSettings.h"
 #include "fdosecrets/dbus/DBusMgr.h"
 #include "fdosecrets/objects/SessionCipher.h"
 
@@ -108,49 +107,31 @@ namespace FdoSecrets
         return exePath;
     }
 
-    bool DBusClient::itemKnown(const QUuid& uuid) const
+    AuthDecision DBusClient::connectionDecision(const QUuid& uuid) const
     {
-        return m_authorizedAll != AuthDecision::Undecided || m_allowed.contains(uuid) || m_allowedOnce.contains(uuid)
-               || m_denied.contains(uuid) || m_deniedOnce.contains(uuid);
+        // individual decisions, denials take precedence
+        if (m_deniedOnce.contains(uuid)) {
+            return AuthDecision::DeniedOnce;
+        }
+        if (m_denied.contains(uuid)) {
+            return AuthDecision::Denied;
+        }
+        if (m_allowedOnce.contains(uuid)) {
+            return AuthDecision::AllowedOnce;
+        }
+        if (m_allowed.contains(uuid)) {
+            return AuthDecision::Allowed;
+        }
+        return AuthDecision::Undecided;
     }
 
-    bool DBusClient::itemAuthorized(const QUuid& uuid) const
+    void DBusClient::resetOnce(const QUuid& uuid)
     {
-        if (!FdoSecrets::settings()->confirmAccessItem()) {
-            // everyone is authorized if this is not enabled
-            return true;
-        }
-
-        // check if we have catch-all decision
-        if (m_authorizedAll == AuthDecision::Allowed) {
-            return true;
-        }
-        if (m_authorizedAll == AuthDecision::Denied) {
-            return false;
-        }
-
-        // individual decisions
-        if (m_deniedOnce.contains(uuid) || m_denied.contains(uuid)) {
-            // explicitly denied
-            return false;
-        }
-        if (m_allowedOnce.contains(uuid) || m_allowed.contains(uuid)) {
-            // explicitly allowed
-            return true;
-        }
-        // haven't asked, not authorized by default
-        return false;
-    }
-
-    bool DBusClient::itemAuthorizedResetOnce(const QUuid& uuid)
-    {
-        auto auth = itemAuthorized(uuid);
         m_deniedOnce.remove(uuid);
         m_allowedOnce.remove(uuid);
-        return auth;
     }
 
-    void DBusClient::setItemAuthorized(const QUuid& uuid, AuthDecision auth)
+    void DBusClient::setConnectionDecision(const QUuid& uuid, AuthDecision auth)
     {
         // uuid should only be in exactly one set at any time
         m_allowed.remove(uuid);
@@ -175,21 +156,8 @@ namespace FdoSecrets
         }
     }
 
-    void DBusClient::setAllAuthorized(AuthDecision authorized)
-    {
-        // once variants doesn't make sense here
-        if (authorized == AuthDecision::AllowedOnce) {
-            authorized = AuthDecision::Allowed;
-        }
-        if (authorized == AuthDecision::DeniedOnce) {
-            authorized = AuthDecision::Denied;
-        }
-        m_authorizedAll = authorized;
-    }
-
     void DBusClient::clearAuthorization()
     {
-        m_authorizedAll = AuthDecision::Undecided;
         m_allowed.clear();
         m_allowedOnce.clear();
         m_denied.clear();
