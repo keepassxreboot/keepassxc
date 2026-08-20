@@ -17,6 +17,9 @@ if(KPXC_FEATURE_FDOSECRETS)
         # setting storage
         FdoSecretsSettings.cpp
 
+        # persisted client authorization
+        ClientAuth.cpp
+
         # dbus objects
         dbus/DBusClient.cpp
         dbus/DBusMgr.cpp
