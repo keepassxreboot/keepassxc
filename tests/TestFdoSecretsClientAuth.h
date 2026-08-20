@@ -38,6 +38,7 @@ private slots:
     void testEntryClientDecisions();
     void testRecordKeyProtected();
     void testMergeKeepsRecords();
+    void testExeHash();
 
 private:
     MockClock* m_clock = nullptr;
