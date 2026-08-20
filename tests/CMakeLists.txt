@@ -162,6 +162,9 @@ endif()
 if(KPXC_FEATURE_FDOSECRETS)
     add_unit_test(NAME testfdosecrets SOURCES TestFdoSecrets.cpp
         LIBS testsupport fdosecrets ${TEST_LIBRARIES})
+
+    add_unit_test(NAME testfdosecretsclientauth SOURCES TestFdoSecretsClientAuth.cpp
+        LIBS testsupport fdosecrets ${TEST_LIBRARIES})
 endif()
 
 if(KPXC_FEATURE_BROWSER)
