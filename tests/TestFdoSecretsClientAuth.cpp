@@ -27,7 +27,11 @@
 #include "core/Metadata.h"
 #include "crypto/Crypto.h"
 #include "fdosecrets/ClientAuth.h"
+#include "fdosecrets/dbus/DBusClient.h"
 
+#include <QCoreApplication>
+#include <QCryptographicHash>
+#include <QFile>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -243,4 +247,35 @@ void TestFdoSecretsClientAuth::testMergeKeepsRecords()
 
     QVERIFY(!dbDestination->metadata()->customData()->hasKey(QStringLiteral("unprotected")));
     QCOMPARE(loadClientRecord(dbDestination.data(), record.id), record);
+}
+
+void TestFdoSecretsClientAuth::testExeHash()
+{
+#ifndef Q_OS_LINUX
+    QSKIP("/proc/PID/exe hashing is only implemented on Linux");
+#endif
+    const auto ownPid = static_cast<uint>(QCoreApplication::applicationPid());
+    PeerInfo info{QStringLiteral("local"), ownPid, true, {ProcInfo{ownPid, 0, {}, {}, {}}, ProcInfo{0, 0, {}, {}, {}}}};
+    DBusClient client(nullptr, info);
+
+    // hashing our own pid via /proc/PID/exe must match hashing the binary by path
+    QFile self(QCoreApplication::applicationFilePath());
+    QVERIFY(self.open(QIODevice::ReadOnly));
+    QCryptographicHash expected(QCryptographicHash::Sha256);
+    QVERIFY(expected.addData(&self));
+
+    const auto hash = client.exeHash(0, DefaultExeHashAlgo);
+    QCOMPARE(hash, QString::fromLatin1(expected.result().toHex()));
+    QCOMPARE(client.exeHash(0, DefaultExeHashAlgo), hash);
+
+    // an unknown algorithm fails closed instead of falling back to another one
+    QCOMPARE(client.exeHash(0, QStringLiteral("md5")), QString());
+
+    // pid 0 has no /proc entry: fails closed, and the failure is cached too
+    QCOMPARE(client.exeHash(1, DefaultExeHashAlgo), QString());
+    QCOMPARE(client.exeHash(1, DefaultExeHashAlgo), QString());
+
+    // outside the hierarchy
+    QCOMPARE(client.exeHash(-1, DefaultExeHashAlgo), QString());
+    QCOMPARE(client.exeHash(2, DefaultExeHashAlgo), QString());
 }

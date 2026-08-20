@@ -24,10 +24,47 @@
 #include "fdosecrets/dbus/DBusMgr.h"
 #include "fdosecrets/objects/SessionCipher.h"
 
+#include <QCryptographicHash>
+#include <QFile>
+
+#include <optional>
 #include <utility>
 
 namespace FdoSecrets
 {
+    namespace
+    {
+        QString hashProcExe(uint pid, QCryptographicHash::Algorithm algo)
+        {
+#ifdef Q_OS_LINUX
+            QFile exe(QStringLiteral("/proc/%1/exe").arg(pid));
+            if (!exe.open(QIODevice::ReadOnly)) {
+                return {};
+            }
+            QCryptographicHash hash(algo);
+            if (!hash.addData(&exe)) {
+                return {};
+            }
+            return QString::fromLatin1(hash.result().toHex());
+#else
+            // no way to reach the original binary content, only the (replaceable)
+            // path; hash conditions then never match
+            Q_UNUSED(pid);
+            Q_UNUSED(algo);
+            return {};
+#endif
+        }
+
+        // the hash algorithms usable in client identity rules, by name
+        std::optional<QCryptographicHash::Algorithm> exeHashAlgoFromName(const QString& name)
+        {
+            if (name == QStringLiteral("sha256")) {
+                return QCryptographicHash::Sha256;
+            }
+            return std::nullopt;
+        }
+    } // namespace
+
     bool ProcInfo::operator==(const ProcInfo& other) const
     {
         return this->pid == other.pid && this->ppid == other.ppid && this->exePath == other.exePath
@@ -176,6 +213,28 @@ namespace FdoSecrets
         clearAuthorization();
         // notify DBusMgr about the removal
         m_dbus->removeClient(this);
+    }
+
+    QString DBusClient::exeHash(int depth, const QString& algo)
+    {
+        if (depth < 0 || depth >= m_process.hierarchy.size()) {
+            return {};
+        }
+        const auto key = qMakePair(depth, algo);
+        const auto it = m_exeHashes.constFind(key);
+        if (it != m_exeHashes.constEnd()) {
+            return *it;
+        }
+        QString hash;
+        if (const auto hashAlgo = exeHashAlgoFromName(algo)) {
+            hash = hashProcExe(m_process.hierarchy.at(depth).pid, *hashAlgo);
+        } else {
+            // caching the failure also limits this to once per connection
+            qWarning() << "FdoSecrets: unsupported executable hash algorithm" << algo << "in a rule matched against"
+                       << name();
+        }
+        m_exeHashes.insert(key, hash);
+        return hash;
     }
 
     QSharedPointer<CipherPair>

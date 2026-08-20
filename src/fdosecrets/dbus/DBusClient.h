@@ -19,6 +19,7 @@
 #ifndef KEEPASSXC_FDOSECRETS_DBUSCLIENT_H
 #define KEEPASSXC_FDOSECRETS_DBUSCLIENT_H
 
+#include <QHash>
 #include <QPair>
 #include <QPointer>
 #include <QSet>
@@ -104,6 +105,7 @@ namespace FdoSecrets
          * @param process the process info
          */
         explicit DBusClient(DBusMgr* dbus, PeerInfo process);
+        virtual ~DBusClient() = default;
 
         DBusMgr* dbus() const;
 
@@ -138,6 +140,22 @@ namespace FdoSecrets
 
         QSharedPointer<CipherPair>
         negotiateCipher(const QString& algorithm, const QVariant& input, QVariant& output, bool& incomplete);
+
+        /**
+         * Digest (lowercase hex) of the executable content of the process at
+         * @a depth in the hierarchy, using the hash algorithm named @a algo
+         * (currently only "sha256"). The content is read via /proc/PID/exe, so
+         * the original binary is hashed even if its path has since been replaced
+         * or deleted.
+         *
+         * Empty when unavailable: depth out of range, unsupported algorithm
+         * (logged), process gone, not readable (different uid or PR_SET_DUMPABLE
+         * cleared), or platform without /proc. Results including failures are
+         * cached for the connection lifetime: a live process cannot change its
+         * /proc/PID/exe, and a reused pid must not produce a different hash than
+         * the process first seen at that depth.
+         */
+        virtual QString exeHash(int depth, const QString& algo);
 
         /**
          * Check if the item is known in this client's auth list
@@ -191,6 +209,8 @@ namespace FdoSecrets
 
         QSet<ItemKey> m_allowedOnce{};
         QSet<ItemKey> m_deniedOnce{};
+
+        QHash<QPair<int, QString>, QString> m_exeHashes{};
     };
 
     using DBusClientPtr = QSharedPointer<DBusClient>;
