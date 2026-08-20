@@ -39,6 +39,12 @@ private slots:
     void testRecordKeyProtected();
     void testMergeKeepsRecords();
     void testExeHash();
+    void testRuleMatching();
+    void testBuildMatchRule();
+    void testFingerprintChanged();
+    void testIdentifyingRule();
+    void testResolveOverlap();
+    void testResolverDecision();
 
 private:
     MockClock* m_clock = nullptr;
