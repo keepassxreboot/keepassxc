@@ -124,6 +124,7 @@ private slots:
     void testEntryEditorDecisions();
     void testEntryEditorHistoryReadOnly();
     void testEntryEditorHistoryRevert();
+    void testAppSettingsAuthorizationColumn();
 
 private:
     bool driveUnlockDialog(DatabaseWidget* target = nullptr);

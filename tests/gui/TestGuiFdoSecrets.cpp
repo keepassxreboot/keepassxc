@@ -28,6 +28,7 @@
 #include "fdosecrets/widgets/ClientAuthModels.h"
 #include "fdosecrets/widgets/ClientRecordDialog.h"
 #include "fdosecrets/widgets/DatabaseSettingsWidgetFdoSecrets.h"
+#include "fdosecrets/widgets/SettingsModels.h"
 #include "gui/entry/EditEntryWidget.h"
 
 #include "config-keepassx-tests.h"
@@ -2712,6 +2713,46 @@ void TestGuiFdoSecrets::testEntryEditorHistoryRevert()
     buttonBox->button(QDialogButtonBox::Ok)->click();
     VERIFY(waitForSignal(finished, 1));
     COMPARE(entryClientDecisions(entry).value(record.id), AuthDecision::Allowed);
+}
+
+void TestGuiFdoSecrets::testAppSettingsAuthorizationColumn()
+{
+    FdoSecrets::settings()->setEnabled(true);
+    auto service = enableService();
+    VERIFY(service);
+
+    SettingsClientModel model(*m_plugin->dbus(), m_plugin->dbTabs());
+    COMPARE(model.rowCount({}), 1);
+    const auto authzIndex = model.index(0, SettingsClientModel::ColumnAuthorization);
+    const auto exePath = m_client->processInfo().exePath();
+    VERIFY(!exePath.isEmpty());
+
+    // an unknown client shows no authorization at all
+    COMPARE(authzIndex.data().toString(), QStringLiteral("none"));
+
+    // a record matching the connected client names the database it lives in
+    auto record = makeRecord(QStringLiteral("fake"), exePath, 60);
+    saveClientRecord(m_db.data(), record);
+    QSignalSpy changed(&model, &QAbstractItemModel::dataChanged);
+    VERIFY(waitForSignal(changed, 1));
+    const auto dbName = QFileInfo(m_db->filePath()).fileName();
+    COMPARE(authzIndex.data().toString(), QStringLiteral("%1: fake").arg(dbName));
+
+    // an executable whose content no longer matches must be re-authorized
+    m_client.staticCast<FakeClient>()->hashes.insert(0, QStringLiteral("current"));
+    record.rules.first().conditions << RuleCondition{
+        0, RuleCondition::Kind::Hash, QStringLiteral("stale"), FdoSecrets::DefaultExeHashAlgo};
+    saveClientRecord(m_db.data(), record);
+    changed.clear();
+    VERIFY(waitForSignal(changed, 1));
+    COMPARE(authzIndex.data().toString(), QStringLiteral("%1: fake (executable changed)").arg(dbName));
+
+    // a locked database cannot be consulted. Saving already dropped the cached
+    // resolution, so the lock has nothing left to invalidate and the value is
+    // recomputed on the next read.
+    VERIFY(m_dbWidget->save());
+    lockDatabaseInBackend();
+    COMPARE(authzIndex.data().toString(), QStringLiteral("none"));
 }
 
 #undef VERIFY
