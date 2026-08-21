@@ -405,6 +405,69 @@ namespace FdoSecrets
         }
     } // namespace
 
+    namespace
+    {
+        bool conditionsContradict(const RuleCondition& x, const RuleCondition& y)
+        {
+            if (x.depth != y.depth) {
+                return false;
+            }
+            if (x.kind == y.kind) {
+                // digests of different algorithms are unrelatable, anything else
+                // of the same kind must agree on the value
+                if (x.kind == RuleCondition::Kind::Hash && x.algo != y.algo) {
+                    return false;
+                }
+                return x.value != y.value;
+            }
+            if (x.kind == RuleCondition::Kind::Path && y.kind == RuleCondition::Kind::Name) {
+                return QFileInfo(x.value).fileName() != y.value;
+            }
+            if (x.kind == RuleCondition::Kind::Name && y.kind == RuleCondition::Kind::Path) {
+                return QFileInfo(y.value).fileName() != x.value;
+            }
+            return false;
+        }
+
+        bool rulesMayOverlap(const MatchRule& a, const MatchRule& b)
+        {
+            // an empty rule never matches anything
+            if (a.conditions.isEmpty() || b.conditions.isEmpty()) {
+                return false;
+            }
+            // pool both rules' conditions: a contradiction anywhere (including
+            // within a single self-contradictory rule) means no client can
+            // satisfy both rules at once
+            QList<const RuleCondition*> all;
+            for (const auto& cond : a.conditions) {
+                all << &cond;
+            }
+            for (const auto& cond : b.conditions) {
+                all << &cond;
+            }
+            for (int i = 0; i < all.size(); ++i) {
+                for (int j = i + 1; j < all.size(); ++j) {
+                    if (conditionsContradict(*all.at(i), *all.at(j))) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+    } // namespace
+
+    bool recordsOverlap(const ClientRecord& a, const ClientRecord& b)
+    {
+        for (const auto& ruleA : a.rules) {
+            for (const auto& ruleB : b.rules) {
+                if (rulesMayOverlap(ruleA, ruleB)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     ClientResolution resolveClient(const Database* db, DBusClient& client)
     {
         ClientResolution res;

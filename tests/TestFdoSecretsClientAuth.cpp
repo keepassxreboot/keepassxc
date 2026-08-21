@@ -478,6 +478,39 @@ void TestFdoSecretsClientAuth::testResolveOverlap()
     QVERIFY(!res.fingerprintChanged);
 }
 
+void TestFdoSecretsClientAuth::testRecordsOverlap()
+{
+    const auto name0 = [](const QString& value) { return RuleCondition{0, RuleCondition::Kind::Name, value, {}}; };
+
+    // same anchor, and anchors that cannot contradict because they constrain
+    // different processes
+    QVERIFY(recordsOverlap(recordWithRule({{path0()}}), recordWithRule({{path0()}})));
+    QVERIFY(recordsOverlap(recordWithRule({{path0()}}),
+                           recordWithRule({{{1, RuleCondition::Kind::Path, QStringLiteral("/usr/bin/zsh"), {}}}})));
+    // a name is compatible with the path it is the basename of
+    QVERIFY(recordsOverlap(recordWithRule({{path0()}}), recordWithRule({{name0(QStringLiteral("python3"))}})));
+
+    // contradicting values at the same depth
+    QVERIFY(!recordsOverlap(recordWithRule({{path0()}}), recordWithRule({{path0(QStringLiteral("/usr/bin/sh"))}})));
+    QVERIFY(!recordsOverlap(recordWithRule({{path0()}}), recordWithRule({{name0(QStringLiteral("sh"))}})));
+    QVERIFY(!recordsOverlap(recordWithRule({{hashAt(0, QStringLiteral("a"))}}),
+                            recordWithRule({{hashAt(0, QStringLiteral("b"))}})));
+
+    // digests of different algorithms say nothing about each other
+    auto md5 = hashAt(0, QStringLiteral("b"));
+    md5.algo = QStringLiteral("md5");
+    QVERIFY(recordsOverlap(recordWithRule({{hashAt(0, QStringLiteral("a"))}}), recordWithRule({{md5}})));
+
+    // a record overlaps as soon as any pair of its rules can
+    auto twoRules = recordWithRule({{path0(QStringLiteral("/usr/bin/sh"))}});
+    twoRules.rules << MatchRule{{path0()}};
+    QVERIFY(recordsOverlap(twoRules, recordWithRule({{path0()}})));
+
+    // rules that never match overlap with nothing
+    QVERIFY(!recordsOverlap(recordWithRule(MatchRule{}), recordWithRule({{path0()}})));
+    QVERIFY(!recordsOverlap(ClientRecord{}, recordWithRule({{path0()}})));
+}
+
 void TestFdoSecretsClientAuth::testResolverDecision()
 {
     QScopedPointer<Database> db(new Database());

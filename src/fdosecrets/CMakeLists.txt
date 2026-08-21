@@ -10,6 +10,8 @@ if(KPXC_FEATURE_FDOSECRETS)
 
         # per database settings page
         widgets/DatabaseSettingsWidgetFdoSecrets.cpp
+        widgets/ClientAuthModels.cpp
+        widgets/ClientRecordDialog.cpp
 
         # prompt dialog
         widgets/AccessControlDialog.cpp

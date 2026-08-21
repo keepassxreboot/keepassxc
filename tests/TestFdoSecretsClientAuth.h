@@ -43,6 +43,7 @@ private slots:
     void testBuildMatchRule();
     void testFingerprintChanged();
     void testResolveOverlap();
+    void testRecordsOverlap();
     void testResolverDecision();
 
 private:

@@ -177,6 +177,19 @@ namespace FdoSecrets
     };
 
     /**
+     * Best-effort static check whether two records can match the same client:
+     * true unless some pair of their rules is contradiction-free. Conditions
+     * contradict when they require different values of the same kind (or
+     * different digests of the same algorithm) at the same depth, or a name
+     * that is not the basename of a required path. Conditions at unshared
+     * depths never contradict, so a record anchored only on an ancestor
+     * overlaps everything below it. Used by the settings editor to flag
+     * overlapping configurations; actual resolution stays deterministic via
+     * resolveClient().
+     */
+    bool recordsOverlap(const ClientRecord& a, const ClientRecord& b);
+
+    /**
      * Resolve @a client to at most one identity record persisted in @a db.
      * Overlapping records (a configuration smell, flagged in the editor) are
      * resolved deterministically: a denying catch-all wins, then the earliest

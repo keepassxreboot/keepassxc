@@ -25,6 +25,9 @@
 #include "fdosecrets/objects/Item.h"
 #include "fdosecrets/objects/SessionCipher.h"
 #include "fdosecrets/widgets/AccessControlDialog.h"
+#include "fdosecrets/widgets/ClientAuthModels.h"
+#include "fdosecrets/widgets/ClientRecordDialog.h"
+#include "fdosecrets/widgets/DatabaseSettingsWidgetFdoSecrets.h"
 
 #include "config-keepassx-tests.h"
 
@@ -2380,6 +2383,172 @@ void TestGuiFdoSecrets::processEvents()
 }
 
 // the following functions have return value, switch macros to the version supporting that
+namespace
+{
+    // A record anchored on the given path, created far enough in the past that
+    // tests can order records by creation without waiting.
+    ClientRecord makeRecord(const QString& name, const QString& path, int agoSeconds)
+    {
+        ClientRecord record;
+        record.id = QUuid::createUuid();
+        record.name = name;
+        record.created = Clock::currentDateTimeUtc().addSecs(-agoSeconds);
+        record.rules << MatchRule{{{0, RuleCondition::Kind::Path, path, {}}}};
+        return record;
+    }
+} // namespace
+
+void TestGuiFdoSecrets::testDbSettingsRecordList()
+{
+    FdoSecrets::settings()->setEnabled(true);
+    auto firefox = makeRecord(QStringLiteral("firefox"), QStringLiteral("/usr/bin/firefox"), 120);
+    firefox.allEntries = AuthDecision::Allowed;
+    auto secretTool = makeRecord(QStringLiteral("secret-tool"), QStringLiteral("/usr/bin/secret-tool"), 60);
+    saveClientRecord(m_db.data(), firefox);
+    saveClientRecord(m_db.data(), secretTool);
+
+    auto entries = m_db->rootGroup()->entriesRecursive();
+    VERIFY(entries.size() >= 2);
+    setEntryClientDecision(entries[0], firefox.id, AuthDecision::Allowed);
+    setEntryClientDecision(entries[1], firefox.id, AuthDecision::Denied);
+
+    DatabaseSettingsWidgetFdoSecrets widget;
+    widget.loadSettings(m_db);
+    auto view = widget.findChild<QTableView*>("recordsView");
+    VERIFY(view);
+    auto model = view->model();
+    VERIFY(model);
+
+    // ordered by creation, oldest first
+    COMPARE(model->rowCount(), 2);
+    using Model = FdoSecrets::ClientRecordsModel;
+    COMPARE(model->index(0, Model::ColumnName).data().toString(), QStringLiteral("firefox"));
+    COMPARE(model->index(1, Model::ColumnName).data().toString(), QStringLiteral("secret-tool"));
+    COMPARE(model->index(0, Model::ColumnRules).data().toString(), QStringLiteral("path: /usr/bin/firefox"));
+    COMPARE(model->index(0, Model::ColumnDecisions).data().toString(),
+            QStringLiteral("Allowed: 1, Denied: 1, Others: allow"));
+    COMPARE(model->index(1, Model::ColumnDecisions).data().toString(),
+            QStringLiteral("Allowed: 0, Denied: 0, Others: ask"));
+}
+
+void TestGuiFdoSecrets::testDbSettingsRecordEdit()
+{
+    FdoSecrets::settings()->setEnabled(true);
+    auto record = makeRecord(QStringLiteral("firefox"), QStringLiteral("/usr/bin/firefox"), 60);
+    saveClientRecord(m_db.data(), record);
+    // creation times are stored with second precision, so compare against the
+    // record as the database has it
+    record = loadClientRecord(m_db.data(), record.id);
+    auto entry = m_db->rootGroup()->entriesRecursive().first();
+    setEntryClientDecision(entry, record.id, AuthDecision::Allowed);
+
+    DatabaseSettingsWidgetFdoSecrets widget;
+    widget.loadSettings(m_db);
+    auto view = widget.findChild<QTableView*>("recordsView");
+    VERIFY(view);
+    view->setCurrentIndex(view->model()->index(0, 0));
+
+    // the modal dialog blocks in exec(), so drive it from the event loop
+    QTimer::singleShot(0, this, [this]() {
+        auto dlg = m_mainWindow->findChild<FdoSecrets::ClientRecordDialog*>();
+        if (!dlg) {
+            for (auto w : QApplication::topLevelWidgets()) {
+                dlg = qobject_cast<FdoSecrets::ClientRecordDialog*>(w);
+                if (dlg) {
+                    break;
+                }
+            }
+        }
+        QVERIFY(dlg);
+
+        auto nameEdit = dlg->findChild<QLineEdit*>("nameEdit");
+        QVERIFY(nameEdit);
+        nameEdit->setText(QStringLiteral("firefox-esr"));
+
+        auto allEntries = dlg->findChild<QComboBox*>("allEntriesCombo");
+        QVERIFY(allEntries);
+        allEntries->setCurrentIndex(2); // deny
+
+        // the entry decision listed here can only be removed
+        auto decisions = dlg->findChild<QTableView*>("entryDecisionsView");
+        QVERIFY(decisions);
+        QCOMPARE(decisions->model()->rowCount(), 1);
+        decisions->setCurrentIndex(decisions->model()->index(0, 0));
+        auto removeButton = dlg->findChild<QPushButton*>("removeDecisionButton");
+        QVERIFY(removeButton);
+        QVERIFY(removeButton->isEnabled());
+        removeButton->click();
+        QCOMPARE(decisions->model()->rowCount(), 0);
+
+        dlg->accept();
+    });
+    widget.findChild<QPushButton*>("recordEditButton")->click();
+    processEvents();
+
+    // staged only: the database still holds the record as it was
+    COMPARE(loadClientRecord(m_db.data(), record.id), record);
+    COMPARE(entryClientDecisions(entry).value(record.id), AuthDecision::Allowed);
+
+    widget.saveSettings();
+    const auto stored = loadClientRecord(m_db.data(), record.id);
+    VERIFY(stored.isValid());
+    COMPARE(stored.name, QStringLiteral("firefox-esr"));
+    COMPARE(stored.allEntries, AuthDecision::Denied);
+    COMPARE(stored.rules, record.rules);
+    VERIFY(!entryClientDecisions(entry).contains(record.id));
+}
+
+void TestGuiFdoSecrets::testDbSettingsRecordRemove()
+{
+    FdoSecrets::settings()->setEnabled(true);
+    auto record = makeRecord(QStringLiteral("firefox"), QStringLiteral("/usr/bin/firefox"), 60);
+    saveClientRecord(m_db.data(), record);
+    auto entry = m_db->rootGroup()->entriesRecursive().first();
+    setEntryClientDecision(entry, record.id, AuthDecision::Allowed);
+
+    DatabaseSettingsWidgetFdoSecrets widget;
+    widget.loadSettings(m_db);
+    auto view = widget.findChild<QTableView*>("recordsView");
+    VERIFY(view);
+    view->setCurrentIndex(view->model()->index(0, 0));
+
+    widget.findChild<QPushButton*>("recordRemoveButton")->click();
+    processEvents();
+    COMPARE(view->model()->rowCount(), 0);
+    // the row is gone from the page, but the database keeps it until saved
+    VERIFY(loadClientRecord(m_db.data(), record.id).isValid());
+
+    widget.saveSettings();
+    VERIFY(!loadClientRecord(m_db.data(), record.id).isValid());
+    // the removal sweeps the decisions referencing the record
+    VERIFY(entryClientDecisions(entry).isEmpty());
+}
+
+void TestGuiFdoSecrets::testDbSettingsOverlapWarning()
+{
+    FdoSecrets::settings()->setEnabled(true);
+    saveClientRecord(m_db.data(), makeRecord(QStringLiteral("firefox"), QStringLiteral("/usr/bin/firefox"), 120));
+
+    DatabaseSettingsWidgetFdoSecrets widget;
+    widget.loadSettings(m_db);
+    auto warning = widget.findChild<MessageWidget*>("authzWarning");
+    VERIFY(warning);
+    // the page itself is never shown here, so only explicit hiding is observable
+    VERIFY(warning->isHidden());
+
+    // a second record anchored on the same path can match the same client
+    saveClientRecord(m_db.data(), makeRecord(QStringLiteral("firefox-copy"), QStringLiteral("/usr/bin/firefox"), 60));
+    widget.loadSettings(m_db);
+    VERIFY(!warning->isHidden());
+    VERIFY(warning->text().contains(QStringLiteral("firefox-copy")));
+
+    // a record for a different executable does not overlap
+    removeClientRecord(m_db.data(), loadClientRecords(m_db.data()).last().id);
+    saveClientRecord(m_db.data(), makeRecord(QStringLiteral("pinentry"), QStringLiteral("/usr/bin/pinentry"), 30));
+    widget.loadSettings(m_db);
+    VERIFY(warning->isHidden());
+}
+
 #undef VERIFY
 #undef VERIFY2
 #undef COMPARE
