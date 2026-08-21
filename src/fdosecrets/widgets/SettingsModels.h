@@ -76,7 +76,7 @@ namespace FdoSecrets
     {
         Q_OBJECT
     public:
-        explicit SettingsClientModel(DBusMgr& dbus, QObject* parent = nullptr);
+        explicit SettingsClientModel(DBusMgr& dbus, DatabaseTabWidget* dbTabs, QObject* parent = nullptr);
 
         int rowCount(const QModelIndex& parent) const override;
         int columnCount(const QModelIndex& parent) const override;
@@ -88,32 +88,50 @@ namespace FdoSecrets
             ColumnApplication,
             ColumnPID,
             ColumnDBus,
-            ColumnManage,
+            ColumnAuthorization,
         };
         static constexpr const char* ColumnNames[] = {
             QT_TRANSLATE_NOOP("SettingsClientModel", "Application"),
             QT_TRANSLATE_NOOP("SettingsClientModel", "PID"),
             QT_TRANSLATE_NOOP("SettingsClientModel", "DBus Address"),
-            QT_TRANSLATE_NOOP("SettingsClientModel", "Manage"),
+            QT_TRANSLATE_NOOP("SettingsClientModel", "Authorization"),
         };
 
     private:
         QVariant dataForApplication(const DBusClientPtr& client, int role) const;
         QVariant dataForPID(const DBusClientPtr& client, int role) const;
         QVariant dataForDBus(const DBusClientPtr& client, int role) const;
-        QVariant dataForManage(const DBusClientPtr& client, int role) const;
+        QVariant dataForAuthorization(const DBusClientPtr& client, int role) const;
+
+        /**
+         * What @a client resolves to in every open unlocked database, computed
+         * once per client and kept until something invalidates it: resolving
+         * hashes the client's executable, which is too expensive to redo for
+         * every repaint.
+         */
+        struct Authorization
+        {
+            QString summary;
+            QString toolTip;
+        };
+        const Authorization& authorization(const DBusClientPtr& client) const;
+        void connectDatabase(DatabaseWidget* dbWidget);
 
     private slots:
         void populateModel();
         void clientConnected(const DBusClientPtr& client, bool emitSignals);
         void clientDisconnected(const DBusClientPtr& client);
+        /// Drop the cached resolutions, e.g. after a database was unlocked
+        void invalidateAuthorizations();
 
     private:
         // source
         DBusMgr& m_dbus;
+        QPointer<DatabaseTabWidget> m_dbTabs;
 
         // internal copy, so we can emit with changed index
         QList<DBusClientPtr> m_clients;
+        mutable QHash<QString, Authorization> m_authorizations;
     };
 
 } // namespace FdoSecrets

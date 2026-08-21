@@ -19,6 +19,7 @@
 #ifndef KEEPASSXC_FDOSECRETS_DBUSCLIENT_H
 #define KEEPASSXC_FDOSECRETS_DBUSCLIENT_H
 
+#include <QHash>
 #include <QPointer>
 #include <QSet>
 #include <QUuid>
@@ -101,6 +102,7 @@ namespace FdoSecrets
          * @param process the process info
          */
         explicit DBusClient(DBusMgr* dbus, PeerInfo process);
+        virtual ~DBusClient() = default;
 
         DBusMgr* dbus() const;
 
@@ -137,29 +139,39 @@ namespace FdoSecrets
         negotiateCipher(const QString& algorithm, const QVariant& input, QVariant& output, bool& incomplete);
 
         /**
-         * Check if the item is known in this client's auth list
+         * Digest (lowercase hex) of the executable content of the process at
+         * @a depth in the hierarchy, using the hash algorithm named @a algo
+         * (currently only "sha256"). The content is read via /proc/PID/exe, so
+         * the original binary is hashed even if its path has since been replaced
+         * or deleted.
+         *
+         * Empty when unavailable: depth out of range, unsupported algorithm
+         * (logged), process gone, not readable (different uid or PR_SET_DUMPABLE
+         * cleared), or platform without /proc. Results including failures are
+         * cached for the connection lifetime: a live process cannot change its
+         * /proc/PID/exe, and a reused pid must not produce a different hash than
+         * the process first seen at that depth.
          */
-        bool itemKnown(const QUuid& uuid) const;
+        virtual QString exeHash(int depth, const QString& algo);
 
         /**
-         * Check if client may access item identified by @a uuid.
+         * This connection's decision for the item, with denials taking
+         * precedence. Undecided when the client was never asked. This is raw
+         * connection state: whether the client may actually access an item is
+         * answered only by Service::authDecision(), which layers this over the
+         * decisions persisted in the item's database.
          */
-        bool itemAuthorized(const QUuid& uuid) const;
+        AuthDecision connectionDecision(const QUuid& uuid) const;
 
         /**
-         * Check if client may access item identified by @a uuid, and also reset any once auth.
+         * Consume any once decision for @a uuid.
          */
-        bool itemAuthorizedResetOnce(const QUuid& uuid);
+        void resetOnce(const QUuid& uuid);
 
         /**
-         * Authorize client to access item identified by @a uuid.
+         * Record this connection's decision for the item identified by @a uuid.
          */
-        void setItemAuthorized(const QUuid& uuid, AuthDecision auth);
-
-        /**
-         * Authorize client to access all items.
-         */
-        void setAllAuthorized(AuthDecision authorized);
+        void setConnectionDecision(const QUuid& uuid, AuthDecision auth);
 
         /**
          * Forget all previous authorization.
@@ -176,13 +188,13 @@ namespace FdoSecrets
         QPointer<DBusMgr> m_dbus;
         PeerInfo m_process;
 
-        AuthDecision m_authorizedAll{AuthDecision::Undecided};
-
         QSet<QUuid> m_allowed{};
         QSet<QUuid> m_denied{};
 
         QSet<QUuid> m_allowedOnce{};
         QSet<QUuid> m_deniedOnce{};
+
+        QHash<QPair<int, QString>, QString> m_exeHashes{};
     };
 
     using DBusClientPtr = QSharedPointer<DBusClient>;

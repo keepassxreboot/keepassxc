@@ -18,14 +18,50 @@
 
 #include "DBusClient.h"
 
-#include "fdosecrets/FdoSecretsSettings.h"
 #include "fdosecrets/dbus/DBusMgr.h"
 #include "fdosecrets/objects/SessionCipher.h"
+
+#include <QCryptographicHash>
+#include <QFile>
 
 #include <utility>
 
 namespace FdoSecrets
 {
+    namespace
+    {
+        QString hashProcExe(uint pid, QCryptographicHash::Algorithm algo)
+        {
+#ifdef Q_OS_LINUX
+            QFile exe(QStringLiteral("/proc/%1/exe").arg(pid));
+            if (!exe.open(QIODevice::ReadOnly)) {
+                return {};
+            }
+            QCryptographicHash hash(algo);
+            if (!hash.addData(&exe)) {
+                return {};
+            }
+            return QString::fromLatin1(hash.result().toHex());
+#else
+            // no way to reach the original binary content, only the (replaceable)
+            // path; hash conditions then never match
+            Q_UNUSED(pid);
+            Q_UNUSED(algo);
+            return {};
+#endif
+        }
+
+        // the named hash algorithms usable in client identity rules
+        bool supportedExeHashAlgo(const QString& algo, QCryptographicHash::Algorithm& out)
+        {
+            if (algo == QStringLiteral("sha256")) {
+                out = QCryptographicHash::Sha256;
+                return true;
+            }
+            return false;
+        }
+    } // namespace
+
     bool ProcInfo::operator==(const ProcInfo& other) const
     {
         return this->pid == other.pid && this->ppid == other.ppid && this->exePath == other.exePath
@@ -71,49 +107,31 @@ namespace FdoSecrets
         return exePath;
     }
 
-    bool DBusClient::itemKnown(const QUuid& uuid) const
+    AuthDecision DBusClient::connectionDecision(const QUuid& uuid) const
     {
-        return m_authorizedAll != AuthDecision::Undecided || m_allowed.contains(uuid) || m_allowedOnce.contains(uuid)
-               || m_denied.contains(uuid) || m_deniedOnce.contains(uuid);
+        // individual decisions, denials take precedence
+        if (m_deniedOnce.contains(uuid)) {
+            return AuthDecision::DeniedOnce;
+        }
+        if (m_denied.contains(uuid)) {
+            return AuthDecision::Denied;
+        }
+        if (m_allowedOnce.contains(uuid)) {
+            return AuthDecision::AllowedOnce;
+        }
+        if (m_allowed.contains(uuid)) {
+            return AuthDecision::Allowed;
+        }
+        return AuthDecision::Undecided;
     }
 
-    bool DBusClient::itemAuthorized(const QUuid& uuid) const
+    void DBusClient::resetOnce(const QUuid& uuid)
     {
-        if (!FdoSecrets::settings()->confirmAccessItem()) {
-            // everyone is authorized if this is not enabled
-            return true;
-        }
-
-        // check if we have catch-all decision
-        if (m_authorizedAll == AuthDecision::Allowed) {
-            return true;
-        }
-        if (m_authorizedAll == AuthDecision::Denied) {
-            return false;
-        }
-
-        // individual decisions
-        if (m_deniedOnce.contains(uuid) || m_denied.contains(uuid)) {
-            // explicitly denied
-            return false;
-        }
-        if (m_allowedOnce.contains(uuid) || m_allowed.contains(uuid)) {
-            // explicitly allowed
-            return true;
-        }
-        // haven't asked, not authorized by default
-        return false;
-    }
-
-    bool DBusClient::itemAuthorizedResetOnce(const QUuid& uuid)
-    {
-        auto auth = itemAuthorized(uuid);
         m_deniedOnce.remove(uuid);
         m_allowedOnce.remove(uuid);
-        return auth;
     }
 
-    void DBusClient::setItemAuthorized(const QUuid& uuid, AuthDecision auth)
+    void DBusClient::setConnectionDecision(const QUuid& uuid, AuthDecision auth)
     {
         // uuid should only be in exactly one set at any time
         m_allowed.remove(uuid);
@@ -138,21 +156,8 @@ namespace FdoSecrets
         }
     }
 
-    void DBusClient::setAllAuthorized(AuthDecision authorized)
-    {
-        // once variants doesn't make sense here
-        if (authorized == AuthDecision::AllowedOnce) {
-            authorized = AuthDecision::Allowed;
-        }
-        if (authorized == AuthDecision::DeniedOnce) {
-            authorized = AuthDecision::Denied;
-        }
-        m_authorizedAll = authorized;
-    }
-
     void DBusClient::clearAuthorization()
     {
-        m_authorizedAll = AuthDecision::Undecided;
         m_allowed.clear();
         m_allowedOnce.clear();
         m_denied.clear();
@@ -164,6 +169,29 @@ namespace FdoSecrets
         clearAuthorization();
         // notify DBusMgr about the removal
         m_dbus->removeClient(this);
+    }
+
+    QString DBusClient::exeHash(int depth, const QString& algo)
+    {
+        if (depth < 0 || depth >= m_process.hierarchy.size()) {
+            return {};
+        }
+        const auto key = qMakePair(depth, algo);
+        const auto it = m_exeHashes.constFind(key);
+        if (it != m_exeHashes.constEnd()) {
+            return *it;
+        }
+        QString hash;
+        QCryptographicHash::Algorithm hashAlgo;
+        if (supportedExeHashAlgo(algo, hashAlgo)) {
+            hash = hashProcExe(m_process.hierarchy.at(depth).pid, hashAlgo);
+        } else {
+            // caching the failure also limits this to once per connection
+            qWarning() << "FdoSecrets: unsupported executable hash algorithm" << algo << "in a rule matched against"
+                       << name();
+        }
+        m_exeHashes.insert(key, hash);
+        return hash;
     }
 
     QSharedPointer<CipherPair>

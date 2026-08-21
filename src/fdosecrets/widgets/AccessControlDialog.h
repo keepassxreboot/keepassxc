@@ -22,14 +22,20 @@
 
 #include <QAbstractTableModel>
 #include <QCheckBox>
+#include <QDateTime>
 #include <QDialog>
+#include <QHash>
+#include <QPixmap>
 #include <QPointer>
 #include <QPushButton>
+#include <QRadioButton>
 #include <QSet>
+#include <QUuid>
 
 #include "core/Global.h"
 
 class Entry;
+class QTreeWidgetItem;
 
 namespace Ui
 {
@@ -44,11 +50,29 @@ namespace FdoSecrets
 enum class AuthOption
 {
     None = 0,
-    Remember = 1 << 1,
+    /// offer the scopes that store the decision in the database
+    Persist = 1 << 1,
     PerEntryDeny = 1 << 2,
 };
 Q_DECLARE_FLAGS(AuthOptions, AuthOption);
 Q_DECLARE_OPERATORS_FOR_FLAGS(AuthOptions);
+
+/**
+ * A fingerprint change detected against a persisted identity record: the client
+ * is identified by its non-hash conditions, but the executable content at the
+ * given hierarchy depths no longer matches the recorded hashes.
+ */
+struct FingerprintChangeInfo
+{
+    QSet<int> mismatchedDepths;
+    /// when the changed record was originally created
+    QDateTime authorizedOn;
+
+    bool isChanged() const
+    {
+        return !mismatchedDepths.isEmpty();
+    }
+};
 
 class AccessControlDialog : public QDialog
 {
@@ -59,43 +83,88 @@ public:
                                  const QList<Entry*>& entries,
                                  const QString& app,
                                  const FdoSecrets::PeerInfo& info,
-                                 AuthOptions authOptions = AuthOption::Remember | AuthOption::PerEntryDeny);
+                                 AuthOptions authOptions = AuthOption::Persist | AuthOption::PerEntryDeny,
+                                 const FingerprintChangeInfo& fingerprintChange = {});
     ~AccessControlDialog() override;
 
     enum DialogCode
     {
         Rejected,
-        AllowSelected,
-        AllowAll,
-        DenyAll,
+        Allow,
+        Deny,
     };
 
-    QHash<Entry*, AuthDecision> decisions() const;
+    /**
+     * How far the verdict reaches. Selected and Future are stored in the
+     * database; Future additionally covers entries the client has not asked
+     * for yet, which is a statement that only makes sense stored.
+     */
+    enum class Scope
+    {
+        Once,
+        Selected,
+        Future,
+    };
+
+    QHash<QUuid, AuthDecision> decisions() const;
+
+    /**
+     * The hierarchy depths the Match column currently selects for a new rule.
+     */
+    QSet<int> selectedMatchDepths() const;
 
 signals:
-    void finished(const QHash<Entry*, AuthDecision>& results, AuthDecision forFutureEntries);
+    /**
+     * @param results per shown entry decision
+     * @param forFutureEntries catch-all decision covering entries not shown
+     * @param persist store the decisions in the affected databases
+     * @param matchDepths hierarchy depths a newly created identity rule anchors on
+     */
+    void finished(const QHash<QUuid, AuthDecision>& results,
+                  AuthDecision forFutureEntries,
+                  bool persist,
+                  const QSet<int>& matchDepths);
 
 private slots:
-    void denyEntryClicked(Entry* entry, const QModelIndex& index);
+    void denyEntryClicked(const QUuid& uuid, const QModelIndex& index);
     void dialogFinished(int result);
 
 private:
     class EntryModel;
     class DenyButton;
 
-    void setupDetails(const FdoSecrets::PeerInfo& info);
+    // procTree columns
+    enum ProcColumn
+    {
+        ColumnName = 0,
+        ColumnMatch,
+        ColumnPid,
+        ColumnExe,
+        ColumnCommand,
+    };
+
+    void setupDetails(const FdoSecrets::PeerInfo& info, const FingerprintChangeInfo& fingerprintChange);
+    void setMatchColumnEnabled(bool enabled);
+
+    Scope scope() const;
 
     QScopedPointer<Ui::AccessControlDialog> m_ui;
-    QPointer<QCheckBox> m_rememberCheck;
+    QPointer<QRadioButton> m_scopeOnce;
+    QPointer<QRadioButton> m_scopeSelected;
+    QPointer<QRadioButton> m_scopeFuture;
     QScopedPointer<EntryModel> m_model;
-    QHash<Entry*, AuthDecision> m_decisions;
+    QHash<QUuid, AuthDecision> m_decisions;
+    // per-entry deny intents, mapped to decisions when the dialog concludes
+    QSet<QUuid> m_deniedEntries;
+    // procTree row for each hierarchy depth
+    QHash<int, QTreeWidgetItem*> m_procItems;
 };
 
 class AccessControlDialog::EntryModel : public QAbstractTableModel
 {
     Q_OBJECT
 public:
-    explicit EntryModel(QList<Entry*> entries, QObject* parent = nullptr);
+    explicit EntryModel(const QList<Entry*>& entries, QObject* parent = nullptr);
 
     int rowCount(const QModelIndex& parent) const override;
     int columnCount(const QModelIndex& parent) const override;
@@ -106,29 +175,40 @@ public slots:
     void toggleCheckState(const QModelIndex& index);
 
 private:
+    // A snapshot of everything shown about an entry, taken at construction.
+    // The dialog must not keep Entry pointers: the entries are destroyed if
+    // the database locks or closes while the dialog is open.
+    struct EntryData
+    {
+        QUuid uuid;
+        QString title;
+        QString username;
+        QPixmap icon;
+    };
+
     bool isValid(const QModelIndex& index) const;
 
-    QList<Entry*> m_entries;
-    QSet<Entry*> m_selected;
+    QList<EntryData> m_entries;
+    QSet<QUuid> m_selected;
 };
 
 class AccessControlDialog::DenyButton : public QPushButton
 {
     Q_OBJECT
 
-    Q_PROPERTY(Entry* entry READ entry WRITE setEntry USER true)
+    Q_PROPERTY(QUuid uuid READ uuid WRITE setUuid USER true)
 
     QPersistentModelIndex m_index;
-    QPointer<Entry> m_entry;
+    QUuid m_uuid;
 
 public:
     explicit DenyButton(QWidget* p, const QModelIndex& idx);
 
-    void setEntry(Entry* e);
-    Entry* entry() const;
+    void setUuid(const QUuid& uuid);
+    QUuid uuid() const;
 
 signals:
-    void clicked(Entry*, const QModelIndex& idx);
+    void clicked(const QUuid& uuid, const QModelIndex& idx);
 };
 
 #endif // KEEPASSXC_FDOSECRETS_ACCESSCONTROLDIALOG_H

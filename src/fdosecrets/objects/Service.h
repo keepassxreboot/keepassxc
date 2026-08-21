@@ -18,6 +18,7 @@
 #ifndef KEEPASSXC_FDOSECRETS_SERVICE_H
 #define KEEPASSXC_FDOSECRETS_SERVICE_H
 
+#include "fdosecrets/ClientAuth.h"
 #include "fdosecrets/dbus/DBusClient.h"
 #include "fdosecrets/dbus/DBusObject.h"
 
@@ -113,6 +114,20 @@ namespace FdoSecrets
             return m_plugin;
         }
 
+        /**
+         * The authorization decision of @a client for @a entry, the only place
+         * where all its sources combine: everyone is Allowed while the
+         * confirmAccessItem setting is off; otherwise the client's decision for
+         * this connection wins, falling back to the decision persisted in the
+         * entry's database. Undecided means the user has to be asked.
+         */
+        AuthDecision authDecision(const DBusClientPtr& client, const Entry* entry);
+
+        /**
+         * Same as authDecision(), also consuming any once decision.
+         */
+        AuthDecision consumeAuthDecision(const DBusClientPtr& client, const Entry* entry);
+
     public slots:
         bool doLockDatabase(DatabaseWidget* dbWidget);
         bool doCloseDatabase(DatabaseWidget* dbWidget);
@@ -175,7 +190,16 @@ namespace FdoSecrets
         bool m_insideEnsureDefaultAlias{false};
         bool m_unlockingAnyDatabase{false};
         // list of db currently has unlock dialog shown
-        QHash<const DatabaseWidget*, QMetaObject::Connection> m_unlockingDb{};
+        struct UnlockingDbEntry
+        {
+            // oneshot connection on databaseUnlocked, delaying the done signal
+            // until the database has actually finished unlocking
+            QMetaObject::Connection unlockedConn;
+            // cleanup in case the widget is destroyed while its dialog is open,
+            // otherwise the stale entry would block unlock dialogs forever
+            QMetaObject::Connection destroyedConn;
+        };
+        QHash<const DatabaseWidget*, UnlockingDbEntry> m_unlockingDb{};
         QSet<const DatabaseWidget*> m_lockingDb{}; // list of db being locking
     };
 

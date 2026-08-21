@@ -244,7 +244,19 @@ namespace FdoSecrets
 
     void DBusMgr::overrideClient(const DBusClientPtr& fake)
     {
+        // the override stands in for a connected client everywhere, including
+        // the list the settings page shows
+        if (m_overrideClient) {
+            const auto previous = m_overrideClient;
+            m_clients.remove(previous->address());
+            m_overrideClient.reset();
+            emit clientDisconnected(previous);
+        }
         m_overrideClient = fake;
+        if (m_overrideClient) {
+            m_clients.insert(m_overrideClient->address(), m_overrideClient);
+            emit clientConnected(m_overrideClient);
+        }
     }
 
     QList<DBusClientPtr> DBusMgr::clients() const

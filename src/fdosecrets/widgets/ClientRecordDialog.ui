@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ClientRecordDialog</class>
+ <widget class="QDialog" name="ClientRecordDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>640</width>
+    <height>760</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Secret Service Client Authorization</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,3,2,0">
+   <item>
+    <widget class="MessageWidget" name="overlapWarning" native="true"/>
+   </item>
+   <item>
+    <layout class="QFormLayout" name="formLayout">
+     <item row="0" column="0">
+      <widget class="QLabel" name="nameLabel">
+       <property name="text">
+        <string>Name:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="nameEdit">
+       <property name="accessibleName">
+        <string>Display name of the client</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="createdLabel">
+       <property name="text">
+        <string>Created:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLabel" name="createdValue">
+       <property name="text">
+        <string notr="true">-</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>1</width>
+       <height>6</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="rulesBox">
+     <property name="title">
+      <string>Matching Rules</string>
+     </property>
+     <layout class="QVBoxLayout" name="rulesLayout">
+      <item>
+       <widget class="QLabel" name="rulesHint">
+        <property name="text">
+         <string>A client matches this record when it satisfies every condition of at least one rule. Hash conditions verify the executable content and force re-authorization when it changes; executables of ancestor processes may not be readable.</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="rulesViewLayout">
+        <item>
+         <widget class="QTreeView" name="conditionsView">
+          <property name="uniformRowHeights">
+           <bool>true</bool>
+          </property>
+          <property name="itemsExpandable">
+           <bool>true</bool>
+          </property>
+          <property name="allColumnsShowFocus">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="rulesButtonLayout">
+          <item>
+           <widget class="QPushButton" name="addRuleButton">
+            <property name="text">
+             <string>Add Rule</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="addConditionButton">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Add Condition</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="removeConditionButton">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Remove</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="hashFromFileButton">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="toolTip">
+             <string>Compute the hash value of the selected condition from a file on disk</string>
+            </property>
+            <property name="text">
+             <string>Hash from File…</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="rulesButtonSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="decisionsBox">
+     <property name="title">
+      <string>Access Decisions</string>
+     </property>
+     <layout class="QVBoxLayout" name="decisionsLayout">
+      <item>
+       <widget class="QLabel" name="decisionsHint">
+        <property name="text">
+         <string>New decisions are recorded when answering the access prompt, and can be changed on each entry's Secret Service tab. Here they can only be removed.</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="decisionsViewLayout">
+        <item>
+         <widget class="QTableView" name="entryDecisionsView">
+          <property name="selectionMode">
+           <enum>QAbstractItemView::SingleSelection</enum>
+          </property>
+          <property name="selectionBehavior">
+           <enum>QAbstractItemView::SelectRows</enum>
+          </property>
+          <attribute name="verticalHeaderVisible">
+           <bool>false</bool>
+          </attribute>
+         </widget>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="decisionsButtonLayout">
+          <item>
+           <widget class="QPushButton" name="removeDecisionButton">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Remove</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="decisionsButtonSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="allEntriesLayout">
+        <item>
+         <widget class="QLabel" name="allEntriesLabel">
+          <property name="text">
+           <string>All other entries:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="allEntriesCombo">
+          <property name="sizeAdjustPolicy">
+           <enum>QComboBox::AdjustToContents</enum>
+          </property>
+          <property name="toolTip">
+           <string>Applies to every exposed entry without a decision above, including entries created in the future.</string>
+          </property>
+          <item>
+           <property name="text">
+            <string>Always ask</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Allow</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Deny</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <spacer name="allEntriesSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MessageWidget</class>
+   <extends>QWidget</extends>
+   <header>gui/MessageWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>nameEdit</tabstop>
+  <tabstop>conditionsView</tabstop>
+  <tabstop>addRuleButton</tabstop>
+  <tabstop>addConditionButton</tabstop>
+  <tabstop>removeConditionButton</tabstop>
+  <tabstop>hashFromFileButton</tabstop>
+  <tabstop>entryDecisionsView</tabstop>
+  <tabstop>removeDecisionButton</tabstop>
+  <tabstop>allEntriesCombo</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>ClientRecordDialog</receiver>
+   <slot>accept()</slot>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>ClientRecordDialog</receiver>
+   <slot>reject()</slot>
+  </connection>
+ </connections>
+</ui>

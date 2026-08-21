@@ -22,6 +22,8 @@
 #include "fdosecrets/dbus/DBusClient.h"
 #include "fdosecrets/dbus/DBusObject.h"
 
+#include <QSet>
+
 class QWindow;
 
 class DatabaseWidget;
@@ -112,6 +114,7 @@ namespace FdoSecrets
 
     private:
         bool m_signalSent = false;
+        bool m_scheduled = false;
     };
 
     class Collection;
@@ -169,12 +172,21 @@ namespace FdoSecrets
         QVariant currentResult() const override;
 
         void collectionUnlockFinished(bool accepted);
-        void itemUnlockFinished(const QHash<Entry*, AuthDecision>& results, AuthDecision forFutureEntries);
+        void collectionRetired(Collection* coll);
+        void itemRetired(Item* item);
+        void itemUnlockFinished(const QHash<QUuid, AuthDecision>& results,
+                                AuthDecision forFutureEntries,
+                                bool persist,
+                                const QSet<int>& matchDepths);
         void unlockItems();
 
         QList<QPointer<Collection>> m_collections;
         QHash<Collection*, QList<QPointer<Item>>> m_items;
-        QHash<QUuid, Item*> m_entryToItems;
+        QHash<QUuid, QPointer<Item>> m_entryToItems;
+
+        // collections whose doUnlock was issued and whose outcome is still awaited
+        QSet<Collection*> m_pendingCollections;
+        bool m_unlockItemsStarted = false;
 
         QList<QDBusObjectPath> m_unlocked;
         int m_numRejected = 0;

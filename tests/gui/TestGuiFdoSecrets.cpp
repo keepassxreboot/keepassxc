@@ -18,16 +18,25 @@
 
 #include "TestGuiFdoSecrets.h"
 
+#include "fdosecrets/ClientAuth.h"
 #include "fdosecrets/FdoSecretsPlugin.h"
 #include "fdosecrets/FdoSecretsSettings.h"
 #include "fdosecrets/objects/Collection.h"
 #include "fdosecrets/objects/Item.h"
 #include "fdosecrets/objects/SessionCipher.h"
 #include "fdosecrets/widgets/AccessControlDialog.h"
+#include "fdosecrets/widgets/ClientAuthModels.h"
+#include "fdosecrets/widgets/ClientRecordDialog.h"
+#include "fdosecrets/widgets/DatabaseSettingsWidgetFdoSecrets.h"
+#include "fdosecrets/widgets/SettingsModels.h"
+#include "gui/entry/EditEntryWidget.h"
 
 #include "config-keepassx-tests.h"
 
+#include "core/Clock.h"
+#include "core/Entry.h"
 #include "core/Global.h"
+#include "core/Group.h"
 #include "core/Tools.h"
 #include "crypto/Crypto.h"
 #include "gui/Application.h"
@@ -40,10 +49,19 @@
 #include "util/FdoSecretsProxy.h"
 #include "util/TemporaryFile.h"
 
+#include "gui/MessageWidget.h"
+
 #include <QCheckBox>
+#include <QComboBox>
+#include <QRadioButton>
+#include <QDialogButtonBox>
 #include <QLineEdit>
+#include <QPushButton>
 #include <QSignalSpy>
+#include <QTableView>
 #include <QTest>
+#include <QTreeView>
+#include <QTreeWidget>
 #include <utility>
 
 int main(int argc, char* argv[])
@@ -124,6 +142,19 @@ public:
               {QStringLiteral("local"), 0, true, {ProcInfo{0, 0, QStringLiteral("fake-client"), QString{}, QString{}}}})
     {
     }
+
+    FakeClient(DBusMgr* dbus, FdoSecrets::PeerInfo info)
+        : DBusClient(dbus, std::move(info))
+    {
+    }
+
+    // the fake processes do not exist, so executable hashes are scripted
+    QString exeHash(int depth, const QString& algo) override
+    {
+        return algo == FdoSecrets::DefaultExeHashAlgo ? hashes.value(depth) : QString();
+    }
+
+    QHash<int, QString> hashes;
 };
 
 // pretty print QDBusObjectPath in QCOMPARE
@@ -242,6 +273,9 @@ void TestGuiFdoSecrets::cleanup()
     }
 
     m_client->clearAuthorization();
+    m_client.staticCast<FakeClient>()->hashes.clear();
+    // in case a test overrode the calling client and failed before restoring it
+    m_plugin->dbus()->overrideClient(m_client);
 }
 
 void TestGuiFdoSecrets::cleanupTestCase()
@@ -586,6 +620,84 @@ void TestGuiFdoSecrets::testServiceUnlockDatabaseConcurrent()
     DBUS_COMPARE(coll->locked(), false);
 }
 
+void TestGuiFdoSecrets::testServiceUnlockConcurrentDelete()
+{
+    lockDatabaseInBackend();
+
+    auto service = enableService();
+    VERIFY(service);
+    auto coll = getDefaultCollection(service);
+    VERIFY(coll);
+
+    DBUS_GET2(unlocked, promptPath, service->Unlock({QDBusObjectPath(coll->path())}));
+    COMPARE(unlocked, {});
+
+    auto prompt = getProxy<PromptProxy>(promptPath);
+    VERIFY(prompt);
+    QSignalSpy spyPromptCompleted(prompt.data(), SIGNAL(Completed(bool, QDBusVariant)));
+    VERIFY(spyPromptCompleted.isValid());
+
+    // show the unlock dialog, but do not interact with it
+    DBUS_VERIFY(prompt->Prompt(""));
+    VERIFY(waitForSignal(spyPromptCompleted, 0));
+
+    // while the unlock prompt is waiting for the user, the collection gets deleted
+    DBUS_GET(deletePromptPath, coll->Delete());
+    auto deletePrompt = getProxy<PromptProxy>(deletePromptPath);
+    VERIFY(deletePrompt);
+    QSignalSpy spyDeletePromptCompleted(deletePrompt.data(), SIGNAL(Completed(bool, QDBusVariant)));
+    VERIFY(spyDeletePromptCompleted.isValid());
+    DBUS_VERIFY(deletePrompt->Prompt(""));
+
+    // the deletion completes
+    VERIFY(waitForSignal(spyDeletePromptCompleted, 1));
+    {
+        auto args = spyDeletePromptCompleted.takeFirst();
+        COMPARE(args.count(), 2);
+        COMPARE(args.at(0).toBool(), false);
+    }
+
+    // the unlock prompt completes as dismissed with nothing unlocked, instead of
+    // waiting forever for a collection that no longer exists
+    VERIFY(waitForSignal(spyPromptCompleted, 1));
+    {
+        auto args = spyPromptCompleted.takeFirst();
+        COMPARE(args.count(), 2);
+        COMPARE(args.at(0).toBool(), true);
+        auto unlockedResult = getSignalVariantArgument<QList<QDBusObjectPath>>(args.at(1));
+        VERIFY(unlockedResult.isEmpty());
+    }
+
+    // dismiss the leftover unlock dialog so it does not interfere with other tests
+    auto dbOpenDlg = m_tabWidget->findChild<DatabaseOpenDialog*>();
+    if (dbOpenDlg && dbOpenDlg->isVisible()) {
+        dbOpenDlg->reject();
+        processEvents();
+    }
+
+    // reopen the database; the service must still be able to show unlock dialogs.
+    // A stale Service::m_unlockingDb entry keyed by the destroyed widget used to
+    // block the unlock-any-database dialog forever.
+    m_tabWidget->addDatabaseTab(m_dbFile->fileName(), false, "a");
+    m_dbWidget = m_tabWidget->currentDatabaseWidget();
+    m_db = m_dbWidget->database();
+    processEvents();
+
+    auto entries = m_db->rootGroup()->entriesRecursive();
+    VERIFY(!entries.isEmpty());
+    auto title = entries.first()->title();
+
+    lockDatabaseInBackend();
+
+    FdoSecrets::settings()->setUnlockBeforeSearch(true);
+    bool unlockDialogWorks = false;
+    QTimer::singleShot(50, [&]() { unlockDialogWorks = driveUnlockDialog(); });
+    DBUS_GET2(unlockedItems, lockedItems, service->SearchItems({{"Title", title}}));
+    VERIFY(unlockDialogWorks);
+    COMPARE(lockedItems, {});
+    COMPARE(unlockedItems.size(), 1);
+}
+
 void TestGuiFdoSecrets::testServiceUnlockItems()
 {
     FdoSecrets::settings()->setConfirmAccessItem(true);
@@ -731,6 +843,559 @@ void TestGuiFdoSecrets::testServiceUnlockItemsIncludeFutureEntries()
         VERIFY(anotherItem);
         DBUS_COMPARE(anotherItem->locked(), false);
     }
+}
+
+void TestGuiFdoSecrets::testServiceUnlockItemsConcurrentLock()
+{
+    FdoSecrets::settings()->setConfirmAccessItem(true);
+
+    auto service = enableService();
+    VERIFY(service);
+    auto coll = getDefaultCollection(service);
+    VERIFY(coll);
+    auto item = getFirstItem(coll);
+    VERIFY(item);
+
+    DBUS_COMPARE(item->locked(), true);
+
+    DBUS_GET2(unlocked, promptPath, service->Unlock({QDBusObjectPath(item->path())}));
+    // nothing is unlocked immediately without user's action
+    COMPARE(unlocked, {});
+
+    auto prompt = getProxy<PromptProxy>(promptPath);
+    VERIFY(prompt);
+    QSignalSpy spyPromptCompleted(prompt.data(), SIGNAL(Completed(bool, QDBusVariant)));
+    VERIFY(spyPromptCompleted.isValid());
+
+    // drive the prompt to show the access confirmation dialog, but do not answer it
+    DBUS_VERIFY(prompt->Prompt(""));
+    processEvents();
+
+    QPointer<AccessControlDialog> dlg;
+    for (auto w : QApplication::topLevelWidgets()) {
+        auto acd = qobject_cast<AccessControlDialog*>(w);
+        if (acd && acd->isVisible()) {
+            dlg = acd;
+            break;
+        }
+    }
+    VERIFY(dlg);
+
+    // while the dialog is open, the database locks, destroying the entries
+    // the dialog was asking about
+    lockDatabaseInBackend();
+
+    // the dialog should have withdrawn itself, as the entries it was asking
+    // about no longer exist
+    bool dialogWithdrawn = !dlg || !dlg->isVisible();
+
+    // canceling whatever remains of the dialog must not crash
+    if (dlg) {
+        dlg->reject();
+        processEvents();
+    }
+    VERIFY(dialogWithdrawn);
+
+    // the prompt completes as dismissed with nothing unlocked
+    VERIFY(waitForSignal(spyPromptCompleted, 1));
+    {
+        auto args = spyPromptCompleted.takeFirst();
+        COMPARE(args.count(), 2);
+        COMPARE(args.at(0).toBool(), true);
+        auto unlockedResult = getSignalVariantArgument<QList<QDBusObjectPath>>(args.at(1));
+        VERIFY(unlockedResult.isEmpty());
+    }
+}
+
+void TestGuiFdoSecrets::testServicePersistedAuthorization()
+{
+    FdoSecrets::settings()->setConfirmAccessItem(true);
+
+    auto service = enableService();
+    VERIFY(service);
+    auto coll = getDefaultCollection(service);
+    VERIFY(coll);
+    auto item = getFirstItem(coll);
+    VERIFY(item);
+    auto sess = openSession(service, DhIetf1024Sha256Aes128CbcPkcs7::Algorithm);
+    VERIFY(sess);
+    auto entry = entryForItem(item);
+    VERIFY(entry);
+
+    // never asked during this connection, and nothing persisted yet
+    DBUS_COMPARE(item->locked(), true);
+
+    // persist an identity record matching the fake client by path, allowing this entry
+    ClientRecord record;
+    record.id = QUuid::createUuid();
+    record.name = QStringLiteral("fake-client");
+    record.created = Clock::currentDateTimeUtc();
+    record.rules << MatchRule{{RuleCondition{0, RuleCondition::Kind::Path, QStringLiteral("fake-client"), {}}}};
+    saveClientRecord(m_db.data(), record);
+    setEntryClientDecision(entry, record.id, AuthDecision::Allowed);
+
+    // the persisted decision applies without any prompt...
+    DBUS_COMPARE(item->locked(), false);
+    DBUS_VERIFY(item->GetSecret(QDBusObjectPath(sess->path())));
+    // ...and unlike a once decision it is not consumed by the access
+    DBUS_COMPARE(item->locked(), false);
+
+    // a fresh connection (no runtime state) still sees the persisted decision
+    m_client->clearAuthorization();
+    DBUS_COMPARE(item->locked(), false);
+
+    // Unlock completes immediately without a prompt
+    {
+        DBUS_GET2(unlocked, promptPath, service->Unlock({QDBusObjectPath(item->path())}));
+        COMPARE(unlocked, {QDBusObjectPath(item->path())});
+        COMPARE(promptPath, QDBusObjectPath("/"));
+    }
+
+    // runtime once decisions take precedence over the persisted allow
+    m_client->setConnectionDecision(entry->uuid(), AuthDecision::DeniedOnce);
+    DBUS_COMPARE(item->locked(), true);
+    {
+        auto reply = item->GetSecret(QDBusObjectPath(sess->path()));
+        VERIFY(reply.isError());
+        COMPARE(reply.error().name(), DBUS_ERROR_SECRET_IS_LOCKED);
+    }
+    // the once denial is consumed by the access: the persisted allow shows through again
+    DBUS_COMPARE(item->locked(), false);
+
+    // flip the persisted decision to deny: denied without prompting
+    setEntryClientDecision(entry, record.id, AuthDecision::Denied);
+    m_client->clearAuthorization();
+    DBUS_COMPARE(item->locked(), true);
+    {
+        DBUS_GET2(unlocked, promptPath, service->Unlock({QDBusObjectPath(item->path())}));
+        COMPARE(unlocked, {});
+
+        auto prompt = getProxy<PromptProxy>(promptPath);
+        VERIFY(prompt);
+        QSignalSpy spyPromptCompleted(prompt.data(), SIGNAL(Completed(bool, QDBusVariant)));
+        VERIFY(spyPromptCompleted.isValid());
+        DBUS_VERIFY(prompt->Prompt(""));
+
+        // no dialog shows up: the persisted denial answers the prompt
+        VERIFY(!driveAccessControlDialog());
+        VERIFY(waitForSignal(spyPromptCompleted, 1));
+        auto args = spyPromptCompleted.takeFirst();
+        COMPARE(args.at(0).toBool(), true);
+    }
+}
+
+void TestGuiFdoSecrets::testServicePersistedAllEntries()
+{
+    FdoSecrets::settings()->setConfirmAccessItem(true);
+
+    auto service = enableService();
+    VERIFY(service);
+    auto coll = getDefaultCollection(service);
+    VERIFY(coll);
+    auto item = getFirstItem(coll);
+    VERIFY(item);
+    auto entry = entryForItem(item);
+    VERIFY(entry);
+
+    // persist a catch-all allow for the fake client
+    ClientRecord record;
+    record.id = QUuid::createUuid();
+    record.name = QStringLiteral("fake-client");
+    record.created = Clock::currentDateTimeUtc();
+    record.rules << MatchRule{{RuleCondition{0, RuleCondition::Kind::Path, QStringLiteral("fake-client"), {}}}};
+    record.allEntries = AuthDecision::Allowed;
+    saveClientRecord(m_db.data(), record);
+
+    // every item in the collection is unlocked without prompting
+    DBUS_GET(itemPaths, coll->items());
+    VERIFY(itemPaths.size() > 1);
+    for (const auto& itemPath : asConst(itemPaths)) {
+        auto itemProxy = getProxy<ItemProxy>(itemPath);
+        VERIFY(itemProxy);
+        DBUS_COMPARE(itemProxy->locked(), false);
+    }
+
+    // the entry's own denial overrides the catch-all, while others stay allowed
+    setEntryClientDecision(entry, record.id, AuthDecision::Denied);
+    DBUS_COMPARE(item->locked(), true);
+    auto otherItem = getProxy<ItemProxy>(itemPaths.last());
+    VERIFY(otherItem);
+    DBUS_COMPARE(otherItem->locked(), false);
+
+    // a record whose rules do not match the client has no effect
+    setEntryClientDecision(entry, record.id, AuthDecision::Undecided);
+    record.rules = {MatchRule{{RuleCondition{0, RuleCondition::Kind::Path, QStringLiteral("someone-else"), {}}}}};
+    saveClientRecord(m_db.data(), record);
+    DBUS_COMPARE(item->locked(), true);
+}
+
+void TestGuiFdoSecrets::testAccessControlPersist()
+{
+    FdoSecrets::settings()->setConfirmAccessItem(true);
+
+    auto service = enableService();
+    VERIFY(service);
+    auto coll = getDefaultCollection(service);
+    VERIFY(coll);
+    auto item = getFirstItem(coll);
+    VERIFY(item);
+    auto sess = openSession(service, DhIetf1024Sha256Aes128CbcPkcs7::Algorithm);
+    VERIFY(sess);
+    auto entry = entryForItem(item);
+    VERIFY(entry);
+
+    // allow with remember: the decision is written into the database
+    {
+        DBUS_GET2(unlocked, promptPath, service->Unlock({QDBusObjectPath(item->path())}));
+        auto prompt = getProxy<PromptProxy>(promptPath);
+        VERIFY(prompt);
+        QSignalSpy spyPromptCompleted(prompt.data(), SIGNAL(Completed(bool, QDBusVariant)));
+        VERIFY(spyPromptCompleted.isValid());
+        DBUS_VERIFY(prompt->Prompt(""));
+        VERIFY(driveAccessControlDialog(true));
+        VERIFY(waitForSignal(spyPromptCompleted, 1));
+    }
+
+    // a new identity record anchoring the client by path was created
+    const auto records = loadClientRecords(m_db.data());
+    COMPARE(records.size(), 1);
+    const auto& record = records.first();
+    COMPARE(record.name, QStringLiteral("fake-client"));
+    COMPARE(record.rules.size(), 1);
+    COMPARE(record.rules.first().conditions,
+            (QList<RuleCondition>{{0, RuleCondition::Kind::Path, QStringLiteral("fake-client"), {}}}));
+    COMPARE(record.allEntries, AuthDecision::Undecided);
+    COMPARE(entryClientDecisions(entry).value(record.id), AuthDecision::Allowed);
+
+    // a fresh connection is authorized by the stored decision without prompting
+    m_client->clearAuthorization();
+    DBUS_COMPARE(item->locked(), false);
+    DBUS_VERIFY(item->GetSecret(QDBusObjectPath(sess->path())));
+
+    // without remember nothing is written
+    m_db->metadata()->customData()->remove(record.customDataKey());
+    setEntryClientDecision(entry, record.id, AuthDecision::Undecided);
+    m_client->clearAuthorization();
+    {
+        DBUS_GET2(unlocked, promptPath, service->Unlock({QDBusObjectPath(item->path())}));
+        auto prompt = getProxy<PromptProxy>(promptPath);
+        VERIFY(prompt);
+        QSignalSpy spyPromptCompleted(prompt.data(), SIGNAL(Completed(bool, QDBusVariant)));
+        VERIFY(spyPromptCompleted.isValid());
+        DBUS_VERIFY(prompt->Prompt(""));
+        VERIFY(driveAccessControlDialog(false));
+        VERIFY(waitForSignal(spyPromptCompleted, 1));
+    }
+    VERIFY(loadClientRecords(m_db.data()).isEmpty());
+    VERIFY(entryClientDecisions(entry).isEmpty());
+}
+
+void TestGuiFdoSecrets::testAccessControlPersistAllEntries()
+{
+    FdoSecrets::settings()->setConfirmAccessItem(true);
+
+    auto service = enableService();
+    VERIFY(service);
+    auto coll = getDefaultCollection(service);
+    VERIFY(coll);
+    auto item = getFirstItem(coll);
+    VERIFY(item);
+    auto entry = entryForItem(item);
+    VERIFY(entry);
+
+    // allow all with remember: the catch-all lands in the identity record
+    {
+        DBUS_GET2(unlocked, promptPath, service->Unlock({QDBusObjectPath(item->path())}));
+        auto prompt = getProxy<PromptProxy>(promptPath);
+        VERIFY(prompt);
+        QSignalSpy spyPromptCompleted(prompt.data(), SIGNAL(Completed(bool, QDBusVariant)));
+        VERIFY(spyPromptCompleted.isValid());
+        DBUS_VERIFY(prompt->Prompt(""));
+        VERIFY(driveAccessControlDialog(true, true));
+        VERIFY(waitForSignal(spyPromptCompleted, 1));
+    }
+
+    const auto records = loadClientRecords(m_db.data());
+    COMPARE(records.size(), 1);
+    COMPARE(records.first().allEntries, AuthDecision::Allowed);
+    COMPARE(entryClientDecisions(entry).value(records.first().id), AuthDecision::Allowed);
+
+    // a fresh connection may access every entry, including ones never shown
+    m_client->clearAuthorization();
+    DBUS_GET(itemPaths, coll->items());
+    VERIFY(itemPaths.size() > 1);
+    auto otherItem = getProxy<ItemProxy>(itemPaths.last());
+    VERIFY(otherItem);
+    DBUS_COMPARE(otherItem->locked(), false);
+}
+
+void TestGuiFdoSecrets::testAccessControlInterpreter()
+{
+    FdoSecrets::settings()->setConfirmAccessItem(true);
+
+    auto service = enableService();
+    VERIFY(service);
+    auto coll = getDefaultCollection(service);
+    VERIFY(coll);
+    auto item = getFirstItem(coll);
+    VERIFY(item);
+    auto entry = entryForItem(item);
+    VERIFY(entry);
+
+    // a script run by an interpreter inside a terminal
+    auto client = QSharedPointer<FakeClient>::create(
+        m_plugin->dbus().data(),
+        PeerInfo{QStringLiteral("local"),
+                 0,
+                 true,
+                 {
+                     ProcInfo{0,
+                              0,
+                              QStringLiteral("/usr/bin/python3"),
+                              QStringLiteral("python3"),
+                              QStringLiteral("python3 secret.py")},
+                     ProcInfo{0, 0, QStringLiteral("/usr/bin/zsh"), QStringLiteral("zsh"), QString{}},
+                     ProcInfo{0, 0, QStringLiteral("/usr/bin/kitty"), QStringLiteral("kitty"), QString{}},
+                 }});
+    m_plugin->dbus()->overrideClient(client);
+
+    DBUS_GET2(unlocked, promptPath, service->Unlock({QDBusObjectPath(item->path())}));
+    auto prompt = getProxy<PromptProxy>(promptPath);
+    VERIFY(prompt);
+    QSignalSpy spyPromptCompleted(prompt.data(), SIGNAL(Completed(bool, QDBusVariant)));
+    VERIFY(spyPromptCompleted.isValid());
+    DBUS_VERIFY(prompt->Prompt(""));
+
+    auto dlg = findAccessControlDialog();
+    VERIFY(dlg);
+    // the warning shows and the scope starts at Once
+    auto warn = dlg->findChild<MessageWidget*>("warningWidget");
+    VERIFY(warn);
+    VERIFY(warn->isVisible());
+    auto scopeOnce = dlg->findChild<QRadioButton*>("scopeOnce");
+    VERIFY(scopeOnce);
+    VERIFY(scopeOnce->isChecked());
+
+    // only the calling process is proposed: anchoring on the shell or the
+    // terminal identifies nothing, so the dialog does not suggest it
+    auto tree = dlg->findChild<QTreeWidget*>("procTree");
+    VERIFY(tree);
+    COMPARE(tree->topLevelItemCount(), 1);
+    auto node = tree->topLevelItem(0); // kitty, then zsh, then python3
+    int levels = 0;
+    while (node) {
+        ++levels;
+        const auto isCaller = node->childCount() == 0;
+        COMPARE(node->checkState(1), isCaller ? Qt::Checked : Qt::Unchecked);
+        node = node->childCount() ? node->child(0) : nullptr;
+    }
+    COMPARE(levels, 3);
+
+    // the user overrides the warning and anchors the terminal as well
+    tree->topLevelItem(0)->setCheckState(1, Qt::Checked);
+    dlg->findChild<QRadioButton*>("scopeSelected")->setChecked(true);
+    dlg->done(AccessControlDialog::Allow);
+    VERIFY(waitForSignal(spyPromptCompleted, 1));
+
+    // the stored rule anchors what was ticked (no hashes: fake processes)
+    const auto records = loadClientRecords(m_db.data());
+    COMPARE(records.size(), 1);
+    COMPARE(records.first().rules.size(), 1);
+    COMPARE(records.first().rules.first().conditions,
+            (QList<RuleCondition>{{0, RuleCondition::Kind::Path, QStringLiteral("/usr/bin/python3"), {}},
+                                  {2, RuleCondition::Kind::Path, QStringLiteral("/usr/bin/kitty"), {}}}));
+    COMPARE(entryClientDecisions(entry).value(records.first().id), AuthDecision::Allowed);
+
+    m_plugin->dbus()->overrideClient(m_client);
+}
+
+void TestGuiFdoSecrets::testAccessControlFingerprintChanged()
+{
+    FdoSecrets::settings()->setConfirmAccessItem(true);
+
+    auto service = enableService();
+    VERIFY(service);
+    auto coll = getDefaultCollection(service);
+    VERIFY(coll);
+    auto item = getFirstItem(coll);
+    VERIFY(item);
+    auto entry = entryForItem(item);
+    VERIFY(entry);
+
+    m_client.staticCast<FakeClient>()->hashes.insert(0, QStringLiteral("newhash"));
+
+    // a stored authorization whose hash no longer matches the client executable
+    ClientRecord record;
+    record.id = QUuid::createUuid();
+    record.name = QStringLiteral("fake-client");
+    record.created = Clock::currentDateTimeUtc();
+    record.rules << MatchRule{
+        {RuleCondition{0, RuleCondition::Kind::Path, QStringLiteral("fake-client"), {}},
+         RuleCondition{0, RuleCondition::Kind::Hash, QStringLiteral("stalehash"), QStringLiteral("sha256")}}};
+    saveClientRecord(m_db.data(), record);
+    setEntryClientDecision(entry, record.id, AuthDecision::Allowed);
+
+    // the changed fingerprint invalidates the stored allow: back to prompting
+    DBUS_COMPARE(item->locked(), true);
+
+    DBUS_GET2(unlocked, promptPath, service->Unlock({QDBusObjectPath(item->path())}));
+    auto prompt = getProxy<PromptProxy>(promptPath);
+    VERIFY(prompt);
+    QSignalSpy spyPromptCompleted(prompt.data(), SIGNAL(Completed(bool, QDBusVariant)));
+    VERIFY(spyPromptCompleted.isValid());
+    DBUS_VERIFY(prompt->Prompt(""));
+
+    auto dlg = findAccessControlDialog();
+    VERIFY(dlg);
+    // the change warning shows and the changed process is marked in the tree
+    auto warn = dlg->findChild<MessageWidget*>("warningWidget");
+    VERIFY(warn);
+    VERIFY(warn->isVisible());
+    auto tree = dlg->findChild<QTreeWidget*>("procTree");
+    VERIFY(tree);
+    COMPARE(tree->topLevelItemCount(), 1);
+    VERIFY(!tree->topLevelItem(0)->icon(3).isNull());
+
+    // remembering defaults to off while a warning shows; opt back in to re-anchor
+    auto scopeOnce = dlg->findChild<QRadioButton*>("scopeOnce");
+    VERIFY(scopeOnce);
+    VERIFY(scopeOnce->isChecked());
+    dlg->findChild<QRadioButton*>("scopeSelected")->setChecked(true);
+
+    dlg->done(AccessControlDialog::Allow);
+    VERIFY(waitForSignal(spyPromptCompleted, 1));
+
+    // the stale hash was re-anchored in place instead of creating a second record
+    const auto records = loadClientRecords(m_db.data());
+    COMPARE(records.size(), 1);
+    COMPARE(records.first().id, record.id);
+    COMPARE(records.first().rules.first().conditions.at(1).value, QStringLiteral("newhash"));
+
+    // the record matches again: a fresh connection is authorized without prompting
+    m_client->clearAuthorization();
+    DBUS_COMPARE(item->locked(), false);
+}
+
+void TestGuiFdoSecrets::testAccessControlPerEntryDeny()
+{
+    FdoSecrets::settings()->setConfirmAccessItem(true);
+
+    auto service = enableService();
+    VERIFY(service);
+    auto coll = getDefaultCollection(service);
+    VERIFY(coll);
+    auto item = getFirstItem(coll);
+    VERIFY(item);
+    auto entry = entryForItem(item);
+    VERIFY(entry);
+
+    DBUS_GET2(unlocked, promptPath, service->Unlock({QDBusObjectPath(item->path())}));
+    auto prompt = getProxy<PromptProxy>(promptPath);
+    VERIFY(prompt);
+    QSignalSpy spyPromptCompleted(prompt.data(), SIGNAL(Completed(bool, QDBusVariant)));
+    VERIFY(spyPromptCompleted.isValid());
+    DBUS_VERIFY(prompt->Prompt(""));
+
+    auto dlg = findAccessControlDialog();
+    VERIFY(dlg);
+    // deny this one entry through its row button; Remember defaults to on for a
+    // clean client, so the denial is stored
+    QPushButton* denyButton = nullptr;
+    for (auto btn : dlg->findChildren<QPushButton*>()) {
+        if (btn->text() == QStringLiteral("Deny for this program")) {
+            denyButton = btn;
+            break;
+        }
+    }
+    VERIFY(denyButton);
+    denyButton->click();
+    VERIFY(waitForSignal(spyPromptCompleted, 1));
+
+    const auto records = loadClientRecords(m_db.data());
+    COMPARE(records.size(), 1);
+    COMPARE(entryClientDecisions(entry).value(records.first().id), AuthDecision::Denied);
+
+    // a fresh connection is denied without prompting
+    m_client->clearAuthorization();
+    DBUS_COMPARE(item->locked(), true);
+}
+
+void TestGuiFdoSecrets::testAccessControlDenyThenTrust()
+{
+    FdoSecrets::settings()->setConfirmAccessItem(true);
+
+    auto service = enableService();
+    VERIFY(service);
+    auto coll = getDefaultCollection(service);
+    VERIFY(coll);
+    DBUS_GET(itemPaths, coll->items());
+    VERIFY(itemPaths.size() > 1);
+    auto itemA = getProxy<ItemProxy>(itemPaths.first());
+    VERIFY(itemA);
+    auto itemB = getProxy<ItemProxy>(itemPaths.last());
+    VERIFY(itemB);
+    auto entryA = entryForItem(itemA);
+    VERIFY(entryA);
+    auto entryB = entryForItem(itemB);
+    VERIFY(entryB);
+
+    DBUS_GET2(unlocked, promptPath, service->Unlock({QDBusObjectPath(itemA->path()), QDBusObjectPath(itemB->path())}));
+    auto prompt = getProxy<PromptProxy>(promptPath);
+    VERIFY(prompt);
+    QSignalSpy spyPromptCompleted(prompt.data(), SIGNAL(Completed(bool, QDBusVariant)));
+    VERIFY(spyPromptCompleted.isValid());
+    DBUS_VERIFY(prompt->Prompt(""));
+
+    auto dlg = findAccessControlDialog();
+    VERIFY(dlg);
+    // the order of clicks must not matter: deny one entry while the scope is
+    // Once, then widen the scope to cover future entries
+    dlg->findChild<QRadioButton*>("scopeOnce")->setChecked(true);
+    QPushButton* denyButton = nullptr;
+    for (auto btn : dlg->findChildren<QPushButton*>()) {
+        if (btn->text() == QStringLiteral("Deny for this program")
+            && btn->property("uuid").toUuid() == entryA->uuid()) {
+            denyButton = btn;
+            break;
+        }
+    }
+    VERIFY(denyButton);
+    denyButton->click();
+    dlg->findChild<QRadioButton*>("scopeFuture")->setChecked(true);
+    dlg->done(AccessControlDialog::Allow);
+    VERIFY(waitForSignal(spyPromptCompleted, 1));
+
+    // the final screen state decides: the denial is stored, not silently
+    // swallowed by the stored catch-all
+    const auto records = loadClientRecords(m_db.data());
+    COMPARE(records.size(), 1);
+    COMPARE(records.first().allEntries, AuthDecision::Allowed);
+    COMPARE(entryClientDecisions(entryA).value(records.first().id), AuthDecision::Denied);
+    COMPARE(entryClientDecisions(entryB).value(records.first().id), AuthDecision::Allowed);
+
+    // a fresh connection sees exactly that
+    m_client->clearAuthorization();
+    DBUS_COMPARE(itemA->locked(), true);
+    DBUS_COMPARE(itemB->locked(), false);
+
+    // an entry created after the decision is covered by the catch-all, while
+    // the entry denied by hand stays denied however often it is asked for
+    auto laterEntry = new Entry();
+    laterEntry->setUuid(QUuid::createUuid());
+    laterEntry->setTitle(QStringLiteral("created later"));
+    laterEntry->setGroup(m_db->rootGroup());
+    processEvents();
+    DBUS_GET(pathsAfter, coll->items());
+    COMPARE(pathsAfter.size(), itemPaths.size() + 1);
+    QSharedPointer<ItemProxy> laterItem;
+    for (const auto& path : pathsAfter) {
+        if (!itemPaths.contains(path)) {
+            laterItem = getProxy<ItemProxy>(path);
+        }
+    }
+    VERIFY(laterItem);
+    DBUS_COMPARE(laterItem->locked(), false);
+    DBUS_COMPARE(itemA->locked(), true);
 }
 
 void TestGuiFdoSecrets::testServiceLock()
@@ -1003,7 +1668,7 @@ void TestGuiFdoSecrets::testCollectionDeleteConcurrent()
 
     // before interacting with the prompt, another request come in
     DBUS_GET(promptPath2, coll->Delete());
-    auto prompt2 = getProxy<PromptProxy>(promptPath);
+    auto prompt2 = getProxy<PromptProxy>(promptPath2);
     VERIFY(prompt2);
     QSignalSpy spyPromptCompleted2(prompt2.data(), SIGNAL(Completed(bool, QDBusVariant)));
     VERIFY(spyPromptCompleted2.isValid());
@@ -1015,6 +1680,7 @@ void TestGuiFdoSecrets::testCollectionDeleteConcurrent()
     // there should be no prompt
     DBUS_VERIFY(prompt2->Prompt(""));
 
+    // the first prompt completes the deletion
     VERIFY(waitForSignal(spyPromptCompleted, 1));
     {
         auto args = spyPromptCompleted.takeFirst();
@@ -1023,11 +1689,13 @@ void TestGuiFdoSecrets::testCollectionDeleteConcurrent()
         COMPARE(args.at(1).value<QDBusVariant>().variant().toString(), QStringLiteral(""));
     }
 
+    // the second prompt fails fast as the deletion is still in progress,
+    // and is reported as dismissed
     VERIFY(waitForSignal(spyPromptCompleted2, 1));
     {
         auto args = spyPromptCompleted2.takeFirst();
         COMPARE(args.count(), 2);
-        COMPARE(args.at(0).toBool(), false);
+        COMPARE(args.at(0).toBool(), true);
         COMPARE(args.at(1).value<QDBusVariant>().variant().toString(), QStringLiteral(""));
     }
 
@@ -1338,7 +2006,7 @@ void TestGuiFdoSecrets::testItemReplaceExistingLocked()
         auto entry = itemObj->backend();
         VERIFY(entry);
         FdoSecrets::settings()->setConfirmAccessItem(true);
-        m_client->setItemAuthorized(entry->uuid(), AuthDecision::Undecided);
+        m_client->setConnectionDecision(entry->uuid(), AuthDecision::Undecided);
         DBUS_COMPARE(item->locked(), true);
     }
 
@@ -1513,7 +2181,7 @@ void TestGuiFdoSecrets::testItemLockState()
     }
 
     // item is unlocked if the client is authorized
-    m_client->setItemAuthorized(entry->uuid(), AuthDecision::Allowed);
+    m_client->setConnectionDecision(entry->uuid(), AuthDecision::Allowed);
     DBUS_COMPARE(item->locked(), false);
     DBUS_VERIFY(item->GetSecret(QDBusObjectPath(sess->path())));
     DBUS_VERIFY(item->SetSecret(encrypted));
@@ -1717,6 +2385,376 @@ void TestGuiFdoSecrets::processEvents()
 }
 
 // the following functions have return value, switch macros to the version supporting that
+namespace
+{
+    // A record anchored on the given path, created far enough in the past that
+    // tests can order records by creation without waiting.
+    ClientRecord makeRecord(const QString& name, const QString& path, int agoSeconds)
+    {
+        ClientRecord record;
+        record.id = QUuid::createUuid();
+        record.name = name;
+        record.created = Clock::currentDateTimeUtc().addSecs(-agoSeconds);
+        record.rules << MatchRule{{{0, RuleCondition::Kind::Path, path, {}}}};
+        return record;
+    }
+} // namespace
+
+void TestGuiFdoSecrets::testDbSettingsRecordList()
+{
+    FdoSecrets::settings()->setEnabled(true);
+    auto firefox = makeRecord(QStringLiteral("firefox"), QStringLiteral("/usr/bin/firefox"), 120);
+    firefox.allEntries = AuthDecision::Allowed;
+    auto secretTool = makeRecord(QStringLiteral("secret-tool"), QStringLiteral("/usr/bin/secret-tool"), 60);
+    saveClientRecord(m_db.data(), firefox);
+    saveClientRecord(m_db.data(), secretTool);
+
+    auto entries = m_db->rootGroup()->entriesRecursive();
+    VERIFY(entries.size() >= 2);
+    setEntryClientDecision(entries[0], firefox.id, AuthDecision::Allowed);
+    setEntryClientDecision(entries[1], firefox.id, AuthDecision::Denied);
+
+    DatabaseSettingsWidgetFdoSecrets widget;
+    widget.loadSettings(m_db);
+    auto view = widget.findChild<QTableView*>("recordsView");
+    VERIFY(view);
+    auto model = view->model();
+    VERIFY(model);
+
+    // ordered by creation, oldest first
+    COMPARE(model->rowCount(), 2);
+    using Model = FdoSecrets::ClientRecordsModel;
+    COMPARE(model->index(0, Model::ColumnName).data().toString(), QStringLiteral("firefox"));
+    COMPARE(model->index(1, Model::ColumnName).data().toString(), QStringLiteral("secret-tool"));
+    COMPARE(model->index(0, Model::ColumnRules).data().toString(), QStringLiteral("path: /usr/bin/firefox"));
+    COMPARE(model->index(0, Model::ColumnDecisions).data().toString(),
+            QStringLiteral("Allowed: 1, Denied: 1, Others: allow"));
+    COMPARE(model->index(1, Model::ColumnDecisions).data().toString(),
+            QStringLiteral("Allowed: 0, Denied: 0, Others: ask"));
+}
+
+void TestGuiFdoSecrets::testDbSettingsRecordEdit()
+{
+    FdoSecrets::settings()->setEnabled(true);
+    auto record = makeRecord(QStringLiteral("firefox"), QStringLiteral("/usr/bin/firefox"), 60);
+    saveClientRecord(m_db.data(), record);
+    // creation times are stored with second precision, so compare against the
+    // record as the database has it
+    record = loadClientRecord(m_db.data(), record.id);
+    auto entry = m_db->rootGroup()->entriesRecursive().first();
+    setEntryClientDecision(entry, record.id, AuthDecision::Allowed);
+
+    DatabaseSettingsWidgetFdoSecrets widget;
+    widget.loadSettings(m_db);
+    auto view = widget.findChild<QTableView*>("recordsView");
+    VERIFY(view);
+    view->setCurrentIndex(view->model()->index(0, 0));
+
+    // the modal dialog blocks in exec(), so drive it from the event loop
+    QTimer::singleShot(0, this, [this]() {
+        auto dlg = m_mainWindow->findChild<FdoSecrets::ClientRecordDialog*>();
+        if (!dlg) {
+            for (auto w : QApplication::topLevelWidgets()) {
+                dlg = qobject_cast<FdoSecrets::ClientRecordDialog*>(w);
+                if (dlg) {
+                    break;
+                }
+            }
+        }
+        QVERIFY(dlg);
+
+        auto nameEdit = dlg->findChild<QLineEdit*>("nameEdit");
+        QVERIFY(nameEdit);
+        nameEdit->setText(QStringLiteral("firefox-esr"));
+
+        auto allEntries = dlg->findChild<QComboBox*>("allEntriesCombo");
+        QVERIFY(allEntries);
+        allEntries->setCurrentIndex(2); // deny
+
+        // the entry decision listed here can only be removed
+        auto decisions = dlg->findChild<QTableView*>("entryDecisionsView");
+        QVERIFY(decisions);
+        QCOMPARE(decisions->model()->rowCount(), 1);
+        decisions->setCurrentIndex(decisions->model()->index(0, 0));
+        auto removeButton = dlg->findChild<QPushButton*>("removeDecisionButton");
+        QVERIFY(removeButton);
+        QVERIFY(removeButton->isEnabled());
+        removeButton->click();
+        QCOMPARE(decisions->model()->rowCount(), 0);
+
+        dlg->accept();
+    });
+    widget.findChild<QPushButton*>("recordEditButton")->click();
+    processEvents();
+
+    // staged only: the database still holds the record as it was
+    COMPARE(loadClientRecord(m_db.data(), record.id), record);
+    COMPARE(entryClientDecisions(entry).value(record.id), AuthDecision::Allowed);
+
+    widget.saveSettings();
+    const auto stored = loadClientRecord(m_db.data(), record.id);
+    VERIFY(stored.isValid());
+    COMPARE(stored.name, QStringLiteral("firefox-esr"));
+    COMPARE(stored.allEntries, AuthDecision::Denied);
+    COMPARE(stored.rules, record.rules);
+    VERIFY(!entryClientDecisions(entry).contains(record.id));
+}
+
+void TestGuiFdoSecrets::testDbSettingsRecordRemove()
+{
+    FdoSecrets::settings()->setEnabled(true);
+    auto record = makeRecord(QStringLiteral("firefox"), QStringLiteral("/usr/bin/firefox"), 60);
+    saveClientRecord(m_db.data(), record);
+    auto entry = m_db->rootGroup()->entriesRecursive().first();
+    setEntryClientDecision(entry, record.id, AuthDecision::Allowed);
+
+    DatabaseSettingsWidgetFdoSecrets widget;
+    widget.loadSettings(m_db);
+    auto view = widget.findChild<QTableView*>("recordsView");
+    VERIFY(view);
+    view->setCurrentIndex(view->model()->index(0, 0));
+
+    widget.findChild<QPushButton*>("recordRemoveButton")->click();
+    processEvents();
+    COMPARE(view->model()->rowCount(), 0);
+    // the row is gone from the page, but the database keeps it until saved
+    VERIFY(loadClientRecord(m_db.data(), record.id).isValid());
+
+    widget.saveSettings();
+    VERIFY(!loadClientRecord(m_db.data(), record.id).isValid());
+    // the removal sweeps the decisions referencing the record
+    VERIFY(entryClientDecisions(entry).isEmpty());
+}
+
+void TestGuiFdoSecrets::testDbSettingsOverlapWarning()
+{
+    FdoSecrets::settings()->setEnabled(true);
+    saveClientRecord(m_db.data(), makeRecord(QStringLiteral("firefox"), QStringLiteral("/usr/bin/firefox"), 120));
+
+    DatabaseSettingsWidgetFdoSecrets widget;
+    widget.loadSettings(m_db);
+    auto warning = widget.findChild<MessageWidget*>("authzWarning");
+    VERIFY(warning);
+    // the page itself is never shown here, so only explicit hiding is observable
+    VERIFY(warning->isHidden());
+
+    // a second record anchored on the same path can match the same client
+    saveClientRecord(m_db.data(), makeRecord(QStringLiteral("firefox-copy"), QStringLiteral("/usr/bin/firefox"), 60));
+    widget.loadSettings(m_db);
+    VERIFY(!warning->isHidden());
+    VERIFY(warning->text().contains(QStringLiteral("firefox-copy")));
+
+    // a record for a different executable does not overlap
+    removeClientRecord(m_db.data(), loadClientRecords(m_db.data()).last().id);
+    saveClientRecord(m_db.data(), makeRecord(QStringLiteral("pinentry"), QStringLiteral("/usr/bin/pinentry"), 30));
+    widget.loadSettings(m_db);
+    VERIFY(warning->isHidden());
+}
+
+void TestGuiFdoSecrets::testEntryEditorDecisions()
+{
+    FdoSecrets::settings()->setEnabled(true);
+    auto firefox = makeRecord(QStringLiteral("firefox"), QStringLiteral("/usr/bin/firefox"), 120);
+    auto secretTool = makeRecord(QStringLiteral("secret-tool"), QStringLiteral("/usr/bin/secret-tool"), 60);
+    saveClientRecord(m_db.data(), firefox);
+    saveClientRecord(m_db.data(), secretTool);
+
+    auto entry = m_db->rootGroup()->entriesRecursive().first();
+    setEntryClientDecision(entry, firefox.id, AuthDecision::Allowed);
+    const auto stale = QUuid::createUuid();
+    setEntryClientDecision(entry, stale, AuthDecision::Denied);
+
+    EditEntryWidget editor;
+    editor.loadEntry(entry, false, false, QStringLiteral("group"), m_db);
+
+    auto view = editor.findChild<QTableView*>("decisionsView");
+    VERIFY(view);
+    auto model = view->model();
+    using Model = FdoSecrets::EntryClientDecisionsModel;
+
+    // known records first, then decisions whose record was removed
+    COMPARE(model->rowCount(), 2);
+    VERIFY(model->index(0, Model::ColumnClient).data().toString().startsWith(QStringLiteral("firefox")));
+    COMPARE(model->index(0, Model::ColumnAccess).data().toString(), QStringLiteral("Allow"));
+    COMPARE(model->index(1, Model::ColumnClient).data().toString(),
+            QStringLiteral("Unknown client (removed from database)"));
+
+    // only records without a decision here can be added
+    auto addCombo = editor.findChild<QComboBox*>("addClientCombo");
+    VERIFY(addCombo);
+    COMPARE(addCombo->count(), 1);
+    VERIFY(addCombo->itemText(0).startsWith(QStringLiteral("secret-tool")));
+
+    auto addButton = editor.findChild<QPushButton*>("addButton");
+    VERIFY(addButton);
+    VERIFY(!addButton->isEnabled());
+    addCombo->setCurrentIndex(0);
+    VERIFY(addButton->isEnabled());
+    editor.findChild<QComboBox*>("addAccessCombo")->setCurrentIndex(1); // deny
+    addButton->click();
+    COMPARE(model->rowCount(), 3);
+    COMPARE(addCombo->count(), 0);
+
+    // a stored decision is edited in place: every row keeps its combo open
+    const auto accessIndex = model->index(0, Model::ColumnAccess);
+    VERIFY(model->flags(accessIndex).testFlag(Qt::ItemIsEditable));
+    auto combo = qobject_cast<QComboBox*>(view->indexWidget(accessIndex));
+    if (!combo) {
+        // persistent editors are not index widgets, find it among the children
+        for (auto* candidate : view->viewport()->findChildren<QComboBox*>()) {
+            if (view->visualRect(accessIndex).contains(candidate->geometry().center())) {
+                combo = candidate;
+                break;
+            }
+        }
+    }
+    VERIFY(combo);
+    combo->setCurrentIndex(combo->findData(static_cast<int>(AuthDecision::Denied)));
+    COMPARE(accessIndex.data().toString(), QStringLiteral("Deny"));
+
+    // the change is staged, and Apply writes it without closing the editor
+    COMPARE(entryClientDecisions(entry).value(firefox.id), AuthDecision::Allowed);
+    auto applyButton = editor.findChild<QDialogButtonBox*>()->button(QDialogButtonBox::Apply);
+    VERIFY(applyButton);
+    VERIFY(applyButton->isEnabled());
+    applyButton->click();
+    processEvents();
+    COMPARE(entryClientDecisions(entry).value(firefox.id), AuthDecision::Denied);
+
+    auto removeButton = editor.findChild<QPushButton*>("removeButton");
+    VERIFY(removeButton);
+    VERIFY(!removeButton->isEnabled());
+    view->setCurrentIndex(model->index(0, 0));
+    VERIFY(removeButton->isEnabled());
+    removeButton->click();
+    COMPARE(model->rowCount(), 2);
+    // the freed record can be assigned again
+    COMPARE(addCombo->count(), 1);
+
+    // the removal is staged: the entry still carries what Apply wrote above
+    COMPARE(entryClientDecisions(entry).value(firefox.id), AuthDecision::Denied);
+    COMPARE(entryClientDecisions(entry).value(secretTool.id), AuthDecision::Denied);
+
+    QSignalSpy finished(&editor, SIGNAL(editFinished(bool)));
+    auto buttonBox = editor.findChild<QDialogButtonBox*>();
+    VERIFY(buttonBox);
+    buttonBox->button(QDialogButtonBox::Ok)->click();
+    VERIFY(waitForSignal(finished, 1));
+
+    const auto decisions = entryClientDecisions(entry);
+    VERIFY(!decisions.contains(firefox.id));  // removed above, so the flip is gone with it
+    COMPARE(decisions.value(secretTool.id), AuthDecision::Denied);
+    // an unknown record id is left alone rather than swept
+    COMPARE(decisions.value(stale), AuthDecision::Denied);
+}
+
+void TestGuiFdoSecrets::testEntryEditorHistoryReadOnly()
+{
+    FdoSecrets::settings()->setEnabled(true);
+    auto record = makeRecord(QStringLiteral("firefox"), QStringLiteral("/usr/bin/firefox"), 60);
+    saveClientRecord(m_db.data(), record);
+    auto entry = m_db->rootGroup()->entriesRecursive().first();
+    setEntryClientDecision(entry, record.id, AuthDecision::Allowed);
+
+    EditEntryWidget editor;
+    editor.loadEntry(entry, false, true, QStringLiteral("group"), m_db);
+
+    auto view = editor.findChild<QTableView*>("decisionsView");
+    VERIFY(view);
+    COMPARE(view->model()->rowCount(), 1);
+    view->setCurrentIndex(view->model()->index(0, 0));
+    VERIFY(!editor.findChild<QPushButton*>("removeButton")->isEnabled());
+    VERIFY(!view->model()->flags(view->model()->index(0, 1)).testFlag(Qt::ItemIsEditable));
+    VERIFY(!editor.findChild<QComboBox*>("addClientCombo")->isEnabled());
+    VERIFY(!editor.findChild<QPushButton*>("addButton")->isEnabled());
+}
+
+void TestGuiFdoSecrets::testEntryEditorHistoryRevert()
+{
+    FdoSecrets::settings()->setEnabled(true);
+    auto record = makeRecord(QStringLiteral("firefox"), QStringLiteral("/usr/bin/firefox"), 60);
+    saveClientRecord(m_db.data(), record);
+    auto entry = m_db->rootGroup()->entriesRecursive().first();
+    setEntryClientDecision(entry, record.id, AuthDecision::Allowed);
+
+    // snapshot the authorized state into the entry history
+    const auto originalTitle = entry->title();
+    const auto historyBefore = entry->historyItems().size();
+    entry->beginUpdate();
+    entry->setTitle(QStringLiteral("renamed"));
+    entry->endUpdate();
+    COMPARE(entry->historyItems().size(), historyBefore + 1);
+    COMPARE(entryClientDecisions(entry->historyItems().last()).value(record.id), AuthDecision::Allowed);
+
+    setEntryClientDecision(entry, record.id, AuthDecision::Undecided);
+
+    EditEntryWidget editor;
+    editor.loadEntry(entry, false, false, QStringLiteral("group"), m_db);
+    editor.switchToPage(EditEntryWidget::Page::History);
+    auto historyView = editor.findChild<QTreeView*>("historyView");
+    VERIFY(historyView);
+    // newest first, with the entry's current state occupying row 0, so the
+    // snapshot just taken is row 1
+    historyView->setCurrentIndex(historyView->model()->index(1, 0));
+    auto restoreButton = editor.findChild<QPushButton*>("restoreButton");
+    VERIFY(restoreButton->isEnabled());
+    restoreButton->click();
+
+    // decisions live in the entry's customData like the browser integration
+    // settings do, so a revert restores them along with everything else
+    COMPARE(editor.findChild<QLineEdit*>("titleEdit")->text(), originalTitle);
+    auto view = editor.findChild<QTableView*>("decisionsView");
+    VERIFY(view);
+    COMPARE(view->model()->rowCount(), 1);
+
+    QSignalSpy finished(&editor, SIGNAL(editFinished(bool)));
+    auto buttonBox = editor.findChild<QDialogButtonBox*>();
+    VERIFY(buttonBox);
+    buttonBox->button(QDialogButtonBox::Ok)->click();
+    VERIFY(waitForSignal(finished, 1));
+    COMPARE(entryClientDecisions(entry).value(record.id), AuthDecision::Allowed);
+}
+
+void TestGuiFdoSecrets::testAppSettingsAuthorizationColumn()
+{
+    FdoSecrets::settings()->setEnabled(true);
+    auto service = enableService();
+    VERIFY(service);
+
+    SettingsClientModel model(*m_plugin->dbus(), m_plugin->dbTabs());
+    COMPARE(model.rowCount({}), 1);
+    const auto authzIndex = model.index(0, SettingsClientModel::ColumnAuthorization);
+    const auto exePath = m_client->processInfo().exePath();
+    VERIFY(!exePath.isEmpty());
+
+    // an unknown client shows no authorization at all
+    COMPARE(authzIndex.data().toString(), QStringLiteral("none"));
+
+    // a record matching the connected client names the database it lives in
+    auto record = makeRecord(QStringLiteral("fake"), exePath, 60);
+    saveClientRecord(m_db.data(), record);
+    QSignalSpy changed(&model, &QAbstractItemModel::dataChanged);
+    VERIFY(waitForSignal(changed, 1));
+    const auto dbName = QFileInfo(m_db->filePath()).fileName();
+    COMPARE(authzIndex.data().toString(), QStringLiteral("%1: fake").arg(dbName));
+
+    // an executable whose content no longer matches must be re-authorized
+    m_client.staticCast<FakeClient>()->hashes.insert(0, QStringLiteral("current"));
+    record.rules.first().conditions << RuleCondition{
+        0, RuleCondition::Kind::Hash, QStringLiteral("stale"), FdoSecrets::DefaultExeHashAlgo};
+    saveClientRecord(m_db.data(), record);
+    changed.clear();
+    VERIFY(waitForSignal(changed, 1));
+    COMPARE(authzIndex.data().toString(), QStringLiteral("%1: fake (executable changed)").arg(dbName));
+
+    // a locked database cannot be consulted. Saving already dropped the cached
+    // resolution, so the lock has nothing left to invalidate and the value is
+    // recomputed on the next read.
+    VERIFY(m_dbWidget->save());
+    lockDatabaseInBackend();
+    COMPARE(authzIndex.data().toString(), QStringLiteral("none"));
+}
+
 #undef VERIFY
 #undef VERIFY2
 #undef COMPARE
@@ -1763,6 +2801,17 @@ QSharedPointer<ItemProxy> TestGuiFdoSecrets::getFirstItem(const QSharedPointer<C
     DBUS_GET(itemPaths, coll->items());
     VERIFY(!itemPaths.isEmpty());
     return getProxy<ItemProxy>(itemPaths.first());
+}
+
+Entry* TestGuiFdoSecrets::entryForItem(const QSharedPointer<ItemProxy>& item)
+{
+    VERIFY(item);
+    DBUS_GET(attrs, item->attributes());
+    const auto uuid = QUuid::fromRfc4122(QByteArray::fromHex(attrs.value(ItemAttributes::UuidKey).toLatin1()));
+    VERIFY(!uuid.isNull());
+    auto entry = m_db->rootGroup()->findEntryByUuid(uuid);
+    VERIFY(entry);
+    return entry;
 }
 
 QSharedPointer<ItemProxy> TestGuiFdoSecrets::createItem(const QSharedPointer<SessionProxy>& sess,
@@ -1823,6 +2872,21 @@ TestGuiFdoSecrets::encryptPassword(QByteArray value, QString contentType, const 
     return m_clientCipher->encrypt(ss.unmarshal(m_plugin->dbus())).marshal();
 }
 
+AccessControlDialog* TestGuiFdoSecrets::findAccessControlDialog()
+{
+    processEvents();
+    for (auto w : QApplication::topLevelWidgets()) {
+        if (!w->isWindow()) {
+            continue;
+        }
+        auto dlg = qobject_cast<AccessControlDialog*>(w);
+        if (dlg && dlg->isVisible()) {
+            return dlg;
+        }
+    }
+    return nullptr;
+}
+
 bool TestGuiFdoSecrets::driveAccessControlDialog(bool remember, bool includeFutureEntries)
 {
     processEvents();
@@ -1832,15 +2896,17 @@ bool TestGuiFdoSecrets::driveAccessControlDialog(bool remember, bool includeFutu
         }
         auto dlg = qobject_cast<AccessControlDialog*>(w);
         if (dlg && dlg->isVisible()) {
-            auto rememberCheck = dlg->findChild<QCheckBox*>("rememberCheck");
-            VERIFY(rememberCheck);
-            rememberCheck->setChecked(remember);
-
+            const char* scope = "scopeOnce";
             if (includeFutureEntries) {
-                dlg->done(AccessControlDialog::AllowAll);
-            } else {
-                dlg->done(AccessControlDialog::AllowSelected);
+                scope = "scopeFuture";
+            } else if (remember) {
+                scope = "scopeSelected";
             }
+            auto button = dlg->findChild<QRadioButton*>(QString::fromLatin1(scope));
+            VERIFY(button);
+            button->setChecked(true);
+
+            dlg->done(AccessControlDialog::Allow);
 
             processEvents();
             VERIFY(dlg->isHidden());

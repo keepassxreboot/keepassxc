@@ -25,6 +25,7 @@
 
 #include "FdoSecretsSettings.h"
 #include "core/Entry.h"
+#include "fdosecrets/ClientAuth.h"
 #include "gui/MessageBox.h"
 
 #include <QThread>
@@ -71,6 +72,13 @@ namespace FdoSecrets
             return ret;
         }
 
+        // the prompt is already being processed, do not schedule another run.
+        // the ongoing one will emit the completed signal.
+        if (m_signalSent || m_scheduled) {
+            return {};
+        }
+        m_scheduled = true;
+
         QWeakPointer<DBusClient> weak = client;
         // execute the actual prompt method in event loop to avoid block this method
         QTimer::singleShot(0, this, [this, weak, windowId]() {
@@ -113,6 +121,12 @@ namespace FdoSecrets
         : PromptBase(parent)
         , m_collection(coll)
     {
+        // The QPointer alone is not enough: after Collection::removeFromDBus the
+        // collection lingers until its deleteLater is delivered, with m_backend
+        // already reset. Clear our reference as soon as the collection retires so
+        // that a non-null m_collection always implies a usable backend, which
+        // Collection::doDelete asserts on.
+        connect(coll, &Collection::collectionAboutToDelete, this, [this]() { m_collection = nullptr; });
     }
 
     PromptResult DeleteCollectionPrompt::promptSync(const DBusClientPtr&, const QString& windowId)
@@ -182,6 +196,16 @@ namespace FdoSecrets
         m_collections.reserve(colls.size());
         for (const auto& c : asConst(colls)) {
             m_collections << c;
+            // clear the reference as soon as the collection retires, so promptSync
+            // never calls into a collection whose backend is already gone.
+            // A retired collection is skipped just like a destroyed one.
+            connect(c, &Collection::collectionAboutToDelete, this, [this, c]() {
+                for (auto& p : m_collections) {
+                    if (p == c) {
+                        p = nullptr;
+                    }
+                }
+            });
         }
     }
 
@@ -211,9 +235,17 @@ namespace FdoSecrets
         m_collections.reserve(colls.size());
         for (const auto& coll : asConst(colls)) {
             m_collections << coll;
+            // a collection may retire while we are waiting for its unlock outcome,
+            // in which case doneUnlockCollection will never fire for it.
+            connect(coll, &Collection::collectionAboutToDelete, this, [this, coll]() { collectionRetired(coll); });
         }
         for (const auto& item : asConst(items)) {
             m_items[item->collection()] << item;
+            // an item may retire (its database locking or closing) while the prompt
+            // is pending. Clear our references right away: a retired item lingers
+            // until its deleteLater is delivered, with its backend entry already
+            // gone, so a non-null item must always imply a usable backend.
+            connect(item, &Item::itemAboutToDelete, this, [this, item]() { itemRetired(item); });
         }
     }
 
@@ -230,21 +262,32 @@ namespace FdoSecrets
         m_windowId = windowId;
         m_client = client;
 
-        // first unlock any collections
-        bool waitingForCollections = false;
+        // first unlock any collections.
+        // register everything we will wait for upfront: doUnlock may complete
+        // synchronously (already unlocked database), and the completion handler
+        // must not conclude that all collections are done while some have not
+        // even been issued yet.
         for (const auto& c : asConst(m_collections)) {
             if (c) {
+                m_pendingCollections << c.data();
+            } else {
+                // the collection retired or was destroyed since the prompt was created
+                m_numRejected += 1;
+            }
+        }
+        for (const auto& c : asConst(m_collections)) {
+            // skip entries that already resolved synchronously or retired mid-loop
+            if (c && m_pendingCollections.contains(c.data())) {
                 connect(c, &Collection::doneUnlockCollection, this, &UnlockPrompt::collectionUnlockFinished);
                 // doUnlock is nonblocking, execution will continue in collectionUnlockFinished
                 // it is ok to call doUnlock multiple times before it's actually unlocked by the user
                 c->doUnlock();
-                waitingForCollections = true;
             }
         }
 
         // unlock items directly if no collection unlocking pending
-        // o.w. doing it in collectionUnlockFinished
-        if (!waitingForCollections) {
+        // o.w. doing it in collectionUnlockFinished or collectionRetired
+        if (m_pendingCollections.isEmpty()) {
             unlockItems();
         }
 
@@ -261,8 +304,8 @@ namespace FdoSecrets
         // one shot
         coll->disconnect(this);
 
-        if (!m_collections.contains(coll)) {
-            // should not happen
+        if (!m_pendingCollections.remove(coll)) {
+            // not awaiting this collection (already resolved or retired)
             return;
         }
 
@@ -275,14 +318,62 @@ namespace FdoSecrets
         }
 
         // if we got response for all collections
-        if (m_numRejected + m_unlocked.size() == m_collections.size()) {
+        if (m_pendingCollections.isEmpty()) {
             // next step is to unlock items
             unlockItems();
         }
     }
 
+    void UnlockPrompt::collectionRetired(Collection* coll)
+    {
+        // the collection is going away (already removed from DBus, backend reset);
+        // stop referencing it so no doUnlock/doneUnlockCollection is attempted on it
+        for (auto& p : m_collections) {
+            if (p == coll) {
+                p = nullptr;
+            }
+        }
+        m_items.remove(coll);
+
+        if (!m_pendingCollections.remove(coll)) {
+            // nothing was issued for it yet (promptSync not run) or it already resolved;
+            // promptSync accounts for cleared entries itself
+            return;
+        }
+
+        // treat as if the collection rejected the unlock
+        m_numRejected += 1;
+        if (m_pendingCollections.isEmpty()) {
+            unlockItems();
+        }
+    }
+
+    void UnlockPrompt::itemRetired(Item* item)
+    {
+        // the item is going away (already removed from DBus, backend about to reset);
+        // stop referencing it. A null item is treated as rejected, same as a destroyed one.
+        for (auto& items : m_items) {
+            for (auto& p : items) {
+                if (p == item) {
+                    p = nullptr;
+                }
+            }
+        }
+        for (auto& p : m_entryToItems) {
+            if (p == item) {
+                p = nullptr;
+            }
+        }
+    }
+
     void UnlockPrompt::unlockItems()
     {
+        // may be reached from multiple paths (last collection resolving vs retiring)
+        if (m_unlockItemsStarted) {
+            return;
+        }
+        m_unlockItemsStarted = true;
+
         auto client = m_client.lock();
         if (!client) {
             // client already gone
@@ -291,38 +382,75 @@ namespace FdoSecrets
 
         // flatten to list of entries
         QList<Entry*> entries;
-        for (const auto& itemsPerColl : asConst(m_items)) {
-            for (const auto& item : itemsPerColl) {
+        QSet<Collection*> collections;
+        for (auto collIt = m_items.constBegin(); collIt != m_items.constEnd(); ++collIt) {
+            for (const auto& item : collIt.value()) {
                 if (!item) {
                     m_numRejected += 1;
                     continue;
                 }
                 auto entry = item->backend();
                 auto uuid = entry->uuid();
-                if (client->itemKnown(uuid) || !FdoSecrets::settings()->confirmAccessItem()) {
-                    if (!client->itemAuthorized(uuid)) {
-                        m_numRejected += 1;
-                    }
-                    // Already saw this entry
-                    continue;
+                const auto decision = service()->authDecision(client, entry);
+                if (decision == AuthDecision::Undecided) {
+                    // the user has to be asked
+                    m_entryToItems[uuid] = item;
+                    entries << entry;
+                    collections << collIt.key();
+                } else if (!decisionAllows(decision)) {
+                    m_numRejected += 1;
                 }
-                m_entryToItems[uuid] = item.data();
-                entries << entry;
             }
         }
         if (!entries.isEmpty()) {
+            // a client identified by a record whose executable hash no longer
+            // matches must be re-decided; surface the change in the dialog
+            FingerprintChangeInfo fingerprintChange;
+            QSet<const Database*> databases;
+            for (const auto& entry : asConst(entries)) {
+                databases << entry->database();
+            }
+            for (const auto& db : databases) {
+                const auto res = resolveClient(db, *client);
+                if (res.fingerprintChanged) {
+                    fingerprintChange.mismatchedDepths += res.mismatchedDepths;
+                    if (!fingerprintChange.authorizedOn.isValid()
+                        || res.changed.created < fingerprintChange.authorizedOn) {
+                        fingerprintChange.authorizedOn = res.changed.created;
+                    }
+                }
+            }
+
             QString app = tr("%1 (PID: %2)").arg(client->name()).arg(client->pid());
-            auto ac = new AccessControlDialog(
-                findWindow(m_windowId), entries, app, client->processInfo(), AuthOption::Remember);
+            auto ac = new AccessControlDialog(findWindow(m_windowId),
+                                              entries,
+                                              app,
+                                              client->processInfo(),
+                                              AuthOption::Persist | AuthOption::PerEntryDeny,
+                                              fingerprintChange);
             connect(ac, &AccessControlDialog::finished, this, &UnlockPrompt::itemUnlockFinished);
             connect(ac, &AccessControlDialog::finished, ac, &AccessControlDialog::deleteLater);
+            // the dialog is asking about entries that do not survive the database
+            // locking or closing. Withdraw the question in that case, as if the
+            // user rejected it.
+            for (const auto& coll : collections) {
+                connect(coll, &Collection::collectionLockChanged, ac, [ac](bool locked) {
+                    if (locked) {
+                        ac->reject();
+                    }
+                });
+                connect(coll, &Collection::collectionAboutToDelete, ac, &AccessControlDialog::reject);
+            }
             ac->open();
         } else {
-            itemUnlockFinished({}, AuthDecision::Undecided);
+            itemUnlockFinished({}, AuthDecision::Undecided, false, {});
         }
     }
 
-    void UnlockPrompt::itemUnlockFinished(const QHash<Entry*, AuthDecision>& decisions, AuthDecision forFutureEntries)
+    void UnlockPrompt::itemUnlockFinished(const QHash<QUuid, AuthDecision>& decisions,
+                                          AuthDecision forFutureEntries,
+                                          bool persist,
+                                          const QSet<int>& matchDepths)
     {
         auto client = m_client.lock();
         if (!client) {
@@ -330,26 +458,58 @@ namespace FdoSecrets
             qDebug() << "DBus client gone before item unlocking finish";
             return;
         }
+        // one identity record per involved database, created or updated on first use
+        QHash<Database*, DBusClientId> recordIds;
+        const auto ensureRecord = [&](Database* db) {
+            auto idIt = recordIds.find(db);
+            if (idIt == recordIds.end()) {
+                idIt = recordIds.insert(db, upsertClientRecord(db, *client, matchDepths));
+            }
+            return idIt.value();
+        };
         for (auto it = decisions.constBegin(); it != decisions.constEnd(); ++it) {
-            auto entry = it.key();
-            auto uuid = entry->uuid();
+            const auto& uuid = it.key();
             // get back the corresponding item
             auto item = m_entryToItems.value(uuid);
             if (!item) {
+                // the item retired while the dialog was open, it can no longer be unlocked
+                m_numRejected += 1;
                 continue;
             }
 
-            // set auth
-            client->setItemAuthorized(uuid, it.value());
+            auto decision = it.value();
+            if (persist && (decision == AuthDecision::Allowed || decision == AuthDecision::Denied)) {
+                auto entry = item->backend();
+                const auto id = ensureRecord(entry->database());
+                if (!id.isNull()) {
+                    // stored in the database; the read path finds it there, no
+                    // connection local state needed
+                    setEntryClientDecision(entry, id, decision);
+                } else {
+                    // nothing to anchor an identity record on: degrade to a once
+                    // decision instead of inventing a connection lifetime tier
+                    decision = decision == AuthDecision::Allowed ? AuthDecision::AllowedOnce : AuthDecision::DeniedOnce;
+                    client->setConnectionDecision(uuid, decision);
+                }
+            } else {
+                client->setConnectionDecision(uuid, decision);
+            }
 
-            if (client->itemAuthorized(uuid)) {
+            if (decisionAllows(decision)) {
                 m_unlocked += item->objectPath();
             } else {
                 m_numRejected += 1;
             }
         }
-        if (forFutureEntries != AuthDecision::Undecided) {
-            client->setAllAuthorized(forFutureEntries);
+        if (forFutureEntries != AuthDecision::Undecided && persist) {
+            // the catch-all lives in the identity record of each involved database
+            for (auto dbIt = recordIds.constBegin(); dbIt != recordIds.constEnd(); ++dbIt) {
+                auto record = loadClientRecord(dbIt.key(), dbIt.value());
+                if (record.isValid()) {
+                    record.allEntries = forFutureEntries;
+                    saveClientRecord(dbIt.key(), record);
+                }
+            }
         }
         // if anything is not unlocked, treat the whole prompt as dismissed
         // so the client has a chance to handle the error

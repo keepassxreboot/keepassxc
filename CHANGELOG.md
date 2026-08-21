@@ -3,6 +3,10 @@
 ## 2.8.0 (Pending)
 * Placeholder for future release notes
 
+### Changes
+
+- Secret Service: Remember client authorizations across restarts by recognizing clients by their executable path and content, and manage them in the database and entry settings [#6458]
+
 ## 2.7.12 (2026-03-10)
 
 ### Changes
