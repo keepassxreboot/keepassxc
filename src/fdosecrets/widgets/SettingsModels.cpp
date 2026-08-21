@@ -17,14 +17,17 @@
 
 #include "SettingsModels.h"
 
+#include "fdosecrets/ClientAuth.h"
 #include "fdosecrets/FdoSecretsSettings.h"
 #include "fdosecrets/dbus/DBusMgr.h"
+#include "fdosecrets/widgets/ClientAuthModels.h"
 
 #include "gui/DatabaseTabWidget.h"
 #include "gui/DatabaseWidget.h"
 #include "gui/Icons.h"
 
 #include <QFileInfo>
+#include <QFont>
 
 namespace FdoSecrets
 {
@@ -247,9 +250,10 @@ namespace FdoSecrets
     // static constexpr still requires definition before c++17
     constexpr const char* SettingsClientModel::ColumnNames[];
 
-    SettingsClientModel::SettingsClientModel(DBusMgr& dbus, QObject* parent)
+    SettingsClientModel::SettingsClientModel(DBusMgr& dbus, DatabaseTabWidget* dbTabs, QObject* parent)
         : QAbstractTableModel(parent)
         , m_dbus(dbus)
+        , m_dbTabs(dbTabs)
     {
         populateModel();
     }
@@ -311,8 +315,8 @@ namespace FdoSecrets
             return dataForPID(client, role);
         case ColumnDBus:
             return dataForDBus(client, role);
-        case ColumnManage:
-            return dataForManage(client, role);
+        case ColumnAuthorization:
+            return dataForAuthorization(client, role);
         default:
             return {};
         }
@@ -363,14 +367,70 @@ namespace FdoSecrets
         }
     }
 
-    QVariant SettingsClientModel::dataForManage(const DBusClientPtr& client, int role) const
+    QVariant SettingsClientModel::dataForAuthorization(const DBusClientPtr& client, int role) const
     {
+        const auto& authz = authorization(client);
         switch (role) {
-        case Qt::EditRole: {
-            return QVariant::fromValue(client);
-        }
+        case Qt::DisplayRole:
+            return authz.summary.isEmpty() ? tr("none") : authz.summary;
+        case Qt::ToolTipRole:
+            return authz.toolTip;
+        case Qt::FontRole:
+            if (authz.summary.isEmpty()) {
+                QFont font;
+                font.setItalic(true);
+                return font;
+            }
+            return {};
         default:
             return {};
+        }
+    }
+
+    const SettingsClientModel::Authorization& SettingsClientModel::authorization(const DBusClientPtr& client) const
+    {
+        auto it = m_authorizations.find(client->address());
+        if (it != m_authorizations.end()) {
+            return it.value();
+        }
+
+        Authorization authz;
+        QStringList toolTipLines;
+        for (int idx = 0; m_dbTabs && idx != m_dbTabs->count(); ++idx) {
+            auto dbWidget = m_dbTabs->databaseWidgetFromIndex(idx);
+            // a locked database cannot be searched for records, and one that is
+            // not exposed never authorizes anything
+            if (!dbWidget || dbWidget->isLocked() || !dbWidget->database()
+                || FdoSecrets::settings()->exposedGroup(dbWidget->database()).isNull()) {
+                continue;
+            }
+            const auto db = dbWidget->database();
+            const auto name = QFileInfo(db->filePath()).fileName();
+            const auto res = resolveClient(db.data(), *client);
+            if (res.record.isValid()) {
+                authz.summary += (authz.summary.isEmpty() ? QString() : QStringLiteral("; "))
+                                 + QStringLiteral("%1: %2").arg(name, res.record.name);
+                toolTipLines << QStringLiteral("%1: %2").arg(name, ClientRecordsModel::rulesSummary(res.record));
+            } else if (res.fingerprintChanged) {
+                authz.summary += (authz.summary.isEmpty() ? QString() : QStringLiteral("; "))
+                                 + tr("%1: %2 (executable changed)").arg(name, res.changed.name);
+                toolTipLines << tr("The executable of this application changed since it was authorized as \"%1\" "
+                                   "in %2. It has to be authorized again.")
+                                    .arg(res.changed.name, name);
+            }
+        }
+        authz.toolTip = toolTipLines.join(QLatin1Char('\n'));
+        return *m_authorizations.insert(client->address(), authz);
+    }
+
+    void SettingsClientModel::invalidateAuthorizations()
+    {
+        if (m_authorizations.isEmpty()) {
+            return;
+        }
+        m_authorizations.clear();
+        if (!m_clients.isEmpty()) {
+            emit dataChanged(index(0, ColumnAuthorization), index(m_clients.size() - 1, ColumnAuthorization));
         }
     }
 
@@ -391,7 +451,30 @@ namespace FdoSecrets
         });
         connect(&m_dbus, &DBusMgr::clientDisconnected, this, &SettingsClientModel::clientDisconnected);
 
+        // a resolution only holds as long as the databases it was computed from
+        if (m_dbTabs) {
+            connect(m_dbTabs, &DatabaseTabWidget::databaseOpened, this, [this](DatabaseWidget* dbWidget) {
+                connectDatabase(dbWidget);
+                invalidateAuthorizations();
+            });
+            connect(m_dbTabs, &DatabaseTabWidget::databaseClosed, this, [this]() { invalidateAuthorizations(); });
+            for (int idx = 0; idx != m_dbTabs->count(); ++idx) {
+                connectDatabase(m_dbTabs->databaseWidgetFromIndex(idx));
+            }
+        }
+
         endResetModel();
+    }
+
+    void SettingsClientModel::connectDatabase(DatabaseWidget* dbWidget)
+    {
+        if (!dbWidget) {
+            return;
+        }
+        connect(dbWidget, &DatabaseWidget::databaseLocked, this, &SettingsClientModel::invalidateAuthorizations);
+        connect(dbWidget, &DatabaseWidget::databaseUnlocked, this, &SettingsClientModel::invalidateAuthorizations);
+        // records are edited in the database settings, and written by prompts
+        connect(dbWidget, &DatabaseWidget::databaseModified, this, &SettingsClientModel::invalidateAuthorizations);
     }
 
     void SettingsClientModel::clientConnected(const DBusClientPtr& client, bool emitSignals)

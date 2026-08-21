@@ -153,66 +153,6 @@ namespace
         QAction* m_lockAct = nullptr;
     };
 
-    class ManageSession : public QWidget
-    {
-        Q_OBJECT
-
-        Q_PROPERTY(const DBusClientPtr& client READ client WRITE setClient USER true)
-
-    public:
-        explicit ManageSession(QWidget* parent = nullptr)
-            : QWidget(parent)
-        {
-            auto disconnectAct = new QAction(tr("Disconnect"), this);
-            disconnectAct->setIcon(icons()->icon(QStringLiteral("dialog-close")));
-            disconnectAct->setToolTip(tr("Disconnect this application"));
-            connect(disconnectAct, &QAction::triggered, this, [this]() {
-                if (m_client) {
-                    m_client->disconnectDBus();
-                }
-            });
-
-            auto resetAct = new QAction(tr("Reset"), this);
-            resetAct->setIcon(icons()->icon(QStringLiteral("refresh")));
-            resetAct->setToolTip(tr("Reset any remembered decisions for this application"));
-            connect(resetAct, &QAction::triggered, this, [this]() {
-                if (m_client) {
-                    m_client->clearAuthorization();
-                }
-            });
-
-            // layout
-            auto disconnectBtn = new QToolButton(this);
-            disconnectBtn->setAutoRaise(true);
-            disconnectBtn->setDefaultAction(disconnectAct);
-
-            auto resetBtn = new QToolButton(this);
-            resetBtn->setAutoRaise(true);
-            resetBtn->setDefaultAction(resetAct);
-
-            auto layout = new QHBoxLayout(this);
-            layout->setContentsMargins(1, 1, 1, 1);
-            layout->setSpacing(1);
-
-            layout->addStretch();
-            layout->addWidget(resetBtn);
-            layout->addWidget(disconnectBtn);
-            layout->addStretch();
-        }
-
-        const DBusClientPtr& client() const
-        {
-            return m_client;
-        }
-
-        void setClient(DBusClientPtr client)
-        {
-            m_client = std::move(client);
-        }
-
-    private:
-        DBusClientPtr m_client{};
-    };
 } // namespace
 
 SettingsWidgetFdoSecrets::SettingsWidgetFdoSecrets(FdoSecretsPlugin* plugin, QWidget* parent)
@@ -224,18 +164,15 @@ SettingsWidgetFdoSecrets::SettingsWidgetFdoSecrets(FdoSecretsPlugin* plugin, QWi
     m_ui->warningMsg->setHidden(true);
     m_ui->warningMsg->setCloseButtonVisible(false);
 
-    auto clientModel = new SettingsClientModel(*plugin->dbus(), this);
+    auto clientModel = new SettingsClientModel(*plugin->dbus(), plugin->dbTabs(), this);
     m_ui->tableClients->setModel(clientModel);
-    installWidgetItemDelegate<ManageSession>(m_ui->tableClients,
-                                             SettingsClientModel::ColumnManage,
-                                             [](QWidget* p, const QModelIndex&) { return new ManageSession(p); });
 
     // config header after setting model, otherwise the header doesn't have enough sections
     auto clientViewHeader = m_ui->tableClients->horizontalHeader();
     clientViewHeader->setSelectionMode(QAbstractItemView::NoSelection);
     clientViewHeader->setSectionsClickable(false);
     clientViewHeader->setSectionResizeMode(QHeaderView::ResizeToContents);
-    clientViewHeader->setSectionResizeMode(SettingsClientModel::ColumnApplication, QHeaderView::Stretch);
+    clientViewHeader->setSectionResizeMode(SettingsClientModel::ColumnAuthorization, QHeaderView::Stretch);
 
     auto dbModel = new SettingsDatabaseModel(plugin->dbTabs(), this);
     m_ui->tableDatabases->setModel(dbModel);

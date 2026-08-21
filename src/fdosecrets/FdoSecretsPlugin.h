@@ -42,7 +42,7 @@ public:
 
     QString name() override
     {
-        return QObject::tr("Secret Service Integration");
+        return QObject::tr("Secret Service");
     }
 
     QIcon icon() override
