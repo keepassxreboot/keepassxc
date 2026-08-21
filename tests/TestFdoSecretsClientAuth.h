@@ -44,6 +44,7 @@ private slots:
     void testFingerprintChanged();
     void testIdentifyingRule();
     void testResolveOverlap();
+    void testRecordsOverlap();
     void testResolverDecision();
 
 private:

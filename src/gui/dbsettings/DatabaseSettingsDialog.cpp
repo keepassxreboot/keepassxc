@@ -81,7 +81,7 @@ DatabaseSettingsDialog::DatabaseSettingsDialog(QWidget* parent)
     addPage(tr("KeeShare"), icons()->icon("preferences-system-network-sharing"), m_keeShareWidget);
 
 #ifdef KPXC_FEATURE_FDOSECRETS
-    addPage(tr("Secret Service Integration"), icons()->icon(QStringLiteral("freedesktop")), m_fdoSecretsWidget);
+    addPage(tr("Secret Service"), icons()->icon(QStringLiteral("freedesktop")), m_fdoSecretsWidget);
 #endif
 
     addPage(tr("Maintenance"), icons()->icon("hammer-wrench"), m_maintenanceWidget);

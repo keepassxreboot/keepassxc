@@ -125,6 +125,11 @@ private slots:
     void testHiddenFilename();
     void testDuplicateName();
 
+    void testDbSettingsRecordList();
+    void testDbSettingsRecordEdit();
+    void testDbSettingsRecordRemove();
+    void testDbSettingsOverlapWarning();
+
 private:
     bool driveUnlockDialog(DatabaseWidget* target = nullptr);
     bool driveNewDatabaseWizard();

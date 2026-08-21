@@ -18,12 +18,17 @@
 #include "DatabaseSettingsWidgetFdoSecrets.h"
 #include "ui_DatabaseSettingsWidgetFdoSecrets.h"
 
+#include "fdosecrets/ClientAuth.h"
 #include "fdosecrets/FdoSecretsSettings.h"
+#include "fdosecrets/widgets/ClientAuthModels.h"
+#include "fdosecrets/widgets/ClientRecordDialog.h"
 
+#include "core/Entry.h"
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "gui/group/GroupModel.h"
 
+#include <QHeaderView>
 #include <QSortFilterProxyModel>
 
 namespace
@@ -106,6 +111,31 @@ DatabaseSettingsWidgetFdoSecrets::DatabaseSettingsWidgetFdoSecrets(QWidget* pare
             }
         }
     });
+
+    m_ui->authzWarning->setHidden(true);
+    m_ui->authzWarning->setCloseButtonVisible(false);
+    m_ui->authzWarning->setAutoHideTimeout(MessageWidget::DisableAutoHide);
+
+    m_recordsModel = new FdoSecrets::ClientRecordsModel(this);
+    m_ui->recordsView->setModel(m_recordsModel);
+    // the name and the decisions get the width they need, the rules the rest
+    using Model = FdoSecrets::ClientRecordsModel;
+    m_ui->recordsView->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    m_ui->recordsView->horizontalHeader()->setSectionResizeMode(Model::ColumnRules, QHeaderView::Stretch);
+
+    connect(m_ui->recordAddButton, &QPushButton::clicked, this, &DatabaseSettingsWidgetFdoSecrets::addClientRecord);
+    connect(m_ui->recordEditButton, &QPushButton::clicked, this, &DatabaseSettingsWidgetFdoSecrets::editClientRecord);
+    connect(
+        m_ui->recordRemoveButton, &QPushButton::clicked, this, &DatabaseSettingsWidgetFdoSecrets::removeClientRecord);
+    connect(m_ui->recordsView, &QTableView::doubleClicked, this, &DatabaseSettingsWidgetFdoSecrets::editClientRecord);
+    connect(m_ui->recordsView->selectionModel(),
+            &QItemSelectionModel::currentRowChanged,
+            this,
+            &DatabaseSettingsWidgetFdoSecrets::updateRecordButtons);
+    connect(
+        m_recordsModel, &QAbstractItemModel::modelReset, this, &DatabaseSettingsWidgetFdoSecrets::updateOverlapWarning);
+    connect(
+        m_recordsModel, &QAbstractItemModel::modelReset, this, &DatabaseSettingsWidgetFdoSecrets::updateRecordButtons);
 }
 
 DatabaseSettingsWidgetFdoSecrets::~DatabaseSettingsWidgetFdoSecrets() = default;
@@ -137,7 +167,19 @@ void DatabaseSettingsWidgetFdoSecrets::loadSettings(QSharedPointer<Database> db)
         m_ui->radioExpose->setChecked(true);
     }
 
+    // the records are edited on a copy and only written when the settings are
+    // saved, like every other page of this dialog
+    m_records = FdoSecrets::loadClientRecords(m_db.data());
+    m_removedRecords.clear();
+    m_removedDecisions.clear();
+    // the initial warning belongs to the page as it appears; only warnings
+    // appearing later, as records are edited, are worth animating
+    m_ui->authzWarning->setAnimate(false);
+    refreshRecords();
+    m_ui->authzWarning->setAnimate(true);
+
     settingsWarning();
+    updateRecordButtons();
 }
 
 void DatabaseSettingsWidgetFdoSecrets::saveSettings()
@@ -158,15 +200,131 @@ void DatabaseSettingsWidgetFdoSecrets::saveSettings()
     }
 
     FdoSecrets::settings()->setExposedGroup(m_db, exposedGroup);
+
+    // removals first: a record removed and re-added keeps the newer definition
+    for (const auto& id : asConst(m_removedRecords)) {
+        FdoSecrets::removeClientRecord(m_db.data(), id);
+    }
+    for (const auto& removed : asConst(m_removedDecisions)) {
+        if (removed.first) {
+            FdoSecrets::setEntryClientDecision(removed.first, removed.second, AuthDecision::Undecided);
+        }
+    }
+    for (const auto& record : asConst(m_records)) {
+        // unchanged records write the same value, which customData ignores
+        FdoSecrets::saveClientRecord(m_db.data(), record);
+    }
+    m_removedRecords.clear();
+    m_removedDecisions.clear();
+}
+
+void DatabaseSettingsWidgetFdoSecrets::addClientRecord()
+{
+    FdoSecrets::ClientRecordDialog dlg(m_db, {}, m_records, this);
+    if (dlg.exec() == QDialog::Accepted) {
+        m_records << dlg.record();
+        refreshRecords();
+    }
+}
+
+void DatabaseSettingsWidgetFdoSecrets::editClientRecord()
+{
+    const auto row = m_ui->recordsView->currentIndex().row();
+    const auto record = m_recordsModel->recordAt(row);
+    if (!record.isValid()) {
+        return;
+    }
+    FdoSecrets::ClientRecordDialog dlg(m_db, record, m_records, this);
+    if (dlg.exec() != QDialog::Accepted) {
+        return;
+    }
+    for (auto& staged : m_records) {
+        if (staged.id == record.id) {
+            staged = dlg.record();
+            break;
+        }
+    }
+    for (auto entry : dlg.removedEntries()) {
+        m_removedDecisions << qMakePair(QPointer<Entry>(entry), record.id);
+    }
+    refreshRecords();
+}
+
+void DatabaseSettingsWidgetFdoSecrets::removeClientRecord()
+{
+    const auto record = m_recordsModel->recordAt(m_ui->recordsView->currentIndex().row());
+    if (!record.isValid()) {
+        return;
+    }
+    // no confirmation: nothing is written before the settings are saved, and
+    // the dialog can still be cancelled
+    for (int i = 0; i < m_records.size(); ++i) {
+        if (m_records.at(i).id == record.id) {
+            m_records.removeAt(i);
+            break;
+        }
+    }
+    // a record that was never saved has nothing to remove from the database
+    if (FdoSecrets::loadClientRecord(m_db.data(), record.id).isValid()) {
+        m_removedRecords << record.id;
+    }
+    refreshRecords();
+}
+
+void DatabaseSettingsWidgetFdoSecrets::refreshRecords()
+{
+    // decision counts come from the database, minus what is staged for removal
+    QHash<FdoSecrets::DBusClientId, QPair<int, int>> counts;
+    for (const auto* entry : m_db->rootGroup()->entriesRecursive()) {
+        const auto decisions = FdoSecrets::entryClientDecisions(entry);
+        for (auto it = decisions.constBegin(); it != decisions.constEnd(); ++it) {
+            if (m_removedDecisions.contains(qMakePair(QPointer<Entry>(const_cast<Entry*>(entry)), it.key()))) {
+                continue;
+            }
+            auto& count = counts[it.key()];
+            (it.value() == AuthDecision::Allowed ? count.first : count.second) += 1;
+        }
+    }
+    m_recordsModel->setRecords(m_records, counts);
+}
+
+void DatabaseSettingsWidgetFdoSecrets::updateRecordButtons()
+{
+    const auto hasSelection = m_recordsModel->recordAt(m_ui->recordsView->currentIndex().row()).isValid();
+    m_ui->recordEditButton->setEnabled(hasSelection);
+    m_ui->recordRemoveButton->setEnabled(hasSelection);
+}
+
+void DatabaseSettingsWidgetFdoSecrets::updateOverlapWarning()
+{
+    const auto& records = m_recordsModel->records();
+    QStringList overlapping;
+    for (int i = 0; i < records.size(); ++i) {
+        for (int j = i + 1; j < records.size(); ++j) {
+            if (FdoSecrets::recordsOverlap(records.at(i), records.at(j))) {
+                overlapping << tr("\"%1\" and \"%2\"").arg(records.at(i).name, records.at(j).name);
+            }
+        }
+    }
+    if (overlapping.isEmpty()) {
+        m_ui->authzWarning->hideMessage();
+    } else {
+        m_ui->authzWarning->showMessage(tr("%1 can match the same client. Overlaps resolve to the denying record "
+                                           "first, then the earliest created one.")
+                                            .arg(overlapping.join(tr(", "))),
+                                        MessageWidget::Warning);
+    }
 }
 
 void DatabaseSettingsWidgetFdoSecrets::settingsWarning()
 {
     if (FdoSecrets::settings()->isEnabled()) {
         m_ui->groupBox->setEnabled(true);
+        m_ui->authzBox->setEnabled(true);
         m_ui->warningWidget->hideMessage();
     } else {
         m_ui->groupBox->setEnabled(false);
+        m_ui->authzBox->setEnabled(false);
         m_ui->warningWidget->showMessage(tr("Enable Secret Service to access these settings."), MessageWidget::Warning);
         m_ui->warningWidget->setCloseButtonVisible(false);
         m_ui->warningWidget->setAutoHideTimeout(-1);
