@@ -121,6 +121,9 @@ private slots:
     void testDbSettingsRecordEdit();
     void testDbSettingsRecordRemove();
     void testDbSettingsOverlapWarning();
+    void testEntryEditorDecisions();
+    void testEntryEditorHistoryReadOnly();
+    void testEntryEditorHistoryRevert();
 
 private:
     bool driveUnlockDialog(DatabaseWidget* target = nullptr);

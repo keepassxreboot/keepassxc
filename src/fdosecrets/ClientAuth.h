@@ -27,6 +27,7 @@
 
 #include "core/Global.h"
 
+class CustomData;
 class Database;
 class Entry;
 
@@ -163,6 +164,13 @@ namespace FdoSecrets
      * Undecided removes the decision (and the customData key when none are left).
      */
     void setEntryClientDecision(Entry* entry, const DBusClientId& id, AuthDecision decision);
+
+    /**
+     * The same on a bare CustomData, for the entry editor, which stages its
+     * edits on a copy of the entry's customData and writes it back on save.
+     */
+    QHash<DBusClientId, AuthDecision> entryClientDecisions(const CustomData* customData);
+    void setEntryClientDecision(CustomData* customData, const DBusClientId& id, AuthDecision decision);
 
     struct ClientResolution
     {

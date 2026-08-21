@@ -91,6 +91,77 @@ namespace FdoSecrets
         QHash<DBusClientId, QPair<int, int>> m_decisionCounts;
     };
 
+    /**
+     * Edits an allow/deny cell through a combo box, so a stored decision is
+     * changed the same way a new one is chosen.
+     */
+    class AuthDecisionDelegate : public QStyledItemDelegate
+    {
+        Q_OBJECT
+
+    public:
+        using QStyledItemDelegate::QStyledItemDelegate;
+
+        QWidget*
+        createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const override;
+        void setEditorData(QWidget* editor, const QModelIndex& index) const override;
+        void setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const override;
+    };
+
+    /**
+     * The client decisions stored on one entry, one row per decision, for the
+     * entry editor. Edits go to the CustomData handed in, which for the editor
+     * is its staging copy of the entry's customData, so they are committed or
+     * discarded with the rest of the entry.
+     */
+    class EntryClientDecisionsModel : public QAbstractTableModel
+    {
+        Q_OBJECT
+
+    public:
+        enum Column
+        {
+            ColumnClient,
+            ColumnAccess,
+        };
+
+        explicit EntryClientDecisionsModel(QObject* parent = nullptr);
+
+        /**
+         * Show the decisions in @a customData, resolving record ids against
+         * @a db. Either may be null, which yields an empty read-only model.
+         */
+        void load(CustomData* customData, const Database* db);
+
+        void setDecision(const DBusClientId& id, AuthDecision decision);
+        void removeRow(int row);
+        DBusClientId idAt(int row) const;
+        /// Records of @a db that have no decision on this entry yet.
+        QList<ClientRecord> assignableRecords() const;
+        /// Display name of a record: its name plus a short rules summary.
+        static QString recordLabel(const ClientRecord& record);
+
+        int rowCount(const QModelIndex& parent = {}) const override;
+        int columnCount(const QModelIndex& parent = {}) const override;
+        QVariant headerData(int section, Qt::Orientation orientation, int role) const override;
+        QVariant data(const QModelIndex& index, int role) const override;
+        Qt::ItemFlags flags(const QModelIndex& index) const override;
+        bool setData(const QModelIndex& index, const QVariant& value, int role) override;
+
+        /// Whether decisions can be changed; false for a history item.
+        void setReadOnly(bool readOnly);
+
+    private:
+        void reload();
+
+        bool m_readOnly = false;
+
+        QPointer<CustomData> m_customData;
+        QPointer<const Database> m_db;
+        QList<ClientRecord> m_records;
+        /// decision rows, records first (by creation), then stale ids
+        QList<QPair<DBusClientId, AuthDecision>> m_rows;
+    };
 } // namespace FdoSecrets
 
 #endif // KEEPASSXC_FDOSECRETS_CLIENTAUTHMODELS_H

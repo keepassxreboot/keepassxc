@@ -28,6 +28,7 @@
 #include "fdosecrets/widgets/ClientAuthModels.h"
 #include "fdosecrets/widgets/ClientRecordDialog.h"
 #include "fdosecrets/widgets/DatabaseSettingsWidgetFdoSecrets.h"
+#include "gui/entry/EditEntryWidget.h"
 
 #include "config-keepassx-tests.h"
 
@@ -2547,6 +2548,170 @@ void TestGuiFdoSecrets::testDbSettingsOverlapWarning()
     saveClientRecord(m_db.data(), makeRecord(QStringLiteral("pinentry"), QStringLiteral("/usr/bin/pinentry"), 30));
     widget.loadSettings(m_db);
     VERIFY(warning->isHidden());
+}
+
+void TestGuiFdoSecrets::testEntryEditorDecisions()
+{
+    FdoSecrets::settings()->setEnabled(true);
+    auto firefox = makeRecord(QStringLiteral("firefox"), QStringLiteral("/usr/bin/firefox"), 120);
+    auto secretTool = makeRecord(QStringLiteral("secret-tool"), QStringLiteral("/usr/bin/secret-tool"), 60);
+    saveClientRecord(m_db.data(), firefox);
+    saveClientRecord(m_db.data(), secretTool);
+
+    auto entry = m_db->rootGroup()->entriesRecursive().first();
+    setEntryClientDecision(entry, firefox.id, AuthDecision::Allowed);
+    const auto stale = QUuid::createUuid();
+    setEntryClientDecision(entry, stale, AuthDecision::Denied);
+
+    EditEntryWidget editor;
+    editor.loadEntry(entry, false, false, QStringLiteral("group"), m_db);
+
+    auto view = editor.findChild<QTableView*>("decisionsView");
+    VERIFY(view);
+    auto model = view->model();
+    using Model = FdoSecrets::EntryClientDecisionsModel;
+
+    // known records first, then decisions whose record was removed
+    COMPARE(model->rowCount(), 2);
+    VERIFY(model->index(0, Model::ColumnClient).data().toString().startsWith(QStringLiteral("firefox")));
+    COMPARE(model->index(0, Model::ColumnAccess).data().toString(), QStringLiteral("Allow"));
+    COMPARE(model->index(1, Model::ColumnClient).data().toString(),
+            QStringLiteral("Unknown client (removed from database)"));
+
+    // only records without a decision here can be added
+    auto addCombo = editor.findChild<QComboBox*>("addClientCombo");
+    VERIFY(addCombo);
+    COMPARE(addCombo->count(), 1);
+    VERIFY(addCombo->itemText(0).startsWith(QStringLiteral("secret-tool")));
+
+    auto addButton = editor.findChild<QPushButton*>("addButton");
+    VERIFY(addButton);
+    VERIFY(!addButton->isEnabled());
+    addCombo->setCurrentIndex(0);
+    VERIFY(addButton->isEnabled());
+    editor.findChild<QComboBox*>("addAccessCombo")->setCurrentIndex(1); // deny
+    addButton->click();
+    COMPARE(model->rowCount(), 3);
+    COMPARE(addCombo->count(), 0);
+
+    // a stored decision is edited in place: every row keeps its combo open
+    const auto accessIndex = model->index(0, Model::ColumnAccess);
+    VERIFY(model->flags(accessIndex).testFlag(Qt::ItemIsEditable));
+    auto combo = qobject_cast<QComboBox*>(view->indexWidget(accessIndex));
+    if (!combo) {
+        // persistent editors are not index widgets, find it among the children
+        for (auto* candidate : view->viewport()->findChildren<QComboBox*>()) {
+            if (view->visualRect(accessIndex).contains(candidate->geometry().center())) {
+                combo = candidate;
+                break;
+            }
+        }
+    }
+    VERIFY(combo);
+    combo->setCurrentIndex(combo->findData(static_cast<int>(AuthDecision::Denied)));
+    COMPARE(accessIndex.data().toString(), QStringLiteral("Deny"));
+
+    // the change is staged, and Apply writes it without closing the editor
+    COMPARE(entryClientDecisions(entry).value(firefox.id), AuthDecision::Allowed);
+    auto applyButton = editor.findChild<QDialogButtonBox*>()->button(QDialogButtonBox::Apply);
+    VERIFY(applyButton);
+    VERIFY(applyButton->isEnabled());
+    applyButton->click();
+    processEvents();
+    COMPARE(entryClientDecisions(entry).value(firefox.id), AuthDecision::Denied);
+
+    auto removeButton = editor.findChild<QPushButton*>("removeButton");
+    VERIFY(removeButton);
+    VERIFY(!removeButton->isEnabled());
+    view->setCurrentIndex(model->index(0, 0));
+    VERIFY(removeButton->isEnabled());
+    removeButton->click();
+    COMPARE(model->rowCount(), 2);
+    // the freed record can be assigned again
+    COMPARE(addCombo->count(), 1);
+
+    // the removal is staged: the entry still carries what Apply wrote above
+    COMPARE(entryClientDecisions(entry).value(firefox.id), AuthDecision::Denied);
+    COMPARE(entryClientDecisions(entry).value(secretTool.id), AuthDecision::Denied);
+
+    QSignalSpy finished(&editor, SIGNAL(editFinished(bool)));
+    auto buttonBox = editor.findChild<QDialogButtonBox*>();
+    VERIFY(buttonBox);
+    buttonBox->button(QDialogButtonBox::Ok)->click();
+    VERIFY(waitForSignal(finished, 1));
+
+    const auto decisions = entryClientDecisions(entry);
+    VERIFY(!decisions.contains(firefox.id));  // removed above, so the flip is gone with it
+    COMPARE(decisions.value(secretTool.id), AuthDecision::Denied);
+    // an unknown record id is left alone rather than swept
+    COMPARE(decisions.value(stale), AuthDecision::Denied);
+}
+
+void TestGuiFdoSecrets::testEntryEditorHistoryReadOnly()
+{
+    FdoSecrets::settings()->setEnabled(true);
+    auto record = makeRecord(QStringLiteral("firefox"), QStringLiteral("/usr/bin/firefox"), 60);
+    saveClientRecord(m_db.data(), record);
+    auto entry = m_db->rootGroup()->entriesRecursive().first();
+    setEntryClientDecision(entry, record.id, AuthDecision::Allowed);
+
+    EditEntryWidget editor;
+    editor.loadEntry(entry, false, true, QStringLiteral("group"), m_db);
+
+    auto view = editor.findChild<QTableView*>("decisionsView");
+    VERIFY(view);
+    COMPARE(view->model()->rowCount(), 1);
+    view->setCurrentIndex(view->model()->index(0, 0));
+    VERIFY(!editor.findChild<QPushButton*>("removeButton")->isEnabled());
+    VERIFY(!view->model()->flags(view->model()->index(0, 1)).testFlag(Qt::ItemIsEditable));
+    VERIFY(!editor.findChild<QComboBox*>("addClientCombo")->isEnabled());
+    VERIFY(!editor.findChild<QPushButton*>("addButton")->isEnabled());
+}
+
+void TestGuiFdoSecrets::testEntryEditorHistoryRevert()
+{
+    FdoSecrets::settings()->setEnabled(true);
+    auto record = makeRecord(QStringLiteral("firefox"), QStringLiteral("/usr/bin/firefox"), 60);
+    saveClientRecord(m_db.data(), record);
+    auto entry = m_db->rootGroup()->entriesRecursive().first();
+    setEntryClientDecision(entry, record.id, AuthDecision::Allowed);
+
+    // snapshot the authorized state into the entry history
+    const auto originalTitle = entry->title();
+    const auto historyBefore = entry->historyItems().size();
+    entry->beginUpdate();
+    entry->setTitle(QStringLiteral("renamed"));
+    entry->endUpdate();
+    COMPARE(entry->historyItems().size(), historyBefore + 1);
+    COMPARE(entryClientDecisions(entry->historyItems().last()).value(record.id), AuthDecision::Allowed);
+
+    setEntryClientDecision(entry, record.id, AuthDecision::Undecided);
+
+    EditEntryWidget editor;
+    editor.loadEntry(entry, false, false, QStringLiteral("group"), m_db);
+    editor.switchToPage(EditEntryWidget::Page::History);
+    auto historyView = editor.findChild<QTreeView*>("historyView");
+    VERIFY(historyView);
+    // newest first, with the entry's current state occupying row 0, so the
+    // snapshot just taken is row 1
+    historyView->setCurrentIndex(historyView->model()->index(1, 0));
+    auto restoreButton = editor.findChild<QPushButton*>("restoreButton");
+    VERIFY(restoreButton->isEnabled());
+    restoreButton->click();
+
+    // decisions live in the entry's customData like the browser integration
+    // settings do, so a revert restores them along with everything else
+    COMPARE(editor.findChild<QLineEdit*>("titleEdit")->text(), originalTitle);
+    auto view = editor.findChild<QTableView*>("decisionsView");
+    VERIFY(view);
+    COMPARE(view->model()->rowCount(), 1);
+
+    QSignalSpy finished(&editor, SIGNAL(editFinished(bool)));
+    auto buttonBox = editor.findChild<QDialogButtonBox*>();
+    VERIFY(buttonBox);
+    buttonBox->button(QDialogButtonBox::Ok)->click();
+    VERIFY(waitForSignal(finished, 1));
+    COMPARE(entryClientDecisions(entry).value(record.id), AuthDecision::Allowed);
 }
 
 #undef VERIFY

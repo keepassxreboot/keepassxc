@@ -20,6 +20,7 @@
 #include "ui_EditEntryWidgetAdvanced.h"
 #include "ui_EditEntryWidgetAutoType.h"
 #include "ui_EditEntryWidgetBrowser.h"
+#include "ui_EditEntryWidgetFdoSecrets.h"
 #include "ui_EditEntryWidgetHistory.h"
 #include "ui_EditEntryWidgetMain.h"
 #include "ui_EditEntryWidgetSSHAgent.h"
@@ -51,6 +52,11 @@
 #include "EntryURLModel.h"
 #include "browser/BrowserService.h"
 #endif
+#ifdef KPXC_FEATURE_FDOSECRETS
+#include "fdosecrets/ClientAuth.h"
+#include "fdosecrets/FdoSecretsSettings.h"
+#include "fdosecrets/widgets/ClientAuthModels.h"
+#endif
 #include "gui/Clipboard.h"
 #include "gui/EditWidgetIcons.h"
 #include "gui/EditWidgetProperties.h"
@@ -72,6 +78,9 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     , m_sshAgentUi(new Ui::EditEntryWidgetSSHAgent())
     , m_historyUi(new Ui::EditEntryWidgetHistory())
     , m_browserUi(new Ui::EditEntryWidgetBrowser())
+#ifdef KPXC_FEATURE_FDOSECRETS
+    , m_fdoSecretsUi(new Ui::EditEntryWidgetFdoSecrets())
+#endif
     , m_attachments(new EntryAttachments())
     , m_customData(new CustomData())
     , m_mainWidget(new QScrollArea(this))
@@ -85,6 +94,10 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
     , m_browserSettingsChanged(false)
     , m_browserWidget(new QWidget(this))
     , m_additionalURLsDataModel(new EntryURLModel(this))
+#endif
+#ifdef KPXC_FEATURE_FDOSECRETS
+    , m_fdoSecretsWidget(new QWidget(this))
+    , m_fdoSecretsModel(new FdoSecrets::EntryClientDecisionsModel(this))
 #endif
     , m_editWidgetProperties(new EditWidgetProperties(this))
     , m_historyWidget(new QWidget(this))
@@ -110,6 +123,10 @@ EditEntryWidget::EditEntryWidget(QWidget* parent)
 
 #ifdef KPXC_FEATURE_BROWSER
     setupBrowser();
+#endif
+
+#ifdef KPXC_FEATURE_FDOSECRETS
+    setupFdoSecrets();
 #endif
 
     setupProperties();
@@ -183,6 +200,12 @@ QWidget* EditEntryWidget::widgetForPage(Page page) const
     case Page::SSHAgent:
 #ifdef KPXC_FEATURE_SSHAGENT
         return m_sshAgentWidget;
+#else
+        return nullptr;
+#endif
+    case Page::FdoSecrets:
+#ifdef KPXC_FEATURE_FDOSECRETS
+        return m_fdoSecretsWidget;
 #else
         return nullptr;
 #endif
@@ -470,6 +493,125 @@ void EditEntryWidget::updateCurrentURL()
 void EditEntryWidget::entryURLEdited(const QString& url)
 {
     m_additionalURLsDataModel->setEntryUrl(url);
+}
+#endif
+
+#ifdef KPXC_FEATURE_FDOSECRETS
+void EditEntryWidget::setupFdoSecrets()
+{
+    m_fdoSecretsUi->setupUi(m_fdoSecretsWidget);
+    addPage(tr("Secret Service"), icons()->icon("freedesktop"), m_fdoSecretsWidget);
+
+    m_fdoSecretsUi->decisionsView->setModel(m_fdoSecretsModel);
+    // a stored decision is changed the same way a new one is chosen
+    m_fdoSecretsUi->decisionsView->setItemDelegateForColumn(
+        FdoSecrets::EntryClientDecisionsModel::ColumnAccess,
+        new FdoSecrets::AuthDecisionDelegate(m_fdoSecretsUi->decisionsView));
+    connect(m_fdoSecretsModel, &QAbstractItemModel::dataChanged, this, [this]() { setModified(true); });
+    // the combo boxes stay open: a decision one has to discover by double
+    // clicking might as well be read-only
+    connect(m_fdoSecretsModel, &QAbstractItemModel::modelReset, this, &EditEntryWidget::openFdoSecretsEditors);
+    auto header = m_fdoSecretsUi->decisionsView->horizontalHeader();
+    header->setSectionResizeMode(QHeaderView::ResizeToContents);
+    header->setSectionResizeMode(FdoSecrets::EntryClientDecisionsModel::ColumnClient, QHeaderView::Stretch);
+
+    // search by typing part of the client name or of its rules summary
+    auto completer = new QCompleter(m_fdoSecretsUi->addClientCombo);
+    completer->setModel(m_fdoSecretsUi->addClientCombo->model());
+    completer->setCaseSensitivity(Qt::CaseInsensitive);
+    completer->setFilterMode(Qt::MatchContains);
+    completer->setCompletionMode(QCompleter::PopupCompletion);
+    m_fdoSecretsUi->addClientCombo->setCompleter(completer);
+    // an editable combo shows the placeholder of its line edit, not its own
+    m_fdoSecretsUi->addClientCombo->lineEdit()->setPlaceholderText(
+        m_fdoSecretsUi->addClientCombo->placeholderText());
+
+    connect(m_fdoSecretsUi->addButton, &QPushButton::clicked, this, &EditEntryWidget::addFdoSecretsDecision);
+    connect(m_fdoSecretsUi->removeButton, &QPushButton::clicked, this, &EditEntryWidget::removeFdoSecretsDecision);
+    connect(m_fdoSecretsUi->decisionsView->selectionModel(),
+            &QItemSelectionModel::currentRowChanged,
+            this,
+            &EditEntryWidget::updateFdoSecretsButtons);
+    connect(m_fdoSecretsUi->addClientCombo,
+            &QComboBox::currentTextChanged,
+            this,
+            &EditEntryWidget::updateFdoSecretsButtons);
+}
+
+void EditEntryWidget::openFdoSecretsEditors()
+{
+    auto view = m_fdoSecretsUi->decisionsView;
+    const auto column = FdoSecrets::EntryClientDecisionsModel::ColumnAccess;
+    for (int row = 0; row < m_fdoSecretsModel->rowCount(); ++row) {
+        const auto index = m_fdoSecretsModel->index(row, column);
+        if (m_history) {
+            view->closePersistentEditor(index);
+        } else {
+            view->openPersistentEditor(index);
+        }
+    }
+    // the open editors are what the column has to fit
+    view->resizeColumnToContents(column);
+}
+
+void EditEntryWidget::setFdoSecretsForms()
+{
+    m_fdoSecretsModel->load(m_customData.data(), m_db.data());
+
+    // only records without a decision on this entry can be added
+    m_fdoSecretsUi->addClientCombo->clear();
+    for (const auto& record : m_fdoSecretsModel->assignableRecords()) {
+        m_fdoSecretsUi->addClientCombo->addItem(FdoSecrets::EntryClientDecisionsModel::recordLabel(record), record.id);
+    }
+    m_fdoSecretsUi->addClientCombo->setCurrentIndex(-1);
+
+    // history items are shown read-only, like every other page
+    m_fdoSecretsModel->setReadOnly(m_history);
+    m_fdoSecretsUi->addClientCombo->setEnabled(!m_history);
+    m_fdoSecretsUi->addAccessCombo->setEnabled(!m_history);
+    openFdoSecretsEditors();
+    updateFdoSecretsButtons();
+}
+
+void EditEntryWidget::addFdoSecretsDecision()
+{
+    const auto combo = m_fdoSecretsUi->addClientCombo;
+    // the text may come from the completer, so map it back to a record
+    const auto row = combo->findText(combo->currentText());
+    if (row < 0) {
+        return;
+    }
+    m_fdoSecretsModel->setDecision(combo->itemData(row).toUuid(),
+                                   m_fdoSecretsUi->addAccessCombo->currentIndex() == 0 ? AuthDecision::Allowed
+                                                                                       : AuthDecision::Denied);
+    combo->removeItem(row);
+    combo->setCurrentIndex(-1);
+    setModified(true);
+    updateFdoSecretsButtons();
+}
+
+void EditEntryWidget::removeFdoSecretsDecision()
+{
+    const auto row = m_fdoSecretsUi->decisionsView->currentIndex().row();
+    const auto id = m_fdoSecretsModel->idAt(row);
+    if (id.isNull()) {
+        return;
+    }
+    m_fdoSecretsModel->removeRow(row);
+    // the record becomes assignable again, unless it was a stale reference
+    const auto record = FdoSecrets::loadClientRecord(m_db.data(), id);
+    if (record.isValid()) {
+        m_fdoSecretsUi->addClientCombo->addItem(FdoSecrets::EntryClientDecisionsModel::recordLabel(record), id);
+    }
+    setModified(true);
+    updateFdoSecretsButtons();
+}
+
+void EditEntryWidget::updateFdoSecretsButtons()
+{
+    const auto combo = m_fdoSecretsUi->addClientCombo;
+    m_fdoSecretsUi->addButton->setEnabled(!m_history && combo->findText(combo->currentText()) >= 0);
+    m_fdoSecretsUi->removeButton->setEnabled(!m_history && m_fdoSecretsUi->decisionsView->currentIndex().isValid());
 }
 #endif
 
@@ -1141,6 +1283,13 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
     }
 
     setPageHidden(m_browserWidget, !config()->get(Config::Browser_Enabled).toBool());
+#endif
+
+#ifdef KPXC_FEATURE_FDOSECRETS
+    setFdoSecretsForms();
+    // the page manages decisions of clients recorded in the database, which
+    // only exist while Secret Service integration is on
+    setPageHidden(m_fdoSecretsWidget, !FdoSecrets::settings()->isEnabled());
 #endif
 
     m_editWidgetProperties->setFields(entry->timeInfo(), entry->uuid());

@@ -341,8 +341,18 @@ namespace FdoSecrets
 
     QHash<DBusClientId, AuthDecision> entryClientDecisions(const Entry* entry)
     {
+        return entryClientDecisions(entry->customData());
+    }
+
+    void setEntryClientDecision(Entry* entry, const DBusClientId& id, AuthDecision decision)
+    {
+        setEntryClientDecision(entry->customData(), id, decision);
+    }
+
+    QHash<DBusClientId, AuthDecision> entryClientDecisions(const CustomData* customData)
+    {
         QHash<DBusClientId, AuthDecision> decisions;
-        const auto doc = QJsonDocument::fromJson(entry->customData()->value(EntryAuthKey).toUtf8());
+        const auto doc = QJsonDocument::fromJson(customData->value(EntryAuthKey).toUtf8());
         if (!doc.isObject() || doc.object().value(QStringLiteral("version")).toInt() != EntryAuthVersion) {
             return decisions;
         }
@@ -357,12 +367,12 @@ namespace FdoSecrets
         return decisions;
     }
 
-    void setEntryClientDecision(Entry* entry, const DBusClientId& id, AuthDecision decision)
+    void setEntryClientDecision(CustomData* customData, const DBusClientId& id, AuthDecision decision)
     {
         if (id.isNull()) {
             return;
         }
-        auto decisions = entryClientDecisions(entry);
+        auto decisions = entryClientDecisions(customData);
         const auto persisted = decisionToString(decision);
         if (persisted.isEmpty()) {
             if (!decisions.remove(id)) {
@@ -373,7 +383,7 @@ namespace FdoSecrets
         }
 
         if (decisions.isEmpty()) {
-            entry->customData()->remove(EntryAuthKey);
+            customData->remove(EntryAuthKey);
             return;
         }
         QJsonObject clients;
@@ -384,7 +394,7 @@ namespace FdoSecrets
             {QStringLiteral("version"), EntryAuthVersion},
             {QStringLiteral("clients"), clients},
         };
-        entry->customData()->set(EntryAuthKey, QString::fromUtf8(QJsonDocument(obj).toJson(QJsonDocument::Compact)));
+        customData->set(EntryAuthKey, QString::fromUtf8(QJsonDocument(obj).toJson(QJsonDocument::Compact)));
     }
 
     namespace

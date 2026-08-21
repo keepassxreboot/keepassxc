@@ -215,4 +215,225 @@ namespace FdoSecrets
         return tr("Allowed: %1, Denied: %2, Others: %3").arg(counts.first).arg(counts.second).arg(others);
     }
 
+    QWidget* AuthDecisionDelegate::createEditor(QWidget* parent,
+                                               const QStyleOptionViewItem& option,
+                                               const QModelIndex& index) const
+    {
+        Q_UNUSED(option);
+        Q_UNUSED(index);
+        auto editor = new QComboBox(parent);
+        editor->addItem(tr("Allow"), static_cast<int>(AuthDecision::Allowed));
+        editor->addItem(tr("Deny"), static_cast<int>(AuthDecision::Denied));
+        // the editors are kept open, so nothing ever closes them to commit:
+        // write the choice through as soon as it changes. Setting the initial
+        // value commits the value that is already there, which the model
+        // ignores.
+        connect(editor, &QComboBox::currentIndexChanged, this, [this, editor]() {
+            emit const_cast<AuthDecisionDelegate*>(this)->commitData(editor);
+        });
+        return editor;
+    }
+
+    void AuthDecisionDelegate::setEditorData(QWidget* editor, const QModelIndex& index) const
+    {
+        auto combo = static_cast<QComboBox*>(editor);
+        combo->setCurrentIndex(combo->findData(index.data(Qt::EditRole).toInt()));
+    }
+
+    void AuthDecisionDelegate::setModelData(QWidget* editor, QAbstractItemModel* model, const QModelIndex& index) const
+    {
+        model->setData(index, static_cast<QComboBox*>(editor)->currentData(), Qt::EditRole);
+    }
+
+    EntryClientDecisionsModel::EntryClientDecisionsModel(QObject* parent)
+        : QAbstractTableModel(parent)
+    {
+    }
+
+    void EntryClientDecisionsModel::load(CustomData* customData, const Database* db)
+    {
+        m_customData = customData;
+        m_db = db;
+        beginResetModel();
+        m_records = db ? loadClientRecords(db) : QList<ClientRecord>{};
+        std::sort(m_records.begin(), m_records.end(), [](const ClientRecord& a, const ClientRecord& b) {
+            return std::tie(a.created, a.id) < std::tie(b.created, b.id);
+        });
+        reload();
+        endResetModel();
+    }
+
+    void EntryClientDecisionsModel::setReadOnly(bool readOnly)
+    {
+        m_readOnly = readOnly;
+    }
+
+    Qt::ItemFlags EntryClientDecisionsModel::flags(const QModelIndex& index) const
+    {
+        auto flags = QAbstractTableModel::flags(index);
+        if (!m_readOnly && index.column() == ColumnAccess) {
+            flags |= Qt::ItemIsEditable;
+        }
+        return flags;
+    }
+
+    bool EntryClientDecisionsModel::setData(const QModelIndex& index, const QVariant& value, int role)
+    {
+        if (role != Qt::EditRole || m_readOnly || index.column() != ColumnAccess || index.row() >= m_rows.size()) {
+            return false;
+        }
+        const auto decision = static_cast<AuthDecision>(value.toInt());
+        if (decision != AuthDecision::Allowed && decision != AuthDecision::Denied) {
+            return false;
+        }
+        if (decision == m_rows.at(index.row()).second) {
+            return true;
+        }
+        // in place: the row order does not depend on the decision, and a reset
+        // would pull the ground out from under the delegate's editor
+        setEntryClientDecision(m_customData, m_rows.at(index.row()).first, decision);
+        m_rows[index.row()].second = decision;
+        emit dataChanged(index, index);
+        return true;
+    }
+
+    void EntryClientDecisionsModel::reload()
+    {
+        m_rows.clear();
+        if (!m_customData) {
+            return;
+        }
+        auto decisions = entryClientDecisions(m_customData);
+        // known records first, in the order the settings page lists them
+        for (const auto& record : asConst(m_records)) {
+            const auto it = decisions.constFind(record.id);
+            if (it != decisions.constEnd()) {
+                m_rows.append({record.id, *it});
+                decisions.erase(it);
+            }
+        }
+        // whatever is left references a record that no longer exists
+        for (auto it = decisions.constBegin(); it != decisions.constEnd(); ++it) {
+            m_rows.append({it.key(), it.value()});
+        }
+    }
+
+    void EntryClientDecisionsModel::setDecision(const DBusClientId& id, AuthDecision decision)
+    {
+        if (!m_customData || id.isNull()) {
+            return;
+        }
+        beginResetModel();
+        setEntryClientDecision(m_customData, id, decision);
+        reload();
+        endResetModel();
+    }
+
+    void EntryClientDecisionsModel::removeRow(int row)
+    {
+        if (row < 0 || row >= m_rows.size()) {
+            return;
+        }
+        setDecision(m_rows.at(row).first, AuthDecision::Undecided);
+    }
+
+    DBusClientId EntryClientDecisionsModel::idAt(int row) const
+    {
+        if (row < 0 || row >= m_rows.size()) {
+            return {};
+        }
+        return m_rows.at(row).first;
+    }
+
+    QList<ClientRecord> EntryClientDecisionsModel::assignableRecords() const
+    {
+        QSet<DBusClientId> decided;
+        for (const auto& row : m_rows) {
+            decided.insert(row.first);
+        }
+        QList<ClientRecord> available;
+        for (const auto& record : m_records) {
+            if (!decided.contains(record.id)) {
+                available.append(record);
+            }
+        }
+        return available;
+    }
+
+    QString EntryClientDecisionsModel::recordLabel(const ClientRecord& record)
+    {
+        return QStringLiteral("%1 — %2").arg(record.name, ClientRecordsModel::rulesSummary(record));
+    }
+
+    int EntryClientDecisionsModel::rowCount(const QModelIndex& parent) const
+    {
+        return parent.isValid() ? 0 : m_rows.size();
+    }
+
+    int EntryClientDecisionsModel::columnCount(const QModelIndex& parent) const
+    {
+        Q_UNUSED(parent);
+        return 2;
+    }
+
+    QVariant EntryClientDecisionsModel::headerData(int section, Qt::Orientation orientation, int role) const
+    {
+        if (orientation != Qt::Horizontal || role != Qt::DisplayRole) {
+            return {};
+        }
+        switch (section) {
+        case ColumnClient:
+            return tr("Client");
+        case ColumnAccess:
+            return tr("Access");
+        default:
+            return {};
+        }
+    }
+
+    QVariant EntryClientDecisionsModel::data(const QModelIndex& index, int role) const
+    {
+        if (!index.isValid() || index.row() >= m_rows.size()) {
+            return {};
+        }
+        const auto& row = m_rows.at(index.row());
+        ClientRecord record;
+        for (const auto& candidate : m_records) {
+            if (candidate.id == row.first) {
+                record = candidate;
+                break;
+            }
+        }
+
+        switch (index.column()) {
+        case ColumnClient:
+            if (role == Qt::DisplayRole) {
+                // a record removed in the database settings leaves the decision
+                // behind; name it as such rather than showing a bare uuid
+                return record.isValid() ? recordLabel(record) : tr("Unknown client (removed from database)");
+            }
+            if (role == Qt::ToolTipRole) {
+                return record.isValid() ? ClientRecordsModel::rulesToolTip(record)
+                                        : row.first.toString(QUuid::WithoutBraces);
+            }
+            if (role == Qt::FontRole && !record.isValid()) {
+                QFont font;
+                font.setItalic(true);
+                return font;
+            }
+            break;
+        case ColumnAccess:
+            if (role == Qt::DisplayRole) {
+                return row.second == AuthDecision::Allowed ? tr("Allow") : tr("Deny");
+            }
+            if (role == Qt::EditRole) {
+                return static_cast<int>(row.second);
+            }
+            break;
+        default:
+            break;
+        }
+        return {};
+    }
+
 } // namespace FdoSecrets
