@@ -266,17 +266,17 @@ bool SSHAgent::sendMessagePageant(const QByteArray& in, QByteArray& out)
  *
  * @param key identity / key to add
  * @param settings constraints (lifetime, confirm), remove-on-lock
- * @param databaseUuid database that owns the key for remove-on-lock
+ * @param checkInAddedKeys check within the cached keys whether the key exists. Should be false in reload.
  * @return true on success
  */
-bool SSHAgent::addIdentity(OpenSSHKey& key, const KeeAgentSettings& settings, const QUuid& databaseUuid)
+bool SSHAgent::addIdentity(OpenSSHKey& key, const SshKeySettings& settings, bool checkInAddedKeys)
 {
     if (!isAgentRunning()) {
         m_error = tr("No agent running, cannot add identity.");
         return false;
     }
 
-    if (m_addedKeys.contains(key) && m_addedKeys[key].first != databaseUuid) {
+    if (checkInAddedKeys && m_addedKeys.contains(key) && m_addedKeys[key].m_databaseUuid != settings.m_databaseUuid) {
         m_error = tr("Key identity ownership conflict. Refusing to add.");
         return false;
     }
@@ -286,17 +286,17 @@ bool SSHAgent::addIdentity(OpenSSHKey& key, const KeeAgentSettings& settings, co
     bool isSecurityKey = key.type().startsWith("sk-");
 
     request.write(
-        (settings.useLifetimeConstraintWhenAdding() || settings.useConfirmConstraintWhenAdding() || isSecurityKey)
+        (settings.m_useLifetimeConstraintWhenAdding || settings.m_useConfirmConstraintWhenAdding || isSecurityKey)
             ? SSH_AGENTC_ADD_ID_CONSTRAINED
             : SSH_AGENTC_ADD_IDENTITY);
     key.writePrivate(request);
 
-    if (settings.useLifetimeConstraintWhenAdding()) {
+    if (settings.m_useLifetimeConstraintWhenAdding) {
         request.write(SSH_AGENT_CONSTRAIN_LIFETIME);
-        request.write(static_cast<quint32>(settings.lifetimeConstraintDuration()));
+        request.write(static_cast<quint32>(settings.m_lifetimeConstraintDuration));
     }
 
-    if (settings.useConfirmConstraintWhenAdding()) {
+    if (settings.m_useConfirmConstraintWhenAdding) {
         request.write(SSH_AGENT_CONSTRAIN_CONFIRM);
     }
 
@@ -315,11 +315,11 @@ bool SSHAgent::addIdentity(OpenSSHKey& key, const KeeAgentSettings& settings, co
         m_error =
             tr("Agent refused this identity. Possible reasons include:") + "\n" + tr("The key has already been added.");
 
-        if (settings.useLifetimeConstraintWhenAdding()) {
+        if (settings.m_useLifetimeConstraintWhenAdding) {
             m_error += "\n" + tr("Restricted lifetime is not supported by the agent (check options).");
         }
 
-        if (settings.useConfirmConstraintWhenAdding()) {
+        if (settings.m_useConfirmConstraintWhenAdding) {
             m_error += "\n" + tr("A confirmation request is not supported by the agent (check options).");
         }
 
@@ -333,7 +333,7 @@ bool SSHAgent::addIdentity(OpenSSHKey& key, const KeeAgentSettings& settings, co
 
     OpenSSHKey keyCopy = key;
     keyCopy.clearPrivate();
-    m_addedKeys[keyCopy] = qMakePair(databaseUuid, settings.removeAtDatabaseClose());
+    m_addedKeys[keyCopy] = settings;
     return true;
 }
 
@@ -403,6 +403,96 @@ bool SSHAgent::clearAllAgentIdentities()
     sendMessage(requestData, responseData);
 
     m_error = tr("All SSH identities removed from agent.");
+    return ret;
+}
+
+/**
+ * Re-add any previously added identity that is no longer loaded in the SSH agent
+ * (e.g. because the agent was restarted).
+ *
+ * @param openDatabases databases that are currently open and unlocked
+ * @return true if every reloadable identity was successfully re-added
+ */
+bool SSHAgent::reloadAllAgentIdentities(const QList<QSharedPointer<Database>>& openDatabases)
+{
+    if (!isAgentRunning()) {
+        m_error = tr("No agent running, cannot reload identities.");
+        return false;
+    }
+
+    bool ret = true;
+
+    QList<QSharedPointer<OpenSSHKey>> identityList;
+    if (!listIdentities(identityList)) {
+        m_error = tr("Could not list identities.");
+        return false;
+    }
+
+    auto it = m_addedKeys.begin();
+    while (it != m_addedKeys.end()) {
+        const OpenSSHKey& openSshKey = it.key();
+        const SshKeySettings& sshKeySettings = it.value();
+
+        // Skip identities that are already loaded in the agent.
+        bool loaded = false;
+        for (const auto& identityListIt : identityList) {
+            if (*identityListIt == openSshKey) {
+                loaded = true;
+                break;
+            }
+        }
+        if (loaded) {
+            ++it;
+            continue;
+        }
+
+        // Not found just means the database is locked/closed right now (may be transient). 
+        // keep tracking the identity and retry next time.
+        QSharedPointer<Database> db;
+        for (const auto& openDb : openDatabases) {
+            if (openDb && openDb->uuid() == sshKeySettings.m_databaseUuid) {
+                db = openDb;
+                break;
+            }
+        }
+        if (!db) {
+            ++it;
+            continue;
+        }
+
+        // The entry is gone, stop tracking it.
+        Entry* entry = db->rootGroup()->findEntryByUuid(sshKeySettings.m_entryUuid);
+        if (!entry || entry->isRecycled()) {
+            it = m_addedKeys.erase(it);
+            continue;
+        }
+
+        // The user turned off SSH agent use for this entry, stop tracking it.
+        KeeAgentSettings keeAgentSettings;
+        if (!keeAgentSettings.fromEntry(entry) || !keeAgentSettings.allowUseOfSshKey()) {
+            it = m_addedKeys.erase(it);
+            continue;
+        }
+
+        // Decryption failure (may be transient). keep tracking the identity and retry next time.
+        OpenSSHKey freshKey;
+        if (!keeAgentSettings.toOpenSSHKey(entry, freshKey, true)) {
+            ++it;
+            continue;
+        }
+
+        // The agent may have rejected this for a retryable reason- keep tracking the identity and retry next time.
+        if (!addIdentity(freshKey, sshKeySettings, false)) {
+            ret = false;
+        }
+        ++it;
+    }
+
+    if (ret) {
+        m_error = tr("All SSH identities reloaded to agent.");
+    } else {
+        m_error = tr("One or more SSH identities could not be reloaded to agent.");
+    }
     return ret;
 }
 
@@ -507,7 +597,7 @@ void SSHAgent::removeAllIdentities()
     auto it = m_addedKeys.begin();
     while (it != m_addedKeys.end()) {
         // Remove key if requested to remove on lock
-        if (it.value().second) {
+        if (it.value().m_removeAtDatabaseClose) {
             OpenSSHKey key = it.key();
             removeIdentity(key);
         }
@@ -525,7 +615,7 @@ void SSHAgent::removeAllIdentities()
 void SSHAgent::setAutoRemoveOnLock(const OpenSSHKey& key, bool autoRemove)
 {
     if (m_addedKeys.contains(key)) {
-        m_addedKeys[key].second = autoRemove;
+        m_addedKeys[key].m_removeAtDatabaseClose = autoRemove;
     }
 }
 
@@ -537,12 +627,12 @@ void SSHAgent::databaseLocked(const QSharedPointer<Database>& db)
 
     auto it = m_addedKeys.begin();
     while (it != m_addedKeys.end()) {
-        if (it.value().first != db->uuid()) {
+        if (it.value().m_databaseUuid != db->uuid()) {
             ++it;
             continue;
         }
         OpenSSHKey key = it.key();
-        if (it.value().second) {
+        if (it.value().m_removeAtDatabaseClose) {
             if (!removeIdentity(key)) {
                 emit error(m_error);
             }
@@ -580,7 +670,8 @@ void SSHAgent::databaseUnlocked(const QSharedPointer<Database>& db)
 
         // Add key to agent; ignore errors if we have previously added the key
         bool known_key = m_addedKeys.contains(key);
-        if (!addIdentity(key, settings, db->uuid()) && !known_key) {
+        SshKeySettings sshKeySettings = keeAgentToSshKeySettings(settings, db->uuid(), entry->uuid());
+        if (!addIdentity(key, sshKeySettings) && !known_key) {
             emit error(m_error);
         }
     }

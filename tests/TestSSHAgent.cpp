@@ -131,15 +131,15 @@ void TestSSHAgent::testIdentity()
     bool keyInAgent;
 
     // test adding a key works
-    QVERIFY(agent.addIdentity(m_key, settings, m_uuid));
+    QVERIFY(agent.addIdentity(m_key, keeAgentToSshKeySettings(settings, m_uuid, QUuid::createUuid())));
     QVERIFY(agent.checkIdentity(m_key, keyInAgent) && keyInAgent);
 
     // test non-conflicting key ownership doesn't throw an error
-    QVERIFY(agent.addIdentity(m_key, settings, m_uuid));
+    QVERIFY(agent.addIdentity(m_key, keeAgentToSshKeySettings(settings, m_uuid, QUuid::createUuid())));
 
     // test conflicting key ownership throws an error
     QUuid secondUuid("{11111111-1111-1111-1111-111111111111}");
-    QVERIFY(!agent.addIdentity(m_key, settings, secondUuid));
+    QVERIFY(!agent.addIdentity(m_key, keeAgentToSshKeySettings(settings, secondUuid, QUuid::createUuid())));
 
     // test removing a key works
     QVERIFY(agent.removeIdentity(m_key));
@@ -158,7 +158,7 @@ void TestSSHAgent::testRemoveOnClose()
     bool keyInAgent;
 
     settings.setRemoveAtDatabaseClose(true);
-    QVERIFY(agent.addIdentity(m_key, settings, m_uuid));
+    QVERIFY(agent.addIdentity(m_key, keeAgentToSshKeySettings(settings, m_uuid, QUuid::createUuid())));
     QVERIFY(agent.checkIdentity(m_key, keyInAgent) && keyInAgent);
     agent.setEnabled(false);
     QVERIFY(agent.checkIdentity(m_key, keyInAgent) && !keyInAgent);
@@ -179,7 +179,7 @@ void TestSSHAgent::testLifetimeConstraint()
     settings.setLifetimeConstraintDuration(2); // two seconds
 
     // identity should be in agent immediately after adding
-    QVERIFY(agent.addIdentity(m_key, settings, m_uuid));
+    QVERIFY(agent.addIdentity(m_key, keeAgentToSshKeySettings(settings, m_uuid, QUuid::createUuid())));
     QVERIFY(agent.checkIdentity(m_key, keyInAgent) && keyInAgent);
 
     QElapsedTimer timer;
@@ -212,7 +212,7 @@ void TestSSHAgent::testConfirmConstraint()
 
     settings.setUseConfirmConstraintWhenAdding(true);
 
-    QVERIFY(agent.addIdentity(m_key, settings, m_uuid));
+    QVERIFY(agent.addIdentity(m_key, keeAgentToSshKeySettings(settings, m_uuid, QUuid::createUuid())));
 
     // we can't test confirmation itself is working but we can test the agent accepts the key
     QVERIFY(agent.checkIdentity(m_key, keyInAgent) && keyInAgent);
@@ -247,7 +247,7 @@ void TestSSHAgent::testKeyGenRSA()
 
     QVERIFY(OpenSSHKeyGen::generateRSA(key, 2048));
 
-    QVERIFY(agent.addIdentity(key, settings, m_uuid));
+    QVERIFY(agent.addIdentity(key, keeAgentToSshKeySettings(settings, m_uuid, QUuid::createUuid())));
     QVERIFY(agent.checkIdentity(key, keyInAgent) && keyInAgent);
     QVERIFY(agent.removeIdentity(key));
     QVERIFY(agent.checkIdentity(key, keyInAgent) && !keyInAgent);
@@ -267,7 +267,7 @@ void TestSSHAgent::testKeyGenECDSA()
 
     QVERIFY(OpenSSHKeyGen::generateECDSA(key, 256));
 
-    QVERIFY(agent.addIdentity(key, settings, m_uuid));
+    QVERIFY(agent.addIdentity(key, keeAgentToSshKeySettings(settings, m_uuid, QUuid::createUuid())));
     QVERIFY(agent.checkIdentity(key, keyInAgent) && keyInAgent);
     QVERIFY(agent.removeIdentity(key));
     QVERIFY(agent.checkIdentity(key, keyInAgent) && !keyInAgent);
@@ -287,7 +287,7 @@ void TestSSHAgent::testKeyGenEd25519()
 
     QVERIFY(OpenSSHKeyGen::generateEd25519(key));
 
-    QVERIFY(agent.addIdentity(key, settings, m_uuid));
+    QVERIFY(agent.addIdentity(key, keeAgentToSshKeySettings(settings, m_uuid, QUuid::createUuid())));
     QVERIFY(agent.checkIdentity(key, keyInAgent) && keyInAgent);
     QVERIFY(agent.removeIdentity(key));
     QVERIFY(agent.checkIdentity(key, keyInAgent) && !keyInAgent);

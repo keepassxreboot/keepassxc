@@ -20,11 +20,21 @@
 #define KEEPASSXC_SSHAGENT_H
 
 #include <QHash>
+#include <quuid.h>
 
 #include "OpenSSHKey.h"
+#include "sshagent/KeeAgentSettings.h"
 
-class KeeAgentSettings;
 class Database;
+
+struct SshKeySettings {
+    QUuid m_databaseUuid;
+    QUuid m_entryUuid;
+    bool  m_useLifetimeConstraintWhenAdding;
+    bool  m_useConfirmConstraintWhenAdding;
+    int   m_lifetimeConstraintDuration;
+    bool  m_removeAtDatabaseClose;
+};
 
 class SSHAgent : public QObject
 {
@@ -51,12 +61,13 @@ public:
 
     const QString errorString() const;
     bool isAgentRunning() const;
-    bool addIdentity(OpenSSHKey& key, const KeeAgentSettings& settings, const QUuid& databaseUuid);
+    bool addIdentity(OpenSSHKey& key, const SshKeySettings& settings, bool checkInAddedKeys = true);
     bool listIdentities(QList<QSharedPointer<OpenSSHKey>>& list);
     bool checkIdentity(const OpenSSHKey& key, bool& loaded);
     bool removeIdentity(OpenSSHKey& key);
     void removeAllIdentities();
     bool clearAllAgentIdentities();
+    bool reloadAllAgentIdentities(const QList<QSharedPointer<Database>>& openDatabases);
     void setAutoRemoveOnLock(const OpenSSHKey& key, bool autoRemove);
 
 signals:
@@ -91,13 +102,28 @@ private:
     const quint32 AGENT_COPYDATA_ID = 0x804e50ba;
 #endif
 
-    QHash<OpenSSHKey, QPair<QUuid, bool>> m_addedKeys;
+    QHash<OpenSSHKey, SshKeySettings> m_addedKeys;
     QString m_error;
 };
 
 static inline SSHAgent* sshAgent()
 {
     return SSHAgent::instance();
+}
+
+static inline SshKeySettings keeAgentToSshKeySettings(const KeeAgentSettings& keeAgentSettings,
+                                                       const QUuid& databaseUuid,
+                                                       const QUuid& entryUuid) {
+    SshKeySettings sshKeySettings;
+    sshKeySettings.m_databaseUuid = databaseUuid;
+    sshKeySettings.m_entryUuid = entryUuid;
+    sshKeySettings.m_useLifetimeConstraintWhenAdding = keeAgentSettings.useLifetimeConstraintWhenAdding();
+    if (sshKeySettings.m_useLifetimeConstraintWhenAdding) {
+        sshKeySettings.m_lifetimeConstraintDuration = keeAgentSettings.lifetimeConstraintDuration();
+    }
+    sshKeySettings.m_useConfirmConstraintWhenAdding = keeAgentSettings.useConfirmConstraintWhenAdding();
+    sshKeySettings.m_removeAtDatabaseClose = keeAgentSettings.removeAtDatabaseClose();
+    return sshKeySettings;
 }
 
 #endif // KEEPASSXC_SSHAGENT_H
