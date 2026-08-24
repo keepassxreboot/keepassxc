@@ -71,6 +71,13 @@ namespace FdoSecrets
             return ret;
         }
 
+        // the prompt is already being processed, do not schedule another run.
+        // the ongoing one will emit the completed signal.
+        if (m_signalSent || m_scheduled) {
+            return {};
+        }
+        m_scheduled = true;
+
         QWeakPointer<DBusClient> weak = client;
         // execute the actual prompt method in event loop to avoid block this method
         QTimer::singleShot(0, this, [this, weak, windowId]() {
@@ -113,6 +120,12 @@ namespace FdoSecrets
         : PromptBase(parent)
         , m_collection(coll)
     {
+        // The QPointer alone is not enough: after Collection::removeFromDBus the
+        // collection lingers until its deleteLater is delivered, with m_backend
+        // already reset. Clear our reference as soon as the collection retires so
+        // that a non-null m_collection always implies a usable backend, which
+        // Collection::doDelete asserts on.
+        connect(coll, &Collection::collectionAboutToDelete, this, [this]() { m_collection = nullptr; });
     }
 
     PromptResult DeleteCollectionPrompt::promptSync(const DBusClientPtr&, const QString& windowId)
@@ -182,6 +195,16 @@ namespace FdoSecrets
         m_collections.reserve(colls.size());
         for (const auto& c : asConst(colls)) {
             m_collections << c;
+            // clear the reference as soon as the collection retires, so promptSync
+            // never calls into a collection whose backend is already gone.
+            // A retired collection is skipped just like a destroyed one.
+            connect(c, &Collection::collectionAboutToDelete, this, [this, c]() {
+                for (auto& p : m_collections) {
+                    if (p == c) {
+                        p = nullptr;
+                    }
+                }
+            });
         }
     }
 
@@ -211,6 +234,9 @@ namespace FdoSecrets
         m_collections.reserve(colls.size());
         for (const auto& coll : asConst(colls)) {
             m_collections << coll;
+            // a collection may retire while we are waiting for its unlock outcome,
+            // in which case doneUnlockCollection will never fire for it.
+            connect(coll, &Collection::collectionAboutToDelete, this, [this, coll]() { collectionRetired(coll); });
         }
         for (const auto& item : asConst(items)) {
             m_items[item->collection()] << item;
@@ -230,21 +256,32 @@ namespace FdoSecrets
         m_windowId = windowId;
         m_client = client;
 
-        // first unlock any collections
-        bool waitingForCollections = false;
+        // first unlock any collections.
+        // register everything we will wait for upfront: doUnlock may complete
+        // synchronously (already unlocked database), and the completion handler
+        // must not conclude that all collections are done while some have not
+        // even been issued yet.
         for (const auto& c : asConst(m_collections)) {
             if (c) {
+                m_pendingCollections << c.data();
+            } else {
+                // the collection retired or was destroyed since the prompt was created
+                m_numRejected += 1;
+            }
+        }
+        for (const auto& c : asConst(m_collections)) {
+            // skip entries that already resolved synchronously or retired mid-loop
+            if (c && m_pendingCollections.contains(c.data())) {
                 connect(c, &Collection::doneUnlockCollection, this, &UnlockPrompt::collectionUnlockFinished);
                 // doUnlock is nonblocking, execution will continue in collectionUnlockFinished
                 // it is ok to call doUnlock multiple times before it's actually unlocked by the user
                 c->doUnlock();
-                waitingForCollections = true;
             }
         }
 
         // unlock items directly if no collection unlocking pending
-        // o.w. doing it in collectionUnlockFinished
-        if (!waitingForCollections) {
+        // o.w. doing it in collectionUnlockFinished or collectionRetired
+        if (m_pendingCollections.isEmpty()) {
             unlockItems();
         }
 
@@ -261,8 +298,8 @@ namespace FdoSecrets
         // one shot
         coll->disconnect(this);
 
-        if (!m_collections.contains(coll)) {
-            // should not happen
+        if (!m_pendingCollections.remove(coll)) {
+            // not awaiting this collection (already resolved or retired)
             return;
         }
 
@@ -275,14 +312,44 @@ namespace FdoSecrets
         }
 
         // if we got response for all collections
-        if (m_numRejected + m_unlocked.size() == m_collections.size()) {
+        if (m_pendingCollections.isEmpty()) {
             // next step is to unlock items
+            unlockItems();
+        }
+    }
+
+    void UnlockPrompt::collectionRetired(Collection* coll)
+    {
+        // the collection is going away (already removed from DBus, backend reset);
+        // stop referencing it so no doUnlock/doneUnlockCollection is attempted on it
+        for (auto& p : m_collections) {
+            if (p == coll) {
+                p = nullptr;
+            }
+        }
+        m_items.remove(coll);
+
+        if (!m_pendingCollections.remove(coll)) {
+            // nothing was issued for it yet (promptSync not run) or it already resolved;
+            // promptSync accounts for cleared entries itself
+            return;
+        }
+
+        // treat as if the collection rejected the unlock
+        m_numRejected += 1;
+        if (m_pendingCollections.isEmpty()) {
             unlockItems();
         }
     }
 
     void UnlockPrompt::unlockItems()
     {
+        // may be reached from multiple paths (last collection resolving vs retiring)
+        if (m_unlockItemsStarted) {
+            return;
+        }
+        m_unlockItemsStarted = true;
+
         auto client = m_client.lock();
         if (!client) {
             // client already gone
