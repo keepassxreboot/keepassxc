@@ -18,6 +18,10 @@
 #include "TestSSHAgent.h"
 #include "config-keepassx-tests.h"
 #include "core/Config.h"
+#include "core/Database.h"
+#include "core/Entry.h"
+#include "core/EntryAttachments.h"
+#include "core/Group.h"
 #include "crypto/Crypto.h"
 #include "sshagent/KeeAgentSettings.h"
 #include "sshagent/OpenSSHKeyGen.h"
@@ -290,6 +294,200 @@ void TestSSHAgent::testKeyGenEd25519()
     QVERIFY(agent.addIdentity(key, keeAgentToSshKeySettings(settings, m_uuid, QUuid::createUuid())));
     QVERIFY(agent.checkIdentity(key, keyInAgent) && keyInAgent);
     QVERIFY(agent.removeIdentity(key));
+    QVERIFY(agent.checkIdentity(key, keyInAgent) && !keyInAgent);
+}
+
+bool TestSSHAgent::buildTestEntry(QSharedPointer<Database>& db, Entry*& entry, OpenSSHKey& key)
+{
+    db = QSharedPointer<Database>::create();
+    entry = new Entry();
+    entry->setUuid(QUuid::createUuid());
+    entry->setGroup(db->rootGroup());
+
+    if (!OpenSSHKeyGen::generateEd25519(key)) {
+        return false;
+    }
+    entry->attachments()->set("id_ed25519", key.privateKey().toUtf8());
+
+    KeeAgentSettings settings;
+    settings.setAllowUseOfSshKey(true);
+    settings.setAddAtDatabaseOpen(true);
+    settings.setSelectedType("attachment");
+    settings.setAttachmentName("id_ed25519");
+    settings.toEntry(entry);
+
+    return true;
+}
+
+void TestSSHAgent::testReloadReAddsMissingIdentity()
+{
+    SSHAgent agent;
+    agent.setEnabled(true);
+    agent.setAuthSockOverride(m_agentSocketFileName);
+    QVERIFY(agent.isAgentRunning());
+
+    QSharedPointer<Database> db;
+    Entry* entry;
+    OpenSSHKey key;
+    QVERIFY(buildTestEntry(db, entry, key));
+
+    KeeAgentSettings settings;
+    QVERIFY(settings.fromEntry(entry));
+    auto sshKeySettings = keeAgentToSshKeySettings(settings, db->uuid(), entry->uuid());
+    QVERIFY(agent.addIdentity(key, sshKeySettings));
+
+    bool keyInAgent = false;
+    QVERIFY(agent.checkIdentity(key, keyInAgent) && keyInAgent);
+
+    QVERIFY(agent.removeIdentity(key));
+    QVERIFY(agent.checkIdentity(key, keyInAgent) && !keyInAgent);
+
+    QVERIFY(agent.reloadAllAgentIdentities({db}));
+    QVERIFY(agent.checkIdentity(key, keyInAgent) && keyInAgent);
+}
+
+void TestSSHAgent::testReloadTerminatesWhenAlreadyLoaded()
+{
+    SSHAgent agent;
+    agent.setEnabled(true);
+    agent.setAuthSockOverride(m_agentSocketFileName);
+    QVERIFY(agent.isAgentRunning());
+
+    QSharedPointer<Database> db;
+    Entry* entry;
+    OpenSSHKey key;
+    QVERIFY(buildTestEntry(db, entry, key));
+
+    KeeAgentSettings settings;
+    QVERIFY(settings.fromEntry(entry));
+    auto sshKeySettings = keeAgentToSshKeySettings(settings, db->uuid(), entry->uuid());
+    QVERIFY(agent.addIdentity(key, sshKeySettings));
+
+    // Regression test: reloading an already loaded entity has no effect.
+    QVERIFY(agent.reloadAllAgentIdentities({db}));
+
+    bool keyInAgent = false;
+    QVERIFY(agent.checkIdentity(key, keyInAgent) && keyInAgent);
+}
+
+void TestSSHAgent::testReloadProcessesAllIdentitiesDespiteEarlierFailure()
+{
+    SSHAgent agent;
+    agent.setEnabled(true);
+    agent.setAuthSockOverride(m_agentSocketFileName);
+    QVERIFY(agent.isAgentRunning());
+
+    // First identity: its database will not be passed to reloadAllAgentIdentities(),
+    // so it can't be recovered.
+    QSharedPointer<Database> unresolvableDb;
+    Entry* unresolvableEntry;
+    OpenSSHKey unresolvableKey;
+    QVERIFY(buildTestEntry(unresolvableDb, unresolvableEntry, unresolvableKey));
+    KeeAgentSettings unresolvableSettings;
+    QVERIFY(unresolvableSettings.fromEntry(unresolvableEntry));
+    QVERIFY(agent.addIdentity(
+        unresolvableKey, keeAgentToSshKeySettings(unresolvableSettings, unresolvableDb->uuid(), unresolvableEntry->uuid())));
+    QVERIFY(agent.removeIdentity(unresolvableKey));
+
+    // Second identity: fully reloadable.
+    QSharedPointer<Database> db;
+    Entry* entry;
+    OpenSSHKey key;
+    QVERIFY(buildTestEntry(db, entry, key));
+    KeeAgentSettings settings;
+    QVERIFY(settings.fromEntry(entry));
+    QVERIFY(agent.addIdentity(key, keeAgentToSshKeySettings(settings, db->uuid(), entry->uuid())));
+    QVERIFY(agent.removeIdentity(key));
+
+    // Regression test: an identity that can't be resolved (since unresolvableDb is not passed as an argument here) 
+    // must not stop later identities from being reloaded.
+    agent.reloadAllAgentIdentities({db});
+
+    bool keyInAgent = false;
+    QVERIFY(agent.checkIdentity(key, keyInAgent) && keyInAgent);
+}
+
+void TestSSHAgent::testReloadKeepsTrackingWhenDatabaseClosed()
+{
+    SSHAgent agent;
+    agent.setEnabled(true);
+    agent.setAuthSockOverride(m_agentSocketFileName);
+    QVERIFY(agent.isAgentRunning());
+
+    QSharedPointer<Database> db;
+    Entry* entry;
+    OpenSSHKey key;
+    QVERIFY(buildTestEntry(db, entry, key));
+
+    KeeAgentSettings settings;
+    QVERIFY(settings.fromEntry(entry));
+    QVERIFY(agent.addIdentity(key, keeAgentToSshKeySettings(settings, db->uuid(), entry->uuid())));
+    QVERIFY(agent.removeIdentity(key));
+
+    bool keyInAgent = false;
+
+    // Database closed: reload can't recover the key right now
+    QVERIFY(agent.reloadAllAgentIdentities({}));
+    QVERIFY(agent.checkIdentity(key, keyInAgent) && !keyInAgent);
+
+    // Database open: reload should recover the key now
+    QVERIFY(agent.reloadAllAgentIdentities({db}));
+    QVERIFY(agent.checkIdentity(key, keyInAgent) && keyInAgent);
+}
+
+void TestSSHAgent::testReloadForgetsDeletedEntry()
+{
+    SSHAgent agent;
+    agent.setEnabled(true);
+    agent.setAuthSockOverride(m_agentSocketFileName);
+    QVERIFY(agent.isAgentRunning());
+
+    QSharedPointer<Database> db;
+    Entry* entry;
+    OpenSSHKey key;
+    QVERIFY(buildTestEntry(db, entry, key));
+
+    KeeAgentSettings settings;
+    QVERIFY(settings.fromEntry(entry));
+    QVERIFY(agent.addIdentity(key, keeAgentToSshKeySettings(settings, db->uuid(), entry->uuid())));
+    QVERIFY(agent.removeIdentity(key));
+
+    delete entry;
+
+    bool keyInAgent = false;
+    QVERIFY(agent.reloadAllAgentIdentities({db}));
+    QVERIFY(agent.checkIdentity(key, keyInAgent) && !keyInAgent);
+}
+
+void TestSSHAgent::testReloadForgetsWhenSshKeyUseDisabled()
+{
+    SSHAgent agent;
+    agent.setEnabled(true);
+    agent.setAuthSockOverride(m_agentSocketFileName);
+    QVERIFY(agent.isAgentRunning());
+
+    QSharedPointer<Database> db;
+    Entry* entry;
+    OpenSSHKey key;
+    QVERIFY(buildTestEntry(db, entry, key));
+
+    KeeAgentSettings settings;
+    QVERIFY(settings.fromEntry(entry));
+    QVERIFY(agent.addIdentity(key, keeAgentToSshKeySettings(settings, db->uuid(), entry->uuid())));
+    QVERIFY(agent.removeIdentity(key));
+
+    // User disables SSH agent use for this entry before the next reload.
+    settings.setAllowUseOfSshKey(false);
+    settings.toEntry(entry);
+
+    bool keyInAgent = false;
+    QVERIFY(agent.reloadAllAgentIdentities({db}));
+    QVERIFY(agent.checkIdentity(key, keyInAgent) && !keyInAgent);
+
+    // Re-enabling afterwards must NOT resurrect it - the tracked identity was already dropped.
+    settings.setAllowUseOfSshKey(true);
+    settings.toEntry(entry);
+    QVERIFY(agent.reloadAllAgentIdentities({db}));
     QVERIFY(agent.checkIdentity(key, keyInAgent) && !keyInAgent);
 }
 
