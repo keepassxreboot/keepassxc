@@ -352,11 +352,11 @@ find_package(Qt6 REQUIRED COMPONENTS SvgWidgets)
 # Core Library Definition
 add_library(keepassxc_core STATIC ${core_SOURCES})
 target_compile_definitions(keepassxc_core PRIVATE KPXC_BUILDING_CORE)
-target_link_libraries(keepassxc_core 
+target_link_libraries(keepassxc_core
         ${qrcode_LIB}
         Qt6::Core
         Qt6::Concurrent
-        ${BOTAN_LIBRARIES}
+        Botan::botan
         ${PCSC_LIBRARIES}
         ${ZXCVBN_LIBRARIES}
         ${ZLIB_LIBRARIES}
