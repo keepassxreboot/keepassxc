@@ -68,8 +68,8 @@ void PasskeyExporter::showExportDialog(const QList<Entry*>& items)
  *      "url": <URL>,
  *      "userHandle": <user handle>,
  *      "credentialId": <generated credential id>,
- *      "username:" <username>,
- *      "prfSecret" <generated secret for PRF>
+ *      "username": <username>,
+ *      "prfSecret": <generated secret for PRF>
  * }
  */
 void PasskeyExporter::exportSelectedEntry(const Entry* entry, const QString& folder)

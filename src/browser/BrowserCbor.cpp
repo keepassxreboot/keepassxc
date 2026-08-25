@@ -189,6 +189,7 @@ QByteArray BrowserCbor::cborEncodeExtensionData(const QJsonObject& extensions) c
             writer.append("first");
             writer.append(browserMessageBuilder()->getArrayFromBase64(salt));
             writer.endMap();
+            writer.endMap();
         }
     }
 
