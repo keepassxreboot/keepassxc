@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -973,7 +973,7 @@ void MainWindow::updateMenuActionState()
     m_ui->actionClearSSHAgent->setVisible(sshAgent()->isEnabled());
     m_ui->actionClearSSHAgent->setEnabled(sshAgent()->isEnabled());
     m_ui->actionReloadSSHAgentKeys->setVisible(sshAgent()->isEnabled());
-    m_ui->actionReloadSSHAgentKeys->setVisible(sshAgent()->isEnabled());
+    m_ui->actionReloadSSHAgentKeys->setEnabled(sshAgent()->isEnabled());
 #endif
 
     m_ui->actionGroupNew->setEnabled(groupSelected && !inRecycleBin);

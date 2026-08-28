@@ -1373,7 +1373,7 @@
     <string>Reload SSH Keys</string>
    </property>
    <property name="toolTip">
-    <string>Reload all identities in ssh-agent</string>
+    <string>Re-add missing KeePassXC identities to ssh-agent</string>
    </property>
    <property name="menuRole">
     <enum>QAction::TextHeuristicRole</enum>

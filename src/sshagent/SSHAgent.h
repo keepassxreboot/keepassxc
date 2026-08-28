@@ -1,6 +1,6 @@
 /*
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2017 Toni Spets <toni.spets@iki.fi>
- *  Copyright (C) 2017 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 #define KEEPASSXC_SSHAGENT_H
 
 #include <QHash>
-#include <quuid.h>
+#include <QUuid>
 
 #include "OpenSSHKey.h"
 #include "sshagent/KeeAgentSettings.h"
@@ -28,12 +28,12 @@
 class Database;
 
 struct SshKeySettings {
-    QUuid m_databaseUuid;
-    QUuid m_entryUuid;
-    bool  m_useLifetimeConstraintWhenAdding;
-    bool  m_useConfirmConstraintWhenAdding;
-    int   m_lifetimeConstraintDuration;
-    bool  m_removeAtDatabaseClose;
+    QUuid m_databaseUuid{};
+    QUuid m_entryUuid{};
+    bool  m_useLifetimeConstraintWhenAdding{false};
+    bool  m_useConfirmConstraintWhenAdding{false};
+    int   m_lifetimeConstraintDuration{0};
+    bool  m_removeAtDatabaseClose{false};
 };
 
 class SSHAgent : public QObject

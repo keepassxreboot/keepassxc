@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2017 Toni Spets <toni.spets@iki.fi>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -331,9 +331,11 @@ bool SSHAgent::addIdentity(OpenSSHKey& key, const SshKeySettings& settings, bool
         return false;
     }
 
-    OpenSSHKey keyCopy = key;
-    keyCopy.clearPrivate();
-    m_addedKeys[keyCopy] = settings;
+    if (checkInAddedKeys) {
+        OpenSSHKey keyCopy = key;
+        keyCopy.clearPrivate();
+        m_addedKeys[keyCopy] = settings;
+    }
     return true;
 }
 
