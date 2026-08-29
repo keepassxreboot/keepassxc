@@ -17,7 +17,7 @@
 
 #include "TestTags.h"
 
-#include "QTest"
+#include <QTest>
 
 #include "core/Database.h"
 #include "core/Entry.h"
