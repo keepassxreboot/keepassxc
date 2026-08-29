@@ -753,6 +753,44 @@ void Entry::removeTag(const QString& tag)
     }
 }
 
+bool Entry::hasTag(const QString& tag)
+{
+    auto cleanTag = tag.trimmed();
+    cleanTag.remove(TagDelimiterRegex);
+
+    auto tagList = m_data.tags;
+    for (const auto& t : tagList) {
+        if (t.compare(tag, Qt::CaseInsensitive) == 0) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Entry::renameTag(const QString& oldTag, const QString& newTag)
+{
+    auto cleanOldTag = oldTag.trimmed();
+    cleanOldTag.remove(TagDelimiterRegex);
+
+    auto cleanNewTag = newTag.trimmed();
+    cleanNewTag.remove(TagDelimiterRegex);
+
+    auto tagList = m_data.tags;
+    bool renamed = false;
+    for (int i = 0; i < tagList.size(); i++) {
+        if (tagList[i].compare(cleanOldTag, Qt::CaseInsensitive) == 0) {
+            tagList[i] = cleanNewTag;
+            renamed = true;
+            break;
+        }
+    }
+    if (renamed) {
+        tagList.sort();
+        set(m_data.tags, tagList);
+    }
+    return renamed;
+}
+
 void Entry::setTimeInfo(const TimeInfo& timeInfo)
 {
     m_data.timeInfo = timeInfo;

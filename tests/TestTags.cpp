@@ -96,3 +96,19 @@ void TestTags::testRenameNotExistingTag()
     QVERIFY(!db->renameTag("tag3", "tag3_ren", &error));
     QCOMPARE(error, QObject::tr("The tag \"%1\" was not found.").arg("tag3"));
 }
+
+void TestTags::testRenameTagWithDelimiter()
+{
+    QScopedPointer<Database> db(new Database());
+    QVERIFY(db);
+
+    auto* entry = new Entry();
+    db->rootGroup()->addEntry(entry);
+    entry->setTags("tag1");
+
+    QString error;
+    QVERIFY(db->renameTag("tag,;1", "tag,;1_ren", &error));
+    QVERIFY(error.isEmpty());
+
+    QCOMPARE(entry->tagList(), QStringList({"tag1_ren"}));
+}

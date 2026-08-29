@@ -849,10 +849,8 @@ bool Database::hasTag(const QString& tag)
     }
 
     for (auto entry : m_rootGroup->entriesRecursive()) {
-        for (const auto& t : entry->tagList()) {
-            if (t.compare(tag, Qt::CaseInsensitive) == 0) {
-                return true;
-            }
+        if (entry->hasTag(tag)) {
+            return true;
         }
     }
     return false;
@@ -884,26 +882,18 @@ bool Database::renameTag(const QString& oldTag, const QString& newTag, QString* 
         return false;
     }
 
-    bool modified = false;
+    bool renamed = false;
     for (auto entry : m_rootGroup->entriesRecursive()) {
-        auto tags = entry->tagList();
-        for (int i = 0; i < tags.size(); ++i) {
-            if (tags[i].compare(cleanOldTag, Qt::CaseInsensitive) == 0) {
-                tags[i] = cleanNewTag;
-                entry->setTags(tags.join(","));
-                modified = true;
-                break;
-            }
-        }
+        renamed |= entry->renameTag(oldTag, newTag);
     }
 
-    if (!modified) {
+    if (!renamed) {
         if (error) {
             *error = tr("The tag \"%1\" was not found.").arg(cleanOldTag);
         }
     }
 
-    return modified;
+    return renamed;
 }
 
 const QUuid& Database::cipher() const
