@@ -30,5 +30,7 @@ if(KPXC_FEATURE_FDOSECRETS)
         objects/Prompt.cpp
         dbus/DBusTypes.cpp
     )
-    target_link_libraries(fdosecrets Qt6::Core Qt6::Widgets Qt6::DBus Botan::botan)
+    target_link_libraries(fdosecrets
+            PUBLIC Qt6::Core Qt6::Widgets Qt6::DBus
+            PRIVATE Botan::botan)
 endif()

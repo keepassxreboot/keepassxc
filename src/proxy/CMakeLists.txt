@@ -21,7 +21,9 @@ if(KPXC_FEATURE_BROWSER)
 
     # Alloc must be defined in a static library to prevent clashing with clang ASAN definitions
     add_library(proxy_alloc STATIC ../core/Alloc.cpp)
-    target_link_libraries(proxy_alloc PRIVATE Qt6::Core Botan::botan)
+    target_link_libraries(proxy_alloc
+            PUBLIC Qt6::Core
+            PRIVATE Botan::botan)
 
     add_executable(keepassxc-proxy ${proxy_SOURCES})
     target_link_libraries(keepassxc-proxy proxy_alloc Qt6::Core Qt6::Network)
