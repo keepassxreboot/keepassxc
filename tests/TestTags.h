@@ -30,6 +30,7 @@ private slots:
     void renameEmptyTag();
     void renameExistingTag();
     void testRenameNotExistingTag();
+    void testRenameTagWithDelimiter();
 };
 
 #endif // KEEPASSXC_TESTTAGS_H
