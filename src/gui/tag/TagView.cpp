@@ -24,6 +24,7 @@
 #include "gui/Icons.h"
 #include "gui/MessageBox.h"
 
+#include <QInputDialog>
 #include <QMenu>
 #include <QPainter>
 #include <QStyledItemDelegate>
@@ -86,17 +87,37 @@ void TagView::contextMenuRequested(const QPoint& pos)
             m_db->metadata()->deleteSavedSearch(index.data(Qt::DisplayRole).toString());
         }
     } else if (type == TagModel::TAG) {
-        // Allow removing tags from all entries in a database
+        // Allow removing and renaming tags from all entries in a database
         QMenu menu;
-        auto action = menu.exec({new QAction(icons()->icon("trash"), tr("Remove Tag"), nullptr)}, mapToGlobal(pos));
+        auto renameAction = menu.addAction(icons()->icon("entry-edit"), tr("Rename Tag"));
+        auto removeAction = menu.addAction(icons()->icon("trash"), tr("Remove Tag"));
+
+        auto action = menu.exec(mapToGlobal(pos));
         if (action) {
             auto tag = index.data(Qt::DisplayRole).toString();
-            auto ans = MessageBox::question(this,
-                                            tr("Confirm Remove Tag"),
-                                            tr("Remove tag \"%1\" from all entries in this database?").arg(tag),
-                                            MessageBox::Remove | MessageBox::Cancel);
-            if (ans == MessageBox::Remove) {
-                m_db->removeTag(tag);
+            if (action == renameAction) {
+                bool ok = false;
+                QString newTag = QInputDialog::getText(this,
+                                                      tr("Rename Tag"),
+                                                      tr("New tag name for \"%1\":").arg(tag),
+                                                      QLineEdit::Normal,
+                                                      tag,
+                                                      &ok).trimmed();
+
+                if (ok && !newTag.isEmpty() && newTag != tag) {
+                    QString error;
+                    if (!m_db->renameTag(tag, newTag, &error)) {
+                        MessageBox::warning(this, tr("Error"), error);
+                    }
+                }
+            } else if (action == removeAction) {
+                auto ans = MessageBox::question(this,
+                                                tr("Confirm Remove Tag"),
+                                                tr("Remove tag \"%1\" from all entries in this database?").arg(tag),
+                                                MessageBox::Remove | MessageBox::Cancel);
+                if (ans == MessageBox::Remove) {
+                    m_db->removeTag(tag);
+                }
             }
         }
     }
