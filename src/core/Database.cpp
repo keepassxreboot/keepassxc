@@ -844,13 +844,15 @@ void Database::removeTag(const QString& tag)
 
 bool Database::hasTag(const QString& tag)
 {
-    // First update the tag list because the new test renameExistingTag fails. The existing tag is not detected
-    // because the list is outdated although from manual tests it works fine
-    updateTagList();
-    const auto tags = tagList();
-    for (const auto& t : tags) {
-        if (t.compare(tag, Qt::CaseInsensitive) == 0) {
-            return true;
+    if (!m_rootGroup) {
+        return false;
+    }
+
+    for (auto entry : m_rootGroup->entriesRecursive()) {
+        for (const auto& t : entry->tagList()) {
+            if (t.compare(tag, Qt::CaseInsensitive) == 0) {
+                return true;
+            }
         }
     }
     return false;
