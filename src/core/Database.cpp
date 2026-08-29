@@ -842,6 +842,68 @@ void Database::removeTag(const QString& tag)
     }
 }
 
+bool Database::hasTag(const QString& tag)
+{
+    // First update the tag list because the new test renameExistingTag fails. The existing tag is not detected
+    // because the list is outdated although from manual tests it works fine
+    updateTagList();
+    const auto tags = tagList();
+    for (const auto& t : tags) {
+        if (t.compare(tag, Qt::CaseInsensitive) == 0) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Database::renameTag(const QString& oldTag, const QString& newTag, QString* error)
+{
+    const QString cleanOldTag = oldTag.trimmed();
+    const QString cleanNewTag = newTag.trimmed();
+
+    if (cleanOldTag.isEmpty() || cleanNewTag.isEmpty()) {
+        if (error) {
+            *error = tr("The tag name cannot be empty.");
+        }
+        return false;
+    }
+
+    if (cleanOldTag.compare(cleanNewTag, Qt::CaseInsensitive) == 0) {
+        if (error) {
+            *error = tr("Both tag names are the same.");
+        }
+        return false;
+    }
+
+    if (hasTag(cleanNewTag)) {
+        if (error) {
+            *error = tr("The tag \"%1\" already exists.").arg(cleanNewTag);
+        }
+        return false;
+    }
+
+    bool modified = false;
+    for (auto entry : m_rootGroup->entriesRecursive()) {
+        auto tags = entry->tagList();
+        for (int i = 0; i < tags.size(); ++i) {
+            if (tags[i].compare(cleanOldTag, Qt::CaseInsensitive) == 0) {
+                tags[i] = cleanNewTag;
+                entry->setTags(tags.join(","));
+                modified = true;
+                break;
+            }
+        }
+    }
+
+    if (!modified) {
+        if (error) {
+            *error = tr("The tag \"%1\" was not found.").arg(cleanOldTag);
+        }
+    }
+
+    return modified;
+}
+
 const QUuid& Database::cipher() const
 {
     return m_data.cipher;
