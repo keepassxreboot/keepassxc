@@ -104,7 +104,7 @@ void TagView::contextMenuRequested(const QPoint& pos)
                                                       tag,
                                                       &ok).trimmed();
 
-                if (ok && !newTag.isEmpty() && newTag != tag) {
+                if (ok && newTag != tag) {
                     QString error;
                     if (!m_db->renameTag(tag, newTag, &error)) {
                         MessageBox::warning(this, tr("Error"), error);
