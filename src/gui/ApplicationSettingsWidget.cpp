@@ -288,6 +288,7 @@ void ApplicationSettingsWidget::loadSettings()
     m_generalUi->autoTypeDesktopPortalPersistModeComboBox->setCurrentIndex(
         config()->get(Config::AutoTypeDesktopPortalPersistMode).toUInt());
     m_generalUi->faviconTimeoutSpinBox->setValue(config()->get(Config::FaviconDownloadTimeout).toInt());
+    m_generalUi->autocompleteSuggestionsCheckBox->setChecked(config()->get(Config::AutocompleteSuggestions).toBool());
     m_generalUi->ConfirmMoveEntryToRecycleBinCheckBox->setChecked(
         !config()->get(Config::Security_NoConfirmMoveEntryToRecycleBin).toBool());
     m_generalUi->EnableCopyOnDoubleClickCheckBox->setChecked(
@@ -482,6 +483,7 @@ void ApplicationSettingsWidget::saveSettings()
     config()->set(Config::Security_NoConfirmMoveEntryToRecycleBin,
                   !m_generalUi->ConfirmMoveEntryToRecycleBinCheckBox->isChecked());
     config()->set(Config::Security_EnableCopyOnDoubleClick, m_generalUi->EnableCopyOnDoubleClickCheckBox->isChecked());
+    config()->set(Config::AutocompleteSuggestions, m_generalUi->autocompleteSuggestionsCheckBox->isChecked());
     config()->set(Config::AutoGeneratePasswordForNewEntries,
                   m_generalUi->autoGeneratePasswordForNewEntriesCheckBox->isChecked());
 
