@@ -760,7 +760,7 @@ bool Entry::hasTag(const QString& tag)
 
     auto tagList = m_data.tags;
     for (const auto& t : tagList) {
-        if (t.compare(tag, Qt::CaseInsensitive) == 0) {
+        if (t.compare(cleanTag, Qt::CaseInsensitive) == 0) {
             return true;
         }
     }
