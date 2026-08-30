@@ -35,6 +35,8 @@ public:
     int uniquePasswords = 0; // Number of unique passwords
     int reusedPasswords = 0; // Number of non-unique passwords
     int totalPasswordLength = 0; // Total length of all passwords
+    int numberOfPasskeys = 0; // Number of passkeys
+    int numberOfTotpEntries = 0; // Number of entries with TOTP setup
 
     explicit DatabaseStats(QSharedPointer<Database> db);
 

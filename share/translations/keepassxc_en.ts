@@ -10073,6 +10073,14 @@ This option is deprecated, use --set-key-file instead.</source>
         <source>Average password length is less than ten characters. Longer passwords provide more security.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Number of passkeys</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Entries with TOTP setup</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message numerus="yes">
         <source>%1 character(s)</source>
         <translation type="unfinished">

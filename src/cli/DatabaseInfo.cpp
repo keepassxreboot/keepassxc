@@ -69,6 +69,8 @@ int DatabaseInfo::executeWithDatabase(QSharedPointer<Database> database, QShared
     out << QObject::tr("Entries excluded from reports") << ": " << QString::number(stats.excludedEntries) << Qt::endl;
     out << QObject::tr("Average password length") << ": "
         << QObject::tr("%1 character(s)", "", stats.averagePwdLength()).arg(stats.averagePwdLength()) << Qt::endl;
+    out << QObject::tr("Number of passkeys") << ": " << QString::number(stats.numberOfPasskeys) << Qt::endl;
+    out << QObject::tr("Entries with TOTP setup") << ": " << QString::number(stats.numberOfTotpEntries) << Qt::endl;
 
     return EXIT_SUCCESS;
 }
