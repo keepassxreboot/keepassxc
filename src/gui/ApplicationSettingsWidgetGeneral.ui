@@ -536,6 +536,13 @@
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_6">
               <item>
+               <widget class="QCheckBox" name="autocompleteSuggestionsCheckBox">
+                <property name="text">
+                 <string>Show autocomplete suggestions for username and additional attributes</string>
+                </property>
+               </widget>
+              </item>
+              <item>
                <widget class="QCheckBox" name="ConfirmMoveEntryToRecycleBinCheckBox">
                 <property name="text">
                  <string>Show confirmation before moving entries to recycle bin</string>
