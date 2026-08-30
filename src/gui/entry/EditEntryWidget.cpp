@@ -67,14 +67,13 @@
 #include "gui/entry/EntryAttributesModel.h"
 #include "gui/entry/EntryHistoryModel.h"
 
-
 namespace
 {
-// Item delegate to enable completer showing suggestions for the attribute key
+    // Item delegate to enable completer showing suggestions for the attribute key
     class AttributeKeyDelegate : public QStyledItemDelegate
     {
         std::function<QStringList()> m_getSuggestion;
-    
+
     public:
         explicit AttributeKeyDelegate(QObject* parent, std::function<QStringList()> suggFunc)
             : QStyledItemDelegate(parent)
@@ -82,7 +81,8 @@ namespace
         {
         }
 
-        QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const override
+        QWidget*
+        createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const override
         {
             auto* editor = QStyledItemDelegate::createEditor(parent, option, index);
             if (auto* lineEdit = qobject_cast<QLineEdit*>(editor)) {
@@ -101,7 +101,6 @@ namespace
         }
     };
 } // namespace
-
 
 EditEntryWidget::EditEntryWidget(QWidget* parent)
     : EditWidget(parent)
@@ -293,8 +292,10 @@ void EditEntryWidget::setupAdvanced()
     m_advancedUi->attributesView->setModel(m_attributesModel);
 
     auto getAttributeKeySuggestions = [this]() -> QStringList {
-        if (!m_db) { return {}; }
-        QStringList suggestions = m_db->customAttributeKeys();  // List of all attribute keys in the db
+        if (!m_db) {
+            return {};
+        }
+        QStringList suggestions = m_db->customAttributeKeys(); // List of all attribute keys in the db
         // Remove keys already present in current entry
         for (const QString& key : m_entryAttributes->keys()) {
             if (!EntryAttributes::isDefaultAttribute(key)) {
