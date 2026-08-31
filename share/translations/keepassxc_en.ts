@@ -8168,6 +8168,14 @@ Do you want to overwrite it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Number of passkeys</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Entries with TOTP setup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Word count for the diceware passphrase.</source>
         <translation type="unfinished"></translation>
     </message>
