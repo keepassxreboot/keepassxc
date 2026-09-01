@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
  *
  *  This program is free software: you can redistribute it and/or modify
@@ -213,6 +213,7 @@ MainWindow::MainWindow()
     connect(sshAgent(), SIGNAL(error(QString)), this, SLOT(showErrorMessage(QString)));
     connect(sshAgent(), SIGNAL(enabledChanged(bool)), this, SLOT(agentEnabled(bool)));
     connect(m_ui->actionClearSSHAgent, SIGNAL(triggered()), SLOT(clearSSHAgent()));
+    connect(m_ui->actionReloadSSHAgentKeys, SIGNAL(triggered()), SLOT(reloadSSHAgentKeys()));
     m_ui->settingsWidget->addSettingsPage(new AgentSettingsPage());
 #else
     agentEnabled(false);
@@ -394,6 +395,7 @@ MainWindow::MainWindow()
     m_ui->actionSettings->setIcon(icons()->icon("configure"));
     m_ui->actionPasswordGenerator->setIcon(icons()->icon("password-generator"));
     m_ui->actionClearSSHAgent->setIcon(icons()->icon("utilities-terminal"));
+    m_ui->actionReloadSSHAgentKeys->setIcon(icons()->icon("utilities-terminal"));
 
     m_ui->actionAbout->setIcon(icons()->icon("help-about"));
     m_ui->actionDonate->setIcon(icons()->icon("donate"));
@@ -970,6 +972,8 @@ void MainWindow::updateMenuActionState()
     m_ui->actionEntryRemoveFromAgent->setEnabled(hasSSHKey);
     m_ui->actionClearSSHAgent->setVisible(sshAgent()->isEnabled());
     m_ui->actionClearSSHAgent->setEnabled(sshAgent()->isEnabled());
+    m_ui->actionReloadSSHAgentKeys->setVisible(sshAgent()->isEnabled());
+    m_ui->actionReloadSSHAgentKeys->setEnabled(sshAgent()->isEnabled());
 #endif
 
     m_ui->actionGroupNew->setEnabled(groupSelected && !inRecycleBin);
@@ -1482,6 +1486,24 @@ void MainWindow::clearSSHAgent()
 #endif
 }
 
+void MainWindow::reloadSSHAgentKeys()
+{
+#ifdef KPXC_FEATURE_SSHAGENT
+    auto agent = SSHAgent::instance();
+
+    QList<QSharedPointer<Database>> openDatabases;
+    for (int i = 0; i != m_ui->tabWidget->count(); ++i) {
+        auto dbWidget = m_ui->tabWidget->databaseWidgetFromIndex(i);
+        if (dbWidget && !dbWidget->isLocked()) {
+            openDatabases << dbWidget->database();
+        }
+    }
+
+    auto ret = agent->reloadAllAgentIdentities(openDatabases);
+    displayGlobalMessage(agent->errorString(), ret ? MessageWidget::Positive : KMessageWidget::Error, false);
+#endif
+}
+
 void MainWindow::saveWindowInformation()
 {
     if (isVisible()) {
@@ -1615,6 +1637,8 @@ void MainWindow::agentEnabled(bool enabled)
     m_ui->actionEntryRemoveFromAgent->setVisible(enabled);
     m_ui->actionClearSSHAgent->setEnabled(enabled);
     m_ui->actionClearSSHAgent->setVisible(enabled);
+    m_ui->actionReloadSSHAgentKeys->setEnabled(enabled);
+    m_ui->actionReloadSSHAgentKeys->setVisible(enabled);
 }
 
 void MainWindow::showEntryContextMenu(const QPoint& globalPos)
@@ -2106,6 +2130,7 @@ void MainWindow::initActionCollection()
                     // Tools Menu
                     m_ui->actionPasswordGenerator,
                     m_ui->actionClearSSHAgent,
+                    m_ui->actionReloadSSHAgentKeys,
                     m_ui->actionSettings,
                     // View Menu
                     m_ui->actionThemeAuto,

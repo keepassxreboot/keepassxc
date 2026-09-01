@@ -842,7 +842,8 @@ void DatabaseWidget::addToAgent()
     SSHAgent* agent = SSHAgent::instance();
     OpenSSHKey key;
     if (settings.toOpenSSHKey(currentEntry, key, true)) {
-        if (!agent->addIdentity(key, settings, database()->uuid())) {
+        SshKeySettings sshKeySettings = keeAgentToSshKeySettings(settings, database()->uuid(), currentEntry->uuid());
+        if (!agent->addIdentity(key, sshKeySettings)) {
             m_messageWidget->showMessage(agent->errorString(), MessageWidget::Error);
         }
     } else {
