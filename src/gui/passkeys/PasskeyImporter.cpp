@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -88,7 +88,8 @@ void PasskeyImporter::importSelectedFile(QFile& file, QSharedPointer<Database>& 
         const auto username = passkeyObject["username"].toString();
         const auto credentialId = passkeyObject["credentialId"].toString();
         const auto userHandle = passkeyObject["userHandle"].toString();
-        showImportDialog(database, entry, url, relyingParty, username, credentialId, userHandle, privateKey);
+        const auto prfSecret = passkeyObject["prfSecret"].toString();
+        showImportDialog(database, entry, url, relyingParty, username, credentialId, userHandle, privateKey, prfSecret);
     }
 }
 
@@ -100,6 +101,7 @@ bool PasskeyImporter::showImportDialog(QSharedPointer<Database>& database,
                                        const QString& credentialId,
                                        const QString& userHandle,
                                        const QString& privateKey,
+                                       const QString& prfSecret,
                                        const QString& titleText,
                                        const QString& infoText,
                                        const QString& importButtonText)
@@ -121,7 +123,7 @@ bool PasskeyImporter::showImportDialog(QSharedPointer<Database>& database,
     // Store to entry if given directly
     if (entry) {
         browserService()->addPasskeyToEntry(
-            entry, relyingParty, relyingParty, username, credentialId, userHandle, privateKey);
+            entry, relyingParty, relyingParty, username, credentialId, userHandle, privateKey, prfSecret);
         return true;
     }
 
@@ -133,8 +135,14 @@ bool PasskeyImporter::showImportDialog(QSharedPointer<Database>& database,
         if (group) {
             auto selectedEntry = group->findEntryByUuid(passkeyImportDialog.getSelectedEntryUuid());
             if (selectedEntry) {
-                browserService()->addPasskeyToEntry(
-                    selectedEntry, relyingParty, relyingParty, username, credentialId, userHandle, privateKey);
+                browserService()->addPasskeyToEntry(selectedEntry,
+                                                    relyingParty,
+                                                    relyingParty,
+                                                    username,
+                                                    credentialId,
+                                                    userHandle,
+                                                    privateKey,
+                                                    prfSecret);
             }
         }
 
@@ -156,7 +164,7 @@ bool PasskeyImporter::showImportDialog(QSharedPointer<Database>& database,
     }
 
     browserService()->addPasskeyToGroup(
-        db, group, url, relyingParty, relyingParty, username, credentialId, userHandle, privateKey);
+        db, group, url, relyingParty, relyingParty, username, credentialId, userHandle, privateKey, prfSecret);
 
     return true;
 }
