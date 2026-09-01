@@ -63,7 +63,7 @@ endif()
 add_library(cli STATIC ${cli_SOURCES})
 target_link_libraries(cli
         PRIVATE ${ZXCVBN_LIBRARIES} text_stream
-        PUBLIC Qt6::Core)
+        PUBLIC Qt6::Core Botan::botan)
 
 add_executable(keepassxc-cli keepassxc-cli.cpp)
 target_link_libraries(keepassxc-cli

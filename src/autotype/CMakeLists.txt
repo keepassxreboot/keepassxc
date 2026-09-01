@@ -38,7 +38,7 @@ elseif(WIN32)
 endif()
 
 add_library(autotype STATIC ${autotype_SOURCES})
-target_link_libraries(autotype Qt6::Core Qt6::Widgets)
+target_link_libraries(autotype Qt6::Core Qt6::Widgets Botan::botan)
 
 if(UNIX AND NOT APPLE AND NOT HAIKU)
     target_link_libraries(autotype Qt6::DBus PkgConfig::Xkbcommon)
