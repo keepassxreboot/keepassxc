@@ -34,6 +34,8 @@ public:
     bool reset() override;
     void close() override;
 
+    static constexpr qint32 MaxBlockSize = 64 * 1024 * 1024;
+
     bool atEnd() const override;
 
 protected:

@@ -1546,8 +1546,9 @@ bool BrowserService::handleURL(const QString& entryUrl,
         return false;
     }
 
-    // Match the subdomains with the limited wildcard
-    if (siteQUrl.host().endsWith(entryQUrl.host())) {
+    // Anchor on label boundary
+    if (siteQUrl.host() == entryQUrl.host()
+        || siteQUrl.host().endsWith(QStringLiteral(".") + entryQUrl.host())) {
         return true;
     }
 

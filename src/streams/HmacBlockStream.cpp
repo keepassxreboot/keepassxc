@@ -17,6 +17,7 @@
 
 #include "HmacBlockStream.h"
 
+#include "streams/HashedBlockStream.h"
 #include "core/Endian.h"
 #include "crypto/CryptoHash.h"
 
@@ -140,7 +141,7 @@ bool HmacBlockStream::readHashedBlock()
         return false;
     }
     auto blockSize = Endian::bytesToSizedInt<qint32>(blockSizeBytes, ByteOrder);
-    if (blockSize < 0) {
+    if (blockSize < 0 || blockSize > HashedBlockStream::MaxBlockSize) {
         m_error = true;
         setErrorString("Invalid block size.");
         return false;
