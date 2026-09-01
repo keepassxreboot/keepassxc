@@ -76,6 +76,7 @@ ImportWizardPageSelect::ImportWizardPageSelect(QWidget* parent)
     registerField("ImportKeyFile", m_ui->keyFileEdit);
     registerField("DownloadCommand", m_ui->downloadCommand);
     registerField("DownloadInput", m_ui->downloadCommandInput, "plainText", "textChanged");
+    registerField("DownloadTimeoutSec", m_ui->downloadTimeoutSec);
 }
 
 ImportWizardPageSelect::~ImportWizardPageSelect()
@@ -274,6 +275,8 @@ void ImportWizardPageSelect::setDownloadCommand(bool downloadCommandEnabled)
     m_ui->downloadCommandInputLabel->setVisible(downloadCommandEnabled);
     m_ui->downloadCommandInput->setVisible(downloadCommandEnabled);
     m_ui->downloadCommandHelpButton->setVisible(downloadCommandEnabled);
+    m_ui->downloadTimeoutLabel->setVisible(downloadCommandEnabled);
+    m_ui->downloadTimeoutSec->setVisible(downloadCommandEnabled);
 
     m_ui->temporaryDatabaseRadio->setVisible(downloadCommandEnabled);
 
