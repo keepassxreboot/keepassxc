@@ -47,6 +47,7 @@ public slots:
 signals:
     void entryUrlActivated(Entry* entry);
     void copyTextRequested(const QString& text);
+    void tagSearchRequested(const QString& search);
 
 protected:
     bool eventFilter(QObject* object, QEvent* event) override;
