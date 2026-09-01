@@ -318,7 +318,7 @@ void TestCli::testAdd()
     // Quiet option
     setInput("a");
     execCmd(addCmd, {"add", "-q", "-u", "newuser", "-g", "-L", "20", m_dbFile->fileName(), "/newentry-quiet"});
-    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QVERIFY(m_stderr->readAll().startsWith("Enter password to unlock"));
     QCOMPARE(m_stdout->readAll(), QByteArray());
     db = readDatabase();
     entry = db->rootGroup()->findEntryByPath("/newentry-quiet");
@@ -511,8 +511,7 @@ void TestCli::testAttachmentExport()
     execCmd(
         attachmentExportCmd,
         {"attachment-export", "--quiet", "--stdout", m_dbFile->fileName(), "/Sample Entry", "Sample attachment.txt"});
-    m_stderr->readLine(); // skip password prompt
-    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QVERIFY(m_stderr->readAll().startsWith("Enter password to unlock"));
     QCOMPARE(m_stdout->readAll(), QByteArray("Sample content\n"));
 }
 
@@ -660,7 +659,7 @@ void TestCli::testClip()
     // Quiet option
     setInput("a");
     execCmd(clipCmd, {"clip", m_dbFile->fileName(), "/Sample Entry", "0", "-q"});
-    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QVERIFY(m_stderr->readAll().startsWith("Enter password to unlock"));
     QCOMPARE(m_stdout->readAll(), QByteArray());
     QTRY_COMPARE(clipboard->text(), QString("Password"));
 
@@ -1029,7 +1028,7 @@ void TestCli::testInfo()
     // Test with quiet option.
     setInput("a");
     execCmd(infoCmd, {"db-info", "-q", m_dbFile->fileName()});
-    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QVERIFY(m_stderr->readAll().startsWith("Enter password to unlock"));
     QVERIFY(m_stdout->readLine().contains(QByteArray("UUID: ")));
     QCOMPARE(m_stdout->readLine(), QByteArray("Name: \n"));
     QCOMPARE(m_stdout->readLine(), QByteArray("Description: \n"));
@@ -1124,7 +1123,7 @@ void TestCli::testEdit()
     // Quiet option
     setInput("a");
     execCmd(editCmd, {"edit", m_dbFile->fileName(), "-q", "-t", "newertitle", "/newtitle"});
-    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QVERIFY(m_stderr->readAll().startsWith("Enter password to unlock"));
     QCOMPARE(m_stdout->readAll(), QByteArray());
 
     setInput("a");
@@ -1295,7 +1294,7 @@ void TestCli::testExport()
     QScopedPointer<Database> dbQuiet(new Database());
     setInput("a");
     execCmd(exportCmd, {"export", "-f", "xml", "-q", m_dbFile->fileName()});
-    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QVERIFY(m_stderr->readAll().startsWith("Enter password to unlock"));
 
     xmlOutput.open(QIODevice::WriteOnly);
     xmlOutput.write(m_stdout->readAll());
@@ -1561,7 +1560,7 @@ void TestCli::testList()
     // Quiet option
     setInput("a");
     execCmd(listCmd, {"ls", "-q", m_dbFile->fileName()});
-    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QVERIFY(m_stderr->readAll().startsWith("Enter password to unlock"));
     QCOMPARE(m_stdout->readAll(),
              QByteArray("Sample Entry\n"
                         "General/\n"
@@ -1708,7 +1707,7 @@ void TestCli::testMerge()
     // the dry run option can be used with the quiet option
     setInput("a");
     execCmd(mergeCmd, {"merge", "--dry-run", "-s", "-q", targetFile2.fileName(), sourceFile.fileName()});
-    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QVERIFY(m_stderr->readAll().startsWith("Enter password to unlock"));
     QCOMPARE(m_stdout->readAll(), QByteArray());
 
     mergedDb = QSharedPointer<Database>::create();
@@ -1740,13 +1739,13 @@ void TestCli::testMerge()
     // Quiet option
     setInput("a");
     execCmd(mergeCmd, {"merge", "-q", "-s", sourceFile.fileName(), sourceFile.fileName()});
-    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QVERIFY(m_stderr->readAll().startsWith("Enter password to unlock"));
     QCOMPARE(m_stdout->readAll(), QByteArray());
 
     // Quiet option without the -s option
     setInput({"a", "a"});
     execCmd(mergeCmd, {"merge", "-q", sourceFile.fileName(), sourceFile.fileName()});
-    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QVERIFY(m_stderr->readAll().startsWith("Enter password to unlock"));
     QCOMPARE(m_stdout->readAll(), QByteArray());
 }
 
@@ -1979,7 +1978,7 @@ void TestCli::testRemoveQuiet()
     // delete entry and verify
     setInput("a");
     execCmd(removeCmd, {"rm", "-q", m_dbFile->fileName(), "/Sample Entry"});
-    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QVERIFY(m_stderr->readAll().startsWith("Enter password to unlock"));
     QCOMPARE(m_stdout->readAll(), QByteArray());
 
     auto db = readDatabase();
@@ -1991,7 +1990,7 @@ void TestCli::testRemoveQuiet()
     // remove the entry completely
     setInput("a");
     execCmd(removeCmd, {"rm", "-q", m_dbFile->fileName(), QString("/%1/Sample Entry").arg(Group::tr("Recycle Bin"))});
-    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QVERIFY(m_stderr->readAll().startsWith("Enter password to unlock"));
     QCOMPARE(m_stdout->readAll(), QByteArray());
 
     db = readDatabase();
@@ -2014,7 +2013,7 @@ void TestCli::testSearch()
     // Quiet option
     setInput("a");
     execCmd(searchCmd, {"search", m_dbFile->fileName(), "-q", "Sample"});
-    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QVERIFY(m_stderr->readAll().startsWith("Enter password to unlock"));
     QCOMPARE(m_stdout->readAll(), QByteArray("/Sample Entry\n"));
 
     setInput("a");
@@ -2101,7 +2100,7 @@ void TestCli::testShow()
 
     setInput("a");
     execCmd(showCmd, {"show", m_dbFile->fileName(), "-q", "/Sample Entry"});
-    QCOMPARE(m_stderr->readAll(), QByteArray());
+    QVERIFY(m_stderr->readAll().startsWith("Enter password to unlock"));
     QCOMPARE(m_stdout->readAll(),
              QByteArray("Title: Sample Entry\n"
                         "UserName: User Name\n"
