@@ -16,6 +16,12 @@
 
 cmake_minimum_required(VERSION 3.16.0)
 
+option(WITH_BUILD_QT "Build Qt6 as a vcpkg dependency" OFF)
+if(WITH_BUILD_QT)
+    list(APPEND VCPKG_MANIFEST_FEATURES qt)
+    unset(ENV{Qt6_DIR})
+endif()
+
 project(KeePassXC)
 set(APP_ID "org.keepassxc.${PROJECT_NAME}")
 
@@ -456,22 +462,52 @@ if(NOT CMAKE_BUILD_TYPE_LOWER STREQUAL "debug")
     add_definitions(-DQT_NO_DEBUG_OUTPUT)
 endif()
 
-get_filename_component(Qt6_PREFIX ${Qt6_DIR}/../../.. REALPATH)
-
 if(APPLE)
+    set(_deployqt_exe_name macdeployqt)
     set(CMAKE_MACOSX_RPATH TRUE)
-    find_program(MACDEPLOYQT_EXE macdeployqt HINTS ${Qt6_PREFIX}/bin ${Qt6_PREFIX}/tools/qt/bin ENV PATH)
-    if(NOT MACDEPLOYQT_EXE)
-        message(FATAL_ERROR "macdeployqt is required to build on macOS")
-    endif()
-    message(STATUS "Using macdeployqt: ${MACDEPLOYQT_EXE}")
     set(MACDEPLOYQT_EXTRA_BINARIES "")
 elseif(WIN32)
-    find_program(WINDEPLOYQT_EXE windeployqt HINTS ${Qt6_PREFIX}/bin ${Qt6_PREFIX}/tools/qt/bin ENV PATH)
-    if(NOT WINDEPLOYQT_EXE)
-        message(FATAL_ERROR "windeployqt is required to build on Windows")
+    set(_deployqt_exe_name windeployqt.exe)
+endif()
+
+if(WITH_BUILD_QT)
+    get_filename_component(Qt6_PREFIX "${Qt6_DIR}/../.." REALPATH)
+
+    if(_deployqt_exe_name)
+        include(cmake/KPXCDeployQt.cmake)
+        kpxc_resolve_vcpkg_deployqt(
+                REQUIRE_EXISTS
+                HOST_SYSTEM_NAME "${CMAKE_HOST_SYSTEM_NAME}"
+                HOST_SYSTEM_PROCESSOR "${CMAKE_HOST_SYSTEM_PROCESSOR}"
+                VCPKG_INSTALLED_DIR "${VCPKG_INSTALLED_DIR}"
+                VCPKG_HOST_TRIPLET "${VCPKG_HOST_TRIPLET}"
+                VCPKG_TARGET_TRIPLET "${VCPKG_TARGET_TRIPLET}"
+                TARGET_QT_PREFIX "${Qt6_PREFIX}"
+                DEPLOYQT_EXE_NAME "${_deployqt_exe_name}"
+                OUT_EXECUTABLE DEPLOYQT_EXE
+                OUT_ARGUMENTS DEPLOYQT_ARGS
+                OUT_HOST_TRIPLET _resolved_vcpkg_host_triplet)
+        set(VCPKG_HOST_TRIPLET "${_resolved_vcpkg_host_triplet}")
     endif()
-    message(STATUS "Using windeployqt: ${WINDEPLOYQT_EXE}")
+else()
+    get_filename_component(Qt6_PREFIX "${Qt6_DIR}/../../.." REALPATH)
+    if(_deployqt_exe_name)
+        find_program(DEPLOYQT_EXE "${_deployqt_exe_name}"
+                HINTS "${Qt6_PREFIX}/bin" "${Qt6_PREFIX}/tools/qt/bin"
+                ENV PATH)
+        if(NOT DEPLOYQT_EXE)
+            message(FATAL_ERROR "Failed to find ${_deployqt_exe_name}.")
+        endif()
+    endif()
+endif()
+
+if(APPLE AND WITH_BUILD_QT)
+    list(APPEND CMAKE_INSTALL_RPATH "${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/lib")
+endif()
+
+if(_deployqt_exe_name)
+    get_filename_component(DEPLOYQT_WORKING_DIR "${DEPLOYQT_EXE}" DIRECTORY)
+    message(STATUS "Using ${_deployqt_exe_name}: ${DEPLOYQT_EXE}")
 endif()
 
 # Find Botan

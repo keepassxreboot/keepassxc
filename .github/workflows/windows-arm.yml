@@ -1,0 +1,322 @@
+name: "Windows x64 and Arm64"
+
+# The application payload is native for each target. WiX 3.14.1 tools are
+# x86 (PE machine 0x014C) and run under Windows emulation on Arm runners.
+# Signing, physical hardware, interactive Auto-Type, and publication remain
+# separate maintainer-owned gates. Revalidate the unpinned windows-11-arm
+# image when its Visual Studio image changes; do not infer future success.
+
+on:
+  push:
+    branches:
+      - 'develop'
+      - 'release/**'
+    paths:
+      - '.github/scripts/**'
+      - '.github/workflows/windows-arm.yml'
+      - 'cmake/**'
+      - 'share/translations/**'
+      - 'share/windows/**'
+      - 'vcpkg.json'
+      - 'vcpkg-configuration.json'
+      - 'vcpkg/**'
+      - 'release-tool.py'
+      - 'CMakeLists.txt'
+      - 'src/**'
+      - 'tests/**'
+  pull_request:
+    paths:
+      - '.github/scripts/**'
+      - '.github/workflows/windows-arm.yml'
+      - 'cmake/**'
+      - 'share/translations/**'
+      - 'share/windows/**'
+      - 'vcpkg.json'
+      - 'vcpkg-configuration.json'
+      - 'vcpkg/**'
+      - 'release-tool.py'
+      - 'CMakeLists.txt'
+      - 'src/**'
+      - 'tests/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  x64:
+    name: x64 regression
+    runs-on: windows-2022
+    timeout-minutes: 330
+    env:
+      VCPKG_DEFAULT_BINARY_CACHE: '${{ github.workspace }}\.cache\vcpkg\x64'
+      VCPKG_BINARY_SOURCES: 'clear;files,${{ github.workspace }}\.cache\vcpkg\x64,readwrite'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Provision Asciidoctor
+        shell: pwsh
+        run: |
+          gem install asciidoctor --version 2.0.26 --no-document
+          asciidoctor --version
+
+      - name: Restore architecture-specific vcpkg cache
+        id: vcpkg-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: '${{ env.VCPKG_DEFAULT_BINARY_CACHE }}'
+          key: 'vcpkg-${{ runner.os }}-x64-${{ hashFiles(''vcpkg.json'', ''vcpkg-configuration.json'', ''vcpkg/triplets/**'') }}'
+          restore-keys: |
+            vcpkg-${{ runner.os }}-x64-
+
+      - name: Provision pinned WiX 3.14.1
+        shell: pwsh
+        run: |
+          $archive = Join-Path $env:RUNNER_TEMP 'wix314-binaries.zip'
+          $wix = Join-Path $env:RUNNER_TEMP 'wix314-binaries'
+          Invoke-WebRequest -UseBasicParsing `
+            'https://github.com/wixtoolset/wix3/releases/download/wix3141rtm/wix314-binaries.zip' `
+            -OutFile $archive
+          $actualHash = (Get-FileHash -LiteralPath $archive -Algorithm SHA256).Hash
+          $expectedHash = '6AC824E1642D6F7277D0ED7EA09411A508F6116BA6FAE0AA5F2C7DAA2FF43D31'
+          if ($actualHash -ne $expectedHash) {
+            throw "WiX archive hash mismatch: expected $expectedHash, found $actualHash."
+          }
+          Expand-Archive -LiteralPath $archive -DestinationPath $wix
+          foreach ($tool in 'candle.exe', 'light.exe', 'heat.exe') {
+            $path = Join-Path $wix $tool
+            if (-not (Test-Path -LiteralPath $path -PathType Leaf)) {
+              throw "Expected WiX tool at $path."
+            }
+            $stream = [IO.File]::OpenRead($path)
+            $reader = [IO.BinaryReader]::new($stream)
+            try {
+              $stream.Position = 0x3C
+              $peOffset = $reader.ReadUInt32()
+              $stream.Position = $peOffset + 4
+              $machine = $reader.ReadUInt16()
+            } finally {
+              $reader.Dispose()
+              $stream.Dispose()
+            }
+            if ($machine -ne 0x014C) {
+              throw "$tool has unexpected PE machine 0x$($machine.ToString('X4'))."
+            }
+          }
+          Add-Content -Path $env:GITHUB_PATH -Value $wix
+          Write-Host "wix.bin=$wix"
+
+      - name: Confirm build tools
+        shell: pwsh
+        run: |
+          if (-not $env:VCPKG_INSTALLATION_ROOT) {
+            throw 'VCPKG_INSTALLATION_ROOT is not set on the runner.'
+          }
+          foreach ($tool in 'cmake', 'ctest', 'cpack', 'candle', 'light', 'heat', 'vcpkg') {
+            $command = Get-Command $tool -ErrorAction Stop
+            Write-Host "$tool=$($command.Source)"
+          }
+          New-Item -ItemType Directory -Force -Path $env:VCPKG_DEFAULT_BINARY_CACHE | Out-Null
+
+      - name: Run targeted release-tool tests
+        shell: pwsh
+        run: |
+          python -m py_compile release-tool.py
+          python tests/test_release_tool.py
+
+      - name: Build, test, and package x64
+        shell: pwsh
+        run: >
+          .github/scripts/invoke-release-build.ps1
+          -PlatformTarget amd64
+          -OutputDirectory release-x64
+          -TimeoutMinutes 300
+          -MinimumInitialFreeGiB 12
+          -MinimumFinalFreeGiB 2
+
+      - name: Save architecture-specific vcpkg cache
+        if: always() && steps.vcpkg-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: '${{ env.VCPKG_DEFAULT_BINARY_CACHE }}'
+          key: '${{ steps.vcpkg-cache.outputs.cache-primary-key }}'
+
+      - name: Verify x64 package and clean install lifecycle
+        shell: pwsh
+        run: >
+          .github/scripts/verify-windows-package.ps1
+          -ArtifactDirectory release-x64
+          -Architecture x64
+          -Headless
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: keepassxc-windows-x64-snapshot
+          path: |
+            release-x64/*.zip
+            release-x64/*.msi
+          if-no-files-found: error
+          retention-days: 14
+
+  arm64:
+    name: Native Arm64
+    needs: x64
+    runs-on: windows-11-arm
+    timeout-minutes: 330
+    env:
+      VCPKG_DEFAULT_BINARY_CACHE: '${{ github.workspace }}\.cache\vcpkg\arm64'
+      VCPKG_BINARY_SOURCES: 'clear;files,${{ github.workspace }}\.cache\vcpkg\arm64,readwrite'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Provision Asciidoctor
+        shell: pwsh
+        run: |
+          gem install asciidoctor --version 2.0.26 --no-document
+          asciidoctor --version
+
+      - name: Restore architecture-specific vcpkg cache
+        id: vcpkg-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: '${{ env.VCPKG_DEFAULT_BINARY_CACHE }}'
+          key: 'vcpkg-${{ runner.os }}-arm64-${{ hashFiles(''vcpkg.json'', ''vcpkg-configuration.json'', ''vcpkg/triplets/**'') }}'
+          restore-keys: |
+            vcpkg-${{ runner.os }}-arm64-
+
+      - name: Provision pinned WiX 3.14.1
+        shell: pwsh
+        run: |
+          $archive = Join-Path $env:RUNNER_TEMP 'wix314-binaries.zip'
+          $wix = Join-Path $env:RUNNER_TEMP 'wix314-binaries'
+          Invoke-WebRequest -UseBasicParsing `
+            'https://github.com/wixtoolset/wix3/releases/download/wix3141rtm/wix314-binaries.zip' `
+            -OutFile $archive
+          $actualHash = (Get-FileHash -LiteralPath $archive -Algorithm SHA256).Hash
+          $expectedHash = '6AC824E1642D6F7277D0ED7EA09411A508F6116BA6FAE0AA5F2C7DAA2FF43D31'
+          if ($actualHash -ne $expectedHash) {
+            throw "WiX archive hash mismatch: expected $expectedHash, found $actualHash."
+          }
+          Expand-Archive -LiteralPath $archive -DestinationPath $wix
+          foreach ($tool in 'candle.exe', 'light.exe', 'heat.exe') {
+            $path = Join-Path $wix $tool
+            if (-not (Test-Path -LiteralPath $path -PathType Leaf)) {
+              throw "Expected WiX tool at $path."
+            }
+            $stream = [IO.File]::OpenRead($path)
+            $reader = [IO.BinaryReader]::new($stream)
+            try {
+              $stream.Position = 0x3C
+              $peOffset = $reader.ReadUInt32()
+              $stream.Position = $peOffset + 4
+              $machine = $reader.ReadUInt16()
+            } finally {
+              $reader.Dispose()
+              $stream.Dispose()
+            }
+            if ($machine -ne 0x014C) {
+              throw "$tool has unexpected PE machine 0x$($machine.ToString('X4'))."
+            }
+          }
+          Add-Content -Path $env:GITHUB_PATH -Value $wix
+          Write-Host "wix.bin=$wix"
+
+      - name: Confirm build tools and native host
+        shell: pwsh
+        run: |
+          if ([Runtime.InteropServices.RuntimeInformation]::OSArchitecture -ne 'Arm64') {
+            throw "Expected a native Arm64 runner, found $([Runtime.InteropServices.RuntimeInformation]::OSArchitecture)."
+          }
+          if (-not $env:VCPKG_INSTALLATION_ROOT) {
+            throw 'VCPKG_INSTALLATION_ROOT is not set on the runner.'
+          }
+          $cmakeVersion = [version] ((cmake --version | Select-Object -First 1) -replace '^cmake version ')
+          $cpackVersion = [version] ((cpack --version | Select-Object -First 1) -replace '^cpack version ')
+          if ($cmakeVersion -lt [version] '3.24' -or $cpackVersion -lt [version] '3.24') {
+            throw "Arm64 packaging requires CMake/CPack 3.24 or later; found $cmakeVersion/$cpackVersion."
+          }
+          foreach ($tool in 'cmake', 'ctest', 'cpack', 'candle', 'light', 'heat', 'vcpkg') {
+            $command = Get-Command $tool -ErrorAction Stop
+            Write-Host "$tool=$($command.Source)"
+          }
+          New-Item -ItemType Directory -Force -Path $env:VCPKG_DEFAULT_BINARY_CACHE | Out-Null
+
+      - name: Run targeted release-tool tests
+        shell: pwsh
+        run: |
+          python -m py_compile release-tool.py
+          python tests/test_release_tool.py
+
+      - name: Build, test, and package native Arm64
+        shell: pwsh
+        run: >
+          .github/scripts/invoke-release-build.ps1
+          -PlatformTarget arm64
+          -OutputDirectory release-arm64
+          -TimeoutMinutes 300
+          -MinimumInitialFreeGiB 12
+          -MinimumFinalFreeGiB 2
+
+      - name: Save architecture-specific vcpkg cache
+        if: always() && steps.vcpkg-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: '${{ env.VCPKG_DEFAULT_BINARY_CACHE }}'
+          key: '${{ steps.vcpkg-cache.outputs.cache-primary-key }}'
+
+      - name: Verify Arm64 package and clean install lifecycle
+        shell: pwsh
+        run: >
+          .github/scripts/verify-windows-package.ps1
+          -ArtifactDirectory release-arm64
+          -Architecture arm64
+          -Headless
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: keepassxc-windows-arm64-snapshot
+          path: |
+            release-arm64/*.zip
+            release-arm64/*.msi
+          if-no-files-found: error
+          retention-days: 14
+
+  x64-to-arm64-upgrade:
+    name: x64 to Arm64 MSI upgrade
+    needs: arm64
+    runs-on: windows-11-arm
+    timeout-minutes: 30
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: keepassxc-windows-x64-snapshot
+          path: upgrade/x64
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: keepassxc-windows-arm64-snapshot
+          path: upgrade/arm64
+
+      - name: Verify x64 to Arm64 MSI upgrade
+        shell: pwsh
+        run: |
+          $x64Msi = Get-ChildItem -LiteralPath upgrade/x64 -Filter *.msi -File -Recurse
+          if (@($x64Msi).Count -ne 1) { throw "Expected one x64 MSI, found $(@($x64Msi).Count)." }
+          .github/scripts/verify-windows-package.ps1 `
+            -ArtifactDirectory upgrade/arm64 `
+            -Architecture arm64 `
+            -UpgradeFromMsi $x64Msi.FullName `
+            -Headless

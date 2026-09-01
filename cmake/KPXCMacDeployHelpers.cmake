@@ -36,8 +36,9 @@ function(kpxc_run_macdeployqt_at_install_time)
     endif()
 
     set(COMMAND_ARGS
-        ${MACDEPLOYQT_EXE}
+        ${DEPLOYQT_EXE}
         ${APP_BUNDLE_PATH}
+        ${DEPLOYQT_ARGS}
 
         # Adjusts dependency rpaths of extra binaries
         ${EXTRA_BINARIES_STR}

@@ -234,6 +234,44 @@ def _cmd_exists(cmd, path=None):
     return shutil.which(cmd, path=path) is not None
 
 
+def _cmake_option_is_set(options, name):
+    """Return whether a CMake -D option was explicitly supplied."""
+    option = re.compile(rf'^-D{re.escape(name)}(?::[^=]+)?(?:=|$)')
+    return any(option.match(str(value)) for value in options)
+
+
+def _windows_vcpkg_triplets(platform_target, build_qt, host_machine=None):
+    """Resolve supported Windows target and native host vcpkg triplets."""
+    target_triplets = {
+        'amd64': 'x64-windows',
+        'arm64': 'arm64-windows',
+    }
+    target_triplet = target_triplets[platform_target]
+    if build_qt:
+        target_triplet += '-release'
+
+    host_machine = (host_machine or platform.machine()).lower()
+    host_triplets = {
+        'amd64': 'x64-windows',
+        'x64': 'x64-windows',
+        'x86_64': 'x64-windows',
+        'arm64': 'arm64-windows',
+        'aarch64': 'arm64-windows',
+    }
+    if host_machine not in host_triplets:
+        raise Error('Unsupported vcpkg host platform: OS=%s, processor=%s', sys.platform, host_machine)
+    return target_triplet, host_triplets[host_machine]
+
+
+def _add_windows_vcpkg_triplets(cmake_options, platform_target, build_qt, host_machine=None):
+    """Add inferred Windows vcpkg triplets without replacing user overrides."""
+    target_triplet, host_triplet = _windows_vcpkg_triplets(platform_target, build_qt, host_machine)
+    if not _cmake_option_is_set(cmake_options, 'VCPKG_TARGET_TRIPLET'):
+        cmake_options.append(f'-DVCPKG_TARGET_TRIPLET={target_triplet}')
+    if not _cmake_option_is_set(cmake_options, 'VCPKG_HOST_TRIPLET'):
+        cmake_options.append(f'-DVCPKG_HOST_TRIPLET={host_triplet}')
+
+
 def _git_working_dir_clean(*, cwd):
     """Check whether the Git working directory is clean."""
     return _run(['git', 'diff-index', '--quiet', 'HEAD', '--'], check=False, cwd=cwd).returncode == 0
@@ -432,7 +470,6 @@ class Check(Command):
 
         logger.info('Checking for required build tools...')
         cls.check_git()
-        cls.check_gnupg()
         cls.check_xcode_setup()
 
     @classmethod
@@ -645,6 +682,7 @@ class Build(Command):
         parser.add_argument('-y', '--yes', help='Bypass confirmation prompts.', action='store_true')
         parser.add_argument('--with-tests', help='Build and run tests.', action='store_true')
         parser.add_argument('--minimal', help='Build with minimal feature set.', action='store_true')
+        parser.add_argument('--build-qt', help='Build Qt6 through vcpkg.', action='store_true')
 
         if sys.platform == 'darwin':
             parser.add_argument('--macos-target', default=12, metavar='MACOSX_DEPLOYMENT_TARGET',
@@ -700,8 +738,13 @@ class Build(Command):
             '-DKPXC_MINIMAL=' + minimal
         ]
 
+        if kwargs['build_qt'] and (kwargs['use_system_deps'] or kwargs.get('docker_image')):
+            raise Error('--build-qt requires vcpkg dependencies.')
+
         if not kwargs['use_system_deps'] and not kwargs.get('docker_image'):
             cmake_opts.append(f'-DCMAKE_TOOLCHAIN_FILE={self._get_vcpkg_toolchain_file()}')
+            if kwargs['build_qt']:
+                cmake_opts.append('-DWITH_BUILD_QT=ON')
 
         if snapshot:
             logger.info('Building a snapshot from HEAD.')
@@ -732,10 +775,11 @@ class Build(Command):
     def _get_vcpkg_toolchain_file(path=None):
         vcpkg = shutil.which('vcpkg', path=path)
         if not vcpkg:
-            # Check the VCPKG_ROOT environment variable
-            if 'VCPKG_ROOT' in os.environ:
-                vcpkg = Path(os.environ['VCPKG_ROOT']) / 'vcpkg'
-            else:
+            for root_variable in ('VCPKG_ROOT', 'VCPKG_INSTALLATION_ROOT'):
+                if root_variable in os.environ:
+                    vcpkg = Path(os.environ[root_variable]) / 'vcpkg'
+                    break
+            if not vcpkg:
                 raise Error('vcpkg not found in PATH (use --use-system-deps to build with '
                             'system dependencies instead).')
         toolchain = Path(vcpkg).parent / 'scripts' / 'buildsystems' / 'vcpkg.cmake'
@@ -746,18 +790,29 @@ class Build(Command):
     @staticmethod
     def _run_tests(cwd, ctest_cmd='ctest', parallelism=4):
         logger.info('Running tests...')
-        _run([ctest_cmd, '-E', 'gui|cli', '--output-on-failure', '-j', str(parallelism)], cwd=cwd, capture_output=False)
-        _run([ctest_cmd, '-R', 'gui|cli', '--output-on-failure'], cwd=cwd, capture_output=False)
+        _run([ctest_cmd, '-E', 'gui|cli|database', '--output-on-failure', '-j', str(parallelism)],
+             cwd=cwd, capture_output=False)
+        _run([ctest_cmd, '-R', '^testdatabase$', '--repeat', 'until-pass:2',
+              '--output-on-failure', '--timeout', '120', '-V'],
+             cwd=cwd, capture_output=False)
+        _run([ctest_cmd, '-R', 'gui|cli', '--output-on-failure', '--timeout', '120', '-V'],
+             cwd=cwd, capture_output=False)
 
     # noinspection PyMethodMayBeStatic
     def build_windows(self, version, src_dir, output_dir, *, parallelism, cmake_opts, platform_target,
-                      sign, sign_identity, sign_timestamp_url, with_tests, mingw, **_):
+                      sign, sign_identity, sign_timestamp_url, with_tests, mingw, use_system_deps,
+                      build_qt, **_):
         # Setup build signing if requested
         if sign:
             cmake_opts.append(f'-DWITH_XC_CODESIGN_IDENTITY={sign_identity}')
             cmake_opts.append(f'-DWITH_XC_CODESIGN_TIMESTAMP_URL={sign_timestamp_url}')
-        # Use vcpkg for dependency deployment
-        cmake_opts.append('-DX_VCPKG_APPLOCAL_DEPS_INSTALL=ON')
+        # windeployqt must run before app-local copying when Qt comes from
+        # vcpkg, otherwise it can lock DLLs that it subsequently replaces.
+        app_local_install = 'OFF' if build_qt else 'ON'
+        cmake_opts.append(f'-DX_VCPKG_APPLOCAL_DEPS_INSTALL={app_local_install}')
+
+        if not mingw and not use_system_deps:
+            _add_windows_vcpkg_triplets(cmake_opts, platform_target, build_qt)
 
         if mingw:
             vs_env = os.environ.copy()
@@ -793,7 +848,7 @@ class Build(Command):
 
             artifacts = list(Path(build_dir).glob("*.zip")) + list(Path(build_dir).glob("*.msi"))
             for artifact in artifacts:
-                artifact.replace(output_dir / artifact.name)
+                shutil.move(artifact, output_dir / artifact.name)
                 logger.info(f'Created artifact: {output_dir / artifact.name}')
 
     # noinspection PyMethodMayBeStatic

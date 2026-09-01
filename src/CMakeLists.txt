@@ -403,7 +403,19 @@ if(WIN32)
 endif()
 
 # Main Executable Definition
+unset(_restore_vcpkg_applocal_deps)
+if(WIN32 AND WITH_BUILD_QT AND VCPKG_APPLOCAL_DEPS)
+    # windeployqt handles the GUI target's build-tree dependencies and plugins.
+    # Running vcpkg app-local first makes windeployqt load and then replace the
+    # same DLLs, which fails with sharing violations on Windows.
+    set(VCPKG_APPLOCAL_DEPS OFF)
+    set(_restore_vcpkg_applocal_deps ON)
+endif()
 add_executable(${PROGNAME} main.cpp)
+if(_restore_vcpkg_applocal_deps)
+    set(VCPKG_APPLOCAL_DEPS ON)
+    unset(_restore_vcpkg_applocal_deps)
+endif()
 target_link_libraries(${PROGNAME} keepassxc_gui)
 set_target_properties(${PROGNAME} PROPERTIES ENABLE_EXPORTS ON)
 
@@ -475,10 +487,12 @@ install(TARGETS ${PROGNAME}
 if(WIN32)
     # Deploy used libraries into build directory for debugging
     add_custom_command(TARGET ${PROGNAME} POST_BUILD
-        COMMAND ${WINDEPLOYQT_EXE}
+        COMMAND ${DEPLOYQT_EXE}
+            ${DEPLOYQT_ARGS}
             --dir $<TARGET_FILE_DIR:${PROGNAME}>
             $<IF:$<CONFIG:Debug>,--debug,--release>
-            $<TARGET_FILE:${PROGNAME}>)
+            $<TARGET_FILE:${PROGNAME}>
+        WORKING_DIRECTORY "${DEPLOYQT_WORKING_DIR}")
 
     # We have to copy the license file in the configuration phase.
     # CMake checks that CPACK_RESOURCE_FILE_LICENSE actually exists and
@@ -531,6 +545,25 @@ if(WIN32)
             "${CMAKE_SOURCE_DIR}/share/windows/KPXC_ExitDlg.wxs")
     set(CPACK_WIX_PROPERTY_ARPURLINFOABOUT  "https://keepassxc.org")
     set(CPACK_WIX_EXTENSIONS "WixUtilExtension.dll")
+
+    string(TOLOWER "${CMAKE_CXX_COMPILER_ARCHITECTURE_ID}" _windows_package_arch)
+    if(NOT _windows_package_arch)
+        string(TOLOWER "${CMAKE_SYSTEM_PROCESSOR}" _windows_package_arch)
+    endif()
+    if(_windows_package_arch MATCHES "^(amd64|x64|x86_64)$")
+        set(CPACK_WIX_ARCHITECTURE x64)
+    elseif(_windows_package_arch MATCHES "^(arm64|aarch64)$")
+        if(CMAKE_VERSION VERSION_LESS "3.24")
+            message(FATAL_ERROR
+                    "Arm64 WiX packages require CMake/CPack 3.24 or later; found ${CMAKE_VERSION}")
+        endif()
+        set(CPACK_WIX_ARCHITECTURE arm64)
+    else()
+        message(FATAL_ERROR
+                "Unsupported Windows release architecture: "
+                "${CMAKE_CXX_COMPILER_ARCHITECTURE_ID} (${CMAKE_SYSTEM_PROCESSOR})")
+    endif()
+
     include(CPack)
 
     
@@ -542,8 +575,11 @@ if(WIN32)
             set(_wdqt_mode --release)
         endif()
         execute_process(
-            COMMAND ${WINDEPLOYQT_EXE} ${PROGNAME}.exe \${_wdqt_mode}
-            WORKING_DIRECTORY \${CMAKE_INSTALL_PREFIX}
+            COMMAND ${DEPLOYQT_EXE} ${DEPLOYQT_ARGS}
+                    --dir \"\${CMAKE_INSTALL_PREFIX}\"
+                    \"\${CMAKE_INSTALL_PREFIX}/${PROGNAME}.exe\"
+                    \${_wdqt_mode}
+            WORKING_DIRECTORY \"${DEPLOYQT_WORKING_DIR}\"
             OUTPUT_QUIET
             RESULT_VARIABLE _wdqt_result
         )
@@ -551,6 +587,24 @@ if(WIN32)
             message(FATAL_ERROR \"windeployqt failed with exit code \${_wdqt_result}\")
         endif()"
         COMPONENT Runtime)
+
+    if(WITH_BUILD_QT)
+        install(CODE "
+            file(GLOB _installed_executables \"\${CMAKE_INSTALL_PREFIX}/*.exe\")
+            foreach(_installed_executable IN LISTS _installed_executables)
+                execute_process(
+                    COMMAND \"${Z_VCPKG_EXECUTABLE}\" z-applocal
+                            \"--target-binary=\${_installed_executable}\"
+                            \"--installed-bin-dir=${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/bin\"
+                    RESULT_VARIABLE _applocal_result
+                )
+                if(NOT \${_applocal_result} EQUAL 0)
+                    message(FATAL_ERROR
+                            \"vcpkg app-local failed for \${_installed_executable} with exit code \${_applocal_result}\")
+                endif()
+            endforeach()"
+            COMPONENT Runtime)
+    endif()
 
     if(NOT VCPKG_INSTALLED_DIR)
         install(CODE "set(gp_tool \"objdump\")" COMPONENT Runtime)
