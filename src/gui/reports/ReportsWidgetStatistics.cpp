@@ -125,6 +125,8 @@ void ReportsWidgetStatistics::calculateStats()
                 tr("%1 character(s)", "", stats->averagePwdLength()).arg(stats->averagePwdLength()),
                 stats->isAvgPwdTooShort(),
                 tr("Average password length is less than ten characters. Longer passwords provide more security."));
+    addStatsRow(tr("Number of passkeys"), QString::number(stats->numberOfPasskeys));
+    addStatsRow(tr("Entries with TOTP setup"), QString::number(stats->numberOfTotpEntries));
 }
 
 void ReportsWidgetStatistics::saveSettings()
