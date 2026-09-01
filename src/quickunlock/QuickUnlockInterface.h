@@ -18,6 +18,7 @@
 #ifndef KEEPASSXC_QUICKUNLOCKINTERFACE_H
 #define KEEPASSXC_QUICKUNLOCKINTERFACE_H
 
+#include <QSharedPointer>
 #include <QUuid>
 
 class QuickUnlockInterface
@@ -29,7 +30,6 @@ public:
     virtual ~QuickUnlockInterface() = default;
 
     virtual bool isAvailable() const = 0;
-    virtual QString errorString() const = 0;
 
     virtual bool setKey(const QUuid& dbUuid, const QByteArray& key) = 0;
     virtual bool getKey(const QUuid& dbUuid, QByteArray& key) = 0;
@@ -37,22 +37,32 @@ public:
 
     virtual void reset(const QUuid& dbUuid) = 0;
     virtual void reset() = 0;
+
+    virtual QString errorString() const
+    {
+        return m_error;
+    }
+
+protected:
+    QString m_error;
 };
 
-class NoQuickUnlock : public QuickUnlockInterface
+class QuickUnlockManager final
 {
+    Q_DISABLE_COPY(QuickUnlockManager)
+
 public:
-    bool isAvailable() const override;
-    QString errorString() const override;
+    QuickUnlockManager();
+    ~QuickUnlockManager();
 
-    bool setKey(const QUuid& dbUuid, const QByteArray& key) override;
-    bool getKey(const QUuid& dbUuid, QByteArray& key) override;
-    bool hasKey(const QUuid& dbUuid) const override;
+    QSharedPointer<QuickUnlockInterface> interface() const;
+    bool isNativeAvailable() const;
 
-    void reset(const QUuid& dbUuid) override;
-    void reset() override;
+private:
+    QSharedPointer<QuickUnlockInterface> m_nativeInterface;
+    QSharedPointer<QuickUnlockInterface> m_fallbackInterface;
 };
 
-QuickUnlockInterface* getQuickUnlock();
+QuickUnlockManager* getQuickUnlock();
 
 #endif // KEEPASSXC_QUICKUNLOCKINTERFACE_H

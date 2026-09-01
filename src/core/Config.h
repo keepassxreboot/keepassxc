@@ -142,6 +142,7 @@ public:
         Security_NoConfirmMoveEntryToRecycleBin,
         Security_EnableCopyOnDoubleClick,
         Security_QuickUnlock,
+        Security_QuickUnlockRemember,
         Security_DatabasePasswordMinimumQuality,
 
         Browser_Enabled,

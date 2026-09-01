@@ -17,8 +17,9 @@
 
 #include "WindowsHello.h"
 
-#include <Userconsentverifierinterop.h>
+#include <Windows.h>
 #include <winrt/base.h>
+#include <winrt/windows.foundation.collections.h>
 #include <winrt/windows.foundation.h>
 #include <winrt/windows.security.credentials.h>
 #include <winrt/windows.security.cryptography.h>
@@ -28,12 +29,14 @@
 #include "crypto/CryptoHash.h"
 #include "crypto/Random.h"
 #include "crypto/SymmetricCipher.h"
+#include "gui/osutils/OSUtils.h"
 
 #include <QTimer>
 #include <QWindow>
 
 using namespace winrt;
 using namespace Windows::Foundation;
+using namespace Windows::Foundation::Collections;
 using namespace Windows::Security::Credentials;
 using namespace Windows::Security::Cryptography;
 using namespace Windows::Storage::Streams;
@@ -43,17 +46,20 @@ namespace
     const std::wstring s_winHelloKeyName{L"keepassxc_winhello"};
     int g_promptFocusCount = 0;
 
-    void queueSecurityPromptFocus(int delay = 500)
+    void queueSecurityPromptFocus(bool initial, int delay = 500)
     {
+        if (initial) {
+            g_promptFocusCount = 0;
+        }
+
         QTimer::singleShot(delay, [] {
             auto hWnd = ::FindWindowA("Credential Dialog Xaml Host", nullptr);
             if (hWnd) {
                 ::SetForegroundWindow(hWnd);
             } else if (++g_promptFocusCount <= 3) {
-                queueSecurityPromptFocus();
-                return;
+                qDebug("WindowsHello - Could not find security prompt window");
+                queueSecurityPromptFocus(false);
             }
-            g_promptFocusCount = 0;
         });
     }
 
@@ -105,14 +111,9 @@ bool WindowsHello::isAvailable() const
     return task.get();
 }
 
-QString WindowsHello::errorString() const
-{
-    return m_error;
-}
-
 bool WindowsHello::setKey(const QUuid& dbUuid, const QByteArray& data)
 {
-    queueSecurityPromptFocus();
+    queueSecurityPromptFocus(true);
 
     // Generate a random challenge that will be signed by Windows Hello
     // to create the key. The challenge is also used as the IV.
@@ -120,6 +121,7 @@ bool WindowsHello::setKey(const QUuid& dbUuid, const QByteArray& data)
     auto challenge = Random::instance()->randomArray(ivSize);
     QByteArray key;
     if (!deriveEncryptionKey(challenge, key, m_error)) {
+        m_error = QObject::tr("Windows Hello setup was canceled or failed. Quick unlock has not been enabled.");
         return false;
     }
 
@@ -137,28 +139,28 @@ bool WindowsHello::setKey(const QUuid& dbUuid, const QByteArray& data)
 
     // Prepend the challenge/IV to the encrypted data
     encrypted.prepend(challenge);
-    m_encryptedKeys.insert(dbUuid, encrypted);
-    return true;
+    return osUtils->saveSecret(dbUuid.toString(), encrypted);
 }
 
 bool WindowsHello::getKey(const QUuid& dbUuid, QByteArray& data)
 {
     data.clear();
-    if (!hasKey(dbUuid)) {
-        m_error = QObject::tr("Failed to get Windows Hello credential.");
+    QByteArray keydata;
+    if (!osUtils->getSecret(dbUuid.toString(), keydata)) {
+        m_error = QObject::tr("Failed to retrieve Windows Hello credential.");
         return false;
     }
 
-    queueSecurityPromptFocus();
+    queueSecurityPromptFocus(true);
 
     // Read the previously used challenge and encrypted data
     auto ivSize = SymmetricCipher::defaultIvSize(SymmetricCipher::Aes256_GCM);
-    const auto& keydata = m_encryptedKeys.value(dbUuid);
     auto challenge = keydata.left(ivSize);
     auto encrypted = keydata.mid(ivSize);
-    QByteArray key;
 
+    QByteArray key;
     if (!deriveEncryptionKey(challenge, key, m_error)) {
+        // Error is set in deriveEncryptionKey
         return false;
     }
 
@@ -182,15 +184,16 @@ bool WindowsHello::getKey(const QUuid& dbUuid, QByteArray& data)
 
 void WindowsHello::reset(const QUuid& dbUuid)
 {
-    m_encryptedKeys.remove(dbUuid);
+    osUtils->removeSecret(dbUuid.toString());
 }
 
 bool WindowsHello::hasKey(const QUuid& dbUuid) const
 {
-    return m_encryptedKeys.contains(dbUuid);
+    QByteArray tmp;
+    return osUtils->getSecret(dbUuid.toString(), tmp);
 }
 
 void WindowsHello::reset()
 {
-    m_encryptedKeys.clear();
+    osUtils->removeAllSecrets();
 }
