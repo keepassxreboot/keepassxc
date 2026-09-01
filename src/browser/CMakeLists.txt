@@ -1,4 +1,4 @@
-#  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
+#  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -33,6 +33,7 @@ if(KPXC_FEATURE_BROWSER)
             BrowserSettings.cpp
             BrowserShared.cpp
             CustomTableWidget.cpp
+            DatabaseSettings.cpp
             NativeMessageInstaller.cpp
             PasskeyUtils.cpp)
 
