@@ -144,14 +144,34 @@ bool EntrySearcher::isCaseSensitive() const
 bool EntrySearcher::searchEntryImpl(const Entry* entry)
 {
     // Pre-load in case they are needed
-    auto attributes_keys = entry->attributes()->customKeys();
-    auto attributes = QStringList(attributes_keys + entry->attributes()->values(attributes_keys));
-    auto attachments = QStringList(entry->attachments()->keys());
+    const auto attributesKeys = entry->attributes()->customKeys();
+    const auto attachments = QStringList(entry->attachments()->keys());
     // Build a group hierarchy to allow searching for e.g. /group1/subgroup*
     QString hierarchy;
     if (entry->group()) {
         hierarchy = entry->group()->hierarchy().join('/').prepend("/");
     }
+
+    const auto passwordMatches = [&](const SearchTerm& term) {
+        if (m_skipProtected) {
+            return false;
+        }
+        return term.regex.match(entry->resolvePlaceholder(entry->password())).hasMatch();
+    };
+    const auto attributeKVMatches = [&](const SearchTerm& term) {
+        // Matches both key or value of attribute
+        for (const auto& key : attributesKeys) {
+            if (term.regex.match(key).hasMatch()) {
+                return true;
+            }
+            if (!m_skipProtected || !entry->attributes()->isProtected(key)) {
+                if (term.regex.match(entry->attributes()->value(key)).hasMatch()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    };
 
     // By default, empty term matches every entry.
     // However when skipping protected fields, we will reject everything instead
@@ -165,10 +185,7 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
             found = term.regex.match(entry->resolvePlaceholder(entry->username())).hasMatch();
             break;
         case Field::Password:
-            if (m_skipProtected) {
-                continue;
-            }
-            found = term.regex.match(entry->resolvePlaceholder(entry->password())).hasMatch();
+            found = passwordMatches(term);
             break;
         case Field::Url:
             found = term.regex.match(entry->resolvePlaceholder(entry->url())).hasMatch();
@@ -177,17 +194,22 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
             found = term.regex.match(entry->notes()).hasMatch();
             break;
         case Field::AttributeKV:
-            found = !attributes.filter(term.regex).empty();
+            found = attributeKVMatches(term);
+            break;
+        case Field::AttributeValue:
+            // here, term.word is the attribute key, e.g., searching "_test:value" --> term.word=test
+            if (!entry->attributes()->contains(term.word)) {
+                found = false;
+                break;
+            }
+            if (m_skipProtected && entry->attributes()->isProtected(term.word)) {
+                found = false;
+                break;
+            }
+            found = term.regex.match(entry->attributes()->value(term.word)).hasMatch();
             break;
         case Field::Attachment:
             found = !attachments.filter(term.regex).empty();
-            break;
-        case Field::AttributeValue:
-            if (m_skipProtected && entry->attributes()->isProtected(term.word)) {
-                continue;
-            }
-            found = entry->attributes()->contains(term.word)
-                    && term.regex.match(entry->attributes()->value(term.word)).hasMatch();
             break;
         case Field::Group:
             // Match against the full hierarchy if the word contains a '/' otherwise just the group name
@@ -232,11 +254,16 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
             found = term.regex.match(entry->uuidToHex()).hasMatch();
             break;
         default:
-            // Terms without a specific field try to match title, username, url, and notes
-            found = term.regex.match(entry->resolvePlaceholder(entry->title())).hasMatch()
+            // Terms without a specific field try to match:
+            // title, username, password, url, notes, additional attributes, attachments or tags
+            found =    term.regex.match(entry->resolvePlaceholder(entry->title())).hasMatch()
                     || term.regex.match(entry->resolvePlaceholder(entry->username())).hasMatch()
+                    || passwordMatches(term)
                     || term.regex.match(entry->resolvePlaceholder(entry->url())).hasMatch()
-                    || entry->tagList().indexOf(term.regex) != -1 || term.regex.match(entry->notes()).hasMatch();
+                    || term.regex.match(entry->notes()).hasMatch()
+                    || attributeKVMatches(term)
+                    || !attachments.filter(term.regex).empty()
+                    || entry->tagList().indexOf(term.regex) != -1;
         }
 
         // negate the result if exclude:
