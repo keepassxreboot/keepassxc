@@ -179,6 +179,18 @@ void TestOpenSSHKey::testParseRSA()
     QCOMPARE(key.fingerprint(QCryptographicHash::Md5), QString("MD5:c2:26:5b:3d:62:19:56:b0:c3:67:99:7a:a6:4c:66:06"));
 }
 
+void TestOpenSSHKey::testParseRSABroken()
+{
+    const QString keyString = QString("-----BEGIN RSA PRIVATE KEY-----\n"
+                                      "MAACAQAChH////8=\n"
+                                      "-----END RSA PRIVATE KEY-----\n");
+
+    const QByteArray keyData = keyString.toLatin1();
+
+    OpenSSHKey key;
+    QVERIFY(!key.parsePKCS1PEM(keyData));
+}
+
 void TestOpenSSHKey::testParseRSACompare()
 {
     const QString oldKeyString = QString("-----BEGIN RSA PRIVATE KEY-----\n"
