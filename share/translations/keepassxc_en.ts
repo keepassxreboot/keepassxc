@@ -3233,6 +3233,18 @@ Would you like to correct it?</source>
         <source>Background color selection</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Toggle attribute display on the entry preview panel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show this attribute on the entry preview panel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pin</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EditEntryWidgetAutoType</name>

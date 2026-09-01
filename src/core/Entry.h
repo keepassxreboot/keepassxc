@@ -144,6 +144,10 @@ public:
     CustomData* customData();
     const CustomData* customData() const;
 
+    QStringList pinnedAttributes() const;
+    static QStringList pinnedAttributes(const CustomData* customData);
+    static void setPinnedAttributes(CustomData* customData, const QStringList& names);
+
     void setUuid(const QUuid& uuid);
     void setIcon(int iconNumber);
     void setIcon(const QUuid& uuid);
