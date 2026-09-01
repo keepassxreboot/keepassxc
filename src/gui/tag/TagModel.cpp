@@ -20,7 +20,6 @@
 #include "core/Database.h"
 #include "core/Metadata.h"
 #include "gui/Icons.h"
-#include "gui/MessageBox.h"
 
 #include <QApplication>
 #include <QMenu>
@@ -28,10 +27,14 @@
 TagModel::TagModel(QObject* parent)
     : QAbstractListModel(parent)
 {
-    m_defaultSearches << qMakePair(tr("Clear Search"), QString("")) << qMakePair(tr("All Entries"), QString("*"))
-                      << qMakePair(tr("Expired"), QString("is:expired"))
+    // clang-format off
+    m_defaultSearches << qMakePair(tr("Clear Search"), QString(""))
+                      << qMakePair(tr("All Entries"), QString("*"))
+                      << qMakePair(tr("Unsaved Changes"), QString("is:modified"))
+                      << qMakePair(tr("Expired Entries"), QString("is:expired"))
                       << qMakePair(tr("Weak Passwords"), QString("is:weak"))
                       << qMakePair(tr("TOTP Entries"), QString("has:totp"));
+    // clang-format on
 }
 
 TagModel::~TagModel() = default;

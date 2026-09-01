@@ -585,6 +585,18 @@ bool Entry::hasValidTotp() const
     return error.isEmpty();
 }
 
+bool Entry::hasUnsavedChanges() const
+{
+    auto db = database();
+    // Basic checks to avoid more expensive file checks later
+    if (!db || !db->isModified() || db->filePath().isEmpty()) {
+        return false;
+    }
+
+    const auto saved = db->savedFileModifiedTime();
+    return saved.isValid() && timeInfo().lastModificationTime() > saved;
+}
+
 bool Entry::hasPasskey() const
 {
     return m_attributes->hasPasskey();
