@@ -44,10 +44,13 @@ QUrl UrlTools::getRedirectTarget(QNetworkReply* reply)
 /**
  * Gets the base domain of URL or hostname.
  *
+ * If returnOnlyLabel is true, return only the Registrable Origin Label:
+ * https://www.w3.org/TR/webauthn-3/#registrable-origin-label
+ *
  * Returns the base domain, e.g. https://another.example.co.uk -> example.co.uk
  * Up-to-date list can be found: https://publicsuffix.org/list/public_suffix_list.dat
  */
-QString UrlTools::getBaseDomainFromUrl(const QString& url)
+QString UrlTools::getBaseDomainFromUrl(const QString& url, bool returnOnlyLabel)
 {
     auto qUrl = QUrl::fromUserInput(url);
 
@@ -65,8 +68,11 @@ QString UrlTools::getBaseDomainFromUrl(const QString& url)
     host.chop(tld.length() + 1);
     // Split the URL and select the last part, e.g. https://another.example -> example
     QString baseDomain = host.split('.').last();
-    // Append the top level domain back to the URL, e.g. example -> example.co.uk
-    baseDomain.append(QString(".%1").arg(tld));
+
+    if (!returnOnlyLabel) {
+        // Append the top level domain back to the URL, e.g. example -> example.co.uk
+        baseDomain.append(QString(".%1").arg(tld));
+    }
 
     return baseDomain;
 }
