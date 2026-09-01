@@ -440,3 +440,106 @@ void TestEntrySearcher::testTotpSearch()
     QVERIFY(!m_searchResult.contains(entry2));
     QVERIFY(!m_searchResult.contains(entry3));
 }
+
+void TestEntrySearcher::testAccentInsensitiveSearch()
+{
+    auto entry1 = new Entry();
+    entry1->setGroup(m_rootGroup);
+    entry1->setTitle(QString::fromUtf8("používateľ"));
+    entry1->setUsername("user1");
+
+    auto entry2 = new Entry();
+    entry2->setGroup(m_rootGroup);
+    entry2->setTitle("pouzivatel");
+    entry2->setUsername("user2");
+
+    auto entry3 = new Entry();
+    entry3->setGroup(m_rootGroup);
+    entry3->setTitle(QString::fromUtf8("café"));
+    entry3->setUsername("user3");
+
+    auto entry4 = new Entry();
+    entry4->setGroup(m_rootGroup);
+    entry4->setTitle("unrelated");
+    entry4->setUsername("user4");
+
+    // Default search is accent-insensitive: ASCII query matches accented entry
+    m_searchResult = m_entrySearcher.search("pouzivatel", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 2);
+    QVERIFY(m_searchResult.contains(entry1));
+    QVERIFY(m_searchResult.contains(entry2));
+
+    // Accented query matches ASCII entry
+    m_searchResult = m_entrySearcher.search(QString::fromUtf8("používateľ"), m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 2);
+    QVERIFY(m_searchResult.contains(entry1));
+    QVERIFY(m_searchResult.contains(entry2));
+
+    // Accented query matches differently-accented entry ("café" -> "cafe")
+    m_searchResult = m_entrySearcher.search("cafe", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 1);
+    QVERIFY(m_searchResult.contains(entry3));
+
+    // Field-specific search works with accent folding
+    m_searchResult = m_entrySearcher.search("title:pouzivatel", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 2);
+    QVERIFY(m_searchResult.contains(entry1));
+    QVERIFY(m_searchResult.contains(entry2));
+
+    // Exact match (+) forces accent-sensitive: ASCII doesn't match accented
+    m_searchResult = m_entrySearcher.search("+pouzivatel", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 1);
+    QVERIFY(m_searchResult.contains(entry2));
+
+    // Exact match (+) with accented query only matches accented entry
+    m_searchResult = m_entrySearcher.search(QString::fromUtf8("+používateľ"), m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 1);
+    QVERIFY(m_searchResult.contains(entry1));
+
+    // Exact match (+) with café only matches café, not cafe
+    m_searchResult = m_entrySearcher.search("+cafe", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 0);
+
+    m_searchResult = m_entrySearcher.search(QString::fromUtf8("+café"), m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 1);
+    QVERIFY(m_searchResult.contains(entry3));
+
+    // Exclude modifier works with accent folding
+    m_searchResult = m_entrySearcher.search("!pouzivatel", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 2);
+    QVERIFY(m_searchResult.contains(entry3));
+    QVERIFY(m_searchResult.contains(entry4));
+
+    // Attachment search with accent folding
+    entry1->attachments()->set(QString::fromUtf8("schéma.pdf"), QByteArray());
+    m_searchResult = m_entrySearcher.search("attachment:schema", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 1);
+    QVERIFY(m_searchResult.contains(entry1));
+
+    // Tag search with accent folding
+    entry1->addTag(QString::fromUtf8("résumé"));
+    m_searchResult = m_entrySearcher.search("tag:resume", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 1);
+    QVERIFY(m_searchResult.contains(entry1));
+
+    // Group search with accent folding
+    auto accentGroup = new Group();
+    accentGroup->setParent(m_rootGroup);
+    accentGroup->setName(QString::fromUtf8("Récréation"));
+    auto entry5 = new Entry();
+    entry5->setGroup(accentGroup);
+    entry5->setTitle("in accented group");
+    m_searchResult = m_entrySearcher.search("group:recreation", accentGroup);
+    QCOMPARE(m_searchResult.count(), 1);
+    QVERIFY(m_searchResult.contains(entry5));
+
+    // Case-sensitive combined with accent-insensitive (default)
+    m_entrySearcher.setCaseSensitive(true);
+    m_searchResult = m_entrySearcher.search("Pouzivatel", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 0);
+    m_searchResult = m_entrySearcher.search("pouzivatel", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 2);
+    QVERIFY(m_searchResult.contains(entry1));
+    QVERIFY(m_searchResult.contains(entry2));
+    m_entrySearcher.setCaseSensitive(false);
+}
