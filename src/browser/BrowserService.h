@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2025 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
  *  Copyright (C) 2013 Francois Ferrand
  *
@@ -26,6 +26,7 @@
 #include "gui/PasswordGeneratorWidget.h"
 
 class QLocalSocket;
+class QWebSocket;
 
 typedef QPair<QString, QString> StringPair;
 typedef QList<StringPair> StringPairList;
@@ -35,9 +36,9 @@ enum
     max_length = 16 * 1024
 };
 
-struct KeyPairMessage
+template <typename T> struct KeyPairMessage
 {
-    QLocalSocket* socket;
+    T* socket;
     QString nonce;
     QString publicKey;
     QString secretKey;
@@ -58,6 +59,7 @@ struct EntryParameters
 
 class DatabaseWidget;
 class BrowserHost;
+class BrowserWebSocketHost;
 class BrowserAction;
 
 class BrowserService : public QObject
@@ -82,7 +84,7 @@ public:
     QJsonArray getDatabaseEntries();
     QJsonObject createNewGroup(const QString& groupName, bool isPasskeysGroup = false);
     QString getCurrentTotp(const QString& uuid);
-    void showPasswordGenerator(const KeyPairMessage& keyPairMessage);
+    template <typename T> void showPasswordGenerator(const KeyPairMessage<T>& keyPairMessage);
     bool isPasswordGeneratorRequested() const;
     QSharedPointer<Database> getDatabase(const QUuid& rootGroupUuid = {});
     QSharedPointer<Database> selectedDatabase();
@@ -137,7 +139,7 @@ public:
 
 signals:
     void requestUnlock();
-    void passwordGenerated(QLocalSocket* socket, const QString& password, const QString& nonce);
+    void passwordGenerated(QWebSocket* socket, const QString& password, const QString& nonce);
 
 public slots:
     void databaseLocked(DatabaseWidget* dbWidget);
@@ -145,7 +147,8 @@ public slots:
     void activeDatabaseChanged(DatabaseWidget* dbWidget);
 
 private slots:
-    void processClientMessage(QLocalSocket* socket, const QJsonObject& message);
+    void processLocalSocketClientMessage(QLocalSocket* socket, const QJsonObject& message);
+    void processWebSocketClientMessage(QWebSocket* socket, const QJsonObject& message);
     void handleDatabaseUnlockDialogFinished(bool accepted, DatabaseWidget* dbWidget);
 
 private:
@@ -208,8 +211,10 @@ private:
     void hideWindow() const;
     void raiseWindow(const bool force = false);
     void updateWindowState();
+    template <typename T> QJsonObject processClientMessage(T* socket, const QJsonObject& message);
 
     QPointer<BrowserHost> m_browserHost;
+    QPointer<BrowserWebSocketHost> m_browserWebSocketHost;
     QHash<QString, QSharedPointer<BrowserAction>> m_browserClients;
 
     bool m_dialogActive;

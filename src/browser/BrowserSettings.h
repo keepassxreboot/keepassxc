@@ -1,5 +1,5 @@
 /*
- *  Copyright (C) 2024 KeePassXC Team <team@keepassxc.org>
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2017 Sami Vänttinen <sami.vanttinen@protonmail.com>
  *  Copyright (C) 2013 Francois Ferrand
  *
@@ -82,6 +82,8 @@ public:
     void updateBinaryPaths();
     QString replaceHomePath(QString location);
     QString replaceTildeHomePath(QString location);
+    void setWebSocketSupport(bool enabled);
+    bool webSocketSupport();
 
 private:
     static BrowserSettings* m_instance;
