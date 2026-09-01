@@ -1,6 +1,6 @@
 /*
+ *  Copyright (C) 2026 KeePassXC Team <team@keepassxc.org>
  *  Copyright (C) 2010 Felix Geyer <debfx@fobos.de>
- *  Copyright (C) 2021 KeePassXC Team <team@keepassxc.org>
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@
 #include <QCheckBox>
 #include <QCompleter>
 #include <QPointer>
+#include <QTableWidgetItem>
 #include <QTimer>
 
 #include "config-keepassx.h"
@@ -148,6 +149,11 @@ private slots:
     void editCurrentURL();
     void updateCurrentURL();
     void entryURLEdited(const QString& url);
+    void sitePermissionSelectionChanged();
+    void allowDenyChangedForSite();
+    void removeCurrentSite();
+    void editSite();
+    void editSiteFinished(QTableWidgetItem* item);
 #endif
 
 private:
@@ -157,6 +163,8 @@ private:
     void setupAutoType();
 #ifdef KPXC_FEATURE_BROWSER
     void setupBrowser();
+    void initializeSitePermissionsTable();
+    void updateSitePermissionsTable();
 #endif
 #ifdef KPXC_FEATURE_SSHAGENT
     void setupSSHAgent();
@@ -207,6 +215,7 @@ private:
     bool m_browserSettingsChanged;
     QWidget* const m_browserWidget;
     EntryURLModel* const m_additionalURLsDataModel;
+    QList<QPair<QString, bool>> m_sitePermissions;
 #endif
     EditWidgetProperties* const m_editWidgetProperties;
     QWidget* const m_historyWidget;
