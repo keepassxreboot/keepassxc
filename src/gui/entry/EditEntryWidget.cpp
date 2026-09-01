@@ -1040,6 +1040,9 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
     m_mainUi->usernameComboBox->lineEdit()->setText(entry->username());
     m_mainUi->urlEdit->setText(entry->url());
     m_mainUi->passwordEdit->setText(entry->password());
+    if (entry->isAttributeReference("Password")) {
+        m_mainUi->passwordEdit->setPasswordStrength(entry->resolveMultiplePlaceholders(entry->password()));
+    }
     m_mainUi->passwordEdit->setShowPassword(!config()->get(Config::Security_PasswordsHidden).toBool());
     if (!m_history) {
         m_mainUi->passwordEdit->enablePasswordGenerator();
