@@ -77,7 +77,7 @@ SearchWidget::SearchWidget(QWidget* parent)
     m_actionWaitForEnter->setCheckable(true);
     m_actionWaitForEnter->setChecked(config()->get(Config::GUI_SearchWaitForEnter).toBool());
 
-    m_ui->searchIcon->setIcon(icons()->icon("system-search"));
+    m_ui->searchIcon->setIcon(icons()->icon("system-search-options"));
     m_ui->searchEdit->addAction(m_ui->searchIcon, QLineEdit::LeadingPosition);
 
     m_ui->helpIcon->setIcon(icons()->icon("system-help"));
