@@ -19,6 +19,7 @@
 #include "TestKeys.h"
 
 #include <QBuffer>
+#include <QTemporaryFile>
 #include <QTest>
 
 #include "config-keepassx-tests.h"
@@ -219,6 +220,28 @@ void TestKeys::testFileKeyError()
     QVERIFY(!result);
     QVERIFY(!errorMsg.isEmpty());
     errorMsg = "";
+}
+
+void TestKeys::testFileKeyUnreadable()
+{
+    // Create a temporary file and remove read permissions
+    QTemporaryFile tempFile;
+    QVERIFY(tempFile.open());
+    QString fileName = tempFile.fileName();
+    tempFile.write("test key data", 12);
+    tempFile.close();
+
+    // Remove read permissions
+    QFile::setPermissions(fileName, QFileDevice::WriteOwner | QFileDevice::WriteUser);
+
+    FileKey fileKey;
+    QString errorMsg;
+    bool result = fileKey.load(fileName, &errorMsg);
+    QVERIFY(!result);
+    QVERIFY(!errorMsg.isEmpty());
+
+    // Restore permissions so the temp file can be cleaned up
+    QFile::setPermissions(fileName, QFileDevice::ReadOwner | QFileDevice::WriteOwner);
 }
 
 void TestKeys::benchmarkTransformKey()

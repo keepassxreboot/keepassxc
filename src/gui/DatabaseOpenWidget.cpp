@@ -532,6 +532,16 @@ bool DatabaseOpenWidget::browseKeyFile()
         return false;
     }
 
+    QFileInfo fileInfo(filename);
+    if (!fileInfo.isReadable()) {
+        MessageBox::warning(this,
+                            tr("Cannot read key file"),
+                            tr("The selected key file cannot be read.\n"
+                               "Please check that the file exists and is readable."),
+                            MessageBox::Button::Ok);
+        return false;
+    }
+
     m_ui->keyFileLineEdit->setText(filename);
     return true;
 }
