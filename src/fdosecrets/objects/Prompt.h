@@ -173,12 +173,13 @@ namespace FdoSecrets
 
         void collectionUnlockFinished(bool accepted);
         void collectionRetired(Collection* coll);
-        void itemUnlockFinished(const QHash<Entry*, AuthDecision>& results, AuthDecision forFutureEntries);
+        void itemRetired(Item* item);
+        void itemUnlockFinished(const QHash<QUuid, AuthDecision>& results, AuthDecision forFutureEntries);
         void unlockItems();
 
         QList<QPointer<Collection>> m_collections;
         QHash<Collection*, QList<QPointer<Item>>> m_items;
-        QHash<QUuid, Item*> m_entryToItems;
+        QHash<QUuid, QPointer<Item>> m_entryToItems;
 
         // collections whose doUnlock was issued and whose outcome is still awaited
         QSet<Collection*> m_pendingCollections;
