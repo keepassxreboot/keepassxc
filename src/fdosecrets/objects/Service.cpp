@@ -608,8 +608,8 @@ namespace FdoSecrets
             return;
         }
 
-        if (!accepted) {
-            emit doneUnlockDatabaseInDialog(false, dbWidget);
+        if (!accepted || !dbWidget->isLocked()) {
+            emit doneUnlockDatabaseInDialog(!dbWidget->isLocked(), dbWidget);
             m_unlockingAnyDatabase = false;
             disconnect(m_unlockingDb.take(dbWidget).destroyedConn);
         } else {
