@@ -307,3 +307,30 @@ void TestDatabase::testExternallyModified()
     // ignoreFileChangesUntilSaved should reset after save
     QVERIFY(db->ignoreFileChangesUntilSaved() == false);
 }
+
+void TestDatabase::testSyncPreviousKey()
+{
+    auto db = QSharedPointer<Database>::create();
+    QVERIFY(!db->syncPreviousKey());
+
+    auto keyA = QSharedPointer<CompositeKey>::create();
+    keyA->addKey(QSharedPointer<PasswordKey>::create("A"));
+
+    db->setSyncPreviousKey(keyA);
+    QCOMPARE(db->syncPreviousKey().data(), keyA.data());
+
+    // No-op while a snapshot is pending: see Database::setSyncPreviousKey.
+    auto keyB = QSharedPointer<CompositeKey>::create();
+    keyB->addKey(QSharedPointer<PasswordKey>::create("B"));
+    db->setSyncPreviousKey(keyB);
+    QCOMPARE(db->syncPreviousKey().data(), keyA.data());
+
+    db->clearSyncPreviousKey();
+    QVERIFY(!db->syncPreviousKey());
+
+    db->setSyncPreviousKey(keyB);
+    QCOMPARE(db->syncPreviousKey().data(), keyB.data());
+
+    db->releaseData();
+    QVERIFY(!db->syncPreviousKey());
+}

@@ -27,6 +27,7 @@
 #include "gui/MessageWidget.h"
 #include "gui/entry/EntryModel.h"
 #include "remote/RemoteHandler.h"
+#include "remotesync/RemoteSyncProvider.h" // for RemoteSyncProvider::ErrorKind in accessor signature
 
 class DatabaseOpenDialog;
 class DatabaseOpenWidget;
@@ -47,6 +48,8 @@ class TagView;
 class ElidedLabel;
 class RemoteSettings;
 struct RemoteParams;
+class SyncEngine;
+struct RemoteSyncParams;
 
 namespace Ui
 {
@@ -129,8 +132,24 @@ public:
     void setSearchStringForAutoType(const QString& search);
 
     void syncWithRemote(const RemoteParams* params);
-    void syncDatabaseWithLockedDatabase(const QString& filePath, const RemoteParams* params);
     QList<RemoteParams*> getRemoteParams() const;
+#ifdef KPXC_FEATURE_NETWORK
+    void syncWithCloud();
+    QJsonObject getCloudSyncConfig() const;
+
+    // Returns the active cloud sync provider's user-visible display name
+    // from RemoteSyncProvider::displayName. Empty string if no provider is active.
+    QString getCloudSyncProviderDisplayName() const;
+
+    // True iff a cloud sync provider is configured and its persisted config
+    // represents an authorized state per RemoteSyncProvider::isAuthorized.
+    // Generic gate used by trigger handlers and the Database>Remote Sync menu.
+    bool isCloudSyncAuthorized() const;
+
+    // Classify a cloud-sync error message via the active provider's
+    // classifyError virtual. Returns ErrorKind::Other if no provider is active.
+    RemoteSyncProvider::ErrorKind classifyCloudSyncError(const QString& errorMessage) const;
+#endif
 
 signals:
     // relayed Database signals
@@ -235,6 +254,9 @@ public slots:
     void switchToDatabaseReports();
     void switchToDatabaseSettings();
     void switchToRemoteSettings();
+#ifdef KPXC_FEATURE_NETWORK
+    void switchToCloudSyncSettings();
+#endif
 #ifdef KPXC_FEATURE_BROWSER
     void switchToPasskeys();
     void showImportPasskeyDialog(bool isEntry = false);
@@ -287,14 +309,15 @@ private slots:
     void unlockDatabase(bool accepted);
     void mergeDatabase(bool accepted);
     void syncUnlockedDatabase(bool accepted);
-    bool syncWithDatabase(const QSharedPointer<Database>& otherDb, QString& error);
-    void uploadAndFinishSync(const RemoteParams* params, RemoteHandler::RemoteResult result);
-    void finishSync(const RemoteParams* params, RemoteHandler::RemoteResult result);
     void emitCurrentModeChanged();
     // Database autoreload slots
     void reloadDatabaseFile(bool triggeredBySave);
     void restoreGroupEntryFocus(const QUuid& groupUuid, const QUuid& EntryUuid);
     void onConfigChanged(Config::ConfigKey key);
+#ifdef KPXC_FEATURE_NETWORK
+    void onDatabaseSavedTriggerSync();
+    void onDatabaseUnlockedTriggerSync();
+#endif
 
 private:
     int addChildWidget(QWidget* w);
@@ -302,6 +325,7 @@ private:
     void openDatabaseFromEntry(const Entry* entry, bool inBackground = true);
     void performIconDownloads(const QList<Entry*>& entries, bool force = false, bool downloadInBackground = false);
     bool performSave(QString& errorMessage, const QString& fileName = {});
+    void initSyncEngine();
 
     QSharedPointer<Database> m_db;
 
@@ -334,6 +358,38 @@ private:
     bool m_attemptingLock = false;
 
     QScopedPointer<RemoteSettings> m_remoteSettings;
+    QScopedPointer<SyncEngine> m_syncEngine;
+    QScopedPointer<RemoteSyncProvider> m_syncProvider;
+    QScopedPointer<RemoteSyncParams> m_syncParams;
+    QString m_currentSyncName;
+    QString m_currentSyncConfigName; // Set for cloud-sync sessions, empty for command syncs;
+                                     // used as a "is this a cloud sync?" guard.
+    // Temp file handed off by SyncEngine when the remote DB key didn't match.
+    // Kept alive across the unlock dialog so DatabaseOpenDialog can read it;
+    // removed when the dialog completes (success or cancel).
+    QString m_pendingRemoteSyncFilePath;
+    // Sync kind that was in flight when remoteDbNeedsKey fired. Routes the
+    // resume after unlock back to the correct entry point (command/script sync
+    // preserves its RemoteParams; cloud sync re-reads its config).
+    enum class PendingSyncKind
+    {
+        None,
+        Command,
+        Cloud
+    };
+    PendingSyncKind m_pendingSyncKind = PendingSyncKind::None;
+    // One-shot flag set by syncUnlockedDatabase's adopt arm so the next
+    // syncFinished handler can prepend the master-key adoption notice to
+    // its banner. Cleared at consumption time.
+    bool m_remoteKeyAdoptedDuringSync = false;
+    bool m_syncInProgress = false;
+    // ErrorKind from the most recent failed sync. Cached from
+    // SyncEngine::lastErrorKind() on syncFinished so classifyCloudSyncError
+    // returns the provider's source-of-truth classification instead of
+    // substring-matching tr()'d strings (which break on localized builds).
+    // Cleared at the start of each sync (syncInProgress / syncWithRemote /
+    // syncWithCloud paths).
+    RemoteSyncProvider::ErrorKind m_lastSyncErrorKind = RemoteSyncProvider::ErrorKind::Other;
 
     // Search state
     QScopedPointer<EntrySearcher> m_entrySearcher;
