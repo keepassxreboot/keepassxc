@@ -53,11 +53,11 @@ QByteArray Base32::decode(const QByteArray& encodedData)
         return {};
     }
 
+    // Count the trailing run of pad characters only; a '=' anywhere else is
+    // not padding and is rejected below.
     int nPads = 0;
-    for (int i = -1; i > -7; --i) {
-        if ('=' == encodedData[encodedData.size() + i]) {
-            ++nPads;
-        }
+    while (nPads < encodedData.size() && '=' == encodedData[encodedData.size() - nPads - 1]) {
+        ++nPads;
     }
 
     int specialOffset;
@@ -80,9 +80,13 @@ QByteArray Base32::decode(const QByteArray& encodedData)
         nSpecialBytes = 1;
         specialOffset = 2;
         break;
-    default:
+    case 0:
         nSpecialBytes = 0;
         specialOffset = 0;
+        break;
+    default:
+        // RFC 4648 only allows 1, 3, 4 or 6 pad characters
+        return {};
     }
 
     Q_ASSERT(encodedData.size() > 0);
@@ -111,6 +115,10 @@ QByteArray Base32::decode(const QByteArray& encodedData)
                     ch += ALPH_POS_2;
                 } else {
                     if (ASCII_EQ == ch) {
+                        if (i <= encodedData.size() - nPads) {
+                            // '=' outside the trailing run of pad characters
+                            return {};
+                        }
                         if (i == encodedData.size()) {
                             // finished with special quantum
                             quantum >>= specialOffset;
