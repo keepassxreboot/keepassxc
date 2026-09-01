@@ -24,6 +24,18 @@
 
 #include <QCommandLineParser>
 
+#include <atomic>
+#include <csignal>
+
+namespace {
+    std::atomic<bool> g_interrupted{false};
+    void handleSignal(int signal)
+    {
+        Q_UNUSED(signal);
+        g_interrupted.store(true);
+    }
+}
+
 #define CLI_DEFAULT_CLIP_TIMEOUT 10
 
 const QCommandLineOption Clip::AttributeOption = QCommandLineOption(
@@ -149,17 +161,28 @@ int Clip::executeWithDatabase(QSharedPointer<Database> database, QSharedPointer<
         return exitCode;
     }
 
+    g_interrupted.store(false);
+    auto oldSigInt = std::signal(SIGINT, handleSignal);
+    auto oldSigTerm = std::signal(SIGTERM, handleSignal);
+
     QString lastLine = "";
-    while (timeout > 0) {
+    while (timeout > 0 && !g_interrupted.load()) {
         out << '\r' << QString(lastLine.size(), ' ') << '\r';
         lastLine = QObject::tr("Clearing the clipboard in %1 second(s)...", "", timeout).arg(timeout);
         out << lastLine << Qt::flush;
-        Tools::sleep(1000);
+
+        for (int i = 0; i < 10 && !g_interrupted.load(); ++i) {
+            Tools::sleep(100);
+        }
         --timeout;
     }
+
     Utils::clipText("");
     out << '\r' << QString(lastLine.size(), ' ') << '\r';
     out << QObject::tr("Clipboard cleared!") << Qt::endl;
+
+    std::signal(SIGINT, oldSigInt);
+    std::signal(SIGTERM, oldSigTerm);
 
     return EXIT_SUCCESS;
 }
