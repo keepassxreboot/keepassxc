@@ -48,7 +48,6 @@ public:
     struct SearchTerm
     {
         Field field;
-        // only used when field == Field::AttributeValue
         QString word;
         QRegularExpression regex;
         bool exclude;
