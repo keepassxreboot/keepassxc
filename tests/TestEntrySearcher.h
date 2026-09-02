@@ -38,7 +38,7 @@ private slots:
     void testSearchTermParser();
     void testCustomAttributesAreSearched();
     void testGroup();
-    void testSkipProtected();
+    void testIncludeProtected();
     void testUUIDSearch();
     void testTotpSearch();
 
