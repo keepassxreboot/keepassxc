@@ -469,24 +469,43 @@ if(APPLE)
     set(CMAKE_MACOSX_RPATH TRUE)
     list(APPEND CMAKE_INSTALL_RPATH "${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/lib")
 elseif(WIN32)
-    set(_deployqt_exe_name windeployqt)
+    set(_deployqt_exe_name windeployqt.exe)
 endif()
 
 if(WITH_BUILD_QT)
     get_filename_component(Qt6_PREFIX "${Qt6_DIR}/../.." REALPATH)
-    set(_host_triplet "${CMAKE_HOST_SYSTEM_PROCESSOR}-${CMAKE_HOST_SYSTEM_NAME}")
-    string(TOLOWER "${_host_triplet}" _host_triplet)
-    string(REPLACE "darwin" "osx" _host_triplet "${_host_triplet}")
     set(Qt6_TOOLS_PREFIX "${Qt6_PREFIX}/tools/Qt6")
 
     if(_deployqt_exe_name)
         # vcpkg installs *deployqt to the host triplet install dir, which prevents it from
         # finding the Qt libraries and plugins from the target triplet install dir.
         # Here, we copy it to the target dir to fix that. A qt.conf exists there already.
-        configure_file(
-                "${VCPKG_INSTALLED_DIR}/${_host_triplet}/tools/Qt6/bin/${_deployqt_exe_name}"
-                "${Qt6_PREFIX}/tools/Qt6/bin/${_deployqt_exe_name}"
-                COPYONLY)
+        if(WIN32)
+            # On Windows, VCPKG_TARGET_TRIPLET may be cross-compiled (e.g. arm64-windows),
+            # so the host triplet must come from vcpkg's own VCPKG_HOST_TRIPLET rather than
+            # being re-derived from CMAKE_HOST_SYSTEM_PROCESSOR/NAME (which does not match
+            # vcpkg's triplet naming, e.g. "AMD64" vs. "x64").
+            include(cmake/KPXCWindowsDeployQt.cmake)
+            kpxc_resolve_windows_deployqt_host_triplet(_host_triplet)
+            set(KPXC_VCPKG_EXECUTABLE "${Z_VCPKG_EXECUTABLE}")
+            if(NOT KPXC_VCPKG_EXECUTABLE)
+                find_program(KPXC_VCPKG_EXECUTABLE vcpkg
+                        HINTS "$ENV{VCPKG_ROOT}" "$ENV{VCPKG_INSTALLATION_ROOT}")
+            endif()
+            if(NOT KPXC_VCPKG_EXECUTABLE)
+                message(FATAL_ERROR "vcpkg executable is required for Windows runtime deployment.")
+            endif()
+        else()
+            set(_host_triplet "${CMAKE_HOST_SYSTEM_PROCESSOR}-${CMAKE_HOST_SYSTEM_NAME}")
+            string(TOLOWER "${_host_triplet}" _host_triplet)
+            string(REPLACE "darwin" "osx" _host_triplet "${_host_triplet}")
+        endif()
+        if(NOT _host_triplet STREQUAL VCPKG_TARGET_TRIPLET)
+            configure_file(
+                    "${VCPKG_INSTALLED_DIR}/${_host_triplet}/tools/Qt6/bin/${_deployqt_exe_name}"
+                    "${Qt6_PREFIX}/tools/Qt6/bin/${_deployqt_exe_name}"
+                    COPYONLY)
+        endif()
     endif()
 else()
     get_filename_component(Qt6_PREFIX "${Qt6_DIR}/../../.." REALPATH)
