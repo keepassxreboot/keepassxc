@@ -252,7 +252,7 @@ NOTE: Restoring an old history item will store the current entry settings as a n
 
 // end::advanced[]
 === Search
-KeePassXC provides a robust search that enables you to find specific entries in the databases using different modifiers, wild card characters, and logical operators. By default, search considers the following fields when matching your query: Title, Username, URL, Tags, and Notes. To include other fields and/or narrow your search to specific fields, you can use the search syntax described below.
+KeePassXC provides a robust search that enables you to find specific entries in the databases using different modifiers, wild card characters, and logical operators. By default, search considers the following fields when matching your query: Title, Username, Password, URL, Notes, Additional Attributes, Attachments or Tags. However, protected fields (password, specified additional attributes) are only searched when the corresponding option is set. To narrow your search to specific fields, you can use the search syntax described below.
 
 ==== Modifiers and Fields
 [grid=rows, frame=none, width=70%]
@@ -277,6 +277,9 @@ The following fields can be searched along with their abbreviated name in parent
 * Group (g)
 * Tags (tag)
 * Entry State (is:expired, is:weak)
+
+Values in specific additional attributes can be searched by adding an underscore, e.g., `_customField1:value` searches for `value` only in field `customField1`.
+Note that also protected values are found regardless of the corresponding option, when explicitly searching the password field (e.g., `p:secret`).
 
 ==== Wild Card Characters and Logical Operators
 [grid=rows, frame=none, width=70%]

@@ -167,7 +167,7 @@ void TestEntrySearcher::testAndConcatenationInSearch()
     entry->setGroup(m_rootGroup);
 
     m_searchResult = m_entrySearcher.search("", m_rootGroup);
-    QCOMPARE(m_searchResult.count(), 1);
+    QCOMPARE(m_searchResult.count(), 0);
 
     m_searchResult = m_entrySearcher.search("def", m_rootGroup);
     QCOMPARE(m_searchResult.count(), 1);
@@ -194,10 +194,15 @@ void TestEntrySearcher::testAllAttributesAreSearched()
     entry->setUsername("testUsername");
     entry->setUrl("testUrl");
     entry->setNotes("testNote");
+    entry->attributes()->set("testAttribute", "testAttributeValue");
+    entry->attributes()->set("testProtected", "testAttributeProtectedValue", true);
 
     // Default is to AND all terms together
-    m_searchResult = m_entrySearcher.search("testTitle testUsername testUrl testNote", m_rootGroup);
+    m_searchResult = m_entrySearcher.search("testTitle testUsername testUrl testNote testAttribute testAttributeValue", m_rootGroup);
     QCOMPARE(m_searchResult.count(), 1);
+
+    m_searchResult = m_entrySearcher.search("testTitle testUsername testUrl testNote testAttributeProtectedValue", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 0);
 }
 
 void TestEntrySearcher::testSearchTermParser()
@@ -268,11 +273,15 @@ void TestEntrySearcher::testCustomAttributesAreSearched()
     // search for custom entries
     m_searchResult = m_entrySearcher.search("_testAttribute:test", m_rootGroup);
     QCOMPARE(m_searchResult.count(), 2);
+    m_searchResult = m_entrySearcher.search("test", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 2);
 
     // protected attributes are ignored
-    m_entrySearcher = EntrySearcher(false, true);
-    m_searchResult = m_entrySearcher.search("_testAttribute:test _testProtected:testP2", m_rootGroup);
-    QCOMPARE(m_searchResult.count(), 2);
+    m_entrySearcher = EntrySearcher(false, false);
+    m_searchResult = m_entrySearcher.search("_testProtected:testP2", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 0);
+    m_searchResult = m_entrySearcher.search("testP2", m_rootGroup);
+    QCOMPARE(m_searchResult.count(), 0);
 }
 
 void TestEntrySearcher::testGroup()
@@ -332,7 +341,7 @@ void TestEntrySearcher::testGroup()
     QCOMPARE(m_searchResult.count(), 1);
 }
 
-void TestEntrySearcher::testSkipProtected()
+void TestEntrySearcher::testIncludeProtected()
 {
     QScopedPointer<Entry> e1(new Entry());
     e1->setGroup(m_rootGroup);
@@ -349,36 +358,38 @@ void TestEntrySearcher::testSkipProtected()
     const QList<Entry*> expectE2{e2.data()};
     const QList<Entry*> expectBoth{e1.data(), e2.data()};
 
-    // when not skipping protected, empty term matches everything
+    // when not including protected, empty term matches nothing
+    m_searchResult = m_entrySearcher.search("", m_rootGroup);
+    QCOMPARE(m_searchResult, {});
+
+    // now test the searcher with includeProtected = true
+    m_entrySearcher = EntrySearcher(false, true);
+
+    // when including protected, empty term matches everything
     m_searchResult = m_entrySearcher.search("", m_rootGroup);
     QCOMPARE(m_searchResult, expectBoth);
 
-    // now test the searcher with skipProtected = true
-    m_entrySearcher = EntrySearcher(false, true);
+    m_entrySearcher = EntrySearcher(false, false);
 
-    // when skipping protected, empty term matches nothing
-    m_searchResult = m_entrySearcher.search("", m_rootGroup);
-    QCOMPARE(m_searchResult, {});
-
-    // having a protected entry in terms should not affect the results in anyways
     m_searchResult = m_entrySearcher.search("_testProtected:apple", m_rootGroup);
     QCOMPARE(m_searchResult, {});
-    m_searchResult = m_entrySearcher.search("_testProtected:apple _testAttribute:testE2", m_rootGroup);
+    m_searchResult = m_entrySearcher.search("_testAttribute:testE2", m_rootGroup);
     QCOMPARE(m_searchResult, expectE2);
     m_searchResult = m_entrySearcher.search("_testProtected:apple _testAttribute:testE1", m_rootGroup);
-    QCOMPARE(m_searchResult, expectE1);
+    QCOMPARE(m_searchResult, {}); // Nothing found since protected fields are not included
     m_searchResult =
-        m_entrySearcher.search("_testProtected:apple _testAttribute:testE1 _testAttribute:testE2", m_rootGroup);
+        m_entrySearcher.search("_testAttribute:testE1 _testAttribute:testE2", m_rootGroup);
     QCOMPARE(m_searchResult, {});
 
-    // also move the protected term around to exercise the short-circuit logic
-    m_searchResult = m_entrySearcher.search("_testAttribute:testE2 _testProtected:apple", m_rootGroup);
-    QCOMPARE(m_searchResult, expectE2);
-    m_searchResult = m_entrySearcher.search("_testAttribute:testE1 _testProtected:apple", m_rootGroup);
+    // Now include protected fields in search
+    m_entrySearcher = EntrySearcher(false, true);
+
+    m_searchResult = m_entrySearcher.search("_testProtected:apple _testAttribute:testE1", m_rootGroup);
     QCOMPARE(m_searchResult, expectE1);
-    m_searchResult =
-        m_entrySearcher.search("_testAttribute:testE1 _testProtected:apple _testAttribute:testE2", m_rootGroup);
-    QCOMPARE(m_searchResult, {});
+    m_searchResult = m_entrySearcher.search("_testAttribute:testE2", m_rootGroup);
+    QCOMPARE(m_searchResult, expectE2);
+    m_searchResult = m_entrySearcher.search("testProtected:banana", m_rootGroup);
+    QCOMPARE(m_searchResult, expectE2);
 }
 
 void TestEntrySearcher::testUUIDSearch()
@@ -395,7 +406,7 @@ void TestEntrySearcher::testUUIDSearch()
     auto uuid2 = QUuid::createUuid();
     entry2->setUuid(uuid2);
 
-    m_searchResult = m_entrySearcher.search("uuid:", m_rootGroup);
+    m_searchResult = m_entrySearcher.search("uuid:*", m_rootGroup);
     QCOMPARE(m_searchResult.count(), 2);
 
     m_searchResult = m_entrySearcher.search("uuid:" + Tools::uuidToHex(uuid1), m_rootGroup);

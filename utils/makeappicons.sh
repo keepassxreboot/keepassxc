@@ -136,7 +136,7 @@ map() {
         sort-alphabetical-descending)       echo sort-alphabetical-descending   ;;
         statistics)                         echo chart-line                     ;;
         system-help)                        echo help                           ;;
-        system-search)                      echo magnify                        ;;
+        system-search-options)              echo tune-variant                   ;;
         system-software-update)             echo cloud-download-outline         ;;
         url-copy)                           echo earth-arrow-right              ;;
         user-guide)                         echo book-open-outline              ;;

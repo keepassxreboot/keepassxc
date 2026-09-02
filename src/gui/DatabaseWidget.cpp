@@ -93,7 +93,7 @@ DatabaseWidget::DatabaseWidget(QSharedPointer<Database> db, QWidget* parent)
     , m_tagView(new TagView(this))
     , m_saveAttempts(0)
     , m_remoteSettings(new RemoteSettings(m_db, this))
-    , m_entrySearcher(new EntrySearcher(false))
+    , m_entrySearcher(new EntrySearcher(false, false))
 {
     Q_ASSERT(m_db);
 
@@ -1810,6 +1810,12 @@ void DatabaseWidget::deleteSearch(const QString& name)
     if (m_db->isInitialized()) {
         m_db->metadata()->deleteSavedSearch(name);
     }
+}
+
+void DatabaseWidget::setSearchIncludeProtected(bool state)
+{
+    m_entrySearcher->setIncludeProtected(state);
+    refreshSearch();
 }
 
 void DatabaseWidget::setSearchCaseSensitive(bool state)

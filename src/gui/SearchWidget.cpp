@@ -62,6 +62,10 @@ SearchWidget::SearchWidget(QWidget* parent)
     m_ui->searchEdit->installEventFilter(this);
 
     m_searchMenu = new QMenu(this);
+    m_actionIncludeProtected = m_searchMenu->addAction(tr("Include protected fields"), this, SLOT(updateIncludeProtected()));
+    m_actionIncludeProtected->setObjectName("actionSearchIncludeProtected");
+    m_actionIncludeProtected->setCheckable(true);
+
     m_actionCaseSensitive = m_searchMenu->addAction(tr("Case sensitive"), this, SLOT(updateCaseSensitive()));
     m_actionCaseSensitive->setObjectName("actionSearchCaseSensitive");
     m_actionCaseSensitive->setCheckable(true);
@@ -77,7 +81,7 @@ SearchWidget::SearchWidget(QWidget* parent)
     m_actionWaitForEnter->setCheckable(true);
     m_actionWaitForEnter->setChecked(config()->get(Config::GUI_SearchWaitForEnter).toBool());
 
-    m_ui->searchIcon->setIcon(icons()->icon("system-search"));
+    m_ui->searchIcon->setIcon(icons()->icon("system-search-options"));
     m_ui->searchEdit->addAction(m_ui->searchIcon, QLineEdit::LeadingPosition);
 
     m_ui->helpIcon->setIcon(icons()->icon("system-help"));
@@ -153,6 +157,7 @@ void SearchWidget::connectSignals(SignalMultiplexer& mx)
     // Connects basically only to the current DatabaseWidget, but allows to switch between instances!
     mx.connect(this, SIGNAL(search(QString)), SLOT(search(QString)));
     mx.connect(this, SIGNAL(saveSearch(QString)), SLOT(saveSearch(QString)));
+    mx.connect(this, SIGNAL(includeProtectedChanged(bool)), SLOT(setSearchIncludeProtected(bool)));
     mx.connect(this, SIGNAL(caseSensitiveChanged(bool)), SLOT(setSearchCaseSensitive(bool)));
     mx.connect(this, SIGNAL(limitGroupChanged(bool)), SLOT(setSearchLimitGroup(bool)));
     mx.connect(this, SIGNAL(downPressed()), SLOT(focusOnEntries()));
@@ -170,6 +175,7 @@ void SearchWidget::databaseChanged(DatabaseWidget* dbWidget)
         // Set current search text from this database
         m_ui->searchEdit->setText(dbWidget->getCurrentSearch());
         // Enforce search policy
+        emit includeProtectedChanged(m_actionIncludeProtected->isChecked());
         emit caseSensitiveChanged(m_actionCaseSensitive->isChecked());
         emit limitGroupChanged(m_actionLimitGroup->isChecked());
     } else {
@@ -200,6 +206,11 @@ void SearchWidget::resetSearchClearTimer()
     }
 }
 
+void SearchWidget::updateIncludeProtected()
+{
+    emit includeProtectedChanged(m_actionIncludeProtected->isChecked());
+}
+
 void SearchWidget::updateCaseSensitive()
 {
     emit caseSensitiveChanged(m_actionCaseSensitive->isChecked());
@@ -209,6 +220,12 @@ void SearchWidget::updateLimitGroup()
 {
     config()->set(Config::SearchLimitGroup, m_actionLimitGroup->isChecked());
     emit limitGroupChanged(m_actionLimitGroup->isChecked());
+}
+
+void SearchWidget::setIncludeProtected(bool state)
+{
+    m_actionIncludeProtected->setChecked(state);
+    updateIncludeProtected();
 }
 
 void SearchWidget::setCaseSensitive(bool state)
