@@ -22,9 +22,9 @@
 #include "core/Group.h"
 #include "core/Tools.h"
 
-EntrySearcher::EntrySearcher(bool caseSensitive, bool skipProtected)
+EntrySearcher::EntrySearcher(bool caseSensitive, bool includeProtected)
     : m_caseSensitive(caseSensitive)
-    , m_skipProtected(skipProtected)
+    , m_includeProtected(includeProtected)
 {
 }
 
@@ -126,21 +126,6 @@ QList<Entry*> EntrySearcher::repeatEntries(const QList<Entry*>& entries)
     return results;
 }
 
-/**
- * Set the next search to be case sensitive or not
- *
- * @param state
- */
-void EntrySearcher::setCaseSensitive(bool state)
-{
-    m_caseSensitive = state;
-}
-
-bool EntrySearcher::isCaseSensitive() const
-{
-    return m_caseSensitive;
-}
-
 bool EntrySearcher::searchEntryImpl(const Entry* entry)
 {
     // Pre-load in case they are needed
@@ -152,19 +137,13 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
         hierarchy = entry->group()->hierarchy().join('/').prepend("/");
     }
 
-    const auto passwordMatches = [&](const SearchTerm& term) {
-        if (m_skipProtected) {
-            return false;
-        }
-        return term.regex.match(entry->resolvePlaceholder(entry->password())).hasMatch();
-    };
     const auto attributeKVMatches = [&](const SearchTerm& term) {
         // Matches both key or value of attribute
         for (const auto& key : attributesKeys) {
             if (term.regex.match(key).hasMatch()) {
                 return true;
             }
-            if (!m_skipProtected || !entry->attributes()->isProtected(key)) {
+            if (m_includeProtected || !entry->attributes()->isProtected(key)) {
                 if (term.regex.match(entry->attributes()->value(key)).hasMatch()) {
                     return true;
                 }
@@ -174,8 +153,8 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
     };
 
     // By default, empty term matches every entry.
-    // However when skipping protected fields, we will reject everything instead
-    bool found = !m_skipProtected;
+    // However when not including protected fields, we will reject everything instead
+    bool found = m_includeProtected;
     for (const auto& term : m_searchTerms) {
         switch (term.field) {
         case Field::Title:
@@ -185,7 +164,7 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
             found = term.regex.match(entry->resolvePlaceholder(entry->username())).hasMatch();
             break;
         case Field::Password:
-            found = passwordMatches(term);
+            found = term.regex.match(entry->resolvePlaceholder(entry->password())).hasMatch();
             break;
         case Field::Url:
             found = term.regex.match(entry->resolvePlaceholder(entry->url())).hasMatch();
@@ -202,7 +181,7 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
                 found = false;
                 break;
             }
-            if (m_skipProtected && entry->attributes()->isProtected(term.word)) {
+            if (!m_includeProtected && entry->attributes()->isProtected(term.word)) {
                 found = false;
                 break;
             }
@@ -256,9 +235,10 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
         default:
             // Terms without a specific field try to match:
             // title, username, password, url, notes, additional attributes, attachments or tags
+            // Protected fields (password, specified additional attributes) are only searched when corresponding option is set
             found =    term.regex.match(entry->resolvePlaceholder(entry->title())).hasMatch()
                     || term.regex.match(entry->resolvePlaceholder(entry->username())).hasMatch()
-                    || passwordMatches(term)
+                    || (m_includeProtected && term.regex.match(entry->resolvePlaceholder(entry->password())).hasMatch())
                     || term.regex.match(entry->resolvePlaceholder(entry->url())).hasMatch()
                     || term.regex.match(entry->notes()).hasMatch()
                     || attributeKVMatches(term)

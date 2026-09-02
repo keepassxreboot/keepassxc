@@ -1812,6 +1812,12 @@ void DatabaseWidget::deleteSearch(const QString& name)
     }
 }
 
+void DatabaseWidget::setSearchIncludeProtected(bool state)
+{
+    m_entrySearcher->setIncludeProtected(state);
+    refreshSearch();
+}
+
 void DatabaseWidget::setSearchCaseSensitive(bool state)
 {
     m_entrySearcher->setCaseSensitive(state);
