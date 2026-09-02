@@ -2023,8 +2023,16 @@ bool DatabaseWidget::focusNextPrevChild(bool next)
 
 bool DatabaseWidget::lock()
 {
-    if (isLocked() || m_attemptingLock) {
+    if (m_attemptingLock) {
         return isLocked();
+    }
+
+    if (isLocked()) {
+        if (m_databaseOpenWidget && m_databaseOpenWidget->unlockingDatabase()) {
+            QMetaObject::invokeMethod(m_databaseOpenWidget, "reject", Qt::DirectConnection);
+        } else {
+            return true;
+        }
     }
 
     // ignore when reloading
