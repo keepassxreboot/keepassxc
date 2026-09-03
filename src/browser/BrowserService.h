@@ -206,6 +206,7 @@ private:
     QString getDatabaseRootUuid();
     QString getDatabaseRecycleBinUuid();
     void hideWindow() const;
+    void hideWindowAfterPasskey() const;
     void raiseWindow(const bool force = false);
     void updateWindowState();
 

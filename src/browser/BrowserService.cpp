@@ -666,12 +666,15 @@ QJsonObject BrowserService::showPasskeysRegisterPrompt(const QJsonObject& public
     BrowserPasskeysConfirmationDialog confirmDialog(m_currentDatabaseWidget);
     confirmDialog.registerCredential(username, rpId, existingEntries, timeout);
 
+    const auto hidePasskeyWindow = [this]() { hideWindowAfterPasskey(); };
+
     auto dialogResult = confirmDialog.exec();
     if (dialogResult == QDialog::Accepted) {
         const auto publicKeyCredentials =
             browserPasskeys()->buildRegisterPublicKeyCredential(credentialCreationOptions);
         if (publicKeyCredentials.credentialId.isEmpty() || publicKeyCredentials.key.isEmpty()
             || publicKeyCredentials.response.isEmpty()) {
+            hidePasskeyWindow();
             return getPasskeyError(ERROR_PASSKEYS_UNKNOWN_ERROR);
         }
 
@@ -693,6 +696,7 @@ QJsonObject BrowserService::showPasskeysRegisterPrompt(const QJsonObject& public
                                                                      tr("Register a new passkey to this entry:"),
                                                                      tr("Register"));
                 if (!result) {
+                    hidePasskeyWindow();
                     return getPasskeyError(ERROR_PASSKEYS_REQUEST_CANCELED);
                 }
             } else {
@@ -721,11 +725,11 @@ QJsonObject BrowserService::showPasskeysRegisterPrompt(const QJsonObject& public
                               publicKeyCredentials.key);
         }
 
-        hideWindow();
+        hidePasskeyWindow();
         return publicKeyCredentials.response;
     }
 
-    hideWindow();
+    hidePasskeyWindow();
     return getPasskeyError(ERROR_PASSKEYS_REQUEST_CANCELED);
 }
 
@@ -758,9 +762,10 @@ QJsonObject BrowserService::showPasskeysAuthenticationPrompt(const QJsonObject& 
     raiseWindow();
     BrowserPasskeysConfirmationDialog confirmDialog(m_currentDatabaseWidget);
     confirmDialog.authenticateCredential(entries, rpId, timeout);
+    const auto hidePasskeyWindow = [this]() { hideWindowAfterPasskey(); };
     auto dialogResult = confirmDialog.exec();
     if (dialogResult == QDialog::Accepted) {
-        hideWindow();
+        hidePasskeyWindow();
         const auto selectedEntry = confirmDialog.getSelectedEntry();
         if (!selectedEntry) {
             return getPasskeyError(ERROR_PASSKEYS_UNKNOWN_ERROR);
@@ -791,7 +796,7 @@ QJsonObject BrowserService::showPasskeysAuthenticationPrompt(const QJsonObject& 
         return publicKeyCredential;
     }
 
-    hideWindow();
+    hidePasskeyWindow();
     return getPasskeyError(ERROR_PASSKEYS_REQUEST_CANCELED);
 }
 
@@ -1670,6 +1675,16 @@ void BrowserService::hideWindow() const
         }
 #endif
     }
+}
+
+void BrowserService::hideWindowAfterPasskey() const
+{
+    if (browserSettings()->minimizeOnPasskey()) {
+        getMainWindow()->minimizeOrHide();
+        return;
+    }
+
+    hideWindow();
 }
 
 void BrowserService::raiseWindow(const bool force)

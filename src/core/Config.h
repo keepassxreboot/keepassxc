@@ -165,6 +165,7 @@ public:
         Browser_CustomBrowserType,
         Browser_CustomBrowserLocation,
         Browser_AllowLocalhostWithPasskeys,
+        Browser_MinimizeOnPasskey,
 #ifdef QT_DEBUG
         Browser_CustomExtensionId,
 #endif

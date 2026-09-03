@@ -908,3 +908,15 @@ void TestBrowser::testHideEntry()
     result = m_browserService->searchEntries(db, "https://github.com", "https://github.com/session");
     QCOMPARE(result.length(), 1);
 }
+
+void TestBrowser::testMinimizeOnPasskeySetting()
+{
+    browserSettings()->setMinimizeOnPasskey(false);
+    QVERIFY(!browserSettings()->minimizeOnPasskey());
+
+    browserSettings()->setMinimizeOnPasskey(true);
+    QVERIFY(browserSettings()->minimizeOnPasskey());
+
+    browserSettings()->setMinimizeOnPasskey(false);
+    QVERIFY(!browserSettings()->minimizeOnPasskey());
+}

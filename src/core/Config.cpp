@@ -187,6 +187,7 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::Browser_CustomBrowserType, {QS("Browser/CustomBrowserType"), Local, -1}},
     {Config::Browser_CustomBrowserLocation, {QS("Browser/CustomBrowserLocation"), Local, {}}},
     {Config::Browser_AllowLocalhostWithPasskeys, {QS("Browser/Browser_AllowLocalhostWithPasskeys"), Roaming, false}},
+    {Config::Browser_MinimizeOnPasskey, {QS("Browser/MinimizeOnPasskey"), Roaming, false}},
 #ifdef QT_DEBUG
     {Config::Browser_CustomExtensionId, {QS("Browser/CustomExtensionId"), Local, {}}},
 #endif

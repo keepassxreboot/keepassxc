@@ -1433,6 +1433,14 @@ Do you want to overwrite the passkey in %1 - %2?</source>
         <source>Browsers installed using Snap or Flatpak are not supported with exception to Firefox installed using Snap.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Minimize or hide the main window after finishing a passkey request.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Minimize window after passkey use</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CloneDialog</name>
