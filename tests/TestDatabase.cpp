@@ -307,3 +307,81 @@ void TestDatabase::testExternallyModified()
     // ignoreFileChangesUntilSaved should reset after save
     QVERIFY(db->ignoreFileChangesUntilSaved() == false);
 }
+
+void TestDatabase::testCustomAttributeKeys()
+{
+    Database db;
+    db.metadata()->setRecycleBinEnabled(true);
+    QVERIFY(db.metadata()->recycleBinEnabled());
+
+    auto root = db.rootGroup();
+    QVERIFY(root);
+
+    // Empty database
+    db.updateCustomAttributeKeys();
+    QCOMPARE(db.customAttributeKeys(), {});
+
+    // Custom attributes of an entry in the root group
+    auto entry1 = new Entry();
+    entry1->setGroup(root);
+    entry1->attributes()->set("Custom10", "value");
+    entry1->attributes()->set("Custom2", "value");
+    entry1->attributes()->set("DuplicateKey", "value");
+
+    // Custom attributes of an entry in a nested group
+    auto group = new Group();
+    group->setName("Nested");
+    group->setParent(root);
+
+    auto entry2 = new Entry();
+    entry2->setGroup(group);
+    entry2->attributes()->set("ProtectedKey", "value", true);
+    entry2->attributes()->set("DuplicateKey", "value3");
+    entry2->attributes()->set("Custom1", "value");
+    entry2->attributes()->set("Case-sensitive", "value2"); // Set is case-sensitive
+
+    // Same keys in another entry should only appear once
+    auto entry3 = new Entry();
+    entry3->setGroup(group);
+    entry3->attributes()->set("Custom2", "another value");
+    entry3->attributes()->set("case-sensitive", "value"); // Set is case-sensitive
+    entry3->attributes()->set("Key with spaces", "test");
+
+    // Entries in the recycle bin do not contribute
+    auto recycledEntry = new Entry();
+    recycledEntry->setGroup(root);
+    recycledEntry->attributes()->set("RecycledKey", "value");
+    recycledEntry->attributes()->set("RecycledKeyProtected", "value", true);
+    db.recycleEntry(recycledEntry);
+
+    auto groupRecycled = new Group();
+    groupRecycled->setName("groupRecycled");
+    groupRecycled->setParent(root);
+    auto entryInRecycledGroup = new Entry();
+    entryInRecycledGroup->setGroup(groupRecycled);
+    entryInRecycledGroup->attributes()->set("RecycledKeyGroup", "value");
+    db.recycleGroup(groupRecycled);
+
+    // Check if recycledEntry and groupRecycled are actually recycled
+    QVERIFY(recycledEntry->isRecycled());
+    QVERIFY(groupRecycled->isRecycled());
+
+    db.updateCustomAttributeKeys();
+
+    QVERIFY(!db.customAttributeKeys().contains("RecycledKey"));
+    QVERIFY(!db.customAttributeKeys().contains("RecycledKeyProtected"));
+    QVERIFY(!db.customAttributeKeys().contains("RecycledKeyGroup"));
+
+    const QStringList expectedKeys = {
+        QStringLiteral("Case-sensitive"),
+        QStringLiteral("Custom1"),
+        QStringLiteral("Custom10"),
+        QStringLiteral("Custom2"),
+        QStringLiteral("DuplicateKey"),
+        QStringLiteral("Key with spaces"),
+        QStringLiteral("ProtectedKey"),
+        QStringLiteral("case-sensitive"),
+    };
+
+    QCOMPARE(db.customAttributeKeys(), expectedKeys);
+}
