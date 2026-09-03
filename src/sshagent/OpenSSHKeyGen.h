@@ -25,6 +25,7 @@ namespace OpenSSHKeyGen
     bool generateRSA(OpenSSHKey& key, int bits);
     bool generateECDSA(OpenSSHKey& key, int bits);
     bool generateEd25519(OpenSSHKey& key);
+    bool generateMLDSA44Ed25519(OpenSSHKey& key);
 } // namespace OpenSSHKeyGen
 
 #endif
