@@ -155,16 +155,6 @@ void BrowserSettings::setAllowLocalhostWithPasskeys(bool enabled)
     config()->set(Config::Browser_AllowLocalhostWithPasskeys, enabled);
 }
 
-bool BrowserSettings::minimizeOnPasskey()
-{
-    return config()->get(Config::Browser_MinimizeOnPasskey).toBool();
-}
-
-void BrowserSettings::setMinimizeOnPasskey(bool enabled)
-{
-    config()->set(Config::Browser_MinimizeOnPasskey, enabled);
-}
-
 bool BrowserSettings::useCustomProxy()
 {
     return config()->get(Config::Browser_UseCustomProxy).toBool();

@@ -321,16 +321,6 @@
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="minimizeOnPasskey">
-         <property name="toolTip">
-          <string>Minimize or hide the main window after finishing a passkey request.</string>
-         </property>
-         <property name="text">
-          <string>Minimize window after passkey use</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QCheckBox" name="noMigrationPrompt">
          <property name="toolTip">
           <string>Don't display the popup suggesting migration of legacy KeePassHTTP settings.</string>

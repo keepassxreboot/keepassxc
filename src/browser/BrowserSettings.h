@@ -53,8 +53,6 @@ public:
     void setNoMigrationPrompt(bool prompt);
     bool allowLocalhostWithPasskeys();
     void setAllowLocalhostWithPasskeys(bool enabled);
-    bool minimizeOnPasskey();
-    void setMinimizeOnPasskey(bool enabled);
 
     bool useCustomProxy();
     void setUseCustomProxy(bool enabled);
