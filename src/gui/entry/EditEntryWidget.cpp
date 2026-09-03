@@ -91,7 +91,7 @@ namespace
                 completer->setFilterMode(Qt::MatchContains);
                 lineEdit->setCompleter(completer);
 
-                // Display suggestions without first input needed
+                // Display suggestions without requiring initial input
                 QTimer::singleShot(0, lineEdit, [completer] {
                     completer->setCompletionPrefix(QString());
                     completer->complete();
