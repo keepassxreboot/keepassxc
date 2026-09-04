@@ -40,17 +40,21 @@ void TestTags::testRenameTag()
     auto* entry1 = new Entry();
     db->rootGroup()->addEntry(entry1);
     entry1->setTags("tag1, tag 2");
+    QCOMPARE(entry1->historyItems().size(), 0);
 
     auto* entry2 = new Entry();
     db->rootGroup()->addEntry(entry2);
     entry2->setTags("TaG 2, tag3");
+    QCOMPARE(entry2->historyItems().size(), 0);
 
     QString error;
     QVERIFY(db->renameTag("tag 2", "tag2_ren", &error));
     QVERIFY(error.isEmpty());
 
     QCOMPARE(entry1->tagList(), QStringList({"tag1", "tag2_ren"}));
+    QCOMPARE(entry1->historyItems().size(), 1);
     QCOMPARE(entry2->tagList(), QStringList({"tag2_ren", "tag3"}));
+    QCOMPARE(entry2->historyItems().size(), 1);
 }
 
 void TestTags::renameEmptyTag()
