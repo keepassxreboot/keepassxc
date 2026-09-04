@@ -1656,6 +1656,22 @@ Backup database located at %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>The tag name cannot be empty.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Both tag names are the same.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The tag &quot;%1&quot; already exists.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The tag &quot;%1&quot; was not found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Recycle Bin</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10454,7 +10470,19 @@ This option is deprecated, use --set-key-file instead.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Rename Tag</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Remove Tag</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New tag name for &quot;%1&quot;:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
