@@ -1677,7 +1677,8 @@ void BrowserService::hideWindow() const
 void BrowserService::raiseWindow(const bool force)
 {
     m_prevWindowState = WindowState::Normal;
-    if (getMainWindow()->isMinimized()) {
+    const auto windowMinimized = getMainWindow()->isMinimized();
+    if (windowMinimized) {
         m_prevWindowState = WindowState::Minimized;
     }
 #ifdef Q_OS_MACOS
@@ -1689,7 +1690,11 @@ void BrowserService::raiseWindow(const bool force)
     macUtils()->raiseOwnWindow();
     Tools::wait(500);
 #else
+    const auto windowHiddenToTray = windowMinimized && config()->get(Config::GUI_MinimizeToTray).toBool();
     if (getMainWindow()->isHidden()) {
+        m_prevWindowState = WindowState::Hidden;
+    }
+    if (windowHiddenToTray) {
         m_prevWindowState = WindowState::Hidden;
     }
 
@@ -1702,7 +1707,8 @@ void BrowserService::raiseWindow(const bool force)
 void BrowserService::updateWindowState()
 {
     m_prevWindowState = WindowState::Normal;
-    if (getMainWindow()->isMinimized()) {
+    const auto windowMinimized = getMainWindow()->isMinimized();
+    if (windowMinimized) {
         m_prevWindowState = WindowState::Minimized;
     }
 #ifdef Q_OS_MACOS
@@ -1710,7 +1716,11 @@ void BrowserService::updateWindowState()
         m_prevWindowState = WindowState::Hidden;
     }
 #else
+    const auto windowHiddenToTray = windowMinimized && config()->get(Config::GUI_MinimizeToTray).toBool();
     if (getMainWindow()->isHidden()) {
+        m_prevWindowState = WindowState::Hidden;
+    }
+    if (windowHiddenToTray) {
         m_prevWindowState = WindowState::Hidden;
     }
 #endif
