@@ -768,6 +768,7 @@ bool Entry::hasTag(const QString& tag)
 
 bool Entry::renameTag(const QString& oldTag, const QString& newTag)
 {
+    beginUpdate();
     auto cleanOldTag = oldTag.trimmed();
     cleanOldTag.remove(TagDelimiterRegex);
 
@@ -787,6 +788,7 @@ bool Entry::renameTag(const QString& oldTag, const QString& newTag)
         tagList.sort();
         set(m_data.tags, tagList);
     }
+    endUpdate();
     return renamed;
 }
 
