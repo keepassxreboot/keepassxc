@@ -20,6 +20,7 @@
 #include "ui_PasswordWidget.h"
 
 #include "core/Config.h"
+#include "gui/Clipboard.h"
 #include "core/PasswordHealth.h"
 #include "gui/Font.h"
 #include "gui/Icons.h"
@@ -82,6 +83,13 @@ PasswordWidget::PasswordWidget(QWidget* parent)
     m_passwordGeneratorAction->setShortcutContext(Qt::WidgetShortcut);
     m_ui->passwordEdit->addAction(m_passwordGeneratorAction, QLineEdit::TrailingPosition);
     m_passwordGeneratorAction->setVisible(false);
+
+    m_copyToClipboardAction = new QAction(  
+        icons()->icon("edit-copy"),  
+        tr("Copy Password"),  
+        this);  
+    m_ui->passwordEdit->addAction(m_copyToClipboardAction, QLineEdit::TrailingPosition);  
+    connect(m_copyToClipboardAction, &QAction::triggered, this, &PasswordWidget::copyPasswordToClipboard);
 
     m_capslockAction =
         new QAction(icons()->icon("dialog-warning", true, StateColorPalette().color(StateColorPalette::Error)),
@@ -188,6 +196,11 @@ void PasswordWidget::setShowPassword(bool show)
 bool PasswordWidget::isPasswordVisible() const
 {
     return m_ui->passwordEdit->echoMode() == QLineEdit::Normal;
+}
+
+void PasswordWidget::copyPasswordToClipboard()  
+{  
+    clipboard()->setText(m_ui->passwordEdit->text());
 }
 
 void PasswordWidget::popupPasswordGenerator()
