@@ -43,15 +43,11 @@ if(PkgConfig_FOUND)
     pkg_search_module(PC_Botan QUIET botan-3 botan-2>=2.19.1 libbotan-2>=2.19.1 botan>=2.19.1)
 endif()
 
-set(BOTAN_VERSIONS botan-3 botan-2)
-set(BOTAN_NAMES botan-3 botan-2 botan)
-set(BOTAN_NAMES_DEBUG botand-3 botand-2 botand botan botan-3)
-
 find_path(
     Botan_INCLUDE_DIR
     NAMES botan/build.h
     HINTS ${PC_Botan_INCLUDE_DIRS}
-    PATH_SUFFIXES ${BOTAN_VERSIONS}
+    PATH_SUFFIXES botan-3 botan-2
     DOC "The Botan include directory")
 
 if(Botan_INCLUDE_DIR)
@@ -67,7 +63,7 @@ endif()
 
 find_library(
     Botan_LIBRARY_RELEASE
-    NAMES ${BOTAN_NAMES}
+    NAMES botan-3 botan-2 botan
     HINTS ${PC_Botan_LIBRARY_DIRS}
     PATH_SUFFIXES release/lib lib
     DOC "The Botan (release) library")
@@ -75,7 +71,7 @@ find_library(
 if(WIN32 AND NOT MINGW)
     find_library(
         Botan_LIBRARY_DEBUG
-        NAMES ${BOTAN_NAMES_DEBUG}
+        NAMES botand-3 botand-2 botand botan botan-3
         HINTS ${PC_Botan_LIBRARY_DIRS}
         PATH_SUFFIXES debug/lib lib
         DOC "The Botan debug library")
