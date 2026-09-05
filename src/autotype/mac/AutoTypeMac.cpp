@@ -17,6 +17,7 @@
  */
 
 #include "AutoTypeMac.h"
+#include "AutoTypeMac_p.h"
 #include "core/Tools.h"
 #include "gui/osutils/OSUtils.h"
 #include "gui/MessageBox.h"
@@ -24,6 +25,85 @@
 #include <ApplicationServices/ApplicationServices.h>
 
 #define INVALID_KEYCODE 0xFFFF
+
+//
+// Resolve macOS virtual key code and modifier flags for a unicode character
+// using the current keyboard layout via UCKeyTranslate.
+// Returns false if no single-keystroke mapping is found.
+//
+bool charToNativeKeyCode(const UCKeyboardLayout* layout,
+                         UInt32 keyboardType,
+                         const QChar& ch,
+                         uint16_t& outKeyCode,
+                         CGEventFlags& outFlags)
+{
+    UInt32 deadKeyState = 0;
+    UniCharCount actualLen = 0;
+    UniChar unicode[4];
+
+    static const UInt32 kUCTShift  = shiftKey >> 8;
+    static const UInt32 kUCTOption = optionKey >> 8;
+
+    static const UInt32 modifierCombinations[] = {
+        0,
+        kUCTShift,
+        kUCTOption,
+        kUCTShift | kUCTOption,
+    };
+
+    for (uint16_t keyCode = 0; keyCode < 128; keyCode++) {
+        for (UInt32 mods : modifierCombinations) {
+            deadKeyState = 0;
+            OSStatus status = UCKeyTranslate(layout,
+                                             keyCode,
+                                             kUCKeyActionDown,
+                                             mods,
+                                             keyboardType,
+                                             kUCKeyTranslateNoDeadKeysBit,
+                                             &deadKeyState,
+                                             4,
+                                             &actualLen,
+                                             unicode);
+            if (status == noErr && actualLen == 1 && unicode[0] == ch.unicode()) {
+                outKeyCode = keyCode;
+                outFlags = 0;
+                if (mods & kUCTShift) {
+                    outFlags |= kCGEventFlagMaskShift;
+                }
+                if (mods & kUCTOption) {
+                    outFlags |= kCGEventFlagMaskAlternate;
+                }
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+static bool charToNativeKeyCode(const QChar& ch, uint16_t& outKeyCode, CGEventFlags& outFlags)
+{
+    TISInputSourceRef keyboard = TISCopyCurrentKeyboardLayoutInputSource();
+    if (!keyboard) {
+        keyboard = TISCopyCurrentASCIICapableKeyboardLayoutInputSource();
+    }
+    if (!keyboard) {
+        return false;
+    }
+
+    CFDataRef layoutData =
+        static_cast<CFDataRef>(TISGetInputSourceProperty(keyboard, kTISPropertyUnicodeKeyLayoutData));
+    if (!layoutData) {
+        CFRelease(keyboard);
+        return false;
+    }
+
+    const UCKeyboardLayout* layout = reinterpret_cast<const UCKeyboardLayout*>(CFDataGetBytePtr(layoutData));
+    bool result = charToNativeKeyCode(layout, LMGetKbdType(), ch, outKeyCode, outFlags);
+
+    CFRelease(keyboard);
+    return result;
+}
 
 AutoTypePlatformMac::AutoTypePlatformMac()
 {
@@ -155,6 +235,18 @@ bool AutoTypePlatformMac::raiseOwnWindow()
 }
 
 //
+// Send raw keycode event
+//
+void AutoTypePlatformMac::sendRawKey(uint16_t keyCode, bool isKeyDown)
+{
+    CGEventRef keyEvent = ::CGEventCreateKeyboardEvent(nullptr, keyCode, isKeyDown);
+    if (keyEvent != nullptr) {
+        ::CGEventPost(kCGSessionEventTap, keyEvent);
+        ::CFRelease(keyEvent);
+    }
+}
+
+//
 // Send unicode character to active window
 // see: Quartz Event Services
 //
@@ -167,6 +259,53 @@ void AutoTypePlatformMac::sendChar(const QChar& ch, bool isKeyDown)
         ::CGEventPost(kCGSessionEventTap, keyEvent);
         ::CFRelease(keyEvent);
     }
+}
+
+//
+// Send unicode character as native keycode + modifiers
+// see: Quartz Event Services
+//
+bool AutoTypePlatformMac::sendCharVirtual(const QChar& ch, bool isKeyDown)
+{
+    uint16_t keyCode = 0;
+    CGEventFlags flags = 0;
+
+    if (!charToNativeKeyCode(ch, keyCode, flags)) {
+        // Couldn't determine which keys to press to make the character
+        return false;
+    }
+
+    // Send physical modifier key events for VNC/Screen Sharing compatibility
+    if (isKeyDown) {
+        if (flags & kCGEventFlagMaskShift) {
+            sendRawKey(kVK_Shift, true);
+        }
+        if (flags & kCGEventFlagMaskAlternate) {
+            sendRawKey(kVK_Option, true);
+        }
+    }
+
+    CGEventRef keyEvent = ::CGEventCreateKeyboardEvent(nullptr, keyCode, isKeyDown);
+    if (keyEvent != nullptr) {
+        if (flags != 0) {
+            ::CGEventSetFlags(keyEvent, flags);
+        }
+        UniChar unicode = ch.unicode();
+        ::CGEventKeyboardSetUnicodeString(keyEvent, 1, &unicode);
+        ::CGEventPost(kCGSessionEventTap, keyEvent);
+        ::CFRelease(keyEvent);
+    }
+
+    // Release modifier keys
+    if (!isKeyDown) {
+        if (flags & kCGEventFlagMaskAlternate) {
+            sendRawKey(kVK_Option, false);
+        }
+        if (flags & kCGEventFlagMaskShift) {
+            sendRawKey(kVK_Shift, false);
+        }
+    }
+    return true;
 }
 
 //
@@ -239,8 +378,6 @@ AutoTypeAction::Result AutoTypeExecutorMac::execBegin(const AutoTypeBegin* actio
 
 AutoTypeAction::Result AutoTypeExecutorMac::execType(const AutoTypeKey* action)
 {
-
-
     if (action->key != Qt::Key_unknown) {
         m_platform->sendKey(action->key, true, action->modifiers);
         m_platform->sendKey(action->key, false, action->modifiers);
@@ -252,9 +389,11 @@ AutoTypeAction::Result AutoTypeExecutorMac::execType(const AutoTypeKey* action)
             m_platform->sendKey(static_cast<Qt::Key>(ch), true, action->modifiers);
             m_platform->sendKey(static_cast<Qt::Key>(ch), false, action->modifiers);
         } else if (mode == Mode::VIRTUAL) {
-            int ch = action->character.toLatin1();
-            m_platform->sendKey(static_cast<Qt::Key>(ch), true, action->modifiers);
-            m_platform->sendKey(static_cast<Qt::Key>(ch), false, action->modifiers);
+            if (!m_platform->sendCharVirtual(action->character, true)) {
+                return AutoTypeAction::Result::Failed(AutoTypePlatformMac::tr("Unable to get valid keycode for key: ")
+                                                          + action->character);
+            }
+            m_platform->sendCharVirtual(action->character, false);
         } else {
             m_platform->sendChar(action->character, true);
             m_platform->sendChar(action->character, false);

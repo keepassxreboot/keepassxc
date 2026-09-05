@@ -95,6 +95,12 @@ add_unit_test(NAME testautotype SOURCES TestAutoType.cpp
         LIBS testsupport ${TEST_LIBRARIES})
 set_target_properties(testautotype PROPERTIES ENABLE_EXPORTS ON)
 
+if(APPLE)
+    add_unit_test(NAME testautotypemac SOURCES TestAutoTypeMac.cpp
+                   ${CMAKE_SOURCE_DIR}/src/autotype/mac/AutoTypeMac.cpp
+            LIBS ${TEST_LIBRARIES} "-framework Carbon" "-framework ApplicationServices" "-framework CoreFoundation")
+endif()
+
 add_unit_test(NAME testentry SOURCES TestEntry.cpp
         LIBS ${TEST_LIBRARIES})
 
@@ -180,7 +186,7 @@ if(KPXC_FEATURE_NETWORK)
     add_unit_test(NAME testupdatecheck SOURCES TestUpdateCheck.cpp
         LIBS ${TEST_LIBRARIES})
 
-    add_unit_test(NAME testicondownloader SOURCES TestIconDownloader.cpp 
+    add_unit_test(NAME testicondownloader SOURCES TestIconDownloader.cpp
         LIBS ${TEST_LIBRARIES})
 endif()
 
