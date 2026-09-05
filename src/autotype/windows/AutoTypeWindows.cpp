@@ -17,6 +17,10 @@
  */
 
 #include "AutoTypeWindows.h"
+#include "core/Config.h"
+#ifdef KPXC_FEATURE_UIACCESS_HELPER
+#include "UiAccessInjector.h"
+#endif
 #include "core/Tools.h"
 #include "gui/osutils/OSUtils.h"
 #include "gui/osutils/winutils/WinUtils.h"
@@ -33,8 +37,14 @@
 //
 AutoTypePlatformWin::AutoTypePlatformWin()
     : m_executor(new AutoTypeExecutorWin(this))
+#ifdef KPXC_FEATURE_UIACCESS_HELPER
+    , m_injector(new UiAccessInjector)
+#endif
 {
 }
+
+// Out of line so QScopedPointer sees the complete UiAccessInjector.
+AutoTypePlatformWin::~AutoTypePlatformWin() = default;
 
 //
 // Test if os version is Windows 7 or later
@@ -88,6 +98,95 @@ bool AutoTypePlatformWin::raiseWindow(WId window)
 }
 
 //
+// Delegation for the sequence about to be typed. Without a helper: ::SendInput, as before.
+//
+void AutoTypePlatformWin::beginSequence(WId window)
+{
+#ifndef KPXC_FEATURE_UIACCESS_HELPER
+    Q_UNUSED(window);
+#else
+    if (!m_injector) {
+        return;
+    }
+    HWND hwnd = reinterpret_cast<HWND>(window);
+    m_injector->end();
+    m_delegating = false;
+    m_delegationFailed = false;
+    if (!UiAccessInjector::isBrokeredCredentialDialog(hwnd)) {
+        return;
+    }
+    if (!config()->get(Config::Security_AutoTypeCredentialPrompts).toBool()) {
+        qWarning("Auto-Type: this window only accepts input from a privileged process; set "
+                 "Security/AutoTypeCredentialPrompts to allow delegating to the uiAccess helper");
+        return;
+    }
+    m_delegating = m_injector->begin(hwnd);
+    if (!m_delegating) {
+        qWarning("Auto-Type: this window only accepts input from a privileged process, "
+                 "and no uiAccess helper is available");
+    }
+#endif
+}
+
+AutoTypeAction::Result AutoTypePlatformWin::endSequence()
+{
+    const bool failed = m_delegating && m_delegationFailed;
+    const bool delegated = m_delegating;
+    m_delegating = false;
+    m_delegationFailed = false;
+    auto result = AutoTypeAction::Result::Ok();
+#ifdef KPXC_FEATURE_UIACCESS_HELPER
+    if (m_injector) {
+        m_injector->end();
+        // A failure only the helper's exit could report, shown once; a loop that
+        // stopped on the same failure has already shown its message.
+        if (delegated && !failed && m_injector->helperFailed()) {
+            result = AutoTypeAction::Result::Failed(
+                QObject::tr("Auto-Type was interrupted: the privileged helper did not deliver all keystrokes"));
+        }
+        // The helper releases its own modifiers on every abort; this covers one that
+        // died or was terminated. Best effort: UIPI drops it while the prompt holds
+        // the foreground. No Windows key, for the same reason the helper has none.
+        if (failed || m_injector->helperFailed()) {
+            for (const auto key : {Qt::Key_Shift, Qt::Key_Control, Qt::Key_Alt, Qt::Key_AltGr}) {
+                setKeyState(key, false);
+            }
+        }
+    }
+#else
+    Q_UNUSED(delegated);
+    Q_UNUSED(failed);
+#endif
+    return result;
+}
+
+//
+// Single exit for injected input. Delegation is per sequence: no fallback to
+// ::SendInput, which would type the rest into whatever holds the foreground.
+//
+bool AutoTypePlatformWin::sendInputs(INPUT* inputs, int count)
+{
+    if (!m_delegating) {
+        return ::SendInput(count, inputs, sizeof(INPUT)) == static_cast<UINT>(count);
+    }
+#ifdef KPXC_FEATURE_UIACCESS_HELPER
+    if (m_injector && m_injector->active() && m_injector->send(inputs, count)) {
+        return true;
+    }
+    // Target lost the foreground: the same silent stop a sequence without a helper
+    // gets when the active window changes. Everything else is a failure, once.
+    if (m_injector && m_injector->interrupted()) {
+        return false;
+    }
+    if (!m_delegationFailed) {
+        m_delegationFailed = true;
+        qWarning("Auto-Type: the uiAccess helper stopped accepting input, so the sequence was cut short");
+    }
+#endif
+    return false;
+}
+
+//
 // Send unicode character to foreground window
 //
 void AutoTypePlatformWin::sendChar(const QChar& ch)
@@ -103,7 +202,7 @@ void AutoTypePlatformWin::sendChar(const QChar& ch)
     in[1] = in[0];
     in[1].ki.dwFlags |= KEYEVENTF_KEYUP;
 
-    ::SendInput(2, &in[0], sizeof(INPUT));
+    sendInputs(&in[0], 2);
 }
 
 void AutoTypePlatformWin::sendCharVirtual(const QChar& ch)
@@ -140,7 +239,7 @@ void AutoTypePlatformWin::sendCharVirtual(const QChar& ch)
     in[1] = in[0];
     in[1].ki.dwFlags |= KEYEVENTF_KEYUP;
 
-    ::SendInput(2, &in[0], sizeof(INPUT));
+    sendInputs(&in[0], 2);
 
     if (HIBYTE(vKey) & 0x6) {
         setKeyState(Qt::Key_AltGr, false);
@@ -179,7 +278,7 @@ void AutoTypePlatformWin::setKeyState(Qt::Key key, bool down)
     in.ki.time = 0;
     in.ki.dwExtraInfo = ::GetMessageExtraInfo();
 
-    ::SendInput(1, &in, sizeof(INPUT));
+    sendInputs(&in, 1);
 }
 
 //
@@ -287,6 +386,17 @@ AutoTypeAction::Result AutoTypeExecutorWin::execBegin(const AutoTypeBegin* actio
     return AutoTypeAction::Result::Ok();
 }
 
+// The senders are void; this is where a delegated sequence that stopped
+// part-way becomes a failure.
+AutoTypeAction::Result AutoTypePlatformWin::sequenceResult() const
+{
+    if (m_delegationFailed) {
+        return AutoTypeAction::Result::Failed(
+            QObject::tr("Auto-Type was interrupted: the privileged helper stopped accepting input"));
+    }
+    return AutoTypeAction::Result::Ok();
+}
+
 AutoTypeAction::Result AutoTypeExecutorWin::execType(const AutoTypeKey* action)
 {
     if (action->modifiers & Qt::ShiftModifier) {
@@ -327,7 +437,7 @@ AutoTypeAction::Result AutoTypeExecutorWin::execType(const AutoTypeKey* action)
     }
 
     Tools::sleep(execDelayMs);
-    return AutoTypeAction::Result::Ok();
+    return m_platform->sequenceResult();
 }
 
 AutoTypeAction::Result AutoTypeExecutorWin::execClearField(const AutoTypeClearField* action)
@@ -336,5 +446,5 @@ AutoTypeAction::Result AutoTypeExecutorWin::execClearField(const AutoTypeClearFi
     execType(new AutoTypeKey(Qt::Key_Home, Qt::ControlModifier));
     execType(new AutoTypeKey(Qt::Key_End, Qt::ControlModifier | Qt::ShiftModifier));
     execType(new AutoTypeKey(Qt::Key_Backspace));
-    return AutoTypeAction::Result::Ok();
+    return m_platform->sequenceResult();
 }

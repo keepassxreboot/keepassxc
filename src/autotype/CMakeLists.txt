@@ -35,6 +35,10 @@ elseif(APPLE)
 elseif(WIN32)
     list(APPEND autotype_SOURCES
             windows/AutoTypeWindows.cpp)
+    if(KPXC_FEATURE_UIACCESS_HELPER)
+        list(APPEND autotype_SOURCES
+                windows/UiAccessInjector.cpp)
+    endif()
 endif()
 
 add_library(autotype STATIC ${autotype_SOURCES})
@@ -47,4 +51,11 @@ if(UNIX AND NOT APPLE AND NOT HAIKU)
     endif()
 elseif(APPLE)
     target_link_libraries(autotype "-framework Foundation" "-framework AppKit" "-framework Carbon" "-framework ScreenCaptureKit")
+elseif(WIN32)
+    # shell32: ShellExecuteEx, the only way to start a uiAccess binary.
+    target_link_libraries(autotype shell32 advapi32)
+    if(MINGW)
+        # FOLDERID_* GUIDs used by UiAccessInjector live in libuuid on MinGW.
+        target_link_libraries(autotype uuid)
+    endif()
 endif()

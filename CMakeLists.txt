@@ -67,6 +67,14 @@ endif()
 option(KPXC_FEATURE_NETWORK "Include code that reaches out to external networks (e.g. downloading icons)" ON)
 option(KPXC_FEATURE_UPDATES "Include automatic update checks; disable for managed distributions" ON)
 option(KPXC_FEATURE_DOCS "Build offline documentation; requires asciidoctor tool" ON)
+# Windows only, and MSVC only: the helper needs an embedded manifest carrying
+# uiAccess, which is how a process becomes exempt from UIPI without being
+# elevated. Without it Auto-Type behaves as before and cannot reach credential
+# prompts.
+option(KPXC_FEATURE_UIACCESS_HELPER "Build the uiAccess helper used to Auto-Type into credential prompts" ON)
+if(NOT WIN32)
+    set(KPXC_FEATURE_UIACCESS_HELPER OFF)
+endif()
 
 # Reconcile update feature with overall network feature
 if(NOT KPXC_FEATURE_NETWORK AND KPXC_FEATURE_UPDATES)

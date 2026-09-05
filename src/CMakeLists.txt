@@ -323,6 +323,7 @@ add_subdirectory(cli)
 add_subdirectory(thirdparty)
 
 add_subdirectory(autotype)
+add_subdirectory(uiaccess-helper)
 set(autotype_LIB autotype)
 
 # TODO: Refactor to gui sources

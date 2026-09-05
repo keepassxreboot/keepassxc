@@ -137,6 +137,7 @@ public:
         Security_HidePasswordPreviewPanel,
         Security_HideTotpPreviewPanel,
         Security_AutoTypeAsk,
+        Security_AutoTypeCredentialPrompts,
         Security_AutoTypeSkipMainWindowConfirmation,
         Security_IconDownloadFallback,
         Security_NoConfirmMoveEntryToRecycleBin,

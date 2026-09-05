@@ -25,6 +25,7 @@
 #cmakedefine KPXC_FEATURE_NETWORK
 #cmakedefine KPXC_FEATURE_UPDATES
 #cmakedefine KPXC_FEATURE_DOCS
+#cmakedefine KPXC_FEATURE_UIACCESS_HELPER
 
 /* Distribution */
 #cmakedefine KEEPASSXC_BUILD_TYPE "@KEEPASSXC_BUILD_TYPE@"

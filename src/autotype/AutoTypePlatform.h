@@ -44,6 +44,20 @@ public:
     {
     }
 
+#if defined(Q_OS_WIN32)
+    // Called once the target window is known. Distinct from prepareAutoType(),
+    // which carries no window, and raiseWindow(), which the entry-level path skips.
+    virtual void beginSequence(WId window)
+    {
+        Q_UNUSED(window);
+    }
+    // Called when the sequence is over. May report a failure only the teardown can know.
+    virtual AutoTypeAction::Result endSequence()
+    {
+        return AutoTypeAction::Result::Ok();
+    }
+#endif
+
     virtual AutoTypeExecutor& executor() const = 0;
 
 #if defined(Q_OS_MACOS)

@@ -139,8 +139,8 @@
         <Property Id="WixQuietExecCmdLine" Value='"[SystemFolder]taskkill.exe" /IM KeePassXC.exe' />
         <CustomAction Id="KillKeePassXC" BinaryKey="WixCA" DllEntry="WixQuietExec" Execute="immediate" Return="ignore" />
 
-        <!-- Action to kill running keepassxc-proxy processes -->
-        <Property Id="WixSilentExecCmdLine" Value='"[SystemFolder]taskkill.exe" /IM keepassxc-proxy.exe /F' />
+        <!-- Action to kill running keepassxc-proxy and keepassxc-uiaccess-helper processes -->
+        <Property Id="WixSilentExecCmdLine" Value='"[SystemFolder]taskkill.exe" /IM keepassxc-proxy.exe /IM keepassxc-uiaccess-helper.exe /F' />
         <CustomAction Id="KillKeePassXCProxy" BinaryKey="WixCA" DllEntry="WixSilentExec" Execute="immediate" Return="ignore" />
 
         <InstallExecuteSequence>
