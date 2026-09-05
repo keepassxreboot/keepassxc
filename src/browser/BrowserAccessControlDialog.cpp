@@ -23,9 +23,8 @@
 #include "core/Entry.h"
 #include "gui/Icons.h"
 
-BrowserAccessControlDialog::BrowserAccessControlDialog(QWidget* parent)
-    : QDialog(parent)
-    , m_ui(new Ui::BrowserAccessControlDialog())
+BrowserAccessControlDialog::BrowserAccessControlDialog()
+    : m_ui(new Ui::BrowserAccessControlDialog())
 {
     setWindowFlags(windowFlags() | Qt::WindowStaysOnTopHint);
 

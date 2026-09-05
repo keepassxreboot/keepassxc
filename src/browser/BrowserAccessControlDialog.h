@@ -41,7 +41,7 @@ class BrowserAccessControlDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit BrowserAccessControlDialog(QWidget* parent = nullptr);
+    explicit BrowserAccessControlDialog();
     ~BrowserAccessControlDialog() override;
 
     void setEntries(const QList<Entry*>& entriesToConfirm, const QString& urlString, bool httpAuth);
