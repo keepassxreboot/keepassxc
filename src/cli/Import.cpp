@@ -46,6 +46,11 @@ Import::Import()
     options.append(DatabaseCreate::SetKeyFileShortOption);
     options.append(DatabaseCreate::SetPasswordOption);
     options.append(DatabaseCreate::DecryptionTimeOption);
+    options.append(DatabaseCreate::KdfOption);
+    options.append(DatabaseCreate::CipherOption);
+    options.append(DatabaseCreate::RoundsOption);
+    options.append(DatabaseCreate::MemoryOption);
+    options.append(DatabaseCreate::ParallelismOption);
 }
 
 int Import::execute(const QStringList& arguments)

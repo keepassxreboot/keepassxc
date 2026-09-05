@@ -853,6 +853,66 @@ void TestCli::testCreate()
 
     db = readDatabase(dbFilename, "a");
     QVERIFY(db);
+
+    // Custom encryption settings
+
+    auto cliCiphers = QVector<QUuid>({
+        KeePass2::CIPHER_AES256,
+        KeePass2::CIPHER_TWOFISH,
+        KeePass2::CIPHER_CHACHA20
+    });
+
+    auto cliKdfs = QVector<QUuid>({
+        KeePass2::KDF_ARGON2D,
+        KeePass2::KDF_ARGON2ID,
+        KeePass2::KDF_AES_KDBX4
+    });
+
+    auto roundsPerKdf = QMap<QString, QString>({
+        { KeePass2::kdfUuidToCliString(KeePass2::KDF_AES_KDBX4), "100000" },
+        { "default", "7" }
+    });
+
+    for (const auto & cipherUuid : cliCiphers) {
+        for (const auto & kdfUuid : cliKdfs) {
+            dbFilename = testDir->path()
+                + QString("/%1-%2.kdbx")
+                    .arg(
+                        QDir::cleanPath(KeePass2::cipherUuidToCliString(cipherUuid)),
+                        QDir::cleanPath(KeePass2::kdfUuidToCliString(kdfUuid)));
+
+            setInput({"a", "a"});
+
+            auto rounds = roundsPerKdf.find(KeePass2::kdfUuidToCliString(kdfUuid));
+
+            if (rounds == roundsPerKdf.end()) {
+                rounds = roundsPerKdf.find("default");
+            }
+
+            execCmd(
+                createCmd,
+                {
+                    "db-create",
+                    dbFilename,
+                    "-p",
+                    "--kdf", KeePass2::kdfUuidToCliString(kdfUuid),
+                    "--cipher", KeePass2::cipherUuidToCliString(cipherUuid),
+                    "--rounds", *rounds,
+                    "--memory", "10",
+                    "--parallelism", "4"
+                }
+            );
+            QCOMPARE(m_stderr->readLine(), QByteArray("Enter password to encrypt database (optional): \n"));
+            QCOMPARE(m_stderr->readLine(), QByteArray("Repeat password: \n"));
+
+            db = readDatabase(dbFilename, "a");
+            QVERIFY(db);
+            QCOMPARE(db->cipher(), cipherUuid);
+            QCOMPARE(db->kdf()->uuid(), kdfUuid);
+        }
+    }
+
+    // Add tests to handle warnings
 }
 
 void TestCli::testDatabaseEdit()
@@ -1492,6 +1552,8 @@ void TestCli::testImport()
 
     db = readDatabase(databaseFilenameQuiet, "a");
     QVERIFY(db);
+
+    // Add custom encryption option tests
 }
 
 void TestCli::testKeyFileOption()

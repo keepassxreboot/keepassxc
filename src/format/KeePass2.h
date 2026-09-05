@@ -132,6 +132,10 @@ namespace KeePass2
     ProtectedStreamAlgo idToProtectedStreamAlgo(quint32 id);
     QString cipherToString(QUuid cipherUuid);
     QString kdfToString(QUuid kdfUuid);
+    QUuid cliStringToCipherUuid(QString cliString);
+    QUuid cliStringToKdfUuid(QString cliString);
+    QString kdfUuidToCliString(QUuid kdfUuid);
+    QString cipherUuidToCliString(QUuid cipherUuid);
 } // namespace KeePass2
 
 #endif // KEEPASSX_KEEPASS2_H
