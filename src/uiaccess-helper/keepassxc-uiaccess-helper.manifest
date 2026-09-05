@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
+  <assemblyIdentity version="1.0.0.0" name="org.keepassxc.uiaccess-helper" type="win32"/>
+  <trustInfo xmlns="urn:schemas-microsoft-com:asm.v3">
+    <security>
+      <requestedPrivileges>
+        <!-- uiAccess is the whole point: exempt from UIPI, and no UAC prompt.
+             The granted token is measured at integrity 0x2010: above the
+             credential dialog's 0x200a, far below High's 0x3000, and not an
+             administrator. Windows grants
+             it only when the binary is Authenticode-signed by a certificate the
+             machine trusts *and* lives under a protected path such as
+             %ProgramFiles%; otherwise the launch fails outright. -->
+        <requestedExecutionLevel level="asInvoker" uiAccess="true"/>
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+  <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">
+    <application>
+      <supportedOS Id="{8e0f7a12-bfb3-4fe8-b9a5-48fd50a15a9a}"/>
+    </application>
+  </compatibility>
+</assembly>

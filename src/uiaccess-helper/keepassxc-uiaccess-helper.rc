@@ -1,0 +1,4 @@
+#include <windows.h>
+/* CREATEPROCESS_MANIFEST_RESOURCE_ID / RT_MANIFEST: UAC settings are read only
+   from an embedded manifest. */
+1 24 "keepassxc-uiaccess-helper.manifest"
