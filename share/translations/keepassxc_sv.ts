@@ -5157,11 +5157,11 @@ Om detta upprepas, kan din databasfil vara skadad.</translation>
     </message>
     <message>
         <source>Invalid master seed size</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltig storlek på huvudfrö</translation>
     </message>
     <message>
         <source>Invalid transform seed size</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltig storlek på transformeringsfrö</translation>
     </message>
     <message>
         <source>Invalid transform rounds size</source>
@@ -5254,7 +5254,7 @@ Rad %2, kolumn: %3</translation>
     </message>
     <message>
         <source>Null DeleteObject uuid</source>
-        <translation type="unfinished"/>
+        <translation>Tomt UUID för DeleteObject</translation>
     </message>
     <message>
         <source>Missing DeletedObject uuid or time</source>
@@ -5386,7 +5386,7 @@ Rad %2, kolumn: %3</translation>
     </message>
     <message>
         <source>Invalid transform seed size</source>
-        <translation type="unfinished"/>
+        <translation>Ogiltig storlek på transformeringsfrö</translation>
     </message>
     <message>
         <source>Invalid number of transform rounds</source>
