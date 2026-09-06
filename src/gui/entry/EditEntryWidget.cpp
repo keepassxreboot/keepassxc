@@ -39,6 +39,7 @@
 #include "core/Group.h"
 #include "core/Metadata.h"
 #include "core/PasswordGenerator.h"
+#include "core/PasswordProfile.h"
 #include "core/TimeDelta.h"
 #include "gui/PasswordWidget.h"
 #ifdef KPXC_FEATURE_SSHAGENT
@@ -511,6 +512,7 @@ void EditEntryWidget::setupEntryUpdate()
     connect(m_mainUi->titleEdit, SIGNAL(textChanged(QString)), this, SLOT(setModified()));
     connect(m_mainUi->usernameComboBox->lineEdit(), SIGNAL(textChanged(QString)), this, SLOT(setModified()));
     connect(m_mainUi->passwordEdit, SIGNAL(textChanged(QString)), this, SLOT(setModified()));
+    connect(m_mainUi->passwordEdit, &PasswordWidget::passwordProfileChanged, this, [this] { setModified(); });
     connect(m_mainUi->urlEdit, SIGNAL(textChanged(QString)), this, SLOT(setModified()));
 #ifdef KPXC_FEATURE_NETWORK
     connect(m_mainUi->urlEdit, SIGNAL(textChanged(QString)), this, SLOT(updateFaviconButtonEnable(QString)));
@@ -972,13 +974,34 @@ void EditEntryWidget::loadEntry(Entry* entry,
 
     // Set an initial password for new entries if the option is enabled
     if (create && config()->get(Config::AutoGeneratePasswordForNewEntries).toBool()) {
-        PasswordGenerator generator;
-        generator.loadSettingsFromConfig();
-        if (!generator.isValid()) {
-            qWarning() << "Password generator config settings are invalid, using default settings.";
-            generator.reset();
+        const auto profile = m_db->defaultPasswordProfile();
+        QString password;
+        if (profile.isValid() && profile.type() == PasswordProfile::Passphrase) {
+            PassphraseGenerator generator;
+            profile.applyPassphraseSettings(&generator);
+            password = generator.generatePassphrase();
+            if (password.isEmpty()) {
+                showMessage(tr("The default password profile's wordlist is unavailable. Choose a wordlist in the "
+                               "password generator."),
+                            MessageWidget::Warning);
+            }
+        } else {
+            PasswordGenerator generator;
+            if (profile.isValid()) {
+                profile.applyPasswordSettings(&generator);
+            } else {
+                generator.loadSettingsFromConfig();
+            }
+            if (!generator.isValid()) {
+                qWarning() << "Password generator config settings are invalid, using default settings.";
+                generator.reset();
+            }
+            password = generator.generatePassword();
         }
-        m_mainUi->passwordEdit->setText(generator.generatePassword());
+        m_mainUi->passwordEdit->setText(password);
+        if (profile.isValid() && !password.isEmpty()) {
+            m_customData->set(CustomData::PasswordProfile, profile.id().toString(QUuid::WithoutBraces));
+        }
     }
 
     setModified(false);
@@ -991,6 +1014,7 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
 #endif
     m_attachments->copyDataFrom(entry->attachments());
     m_customData->copyDataFrom(entry->customData());
+    m_mainUi->passwordEdit->setGeneratorContext(m_db.data(), m_customData.data());
 
     m_mainUi->titleEdit->setReadOnly(m_history);
     m_mainUi->usernameComboBox->lineEdit()->setReadOnly(m_history);
@@ -1409,6 +1433,7 @@ void EditEntryWidget::clear()
     QSignalBlocker attachmentsBlocker(m_attachments.data());
 #endif
     m_attachments->clear();
+    m_mainUi->passwordEdit->setGeneratorContext(nullptr, nullptr);
     m_customData->clear();
     m_autoTypeAssoc->clear();
     m_historyModel->clear();
