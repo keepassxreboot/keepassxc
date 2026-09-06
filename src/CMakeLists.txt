@@ -40,6 +40,7 @@ set(core_SOURCES
         core/ModifiableObject.cpp
         core/PasswordGenerator.cpp
         core/PasswordHealth.cpp
+        core/PasswordProfile.cpp
         core/PassphraseGenerator.cpp
         core/Resources.cpp
         core/SignalMultiplexer.cpp

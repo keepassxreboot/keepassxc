@@ -20,6 +20,8 @@
 #include "ui_PasswordWidget.h"
 
 #include "core/Config.h"
+#include "core/CustomData.h"
+#include "core/Database.h"
 #include "core/PasswordHealth.h"
 #include "gui/Font.h"
 #include "gui/Icons.h"
@@ -190,11 +192,33 @@ bool PasswordWidget::isPasswordVisible() const
     return m_ui->passwordEdit->echoMode() == QLineEdit::Normal;
 }
 
+void PasswordWidget::setGeneratorContext(Database* database, CustomData* customData)
+{
+    m_database = database;
+    m_customData = customData;
+}
+
 void PasswordWidget::popupPasswordGenerator()
 {
     auto generator = PasswordGeneratorWidget::popupGenerator(this);
     generator->setPasswordVisible(isPasswordVisible());
     generator->setPasswordLength(text().length());
+    const auto profileId = m_customData ? QUuid(m_customData->value(CustomData::PasswordProfile)) : QUuid();
+    generator->setDatabase(m_database, profileId);
+    connect(generator, &PasswordGeneratorWidget::appliedProfile, this, [this](const QUuid& id) {
+        if (!m_customData) {
+            return;
+        }
+        if (QUuid(m_customData->value(CustomData::PasswordProfile)) == id) {
+            return;
+        }
+        if (id.isNull()) {
+            m_customData->remove(CustomData::PasswordProfile);
+        } else {
+            m_customData->set(CustomData::PasswordProfile, id.toString(QUuid::WithoutBraces));
+        }
+        emit passwordProfileChanged();
+    });
 
     connect(generator, SIGNAL(appliedPassword(QString)), SLOT(setText(QString)));
     if (m_repeatPasswordWidget) {

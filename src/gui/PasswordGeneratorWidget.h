@@ -19,7 +19,9 @@
 #ifndef KEEPASSX_PASSWORDGENERATORWIDGET_H
 #define KEEPASSX_PASSWORDGENERATORWIDGET_H
 
+#include "core/PasswordProfile.h"
 #include <QComboBox>
+#include <QPointer>
 #include <QTimer>
 
 #include "core/PassphraseGenerator.h"
@@ -30,6 +32,7 @@ namespace Ui
     class PasswordGeneratorWidget;
 }
 
+class Database;
 class PasswordGenerator;
 class PasswordHealth;
 class PassphraseGenerator;
@@ -48,6 +51,8 @@ public:
     explicit PasswordGeneratorWidget(QWidget* parent = nullptr);
     ~PasswordGeneratorWidget() override;
 
+    void setDatabase(Database* database, const QUuid& profile = {});
+    QUuid selectedProfile() const;
     void loadSettings();
     void saveSettings();
     void setPasswordLength(int length);
@@ -60,6 +65,7 @@ public:
 
 signals:
     void appliedPassword(const QString& password);
+    void appliedProfile(const QUuid& profile);
     void closed();
 
 public slots:
@@ -84,14 +90,28 @@ private slots:
     void passphraseLengthChanged(int length);
 
     void updateGenerator();
+    void selectProfile(int index);
+    void saveProfile();
+    void removeProfile();
+    void setDefaultProfile();
 
 private:
+    PasswordProfile currentProfile(const QString& name) const;
+    void loadProfile(const PasswordProfile& profile);
+    void refreshProfiles(const QUuid& selected = {});
+    void clearProfileContext();
+    QPointer<Database> m_database;
+    QMetaObject::Connection m_databaseConnection;
+    QMetaObject::Connection m_databaseDestroyedConnection;
+    bool m_loadingSettings = false;
+    bool m_databaseSettings = false;
+    bool m_profileUnavailable = false;
     bool m_standalone = false;
     bool m_passwordGenerated = false;
     int m_firstCustomWordlistIndex;
 
-    PasswordGenerator::CharClasses charClasses();
-    PasswordGenerator::GeneratorFlags generatorFlags();
+    PasswordGenerator::CharClasses charClasses() const;
+    PasswordGenerator::GeneratorFlags generatorFlags() const;
 
     const QScopedPointer<PasswordGenerator> m_passwordGenerator;
     const QScopedPointer<PassphraseGenerator> m_dicewareGenerator;

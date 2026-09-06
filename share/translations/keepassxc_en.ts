@@ -3054,6 +3054,10 @@ Disable safe saves and try again?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>The default password profile&apos;s wordlist is unavailable. Choose a wordlist in the password generator.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Some Browser Integration settings are overridden by group settings.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7397,6 +7401,58 @@ Do you want to overwrite it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>The entry&apos;s password profile is unavailable in this database. Choose a profile or change the generator settings to continue.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 (default)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save Password Profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid Profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose valid generator settings before saving a profile.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update Password Profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Replace profile &quot;%1&quot;? Entries using this profile will use the new settings the next time a password is generated.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot Save Profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The database&apos;s password profiles could not be updated.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove Password Profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove profile &quot;%1&quot; from this database? Entries using it will need another profile when changing their passwords.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>passwordLength</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7424,6 +7480,30 @@ Do you want to overwrite it?</source>
         <source>Do you really want to remove the wordlist &quot;%1&quot;?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Profile:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password profiles saved in this database</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save Profile…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use this profile by default for this database</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PasswordWidget</name>
@@ -7445,6 +7525,10 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Warning: Caps Lock enabled!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source></source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7756,6 +7840,10 @@ Do you want to overwrite it?</source>
     </message>
     <message>
         <source>Password for &apos;%1&apos; has been leaked!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source></source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9743,6 +9831,10 @@ This option is deprecated, use --set-key-file instead.</source>
     </message>
     <message>
         <source>Score</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source></source>
         <translation type="unfinished"></translation>
     </message>
     <message>

@@ -19,8 +19,12 @@
 #include "PasswordGeneratorWidget.h"
 #include "ui_PasswordGeneratorWidget.h"
 
+#include "core/Database.h"
+#include "core/Metadata.h"
 #include <QCloseEvent>
 #include <QDir>
+#include <QInputDialog>
+#include <QScopedValueRollback>
 #include <QShortcut>
 #include <QTimer>
 
@@ -31,6 +35,7 @@
 #include "gui/FileDialog.h"
 #include "gui/Icons.h"
 #include "gui/MessageBox.h"
+#include "gui/PasswordWidget.h"
 #include "gui/styles/StateColorPalette.h"
 
 PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
@@ -120,6 +125,17 @@ PasswordGeneratorWidget::PasswordGeneratorWidget(QWidget* parent)
     auto color = statePalette.color(StateColorPalette::ColorRole::False);
     m_ui->labelWordListWarning->setStyleSheet(QString("QLabel { color: %1; }").arg(color.name()));
 
+    m_ui->profileContainer->hide();
+    m_ui->profileWarningLabel->hide();
+    connect(m_ui->profileComboBox, &QComboBox::currentIndexChanged, this, &PasswordGeneratorWidget::selectProfile);
+    connect(m_ui->saveProfileButton, &QPushButton::clicked, this, &PasswordGeneratorWidget::saveProfile);
+    connect(m_ui->deleteProfileButton, &QPushButton::clicked, this, &PasswordGeneratorWidget::removeProfile);
+    connect(m_ui->defaultProfileButton, &QPushButton::clicked, this, &PasswordGeneratorWidget::setDefaultProfile);
+    connect(m_ui->editNewPassword, &PasswordWidget::textChanged, this, [this] {
+        if (!m_loadingSettings) {
+            refreshProfiles();
+        }
+    });
     loadSettings();
 }
 
@@ -151,6 +167,7 @@ PasswordGeneratorWidget* PasswordGeneratorWidget::popupGenerator(QWidget* parent
 
 void PasswordGeneratorWidget::loadSettings()
 {
+    QScopedValueRollback<bool> loading(m_loadingSettings, true);
     // Password config
     m_ui->checkBoxLower->setChecked(config()->get(Config::PasswordGenerator_LowerCase).toBool());
     m_ui->checkBoxUpper->setChecked(config()->get(Config::PasswordGenerator_UpperCase).toBool());
@@ -191,11 +208,15 @@ void PasswordGeneratorWidget::loadSettings()
     // Set advanced mode
     m_ui->buttonAdvancedMode->setChecked(advanced);
     setAdvancedMode(advanced);
+    m_loadingSettings = false;
     updateGenerator();
 }
 
 void PasswordGeneratorWidget::saveSettings()
 {
+    if (m_loadingSettings || m_databaseSettings) {
+        return;
+    }
     // Password config
     config()->set(Config::PasswordGenerator_LowerCase, m_ui->checkBoxLower->isChecked());
     config()->set(Config::PasswordGenerator_UpperCase, m_ui->checkBoxUpper->isChecked());
@@ -257,13 +278,19 @@ QString PasswordGeneratorWidget::getGeneratedPassword()
 
 void PasswordGeneratorWidget::regeneratePassword()
 {
-    if (m_ui->tabWidget->currentIndex() == Password) {
-        if (m_passwordGenerator->isValid()) {
-            m_ui->editNewPassword->setText(m_passwordGenerator->generatePassword());
+    QScopedValueRollback<bool> loading(m_loadingSettings, true);
+    QString password;
+    if (!m_profileUnavailable) {
+        if (m_ui->tabWidget->currentIndex() == Password) {
+            if (m_passwordGenerator->isValid()) {
+                password = m_passwordGenerator->generatePassword();
+            }
+        } else {
+            password = m_dicewareGenerator->generatePassphrase();
         }
-    } else {
-        m_ui->editNewPassword->setText(m_dicewareGenerator->generatePassphrase());
     }
+    m_ui->editNewPassword->setText(password);
+    m_ui->buttonGenerate->setEnabled(!password.isEmpty());
 }
 
 void PasswordGeneratorWidget::updateButtonsEnabled(const QString& password)
@@ -328,8 +355,12 @@ void PasswordGeneratorWidget::updatePasswordLengthLabel(const QString& password)
 
 void PasswordGeneratorWidget::applyPassword()
 {
+    if (m_ui->editNewPassword->text().isEmpty() || m_profileUnavailable) {
+        return;
+    }
     saveSettings();
     m_passwordGenerated = true;
+    emit appliedProfile(selectedProfile());
     emit appliedPassword(m_ui->editNewPassword->text());
     emit closed();
 }
@@ -459,16 +490,22 @@ void PasswordGeneratorWidget::addWordList()
 
 void PasswordGeneratorWidget::setAdvancedMode(bool advanced)
 {
-    saveSettings();
+    if (!m_loadingSettings) {
+        saveSettings();
+    }
 
     if (advanced) {
         m_ui->checkBoxSpecialChars->setText("# $ % && @ ^ ` ~");
         m_ui->checkBoxSpecialChars->setToolTip(tr("Logograms"));
-        m_ui->checkBoxSpecialChars->setChecked(config()->get(Config::PasswordGenerator_Logograms).toBool());
+        if (!m_loadingSettings) {
+            m_ui->checkBoxSpecialChars->setChecked(config()->get(Config::PasswordGenerator_Logograms).toBool());
+        }
     } else {
         m_ui->checkBoxSpecialChars->setText("/ * + && …");
         m_ui->checkBoxSpecialChars->setToolTip(tr("Special Characters"));
-        m_ui->checkBoxSpecialChars->setChecked(config()->get(Config::PasswordGenerator_SpecialChars).toBool());
+        if (!m_loadingSettings) {
+            m_ui->checkBoxSpecialChars->setChecked(config()->get(Config::PasswordGenerator_SpecialChars).toBool());
+        }
     }
 
     m_ui->advancedContainer->setVisible(advanced);
@@ -478,6 +515,7 @@ void PasswordGeneratorWidget::setAdvancedMode(bool advanced)
     m_ui->checkBoxMath->setVisible(advanced);
     m_ui->checkBoxDashes->setVisible(advanced);
 
+    updateGenerator();
     if (!m_standalone) {
         QTimer::singleShot(50, this, [this] { adjustSize(); });
     }
@@ -501,7 +539,7 @@ void PasswordGeneratorWidget::excludeHexChars()
     updateGenerator();
 }
 
-PasswordGenerator::CharClasses PasswordGeneratorWidget::charClasses()
+PasswordGenerator::CharClasses PasswordGeneratorWidget::charClasses() const
 {
     PasswordGenerator::CharClasses classes;
 
@@ -554,7 +592,7 @@ PasswordGenerator::CharClasses PasswordGeneratorWidget::charClasses()
     return classes;
 }
 
-PasswordGenerator::GeneratorFlags PasswordGeneratorWidget::generatorFlags()
+PasswordGenerator::GeneratorFlags PasswordGeneratorWidget::generatorFlags() const
 {
     PasswordGenerator::GeneratorFlags flags;
 
@@ -573,6 +611,12 @@ PasswordGenerator::GeneratorFlags PasswordGeneratorWidget::generatorFlags()
 
 void PasswordGeneratorWidget::updateGenerator()
 {
+    if (m_loadingSettings) {
+        return;
+    }
+    m_profileUnavailable = false;
+    m_ui->profileWarningLabel->hide();
+    refreshProfiles();
     if (m_ui->tabWidget->currentIndex() == Password) {
         auto classes = charClasses();
         auto flags = generatorFlags();
@@ -584,6 +628,8 @@ void PasswordGeneratorWidget::updateGenerator()
             m_passwordGenerator->setExcludedCharacterSet(m_ui->editExcludedChars->text());
         } else {
             m_passwordGenerator->setCharClasses(classes);
+            m_passwordGenerator->setCustomCharacterSet({});
+            m_passwordGenerator->setExcludedCharacterSet({});
         }
         m_passwordGenerator->setFlags(flags);
 
@@ -605,8 +651,232 @@ void PasswordGeneratorWidget::updateGenerator()
         m_dicewareGenerator->setWordSeparator(m_ui->editWordSeparator->text());
 
         m_ui->labelWordListWarning->setVisible(!m_dicewareGenerator->isWordListValid());
-        m_ui->buttonGenerate->setEnabled(true);
     }
 
     regeneratePassword();
+}
+
+void PasswordGeneratorWidget::setDatabase(Database* database, const QUuid& profileId)
+{
+    disconnect(m_databaseConnection);
+    disconnect(m_databaseDestroyedConnection);
+    m_database = database;
+    m_databaseSettings = false;
+    m_profileUnavailable = false;
+    m_ui->profileContainer->setVisible(database != nullptr);
+    m_ui->profileWarningLabel->hide();
+    refreshProfiles();
+    if (!database) {
+        return;
+    }
+    m_databaseDestroyedConnection =
+        connect(database, &QObject::destroyed, this, &PasswordGeneratorWidget::clearProfileContext);
+    m_databaseConnection = connect(database->metadata()->customData(),
+                                   &CustomData::aboutToBeReset,
+                                   this,
+                                   &PasswordGeneratorWidget::clearProfileContext);
+    const auto profile = profileId.isNull() ? database->defaultPasswordProfile() : database->passwordProfile(profileId);
+    if (profile.isValid()) {
+        loadProfile(profile);
+    } else if (!profileId.isNull()) {
+        m_profileUnavailable = true;
+        m_ui->profileWarningLabel->setText(tr("The entry's password profile is unavailable in this database. "
+                                              "Choose a profile or change the generator settings to continue."));
+        m_ui->profileWarningLabel->show();
+        m_ui->buttonGenerate->setEnabled(false);
+        regeneratePassword();
+    }
+}
+
+void PasswordGeneratorWidget::clearProfileContext()
+{
+    setDatabase(nullptr);
+    loadSettings();
+    m_ui->editNewPassword->clear();
+    if (!m_standalone) {
+        emit closed();
+    }
+}
+
+QUuid PasswordGeneratorWidget::selectedProfile() const
+{
+    return m_ui->profileComboBox->currentData().toUuid();
+}
+
+void PasswordGeneratorWidget::refreshProfiles(const QUuid& selected)
+{
+    QSignalBlocker blocker(m_ui->profileComboBox);
+    m_ui->profileComboBox->clear();
+    m_ui->profileComboBox->addItem(tr("Custom settings"), QUuid());
+    QUuid defaultId;
+    if (m_database) {
+        defaultId = m_database->defaultPasswordProfile().id();
+        const auto profiles = m_database->passwordProfiles();
+        for (const auto& profile : profiles) {
+            const auto label = profile.id() == defaultId ? tr("%1 (default)").arg(profile.name()) : profile.name();
+            m_ui->profileComboBox->addItem(label, profile.id());
+        }
+    }
+    auto index = m_ui->profileComboBox->findData(selected);
+    m_ui->profileComboBox->setCurrentIndex(qMax(0, index));
+    m_ui->deleteProfileButton->setEnabled(index > 0);
+    m_ui->defaultProfileButton->setEnabled(index > 0);
+    m_ui->defaultProfileButton->setChecked(index > 0 && selected == defaultId);
+}
+
+PasswordProfile PasswordGeneratorWidget::currentProfile(const QString& name) const
+{
+    PasswordProfile profile(name);
+    if (m_ui->tabWidget->currentIndex() == Password) {
+        auto advanced = m_ui->buttonAdvancedMode->isChecked();
+        auto flags = generatorFlags();
+        if (advanced) {
+            flags |= PasswordGenerator::AdvancedMode;
+        }
+        profile.setPasswordSettings(m_ui->spinBoxLength->value(),
+                                    charClasses(),
+                                    flags,
+                                    advanced ? m_ui->editAdditionalChars->text() : QString(),
+                                    advanced ? m_ui->editExcludedChars->text() : QString());
+    } else {
+        profile.setPassphraseSettings(
+            m_ui->spinBoxWordCount->value(),
+            static_cast<PassphraseGenerator::PassphraseWordCase>(m_ui->wordCaseComboBox->currentData().toInt()),
+            m_ui->editWordSeparator->text(),
+            m_ui->comboBoxWordList->currentData().toString());
+    }
+    return profile;
+}
+
+void PasswordGeneratorWidget::loadProfile(const PasswordProfile& profile)
+{
+    if (!profile.isValid()) {
+        return;
+    }
+    m_databaseSettings = true;
+    const auto settings = profile.toVariantMap();
+    {
+        QScopedValueRollback<bool> loading(m_loadingSettings, true);
+        m_ui->tabWidget->setCurrentIndex(profile.type() == PasswordProfile::Password ? Password : Diceware);
+        if (profile.type() == PasswordProfile::Password) {
+            const auto classes = settings.value("charClasses").toInt();
+            const auto flags = settings.value("generatorFlags").toInt();
+            const bool advanced = flags != 0 || !settings.value("customCharacterSet").toString().isEmpty()
+                                  || !settings.value("excludedCharacterSet").toString().isEmpty()
+                                  || (classes & PasswordGenerator::SpecialCharacters) != 0;
+            m_ui->buttonAdvancedMode->setChecked(advanced);
+            setAdvancedMode(advanced);
+            m_ui->checkBoxLower->setChecked(classes & PasswordGenerator::LowerLetters);
+            m_ui->checkBoxUpper->setChecked(classes & PasswordGenerator::UpperLetters);
+            m_ui->checkBoxNumbers->setChecked(classes & PasswordGenerator::Numbers);
+            m_ui->checkBoxExtASCII->setChecked(classes & PasswordGenerator::EASCII);
+            m_ui->checkBoxBraces->setChecked(classes & PasswordGenerator::Braces);
+            m_ui->checkBoxPunctuation->setChecked(classes & PasswordGenerator::Punctuation);
+            m_ui->checkBoxQuotes->setChecked(classes & PasswordGenerator::Quotes);
+            m_ui->checkBoxDashes->setChecked(classes & PasswordGenerator::Dashes);
+            m_ui->checkBoxMath->setChecked(classes & PasswordGenerator::Math);
+            m_ui->checkBoxSpecialChars->setChecked(classes & PasswordGenerator::Logograms);
+            m_ui->checkBoxExcludeAlike->setChecked(flags & PasswordGenerator::ExcludeLookAlike);
+            m_ui->checkBoxEnsureEvery->setChecked(flags & PasswordGenerator::CharFromEveryGroup);
+            m_ui->spinBoxLength->setValue(settings.value("passwordLength").toInt());
+            m_ui->editAdditionalChars->setText(settings.value("customCharacterSet").toString());
+            m_ui->editExcludedChars->setText(settings.value("excludedCharacterSet").toString());
+        } else {
+            m_ui->spinBoxWordCount->setValue(settings.value("passphraseWordCount").toInt());
+            m_ui->wordCaseComboBox->setCurrentIndex(settings.value("wordCase").toInt());
+            m_ui->editWordSeparator->setText(settings.value("wordSeparator").toString());
+            m_ui->comboBoxWordList->setCurrentIndex(m_ui->comboBoxWordList->findData(settings.value("wordList")));
+        }
+    }
+    updateGenerator();
+    refreshProfiles(profile.id());
+}
+
+void PasswordGeneratorWidget::selectProfile(int index)
+{
+    if (m_loadingSettings || !m_database) {
+        return;
+    }
+    if (index == 0) {
+        loadSettings();
+    } else {
+        loadProfile(m_database->passwordProfile(selectedProfile()));
+    }
+}
+
+void PasswordGeneratorWidget::saveProfile()
+{
+    if (!m_database || m_profileUnavailable) {
+        return;
+    }
+    QPointer<PasswordGeneratorWidget> guard(this);
+    bool ok = false;
+    const auto previous = m_database->passwordProfile(selectedProfile());
+    const auto name =
+        QInputDialog::getText(
+            this, tr("Save Password Profile"), tr("Profile name:"), QLineEdit::Normal, previous.name(), &ok)
+            .trimmed();
+    if (!guard || !ok || name.isEmpty() || !m_database) {
+        return;
+    }
+    auto profile = currentProfile(name);
+    if (!profile.isValid() || m_ui->editNewPassword->text().isEmpty()) {
+        MessageBox::warning(
+            this, tr("Invalid Profile"), tr("Choose valid generator settings before saving a profile."));
+        return;
+    }
+    if (m_database->hasPasswordProfile(name)
+        && MessageBox::question(this,
+                                tr("Update Password Profile"),
+                                tr("Replace profile \"%1\"? Entries using this profile will use the new settings the "
+                                   "next time a password is generated.")
+                                    .arg(name),
+                                MessageBox::Yes | MessageBox::Cancel,
+                                MessageBox::Cancel)
+               != MessageBox::Yes) {
+        return;
+    }
+    if (!guard || !m_database) {
+        return;
+    }
+    if (!m_database->addPasswordProfile(profile)) {
+        MessageBox::warning(
+            this, tr("Cannot Save Profile"), tr("The database's password profiles could not be updated."));
+        return;
+    }
+    m_databaseSettings = true;
+    loadProfile(m_database->passwordProfile(name));
+}
+
+void PasswordGeneratorWidget::removeProfile()
+{
+    if (!m_database) {
+        return;
+    }
+    const auto profile = m_database->passwordProfile(selectedProfile());
+    if (!profile.isValid()) {
+        return;
+    }
+    QPointer<PasswordGeneratorWidget> guard(this);
+    if (MessageBox::question(this,
+                             tr("Remove Password Profile"),
+                             tr("Remove profile \"%1\" from this database? Entries using it will need another profile "
+                                "when changing their passwords.")
+                                 .arg(profile.name()),
+                             MessageBox::Remove | MessageBox::Cancel,
+                             MessageBox::Cancel)
+            == MessageBox::Remove
+        && guard && m_database) {
+        m_database->removePasswordProfile(profile.name());
+        refreshProfiles();
+    }
+}
+
+void PasswordGeneratorWidget::setDefaultProfile()
+{
+    if (m_database) {
+        const auto id = selectedProfile();
+        m_database->setDefaultPasswordProfile(m_ui->defaultProfileButton->isChecked() ? id : QUuid());
+        refreshProfiles(id);
+    }
 }
