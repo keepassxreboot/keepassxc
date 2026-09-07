@@ -29,8 +29,7 @@ namespace Ui
     class PasswordWidget;
 }
 
-class Database;
-class CustomData;
+class PasswordGeneratorWidget;
 
 class PasswordWidget : public QWidget
 {
@@ -41,7 +40,6 @@ public:
     explicit PasswordWidget(QWidget* parent = nullptr);
     ~PasswordWidget() override;
     void enablePasswordGenerator();
-    void setGeneratorContext(Database* database, CustomData* customData);
     void setRepeatPartner(PasswordWidget* repeatPartner);
     void setQualityVisible(bool state);
 
@@ -52,7 +50,7 @@ public:
 
 signals:
     void textChanged(QString text);
-    void passwordProfileChanged();
+    void passwordGeneratorOpened(PasswordGeneratorWidget* generator);
     void requestPlaceholderResolution(const QString& rawText, QString& resolvedText);
 
 public slots:
@@ -84,8 +82,6 @@ private:
     QPointer<PasswordWidget> m_repeatPasswordWidget;
     QPointer<PasswordWidget> m_parentPasswordWidget;
 
-    QPointer<Database> m_database;
-    QPointer<CustomData> m_customData;
     bool m_capslockState = false;
 };
 

@@ -41,6 +41,7 @@
 #include "core/PasswordGenerator.h"
 #include "core/PasswordProfile.h"
 #include "core/TimeDelta.h"
+#include "gui/PasswordGeneratorWidget.h"
 #include "gui/PasswordWidget.h"
 #ifdef KPXC_FEATURE_SSHAGENT
 #include "sshagent/OpenSSHKey.h"
@@ -512,7 +513,13 @@ void EditEntryWidget::setupEntryUpdate()
     connect(m_mainUi->titleEdit, SIGNAL(textChanged(QString)), this, SLOT(setModified()));
     connect(m_mainUi->usernameComboBox->lineEdit(), SIGNAL(textChanged(QString)), this, SLOT(setModified()));
     connect(m_mainUi->passwordEdit, SIGNAL(textChanged(QString)), this, SLOT(setModified()));
-    connect(m_mainUi->passwordEdit, &PasswordWidget::passwordProfileChanged, this, [this] { setModified(); });
+    connect(m_mainUi->passwordEdit,
+            &PasswordWidget::passwordGeneratorOpened,
+            this,
+            [this](PasswordGeneratorWidget* generator) {
+                generator->setEntryContext(m_db.data(), m_customData.data());
+                connect(generator, &PasswordGeneratorWidget::entryProfileChanged, this, [this] { setModified(); });
+            });
     connect(m_mainUi->urlEdit, SIGNAL(textChanged(QString)), this, SLOT(setModified()));
 #ifdef KPXC_FEATURE_NETWORK
     connect(m_mainUi->urlEdit, SIGNAL(textChanged(QString)), this, SLOT(updateFaviconButtonEnable(QString)));
@@ -1014,7 +1021,6 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
 #endif
     m_attachments->copyDataFrom(entry->attachments());
     m_customData->copyDataFrom(entry->customData());
-    m_mainUi->passwordEdit->setGeneratorContext(m_db.data(), m_customData.data());
 
     m_mainUi->titleEdit->setReadOnly(m_history);
     m_mainUi->usernameComboBox->lineEdit()->setReadOnly(m_history);
@@ -1433,7 +1439,6 @@ void EditEntryWidget::clear()
     QSignalBlocker attachmentsBlocker(m_attachments.data());
 #endif
     m_attachments->clear();
-    m_mainUi->passwordEdit->setGeneratorContext(nullptr, nullptr);
     m_customData->clear();
     m_autoTypeAssoc->clear();
     m_historyModel->clear();

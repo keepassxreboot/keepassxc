@@ -33,6 +33,7 @@ namespace Ui
 }
 
 class Database;
+class CustomData;
 class PasswordGenerator;
 class PasswordHealth;
 class PassphraseGenerator;
@@ -52,6 +53,7 @@ public:
     ~PasswordGeneratorWidget() override;
 
     void setDatabase(Database* database, const QUuid& profile = {});
+    void setEntryContext(Database* database, CustomData* customData);
     QUuid selectedProfile() const;
     void loadSettings();
     void saveSettings();
@@ -66,6 +68,7 @@ public:
 signals:
     void appliedPassword(const QString& password);
     void appliedProfile(const QUuid& profile);
+    void entryProfileChanged();
     void closed();
 
 public slots:
@@ -101,8 +104,11 @@ private:
     void refreshProfiles(const QUuid& selected = {});
     void clearProfileContext();
     QPointer<Database> m_database;
+    QPointer<CustomData> m_entryCustomData;
     QMetaObject::Connection m_databaseConnection;
     QMetaObject::Connection m_databaseDestroyedConnection;
+    QMetaObject::Connection m_entryResetConnection;
+    QMetaObject::Connection m_entryDestroyedConnection;
     bool m_loadingSettings = false;
     bool m_databaseSettings = false;
     bool m_profileUnavailable = false;

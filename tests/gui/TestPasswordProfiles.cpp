@@ -51,6 +51,10 @@ private slots:
     void testProfileManagement();
     void testAssociationOnlyChange();
     void testLockDuringProfileDialog();
+    void testEntryContextReset();
+    void testEntryContextDestroyed();
+    void testReopenForAnotherEntry();
+    void testPasswordWidgetWithoutContext();
 
 private:
     QTemporaryDir m_configDir;
@@ -151,11 +155,14 @@ void TestPasswordProfiles::testDraftApplyAndCancel()
     CustomData draft;
     PasswordWidget password;
     password.setText("old");
-    password.setGeneratorContext(&db, &draft);
+    connect(&password, &PasswordWidget::passwordGeneratorOpened, &password, [&](PasswordGeneratorWidget* generator) {
+        generator->setEntryContext(&db, &draft);
+    });
     QVERIFY(QMetaObject::invokeMethod(&password, "popupPasswordGenerator"));
     auto* generator = password.findChild<PasswordGeneratorWidget*>();
     QVERIFY(generator);
-    generator->setDatabase(&db, profile.id());
+    auto* profiles = generator->findChild<QComboBox*>("profileComboBox");
+    profiles->setCurrentIndex(profiles->findData(profile.id()));
     generator->close();
     QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
     QVERIFY(!draft.contains(CustomData::PasswordProfile));
@@ -163,7 +170,8 @@ void TestPasswordProfiles::testDraftApplyAndCancel()
     QVERIFY(QMetaObject::invokeMethod(&password, "popupPasswordGenerator"));
     generator = password.findChild<PasswordGeneratorWidget*>();
     QVERIFY(generator);
-    generator->setDatabase(&db, profile.id());
+    profiles = generator->findChild<QComboBox*>("profileComboBox");
+    profiles->setCurrentIndex(profiles->findData(profile.id()));
     generator->applyPassword();
     QCOMPARE(password.text().size(), 40);
     QCOMPARE(QUuid(draft.value(CustomData::PasswordProfile)), profile.id());
@@ -211,7 +219,8 @@ void TestPasswordProfiles::testEntryCancelAndCommit()
         QVERIFY(QMetaObject::invokeMethod(password, "popupPasswordGenerator"));
         auto* generator = password->findChild<PasswordGeneratorWidget*>();
         QVERIFY(generator);
-        generator->setDatabase(db.data(), profile.id());
+        auto* profiles = generator->findChild<QComboBox*>("profileComboBox");
+        profiles->setCurrentIndex(profiles->findData(profile.id()));
         generator->applyPassword();
         QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
         QCOMPARE(password->text().size(), 42);
@@ -301,7 +310,8 @@ void TestPasswordProfiles::testAssociationOnlyChange()
     QVERIFY(QMetaObject::invokeMethod(password, "popupPasswordGenerator"));
     auto* generator = password->findChild<PasswordGeneratorWidget*>();
     QVERIFY(generator);
-    generator->setDatabase(db.data(), profile.id());
+    auto* profiles = generator->findChild<QComboBox*>("profileComboBox");
+    profiles->setCurrentIndex(profiles->findData(profile.id()));
     generator->applyPassword();
     QCOMPARE(password->text(), QString("x"));
     QVERIFY(editor.isModified());
@@ -315,7 +325,9 @@ void TestPasswordProfiles::testLockDuringProfileDialog()
     Database db;
     PasswordWidget password;
     CustomData draft;
-    password.setGeneratorContext(&db, &draft);
+    connect(&password, &PasswordWidget::passwordGeneratorOpened, &password, [&](PasswordGeneratorWidget* generator) {
+        generator->setEntryContext(&db, &draft);
+    });
     QVERIFY(QMetaObject::invokeMethod(&password, "popupPasswordGenerator"));
     QPointer<PasswordGeneratorWidget> generator = password.findChild<PasswordGeneratorWidget*>();
     QVERIFY(generator);
@@ -329,6 +341,100 @@ void TestPasswordProfiles::testLockDuringProfileDialog()
     QVERIFY(generator.isNull());
     QVERIFY(db.passwordProfiles().isEmpty());
     QVERIFY(!draft.contains(CustomData::PasswordProfile));
+}
+
+void TestPasswordProfiles::testEntryContextReset()
+{
+    Database db;
+    PasswordProfile profile("Saved profile");
+    QVERIFY(db.addPasswordProfile(profile));
+    CustomData draft;
+    draft.set(CustomData::PasswordProfile, profile.id().toString(QUuid::WithoutBraces));
+    PasswordGeneratorWidget generator;
+    generator.setEntryContext(&db, &draft);
+    QCOMPARE(generator.selectedProfile(), profile.id());
+    QSignalSpy closed(&generator, &PasswordGeneratorWidget::closed);
+    QSignalSpy applied(&generator, &PasswordGeneratorWidget::appliedPassword);
+    draft.clear();
+    QCOMPARE(closed.count(), 1);
+    QVERIFY(generator.selectedProfile().isNull());
+    QVERIFY(generator.getGeneratedPassword().isEmpty());
+    generator.applyPassword();
+    QCOMPARE(applied.count(), 0);
+    QVERIFY(draft.isEmpty());
+}
+
+void TestPasswordProfiles::testEntryContextDestroyed()
+{
+    Database db;
+    PasswordGeneratorWidget generator;
+    QSignalSpy closed(&generator, &PasswordGeneratorWidget::closed);
+    {
+        CustomData draft;
+        generator.setEntryContext(&db, &draft);
+        QVERIFY(!generator.getGeneratedPassword().isEmpty());
+    }
+    QCOMPARE(closed.count(), 1);
+    QVERIFY(generator.getGeneratedPassword().isEmpty());
+    QSignalSpy applied(&generator, &PasswordGeneratorWidget::appliedPassword);
+    generator.applyPassword();
+    QCOMPARE(applied.count(), 0);
+}
+
+void TestPasswordProfiles::testReopenForAnotherEntry()
+{
+    auto db = QSharedPointer<Database>::create();
+    PasswordProfile firstProfile("First entry");
+    PasswordProfile secondProfile("Second entry");
+    QVERIFY(db->addPasswordProfile(firstProfile));
+    QVERIFY(db->addPasswordProfile(secondProfile));
+    auto* first = new Entry();
+    first->setUuid(QUuid::createUuid());
+    first->setGroup(db->rootGroup());
+    first->customData()->set(CustomData::PasswordProfile, firstProfile.id().toString(QUuid::WithoutBraces));
+    auto* second = new Entry();
+    second->setUuid(QUuid::createUuid());
+    second->setGroup(db->rootGroup());
+    second->customData()->set(CustomData::PasswordProfile, secondProfile.id().toString(QUuid::WithoutBraces));
+    EditEntryWidget editor;
+    editor.loadEntry(first, false, false, "Database", db);
+    auto* password = editor.findChild<PasswordWidget*>("passwordEdit");
+    QVERIFY(QMetaObject::invokeMethod(password, "popupPasswordGenerator"));
+    QPointer<PasswordGeneratorWidget> generator = password->findChild<PasswordGeneratorWidget*>();
+    QVERIFY(generator);
+    QCOMPARE(generator->selectedProfile(), firstProfile.id());
+    generator->close();
+    QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
+    QVERIFY(generator.isNull());
+    editor.loadEntry(second, false, false, "Database", db);
+    QVERIFY(QMetaObject::invokeMethod(password, "popupPasswordGenerator"));
+    generator = password->findChild<PasswordGeneratorWidget*>();
+    QVERIFY(generator);
+    QCOMPARE(generator->selectedProfile(), secondProfile.id());
+    generator->close();
+    QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
+    QVERIFY(!editor.isModified());
+}
+
+void TestPasswordProfiles::testPasswordWidgetWithoutContext()
+{
+    config()->set(Config::PasswordGenerator_Length, 18);
+    PasswordWidget password;
+    PasswordWidget repeat;
+    password.setRepeatPartner(&repeat);
+    password.setText("old");
+    QSignalSpy opened(&password, &PasswordWidget::passwordGeneratorOpened);
+    QVERIFY(QMetaObject::invokeMethod(&password, "popupPasswordGenerator"));
+    QCOMPARE(opened.count(), 1);
+    auto* generator = password.findChild<PasswordGeneratorWidget*>();
+    QVERIFY(generator);
+    QVERIFY(generator->selectedProfile().isNull());
+    QVERIFY(generator->findChild<QWidget*>("profileContainer")->isHidden());
+    generator->applyPassword();
+    QVERIFY(!password.text().isEmpty());
+    QVERIFY(password.text() != "old");
+    QCOMPARE(repeat.text(), password.text());
+    QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
 }
 
 int main(int argc, char** argv)

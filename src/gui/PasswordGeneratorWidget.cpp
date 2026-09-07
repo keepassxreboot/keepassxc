@@ -360,6 +360,15 @@ void PasswordGeneratorWidget::applyPassword()
     }
     saveSettings();
     m_passwordGenerated = true;
+    const auto id = selectedProfile();
+    if (m_entryCustomData && QUuid(m_entryCustomData->value(CustomData::PasswordProfile)) != id) {
+        if (id.isNull()) {
+            m_entryCustomData->remove(CustomData::PasswordProfile);
+        } else {
+            m_entryCustomData->set(CustomData::PasswordProfile, id.toString(QUuid::WithoutBraces));
+        }
+        emit entryProfileChanged();
+    }
     emit appliedProfile(selectedProfile());
     emit appliedPassword(m_ui->editNewPassword->text());
     emit closed();
@@ -660,6 +669,9 @@ void PasswordGeneratorWidget::setDatabase(Database* database, const QUuid& profi
 {
     disconnect(m_databaseConnection);
     disconnect(m_databaseDestroyedConnection);
+    disconnect(m_entryResetConnection);
+    disconnect(m_entryDestroyedConnection);
+    m_entryCustomData = nullptr;
     m_database = database;
     m_databaseSettings = false;
     m_profileUnavailable = false;
@@ -685,6 +697,19 @@ void PasswordGeneratorWidget::setDatabase(Database* database, const QUuid& profi
         m_ui->profileWarningLabel->show();
         m_ui->buttonGenerate->setEnabled(false);
         regeneratePassword();
+    }
+}
+
+void PasswordGeneratorWidget::setEntryContext(Database* database, CustomData* customData)
+{
+    const auto id = customData ? QUuid(customData->value(CustomData::PasswordProfile)) : QUuid();
+    setDatabase(database, id);
+    if (database && customData) {
+        m_entryCustomData = customData;
+        m_entryResetConnection =
+            connect(customData, &CustomData::aboutToBeReset, this, &PasswordGeneratorWidget::clearProfileContext);
+        m_entryDestroyedConnection =
+            connect(customData, &QObject::destroyed, this, &PasswordGeneratorWidget::clearProfileContext);
     }
 }
 
