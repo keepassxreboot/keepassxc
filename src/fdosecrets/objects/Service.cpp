@@ -603,6 +603,15 @@ namespace FdoSecrets
 
     void Service::onDatabaseUnlockDialogFinished(bool accepted, DatabaseWidget* dbWidget)
     {
+
+        if (!dbWidget) {
+            if (m_unlockingAnyDatabase) {
+                emit doneUnlockDatabaseInDialog(false, dbWidget);
+                m_unlockingAnyDatabase = false;
+            }
+            return;
+        }
+
         if (!m_unlockingAnyDatabase && !m_unlockingDb.contains(dbWidget)) {
             // not our concern
             return;
