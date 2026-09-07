@@ -20,6 +20,8 @@
 #include "BinaryStream.h"
 #include "OpenSSHKey.h"
 
+#define VALIDATE_RETURN(call) if (!call) { return false; }
+
 namespace
 {
     constexpr quint8 TAG_INT = 0x02;
@@ -28,22 +30,22 @@ namespace
 
     bool nextTag(BinaryStream& stream, quint8& tag, quint32& len)
     {
-        stream.read(tag);
+        VALIDATE_RETURN(stream.read(tag));
 
         quint8 lenByte;
-        stream.read(lenByte);
+        VALIDATE_RETURN(stream.read(lenByte));
 
         if (lenByte & 0x80) {
             quint32 bytes = lenByte & ~0x80;
             if (bytes == 1) {
-                stream.read(lenByte);
+                VALIDATE_RETURN(stream.read(lenByte));
                 len = lenByte;
             } else if (bytes == 2) {
                 quint16 lenShort;
-                stream.read(lenShort);
+                VALIDATE_RETURN(stream.read(lenShort));
                 len = lenShort;
             } else if (bytes == 4) {
-                stream.read(len);
+                VALIDATE_RETURN(stream.read(len));
             } else {
                 return false;
             }
@@ -59,20 +61,20 @@ namespace
         quint8 tag;
         quint32 len;
 
-        nextTag(stream, tag, len);
+        VALIDATE_RETURN(nextTag(stream, tag, len));
 
         if (tag != TAG_SEQUENCE) {
             return false;
         }
 
-        nextTag(stream, tag, len);
+        VALIDATE_RETURN(nextTag(stream, tag, len));
 
         if (tag != TAG_INT || len != 1) {
             return false;
         }
 
         quint8 keyType;
-        stream.read(keyType);
+        VALIDATE_RETURN(stream.read(keyType));
 
         return (keyType == wantedType);
     }
@@ -82,14 +84,14 @@ namespace
         quint8 tag;
         quint32 len;
 
-        nextTag(stream, tag, len);
+        VALIDATE_RETURN(nextTag(stream, tag, len));
 
-        if (tag != TAG_INT) {
+        if (tag != TAG_INT || len > 1024 * 1024 * 10) {
             return false;
         }
 
         target.resize(len);
-        stream.read(target);
+        VALIDATE_RETURN(stream.read(target));
         return true;
     }
 } // namespace
@@ -103,26 +105,26 @@ bool ASN1Key::parseDSA(QByteArray& ba, OpenSSHKey& key)
     }
 
     QByteArray p, q, g, y, x;
-    readInt(stream, p);
-    readInt(stream, q);
-    readInt(stream, g);
-    readInt(stream, y);
-    readInt(stream, x);
+    VALIDATE_RETURN(stream.read(p));
+    VALIDATE_RETURN(stream.read(q));
+    VALIDATE_RETURN(stream.read(g));
+    VALIDATE_RETURN(stream.read(y));
+    VALIDATE_RETURN(stream.read(x));
 
     QByteArray publicData;
     BinaryStream publicDataStream(&publicData);
-    publicDataStream.writeString(p);
-    publicDataStream.writeString(q);
-    publicDataStream.writeString(g);
-    publicDataStream.writeString(y);
+    VALIDATE_RETURN(publicDataStream.writeString(p));
+    VALIDATE_RETURN(publicDataStream.writeString(q));
+    VALIDATE_RETURN(publicDataStream.writeString(g));
+    VALIDATE_RETURN(publicDataStream.writeString(y));
 
     QByteArray privateData;
     BinaryStream privateDataStream(&privateData);
-    privateDataStream.writeString(p);
-    privateDataStream.writeString(q);
-    privateDataStream.writeString(g);
-    privateDataStream.writeString(y);
-    privateDataStream.writeString(x);
+    VALIDATE_RETURN(privateDataStream.writeString(p));
+    VALIDATE_RETURN(privateDataStream.writeString(q));
+    VALIDATE_RETURN(privateDataStream.writeString(g));
+    VALIDATE_RETURN(privateDataStream.writeString(y));
+    VALIDATE_RETURN(privateDataStream.writeString(x));
 
     key.setType("ssh-dss");
     key.setPublicData(publicData);
@@ -135,34 +137,32 @@ bool ASN1Key::parseRSA(QByteArray& ba, OpenSSHKey& key)
 {
     BinaryStream stream(&ba);
 
-    if (!parsePrivateHeader(stream, KEY_ZERO)) {
-        return false;
-    }
+    VALIDATE_RETURN(parsePrivateHeader(stream, KEY_ZERO));
 
     QByteArray n, e, d, p, q, dp, dq, qinv;
-    readInt(stream, n);
-    readInt(stream, e);
-    readInt(stream, d);
-    readInt(stream, p);
-    readInt(stream, q);
-    readInt(stream, dp);
-    readInt(stream, dq);
-    readInt(stream, qinv);
+    VALIDATE_RETURN(readInt(stream, n));
+    VALIDATE_RETURN(readInt(stream, e));
+    VALIDATE_RETURN(readInt(stream, d));
+    VALIDATE_RETURN(readInt(stream, p));
+    VALIDATE_RETURN(readInt(stream, q));
+    VALIDATE_RETURN(readInt(stream, dp));
+    VALIDATE_RETURN(readInt(stream, dq));
+    VALIDATE_RETURN(readInt(stream, qinv));
 
     // Note: To properly calculate the key fingerprint, e and n are reversed per RFC 4253
     QByteArray publicData;
     BinaryStream publicDataStream(&publicData);
-    publicDataStream.writeString(e);
-    publicDataStream.writeString(n);
+    VALIDATE_RETURN(publicDataStream.writeString(e));
+    VALIDATE_RETURN(publicDataStream.writeString(n));
 
     QByteArray privateData;
     BinaryStream privateDataStream(&privateData);
-    privateDataStream.writeString(n);
-    privateDataStream.writeString(e);
-    privateDataStream.writeString(d);
-    privateDataStream.writeString(qinv);
-    privateDataStream.writeString(p);
-    privateDataStream.writeString(q);
+    VALIDATE_RETURN(privateDataStream.writeString(n));
+    VALIDATE_RETURN(privateDataStream.writeString(e));
+    VALIDATE_RETURN(privateDataStream.writeString(d));
+    VALIDATE_RETURN(privateDataStream.writeString(qinv));
+    VALIDATE_RETURN(privateDataStream.writeString(p));
+    VALIDATE_RETURN(privateDataStream.writeString(q));
 
     key.setType("ssh-rsa");
     key.setPublicData(publicData);
