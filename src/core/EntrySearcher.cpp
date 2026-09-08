@@ -191,6 +191,9 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
         case Field::Attachment:
             found = !attachments.filter(term.regex).empty();
             break;
+        case Field::Uuid:
+            found = term.regex.match(entry->uuidToHex()).hasMatch();
+            break;
         case Field::Group:
             // Match against the full hierarchy if the word contains a '/' otherwise just the group name
             if (term.word.contains('/')) {
@@ -220,6 +223,9 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
                         break;
                     }
                 }
+            } else if (term.word.compare("recycled", Qt::CaseInsensitive) == 0) {
+                found = entry->isRecycled();
+                break;
             }
             found = false;
             break;
@@ -227,11 +233,14 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
             if (term.word.compare("totp", Qt::CaseInsensitive) == 0) {
                 found = entry->hasTotp();
                 break;
+            } else if (term.word.compare("passkey", Qt::CaseInsensitive) == 0) {
+                found = entry->hasPasskey();
+                break;
+            } else if (term.word.compare("expiration", Qt::CaseInsensitive) == 0) {
+                found = entry->timeInfo().expires();
+                break;
             }
             found = false;
-            break;
-        case Field::Uuid:
-            found = term.regex.match(entry->uuidToHex()).hasMatch();
             break;
         default:
             // Terms without a specific field try to match:

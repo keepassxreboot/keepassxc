@@ -273,9 +273,11 @@ The following fields can be searched along with their abbreviated name in parent
 * Notes (n)
 * Attribute names and values (attr)
 * Attachment (attach)
+* UUID (uuid)
 * Group (g)
 * Tags (tag)
-* Entry State (is:expired, is:weak)
+* Entry State (is:expired, is:weak, is:recycled)
+* Entry Feature (has:totp, has:passkey, has:expiration)
 
 Values in specific additional attributes can be searched by adding an underscore, e.g., `_customField1:value` searches for `value` only in field `customField1`.
 Note that also protected values are found regardless of the corresponding option, when explicitly searching the password field (e.g., `p:secret`).
