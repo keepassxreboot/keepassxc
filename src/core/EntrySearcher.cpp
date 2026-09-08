@@ -153,9 +153,7 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
         return false;
     };
 
-    // By default (skip protected fields), we will reject everything.
-    // However when including protected fields, empty term matches every entry instead.
-    bool found = m_includeProtected;
+    bool found = false;
     for (const auto& term : m_searchTerms) {
         switch (term.field) {
         case Field::Title:
