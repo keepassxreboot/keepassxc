@@ -53,7 +53,7 @@ public:
         bool exclude;
     };
 
-    explicit EntrySearcher(bool caseSensitive = false, bool includeProtected = false);
+    explicit EntrySearcher(bool caseSensitive = false, bool includeProtected = false, bool regularExpr = false);
 
     QList<Entry*> search(const QList<SearchTerm>& searchTerms, const Group* baseGroup, bool forceSearch = false);
     QList<Entry*> search(const QString& searchString, const Group* baseGroup, bool forceSearch = false);
@@ -69,12 +69,16 @@ public:
     void setIncludeProtected(bool state) { m_includeProtected = state; } // Set the next search to include protected fields
     bool isIncludeProtected() const { return m_includeProtected; }
 
+    void setRegularExpr(bool state) { m_regularExpr = state; } // Set the next search to handle terms as regular expressions
+    bool isRegularExpr() const { return m_regularExpr; }
+
 private:
     bool searchEntryImpl(const Entry* entry);
     void parseSearchTerms(const QString& searchString);
 
     bool m_caseSensitive;
     bool m_includeProtected;
+    bool m_regularExpr;
     QList<SearchTerm> m_searchTerms;
 
     friend class TestEntrySearcher;

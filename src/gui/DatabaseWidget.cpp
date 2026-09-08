@@ -1818,6 +1818,12 @@ void DatabaseWidget::setSearchIncludeProtected(bool state)
     refreshSearch();
 }
 
+void DatabaseWidget::setSearchRegularExpr(bool state)
+{
+    m_entrySearcher->setRegularExpr(state);
+    refreshSearch();
+}
+
 void DatabaseWidget::setSearchCaseSensitive(bool state)
 {
     m_entrySearcher->setCaseSensitive(state);

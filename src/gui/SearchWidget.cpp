@@ -70,6 +70,10 @@ SearchWidget::SearchWidget(QWidget* parent)
     m_actionCaseSensitive->setObjectName("actionSearchCaseSensitive");
     m_actionCaseSensitive->setCheckable(true);
 
+    m_actionRegularExpr = m_searchMenu->addAction(tr("Regular expression"), this, SLOT(updateRegularExpr()));
+    m_actionRegularExpr->setObjectName("actionSearchRegularExpr");
+    m_actionRegularExpr->setCheckable(true);
+
     m_actionLimitGroup = m_searchMenu->addAction(tr("Limit search to selected group"), this, SLOT(updateLimitGroup()));
     m_actionLimitGroup->setObjectName("actionSearchLimitGroup");
     m_actionLimitGroup->setCheckable(true);
@@ -162,6 +166,7 @@ void SearchWidget::connectSignals(SignalMultiplexer& mx)
     mx.connect(this, SIGNAL(search(QString)), SLOT(search(QString)));
     mx.connect(this, SIGNAL(saveSearch(QString)), SLOT(saveSearch(QString)));
     mx.connect(this, SIGNAL(includeProtectedChanged(bool)), SLOT(setSearchIncludeProtected(bool)));
+    mx.connect(this, SIGNAL(regularExprChanged(bool)), SLOT(setSearchRegularExpr(bool)));
     mx.connect(this, SIGNAL(caseSensitiveChanged(bool)), SLOT(setSearchCaseSensitive(bool)));
     mx.connect(this, SIGNAL(limitGroupChanged(bool)), SLOT(setSearchLimitGroup(bool)));
     mx.connect(this, SIGNAL(downPressed()), SLOT(focusOnEntries()));
@@ -180,6 +185,7 @@ void SearchWidget::databaseChanged(DatabaseWidget* dbWidget)
         m_ui->searchEdit->setText(dbWidget->getCurrentSearch());
         // Enforce search policy
         emit includeProtectedChanged(m_actionIncludeProtected->isChecked());
+        emit regularExprChanged(m_actionRegularExpr->isChecked());
         emit caseSensitiveChanged(m_actionCaseSensitive->isChecked());
         emit limitGroupChanged(m_actionLimitGroup->isChecked());
     } else {
@@ -215,6 +221,11 @@ void SearchWidget::updateIncludeProtected()
     emit includeProtectedChanged(m_actionIncludeProtected->isChecked());
 }
 
+void SearchWidget::updateRegularExpr()
+{
+    emit regularExprChanged(m_actionRegularExpr->isChecked());
+}
+
 void SearchWidget::updateCaseSensitive()
 {
     emit caseSensitiveChanged(m_actionCaseSensitive->isChecked());
@@ -230,6 +241,12 @@ void SearchWidget::setIncludeProtected(bool state)
 {
     m_actionIncludeProtected->setChecked(state);
     updateIncludeProtected();
+}
+
+void SearchWidget::setRegularExpr(bool state)
+{
+    m_actionRegularExpr->setChecked(state);
+    updateRegularExpr();
 }
 
 void SearchWidget::setCaseSensitive(bool state)

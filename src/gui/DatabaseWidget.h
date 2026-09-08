@@ -252,6 +252,7 @@ public slots:
     void saveSearch(const QString& searchtext);
     void deleteSearch(const QString& name);
     void setSearchIncludeProtected(bool state);
+    void setSearchRegularExpr(bool state);
     void setSearchCaseSensitive(bool state);
     void setSearchLimitGroup(bool state);
     void endSearch();

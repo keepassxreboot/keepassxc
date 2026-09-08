@@ -262,7 +262,6 @@ KeePassXC provides a robust search that enables you to find specific entries in 
 |-          |Exclude this term from results
 |!          |Exclude this term from results
 |+	        |Match this term exactly
-|*	        |Term is handled as a regular expression
 |===
 
 The following fields can be searched along with their abbreviated name in parentheses:
@@ -303,8 +302,8 @@ The following tables lists a few samples search queries for your reference:
 |`user:john\|smith`
 |Searches the Username field for john OR smith.
 
-|`+user:johnsmith -url:www.google.com *notes:"secret note \d"`
-|Search the username field for exactly johnsmith, the URL must not contain www.google.com, and notes contains secret note [digit].
+|`+user:johnsmith -url:www.google.com notes:"secret note*"`
+|Search the username field for exactly johnsmith, the URL must not contain www.google.com, and notes contains 'secret note*'.
 
 |`+attr:mystring123`
 |Searches all additional attributes for any name OR value equal to mystring123.
@@ -315,6 +314,14 @@ The following tables lists a few samples search queries for your reference:
 |`is:expired is:weak`
 |Searches for all expired entries with weak passwords.
 |===
+
+==== Search Options
+The following options are available to affect the search:
+* *Include protected fields*: Include protected fields in default search
+* *Case sensitive*: Set search terms to be case-sensitive
+* *Regular expression*: Search terms are handled as regular expressions
+* *Limit search to selected group*: Only search within selected group
+* *Press Enter to search*: Instead of automatic beginning of search, you have to press enter
 
 // tag::advanced[]
 === Merging Databases

@@ -22,9 +22,10 @@
 #include "core/Group.h"
 #include "core/Tools.h"
 
-EntrySearcher::EntrySearcher(bool caseSensitive, bool includeProtected)
+EntrySearcher::EntrySearcher(bool caseSensitive, bool includeProtected, bool regularExpr)
     : m_caseSensitive(caseSensitive)
     , m_includeProtected(includeProtected)
+    , m_regularExpr(regularExpr)
 {
 }
 
@@ -278,7 +279,7 @@ void EntrySearcher::parseSearchTerms(const QString& searchString)
         {QStringLiteral("uuid"), Field::Uuid}};
 
     // Group 1 = modifiers, Group 2 = field, Group 3 = quoted string, Group 4 = unquoted string
-    static QRegularExpression termParser(R"re(([-!*+]+)?(?:(\w*):)?(?:(?=")"((?:[^"\\]|\\.)*)"|([^ ]*))( |$))re");
+    static QRegularExpression termParser(R"re(([-!+]+)?(?:(\w*):)?(?:(?=")"((?:[^"\\]|\\.)*)"|([^ ]*))( |$))re");
 
     m_searchTerms.clear();
     auto results = termParser.globalMatch(searchString);
@@ -305,7 +306,7 @@ void EntrySearcher::parseSearchTerms(const QString& searchString)
 
         // Convert term to regex
         int opts = m_caseSensitive ? Tools::RegexConvertOpts::CASE_SENSITIVE : Tools::RegexConvertOpts::DEFAULT;
-        if (!mods.contains("*")) {
+        if (!m_regularExpr) {
             opts |= Tools::RegexConvertOpts::WILDCARD_ALL;
         }
         if (mods.contains("+")) {
