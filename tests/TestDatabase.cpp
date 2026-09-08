@@ -310,6 +310,12 @@ void TestDatabase::testExternallyModified()
 
 void TestDatabase::testCustomAttributeKeys()
 {
+    // Check for:
+    // - duplicate key
+    // - key of protected fields
+    // - recycled entry or group
+    // - unicode
+    // - sorting
     Database db;
     db.metadata()->setRecycleBinEnabled(true);
     QVERIFY(db.metadata()->recycleBinEnabled());
@@ -324,9 +330,9 @@ void TestDatabase::testCustomAttributeKeys()
     // Custom attributes of an entry in the root group
     auto entry1 = new Entry();
     entry1->setGroup(root);
-    entry1->attributes()->set("Custom10", "value");
     entry1->attributes()->set("Custom2", "value");
     entry1->attributes()->set("DuplicateKey", "value");
+    entry1->attributes()->set("東京", "unicode1");
 
     // Custom attributes of an entry in a nested group
     auto group = new Group();
@@ -338,13 +344,13 @@ void TestDatabase::testCustomAttributeKeys()
     entry2->attributes()->set("ProtectedKey", "value", true);
     entry2->attributes()->set("DuplicateKey", "value3");
     entry2->attributes()->set("Custom1", "value");
-    entry2->attributes()->set("Case-sensitive", "value2"); // Set is case-sensitive
+    entry2->attributes()->set("Naïve Café Österreich", "unicode2");
+    entry2->attributes()->set("😀Emoji", "unicode3");
 
-    // Same keys in another entry should only appear once
     auto entry3 = new Entry();
     entry3->setGroup(group);
     entry3->attributes()->set("Custom2", "another value");
-    entry3->attributes()->set("case-sensitive", "value"); // Set is case-sensitive
+    entry3->attributes()->set("customLowerCase", "value2");
     entry3->attributes()->set("Key with spaces", "test");
 
     // Entries in the recycle bin do not contribute
@@ -373,14 +379,15 @@ void TestDatabase::testCustomAttributeKeys()
     QVERIFY(!db.customAttributeKeys().contains("RecycledKeyGroup"));
 
     const QStringList expectedKeys = {
-        QStringLiteral("Case-sensitive"),
         QStringLiteral("Custom1"),
-        QStringLiteral("Custom10"),
         QStringLiteral("Custom2"),
+        QStringLiteral("customLowerCase"),
         QStringLiteral("DuplicateKey"),
         QStringLiteral("Key with spaces"),
+        QStringLiteral("Naïve Café Österreich"),
         QStringLiteral("ProtectedKey"),
-        QStringLiteral("case-sensitive"),
+        QStringLiteral("東京"),
+        QStringLiteral("😀Emoji"),
     };
 
     QCOMPARE(db.customAttributeKeys(), expectedKeys);
