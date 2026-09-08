@@ -223,9 +223,6 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
                         break;
                     }
                 }
-            } else if (term.word.compare("recycled", Qt::CaseInsensitive) == 0) {
-                found = entry->isRecycled();
-                break;
             }
             found = false;
             break;
