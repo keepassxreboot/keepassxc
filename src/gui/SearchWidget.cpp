@@ -50,7 +50,7 @@ SearchWidget::SearchWidget(QWidget* parent)
     connect(m_ui->searchEdit, SIGNAL(textChanged(QString)), SLOT(startSearchTimer()));
     connect(m_ui->searchEdit, SIGNAL(textChanged(QString)), SLOT(updateSaveButtonVisibility()));
     connect(m_ui->helpIcon, SIGNAL(triggered()), SLOT(toggleHelp()));
-    connect(m_ui->searchIcon, SIGNAL(triggered()), SLOT(showSearchMenu()));
+    connect(m_ui->searchOptionsIcon, SIGNAL(triggered()), SLOT(showSearchMenu()));
     connect(m_ui->saveIcon, &QAction::triggered, this, [this] { emit saveSearch(m_ui->searchEdit->text()); });
     connect(m_searchTimer, SIGNAL(timeout()), SLOT(startSearch()));
     connect(m_clearSearchTimer, SIGNAL(timeout()), SLOT(clearSearch()));
@@ -81,8 +81,12 @@ SearchWidget::SearchWidget(QWidget* parent)
     m_actionWaitForEnter->setCheckable(true);
     m_actionWaitForEnter->setChecked(config()->get(Config::GUI_SearchWaitForEnter).toBool());
 
-    m_ui->searchIcon->setIcon(icons()->icon("system-search-options"));
+    // Just an icon, not connected to any action
+    m_ui->searchIcon->setIcon(icons()->icon("system-search"));
     m_ui->searchEdit->addAction(m_ui->searchIcon, QLineEdit::LeadingPosition);
+
+    m_ui->searchOptionsIcon->setIcon(icons()->icon("system-search-options"));
+    m_ui->searchEdit->addAction(m_ui->searchOptionsIcon, QLineEdit::TrailingPosition);
 
     m_ui->helpIcon->setIcon(icons()->icon("system-help"));
     m_ui->searchEdit->addAction(m_ui->helpIcon, QLineEdit::TrailingPosition);
@@ -264,7 +268,9 @@ void SearchWidget::toggleHelp()
 
 void SearchWidget::showSearchMenu()
 {
-    m_searchMenu->exec(m_ui->searchEdit->mapToGlobal(m_ui->searchEdit->rect().bottomLeft()));
+    // Right-align search options menu with search bar
+    const auto pos = m_ui->searchEdit->rect().bottomRight() - QPoint(m_searchMenu->sizeHint().width(), 0);
+    m_searchMenu->exec(m_ui->searchEdit->mapToGlobal(pos));
 }
 
 void SearchWidget::onReturnPressed()
