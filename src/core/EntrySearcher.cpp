@@ -288,8 +288,13 @@ void EntrySearcher::parseSearchTerms(const QString& searchString)
     m_searchTerms.clear();
     auto results = termParser.globalMatch(searchString);
     while (results.hasNext()) {
-        auto result = results.next();
+        const auto result = results.next();
         SearchTerm term{};
+
+        const auto mods = result.captured(1);
+
+        const QString field = result.captured(2);
+        const bool hasField = !field.isEmpty();
 
         // Quoted string group
         term.word = result.captured(3);
@@ -301,19 +306,20 @@ void EntrySearcher::parseSearchTerms(const QString& searchString)
             term.word = result.captured(4);
         }
 
-        // If still empty, ignore this match
-        if (term.word.isEmpty()) {
+        // Skip leftover whitespace but continue if, e.g., "u:" is searched
+        if (term.word.isEmpty() && !hasField) {
             continue;
         }
-
-        auto mods = result.captured(1);
 
         // Convert term to regex
         int opts = m_caseSensitive ? Tools::RegexConvertOpts::CASE_SENSITIVE : Tools::RegexConvertOpts::DEFAULT;
         if (!m_regularExpr) {
             opts |= Tools::RegexConvertOpts::WILDCARD_ALL;
         }
-        if (mods.contains("+")) {
+        // Empty field value (e.g. u: or u:"") should match entries where field is empty
+        // Therefore, enforce an exact match against the empty string
+        const bool emptyFieldValue = term.word.isEmpty() && hasField;
+        if (mods.contains("+") || emptyFieldValue) {
             opts |= Tools::RegexConvertOpts::EXACT_MATCH;
         }
         term.regex = Tools::convertToRegex(term.word, opts);
@@ -324,8 +330,7 @@ void EntrySearcher::parseSearchTerms(const QString& searchString)
         // Determine the field to search
         term.field = Field::Undefined;
 
-        QString field = result.captured(2);
-        if (!field.isEmpty()) {
+        if (hasField) {
             if (field.startsWith("_", Qt::CaseInsensitive)) {
                 term.field = Field::AttributeValue;
                 // searching a custom attribute
