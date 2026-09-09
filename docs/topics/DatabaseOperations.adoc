@@ -314,6 +314,9 @@ The following tables lists a few samples search queries for your reference:
 |`+tag:personal`
 | Search exactly for the 'personal' tag and do not include tags such as 'my personal'.
 
+|`!u:`
+| Searches for entries with non-empty username.
+
 |`is:expired is:weak`
 |Searches for all expired entries with weak passwords.
 |===
