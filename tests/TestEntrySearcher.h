@@ -39,6 +39,7 @@ private slots:
     void testCustomAttributesAreSearched();
     void testGroup();
     void testIncludeProtected();
+    void testCaseSensitivity();
     void testUUIDSearch();
     void testTotpSearch();
 
