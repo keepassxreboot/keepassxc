@@ -121,6 +121,9 @@ namespace FdoSecrets
         // add custom attributes
         const auto customKeys = entryAttrs->customKeys();
         for (const auto& attr : customKeys) {
+            if (entryAttrs->isProtected(attr)) {
+                continue;
+            }
             attrs[attr] = entryAttrs->value(attr);
         }
 
