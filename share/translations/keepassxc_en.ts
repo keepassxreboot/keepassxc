@@ -6505,6 +6505,14 @@ This version is not meant for production use.</source>
             <numerusform></numerusform>
         </translation>
     </message>
+    <message>
+        <source>&amp;Merge Entries…</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Merge Selected Entries</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ManageDatabase</name>
@@ -6576,6 +6584,101 @@ This version is not meant for production use.</source>
     </message>
     <message>
         <source>Change</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MergeEntriesDialog</name>
+    <message>
+        <source>Merge Entries</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The selected entries are combined into a single entry. Attachments, tags, Auto-Type associations and a passkey are carried over where the entry you merge into has none of its own.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Merge &amp;into:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The entry that is kept. All other selected entries are merged into it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose the value to keep for each field the entries disagree on:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Field</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Value to keep</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The selected entries do not disagree on any field, so there is nothing to choose.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Combine the notes of all entries</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Append the notes of the merged entries instead of keeping only one of them.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep the values that are not kept as custom attributes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Discarded URLs are always kept as additional URLs.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete the merged entries afterwards</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>An entry can hold only one passkey. Left out of the merge and kept unchanged: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The notes of all entries are combined</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>URL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Notes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Value of %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(no title)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%1 — in %2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

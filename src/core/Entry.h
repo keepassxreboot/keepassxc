@@ -19,8 +19,10 @@
 #ifndef KEEPASSX_ENTRY_H
 #define KEEPASSX_ENTRY_H
 
+#include <QHash>
 #include <QMap>
 #include <QPointer>
+#include <QSet>
 #include <QUuid>
 
 #include "core/AutoTypeAssociations.h"
@@ -187,6 +189,65 @@ public:
      */
     QStringList calculateDifference(const Entry* other);
 
+    enum MergeFlag
+    {
+        MergeNoFlags = 0,
+        MergeKeepDiscardedUrls = 1, // keep URLs that lose a conflict as additional URLs
+        MergeKeepDiscardedValues = 2, // keep other values that lose a conflict as custom attributes
+        MergeConcatenateNotes = 4, // append the notes of the other entries instead of keeping one of them
+        MergeDefault = MergeKeepDiscardedUrls | MergeKeepDiscardedValues,
+    };
+    Q_DECLARE_FLAGS(MergeFlags, MergeFlag)
+
+    /**
+     * Determine the values several entries hold for the same attribute.
+     *
+     * Attributes that all entries agree on are left out, so the result contains
+     * exactly those attributes that need a decision before the entries can be
+     * merged into one. Passkey attributes are never reported because a passkey is
+     * only ever merged as a whole.
+     *
+     * @return The conflicting attribute names, each mapped to the distinct
+     *         non-empty values found, in the order the entries were given
+     */
+    static QMap<QString, QStringList> conflictingAttributes(const QList<Entry*>& entries);
+
+    /**
+     * Determine which of the other entries cannot be merged into this one.
+     *
+     * An entry holds at most one passkey. Rather than being merged without its
+     * passkey, an entry whose passkey would have to be dropped is left out of the
+     * merge entirely. The entries are considered in the order given, so the first
+     * passkey found is the one merged into an entry that has none yet.
+     *
+     * @return The entries mergeFrom() leaves out, in the order given
+     */
+    QList<Entry*> unmergeableEntries(const QList<Entry*>& others) const;
+
+    /**
+     * Merge other entries into this one.
+     *
+     * The values in @p resolvedAttributes are applied first and are never
+     * overwritten afterwards. Every other attribute, attachment, tag, Auto-Type
+     * association, custom data item, the icon and the TOTP settings are taken from
+     * the other entries only where this entry has nothing of its own, so a merge
+     * never silently replaces existing data. Conflicting values that are dropped
+     * are kept as additional URLs or as custom attributes, depending on @p flags.
+     *
+     * Custom icons are expected to belong to the same database as this entry.
+     *
+     * A passkey is merged as a single unit and only into an entry that does not
+     * carry one yet, so that no passkey is left half-merged. The entries reported
+     * by unmergeableEntries() are skipped entirely.
+     *
+     * The other entries are left untouched; removing them is up to the caller. Wrap
+     * the call in beginUpdate() and endUpdate() to make the merge undoable through
+     * the entry history.
+     */
+    void mergeFrom(const QList<Entry*>& others,
+                   const QHash<QString, QString>& resolvedAttributes = {},
+                   MergeFlags flags = MergeDefault);
+
     enum CloneFlag
     {
         CloneNoFlags = 0,
@@ -255,6 +316,14 @@ private:
     QString resolveReferencePlaceholderRecursive(const QString& placeholder, int maxDepth) const;
     QString referenceFieldValue(EntryReferenceType referenceType) const;
 
+    void mergeAttributesFrom(const Entry* other, const QSet<QString>& protectedKeys, MergeFlags flags);
+    void mergePasskeyFrom(const Entry* other);
+    void mergeAttachmentsFrom(const Entry* other);
+    void addAdditionalUrl(const QString& url);
+    static bool isUrlAttribute(const QString& key);
+    QString availableAttributeKey(const QString& key) const;
+    QString availableAttachmentKey(const QString& key) const;
+
     static QString buildReference(const QUuid& uuid, const QString& field);
     static EntryReferenceType referenceType(const QString& referenceStr);
 
@@ -276,5 +345,6 @@ private:
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(Entry::CloneFlags)
+Q_DECLARE_OPERATORS_FOR_FLAGS(Entry::MergeFlags)
 
 #endif // KEEPASSX_ENTRY_H
