@@ -27,5 +27,5 @@ set(keeshare_SOURCES
     )
 
 add_library(keeshare STATIC ${keeshare_SOURCES})
-target_link_libraries(keeshare PUBLIC Qt6::Core Qt6::Widgets ${BOTAN_LIBRARIES} ${ZLIB_LIBRARIES} PRIVATE ${MINIZIP_LIBRARIES})
+target_link_libraries(keeshare PUBLIC Qt6::Core Qt6::Widgets Botan::botan ${ZLIB_LIBRARIES} PRIVATE ${MINIZIP_LIBRARIES})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR})
