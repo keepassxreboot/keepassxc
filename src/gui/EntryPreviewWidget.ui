@@ -219,7 +219,7 @@
           <layout class="QVBoxLayout" name="verticalLayout_5">
            <item>
             <widget class="QWidget" name="entryGeneralWidget" native="true">
-             <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,1" columnstretch="0,1,0,0,0,1">
+             <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0,1" columnstretch="0,1,0,0,0,1">
               <property name="leftMargin">
                <number>0</number>
               </property>
@@ -392,7 +392,7 @@
                 </property>
                </widget>
               </item>
-              <item row="3" column="1" colspan="5">
+              <item row="4" column="1" colspan="5">
                <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,0">
                 <property name="spacing">
                  <number>6</number>
@@ -440,7 +440,7 @@
                 </item>
                </layout>
               </item>
-              <item row="2" column="0">
+              <item row="3" column="0">
                <widget class="QLabel" name="entryTagsTitleLabel">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
@@ -516,7 +516,7 @@
                 </item>
                </layout>
               </item>
-              <item row="2" column="1" colspan="5">
+              <item row="3" column="1" colspan="5">
                <widget class="TagsEdit" name="entryTagsList" native="true">
                 <property name="focusPolicy">
                  <enum>Qt::ClickFocus</enum>
@@ -592,7 +592,7 @@
                 </property>
                </widget>
               </item>
-              <item row="3" column="0">
+              <item row="4" column="0">
                <widget class="QLabel" name="entryNotesTitleLabel">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
@@ -634,6 +634,33 @@
                 <property name="alignment">
                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                 </property>
+               </widget>
+              </item>
+              <item row="2" column="0" colspan="6">
+               <widget class="QWidget" name="entryPinnedAttributesWidget" native="true">
+                <layout class="QFormLayout" name="entryPinnedAttributesLayout">
+                 <property name="leftMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="horizontalSpacing">
+                  <number>8</number>
+                 </property>
+                 <property name="verticalSpacing">
+                  <number>6</number>
+                 </property>
+                 <property name="labelAlignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                 </property>
+                </layout>
                </widget>
               </item>
               <item row="0" column="4">

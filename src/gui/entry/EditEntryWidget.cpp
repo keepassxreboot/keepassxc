@@ -257,6 +257,8 @@ void EditEntryWidget::setupAdvanced()
     connect(m_advancedUi->editAttributeButton, SIGNAL(clicked()), SLOT(editCurrentAttribute()));
     connect(m_advancedUi->removeAttributeButton, SIGNAL(clicked()), SLOT(removeCurrentAttribute()));
     connect(m_advancedUi->protectAttributeButton, SIGNAL(toggled(bool)), SLOT(protectCurrentAttribute(bool)));
+    connect(m_advancedUi->pinAttributeButton, SIGNAL(toggled(bool)), SLOT(pinCurrentAttribute(bool)));
+    connect(m_entryAttributes, SIGNAL(renamed(QString,QString)), SLOT(updatePinnedAttributeRename(QString,QString)));
     connect(m_advancedUi->revealAttributeButton, SIGNAL(clicked(bool)), SLOT(toggleCurrentAttributeVisibility()));
     connect(m_advancedUi->attributesView->selectionModel(),
             SIGNAL(currentChanged(QModelIndex,QModelIndex)),
@@ -523,6 +525,7 @@ void EditEntryWidget::setupEntryUpdate()
     // Advanced tab
     connect(m_advancedUi->attributesEdit, SIGNAL(textChanged()), this, SLOT(setModified()));
     connect(m_advancedUi->protectAttributeButton, SIGNAL(stateChanged(int)), this, SLOT(setModified()));
+    connect(m_advancedUi->pinAttributeButton, SIGNAL(stateChanged(int)), this, SLOT(setModified()));
     connect(m_advancedUi->excludeReportsCheckBox, SIGNAL(stateChanged(int)), this, SLOT(setModified()));
     connect(m_advancedUi->fgColorCheckBox, SIGNAL(stateChanged(int)), this, SLOT(setModified()));
     connect(m_advancedUi->bgColorCheckBox, SIGNAL(stateChanged(int)), this, SLOT(setModified()));
@@ -1471,7 +1474,12 @@ void EditEntryWidget::removeCurrentAttribute()
                                            MessageBox::Cancel);
 
         if (result == MessageBox::Remove) {
-            m_entryAttributes->remove(m_attributesModel->keyByIndex(index));
+            QString key = m_attributesModel->keyByIndex(index);
+            m_entryAttributes->remove(key);
+            auto pinned = Entry::pinnedAttributes(m_customData.data());
+            if (pinned.removeAll(key) > 0) {
+                Entry::setPinnedAttributes(m_customData.data(), pinned);
+            }
             setModified(true);
         }
     }
@@ -1500,11 +1508,14 @@ void EditEntryWidget::displayAttribute(QModelIndex index, bool showProtected)
 {
     // Block signals to prevent modified being set
     m_advancedUi->protectAttributeButton->blockSignals(true);
+    m_advancedUi->pinAttributeButton->blockSignals(true);
     m_advancedUi->attributesEdit->blockSignals(true);
     m_advancedUi->revealAttributeButton->setText(tr("Reveal"));
 
     if (index.isValid()) {
         QString key = m_attributesModel->keyByIndex(index);
+        m_advancedUi->pinAttributeButton->setChecked(Entry::pinnedAttributes(m_customData.data()).contains(key));
+        m_advancedUi->pinAttributeButton->setEnabled(!m_history);
         if (showProtected) {
             m_advancedUi->attributesEdit->setPlainText(tr("[PROTECTED] Press Reveal to view or edit"));
             m_advancedUi->attributesEdit->setEnabled(false);
@@ -1527,11 +1538,14 @@ void EditEntryWidget::displayAttribute(QModelIndex index, bool showProtected)
         m_advancedUi->revealAttributeButton->setEnabled(false);
         m_advancedUi->protectAttributeButton->setChecked(false);
         m_advancedUi->protectAttributeButton->setEnabled(false);
+        m_advancedUi->pinAttributeButton->setChecked(false);
+        m_advancedUi->pinAttributeButton->setEnabled(false);
         m_advancedUi->editAttributeButton->setEnabled(false);
         m_advancedUi->removeAttributeButton->setEnabled(false);
     }
 
     m_advancedUi->protectAttributeButton->blockSignals(false);
+    m_advancedUi->pinAttributeButton->blockSignals(false);
     m_advancedUi->attributesEdit->blockSignals(false);
 }
 
@@ -1550,6 +1564,35 @@ void EditEntryWidget::protectCurrentAttribute(bool state)
 
         // Display the attribute
         displayAttribute(index, state);
+    }
+}
+
+void EditEntryWidget::pinCurrentAttribute(bool state)
+{
+    QModelIndex index = m_advancedUi->attributesView->currentIndex();
+    if (!m_history && index.isValid()) {
+        QString key = m_attributesModel->keyByIndex(index);
+        auto pinned = Entry::pinnedAttributes(m_customData.data());
+        if (state && !pinned.contains(key)) {
+            pinned.append(key);
+        } else if (!state) {
+            pinned.removeAll(key);
+        }
+        Entry::setPinnedAttributes(m_customData.data(), pinned);
+    }
+}
+
+void EditEntryWidget::updatePinnedAttributeRename(const QString& oldKey, const QString& newKey)
+{
+    auto pinned = Entry::pinnedAttributes(m_customData.data());
+    if (pinned.contains(oldKey)) {
+        for (auto& name : pinned) {
+            if (name == oldKey) {
+                name = newKey;
+            }
+        }
+        Entry::setPinnedAttributes(m_customData.data(), pinned);
+        setModified(true);
     }
 }
 
