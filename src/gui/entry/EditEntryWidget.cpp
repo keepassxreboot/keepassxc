@@ -86,16 +86,18 @@ namespace
         {
             auto* editor = QStyledItemDelegate::createEditor(parent, option, index);
             if (auto* lineEdit = qobject_cast<QLineEdit*>(editor)) {
-                auto* completer = new QCompleter(m_getSuggestion ? m_getSuggestion() : QStringList(), lineEdit);
-                completer->setCaseSensitivity(Qt::CaseInsensitive);
-                completer->setFilterMode(Qt::MatchContains);
-                lineEdit->setCompleter(completer);
+                if (config()->get(Config::AutocompleteSuggestions).toBool()) {
+                    auto* completer = new QCompleter(m_getSuggestion ? m_getSuggestion() : QStringList(), lineEdit);
+                    completer->setCaseSensitivity(Qt::CaseInsensitive);
+                    completer->setFilterMode(Qt::MatchContains);
+                    lineEdit->setCompleter(completer);
 
-                // Display suggestions without requiring initial input
-                QTimer::singleShot(0, lineEdit, [completer] {
-                    completer->setCompletionPrefix(QString());
-                    completer->complete();
-                });
+                    // Display suggestions without requiring initial input
+                    QTimer::singleShot(0, lineEdit, [completer] {
+                        completer->setCompletionPrefix(QString());
+                        completer->complete();
+                    });
+                }
             }
             return editor;
         }
@@ -1104,7 +1106,8 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
     m_mainUi->expirePresets->setEnabled(!m_history);
 
     QList<QString> commonUsernames = m_db->commonUsernames();
-    m_usernameCompleterModel->setStringList(commonUsernames);
+    m_usernameCompleterModel->setStringList(
+        config()->get(Config::AutocompleteSuggestions).toBool() ? commonUsernames : QList<QString>());
     QString usernameToRestore = m_mainUi->usernameComboBox->lineEdit()->text();
     m_mainUi->usernameComboBox->clear();
     m_mainUi->usernameComboBox->addItems(commonUsernames);
