@@ -538,7 +538,7 @@
               <item>
                <widget class="QCheckBox" name="autocompleteSuggestionsCheckBox">
                 <property name="text">
-                 <string>Show autocomplete suggestions for usernames and additional attributes</string>
+                 <string>Show autocomplete suggestions for username and additional attributes</string>
                 </property>
                </widget>
               </item>

@@ -1106,8 +1106,8 @@ void EditEntryWidget::setForms(Entry* entry, bool restore)
     m_mainUi->expirePresets->setEnabled(!m_history);
 
     QList<QString> commonUsernames = m_db->commonUsernames();
-    m_usernameCompleterModel->setStringList(
-        config()->get(Config::AutocompleteSuggestions).toBool() ? commonUsernames : QList<QString>());
+    m_usernameCompleterModel->setStringList(config()->get(Config::AutocompleteSuggestions).toBool() ? commonUsernames
+                                                                                                    : QList<QString>());
     QString usernameToRestore = m_mainUi->usernameComboBox->lineEdit()->text();
     m_mainUi->usernameComboBox->clear();
     m_mainUi->usernameComboBox->addItems(commonUsernames);
