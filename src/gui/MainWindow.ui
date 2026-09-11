@@ -386,6 +386,7 @@
      <addaction name="actionThemeAuto"/>
      <addaction name="actionThemeLight"/>
      <addaction name="actionThemeDark"/>
+     <addaction name="actionThemeOled"/>
      <addaction name="actionThemeClassic"/>
     </widget>
     <addaction name="menuTheme"/>
@@ -1175,6 +1176,17 @@
    </property>
    <property name="toolTip">
     <string>Set Theme: Dark</string>
+   </property>
+  </action>
+  <action name="actionThemeOled">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Dark (OLED)</string>
+   </property>
+   <property name="toolTip">
+    <string>Set Theme: Dark (OLED) — pure-black theme for OLED displays</string>
    </property>
   </action>
   <action name="actionThemeClassic">
