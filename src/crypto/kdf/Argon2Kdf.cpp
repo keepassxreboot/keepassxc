@@ -163,6 +163,13 @@ QVariantMap Argon2Kdf::writeParameters()
 
 bool Argon2Kdf::transform(const QByteArray& raw, QByteArray& result) const
 {
+    // This is a programming error and will result in broken encryption
+    Q_ASSERT(raw.data() != result.data());
+    if (raw.data() == result.data()) {
+        qWarning("Argon2Kdf: Input and output buffers must not be the same.");
+        return false;
+    }
+
     result.clear();
     result.resize(32);
 
@@ -193,11 +200,12 @@ QSharedPointer<Kdf> Argon2Kdf::clone() const
 int Argon2Kdf::benchmark(int msec) const
 {
     QByteArray key = QByteArray(16, '\x7E');
+    QByteArray tmp;
 
     QElapsedTimer timer;
     timer.start();
 
-    if (transform(key, key)) {
+    if (transform(key, tmp)) {
         return static_cast<int>(rounds() * (static_cast<float>(msec) / timer.elapsed()));
     }
 

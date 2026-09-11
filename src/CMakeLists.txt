@@ -211,6 +211,7 @@ set(gui_SOURCES
         gui/wizard/NewDatabaseWizardPageEncryption.cpp
         gui/wizard/NewDatabaseWizardPageDatabaseKey.cpp
         quickunlock/QuickUnlockInterface.cpp
+        quickunlock/PinUnlock.cpp
         ../share/icons/icons.qrc
         ../share/wizard/wizard.qrc)
 
@@ -222,10 +223,7 @@ if(APPLE)
             gui/osutils/macutils/ScreenLockListenerMac.cpp
             gui/osutils/macutils/AppKitImpl.mm
             gui/osutils/macutils/AppKit.h
-            quickunlock/TouchID.mm)
-
-    # TODO: Remove -Wno-error once deprecation warnings have been resolved.
-    set_source_files_properties(quickunlock/TouchID.mm PROPERTY COMPILE_FLAGS "-Wno-old-style-cast")
+            quickunlock/TouchID.cpp)
 endif()
 
 if(UNIX AND NOT APPLE)
@@ -237,10 +235,22 @@ if(UNIX AND NOT APPLE)
             gui/osutils/nixutils/RemoteDesktopPortal.cpp
             gui/osutils/nixutils/ScreenLockListenerDBus.cpp
     )
+
+    # Polkit is only available on Linux systems
     if("${CMAKE_SYSTEM}" MATCHES "Linux")
-        list(APPEND core_SOURCES
+        list(APPEND gui_SOURCES
                 quickunlock/Polkit.cpp
                 quickunlock/PolkitDbusTypes.cpp)
+
+        set_source_files_properties(
+                quickunlock/dbus/org.freedesktop.PolicyKit1.Authority.xml
+                PROPERTIES
+                INCLUDE "quickunlock/PolkitDbusTypes.h"
+        )
+        qt6_add_dbus_interface(gui_SOURCES
+                quickunlock/dbus/org.freedesktop.PolicyKit1.Authority.xml
+                polkit_dbus
+        )
     endif()
     if(WITH_X11)
         list(APPEND gui_SOURCES
@@ -250,16 +260,7 @@ if(UNIX AND NOT APPLE)
             gui/org.keepassxc.KeePassXC.MainWindow.xml
             gui/MainWindow.h
             MainWindow)
-
-    set_source_files_properties(
-        quickunlock/dbus/org.freedesktop.PolicyKit1.Authority.xml
-        PROPERTIES
-        INCLUDE "quickunlock/PolkitDbusTypes.h"
-        )
-    qt6_add_dbus_interface(core_SOURCES
-        quickunlock/dbus/org.freedesktop.PolicyKit1.Authority.xml
-        polkit_dbus
-    )
+    
     qt6_add_dbus_interface(core_SOURCES
         gui/osutils/nixutils/dbus/org.freedesktop.portal.Request.xml
         xdp_request

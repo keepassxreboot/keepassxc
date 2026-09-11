@@ -15,8 +15,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef KEEPASSXC_POLKITDBUSTYPES_H
-#define KEEPASSXC_POLKITDBUSTYPES_H
+#pragma once
 
 #include <QtDBus>
 
@@ -47,7 +46,30 @@ public:
     friend const QDBusArgument& operator>>(const QDBusArgument& argument, PolkitAuthorizationResults& subject);
 };
 
+class PolkitActionDescription
+{
+public:
+    QString actionId;
+    QString description;
+    QString message;
+    QString vendorName;
+    QString vendorUrl;
+    QString iconName;
+    uint implicitAny;
+    uint implicitInactive;
+    uint implicitActive;
+    QMap<QString, QString> annotations;
+
+    static void registerMetaType();
+
+    friend QDBusArgument& operator<<(QDBusArgument& argument, const PolkitActionDescription& action);
+
+    friend const QDBusArgument& operator>>(const QDBusArgument& argument, PolkitActionDescription& action);
+};
+
+typedef QList<PolkitActionDescription> PolkitActionDescriptionList;
+
 Q_DECLARE_METATYPE(PolkitSubject);
 Q_DECLARE_METATYPE(PolkitAuthorizationResults);
-
-#endif // KEEPASSXC_POLKITDBUSTYPES_H
+Q_DECLARE_METATYPE(PolkitActionDescription);
+Q_DECLARE_METATYPE(PolkitActionDescriptionList);

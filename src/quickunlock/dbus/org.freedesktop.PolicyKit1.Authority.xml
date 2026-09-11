@@ -12,5 +12,10 @@
       <annotation name="org.qtproject.QtDBus.QtTypeName.In0" value="PolkitSubject"/>
       <annotation name="org.qtproject.QtDBus.QtTypeName.In2" value="QMap&lt;QString, QString&gt;"/>
     </method>
+	<method name="EnumerateActions">
+	  <arg type="s" name="locale" direction="in" />
+	  <arg type="a(ssssssuuua{ss})" name="action_descriptions" direction="out" />
+      <annotation name="org.qtproject.QtDBus.QtTypeName.Out0" value="PolkitActionDescriptionList"/>
+	</method>
   </interface>
 </node>

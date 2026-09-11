@@ -82,9 +82,8 @@ void DatabaseOpenDialog::showEvent(QShowEvent* event)
     GuiTools::centerWidgetOnActiveScreen(this);
 
     QTimer::singleShot(100, this, [this] {
-        if (m_view->isOnQuickUnlockScreen() && !m_view->unlockingDatabase()) {
-            m_view->triggerQuickUnlock();
-        }
+        // Automatically trigger quick unlock if it's available
+        m_view->triggerQuickUnlock();
     });
 }
 

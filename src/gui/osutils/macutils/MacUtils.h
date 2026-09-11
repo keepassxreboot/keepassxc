@@ -69,6 +69,22 @@ public:
     bool canPreventScreenCapture() const override;
     bool setPreventScreenCapture(QWindow* window, bool prevent) const override;
 
+    // Key management API (TouchID)
+    bool saveSecret(const QString& key, const QByteArray& secretData) const override;
+    bool getSecret(const QString& key, QByteArray& secretData) const override;
+    bool hasSecret(const QString& key) const override;
+    bool removeSecret(const QString& key) const override;
+    bool removeAllSecrets() const override;
+
+    enum class AuthPolicy
+    {
+        TouchId,
+        Watch,
+        PasswordFallback
+    };
+
+    bool isAuthPolicyAvailable(AuthPolicy policy) const;
+
 signals:
     void userSwitched();
 

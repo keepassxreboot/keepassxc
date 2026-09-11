@@ -62,6 +62,12 @@ public:
     bool canPreventScreenCapture() const override;
     bool setPreventScreenCapture(QWindow* window, bool prevent) const override;
 
+    bool saveSecret(const QString& key, const QByteArray& secretData) const override;
+    bool getSecret(const QString& key, QByteArray& secretData) const override;
+    bool hasSecret(const QString& key) const override;
+    bool removeSecret(const QString& key) const override;
+    bool removeAllSecrets() const override;
+
 protected:
     explicit WinUtils(QObject* parent = nullptr);
     ~WinUtils() override = default;
