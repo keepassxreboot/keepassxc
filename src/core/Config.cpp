@@ -72,7 +72,7 @@ static const QHash<Config::ConfigKey, ConfigDirective> configStrings = {
     {Config::URLDoubleClickAction, {QS("URLDoubleClickAction"), Roaming, 0}},
     {Config::HideWindowOnCopy,{QS("HideWindowOnCopy"), Roaming, false}},
     {Config::MinimizeOnCopy,{QS("MinimizeOnCopy"), Roaming, true}},
-    {Config::AutocompleteSuggestions,{QS("AutocompleteSuggestions"), Roaming, false}},
+    {Config::AutocompleteSuggestions,{QS("AutocompleteSuggestions"), Roaming, true}},
     {Config::AutoGeneratePasswordForNewEntries,{QS("AutoGeneratePasswordForNewEntries"), Roaming, false}},
     {Config::MinimizeAfterUnlock,{QS("MinimizeAfterUnlock"), Roaming, false}},
     {Config::DropToBackgroundOnCopy,{QS("DropToBackgroundOnCopy"), Roaming, false}},
