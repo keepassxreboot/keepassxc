@@ -954,3 +954,238 @@ void TestEntry::testContainsPlaceholder()
     QVERIFY(EntryPlaceholders::containsPlaceholder("{TOTP}"));
     QVERIFY(EntryPlaceholders::containsPlaceholder("test\\{TOTP\\}"));
 }
+
+void TestEntry::testConflictingAttributes()
+{
+    QScopedPointer<Entry> entry1(new Entry());
+    entry1->setTitle("Example");
+    entry1->setUsername("user");
+    entry1->setPassword("secret");
+    entry1->attributes()->set("Custom", "one");
+
+    QScopedPointer<Entry> entry2(new Entry());
+    entry2->setTitle("Example");
+    entry2->setUsername("user");
+    entry2->setPassword("other secret");
+    entry2->attributes()->set("Custom", "two");
+    entry2->attributes()->set(EntryAttributes::KPEX_PASSKEY_USERNAME, "passkey user");
+
+    const auto conflicts = Entry::conflictingAttributes({entry1.data(), entry2.data()});
+
+    // Attributes the entries agree on are not reported
+    QVERIFY(!conflicts.contains(EntryAttributes::TitleKey));
+    QVERIFY(!conflicts.contains(EntryAttributes::UserNameKey));
+    // Neither are attributes only one entry holds
+    QVERIFY(!conflicts.contains(EntryAttributes::KPEX_PASSKEY_USERNAME));
+
+    QCOMPARE(conflicts.value(EntryAttributes::PasswordKey), QStringList({"secret", "other secret"}));
+    QCOMPARE(conflicts.value("Custom"), QStringList({"one", "two"}));
+
+    // A single entry can never conflict with itself
+    QVERIFY(Entry::conflictingAttributes({entry1.data()}).isEmpty());
+}
+
+void TestEntry::testMergeFrom()
+{
+    QScopedPointer<Entry> target(new Entry());
+    target->setTitle("Example");
+    target->setUsername("user");
+    target->setUrl("https://example.com");
+    target->setTags("first");
+    target->attachments()->set("notes.txt", QByteArray("target"));
+    QCOMPARE(target->iconNumber(), Entry::DefaultIconNumber);
+
+    QScopedPointer<Entry> source(new Entry());
+    source->setTitle("Example");
+    // The target has no password of its own, so the source fills it in
+    source->setPassword("secret");
+    source->setUrl("https://login.example.com");
+    source->setNotes("some notes");
+    source->setTags("second");
+    source->attributes()->set("Custom", "value");
+    source->attachments()->set("notes.txt", QByteArray("source"));
+    source->attachments()->set("key.pem", QByteArray("key"));
+    source->autoTypeAssociations()->add({"Example Window", "{USERNAME}"});
+    source->setIcon(12);
+
+    target->mergeFrom({source.data()});
+
+    QCOMPARE(target->password(), QString("secret"));
+    QCOMPARE(target->notes(), QString("some notes"));
+    QCOMPARE(target->attribute("Custom"), QString("value"));
+
+    // The primary URL is kept and the other one becomes an additional URL
+    QCOMPARE(target->url(), QString("https://example.com"));
+    QCOMPARE(target->getAdditionalUrls(), QStringList({"https://login.example.com"}));
+
+    QCOMPARE(target->tagList(), QStringList({"first", "second"}));
+    QCOMPARE(target->autoTypeAssociations()->size(), 1);
+
+    // The target still showed the default icon, so it takes the one it is given
+    QCOMPARE(target->iconNumber(), 12);
+
+    // A colliding attachment is kept under a name that preserves the extension
+    QCOMPARE(target->attachments()->value("notes.txt"), QByteArray("target"));
+    QCOMPARE(target->attachments()->value("notes_1.txt"), QByteArray("source"));
+    QCOMPARE(target->attachments()->value("key.pem"), QByteArray("key"));
+
+    // The merged entry is left untouched
+    QCOMPARE(source->title(), QString("Example"));
+    QCOMPARE(source->password(), QString("secret"));
+    QCOMPARE(source->attachments()->keys().size(), 2);
+}
+
+void TestEntry::testMergeFromResolvesConflicts()
+{
+    QScopedPointer<Entry> target(new Entry());
+    target->setTitle("Old Title");
+    target->setPassword("old secret");
+    target->setUrl("https://example.com");
+
+    QScopedPointer<Entry> source(new Entry());
+    source->setTitle("New Title");
+    source->attributes()->set(EntryAttributes::PasswordKey, "new secret", true);
+    source->setUrl("https://login.example.com");
+
+    QHash<QString, QString> resolvedAttributes;
+    resolvedAttributes.insert(EntryAttributes::TitleKey, "New Title");
+    resolvedAttributes.insert(EntryAttributes::PasswordKey, "new secret");
+    resolvedAttributes.insert(EntryAttributes::URLKey, "https://login.example.com");
+
+    target->mergeFrom({source.data()}, resolvedAttributes);
+
+    QCOMPARE(target->title(), QString("New Title"));
+    QCOMPARE(target->password(), QString("new secret"));
+    // The URL that lost the conflict is kept rather than dropped
+    QCOMPARE(target->url(), QString("https://login.example.com"));
+    QCOMPARE(target->getAdditionalUrls(), QStringList({"https://example.com"}));
+    // Protection is never downgraded: the source protected its password, so the
+    // merged password stays protected even though the target's was not
+    QVERIFY(!source->attributes()->isProtected(EntryAttributes::TitleKey));
+    QVERIFY(target->attributes()->isProtected(EntryAttributes::PasswordKey));
+
+    QScopedPointer<Entry> keepNothing(new Entry());
+    keepNothing->setTitle("Old Title");
+    keepNothing->mergeFrom({source.data()}, {}, Entry::MergeNoFlags);
+
+    // Without MergeKeepDiscardedValues a losing value is dropped
+    QCOMPARE(keepNothing->title(), QString("Old Title"));
+    QCOMPARE(keepNothing->attributes()->customKeys(), QList<QString>());
+
+    QScopedPointer<Entry> keepDiscarded(new Entry());
+    keepDiscarded->setTitle("Old Title");
+    keepDiscarded->mergeFrom({source.data()}, {}, Entry::MergeKeepDiscardedValues);
+
+    QCOMPARE(keepDiscarded->title(), QString("Old Title"));
+    QCOMPARE(keepDiscarded->attribute("Title_1"), QString("New Title"));
+}
+
+void TestEntry::testMergeFromKeepsPasskeyIntact()
+{
+    QScopedPointer<Entry> withPasskey(new Entry());
+    withPasskey->setTitle("Example");
+    withPasskey->attributes()->set(EntryAttributes::KPEX_PASSKEY_USERNAME, "user");
+    withPasskey->attributes()->set(EntryAttributes::KPEX_PASSKEY_CREDENTIAL_ID, "credential", true);
+    withPasskey->attributes()->set(EntryAttributes::KPEX_PASSKEY_PRIVATE_KEY_PEM, "private key", true);
+    withPasskey->attributes()->set(EntryAttributes::KPEX_PASSKEY_RELYING_PARTY, "example.com");
+    QVERIFY(withPasskey->hasPasskey());
+
+    QScopedPointer<Entry> target(new Entry());
+    target->setTitle("Example");
+    target->mergeFrom({withPasskey.data()});
+
+    // The passkey is carried over as a whole, protection included
+    QVERIFY(target->hasPasskey());
+    QCOMPARE(target->attribute(EntryAttributes::KPEX_PASSKEY_CREDENTIAL_ID), QString("credential"));
+    QCOMPARE(target->attribute(EntryAttributes::KPEX_PASSKEY_PRIVATE_KEY_PEM), QString("private key"));
+    QCOMPARE(target->attribute(EntryAttributes::KPEX_PASSKEY_RELYING_PARTY), QString("example.com"));
+    QVERIFY(target->attributes()->isProtected(EntryAttributes::KPEX_PASSKEY_PRIVATE_KEY_PEM));
+    QVERIFY(target->tagList().contains("Passkey"));
+
+    QScopedPointer<Entry> otherPasskey(new Entry());
+    otherPasskey->setUsername("other user");
+    otherPasskey->setNotes("other notes");
+    otherPasskey->attachments()->set("other.txt", QByteArray("other"));
+    otherPasskey->attributes()->set(EntryAttributes::KPEX_PASSKEY_USERNAME, "other user");
+    otherPasskey->attributes()->set(EntryAttributes::KPEX_PASSKEY_CREDENTIAL_ID, "other credential", true);
+    otherPasskey->attributes()->set(EntryAttributes::KPEX_PASSKEY_PRIVATE_KEY_PEM, "other private key", true);
+
+    QCOMPARE(target->unmergeableEntries({otherPasskey.data()}), QList<Entry*>({otherPasskey.data()}));
+    target->mergeFrom({otherPasskey.data()});
+
+    // An entry that already carries a passkey never has it partly overwritten
+    QCOMPARE(target->attribute(EntryAttributes::KPEX_PASSKEY_USERNAME), QString("user"));
+    QCOMPARE(target->attribute(EntryAttributes::KPEX_PASSKEY_CREDENTIAL_ID), QString("credential"));
+    QCOMPARE(target->attribute(EntryAttributes::KPEX_PASSKEY_PRIVATE_KEY_PEM), QString("private key"));
+
+    // ...and the entry whose passkey does not fit is left out of the merge entirely
+    QVERIFY(target->username().isEmpty());
+    QVERIFY(target->notes().isEmpty());
+    QVERIFY(!target->attachments()->hasKey("other.txt"));
+    QVERIFY(target->attributes()->customKeys().isEmpty());
+}
+
+void TestEntry::testUnmergeableEntries()
+{
+    QScopedPointer<Entry> target(new Entry());
+    target->setTitle("Example");
+
+    QScopedPointer<Entry> firstPasskey(new Entry());
+    firstPasskey->setNotes("first");
+    firstPasskey->attributes()->set(EntryAttributes::KPEX_PASSKEY_USERNAME, "first user");
+    firstPasskey->attributes()->set(EntryAttributes::KPEX_PASSKEY_PRIVATE_KEY_PEM, "first private key", true);
+
+    QScopedPointer<Entry> noPasskey(new Entry());
+    noPasskey->setUrl("https://example.com");
+
+    QScopedPointer<Entry> secondPasskey(new Entry());
+    secondPasskey->setUsername("second user");
+    secondPasskey->attributes()->set(EntryAttributes::KPEX_PASSKEY_USERNAME, "second user");
+    secondPasskey->attributes()->set(EntryAttributes::KPEX_PASSKEY_PRIVATE_KEY_PEM, "second private key", true);
+
+    const QList<Entry*> others({firstPasskey.data(), noPasskey.data(), secondPasskey.data()});
+
+    // The first passkey fits into an entry without one, every later passkey does not
+    QCOMPARE(target->unmergeableEntries(others), QList<Entry*>({secondPasskey.data()}));
+    // An entry is never reported against itself
+    QVERIFY(target->unmergeableEntries({target.data()}).isEmpty());
+
+    target->mergeFrom(others);
+
+    QCOMPARE(target->attribute(EntryAttributes::KPEX_PASSKEY_USERNAME), QString("first user"));
+    QCOMPARE(target->notes(), QString("first"));
+    QCOMPARE(target->url(), QString("https://example.com"));
+    // Nothing of the left out entry reaches the merged one
+    QVERIFY(target->username().isEmpty());
+    QVERIFY(!target->attributes()->values(target->attributes()->keys()).contains("second private key"));
+}
+
+void TestEntry::testMergeFromConcatenatesNotes()
+{
+    QScopedPointer<Entry> target(new Entry());
+    target->setNotes("first note");
+
+    QScopedPointer<Entry> source(new Entry());
+    source->setNotes("second note");
+
+    QScopedPointer<Entry> duplicate(new Entry());
+    duplicate->setNotes("second note");
+
+    QScopedPointer<Entry> concatenated(target->clone(Entry::CloneNoFlags));
+    concatenated->mergeFrom({source.data(), duplicate.data()}, {}, Entry::MergeConcatenateNotes);
+
+    // The notes of every merged entry are kept, but never repeated
+    QCOMPARE(concatenated->notes(), QString("first note\n\nsecond note"));
+
+    QScopedPointer<Entry> chosen(target->clone(Entry::CloneNoFlags));
+    chosen->mergeFrom({source.data()}, {}, Entry::MergeNoFlags);
+
+    // Without the flag the notes of the entry merged into are the ones kept
+    QCOMPARE(chosen->notes(), QString("first note"));
+
+    QScopedPointer<Entry> emptyNotes(new Entry());
+    emptyNotes->mergeFrom({source.data()}, {}, Entry::MergeConcatenateNotes);
+
+    // Nothing to concatenate to means no leading separator
+    QCOMPARE(emptyNotes->notes(), QString("second note"));
+}

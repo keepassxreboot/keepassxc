@@ -46,6 +46,12 @@ private slots:
     void testMoveUpDown();
     void testPreviousParentGroup();
     void testContainsPlaceholder();
+    void testConflictingAttributes();
+    void testMergeFrom();
+    void testMergeFromResolvesConflicts();
+    void testMergeFromKeepsPasskeyIntact();
+    void testUnmergeableEntries();
+    void testMergeFromConcatenatesNotes();
 };
 
 #endif // KEEPASSX_TESTENTRY_H
