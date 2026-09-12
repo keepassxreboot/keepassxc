@@ -41,6 +41,48 @@
 
 namespace
 {
+    QByteArray parseBitwardenPasskeyCredentialId(const QString& credentialIdValue)
+    {
+        static const QRegularExpression uuidPattern(
+            QStringLiteral("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"));
+
+        auto decodeBase64Url = [](QByteArray encodedCredentialId) {
+            if (encodedCredentialId.isEmpty()) {
+                return QByteArray();
+            }
+
+            auto canonicalCredentialId = encodedCredentialId;
+            while (canonicalCredentialId.endsWith('=')) {
+                canonicalCredentialId.chop(1);
+            }
+
+            const auto credentialId =
+                QByteArray::fromBase64(encodedCredentialId, QByteArray::Base64UrlEncoding);
+            if (credentialId.isEmpty()
+                || credentialId.toBase64(QByteArray::Base64UrlEncoding | QByteArray::OmitTrailingEquals)
+                       != canonicalCredentialId) {
+                return QByteArray();
+            }
+
+            return credentialId;
+        };
+
+        if (uuidPattern.match(credentialIdValue).hasMatch()) {
+            return QUuid(credentialIdValue).toRfc4122();
+        }
+
+        auto credentialIdBytes = credentialIdValue.toUtf8();
+        if (credentialIdBytes.startsWith("b64.")) {
+            return decodeBase64Url(credentialIdBytes.mid(4));
+        }
+
+        if ((credentialIdBytes.size() % 2) == 0 && Tools::isHex(credentialIdBytes)) {
+            return QByteArray::fromHex(credentialIdBytes);
+        }
+
+        return decodeBase64Url(credentialIdBytes);
+    }
+
     Entry* readItem(const QJsonObject& item, QString& folderId)
     {
         // Create the item map and extract the folder id
@@ -88,10 +130,10 @@ namespace
                 for (const auto& fido2Credentials : fido2CredentialsMap) {
                     const auto passkey = fido2Credentials.toMap();
 
-                    // Change from UUID to base64 byte array
+                    // Change UUID, hex, or base64url values to the stored base64url byte array form
                     const auto credentialIdValue = passkey.value("credentialId").toString();
                     if (!credentialIdValue.isEmpty()) {
-                        const auto credentialIdArray = QByteArray::fromHex(credentialIdValue.toUtf8());
+                        const auto credentialIdArray = parseBitwardenPasskeyCredentialId(credentialIdValue);
                         const auto credentialId =
                             credentialIdArray.toBase64(QByteArray::Base64UrlEncoding | QByteArray::OmitTrailingEquals);
                         entry->attributes()->set(EntryAttributes::KPEX_PASSKEY_CREDENTIAL_ID, credentialId, true);
