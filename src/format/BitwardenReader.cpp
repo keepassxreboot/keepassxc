@@ -56,8 +56,7 @@ namespace
                 canonicalCredentialId.chop(1);
             }
 
-            const auto credentialId =
-                QByteArray::fromBase64(encodedCredentialId, QByteArray::Base64UrlEncoding);
+            const auto credentialId = QByteArray::fromBase64(encodedCredentialId, QByteArray::Base64UrlEncoding);
             if (credentialId.isEmpty()
                 || credentialId.toBase64(QByteArray::Base64UrlEncoding | QByteArray::OmitTrailingEquals)
                        != canonicalCredentialId) {

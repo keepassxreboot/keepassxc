@@ -331,12 +331,13 @@ void TestImports::testBitwardenPasskey()
     QVERIFY(entry);
     attr = entry->attributes();
     QCOMPARE(attr->value(EntryAttributes::KPEX_PASSKEY_CREDENTIAL_ID), QStringLiteral("o-FfiyfBQq6Qz6YVrYeFTw"));
-    QCOMPARE(attr->value(EntryAttributes::KPEX_PASSKEY_PRIVATE_KEY_PEM),
-             QStringLiteral(
-                 "-----BEGIN PRIVATE "
-                 "KEY-----"
-                 "MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgmr4GQQjerojFuf0ZouOuUllMvAwxZSZAfB6gwDYcLiehRANCAAT0WR5zVS"
-                 "p6ieusvjkLkzaGc7fjGBmwpiuLPxR/d+ZjqMI9L2DKh+takp6wGt2x0n4jzr1KA352NZg0vjZX9CHh-----END PRIVATE KEY-----"));
+    QCOMPARE(
+        attr->value(EntryAttributes::KPEX_PASSKEY_PRIVATE_KEY_PEM),
+        QStringLiteral(
+            "-----BEGIN PRIVATE "
+            "KEY-----"
+            "MIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgmr4GQQjerojFuf0ZouOuUllMvAwxZSZAfB6gwDYcLiehRANCAAT0WR5zVS"
+            "p6ieusvjkLkzaGc7fjGBmwpiuLPxR/d+ZjqMI9L2DKh+takp6wGt2x0n4jzr1KA352NZg0vjZX9CHh-----END PRIVATE KEY-----"));
     QCOMPARE(attr->value(EntryAttributes::KPEX_PASSKEY_USERNAME), QStringLiteral("KPXC_BITWARDEN"));
     QCOMPARE(attr->value(EntryAttributes::KPEX_PASSKEY_RELYING_PARTY), QStringLiteral("webauthn.io"));
     QCOMPARE(attr->value(EntryAttributes::KPEX_PASSKEY_USER_HANDLE),
