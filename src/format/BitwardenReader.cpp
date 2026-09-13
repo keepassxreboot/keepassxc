@@ -43,9 +43,6 @@ namespace
 {
     QByteArray parseBitwardenPasskeyCredentialId(const QString& credentialIdValue)
     {
-        static const QRegularExpression uuidPattern(
-            QStringLiteral("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$"));
-
         auto decodeBase64Url = [](QByteArray encodedCredentialId) {
             if (encodedCredentialId.isEmpty()) {
                 return QByteArray();
@@ -66,13 +63,14 @@ namespace
             return credentialId;
         };
 
-        if (uuidPattern.match(credentialIdValue).hasMatch()) {
-            return QUuid(credentialIdValue).toRfc4122();
-        }
-
         auto credentialIdBytes = credentialIdValue.toUtf8();
         if (credentialIdBytes.startsWith("b64.")) {
             return decodeBase64Url(credentialIdBytes.mid(4));
+        }
+
+        const auto credentialUuid = QUuid(credentialIdValue);
+        if (!credentialUuid.isNull()) {
+            return credentialUuid.toRfc4122();
         }
 
         if ((credentialIdBytes.size() % 2) == 0 && Tools::isHex(credentialIdBytes)) {
