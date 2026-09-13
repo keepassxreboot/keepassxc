@@ -37,7 +37,6 @@ const int Entry::DefaultIconNumber = 0;
 
 namespace
 {
-    const int ResolveMaximumDepth = 10;
     const QString AutoTypeSequenceUsername = "{USERNAME}{ENTER}";
     const QString AutoTypeSequencePassword = "{PASSWORD}{ENTER}";
     const QRegularExpression TagDelimiterRegex(R"([,;\t])");
@@ -1472,12 +1471,12 @@ Entry* Entry::resolveReference(const QString& str) const
 
 QString Entry::resolveMultiplePlaceholders(const QString& str) const
 {
-    return resolveMultiplePlaceholdersRecursive(str, ResolveMaximumDepth);
+    return resolveMultiplePlaceholdersRecursive(str, EntryPlaceholders::ResolveMaximumDepth);
 }
 
 QString Entry::resolvePlaceholder(const QString& placeholder) const
 {
-    return resolvePlaceholderRecursive(placeholder, ResolveMaximumDepth);
+    return resolvePlaceholderRecursive(placeholder, EntryPlaceholders::ResolveMaximumDepth);
 }
 
 QString Entry::resolveUrl(const QString& url) const
