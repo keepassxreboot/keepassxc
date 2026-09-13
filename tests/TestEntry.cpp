@@ -943,7 +943,14 @@ void TestEntry::testContainsPlaceholder()
     QVERIFY(EntryPlaceholders::containsPlaceholder("yes{URL:PORT}"));
     QVERIFY(EntryPlaceholders::containsPlaceholder("yes{S:KPEX_PASSKEYS_USER_ID}no"));
 
-    // Static placeholders
+    // Placeholder can be inside {} brackets, and must be identified
+    QVERIFY(EntryPlaceholders::containsPlaceholder("{{REF:U@A:https://url.com/}}"));
+    QVERIFY(EntryPlaceholders::containsPlaceholder("{{{REF:U@A:https://url.com/}}}"));
+
+    // This kind of mixup is not considered as a placeholder
+    QVERIFY(!EntryPlaceholders::containsPlaceholder("{[{REF:U@A:https://url.com/}]}"));
+
+    // Static placeholdersi
     QVERIFY(EntryPlaceholders::containsPlaceholder("{TITLE}"));
     QVERIFY(!EntryPlaceholders::containsPlaceholder("{TITLE2}"));
     QVERIFY(EntryPlaceholders::containsPlaceholder("{USERNAME}"));
@@ -952,5 +959,18 @@ void TestEntry::testContainsPlaceholder()
     QVERIFY(EntryPlaceholders::containsPlaceholder("{NOTES}"));
     QVERIFY(EntryPlaceholders::containsPlaceholder("inthe{NOTES}middle"));
     QVERIFY(EntryPlaceholders::containsPlaceholder("{TOTP}"));
+    QVERIFY(EntryPlaceholders::containsPlaceholder("{{TOTP}}"));
+    QVERIFY(EntryPlaceholders::containsPlaceholder("after{{TOTP}}"));
     QVERIFY(EntryPlaceholders::containsPlaceholder("test\\{TOTP\\}"));
+
+    // Max depth (10), and max depth exceeded
+    for (auto i = 1; i <= EntryPlaceholders::ResolveMaximumDepth + 1; ++i) {
+        const auto placeholder = QString("{").repeated(i) + QString("TOTP") + QString("}").repeated(i);
+        if (i <= EntryPlaceholders::ResolveMaximumDepth) {
+            QVERIFY(EntryPlaceholders::containsPlaceholder(placeholder));
+        } else {
+            // Max depth exceeded
+            QVERIFY(!EntryPlaceholders::containsPlaceholder(placeholder));
+        }
+    }
 }

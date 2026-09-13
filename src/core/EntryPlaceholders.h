@@ -23,6 +23,8 @@
 
 namespace EntryPlaceholders
 {
+    const int ResolveMaximumDepth = 10;
+
     enum class PlaceholderType
     {
         NotPlaceholder,
@@ -65,7 +67,7 @@ namespace EntryPlaceholders
         Regex
     };
 
-    PlaceholderType placeholderType(const QString& placeholder);
+    PlaceholderType placeholderType(const QString& placeholder, int maxDepth = ResolveMaximumDepth);
     QString resolveUrlPlaceholder(const QString& str, PlaceholderType placeholderType);
     QString resolveDateTimePlaceholder(PlaceholderType placeholderType);
     QString maskPasswordPlaceholders(const QString& str);
