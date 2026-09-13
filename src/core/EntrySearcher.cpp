@@ -22,9 +22,10 @@
 #include "core/Group.h"
 #include "core/Tools.h"
 
-EntrySearcher::EntrySearcher(bool caseSensitive, bool skipProtected)
+EntrySearcher::EntrySearcher(bool caseSensitive, bool includeProtected, bool regularExpr)
     : m_caseSensitive(caseSensitive)
-    , m_skipProtected(skipProtected)
+    , m_includeProtected(includeProtected)
+    , m_regularExpr(regularExpr)
 {
 }
 
@@ -126,36 +127,33 @@ QList<Entry*> EntrySearcher::repeatEntries(const QList<Entry*>& entries)
     return results;
 }
 
-/**
- * Set the next search to be case sensitive or not
- *
- * @param state
- */
-void EntrySearcher::setCaseSensitive(bool state)
-{
-    m_caseSensitive = state;
-}
-
-bool EntrySearcher::isCaseSensitive() const
-{
-    return m_caseSensitive;
-}
-
 bool EntrySearcher::searchEntryImpl(const Entry* entry)
 {
     // Pre-load in case they are needed
-    auto attributes_keys = entry->attributes()->customKeys();
-    auto attributes = QStringList(attributes_keys + entry->attributes()->values(attributes_keys));
-    auto attachments = QStringList(entry->attachments()->keys());
+    const auto attributesKeys = entry->attributes()->customKeys();
+    const auto attachments = QStringList(entry->attachments()->keys());
     // Build a group hierarchy to allow searching for e.g. /group1/subgroup*
     QString hierarchy;
     if (entry->group()) {
         hierarchy = entry->group()->hierarchy().join('/').prepend("/");
     }
 
-    // By default, empty term matches every entry.
-    // However when skipping protected fields, we will reject everything instead
-    bool found = !m_skipProtected;
+    const auto attributeKVMatches = [&](const SearchTerm& term) {
+        // Matches both key or value of attribute
+        for (const auto& key : attributesKeys) {
+            if (term.regex.match(key).hasMatch()) {
+                return true;
+            }
+            if (m_includeProtected || !entry->attributes()->isProtected(key)) {
+                if (term.regex.match(entry->attributes()->value(key)).hasMatch()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    };
+
+    bool found = false;
     for (const auto& term : m_searchTerms) {
         switch (term.field) {
         case Field::Title:
@@ -165,9 +163,6 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
             found = term.regex.match(entry->resolvePlaceholder(entry->username())).hasMatch();
             break;
         case Field::Password:
-            if (m_skipProtected) {
-                continue;
-            }
             found = term.regex.match(entry->resolvePlaceholder(entry->password())).hasMatch();
             break;
         case Field::Url:
@@ -177,17 +172,25 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
             found = term.regex.match(entry->notes()).hasMatch();
             break;
         case Field::AttributeKV:
-            found = !attributes.filter(term.regex).empty();
+            found = attributeKVMatches(term);
+            break;
+        case Field::AttributeValue:
+            // here, term.word is the attribute key, e.g., searching "_test:value" --> term.word=test
+            if (!entry->attributes()->contains(term.word)) {
+                found = false;
+                break;
+            }
+            if (!m_includeProtected && entry->attributes()->isProtected(term.word)) {
+                found = false;
+                break;
+            }
+            found = term.regex.match(entry->attributes()->value(term.word)).hasMatch();
             break;
         case Field::Attachment:
             found = !attachments.filter(term.regex).empty();
             break;
-        case Field::AttributeValue:
-            if (m_skipProtected && entry->attributes()->isProtected(term.word)) {
-                continue;
-            }
-            found = entry->attributes()->contains(term.word)
-                    && term.regex.match(entry->attributes()->value(term.word)).hasMatch();
+        case Field::Uuid:
+            found = term.regex.match(entry->uuidToHex()).hasMatch();
             break;
         case Field::Group:
             // Match against the full hierarchy if the word contains a '/' otherwise just the group name
@@ -225,18 +228,27 @@ bool EntrySearcher::searchEntryImpl(const Entry* entry)
             if (term.word.compare("totp", Qt::CaseInsensitive) == 0) {
                 found = entry->hasTotp();
                 break;
+            } else if (term.word.compare("passkey", Qt::CaseInsensitive) == 0) {
+                found = entry->hasPasskey();
+                break;
+            } else if (term.word.compare("expiration", Qt::CaseInsensitive) == 0) {
+                found = entry->timeInfo().expires();
+                break;
             }
             found = false;
             break;
-        case Field::Uuid:
-            found = term.regex.match(entry->uuidToHex()).hasMatch();
-            break;
         default:
-            // Terms without a specific field try to match title, username, url, and notes
-            found = term.regex.match(entry->resolvePlaceholder(entry->title())).hasMatch()
+            // Terms without a specific field try to match:
+            // title, username, password, url, notes, additional attributes, attachments or tags
+            // Protected fields (password, specified additional attributes) are only searched when corresponding option is set
+            found =    term.regex.match(entry->resolvePlaceholder(entry->title())).hasMatch()
                     || term.regex.match(entry->resolvePlaceholder(entry->username())).hasMatch()
+                    || (m_includeProtected && term.regex.match(entry->resolvePlaceholder(entry->password())).hasMatch())
                     || term.regex.match(entry->resolvePlaceholder(entry->url())).hasMatch()
-                    || entry->tagList().indexOf(term.regex) != -1 || term.regex.match(entry->notes()).hasMatch();
+                    || term.regex.match(entry->notes()).hasMatch()
+                    || attributeKVMatches(term)
+                    || !attachments.filter(term.regex).empty()
+                    || entry->tagList().indexOf(term.regex) != -1;
         }
 
         // negate the result if exclude:
@@ -271,13 +283,18 @@ void EntrySearcher::parseSearchTerms(const QString& searchString)
         {QStringLiteral("uuid"), Field::Uuid}};
 
     // Group 1 = modifiers, Group 2 = field, Group 3 = quoted string, Group 4 = unquoted string
-    static QRegularExpression termParser(R"re(([-!*+]+)?(?:(\w*):)?(?:(?=")"((?:[^"\\]|\\.)*)"|([^ ]*))( |$))re");
+    static QRegularExpression termParser(R"re(([-!+]+)?(?:(\w*):)?(?:(?=")"((?:[^"\\]|\\.)*)"|([^ ]*))( |$))re");
 
     m_searchTerms.clear();
     auto results = termParser.globalMatch(searchString);
     while (results.hasNext()) {
-        auto result = results.next();
+        const auto result = results.next();
         SearchTerm term{};
+
+        const auto mods = result.captured(1);
+
+        const QString field = result.captured(2);
+        const bool hasField = !field.isEmpty();
 
         // Quoted string group
         term.word = result.captured(3);
@@ -289,19 +306,20 @@ void EntrySearcher::parseSearchTerms(const QString& searchString)
             term.word = result.captured(4);
         }
 
-        // If still empty, ignore this match
-        if (term.word.isEmpty()) {
+        // Skip leftover whitespace but continue if, e.g., "u:" is searched
+        if (term.word.isEmpty() && !hasField) {
             continue;
         }
 
-        auto mods = result.captured(1);
-
         // Convert term to regex
         int opts = m_caseSensitive ? Tools::RegexConvertOpts::CASE_SENSITIVE : Tools::RegexConvertOpts::DEFAULT;
-        if (!mods.contains("*")) {
+        if (!m_regularExpr) {
             opts |= Tools::RegexConvertOpts::WILDCARD_ALL;
         }
-        if (mods.contains("+")) {
+        // Empty field value (e.g. u: or u:"") should match entries where field is empty
+        // Therefore, enforce an exact match against the empty string
+        const bool emptyFieldValue = term.word.isEmpty() && hasField;
+        if (mods.contains("+") || emptyFieldValue) {
             opts |= Tools::RegexConvertOpts::EXACT_MATCH;
         }
         term.regex = Tools::convertToRegex(term.word, opts);
@@ -312,8 +330,7 @@ void EntrySearcher::parseSearchTerms(const QString& searchString)
         // Determine the field to search
         term.field = Field::Undefined;
 
-        QString field = result.captured(2);
-        if (!field.isEmpty()) {
+        if (hasField) {
             if (field.startsWith("_", Qt::CaseInsensitive)) {
                 term.field = Field::AttributeValue;
                 // searching a custom attribute

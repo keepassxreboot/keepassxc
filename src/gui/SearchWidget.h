@@ -44,6 +44,8 @@ public:
     Q_DISABLE_COPY(SearchWidget)
 
     void connectSignals(SignalMultiplexer& mx);
+    void setIncludeProtected(bool state);
+    void setRegularExpr(bool state);
     void setCaseSensitive(bool state);
     void setLimitGroup(bool state);
 
@@ -54,6 +56,8 @@ protected:
 signals:
     void search(const QString& text);
     void searchCanceled();
+    void includeProtectedChanged(bool state);
+    void regularExprChanged(bool state);
     void caseSensitiveChanged(bool state);
     void limitGroupChanged(bool state);
     void escapePressed();
@@ -71,6 +75,8 @@ private slots:
     void onReturnPressed();
     void startSearchTimer();
     void startSearch();
+    void updateIncludeProtected();
+    void updateRegularExpr();
     void updateCaseSensitive();
     void updateLimitGroup();
     void toggleHelp();
@@ -84,6 +90,8 @@ private:
     PopupHelpWidget* m_helpWidget;
     QTimer* m_searchTimer;
     QTimer* m_clearSearchTimer;
+    QAction* m_actionIncludeProtected;
+    QAction* m_actionRegularExpr;
     QAction* m_actionCaseSensitive;
     QAction* m_actionLimitGroup;
     QAction* m_actionWaitForEnter;
