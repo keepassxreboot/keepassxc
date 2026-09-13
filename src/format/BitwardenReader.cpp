@@ -69,7 +69,7 @@ namespace
         }
 
         const auto credentialUuid = QUuid(credentialIdValue);
-        if (!credentialUuid.isNull()) {
+        if (credentialIdValue.compare(credentialUuid.toString(QUuid::WithoutBraces), Qt::CaseInsensitive) == 0) {
             return credentialUuid.toRfc4122();
         }
 
