@@ -114,6 +114,14 @@ void DatabaseStats::gatherStats(const QList<Group*>& groups)
                 totalPasswordLength += pwd.size();
                 m_passwords[pwd]++;
             }
+
+            if (entry->hasPasskey()) {
+                numberOfPasskeys++;
+            }
+
+            if (entry->hasTotp()) {
+                numberOfTotpEntries++;
+            }
         }
     }
 }
