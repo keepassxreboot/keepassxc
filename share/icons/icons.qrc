@@ -46,6 +46,17 @@
         <file>application/scalable/actions/entry-new.svg</file>
         <file>application/scalable/actions/favicon-download.svg</file>
         <file>application/scalable/actions/fingerprint.svg</file>
+        <file>application/scalable/actions/format-code-block.svg</file>
+        <file>application/scalable/actions/format-code.svg</file>
+        <file>application/scalable/actions/format-header-decrease.svg</file>
+        <file>application/scalable/actions/format-header-increase.svg</file>
+        <file>application/scalable/actions/format-list-bulleted.svg</file>
+        <file>application/scalable/actions/format-list-check.svg</file>
+        <file>application/scalable/actions/format-list-numbered.svg</file>
+        <file>application/scalable/actions/format-text-bold.svg</file>
+        <file>application/scalable/actions/format-text-italic.svg</file>
+        <file>application/scalable/actions/format-text-strikethrough.svg</file>
+        <file>application/scalable/actions/format-text-underline.svg</file>
         <file>application/scalable/actions/getting-started.svg</file>
         <file>application/scalable/actions/group-delete.svg</file>
         <file>application/scalable/actions/group-edit.svg</file>
@@ -56,6 +67,7 @@
         <file>application/scalable/actions/health.svg</file>
         <file>application/scalable/actions/help-about.svg</file>
         <file>application/scalable/actions/hibp.svg</file>
+        <file>application/scalable/actions/insert-link.svg</file>
         <file>application/scalable/actions/lock-question.svg</file>
         <file>application/scalable/actions/keyboard-shortcuts.svg</file>
         <file>application/scalable/actions/lock.svg</file>
@@ -75,6 +87,7 @@
         <file>application/scalable/actions/password-show-on.svg</file>
         <file>application/scalable/actions/proton.svg</file>
         <file>application/scalable/actions/qrcode.svg</file>
+        <file>application/scalable/actions/redo.svg</file>
         <file>application/scalable/actions/refresh.svg</file>
         <file>application/scalable/actions/remote-sync.svg</file>
         <file>application/scalable/actions/reports.svg</file>
@@ -94,6 +107,7 @@
         <file>application/scalable/actions/totp-edit.svg</file>
         <file>application/scalable/actions/totp-invalid.svg</file>
         <file>application/scalable/actions/trash.svg</file>
+        <file>application/scalable/actions/undo.svg</file>
         <file>application/scalable/actions/url-copy.svg</file>
         <file>application/scalable/actions/user-guide.svg</file>
         <file>application/scalable/actions/username-copy.svg</file>

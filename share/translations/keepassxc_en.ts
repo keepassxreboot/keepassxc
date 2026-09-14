@@ -6545,6 +6545,89 @@ This version is not meant for production use.</source>
     </message>
 </context>
 <context>
+    <name>MarkdownToolbar</name>
+    <message>
+        <source>Undo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Redo</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Decrease heading level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Increase heading level</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bold</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Italic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Strike</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Underline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bullet list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Numbered list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Task list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inline code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Code block</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Insert Link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Full link address (e.g. https://example.com or mailto:user@example.com)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text shown instead of the URL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Link text:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text shown on hover</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tooltip:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MergeDialog</name>
     <message>
         <source>Database Merge Confirmation</source>
