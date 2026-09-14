@@ -9502,6 +9502,26 @@ This option is deprecated, use --set-key-file instead.</source>
         <source>Confirm Replace Entry References</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Version information not found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Major version %1 is not supported.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No exporter data or timestamp provided.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No accounts to read.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No accounts were succesfully read.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QtIOCompressor</name>

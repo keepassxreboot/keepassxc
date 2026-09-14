@@ -88,6 +88,9 @@ add_unit_test(NAME testdeletedobjects SOURCES TestDeletedObjects.cpp
 add_unit_test(NAME testkeepass1reader SOURCES TestKeePass1Reader.cpp
         LIBS ${TEST_LIBRARIES})
 
+add_unit_test(NAME testcredentialexchange SOURCES TestCredentialExchange.cpp
+        LIBS ${TEST_LIBRARIES})
+
 add_unit_test(NAME testimports SOURCES TestImports.cpp
         LIBS ${TEST_LIBRARIES})
 
